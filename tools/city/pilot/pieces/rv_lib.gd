@@ -138,7 +138,8 @@ func add(base: String, cond: String, u: float, v: float, yaw: float, lift := 0.0
 func fp_r(base: String, r: float) -> float:
 	if base.begins_with("tree_") or base.begins_with("palm_"): return r      # trees: the trunk counts (validator rule)
 	var e := K.manifest(base)
-	return maxf(r, 0.5 * maxf(float(e.get("footprint_w", 0.5)), float(e.get("footprint_d", 0.5))) + 0.05)
+	var fw := float(e.get("footprint_w", 0.5)); var fd := float(e.get("footprint_d", 0.5))
+	return maxf(r, 0.5 * sqrt(fw * fw + fd * fd) + 0.05)       # half the diagonal: items stand at any angle
 
 func try_add(base: String, cond: String, u: float, v: float, yaw: float, r: float, scale := 1.0) -> bool:
 	r = fp_r(base, r)
@@ -391,7 +392,7 @@ func house_lot(lot: Dictionary) -> void:
 	var fa: Vector2 = pt(axis, s0, f + 0.35); var fb: Vector2 = pt(axis, s1, f + 0.35)
 	var gaps: Array = [[door_s - s0, 1.2]]
 	if own_garage: gaps.append([garage_door_s - s0, 4.6])
-	var t_r := f + set + hd - 1.0                     # where the back yard is closed off: just in front of the rear wall
+	var t_r := f + set + hd + 0.55                    # where the back yard is closed off: from the house's back corners (clear of the downspouts)
 	lot.t_r = t_r
 	if FENCE.has(front):
 		var fd: Array = FENCE[front]
@@ -421,7 +422,7 @@ func house_lot(lot: Dictionary) -> void:
 	for k5 in 3:
 		var es := rr.randf_range(s0 + 1.2, s1 - 1.2)
 		if absf(es - door_s) < 1.8 or (own_garage and absf(es - garage_door_s) < 3.0): continue
-		var ep: Vector2 = pt(axis, es, f + 1.3)
+		var ep: Vector2 = pt(axis, es, f + 1.8)
 		try_add(String(plants[rr.randi() % plants.size()]), "normal", ep.x, ep.y, rr.randf_range(0, 360), 0.7)
 	if H - fh(pt(axis, (s0 + s1) * 0.5, f).x, pt(axis, (s0 + s1) * 0.5, f).y) > 0.35:
 		for k8 in 2:
@@ -498,7 +499,7 @@ func house_lot(lot: Dictionary) -> void:
 		fence_run(a3, b3, String(sf[0]), String(sf[1]), float(sf[2]), yy)
 	# the returns: from each side wall of the house to the lot line, touching both; the side gate on the wider side
 	for sd: float in [-1.0, 1.0]:
-		var wall_s := hs + sd * hw * 0.5
+		var wall_s := hs + sd * (hw * 0.5 - 0.05)       # from the back corner of the house (just behind its rear wall)
 		var line_s := s1 if sd > 0 else s0
 		var Lr := absf(line_s - wall_s)
 		if Lr < 0.3: continue
@@ -897,7 +898,8 @@ func clear_fences() -> void:
 		if base.begins_with("fence_") or base.begins_with("tree_") or base.begins_with("palm_") or base.begins_with("prop_utility_pole") or base.begins_with("prop_shade_sail"): continue
 		var e := K.manifest(base)
 		if String(e.get("mount", "ground")) != "ground": continue
-		var r := 0.5 * maxf(float(e.get("footprint_w", 0.5)), float(e.get("footprint_d", 0.5)))
+		var fw2 := float(e.get("footprint_w", 0.5)); var fd2 := float(e.get("footprint_d", 0.5))
+		var r := 0.5 * sqrt(fw2 * fw2 + fd2 * fd2)
 		var keep: Array = []
 		for t: Transform3D in props.items[k]:
 			var q := Q2(t.origin)
@@ -953,9 +955,15 @@ func build(piece: String, site: Dictionary, des: Dictionary) -> void:
 	var fronts: Array = des.fronts
 	var mk := func(w: float, i: int, maxw: float) -> Dictionary:
 		var h := ""
+		var fits := false
 		for tries in 12:
 			h = String(pick.call())
-			if float(K.building_stats(h).footprint_wd[0]) <= maxw: break
+			if float(K.building_stats(h).footprint_wd[0]) <= maxw: fits = true; break
+		if not fits:      # nothing narrow enough came up: the narrowest house of the design that fits (never one too wide)
+			var best_w := 1e9
+			for hh: String in houses:
+				var ww := float(K.building_stats(hh).footprint_wd[0])
+				if ww <= maxw and ww < best_w: best_w = ww; h = hh
 		return {"w": w, "house": h, "garage": String(garages[rr.randi() % garages.size()]), "front": String(fronts[rr.randi() % fronts.size()]),
 			"back": String(des.get("back", "privacy")), "gs": GS, "i": i}
 	var shop: Array = site.get("shop", [])

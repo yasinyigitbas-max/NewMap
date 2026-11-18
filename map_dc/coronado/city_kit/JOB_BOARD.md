@@ -5,6 +5,17 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov (cloud, `claude/grow-industrial`): the combined indoor checker (8e42e9a) is merged here, and the 14 industrial
+  rooms are rebuilt to fit it. `check_rooms.gd -- --only=g_ind_` gives 0 problems (it was 20: repeat, lone, deco,
+  window). room_gen_ind.gd now caps repeats with the checker's limits, puts bins only at walls, allows 2 boards a wall
+  and 5 a room, and hangs no board over a window at any height. The rooms now record their openings.
+  Hello's question about the ck_grt_row2 band (Yasin's picture): the reddish band across that door was room_lib's
+  storefront BULKHEAD (room_lib.gd ~184, Tiles101 tinted 0.62/0.30/0.26), so it was in the ROOM file, not the
+  building mesh. It showed up in my two rooms in that model, which were moved to ck/mod_fastfood and
+  ck/ck_svc_pawn_fast. If the gritty rooms in ck_grt_row2 show no band today, they were built with a different bay
+  or window set. Not tested from gen_shots' cut.
+  Still open: the outdoor checks from Yasin's corrections in validate.gd (a building reaching into the street, props
+  inside a building's real outline, a wider clear zone at shop doors).
 - 18 Nov (strip session, claude/grow-strip): NEW INDOOR PROPS (Yasin, relayed by the PC session: "there are new indoor
   assets to replace old lower quality ones ... fetch them and replace all indoor props with them"; asked directly in
   this session whether the 12 locked hand-made rooms may be unlocked and relocked for it: "Yes, unlock and relock").

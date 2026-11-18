@@ -7,7 +7,7 @@
    "kind": "freight_office",
    "lights": 6,
    "name": "Harbor Freight Station",
-   "props": 28,
+   "props": 21,
    "w": 11.4
   },
   {
@@ -17,7 +17,7 @@
    "kind": "trade_counter",
    "lights": 6,
    "name": "Bayside Chandlery",
-   "props": 30,
+   "props": 29,
    "w": 11.4
   },
   {
@@ -27,7 +27,7 @@
    "kind": "parts_counter",
    "lights": 5,
    "name": "Cold Line Reefer Service",
-   "props": 36,
+   "props": 31,
    "w": 6.1
   },
   {
@@ -37,7 +37,7 @@
    "kind": "permits",
    "lights": 5,
    "name": "Public Works Permits",
-   "props": 26,
+   "props": 23,
    "w": 6.0
   },
   {
@@ -57,7 +57,7 @@
    "kind": "fish_counter",
    "lights": 6,
    "name": "Dockside Fish Market",
-   "props": 58,
+   "props": 54,
    "w": 11.4
   },
   {
@@ -67,7 +67,7 @@
    "kind": "sales_office",
    "lights": 4,
    "name": "Pacific Seafood Co.",
-   "props": 22,
+   "props": 18,
    "w": 5.4
   },
   {
@@ -77,7 +77,7 @@
    "kind": "broker",
    "lights": 6,
    "name": "Bay Boatworks",
-   "props": 26,
+   "props": 22,
    "w": 15.4
   },
   {
@@ -87,7 +87,7 @@
    "kind": "parts_counter",
    "lights": 5,
    "name": "Tidewater Marine Engines",
-   "props": 36,
+   "props": 31,
    "w": 6.1
   },
   {
@@ -97,7 +97,7 @@
    "kind": "diner",
    "lights": 6,
    "name": "3rd St Truck Stop",
-   "props": 43,
+   "props": 39,
    "w": 11.4
   },
   {
@@ -107,7 +107,7 @@
    "kind": "trade_counter",
    "lights": 6,
    "name": "Bayline Truck Parts",
-   "props": 30,
+   "props": 29,
    "w": 11.4
   },
   {
@@ -117,7 +117,7 @@
    "kind": "canteen",
    "lights": 6,
    "name": "Shift Canteen",
-   "props": 51,
+   "props": 50,
    "w": 11.4
   },
   {
@@ -127,7 +127,7 @@
    "kind": "trade_counter",
    "lights": 4,
    "name": "Island Restaurant Supply",
-   "props": 24,
+   "props": 23,
    "w": 5.7
   },
   {
@@ -137,7 +137,7 @@
    "kind": "uniform",
    "lights": 4,
    "name": "Shift Linen & Uniforms",
-   "props": 29,
+   "props": 28,
    "w": 5.7
   }
  ]

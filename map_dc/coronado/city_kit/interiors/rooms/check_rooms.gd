@@ -53,6 +53,10 @@ extends SceneTree
 ##   binshop   "trash store?": bins making up more than a quarter of a room's things
 ##   sparse    "bare": fewer than 1.2 things per 10 m2 of floor
 ##   (--no-review leaves these eight out.)
+##   unheld    (19 Nov, the gritty session's rule; Yasin: "whats that thing flying there?") a part of the room's OWN
+##             build hangs in the air: a box (room_lib.box: bars, shelves, panels, fittings) that stands on no floor,
+##             leans on no wall or partition, reaches no ceiling, sits on no prop and touches no other part that is
+##             held. Needs the boxes room_lib records since 19 Nov (meta "boxes"): older rooms are counted, not tested.
 ## A LOCKED room (locked.json "files"): faults of the kinds added after it was locked (NEW_KINDS) are printed as NOTE
 ## and not counted: a locked room changes only with Yasin's word.
 ## Output like the city validator (tools/city/pilot/validate.gd): "CHECK <kind> room: ..." per problem, a table of
@@ -73,7 +77,7 @@ const WALL_MOUNT := ["prop_gallery_frame", "prop_menu_board", "prop_pegboard_wal
 const STORAGE := ["shelf", "gondola", "bookcase", "backbar"]
 ## kinds that did not exist when the hand-made rooms were locked
 const REVIEW_KINDS := ["repeat", "deco", "lone", "face", "seat", "outseat", "binshop", "sparse"]
-const NEW_KINDS := ["behind", "ceiling", "window", "wallover", "doorway", "bare", "stack", "offwall", "repeat", "deco", "lone", "face", "seat", "outseat", "binshop", "sparse"]
+const NEW_KINDS := ["unheld", "behind", "ceiling", "window", "wallover", "doorway", "bare", "stack", "offwall", "repeat", "deco", "lone", "face", "seat", "outseat", "binshop", "sparse"]
 const INTERIORS := "res://map_dc/coronado/city_kit/interiors/"
 ## the review's lists (from room_review.gd)
 const AGAINST_WALL := ["prop_filing_cabinet", "prop_wall_shelf", "prop_pegboard_wall", "prop_drinks_fridge", "prop_vending_soda",
@@ -109,6 +113,7 @@ var no_review := false
 var info := {}          # room name -> {model, kind} from every interiors/assignment_*.json
 var contracts := {}     # building model -> its contract (openings ...) from every interiors/room_contracts*.json
 var no_openings := 0    # rooms that do not record their openings (built before 19 Nov)
+var no_boxes := 0       # rooms that do not record their boxes (built before the "unheld" rule)
 
 func _init() -> void: _run.call_deferred()
 
@@ -164,6 +169,7 @@ func _run() -> void:
 	rr.sort_custom(func(a: String, b: String) -> bool: return int(by_room[a]) > int(by_room[b]))
 	if not rr.is_empty(): print("CHECKS-ROOMS %d of %d rooms have problems; most: %s" % [rr.size(), rooms.size(), ", ".join(rr.slice(0, 8).map(func(r: String) -> String: return "%s (%d)" % [r, int(by_room[r])]))])
 	if no_openings > 0: print("CHECKS-INFO %d rooms do not record their openings (built before 19 Nov): for them 'window' relies on their glass, their entrances and the building's contract; a rebuild makes it exact" % no_openings)
+	if no_boxes > 0: print("CHECKS-INFO %d rooms do not record the boxes of their own build: 'unheld' (a part hanging in the air) is not tested in them until they are rebuilt" % no_boxes)
 	if notes > 0: print("CHECKS-NOTE %d faults of the newer kinds in LOCKED rooms (not counted: they change only with Yasin's word)" % notes)
 	if json_out != "":
 		var jf := FileAccess.open(json_out, FileAccess.WRITE)
@@ -294,6 +300,7 @@ func _room(name: String, root: Node3D) -> void:
 	var ops := _openings(name, root, miny)
 	_wall_items(name, root, props, miny, shell, floors, solids, ops)
 	_review(name, props, ground, miny, floors, solids, ops)
+	_unheld(name, root, props, miny, floors, solids, shell)
 	_ceiling_all(name, props, miny, shell)
 	# pot: indoors a plant stands in a pot - a garden plant (no pot in its model) cannot grow out of the floor
 	for g2: Array in ground:
@@ -493,6 +500,66 @@ func _wall_items(name: String, root: Node3D, props: Array, miny: float, shell: A
 			var sd := Vector2((A[5] as Vector2).y, -(A[5] as Vector2).x)
 			if absf(dd.dot(sd)) < float(A[2]) + float(B[2]) - 0.02 and float(A[3]) < float(B[4]) - 0.02 and float(B[3]) < float(A[4]) - 0.02:
 				_report(name, "wallover", "%s at %s overlaps %s at %s on the same wall" % [A[0], _v(A[1]), B[0], _v(B[1])])
+
+## unheld: every box of the room's own build must be held by something. Held = on the floor, or against a wall or
+## partition (a side within 3 cm of one, or beyond the floor's edge), or up at the ceiling, or on a prop's top; and
+## whatever touches a held box is held too (a shelf board on its bracket).
+func _unheld(name: String, root: Node3D, props: Array, miny: float, floors: Array, solids: Array, shell: Array) -> void:
+	if not root.has_meta(&"boxes"): no_boxes += 1; return
+	var boxes: Array = root.get_meta(&"boxes", [])
+	if boxes.is_empty() or floors.is_empty(): return
+	var held := PackedByteArray(); held.resize(boxes.size())
+	var bb: Array = []
+	for i in boxes.size():
+		var b: Array = boxes[i]
+		var c := Vector3(float(b[0]), float(b[1]), float(b[2])); var h := Vector3(float(b[3]), float(b[4]), float(b[5])) * 0.5
+		bb.append(AABB(c - h, h * 2.0))
+		var ok := c.y - h.y <= miny + 0.03      # on the floor
+		if not ok:      # up at the ceiling: the highest face of the room over its middle
+			var top := -INF
+			for t: Array in shell:
+				if int(t[3]) != 0: continue
+				var ta: Vector3 = t[0]; var tb: Vector3 = t[1]; var tc: Vector3 = t[2]
+				var ty := (ta.y + tb.y + tc.y) / 3.0
+				if ty <= top or ty < c.y + h.y - 0.001: continue
+				var nn := (tb - ta).cross(tc - ta)
+				if nn.length_squared() < 1e-10 or absf(nn.normalized().y) < 0.9: continue
+				if Geometry2D.point_is_inside_triangle(Vector2(c.x, c.z), Vector2(ta.x, ta.z), Vector2(tb.x, tb.z), Vector2(tc.x, tc.z)): top = ty
+			# its own top face is the lowest candidate; anything within 3 cm above it means it reaches the ceiling
+			ok = top > -INF and top - (c.y + h.y) <= 0.03 and top > miny + 1.8 and _is_room_top(shell, Vector2(c.x, c.z), top)
+		if not ok:      # against a wall or partition
+			for q: Vector2 in [Vector2(c.x - h.x, c.z), Vector2(c.x + h.x, c.z), Vector2(c.x, c.z - h.z), Vector2(c.x, c.z + h.z)]:
+				if not _on_floor(q, floors, []) or _wall_dist(q, floors, solids) <= 0.03: ok = true; break
+		if not ok:      # on a prop
+			for p: Array in props:
+				var ptop := float(p[4]) + float(tall.get(String(p[0]), 1.0))
+				if absf((c.y - h.y) - ptop) <= 0.05 and _hit(Vector2(c.x, c.z), Vector2(h.x, h.z), 0.0, p[1], p[2], p[3]): ok = true; break
+		held[i] = 1 if ok else 0
+	var changed := true
+	while changed:      # what touches a held part is held
+		changed = false
+		for i in boxes.size():
+			if held[i] == 1: continue
+			for j in boxes.size():
+				if held[j] == 1 and (bb[i] as AABB).grow(0.03).intersects(bb[j]): held[i] = 1; changed = true; break
+	var said := 0
+	for i in boxes.size():
+		if held[i] == 1: continue
+		var b2: Array = boxes[i]
+		said += 1
+		if said <= 4: _report(name, "unheld", "a part of the room's build (%s, %.2f x %.2f x %.2f m) at (%.2f, %.2f), %.2f..%.2f m up, hangs in the air: it touches no floor, wall, ceiling, prop or held part" % [b2[6], float(b2[3]), float(b2[4]), float(b2[5]), float(b2[0]), float(b2[2]), float(b2[1]) - float(b2[4]) * 0.5 - miny, float(b2[1]) + float(b2[4]) * 0.5 - miny])
+	if said > 4: _report(name, "unheld", "and %d more parts of the room's build hang in the air" % (said - 4))
+
+## true if no solid face of the room lies more than 3 cm above `y` over the point: `y` is the room's top there
+func _is_room_top(shell: Array, at: Vector2, y: float) -> bool:
+	for t: Array in shell:
+		if int(t[3]) != 0: continue
+		var a: Vector3 = t[0]; var b: Vector3 = t[1]; var c: Vector3 = t[2]
+		if (a.y + b.y + c.y) / 3.0 <= y + 0.03: continue
+		var nn := (b - a).cross(c - a)
+		if nn.length_squared() < 1e-10 or absf(nn.normalized().y) < 0.9: continue
+		if Geometry2D.point_is_inside_triangle(at, Vector2(a.x, a.z), Vector2(b.x, b.z), Vector2(c.x, c.z)): return false
+	return true
 
 ## How far a point is from the nearest wall of the room: an edge of a floor rectangle that is not shared with
 ## another floor rectangle (so the join of an L-shaped room is no wall), or the face of a partition. INF if the point
