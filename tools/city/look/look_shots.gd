@@ -8,7 +8,7 @@ extends RefCounted
 ##   --times=day | night                only one of the two
 ##   --hold=40                          frames to wait before a picture is taken
 ##   --fullsize                         keep the window's size (e.g. 2460 x 1080 to judge the upscaler) instead of 1640 x 720
-## With --upscale=1 the file names end in _sgsr.
+## With --upscale=1 the file names end in _sgsr, with --glow=0 (and the look) in _glow0.
 ## [name, x, z, yaw, pitch]: street level, eye 1.6 m over the road.
 const VIEWS := [
 	["centre", -6.0, -560.0, 0.0, 4.0],           # Amber Ave (west lane; the median has palms), looking north through 7th St (0, -600)
@@ -67,7 +67,7 @@ static func run(rig: Node, folder: String, args: PackedStringArray) -> void:
 			var img := vp.get_texture().get_image()
 			if not full and img.get_size() != SIZE: img.resize(SIZE.x, SIZE.y, Image.INTERPOLATE_LANCZOS)
 			img.convert(Image.FORMAT_RGB8)
-			var path := dir.path_join("%s_%s%s.jpg" % [v[0], c[0], "_sgsr" if int(rig.opt.upscale) == 1 else ""])
+			var path := dir.path_join("%s_%s%s%s.jpg" % [v[0], c[0], "_sgsr" if int(rig.opt.upscale) == 1 else "", "_glow0" if int(rig.opt.glow) == 0 and lk != "0" else ""])
 			img.save_jpg(path, 0.9)
 			rig._say("shot %s look=%s ground=%.1f draws=%d" % [path.get_file(), lk, gy, RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)])
 	rig._say("shots_done %s" % dir)

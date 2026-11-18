@@ -12,6 +12,8 @@ extends Node
 ##  - WARM SUN, COOL SHADE: only the colours of the sun and of the ambient light. Nothing per pixel.
 ##  - TONEMAP + GRADE: in the last pass, which runs anyway (it scales the 720p picture up and smooths edges): the
 ##    tonemap curve, then ONE read of a 16 x 16 x 16 colour table (12 KB, built at start) per screen pixel.
+##  - LAMP GLOW (glow.gdshader, look job 3): the same quads as before, a few more arithmetic steps, no texture read;
+##    halos 1.8 x wider (small quads), pools 0.85 x (the big overlapping ones: fewer pixels than before).
 ##  - BLOOM: only with --bloom=1 (off by default): a blur chain at 1/4 .. 1/16 size plus one read per pixel. Measure
 ##    it on the phone before it is kept (Yasin 18 Nov: "does the bloom cost that much?").
 ##  - NOT used, on purpose: SSAO, SSR, volumetric fog, depth of field.
@@ -85,6 +87,7 @@ static var PRESETS := {
 @export var cloud_speed := Vector2(0.0008, 0.0003)  ## texture units a second; 0 = still
 @export var shadow_distance := 50.0                 ## the game's sun shadow distance (unchanged)
 @export var bloom := false                          ## glow round bright things (GTA 4 has it). COSTS PIXELS: off by default, see docs/LOOK_SKY.md
+@export var glow := true                            ## lamp halos and pools drawn by tools/city/look/glow.gdshader (look job 3); false = the bake's
 @export_range(0.0, 1.0) var grade := 1.0           ## strength of the colour grade (the lookup table); 0 = none
 
 var env: Environment
@@ -121,6 +124,28 @@ func _ready() -> void:
 	sun = DirectionalLight3D.new(); sun.rotation_degrees = sun_angles
 	sun.shadow_enabled = OS.get_environment("NOSHADOW") != "1"; sun.directional_shadow_max_distance = shadow_distance; add_child(sun)
 	set_night(night)
+
+## LOOK JOB 3: the lamps' glow. Each cell's glow_halo / glow_pool node gets the look's glow material when the cell
+## comes in (two shared materials, nothing per frame; the bake's energy per kind is kept).
+var _glow_mats := {}
+func attach_stream(st: Node) -> void:
+	if not glow: return
+	st.cell_in.connect(func(k: String) -> void: _restyle(st.cells[k].node))
+	for k: String in st.cells:
+		if st.cells[k].state == st.IN: _restyle(st.cells[k].node)
+
+func _restyle(cell: Node) -> void:
+	if cell == null: return
+	for nm: String in ["glow_halo", "glow_pool"]:
+		var g := cell.get_node_or_null(nm) as GeometryInstance3D
+		if g == null: continue
+		if not _glow_mats.has(nm):
+			var old := g.material_override as ShaderMaterial
+			var m := ShaderMaterial.new(); m.shader = load("res://tools/city/look/glow.gdshader")
+			m.set_shader_parameter(&"billboard", nm == "glow_halo")
+			m.set_shader_parameter(&"energy", old.get_shader_parameter(&"energy") if old else (1.6 if nm == "glow_halo" else 0.22))
+			_glow_mats[nm] = m
+		g.material_override = _glow_mats[nm]
 
 func _process(dt: float) -> void:
 	if cloud_speed == Vector2.ZERO: return
