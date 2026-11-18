@@ -5,6 +5,14 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov: AUDIT (Yasin: "check the performance ... find inefficiencies, include how we can make it more lively and
+  varied ... zero loadings"): `docs/AUDIT_PERF_LIFE_18NOV.md`, tools in `tools/city/audit/` (census.gd, probe.gd,
+  probe_whatif.gd, load_times.gd: read-only, real renderer). NOTHING in the map changed, lock test PASS. Measured: whole
+  city loaded = 916 draws median per street view (budget 150): far tier 2,331 draws for 70k tris, ground with no
+  distance limit, every piece embeds its own model copies (lamp stored 305 times), kit atlases uncompressed without
+  mipmaps (113 MB), 43 % of prop batches hold one prop; with a 300 m streaming radius 108 draws / 61k tris. Only the
+  shore foam moves. WAITING for Yasin's four decisions at the end of the report (texture import, runtime bake before
+  growth, which movement first, tint / shop-name trial on one sample). No work started on them.
 - 18 Nov: THE NEW MAP HAS ITS OWN REPO (Yasin: "completely separate the new map from the old one ... sessions take too
   long to start"; chose "map only"): yasinyigitbas-max/NewMap, fresh history (~0.5 GB vs the game repo's ~7 GB). Work
   here from now on; the repo root is the Godot project (CLAUDE.md, tools/city/run/*.sh). The game repo

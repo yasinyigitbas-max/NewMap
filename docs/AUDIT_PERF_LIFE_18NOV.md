@@ -11,7 +11,7 @@ read-only measuring scripts in `tools/city/audit/` and this report.
 1. **The street-level detail is cheap. The far view is what breaks the budget.** Standing in the street with the whole
    city loaded, a typical view costs **916 draw calls** against the budget of 150. About 580 of them are the far tier
    (distant tree cards, distant props, distant building boxes) and about 140 are road surfaces with no distance limit.
-   Everything within 220 m costs about 90.
+   The props, trees and buildings within 220 m cost about 90.
 2. **Zero loading needs two layers that do not exist yet:** pieces streamed in and out around the player (about 300 m),
    and one small, always-loaded "far world" for the skyline. The whole city's far tier is only about 70,000 triangles,
    so it can stay in memory for the entire island. Today it is spread over 2,331 separate draws.
@@ -70,7 +70,7 @@ Where an average view's draw calls go with the whole city loaded:
 | Far props | 133 | 5,000 |
 | Far building boxes | 58 | 1,800 |
 | Far fences | 28 | 8,000 |
-| Near and mid props, trees, fences | 74 | 27,000 |
+| Near and mid props, trees, fences | 74 | 19,000 |
 | Near and mid buildings | 10 | 12,600 |
 | Wear marks, wires, foam | 9 | 2,800 |
 
@@ -107,7 +107,7 @@ renderer to treat the same lamp in two pieces as the same lamp.
 **P4. Kit textures are uncompressed and have no mipmaps.**
 All 36 kit atlases (`assets/coronado_kit/textures`, `atlases`) are imported with compression "lossless" and mipmaps
 off. Measured in memory: three 2048 atlases at 12 MB each, twenty-one 1024 atlases at 3-4 MB each, about 113 MB in
-total. The kit's own budget is 44 MB after compression. Without mipmaps, distant walls and tree crowns sparkle (visible
+total. The kit's own budget is 44 MB after compression. Without mipmaps, distant walls and tree crowns sparkle (seen in the tree crowns in
 in the preview shots) and the phone's GPU works harder on every distant pixel. The kit budget names pixels as the
 number one cost on the Redmi.
 - Fix: import them VRAM-compressed with mipmaps (normal maps flagged as normal maps). About 25-30 MB.
@@ -127,11 +127,11 @@ batches share one single material. A batch is a draw call whatever it holds.
   load the shared atlases, materials and shaders once at game start, and draw each material once off-screen so
   shaders are compiled before the player moves.
 - A sample's quadrants share one origin, so about 13 pieces cross any radius in the same frame (4.2 s of load work
-  cold, about 0.4 s warm, on this machine). Fix: stream by each piece's own bounds, nearest and ahead-of-travel first.
+  cold, about 0.4-0.5 s warm, on this machine). Fix: stream by each piece's own bounds, nearest and ahead-of-travel first.
 - Putting a piece into the scene runs on the main thread: 2-13 ms for most, 54-84 ms for the stadium (2,084 nodes).
   On a phone that is one to several dropped frames. Fix: load and build on a worker thread, add at most one piece per
   frame, split the stadium.
-- Driving at 30 m/s with a 300 m radius needs about 280 ms of load work per second with today's files. One background
+- Driving at 30 m/s with a 300 m radius needs about 100 ms (warm) to 280 ms (cold) of load work per second with today's files. One background
   thread can carry that on this machine; on a phone it is too close. P3 fixes it.
 
 **P7. The wear shaders run at full cost at every distance.**
@@ -192,10 +192,10 @@ in ten are still to come.
 ### A. Movement that costs no draw calls
 All of this is a few lines in the vertex part of a shader. No new models, no new draws.
 1. **Wind in the 3,468 trees and palms and the hedges.** The biggest single change to how alive a street feels. One
-   shared foliage shader also replaces the eight separate tree materials.
+   shared foliage shader also replaces the separate tree materials (near, mid and far each have their own today).
 2. **Cloth and boats:** 29 shade sails, 16 clotheslines, 15 beach umbrellas, awnings and flags sway; 15 moored boats
    and the buoys bob.
-3. **Traffic signals that cycle:** 107 signal heads, driven by the traffic system, as glowing texture regions.
+3. **Traffic signals that cycle:** 107 signals (61 mast arms, 46 posts), driven by the traffic system, as glowing texture regions.
 4. **Night:** window glow (already in the shader), 1,209 street lamps and 204 porch lights with glowing heads and a
    soft pool of light painted on the ground. No real lights outdoors: they are too costly on the phone.
 5. **Small effects with a cap per view:** the 21 sprinklers running on a timer, factory stack smoke, rooftop vent
@@ -228,7 +228,7 @@ list of "life anchors". Locked pieces are not touched.
 4. **Painted shop names repeat and sit in the wrong place.** The preview shows SUGAR CROWN BAKERY, VILLAGE THEATRE and
    CROWN CAFE in the industrial quarter; 15 models say VILLAGE THEATRE. The sign plates built for the walk-in rooms
    (`r.sign`, `make_signs`) can cover every shopfront from a name list per district.
-5. **Every district has the same road and pavement.** One asphalt, one near-white concrete, and 60 % of all lamps are
+5. **Every district has the same road and pavement.** One asphalt, one near-white concrete, and 60 % of the street lamps are
    the cobra type. Vary by district with colour and wear only: fresh black asphalt in the centre, patched grey in the
    industrial and gritty quarters, sandy at the beach, faded paint on back streets.
 6. **Weather and hours.** Wet roads after rain (a wet mask is already in `assets/roads`), puddles at the 648 storm
