@@ -2,6 +2,7 @@
 """Before / after sheets from the rig's --shots pictures: pair_<view>_<day|night>.jpg, before on top, after below
 (and after with bloom under that, when those pictures exist), each with a caption bar.
 Run from the repo root:  python3 tools/city/look/make_pairs.py map_dc/coronado/city_kit/review/look_18nov/sky
+Grids instead (one sheet per view):  ... make_pairs.py <folder> --sheet=morning,noon,golden,dusk,night,overcast
 """
 import os
 import sys
@@ -32,5 +33,30 @@ def main(folder):
         print("wrote", out)
 
 
+def sheet(folder, names, cols=2):
+    """sheet_<view>.jpg: every <view>_<name>.jpg of a view at half size in a grid, captioned (times of day)."""
+    font = ImageFont.truetype(os.path.join("ui", "fonts", "Overpass.ttf"), 22)
+    views = sorted({f.split("_", 1)[0] for f in os.listdir(folder) if f.endswith(".jpg") and not f.startswith("sheet_")})
+    for v in views:
+        ims = [(n, os.path.join(folder, f"{v}_{n}.jpg")) for n in names if os.path.exists(os.path.join(folder, f"{v}_{n}.jpg"))]
+        if not ims:
+            continue
+        w, h = 820, 360
+        bar = 32
+        rows = (len(ims) + cols - 1) // cols
+        out = Image.new("RGB", (w * cols, (h + bar) * rows), (20, 20, 20))
+        d = ImageDraw.Draw(out)
+        for i, (n, path) in enumerate(ims):
+            x, y = (i % cols) * w, (i // cols) * (h + bar)
+            d.text((x + 10, y + 4), f"{v}  -  {n}", fill=(240, 240, 240), font=font)
+            out.paste(Image.open(path).convert("RGB").resize((w, h), Image.LANCZOS), (x, y + bar))
+        dst = os.path.join(folder, f"sheet_{v}.jpg")
+        out.save(dst, quality=88)
+        print("wrote", dst)
+
+
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else "map_dc/coronado/city_kit/review/look_18nov/sky")
+    if len(sys.argv) > 2 and sys.argv[2].startswith("--sheet="):
+        sheet(sys.argv[1], sys.argv[2].split("=", 1)[1].split(","))
+    else:
+        main(sys.argv[1] if len(sys.argv) > 1 else "map_dc/coronado/city_kit/review/look_18nov/sky")
