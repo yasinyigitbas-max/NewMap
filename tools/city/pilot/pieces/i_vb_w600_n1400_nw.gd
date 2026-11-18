@@ -64,8 +64,9 @@ func _run() -> void:
 	# ---- drivers' own cars along the back wall
 	stl.append_array(G.stalls(props, sx, sz, 30.0, 18, 94.6, 1.0, "prop_wheel_stop_concrete", [7]))
 	# ---- the diner's sidewalk: a bench facing 3rd St (drivers wait for a lift), bin, paper box; the parts counter's rack
-	G.walk_prop(props, m, sx, sz, "x", 30.0, "prop_trash_receptacle", "dirty")
-	G.walk_prop(props, m, sx, sz, "x", 25.0, "prop_newspaper_box_red", "dirty")
+	# one bin midway between the diner's door (u 33.1) and the flats' door (u 25.5); no paper box: at night the pair read as
+	# something blocking the door (Yasin 18 Nov)
+	G.walk_prop(props, m, sx, sz, "x", 29.3, "prop_trash_receptacle", "dirty")
 	G.walk_prop(props, m, sx, sz, "z", 32.5, "prop_bike_rack", "rusty")
 	# ---- wear: the heaviest in the zone: oil at the pumps, wash water out of the wash, tyre scrub on the turns
 	for b: Array in B: I.bld_wear(dec, rr, b[0][0], b[0][1], b[0][2], b[1])

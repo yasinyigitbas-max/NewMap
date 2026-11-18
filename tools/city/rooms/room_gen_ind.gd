@@ -3,7 +3,7 @@ extends SceneTree
 ## different"). A copy of tools/city/rooms/room_gen.gd (the shared generator is not edited) with the industrial zone's
 ## own kinds and character: bare and worn, functional, nothing decorative. Floors are sealed concrete or quarry tile,
 ## the ceilings drop-in panels, the light comes from cool fluorescent strips, and the fittings are steel shelving,
-## pegboard, filing cabinets, a workbench behind the parts counters, a soda machine for the drivers, stock on the floor
+## pegboard, filing cabinets (only stocked shelving: the kit's wall_shelf and gondola models are empty, Yasin 18 Nov), a workbench behind the parts counters, a soda machine for the drivers, stock on the floor
 ## and the notices board. Only the places of interiors/assignment_ind.json are built (tools/city/rooms/assign_ind.py),
 ## saved as interiors/rooms/g_ind_<...>.scn; no other room is touched.
 ##   xvfb-run -a godot --path . --rendering-method mobile --resolution 320x180 -s res://tools/city/rooms/room_gen_ind.gd -- [--only=ID,ID]
@@ -16,11 +16,11 @@ const MAN := "res://assets/coronado_kit/props/"
 ## the middle of the room, the window zone, back of house (kitchen / stock / none), extras
 const KINDS := {
 	"freight_office": {"floor": "Concrete047A", "light": "strip", "counter": ["shop_counter", "shop_counter"], "till": false, "behind": ["office_desk", "filing_cabinet", "filing_cabinet"], "board": true, "walls": ["waiting_bench", "vending_soda", "filing_cabinet"], "centre": "none", "window": "waiting", "back": "office", "frames": false, "stock": ["indoor_bin"]},
-	"trade_counter": {"floor": "Concrete047A", "light": "strip", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["pegboard_wall", "wall_shelf", "wall_shelf"], "board": false, "walls": ["wall_shelf", "wall_shelf", "pegboard_wall"], "centre": "rows", "window": "display", "back": "stock", "frames": false, "stock": ["cone_28in", "channelizer_drum"]},
-	"parts_counter": {"floor": "Concrete047A", "light": "strip", "counter": ["shop_counter"], "till": true, "behind": ["workbench", "pegboard_wall", "wall_shelf"], "board": false, "walls": ["wall_shelf", "drinks_fridge", "wall_shelf"], "centre": "none", "window": "waiting", "back": "none", "frames": false, "stock": ["channelizer_drum", "propane_cylinder_100lb"]},
+	"trade_counter": {"floor": "Concrete047A", "light": "strip", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["pegboard_wall", "pharmacy_shelf", "grocery_shelf"], "board": false, "walls": ["grocery_shelf", "pharmacy_shelf", "pegboard_wall"], "centre": "rows", "window": "display", "back": "stock", "frames": false, "stock": ["cone_28in", "channelizer_drum"]},
+	"parts_counter": {"floor": "Concrete047A", "light": "strip", "counter": ["shop_counter"], "till": true, "behind": ["workbench", "pegboard_wall", "pharmacy_shelf"], "board": false, "walls": ["grocery_shelf", "drinks_fridge", "pharmacy_shelf"], "centre": "none", "window": "waiting", "back": "none", "frames": false, "stock": ["channelizer_drum", "propane_cylinder_100lb"]},
 	"permits": {"floor": "Tiles012", "light": "strip", "counter": ["shop_counter", "shop_counter"], "till": false, "behind": ["office_desk", "filing_cabinet", "filing_cabinet"], "board": true, "walls": ["waiting_bench", "brochure_rack", "vending_snack"], "centre": "benches", "window": "brochures", "back": "office", "frames": false, "stock": ["cone_28in"]},
-	"workwear": {"floor": "Concrete047A", "light": "strip", "counter": ["checkout_counter"], "till": false, "behind": ["shoe_wall", "wall_shelf"], "board": false, "walls": ["garment_rail", "shoe_wall", "wall_shelf"], "centre": "racks", "window": "mannequins", "back": "stock", "frames": false, "stock": []},
-	"fish_counter": {"floor": "Tiles143", "light": "strip", "counter": ["chest_freezer", "shop_counter", "chest_freezer"], "till": true, "behind": ["drinks_fridge", "wall_shelf"], "board": true, "walls": ["chest_freezer", "drinks_fridge"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": false, "stock": ["ice_chest"]},
+	"workwear": {"floor": "Concrete047A", "light": "strip", "counter": ["checkout_counter"], "till": false, "behind": ["shoe_wall", "pharmacy_shelf"], "board": false, "walls": ["garment_rail", "shoe_wall", "grocery_shelf"], "centre": "racks", "window": "mannequins", "back": "stock", "frames": false, "stock": []},
+	"fish_counter": {"floor": "Tiles143", "light": "strip", "counter": ["chest_freezer", "shop_counter", "chest_freezer"], "till": true, "behind": ["drinks_fridge", "grocery_shelf"], "board": true, "walls": ["chest_freezer", "drinks_fridge"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": false, "stock": ["ice_chest"]},
 	"sales_office": {"floor": "Carpet012", "light": "strip", "counter": ["shop_counter"], "till": false, "behind": ["office_desk", "filing_cabinet"], "board": false, "walls": ["filing_cabinet", "waiting_bench"], "centre": "none", "window": "waiting", "back": "none", "frames": true, "stock": ["ice_chest"]},
 	"broker": {"floor": "WoodFloor051", "light": "strip", "counter": ["shop_counter"], "till": false, "behind": ["office_desk", "filing_cabinet", "filing_cabinet"], "board": true, "walls": ["brochure_rack", "waiting_bench", "filing_cabinet"], "centre": "none", "window": "display", "back": "office", "frames": true, "stock": []},
 	"diner": {"floor": "Tiles074", "light": "strip", "counter": ["bar_counter", "bar_counter"], "stools": true, "till": false, "behind": ["kitchen_line", "soda_fountain"], "board": true, "walls": ["booth"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": false, "stock": ["vending_soda"]},
@@ -304,8 +304,9 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 			for xx: float in _steps(IX0 + 0.27, IX1 - 0.27, 1.65):
 				var zz := mz1 - 0.65
 				while zz - 0.61 > mz0:
-					if not _put("gondola_aisle", xx, zz, 90.0): pass
-					zz -= 1.24
+					# the kit's gondola is an empty model: two stocked steel shelves back to back make the aisle instead
+					_group([["grocery_shelf", xx - 0.235, zz, -90.0], ["grocery_shelf", xx + 0.235, zz, 90.0]])
+					zz -= 1.26
 		"racks":
 			for xx: float in _steps(IX0 + 0.24, IX1 - 0.24, 1.7):
 				for zz: float in _steps(mz0 + 0.8, mz1 - 0.8, 1.9): _put("clothes_rack", xx, zz, 90.0)
@@ -343,7 +344,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	# ---- back of house
 	if ZP > ZB + 0.01:
 		var kx := X0 + 0.2
-		var stuff: Array = ["kitchen_line", "wall_shelf"] if back == "kitchen" else (["office_desk", "filing_cabinet", "filing_cabinet"] if back == "office" else ["wall_shelf", "wall_shelf", "wall_shelf"])
+		var stuff: Array = ["kitchen_line", "grocery_shelf"] if back == "kitchen" else (["office_desk", "filing_cabinet", "filing_cabinet"] if back == "office" else ["grocery_shelf", "pharmacy_shelf", "grocery_shelf"])
 		var save_zbp := ZBp; ZBp = ZB
 		var saved_keep := keep; keep = [[staff_x - 0.55, ZP - 1.1, staff_x + 0.55, ZP]]
 		for p2: String in stuff:
