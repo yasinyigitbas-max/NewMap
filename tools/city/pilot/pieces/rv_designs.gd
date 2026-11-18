@@ -21,7 +21,7 @@ const V1 := {"name": "V1 village bungalows", "wear": 0.65,
 	"plants": ["plant_bird_of_paradise", "plant_agave_americana_small", "plant_iceplant_patch"],
 	"front_trees": ["tree_jacaranda_a", "tree_jacaranda_b", "tree_magnolia_a"], "front_tree": 0.45,
 	"back_trees": ["tree_ficus_a", "tree_ficus_b", "tree_coral_a", "tree_jacaranda_b", "tree_magnolia_b"],
-	"yard": ["patio", "bbq", "chairs", "arbor", "line"], "pad_extras": ["prop_golf_cart_white"], "dry": 0.2}
+	"yard": ["patio", "bbq", "chairs", "arbor", "line"], "pad_extras": ["prop_golf_cart_white"], "dry": 0.2, "front_chairs": 0.45, "front_chair": "prop_adirondack_white", "swing": 0.2}
 
 const V2 := {"name": "V2 spanish hill", "wear": 0.6,
 	"houses": ["houses/spanish_peach", "houses/spanish_pink", "houses/spanish_white", "houses/spanish_large", "houses/spanish_small",
@@ -33,7 +33,7 @@ const V2 := {"name": "V2 spanish hill", "wear": 0.6,
 	"plants": ["plant_bougainvillea_mound", "plant_agave_americana", "plant_agave_americana_small", "plant_iceplant_patch"],
 	"front_trees": ["palm_queen_a", "palm_mexican_fan_c", "tree_coral_b"], "front_tree": 0.5,
 	"back_trees": ["tree_coral_a", "tree_coral_b", "palm_canary_date_b", "tree_ficus_a"],
-	"yard": ["patio", "arbor", "bbq", "chairs"], "pad_extras": ["prop_golf_cart_blue"], "dry": 0.15}
+	"yard": ["patio", "arbor", "bbq", "chairs"], "pad_extras": ["prop_golf_cart_blue"], "dry": 0.15, "front_chairs": 0.25, "front_chair": "prop_adirondack_wood"}
 
 const V3 := {"name": "V3 beach cottages", "wear": 0.75,
 	"houses": ["houses/narrow_2sty_siding", "houses/narrow_2sty_stucco_clay", "houses/narrow_cottage_siding", "houses/narrow_cottage_stucco_clay",
@@ -43,7 +43,7 @@ const V3 := {"name": "V3 beach cottages", "wear": 0.75,
 	"plants": ["plant_iceplant_patch", "plant_agave_americana_small", "plant_bird_of_paradise"],
 	"front_trees": ["palm_queen_b", "palm_mexican_fan_a"], "front_tree": 0.3,
 	"back_trees": ["tree_torrey_pine_a", "tree_coral_a", "palm_queen_b"],
-	"yard": ["kayak", "chairs", "line", "bbq", "kayak"], "pad_extras": ["prop_boat_trailer", "prop_golf_cart_blue", "prop_golf_cart_white"], "dry": 0.35}
+	"yard": ["kayak", "chairs", "line", "bbq", "kayak"], "pad_extras": ["prop_boat_trailer", "prop_golf_cart_blue", "prop_golf_cart_white"], "dry": 0.35, "front_chairs": 0.55, "front_chair": "prop_adirondack_wood"}
 
 const V4 := {"name": "V4 mid-century", "wear": 0.7,
 	"houses": ["houses/ranch_pink", "houses/ranch_siding", "houses/ranch_porch", "houses/ranch_peach", "houses/hipranch_nogarage",
@@ -54,7 +54,7 @@ const V4 := {"name": "V4 mid-century", "wear": 0.7,
 	"plants": ["plant_agave_americana_small", "plant_iceplant_patch", "plant_bird_of_paradise", "plant_agave_americana"],
 	"front_trees": ["palm_queen_a", "tree_magnolia_b", "tree_norfolk_pine_a"], "front_tree": 0.35,
 	"back_trees": ["tree_magnolia_a", "tree_jacaranda_a", "tree_ficus_b", "tree_eucalyptus_a"],
-	"yard": ["patio", "bbq", "line", "chairs"], "pad_extras": ["prop_golf_cart_white", "prop_boat_trailer"], "dry": 0.3}
+	"yard": ["patio", "bbq", "line", "chairs"], "pad_extras": ["prop_golf_cart_white", "prop_boat_trailer"], "dry": 0.3, "front_chairs": 0.3, "front_chair": "prop_adirondack_white", "swing": 0.25}
 
 static func get_design(k: String) -> Dictionary:
 	match k:

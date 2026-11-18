@@ -109,6 +109,8 @@ func _books() -> void:
 	r.prop("display_table", 0.15, 1.85, 0.0); r.prop("display_table", 1.75, 1.85, 0.0)
 	# by the door: the neighbourhood's leaflets; a bin at the counter's end; a plant where the light is
 	r.prop("brochure_rack", X0 + 0.25, 0.76, 90.0)
+	r.prop("side_chair", -0.95, 1.95, 180.0)
+	r.prop("card_spinner", 0.45, -0.25)
 	r.prop("indoor_bin", 2.8, -1.7)
 	r.prop("potted_plant", 2.7, 1.9)
 	# old maps and prints where nothing tall stands in front
@@ -161,6 +163,9 @@ func _cafe() -> void:
 	r.prop("plant_potted_leafy", 1.0, 2.2, 0.0)
 	r.prop("indoor_bin", 1.6, 0.9)
 	r.prop("gallery_frame", X0 + 0.04, -1.9, 90.0, 1.6)
+	r.prop("gallery_frame", X0 + 0.04, -0.1, 90.0, 1.7)
+	r.prop("gallery_frame", X1 - 0.04, 2.1, -90.0, 1.6)
+	r.prop("potted_plant", X0 + 0.25, -2.65)
 	r.box("wains", Vector3(0.0, F + 0.45, ZF - 0.015), Vector3(X1 - X0, 0.9, 0.03))
 	for px: float in [-2.2, 0.0, 2.2]: r.pendant(px, 0.4, H, 0.8, Color(1.0, 0.8, 0.55), 1.1, 4.5)
 	_daylight(r, -1.0, 1.9, 2.2)
@@ -215,6 +220,9 @@ func _surf() -> void:
 	r.prop("display_table", 0.75, 5.75, 0.0)
 	r.prop("potted_plant", X1 - 0.3, 4.2)
 	r.prop("gallery_frame", -3.0, ZP + 0.1, 0.0, 1.5); r.prop("gallery_frame", -3.7, ZP + 0.1, 0.0, 1.5)
+	r.prop("waiting_bench", -3.4, ZP + 0.35, 0.0)
+	r.prop("wall_shelf", 2.0, ZP + 0.24, 0.0)
+	r.prop("brochure_rack", -2.0, 4.6, 90.0)
 	# back room: the ding-repair bench and its pegboard, stock, boards in for repair
 	r.prop("workbench", 1.4, ZB + 0.55, 0.0)
 	r.prop("pegboard_wall", 1.4, ZB + 0.16, 0.0)
