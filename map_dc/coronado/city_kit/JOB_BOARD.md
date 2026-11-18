@@ -5,6 +5,21 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~03:00 (PC session): TWO PROPOSALS WRITTEN, NOTHING IN THE MAP CHANGED, WAITING FOR YASIN.
+  (1) `docs/BUDGET.md` (Yasin: "we are gonna shoot way above budget once the cars and these areas land ... scripts
+  arent even in yet"; "yes go ahead"): each system's share of the 150 draws (city 100, rooms 12, cars 15, people 15,
+  sky 4, HUD 4), of the main thread (11 ms used, 5.7 spare) and of the GPU, the memory cap (1.2 GB proposed), and the
+  whole-game gate. The city alone is at 79-118 draws standing and up to 198 driving.
+  (2) `docs/TREE_PLAN.md` (Yasin: "which areas having trees make sense and which dont"; "we can turn off the trees
+  entirely from the current builders and place your hand placed trees instead"): counted with the new
+  `tools/city/audit/tree_census.gd`: 2,411 trees, 2,021 palms, 3,101 other plants; 72 % of trees and palms are STREET
+  trees in locked road pieces, the four zone builders hold 22 %. Plan: one switch in the runtime bake leaves every
+  builder tree out (no piece touched, locks intact), hand-placed `t_<area>` pieces replace them (about 3,050 from
+  4,432; broadleaf 2,411 -> about 1,400), with an in-view cap. Four open questions at its end (empty wells, when,
+  order, hedges).
+  ALSO (Yasin, 19 Nov, on the zone sessions fixing by generator: every fix rewrote ALL of a zone's rooms or blocks):
+  "damage is done... we need to let them build all, lock all, then chck them one by one, lock and move onto the other
+  one..."; then "do nothing for now". NOTHING was told to the extenders about it.
 - 19 Nov ~01:30 (PC session, after a context compaction; Yasin: "read all the rules performance budgets and my words
   from the chat"): everything pushed is MERGED again into `claude/festive-faraday-20ltx2` (df0c2dc): the whole
   residential zone (19 new quadrants, 5 rooms), gritty (4 more blocks, rooms rebuilt with boxes recorded), strip
