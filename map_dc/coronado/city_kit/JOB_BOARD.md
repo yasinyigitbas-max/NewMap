@@ -5,6 +5,16 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~01:30 (PC session, after a context compaction; Yasin: "read all the rules performance budgets and my words
+  from the chat"): everything pushed is MERGED again into `claude/festive-faraday-20ltx2` (df0c2dc): the whole
+  residential zone (19 new quadrants, 5 rooms), gritty (4 more blocks, rooms rebuilt with boxes recorded), strip
+  (blocks against check_life), industrial (the rest of the zone), and the streaming session's collision work.
+  Layout regenerated: 526 rows. Lock test RESULT PASS. Combined indoor checker on all 236 rooms: 319 problems, ALL in
+  the 150 older generated rooms (g_a/b/c/f/g/i/m/r/v, the strip session's `tools/city/rooms/room_gen.gd`); the four
+  zone sessions' own 74 rooms: 0; 24 notes in the 12 locked rooms (Yasin's call). 42 rooms record their boxes now
+  ('unheld' tested there: 0). STREAMING: collision within 100 m first, the rest in quiet frames, is the DEFAULT, and
+  BOTH phone gates PASS for the first time (`colbg_zones`, `colbg_stream`; RUNTIME_BAKE.md "Collision per place").
+  NOT on the phone yet: this merged build with all the growth (waits for traffic / people in C++, Yasin's word).
 - 19 Nov (cloud, `claude/grow-industrial`): the combined indoor checker (8e42e9a) is merged here, and the 14 industrial
   rooms are rebuilt to fit it. `check_rooms.gd -- --only=g_ind_` gives 0 problems (it was 20: repeat, lone, deco,
   window). room_gen_ind.gd now caps repeats with the checker's limits, puts bins only at walls, allows 2 boards a wall
