@@ -1,0 +1,872 @@
+{
+ "_doc": "The gritty edge growth's shops (18 Nov, claude/grow-gritty): which business is behind which door of the new blocks.",
+ "count": 25,
+ "rooms": [
+  {
+   "id": "grt_v1_g4ne_trade_corner_0",
+   "piece": "g_v1_g4ne",
+   "label": "trade_corner",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    -583.5,
+    4.14979873597622,
+    -1222.79999923706
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "cash",
+   "name": "Payday Loans 4U",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "grt_v1_g4ne_trade_corner_1",
+   "piece": "g_v1_g4ne",
+   "label": "trade_corner",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    -583.5,
+    4.14979873597622,
+    -1222.79999923706
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 3.0,
+   "door_w": 1.8,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "parts",
+   "name": "Brake Masters Used Parts",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "grt_v1_g4ne_tyre_shop_0",
+   "piece": "g_v1_g4ne",
+   "label": "tyre_shop",
+   "model": "industrial/ind_repair",
+   "pos": [
+    -520.0,
+    4.14804808795452,
+    -1224.79999923706
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -6.5,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -2.2
+   ],
+   "kind": "tyres",
+   "name": "Big Al's Tires",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "front",
+     "along": -5.0,
+     "w": 3.6
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    }
+   ],
+   "depth": 7.5
+  },
+  {
+   "id": "grt_v1_j4ne_trade_corner_0",
+   "piece": "g_v1_j4ne",
+   "label": "trade_corner",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    -783.5,
+    2.15214402973652,
+    -1222.79999923706
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "cash",
+   "name": "Quik Check Cash",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "grt_v1_j4ne_trade_corner_1",
+   "piece": "g_v1_j4ne",
+   "label": "trade_corner",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    -783.5,
+    2.15214402973652,
+    -1222.79999923706
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 3.0,
+   "door_w": 1.8,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "parts",
+   "name": "Rim & Tire",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_g4nw_corner_block_0",
+   "piece": "g_v2_g4nw",
+   "label": "corner_block",
+   "model": "urban/urb_brick_corner",
+   "pos": [
+    -619.200000762939,
+    4.14874076843262,
+    -1224.79999923706
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 6.8,
+   "door_w": 1.8,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "diner",
+   "name": "Rosie's Diner",
+   "style": "cream",
+   "font": "Nunito",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.48
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_g4nw_corner_next_1",
+   "piece": "g_v2_g4nw",
+   "label": "corner_next",
+   "model": "ck/ck_svc_cinema_fast",
+   "pos": [
+    -634.799999237061,
+    4.10593732446432,
+    -1222.79999923706
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 1.2,
+   "door_w": 1.6,
+   "bay": [
+    -0.14,
+    5.7
+   ],
+   "kind": "takeout",
+   "name": "Wok N Roll",
+   "style": "red",
+   "font": "Nunito",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 4.0
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_g4nw_row3_0",
+   "piece": "g_v2_g4nw",
+   "label": "row3",
+   "model": "ck/ck_grt_row3",
+   "pos": [
+    -670.0,
+    3.68796598911285,
+    -1222.79999923706
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -4.4,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    1.6
+   ],
+   "kind": "thrift",
+   "name": "Second Hand Rose",
+   "style": "cream",
+   "font": "Nunito",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 3.4
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.8
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_g4nw_row3_1",
+   "piece": "g_v2_g4nw",
+   "label": "row3",
+   "model": "ck/ck_grt_row3",
+   "pos": [
+    -670.0,
+    3.68796598911285,
+    -1222.79999923706
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 7.6,
+   "door_w": 1.6,
+   "bay": [
+    1.6,
+    8.7
+   ],
+   "kind": "cash",
+   "name": "Check Express",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_g4nw_dive_bar_0",
+   "piece": "g_v2_g4nw",
+   "label": "dive_bar",
+   "model": "commercial/com_bar_crown",
+   "pos": [
+    -694.900001525879,
+    3.24290227890015,
+    -1223.79999923706
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bar",
+   "name": "The Anchor Inn",
+   "style": "black",
+   "font": "Nunito",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 0.0,
+     "w": 3.6
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_j4se_corner_block_0",
+   "piece": "g_v2_j4se",
+   "label": "corner_block",
+   "model": "ck/ck_brk3_corner2",
+   "pos": [
+    -783.799999237061,
+    2.14745877683163,
+    -1176.20000076294
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "liquor",
+   "name": "Fourth St Liquor",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_j4se_corner_next_0",
+   "piece": "g_v2_j4se",
+   "label": "corner_next",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    -771.200000762939,
+    2.16072469949722,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "pawn",
+   "name": "Gold & Pawn",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_j4se_corner_next_1",
+   "piece": "g_v2_j4se",
+   "label": "corner_next",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    -771.200000762939,
+    2.16072469949722,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 1,
+   "door_along": 3.0,
+   "door_w": 1.8,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "barber",
+   "name": "Fade Kings Barber",
+   "style": "navy",
+   "font": "Nunito",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_j4se_row_b_1",
+   "piece": "g_v2_j4se",
+   "label": "row_b",
+   "model": "ck/ck_svc_pawn_fast",
+   "pos": [
+    -733.0,
+    2.57087367773056,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 1,
+   "door_along": 1.2,
+   "door_w": 1.6,
+   "bay": [
+    -0.1,
+    5.7
+   ],
+   "kind": "takeout",
+   "name": "Taco Shack",
+   "style": "red",
+   "font": "Nunito",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 4.0
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_j4se_launder_0",
+   "piece": "g_v2_j4se",
+   "label": "launder",
+   "model": "ck/ck_grt_row2",
+   "pos": [
+    -708.599998474121,
+    3.00040066242218,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 0,
+   "door_along": -4.6,
+   "door_w": 1.2,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "laundry",
+   "name": "Suds City Laundry",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -2.0,
+     "w": 2.4
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 2.8
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_j5ne_corner_block_0",
+   "piece": "g_v2_j5ne",
+   "label": "corner_block",
+   "model": "ck/ck_brk3_corner2",
+   "pos": [
+    -783.799999237061,
+    4.14917767047882,
+    -1018.70000076294
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "bodega",
+   "name": "Fifth St Market",
+   "style": "red",
+   "font": "Nunito",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_j5ne_corner_next_0",
+   "piece": "g_v2_j5ne",
+   "label": "corner_next",
+   "model": "ck/ck_svc_trade_1d",
+   "pos": [
+    -771.200000762939,
+    4.22098413109779,
+    -1017.70000076294
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "tattoo",
+   "name": "Black Anchor Tattoo",
+   "style": "black",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_j5ne_brick_row_1",
+   "piece": "g_v2_j5ne",
+   "label": "brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    -730.0,
+    5.52182459831238,
+    -1018.70000076294
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -2.46,
+    3.54
+   ],
+   "kind": "laundry",
+   "name": "Bubbles Coin Wash",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_j5ne_brick_row_2",
+   "piece": "g_v2_j5ne",
+   "label": "brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    -730.0,
+    5.52182459831238,
+    -1018.70000076294
+   ],
+   "yaw": 0.0,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    3.54,
+    8.7
+   ],
+   "kind": "thrift",
+   "name": "Junk & Treasures",
+   "style": "cream",
+   "font": "Nunito",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "grt_v3_g4se_corner_shop_0",
+   "piece": "g_v3_g4se",
+   "label": "corner_shop",
+   "model": "ck/ck_svc_bank_pharm",
+   "pos": [
+    -583.799999237061,
+    4.15038596093655,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 0,
+   "door_along": 4.6,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "cash",
+   "name": "Cash Now",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.48
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "grt_v3_g4se_shop_two_0",
+   "piece": "g_v3_g4se",
+   "label": "shop_two",
+   "model": "commercial/com_realty",
+   "pos": [
+    -574.200000762939,
+    4.15091529488564,
+    -1176.20000076294
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 0,
+   "door_along": 1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "botanica",
+   "name": "Botanica San Miguel",
+   "style": "green",
+   "font": "Nunito",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": -3.4,
+     "w": 2.6
+    }
+   ]
+  },
+  {
+   "id": "grt_v3_g4sw_corner_shop_0",
+   "piece": "g_v3_g4sw",
+   "label": "corner_shop",
+   "model": "ck/ck_svc_trade_1d",
+   "pos": [
+    -616.200000762939,
+    4.14833003282547,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "bodega",
+   "name": "G Ave Mini Mart",
+   "style": "red",
+   "font": "Nunito",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "grt_v3_g4sw_shop_two_0",
+   "piece": "g_v3_g4sw",
+   "label": "shop_two",
+   "model": "ck/ck_grt_row2",
+   "pos": [
+    -628.799999237061,
+    4.13393557071686,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 0,
+   "door_along": -4.6,
+   "door_w": 1.2,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "laundry",
+   "name": "Wash Tub Laundromat",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -2.0,
+     "w": 2.4
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 2.8
+    }
+   ]
+  },
+  {
+   "id": "grt_v3_j5se_corner_shop_0",
+   "piece": "g_v3_j5se",
+   "label": "corner_shop",
+   "model": "ck/ck_grt_row3",
+   "pos": [
+    -780.799999237061,
+    4.15396055579185,
+    -982.299999237061
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 0,
+   "door_along": -4.4,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    1.6
+   ],
+   "kind": "diner",
+   "name": "Campus Grill",
+   "style": "cream",
+   "font": "Nunito",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 3.4
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.8
+    }
+   ]
+  },
+  {
+   "id": "grt_v3_j5se_corner_shop_1",
+   "piece": "g_v3_j5se",
+   "label": "corner_shop",
+   "model": "ck/ck_grt_row3",
+   "pos": [
+    -780.799999237061,
+    4.15396055579185,
+    -982.299999237061
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 1,
+   "door_along": 7.6,
+   "door_w": 1.6,
+   "bay": [
+    1.6,
+    8.7
+   ],
+   "kind": "laundry",
+   "name": "Spin Cycle",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 3.4
+    }
+   ]
+  }
+ ]
+}

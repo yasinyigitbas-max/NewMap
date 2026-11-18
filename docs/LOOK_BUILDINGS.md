@@ -10,6 +10,18 @@ RESULT PASS after every step. The rig and the bake / streamer were not touched; 
 draws no shadows, and the pictures run with sky reflections off (otherwise it draws the leaves black). The PC session
 should take the real ones on the Redmi. NOTHING here has been measured on the phone.
 
+## After the merge into the working branch (19 Nov)
+`rt_bldg.gdshader` now also carries the tier window (`rt_tier.gdshaderinc`, `ck_pivot`, `ck_win`) and the census's
+`#ifdef CK_CHEAP` (colour only). Looked over after merging `claude/festive-faraday-20ltx2` (0b8ede7) back into this
+branch: everything of the look pack sits in the full (`#else`) branch and reads right - the window cell (`v_win`) and the
+atlas test (`v_city`) are computed after the tier collapse in the vertex shader, which only matters for collapsed
+(invisible) vertices; the CK_CHEAP branch skips glass, windows, signs, contact and detail, as a "colour only" measure
+should (so the census measures the whole look pack together, plus the kit's own wear). Re-baked (141 cells) and
+re-shot: the centre and the high street by day and night look as before the merge. Lock test PASS.
+- Rooms: four cloud sessions grow the residential, strip, industrial and gritty zones and make the rooms for their own
+  new shops with `tools/city/rooms/room_gen.gd`. Do NOT run `room_gen.gd` without `--only=` over the whole
+  `assignment_all.json`: it would rebuild rooms that are theirs.
+
 ## Everything at a glance
 Switches are global shader values (`project.godot` `[shader_globals]`, 0 off / 1 on, all default 1), set from code with
 `RenderingServer.global_shader_parameter_set()`. Pictures under `map_dc/coronado/city_kit/review/`.

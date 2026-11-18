@@ -42,6 +42,13 @@ numbers sit beside `zones_720` / `zones_final` in `review/phone/`.
 After each run: `python tools/city/rig/health.py` prints PASS / FAIL (the streaming budget); a look change should
 not turn a PASS into a FAIL. Copy the `RIG drive` lines of each run into one table in `docs/LOOK_SKY.md`.
 
+## 1b. A note for the census (18 Nov, after the merge)
+The look is on by default now. One change in it alters the DEFAULT day picture without any cost: the day's clouds
+reach lower and are crisper (`look.gd` DAY: `cloud_low` 0.1, `cloud_soft` 0.18; before 0.2 / 0.24), so they can be
+seen from the street; same shader, same texture reads. Please look at it in the census's day pictures; if Yasin does
+not want it, those two numbers back to 0.2 / 0.24 undo it. Golden and morning (presets, not the default) also changed:
+thinner haze, a stronger warm sun, the GTA table.
+
 ## 2. Pictures on the phone (the real look: the cloud draws buildings too dark, no shadows, no sky reflection)
 Each `--shots` run takes pictures at fixed views and quits; the files land in the app's own folder. Copy them back:
 `adb exec-out run-as com.yasin.citykit.rig tar -c -C files look > look.tar` (then unpack into

@@ -14,6 +14,7 @@ extends Node3D
 ##   --lead=2  --maxcells=30  --loading=2  --bodies=6  --coltris=1200  --colms=2     streamer settings to compare
 ##   --lights=20   real lamp lights at night (the engine's light grid; 8 on a stock engine)
 ##   --nowarm      skip the warm-up (to see what it saves)
+##   --nowarmnight skip drawing the night once in the warm-up (on by default since 19 Nov: it removes the first dusk's hitch)
 ##   --look=1|0|NAME  1 (default): the look pack's sky, distance haze, light colours and colour treatment
 ##             (tools/city/look/look.gd, docs/LOOK_SKY.md); 0: the old plain sky and light, to compare;
 ##             NAME a time of day of the look: morning, noon, day, golden, dusk, night, overcast (overrides the drives' night)
@@ -50,7 +51,7 @@ extends Node3D
 ##   --tiers       the tier hand-over: fades at 60 m and 220 m, an arriving cell's objects take over nearest first
 ##   --band=8      with --tiers: metres of overlap at each switch (0 = hard cuts)     --arrive=0.5  seconds of the sweep
 ##   --nofarground hide the far world's ground (the streets beyond the loaded cells)
-##   --plan=census no drives: the drawing cost census (see _census below; --census=day|night|both --views=a,b --censussecs=2 --warmnight)
+##   --plan=census no drives: the drawing cost census (see _census below; --census=day|night|both --views=a,b --censussecs=2; the night is drawn once at start unless --nowarmnight)
 ##   --plan=shots  no drives: pictures of a building at set distances and of a street, saved as JPG in
 ##                 user://rig/shots/ (phone_rig.sh shots NAME ... pulls them to review/tiers/NAME/)
 const Stream := preload("res://tools/city/bake/city_stream.gd")
@@ -96,7 +97,7 @@ var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
-var opt := {"look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": false}
+var opt := {"look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -117,6 +118,7 @@ func _ready() -> void:
 		if a == "--tiers": opt.tiers = true
 		if a == "--nofarground": opt.nofarground = true
 		if a == "--warmnight": opt.warmnight = true
+		if a == "--nowarmnight": opt.warmnight = false
 		if a.begins_with("--drive="):
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
@@ -214,14 +216,19 @@ func _run() -> void:
 	st.update_focus(first, true)
 	var t1 := Time.get_ticks_msec()
 	if not opt.nowarm: await st.warm_up(cam, 4)
-	for i in 10: await get_tree().process_frame
-	_say("boot first_area_ms=%d warm_ms=%d (graphics memory reserve %d MB: %d ms) cells=%d static_mb=%.0f video_mb=%.0f" % [t1 - t0, Time.get_ticks_msec() - t1, int(opt.gpureserve), int(st.stats.get("reserve_ms", 0)), st.loaded_count(), Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0])
-	if opt.warmnight:      # census test: draw the night once behind the loading screen (does it remove the first-night frames?)
+	# THE NIGHT ONCE, behind the loading screen (on by default since 19 Nov; --nowarmnight to compare). The first dusk of
+	# a session built the look's night shaders, loaded its night textures and the lights' shader versions in the middle
+	# of a drive: 33 ms of GPU and a 41 ms frame at 720p, up to 120 ms at 1.5 x; the second dusk had none of it. Drawn
+	# once here, the first dusk's worst frame was 19 ms (docs/DRAW_CENSUS.md "THE FIRST NIGHT", census_warmnight).
+	if opt.warmnight and not opt.nowarm:
+		var tw := Time.get_ticks_msec()
 		_night(1.0); lights.update_lights(cam.global_position, 1.0)
 		for i in 20: await get_tree().process_frame
 		_night(0.0); lights.update_lights(cam.global_position, 0.0)
 		for i in 10: await get_tree().process_frame
-		_say("warmnight done")
+		_say("warmnight %d ms" % (Time.get_ticks_msec() - tw))
+	for i in 10: await get_tree().process_frame
+	_say("boot first_area_ms=%d warm_ms=%d (graphics memory reserve %d MB: %d ms) cells=%d static_mb=%.0f video_mb=%.0f" % [t1 - t0, Time.get_ticks_msec() - t1, int(opt.gpureserve), int(st.stats.get("reserve_ms", 0)), st.loaded_count(), Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0])
 	if String(opt.plan) == "census":
 		await _census()
 		await get_tree().create_timer(0.5).timeout
@@ -425,15 +432,18 @@ func _shots() -> void:
 ## the baseline with ONE thing changed, a few seconds each, and prints per state the median and 95 % GPU time, the
 ## CPU draw time, draws and triangles. Baseline first and last at every viewpoint (heat drift). GPU time, not frame
 ## time: the frame sits on the vsync step. Nothing of this changes the defaults; every state is undone after it.
-##   --census=day|night|both   --views=centre,gritty,...   --censussecs=2.0   --warmnight (draw the night once at boot)
+##   --census=day|night|both   --views=centre,gritty,...   --censussecs=2.0   (the night is drawn once at boot unless --nowarmnight)
 ## Results: "RIG census VIEW STATE ..." lines; docs/DRAW_CENSUS.md.
 const CENSUS_VIEWS := [["centre", 0.0, -600.0, 1.0, 0.0], ["apartments", 250.0, -600.0, 1.0, 0.0], ["gritty", -600.0, -1000.0, 1.0, 0.0],
 	["waterfront", 570.0, 200.0, -1.0, 0.0], ["industrial", -800.0, -1400.0, 1.0, 0.0], ["pilot", 0.0, 0.0, 0.0, 1.0], ["civic", -200.0, -600.0, 1.0, 0.0]]
 const CENSUS_DAY := ["baseline", "hide_plants", "hide_props_near", "hide_props_mid", "hide_props_other", "hide_bldg_near", "hide_bldg_mid",
 	"hide_ground", "hide_wear", "hide_far", "hide_far_ground", "hide_misc", "shadows_off", "shadow_map_2048", "shadow_map_1024",
-	"fxaa_off", "sky_reflection_off", "scale_0.50", "scale_0.85", "scale_1.00", "cheap_bldg_mid", "cheap_bldg_all", "cheap_props_mid",
-	"cheap_plants_mid", "plants_opaque", "baseline"]
-const CENSUS_NIGHT := ["baseline", "lights_0", "lights_1", "window_glow_off", "hide_glow", "baseline"]
+	"fxaa_off", "scale_0.50", "scale_0.67", "scale_0.85", "scale_1.00", "cheap_bldg_mid", "cheap_bldg_all", "cheap_props_mid",
+	"cheap_plants_mid", "plants_opaque", "look_parts_off", "look_contact_off", "look_windows_off", "look_glass_off", "look_detail_off",
+	"look_signs_off", "look_propmaps_off", "look_between_off", "baseline", "sky_reflection_off", "baseline"]      # (the reflection last: switching it back on left the GPU slower until the next teleport, phone 19 Nov)
+const CENSUS_NIGHT := ["baseline", "lights_0", "lights_1", "window_glow_off", "look_windows_off", "look_signs_off", "hide_glow", "baseline"]
+## the look pack's parts that have a global switch (docs/LOOK_OVERVIEW.md); 1 = on (the default), 0 = off
+const LOOK_PARTS := ["contact", "windows", "glass", "detail", "signs", "propmaps", "between"]
 var _cz_undo: Array = []         # [callable] to undo the current state
 var _cz_mat_cache := {}
 
@@ -549,6 +559,12 @@ func _census_apply(state: String) -> void:
 				var ol := l as OmniLight3D; var was3 := ol.visible
 				if i >= (1 if state == "lights_1" else 0): ol.visible = false
 				_cz_undo.append(func() -> void: ol.visible = was3); i += 1
+	elif state.begins_with("look_") and state.ends_with("_off"):
+		var parts: Array = LOOK_PARTS if state == "look_parts_off" else [state.trim_prefix("look_").trim_suffix("_off")]
+		for part: String in parts:
+			var gname := StringName("ck_look_" + part)
+			RenderingServer.global_shader_parameter_set(gname, 0.0)      # (back to 1 = on: the census runs with the look's parts at their default)
+			_cz_undo.append(func() -> void: RenderingServer.global_shader_parameter_set(gname, 1.0))
 	elif state == "window_glow_off":
 		var mats := {}
 		for tname in ["near", "mid"]:
@@ -587,9 +603,11 @@ func _census_state(view: String, state: String, p: Vector3, base: float, secs: f
 ## (the sky's reflection is rendered again when they change), and the sky's colours alone
 func _census_flip(view: String, how: String, p: Vector3) -> void:
 	var R := RenderingServer; var vr := get_viewport().get_viewport_rid()
-	var sm := env.sky.sky_material as ProceduralSkyMaterial
-	if how != "sky_only": st.set_night(1.0); sun.light_energy = 0.04; env.ambient_light_energy = 0.22; lights.update_lights(p, 1.0)
-	if how != "no_sky": sm.sky_top_color = Color(0.01, 0.015, 0.04); sm.sky_horizon_color = Color(0.05, 0.06, 0.1)
+	if how == "full": _night(1.0); lights.update_lights(p, 1.0)      # as the drives do it (with the look: the look's night)
+	else:      # the old plain sky only (--look=0): night without the sky's colours, or the sky's colours alone
+		var sm := env.sky.sky_material as ProceduralSkyMaterial
+		if how != "sky_only": st.set_night(1.0); sun.light_energy = 0.04; env.ambient_light_energy = 0.22; lights.update_lights(p, 1.0)
+		if how != "no_sky": sm.sky_top_color = Color(0.01, 0.015, 0.04); sm.sky_horizon_color = Color(0.05, 0.06, 0.1)
 	var gs: Array = []; var worst := 0.0; var t_prev := Time.get_ticks_usec(); var fw := 0.0
 	for i in 45:
 		await get_tree().process_frame
@@ -602,6 +620,9 @@ func _census_flip(view: String, how: String, p: Vector3) -> void:
 
 func _census() -> void:
 	var which := String(opt.census); var secs := float(opt.censussecs)
+	if look == null:      # the whole look off (--look=0): its shader parts off too, so the city draws as before the look
+		for part: String in LOOK_PARTS: RenderingServer.global_shader_parameter_set(StringName("ck_look_" + part), 0.0)
+	_say("census look=%s glow=%s reflect=%s" % [String(opt.look), str(opt.get("glow", "?")), str(opt.get("reflect", "?"))])
 	var only: PackedStringArray = String(opt.views).split(",", false)
 	for v: Array in CENSUS_VIEWS:
 		if not only.is_empty() and not (String(v[0]) in only): continue
@@ -619,8 +640,9 @@ func _census() -> void:
 				if s == "baseline" and base < 0.0: base = gv
 		if which != "day":
 			await _census_flip(name, "full", p)
-			await _census_flip(name, "no_sky", p)
-			await _census_flip(name, "sky_only", p)
+			if look == null and env.sky.sky_material is ProceduralSkyMaterial:
+				await _census_flip(name, "no_sky", p)
+				await _census_flip(name, "sky_only", p)
 			await _census_flip(name, "full", p)      # again: is it only the first time?
 			_night(1.0); lights.update_lights(p, 1.0)
 			for i in 60: await get_tree().process_frame

@@ -588,3 +588,16 @@ civic + parks, stadium + tennis, gritty edge, waterfront.
 |---|---|
 | @Node3D@6 | 1 |
 | @Node3D@7 | 1 |
+
+## Industrial growth (18 Nov, branch claude/grow-industrial; added lines, the census above is not regenerated)
+Six variant blocks (`i_va_*`, `i_vb_*`, `i_vc_*`, review/grow_ind/README.md) put these unused kit pieces to work:
+`prop_dock_crane` (freight yard), `prop_cone_18in`, `prop_wheel_stop_rubber`, `fence_stucco_wall` and
+`plant_bougainvillea_wall` (edge to the houses), `tree_torrey_pine_b`, `services/svc_carwash` (fleet wash, truck wash),
+`garages/single_stucco_flat` and `garages/single_stucco_clay` (lock-ups), `prop_bollard_iron` (diesel islands).
+Also used again: transformer substation, water tower (ice plant), billboard (3rd St), fuel pumps, boats on the hard
+with their trailers, buoys, dock boxes, kayak rack, life-ring stand, ice chests, cart corral, vending machines.
+Still unused that would fit the zone later: `prop_riprap_*` (a bay-edge quay), `hedge_privet_2m` (left out on purpose:
+one more see-through layer at the house edge), roof vents and solar (need roof heights), `ck/mod_wh_dist` again (one
+per district is enough).
+Kit shelves: `wall_shelf` and `gondola_aisle` are EMPTY models (no goods). The industrial rooms use the stocked
+`grocery_shelf` / `pharmacy_shelf` instead (Yasin 18 Nov: "most shelves are empty").

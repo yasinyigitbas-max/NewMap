@@ -66,10 +66,10 @@ static func begin(piece: String) -> Dictionary:
 				ctx.paints.append(A.rect(sx, sz, minf(AL0, a - 4.5), ctx.plv, maxf(AL1, a + 4.5), ctx.plv + 6.0, "asphalt"))
 	return ctx
 
-## true when [s0, s1] along the numbered street is clear of every driveway apron (+1 m)
+## true when [s0, s1] along the numbered street is clear of every driveway apron (+0.5 m)
 static func apron_free(ctx: Dictionary, s0: float, s1: float) -> bool:
 	for a: float in ctx.apr:
-		if s0 < a + 5.5 and s1 > a - 5.5: return false
+		if s0 < a + 5.0 and s1 > a - 5.0: return false
 	return true
 
 ## an asphalt drive from an apron straight back to (and including) depth v1
@@ -81,7 +81,7 @@ static func drive(ctx: Dictionary, a: float, v1: float, w := 7.0) -> void:
 ## a shop building on its street's property line behind a 2.5 m paved forecourt (grt_lib.shop with the line as a
 ## parameter). face "-v": on the numbered street (line plv), "-u": on the Ave (line plu). kinds per bay as grt_lib
 ## ("pawn", "laundry", "liquor", "bar", "dead", "none") plus "diner" and "cash" (forecourt life only; the room is the
-## shop's own, see shops). open = [[door_index, kind, name], ...]: the businesses that get a room (grt rooms table).
+## shop's own, see shops). open = [[shop door index (the contract's shop entrances, left to right), kind, name], ...]: the businesses that get a room (grt rooms table).
 static func shop(ctx: Dictionary, folder: String, s: float, face: String, label: String, kinds: Array, open: Array = []) -> Dictionary:
 	var sx: float = ctx.sx; var sz: float = ctx.sz
 	var line: float = ctx.plv if face.ends_with("v") else ctx.plu
@@ -414,6 +414,7 @@ static func done(ctx: Dictionary, base := "grass", fill := true) -> void:
 			if absf(lp.x) < float(bd.w) * 0.5 + 0.5 and absf(lp.z) < float(bd.d) * 0.5 + 3.5: under = true
 		if not under: open.append(st)
 	SL.wheel_stops(props, ctx.rr, open, "prop_wheel_stop_rubber" if ctx.rr.randf() < 0.5 else "prop_wheel_stop_concrete")
+	_prune(ctx)
 	# no tree within 0.9 m of a fence (apt_lib.done)
 	var fence_pts: Array = []
 	for k2: String in props.items:
@@ -440,6 +441,145 @@ static func done(ctx: Dictionary, base := "grass", fill := true) -> void:
 	root.set_meta("shops", ctx.shoplist)
 	A.finish(root, g, props, ctx.dec, String(ctx.name), ctx.stalls, ctx.poles)
 	_write_shops(ctx)
+
+## the ground material at (x, z): the first paint that holds the point (painted_rect's rule), else the base
+static func _mat_at(ctx: Dictionary, x: float, z: float, base: String) -> String:
+	for p: Array in ctx.paints:
+		if x > float(p[0]) and x < float(p[2]) and z > float(p[1]) and z < float(p[3]): return String(p[4])
+	return base
+
+## the validator's rules applied while building (validate.gd overlap / inside, audit_trees): every ground prop keeps
+## clear of the others and of the buildings; when two collide the one that matters less goes (fences and gates first,
+## then trees, then big things, then small clutter), a tree on paving goes. Mounted / lifted props are not touched.
+static func _prune(ctx: Dictionary, base_mat := "grass") -> void:
+	var props: K.Props = ctx.props
+	_off_openings(ctx)
+	var items: Array = []     # [rank, key, index, centre, half, ang, y]
+	for k: String in props.items:
+		var bname := k.get_slice("|", 0)
+		var e := K.manifest(bname)
+		var mounted := String(e.get("mount", "ground")) != "ground"
+		if bname.begins_with("plant_iceplant") or bname.begins_with("prop_shade_sail"): continue
+		var fw := float(e.get("footprint_w", 0.5)); var fd := float(e.get("footprint_d", 0.5))
+		var rank := 3
+		if bname.begins_with("fence_"): rank = 0
+		elif bname.begins_with("tree_") or bname.begins_with("palm_"): rank = 1; fw = 0.6; fd = 0.6
+		elif fw * fd > 3.0: rank = 2
+		if bname.begins_with("prop_utility_pole") or bname.begins_with("prop_lot_light") or bname.begins_with("prop_billboard"): fw = 0.45; fd = 0.45; rank = 0
+		var arr: Array = props.items[k]
+		for i in arr.size():
+			var t: Transform3D = arr[i]
+			var up := mounted or t.origin.y - 0.15 > 1.2
+			items.append([rank + (4 if up else 0), k, i, Vector2(t.origin.x, t.origin.z), Vector2(fw, fd) * 0.5, atan2(t.basis.z.x, t.basis.z.z), t.origin.y, up])
+	items.sort_custom(func(a: Array, b: Array) -> bool: return int(a[0]) < int(b[0]))
+	var boxes: Array = []
+	for b: Dictionary in ctx.blds:
+		var n: Node3D = b.node
+		boxes.append([Vector2(n.position.x, n.position.z), Vector2(float(b.w), float(b.d)) * 0.5 - Vector2(0.15, 0.15), atan2(n.transform.basis.z.x, n.transform.basis.z.z)])
+	var kept: Array = []
+	var drop := {}
+	for it: Array in items:
+		var ok := true
+		var key := String(it[1])
+		if int(it[0]) == 1:
+			var m := _mat_at(ctx, (it[3] as Vector2).x, (it[3] as Vector2).y, base_mat)
+			if not (m in ["grass", "mulch", "gravel"]): ok = false
+		if ok and not bool(it[7]):
+			for bx: Array in boxes:
+				if _hit(it[3], it[4], it[5], bx[0], bx[1], bx[2]): ok = false; break
+		if ok:
+			for o: Array in kept:
+				if (it[3] as Vector2).distance_to(o[3]) > (it[4] as Vector2).length() + (o[4] as Vector2).length(): continue
+				if key.begins_with("fence_") and String(o[1]).begins_with("fence_"): continue
+				if absf(float(it[6]) - float(o[6])) > 1.5: continue
+				if bool(it[7]) and bool(o[7]) and absf(float(it[6]) - float(o[6])) > 0.6: continue
+				if _hit(it[3], (it[4] as Vector2) * 0.97, it[5], o[3], (o[4] as Vector2) * 0.97, o[5]): ok = false; break
+		if ok: kept.append(it)
+		else:
+			if not drop.has(key): drop[key] = {}
+			drop[key][int(it[2])] = true
+	var nd := 0
+	for k2: String in drop:
+		var arr2: Array = props.items[k2]; var keep: Array = []
+		for i2 in arr2.size():
+			if not drop[k2].has(i2): keep.append(arr2[i2])
+			else: nd += 1
+		props.items[k2] = keep
+	# colliders of dropped props: keep only colliders that still have a drawn twin
+	var live := {}
+	for k3: String in props.items:
+		for t3: Transform3D in props.items[k3]: live["%s@%.2f,%.2f" % [k3, t3.origin.x, t3.origin.z]] = true
+	var kc: Array = []
+	for ci: Array in props.col_items:
+		var tt: Transform3D = ci[2]
+		if live.has("%s|%s@%.2f,%.2f" % [ci[0], ci[1], tt.origin.x, tt.origin.z]): kc.append(ci)
+	props.col_items = kc
+	print("GRT_PRUNE %s: %d props dropped (validator rules)" % [ctx.name, nd])
+
+## wall-hung props (window AC units, lights, meters, mailboxes, buzzers, downspouts, house numbers) never over a door
+## or window of the building they hang on (Yasin 18 Nov: "some of them are on windows"): the openings of every floor
+## from the building's contract (interiors/room_contracts.json; models without one are left as they are)
+static var _rc := {}
+static func _off_openings(ctx: Dictionary) -> void:
+	if _rc.is_empty():
+		_rc = (JSON.parse_string(FileAccess.get_file_as_string("res://map_dc/coronado/city_kit/interiors/room_contracts.json")) as Dictionary).models
+	var props: K.Props = ctx.props
+	var nd := 0; var nm := 0; var by := {}
+	for k: String in props.items.keys():
+		var bname := k.get_slice("|", 0)
+		if bname.begins_with("prop_balcony") or bname.begins_with("prop_dingbat_stair"): continue     # they belong in front of the flats' doors / windows
+		var e := K.manifest(bname)
+		var mounted := String(e.get("mount", "ground")) != "ground"
+		var fw := float(e.get("footprint_w", 0.5)); var ht := float(e.get("height", 0.5))
+		var keep: Array = []
+		for t: Transform3D in props.items[k]:
+			var res := _wall_spot(ctx, t, mounted, fw, ht)
+			if res == 0: keep.append(t); continue
+			# slide it along its wall to the nearest free spot (up to 2.4 m either way), else drop it
+			var moved := false
+			for step in range(1, 9):
+				for sgn: float in [1.0, -1.0]:
+					var t2 := t
+					t2.origin += (_wall_dir as Vector3) * sgn * 0.3 * step
+					if _wall_spot(ctx, t2, mounted, fw, ht) == 0: keep.append(t2); moved = true; break
+				if moved: break
+			if moved: nm += 1
+			else: nd += 1; by[bname] = int(by.get(bname, 0)) + 1
+		props.items[k] = keep
+	print("GRT_WALLS %s: %d wall props slid off windows / doors, %d dropped (no free wall) %s" % [ctx.name, nm, nd, by])
+
+static var _wall_dir := Vector3.ZERO
+## 0 = free; 1 = over an opening (or off the end of its wall) of the building it hangs on (_wall_dir = that wall's
+## direction), 2 = not on a wall of a building with a contract
+static func _wall_spot(ctx: Dictionary, t: Transform3D, mounted: bool, fw: float, ht: float) -> int:
+	for b: Dictionary in ctx.blds:
+		if not _rc.has(String(b.folder)): continue
+		var n: Node3D = b.node
+		var lp: Vector3 = n.transform.affine_inverse() * t.origin
+		var hw := float(b.w) * 0.5; var hd := float(b.d) * 0.5
+		var fac := ""; var along := 0.0; var ext := 0.0
+		if absf(lp.z - hd) < 0.45 and absf(lp.x) < hw + 0.2: fac = "front"; along = lp.x; ext = hw; _wall_dir = n.transform.basis.x.normalized()
+		elif absf(lp.z + hd) < 0.45 and absf(lp.x) < hw + 0.2: fac = "back"; along = lp.x; ext = hw; _wall_dir = n.transform.basis.x.normalized()
+		elif absf(lp.x - hw) < 0.45 and absf(lp.z) < hd + 0.2: fac = "right"; along = lp.z; ext = hd; _wall_dir = n.transform.basis.z.normalized()
+		elif absf(lp.x + hw) < 0.45 and absf(lp.z) < hd + 0.2: fac = "left"; along = lp.z; ext = hd; _wall_dir = n.transform.basis.z.normalized()
+		if fac == "": continue
+		if not mounted and t.origin.y - 0.15 < 0.3: return 0
+		if absf(along) > ext - fw * 0.5 - 0.1: return 1
+		var y0 := t.origin.y - 0.15; var y1 := y0 + ht
+		for o: Dictionary in (_rc[String(b.folder)] as Dictionary).openings:
+			if String(o.facade) != fac: continue
+			if absf(along - float(o.along)) < fw * 0.5 + float(o.w) * 0.5 + 0.05 and y0 < float(o.y1) + 0.05 and y1 > float(o.y0) - 0.05: return 1
+		return 0
+	return 0
+
+static func _hit(ca: Vector2, ha: Vector2, aa: float, cb: Vector2, hb: Vector2, ab: float) -> bool:
+	var axes := [Vector2(cos(aa), -sin(aa)), Vector2(sin(aa), cos(aa)), Vector2(cos(ab), -sin(ab)), Vector2(sin(ab), cos(ab))]
+	var d := cb - ca
+	for ax: Vector2 in axes:
+		var ra := ha.x * absf(Vector2(cos(aa), -sin(aa)).dot(ax)) + ha.y * absf(Vector2(sin(aa), cos(aa)).dot(ax))
+		var rb := hb.x * absf(Vector2(cos(ab), -sin(ab)).dot(ax)) + hb.y * absf(Vector2(sin(ab), cos(ab)).dot(ax))
+		if absf(d.dot(ax)) > ra + rb: return false
+	return true
 
 ## the open shops of this piece for the rooms (tools/city/rooms/assign_grt.py reads these)
 static func _write_shops(ctx: Dictionary) -> void:

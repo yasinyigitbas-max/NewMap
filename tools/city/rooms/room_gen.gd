@@ -9,6 +9,7 @@ extends SceneTree
 ## prints, wear where people walk. Saved as interiors/rooms/g_<id>.scn (the hand-made rooms are not touched).
 ##   xvfb-run -a godot --path . --rendering-method mobile --resolution 320x180 -s res://tools/city/rooms/room_gen.gd -- [--only=ID,ID] [--kinds=cafe,bar] [--limit=N]
 ## then: interiors/rooms/check_rooms.gd (0 problems), tools/city/rooms/gen_shots.gd (pictures).
+## CAREFUL (19 Nov): zone sessions make their own shops' rooms with this tool; run it with --only= for your own shops.
 const R := preload("res://map_dc/coronado/city_kit/interiors/rooms/room_lib.gd")
 const D := "res://map_dc/coronado/city_kit/interiors/"
 const MAN := "res://assets/coronado_kit/props/"
