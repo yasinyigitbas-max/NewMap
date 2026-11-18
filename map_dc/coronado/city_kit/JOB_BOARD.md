@@ -5,6 +5,16 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov (cloud, branch `claude/grow-industrial`): INDUSTRIAL GROWTH, stage 1 + 2 done, NOTHING LOCKED, WAITING for
+  Yasin's word on the variants. Read `review/grow_ind/README.md`. Three variants (A port, B fleet, C cold chain),
+  each dressed twice = six 100 m blocks round the sample. They form the pilot area u -900..-500, v -1600..-1400
+  (1st St to 3rd St, J Ave to the house edge). Table `review/grow_ind_blocks.json` (the shared grow_* form).
+  `pieces/ind_grow_lib.gd` MEASURES the road pieces, so every block meets the walk flush and its gates sit on the
+  street's aprons. 14 rooms with an industrial character: `tools/city/rooms/room_gen_ind.gd` + `assign_ind.py`
+  (stocked shelves only). Checks in the area: validator 0, trees 0, sink 0, rooms 0, lock PASS. Baked: worst view
+  78 draws / 387k tris; +5.8 MB download; rooms not in the bake (21-36 draws, 4-6 lights each, unmerged). Not done:
+  the two sloped blocks south of 3rd St at G Ave, the Alameda strip, pictures in the GTA IV look (they need a full
+  bake on the PC), the phone.
 - 19 Nov (PC session, after the census): EVERYTHING PUSHED IS MERGED into `claude/festive-faraday-20ltx2` (Yasin: "merge
   them yes i saw their works"; "dont leave anything unmerged"): the look pack (he chose "gta4 look"), the tier work
   and the DRAWING CENSUS (`docs/DRAW_CENSUS.md`, `docs/TREE_ARTIST_BRIEF.md`), and the four zone sessions' first work

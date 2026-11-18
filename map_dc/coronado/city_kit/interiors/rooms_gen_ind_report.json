@@ -17,7 +17,7 @@
    "kind": "trade_counter",
    "lights": 6,
    "name": "Bayside Chandlery",
-   "props": 29,
+   "props": 38,
    "w": 11.4
   },
   {
@@ -27,7 +27,7 @@
    "kind": "parts_counter",
    "lights": 5,
    "name": "Cold Line Reefer Service",
-   "props": 33,
+   "props": 30,
    "w": 6.1
   },
   {
@@ -47,7 +47,7 @@
    "kind": "workwear",
    "lights": 6,
    "name": "Harbor Workwear",
-   "props": 27,
+   "props": 26,
    "w": 11.4
   },
   {
@@ -87,7 +87,7 @@
    "kind": "parts_counter",
    "lights": 5,
    "name": "Tidewater Marine Engines",
-   "props": 33,
+   "props": 30,
    "w": 6.1
   },
   {
@@ -107,7 +107,7 @@
    "kind": "trade_counter",
    "lights": 6,
    "name": "Bayline Truck Parts",
-   "props": 29,
+   "props": 38,
    "w": 11.4
   },
   {
@@ -127,7 +127,7 @@
    "kind": "trade_counter",
    "lights": 4,
    "name": "Island Restaurant Supply",
-   "props": 19,
+   "props": 20,
    "w": 5.7
   },
   {
