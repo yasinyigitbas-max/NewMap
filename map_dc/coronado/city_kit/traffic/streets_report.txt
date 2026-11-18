@@ -177,8 +177,13 @@ NODE 77 moved 0.33 m onto its streets: (-993.8, -1000.0) -> (-993.5, -1000.1)
 NODE 88 moved 1.92 m onto its streets: (626.5, 0.0) -> (624.6, 0.0)
 NODE 89 moved 0.38 m onto its streets: (-992.5, 200.0) -> (-992.3, 200.3)
 NODE 93 moved 6.69 m onto its streets: (922.5, -1052.4) -> (924.8, -1058.7)
+LANES CHANGE in block b065 (3rd St) at (-668.0, -1400.0): 1 + 1 lanes before, 2 + 2 after
+LANES CHANGE in block b136 (W leg) at (594.1, 53.5): 1 + 1 lanes before, 2 + 2 after
+LANES CHANGE in block b161 (Ocean Blvd) at (510.8, 336.2): 2 + 2 lanes before, 1 + 1 after
+POCKET NOT MADE in block b065: the block is 68 m, too short for its left-turn lane
+POCKET NOT MADE in block b145: the block is 77 m, too short for its left-turn lane
 NODE   0 ( -800.0, -1400.0) legs 4 signal heads 0: [b000 b returns end 17.5, lanes end 20.7, STOP] [b001 a returns end 17.5, lanes end 20.7, STOP] [b064 b returns end 17.5, lanes end 20.7, STOP] [b065 a returns end 17.5, lanes end 20.7, STOP]
-NODE   1 ( -800.0, -1200.0) legs 4 signal heads 6: [b001 b returns end 17.0, lanes end 23.7, SIGNAL] [b002 a returns end 17.0, lanes end 23.7, SIGNAL] [b072 b returns end 12.5, lanes end 19.1, SIGNAL] [b073 a returns end 12.5, lanes end 19.1, SIGNAL]
+NODE   1 ( -800.0, -1200.0) legs 4 signal heads 6: [b001 b returns end 17.0, lanes end 23.7, SIGNAL] [b002 a returns end 17.0, lanes end 23.7, SIGNAL] [b072 b returns end 12.5, lanes end 19.2, SIGNAL] [b073 a returns end 12.5, lanes end 19.1, SIGNAL]
 NODE   2 ( -800.0, -1000.0) legs 4 signal heads 0: [b002 b returns end 11.0, lanes end 17.2, STOP] [b003 a returns end 11.0, lanes end 17.2, STOP] [b080 b returns end 11.0, lanes end 17.2, STOP] [b081 a returns end 11.0, lanes end 17.2, STOP]
 NODE   3 ( -800.0,  -800.0) legs 4 signal heads 0: [b003 b returns end 11.0, lanes end 17.2, STOP] [b004 a returns end 11.0, lanes end 17.2, STOP] [b088 b returns end 11.0, lanes end 17.2, STOP] [b089 a returns end 11.0, lanes end 17.2, STOP]
 NODE   4 ( -800.2,  -600.0) legs 3 signal heads 0: [b004 b returns end 10.5, lanes end 17.3, STOP] [b005 a returns end 10.5, lanes end 17.3, STOP] [b096 b returns end 11.0, lanes end 17.2, STOP]
@@ -245,17 +250,17 @@ NODE  64 ( -400.0, -1599.8) legs 3 signal heads 0: [b018 a returns end 17.0, lan
 NODE  65 ( -400.1,   315.2) legs 3 signal heads 0: [b027 b returns end 18.0, lanes end 25.0, STOP] [b132 b returns end 13.5, lanes end 14.5, free] [b133 a returns end 10.5, lanes end 11.5, free]
 NODE  66 ( -200.0, -1599.9) legs 3 signal heads 0: [b028 a returns end 17.0, lanes end 24.0, STOP] [b147 b returns end 12.0, lanes end 13.0, free] [b148 a returns end 12.0, lanes end 13.0, free]
 NODE  67 ( -200.0,   327.8) legs 3 signal heads 0: [b035 b returns end 18.0, lanes end 24.9, STOP] [b133 b returns end 13.5, lanes end 14.5, free] [b134 a returns end 11.0, lanes end 12.0, free]
-NODE  68 (    0.0, -1599.8) legs 3 signal heads 6: [b036 a returns end 17.0, lanes end 24.0, SIGNAL] [b146 b returns end 18.0, lanes end 25.2, SIGNAL] [b147 a returns end 18.0, lanes end 25.3, SIGNAL]
+NODE  68 (    0.0, -1599.8) legs 3 signal heads 6: [b036 a returns end 17.0, lanes end 24.0, SIGNAL] [b146 b returns end 18.0, lanes end 25.3, SIGNAL] [b147 a returns end 18.0, lanes end 25.3, SIGNAL]
 NODE  69 (   -0.1,   339.8) legs 3 signal heads 6: [b045 b returns end 18.0, lanes end 25.2, SIGNAL] [b134 b returns end 19.0, lanes end 26.4, SIGNAL] [b135 a returns end 17.0, lanes end 24.9, SIGNAL]
 NODE  70 (  250.0, -1599.8) legs 3 signal heads 0: [b046 a returns end 17.0, lanes end 24.0, STOP] [b145 b returns end 12.0, lanes end 13.0, free] [b146 a returns end 12.0, lanes end 13.0, free]
 NODE  71 (  250.0,   344.8) legs 3 signal heads 0: [b055 b returns end 18.0, lanes end 24.7, STOP] [b135 b returns end 12.0, lanes end 13.0, free] [b161 a returns end 19.0, lanes end 20.0, free]
 NODE  72 (  500.0, -1599.8) legs 3 signal heads 0: [b056 a returns end 17.0, lanes end 24.0, STOP] [b145 a returns end 12.0, lanes end 13.0, free] [b163 b returns end 12.0, lanes end 13.0, free]
 NODE  73 ( -950.7, -1400.0) legs 3 signal heads 0: [b064 a returns end 21.0, lanes end 28.1, STOP] [b151 a returns end 17.0, lanes end 18.0, free] [b162 b returns end 17.0, lanes end 18.0, free]
-NODE  74 (  659.7, -1400.5) legs 4 signal heads 8: [b071 b returns end 17.0, lanes end 24.0, SIGNAL] [b144 b returns end 17.0, lanes end 24.0, SIGNAL] [b163 a returns end 17.0, lanes end 23.9, SIGNAL] [b164 b returns end 37.5, lanes end 24.1, SIGNAL]
-NODE  75 ( -951.6, -1200.0) legs 3 signal heads 6: [b072 a returns end 17.5, lanes end 24.2, SIGNAL] [b151 b returns end 17.0, lanes end 24.1, SIGNAL] [b152 a returns end 17.0, lanes end 24.0, SIGNAL]
-NODE  76 (  660.0, -1200.0) legs 4 signal heads 8: [b079 b returns end 17.0, lanes end 24.0, SIGNAL] [b143 b returns end 17.0, lanes end 24.0, SIGNAL] [b144 a returns end 17.0, lanes end 24.1, SIGNAL] [b160_a a returns end 17.0, lanes end 24.1, SIGNAL]
+NODE  74 (  659.7, -1400.5) legs 4 signal heads 8: [b071 b returns end 17.0, lanes end 24.0, SIGNAL] [b144 b returns end 17.0, lanes end 24.1, SIGNAL] [b163 a returns end 17.5, lanes end 24.0, SIGNAL] [b164 b returns end 37.5, lanes end 24.1, SIGNAL]
+NODE  75 ( -951.6, -1200.0) legs 3 signal heads 6: [b072 a returns end 17.5, lanes end 24.2, SIGNAL] [b151 b returns end 17.0, lanes end 24.2, SIGNAL] [b152 a returns end 17.0, lanes end 24.0, SIGNAL]
+NODE  76 (  660.0, -1200.0) legs 4 signal heads 8: [b079 b returns end 17.0, lanes end 24.0, SIGNAL] [b143 b returns end 17.0, lanes end 24.1, SIGNAL] [b144 a returns end 17.0, lanes end 24.1, SIGNAL] [b160_a a returns end 17.0, lanes end 24.1, SIGNAL]
 NODE  77 ( -993.5, -1000.1) legs 3 signal heads 0: [b080 a returns end 22.0, lanes end 29.2, STOP] [b152 b returns end 19.0, lanes end 20.0, free] [b153 a returns end 7.0, lanes end 8.0, free]
-NODE  78 (  659.9, -1000.0) legs 3 signal heads 6: [b087 b returns end 17.5, lanes end 24.3, SIGNAL] [b141 b returns end 17.0, lanes end 24.3, SIGNAL] [b142 a returns end 16.5, lanes end 24.0, SIGNAL]
+NODE  78 (  659.9, -1000.0) legs 3 signal heads 6: [b087 b returns end 17.5, lanes end 24.3, SIGNAL] [b141 b returns end 17.0, lanes end 24.4, SIGNAL] [b142 a returns end 16.5, lanes end 24.0, SIGNAL]
 NODE  79 ( -999.8,  -800.0) legs 3 signal heads 0: [b088 a returns end 17.0, lanes end 24.0, STOP] [b153 b returns end 12.0, lanes end 13.0, free] [b154 a returns end 12.0, lanes end 13.0, free]
 NODE  80 (  657.2,  -800.0) legs 3 signal heads 0: [b095 b returns end 17.5, lanes end 24.2, STOP] [b140 b returns end 12.0, lanes end 13.0, free] [b141 a returns end 12.0, lanes end 13.0, free]
 NODE  81 ( -999.8,  -600.0) legs 3 signal heads 0: [b096 a returns end 17.0, lanes end 24.0, STOP] [b154 b returns end 12.0, lanes end 13.0, free] [b155 a returns end 12.0, lanes end 13.0, free]
@@ -265,7 +270,7 @@ NODE  84 (  651.8,  -400.0) legs 3 signal heads 0: [b107 b returns end 17.5, lan
 NODE  85 ( -999.8,  -200.0) legs 3 signal heads 0: [b108 a returns end 17.0, lanes end 24.0, STOP] [b156 b returns end 12.0, lanes end 13.0, free] [b157 a returns end 12.0, lanes end 13.0, free]
 NODE  86 (  646.8,  -200.0) legs 3 signal heads 0: [b115 b returns end 17.5, lanes end 24.4, STOP] [b137 b returns end 12.5, lanes end 13.5, free] [b138 a returns end 11.5, lanes end 12.5, free]
 NODE  87 ( -999.8,    -0.0) legs 3 signal heads 0: [b116 a returns end 17.0, lanes end 24.0, STOP] [b157 b returns end 12.0, lanes end 13.0, free] [b158 a returns end 12.0, lanes end 13.0, free]
-NODE  88 (  624.6,     0.0) legs 3 signal heads 0: [b123 b returns end 24.0, lanes end 31.0, STOP] [b136 b returns end 36.5, lanes end 24.0, free] [b137 a returns end 9.5, lanes end 10.5, free]
+NODE  88 (  624.6,     0.0) legs 3 signal heads 0: [b123 b returns end 24.0, lanes end 31.0, STOP] [b136 b returns end 25.0, lanes end 24.0, free] [b137 a returns end 9.5, lanes end 10.5, free]
 NODE  89 ( -992.3,   200.3) legs 3 signal heads 0: [b124 a returns end 19.5, lanes end 26.3, STOP] [b158 b returns end 9.5, lanes end 10.5, free] [b159 a returns end 15.0, lanes end 16.0, free]
 NODE  90 (  570.0,   200.0) legs 3 signal heads 0: [b130 b returns end 11.0, lanes end 17.2, STOP] [b136 a returns end 11.0, lanes end 17.2, STOP] [b161 b returns end 10.5, lanes end 16.8, STOP]
 NODE  91 (  660.0, -1100.0) legs 2 signal heads 0: [b142 b returns end 2.0, lanes end 1.0, free] [b143 a returns end 2.0, lanes end 1.0, free]
@@ -273,7 +278,70 @@ NODE  92 ( 1180.0,  -905.0) legs 1 signal heads 0: [b160_b b returns end 2.0, la
 NODE  93 (  922.5, -1052.4) legs 3 signal heads 0: [b160_a b returns end 21.5, lanes end 1.0, free] [b164 a returns end 7.0, lanes end 0.5, free] [b160_b a returns end 29.0, lanes end 1.0, free]
 NODE  94 (  373.3, -1600.0) legs 1 signal heads 0: [b145 b returns end 2.0, lanes end 2.0, free]
 NODE  95 (  326.7, -1600.0) legs 1 signal heads 0: [b145 a returns end 2.0, lanes end 2.0, free]
-WORST steepest stretch at (94.0, 1.6), largest kink at (146.0, 1.6)
+NODE  96 ( -668.0, -1400.0) legs 2 signal heads 0: [b065 b returns end 18.0, lanes end 12.0, free] [b065 a returns end 14.0, lanes end 12.0, free]
+NODE  97 (  594.1,    53.5) legs 2 signal heads 0: [b136 b returns end 38.0, lanes end 12.0, free] [b136 a returns end 23.0, lanes end 12.0, free]
+NODE  98 (  510.8,   336.2) legs 2 signal heads 0: [b161 b returns end 36.0, lanes end 12.0, free] [b161 a returns end 37.5, lanes end 12.0, free]
+NODE  99 ( -544.0, -1400.0) legs 2 signal heads 0: [b066 b returns end 2.0, lanes end 11.2, free] [b066 a returns end 2.0, lanes end 12.0, free]
+NODE 100 ( -456.0, -1400.0) legs 2 signal heads 0: [b066 b returns end 2.0, lanes end 12.0, free] [b066 a returns end 2.0, lanes end 11.2, free]
+NODE 101 ( -344.0, -1400.0) legs 2 signal heads 0: [b067 b returns end 2.0, lanes end 11.2, free] [b067 a returns end 2.0, lanes end 12.0, free]
+NODE 102 ( -256.0, -1400.0) legs 2 signal heads 0: [b067 b returns end 2.0, lanes end 12.0, free] [b067 a returns end 2.0, lanes end 11.2, free]
+NODE 103 ( -144.0, -1400.0) legs 2 signal heads 0: [b068 b returns end 2.0, lanes end 11.2, free] [b068 a returns end 2.0, lanes end 12.0, free]
+NODE 104 (  -56.0, -1400.0) legs 2 signal heads 0: [b068 b returns end 2.0, lanes end 12.0, free] [b068 a returns end 2.0, lanes end 11.2, free]
+NODE 105 (   56.0, -1400.0) legs 2 signal heads 0: [b069 b returns end 2.0, lanes end 11.2, free] [b069 a returns end 2.0, lanes end 12.0, free]
+NODE 106 (  194.0, -1400.0) legs 2 signal heads 0: [b069 b returns end 2.0, lanes end 12.0, free] [b069 a returns end 2.0, lanes end 11.2, free]
+NODE 107 (  306.0, -1400.0) legs 2 signal heads 0: [b070 b returns end 2.0, lanes end 11.2, free] [b070 a returns end 2.0, lanes end 12.0, free]
+NODE 108 (  444.0, -1400.0) legs 2 signal heads 0: [b070 b returns end 2.0, lanes end 12.0, free] [b070 a returns end 2.0, lanes end 11.2, free]
+NODE 109 (  556.0, -1400.0) legs 2 signal heads 0: [b071 b returns end 2.0, lanes end 11.2, free] [b071 a returns end 2.0, lanes end 9.6, free]
+NODE 110 (  604.0, -1400.0) legs 2 signal heads 0: [b071 b returns end 2.0, lanes end 9.6, free] [b071 a returns end 2.0, lanes end 11.2, free]
+NODE 111 ( -895.9, -1200.0) legs 2 signal heads 0: [b072 b returns end 2.0, lanes end 11.2, free] [b072 a returns end 2.0, lanes end 8.0, free]
+NODE 112 ( -855.9, -1200.0) legs 2 signal heads 0: [b072 b returns end 2.0, lanes end 8.0, free] [b072 a returns end 2.0, lanes end 11.2, free]
+NODE 113 ( -744.0, -1200.0) legs 2 signal heads 0: [b073 b returns end 2.0, lanes end 11.2, free] [b073 a returns end 2.0, lanes end 12.0, free]
+NODE 114 ( -656.0, -1200.0) legs 2 signal heads 0: [b073 b returns end 2.0, lanes end 12.0, free] [b073 a returns end 2.0, lanes end 11.2, free]
+NODE 115 ( -544.0, -1200.0) legs 2 signal heads 0: [b074 b returns end 2.0, lanes end 11.2, free] [b074 a returns end 2.0, lanes end 12.0, free]
+NODE 116 ( -456.0, -1200.0) legs 2 signal heads 0: [b074 b returns end 2.0, lanes end 12.0, free] [b074 a returns end 2.0, lanes end 11.2, free]
+NODE 117 ( -344.0, -1200.0) legs 2 signal heads 0: [b075 b returns end 2.0, lanes end 11.2, free] [b075 a returns end 2.0, lanes end 12.0, free]
+NODE 118 ( -256.0, -1200.0) legs 2 signal heads 0: [b075 b returns end 2.0, lanes end 12.0, free] [b075 a returns end 2.0, lanes end 11.2, free]
+NODE 119 ( -144.0, -1200.0) legs 2 signal heads 0: [b076 b returns end 2.0, lanes end 11.2, free] [b076 a returns end 2.0, lanes end 12.0, free]
+NODE 120 (  -56.0, -1200.0) legs 2 signal heads 0: [b076 b returns end 2.0, lanes end 12.0, free] [b076 a returns end 2.0, lanes end 11.2, free]
+NODE 121 (   56.0, -1200.0) legs 2 signal heads 0: [b077 b returns end 2.0, lanes end 11.2, free] [b077 a returns end 2.0, lanes end 12.0, free]
+NODE 122 (  194.0, -1200.0) legs 2 signal heads 0: [b077 b returns end 2.0, lanes end 12.0, free] [b077 a returns end 2.0, lanes end 11.2, free]
+NODE 123 (  306.0, -1200.0) legs 2 signal heads 0: [b078 b returns end 2.0, lanes end 11.2, free] [b078 a returns end 2.0, lanes end 12.0, free]
+NODE 124 (  444.0, -1200.0) legs 2 signal heads 0: [b078 b returns end 2.0, lanes end 12.0, free] [b078 a returns end 2.0, lanes end 11.2, free]
+NODE 125 (  556.0, -1200.0) legs 2 signal heads 0: [b079 b returns end 2.0, lanes end 11.2, free] [b079 a returns end 2.0, lanes end 9.6, free]
+NODE 126 (  604.0, -1200.0) legs 2 signal heads 0: [b079 b returns end 2.0, lanes end 9.6, free] [b079 a returns end 2.0, lanes end 11.2, free]
+NODE 127 (  556.0, -1000.0) legs 2 signal heads 0: [b087 b returns end 2.0, lanes end 11.2, free] [b087 a returns end 2.0, lanes end 9.6, free]
+NODE 128 (  604.0, -1000.0) legs 2 signal heads 0: [b087 b returns end 2.0, lanes end 9.6, free] [b087 a returns end 2.0, lanes end 11.2, free]
+NODE 129 ( -655.0,   298.3) legs 2 signal heads 0: [b131 b returns end 2.0, lanes end 12.0, free] [b131 a returns end 2.0, lanes end 11.0, free]
+NODE 130 ( -455.0,   311.7) legs 2 signal heads 0: [b132 b returns end 2.0, lanes end 12.0, free] [b132 a returns end 2.0, lanes end 11.0, free]
+NODE 131 ( -255.0,   324.7) legs 2 signal heads 0: [b133 b returns end 2.0, lanes end 12.0, free] [b133 a returns end 2.0, lanes end 11.0, free]
+NODE 132 (  -55.0,   336.7) legs 2 signal heads 0: [b134 b returns end 2.0, lanes end 12.0, free] [b134 a returns end 2.0, lanes end 11.0, free]
+NODE 133 (  195.0,   343.9) legs 2 signal heads 0: [b135 b returns end 2.0, lanes end 12.0, free] [b135 a returns end 2.0, lanes end 11.0, free]
+NODE 134 (  645.6,  -144.6) legs 2 signal heads 0: [b137 b returns end 2.0, lanes end 12.0, free] [b137 a returns end 2.0, lanes end 11.1, free]
+NODE 135 (  650.6,  -345.0) legs 2 signal heads 0: [b138 b returns end 2.0, lanes end 12.0, free] [b138 a returns end 2.0, lanes end 11.0, free]
+NODE 136 (  653.9,  -545.0) legs 2 signal heads 0: [b139 b returns end 2.0, lanes end 12.0, free] [b139 a returns end 2.0, lanes end 11.0, free]
+NODE 137 (  656.6,  -745.0) legs 2 signal heads 0: [b140 b returns end 2.0, lanes end 12.0, free] [b140 a returns end 2.0, lanes end 11.0, free]
+NODE 138 (  659.3,  -945.0) legs 2 signal heads 0: [b141 b returns end 2.0, lanes end 12.0, free] [b141 a returns end 2.0, lanes end 11.0, free]
+NODE 139 (  660.0, -1143.6) legs 2 signal heads 0: [b143 b returns end 2.0, lanes end 8.7, free] [b143 a returns end 2.0, lanes end 11.3, free]
+NODE 140 (  660.0, -1255.7) legs 2 signal heads 0: [b144 b returns end 2.0, lanes end 11.1, free] [b144 a returns end 2.0, lanes end 12.0, free]
+NODE 141 (  660.0, -1344.3) legs 2 signal heads 0: [b144 b returns end 2.0, lanes end 12.0, free] [b144 a returns end 2.0, lanes end 11.1, free]
+NODE 142 (   55.0, -1600.0) legs 2 signal heads 0: [b146 b returns end 2.0, lanes end 12.0, free] [b146 a returns end 2.0, lanes end 11.0, free]
+NODE 143 ( -144.3, -1600.0) legs 2 signal heads 0: [b147 b returns end 2.0, lanes end 12.0, free] [b147 a returns end 2.0, lanes end 11.1, free]
+NODE 144 ( -345.0, -1600.0) legs 2 signal heads 0: [b148 b returns end 2.0, lanes end 12.0, free] [b148 a returns end 2.0, lanes end 11.0, free]
+NODE 145 ( -545.0, -1600.0) legs 2 signal heads 0: [b149 b returns end 2.0, lanes end 12.0, free] [b149 a returns end 2.0, lanes end 11.0, free]
+NODE 146 ( -744.4, -1600.0) legs 2 signal heads 0: [b150 b returns end 2.0, lanes end 12.0, free] [b150 a returns end 2.0, lanes end 11.1, free]
+NODE 147 ( -951.5, -1256.7) legs 2 signal heads 0: [b151 b returns end 2.0, lanes end 12.0, free] [b151 a returns end 2.0, lanes end 11.3, free]
+NODE 148 ( -976.9, -1054.0) legs 2 signal heads 0: [b152 b returns end 2.0, lanes end 12.0, free] [b152 a returns end 2.0, lanes end 11.3, free]
+NODE 149 (-1000.0,  -855.2) legs 2 signal heads 0: [b153 b returns end 2.0, lanes end 12.0, free] [b153 a returns end 2.0, lanes end 11.0, free]
+NODE 150 (-1000.0,  -655.0) legs 2 signal heads 0: [b154 b returns end 2.0, lanes end 12.0, free] [b154 a returns end 2.0, lanes end 11.0, free]
+NODE 151 (-1000.0,  -455.0) legs 2 signal heads 0: [b155 b returns end 2.0, lanes end 12.0, free] [b155 a returns end 2.0, lanes end 11.0, free]
+NODE 152 (-1000.0,  -255.0) legs 2 signal heads 0: [b156 b returns end 2.0, lanes end 12.0, free] [b156 a returns end 2.0, lanes end 11.0, free]
+NODE 153 (-1000.0,   -55.0) legs 2 signal heads 0: [b157 b returns end 2.0, lanes end 12.0, free] [b157 a returns end 2.0, lanes end 11.0, free]
+NODE 154 (-1000.0,   145.4) legs 2 signal heads 0: [b158 b returns end 2.0, lanes end 12.0, free] [b158 a returns end 2.0, lanes end 11.0, free]
+NODE 155 ( -855.6,   285.0) legs 2 signal heads 0: [b159 b returns end 2.0, lanes end 12.0, free] [b159 a returns end 2.0, lanes end 11.1, free]
+NODE 156 ( -950.6, -1455.2) legs 2 signal heads 0: [b162 b returns end 2.0, lanes end 12.0, free] [b162 a returns end 2.0, lanes end 11.0, free]
+NODE 157 (  655.5, -1455.7) legs 2 signal heads 0: [b163 b returns end 2.0, lanes end 11.2, free] [b163 a returns end 2.0, lanes end 12.0, free]
+NODE 158 (  556.1, -1598.8) legs 2 signal heads 0: [b163 b returns end 2.0, lanes end 12.0, free] [b163 a returns end 2.0, lanes end 11.2, free]
+WORST steepest stretch at (94.0, 1.6), largest kink at (-356.0, -1196.4)
 CORNER WITHOUT PAVEMENT at node 38 (0.0, -600.0): no pavement at (-12.5, -593.5) nor near it. The map has a hole there
 CORNER WITHOUT PAVEMENT at node 38 (0.0, -600.0): no pavement at (12.6, -593.5) nor near it. The map has a hole there
 CORNER WITHOUT PAVEMENT at node 38 (0.0, -600.0): no pavement at (12.6, -606.8) nor near it. The map has a hole there
@@ -287,14 +355,15 @@ CROSSING WITHOUT PAINT block b065 end a at (-782.6, -1400.0)
 PAVEMENT LINE OFF ITS PAVEMENT block b098 (7th St, cc): 2 points with no ground, 0 on the road (first at -12.5, -593.5)
 PAVEMENT LINE OFF ITS PAVEMENT block b099 (7th St, cc): 2 points with no ground, 0 on the road (first at 12.6, -593.5)
 PAVEMENT LINE OFF ITS PAVEMENT block b161 (Ocean Blvd, ring): 1 points with no ground, 0 on the road (first at 579.5, 210.5)
-TOTAL edges 167, nodes 96, lanes 449 (75.3 km, 3970 points kept of 41619 checked), connections 974
+TOTAL edges 230, nodes 159, lanes 761 (71.8 km, 4374 points kept of 40222 checked), connections 1291
 CHECK lane points off the asphalt 0, without ground 0 (both must be 0)
-CHECK paths through the junctions: 974 (17 take a wider curve to keep off a kerb), 20155 points checked as wide as a car: 0 touch a kerb, on 0 paths (must be 0)
+CHECK paths through the junctions: 1291 (17 take a wider curve to keep off a kerb), 25098 points checked as wide as a car: 0 touch a kerb, on 0 paths (must be 0)
 CHECK lane points where a car's side would be off the asphalt: 0 (must be 0)
-CHECK steepest lane 8.0 %, largest height kink at a lane point 0.010 m
-CHECK junctions (3 legs and more): 27 with signals, 64 with stop bars, 1 with neither | approaches 333: 103 signal, 175 stop, 55 free
-TOTAL pavements 880 stretches (61.0 km), 884 walk points, 276 crossings (101 at signals), parking stalls 3010 at the kerb, 1514 in car parks
-CHECK pavement points on the road 0, without ground 9 (both must be 0) of 32241 | driveways and alley mouths walked over 3 | crossings with no paint under them 4
+CHECK steepest lane 8.0 %, largest height kink at a lane point 0.016 m
+CHECK junctions (3 legs and more): 27 with signals, 64 with stop bars, 1 with neither | approaches 459: 103 signal, 175 stop, 181 free
+TOTAL pavements 1006 stretches (61.0 km), 1010 walk points, 276 crossings (101 at signals), parking stalls 3010 at the kerb, 1514 in car parks
+CHECK pavement points on the road 0, without ground 9 (both must be 0) of 32367 | driveways and alley mouths walked over 5 | crossings with no paint under them 4
 CHECK pavement corners with no ground under them (holes in the map, listed above): 4
 CHECK kerb stalls not on the asphalt 0, stalls without ground 0 (both must be 0)
+TOTAL places where a street changes its lanes mid-block 3, left-turn lanes before signals 60
 CHECK approaches with no way on 0, blocks too short for their junctions 0, points of an unknown street kind 0

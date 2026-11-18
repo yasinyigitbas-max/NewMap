@@ -20,6 +20,7 @@ struct SkNode {
 	double x = 0, z = 0, pad = 0;
 	bool deadend = false;   // a street ends here (a hole in it, the far end of the bridge)
 	bool diverge = false;   // a ramp leaves the road here: no junction, nobody stops
+	bool inner = false;     // a point inside a block where its lanes change (two become one, a left-turn lane starts): no junction
 };
 
 struct SkBlock {
@@ -49,7 +50,8 @@ struct Edge {
 	int valid[2] = { 0, 0 }, stations = 0;
 	double shift_max = 0;          // how far the built street lies off the skeleton line, at most (m)
 	int nl[2] = { 0, 0 };          // lanes per direction
-	std::vector<double> off[2][2]; // per direction, per lane (0 = innermost): metres from the centre line at every point
+	std::vector<double> off[2][3]; // per direction, per lane (0 = innermost): metres from the centre line at every point
+	bool pocket[2] = { false, false };   // per direction: its lane 0 is a left-turn lane on the centre line (the last metres before a signal on an arterial)
 	std::vector<double> wc[2], whw[2];   // per side: the middle of the pavement (metres from the centre line) and its half width at every point; empty or 0 = none
 	double lhw[2] = { 1.65, 1.65 };
 	double trim[2] = { 0, 0 };     // at a, at b: metres from the node where the lanes begin / end
@@ -74,6 +76,7 @@ struct Report {
 	int walks = 0, crossings = 0, crossings_signal = 0, crossings_unpainted = 0, walk_driveways = 0;
 	int stalls_kerb = 0, stalls_park = 0, stalls_no_ground = 0, stalls_kerb_off_road = 0;
 	int corners_no_ground = 0;
+	int lane_changes = 0, pockets = 0;
 };
 
 // what the game loads (streets.bin)
@@ -143,6 +146,8 @@ private:
 	void make_edges();
 	void measure_edges();
 	bool retrace(Edge &e);
+	void classify_edges();
+	void split_edges();
 	void layout_lanes();
 	void junctions();
 	void emit_lanes();

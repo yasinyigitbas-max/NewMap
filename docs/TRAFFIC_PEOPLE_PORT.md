@@ -405,3 +405,54 @@ FOUND IN THE MAP (for Yasin; nothing was changed):
 Not done in 2a, said plainly: the 3rd / 4th St left-turn pockets (the painted centre lane before a junction) are not
 lanes yet: a car turning left there waits in the inner through lane. Lanes are one per direction where a block is
 partly one lane wide. Both are on the list for after the traffic runs.
+
+## 16. Stage 2b result: the traffic core drives on the new streets (19 Nov, 03:40)
+The old game's traffic core (`traffic_sim.h`, `traffic_setup.cpp`, `traffic_step.cpp`, `traffic_route.cpp`, 2,500
+lines) is in `native/src`, fitted to this map, behind the C++ class `CityTraffic` (`city_traffic.*`). No drawing yet:
+this stage is the driving itself, proven by a test with no picture.
+
+THE TEST: `godot --headless --path . -s res://tests/traffic/test_traffic_core.gd -- --minutes=30` -> RESULT PASS.
+Nine runs of 30 traffic minutes (20 steps a second, as in the game): the whole city with 190 cars, every car stepped
+every tick; and the city centre, the 3rd St arterial, the ring at the waterfront and the bridge's foot as the game
+will run them, each at the busiest hour and at twice the busiest hour. In every run:
+- no two cars ever overlap (checked once a traffic second by a check of its own), no crash;
+- at the busiest hour no car stands longer than 2 minutes anywhere except at a red light, with the old "take a stuck
+  car away" rule switched OFF (so nothing is hidden); at twice the busiest hour (more cars than the junctions can
+  pass: queues) nothing locks up;
+- the same seed gives the same traffic, run after run and process after process;
+- one step for 190 cars: 0.32 ms on this PC (a slow laptop); for the 30-35 cars round the camera: 0.02 ms.
+
+WHAT HAD TO CHANGE IN THE OLD CORE FOR THIS MAP (each found by the test, each a real fault on these streets):
+1. LEFT TURNS NEVER GOT THROUGH. The map's signals have a 12 s green and no left-turn phase. The old rule made a
+   left-turner wait for a long gap in oncoming traffic: on a busy street it stood for good, with its lane behind it.
+   Now a car that has waited at its line to turn left takes the amber and the first seconds of red, as drivers do,
+   and the street that has just got its green waits for the junction to clear.
+2. A FAIRNESS RULE. A car that has waited long at the head of its lane (a side street on the ring, a left-turner)
+   asks for a way through, and drivers who can still stop comfortably let it go. Two that ask never wait for each
+   other: the one that waited longer goes.
+3. LANES CHANGE WHERE THE STREET CHANGES. My first lanes gave a block the fewest lanes of its narrowest part, so two
+   lanes merged into one right AT a junction and halved it. Now a street is cut where it really narrows or widens
+   (3 places), and the cars merge there.
+4. THE LEFT-TURN LANES ARE REAL LANES. The arterials paint a left-turn lane in the middle before a signal (white
+   arrows). The tool finds them from the paint (60 of them); cars that turn left wait there and the two through
+   lanes stay free.
+5. HOW MANY CARS. The old game asked for its full number of cars wherever the camera was. Now each street carries
+   what its kind carries (cars per metre of lane, chosen as about half of what this map's junctions can pass), and
+   the number given to the traffic is only the upper limit. Round the city centre that is about 32 cars within
+   340 m at the busiest hour; the whole city about 330.
+6. A CAR STUCK SIDEWAYS. A car that stopped at its line a little to one side was never let into the junction
+   ("straighten up first"), and standing still it could not: it stood for ever. After 4 s it now goes.
+7. THE EDGE OF THE MAP. The bridge's far end is a way out and a way in: cars drive on to it at speed and are gone,
+   others arrive from it. The hole in 1st St is a true dead end: cars do not drive into it.
+8. THE OLD CORE READS A VALUE IT NEVER SET, somewhere in its step (found because two identical runs differed by a
+   car or two; the compiler's own checks do not find the place, and nor did I). The module is now built so that every
+   local value starts at zero (`-ftrivial-auto-var-init=zero`, in `native/build.sh`, on the PC and on the phone
+   alike), which makes the behaviour defined and the same everywhere. Said plainly: the fault is contained, not
+   located.
+
+Not solved, said plainly:
+- At twice the busiest hour the city centre still has left-turners that wait up to three and a half minutes. That
+  is beyond what the streets carry, but it shows the limit: this map's signal plan is tight.
+- Left-turn lanes exist where they are painted (3rd / 4th St, the ring). Amber has none: a car turning left off
+  Amber waits in the inner lane, and the lane behind it waits or changes lane.
+- Buses, the old taxi ride and scripted cars: the code came over with the core, nothing uses it yet.

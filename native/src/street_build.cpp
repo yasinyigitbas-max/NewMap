@@ -525,15 +525,11 @@ double Builder::lane_off_at(const Edge &e, int dir, int lane, double s) const {
 	return o[i] + (o[i + 1] - o[i]) * u;
 }
 
-// Which kind of street each side is at every point of the centre line, and from that the lanes: how many per direction
-// and how far from the centre line, point by point (a block whose two halves were built by different pieces changes
-// its section on the way; the lanes follow it over a 20 m taper).
-void Builder::layout_lanes() {
-	static const double VMAX[T_COUNT] = { 11.1, 11.1, 11.1, 11.1, 15.3, 13.9, 13.9, 19.4, 11.1 };   // 40 / 55 / 50 / 70 km/h
+// Which kind of street each side is at every point of the centre line (T_*).
+void Builder::classify_edges() {
 	for (Edge &e : edges) {
 		const int n = (int)e.x.size();
 		const SkBlock &b = blocks[e.block];
-		int mode_all[2] = { T_NONE, T_NONE };
 		for (int sd = 0; sd < 2; sd++) {
 			std::vector<uint8_t> t(n, T_NONE);
 			int known = 0;
@@ -561,30 +557,207 @@ void Builder::layout_lanes() {
 			}
 			// single odd points (a driveway apron read as a kerb) follow their neighbours: the most frequent kind within 8 m
 			std::vector<uint8_t> f(n);
+			int cnt[T_COUNT] = { 0 };
 			for (int i = 0; i < n; i++) {
-				int cnt[T_COUNT] = { 0 };
-				for (int j = std::max(0, i - 4); j <= std::min(n - 1, i + 4); j++) cnt[t[j]]++;
+				int c9[T_COUNT] = { 0 };
+				for (int j = std::max(0, i - 4); j <= std::min(n - 1, i + 4); j++) c9[t[j]]++;
 				int best = t[i];
-				for (int k = 0; k < T_COUNT; k++) if (cnt[k] > cnt[best]) best = k;
+				for (int k = 0; k < T_COUNT; k++) if (c9[k] > c9[best]) best = k;
 				f[i] = (uint8_t)best;
+				cnt[best]++;
 			}
 			e.tm[sd] = f;
-			int cnt[T_COUNT] = { 0 };
-			for (int i = 0; i < n; i++) cnt[f[i]]++;
-			int best = f[0];
-			for (int k = 0; k < T_COUNT; k++) if (cnt[k] > cnt[best]) best = k;
-			mode_all[sd] = best;
 			if (!e.oneway) rep.generic_stations += cnt[T_GENERIC];
 			if (cnt[T_GENERIC] > 0 && !e.oneway) say("KIND UNKNOWN block %s (%s) side %d: %d of %d points (typical there: carriageway from %.2f to %.2f m)", b.id.c_str(), b.name.c_str(), sd, cnt[T_GENERIC], n, e.med[sd].m, e.med[sd].k);
 		}
+	}
+}
+
+// A part of an edge, from point i0 to point i1, as an edge of its own
+static Edge slice(const Edge &e, int i0, int i1) {
+	Edge r;
+	r.block = e.block; r.oneway = e.oneway; r.shift_max = e.shift_max;
+	r.med[0] = e.med[0]; r.med[1] = e.med[1]; r.valid[0] = e.valid[0]; r.valid[1] = e.valid[1];
+	for (int i = i0; i <= i1; i++) {
+		r.x.push_back(e.x[i]); r.z.push_back(e.z[i]); r.s.push_back(e.s[i] - e.s[i0]);
+		for (int sd = 0; sd < 2; sd++) { r.at[sd].push_back(e.at[sd][i]); r.tm[sd].push_back(e.tm[sd][i]); }
+	}
+	r.len = r.s.back();
+	r.stations = (int)r.x.size();
+	return r;
+}
+
+// A street does not always keep its lanes from one junction to the next:
+//  - a block whose two halves were built by different pieces has two lanes each way on one half and one on the other.
+//    The edge is cut where the street changes, with a node of its own there (no junction: nobody stops): the two
+//    lanes merge into one, or one opens into two, WHERE THE STREET DOES IT;
+//  - the arterials (3rd / 4th St, the ring) paint a left-turn lane in the middle before a signal (the white arrows).
+//    The last 55 m before such a junction become an edge with that lane as the arriving direction's innermost lane:
+//    cars that turn left wait there, the two through lanes stay free.
+void Builder::split_edges() {
+	std::vector<Edge> res;
+	int cuts = 0, pockets = 0;
+	auto lanes_at = [&](const Edge &e, int d, int i) { return e.oneway ? (d == 0 ? 1 : 0) : TMPL[e.tm[d][i]].n; };
+	// 1. where the lane count changes
+	for (const Edge &e : edges) {
+		const int n = (int)e.x.size();
+		std::vector<int> key(n);
+		for (int i = 0; i < n; i++) key[i] = lanes_at(e, 0, i) * 4 + lanes_at(e, 1, i);
+		// a stretch under 30 m that differs from both its neighbours is not a street of its own: it takes the fewer lanes
+		for (int i = 0; i < n;) {
+			int j = i;
+			while (j < n && key[j] == key[i]) j++;
+			if (j - i < 15 && (i > 0 || j < n)) {
+				const int a = i > 0 ? key[i - 1] : key[j < n ? j : i], b = j < n ? key[j] : a;
+				const int take = std::min(a, b);
+				for (int k = i; k < j; k++) key[k] = take;
+			}
+			i = j;
+		}
+		std::vector<int> at;
+		for (int i = 1; i < n; i++) if (key[i] != key[i - 1]) at.push_back(i);
+		// a cut needs 30 m of street on both sides
+		std::vector<int> good;
+		int prev = 0;
+		for (int c : at) { if (c - prev >= 15 && n - 1 - c >= 15) { good.push_back(c); prev = c; } }
+		if (good.empty()) { res.push_back(e); continue; }
+		int from = 0, node_from = e.na;
+		for (size_t k = 0; k <= good.size(); k++) {
+			const int to = k < good.size() ? good[k] : n - 1;
+			Edge p = slice(e, from, to);
+			// each part keeps only its own kind of street (the points of the other part near the cut would mix them)
+			p.na = node_from;
+			if (k < good.size()) {
+				SkNode in; in.x = e.x[to]; in.z = e.z[to]; in.inner = true;
+				nodes.push_back(in);
+				p.nb = (int)nodes.size() - 1; node_from = p.nb;
+				cuts++;
+				say("LANES CHANGE in block %s (%s) at (%.1f, %.1f): %d + %d lanes before, %d + %d after", blocks[e.block].id.c_str(), blocks[e.block].name.c_str(), e.x[to], e.z[to],
+						key[to - 1] / 4, key[to - 1] % 4, key[to] / 4, key[to] % 4);
+			} else p.nb = e.nb;
+			for (int sd = 0; sd < 2; sd++) {   // the part's own kind, at all its points
+				int cnt[T_COUNT] = { 0 };
+				const int want = (sd == 0 ? key[from + (to - from) / 2] / 4 : key[from + (to - from) / 2] % 4);
+				for (uint8_t t : p.tm[sd]) if (TMPL[t].n == want) cnt[t]++;
+				int best = -1;
+				for (int q = 0; q < T_COUNT; q++) if (cnt[q] > 0 && (best < 0 || cnt[q] > cnt[best])) best = q;
+				if (best >= 0) for (uint8_t &t : p.tm[sd]) if (TMPL[t].n != want) t = (uint8_t)best;
+			}
+			res.push_back(p);
+			from = to;
+		}
+	}
+	edges = res;
+	// 2. left-turn pockets: white arrows on the centre line, 10 to 50 m before a junction, on an arterial
+	res.clear();
+	std::vector<int> deg(nodes.size(), 0);
+	for (const Edge &e : edges) { if (e.na >= 0) deg[e.na]++; if (e.nb >= 0) deg[e.nb]++; }
+	for (const Edge &e0 : edges) {
+		Edge e = e0;
+		const int n = (int)e.x.size();
+		bool has[2] = { false, false };   // at a, at b
+		for (int end = 0; end < 2 && !e.oneway; end++) {
+			const int node = end == 0 ? e.na : e.nb, din = end == 0 ? 1 : 0;
+			if (node < 0 || deg[node] < 3 || nodes[node].inner || nodes[node].diverge) continue;
+			int hits = 0;
+			bool art = true;
+			for (int i = 0; i < n; i++) {
+				const double d = end == 0 ? e.s[i] : e.len - e.s[i];
+				if (d < 10.0 || d > 50.0) continue;
+				if (e.tm[din][i] != T_ART) art = false;
+				const int i0 = std::max(i - 1, 0), i1 = std::min(i + 1, n - 1);
+				double tx = e.x[i1] - e.x[i0], tz = e.z[i1] - e.z[i0];
+				const double tl = std::hypot(tx, tz);
+				tx /= tl; tz /= tl;
+				for (double a = 0.0; a < PT_STEP; a += 0.5) {
+					bool w = false;
+					for (double o = -0.6; o <= 0.61 && !w; o += 0.3) w = ground->layer_at((float)(e.x[i] + tx * a + tz * o), (float)(e.z[i] + tz * a - tx * o)) == G_PAINT_WHITE;
+					if (w) hits++;
+				}
+			}
+			// ... and a street to turn left into (at a T-junction the side with no such street has hatching on its centre
+			// lane, which is white paint too)
+			bool left_exists = false;
+			{
+				const double ox = end == 0 ? e.x[1] - e.x[0] : e.x[n - 2] - e.x[n - 1], oz = end == 0 ? e.z[1] - e.z[0] : e.z[n - 2] - e.z[n - 1];
+				const double ol = std::hypot(ox, oz), ix = -ox / ol, iz = -oz / ol;   // the way the arriving traffic drives
+				for (const Edge &f : edges) {
+					for (int fe = 0; fe < 2; fe++) {
+						if ((fe == 0 ? f.na : f.nb) != node || (&f == &e0 && fe == end)) continue;
+						const int fn = (int)f.x.size();
+						double hx = fe == 0 ? f.x[1] - f.x[0] : f.x[fn - 2] - f.x[fn - 1], hz = fe == 0 ? f.z[1] - f.z[0] : f.z[fn - 2] - f.z[fn - 1];
+						const double hl = std::hypot(hx, hz);
+						hx /= hl; hz /= hl;
+						const double ang = std::atan2(hx * iz - hz * ix, ix * hx + iz * hz);
+						if (ang > 0.70 && ang < 2.6) left_exists = true;
+					}
+				}
+			}
+			has[end] = art && hits >= 6 && left_exists;   // 3 m of arrow and more
+		}
+		const double POCKET = 55.0;
+		if ((has[0] || has[1]) && e.len < POCKET * (has[0] && has[1] ? 2.0 : 1.0) + 40.0) {
+			say("POCKET NOT MADE in block %s: the block is %.0f m, too short for its left-turn lane%s", blocks[e.block].id.c_str(), e.len, has[0] && has[1] ? "s" : "");
+			has[0] = has[1] = false;
+		}
+		if (!has[0] && !has[1]) { res.push_back(e); continue; }
+		int ia = 0, ib = n - 1;
+		if (has[0]) { while (ia < n - 1 && e.s[ia] < POCKET) ia++; }
+		if (has[1]) { while (ib > 0 && e.len - e.s[ib] < POCKET) ib--; }
+		int node_from = e.na;
+		if (has[0]) {
+			Edge p = slice(e, 0, ia);
+			SkNode in; in.x = e.x[ia]; in.z = e.z[ia]; in.inner = true;
+			nodes.push_back(in);
+			p.na = e.na; p.nb = (int)nodes.size() - 1; p.pocket[1] = true;   // direction 1 arrives at a
+			res.push_back(p); node_from = p.nb; pockets++;
+		}
+		{
+			Edge m = slice(e, ia, ib);
+			m.na = node_from;
+			if (has[1]) {
+				SkNode in; in.x = e.x[ib]; in.z = e.z[ib]; in.inner = true;
+				nodes.push_back(in);
+				m.nb = (int)nodes.size() - 1;
+			} else m.nb = e.nb;
+			res.push_back(m);
+			node_from = m.nb;
+		}
+		if (has[1]) {
+			Edge p = slice(e, ib, n - 1);
+			p.na = node_from; p.nb = e.nb; p.pocket[0] = true;   // direction 0 arrives at b
+			res.push_back(p); pockets++;
+		}
+	}
+	edges = res;
+	rep.lane_changes = cuts; rep.pockets = pockets;
+}
+
+// The lanes: how many per direction and how far from the centre line, point by point (the lanes follow a change of
+// the street's section over a 20 m taper).
+void Builder::layout_lanes() {
+	static const double VMAX[T_COUNT] = { 11.1, 11.1, 11.1, 11.1, 15.3, 13.9, 13.9, 19.4, 11.1 };   // 40 / 55 / 50 / 70 km/h
+	for (Edge &e : edges) {
+		const int n = (int)e.x.size();
+		const SkBlock &b = blocks[e.block];
+		int mode_all[2] = { T_NONE, T_NONE };
+		for (int sd = 0; sd < 2; sd++) {
+			int cnt[T_COUNT] = { 0 };
+			for (int i = 0; i < n; i++) cnt[e.tm[sd][i]]++;
+			int best = e.tm[sd][0];
+			for (int k = 0; k < T_COUNT; k++) if (cnt[k] > cnt[best]) best = k;
+			mode_all[sd] = best;
+		}
 		for (int d = 0; d < 2; d++) {
 			if (e.oneway && d == 1) { e.nl[1] = 0; continue; }
-			// lanes: as many as the narrowest stretch of the block has
+			// lanes: as many as the narrowest stretch of the edge has (edges are cut where the count changes)
 			int nl = 2;
 			double hw = 9.0;
 			for (int i = 0; i < n; i++) { nl = std::min(nl, TMPL[e.tm[d][i]].n); hw = std::min(hw, TMPL[e.tm[d][i]].hw); }
 			if (e.oneway) nl = 1;
-			e.nl[d] = nl; e.lhw[d] = hw;
+			const int pk = e.pocket[d] ? 1 : 0;   // a left-turn lane on the centre line is this direction's lane 0
+			e.nl[d] = nl + pk; e.lhw[d] = hw;
+			if (pk) e.off[d][0].assign(n, 0.0);
 			for (int j = 0; j < nl; j++) {
 				std::vector<double> raw(n);
 				for (int i = 0; i < n; i++) {
@@ -604,22 +777,25 @@ void Builder::layout_lanes() {
 					for (int k = std::max(0, i - 5); k <= std::min(n - 1, i + 5); k++) { a += raw[k]; c++; }
 					sm[i] = a / c;
 				}
-				e.off[d][j] = sm;
+				e.off[d][j + pk] = sm;
 			}
 			if (e.oneway) e.lhw[0] = std::min(2.0, std::max(1.5, (e.med[0].k + e.med[1].k) * 0.5 - 0.9));
 		}
-		// speed, how busy, and its rank at junctions: from the kind of street most of the block is
+		// speed, how busy, and its rank at junctions: from the kind of street most of the edge is
 		const int kind = mode_all[0] != T_NONE ? mode_all[0] : mode_all[1];
 		e.vmax = VMAX[kind];
 		const bool busy = b.section == "hs" || b.section == "cc" || b.section == "strip";
+		// How busy: cars per metre of lane at the busiest hour. Chosen so that the flow (cars per metre x speed) is about
+		// half of what the junctions pass: a signal lane on this map's plan (green 40 % of 30 s) passes about 0.18
+		// cars a second, an all-way stop about 0.07 per approach.
 		switch (kind) {
-			case T_ART: e.dens = 0.016; e.cls = 4; break;
-			case T_BLVD: case T_BLVD_PARK: e.dens = 0.016; e.cls = 5; break;
-			case T_BRIDGE: e.dens = 0.018; e.cls = 5; break;
-			case T_TRUCK: e.dens = 0.006; e.cls = 2; break;
-			default: e.dens = busy ? 0.012 : (b.section == "std" ? 0.007 : 0.004); e.cls = busy ? 3 : (b.section == "std" ? 2 : 1); break;
+			case T_ART: e.dens = 0.0065; e.cls = 4; break;
+			case T_BLVD: case T_BLVD_PARK: e.dens = 0.0070; e.cls = 5; break;
+			case T_BRIDGE: e.dens = 0.0060; e.cls = 5; break;
+			case T_TRUCK: e.dens = 0.0030; e.cls = 2; break;
+			default: e.dens = busy ? 0.0050 : (b.section == "std" ? 0.0040 : 0.0027); e.cls = busy ? 3 : (b.section == "std" ? 2 : 1); break;
 		}
-		if (e.oneway) { e.dens = 0.012; e.cls = 3; }
+		if (e.oneway) { e.dens = 0.0040; e.cls = 3; }
 	}
 }
 
@@ -699,7 +875,9 @@ void Builder::junctions() {
 				const double far = std::min(45.0, e.len * 0.5);
 				for (double d = far; d >= 5.0 && bar < 0.0; d -= 0.1) {
 					const double sgn = din == 0 ? -1.0 : 1.0;
-					const double o0 = lane_off_at(e, din, 0, s_of(d)) - e.lhw[din] * 0.7, o1 = lane_off_at(e, din, e.nl[din] - 1, s_of(d)) + e.lhw[din] * 0.7;
+					// (across the through lanes: a left-turn lane has its own short bar, or hatching)
+					const int pk = e.pocket[din] ? 1 : 0;
+					const double o0 = lane_off_at(e, din, pk, s_of(d)) - e.lhw[din] * 0.7, o1 = lane_off_at(e, din, e.nl[din] - 1, s_of(d)) + e.lhw[din] * 0.7;
 					int hit = 0, all = 0;
 					for (double o = o0; o <= o1 + 1e-6; o += 0.35) {
 						all++;
@@ -713,6 +891,7 @@ void Builder::junctions() {
 			if (trim > 24.0) trim = 24.0;   // (a street that changes its width near the junction: its lanes still reach the junction)
 			if (bar > 0.0) { ctl = sig ? CTL_SIGNAL : CTL_STOP; trim = bar + 0.25; }
 			if (legs[ni].size() == 2) trim = 1.0;      // a bend or a joint of two blocks: the lanes run on
+			if (nodes[ni].inner) trim = std::min(12.0, e.len * 0.2);   // lanes change here: 24 m for the cars to move over
 			if (legs[ni].size() == 1) trim = 2.0;      // the street ends here
 			if (nodes[ni].diverge) { trim = e.oneway ? 0.5 : 1.0; ctl = CTL_NONE; }   // a ramp leaves: nobody stops
 			e.trim[lg.end] = trim; e.ctl[lg.end] = ctl;
@@ -847,7 +1026,13 @@ void Builder::emit_lanes() {
 				// which clock phase the approach is on: the signal shader gives heads facing along x half a cycle later
 				const float hx = pts[pts.size() - 3] - pts[pts.size() - 6], hz = pts[pts.size() - 1] - pts[pts.size() - 4];
 				const int phase = std::fabs(hx) > std::fabs(hz) ? 1 : 0;
-				const int32_t ia[12] = { (int32_t)ei, d, j, j > 0 ? id - 1 : -1, j + 1 < e.nl[d] ? id + 1 : -1, n_start, n_end, e.cls, 1, ctl, n_end, phase };
+				// flags: 1 = a driving lane; 16 = it runs out of the map (it ends at a node with no other street that is not a
+				// hole in a street: the far end of the bridge)
+				const bool exits = n_end >= 0 && legs[n_end].size() == 1 && !nodes[n_end].deadend;
+				// neighbours for lane changes; a left-turn lane has none (it is entered at its start, left at the junction)
+				const int pk = e.pocket[d] ? 1 : 0;
+				const int left = (j > pk) ? id - 1 : -1, right = (j + 1 < e.nl[d] && j >= pk) ? id + 1 : -1;
+				const int32_t ia[12] = { (int32_t)ei, d, j, left, right, n_start, n_end, e.cls, 1 | (exits ? 16 : 0), ctl, n_end, phase };
 				out.lane_i.insert(out.lane_i.end(), ia, ia + 12);
 			}
 		}
@@ -881,9 +1066,19 @@ void Builder::emit_lanes() {
 					out.conns.insert(out.conns.end(), c, c + 5);
 					made++;
 				};
+				const int pin = ei.pocket[din] ? 1 : 0, pout = eo.pocket[dout] ? 1 : 0;   // a left-turn lane as lane 0
 				if (turn == TURN_STRAIGHT && eo.oneway && nodes[ni].diverge) add(n_in - 1, 0);   // a ramp is left from the outer lane
-				else if (turn == TURN_STRAIGHT) { for (int a = 0; a < n_in; a++) add(a, std::min(a, n_out - 1)); }
-				else if (turn == TURN_LEFT) add(0, 0);
+				else if (turn == TURN_STRAIGHT) {
+					// through lanes to through lanes, innermost to innermost (a left-turn lane is not a through lane)
+					const int ti = n_in - pin, to = n_out - pout;
+					for (int a = 0; a < ti; a++) add(a + pin, std::min(a, to - 1) + pout);
+					for (int b = ti; b < to; b++) add(n_in - 1, b + pout);   // the street gains a lane: the outer lane opens into it
+					if (pout) {   // a left-turn lane starts here: it is entered from the innermost through lane
+						const int32_t c[5] = { ei.first_lane[din] + pin, eo.first_lane[dout], TURN_LEFT, (int32_t)ni, 40 };
+						out.conns.insert(out.conns.end(), c, c + 5);
+					}
+				}
+				else if (turn == TURN_LEFT) add(0, pout);
 				else add(n_in - 1, n_out - 1);
 			}
 			if (made == 0 && legs[ni].size() > 1) {
@@ -1289,6 +1484,8 @@ void Builder::build() {
 	out = StreetData();
 	make_edges();
 	measure_edges();
+	classify_edges();
+	split_edges();
 	layout_lanes();
 	junctions();
 	emit_lanes();
@@ -1318,6 +1515,7 @@ void Builder::build() {
 			rep.walk_pts_no_ground, rep.walk_pts, rep.walk_driveways, rep.crossings_unpainted);
 	say("CHECK pavement corners with no ground under them (holes in the map, listed above): %d", rep.corners_no_ground);
 	say("CHECK kerb stalls not on the asphalt %d, stalls without ground %d (both must be 0)", rep.stalls_kerb_off_road, rep.stalls_no_ground);
+	say("TOTAL places where a street changes its lanes mid-block %d, left-turn lanes before signals %d", rep.lane_changes, rep.pockets);
 	say("CHECK approaches with no way on %d, blocks too short for their junctions %d, points of an unknown street kind %d", rep.legs_unconnected, rep.short_edges, rep.generic_stations);
 }
 

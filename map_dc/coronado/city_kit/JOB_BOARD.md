@@ -28,7 +28,13 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   `review/traffic/`; run it after every bake. 449 lanes (75.3 km), 974 junction paths, 61 km of pavement lines, 276
   crossings, 3,010 kerb stalls: 0 lane points off the asphalt, 0 junction paths touching a kerb (checked as wide as a
   car). FOUND IN THE MAP: a 54 m hole in 1st St (ferry landing), no ground under the four pavement corners of the
-  centre junction (Amber x 7th). Doc section 15. NEXT: stage 2b, the traffic core on these lanes.
+  centre junction (Amber x 7th). Doc section 15. STAGE 2b DONE (19 Nov 03:40): the old traffic core drives on the
+  new streets (`native/src/traffic_*`, class `CityTraffic`). `tests/traffic/test_traffic_core.gd` RESULT PASS: nine
+  30-minute runs, no overlap, no crash, nobody stuck at the busiest hour with the stuck-car rule off, the same
+  result every time; a step for 190 cars 0.32 ms on the PC. The streets now have 761 lanes, 60 left-turn lanes found
+  from the paint, lanes that change where the street narrows. What had to change in the old core: doc section 16.
+  NEXT: stage 2c (cars drawn as batches, parked cars, signals on the lamps' clock, the streamer hooks), then the
+  phone (2d).
 - 18 Nov (cloud, branch `claude/grow-industrial`): INDUSTRIAL GROWTH, stage 1 + 2 done, NOTHING LOCKED, WAITING for
   Yasin's word on the variants. Read `review/grow_ind/README.md`. Three variants (A port, B fleet, C cold chain),
   each dressed twice = six 100 m blocks round the sample. They form the pilot area u -900..-500, v -1600..-1400
