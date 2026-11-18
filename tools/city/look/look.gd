@@ -21,6 +21,7 @@ extends Node
 ##    swaps the ground's shader for rt_ground + the snippet: one more read (puddles) + one (sky map) per ground pixel.
 ##  - SEA (sea.gd + sea.gdshader, queue 2 job 3): one draw (~33k triangles) in the place of the green plane; unshaded;
 ##    per water pixel 3 texture reads (two ripple reads + the sky map) and ~40 arithmetic steps.
+##  - AIR (air.gd + air.gdshader, queue 2 job 5, OFF by default): one draw of small alpha quads moved by the shader.
 ##  - BLOOM: only with --bloom=1 (off by default): a blur chain at 1/4 .. 1/16 size plus one read per pixel. Measure
 ##    it on the phone before it is kept (Yasin 18 Nov: "does the bloom cost that much?").
 ##  - NOT used, on purpose: SSAO, SSR, volumetric fog, depth of field.
@@ -32,6 +33,7 @@ const Blobs := preload("res://tools/city/look/blob_shadows.gd")
 const DayCycle := preload("res://tools/city/look/day_cycle.gd")
 const Sea := preload("res://tools/city/look/sea.gd")
 const Weather := preload("res://tools/city/look/weather.gd")
+const Air := preload("res://tools/city/look/air.gd")
 ## the moon: where the night's light comes from (the same direction the night used before the running day)
 const MOON_ELEV := 40.0
 const MOON_AZIM := -35.0
@@ -104,6 +106,7 @@ static var PRESETS := {
 @export var glow := true                            ## lamp halos and pools drawn by tools/city/look/glow.gdshader (look job 3); false = the bake's
 @export var blobs := false                          ## soft tree shadows beyond the sun shadow (look job 4). Reads each cell's meshes: off for phone drives
 @export_range(0.0, 1.0) var wet := 0.0             ## look job 5: 0 dry .. 1 after rain (global ck_wet; the ground demo below)
+@export var air := false                            ## look queue 2 job 5: gulls, a plane, smoke (air.gd, one draw); off until measured
 @export var weather := ""                           ## look queue 2 job 4: mist, hazy, storm, rain (weather.gd) over the time of day
 @export var sea := true                             ## look queue 2 job 3: the sea in the place of the green plane (sea.gd)
 @export var celestial := true                       ## look queue 2 job 2: sun glare, the moon, new stars; false = the sky as before
@@ -162,6 +165,7 @@ func _ready() -> void:
 		RenderingServer.global_shader_parameter_add(&"ck_wet", RenderingServer.GLOBAL_VAR_TYPE_FLOAT, wet); _map_added = true
 	else: RenderingServer.global_shader_parameter_set(&"ck_sky_map", sky_map.get_texture())
 	if sea: add_child(Sea.build())      # one draw, built once (tens of ms at start)
+	if air: add_child(Air.build())      # one draw, nothing per frame
 	sun = DirectionalLight3D.new(); sun.rotation_degrees = sun_angles
 	sun.shadow_enabled = OS.get_environment("NOSHADOW") != "1"; sun.directional_shadow_max_distance = shadow_distance; add_child(sun)
 	if weather == "rain" and wet <= 0.0: wet = 0.65      # rain wets the ground (before the cells come in: attach_stream)
@@ -324,6 +328,7 @@ func _apply(t0: Dictionary) -> void:
 	sm.set_shader_parameter(&"light", Vector3(env.ambient_light_color.r, env.ambient_light_color.g, env.ambient_light_color.b) * env.ambient_light_energy + Vector3(sun.light_color.r, sun.light_color.g, sun.light_color.b) * sun.light_energy * maxf(light_v.y, 0.0) * 0.55)
 	sm.set_shader_parameter(&"sun_dir", sun_v if mo < 0.5 else moon_v)
 	sm.set_shader_parameter(&"sun_light", Vector3(sun.light_color.r, sun.light_color.g, sun.light_color.b) * sun.light_energy)
+	Air.material().set_shader_parameter(&"light", sm.get_shader_parameter(&"light"))
 	var bm := Blobs.material()      # the blob shadows follow the sun: where it stands, how strong (none at night)
 	bm.set_shader_parameter(&"sun_dir", light_v)
 	bm.set_shader_parameter(&"strength", 0.5 * clampf(sun.light_energy / 1.55, 0.0, 1.0) * (1.0 - float(t.get("lights", night))))
