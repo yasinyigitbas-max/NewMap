@@ -38,7 +38,7 @@ func _run() -> void:
 	var B: Array = []
 	var fx := G.front_x(m, 22.0, 56.0)
 	B.append([G.put(bl, props, sx, sz, "x", 23.0, fx, "modular/examples/mod_brk_row", "public_works_office"), "modular/examples/mod_brk_row"])
-	B.append([G.put(bl, props, sx, sz, "x", 43.0, fx, "ck/ck_grt_row2", "workwear_store"), "ck/ck_grt_row2"])
+	B.append([G.put(bl, props, sx, sz, "x", 43.0, fx, "ck/ck_svc_pawn_fast", "workwear_store"), "ck/ck_svc_pawn_fast"])   # not ck_grt_row2: its painted windows and the room's storefront band across its door (Yasin 18 Nov)
 	var fz := G.front_z(m, 22.0, 100.0)
 	B.append([G.put(bl, props, sx, sz, "z", 32.0, fz, "ck/mod_stg_row_roofed", "salt_and_sign_store"), "ck/mod_stg_row_roofed"])
 	B.append([G.put_back(bl, props, sx, sz, "x", 62.0, "services/svc_carwash", "fleet_wash"), "services/svc_carwash"])

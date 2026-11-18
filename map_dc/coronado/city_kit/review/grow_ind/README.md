@@ -70,14 +70,18 @@ Kit it uses: ice chests, shopping carts + corral, vending machines, **stucco wal
 ## The rooms (14, all new; generator `tools/city/rooms/room_gen_ind.gd`, list `tools/city/rooms/assign_ind.py`)
 Industrial character, unlike the high street's rooms: sealed concrete or quarry tile, drop-in ceilings, cool
 fluorescent strips, steel shelving, pegboard and workbench behind the parts counters, filing cabinets, vending
-machines, and stock on the floor (cones, drums, gas bottles, ice chests). Indoor checker: 0 problems (all 176 rooms of
-the city). Each room has 2-6 real lights (the fixtures plus daylight at the window).
+machines, and stock on the floor (cones, drums, gas bottles, ice chests). Indoor checker: 0 problems in these 14 rooms (the
+last run loaded 219 rooms city-wide; its only 5 problems are in a strip-growth room, g_strip_*, another session's). Each room has 2-6 real lights (the fixtures plus daylight at the window).
 
 What is honestly weak:
 - The kit's shelves and gondolas are EMPTY (no goods models), so the stores look bare.
 - The fish market has too many dining tables for a fish counter.
-- The diner's building is a boarded-up gritty model whose front windows are painted: you see its room through
-  the door only.
+- (fixed 18 Nov, Yasin: "something blocking the door", "overlapping props") the diner and the workwear store first stood
+  in `ck_grt_row2`, a gritty model whose painted windows overlap its own side door and whose storefront band (room
+  library) ran across the shop door. They are now in `ck/mod_fastfood` and `ck/ck_svc_pawn_fast` (real shopfronts,
+  the room behind both doors). The diner's bin stands at the corner, 3 m past its door; the paper box is gone.
+- (fixed 18 Nov, Yasin: "most shelves are empty") the kit's `wall_shelf` and `gondola_aisle` are empty models; the
+  rooms now use only stocked shelving (steel racking with goods, boxed stock), aisles as back-to-back pairs.
 - The wear on the floors is light.
 
 These are first drafts for Yasin's word.

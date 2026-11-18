@@ -32,7 +32,7 @@ ROOMS = [
      "the repair shop's parts counter on J Ave; the bays stay a service yard"),
     ("i_vb_w800_n1600_se", "public_works_office", 1.9, "permits", "Public Works Permits", "navy",
      "the city yard's civic face: the permits and complaints counter (the row's other two fronts are its offices)"),
-    ("i_vb_w800_n1600_se", "workwear_store", -4.6, "workwear", "Harbor Workwear", "orange",
+    ("i_vb_w800_n1600_se", "workwear_store", 1.2, "workwear", "Harbor Workwear", "orange",
      "boots, hi-vis and gloves for the crews and the district's trades, by the bus stop"),
     ("i_vc_w600_n1600_sw", "dockside_fish_market", 4.8, "fish_counter", "Dockside Fish Market", "teal",
      "the catch landed across the road, sold over the counter and fried for the district's lunch"),
@@ -42,7 +42,7 @@ ROOMS = [
      "the boatyard's office and yacht broker: storage contracts, haul-outs, boats for sale"),
     ("i_va_w600_n1600_se", "marine_engines", -6.5, "parts_counter", "Tidewater Marine Engines", "green",
      "outboard and diesel parts over the counter; the bays work on the yard's boats"),
-    ("i_vb_w600_n1400_nw", "truck_stop_diner", -4.6, "diner", "3rd St Truck Stop", "red",
+    ("i_vb_w600_n1400_nw", "truck_stop_diner", -4.8, "diner", "3rd St Truck Stop", "red",
      "the drivers' diner on the truck route: breakfast at 4 am, coffee all day"),
     ("i_vb_w600_n1400_nw", "truck_parts", -3.0, "trade_counter", "Bayline Truck Parts", "orange",
      "filters, belts and lights for the trucks serviced next door"),
@@ -53,7 +53,7 @@ ROOMS = [
     ("i_vc_w600_n1400_ne", "island_restaurant_supply", -3.0, "uniform", "Shift Linen & Uniforms", "teal",
      "aprons, chef whites and shop towels washed and handed back over the counter"),
 ]
-FULL = {("i_vc_w600_n1400_ne", "shift_canteen")}      # one place behind both of the building's shop doors
+FULL = {("i_vc_w600_n1400_ne", "shift_canteen"), ("i_vb_w800_n1600_se", "workwear_store"), ("i_vb_w600_n1400_nw", "truck_stop_diner")}      # one place behind both of the building's shop doors
 # the repair shops' counters take the office end only; the rollup bays stay a service yard behind a partition
 BAY = {("i_va_w800_n1600_sw", "reefer_repair"): [-8.7, -2.6], ("i_va_w600_n1600_se", "marine_engines"): [-8.7, -2.6]}
 

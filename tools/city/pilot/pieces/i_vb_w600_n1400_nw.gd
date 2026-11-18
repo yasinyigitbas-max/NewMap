@@ -32,7 +32,7 @@ func _run() -> void:
 	paints.append([sx * 61.0, sz * 49.0, sx * 47.0, sz * 45.0, "concrete"])        # the diesel island's slab
 	G.floor(g, m, sx, sz, paints)
 	var B: Array = []
-	B.append([G.put(bl, props, sx, sz, "x", 22.5, G.front_x(m, 22.0, 35.0), "ck/ck_grt_row2", "truck_stop_diner"), "ck/ck_grt_row2"])
+	B.append([G.put(bl, props, sx, sz, "x", 22.5, G.front_x(m, 22.0, 35.0), "ck/mod_fastfood", "truck_stop_diner"), "ck/mod_fastfood"])   # not ck_grt_row2: the room's storefront band ran across its door (Yasin 18 Nov)
 	B.append([G.put(bl, props, sx, sz, "x", 43.0, G.front_x(m, 43.0, 69.2), "services/svc_carwash", "truck_wash"), "services/svc_carwash"])
 	B.append([G.put(bl, props, sx, sz, "x", 72.0, G.front_x(m, 72.0, 90.0), "ck/mod_stg_row_roofed", "tyre_store"), "ck/mod_stg_row_roofed"])
 	var fz := G.front_z(m, 22.0, 100.0)
@@ -64,9 +64,9 @@ func _run() -> void:
 	# ---- drivers' own cars along the back wall
 	stl.append_array(G.stalls(props, sx, sz, 30.0, 18, 94.6, 1.0, "prop_wheel_stop_concrete", [7]))
 	# ---- the diner's sidewalk: a bench facing 3rd St (drivers wait for a lift), bin, paper box; the parts counter's rack
-	# one bin midway between the diner's door (u 33.1) and the flats' door (u 25.5); no paper box: at night the pair read as
-	# something blocking the door (Yasin 18 Nov)
-	G.walk_prop(props, m, sx, sz, "x", 29.3, "prop_trash_receptacle", "dirty")
+	# one bin at the diner's corner, 3 m past its west door (doors at u 27.3 and 33.3); no paper box: at night the pair
+	# read as something blocking the door (Yasin 18 Nov)
+	G.walk_prop(props, m, sx, sz, "x", 24.2, "prop_trash_receptacle", "dirty")
 	G.walk_prop(props, m, sx, sz, "z", 32.5, "prop_bike_rack", "rusty")
 	# ---- wear: the heaviest in the zone: oil at the pumps, wash water out of the wash, tyre scrub on the turns
 	for b: Array in B: I.bld_wear(dec, rr, b[0][0], b[0][1], b[0][2], b[1])
