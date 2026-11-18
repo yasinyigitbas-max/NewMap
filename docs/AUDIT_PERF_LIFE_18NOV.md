@@ -107,8 +107,8 @@ renderer to treat the same lamp in two pieces as the same lamp.
 **P4. Kit textures are uncompressed and have no mipmaps.**
 All 36 kit atlases (`assets/coronado_kit/textures`, `atlases`) are imported with compression "lossless" and mipmaps
 off. Measured in memory: three 2048 atlases at 12 MB each, twenty-one 1024 atlases at 3-4 MB each, about 113 MB in
-total. The kit's own budget is 44 MB after compression. Without mipmaps, distant walls and tree crowns sparkle (seen in the tree crowns in
-in the preview shots) and the phone's GPU works harder on every distant pixel. The kit budget names pixels as the
+total. The kit's own budget is 44 MB after compression. Without mipmaps, distant walls and tree crowns sparkle (the
+preview shots show it) and the phone's GPU works harder on every distant pixel. The kit budget names pixels as the
 number one cost on the Redmi.
 - Fix: import them VRAM-compressed with mipmaps (normal maps flagged as normal maps). About 25-30 MB.
 - This does not touch any piece file, but it changes how locked pieces look at a distance (calmer, slightly softer),
