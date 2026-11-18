@@ -20,6 +20,7 @@ Global shader values in `project.godot` `[shader_globals]`, 0 = off (the look be
 | `ck_look_glass` | 3. glass by day |
 | `ck_look_propmaps` | props' ORM maps (queue job 2) |
 | `ck_look_detail` | close-up wall grain (queue job 3) |
+| `ck_look_between` | contact shadows between models (queue job 4, prototype layer) |
 | `ck_look_sky_top`, `ck_look_sky_horizon` | the day sky colours the glass reflects (set to the rig's sky; the sky session or the game's day cycle should set these to its own sky) |
 
 From code: `RenderingServer.global_shader_parameter_set(&"ck_look_glass", 0.0)`. Takes effect the next frame, no reload.
@@ -114,6 +115,15 @@ grime), full strength to 4 m, gone by 12 m, never on glass. Pictures `review/loo
 - Cost: one texture read on building pixels within 12 m of the camera (a branch skips it beyond), ~6 ops. None farther.
 - Tunable per material: `detail_amount`, `detail_m`, `detail_near`, `detail_far`. Not checked: how it reads on the phone's
   720p screen (the effect is small by design; it may be too subtle to notice there).
+
+## Queue job 4, contact shadows between models (`ck_look_between`, prototype)
+Where one model meets another, which the kit's per-model occlusion cannot know: the pavement at a building's foot (a
+strip along every facade, 0.9 m out) and the wall under an awning (found from the awning texels in the mesh, 1.5 m
+down). `tools/city/look/contact_proto.gd` builds them for chosen cells into one multiply mesh (`contact_mul.gdshader`,
+no lighting, no texture read): the pilot area = 39 buildings, 23 awnings, 358 triangles, one draw. Pictures
+`review/look_18nov/contact_between/` (`awn`, `foot`). Parked cars: none in the map yet; the patch note says how a car
+would carry its own. Into the bake: `docs/look_patches/contact_between.md`.
+- Cost: one draw per cell; a blend on the strips' pixels only, ~4 ops.
 
 ## Picture files
 `<view>_<day|night>_<set>.jpg`, views `centre_a/b` (city centre, 0,-600), `apartments_a/b` (250,-600), `pilot_a/b`

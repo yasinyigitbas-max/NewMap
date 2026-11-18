@@ -14,10 +14,11 @@ const Lights := preload("res://tools/city/bake/city_lights.gd")
 ##                                    ("-glass": everything on except the glass: the "before" of that job)
 ##   --ao    also "ao_off" / "ao_on": the kit's own occlusion (ORM red) switched off in memory, to show how much the
 ##           kit already does (look changes off in both)
+##   --extra=res://...scn   add a scene (a prototype layer, e.g. runtime/look/contact_pilot.scn)
 ##   --png   lossless files instead of JPG        --hold=frames before each picture (default 30)
 ## Cloud note: the software GPU draws no shadows (NOSHADOW=1) and the weathered buildings about 40 % too dark. Use the
 ## system Mesa driver (apt mesa-vulkan-drivers, VK_ICD_FILENAMES unset): /opt/lavapipe draws the tree leaves black.
-const LOOKS := [&"ck_look_contact", &"ck_look_windows", &"ck_look_glass", &"ck_look_propmaps", &"ck_look_detail"]
+const LOOKS := [&"ck_look_contact", &"ck_look_windows", &"ck_look_glass", &"ck_look_propmaps", &"ck_look_detail", &"ck_look_between"]
 ## street level (eye 1.7 m above the road) at the three places Yasin named: city centre, apartments, pilot high street
 const VIEWS := [
 	["centre_a", Vector3(-6, 7.7, -592), Vector3(40, 16, -640)],
@@ -31,6 +32,7 @@ func _v(s: String) -> Vector3:
 	var f := s.split_floats(","); return Vector3(f[0], f[1], f[2])
 func _run() -> void:
 	var out := "res://map_dc/coronado/city_kit/review/look_18nov/buildings"; var cams: Array = []; var only := PackedStringArray(); var times := PackedStringArray(["day", "night"])
+	var extra: Array = []
 	var sets := PackedStringArray(["before", "after"]); var ao := false; var png := false; var hold := 30
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--out="): out = a.trim_prefix("--out=")
@@ -40,6 +42,7 @@ func _run() -> void:
 		if a.begins_with("--hold="): hold = int(a.trim_prefix("--hold="))
 		if a == "--ao": ao = true
 		if a == "--png": png = true
+		if a.begins_with("--extra="): extra.append(a.trim_prefix("--extra="))
 		if a.begins_with("--cams="):
 			for c in a.trim_prefix("--cams=").split(";", false):
 				var p := c.split(":"); cams.append([p[0], _v(p[1]), _v(p[2])])
@@ -66,6 +69,7 @@ func _run() -> void:
 	var gm := StandardMaterial3D.new(); gm.albedo_color = Color(0.36, 0.42, 0.3); gm.roughness = 1.0; gp.material_override = gm; gp.position.y = -0.05; root.add_child(gp)
 	var st: Node3D = Stream.new(); st.name = "City"; root.add_child(st)
 	var lights: Node3D = Lights.new(); lights.budget = 8; lights.stream = st; root.add_child(lights)
+	for x in extra: root.add_child((load(String(x)) as PackedScene).instantiate())      # --extra=res://...scn: a prototype layer (look job 4)
 	var cam := Camera3D.new(); cam.fov = 74.0; cam.near = 0.08; cam.far = 900.0; root.add_child(cam); cam.current = true
 	root.get_viewport().screen_space_aa = Viewport.SCREEN_SPACE_AA_FXAA
 	var shader: Shader = load("res://map_dc/coronado/city_kit/shaders/rt/rt_bldg.gdshader"); var code := shader.code
