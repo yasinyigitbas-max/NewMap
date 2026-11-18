@@ -257,6 +257,10 @@ func _apply(t: Dictionary) -> void:
 		m.set_shader_parameter(&"sun_dir", Basis.from_euler(sun.rotation).z)      # towards the light (its +Z)
 		m.set_shader_parameter(&"sun_scatter", sun.light_energy * env.fog_sun_scatter)      # the fog's own sun glow, so sky and fog agree
 	sky_map.render_target_update_mode = SubViewport.UPDATE_ONCE
+	# the building session's glass (claude/look-buildings, rt_bldg.gdshader) reflects a two-colour sky: keep it this sky
+	if ProjectSettings.has_setting("shader_globals/ck_look_sky_top"):
+		RenderingServer.global_shader_parameter_set(&"ck_look_sky_top", t.zenith.lerp(t.middle, 0.4))
+		RenderingServer.global_shader_parameter_set(&"ck_look_sky_horizon", t.haze)
 	RenderingServer.global_shader_parameter_set(&"ck_wet", wet)
 	var bm := Blobs.material()      # the blob shadows follow the sun: where it stands, how strong (none at night)
 	bm.set_shader_parameter(&"sun_dir", Basis.from_euler(sun.rotation).z)
