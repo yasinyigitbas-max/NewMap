@@ -36,10 +36,10 @@ func _run() -> void:
 	B.append([G.put(bl, props, sx, sz, "x", 43.0, G.front_x(m, 43.0, 69.2), "services/svc_carwash", "truck_wash"), "services/svc_carwash"])
 	B.append([G.put(bl, props, sx, sz, "x", 72.0, G.front_x(m, 72.0, 90.0), "ck/mod_stg_row_roofed", "tyre_store"), "ck/mod_stg_row_roofed"])
 	var fz := G.front_z(m, 22.0, 100.0)
-	B.append([G.put(bl, props, sx, sz, "z", 27.0, fz, "ck/ck_svc_trade_1d", "truck_parts"), "ck/ck_svc_trade_1d"])
+	B.append([G.put(bl, props, sx, sz, "z", 28.5, fz, "ck/ck_svc_trade_1d", "truck_parts"), "ck/ck_svc_trade_1d"])
 	B.append([G.put(bl, props, sx, sz, "z", 50.0, fz, "industrial/ind_repair", "heavy_repair"), "industrial/ind_repair"])
-	G.frontage(props, m, sx, sz, "x", [[22.5, 34.5], [43.0, 69.2], [72.0, 90.0]], [38.0], "chain", 34.5, 99.8)
-	G.frontage(props, m, sx, sz, "z", [[27.0, 39.0], [50.0, 68.0]], [44.0, 79.0], "chain", 39.0, 99.8)
+	G.frontage(props, m, sx, sz, "x", [[22.5, 34.5], [43.0, 69.2], [72.0, 90.0]], [38.0], "chain", 34.5, 99.8, [], [38.0])
+	G.frontage(props, m, sx, sz, "z", [[28.5, 40.5], [50.0, 68.0]], [44.0, 79.0], "chain", 40.5, 99.8)
 	G.wall(props, sx, sz, Vector2(G.ev(m, 99.8) + 0.2, 99.8), Vector2(99.6, 99.8), "fence_cmu_wall", 6)
 	# ---- the diesel island: two pumps on their slab, iron bollards round it, the tank behind a k-rail
 	for k in 2: I.add(props, "prop_fuel_pump", "clean", G.q(sx, sz, 51.0 + k * 6.0, 47.0), 90.0)
@@ -49,7 +49,7 @@ func _run() -> void:
 	for k in 2: I.add(props, "prop_k_rail", "dirty", G.q(sx, sz, 64.4, 54.0 + k * 4.2), 90.0)    # the tank is 9 m across
 	# ---- the tyre store's back: rolloff of scrap tyres, the heavy repair shop's drums, the wash's soap drums
 	I.add(props, "prop_dumpster_rolloff_20yd", "rusty", G.q(sx, sz, 60.0, 86.0), 90.0)
-	for k in 6: I.add(props, "prop_channelizer_drum", "dirty", G.q(sx, sz, 27.5, 70.0 + (k % 3) * 0.85 + (k / 3) * 0.0), 0.0)
+	for k in 6: I.add(props, "prop_channelizer_drum", "dirty", G.q(sx, sz, 27.5 + (k / 3) * 0.85, 70.0 + (k % 3) * 0.85), 0.0)
 	for k in 3: I.add(props, "prop_channelizer_drum", "worn", G.q(sx, sz, 40.0 + k * 0.85, 33.0), 0.0)
 	I.add(props, "prop_propane_tank_250gal", "rusty", G.q(sx, sz, 28.0, 48.5), 0.0)
 	I.back_door_clutter(props, rr, G.q(sx, sz, 28.5, 29.5), 0.0, "gas")      # the diner's fryer gas and bins
@@ -66,7 +66,7 @@ func _run() -> void:
 	# ---- the diner's sidewalk: a bench facing 3rd St (drivers wait for a lift), bin, paper box; the parts counter's rack
 	G.walk_prop(props, m, sx, sz, "x", 30.0, "prop_trash_receptacle", "dirty")
 	G.walk_prop(props, m, sx, sz, "x", 25.0, "prop_newspaper_box_red", "dirty")
-	G.walk_prop(props, m, sx, sz, "z", 36.0, "prop_bike_rack", "rusty")
+	G.walk_prop(props, m, sx, sz, "z", 32.5, "prop_bike_rack", "rusty")
 	# ---- wear: the heaviest in the zone: oil at the pumps, wash water out of the wash, tyre scrub on the turns
 	for b: Array in B: I.bld_wear(dec, rr, b[0][0], b[0][1], b[0][2], b[1])
 	for k in 8: W.oil(dec, rr, Vector2(sx * rr.randf_range(48.0, 60.0), sz * rr.randf_range(43.0, 51.0)), 90.0, S.walk_y, 0.95)

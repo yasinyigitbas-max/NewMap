@@ -30,7 +30,7 @@ func _run() -> void:
 	var g := K.Ground.new(); var props := K.Props.new(); var dec := K.Decals.new(); var rr := W.rng_for(NAME)
 	var stl: Array = []
 	var paints: Array = []
-	paints.append_array(G.stall_paint(sx, sz, 24.0, 13, 34.0, -1.0))
+	paints.append_array(G.stall_paint(sx, sz, 24.0, 13, 36.0, -1.0))
 	paints.append_array(G.stall_paint(sx, sz, 48.0, 13, 50.0, 1.0))
 	paints.append_array(G.stall_paint(sx, sz, 48.0, 13, 55.6, -1.0))
 	paints.append([sx * 29.0, sz * 62.5, sx * 41.0, sz * 66.5, "concrete"])        # the fuel island's slab
@@ -52,10 +52,10 @@ func _run() -> void:
 	G.frontage(props, m, sx, sz, "x", [[23.0, 41.0], [43.0, 55.0]], [], "stucco", 55.0, 99.8)
 	G.frontage(props, m, sx, sz, "z", [[32.0, 50.0]], [82.0], "chain", 22.0, 99.8)
 	G.wall(props, sx, sz, Vector2(99.8, G.eu(m, 99.8) + 0.2), Vector2(99.8, 23.8), "fence_cmu_wall", 0)
-	G.wall(props, sx, sz, Vector2(99.8, 66.4), Vector2(99.8, 99.6), "fence_cmu_wall", 6)
+	G.wall(props, sx, sz, Vector2(99.8, 67.6), Vector2(99.8, 99.6), "fence_cmu_wall", 6)
 	K.building(bl, "commercial/com_kiosk", G.q(sx, sz, 15.0, 90.0), 180.0, "gate_booth")
 	# ---- fleet stalls (trucks and vans overnight: the preview parks cars here), staff row behind the office
-	stl.append_array(G.stalls(props, sx, sz, 24.0, 13, 34.0, -1.0, "prop_wheel_stop_concrete"))
+	stl.append_array(G.stalls(props, sx, sz, 24.0, 13, 36.0, -1.0, "prop_wheel_stop_concrete"))
 	stl.append_array(G.stalls(props, sx, sz, 48.0, 13, 50.0, 1.0))
 	stl.append_array(G.stalls(props, sx, sz, 48.0, 13, 55.6, -1.0, "prop_wheel_stop_rubber", [4, 9]))
 	# ---- the diesel island: two pumps, iron bollards at both ends and between, the tank behind a k-rail
@@ -69,7 +69,7 @@ func _run() -> void:
 	I.add(props, "prop_hose_reel_cart", "worn", G.q(sx, sz, 60.0, 80.0), 90.0)
 	# ---- crew gear: sweeper brooms and cones by the lock-ups, a rolloff for street sweepings, the signs crew's stock
 	for k4 in 8: I.add(props, "prop_cone_28in", "dirty", G.q(sx, sz, 88.0 + (k4 % 2) * 0.6, 26.0 + (k4 / 2) * 0.7), k4 * 41.0)
-	for k5 in 5: I.add(props, "prop_barricade_type1", "worn", G.q(sx, sz, 89.0, 40.0 + k5 * 1.1), 90.0)
+	for k5 in 4: I.add(props, "prop_barricade_type1", "worn", G.q(sx, sz, 89.0, 39.0 + k5 * 1.8), 90.0)
 	for k6 in 4: I.add(props, "prop_water_barrier_orange", "dirty", G.q(sx, sz, 88.5, 47.0 + k6 * 2.1), 90.0)
 	I.add(props, "prop_dumpster_rolloff_20yd", "rusty", G.q(sx, sz, 56.0, 92.0), 0.0)
 	I.add(props, "prop_temp_fence_stand", "worn", G.q(sx, sz, 85.0, 60.0), 0.0)
@@ -79,13 +79,13 @@ func _run() -> void:
 	for p: Vector2 in [Vector2(36.0, 44.0), Vector2(70.0, 44.0), Vector2(46.0, 70.0), Vector2(80.0, 66.0)]:
 		I.add(props, "prop_lot_light_pole", "dirty", G.q(sx, sz, p.x, p.y), 0.0)
 	# ---- back doors: office bins and recycling, the store's cardboard skip
-	I.back_door_clutter(props, rr, G.q(sx, sz, 37.0, 30.0), 180.0, "shop")
-	I.add(props, "prop_trash_cart_blue", "worn", G.q(sx, sz, 30.0, 30.0), 180.0)
-	I.add(props, "prop_dumpster_3yd_green", "rusty", G.q(sx, sz, 52.5, 29.5), 180.0)
+	I.back_door_clutter(props, rr, G.q(sx, sz, 42.0, 32.0), 180.0, "shop")
+	I.add(props, "prop_trash_cart_blue", "worn", G.q(sx, sz, 30.0, 31.7), 180.0)
+	I.add(props, "prop_dumpster_3yd_green", "rusty", G.q(sx, sz, 61.5, 30.5), 180.0)
 	# ---- sidewalk: a USPS box and a paper box by the office (people come for permits); the bus stop stays clear
 	G.walk_prop(props, m, sx, sz, "x", 27.0, "prop_usps_collection_box", "worn")
 	G.walk_prop(props, m, sx, sz, "x", 31.5, "prop_newspaper_box_red", "dirty")
-	G.walk_prop(props, m, sx, sz, "z", 28.0, "prop_trash_receptacle", "dirty")
+	G.walk_prop(props, m, sx, sz, "z", 31.0, "prop_trash_receptacle", "dirty")
 	# ---- wear: fleet yard = oil at every stall, the fuel island's stains, soap and grime off the wash
 	for b: Array in B: I.bld_wear(dec, rr, b[0][0], b[0][1], b[0][2], b[1])
 	for r: Array in stl: W.oil(dec, rr, Vector2(float(r[0]), float(r[1])), float(r[2]), S.walk_y, 0.85)

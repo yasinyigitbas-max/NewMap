@@ -128,7 +128,7 @@ static func chain(props: K.Props, sx: float, sz: float, a: Vector2, b: Vector2, 
 ## frontage fence on the measured property line between `taken` spans (buildings) and `opens` (apron centres, 7 m
 ## open driveway each, ind_lib.OPEN_HALF): kind "chain" / "cmu" / "stucco" / "board". Gate leaves stand slid open
 ## inside the fence beside each opening (closed: `shut` lists apron centres whose leaf stands across the opening).
-static func frontage(props: K.Props, m: Dictionary, sx: float, sz: float, axis: String, taken: Array, opens: Array, kind := "chain", s_from := 22.0, s_to := 99.8, shut: Array = []) -> void:
+static func frontage(props: K.Props, m: Dictionary, sx: float, sz: float, axis: String, taken: Array, opens: Array, kind := "chain", s_from := 22.0, s_to := 99.8, shut: Array = [], leaf_after: Array = []) -> void:
 	var cuts: Array = taken.duplicate()
 	for o: float in opens: cuts.append([o - I.OPEN_HALF, o + I.OPEN_HALF])
 	cuts.sort_custom(func(p: Array, r: Array) -> bool: return p[0] < r[0])
@@ -155,7 +155,8 @@ static func frontage(props: K.Props, m: Dictionary, sx: float, sz: float, axis: 
 			var p := Vector2(o, d) if axis == "x" else Vector2(d, o)
 			I.add(props, "fence_gate_rolling_chainlink", "rusty", q(sx, sz, p.x, p.y), 0.0 if axis == "x" else 90.0)
 		else:
-			var g := Vector2(o - I.OPEN_HALF - 3.0, d + 0.6) if axis == "x" else Vector2(d + 0.6, o - I.OPEN_HALF - 3.0)
+			var go := o + I.OPEN_HALF + 3.0 if o in leaf_after else o - I.OPEN_HALF - 3.0     # the leaf slides away from a door
+			var g := Vector2(go, d + 0.6) if axis == "x" else Vector2(d + 0.6, go)
 			I.add(props, "fence_gate_rolling_chainlink", "worn", q(sx, sz, g.x, g.y), 0.0 if axis == "x" else 90.0)
 
 ## weathered board fence (2.0 m boards), no posts in the model's own panel ends: a privacy post at every joint
@@ -206,9 +207,9 @@ static func house_buffer(props: K.Props, rr: RandomNumberGenerator, sx: float, s
 	wall(props, sx, sz, Vector2(92.0, v0), Vector2(92.0, v1), "fence_stucco_wall", 0, "dirty")
 	var v := v0 + 3.0
 	while v < v1 - 2.0:
-		I.add(props, "plant_bougainvillea_wall", "normal", q(sx, sz, 92.45, v), -90.0 * sx, false)
+		I.add(props, "plant_bougainvillea_wall", "normal", q(sx, sz, 93.0, v), -90.0 * sx, false)
 		v += rr.randf_range(5.0, 9.0)
-	v = v0 + 6.0
+	v = maxf(v0 + 6.0, 28.0)      # trees on the grass only (the strip in front of R0 is paved)
 	var k := 0
 	while v < v1 - 4.0:
 		var sp: String = ["tree_torrey_pine_b", "tree_eucalyptus_a", "tree_torrey_pine_a", "tree_eucalyptus_b"][k % 4]

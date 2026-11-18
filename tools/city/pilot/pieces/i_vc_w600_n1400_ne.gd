@@ -26,8 +26,8 @@ func _run() -> void:
 	var bl := Node3D.new(); bl.name = "Buildings"; root.add_child(bl)
 	var g := K.Ground.new(); var props := K.Props.new(); var dec := K.Decals.new(); var rr := W.rng_for(NAME)
 	var stl: Array = []
-	var paints: Array = G.stall_paint(sx, sz, 37.0, 8, 34.2, -1.0)
-	paints.append_array(G.stall_paint(sx, sz, 37.0, 8, 46.0, 1.0))
+	var paints: Array = G.stall_paint(sx, sz, 37.0, 8, 35.5, -1.0)
+	paints.append_array(G.stall_paint(sx, sz, 37.0, 8, 47.3, 1.0))
 	paints.append([92.2, -99.8, 99.8, -24.0, "grass"])
 	G.floor(g, m, sx, sz, paints)
 	var B: Array = []
@@ -42,10 +42,10 @@ func _run() -> void:
 	G.wall(props, sx, sz, Vector2(G.ev(m, 99.8) + 0.2, 99.8), Vector2(91.8, 99.8), "fence_cmu_wall", 5)
 	G.house_buffer(props, rr, sx, sz, G.eu(m, 92.0) + 0.3, 99.8)
 	# ---- customers' lot behind the store: two facing rows, cart corral, carts left out
-	stl.append_array(G.stalls(props, sx, sz, 37.0, 8, 34.2, -1.0, "prop_wheel_stop_concrete"))
-	stl.append_array(G.stalls(props, sx, sz, 37.0, 8, 46.0, 1.0, "prop_wheel_stop_concrete", [3]))
-	I.add(props, "prop_cart_corral", "clean", G.q(sx, sz, 46.45, 46.6), 90.0)
-	for k in 3: I.add(props, "prop_shopping_cart", "clean", G.q(sx, sz, 58.0 + k * 0.7, 39.8 + k * 0.4), 70.0 + k * 25.0, false)
+	stl.append_array(G.stalls(props, sx, sz, 37.0, 8, 35.5, -1.0, "prop_wheel_stop_concrete"))
+	stl.append_array(G.stalls(props, sx, sz, 37.0, 8, 47.3, 1.0, "prop_wheel_stop_concrete", [3]))
+	I.add(props, "prop_cart_corral", "clean", G.q(sx, sz, 46.45, 47.9), 90.0)
+	for k in 3: I.add(props, "prop_shopping_cart", "clean", G.q(sx, sz, 57.0 + k * 1.3, 40.6 + k * 0.6), 70.0 + k * 25.0, false)
 	# ---- the meat packer's dock (reefer trailers at the doors) and the produce hall's yard door (pallet bins = ice chests)
 	for k in 5: I.add(props, "prop_container_20ft_white", "dirty" if k % 2 else "worn", G.q(sx, sz, 39.5, 52.0 + k * 3.6), 90.0)
 	for k in 4: I.add(props, "prop_ice_chest", "clean", G.q(sx, sz, 72.0 + k * 1.9, 44.5), 0.0)
@@ -54,7 +54,7 @@ func _run() -> void:
 	I.add(props, "prop_dumpster_3yd_green", "rusty", G.q(sx, sz, 36.0, 76.5), 90.0)            # the packer's bone bin
 	# ---- the canteen's back: gas, bins; a soda machine by its side door for the night shift
 	I.back_door_clutter(props, rr, G.q(sx, sz, 28.5, 31.6), 180.0, "gas")
-	I.back_door_clutter(props, rr, G.q(sx, sz, 43.0, 30.2), 180.0, "shop")
+	I.back_door_clutter(props, rr, G.q(sx, sz, 43.0, 31.4), 180.0, "shop")
 	I.add(props, "prop_vending_soda", "clean", G.q(sx, sz, 22.3, 24.0), -90.0)
 	I.add(props, "prop_vending_snack", "clean", G.q(sx, sz, 22.3, 25.3), -90.0)
 	for bv: float in [23.0, 26.6]: I.add(props, "prop_bollard_steel", "rusty", G.q(sx, sz, 20.9, bv), 0.0)    # cars park by the machines

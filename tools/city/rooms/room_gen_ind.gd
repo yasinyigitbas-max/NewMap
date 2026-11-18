@@ -183,6 +183,11 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		rr.box("wall", Vector3(staff_x, (F + 2.2 + H) * 0.5, ZP), Vector3(0.9, H - F - 2.2, 0.12))
 	# kept free: the door swing and the step in, and the straight walk from the door to the counter
 	keep.append([dx - dw * 0.5 - 0.2, ZF - 1.6, dx + dw * 0.5 + 0.2, ZF])
+	# every other public door inside this room keeps its swing free too (a canteen behind both of a building's doors)
+	for o2: Dictionary in c.openings:
+		if int(o2.floor) == 0 and String(o2.facade) == "front" and (String(o2.region) == "O_shopdoor" or String(o2.region) == "O_civic_door"):
+			var oa := float(o2.along); var ow := float(o2.w)
+			if oa > X0 and oa < X1 and absf(oa - dx) > 0.6: keep.append([oa - ow * 0.5 - 0.3, ZF - 1.7, oa + ow * 0.5 + 0.3, ZF])
 	# ---- the counter: across the back of the shop, its staff end away from the door, staff space behind it
 	var row: Array = K.counter
 	var cw := 0.0; var cd := 0.0
@@ -232,7 +237,8 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	for side: Array in [[X0, 90.0, "left"], [X1, -90.0, "right"]]:
 		var wx := float(side[0]); var yaw := float(side[1]); var inn := 1.0 if yaw > 0.0 else -1.0
 		var items: Array = K.walls
-		var z := ZF - 0.45; var k := 0
+		# the side walls' goods start behind the window zone (seats / displays there), so every shelf can be walked up to
+		var z := ZF - (1.7 if String(K.window) != "none" else 0.45); var k := 0
 		var tries := 0; var run := 0; var stations := 0
 		while z > ZBp + 0.4 and tries < 60:
 			tries += 1

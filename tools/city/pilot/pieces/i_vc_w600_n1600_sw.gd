@@ -60,12 +60,12 @@ func _run() -> void:
 	I.add(props, "fence_gate_rolling_chainlink", "rusty", G.q(sx, sz, 87.0, 72.0), 0.0)
 	I.add(props, "prop_switch_rack", "worn", G.q(sx, sz, 96.0, 96.0), 0.0)
 	# ---- the fish market's back: ice chests (the catch comes in iced), fish-waste carts, the gas for the fryer
-	for k2 in 3: I.add(props, "prop_ice_chest", "clean", G.q(sx, sz, 25.0 + k2 * 1.9, 31.0), 0.0)
-	for k3 in 3: I.add(props, "prop_trash_cart_green", "dirty", G.q(sx, sz, 31.5 + k3 * 0.8, 31.0), 180.0)
+	for k2 in 3: I.add(props, "prop_ice_chest", "clean", G.q(sx, sz, 25.0 + k2 * 1.9, 32.6), 0.0)
+	for k3 in 3: I.add(props, "prop_trash_cart_green", "dirty", G.q(sx, sz, 31.5 + k3 * 0.8, 32.4), 180.0)
 	I.back_door_clutter(props, rr, G.q(sx, sz, 40.0, 30.5), 0.0, "gas")
 	I.add(props, "prop_dumpster_3yd_green", "rusty", G.q(sx, sz, 72.0, 42.2), 0.0)
 	# ---- the packing hall's yard door: pallets of ice chests waiting, cones round a wet patch
-	for k4 in 4: I.add(props, "prop_ice_chest", "clean", G.q(sx, sz, 72.5, 45.0 + k4 * 1.5), 90.0)
+	for k4 in 4: I.add(props, "prop_ice_chest", "clean", G.q(sx, sz, 72.5, 45.0 + k4 * 1.8), 90.0)
 	for k5 in 3: I.add(props, "prop_cone_18in", "dirty", G.q(sx, sz, 62.0 + k5 * 1.2, 50.0), k5 * 50.0)
 	for p: Vector2 in [Vector2(38.0, 56.0), Vector2(62.0, 56.0), Vector2(90.0, 50.0)]:
 		I.add(props, "prop_lot_light_pole", "dirty", G.q(sx, sz, p.x, p.y), 0.0)
