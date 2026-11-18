@@ -5,6 +5,17 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov late (cloud session, branch `claude/look-sky`, NOT merged): LOOK QUEUES 2 AND 3 (from the PC session for
+  Yasin). Read `docs/LOOK_OVERVIEW.md` (every switch), `docs/LOOK_FOR_THE_GAME.md` (how the game uses the look),
+  `docs/LOOK_PHONE_TESTS.md` (the phone runs in order; the FIRST must be `phone_rig.sh all` from a checkout with this
+  branch: the look's files are new). Queue 2: running day `--cycle=120`, sun / moon / stars `--celestial`, the sea
+  `--sea` (from coast.json + terrain depths, meets the shore foam), weather `--weather=mist|hazy|storm|rain`, life in
+  the air `--air` (off), car paint / glass reflect the look's sky (`--cars` demo). Queue 3 (a real GPU showed the day
+  beige and murky): `tools/city/look/measure.py` (sky saturation halved: 21 % against 41 %), day variants
+  `--look=day_half` / `day_clear` for YASIN TO PICK (default `day` unchanged; sheets `review/look_18nov/variants/`),
+  golden and morning less brown, the sun shadow's end fades (2 blended splits, `--shadowtune`; also fixes the cloud's
+  black trees). FOUND and fixed: sun east / west were swapped; streamer now-path without collision (fixed by the PC
+  session). Lock test RESULT PASS.
 - 18 Nov ~20:10 (PC time): STREAMING MADE HEALTHY ON THE PHONE (Yasin: "streaming is the backbone of this game, we
   need it to work healthy agile and robust ... think that you are the streaming engineer in rockstar studios"; "do
   whatever you need"). Full account: docs/RUNTIME_BAKE.md "The streamer on the phone". Six causes found and fixed one
