@@ -6,7 +6,7 @@ extends Node3D
 ## Results: "RIG ..." lines in the log (adb logcat -s godot) and user://rig/summary_<n>.txt. tools/city/rig/phone_rig.sh
 ## builds, installs, runs and collects.
 ## Options: user args on the PC (after --), or the file user://rig_args.txt on the phone (the script writes it):
-##   --plan=default|quick|speed|zones   which list of drives (zones: teleports between the populated zones)      --scale=0.5  3D render scale (the game uses 0.5)
+##   --plan=default|quick|speed|zones   which list of drives (zones: teleports between the populated zones)      --scale=0.667  3D render scale; default: 720 lines high on any screen (Yasin 18 Nov: "default resolution 720p")
 ##   --drive=NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT   a drive of your own, as often as you like, instead of a plan: no
 ##             rebuild needed for a new route. ROUTE is a route name or points x,z:x,z:... (NIGHT 0 or 1), e.g.
 ##             --drive=gritty/-740,-1000:-600,-1000:-600,-860/60/25/0
@@ -48,7 +48,7 @@ var cam: Camera3D
 var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
-var opt := {"plan": "default", "scale": 0.5, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 2, "lights": 20, "nowarm": false}
+var opt := {"plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 2, "lights": 20, "nowarm": false}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -74,6 +74,8 @@ func _ready() -> void:
 	if from_file and not ("--loop" in args): opt.quit = true
 	Engine.max_fps = 0
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+	if float(opt.scale) <= 0.0:      # no --scale given: 720p (1640x720 on the Redmi's 2460x1080)
+		var ws := DisplayServer.window_get_size(); opt.scale = clampf(720.0 / maxf(1.0, float(mini(ws.x, ws.y))), 0.25, 1.0)
 	var vp := get_viewport(); vp.scaling_3d_scale = float(opt.scale); vp.screen_space_aa = Viewport.SCREEN_SPACE_AA_FXAA
 	env = Environment.new()
 	var sky := Sky.new(); sky.sky_material = ProceduralSkyMaterial.new(); env.background_mode = Environment.BG_SKY; env.sky = sky
