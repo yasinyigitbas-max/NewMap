@@ -80,6 +80,10 @@ WHY = {"cafe": "coffee where people walk past", "bakery": "bread for the street 
        "gas": "the fuel station's kiosk", "venue": "a night out"}
 
 
+# a street takes more than one cafe or bar, but not three ice-cream shops: near repeats of these count extra
+RARE = {"ice_cream": 3, "venue": 3, "gas": 3, "gallery": 2, "jewelry": 2, "souvenir": 2, "books": 2, "shoes": 2, "pharmacy": 2,
+        "grocery": 2, "keys": 2, "corner_shop": 2, "sport": 2}
+
 # the rooms already built by hand (interiors/rooms/*.scn, locked): they stay as they are
 BUILT = {("f_ne", "seaside_cafe"): "wf_cafe", ("f_nw", "surf_shop"): "wf_beach_shop", ("f_se", "marina_office"): "wf_marina_office",
          ("f_ne", "civ_harbor_office"): "wf_harbor_office", ("v_ne", "library"): "cv_library", ("v_ne", "city_hall"): "cv_city_hall",
@@ -158,9 +162,14 @@ def main():
     kinds_of = {}
     for sr in samples["rooms"]:
         kinds_of.setdefault((sr["piece"], sr["building"]), set()).add(sr["room"]["set"])
-    placed = []          # (x, z, kind)
+    placed = []          # (x, z, kind): the samples' shops count as neighbours from the start
     names = set()
     count = {}
+    for r in rows:
+        k2 = (r["building"]["piece"], r["building"]["label"], r["door_index"])
+        if k2 in sample_key:
+            kk = sample_key[k2]["room"]["set"]
+            placed.append((r["world"][0], r["world"][1], kk)); count[kk] = count.get(kk, 0) + 1
     out = []
     for r in rows:
         b = r["building"]; e = r["entrance"]; c = rc[b["kit"]]
@@ -189,7 +198,7 @@ def main():
             def score(k):
                 near = sum(1 for (x, z, kk) in placed if kk == k and math.hypot(x - r["world"][0], z - r["world"][1]) < 150.0)
                 # the building's own name first (first door only); never the same kind twice in one building
-                return (0 if (k == hk and not same_bld) else 1, 1 if k in same_bld else 0, near, count.get(k, 0), h(rid + k) % 1000)
+                return (0 if (k == hk and not same_bld) else 1, 1 if k in same_bld else 0, near * RARE.get(k, 1), count.get(k, 0), h(rid + k) % 1000)
             if hk and hk not in fits and hk in e.get("fits", []) and not same_bld:
                 fits.append(hk)
             kind = min(fits, key=score)
@@ -202,8 +211,9 @@ def main():
                     name = n; break
             why = "%s (%s)" % (WHY.get(kind, kind), dist); src = "new"
         names.add(name)
-        count[kind] = count.get(kind, 0) + 1
-        placed.append((r["world"][0], r["world"][1], kind))
+        if src == "new":
+            count[kind] = count.get(kind, 0) + 1
+            placed.append((r["world"][0], r["world"][1], kind))
         # the building's sign boards that belong to this bay: front boards inside it, side boards at its end
         boards = []
         for sg in c.get("signs", []):
