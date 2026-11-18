@@ -4935,6 +4935,86 @@
    "site": "b045"
   },
   {
+   "piece": "g_v1_j4ne",
+   "pos": [
+    -800.0,
+    2.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v2_g4nw",
+   "pos": [
+    -600.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v1_g4ne",
+   "pos": [
+    -600.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v2_j4se",
+   "pos": [
+    -800.0,
+    2.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v3_g4sw",
+   "pos": [
+    -600.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v3_g4se",
+   "pos": [
+    -600.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v2_j5ne",
+   "pos": [
+    -800.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v3_j5se",
+   "pos": [
+    -800.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
    "piece": "x_shore_foam",
    "pos": [
     0.0,

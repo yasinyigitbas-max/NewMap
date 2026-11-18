@@ -5,6 +5,29 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov ~21:50 (PC time): YASIN DECIDED THE DAY LOOK: "i go for gta4 look" (the sky session's current default palette
+  stays; the half-haze and clear-day variants are not needed). He also asked whether merging must wait for the census
+  ("do we have to wait for the cencus?"): no. MERGED into the working branch: the tier session's branch
+  `claude/ecstatic-archimedes-922d2c` as of bd74fd0 (far ground ON, tiers built and OFF). Still NOT merged:
+  `claude/look-sky`, `claude/look-buildings`, the four `claude/grow-*` branches. FOUR ZONE SESSIONS started in the
+  cloud (Yasin: "start 4 of them, since we have 4 different zones"; "tell them to do out and indoors together. thats
+  the point of having 4 different agents, i want the shops to look different"; "fetch the tool and give it to them"):
+  residential, commercial strip, industrial, gritty edge, each on `claude/grow-<zone>`, variants + one pilot area +
+  their own shop rooms with the room tool (`tools/city/rooms/`, copied here from `claude/look-buildings`, 3203b2d).
+  Nothing of theirs is locked; they wait for Yasin's approval. The tier session is now running a DRAWING-COST CENSUS
+  on the phone (brief: where the 13-14 ms of GPU at 720p go, one switch at a time; result `docs/DRAW_CENSUS.md` on
+  its branch).
+- 18 Nov ~22:30 (PC time): THE TIERS (Yasin: "it snaps from near to far directly"), branch
+  `claude/ecstatic-archimedes-922d2c`, not merged. Full account: docs/RUNTIME_BAKE.md "The tiers". (1) FAR GROUND, ON:
+  the streets and ground of all 100 cells that have ground in the far world, 1 draw, 20k triangles, one 1.3 MB
+  picture, no GPU cost measured. (2) An arriving cell's objects take over nearest first and (3) dithered fades at
+  60 m / 220 m: built, behind ONE switch (`--tiers`, streamer `tiers`), OFF. On the Redmi they cost 0.1-0.4 ms of GPU
+  in most zones and 4 ms (40 %) in the gritty edge. Gate: `tiers_off_stream` and `tiers_on_stream` PASS. The zones
+  fail only on the known day-to-night frame (as `zones_final`; the same without the far ground). Also fixed: a
+  start load attaches its collision at once (it trickled in, one body 9.9 s late). NEW: rig `--plan=shots`,
+  `phone_rig.sh shots NAME`, `gpu_ms` on the map line; pictures `review/tiers/before|after_farground|after_tiers`.
+  WAITING FOR YASIN: look at the pictures and at `--tiers` on the phone; fades for buildings only (cheaper) is the
+  next thing to try. Lock test RESULT PASS.
 - 18 Nov ~20:50 (PC time): WHILE THE TIER SESSION WORKS (Yasin: "do 1 and 2 together"). (1) LOOK PACK ON A REAL GRAPHICS
   CARD: `claude/look-sky` + `claude/look-buildings` merged onto the working branch in a scratch worktree
   (`OUT/look_wt`, branch `claude/look-merge-test`, local only, NOT merged anywhere): collisions only in rig.gd's
@@ -18,6 +41,28 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   evening's phone runs were taken before it; the tier session was told to take a fresh baseline. Tier session:
   "Streaming: tier fades and far roads", an Opus session on this PC in its own worktree, branch
   `claude/ecstatic-archimedes-922d2c`; it has the phone.
+- 18 Nov ~22:30 (PC time): THE TIERS (Yasin: "it snaps from near to far directly"), branch
+  `claude/ecstatic-archimedes-922d2c`, not merged. Full account: docs/RUNTIME_BAKE.md "The tiers". (1) FAR GROUND, ON:
+  the streets and ground of all 100 cells that have ground in the far world, 1 draw, 20k triangles, one 1.3 MB
+  picture, no GPU cost measured. (2) An arriving cell's objects take over nearest first and (3) dithered fades at
+  60 m / 220 m: built, behind ONE switch (`--tiers`, streamer `tiers`), OFF. On the Redmi they cost 0.1-0.4 ms of GPU
+  in most zones and 4 ms (40 %) in the gritty edge. Gate: `tiers_off_stream` and `tiers_on_stream` PASS. The zones
+  fail only on the known day-to-night frame (as `zones_final`; the same without the far ground). Also fixed: a
+  start load attaches its collision at once (it trickled in, one body 9.9 s late). NEW: rig `--plan=shots`,
+  `phone_rig.sh shots NAME`, `gpu_ms` on the map line; pictures `review/tiers/before|after_farground|after_tiers`.
+  WAITING FOR YASIN: look at the pictures and at `--tiers` on the phone; fades for buildings only (cheaper) is the
+  next thing to try. Lock test RESULT PASS.
+- 18 Nov late (cloud session, branch `claude/look-sky`, NOT merged): LOOK QUEUES 2 AND 3 (from the PC session for
+  Yasin). Read `docs/LOOK_OVERVIEW.md` (every switch), `docs/LOOK_FOR_THE_GAME.md` (how the game uses the look),
+  `docs/LOOK_PHONE_TESTS.md` (the phone runs in order; the FIRST must be `phone_rig.sh all` from a checkout with this
+  branch: the look's files are new). Queue 2: running day `--cycle=120`, sun / moon / stars `--celestial`, the sea
+  `--sea` (from coast.json + terrain depths, meets the shore foam), weather `--weather=mist|hazy|storm|rain`, life in
+  the air `--air` (off), car paint / glass reflect the look's sky (`--cars` demo). Queue 3 (a real GPU showed the day
+  beige and murky): `tools/city/look/measure.py` (sky saturation halved: 21 % against 41 %), day variants
+  `--look=day_half` / `day_clear` for YASIN TO PICK (default `day` unchanged; sheets `review/look_18nov/variants/`),
+  golden and morning less brown, the sun shadow's end fades (2 blended splits, `--shadowtune`; also fixes the cloud's
+  black trees). FOUND and fixed: sun east / west were swapped; streamer now-path without collision (fixed by the PC
+  session). Lock test RESULT PASS.
 - 18 Nov ~20:10 (PC time): STREAMING MADE HEALTHY ON THE PHONE (Yasin: "streaming is the backbone of this game, we
   need it to work healthy agile and robust ... think that you are the streaming engineer in rockstar studios"; "do
   whatever you need"). Full account: docs/RUNTIME_BAKE.md "The streamer on the phone". Six causes found and fixed one
@@ -36,6 +81,52 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   the driver's block size: an engine-build matter); a release build; repeats. Cloud sessions were given queues of
   further look jobs (Yasin: "give them all the improvements lists and have them do them non stop"; "we already have
   real indoor windows, and id like to keep them, in the shops on water front": told the buildings session).
+- 18 Nov evening (cloud session, branch `claude/look-sky`, NOT merged): THE LOOK QUEUE (from the PC session for Yasin:
+  "give them all the improvements lists and have them do them non stop"). Read `docs/LOOK_OVERVIEW.md` (every look
+  switch on both branches, cost, safe or not) and `docs/LOOK_SKY.md` "The look queue". 1 times of day `--look=morning|
+  noon|day|golden|dusk|night|overcast` (`review/look_18nov/times/sheet_*`). 2 upscaler `--upscale=1 --sharp=0.2`
+  (SGSR via the FSR 1 mode, patch c): a patched Linux engine built in the cloud, 18-30 % sharper (`upscale/crop_*`);
+  phone test steps in LOOK_SKY.md. 3 lamp glow `--glow=1` (own shader, the bake's untouched; patch note). 4 blob
+  shadows past 50 m `--blobs=1` (OFF: reads meshes at load; +5-8 draws; bake patch note). 5 sky map `ck_sky_map` +
+  snippet `tools/city/look/sky_reflect.gdshaderinc` for glass / wet ground, `--wet=0..1` demo. 6 the overview.
+  FOUND: `docs/look_patches/streamer_now.md`: `update_focus(p, true)` adds cells WITHOUT collision since the streamer
+  rewrite (the rig's start uses it): one-line fix in the note. Shaders in `city_kit/shaders/` not edited (Yasin's
+  brief: the building session's). Lock test RESULT PASS.
+- 18 Nov (cloud session, branch `claude/look-sky`, NOT merged): LOOK PACK, SKY HALF (Yasin: "a visible jump"; mid-way:
+  "we are going for a gta 4 like look"; "does the bloom cost that much?"). Read `docs/LOOK_SKY.md`. New
+  `tools/city/look/` (sky shader + 256 px noise texture, look.gd: haze = distance fog in the sky's horizon colour,
+  amber sun / grey-blue shade, Filmic + a 16^3 colour table: held-back colours, warm highlights, smoggy blacks; night:
+  brown-orange smog glow, few stars). Rig: `--look=1|0` (default 1), `--bloom=0|1` (default 0: costs pixels, guessed
+  1-2 ms, NOT measured), `--reflect=1|0`, `--shots=FOLDER`. Pictures: `review/look_18nov/sky/` (cloud: no shadows, no
+  sky reflection - the software GPU draws near trees black with either on - and buildings ~40 % too dark).
+  NEXT (PC session): `--plan=zones` with `--look=0`, `--look=1`, `--look=1 --bloom=1` on the Redmi, and the real
+  pictures. Told Yasin the bloom answer: a blur chain + one read a pixel; the 720p runs sit at the 60 fps step.
+  Same draws with and without the look; lock test RESULT PASS.
+- 18 Nov (cloud, branch `claude/look-buildings`, NOT merged): THE PC QUEUE OF LOOK JOBS DONE (Yasin: "start and work
+  non stop to clear your queue"). 1 fake rooms: dropped (real rooms instead, above). 2 props read their ORM map again
+  (`ck_look_propmaps`; why they lost it, normal maps = bake patch). 3 close-up wall grain (`ck_look_detail`). 4 contact
+  shadows between models, prototype (`ck_look_between`, pavement at building feet, walls under awnings). 5 far
+  buildings' night windows (mask in the far atlas alpha, patch for rt_far). 6 shop signs glow at night, some flicker
+  (`ck_look_signs`). 7 the summary table: top of `docs/LOOK_BUILDINGS.md`. Bake / rt_far parts in `docs/look_patches/`
+  for the PC session. Lock test PASS. NOTHING measured on the phone. WAITING for Yasin / the PC session's phone run.
+- 18 Nov (cloud, branch `claude/look-buildings`, NOT merged): ROOMS ON ALL SHOPS (Yasin: "we had fake windows, i didnt
+  like them"; "ideally, id like to have those store signs, real windows and see thru doors of those shops all over the
+  map"; "i want them on all shops"). The PC queue's job 1 (fake rooms behind glass) DROPPED. Every shop of the map has a
+  shop (`interiors/assignment_all.json`, 161) and a room (150 generated by `tools/city/rooms/room_gen.gd` + the 12
+  hand-made), indoor checker 0 problems, lock test PASS. Pictures `review/rooms_18nov/`. Room merge prototype: 26 -> 9
+  draws a room. NOT in the streamed city: the bake part is `docs/look_patches/rooms_bake.md` (PC session). The PC
+  queue's jobs 2-7 are paused. WAITING for Yasin: look at the rooms; which kinds want a hand pass; enterable or not.
+- 18 Nov (cloud session, branch `claude/look-buildings`, NOT merged): LOOK PACK, BUILDINGS (Yasin: "we need a visible
+  jump"; the sky / haze / colour half is another cloud session in rig.gd). Read `docs/LOOK_BUILDINGS.md`. Three changes
+  in `shaders/rt/rt_bldg.gdshader`, each behind a global switch (`ck_look_contact`, `ck_look_windows`, `ck_look_glass`,
+  0 off / 1 on, default on): the kit's own AO also dims sunlight + a thin line at the wall foot (no second AO: the kit
+  has it, PC session's correction); night windows found per window, each its own colour / brightness; day glass reflects
+  a sky gradient (`ck_look_sky_top` / `_horizon`). No texture read, no draw, no re-bake added. Pictures
+  `review/look_18nov/buildings/` (cloud: ~40 % too dark, no shadows). Lock test PASS. NOT checked on the phone: look and
+  cost (the PC session takes the real pictures). WAITING for Yasin: keep / tune / drop each.
+  Ground bump maps (grass / gravel / paving normal maps in rt_ground): Yasin asked "is it gonna improve the looks
+  significantly ... how major of a cost?", told him: small gain, one more texture read on those pixels, a bake change;
+  Yasin: "ok skip it then". NOT to do.
 - 18 Nov ~18:40 (PC time): LOOK PACK IN TWO CLOUD SESSIONS (Yasin: "do them on cloud sessions"): "Look pack: sky, haze
   and colour" -> branch `claude/look-sky` (rig.gd environment, tools/city/look/), "Look pack: building shader" ->
   `claude/look-buildings` (rt_bldg.gdshader, shader globals). Neither merges; the PC session takes the real phone

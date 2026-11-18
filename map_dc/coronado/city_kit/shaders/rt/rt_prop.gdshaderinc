@@ -7,6 +7,7 @@
 // otherwise: a MultiMesh. Origin = the instance transform, INSTANCE_CUSTOM = (wear, page, flags, -).
 // The kit's prop atlas pages are layers of one texture array (runtime_tex/arr_prop_*.png), so every prop of a batch
 // shares this material whatever page it is on. Per prop: page, and whether its kit material had a normal / ORM map.
+#include "res://map_dc/coronado/city_kit/shaders/rt/rt_tier.gdshaderinc"
 uniform sampler2DArray albedo_arr : source_color, filter_linear_mipmap, repeat_disable;
 uniform sampler2DArray normal_arr : hint_normal, filter_linear_mipmap, repeat_disable;
 uniform sampler2DArray orm_arr : filter_linear_mipmap, repeat_disable;
@@ -19,6 +20,12 @@ uniform float cavity_bias : hint_range(0.0, 2.0) = 1.2;
 uniform float instance_variation : hint_range(0.0, 1.0) = 1.0;
 uniform float normal_depth : hint_range(0.0, 2.0) = 1.0;
 uniform float signal_cycle = 30.0;
+// Look pack (18 Nov, docs/LOOK_BUILDINGS.md "Props' maps"): the kit's main prop page (benches, bins, lamps ...) lost its
+// ORM map in the city kit's materials (kit_lib names a prop material by its colour atlas only, and the first prop to
+// make it was a mid tier without maps); the texture array has the map for every page. ck_look_propmaps = 1: near
+// props always read it (roughness, cavities, metal) - without it the shader took them as fully metal and fully rough.
+// Their normal maps need tangents the bake does not write for them yet (docs/look_patches/prop_maps.md).
+global uniform float ck_look_propmaps;
 varying vec3 v_world_pos;
 varying vec3 v_world_n;
 varying float v_local_y;
@@ -26,6 +33,9 @@ varying vec3 v_origin;
 varying float v_wear;
 varying flat float v_page;
 varying flat float v_flags;
+#ifdef CK_TIERS
+varying vec2 v_tw;
+#endif
 
 void vertex() {
 #ifdef RT_MERGED
@@ -39,7 +49,13 @@ void vertex() {
 	v_origin = (MODEL_MATRIX * vec4(pivot, 1.0)).xyz;
 	float d = distance(MAIN_CAM_INV_VIEW_MATRIX[3].xyz, v_origin);
 	v_local_y = VERTEX.y - pivot.y;
+#ifdef CK_TIERS
+	float ck_s = CK_FAR_M * ck_cell_ramp(v_origin);      // see rt_tier.gdshaderinc
+	v_tw = ck_weights(d, min(range_begin, ck_s), min(range_end, ck_s));
+	if (v_tw.x <= 0.0 || v_tw.y <= 0.0) VERTEX = pivot;
+#else
 	if (d < range_begin || d >= range_end) VERTEX = pivot;
+#endif
 	v_world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	v_world_n = normalize((MODEL_MATRIX * vec4(NORMAL, 0.0)).xyz);
 }
@@ -58,9 +74,21 @@ vec2 wear_uv(vec3 p, vec3 n) {
 }
 
 void fragment() {
+#ifdef CK_TIERS
+	CK_DITHER
+#endif
+#ifdef CK_CHEAP
+	// CK_CHEAP (19 Nov, the drawing census: tools/city/rig/rig.gd --plan=census, docs/DRAW_CENSUS.md): colour only, to
+	// measure what the full shader costs. Never baked in: the rig swaps it in for one measurement.
+	vec4 ck_a = texture(albedo_arr, vec3(UV, floor(v_page + 0.5)));
+	float ck_m = max(max(COLOR.r, COLOR.g), max(COLOR.b, 0.04));
+	ALBEDO = ck_a.rgb * COLOR.rgb / ck_m * mix(1.0, ck_m, 0.5);
+	ROUGHNESS = 0.8;
+#else
 	vec3 uvw = vec3(UV, floor(v_page + 0.5));
 	float fl = floor(v_flags + 0.5);
 	bool has_normal = mod(fl, 2.0) > 0.5; bool has_orm = mod(floor(fl / 2.0), 2.0) > 0.5; bool is_signal = fl > 3.5;
+	if (ck_look_propmaps > 0.5 && range_begin < 0.5) has_orm = true;
 	vec4 alb = texture(albedo_arr, uvw);
 	vec3 orm = vec3(1.0);     // (an unset ORM read white in the kit shader too)
 	if (has_orm) orm = texture(orm_arr, uvw).rgb;
@@ -112,4 +140,5 @@ void fragment() {
 			EMISSION = lens * 1.6 * on;
 		}
 	}
+#endif
 }
