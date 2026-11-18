@@ -241,3 +241,69 @@ static func put(bl: Node3D, props: K.Props, sx: float, sz: float, axis: String, 
 static func put_back(bl: Node3D, props: K.Props, sx: float, sz: float, axis: String, s0: float, folder: String, label := "", back := 97.5) -> Array:
 	var d: float = float(K.building_stats(folder).footprint_wd[1])
 	return I.put(bl, props, sx, sz, axis, s0, back - d - overhang(folder).y, folder, label, true)
+
+## ------------------------------------------------------------------ polish (Yasin 18 Nov: "run a polish pass on your
+## part, lots of props ... think like an interior and exterior designer, customer and city planner"). place() puts ONE
+## prop into a zone chosen for its purpose (a break spot behind the plant, the gate exit, the shed's rollups) at the
+## first free spot of a seeded search: clear of every building (its real mesh outline), of every prop already placed
+## (oriented footprints from the kit manifests, a 0.25 m gap), of 1.6 m round every building door, and of the `keep`
+## rectangles (truck lanes, gate openings, stall rows). A prop that finds no free spot is left out, never forced.
+static func _obb(c: Vector2, yaw: float, w: float, d: float) -> Array:
+	var a := deg_to_rad(yaw); var ux := Vector2(cos(a), -sin(a)); var uz := Vector2(sin(a), cos(a))
+	return [c, ux, uz, w * 0.5, d * 0.5]
+static func _sep(A: Array, B: Array) -> bool:
+	for ax: Vector2 in [A[1], A[2], B[1], B[2]]:
+		var ra: float = float(A[3]) * absf(ax.dot(A[1])) + float(A[4]) * absf(ax.dot(A[2]))
+		var rb: float = float(B[3]) * absf(ax.dot(B[1])) + float(B[4]) * absf(ax.dot(B[2]))
+		if absf(ax.dot(Vector2(B[0]) - Vector2(A[0]))) > ra + rb: return true
+	return false
+static func _fp(base: String) -> Vector2:
+	var m := K.manifest(base)
+	return Vector2(float(m.get("footprint_w", 0.6)), float(m.get("footprint_d", 0.6)))
+## world-space boxes of everything that is already there (buildings by their real mesh, doors with 1.6 m, props)
+static func obstacles(bl: Node3D, props: K.Props, stalls: Array = []) -> Array:
+	var out: Array = []
+	for r: Array in stalls: out.append(_obb(Vector2(float(r[0]), float(r[1])), float(r[2]), 2.6, 5.4))     # parked cars
+	for b: Node in bl.get_children():
+		if not b.has_meta(&"kit"): continue
+		var n := b as Node3D; var f := String(b.get_meta(&"kit"))
+		var st := K.building_stats(f); var w: float = float(st.footprint_wd[0]); var d: float = float(st.footprint_wd[1])
+		var o := overhang(f)
+		var yaw := rad_to_deg(n.rotation.y)
+		var lc := Vector3(0.0, 0.0, (o.x - o.y) * 0.5)
+		var wc: Vector3 = n.transform * lc
+		out.append(_obb(Vector2(wc.x, wc.z), yaw, w + 0.4, d + o.x + o.y + 0.4))
+		for e: Array in st.get("doors_front", []):
+			var dp: Vector3 = n.transform * Vector3(float(e[1]), 0.0, d * 0.5 + 0.8)
+			out.append(_obb(Vector2(dp.x, dp.z), yaw, 3.2, 3.2))
+	for key: String in props.items:
+		var base := key.get_slice("|", 0)
+		var f2 := _fp(base)
+		for t: Transform3D in props.items[key]:
+			if t.origin.y > S.walk_y(0.0) + 1.2: continue      # stacked boxes, wall-mounted things
+			out.append(_obb(Vector2(t.origin.x, t.origin.z), rad_to_deg(t.basis.get_euler().y), f2.x + 0.25, f2.y + 0.25))
+	return out
+## one prop in the zone [u0..u1] x [v0..v1] (block-local), yaw = the zone's facing (+- jitter); keep = [[u0, v0, u1, v1]]
+static func place(props: K.Props, obs: Array, rr: RandomNumberGenerator, sx: float, sz: float, base: String, cond: String, u0: float, v0: float, u1: float, v1: float, yaw: float, keep: Array = [], jitter := 8.0) -> bool:
+	var f := _fp(base)
+	for t in 60:
+		var u := rr.randf_range(u0, u1); var v := rr.randf_range(v0, v1)
+		var bad := false
+		for k: Array in keep:
+			if u > float(k[0]) - f.x * 0.6 and u < float(k[2]) + f.x * 0.6 and v > float(k[1]) - f.y * 0.6 and v < float(k[3]) + f.y * 0.6: bad = true; break
+		if bad: continue
+		var y := yaw + rr.randf_range(-jitter, jitter)
+		var B := _obb(Vector2(sx * u, sz * v), y, f.x, f.y)
+		for A: Array in obs:
+			if not _sep(A, B): bad = true; break
+		if bad: continue
+		I.add(props, base, cond, q(sx, sz, u, v), y)
+		obs.append(_obb(Vector2(sx * u, sz * v), y, f.x + 0.25, f.y + 0.25))
+		return true
+	return false
+## a small set placed together (a break spot: table, bench, bin), each by place() inside the same zone
+static func spot(props: K.Props, obs: Array, rr: RandomNumberGenerator, sx: float, sz: float, items: Array, u0: float, v0: float, u1: float, v1: float, yaw: float, keep: Array = []) -> int:
+	var n := 0
+	for it: Array in items:
+		if place(props, obs, rr, sx, sz, String(it[0]), String(it[1]), u0, v0, u1, v1, yaw + float(it[2]) if it.size() > 2 else yaw, keep): n += 1
+	return n

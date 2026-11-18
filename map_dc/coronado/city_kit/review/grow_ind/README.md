@@ -70,14 +70,18 @@ Kit it uses: ice chests, shopping carts + corral, vending machines, **stucco wal
 ## The rooms (14, all new; generator `tools/city/rooms/room_gen_ind.gd`, list `tools/city/rooms/assign_ind.py`)
 Industrial character, unlike the high street's rooms: sealed concrete or quarry tile, drop-in ceilings, cool
 fluorescent strips, steel shelving, pegboard and workbench behind the parts counters, filing cabinets, vending
-machines, and stock on the floor (cones, drums, gas bottles, ice chests). Indoor checker: 0 problems (all 176 rooms of
-the city). Each room has 2-6 real lights (the fixtures plus daylight at the window).
+machines, and stock on the floor (cones, drums, gas bottles, ice chests). Indoor checker: 0 problems in these 14 rooms (the
+last run loaded 219 rooms city-wide; its only 5 problems are in a strip-growth room, g_strip_*, another session's). Each room has 2-6 real lights (the fixtures plus daylight at the window).
 
 What is honestly weak:
 - The kit's shelves and gondolas are EMPTY (no goods models), so the stores look bare.
 - The fish market has too many dining tables for a fish counter.
-- The diner's building is a boarded-up gritty model whose front windows are painted: you see its room through
-  the door only.
+- (fixed 18 Nov, Yasin: "something blocking the door", "overlapping props") the diner and the workwear store first stood
+  in `ck_grt_row2`, a gritty model whose painted windows overlap its own side door and whose storefront band (room
+  library) ran across the shop door. They are now in `ck/mod_fastfood` and `ck/ck_svc_pawn_fast` (real shopfronts,
+  the room behind both doors). The diner's bin stands at the corner, 3 m past its door; the paper box is gone.
+- (fixed 18 Nov, Yasin: "most shelves are empty") the kit's `wall_shelf` and `gondola_aisle` are empty models; the
+  rooms now use only stocked shelving (steel racking with goods, boxed stock), aisles as back-to-back pairs.
 - The wear on the floors is light.
 
 These are first drafts for Yasin's word.
@@ -116,3 +120,26 @@ and the light budget proposed in rooms_bake.md before they go on the phone.
 Validator **0 problems**, trees **0 in hard ground**, sink **0**, indoor checker **0 problems** (all 176 rooms), lock
 test **RESULT PASS**. The city-wide validator also lists problems in the gritty edge growth blocks (g_v*, another
 session's work); none of them are in these blocks.
+
+## Polish pass and the new indoor props (18 Nov, Yasin: "did you replace the props? ... run a polish pass on your part,
+## lots of props ... think like an interior and exterior designer, customer and city planner")
+- **New indoor props:** commit 9fce731 (`claude/kit-indoor-props`, the assets branch's dd8d53a) taken. All 14 rooms
+  were rebuilt with them. The kit's wall shelves and aisle gondolas are now stocked, so they are back in the rooms.
+- **Rooms:** each kind gets what its staff and customers still lacked, on free wall space. Examples:
+  - permits counter: a water fountain, benches, brochure racks, a snack machine
+  - parts counters: gas bottles and cones for sale, a display table
+  - workwear store: a fitting room, boot bench, mannequin
+  - canteen and diner: vending machines, fridges
+  - every room: safety and notice boards on walls with nothing in front of them, plants and bins
+  Indoor checker 0 in these rooms. Pictures: `rooms/`, retaken.
+- **Outdoors:** each block got a polish list, every item with its reason in the script. Each item goes in a zone
+  chosen for its purpose, and a careful placer (`ind_grow_lib.place`) sets it only where it clears buildings, doors,
+  other props, truck lanes and parked cars.
+  - stop signs at every yard exit
+  - fire hydrants by the big sheds
+  - workers' break spots (picnic table, bench, bin, vending machine)
+  - the city yard's stock of new household bins and the signs crew's spare signs
+  - mooring buoys waiting for the season, antifouling drums by the boats
+  - the canteen's outdoor tables, carts left at the cash-and-carry
+  - wash-down hoses at the fish and ice doors
+  Pictures: `polish_*.jpg`. Area checks: validator 0, trees 0, sink 0.

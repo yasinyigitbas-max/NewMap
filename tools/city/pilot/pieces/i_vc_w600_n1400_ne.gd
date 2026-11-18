@@ -75,6 +75,14 @@ func _run() -> void:
 	I.truck_path(dec, rr, Vector2(sx * 9.0, sz * 79.0), Vector2(sx * 70.0, sz * 60.0))
 	I.yard_wear(dec, rr, sx, sz, 34.0, 30.0, 91.0, 99.0, 1.3)
 	I.yard_wear(dec, rr, sx, sz, 22.0, 72.0, 34.0, 99.0, 0.8)
+	# ---- POLISH (Yasin 18 Nov: "lots of props"; each with its reason; placed only where free, G.place)
+	var obs := G.obstacles(bl, props, stl); var kp := [[36.0, 37.5, 60.0, 45.5], [58.5, 13.0, 65.5, 41.0], [8.0, 41.0, 34.0, 47.0], [8.0, 58.0, 72.0, 82.0]]
+	G.place(props, obs, rr, sx, sz, "prop_sign_stop", "worn", 65.8, 15.0, 67.5, 18.0, 180.0, kp, 3.0)             # customers leaving onto 3rd St
+	G.place(props, obs, rr, sx, sz, "prop_hydrant_red", "rusty", 88.0, 46.0, 91.0, 54.0, 0.0, kp)                 # the produce hall's fire hydrant
+	G.spot(props, obs, rr, sx, sz, [["prop_picnic_table", "worn"], ["prop_picnic_table", "worn"], ["prop_trash_receptacle", "worn"], ["prop_recycling_receptacle", "worn"]], 22.5, 31.5, 35.5, 40.5, 0.0, kp)   # the canteen's outdoor tables for the shift
+	G.spot(props, obs, rr, sx, sz, [["prop_ice_chest", "clean"], ["prop_ice_chest", "clean"], ["prop_ice_chest", "clean"]], 44.0, 52.0, 58.0, 57.0, 0.0, kp)   # pallet bins waiting at the meat packer's dock
+	G.spot(props, obs, rr, sx, sz, [["prop_shopping_cart", "clean"], ["prop_shopping_cart", "clean"]], 50.0, 30.0, 58.0, 37.0, 30.0, kp)   # carts left at the store's door
+	G.spot(props, obs, rr, sx, sz, [["prop_trash_cart_green", "dirty"], ["prop_trash_cart_black", "worn"]], 50.0, 29.5, 56.0, 32.0, 180.0, kp)   # the store's bins
 	root.set_meta("stalls", stl)
 	I.finish(root, g, props, dec, NAME)
 	quit()
