@@ -334,8 +334,8 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 					z -= 2.25; k += 1; run += 1; continue
 				z -= 0.3; continue
 			if it == "nail":       # a nail table out from the wall, the client's chair on the room side, the tech's at the wall
-				if String(side[2]) == "right" and X1 - X0 < 7.5: k += 1; continue     # a narrow salon has its tables along ONE wall: the other wall gets the shelves
-				var nx := wx + inn * 0.9
+				if X1 - X0 < 7.5 and absf(wx - dx) < absf((X0 + X1 - wx) - dx): k += 1; continue     # a narrow salon: tables along the wall AWAY from the door (the walk to the counter runs on the door side), shelves on the other
+				var nx := wx + inn * 1.35     # the technician walks in behind the chair
 				if _group([["nail_table", nx, z - 0.6, yaw], ["side_chair", nx + inn * 0.65, z - 0.6, yaw + 180.0], ["side_chair", nx - inn * 0.6, z - 0.6, yaw]]):
 					z -= 1.5; run += 1; continue
 				z -= 0.3; continue
