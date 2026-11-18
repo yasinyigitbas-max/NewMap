@@ -44,10 +44,11 @@ static func run(rig: Node, folder: String, args: PackedStringArray) -> void:
 	rig.hud.visible = false
 	for v: Array in views:
 		var p := Vector3(float(v[1]), 0.0, float(v[2]))
-		rig.st.update_focus(p, true)                       # the whole neighbourhood at once
+		# the normal way in, not update_focus(p, true): since the 18 Nov streamer rewrite that path adds cells without
+		# their collision (docs/look_patches/streamer_now.md), and the ground ray finds nothing
 		rig._g_hit = false; rig._g_at = p
 		var gy := 0.0
-		for i in 600:                                      # until the road can be stood on (collision arrives in steps)
+		for i in 3000:                                     # until the cells are in and the road can be stood on
 			rig.st.update_focus(p, false)
 			await tree.physics_frame
 			await tree.process_frame
