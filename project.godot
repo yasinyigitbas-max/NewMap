@@ -36,6 +36,46 @@ ck_wind_dir={
 "type": "vec2",
 "value": Vector2(0.8, 0.6)
 }
+ck_look_contact={
+"type": "float",
+"value": 1.0
+}
+ck_look_windows={
+"type": "float",
+"value": 1.0
+}
+ck_look_glass={
+"type": "float",
+"value": 1.0
+}
+ck_look_sky_top={
+"type": "color",
+"value": Color(0.32, 0.52, 0.82, 1)
+}
+ck_look_sky_horizon={
+"type": "color",
+"value": Color(0.72, 0.8, 0.88, 1)
+}
+ck_look_propmaps={
+"type": "float",
+"value": 1.0
+}
+ck_look_detail={
+"type": "float",
+"value": 1.0
+}
+ck_look_detail_tex={
+"type": "sampler2D",
+"value": "res://map_dc/coronado/city_kit/look/detail_wall.png"
+}
+ck_look_between={
+"type": "float",
+"value": 1.0
+}
+ck_look_signs={
+"type": "float",
+"value": 1.0
+}
 ck_cells_loaded={
 "type": "sampler2D",
 "value": ""

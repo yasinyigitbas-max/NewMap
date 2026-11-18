@@ -20,6 +20,12 @@ uniform float cavity_bias : hint_range(0.0, 2.0) = 1.2;
 uniform float instance_variation : hint_range(0.0, 1.0) = 1.0;
 uniform float normal_depth : hint_range(0.0, 2.0) = 1.0;
 uniform float signal_cycle = 30.0;
+// Look pack (18 Nov, docs/LOOK_BUILDINGS.md "Props' maps"): the kit's main prop page (benches, bins, lamps ...) lost its
+// ORM map in the city kit's materials (kit_lib names a prop material by its colour atlas only, and the first prop to
+// make it was a mid tier without maps); the texture array has the map for every page. ck_look_propmaps = 1: near
+// props always read it (roughness, cavities, metal) - without it the shader took them as fully metal and fully rough.
+// Their normal maps need tangents the bake does not write for them yet (docs/look_patches/prop_maps.md).
+global uniform float ck_look_propmaps;
 varying vec3 v_world_pos;
 varying vec3 v_world_n;
 varying float v_local_y;
@@ -74,6 +80,7 @@ void fragment() {
 	vec3 uvw = vec3(UV, floor(v_page + 0.5));
 	float fl = floor(v_flags + 0.5);
 	bool has_normal = mod(fl, 2.0) > 0.5; bool has_orm = mod(floor(fl / 2.0), 2.0) > 0.5; bool is_signal = fl > 3.5;
+	if (ck_look_propmaps > 0.5 && range_begin < 0.5) has_orm = true;
 	vec4 alb = texture(albedo_arr, uvw);
 	vec3 orm = vec3(1.0);     // (an unset ORM read white in the kit shader too)
 	if (has_orm) orm = texture(orm_arr, uvw).rgb;

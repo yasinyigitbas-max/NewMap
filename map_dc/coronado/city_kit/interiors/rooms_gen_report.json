@@ -1,0 +1,1504 @@
+{
+ "rooms": [
+  {
+   "d": 15.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_ne__truck_repair__0.scn",
+   "id": "g_i_ne__truck_repair__0",
+   "kind": "cleaners",
+   "lights": 5,
+   "name": "Base Autoport",
+   "props": 41,
+   "w": 17.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_ne__harbor_steel_mill__0.scn",
+   "id": "g_i_ne__harbor_steel_mill__0",
+   "kind": "keys",
+   "lights": 5,
+   "name": "Anchor Lock & Key",
+   "props": 45,
+   "w": 35.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_nw__bayline_dispatch__1.scn",
+   "id": "g_i_nw__bayline_dispatch__1",
+   "kind": "fast_food",
+   "lights": 4,
+   "name": "Breakwater Burgers",
+   "props": 18,
+   "w": 5.7
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_ne__machine_shop__0.scn",
+   "id": "g_i_ne__machine_shop__0",
+   "kind": "office",
+   "lights": 4,
+   "name": "Abe's Tax Office",
+   "props": 22,
+   "w": 5.7
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_nw__bayline_dispatch__0.scn",
+   "id": "g_i_nw__bayline_dispatch__0",
+   "kind": "store",
+   "lights": 4,
+   "name": "Ocean Hardware",
+   "props": 14,
+   "w": 5.7
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_ne__machine_shop__1.scn",
+   "id": "g_i_ne__machine_shop__1",
+   "kind": "bar",
+   "lights": 4,
+   "name": "Tern Taproom",
+   "props": 29,
+   "w": 5.7
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_nw__bayline_freight_office__0.scn",
+   "id": "g_i_nw__bayline_freight_office__0",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "Dot's Trattoria",
+   "props": 25,
+   "w": 6.24
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_nw__bayline_freight_office__1.scn",
+   "id": "g_i_nw__bayline_freight_office__1",
+   "kind": "fast_food",
+   "lights": 5,
+   "name": "Ferry Burgers",
+   "props": 17,
+   "w": 6.0
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_nw__bayline_freight_office__2.scn",
+   "id": "g_i_nw__bayline_freight_office__2",
+   "kind": "cleaners",
+   "lights": 4,
+   "name": "Pelican Laundry",
+   "props": 17,
+   "w": 5.16
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_nw__drivers_cafe__0.scn",
+   "id": "g_i_nw__drivers_cafe__0",
+   "kind": "cafe",
+   "lights": 5,
+   "name": "Cove Coffee",
+   "props": 21,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_nw__drivers_cafe__1.scn",
+   "id": "g_i_nw__drivers_cafe__1",
+   "kind": "office",
+   "lights": 5,
+   "name": "Ocean Travel",
+   "props": 25,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_ne__harbor_diner__0.scn",
+   "id": "g_i_ne__harbor_diner__0",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "Clay's Diner",
+   "props": 61,
+   "w": 11.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_ne__harbor_steel_office__0.scn",
+   "id": "g_i_ne__harbor_steel_office__0",
+   "kind": "store",
+   "lights": 6,
+   "name": "Tern Hardware",
+   "props": 19,
+   "w": 6.24
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_ne__harbor_steel_office__1.scn",
+   "id": "g_i_ne__harbor_steel_office__1",
+   "kind": "bar",
+   "lights": 5,
+   "name": "Island Bar",
+   "props": 25,
+   "w": 6.0
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_ne__harbor_steel_office__2.scn",
+   "id": "g_i_ne__harbor_steel_office__2",
+   "kind": "restaurant",
+   "lights": 5,
+   "name": "Hank's Trattoria",
+   "props": 24,
+   "w": 5.16
+  },
+  {
+   "d": 15.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_se__auto_repair__0.scn",
+   "id": "g_i_se__auto_repair__0",
+   "kind": "cleaners",
+   "lights": 5,
+   "name": "Sandpiper Wash & Fold",
+   "props": 41,
+   "w": 17.4
+  },
+  {
+   "d": 11.2,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_se__electrical_contractor__0.scn",
+   "id": "g_i_se__electrical_contractor__0",
+   "kind": "fast_food",
+   "lights": 6,
+   "name": "Ferry Subs",
+   "props": 33,
+   "w": 11.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_sw__print_works__0.scn",
+   "id": "g_i_sw__print_works__0",
+   "kind": "keys",
+   "lights": 5,
+   "name": "Theo's Keys & Repairs",
+   "props": 19,
+   "w": 6.24
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_sw__dive_bar__0.scn",
+   "id": "g_i_sw__dive_bar__0",
+   "kind": "bar",
+   "lights": 6,
+   "name": "World Famous Eye Bar",
+   "props": 52,
+   "w": 8.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_se__auto_parts__0.scn",
+   "id": "g_i_se__auto_parts__0",
+   "kind": "store",
+   "lights": 4,
+   "name": "Crownado Hardware",
+   "props": 14,
+   "w": 5.7
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_sw__print_works__1.scn",
+   "id": "g_i_sw__print_works__1",
+   "kind": "store",
+   "lights": 5,
+   "name": "Gus' Supply",
+   "props": 20,
+   "w": 6.0
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_se__auto_parts__1.scn",
+   "id": "g_i_se__auto_parts__1",
+   "kind": "office",
+   "lights": 4,
+   "name": "Vera's Tax Office",
+   "props": 21,
+   "w": 5.7
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_sw__print_works__2.scn",
+   "id": "g_i_sw__print_works__2",
+   "kind": "bar",
+   "lights": 5,
+   "name": "The Jetty Room",
+   "props": 23,
+   "w": 5.16
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_sw__cash_and_carry__1.scn",
+   "id": "g_i_sw__cash_and_carry__1",
+   "kind": "fast_food",
+   "lights": 4,
+   "name": "Saltwater Subs",
+   "props": 18,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_se__wholesale_bakery__0.scn",
+   "id": "g_i_se__wholesale_bakery__0",
+   "kind": "bakery",
+   "lights": 6,
+   "name": "Kelp Bread Co.",
+   "props": 32,
+   "w": 8.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_sw__cash_and_carry__0.scn",
+   "id": "g_i_sw__cash_and_carry__0",
+   "kind": "restaurant",
+   "lights": 4,
+   "name": "Nguyen's Diner",
+   "props": 25,
+   "w": 5.7
+  },
+  {
+   "d": 15.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_sw__bus_repair__0.scn",
+   "id": "g_i_sw__bus_repair__0",
+   "kind": "cleaners",
+   "lights": 5,
+   "name": "Gull Laundry",
+   "props": 41,
+   "w": 17.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_se__plumbing_supply__0.scn",
+   "id": "g_i_se__plumbing_supply__0",
+   "kind": "cleaners",
+   "lights": 5,
+   "name": "Mei's Cleaners",
+   "props": 30,
+   "w": 11.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_sw__locksmith__1.scn",
+   "id": "g_i_sw__locksmith__1",
+   "kind": "office",
+   "lights": 4,
+   "name": "Crown Insurance",
+   "props": 23,
+   "w": 5.8
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_i_sw__locksmith__0.scn",
+   "id": "g_i_sw__locksmith__0",
+   "kind": "keys",
+   "lights": 4,
+   "name": "Crownado Lock & Key",
+   "props": 11,
+   "w": 5.6
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_ne__insurance_office__0.scn",
+   "id": "g_m_ne__insurance_office__0",
+   "kind": "office",
+   "lights": 5,
+   "name": "Anchor Credit Union",
+   "props": 22,
+   "w": 5.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_ne__corner_bakery__0.scn",
+   "id": "g_m_ne__corner_bakery__0",
+   "kind": "bakery",
+   "lights": 6,
+   "name": "Clay's Bakery",
+   "props": 32,
+   "w": 8.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_ne__bank_pharmacy__0.scn",
+   "id": "g_m_ne__bank_pharmacy__0",
+   "kind": "office",
+   "lights": 6,
+   "name": "Wagon Bank",
+   "props": 28,
+   "w": 11.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_nw__crown_plaza__0.scn",
+   "id": "g_m_nw__crown_plaza__0",
+   "kind": "pharmacy",
+   "lights": 6,
+   "name": "Dot's Drugstore",
+   "props": 42,
+   "w": 12.08
+  },
+  {
+   "d": 11.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_nw__crown_plaza__1.scn",
+   "id": "g_m_nw__crown_plaza__1",
+   "kind": "salon",
+   "lights": 5,
+   "name": "Fashion Nail Bar",
+   "props": 20,
+   "w": 7.99
+  },
+  {
+   "d": 11.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_nw__crown_plaza__2.scn",
+   "id": "g_m_nw__crown_plaza__2",
+   "kind": "grocery",
+   "lights": 6,
+   "name": "Dune Grocers",
+   "props": 16,
+   "w": 8.37
+  },
+  {
+   "d": 11.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_nw__crown_plaza__3.scn",
+   "id": "g_m_nw__crown_plaza__3",
+   "kind": "sport",
+   "lights": 6,
+   "name": "Driftwood Fitness",
+   "props": 18,
+   "w": 8.38
+  },
+  {
+   "d": 11.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_nw__crown_plaza__4.scn",
+   "id": "g_m_nw__crown_plaza__4",
+   "kind": "cafe",
+   "lights": 6,
+   "name": "Starducks",
+   "props": 24,
+   "w": 8.38
+  },
+  {
+   "d": 11.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_nw__crown_plaza__5.scn",
+   "id": "g_m_nw__crown_plaza__5",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "Cove Kitchen",
+   "props": 30,
+   "w": 8.38
+  },
+  {
+   "d": 11.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_nw__crown_plaza__6.scn",
+   "id": "g_m_nw__crown_plaza__6",
+   "kind": "store",
+   "lights": 6,
+   "name": "Rosa's Supply",
+   "props": 20,
+   "w": 8.38
+  },
+  {
+   "d": 11.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_nw__crown_plaza__7.scn",
+   "id": "g_m_nw__crown_plaza__7",
+   "kind": "cleaners",
+   "lights": 5,
+   "name": "Laundry Lounge Crownado",
+   "props": 17,
+   "w": 8.38
+  },
+  {
+   "d": 11.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_nw__crown_plaza__8.scn",
+   "id": "g_m_nw__crown_plaza__8",
+   "kind": "fast_food",
+   "lights": 6,
+   "name": "Lupe's Tacos",
+   "props": 25,
+   "w": 8.08
+  },
+  {
+   "d": 15.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_ne__tyre_lube__0.scn",
+   "id": "g_m_ne__tyre_lube__0",
+   "kind": "pharmacy",
+   "lights": 6,
+   "name": "Silver Strand Rx",
+   "props": 55,
+   "w": 17.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_ne__burger_barn__0.scn",
+   "id": "g_m_ne__burger_barn__0",
+   "kind": "fast_food",
+   "lights": 4,
+   "name": "McDowell's",
+   "props": 4,
+   "w": 2.64
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_ne__burger_barn__1.scn",
+   "id": "g_m_ne__burger_barn__1",
+   "kind": "salon",
+   "lights": 5,
+   "name": "Bill's Hair Studio",
+   "props": 21,
+   "w": 8.76
+  },
+  {
+   "d": 8.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_ne__crown_fuel__0.scn",
+   "id": "g_m_ne__crown_fuel__0",
+   "kind": "gas",
+   "lights": 5,
+   "name": "Shoal",
+   "props": 11,
+   "w": 9.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_sw__donut_shop__0.scn",
+   "id": "g_m_sw__donut_shop__0",
+   "kind": "bakery",
+   "lights": 6,
+   "name": "Saltwater Bakery",
+   "props": 32,
+   "w": 8.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_se__corner_pharmacy__0.scn",
+   "id": "g_m_se__corner_pharmacy__0",
+   "kind": "pharmacy",
+   "lights": 4,
+   "name": "Pelican Pharmacy",
+   "props": 16,
+   "w": 5.84
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_se__corner_pharmacy__1.scn",
+   "id": "g_m_se__corner_pharmacy__1",
+   "kind": "cafe",
+   "lights": 4,
+   "name": "Abe's Coffee Bar",
+   "props": 19,
+   "w": 5.56
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_sw__check_cashing__0.scn",
+   "id": "g_m_sw__check_cashing__0",
+   "kind": "office",
+   "lights": 5,
+   "name": "Palm Travel",
+   "props": 22,
+   "w": 5.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_se__crown_grocery__1.scn",
+   "id": "g_m_se__crown_grocery__1",
+   "kind": "grocery",
+   "lights": 6,
+   "name": "Bonny Bay Market",
+   "props": 35,
+   "w": 10.6
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_se__thrift_store__0.scn",
+   "id": "g_m_se__thrift_store__0",
+   "kind": "store",
+   "lights": 5,
+   "name": "Thrift Cabin",
+   "props": 23,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_se__thrift_store__1.scn",
+   "id": "g_m_se__thrift_store__1",
+   "kind": "cleaners",
+   "lights": 4,
+   "name": "Bougainvillea Laundry",
+   "props": 19,
+   "w": 5.92
+  },
+  {
+   "d": 9.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_sw__sea_breeze_west_wing__0.scn",
+   "id": "g_m_sw__sea_breeze_west_wing__0",
+   "kind": "salon",
+   "lights": 5,
+   "name": "Tomas' Hair Studio",
+   "props": 31,
+   "w": 35.4
+  },
+  {
+   "d": 8.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_sw__sea_breeze_motel__0.scn",
+   "id": "g_m_sw__sea_breeze_motel__0",
+   "kind": "fast_food",
+   "lights": 5,
+   "name": "Gus' Pizza",
+   "props": 127,
+   "w": 41.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_se__thrift_store__2.scn",
+   "id": "g_m_se__thrift_store__2",
+   "kind": "sport",
+   "lights": 5,
+   "name": "Coral Fitness",
+   "props": 17,
+   "w": 5.78
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_m_se__pho_house__0.scn",
+   "id": "g_m_se__pho_house__0",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "Swaddee Thai Kitchen",
+   "props": 61,
+   "w": 11.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_ne__dive_bar__0.scn",
+   "id": "g_g_ne__dive_bar__0",
+   "kind": "bar",
+   "lights": 6,
+   "name": "Orange Taproom",
+   "props": 52,
+   "w": 8.4
+  },
+  {
+   "d": 11.2,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_nw__boarded_pair__0.scn",
+   "id": "g_g_nw__boarded_pair__0",
+   "kind": "keys",
+   "lights": 5,
+   "name": "Harbor Lock & Key",
+   "props": 25,
+   "w": 11.4
+  },
+  {
+   "d": 15.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_nw__body_shop__0.scn",
+   "id": "g_g_nw__body_shop__0",
+   "kind": "salon",
+   "lights": 5,
+   "name": "Dune Barbers",
+   "props": 32,
+   "w": 17.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_nw__pawn_laundry_row__0.scn",
+   "id": "g_g_nw__pawn_laundry_row__0",
+   "kind": "jewelry",
+   "lights": 6,
+   "name": "Crownado Vintage",
+   "props": 27,
+   "w": 10.3
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_nw__pawn_laundry_row__1.scn",
+   "id": "g_g_nw__pawn_laundry_row__1",
+   "kind": "cleaners",
+   "lights": 5,
+   "name": "Island Laundry",
+   "props": 15,
+   "w": 7.1
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_ne__corner_market__0.scn",
+   "id": "g_g_ne__corner_market__0",
+   "kind": "grocery",
+   "lights": 6,
+   "name": "Grove Market",
+   "props": 59,
+   "w": 23.7
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_ne__corner_market__1.scn",
+   "id": "g_g_ne__corner_market__1",
+   "kind": "store",
+   "lights": 6,
+   "name": "Tern Thrift",
+   "props": 26,
+   "w": 5.7
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_ne__deli_walkup__0.scn",
+   "id": "g_g_ne__deli_walkup__0",
+   "kind": "store",
+   "lights": 6,
+   "name": "Dune Home & Garden",
+   "props": 29,
+   "w": 11.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_ne__brick_shops__0.scn",
+   "id": "g_g_ne__brick_shops__0",
+   "kind": "bar",
+   "lights": 6,
+   "name": "The Saltwater Room",
+   "props": 25,
+   "w": 6.24
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_ne__brick_shops__1.scn",
+   "id": "g_g_ne__brick_shops__1",
+   "kind": "salon",
+   "lights": 4,
+   "name": "Island Barber Shop",
+   "props": 18,
+   "w": 6.0
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_ne__brick_shops__2.scn",
+   "id": "g_g_ne__brick_shops__2",
+   "kind": "fast_food",
+   "lights": 5,
+   "name": "Dot's Tacos",
+   "props": 11,
+   "w": 5.16
+  },
+  {
+   "d": 11.2,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_sw__boarded_pair__0.scn",
+   "id": "g_g_sw__boarded_pair__0",
+   "kind": "cleaners",
+   "lights": 5,
+   "name": "Lantern Wash & Fold",
+   "props": 18,
+   "w": 11.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_se__pawn_chicken__0.scn",
+   "id": "g_g_se__pawn_chicken__0",
+   "kind": "jewelry",
+   "lights": 4,
+   "name": "Hank's Fine Jewelry",
+   "props": 21,
+   "w": 5.6
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_sw__walkup_shops__0.scn",
+   "id": "g_g_sw__walkup_shops__0",
+   "kind": "corner_shop",
+   "lights": 6,
+   "name": "Harbor Market",
+   "props": 32,
+   "w": 11.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_se__pawn_chicken__1.scn",
+   "id": "g_g_se__pawn_chicken__1",
+   "kind": "fast_food",
+   "lights": 4,
+   "name": "Crunch Taco Shop",
+   "props": 12,
+   "w": 5.8
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_sw__corner_liquor__0.scn",
+   "id": "g_g_sw__corner_liquor__0",
+   "kind": "corner_shop",
+   "lights": 6,
+   "name": "High Tide Bottles & Kitchen",
+   "props": 28,
+   "w": 11.4
+  },
+  {
+   "d": 9.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_se__motel__0.scn",
+   "id": "g_g_se__motel__0",
+   "kind": "salon",
+   "lights": 5,
+   "name": "Sandpiper Barbers",
+   "props": 31,
+   "w": 35.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_sw__side_walkup__0.scn",
+   "id": "g_g_sw__side_walkup__0",
+   "kind": "keys",
+   "lights": 5,
+   "name": "Mariner Lock & Key",
+   "props": 23,
+   "w": 11.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_sw__rear_walkup_b__0.scn",
+   "id": "g_g_sw__rear_walkup_b__0",
+   "kind": "bar",
+   "lights": 6,
+   "name": "The Bayview Tavern",
+   "props": 57,
+   "w": 11.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_se__brick_shops_c__0.scn",
+   "id": "g_g_se__brick_shops_c__0",
+   "kind": "store",
+   "lights": 6,
+   "name": "Ocean Home & Garden",
+   "props": 19,
+   "w": 6.24
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_sw__rear_walkup_c__0.scn",
+   "id": "g_g_sw__rear_walkup_c__0",
+   "kind": "fast_food",
+   "lights": 6,
+   "name": "Gina's Pizza",
+   "props": 49,
+   "w": 11.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_se__brick_shops_c__1.scn",
+   "id": "g_g_se__brick_shops_c__1",
+   "kind": "cleaners",
+   "lights": 4,
+   "name": "Abe's Cleaners",
+   "props": 33,
+   "w": 6.0
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_se__brick_shops_c__2.scn",
+   "id": "g_g_se__brick_shops_c__2",
+   "kind": "salon",
+   "lights": 4,
+   "name": "Seaglass Nails",
+   "props": 14,
+   "w": 5.16
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_g_se__bar_walkup__0.scn",
+   "id": "g_g_se__bar_walkup__0",
+   "kind": "bar",
+   "lights": 6,
+   "name": "Ferry Bar",
+   "props": 57,
+   "w": 11.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_a_ne__ck_brk3_row2__0.scn",
+   "id": "g_a_ne__ck_brk3_row2__0",
+   "kind": "books",
+   "lights": 6,
+   "name": "Crown Pages",
+   "props": 29,
+   "w": 11.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_nw__com_cafe_seaside__0.scn",
+   "id": "g_c_nw__com_cafe_seaside__0",
+   "kind": "cafe",
+   "lights": 5,
+   "name": "Better Buzz Café",
+   "props": 20,
+   "w": 5.4
+  },
+  {
+   "d": 9.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_v_nw__skate_shed__0.scn",
+   "id": "g_v_nw__skate_shed__0",
+   "kind": "bar",
+   "lights": 6,
+   "name": "Gus' Place",
+   "props": 28,
+   "w": 11.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_nw__urb_brick_row__2.scn",
+   "id": "g_c_nw__urb_brick_row__2",
+   "kind": "gallery",
+   "lights": 4,
+   "name": "June's Art House",
+   "props": 14,
+   "w": 5.16
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_nw__urb_brick_row__1.scn",
+   "id": "g_c_nw__urb_brick_row__1",
+   "kind": "books",
+   "lights": 5,
+   "name": "Jetty Pages",
+   "props": 23,
+   "w": 6.0
+  },
+  {
+   "d": 15.05,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_ne__urb_brick_corner__0.scn",
+   "id": "g_c_ne__urb_brick_corner__0",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "Stake Chop House",
+   "props": 97,
+   "w": 17.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_nw__urb_brick_row__0.scn",
+   "id": "g_c_nw__urb_brick_row__0",
+   "kind": "clothes",
+   "lights": 6,
+   "name": "Paris & Me Shop",
+   "props": 20,
+   "w": 6.24
+  },
+  {
+   "d": 11.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_a_nw__apt_stucco3_cream__0.scn",
+   "id": "g_a_nw__apt_stucco3_cream__0",
+   "kind": "grocery",
+   "lights": 6,
+   "name": "Tern Foods",
+   "props": 26,
+   "w": 18.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_nw__urb_dept_store__0.scn",
+   "id": "g_c_nw__urb_dept_store__0",
+   "kind": "shoes",
+   "lights": 6,
+   "name": "Tidewater Shoes",
+   "props": 76,
+   "w": 35.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_ne__twr_hotel__0.scn",
+   "id": "g_c_ne__twr_hotel__0",
+   "kind": "jewelry",
+   "lights": 6,
+   "name": "Palm Jewelers",
+   "props": 64,
+   "w": 29.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_ne__twr_glass__0.scn",
+   "id": "g_c_ne__twr_glass__0",
+   "kind": "bakery",
+   "lights": 6,
+   "name": "Omar's Bakery",
+   "props": 112,
+   "w": 23.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_nw__twr_office__0.scn",
+   "id": "g_c_nw__twr_office__0",
+   "kind": "salon",
+   "lights": 5,
+   "name": "Coral Barbers",
+   "props": 23,
+   "w": 23.4
+  },
+  {
+   "d": 10.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_a_nw__apt_beach_condo__0.scn",
+   "id": "g_a_nw__apt_beach_condo__0",
+   "kind": "pharmacy",
+   "lights": 6,
+   "name": "Gull Rx",
+   "props": 27,
+   "w": 17.4
+  },
+  {
+   "d": 11.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_a_ne__apt_stucco3_peach__0.scn",
+   "id": "g_a_ne__apt_stucco3_peach__0",
+   "kind": "bakery",
+   "lights": 6,
+   "name": "Mariner Bakery",
+   "props": 40,
+   "w": 18.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_a_nw__laundromat__0.scn",
+   "id": "g_a_nw__laundromat__0",
+   "kind": "salon",
+   "lights": 4,
+   "name": "Lighthouse Barbers",
+   "props": 17,
+   "w": 5.84
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_a_ne__corner_market__1.scn",
+   "id": "g_a_ne__corner_market__1",
+   "kind": "fast_food",
+   "lights": 5,
+   "name": "Orange Fish & Chips",
+   "props": 12,
+   "w": 5.7
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_sw__ck_svc_cinema_fast__0.scn",
+   "id": "g_c_sw__ck_svc_cinema_fast__0",
+   "kind": "venue",
+   "lights": 4,
+   "name": "Lowrey Theater",
+   "props": 19,
+   "w": 5.56
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_sw__ck_svc_cinema_fast__1.scn",
+   "id": "g_c_sw__ck_svc_cinema_fast__1",
+   "kind": "fast_food",
+   "lights": 4,
+   "name": "Chilpote",
+   "props": 12,
+   "w": 5.84
+  },
+  {
+   "d": 15.05,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_sw__urb_brick_corner__0.scn",
+   "id": "g_c_sw__urb_brick_corner__0",
+   "kind": "bar",
+   "lights": 6,
+   "name": "Marta's Place",
+   "props": 127,
+   "w": 17.4
+  },
+  {
+   "d": 11.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_a_sw__apt_stucco3_peach__0.scn",
+   "id": "g_a_sw__apt_stucco3_peach__0",
+   "kind": "bakery",
+   "lights": 6,
+   "name": "Island Bakery",
+   "props": 40,
+   "w": 18.4
+  },
+  {
+   "d": 11.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_a_se__apt_stucco3_cream__0.scn",
+   "id": "g_a_se__apt_stucco3_cream__0",
+   "kind": "pharmacy",
+   "lights": 6,
+   "name": "Sunset Pharmacy",
+   "props": 35,
+   "w": 18.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_sw__urb_mall__0.scn",
+   "id": "g_c_sw__urb_mall__0",
+   "kind": "clothes",
+   "lights": 6,
+   "name": "Jetty Apparel",
+   "props": 153,
+   "w": 47.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_se__mod_twr_office__0.scn",
+   "id": "g_c_se__mod_twr_office__0",
+   "kind": "pharmacy",
+   "lights": 6,
+   "name": "Walgrove",
+   "props": 18,
+   "w": 7.7
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_sw__mod_svc_row__0.scn",
+   "id": "g_c_sw__mod_svc_row__0",
+   "kind": "gallery",
+   "lights": 4,
+   "name": "Cove Gallery",
+   "props": 18,
+   "w": 5.84
+  },
+  {
+   "d": 13.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_sw__com_bank__0.scn",
+   "id": "g_c_sw__com_bank__0",
+   "kind": "office",
+   "lights": 6,
+   "name": "Shore Bank",
+   "props": 18,
+   "w": 13.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_se__mod_twr_office__1.scn",
+   "id": "g_c_se__mod_twr_office__1",
+   "kind": "shoes",
+   "lights": 6,
+   "name": "Frank's Footwear",
+   "props": 16,
+   "w": 7.7
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_c_sw__mod_svc_row__1.scn",
+   "id": "g_c_sw__mod_svc_row__1",
+   "kind": "books",
+   "lights": 4,
+   "name": "Breakwater Books",
+   "props": 17,
+   "w": 5.56
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_a_se__ck_brk3_row2__0.scn",
+   "id": "g_a_se__ck_brk3_row2__0",
+   "kind": "books",
+   "lights": 6,
+   "name": "Bougainvillea Books",
+   "props": 29,
+   "w": 11.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_nw__com_realty__0.scn",
+   "id": "g_b_nw__com_realty__0",
+   "kind": "office",
+   "lights": 5,
+   "name": "Kelp Travel",
+   "props": 22,
+   "w": 5.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_ne__urb_brick_row__0.scn",
+   "id": "g_b_ne__urb_brick_row__0",
+   "kind": "ice_cream",
+   "lights": 5,
+   "name": "Moo Hour Creamery",
+   "props": 36,
+   "w": 6.24
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_nw__com_surf_shop__0.scn",
+   "id": "g_b_nw__com_surf_shop__0",
+   "kind": "sport",
+   "lights": 6,
+   "name": "Emerald Surf Shop",
+   "props": 23,
+   "w": 8.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_ne__urb_brick_row__1.scn",
+   "id": "g_b_ne__urb_brick_row__1",
+   "kind": "gallery",
+   "lights": 4,
+   "name": "Bill's Art House",
+   "props": 15,
+   "w": 6.0
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_nw__urb_brick_row__2.scn",
+   "id": "g_b_nw__urb_brick_row__2",
+   "kind": "books",
+   "lights": 5,
+   "name": "Marina Books",
+   "props": 16,
+   "w": 5.16
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_ne__urb_brick_row__2.scn",
+   "id": "g_b_ne__urb_brick_row__2",
+   "kind": "pharmacy",
+   "lights": 5,
+   "name": "Gus' Drugstore",
+   "props": 15,
+   "w": 5.16
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_nw__urb_brick_row__1.scn",
+   "id": "g_b_nw__urb_brick_row__1",
+   "kind": "clothes",
+   "lights": 5,
+   "name": "Mariner Outfitters",
+   "props": 20,
+   "w": 6.0
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_ne__com_orange_arcade_block__0.scn",
+   "id": "g_b_ne__com_orange_arcade_block__0",
+   "kind": "bakery",
+   "lights": 6,
+   "name": "Bougainvillea Bakery",
+   "props": 37,
+   "w": 6.2
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_nw__urb_brick_row__0.scn",
+   "id": "g_b_nw__urb_brick_row__0",
+   "kind": "cafe",
+   "lights": 6,
+   "name": "Pelican Cafe",
+   "props": 23,
+   "w": 6.24
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_ne__com_orange_arcade_block__1.scn",
+   "id": "g_b_ne__com_orange_arcade_block__1",
+   "kind": "jewelry",
+   "lights": 6,
+   "name": "LUMO Jewels",
+   "props": 28,
+   "w": 6.5
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_ne__com_orange_arcade_block__2.scn",
+   "id": "g_b_ne__com_orange_arcade_block__2",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "Hank's Diner",
+   "props": 46,
+   "w": 6.5
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_nw__com_bar_crown__0.scn",
+   "id": "g_b_nw__com_bar_crown__0",
+   "kind": "bar",
+   "lights": 6,
+   "name": "Mac's Pub",
+   "props": 52,
+   "w": 8.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_ne__com_orange_arcade_block__3.scn",
+   "id": "g_b_ne__com_orange_arcade_block__3",
+   "kind": "salon",
+   "lights": 5,
+   "name": "Dot's Hair Studio",
+   "props": 25,
+   "w": 6.2
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_nw__com_bakery__0.scn",
+   "id": "g_b_nw__com_bakery__0",
+   "kind": "bakery",
+   "lights": 6,
+   "name": "Villa Nueva Bake Shop",
+   "props": 32,
+   "w": 8.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_nw__com_orange_row__2.scn",
+   "id": "g_b_nw__com_orange_row__2",
+   "kind": "bar",
+   "lights": 5,
+   "name": "The Breakwater Tavern",
+   "props": 39,
+   "w": 5.78
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_ne__lmk_village_theatre__0.scn",
+   "id": "g_b_ne__lmk_village_theatre__0",
+   "kind": "venue",
+   "lights": 5,
+   "name": "Villager Theatre",
+   "props": 23,
+   "w": 7.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_nw__com_orange_row__1.scn",
+   "id": "g_b_nw__com_orange_row__1",
+   "kind": "clothes",
+   "lights": 5,
+   "name": "Crownado Beach Wear",
+   "props": 24,
+   "w": 5.92
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_nw__com_orange_row__0.scn",
+   "id": "g_b_nw__com_orange_row__0",
+   "kind": "souvenir",
+   "lights": 4,
+   "name": "Tomas' Beach Shop",
+   "props": 29,
+   "w": 5.7
+  },
+  {
+   "d": 15.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_ne__com_spanish_arcade_block__0.scn",
+   "id": "g_b_ne__com_spanish_arcade_block__0",
+   "kind": "salon",
+   "lights": 5,
+   "name": "Crest Barber Shop",
+   "props": 27,
+   "w": 7.7
+  },
+  {
+   "d": 15.05,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_nw__urb_brick_corner__0.scn",
+   "id": "g_b_nw__urb_brick_corner__0",
+   "kind": "cafe",
+   "lights": 6,
+   "name": "Trident Café",
+   "props": 89,
+   "w": 17.4
+  },
+  {
+   "d": 15.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_ne__com_spanish_arcade_block__1.scn",
+   "id": "g_b_ne__com_spanish_arcade_block__1",
+   "kind": "shoes",
+   "lights": 6,
+   "name": "Orange Soles",
+   "props": 34,
+   "w": 7.78
+  },
+  {
+   "d": 15.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_ne__com_spanish_arcade_block__2.scn",
+   "id": "g_b_ne__com_spanish_arcade_block__2",
+   "kind": "gallery",
+   "lights": 5,
+   "name": "Rudy's Art House",
+   "props": 33,
+   "w": 7.92
+  },
+  {
+   "d": 11.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_r_n__craftsman_cedar__0.scn",
+   "id": "g_r_n__craftsman_cedar__0",
+   "kind": "clothes",
+   "lights": 6,
+   "name": "Harbor Threads",
+   "props": 20,
+   "w": 9.4
+  },
+  {
+   "d": 7.75,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_r_n__hipranch_grey__0.scn",
+   "id": "g_r_n__hipranch_grey__0",
+   "kind": "jewelry",
+   "lights": 5,
+   "name": "Tern Pawn & Gold",
+   "props": 17,
+   "w": 11.4
+  },
+  {
+   "d": 11.37,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_r_n__victorian_yellow__0.scn",
+   "id": "g_r_n__victorian_yellow__0",
+   "kind": "books",
+   "lights": 6,
+   "name": "Nguyen's Bookshop",
+   "props": 22,
+   "w": 10.14
+  },
+  {
+   "d": 8.63,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_r_n__spanish_white__0.scn",
+   "id": "g_r_n__spanish_white__0",
+   "kind": "restaurant",
+   "lights": 5,
+   "name": "Lola's Diner",
+   "props": 41,
+   "w": 11.4
+  },
+  {
+   "d": 8.37,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_r_s__tudor_stucco__0.scn",
+   "id": "g_r_s__tudor_stucco__0",
+   "kind": "bar",
+   "lights": 5,
+   "name": "The Gull Tavern",
+   "props": 36,
+   "w": 11.9
+  },
+  {
+   "d": 7.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_r_s__hipranch_sand__0.scn",
+   "id": "g_r_s__hipranch_sand__0",
+   "kind": "cafe",
+   "lights": 5,
+   "name": "Lantern Roasters",
+   "props": 22,
+   "w": 10.4
+  },
+  {
+   "d": 11.75,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_r_s__craftsman_sage__0.scn",
+   "id": "g_r_s__craftsman_sage__0",
+   "kind": "office",
+   "lights": 6,
+   "name": "Saltwater Realty",
+   "props": 17,
+   "w": 9.4
+  },
+  {
+   "d": 14.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_se__civ_post_office__0.scn",
+   "id": "g_b_se__civ_post_office__0",
+   "kind": "office",
+   "lights": 6,
+   "name": "Crownado Post Office",
+   "props": 32,
+   "w": 21.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_sw__com_bistro__0.scn",
+   "id": "g_b_sw__com_bistro__0",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "Little Frenchy",
+   "props": 61,
+   "w": 11.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_se__com_boutique_row__0.scn",
+   "id": "g_b_se__com_boutique_row__0",
+   "kind": "pharmacy",
+   "lights": 5,
+   "name": "Compass Rx",
+   "props": 25,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_se__com_boutique_row__1.scn",
+   "id": "g_b_se__com_boutique_row__1",
+   "kind": "shoes",
+   "lights": 5,
+   "name": "Sweet Soles Shoes",
+   "props": 22,
+   "w": 5.92
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_se__com_boutique_row__2.scn",
+   "id": "g_b_se__com_boutique_row__2",
+   "kind": "souvenir",
+   "lights": 4,
+   "name": "The Bay Shop",
+   "props": 29,
+   "w": 5.78
+  },
+  {
+   "d": 11.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_sw__apt_stucco3_cream__0.scn",
+   "id": "g_b_sw__apt_stucco3_cream__0",
+   "kind": "ice_cream",
+   "lights": 5,
+   "name": "Coral Scoops",
+   "props": 87,
+   "w": 18.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_sw__twr_hotel__0.scn",
+   "id": "g_b_sw__twr_hotel__0",
+   "kind": "books",
+   "lights": 6,
+   "name": "Isle Pages",
+   "props": 62,
+   "w": 29.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_se__urb_dept_store__0.scn",
+   "id": "g_b_se__urb_dept_store__0",
+   "kind": "bakery",
+   "lights": 6,
+   "name": "The Jetty Oven",
+   "props": 192,
+   "w": 35.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_b_se__com_cafe_seaside__0.scn",
+   "id": "g_b_se__com_cafe_seaside__0",
+   "kind": "cafe",
+   "lights": 5,
+   "name": "Ines' Coffee Bar",
+   "props": 20,
+   "w": 5.4
+  },
+  {
+   "d": 10.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_f_ne__@Node3D@6__0.scn",
+   "id": "g_f_ne__@Node3D@6__0",
+   "kind": "ice_cream",
+   "lights": 5,
+   "name": "Hank's Gelato",
+   "props": 51,
+   "w": 17.4
+  },
+  {
+   "d": 10.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_f_ne__apt_beach_condo__0.scn",
+   "id": "g_f_ne__apt_beach_condo__0",
+   "kind": "clothes",
+   "lights": 6,
+   "name": "Marta's Boutique",
+   "props": 33,
+   "w": 17.4
+  },
+  {
+   "d": 10.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_f_nw__apt_beach_condo__0.scn",
+   "id": "g_f_nw__apt_beach_condo__0",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "The Saltwater Table",
+   "props": 27,
+   "w": 17.4
+  }
+ ]
+}
