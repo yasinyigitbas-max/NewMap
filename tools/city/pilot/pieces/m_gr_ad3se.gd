@@ -31,10 +31,17 @@ func _run() -> void:
 	b.stalls_x(35.0, 13, 41.5, -1.0); b.stalls_x(81.0, 13, 41.5, -1.0)       # guests park at their own doors
 	b.roof(w1, ["prop_ac_condenser", "prop_satellite_dish_round", "prop_ac_condenser"])
 	b.roof(w2, ["prop_ac_condenser", "prop_vent_plumbing", "prop_ac_condenser"])
-	tries.call("prop_ice_chest", "worn", 71.6, 30.0, 90.0)                    # ice and soda at the gap between the wings
-	tries.call("prop_vending_soda", "worn", 73.2, 30.2, 0.0)
-	tries.call("prop_vending_snack", "worn", 76.8, 30.2, 0.0)
-	tries.call("prop_golf_cart_white", "worn", 78.6, 25.0, 0.0)               # housekeeping's cart, parked in the gap
+	# the gap between the wings: the guests' way on foot from the court to 3rd St (the coffee kiosk, the hospital
+	# across), paved; ice and vending in an alcove against the office wing's end wall, off the walk, facing the passage
+	# (the east wing's stair lands on the other side of it, kept clear)
+	b.paints.append(b.rect(70.0, 14.3, 80.0, 29.0, "concrete"))
+	b.paints.insert(0, b.rect(72.0, 29.0, 78.0, 35.6, "concrete"))         # ... on through the planter to the lot's aisle (the trees stay in the grass)
+	# one level pad over the gap at the wings' height: each wing levelled its own pad and their blends made a hump between them
+	b.pad(71.0, 17.8, 79.0, 31.0, 4.0, ((w1[0] as Node3D).position.y + (w2[0] as Node3D).position.y) * 0.5)
+	tries.call("prop_ice_chest", "worn", 70.9, 26.6, 90.0)
+	tries.call("prop_vending_soda", "worn", 70.9, 24.4, 90.0)
+	tries.call("prop_vending_snack", "worn", 70.9, 22.4, 90.0)
+	tries.call("prop_golf_cart_white", "worn", 118.8, 22.0, 0.0)             # housekeeping's cart, at the laundry end
 	# ---------------------------------------------------------------- the walk-up coffee kiosk on the 3rd St corner
 	var ki := b.bld("commercial/com_kiosk", 20.0, 22.0, 180.0, "crosswalk_coffee", 0.8)
 	b.paints.append(b.rect(11.0, 25.5, 29.0, 34.0, "concrete"))               # its patio
@@ -80,12 +87,10 @@ func _run() -> void:
 		b.add("prop_storm_drain_grate", "dirty", d.x, d.y, 0.0, false, 0.002)
 	tries.call("prop_park_bench", "worn", 101.4, 72.0, -90.0)                 # outside the gym door, facing the lot
 	tries.call("prop_bike_rack", "worn", 101.4, 90.0, 90.0)
-	tries.call("prop_newspaper_box_red", "worn", 66.0, 30.0, 0.0)
-	# polish 19 Nov (whole-zone pass): a chair set between the kiosk's picnic tables, a table in the wings' gap, carts at the motel
+	tries.call("prop_newspaper_box_red", "worn", 71.0, 15.6, 180.0)          # at the passage's street end, for the walkers
+	# polish 19 Nov (whole-zone pass): a chair set between the kiosk's picnic tables, carts at the wings' ends
 	tries.call("prop_patio_set_4", "worn", 19.5, 29.6, 0.0)
-	tries.call("prop_patio_set_4", "worn", 73.8, 26.4, 0.0)
 	for x: float in [32.6, 117.4]: tries.call("prop_trash_cart_green", "dirty", x, 27.0, 0.0)
-	tries.call("prop_hydrant_red", "worn", 75.0, 32.6, 0.0)
 	tries.call("prop_drinking_fountain", "worn", 101.4, 67.6, -90.0)           # at the gym door
 	# ---------------------------------------------------------------- wear
 	b.building_wear()

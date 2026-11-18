@@ -225,6 +225,13 @@ func wheel_stops(kind := "prop_wheel_stop_concrete") -> void:
 ## a planted island (grass, or mulch on a dry lot) with palms and low shrubs at the ends
 func island(ax: float, az: float, bx: float, bz: float, palms: int, species: Array, mat := "grass", ends := true) -> void:
 	paints.append(rect(ax, az, bx, bz, mat))
+	# a strip within half a metre of the block edge: the sliver between it and the street's walk is paved like the walk
+	# (it showed as a dark line of lot asphalt along the frontages, Yasin 19 Nov)
+	var lo := Vector2(minf(ax, bx), minf(az, bz)); var hi := Vector2(maxf(ax, bx), maxf(az, bz))
+	if lo.y - z0 > 0.01 and lo.y - z0 < 0.5: paints.append(rect(lo.x, z0, hi.x, lo.y, "concrete"))
+	if z1 - hi.y > 0.01 and z1 - hi.y < 0.5: paints.append(rect(lo.x, hi.y, hi.x, z1, "concrete"))
+	if lo.x - x0 > 0.01 and lo.x - x0 < 0.5: paints.append(rect(x0, lo.y, lo.x, hi.y, "concrete"))
+	if x1 - hi.x > 0.01 and x1 - hi.x < 0.5: paints.append(rect(hi.x, lo.y, x1, hi.y, "concrete"))
 	var long_x := absf(bx - ax) > absf(bz - az)
 	for k in palms:
 		var t := (k + 1.0) / (palms + 1.0)
@@ -348,6 +355,7 @@ func door_life() -> int:
 	for bi in B.size():
 		var b: Array = B[bi]
 		var n: Node3D = b[0]; var w: float = b[1]; var d: float = b[2]
+		if String(b[3]).contains("com_kiosk"): continue          # a walk-up window: its front stays clear for the queue (Yasin 19 Nov)
 		var ds: Array = K.building_stats(String(b[3])).get("doors_front", [])
 		var yaw := rad_to_deg(n.rotation.y)
 		var k := bi
@@ -388,6 +396,54 @@ func fire_lane(ax: float, az: float, bx: float, bz: float, side: Vector2) -> voi
 	W.red_kerb(dec, Vector2(ax, az), Vector2(bx, bz), side)
 
 ## ---------------------------------------------------------------- finish
+## the ground's material at a point (the first paint covering it wins, as in K.painted_rect), asphalt otherwise
+func mat_at(x: float, z: float) -> String:
+	for p: Array in paints:
+		if x > float(p[0]) and x < float(p[2]) and z > float(p[1]) and z < float(p[3]): return String(p[4]) if String(p[4]) != "-" else "asphalt"
+	return "asphalt"
+
+## a 0.3 m skirt hanging under every block edge, in the edge's own surface: where the neighbour's ground lies a few cm
+## lower nothing can show through the seam (Yasin 19 Nov: "floor is broken, grass underneath shows")
+func skirt() -> void:
+	var down := func(x: float, z: float) -> float: return y(x, z) - 0.3
+	for e: Array in [[Vector2(x0, z0), Vector2(x1, z0), 1.0], [Vector2(x1, z0), Vector2(x1, z1), 1.0], [Vector2(x1, z1), Vector2(x0, z1), 1.0], [Vector2(x0, z1), Vector2(x0, z0), 1.0]]:
+		var a: Vector2 = e[0]; var c: Vector2 = e[1]
+		var n := int(ceil(a.distance_to(c)))
+		for k in n:
+			var p0 := a.lerp(c, float(k) / n); var p1 := a.lerp(c, float(k + 1) / n)
+			var mid := (p0 + p1) * 0.5 + (Vector2(x0 + x1, z0 + z1) * 0.5 - (p0 + p1) * 0.5).normalized() * 0.05
+			var m := mat_at(mid.x, mid.y)
+			if m in ["white", "yellow", "red"]: m = "asphalt"
+			g.wall_line(m, PackedVector2Array([p0, p1]), down, yfn, float(e[2]))
+
+## keep each ground wear mark only where its whole quad lies on a surface it belongs to (Yasin 19 Nov: "there is
+## asphalt wear on the grass"): cracks, sealant and patches on asphalt / concrete / paint, oil, tyre marks and grime also
+## on gravel, nothing on grass or mulch, nothing hanging over the block edge. Kerb paint (vertical faces) is kept.
+func wear_on_paving() -> void:
+	const PAVE := ["asphalt", "concrete", "white", "yellow", "red", "paving", "plaza"]
+	var nv := PackedVector3Array(); var nn := PackedVector3Array(); var nuv := PackedVector2Array(); var nc := PackedColorArray()
+	var kept := 0; var dropped := 0
+	for q in range(0, dec.V.size(), 6):
+		var ok := true
+		if dec.N[q].is_equal_approx(Vector3.UP):
+			var uv0 := dec.UV[q]
+			for k in 6: uv0 = uv0.min(dec.UV[q + k])
+			var tile := int(uv0.x * 4.0) + 4 * int(uv0.y * 4.0)
+			var on_gravel_ok := tile in [6, 7, 8, 14, 15]
+			var pts: Array[Vector3] = [dec.V[q], dec.V[q + 1], dec.V[q + 2], dec.V[q + 5]]
+			var cen := (pts[0] + pts[2]) * 0.5
+			pts.append(cen)
+			for pt: Vector3 in pts:
+				if pt.x < x0 + 0.05 or pt.x > x1 - 0.05 or pt.z < z0 + 0.05 or pt.z > z1 - 0.05: ok = false; break
+				var m := mat_at(pt.x, pt.z)
+				if not (m in PAVE or (m == "gravel" and on_gravel_ok)): ok = false; break
+		if ok:
+			for k in 6: nv.append(dec.V[q + k]); nn.append(dec.N[q + k]); nuv.append(dec.UV[q + k]); nc.append(dec.C[q + k])
+			kept += 1
+		else: dropped += 1
+	dec.V = nv; dec.N = nn; dec.UV = nuv; dec.C = nc; dec.count = kept
+	print("%s: wear marks kept %d, dropped %d (off the paving)" % [name, kept, dropped])
+
 ## floor over the whole rectangle (asphalt base, paints cut in), arrows, wear, props, meta, save
 func finish(stops := "prop_wheel_stop_concrete") -> void:
 	root.set_meta(&"stalls", stalls)
@@ -395,8 +451,10 @@ func finish(stops := "prop_wheel_stop_concrete") -> void:
 	for s in shops: sl.append(s[0])
 	root.set_meta(&"shops", sl)
 	wheel_stops(stops)
-	K.painted_rect(g, x0, z0, x1, z1, paints, yfn)
+	K.painted_rect(g, x0, z0, x1, z1, paints, yfn, "asphalt", false)
+	skirt()
 	for a: Dictionary in arrows: K.fill_arrow(g, a, yfn)
+	wear_on_paving()
 	var wm := dec.build()
 	if wm: root.add_child(wm)
 	var mi := MeshInstance3D.new(); mi.name = "ground"; mi.mesh = g.build()
