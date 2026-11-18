@@ -5,6 +5,12 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~01:00 (PC time): COLLISION PER PLACE (the growth doubled the gritty edge's collision; teleport 3.6 s). Branch
+  `claude/ecstatic-archimedes-922d2c`, docs/RUNTIME_BAKE.md "Collision per place". ON: a teleport's destination's
+  collision first, and 4 x the collision budget while a teleport prepares: teleports 0.1-1.3 s, stream gate PASS; zones
+  gate still FAILS on one body (3.2 s against 3 s, gritty night). TRIAL, OFF: collision only within 100 m
+  (`--colrange=100`): a fifth of the collision and the zones' waits under 1 s, but one 86-414 ms draw stall per lap on
+  5th St at 210 km/h, not understood. The phone has the build with the range ON (installed before it was turned off).
 - 19 Nov ~00:30 (PC time): DRAWING CENSUS ON THE PHONE (Yasin: "queue the drawing cost census"), branch
   `claude/ecstatic-archimedes-922d2c`, not merged. Full account: docs/DRAW_CENSUS.md. Rig `--plan=census` (states one at
   a time, standing viewpoints, day / night, `--warmnight`). KEY FINDING: at 720p the phone lowers its GPU clock, so GPU

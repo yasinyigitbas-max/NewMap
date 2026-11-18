@@ -50,7 +50,7 @@ signal cell_out(key: String)
 ## took 3.6 s, see docs/RUNTIME_BAKE.md "Collision per place"). Nothing can touch a body 200 m away (traffic and people
 ## follow lane graphs), so a cell's bodies are made only once they are within `col_range` of the player, of the lead
 ## swept ahead of the player, or of a place being prepared; farther ones wait as data and leave with their cell.
-@export var col_range := 100.0        ## 0 = every body of every loaded cell (as before 19 Nov)
+@export var col_range := 0.0          ## 0 = every body of every loaded cell (the default). 100 m cut the collision made to a fifth, but every phone run with a range (100 or 150 m) had one frame of 86-414 ms stalled in the draw on 5th St at 210 km/h while two cells loaded (19 Nov: col23_stream, col23_stream_repeat, col3_stream, col150_stream); not understood, so OFF
 @export var prepare_boost := 4.0      ## while a prepare() is pending (a teleport behind a fade: the player is not there), the collision budgets a frame are this many times larger
 ## THE TIERS (19 Nov, Yasin: "it snaps from near to far directly"; shaders/rt/rt_tier.gdshaderinc, docs/RUNTIME_BAKE.md
 ## "The tiers"). All off = the city draws exactly as the bake made it. Set before the node enters the tree, or call
