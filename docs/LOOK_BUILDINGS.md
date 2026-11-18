@@ -86,7 +86,12 @@ The phone sits at the 60 fps step at 720p, so it shows only if it pushes frames 
 - Far tier (beyond 220 m, `rt_far`): unchanged: far buildings get no glass and no night windows (as before).
 
 ## Found on the way (not fixed)
-- `rt_ground.gdshader` uses no occlusion although `ground_orm.png` has one.
+- (Corrected 18 Nov.) An earlier note here said `rt_ground.gdshader` ignores an occlusion map. Wrong: the city's ground
+  is drawn from nine tiling textures (asphalt, concrete, grass, dry ground, travertine, two road-line sheets, gravel,
+  sand; `make_arrays.py` "ground"), and none of them has an occlusion map. `ground_orm.png` belongs to the kit's ground
+  atlas, which the built ground does not use. So there is nothing there to switch on. Grass, gravel and travertine do
+  have normal maps; using them would be one more texture read on the ground, which covers most of the screen: the most
+  expensive pixels on the phone. Not done.
 - Cloud setup: Godot 4.7.2 from GitHub releases; `apt-get install mesa-vulkan-drivers`; do NOT point
   `VK_ICD_FILENAMES` at `/opt/lavapipe` (that build draws the trees black); and sky reflections off in cloud shots.
 
