@@ -101,7 +101,7 @@ def family_rows():
             elif isinstance(o.get("at"), list): c["uv"] = o["at"]
             if "pad" in o: c["y"] = o["pad"]
             if isinstance(o.get("site"), str) or "id" in o: c["sid"] = o.get("id", o.get("site"))
-            if isinstance(o.get("piece"), str) and (o["piece"].startswith(("j_", "s_")) ):
+            if isinstance(o.get("piece"), str) and (o["piece"].startswith(("j_", "s_")) or o.get("block") is True):   # block: zone growth tables (18 Nov)
                 pos = place(o, c)
                 if pos is not None:
                     key = (o["piece"], round(pos[0], 2), round(pos[1], 2), round(pos[2], 2), round(float(o.get("yaw", 0.0)), 1))

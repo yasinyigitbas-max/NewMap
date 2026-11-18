@@ -4935,6 +4935,17 @@
    "site": "b045"
   },
   {
+   "piece": "m_gr_ad5ne",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "strip_grow",
+   "site": "strip block Adela x 5th NE (u 508.7-645.7, v -1100 to -1014.3)"
+  },
+  {
    "piece": "x_shore_foam",
    "pos": [
     0.0,
@@ -4947,7 +4958,7 @@
  ],
  "coverage": {
   "sample_rows": 84,
-  "family_rows": 372,
+  "family_rows": 373,
   "gap_nodes": 2,
   "gap_blocks": 0,
   "gaps": {
