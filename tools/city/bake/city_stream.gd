@@ -41,6 +41,8 @@ signal cell_out(key: String)
 @export var attach_bodies := true    ## test switch: false = a cell's collision is never attached (to see what attaching costs)
 @export var show_cells := true       ## test switch: false = cells are added hidden (to see what their first drawing costs)
 @export var loader_mode := 0         ## 0 = the streamer's own loader threads (the way to run it). 1 / 2 = the engine's thread pool without / with sub-threads, kept to compare: the pool is also what the physics engine and the renderer run their jobs on, and a cell's hundreds of files filled it (phone, 18 Nov: the main thread waited 65-350 ms for the physics step each time two cells were asked for)
+@export var col_ms_per_frame := 2.0  ## and at most this much main-thread time a frame making bodies (after the first)
+@export var gpu_reserve_mb := 192    ## warm_up(): graphics memory taken and given back once, so the driver gets its next big block of memory behind the loading screen and not at the first cells of a drive (see warm_up)
 @export var ready_col_m := 70.0      ## is_ready(): collision this near the place must be attached
 @export var probe := false           ## test switch: time how long the physics and render servers take to digest what this frame gave them
 @export var urgent_m := 90.0          ## a body this near the player is attached even while a cell is loading
@@ -77,7 +79,7 @@ func _ready() -> void:
 	var mp := runtime_dir + "manifest.json"
 	if FileAccess.file_exists(mp): manifest = JSON.parse_string(FileAccess.get_file_as_string(mp))
 	cell_m = float(manifest.get("cell_m", 200.0))
-	for k: String in manifest.get("cells", {}): cells[k] = {"state": NONE, "node": null, "task": -1, "ps": null, "t_req": 0, "cancel": false, "bodies": []}
+	for k: String in manifest.get("cells", {}): cells[k] = {"state": NONE, "node": null, "task": -1, "ps": null, "t_req": 0, "cancel": false, "bodies": [], "x0": float(k.get_slice("_", 0)) * cell_m, "z0": float(k.get_slice("_", 1)) * cell_m}
 	for p: String in manifest.get("keep", []):
 		if ResourceLoader.exists(p): _keep.append(load(p))
 	_map_img = Image.create(MAP, MAP, false, Image.FORMAT_R8); _map_img.fill(Color(0, 0, 0))
@@ -92,7 +94,7 @@ func _ready() -> void:
 
 # ---------------------------------------------------------------- queries
 func _dist(k: String, p: Vector3) -> float:
-	var cx := float(k.get_slice("_", 0)) * cell_m; var cz := float(k.get_slice("_", 1)) * cell_m
+	var cd: Dictionary = cells[k]; var cx: float = cd.x0; var cz: float = cd.z0
 	var dx := maxf(maxf(cx - p.x, p.x - (cx + cell_m)), 0.0); var dz := maxf(maxf(cz - p.z, p.z - (cz + cell_m)), 0.0)
 	return sqrt(dx * dx + dz * dz)
 
@@ -160,8 +162,14 @@ func update_focus(p: Vector3, now := false, velocity := Vector3.ZERO) -> void:
 	for i in range(1, steps + 1): pts.append(p + lead * (float(i) / steps))
 	for q: Vector3 in _prepared: pts.append(q)
 	var want: Array = []      # [priority distance, key]
+	# the box round every point of interest: a cell outside it that is not loaded needs no look (the city can grow
+	# without this loop growing with it: phone, 18 Nov, 1-3 ms a frame went here for 141 cells)
+	var lo := p; var hi := p
+	for qb: Vector3 in pts: lo = lo.min(qb); hi = hi.max(qb)
+	var rb := unload_dist + 1.0
 	for k: String in cells:
 		var c: Dictionary = cells[k]; var d := 1.0e9
+		if c.state == NONE and (float(c.x0) > hi.x + rb or float(c.x0) + cell_m < lo.x - rb or float(c.z0) > hi.z + rb or float(c.z0) + cell_m < lo.z - rb): continue
 		for q2: Vector3 in pts: d = minf(d, _dist(k, q2))
 		if d <= load_dist:
 			c.cancel = false
@@ -250,9 +258,10 @@ func _process_stream(t0: int) -> void:
 		if cells[kq].state in [LOADING, BUILDING]: quiet = false; break
 	# collision: the nearest waiting bodies first, a few a frame
 	if not _pending.is_empty():
-		var spent := 0
+		var spent := 0; var ta0 := Time.get_ticks_usec()
 		for i in bodies_per_frame:
 			if _pending.is_empty(): break
+			if i > 0 and (Time.get_ticks_usec() - ta0) > int(col_ms_per_frame * 1000.0): break
 			var bi := 0; var bdist := 1.0e18
 			for j in _pending.size():
 				var dd := (_pending[j][0] as Vector3).distance_squared_to(focus)
@@ -359,3 +368,14 @@ func warm_up(cam: Camera3D, frames := 3) -> void:
 	for i in frames: await get_tree().process_frame
 	RenderingServer.global_shader_parameter_set(&"ck_night", prev)
 	w.queue_free()
+	# Graphics memory. The driver takes memory from the system in big blocks; the first cells streamed in after the
+	# start need more than the start did, the next block is fetched, and that is one frame of 60-550 ms in the draw
+	# (phone, 18 Nov, the same place in every run; the marks put it in the draw with nothing being drawn). So the
+	# growth is asked for here, once, behind the loading screen, and given back: the block stays with the driver.
+	var rd := RenderingServer.get_rendering_device()
+	if rd and gpu_reserve_mb > 0:
+		var tr0 := Time.get_ticks_msec(); var held: Array = []
+		for i2 in int(gpu_reserve_mb / 16): held.append(rd.vertex_buffer_create(16 * 1024 * 1024))
+		for i3 in 2: await get_tree().process_frame
+		for r: RID in held: rd.free_rid(r)
+		stats["reserve_ms"] = Time.get_ticks_msec() - tr0
