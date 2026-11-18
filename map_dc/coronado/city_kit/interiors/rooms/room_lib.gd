@@ -109,6 +109,7 @@ func reveal_z(key: String, at: float, th: float, x0: float, x1: float, y0: float
 ## a box (skirting, shelves, partitions, window glass panels ...) as six quads
 func box(key: String, c: Vector3, size: Vector3) -> void:
 	var h := size * 0.5
+	_boxes.append([c.x, c.y, c.z, size.x, size.y, size.z, key])      # for the indoor checker's "unheld" rule
 	if key == "wall" and c.y - h.y <= floor_y + 0.1: _solids.append([c.x - h.x, c.z - h.z, c.x + h.x, c.z + h.z])
 	var x0 := c.x - h.x; var x1 := c.x + h.x; var y0 := c.y - h.y; var y1 := c.y + h.y; var z0 := c.z - h.z; var z1 := c.z + h.z
 	wall(key, "x", x1, z0, z1, y0, y1, 1.0); wall(key, "x", x0, z0, z1, y0, y1, -1.0)
@@ -334,6 +335,9 @@ func _closed_part(axis: String, wall_at: float, plane: float, s0: float, s1: flo
 ## a closed solid door leaf filling a hole in the room wall (back and side doors: staff, deliveries)
 ## every opening built in the room's walls, for the indoor checker's "cover" rule: [axis, at, s0, s1, y0, y1, kind]
 var _openings: Array = []
+## every box built in the room (partitions, shelves, bars, fittings): [cx, cy, cz, sx, sy, sz, material key], for the
+## indoor checker's "unheld" rule (19 Nov, Yasin: "whats that thing flying there?")
+var _boxes: Array = []
 
 func solid_door(axis: String, at: float, s0: float, s1: float, y0: float, y1: float) -> void:
 	_openings.append([axis, at, s0, s1, y0, y1, "door"])
@@ -482,7 +486,7 @@ func build() -> Node3D:
 		pn.add_child(mmi); inst.free()
 	var wm := dec.build()
 	if wm: wm.name = "wear"; root.add_child(wm)
-	root.set_meta(&"floors", _floors); root.set_meta(&"solids", _solids); root.set_meta(&"entrances", _doors); root.set_meta(&"cut", _cut); root.set_meta(&"openings", _openings)
+	root.set_meta(&"floors", _floors); root.set_meta(&"solids", _solids); root.set_meta(&"entrances", _doors); root.set_meta(&"cut", _cut); root.set_meta(&"openings", _openings); root.set_meta(&"boxes", _boxes)
 	# the room is drawn exactly as long as its building shows the near tier (0-62 m, the tier with the openings cut);
 	# past that the building's mid tier paints its windows shut again and the room is not needed. Lights fade out
 	# over the last 12 m so nothing pops.
