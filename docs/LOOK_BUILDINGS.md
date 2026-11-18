@@ -32,8 +32,8 @@ added. What is added:
 - a thin dark line where a wall stands on the ground (bottom 0.45 m, at most 50 % darker at the very foot), so the
   building does not float on the pavement.
 How visible the kit's existing AO is: `*_ao_off` / `*_ao_on` pictures (look changes all off in both; the AO switched off
-in memory). Measured on a close apartment view: it changes 2 % of the pixels by day by more than a small step, 4 % at night.
-It is subtle. The new contact change touches 3 % of the pixels by day, 1 % at night: also gentle, as asked.
+in memory). Measured on the three `_a` views: it changes 4-5 % of the pixels by day by more than a small step, 2-3 % at
+night. It is there, but subtle. The new contact change touches 3 % of the pixels by day, 1 % at night: also gentle, as asked.
 
 **2. Night windows (`ck_look_windows`).** Before: 3 m x 3 m bays of world position, all one orange, so a big window was
 cut into differently lit blocks and a whole tower looked like one orange chequerboard. Now:
@@ -55,6 +55,15 @@ not metal: in the kit's atlases nothing else is under 0.25). On glass: a sky gra
 fronts across the street, high ones see over the roofs; each window leans a tiny bit and is a little brighter or darker,
 so a glass tower shows panes instead of one sheet. It fades out at night. No texture: the brief allowed one texture read,
 this uses none.
+
+## Picture files
+`<view>_<day|night>_<set>.jpg`, views `centre_a/b` (city centre, 0,-600), `apartments_a/b` (250,-600), `pilot_a/b`
+(high street, 0,0), eye 1.7 m above the road. Sets: `before` (all three off) and `after` (all on) for every view;
+for the `_a` views also each change alone (`contact`, `windows`, `glass`) and the kit's own AO off / on
+(`ao_off`, `ao_on`).
+What to look for: by day the glass (tower in `centre_a`, shopfronts and upper windows everywhere); at night the
+windows. The night "after" is less orange than "before": warm, with some neutral and a few cold windows, instead of
+one orange everywhere. If Yasin prefers the old orange, `ck_look_windows = 0` gives it back, or the mix can be tuned.
 
 ## What it should cost (per pixel, building pixels only)
 No new texture read, no screen-space effect, no new draw, no new material.

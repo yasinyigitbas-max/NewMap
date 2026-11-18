@@ -120,7 +120,7 @@ void fragment() {
 			float bright = mix(0.35, 0.85, hr.x) * mix(0.8, 1.1, hw.y);      // under 1: big shopfronts must not burn white
 			vec3 lamp = mix(vec3(1.0, 0.56, 0.24), vec3(1.0, 0.7, 0.42), smoothstep(0.0, 0.55, hr.y));      // tungsten .. warm LED
 			lamp = mix(lamp, vec3(1.0, 0.8, 0.58), step(0.72, hr.y));                                          // neutral
-			lamp = mix(lamp, vec3(0.5, 0.6, 0.78), step(0.92, hr.y));                                          // tube / TV: bluish, dimmer
+			lamp = mix(lamp, vec3(0.3, 0.38, 0.52), step(0.92, hr.y));                                        // tube / TV: bluish, dimmer
 			emi += texture(emission_tex, UV).r * lamp * (emission_energy * night_energy * on * bright);
 		} else {
 			// the look before: 3 m x 3 m bays of each wall, one colour
