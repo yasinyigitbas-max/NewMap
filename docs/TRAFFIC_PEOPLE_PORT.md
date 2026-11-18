@@ -164,12 +164,19 @@ How the old game builds (checked on this PC, not from memory):
 - Present on this PC: Python 3.12, SCons 4.8.1, JDK 17, the NDK, llvm-mingw, godot-cpp with its Windows debug and
   Android release libraries built.
 
-How it will be built here:
-- `native/` in this repo: `src/`, `SConstruct`, `build.sh` (one command builds Windows + Android debug + Android
-  release, about a minute once godot-cpp itself is built), `coronado_city.gdextension.in`.
-- godot-cpp gets its OWN copy for this repo, outside git, at `C:\Users\yasin\NewMap\OUT\native_tools\godot-cpp`
-  (same commit, same one-line fix), so nothing is built inside the old game's folders. `build.sh` makes it if it is
-  missing. (Started while this page was written.)
+How it is built here (done in Stage 1; where it differs from this plan's first draft, it says so):
+- `native/` in this repo: `src/`, `build.sh`, `coronado_city.gdextension.in`. `bash native/build.sh` builds the
+  Windows dll and the Android .so in under a minute. It does NOT run scons: it compiles `src/*.cpp` with exactly the
+  flags godot-cpp's scons uses (read from a dry run) and links godot-cpp's static library. Why: scons keeps its own
+  record per folder, so every checkout would have rebuilt godot-cpp itself, about an hour on this PC (4 threads).
+- godot-cpp has its OWN copy for this repo, outside git, at `C:\Users\yasin\NewMap\OUT\native_tools\godot-cpp`
+  (same commit, same one-line fix), so nothing is built inside the old game's folders. `build.sh` makes it when it
+  is missing and takes the two static libraries the old game's tools folder already has (same commit; the generated
+  headers were compared: identical). Without them it builds them with scons.
+- ONE Android library, not two (first draft: debug + release): built like a release (no debug checks) and used by
+  debug AND release exports. The extension interface is plain C, so it loads in a debug engine, and the old game's
+  "release library missing" crash cannot happen with one file. The Windows dll keeps the debug checks. The .so
+  needs only libc, libm and libdl, exports one symbol (`coronado_city_init`) and is laid out for 16 KB pages.
 - THE BINARIES AND THE `.gdextension` FILE STAY OUT OF GIT, like the bake (`runtime/`) and the Android template:
   `build.sh` writes them. Why: every checkout that has a `.gdextension` file loads it, and a cloud session on Linux
   would print an error on every run (there is no Linux library unless it builds one). This way the four zone
@@ -238,7 +245,7 @@ Every stage reports the real numbers from the rig's probe at 720p: main thread m
 | Stage | What | Done when |
 |---|---|---|
 | 0 | this page | pushed; Yasin answers section 4 |
-| 1 | `native/` builds for Windows and Android (debug + release); the test app loads it and prints one line from a C++ class | the line in the PC log AND in a phone run; stream health gate PASS; lock test RESULT PASS |
+| 1 | `native/` builds for Windows and Android; the test app loads it and prints one line from a C++ class | the line in the PC log AND in a phone run; stream health gate PASS; lock test RESULT PASS |
 | 2a | `StreetGraph` and its tool; `streets.bin`; the picture | 0 lane points off the asphalt, heights within 3 cm of the ground, every junction leg connected; the picture pushed |
 | 2b | the traffic core on the new graph, on its own thread, no drawing | a PC test: 30 sim-minutes at 80 cars: 0 overlapping cars (the core's own audit), no car standing over 2 minutes except at a red, the same result twice for one seed; step time printed |
 | 2c | car batches, parked cars, signals on the shader clock, the speed ring, collision pool; rig options `--traffic=N` `--parked=0/1` (`--cars` is already the look session's demo and stays theirs) | PC pictures by day and night; a 280 km/h drive on the PC with cars ahead all the way |

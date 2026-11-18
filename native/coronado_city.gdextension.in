@@ -1,0 +1,15 @@
+; The new map's native module (traffic and people in C++, docs/TRAFFIC_PEOPLE_PORT.md).
+; This is the TEMPLATE. native/build.sh copies it to coronado_city.gdextension beside the libraries it builds; that
+; copy and native/bin/ are not in git, so a checkout that has not built the module (a cloud session) never loads it.
+[configuration]
+
+entry_symbol = "coronado_city_init"
+compatibility_minimum = "4.5"
+reloadable = false
+
+[libraries]
+
+windows.debug.x86_64 = "res://native/bin/coronado_city.windows.x86_64.dll"
+windows.release.x86_64 = "res://native/bin/coronado_city.windows.x86_64.dll"
+android.debug.arm64 = "res://native/bin/libcoronado_city.android.arm64.so"
+android.release.arm64 = "res://native/bin/libcoronado_city.android.arm64.so"
