@@ -2,7 +2,7 @@
  "piece": "g_v3_g4se",
  "shops": [
   {
-   "door_index": 1,
+   "door_index": 0,
    "kind": "cash",
    "label": "corner_shop",
    "model": "ck/ck_svc_bank_pharm",

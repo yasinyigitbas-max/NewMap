@@ -66,10 +66,10 @@ static func begin(piece: String) -> Dictionary:
 				ctx.paints.append(A.rect(sx, sz, minf(AL0, a - 4.5), ctx.plv, maxf(AL1, a + 4.5), ctx.plv + 6.0, "asphalt"))
 	return ctx
 
-## true when [s0, s1] along the numbered street is clear of every driveway apron (+1 m)
+## true when [s0, s1] along the numbered street is clear of every driveway apron (+0.5 m)
 static func apron_free(ctx: Dictionary, s0: float, s1: float) -> bool:
 	for a: float in ctx.apr:
-		if s0 < a + 5.5 and s1 > a - 5.5: return false
+		if s0 < a + 5.0 and s1 > a - 5.0: return false
 	return true
 
 ## an asphalt drive from an apron straight back to (and including) depth v1
@@ -81,7 +81,7 @@ static func drive(ctx: Dictionary, a: float, v1: float, w := 7.0) -> void:
 ## a shop building on its street's property line behind a 2.5 m paved forecourt (grt_lib.shop with the line as a
 ## parameter). face "-v": on the numbered street (line plv), "-u": on the Ave (line plu). kinds per bay as grt_lib
 ## ("pawn", "laundry", "liquor", "bar", "dead", "none") plus "diner" and "cash" (forecourt life only; the room is the
-## shop's own, see shops). open = [[door_index, kind, name], ...]: the businesses that get a room (grt rooms table).
+## shop's own, see shops). open = [[shop door index (the contract's shop entrances, left to right), kind, name], ...]: the businesses that get a room (grt rooms table).
 static func shop(ctx: Dictionary, folder: String, s: float, face: String, label: String, kinds: Array, open: Array = []) -> Dictionary:
 	var sx: float = ctx.sx; var sz: float = ctx.sz
 	var line: float = ctx.plv if face.ends_with("v") else ctx.plu

@@ -76,7 +76,7 @@ static func _v1(ctx: Dictionary) -> void:
 	var rr: RandomNumberGenerator = ctx.rr; var props: K.Props = ctx.props; var dec: K.Decals = ctx.dec; var paints: Array = ctx.paints
 	var seed := int(ctx.site.seed)
 	# ---- A: the trade corner on 4th St, its customers' lot behind, the last cottage on the Ave
-	var names: Array = [["Rim & Tire", "Quik Check Cash"], ["Brake Masters Used Parts", "Payday Loans 4U"]][seed % 2]
+	var names: Array = [["Rim & Tire", "Quik Check Cash"], ["Brake Masters Used Parts", "Payday Loans 4U"]][(seed / 2) % 2]
 	var tr := GL.shop(ctx, "ck/ck_svc_trade", 16.5, "-v", "trade_corner", ["cash", "none"], [[0, "cash", names[1]], [1, "parts", names[0]]])
 	GL.roof(ctx, tr, 4); GL.downspouts(ctx, tr)
 	var nx := 16.5 + 6.0 + 1.0
@@ -89,7 +89,7 @@ static func _v1(ctx: Dictionary) -> void:
 	I.add(props, "prop_cone_18in", "dirty", A.q(sx, sz, 30.0, L + 17.0), 20.0)
 	I.add(props, "prop_tank_horizontal_propane", "rusty", A.q(sx, sz, 44.0, L + 18.5), 90.0)     # the old station's last tank
 	# ---- B: the hand car wash (or a tyre shop) on 4th St, entered from the apron next to the lane mouth
-	if seed % 2 == 0:
+	if seed == 0:
 		var cw := GL.work(ctx, "services/svc_carwash", 81.0, L + GL.FORE + 8.0, "-v", "hand_car_wash")
 		GL.roof(ctx, cw, 2)
 		paints.append(A.rect(sx, sz, 66.5, L, 98.0, L + GL.FORE + 0.05, "concrete"))
@@ -115,7 +115,7 @@ static func _v1(ctx: Dictionary) -> void:
 	_row_u(ctx, 61.5, 99.0, hs, 1.6)
 	for k5 in 4: GL.garage(ctx, ["garages/single_stucco_flat", "garages/single_stucco_clay"][(k5 + seed) % 2], 64.0 + k5 * 9.0, "+u", "garage_%d" % k5)
 	# ---- D: the contractor's yard (warehouse to the lane, open yard behind, fenced on the lane sides only)
-	if seed % 2 == 0:
+	if seed == 0:
 		var wh := GL.work(ctx, "industrial/ind_warehouse", 80.0, GL.AL1 + 0.8 + 12.0, "-v", "contractor_shed")
 		GL.roof(ctx, wh, 3)
 		I.containers(props, sx, sz, 64.0, 90.0, 2, false, rr, 1)
@@ -151,13 +151,13 @@ static func _v2(ctx: Dictionary) -> void:
 	var sets := {
 		1: {"corner": "urban/urb_brick_corner", "cn": [[0, "diner", "Rosie's Diner"]], "ck": ["diner"],
 			"a2": ["ck/ck_svc_cinema_fast", ["dead", "diner"], [[1, "takeout", "Wok N Roll"]]],
-			"b": [["ck/ck_grt_row3", "shop", "row3", [["thrift", "dead", "cash"], [[0, "thrift", "Second Hand Rose"], [2, "cash", "Check Express"]]]],
+			"b": [["ck/ck_grt_row3", "shop", "row3", [["thrift", "dead", "cash"], [[0, "thrift", "Second Hand Rose"], [1, "cash", "Check Express"]]]],
 				["commercial/com_bar_crown", "shop", "dive_bar", [["bar"], [[0, "bar", "The Anchor Inn"]]]]]},
-		3: {"corner": "ck/ck_brk3_corner2", "cn": [[1, "liquor", "Fourth St Liquor"]], "ck": ["liquor"],
+		3: {"corner": "ck/ck_brk3_corner2", "cn": [[0, "liquor", "Fourth St Liquor"]], "ck": ["liquor"],
 			"a2": ["ck/ck_svc_trade", ["pawn", "none"], [[0, "pawn", "Gold & Pawn"], [1, "barber", "Fade Kings Barber"]]],
 			"b": [["ck/ck_svc_pawn_fast", "shop", "row_b", [["dead", "diner"], [[1, "takeout", "Taco Shack"]]]],
 				["ck/ck_grt_row2", "shop", "launder", [["laundry"], [[0, "laundry", "Suds City Laundry"]]]]]},
-		6: {"corner": "ck/ck_brk3_corner2", "cn": [[1, "bodega", "Fifth St Market"]], "ck": ["liquor"],
+		6: {"corner": "ck/ck_brk3_corner2", "cn": [[0, "bodega", "Fifth St Market"]], "ck": ["liquor"],
 			"a2": ["ck/ck_svc_trade_1d", ["cash"], [[0, "tattoo", "Black Anchor Tattoo"]]],
 			"b": [["urban/urb_brick_row", "shop", "brick_row", [["dead", "laundry", "none"], [[1, "laundry", "Bubbles Coin Wash"], [2, "thrift", "Junk & Treasures"]]]],
 				["ck/ck_grt_row2", "shop", "boarded", [["dead"], []]]]},
@@ -221,9 +221,9 @@ static func _v3(ctx: Dictionary) -> void:
 	var sets := {
 		4: {"shop": ["ck/ck_svc_trade_1d", ["liquor"], [[0, "bodega", "G Ave Mini Mart"]]], "shop2": ["ck/ck_grt_row2", ["laundry"], [[0, "laundry", "Wash Tub Laundromat"]]],
 			"b": ["ck/ck_apt3_row3", "apartments/apt_stucco3_peach"], "ding": "apartments/apt_dingbat_teal", "court": "apartments/apt_court_white"},
-		5: {"shop": ["ck/ck_svc_bank_pharm", ["cash"], [[1, "cash", "Cash Now"]]], "shop2": ["commercial/com_realty", ["none"], [[0, "botanica", "Botanica San Miguel"]]],
+		5: {"shop": ["ck/ck_svc_bank_pharm", ["cash"], [[0, "cash", "Cash Now"]]], "shop2": ["commercial/com_realty", ["none"], [[0, "botanica", "Botanica San Miguel"]]],
 			"b": ["apartments/apt_stucco3_cream", "ck/ck_apt3_row2"], "ding": "apartments/apt_dingbat_pink", "court": "ck/ck_apt3_row3_boarded"},
-		7: {"shop": ["ck/ck_grt_row3", ["diner", "none", "laundry"], [[0, "diner", "Campus Grill"], [2, "laundry", "Spin Cycle"]]], "shop2": ["", [], []],
+		7: {"shop": ["ck/ck_grt_row3", ["diner", "none", "laundry"], [[0, "diner", "Campus Grill"], [1, "laundry", "Spin Cycle"]]], "shop2": ["", [], []],
 			"b": ["apartments/apt_court_white", "ck/ck_apt3_row3"], "ding": "apartments/apt_dingbat_teal", "court": "apartments/apt_garden_cream"},
 	}
 	var cfg: Dictionary = sets.get(seed, sets[4])
