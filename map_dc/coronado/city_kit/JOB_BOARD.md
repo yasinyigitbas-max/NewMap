@@ -95,6 +95,9 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   `gen_shots_grt.gd`. Yasin's fix in the same round: "many on the wall props overlap, some of them are on windows, some of
   them are inside the ceiling" -> one fit check for every hung item indoors; outdoors wall props slide off windows / doors.
   Checks: validator 0, trees 0, sink 0, rooms 0, lock test RESULT PASS. Numbers in the README (GRT_NUMBERS).
+  19 Nov later: WHOLE GRITTY ZONE FILLED (Yasin: "roll out to your whole zone, then do a polish pass"): 12 blocks (+4
+  between J Ave and the ring: g_v1_j4nw g_v2_j4sw g_v3_j5nw g_v3_j5sw), 37 rooms; polish pass 2; checks 0/0/0/0, lock PASS.
+  See review/grow_grt/README.md. Still WAITING for Yasin's word on the variants; nothing locked.
   19 Nov: counter cages REMOVED from every gritty room (Yasin: "remove all of the cages, they arent prison cells").
   Combined indoor checker (working branch 8e42e9a) on the gritty rooms: 19 -> 0 (deco: at most 2 decorations a wall,
   6 a room; repeat: at most 2 leaflet racks / spinners, 1 vending; lone: no bin at the counter end).
