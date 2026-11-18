@@ -89,6 +89,8 @@ static func _v1(ctx: Dictionary) -> void:
 	G.bins(ctx, 14.5, 46.0, rad_to_deg(atan2(A.face_dir(sx, sz, "+u").x, A.face_dir(sx, sz, "+u").y)))
 	I.add(props, "prop_cone_18in", "dirty", A.q(sx, sz, 30.0, L + 17.0), 20.0)
 	I.add(props, "prop_tank_horizontal_propane", "rusty", A.q(sx, sz, 44.0, L + 18.5), 90.0)     # the old station's last tank
+	var fvv := A.face_dir(sx, sz, "-v")       # the billboard over the dead station faces 4th St: the only rent the lot still earns
+	I.add(props, "prop_billboard", "worn", A.q(sx, sz, 41.0, L + 3.2), rad_to_deg(atan2(fvv.x, fvv.y)))
 	# ---- B: the hand car wash (or a tyre shop) on 4th St, entered from the apron next to the lane mouth
 	if seed == 0:
 		var cw := GL.work(ctx, "services/svc_carwash", 81.0, L + GL.FORE + 8.0, "-v", "hand_car_wash")
