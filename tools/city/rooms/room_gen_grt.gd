@@ -423,16 +423,27 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	for k2 in steps: rr.dec.add(14, Vector2(lerpf(dx, cx, float(k2) / steps), ZF - 0.6 - k2 * 1.25), 0.0, 1.0, 1.4, fy, Color(1, 1, 1, 0.3), 0.004)
 	rr.dec.add(14, Vector2(cx, zc + cd * 0.5 + 0.6), 0.0, cw, 0.9, fy, Color(1, 1, 1, 0.4), 0.004)
 	# ---- gritty: steel bars over the counter (a pass-through slot left at the till), the wall above the counter run
-	if bool(K.get("bars", false)):
+	if bool(K.get("bars", false)) and not placed_counter.is_empty():
+		# a cashier's cage on the counter that was really placed (Yasin 18 Nov: "whats that thing flying there?" - the
+		# bars were sized to the planned counter row and hung in the air): bars stand ON the counter top and run up to
+		# the ceiling, a post at each end from the floor, a rail under the ceiling, the pass-through slot at the till
 		rr.plain("bars", Color(0.2, 0.21, 0.22), 0.45)
-		var cx0 := cx - cw * 0.5; var cx1 := cx + cw * 0.5
-		var ztop := zc + cd * 0.5 - 0.06
-		var top := minf(H - 0.05, F + 2.35)
-		rr.box("bars", Vector3(cx, top, ztop), Vector3(cw, 0.05, 0.05))
-		rr.box("bars", Vector3(cx, F + 1.62, ztop), Vector3(cw, 0.04, 0.04))
-		var bx2 := cx0 + 0.06
-		while bx2 < cx1 - 0.03:
-			if absf(bx2 - cx) > 0.25: rr.box("bars", Vector3(bx2, (F + 1.05 + top) * 0.5, ztop), Vector3(0.022, top - F - 1.05, 0.022))
+		var cx0 := INF; var cx1 := -INF; var ctop := F + 1.0
+		for pc2: Array in placed_counter:
+			var w2 := _fp(String(pc2[0]), 0.0).x
+			cx0 = minf(cx0, float(pc2[1]) - w2 * 0.5); cx1 = maxf(cx1, float(pc2[1]) + w2 * 0.5)
+			ctop = maxf(ctop, F + float(tall.get("prop_" + String(pc2[0]), 1.0)))
+		var ztop := zc + cd * 0.5 - 0.05
+		var top := H - 0.02
+		var mid := (cx0 + cx1) * 0.5; var span := cx1 - cx0
+		var slot := float(placed_counter[0][1])      # the till's spot: an open slot to pass the cash through
+		rr.box("bars", Vector3(mid, top - 0.03, ztop), Vector3(span, 0.06, 0.06))           # rail under the ceiling
+		rr.box("bars", Vector3(mid, ctop + 0.55, ztop), Vector3(span, 0.04, 0.04))         # cross bar over the slot
+		for ex: float in [cx0 + 0.025, cx1 - 0.025]: rr.box("bars", Vector3(ex, (F + top) * 0.5, ztop), Vector3(0.05, top - F, 0.05))   # end posts to the floor
+		var bx2 := cx0 + 0.13
+		while bx2 < cx1 - 0.1:
+			var y0b := ctop + (0.55 if absf(bx2 - slot) < 0.3 else 0.0)
+			rr.box("bars", Vector3(bx2, (y0b + top) * 0.5, ztop), Vector3(0.022, top - y0b, 0.022))
 			bx2 += 0.13
 	# ---- gritty wear: the floor worn grey where people stand and walk, scuffs along the walls, cracked tiles
 	for k3 in 6: rr.dec.add(14, Vector2(randf_range(X0 + 0.6, X1 - 0.6), randf_range(ZBp + 0.6, ZF - 0.6)), randf_range(0, 180), randf_range(0.8, 1.8), randf_range(0.8, 1.8), fy, Color(1, 1, 1, 0.45), 0.004)

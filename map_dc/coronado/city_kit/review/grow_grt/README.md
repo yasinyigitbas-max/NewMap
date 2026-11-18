@@ -75,7 +75,11 @@ block from above, along its numbered street and along its Ave), before (samples 
 - **Download: the six baked cells grow from 15.1 to 28.0 MB (+12.8 MB, about 1.6 MB a block; a sample block with its
   streets bakes to ~2.5 MB), shared models (lib) +1.6 MB** (the car wash, the narrow houses, the garages ...). The
   blocks' ground is split only where the slope bends (3-6k triangles a block; 18k at a fixed 2 m grid).
-- **Rooms** (25, as built, not merged): 26-36 draws and 4-5 real lights each (3 fixtures, the back room, daylight at
-  the window), 9k-41k triangles. The merge tool (tools/city/rooms/room_merge.gd) is not yet run on them.
+- **Rooms** (25): as built 26-36 draws each; MERGED (tools/city/rooms/room_merge.gd, runtime/rooms, not in git) 7-9
+  draws each (706 -> 221 for all 25, a room 28.2 -> 8.8); 4-5 real lights each (3 fixtures, the back room, daylight at
+  the window), 9k-41k triangles. Still not in the streamed city (the bake knows no rooms yet).
+- Yasin 18 Nov, "whats that thing flying there?": the counter bars were sized to the planned counter row and hung in
+  the air; now a cashier's cage on the counter really placed, counter top to ceiling, posts to the floor, a pass-through
+  slot at the till (shots/rooms_counter_cages.jpg).
 - Validator CHECKS 0 problems (area 8,156 props; whole city 25,992+), trees 0 in hard ground, sink 0, indoor checker 0
   problems in the gritty rooms, lock test RESULT PASS. Nothing locked.
