@@ -19,6 +19,7 @@ Global shader values in `project.godot` `[shader_globals]`, 0 = off (the look be
 | `ck_look_windows` | 2. night windows |
 | `ck_look_glass` | 3. glass by day |
 | `ck_look_propmaps` | props' ORM maps (queue job 2) |
+| `ck_look_detail` | close-up wall grain (queue job 3) |
 | `ck_look_sky_top`, `ck_look_sky_horizon` | the day sky colours the glass reflects (set to the rig's sky; the sky session or the game's day cycle should set these to its own sky) |
 
 From code: `RenderingServer.global_shader_parameter_set(&"ck_look_glass", 0.0)`. Takes effect the next frame, no reload.
@@ -104,6 +105,15 @@ page W two-sided. Without an ORM the shader took those props as fully metal and 
   shine goes, concrete and plastic read as such; 6-10 % of the pixels change.
 - Normal maps: need tangents the bake does not write for these props: `docs/look_patches/prop_maps.md`.
 - Cost: one more texture read (ORM) on near pixels of page-A props only; with the patch, one more (normal).
+
+## Queue job 3, close-up detail (`ck_look_detail`)
+Walls go soft at arm's length (one atlas texel is 1-2 cm of wall). One small tiling grain texture
+(`city_kit/look/detail_wall.png`, 256 x 256 grey, made by `tools/city/look/make_detail.py` from noise, VRAM-compressed
+with mipmaps) multiplies the wall colour by about +-10 %, world-mapped (0.7 m tile, the same planar mapping as the
+grime), full strength to 4 m, gone by 12 m, never on glass. Pictures `review/look_18nov/detail/` (1 m and 5 m).
+- Cost: one texture read on building pixels within 12 m of the camera (a branch skips it beyond), ~6 ops. None farther.
+- Tunable per material: `detail_amount`, `detail_m`, `detail_near`, `detail_far`. Not checked: how it reads on the phone's
+  720p screen (the effect is small by design; it may be too subtle to notice there).
 
 ## Picture files
 `<view>_<day|night>_<set>.jpg`, views `centre_a/b` (city centre, 0,-600), `apartments_a/b` (250,-600), `pilot_a/b`

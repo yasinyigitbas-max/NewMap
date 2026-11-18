@@ -17,7 +17,7 @@ const Lights := preload("res://tools/city/bake/city_lights.gd")
 ##   --png   lossless files instead of JPG        --hold=frames before each picture (default 30)
 ## Cloud note: the software GPU draws no shadows (NOSHADOW=1) and the weathered buildings about 40 % too dark. Use the
 ## system Mesa driver (apt mesa-vulkan-drivers, VK_ICD_FILENAMES unset): /opt/lavapipe draws the tree leaves black.
-const LOOKS := [&"ck_look_contact", &"ck_look_windows", &"ck_look_glass", &"ck_look_propmaps"]
+const LOOKS := [&"ck_look_contact", &"ck_look_windows", &"ck_look_glass", &"ck_look_propmaps", &"ck_look_detail"]
 ## street level (eye 1.7 m above the road) at the three places Yasin named: city centre, apartments, pilot high street
 const VIEWS := [
 	["centre_a", Vector3(-6, 7.7, -592), Vector3(40, 16, -640)],

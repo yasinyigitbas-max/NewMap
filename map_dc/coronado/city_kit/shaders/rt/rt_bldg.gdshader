@@ -39,6 +39,12 @@ global uniform float ck_look_windows;
 global uniform float ck_look_glass;
 global uniform vec4 ck_look_sky_top : source_color;
 global uniform vec4 ck_look_sky_horizon : source_color;
+global uniform float ck_look_detail;          // look job 3: fine grain on the walls near the camera
+global uniform sampler2D ck_look_detail_tex : filter_linear_mipmap, repeat_enable;
+uniform float detail_amount = 0.6;
+uniform float detail_m = 0.7;           // world size of the detail tile
+uniform float detail_near = 4.0;        // full strength up to here, gone by detail_far (metres from the camera)
+uniform float detail_far = 12.0;
 varying vec3 v_wp;
 varying vec3 v_wn;
 varying float v_y;
@@ -76,6 +82,11 @@ void fragment() {
 	float paint = smoothstep(0.28, 0.55, lum) * (1.0 - smoothstep(0.18, 0.4, sat)) * wall;
 	vec3 base = alb.rgb * COLOR.rgb * mix(vec3(1.0), tint, paint);
 	vec3 col = mix(base, base * grime.rgb * 1.1, amount * 0.8);
+	// close-up detail: walls go soft at arm's length (one atlas texel is ~1-2 cm); a fine tiling grain only near the camera
+	if (ck_look_detail > 0.5) {
+		float near_f = (1.0 - smoothstep(detail_near, detail_far, distance(CAMERA_POSITION_WORLD, v_wp))) * smoothstep(0.18, 0.3, orm.g);      // not on glass
+		if (near_f > 0.01) col *= 1.0 + (texture(ck_look_detail_tex, guv / detail_m).r - 0.5) * 1.6 * detail_amount * near_f;
+	}
 	// contact: a thin dark line where the wall stands on the ground
 	float line = (1.0 - smoothstep(0.0, contact_line_m, v_y)) * wall;
 	col *= 1.0 - contact_line * ck_look_contact * line * line;
