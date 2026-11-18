@@ -73,9 +73,21 @@ func _pts(route: String) -> Array:
 		var f := q.split_floats(","); out.append(Vector3(f[0], 0, f[1]))
 	return out
 
+## Ground height under p. The ray is cast in _physics_process and read here one physics tick later: on the phone the
+## physics runs on its own thread (Jolt) and the space may only be asked from the physics step. Asked from a normal
+## frame it fails every frame (first phone run, 18 Nov: 5,000 errors and the camera sunk into the road).
+var _g_at := Vector3.ZERO
+var _g_y := 0.0
+var _g_hit := false
+
+func _physics_process(_dt: float) -> void:
+	var hit := get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(_g_at.x, 80, _g_at.z), Vector3(_g_at.x, -20, _g_at.z)))
+	_g_hit = hit.has("position")
+	if _g_hit: _g_y = float(hit.position.y)
+
 func _ground(p: Vector3, last: float) -> float:
-	var hit := get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(p.x, 80, p.z), Vector3(p.x, -20, p.z)))
-	return float(hit.position.y) if hit.has("position") else last
+	_g_at = p
+	return _g_y if _g_hit else last
 
 func _night(v: float) -> void:
 	st.set_night(v)
@@ -128,10 +140,13 @@ func _drive(seg: Array) -> void:
 	var late220 := 0; var late60 := 0; var deepest := 0.0; var max_cells := 0; var slow := 0; var gy := 8.0
 	var segi := 0; var along := 0.0; var t := 0.0; var t_prev := Time.get_ticks_usec(); var hud_t := 0.0; var prev := [S0["in"], S0.out, S0.bodies]
 	var ready0: int = st.ready_ms.size()
+	var on_ground := false; _g_hit = false; _g_at = pts[0]
 	while t < secs:
 		var a0: Vector3 = pts[segi]; var a1: Vector3 = pts[segi + 1]; var sl := a0.distance_to(a1)
 		var p := a0.lerp(a1, clampf(along / sl, 0.0, 1.0)); var dir := (a1 - a0).normalized()
-		gy = lerpf(gy, _ground(p, gy), 0.2)
+		var g := _ground(p, gy)
+		if _g_hit and not on_ground: gy = g; on_ground = true      # the first answer: stand on the road at once, do not glide down (or up) to it
+		gy = lerpf(gy, g, 0.2)
 		cam.global_position = Vector3(p.x, gy + 1.3, p.z); cam.look_at(cam.global_position + dir * 50.0)
 		st.update_focus(p, false, dir * sp)
 		if float(seg[4]) > 0.05 and Engine.get_process_frames() % 15 == 0: lights.update_lights(cam.global_position, float(seg[4]))
