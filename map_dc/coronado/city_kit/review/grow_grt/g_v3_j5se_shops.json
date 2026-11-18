@@ -15,7 +15,7 @@
    "yaw": 180.000005008956
   },
   {
-   "door_index": 2,
+   "door_index": 1,
    "kind": "laundry",
    "label": "corner_shop",
    "model": "ck/ck_grt_row3",

@@ -76,7 +76,7 @@ static func _v1(ctx: Dictionary) -> void:
 	var rr: RandomNumberGenerator = ctx.rr; var props: K.Props = ctx.props; var dec: K.Decals = ctx.dec; var paints: Array = ctx.paints
 	var seed := int(ctx.site.seed)
 	# ---- A: the trade corner on 4th St, its customers' lot behind, the last cottage on the Ave
-	var names: Array = [["Rim & Tire", "Quik Check Cash"], ["Brake Masters Used Parts", "Payday Loans 4U"]][seed % 2]
+	var names: Array = [["Rim & Tire", "Quik Check Cash"], ["Brake Masters Used Parts", "Payday Loans 4U"]][(seed / 2) % 2]
 	var tr := GL.shop(ctx, "ck/ck_svc_trade", 16.5, "-v", "trade_corner", ["cash", "none"], [[0, "cash", names[1]], [1, "parts", names[0]]])
 	GL.roof(ctx, tr, 4); GL.downspouts(ctx, tr)
 	var nx := 16.5 + 6.0 + 1.0
@@ -89,7 +89,7 @@ static func _v1(ctx: Dictionary) -> void:
 	I.add(props, "prop_cone_18in", "dirty", A.q(sx, sz, 30.0, L + 17.0), 20.0)
 	I.add(props, "prop_tank_horizontal_propane", "rusty", A.q(sx, sz, 44.0, L + 18.5), 90.0)     # the old station's last tank
 	# ---- B: the hand car wash (or a tyre shop) on 4th St, entered from the apron next to the lane mouth
-	if seed % 2 == 0:
+	if seed == 0:
 		var cw := GL.work(ctx, "services/svc_carwash", 81.0, L + GL.FORE + 8.0, "-v", "hand_car_wash")
 		GL.roof(ctx, cw, 2)
 		paints.append(A.rect(sx, sz, 66.5, L, 98.0, L + GL.FORE + 0.05, "concrete"))
@@ -115,7 +115,7 @@ static func _v1(ctx: Dictionary) -> void:
 	_row_u(ctx, 61.5, 99.0, hs, 1.6)
 	for k5 in 4: GL.garage(ctx, ["garages/single_stucco_flat", "garages/single_stucco_clay"][(k5 + seed) % 2], 64.0 + k5 * 9.0, "+u", "garage_%d" % k5)
 	# ---- D: the contractor's yard (warehouse to the lane, open yard behind, fenced on the lane sides only)
-	if seed % 2 == 0:
+	if seed == 0:
 		var wh := GL.work(ctx, "industrial/ind_warehouse", 80.0, GL.AL1 + 0.8 + 12.0, "-v", "contractor_shed")
 		GL.roof(ctx, wh, 3)
 		I.containers(props, sx, sz, 64.0, 90.0, 2, false, rr, 1)
@@ -151,13 +151,13 @@ static func _v2(ctx: Dictionary) -> void:
 	var sets := {
 		1: {"corner": "urban/urb_brick_corner", "cn": [[0, "diner", "Rosie's Diner"]], "ck": ["diner"],
 			"a2": ["ck/ck_svc_cinema_fast", ["dead", "diner"], [[1, "takeout", "Wok N Roll"]]],
-			"b": [["ck/ck_grt_row3", "shop", "row3", [["thrift", "dead", "cash"], [[0, "thrift", "Second Hand Rose"], [2, "cash", "Check Express"]]]],
+			"b": [["ck/ck_grt_row3", "shop", "row3", [["thrift", "dead", "cash"], [[0, "thrift", "Second Hand Rose"], [1, "cash", "Check Express"]]]],
 				["commercial/com_bar_crown", "shop", "dive_bar", [["bar"], [[0, "bar", "The Anchor Inn"]]]]]},
-		3: {"corner": "ck/ck_brk3_corner2", "cn": [[1, "liquor", "Fourth St Liquor"]], "ck": ["liquor"],
+		3: {"corner": "ck/ck_brk3_corner2", "cn": [[0, "liquor", "Fourth St Liquor"]], "ck": ["liquor"],
 			"a2": ["ck/ck_svc_trade", ["pawn", "none"], [[0, "pawn", "Gold & Pawn"], [1, "barber", "Fade Kings Barber"]]],
 			"b": [["ck/ck_svc_pawn_fast", "shop", "row_b", [["dead", "diner"], [[1, "takeout", "Taco Shack"]]]],
 				["ck/ck_grt_row2", "shop", "launder", [["laundry"], [[0, "laundry", "Suds City Laundry"]]]]]},
-		6: {"corner": "ck/ck_brk3_corner2", "cn": [[1, "bodega", "Fifth St Market"]], "ck": ["liquor"],
+		6: {"corner": "ck/ck_brk3_corner2", "cn": [[0, "bodega", "Fifth St Market"]], "ck": ["liquor"],
 			"a2": ["ck/ck_svc_trade_1d", ["cash"], [[0, "tattoo", "Black Anchor Tattoo"]]],
 			"b": [["urban/urb_brick_row", "shop", "brick_row", [["dead", "laundry", "none"], [[1, "laundry", "Bubbles Coin Wash"], [2, "thrift", "Junk & Treasures"]]]],
 				["ck/ck_grt_row2", "shop", "boarded", [["dead"], []]]]},
@@ -176,9 +176,9 @@ static func _v2(ctx: Dictionary) -> void:
 	G.bins(ctx, 44.0, back + 3.2, rad_to_deg(atan2(A.face_dir(sx, sz, "+v").x, A.face_dir(sx, sz, "+v").y)))
 	I.yard_wear(dec, rr, sx, sz, 24.0, back, 54.0, 54.0, 1.4)
 	# the corner block's own Ave side: a brick walk-up with the fire escape over its alley side
-	_row_u(ctx, back + 0.5, 53.0, [["ck/ck_brk3_row2_fe", "home", "walkup_a", 1.5]])
+	_row_u(ctx, back + 4.5, 53.0, [["ck/ck_brk3_row2_fe", "home", "walkup_a", 1.5]])
 	# ---- B: the row of small businesses, a drive in at each apron to the tenants' and staff parking
-	var rb := _row_v(ctx, 61.0, 99.0, cfg.b, 0.4)
+	var rb := _row_v(ctx, 61.0, 99.6, cfg.b, 0.4)
 	for b1: Dictionary in rb: GL.roof(ctx, b1, 3); GL.downspouts(ctx, b1)
 	paints.append(A.rect(sx, sz, 60.0, L + GL.FORE + 14.5, 100.0, 54.0, "asphalt"))
 	A.pad(paints, ctx.stalls, dec, rr, sx, sz, true, 62.0, 98.0, GL.AL0, -1.0)
@@ -189,7 +189,7 @@ static func _v2(ctx: Dictionary) -> void:
 	if seed % 2 == 1: walkups = [walkups[1], walkups[0], ["ck/ck_apt3_row3", "home", "walkup_c2", 2.5]]
 	_row_u(ctx, 61.0, 99.5, walkups, 0.8)
 	# ---- D: the inside of the block
-	match seed % 3:
+	match {1: 1, 3: 2, 6: 0}.get(seed, 0):
 		0:   # a vacant lot the owner fenced and forgot: gravel, self-seeded agaves, dumped stuff (ONE gate on the lane)
 			G.lot(ctx, "vacant", 62.0, 62.0, 98.0, 98.0, "v0")
 			paints.append(A.rect(sx, sz, 76.0, 60.0, 84.0, 62.0, "asphalt"))
@@ -221,9 +221,9 @@ static func _v3(ctx: Dictionary) -> void:
 	var sets := {
 		4: {"shop": ["ck/ck_svc_trade_1d", ["liquor"], [[0, "bodega", "G Ave Mini Mart"]]], "shop2": ["ck/ck_grt_row2", ["laundry"], [[0, "laundry", "Wash Tub Laundromat"]]],
 			"b": ["ck/ck_apt3_row3", "apartments/apt_stucco3_peach"], "ding": "apartments/apt_dingbat_teal", "court": "apartments/apt_court_white"},
-		5: {"shop": ["ck/ck_svc_bank_pharm", ["cash"], [[1, "cash", "Cash Now"]]], "shop2": ["commercial/com_realty", ["none"], [[0, "botanica", "Botanica San Miguel"]]],
+		5: {"shop": ["ck/ck_svc_bank_pharm", ["cash"], [[0, "cash", "Cash Now"]]], "shop2": ["commercial/com_realty", ["none"], [[0, "botanica", "Botanica San Miguel"]]],
 			"b": ["apartments/apt_stucco3_cream", "ck/ck_apt3_row2"], "ding": "apartments/apt_dingbat_pink", "court": "ck/ck_apt3_row3_boarded"},
-		7: {"shop": ["ck/ck_grt_row3", ["diner", "none", "laundry"], [[0, "diner", "Campus Grill"], [2, "laundry", "Spin Cycle"]]], "shop2": ["", [], []],
+		7: {"shop": ["ck/ck_grt_row3", ["diner", "none", "laundry"], [[0, "diner", "Campus Grill"], [1, "laundry", "Spin Cycle"]]], "shop2": ["", [], []],
 			"b": ["apartments/apt_court_white", "ck/ck_apt3_row3"], "ding": "apartments/apt_dingbat_teal", "court": "apartments/apt_garden_cream"},
 	}
 	var cfg: Dictionary = sets.get(seed, sets[4])
@@ -235,7 +235,7 @@ static func _v3(ctx: Dictionary) -> void:
 	var ra := _row_v(ctx, 10.2, 53.0, a_items, 0.6)
 	for b0: Dictionary in ra: GL.roof(ctx, b0, 2)
 	var back := L + GL.FORE + 14.5
-	_row_u(ctx, back + 1.0, 53.0, [["houses/narrow_2sty_stucco_clay", "home", "house_a0", 3.0], ["houses/narrow_cottage_siding", "home", "house_a1", 3.0]], 1.6)
+	_row_u(ctx, back + 4.5, 53.0, [["houses/narrow_2sty_stucco_clay", "home", "house_a0", 3.0], ["houses/narrow_cottage_siding", "home", "house_a1", 3.0]], 1.6)
 	A.pad(paints, ctx.stalls, dec, rr, sx, sz, true, 30.0, 53.0, GL.AL0, -1.0)
 	G.bins(ctx, 26.0, GL.AL0 - 3.0, rad_to_deg(atan2(A.face_dir(sx, sz, "+v").x, A.face_dir(sx, sz, "+v").y)))
 	# ---- B: apartment rows behind small yards on the numbered street, a dingbat on lane U behind them
@@ -243,9 +243,11 @@ static func _v3(ctx: Dictionary) -> void:
 	_row_v(ctx, 61.0, 99.0, [[bl[0], "home", "apts_b0", 3.0], [bl[1], "home", "apts_b1", 3.0]], 1.2)
 	G.dingbat(ctx, String(cfg.ding), 84.0, "+v", "lane_dingbat")
 	# ---- C: narrow houses and a walk-up on the Ave, garages on lane V
+	# the Ave side differs per site: narrow houses (G Ave west), walk-ups facing E Ave's apartments, student rentals
 	var hs: Array = [["houses/narrow_cottage_stucco_clay", "home", "house_c0", 3.0], ["houses/narrow_2sty_siding", "home", "house_c1", 3.0],
 		["ck/ck_apt3_row2", "home", "walkup_c", 2.5], ["houses/narrow_cottage_siding", "home", "house_c2", 3.0]]
-	if seed % 2 == 1: hs.reverse()
+	if seed == 5: hs = [["ck/ck_brk3_row2", "home", "walkup_c0", 1.5], ["apartments/apt_garden_mint", "home", "garden_apts", 3.0], ["houses/mcm_shed", "home", "house_c1", 3.0]]
+	if seed == 7: hs = [["houses/ranch_siding", "home", "rental_c0", 3.0], ["houses/narrow_2sty_stucco_clay", "home", "rental_c1", 3.0], ["ck/ck_apt3_row3", "home", "student_row", 2.5], ["houses/narrow_cottage_siding", "home", "rental_c2", 3.0]]
 	_row_u(ctx, 61.0, 99.5, hs, 1.4)
 	for k in 3: GL.garage(ctx, ["garages/single_stucco_clay", "garages/single_stucco_flat"][(k + seed) % 2], 66.0 + k * 10.0, "+u", "garage_%d" % k)
 	# ---- D: the shared court: a home along lane U, the community garden behind chain-link (ONE gate), a kids' corner
@@ -265,7 +267,7 @@ static func _v3(ctx: Dictionary) -> void:
 		var pu := 70.0 + (k2 % 7) * 3.8; var pv := gv0 + 2.0 + float(k2 / 7) * (98.0 - gv0 - 4.0)
 		I.add(props, beds[(k2 + seed) % beds.size()], "normal", A.q(sx, sz, pu, pv), rr.randf_range(0, 360))
 	I.add(props, "prop_hose_reel_cart", "worn", A.q(sx, sz, 82.0, gv0 + 1.2), 0.0)
-	I.add(props, "plant_bougainvillea_wall", "normal", A.q(sx, sz, 96.4, (gv0 + 98.0) * 0.5), 90.0)
+	I.add(props, "plant_bougainvillea_wall", "normal", A.q(sx, sz, 95.2, (gv0 + 98.0) * 0.5), 90.0)
 	I.add(props, "prop_park_bench", "worn", A.q(sx, sz, 64.0, gv0 + 4.0), rad_to_deg(atan2(A.face_dir(sx, sz, "+u").x, A.face_dir(sx, sz, "+u").y)))
 	_drives(ctx)
 	GL.done(ctx, "grass", true)

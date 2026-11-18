@@ -6,7 +6,7 @@
    "kind": "cash",
    "label": "trade_corner",
    "model": "ck/ck_svc_trade",
-   "name": "Quik Check Cash",
+   "name": "Payday Loans 4U",
    "pos": [
     -583.5,
     4.14979873597622,
@@ -19,11 +19,24 @@
    "kind": "parts",
    "label": "trade_corner",
    "model": "ck/ck_svc_trade",
-   "name": "Rim & Tire",
+   "name": "Brake Masters Used Parts",
    "pos": [
     -583.5,
     4.14979873597622,
     -1222.79999923706
+   ],
+   "yaw": 0.0
+  },
+  {
+   "door_index": 0,
+   "kind": "tyres",
+   "label": "tyre_shop",
+   "model": "industrial/ind_repair",
+   "name": "Big Al's Tires",
+   "pos": [
+    -520.0,
+    4.14804808795452,
+    -1224.79999923706
    ],
    "yaw": 0.0
   }

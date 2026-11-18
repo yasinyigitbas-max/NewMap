@@ -29,13 +29,39 @@
   },
   {
    "door_index": 0,
+   "kind": "thrift",
+   "label": "row3",
+   "model": "ck/ck_grt_row3",
+   "name": "Second Hand Rose",
+   "pos": [
+    -670.0,
+    3.68796598911285,
+    -1222.79999923706
+   ],
+   "yaw": 0.0
+  },
+  {
+   "door_index": 1,
+   "kind": "cash",
+   "label": "row3",
+   "model": "ck/ck_grt_row3",
+   "name": "Check Express",
+   "pos": [
+    -670.0,
+    3.68796598911285,
+    -1222.79999923706
+   ],
+   "yaw": 0.0
+  },
+  {
+   "door_index": 0,
    "kind": "bar",
    "label": "dive_bar",
    "model": "commercial/com_bar_crown",
    "name": "The Anchor Inn",
    "pos": [
-    -666.5,
-    3.74398717284203,
+    -694.900001525879,
+    3.24290227890015,
     -1223.79999923706
    ],
    "yaw": 0.0
