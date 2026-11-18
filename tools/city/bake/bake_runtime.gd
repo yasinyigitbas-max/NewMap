@@ -37,6 +37,14 @@ const COL_CHUNK_TRIS := 400
 const COL_GRID := 16.0        ## first cut: a grid in the shape's own space (so copies of a piece still share their pieces in lib/)
 const COL_BODY_TRIS := 1600   ## a static body carries at most this many triangles (and 24 shapes): attaching stays small too
 const FAR_MIN_SIZE := 2.5    ## a prop smaller than this in every direction gets no far version (under a pixel)
+## Tier hand-over (19 Nov, shaders/rt/rt_tier.gdshaderinc): the shaders cut each tier exactly at its window, and with the
+## tier switch on they overlap two tiers over a band of up to BAND_MAX metres. Node ranges are BAND_MAX / 2 wider than
+## the windows so the band is drawn (the kit's 2 m hysteresis margins gave the same overlap before: 56-64 m, 218-224 m).
+const BAND_MAX := 8.0
+## Far ground (19 Nov): every cell's ground as a 200 m patch on this grid, drawn with a top-down picture of the real ground
+const FG_GRID := 20.0
+const FG_TEXEL := 1.25       ## metres a texel of the far ground's picture
+const FG_SUPER := 2          ## the picture is rendered this many times larger and scaled down (thin kerbs and lines)
 
 var out := "res://map_dc/coronado/city_kit/runtime/"
 var tint_on := false
@@ -56,6 +64,9 @@ var manifest_cells := {}
 var warm := {}               # material path + kind -> a small node that draws it once (lib/warm.scn)
 var keep := {}               # every shared material a cell uses (the streamer holds them for its whole life)
 var layers := {}             # arrays.json: set name -> [texture path per layer]
+var fg_src: Array = []       # every piece ground of the island (whatever --area says): [mesh, world transform, cell]
+var fg_node: Node3D = null   # the far ground, made before the far world (it goes into far_world.scn)
+var fg_on := true            # --nofarground: bake without it
 
 func _init() -> void: _run.call_deferred()
 
@@ -330,6 +341,7 @@ func _walk(n: Node, piece: String, inst_name: String) -> void:
 	if n is MeshInstance3D and (n as MeshInstance3D).mesh:
 		var mi := n as MeshInstance3D
 		var c := _cell_of((mi.global_transform * mi.get_aabb()).get_center())
+		if String(n.name) == "ground": fg_src.append([mi.mesh, mi.global_transform, c])      # the far ground covers the whole island
 		if not _cell_wanted(c): stat.skipped_cell += 1
 		elif String(n.name) == "wear" and mi.material_override == null: _cell(c).wear.append([mi.mesh, mi.global_transform])
 		elif String(n.name) == "ground": _cell(c).ground.append([mi.mesh, mi.global_transform, "%s__ground" % inst_name])
@@ -357,6 +369,7 @@ func _building(b: Node3D, piece: String, inst_name: String) -> void:
 				if bsh is ConcavePolygonShape3D:
 					for pc: Array in _split_concave(bsh): rec.col.append([pc[0], (cs as CollisionShape3D).transform * Transform3D(Basis(), pc[1]), (ch as StaticBody3D).collision_layer, (ch as StaticBody3D).collision_mask])
 				else: rec.col.append([bsh, (cs as CollisionShape3D).transform, (ch as StaticBody3D).collision_layer, (ch as StaticBody3D).collision_mask])
+	rec["pivot"] = pivot      # the far version's pivot: near and mid measure their distance to the same point (rt_tier)
 	if _cell_wanted(c): _cell(c).bld.append(rec)
 	else: stat.skipped_cell += 1
 
@@ -566,7 +579,14 @@ func _build_cell(c: Vector2i) -> Dictionary:
 			var wk3 := "%s|bldg|%d" % [bmat.resource_path, mi2.mesh.surface_get_format(0)]
 			if not warm.has(wk3):
 				var wb := MeshInstance3D.new(); wb.mesh = mi2.mesh; wb.set_surface_override_material(0, bmat); wb.scale = Vector3.ONE * 0.05; wb.cast_shadow = t.shadow; warm[wk3] = wb
-			mi2.visibility_range_begin = t.vb; mi2.visibility_range_end = t.ve; mi2.visibility_range_begin_margin = t.vbm; mi2.visibility_range_end_margin = t.vem
+			# the tier window (the shader cuts exactly there, rt_tier.gdshaderinc) and a node range BAND_MAX / 2 wider
+			var win := Vector2(0.0, NEAR_END) if String(t.name) == "near" else (Vector2(NEAR_END, MID_END) if String(t.name) == "mid" else Vector2(0.0, 1.0e6))
+			if win.y < 1.0e5:
+				mi2.visibility_range_begin = maxf(0.0, win.x - BAND_MAX * 0.5) if win.x > 0.0 else 0.0; mi2.visibility_range_end = win.y + BAND_MAX * 0.5
+				mi2.visibility_range_begin_margin = 0.0; mi2.visibility_range_end_margin = 0.0
+			else:
+				mi2.visibility_range_begin = t.vb; mi2.visibility_range_end = t.ve; mi2.visibility_range_begin_margin = t.vbm; mi2.visibility_range_end_margin = t.vem
+			mi2.set_instance_shader_parameter(&"ck_win", win); mi2.set_instance_shader_parameter(&"ck_pivot", b.pivot)
 			mi2.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED; mi2.cast_shadow = t.shadow
 			# every per-building value is written (an unset one did not read as the shader's default in the first bake)
 			var tv := _tint_for(String(b.name), String(b.kit)) if tint_on else [Color(1, 1, 1), 0.0]
@@ -671,7 +691,7 @@ func _build_cell(c: Vector2i) -> Dictionary:
 ## node-level range of a batch: wide enough for every prop in it (each prop then cuts itself exactly in the shader)
 func _range(g: GeometryInstance3D, tier: String, r: float) -> void:
 	var b := 0.0 if tier == "near" else NEAR_END; var e := NEAR_END if tier == "near" else MID_END
-	g.visibility_range_begin = maxf(0.0, b - r - 1.0); g.visibility_range_end = e + r + 1.0
+	g.visibility_range_begin = maxf(0.0, b - r - 1.0 - BAND_MAX * 0.5); g.visibility_range_end = e + r + 1.0 + BAND_MAX * 0.5
 	g.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED
 
 ## trial (--tint): a paint tint and a little more or less wear per building, fixed by its name (so it never changes)
@@ -721,11 +741,148 @@ func _build_far() -> Dictionary:
 			fa[Mesh.ARRAY_TEX_UV2] = PackedVector2Array([Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]); fa[Mesh.ARRAY_COLOR] = C.slice(0, 3); fa[Mesh.ARRAY_CUSTOM0] = PackedFloat32Array([0, 0, 0, 1e9, 0, 0, 0, 1e9, 0, 0, 0, 1e9])
 			var fam := ArrayMesh.new(); fam.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, fa, [], {}, Mesh.ARRAY_CUSTOM_RGBA_FLOAT << Mesh.ARRAY_FORMAT_CUSTOM0_SHIFT)
 			var fn := MeshInstance3D.new(); fn.mesh = fam; fn.material_override = mats[key[1]]; warm[String(key[1])] = fn
+	if fg_node: root.add_child(fg_node); n += 1; tris += int(fg_node.get_meta(&"tris", 0))
 	_own(root, root)
 	var ps := PackedScene.new(); ps.pack(root)
 	ResourceSaver.save(ps, out + "far/far_world.scn", ResourceSaver.FLAG_COMPRESS)
 	root.free()
 	return {"meshes": n, "tris": tris}
+
+## FAR GROUND (19 Nov). The ground of every cell as one mesh of the far world: per cell a 200 m patch on a FG_GRID grid
+## that follows the real ground's heights (sampled from its triangles on one grid for the whole island, so neighbouring
+## patches meet without cracks), drawn with ONE top-down picture of the real ground (rendered here with the real ground
+## materials, unlit, FG_SUPER times larger and scaled down, mipmaps, VRAM-compressed). rt_far_ground.gdshader collapses
+## a patch in the frame its cell is in. Places a piece does not cover show the rig's plane colour.
+func _build_far_ground() -> Dictionary:
+	if fg_src.is_empty(): return {"cells": 0}
+	var t0 := Time.get_ticks_msec()
+	var used := {}
+	for g: Array in fg_src: used[g[2]] = true
+	var c_lo := Vector2i(1 << 20, 1 << 20); var c_hi := -c_lo
+	for c: Vector2i in used: c_lo = Vector2i(mini(c_lo.x, c.x), mini(c_lo.y, c.y)); c_hi = Vector2i(maxi(c_hi.x, c.x), maxi(c_hi.y, c.y))
+	var x0 := c_lo.x * CELL; var z0 := c_lo.y * CELL; var wx := (c_hi.x - c_lo.x + 1) * CELL; var wz := (c_hi.y - c_lo.y + 1) * CELL
+	# heights: the highest ground triangle over each grid point
+	var gn := Vector2i(int(wx / FG_GRID) + 1, int(wz / FG_GRID) + 1)
+	var hy := PackedFloat32Array(); hy.resize(gn.x * gn.y); hy.fill(-1.0e9)
+	var ntri := 0
+	for g: Array in fg_src:
+		var gm: Mesh = g[0]; var xf: Transform3D = g[1]
+		for si in gm.get_surface_count():
+			var a := gm.surface_get_arrays(si)
+			var v: PackedVector3Array = xf * (a[Mesh.ARRAY_VERTEX] as PackedVector3Array)
+			var idx: PackedInt32Array = a[Mesh.ARRAY_INDEX] if a[Mesh.ARRAY_INDEX] != null else PackedInt32Array(range(v.size()))
+			for t in range(0, idx.size() - 2, 3):
+				var p0 := v[idx[t]]; var p1 := v[idx[t + 1]]; var p2 := v[idx[t + 2]]; ntri += 1
+				var ix0 := ceili((minf(p0.x, minf(p1.x, p2.x)) - x0) / FG_GRID); var ix1 := floori((maxf(p0.x, maxf(p1.x, p2.x)) - x0) / FG_GRID)
+				var iz0 := ceili((minf(p0.z, minf(p1.z, p2.z)) - z0) / FG_GRID); var iz1 := floori((maxf(p0.z, maxf(p1.z, p2.z)) - z0) / FG_GRID)
+				if ix1 < ix0 or iz1 < iz0: continue
+				var den := (p1.z - p2.z) * (p0.x - p2.x) + (p2.x - p1.x) * (p0.z - p2.z)
+				if absf(den) < 1.0e-6: continue
+				for iz in range(maxi(iz0, 0), mini(iz1, gn.y - 1) + 1):
+					for ix in range(maxi(ix0, 0), mini(ix1, gn.x - 1) + 1):
+						var px := x0 + ix * FG_GRID; var pz := z0 + iz * FG_GRID
+						var l0 := ((p1.z - p2.z) * (px - p2.x) + (p2.x - p1.x) * (pz - p2.z)) / den
+						var l1 := ((p2.z - p0.z) * (px - p2.x) + (p0.x - p2.x) * (pz - p2.z)) / den
+						var l2 := 1.0 - l0 - l1
+						if l0 < -1.0e-4 or l1 < -1.0e-4 or l2 < -1.0e-4: continue
+						var y := l0 * p0.y + l1 * p1.y + l2 * p2.y
+						var gi := iz * gn.x + ix
+						if y > hy[gi]: hy[gi] = y
+	# grid points no ground lies over: the mean of their known neighbours, spread outwards (0 where nothing is known)
+	for it in 64:
+		var changed := false; var nh := hy.duplicate()
+		for iz in gn.y:
+			for ix in gn.x:
+				if hy[iz * gn.x + ix] > -1.0e8: continue
+				var sm := 0.0; var cnt := 0
+				for o: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+					var q := Vector2i(ix, iz) + o
+					if q.x < 0 or q.y < 0 or q.x >= gn.x or q.y >= gn.y: continue
+					var hv := hy[q.y * gn.x + q.x]
+					if hv > -1.0e8: sm += hv; cnt += 1
+				if cnt > 0: nh[iz * gn.x + ix] = sm / cnt; changed = true
+		hy = nh
+		if not changed: break
+	for i in hy.size():
+		if hy[i] < -1.0e8: hy[i] = 0.0
+	# the picture: the real ground of every piece, seen from straight above, unlit
+	var px_w := int(round(wx / FG_TEXEL)); var px_h := int(round(wz / FG_TEXEL))
+	var vp := SubViewport.new(); vp.size = Vector2i(px_w * FG_SUPER, px_h * FG_SUPER); vp.own_world_3d = true; vp.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(vp)
+	var env := Environment.new(); env.background_mode = Environment.BG_COLOR; env.background_color = Color(0.36, 0.42, 0.3)      # the rig's ground plane
+	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR; env.ambient_light_color = Color.WHITE; env.ambient_light_energy = 1.0
+	env.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED; env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
+	var we := WorldEnvironment.new(); we.environment = env; vp.add_child(we)
+	var cam := Camera3D.new(); cam.projection = Camera3D.PROJECTION_ORTHOGONAL; cam.keep_aspect = Camera3D.KEEP_HEIGHT; cam.size = wz
+	cam.position = Vector3(x0 + wx * 0.5, 400.0, z0 + wz * 0.5); cam.rotation_degrees = Vector3(-90, 0, 0); cam.near = 1.0; cam.far = 900.0; vp.add_child(cam); cam.current = true
+	var gsh := Shader.new(); gsh.code = (load(SH + "rt_ground.gdshader") as Shader).code.replace("render_mode cull_back;", "render_mode cull_back, unshaded;")
+	var gmat := ShaderMaterial.new(); gmat.shader = gsh; gmat.set_shader_parameter(&"ground_arr", load(TEX + "arr_ground.png"))
+	var unlit := {}
+	for g2: Array in fg_src:
+		var mi := MeshInstance3D.new(); mi.transform = g2[1]; mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		var joined := _lib_ground(g2[0])
+		if joined: mi.mesh = joined; mi.material_override = gmat
+		else:
+			mi.mesh = g2[0]
+			for si in (g2[0] as Mesh).get_surface_count():
+				var sm2: Material = (g2[0] as Mesh).surface_get_material(si)
+				if sm2 is BaseMaterial3D:
+					if not unlit.has(sm2): unlit[sm2] = sm2.duplicate(); (unlit[sm2] as BaseMaterial3D).shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+					mi.set_surface_override_material(si, unlit[sm2])
+		vp.add_child(mi)
+	for i in 4: await process_frame
+	await RenderingServer.frame_post_draw
+	var img := vp.get_texture().get_image()
+	vp.queue_free()
+	if img == null or img.is_empty(): print("BAKE far ground: the top-down render gave no picture"); return {"cells": 0}
+	img.convert(Image.FORMAT_RGB8)
+	img.resize(px_w, px_h, Image.INTERPOLATE_LANCZOS)
+	var dbg := img.duplicate(); dbg.resize(px_w / 4, px_h / 4, Image.INTERPOLATE_LANCZOS); dbg.save_png(out + "far/far_ground_small.png")      # a look at it (not used by the game)
+	img.generate_mipmaps()
+	var tex: Texture2D = null
+	var cimg := img.duplicate()
+	if cimg.compress(Image.COMPRESS_ETC2, Image.COMPRESS_SOURCE_SRGB) == OK:
+		var ctex := PortableCompressedTexture2D.new(); ctex.create_from_image(img, PortableCompressedTexture2D.COMPRESSION_MODE_ETC2); tex = ctex
+	else:
+		print("BAKE far ground: ETC2 compression not available here, the picture is stored uncompressed")
+		tex = ImageTexture.create_from_image(img)
+	ResourceSaver.save(tex, out + "far/far_ground_top.res", ResourceSaver.FLAG_COMPRESS)
+	tex = load(out + "far/far_ground_top.res")
+	# the patches: one mesh for the island, one draw
+	var cc := Vector3(x0 + wx * 0.5, 0.0, z0 + wz * 0.5)
+	var V := PackedVector3Array(); var N := PackedVector3Array(); var UV := PackedVector2Array(); var UV2 := PackedVector2Array(); var I := PackedInt32Array()
+	var per := int(CELL / FG_GRID)
+	for c2: Vector2i in used:
+		var code := float((c2.x + 32) + (c2.y + 32) * 64); var base := V.size()
+		var gx0 := int((c2.x * CELL - x0) / FG_GRID); var gz0 := int((c2.y * CELL - z0) / FG_GRID)
+		for j in per + 1:
+			for i in per + 1:
+				var gx := gx0 + i; var gz := gz0 + j
+				var y := hy[gz * gn.x + gx]
+				var wpos := Vector3(x0 + gx * FG_GRID, y, z0 + gz * FG_GRID)
+				var hl := hy[gz * gn.x + maxi(gx - 1, 0)]; var hr := hy[gz * gn.x + mini(gx + 1, gn.x - 1)]
+				var hd := hy[maxi(gz - 1, 0) * gn.x + gx]; var hu := hy[mini(gz + 1, gn.y - 1) * gn.x + gx]
+				V.append(wpos - cc); N.append(Vector3(hl - hr, 2.0 * FG_GRID, hd - hu).normalized())
+				UV.append(Vector2((wpos.x - x0) / wx, (wpos.z - z0) / wz)); UV2.append(Vector2(0.0, code))
+		for j2 in per:
+			for i2 in per:
+				var a0 := base + j2 * (per + 1) + i2; var a1 := a0 + 1; var a2 := a0 + per + 1; var a3 := a2 + 1
+				I.append_array(PackedInt32Array([a0, a1, a2, a1, a3, a2]))
+	var arr := []; arr.resize(Mesh.ARRAY_MAX)
+	arr[Mesh.ARRAY_VERTEX] = V; arr[Mesh.ARRAY_NORMAL] = N; arr[Mesh.ARRAY_TEX_UV] = UV; arr[Mesh.ARRAY_TEX_UV2] = UV2; arr[Mesh.ARRAY_INDEX] = I
+	var am := ArrayMesh.new(); am.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+	if not mats.has("far_ground"):
+		var fm := ShaderMaterial.new(); fm.shader = load(SH + "rt_far_ground.gdshader"); fm.set_shader_parameter(&"ground_top", tex)
+		_save_mat("far_ground", fm)
+	var mi2 := MeshInstance3D.new(); mi2.name = "far_ground"; mi2.mesh = am; mi2.position = cc; mi2.material_override = mats["far_ground"]
+	mi2.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF; mi2.set_meta(&"tris", I.size() / 3)
+	fg_node = mi2
+	if not warm.has("far_ground"):
+		var wfa := []; wfa.resize(Mesh.ARRAY_MAX); wfa[Mesh.ARRAY_VERTEX] = V.slice(0, 3); wfa[Mesh.ARRAY_NORMAL] = N.slice(0, 3); wfa[Mesh.ARRAY_TEX_UV] = UV.slice(0, 3)
+		wfa[Mesh.ARRAY_TEX_UV2] = PackedVector2Array([Vector2.ZERO, Vector2.ZERO, Vector2.ZERO])
+		var wfm := ArrayMesh.new(); wfm.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, wfa)
+		var wfn := MeshInstance3D.new(); wfn.mesh = wfm; wfn.material_override = mats["far_ground"]; warm["far_ground"] = wfn
+	return {"cells": used.size(), "tris": I.size() / 3, "verts": V.size(), "picture": "%dx%d" % [px_w, px_h], "compressed": tex is PortableCompressedTexture2D, "ground_tris_sampled": ntri, "ms": Time.get_ticks_msec() - t0}
 
 # ---------------------------------------------------------------- main
 func _rows() -> Array: return (JSON.parse_string(FileAccess.get_file_as_string(LAYOUT)) as Dictionary).instances
@@ -750,6 +907,7 @@ func _run() -> void:
 		if a == "--all": all = true
 		if a == "--check": check = true
 		if a == "--tint": tint_on = true
+		if a == "--nofarground": fg_on = false
 		if a.begins_with("--out="): out = a.trim_prefix("--out=")
 		if a.begins_with("--area="):
 			var f := a.trim_prefix("--area=").split_floats(","); area = [f[0], f[1], f[2]]
@@ -793,6 +951,9 @@ func _run() -> void:
 		manifest_cells["%d_%d" % [c.x, c.y]] = {"pieces": cells[c].pieces.values(), "draw_nodes": cnt.draw_nodes, "nodes": cnt.nodes}
 		arr_cache.clear()
 		print("BAKE cell %d_%d draw nodes=%d nodes=%d %s" % [c.x, c.y, cnt.draw_nodes, cnt.nodes, error_string(cnt.err)])
+	if fg_on:
+		var fgs: Dictionary = await _build_far_ground()
+		print("BAKE far ground: %s" % str(fgs))
 	var fw := _build_far()
 	print("BAKE far world: %d meshes, %d triangles" % [fw.meshes, fw.tris])
 	# lib/warm.scn: one small draw of every material and vertex format the bake made, for city_stream.warm_up()

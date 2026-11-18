@@ -23,15 +23,34 @@ instance uniform vec3 tint : source_color = vec3(1.0, 1.0, 1.0);
 instance uniform float wear_add = 0.0;
 instance uniform float lit_seed = 0.0;       // which windows are lit differs per building
 global uniform float ck_night;
+// the tier window (19 Nov, rt_tier.gdshaderinc): this mesh draws while its building's pivot (world) is within
+// [ck_win.x, ck_win.y) of the camera; the bake sets near 0-60 m, mid 60-220 m, and node ranges a little wider
+#include "rt_tier.gdshaderinc"
+instance uniform vec3 ck_pivot = vec3(0.0);
+instance uniform vec2 ck_win = vec2(0.0, 1.0e6);
+#ifdef CK_TIERS
+varying vec2 v_tw;
+#endif
 varying vec3 v_wp;
 varying vec3 v_wn;
 varying float v_y;
 void vertex() {
+	float ck_d = distance(MAIN_CAM_INV_VIEW_MATRIX[3].xyz, ck_pivot);
+#ifdef CK_TIERS
+	float ck_s = CK_FAR_M * ck_cell_ramp(ck_pivot);
+	v_tw = ck_weights(ck_d, min(ck_win.x, ck_s), min(ck_win.y, ck_s));
+	if (v_tw.x <= 0.0 || v_tw.y <= 0.0) VERTEX = vec3(0.0);
+#else
+	if (ck_d < ck_win.x || ck_d >= ck_win.y) VERTEX = vec3(0.0);
+#endif
 	v_wp = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	v_wn = normalize((MODEL_MATRIX * vec4(NORMAL, 0.0)).xyz);
 	v_y = VERTEX.y;
 }
 void fragment() {
+#ifdef CK_TIERS
+	CK_DITHER
+#endif
 	vec4 alb = texture(albedo_tex, UV);
 	vec3 orm = has_orm ? texture(orm_tex, UV).rgb : vec3(1.0, 0.8, 0.0);
 	vec3 a = abs(v_wn);

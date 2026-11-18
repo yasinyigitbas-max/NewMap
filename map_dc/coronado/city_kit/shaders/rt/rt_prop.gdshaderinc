@@ -7,6 +7,7 @@
 // otherwise: a MultiMesh. Origin = the instance transform, INSTANCE_CUSTOM = (wear, page, flags, -).
 // The kit's prop atlas pages are layers of one texture array (runtime_tex/arr_prop_*.png), so every prop of a batch
 // shares this material whatever page it is on. Per prop: page, and whether its kit material had a normal / ORM map.
+#include "res://map_dc/coronado/city_kit/shaders/rt/rt_tier.gdshaderinc"
 uniform sampler2DArray albedo_arr : source_color, filter_linear_mipmap, repeat_disable;
 uniform sampler2DArray normal_arr : hint_normal, filter_linear_mipmap, repeat_disable;
 uniform sampler2DArray orm_arr : filter_linear_mipmap, repeat_disable;
@@ -26,6 +27,9 @@ varying vec3 v_origin;
 varying float v_wear;
 varying flat float v_page;
 varying flat float v_flags;
+#ifdef CK_TIERS
+varying vec2 v_tw;
+#endif
 
 void vertex() {
 #ifdef RT_MERGED
@@ -39,7 +43,13 @@ void vertex() {
 	v_origin = (MODEL_MATRIX * vec4(pivot, 1.0)).xyz;
 	float d = distance(MAIN_CAM_INV_VIEW_MATRIX[3].xyz, v_origin);
 	v_local_y = VERTEX.y - pivot.y;
+#ifdef CK_TIERS
+	float ck_s = CK_FAR_M * ck_cell_ramp(v_origin);      // see rt_tier.gdshaderinc
+	v_tw = ck_weights(d, min(range_begin, ck_s), min(range_end, ck_s));
+	if (v_tw.x <= 0.0 || v_tw.y <= 0.0) VERTEX = pivot;
+#else
 	if (d < range_begin || d >= range_end) VERTEX = pivot;
+#endif
 	v_world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	v_world_n = normalize((MODEL_MATRIX * vec4(NORMAL, 0.0)).xyz);
 }
@@ -58,6 +68,9 @@ vec2 wear_uv(vec3 p, vec3 n) {
 }
 
 void fragment() {
+#ifdef CK_TIERS
+	CK_DITHER
+#endif
 	vec3 uvw = vec3(UV, floor(v_page + 0.5));
 	float fl = floor(v_flags + 0.5);
 	bool has_normal = mod(fl, 2.0) > 0.5; bool has_orm = mod(floor(fl / 2.0), 2.0) > 0.5; bool is_signal = fl > 3.5;
