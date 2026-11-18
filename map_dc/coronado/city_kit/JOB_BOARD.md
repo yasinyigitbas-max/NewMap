@@ -13,6 +13,9 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   a sky gradient (`ck_look_sky_top` / `_horizon`). No texture read, no draw, no re-bake added. Pictures
   `review/look_18nov/buildings/` (cloud: ~40 % too dark, no shadows). Lock test PASS. NOT checked on the phone: look and
   cost (the PC session takes the real pictures). WAITING for Yasin: keep / tune / drop each.
+  Ground bump maps (grass / gravel / paving normal maps in rt_ground): Yasin asked "is it gonna improve the looks
+  significantly ... how major of a cost?", told him: small gain, one more texture read on those pixels, a bake change;
+  Yasin: "ok skip it then". NOT to do.
 - 18 Nov ~18:10 (PC time): SETTING TESTS at 720p done (Yasin: "ok run the tests"; "make the games default resolution
   720p ... just inject it": rig default is now 720 lines, app not rebuilt, runs pass --scale=0.6667). Table in
   RUNTIME_BAKE.md "THE SETTING TESTS AT 720p". --loading=1 and --bodies=1 change nothing measurable (two identical
