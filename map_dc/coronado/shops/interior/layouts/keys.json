@@ -1,0 +1,276 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "keys",
+ "clutter": true,
+ "signs": true,
+ "types": [
+  "locksmith"
+ ],
+ "floor": "Concrete047A",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  1,
+  1,
+  1
+ ],
+ "ceiling": "OfficeCeiling002",
+ "ceiling_scale": 3.6,
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.0,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter",
+  "key_wall"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    2.4
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "keys"
+   ],
+   "wall": true
+  },
+  {
+   "role": "key_wall",
+   "prop": "shelf_wall",
+   "place": "behind_counter",
+   "goods": [
+    "keys"
+   ]
+  },
+  {
+   "role": "wall_shelves",
+   "prop": "shelf_wall",
+   "place": "walls",
+   "walls": [
+    "back"
+   ],
+   "goods": [
+    "keys"
+   ]
+  }
+ ],
+ "plans": [
+  {
+   "name": "booth",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "keys"
+     ],
+     "wall": true
+    },
+    {
+     "role": "key_wall",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "keys"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "keys"
+     ]
+    }
+   ],
+   "fixtures": "shop_tubes"
+  },
+  {
+   "name": "hardware",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "keys"
+     ],
+     "wall": true
+    },
+    {
+     "role": "key_wall",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "keys"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "keys"
+     ]
+    },
+    {
+     "role": "side_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "goods": [
+      "keys",
+      "hardware"
+     ],
+     "max": 3
+    },
+    {
+     "role": "rack",
+     "prop": "gondola",
+     "place": "aisles",
+     "goods": [
+      "hardware",
+      "keys"
+     ],
+     "dims": [
+      1.0,
+      2.5
+     ],
+     "max": 1
+    }
+   ],
+   "clutter": {
+    "floor": [
+     2,
+     3
+    ]
+   },
+   "fixtures": "shop_tubes"
+  },
+  {
+   "name": "repair",
+   "till": "pick",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "keys"
+     ],
+     "wall": true
+    },
+    {
+     "role": "key_wall",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "keys"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "keys"
+     ],
+     "max": 4
+    },
+    {
+     "role": "bench",
+     "prop": "bench",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "unit": [
+      1.5,
+      0.55
+     ],
+     "max": 1
+    }
+   ],
+   "fixtures": "shop_troffer"
+  }
+ ],
+ "styles": [
+  {
+   "floor": "Concrete047A",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.98,
+    0.94
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  },
+  {
+   "floor": "Tiles012",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.96,
+    0.98,
+    1.0
+   ],
+   "wainscot": "Tiles141",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  },
+  {
+   "floor": "Concrete034",
+   "wall": "Bricks066",
+   "wall_tint": [
+    1,
+    1,
+    1
+   ],
+   "wainscot": "Concrete034",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  }
+ ]
+}

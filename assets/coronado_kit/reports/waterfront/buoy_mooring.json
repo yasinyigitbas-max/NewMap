@@ -1,0 +1,110 @@
+{
+ "name": "buoy_mooring",
+ "tiers": {
+  "near": 446,
+  "mid": 96,
+  "far": 16
+ },
+ "budget": 600,
+ "class": "small",
+ "far_paint_max": 0.9024700786949614,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_buoy_mooring_clean_far.glb",
+   "tier": "far",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.00,-0.40) - asymmetric parts?"
+   ],
+   "tris": 16,
+   "verts": 26,
+   "budget": 20,
+   "size": [
+    0.84,
+    2.0,
+    1.534
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_buoy_mooring_clean_mid.glb",
+   "tier": "mid",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.00,-0.39) - asymmetric parts?"
+   ],
+   "tris": 96,
+   "verts": 214,
+   "budget": 181,
+   "size": [
+    0.8,
+    2.08,
+    1.577
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_buoy_mooring_clean_near.glb",
+   "tier": "near",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.11,-0.41) - asymmetric parts?"
+   ],
+   "tris": 446,
+   "verts": 871,
+   "budget": 600,
+   "size": [
+    1.03,
+    2.45,
+    1.62
+   ],
+   "odd_ray": 17
+  },
+  {
+   "file": "prop_buoy_mooring_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 2,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.88,
+   "dE": 2.7
+  },
+  "top": {
+   "iou": 0.867,
+   "dE": 0.4
+  },
+  "left": {
+   "iou": 0.0,
+   "dE": 99,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 1,
+  "rail": 1
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 64,
+ "bake_px_per_m": 307.9,
+ "high_tris": 7080,
+ "pass": true
+}

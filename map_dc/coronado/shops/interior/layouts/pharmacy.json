@@ -1,0 +1,350 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "pharmacy",
+ "clutter": true,
+ "signs": true,
+ "types": [
+  "chemist"
+ ],
+ "floor": "Tiles074",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  0.97,
+  1,
+  1
+ ],
+ "ceiling": "OfficeCeiling002",
+ "ceiling_scale": 3.6,
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.0,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter",
+  "pharmacy_wall",
+  "wall_shelves"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    3.0
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "pharmacy"
+   ],
+   "wall": true
+  },
+  {
+   "role": "pharmacy_wall",
+   "prop": "shelf_wall",
+   "place": "behind_counter",
+   "goods": [
+    "pharmacy"
+   ]
+  },
+  {
+   "role": "wall_shelves",
+   "prop": "shelf_wall",
+   "place": "walls",
+   "walls": [
+    "back",
+    "door_side"
+   ],
+   "goods": [
+    "toiletry",
+    "pharmacy",
+    "snack"
+   ]
+  },
+  {
+   "role": "fridges",
+   "prop": "fridge",
+   "place": "walls",
+   "walls": [
+    "back"
+   ],
+   "goods": [
+    "drink"
+   ],
+   "max": 1
+  },
+  {
+   "role": "aisles",
+   "prop": "gondola",
+   "place": "aisles",
+   "goods": [
+    "toiletry",
+    "pharmacy",
+    "snack"
+   ]
+  }
+ ],
+ "plans": [
+  {
+   "name": "chain",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      3.0
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "pharmacy"
+     ],
+     "wall": true
+    },
+    {
+     "role": "pharmacy_wall",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "pharmacy"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "toiletry",
+      "pharmacy",
+      "snack"
+     ]
+    },
+    {
+     "role": "fridges",
+     "prop": "fridge",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "drink"
+     ],
+     "max": 1
+    },
+    {
+     "role": "aisles",
+     "prop": "gondola",
+     "place": "aisles",
+     "goods": [
+      "toiletry",
+      "pharmacy",
+      "snack"
+     ],
+     "dims": [
+      1.0,
+      2.5
+     ]
+    }
+   ],
+   "fixtures": "shop_troffer"
+  },
+  {
+   "name": "apothecary",
+   "till": "pick",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      3.0
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "pharmacy"
+     ],
+     "wall": true
+    },
+    {
+     "role": "pharmacy_wall",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "pharmacy"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "pharmacy",
+      "toiletry"
+     ]
+    },
+    {
+     "role": "cases",
+     "prop": "display_case",
+     "place": "aisles",
+     "goods": [
+      "toiletry",
+      "pharmacy"
+     ],
+     "dims": [
+      0.6,
+      1.25
+     ],
+     "max": 2
+    },
+    {
+     "role": "spinner",
+     "prop": "spinner",
+     "place": "corner"
+    }
+   ],
+   "fixtures": {
+    "grid": {
+     "kind": "pendant",
+     "pitch": [
+      2.4,
+      2.6
+     ],
+     "margin": 1.0,
+     "drop": 0.6,
+     "shade": "dome",
+     "col": "brass"
+    }
+   }
+  },
+  {
+   "name": "drugstore",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      3.0
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "pharmacy"
+     ],
+     "wall": true
+    },
+    {
+     "role": "pharmacy_wall",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "pharmacy"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "goods": [
+      "toiletry",
+      "pharmacy",
+      "snack"
+     ]
+    },
+    {
+     "role": "fridges",
+     "prop": "fridge",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "drink"
+     ],
+     "max": 2
+    },
+    {
+     "role": "aisles",
+     "prop": "gondola",
+     "place": "aisles",
+     "goods": [
+      "toiletry",
+      "pharmacy",
+      "snack",
+      "household"
+     ],
+     "dims": [
+      1.0,
+      3.7
+     ]
+    }
+   ],
+   "clutter": {
+    "floor": [
+     2,
+     4
+    ]
+   },
+   "fixtures": "shop_tubes"
+  }
+ ],
+ "styles": [
+  {
+   "floor": "Tiles141",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.97,
+    1.0,
+    1.0
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  },
+  {
+   "floor": "Terrazzo005",
+   "wall": "Plaster001",
+   "wall_tint": [
+    1,
+    1,
+    1
+   ],
+   "wainscot": "Tiles141",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  },
+  {
+   "floor": "WoodFloor051",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.95,
+    1.0,
+    0.96
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  }
+ ]
+}

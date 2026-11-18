@@ -1,0 +1,125 @@
+{
+ "name": "lmk_crown_hotel_annex",
+ "cat": "landmark",
+ "style": "victorian_resort_annex",
+ "logic_errors": [],
+ "col_boxes": 20,
+ "near": {
+  "tris": 7371,
+  "verts": 13377,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_lamp",
+   "O_louver",
+   "O_shutter",
+   "O_vent",
+   "O_win_casement",
+   "R_comp",
+   "SG_hotel",
+   "S_black",
+   "S_brick",
+   "S_concrete",
+   "S_metal",
+   "S_siding",
+   "S_soffit",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_rail",
+   "T_terracotta",
+   "T_white",
+   "W_brick",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -15.720000267028809,
+    -0.0,
+    -8.5
+   ],
+   [
+    15.720000267028809,
+    20.049999237060547,
+    10.949999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 20.05,
+ "mid": {
+  "tris": 1104,
+  "verts": 1353,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_louver",
+   "O_win_casement",
+   "SG_hotel",
+   "S_comp",
+   "S_concrete",
+   "S_deck",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_brick",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -15.600000381469727,
+    0.0,
+    -8.5
+   ],
+   [
+    15.600000381469727,
+    20.049999237060547,
+    9.699999809265137
+   ]
+  ]
+ },
+ "far": {
+  "tris": 78,
+  "verts": 134,
+  "regions": [
+   "F_comp",
+   "F_siding_2",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -15.0,
+    0.0,
+    -7.0
+   ],
+   [
+    15.0,
+    20.049999237060547,
+    7.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  30.0,
+  14.0
+ ],
+ "footprint_area": 420.0,
+ "height": 20.05,
+ "storeys": 3,
+ "budget": [
+  8000,
+  2500,
+  200
+ ],
+ "budget_class": "landmark",
+ "time_s": 88.0
+}

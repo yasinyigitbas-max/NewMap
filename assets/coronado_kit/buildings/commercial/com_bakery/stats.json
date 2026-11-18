@@ -1,0 +1,118 @@
+{
+ "name": "com_bakery",
+ "cat": "shop",
+ "style": "bakery",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 1880,
+  "verts": 3346,
+  "regions": [
+   "AW_navy",
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_shopdoor",
+   "O_shutter",
+   "O_small_white",
+   "O_storefront",
+   "O_win_dh_white",
+   "R_flat",
+   "SG_bakery",
+   "S_awn_navy",
+   "S_black",
+   "S_stucco",
+   "S_white",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -4.949999809265137,
+    -0.0,
+    -7.449999809265137
+   ],
+   [
+    4.949999809265137,
+    8.270000457763672,
+    8.17300033569336
+   ]
+  ]
+ },
+ "mid_roof_top": 8.1,
+ "mid": {
+  "tris": 372,
+  "verts": 444,
+  "regions": [
+   "AW_navy",
+   "O_apt_door",
+   "O_louver",
+   "O_shopdoor",
+   "O_small_white",
+   "O_storefront",
+   "O_win_dh_white",
+   "SG_bakery",
+   "S_awn_navy",
+   "S_flat",
+   "S_metal",
+   "S_signbg",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -4.5,
+    0.0,
+    -7.0
+   ],
+   [
+    4.5,
+    8.100000381469727,
+    8.17300033569336
+   ]
+  ]
+ },
+ "far": {
+  "tris": 10,
+  "verts": 20,
+  "regions": [
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -4.5,
+    0.0,
+    -7.0
+   ],
+   [
+    4.5,
+    8.100000381469727,
+    7.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   3.26
+  ]
+ ],
+ "footprint_wd": [
+  9.0,
+  14.0
+ ],
+ "footprint_area": 126.0,
+ "height": 8.27,
+ "storeys": 2,
+ "budget": [
+  2400,
+  700,
+  40
+ ],
+ "budget_units": 2,
+ "budget_class": "shop",
+ "time_s": 13.3
+}

@@ -1,0 +1,110 @@
+{
+ "name": "ext_parking_garage",
+ "cat": "warehouse",
+ "style": "parking_garage",
+ "logic_errors": [],
+ "col_boxes": 3,
+ "near": {
+  "tris": 1850,
+  "verts": 3047,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_rollup",
+   "O_small_dark",
+   "R_flat",
+   "SG_parking",
+   "S_black",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -18.450000762939453,
+    -0.0,
+    -15.449999809265137
+   ],
+   [
+    18.450000762939453,
+    14.180000305175781,
+    15.300000190734863
+   ]
+  ]
+ },
+ "mid_roof_top": 12.495,
+ "mid": {
+  "tris": 456,
+  "verts": 592,
+  "regions": [
+   "O_apt_door",
+   "O_rollup",
+   "O_small_dark",
+   "SG_parking",
+   "S_concrete",
+   "S_flat",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -18.0,
+    0.0,
+    -15.0
+   ],
+   [
+    18.082000732421875,
+    12.494999885559082,
+    15.300000190734863
+   ]
+  ]
+ },
+ "far": {
+  "tris": 38,
+  "verts": 66,
+  "regions": [
+   "F_flat",
+   "F_stucco_2",
+   "F_stucco_blank"
+  ],
+  "bbox": [
+   [
+    -18.0,
+    0.0,
+    -15.0
+   ],
+   [
+    18.0,
+    12.494999885559082,
+    15.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "rollup",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  36.0,
+  30.0
+ ],
+ "footprint_area": 1080.0,
+ "height": 14.18,
+ "storeys": 3,
+ "budget": [
+  2000,
+  600,
+  40
+ ],
+ "budget_class": "warehouse",
+ "time_s": 9.8
+}

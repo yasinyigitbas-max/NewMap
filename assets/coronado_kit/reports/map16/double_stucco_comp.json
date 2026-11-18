@@ -1,0 +1,172 @@
+{
+ "name": "double_stucco_comp",
+ "style": "garage",
+ "module": "houses_map",
+ "stats": {
+  "near": {
+   "tris": 294,
+   "verts": 499,
+   "regions": [
+    "O_door_white",
+    "O_garage_panel",
+    "O_small_white",
+    "R_comp",
+    "S_black",
+    "S_soffit",
+    "S_stucco",
+    "S_white",
+    "T_white",
+    "W_stucco"
+   ],
+   "bbox": [
+    [
+     -3.299999952316284,
+     0.0,
+     -3.200000047683716
+    ],
+    [
+     3.4200000762939453,
+     4.34499979019165,
+     3.200000047683716
+    ]
+   ]
+  },
+  "mid": {
+   "tris": 72,
+   "verts": 92,
+   "regions": [
+    "O_door_white",
+    "O_garage_panel",
+    "O_small_white",
+    "S_comp",
+    "S_soffit",
+    "S_white",
+    "W_stucco"
+   ],
+   "bbox": [
+    [
+     -3.299999952316284,
+     0.0,
+     -3.0
+    ],
+    [
+     3.299999952316284,
+     4.34499979019165,
+     3.0
+    ]
+   ]
+  },
+  "far": {
+   "tris": 10,
+   "verts": 20,
+   "regions": [
+    "F_comp",
+    "F_siding_1"
+   ],
+   "bbox": [
+    [
+     -3.0,
+     0.0,
+     -3.0
+    ],
+    [
+     3.0,
+     4.34499979019165,
+     3.0
+    ]
+   ]
+  },
+  "budget": [
+   300,
+   100,
+   12
+  ],
+  "budget_class": "garage",
+  "storeys": 1,
+  "footprint_wd": [
+   6.0,
+   6.0
+  ],
+  "footprint_area": 36.0,
+  "height": 4.34,
+  "logic_errors": [],
+  "col_boxes": 2
+ },
+ "validator": {
+  "pass": true,
+  "errors": []
+ },
+ "railcheck": {
+  "pass": true,
+  "gaps": [],
+  "floating": [],
+  "pen": []
+ },
+ "far_match": {
+  "ok": true,
+  "reason": "ok (opening layout)",
+  "detail": {
+   "mid_h": 4.345,
+   "far_h": 4.345,
+   "mid_w": 6.6,
+   "far_w": 6.0,
+   "iou": 0.846,
+   "mid_px": 44126,
+   "far_px": 51456,
+   "frame": [
+    -3.3,
+    3.3,
+    0.0,
+    4.345
+   ],
+   "swing_mid": 0.552,
+   "corr": 0.379,
+   "mid_rows": 1,
+   "far_rows": 3,
+   "mid_fill": 0.108,
+   "far_fill": 0.238,
+   "mid_cols": 0,
+   "far_cols": 2,
+   "mid_col_x": [],
+   "far_col_x": [
+    0.162,
+    0.834
+   ],
+   "mid_open_rows": 0,
+   "far_open_rows": 1
+  },
+  "full_iou": {
+   "front": 0.838833677104819,
+   "side": 1.0
+  }
+ },
+ "pass": true,
+ "time_s": 2.5,
+ "wallcheck": {
+  "front": {
+   "wall_px": 59427,
+   "resid_std": 0.0091,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "left": {
+   "wall_px": 135866,
+   "resid_std": 0.0091,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "right": {
+   "wall_px": 89184,
+   "resid_std": 0.0074,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "back": {
+   "wall_px": 174101,
+   "resid_std": 0.0068,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "pass": true
+ }
+}

@@ -1,0 +1,127 @@
+{
+ "name": "urb_wh_dock_12m",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 5,
+ "near": {
+  "tris": 346,
+  "verts": 592,
+  "regions": [
+   "S_black",
+   "S_concrete",
+   "T_concrete",
+   "T_dark"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    0.0,
+    -1.2000000476837158
+   ],
+   [
+    6.0,
+    2.049999952316284,
+    4.5
+   ]
+  ]
+ },
+ "mid_roof_top": 2.05,
+ "mid": {
+  "tris": 114,
+  "verts": 196,
+  "regions": [
+   "S_concrete",
+   "S_dark"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    0.0,
+    -1.2000000476837158
+   ],
+   [
+    6.0,
+    2.049999952316284,
+    4.5
+   ]
+  ]
+ },
+ "far": {
+  "tris": 30,
+  "verts": 48,
+  "regions": [
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    0.0,
+    -1.2000000476837158
+   ],
+   [
+    6.0,
+    2.049999952316284,
+    3.0
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  12.0,
+  4.2
+ ],
+ "footprint_area": 50.4,
+ "height": 2.05,
+ "storeys": 1,
+ "budget": [
+  360,
+  120,
+  32
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_wh_dock",
+ "time_s": 1.1,
+ "open_planes": [
+  [
+   0,
+   -6.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   6.0,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  1.2
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "module": 12.0,
+  "type": "wh_dock",
+  "ends": [
+   [
+    -6.0,
+    0,
+    1.2
+   ],
+   [
+    6.0,
+    0,
+    1.2
+   ]
+  ],
+  "face_z": 2.4,
+  "plate_y": 1.1
+ },
+ "no_door": true,
+ "base_y": 0.0,
+ "ground_reach": false
+}

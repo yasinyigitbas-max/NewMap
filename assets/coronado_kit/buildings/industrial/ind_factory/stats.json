@@ -1,0 +1,121 @@
+{
+ "name": "ind_factory",
+ "cat": "landmark",
+ "style": "factory",
+ "logic_errors": [],
+ "col_boxes": 9,
+ "near": {
+  "tris": 2394,
+  "verts": 4200,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_rollup",
+   "O_shopdoor",
+   "O_storefront",
+   "O_win_casement",
+   "R_flat",
+   "S_black",
+   "S_concrete",
+   "S_glass",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_brick",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -18.450000762939453,
+    -0.0,
+    -13.5
+   ],
+   [
+    18.450000762939453,
+    18.100000381469727,
+    15.699999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 9.8,
+ "mid": {
+  "tris": 488,
+  "verts": 636,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "O_rollup",
+   "O_shopdoor",
+   "S_concrete",
+   "S_flat",
+   "S_glass",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "T_dark",
+   "W_brick",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -18.0,
+    0.0,
+    -13.5
+   ],
+   [
+    18.0,
+    18.0,
+    15.699999809265137
+   ]
+  ]
+ },
+ "far": {
+  "tris": 18,
+  "verts": 36,
+  "regions": [
+   "F_c_tower_3",
+   "F_flat"
+  ],
+  "bbox": [
+   [
+    -18.0,
+    0.0,
+    -12.0
+   ],
+   [
+    18.0,
+    9.800000190734863,
+    12.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "rollup",
+   -10.0
+  ],
+  [
+   "shopdoor",
+   8.0
+  ]
+ ],
+ "footprint_wd": [
+  36.0,
+  24.0
+ ],
+ "footprint_area": 864.0,
+ "height": 18.1,
+ "storeys": 2,
+ "budget": [
+  8000,
+  2500,
+  200
+ ],
+ "budget_class": "landmark",
+ "time_s": 14.9
+}

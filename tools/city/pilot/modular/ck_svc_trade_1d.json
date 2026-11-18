@@ -1,0 +1,85 @@
+{
+ "name": "ck_svc_trade_1d",
+ "group": "urban",
+ "note": "audit fix 17 Nov: ck_svc_trade with one door bay (the other bay a blank wall) for plots where a street pole stands in front of a bay",
+ "outline": {
+  "kind": "shop",
+  "W": 12.0,
+  "D": 12.0,
+  "storeys": 1,
+  "wall": "W_stucco",
+  "tint": [
+   0.82,
+   0.82,
+   0.8
+  ],
+  "budget": "shop",
+  "floor": 0.0,
+  "storey": 5.4,
+  "parapet": 1.1,
+  "sills": false,
+  "foundation": false
+ },
+ "pieces": [
+  {
+   "piece": "urb_svc_front_6m_bigbox",
+   "x": -3.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_svc_back_6m_bigbox_blank",
+   "x": 3.0,
+   "z": 5.85,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_svc_back_6m_bigbox_dock",
+   "x": 3.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_svc_back_6m_bigbox_blank",
+   "x": -3.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_svc_side_12m_bigbox",
+   "x": 5.85,
+   "z": 0.0,
+   "rot_y": 90
+  },
+  {
+   "piece": "urb_svc_side_12m_bigbox",
+   "x": -5.85,
+   "z": 0.0,
+   "rot_y": 270
+  },
+  {
+   "piece": "urb_svc_roof_6x12_bigbox",
+   "x": -3.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_svc_roof_6x12_bigbox",
+   "x": 3.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_svc_trim_return_r_bigbox",
+   "x": 6.0,
+   "z": 6.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_svc_trim_return_l_bigbox",
+   "x": -6.0,
+   "z": 6.0,
+   "rot_y": 0
+  }
+ ]
+}

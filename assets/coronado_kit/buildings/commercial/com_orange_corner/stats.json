@@ -1,0 +1,127 @@
+{
+ "name": "com_orange_corner",
+ "cat": "shop",
+ "style": "orange_ave_block",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 2366,
+  "verts": 4212,
+  "regions": [
+   "AW_black",
+   "AW_red",
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_shopdoor",
+   "O_small_white",
+   "O_storefront",
+   "O_win_dh_white",
+   "R_flat",
+   "SG_cafe",
+   "SG_theatre",
+   "S_awn_black",
+   "S_awn_red",
+   "S_black",
+   "S_stucco",
+   "S_white",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -6.449999809265137,
+    -0.0,
+    -7.449999809265137
+   ],
+   [
+    6.449999809265137,
+    8.270000457763672,
+    8.17300033569336
+   ]
+  ]
+ },
+ "mid_roof_top": 8.1,
+ "mid": {
+  "tris": 496,
+  "verts": 622,
+  "regions": [
+   "AW_black",
+   "AW_red",
+   "O_apt_door",
+   "O_louver",
+   "O_shopdoor",
+   "O_small_white",
+   "O_storefront",
+   "O_win_dh_white",
+   "SG_cafe",
+   "SG_theatre",
+   "S_awn_black",
+   "S_awn_red",
+   "S_flat",
+   "S_metal",
+   "S_signbg",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    0.0,
+    -7.0
+   ],
+   [
+    6.081999778747559,
+    8.100000381469727,
+    8.17300033569336
+   ]
+  ]
+ },
+ "far": {
+  "tris": 10,
+  "verts": 20,
+  "regions": [
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    0.0,
+    -7.0
+   ],
+   [
+    6.0,
+    8.100000381469727,
+    7.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   -1.08
+  ],
+  [
+   "shopdoor",
+   1.08
+  ]
+ ],
+ "footprint_wd": [
+  12.0,
+  14.0
+ ],
+ "footprint_area": 168.0,
+ "height": 8.27,
+ "storeys": 2,
+ "budget": [
+  2400,
+  700,
+  40
+ ],
+ "budget_units": 2,
+ "budget_class": "shop",
+ "time_s": 11.4
+}

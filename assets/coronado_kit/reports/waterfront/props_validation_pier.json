@@ -1,0 +1,242 @@
+[
+ {
+  "file": "prop_pier_lamp_clean_far.glb",
+  "tier": "far",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 14,
+  "verts": 24,
+  "budget": 20,
+  "size": [
+   0.37,
+   4.1,
+   0.37
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_pier_lamp_clean_mid.glb",
+  "tier": "mid",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 170,
+  "verts": 425,
+  "budget": 181,
+  "size": [
+   0.4,
+   4.1,
+   0.4
+  ],
+  "odd_ray": 8
+ },
+ {
+  "file": "prop_pier_lamp_clean_near.glb",
+  "tier": "near",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 406,
+  "verts": 701,
+  "budget": 600,
+  "size": [
+   0.4,
+   4.24,
+   0.38
+  ],
+  "odd_ray": 22
+ },
+ {
+  "file": "prop_pier_lamp_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 1,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_pier_rail_end_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 20,
+  "verts": 40,
+  "budget": 20,
+  "size": [
+   4.0,
+   4.07,
+   6.0
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_pier_rail_end_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 236,
+  "verts": 641,
+  "budget": 751,
+  "size": [
+   4.1,
+   4.07,
+   6.095
+  ],
+  "odd_ray": 8
+ },
+ {
+  "file": "prop_pier_rail_end_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "150 tris may face inward / be enclosed"
+  ],
+  "tris": 1242,
+  "verts": 2604,
+  "budget": 2500,
+  "size": [
+   4.182,
+   4.08,
+   6.095
+  ],
+  "odd_ray": 312
+ },
+ {
+  "file": "prop_pier_rail_end_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 13,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_pier_straight_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 16,
+  "verts": 32,
+  "budget": 20,
+  "size": [
+   4.0,
+   3.25,
+   6.0
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_pier_straight_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 172,
+  "verts": 486,
+  "budget": 751,
+  "size": [
+   4.1,
+   3.25,
+   6.0
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_pier_straight_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "88 tris may face inward / be enclosed"
+  ],
+  "tris": 1012,
+  "verts": 2204,
+  "budget": 2500,
+  "size": [
+   4.182,
+   3.25,
+   6.0
+  ],
+  "odd_ray": 188
+ },
+ {
+  "file": "prop_pier_straight_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 13,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_pier_thead_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 20,
+  "verts": 40,
+  "budget": 20,
+  "size": [
+   12.0,
+   3.25,
+   6.462
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_pier_thead_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 398,
+  "verts": 1077,
+  "budget": 751,
+  "size": [
+   12.1,
+   3.25,
+   6.58
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_pier_thead_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 2436,
+  "verts": 5054,
+  "budget": 2500,
+  "size": [
+   12.1,
+   4.02,
+   6.582
+  ],
+  "odd_ray": 430
+ },
+ {
+  "file": "prop_pier_thead_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 26,
+  "col_maxverts": 24
+ }
+]

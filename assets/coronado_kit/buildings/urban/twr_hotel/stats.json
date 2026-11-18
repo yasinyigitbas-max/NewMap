@@ -1,0 +1,115 @@
+{
+ "name": "twr_hotel",
+ "cat": "tower",
+ "style": "hotel_tower",
+ "logic_errors": [],
+ "col_boxes": 8,
+ "near": {
+  "tris": 3526,
+  "verts": 6352,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_ribbon",
+   "O_shopdoor",
+   "O_storefront",
+   "O_vent",
+   "R_flat",
+   "SG_hotel",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -15.180000305175781,
+    -0.0,
+    -10.5
+   ],
+   [
+    15.180000305175781,
+    34.869998931884766,
+    11.5
+   ]
+  ]
+ },
+ "mid_roof_top": 34.8,
+ "mid": {
+  "tris": 440,
+  "verts": 530,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "O_louver",
+   "O_shopdoor",
+   "SG_hotel",
+   "S_concrete",
+   "S_flat",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -15.0,
+    0.0,
+    -10.5
+   ],
+   [
+    15.0,
+    34.79999923706055,
+    11.5
+   ]
+  ]
+ },
+ "far": {
+  "tris": 74,
+  "verts": 132,
+  "regions": [
+   "F_c_tower_3",
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -15.0,
+    0.0,
+    -9.0
+   ],
+   [
+    15.0,
+    34.79999923706055,
+    9.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  30.0,
+  18.0
+ ],
+ "footprint_area": 540.0,
+ "height": 34.87,
+ "storeys": 10,
+ "budget": [
+  4000,
+  1200,
+  80
+ ],
+ "budget_units": 1.0,
+ "budget_class": "tower",
+ "time_s": 24.1
+}

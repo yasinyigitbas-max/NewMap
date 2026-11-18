@@ -1,0 +1,307 @@
+{
+ "instances": [
+  {
+   "piece": "s_rg_b158_2",
+   "pos": [
+    -1000.0,
+    3.0,
+    -7898.47698974609
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_w993_s200",
+   "pos": [
+    -992.499694824219,
+    2.0,
+    -7800.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_w800_s289",
+   "pos": [
+    -800.0,
+    2.0,
+    -7711.33309936523
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_e660_n1000",
+   "pos": [
+    659.999206542969,
+    4.0,
+    -9000.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_b131_1",
+   "pos": [
+    -785.033386230469,
+    2.0,
+    -7710.33535766602
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_b131_2",
+   "pos": [
+    -700.997985839844,
+    3.0,
+    -7704.73306274414
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_b159_1",
+   "pos": [
+    -989.6796875,
+    2.0,
+    -7781.21020507812
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_b159_2",
+   "pos": [
+    -916.004638671875,
+    2.0,
+    -7724.02444458008
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_b009",
+   "pos": [
+    -800.0,
+    2.0,
+    -7800.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_b087",
+   "pos": [
+    500.0,
+    4.0,
+    -9000.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "piece": "j_rg_e0_s340",
+   "pos": [
+    0.0,
+    2.0,
+    -7660.01187133789
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_b045",
+   "pos": [
+    0.0,
+    4.0,
+    -7800.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_w800_n1600",
+   "pos": [
+    -800.0,
+    2.0,
+    -9600.00012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_b000",
+   "pos": [
+    -800.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 180.0
+  },
+  {
+   "piece": "s_rg_b161_2",
+   "pos": [
+    357.492095947266,
+    3.0,
+    -7659.88595581055
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_b161_w",
+   "pos": [
+    448.0,
+    2.00000001827284,
+    -7663.99987792969
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_b136_w",
+   "pos": [
+    570.0,
+    2.0,
+    -7900.00000762939
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_e627_s0",
+   "pos": [
+    626.538635253906,
+    4.0,
+    -8000.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "PREVIEW ONLY ground (grid coordinates); never in the game",
+   "piece": "zz_ring_ground_w",
+   "pos": [
+    0,
+    0,
+    -8000.0
+   ],
+   "yaw": 0
+  },
+  {
+   "note": "PREVIEW ONLY ground (grid coordinates); never in the game",
+   "piece": "zz_ring_ground_e",
+   "pos": [
+    0,
+    0,
+    -8000.0
+   ],
+   "yaw": 0
+  },
+  {
+   "note": "PREVIEW ONLY ground (grid coordinates); never in the game",
+   "piece": "zz_ring_ground_n",
+   "pos": [
+    0,
+    0,
+    -8000.0
+   ],
+   "yaw": 0
+  },
+  {
+   "note": "PREVIEW ONLY ground (grid coordinates); never in the game",
+   "piece": "zz_ring_ground_s",
+   "pos": [
+    0,
+    0,
+    -8000.0
+   ],
+   "yaw": 0
+  },
+  {
+   "note": "PREVIEW ONLY ground (grid coordinates); never in the game",
+   "piece": "zz_ring_ground_wt",
+   "pos": [
+    0,
+    0,
+    -8000.0
+   ],
+   "yaw": 0
+  },
+  {
+   "note": "PREVIEW ONLY ground (grid coordinates); never in the game",
+   "piece": "zz_ring_ground_wt2",
+   "pos": [
+    0,
+    0,
+    -8000.0
+   ],
+   "yaw": 0
+  },
+  {
+   "note": "context only: a residential crossroads where the J Ave stub starts (the resstd family builds the real one)",
+   "piece": "j_res",
+   "pos": [
+    -800.0,
+    2.0,
+    -7800.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "context only: the locked industrial sample's junction (J Ave x 3rd St)",
+   "piece": "j_ind",
+   "pos": [
+    -800.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "context only: the sample's own J Ave leg toward 1st St (22-100 m); the ring stub b000 starts at its end",
+   "piece": "s_ind",
+   "pos": [
+    -800.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 180.0
+  },
+  {
+   "note": "context only: the waterfront sample W at its grid site (570, 200), yaw 90 (its layout rows turned by 90)",
+   "piece": "j_apt",
+   "pos": [
+    570.0,
+    2.0,
+    -7800.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "note": "context only: W's 11th St leg (west)",
+   "piece": "s_wfd",
+   "pos": [
+    570.0,
+    2.0,
+    -7800.0
+   ],
+   "yaw": 270.0
+  },
+  {
+   "note": "context only: W's north leg (the ring), the transition s_rg_b136_w starts at its end",
+   "piece": "s_wfd",
+   "pos": [
+    570.0,
+    2.0,
+    -7800.0
+   ],
+   "yaw": 180.0
+  },
+  {
+   "note": "context only: W's south leg (the ring), the transition s_rg_b161_w ends at its end",
+   "piece": "s_wfd",
+   "pos": [
+    570.0,
+    2.0,
+    -7800.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "context only: W's pier plaza leg into Glorietta Bay",
+   "piece": "s_wf",
+   "pos": [
+    570.0,
+    2.0,
+    -7800.0
+   ],
+   "yaw": 90.0
+  }
+ ],
+ "note": "Ring family (road kit groups 2-5) review rows, 17 Nov: ring pieces in GRID coordinates (x = u, z = v) shifted by [0, 0, -8000]. Load with CITYKIT_LAYOUT_EXTRA=res://map_dc/coronado/city_kit/review/ring.json."
+}

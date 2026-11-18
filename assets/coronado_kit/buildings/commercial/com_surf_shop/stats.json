@@ -1,0 +1,111 @@
+{
+ "name": "com_surf_shop",
+ "cat": "shop",
+ "style": "surf_shop",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 1262,
+  "verts": 2244,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_shopdoor",
+   "O_small_white",
+   "O_storefront",
+   "R_flat",
+   "SG_surf",
+   "S_black",
+   "S_stucco",
+   "S_white",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -4.949999809265137,
+    -0.0,
+    -7.449999809265137
+   ],
+   [
+    4.949999809265137,
+    5.269999980926514,
+    7.949999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 5.1,
+ "mid": {
+  "tris": 266,
+  "verts": 326,
+  "regions": [
+   "O_apt_door",
+   "O_louver",
+   "O_shopdoor",
+   "O_small_white",
+   "O_storefront",
+   "SG_surf",
+   "S_flat",
+   "S_metal",
+   "S_signbg",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -4.5,
+    0.0,
+    -7.0
+   ],
+   [
+    4.581999778747559,
+    5.099999904632568,
+    7.949999809265137
+   ]
+  ]
+ },
+ "far": {
+  "tris": 10,
+  "verts": 20,
+  "regions": [
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -4.5,
+    0.0,
+    -7.0
+   ],
+   [
+    4.5,
+    5.099999904632568,
+    7.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   -3.26
+  ]
+ ],
+ "footprint_wd": [
+  9.0,
+  14.0
+ ],
+ "footprint_area": 126.0,
+ "height": 5.27,
+ "storeys": 1,
+ "budget": [
+  2400,
+  700,
+  40
+ ],
+ "budget_units": 2,
+ "budget_class": "shop",
+ "time_s": 4.3
+}

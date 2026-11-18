@@ -1,0 +1,108 @@
+{
+ "name": "boat_skiff",
+ "tiers": {
+  "near": 1077,
+  "mid": 149,
+  "far": 15
+ },
+ "budget": 1200,
+ "class": "medium",
+ "far_paint_max": 0.5644739955551491,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_boat_skiff_clean_far.glb",
+   "tier": "far",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 15,
+   "verts": 23,
+   "budget": 20,
+   "size": [
+    1.6,
+    1.08,
+    5.218
+   ],
+   "odd_ray": 2
+  },
+  {
+   "file": "prop_boat_skiff_clean_mid.glb",
+   "tier": "mid",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "16 tris may face inward / be enclosed"
+   ],
+   "tris": 148,
+   "verts": 400,
+   "budget": 361,
+   "size": [
+    1.58,
+    1.1,
+    5.198
+   ],
+   "odd_ray": 16
+  },
+  {
+   "file": "prop_boat_skiff_clean_near.glb",
+   "tier": "near",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "129 tris may face inward / be enclosed"
+   ],
+   "tris": 1076,
+   "verts": 2246,
+   "budget": 1200,
+   "size": [
+    1.622,
+    1.116,
+    5.228
+   ],
+   "odd_ray": 156
+  },
+  {
+   "file": "prop_boat_skiff_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 3,
+   "col_maxverts": 8
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.91,
+   "dE": 1.5
+  },
+  "top": {
+   "iou": 0.904,
+   "dE": 1.2
+  },
+  "left": {
+   "iou": 0.872,
+   "dE": 1.0,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 3,
+  "rail": 0
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 64,
+ "bake_px_per_m": 56.6,
+ "high_tris": 12918,
+ "pass": true
+}

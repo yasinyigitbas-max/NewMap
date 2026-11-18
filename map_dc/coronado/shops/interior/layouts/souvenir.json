@@ -1,0 +1,326 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "souvenir",
+ "clutter": true,
+ "signs": true,
+ "types": [
+  "gift",
+  "beach_shop"
+ ],
+ "floor": "WoodFloor051",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  0.95,
+  0.98,
+  1
+ ],
+ "ceiling": "Plaster001",
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.0,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter",
+  "wall_shelves"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    2.2
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "gift",
+    "jewelry",
+    "accessory"
+   ]
+  },
+  {
+   "role": "wall_shelves",
+   "prop": "shelf_wall",
+   "place": "walls",
+   "walls": [
+    "back",
+    "door_side"
+   ],
+   "goods": [
+    "gift",
+    "toiletry",
+    "beach",
+    "toy",
+    "accessory"
+   ]
+  },
+  {
+   "role": "racks",
+   "prop": "rack",
+   "place": "aisles",
+   "goods": [
+    "clothing"
+   ],
+   "max": 2
+  },
+  {
+   "role": "display_tables",
+   "prop": "display_table",
+   "place": "aisles",
+   "goods": [
+    "gift",
+    "beach",
+    "toy",
+    "jewelry"
+   ]
+  }
+ ],
+ "plans": [
+  {
+   "name": "beach",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "gift",
+      "jewelry",
+      "accessory"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "gift",
+      "toiletry",
+      "beach",
+      "toy",
+      "accessory"
+     ]
+    },
+    {
+     "role": "racks",
+     "prop": "rack",
+     "place": "aisles",
+     "goods": [
+      "clothing"
+     ],
+     "max": 2
+    },
+    {
+     "role": "display_tables",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "gift",
+      "beach",
+      "toy",
+      "jewelry"
+     ]
+    }
+   ],
+   "fixtures": "shop_troffer"
+  },
+  {
+   "name": "gift",
+   "till": "pick",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "gift",
+      "jewelry",
+      "accessory"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "gift",
+      "toiletry",
+      "toy",
+      "accessory"
+     ]
+    },
+    {
+     "role": "display_tables",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "gift",
+      "toy",
+      "jewelry"
+     ],
+     "max": 3
+    },
+    {
+     "role": "spinner",
+     "prop": "spinner",
+     "place": "corner"
+    }
+   ],
+   "fixtures": "boutique_track"
+  },
+  {
+   "name": "surf_shack",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "gift",
+      "jewelry",
+      "accessory"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "gift",
+      "beach",
+      "accessory"
+     ]
+    },
+    {
+     "role": "boards",
+     "prop": "board_rack",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "goods": [
+      "surf"
+     ],
+     "unit": [
+      1.4,
+      0.6
+     ],
+     "max": 2
+    },
+    {
+     "role": "racks",
+     "prop": "rack",
+     "place": "aisles",
+     "goods": [
+      "clothing"
+     ],
+     "max": 2
+    },
+    {
+     "role": "display_tables",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "beach",
+      "toy"
+     ],
+     "max": 1
+    }
+   ],
+   "clutter": {
+    "floor": [
+     1,
+     3
+    ]
+   },
+   "fixtures": {
+    "grid": {
+     "kind": "pendant",
+     "pitch": [
+      2.4,
+      2.6
+     ],
+     "margin": 1.0,
+     "drop": 0.6,
+     "shade": "cone",
+     "col": "cream"
+    },
+    "fans": {
+     "every": 3.0,
+     "drop": 0.4
+    }
+   }
+  }
+ ],
+ "styles": [
+  {
+   "floor": "WoodFloor051",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.95,
+    0.98,
+    1
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "Tiles143",
+   "wall": "Plaster001",
+   "wall_tint": [
+    1,
+    0.96,
+    0.88
+   ],
+   "wainscot": "WoodSiding008",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "WoodFloor034",
+   "wall": "WoodSiding008",
+   "wall_tint": [
+    1,
+    1,
+    1
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  }
+ ]
+}

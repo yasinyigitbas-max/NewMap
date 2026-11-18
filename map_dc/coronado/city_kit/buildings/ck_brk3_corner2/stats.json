@@ -1,0 +1,25 @@
+{
+ "cat": "mod",
+ "doors_front": [
+  [
+   "apt_door",
+   -3.0
+  ],
+  [
+   "shopdoor",
+   4.9
+  ]
+ ],
+ "footprint_wd": [
+  12.0,
+  14.0
+ ],
+ "height": 10.3,
+ "merged_from": "ck_brk3_corner2.json",
+ "name": "ck_brk3_corner2",
+ "tris": {
+  "far": 34,
+  "mid": 794,
+  "near": 3516
+ }
+}

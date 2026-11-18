@@ -1,0 +1,121 @@
+{
+ "name": "apt_dingbat_pink",
+ "cat": "apartment",
+ "style": "dingbat",
+ "logic_errors": [],
+ "col_boxes": 7,
+ "near": {
+  "tris": 3319,
+  "verts": 5775,
+  "regions": [
+   "O_apt_door",
+   "O_apt_slider",
+   "O_lamp",
+   "O_louver",
+   "O_number",
+   "O_patio",
+   "O_shutter",
+   "O_small_white",
+   "O_win_casement",
+   "O_win_dh_white",
+   "R_flat",
+   "S_black",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_deck",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -7.400000095367432,
+    -0.0,
+    -9.225000381469727
+   ],
+   [
+    6.71999979019165,
+    6.820000171661377,
+    8.449999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 6.75,
+ "mid": {
+  "tris": 719,
+  "verts": 831,
+  "regions": [
+   "O_apt_door",
+   "O_apt_slider",
+   "O_louver",
+   "O_patio",
+   "O_small_white",
+   "O_win_casement",
+   "O_win_dh_white",
+   "S_concrete",
+   "S_flat",
+   "S_metal",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -7.400000095367432,
+    0.0,
+    -9.199999809265137
+   ],
+   [
+    6.0,
+    6.75,
+    8.0
+   ]
+  ]
+ },
+ "far": {
+  "tris": 16,
+  "verts": 28,
+  "regions": [
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    -0.0,
+    -8.0
+   ],
+   [
+    6.0,
+    6.75,
+    8.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "apt_door",
+   -4.0
+  ],
+  [
+   "apt_door",
+   4.0
+  ]
+ ],
+ "footprint_wd": [
+  12.0,
+  16.0
+ ],
+ "footprint_area": 192.0,
+ "height": 6.82,
+ "storeys": 2,
+ "budget": [
+  3500,
+  1000,
+  80
+ ],
+ "budget_class": "apartment",
+ "time_s": 25.0
+}

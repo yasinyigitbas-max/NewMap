@@ -1,0 +1,104 @@
+{
+ "name": "wheel_stop_rubber",
+ "tiers": {
+  "near": 146,
+  "mid": 18,
+  "far": 10
+ },
+ "budget": 300,
+ "class": "tiny",
+ "far_paint_max": null,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_wheel_stop_rubber_clean_far.glb",
+   "tier": "far",
+   "cls": "tiny",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 10,
+   "verts": 20,
+   "budget": 20,
+   "size": [
+    1.83,
+    0.1,
+    0.15
+   ],
+   "odd_ray": 8
+  },
+  {
+   "file": "prop_wheel_stop_rubber_clean_mid.glb",
+   "tier": "mid",
+   "cls": "tiny",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 18,
+   "verts": 32,
+   "budget": 91,
+   "size": [
+    1.83,
+    0.095,
+    0.15
+   ],
+   "odd_ray": 8
+  },
+  {
+   "file": "prop_wheel_stop_rubber_clean_near.glb",
+   "tier": "near",
+   "cls": "tiny",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 146,
+   "verts": 287,
+   "budget": 300,
+   "size": [
+    1.83,
+    0.104,
+    0.15
+   ],
+   "odd_ray": 50
+  },
+  {
+   "file": "prop_wheel_stop_rubber_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 1,
+   "col_maxverts": 8
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.899,
+   "dE": 0.1
+  },
+  "top": {
+   "iou": 1.0,
+   "dE": 1.2
+  },
+  "left": {
+   "iou": 0.879,
+   "dE": 1.1,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 1,
+  "rail": 0
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 48,
+ "bake_px_per_m": 50.6,
+ "high_tris": 14534,
+ "pass": true
+}

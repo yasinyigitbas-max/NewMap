@@ -1,0 +1,411 @@
+{
+ "name": "cart_corral",
+ "tiers": {
+  "near": 672,
+  "mid": 276,
+  "far": 20
+ },
+ "budget": 2500,
+ "class": "large",
+ "far_paint_max": null,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_cart_corral_clean_far.glb",
+   "tier": "far",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 20,
+   "verts": 42,
+   "budget": 20,
+   "size": [
+    4.175,
+    2.0,
+    1.645
+   ],
+   "odd_ray": 2
+  },
+  {
+   "file": "prop_cart_corral_clean_mid.glb",
+   "tier": "mid",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "42 tris may face inward / be enclosed"
+   ],
+   "tris": 276,
+   "verts": 698,
+   "budget": 751,
+   "size": [
+    4.161,
+    2.0,
+    2.003
+   ],
+   "odd_ray": 62
+  },
+  {
+   "file": "prop_cart_corral_clean_near.glb",
+   "tier": "near",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "96 tris may face inward / be enclosed"
+   ],
+   "tris": 672,
+   "verts": 1639,
+   "budget": 2500,
+   "size": [
+    4.25,
+    2.0,
+    2.08
+   ],
+   "odd_ray": 131
+  },
+  {
+   "file": "prop_cart_corral_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 4,
+   "col_maxverts": 8
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.832,
+   "dE": 5.1
+  },
+  "top": {
+   "iou": 0.903,
+   "dE": 13.0
+  },
+  "left": {
+   "iou": 0.448,
+   "dE": 3.0,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 0,
+  "rail": 4
+ },
+ "col_ok": true,
+ "rail_ok": true,
+ "railcheck": [
+  {
+   "member": 0,
+   "kind": "v",
+   "end": [
+    -1.83,
+    0.0,
+    0.68
+   ],
+   "gap": 0.0,
+   "pen": 0.01,
+   "ok": true
+  },
+  {
+   "member": 1,
+   "kind": "v",
+   "end": [
+    -0.61,
+    0.0,
+    0.68
+   ],
+   "gap": 0.0,
+   "pen": 0.01,
+   "ok": true
+  },
+  {
+   "member": 2,
+   "kind": "v",
+   "end": [
+    0.61,
+    0.0,
+    0.68
+   ],
+   "gap": 0.0,
+   "pen": 0.01,
+   "ok": true
+  },
+  {
+   "member": 3,
+   "kind": "v",
+   "end": [
+    1.83,
+    0.0,
+    0.68
+   ],
+   "gap": 0.0,
+   "pen": 0.01,
+   "ok": true
+  },
+  {
+   "member": 4,
+   "kind": "h",
+   "end": [
+    -1.801,
+    0.97,
+    0.68
+   ],
+   "gap": 0.0008,
+   "pen": 0.0009,
+   "ok": true
+  },
+  {
+   "member": 4,
+   "kind": "h",
+   "end": [
+    1.801,
+    0.97,
+    0.68
+   ],
+   "gap": 0.0008,
+   "pen": 0.0009,
+   "ok": true
+  },
+  {
+   "member": 5,
+   "kind": "h",
+   "end": [
+    -1.801,
+    0.5,
+    0.68
+   ],
+   "gap": 0.0008,
+   "pen": 0.0009,
+   "ok": true
+  },
+  {
+   "member": 5,
+   "kind": "h",
+   "end": [
+    1.801,
+    0.5,
+    0.68
+   ],
+   "gap": 0.0008,
+   "pen": 0.0009,
+   "ok": true
+  },
+  {
+   "member": 6,
+   "kind": "p",
+   "end": [
+    -1.859,
+    0.75,
+    0.68
+   ],
+   "gap": 0.0008,
+   "pen": 0.0009,
+   "ok": true
+  },
+  {
+   "member": 6,
+   "kind": "p",
+   "end": [
+    -2.28,
+    0.01,
+    0.98
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 7,
+   "kind": "v",
+   "end": [
+    -1.83,
+    0.0,
+    -0.68
+   ],
+   "gap": 0.0,
+   "pen": 0.01,
+   "ok": true
+  },
+  {
+   "member": 8,
+   "kind": "v",
+   "end": [
+    -0.61,
+    0.0,
+    -0.68
+   ],
+   "gap": 0.0,
+   "pen": 0.01,
+   "ok": true
+  },
+  {
+   "member": 9,
+   "kind": "v",
+   "end": [
+    0.61,
+    0.0,
+    -0.68
+   ],
+   "gap": 0.0,
+   "pen": 0.01,
+   "ok": true
+  },
+  {
+   "member": 10,
+   "kind": "v",
+   "end": [
+    1.83,
+    0.0,
+    -0.68
+   ],
+   "gap": 0.0,
+   "pen": 0.01,
+   "ok": true
+  },
+  {
+   "member": 11,
+   "kind": "h",
+   "end": [
+    -1.801,
+    0.97,
+    -0.68
+   ],
+   "gap": 0.0008,
+   "pen": 0.0009,
+   "ok": true
+  },
+  {
+   "member": 11,
+   "kind": "h",
+   "end": [
+    1.801,
+    0.97,
+    -0.68
+   ],
+   "gap": 0.0008,
+   "pen": 0.0009,
+   "ok": true
+  },
+  {
+   "member": 12,
+   "kind": "h",
+   "end": [
+    -1.801,
+    0.5,
+    -0.68
+   ],
+   "gap": 0.0008,
+   "pen": 0.0009,
+   "ok": true
+  },
+  {
+   "member": 12,
+   "kind": "h",
+   "end": [
+    1.801,
+    0.5,
+    -0.68
+   ],
+   "gap": 0.0008,
+   "pen": 0.0009,
+   "ok": true
+  },
+  {
+   "member": 13,
+   "kind": "p",
+   "end": [
+    -1.859,
+    0.75,
+    -0.68
+   ],
+   "gap": 0.0008,
+   "pen": 0.0009,
+   "ok": true
+  },
+  {
+   "member": 13,
+   "kind": "p",
+   "end": [
+    -2.28,
+    0.01,
+    -0.98
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 14,
+   "kind": "h",
+   "end": [
+    1.83,
+    0.97,
+    0.651
+   ],
+   "gap": 0.0008,
+   "pen": 0.0009,
+   "ok": true
+  },
+  {
+   "member": 14,
+   "kind": "h",
+   "end": [
+    1.83,
+    0.97,
+    -0.651
+   ],
+   "gap": 0.0008,
+   "pen": 0.0009,
+   "ok": true
+  },
+  {
+   "member": 15,
+   "kind": "h",
+   "end": [
+    1.83,
+    0.5,
+    0.651
+   ],
+   "gap": 0.0008,
+   "pen": 0.0009,
+   "ok": true
+  },
+  {
+   "member": 15,
+   "kind": "h",
+   "end": [
+    1.83,
+    0.5,
+    -0.651
+   ],
+   "gap": 0.0008,
+   "pen": 0.0009,
+   "ok": true
+  },
+  {
+   "member": 16,
+   "kind": "v",
+   "end": [
+    1.83,
+    1.0,
+    0.0
+   ],
+   "gap": 0.003,
+   "pen": 0.0,
+   "ok": true
+  }
+ ],
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 96,
+ "bake_px_per_m": 86.0,
+ "high_tris": 19595,
+ "pass": true
+}

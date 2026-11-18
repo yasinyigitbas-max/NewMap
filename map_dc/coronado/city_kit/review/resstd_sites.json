@@ -1,0 +1,5319 @@
+{
+ "note": "resstd integration table (road kit, 17 Nov). Grid frame (u along 10th St toward ESE = layout x, v along Amber toward SSW = layout z, origin Amber x 10th). Place a piece at [u, y, v] with the yaw (Godot: yaw 90 turns the piece's +z to +x). Junctions: y = the grading pad. Legs: placed at the junction they start from (y = that pad), running along +z from z0 to z1; fillers are placed at a locked sample's junction. prof_a: the block's height profile from end A, [p0, p1, h] = h * smoothstep over p0..p1 metres from A's centre, relative to pad A.",
+ "assumptions": [
+  "Legs from an Amber junction (amber family) start at 23.5 m, the side-street tile edge of j_amber_10th / j_cc, with the side street's section there (res: kerb 5.7, parkway to 7.2, walk to 9.2; hs: walk to 9.7; cc: kerb 3.3, walk to 9.7). If the amber family chose another tile edge, change z0 in the piece's SPEC and rebuild.",
+  "Legs from an arterial junction (art family: 3rd / 4th St, strip) start at 26 m, the side-street tile edge of j_strip, with the res / std section (kerb 5.7, parkway to 7.2, walk to 9.2), no centre line on res legs, a centre line on std legs.",
+  "Alley mouths: 54-60 m from our and the arterial junctions (apt_lib quadrant pattern), 44-50 m from Amber (pilot / centre pattern); block builders put their alleys there."
+ ],
+ "junctions": [
+  {
+   "site": [
+    -800.0,
+    -600.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "L-LL",
+   "piece": "j_rs_t_lll_a",
+   "yaw": -90,
+   "reuse": false,
+   "legs": {
+    "b004": "std",
+    "b005": "std",
+    "b096": "std"
+   }
+  },
+  {
+   "site": [
+    -600.0,
+    -800.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "LL-L",
+   "piece": "j_rs_t_lll_a",
+   "yaw": 180,
+   "reuse": false,
+   "legs": {
+    "b013": "res",
+    "b089": "std",
+    "b090": "std"
+   }
+  },
+  {
+   "site": [
+    -400.0,
+    -600.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "LLL-",
+   "piece": "j_rs_t_lll_b",
+   "yaw": 90,
+   "reuse": false,
+   "legs": {
+    "b022": "std",
+    "b023": "std",
+    "b097": "std"
+   }
+  },
+  {
+   "site": [
+    -400.0,
+    -400.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "L-LL",
+   "piece": "j_rs_t_lll_b",
+   "yaw": -90,
+   "reuse": false,
+   "legs": {
+    "b023": "std",
+    "b024": "std",
+    "b104": "std"
+   }
+  },
+  {
+   "site": [
+    -600.0,
+    -400.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "-LrL",
+   "piece": "j_rs_t_lrl_a",
+   "yaw": 0,
+   "reuse": false,
+   "legs": {
+    "b014": "res",
+    "b103": "std",
+    "b104": "std"
+   }
+  },
+  {
+   "site": [
+    -200.0,
+    -200.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "-Lrr",
+   "piece": "j_rs_t_lrr_a",
+   "yaw": 0,
+   "reuse": false,
+   "legs": {
+    "b033": "res",
+    "b111": "res",
+    "b112": "hs"
+   }
+  },
+  {
+   "site": [
+    500.0,
+    0.0
+   ],
+   "pad": 4.0,
+   "pattern_NESW": "rr-r",
+   "piece": "j_rs_t_rrr_a",
+   "yaw": 180,
+   "reuse": false,
+   "legs": {
+    "b063": "res",
+    "b122": "res",
+    "b123": "res"
+   }
+  },
+  {
+   "site": [
+    -400.0,
+    -1000.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "LLLL",
+   "piece": "j_apt",
+   "yaw": 90,
+   "reuse": true,
+   "legs": {
+    "b020": "std",
+    "b021": "std",
+    "b082": "std",
+    "b083": "std"
+   }
+  },
+  {
+   "site": [
+    -400.0,
+    -800.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "LLLL",
+   "piece": "j_apt",
+   "yaw": 0,
+   "reuse": true,
+   "legs": {
+    "b021": "std",
+    "b022": "std",
+    "b090": "std",
+    "b091": "std"
+   }
+  },
+  {
+   "site": [
+    -200.0,
+    -800.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "LLLL",
+   "piece": "j_apt",
+   "yaw": -90,
+   "reuse": true,
+   "legs": {
+    "b031": "std",
+    "b032": "std",
+    "b091": "std",
+    "b092": "cc"
+   }
+  },
+  {
+   "site": [
+    -800.0,
+    -1000.0
+   ],
+   "pad": 4.0,
+   "pattern_NESW": "LLrL",
+   "piece": "j_rs_3l1r_a",
+   "yaw": 90,
+   "reuse": false,
+   "legs": {
+    "b002": "std",
+    "b003": "res",
+    "b080": "std",
+    "b081": "std"
+   }
+  },
+  {
+   "site": [
+    -800.0,
+    -800.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "rLLL",
+   "piece": "j_rs_3l1r_a",
+   "yaw": -90,
+   "reuse": false,
+   "legs": {
+    "b003": "res",
+    "b004": "std",
+    "b088": "std",
+    "b089": "std"
+   }
+  },
+  {
+   "site": [
+    -800.0,
+    -400.0
+   ],
+   "pad": 4.0,
+   "pattern_NESW": "LLrL",
+   "piece": "j_rs_3l1r_b",
+   "yaw": 90,
+   "reuse": false,
+   "legs": {
+    "b005": "std",
+    "b006": "res",
+    "b102": "std",
+    "b103": "std"
+   }
+  },
+  {
+   "site": [
+    -200.0,
+    -1000.0
+   ],
+   "pad": 8.0,
+   "pattern_NESW": "LrLL",
+   "piece": "j_rs_3l1r_b",
+   "yaw": 180,
+   "reuse": false,
+   "legs": {
+    "b030": "std",
+    "b031": "std",
+    "b083": "std",
+    "b084": "res"
+   }
+  },
+  {
+   "site": [
+    250.0,
+    -800.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "rLLL",
+   "piece": "j_rs_3l1r_c",
+   "yaw": -90,
+   "reuse": false,
+   "legs": {
+    "b049": "res",
+    "b050": "std",
+    "b093": "cc",
+    "b094": "std"
+   }
+  },
+  {
+   "site": [
+    250.0,
+    -400.0
+   ],
+   "pad": 8.0,
+   "pattern_NESW": "LLrL",
+   "piece": "j_rs_3l1r_c",
+   "yaw": 90,
+   "reuse": false,
+   "legs": {
+    "b051": "std",
+    "b052": "res",
+    "b105": "cc",
+    "b106": "std"
+   }
+  },
+  {
+   "site": [
+    500.0,
+    -600.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "LrLL",
+   "piece": "j_rs_3l1r_d",
+   "yaw": 180,
+   "reuse": false,
+   "legs": {
+    "b060": "std",
+    "b061": "std",
+    "b100": "std",
+    "b101": "res"
+   }
+  },
+  {
+   "site": [
+    500.0,
+    -800.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "rrLL",
+   "piece": "j_rs_2l2r_adj_a",
+   "yaw": 180,
+   "reuse": false,
+   "legs": {
+    "b059": "res",
+    "b060": "std",
+    "b094": "std",
+    "b095": "res"
+   }
+  },
+  {
+   "site": [
+    500.0,
+    -400.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "LrrL",
+   "piece": "j_rs_2l2r_adj_a",
+   "yaw": 90,
+   "reuse": false,
+   "legs": {
+    "b061": "std",
+    "b062": "res",
+    "b106": "std",
+    "b107": "res"
+   }
+  },
+  {
+   "site": [
+    250.0,
+    200.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "rLrL",
+   "piece": "j_rs_2l2r_opp_a",
+   "yaw": -90,
+   "reuse": false,
+   "legs": {
+    "b054": "res",
+    "b055": "res",
+    "b129": "hs",
+    "b130": "std"
+   }
+  },
+  {
+   "site": [
+    -400.0,
+    -200.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "Lrrr",
+   "piece": "j_rs_1l3r_a",
+   "yaw": 0,
+   "reuse": false,
+   "legs": {
+    "b024": "std",
+    "b025": "res",
+    "b110": "res",
+    "b111": "res"
+   }
+  },
+  {
+   "site": [
+    -200.0,
+    0.0
+   ],
+   "pad": 4.0,
+   "pattern_NESW": "rLrr",
+   "piece": "j_rs_1l3r_a",
+   "yaw": -90,
+   "reuse": false,
+   "legs": {
+    "b033": "res",
+    "b034": "res",
+    "b119": "res",
+    "b120": "hs"
+   }
+  },
+  {
+   "site": [
+    -200.0,
+    200.0
+   ],
+   "pad": 2.0,
+   "pattern_NESW": "rLrr",
+   "piece": "j_rs_1l3r_b",
+   "yaw": -90,
+   "reuse": false,
+   "legs": {
+    "b034": "res",
+    "b035": "res",
+    "b127": "res",
+    "b128": "hs"
+   }
+  },
+  {
+   "site": [
+    250.0,
+    -200.0
+   ],
+   "pad": 12.0,
+   "pattern_NESW": "rrrL",
+   "piece": "j_rs_1l3r_b",
+   "yaw": 90,
+   "reuse": false,
+   "legs": {
+    "b052": "res",
+    "b053": "res",
+    "b113": "hs",
+    "b114": "res"
+   }
+  },
+  {
+   "site": [
+    250.0,
+    0.0
+   ],
+   "pad": 10.0,
+   "pattern_NESW": "rrrL",
+   "piece": "j_rs_1l3r_c",
+   "yaw": 90,
+   "reuse": false,
+   "legs": {
+    "b053": "res",
+    "b054": "res",
+    "b121": "hs",
+    "b122": "res"
+   }
+  },
+  {
+   "site": [
+    -800.0,
+    -200.0
+   ],
+   "pad": 4.0,
+   "pattern_NESW": "rrrr",
+   "piece": "j_res",
+   "yaw": 90,
+   "reuse": true,
+   "legs": {
+    "b006": "res",
+    "b007": "res",
+    "b108": "res",
+    "b109": "res"
+   }
+  },
+  {
+   "site": [
+    -800.0,
+    0.0
+   ],
+   "pad": 8.0,
+   "pattern_NESW": "rrrr",
+   "piece": "j_res",
+   "yaw": 0,
+   "reuse": true,
+   "legs": {
+    "b007": "res",
+    "b008": "res",
+    "b116": "res",
+    "b117": "res"
+   }
+  },
+  {
+   "site": [
+    -800.0,
+    200.0
+   ],
+   "pad": 2.0,
+   "pattern_NESW": "rrrr",
+   "piece": "j_res",
+   "yaw": -90,
+   "reuse": true,
+   "legs": {
+    "b008": "res",
+    "b009": "res",
+    "b124": "res",
+    "b125": "res"
+   }
+  },
+  {
+   "site": [
+    -600.0,
+    -200.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "rrrr",
+   "piece": "j_rs_4r_b",
+   "yaw": 180,
+   "reuse": false,
+   "legs": {
+    "b014": "res",
+    "b015": "res",
+    "b109": "res",
+    "b110": "res"
+   }
+  },
+  {
+   "site": [
+    -600.0,
+    0.0
+   ],
+   "pad": 12.0,
+   "pattern_NESW": "rrrr",
+   "piece": "j_rs_4r_b",
+   "yaw": 90,
+   "reuse": false,
+   "legs": {
+    "b015": "res",
+    "b016": "res",
+    "b117": "res",
+    "b118": "res"
+   }
+  },
+  {
+   "site": [
+    -600.0,
+    200.0
+   ],
+   "pad": 4.0,
+   "pattern_NESW": "rrrr",
+   "piece": "j_rs_4r_c",
+   "yaw": 0,
+   "reuse": false,
+   "legs": {
+    "b016": "res",
+    "b017": "res",
+    "b125": "res",
+    "b126": "res"
+   }
+  },
+  {
+   "site": [
+    -400.0,
+    0.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "rrrr",
+   "piece": "j_rs_4r_c",
+   "yaw": -90,
+   "reuse": false,
+   "legs": {
+    "b025": "res",
+    "b026": "res",
+    "b118": "res",
+    "b119": "res"
+   }
+  },
+  {
+   "site": [
+    -400.0,
+    200.0
+   ],
+   "pad": 2.0,
+   "pattern_NESW": "rrrr",
+   "piece": "j_rs_4r_d",
+   "yaw": 180,
+   "reuse": false,
+   "legs": {
+    "b026": "res",
+    "b027": "res",
+    "b126": "res",
+    "b127": "res"
+   }
+  },
+  {
+   "site": [
+    250.0,
+    -1000.0
+   ],
+   "pad": 6.0,
+   "pattern_NESW": "rrrr",
+   "piece": "j_rs_4r_d",
+   "yaw": 90,
+   "reuse": false,
+   "legs": {
+    "b048": "res",
+    "b049": "res",
+    "b085": "res",
+    "b086": "res"
+   }
+  },
+  {
+   "site": [
+    500.0,
+    -200.0
+   ],
+   "pad": 8.0,
+   "pattern_NESW": "rrrr",
+   "piece": "j_rs_4r_e",
+   "yaw": 0,
+   "reuse": false,
+   "legs": {
+    "b062": "res",
+    "b063": "res",
+    "b114": "res",
+    "b115": "res"
+   }
+  }
+ ],
+ "blocks": [
+  {
+   "id": "b001",
+   "name": "J Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -800.0,
+    -1400.0
+   ],
+   "b": [
+    -800.0,
+    -1200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 2.0,
+   "pad_b": 2.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b001",
+     "end": "B",
+     "piece": "s_rs_b001_b",
+     "at": [
+      -800.0,
+      -1200.0
+     ],
+     "y": 2.0,
+     "yaw": -180,
+     "z0": 26.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b002",
+   "name": "J Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -800.0,
+    -1200.0
+   ],
+   "b": [
+    -800.0,
+    -1000.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 2.0,
+   "pad_b": 4.0,
+   "prof_a": [
+    [
+     26.0,
+     180.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 1.95,
+   "note": "",
+   "legs": [
+    {
+     "block": "b002",
+     "end": "A",
+     "piece": "s_rs_b002_a",
+     "at": [
+      -800.0,
+      -1200.0
+     ],
+     "y": 2.0,
+     "yaw": 0,
+     "z0": 26.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b002",
+     "end": "B",
+     "piece": "s_rs_b002_b",
+     "at": [
+      -800.0,
+      -1000.0
+     ],
+     "y": 4.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b003",
+   "name": "J Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -800.0,
+    -1000.0
+   ],
+   "b": [
+    -800.0,
+    -800.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 4.0,
+   "pad_b": 6.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 1.88,
+   "note": "",
+   "legs": [
+    {
+     "block": "b003",
+     "end": "A",
+     "piece": "s_res_up2_a",
+     "at": [
+      -800.0,
+      -1000.0
+     ],
+     "y": 4.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "J Ave, a residential street (mixed street trees, no centre line)"
+    },
+    {
+     "block": "b003",
+     "end": "B",
+     "piece": "s_res_dn2_a",
+     "at": [
+      -800.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "J Ave, a residential street (mixed street trees, no centre line)"
+    }
+   ]
+  },
+  {
+   "id": "b004",
+   "name": "J Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -800.0,
+    -800.0
+   ],
+   "b": [
+    -800.0,
+    -600.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b004",
+     "end": "A",
+     "piece": "s_rs_b004_a",
+     "at": [
+      -800.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b004",
+     "end": "B",
+     "piece": "s_rs_b004_b",
+     "at": [
+      -800.0,
+      -600.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b005",
+   "name": "J Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -800.0,
+    -600.0
+   ],
+   "b": [
+    -800.0,
+    -400.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -2.0,
+   "pad_a": 6.0,
+   "pad_b": 4.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     -2.0
+    ]
+   ],
+   "max_grade_pct": 1.88,
+   "note": "",
+   "legs": [
+    {
+     "block": "b005",
+     "end": "A",
+     "piece": "s_rs_b005_a",
+     "at": [
+      -800.0,
+      -600.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b005",
+     "end": "B",
+     "piece": "s_rs_b005_b",
+     "at": [
+      -800.0,
+      -400.0
+     ],
+     "y": 4.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b006",
+   "name": "J Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -800.0,
+    -400.0
+   ],
+   "b": [
+    -800.0,
+    -200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 4.0,
+   "pad_b": 4.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b006",
+     "end": "A",
+     "piece": "s_res_a",
+     "at": [
+      -800.0,
+      -400.0
+     ],
+     "y": 4.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "J Ave, a residential street (mixed street trees, no centre line)"
+    },
+    {
+     "block": "b006",
+     "end": "B",
+     "piece": "s_res_a",
+     "at": [
+      -800.0,
+      -200.0
+     ],
+     "y": 4.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "J Ave, a residential street (mixed street trees, no centre line)"
+    }
+   ]
+  },
+  {
+   "id": "b007",
+   "name": "J Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -800.0,
+    -200.0
+   ],
+   "b": [
+    -800.0,
+    0.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 4.0,
+   "pad_a": 4.0,
+   "pad_b": 8.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     4.0
+    ]
+   ],
+   "max_grade_pct": 3.75,
+   "note": "",
+   "legs": [
+    {
+     "block": "b007",
+     "end": "A",
+     "piece": "s_res_up4_a",
+     "at": [
+      -800.0,
+      -200.0
+     ],
+     "y": 4.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "J Ave, a residential street (mixed street trees, no centre line)"
+    },
+    {
+     "block": "b007",
+     "end": "B",
+     "piece": "s_res_dn4_a",
+     "at": [
+      -800.0,
+      0.0
+     ],
+     "y": 8.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "J Ave, a residential street (mixed street trees, no centre line)"
+    }
+   ]
+  },
+  {
+   "id": "b008",
+   "name": "J Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -800.0,
+    0.0
+   ],
+   "b": [
+    -800.0,
+    200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -6.0,
+   "pad_a": 8.0,
+   "pad_b": 2.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     -6.0
+    ]
+   ],
+   "max_grade_pct": 5.62,
+   "note": "",
+   "legs": [
+    {
+     "block": "b008",
+     "end": "A",
+     "piece": "s_res_dn6",
+     "at": [
+      -800.0,
+      0.0
+     ],
+     "y": 8.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "J Ave, a residential street (mixed street trees, no centre line)"
+    },
+    {
+     "block": "b008",
+     "end": "B",
+     "piece": "s_res_up6",
+     "at": [
+      -800.0,
+      200.0
+     ],
+     "y": 2.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "J Ave, a residential street (mixed street trees, no centre line)"
+    }
+   ]
+  },
+  {
+   "id": "b011",
+   "name": "G Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -600.0,
+    -1400.0
+   ],
+   "b": [
+    -600.0,
+    -1200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 2.0,
+   "pad_b": 4.0,
+   "prof_a": [
+    [
+     26.0,
+     174.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 2.03,
+   "note": "",
+   "legs": [
+    {
+     "block": "b011",
+     "end": "A",
+     "piece": "s_rs_b011_a",
+     "at": [
+      -600.0,
+      -1400.0
+     ],
+     "y": 2.0,
+     "yaw": 0,
+     "z0": 26.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b011",
+     "end": "B",
+     "piece": "s_rs_b011_b",
+     "at": [
+      -600.0,
+      -1200.0
+     ],
+     "y": 4.0,
+     "yaw": -180,
+     "z0": 26.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b012",
+   "name": "G Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -600.0,
+    -1200.0
+   ],
+   "b": [
+    -600.0,
+    -1000.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 4.0,
+   "pad_b": 6.0,
+   "prof_a": [
+    [
+     26.0,
+     100.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 4.05,
+   "note": "",
+   "legs": [
+    {
+     "block": "b012",
+     "end": "A",
+     "piece": "s_rs_b012_a",
+     "at": [
+      -600.0,
+      -1200.0
+     ],
+     "y": 4.0,
+     "yaw": 0,
+     "z0": 26.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b013",
+   "name": "G Ave",
+   "section": "res",
+   "built_as": "std",
+   "a": [
+    -600.0,
+    -1000.0
+   ],
+   "b": [
+    -600.0,
+    -800.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "G Ave runs from the gritty sample (whose s_grt leg is std, double yellow) to the campus T: a std collector, so the centre line never ends mid-block",
+   "legs": [
+    {
+     "block": "b013",
+     "end": "B",
+     "piece": "s_grt",
+     "at": [
+      -600.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "G Ave, a std collector (grt dress)"
+    }
+   ]
+  },
+  {
+   "id": "b014",
+   "name": "G Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -600.0,
+    -400.0
+   ],
+   "b": [
+    -600.0,
+    -200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b014",
+     "end": "A",
+     "piece": "s_res_b",
+     "at": [
+      -600.0,
+      -400.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "G Ave, a residential street (mixed street trees, no centre line)"
+    },
+    {
+     "block": "b014",
+     "end": "B",
+     "piece": "s_res_b",
+     "at": [
+      -600.0,
+      -200.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "G Ave, a residential street (mixed street trees, no centre line)"
+    }
+   ]
+  },
+  {
+   "id": "b015",
+   "name": "G Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -600.0,
+    -200.0
+   ],
+   "b": [
+    -600.0,
+    0.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 6.0,
+   "pad_a": 6.0,
+   "pad_b": 12.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     6.0
+    ]
+   ],
+   "max_grade_pct": 5.62,
+   "note": "",
+   "legs": [
+    {
+     "block": "b015",
+     "end": "A",
+     "piece": "s_res_up6",
+     "at": [
+      -600.0,
+      -200.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "G Ave, a residential street (mixed street trees, no centre line)"
+    },
+    {
+     "block": "b015",
+     "end": "B",
+     "piece": "s_res_dn6",
+     "at": [
+      -600.0,
+      0.0
+     ],
+     "y": 12.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "G Ave, a residential street (mixed street trees, no centre line)"
+    }
+   ]
+  },
+  {
+   "id": "b016",
+   "name": "G Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -600.0,
+    0.0
+   ],
+   "b": [
+    -600.0,
+    200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -8.0,
+   "pad_a": 12.0,
+   "pad_b": 4.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     -8.0
+    ]
+   ],
+   "max_grade_pct": 7.5,
+   "note": "",
+   "legs": [
+    {
+     "block": "b016",
+     "end": "A",
+     "piece": "s_res_dn8",
+     "at": [
+      -600.0,
+      0.0
+     ],
+     "y": 12.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "G Ave, a residential street (mixed street trees, no centre line)"
+    },
+    {
+     "block": "b016",
+     "end": "B",
+     "piece": "s_res_up8",
+     "at": [
+      -600.0,
+      200.0
+     ],
+     "y": 4.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "G Ave, a residential street (mixed street trees, no centre line)"
+    }
+   ]
+  },
+  {
+   "id": "b019",
+   "name": "E Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -400.0,
+    -1400.0
+   ],
+   "b": [
+    -400.0,
+    -1200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 2.0,
+   "pad_b": 4.0,
+   "prof_a": [
+    [
+     26.0,
+     174.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 2.03,
+   "note": "",
+   "legs": [
+    {
+     "block": "b019",
+     "end": "A",
+     "piece": "s_rs_b019_a",
+     "at": [
+      -400.0,
+      -1400.0
+     ],
+     "y": 2.0,
+     "yaw": 0,
+     "z0": 26.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b019",
+     "end": "B",
+     "piece": "s_rs_b019_b",
+     "at": [
+      -400.0,
+      -1200.0
+     ],
+     "y": 4.0,
+     "yaw": -180,
+     "z0": 26.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b020",
+   "name": "E Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -400.0,
+    -1200.0
+   ],
+   "b": [
+    -400.0,
+    -1000.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 4.0,
+   "pad_b": 6.0,
+   "prof_a": [
+    [
+     26.0,
+     180.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 1.95,
+   "note": "",
+   "legs": [
+    {
+     "block": "b020",
+     "end": "A",
+     "piece": "s_rs_b020_a",
+     "at": [
+      -400.0,
+      -1200.0
+     ],
+     "y": 4.0,
+     "yaw": 0,
+     "z0": 26.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b020",
+     "end": "B",
+     "piece": "s_rs_b020_b",
+     "at": [
+      -400.0,
+      -1000.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b021",
+   "name": "E Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -400.0,
+    -1000.0
+   ],
+   "b": [
+    -400.0,
+    -800.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b021",
+     "end": "A",
+     "piece": "s_apt",
+     "at": [
+      -400.0,
+      -1000.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "E Ave, a std collector (apt dress)"
+    },
+    {
+     "block": "b021",
+     "end": "B",
+     "piece": "s_rs_b021_b",
+     "at": [
+      -400.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b022",
+   "name": "E Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -400.0,
+    -800.0
+   ],
+   "b": [
+    -400.0,
+    -600.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b022",
+     "end": "A",
+     "piece": "s_rs_b022_a",
+     "at": [
+      -400.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b022",
+     "end": "B",
+     "piece": "s_rs_b022_b",
+     "at": [
+      -400.0,
+      -600.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b023",
+   "name": "E Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -400.0,
+    -600.0
+   ],
+   "b": [
+    -400.0,
+    -400.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b023",
+     "end": "A",
+     "piece": "s_rs_b023_a",
+     "at": [
+      -400.0,
+      -600.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b023",
+     "end": "B",
+     "piece": "s_rs_b023_b",
+     "at": [
+      -400.0,
+      -400.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b024",
+   "name": "E Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -400.0,
+    -400.0
+   ],
+   "b": [
+    -400.0,
+    -200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b024",
+     "end": "A",
+     "piece": "s_rs_b024_a",
+     "at": [
+      -400.0,
+      -400.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b024",
+     "end": "B",
+     "piece": "s_rs_b024_b",
+     "at": [
+      -400.0,
+      -200.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b025",
+   "name": "E Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -400.0,
+    -200.0
+   ],
+   "b": [
+    -400.0,
+    0.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b025",
+     "end": "A",
+     "piece": "s_res_c",
+     "at": [
+      -400.0,
+      -200.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "E Ave, a residential street (mixed street trees, no centre line)"
+    },
+    {
+     "block": "b025",
+     "end": "B",
+     "piece": "s_res_c",
+     "at": [
+      -400.0,
+      0.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "E Ave, a residential street (mixed street trees, no centre line)"
+    }
+   ]
+  },
+  {
+   "id": "b026",
+   "name": "E Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -400.0,
+    0.0
+   ],
+   "b": [
+    -400.0,
+    200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -4.0,
+   "pad_a": 6.0,
+   "pad_b": 2.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     -4.0
+    ]
+   ],
+   "max_grade_pct": 3.75,
+   "note": "",
+   "legs": [
+    {
+     "block": "b026",
+     "end": "A",
+     "piece": "s_res_dn4_a",
+     "at": [
+      -400.0,
+      0.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "E Ave, a residential street (mixed street trees, no centre line)"
+    },
+    {
+     "block": "b026",
+     "end": "B",
+     "piece": "s_res_up4_a",
+     "at": [
+      -400.0,
+      200.0
+     ],
+     "y": 2.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "E Ave, a residential street (mixed street trees, no centre line)"
+    }
+   ]
+  },
+  {
+   "id": "b029",
+   "name": "C Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -200.0,
+    -1400.0
+   ],
+   "b": [
+    -200.0,
+    -1200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 6.0,
+   "pad_a": 4.0,
+   "pad_b": 10.0,
+   "prof_a": [
+    [
+     26.0,
+     174.0,
+     6.0
+    ]
+   ],
+   "max_grade_pct": 6.08,
+   "note": "",
+   "legs": [
+    {
+     "block": "b029",
+     "end": "A",
+     "piece": "s_rs_b029_a",
+     "at": [
+      -200.0,
+      -1400.0
+     ],
+     "y": 4.0,
+     "yaw": 0,
+     "z0": 26.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b029",
+     "end": "B",
+     "piece": "s_rs_b029_b",
+     "at": [
+      -200.0,
+      -1200.0
+     ],
+     "y": 10.0,
+     "yaw": -180,
+     "z0": 26.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b030",
+   "name": "C Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -200.0,
+    -1200.0
+   ],
+   "b": [
+    -200.0,
+    -1000.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -2.0,
+   "pad_a": 10.0,
+   "pad_b": 8.0,
+   "prof_a": [
+    [
+     26.0,
+     180.0,
+     -2.0
+    ]
+   ],
+   "max_grade_pct": 1.95,
+   "note": "",
+   "legs": [
+    {
+     "block": "b030",
+     "end": "A",
+     "piece": "s_rs_b030_a",
+     "at": [
+      -200.0,
+      -1200.0
+     ],
+     "y": 10.0,
+     "yaw": 0,
+     "z0": 26.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b030",
+     "end": "B",
+     "piece": "s_rs_b030_b",
+     "at": [
+      -200.0,
+      -1000.0
+     ],
+     "y": 8.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b031",
+   "name": "C Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -200.0,
+    -1000.0
+   ],
+   "b": [
+    -200.0,
+    -800.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -2.0,
+   "pad_a": 8.0,
+   "pad_b": 6.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     -2.0
+    ]
+   ],
+   "max_grade_pct": 1.88,
+   "note": "",
+   "legs": [
+    {
+     "block": "b031",
+     "end": "A",
+     "piece": "s_rs_b031_a",
+     "at": [
+      -200.0,
+      -1000.0
+     ],
+     "y": 8.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b031",
+     "end": "B",
+     "piece": "s_rs_b031_b",
+     "at": [
+      -200.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b032",
+   "name": "C Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -200.0,
+    -800.0
+   ],
+   "b": [
+    -200.0,
+    -600.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b032",
+     "end": "A",
+     "piece": "s_rs_b032_a",
+     "at": [
+      -200.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b033",
+   "name": "C Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -200.0,
+    -200.0
+   ],
+   "b": [
+    -200.0,
+    0.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -2.0,
+   "pad_a": 6.0,
+   "pad_b": 4.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     -2.0
+    ]
+   ],
+   "max_grade_pct": 1.88,
+   "note": "",
+   "legs": [
+    {
+     "block": "b033",
+     "end": "A",
+     "piece": "s_res_dn2_a",
+     "at": [
+      -200.0,
+      -200.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "C Ave, a residential street (mixed street trees, no centre line)"
+    },
+    {
+     "block": "b033",
+     "end": "B",
+     "piece": "s_res_up2_a",
+     "at": [
+      -200.0,
+      0.0
+     ],
+     "y": 4.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "C Ave, a residential street (mixed street trees, no centre line)"
+    }
+   ]
+  },
+  {
+   "id": "b034",
+   "name": "C Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -200.0,
+    0.0
+   ],
+   "b": [
+    -200.0,
+    200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -2.0,
+   "pad_a": 4.0,
+   "pad_b": 2.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     -2.0
+    ]
+   ],
+   "max_grade_pct": 1.88,
+   "note": "",
+   "legs": [
+    {
+     "block": "b034",
+     "end": "A",
+     "piece": "s_res_dn2_b",
+     "at": [
+      -200.0,
+      0.0
+     ],
+     "y": 4.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "C Ave, a residential street (mixed street trees, no centre line)"
+    },
+    {
+     "block": "b034",
+     "end": "B",
+     "piece": "s_res_up2_b",
+     "at": [
+      -200.0,
+      200.0
+     ],
+     "y": 2.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "C Ave, a residential street (mixed street trees, no centre line)"
+    }
+   ]
+  },
+  {
+   "id": "b047",
+   "name": "B Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    250.0,
+    -1400.0
+   ],
+   "b": [
+    250.0,
+    -1200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 6.0,
+   "pad_a": 2.0,
+   "pad_b": 8.0,
+   "prof_a": [
+    [
+     26.0,
+     174.0,
+     6.0
+    ]
+   ],
+   "max_grade_pct": 6.08,
+   "note": "",
+   "legs": [
+    {
+     "block": "b047",
+     "end": "A",
+     "piece": "s_rs_b047_a",
+     "at": [
+      250.0,
+      -1400.0
+     ],
+     "y": 2.0,
+     "yaw": 0,
+     "z0": 26.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b047",
+     "end": "B",
+     "piece": "s_rs_b047_b",
+     "at": [
+      250.0,
+      -1200.0
+     ],
+     "y": 8.0,
+     "yaw": -180,
+     "z0": 26.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b048",
+   "name": "B Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    250.0,
+    -1200.0
+   ],
+   "b": [
+    250.0,
+    -1000.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -2.0,
+   "pad_a": 8.0,
+   "pad_b": 6.0,
+   "prof_a": [
+    [
+     26.0,
+     180.0,
+     -2.0
+    ]
+   ],
+   "max_grade_pct": 1.95,
+   "note": "",
+   "legs": [
+    {
+     "block": "b048",
+     "end": "A",
+     "piece": "s_rs_b048_a",
+     "at": [
+      250.0,
+      -1200.0
+     ],
+     "y": 8.0,
+     "yaw": 0,
+     "z0": 26.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b048",
+     "end": "B",
+     "piece": "s_rs_b048_b",
+     "at": [
+      250.0,
+      -1000.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b049",
+   "name": "B Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    250.0,
+    -1000.0
+   ],
+   "b": [
+    250.0,
+    -800.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b049",
+     "end": "A",
+     "piece": "s_rs_b049_a",
+     "at": [
+      250.0,
+      -1000.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b049",
+     "end": "B",
+     "piece": "s_rs_b049_b",
+     "at": [
+      250.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b050",
+   "name": "B Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    250.0,
+    -800.0
+   ],
+   "b": [
+    250.0,
+    -600.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b050",
+     "end": "A",
+     "piece": "s_apt",
+     "at": [
+      250.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "B Ave, a std collector (apt dress)"
+    }
+   ]
+  },
+  {
+   "id": "b051",
+   "name": "B Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    250.0,
+    -600.0
+   ],
+   "b": [
+    250.0,
+    -400.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 6.0,
+   "pad_b": 8.0,
+   "prof_a": [
+    [
+     100.0,
+     180.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 3.75,
+   "note": "",
+   "legs": [
+    {
+     "block": "b051",
+     "end": "B",
+     "piece": "s_rs_b051_b",
+     "at": [
+      250.0,
+      -400.0
+     ],
+     "y": 8.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b052",
+   "name": "B Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    250.0,
+    -400.0
+   ],
+   "b": [
+    250.0,
+    -200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 4.0,
+   "pad_a": 8.0,
+   "pad_b": 12.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     4.0
+    ]
+   ],
+   "max_grade_pct": 3.75,
+   "note": "",
+   "legs": [
+    {
+     "block": "b052",
+     "end": "A",
+     "piece": "s_res_up4_b",
+     "at": [
+      250.0,
+      -400.0
+     ],
+     "y": 8.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "B Ave, a residential street (mixed street trees, no centre line)"
+    },
+    {
+     "block": "b052",
+     "end": "B",
+     "piece": "s_res_dn4_b",
+     "at": [
+      250.0,
+      -200.0
+     ],
+     "y": 12.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "B Ave, a residential street (mixed street trees, no centre line)"
+    }
+   ]
+  },
+  {
+   "id": "b053",
+   "name": "B Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    250.0,
+    -200.0
+   ],
+   "b": [
+    250.0,
+    0.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -2.0,
+   "pad_a": 12.0,
+   "pad_b": 10.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     -2.0
+    ]
+   ],
+   "max_grade_pct": 1.88,
+   "note": "",
+   "legs": [
+    {
+     "block": "b053",
+     "end": "A",
+     "piece": "s_res_dn2_b",
+     "at": [
+      250.0,
+      -200.0
+     ],
+     "y": 12.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "B Ave, a residential street (mixed street trees, no centre line)"
+    },
+    {
+     "block": "b053",
+     "end": "B",
+     "piece": "s_res_up2_b",
+     "at": [
+      250.0,
+      0.0
+     ],
+     "y": 10.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "B Ave, a residential street (mixed street trees, no centre line)"
+    }
+   ]
+  },
+  {
+   "id": "b054",
+   "name": "B Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    250.0,
+    0.0
+   ],
+   "b": [
+    250.0,
+    200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -4.0,
+   "pad_a": 10.0,
+   "pad_b": 6.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     -4.0
+    ]
+   ],
+   "max_grade_pct": 3.75,
+   "note": "",
+   "legs": [
+    {
+     "block": "b054",
+     "end": "A",
+     "piece": "s_res_dn4_b",
+     "at": [
+      250.0,
+      0.0
+     ],
+     "y": 10.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "B Ave, a residential street (mixed street trees, no centre line)"
+    },
+    {
+     "block": "b054",
+     "end": "B",
+     "piece": "s_res_up4_b",
+     "at": [
+      250.0,
+      200.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "B Ave, a residential street (mixed street trees, no centre line)"
+    }
+   ]
+  },
+  {
+   "id": "b059",
+   "name": "Adela Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    500.0,
+    -1000.0
+   ],
+   "b": [
+    500.0,
+    -800.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 4.0,
+   "pad_b": 6.0,
+   "prof_a": [
+    [
+     26.0,
+     180.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 1.95,
+   "note": "",
+   "legs": [
+    {
+     "block": "b059",
+     "end": "A",
+     "piece": "s_rs_b059_a",
+     "at": [
+      500.0,
+      -1000.0
+     ],
+     "y": 4.0,
+     "yaw": 0,
+     "z0": 26.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b059",
+     "end": "B",
+     "piece": "s_rs_b059_b",
+     "at": [
+      500.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b060",
+   "name": "Adela Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    500.0,
+    -800.0
+   ],
+   "b": [
+    500.0,
+    -600.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b060",
+     "end": "A",
+     "piece": "s_rs_b060_a",
+     "at": [
+      500.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b060",
+     "end": "B",
+     "piece": "s_rs_b060_b",
+     "at": [
+      500.0,
+      -600.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b061",
+   "name": "Adela Ave",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    500.0,
+    -600.0
+   ],
+   "b": [
+    500.0,
+    -400.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b061",
+     "end": "A",
+     "piece": "s_rs_b061_a",
+     "at": [
+      500.0,
+      -600.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b061",
+     "end": "B",
+     "piece": "s_rs_b061_b",
+     "at": [
+      500.0,
+      -400.0
+     ],
+     "y": 6.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b062",
+   "name": "Adela Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    500.0,
+    -400.0
+   ],
+   "b": [
+    500.0,
+    -200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 6.0,
+   "pad_b": 8.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 1.88,
+   "note": "",
+   "legs": [
+    {
+     "block": "b062",
+     "end": "A",
+     "piece": "s_rs_b062_a",
+     "at": [
+      500.0,
+      -400.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b062",
+     "end": "B",
+     "piece": "s_rs_b062_b",
+     "at": [
+      500.0,
+      -200.0
+     ],
+     "y": 8.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b063",
+   "name": "Adela Ave",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    500.0,
+    -200.0
+   ],
+   "b": [
+    500.0,
+    0.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -4.0,
+   "pad_a": 8.0,
+   "pad_b": 4.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     -4.0
+    ]
+   ],
+   "max_grade_pct": 3.75,
+   "note": "",
+   "legs": [
+    {
+     "block": "b063",
+     "end": "A",
+     "piece": "s_rs_b063_a",
+     "at": [
+      500.0,
+      -200.0
+     ],
+     "y": 8.0,
+     "yaw": 0,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b063",
+     "end": "B",
+     "piece": "s_rs_b063_b",
+     "at": [
+      500.0,
+      0.0
+     ],
+     "y": 4.0,
+     "yaw": -180,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b081",
+   "name": "5th St",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -800.0,
+    -1000.0
+   ],
+   "b": [
+    -600.0,
+    -1000.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 4.0,
+   "pad_b": 6.0,
+   "prof_a": [
+    [
+     20.0,
+     100.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 3.75,
+   "note": "",
+   "legs": [
+    {
+     "block": "b081",
+     "end": "A",
+     "piece": "s_rs_b081_a",
+     "at": [
+      -800.0,
+      -1000.0
+     ],
+     "y": 4.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b082",
+   "name": "5th St",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -600.0,
+    -1000.0
+   ],
+   "b": [
+    -400.0,
+    -1000.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b082",
+     "end": "B",
+     "piece": "s_rs_b082_b",
+     "at": [
+      -400.0,
+      -1000.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b083",
+   "name": "5th St",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -400.0,
+    -1000.0
+   ],
+   "b": [
+    -200.0,
+    -1000.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 6.0,
+   "pad_b": 8.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 1.88,
+   "note": "",
+   "legs": [
+    {
+     "block": "b083",
+     "end": "A",
+     "piece": "s_rs_b083_a",
+     "at": [
+      -400.0,
+      -1000.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b083",
+     "end": "B",
+     "piece": "s_rs_b083_b",
+     "at": [
+      -200.0,
+      -1000.0
+     ],
+     "y": 8.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b084",
+   "name": "5th St",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -200.0,
+    -1000.0
+   ],
+   "b": [
+    0.0,
+    -1000.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 4.0,
+   "pad_a": 8.0,
+   "pad_b": 12.0,
+   "prof_a": [
+    [
+     20.0,
+     176.5,
+     4.0
+    ]
+   ],
+   "max_grade_pct": 3.83,
+   "note": "",
+   "legs": [
+    {
+     "block": "b084",
+     "end": "A",
+     "piece": "s_rs_b084_a",
+     "at": [
+      -200.0,
+      -1000.0
+     ],
+     "y": 8.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b084",
+     "end": "B",
+     "piece": "s_rs_b084_b",
+     "at": [
+      0.0,
+      -1000.0
+     ],
+     "y": 12.0,
+     "yaw": -90,
+     "z0": 23.5,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b085",
+   "name": "5th St",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    0.0,
+    -1000.0
+   ],
+   "b": [
+    250.0,
+    -1000.0
+   ],
+   "length": 250.0,
+   "rise_a_to_b": -6.0,
+   "pad_a": 12.0,
+   "pad_b": 6.0,
+   "prof_a": [
+    [
+     23.5,
+     230.0,
+     -6.0
+    ]
+   ],
+   "max_grade_pct": 4.36,
+   "note": "",
+   "legs": [
+    {
+     "block": "b085",
+     "end": "A",
+     "piece": "s_rs_b085_a",
+     "at": [
+      0.0,
+      -1000.0
+     ],
+     "y": 12.0,
+     "yaw": 90,
+     "z0": 23.5,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b085",
+     "end": "B",
+     "piece": "s_rs_b085_b",
+     "at": [
+      250.0,
+      -1000.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b086",
+   "name": "5th St",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    250.0,
+    -1000.0
+   ],
+   "b": [
+    500.0,
+    -1000.0
+   ],
+   "length": 250.0,
+   "rise_a_to_b": -2.0,
+   "pad_a": 6.0,
+   "pad_b": 4.0,
+   "prof_a": [
+    [
+     20.0,
+     224.0,
+     -2.0
+    ]
+   ],
+   "max_grade_pct": 1.47,
+   "note": "",
+   "legs": [
+    {
+     "block": "b086",
+     "end": "A",
+     "piece": "s_rs_b086_a",
+     "at": [
+      250.0,
+      -1000.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b086",
+     "end": "B",
+     "piece": "s_rs_b086_b",
+     "at": [
+      500.0,
+      -1000.0
+     ],
+     "y": 4.0,
+     "yaw": -90,
+     "z0": 26.0,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b089",
+   "name": "6th St",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -800.0,
+    -800.0
+   ],
+   "b": [
+    -600.0,
+    -800.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b089",
+     "end": "A",
+     "piece": "s_rs_b089_a",
+     "at": [
+      -800.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b089",
+     "end": "B",
+     "piece": "s_rs_b089_b",
+     "at": [
+      -600.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b090",
+   "name": "6th St",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -600.0,
+    -800.0
+   ],
+   "b": [
+    -400.0,
+    -800.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b090",
+     "end": "A",
+     "piece": "s_rs_b090_a",
+     "at": [
+      -600.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b090",
+     "end": "B",
+     "piece": "s_rs_b090_b",
+     "at": [
+      -400.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b091",
+   "name": "6th St",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -400.0,
+    -800.0
+   ],
+   "b": [
+    -200.0,
+    -800.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b091",
+     "end": "A",
+     "piece": "s_rs_b091_a",
+     "at": [
+      -400.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b091",
+     "end": "B",
+     "piece": "s_rs_b091_b",
+     "at": [
+      -200.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b092",
+   "name": "6th St",
+   "section": "cc",
+   "built_as": "cc",
+   "a": [
+    -200.0,
+    -800.0
+   ],
+   "b": [
+    0.0,
+    -800.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b092",
+     "end": "A",
+     "piece": "s_rs_b092_a",
+     "at": [
+      -200.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b092",
+     "end": "B",
+     "piece": "s_rs_b092_b",
+     "at": [
+      0.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 23.5,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b093",
+   "name": "6th St",
+   "section": "cc",
+   "built_as": "cc",
+   "a": [
+    0.0,
+    -800.0
+   ],
+   "b": [
+    250.0,
+    -800.0
+   ],
+   "length": 250.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b093",
+     "end": "A",
+     "piece": "s_rs_b093_a",
+     "at": [
+      0.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 23.5,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b093",
+     "end": "B",
+     "piece": "s_rs_b093_b",
+     "at": [
+      250.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b094",
+   "name": "6th St",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    250.0,
+    -800.0
+   ],
+   "b": [
+    500.0,
+    -800.0
+   ],
+   "length": 250.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b094",
+     "end": "A",
+     "piece": "s_rs_b094_a",
+     "at": [
+      250.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b094",
+     "end": "B",
+     "piece": "s_rs_b094_b",
+     "at": [
+      500.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b097",
+   "name": "7th St",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -400.0,
+    -600.0
+   ],
+   "b": [
+    -200.0,
+    -600.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b097",
+     "end": "A",
+     "piece": "s_civ",
+     "at": [
+      -400.0,
+      -600.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": true,
+     "note": "7th St, a std collector (civ dress)"
+    }
+   ]
+  },
+  {
+   "id": "b098",
+   "name": "7th St",
+   "section": "cc",
+   "built_as": "cc",
+   "a": [
+    -200.0,
+    -600.0
+   ],
+   "b": [
+    0.0,
+    -600.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "both ends are locked samples; a 44 m filler joins their legs",
+   "legs": [
+    {
+     "block": "b098",
+     "end": "A(filler)",
+     "piece": "s_rs_b098_fill",
+     "at": [
+      -200.0,
+      -600.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 100.0,
+     "z1": 144.0,
+     "reuse": false,
+     "note": "placed at the civic sample's junction"
+    }
+   ]
+  },
+  {
+   "id": "b099",
+   "name": "7th St",
+   "section": "cc",
+   "built_as": "cc",
+   "a": [
+    0.0,
+    -600.0
+   ],
+   "b": [
+    250.0,
+    -600.0
+   ],
+   "length": 250.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "both ends are locked samples; a 94 m filler joins their legs",
+   "legs": [
+    {
+     "block": "b099",
+     "end": "A(filler)",
+     "piece": "s_rs_b099_fill",
+     "at": [
+      0.0,
+      -600.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 56.0,
+     "z1": 150.0,
+     "reuse": false,
+     "note": "placed at the centre sample's junction"
+    }
+   ]
+  },
+  {
+   "id": "b100",
+   "name": "7th St",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    250.0,
+    -600.0
+   ],
+   "b": [
+    500.0,
+    -600.0
+   ],
+   "length": 250.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b100",
+     "end": "B",
+     "piece": "s_rs_b100_b",
+     "at": [
+      500.0,
+      -600.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 150.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b103",
+   "name": "8th St",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -800.0,
+    -400.0
+   ],
+   "b": [
+    -600.0,
+    -400.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 4.0,
+   "pad_b": 6.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 1.88,
+   "note": "",
+   "legs": [
+    {
+     "block": "b103",
+     "end": "A",
+     "piece": "s_rs_b103_a",
+     "at": [
+      -800.0,
+      -400.0
+     ],
+     "y": 4.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b103",
+     "end": "B",
+     "piece": "s_rs_b103_b",
+     "at": [
+      -600.0,
+      -400.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b104",
+   "name": "8th St",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    -600.0,
+    -400.0
+   ],
+   "b": [
+    -400.0,
+    -400.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b104",
+     "end": "A",
+     "piece": "s_rs_b104_a",
+     "at": [
+      -600.0,
+      -400.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b104",
+     "end": "B",
+     "piece": "s_rs_b104_b",
+     "at": [
+      -400.0,
+      -400.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b105",
+   "name": "8th St",
+   "section": "cc",
+   "built_as": "cc",
+   "a": [
+    0.0,
+    -400.0
+   ],
+   "b": [
+    250.0,
+    -400.0
+   ],
+   "length": 250.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 6.0,
+   "pad_b": 8.0,
+   "prof_a": [
+    [
+     23.5,
+     230.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 1.45,
+   "note": "",
+   "legs": [
+    {
+     "block": "b105",
+     "end": "A",
+     "piece": "s_rs_b105_a",
+     "at": [
+      0.0,
+      -400.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 23.5,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b105",
+     "end": "B",
+     "piece": "s_rs_b105_b",
+     "at": [
+      250.0,
+      -400.0
+     ],
+     "y": 8.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b106",
+   "name": "8th St",
+   "section": "std",
+   "built_as": "std",
+   "a": [
+    250.0,
+    -400.0
+   ],
+   "b": [
+    500.0,
+    -400.0
+   ],
+   "length": 250.0,
+   "rise_a_to_b": -2.0,
+   "pad_a": 8.0,
+   "pad_b": 6.0,
+   "prof_a": [
+    [
+     20.0,
+     230.0,
+     -2.0
+    ]
+   ],
+   "max_grade_pct": 1.43,
+   "note": "",
+   "legs": [
+    {
+     "block": "b106",
+     "end": "A",
+     "piece": "s_rs_b106_a",
+     "at": [
+      250.0,
+      -400.0
+     ],
+     "y": 8.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b106",
+     "end": "B",
+     "piece": "s_rs_b106_b",
+     "at": [
+      500.0,
+      -400.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b109",
+   "name": "9th St",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -800.0,
+    -200.0
+   ],
+   "b": [
+    -600.0,
+    -200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 4.0,
+   "pad_b": 6.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 1.88,
+   "note": "",
+   "legs": [
+    {
+     "block": "b109",
+     "end": "A",
+     "piece": "s_rs_b109_a",
+     "at": [
+      -800.0,
+      -200.0
+     ],
+     "y": 4.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b109",
+     "end": "B",
+     "piece": "s_rs_b109_b",
+     "at": [
+      -600.0,
+      -200.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b110",
+   "name": "9th St",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -600.0,
+    -200.0
+   ],
+   "b": [
+    -400.0,
+    -200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b110",
+     "end": "A",
+     "piece": "s_rs_b110_a",
+     "at": [
+      -600.0,
+      -200.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b110",
+     "end": "B",
+     "piece": "s_rs_b110_b",
+     "at": [
+      -400.0,
+      -200.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b111",
+   "name": "9th St",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -400.0,
+    -200.0
+   ],
+   "b": [
+    -200.0,
+    -200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b111",
+     "end": "A",
+     "piece": "s_rs_b111_a",
+     "at": [
+      -400.0,
+      -200.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b111",
+     "end": "B",
+     "piece": "s_rs_b111_b",
+     "at": [
+      -200.0,
+      -200.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b112",
+   "name": "9th St",
+   "section": "hs",
+   "built_as": "hs",
+   "a": [
+    -200.0,
+    -200.0
+   ],
+   "b": [
+    0.0,
+    -200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b112",
+     "end": "A",
+     "piece": "s_rs_b112_a",
+     "at": [
+      -200.0,
+      -200.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b112",
+     "end": "B",
+     "piece": "s_rs_b112_b",
+     "at": [
+      0.0,
+      -200.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 23.5,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b113",
+   "name": "9th St",
+   "section": "hs",
+   "built_as": "hs",
+   "a": [
+    0.0,
+    -200.0
+   ],
+   "b": [
+    250.0,
+    -200.0
+   ],
+   "length": 250.0,
+   "rise_a_to_b": 6.0,
+   "pad_a": 6.0,
+   "pad_b": 12.0,
+   "prof_a": [
+    [
+     23.5,
+     230.0,
+     6.0
+    ]
+   ],
+   "max_grade_pct": 4.36,
+   "note": "",
+   "legs": [
+    {
+     "block": "b113",
+     "end": "A",
+     "piece": "s_rs_b113_a",
+     "at": [
+      0.0,
+      -200.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 23.5,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b113",
+     "end": "B",
+     "piece": "s_rs_b113_b",
+     "at": [
+      250.0,
+      -200.0
+     ],
+     "y": 12.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b114",
+   "name": "9th St",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    250.0,
+    -200.0
+   ],
+   "b": [
+    500.0,
+    -200.0
+   ],
+   "length": 250.0,
+   "rise_a_to_b": -4.0,
+   "pad_a": 12.0,
+   "pad_b": 8.0,
+   "prof_a": [
+    [
+     20.0,
+     230.0,
+     -4.0
+    ]
+   ],
+   "max_grade_pct": 2.86,
+   "note": "",
+   "legs": [
+    {
+     "block": "b114",
+     "end": "A",
+     "piece": "s_rs_b114_a",
+     "at": [
+      250.0,
+      -200.0
+     ],
+     "y": 12.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b114",
+     "end": "B",
+     "piece": "s_rs_b114_b",
+     "at": [
+      500.0,
+      -200.0
+     ],
+     "y": 8.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b117",
+   "name": "10th St",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -800.0,
+    0.0
+   ],
+   "b": [
+    -600.0,
+    0.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 4.0,
+   "pad_a": 8.0,
+   "pad_b": 12.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     4.0
+    ]
+   ],
+   "max_grade_pct": 3.75,
+   "note": "",
+   "legs": [
+    {
+     "block": "b117",
+     "end": "A",
+     "piece": "s_rs_b117_a",
+     "at": [
+      -800.0,
+      0.0
+     ],
+     "y": 8.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b117",
+     "end": "B",
+     "piece": "s_rs_b117_b",
+     "at": [
+      -600.0,
+      0.0
+     ],
+     "y": 12.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b118",
+   "name": "10th St",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -600.0,
+    0.0
+   ],
+   "b": [
+    -400.0,
+    0.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -6.0,
+   "pad_a": 12.0,
+   "pad_b": 6.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     -6.0
+    ]
+   ],
+   "max_grade_pct": 5.62,
+   "note": "",
+   "legs": [
+    {
+     "block": "b118",
+     "end": "A",
+     "piece": "s_rs_b118_a",
+     "at": [
+      -600.0,
+      0.0
+     ],
+     "y": 12.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b118",
+     "end": "B",
+     "piece": "s_rs_b118_b",
+     "at": [
+      -400.0,
+      0.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b119",
+   "name": "10th St",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -400.0,
+    0.0
+   ],
+   "b": [
+    -200.0,
+    0.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -2.0,
+   "pad_a": 6.0,
+   "pad_b": 4.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     -2.0
+    ]
+   ],
+   "max_grade_pct": 1.88,
+   "note": "",
+   "legs": [
+    {
+     "block": "b119",
+     "end": "A",
+     "piece": "s_rs_b119_a",
+     "at": [
+      -400.0,
+      0.0
+     ],
+     "y": 6.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b119",
+     "end": "B",
+     "piece": "s_rs_b119_b",
+     "at": [
+      -200.0,
+      0.0
+     ],
+     "y": 4.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b120",
+   "name": "10th St",
+   "section": "hs",
+   "built_as": "hs",
+   "a": [
+    -200.0,
+    0.0
+   ],
+   "b": [
+    0.0,
+    0.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 4.0,
+   "pad_b": 4.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b120",
+     "end": "A",
+     "piece": "s_rs_b120_a",
+     "at": [
+      -200.0,
+      0.0
+     ],
+     "y": 4.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 144.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b121",
+   "name": "10th St",
+   "section": "hs",
+   "built_as": "hs",
+   "a": [
+    0.0,
+    0.0
+   ],
+   "b": [
+    250.0,
+    0.0
+   ],
+   "length": 250.0,
+   "rise_a_to_b": 6.0,
+   "pad_a": 4.0,
+   "pad_b": 10.0,
+   "prof_a": [
+    [
+     40.0,
+     150.0,
+     5.9
+    ],
+    [
+     150.0,
+     230.0,
+     0.1
+    ]
+   ],
+   "max_grade_pct": 8.05,
+   "note": "the pilot's s_10th_e climbs +5.9 m to x 150 (site.gd hill); our leg takes the last 0.1 m to B Ave's pad (10.0)",
+   "legs": [
+    {
+     "block": "b121",
+     "end": "B",
+     "piece": "s_rs_b121_b",
+     "at": [
+      250.0,
+      0.0
+     ],
+     "y": 10.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b122",
+   "name": "10th St",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    250.0,
+    0.0
+   ],
+   "b": [
+    500.0,
+    0.0
+   ],
+   "length": 250.0,
+   "rise_a_to_b": -6.0,
+   "pad_a": 10.0,
+   "pad_b": 4.0,
+   "prof_a": [
+    [
+     20.0,
+     230.0,
+     -6.0
+    ]
+   ],
+   "max_grade_pct": 4.29,
+   "note": "",
+   "legs": [
+    {
+     "block": "b122",
+     "end": "A",
+     "piece": "s_rs_b122_a",
+     "at": [
+      250.0,
+      0.0
+     ],
+     "y": 10.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b122",
+     "end": "B",
+     "piece": "s_rs_b122_b",
+     "at": [
+      500.0,
+      0.0
+     ],
+     "y": 4.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b125",
+   "name": "11th St",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -800.0,
+    200.0
+   ],
+   "b": [
+    -600.0,
+    200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 2.0,
+   "pad_b": 4.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 1.88,
+   "note": "",
+   "legs": [
+    {
+     "block": "b125",
+     "end": "A",
+     "piece": "s_rs_b125_a",
+     "at": [
+      -800.0,
+      200.0
+     ],
+     "y": 2.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b125",
+     "end": "B",
+     "piece": "s_rs_b125_b",
+     "at": [
+      -600.0,
+      200.0
+     ],
+     "y": 4.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b126",
+   "name": "11th St",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -600.0,
+    200.0
+   ],
+   "b": [
+    -400.0,
+    200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -2.0,
+   "pad_a": 4.0,
+   "pad_b": 2.0,
+   "prof_a": [
+    [
+     20.0,
+     180.0,
+     -2.0
+    ]
+   ],
+   "max_grade_pct": 1.88,
+   "note": "",
+   "legs": [
+    {
+     "block": "b126",
+     "end": "A",
+     "piece": "s_rs_b126_a",
+     "at": [
+      -600.0,
+      200.0
+     ],
+     "y": 4.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b126",
+     "end": "B",
+     "piece": "s_rs_b126_b",
+     "at": [
+      -400.0,
+      200.0
+     ],
+     "y": 2.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b127",
+   "name": "11th St",
+   "section": "res",
+   "built_as": "res",
+   "a": [
+    -400.0,
+    200.0
+   ],
+   "b": [
+    -200.0,
+    200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 2.0,
+   "pad_b": 2.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "note": "",
+   "legs": [
+    {
+     "block": "b127",
+     "end": "A",
+     "piece": "s_rs_b127_a",
+     "at": [
+      -400.0,
+      200.0
+     ],
+     "y": 2.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b127",
+     "end": "B",
+     "piece": "s_rs_b127_b",
+     "at": [
+      -200.0,
+      200.0
+     ],
+     "y": 2.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b128",
+   "name": "11th St",
+   "section": "hs",
+   "built_as": "hs",
+   "a": [
+    -200.0,
+    200.0
+   ],
+   "b": [
+    0.0,
+    200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 2.0,
+   "pad_b": 4.0,
+   "prof_a": [
+    [
+     20.0,
+     176.5,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 1.92,
+   "note": "",
+   "legs": [
+    {
+     "block": "b128",
+     "end": "A",
+     "piece": "s_rs_b128_a",
+     "at": [
+      -200.0,
+      200.0
+     ],
+     "y": 2.0,
+     "yaw": 90,
+     "z0": 20.0,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b128",
+     "end": "B",
+     "piece": "s_rs_b128_b",
+     "at": [
+      0.0,
+      200.0
+     ],
+     "y": 4.0,
+     "yaw": -90,
+     "z0": 23.5,
+     "z1": 100.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "b129",
+   "name": "11th St",
+   "section": "hs",
+   "built_as": "hs",
+   "a": [
+    0.0,
+    200.0
+   ],
+   "b": [
+    250.0,
+    200.0
+   ],
+   "length": 250.0,
+   "rise_a_to_b": 2.0,
+   "pad_a": 4.0,
+   "pad_b": 6.0,
+   "prof_a": [
+    [
+     23.5,
+     230.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 1.45,
+   "note": "",
+   "legs": [
+    {
+     "block": "b129",
+     "end": "A",
+     "piece": "s_rs_b129_a",
+     "at": [
+      0.0,
+      200.0
+     ],
+     "y": 4.0,
+     "yaw": 90,
+     "z0": 23.5,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    },
+    {
+     "block": "b129",
+     "end": "B",
+     "piece": "s_rs_b129_b",
+     "at": [
+      250.0,
+      200.0
+     ],
+     "y": 6.0,
+     "yaw": -90,
+     "z0": 20.0,
+     "z1": 125.0,
+     "reuse": false,
+     "note": ""
+    }
+   ]
+  }
+ ],
+ "pieces": {
+  "j_rs_1l3r_a": {
+   "kind": "junction",
+   "about": "a residential crossing where one leg carries a centre line (a high-street side street or a std collector ending here). Canonical legs N/E/S/W = Lrrr ('L' lined, 'r' residential, '-' closed). Sites: (-400, -200), (-200, 0)."
+  },
+  "j_rs_1l3r_b": {
+   "kind": "junction",
+   "about": "a residential crossing where one leg carries a centre line (a high-street side street or a std collector ending here). Canonical legs N/E/S/W = Lrrr ('L' lined, 'r' residential, '-' closed). Sites: (-200, 200), (250, -200)."
+  },
+  "j_rs_1l3r_c": {
+   "kind": "junction",
+   "about": "a residential crossing where one leg carries a centre line (a high-street side street or a std collector ending here). Canonical legs N/E/S/W = Lrrr ('L' lined, 'r' residential, '-' closed). Sites: (250, 0)."
+  },
+  "j_rs_2l2r_adj_a": {
+   "kind": "junction",
+   "about": "two lined legs on adjacent sides (a std street turning the corner of the apartment band) and two residential legs. Canonical legs N/E/S/W = LLrr ('L' lined, 'r' residential, '-' closed). Sites: (500, -800), (500, -400)."
+  },
+  "j_rs_2l2r_opp_a": {
+   "kind": "junction",
+   "about": "a lined street (11th St: std to the east, the high street's centre line to the west) crossing a residential avenue. Canonical legs N/E/S/W = LrLr ('L' lined, 'r' residential, '-' closed). Sites: (250, 200)."
+  },
+  "j_rs_3l1r_a": {
+   "kind": "junction",
+   "about": "a std collector crossing (or meeting) a residential street: centre-line stubs and continental crosswalks on the three lined legs, a plain two-line crosswalk on the quiet one. Canonical legs N/E/S/W = LLLr ('L' lined, 'r' residential, '-' closed). Sites: (-800, -1000), (-800, -800)."
+  },
+  "j_rs_3l1r_b": {
+   "kind": "junction",
+   "about": "a std collector crossing (or meeting) a residential street: centre-line stubs and continental crosswalks on the three lined legs, a plain two-line crosswalk on the quiet one. Canonical legs N/E/S/W = LLLr ('L' lined, 'r' residential, '-' closed). Sites: (-800, -400), (-200, -1000)."
+  },
+  "j_rs_3l1r_c": {
+   "kind": "junction",
+   "about": "a std collector crossing (or meeting) a residential street: centre-line stubs and continental crosswalks on the three lined legs, a plain two-line crosswalk on the quiet one. Canonical legs N/E/S/W = LLLr ('L' lined, 'r' residential, '-' closed). Sites: (250, -800), (250, -400)."
+  },
+  "j_rs_3l1r_d": {
+   "kind": "junction",
+   "about": "a std collector crossing (or meeting) a residential street: centre-line stubs and continental crosswalks on the three lined legs, a plain two-line crosswalk on the quiet one. Canonical legs N/E/S/W = LLLr ('L' lined, 'r' residential, '-' closed). Sites: (500, -600)."
+  },
+  "j_rs_4r_b": {
+   "kind": "junction",
+   "about": "residential all-way stop (j_res geometry; a dress variant so 10 residential corners are not one copy). Canonical legs N/E/S/W = rrrr ('L' lined, 'r' residential, '-' closed). Sites: (-600, -200), (-600, 0)."
+  },
+  "j_rs_4r_c": {
+   "kind": "junction",
+   "about": "residential all-way stop (j_res geometry; a dress variant so 10 residential corners are not one copy). Canonical legs N/E/S/W = rrrr ('L' lined, 'r' residential, '-' closed). Sites: (-600, 200), (-400, 0)."
+  },
+  "j_rs_4r_d": {
+   "kind": "junction",
+   "about": "residential all-way stop (j_res geometry; a dress variant so 10 residential corners are not one copy). Canonical legs N/E/S/W = rrrr ('L' lined, 'r' residential, '-' closed). Sites: (-400, 200), (250, -1000)."
+  },
+  "j_rs_4r_e": {
+   "kind": "junction",
+   "about": "residential all-way stop (j_res geometry; a dress variant so 10 residential corners are not one copy). Canonical legs N/E/S/W = rrrr ('L' lined, 'r' residential, '-' closed). Sites: (500, -200)."
+  },
+  "j_rs_t_lll_a": {
+   "kind": "junction",
+   "about": "T where a superblock (university campus, stadium) closes the street: all-way stop on three lined legs, the closed side is a straight kerb, parkway and walk with ramps where the two crosswalks land, a lamp opposite the stem lights the T's head. Canonical legs N/E/S/W = -LLL ('L' lined, 'r' residential, '-' closed). Sites: (-800, -600), (-600, -800)."
+  },
+  "j_rs_t_lll_b": {
+   "kind": "junction",
+   "about": "T where a superblock (university campus, stadium) closes the street: all-way stop on three lined legs, the closed side is a straight kerb, parkway and walk with ramps where the two crosswalks land, a lamp opposite the stem lights the T's head. Canonical legs N/E/S/W = -LLL ('L' lined, 'r' residential, '-' closed). Sites: (-400, -600), (-400, -400)."
+  },
+  "j_rs_t_lrl_a": {
+   "kind": "junction",
+   "about": "T at the campus edge: the lined collector runs through, a residential street ends on it. Canonical legs N/E/S/W = -LrL ('L' lined, 'r' residential, '-' closed). Sites: (-600, -400)."
+  },
+  "j_rs_t_lrr_a": {
+   "kind": "junction",
+   "about": "T by the stadium: 9th St runs through (lined toward the high street), C Ave ends on it. Canonical legs N/E/S/W = -Lrr ('L' lined, 'r' residential, '-' closed). Sites: (-200, -200)."
+  },
+  "j_rs_t_rrr_a": {
+   "kind": "junction",
+   "about": "residential T (Adela Ave ends on 10th St). Canonical legs N/E/S/W = -rrr ('L' lined, 'r' residential, '-' closed). Sites: (500, 0)."
+  },
+  "s_rs_b001_b": {
+   "kind": "leg",
+   "about": "Block b001 (J Ave, (-800.0, -1400.0) -> (-800.0, -1200.0), 200 m), the leg from end B at (-800, -1200) [art junction, pad 2.0]: J Ave from 4th St north to the industrial sample: residential at the junction, then the kerb steps out over 12 m to the truck street (s_ind: kerb 6.7, shoulder edge line, double yellow) whose leg it meets at 100 m; the centre and edge lines start where the truck street does (the road class changes there), never mid-air. Height: flat. Joint: meets the locked s_ind at 100 m."
+  },
+  "s_rs_b002_a": {
+   "kind": "leg",
+   "about": "Block b002 (J Ave, (-800.0, -1200.0) -> (-800.0, -1000.0), 200 m), the leg from end A at (-800, -1200) [art junction, pad 2.0]: J Ave, a std collector (grt dress). Height: the block rises +2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b002_b": {
+   "kind": "leg",
+   "about": "Block b002 (J Ave, (-800.0, -1200.0) -> (-800.0, -1000.0), 200 m), the leg from end B at (-800, -1000) [resstd junction, pad 4.0]: J Ave, a std collector (grt dress). Height: the block rises -2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b004_a": {
+   "kind": "leg",
+   "about": "Block b004 (J Ave, (-800.0, -800.0) -> (-800.0, -600.0), 200 m), the leg from end A at (-800, -800) [resstd junction, pad 6.0]: J Ave, a std collector (civ dress); the campus edge streets carry the native torrey pine. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b004_b": {
+   "kind": "leg",
+   "about": "Block b004 (J Ave, (-800.0, -800.0) -> (-800.0, -600.0), 200 m), the leg from end B at (-800, -600) [resstd junction, pad 6.0]: J Ave, a std collector (civ dress); the campus edge streets carry the native torrey pine. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b005_a": {
+   "kind": "leg",
+   "about": "Block b005 (J Ave, (-800.0, -600.0) -> (-800.0, -400.0), 200 m), the leg from end A at (-800, -600) [resstd junction, pad 6.0]: J Ave, a std collector (civ dress); the campus edge streets carry the native torrey pine. Height: the block rises -2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b005_b": {
+   "kind": "leg",
+   "about": "Block b005 (J Ave, (-800.0, -600.0) -> (-800.0, -400.0), 200 m), the leg from end B at (-800, -400) [resstd junction, pad 4.0]: J Ave, a std collector (civ dress); the campus edge streets carry the native torrey pine. Height: the block rises +2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b011_a": {
+   "kind": "leg",
+   "about": "Block b011 (G Ave, (-600.0, -1400.0) -> (-600.0, -1200.0), 200 m), the leg from end A at (-600, -1400) [art junction, pad 2.0]: G Ave, a residential street (mixed street trees, no centre line). Height: the block rises +2.0 m from this end to the other (max grade 2.0 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b011_b": {
+   "kind": "leg",
+   "about": "Block b011 (G Ave, (-600.0, -1400.0) -> (-600.0, -1200.0), 200 m), the leg from end B at (-600, -1200) [art junction, pad 4.0]: G Ave, a residential street (mixed street trees, no centre line). Height: the block rises -2.0 m from this end to the other (max grade 2.0 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b012_a": {
+   "kind": "leg",
+   "about": "Block b012 (G Ave, (-600.0, -1200.0) -> (-600.0, -1000.0), 200 m), the leg from end A at (-600, -1200) [art junction, pad 4.0]: G Ave, a std collector (grt dress). Height: the block rises +2.0 m from this end to the other (max grade 4.1 %). Joint: meets the locked s_grt at 100 m."
+  },
+  "s_rs_b019_a": {
+   "kind": "leg",
+   "about": "Block b019 (E Ave, (-400.0, -1400.0) -> (-400.0, -1200.0), 200 m), the leg from end A at (-400, -1400) [art junction, pad 2.0]: E Ave, a std collector (apt dress). Height: the block rises +2.0 m from this end to the other (max grade 2.0 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b019_b": {
+   "kind": "leg",
+   "about": "Block b019 (E Ave, (-400.0, -1400.0) -> (-400.0, -1200.0), 200 m), the leg from end B at (-400, -1200) [art junction, pad 4.0]: E Ave, a std collector (apt dress). Height: the block rises -2.0 m from this end to the other (max grade 2.0 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b020_a": {
+   "kind": "leg",
+   "about": "Block b020 (E Ave, (-400.0, -1200.0) -> (-400.0, -1000.0), 200 m), the leg from end A at (-400, -1200) [art junction, pad 4.0]: E Ave, a std collector (apt dress). Height: the block rises +2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b020_b": {
+   "kind": "leg",
+   "about": "Block b020 (E Ave, (-400.0, -1200.0) -> (-400.0, -1000.0), 200 m), the leg from end B at (-400, -1000) [resstd junction, pad 6.0]: E Ave, a std collector (apt dress). Height: the block rises -2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b021_b": {
+   "kind": "leg",
+   "about": "Block b021 (E Ave, (-400.0, -1000.0) -> (-400.0, -800.0), 200 m), the leg from end B at (-400, -800) [resstd junction, pad 6.0]: E Ave, a std collector (civ dress); E Ave is the civic band's palm avenue: queen palms, planted in one go. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b022_a": {
+   "kind": "leg",
+   "about": "Block b022 (E Ave, (-400.0, -800.0) -> (-400.0, -600.0), 200 m), the leg from end A at (-400, -800) [resstd junction, pad 6.0]: E Ave, a std collector (civ dress); E Ave is the civic band's palm avenue: queen palms, planted in one go. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b022_b": {
+   "kind": "leg",
+   "about": "Block b022 (E Ave, (-400.0, -800.0) -> (-400.0, -600.0), 200 m), the leg from end B at (-400, -600) [resstd junction, pad 6.0]: E Ave, a std collector (civ dress); E Ave is the civic band's palm avenue: queen palms, planted in one go. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b023_a": {
+   "kind": "leg",
+   "about": "Block b023 (E Ave, (-400.0, -600.0) -> (-400.0, -400.0), 200 m), the leg from end A at (-400, -600) [resstd junction, pad 6.0]: E Ave, a std collector (civ dress); E Ave is the civic band's palm avenue: queen palms, planted in one go. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b023_b": {
+   "kind": "leg",
+   "about": "Block b023 (E Ave, (-400.0, -600.0) -> (-400.0, -400.0), 200 m), the leg from end B at (-400, -400) [resstd junction, pad 6.0]: E Ave, a std collector (civ dress); E Ave is the civic band's palm avenue: queen palms, planted in one go. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b024_a": {
+   "kind": "leg",
+   "about": "Block b024 (E Ave, (-400.0, -400.0) -> (-400.0, -200.0), 200 m), the leg from end A at (-400, -400) [resstd junction, pad 6.0]: E Ave, a std collector (civ dress); E Ave is the civic band's palm avenue: queen palms, planted in one go. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b024_b": {
+   "kind": "leg",
+   "about": "Block b024 (E Ave, (-400.0, -400.0) -> (-400.0, -200.0), 200 m), the leg from end B at (-400, -200) [resstd junction, pad 6.0]: E Ave, a std collector (civ dress); E Ave is the civic band's palm avenue: queen palms, planted in one go. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b029_a": {
+   "kind": "leg",
+   "about": "Block b029 (C Ave, (-200.0, -1400.0) -> (-200.0, -1200.0), 200 m), the leg from end A at (-200, -1400) [art junction, pad 4.0]: C Ave, a std collector (apt dress). Height: the block rises +6.0 m from this end to the other (max grade 6.1 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b029_b": {
+   "kind": "leg",
+   "about": "Block b029 (C Ave, (-200.0, -1400.0) -> (-200.0, -1200.0), 200 m), the leg from end B at (-200, -1200) [art junction, pad 10.0]: C Ave, a std collector (apt dress). Height: the block rises -6.0 m from this end to the other (max grade 6.1 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b030_a": {
+   "kind": "leg",
+   "about": "Block b030 (C Ave, (-200.0, -1200.0) -> (-200.0, -1000.0), 200 m), the leg from end A at (-200, -1200) [art junction, pad 10.0]: C Ave, a std collector (apt dress). Height: the block rises -2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b030_b": {
+   "kind": "leg",
+   "about": "Block b030 (C Ave, (-200.0, -1200.0) -> (-200.0, -1000.0), 200 m), the leg from end B at (-200, -1000) [resstd junction, pad 8.0]: C Ave, a std collector (apt dress). Height: the block rises +2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b031_a": {
+   "kind": "leg",
+   "about": "Block b031 (C Ave, (-200.0, -1000.0) -> (-200.0, -800.0), 200 m), the leg from end A at (-200, -1000) [resstd junction, pad 8.0]: C Ave, a std collector (apt dress). Height: the block rises -2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b031_b": {
+   "kind": "leg",
+   "about": "Block b031 (C Ave, (-200.0, -1000.0) -> (-200.0, -800.0), 200 m), the leg from end B at (-200, -800) [resstd junction, pad 6.0]: C Ave, a std collector (civ dress); C Ave keeps the civic sample's magnolias. Height: the block rises +2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b032_a": {
+   "kind": "leg",
+   "about": "Block b032 (C Ave, (-200.0, -800.0) -> (-200.0, -600.0), 200 m), the leg from end A at (-200, -800) [resstd junction, pad 6.0]: C Ave, a std collector (civ dress); C Ave keeps the civic sample's magnolias. Height: flat. Joint: meets the locked s_civ at 100 m."
+  },
+  "s_rs_b047_a": {
+   "kind": "leg",
+   "about": "Block b047 (B Ave, (250.0, -1400.0) -> (250.0, -1200.0), 200 m), the leg from end A at (250, -1400) [art junction, pad 2.0]: B Ave, a residential street (mixed street trees, no centre line). Height: the block rises +6.0 m from this end to the other (max grade 6.1 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b047_b": {
+   "kind": "leg",
+   "about": "Block b047 (B Ave, (250.0, -1400.0) -> (250.0, -1200.0), 200 m), the leg from end B at (250, -1200) [art junction, pad 8.0]: B Ave, a residential street (mixed street trees, no centre line). Height: the block rises -6.0 m from this end to the other (max grade 6.1 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b048_a": {
+   "kind": "leg",
+   "about": "Block b048 (B Ave, (250.0, -1200.0) -> (250.0, -1000.0), 200 m), the leg from end A at (250, -1200) [art junction, pad 8.0]: B Ave, a residential street (mixed street trees, no centre line). Height: the block rises -2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b048_b": {
+   "kind": "leg",
+   "about": "Block b048 (B Ave, (250.0, -1200.0) -> (250.0, -1000.0), 200 m), the leg from end B at (250, -1000) [resstd junction, pad 6.0]: B Ave, a residential street (mixed street trees, no centre line). Height: the block rises +2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b049_a": {
+   "kind": "leg",
+   "about": "Block b049 (B Ave, (250.0, -1000.0) -> (250.0, -800.0), 200 m), the leg from end A at (250, -1000) [resstd junction, pad 6.0]: B Ave, a residential street (mixed street trees, no centre line). Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b049_b": {
+   "kind": "leg",
+   "about": "Block b049 (B Ave, (250.0, -1000.0) -> (250.0, -800.0), 200 m), the leg from end B at (250, -800) [resstd junction, pad 6.0]: B Ave, a residential street (mixed street trees, no centre line). Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b051_b": {
+   "kind": "leg",
+   "about": "Block b051 (B Ave, (250.0, -600.0) -> (250.0, -400.0), 200 m), the leg from end B at (250, -400) [resstd junction, pad 8.0]: B Ave, a std collector (apt dress). Height: the block rises -2.0 m from this end to the other (max grade 3.8 %). Joint: meets the locked s_apt at 100 m."
+  },
+  "s_rs_b059_a": {
+   "kind": "leg",
+   "about": "Block b059 (Adela Ave, (500.0, -1000.0) -> (500.0, -800.0), 200 m), the leg from end A at (500, -1000) [art junction, pad 4.0]: Adela Ave, a residential street (mixed street trees, no centre line). Height: the block rises +2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b059_b": {
+   "kind": "leg",
+   "about": "Block b059 (Adela Ave, (500.0, -1000.0) -> (500.0, -800.0), 200 m), the leg from end B at (500, -800) [resstd junction, pad 6.0]: Adela Ave, a residential street (mixed street trees, no centre line). Height: the block rises -2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b060_a": {
+   "kind": "leg",
+   "about": "Block b060 (Adela Ave, (500.0, -800.0) -> (500.0, -600.0), 200 m), the leg from end A at (500, -800) [resstd junction, pad 6.0]: Adela Ave, a std collector (apt dress). Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b060_b": {
+   "kind": "leg",
+   "about": "Block b060 (Adela Ave, (500.0, -800.0) -> (500.0, -600.0), 200 m), the leg from end B at (500, -600) [resstd junction, pad 6.0]: Adela Ave, a std collector (apt dress). Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b061_a": {
+   "kind": "leg",
+   "about": "Block b061 (Adela Ave, (500.0, -600.0) -> (500.0, -400.0), 200 m), the leg from end A at (500, -600) [resstd junction, pad 6.0]: Adela Ave, a std collector (apt dress). Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b061_b": {
+   "kind": "leg",
+   "about": "Block b061 (Adela Ave, (500.0, -600.0) -> (500.0, -400.0), 200 m), the leg from end B at (500, -400) [resstd junction, pad 6.0]: Adela Ave, a std collector (apt dress). Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b062_a": {
+   "kind": "leg",
+   "about": "Block b062 (Adela Ave, (500.0, -400.0) -> (500.0, -200.0), 200 m), the leg from end A at (500, -400) [resstd junction, pad 6.0]: Adela Ave, a residential street (mixed street trees, no centre line). Height: the block rises +2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b062_b": {
+   "kind": "leg",
+   "about": "Block b062 (Adela Ave, (500.0, -400.0) -> (500.0, -200.0), 200 m), the leg from end B at (500, -200) [resstd junction, pad 8.0]: Adela Ave, a residential street (mixed street trees, no centre line). Height: the block rises -2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b063_a": {
+   "kind": "leg",
+   "about": "Block b063 (Adela Ave, (500.0, -200.0) -> (500.0, 0.0), 200 m), the leg from end A at (500, -200) [resstd junction, pad 8.0]: Adela Ave, a residential street (mixed street trees, no centre line). Height: the block rises -4.0 m from this end to the other (max grade 3.8 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b063_b": {
+   "kind": "leg",
+   "about": "Block b063 (Adela Ave, (500.0, -200.0) -> (500.0, 0.0), 200 m), the leg from end B at (500, 0) [resstd junction, pad 4.0]: Adela Ave, a residential street (mixed street trees, no centre line). Height: the block rises +4.0 m from this end to the other (max grade 3.8 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b081_a": {
+   "kind": "leg",
+   "about": "Block b081 (5th St, (-800.0, -1000.0) -> (-600.0, -1000.0), 200 m), the leg from end A at (-800, -1000) [resstd junction, pad 4.0]: 5th St, a std collector (grt dress). Height: the block rises +2.0 m from this end to the other (max grade 3.8 %). Joint: meets the locked s_grt at 100 m."
+  },
+  "s_rs_b082_b": {
+   "kind": "leg",
+   "about": "Block b082 (5th St, (-600.0, -1000.0) -> (-400.0, -1000.0), 200 m), the leg from end B at (-400, -1000) [resstd junction, pad 6.0]: 5th St, a std collector (grt dress). Height: flat. Joint: meets the locked s_grt at 100 m."
+  },
+  "s_rs_b083_a": {
+   "kind": "leg",
+   "about": "Block b083 (5th St, (-400.0, -1000.0) -> (-200.0, -1000.0), 200 m), the leg from end A at (-400, -1000) [resstd junction, pad 6.0]: 5th St, a std collector (apt dress). Height: the block rises +2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b083_b": {
+   "kind": "leg",
+   "about": "Block b083 (5th St, (-400.0, -1000.0) -> (-200.0, -1000.0), 200 m), the leg from end B at (-200, -1000) [resstd junction, pad 8.0]: 5th St, a std collector (apt dress). Height: the block rises -2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b084_a": {
+   "kind": "leg",
+   "about": "Block b084 (5th St, (-200.0, -1000.0) -> (0.0, -1000.0), 200 m), the leg from end A at (-200, -1000) [resstd junction, pad 8.0]: 5th St, a residential street (mixed street trees, no centre line). Height: the block rises +4.0 m from this end to the other (max grade 3.8 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b084_b": {
+   "kind": "leg",
+   "about": "Block b084 (5th St, (-200.0, -1000.0) -> (0.0, -1000.0), 200 m), the leg from end B at (0, -1000) [amber junction, pad 12.0]: 5th St, a residential street (mixed street trees, no centre line). Height: the block rises -4.0 m from this end to the other (max grade 3.8 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b085_a": {
+   "kind": "leg",
+   "about": "Block b085 (5th St, (0.0, -1000.0) -> (250.0, -1000.0), 250 m), the leg from end A at (0, -1000) [amber junction, pad 12.0]: 5th St, a residential street (mixed street trees, no centre line). Height: the block rises -6.0 m from this end to the other (max grade 4.4 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b085_b": {
+   "kind": "leg",
+   "about": "Block b085 (5th St, (0.0, -1000.0) -> (250.0, -1000.0), 250 m), the leg from end B at (250, -1000) [resstd junction, pad 6.0]: 5th St, a residential street (mixed street trees, no centre line). Height: the block rises +6.0 m from this end to the other (max grade 4.4 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b086_a": {
+   "kind": "leg",
+   "about": "Block b086 (5th St, (250.0, -1000.0) -> (500.0, -1000.0), 250 m), the leg from end A at (250, -1000) [resstd junction, pad 6.0]: 5th St, a residential street (mixed street trees, no centre line). Height: the block rises -2.0 m from this end to the other (max grade 1.5 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b086_b": {
+   "kind": "leg",
+   "about": "Block b086 (5th St, (250.0, -1000.0) -> (500.0, -1000.0), 250 m), the leg from end B at (500, -1000) [art junction, pad 4.0]: 5th St, a residential street (mixed street trees, no centre line). Height: the block rises +2.0 m from this end to the other (max grade 1.5 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b089_a": {
+   "kind": "leg",
+   "about": "Block b089 (6th St, (-800.0, -800.0) -> (-600.0, -800.0), 200 m), the leg from end A at (-800, -800) [resstd junction, pad 6.0]: 6th St, a std collector (civ dress); 6th St is the jacaranda street from the campus to the centre. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b089_b": {
+   "kind": "leg",
+   "about": "Block b089 (6th St, (-800.0, -800.0) -> (-600.0, -800.0), 200 m), the leg from end B at (-600, -800) [resstd junction, pad 6.0]: 6th St, a std collector (civ dress); 6th St is the jacaranda street from the campus to the centre. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b090_a": {
+   "kind": "leg",
+   "about": "Block b090 (6th St, (-600.0, -800.0) -> (-400.0, -800.0), 200 m), the leg from end A at (-600, -800) [resstd junction, pad 6.0]: 6th St, a std collector (civ dress); 6th St is the jacaranda street from the campus to the centre. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b090_b": {
+   "kind": "leg",
+   "about": "Block b090 (6th St, (-600.0, -800.0) -> (-400.0, -800.0), 200 m), the leg from end B at (-400, -800) [resstd junction, pad 6.0]: 6th St, a std collector (civ dress); 6th St is the jacaranda street from the campus to the centre. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b091_a": {
+   "kind": "leg",
+   "about": "Block b091 (6th St, (-400.0, -800.0) -> (-200.0, -800.0), 200 m), the leg from end A at (-400, -800) [resstd junction, pad 6.0]: 6th St, a std collector (civ dress); 6th St is the jacaranda street from the campus to the centre. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b091_b": {
+   "kind": "leg",
+   "about": "Block b091 (6th St, (-400.0, -800.0) -> (-200.0, -800.0), 200 m), the leg from end B at (-200, -800) [resstd junction, pad 6.0]: 6th St, a std collector (civ dress); 6th St is the jacaranda street from the campus to the centre. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b092_a": {
+   "kind": "leg",
+   "about": "Block b092 (6th St, (-200.0, -800.0) -> (0.0, -800.0), 200 m), the leg from end A at (-200, -800) [resstd junction, pad 6.0]: 6th St from the civic junction toward the city centre: a std street with its bus stop to the alley (54-60), then the kerb builds out over 12 m and the sidewalk widens into the centre section. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b092_b": {
+   "kind": "leg",
+   "about": "Block b092 (6th St, (-200.0, -800.0) -> (0.0, -800.0), 200 m), the leg from end B at (0, -800) [amber junction, pad 6.0]: 6th St off Amber in the city centre: the centre section (s_cc_10th) from the Amber tile (23.5, as j_amber_10th / j_cc), the centre's alley at 44-50, a bus shelter on the far side for the westbound / eastbound buses. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b093_a": {
+   "kind": "leg",
+   "about": "Block b093 (6th St, (0.0, -800.0) -> (250.0, -800.0), 250 m), the leg from end A at (0, -800) [amber junction, pad 6.0]: 6th St off Amber in the city centre: the centre section (s_cc_10th) from the Amber tile (23.5, as j_amber_10th / j_cc), the centre's alley at 44-50, a bus shelter on the far side for the westbound / eastbound buses. Height: flat. Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b093_b": {
+   "kind": "leg",
+   "about": "Block b093 (6th St, (0.0, -800.0) -> (250.0, -800.0), 250 m), the leg from end B at (250, -800) [resstd junction, pad 6.0]: 6th St from the apartment junction toward the city centre: a std street with its bus stop to the alley (54-60), then the kerb builds out over 12 m and the sidewalk widens into the centre section. Height: flat. Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b094_a": {
+   "kind": "leg",
+   "about": "Block b094 (6th St, (250.0, -800.0) -> (500.0, -800.0), 250 m), the leg from end A at (250, -800) [resstd junction, pad 6.0]: 6th St, a std collector (apt dress). Height: flat. Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b094_b": {
+   "kind": "leg",
+   "about": "Block b094 (6th St, (250.0, -800.0) -> (500.0, -800.0), 250 m), the leg from end B at (500, -800) [resstd junction, pad 6.0]: 6th St, a std collector (apt dress). Height: flat. Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b098_fill": {
+   "kind": "leg",
+   "about": "7th St between the civic sample (its s_civ leg ends at u -100) and the centre sample (s_cc_10th ends at u -56): the street enters the city centre here, so the kerb builds out over 12 m (no parking in the centre) and the sidewalk widens to the centre's 6.4 m; flat (both pads 6.0)"
+  },
+  "s_rs_b099_fill": {
+   "kind": "leg",
+   "about": "7th St between the centre sample (s_cc_10th ends at u 56) and the apartment sample (s_apt from B Ave ends at u 150): the centre section continues to the apartment band, then the kerb steps back over 12 m to give the apartments their parking lane and parkway; flat"
+  },
+  "s_rs_b100_b": {
+   "kind": "leg",
+   "about": "Block b100 (7th St, (250.0, -600.0) -> (500.0, -600.0), 250 m), the leg from end B at (500, -600) [resstd junction, pad 6.0]: 7th St, a std collector (apt dress). Height: flat. Joint: meets the locked s_apt at 150 m."
+  },
+  "s_rs_b103_a": {
+   "kind": "leg",
+   "about": "Block b103 (8th St, (-800.0, -400.0) -> (-600.0, -400.0), 200 m), the leg from end A at (-800, -400) [resstd junction, pad 4.0]: 8th St, a std collector (civ dress); the campus edge streets carry the native torrey pine. Height: the block rises +2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b103_b": {
+   "kind": "leg",
+   "about": "Block b103 (8th St, (-800.0, -400.0) -> (-600.0, -400.0), 200 m), the leg from end B at (-600, -400) [resstd junction, pad 6.0]: 8th St, a std collector (civ dress); the campus edge streets carry the native torrey pine. Height: the block rises -2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b104_a": {
+   "kind": "leg",
+   "about": "Block b104 (8th St, (-600.0, -400.0) -> (-400.0, -400.0), 200 m), the leg from end A at (-600, -400) [resstd junction, pad 6.0]: 8th St, a std collector (civ dress); the campus edge streets carry the native torrey pine. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b104_b": {
+   "kind": "leg",
+   "about": "Block b104 (8th St, (-600.0, -400.0) -> (-400.0, -400.0), 200 m), the leg from end B at (-400, -400) [resstd junction, pad 6.0]: 8th St, a std collector (civ dress); the campus edge streets carry the native torrey pine. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b105_a": {
+   "kind": "leg",
+   "about": "Block b105 (8th St, (0.0, -400.0) -> (250.0, -400.0), 250 m), the leg from end A at (0, -400) [amber junction, pad 6.0]: 8th St off Amber in the city centre: the centre section (s_cc_10th) from the Amber tile (23.5, as j_amber_10th / j_cc), the centre's alley at 44-50, a bus shelter on the far side for the westbound / eastbound buses. Height: the block rises +2.0 m from this end to the other (max grade 1.5 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b105_b": {
+   "kind": "leg",
+   "about": "Block b105 (8th St, (0.0, -400.0) -> (250.0, -400.0), 250 m), the leg from end B at (250, -400) [resstd junction, pad 8.0]: 8th St from the apartment junction toward the city centre: a std street with its bus stop to the alley (54-60), then the kerb builds out over 12 m and the sidewalk widens into the centre section. Height: the block rises -2.0 m from this end to the other (max grade 1.5 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b106_a": {
+   "kind": "leg",
+   "about": "Block b106 (8th St, (250.0, -400.0) -> (500.0, -400.0), 250 m), the leg from end A at (250, -400) [resstd junction, pad 8.0]: 8th St, a std collector (apt dress). Height: the block rises -2.0 m from this end to the other (max grade 1.4 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b106_b": {
+   "kind": "leg",
+   "about": "Block b106 (8th St, (250.0, -400.0) -> (500.0, -400.0), 250 m), the leg from end B at (500, -400) [resstd junction, pad 6.0]: 8th St, a std collector (apt dress). Height: the block rises +2.0 m from this end to the other (max grade 1.4 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b109_a": {
+   "kind": "leg",
+   "about": "Block b109 (9th St, (-800.0, -200.0) -> (-600.0, -200.0), 200 m), the leg from end A at (-800, -200) [resstd junction, pad 4.0]: 9th St, a residential street (mixed street trees, no centre line). Height: the block rises +2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b109_b": {
+   "kind": "leg",
+   "about": "Block b109 (9th St, (-800.0, -200.0) -> (-600.0, -200.0), 200 m), the leg from end B at (-600, -200) [resstd junction, pad 6.0]: 9th St, a residential street (mixed street trees, no centre line). Height: the block rises -2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b110_a": {
+   "kind": "leg",
+   "about": "Block b110 (9th St, (-600.0, -200.0) -> (-400.0, -200.0), 200 m), the leg from end A at (-600, -200) [resstd junction, pad 6.0]: 9th St, a residential street (mixed street trees, no centre line). Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b110_b": {
+   "kind": "leg",
+   "about": "Block b110 (9th St, (-600.0, -200.0) -> (-400.0, -200.0), 200 m), the leg from end B at (-400, -200) [resstd junction, pad 6.0]: 9th St, a residential street (mixed street trees, no centre line). Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b111_a": {
+   "kind": "leg",
+   "about": "Block b111 (9th St, (-400.0, -200.0) -> (-200.0, -200.0), 200 m), the leg from end A at (-400, -200) [resstd junction, pad 6.0]: 9th St, a residential street (mixed street trees, no centre line). Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b111_b": {
+   "kind": "leg",
+   "about": "Block b111 (9th St, (-400.0, -200.0) -> (-200.0, -200.0), 200 m), the leg from end B at (-200, -200) [resstd junction, pad 6.0]: 9th St, a residential street (mixed street trees, no centre line). Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b112_a": {
+   "kind": "leg",
+   "about": "Block b112 (9th St, (-200.0, -200.0) -> (0.0, -200.0), 200 m), the leg from end A at (-200, -200) [resstd junction, pad 6.0]: 9th St from the residential junction toward the high street: residential, carrying the high street's double yellow (no centre line ends mid-block). Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b112_b": {
+   "kind": "leg",
+   "about": "Block b112 (9th St, (-200.0, -200.0) -> (0.0, -200.0), 200 m), the leg from end B at (0, -200) [amber junction, pad 6.0]: 9th St off Amber on the high street: like the pilot's 10th St, the downtown section (4 m walk to the building line 9.7, wells, marked stalls) runs from the Amber tile (23.5) to the alley at 44-50, then the street is residential with the pilot's double yellow carried on to the next junction. Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b113_a": {
+   "kind": "leg",
+   "about": "Block b113 (9th St, (0.0, -200.0) -> (250.0, -200.0), 250 m), the leg from end A at (0, -200) [amber junction, pad 6.0]: 9th St off Amber on the high street: like the pilot's 10th St, the downtown section (4 m walk to the building line 9.7, wells, marked stalls) runs from the Amber tile (23.5) to the alley at 44-50, then the street is residential with the pilot's double yellow carried on to the next junction. Height: the block rises +6.0 m from this end to the other (max grade 4.4 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b113_b": {
+   "kind": "leg",
+   "about": "Block b113 (9th St, (0.0, -200.0) -> (250.0, -200.0), 250 m), the leg from end B at (250, -200) [resstd junction, pad 12.0]: 9th St from the residential junction toward the high street: residential, carrying the high street's double yellow (no centre line ends mid-block). Height: the block rises -6.0 m from this end to the other (max grade 4.4 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b114_a": {
+   "kind": "leg",
+   "about": "Block b114 (9th St, (250.0, -200.0) -> (500.0, -200.0), 250 m), the leg from end A at (250, -200) [resstd junction, pad 12.0]: 9th St, a residential street (mixed street trees, no centre line). Height: the block rises -4.0 m from this end to the other (max grade 2.9 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b114_b": {
+   "kind": "leg",
+   "about": "Block b114 (9th St, (250.0, -200.0) -> (500.0, -200.0), 250 m), the leg from end B at (500, -200) [resstd junction, pad 8.0]: 9th St, a residential street (mixed street trees, no centre line). Height: the block rises +4.0 m from this end to the other (max grade 2.9 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b117_a": {
+   "kind": "leg",
+   "about": "Block b117 (10th St, (-800.0, 0.0) -> (-600.0, 0.0), 200 m), the leg from end A at (-800, 0) [resstd junction, pad 8.0]: 10th St, a residential street (mixed street trees, no centre line). Height: the block rises +4.0 m from this end to the other (max grade 3.8 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b117_b": {
+   "kind": "leg",
+   "about": "Block b117 (10th St, (-800.0, 0.0) -> (-600.0, 0.0), 200 m), the leg from end B at (-600, 0) [resstd junction, pad 12.0]: 10th St, a residential street (mixed street trees, no centre line). Height: the block rises -4.0 m from this end to the other (max grade 3.8 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b118_a": {
+   "kind": "leg",
+   "about": "Block b118 (10th St, (-600.0, 0.0) -> (-400.0, 0.0), 200 m), the leg from end A at (-600, 0) [resstd junction, pad 12.0]: 10th St, a residential street (mixed street trees, no centre line). Height: the block rises -6.0 m from this end to the other (max grade 5.6 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b118_b": {
+   "kind": "leg",
+   "about": "Block b118 (10th St, (-600.0, 0.0) -> (-400.0, 0.0), 200 m), the leg from end B at (-400, 0) [resstd junction, pad 6.0]: 10th St, a residential street (mixed street trees, no centre line). Height: the block rises +6.0 m from this end to the other (max grade 5.6 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b119_a": {
+   "kind": "leg",
+   "about": "Block b119 (10th St, (-400.0, 0.0) -> (-200.0, 0.0), 200 m), the leg from end A at (-400, 0) [resstd junction, pad 6.0]: 10th St, a residential street (mixed street trees, no centre line). Height: the block rises -2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b119_b": {
+   "kind": "leg",
+   "about": "Block b119 (10th St, (-400.0, 0.0) -> (-200.0, 0.0), 200 m), the leg from end B at (-200, 0) [resstd junction, pad 4.0]: 10th St, a residential street (mixed street trees, no centre line). Height: the block rises +2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b120_a": {
+   "kind": "leg",
+   "about": "Block b120 (10th St, (-200.0, 0.0) -> (0.0, 0.0), 200 m), the leg from end A at (-200, 0) [resstd junction, pad 4.0]: 10th St west from C Ave to the pilot: residential with the pilot's double yellow, then 16 m before the pilot's s_10th_w ends (u -56) the parkway gives way to the downtown walk and the property line eases from 9.2 to the building line 9.7. Height: flat. Joint: meets the locked None at 144 m."
+  },
+  "s_rs_b121_b": {
+   "kind": "leg",
+   "about": "Block b121 (10th St, (0.0, 0.0) -> (250.0, 0.0), 250 m), the leg from end B at (250, 0) [resstd junction, pad 10.0]: 10th St from B Ave west to the pilot's hill street (s_10th_e ends at x 150 at +5.9 m): the pilot's double yellow, and past the alley the parkway widens over 6 m to the pilot's 2 m (sidewalk 1.5 m) so the two meet exactly. Height: the block rises -6.0 m from this end to the other (max grade 8.0 %). Joint: meets the locked None at 100 m."
+  },
+  "s_rs_b122_a": {
+   "kind": "leg",
+   "about": "Block b122 (10th St, (250.0, 0.0) -> (500.0, 0.0), 250 m), the leg from end A at (250, 0) [resstd junction, pad 10.0]: 10th St, a residential street (mixed street trees, no centre line). Height: the block rises -6.0 m from this end to the other (max grade 4.3 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b122_b": {
+   "kind": "leg",
+   "about": "Block b122 (10th St, (250.0, 0.0) -> (500.0, 0.0), 250 m), the leg from end B at (500, 0) [resstd junction, pad 4.0]: 10th St, a residential street (mixed street trees, no centre line). Height: the block rises +6.0 m from this end to the other (max grade 4.3 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b125_a": {
+   "kind": "leg",
+   "about": "Block b125 (11th St, (-800.0, 200.0) -> (-600.0, 200.0), 200 m), the leg from end A at (-800, 200) [resstd junction, pad 2.0]: 11th St, a residential street (mixed street trees, no centre line). Height: the block rises +2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b125_b": {
+   "kind": "leg",
+   "about": "Block b125 (11th St, (-800.0, 200.0) -> (-600.0, 200.0), 200 m), the leg from end B at (-600, 200) [resstd junction, pad 4.0]: 11th St, a residential street (mixed street trees, no centre line). Height: the block rises -2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b126_a": {
+   "kind": "leg",
+   "about": "Block b126 (11th St, (-600.0, 200.0) -> (-400.0, 200.0), 200 m), the leg from end A at (-600, 200) [resstd junction, pad 4.0]: 11th St, a residential street (mixed street trees, no centre line). Height: the block rises -2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b126_b": {
+   "kind": "leg",
+   "about": "Block b126 (11th St, (-600.0, 200.0) -> (-400.0, 200.0), 200 m), the leg from end B at (-400, 200) [resstd junction, pad 2.0]: 11th St, a residential street (mixed street trees, no centre line). Height: the block rises +2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b127_a": {
+   "kind": "leg",
+   "about": "Block b127 (11th St, (-400.0, 200.0) -> (-200.0, 200.0), 200 m), the leg from end A at (-400, 200) [resstd junction, pad 2.0]: 11th St, a residential street (mixed street trees, no centre line). Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b127_b": {
+   "kind": "leg",
+   "about": "Block b127 (11th St, (-400.0, 200.0) -> (-200.0, 200.0), 200 m), the leg from end B at (-200, 200) [resstd junction, pad 2.0]: 11th St, a residential street (mixed street trees, no centre line). Height: flat. Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b128_a": {
+   "kind": "leg",
+   "about": "Block b128 (11th St, (-200.0, 200.0) -> (0.0, 200.0), 200 m), the leg from end A at (-200, 200) [resstd junction, pad 2.0]: 11th St from the residential junction toward the high street: residential, carrying the high street's double yellow (no centre line ends mid-block). Height: the block rises +2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b128_b": {
+   "kind": "leg",
+   "about": "Block b128 (11th St, (-200.0, 200.0) -> (0.0, 200.0), 200 m), the leg from end B at (0, 200) [amber junction, pad 4.0]: 11th St off Amber on the high street: like the pilot's 10th St, the downtown section (4 m walk to the building line 9.7, wells, marked stalls) runs from the Amber tile (23.5) to the alley at 44-50, then the street is residential with the pilot's double yellow carried on to the next junction. Height: the block rises -2.0 m from this end to the other (max grade 1.9 %). Joint: meets the leg from the other end at the seam (100.0 m)."
+  },
+  "s_rs_b129_a": {
+   "kind": "leg",
+   "about": "Block b129 (11th St, (0.0, 200.0) -> (250.0, 200.0), 250 m), the leg from end A at (0, 200) [amber junction, pad 4.0]: 11th St off Amber on the high street: like the pilot's 10th St, the downtown section (4 m walk to the building line 9.7, wells, marked stalls) runs from the Amber tile (23.5) to the alley at 44-50, then the street is residential with the pilot's double yellow carried on to the next junction. Height: the block rises +2.0 m from this end to the other (max grade 1.5 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  },
+  "s_rs_b129_b": {
+   "kind": "leg",
+   "about": "Block b129 (11th St, (0.0, 200.0) -> (250.0, 200.0), 250 m), the leg from end B at (250, 200) [resstd junction, pad 6.0]: 11th St from the residential junction toward the high street: residential, carrying the high street's double yellow (no centre line ends mid-block). Height: the block rises -2.0 m from this end to the other (max grade 1.5 %). Joint: meets the leg from the other end at the seam (125.0 m)."
+  }
+ }
+}

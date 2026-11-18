@@ -1,0 +1,227 @@
+{
+ "name": "urb_twr_back_8m_10sty_glass",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 3,
+ "near": {
+  "tris": 930,
+  "verts": 1686,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "O_lamp",
+   "S_black",
+   "S_concrete",
+   "S_stucco",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -4.0,
+    0.0,
+    -0.10000000149011612
+   ],
+   [
+    4.0,
+    31.270000457763672,
+    1.649999976158142
+   ]
+  ]
+ },
+ "mid_roof_top": 31.2,
+ "mid": {
+  "tris": 208,
+  "verts": 282,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "S_concrete",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -4.0,
+    0.0,
+    -0.05000000074505806
+   ],
+   [
+    4.0,
+    31.200000762939453,
+    1.649999976158142
+   ]
+  ]
+ },
+ "far": {
+  "tris": 24,
+  "verts": 48,
+  "regions": [
+   "F_c_glass_3",
+   "F_flat"
+  ],
+  "bbox": [
+   [
+    -4.0,
+    -0.0,
+    -0.15000000596046448
+   ],
+   [
+    4.0,
+    31.200000762939453,
+    0.15000000596046448
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "apt_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  8.0,
+  0.3
+ ],
+ "footprint_area": 2.4,
+ "height": 31.27,
+ "storeys": 1,
+ "budget": [
+  1000,
+  220,
+  32
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_twr_back",
+ "time_s": 2.9,
+ "open_planes": [
+  [
+   0,
+   -4.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   4.0,
+   1,
+   null
+  ],
+  [
+   2,
+   -0.15,
+   -1,
+   null
+  ],
+  [
+   1,
+   30.3,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.15
+ ],
+ "openings": [
+  {
+   "k": "apt_door",
+   "c": 0.0,
+   "w": 1.0,
+   "t0": 0.3,
+   "t1": 2.5
+  },
+  {
+   "k": "glass",
+   "c": 0.0,
+   "w": 7.0,
+   "t0": 3.7,
+   "t1": 5.9
+  },
+  {
+   "k": "glass",
+   "c": 0.0,
+   "w": 7.0,
+   "t0": 6.7,
+   "t1": 8.9
+  },
+  {
+   "k": "glass",
+   "c": 0.0,
+   "w": 7.0,
+   "t0": 9.7,
+   "t1": 11.9
+  },
+  {
+   "k": "glass",
+   "c": 0.0,
+   "w": 7.0,
+   "t0": 12.7,
+   "t1": 14.9
+  },
+  {
+   "k": "glass",
+   "c": 0.0,
+   "w": 7.0,
+   "t0": 15.7,
+   "t1": 17.9
+  },
+  {
+   "k": "glass",
+   "c": 0.0,
+   "w": 7.0,
+   "t0": 18.7,
+   "t1": 20.9
+  },
+  {
+   "k": "glass",
+   "c": 0.0,
+   "w": 7.0,
+   "t0": 21.7,
+   "t1": 23.9
+  },
+  {
+   "k": "glass",
+   "c": 0.0,
+   "w": 7.0,
+   "t0": 24.7,
+   "t1": 26.9
+  },
+  {
+   "k": "glass",
+   "c": 0.0,
+   "w": 7.0,
+   "t0": 27.7,
+   "t1": 29.9
+  }
+ ],
+ "snap": {
+  "grid": 0.5,
+  "module": 8.0,
+  "type": "twr_back",
+  "ends": [
+   [
+    -4.0,
+    0,
+    0.15
+   ],
+   [
+    4.0,
+    0,
+    0.15
+   ]
+  ],
+  "face_z": 0.15,
+  "plate_y": 30.3,
+  "parapet_top": 31.2
+ },
+ "no_door": false,
+ "base_y": 0.0,
+ "ground_reach": false
+}

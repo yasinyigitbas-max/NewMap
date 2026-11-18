@@ -1,0 +1,105 @@
+{
+ "name": "ck_grt_row3",
+ "group": "urban",
+ "outline": {
+  "kind": "shop",
+  "W": 18.0,
+  "D": 12.0,
+  "storeys": 1,
+  "wall": "W_stucco",
+  "tint": [
+   0.86,
+   0.82,
+   0.74
+  ],
+  "budget": "shop",
+  "floor": 0.0,
+  "storey": 4.2,
+  "parapet": 0.9,
+  "sills": false,
+  "foundation": false
+ },
+ "far_tiles": {
+  "example": "@map:shop_row3",
+  "nx": 1,
+  "nz": 1,
+  "size": 0.0
+ },
+ "note": "gritty edge (17 Nov): pawn shop, an abandoned false-front between, a laundromat; kit urb_svc/urb_grt fronts on the shop shell",
+ "pieces": [
+  {
+   "piece": "urb_svc_front_6m_pawn",
+   "x": -6.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_grt_front_6m_abandoned",
+   "x": 0.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_svc_front_6m_laundry",
+   "x": 6.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_back_6m_stucco",
+   "x": -6.0,
+   "z": -5.85,
+   "rot_y": 180,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_back_6m_stucco_blank",
+   "x": 0.0,
+   "z": -5.85,
+   "rot_y": 180,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_back_6m_stucco",
+   "x": 6.0,
+   "z": -5.85,
+   "rot_y": 180,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_side_12m_stucco",
+   "x": 8.85,
+   "z": 0.0,
+   "rot_y": 90,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_side_12m_stucco_l",
+   "x": -8.85,
+   "z": 0.0,
+   "rot_y": 270,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_roof_6m_end",
+   "x": -6.0,
+   "z": 0.0,
+   "rot_y": 0,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_roof_6m_mid",
+   "x": 0.0,
+   "z": 0.0,
+   "rot_y": 0,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_roof_6m_end",
+   "x": 6.0,
+   "z": 0.0,
+   "rot_y": 180,
+   "group": "shops"
+  }
+ ]
+}

@@ -1,0 +1,123 @@
+{
+ "name": "victorian_blue",
+ "cat": "house",
+ "style": "victorian",
+ "logic_errors": [],
+ "col_boxes": 13,
+ "near": {
+  "tris": 2486,
+  "verts": 4185,
+  "regions": [
+   "O_door_craftsman",
+   "O_lamp",
+   "O_number",
+   "O_shutter",
+   "O_vent",
+   "O_win_dh_white",
+   "O_win_victorian",
+   "R_shake",
+   "S_black",
+   "S_concrete",
+   "S_shingle",
+   "S_siding",
+   "S_soffit",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_rail",
+   "T_white",
+   "W_brick",
+   "W_shingle",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.711999893188477,
+    0.0,
+    -6.449999809265137
+   ],
+   [
+    5.886000156402588,
+    11.489999771118164,
+    8.649999618530273
+   ]
+  ]
+ },
+ "mid_roof_top": 10.99,
+ "mid": {
+  "tris": 523,
+  "verts": 628,
+  "regions": [
+   "O_door_craftsman",
+   "O_vent",
+   "O_win_dh_white",
+   "O_win_victorian",
+   "S_concrete",
+   "S_deck",
+   "S_shake",
+   "S_soffit",
+   "S_white",
+   "W_brick",
+   "W_shingle",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.711999893188477,
+    0.0,
+    -6.150000095367432
+   ],
+   [
+    5.765999794006348,
+    11.489999771118164,
+    8.649999618530273
+   ]
+  ]
+ },
+ "far": {
+  "tris": 46,
+  "verts": 80,
+  "regions": [
+   "F_shake",
+   "F_shingle_blank",
+   "F_siding_2",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -5.366000175476074,
+    0.0,
+    -6.150000095367432
+   ],
+   [
+    5.366000175476074,
+    10.989999771118164,
+    6.150000095367432
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door_craftsman",
+   3.57
+  ]
+ ],
+ "footprint_wd": [
+  10.73,
+  12.3
+ ],
+ "footprint_area": 132.0,
+ "height": 11.49,
+ "storeys": 2,
+ "budget": [
+  2500,
+  750,
+  60
+ ],
+ "budget_class": "house_large",
+ "time_s": 18.9
+}

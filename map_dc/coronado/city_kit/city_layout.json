@@ -1,0 +1,1213 @@
+{
+ "note": "Piece instances in the shared frame (x east, -z north, metres). The pilot (residential + high street samples) sits at the origin; the city centre sample 400 m south. yaw in degrees. The industrial sample sits 400 m north of the pilot.",
+ "instances": [
+  {
+   "piece": "j_amber_10th",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_amber_n",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_amber_s",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_10th_w",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_10th_e",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "b_nw",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "b_ne",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "b_se",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "b_sw",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "r_n",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "r_s",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "w_power",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "j_cc",
+   "pos": [
+    0,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_cc_amber_n",
+   "pos": [
+    0,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_cc_amber_s",
+   "pos": [
+    0,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_cc_10th",
+   "pos": [
+    0,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_cc_10th",
+   "pos": [
+    0,
+    0,
+    400
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "c_nw",
+   "pos": [
+    0,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "c_ne",
+   "pos": [
+    0,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "c_se",
+   "pos": [
+    0,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "c_sw",
+   "pos": [
+    0,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "j_ind",
+   "pos": [
+    0,
+    0,
+    -400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_ind",
+   "pos": [
+    0,
+    0,
+    -400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_ind",
+   "pos": [
+    0,
+    0,
+    -400
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "s_ind",
+   "pos": [
+    0,
+    0,
+    -400
+   ],
+   "yaw": 90
+  },
+  {
+   "piece": "s_ind",
+   "pos": [
+    0,
+    0,
+    -400
+   ],
+   "yaw": -90
+  },
+  {
+   "piece": "i_ne",
+   "pos": [
+    0,
+    0,
+    -400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "i_nw",
+   "pos": [
+    0,
+    0,
+    -400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "i_se",
+   "pos": [
+    0,
+    0,
+    -400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "i_sw",
+   "pos": [
+    0,
+    0,
+    -400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "w_ind",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "note": "built in world coordinates: keep at the origin"
+  },
+  {
+   "piece": "j_strip",
+   "pos": [
+    -400,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_strip_art",
+   "pos": [
+    -400,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_strip_art",
+   "pos": [
+    -400,
+    0,
+    0
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "s_strip_side",
+   "pos": [
+    -400,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_strip_side",
+   "pos": [
+    -400,
+    0,
+    0
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "m_ne",
+   "pos": [
+    -400,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "m_nw",
+   "pos": [
+    -400,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "m_se",
+   "pos": [
+    -400,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "m_sw",
+   "pos": [
+    -400,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "w_strip",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "note": "built in world coordinates: keep at the origin"
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    400,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    400,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    400,
+    0,
+    0
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    400,
+    0,
+    0
+   ],
+   "yaw": 90
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    400,
+    0,
+    0
+   ],
+   "yaw": -90
+  },
+  {
+   "piece": "a_ne",
+   "pos": [
+    400,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "a_nw",
+   "pos": [
+    400,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "a_se",
+   "pos": [
+    400,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "a_sw",
+   "pos": [
+    400,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "w_apt",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "note": "built in world coordinates: keep at the origin"
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    400,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_civ",
+   "pos": [
+    400,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_civ",
+   "pos": [
+    400,
+    0,
+    400
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "s_civ",
+   "pos": [
+    400,
+    0,
+    400
+   ],
+   "yaw": 90
+  },
+  {
+   "piece": "s_civ",
+   "pos": [
+    400,
+    0,
+    400
+   ],
+   "yaw": -90
+  },
+  {
+   "piece": "v_ne",
+   "pos": [
+    400,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "v_nw",
+   "pos": [
+    400,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "v_se",
+   "pos": [
+    400,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "v_sw",
+   "pos": [
+    400,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "w_civ",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "note": "built in world coordinates: keep at the origin"
+  },
+  {
+   "piece": "st_stadium",
+   "pos": [
+    400,
+    0,
+    600
+   ],
+   "yaw": 0,
+   "note": "site north edge at z 500 = the civic band south street end; south edge z 760"
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    400,
+    0,
+    -400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_grt",
+   "pos": [
+    400,
+    0,
+    -400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_grt",
+   "pos": [
+    400,
+    0,
+    -400
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "s_grt",
+   "pos": [
+    400,
+    0,
+    -400
+   ],
+   "yaw": 90
+  },
+  {
+   "piece": "s_grt",
+   "pos": [
+    400,
+    0,
+    -400
+   ],
+   "yaw": -90
+  },
+  {
+   "piece": "g_ne",
+   "pos": [
+    400,
+    0,
+    -400
+   ],
+   "yaw": 0,
+   "note": "gritty edge sample (17 Nov): between the industrial sample (west) and the apartment band (south); reuses the locked j_apt / s_apt streets"
+  },
+  {
+   "piece": "g_nw",
+   "pos": [
+    400,
+    0,
+    -400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "g_se",
+   "pos": [
+    400,
+    0,
+    -400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "g_sw",
+   "pos": [
+    400,
+    0,
+    -400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "w_grt",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "note": "built in world coordinates: keep at the origin"
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    -400,
+    0,
+    400
+   ],
+   "yaw": 0,
+   "note": "waterfront sample (17 Nov): the bay to the south; north/east/west legs reuse the locked s_apt, the south leg is the pier plaza s_wf"
+  },
+  {
+   "piece": "s_wfd",
+   "pos": [
+    -400,
+    0,
+    400
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "s_wfd",
+   "pos": [
+    -400,
+    0,
+    400
+   ],
+   "yaw": 90
+  },
+  {
+   "piece": "s_wfd",
+   "pos": [
+    -400,
+    0,
+    400
+   ],
+   "yaw": -90
+  },
+  {
+   "piece": "s_wf",
+   "pos": [
+    -400,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "f_se",
+   "pos": [
+    -400,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "f_sw",
+   "pos": [
+    -400,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "f_ne",
+   "pos": [
+    -400,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "f_nw",
+   "pos": [
+    -400,
+    0,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "w_wf",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "note": "built in world coordinates: keep at the origin"
+  },
+  {
+   "piece": "d_pilot",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "note": "life overlay on the pilot (17 Nov): only adds props to the locked pilot pieces"
+  },
+  {
+   "piece": "d_cc",
+   "pos": [
+    0,
+    0,
+    400
+   ],
+   "yaw": 0,
+   "note": "life overlay on the city centre (17 Nov): only adds props to the locked c_* pieces"
+  },
+  {
+   "piece": "j_res",
+   "pos": [
+    800.0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "note": "ROAD KIT REVIEW (group 1, 17 Nov): residential crossroads, flat junction A"
+  },
+  {
+   "piece": "s_res_up8",
+   "pos": [
+    800.0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "note": "review: A -> B rises 8 m"
+  },
+  {
+   "piece": "s_res_a",
+   "pos": [
+    800.0,
+    0,
+    0
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "s_res_b",
+   "pos": [
+    800.0,
+    0,
+    0
+   ],
+   "yaw": 90
+  },
+  {
+   "piece": "s_res_c",
+   "pos": [
+    800.0,
+    0,
+    0
+   ],
+   "yaw": -90
+  },
+  {
+   "piece": "j_res",
+   "pos": [
+    800.0,
+    8.0,
+    200
+   ],
+   "yaw": 0,
+   "note": "review: junction B, 8 m higher"
+  },
+  {
+   "piece": "s_res_dn8",
+   "pos": [
+    800.0,
+    8.0,
+    200
+   ],
+   "yaw": 180,
+   "note": "review: B -> A falls 8 m (meets the up-leg at mid-block)"
+  },
+  {
+   "piece": "s_res_b",
+   "pos": [
+    800.0,
+    8.0,
+    200
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_res_c",
+   "pos": [
+    800.0,
+    8.0,
+    200
+   ],
+   "yaw": 90
+  },
+  {
+   "piece": "s_res_a",
+   "pos": [
+    800.0,
+    8.0,
+    200
+   ],
+   "yaw": -90
+  },
+  {
+   "piece": "zz_review_ground",
+   "pos": [
+    800.0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "note": "PREVIEW ONLY ground under the review street; never in the game"
+  },
+  {
+   "piece": "j_res",
+   "pos": [
+    1100,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "note": "ROAD KIT REVIEW chain (rise classes), preview only"
+  },
+  {
+   "piece": "s_res_a",
+   "pos": [
+    1100,
+    0,
+    0
+   ],
+   "yaw": 90
+  },
+  {
+   "piece": "s_res_b",
+   "pos": [
+    1100,
+    0,
+    0
+   ],
+   "yaw": -90
+  },
+  {
+   "piece": "s_res_c",
+   "pos": [
+    1100,
+    0,
+    0
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "j_res",
+   "pos": [
+    1100,
+    4,
+    200
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_res_c",
+   "pos": [
+    1100,
+    4,
+    200
+   ],
+   "yaw": 90
+  },
+  {
+   "piece": "s_res_a",
+   "pos": [
+    1100,
+    4,
+    200
+   ],
+   "yaw": -90
+  },
+  {
+   "piece": "j_res",
+   "pos": [
+    1100,
+    10,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_res_a",
+   "pos": [
+    1100,
+    10,
+    400
+   ],
+   "yaw": 90
+  },
+  {
+   "piece": "s_res_b",
+   "pos": [
+    1100,
+    10,
+    400
+   ],
+   "yaw": -90
+  },
+  {
+   "piece": "j_res",
+   "pos": [
+    1100,
+    12,
+    600
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_res_c",
+   "pos": [
+    1100,
+    12,
+    600
+   ],
+   "yaw": 90
+  },
+  {
+   "piece": "s_res_a",
+   "pos": [
+    1100,
+    12,
+    600
+   ],
+   "yaw": -90
+  },
+  {
+   "piece": "s_res_b",
+   "pos": [
+    1100,
+    12,
+    600
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_res_up4_a",
+   "pos": [
+    1100,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_res_dn4_b",
+   "pos": [
+    1100,
+    4,
+    200
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "s_res_up6",
+   "pos": [
+    1100,
+    4,
+    200
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_res_dn6",
+   "pos": [
+    1100,
+    10,
+    400
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "s_res_up2_a",
+   "pos": [
+    1100,
+    10,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_res_dn2_b",
+   "pos": [
+    1100,
+    12,
+    600
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "zz_review_chain_a",
+   "pos": [
+    1100,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "note": "PREVIEW ONLY ground; never in the game"
+  },
+  {
+   "piece": "j_res",
+   "pos": [
+    1400,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "note": "ROAD KIT REVIEW chain (rise classes), preview only"
+  },
+  {
+   "piece": "s_res_b",
+   "pos": [
+    1400,
+    0,
+    0
+   ],
+   "yaw": 90
+  },
+  {
+   "piece": "s_res_c",
+   "pos": [
+    1400,
+    0,
+    0
+   ],
+   "yaw": -90
+  },
+  {
+   "piece": "s_res_a",
+   "pos": [
+    1400,
+    0,
+    0
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "j_res",
+   "pos": [
+    1400,
+    4,
+    200
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_res_b",
+   "pos": [
+    1400,
+    4,
+    200
+   ],
+   "yaw": 90
+  },
+  {
+   "piece": "s_res_c",
+   "pos": [
+    1400,
+    4,
+    200
+   ],
+   "yaw": -90
+  },
+  {
+   "piece": "j_res",
+   "pos": [
+    1400,
+    2,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_res_b",
+   "pos": [
+    1400,
+    2,
+    400
+   ],
+   "yaw": 90
+  },
+  {
+   "piece": "s_res_c",
+   "pos": [
+    1400,
+    2,
+    400
+   ],
+   "yaw": -90
+  },
+  {
+   "piece": "s_res_a",
+   "pos": [
+    1400,
+    2,
+    400
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_res_up4_b",
+   "pos": [
+    1400,
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_res_dn4_a",
+   "pos": [
+    1400,
+    4,
+    200
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "s_res_dn2_a",
+   "pos": [
+    1400,
+    4,
+    200
+   ],
+   "yaw": 0
+  },
+  {
+   "piece": "s_res_up2_b",
+   "pos": [
+    1400,
+    2,
+    400
+   ],
+   "yaw": 180
+  },
+  {
+   "piece": "zz_review_chain_b",
+   "pos": [
+    1400,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "note": "PREVIEW ONLY ground; never in the game"
+  }
+ ]
+}

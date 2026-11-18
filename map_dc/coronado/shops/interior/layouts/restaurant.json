@@ -1,0 +1,571 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "restaurant",
+ "types": [
+  "restaurant"
+ ],
+ "floor": "WoodFloor034",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  1,
+  0.94,
+  0.86
+ ],
+ "ceiling": "Plaster001",
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.5,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter",
+  "seating"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    2.6
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "drink",
+    "alcohol",
+    "dessert"
+   ],
+   "wall": true
+  },
+  {
+   "role": "back_bar",
+   "prop": "shelf_wall",
+   "place": "behind_counter",
+   "goods": [
+    "alcohol",
+    "drink"
+   ]
+  },
+  {
+   "role": "booths",
+   "prop": "booth_set",
+   "place": "booths",
+   "max": 3
+  },
+  {
+   "role": "seating",
+   "prop": "table",
+   "place": "grid",
+   "seats": 2
+  },
+  {
+   "role": "plant",
+   "prop": "plant",
+   "place": "corner"
+  }
+ ],
+ "clutter": true,
+ "signs": true,
+ "plans": [
+  {
+   "name": "cantina",
+   "match": [
+    "mexican",
+    "cocina",
+    "cantina",
+    "burrito",
+    "taqueria",
+    "taco shack"
+   ],
+   "fixtures": "rest_cantina",
+   "counter_stools": true,
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.6
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "drink",
+      "alcohol",
+      "dessert"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "alcohol",
+      "drink"
+     ]
+    },
+    {
+     "role": "booths",
+     "prop": "booth_set",
+     "place": "booths",
+     "max": 2
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ],
+   "wear": 0.4
+  },
+  {
+   "name": "trattoria",
+   "match": [
+    "italian",
+    "pizza",
+    "pasta",
+    "trattoria",
+    "pizzeria",
+    "oven",
+    "greek",
+    "mediterranean"
+   ],
+   "fixtures": "rest_trattoria",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.6
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "drink",
+      "alcohol",
+      "dessert"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "alcohol",
+      "drink"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    },
+    {
+     "role": "art",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "door_side",
+      "back"
+     ],
+     "max": 1
+    }
+   ],
+   "wear": 0.3
+  },
+  {
+   "name": "upscale",
+   "match": [
+    "steakhouse",
+    "chophouse",
+    "chop house",
+    "french",
+    "frenchy",
+    "bistro"
+   ],
+   "fixtures": "rest_upscale",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.6
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "drink",
+      "alcohol",
+      "dessert"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "alcohol",
+      "drink"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    },
+    {
+     "role": "art",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "door_side",
+      "back"
+     ],
+     "max": 1
+    }
+   ],
+   "wear": 0.12
+  },
+  {
+   "name": "seafood",
+   "match": [
+    "seafood",
+    "raw bar",
+    "boathouse",
+    "oyster",
+    "coastal",
+    "fish market"
+   ],
+   "fixtures": "rest_seafood",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.6
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "drink",
+      "alcohol",
+      "dessert"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "alcohol",
+      "drink"
+     ]
+    },
+    {
+     "role": "booths",
+     "prop": "booth_set",
+     "place": "booths",
+     "max": 3
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    },
+    {
+     "role": "art",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "door_side",
+      "back"
+     ],
+     "max": 1
+    }
+   ],
+   "wear": 0.35
+  },
+  {
+   "name": "asian",
+   "match": [
+    "thai",
+    "sushi",
+    "asian",
+    "japanese",
+    "chinese",
+    "noodle",
+    "curry"
+   ],
+   "fixtures": "rest_asian",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.6
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "drink",
+      "alcohol",
+      "dessert"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "alcohol",
+      "drink"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    },
+    {
+     "role": "plant2",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ],
+   "wear": 0.3
+  },
+  {
+   "name": "diner",
+   "match": [
+    "diner",
+    "bar-b-q",
+    "bbq",
+    "tavern",
+    "american",
+    "smash-burger",
+    "shakes"
+   ],
+   "fixtures": "rest_diner",
+   "counter_stools": true,
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.6
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "drink",
+      "alcohol",
+      "dessert"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "alcohol",
+      "drink"
+     ]
+    },
+    {
+     "role": "booths",
+     "prop": "booth_set",
+     "place": "booths",
+     "max": 4
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    }
+   ],
+   "wear": 0.5
+  }
+ ],
+ "styles": [
+  {
+   "floor": "Tiles143",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.75,
+    0.5
+   ],
+   "wainscot": "Tiles074",
+   "ceiling": "Plaster001",
+   "match": [
+    "mexican",
+    "cocina",
+    "cantina",
+    "burrito",
+    "taqueria",
+    "taco shack"
+   ]
+  },
+  {
+   "floor": "WoodFloor034",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.9,
+    0.75
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001",
+   "match": [
+    "italian",
+    "pizza",
+    "pasta",
+    "trattoria",
+    "pizzeria",
+    "oven",
+    "greek",
+    "mediterranean"
+   ]
+  },
+  {
+   "floor": "Marble006",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.9,
+    0.88,
+    0.8
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001",
+   "match": [
+    "steakhouse",
+    "chophouse",
+    "chop house",
+    "french",
+    "frenchy",
+    "bistro"
+   ]
+  },
+  {
+   "floor": "WoodFloor051",
+   "wall": "WoodSiding008",
+   "wall_tint": [
+    0.75,
+    0.85,
+    0.95
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001",
+   "match": [
+    "seafood",
+    "raw bar",
+    "boathouse",
+    "oyster",
+    "coastal",
+    "fish market"
+   ]
+  },
+  {
+   "floor": "WoodFloor034",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.8,
+    0.25,
+    0.2
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001",
+   "match": [
+    "thai",
+    "sushi",
+    "asian",
+    "japanese",
+    "chinese",
+    "noodle",
+    "curry"
+   ]
+  },
+  {
+   "floor": "Tiles012",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.95,
+    0.95,
+    0.92
+   ],
+   "wainscot": "Tiles141",
+   "ceiling": "Plaster001",
+   "match": [
+    "diner",
+    "bar-b-q",
+    "bbq",
+    "tavern",
+    "american",
+    "smash-burger",
+    "shakes"
+   ]
+  }
+ ],
+ "match_salt": "style",
+ "hours": [
+  11,
+  23
+ ],
+ "busy": 0.6,
+ "dado": {
+  "h": 1.0
+ }
+}

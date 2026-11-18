@@ -1,0 +1,803 @@
+{
+ "note": "Art family integration table (road kit 17 Nov, road_art.gd): every art-owned junction and block of review/sites.json -> piece, pos [u, y, v] in the GRID frame (y = the start junction's pad), yaw (Godot: +z -> (sin yaw, cos yaw)). Junctions are authored with the arterial (or 5th St) along +x: yaw 0 everywhere. Legs run along +z from their junction.",
+ "assumptions": [
+  "Arterial legs (3rd / 4th St) start at 22 m from our junctions (j_strip's arterial tile edge, the ring's SEC couplet z0) and at 23.5 m from the Amber junctions (amber family: the pilot's cross-street tile edge, as resstd assumed). If amber chooses another edge, change z0 in s_ar_b068_b, s_ar_b069_a, s_ar_b076_b, s_ar_b077_a and rebuild.",
+  "Cross streets at OUR junctions (N / S, and AD5's west) start at 26 m (j_strip's side-street tile edge, as resstd assumed and built). The ring family's stubs from our junctions (b010 G Ave ind, b046 B Ave res, b056 Adela std) must start at 26 too, not at SEC z0 20 / 22 (road_rg.stub_plan): otherwise they overlap our tiles by 6 / 4 m. b071 (3rd St east of Adela) and b072 (4th St west of J Ave) start at 22. b087 (5th St east of Adela, built) starts at 22 with the arterial section: AD5's east mouth matches it.",
+  "Sections at the mouths (measured 17 Nov): res / std kerb 5.7, parkway to 7.2, walk to 9.2; strip side kerb 5.7, walk 8.7; truck kerb 6.7, walk 8.7; arterial kerb 10.3 (walk all concrete inside the tile, the palm parkway starts at 22 on the legs).",
+  "Bus stops (far side, both directions): 3rd St at E Ave and B Ave, 4th St at G, C and B Ave."
+ ],
+ "sites": [
+  {
+   "site": "b057",
+   "piece": "s_ar_b057_a",
+   "pos": [
+    500.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "kind": "leg",
+   "z": [
+    26.0,
+    100.0
+   ],
+   "prof": [
+    [
+     26.0,
+     100.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 4.05,
+   "dress": "strip side"
+  },
+  {
+   "site": "b058",
+   "piece": "s_ar_b058_b",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 180.0,
+   "kind": "leg",
+   "z": [
+    26.0,
+    100.0
+   ],
+   "prof": [],
+   "max_grade_pct": 0.0,
+   "dress": "strip side"
+  },
+  {
+   "site": "b065",
+   "piece": "s_ar_b065_b",
+   "pos": [
+    -600.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": -90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    100.0
+   ],
+   "prof": [],
+   "max_grade_pct": 0.0,
+   "dress": "grt"
+  },
+  {
+   "site": "b066",
+   "piece": "s_ar_b066_a",
+   "pos": [
+    -600.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    100.0
+   ],
+   "prof": [],
+   "max_grade_pct": 0.0,
+   "dress": "grt"
+  },
+  {
+   "site": "b066",
+   "piece": "s_ar_b066_b",
+   "pos": [
+    -400.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": -90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    100.0
+   ],
+   "prof": [],
+   "max_grade_pct": 0.0,
+   "dress": "grt"
+  },
+  {
+   "site": "b067",
+   "piece": "s_ar_b067_a",
+   "pos": [
+    -400.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    100.0
+   ],
+   "prof": [
+    [
+     22.0,
+     178.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 1.92,
+   "dress": "hill"
+  },
+  {
+   "site": "b067",
+   "piece": "s_ar_b067_b",
+   "pos": [
+    -200.0,
+    4.0,
+    -1400.0
+   ],
+   "yaw": -90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    100.0
+   ],
+   "prof": [
+    [
+     22.0,
+     178.0,
+     -2.0
+    ]
+   ],
+   "max_grade_pct": 1.92,
+   "dress": "hill"
+  },
+  {
+   "site": "b068",
+   "piece": "s_ar_b068_a",
+   "pos": [
+    -200.0,
+    4.0,
+    -1400.0
+   ],
+   "yaw": 90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    100.0
+   ],
+   "prof": [
+    [
+     22.0,
+     176.5,
+     4.0
+    ]
+   ],
+   "max_grade_pct": 3.88,
+   "dress": "hill"
+  },
+  {
+   "site": "b068",
+   "piece": "s_ar_b068_b",
+   "pos": [
+    0.0,
+    8.0,
+    -1400.0
+   ],
+   "yaw": -90.0,
+   "kind": "leg",
+   "z": [
+    23.5,
+    100.0
+   ],
+   "prof": [
+    [
+     23.5,
+     178.0,
+     -4.0
+    ]
+   ],
+   "max_grade_pct": 3.88,
+   "dress": "hill"
+  },
+  {
+   "site": "b069",
+   "piece": "s_ar_b069_a",
+   "pos": [
+    0.0,
+    8.0,
+    -1400.0
+   ],
+   "yaw": 90.0,
+   "kind": "leg",
+   "z": [
+    23.5,
+    125.0
+   ],
+   "prof": [
+    [
+     23.5,
+     228.0,
+     -6.0
+    ]
+   ],
+   "max_grade_pct": 4.4,
+   "dress": "hill"
+  },
+  {
+   "site": "b069",
+   "piece": "s_ar_b069_b",
+   "pos": [
+    250.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": -90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    125.0
+   ],
+   "prof": [
+    [
+     22.0,
+     226.5,
+     6.0
+    ]
+   ],
+   "max_grade_pct": 4.4,
+   "dress": "hill"
+  },
+  {
+   "site": "b070",
+   "piece": "s_ar_b070_a",
+   "pos": [
+    250.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    125.0
+   ],
+   "prof": [],
+   "max_grade_pct": 0.0,
+   "dress": "strip"
+  },
+  {
+   "site": "b070",
+   "piece": "s_ar_b070_b",
+   "pos": [
+    500.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": -90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    125.0
+   ],
+   "prof": [],
+   "max_grade_pct": 0.0,
+   "dress": "strip"
+  },
+  {
+   "site": "b073",
+   "piece": "s_ar_b073_a",
+   "pos": [
+    -800.0,
+    2.0,
+    -1200.0
+   ],
+   "yaw": 90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    100.0
+   ],
+   "prof": [
+    [
+     22.0,
+     178.0,
+     2.0
+    ]
+   ],
+   "max_grade_pct": 1.92,
+   "dress": "grt"
+  },
+  {
+   "site": "b073",
+   "piece": "s_ar_b073_b",
+   "pos": [
+    -600.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": -90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    100.0
+   ],
+   "prof": [
+    [
+     22.0,
+     178.0,
+     -2.0
+    ]
+   ],
+   "max_grade_pct": 1.92,
+   "dress": "grt"
+  },
+  {
+   "site": "b074",
+   "piece": "s_ar_b074_a",
+   "pos": [
+    -600.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    100.0
+   ],
+   "prof": [],
+   "max_grade_pct": 0.0,
+   "dress": "grt"
+  },
+  {
+   "site": "b074",
+   "piece": "s_ar_b074_b",
+   "pos": [
+    -400.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": -90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    100.0
+   ],
+   "prof": [],
+   "max_grade_pct": 0.0,
+   "dress": "grt"
+  },
+  {
+   "site": "b075",
+   "piece": "s_ar_b075_a",
+   "pos": [
+    -400.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    100.0
+   ],
+   "prof": [
+    [
+     22.0,
+     178.0,
+     6.0
+    ]
+   ],
+   "max_grade_pct": 5.77,
+   "dress": "hill"
+  },
+  {
+   "site": "b075",
+   "piece": "s_ar_b075_b",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": -90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    100.0
+   ],
+   "prof": [
+    [
+     22.0,
+     178.0,
+     -6.0
+    ]
+   ],
+   "max_grade_pct": 5.77,
+   "dress": "hill"
+  },
+  {
+   "site": "b076",
+   "piece": "s_ar_b076_a",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": 90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    100.0
+   ],
+   "prof": [
+    [
+     22.0,
+     176.5,
+     4.0
+    ]
+   ],
+   "max_grade_pct": 3.88,
+   "dress": "hill"
+  },
+  {
+   "site": "b076",
+   "piece": "s_ar_b076_b",
+   "pos": [
+    0.0,
+    14.0,
+    -1200.0
+   ],
+   "yaw": -90.0,
+   "kind": "leg",
+   "z": [
+    23.5,
+    100.0
+   ],
+   "prof": [
+    [
+     23.5,
+     178.0,
+     -4.0
+    ]
+   ],
+   "max_grade_pct": 3.88,
+   "dress": "hill"
+  },
+  {
+   "site": "b077",
+   "piece": "s_ar_b077_a",
+   "pos": [
+    0.0,
+    14.0,
+    -1200.0
+   ],
+   "yaw": 90.0,
+   "kind": "leg",
+   "z": [
+    23.5,
+    125.0
+   ],
+   "prof": [
+    [
+     23.5,
+     228.0,
+     -6.0
+    ]
+   ],
+   "max_grade_pct": 4.4,
+   "dress": "hill"
+  },
+  {
+   "site": "b077",
+   "piece": "s_ar_b077_b",
+   "pos": [
+    250.0,
+    8.0,
+    -1200.0
+   ],
+   "yaw": -90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    125.0
+   ],
+   "prof": [
+    [
+     22.0,
+     226.5,
+     6.0
+    ]
+   ],
+   "max_grade_pct": 4.4,
+   "dress": "hill"
+  },
+  {
+   "site": "b078",
+   "piece": "s_ar_b078_a",
+   "pos": [
+    250.0,
+    8.0,
+    -1200.0
+   ],
+   "yaw": 90.0,
+   "kind": "leg",
+   "z": [
+    22.0,
+    150.0
+   ],
+   "prof": [
+    [
+     22.0,
+     150.0,
+     -4.0
+    ]
+   ],
+   "max_grade_pct": 4.69,
+   "dress": "strip"
+  },
+  {
+   "site": "node -600,-1400",
+   "piece": "j_ar_g3",
+   "pos": [
+    -600.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "kind": "junction",
+   "legs_NESW": [
+    "ind",
+    "art",
+    "res",
+    "art"
+   ],
+   "tiles_NESW": [
+    26.0,
+    22.0,
+    26.0,
+    22.0
+   ],
+   "dress": "grt"
+  },
+  {
+   "site": "node -400,-1400",
+   "piece": "j_ar_e3",
+   "pos": [
+    -400.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "kind": "junction",
+   "legs_NESW": [
+    "res",
+    "art",
+    "std",
+    "art"
+   ],
+   "tiles_NESW": [
+    26.0,
+    22.0,
+    26.0,
+    22.0
+   ],
+   "dress": "grt"
+  },
+  {
+   "site": "node -200,-1400",
+   "piece": "j_ar_c3",
+   "pos": [
+    -200.0,
+    4.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "kind": "junction",
+   "legs_NESW": [
+    "res",
+    "art",
+    "std",
+    "art"
+   ],
+   "tiles_NESW": [
+    26.0,
+    22.0,
+    26.0,
+    22.0
+   ],
+   "dress": "hill"
+  },
+  {
+   "site": "node 250,-1400",
+   "piece": "j_ar_b3",
+   "pos": [
+    250.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "kind": "junction",
+   "legs_NESW": [
+    "res",
+    "art",
+    "res",
+    "art"
+   ],
+   "tiles_NESW": [
+    26.0,
+    22.0,
+    26.0,
+    22.0
+   ],
+   "dress": "hill"
+  },
+  {
+   "site": "node 500,-1400",
+   "piece": "j_ar_ad3",
+   "pos": [
+    500.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "kind": "junction",
+   "legs_NESW": [
+    "std",
+    "art",
+    "strip",
+    "art"
+   ],
+   "tiles_NESW": [
+    26.0,
+    22.0,
+    26.0,
+    22.0
+   ],
+   "dress": "strip"
+  },
+  {
+   "site": "node -800,-1200",
+   "piece": "j_ar_j4",
+   "pos": [
+    -800.0,
+    2.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "kind": "junction",
+   "legs_NESW": [
+    "res",
+    "art",
+    "std",
+    "art"
+   ],
+   "tiles_NESW": [
+    26.0,
+    22.0,
+    26.0,
+    22.0
+   ],
+   "dress": "grt"
+  },
+  {
+   "site": "node -600,-1200",
+   "piece": "j_ar_g4",
+   "pos": [
+    -600.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "kind": "junction",
+   "legs_NESW": [
+    "res",
+    "art",
+    "std",
+    "art"
+   ],
+   "tiles_NESW": [
+    26.0,
+    22.0,
+    26.0,
+    22.0
+   ],
+   "dress": "grt"
+  },
+  {
+   "site": "node -400,-1200",
+   "piece": "j_ar_e4",
+   "pos": [
+    -400.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "kind": "junction",
+   "legs_NESW": [
+    "std",
+    "art",
+    "std",
+    "art"
+   ],
+   "tiles_NESW": [
+    26.0,
+    22.0,
+    26.0,
+    22.0
+   ],
+   "dress": "grt"
+  },
+  {
+   "site": "node -200,-1200",
+   "piece": "j_ar_c4",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "kind": "junction",
+   "legs_NESW": [
+    "std",
+    "art",
+    "std",
+    "art"
+   ],
+   "tiles_NESW": [
+    26.0,
+    22.0,
+    26.0,
+    22.0
+   ],
+   "dress": "hill"
+  },
+  {
+   "site": "node 250,-1200",
+   "piece": "j_ar_b4",
+   "pos": [
+    250.0,
+    8.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "kind": "junction",
+   "legs_NESW": [
+    "res",
+    "art",
+    "res",
+    "art"
+   ],
+   "tiles_NESW": [
+    26.0,
+    22.0,
+    26.0,
+    22.0
+   ],
+   "dress": "hill"
+  },
+  {
+   "site": "node 500,-1000",
+   "piece": "j_ar_ad5",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "kind": "junction",
+   "legs_NESW": [
+    "strip",
+    "art",
+    "res",
+    "res"
+   ],
+   "tiles_NESW": [
+    26.0,
+    22.0,
+    26.0,
+    26.0
+   ],
+   "dress": "strip"
+  }
+ ]
+}

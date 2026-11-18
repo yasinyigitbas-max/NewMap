@@ -1,0 +1,992 @@
+{
+ "instances": [
+  {
+   "piece": "j_rg_nw_e0_n1600",
+   "pos": [
+    0.0,
+    2.0,
+    -9600.00012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_e250_n1600",
+   "pos": [
+    250.0,
+    2.0,
+    -9600.00012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_e500_n1600",
+   "pos": [
+    500.0,
+    2.0,
+    -9600.00012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_e657_n800",
+   "pos": [
+    657.332702636719,
+    4.0,
+    -8800.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_e660_n1200",
+   "pos": [
+    660.000061035156,
+    4.0,
+    -9200.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_e660_n1400",
+   "pos": [
+    660.000061035156,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_w1000_n200",
+   "pos": [
+    -1000.00006103516,
+    4.0,
+    -8200.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_w1000_n400",
+   "pos": [
+    -1000.00006103516,
+    4.0,
+    -8400.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_w1000_n600",
+   "pos": [
+    -1000.00006103516,
+    4.0,
+    -8600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_w1000_n800",
+   "pos": [
+    -1000.00006103516,
+    4.0,
+    -8800.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_w1000_s0",
+   "pos": [
+    -1000.00006103516,
+    4.0,
+    -8000.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_w200_n1600",
+   "pos": [
+    -200.0,
+    2.0,
+    -9600.00012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_w400_n1600",
+   "pos": [
+    -400.0,
+    2.0,
+    -9600.00012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_w600_n1600",
+   "pos": [
+    -600.0,
+    2.0,
+    -9600.00012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_w951_n1400",
+   "pos": [
+    -950.888854980469,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_w952_n1200",
+   "pos": [
+    -951.778015136719,
+    2.0,
+    -9200.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_nw_w994_n1000",
+   "pos": [
+    -993.750427246094,
+    4.0,
+    -9000.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b010",
+   "pos": [
+    -600.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 180.0
+  },
+  {
+   "piece": "s_rg_nw_b018",
+   "pos": [
+    -400.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 180.0
+  },
+  {
+   "piece": "s_rg_nw_b028",
+   "pos": [
+    -200.0,
+    4.0,
+    -9400.0
+   ],
+   "yaw": 180.0
+  },
+  {
+   "piece": "s_rg_nw_b036",
+   "pos": [
+    0.0,
+    8.0,
+    -9400.0
+   ],
+   "yaw": 180.0
+  },
+  {
+   "piece": "s_rg_nw_b046",
+   "pos": [
+    250.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 180.0
+  },
+  {
+   "piece": "s_rg_nw_b056",
+   "pos": [
+    500.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 180.0
+  },
+  {
+   "piece": "s_rg_nw_b064",
+   "pos": [
+    -800.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "piece": "s_rg_nw_b071",
+   "pos": [
+    500.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "piece": "s_rg_nw_b072",
+   "pos": [
+    -800.0,
+    2.0,
+    -9200.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "piece": "s_rg_nw_b079",
+   "pos": [
+    500.0,
+    4.0,
+    -9200.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "piece": "s_rg_nw_b080",
+   "pos": [
+    -800.0,
+    4.0,
+    -9000.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "piece": "s_rg_nw_b088",
+   "pos": [
+    -800.0,
+    6.0,
+    -8800.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "piece": "s_rg_nw_b096",
+   "pos": [
+    -800.0,
+    6.0,
+    -8600.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "piece": "s_rg_nw_b102",
+   "pos": [
+    -800.0,
+    4.0,
+    -8400.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "piece": "s_rg_nw_b108",
+   "pos": [
+    -800.0,
+    4.0,
+    -8200.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "piece": "s_rg_nw_b116",
+   "pos": [
+    -800.0,
+    8.0,
+    -8000.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "piece": "s_rg_nw_b124",
+   "pos": [
+    -800.0,
+    2.0,
+    -7800.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "piece": "s_rg_nw_b141_1",
+   "pos": [
+    657.539428710938,
+    4.0,
+    -8815.49865722656
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b141_2",
+   "pos": [
+    658.596557617188,
+    4.0,
+    -8894.75048828125
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b142_1",
+   "pos": [
+    660.0,
+    4.0,
+    -9025.50012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b143_1",
+   "pos": [
+    660.0,
+    4.0,
+    -9100.00012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b144_1",
+   "pos": [
+    660.0,
+    4.0,
+    -9225.50012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b144_2",
+   "pos": [
+    660.0,
+    3.0,
+    -9300.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b145_1",
+   "pos": [
+    484.0,
+    2.0,
+    -9600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b145_2",
+   "pos": [
+    428.25,
+    2.0,
+    -9600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b145_3",
+   "pos": [
+    327.5,
+    2.0,
+    -9600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b146_1",
+   "pos": [
+    234.0,
+    2.0,
+    -9600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b146_2",
+   "pos": [
+    130.5,
+    2.0,
+    -9600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b147_1",
+   "pos": [
+    -27.0,
+    2.0,
+    -9600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b147_2",
+   "pos": [
+    -105.5,
+    2.0,
+    -9600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b148_1",
+   "pos": [
+    -216.0,
+    2.0,
+    -9600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b148_2",
+   "pos": [
+    -300.0,
+    2.0,
+    -9600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b149_1",
+   "pos": [
+    -416.0,
+    2.0,
+    -9600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b149_2",
+   "pos": [
+    -497.500061035156,
+    2.0,
+    -9600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b150_1",
+   "pos": [
+    -621.000061035156,
+    2.0,
+    -9600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b150_2",
+   "pos": [
+    -699.999938964844,
+    2.0,
+    -9600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b151_1",
+   "pos": [
+    -950.982177734375,
+    2.0,
+    -9379.00036621094
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b151_2",
+   "pos": [
+    -951.323364257812,
+    2.0,
+    -9302.25012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b152_1",
+   "pos": [
+    -951.891296386719,
+    2.0,
+    -9174.50048828125
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b152_2",
+   "pos": [
+    -965.471374511719,
+    3.0,
+    -9097.28503417969
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b153_1",
+   "pos": [
+    -997.031127929688,
+    4.0,
+    -8989.50042724609
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b153_2",
+   "pos": [
+    -1000.0,
+    4.0,
+    -8902.91595458984
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b154_1",
+   "pos": [
+    -1000.0,
+    4.0,
+    -8783.99993896484
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b154_2",
+   "pos": [
+    -1000.0,
+    4.0,
+    -8699.99993896484
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b155_1",
+   "pos": [
+    -1000.0,
+    4.0,
+    -8583.99993896484
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b155_2",
+   "pos": [
+    -1000.0,
+    4.0,
+    -8499.99993896484
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b156_1",
+   "pos": [
+    -1000.0,
+    4.0,
+    -8383.99993896484
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b156_2",
+   "pos": [
+    -1000.0,
+    4.0,
+    -8299.99993896484
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b157_1",
+   "pos": [
+    -1000.0,
+    4.0,
+    -8183.99993896484
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b157_2",
+   "pos": [
+    -1000.0,
+    4.0,
+    -8099.99993896484
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b158_1",
+   "pos": [
+    -1000.0,
+    4.0,
+    -7983.99993896484
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b162_1",
+   "pos": [
+    -820.999816894531,
+    2.0,
+    -9600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b162_2",
+   "pos": [
+    -917.150207519531,
+    2.0,
+    -9598.38403320312
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b162_3",
+   "pos": [
+    -950.367309570312,
+    2.0,
+    -9517.29455566406
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b163_1",
+   "pos": [
+    660.0,
+    2.0,
+    -9425.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b163_2",
+   "pos": [
+    645.954833984375,
+    2.0,
+    -9510.75915527344
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_nw_b163_3",
+   "pos": [
+    595.69775390625,
+    2.0,
+    -9575.45837402344
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_w800_n1600",
+   "pos": [
+    -800.0,
+    2.0,
+    -9600.00012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_e660_n1000",
+   "pos": [
+    659.999206542969,
+    4.0,
+    -9000.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_w993_s200",
+   "pos": [
+    -992.499694824219,
+    2.0,
+    -7800.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "j_rg_w800_s289",
+   "pos": [
+    -800.0,
+    2.0,
+    -7711.33309936523
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_b000",
+   "pos": [
+    -800.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 180.0
+  },
+  {
+   "piece": "s_rg_b087",
+   "pos": [
+    500.0,
+    4.0,
+    -9000.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "piece": "s_rg_b158_2",
+   "pos": [
+    -1000.0,
+    3.0,
+    -7898.47698974609
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_b159_1",
+   "pos": [
+    -989.6796875,
+    2.0,
+    -7781.21020507812
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "s_rg_b159_2",
+   "pos": [
+    -916.004638671875,
+    2.0,
+    -7724.02444458008
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "PREVIEW ONLY ground (grid coordinates); never in the game",
+   "piece": "zz_ring_nw_ground_e",
+   "pos": [
+    0,
+    0,
+    -8000.0
+   ],
+   "yaw": 0
+  },
+  {
+   "note": "PREVIEW ONLY ground (grid coordinates); never in the game",
+   "piece": "zz_ring_nw_ground_n",
+   "pos": [
+    0,
+    0,
+    -8000.0
+   ],
+   "yaw": 0
+  },
+  {
+   "note": "PREVIEW ONLY ground (grid coordinates); never in the game",
+   "piece": "zz_ring_nw_ground_w",
+   "pos": [
+    0,
+    0,
+    -8000.0
+   ],
+   "yaw": 0
+  },
+  {
+   "note": "PREVIEW ONLY ground (grid coordinates); never in the game",
+   "piece": "zz_ring_ground_w",
+   "pos": [
+    0,
+    0,
+    -8000.0
+   ],
+   "yaw": 0
+  },
+  {
+   "note": "context: the locked industrial sample I's junction (J Ave x 3rd St)",
+   "piece": "j_ind",
+   "pos": [
+    -800.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "context: I's J Ave leg to 100 m; the core's stub s_rg_b000 starts at its end",
+   "piece": "s_ind",
+   "pos": [
+    -800.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 180.0
+  },
+  {
+   "note": "context: I's 3rd St (truck street) leg west to 100 m; s_rg_nw_b064 starts at its end",
+   "piece": "s_ind",
+   "pos": [
+    -800.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "note": "context: the locked strip sample M's junction (Adela x 4th St)",
+   "piece": "j_strip",
+   "pos": [
+    500.0,
+    4.0,
+    -9200.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "context: M's 4th St arterial leg east to 100 m; s_rg_nw_b079 continues it",
+   "piece": "s_strip_art",
+   "pos": [
+    500.0,
+    4.0,
+    -9200.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "context (art family): G Ave x 3rd St; stub b010 starts at its north tile edge 26",
+   "piece": "j_ar_g3",
+   "pos": [
+    -600.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "context (art family): E Ave x 3rd St; stub b018 at 26",
+   "piece": "j_ar_e3",
+   "pos": [
+    -400.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "context (art family): C Ave x 3rd St; stub b028 at 26",
+   "piece": "j_ar_c3",
+   "pos": [
+    -200.0,
+    4.0,
+    -9400.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "context (amber family): Amber x 3rd St; stub b036 at 22.5",
+   "piece": "j_am_3rd",
+   "pos": [
+    0.0,
+    8.0,
+    -9400.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "context (art family): B Ave x 3rd St; stub b046 at 26",
+   "piece": "j_ar_b3",
+   "pos": [
+    250.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "context (art family): Adela x 3rd St; stubs b056 (north, 26) and b071 (east, 22)",
+   "piece": "j_ar_ad3",
+   "pos": [
+    500.0,
+    2.0,
+    -9400.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "context (art family): Adela x 5th St; the core's stub s_rg_b087 (east, 22)",
+   "piece": "j_ar_ad5",
+   "pos": [
+    500.0,
+    4.0,
+    -9000.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "context (art family): J Ave x 4th St; stub b072 (west, 22)",
+   "piece": "j_ar_j4",
+   "pos": [
+    -800.0,
+    2.0,
+    -9200.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "context (resstd family): J Ave x 5th St; stub b080 (west, 20)",
+   "piece": "j_rs_3l1r_a",
+   "pos": [
+    -800.0,
+    4.0,
+    -9000.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "note": "context (resstd family): J Ave x 6th St; stub b088 (west, 20)",
+   "piece": "j_rs_3l1r_a",
+   "pos": [
+    -800.0,
+    6.0,
+    -8800.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "note": "context (resstd family): J Ave x 7th St; stub b096 (west, 20)",
+   "piece": "j_rs_t_lll_a",
+   "pos": [
+    -800.0,
+    6.0,
+    -8600.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "note": "context (resstd family): J Ave x 8th St; stub b102 (west, 20)",
+   "piece": "j_rs_3l1r_b",
+   "pos": [
+    -800.0,
+    4.0,
+    -8400.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "note": "context (resstd family, locked j_res): J Ave x 9th St; stub b108 (west, 20)",
+   "piece": "j_res",
+   "pos": [
+    -800.0,
+    4.0,
+    -8200.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "note": "context (resstd family, locked j_res): J Ave x 10th St; stub b116 (west, 20)",
+   "piece": "j_res",
+   "pos": [
+    -800.0,
+    8.0,
+    -8000.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "note": "context (resstd family): Adela x 6th St, where the SE half's stub b095 to the boundary T starts",
+   "piece": "j_rs_2l2r_adj_a",
+   "pos": [
+    500.0,
+    6.0,
+    -8800.0
+   ],
+   "yaw": 180.0
+  }
+ ],
+ "note": "Ring family half NW (road kit groups 2-5, stage 2) review rows, 17 Nov: ring pieces in GRID coordinates (x = u, z = v) shifted by [0, 0, -8000], with the core stage's NW pieces, preview-only grounds and context pieces of the neighbouring families. Load ALONE with CITYKIT_LAYOUT_EXTRA=res://map_dc/coronado/city_kit/review/ring_nw.json (not together with ring.json: the core's NW pieces are in both)."
+}

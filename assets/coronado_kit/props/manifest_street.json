@@ -1,0 +1,1071 @@
+{
+ "hydrant_red": {
+  "file_base": "prop_hydrant_red",
+  "batch": "street",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 590
+  },
+  "footprint_w": 0.406,
+  "footprint_d": 0.332,
+  "height": 0.856,
+  "regions": [
+   "baked:hydrant_red"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 38975,
+  "bake_slot_px": 320,
+  "bake_px_per_m": 389.5,
+  "col": 2,
+  "secs": 17.7
+ },
+ "hydrant_wet_barrel": {
+  "file_base": "prop_hydrant_wet_barrel",
+  "batch": "street",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 354
+  },
+  "footprint_w": 0.424,
+  "footprint_d": 0.389,
+  "height": 0.775,
+  "regions": [
+   "baked:hydrant_wet_barrel"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 6743,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 131.4,
+  "col": 1,
+  "secs": 12.4
+ },
+ "sign_stop": {
+  "file_base": "prop_sign_stop",
+  "batch": "street",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 546
+  },
+  "footprint_w": 0.9,
+  "footprint_d": 0.9,
+  "height": 3.296,
+  "regions": [
+   "baked:sign_stop"
+  ],
+  "trim": {
+   "tb_concrete": {
+    "area_m2": 0.06,
+    "px_per_m": 128.0
+   },
+   "tb_galv": {
+    "area_m2": 0.11,
+    "px_per_m": 128.0
+   },
+   "tbd_sign_stop": {
+    "area_m2": 0.47,
+    "px_per_m": 240.0
+   },
+   "tbd_sign_street_orange": {
+    "area_m2": 0.27,
+    "px_per_m": 248.0
+   },
+   "tbd_sign_street_tenth": {
+    "area_m2": 0.27,
+    "px_per_m": 248.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 19852,
+  "bake_slot_px": 176,
+  "bake_px_per_m": 115.0,
+  "col": 1,
+  "secs": 9.2
+ },
+ "sign_ped_crossing": {
+  "file_base": "prop_sign_ped_crossing",
+  "batch": "street",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 366
+  },
+  "footprint_w": 0.76,
+  "footprint_d": 0.228,
+  "height": 2.946,
+  "regions": [
+   "baked:sign_ped_crossing"
+  ],
+  "trim": {
+   "tb_concrete": {
+    "area_m2": 0.06,
+    "px_per_m": 128.0
+   },
+   "tb_galv": {
+    "area_m2": 0.11,
+    "px_per_m": 128.0
+   },
+   "tbd_sign_ped": {
+    "area_m2": 0.29,
+    "px_per_m": 240.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 18770,
+  "bake_slot_px": 160,
+  "bake_px_per_m": 124.8,
+  "col": 1,
+  "secs": 7.2
+ },
+ "sign_school": {
+  "file_base": "prop_sign_school",
+  "batch": "street",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 370
+  },
+  "footprint_w": 0.76,
+  "footprint_d": 0.228,
+  "height": 2.946,
+  "regions": [
+   "baked:sign_school"
+  ],
+  "trim": {
+   "tb_concrete": {
+    "area_m2": 0.06,
+    "px_per_m": 128.0
+   },
+   "tb_galv": {
+    "area_m2": 0.11,
+    "px_per_m": 128.0
+   },
+   "tbd_sign_school": {
+    "area_m2": 0.46,
+    "px_per_m": 240.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 18786,
+  "bake_slot_px": 160,
+  "bake_px_per_m": 116.7,
+  "col": 1,
+  "secs": 8.3
+ },
+ "sign_speed25": {
+  "file_base": "prop_sign_speed25",
+  "batch": "street",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 366
+  },
+  "footprint_w": 0.45,
+  "footprint_d": 0.228,
+  "height": 2.786,
+  "regions": [
+   "baked:sign_speed25"
+  ],
+  "trim": {
+   "tb_concrete": {
+    "area_m2": 0.06,
+    "px_per_m": 128.0
+   },
+   "tb_galv": {
+    "area_m2": 0.11,
+    "px_per_m": 128.0
+   },
+   "tbd_sign_speed25": {
+    "area_m2": 0.27,
+    "px_per_m": 234.7
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 18644,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 103.2,
+  "col": 1,
+  "secs": 7.4
+ },
+ "sign_no_parking": {
+  "file_base": "prop_sign_no_parking",
+  "batch": "street",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 366
+  },
+  "footprint_w": 0.3,
+  "footprint_d": 0.228,
+  "height": 2.336,
+  "regions": [
+   "baked:sign_no_parking"
+  ],
+  "trim": {
+   "tb_concrete": {
+    "area_m2": 0.06,
+    "px_per_m": 128.0
+   },
+   "tb_galv": {
+    "area_m2": 0.11,
+    "px_per_m": 128.0
+   },
+   "tbd_sign_noparking": {
+    "area_m2": 0.14,
+    "px_per_m": 234.7
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 18238,
+  "bake_slot_px": 112,
+  "bake_px_per_m": 104.0,
+  "col": 1,
+  "secs": 7.5
+ },
+ "sign_street_names": {
+  "file_base": "prop_sign_street_names",
+  "batch": "street",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 342
+  },
+  "footprint_w": 0.91,
+  "footprint_d": 0.91,
+  "height": 3.03,
+  "regions": [
+   "baked:sign_street_names"
+  ],
+  "trim": {
+   "tb_concrete": {
+    "area_m2": 0.06,
+    "px_per_m": 128.0
+   },
+   "tb_galv": {
+    "area_m2": 0.68,
+    "px_per_m": 128.0
+   },
+   "tbd_sign_street_orange": {
+    "area_m2": 0.27,
+    "px_per_m": 248.0
+   },
+   "tbd_sign_street_tenth": {
+    "area_m2": 0.27,
+    "px_per_m": 248.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 3852,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 132.2,
+  "col": 1,
+  "secs": 8.4
+ },
+ "lamp_victorian": {
+  "file_base": "prop_lamp_victorian",
+  "batch": "street",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1150,
+   "mid": 78
+  },
+  "footprint_w": 0.736,
+  "footprint_d": 0.46,
+  "height": 4.42,
+  "regions": [
+   "baked:lamp_victorian"
+  ],
+  "trim": {
+   "tbm_black": {
+    "area_m2": 0.92,
+    "px_per_m": 240.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 13635,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 96.0,
+  "col": 1,
+  "secs": 11.1
+ },
+ "lamp_globe": {
+  "file_base": "prop_lamp_globe",
+  "batch": "street",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 684,
+   "mid": 45
+  },
+  "footprint_w": 0.468,
+  "footprint_d": 0.468,
+  "height": 3.95,
+  "regions": [
+   "baked:lamp_globe"
+  ],
+  "trim": {
+   "tb_paint": {
+    "area_m2": 0.95,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 4826,
+  "bake_slot_px": 160,
+  "bake_px_per_m": 117.4,
+  "col": 1,
+  "secs": 8.9
+ },
+ "lamp_cobra": {
+  "file_base": "prop_lamp_cobra",
+  "batch": "street",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 820,
+   "mid": 66
+  },
+  "footprint_w": 0.554,
+  "footprint_d": 3.377,
+  "height": 8.97,
+  "regions": [
+   "baked:lamp_cobra"
+  ],
+  "trim": {
+   "ta_concrete": {
+    "area_m2": 0.98,
+    "px_per_m": 128.0
+   },
+   "pa_paint": {
+    "area_m2": 5.28,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 6825,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 58.3,
+  "col": 1,
+  "secs": 10.0
+ },
+ "signal_mast_arm": {
+  "file_base": "prop_signal_mast_arm",
+  "batch": "street",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1122,
+   "mid": 64
+  },
+  "footprint_w": 6.947,
+  "footprint_d": 1.014,
+  "height": 6.5,
+  "regions": [
+   "baked:signal_mast_arm"
+  ],
+  "trim": {
+   "tb_galv": {
+    "area_m2": 8.63,
+    "px_per_m": 128.0
+   },
+   "tbd_sign_street_orange": {
+    "area_m2": 0.6,
+    "px_per_m": 248.0
+   },
+   "tbm_black": {
+    "area_m2": 10.95,
+    "px_per_m": 200.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 13377,
+  "bake_slot_px": 224,
+  "bake_px_per_m": 82.0,
+  "col": 1,
+  "secs": 14.8
+ },
+ "signal_post": {
+  "file_base": "prop_signal_post",
+  "batch": "street",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 856,
+   "mid": 34
+  },
+  "footprint_w": 0.675,
+  "footprint_d": 1.12,
+  "height": 3.39,
+  "regions": [
+   "baked:signal_post"
+  ],
+  "trim": {
+   "tb_galv": {
+    "area_m2": 1.47,
+    "px_per_m": 128.0
+   },
+   "tbm_black": {
+    "area_m2": 7.55,
+    "px_per_m": 200.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 11649,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 98.3,
+  "col": 1,
+  "secs": 13.1
+ },
+ "utility_pole_transformer": {
+  "file_base": "prop_utility_pole_transformer",
+  "batch": "street",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1874,
+   "mid": 51,
+   "far": 6
+  },
+  "footprint_w": 2.4,
+  "footprint_d": 1.068,
+  "height": 12.16,
+  "regions": [
+   "baked:utility_pole_transformer"
+  ],
+  "trim": {
+   "tbm_woodpole": {
+    "area_m2": 10.9,
+    "px_per_m": 180.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 23153,
+  "bake_slot_px": 208,
+  "bake_px_per_m": 82.3,
+  "col": 1,
+  "secs": 6.5
+ },
+ "utility_pole": {
+  "file_base": "prop_utility_pole",
+  "batch": "street",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1112,
+   "mid": 25,
+   "far": 6
+  },
+  "footprint_w": 2.4,
+  "footprint_d": 0.626,
+  "height": 12.16,
+  "regions": [
+   "baked:utility_pole"
+  ],
+  "trim": {
+   "tbm_woodpole": {
+    "area_m2": 10.48,
+    "px_per_m": 180.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 14463,
+  "bake_slot_px": 160,
+  "bake_px_per_m": 110.6,
+  "col": 1,
+  "secs": 5.4
+ },
+ "bollard_concrete": {
+  "file_base": "prop_bollard_concrete",
+  "batch": "street",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 156
+  },
+  "footprint_w": 0.33,
+  "footprint_d": 0.33,
+  "height": 0.88,
+  "regions": [
+   "baked:bollard_concrete"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 2784,
+  "bake_slot_px": 144,
+  "bake_px_per_m": 130.9,
+  "col": 1,
+  "secs": 11.0
+ },
+ "bollard_steel": {
+  "file_base": "prop_bollard_steel",
+  "batch": "street",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 190
+  },
+  "footprint_w": 0.22,
+  "footprint_d": 0.209,
+  "height": 1.06,
+  "regions": [
+   "baked:bollard_steel"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 2316,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 145.4,
+  "col": 1,
+  "secs": 10.2
+ },
+ "bollard_iron": {
+  "file_base": "prop_bollard_iron",
+  "batch": "street",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 104
+  },
+  "footprint_w": 0.24,
+  "footprint_d": 0.24,
+  "height": 0.95,
+  "regions": [
+   "baked:bollard_iron"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 3956,
+  "bake_slot_px": 112,
+  "bake_px_per_m": 136.7,
+  "col": 1,
+  "secs": 10.5
+ },
+ "parking_meter": {
+  "file_base": "prop_parking_meter",
+  "batch": "street",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 30
+  },
+  "footprint_w": 0.2,
+  "footprint_d": 0.16,
+  "height": 1.51,
+  "regions": [
+   "baked:parking_meter"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 852,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 134.5,
+  "col": 1,
+  "secs": 10.0
+ },
+ "pay_station": {
+  "file_base": "prop_pay_station",
+  "batch": "street",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 42
+  },
+  "footprint_w": 0.45,
+  "footprint_d": 0.35,
+  "height": 1.63,
+  "regions": [
+   "baked:pay_station"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 1062,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 101.8,
+  "col": 1,
+  "secs": 12.6
+ },
+ "usps_collection_box": {
+  "file_base": "prop_usps_collection_box",
+  "batch": "street",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 76
+  },
+  "footprint_w": 0.53,
+  "footprint_d": 0.54,
+  "height": 1.26,
+  "regions": [
+   "baked:usps_collection_box"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 2084,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 96.5,
+  "col": 1,
+  "secs": 13.4
+ },
+ "newspaper_box_red": {
+  "file_base": "prop_newspaper_box_red",
+  "batch": "street",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 158
+  },
+  "footprint_w": 0.5,
+  "footprint_d": 0.462,
+  "height": 1.1,
+  "regions": [
+   "baked:newspaper_box_red"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 11051,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 96.2,
+  "col": 1,
+  "secs": 17.0
+ },
+ "newspaper_box_blue": {
+  "file_base": "prop_newspaper_box_blue",
+  "batch": "street",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 158
+  },
+  "footprint_w": 0.5,
+  "footprint_d": 0.462,
+  "height": 1.1,
+  "regions": [
+   "baked:newspaper_box_blue"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 11051,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 96.2,
+  "col": 1,
+  "secs": 16.9
+ },
+ "bike_rack": {
+  "file_base": "prop_bike_rack",
+  "batch": "street",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 540
+  },
+  "footprint_w": 2.52,
+  "footprint_d": 0.12,
+  "height": 1.025,
+  "regions": [
+   "baked:bike_rack"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 6666,
+  "bake_slot_px": 176,
+  "bake_px_per_m": 139.7,
+  "col": 1,
+  "secs": 16.2
+ },
+ "bench_bus_stop": {
+  "file_base": "prop_bench_bus_stop",
+  "batch": "street",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 256
+  },
+  "footprint_w": 1.9,
+  "footprint_d": 0.674,
+  "height": 0.916,
+  "regions": [
+   "baked:bench_bus_stop"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 3649,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 73.0,
+  "col": 1,
+  "secs": 17.8
+ },
+ "bus_shelter": {
+  "file_base": "prop_bus_shelter",
+  "batch": "street",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 510,
+   "mid": 56,
+   "far": 10
+  },
+  "footprint_w": 4.6,
+  "footprint_d": 1.9,
+  "height": 2.62,
+  "regions": [
+   "baked:bus_shelter"
+  ],
+  "trim": {
+   "tbm_black": {
+    "area_m2": 3.2,
+    "px_per_m": 240.0
+   },
+   "tbm_aluminium": {
+    "area_m2": 16.35,
+    "px_per_m": 240.0
+   },
+   "tbm_glass": {
+    "area_m2": 19.14,
+    "px_per_m": 240.0
+   },
+   "tbd_sign_bus": {
+    "area_m2": 3.22,
+    "px_per_m": 234.7
+   },
+   "tbm_wood": {
+    "area_m2": 1.87,
+    "px_per_m": 240.0
+   },
+   "tb_galv": {
+    "area_m2": 0.62,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 6383,
+  "bake_slot_px": 208,
+  "bake_px_per_m": 118.0,
+  "col": 6,
+  "secs": 19.2
+ },
+ "trash_receptacle": {
+  "file_base": "prop_trash_receptacle",
+  "batch": "street",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 298
+  },
+  "footprint_w": 0.62,
+  "footprint_d": 0.635,
+  "height": 1.1,
+  "regions": [
+   "baked:trash_receptacle"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 6062,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 105.7,
+  "col": 1,
+  "secs": 14.2
+ },
+ "recycling_receptacle": {
+  "file_base": "prop_recycling_receptacle",
+  "batch": "street",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 298
+  },
+  "footprint_w": 0.62,
+  "footprint_d": 0.635,
+  "height": 1.1,
+  "regions": [
+   "baked:recycling_receptacle"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 6062,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 105.7,
+  "col": 1,
+  "secs": 14.0
+ },
+ "manhole_cover": {
+  "file_base": "prop_manhole_cover",
+  "batch": "street",
+  "class": "tiny",
+  "budget": 400,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 378
+  },
+  "footprint_w": 1.16,
+  "footprint_d": 1.16,
+  "height": 0.01,
+  "regions": [
+   "baked:manhole_cover"
+  ],
+  "trim": {
+   "tc_concrete": {
+    "area_m2": 1.35,
+    "px_per_m": 224.0
+   },
+   "tc_tar": {
+    "area_m2": 0.03,
+    "px_per_m": 224.0
+   },
+   "tc_iron": {
+    "area_m2": 0.22,
+    "px_per_m": 448.0
+   }
+  },
+  "atlas_page": "props_c_*",
+  "high_tris": 10906,
+  "bake_slot_px": 384,
+  "bake_px_per_m": 428.3,
+  "col": 1,
+  "secs": 21.8
+ },
+ "storm_drain_grate": {
+  "file_base": "prop_storm_drain_grate",
+  "batch": "street",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 210
+  },
+  "footprint_w": 1.48,
+  "footprint_d": 0.94,
+  "height": 0.134,
+  "regions": [
+   "cast_iron",
+   "cmu",
+   "rubber_black"
+  ],
+  "trim": {
+   "tc_concrete": {
+    "area_m2": 0.53,
+    "px_per_m": 149.3
+   },
+   "tc_iron": {
+    "area_m2": 0.68,
+    "px_per_m": 186.7
+   },
+   "tc_tar": {
+    "area_m2": 1.06,
+    "px_per_m": 149.3
+   }
+  },
+  "atlas_page": "props_c_*",
+  "col": 1,
+  "secs": 22.8
+ },
+ "storm_drain_curb_inlet": {
+  "file_base": "prop_storm_drain_curb_inlet",
+  "batch": "street",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 276
+  },
+  "footprint_w": 2.79,
+  "footprint_d": 1.15,
+  "height": 0.28,
+  "regions": [
+   "cast_iron",
+   "concrete",
+   "galvanized",
+   "rubber_black"
+  ],
+  "trim": {
+   "tc_concrete": {
+    "area_m2": 4.58,
+    "px_per_m": 112.0
+   },
+   "tc_tar": {
+    "area_m2": 1.32,
+    "px_per_m": 149.3
+   },
+   "tc_iron": {
+    "area_m2": 0.66,
+    "px_per_m": 186.7
+   }
+  },
+  "atlas_page": "props_c_*",
+  "col": 1,
+  "secs": 33.0
+ }
+}

@@ -1,0 +1,117 @@
+{
+ "name": "urb_brick_corner",
+ "cat": "urban",
+ "style": "brick_corner",
+ "logic_errors": [],
+ "col_boxes": 3,
+ "near": {
+  "tris": 3244,
+  "verts": 5608,
+  "regions": [
+   "AW_navy",
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_rollup",
+   "O_shopdoor",
+   "O_storefront",
+   "O_vent",
+   "O_win_dh_div",
+   "O_win_dh_white",
+   "R_flat",
+   "S_awn_navy",
+   "S_black",
+   "S_brick",
+   "S_concrete",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_brick"
+  ],
+  "bbox": [
+   [
+    -9.199999809265137,
+    -0.0,
+    -9.5
+   ],
+   [
+    10.222999572753906,
+    13.470000267028809,
+    9.222999572753906
+   ]
+  ]
+ },
+ "mid_roof_top": 13.4,
+ "mid": {
+  "tris": 400,
+  "verts": 502,
+  "regions": [
+   "AW_navy",
+   "O_apt_door",
+   "O_glass_plain",
+   "O_rollup",
+   "O_shopdoor",
+   "S_awn_navy",
+   "S_concrete",
+   "S_flat",
+   "S_signbg",
+   "S_white",
+   "T_dark",
+   "W_brick"
+  ],
+  "bbox": [
+   [
+    -9.0,
+    0.0,
+    -9.5
+   ],
+   [
+    10.222999572753906,
+    13.399999618530273,
+    9.222999572753906
+   ]
+  ]
+ },
+ "far": {
+  "tris": 42,
+  "verts": 84,
+  "regions": [
+   "F_c_tower_3",
+   "F_flat"
+  ],
+  "bbox": [
+   [
+    -9.0,
+    0.0,
+    -8.0
+   ],
+   [
+    9.0,
+    13.399999618530273,
+    8.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   6.8
+  ]
+ ],
+ "footprint_wd": [
+  18.0,
+  16.0
+ ],
+ "footprint_area": 288.0,
+ "height": 13.47,
+ "storeys": 4,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "apartment_large",
+ "time_s": 16.6
+}

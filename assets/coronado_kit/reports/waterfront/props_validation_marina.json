@@ -1,0 +1,313 @@
+[
+ {
+  "file": "prop_dock_box_clean_far.glb",
+  "tier": "far",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 10,
+  "verts": 20,
+  "budget": 20,
+  "size": [
+   1.535,
+   0.62,
+   0.639
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_dock_box_clean_mid.glb",
+  "tier": "mid",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 18,
+  "verts": 46,
+  "budget": 181,
+  "size": [
+   1.543,
+   0.62,
+   0.645
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_dock_box_clean_near.glb",
+  "tier": "near",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 266,
+  "verts": 534,
+  "budget": 600,
+  "size": [
+   1.543,
+   0.62,
+   0.74
+  ],
+  "odd_ray": 12
+ },
+ {
+  "file": "prop_dock_box_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 1,
+  "col_maxverts": 8
+ },
+ {
+  "file": "prop_marina_finger_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.00,3.79) - asymmetric parts?"
+  ],
+  "tris": 16,
+  "verts": 34,
+  "budget": 20,
+  "size": [
+   3.0,
+   0.75,
+   7.58
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_marina_finger_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.00,3.78) - asymmetric parts?",
+   "16 tris may face inward / be enclosed"
+  ],
+  "tris": 94,
+  "verts": 231,
+  "budget": 751,
+  "size": [
+   3.0,
+   0.75,
+   7.56
+  ],
+  "odd_ray": 20
+ },
+ {
+  "file": "prop_marina_finger_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.00,3.75) - asymmetric parts?",
+   "204 tris may face inward / be enclosed"
+  ],
+  "tris": 1172,
+  "verts": 2501,
+  "budget": 2500,
+  "size": [
+   3.085,
+   0.869,
+   7.617
+  ],
+  "odd_ray": 216
+ },
+ {
+  "file": "prop_marina_finger_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 2,
+  "col_maxverts": 8
+ },
+ {
+  "file": "prop_marina_float_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 10,
+  "verts": 20,
+  "budget": 20,
+  "size": [
+   6.0,
+   0.75,
+   2.62
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_marina_float_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "16 tris may face inward / be enclosed"
+  ],
+  "tris": 134,
+  "verts": 320,
+  "budget": 751,
+  "size": [
+   6.0,
+   0.84,
+   2.62
+  ],
+  "odd_ray": 22
+ },
+ {
+  "file": "prop_marina_float_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "191 tris may face inward / be enclosed"
+  ],
+  "tris": 1470,
+  "verts": 2972,
+  "budget": 2500,
+  "size": [
+   6.047,
+   0.869,
+   2.72
+  ],
+  "odd_ray": 236
+ },
+ {
+  "file": "prop_marina_float_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 5,
+  "col_maxverts": 8
+ },
+ {
+  "file": "prop_marina_pedestal_clean_far.glb",
+  "tier": "far",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 12,
+  "verts": 24,
+  "budget": 20,
+  "size": [
+   0.4,
+   1.17,
+   0.34
+  ],
+  "odd_ray": 2
+ },
+ {
+  "file": "prop_marina_pedestal_clean_mid.glb",
+  "tier": "mid",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 30,
+  "verts": 77,
+  "budget": 181,
+  "size": [
+   0.4,
+   1.15,
+   0.34
+  ],
+  "odd_ray": 2
+ },
+ {
+  "file": "prop_marina_pedestal_clean_near.glb",
+  "tier": "near",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "20 tris may face inward / be enclosed"
+  ],
+  "tris": 188,
+  "verts": 352,
+  "budget": 600,
+  "size": [
+   0.404,
+   1.17,
+   0.356
+  ],
+  "odd_ray": 44
+ },
+ {
+  "file": "prop_marina_pedestal_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 1,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_marina_pile_clean_far.glb",
+  "tier": "far",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 14,
+  "verts": 28,
+  "budget": 20,
+  "size": [
+   0.6,
+   5.3,
+   0.71
+  ],
+  "odd_ray": 2
+ },
+ {
+  "file": "prop_marina_pile_clean_mid.glb",
+  "tier": "mid",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 112,
+  "verts": 297,
+  "budget": 361,
+  "size": [
+   0.6,
+   5.46,
+   0.706
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_marina_pile_clean_near.glb",
+  "tier": "near",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "112 tris may face inward / be enclosed"
+  ],
+  "tris": 510,
+  "verts": 932,
+  "budget": 1200,
+  "size": [
+   0.6,
+   5.46,
+   0.706
+  ],
+  "odd_ray": 130
+ },
+ {
+  "file": "prop_marina_pile_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 2,
+  "col_maxverts": 24
+ }
+]

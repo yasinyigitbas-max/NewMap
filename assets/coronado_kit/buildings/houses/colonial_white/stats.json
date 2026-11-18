@@ -1,0 +1,120 @@
+{
+ "name": "colonial_white",
+ "cat": "house",
+ "style": "colonial",
+ "logic_errors": [],
+ "col_boxes": 11,
+ "near": {
+  "tris": 2341,
+  "verts": 3976,
+  "regions": [
+   "O_door_white",
+   "O_lamp",
+   "O_number",
+   "O_shutter",
+   "O_small_white",
+   "O_vent",
+   "O_win_dh_div",
+   "O_win_dh_white",
+   "R_comp",
+   "S_black",
+   "S_concrete",
+   "S_siding",
+   "S_soffit",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_rail",
+   "T_white",
+   "W_brick",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -6.019999980926514,
+    0.0,
+    -4.519999980926514
+   ],
+   [
+    6.019999980926514,
+    9.15999984741211,
+    6.199999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 8.56,
+ "mid": {
+  "tris": 404,
+  "verts": 488,
+  "regions": [
+   "O_door_white",
+   "O_small_white",
+   "O_win_dh_div",
+   "O_win_dh_white",
+   "S_comp",
+   "S_concrete",
+   "S_deck",
+   "S_soffit",
+   "S_white",
+   "W_brick",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.900000095367432,
+    0.0,
+    -4.400000095367432
+   ],
+   [
+    5.900000095367432,
+    9.15999984741211,
+    6.199999809265137
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 46,
+  "regions": [
+   "F_comp",
+   "F_siding_2",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -5.5,
+    0.0,
+    -4.0
+   ],
+   [
+    5.5,
+    8.5600004196167,
+    4.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  11.0,
+  8.0
+ ],
+ "footprint_area": 88.0,
+ "height": 9.16,
+ "storeys": 2,
+ "budget": [
+  2500,
+  750,
+  60
+ ],
+ "budget_class": "house_large",
+ "time_s": 13.2
+}

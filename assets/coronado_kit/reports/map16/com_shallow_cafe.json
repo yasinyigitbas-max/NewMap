@@ -1,0 +1,187 @@
+{
+ "name": "com_shallow_cafe",
+ "style": "shallow_shop",
+ "module": "city_map",
+ "stats": {
+  "near": {
+   "tris": 1108,
+   "verts": 2004,
+   "regions": [
+    "AW_red",
+    "O_apt_door",
+    "O_lamp",
+    "O_louver",
+    "O_small_white",
+    "O_storefront",
+    "O_win_casement",
+    "R_flat",
+    "SG_cafe",
+    "S_awn_red",
+    "S_black",
+    "S_stucco",
+    "S_white",
+    "T_dark",
+    "T_metal",
+    "T_white",
+    "W_stucco"
+   ],
+   "bbox": [
+    [
+     -4.199999809265137,
+     -0.0,
+     -3.700000047683716
+    ],
+    [
+     4.199999809265137,
+     5.269999980926514,
+     4.422999858856201
+    ]
+   ]
+  },
+  "mid": {
+   "tris": 210,
+   "verts": 266,
+   "regions": [
+    "AW_red",
+    "O_apt_door",
+    "O_louver",
+    "O_small_white",
+    "O_storefront",
+    "O_win_casement",
+    "SG_cafe",
+    "S_awn_red",
+    "S_flat",
+    "S_signbg",
+    "S_white",
+    "W_stucco"
+   ],
+   "bbox": [
+    [
+     -3.75,
+     0.0,
+     -3.25
+    ],
+    [
+     3.75,
+     5.099999904632568,
+     4.422999858856201
+    ]
+   ]
+  },
+  "far": {
+   "tris": 20,
+   "verts": 32,
+   "regions": [
+    "F_dark",
+    "F_flat",
+    "F_stucco_1",
+    "F_stucco_blank"
+   ],
+   "bbox": [
+    [
+     -3.75,
+     0.0,
+     -3.25
+    ],
+    [
+     3.75,
+     5.099999904632568,
+     3.25
+    ]
+   ]
+  },
+  "budget": [
+   1200,
+   350,
+   20
+  ],
+  "budget_class": "shop",
+  "storeys": 1,
+  "footprint_wd": [
+   7.5,
+   6.5
+  ],
+  "footprint_area": 48.8,
+  "height": 5.27,
+  "logic_errors": [],
+  "col_boxes": 1
+ },
+ "validator": {
+  "pass": true,
+  "errors": []
+ },
+ "railcheck": {
+  "pass": true,
+  "gaps": [],
+  "floating": [],
+  "pen": []
+ },
+ "far_match": {
+  "ok": true,
+  "reason": "ok (opening layout)",
+  "detail": {
+   "mid_h": 5.1,
+   "far_h": 5.1,
+   "mid_w": 7.5,
+   "far_w": 7.5,
+   "iou": 1.0,
+   "mid_px": 54144,
+   "far_px": 54144,
+   "frame": [
+    -3.75,
+    3.75,
+    0.0,
+    5.1
+   ],
+   "swing_mid": 0.408,
+   "corr": 0.936,
+   "mid_rows": 3,
+   "far_rows": 1,
+   "mid_fill": 0.477,
+   "far_fill": 0.465,
+   "mid_cols": 1,
+   "far_cols": 1,
+   "mid_col_x": [
+    0.362
+   ],
+   "far_col_x": [
+    0.362
+   ],
+   "mid_open_rows": 2,
+   "far_open_rows": 1
+  },
+  "full_iou": {
+   "front": 1.0,
+   "side": 0.9957933579335794
+  }
+ },
+ "pass": true,
+ "time_s": 6.2,
+ "wallcheck": {
+  "front": {
+   "wall_px": 26898,
+   "resid_std": 0.0066,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "left": {
+   "wall_px": 126880,
+   "resid_std": 0.0078,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "right": {
+   "wall_px": 154948,
+   "resid_std": 0.0057,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "back": {
+   "wall_px": 140972,
+   "resid_std": 0.0077,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "pass": true
+ }
+}

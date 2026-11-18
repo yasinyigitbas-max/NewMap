@@ -1,0 +1,372 @@
+{
+ "pylon_sign": {
+  "file_base": "prop_pylon_sign",
+  "batch": "b2a",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1324,
+   "mid": 162,
+   "far": 12
+  },
+  "footprint_w": 3.6,
+  "footprint_d": 1.65,
+  "height": 7.592,
+  "regions": [
+   "baked:pylon_sign"
+  ],
+  "trim": {
+   "tw_conc_top": {
+    "area_m2": 7.79,
+    "px_per_m": 128.0
+   },
+   "tw_paint": {
+    "area_m2": 50.73,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 0.62,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 106197,
+  "bake_slot_px": 256,
+  "bake_px_per_m": 33.2,
+  "col": 5,
+  "secs": 20.7
+ },
+ "drive_thru_menu": {
+  "file_base": "prop_drive_thru_menu",
+  "batch": "b2a",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 744,
+   "mid": 74,
+   "far": 20
+  },
+  "footprint_w": 2.96,
+  "footprint_d": 1.025,
+  "height": 2.67,
+  "regions": [
+   "baked:drive_thru_menu"
+  ],
+  "trim": {
+   "tw_conc_top": {
+    "area_m2": 4.61,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 0.78,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 157214,
+  "bake_slot_px": 144,
+  "bake_px_per_m": 26.1,
+  "col": 4,
+  "secs": 32.6
+ },
+ "vending_soda": {
+  "file_base": "prop_vending_soda",
+  "batch": "b2a",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 474,
+   "mid": 16,
+   "far": 10
+  },
+  "footprint_w": 1.032,
+  "footprint_d": 1.425,
+  "height": 1.83,
+  "regions": [
+   "baked:vending_soda"
+  ],
+  "trim": {
+   "tw_rubber": {
+    "area_m2": 0.1,
+    "px_per_m": 128.0
+   },
+   "tw_paint": {
+    "area_m2": 7.52,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 65912,
+  "bake_slot_px": 160,
+  "bake_px_per_m": 83.8,
+  "col": 1,
+  "secs": 23.0
+ },
+ "vending_snack": {
+  "file_base": "prop_vending_snack",
+  "batch": "b2a",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 410,
+   "mid": 16,
+   "far": 10
+  },
+  "footprint_w": 1.057,
+  "footprint_d": 1.43,
+  "height": 1.83,
+  "regions": [
+   "baked:vending_snack"
+  ],
+  "trim": {
+   "tw_rubber": {
+    "area_m2": 0.1,
+    "px_per_m": 128.0
+   },
+   "tw_paint": {
+    "area_m2": 8.09,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 41125,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 66.7,
+  "col": 1,
+  "secs": 21.6
+ },
+ "wheel_stop_concrete": {
+  "file_base": "prop_wheel_stop_concrete",
+  "batch": "b2a",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 142,
+   "mid": 18,
+   "far": 10
+  },
+  "footprint_w": 1.83,
+  "footprint_d": 0.15,
+  "height": 0.108,
+  "regions": [
+   "baked:wheel_stop_concrete"
+  ],
+  "trim": {
+   "tw_conc_top": {
+    "area_m2": 0.02,
+    "px_per_m": 128.0
+   },
+   "tw_rubber": {
+    "area_m2": 0.0,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 2514,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 50.7,
+  "col": 1,
+  "secs": 18.5
+ },
+ "wheel_stop_rubber": {
+  "file_base": "prop_wheel_stop_rubber",
+  "batch": "b2a",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 146,
+   "mid": 18,
+   "far": 10
+  },
+  "footprint_w": 1.83,
+  "footprint_d": 0.15,
+  "height": 0.104,
+  "regions": [
+   "baked:wheel_stop_rubber"
+  ],
+  "trim": {
+   "tw_galv": {
+    "area_m2": 0.0,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 14534,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 50.6,
+  "col": 1,
+  "secs": 19.0
+ },
+ "shopping_cart": {
+  "file_base": "prop_shopping_cart",
+  "batch": "b2a",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1012,
+   "mid": 104,
+   "far": 14
+  },
+  "footprint_w": 0.58,
+  "footprint_d": 1.059,
+  "height": 1.046,
+  "regions": [
+   "baked:shopping_cart"
+  ],
+  "trim": {
+   "tw_galv": {
+    "area_m2": 1.61,
+    "px_per_m": 128.0
+   },
+   "tw_rubber": {
+    "area_m2": 0.09,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 14161,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 95.8,
+  "col": 2,
+  "secs": 17.4
+ },
+ "cart_corral": {
+  "file_base": "prop_cart_corral",
+  "batch": "b2a",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 672,
+   "mid": 276,
+   "far": 20
+  },
+  "footprint_w": 4.25,
+  "footprint_d": 2.08,
+  "height": 2.0,
+  "regions": [
+   "baked:cart_corral"
+  ],
+  "trim": {
+   "tw_galv": {
+    "area_m2": 5.58,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 19595,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 86.0,
+  "col": 4,
+  "secs": 26.3
+ },
+ "bus_stop_sign": {
+  "file_base": "prop_bus_stop_sign",
+  "batch": "b2a",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 290,
+   "mid": 32,
+   "far": 12
+  },
+  "footprint_w": 0.625,
+  "footprint_d": 0.304,
+  "height": 3.31,
+  "regions": [
+   "baked:bus_stop_sign"
+  ],
+  "trim": {
+   "tw_conc_top": {
+    "area_m2": 0.1,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 0.11,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 58266,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 63.4,
+  "col": 2,
+  "secs": 8.3
+ },
+ "ice_chest": {
+  "file_base": "prop_ice_chest",
+  "batch": "b2a",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 414,
+   "mid": 24,
+   "far": 10
+  },
+  "footprint_w": 1.642,
+  "footprint_d": 1.337,
+  "height": 1.266,
+  "regions": [
+   "baked:ice_chest"
+  ],
+  "trim": {
+   "tw_galv": {
+    "area_m2": 0.34,
+    "px_per_m": 128.0
+   },
+   "tw_paint": {
+    "area_m2": 7.71,
+    "px_per_m": 128.0
+   },
+   "tw_rubber": {
+    "area_m2": 0.12,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 59155,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 59.7,
+  "col": 1,
+  "secs": 24.8
+ }
+}

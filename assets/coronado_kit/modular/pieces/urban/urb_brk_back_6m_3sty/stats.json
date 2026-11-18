@@ -1,0 +1,186 @@
+{
+ "name": "urb_brk_back_6m_3sty",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 3,
+ "near": {
+  "tris": 290,
+  "verts": 500,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_small_white",
+   "O_win_dh_white",
+   "S_black",
+   "S_brick",
+   "S_concrete",
+   "T_concrete",
+   "T_metal",
+   "T_white",
+   "W_brick"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.10000000149011612
+   ],
+   [
+    3.0,
+    10.369999885559082,
+    1.649999976158142
+   ]
+  ]
+ },
+ "mid_roof_top": 10.3,
+ "mid": {
+  "tris": 90,
+  "verts": 112,
+  "regions": [
+   "O_apt_door",
+   "O_small_white",
+   "O_win_dh_white",
+   "S_concrete",
+   "S_white",
+   "W_brick"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.05000000074505806
+   ],
+   [
+    3.0,
+    10.300000190734863,
+    1.649999976158142
+   ]
+  ]
+ },
+ "far": {
+  "tris": 10,
+  "verts": 20,
+  "regions": [
+   "F_c_brick_3",
+   "F_flat"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.15000000596046448
+   ],
+   [
+    3.0,
+    10.300000190734863,
+    0.15000000596046448
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "apt_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  6.0,
+  0.3
+ ],
+ "footprint_area": 1.8,
+ "height": 10.37,
+ "storeys": 1,
+ "budget": [
+  500,
+  150,
+  16
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_brk_back",
+ "time_s": 0.7,
+ "open_planes": [
+  [
+   0,
+   -3.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   3.0,
+   1,
+   null
+  ],
+  [
+   2,
+   -0.15,
+   -1,
+   null
+  ],
+  [
+   1,
+   9.3,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.15
+ ],
+ "openings": [
+  {
+   "k": "apt_door",
+   "c": 0.0,
+   "w": 1.0,
+   "t0": 0.3,
+   "t1": 2.5
+  },
+  {
+   "k": "small",
+   "c": 1.6,
+   "w": 0.7,
+   "t0": 1.8,
+   "t1": 2.5
+  },
+  {
+   "k": "dh",
+   "c": 0.0,
+   "w": 1.2,
+   "t0": 4.2,
+   "t1": 5.6
+  },
+  {
+   "k": "dh",
+   "c": 0.0,
+   "w": 1.2,
+   "t0": 7.2,
+   "t1": 8.6
+  }
+ ],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "brk_back",
+  "ends": [
+   [
+    -3.0,
+    0,
+    0.15
+   ],
+   [
+    3.0,
+    0,
+    0.15
+   ]
+  ],
+  "face_z": 0.15,
+  "plate_y": 9.3,
+  "parapet_top": 10.3
+ },
+ "no_door": false,
+ "base_y": 0.0,
+ "ground_reach": false
+}

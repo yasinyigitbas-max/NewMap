@@ -1,0 +1,102 @@
+{
+ "name": "single_stucco_clay",
+ "cat": "garage",
+ "style": "garage",
+ "logic_errors": [],
+ "col_boxes": 2,
+ "near": {
+  "tris": 270,
+  "verts": 467,
+  "regions": [
+   "O_door_white",
+   "O_garage_panel",
+   "O_lamp",
+   "O_small_white",
+   "R_clay",
+   "S_black",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -2.049999952316284,
+    0.0,
+    -3.200000047683716
+   ],
+   [
+    2.1700000762939453,
+    3.5980000495910645,
+    3.200000047683716
+   ]
+  ]
+ },
+ "mid_roof_top": 3.598,
+ "mid": {
+  "tris": 72,
+  "verts": 92,
+  "regions": [
+   "O_door_white",
+   "O_garage_panel",
+   "O_small_white",
+   "S_clay",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -2.049999952316284,
+    0.0,
+    -3.0
+   ],
+   [
+    2.049999952316284,
+    3.5980000495910645,
+    3.0
+   ]
+  ]
+ },
+ "far": {
+  "tris": 10,
+  "verts": 20,
+  "regions": [
+   "F_clay",
+   "F_stucco_1"
+  ],
+  "bbox": [
+   [
+    -1.75,
+    0.0,
+    -3.0
+   ],
+   [
+    1.75,
+    3.5980000495910645,
+    3.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "garage",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  3.5,
+  6.0
+ ],
+ "footprint_area": 21.0,
+ "height": 3.6,
+ "storeys": 1,
+ "budget": [
+  300,
+  100,
+  12
+ ],
+ "budget_class": "garage",
+ "time_s": 0.6
+}

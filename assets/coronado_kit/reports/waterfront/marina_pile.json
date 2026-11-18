@@ -1,0 +1,106 @@
+{
+ "name": "marina_pile",
+ "tiers": {
+  "near": 510,
+  "mid": 112,
+  "far": 14
+ },
+ "budget": 1200,
+ "class": "medium",
+ "far_paint_max": null,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_marina_pile_clean_far.glb",
+   "tier": "far",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 14,
+   "verts": 28,
+   "budget": 20,
+   "size": [
+    0.6,
+    5.3,
+    0.71
+   ],
+   "odd_ray": 2
+  },
+  {
+   "file": "prop_marina_pile_clean_mid.glb",
+   "tier": "mid",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 112,
+   "verts": 297,
+   "budget": 361,
+   "size": [
+    0.6,
+    5.46,
+    0.706
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_marina_pile_clean_near.glb",
+   "tier": "near",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "112 tris may face inward / be enclosed"
+   ],
+   "tris": 510,
+   "verts": 932,
+   "budget": 1200,
+   "size": [
+    0.6,
+    5.46,
+    0.706
+   ],
+   "odd_ray": 130
+  },
+  {
+   "file": "prop_marina_pile_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 2,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.903,
+   "dE": 0.1
+  },
+  "top": {
+   "iou": 0.879,
+   "dE": 4.7
+  },
+  "left": {
+   "iou": 0.883,
+   "dE": 0.1,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 1,
+  "rail": 1
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 96,
+ "bake_px_per_m": 75.3,
+ "high_tris": 8840,
+ "pass": true
+}

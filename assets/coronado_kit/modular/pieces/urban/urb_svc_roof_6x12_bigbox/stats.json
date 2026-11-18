@@ -1,0 +1,121 @@
+{
+ "name": "urb_svc_roof_6x12_bigbox",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 286,
+  "verts": 572,
+  "regions": [
+   "O_louver",
+   "R_flat",
+   "S_black",
+   "S_soffit",
+   "T_dark",
+   "T_metal"
+  ],
+  "bbox": [
+   [
+    -2.9800000190734863,
+    5.400000095367432,
+    -5.900000095367432
+   ],
+   [
+    2.9800000190734863,
+    6.541999816894531,
+    5.900000095367432
+   ]
+  ]
+ },
+ "mid_roof_top": 6.542,
+ "mid": {
+  "tris": 56,
+  "verts": 112,
+  "regions": [
+   "S_flat",
+   "S_metal",
+   "S_soffit"
+  ],
+  "bbox": [
+   [
+    -2.9800000190734863,
+    5.400000095367432,
+    -5.900000095367432
+   ],
+   [
+    2.9800000190734863,
+    6.541999816894531,
+    5.900000095367432
+   ]
+  ]
+ },
+ "far": {
+  "tris": 56,
+  "verts": 80,
+  "regions": [
+   "F_dark",
+   "F_flat",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -2.9800000190734863,
+    5.400000095367432,
+    -5.900000095367432
+   ],
+   [
+    2.9800000190734863,
+    6.541999816894531,
+    5.900000095367432
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  6.0,
+  12.0
+ ],
+ "footprint_area": 72.0,
+ "height": 6.54,
+ "storeys": 1,
+ "budget": [
+  480,
+  80,
+  72
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_svc_roof",
+ "time_s": 0.3,
+ "open_planes": [
+  [
+   0,
+   -2.98,
+   -1,
+   null
+  ],
+  [
+   0,
+   2.98,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "type": "svc_roof",
+  "module": 6.0,
+  "depth": 12.0,
+  "plate_y": 5.4,
+  "note": "deck tucks under front/back parapets; X ends open for adjacent bays"
+ },
+ "no_door": true,
+ "base_y": 5.4,
+ "ground_reach": false
+}

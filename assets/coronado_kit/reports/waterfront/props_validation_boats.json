@@ -1,0 +1,248 @@
+[
+ {
+  "file": "prop_boat_express_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 20,
+  "verts": 32,
+  "budget": 20,
+  "size": [
+   2.62,
+   3.047,
+   9.322
+  ],
+  "odd_ray": 1
+ },
+ {
+  "file": "prop_boat_express_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 254,
+  "verts": 664,
+  "budget": 751,
+  "size": [
+   2.62,
+   3.027,
+   9.452
+  ],
+  "odd_ray": 18
+ },
+ {
+  "file": "prop_boat_express_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "194 tris may face inward / be enclosed"
+  ],
+  "tris": 2341,
+  "verts": 5780,
+  "budget": 2500,
+  "size": [
+   2.835,
+   5.247,
+   9.492
+  ],
+  "odd_ray": 478
+ },
+ {
+  "file": "prop_boat_express_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 11,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_boat_skiff_clean_far.glb",
+  "tier": "far",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 15,
+  "verts": 23,
+  "budget": 20,
+  "size": [
+   1.6,
+   1.08,
+   5.218
+  ],
+  "odd_ray": 2
+ },
+ {
+  "file": "prop_boat_skiff_clean_mid.glb",
+  "tier": "mid",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "16 tris may face inward / be enclosed"
+  ],
+  "tris": 148,
+  "verts": 400,
+  "budget": 361,
+  "size": [
+   1.58,
+   1.1,
+   5.198
+  ],
+  "odd_ray": 16
+ },
+ {
+  "file": "prop_boat_skiff_clean_near.glb",
+  "tier": "near",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "129 tris may face inward / be enclosed"
+  ],
+  "tris": 1076,
+  "verts": 2246,
+  "budget": 1200,
+  "size": [
+   1.622,
+   1.116,
+   5.228
+  ],
+  "odd_ray": 156
+ },
+ {
+  "file": "prop_boat_skiff_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 3,
+  "col_maxverts": 8
+ },
+ {
+  "file": "prop_boat_sloop_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 19,
+  "verts": 27,
+  "budget": 20,
+  "size": [
+   3.1,
+   13.986,
+   9.22
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_boat_sloop_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 361,
+  "verts": 887,
+  "budget": 751,
+  "size": [
+   2.976,
+   13.699,
+   9.2
+  ],
+  "odd_ray": 14
+ },
+ {
+  "file": "prop_boat_sloop_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "221 tris may face inward / be enclosed"
+  ],
+  "tris": 2378,
+  "verts": 4767,
+  "budget": 2500,
+  "size": [
+   3.22,
+   14.597,
+   9.488
+  ],
+  "odd_ray": 360
+ },
+ {
+  "file": "prop_boat_sloop_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 7,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_boat_troller_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 20,
+  "verts": 32,
+  "budget": 20,
+  "size": [
+   3.94,
+   14.56,
+   11.937
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_boat_troller_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "18 tris may face inward / be enclosed"
+  ],
+  "tris": 278,
+  "verts": 701,
+  "budget": 751,
+  "size": [
+   3.82,
+   14.562,
+   11.917
+  ],
+  "odd_ray": 21
+ },
+ {
+  "file": "prop_boat_troller_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 2088,
+  "verts": 4287,
+  "budget": 2500,
+  "size": [
+   4.106,
+   14.562,
+   11.917
+  ],
+  "odd_ray": 235
+ },
+ {
+  "file": "prop_boat_troller_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 8,
+  "col_maxverts": 24
+ }
+]

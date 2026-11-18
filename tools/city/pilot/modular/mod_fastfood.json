@@ -1,0 +1,95 @@
+{
+ "name": "mod_fastfood",
+ "group": "urban",
+ "outline": {
+  "kind": "shop",
+  "W": 12.0,
+  "D": 12.0,
+  "storeys": 1,
+  "wall": "W_stucco",
+  "tint": [
+   0.93,
+   0.86,
+   0.72
+  ],
+  "budget": "shop",
+  "floor": 0.0,
+  "storey": 4.2,
+  "parapet": 0.9,
+  "sills": false,
+  "foundation": false
+ },
+ "pieces": [
+  {
+   "piece": "urb_svc_front_6m_fastfood",
+   "x": -3.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_svc_front_6m_fastfood",
+   "x": 3.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_back_6m_stucco",
+   "x": 3.0,
+   "z": -5.85,
+   "rot_y": 180,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_back_6m_stucco",
+   "x": -3.0,
+   "z": -5.85,
+   "rot_y": 180,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_side_12m_stucco",
+   "x": 5.85,
+   "z": 0.0,
+   "rot_y": 90,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_side_12m_stucco_l",
+   "x": -5.85,
+   "z": 0.0,
+   "rot_y": 270,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_roof_6m_end",
+   "x": -3.0,
+   "z": 0.0,
+   "rot_y": 0,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_roof_6m_end",
+   "x": 3.0,
+   "z": 0.0,
+   "rot_y": 180,
+   "group": "shops"
+  }
+ ],
+ "far_tiles": {
+  "example": "mod_svc_row",
+  "nx": 1,
+  "nz": 1,
+  "size": 12.0
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   -4.8
+  ],
+  [
+   "shopdoor",
+   1.2
+  ]
+ ],
+ "note": "two-bay fast food from the kit urb_svc_front_6m_fastfood fronts on the svc_row shell (shop sides/backs/roofs)"
+}

@@ -1,0 +1,863 @@
+{
+ "name": "park_dog_run",
+ "style": "dog_park",
+ "footprint": [
+  36,
+  28
+ ],
+ "zones": [
+  {
+   "kind": "lawn",
+   "rect": [
+    -18,
+    18,
+    -14,
+    14
+   ]
+  },
+  {
+   "kind": "path",
+   "rect": [
+    -18,
+    18,
+    -14,
+    -11
+   ]
+  }
+ ],
+ "instances": [
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -16.06,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -14.19,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -12.31,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -10.44,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -8.56,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -6.69,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -4.81,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -2.94,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    2.94,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    4.81,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    6.69,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    8.56,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    10.44,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    12.31,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    14.19,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    16.06,
+    0.0,
+    -10.0
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -17.5,
+    0.0,
+    -8.48
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -17.5,
+    0.0,
+    -6.43
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -17.5,
+    0.0,
+    -4.39
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -17.5,
+    0.0,
+    -2.34
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -17.5,
+    0.0,
+    -0.3
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -17.5,
+    0.0,
+    1.75
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -17.5,
+    0.0,
+    3.8
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -17.5,
+    0.0,
+    5.84
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -17.5,
+    0.0,
+    7.89
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -17.5,
+    0.0,
+    9.93
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -17.5,
+    0.0,
+    11.98
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    17.5,
+    0.0,
+    -8.48
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    17.5,
+    0.0,
+    -6.43
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    17.5,
+    0.0,
+    -4.39
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    17.5,
+    0.0,
+    -2.34
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    17.5,
+    0.0,
+    -0.3
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    17.5,
+    0.0,
+    1.75
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    17.5,
+    0.0,
+    3.8
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    17.5,
+    0.0,
+    5.84
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    17.5,
+    0.0,
+    7.89
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    17.5,
+    0.0,
+    9.93
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    17.5,
+    0.0,
+    11.98
+   ],
+   "rot_y": 90.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -16.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -14.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -12.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -10.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -8.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -6.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -4.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    -2.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    0.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    2.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    4.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    6.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    8.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    10.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    12.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    14.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "fence_chainlink",
+   "cond": "clean",
+   "pos": [
+    16.0,
+    0.0,
+    13.5
+   ],
+   "rot_y": 180.0,
+   "role": "fence",
+   "file": "fences/fence_chainlink_clean_near.glb",
+   "tris_near": null
+  },
+  {
+   "base": "prop_beach_sign_dog",
+   "cond": "clean",
+   "pos": [
+    -3.0,
+    0.0,
+    -8.8
+   ],
+   "rot_y": 180,
+   "role": "sign",
+   "file": "props/park/prop_beach_sign_dog_clean_near.glb",
+   "tris_near": 32
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    -10,
+    0.0,
+    10.5
+   ],
+   "rot_y": 180.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    0,
+    0.0,
+    10.5
+   ],
+   "rot_y": 180.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    10,
+    0.0,
+    10.5
+   ],
+   "rot_y": 180.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_drinking_fountain",
+   "cond": "clean",
+   "pos": [
+    4,
+    0.0,
+    -8.8
+   ],
+   "rot_y": 0,
+   "role": "fountain",
+   "file": "props/park/prop_drinking_fountain_clean_near.glb",
+   "tris_near": 288
+  },
+  {
+   "base": "prop_trash_receptacle",
+   "cond": "clean",
+   "pos": [
+    -6,
+    0.0,
+    -8.8
+   ],
+   "rot_y": 0.0,
+   "role": "bin",
+   "file": "props/street/prop_trash_receptacle_clean_near.glb",
+   "tris_near": 298
+  },
+  {
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "pos": [
+    -12,
+    0.0,
+    3
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/tree_ficus_a_normal_near.glb",
+   "tris_near": 1252
+  },
+  {
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "pos": [
+    12,
+    0.0,
+    3
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/tree_ficus_b_normal_near.glb",
+   "tris_near": 1104
+  }
+ ],
+ "stats": {
+  "instances": 63,
+  "near_tris_sum": 3514,
+  "assets": [
+   "fence_chainlink",
+   "prop_beach_sign_dog",
+   "prop_drinking_fountain",
+   "prop_park_bench",
+   "prop_trash_receptacle",
+   "tree_ficus_a",
+   "tree_ficus_b"
+  ]
+ },
+ "errors": []
+}

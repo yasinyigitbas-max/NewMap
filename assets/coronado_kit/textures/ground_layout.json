@@ -1,0 +1,128 @@
+{
+ "size": 1024,
+ "regions": {
+  "G_grass": {
+   "kind": "tile",
+   "px": [
+    0,
+    0,
+    512,
+    512
+   ],
+   "uv": [
+    0.0,
+    0.0,
+    0.5,
+    0.5
+   ],
+   "tile_m": 3.0
+  },
+  "G_paving": {
+   "kind": "tile",
+   "px": [
+    512,
+    0,
+    1024,
+    512
+   ],
+   "uv": [
+    0.5,
+    0.0,
+    1.0,
+    0.5
+   ],
+   "tile_m": 2.0
+  },
+  "G_sand": {
+   "kind": "tile",
+   "px": [
+    0,
+    512,
+    512,
+    1024
+   ],
+   "uv": [
+    0.0,
+    0.5,
+    0.5,
+    1.0
+   ],
+   "tile_m": 3.0
+  },
+  "G_chips": {
+   "kind": "tile",
+   "px": [
+    512,
+    512,
+    768,
+    768
+   ],
+   "uv": [
+    0.5,
+    0.5,
+    0.75,
+    0.75
+   ],
+   "tile_m": 2.0
+  },
+  "G_court": {
+   "kind": "tile",
+   "px": [
+    768,
+    512,
+    1024,
+    768
+   ],
+   "uv": [
+    0.75,
+    0.5,
+    1.0,
+    0.75
+   ],
+   "tile_m": 2.0
+  },
+  "G_curb": {
+   "kind": "strip",
+   "px": [
+    512,
+    768,
+    1024,
+    896
+   ],
+   "uv": [
+    0.5,
+    0.75,
+    1.0,
+    0.875
+   ],
+   "tile_m": 2.0,
+   "strip_h_m": 0.5
+  },
+  "G_timber": {
+   "kind": "strip",
+   "px": [
+    512,
+    896,
+    1024,
+    1024
+   ],
+   "uv": [
+    0.5,
+    0.875,
+    1.0,
+    1.0
+   ],
+   "tile_m": 2.0,
+   "strip_h_m": 0.5
+  }
+ },
+ "sources": {
+  "grass_ground": "Poly Haven CC0",
+  "concrete_pavement": "Poly Haven CC0",
+  "park_sand": "Poly Haven CC0",
+  "coast_sand_01": "Poly Haven CC0",
+  "wood_chips": "Poly Haven CC0",
+  "smooth_concrete_floor": "Poly Haven CC0",
+  "weathered_brown_planks": "Poly Haven CC0"
+ }
+}

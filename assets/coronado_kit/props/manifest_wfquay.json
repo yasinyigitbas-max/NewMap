@@ -1,0 +1,287 @@
+{
+ "quay_straight": {
+  "file_base": "prop_quay_straight",
+  "batch": "wfquay",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1638,
+   "mid": 234,
+   "far": 6
+  },
+  "footprint_w": 6.0,
+  "footprint_d": 2.025,
+  "height": 3.7,
+  "regions": [
+   "baked:quay_straight"
+  ],
+  "trim": {
+   "tw_tide": {
+    "area_m2": 5.64,
+    "px_per_m": 128.0
+   },
+   "tw_tide_hi": {
+    "area_m2": 5.64,
+    "px_per_m": 128.0
+   },
+   "tw_conc_top": {
+    "area_m2": 4.64,
+    "px_per_m": 128.0
+   },
+   "tw_conc": {
+    "area_m2": 1.55,
+    "px_per_m": 128.0
+   },
+   "tw_granite": {
+    "area_m2": 5.36,
+    "px_per_m": 128.0
+   },
+   "tw_paver": {
+    "area_m2": 6.9,
+    "px_per_m": 128.0
+   },
+   "tw_timber": {
+    "area_m2": 5.17,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 21185,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 73.6,
+  "col": 7,
+  "secs": 32.0
+ },
+ "quay_straight_bollards": {
+  "file_base": "prop_quay_straight_bollards",
+  "batch": "wfquay",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1606,
+   "mid": 332,
+   "far": 6
+  },
+  "footprint_w": 6.0,
+  "footprint_d": 2.025,
+  "height": 3.535,
+  "regions": [
+   "baked:quay_straight_bollards"
+  ],
+  "trim": {
+   "tw_tide": {
+    "area_m2": 5.25,
+    "px_per_m": 128.0
+   },
+   "tw_tide_hi": {
+    "area_m2": 5.25,
+    "px_per_m": 128.0
+   },
+   "tw_conc_top": {
+    "area_m2": 3.96,
+    "px_per_m": 128.0
+   },
+   "tw_conc": {
+    "area_m2": 1.8,
+    "px_per_m": 128.0
+   },
+   "tw_granite": {
+    "area_m2": 5.44,
+    "px_per_m": 128.0
+   },
+   "tw_paver": {
+    "area_m2": 6.9,
+    "px_per_m": 128.0
+   },
+   "tw_timber": {
+    "area_m2": 5.17,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 25553,
+  "bake_slot_px": 160,
+  "bake_px_per_m": 66.4,
+  "col": 5,
+  "secs": 29.8
+ },
+ "quay_corner_out": {
+  "file_base": "prop_quay_corner_out",
+  "batch": "wfquay",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1229,
+   "mid": 241,
+   "far": 12
+  },
+  "footprint_w": 2.025,
+  "footprint_d": 2.025,
+  "height": 3.535,
+  "regions": [
+   "baked:quay_corner_out"
+  ],
+  "trim": {
+   "tw_tide": {
+    "area_m2": 2.75,
+    "px_per_m": 128.0
+   },
+   "tw_tide_hi": {
+    "area_m2": 2.75,
+    "px_per_m": 128.0
+   },
+   "tw_conc_top": {
+    "area_m2": 2.07,
+    "px_per_m": 128.0
+   },
+   "tw_conc": {
+    "area_m2": 0.95,
+    "px_per_m": 128.0
+   },
+   "tw_granite": {
+    "area_m2": 2.63,
+    "px_per_m": 128.0
+   },
+   "tw_paver": {
+    "area_m2": 1.32,
+    "px_per_m": 128.0
+   },
+   "tw_timber": {
+    "area_m2": 5.17,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 13650,
+  "bake_slot_px": 160,
+  "bake_px_per_m": 70.7,
+  "col": 5,
+  "secs": 19.2
+ },
+ "quay_corner_in": {
+  "file_base": "prop_quay_corner_in",
+  "batch": "wfquay",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1100,
+   "mid": 228,
+   "far": 8
+  },
+  "footprint_w": 4.0,
+  "footprint_d": 4.0,
+  "height": 3.123,
+  "regions": [
+   "baked:quay_corner_in"
+  ],
+  "trim": {
+   "tw_tide": {
+    "area_m2": 4.03,
+    "px_per_m": 128.0
+   },
+   "tw_tide_hi": {
+    "area_m2": 4.03,
+    "px_per_m": 128.0
+   },
+   "tw_conc_top": {
+    "area_m2": 3.04,
+    "px_per_m": 128.0
+   },
+   "tw_conc": {
+    "area_m2": 1.37,
+    "px_per_m": 128.0
+   },
+   "tw_granite": {
+    "area_m2": 4.44,
+    "px_per_m": 128.0
+   },
+   "tw_paver": {
+    "area_m2": 7.88,
+    "px_per_m": 128.0
+   },
+   "tw_timber": {
+    "area_m2": 7.85,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 5952,
+  "bake_slot_px": 160,
+  "bake_px_per_m": 95.9,
+  "col": 5,
+  "secs": 30.6
+ },
+ "quay_stair": {
+  "file_base": "prop_quay_stair",
+  "batch": "wfquay",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1848,
+   "mid": 308,
+   "far": 14
+  },
+  "footprint_w": 6.0,
+  "footprint_d": 2.025,
+  "height": 4.07,
+  "regions": [
+   "baked:quay_stair"
+  ],
+  "trim": {
+   "tw_tide": {
+    "area_m2": 5.25,
+    "px_per_m": 128.0
+   },
+   "tw_tide_hi": {
+    "area_m2": 5.1,
+    "px_per_m": 128.0
+   },
+   "tw_conc_top": {
+    "area_m2": 6.41,
+    "px_per_m": 128.0
+   },
+   "tw_conc": {
+    "area_m2": 0.73,
+    "px_per_m": 128.0
+   },
+   "tw_granite": {
+    "area_m2": 10.71,
+    "px_per_m": 128.0
+   },
+   "tw_paver": {
+    "area_m2": 3.48,
+    "px_per_m": 128.0
+   },
+   "tw_timber": {
+    "area_m2": 2.58,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 19549,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 76.6,
+  "col": 17,
+  "secs": 30.1
+ }
+}

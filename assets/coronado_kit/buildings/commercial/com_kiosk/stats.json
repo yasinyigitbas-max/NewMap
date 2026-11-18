@@ -1,0 +1,114 @@
+{
+ "name": "com_kiosk",
+ "cat": "shop",
+ "style": "kiosk",
+ "logic_errors": [],
+ "col_boxes": 2,
+ "near": {
+  "tris": 576,
+  "verts": 1011,
+  "regions": [
+   "AW_green",
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_small_white",
+   "O_storefront",
+   "R_clay",
+   "SG_cafe",
+   "S_awn_green",
+   "S_black",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -2.569999933242798,
+    -0.0,
+    -3.299999952316284
+   ],
+   [
+    2.569999933242798,
+    4.202000141143799,
+    3.9230000972747803
+   ]
+  ]
+ },
+ "mid_roof_top": 4.189,
+ "mid": {
+  "tris": 166,
+  "verts": 232,
+  "regions": [
+   "AW_green",
+   "O_apt_door",
+   "O_louver",
+   "O_small_white",
+   "O_storefront",
+   "SG_cafe",
+   "S_awn_green",
+   "S_clay",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -2.450000047683716,
+    0.0,
+    -3.0
+   ],
+   [
+    2.450000047683716,
+    4.189000129699707,
+    3.9230000972747803
+   ]
+  ]
+ },
+ "far": {
+  "tris": 14,
+  "verts": 26,
+  "regions": [
+   "F_clay",
+   "F_stucco_1"
+  ],
+  "bbox": [
+   [
+    -2.0,
+    0.0,
+    -3.0
+   ],
+   [
+    2.0,
+    4.189000129699707,
+    3.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "apt_door",
+   1.15
+  ]
+ ],
+ "footprint_wd": [
+  4.0,
+  6.0
+ ],
+ "footprint_area": 24.0,
+ "height": 4.2,
+ "storeys": 1,
+ "budget": [
+  1200,
+  350,
+  20
+ ],
+ "budget_units": 1,
+ "budget_class": "shop",
+ "time_s": 1.3
+}

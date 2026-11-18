@@ -1,0 +1,156 @@
+{
+ "balcony_clutter": {
+  "file_base": "prop_balcony_clutter",
+  "batch": "b2b",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 1442,
+   "mid": 187,
+   "far": 16
+  },
+  "footprint_w": 3.03,
+  "footprint_d": 1.215,
+  "height": 1.413,
+  "regions": [
+   "baked:balcony_clutter"
+  ],
+  "trim": {
+   "tw_conc_top": {
+    "area_m2": 3.6,
+    "px_per_m": 128.0
+   },
+   "tw_paint": {
+    "area_m2": 4.62,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 0.93,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": -0.012,
+  "atlas_page": "props_w_*",
+  "high_tris": 9298,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 49.1,
+  "col": 6,
+  "secs": 31.9
+ },
+ "buzzer_panel": {
+  "file_base": "prop_buzzer_panel",
+  "batch": "b2b",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 200,
+   "mid": 38,
+   "far": 12
+  },
+  "footprint_w": 0.28,
+  "footprint_d": 0.064,
+  "height": 0.775,
+  "regions": [
+   "baked:buzzer_panel"
+  ],
+  "trim": {
+   "tw_galv": {
+    "area_m2": 0.04,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": -0.33,
+  "atlas_page": "props_w_*",
+  "high_tris": 30680,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 94.5,
+  "col": 1,
+  "secs": 9.4
+ },
+ "clothesline": {
+  "file_base": "prop_clothesline",
+  "batch": "b2b",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 755,
+   "mid": 78,
+   "far": 20
+  },
+  "footprint_w": 5.2,
+  "footprint_d": 1.75,
+  "height": 2.06,
+  "regions": [
+   "baked:clothesline"
+  ],
+  "trim": {
+   "tw_conc_top": {
+    "area_m2": 0.09,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 1.38,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 4247,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 44.2,
+  "col": 5,
+  "secs": 25.8
+ },
+ "dingbat_stair": {
+  "file_base": "prop_dingbat_stair",
+  "batch": "b2b",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1008,
+   "mid": 206,
+   "far": 14
+  },
+  "footprint_w": 5.96,
+  "footprint_d": 1.135,
+  "height": 3.98,
+  "regions": [
+   "baked:dingbat_stair"
+  ],
+  "trim": {
+   "tw_conc_top": {
+    "area_m2": 6.67,
+    "px_per_m": 128.0
+   },
+   "tw_paint": {
+    "area_m2": 21.56,
+    "px_per_m": 128.0
+   },
+   "tw_rubber": {
+    "area_m2": 0.31,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 13368,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 122.1,
+  "col": 10,
+  "secs": 23.9
+ }
+}

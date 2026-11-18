@@ -1,0 +1,654 @@
+{
+ "picket_white": {
+  "file_base": "fence_picket_white",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 50,
+   "mid": 18,
+   "far": 14
+  },
+  "footprint_w": 2.0,
+  "footprint_d": 0.1,
+  "height": 1.1,
+  "regions": [
+   "baked:picket_white"
+  ],
+  "high_tris": 5524,
+  "bake_slot_px": 144,
+  "bake_px_per_m": 132.9,
+  "col": 1,
+  "secs": 72.6
+ },
+ "wrought_iron": {
+  "file_base": "fence_wrought_iron",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 56,
+   "mid": 18,
+   "far": 16
+  },
+  "footprint_w": 1.98,
+  "footprint_d": 0.06,
+  "height": 1.26,
+  "regions": [
+   "baked:wrought_iron"
+  ],
+  "high_tris": 8523,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 124.1,
+  "col": 1,
+  "secs": 58.8
+ },
+ "chainlink": {
+  "file_base": "fence_chainlink",
+  "batch": "fences",
+  "class": "chainlink",
+  "budget": 4,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 4,
+   "mid": 2,
+   "far": 2
+  },
+  "footprint_w": 2.0,
+  "footprint_d": 0.001,
+  "height": 1.525,
+  "regions": [
+   "chainlink",
+   "galvanized"
+  ],
+  "atlas_page": "props_*",
+  "region_high": {
+   "chainlink": 160720
+  },
+  "high_tris": 160720,
+  "col": 1,
+  "secs": 21.7
+ },
+ "chainlink_post": {
+  "file_base": "fence_chainlink_post",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 42
+  },
+  "footprint_w": 0.16,
+  "footprint_d": 0.139,
+  "height": 1.595,
+  "regions": [
+   "baked:chainlink_post"
+  ],
+  "high_tris": 1164,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 139.2,
+  "col": 1,
+  "secs": 32.8
+ },
+ "stucco_wall": {
+  "file_base": "fence_stucco_wall",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 52,
+   "mid": 18,
+   "far": 6
+  },
+  "footprint_w": 2.03,
+  "footprint_d": 0.38,
+  "height": 2.18,
+  "regions": [
+   "baked:stucco_wall"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 33874,
+  "bake_slot_px": 400,
+  "bake_px_per_m": 132.1,
+  "col": 1,
+  "secs": 27.7
+ },
+ "wood_privacy": {
+  "file_base": "fence_wood_privacy",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 56,
+   "mid": 12,
+   "far": 2
+  },
+  "footprint_w": 2.01,
+  "footprint_d": 0.12,
+  "height": 1.84,
+  "regions": [
+   "baked:wood_privacy"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 21188,
+  "bake_slot_px": 464,
+  "bake_px_per_m": 131.3,
+  "col": 1,
+  "secs": 30.0
+ },
+ "weathered_board": {
+  "file_base": "fence_weathered_board",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 52,
+   "mid": 12,
+   "far": 2
+  },
+  "footprint_w": 2.0,
+  "footprint_d": 0.1,
+  "height": 1.55,
+  "regions": [
+   "baked:weathered_board"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 6817,
+  "bake_slot_px": 304,
+  "bake_px_per_m": 131.3,
+  "col": 1,
+  "secs": 23.8
+ },
+ "brick_wall": {
+  "file_base": "fence_brick_wall",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 52,
+   "mid": 18,
+   "far": 6
+  },
+  "footprint_w": 2.03,
+  "footprint_d": 0.38,
+  "height": 2.18,
+  "regions": [
+   "baked:brick_wall"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 1066,
+  "bake_slot_px": 400,
+  "bake_px_per_m": 132.1,
+  "col": 1,
+  "secs": 23.4
+ },
+ "cmu_wall": {
+  "file_base": "fence_cmu_wall",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 52,
+   "mid": 18,
+   "far": 6
+  },
+  "footprint_w": 2.03,
+  "footprint_d": 0.38,
+  "height": 2.18,
+  "regions": [
+   "baked:cmu_wall"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 1094,
+  "bake_slot_px": 400,
+  "bake_px_per_m": 132.1,
+  "col": 1,
+  "secs": 23.5
+ },
+ "vinyl_canal_rail": {
+  "file_base": "fence_vinyl_canal_rail",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 54,
+   "mid": 18,
+   "far": 2
+  },
+  "footprint_w": 2.015,
+  "footprint_d": 0.15,
+  "height": 1.12,
+  "regions": [
+   "baked:vinyl_canal_rail"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 2254,
+  "bake_slot_px": 224,
+  "bake_px_per_m": 125.5,
+  "col": 1,
+  "secs": 21.0
+ },
+ "gate_picket": {
+  "file_base": "fence_gate_picket",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 32
+  },
+  "footprint_w": 1.11,
+  "footprint_d": 0.1,
+  "height": 1.1,
+  "regions": [
+   "baked:gate_picket"
+  ],
+  "high_tris": 3522,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 132.6,
+  "col": 1,
+  "secs": 25.7
+ },
+ "gate_wrought_iron": {
+  "file_base": "fence_gate_wrought_iron",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 35,
+   "mid": 18,
+   "far": 10
+  },
+  "footprint_w": 1.09,
+  "footprint_d": 0.06,
+  "height": 1.3,
+  "regions": [
+   "baked:gate_wrought_iron"
+  ],
+  "high_tris": 4544,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 131.8,
+  "col": 1,
+  "secs": 23.0
+ },
+ "gate_privacy": {
+  "file_base": "fence_gate_privacy",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 46,
+   "mid": 2,
+   "far": 2
+  },
+  "footprint_w": 1.105,
+  "footprint_d": 0.1,
+  "height": 1.8,
+  "regions": [
+   "baked:gate_privacy"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 21438,
+  "bake_slot_px": 336,
+  "bake_px_per_m": 131.4,
+  "col": 1,
+  "secs": 20.8
+ },
+ "post_picket": {
+  "file_base": "fence_post_picket",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 10
+  },
+  "footprint_w": 0.1,
+  "footprint_d": 0.1,
+  "height": 1.1,
+  "regions": [
+   "baked:post_picket"
+  ],
+  "high_tris": 490,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 123.2,
+  "col": 1,
+  "secs": 8.6
+ },
+ "post_privacy": {
+  "file_base": "fence_post_privacy",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 20,
+   "mid": 10,
+   "far": 8
+  },
+  "footprint_w": 0.12,
+  "footprint_d": 0.12,
+  "height": 1.84,
+  "regions": [
+   "baked:post_privacy"
+  ],
+  "atlas_page": "props_b_*",
+  "high_tris": 1204,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 82.5,
+  "col": 1,
+  "secs": 7.4
+ },
+ "post_vinyl": {
+  "file_base": "fence_post_vinyl",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 24
+  },
+  "footprint_w": 0.15,
+  "footprint_d": 0.15,
+  "height": 1.12,
+  "regions": [
+   "baked:post_vinyl"
+  ],
+  "atlas_page": "props_b_*",
+  "high_tris": 648,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 90.7,
+  "col": 1,
+  "secs": 6.5
+ },
+ "post_wrought_iron": {
+  "file_base": "fence_post_wrought_iron",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 50,
+   "mid": 10,
+   "far": 8
+  },
+  "footprint_w": 0.08,
+  "footprint_d": 0.08,
+  "height": 1.32,
+  "regions": [
+   "baked:post_wrought_iron"
+  ],
+  "atlas_page": "props_b_*",
+  "high_tris": 454,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 98.0,
+  "col": 1,
+  "secs": 5.9
+ },
+ "chainlink_lot": {
+  "file_base": "fence_chainlink_lot",
+  "batch": "fences",
+  "class": "chainlink",
+  "budget": 4,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 4,
+   "mid": 2,
+   "far": 2
+  },
+  "footprint_w": 2.0,
+  "footprint_d": 0.001,
+  "height": 1.855,
+  "regions": [
+   "chainlink",
+   "galvanized"
+  ],
+  "atlas_page": "props_*",
+  "region_high": {
+   "chainlink": 160720
+  },
+  "high_tris": 160720,
+  "col": 1,
+  "secs": 17.9
+ },
+ "chainlink_lot_post": {
+  "file_base": "fence_chainlink_lot_post",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 50,
+   "mid": 14,
+   "far": 6
+  },
+  "footprint_w": 0.18,
+  "footprint_d": 0.309,
+  "height": 2.111,
+  "regions": [
+   "baked:chainlink_lot_post"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 1053,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 87.6,
+  "col": 1,
+  "secs": 15.3
+ },
+ "barbed_wire": {
+  "file_base": "fence_barbed_wire",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "wall_post_arm",
+  "tiers": {
+   "near": 54,
+   "mid": 18,
+   "far": 18
+  },
+  "footprint_w": 2.0,
+  "footprint_d": 0.16,
+  "height": 0.163,
+  "regions": [
+   "baked:barbed_wire"
+  ],
+  "mount_height": 1.962,
+  "atlas_page": "props_b_*",
+  "high_tris": 27397,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 165.9,
+  "col": 1,
+  "secs": 21.5
+ },
+ "gate_rolling_chainlink": {
+  "file_base": "fence_gate_rolling_chainlink",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 60,
+   "mid": 18,
+   "far": 2
+  },
+  "footprint_w": 5.8,
+  "footprint_d": 0.06,
+  "height": 1.86,
+  "regions": [
+   "baked:gate_rolling_chainlink"
+  ],
+  "trim": {
+   "tb_galv": {
+    "area_m2": 2.72,
+    "px_per_m": 128.0
+   },
+   "tbm_chain": {
+    "area_m2": 9.58,
+    "px_per_m": 132.6
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 2237,
+  "bake_slot_px": 112,
+  "bake_px_per_m": 97.8,
+  "region_high": {
+   "chainlink": 160720
+  },
+  "col": 1,
+  "secs": 18.0
+ },
+ "graffiti_cmu_panel": {
+  "file_base": "fence_graffiti_cmu_panel",
+  "batch": "fences",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 56,
+   "mid": 18,
+   "far": 6
+  },
+  "footprint_w": 2.03,
+  "footprint_d": 0.38,
+  "height": 2.18,
+  "regions": [
+   "baked:cmu_wall"
+  ],
+  "trim": {
+   "graffiti_piece": {
+    "area_m2": 0.78,
+    "px_per_m": 128.0
+   },
+   "graffiti_tag": {
+    "area_m2": 0.45,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 1094,
+  "bake_slot_px": 400,
+  "bake_px_per_m": 132.1,
+  "col": 1,
+  "secs": 30.4
+ }
+}

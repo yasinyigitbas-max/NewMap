@@ -1,0 +1,21 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://map_dc/coronado/city_kit/shaders/prop_wear_fix_2s.gdshader" id="1_ytriy"]
+[ext_resource type="Texture2D" path="res://assets/coronado_kit/atlases/props_b_color_clean.png" id="2_l58gf"]
+[ext_resource type="Texture2D" path="res://assets/coronado_kit/atlases/props_grime.png" id="3_23fr4"]
+[ext_resource type="Texture2D" path="res://assets/coronado_kit/atlases/props_b_normal.png" id="4_qflu2"]
+[ext_resource type="Texture2D" path="res://assets/coronado_kit/atlases/props_b_orm.png" id="5_afo2q"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ytriy")
+shader_parameter/albedo_tex = ExtResource("2_l58gf")
+shader_parameter/normal_tex = ExtResource("4_qflu2")
+shader_parameter/orm_tex = ExtResource("5_afo2q")
+shader_parameter/grime_tex = ExtResource("3_23fr4")
+shader_parameter/wear = 1.0
+shader_parameter/grime_meters = 0.45
+shader_parameter/bottom_bias = 0.65
+shader_parameter/cavity_bias = 1.2
+shader_parameter/instance_variation = 1.0
+shader_parameter/normal_depth = 1.0

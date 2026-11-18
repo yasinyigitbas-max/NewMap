@@ -1,0 +1,226 @@
+{
+ "name": "park_playground_village",
+ "style": "neighbourhood_playground",
+ "footprint": [
+  30,
+  24
+ ],
+ "zones": [
+  {
+   "kind": "lawn",
+   "rect": [
+    -15,
+    15,
+    -12,
+    12
+   ]
+  },
+  {
+   "kind": "play",
+   "rect": [
+    -11,
+    11,
+    -8,
+    8
+   ]
+  },
+  {
+   "kind": "path",
+   "rect": [
+    -15,
+    15,
+    -12,
+    -11
+   ]
+  }
+ ],
+ "instances": [
+  {
+   "base": "prop_play_structure",
+   "cond": "clean",
+   "pos": [
+    -4,
+    0.0,
+    0
+   ],
+   "rot_y": 0,
+   "role": "play",
+   "file": "props/park/prop_play_structure_clean_near.glb",
+   "tris_near": 1276
+  },
+  {
+   "base": "prop_slide",
+   "cond": "clean",
+   "pos": [
+    1.0,
+    0.0,
+    0
+   ],
+   "rot_y": 90,
+   "role": "play",
+   "file": "props/park/prop_slide_clean_near.glb",
+   "tris_near": 528
+  },
+  {
+   "base": "prop_swing_set",
+   "cond": "clean",
+   "pos": [
+    6,
+    0.0,
+    4
+   ],
+   "rot_y": 0,
+   "role": "play",
+   "file": "props/park/prop_swing_set_clean_near.glb",
+   "tris_near": 352
+  },
+  {
+   "base": "prop_shade_sail",
+   "cond": "clean",
+   "pos": [
+    -4,
+    0.0,
+    -4.5
+   ],
+   "rot_y": 0,
+   "role": "shade",
+   "file": "props/park/prop_shade_sail_clean_near.glb",
+   "tris_near": 174
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    -8,
+    0.0,
+    -10
+   ],
+   "rot_y": 0.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    0,
+    0.0,
+    -10
+   ],
+   "rot_y": 0.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    8,
+    0.0,
+    -10
+   ],
+   "rot_y": 0.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_trash_receptacle",
+   "cond": "clean",
+   "pos": [
+    -11.5,
+    0.0,
+    -10
+   ],
+   "rot_y": 0.0,
+   "role": "bin",
+   "file": "props/street/prop_trash_receptacle_clean_near.glb",
+   "tris_near": 298
+  },
+  {
+   "base": "prop_drinking_fountain",
+   "cond": "clean",
+   "pos": [
+    11.5,
+    0.0,
+    -10
+   ],
+   "rot_y": 0,
+   "role": "fountain",
+   "file": "props/park/prop_drinking_fountain_clean_near.glb",
+   "tris_near": 288
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "pos": [
+    -12.5,
+    0.0,
+    9
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/tree_magnolia_b_normal_near.glb",
+   "tris_near": 868
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "pos": [
+    12.5,
+    0.0,
+    9
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/tree_coral_b_normal_near.glb",
+   "tris_near": 824
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "pos": [
+    -13,
+    0.0,
+    -4
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/palm_queen_a_normal_near.glb",
+   "tris_near": 560
+  },
+  {
+   "base": "prop_picnic_table",
+   "cond": "clean",
+   "pos": [
+    10,
+    0.0,
+    -3
+   ],
+   "rot_y": 90,
+   "role": "table",
+   "file": "props/park/prop_picnic_table_clean_near.glb",
+   "tris_near": 292
+  }
+ ],
+ "stats": {
+  "instances": 13,
+  "near_tris_sum": 6000,
+  "assets": [
+   "palm_queen_a",
+   "prop_drinking_fountain",
+   "prop_park_bench",
+   "prop_picnic_table",
+   "prop_play_structure",
+   "prop_shade_sail",
+   "prop_slide",
+   "prop_swing_set",
+   "prop_trash_receptacle",
+   "tree_coral_b",
+   "tree_magnolia_b"
+  ]
+ },
+ "errors": []
+}

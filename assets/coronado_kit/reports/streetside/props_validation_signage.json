@@ -1,0 +1,194 @@
+[
+ {
+  "file": "prop_bus_stop_sign_clean_far.glb",
+  "tier": "far",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.17,0.03) - asymmetric parts?"
+  ],
+  "tris": 12,
+  "verts": 24,
+  "budget": 20,
+  "size": [
+   0.595,
+   3.31,
+   0.15
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_bus_stop_sign_clean_mid.glb",
+  "tier": "mid",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.17,0.04) - asymmetric parts?"
+  ],
+  "tris": 32,
+  "verts": 81,
+  "budget": 361,
+  "size": [
+   0.595,
+   3.31,
+   0.137
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_bus_stop_sign_clean_near.glb",
+  "tier": "near",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.15,0.00) - asymmetric parts?",
+   "29 tris may face inward / be enclosed"
+  ],
+  "tris": 290,
+  "verts": 585,
+  "budget": 1200,
+  "size": [
+   0.625,
+   3.31,
+   0.304
+  ],
+  "odd_ray": 38
+ },
+ {
+  "file": "prop_bus_stop_sign_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 2,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_drive_thru_menu_clean_far.glb",
+  "tier": "far",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 20,
+  "verts": 40,
+  "budget": 20,
+  "size": [
+   2.95,
+   2.42,
+   0.8
+  ],
+  "odd_ray": 2
+ },
+ {
+  "file": "prop_drive_thru_menu_clean_mid.glb",
+  "tier": "mid",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "5 tris may face inward / be enclosed"
+  ],
+  "tris": 74,
+  "verts": 194,
+  "budget": 361,
+  "size": [
+   2.96,
+   2.4,
+   1.01
+  ],
+  "odd_ray": 5
+ },
+ {
+  "file": "prop_drive_thru_menu_clean_near.glb",
+  "tier": "near",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "74 tris may face inward / be enclosed"
+  ],
+  "tris": 744,
+  "verts": 1578,
+  "budget": 1200,
+  "size": [
+   2.96,
+   2.67,
+   1.025
+  ],
+  "odd_ray": 193
+ },
+ {
+  "file": "prop_drive_thru_menu_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 4,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_pylon_sign_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 12,
+  "verts": 24,
+  "budget": 20,
+  "size": [
+   3.6,
+   7.52,
+   1.64
+  ],
+  "odd_ray": 2
+ },
+ {
+  "file": "prop_pylon_sign_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "12 tris may face inward / be enclosed"
+  ],
+  "tris": 162,
+  "verts": 415,
+  "budget": 751,
+  "size": [
+   3.6,
+   7.52,
+   1.65
+  ],
+  "odd_ray": 37
+ },
+ {
+  "file": "prop_pylon_sign_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "178 tris may face inward / be enclosed"
+  ],
+  "tris": 1324,
+  "verts": 2919,
+  "budget": 2500,
+  "size": [
+   3.6,
+   7.592,
+   1.65
+  ],
+  "odd_ray": 373
+ },
+ {
+  "file": "prop_pylon_sign_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 5,
+  "col_maxverts": 8
+ }
+]

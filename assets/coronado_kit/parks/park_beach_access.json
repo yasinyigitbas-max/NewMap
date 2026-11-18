@@ -1,0 +1,289 @@
+{
+ "name": "park_beach_access",
+ "style": "beach_access",
+ "footprint": [
+  40,
+  50
+ ],
+ "zones": [
+  {
+   "kind": "sand",
+   "rect": [
+    -20,
+    20,
+    -5,
+    25
+   ]
+  },
+  {
+   "kind": "path",
+   "rect": [
+    -1.5,
+    1.5,
+    -25,
+    -5
+   ]
+  },
+  {
+   "kind": "lawn",
+   "rect": [
+    -20,
+    -2,
+    -25,
+    -5
+   ]
+  },
+  {
+   "kind": "lawn",
+   "rect": [
+    2,
+    20,
+    -25,
+    -5
+   ]
+  }
+ ],
+ "instances": [
+  {
+   "base": "prop_lifeguard_tower",
+   "cond": "clean",
+   "pos": [
+    8,
+    0.0,
+    12
+   ],
+   "rot_y": 180,
+   "role": "focus",
+   "file": "props/park/prop_lifeguard_tower_clean_near.glb",
+   "tris_near": 480
+  },
+  {
+   "base": "prop_beach_sign_rules",
+   "cond": "clean",
+   "pos": [
+    -3.0,
+    0.0,
+    -6.0
+   ],
+   "rot_y": 0,
+   "role": "sign",
+   "file": "props/park/prop_beach_sign_rules_clean_near.glb",
+   "tris_near": 32
+  },
+  {
+   "base": "prop_beach_sign_rip",
+   "cond": "clean",
+   "pos": [
+    3.0,
+    0.0,
+    -6.0
+   ],
+   "rot_y": 0,
+   "role": "sign",
+   "file": "props/park/prop_beach_sign_rip_clean_near.glb",
+   "tris_near": 32
+  },
+  {
+   "base": "prop_beach_sign_dog",
+   "cond": "clean",
+   "pos": [
+    3.0,
+    0.0,
+    -16
+   ],
+   "rot_y": 0,
+   "role": "sign",
+   "file": "props/park/prop_beach_sign_dog_clean_near.glb",
+   "tris_near": 32
+  },
+  {
+   "base": "plant_iceplant_patch",
+   "cond": "normal",
+   "pos": [
+    -9,
+    0.0,
+    -14
+   ],
+   "rot_y": 0,
+   "role": "plant",
+   "file": "foliage/plant_iceplant_patch_normal_near.glb",
+   "tris_near": 138
+  },
+  {
+   "base": "plant_iceplant_patch",
+   "cond": "normal",
+   "pos": [
+    10,
+    0.0,
+    -14
+   ],
+   "rot_y": 0,
+   "role": "plant",
+   "file": "foliage/plant_iceplant_patch_normal_near.glb",
+   "tris_near": 138
+  },
+  {
+   "base": "plant_iceplant_patch",
+   "cond": "normal",
+   "pos": [
+    -14,
+    0.0,
+    -20
+   ],
+   "rot_y": 0,
+   "role": "plant",
+   "file": "foliage/plant_iceplant_patch_normal_near.glb",
+   "tris_near": 138
+  },
+  {
+   "base": "plant_iceplant_patch",
+   "cond": "normal",
+   "pos": [
+    15,
+    0.0,
+    -21
+   ],
+   "rot_y": 0,
+   "role": "plant",
+   "file": "foliage/plant_iceplant_patch_normal_near.glb",
+   "tris_near": 138
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "pos": [
+    -6,
+    0.0,
+    -20
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/palm_mexican_fan_b_normal_near.glb",
+   "tris_near": 856
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "pos": [
+    6,
+    0.0,
+    -20
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/palm_mexican_fan_c_normal_near.glb",
+   "tris_near": 856
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "pos": [
+    -16,
+    0.0,
+    -9
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/palm_mexican_fan_a_normal_near.glb",
+   "tris_near": 856
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "pos": [
+    16,
+    0.0,
+    -8
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/palm_queen_a_normal_near.glb",
+   "tris_near": 560
+  },
+  {
+   "base": "prop_trash_receptacle",
+   "cond": "clean",
+   "pos": [
+    -2.6,
+    0.0,
+    -10
+   ],
+   "rot_y": 0.0,
+   "role": "bin",
+   "file": "props/street/prop_trash_receptacle_clean_near.glb",
+   "tris_near": 298
+  },
+  {
+   "base": "prop_recycling_receptacle",
+   "cond": "clean",
+   "pos": [
+    -2.6,
+    0.0,
+    -12
+   ],
+   "rot_y": 0.0,
+   "role": "bin",
+   "file": "props/street/prop_recycling_receptacle_clean_near.glb",
+   "tris_near": 298
+  },
+  {
+   "base": "prop_drinking_fountain",
+   "cond": "clean",
+   "pos": [
+    2.6,
+    0.0,
+    -11
+   ],
+   "rot_y": 270,
+   "role": "fountain",
+   "file": "props/park/prop_drinking_fountain_clean_near.glb",
+   "tris_near": 288
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    -6,
+    0.0,
+    -6.5
+   ],
+   "rot_y": 0.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    6,
+    0.0,
+    -6.5
+   ],
+   "rot_y": 0.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  }
+ ],
+ "stats": {
+  "instances": 17,
+  "near_tris_sum": 5500,
+  "assets": [
+   "palm_mexican_fan_a",
+   "palm_mexican_fan_b",
+   "palm_mexican_fan_c",
+   "palm_queen_a",
+   "plant_iceplant_patch",
+   "prop_beach_sign_dog",
+   "prop_beach_sign_rip",
+   "prop_beach_sign_rules",
+   "prop_drinking_fountain",
+   "prop_lifeguard_tower",
+   "prop_park_bench",
+   "prop_recycling_receptacle",
+   "prop_trash_receptacle"
+  ]
+ },
+ "errors": []
+}

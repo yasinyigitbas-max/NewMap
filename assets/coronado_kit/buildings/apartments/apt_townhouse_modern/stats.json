@@ -1,0 +1,147 @@
+{
+ "name": "apt_townhouse_modern",
+ "cat": "apartment",
+ "style": "modern_townhouse_row",
+ "logic_errors": [],
+ "col_boxes": 12,
+ "near": {
+  "tris": 3082,
+  "verts": 5235,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_number",
+   "O_patio",
+   "O_rollup",
+   "O_small_white",
+   "O_win_casement",
+   "O_win_dh_white",
+   "R_flat",
+   "R_metal",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -9.720000267028809,
+    0.0,
+    -6.699999809265137
+   ],
+   [
+    9.720000267028809,
+    6.96999979019165,
+    6.400000095367432
+   ]
+  ]
+ },
+ "mid_roof_top": 6.9,
+ "mid": {
+  "tris": 954,
+  "verts": 1172,
+  "regions": [
+   "O_apt_door",
+   "O_patio",
+   "O_rollup",
+   "O_small_white",
+   "O_win_casement",
+   "O_win_dh_white",
+   "S_concrete",
+   "S_flat",
+   "S_metal",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -9.0,
+    0.0,
+    -6.699999809265137
+   ],
+   [
+    9.0,
+    6.900000095367432,
+    6.400000095367432
+   ]
+  ]
+ },
+ "far": {
+  "tris": 28,
+  "verts": 54,
+  "regions": [
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -9.0,
+    -0.0,
+    -5.0
+   ],
+   [
+    9.0,
+    6.900000095367432,
+    5.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "rollup",
+   -7.25
+  ],
+  [
+   "apt_door",
+   -4.0
+  ],
+  [
+   "patio",
+   -7.25
+  ],
+  [
+   "rollup",
+   1.25
+  ],
+  [
+   "apt_door",
+   -2.0
+  ],
+  [
+   "patio",
+   1.25
+  ],
+  [
+   "rollup",
+   4.75
+  ],
+  [
+   "apt_door",
+   8.0
+  ],
+  [
+   "patio",
+   4.75
+  ]
+ ],
+ "footprint_wd": [
+  18.0,
+  10.0
+ ],
+ "footprint_area": 180.0,
+ "height": 6.97,
+ "storeys": 2,
+ "budget": [
+  3500,
+  1000,
+  80
+ ],
+ "budget_class": "apartment",
+ "time_s": 35.7
+}

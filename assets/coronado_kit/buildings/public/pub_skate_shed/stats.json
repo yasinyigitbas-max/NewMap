@@ -1,0 +1,123 @@
+{
+ "name": "pub_skate_shed",
+ "cat": "warehouse",
+ "style": "skate_shed",
+ "logic_errors": [],
+ "col_boxes": 8,
+ "near": {
+  "tris": 817,
+  "verts": 1448,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_rollup",
+   "O_shopdoor",
+   "O_win_casement",
+   "R_comp",
+   "R_flat",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -6.300000190734863,
+    -0.0,
+    -6.5
+   ],
+   [
+    6.300000190734863,
+    6.23199987411499,
+    6.920000076293945
+   ]
+  ]
+ },
+ "mid_roof_top": 6.232,
+ "mid": {
+  "tris": 242,
+  "verts": 356,
+  "regions": [
+   "O_apt_door",
+   "O_louver",
+   "O_rollup",
+   "O_shopdoor",
+   "O_win_casement",
+   "S_comp",
+   "S_concrete",
+   "S_dark",
+   "S_flat",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "T_dark",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    -0.0,
+    -6.5
+   ],
+   [
+    6.0,
+    6.23199987411499,
+    6.920000076293945
+   ]
+  ]
+ },
+ "far": {
+  "tris": 30,
+  "verts": 58,
+  "regions": [
+   "F_c_tower_3",
+   "F_comp",
+   "F_stucco_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    0.0,
+    -5.0
+   ],
+   [
+    6.0,
+    6.23199987411499,
+    5.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   -3.6
+  ],
+  [
+   "rollup",
+   2.0
+  ]
+ ],
+ "footprint_wd": [
+  12.0,
+  10.0
+ ],
+ "footprint_area": 120.0,
+ "height": 6.23,
+ "storeys": 1,
+ "budget": [
+  2000,
+  600,
+  40
+ ],
+ "budget_class": "warehouse",
+ "time_s": 2.7
+}

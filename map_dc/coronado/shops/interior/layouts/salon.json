@@ -1,0 +1,532 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "salon",
+ "types": [
+  "hair_salon",
+  "barber",
+  "nail_salon",
+  "beauty"
+ ],
+ "floor": "Tiles141",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  1,
+  0.97,
+  0.95
+ ],
+ "ceiling": "Plaster001",
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.0,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter",
+  "stations"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    1.8
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "beauty",
+    "hair"
+   ],
+   "wall": true
+  },
+  {
+   "role": "product_shelf",
+   "prop": "shelf_wall",
+   "place": "behind_counter",
+   "goods": [
+    "beauty",
+    "hair"
+   ]
+  },
+  {
+   "role": "stations",
+   "prop": "station",
+   "place": "stations",
+   "walls": [
+    "door_side"
+   ]
+  },
+  {
+   "role": "wash",
+   "prop": "wash_basin",
+   "place": "walls",
+   "walls": [
+    "back"
+   ],
+   "unit": [
+    0.75,
+    1.1
+   ],
+   "max": 1,
+   "only_types": [
+    "hair_salon",
+    "barber",
+    "beauty"
+   ]
+  },
+  {
+   "role": "waiting_bench",
+   "prop": "chair_row",
+   "place": "walls",
+   "walls": [
+    "back"
+   ],
+   "unit": [
+    1.5,
+    0.55
+   ],
+   "max": 1
+  },
+  {
+   "role": "waiting",
+   "prop": "chair",
+   "place": "corner",
+   "seats": 1
+  },
+  {
+   "role": "plant",
+   "prop": "plant",
+   "place": "corner"
+  }
+ ],
+ "plans": [
+  {
+   "name": "classic",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      1.8
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "beauty",
+      "hair"
+     ],
+     "wall": true
+    },
+    {
+     "role": "product_shelf",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "beauty",
+      "hair"
+     ]
+    },
+    {
+     "role": "stations",
+     "prop": "station",
+     "place": "stations",
+     "walls": [
+      "door_side"
+     ]
+    },
+    {
+     "role": "wash",
+     "prop": "wash_basin",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "unit": [
+      0.75,
+      1.1
+     ],
+     "max": 1,
+     "only_types": [
+      "hair_salon",
+      "barber",
+      "beauty"
+     ]
+    },
+    {
+     "role": "waiting_bench",
+     "prop": "chair_row",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "unit": [
+      1.5,
+      0.55
+     ],
+     "max": 1
+    },
+    {
+     "role": "waiting",
+     "prop": "chair",
+     "place": "corner",
+     "seats": 1
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ]
+  },
+  {
+   "name": "double",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      1.8
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "beauty",
+      "hair"
+     ],
+     "wall": true
+    },
+    {
+     "role": "product_shelf",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "beauty",
+      "hair"
+     ]
+    },
+    {
+     "role": "stations",
+     "prop": "station",
+     "place": "stations",
+     "walls": [
+      "door_side"
+     ]
+    },
+    {
+     "role": "stations2",
+     "prop": "station",
+     "place": "walls",
+     "walls": [
+      "counter_side"
+     ],
+     "unit": [
+      1.3,
+      1.1
+     ],
+     "max": 1,
+     "skip_shallow": true
+    },
+    {
+     "role": "wash",
+     "prop": "wash_basin",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "unit": [
+      0.75,
+      1.1
+     ],
+     "max": 1,
+     "only_types": [
+      "hair_salon",
+      "barber",
+      "beauty"
+     ]
+    },
+    {
+     "role": "waiting",
+     "prop": "chair",
+     "place": "corner",
+     "seats": 1
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ]
+  },
+  {
+   "name": "boutique",
+   "fixtures": [
+    "salon_bright",
+    "boutique_track"
+   ],
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      1.8
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "beauty",
+      "hair"
+     ],
+     "wall": true
+    },
+    {
+     "role": "product_shelf",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "beauty",
+      "hair"
+     ]
+    },
+    {
+     "role": "stations",
+     "prop": "station",
+     "place": "stations",
+     "walls": [
+      "door_side"
+     ]
+    },
+    {
+     "role": "products",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "unit": [
+      0.9,
+      0.3
+     ],
+     "max": 2,
+     "goods": [
+      "hair",
+      "beauty"
+     ]
+    },
+    {
+     "role": "waiting_side",
+     "prop": "chair_row",
+     "place": "walls",
+     "walls": [
+      "counter_side"
+     ],
+     "unit": [
+      1.5,
+      0.55
+     ],
+     "max": 1
+    },
+    {
+     "role": "waiting",
+     "prop": "chair",
+     "place": "corner",
+     "seats": 1
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ]
+  }
+ ],
+ "styles": [
+  {
+   "floor": "Tiles141",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1.0,
+    0.98,
+    0.96
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "Terrazzo005",
+   "wall": "Plaster001",
+   "wall_tint": [
+    0.97,
+    0.95,
+    0.98
+   ],
+   "wainscot": "Marble006",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "WoodFloor034",
+   "wall": "Bricks066",
+   "wall_tint": [
+    0.95,
+    0.9,
+    0.85
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001",
+   "match": [
+    "barber",
+    "barbers",
+    "gentlemen"
+   ]
+  },
+  {
+   "floor": "Tiles012",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.92,
+    0.95,
+    1.0
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001",
+   "match": [
+    "barber",
+    "fade",
+    "clipper"
+   ]
+  },
+  {
+   "floor": "Marble006",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1.0,
+    0.93,
+    0.95
+   ],
+   "wainscot": "Marble006",
+   "ceiling": "Plaster001",
+   "match": [
+    "nail",
+    "beauty",
+    "polish",
+    "spa",
+    "lash",
+    "brow"
+   ]
+  }
+ ],
+ "wear": 0.32,
+ "wear_types": {
+  "barber": 0.42
+ },
+ "clutter": {
+  "kit": "generic",
+  "counter": [
+   "terminal",
+   "phone",
+   "cup",
+   "papers"
+  ],
+  "floor": [
+   0,
+   1
+  ],
+  "floor_kinds": [
+   "stack"
+  ],
+  "bin": true,
+  "trash": 0
+ },
+ "signs": {
+  "kit": "generic",
+  "posters": [
+   "poster_hair_style",
+   "poster_summer"
+  ],
+  "notices": [
+   "notice_hours",
+   "notice_appointments"
+  ],
+  "neon": [
+   "neon_open"
+  ],
+  "above": [
+   "price_haircuts"
+  ],
+  "n_posters": [
+   1,
+   2
+  ],
+  "n_notices": [
+   1,
+   1
+  ],
+  "n_neon": [
+   0,
+   1
+  ],
+  "n_above": [
+   1,
+   1
+  ],
+  "types": {
+   "barber": {
+    "posters": [
+     "poster_hair_style",
+     "poster_surf_classic"
+    ],
+    "neon": [
+     "neon_barber",
+     "neon_open"
+    ],
+    "above": [
+     "price_haircuts"
+    ],
+    "n_neon": [
+     1,
+     1
+    ]
+   },
+   "nail_salon": {
+    "posters": [
+     "poster_summer",
+     "poster_hair_style"
+    ],
+    "neon": [
+     "neon_nails",
+     "neon_open"
+    ],
+    "above": [
+     "price_nails"
+    ],
+    "n_neon": [
+     1,
+     1
+    ]
+   },
+   "beauty": {
+    "posters": [
+     "poster_hair_style",
+     "poster_summer"
+    ],
+    "neon": [
+     "neon_nails"
+    ],
+    "above": [
+     "price_nails",
+     "price_haircuts"
+    ]
+   }
+  }
+ },
+ "busy": 0.6
+}

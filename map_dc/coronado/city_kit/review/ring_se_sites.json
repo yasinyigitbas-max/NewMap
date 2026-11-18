@@ -1,0 +1,928 @@
+{
+ "half": "SE: every ring-owned site not in half NW (NW = v < -900 or u < -900, plus the ring node nearest the dividing line on each side: the J Ave T (-800, 288.7) and the 6th St T (657.3, -800)). This half meets NW at the J Ave T's east tile edge (s_rg_b131_1, core-built) and at the 6th St T's south tile edge (s_rg_se_b140_2); the stub b095 (6th St) to that T is SE.",
+ "not_served": [],
+ "note": "Ring family half SE integration table (17 Nov, stage 2 site builder). pos = [u, y, v] in the GRID frame (x = u along 10th St ESE, z = v along Amber SSW, origin Amber x 10th; y = height); yaw in degrees (Godot: +z -> (sin yaw, cos yaw)). Boulevard pieces and T-junctions are authored in the grid frame about their anchor (yaw 0); stubs along +z from their lattice junction. Includes the core stage's pieces that serve SE sites (built_by). Built by tools/city/pilot/pieces/road_rg_SE.gd over road_rg.gd.",
+ "overrides": {
+  "250.0,345.0": "bus stops both ways at B Ave x Ocean Blvd (the library's look-back rule left 667 m without a stop between Amber's signals and W; Yasin's approved rule: stops never more than ~330 m apart). b135 and b161 are laid out with it; b161 part 2 is therefore rebuilt here (s_rg_se_b161_2) and the core's example s_rg_b161_2 is superseded (its file is untouched, it is not in this table)",
+  "b130": "11th St, B Ave -> W: the library's stub plan has no far T (W is a locked sample), built by road_rg_SE._build_b130: std section from j_rs_2l2r_opp_a's east tile edge 20 to W's west leg end (s_wfd, 100 m from W: z 220), the whole -4.65 m rise (6.0 -> W's pad 1.35, ROADKIT_SPEC 6) on one smoothstep, max 3.5 %, the eastbound far-side bus stop after B Ave",
+  "stub starts": "measured 20.0 on every resstd junction (res section) and 17.5 on j_am_11th (hs): the library's SEC z0, no change"
+ },
+ "sites": [
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "bus": false,
+   "ctl": "stop",
+   "kind": "T",
+   "piece": "j_rg_se_w600_s302",
+   "pos": [
+    -600.0,
+    4.0,
+    302.000091552734
+   ],
+   "s": [
+    6542.688,
+    6584.688
+   ],
+   "site": "-600.0,302.0",
+   "stem": "res",
+   "xing": true,
+   "yaw": 0.0,
+   "z_E": 26.5
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "bus": true,
+   "ctl": "stop",
+   "kind": "T",
+   "piece": "j_rg_se_w400_s315",
+   "pos": [
+    -400.0,
+    2.0,
+    315.333282470703
+   ],
+   "s": [
+    6743.132,
+    6785.132
+   ],
+   "site": "-400.0,315.3",
+   "stem": "res",
+   "xing": true,
+   "yaw": 0.0,
+   "z_E": 26.5
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "bus": false,
+   "ctl": "stop",
+   "kind": "T",
+   "piece": "j_rg_se_w200_s328",
+   "pos": [
+    -200.0,
+    2.0,
+    328.000457763672
+   ],
+   "s": [
+    82.723,
+    124.723
+   ],
+   "site": "-200.0,328.0",
+   "stem": "res",
+   "xing": true,
+   "yaw": 0.0,
+   "z_E": 26.5
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "bus": true,
+   "ctl": "signal",
+   "kind": "T",
+   "piece": "j_rg_se_e0_s340",
+   "pos": [
+    0.0,
+    2.0,
+    339.988128662109
+   ],
+   "s": [
+    272.082,
+    326.582
+   ],
+   "site": "0.0,340.0",
+   "stem": "hs",
+   "xing": false,
+   "yaw": 0.0,
+   "z_E": 27.0
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "bus": true,
+   "ctl": "stop",
+   "kind": "T",
+   "piece": "j_rg_se_e250_s345",
+   "pos": [
+    250.0,
+    4.0,
+    344.949920654297
+   ],
+   "s": [
+    533.632,
+    577.132
+   ],
+   "site": "250.0,345.0",
+   "stem": "res",
+   "xing": true,
+   "yaw": 0.0,
+   "z_E": 26.0
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "bus": false,
+   "corner_clip": [
+    [
+     "(601.2922, 9.2)",
+     "(601.8176, 9.258741)",
+     "(602.3292, 9.378216)",
+     "(602.8201, 9.556007)",
+     "(603.2837, 9.788934)",
+     "(603.7139, 10.07305)",
+     "(604.1052, 10.40376)",
+     "(604.4525, 10.77588)",
+     "(604.7516, 11.18371)",
+     "(604.9991, 11.6211)",
+     "(605.192, 12.08158)",
+     "(605.3284, 12.55843)",
+     "(605.407, 13.04483)",
+     "(605.4278, 13.53385)",
+     "(605.391, 14.01865)",
+     "(605.2979, 14.49253)",
+     "(605.1506, 14.94904)",
+     "(604.952, 15.38203)",
+     "(604.7054, 15.78582)"
+    ]
+   ],
+   "ctl": "stop",
+   "kind": "T",
+   "piece": "j_rg_se_e627_s0",
+   "pos": [
+    626.538635253906,
+    4.0,
+    0.0
+   ],
+   "s": [
+    1154.951,
+    1195.951
+   ],
+   "site": "626.5,0.0",
+   "stem": "res",
+   "xing": false,
+   "yaw": 0.0,
+   "z_E": 32.5
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "bus": true,
+   "ctl": "stop",
+   "kind": "T",
+   "piece": "j_rg_se_e647_n200",
+   "pos": [
+    646.999816894531,
+    4.0,
+    -200.0
+   ],
+   "s": [
+    1367.38,
+    1409.38
+   ],
+   "site": "647.0,-200.0",
+   "stem": "res",
+   "xing": true,
+   "yaw": 0.0,
+   "z_E": 26.0
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "bus": false,
+   "ctl": "stop",
+   "kind": "T",
+   "piece": "j_rg_se_e652_n400",
+   "pos": [
+    651.997375488281,
+    4.0,
+    -400.0
+   ],
+   "s": [
+    1567.442,
+    1599.442
+   ],
+   "site": "652.0,-400.0",
+   "stem": "res",
+   "xing": false,
+   "yaw": 0.0,
+   "z_E": 26.0
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "bus": true,
+   "ctl": "stop",
+   "kind": "T",
+   "piece": "j_rg_se_e655_n600",
+   "pos": [
+    654.664978027344,
+    4.0,
+    -600.0
+   ],
+   "s": [
+    1767.96,
+    1809.96
+   ],
+   "site": "654.7,-600.0",
+   "stem": "res",
+   "xing": true,
+   "yaw": 0.0,
+   "z_E": 26.0
+  },
+  {
+   "block": "Ocean Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "beach",
+   "kind": "boulevard",
+   "part": 1,
+   "piece": "s_rg_se_b131_1",
+   "pos": [
+    -785.033386230469,
+    2.0,
+    289.664642333984
+   ],
+   "s": [
+    6374.244,
+    6458.466
+   ],
+   "scheme": "fan",
+   "site": "b131",
+   "yaw": 0.0
+  },
+  {
+   "block": "Ocean Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "beach",
+   "kind": "boulevard",
+   "part": 2,
+   "piece": "s_rg_se_b131_2",
+   "pos": [
+    -700.997985839844,
+    3.0,
+    295.266937255859
+   ],
+   "s": [
+    6458.466,
+    6542.688
+   ],
+   "scheme": "fan",
+   "site": "b131",
+   "yaw": 0.0
+  },
+  {
+   "block": "Ocean Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "beach",
+   "kind": "boulevard",
+   "part": 1,
+   "piece": "s_rg_se_b132_1",
+   "pos": [
+    -575.055603027344,
+    4.0,
+    303.663024902344
+   ],
+   "s": [
+    6584.688,
+    6663.91
+   ],
+   "scheme": "fan",
+   "site": "b132",
+   "yaw": 0.0
+  },
+  {
+   "block": "Ocean Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "beach",
+   "kind": "boulevard",
+   "part": 2,
+   "piece": "s_rg_se_b132_2",
+   "pos": [
+    -496.008911132812,
+    3.0,
+    308.932739257812
+   ],
+   "s": [
+    6663.91,
+    6743.132
+   ],
+   "scheme": "fan",
+   "site": "b132",
+   "yaw": 0.0
+  },
+  {
+   "block": "Ocean Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "beach",
+   "kind": "boulevard",
+   "part": 1,
+   "piece": "s_rg_se_b133_1",
+   "pos": [
+    -375.055236816406,
+    2.0,
+    316.996246337891
+   ],
+   "s": [
+    6785.132,
+    6864.333
+   ],
+   "scheme": "fan",
+   "site": "b133",
+   "yaw": 0.0
+  },
+  {
+   "block": "Ocean Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "beach",
+   "kind": "boulevard",
+   "part": 2,
+   "piece": "s_rg_se_b133_2",
+   "pos": [
+    -296.028228759766,
+    2.0,
+    322.240112304688
+   ],
+   "s": [
+    6864.333,
+    6943.534
+   ],
+   "scheme": "fan",
+   "site": "b133",
+   "yaw": 0.0
+  },
+  {
+   "block": "Ocean Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "beach",
+   "kind": "boulevard",
+   "part": 1,
+   "piece": "s_rg_se_b134_1",
+   "pos": [
+    -175.044860839844,
+    2.0,
+    329.497406005859
+   ],
+   "s": [
+    124.723,
+    198.402
+   ],
+   "scheme": "fan",
+   "site": "b134",
+   "yaw": 0.0
+  },
+  {
+   "block": "Ocean Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "beach",
+   "kind": "boulevard",
+   "part": 2,
+   "piece": "s_rg_se_b134_2",
+   "pos": [
+    -101.497573852539,
+    2.0,
+    333.909210205078
+   ],
+   "s": [
+    198.402,
+    272.082
+   ],
+   "scheme": "fan",
+   "site": "b134",
+   "yaw": 0.0
+  },
+  {
+   "block": "Ocean Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "beach",
+   "kind": "boulevard",
+   "part": 1,
+   "piece": "s_rg_se_b135_1",
+   "pos": [
+    26.4944343566895,
+    2.0,
+    340.527893066406
+   ],
+   "s": [
+    326.582,
+    430.107
+   ],
+   "scheme": "fan",
+   "site": "b135",
+   "yaw": 0.0
+  },
+  {
+   "block": "Ocean Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "beach",
+   "kind": "boulevard",
+   "part": 2,
+   "piece": "s_rg_se_b135_2",
+   "pos": [
+    129.998641967773,
+    3.0,
+    342.599395751953
+   ],
+   "s": [
+    430.107,
+    533.632
+   ],
+   "scheme": "fan",
+   "site": "b135",
+   "yaw": 0.0
+  },
+  {
+   "block": "Ocean Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "beach",
+   "kind": "boulevard",
+   "part": 1,
+   "piece": "s_rg_se_b161_1",
+   "pos": [
+    276.973876953125,
+    4.0,
+    343.773895263672
+   ],
+   "s": [
+    577.132,
+    662.733
+   ],
+   "scheme": "queen_runs",
+   "site": "b161",
+   "yaw": 0.0
+  },
+  {
+   "block": "Ocean Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "beach",
+   "kind": "boulevard",
+   "part": 2,
+   "piece": "s_rg_se_b161_2",
+   "pos": [
+    362.486938476562,
+    2.675,
+    339.887023925781
+   ],
+   "s": [
+    662.733,
+    748.334
+   ],
+   "scheme": "queen_runs",
+   "site": "b161",
+   "yaw": 0.0
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "kind": "w_transition",
+   "len": 143.523606311776,
+   "piece": "s_rg_se_b161_w",
+   "pos": [
+    448.0,
+    1.35000002712246,
+    336.000122070312
+   ],
+   "ring_join": [
+    448.0,
+    336.000122070312
+   ],
+   "site": "W_S",
+   "w_end": [
+    570.0,
+    300.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "kind": "w_transition",
+   "len": 89.9850753302893,
+   "piece": "s_rg_se_b136_w",
+   "pos": [
+    570.0,
+    1.35,
+    99.9999923706055
+   ],
+   "ring_join": [
+    615.796264648438,
+    25.0605773925781
+   ],
+   "site": "W_N",
+   "w_end": [
+    570.0,
+    100.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "block": "Glorietta Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "golf",
+   "kind": "boulevard",
+   "part": 1,
+   "piece": "s_rg_se_b137_1",
+   "pos": [
+    628.591369628906,
+    4.0,
+    -13.3430194854736
+   ],
+   "s": [
+    1195.951,
+    1281.666
+   ],
+   "scheme": "queen_runs",
+   "site": "b137",
+   "yaw": 0.0
+  },
+  {
+   "block": "Glorietta Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "golf",
+   "kind": "boulevard",
+   "part": 2,
+   "piece": "s_rg_se_b137_2",
+   "pos": [
+    641.624084472656,
+    4.0,
+    -98.0606536865234
+   ],
+   "s": [
+    1281.666,
+    1367.38
+   ],
+   "scheme": "queen_runs",
+   "site": "b137",
+   "yaw": 0.0
+  },
+  {
+   "block": "Glorietta Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "golf",
+   "kind": "boulevard",
+   "part": 1,
+   "piece": "s_rg_se_b138_1",
+   "pos": [
+    647.637268066406,
+    4.0,
+    -225.492065429688
+   ],
+   "s": [
+    1409.38,
+    1488.411
+   ],
+   "scheme": "alt",
+   "site": "b138",
+   "yaw": 0.0
+  },
+  {
+   "block": "Glorietta Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "golf",
+   "kind": "boulevard",
+   "part": 2,
+   "piece": "s_rg_se_b138_2",
+   "pos": [
+    649.613037109375,
+    4.0,
+    -304.49853515625
+   ],
+   "s": [
+    1488.411,
+    1567.442
+   ],
+   "scheme": "alt",
+   "site": "b138",
+   "yaw": 0.0
+  },
+  {
+   "block": "Glorietta Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "golf",
+   "kind": "boulevard",
+   "part": 1,
+   "piece": "s_rg_se_b139_1",
+   "pos": [
+    652.204040527344,
+    4.0,
+    -415.498596191406
+   ],
+   "s": [
+    1599.442,
+    1683.701
+   ],
+   "scheme": "fan",
+   "site": "b139",
+   "yaw": 0.0
+  },
+  {
+   "block": "Glorietta Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "golf",
+   "kind": "boulevard",
+   "part": 2,
+   "piece": "s_rg_se_b139_2",
+   "pos": [
+    653.327819824219,
+    4.0,
+    -499.75
+   ],
+   "s": [
+    1683.701,
+    1767.96
+   ],
+   "scheme": "fan",
+   "site": "b139",
+   "yaw": 0.0
+  },
+  {
+   "block": "Glorietta Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "golf",
+   "kind": "boulevard",
+   "part": 1,
+   "piece": "s_rg_se_b140_1",
+   "pos": [
+    655.011779785156,
+    4.0,
+    -625.997680664062
+   ],
+   "s": [
+    1809.96,
+    1888.969
+   ],
+   "scheme": "alt",
+   "site": "b140",
+   "yaw": 0.0
+  },
+  {
+   "block": "Glorietta Blvd",
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "coast": "golf",
+   "kind": "boulevard",
+   "part": 2,
+   "piece": "s_rg_se_b140_2",
+   "pos": [
+    656.065551757812,
+    4.0,
+    -704.999572753906
+   ],
+   "s": [
+    1888.969,
+    1967.978
+   ],
+   "scheme": "alt",
+   "site": "b140",
+   "yaw": 0.0
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "kind": "stub",
+   "lattice": "-800.0,200.0",
+   "max_grade": 0.0,
+   "piece": "s_rg_se_b009",
+   "pos": [
+    -800.0,
+    2.0,
+    200.0
+   ],
+   "sec": "res",
+   "site": "b009",
+   "street": "J Ave",
+   "t_node": "-800.0,288.7",
+   "yaw": 0.0,
+   "z": [
+    20.0,
+    62.1669006347656
+   ]
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "kind": "stub",
+   "lattice": "-600.0,200.0",
+   "max_grade": 0.0,
+   "piece": "s_rg_se_b017",
+   "pos": [
+    -600.0,
+    4.0,
+    200.0
+   ],
+   "sec": "res",
+   "site": "b017",
+   "street": "G Ave",
+   "t_node": "-600.0,302.0",
+   "yaw": 0.0,
+   "z": [
+    20.0,
+    75.5000915527344
+   ]
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "kind": "stub",
+   "lattice": "-400.0,200.0",
+   "max_grade": 0.0,
+   "piece": "s_rg_se_b027",
+   "pos": [
+    -400.0,
+    2.0,
+    200.0
+   ],
+   "sec": "res",
+   "site": "b027",
+   "street": "E Ave",
+   "t_node": "-400.0,315.3",
+   "yaw": 0.0,
+   "z": [
+    20.0,
+    88.8332824707031
+   ]
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "kind": "stub",
+   "lattice": "-200.0,200.0",
+   "max_grade": 0.0,
+   "piece": "s_rg_se_b035",
+   "pos": [
+    -200.0,
+    2.0,
+    200.0
+   ],
+   "sec": "res",
+   "site": "b035",
+   "street": "C Ave",
+   "t_node": "-200.0,328.0",
+   "yaw": 0.0,
+   "z": [
+    20.0,
+    101.500457763672
+   ]
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "kind": "stub",
+   "lattice": "250.0,200.0",
+   "max_grade": 0.0303183669088645,
+   "piece": "s_rg_se_b055",
+   "pos": [
+    250.0,
+    6.0,
+    200.0
+   ],
+   "sec": "res",
+   "site": "b055",
+   "street": "B Ave",
+   "t_node": "250.0,345.0",
+   "yaw": 0.0,
+   "z": [
+    20.0,
+    118.949920654297
+   ]
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "kind": "stub",
+   "lattice": "500.0,-800.0",
+   "max_grade": 0.0269462604333703,
+   "piece": "s_rg_se_b095",
+   "pos": [
+    500.0,
+    6.0,
+    -800.0
+   ],
+   "sec": "res",
+   "site": "b095",
+   "street": "6th St",
+   "t_node": "657.3,-800.0",
+   "yaw": 90.0,
+   "z": [
+    20.0,
+    131.332702636719
+   ]
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "kind": "stub",
+   "lattice": "500.0,-600.0",
+   "max_grade": 0.0276077909779276,
+   "piece": "s_rg_se_b101",
+   "pos": [
+    500.0,
+    6.0,
+    -600.0
+   ],
+   "sec": "res",
+   "site": "b101",
+   "street": "7th St",
+   "t_node": "654.7,-600.0",
+   "yaw": 90.0,
+   "z": [
+    20.0,
+    128.664978027344
+   ]
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "kind": "stub",
+   "lattice": "500.0,-400.0",
+   "max_grade": 0.0283025875516292,
+   "piece": "s_rg_se_b107",
+   "pos": [
+    500.0,
+    6.0,
+    -400.0
+   ],
+   "sec": "res",
+   "site": "b107",
+   "street": "8th St",
+   "t_node": "652.0,-400.0",
+   "yaw": 90.0,
+   "z": [
+    20.0,
+    125.997375488281
+   ]
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "kind": "stub",
+   "lattice": "500.0,-200.0",
+   "max_grade": 0.0594060482927952,
+   "piece": "s_rg_se_b115",
+   "pos": [
+    500.0,
+    8.0,
+    -200.0
+   ],
+   "sec": "res",
+   "site": "b115",
+   "street": "9th St",
+   "t_node": "647.0,-200.0",
+   "yaw": 90.0,
+   "z": [
+    20.0,
+    120.999816894531
+   ]
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "kind": "stub",
+   "lattice": "500.0,0.0",
+   "max_grade": 0.0,
+   "piece": "s_rg_se_b123",
+   "pos": [
+    500.0,
+    4.0,
+    0.0
+   ],
+   "sec": "res",
+   "site": "b123",
+   "street": "10th St",
+   "t_node": "626.5,0.0",
+   "yaw": 90.0,
+   "z": [
+    20.0,
+    94.0386352539062
+   ]
+  },
+  {
+   "built_by": "half SE (road_rg_SE.gd over road_rg.gd)",
+   "bus": "eastbound far side of B Ave",
+   "continues": "s_wfd (waterfront sample W, west leg, ends at 100 m from W)",
+   "kind": "stub",
+   "lattice": "250.0,200.0",
+   "max_grade": 0.034875,
+   "piece": "s_rg_se_b130",
+   "pos": [
+    250.0,
+    6.0,
+    200.0
+   ],
+   "sec": "std",
+   "site": "b130",
+   "street": "11th St",
+   "t_node": "570.0,200.0",
+   "yaw": 90.0,
+   "z": [
+    20.0,
+    220.0
+   ]
+  },
+  {
+   "built_by": "core stage (road_rg.gd)",
+   "kind": "stub",
+   "max_grade": 0.0314175179892328,
+   "piece": "s_rg_b045",
+   "pos": [
+    0.0,
+    4.0,
+    200.0
+   ],
+   "sec": "hs",
+   "site": "b045",
+   "street": "Amber Ave",
+   "yaw": 0.0,
+   "z": [
+    17.5,
+    112.988128662109
+   ]
+  }
+ ],
+ "superseded": {
+  "j_rg_e0_s340": "j_rg_se_e0_s340 (the signal duct trench as a sealed cut)",
+  "j_rg_e627_s0": "j_rg_se_e627_s0 (no signal duct trench at a stop-controlled T)",
+  "s_rg_b009": "s_rg_se_b009 (kerb inlets clear of signs and aprons; sealed water-service cut)",
+  "s_rg_b131_1": "s_rg_se_b131_1 (sealed utility cut instead of three dark squares)",
+  "s_rg_b131_2": "s_rg_se_b131_2 (sealed utility cut; the G Ave T's crossing does not change its range)",
+  "s_rg_b136_w": "s_rg_se_b136_w (built for W's old pad 2.0; W is at 1.35 now)",
+  "s_rg_b161_2": "s_rg_se_b161_2 (the B Ave bus stop changes b161's layout; sealed utility cuts)",
+  "s_rg_b161_w": "s_rg_se_b161_w (built for W's old pad 2.0; W is at 1.35 now)"
+ }
+}

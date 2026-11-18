@@ -1,0 +1,119 @@
+{
+ "name": "ranch_siding",
+ "cat": "house",
+ "style": "ranch",
+ "logic_errors": [],
+ "col_boxes": 11,
+ "near": {
+  "tris": 1400,
+  "verts": 2267,
+  "regions": [
+   "O_door_white",
+   "O_lamp",
+   "O_number",
+   "O_small_white",
+   "O_vent",
+   "O_win_dh_white",
+   "R_shake",
+   "S_black",
+   "S_concrete",
+   "S_siding",
+   "S_soffit",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_rail",
+   "T_white",
+   "W_brick",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.300000190734863,
+    -0.0,
+    -4.320000171661377
+   ],
+   [
+    5.300000190734863,
+    6.070000171661377,
+    6.150000095367432
+   ]
+  ]
+ },
+ "mid_roof_top": 5.57,
+ "mid": {
+  "tris": 354,
+  "verts": 436,
+  "regions": [
+   "O_door_white",
+   "O_small_white",
+   "O_vent",
+   "O_win_dh_white",
+   "S_concrete",
+   "S_deck",
+   "S_shake",
+   "S_soffit",
+   "S_white",
+   "W_brick",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.0,
+    0.0,
+    -4.199999809265137
+   ],
+   [
+    5.0,
+    6.070000171661377,
+    6.150000095367432
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 42,
+  "regions": [
+   "F_shake",
+   "F_siding_1",
+   "F_siding_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -5.0,
+    0.0,
+    -3.75
+   ],
+   [
+    5.0,
+    5.570000171661377,
+    3.75
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door",
+   -1.0
+  ]
+ ],
+ "footprint_wd": [
+  10.0,
+  7.5
+ ],
+ "footprint_area": 75.0,
+ "height": 6.07,
+ "storeys": 1,
+ "budget": [
+  1500,
+  450,
+  40
+ ],
+ "budget_class": "house_small",
+ "time_s": 8.4
+}

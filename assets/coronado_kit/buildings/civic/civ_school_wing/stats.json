@@ -1,0 +1,116 @@
+{
+ "name": "civ_school_wing",
+ "cat": "civic",
+ "style": "school_wing",
+ "logic_errors": [],
+ "col_boxes": 13,
+ "near": {
+  "tris": 2188,
+  "verts": 3671,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "O_lamp",
+   "R_clay",
+   "R_metal",
+   "SG_school",
+   "S_black",
+   "S_concrete",
+   "S_metal",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_deck",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -15.720000267028809,
+    -0.0,
+    -7.5
+   ],
+   [
+    15.600000381469727,
+    9.0,
+    9.949999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 7.805,
+ "mid": {
+  "tris": 550,
+  "verts": 688,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "SG_school",
+   "S_clay",
+   "S_concrete",
+   "S_deck",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -15.0,
+    0.0,
+    -7.5
+   ],
+   [
+    15.0,
+    7.804999828338623,
+    8.5
+   ]
+  ]
+ },
+ "far": {
+  "tris": 30,
+  "verts": 54,
+  "regions": [
+   "F_metal",
+   "F_stucco_1",
+   "F_stucco_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -15.0,
+    0.0,
+    -6.0
+   ],
+   [
+    15.0,
+    7.804999828338623,
+    6.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  30.0,
+  12.0
+ ],
+ "footprint_area": 360.0,
+ "height": 9.0,
+ "storeys": 1,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "civic",
+ "time_s": 16.1
+}

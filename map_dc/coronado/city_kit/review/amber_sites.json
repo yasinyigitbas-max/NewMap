@@ -1,0 +1,562 @@
+{
+ "note": "amber integration table (road kit, 17 Nov). Grid frame (u along 10th St toward ESE = layout x, v along Amber toward SSW = layout z, origin Amber x 10th). Place a piece at [u, y, v] with the yaw (Godot: yaw 90 turns the piece's +z to +x). Junctions: y = the grading pad, yaw 0. Legs run along +z from z0 (the junction tile edge) to z1 (the block's mid-point seam); a leg from end A (north) has yaw 0, from end B (south) yaw 180. prof_a: the block's profile from end A, [p0, p1, h] = h * smoothstep over p0..p1 metres from A's centre, relative to pad A.",
+ "interfaces": {
+  "side_legs": "Every side street leg from an Amber junction starts at |x| 23.5 (the pilot's cross-street tile edge), on the pad, flat at the joint, with the side street's section there: res kerb 5.7 / parkway to 7.2 / walk to 9.2 (no centre line); hs kerb 5.7 / walk to 9.7, double yellow at |z| 0.1-0.2; cc kerb 3.3 / walk to 9.7, double yellow; arterial (3rd, 4th St) kerb 10.3 / palm parkway grass 10.3-12.3 / walk 12.3-14.3, the stop bars inside our tile at 22.5-23.1 (covering the turn pocket: |z| -1.8..10.3 for eastbound, -10.3..1.8 for westbound), crosswalk 18.3-21.3, no lane lines inside the tile. Kerb inlets of side legs that fall toward Amber are in our tile at |x| 22.8.",
+  "amber_stubs": "Ring stubs: b036 (Amber 1st St -> 3rd St) starts at our j_am_3rd's north tile edge, |z| 22.5 (yaw 180 from (0, -1400)), res Amber section: median nose (r 2.5) with its tip at the tile edge, lanes to 9.1 (line 5.8), edge line 9.1, parking lane, kerb 11.5, grass parkway 11.5-13.5, walk 13.5-16; flat at pad 8.0 at the joint; it carries 3rd St's NORTHBOUND far-side bus stop (departure side). b045 (11th -> Ocean Blvd) starts at j_am_11th's south tile edge |z| 17.5 with the hs section (built: s_rg_b045, joint checked); it carries 11th's southbound stop.",
+  "fillers": "s_am_fill_hs at the pilot (0, 4, 0) yaw 180 (north) and yaw 0 (south); s_am_fill_cc at the centre (0, 6, -600) yaw 180 / 0. Each covers 97.5-100 from the sample junction."
+ },
+ "junctions": [
+  {
+   "site": [
+    0.0,
+    -1400.0
+   ],
+   "pad": 8.0,
+   "piece": "j_am_3rd",
+   "yaw": 0,
+   "pos": [
+    0.0,
+    8.0,
+    -1400.0
+   ],
+   "control": "signals: sw arm, ne arm, nw arm, se arm",
+   "legs": {
+    "b036": "res",
+    "b037": "res",
+    "b068": "couplet",
+    "b069": "couplet"
+   }
+  },
+  {
+   "site": [
+    0.0,
+    -1200.0
+   ],
+   "pad": 14.0,
+   "piece": "j_am_4th",
+   "yaw": 0,
+   "pos": [
+    0.0,
+    14.0,
+    -1200.0
+   ],
+   "control": "signals: sw arm, ne arm, nw arm, se arm",
+   "legs": {
+    "b037": "res",
+    "b038": "res",
+    "b076": "couplet",
+    "b077": "couplet"
+   }
+  },
+  {
+   "site": [
+    0.0,
+    -1000.0
+   ],
+   "pad": 12.0,
+   "piece": "j_am_5th",
+   "yaw": 0,
+   "pos": [
+    0.0,
+    12.0,
+    -1000.0
+   ],
+   "control": "signals: sw arm, ne arm, nw post, se post",
+   "legs": {
+    "b038": "res",
+    "b039": "res",
+    "b084": "res",
+    "b085": "res"
+   }
+  },
+  {
+   "site": [
+    0.0,
+    -800.0
+   ],
+   "pad": 6.0,
+   "piece": "j_am_6th",
+   "yaw": 0,
+   "pos": [
+    0.0,
+    6.0,
+    -800.0
+   ],
+   "control": "signals: sw arm, ne arm, nw post, se post",
+   "legs": {
+    "b039": "res",
+    "b040": "cc",
+    "b092": "cc",
+    "b093": "cc"
+   }
+  },
+  {
+   "site": [
+    0.0,
+    -400.0
+   ],
+   "pad": 6.0,
+   "piece": "j_am_8th",
+   "yaw": 0,
+   "pos": [
+    0.0,
+    6.0,
+    -400.0
+   ],
+   "control": "signals: w_s arm, ne arm, w_n post",
+   "legs": {
+    "b041": "cc",
+    "b042": "res",
+    "b105": "cc"
+   }
+  },
+  {
+   "site": [
+    0.0,
+    -200.0
+   ],
+   "pad": 6.0,
+   "piece": "j_am_9th",
+   "yaw": 0,
+   "pos": [
+    0.0,
+    6.0,
+    -200.0
+   ],
+   "control": "signals: sw arm, ne arm, nw post, se post",
+   "legs": {
+    "b042": "res",
+    "b043": "hs",
+    "b112": "hs",
+    "b113": "hs"
+   }
+  },
+  {
+   "site": [
+    0.0,
+    200.0
+   ],
+   "pad": 4.0,
+   "piece": "j_am_11th",
+   "yaw": 0,
+   "pos": [
+    0.0,
+    4.0,
+    200.0
+   ],
+   "control": "signals: sw arm, ne arm, nw post, se post",
+   "legs": {
+    "b044": "hs",
+    "b045": "hs",
+    "b128": "hs",
+    "b129": "hs"
+   }
+  }
+ ],
+ "blocks": [
+  {
+   "id": "b037",
+   "name": "Amber Ave",
+   "section": "res",
+   "a": [
+    0.0,
+    -1400.0
+   ],
+   "b": [
+    0.0,
+    -1200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 6.0,
+   "pad_a": 8.0,
+   "pad_b": 14.0,
+   "prof_a": [
+    [
+     22.5,
+     177.5,
+     6.0
+    ]
+   ],
+   "max_grade_pct": 5.81,
+   "legs": [
+    {
+     "piece": "s_am_b037_a",
+     "end": "A",
+     "at": [
+      0.0,
+      -1400.0
+     ],
+     "y": 8.0,
+     "yaw": 0,
+     "z0": 22.5,
+     "z1": 100.0,
+     "kind": "leg"
+    },
+    {
+     "piece": "s_am_b037_b",
+     "end": "B",
+     "at": [
+      0.0,
+      -1200.0
+     ],
+     "y": 14.0,
+     "yaw": 180,
+     "z0": 22.5,
+     "z1": 100.0,
+     "kind": "leg"
+    }
+   ]
+  },
+  {
+   "id": "b038",
+   "name": "Amber Ave",
+   "section": "res",
+   "a": [
+    0.0,
+    -1200.0
+   ],
+   "b": [
+    0.0,
+    -1000.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -2.0,
+   "pad_a": 14.0,
+   "pad_b": 12.0,
+   "prof_a": [
+    [
+     22.5,
+     182.5,
+     -2.0
+    ]
+   ],
+   "max_grade_pct": 1.88,
+   "legs": [
+    {
+     "piece": "s_am_b038_a",
+     "end": "A",
+     "at": [
+      0.0,
+      -1200.0
+     ],
+     "y": 14.0,
+     "yaw": 0,
+     "z0": 22.5,
+     "z1": 100.0,
+     "kind": "leg"
+    },
+    {
+     "piece": "s_am_b038_b",
+     "end": "B",
+     "at": [
+      0.0,
+      -1000.0
+     ],
+     "y": 12.0,
+     "yaw": 180,
+     "z0": 17.5,
+     "z1": 100.0,
+     "kind": "leg"
+    }
+   ]
+  },
+  {
+   "id": "b039",
+   "name": "Amber Ave",
+   "section": "res",
+   "a": [
+    0.0,
+    -1000.0
+   ],
+   "b": [
+    0.0,
+    -800.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -6.0,
+   "pad_a": 12.0,
+   "pad_b": 6.0,
+   "prof_a": [
+    [
+     17.5,
+     182.5,
+     -6.0
+    ]
+   ],
+   "max_grade_pct": 5.45,
+   "legs": [
+    {
+     "piece": "s_am_b039_a",
+     "end": "A",
+     "at": [
+      0.0,
+      -1000.0
+     ],
+     "y": 12.0,
+     "yaw": 0,
+     "z0": 17.5,
+     "z1": 100.0,
+     "kind": "leg"
+    },
+    {
+     "piece": "s_am_b039_b",
+     "end": "B",
+     "at": [
+      0.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": 180,
+     "z0": 17.5,
+     "z1": 100.0,
+     "kind": "leg"
+    }
+   ]
+  },
+  {
+   "id": "b040",
+   "name": "Amber Ave",
+   "section": "cc",
+   "a": [
+    0.0,
+    -800.0
+   ],
+   "b": [
+    0.0,
+    -600.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "legs": [
+    {
+     "piece": "s_am_b040_a",
+     "end": "A",
+     "at": [
+      0.0,
+      -800.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 17.5,
+     "z1": 100.0,
+     "kind": "leg"
+    },
+    {
+     "piece": "s_am_fill_cc",
+     "end": "B",
+     "at": [
+      0.0,
+      -600.0
+     ],
+     "y": 6.0,
+     "yaw": 180,
+     "z0": 97.5,
+     "z1": 100.0,
+     "kind": "fill"
+    }
+   ]
+  },
+  {
+   "id": "b041",
+   "name": "Amber Ave",
+   "section": "cc",
+   "a": [
+    0.0,
+    -600.0
+   ],
+   "b": [
+    0.0,
+    -400.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "legs": [
+    {
+     "piece": "s_am_fill_cc",
+     "end": "A",
+     "at": [
+      0.0,
+      -600.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 97.5,
+     "z1": 100.0,
+     "kind": "fill"
+    },
+    {
+     "piece": "s_am_b041_b",
+     "end": "B",
+     "at": [
+      0.0,
+      -400.0
+     ],
+     "y": 6.0,
+     "yaw": 180,
+     "z0": 17.5,
+     "z1": 100.0,
+     "kind": "leg"
+    }
+   ]
+  },
+  {
+   "id": "b042",
+   "name": "Amber Ave",
+   "section": "res",
+   "a": [
+    0.0,
+    -400.0
+   ],
+   "b": [
+    0.0,
+    -200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 6.0,
+   "pad_b": 6.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "legs": [
+    {
+     "piece": "s_am_b042_a",
+     "end": "A",
+     "at": [
+      0.0,
+      -400.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 17.5,
+     "z1": 100.0,
+     "kind": "leg"
+    },
+    {
+     "piece": "s_am_b042_b",
+     "end": "B",
+     "at": [
+      0.0,
+      -200.0
+     ],
+     "y": 6.0,
+     "yaw": 180,
+     "z0": 17.5,
+     "z1": 100.0,
+     "kind": "leg"
+    }
+   ]
+  },
+  {
+   "id": "b043",
+   "name": "Amber Ave",
+   "section": "hs",
+   "a": [
+    0.0,
+    -200.0
+   ],
+   "b": [
+    0.0,
+    0.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": -2.0,
+   "pad_a": 6.0,
+   "pad_b": 4.0,
+   "prof_a": [
+    [
+     17.5,
+     100.0,
+     -2.0
+    ]
+   ],
+   "max_grade_pct": 3.64,
+   "legs": [
+    {
+     "piece": "s_am_b043_a",
+     "end": "A",
+     "at": [
+      0.0,
+      -200.0
+     ],
+     "y": 6.0,
+     "yaw": 0,
+     "z0": 17.5,
+     "z1": 100.0,
+     "kind": "leg"
+    },
+    {
+     "piece": "s_am_fill_hs",
+     "end": "B",
+     "at": [
+      0.0,
+      0.0
+     ],
+     "y": 4.0,
+     "yaw": 180,
+     "z0": 97.5,
+     "z1": 100.0,
+     "kind": "fill"
+    }
+   ]
+  },
+  {
+   "id": "b044",
+   "name": "Amber Ave",
+   "section": "hs",
+   "a": [
+    0.0,
+    0.0
+   ],
+   "b": [
+    0.0,
+    200.0
+   ],
+   "length": 200.0,
+   "rise_a_to_b": 0.0,
+   "pad_a": 4.0,
+   "pad_b": 4.0,
+   "prof_a": [],
+   "max_grade_pct": 0.0,
+   "legs": [
+    {
+     "piece": "s_am_fill_hs",
+     "end": "A",
+     "at": [
+      0.0,
+      0.0
+     ],
+     "y": 4.0,
+     "yaw": 0,
+     "z0": 97.5,
+     "z1": 100.0,
+     "kind": "fill"
+    },
+    {
+     "piece": "s_am_b044_b",
+     "end": "B",
+     "at": [
+      0.0,
+      200.0
+     ],
+     "y": 4.0,
+     "yaw": 180,
+     "z0": 17.5,
+     "z1": 100.0,
+     "kind": "leg"
+    }
+   ]
+  }
+ ],
+ "not_served": [
+  "Amber x 1st St (ring T, ring family) and Amber x Ocean Blvd (ring T, ring family): legs end at the stub boundaries above.",
+  "b036 and b045 (the Amber stubs to the ring) belong to the ring family."
+ ]
+}

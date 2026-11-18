@@ -1,0 +1,341 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "clothes",
+ "clutter": true,
+ "signs": true,
+ "types": [
+  "clothes",
+  "hat"
+ ],
+ "floor": "WoodFloor051",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  1,
+  0.98,
+  0.96
+ ],
+ "ceiling": "Plaster001",
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.0,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter",
+  "racks"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    2.2
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "accessory",
+    "jewelry",
+    "hat"
+   ]
+  },
+  {
+   "role": "wall_shelves",
+   "prop": "shelf_wall",
+   "place": "walls",
+   "walls": [
+    "back"
+   ],
+   "goods": [
+    "clothing",
+    "hat",
+    "shoes",
+    "accessory"
+   ]
+  },
+  {
+   "role": "wall_rails",
+   "prop": "rack",
+   "place": "walls",
+   "walls": [
+    "door_side"
+   ],
+   "goods": [
+    "clothing",
+    "hat"
+   ]
+  },
+  {
+   "role": "racks",
+   "prop": "rack",
+   "place": "aisles",
+   "goods": [
+    "clothing",
+    "hat"
+   ]
+  }
+ ],
+ "plans": [
+  {
+   "name": "rails",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "accessory",
+      "jewelry",
+      "hat"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "clothing",
+      "hat",
+      "shoes",
+      "accessory"
+     ]
+    },
+    {
+     "role": "wall_rails",
+     "prop": "rack",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "goods": [
+      "clothing",
+      "hat"
+     ]
+    },
+    {
+     "role": "racks",
+     "prop": "rack",
+     "place": "aisles",
+     "goods": [
+      "clothing",
+      "hat"
+     ]
+    }
+   ],
+   "fixtures": "shop_troffer"
+  },
+  {
+   "name": "boutique",
+   "till": "tablet",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "accessory",
+      "jewelry",
+      "hat"
+     ]
+    },
+    {
+     "role": "wall_rails",
+     "prop": "rack",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "clothing"
+     ]
+    },
+    {
+     "role": "racks",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "clothing",
+      "accessory"
+     ],
+     "max": 2
+    },
+    {
+     "role": "rails",
+     "prop": "rack",
+     "place": "aisles",
+     "goods": [
+      "clothing",
+      "hat"
+     ],
+     "max": 2
+    },
+    {
+     "role": "mannequin",
+     "prop": "mannequin",
+     "place": "corner"
+    },
+    {
+     "role": "fitting",
+     "prop": "fitting_room",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "unit": [
+      1.2,
+      1.2
+     ],
+     "max": 1,
+     "skip_shallow": true
+    }
+   ],
+   "clutter": {
+    "floor": [
+     1,
+     2
+    ]
+   },
+   "fixtures": "boutique_track"
+  },
+  {
+   "name": "outlet",
+   "till": "pick",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "accessory",
+      "jewelry",
+      "hat"
+     ]
+    },
+    {
+     "role": "wall_rails",
+     "prop": "rack",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "goods": [
+      "clothing",
+      "hat"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "clothing",
+      "accessory",
+      "shoes"
+     ]
+    },
+    {
+     "role": "racks",
+     "prop": "rack",
+     "place": "aisles",
+     "goods": [
+      "clothing"
+     ],
+     "max": 4
+    },
+    {
+     "role": "tables",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "clothing",
+      "hat"
+     ],
+     "max": 2
+    },
+    {
+     "role": "mannequin",
+     "prop": "mannequin",
+     "place": "corner"
+    }
+   ],
+   "clutter": {
+    "floor": [
+     2,
+     3
+    ]
+   },
+   "signs": {
+    "n_above": [
+     1,
+     2
+    ]
+   },
+   "fixtures": "shop_tubes"
+  }
+ ],
+ "styles": [
+  {
+   "floor": "WoodFloor051",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.98,
+    0.96
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "Concrete034",
+   "wall": "Bricks066",
+   "wall_tint": [
+    1,
+    1,
+    1
+   ],
+   "wainscot": "Concrete034",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "WoodFloor034",
+   "wall": "Plaster001",
+   "wall_tint": [
+    1,
+    0.95,
+    0.92
+   ],
+   "wainscot": "WoodSiding008",
+   "ceiling": "Plaster001"
+  }
+ ]
+}

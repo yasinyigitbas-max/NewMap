@@ -1,0 +1,122 @@
+{
+ "name": "ind_repair",
+ "cat": "warehouse",
+ "style": "auto_repair",
+ "logic_errors": [],
+ "col_boxes": 3,
+ "near": {
+  "tris": 1231,
+  "verts": 2153,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_rollup",
+   "O_shopdoor",
+   "O_storefront",
+   "O_win_casement",
+   "R_flat",
+   "S_black",
+   "S_glass",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -9.050000190734863,
+    -0.0,
+    -9.5
+   ],
+   [
+    9.050000190734863,
+    6.46999979019165,
+    9.800000190734863
+   ]
+  ]
+ },
+ "mid_roof_top": 6.1,
+ "mid": {
+  "tris": 288,
+  "verts": 356,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "O_rollup",
+   "O_shopdoor",
+   "S_concrete",
+   "S_flat",
+   "S_glass",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "T_dark",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -9.0,
+    0.0,
+    -9.5
+   ],
+   [
+    9.0,
+    6.099999904632568,
+    9.800000190734863
+   ]
+  ]
+ },
+ "far": {
+  "tris": 18,
+  "verts": 36,
+  "regions": [
+   "F_c_tower_3",
+   "F_flat"
+  ],
+  "bbox": [
+   [
+    -9.0,
+    0.0,
+    -8.0
+   ],
+   [
+    9.0,
+    6.099999904632568,
+    8.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   -6.5
+  ],
+  [
+   "rollup",
+   0.6
+  ],
+  [
+   "rollup",
+   6.0
+  ]
+ ],
+ "footprint_wd": [
+  18.0,
+  16.0
+ ],
+ "footprint_area": 288.0,
+ "height": 6.47,
+ "storeys": 1,
+ "budget": [
+  2000,
+  600,
+  40
+ ],
+ "budget_class": "warehouse",
+ "time_s": 4.8
+}

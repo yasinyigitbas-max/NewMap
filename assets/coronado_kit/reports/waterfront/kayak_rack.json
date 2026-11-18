@@ -1,0 +1,106 @@
+{
+ "name": "kayak_rack",
+ "tiers": {
+  "near": 1182,
+  "mid": 260,
+  "far": 20
+ },
+ "budget": 1200,
+ "class": "medium",
+ "far_paint_max": 0.6520958706128257,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_kayak_rack_clean_far.glb",
+   "tier": "far",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 20,
+   "verts": 32,
+   "budget": 20,
+   "size": [
+    3.6,
+    2.05,
+    1.594
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_kayak_rack_clean_mid.glb",
+   "tier": "mid",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 252,
+   "verts": 702,
+   "budget": 361,
+   "size": [
+    3.6,
+    2.05,
+    1.8
+   ],
+   "odd_ray": 23
+  },
+  {
+   "file": "prop_kayak_rack_clean_near.glb",
+   "tier": "near",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "88 tris may face inward / be enclosed"
+   ],
+   "tris": 1174,
+   "verts": 2921,
+   "budget": 1200,
+   "size": [
+    3.6,
+    2.05,
+    1.86
+   ],
+   "odd_ray": 196
+  },
+  {
+   "file": "prop_kayak_rack_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 8,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.895,
+   "dE": 0.5
+  },
+  "top": {
+   "iou": 0.884,
+   "dE": 1.0
+  },
+  "left": {
+   "iou": 0.0,
+   "dE": 99,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 2,
+  "rail": 6
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 64,
+ "bake_px_per_m": 134.4,
+ "high_tris": 20254,
+ "pass": true
+}

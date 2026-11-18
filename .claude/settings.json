@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude-code-remote__send_message"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && echo '=== AUTO-REMINDER after context compression: Yasin asked to re-read the job board, rules, budgets and skill before continuing ===' && cat map_dc/coronado/city_kit/JOB_BOARD.md && echo && sed -n '/^## Yasin/,$p' .claude/skills/coronado-city-kit/SKILL.md"
+          }
+        ]
+      }
+    ]
+  }
+}

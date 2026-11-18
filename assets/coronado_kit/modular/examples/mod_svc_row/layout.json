@@ -1,0 +1,95 @@
+{
+ "name": "mod_svc_row",
+ "group": "urban",
+ "outline": {
+  "kind": "shop",
+  "W": 12.0,
+  "D": 12.0,
+  "storeys": 1,
+  "wall": "W_stucco",
+  "tint": [
+   0.93,
+   0.86,
+   0.72
+  ],
+  "budget": "shop",
+  "floor": 0.0,
+  "storey": 4.2,
+  "parapet": 0.9,
+  "sills": false,
+  "foundation": false
+ },
+ "pieces": [
+  {
+   "piece": "urb_svc_front_6m_pharmacy",
+   "x": -3.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_svc_front_6m_laundry",
+   "x": 3.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_back_6m_stucco",
+   "x": 3.0,
+   "z": -5.85,
+   "rot_y": 180,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_back_6m_stucco",
+   "x": -3.0,
+   "z": -5.85,
+   "rot_y": 180,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_side_12m_stucco",
+   "x": 5.85,
+   "z": 0.0,
+   "rot_y": 90,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_side_12m_stucco_l",
+   "x": -5.85,
+   "z": 0.0,
+   "rot_y": 270,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_roof_6m_end",
+   "x": -3.0,
+   "z": 0.0,
+   "rot_y": 0,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_roof_6m_end",
+   "x": 3.0,
+   "z": 0.0,
+   "rot_y": 180,
+   "group": "shops"
+  }
+ ],
+ "budget_class": "shop",
+ "budget": [
+  2400,
+  700,
+  40
+ ],
+ "tris": {
+  "near": 1776,
+  "mid": 404,
+  "far": 10
+ },
+ "col_boxes": 1,
+ "far_from": "snapped outline hull",
+ "merged": {
+  "near_mid": "pieces merged, 1 mesh/1 primitive/1 material",
+  "far_col": "outline hull + <=12 boxes"
+ }
+}

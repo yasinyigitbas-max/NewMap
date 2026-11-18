@@ -1,0 +1,164 @@
+{
+ "name": "carport_clay",
+ "style": "carport",
+ "module": "houses_map",
+ "stats": {
+  "near": {
+   "tris": 251,
+   "verts": 421,
+   "regions": [
+    "O_lamp",
+    "R_clay",
+    "S_black",
+    "S_soffit",
+    "T_concrete",
+    "T_metal",
+    "T_white",
+    "W_stucco"
+   ],
+   "bbox": [
+    [
+     -1.75,
+     -0.0,
+     -3.0
+    ],
+    [
+     1.75,
+     3.007999897003174,
+     3.119999885559082
+    ]
+   ]
+  },
+  "mid": {
+   "tris": 85,
+   "verts": 135,
+   "regions": [
+    "S_clay",
+    "S_soffit",
+    "S_white",
+    "W_stucco"
+   ],
+   "bbox": [
+    [
+     -1.75,
+     0.0,
+     -3.0
+    ],
+    [
+     1.75,
+     3.007999897003174,
+     3.0
+    ]
+   ]
+  },
+  "far": {
+   "tris": 10,
+   "verts": 20,
+   "regions": [
+    "F_bb_1",
+    "F_clay"
+   ],
+   "bbox": [
+    [
+     -1.5,
+     -0.0,
+     -2.75
+    ],
+    [
+     1.5,
+     3.007999897003174,
+     2.75
+    ]
+   ]
+  },
+  "budget": [
+   300,
+   100,
+   12
+  ],
+  "budget_class": "garage",
+  "storeys": 1,
+  "footprint_wd": [
+   3.0,
+   5.5
+  ],
+  "footprint_area": 16.5,
+  "height": 3.01,
+  "logic_errors": [],
+  "col_boxes": 3
+ },
+ "validator": {
+  "pass": true,
+  "errors": []
+ },
+ "railcheck": {
+  "pass": true,
+  "gaps": [],
+  "floating": [],
+  "pen": []
+ },
+ "far_match": {
+  "ok": true,
+  "reason": "ok (opening layout)",
+  "detail": {
+   "mid_h": 3.007,
+   "far_h": 3.007,
+   "mid_w": 3.5,
+   "far_w": 3.0,
+   "iou": 0.938,
+   "mid_px": 36238,
+   "far_px": 37824,
+   "frame": [
+    -1.75,
+    1.75,
+    0.0,
+    3.007
+   ],
+   "swing_mid": 0.393,
+   "corr": -0.256,
+   "mid_rows": 1,
+   "far_rows": 2,
+   "mid_fill": 0.808,
+   "far_fill": 0.064,
+   "mid_cols": 0,
+   "far_cols": 0,
+   "mid_col_x": [],
+   "far_col_x": [],
+   "mid_open_rows": 0,
+   "far_open_rows": 0
+  },
+  "full_iou": {
+   "front": 0.9271857560457082,
+   "side": 0.9825859817152808
+  }
+ },
+ "pass": true,
+ "time_s": 1.9,
+ "wallcheck": {
+  "front": {
+   "wall_px": 6926,
+   "resid_std": 0.0119,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "left": {
+   "wall_px": 126174,
+   "resid_std": 0.0073,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "right": {
+   "wall_px": 80306,
+   "resid_std": 0.0133,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "back": {
+   "wall_px": 184594,
+   "resid_std": 0.0156,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "pass": true
+ }
+}

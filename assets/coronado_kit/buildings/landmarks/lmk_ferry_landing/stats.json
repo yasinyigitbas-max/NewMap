@@ -1,0 +1,121 @@
+{
+ "name": "lmk_ferry_landing",
+ "cat": "landmark",
+ "style": "ferry_pavilion",
+ "logic_errors": [],
+ "col_boxes": 21,
+ "near": {
+  "tris": 3598,
+  "verts": 6328,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "O_lamp",
+   "O_louver",
+   "O_shutter",
+   "R_clay",
+   "R_metal",
+   "SG_ferry",
+   "S_black",
+   "S_concrete",
+   "S_deck",
+   "S_metal",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -10.720000267028809,
+    -0.0,
+    -19.0
+   ],
+   [
+    10.720000267028809,
+    11.930000305175781,
+    9.449999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 11.93,
+ "mid": {
+  "tris": 670,
+  "verts": 902,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "O_louver",
+   "SG_ferry",
+   "S_clay",
+   "S_concrete",
+   "S_dark",
+   "S_deck",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -10.600000381469727,
+    0.0,
+    -19.0
+   ],
+   [
+    10.600000381469727,
+    11.930000305175781,
+    8.0
+   ]
+  ]
+ },
+ "far": {
+  "tris": 56,
+  "verts": 94,
+  "regions": [
+   "F_metal",
+   "F_stucco_2",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -10.0,
+    0.0,
+    -5.5
+   ],
+   [
+    10.0,
+    11.930000305175781,
+    5.5
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  20.0,
+  11.0
+ ],
+ "footprint_area": 220.0,
+ "height": 11.93,
+ "storeys": 1,
+ "budget": [
+  8000,
+  2500,
+  200
+ ],
+ "budget_class": "landmark",
+ "time_s": 36.0
+}

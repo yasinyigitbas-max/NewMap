@@ -1,0 +1,2085 @@
+{
+ "note": "resstd review area (road kit 17 Nov): the family's pieces at their grid sites (u, pad, v) + (0, 0, -3000), plus the locked sample streets they join (review only). Never part of city_layout.json.",
+ "instances": [
+  {
+   "piece": "j_rs_t_lll_a",
+   "pos": [
+    -800.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": -90,
+   "note": "resstd junction L-LL"
+  },
+  {
+   "piece": "j_rs_t_lll_a",
+   "pos": [
+    -600.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 180,
+   "note": "resstd junction LL-L"
+  },
+  {
+   "piece": "j_rs_t_lll_b",
+   "pos": [
+    -400.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 90,
+   "note": "resstd junction LLL-"
+  },
+  {
+   "piece": "j_rs_t_lll_b",
+   "pos": [
+    -400.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": -90,
+   "note": "resstd junction L-LL"
+  },
+  {
+   "piece": "j_rs_t_lrl_a",
+   "pos": [
+    -600.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": 0,
+   "note": "resstd junction -LrL"
+  },
+  {
+   "piece": "j_rs_t_lrr_a",
+   "pos": [
+    -200.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": 0,
+   "note": "resstd junction -Lrr"
+  },
+  {
+   "piece": "j_rs_t_rrr_a",
+   "pos": [
+    500.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": 180,
+   "note": "resstd junction rr-r"
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    -400.0,
+    6.0,
+    -4000.0
+   ],
+   "yaw": 90,
+   "note": "resstd junction LLLL"
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    -400.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 0,
+   "note": "resstd junction LLLL"
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    -200.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": -90,
+   "note": "resstd junction LLLL"
+  },
+  {
+   "piece": "j_rs_3l1r_a",
+   "pos": [
+    -800.0,
+    4.0,
+    -4000.0
+   ],
+   "yaw": 90,
+   "note": "resstd junction LLrL"
+  },
+  {
+   "piece": "j_rs_3l1r_a",
+   "pos": [
+    -800.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": -90,
+   "note": "resstd junction rLLL"
+  },
+  {
+   "piece": "j_rs_3l1r_b",
+   "pos": [
+    -800.0,
+    4.0,
+    -3400.0
+   ],
+   "yaw": 90,
+   "note": "resstd junction LLrL"
+  },
+  {
+   "piece": "j_rs_3l1r_b",
+   "pos": [
+    -200.0,
+    8.0,
+    -4000.0
+   ],
+   "yaw": 180,
+   "note": "resstd junction LrLL"
+  },
+  {
+   "piece": "j_rs_3l1r_c",
+   "pos": [
+    250.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": -90,
+   "note": "resstd junction rLLL"
+  },
+  {
+   "piece": "j_rs_3l1r_c",
+   "pos": [
+    250.0,
+    8.0,
+    -3400.0
+   ],
+   "yaw": 90,
+   "note": "resstd junction LLrL"
+  },
+  {
+   "piece": "j_rs_3l1r_d",
+   "pos": [
+    500.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 180,
+   "note": "resstd junction LrLL"
+  },
+  {
+   "piece": "j_rs_2l2r_adj_a",
+   "pos": [
+    500.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 180,
+   "note": "resstd junction rrLL"
+  },
+  {
+   "piece": "j_rs_2l2r_adj_a",
+   "pos": [
+    500.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": 90,
+   "note": "resstd junction LrrL"
+  },
+  {
+   "piece": "j_rs_2l2r_opp_a",
+   "pos": [
+    250.0,
+    6.0,
+    -2800.0
+   ],
+   "yaw": -90,
+   "note": "resstd junction rLrL"
+  },
+  {
+   "piece": "j_rs_1l3r_a",
+   "pos": [
+    -400.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": 0,
+   "note": "resstd junction Lrrr"
+  },
+  {
+   "piece": "j_rs_1l3r_a",
+   "pos": [
+    -200.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": -90,
+   "note": "resstd junction rLrr"
+  },
+  {
+   "piece": "j_rs_1l3r_b",
+   "pos": [
+    -200.0,
+    2.0,
+    -2800.0
+   ],
+   "yaw": -90,
+   "note": "resstd junction rLrr"
+  },
+  {
+   "piece": "j_rs_1l3r_b",
+   "pos": [
+    250.0,
+    12.0,
+    -3200.0
+   ],
+   "yaw": 90,
+   "note": "resstd junction rrrL"
+  },
+  {
+   "piece": "j_rs_1l3r_c",
+   "pos": [
+    250.0,
+    10.0,
+    -3000.0
+   ],
+   "yaw": 90,
+   "note": "resstd junction rrrL"
+  },
+  {
+   "piece": "j_res",
+   "pos": [
+    -800.0,
+    4.0,
+    -3200.0
+   ],
+   "yaw": 90,
+   "note": "resstd junction rrrr"
+  },
+  {
+   "piece": "j_res",
+   "pos": [
+    -800.0,
+    8.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "resstd junction rrrr"
+  },
+  {
+   "piece": "j_res",
+   "pos": [
+    -800.0,
+    2.0,
+    -2800.0
+   ],
+   "yaw": -90,
+   "note": "resstd junction rrrr"
+  },
+  {
+   "piece": "j_rs_4r_b",
+   "pos": [
+    -600.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": 180,
+   "note": "resstd junction rrrr"
+  },
+  {
+   "piece": "j_rs_4r_b",
+   "pos": [
+    -600.0,
+    12.0,
+    -3000.0
+   ],
+   "yaw": 90,
+   "note": "resstd junction rrrr"
+  },
+  {
+   "piece": "j_rs_4r_c",
+   "pos": [
+    -600.0,
+    4.0,
+    -2800.0
+   ],
+   "yaw": 0,
+   "note": "resstd junction rrrr"
+  },
+  {
+   "piece": "j_rs_4r_c",
+   "pos": [
+    -400.0,
+    6.0,
+    -3000.0
+   ],
+   "yaw": -90,
+   "note": "resstd junction rrrr"
+  },
+  {
+   "piece": "j_rs_4r_d",
+   "pos": [
+    -400.0,
+    2.0,
+    -2800.0
+   ],
+   "yaw": 180,
+   "note": "resstd junction rrrr"
+  },
+  {
+   "piece": "j_rs_4r_d",
+   "pos": [
+    250.0,
+    6.0,
+    -4000.0
+   ],
+   "yaw": 90,
+   "note": "resstd junction rrrr"
+  },
+  {
+   "piece": "j_rs_4r_e",
+   "pos": [
+    500.0,
+    8.0,
+    -3200.0
+   ],
+   "yaw": 0,
+   "note": "resstd junction rrrr"
+  },
+  {
+   "piece": "s_rs_b001_b",
+   "pos": [
+    -800.0,
+    2.0,
+    -4200.0
+   ],
+   "yaw": -180,
+   "note": "resstd b001 end B"
+  },
+  {
+   "piece": "s_rs_b002_a",
+   "pos": [
+    -800.0,
+    2.0,
+    -4200.0
+   ],
+   "yaw": 0,
+   "note": "resstd b002 end A"
+  },
+  {
+   "piece": "s_rs_b002_b",
+   "pos": [
+    -800.0,
+    4.0,
+    -4000.0
+   ],
+   "yaw": -180,
+   "note": "resstd b002 end B"
+  },
+  {
+   "piece": "s_res_up2_a",
+   "pos": [
+    -800.0,
+    4.0,
+    -4000.0
+   ],
+   "yaw": 0,
+   "note": "resstd b003 end A"
+  },
+  {
+   "piece": "s_res_dn2_a",
+   "pos": [
+    -800.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": -180,
+   "note": "resstd b003 end B"
+  },
+  {
+   "piece": "s_rs_b004_a",
+   "pos": [
+    -800.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 0,
+   "note": "resstd b004 end A"
+  },
+  {
+   "piece": "s_rs_b004_b",
+   "pos": [
+    -800.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": -180,
+   "note": "resstd b004 end B"
+  },
+  {
+   "piece": "s_rs_b005_a",
+   "pos": [
+    -800.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 0,
+   "note": "resstd b005 end A"
+  },
+  {
+   "piece": "s_rs_b005_b",
+   "pos": [
+    -800.0,
+    4.0,
+    -3400.0
+   ],
+   "yaw": -180,
+   "note": "resstd b005 end B"
+  },
+  {
+   "piece": "s_res_a",
+   "pos": [
+    -800.0,
+    4.0,
+    -3400.0
+   ],
+   "yaw": 0,
+   "note": "resstd b006 end A"
+  },
+  {
+   "piece": "s_res_a",
+   "pos": [
+    -800.0,
+    4.0,
+    -3200.0
+   ],
+   "yaw": -180,
+   "note": "resstd b006 end B"
+  },
+  {
+   "piece": "s_res_up4_a",
+   "pos": [
+    -800.0,
+    4.0,
+    -3200.0
+   ],
+   "yaw": 0,
+   "note": "resstd b007 end A"
+  },
+  {
+   "piece": "s_res_dn4_a",
+   "pos": [
+    -800.0,
+    8.0,
+    -3000.0
+   ],
+   "yaw": -180,
+   "note": "resstd b007 end B"
+  },
+  {
+   "piece": "s_res_dn6",
+   "pos": [
+    -800.0,
+    8.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "resstd b008 end A"
+  },
+  {
+   "piece": "s_res_up6",
+   "pos": [
+    -800.0,
+    2.0,
+    -2800.0
+   ],
+   "yaw": -180,
+   "note": "resstd b008 end B"
+  },
+  {
+   "piece": "s_rs_b011_a",
+   "pos": [
+    -600.0,
+    2.0,
+    -4400.0
+   ],
+   "yaw": 0,
+   "note": "resstd b011 end A"
+  },
+  {
+   "piece": "s_rs_b011_b",
+   "pos": [
+    -600.0,
+    4.0,
+    -4200.0
+   ],
+   "yaw": -180,
+   "note": "resstd b011 end B"
+  },
+  {
+   "piece": "s_rs_b012_a",
+   "pos": [
+    -600.0,
+    4.0,
+    -4200.0
+   ],
+   "yaw": 0,
+   "note": "resstd b012 end A"
+  },
+  {
+   "piece": "s_grt",
+   "pos": [
+    -600.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": -180,
+   "note": "resstd b013 end B"
+  },
+  {
+   "piece": "s_res_b",
+   "pos": [
+    -600.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": 0,
+   "note": "resstd b014 end A"
+  },
+  {
+   "piece": "s_res_b",
+   "pos": [
+    -600.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": -180,
+   "note": "resstd b014 end B"
+  },
+  {
+   "piece": "s_res_up6",
+   "pos": [
+    -600.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": 0,
+   "note": "resstd b015 end A"
+  },
+  {
+   "piece": "s_res_dn6",
+   "pos": [
+    -600.0,
+    12.0,
+    -3000.0
+   ],
+   "yaw": -180,
+   "note": "resstd b015 end B"
+  },
+  {
+   "piece": "s_res_dn8",
+   "pos": [
+    -600.0,
+    12.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "resstd b016 end A"
+  },
+  {
+   "piece": "s_res_up8",
+   "pos": [
+    -600.0,
+    4.0,
+    -2800.0
+   ],
+   "yaw": -180,
+   "note": "resstd b016 end B"
+  },
+  {
+   "piece": "s_rs_b019_a",
+   "pos": [
+    -400.0,
+    2.0,
+    -4400.0
+   ],
+   "yaw": 0,
+   "note": "resstd b019 end A"
+  },
+  {
+   "piece": "s_rs_b019_b",
+   "pos": [
+    -400.0,
+    4.0,
+    -4200.0
+   ],
+   "yaw": -180,
+   "note": "resstd b019 end B"
+  },
+  {
+   "piece": "s_rs_b020_a",
+   "pos": [
+    -400.0,
+    4.0,
+    -4200.0
+   ],
+   "yaw": 0,
+   "note": "resstd b020 end A"
+  },
+  {
+   "piece": "s_rs_b020_b",
+   "pos": [
+    -400.0,
+    6.0,
+    -4000.0
+   ],
+   "yaw": -180,
+   "note": "resstd b020 end B"
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    -400.0,
+    6.0,
+    -4000.0
+   ],
+   "yaw": 0,
+   "note": "resstd b021 end A"
+  },
+  {
+   "piece": "s_rs_b021_b",
+   "pos": [
+    -400.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": -180,
+   "note": "resstd b021 end B"
+  },
+  {
+   "piece": "s_rs_b022_a",
+   "pos": [
+    -400.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 0,
+   "note": "resstd b022 end A"
+  },
+  {
+   "piece": "s_rs_b022_b",
+   "pos": [
+    -400.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": -180,
+   "note": "resstd b022 end B"
+  },
+  {
+   "piece": "s_rs_b023_a",
+   "pos": [
+    -400.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 0,
+   "note": "resstd b023 end A"
+  },
+  {
+   "piece": "s_rs_b023_b",
+   "pos": [
+    -400.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": -180,
+   "note": "resstd b023 end B"
+  },
+  {
+   "piece": "s_rs_b024_a",
+   "pos": [
+    -400.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": 0,
+   "note": "resstd b024 end A"
+  },
+  {
+   "piece": "s_rs_b024_b",
+   "pos": [
+    -400.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": -180,
+   "note": "resstd b024 end B"
+  },
+  {
+   "piece": "s_res_c",
+   "pos": [
+    -400.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": 0,
+   "note": "resstd b025 end A"
+  },
+  {
+   "piece": "s_res_c",
+   "pos": [
+    -400.0,
+    6.0,
+    -3000.0
+   ],
+   "yaw": -180,
+   "note": "resstd b025 end B"
+  },
+  {
+   "piece": "s_res_dn4_a",
+   "pos": [
+    -400.0,
+    6.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "resstd b026 end A"
+  },
+  {
+   "piece": "s_res_up4_a",
+   "pos": [
+    -400.0,
+    2.0,
+    -2800.0
+   ],
+   "yaw": -180,
+   "note": "resstd b026 end B"
+  },
+  {
+   "piece": "s_rs_b029_a",
+   "pos": [
+    -200.0,
+    4.0,
+    -4400.0
+   ],
+   "yaw": 0,
+   "note": "resstd b029 end A"
+  },
+  {
+   "piece": "s_rs_b029_b",
+   "pos": [
+    -200.0,
+    10.0,
+    -4200.0
+   ],
+   "yaw": -180,
+   "note": "resstd b029 end B"
+  },
+  {
+   "piece": "s_rs_b030_a",
+   "pos": [
+    -200.0,
+    10.0,
+    -4200.0
+   ],
+   "yaw": 0,
+   "note": "resstd b030 end A"
+  },
+  {
+   "piece": "s_rs_b030_b",
+   "pos": [
+    -200.0,
+    8.0,
+    -4000.0
+   ],
+   "yaw": -180,
+   "note": "resstd b030 end B"
+  },
+  {
+   "piece": "s_rs_b031_a",
+   "pos": [
+    -200.0,
+    8.0,
+    -4000.0
+   ],
+   "yaw": 0,
+   "note": "resstd b031 end A"
+  },
+  {
+   "piece": "s_rs_b031_b",
+   "pos": [
+    -200.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": -180,
+   "note": "resstd b031 end B"
+  },
+  {
+   "piece": "s_rs_b032_a",
+   "pos": [
+    -200.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 0,
+   "note": "resstd b032 end A"
+  },
+  {
+   "piece": "s_res_dn2_a",
+   "pos": [
+    -200.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": 0,
+   "note": "resstd b033 end A"
+  },
+  {
+   "piece": "s_res_up2_a",
+   "pos": [
+    -200.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": -180,
+   "note": "resstd b033 end B"
+  },
+  {
+   "piece": "s_res_dn2_b",
+   "pos": [
+    -200.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "resstd b034 end A"
+  },
+  {
+   "piece": "s_res_up2_b",
+   "pos": [
+    -200.0,
+    2.0,
+    -2800.0
+   ],
+   "yaw": -180,
+   "note": "resstd b034 end B"
+  },
+  {
+   "piece": "s_rs_b047_a",
+   "pos": [
+    250.0,
+    2.0,
+    -4400.0
+   ],
+   "yaw": 0,
+   "note": "resstd b047 end A"
+  },
+  {
+   "piece": "s_rs_b047_b",
+   "pos": [
+    250.0,
+    8.0,
+    -4200.0
+   ],
+   "yaw": -180,
+   "note": "resstd b047 end B"
+  },
+  {
+   "piece": "s_rs_b048_a",
+   "pos": [
+    250.0,
+    8.0,
+    -4200.0
+   ],
+   "yaw": 0,
+   "note": "resstd b048 end A"
+  },
+  {
+   "piece": "s_rs_b048_b",
+   "pos": [
+    250.0,
+    6.0,
+    -4000.0
+   ],
+   "yaw": -180,
+   "note": "resstd b048 end B"
+  },
+  {
+   "piece": "s_rs_b049_a",
+   "pos": [
+    250.0,
+    6.0,
+    -4000.0
+   ],
+   "yaw": 0,
+   "note": "resstd b049 end A"
+  },
+  {
+   "piece": "s_rs_b049_b",
+   "pos": [
+    250.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": -180,
+   "note": "resstd b049 end B"
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    250.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 0,
+   "note": "resstd b050 end A"
+  },
+  {
+   "piece": "s_rs_b051_b",
+   "pos": [
+    250.0,
+    8.0,
+    -3400.0
+   ],
+   "yaw": -180,
+   "note": "resstd b051 end B"
+  },
+  {
+   "piece": "s_res_up4_b",
+   "pos": [
+    250.0,
+    8.0,
+    -3400.0
+   ],
+   "yaw": 0,
+   "note": "resstd b052 end A"
+  },
+  {
+   "piece": "s_res_dn4_b",
+   "pos": [
+    250.0,
+    12.0,
+    -3200.0
+   ],
+   "yaw": -180,
+   "note": "resstd b052 end B"
+  },
+  {
+   "piece": "s_res_dn2_b",
+   "pos": [
+    250.0,
+    12.0,
+    -3200.0
+   ],
+   "yaw": 0,
+   "note": "resstd b053 end A"
+  },
+  {
+   "piece": "s_res_up2_b",
+   "pos": [
+    250.0,
+    10.0,
+    -3000.0
+   ],
+   "yaw": -180,
+   "note": "resstd b053 end B"
+  },
+  {
+   "piece": "s_res_dn4_b",
+   "pos": [
+    250.0,
+    10.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "resstd b054 end A"
+  },
+  {
+   "piece": "s_res_up4_b",
+   "pos": [
+    250.0,
+    6.0,
+    -2800.0
+   ],
+   "yaw": -180,
+   "note": "resstd b054 end B"
+  },
+  {
+   "piece": "s_rs_b059_a",
+   "pos": [
+    500.0,
+    4.0,
+    -4000.0
+   ],
+   "yaw": 0,
+   "note": "resstd b059 end A"
+  },
+  {
+   "piece": "s_rs_b059_b",
+   "pos": [
+    500.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": -180,
+   "note": "resstd b059 end B"
+  },
+  {
+   "piece": "s_rs_b060_a",
+   "pos": [
+    500.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 0,
+   "note": "resstd b060 end A"
+  },
+  {
+   "piece": "s_rs_b060_b",
+   "pos": [
+    500.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": -180,
+   "note": "resstd b060 end B"
+  },
+  {
+   "piece": "s_rs_b061_a",
+   "pos": [
+    500.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 0,
+   "note": "resstd b061 end A"
+  },
+  {
+   "piece": "s_rs_b061_b",
+   "pos": [
+    500.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": -180,
+   "note": "resstd b061 end B"
+  },
+  {
+   "piece": "s_rs_b062_a",
+   "pos": [
+    500.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": 0,
+   "note": "resstd b062 end A"
+  },
+  {
+   "piece": "s_rs_b062_b",
+   "pos": [
+    500.0,
+    8.0,
+    -3200.0
+   ],
+   "yaw": -180,
+   "note": "resstd b062 end B"
+  },
+  {
+   "piece": "s_rs_b063_a",
+   "pos": [
+    500.0,
+    8.0,
+    -3200.0
+   ],
+   "yaw": 0,
+   "note": "resstd b063 end A"
+  },
+  {
+   "piece": "s_rs_b063_b",
+   "pos": [
+    500.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": -180,
+   "note": "resstd b063 end B"
+  },
+  {
+   "piece": "s_rs_b081_a",
+   "pos": [
+    -800.0,
+    4.0,
+    -4000.0
+   ],
+   "yaw": 90,
+   "note": "resstd b081 end A"
+  },
+  {
+   "piece": "s_rs_b082_b",
+   "pos": [
+    -400.0,
+    6.0,
+    -4000.0
+   ],
+   "yaw": -90,
+   "note": "resstd b082 end B"
+  },
+  {
+   "piece": "s_rs_b083_a",
+   "pos": [
+    -400.0,
+    6.0,
+    -4000.0
+   ],
+   "yaw": 90,
+   "note": "resstd b083 end A"
+  },
+  {
+   "piece": "s_rs_b083_b",
+   "pos": [
+    -200.0,
+    8.0,
+    -4000.0
+   ],
+   "yaw": -90,
+   "note": "resstd b083 end B"
+  },
+  {
+   "piece": "s_rs_b084_a",
+   "pos": [
+    -200.0,
+    8.0,
+    -4000.0
+   ],
+   "yaw": 90,
+   "note": "resstd b084 end A"
+  },
+  {
+   "piece": "s_rs_b084_b",
+   "pos": [
+    0.0,
+    12.0,
+    -4000.0
+   ],
+   "yaw": -90,
+   "note": "resstd b084 end B"
+  },
+  {
+   "piece": "s_rs_b085_a",
+   "pos": [
+    0.0,
+    12.0,
+    -4000.0
+   ],
+   "yaw": 90,
+   "note": "resstd b085 end A"
+  },
+  {
+   "piece": "s_rs_b085_b",
+   "pos": [
+    250.0,
+    6.0,
+    -4000.0
+   ],
+   "yaw": -90,
+   "note": "resstd b085 end B"
+  },
+  {
+   "piece": "s_rs_b086_a",
+   "pos": [
+    250.0,
+    6.0,
+    -4000.0
+   ],
+   "yaw": 90,
+   "note": "resstd b086 end A"
+  },
+  {
+   "piece": "s_rs_b086_b",
+   "pos": [
+    500.0,
+    4.0,
+    -4000.0
+   ],
+   "yaw": -90,
+   "note": "resstd b086 end B"
+  },
+  {
+   "piece": "s_rs_b089_a",
+   "pos": [
+    -800.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 90,
+   "note": "resstd b089 end A"
+  },
+  {
+   "piece": "s_rs_b089_b",
+   "pos": [
+    -600.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": -90,
+   "note": "resstd b089 end B"
+  },
+  {
+   "piece": "s_rs_b090_a",
+   "pos": [
+    -600.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 90,
+   "note": "resstd b090 end A"
+  },
+  {
+   "piece": "s_rs_b090_b",
+   "pos": [
+    -400.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": -90,
+   "note": "resstd b090 end B"
+  },
+  {
+   "piece": "s_rs_b091_a",
+   "pos": [
+    -400.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 90,
+   "note": "resstd b091 end A"
+  },
+  {
+   "piece": "s_rs_b091_b",
+   "pos": [
+    -200.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": -90,
+   "note": "resstd b091 end B"
+  },
+  {
+   "piece": "s_rs_b092_a",
+   "pos": [
+    -200.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 90,
+   "note": "resstd b092 end A"
+  },
+  {
+   "piece": "s_rs_b092_b",
+   "pos": [
+    0.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": -90,
+   "note": "resstd b092 end B"
+  },
+  {
+   "piece": "s_rs_b093_a",
+   "pos": [
+    0.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 90,
+   "note": "resstd b093 end A"
+  },
+  {
+   "piece": "s_rs_b093_b",
+   "pos": [
+    250.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": -90,
+   "note": "resstd b093 end B"
+  },
+  {
+   "piece": "s_rs_b094_a",
+   "pos": [
+    250.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 90,
+   "note": "resstd b094 end A"
+  },
+  {
+   "piece": "s_rs_b094_b",
+   "pos": [
+    500.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": -90,
+   "note": "resstd b094 end B"
+  },
+  {
+   "piece": "s_civ",
+   "pos": [
+    -400.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 90,
+   "note": "resstd b097 end A"
+  },
+  {
+   "piece": "s_rs_b098_fill",
+   "pos": [
+    -200.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 90,
+   "note": "resstd b098 end A(filler)"
+  },
+  {
+   "piece": "s_rs_b099_fill",
+   "pos": [
+    0.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 90,
+   "note": "resstd b099 end A(filler)"
+  },
+  {
+   "piece": "s_rs_b100_b",
+   "pos": [
+    500.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": -90,
+   "note": "resstd b100 end B"
+  },
+  {
+   "piece": "s_rs_b103_a",
+   "pos": [
+    -800.0,
+    4.0,
+    -3400.0
+   ],
+   "yaw": 90,
+   "note": "resstd b103 end A"
+  },
+  {
+   "piece": "s_rs_b103_b",
+   "pos": [
+    -600.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": -90,
+   "note": "resstd b103 end B"
+  },
+  {
+   "piece": "s_rs_b104_a",
+   "pos": [
+    -600.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": 90,
+   "note": "resstd b104 end A"
+  },
+  {
+   "piece": "s_rs_b104_b",
+   "pos": [
+    -400.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": -90,
+   "note": "resstd b104 end B"
+  },
+  {
+   "piece": "s_rs_b105_a",
+   "pos": [
+    0.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": 90,
+   "note": "resstd b105 end A"
+  },
+  {
+   "piece": "s_rs_b105_b",
+   "pos": [
+    250.0,
+    8.0,
+    -3400.0
+   ],
+   "yaw": -90,
+   "note": "resstd b105 end B"
+  },
+  {
+   "piece": "s_rs_b106_a",
+   "pos": [
+    250.0,
+    8.0,
+    -3400.0
+   ],
+   "yaw": 90,
+   "note": "resstd b106 end A"
+  },
+  {
+   "piece": "s_rs_b106_b",
+   "pos": [
+    500.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": -90,
+   "note": "resstd b106 end B"
+  },
+  {
+   "piece": "s_rs_b109_a",
+   "pos": [
+    -800.0,
+    4.0,
+    -3200.0
+   ],
+   "yaw": 90,
+   "note": "resstd b109 end A"
+  },
+  {
+   "piece": "s_rs_b109_b",
+   "pos": [
+    -600.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": -90,
+   "note": "resstd b109 end B"
+  },
+  {
+   "piece": "s_rs_b110_a",
+   "pos": [
+    -600.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": 90,
+   "note": "resstd b110 end A"
+  },
+  {
+   "piece": "s_rs_b110_b",
+   "pos": [
+    -400.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": -90,
+   "note": "resstd b110 end B"
+  },
+  {
+   "piece": "s_rs_b111_a",
+   "pos": [
+    -400.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": 90,
+   "note": "resstd b111 end A"
+  },
+  {
+   "piece": "s_rs_b111_b",
+   "pos": [
+    -200.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": -90,
+   "note": "resstd b111 end B"
+  },
+  {
+   "piece": "s_rs_b112_a",
+   "pos": [
+    -200.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": 90,
+   "note": "resstd b112 end A"
+  },
+  {
+   "piece": "s_rs_b112_b",
+   "pos": [
+    0.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": -90,
+   "note": "resstd b112 end B"
+  },
+  {
+   "piece": "s_rs_b113_a",
+   "pos": [
+    0.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": 90,
+   "note": "resstd b113 end A"
+  },
+  {
+   "piece": "s_rs_b113_b",
+   "pos": [
+    250.0,
+    12.0,
+    -3200.0
+   ],
+   "yaw": -90,
+   "note": "resstd b113 end B"
+  },
+  {
+   "piece": "s_rs_b114_a",
+   "pos": [
+    250.0,
+    12.0,
+    -3200.0
+   ],
+   "yaw": 90,
+   "note": "resstd b114 end A"
+  },
+  {
+   "piece": "s_rs_b114_b",
+   "pos": [
+    500.0,
+    8.0,
+    -3200.0
+   ],
+   "yaw": -90,
+   "note": "resstd b114 end B"
+  },
+  {
+   "piece": "s_rs_b117_a",
+   "pos": [
+    -800.0,
+    8.0,
+    -3000.0
+   ],
+   "yaw": 90,
+   "note": "resstd b117 end A"
+  },
+  {
+   "piece": "s_rs_b117_b",
+   "pos": [
+    -600.0,
+    12.0,
+    -3000.0
+   ],
+   "yaw": -90,
+   "note": "resstd b117 end B"
+  },
+  {
+   "piece": "s_rs_b118_a",
+   "pos": [
+    -600.0,
+    12.0,
+    -3000.0
+   ],
+   "yaw": 90,
+   "note": "resstd b118 end A"
+  },
+  {
+   "piece": "s_rs_b118_b",
+   "pos": [
+    -400.0,
+    6.0,
+    -3000.0
+   ],
+   "yaw": -90,
+   "note": "resstd b118 end B"
+  },
+  {
+   "piece": "s_rs_b119_a",
+   "pos": [
+    -400.0,
+    6.0,
+    -3000.0
+   ],
+   "yaw": 90,
+   "note": "resstd b119 end A"
+  },
+  {
+   "piece": "s_rs_b119_b",
+   "pos": [
+    -200.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": -90,
+   "note": "resstd b119 end B"
+  },
+  {
+   "piece": "s_rs_b120_a",
+   "pos": [
+    -200.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": 90,
+   "note": "resstd b120 end A"
+  },
+  {
+   "piece": "s_rs_b121_b",
+   "pos": [
+    250.0,
+    10.0,
+    -3000.0
+   ],
+   "yaw": -90,
+   "note": "resstd b121 end B"
+  },
+  {
+   "piece": "s_rs_b122_a",
+   "pos": [
+    250.0,
+    10.0,
+    -3000.0
+   ],
+   "yaw": 90,
+   "note": "resstd b122 end A"
+  },
+  {
+   "piece": "s_rs_b122_b",
+   "pos": [
+    500.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": -90,
+   "note": "resstd b122 end B"
+  },
+  {
+   "piece": "s_rs_b125_a",
+   "pos": [
+    -800.0,
+    2.0,
+    -2800.0
+   ],
+   "yaw": 90,
+   "note": "resstd b125 end A"
+  },
+  {
+   "piece": "s_rs_b125_b",
+   "pos": [
+    -600.0,
+    4.0,
+    -2800.0
+   ],
+   "yaw": -90,
+   "note": "resstd b125 end B"
+  },
+  {
+   "piece": "s_rs_b126_a",
+   "pos": [
+    -600.0,
+    4.0,
+    -2800.0
+   ],
+   "yaw": 90,
+   "note": "resstd b126 end A"
+  },
+  {
+   "piece": "s_rs_b126_b",
+   "pos": [
+    -400.0,
+    2.0,
+    -2800.0
+   ],
+   "yaw": -90,
+   "note": "resstd b126 end B"
+  },
+  {
+   "piece": "s_rs_b127_a",
+   "pos": [
+    -400.0,
+    2.0,
+    -2800.0
+   ],
+   "yaw": 90,
+   "note": "resstd b127 end A"
+  },
+  {
+   "piece": "s_rs_b127_b",
+   "pos": [
+    -200.0,
+    2.0,
+    -2800.0
+   ],
+   "yaw": -90,
+   "note": "resstd b127 end B"
+  },
+  {
+   "piece": "s_rs_b128_a",
+   "pos": [
+    -200.0,
+    2.0,
+    -2800.0
+   ],
+   "yaw": 90,
+   "note": "resstd b128 end A"
+  },
+  {
+   "piece": "s_rs_b128_b",
+   "pos": [
+    0.0,
+    4.0,
+    -2800.0
+   ],
+   "yaw": -90,
+   "note": "resstd b128 end B"
+  },
+  {
+   "piece": "s_rs_b129_a",
+   "pos": [
+    0.0,
+    4.0,
+    -2800.0
+   ],
+   "yaw": 90,
+   "note": "resstd b129 end A"
+  },
+  {
+   "piece": "s_rs_b129_b",
+   "pos": [
+    250.0,
+    6.0,
+    -2800.0
+   ],
+   "yaw": -90,
+   "note": "resstd b129 end B"
+  },
+  {
+   "piece": "j_ind",
+   "pos": [
+    -800.0,
+    2.0,
+    -4400.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_ind",
+   "pos": [
+    -800.0,
+    2.0,
+    -4400.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_ind",
+   "pos": [
+    -800.0,
+    2.0,
+    -4400.0
+   ],
+   "yaw": 180,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_ind",
+   "pos": [
+    -800.0,
+    2.0,
+    -4400.0
+   ],
+   "yaw": 90,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_ind",
+   "pos": [
+    -800.0,
+    2.0,
+    -4400.0
+   ],
+   "yaw": -90,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    -600.0,
+    6.0,
+    -4000.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_grt",
+   "pos": [
+    -600.0,
+    6.0,
+    -4000.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_grt",
+   "pos": [
+    -600.0,
+    6.0,
+    -4000.0
+   ],
+   "yaw": 180,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_grt",
+   "pos": [
+    -600.0,
+    6.0,
+    -4000.0
+   ],
+   "yaw": 90,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_grt",
+   "pos": [
+    -600.0,
+    6.0,
+    -4000.0
+   ],
+   "yaw": -90,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    -200.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_civ",
+   "pos": [
+    -200.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_civ",
+   "pos": [
+    -200.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 180,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_civ",
+   "pos": [
+    -200.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 90,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_civ",
+   "pos": [
+    -200.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": -90,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    250.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    250.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    250.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 180,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    250.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 90,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    250.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": -90,
+   "note": "review only: locked sample street"
+  },
+  {
+   "piece": "j_cc",
+   "pos": [
+    0.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked centre sample street"
+  },
+  {
+   "piece": "s_cc_amber_n",
+   "pos": [
+    0.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked centre sample street"
+  },
+  {
+   "piece": "s_cc_amber_s",
+   "pos": [
+    0.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked centre sample street"
+  },
+  {
+   "piece": "s_cc_10th",
+   "pos": [
+    0.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 0,
+   "note": "review only"
+  },
+  {
+   "piece": "s_cc_10th",
+   "pos": [
+    0.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 180,
+   "note": "review only"
+  },
+  {
+   "piece": "j_amber_10th",
+   "pos": [
+    0.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked pilot street"
+  },
+  {
+   "piece": "s_amber_n",
+   "pos": [
+    0.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked pilot street"
+  },
+  {
+   "piece": "s_amber_s",
+   "pos": [
+    0.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked pilot street"
+  },
+  {
+   "piece": "s_10th_w",
+   "pos": [
+    0.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked pilot street"
+  },
+  {
+   "piece": "s_10th_e",
+   "pos": [
+    0.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "review only: locked pilot street"
+  },
+  {
+   "piece": "zz_resstd_ground",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "note": "PREVIEW ONLY ground (built in review coordinates); never in the game"
+  }
+ ]
+}

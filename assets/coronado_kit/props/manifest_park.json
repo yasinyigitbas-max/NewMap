@@ -1,0 +1,468 @@
+{
+ "swing_set": {
+  "file_base": "prop_swing_set",
+  "batch": "park",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 352,
+   "mid": 100,
+   "far": 6
+  },
+  "footprint_w": 2.689,
+  "footprint_d": 1.585,
+  "height": 2.47,
+  "regions": [
+   "baked:swing_set"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 76839,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 70.5,
+  "col": 1,
+  "secs": 24.0
+ },
+ "slide": {
+  "file_base": "prop_slide",
+  "batch": "park",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 528
+  },
+  "footprint_w": 0.63,
+  "footprint_d": 3.124,
+  "height": 2.123,
+  "regions": [
+   "baked:slide"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 14774,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 40.0,
+  "col": 1,
+  "secs": 18.3
+ },
+ "play_structure": {
+  "file_base": "prop_play_structure",
+  "batch": "park",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1276,
+   "mid": 70,
+   "far": 14
+  },
+  "footprint_w": 2.443,
+  "footprint_d": 3.321,
+  "height": 3.3,
+  "regions": [
+   "baked:play_structure"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 26563,
+  "bake_slot_px": 176,
+  "bake_px_per_m": 31.9,
+  "col": 3,
+  "secs": 21.7
+ },
+ "shade_sail": {
+  "file_base": "prop_shade_sail",
+  "batch": "park",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 174
+  },
+  "footprint_w": 4.64,
+  "footprint_d": 3.84,
+  "height": 3.4,
+  "regions": [
+   "baked:shade_sail"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 5039,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 36.0,
+  "col": 3,
+  "secs": 17.9
+ },
+ "park_bench": {
+  "file_base": "prop_park_bench",
+  "batch": "park",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 180
+  },
+  "footprint_w": 1.8,
+  "footprint_d": 0.6,
+  "height": 0.88,
+  "regions": [
+   "baked:park_bench"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 9439,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 59.6,
+  "col": 1,
+  "secs": 16.2
+ },
+ "picnic_table": {
+  "file_base": "prop_picnic_table",
+  "batch": "park",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 292
+  },
+  "footprint_w": 1.83,
+  "footprint_d": 1.5,
+  "height": 0.796,
+  "regions": [
+   "baked:picnic_table"
+  ],
+  "trim": {
+   "pa_wood": {
+    "area_m2": 7.79,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 14298,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 345.9,
+  "col": 1,
+  "secs": 20.6
+ },
+ "drinking_fountain": {
+  "file_base": "prop_drinking_fountain",
+  "batch": "park",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 288
+  },
+  "footprint_w": 0.69,
+  "footprint_d": 0.505,
+  "height": 0.96,
+  "regions": [
+   "baked:drinking_fountain"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 15319,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 103.0,
+  "col": 1,
+  "secs": 13.2
+ },
+ "tennis_net": {
+  "file_base": "prop_tennis_net",
+  "batch": "park",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 122
+  },
+  "footprint_w": 12.94,
+  "footprint_d": 0.14,
+  "height": 1.07,
+  "regions": [
+   "baked:tennis_net"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 29424,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 29.9,
+  "col": 1,
+  "secs": 18.1
+ },
+ "beach_sign_rules": {
+  "file_base": "prop_beach_sign_rules",
+  "batch": "park",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 32
+  },
+  "footprint_w": 0.6,
+  "footprint_d": 0.08,
+  "height": 2.15,
+  "regions": [
+   "baked:beach_sign_rules"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 32746,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 63.0,
+  "col": 1,
+  "secs": 11.4
+ },
+ "beach_sign_rip": {
+  "file_base": "prop_beach_sign_rip",
+  "batch": "park",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 32
+  },
+  "footprint_w": 0.6,
+  "footprint_d": 0.08,
+  "height": 2.15,
+  "regions": [
+   "baked:beach_sign_rip"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 25742,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 63.0,
+  "col": 1,
+  "secs": 41.8
+ },
+ "beach_sign_dog": {
+  "file_base": "prop_beach_sign_dog",
+  "batch": "park",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 32
+  },
+  "footprint_w": 0.6,
+  "footprint_d": 0.08,
+  "height": 2.15,
+  "regions": [
+   "baked:beach_sign_dog"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 27502,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 63.0,
+  "col": 1,
+  "secs": 23.5
+ },
+ "lifeguard_tower": {
+  "file_base": "prop_lifeguard_tower",
+  "batch": "park",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 480,
+   "mid": 72,
+   "far": 14
+  },
+  "footprint_w": 2.5,
+  "footprint_d": 4.963,
+  "height": 5.2,
+  "regions": [
+   "baked:lifeguard_tower"
+  ],
+  "trim": {
+   "pa_wood": {
+    "area_m2": 35.12,
+    "px_per_m": 128.0
+   },
+   "pa_lap": {
+    "area_m2": 10.54,
+    "px_per_m": 128.0
+   },
+   "pa_paint": {
+    "area_m2": 5.73,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 10606,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 50.2,
+  "col": 2,
+  "secs": 21.3
+ },
+ "riprap_slope": {
+  "file_base": "prop_riprap_slope",
+  "batch": "park",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 522
+  },
+  "footprint_w": 1.935,
+  "footprint_d": 1.793,
+  "height": 0.296,
+  "regions": [
+   "baked:riprap_slope"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 16159,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 50.5,
+  "col": 1,
+  "secs": 23.1
+ },
+ "riprap_pile": {
+  "file_base": "prop_riprap_pile",
+  "batch": "park",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 406
+  },
+  "footprint_w": 1.73,
+  "footprint_d": 1.542,
+  "height": 0.3,
+  "regions": [
+   "baked:riprap_pile"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 13973,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 58.9,
+  "col": 1,
+  "secs": 19.5
+ },
+ "riprap_boulder": {
+  "file_base": "prop_riprap_boulder",
+  "batch": "park",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 214
+  },
+  "footprint_w": 1.346,
+  "footprint_d": 1.231,
+  "height": 0.455,
+  "regions": [
+   "baked:riprap_boulder"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 2465,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 75.0,
+  "col": 1,
+  "secs": 16.1
+ },
+ "bandstand": {
+  "file_base": "prop_bandstand",
+  "batch": "park",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 2242,
+   "mid": 406,
+   "far": 14
+  },
+  "footprint_w": 9.369,
+  "footprint_d": 10.272,
+  "height": 7.22,
+  "regions": [
+   "baked:bandstand"
+  ],
+  "trim": {
+   "pa_wood": {
+    "area_m2": 69.1,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 64500,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 26.8,
+  "col": 1,
+  "secs": 23.8
+ }
+}

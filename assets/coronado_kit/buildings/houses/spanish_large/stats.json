@@ -1,0 +1,126 @@
+{
+ "name": "spanish_large",
+ "cat": "house",
+ "style": "spanish",
+ "logic_errors": [],
+ "col_boxes": 12,
+ "near": {
+  "tris": 2347,
+  "verts": 4142,
+  "regions": [
+   "O_chimvent",
+   "O_door_french",
+   "O_door_spanish",
+   "O_lamp",
+   "O_number",
+   "O_shutter",
+   "O_tilevent",
+   "O_vent",
+   "O_win_casement",
+   "O_win_diamond",
+   "R_clay",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_terracotta",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_terracotta",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.75,
+    0.0,
+    -7.639999866485596
+   ],
+   [
+    5.949999809265137,
+    8.942000389099121,
+    9.399999618530273
+   ]
+  ]
+ },
+ "mid_roof_top": 7.962,
+ "mid": {
+  "tris": 506,
+  "verts": 610,
+  "regions": [
+   "O_door_french",
+   "O_door_spanish",
+   "O_tilevent",
+   "O_win_casement",
+   "O_win_diamond",
+   "S_clay",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_terracotta",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.75,
+    0.0,
+    -7.5
+   ],
+   [
+    5.5,
+    8.562000274658203,
+    9.399999618530273
+   ]
+  ]
+ },
+ "far": {
+  "tris": 50,
+  "verts": 90,
+  "regions": [
+   "F_clay",
+   "F_stucco_1",
+   "F_stucco_2",
+   "F_stucco_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -5.5,
+    -0.0,
+    -7.5
+   ],
+   [
+    5.5,
+    7.961999893188477,
+    8.5
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door_spanish",
+   -0.5
+  ],
+  [
+   "french",
+   -3.4
+  ]
+ ],
+ "footprint_wd": [
+  11.0,
+  15.0
+ ],
+ "footprint_area": 165.0,
+ "height": 8.94,
+ "storeys": 2,
+ "budget": [
+  2500,
+  750,
+  60
+ ],
+ "budget_class": "house_large",
+ "time_s": 18.2
+}

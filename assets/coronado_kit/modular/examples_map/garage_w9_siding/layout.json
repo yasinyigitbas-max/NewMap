@@ -1,0 +1,133 @@
+{
+ "name": "garage_w9_siding",
+ "group": "houses",
+ "outline": {
+  "kind": "house",
+  "W": 9.0,
+  "D": 7.5,
+  "wall": "W_siding",
+  "tint": [
+   0.68,
+   0.76,
+   0.82
+  ],
+  "roof": "R_comp",
+  "budget": "mod_house_small",
+  "pitch": 0.45
+ },
+ "pieces": [
+  {
+   "piece": "house_wall_3m_garage_siding",
+   "x": -3.0,
+   "z": 3.6,
+   "rot_y": 0
+  },
+  {
+   "piece": "house_wall_3m_garage_siding",
+   "x": 0.0,
+   "z": 3.6,
+   "rot_y": 0
+  },
+  {
+   "piece": "house_wall_3m_garage_siding",
+   "x": 3.0,
+   "z": 3.6,
+   "rot_y": 0
+  },
+  {
+   "piece": "house_wall_4p5m_window_small_siding",
+   "x": 4.35,
+   "z": 1.5,
+   "rot_y": 90
+  },
+  {
+   "piece": "house_wall_3m_door_siding",
+   "x": 4.35,
+   "z": -2.25,
+   "rot_y": 90
+  },
+  {
+   "piece": "house_wall_4p5m_window_small_siding",
+   "x": 2.25,
+   "z": -3.6,
+   "rot_y": 180
+  },
+  {
+   "piece": "house_wall_4p5m_utility_siding",
+   "x": -2.25,
+   "z": -3.6,
+   "rot_y": 180
+  },
+  {
+   "piece": "house_wall_3m_window_siding",
+   "x": -4.35,
+   "z": -2.25,
+   "rot_y": 270
+  },
+  {
+   "piece": "house_wall_4p5m_window_small_siding",
+   "x": -4.35,
+   "z": 1.5,
+   "rot_y": 270
+  },
+  {
+   "piece": "house_trim_corner_white",
+   "x": 4.5,
+   "z": 3.75,
+   "rot_y": 0
+  },
+  {
+   "piece": "house_trim_corner_white",
+   "x": 4.5,
+   "z": -3.75,
+   "rot_y": 90
+  },
+  {
+   "piece": "house_trim_corner_white",
+   "x": -4.5,
+   "z": -3.75,
+   "rot_y": 180
+  },
+  {
+   "piece": "house_trim_corner_white",
+   "x": -4.5,
+   "z": 3.75,
+   "rot_y": 270
+  },
+  {
+   "piece": "house_roof_gable_endl_3m_comp_siding",
+   "x": -3.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "house_roof_gable_run_3m_comp",
+   "x": 0.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "house_roof_gable_endr_3m_comp_siding",
+   "x": 3.0,
+   "z": 0.0,
+   "rot_y": 0
+  }
+ ],
+ "budget_class": "mod_house_small",
+ "budget": [
+  1650,
+  500,
+  40
+ ],
+ "tris": {
+  "near": 1442,
+  "mid": 372,
+  "far": 32
+ },
+ "col_boxes": 2,
+ "far_from": "snapped outline hull",
+ "merged": {
+  "near_mid": "pieces merged, 1 mesh/1 primitive/1 material",
+  "far_col": "outline hull + <=12 boxes"
+ }
+}

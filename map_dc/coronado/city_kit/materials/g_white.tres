@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/roads/roadlines022a_white_worn.png" id="1_81syk"]
+
+[resource]
+albedo_color = Color(0.95, 0.95, 0.93, 1)
+albedo_texture = ExtResource("1_81syk")
+roughness = 0.7
+texture_filter = 5

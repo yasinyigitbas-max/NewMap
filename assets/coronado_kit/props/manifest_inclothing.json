@@ -1,0 +1,205 @@
+{
+ "clothes_rack": {
+  "file_base": "prop_clothes_rack",
+  "batch": "inclothing",
+  "class": "medium",
+  "budget": 1000,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 956
+  },
+  "footprint_w": 1.44,
+  "footprint_d": 0.48,
+  "height": 1.699,
+  "regions": [
+   "baked:clothes_rack"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 2.01,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.09,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 4528,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 65.0,
+  "col": 1,
+  "secs": 15.0
+ },
+ "fitting_room": {
+  "file_base": "prop_fitting_room",
+  "batch": "inclothing",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1088
+  },
+  "footprint_w": 1.14,
+  "footprint_d": 1.362,
+  "height": 2.12,
+  "regions": [
+   "baked:fitting_room"
+  ],
+  "trim": {
+   "ti_laminate": {
+    "area_m2": 1.46,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 1.05,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 25.27,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 13.05,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.76,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 0.39,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 4588,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 374.2,
+  "col": 1,
+  "secs": 14.4
+ },
+ "mannequin": {
+  "file_base": "prop_mannequin",
+  "batch": "inclothing",
+  "class": "medium",
+  "budget": 900,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 590
+  },
+  "footprint_w": 0.515,
+  "footprint_d": 0.44,
+  "height": 1.74,
+  "regions": [
+   "baked:mannequin"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 0.54,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 1.67,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1908,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1087.0,
+  "col": 1,
+  "secs": 7.8
+ },
+ "shoe_bench": {
+  "file_base": "prop_shoe_bench",
+  "batch": "inclothing",
+  "class": "small",
+  "budget": 550,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 508
+  },
+  "footprint_w": 1.1,
+  "footprint_d": 0.384,
+  "height": 0.586,
+  "regions": [
+   "baked:shoe_bench"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 2.73,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3000,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1011.1,
+  "col": 1,
+  "secs": 9.2
+ },
+ "shoe_wall": {
+  "file_base": "prop_shoe_wall",
+  "batch": "inclothing",
+  "class": "medium",
+  "budget": 1100,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 486
+  },
+  "footprint_w": 1.2,
+  "footprint_d": 0.36,
+  "height": 2.0,
+  "regions": [
+   "baked:shoe_wall"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 19.97,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 5230,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 53.1,
+  "col": 1,
+  "secs": 10.5
+ }
+}

@@ -1,0 +1,113 @@
+{
+ "name": "stg_row2",
+ "group": "urban",
+ "outline": {
+  "kind": "warehouse",
+  "W": 12.0,
+  "D": 12.0,
+  "storeys": 1,
+  "wall": "W_stucco",
+  "tint": [
+   0.82,
+   0.82,
+   0.8
+  ],
+  "budget": "warehouse",
+  "floor": 0.0,
+  "storey": 4.2,
+  "parapet": 0.6,
+  "sills": false,
+  "foundation": false,
+  "far_facade": "F_c_tower_3",
+  "far_tile": 6.0,
+  "far_paint": {
+   "key": "F_bb_1",
+   "u": 100.0
+  },
+  "far_wedges": [
+   [
+    -3.53,
+    -2.25,
+    4.81,
+    5.09,
+    -2.35,
+    -2.05
+   ],
+   [
+    2.47,
+    3.75,
+    4.81,
+    5.09,
+    -2.35,
+    -2.05
+   ]
+  ]
+ },
+ "pieces": [
+  {
+   "piece": "urb_stg_front_6m",
+   "x": -3.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_stg_front_6m",
+   "x": 3.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_stg_back_6m",
+   "x": 3.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_stg_back_6m",
+   "x": -3.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_stg_side_12m",
+   "x": 5.85,
+   "z": 0.0,
+   "rot_y": 90
+  },
+  {
+   "piece": "urb_stg_side_12m",
+   "x": -5.85,
+   "z": 0.0,
+   "rot_y": 270
+  },
+  {
+   "piece": "urb_stg_roof_6x12",
+   "x": -3.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_stg_roof_6x12",
+   "x": 3.0,
+   "z": 0.0,
+   "rot_y": 0
+  }
+ ],
+ "budget_class": "warehouse",
+ "budget": [
+  2000,
+  600,
+  40
+ ],
+ "tris": {
+  "near": 1094,
+  "mid": 245,
+  "far": 26
+ },
+ "col_boxes": 1,
+ "far_from": "snapped outline hull",
+ "merged": {
+  "near_mid": "pieces merged, 1 mesh/1 primitive/1 material",
+  "far_col": "outline hull + <=12 boxes"
+ }
+}

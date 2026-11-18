@@ -1,0 +1,115 @@
+{
+ "prom_rail": {
+  "file_base": "prop_prom_rail",
+  "batch": "wfprom",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 544,
+   "mid": 184,
+   "far": 10
+  },
+  "footprint_w": 4.09,
+  "footprint_d": 0.17,
+  "height": 1.078,
+  "regions": [
+   "baked:prom_rail"
+  ],
+  "trim": {
+   "tw_galv": {
+    "area_m2": 4.23,
+    "px_per_m": 128.0
+   },
+   "tw_teak": {
+    "area_m2": 2.02,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 15170,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 348.7,
+  "col": 1,
+  "secs": 33.9
+ },
+ "prom_rail_wall": {
+  "file_base": "prop_prom_rail_wall",
+  "batch": "wfprom",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 332,
+   "mid": 126,
+   "far": 8
+  },
+  "footprint_w": 2.045,
+  "footprint_d": 0.17,
+  "height": 1.1,
+  "regions": [
+   "aluminium",
+   "stainless",
+   "wood_natural"
+  ],
+  "trim": {
+   "tw_galv": {
+    "area_m2": 2.04,
+    "px_per_m": 128.0
+   },
+   "tw_teak": {
+    "area_m2": 1.0,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "col": 1,
+  "secs": 24.4
+ },
+ "prom_boardwalk": {
+  "file_base": "prop_prom_boardwalk",
+  "batch": "wfprom",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 520,
+   "mid": 92,
+   "far": 10
+  },
+  "footprint_w": 4.0,
+  "footprint_d": 3.004,
+  "height": 0.32,
+  "regions": [
+   "concrete",
+   "galvanized",
+   "wood_weathered"
+  ],
+  "trim": {
+   "tw_conc_top": {
+    "area_m2": 1.4,
+    "px_per_m": 128.0
+   },
+   "tw_timber": {
+    "area_m2": 19.48,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 0.18,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "col": 1,
+  "secs": 32.3
+ }
+}

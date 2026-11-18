@@ -1,0 +1,127 @@
+{
+ "name": "lmk_red_spire_church",
+ "cat": "landmark",
+ "style": "carpenter_gothic_church",
+ "logic_errors": [],
+ "col_boxes": 11,
+ "near": {
+  "tris": 5568,
+  "verts": 10147,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_lamp",
+   "O_lancet",
+   "O_louver",
+   "O_vent",
+   "R_comp",
+   "R_flat",
+   "R_metal",
+   "SG_church",
+   "S_black",
+   "S_concrete",
+   "S_glass",
+   "S_siding",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_white",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -7.5,
+    -0.0,
+    -11.720000267028809
+   ],
+   [
+    6.849999904632568,
+    26.3799991607666,
+    13.899999618530273
+   ]
+  ]
+ },
+ "mid_roof_top": 25.28,
+ "mid": {
+  "tris": 1040,
+  "verts": 1509,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_lancet",
+   "SG_church",
+   "S_comp",
+   "S_concrete",
+   "S_deck",
+   "S_flat",
+   "S_glass",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -7.5,
+    0.0,
+    -11.029999732971191
+   ],
+   [
+    6.849999904632568,
+    25.280000686645508,
+    13.899999618530273
+   ]
+  ]
+ },
+ "far": {
+  "tris": 56,
+  "verts": 94,
+  "regions": [
+   "F_comp",
+   "F_metal",
+   "F_siding_2",
+   "F_siding_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    0.0,
+    -11.0
+   ],
+   [
+    6.0,
+    25.280000686645508,
+    11.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  12.0,
+  22.0
+ ],
+ "footprint_area": 264.0,
+ "height": 26.38,
+ "storeys": 1,
+ "budget": [
+  8000,
+  2500,
+  200
+ ],
+ "budget_class": "landmark",
+ "time_s": 76.3
+}

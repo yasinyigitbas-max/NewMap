@@ -1,0 +1,108 @@
+{
+ "name": "drive_thru_menu",
+ "tiers": {
+  "near": 744,
+  "mid": 74,
+  "far": 20
+ },
+ "budget": 1200,
+ "class": "medium",
+ "far_paint_max": null,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_drive_thru_menu_clean_far.glb",
+   "tier": "far",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 20,
+   "verts": 40,
+   "budget": 20,
+   "size": [
+    2.95,
+    2.42,
+    0.8
+   ],
+   "odd_ray": 2
+  },
+  {
+   "file": "prop_drive_thru_menu_clean_mid.glb",
+   "tier": "mid",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "5 tris may face inward / be enclosed"
+   ],
+   "tris": 74,
+   "verts": 194,
+   "budget": 361,
+   "size": [
+    2.96,
+    2.4,
+    1.01
+   ],
+   "odd_ray": 5
+  },
+  {
+   "file": "prop_drive_thru_menu_clean_near.glb",
+   "tier": "near",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "74 tris may face inward / be enclosed"
+   ],
+   "tris": 744,
+   "verts": 1578,
+   "budget": 1200,
+   "size": [
+    2.96,
+    2.67,
+    1.025
+   ],
+   "odd_ray": 193
+  },
+  {
+   "file": "prop_drive_thru_menu_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 4,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.86,
+   "dE": 1.3
+  },
+  "top": {
+   "iou": 0.978,
+   "dE": 6.9
+  },
+  "left": {
+   "iou": 0.629,
+   "dE": 4.1,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 3,
+  "rail": 1
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 144,
+ "bake_px_per_m": 26.1,
+ "high_tris": 157214,
+ "pass": true
+}

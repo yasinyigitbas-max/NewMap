@@ -1,0 +1,25 @@
+{
+ "cat": "mod",
+ "doors_front": [
+  [
+   "shopdoor",
+   -3.0
+  ],
+  [
+   "shopdoor",
+   3.0
+  ]
+ ],
+ "footprint_wd": [
+  12.0,
+  12.0
+ ],
+ "height": 6.5,
+ "merged_from": "ck_svc_trade.json",
+ "name": "ck_svc_trade",
+ "tris": {
+  "far": 268,
+  "mid": 416,
+  "near": 1562
+ }
+}

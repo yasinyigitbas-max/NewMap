@@ -1,0 +1,106 @@
+{
+ "name": "marina_pedestal",
+ "tiers": {
+  "near": 188,
+  "mid": 30,
+  "far": 12
+ },
+ "budget": 600,
+ "class": "small",
+ "far_paint_max": null,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_marina_pedestal_clean_far.glb",
+   "tier": "far",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 12,
+   "verts": 24,
+   "budget": 20,
+   "size": [
+    0.4,
+    1.17,
+    0.34
+   ],
+   "odd_ray": 2
+  },
+  {
+   "file": "prop_marina_pedestal_clean_mid.glb",
+   "tier": "mid",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 30,
+   "verts": 77,
+   "budget": 181,
+   "size": [
+    0.4,
+    1.15,
+    0.34
+   ],
+   "odd_ray": 2
+  },
+  {
+   "file": "prop_marina_pedestal_clean_near.glb",
+   "tier": "near",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "20 tris may face inward / be enclosed"
+   ],
+   "tris": 188,
+   "verts": 352,
+   "budget": 600,
+   "size": [
+    0.404,
+    1.17,
+    0.356
+   ],
+   "odd_ray": 44
+  },
+  {
+   "file": "prop_marina_pedestal_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 1,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.814,
+   "dE": 0.8
+  },
+  "top": {
+   "iou": 1.0,
+   "dE": 1.7
+  },
+  "left": {
+   "iou": 0.886,
+   "dE": 0.8,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 0,
+  "rail": 1
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 64,
+ "bake_px_per_m": 45.0,
+ "high_tris": 7370,
+ "pass": true
+}

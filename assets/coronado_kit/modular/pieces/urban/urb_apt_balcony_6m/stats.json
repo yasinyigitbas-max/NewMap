@@ -1,0 +1,115 @@
+{
+ "name": "urb_apt_balcony_6m",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 224,
+  "verts": 374,
+  "regions": [
+   "S_concrete",
+   "S_soffit",
+   "T_concrete",
+   "T_metal"
+  ],
+  "bbox": [
+   [
+    -2.9200000762939453,
+    3.119999885559082,
+    -0.03999999910593033
+   ],
+   [
+    2.9200000762939453,
+    4.300000190734863,
+    1.2000000476837158
+   ]
+  ]
+ },
+ "mid_roof_top": 4.3,
+ "mid": {
+  "tris": 36,
+  "verts": 56,
+  "regions": [
+   "S_concrete",
+   "S_metal",
+   "S_soffit"
+  ],
+  "bbox": [
+   [
+    -2.9200000762939453,
+    3.119999885559082,
+    -0.03999999910593033
+   ],
+   [
+    2.9200000762939453,
+    4.300000190734863,
+    1.2000000476837158
+   ]
+  ]
+ },
+ "far": {
+  "tris": 12,
+  "verts": 24,
+  "regions": [
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -2.9200000762939453,
+    3.119999885559082,
+    0.0
+   ],
+   [
+    2.9200000762939453,
+    4.300000190734863,
+    1.2000000476837158
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  6.0,
+  1.2
+ ],
+ "footprint_area": 7.2,
+ "height": 4.3,
+ "storeys": 1,
+ "budget": [
+  420,
+  140,
+  40
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_apt_balcony",
+ "time_s": 0.4,
+ "open_planes": [],
+ "shift": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "apt_balcony",
+  "ends": [
+   [
+    -3.0,
+    0,
+    0
+   ],
+   [
+    3.0,
+    0,
+    0
+   ]
+  ],
+  "face_z": 0.0,
+  "plate_y": 3.3
+ },
+ "no_door": true,
+ "base_y": 3.1199999999999997,
+ "ground_reach": false
+}

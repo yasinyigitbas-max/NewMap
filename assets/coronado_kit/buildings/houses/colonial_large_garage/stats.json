@@ -1,0 +1,130 @@
+{
+ "name": "colonial_large_garage",
+ "cat": "house",
+ "style": "colonial",
+ "logic_errors": [],
+ "col_boxes": 15,
+ "near": {
+  "tris": 2489,
+  "verts": 4170,
+  "regions": [
+   "O_door_french",
+   "O_door_white",
+   "O_garage_panel",
+   "O_lamp",
+   "O_number",
+   "O_shutter",
+   "O_small_white",
+   "O_vent",
+   "O_win_dh_div",
+   "O_win_dh_white",
+   "R_comp",
+   "S_black",
+   "S_concrete",
+   "S_siding",
+   "S_soffit",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_rail",
+   "T_white",
+   "W_brick",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -6.820000171661377,
+    0.0,
+    -8.199999809265137
+   ],
+   [
+    6.769999980926514,
+    9.25,
+    8.899999618530273
+   ]
+  ]
+ },
+ "mid_roof_top": 8.65,
+ "mid": {
+  "tris": 474,
+  "verts": 604,
+  "regions": [
+   "O_door_french",
+   "O_door_white",
+   "O_garage_panel",
+   "O_small_white",
+   "O_win_dh_div",
+   "O_win_dh_white",
+   "S_comp",
+   "S_concrete",
+   "S_deck",
+   "S_soffit",
+   "S_white",
+   "W_brick",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -6.699999809265137,
+    0.0,
+    -8.199999809265137
+   ],
+   [
+    6.650000095367432,
+    9.25,
+    8.899999618530273
+   ]
+  ]
+ },
+ "far": {
+  "tris": 38,
+  "verts": 70,
+  "regions": [
+   "F_comp",
+   "F_siding_1",
+   "F_siding_2",
+   "F_siding_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -6.300000190734863,
+    -0.0,
+    -6.5
+   ],
+   [
+    6.300000190734863,
+    8.649999618530273,
+    6.5
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door",
+   -2.1
+  ],
+  [
+   "garage",
+   4.2
+  ]
+ ],
+ "footprint_wd": [
+  12.6,
+  13.0
+ ],
+ "footprint_area": 163.8,
+ "height": 9.25,
+ "storeys": 2,
+ "budget": [
+  2500,
+  750,
+  60
+ ],
+ "budget_class": "house_large",
+ "time_s": 18.1
+}

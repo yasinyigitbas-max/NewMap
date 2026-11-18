@@ -1,0 +1,118 @@
+{
+ "name": "lmk_beach_lookout",
+ "cat": "landmark",
+ "style": "lookout_tower",
+ "logic_errors": [],
+ "col_boxes": 9,
+ "near": {
+  "tris": 3542,
+  "verts": 6408,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "O_lamp",
+   "O_louver",
+   "R_metal",
+   "SG_rec",
+   "S_black",
+   "S_concrete",
+   "S_metal",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.71999979019165,
+    -0.0,
+    -5.5
+   ],
+   [
+    11.239999771118164,
+    15.739999771118164,
+    7.949999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 15.74,
+ "mid": {
+  "tris": 646,
+  "verts": 857,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "O_louver",
+   "SG_rec",
+   "S_concrete",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.599999904632568,
+    0.0,
+    -5.5
+   ],
+   [
+    11.239999771118164,
+    15.739999771118164,
+    6.041999816894531
+   ]
+  ]
+ },
+ "far": {
+  "tris": 68,
+  "verts": 110,
+  "regions": [
+   "F_metal",
+   "F_stucco_2",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -5.0,
+    0.0,
+    -4.0
+   ],
+   [
+    5.0,
+    15.739999771118164,
+    4.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ],
+  [
+   "apt_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  10.0,
+  8.0
+ ],
+ "footprint_area": 80.0,
+ "height": 15.74,
+ "storeys": 2,
+ "budget": [
+  8000,
+  2500,
+  200
+ ],
+ "budget_class": "landmark",
+ "time_s": 27.7
+}

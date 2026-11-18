@@ -1,0 +1,134 @@
+{
+ "name": "com_boutique_row",
+ "cat": "shop",
+ "style": "boutique_row",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 2072,
+  "verts": 3718,
+  "regions": [
+   "AW_black",
+   "AW_green",
+   "AW_red",
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_shopdoor",
+   "O_small_white",
+   "O_storefront",
+   "R_flat",
+   "SG_books",
+   "SG_boutique",
+   "SG_threads",
+   "S_awn_black",
+   "S_awn_green",
+   "S_awn_red",
+   "S_black",
+   "S_stucco",
+   "S_white",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -9.449999809265137,
+    -0.0,
+    -7.449999809265137
+   ],
+   [
+    9.449999809265137,
+    5.269999980926514,
+    8.17300033569336
+   ]
+  ]
+ },
+ "mid_roof_top": 5.1,
+ "mid": {
+  "tris": 447,
+  "verts": 593,
+  "regions": [
+   "AW_black",
+   "AW_green",
+   "AW_red",
+   "O_apt_door",
+   "O_louver",
+   "O_shopdoor",
+   "O_small_white",
+   "O_storefront",
+   "SG_books",
+   "SG_boutique",
+   "SG_threads",
+   "S_awn_black",
+   "S_awn_green",
+   "S_awn_red",
+   "S_flat",
+   "S_signbg",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -9.0,
+    0.0,
+    -7.0
+   ],
+   [
+    9.0,
+    5.099999904632568,
+    8.17300033569336
+   ]
+  ]
+ },
+ "far": {
+  "tris": 10,
+  "verts": 20,
+  "regions": [
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -9.0,
+    0.0,
+    -7.0
+   ],
+   [
+    9.0,
+    5.099999904632568,
+    7.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   -4.08
+  ],
+  [
+   "shopdoor",
+   -1.92
+  ],
+  [
+   "shopdoor",
+   7.76
+  ]
+ ],
+ "footprint_wd": [
+  18.0,
+  14.0
+ ],
+ "footprint_area": 252.0,
+ "height": 5.27,
+ "storeys": 1,
+ "budget": [
+  3600,
+  1050,
+  60
+ ],
+ "budget_units": 3,
+ "budget_class": "shop",
+ "time_s": 14.1
+}

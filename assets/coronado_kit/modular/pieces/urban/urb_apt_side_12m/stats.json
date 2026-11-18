@@ -1,0 +1,173 @@
+{
+ "name": "urb_apt_side_12m",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 220,
+  "verts": 374,
+  "regions": [
+   "O_vent",
+   "O_win_casement",
+   "S_stucco",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    0.0,
+    -0.10000000149011612
+   ],
+   [
+    6.0,
+    10.170000076293945,
+    0.23499999940395355
+   ]
+  ]
+ },
+ "mid_roof_top": 10.1,
+ "mid": {
+  "tris": 64,
+  "verts": 70,
+  "regions": [
+   "O_vent",
+   "O_win_casement",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    0.0,
+    -0.05000000074505806
+   ],
+   [
+    6.0,
+    10.100000381469727,
+    0.15000000596046448
+   ]
+  ]
+ },
+ "far": {
+  "tris": 4,
+  "verts": 8,
+  "regions": [
+   "F_c_apt_3",
+   "F_flat"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    0.0,
+    -0.15000000596046448
+   ],
+   [
+    6.0,
+    10.100000381469727,
+    0.15000000596046448
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  12.0,
+  0.3
+ ],
+ "footprint_area": 3.6,
+ "height": 10.17,
+ "storeys": 1,
+ "budget": [
+  500,
+  150,
+  16
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_apt_side",
+ "time_s": 0.4,
+ "open_planes": [
+  [
+   0,
+   -6.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   6.0,
+   1,
+   null
+  ],
+  [
+   2,
+   -0.15,
+   -1,
+   null
+  ],
+  [
+   1,
+   9.3,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.15
+ ],
+ "openings": [
+  {
+   "k": "casement",
+   "c": 0.0,
+   "w": 1.2,
+   "t0": 1.2,
+   "t1": 2.6
+  },
+  {
+   "k": "casement",
+   "c": 0.0,
+   "w": 1.2,
+   "t0": 4.2,
+   "t1": 5.6
+  },
+  {
+   "k": "casement",
+   "c": 0.0,
+   "w": 1.2,
+   "t0": 7.2,
+   "t1": 8.6
+  },
+  {
+   "k": "vent",
+   "c": -5.5,
+   "t0": 8.450000000000001,
+   "t1": 8.850000000000001,
+   "w": 0.6
+  }
+ ],
+ "snap": {
+  "grid": 0.5,
+  "module": 12.0,
+  "type": "apt_side",
+  "ends": [
+   [
+    -6.0,
+    0,
+    0.15
+   ],
+   [
+    6.0,
+    0,
+    0.15
+   ]
+  ],
+  "face_z": 0.15,
+  "plate_y": 9.3,
+  "parapet_top": 10.100000000000001
+ },
+ "no_door": true,
+ "base_y": 0.0,
+ "ground_reach": false
+}

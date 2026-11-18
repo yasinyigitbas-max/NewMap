@@ -1,0 +1,122 @@
+{
+ "name": "craftsman_stucco",
+ "cat": "house",
+ "style": "craftsman",
+ "logic_errors": [],
+ "col_boxes": 13,
+ "near": {
+  "tris": 2267,
+  "verts": 3913,
+  "regions": [
+   "O_door_white",
+   "O_lamp",
+   "O_number",
+   "O_shutter",
+   "O_small_white",
+   "O_vent",
+   "O_win_craftsman",
+   "R_comp",
+   "S_black",
+   "S_concrete",
+   "S_halftimber",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_rail",
+   "T_white",
+   "W_brick",
+   "W_halftimber",
+   "W_stone",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.71999979019165,
+    -0.0,
+    -6.449999809265137
+   ],
+   [
+    5.71999979019165,
+    6.880000114440918,
+    9.0
+   ]
+  ]
+ },
+ "mid_roof_top": 6.48,
+ "mid": {
+  "tris": 411,
+  "verts": 505,
+  "regions": [
+   "O_door_white",
+   "O_small_white",
+   "O_vent",
+   "O_win_craftsman",
+   "S_comp",
+   "S_concrete",
+   "S_deck",
+   "S_soffit",
+   "S_white",
+   "W_brick",
+   "W_halftimber",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.650000095367432,
+    0.0,
+    -6.0
+   ],
+   [
+    5.599999904632568,
+    6.880000114440918,
+    9.0
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 42,
+  "regions": [
+   "F_comp",
+   "F_halftimber_blank",
+   "F_stucco_1",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -5.0,
+    0.0,
+    -6.0
+   ],
+   [
+    5.0,
+    6.480000019073486,
+    6.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door",
+   2.8
+  ]
+ ],
+ "footprint_wd": [
+  10.0,
+  12.0
+ ],
+ "footprint_area": 120.0,
+ "height": 6.88,
+ "storeys": 1,
+ "budget": [
+  2500,
+  750,
+  60
+ ],
+ "budget_class": "house_large",
+ "time_s": 14.6
+}

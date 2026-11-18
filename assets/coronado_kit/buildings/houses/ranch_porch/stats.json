@@ -1,0 +1,118 @@
+{
+ "name": "ranch_porch",
+ "cat": "house",
+ "style": "ranch",
+ "logic_errors": [],
+ "col_boxes": 11,
+ "near": {
+  "tris": 1450,
+  "verts": 2367,
+  "regions": [
+   "O_door_white",
+   "O_lamp",
+   "O_number",
+   "O_shutter",
+   "O_small_white",
+   "O_vent",
+   "O_win_dh_white",
+   "R_comp",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_rail",
+   "T_white",
+   "W_brick",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.300000190734863,
+    -0.0,
+    -4.570000171661377
+   ],
+   [
+    5.300000190734863,
+    6.182000160217285,
+    6.400000095367432
+   ]
+  ]
+ },
+ "mid_roof_top": 5.683,
+ "mid": {
+  "tris": 354,
+  "verts": 436,
+  "regions": [
+   "O_door_white",
+   "O_small_white",
+   "O_vent",
+   "O_win_dh_white",
+   "S_comp",
+   "S_concrete",
+   "S_deck",
+   "S_soffit",
+   "S_white",
+   "W_brick",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.0,
+    0.0,
+    -4.449999809265137
+   ],
+   [
+    5.0,
+    6.182000160217285,
+    6.400000095367432
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 42,
+  "regions": [
+   "F_comp",
+   "F_stucco_1",
+   "F_stucco_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -5.0,
+    0.0,
+    -4.0
+   ],
+   [
+    5.0,
+    5.682000160217285,
+    4.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door",
+   -1.0
+  ]
+ ],
+ "footprint_wd": [
+  10.0,
+  8.0
+ ],
+ "footprint_area": 80.0,
+ "height": 6.18,
+ "storeys": 1,
+ "budget": [
+  1500,
+  450,
+  40
+ ],
+ "budget_class": "house_small",
+ "time_s": 7.8
+}

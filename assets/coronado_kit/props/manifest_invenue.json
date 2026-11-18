@@ -1,0 +1,167 @@
+{
+ "theatre_seat": {
+  "file_base": "prop_theatre_seat",
+  "batch": "invenue",
+  "class": "medium",
+  "budget": 800,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 386
+  },
+  "footprint_w": 0.583,
+  "footprint_d": 0.59,
+  "height": 1.02,
+  "regions": [
+   "baked:theatre_seat"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 1.99,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 1.2,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.63,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.02,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1750,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 480.5,
+  "col": 1,
+  "secs": 11.3
+ },
+ "ticket_booth": {
+  "file_base": "prop_ticket_booth",
+  "batch": "invenue",
+  "class": "large",
+  "budget": 1800,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 880
+  },
+  "footprint_w": 1.26,
+  "footprint_d": 1.14,
+  "height": 2.2,
+  "regions": [
+   "baked:ticket_booth"
+  ],
+  "trim": {
+   "ti_laminate": {
+    "area_m2": 2.32,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 27.09,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 10.7,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.18,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 4496,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 98.5,
+  "col": 1,
+  "secs": 13.9
+ },
+ "stanchion": {
+  "file_base": "prop_stanchion",
+  "batch": "invenue",
+  "class": "small",
+  "budget": 500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 180
+  },
+  "footprint_w": 0.4,
+  "footprint_d": 0.74,
+  "height": 0.99,
+  "regions": [
+   "baked:stanchion"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 0.53,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.07,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 916,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1249.3,
+  "col": 1,
+  "secs": 8.0
+ },
+ "poster_case": {
+  "file_base": "prop_poster_case",
+  "batch": "invenue",
+  "class": "medium",
+  "budget": 700,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 224
+  },
+  "footprint_w": 0.839,
+  "footprint_d": 0.095,
+  "height": 1.2,
+  "regions": [
+   "baked:poster_case"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 1.16,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 1.58,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.0,
+  "atlas_page": "props_i_*",
+  "high_tris": 1479,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 70.0,
+  "col": 1,
+  "secs": 8.8
+ }
+}

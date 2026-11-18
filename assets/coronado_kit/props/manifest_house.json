@@ -1,0 +1,807 @@
+{
+ "ac_condenser": {
+  "file_base": "prop_ac_condenser",
+  "batch": "house",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 428
+  },
+  "footprint_w": 0.92,
+  "footprint_d": 1.085,
+  "height": 0.86,
+  "regions": [
+   "baked:ac_condenser"
+  ],
+  "trim": {
+   "ta_concrete": {
+    "area_m2": 1.01,
+    "px_per_m": 128.0
+   },
+   "pa_paint": {
+    "area_m2": 1.47,
+    "px_per_m": 128.0
+   },
+   "pa_coil": {
+    "area_m2": 1.65,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 47088,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 174.1,
+  "col": 1,
+  "secs": 20.1
+ },
+ "ac_condenser_compact": {
+  "file_base": "prop_ac_condenser_compact",
+  "batch": "house",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 418
+  },
+  "footprint_w": 0.74,
+  "footprint_d": 0.905,
+  "height": 0.66,
+  "regions": [
+   "baked:ac_condenser_compact"
+  ],
+  "trim": {
+   "ta_concrete": {
+    "area_m2": 0.68,
+    "px_per_m": 128.0
+   },
+   "pa_paint": {
+    "area_m2": 0.9,
+    "px_per_m": 128.0
+   },
+   "pa_coil": {
+    "area_m2": 0.49,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 47102,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 162.2,
+  "col": 1,
+  "secs": 21.2
+ },
+ "ac_window": {
+  "file_base": "prop_ac_window",
+  "batch": "house",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 46
+  },
+  "footprint_w": 0.86,
+  "footprint_d": 0.59,
+  "height": 0.736,
+  "regions": [
+   "baked:ac_window"
+  ],
+  "mount_height": -0.286,
+  "atlas_page": "props_*",
+  "high_tris": 2198,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 118.0,
+  "col": 1,
+  "secs": 14.0
+ },
+ "meter_electric": {
+  "file_base": "prop_meter_electric",
+  "batch": "house",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 60
+  },
+  "footprint_w": 0.3,
+  "footprint_d": 0.15,
+  "height": 1.02,
+  "regions": [
+   "baked:meter_electric"
+  ],
+  "mount_height": -0.6,
+  "atlas_page": "props_*",
+  "high_tris": 5236,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 135.9,
+  "col": 1,
+  "secs": 10.3
+ },
+ "meter_gas": {
+  "file_base": "prop_meter_gas",
+  "batch": "house",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 88
+  },
+  "footprint_w": 0.337,
+  "footprint_d": 0.27,
+  "height": 0.83,
+  "regions": [
+   "baked:meter_gas"
+  ],
+  "mount_height": 0.0,
+  "atlas_page": "props_*",
+  "high_tris": 1480,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 136.6,
+  "col": 1,
+  "secs": 10.8
+ },
+ "vent_plumbing": {
+  "file_base": "prop_vent_plumbing",
+  "batch": "house",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 70
+  },
+  "footprint_w": 0.24,
+  "footprint_d": 0.24,
+  "height": 0.32,
+  "regions": [
+   "baked:vent_plumbing"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 622,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 150.2,
+  "col": 1,
+  "secs": 9.6
+ },
+ "vent_turbine": {
+  "file_base": "prop_vent_turbine",
+  "batch": "house",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 140
+  },
+  "footprint_w": 0.5,
+  "footprint_d": 0.5,
+  "height": 0.39,
+  "regions": [
+   "baked:vent_turbine"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 4674,
+  "bake_slot_px": 144,
+  "bake_px_per_m": 143.1,
+  "col": 1,
+  "secs": 12.0
+ },
+ "vent_box": {
+  "file_base": "prop_vent_box",
+  "batch": "house",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 30
+  },
+  "footprint_w": 0.6,
+  "footprint_d": 0.5,
+  "height": 0.16,
+  "regions": [
+   "baked:vent_box"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 1306,
+  "bake_slot_px": 144,
+  "bake_px_per_m": 138.8,
+  "col": 1,
+  "secs": 11.6
+ },
+ "gutter_kstyle_2m": {
+  "file_base": "prop_gutter_kstyle_2m",
+  "batch": "house",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 42
+  },
+  "footprint_w": 2.0,
+  "footprint_d": 0.128,
+  "height": 0.14,
+  "regions": [
+   "baked:gutter_kstyle_2m"
+  ],
+  "trim": {
+   "pa_paint": {
+    "area_m2": 0.59,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": -0.03,
+  "atlas_page": "props_*",
+  "high_tris": 540,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 386.4,
+  "col": 1,
+  "secs": 15.3
+ },
+ "downspout_3m": {
+  "file_base": "prop_downspout_3m",
+  "batch": "house",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 140
+  },
+  "footprint_w": 0.28,
+  "footprint_d": 0.665,
+  "height": 3.0,
+  "regions": [
+   "baked:downspout_3m"
+  ],
+  "mount_height": 0.0,
+  "atlas_page": "props_b_*",
+  "high_tris": 1148,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 87.8,
+  "col": 1,
+  "secs": 5.2
+ },
+ "mailbox_post_wood": {
+  "file_base": "prop_mailbox_post_wood",
+  "batch": "house",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 86
+  },
+  "footprint_w": 0.243,
+  "footprint_d": 0.53,
+  "height": 1.24,
+  "regions": [
+   "baked:mailbox_post_wood"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 4192,
+  "bake_slot_px": 176,
+  "bake_px_per_m": 133.8,
+  "col": 1,
+  "secs": 11.6
+ },
+ "mailbox_post_metal": {
+  "file_base": "prop_mailbox_post_metal",
+  "batch": "house",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 86
+  },
+  "footprint_w": 0.243,
+  "footprint_d": 0.53,
+  "height": 1.24,
+  "regions": [
+   "baked:mailbox_post_metal"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 4192,
+  "bake_slot_px": 176,
+  "bake_px_per_m": 133.8,
+  "col": 1,
+  "secs": 11.6
+ },
+ "mailbox_wall_black": {
+  "file_base": "prop_mailbox_wall_black",
+  "batch": "house",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 136
+  },
+  "footprint_w": 0.43,
+  "footprint_d": 0.143,
+  "height": 0.446,
+  "regions": [
+   "baked:mailbox_wall_black"
+  ],
+  "mount_height": -0.03,
+  "atlas_page": "props_*",
+  "high_tris": 7588,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 132.3,
+  "col": 1,
+  "secs": 11.0
+ },
+ "mailbox_wall_brass": {
+  "file_base": "prop_mailbox_wall_brass",
+  "batch": "house",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 136
+  },
+  "footprint_w": 0.43,
+  "footprint_d": 0.143,
+  "height": 0.446,
+  "regions": [
+   "baked:mailbox_wall_brass"
+  ],
+  "mount_height": -0.03,
+  "atlas_page": "props_*",
+  "high_tris": 7588,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 132.3,
+  "col": 1,
+  "secs": 11.0
+ },
+ "porch_light_coach": {
+  "file_base": "prop_porch_light_coach",
+  "batch": "house",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 96
+  },
+  "footprint_w": 0.191,
+  "footprint_d": 0.27,
+  "height": 0.46,
+  "regions": [
+   "baked:porch_light_coach"
+  ],
+  "mount_height": 0.0,
+  "atlas_page": "props_*",
+  "high_tris": 1113,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 134.5,
+  "col": 1,
+  "secs": 10.2
+ },
+ "porch_light_coach_bronze": {
+  "file_base": "prop_porch_light_coach_bronze",
+  "batch": "house",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 96
+  },
+  "footprint_w": 0.191,
+  "footprint_d": 0.27,
+  "height": 0.46,
+  "regions": [
+   "baked:porch_light_coach_bronze"
+  ],
+  "mount_height": 0.0,
+  "atlas_page": "props_*",
+  "high_tris": 1113,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 134.5,
+  "col": 1,
+  "secs": 10.5
+ },
+ "porch_light_barn": {
+  "file_base": "prop_porch_light_barn",
+  "batch": "house",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 118
+  },
+  "footprint_w": 0.28,
+  "footprint_d": 0.383,
+  "height": 0.207,
+  "regions": [
+   "baked:porch_light_barn"
+  ],
+  "mount_height": -0.03,
+  "atlas_page": "props_*",
+  "high_tris": 1908,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 131.8,
+  "col": 1,
+  "secs": 10.1
+ },
+ "hose_reel_wall": {
+  "file_base": "prop_hose_reel_wall",
+  "batch": "house",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 94
+  },
+  "footprint_w": 0.544,
+  "footprint_d": 0.4,
+  "height": 0.4,
+  "regions": [
+   "baked:hose_reel_wall"
+  ],
+  "mount_height": 0.42,
+  "atlas_page": "props_*",
+  "high_tris": 9136,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 139.2,
+  "col": 1,
+  "secs": 11.7
+ },
+ "hose_reel_cart": {
+  "file_base": "prop_hose_reel_cart",
+  "batch": "house",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 166
+  },
+  "footprint_w": 0.6,
+  "footprint_d": 0.34,
+  "height": 0.914,
+  "regions": [
+   "baked:hose_reel_cart"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 9968,
+  "bake_slot_px": 160,
+  "bake_px_per_m": 131.8,
+  "col": 1,
+  "secs": 12.2
+ },
+ "solar_panel": {
+  "file_base": "prop_solar_panel",
+  "batch": "house",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 40
+  },
+  "footprint_w": 1.02,
+  "footprint_d": 1.7,
+  "height": 0.11,
+  "regions": [
+   "baked:solar_panel"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 1350,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 83.7,
+  "col": 1,
+  "secs": 16.4
+ },
+ "solar_panel_x3": {
+  "file_base": "prop_solar_panel_x3",
+  "batch": "house",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 80
+  },
+  "footprint_w": 3.06,
+  "footprint_d": 1.7,
+  "height": 0.11,
+  "regions": [
+   "baked:solar_panel_x3"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 3860,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 48.3,
+  "col": 1,
+  "secs": 20.0
+ },
+ "tv_antenna": {
+  "file_base": "prop_tv_antenna",
+  "batch": "house",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 162
+  },
+  "footprint_w": 1.46,
+  "footprint_d": 1.518,
+  "height": 2.4,
+  "regions": [
+   "baked:tv_antenna"
+  ],
+  "atlas_page": "props_b_*",
+  "high_tris": 3776,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 91.5,
+  "col": 1,
+  "secs": 10.2
+ },
+ "propane_tank_250gal": {
+  "file_base": "prop_propane_tank_250gal",
+  "batch": "house",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 256
+  },
+  "footprint_w": 1.55,
+  "footprint_d": 0.76,
+  "height": 1.12,
+  "regions": [
+   "baked:propane_tank_250gal"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 6992,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 73.0,
+  "col": 1,
+  "secs": 17.4
+ },
+ "propane_cylinder_100lb": {
+  "file_base": "prop_propane_cylinder_100lb",
+  "batch": "house",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 236
+  },
+  "footprint_w": 0.37,
+  "footprint_d": 0.37,
+  "height": 1.4,
+  "regions": [
+   "baked:propane_cylinder_100lb"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 6234,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 130.7,
+  "col": 1,
+  "secs": 11.7
+ },
+ "satellite_dish": {
+  "file_base": "prop_satellite_dish",
+  "batch": "house",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 94
+  },
+  "footprint_w": 0.5,
+  "footprint_d": 0.735,
+  "height": 0.61,
+  "regions": [
+   "baked:satellite_dish"
+  ],
+  "mount_height": 0.0,
+  "atlas_page": "props_*",
+  "high_tris": 3323,
+  "bake_slot_px": 112,
+  "bake_px_per_m": 140.9,
+  "col": 1,
+  "secs": 11.9
+ },
+ "satellite_dish_round": {
+  "file_base": "prop_satellite_dish_round",
+  "batch": "house",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 94
+  },
+  "footprint_w": 0.46,
+  "footprint_d": 0.735,
+  "height": 0.63,
+  "regions": [
+   "baked:satellite_dish_round"
+  ],
+  "mount_height": 0.0,
+  "atlas_page": "props_*",
+  "high_tris": 3323,
+  "bake_slot_px": 112,
+  "bake_px_per_m": 140.1,
+  "col": 1,
+  "secs": 12.3
+ },
+ "house_numbers_wood": {
+  "file_base": "prop_house_numbers_wood",
+  "batch": "house",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 10
+  },
+  "footprint_w": 0.34,
+  "footprint_d": 0.03,
+  "height": 0.13,
+  "regions": [
+   "baked:house_numbers_wood"
+  ],
+  "mount_height": 0.0,
+  "atlas_page": "props_*",
+  "high_tris": 2114,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 215.8,
+  "col": 1,
+  "secs": 9.6
+ },
+ "house_numbers_tile": {
+  "file_base": "prop_house_numbers_tile",
+  "batch": "house",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 20
+  },
+  "footprint_w": 0.38,
+  "footprint_d": 0.028,
+  "height": 0.16,
+  "regions": [
+   "baked:house_numbers_tile"
+  ],
+  "mount_height": -0.01,
+  "atlas_page": "props_*",
+  "high_tris": 3048,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 147.5,
+  "col": 1,
+  "secs": 10.0
+ }
+}

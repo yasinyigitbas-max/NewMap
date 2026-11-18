@@ -1,0 +1,105 @@
+{
+ "name": "urb_wh_roof_sawtooth_12x24",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 144,
+  "verts": 288,
+  "regions": [
+   "R_flat",
+   "S_soffit",
+   "T_dark",
+   "T_white"
+  ],
+  "bbox": [
+   [
+    -5.980000019073486,
+    6.599999904632568,
+    -11.970000267028809
+   ],
+   [
+    5.980000019073486,
+    8.0,
+    11.970000267028809
+   ]
+  ]
+ },
+ "mid_roof_top": 8.0,
+ "mid": {
+  "tris": 60,
+  "verts": 120,
+  "regions": [
+   "S_dark",
+   "S_flat",
+   "S_soffit",
+   "S_white"
+  ],
+  "bbox": [
+   [
+    -5.980000019073486,
+    6.599999904632568,
+    -11.970000267028809
+   ],
+   [
+    5.980000019073486,
+    8.0,
+    11.970000267028809
+   ]
+  ]
+ },
+ "far": {
+  "tris": 12,
+  "verts": 24,
+  "regions": [
+   "F_flat",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    6.599999904632568,
+    -12.0
+   ],
+   [
+    6.0,
+    8.0,
+    12.0
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  12.0,
+  24.0
+ ],
+ "footprint_area": 288.0,
+ "height": 8.0,
+ "storeys": 1,
+ "budget": [
+  360,
+  120,
+  16
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_wh_roof",
+ "time_s": 0.5,
+ "open_planes": [],
+ "shift": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "type": "wh_roof",
+  "module": 12.0,
+  "depth": 24.0,
+  "plate_y": 6.6
+ },
+ "no_door": true,
+ "base_y": 6.6,
+ "ground_reach": false
+}

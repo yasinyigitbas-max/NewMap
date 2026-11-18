@@ -1,0 +1,207 @@
+{
+ "name": "beach_large",
+ "style": "beach_cottage",
+ "module": "houses_map",
+ "stats": {
+  "near": {
+   "tris": 2373,
+   "verts": 4127,
+   "regions": [
+    "O_door_french",
+    "O_door_white",
+    "O_lamp",
+    "O_number",
+    "O_shutter",
+    "O_vent",
+    "O_win_casement",
+    "R_metal",
+    "S_bb",
+    "S_black",
+    "S_concrete",
+    "S_soffit",
+    "S_white",
+    "T_concrete",
+    "T_deck",
+    "T_metal",
+    "T_rail",
+    "T_white",
+    "W_bb",
+    "W_brick",
+    "W_stucco"
+   ],
+   "bbox": [
+    [
+     -5.769999980926514,
+     -0.0,
+     -7.550000190734863
+    ],
+    [
+     5.769999980926514,
+     10.817999839782715,
+     9.649999618530273
+    ]
+   ]
+  },
+  "mid": {
+   "tris": 432,
+   "verts": 512,
+   "regions": [
+    "O_door_french",
+    "O_door_white",
+    "O_vent",
+    "O_win_casement",
+    "S_concrete",
+    "S_deck",
+    "S_metal",
+    "S_soffit",
+    "S_white",
+    "W_bb",
+    "W_brick",
+    "W_stucco"
+   ],
+   "bbox": [
+    [
+     -5.650000095367432,
+     0.0,
+     -7.25
+    ],
+    [
+     5.650000095367432,
+     10.817999839782715,
+     9.649999618530273
+    ]
+   ]
+  },
+  "far": {
+   "tris": 30,
+   "verts": 54,
+   "regions": [
+    "F_bb_2",
+    "F_bb_blank",
+    "F_metal",
+    "F_trim_white"
+   ],
+   "bbox": [
+    [
+     -5.25,
+     0.0,
+     -7.25
+    ],
+    [
+     5.25,
+     10.817999839782715,
+     7.25
+    ]
+   ]
+  },
+  "budget": [
+   2500,
+   750,
+   60
+  ],
+  "budget_class": "house_large",
+  "storeys": 2,
+  "footprint_wd": [
+   10.5,
+   14.5
+  ],
+  "footprint_area": 152.2,
+  "height": 10.82,
+  "logic_errors": [],
+  "col_boxes": 15
+ },
+ "validator": {
+  "pass": true,
+  "errors": []
+ },
+ "railcheck": {
+  "pass": true,
+  "gaps": [],
+  "floating": [],
+  "pen": []
+ },
+ "far_match": {
+  "ok": true,
+  "reason": "ok",
+  "detail": {
+   "mid_h": 10.818,
+   "far_h": 10.818,
+   "mid_w": 11.3,
+   "far_w": 10.5,
+   "iou": 0.989,
+   "mid_px": 29796,
+   "far_px": 29464,
+   "frame": [
+    -5.65,
+    5.65,
+    0.0,
+    10.818
+   ],
+   "swing_mid": 0.366,
+   "corr": 0.902,
+   "mid_rows": 3,
+   "far_rows": 2,
+   "mid_fill": 0.252,
+   "far_fill": 0.214,
+   "delta_e": 2.0,
+   "wall_delta_e": 3.0,
+   "hv_mid": 1.16,
+   "hv_far": 1.36,
+   "light_rows_mid": 0.854,
+   "light_rows_far": 0.672,
+   "mid_rgb": [
+    0.459,
+    0.5,
+    0.52
+   ],
+   "far_rgb": [
+    0.435,
+    0.482,
+    0.505
+   ],
+   "mid_wall_rgb": [
+    0.494,
+    0.54,
+    0.562
+   ],
+   "far_wall_rgb": [
+    0.46,
+    0.51,
+    0.534
+   ]
+  },
+  "full_iou": {
+   "front": 0.9874338624338624,
+   "side": 0.9822059075142711
+  }
+ },
+ "pass": true,
+ "time_s": 22.3,
+ "wallcheck": {
+  "front": {
+   "wall_px": 106940,
+   "resid_std": 0.0068,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "left": {
+   "wall_px": 86451,
+   "resid_std": 0.0038,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "right": {
+   "wall_px": 83986,
+   "resid_std": 0.0034,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "back": {
+   "wall_px": 184390,
+   "resid_std": 0.005,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "pass": true
+ }
+}

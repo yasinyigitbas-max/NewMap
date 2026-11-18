@@ -1,0 +1,701 @@
+[
+ {
+  "file": "prop_beach_shower_clean_far.glb",
+  "tier": "far",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 10,
+  "verts": 20,
+  "budget": 20,
+  "size": [
+   1.1,
+   2.45,
+   1.1
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_beach_shower_clean_mid.glb",
+  "tier": "mid",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 56,
+  "verts": 123,
+  "budget": 181,
+  "size": [
+   1.1,
+   2.455,
+   1.1
+  ],
+  "odd_ray": 6
+ },
+ {
+  "file": "prop_beach_shower_clean_near.glb",
+  "tier": "near",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "60 tris may face inward / be enclosed"
+  ],
+  "tris": 466,
+  "verts": 784,
+  "budget": 600,
+  "size": [
+   1.1,
+   2.452,
+   1.11
+  ],
+  "odd_ray": 99
+ },
+ {
+  "file": "prop_beach_shower_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 2,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_beach_umbrella_clean_far.glb",
+  "tier": "far",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 14,
+  "verts": 22,
+  "budget": 20,
+  "size": [
+   1.94,
+   2.32,
+   1.94
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_beach_umbrella_clean_mid.glb",
+  "tier": "mid",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "20 tris may face inward / be enclosed"
+  ],
+  "tris": 70,
+  "verts": 159,
+  "budget": 181,
+  "size": [
+   1.94,
+   2.32,
+   1.94
+  ],
+  "odd_ray": 20
+ },
+ {
+  "file": "prop_beach_umbrella_clean_near.glb",
+  "tier": "near",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "190 tris may face inward / be enclosed"
+  ],
+  "tris": 546,
+  "verts": 1126,
+  "budget": 600,
+  "size": [
+   1.94,
+   2.52,
+   1.94
+  ],
+  "odd_ray": 235
+ },
+ {
+  "file": "prop_beach_umbrella_closed_clean_far.glb",
+  "tier": "far",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 13,
+  "verts": 21,
+  "budget": 20,
+  "size": [
+   0.6,
+   2.45,
+   0.52
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_beach_umbrella_closed_clean_mid.glb",
+  "tier": "mid",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "8 tris may face inward / be enclosed"
+  ],
+  "tris": 78,
+  "verts": 171,
+  "budget": 181,
+  "size": [
+   0.6,
+   2.32,
+   0.52
+  ],
+  "odd_ray": 8
+ },
+ {
+  "file": "prop_beach_umbrella_closed_clean_near.glb",
+  "tier": "near",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "26 tris may face inward / be enclosed"
+  ],
+  "tris": 346,
+  "verts": 697,
+  "budget": 600,
+  "size": [
+   0.6,
+   2.46,
+   0.6
+  ],
+  "odd_ray": 29
+ },
+ {
+  "file": "prop_beach_umbrella_closed_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 2,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_beach_umbrella_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 2,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_boat_trailer_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 18,
+  "verts": 28,
+  "budget": 20,
+  "size": [
+   2.0,
+   1.611,
+   6.58
+  ],
+  "odd_ray": 1
+ },
+ {
+  "file": "prop_boat_trailer_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "49 tris may face inward / be enclosed"
+  ],
+  "tris": 372,
+  "verts": 973,
+  "budget": 751,
+  "size": [
+   2.0,
+   1.811,
+   6.614
+  ],
+  "odd_ray": 56
+ },
+ {
+  "file": "prop_boat_trailer_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "313 tris may face inward / be enclosed"
+  ],
+  "tris": 2238,
+  "verts": 4343,
+  "budget": 2500,
+  "size": [
+   2.0,
+   1.75,
+   6.737
+  ],
+  "odd_ray": 381
+ },
+ {
+  "file": "prop_boat_trailer_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 7,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_buoy_can_clean_far.glb",
+  "tier": "far",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.00,-0.50) - asymmetric parts?"
+  ],
+  "tris": 14,
+  "verts": 24,
+  "budget": 20,
+  "size": [
+   0.88,
+   2.16,
+   1.761
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_buoy_can_clean_mid.glb",
+  "tier": "mid",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.00,-0.48) - asymmetric parts?"
+  ],
+  "tris": 68,
+  "verts": 159,
+  "budget": 181,
+  "size": [
+   0.727,
+   2.15,
+   1.795
+  ],
+  "odd_ray": 1
+ },
+ {
+  "file": "prop_buoy_can_clean_near.glb",
+  "tier": "near",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.00,-0.48) - asymmetric parts?"
+  ],
+  "tris": 325,
+  "verts": 648,
+  "budget": 600,
+  "size": [
+   0.799,
+   2.681,
+   1.795
+  ],
+  "odd_ray": 21
+ },
+ {
+  "file": "prop_buoy_can_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 2,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_buoy_mooring_clean_far.glb",
+  "tier": "far",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.00,-0.40) - asymmetric parts?"
+  ],
+  "tris": 16,
+  "verts": 26,
+  "budget": 20,
+  "size": [
+   0.84,
+   2.0,
+   1.534
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_buoy_mooring_clean_mid.glb",
+  "tier": "mid",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.00,-0.39) - asymmetric parts?"
+  ],
+  "tris": 96,
+  "verts": 214,
+  "budget": 181,
+  "size": [
+   0.8,
+   2.08,
+   1.577
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_buoy_mooring_clean_near.glb",
+  "tier": "near",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.11,-0.41) - asymmetric parts?"
+  ],
+  "tris": 446,
+  "verts": 871,
+  "budget": 600,
+  "size": [
+   1.03,
+   2.45,
+   1.62
+  ],
+  "odd_ray": 17
+ },
+ {
+  "file": "prop_buoy_mooring_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 2,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_buoy_nun_clean_far.glb",
+  "tier": "far",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.00,-0.50) - asymmetric parts?"
+  ],
+  "tris": 15,
+  "verts": 25,
+  "budget": 20,
+  "size": [
+   0.88,
+   2.45,
+   1.761
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_buoy_nun_clean_mid.glb",
+  "tier": "mid",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.00,-0.48) - asymmetric parts?"
+  ],
+  "tris": 68,
+  "verts": 165,
+  "budget": 181,
+  "size": [
+   0.727,
+   2.45,
+   1.795
+  ],
+  "odd_ray": 1
+ },
+ {
+  "file": "prop_buoy_nun_clean_near.glb",
+  "tier": "near",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.00,-0.48) - asymmetric parts?",
+   "29 tris may face inward / be enclosed"
+  ],
+  "tris": 345,
+  "verts": 692,
+  "budget": 600,
+  "size": [
+   0.799,
+   2.951,
+   1.795
+  ],
+  "odd_ray": 43
+ },
+ {
+  "file": "prop_buoy_nun_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 2,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_fuel_pump_clean_far.glb",
+  "tier": "far",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.00,-0.12) - asymmetric parts?"
+  ],
+  "tris": 18,
+  "verts": 36,
+  "budget": 20,
+  "size": [
+   1.4,
+   1.78,
+   1.1
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_fuel_pump_clean_mid.glb",
+  "tier": "mid",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.00,-0.12) - asymmetric parts?"
+  ],
+  "tris": 68,
+  "verts": 165,
+  "budget": 361,
+  "size": [
+   1.4,
+   1.78,
+   1.1
+  ],
+  "odd_ray": 5
+ },
+ {
+  "file": "prop_fuel_pump_clean_near.glb",
+  "tier": "near",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.00,-0.12) - asymmetric parts?",
+   "60 tris may face inward / be enclosed"
+  ],
+  "tris": 912,
+  "verts": 1759,
+  "budget": 1200,
+  "size": [
+   1.4,
+   1.78,
+   1.1
+  ],
+  "odd_ray": 174
+ },
+ {
+  "file": "prop_fuel_pump_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 4,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_kayak_rack_clean_far.glb",
+  "tier": "far",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 20,
+  "verts": 32,
+  "budget": 20,
+  "size": [
+   3.6,
+   2.05,
+   1.594
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_kayak_rack_clean_mid.glb",
+  "tier": "mid",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 252,
+  "verts": 702,
+  "budget": 361,
+  "size": [
+   3.6,
+   2.05,
+   1.8
+  ],
+  "odd_ray": 23
+ },
+ {
+  "file": "prop_kayak_rack_clean_near.glb",
+  "tier": "near",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "88 tris may face inward / be enclosed"
+  ],
+  "tris": 1174,
+  "verts": 2921,
+  "budget": 1200,
+  "size": [
+   3.6,
+   2.05,
+   1.86
+  ],
+  "odd_ray": 196
+ },
+ {
+  "file": "prop_kayak_rack_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 8,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_lifering_stand_clean_far.glb",
+  "tier": "far",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 16,
+  "verts": 28,
+  "budget": 20,
+  "size": [
+   0.66,
+   1.78,
+   0.2
+  ],
+  "odd_ray": 1
+ },
+ {
+  "file": "prop_lifering_stand_clean_mid.glb",
+  "tier": "mid",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "16 tris may face inward / be enclosed"
+  ],
+  "tris": 108,
+  "verts": 242,
+  "budget": 181,
+  "size": [
+   0.708,
+   1.75,
+   0.2
+  ],
+  "odd_ray": 16
+ },
+ {
+  "file": "prop_lifering_stand_clean_near.glb",
+  "tier": "near",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "86 tris may face inward / be enclosed"
+  ],
+  "tris": 490,
+  "verts": 921,
+  "budget": 600,
+  "size": [
+   0.688,
+   1.774,
+   0.26
+  ],
+  "odd_ray": 92
+ },
+ {
+  "file": "prop_lifering_stand_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 2,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_volleyball_net_clean_far.glb",
+  "tier": "far",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 18,
+  "verts": 36,
+  "budget": 20,
+  "size": [
+   10.22,
+   2.6,
+   0.18
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_volleyball_net_clean_mid.glb",
+  "tier": "mid",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "24 tris may face inward / be enclosed"
+  ],
+  "tris": 224,
+  "verts": 481,
+  "budget": 361,
+  "size": [
+   10.191,
+   2.6,
+   0.22
+  ],
+  "odd_ray": 26
+ },
+ {
+  "file": "prop_volleyball_net_clean_near.glb",
+  "tier": "near",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "82 tris may face inward / be enclosed"
+  ],
+  "tris": 1056,
+  "verts": 1949,
+  "budget": 1200,
+  "size": [
+   13.32,
+   3.23,
+   2.12
+  ],
+  "odd_ray": 118
+ },
+ {
+  "file": "prop_volleyball_net_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 3,
+  "col_maxverts": 24
+ }
+]

@@ -1,0 +1,127 @@
+{
+ "name": "urb_civ_pediment_6m",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 308,
+  "verts": 606,
+  "regions": [
+   "S_soffit",
+   "S_stucco",
+   "T_white"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.23999999463558197
+   ],
+   [
+    3.0,
+    1.5,
+    0.23999999463558197
+   ]
+  ]
+ },
+ "mid_roof_top": 1.452,
+ "mid": {
+  "tris": 56,
+  "verts": 102,
+  "regions": [
+   "S_soffit",
+   "S_stucco",
+   "S_white"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.23999999463558197
+   ],
+   [
+    3.0,
+    1.4520000219345093,
+    0.23999999463558197
+   ]
+  ]
+ },
+ "far": {
+  "tris": 16,
+  "verts": 34,
+  "regions": [
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.23999999463558197
+   ],
+   [
+    3.0,
+    1.4600000381469727,
+    0.23999999463558197
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  6.0,
+  0.48
+ ],
+ "footprint_area": 2.9,
+ "height": 1.5,
+ "storeys": 1,
+ "budget": [
+  360,
+  120,
+  24
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_civ_pediment",
+ "time_s": 0.4,
+ "open_planes": [
+  [
+   0,
+   -3.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   3.0,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "civ_pediment",
+  "ends": [
+   [
+    -3.0,
+    0,
+    0
+   ],
+   [
+    3.0,
+    0,
+    0
+   ]
+  ],
+  "face_z": 0.24,
+  "plate_y": 1.34
+ },
+ "no_door": true,
+ "base_y": 0.0,
+ "ground_reach": false
+}

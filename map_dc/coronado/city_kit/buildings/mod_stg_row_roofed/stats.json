@@ -1,0 +1,16 @@
+{
+ "cat": "mod",
+ "doors_front": [],
+ "footprint_wd": [
+  18.0,
+  12.0
+ ],
+ "height": 4.8,
+ "merged_from": "mod_stg_row_roofed.json",
+ "name": "mod_stg_row_roofed",
+ "tris": {
+  "far": 10,
+  "mid": 352,
+  "near": 1584
+ }
+}

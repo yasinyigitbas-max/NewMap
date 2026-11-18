@@ -1,0 +1,427 @@
+{
+ "cone_28in": {
+  "file_base": "prop_cone_28in",
+  "batch": "construction",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 98
+  },
+  "footprint_w": 0.36,
+  "footprint_d": 0.36,
+  "height": 0.71,
+  "regions": [
+   "baked:cone_28in"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 3571,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 114.2,
+  "col": 1,
+  "secs": 10.6
+ },
+ "cone_18in": {
+  "file_base": "prop_cone_18in",
+  "batch": "construction",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 98
+  },
+  "footprint_w": 0.36,
+  "footprint_d": 0.36,
+  "height": 0.62,
+  "regions": [
+   "baked:cone_18in"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 3859,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 93.8,
+  "col": 1,
+  "secs": 10.4
+ },
+ "channelizer_drum": {
+  "file_base": "prop_channelizer_drum",
+  "batch": "construction",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 314
+  },
+  "footprint_w": 0.72,
+  "footprint_d": 0.72,
+  "height": 1.06,
+  "regions": [
+   "baked:channelizer_drum"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 1952,
+  "bake_slot_px": 112,
+  "bake_px_per_m": 68.0,
+  "col": 1,
+  "secs": 12.7
+ },
+ "barricade_type1": {
+  "file_base": "prop_barricade_type1",
+  "batch": "construction",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 64
+  },
+  "footprint_w": 1.2,
+  "footprint_d": 0.945,
+  "height": 0.96,
+  "regions": [
+   "baked:barricade_type1"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 450,
+  "bake_slot_px": 112,
+  "bake_px_per_m": 95.7,
+  "col": 1,
+  "secs": 15.1
+ },
+ "temp_fence_panel": {
+  "file_base": "fence_temp_fence_panel",
+  "batch": "construction",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 58,
+   "mid": 14,
+   "far": 2
+  },
+  "footprint_w": 3.309,
+  "footprint_d": 0.22,
+  "height": 1.85,
+  "regions": [
+   "baked:temp_fence_panel"
+  ],
+  "trim": {
+   "tbm_chain": {
+    "area_m2": 4.71,
+    "px_per_m": 171.0
+   },
+   "tb_galv": {
+    "area_m2": 0.9,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 8344,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 106.8,
+  "region_high": {
+   "chainlink": 160720
+  },
+  "col": 1,
+  "secs": 19.0
+ },
+ "temp_fence_panel_screen": {
+  "file_base": "fence_temp_fence_panel_screen",
+  "batch": "construction",
+  "class": "fence",
+  "budget": 60,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 58,
+   "mid": 16,
+   "far": 2
+  },
+  "footprint_w": 3.309,
+  "footprint_d": 0.22,
+  "height": 1.85,
+  "regions": [
+   "baked:temp_fence_panel_screen"
+  ],
+  "trim": {
+   "tbm_fabric": {
+    "area_m2": 9.43,
+    "px_per_m": 30.9
+   },
+   "tb_galv": {
+    "area_m2": 0.9,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 8538,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 142.4,
+  "col": 1,
+  "secs": 19.9
+ },
+ "dumpster_3yd_green": {
+  "file_base": "prop_dumpster_3yd_green",
+  "batch": "construction",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 424
+  },
+  "footprint_w": 2.002,
+  "footprint_d": 1.352,
+  "height": 1.66,
+  "regions": [
+   "baked:dumpster_3yd_green"
+  ],
+  "trim": {
+   "pa_paint": {
+    "area_m2": 13.72,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 26446,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 42.6,
+  "col": 1,
+  "secs": 23.5
+ },
+ "dumpster_3yd_blue": {
+  "file_base": "prop_dumpster_3yd_blue",
+  "batch": "construction",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 424
+  },
+  "footprint_w": 2.002,
+  "footprint_d": 1.352,
+  "height": 1.66,
+  "regions": [
+   "baked:dumpster_3yd_blue"
+  ],
+  "trim": {
+   "pa_paint": {
+    "area_m2": 13.72,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 26446,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 42.6,
+  "col": 1,
+  "secs": 22.4
+ },
+ "dumpster_rolloff_20yd": {
+  "file_base": "prop_dumpster_rolloff_20yd",
+  "batch": "construction",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 640,
+   "mid": 34,
+   "far": 10
+  },
+  "footprint_w": 2.55,
+  "footprint_d": 6.831,
+  "height": 1.67,
+  "regions": [
+   "baked:dumpster_rolloff_20yd"
+  ],
+  "trim": {
+   "pa_paint": {
+    "area_m2": 65.65,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 21014,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 35.6,
+  "col": 1,
+  "secs": 24.9
+ },
+ "barricade_type3": {
+  "file_base": "prop_barricade_type3",
+  "batch": "construction",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 108
+  },
+  "footprint_w": 2.4,
+  "footprint_d": 0.9,
+  "height": 1.55,
+  "regions": [
+   "baked:barricade_type3"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 6749,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 55.1,
+  "col": 1,
+  "secs": 19.9
+ },
+ "water_barrier_white": {
+  "file_base": "prop_water_barrier_white",
+  "batch": "construction",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 54
+  },
+  "footprint_w": 1.923,
+  "footprint_d": 0.552,
+  "height": 0.984,
+  "regions": [
+   "baked:water_barrier_white"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 6388,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 46.8,
+  "col": 1,
+  "secs": 17.7
+ },
+ "water_barrier_orange": {
+  "file_base": "prop_water_barrier_orange",
+  "batch": "construction",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 54
+  },
+  "footprint_w": 1.923,
+  "footprint_d": 0.552,
+  "height": 0.984,
+  "regions": [
+   "baked:water_barrier_orange"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 6388,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 46.8,
+  "col": 1,
+  "secs": 17.3
+ },
+ "k_rail": {
+  "file_base": "prop_k_rail",
+  "batch": "construction",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 34
+  },
+  "footprint_w": 3.8,
+  "footprint_d": 0.6,
+  "height": 0.82,
+  "regions": [
+   "baked:k_rail"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 3619,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 39.3,
+  "col": 1,
+  "secs": 19.2
+ },
+ "temp_fence_stand": {
+  "file_base": "prop_temp_fence_stand",
+  "batch": "construction",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "rusty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 54
+  },
+  "footprint_w": 0.6,
+  "footprint_d": 0.18,
+  "height": 1.95,
+  "regions": [
+   "baked:temp_fence_stand"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 7293,
+  "bake_slot_px": 112,
+  "bake_px_per_m": 111.2,
+  "col": 1,
+  "secs": 11.0
+ }
+}

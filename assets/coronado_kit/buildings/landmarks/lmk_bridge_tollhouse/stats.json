@@ -1,0 +1,113 @@
+{
+ "name": "lmk_bridge_tollhouse",
+ "cat": "landmark",
+ "style": "bridge_tollhouse",
+ "logic_errors": [],
+ "col_boxes": 12,
+ "near": {
+  "tris": 2590,
+  "verts": 4642,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "O_lamp",
+   "O_shutter",
+   "R_metal",
+   "SG_bridge",
+   "S_black",
+   "S_concrete",
+   "S_metal",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -18.082000732421875,
+    -0.0,
+    -6.5
+   ],
+   [
+    9.720000267028809,
+    9.0,
+    8.949999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 6.696,
+ "mid": {
+  "tris": 420,
+  "verts": 608,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "SG_bridge",
+   "S_concrete",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -18.082000732421875,
+    0.0,
+    -6.5
+   ],
+   [
+    9.600000381469727,
+    6.696000099182129,
+    6.900000095367432
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 46,
+  "regions": [
+   "F_metal",
+   "F_stucco_1",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -9.0,
+    0.0,
+    -5.0
+   ],
+   [
+    9.0,
+    6.696000099182129,
+    5.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  18.0,
+  10.0
+ ],
+ "footprint_area": 180.0,
+ "height": 9.0,
+ "storeys": 1,
+ "budget": [
+  8000,
+  2500,
+  200
+ ],
+ "budget_class": "landmark",
+ "time_s": 14.4
+}

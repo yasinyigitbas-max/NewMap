@@ -1,0 +1,314 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested); required_shallow: roles a small (shallow / narrow real building) room must have. only_types: slot used only for those shop types.",
+ "set": "venue",
+ "types": [
+  "cinema",
+  "theatre"
+ ],
+ "floor": "Carpet012",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  0.55,
+  0.25,
+  0.25
+ ],
+ "ceiling": "Plaster001",
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3,
+  "max_w": 14,
+  "min_d": 4,
+  "max_d": 14
+ },
+ "required": [
+  "counter",
+  "auditorium_door"
+ ],
+ "required_shallow": [
+  "counter"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    2.4
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "snack",
+    "drink"
+   ],
+   "wall": true
+  },
+  {
+   "role": "concession",
+   "prop": "shelf_wall",
+   "place": "behind_counter",
+   "goods": [
+    "snack",
+    "drink"
+   ]
+  },
+  {
+   "role": "auditorium_door",
+   "prop": "double_door",
+   "place": "walls",
+   "walls": [
+    "back"
+   ],
+   "unit": [
+    1.9,
+    0.12
+   ],
+   "max": 1
+  },
+  {
+   "role": "posters",
+   "prop": "art_wall",
+   "place": "walls",
+   "walls": [
+    "door_side"
+   ],
+   "unit": [
+    1.6,
+    0.12
+   ]
+  },
+  {
+   "role": "plant",
+   "prop": "plant",
+   "place": "corner"
+  }
+ ],
+ "clutter": true,
+ "signs": true,
+ "plans": [
+  {
+   "name": "chandelier",
+   "fixtures": "venue_chandelier",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "snack",
+      "drink"
+     ],
+     "wall": true
+    },
+    {
+     "role": "concession",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "snack",
+      "drink"
+     ]
+    },
+    {
+     "role": "auditorium_door",
+     "prop": "double_door",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "unit": [
+      1.9,
+      0.12
+     ],
+     "max": 1
+    },
+    {
+     "role": "posters",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "unit": [
+      1.6,
+      0.12
+     ]
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ],
+   "wear": 0.22,
+   "floor": "Carpet012",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.55,
+    0.25,
+    0.25
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  },
+  {
+   "name": "marquee",
+   "fixtures": "venue_marquee",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "snack",
+      "drink"
+     ],
+     "wall": true
+    },
+    {
+     "role": "concession",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "snack",
+      "drink"
+     ]
+    },
+    {
+     "role": "auditorium_door",
+     "prop": "double_door",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "unit": [
+      1.9,
+      0.12
+     ],
+     "max": 1
+    },
+    {
+     "role": "posters",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "unit": [
+      1.6,
+      0.12
+     ]
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ],
+   "wear": 0.35,
+   "floor": "Carpet012",
+   "wall": "WoodSiding008",
+   "wall_tint": [
+    0.6,
+    0.45,
+    0.35
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  },
+  {
+   "name": "deco",
+   "fixtures": "venue_track",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "snack",
+      "drink"
+     ],
+     "wall": true
+    },
+    {
+     "role": "concession",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "snack",
+      "drink"
+     ]
+    },
+    {
+     "role": "auditorium_door",
+     "prop": "double_door",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "unit": [
+      1.9,
+      0.12
+     ],
+     "max": 1
+    },
+    {
+     "role": "posters",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "unit": [
+      1.6,
+      0.12
+     ]
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    },
+    {
+     "role": "plant2",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ],
+   "wear": 0.28,
+   "floor": "Terrazzo005",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.3,
+    0.3,
+    0.4
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  }
+ ],
+ "hours": [
+  12,
+  24
+ ],
+ "busy": 0.5
+}

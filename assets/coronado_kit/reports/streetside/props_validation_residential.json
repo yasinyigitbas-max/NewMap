@@ -1,0 +1,248 @@
+[
+ {
+  "file": "prop_balcony_clutter_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 16,
+  "verts": 32,
+  "budget": 20,
+  "size": [
+   3.0,
+   1.232,
+   1.2
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_balcony_clutter_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "20 tris may face inward / be enclosed"
+  ],
+  "tris": 187,
+  "verts": 472,
+  "budget": 751,
+  "size": [
+   3.0,
+   1.232,
+   1.2
+  ],
+  "odd_ray": 27
+ },
+ {
+  "file": "prop_balcony_clutter_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 1442,
+  "verts": 3190,
+  "budget": 2500,
+  "size": [
+   3.03,
+   1.413,
+   1.215
+  ],
+  "odd_ray": 142
+ },
+ {
+  "file": "prop_balcony_clutter_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 6,
+  "col_maxverts": 8
+ },
+ {
+  "file": "prop_buzzer_panel_clean_far.glb",
+  "tier": "far",
+  "cls": "tiny",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 12,
+  "verts": 24,
+  "budget": 20,
+  "size": [
+   0.28,
+   0.775,
+   0.06
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_buzzer_panel_clean_mid.glb",
+  "tier": "mid",
+  "cls": "tiny",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "3 tris may face inward / be enclosed"
+  ],
+  "tris": 38,
+  "verts": 94,
+  "budget": 91,
+  "size": [
+   0.28,
+   0.771,
+   0.064
+  ],
+  "odd_ray": 3
+ },
+ {
+  "file": "prop_buzzer_panel_clean_near.glb",
+  "tier": "near",
+  "cls": "tiny",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "27 tris may face inward / be enclosed"
+  ],
+  "tris": 200,
+  "verts": 410,
+  "budget": 300,
+  "size": [
+   0.28,
+   0.775,
+   0.064
+  ],
+  "odd_ray": 30
+ },
+ {
+  "file": "prop_buzzer_panel_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 1,
+  "col_maxverts": 8
+ },
+ {
+  "file": "prop_clothesline_clean_far.glb",
+  "tier": "far",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 20,
+  "verts": 40,
+  "budget": 20,
+  "size": [
+   5.08,
+   2.05,
+   0.924
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_clothesline_clean_mid.glb",
+  "tier": "mid",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 78,
+  "verts": 198,
+  "budget": 361,
+  "size": [
+   5.06,
+   2.04,
+   1.717
+  ],
+  "odd_ray": 4
+ },
+ {
+  "file": "prop_clothesline_clean_near.glb",
+  "tier": "near",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "46 tris may face inward / be enclosed"
+  ],
+  "tris": 755,
+  "verts": 1588,
+  "budget": 1200,
+  "size": [
+   5.2,
+   2.06,
+   1.75
+  ],
+  "odd_ray": 56
+ },
+ {
+  "file": "prop_clothesline_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 5,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_dingbat_stair_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 14,
+  "verts": 28,
+  "budget": 20,
+  "size": [
+   5.5,
+   3.95,
+   0.975
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_dingbat_stair_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "28 tris may face inward / be enclosed"
+  ],
+  "tris": 206,
+  "verts": 528,
+  "budget": 751,
+  "size": [
+   5.85,
+   3.95,
+   1.1
+  ],
+  "odd_ray": 38
+ },
+ {
+  "file": "prop_dingbat_stair_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 1008,
+  "verts": 2597,
+  "budget": 2500,
+  "size": [
+   5.96,
+   3.98,
+   1.135
+  ],
+  "odd_ray": 115
+ },
+ {
+  "file": "prop_dingbat_stair_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 10,
+  "col_maxverts": 24
+ }
+]

@@ -1,0 +1,2698 @@
+{
+ "pieces": [
+  {
+   "name": "house_roof_chimney_brick",
+   "group": "houses",
+   "cls": "mod_house_trim",
+   "budget": [
+    90,
+    24,
+    12
+   ],
+   "tris": [
+    72,
+    16,
+    12
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_roof_chimney_brick_clay",
+   "group": "houses",
+   "cls": "mod_house_trim",
+   "budget": [
+    90,
+    24,
+    12
+   ],
+   "tris": [
+    60,
+    16,
+    12
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_roof_gable_endl_3m_clay_stucco",
+   "group": "houses",
+   "cls": "mod_house_roof",
+   "budget": [
+    240,
+    72,
+    8
+   ],
+   "tris": [
+    158,
+    31,
+    7
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_vent"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_roof_gable_endl_3m_clay_stucco_white",
+   "group": "houses",
+   "cls": "mod_house_roof",
+   "budget": [
+    240,
+    72,
+    8
+   ],
+   "tris": [
+    158,
+    31,
+    7
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_vent"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_roof_gable_endl_3m_comp_siding",
+   "group": "houses",
+   "cls": "mod_house_roof",
+   "budget": [
+    240,
+    72,
+    8
+   ],
+   "tris": [
+    164,
+    31,
+    7
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_vent"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_roof_gable_endl_3m_comp_stucco",
+   "group": "houses",
+   "cls": "mod_house_roof",
+   "budget": [
+    240,
+    72,
+    8
+   ],
+   "tris": [
+    164,
+    31,
+    7
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_vent"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_roof_gable_endr_3m_clay_stucco",
+   "group": "houses",
+   "cls": "mod_house_roof",
+   "budget": [
+    240,
+    72,
+    8
+   ],
+   "tris": [
+    158,
+    31,
+    7
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_vent"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_roof_gable_endr_3m_clay_stucco_white",
+   "group": "houses",
+   "cls": "mod_house_roof",
+   "budget": [
+    240,
+    72,
+    8
+   ],
+   "tris": [
+    158,
+    31,
+    7
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_vent"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_roof_gable_endr_3m_comp_siding",
+   "group": "houses",
+   "cls": "mod_house_roof",
+   "budget": [
+    240,
+    72,
+    8
+   ],
+   "tris": [
+    164,
+    31,
+    7
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_vent"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_roof_gable_endr_3m_comp_stucco",
+   "group": "houses",
+   "cls": "mod_house_roof",
+   "budget": [
+    240,
+    72,
+    8
+   ],
+   "tris": [
+    164,
+    31,
+    7
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_vent"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_roof_gable_run_3m_clay",
+   "group": "houses",
+   "cls": "mod_house_roof",
+   "budget": [
+    160,
+    50,
+    8
+   ],
+   "tris": [
+    76,
+    12,
+    4
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_roof_gable_run_3m_comp",
+   "group": "houses",
+   "cls": "mod_house_roof",
+   "budget": [
+    160,
+    50,
+    8
+   ],
+   "tris": [
+    76,
+    12,
+    4
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_trim_corner_white",
+   "group": "houses",
+   "cls": "mod_house_trim",
+   "budget": [
+    40,
+    12,
+    8
+   ],
+   "tris": [
+    10,
+    6,
+    6
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_1p5m_small_siding",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    120,
+    40,
+    24
+   ],
+   "tris": [
+    64,
+    16,
+    20
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_small_white"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_1p5m_small_stucco",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    120,
+    40,
+    24
+   ],
+   "tris": [
+    64,
+    16,
+    20
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_small_white"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_1p5m_small_stucco_white",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    120,
+    40,
+    24
+   ],
+   "tris": [
+    64,
+    16,
+    20
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_small_white"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_bay_siding",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    360,
+    120,
+    80
+   ],
+   "tris": [
+    314,
+    100,
+    60
+   ],
+   "col_boxes": 2,
+   "regions_O": [
+    "O_win_casement"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_bay_stucco",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    360,
+    120,
+    80
+   ],
+   "tris": [
+    314,
+    100,
+    60
+   ],
+   "col_boxes": 2,
+   "regions_O": [
+    "O_win_casement"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_bay_stucco_white",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    360,
+    120,
+    80
+   ],
+   "tris": [
+    314,
+    100,
+    60
+   ],
+   "col_boxes": 2,
+   "regions_O": [
+    "O_win_casement"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_door_siding",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    320,
+    100,
+    56
+   ],
+   "tris": [
+    242,
+    66,
+    44
+   ],
+   "col_boxes": 5,
+   "regions_O": [
+    "O_door_white",
+    "O_lamp",
+    "O_number"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_door_stucco",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    320,
+    100,
+    56
+   ],
+   "tris": [
+    242,
+    66,
+    44
+   ],
+   "col_boxes": 5,
+   "regions_O": [
+    "O_door_white",
+    "O_lamp",
+    "O_number"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_door_stucco_clayhood",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    320,
+    100,
+    56
+   ],
+   "tris": [
+    242,
+    66,
+    44
+   ],
+   "col_boxes": 5,
+   "regions_O": [
+    "O_door_white",
+    "O_lamp",
+    "O_number"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_door_stucco_white",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    320,
+    100,
+    56
+   ],
+   "tris": [
+    242,
+    66,
+    44
+   ],
+   "col_boxes": 5,
+   "regions_O": [
+    "O_door_white",
+    "O_lamp",
+    "O_number"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_door_stucco_white_clayhood",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    320,
+    100,
+    56
+   ],
+   "tris": [
+    242,
+    66,
+    44
+   ],
+   "col_boxes": 5,
+   "regions_O": [
+    "O_door_white",
+    "O_lamp",
+    "O_number"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_garage_siding",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    160,
+    50,
+    24
+   ],
+   "tris": [
+    36,
+    16,
+    16
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_garage_panel"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_garage_stucco",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    160,
+    50,
+    24
+   ],
+   "tris": [
+    36,
+    16,
+    16
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_garage_panel"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_garage_stucco_white",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    160,
+    50,
+    24
+   ],
+   "tris": [
+    36,
+    16,
+    16
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_garage_panel"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_utility_siding",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    220,
+    70,
+    48
+   ],
+   "tris": [
+    96,
+    16,
+    20
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_small_white",
+    "O_vent"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_utility_stucco",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    220,
+    70,
+    48
+   ],
+   "tris": [
+    96,
+    16,
+    20
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_small_white",
+    "O_vent"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_utility_stucco_white",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    220,
+    70,
+    48
+   ],
+   "tris": [
+    96,
+    16,
+    20
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_small_white",
+    "O_vent"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_window_pair_siding",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    220,
+    70,
+    48
+   ],
+   "tris": [
+    110,
+    24,
+    36
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_win_casement"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_window_pair_stucco",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    220,
+    70,
+    48
+   ],
+   "tris": [
+    110,
+    24,
+    36
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_win_casement"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_window_pair_stucco_white",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    220,
+    70,
+    48
+   ],
+   "tris": [
+    110,
+    24,
+    36
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_win_casement"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_window_siding",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    220,
+    70,
+    48
+   ],
+   "tris": [
+    84,
+    16,
+    20
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shutter",
+    "O_win_dh_white"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_window_stucco",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    220,
+    70,
+    48
+   ],
+   "tris": [
+    84,
+    16,
+    20
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shutter",
+    "O_win_dh_white"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_3m_window_stucco_white",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    220,
+    70,
+    48
+   ],
+   "tris": [
+    84,
+    16,
+    20
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shutter",
+    "O_win_dh_white"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_4p5m_utility_siding",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    240,
+    72,
+    48
+   ],
+   "tris": [
+    150,
+    36,
+    36
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_small_white",
+    "O_vent",
+    "O_win_casement"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_4p5m_utility_stucco",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    240,
+    72,
+    48
+   ],
+   "tris": [
+    150,
+    36,
+    36
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_small_white",
+    "O_vent",
+    "O_win_casement"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_4p5m_utility_stucco_white",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    240,
+    72,
+    48
+   ],
+   "tris": [
+    150,
+    36,
+    36
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_small_white",
+    "O_vent",
+    "O_win_casement"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_4p5m_window_small_siding",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    240,
+    72,
+    48
+   ],
+   "tris": [
+    138,
+    36,
+    36
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shutter",
+    "O_small_white",
+    "O_win_dh_white"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_4p5m_window_small_stucco",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    240,
+    72,
+    48
+   ],
+   "tris": [
+    138,
+    36,
+    36
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shutter",
+    "O_small_white",
+    "O_win_dh_white"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "house_wall_4p5m_window_small_stucco_white",
+   "group": "houses",
+   "cls": "mod_house_wall",
+   "budget": [
+    240,
+    72,
+    48
+   ],
+   "tris": [
+    138,
+    36,
+    36
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shutter",
+    "O_small_white",
+    "O_win_dh_white"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "shop_back_6m_stucco",
+   "group": "shops",
+   "cls": "mod_shop_back",
+   "budget": [
+    300,
+    90,
+    8
+   ],
+   "tris": [
+    168,
+    56,
+    4
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_apt_door",
+    "O_lamp",
+    "O_louver",
+    "O_small_white"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "shop_front_6m_bakery_navy",
+   "group": "shops",
+   "cls": "mod_shop_front",
+   "budget": [
+    700,
+    210,
+    48
+   ],
+   "tris": [
+    300,
+    60,
+    26
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shopdoor",
+    "O_storefront"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "shop_front_6m_books_green",
+   "group": "shops",
+   "cls": "mod_shop_front",
+   "budget": [
+    700,
+    210,
+    48
+   ],
+   "tris": [
+    300,
+    60,
+    26
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shopdoor",
+    "O_storefront"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "shop_front_6m_cafe_red",
+   "group": "shops",
+   "cls": "mod_shop_front",
+   "budget": [
+    700,
+    210,
+    48
+   ],
+   "tris": [
+    300,
+    60,
+    26
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shopdoor",
+    "O_storefront"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "shop_front_6m_surf_black",
+   "group": "shops",
+   "cls": "mod_shop_front",
+   "budget": [
+    700,
+    210,
+    48
+   ],
+   "tris": [
+    300,
+    60,
+    26
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shopdoor",
+    "O_storefront"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "shop_roof_6m_end",
+   "group": "shops",
+   "cls": "mod_shop_roof",
+   "budget": [
+    600,
+    80,
+    72
+   ],
+   "tris": [
+    347,
+    58,
+    58
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_louver"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "shop_roof_6m_mid",
+   "group": "shops",
+   "cls": "mod_shop_roof",
+   "budget": [
+    600,
+    80,
+    72
+   ],
+   "tris": [
+    322,
+    56,
+    56
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_louver"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "shop_roof_6m_single",
+   "group": "shops",
+   "cls": "mod_shop_roof",
+   "budget": [
+    600,
+    80,
+    72
+   ],
+   "tris": [
+    372,
+    60,
+    60
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_louver"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "shop_side_12m_stucco",
+   "group": "shops",
+   "cls": "mod_shop_side",
+   "budget": [
+    420,
+    126,
+    10
+   ],
+   "tris": [
+    356,
+    84,
+    8
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_apt_door",
+    "O_lamp",
+    "O_louver",
+    "O_small_white"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "shop_side_12m_stucco_l",
+   "group": "shops",
+   "cls": "mod_shop_side",
+   "budget": [
+    420,
+    126,
+    10
+   ],
+   "tris": [
+    356,
+    84,
+    8
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_apt_door",
+    "O_lamp",
+    "O_louver",
+    "O_small_white"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "shop_trim_cornice_corner_l",
+   "group": "shops",
+   "cls": "mod_shop_trim",
+   "budget": [
+    40,
+    12,
+    10
+   ],
+   "tris": [
+    20,
+    10,
+    10
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "shop_trim_cornice_corner_r",
+   "group": "shops",
+   "cls": "mod_shop_trim",
+   "budget": [
+    40,
+    12,
+    10
+   ],
+   "tris": [
+    20,
+    10,
+    10
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_apt_back_6m",
+   "group": "urban",
+   "cls": "mod_apt_back",
+   "budget": [
+    450,
+    140,
+    16
+   ],
+   "tris": [
+    296,
+    96,
+    4
+   ],
+   "col_boxes": 3,
+   "regions_O": [
+    "O_apt_door",
+    "O_lamp",
+    "O_win_casement"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_apt_balcony_6m",
+   "group": "urban",
+   "cls": "mod_apt_balcony",
+   "budget": [
+    420,
+    140,
+    40
+   ],
+   "tris": [
+    224,
+    36,
+    12
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_apt_front_6m_balcony",
+   "group": "urban",
+   "cls": "mod_apt_front",
+   "budget": [
+    1000,
+    280,
+    48
+   ],
+   "tris": [
+    986,
+    212,
+    42
+   ],
+   "col_boxes": 14,
+   "regions_O": [
+    "O_apt_door",
+    "O_apt_slider",
+    "O_number"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_apt_front_6m_boarded",
+   "group": "urban",
+   "cls": "mod_apt_front",
+   "budget": [
+    800,
+    240,
+    16
+   ],
+   "tris": [
+    396,
+    192,
+    4
+   ],
+   "col_boxes": 3,
+   "regions_O": [
+    "O_apt_door",
+    "O_apt_slider"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_apt_front_6m_open",
+   "group": "urban",
+   "cls": "mod_apt_front",
+   "budget": [
+    800,
+    240,
+    16
+   ],
+   "tris": [
+    418,
+    120,
+    4
+   ],
+   "col_boxes": 3,
+   "regions_O": [
+    "O_apt_door",
+    "O_apt_slider",
+    "O_number"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_apt_roof_6x12",
+   "group": "urban",
+   "cls": "mod_apt_roof",
+   "budget": [
+    600,
+    80,
+    72
+   ],
+   "tris": [
+    338,
+    56,
+    56
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_louver"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_apt_side_12m",
+   "group": "urban",
+   "cls": "mod_apt_side",
+   "budget": [
+    500,
+    150,
+    16
+   ],
+   "tris": [
+    220,
+    64,
+    4
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_vent",
+    "O_win_casement"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_awning_6m",
+   "group": "urban",
+   "cls": "mod_awning",
+   "budget": [
+    160,
+    60,
+    16
+   ],
+   "tris": [
+    110,
+    42,
+    8
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_brk_back_6m_3sty",
+   "group": "urban",
+   "cls": "mod_brk_back",
+   "budget": [
+    500,
+    150,
+    16
+   ],
+   "tris": [
+    290,
+    90,
+    10
+   ],
+   "col_boxes": 3,
+   "regions_O": [
+    "O_apt_door",
+    "O_lamp",
+    "O_small_white",
+    "O_win_dh_white"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_brk_back_6m_4sty",
+   "group": "urban",
+   "cls": "mod_brk_back",
+   "budget": [
+    500,
+    150,
+    16
+   ],
+   "tris": [
+    346,
+    102,
+    12
+   ],
+   "col_boxes": 3,
+   "regions_O": [
+    "O_apt_door",
+    "O_lamp",
+    "O_small_white",
+    "O_win_dh_white"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_brk_corner_pier_3sty",
+   "group": "urban",
+   "cls": "mod_brk_corner",
+   "budget": [
+    440,
+    100,
+    40
+   ],
+   "tris": [
+    270,
+    42,
+    24
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_brk_corner_pier_4sty",
+   "group": "urban",
+   "cls": "mod_brk_corner",
+   "budget": [
+    440,
+    100,
+    40
+   ],
+   "tris": [
+    342,
+    42,
+    24
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_brk_front_6m_3sty",
+   "group": "urban",
+   "cls": "mod_brk_front",
+   "budget": [
+    900,
+    260,
+    16
+   ],
+   "tris": [
+    412,
+    100,
+    10
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shopdoor",
+    "O_storefront",
+    "O_win_dh_div"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_brk_front_6m_3sty_corner",
+   "group": "urban",
+   "cls": "mod_brk_front",
+   "budget": [
+    950,
+    280,
+    16
+   ],
+   "tris": [
+    422,
+    110,
+    10
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shopdoor",
+    "O_storefront",
+    "O_win_dh_div"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_brk_front_6m_3sty_walkup",
+   "group": "urban",
+   "cls": "mod_brk_front",
+   "budget": [
+    900,
+    260,
+    16
+   ],
+   "tris": [
+    606,
+    150,
+    10
+   ],
+   "col_boxes": 5,
+   "regions_O": [
+    "O_apt_door",
+    "O_number",
+    "O_win_dh_div"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_brk_front_6m_4sty",
+   "group": "urban",
+   "cls": "mod_brk_front",
+   "budget": [
+    900,
+    260,
+    16
+   ],
+   "tris": [
+    508,
+    120,
+    12
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shopdoor",
+    "O_storefront",
+    "O_win_dh_div"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_brk_front_6m_4sty_corner",
+   "group": "urban",
+   "cls": "mod_brk_front",
+   "budget": [
+    950,
+    280,
+    16
+   ],
+   "tris": [
+    518,
+    130,
+    12
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shopdoor",
+    "O_storefront",
+    "O_win_dh_div"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_brk_front_6m_4sty_walkup",
+   "group": "urban",
+   "cls": "mod_brk_front",
+   "budget": [
+    950,
+    280,
+    16
+   ],
+   "tris": [
+    702,
+    170,
+    12
+   ],
+   "col_boxes": 5,
+   "regions_O": [
+    "O_apt_door",
+    "O_number",
+    "O_win_dh_div"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_brk_roof_6x14_3sty",
+   "group": "urban",
+   "cls": "mod_brk_roof",
+   "budget": [
+    620,
+    80,
+    72
+   ],
+   "tris": [
+    346,
+    56,
+    60
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_louver"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_brk_roof_6x14_3sty_run",
+   "group": "urban",
+   "cls": "mod_brk_roof",
+   "budget": [
+    300,
+    60,
+    72
+   ],
+   "tris": [
+    150,
+    8,
+    8
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_brk_roof_6x16_4sty",
+   "group": "urban",
+   "cls": "mod_brk_roof",
+   "budget": [
+    620,
+    80,
+    72
+   ],
+   "tris": [
+    354,
+    56,
+    60
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_louver"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_brk_side_14m_3sty",
+   "group": "urban",
+   "cls": "mod_brk_side",
+   "budget": [
+    700,
+    200,
+    16
+   ],
+   "tris": [
+    354,
+    92,
+    10
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_vent",
+    "O_win_dh_div"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_brk_side_16m_4sty",
+   "group": "urban",
+   "cls": "mod_brk_side",
+   "budget": [
+    700,
+    200,
+    16
+   ],
+   "tris": [
+    450,
+    112,
+    12
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_vent",
+    "O_win_dh_div"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_canopy_6m",
+   "group": "urban",
+   "cls": "mod_canopy",
+   "budget": [
+    380,
+    120,
+    16
+   ],
+   "tris": [
+    340,
+    84,
+    8
+   ],
+   "col_boxes": 4,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_civ_colonnade_6m",
+   "group": "urban",
+   "cls": "mod_civ_colonnade",
+   "budget": [
+    800,
+    220,
+    56
+   ],
+   "tris": [
+    758,
+    202,
+    44
+   ],
+   "col_boxes": 6,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_civ_column",
+   "group": "urban",
+   "cls": "mod_civ_col",
+   "budget": [
+    280,
+    90,
+    40
+   ],
+   "tris": [
+    146,
+    62,
+    36
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_civ_cornice_6m",
+   "group": "urban",
+   "cls": "mod_civ_cornice",
+   "budget": [
+    160,
+    50,
+    16
+   ],
+   "tris": [
+    128,
+    24,
+    8
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_civ_entry_6m",
+   "group": "urban",
+   "cls": "mod_civ_entry",
+   "budget": [
+    800,
+    240,
+    120
+   ],
+   "tris": [
+    478,
+    94,
+    64
+   ],
+   "col_boxes": 5,
+   "regions_O": [
+    "O_apt_door",
+    "O_glass_plain"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_civ_parapet_6m",
+   "group": "urban",
+   "cls": "mod_civ_parapet",
+   "budget": [
+    140,
+    50,
+    16
+   ],
+   "tris": [
+    118,
+    22,
+    6
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_civ_pediment_6m",
+   "group": "urban",
+   "cls": "mod_civ_pediment",
+   "budget": [
+    360,
+    120,
+    24
+   ],
+   "tris": [
+    308,
+    56,
+    16
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_civ_window_6m",
+   "group": "urban",
+   "cls": "mod_civ_window",
+   "budget": [
+    600,
+    180,
+    120
+   ],
+   "tris": [
+    214,
+    40,
+    36
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_civic_win"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_grt_fireescape_6m",
+   "group": "urban",
+   "cls": "mod_grt_escape",
+   "budget": [
+    500,
+    160,
+    120
+   ],
+   "tris": [
+    380,
+    120,
+    120
+   ],
+   "col_boxes": 8,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_grt_front_6m_abandoned",
+   "group": "urban",
+   "cls": "mod_grt_front",
+   "budget": [
+    650,
+    200,
+    12
+   ],
+   "tris": [
+    112,
+    40,
+    8
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_apt_door"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_grt_front_6m_boarded",
+   "group": "urban",
+   "cls": "mod_grt_front",
+   "budget": [
+    600,
+    180,
+    120
+   ],
+   "tris": [
+    160,
+    70,
+    54
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shopdoor"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_stg_back_6m",
+   "group": "urban",
+   "cls": "mod_stg_back",
+   "budget": [
+    220,
+    70,
+    6
+   ],
+   "tris": [
+    66,
+    20,
+    6
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_louver"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_stg_front_6m",
+   "group": "urban",
+   "cls": "mod_stg_front",
+   "budget": [
+    400,
+    120,
+    120
+   ],
+   "tris": [
+    76,
+    28,
+    20
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_rollup"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_stg_roof_6x12",
+   "group": "urban",
+   "cls": "mod_stg_roof",
+   "budget": [
+    480,
+    80,
+    72
+   ],
+   "tris": [
+    342,
+    56,
+    56
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_louver"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_stg_side_12m",
+   "group": "urban",
+   "cls": "mod_stg_side",
+   "budget": [
+    280,
+    90,
+    6
+   ],
+   "tris": [
+    66,
+    20,
+    6
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_louver"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_storefront_6m",
+   "group": "urban",
+   "cls": "mod_storefront",
+   "budget": [
+    700,
+    210,
+    120
+   ],
+   "tris": [
+    170,
+    34,
+    26
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shopdoor",
+    "O_storefront"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_svc_front_6m_bank",
+   "group": "urban",
+   "cls": "mod_svc_front",
+   "budget": [
+    800,
+    280,
+    120
+   ],
+   "tris": [
+    666,
+    228,
+    92
+   ],
+   "col_boxes": 4,
+   "regions_O": [
+    "O_apt_door",
+    "O_glass_plain"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_svc_front_6m_bigbox",
+   "group": "urban",
+   "cls": "mod_svc_front",
+   "budget": [
+    800,
+    240,
+    120
+   ],
+   "tris": [
+    200,
+    82,
+    58
+   ],
+   "col_boxes": 3,
+   "regions_O": [
+    "O_shopdoor",
+    "O_storefront"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_svc_front_6m_cinema",
+   "group": "urban",
+   "cls": "mod_svc_front",
+   "budget": [
+    750,
+    220,
+    120
+   ],
+   "tris": [
+    192,
+    80,
+    52
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shopdoor",
+    "O_storefront"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_svc_front_6m_fastfood",
+   "group": "urban",
+   "cls": "mod_svc_front",
+   "budget": [
+    700,
+    210,
+    120
+   ],
+   "tris": [
+    348,
+    78,
+    48
+   ],
+   "col_boxes": 3,
+   "regions_O": [
+    "O_shopdoor",
+    "O_storefront"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_svc_front_6m_laundry",
+   "group": "urban",
+   "cls": "mod_svc_front",
+   "budget": [
+    650,
+    200,
+    120
+   ],
+   "tris": [
+    228,
+    60,
+    26
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shopdoor",
+    "O_storefront"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_svc_front_6m_pawn",
+   "group": "urban",
+   "cls": "mod_svc_front",
+   "budget": [
+    650,
+    200,
+    120
+   ],
+   "tris": [
+    228,
+    60,
+    26
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shopdoor",
+    "O_storefront"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_svc_front_6m_pharmacy",
+   "group": "urban",
+   "cls": "mod_svc_front",
+   "budget": [
+    650,
+    200,
+    120
+   ],
+   "tris": [
+    228,
+    60,
+    26
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_shopdoor",
+    "O_storefront"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_twr_back_8m_10sty",
+   "group": "urban",
+   "cls": "mod_twr_back",
+   "budget": [
+    900,
+    200,
+    32
+   ],
+   "tris": [
+    462,
+    160,
+    24
+   ],
+   "col_boxes": 3,
+   "regions_O": [
+    "O_apt_door",
+    "O_lamp",
+    "O_ribbon"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_twr_back_8m_10sty_glass",
+   "group": "urban",
+   "cls": "mod_twr_back",
+   "budget": [
+    1000,
+    220,
+    32
+   ],
+   "tris": [
+    930,
+    208,
+    24
+   ],
+   "col_boxes": 3,
+   "regions_O": [
+    "O_apt_door",
+    "O_glass_plain",
+    "O_lamp"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_twr_corner_pier_10sty",
+   "group": "urban",
+   "cls": "mod_twr_corner",
+   "budget": [
+    480,
+    140,
+    40
+   ],
+   "tris": [
+    330,
+    54,
+    24
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_twr_front_8m_10sty",
+   "group": "urban",
+   "cls": "mod_twr_front",
+   "budget": [
+    1400,
+    280,
+    32
+   ],
+   "tris": [
+    760,
+    210,
+    24
+   ],
+   "col_boxes": 5,
+   "regions_O": [
+    "O_ribbon",
+    "O_shopdoor",
+    "O_storefront"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_twr_front_8m_10sty_glass",
+   "group": "urban",
+   "cls": "mod_twr_front",
+   "budget": [
+    1600,
+    320,
+    32
+   ],
+   "tris": [
+    1144,
+    236,
+    24
+   ],
+   "col_boxes": 5,
+   "regions_O": [
+    "O_glass_plain",
+    "O_shopdoor"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_twr_roof_8x20",
+   "group": "urban",
+   "cls": "mod_twr_roof",
+   "budget": [
+    840,
+    120,
+    96
+   ],
+   "tris": [
+    498,
+    92,
+    80
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_louver"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_twr_side_20m_10sty",
+   "group": "urban",
+   "cls": "mod_twr_side",
+   "budget": [
+    1200,
+    240,
+    32
+   ],
+   "tris": [
+    416,
+    150,
+    24
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_ribbon",
+    "O_vent"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_twr_side_20m_10sty_glass",
+   "group": "urban",
+   "cls": "mod_twr_side",
+   "budget": [
+    1400,
+    280,
+    32
+   ],
+   "tris": [
+    1142,
+    198,
+    24
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_glass_plain",
+    "O_vent"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_wh_back_12m",
+   "group": "urban",
+   "cls": "mod_wh_back",
+   "budget": [
+    500,
+    150,
+    12
+   ],
+   "tris": [
+    208,
+    80,
+    4
+   ],
+   "col_boxes": 3,
+   "regions_O": [
+    "O_apt_door",
+    "O_lamp",
+    "O_louver",
+    "O_rollup"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_wh_dock_12m",
+   "group": "urban",
+   "cls": "mod_wh_dock",
+   "budget": [
+    360,
+    120,
+    32
+   ],
+   "tris": [
+    346,
+    114,
+    30
+   ],
+   "col_boxes": 5,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_wh_front_12m_office",
+   "group": "urban",
+   "cls": "mod_wh_front",
+   "budget": [
+    600,
+    180,
+    120
+   ],
+   "tris": [
+    242,
+    108,
+    108
+   ],
+   "col_boxes": 3,
+   "regions_O": [
+    "O_apt_door",
+    "O_win_casement"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_wh_front_12m_rollup",
+   "group": "urban",
+   "cls": "mod_wh_front",
+   "budget": [
+    600,
+    180,
+    120
+   ],
+   "tris": [
+    152,
+    48,
+    48
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_rollup",
+    "O_win_casement"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_wh_roof_12x24",
+   "group": "urban",
+   "cls": "mod_wh_roof",
+   "budget": [
+    1000,
+    120,
+    96
+   ],
+   "tris": [
+    666,
+    92,
+    84
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_louver"
+   ],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_wh_roof_sawtooth_12x24",
+   "group": "urban",
+   "cls": "mod_wh_roof",
+   "budget": [
+    360,
+    120,
+    16
+   ],
+   "tris": [
+    144,
+    60,
+    12
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_wh_roof_shed_12x24",
+   "group": "urban",
+   "cls": "mod_wh_roof",
+   "budget": [
+    280,
+    100,
+    16
+   ],
+   "tris": [
+    114,
+    24,
+    12
+   ],
+   "col_boxes": 1,
+   "regions_O": [],
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "urb_wh_side_24m",
+   "group": "urban",
+   "cls": "mod_wh_side",
+   "budget": [
+    550,
+    160,
+    12
+   ],
+   "tris": [
+    218,
+    56,
+    4
+   ],
+   "col_boxes": 1,
+   "regions_O": [
+    "O_louver",
+    "O_win_casement"
+   ],
+   "errors": [],
+   "ok": true
+  }
+ ],
+ "examples": [
+  {
+   "name": "ex_house_cottage_clay",
+   "cls": "mod_house_small",
+   "budget": [
+    1650,
+    500,
+    40
+   ],
+   "tris": [
+    1620,
+    372,
+    22
+   ],
+   "col_boxes": 2,
+   "pieces": 13,
+   "mid_ratio": 0.23,
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "ex_house_garage_siding",
+   "cls": "mod_house_small",
+   "budget": [
+    1650,
+    500,
+    40
+   ],
+   "tris": [
+    1622,
+    388,
+    22
+   ],
+   "col_boxes": 2,
+   "pieces": 17,
+   "mid_ratio": 0.24,
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "ex_house_ranch_stucco",
+   "cls": "mod_house_small",
+   "budget": [
+    1650,
+    500,
+    40
+   ],
+   "tris": [
+    1630,
+    364,
+    22
+   ],
+   "col_boxes": 2,
+   "pieces": 13,
+   "mid_ratio": 0.22,
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "ex_shop_corner_bakery",
+   "cls": "corner_shop",
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "tris": [
+    1356,
+    306,
+    10
+   ],
+   "col_boxes": 1,
+   "pieces": 7,
+   "mid_ratio": 0.23,
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "ex_shop_row_cafe_books",
+   "cls": "shop",
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "tris": [
+    1960,
+    424,
+    10
+   ],
+   "col_boxes": 1,
+   "pieces": 10,
+   "mid_ratio": 0.22,
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "mod_apt_row",
+   "cls": "apartment",
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "tris": [
+    2582,
+    776,
+    34
+   ],
+   "col_boxes": 1,
+   "pieces": 8,
+   "mid_ratio": 0.3,
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "mod_brk_row",
+   "cls": "apartment",
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "tris": [
+    3174,
+    778,
+    34
+   ],
+   "col_boxes": 1,
+   "pieces": 11,
+   "mid_ratio": 0.25,
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "mod_stg_row",
+   "cls": "warehouse",
+   "budget": [
+    2000,
+    600,
+    40
+   ],
+   "tris": [
+    558,
+    184,
+    10
+   ],
+   "col_boxes": 1,
+   "pieces": 8,
+   "mid_ratio": 0.33,
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "mod_svc_row",
+   "cls": "shop",
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "tris": [
+    1776,
+    404,
+    10
+   ],
+   "col_boxes": 1,
+   "pieces": 8,
+   "mid_ratio": 0.23,
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "mod_twr_office",
+   "cls": "tower",
+   "budget": [
+    4000,
+    1200,
+    80
+   ],
+   "tris": [
+    3580,
+    1056,
+    50
+   ],
+   "col_boxes": 1,
+   "pieces": 8,
+   "mid_ratio": 0.29,
+   "errors": [],
+   "ok": true
+  },
+  {
+   "name": "mod_wh_shed",
+   "cls": "warehouse",
+   "budget": [
+    2000,
+    600,
+    40
+   ],
+   "tris": [
+    1626,
+    444,
+    18
+   ],
+   "col_boxes": 1,
+   "pieces": 8,
+   "mid_ratio": 0.27,
+   "errors": [],
+   "ok": true
+  }
+ ]
+}

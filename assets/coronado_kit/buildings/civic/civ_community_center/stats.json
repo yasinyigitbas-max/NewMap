@@ -1,0 +1,114 @@
+{
+ "name": "civ_community_center",
+ "cat": "civic",
+ "style": "community_center",
+ "logic_errors": [],
+ "col_boxes": 8,
+ "near": {
+  "tris": 2361,
+  "verts": 3856,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_lamp",
+   "O_win_casement",
+   "R_clay",
+   "SG_community",
+   "S_black",
+   "S_concrete",
+   "S_metal",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_deck",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -12.720000267028809,
+    -0.0,
+    -8.5
+   ],
+   [
+    12.600000381469727,
+    9.0,
+    10.949999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 8.055,
+ "mid": {
+  "tris": 448,
+  "verts": 564,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_win_casement",
+   "SG_community",
+   "S_clay",
+   "S_concrete",
+   "S_deck",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -12.0,
+    0.0,
+    -8.5
+   ],
+   [
+    12.0,
+    8.055000305175781,
+    9.699999809265137
+   ]
+  ]
+ },
+ "far": {
+  "tris": 30,
+  "verts": 54,
+  "regions": [
+   "F_clay",
+   "F_stucco_1",
+   "F_stucco_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -12.0,
+    0.0,
+    -7.0
+   ],
+   [
+    12.0,
+    8.055000305175781,
+    7.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  24.0,
+  14.0
+ ],
+ "footprint_area": 336.0,
+ "height": 9.0,
+ "storeys": 1,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "civic",
+ "time_s": 34.8
+}

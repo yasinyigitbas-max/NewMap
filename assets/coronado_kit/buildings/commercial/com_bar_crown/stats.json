@@ -1,0 +1,117 @@
+{
+ "name": "com_bar_crown",
+ "cat": "shop",
+ "style": "bar",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 1936,
+  "verts": 3496,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_shopdoor",
+   "O_shutter",
+   "O_small_white",
+   "O_storefront",
+   "O_win_casement",
+   "O_win_dh_white",
+   "R_flat",
+   "SG_bar",
+   "S_black",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.599999904632568,
+    -0.0,
+    -7.449999809265137
+   ],
+   [
+    5.21999979019165,
+    8.270000457763672,
+    7.949999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 8.1,
+ "mid": {
+  "tris": 326,
+  "verts": 388,
+  "regions": [
+   "O_apt_door",
+   "O_louver",
+   "O_shopdoor",
+   "O_small_white",
+   "O_storefront",
+   "O_win_casement",
+   "O_win_dh_white",
+   "SG_bar",
+   "S_flat",
+   "S_metal",
+   "S_signbg",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -4.507999897003174,
+    0.0,
+    -7.0
+   ],
+   [
+    4.5,
+    8.100000381469727,
+    7.949999809265137
+   ]
+  ]
+ },
+ "far": {
+  "tris": 10,
+  "verts": 20,
+  "regions": [
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -4.5,
+    0.0,
+    -7.0
+   ],
+   [
+    4.5,
+    8.100000381469727,
+    7.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   -3.26
+  ]
+ ],
+ "footprint_wd": [
+  9.0,
+  14.0
+ ],
+ "footprint_area": 126.0,
+ "height": 8.27,
+ "storeys": 2,
+ "budget": [
+  2400,
+  700,
+  40
+ ],
+ "budget_units": 2,
+ "budget_class": "shop",
+ "time_s": 9.8
+}

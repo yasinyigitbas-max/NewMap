@@ -1,0 +1,99 @@
+{
+ "name": "ck_brk3_row2_fe",
+ "group": "urban",
+ "outline": {
+  "kind": "block",
+  "W": 12.0,
+  "D": 14.0,
+  "storeys": 3,
+  "wall": "W_brick",
+  "tint": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "budget": "apartment",
+  "floor": 0.3,
+  "storey": 3.0,
+  "parapet": 1.0,
+  "sills": true,
+  "foundation": false,
+  "far_facade": "F_c_brick_3",
+  "far_tile": 3.0
+ },
+ "pieces": [
+  {
+   "piece": "urb_brk_front_6m_3sty",
+   "x": -3.0,
+   "z": 6.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_brk_front_6m_3sty_walkup",
+   "x": 3.0,
+   "z": 6.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_brk_back_6m_3sty",
+   "x": 3.0,
+   "z": -6.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_brk_back_6m_3sty",
+   "x": -3.0,
+   "z": -6.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_brk_side_14m_3sty",
+   "x": 5.85,
+   "z": 0.0,
+   "rot_y": 90
+  },
+  {
+   "piece": "urb_brk_side_14m_3sty",
+   "x": -5.85,
+   "z": 0.0,
+   "rot_y": 270
+  },
+  {
+   "piece": "urb_brk_roof_6x14_3sty",
+   "x": -3.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_brk_roof_6x14_3sty",
+   "x": 3.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_grt_fireescape_6m",
+   "x": 3.0,
+   "z": -7.0,
+   "rot_y": 180
+  }
+ ],
+ "budget_class": "apartment",
+ "budget": [
+  3500,
+  1000,
+  80
+ ],
+ "col_boxes": 1,
+ "far_from": "snapped outline hull",
+ "merged": {
+  "near_mid": "pieces merged, 1 mesh/1 primitive/1 material",
+  "far_col": "outline hull + <=12 boxes"
+ },
+ "far_tiles": {
+  "example": "@map:brk3_row2",
+  "nx": 1,
+  "nz": 1,
+  "size": 0.0
+ },
+ "note": "ck_brk3_row2 + the kit fire escape on the alley (back) wall, bay x=+3 (gritty edge, 17 Nov; on the front its ladder came down through the shop awning)"
+}

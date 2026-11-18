@@ -1,0 +1,104 @@
+{
+ "name": "dock_box",
+ "tiers": {
+  "near": 266,
+  "mid": 18,
+  "far": 10
+ },
+ "budget": 600,
+ "class": "small",
+ "far_paint_max": null,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_dock_box_clean_far.glb",
+   "tier": "far",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 10,
+   "verts": 20,
+   "budget": 20,
+   "size": [
+    1.535,
+    0.62,
+    0.639
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_dock_box_clean_mid.glb",
+   "tier": "mid",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 18,
+   "verts": 46,
+   "budget": 181,
+   "size": [
+    1.543,
+    0.62,
+    0.645
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_dock_box_clean_near.glb",
+   "tier": "near",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 266,
+   "verts": 534,
+   "budget": 600,
+   "size": [
+    1.543,
+    0.62,
+    0.74
+   ],
+   "odd_ray": 12
+  },
+  {
+   "file": "prop_dock_box_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 1,
+   "col_maxverts": 8
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.995,
+   "dE": 0.3
+  },
+  "top": {
+   "iou": 0.949,
+   "dE": 0.7
+  },
+  "left": {
+   "iou": 0.972,
+   "dE": 0.2,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 1,
+  "rail": 0
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 64,
+ "bake_px_per_m": 44.1,
+ "high_tris": 22234,
+ "pass": true
+}

@@ -1,0 +1,108 @@
+{
+ "name": "beach_umbrella",
+ "tiers": {
+  "near": 546,
+  "mid": 70,
+  "far": 14
+ },
+ "budget": 600,
+ "class": "small",
+ "far_paint_max": 1.0,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_beach_umbrella_clean_far.glb",
+   "tier": "far",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 14,
+   "verts": 22,
+   "budget": 20,
+   "size": [
+    1.94,
+    2.32,
+    1.94
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_beach_umbrella_clean_mid.glb",
+   "tier": "mid",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "20 tris may face inward / be enclosed"
+   ],
+   "tris": 70,
+   "verts": 159,
+   "budget": 181,
+   "size": [
+    1.94,
+    2.32,
+    1.94
+   ],
+   "odd_ray": 20
+  },
+  {
+   "file": "prop_beach_umbrella_clean_near.glb",
+   "tier": "near",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "190 tris may face inward / be enclosed"
+   ],
+   "tris": 546,
+   "verts": 1126,
+   "budget": 600,
+   "size": [
+    1.94,
+    2.52,
+    1.94
+   ],
+   "odd_ray": 235
+  },
+  {
+   "file": "prop_beach_umbrella_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 2,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.929,
+   "dE": 1.1
+  },
+  "top": {
+   "iou": 1.0,
+   "dE": 0.2
+  },
+  "left": {
+   "iou": 0.0,
+   "dE": 99,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 1,
+  "rail": 1
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": null,
+ "bake_px_per_m": null,
+ "high_tris": null,
+ "pass": true
+}

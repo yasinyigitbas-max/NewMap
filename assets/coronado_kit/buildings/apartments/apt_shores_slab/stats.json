@@ -1,0 +1,149 @@
+{
+ "name": "apt_shores_slab",
+ "cat": "apartment",
+ "style": "condo_slab",
+ "logic_errors": [],
+ "col_boxes": 16,
+ "near": {
+  "tris": 4856,
+  "verts": 8128,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_patio",
+   "O_ribbon",
+   "O_shopdoor",
+   "O_small_white",
+   "O_storefront",
+   "R_flat",
+   "SG_hotel",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -39.04999923706055,
+    0.0,
+    -12.5
+   ],
+   [
+    39.04999923706055,
+    31.770000457763672,
+    14.232000350952148
+   ]
+  ]
+ },
+ "mid_roof_top": 31.7,
+ "mid": {
+  "tris": 796,
+  "verts": 1078,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "O_louver",
+   "O_shopdoor",
+   "SG_hotel",
+   "S_concrete",
+   "S_flat",
+   "S_signbg",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -39.0,
+    0.0,
+    -12.5
+   ],
+   [
+    39.0,
+    31.700000762939453,
+    14.232000350952148
+   ]
+  ]
+ },
+ "far": {
+  "tris": 106,
+  "verts": 196,
+  "regions": [
+   "F_c_glass_3",
+   "F_c_tower_3",
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -39.0,
+    0.0,
+    -11.0
+   ],
+   [
+    39.0,
+    31.700000762939453,
+    11.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   0.0
+  ],
+  [
+   "patio",
+   0.0
+  ],
+  [
+   "patio",
+   0.0
+  ],
+  [
+   "patio",
+   0.0
+  ],
+  [
+   "patio",
+   0.0
+  ],
+  [
+   "patio",
+   0.0
+  ],
+  [
+   "patio",
+   0.0
+  ],
+  [
+   "patio",
+   0.0
+  ],
+  [
+   "patio",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  78.0,
+  22.0
+ ],
+ "footprint_area": 1716.0,
+ "height": 31.77,
+ "storeys": 9,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "apartment_large",
+ "time_s": 71.2
+}

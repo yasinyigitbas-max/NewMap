@@ -1,0 +1,148 @@
+{
+ "name": "house_wall_3m_bay_stucco",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 2,
+ "near": {
+  "tris": 314,
+  "verts": 494,
+  "regions": [
+   "O_win_casement",
+   "R_comp",
+   "S_soffit",
+   "S_stucco",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -1.5,
+    0.0,
+    0.15000000596046448
+   ],
+   [
+    1.5,
+    3.5,
+    0.949999988079071
+   ]
+  ]
+ },
+ "mid_roof_top": 3.5,
+ "mid": {
+  "tris": 100,
+  "verts": 124,
+  "regions": [
+   "O_win_casement",
+   "S_comp",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -1.5,
+    0.0,
+    0.15000000596046448
+   ],
+   [
+    1.5,
+    3.5,
+    0.949999988079071
+   ]
+  ]
+ },
+ "far": {
+  "tris": 60,
+  "verts": 86,
+  "regions": [
+   "F_comp",
+   "F_stucco_1",
+   "F_stucco_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -1.5,
+    -0.0,
+    0.15000000596046448
+   ],
+   [
+    1.5,
+    3.5,
+    0.949999988079071
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  3.0,
+  0.3
+ ],
+ "footprint_area": 0.9,
+ "height": 3.5,
+ "storeys": 1,
+ "budget": [
+  360,
+  120,
+  80
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_house_wall",
+ "time_s": 0.9,
+ "open_planes": [
+  [
+   0,
+   -1.5,
+   -1,
+   null
+  ],
+  [
+   0,
+   1.5,
+   1,
+   null
+  ],
+  [
+   2,
+   -0.15,
+   -1,
+   null
+  ],
+  [
+   1,
+   3.5,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.15
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "module": 3.0,
+  "type": "house_wall",
+  "ends": [
+   [
+    -1.5,
+    0,
+    0.15
+   ],
+   [
+    1.5,
+    0,
+    0.15
+   ]
+  ],
+  "face_z": 0.15,
+  "plate_y": 3.5
+ },
+ "no_door": true,
+ "base_y": 0.0,
+ "ground_reach": false
+}

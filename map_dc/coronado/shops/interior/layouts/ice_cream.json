@@ -1,0 +1,226 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "ice_cream",
+ "types": [
+  "ice_cream"
+ ],
+ "floor": "Tiles141",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  1,
+  0.96,
+  0.96
+ ],
+ "ceiling": "Plaster001",
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.0,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "display_case",
+   "place": "by_door",
+   "len": [
+    2.0,
+    3.4
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "dessert"
+   ],
+   "wall": true
+  },
+  {
+   "role": "back_bar",
+   "prop": "shelf_wall",
+   "place": "behind_counter",
+   "goods": [
+    "coffee",
+    "drink"
+   ]
+  },
+  {
+   "role": "seating",
+   "prop": "table",
+   "place": "grid",
+   "seats": 2,
+   "max": 3
+  }
+ ],
+ "clutter": true,
+ "signs": true,
+ "plans": [
+  {
+   "name": "parlour",
+   "fixtures": "icecream_tubes",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "display_case",
+     "place": "by_door",
+     "len": [
+      2.0,
+      3.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "dessert"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "coffee",
+      "drink"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    }
+   ],
+   "wear": 0.25,
+   "floor": "Tiles141",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.88,
+    0.9
+   ],
+   "wainscot": "Tiles141",
+   "ceiling": "Plaster001"
+  },
+  {
+   "name": "pastel",
+   "fixtures": "icecream_pendants",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "display_case",
+     "place": "by_door",
+     "len": [
+      2.0,
+      3.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "dessert"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "coffee",
+      "drink"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ],
+   "wear": 0.2,
+   "floor": "Tiles012",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.88,
+    1,
+    0.95
+   ],
+   "wainscot": "Tiles141",
+   "ceiling": "Plaster001"
+  },
+  {
+   "name": "cafe",
+   "fixtures": "cafe_bright",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "display_case",
+     "place": "by_door",
+     "len": [
+      2.0,
+      3.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "dessert"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "coffee",
+      "drink"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 3
+    },
+    {
+     "role": "art",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "door_side",
+      "back"
+     ],
+     "max": 1
+    }
+   ],
+   "wear": 0.28,
+   "floor": "Terrazzo005",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.97,
+    0.9
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  }
+ ],
+ "hours": [
+  11,
+  22
+ ],
+ "busy": 0.55,
+ "dado": {
+  "h": 1.0
+ }
+}

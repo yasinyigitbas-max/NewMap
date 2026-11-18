@@ -1,0 +1,150 @@
+{
+ "name": "urb_stg_back_6m",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 66,
+  "verts": 118,
+  "regions": [
+   "O_louver",
+   "S_stucco",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.10000000149011612
+   ],
+   [
+    3.0,
+    4.869999885559082,
+    0.20000000298023224
+   ]
+  ]
+ },
+ "mid_roof_top": 4.8,
+ "mid": {
+  "tris": 20,
+  "verts": 26,
+  "regions": [
+   "O_louver",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.05000000074505806
+   ],
+   [
+    3.0,
+    4.800000190734863,
+    0.15000000596046448
+   ]
+  ]
+ },
+ "far": {
+  "tris": 6,
+  "verts": 12,
+  "regions": [
+   "F_flat",
+   "F_stucco_blank"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.15000000596046448
+   ],
+   [
+    3.0,
+    4.800000190734863,
+    0.15000000596046448
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  6.0,
+  0.3
+ ],
+ "footprint_area": 1.8,
+ "height": 4.87,
+ "storeys": 1,
+ "budget": [
+  220,
+  70,
+  6
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_stg_back",
+ "time_s": 0.1,
+ "open_planes": [
+  [
+   0,
+   -3.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   3.0,
+   1,
+   null
+  ],
+  [
+   2,
+   -0.15,
+   -1,
+   null
+  ],
+  [
+   1,
+   4.2,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.15
+ ],
+ "openings": [
+  {
+   "k": "louver",
+   "c": 0.0,
+   "w": 0.9,
+   "t0": 2.8,
+   "t1": 3.5
+  }
+ ],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "stg_back",
+  "ends": [
+   [
+    -3.0,
+    0,
+    0.15
+   ],
+   [
+    3.0,
+    0,
+    0.15
+   ]
+  ],
+  "face_z": 0.15,
+  "plate_y": 4.2,
+  "parapet_top": 4.8
+ },
+ "no_door": true,
+ "base_y": 0.0,
+ "ground_reach": false
+}

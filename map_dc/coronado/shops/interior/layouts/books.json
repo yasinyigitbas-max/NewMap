@@ -1,0 +1,283 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "books",
+ "clutter": true,
+ "signs": true,
+ "types": [
+  "books"
+ ],
+ "floor": "WoodFloor034",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  1,
+  0.95,
+  0.86
+ ],
+ "ceiling": "Plaster001",
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.0,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter",
+  "bookcases"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    2.2
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "stationery",
+    "books"
+   ]
+  },
+  {
+   "role": "bookcases",
+   "prop": "bookcase",
+   "place": "walls",
+   "walls": [
+    "back",
+    "door_side"
+   ],
+   "goods": [
+    "books"
+   ]
+  },
+  {
+   "role": "display_tables",
+   "prop": "display_table",
+   "place": "aisles",
+   "goods": [
+    "books",
+    "stationery",
+    "gift"
+   ]
+  }
+ ],
+ "plans": [
+  {
+   "name": "shop",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "stationery",
+      "books"
+     ]
+    },
+    {
+     "role": "bookcases",
+     "prop": "bookcase",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "books"
+     ]
+    },
+    {
+     "role": "display_tables",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "books",
+      "stationery",
+      "gift"
+     ]
+    }
+   ],
+   "fixtures": "shop_troffer"
+  },
+  {
+   "name": "used",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "stationery",
+      "books"
+     ]
+    },
+    {
+     "role": "bookcases",
+     "prop": "bookcase",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "books"
+     ]
+    },
+    {
+     "role": "stacks",
+     "prop": "bookcase",
+     "place": "aisles",
+     "goods": [
+      "books"
+     ],
+     "dims": [
+      0.5,
+      1.4
+     ],
+     "max": 3
+    },
+    {
+     "role": "spinner",
+     "prop": "spinner",
+     "place": "corner"
+    }
+   ],
+   "clutter": {
+    "floor": [
+     2,
+     4
+    ],
+    "floor_kinds": [
+     "paper_pile",
+     "stack",
+     "paper_pile"
+    ]
+   },
+   "fixtures": {
+    "grid": {
+     "kind": "bulb",
+     "pitch": [
+      2.2,
+      2.4
+     ],
+     "margin": 0.9,
+     "drop": 0.6
+    }
+   }
+  },
+  {
+   "name": "corner",
+   "till": "tablet",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "stationery",
+      "books"
+     ]
+    },
+    {
+     "role": "bookcases",
+     "prop": "bookcase",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "books"
+     ]
+    },
+    {
+     "role": "display_tables",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "books",
+      "stationery",
+      "gift"
+     ],
+     "max": 2
+    },
+    {
+     "role": "reading_chair",
+     "prop": "chair",
+     "place": "corner"
+    }
+   ],
+   "fixtures": {
+    "grid": {
+     "kind": "pendant",
+     "pitch": [
+      2.4,
+      2.6
+     ],
+     "margin": 1.0,
+     "drop": 0.6,
+     "shade": "drum",
+     "col": "cream"
+    }
+   }
+  }
+ ],
+ "styles": [
+  {
+   "floor": "WoodFloor034",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.96,
+    0.9
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "Carpet012",
+   "wall": "Plaster001",
+   "wall_tint": [
+    1,
+    0.95,
+    0.88
+   ],
+   "wainscot": "WoodSiding008",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "WoodFloor051",
+   "wall": "Bricks066",
+   "wall_tint": [
+    1,
+    0.95,
+    0.9
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  }
+ ]
+}

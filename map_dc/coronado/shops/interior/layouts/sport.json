@@ -1,0 +1,508 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested); required_shallow: roles a small (shallow / narrow real building) room must have. only_types: slot used only for those shop types.",
+ "set": "sport",
+ "clutter": true,
+ "signs": true,
+ "types": [
+  "surf",
+  "bicycle",
+  "bicycle_rental",
+  "fitness_centre"
+ ],
+ "floor": "Concrete047A",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  0.95,
+  0.98,
+  1
+ ],
+ "ceiling": "OfficeCeiling002",
+ "ceiling_scale": 3.6,
+ "wainscot": "WoodSiding008",
+ "room": {
+  "min_w": 3,
+  "max_w": 12,
+  "min_d": 4,
+  "max_d": 14
+ },
+ "required": [
+  "counter"
+ ],
+ "required_shallow": [
+  "counter"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    2.4
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "surf",
+    "accessory",
+    "clothing"
+   ],
+   "wall": true
+  },
+  {
+   "role": "back_shelf",
+   "prop": "shelf_wall",
+   "place": "behind_counter",
+   "goods": [
+    "accessory",
+    "shoes",
+    "surf"
+   ]
+  },
+  {
+   "role": "boards",
+   "prop": "board_rack",
+   "place": "walls",
+   "walls": [
+    "back"
+   ],
+   "unit": [
+    1.4,
+    0.6
+   ],
+   "only_types": [
+    "surf"
+   ],
+   "goods": [
+    "surf"
+   ]
+  },
+  {
+   "role": "rails",
+   "prop": "rack",
+   "place": "walls",
+   "walls": [
+    "door_side"
+   ],
+   "only_types": [
+    "surf"
+   ],
+   "goods": [
+    "clothing"
+   ]
+  },
+  {
+   "role": "bikes",
+   "prop": "bike_rack",
+   "place": "walls",
+   "walls": [
+    "back",
+    "door_side"
+   ],
+   "unit": [
+    1.6,
+    1.8
+   ],
+   "only_types": [
+    "bicycle",
+    "bicycle_rental"
+   ],
+   "goods": [
+    "bike",
+    "bike_rental"
+   ]
+  },
+  {
+   "role": "equipment",
+   "prop": "weight_bench",
+   "place": "aisles",
+   "only_types": [
+    "fitness_centre"
+   ]
+  },
+  {
+   "role": "tables",
+   "prop": "display_table",
+   "place": "aisles",
+   "only_types": [
+    "surf"
+   ],
+   "goods": [
+    "shoes",
+    "clothing",
+    "surf"
+   ],
+   "max": 2
+  }
+ ],
+ "plans": [
+  {
+   "name": "shop",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "surf",
+      "accessory",
+      "clothing"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_shelf",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "accessory",
+      "shoes",
+      "surf"
+     ]
+    },
+    {
+     "role": "boards",
+     "prop": "board_rack",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "unit": [
+      1.4,
+      0.6
+     ],
+     "only_types": [
+      "surf"
+     ],
+     "goods": [
+      "surf"
+     ]
+    },
+    {
+     "role": "rails",
+     "prop": "rack",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "only_types": [
+      "surf"
+     ],
+     "goods": [
+      "clothing"
+     ]
+    },
+    {
+     "role": "bikes",
+     "prop": "bike_rack",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "unit": [
+      1.6,
+      1.8
+     ],
+     "only_types": [
+      "bicycle",
+      "bicycle_rental"
+     ],
+     "goods": [
+      "bike",
+      "bike_rental"
+     ]
+    },
+    {
+     "role": "equipment",
+     "prop": "weight_bench",
+     "place": "aisles",
+     "only_types": [
+      "fitness_centre"
+     ]
+    },
+    {
+     "role": "tables",
+     "prop": "display_table",
+     "place": "aisles",
+     "only_types": [
+      "surf"
+     ],
+     "goods": [
+      "shoes",
+      "clothing",
+      "surf"
+     ],
+     "max": 2
+    }
+   ],
+   "fixtures": "shop_troffer"
+  },
+  {
+   "name": "pro",
+   "till": "tablet",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "surf",
+      "accessory",
+      "clothing"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_shelf",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "accessory",
+      "shoes",
+      "surf"
+     ]
+    },
+    {
+     "role": "boards",
+     "prop": "board_rack",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "surf"
+     ],
+     "unit": [
+      1.4,
+      0.6
+     ],
+     "only_types": [
+      "surf"
+     ]
+    },
+    {
+     "role": "bikes",
+     "prop": "bike_rack",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "bike",
+      "bike_rental"
+     ],
+     "unit": [
+      1.6,
+      1.8
+     ],
+     "only_types": [
+      "bicycle",
+      "bicycle_rental"
+     ]
+    },
+    {
+     "role": "equipment",
+     "prop": "weight_bench",
+     "place": "aisles",
+     "only_types": [
+      "fitness_centre"
+     ]
+    },
+    {
+     "role": "racks",
+     "prop": "rack",
+     "place": "aisles",
+     "goods": [
+      "clothing"
+     ],
+     "only_types": [
+      "surf",
+      "bicycle"
+     ],
+     "max": 2
+    },
+    {
+     "role": "mannequin",
+     "prop": "mannequin",
+     "place": "corner",
+     "only_types": [
+      "surf"
+     ]
+    }
+   ],
+   "fixtures": "boutique_track"
+  },
+  {
+   "name": "rental",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "surf",
+      "accessory",
+      "clothing"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_shelf",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "accessory",
+      "shoes",
+      "surf"
+     ]
+    },
+    {
+     "role": "bikes",
+     "prop": "bike_rack",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "goods": [
+      "bike",
+      "bike_rental"
+     ],
+     "unit": [
+      1.6,
+      1.8
+     ],
+     "only_types": [
+      "bicycle",
+      "bicycle_rental"
+     ]
+    },
+    {
+     "role": "boards",
+     "prop": "board_rack",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "surf"
+     ],
+     "unit": [
+      1.4,
+      0.6
+     ],
+     "only_types": [
+      "surf",
+      "bicycle_rental"
+     ]
+    },
+    {
+     "role": "shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "accessory",
+      "shoes",
+      "clothing"
+     ],
+     "only_types": [
+      "bicycle",
+      "surf"
+     ],
+     "max": 2
+    },
+    {
+     "role": "equipment",
+     "prop": "weight_bench",
+     "place": "aisles",
+     "only_types": [
+      "fitness_centre"
+     ]
+    },
+    {
+     "role": "tables",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "shoes",
+      "clothing",
+      "surf"
+     ],
+     "only_types": [
+      "surf"
+     ],
+     "max": 1
+    }
+   ],
+   "clutter": {
+    "floor": [
+     2,
+     4
+    ]
+   },
+   "fixtures": "shop_tubes"
+  }
+ ],
+ "styles": [
+  {
+   "floor": "Concrete047A",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    1,
+    1
+   ],
+   "wainscot": "WoodSiding008",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  },
+  {
+   "floor": "WoodFloor051",
+   "wall": "WoodSiding008",
+   "wall_tint": [
+    1,
+    1,
+    1
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "Concrete034",
+   "wall": "Bricks066",
+   "wall_tint": [
+    0.95,
+    0.98,
+    1.0
+   ],
+   "wainscot": "Concrete034",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  }
+ ]
+}

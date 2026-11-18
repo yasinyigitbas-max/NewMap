@@ -1,0 +1,151 @@
+{
+ "card_spinner": {
+  "file_base": "prop_card_spinner",
+  "batch": "ingift",
+  "class": "medium",
+  "budget": 900,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 720
+  },
+  "footprint_w": 0.606,
+  "footprint_d": 0.56,
+  "height": 1.55,
+  "regions": [
+   "baked:card_spinner"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 0.9,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 4292,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 103.4,
+  "col": 1,
+  "secs": 11.3
+ },
+ "gallery_frame": {
+  "file_base": "prop_gallery_frame",
+  "batch": "ingift",
+  "class": "small",
+  "budget": 400,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 222
+  },
+  "footprint_w": 0.7,
+  "footprint_d": 0.072,
+  "height": 0.9,
+  "regions": [
+   "baked:gallery_frame"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 0.99,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.96,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.0,
+  "atlas_page": "props_i_*",
+  "high_tris": 1600,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 90.0,
+  "col": 1,
+  "secs": 9.5
+ },
+ "pharmacy_shelf": {
+  "file_base": "prop_pharmacy_shelf",
+  "batch": "ingift",
+  "class": "medium",
+  "budget": 1100,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 514
+  },
+  "footprint_w": 1.13,
+  "footprint_d": 0.401,
+  "height": 2.0,
+  "regions": [
+   "baked:pharmacy_shelf"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 15.9,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.06,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.32,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 7390,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 58.2,
+  "col": 1,
+  "secs": 14.2
+ },
+ "bookcase": {
+  "file_base": "prop_bookcase",
+  "batch": "ingift",
+  "class": "medium",
+  "budget": 1100,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 418
+  },
+  "footprint_w": 1.02,
+  "footprint_d": 0.36,
+  "height": 2.05,
+  "regions": [
+   "baked:bookcase"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 14.58,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 6926,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 83.9,
+  "col": 1,
+  "secs": 10.4
+ }
+}

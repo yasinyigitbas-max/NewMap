@@ -1,0 +1,24 @@
+{
+ "name": "mod_svc_row",
+ "budget_class": "shop",
+ "budget": [
+  2400,
+  700,
+  40
+ ],
+ "storeys": 1,
+ "footprint_wd": [
+  12.0,
+  12.0
+ ],
+ "footprint_area": 144.0,
+ "logic_errors": [],
+ "col_boxes": 1,
+ "tris": {
+  "near": 1776,
+  "mid": 404,
+  "far": 10
+ },
+ "budget_units": 2,
+ "frontage": 12.0
+}

@@ -1,0 +1,160 @@
+{
+ "name": "apt_garden_cream",
+ "cat": "apartment",
+ "style": "garden_apartment",
+ "logic_errors": [],
+ "col_boxes": 4,
+ "near": {
+  "tris": 3475,
+  "verts": 6100,
+  "regions": [
+   "O_apt_door",
+   "O_apt_slider",
+   "O_lamp",
+   "O_number",
+   "O_small_white",
+   "O_vent",
+   "O_win_casement",
+   "O_win_dh_white",
+   "R_clay",
+   "S_black",
+   "S_concrete",
+   "S_metal",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -12.024999618530273,
+    0.0,
+    -5.21999979019165
+   ],
+   [
+    11.470000267028809,
+    8.479999542236328,
+    6.099999904632568
+   ]
+  ]
+ },
+ "mid_roof_top": 8.48,
+ "mid": {
+  "tris": 789,
+  "verts": 917,
+  "regions": [
+   "O_apt_door",
+   "O_apt_slider",
+   "O_small_white",
+   "O_vent",
+   "O_win_casement",
+   "O_win_dh_white",
+   "S_clay",
+   "S_concrete",
+   "S_metal",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -12.0,
+    0.0,
+    -5.050000190734863
+   ],
+   [
+    11.350000381469727,
+    8.479999542236328,
+    6.099999904632568
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 46,
+  "regions": [
+   "F_clay",
+   "F_stucco_2",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -10.800000190734863,
+    0.0,
+    -4.5
+   ],
+   [
+    10.800000190734863,
+    8.479999542236328,
+    4.5
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "apt_door",
+   -7.95
+  ],
+  [
+   "apt_door",
+   -6.45
+  ],
+  [
+   "apt_door",
+   -0.75
+  ],
+  [
+   "apt_door",
+   0.75
+  ],
+  [
+   "apt_door",
+   6.45
+  ],
+  [
+   "apt_door",
+   7.95
+  ],
+  [
+   "apt_door",
+   -7.95
+  ],
+  [
+   "apt_door",
+   -6.45
+  ],
+  [
+   "apt_door",
+   -0.75
+  ],
+  [
+   "apt_door",
+   0.75
+  ],
+  [
+   "apt_door",
+   6.45
+  ],
+  [
+   "apt_door",
+   7.95
+  ]
+ ],
+ "footprint_wd": [
+  21.6,
+  9.0
+ ],
+ "footprint_area": 194.4,
+ "height": 8.48,
+ "storeys": 2,
+ "budget": [
+  3500,
+  1000,
+  80
+ ],
+ "budget_class": "apartment",
+ "time_s": 23.2
+}

@@ -1,0 +1,552 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "cafe",
+ "types": [
+  "cafe",
+  "juice_bar"
+ ],
+ "floor": "WoodFloor051",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  1,
+  0.95,
+  0.88
+ ],
+ "ceiling": "Plaster001",
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.0,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter",
+  "seating"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    3.2
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "pastry",
+    "meal"
+   ],
+   "wall": true
+  },
+  {
+   "role": "back_bar",
+   "prop": "shelf_wall",
+   "place": "behind_counter",
+   "goods": [
+    "coffee",
+    "drink"
+   ]
+  },
+  {
+   "role": "seating",
+   "prop": "table",
+   "place": "grid",
+   "seats": 2
+  },
+  {
+   "role": "plant",
+   "prop": "plant",
+   "place": "corner"
+  }
+ ],
+ "clutter": true,
+ "signs": true,
+ "plans": [
+  {
+   "name": "brass",
+   "fixtures": "cafe_brass",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      3.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "pastry",
+      "meal"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "coffee",
+      "drink"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ],
+   "wear": 0.28,
+   "floor": "WoodFloor051",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.95,
+    0.88
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  },
+  {
+   "name": "industrial",
+   "fixtures": "cafe_industrial",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      3.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "pastry",
+      "meal"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "coffee",
+      "drink"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    },
+    {
+     "role": "art",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "door_side",
+      "back"
+     ],
+     "max": 1
+    }
+   ],
+   "wear": 0.4,
+   "floor": "Concrete047A",
+   "wall": "Bricks066",
+   "wall_tint": [
+    1,
+    0.95,
+    0.9
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  },
+  {
+   "name": "bright",
+   "fixtures": "cafe_bright",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      3.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "pastry",
+      "meal"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "coffee",
+      "drink"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    },
+    {
+     "role": "plant2",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ],
+   "wear": 0.22,
+   "floor": "Tiles012",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.85,
+    0.95,
+    0.9
+   ],
+   "wainscot": "Tiles141",
+   "ceiling": "Plaster001"
+  },
+  {
+   "name": "better_buzz",
+   "keys": [
+    "x:better_buzz_coffee_1305"
+   ],
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      3.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "pastry",
+      "meal"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "coffee",
+      "drink"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    },
+    {
+     "role": "art",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "door_side",
+      "back"
+     ],
+     "max": 1
+    }
+   ],
+   "floor": "WoodFloor051",
+   "wall": "Bricks066",
+   "wall_tint": [
+    1.0,
+    0.9,
+    0.8
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Wood058",
+   "ceiling_scale": 2.0,
+   "wear": 0.25,
+   "busy": 0.65,
+   "fixtures": {
+    "over": [
+     {
+      "roles": [
+       "counter"
+      ],
+      "kind": "pendant",
+      "every": 0.9,
+      "drop": 0.85,
+      "shade": "dome",
+      "col": "brass"
+     },
+     {
+      "roles": [
+       "seating",
+       "ledge"
+      ],
+      "kind": "bulb",
+      "every": 0,
+      "drop": 0.8
+     }
+    ],
+    "walls": {
+     "kind": "sconce",
+     "every": 2.8,
+     "walls": [
+      "door_side"
+     ],
+     "y": 2.0
+    },
+    "signs": [
+     {
+      "kind": "neon",
+      "text": "BETTER BUZZ",
+      "col": [
+       1.0,
+       0.78,
+       0.2
+      ],
+      "where": "back",
+      "h": 0.3
+     },
+     {
+      "kind": "neon",
+      "icon": "cup",
+      "col": [
+       1.0,
+       0.95,
+       0.85
+      ],
+      "where": "side",
+      "w": 0.55,
+      "h": 0.55
+     }
+    ]
+   },
+   "food_dress": {
+    "menus": [
+     [
+      "menu_cafe_chalk",
+      "behind"
+     ],
+     [
+      "menu_cafe_card",
+      "tent"
+     ],
+     [
+      "menu_aframe",
+      "door"
+     ]
+    ],
+    "floor": [
+     [
+      "coffee_sacks",
+      2,
+      2
+     ],
+     [
+      "milk_crates",
+      1,
+      1
+     ]
+    ]
+   },
+   "signs": {
+    "kit": "cafe",
+    "n_posters": [
+     2,
+     3
+    ],
+    "posters": [
+     "poster_island_brew",
+     "poster_ferry",
+     "poster_reading"
+    ]
+   }
+  },
+  {
+   "name": "beach_coffee",
+   "keys": [
+    "x:coronado_beach_coffee_828"
+   ],
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      3.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "pastry",
+      "meal"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "coffee",
+      "drink"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ],
+   "floor": "WoodFloor051",
+   "wall": "WoodSiding008",
+   "wall_tint": [
+    0.78,
+    0.9,
+    0.98
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "WoodSiding008",
+   "ceiling_scale": 2.0,
+   "wear": 0.3,
+   "busy": 0.4,
+   "max_people": 3,
+   "fixtures": {
+    "over": [
+     {
+      "roles": [
+       "counter"
+      ],
+      "kind": "pendant",
+      "every": 1.0,
+      "drop": 0.8,
+      "shade": "drum",
+      "col": "white"
+     },
+     {
+      "roles": [
+       "seating",
+       "ledge"
+      ],
+      "kind": "pendant",
+      "every": 0,
+      "drop": 0.9,
+      "shade": "cone",
+      "col": "cream"
+     }
+    ],
+    "fans": {
+     "every": 3.2,
+     "drop": 0.35
+    },
+    "signs": [
+     {
+      "kind": "neon",
+      "text": "BEACH COFFEE",
+      "col": [
+       0.3,
+       0.9,
+       1.0
+      ],
+      "where": "back",
+      "h": 0.28
+     },
+     {
+      "kind": "neon",
+      "icon": "cup",
+      "col": [
+       1.0,
+       0.55,
+       0.35
+      ],
+      "where": "side",
+      "w": 0.5,
+      "h": 0.5
+     }
+    ]
+   },
+   "food_dress": {
+    "menus": [
+     [
+      "menu_cafe_chalk",
+      "behind"
+     ],
+     [
+      "menu_cafe_card",
+      "tent"
+     ]
+    ],
+    "floor": [
+     [
+      "coffee_sacks",
+      1,
+      1
+     ]
+    ]
+   },
+   "signs": {
+    "kit": "cafe",
+    "n_posters": [
+     2,
+     3
+    ],
+    "posters": [
+     "poster_surf_classic",
+     "poster_summer",
+     "poster_island_brew"
+    ]
+   }
+  }
+ ],
+ "hours": [
+  6,
+  18
+ ],
+ "busy": 0.6,
+ "dado": {
+  "h": 1.0
+ }
+}

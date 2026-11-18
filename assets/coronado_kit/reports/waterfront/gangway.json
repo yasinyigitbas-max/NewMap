@@ -1,0 +1,515 @@
+{
+ "name": "gangway",
+ "tiers": {
+  "near": 2382,
+  "mid": 226,
+  "far": 12
+ },
+ "budget": 2500,
+ "class": "large",
+ "far_paint_max": 0.42940414786729175,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_gangway_clean_far.glb",
+   "tier": "far",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 12,
+   "verts": 24,
+   "budget": 20,
+   "size": [
+    1.3,
+    2.12,
+    11.0
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_gangway_clean_mid.glb",
+   "tier": "mid",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 226,
+   "verts": 563,
+   "budget": 751,
+   "size": [
+    1.292,
+    2.118,
+    11.0
+   ],
+   "odd_ray": 39
+  },
+  {
+   "file": "prop_gangway_clean_near.glb",
+   "tier": "near",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 2382,
+   "verts": 4801,
+   "budget": 2500,
+   "size": [
+    1.29,
+    2.119,
+    11.0
+   ],
+   "odd_ray": 363
+  },
+  {
+   "file": "prop_gangway_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 14,
+   "col_maxverts": 8
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.834,
+   "dE": 0.8,
+   "note": "info only (snap ends are open)"
+  },
+  "top": {
+   "iou": 0.996,
+   "dE": 0.4
+  },
+  "left": {
+   "iou": 0.997,
+   "dE": 0.1
+  }
+ },
+ "col_split": {
+  "main": 6,
+  "rail": 8
+ },
+ "col_ok": true,
+ "rail_ok": true,
+ "railcheck": [
+  {
+   "member": 0,
+   "kind": "v",
+   "end": [
+    -0.62,
+    0.2,
+    4.5
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 1,
+   "kind": "v",
+   "end": [
+    -0.62,
+    0.306,
+    3.319
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 2,
+   "kind": "v",
+   "end": [
+    -0.62,
+    0.413,
+    2.138
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 3,
+   "kind": "v",
+   "end": [
+    -0.62,
+    0.519,
+    0.956
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 4,
+   "kind": "v",
+   "end": [
+    -0.62,
+    0.625,
+    -0.225
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 5,
+   "kind": "v",
+   "end": [
+    -0.62,
+    0.731,
+    -1.406
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 6,
+   "kind": "v",
+   "end": [
+    -0.62,
+    0.838,
+    -2.587
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 7,
+   "kind": "v",
+   "end": [
+    -0.62,
+    0.944,
+    -3.769
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 8,
+   "kind": "v",
+   "end": [
+    -0.62,
+    1.05,
+    -4.95
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 9,
+   "kind": "h",
+   "end": [
+    -0.62,
+    1.243,
+    4.53
+   ],
+   "gap": 0.006,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 9,
+   "kind": "h",
+   "end": [
+    -0.62,
+    2.099,
+    -4.98
+   ],
+   "gap": 0.01,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 10,
+   "kind": "h",
+   "end": [
+    -0.62,
+    0.302,
+    4.475
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 10,
+   "kind": "h",
+   "end": [
+    -0.62,
+    1.148,
+    -4.925
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 11,
+   "kind": "h",
+   "end": [
+    -0.62,
+    1.122,
+    4.475
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 11,
+   "kind": "h",
+   "end": [
+    -0.62,
+    1.968,
+    -4.925
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 12,
+   "kind": "p",
+   "end": [
+    -0.595,
+    1.062,
+    4.48
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 12,
+   "kind": "p",
+   "end": [
+    -0.595,
+    1.908,
+    -4.93
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 13,
+   "kind": "v",
+   "end": [
+    0.62,
+    0.2,
+    4.5
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 14,
+   "kind": "v",
+   "end": [
+    0.62,
+    0.306,
+    3.319
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 15,
+   "kind": "v",
+   "end": [
+    0.62,
+    0.413,
+    2.138
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 16,
+   "kind": "v",
+   "end": [
+    0.62,
+    0.519,
+    0.956
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 17,
+   "kind": "v",
+   "end": [
+    0.62,
+    0.625,
+    -0.225
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 18,
+   "kind": "v",
+   "end": [
+    0.62,
+    0.731,
+    -1.406
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 19,
+   "kind": "v",
+   "end": [
+    0.62,
+    0.838,
+    -2.587
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 20,
+   "kind": "v",
+   "end": [
+    0.62,
+    0.944,
+    -3.769
+   ],
+   "gap": 0.0,
+   "pen": 0.0004,
+   "ok": true
+  },
+  {
+   "member": 21,
+   "kind": "v",
+   "end": [
+    0.62,
+    1.05,
+    -4.95
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 22,
+   "kind": "h",
+   "end": [
+    0.62,
+    1.243,
+    4.53
+   ],
+   "gap": 0.006,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 22,
+   "kind": "h",
+   "end": [
+    0.62,
+    2.099,
+    -4.98
+   ],
+   "gap": 0.01,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 23,
+   "kind": "h",
+   "end": [
+    0.62,
+    0.302,
+    4.475
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 23,
+   "kind": "h",
+   "end": [
+    0.62,
+    1.148,
+    -4.925
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 24,
+   "kind": "h",
+   "end": [
+    0.62,
+    1.122,
+    4.475
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 24,
+   "kind": "h",
+   "end": [
+    0.62,
+    1.968,
+    -4.925
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 25,
+   "kind": "p",
+   "end": [
+    0.595,
+    1.062,
+    4.48
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 25,
+   "kind": "p",
+   "end": [
+    0.595,
+    1.908,
+    -4.93
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  }
+ ],
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 128,
+ "bake_px_per_m": 64.5,
+ "high_tris": 20779,
+ "pass": true
+}

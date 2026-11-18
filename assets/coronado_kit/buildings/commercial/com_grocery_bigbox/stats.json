@@ -1,0 +1,130 @@
+{
+ "name": "com_grocery_bigbox",
+ "cat": "shop",
+ "style": "grocery",
+ "logic_errors": [],
+ "col_boxes": 12,
+ "near": {
+  "tris": 3026,
+  "verts": 5336,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_rollup",
+   "O_shopdoor",
+   "O_storefront",
+   "O_vent",
+   "R_flat",
+   "R_metal",
+   "SG_market",
+   "S_black",
+   "S_concrete",
+   "S_glass",
+   "S_soffit",
+   "S_stucco",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -30.200000762939453,
+    -0.0,
+    -24.399999618530273
+   ],
+   [
+    30.200000762939453,
+    8.470000267028809,
+    22.239999771118164
+   ]
+  ]
+ },
+ "mid_roof_top": 8.4,
+ "mid": {
+  "tris": 516,
+  "verts": 730,
+  "regions": [
+   "O_apt_door",
+   "O_rollup",
+   "O_shopdoor",
+   "O_storefront",
+   "SG_market",
+   "S_flat",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -30.0,
+    0.0,
+    -24.399999618530273
+   ],
+   [
+    30.0,
+    8.399999618530273,
+    22.082000732421875
+   ]
+  ]
+ },
+ "far": {
+  "tris": 160,
+  "verts": 194,
+  "regions": [
+   "F_dark",
+   "F_flat",
+   "F_glass",
+   "F_stucco_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -30.0,
+    0.0,
+    -22.0
+   ],
+   [
+    30.0,
+    8.399999618530273,
+    22.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   -26.5
+  ],
+  [
+   "shopdoor",
+   26.5
+  ],
+  [
+   "shopdoor",
+   -3.4
+  ],
+  [
+   "shopdoor",
+   3.4
+  ]
+ ],
+ "footprint_wd": [
+  60.0,
+  44.0
+ ],
+ "footprint_area": 2640.0,
+ "height": 8.47,
+ "storeys": 1,
+ "budget": [
+  12000,
+  3500,
+  200
+ ],
+ "budget_units": 10,
+ "budget_class": "shop",
+ "time_s": 29.6
+}

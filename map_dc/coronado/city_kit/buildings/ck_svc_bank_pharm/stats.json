@@ -1,0 +1,25 @@
+{
+ "cat": "mod",
+ "doors_front": [
+  [
+   "apt_door",
+   -3.0
+  ],
+  [
+   "shopdoor",
+   4.6
+  ]
+ ],
+ "footprint_wd": [
+  12.0,
+  12.0
+ ],
+ "height": 5.1,
+ "merged_from": "ck_svc_bank_pharm.json",
+ "name": "ck_svc_bank_pharm",
+ "tris": {
+  "far": 258,
+  "mid": 684,
+  "near": 2636
+ }
+}

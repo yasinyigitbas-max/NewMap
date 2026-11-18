@@ -1,0 +1,318 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "gas",
+ "clutter": true,
+ "signs": true,
+ "types": [
+  "fuel"
+ ],
+ "floor": "Concrete034",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  1,
+  1,
+  1
+ ],
+ "ceiling": "OfficeCeiling002",
+ "ceiling_scale": 3.6,
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.0,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter",
+  "fridges"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    2.4
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "snack",
+    "car"
+   ]
+  },
+  {
+   "role": "fridges",
+   "prop": "fridge",
+   "place": "walls",
+   "walls": [
+    "back"
+   ],
+   "goods": [
+    "drink"
+   ]
+  },
+  {
+   "role": "wall_shelves",
+   "prop": "shelf_wall",
+   "place": "walls",
+   "walls": [
+    "door_side"
+   ],
+   "goods": [
+    "snack",
+    "car",
+    "fuel"
+   ]
+  },
+  {
+   "role": "aisles",
+   "prop": "gondola",
+   "place": "aisles",
+   "goods": [
+    "snack",
+    "drink",
+    "car"
+   ]
+  }
+ ],
+ "plans": [
+  {
+   "name": "mart",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "snack",
+      "car"
+     ]
+    },
+    {
+     "role": "fridges",
+     "prop": "fridge",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "drink"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "goods": [
+      "snack",
+      "car",
+      "fuel"
+     ]
+    },
+    {
+     "role": "aisles",
+     "prop": "gondola",
+     "place": "aisles",
+     "goods": [
+      "snack",
+      "car"
+     ],
+     "dims": [
+      1.0,
+      2.5
+     ]
+    }
+   ],
+   "fixtures": "shop_troffer"
+  },
+  {
+   "name": "kiosk",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "snack",
+      "car"
+     ]
+    },
+    {
+     "role": "fridges",
+     "prop": "fridge",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "goods": [
+      "drink"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "snack",
+      "car",
+      "fuel"
+     ]
+    },
+    {
+     "role": "ice",
+     "prop": "freezer",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "unit": [
+      1.35,
+      0.75
+     ],
+     "max": 1
+    },
+    {
+     "role": "aisles",
+     "prop": "gondola",
+     "place": "aisles",
+     "goods": [
+      "snack",
+      "car"
+     ],
+     "dims": [
+      1.0,
+      2.5
+     ],
+     "max": 2
+    }
+   ],
+   "clutter": {
+    "floor": [
+     3,
+     5
+    ],
+    "floor_kinds": [
+     "water_pack",
+     "stack",
+     "red_crates"
+    ]
+   },
+   "fixtures": "shop_tubes"
+  },
+  {
+   "name": "road_stop",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "snack",
+      "car"
+     ]
+    },
+    {
+     "role": "fridges",
+     "prop": "fridge",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "drink"
+     ],
+     "max": 5
+    },
+    {
+     "role": "aisles",
+     "prop": "gondola",
+     "place": "aisles",
+     "goods": [
+      "snack",
+      "car",
+      "fuel"
+     ],
+     "dims": [
+      1.0,
+      2.5
+     ]
+    }
+   ],
+   "signs": {
+    "n_neon": [
+     2,
+     2
+    ]
+   },
+   "fixtures": "shop_tubes"
+  }
+ ],
+ "styles": [
+  {
+   "floor": "Concrete034",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.98,
+    0.94
+   ],
+   "wainscot": "Tiles141",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  },
+  {
+   "floor": "Tiles141",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.95,
+    0.98,
+    1.0
+   ],
+   "wainscot": "Concrete034",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  },
+  {
+   "floor": "Tiles012",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.95,
+    0.9
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  }
+ ]
+}

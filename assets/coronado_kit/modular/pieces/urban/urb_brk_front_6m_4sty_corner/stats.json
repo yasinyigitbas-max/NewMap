@@ -1,0 +1,220 @@
+{
+ "name": "urb_brk_front_6m_4sty_corner",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 518,
+  "verts": 940,
+  "regions": [
+   "AW_red",
+   "O_shopdoor",
+   "O_storefront",
+   "O_win_dh_div",
+   "S_awn_red",
+   "S_brick",
+   "S_white",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_brick"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.125
+   ],
+   [
+    3.0,
+    13.369999885559082,
+    1.3980000019073486
+   ]
+  ]
+ },
+ "mid_roof_top": 13.3,
+ "mid": {
+  "tris": 130,
+  "verts": 186,
+  "regions": [
+   "AW_red",
+   "O_shopdoor",
+   "O_storefront",
+   "O_win_dh_div",
+   "S_awn_red",
+   "S_brick",
+   "S_signbg",
+   "S_white",
+   "T_dark",
+   "W_brick"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    0.02500000037252903
+   ],
+   [
+    3.0,
+    13.300000190734863,
+    1.3980000019073486
+   ]
+  ]
+ },
+ "far": {
+  "tris": 12,
+  "verts": 24,
+  "regions": [
+   "F_c_brick_3",
+   "F_flat"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.22499999403953552
+   ],
+   [
+    3.0,
+    13.300000190734863,
+    0.22499999403953552
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   1.9
+  ]
+ ],
+ "footprint_wd": [
+  6.0,
+  0.45
+ ],
+ "footprint_area": 2.7,
+ "height": 13.37,
+ "storeys": 1,
+ "budget": [
+  950,
+  280,
+  16
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_brk_front",
+ "time_s": 1.1,
+ "open_planes": [
+  [
+   0,
+   -3.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   3.0,
+   1,
+   null
+  ],
+  [
+   2,
+   -0.225,
+   -1,
+   null
+  ],
+  [
+   1,
+   12.3,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.225
+ ],
+ "openings": [
+  {
+   "k": "shopdoor",
+   "c": 1.9,
+   "w": 1.6,
+   "t0": 0.0,
+   "t1": 3.0,
+   "depth": 0.35
+  },
+  {
+   "k": "storefront",
+   "c": -0.9,
+   "w": 3.2,
+   "t0": 0.0,
+   "t1": 3.0,
+   "depth": 0.12
+  },
+  {
+   "k": "dh_div",
+   "c": -1.6,
+   "w": 1.2,
+   "t0": 4.1,
+   "t1": 5.6
+  },
+  {
+   "k": "dh_div",
+   "c": 1.0,
+   "w": 1.2,
+   "t0": 4.1,
+   "t1": 5.6
+  },
+  {
+   "k": "dh_div",
+   "c": -1.6,
+   "w": 1.2,
+   "t0": 7.1,
+   "t1": 8.6
+  },
+  {
+   "k": "dh_div",
+   "c": 1.0,
+   "w": 1.2,
+   "t0": 7.1,
+   "t1": 8.6
+  },
+  {
+   "k": "dh_div",
+   "c": -1.6,
+   "w": 1.2,
+   "t0": 10.1,
+   "t1": 11.6
+  },
+  {
+   "k": "dh_div",
+   "c": 1.0,
+   "w": 1.2,
+   "t0": 10.1,
+   "t1": 11.6
+  }
+ ],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "brk_front",
+  "ends": [
+   [
+    -3.0,
+    0,
+    0.225
+   ],
+   [
+    3.0,
+    0,
+    0.225
+   ]
+  ],
+  "face_z": 0.225,
+  "plate_y": 12.3,
+  "parapet_top": 13.3
+ },
+ "no_door": false,
+ "base_y": 0.0,
+ "ground_reach": false
+}

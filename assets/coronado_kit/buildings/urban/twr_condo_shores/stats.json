@@ -1,0 +1,231 @@
+{
+ "name": "twr_condo_shores",
+ "cat": "tower",
+ "style": "condo_slab",
+ "logic_errors": [],
+ "col_boxes": 14,
+ "near": {
+  "tris": 4968,
+  "verts": 8442,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_number",
+   "O_patio",
+   "O_ribbon",
+   "O_storefront",
+   "O_vent",
+   "R_flat",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -18.139999389648438,
+    0.0,
+    -9.5
+   ],
+   [
+    18.139999389648438,
+    49.66999816894531,
+    10.300000190734863
+   ]
+  ]
+ },
+ "mid_roof_top": 49.6,
+ "mid": {
+  "tris": 958,
+  "verts": 1390,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "O_louver",
+   "O_patio",
+   "S_concrete",
+   "S_flat",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -18.0,
+    0.0,
+    -9.5
+   ],
+   [
+    18.0,
+    49.599998474121094,
+    10.300000190734863
+   ]
+  ]
+ },
+ "far": {
+  "tris": 90,
+  "verts": 164,
+  "regions": [
+   "F_c_tower_3",
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -18.0,
+    0.0,
+    -8.0
+   ],
+   [
+    18.0,
+    49.599998474121094,
+    8.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "patio",
+   -1.2
+  ],
+  [
+   "patio",
+   1.2
+  ],
+  [
+   "patio",
+   -6.0
+  ],
+  [
+   "patio",
+   6.0
+  ],
+  [
+   "patio",
+   -6.0
+  ],
+  [
+   "patio",
+   6.0
+  ],
+  [
+   "patio",
+   -6.0
+  ],
+  [
+   "patio",
+   6.0
+  ],
+  [
+   "patio",
+   -6.0
+  ],
+  [
+   "patio",
+   6.0
+  ],
+  [
+   "patio",
+   -6.0
+  ],
+  [
+   "patio",
+   6.0
+  ],
+  [
+   "patio",
+   -6.0
+  ],
+  [
+   "patio",
+   6.0
+  ],
+  [
+   "patio",
+   -6.0
+  ],
+  [
+   "patio",
+   6.0
+  ],
+  [
+   "patio",
+   -6.0
+  ],
+  [
+   "patio",
+   6.0
+  ],
+  [
+   "patio",
+   -6.0
+  ],
+  [
+   "patio",
+   6.0
+  ],
+  [
+   "patio",
+   -6.0
+  ],
+  [
+   "patio",
+   6.0
+  ],
+  [
+   "patio",
+   -6.0
+  ],
+  [
+   "patio",
+   6.0
+  ],
+  [
+   "patio",
+   -6.0
+  ],
+  [
+   "patio",
+   6.0
+  ],
+  [
+   "patio",
+   -6.0
+  ],
+  [
+   "patio",
+   6.0
+  ],
+  [
+   "patio",
+   -6.0
+  ],
+  [
+   "patio",
+   6.0
+  ]
+ ],
+ "footprint_wd": [
+  36.0,
+  16.0
+ ],
+ "footprint_area": 576.0,
+ "height": 49.67,
+ "storeys": 15,
+ "budget": [
+  6000,
+  1800,
+  120
+ ],
+ "budget_units": 1.5,
+ "budget_class": "tower",
+ "time_s": 88.6
+}

@@ -1,0 +1,78 @@
+{
+ "name": "ex_shop_corner_bakery",
+ "group": "shops",
+ "outline": {
+  "kind": "shop",
+  "W": 6.0,
+  "D": 12.0,
+  "wall": "W_stucco",
+  "tint": [
+   0.97,
+   0.88,
+   0.62
+  ],
+  "roof": "R_flat",
+  "budget": "corner_shop"
+ },
+ "pieces": [
+  {
+   "piece": "shop_front_6m_bakery_navy",
+   "x": 0.0,
+   "z": 5.7,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_side_12m_stucco",
+   "x": 2.85,
+   "z": 0.0,
+   "rot_y": 90
+  },
+  {
+   "piece": "shop_side_12m_stucco_l",
+   "x": -2.85,
+   "z": 0.0,
+   "rot_y": 270
+  },
+  {
+   "piece": "shop_back_6m_stucco",
+   "x": 0.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "shop_trim_cornice_corner_r",
+   "x": 3.0,
+   "z": 6.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_trim_cornice_corner_l",
+   "x": -3.0,
+   "z": 6.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_roof_6m_single",
+   "x": 0.0,
+   "z": 0.0,
+   "rot_y": 0
+  }
+ ],
+ "budget_class": "corner_shop",
+ "budget": [
+  2500,
+  750,
+  60
+ ],
+ "tris": {
+  "near": 1356,
+  "mid": 306,
+  "far": 10
+ },
+ "col_boxes": 1,
+ "far_from": "snapped outline hull",
+ "merged": {
+  "near_mid": "pieces merged, 1 mesh/1 primitive/1 material",
+  "far_col": "outline hull + <=12 boxes"
+ }
+}

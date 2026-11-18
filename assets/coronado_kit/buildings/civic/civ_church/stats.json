@@ -1,0 +1,120 @@
+{
+ "name": "civ_church",
+ "cat": "civic",
+ "style": "mission_church",
+ "logic_errors": [],
+ "col_boxes": 11,
+ "near": {
+  "tris": 4722,
+  "verts": 8468,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_lamp",
+   "O_lancet",
+   "O_louver",
+   "O_vent",
+   "R_clay",
+   "R_flat",
+   "SG_church",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -8.5,
+    -0.0,
+    -13.720000267028809
+   ],
+   [
+    7.849999904632568,
+    20.229999542236328,
+    15.899999618530273
+   ]
+  ]
+ },
+ "mid_roof_top": 19.13,
+ "mid": {
+  "tris": 1018,
+  "verts": 1433,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_lancet",
+   "O_vent",
+   "SG_church",
+   "S_clay",
+   "S_concrete",
+   "S_deck",
+   "S_flat",
+   "S_signbg",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -8.5,
+    0.0,
+    -13.0
+   ],
+   [
+    7.849999904632568,
+    19.1299991607666,
+    15.899999618530273
+   ]
+  ]
+ },
+ "far": {
+  "tris": 64,
+  "verts": 106,
+  "regions": [
+   "F_clay",
+   "F_stucco_2",
+   "F_stucco_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -7.0,
+    0.0,
+    -13.0
+   ],
+   [
+    7.0,
+    19.1299991607666,
+    13.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  14.0,
+  26.0
+ ],
+ "footprint_area": 364.0,
+ "height": 20.23,
+ "storeys": 1,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "civic",
+ "time_s": 63.0
+}

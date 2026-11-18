@@ -1,0 +1,103 @@
+{
+ "name": "house_w6_comp",
+ "group": "houses",
+ "outline": {
+  "kind": "house",
+  "W": 6.0,
+  "D": 7.5,
+  "wall": "W_stucco",
+  "tint": [
+   0.93,
+   0.86,
+   0.72
+  ],
+  "roof": "R_comp",
+  "budget": "mod_house_small",
+  "pitch": 0.45
+ },
+ "pieces": [
+  {
+   "piece": "house_wall_3m_window_stucco",
+   "x": -1.5,
+   "z": 3.6,
+   "rot_y": 0
+  },
+  {
+   "piece": "house_wall_3m_door_stucco",
+   "x": 1.5,
+   "z": 3.6,
+   "rot_y": 0
+  },
+  {
+   "piece": "house_wall_4p5m_window_small_stucco",
+   "x": 2.85,
+   "z": 1.5,
+   "rot_y": 90
+  },
+  {
+   "piece": "house_wall_3m_window_stucco",
+   "x": 2.85,
+   "z": -2.25,
+   "rot_y": 90
+  },
+  {
+   "piece": "house_wall_3m_utility_stucco",
+   "x": 1.5,
+   "z": -3.6,
+   "rot_y": 180
+  },
+  {
+   "piece": "house_wall_3m_window_stucco",
+   "x": -1.5,
+   "z": -3.6,
+   "rot_y": 180
+  },
+  {
+   "piece": "house_wall_3m_window_stucco",
+   "x": -2.85,
+   "z": -2.25,
+   "rot_y": 270
+  },
+  {
+   "piece": "house_wall_4p5m_utility_stucco",
+   "x": -2.85,
+   "z": 1.5,
+   "rot_y": 270
+  },
+  {
+   "piece": "house_roof_gable_endl_3m_comp_stucco",
+   "x": -1.5,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "house_roof_gable_endr_3m_comp_stucco",
+   "x": 1.5,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "house_roof_chimney_brick",
+   "x": 1.0,
+   "z": 0.0,
+   "rot_y": 0
+  }
+ ],
+ "budget_class": "mod_house_small",
+ "budget": [
+  1650,
+  500,
+  40
+ ],
+ "tris": {
+  "near": 1362,
+  "mid": 296,
+  "far": 22
+ },
+ "col_boxes": 2,
+ "far_from": "snapped outline hull",
+ "merged": {
+  "near_mid": "pieces merged, 1 mesh/1 primitive/1 material",
+  "far_col": "outline hull + <=12 boxes"
+ }
+}

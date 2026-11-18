@@ -1,0 +1,50 @@
+[
+ {
+  "joint": "straight|straight",
+  "bands": 56,
+  "max_dev_m": 0.012,
+  "ok": true
+ },
+ {
+  "joint": "straight|bollards",
+  "bands": 56,
+  "max_dev_m": 0.012,
+  "ok": true
+ },
+ {
+  "joint": "straight|stair",
+  "bands": 56,
+  "max_dev_m": 0.012,
+  "ok": true
+ },
+ {
+  "joint": "stair|straight",
+  "bands": 56,
+  "max_dev_m": 0.001,
+  "ok": true
+ },
+ {
+  "joint": "straight|corner_out.a",
+  "bands": 56,
+  "max_dev_m": 0.0,
+  "ok": true
+ },
+ {
+  "joint": "corner_out.b|straight",
+  "bands": 56,
+  "max_dev_m": 0.0,
+  "ok": true
+ },
+ {
+  "joint": "straight|corner_in.a",
+  "bands": 56,
+  "max_dev_m": 0.013,
+  "ok": true
+ },
+ {
+  "joint": "corner_in.b|straight",
+  "bands": 56,
+  "max_dev_m": 0.012,
+  "ok": true
+ }
+]

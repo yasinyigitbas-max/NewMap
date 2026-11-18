@@ -1,0 +1,90 @@
+{
+ "origin_xz": [
+  -7389.81,
+  630.27
+ ],
+ "metres_per_pixel": 4.0,
+ "size_px": [
+  2108,
+  1383
+ ],
+ "min_m": -32.05459999999999,
+ "max_m": 114.43045043945312,
+ "height_file": "height.f32z",
+ "height_format": "zlib(float32 LE W*H row-major)",
+ "height_convention": "point samples at origin + 4*i (row0 north); bilinear between samples",
+ "class_file": "class.r8z",
+ "class_res": 2.5,
+ "class_size": [
+  3372,
+  2212
+ ],
+ "class_origin_xz": [
+  -7389.81,
+  630.27
+ ],
+ "classes": [
+  "sea",
+  "ground",
+  "sand",
+  "grass",
+  "golf",
+  "military",
+  "tarmac",
+  "bay",
+  "golf_green",
+  "water_inland",
+  "pitch",
+  "scrub",
+  "rock",
+  "golf_rough",
+  "apron",
+  "path"
+ ],
+ "landuse_area_m2": {
+  "military": 11107457,
+  "aeroway_apron": 413170,
+  "aeroway_helipad": 11213,
+  "recreation_ground": 9477,
+  "park": 365125,
+  "grass": 374552,
+  "sports_centre": 26232,
+  "playground": 9328,
+  "garden": 19184,
+  "religious": 2816,
+  "flowerbed": 64,
+  "scrub": 394626,
+  "wetland": 0,
+  "wood": 356,
+  "nature_reserve": 211406,
+  "pitch": 105748,
+  "golf": 1047854,
+  "golf_tee": 13196,
+  "golf_fairway": 177867,
+  "golf_driving_range": 30151,
+  "golf_green": 21085,
+  "beach": 831465,
+  "sand": 27387,
+  "golf_bunker": 13573,
+  "golf_water_hazard": 26619
+ },
+ "note_citykit": "city-kit terrain (tools/city/pilot/zoning/bake_game_terrain.py from zoning/terrain_grid.npz); read with --citykit",
+ "class_counts_citykit": {
+  "sea": 4250611,
+  "ground": 279424,
+  "sand": 61569,
+  "grass": 1009422,
+  "golf": 7505,
+  "military": 1067457,
+  "tarmac": 104653,
+  "bay": 513520,
+  "golf_green": 793,
+  "water_inland": 2744,
+  "pitch": 4938,
+  "scrub": 56693,
+  "rock": 2726,
+  "golf_rough": 25022,
+  "apron": 63965,
+  "path": 7822
+ }
+}

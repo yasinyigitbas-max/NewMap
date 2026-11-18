@@ -1,0 +1,108 @@
+{
+ "name": "boat_trailer",
+ "tiers": {
+  "near": 2239,
+  "mid": 373,
+  "far": 18
+ },
+ "budget": 2500,
+ "class": "large",
+ "far_paint_max": 0.601750723723516,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_boat_trailer_clean_far.glb",
+   "tier": "far",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 18,
+   "verts": 28,
+   "budget": 20,
+   "size": [
+    2.0,
+    1.611,
+    6.58
+   ],
+   "odd_ray": 1
+  },
+  {
+   "file": "prop_boat_trailer_clean_mid.glb",
+   "tier": "mid",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "49 tris may face inward / be enclosed"
+   ],
+   "tris": 372,
+   "verts": 973,
+   "budget": 751,
+   "size": [
+    2.0,
+    1.811,
+    6.614
+   ],
+   "odd_ray": 56
+  },
+  {
+   "file": "prop_boat_trailer_clean_near.glb",
+   "tier": "near",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "313 tris may face inward / be enclosed"
+   ],
+   "tris": 2238,
+   "verts": 4343,
+   "budget": 2500,
+   "size": [
+    2.0,
+    1.75,
+    6.737
+   ],
+   "odd_ray": 381
+  },
+  {
+   "file": "prop_boat_trailer_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 7,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.833,
+   "dE": 4.2
+  },
+  "top": {
+   "iou": 0.861,
+   "dE": 1.6
+  },
+  "left": {
+   "iou": 0.0,
+   "dE": 99,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 7,
+  "rail": 0
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 48,
+ "bake_px_per_m": 90.1,
+ "high_tris": 14847,
+ "pass": true
+}

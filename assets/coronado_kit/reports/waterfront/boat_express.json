@@ -1,0 +1,205 @@
+{
+ "name": "boat_express",
+ "tiers": {
+  "near": 2343,
+  "mid": 255,
+  "far": 20
+ },
+ "budget": 2500,
+ "class": "large",
+ "far_paint_max": 0.9494418424624891,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_boat_express_clean_far.glb",
+   "tier": "far",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 20,
+   "verts": 32,
+   "budget": 20,
+   "size": [
+    2.62,
+    3.047,
+    9.322
+   ],
+   "odd_ray": 1
+  },
+  {
+   "file": "prop_boat_express_clean_mid.glb",
+   "tier": "mid",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 254,
+   "verts": 664,
+   "budget": 751,
+   "size": [
+    2.62,
+    3.027,
+    9.452
+   ],
+   "odd_ray": 18
+  },
+  {
+   "file": "prop_boat_express_clean_near.glb",
+   "tier": "near",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "194 tris may face inward / be enclosed"
+   ],
+   "tris": 2341,
+   "verts": 5780,
+   "budget": 2500,
+   "size": [
+    2.835,
+    5.247,
+    9.492
+   ],
+   "odd_ray": 478
+  },
+  {
+   "file": "prop_boat_express_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 11,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.878,
+   "dE": 1.1
+  },
+  "top": {
+   "iou": 0.91,
+   "dE": 0.1
+  },
+  "left": {
+   "iou": 0.629,
+   "dE": 0.9,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 5,
+  "rail": 6
+ },
+ "col_ok": true,
+ "rail_ok": true,
+ "railcheck": [
+  {
+   "member": 0,
+   "kind": "p",
+   "end": [
+    -1.178,
+    1.761,
+    1.25
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 0,
+   "kind": "p",
+   "end": [
+    1.178,
+    1.761,
+    1.25
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 1,
+   "kind": "v",
+   "end": [
+    0.671,
+    1.979,
+    3.592
+   ],
+   "gap": 0.0,
+   "pen": 0.006,
+   "ok": true
+  },
+  {
+   "member": 2,
+   "kind": "v",
+   "end": [
+    -0.671,
+    1.979,
+    3.592
+   ],
+   "gap": 0.0,
+   "pen": 0.006,
+   "ok": true
+  },
+  {
+   "member": 3,
+   "kind": "v",
+   "end": [
+    1.022,
+    1.876,
+    2.45
+   ],
+   "gap": 0.0019,
+   "pen": 0.006,
+   "ok": true
+  },
+  {
+   "member": 4,
+   "kind": "v",
+   "end": [
+    -1.022,
+    1.876,
+    2.45
+   ],
+   "gap": 0.0019,
+   "pen": 0.006,
+   "ok": true
+  },
+  {
+   "member": 5,
+   "kind": "v",
+   "end": [
+    -0.11,
+    2.092,
+    4.632
+   ],
+   "gap": 0.0037,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 6,
+   "kind": "v",
+   "end": [
+    0.11,
+    2.092,
+    4.632
+   ],
+   "gap": 0.0037,
+   "pen": 0.0,
+   "ok": true
+  }
+ ],
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": null,
+ "bake_px_per_m": null,
+ "high_tris": null,
+ "pass": true
+}

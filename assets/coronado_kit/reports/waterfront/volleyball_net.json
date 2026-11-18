@@ -1,0 +1,108 @@
+{
+ "name": "volleyball_net",
+ "tiers": {
+  "near": 1056,
+  "mid": 224,
+  "far": 18
+ },
+ "budget": 1200,
+ "class": "medium",
+ "far_paint_max": 1.0,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_volleyball_net_clean_far.glb",
+   "tier": "far",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 18,
+   "verts": 36,
+   "budget": 20,
+   "size": [
+    10.22,
+    2.6,
+    0.18
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_volleyball_net_clean_mid.glb",
+   "tier": "mid",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "24 tris may face inward / be enclosed"
+   ],
+   "tris": 224,
+   "verts": 481,
+   "budget": 361,
+   "size": [
+    10.191,
+    2.6,
+    0.22
+   ],
+   "odd_ray": 26
+  },
+  {
+   "file": "prop_volleyball_net_clean_near.glb",
+   "tier": "near",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "82 tris may face inward / be enclosed"
+   ],
+   "tris": 1056,
+   "verts": 1949,
+   "budget": 1200,
+   "size": [
+    13.32,
+    3.23,
+    2.12
+   ],
+   "odd_ray": 118
+  },
+  {
+   "file": "prop_volleyball_net_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 3,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.845,
+   "dE": 4.5
+  },
+  "top": {
+   "iou": 1.0,
+   "dE": 2.3
+  },
+  "left": {
+   "iou": 0.0,
+   "dE": 99,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 1,
+  "rail": 2
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 48,
+ "bake_px_per_m": 238.5,
+ "high_tris": 5538,
+ "pass": true
+}

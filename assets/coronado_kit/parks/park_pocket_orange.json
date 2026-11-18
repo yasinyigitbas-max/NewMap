@@ -1,0 +1,191 @@
+{
+ "name": "park_pocket_orange",
+ "style": "pocket_plaza",
+ "footprint": [
+  16,
+  12
+ ],
+ "zones": [
+  {
+   "kind": "plaza",
+   "rect": [
+    -8,
+    8,
+    -6,
+    6
+   ]
+  }
+ ],
+ "instances": [
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    -5,
+    0.0,
+    -3.0
+   ],
+   "rot_y": 0.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    5,
+    0.0,
+    -3.0
+   ],
+   "rot_y": 0.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_lamp_globe",
+   "cond": "clean",
+   "pos": [
+    -6.8,
+    0.0,
+    4.8
+   ],
+   "rot_y": 0.0,
+   "role": "lamp",
+   "file": "props/street/prop_lamp_globe_clean_near.glb",
+   "tris_near": 684
+  },
+  {
+   "base": "prop_lamp_globe",
+   "cond": "clean",
+   "pos": [
+    6.8,
+    0.0,
+    4.8
+   ],
+   "rot_y": 0.0,
+   "role": "lamp",
+   "file": "props/street/prop_lamp_globe_clean_near.glb",
+   "tris_near": 684
+  },
+  {
+   "base": "plant_potted_leafy",
+   "cond": "normal",
+   "pos": [
+    -2.4,
+    0.0,
+    -4.6
+   ],
+   "rot_y": 0,
+   "role": "plant",
+   "file": "foliage/plant_potted_leafy_normal_near.glb",
+   "tris_near": 292
+  },
+  {
+   "base": "plant_potted_leafy",
+   "cond": "normal",
+   "pos": [
+    2.4,
+    0.0,
+    -4.6
+   ],
+   "rot_y": 0,
+   "role": "plant",
+   "file": "foliage/plant_potted_leafy_normal_near.glb",
+   "tris_near": 292
+  },
+  {
+   "base": "plant_potted_leafy",
+   "cond": "normal",
+   "pos": [
+    -7.2,
+    0.0,
+    -0.5
+   ],
+   "rot_y": 0,
+   "role": "plant",
+   "file": "foliage/plant_potted_leafy_normal_near.glb",
+   "tris_near": 292
+  },
+  {
+   "base": "plant_potted_leafy",
+   "cond": "normal",
+   "pos": [
+    7.2,
+    0.0,
+    -0.5
+   ],
+   "rot_y": 0,
+   "role": "plant",
+   "file": "foliage/plant_potted_leafy_normal_near.glb",
+   "tris_near": 292
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "pos": [
+    0,
+    0.0,
+    -3.0
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/palm_queen_b_normal_near.glb",
+   "tris_near": 560
+  },
+  {
+   "base": "prop_trash_receptacle",
+   "cond": "clean",
+   "pos": [
+    -3.0,
+    0.0,
+    4.6
+   ],
+   "rot_y": 0.0,
+   "role": "bin",
+   "file": "props/street/prop_trash_receptacle_clean_near.glb",
+   "tris_near": 298
+  },
+  {
+   "base": "prop_bike_rack",
+   "cond": "clean",
+   "pos": [
+    3.2,
+    0.0,
+    4.6
+   ],
+   "rot_y": 0,
+   "role": "bike",
+   "file": "props/street/prop_bike_rack_clean_near.glb",
+   "tris_near": 540
+  },
+  {
+   "base": "prop_newspaper_box_blue",
+   "cond": "clean",
+   "pos": [
+    -5.2,
+    0.0,
+    5.2
+   ],
+   "rot_y": 180,
+   "role": "box",
+   "file": "props/street/prop_newspaper_box_blue_clean_near.glb",
+   "tris_near": 158
+  }
+ ],
+ "stats": {
+  "instances": 12,
+  "near_tris_sum": 4452,
+  "assets": [
+   "palm_queen_b",
+   "plant_potted_leafy",
+   "prop_bike_rack",
+   "prop_lamp_globe",
+   "prop_newspaper_box_blue",
+   "prop_park_bench",
+   "prop_trash_receptacle"
+  ]
+ },
+ "errors": []
+}

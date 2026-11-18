@@ -1,0 +1,108 @@
+{
+ "name": "quay_corner_out",
+ "tiers": {
+  "near": 1229,
+  "mid": 241,
+  "far": 12
+ },
+ "budget": 2500,
+ "class": "large",
+ "far_paint_max": 0.41005132240093356,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_quay_corner_out_clean_far.glb",
+   "tier": "far",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 12,
+   "verts": 22,
+   "budget": 20,
+   "size": [
+    1.85,
+    3.0,
+    1.85
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_quay_corner_out_clean_mid.glb",
+   "tier": "mid",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "21 tris may face inward / be enclosed"
+   ],
+   "tris": 241,
+   "verts": 660,
+   "budget": 751,
+   "size": [
+    2.01,
+    3.535,
+    2.01
+   ],
+   "odd_ray": 39
+  },
+  {
+   "file": "prop_quay_corner_out_clean_near.glb",
+   "tier": "near",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "99 tris may face inward / be enclosed"
+   ],
+   "tris": 1229,
+   "verts": 2163,
+   "budget": 2500,
+   "size": [
+    2.025,
+    3.535,
+    2.025
+   ],
+   "odd_ray": 214
+  },
+  {
+   "file": "prop_quay_corner_out_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 5,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.893,
+   "dE": 1.9
+  },
+  "top": {
+   "iou": 0.889,
+   "dE": 0.3
+  },
+  "left": {
+   "iou": 0.899,
+   "dE": 0.6,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 2,
+  "rail": 3
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 160,
+ "bake_px_per_m": 70.7,
+ "high_tris": 13650,
+ "pass": true
+}

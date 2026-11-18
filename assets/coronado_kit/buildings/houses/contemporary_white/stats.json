@@ -1,0 +1,115 @@
+{
+ "name": "contemporary_white",
+ "cat": "house",
+ "style": "contemporary",
+ "logic_errors": [],
+ "col_boxes": 7,
+ "near": {
+  "tris": 1791,
+  "verts": 3257,
+  "regions": [
+   "O_door_modern",
+   "O_door_slider",
+   "O_lamp",
+   "O_number",
+   "O_vent",
+   "O_win_modern",
+   "R_flat",
+   "S_black",
+   "S_concrete",
+   "S_siding",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_deck",
+   "T_metal",
+   "T_white",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.71999979019165,
+    -0.0,
+    -5.949999809265137
+   ],
+   [
+    5.449999809265137,
+    6.96999979019165,
+    7.300000190734863
+   ]
+  ]
+ },
+ "mid_roof_top": 6.9,
+ "mid": {
+  "tris": 326,
+  "verts": 404,
+  "regions": [
+   "O_door_modern",
+   "O_door_slider",
+   "O_win_modern",
+   "S_concrete",
+   "S_flat",
+   "S_soffit",
+   "S_white",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.0,
+    0.0,
+    -5.5
+   ],
+   [
+    5.0,
+    6.900000095367432,
+    7.300000190734863
+   ]
+  ]
+ },
+ "far": {
+  "tris": 10,
+  "verts": 20,
+  "regions": [
+   "F_flat",
+   "F_siding_2"
+  ],
+  "bbox": [
+   [
+    -5.0,
+    0.0,
+    -5.5
+   ],
+   [
+    5.0,
+    6.900000095367432,
+    5.5
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door_modern",
+   3.5
+  ],
+  [
+   "slider",
+   -1.8
+  ]
+ ],
+ "footprint_wd": [
+  10.0,
+  11.0
+ ],
+ "footprint_area": 110.0,
+ "height": 6.97,
+ "storeys": 2,
+ "budget": [
+  2500,
+  750,
+  60
+ ],
+ "budget_class": "house_large",
+ "time_s": 14.6
+}

@@ -1,0 +1,116 @@
+{
+ "name": "urb_dept_store",
+ "cat": "urban",
+ "style": "department_store",
+ "logic_errors": [],
+ "col_boxes": 6,
+ "near": {
+  "tris": 3554,
+  "verts": 6494,
+  "regions": [
+   "AW_black",
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_ribbon",
+   "O_rollup",
+   "O_shopdoor",
+   "O_storefront",
+   "O_vent",
+   "R_flat",
+   "S_awn_black",
+   "S_black",
+   "S_concrete",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -18.450000762939453,
+    -0.0,
+    -13.5
+   ],
+   [
+    18.450000762939453,
+    10.470000267028809,
+    14.5
+   ]
+  ]
+ },
+ "mid_roof_top": 10.4,
+ "mid": {
+  "tris": 492,
+  "verts": 586,
+  "regions": [
+   "AW_black",
+   "O_apt_door",
+   "O_glass_plain",
+   "O_rollup",
+   "O_shopdoor",
+   "S_awn_black",
+   "S_concrete",
+   "S_flat",
+   "S_signbg",
+   "S_white",
+   "T_dark",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -18.0,
+    0.0,
+    -13.5
+   ],
+   [
+    18.0,
+    10.399999618530273,
+    14.5
+   ]
+  ]
+ },
+ "far": {
+  "tris": 34,
+  "verts": 68,
+  "regions": [
+   "F_c_tower_3",
+   "F_flat"
+  ],
+  "bbox": [
+   [
+    -18.0,
+    -0.0,
+    -12.0
+   ],
+   [
+    18.0,
+    10.399999618530273,
+    12.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   15.4
+  ]
+ ],
+ "footprint_wd": [
+  36.0,
+  24.0
+ ],
+ "footprint_area": 864.0,
+ "height": 10.47,
+ "storeys": 3,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "civic",
+ "time_s": 20.2
+}

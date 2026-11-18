@@ -1,0 +1,373 @@
+{
+ "name": "boat_sloop",
+ "tiers": {
+  "near": 2379,
+  "mid": 362,
+  "far": 19
+ },
+ "budget": 2500,
+ "class": "large",
+ "far_paint_max": 0.9908756351473241,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_boat_sloop_clean_far.glb",
+   "tier": "far",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 19,
+   "verts": 27,
+   "budget": 20,
+   "size": [
+    3.1,
+    13.986,
+    9.22
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_boat_sloop_clean_mid.glb",
+   "tier": "mid",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 361,
+   "verts": 887,
+   "budget": 751,
+   "size": [
+    2.976,
+    13.699,
+    9.2
+   ],
+   "odd_ray": 14
+  },
+  {
+   "file": "prop_boat_sloop_clean_near.glb",
+   "tier": "near",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "221 tris may face inward / be enclosed"
+   ],
+   "tris": 2378,
+   "verts": 4767,
+   "budget": 2500,
+   "size": [
+    3.22,
+    14.597,
+    9.488
+   ],
+   "odd_ray": 360
+  },
+  {
+   "file": "prop_boat_sloop_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 7,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.807,
+   "dE": 2.4
+  },
+  "top": {
+   "iou": 0.918,
+   "dE": 0.2
+  },
+  "left": {
+   "iou": 0.505,
+   "dE": 5.6,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 4,
+  "rail": 3
+ },
+ "col_ok": true,
+ "rail_ok": true,
+ "railcheck": [
+  {
+   "member": 0,
+   "kind": "p",
+   "end": [
+    -0.582,
+    2.415,
+    3.588
+   ],
+   "gap": 0.0007,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 0,
+   "kind": "p",
+   "end": [
+    0.582,
+    2.415,
+    3.588
+   ],
+   "gap": 0.0007,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 1,
+   "kind": "v",
+   "end": [
+    -0.12,
+    2.482,
+    4.278
+   ],
+   "gap": 0.0035,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 2,
+   "kind": "v",
+   "end": [
+    0.12,
+    2.482,
+    4.278
+   ],
+   "gap": 0.0035,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 3,
+   "kind": "p",
+   "end": [
+    1.292,
+    2.164,
+    -3.496
+   ],
+   "gap": 0.0011,
+   "pen": 0.0011,
+   "ok": true
+  },
+  {
+   "member": 3,
+   "kind": "p",
+   "end": [
+    -1.292,
+    2.164,
+    -3.496
+   ],
+   "gap": 0.0011,
+   "pen": 0.0011,
+   "ok": true
+  },
+  {
+   "member": 4,
+   "kind": "v",
+   "end": [
+    1.133,
+    2.178,
+    -4.508
+   ],
+   "gap": 0.0001,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 5,
+   "kind": "v",
+   "end": [
+    -1.133,
+    2.178,
+    -4.508
+   ],
+   "gap": 0.0001,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 6,
+   "kind": "v",
+   "end": [
+    1.133,
+    2.32,
+    2.208
+   ],
+   "gap": 0.0,
+   "pen": 0.006,
+   "ok": true
+  },
+  {
+   "member": 7,
+   "kind": "v",
+   "end": [
+    1.382,
+    2.236,
+    0.368
+   ],
+   "gap": 0.0002,
+   "pen": 0.0002,
+   "ok": true
+  },
+  {
+   "member": 8,
+   "kind": "v",
+   "end": [
+    1.414,
+    2.185,
+    -1.472
+   ],
+   "gap": 0.0,
+   "pen": 0.006,
+   "ok": true
+  },
+  {
+   "member": 9,
+   "kind": "p",
+   "end": [
+    0.582,
+    3.035,
+    3.576
+   ],
+   "gap": 0.0003,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 9,
+   "kind": "p",
+   "end": [
+    1.292,
+    2.784,
+    -3.484
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 10,
+   "kind": "p",
+   "end": [
+    0.582,
+    2.745,
+    3.576
+   ],
+   "gap": 0.0006,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 10,
+   "kind": "p",
+   "end": [
+    1.292,
+    2.494,
+    -3.484
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 11,
+   "kind": "v",
+   "end": [
+    -1.133,
+    2.32,
+    2.208
+   ],
+   "gap": 0.0,
+   "pen": 0.006,
+   "ok": true
+  },
+  {
+   "member": 12,
+   "kind": "v",
+   "end": [
+    -1.382,
+    2.236,
+    0.368
+   ],
+   "gap": 0.0002,
+   "pen": 0.0002,
+   "ok": true
+  },
+  {
+   "member": 13,
+   "kind": "v",
+   "end": [
+    -1.414,
+    2.185,
+    -1.472
+   ],
+   "gap": 0.0,
+   "pen": 0.006,
+   "ok": true
+  },
+  {
+   "member": 14,
+   "kind": "p",
+   "end": [
+    -0.582,
+    3.035,
+    3.576
+   ],
+   "gap": 0.0008,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 14,
+   "kind": "p",
+   "end": [
+    -1.292,
+    2.784,
+    -3.484
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 15,
+   "kind": "p",
+   "end": [
+    -0.582,
+    2.745,
+    3.576
+   ],
+   "gap": 0.0005,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 15,
+   "kind": "p",
+   "end": [
+    -1.292,
+    2.494,
+    -3.484
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  }
+ ],
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 64,
+ "bake_px_per_m": 108.2,
+ "high_tris": 32322,
+ "pass": true
+}

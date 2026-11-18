@@ -1,0 +1,548 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "bar",
+ "types": [
+  "bar",
+  "pub"
+ ],
+ "floor": "WoodFloor034",
+ "wall": "WoodSiding008",
+ "wall_tint": [
+  0.85,
+  0.75,
+  0.65
+ ],
+ "ceiling": "Plaster001",
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.0,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter",
+  "back_bar",
+  "seating"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    2.4,
+    4.2
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "alcohol"
+   ],
+   "wall": true
+  },
+  {
+   "role": "back_bar",
+   "prop": "shelf_wall",
+   "place": "behind_counter",
+   "goods": [
+    "alcohol"
+   ]
+  },
+  {
+   "role": "booths",
+   "prop": "booth_set",
+   "place": "booths",
+   "max": 3
+  },
+  {
+   "role": "seating",
+   "prop": "table",
+   "place": "grid",
+   "seats": 2
+  }
+ ],
+ "clutter": true,
+ "signs": true,
+ "plans": [
+  {
+   "name": "dive",
+   "fixtures": "bar_dive",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      2.4,
+      4.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "alcohol"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "alcohol"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 3
+    },
+    {
+     "role": "art",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "door_side",
+      "back"
+     ],
+     "max": 1
+    }
+   ],
+   "wear": 0.7,
+   "floor": "Concrete034",
+   "wall": "Bricks066",
+   "wall_tint": [
+    0.8,
+    0.7,
+    0.65
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "WoodSiding008",
+   "ceiling_scale": 2.0,
+   "keys": [
+    "n10936222136"
+   ],
+   "pool": true
+  },
+  {
+   "name": "pub",
+   "fixtures": "bar_pub",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      2.4,
+      4.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "alcohol"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "alcohol"
+     ]
+    },
+    {
+     "role": "booths",
+     "prop": "booth_set",
+     "place": "booths",
+     "max": 3
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    }
+   ],
+   "wear": 0.45,
+   "floor": "WoodFloor034",
+   "wall": "WoodSiding008",
+   "wall_tint": [
+    0.85,
+    0.75,
+    0.65
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Wood058",
+   "ceiling_scale": 2.0,
+   "keys": [
+    "n4360771592"
+   ],
+   "pool": true
+  },
+  {
+   "name": "lounge",
+   "fixtures": "bar_lounge",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      2.4,
+      4.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "alcohol"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "alcohol"
+     ]
+    },
+    {
+     "role": "booths",
+     "prop": "booth_set",
+     "place": "booths",
+     "max": 2
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 2
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ],
+   "wear": 0.28,
+   "floor": "Carpet012",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.45,
+    0.2,
+    0.22
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "WoodSiding008",
+   "ceiling_scale": 2.0
+  },
+  {
+   "name": "tavern",
+   "fixtures": {
+    "gain": 1.0,
+    "over": [
+     {
+      "roles": [
+       "counter"
+      ],
+      "kind": "pendant",
+      "every": 1.0,
+      "drop": 0.8,
+      "shade": "cone",
+      "col": "brass"
+     },
+     {
+      "roles": [
+       "seating"
+      ],
+      "kind": "bulb",
+      "every": 0,
+      "drop": 0.9
+     }
+    ],
+    "walls": {
+     "kind": "sconce",
+     "every": 2.4,
+     "walls": [
+      "side"
+     ],
+     "y": 1.9
+    },
+    "fans": {
+     "every": 3.5,
+     "drop": 0.35
+    },
+    "signs": [
+     {
+      "kind": "neon",
+      "text": "TAVERN",
+      "col": [
+       1.0,
+       0.5,
+       0.15
+      ],
+      "where": "back",
+      "h": 0.3
+     },
+     {
+      "kind": "lightbox",
+      "col": [
+       0.6,
+       0.1,
+       0.1
+      ],
+      "col2": [
+       0.95,
+       0.9,
+       0.75
+      ],
+      "where": "behind_counter"
+     }
+    ]
+   },
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      2.4,
+      4.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "alcohol"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "alcohol"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    },
+    {
+     "role": "art",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "door_side",
+      "back"
+     ],
+     "max": 1
+    }
+   ],
+   "wear": 0.5,
+   "floor": "Tiles143",
+   "wall": "Bricks066",
+   "wall_tint": [
+    0.75,
+    0.62,
+    0.55
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Wood058",
+   "ceiling_scale": 2.0,
+   "keys": [
+    "w363141081"
+   ],
+   "pool": true
+  },
+  {
+   "name": "danni_palm",
+   "keys": [
+    "n365317713"
+   ],
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      3.2,
+      4.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "alcohol"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_bar",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "alcohol"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 2
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ],
+   "fixtures": {
+    "gain": 1.0,
+    "over": [
+     {
+      "roles": [
+       "counter"
+      ],
+      "kind": "bulb",
+      "every": 0.75,
+      "drop": 0.7
+     },
+     {
+      "roles": [
+       "seating"
+      ],
+      "kind": "pendant",
+      "every": 0,
+      "drop": 0.95,
+      "shade": "drum",
+      "col": "red"
+     }
+    ],
+    "fans": {
+     "every": 3.2,
+     "drop": 0.35
+    },
+    "signs": [
+     {
+      "kind": "neon",
+      "text": "PALM BAR",
+      "col": [
+       0.25,
+       1.0,
+       0.5
+      ],
+      "where": "back",
+      "h": 0.34
+     },
+     {
+      "kind": "neon",
+      "icon": "palm",
+      "col": [
+       1.0,
+       0.55,
+       0.2
+      ],
+      "where": "side",
+      "w": 0.55,
+      "h": 0.7
+     },
+     {
+      "kind": "lightbox",
+      "col": [
+       0.95,
+       0.75,
+       0.1
+      ],
+      "col2": [
+       0.15,
+       0.3,
+       0.2
+      ],
+      "text": "COLD BEER",
+      "where": "behind_counter",
+      "w": 0.8,
+      "h": 0.4
+     },
+     {
+      "kind": "neon",
+      "icon": "beer",
+      "col": [
+       1.0,
+       0.8,
+       0.25
+      ],
+      "where": "behind_counter",
+      "w": 0.5,
+      "h": 0.5
+     }
+    ]
+   },
+   "signs": {
+    "kit": "bar",
+    "n_posters": [
+     2,
+     2
+    ],
+    "posters": [
+     "poster_happy_hour",
+     "poster_live_music"
+    ]
+   },
+   "food_dress": {
+    "floor": [
+     [
+      "kegs",
+      2,
+      2
+     ],
+     [
+      "red_crates",
+      1,
+      1
+     ]
+    ],
+    "menus": [
+     [
+      "menu_bar_taps",
+      "behind"
+     ],
+     [
+      "menu_bar_cocktails",
+      "wall"
+     ],
+     [
+      "menu_aframe",
+      "door"
+     ]
+    ]
+   },
+   "busy": 0.4,
+   "max_people": 3,
+   "wear": 0.5,
+   "floor": "WoodFloor034",
+   "wall": "WoodSiding008",
+   "wall_tint": [
+    0.8,
+    0.68,
+    0.58
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "WoodSiding008",
+   "ceiling_scale": 2.0
+  }
+ ],
+ "hours": [
+  11,
+  2
+ ],
+ "busy": 0.6
+}

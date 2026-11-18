@@ -1,0 +1,152 @@
+{
+ "name": "house_wall_3m_garage_stucco_white",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 36,
+  "verts": 66,
+  "regions": [
+   "O_garage_panel",
+   "S_stucco",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -1.5,
+    0.0,
+    0.07000000029802322
+   ],
+   [
+    1.5,
+    3.5,
+    0.15000000596046448
+   ]
+  ]
+ },
+ "mid_roof_top": 3.5,
+ "mid": {
+  "tris": 16,
+  "verts": 24,
+  "regions": [
+   "O_garage_panel",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -1.5,
+    0.0,
+    0.15000000596046448
+   ],
+   [
+    1.5,
+    3.5,
+    0.15000000596046448
+   ]
+  ]
+ },
+ "far": {
+  "tris": 16,
+  "verts": 22,
+  "regions": [
+   "F_dark",
+   "F_stucco_blank"
+  ],
+  "bbox": [
+   [
+    -1.5,
+    0.0,
+    0.15000000596046448
+   ],
+   [
+    1.5,
+    3.5,
+    0.15000000596046448
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "garage",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  3.0,
+  0.3
+ ],
+ "footprint_area": 0.9,
+ "height": 3.5,
+ "storeys": 1,
+ "budget": [
+  160,
+  50,
+  24
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_house_wall",
+ "time_s": 0.1,
+ "open_planes": [
+  [
+   0,
+   -1.5,
+   -1,
+   null
+  ],
+  [
+   0,
+   1.5,
+   1,
+   null
+  ],
+  [
+   2,
+   -0.15,
+   -1,
+   null
+  ],
+  [
+   1,
+   3.5,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.15
+ ],
+ "openings": [
+  {
+   "k": "garage",
+   "c": 0.0,
+   "w": 2.4,
+   "t0": 0.0,
+   "t1": 2.2
+  }
+ ],
+ "snap": {
+  "grid": 0.5,
+  "module": 3.0,
+  "type": "house_wall",
+  "ends": [
+   [
+    -1.5,
+    0,
+    0.15
+   ],
+   [
+    1.5,
+    0,
+    0.15
+   ]
+  ],
+  "face_z": 0.15,
+  "plate_y": 3.5
+ },
+ "no_door": false,
+ "base_y": 0.0,
+ "ground_reach": false
+}

@@ -1,0 +1,24 @@
+{
+ "name": "mod_twr_office",
+ "cat": "mod",
+ "budget_class": "tower",
+ "budget": [
+  4000,
+  1200,
+  80
+ ],
+ "storeys": 10,
+ "footprint_wd": [
+  16.0,
+  20.0
+ ],
+ "footprint_area": 320.0,
+ "logic_errors": [],
+ "col_boxes": 1,
+ "tris": {
+  "near": 3580,
+  "mid": 1056,
+  "far": 50
+ },
+ "no_door": false
+}

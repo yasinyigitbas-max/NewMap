@@ -1,0 +1,112 @@
+{
+ "name": "ck_apt3_row3_boarded",
+ "group": "urban",
+ "outline": {
+  "kind": "block",
+  "W": 18.0,
+  "D": 12.0,
+  "storeys": 3,
+  "wall": "W_stucco",
+  "tint": [
+   0.97,
+   0.96,
+   0.93
+  ],
+  "budget": "apartment_large",
+  "floor": 0.3,
+  "storey": 3.0,
+  "parapet": 0.8,
+  "sills": true,
+  "foundation": true,
+  "far_facade": "F_c_apt_3",
+  "far_tile": 3.0,
+  "far_u0": -3.0
+ },
+ "pieces": [
+  {
+   "piece": "urb_apt_front_6m_open",
+   "x": -6.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_apt_front_6m_boarded",
+   "x": 0.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_apt_front_6m_open",
+   "x": 6.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_apt_back_6m",
+   "x": 6.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_apt_back_6m",
+   "x": 0.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_apt_back_6m",
+   "x": -6.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_apt_side_12m",
+   "x": 8.85,
+   "z": 0.0,
+   "rot_y": 90
+  },
+  {
+   "piece": "urb_apt_side_12m",
+   "x": -8.85,
+   "z": 0.0,
+   "rot_y": 270
+  },
+  {
+   "piece": "urb_apt_roof_6x12",
+   "x": -6.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_apt_roof_6x12",
+   "x": 0.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_apt_roof_6x12",
+   "x": 6.0,
+   "z": 0.0,
+   "rot_y": 0
+  }
+ ],
+ "budget_class": "apartment_large",
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "col_boxes": 1,
+ "far_from": "snapped outline hull",
+ "merged": {
+  "near_mid": "pieces merged, 1 mesh/1 primitive/1 material",
+  "far_col": "outline hull + <=12 boxes"
+ },
+ "far_tiles": {
+  "example": "@map:apt3_row3",
+  "nx": 1,
+  "nz": 1,
+  "size": 0.0
+ },
+ "note": "ck_apt3_row3 with the middle bay boarded up (gritty edge, 17 Nov)"
+}

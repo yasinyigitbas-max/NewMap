@@ -1,0 +1,111 @@
+{
+ "name": "fuel_pump",
+ "tiers": {
+  "near": 912,
+  "mid": 68,
+  "far": 18
+ },
+ "budget": 1200,
+ "class": "medium",
+ "far_paint_max": 0.8644159221450303,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_fuel_pump_clean_far.glb",
+   "tier": "far",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.00,-0.12) - asymmetric parts?"
+   ],
+   "tris": 18,
+   "verts": 36,
+   "budget": 20,
+   "size": [
+    1.4,
+    1.78,
+    1.1
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_fuel_pump_clean_mid.glb",
+   "tier": "mid",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.00,-0.12) - asymmetric parts?"
+   ],
+   "tris": 68,
+   "verts": 165,
+   "budget": 361,
+   "size": [
+    1.4,
+    1.78,
+    1.1
+   ],
+   "odd_ray": 5
+  },
+  {
+   "file": "prop_fuel_pump_clean_near.glb",
+   "tier": "near",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.00,-0.12) - asymmetric parts?",
+    "60 tris may face inward / be enclosed"
+   ],
+   "tris": 912,
+   "verts": 1759,
+   "budget": 1200,
+   "size": [
+    1.4,
+    1.78,
+    1.1
+   ],
+   "odd_ray": 174
+  },
+  {
+   "file": "prop_fuel_pump_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 4,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.946,
+   "dE": 0.4
+  },
+  "top": {
+   "iou": 1.0,
+   "dE": 0.9
+  },
+  "left": {
+   "iou": 0.0,
+   "dE": 99,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 2,
+  "rail": 2
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 48,
+ "bake_px_per_m": 29.4,
+ "high_tris": 63868,
+ "pass": true
+}

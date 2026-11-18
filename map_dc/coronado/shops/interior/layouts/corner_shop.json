@@ -1,0 +1,403 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "corner_shop",
+ "clutter": true,
+ "signs": true,
+ "types": [
+  "convenience",
+  "alcohol"
+ ],
+ "floor": "Tiles012",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  1,
+  1,
+  1
+ ],
+ "ceiling": "OfficeCeiling002",
+ "ceiling_scale": 3.6,
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.5,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter",
+  "fridges",
+  "wall_shelves"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    2.4
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "snack",
+    "candy"
+   ],
+   "wall": true
+  },
+  {
+   "role": "cigarette_wall",
+   "prop": "shelf_wall",
+   "place": "behind_counter",
+   "goods": [
+    "snack",
+    "alcohol"
+   ]
+  },
+  {
+   "role": "fridges",
+   "prop": "fridge",
+   "place": "walls",
+   "walls": [
+    "back"
+   ],
+   "goods": [
+    "drink",
+    "alcohol"
+   ]
+  },
+  {
+   "role": "wall_shelves",
+   "prop": "shelf_wall",
+   "place": "walls",
+   "walls": [
+    "door_side"
+   ],
+   "goods": [
+    "grocery",
+    "household",
+    "snack",
+    "meal",
+    "alcohol"
+   ]
+  },
+  {
+   "role": "aisles",
+   "prop": "gondola",
+   "place": "aisles",
+   "goods": [
+    "grocery",
+    "snack",
+    "household",
+    "alcohol"
+   ]
+  }
+ ],
+ "plans": [
+  {
+   "name": "deli",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "snack",
+      "candy"
+     ],
+     "wall": true
+    },
+    {
+     "role": "cigarette_wall",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "snack",
+      "alcohol"
+     ]
+    },
+    {
+     "role": "fridges",
+     "prop": "fridge",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "drink",
+      "alcohol"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "goods": [
+      "grocery",
+      "household",
+      "snack",
+      "meal",
+      "alcohol"
+     ]
+    },
+    {
+     "role": "aisles",
+     "prop": "gondola",
+     "place": "aisles",
+     "goods": [
+      "grocery",
+      "snack",
+      "household"
+     ],
+     "dims": [
+      1.0,
+      2.5
+     ]
+    }
+   ],
+   "fixtures": "shop_troffer"
+  },
+  {
+   "name": "liquor",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "snack",
+      "candy"
+     ],
+     "wall": true
+    },
+    {
+     "role": "cigarette_wall",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "snack",
+      "alcohol"
+     ]
+    },
+    {
+     "role": "fridges",
+     "prop": "fridge",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "goods": [
+      "drink",
+      "alcohol"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "alcohol",
+      "snack",
+      "grocery"
+     ]
+    },
+    {
+     "role": "aisles",
+     "prop": "gondola",
+     "place": "aisles",
+     "goods": [
+      "snack",
+      "grocery"
+     ],
+     "dims": [
+      1.0,
+      2.5
+     ],
+     "max": 2
+    },
+    {
+     "role": "ice",
+     "prop": "freezer",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "unit": [
+      1.35,
+      0.75
+     ],
+     "max": 1
+    }
+   ],
+   "clutter": {
+    "floor": [
+     3,
+     5
+    ],
+    "floor_kinds": [
+     "red_crates",
+     "red_crates",
+     "water_pack"
+    ]
+   },
+   "fixtures": "shop_troffer"
+  },
+  {
+   "name": "bodega",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "snack",
+      "candy"
+     ],
+     "wall": true
+    },
+    {
+     "role": "cigarette_wall",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "snack",
+      "alcohol"
+     ]
+    },
+    {
+     "role": "fridges",
+     "prop": "fridge",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "drink"
+     ],
+     "max": 3
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "door_side",
+      "back"
+     ],
+     "goods": [
+      "grocery",
+      "household",
+      "snack",
+      "meal"
+     ]
+    },
+    {
+     "role": "produce",
+     "prop": "produce",
+     "place": "aisles",
+     "goods": [
+      "produce",
+      "snack"
+     ],
+     "max": 1
+    },
+    {
+     "role": "aisles",
+     "prop": "gondola",
+     "place": "aisles",
+     "goods": [
+      "grocery",
+      "snack",
+      "household"
+     ],
+     "dims": [
+      1.0,
+      2.5
+     ]
+    }
+   ],
+   "clutter": {
+    "floor": [
+     3,
+     6
+    ]
+   },
+   "signs": {
+    "n_posters": [
+     3,
+     4
+    ],
+    "n_neon": [
+     2,
+     2
+    ]
+   },
+   "fixtures": "shop_tubes"
+  }
+ ],
+ "styles": [
+  {
+   "floor": "Tiles012",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.97,
+    0.9
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  },
+  {
+   "floor": "Tiles074",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.92,
+    0.97,
+    1.0
+   ],
+   "wainscot": "Tiles141",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  },
+  {
+   "floor": "Concrete047A",
+   "wall": "Bricks066",
+   "wall_tint": [
+    1,
+    0.95,
+    0.88
+   ],
+   "wainscot": "WoodSiding008",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  }
+ ]
+}

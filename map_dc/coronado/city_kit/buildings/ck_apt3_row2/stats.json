@@ -1,0 +1,25 @@
+{
+ "cat": "mod",
+ "doors_front": [
+  [
+   "apt_door",
+   -3.0
+  ],
+  [
+   "apt_door",
+   3.0
+  ]
+ ],
+ "footprint_wd": [
+  12.0,
+  12.0
+ ],
+ "height": 10.1,
+ "merged_from": "ck_apt3_row2.json",
+ "name": "ck_apt3_row2",
+ "tris": {
+  "far": 10,
+  "mid": 764,
+  "near": 3112
+ }
+}

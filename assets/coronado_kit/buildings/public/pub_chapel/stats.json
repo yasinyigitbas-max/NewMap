@@ -1,0 +1,114 @@
+{
+ "name": "pub_chapel",
+ "cat": "urban",
+ "style": "cemetery_chapel",
+ "logic_errors": [],
+ "col_boxes": 9,
+ "near": {
+  "tris": 1436,
+  "verts": 2584,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_lamp",
+   "O_lancet",
+   "R_comp",
+   "R_flat",
+   "S_black",
+   "S_concrete",
+   "S_glass",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.519999980926514,
+    -0.0,
+    -9.5
+   ],
+   [
+    5.519999980926514,
+    17.549999237060547,
+    10.100000381469727
+   ]
+  ]
+ },
+ "mid_roof_top": 17.55,
+ "mid": {
+  "tris": 338,
+  "verts": 488,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_lancet",
+   "S_comp",
+   "S_concrete",
+   "S_flat",
+   "S_glass",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.400000095367432,
+    0.0,
+    -9.5
+   ],
+   [
+    5.400000095367432,
+    17.549999237060547,
+    10.100000381469727
+   ]
+  ]
+ },
+ "far": {
+  "tris": 42,
+  "verts": 78,
+  "regions": [
+   "F_c_apt_3",
+   "F_comp",
+   "F_stucco_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -5.0,
+    0.0,
+    -8.0
+   ],
+   [
+    5.0,
+    17.549999237060547,
+    8.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  10.0,
+  16.0
+ ],
+ "footprint_area": 160.0,
+ "height": 17.55,
+ "storeys": 1,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "civic",
+ "time_s": 5.1
+}

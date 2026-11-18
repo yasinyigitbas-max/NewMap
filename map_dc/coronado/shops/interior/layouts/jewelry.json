@@ -1,0 +1,352 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "jewelry",
+ "clutter": true,
+ "signs": true,
+ "types": [
+  "jewelry",
+  "antiques"
+ ],
+ "floor": "Marble006",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  1,
+  0.97,
+  0.92
+ ],
+ "ceiling": "Plaster001",
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.0,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter",
+  "cases"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    2.6
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "jewelry",
+    "jewelry_service"
+   ]
+  },
+  {
+   "role": "antique_shelves",
+   "prop": "shelf_wall",
+   "place": "walls",
+   "walls": [
+    "door_side",
+    "back"
+   ],
+   "only_types": [
+    "antiques"
+   ],
+   "goods": [
+    "jewelry",
+    "home"
+   ]
+  },
+  {
+   "role": "cases",
+   "prop": "display_case",
+   "place": "walls",
+   "walls": [
+    "back",
+    "door_side"
+   ],
+   "goods": [
+    "jewelry",
+    "gift",
+    "home"
+   ]
+  }
+ ],
+ "plans": [
+  {
+   "name": "cases",
+   "till": "tablet",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.6
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "jewelry",
+      "jewelry_service"
+     ]
+    },
+    {
+     "role": "cases",
+     "prop": "display_case",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "jewelry",
+      "gift",
+      "home"
+     ],
+     "unit": [
+      1.25,
+      0.6
+     ]
+    },
+    {
+     "role": "island",
+     "prop": "display_case",
+     "place": "aisles",
+     "goods": [
+      "jewelry",
+      "gift"
+     ],
+     "dims": [
+      0.6,
+      1.25
+     ],
+     "max": 3
+    },
+    {
+     "role": "antique_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "door_side",
+      "back"
+     ],
+     "only_types": [
+      "antiques"
+     ],
+     "goods": [
+      "jewelry",
+      "home"
+     ],
+     "max": 2
+    }
+   ],
+   "fixtures": "boutique_track"
+  },
+  {
+   "name": "salon",
+   "till": "tablet",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.6
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "jewelry",
+      "jewelry_service"
+     ]
+    },
+    {
+     "role": "cases",
+     "prop": "display_case",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "jewelry",
+      "gift"
+     ],
+     "unit": [
+      1.25,
+      0.6
+     ]
+    },
+    {
+     "role": "island",
+     "prop": "display_case",
+     "place": "aisles",
+     "goods": [
+      "jewelry",
+      "home"
+     ],
+     "dims": [
+      0.6,
+      1.25
+     ],
+     "max": 2
+    },
+    {
+     "role": "wall_cases",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "goods": [
+      "jewelry",
+      "home"
+     ],
+     "max": 2
+    },
+    {
+     "role": "seat",
+     "prop": "chair",
+     "place": "corner"
+    },
+    {
+     "role": "antique_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "door_side",
+      "back"
+     ],
+     "only_types": [
+      "antiques"
+     ],
+     "goods": [
+      "jewelry",
+      "home"
+     ],
+     "max": 2
+    }
+   ],
+   "fixtures": {
+    "grid": {
+     "kind": "pendant",
+     "pitch": [
+      2.4,
+      2.6
+     ],
+     "margin": 1.0,
+     "drop": 0.5,
+     "shade": "dome",
+     "col": "brass"
+    }
+   }
+  },
+  {
+   "name": "workshop",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.6
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "jewelry",
+      "jewelry_service"
+     ]
+    },
+    {
+     "role": "cases",
+     "prop": "display_case",
+     "place": "walls",
+     "walls": [
+      "door_side",
+      "back"
+     ],
+     "goods": [
+      "jewelry",
+      "jewelry_service"
+     ],
+     "unit": [
+      1.25,
+      0.6
+     ]
+    },
+    {
+     "role": "island",
+     "prop": "display_case",
+     "place": "aisles",
+     "goods": [
+      "jewelry"
+     ],
+     "dims": [
+      0.6,
+      1.25
+     ],
+     "max": 1
+    },
+    {
+     "role": "antique_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "door_side",
+      "back"
+     ],
+     "only_types": [
+      "antiques"
+     ],
+     "goods": [
+      "jewelry",
+      "home"
+     ],
+     "max": 2
+    }
+   ],
+   "fixtures": "shop_tubes"
+  }
+ ],
+ "styles": [
+  {
+   "floor": "Marble006",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.97,
+    0.92
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "Carpet012",
+   "wall": "Plaster001",
+   "wall_tint": [
+    1,
+    0.96,
+    0.9
+   ],
+   "wainscot": "WoodSiding008",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "Terrazzo005",
+   "wall": "Plaster001",
+   "wall_tint": [
+    1,
+    1,
+    1
+   ],
+   "wainscot": "Marble006",
+   "ceiling": "Plaster001"
+  }
+ ]
+}

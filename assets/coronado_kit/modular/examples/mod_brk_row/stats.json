@@ -1,0 +1,24 @@
+{
+ "name": "mod_brk_row",
+ "cat": "mod",
+ "budget_class": "apartment",
+ "budget": [
+  3500,
+  1000,
+  80
+ ],
+ "storeys": 3,
+ "footprint_wd": [
+  18.0,
+  14.0
+ ],
+ "footprint_area": 252.0,
+ "logic_errors": [],
+ "col_boxes": 1,
+ "tris": {
+  "near": 3174,
+  "mid": 778,
+  "far": 34
+ },
+ "no_door": false
+}

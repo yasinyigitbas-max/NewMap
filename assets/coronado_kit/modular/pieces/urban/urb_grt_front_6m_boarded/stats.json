@@ -1,0 +1,168 @@
+{
+ "name": "urb_grt_front_6m_boarded",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 160,
+  "verts": 298,
+  "regions": [
+   "O_shopdoor",
+   "R_flat",
+   "S_brick",
+   "S_soffit",
+   "S_stucco",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    -0.0,
+    -0.02500000037252903
+   ],
+   [
+    3.0,
+    4.769999980926514,
+    1.125
+   ]
+  ]
+ },
+ "mid_roof_top": 4.7,
+ "mid": {
+  "tris": 70,
+  "verts": 116,
+  "regions": [
+   "O_shopdoor",
+   "S_brick",
+   "S_dark",
+   "S_flat",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "T_dark",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    -0.0,
+    0.02500000037252903
+   ],
+   [
+    3.0,
+    4.699999809265137,
+    1.125
+   ]
+  ]
+ },
+ "far": {
+  "tris": 54,
+  "verts": 72,
+  "regions": [
+   "F_dark",
+   "F_flat",
+   "F_stucco_blank"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.22499999403953552
+   ],
+   [
+    3.0,
+    4.699999809265137,
+    1.125
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   -1.6
+  ]
+ ],
+ "footprint_wd": [
+  6.0,
+  0.45
+ ],
+ "footprint_area": 2.7,
+ "height": 4.77,
+ "storeys": 1,
+ "budget": [
+  600,
+  180,
+  120
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_grt_front",
+ "time_s": 0.4,
+ "open_planes": [
+  [
+   0,
+   -3.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   3.0,
+   1,
+   null
+  ],
+  [
+   2,
+   -0.225,
+   -1,
+   null
+  ],
+  [
+   1,
+   3.9,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.225
+ ],
+ "openings": [
+  {
+   "k": "shopdoor",
+   "c": -1.6,
+   "w": 1.2,
+   "t0": 0.0,
+   "t1": 3.0,
+   "depth": 0.25
+  }
+ ],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "grt_front",
+  "ends": [
+   [
+    -3.0,
+    0,
+    0.225
+   ],
+   [
+    3.0,
+    0,
+    0.225
+   ]
+  ],
+  "face_z": 0.225,
+  "plate_y": 3.9,
+  "parapet_top": 4.7
+ },
+ "no_door": false,
+ "base_y": 0.0,
+ "ground_reach": false
+}

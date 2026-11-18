@@ -1,0 +1,114 @@
+{
+ "name": "ext_marina_office",
+ "cat": "civic",
+ "style": "marina_office",
+ "logic_errors": [],
+ "col_boxes": 8,
+ "near": {
+  "tris": 2454,
+  "verts": 3994,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "O_lamp",
+   "R_metal",
+   "SG_harbor",
+   "S_black",
+   "S_concrete",
+   "S_deck",
+   "S_metal",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -14.0,
+    -0.0,
+    -6.5
+   ],
+   [
+    14.0,
+    9.0,
+    25.0
+   ]
+  ]
+ },
+ "mid_roof_top": 6.296,
+ "mid": {
+  "tris": 346,
+  "verts": 480,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "SG_harbor",
+   "S_concrete",
+   "S_deck",
+   "S_metal",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -14.0,
+    0.0,
+    -6.5
+   ],
+   [
+    14.0,
+    6.296000003814697,
+    25.0
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 46,
+  "regions": [
+   "F_metal",
+   "F_stucco_1",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -7.0,
+    0.0,
+    -5.0
+   ],
+   [
+    7.0,
+    6.296000003814697,
+    5.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  14.0,
+  10.0
+ ],
+ "footprint_area": 140.0,
+ "height": 9.0,
+ "storeys": 1,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "civic",
+ "time_s": 26.3
+}

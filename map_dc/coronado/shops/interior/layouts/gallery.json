@@ -1,0 +1,363 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested); required_shallow: roles a small (shallow / narrow real building) room must have. only_types: slot used only for those shop types.",
+ "set": "gallery",
+ "clutter": true,
+ "signs": true,
+ "types": [
+  "art_gallery",
+  "museum",
+  "craft_studio"
+ ],
+ "floor": "WoodFloor034",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  1,
+  1,
+  1
+ ],
+ "ceiling": "Plaster001",
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3,
+  "max_w": 12,
+  "min_d": 4,
+  "max_d": 14
+ },
+ "required": [
+  "counter",
+  "art_walls"
+ ],
+ "required_shallow": [
+  "counter"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    1.8
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "books",
+    "gift"
+   ],
+   "wall": true
+  },
+  {
+   "role": "shop_shelf",
+   "prop": "shelf_wall",
+   "place": "behind_counter",
+   "goods": [
+    "books",
+    "gift"
+   ]
+  },
+  {
+   "role": "art_walls",
+   "prop": "art_wall",
+   "place": "walls",
+   "walls": [
+    "back",
+    "door_side"
+   ],
+   "unit": [
+    1.6,
+    0.12
+   ]
+  },
+  {
+   "role": "workshop",
+   "prop": "table",
+   "place": "grid",
+   "seats": 2,
+   "only_types": [
+    "craft_studio"
+   ],
+   "max": 3
+  },
+  {
+   "role": "plinths",
+   "prop": "display_table",
+   "place": "aisles",
+   "goods": [
+    "art",
+    "gift"
+   ],
+   "max": 3
+  }
+ ],
+ "plans": [
+  {
+   "name": "white_cube",
+   "till": "tablet",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      1.8
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "books",
+      "gift"
+     ],
+     "wall": true
+    },
+    {
+     "role": "shop_shelf",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "books",
+      "gift"
+     ]
+    },
+    {
+     "role": "art_walls",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "unit": [
+      1.6,
+      0.12
+     ]
+    },
+    {
+     "role": "workshop",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "only_types": [
+      "craft_studio"
+     ],
+     "max": 3
+    },
+    {
+     "role": "plinths",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "art",
+      "gift"
+     ],
+     "max": 3
+    }
+   ],
+   "fixtures": "boutique_track"
+  },
+  {
+   "name": "salon",
+   "till": "tablet",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      1.8
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "books",
+      "gift"
+     ],
+     "wall": true
+    },
+    {
+     "role": "shop_shelf",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "books",
+      "gift"
+     ]
+    },
+    {
+     "role": "art_walls",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "unit": [
+      1.1,
+      0.12
+     ]
+    },
+    {
+     "role": "plinths",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "art",
+      "gift"
+     ],
+     "max": 2
+    },
+    {
+     "role": "bench",
+     "prop": "bench",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "unit": [
+      1.5,
+      0.55
+     ],
+     "max": 1
+    }
+   ],
+   "fixtures": {
+    "grid": {
+     "kind": "pendant",
+     "pitch": [
+      2.4,
+      2.6
+     ],
+     "margin": 1.0,
+     "drop": 0.5,
+     "shade": "dome",
+     "col": "white"
+    }
+   }
+  },
+  {
+   "name": "studio",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      1.8
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "books",
+      "gift"
+     ],
+     "wall": true
+    },
+    {
+     "role": "shop_shelf",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "books",
+      "gift"
+     ]
+    },
+    {
+     "role": "art_walls",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "unit": [
+      1.6,
+      0.12
+     ]
+    },
+    {
+     "role": "shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "goods": [
+      "art",
+      "gift",
+      "books"
+     ],
+     "max": 2
+    },
+    {
+     "role": "plinths",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "art",
+      "gift"
+     ],
+     "max": 3
+    },
+    {
+     "role": "workshop",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "only_types": [
+      "craft_studio"
+     ],
+     "max": 3
+    }
+   ],
+   "clutter": {
+    "floor": [
+     1,
+     2
+    ],
+    "floor_kinds": [
+     "crate",
+     "stack"
+    ]
+   },
+   "fixtures": "shop_tubes"
+  }
+ ],
+ "styles": [
+  {
+   "floor": "WoodFloor034",
+   "wall": "Plaster001",
+   "wall_tint": [
+    1,
+    1,
+    1
+   ],
+   "wainscot": "Plaster001",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "Concrete034",
+   "wall": "Plaster001",
+   "wall_tint": [
+    1,
+    1,
+    1
+   ],
+   "wainscot": "Concrete034",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "WoodFloor051",
+   "wall": "Bricks066",
+   "wall_tint": [
+    1,
+    0.98,
+    0.96
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  }
+ ]
+}

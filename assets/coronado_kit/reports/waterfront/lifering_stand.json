@@ -1,0 +1,108 @@
+{
+ "name": "lifering_stand",
+ "tiers": {
+  "near": 490,
+  "mid": 108,
+  "far": 16
+ },
+ "budget": 600,
+ "class": "small",
+ "far_paint_max": 0.9130587920438898,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_lifering_stand_clean_far.glb",
+   "tier": "far",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 16,
+   "verts": 28,
+   "budget": 20,
+   "size": [
+    0.66,
+    1.78,
+    0.2
+   ],
+   "odd_ray": 1
+  },
+  {
+   "file": "prop_lifering_stand_clean_mid.glb",
+   "tier": "mid",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "16 tris may face inward / be enclosed"
+   ],
+   "tris": 108,
+   "verts": 242,
+   "budget": 181,
+   "size": [
+    0.708,
+    1.75,
+    0.2
+   ],
+   "odd_ray": 16
+  },
+  {
+   "file": "prop_lifering_stand_clean_near.glb",
+   "tier": "near",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "86 tris may face inward / be enclosed"
+   ],
+   "tris": 490,
+   "verts": 921,
+   "budget": 600,
+   "size": [
+    0.688,
+    1.774,
+    0.26
+   ],
+   "odd_ray": 92
+  },
+  {
+   "file": "prop_lifering_stand_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 2,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.863,
+   "dE": 5.3
+  },
+  "top": {
+   "iou": 0.913,
+   "dE": 2.0
+  },
+  "left": {
+   "iou": 0.0,
+   "dE": 99,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 1,
+  "rail": 1
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 64,
+ "bake_px_per_m": 140.4,
+ "high_tris": 21463,
+ "pass": true
+}

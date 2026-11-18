@@ -1,0 +1,225 @@
+{
+ "name": "urb_apt_front_6m_balcony",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 14,
+ "near": {
+  "tris": 986,
+  "verts": 1668,
+  "regions": [
+   "O_apt_door",
+   "O_apt_slider",
+   "O_number",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.02500000037252903
+   ],
+   [
+    3.0,
+    10.170000076293945,
+    1.8250000476837158
+   ]
+  ]
+ },
+ "mid_roof_top": 10.1,
+ "mid": {
+  "tris": 212,
+  "verts": 268,
+  "regions": [
+   "O_apt_door",
+   "O_apt_slider",
+   "S_concrete",
+   "S_metal",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    0.02500000037252903
+   ],
+   [
+    3.0,
+    10.100000381469727,
+    1.8250000476837158
+   ]
+  ]
+ },
+ "far": {
+  "tris": 42,
+  "verts": 62,
+  "regions": [
+   "F_c_apt_3",
+   "F_flat",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    -0.0,
+    -0.22499999403953552
+   ],
+   [
+    3.0,
+    10.100000381469727,
+    1.4249999523162842
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "apt_door",
+   0.0
+  ],
+  [
+   "apt_door",
+   -1.5
+  ],
+  [
+   "apt_door",
+   1.5
+  ],
+  [
+   "apt_door",
+   -1.5
+  ],
+  [
+   "apt_door",
+   1.5
+  ]
+ ],
+ "footprint_wd": [
+  6.0,
+  0.45
+ ],
+ "footprint_area": 2.7,
+ "height": 10.17,
+ "storeys": 1,
+ "budget": [
+  1000,
+  280,
+  48
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_apt_front",
+ "time_s": 4.5,
+ "open_planes": [
+  [
+   0,
+   -3.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   3.0,
+   1,
+   null
+  ],
+  [
+   2,
+   -0.225,
+   -1,
+   null
+  ],
+  [
+   1,
+   9.3,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.225
+ ],
+ "openings": [
+  {
+   "k": "apt_door",
+   "c": 0.0,
+   "w": 1.0,
+   "t0": 0.3,
+   "t1": 2.5
+  },
+  {
+   "k": "apt_slider",
+   "c": -1.8,
+   "w": 1.6,
+   "t0": 1.15,
+   "t1": 2.45
+  },
+  {
+   "k": "apt_slider",
+   "c": 1.8,
+   "w": 1.6,
+   "t0": 1.15,
+   "t1": 2.45
+  },
+  {
+   "k": "apt_door",
+   "c": -1.5,
+   "w": 1.0,
+   "t0": 3.3,
+   "t1": 5.5
+  },
+  {
+   "k": "apt_door",
+   "c": 1.5,
+   "w": 1.0,
+   "t0": 3.3,
+   "t1": 5.5
+  },
+  {
+   "k": "apt_door",
+   "c": -1.5,
+   "w": 1.0,
+   "t0": 6.3,
+   "t1": 8.5
+  },
+  {
+   "k": "apt_door",
+   "c": 1.5,
+   "w": 1.0,
+   "t0": 6.3,
+   "t1": 8.5
+  }
+ ],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "apt_front",
+  "ends": [
+   [
+    -3.0,
+    0,
+    0.225
+   ],
+   [
+    3.0,
+    0,
+    0.225
+   ]
+  ],
+  "face_z": 0.225,
+  "plate_y": 9.3,
+  "parapet_top": 10.100000000000001
+ },
+ "no_door": false,
+ "base_y": 0.0,
+ "ground_reach": false
+}

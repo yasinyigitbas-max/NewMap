@@ -1,0 +1,132 @@
+{
+ "name": "house_roof_gable_run_3m_clay",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 76,
+  "verts": 152,
+  "regions": [
+   "R_clay",
+   "S_black",
+   "S_soffit",
+   "S_white",
+   "T_white"
+  ],
+  "bbox": [
+   [
+    -1.5,
+    3.3499999046325684,
+    -4.320000171661377
+   ],
+   [
+    1.5,
+    5.191999912261963,
+    4.320000171661377
+   ]
+  ]
+ },
+ "mid_roof_top": 5.192,
+ "mid": {
+  "tris": 12,
+  "verts": 24,
+  "regions": [
+   "S_clay",
+   "S_soffit",
+   "S_white"
+  ],
+  "bbox": [
+   [
+    -1.5,
+    3.5,
+    -4.199999809265137
+   ],
+   [
+    1.5,
+    5.191999912261963,
+    4.199999809265137
+   ]
+  ]
+ },
+ "far": {
+  "tris": 4,
+  "verts": 8,
+  "regions": [
+   "F_clay"
+  ],
+  "bbox": [
+   [
+    -1.5,
+    3.8420000076293945,
+    -3.75
+   ],
+   [
+    1.5,
+    5.191999912261963,
+    3.75
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  3.0,
+  7.5
+ ],
+ "footprint_area": 22.5,
+ "height": 5.19,
+ "storeys": 1,
+ "budget": [
+  160,
+  50,
+  8
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_house_roof",
+ "time_s": 0.1,
+ "open_planes": [
+  [
+   2,
+   3.75,
+   1,
+   null
+  ],
+  [
+   2,
+   -3.75,
+   -1,
+   null
+  ],
+  [
+   0,
+   -1.5,
+   -1,
+   1000000000.0
+  ],
+  [
+   0,
+   1.5,
+   1,
+   1000000000.0
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "type": "house_roof",
+  "run": 3.0,
+  "span": 7.5,
+  "plate_y": 3.5,
+  "pitch": 0.36,
+  "overhang": 0.45,
+  "note": "origin on the house centre line (z=0 = middle of the 7.5 m depth) at ground; the roof sits on the plate (y=3.5); both ends open"
+ },
+ "no_door": true,
+ "base_y": 3.5,
+ "ground_reach": false
+}

@@ -1,0 +1,170 @@
+{
+ "name": "urb_svc_back_6m_bigbox",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 3,
+ "near": {
+  "tris": 176,
+  "verts": 302,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "S_black",
+   "S_concrete",
+   "S_stucco",
+   "T_concrete",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.10000000149011612
+   ],
+   [
+    3.0,
+    6.570000171661377,
+    1.649999976158142
+   ]
+  ]
+ },
+ "mid_roof_top": 6.5,
+ "mid": {
+  "tris": 64,
+  "verts": 86,
+  "regions": [
+   "O_apt_door",
+   "O_louver",
+   "S_concrete",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.05000000074505806
+   ],
+   [
+    3.0,
+    6.5,
+    1.649999976158142
+   ]
+  ]
+ },
+ "far": {
+  "tris": 4,
+  "verts": 8,
+  "regions": [
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.15000000596046448
+   ],
+   [
+    3.0,
+    6.5,
+    0.15000000596046448
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "apt_door",
+   -1.2
+  ]
+ ],
+ "footprint_wd": [
+  6.0,
+  0.3
+ ],
+ "footprint_area": 1.8,
+ "height": 6.57,
+ "storeys": 1,
+ "budget": [
+  400,
+  120,
+  12
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_svc_back",
+ "time_s": 0.5,
+ "open_planes": [
+  [
+   0,
+   -3.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   3.0,
+   1,
+   null
+  ],
+  [
+   2,
+   -0.15,
+   -1,
+   null
+  ],
+  [
+   1,
+   5.4,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.15
+ ],
+ "openings": [
+  {
+   "k": "apt_door",
+   "c": -1.2,
+   "w": 1.0,
+   "t0": 0.2,
+   "t1": 2.4
+  },
+  {
+   "k": "louver",
+   "c": 1.6,
+   "w": 1.2,
+   "t0": 4.35,
+   "t1": 5.1
+  }
+ ],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "svc_back",
+  "ends": [
+   [
+    -3.0,
+    0,
+    0.15
+   ],
+   [
+    3.0,
+    0,
+    0.15
+   ]
+  ],
+  "face_z": 0.15,
+  "plate_y": 5.4,
+  "parapet_top": 6.5
+ },
+ "no_door": false,
+ "base_y": 0.0,
+ "ground_reach": false
+}

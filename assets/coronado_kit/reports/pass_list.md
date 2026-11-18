@@ -1,0 +1,86 @@
+# Pass list (2026-11-15 18:41 UTC+3)
+
+Sources: reports/<group>/<name>.json, logs/houses_wc.log, logs/wc_houses2.log, logs/rejudge.log, logs/wc_motel.log, reports/wallcheck_verified.json. Tags: fine = thin-strip mode, relief = shingle/brick/stone mode, 2nd-sun = second sun angle, VERIFIED = manual review with evidence image.
+
+| group | building | near/mid/far | validator | front | left | right | back | result |
+|---|---|---|---|---|---|---|---|---|
+| houses | beach_blue | 1461/308/30 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | beach_teal | 1461/308/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | beach_white | 1449/308/30 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | cape_grey | 1418/300/30 | ok | PASS | PASS/relief/2nd-sun | MANUAL PASS (evidence: previews/houses/wallcheck_evidence/cape_grey_right.png) | PASS | PASS |
+| houses | cape_white | 1418/300/30 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | colonial_blue | 2341/404/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | colonial_white | 2313/404/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | contemporary_grey | 1783/326/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | contemporary_white | 1791/326/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | craftsman_cedar | 2242/415/22 | ok | PASS/2nd-sun | PASS/2nd-sun/fine | PASS | PASS | PASS |
+| houses | craftsman_olive | 2279/406/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | craftsman_sage | 2279/406/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | craftsman_stucco | 2239/411/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | hipranch_grey | 1473/348/38 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | hipranch_nogarage | 1219/274/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | hipranch_sand | 1451/348/38 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | mcm_shed | 1437/327/31 | ok | PASS | PASS/2nd-sun | PASS | PASS | PASS |
+| houses | mcm_teal | 1454/326/31 | ok | PASS | PASS | PASS/relief/2nd-sun | PASS | PASS |
+| houses | mcm_white | 1486/326/31 | ok | PASS | PASS | PASS/relief/2nd-sun | PASS | PASS |
+| houses | ranch_peach | 1422/354/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | ranch_pink | 1410/354/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | ranch_porch | 1422/354/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | ranch_siding | 1372/354/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | spanish_peach | 2294/419/37 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | spanish_pink | 2296/419/37 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | spanish_small | 1357/312/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | spanish_white | 2294/419/37 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | tudor_brick | 1678/326/42 | ok | PASS | PASS/relief/2nd-sun | PASS/relief/2nd-sun | PASS | PASS |
+| houses | tudor_stucco | 1718/326/42 | ok | PASS | PASS | PASS | PASS | PASS |
+| houses | victorian_blue | 2458/523/46 | ok | MANUAL PASS (evidence: previews/houses/wallcheck_evidence/victorian_blue_front.png) | PASS | PASS | PASS | PASS |
+| houses | victorian_yellow | 2385/492/46 | ok | PASS | PASS | PASS | PASS | PASS |
+| apartments | apt_beach_condo | 3452/834/18 | ok | PASS | PASS | PASS | PASS | PASS |
+| apartments | apt_court_white | 3113/633/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| apartments | apt_dingbat_pink | 3297/719/16 | ok | PASS | PASS | PASS | PASS | PASS |
+| apartments | apt_dingbat_teal | 3297/719/16 | ok | PASS | PASS | PASS | PASS | PASS |
+| apartments | apt_garden_cream | 3445/789/22 | ok | PASS/fine/2nd-sun | PASS | PASS | PASS | PASS |
+| apartments | apt_garden_mint | 3459/781/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| apartments | apt_spanish_revival | 3038/902/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| apartments | apt_spanish_white | 3306/874/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| apartments | apt_stucco3_cream | 3088/658/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| apartments | apt_stucco3_peach | 3440/686/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| apartments | apt_townhouse_cays | 3452/968/76 | ok | PASS | PASS | PASS | PASS | PASS |
+| apartments | apt_townhouse_modern | 3082/954/28 | ok | PASS | PASS | PASS | PASS | PASS |
+| commercial | com_bakery | 1880/372/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| commercial | com_bank | 1724/274/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| commercial | com_bar_crown | 1936/326/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| commercial | com_bistro | 1298/286/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| commercial | com_boutique_row | 2072/447/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| commercial | com_cafe_seaside | 1186/257/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| commercial | com_gas_station | 2332/467/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| commercial | com_orange_corner | 2366/496/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| commercial | com_orange_row | 2870/599/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| commercial | com_realty | 1168/237/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| commercial | com_surf_shop | 1262/266/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| civic | civ_church | 4722/1018/64 | ok | PASS | PASS | PASS | PASS | PASS |
+| civic | civ_city_hall | 4507/532/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| civic | civ_community_center | 2361/448/30 | ok | PASS | PASS | PASS | PASS | PASS |
+| civic | civ_fire_station | 3737/502/50 | ok | PASS | PASS | PASS | PASS | PASS |
+| civic | civ_harbor_office | 2685/460/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| civic | civ_library | 2270/564/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| civic | civ_museum | 4692/686/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| civic | civ_police | 3809/554/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| civic | civ_post_office | 2094/518/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| civic | civ_rec_center | 3576/510/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| civic | civ_school_wing | 2188/550/30 | ok | PASS | PASS | PASS | PASS | PASS |
+| extras | ext_grocery_market | 2066/517/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| extras | ext_hospital | 4625/890/10 | ok | PASS | PASS | PASS | PASS | PASS |
+| extras | ext_marina_office | 2454/346/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| extras | ext_motel_crown | 4873/1214/20 | ok | PASS/fine/2nd-sun | PASS | PASS | PASS | PASS |
+| extras | ext_parking_garage | 1850/456/38 | ok | PASS | PASS | PASS | PASS | PASS |
+| landmarks | lmk_beach_lookout | 3528/646/68 | ok | PASS | PASS | PASS | PASS | PASS |
+| landmarks | lmk_blue_dome_chapel | 6118/1218/64 | ok | PASS | PASS | PASS | PASS | PASS |
+| landmarks | lmk_bridge_tollhouse | 2590/420/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| landmarks | lmk_crown_boathouse | 4052/760/66 | ok | PASS | PASS | PASS | PASS | PASS |
+| landmarks | lmk_crown_hotel_annex | 7343/1104/78 | ok | PASS | PASS | PASS | PASS | PASS |
+| landmarks | lmk_ferry_landing | 3598/670/56 | ok | PASS | PASS | PASS | PASS | PASS |
+| landmarks | lmk_glorietta_mansion | 7215/722/22 | ok | PASS | PASS | PASS | PASS | PASS |
+| landmarks | lmk_navy_gatehouse | 2742/532/36 | ok | PASS | PASS | PASS | PASS | PASS |
+| landmarks | lmk_red_spire_church | 5568/1040/56 | ok | PASS | PASS/2nd-sun | PASS | PASS | PASS |
+| landmarks | lmk_village_theatre | 4877/852/10 | ok | PASS | PASS | PASS | PASS | PASS |

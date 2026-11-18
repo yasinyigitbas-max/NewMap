@@ -1,0 +1,129 @@
+{
+ "name": "urb_canopy_6m",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 4,
+ "near": {
+  "tris": 340,
+  "verts": 616,
+  "regions": [
+   "S_soffit",
+   "T_dark",
+   "T_metal",
+   "T_white"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -1.6299999952316284
+   ],
+   [
+    3.0,
+    4.28000020980835,
+    1.6299999952316284
+   ]
+  ]
+ },
+ "mid_roof_top": 4.28,
+ "mid": {
+  "tris": 84,
+  "verts": 146,
+  "regions": [
+   "S_dark",
+   "S_metal",
+   "S_soffit",
+   "S_white"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.07999999821186066,
+    -1.600000023841858
+   ],
+   [
+    3.0,
+    4.28000020980835,
+    1.6299999952316284
+   ]
+  ]
+ },
+ "far": {
+  "tris": 8,
+  "verts": 16,
+  "regions": [
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    3.200000047683716,
+    -1.600000023841858
+   ],
+   [
+    3.0,
+    4.28000020980835,
+    1.600000023841858
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  6.0,
+  3.2
+ ],
+ "footprint_area": 19.2,
+ "height": 4.28,
+ "storeys": 1,
+ "budget": [
+  380,
+  120,
+  16
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_canopy",
+ "time_s": 2.2,
+ "open_planes": [
+  [
+   0,
+   -3.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   3.0,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  1.6
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "canopy",
+  "ends": [
+   [
+    -3.0,
+    0,
+    1.6
+   ],
+   [
+    3.0,
+    0,
+    1.6
+   ]
+  ],
+  "face_z": 3.2,
+  "plate_y": 4.28
+ },
+ "no_door": true,
+ "base_y": 0.0,
+ "ground_reach": false
+}

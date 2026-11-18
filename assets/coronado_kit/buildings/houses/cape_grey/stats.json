@@ -1,0 +1,121 @@
+{
+ "name": "cape_grey",
+ "cat": "house",
+ "style": "cape_cod",
+ "logic_errors": [],
+ "col_boxes": 7,
+ "near": {
+  "tris": 1418,
+  "verts": 2506,
+  "regions": [
+   "O_door_white",
+   "O_lamp",
+   "O_number",
+   "O_shutter",
+   "O_small_white",
+   "O_vent",
+   "O_win_dh_div",
+   "O_win_dh_white",
+   "R_comp",
+   "S_black",
+   "S_concrete",
+   "S_shingle",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_brick",
+   "W_shingle",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -4.949999809265137,
+    -0.0,
+    -4.170000076293945
+   ],
+   [
+    4.949999809265137,
+    8.229999542236328,
+    5.550000190734863
+   ]
+  ]
+ },
+ "mid_roof_top": 7.73,
+ "mid": {
+  "tris": 300,
+  "verts": 384,
+  "regions": [
+   "O_door_white",
+   "O_small_white",
+   "O_vent",
+   "O_win_dh_div",
+   "O_win_dh_white",
+   "S_comp",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "W_brick",
+   "W_shingle",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -4.75,
+    0.0,
+    -4.050000190734863
+   ],
+   [
+    4.75,
+    8.229999542236328,
+    5.550000190734863
+   ]
+  ]
+ },
+ "far": {
+  "tris": 30,
+  "verts": 54,
+  "regions": [
+   "F_comp",
+   "F_shingle_1",
+   "F_shingle_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -4.75,
+    0.0,
+    -3.75
+   ],
+   [
+    4.75,
+    7.730000019073486,
+    3.75
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  9.5,
+  7.5
+ ],
+ "footprint_area": 71.2,
+ "height": 8.23,
+ "storeys": 1,
+ "budget": [
+  1500,
+  450,
+  40
+ ],
+ "budget_class": "house_small",
+ "time_s": 6.3
+}

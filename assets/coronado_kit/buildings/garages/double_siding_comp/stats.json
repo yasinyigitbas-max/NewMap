@@ -1,0 +1,101 @@
+{
+ "name": "double_siding_comp",
+ "cat": "garage",
+ "style": "garage",
+ "logic_errors": [],
+ "col_boxes": 2,
+ "near": {
+  "tris": 294,
+  "verts": 499,
+  "regions": [
+   "O_door_white",
+   "O_garage_panel",
+   "O_small_white",
+   "R_comp",
+   "S_black",
+   "S_siding",
+   "S_soffit",
+   "S_white",
+   "T_white",
+   "W_siding"
+  ],
+  "bbox": [
+   [
+    -3.299999952316284,
+    0.0,
+    -3.200000047683716
+   ],
+   [
+    3.4200000762939453,
+    4.34499979019165,
+    3.200000047683716
+   ]
+  ]
+ },
+ "mid_roof_top": 4.345,
+ "mid": {
+  "tris": 72,
+  "verts": 92,
+  "regions": [
+   "O_door_white",
+   "O_garage_panel",
+   "O_small_white",
+   "S_comp",
+   "S_soffit",
+   "S_white",
+   "W_siding"
+  ],
+  "bbox": [
+   [
+    -3.299999952316284,
+    0.0,
+    -3.0
+   ],
+   [
+    3.299999952316284,
+    4.34499979019165,
+    3.0
+   ]
+  ]
+ },
+ "far": {
+  "tris": 10,
+  "verts": 20,
+  "regions": [
+   "F_comp",
+   "F_siding_1"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -3.0
+   ],
+   [
+    3.0,
+    4.34499979019165,
+    3.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "garage",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  6.0,
+  6.0
+ ],
+ "footprint_area": 36.0,
+ "height": 4.34,
+ "storeys": 1,
+ "budget": [
+  300,
+  100,
+  12
+ ],
+ "budget_class": "garage",
+ "time_s": 0.7
+}

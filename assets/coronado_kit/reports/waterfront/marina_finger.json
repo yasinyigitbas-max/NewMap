@@ -1,0 +1,112 @@
+{
+ "name": "marina_finger",
+ "tiers": {
+  "near": 1172,
+  "mid": 94,
+  "far": 16
+ },
+ "budget": 2500,
+ "class": "large",
+ "far_paint_max": null,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_marina_finger_clean_far.glb",
+   "tier": "far",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.00,3.79) - asymmetric parts?"
+   ],
+   "tris": 16,
+   "verts": 34,
+   "budget": 20,
+   "size": [
+    3.0,
+    0.75,
+    7.58
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_marina_finger_clean_mid.glb",
+   "tier": "mid",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.00,3.78) - asymmetric parts?",
+    "16 tris may face inward / be enclosed"
+   ],
+   "tris": 94,
+   "verts": 231,
+   "budget": 751,
+   "size": [
+    3.0,
+    0.75,
+    7.56
+   ],
+   "odd_ray": 20
+  },
+  {
+   "file": "prop_marina_finger_clean_near.glb",
+   "tier": "near",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.00,3.75) - asymmetric parts?",
+    "204 tris may face inward / be enclosed"
+   ],
+   "tris": 1172,
+   "verts": 2501,
+   "budget": 2500,
+   "size": [
+    3.085,
+    0.869,
+    7.617
+   ],
+   "odd_ray": 216
+  },
+  {
+   "file": "prop_marina_finger_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 2,
+   "col_maxverts": 8
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.926,
+   "dE": 0.7
+  },
+  "top": {
+   "iou": 0.996,
+   "dE": 0.2
+  },
+  "left": {
+   "iou": 0.977,
+   "dE": 0.8,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 2,
+  "rail": 0
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 128,
+ "bake_px_per_m": 83.9,
+ "high_tris": 22716,
+ "pass": true
+}

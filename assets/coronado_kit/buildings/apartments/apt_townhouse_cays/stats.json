@@ -1,0 +1,149 @@
+{
+ "name": "apt_townhouse_cays",
+ "cat": "apartment",
+ "style": "townhouse_row",
+ "logic_errors": [],
+ "col_boxes": 12,
+ "near": {
+  "tris": 3452,
+  "verts": 5801,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_number",
+   "O_patio",
+   "O_rollup",
+   "O_small_white",
+   "O_win_casement",
+   "O_win_dh_white",
+   "R_clay",
+   "S_black",
+   "S_concrete",
+   "S_metal",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_terracotta",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -10.319999694824219,
+    0.0,
+    -6.699999809265137
+   ],
+   [
+    10.319999694824219,
+    7.993000030517578,
+    6.400000095367432
+   ]
+  ]
+ },
+ "mid_roof_top": 7.993,
+ "mid": {
+  "tris": 968,
+  "verts": 1213,
+  "regions": [
+   "O_apt_door",
+   "O_patio",
+   "O_rollup",
+   "O_small_white",
+   "O_win_casement",
+   "O_win_dh_white",
+   "S_clay",
+   "S_concrete",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -10.050000190734863,
+    0.0,
+    -6.699999809265137
+   ],
+   [
+    10.050000190734863,
+    7.993000030517578,
+    6.400000095367432
+   ]
+  ]
+ },
+ "far": {
+  "tris": 76,
+  "verts": 134,
+  "regions": [
+   "F_clay",
+   "F_stucco_2",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -9.600000381469727,
+    0.0,
+    -5.0
+   ],
+   [
+    9.600000381469727,
+    7.993000030517578,
+    5.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "rollup",
+   -7.85
+  ],
+  [
+   "apt_door",
+   -4.2
+  ],
+  [
+   "patio",
+   -7.85
+  ],
+  [
+   "rollup",
+   1.45
+  ],
+  [
+   "apt_door",
+   -2.2
+  ],
+  [
+   "patio",
+   1.45
+  ],
+  [
+   "rollup",
+   4.95
+  ],
+  [
+   "apt_door",
+   8.6
+  ],
+  [
+   "patio",
+   4.95
+  ]
+ ],
+ "footprint_wd": [
+  19.2,
+  10.0
+ ],
+ "footprint_area": 192.0,
+ "height": 7.99,
+ "storeys": 2,
+ "budget": [
+  3500,
+  1000,
+  80
+ ],
+ "budget_class": "apartment",
+ "time_s": 34.9
+}

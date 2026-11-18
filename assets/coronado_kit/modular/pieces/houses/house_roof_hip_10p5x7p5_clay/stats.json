@@ -1,0 +1,133 @@
+{
+ "name": "house_roof_hip_10p5x7p5_clay",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 218,
+  "verts": 354,
+  "regions": [
+   "R_clay",
+   "S_black",
+   "S_soffit",
+   "S_white",
+   "T_white"
+  ],
+  "bbox": [
+   [
+    -5.820000171661377,
+    3.5,
+    -4.320000171661377
+   ],
+   [
+    5.820000171661377,
+    5.191999912261963,
+    4.320000171661377
+   ]
+  ]
+ },
+ "mid_roof_top": 5.192,
+ "mid": {
+  "tris": 26,
+  "verts": 50,
+  "regions": [
+   "S_clay",
+   "S_soffit",
+   "S_white"
+  ],
+  "bbox": [
+   [
+    -5.699999809265137,
+    3.5,
+    -4.199999809265137
+   ],
+   [
+    5.699999809265137,
+    5.191999912261963,
+    4.199999809265137
+   ]
+  ]
+ },
+ "far": {
+  "tris": 8,
+  "verts": 18,
+  "regions": [
+   "F_clay",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -5.949999809265137,
+    3.5,
+    -4.449999809265137
+   ],
+   [
+    5.949999809265137,
+    5.1020002365112305,
+    4.449999809265137
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  10.5,
+  7.5
+ ],
+ "footprint_area": 78.8,
+ "height": 5.19,
+ "storeys": 1,
+ "budget": [
+  560,
+  166,
+  12
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_house_roof",
+ "time_s": 0.3,
+ "open_planes": [
+  [
+   2,
+   3.75,
+   1,
+   null
+  ],
+  [
+   2,
+   -3.75,
+   -1,
+   null
+  ],
+  [
+   0,
+   -5.25,
+   -1,
+   null
+  ],
+  [
+   0,
+   5.25,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "type": "house_roof",
+  "run": 10.5,
+  "span": 7.5,
+  "plate_y": 3.5,
+  "pitch": 0.36,
+  "overhang": 0.45,
+  "note": "complete hip roof over an 10.5 x 7.5 m house; origin on the house centre at ground, sits on the plate (y=3.5)"
+ },
+ "no_door": true,
+ "base_y": 3.5,
+ "ground_reach": false
+}

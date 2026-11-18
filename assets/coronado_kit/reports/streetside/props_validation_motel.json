@@ -1,0 +1,190 @@
+[
+ {
+  "file": "prop_ice_chest_clean_far.glb",
+  "tier": "far",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 10,
+  "verts": 20,
+  "budget": 20,
+  "size": [
+   1.36,
+   1.24,
+   0.78
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_ice_chest_clean_mid.glb",
+  "tier": "mid",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "4 tris may face inward / be enclosed"
+  ],
+  "tris": 24,
+  "verts": 61,
+  "budget": 181,
+  "size": [
+   1.36,
+   1.24,
+   0.783
+  ],
+  "odd_ray": 4
+ },
+ {
+  "file": "prop_ice_chest_clean_near.glb",
+  "tier": "near",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (-0.08,-0.21) - asymmetric parts?",
+   "52 tris may face inward / be enclosed"
+  ],
+  "tris": 414,
+  "verts": 921,
+  "budget": 600,
+  "size": [
+   1.642,
+   1.266,
+   1.337
+  ],
+  "odd_ray": 88
+ },
+ {
+  "file": "prop_ice_chest_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 1,
+  "col_maxverts": 8
+ },
+ {
+  "file": "prop_vending_snack_clean_far.glb",
+  "tier": "far",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 10,
+  "verts": 20,
+  "budget": 20,
+  "size": [
+   1.0,
+   1.83,
+   0.9
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_vending_snack_clean_mid.glb",
+  "tier": "mid",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 16,
+  "verts": 40,
+  "budget": 181,
+  "size": [
+   1.0,
+   1.83,
+   0.903
+  ],
+  "odd_ray": 2
+ },
+ {
+  "file": "prop_vending_snack_clean_near.glb",
+  "tier": "near",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (-0.02,-0.22) - asymmetric parts?",
+   "45 tris may face inward / be enclosed"
+  ],
+  "tris": 410,
+  "verts": 888,
+  "budget": 600,
+  "size": [
+   1.057,
+   1.83,
+   1.43
+  ],
+  "odd_ray": 60
+ },
+ {
+  "file": "prop_vending_snack_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 1,
+  "col_maxverts": 8
+ },
+ {
+  "file": "prop_vending_soda_clean_far.glb",
+  "tier": "far",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 10,
+  "verts": 20,
+  "budget": 20,
+  "size": [
+   0.95,
+   1.83,
+   0.85
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_vending_soda_clean_mid.glb",
+  "tier": "mid",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 16,
+  "verts": 40,
+  "budget": 181,
+  "size": [
+   0.95,
+   1.83,
+   0.853
+  ],
+  "odd_ray": 2
+ },
+ {
+  "file": "prop_vending_soda_clean_near.glb",
+  "tier": "near",
+  "cls": "small",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "origin off footprint centre (0.04,-0.20) - asymmetric parts?",
+   "55 tris may face inward / be enclosed"
+  ],
+  "tris": 474,
+  "verts": 1017,
+  "budget": 600,
+  "size": [
+   1.032,
+   1.83,
+   1.425
+  ],
+  "odd_ray": 89
+ },
+ {
+  "file": "prop_vending_soda_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 1,
+  "col_maxverts": 8
+ }
+]

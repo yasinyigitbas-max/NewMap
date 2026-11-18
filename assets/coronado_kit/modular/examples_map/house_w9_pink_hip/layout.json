@@ -1,0 +1,110 @@
+{
+ "name": "house_w9_pink_hip",
+ "group": "houses",
+ "outline": {
+  "kind": "house",
+  "W": 9.0,
+  "D": 7.5,
+  "wall": "W_stucco",
+  "tint": [
+   0.96,
+   0.76,
+   0.76
+  ],
+  "roof": "R_clay",
+  "budget": "mod_house_small",
+  "pitch": 0.36,
+  "roof_shape": "hip"
+ },
+ "pieces": [
+  {
+   "piece": "house_wall_3m_window_stucco_pink",
+   "x": -3.0,
+   "z": 3.6,
+   "rot_y": 0
+  },
+  {
+   "piece": "house_wall_3m_door_stucco_pink_clayhood",
+   "x": 0.0,
+   "z": 3.6,
+   "rot_y": 0
+  },
+  {
+   "piece": "house_wall_3m_window_pair_stucco_pink",
+   "x": 3.0,
+   "z": 3.6,
+   "rot_y": 0
+  },
+  {
+   "piece": "house_wall_4p5m_window_small_stucco_pink",
+   "x": 4.35,
+   "z": 1.5,
+   "rot_y": 90
+  },
+  {
+   "piece": "house_wall_3m_window_stucco_pink",
+   "x": 4.35,
+   "z": -2.25,
+   "rot_y": 90
+  },
+  {
+   "piece": "house_wall_3m_utility_stucco_pink",
+   "x": 3.0,
+   "z": -3.6,
+   "rot_y": 180
+  },
+  {
+   "piece": "house_wall_3m_window_stucco_pink",
+   "x": 0.0,
+   "z": -3.6,
+   "rot_y": 180
+  },
+  {
+   "piece": "house_wall_3m_window_stucco_pink",
+   "x": -3.0,
+   "z": -3.6,
+   "rot_y": 180
+  },
+  {
+   "piece": "house_wall_3m_window_stucco_pink",
+   "x": -4.35,
+   "z": -2.25,
+   "rot_y": 270
+  },
+  {
+   "piece": "house_wall_4p5m_utility_stucco_pink",
+   "x": -4.35,
+   "z": 1.5,
+   "rot_y": 270
+  },
+  {
+   "piece": "house_roof_chimney_brick_clay",
+   "x": -0.5,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "house_roof_hip_9x7p5_clay",
+   "x": 0.0,
+   "z": 0.0,
+   "rot_y": 0
+  }
+ ],
+ "budget_class": "mod_house_small",
+ "budget": [
+  1650,
+  500,
+  40
+ ],
+ "tris": {
+  "near": 1394,
+  "mid": 300,
+  "far": 22
+ },
+ "col_boxes": 2,
+ "far_from": "snapped outline hull",
+ "merged": {
+  "near_mid": "pieces merged, 1 mesh/1 primitive/1 material",
+  "far_col": "outline hull + <=12 boxes"
+ }
+}

@@ -1,0 +1,120 @@
+{
+ "name": "narrow_2sty_siding",
+ "cat": "house",
+ "style": "craftsman",
+ "logic_errors": [],
+ "col_boxes": 15,
+ "near": {
+  "tris": 2384,
+  "verts": 4010,
+  "regions": [
+   "O_door_craftsman",
+   "O_door_white",
+   "O_lamp",
+   "O_number",
+   "O_shutter",
+   "O_vent",
+   "O_win_dh_div",
+   "O_win_dh_white",
+   "R_comp",
+   "S_black",
+   "S_concrete",
+   "S_siding",
+   "S_soffit",
+   "S_white",
+   "T_concrete",
+   "T_deck",
+   "T_metal",
+   "T_rail",
+   "T_white",
+   "W_brick",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.5,
+    -0.0,
+    -7.25
+   ],
+   [
+    4.5,
+    9.680000305175781,
+    9.399999618530273
+   ]
+  ]
+ },
+ "mid_roof_top": 9.18,
+ "mid": {
+  "tris": 524,
+  "verts": 634,
+  "regions": [
+   "O_door_craftsman",
+   "O_door_white",
+   "O_win_dh_div",
+   "O_win_dh_white",
+   "S_comp",
+   "S_concrete",
+   "S_deck",
+   "S_soffit",
+   "S_white",
+   "W_brick",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.450000047683716,
+    0.0,
+    -7.0
+   ],
+   [
+    4.5,
+    9.680000305175781,
+    9.399999618530273
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 42,
+  "regions": [
+   "F_comp",
+   "F_siding_2",
+   "F_siding_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -2.9000000953674316,
+    0.0,
+    -7.0
+   ],
+   [
+    2.9000000953674316,
+    9.180000305175781,
+    7.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door_craftsman",
+   -1.3
+  ]
+ ],
+ "footprint_wd": [
+  5.8,
+  14.0
+ ],
+ "footprint_area": 81.2,
+ "height": 9.68,
+ "storeys": 2,
+ "budget": [
+  2500,
+  750,
+  60
+ ],
+ "budget_class": "house_large",
+ "time_s": 15.6
+}

@@ -1,0 +1,116 @@
+{
+ "name": "shop_roof_6m_end",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 347,
+  "verts": 671,
+  "regions": [
+   "O_louver",
+   "R_flat",
+   "S_black",
+   "S_soffit",
+   "T_dark",
+   "T_metal"
+  ],
+  "bbox": [
+   [
+    -2.799999952316284,
+    4.199999809265137,
+    -5.800000190734863
+   ],
+   [
+    2.9800000190734863,
+    5.291999816894531,
+    5.800000190734863
+   ]
+  ]
+ },
+ "mid_roof_top": 5.292,
+ "mid": {
+  "tris": 58,
+  "verts": 116,
+  "regions": [
+   "S_flat",
+   "S_metal",
+   "S_soffit"
+  ],
+  "bbox": [
+   [
+    -2.799999952316284,
+    4.199999809265137,
+    -5.800000190734863
+   ],
+   [
+    2.9800000190734863,
+    5.291999816894531,
+    5.800000190734863
+   ]
+  ]
+ },
+ "far": {
+  "tris": 58,
+  "verts": 84,
+  "regions": [
+   "F_dark",
+   "F_flat",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -2.799999952316284,
+    4.199999809265137,
+    -5.800000190734863
+   ],
+   [
+    2.9800000190734863,
+    5.291999816894531,
+    5.800000190734863
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  6.0,
+  12.0
+ ],
+ "footprint_area": 72.0,
+ "height": 5.29,
+ "storeys": 1,
+ "budget": [
+  600,
+  80,
+  72
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_shop_roof",
+ "time_s": 0.4,
+ "open_planes": [
+  [
+   0,
+   2.98,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "type": "shop_roof",
+  "module": 6.0,
+  "depth": 12.0,
+  "plate_y": 4.2,
+  "kind": "end",
+  "note": "origin = bay centre line / building depth centre at ground; deck at y=4.2, tucked under parapets"
+ },
+ "no_door": true,
+ "base_y": 4.2,
+ "ground_reach": false
+}

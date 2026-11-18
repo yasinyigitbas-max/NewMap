@@ -1,0 +1,108 @@
+{
+ "name": "pylon_sign",
+ "tiers": {
+  "near": 1324,
+  "mid": 162,
+  "far": 12
+ },
+ "budget": 2500,
+ "class": "large",
+ "far_paint_max": null,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_pylon_sign_clean_far.glb",
+   "tier": "far",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 12,
+   "verts": 24,
+   "budget": 20,
+   "size": [
+    3.6,
+    7.52,
+    1.64
+   ],
+   "odd_ray": 2
+  },
+  {
+   "file": "prop_pylon_sign_clean_mid.glb",
+   "tier": "mid",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "12 tris may face inward / be enclosed"
+   ],
+   "tris": 162,
+   "verts": 415,
+   "budget": 751,
+   "size": [
+    3.6,
+    7.52,
+    1.65
+   ],
+   "odd_ray": 37
+  },
+  {
+   "file": "prop_pylon_sign_clean_near.glb",
+   "tier": "near",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "178 tris may face inward / be enclosed"
+   ],
+   "tris": 1324,
+   "verts": 2919,
+   "budget": 2500,
+   "size": [
+    3.6,
+    7.592,
+    1.65
+   ],
+   "odd_ray": 373
+  },
+  {
+   "file": "prop_pylon_sign_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 5,
+   "col_maxverts": 8
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.927,
+   "dE": 0.2
+  },
+  "top": {
+   "iou": 0.988,
+   "dE": 7.7
+  },
+  "left": {
+   "iou": 0.628,
+   "dE": 2.7,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 5,
+  "rail": 0
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 256,
+ "bake_px_per_m": 33.2,
+ "high_tris": 106197,
+ "pass": true
+}

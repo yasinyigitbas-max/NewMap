@@ -1,0 +1,113 @@
+{
+ "name": "narrow_cottage_stucco_clay",
+ "cat": "house",
+ "style": "spanish",
+ "logic_errors": [],
+ "col_boxes": 7,
+ "near": {
+  "tris": 1158,
+  "verts": 1945,
+  "regions": [
+   "O_door_spanish",
+   "O_door_white",
+   "O_lamp",
+   "O_number",
+   "O_tilevent",
+   "O_vent",
+   "O_win_casement",
+   "R_clay",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_terracotta",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -7.599999904632568
+   ],
+   [
+    3.3499999046325684,
+    5.21999979019165,
+    7.800000190734863
+   ]
+  ]
+ },
+ "mid_roof_top": 4.72,
+ "mid": {
+  "tris": 366,
+  "verts": 450,
+  "regions": [
+   "O_door_spanish",
+   "O_door_white",
+   "O_tilevent",
+   "O_win_casement",
+   "S_clay",
+   "S_concrete",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -7.599999904632568
+   ],
+   [
+    3.299999952316284,
+    5.21999979019165,
+    7.800000190734863
+   ]
+  ]
+ },
+ "far": {
+  "tris": 34,
+  "verts": 66,
+  "regions": [
+   "F_clay",
+   "F_stucco_1",
+   "F_stucco_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -2.75,
+    0.0,
+    -6.0
+   ],
+   [
+    2.75,
+    4.71999979019165,
+    6.900000095367432
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door_spanish",
+   1.25
+  ]
+ ],
+ "footprint_wd": [
+  5.5,
+  12.0
+ ],
+ "footprint_area": 66.0,
+ "height": 5.22,
+ "storeys": 1,
+ "budget": [
+  1500,
+  450,
+  40
+ ],
+ "budget_class": "house_small",
+ "time_s": 7.9
+}

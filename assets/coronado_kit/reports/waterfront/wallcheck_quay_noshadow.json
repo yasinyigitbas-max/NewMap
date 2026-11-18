@@ -1,0 +1,60 @@
+{
+ "quay_straight": {
+  "front": {
+   "wall_px": 19663,
+   "resid_std": 0.0133,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "pass": true
+ },
+ "quay_straight_bollards": {
+  "front": {
+   "wall_px": 22527,
+   "resid_std": 0.0147,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "pass": true
+ },
+ "quay_stair": {
+  "front": {
+   "wall_px": 33910,
+   "resid_std": 0.0132,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "pass": true
+ },
+ "quay_corner_out": {
+  "front": {
+   "wall_px": 2830,
+   "resid_std": 0.0063,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "right": {
+   "wall_px": 2210,
+   "resid_std": 0.0139,
+   "worst_blob_frac": 0.0,
+   "pass": true,
+   "sun": "flipped"
+  },
+  "pass": true
+ },
+ "quay_corner_in": {
+  "front": {
+   "wall_px": 7135,
+   "resid_std": 0.0128,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "left": {
+   "wall_px": 8494,
+   "resid_std": 0.0128,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "pass": true
+ }
+}

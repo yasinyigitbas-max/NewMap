@@ -1,0 +1,167 @@
+{
+ "name": "urb_svc_side_12m_bigbox",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 162,
+  "verts": 290,
+  "regions": [
+   "O_louver",
+   "O_small_white",
+   "S_stucco",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    0.0,
+    -0.10000000149011612
+   ],
+   [
+    6.0,
+    6.570000171661377,
+    0.28999999165534973
+   ]
+  ]
+ },
+ "mid_roof_top": 6.5,
+ "mid": {
+  "tris": 40,
+  "verts": 46,
+  "regions": [
+   "O_louver",
+   "O_small_white",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    0.0,
+    -0.05000000074505806
+   ],
+   [
+    6.0,
+    6.5,
+    0.15000000596046448
+   ]
+  ]
+ },
+ "far": {
+  "tris": 4,
+  "verts": 8,
+  "regions": [
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    0.0,
+    -0.15000000596046448
+   ],
+   [
+    6.0,
+    6.5,
+    0.15000000596046448
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  12.0,
+  0.3
+ ],
+ "footprint_area": 3.6,
+ "height": 6.57,
+ "storeys": 1,
+ "budget": [
+  450,
+  140,
+  12
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_svc_side",
+ "time_s": 0.3,
+ "open_planes": [
+  [
+   0,
+   -6.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   6.0,
+   1,
+   null
+  ],
+  [
+   2,
+   -0.15,
+   -1,
+   null
+  ],
+  [
+   1,
+   5.4,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.15
+ ],
+ "openings": [
+  {
+   "k": "louver",
+   "c": -3.5,
+   "w": 1.2,
+   "t0": 4.35,
+   "t1": 5.1
+  },
+  {
+   "k": "louver",
+   "c": 3.0,
+   "w": 1.2,
+   "t0": 4.35,
+   "t1": 5.1
+  },
+  {
+   "k": "small",
+   "c": 0.0,
+   "w": 0.8,
+   "t0": 3.2,
+   "t1": 4.0
+  }
+ ],
+ "snap": {
+  "grid": 0.5,
+  "module": 12.0,
+  "type": "svc_side",
+  "ends": [
+   [
+    -6.0,
+    0,
+    0.15
+   ],
+   [
+    6.0,
+    0,
+    0.15
+   ]
+  ],
+  "face_z": 0.15,
+  "plate_y": 5.4,
+  "parapet_top": 6.5
+ },
+ "no_door": true,
+ "base_y": 0.0,
+ "ground_reach": false
+}

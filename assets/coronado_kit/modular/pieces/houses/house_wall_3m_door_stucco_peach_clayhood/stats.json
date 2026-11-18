@@ -1,0 +1,167 @@
+{
+ "name": "house_wall_3m_door_stucco_peach_clayhood",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 5,
+ "near": {
+  "tris": 242,
+  "verts": 416,
+  "regions": [
+   "O_door_white",
+   "O_lamp",
+   "O_number",
+   "R_clay",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_terracotta",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -1.5,
+    -0.0,
+    0.07000000029802322
+   ],
+   [
+    1.5,
+    3.5,
+    1.850000023841858
+   ]
+  ]
+ },
+ "mid_roof_top": 3.5,
+ "mid": {
+  "tris": 66,
+  "verts": 96,
+  "regions": [
+   "O_door_white",
+   "S_clay",
+   "S_concrete",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -1.5,
+    0.0,
+    0.15000000596046448
+   ],
+   [
+    1.5,
+    3.5,
+    1.850000023841858
+   ]
+  ]
+ },
+ "far": {
+  "tris": 44,
+  "verts": 72,
+  "regions": [
+   "F_clay",
+   "F_concrete",
+   "F_stucco_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -1.5,
+    0.0,
+    0.15000000596046448
+   ],
+   [
+    1.5,
+    3.5,
+    1.850000023841858
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  3.0,
+  0.3
+ ],
+ "footprint_area": 0.9,
+ "height": 3.5,
+ "storeys": 1,
+ "budget": [
+  320,
+  100,
+  56
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_house_wall",
+ "time_s": 0.5,
+ "open_planes": [
+  [
+   0,
+   -1.5,
+   -1,
+   null
+  ],
+  [
+   0,
+   1.5,
+   1,
+   null
+  ],
+  [
+   2,
+   -0.15,
+   -1,
+   null
+  ],
+  [
+   1,
+   3.5,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.15
+ ],
+ "openings": [
+  {
+   "k": "door",
+   "c": 0.0,
+   "w": 1.0,
+   "t0": 0.5,
+   "t1": 2.6
+  }
+ ],
+ "snap": {
+  "grid": 0.5,
+  "module": 3.0,
+  "type": "house_wall",
+  "ends": [
+   [
+    -1.5,
+    0,
+    0.15
+   ],
+   [
+    1.5,
+    0,
+    0.15
+   ]
+  ],
+  "face_z": 0.15,
+  "plate_y": 3.5
+ },
+ "no_door": false,
+ "base_y": 0.0,
+ "ground_reach": false
+}

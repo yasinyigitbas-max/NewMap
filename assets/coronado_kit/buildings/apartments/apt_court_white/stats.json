@@ -1,0 +1,145 @@
+{
+ "name": "apt_court_white",
+ "cat": "apartment",
+ "style": "apartment_court",
+ "logic_errors": [],
+ "col_boxes": 4,
+ "near": {
+  "tris": 3143,
+  "verts": 5598,
+  "regions": [
+   "O_apt_door",
+   "O_apt_slider",
+   "O_lamp",
+   "O_number",
+   "O_shutter",
+   "O_small_white",
+   "O_vent",
+   "O_win_casement",
+   "O_win_dh_white",
+   "R_clay",
+   "S_black",
+   "S_concrete",
+   "S_metal",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -9.069999694824219,
+    -0.0,
+    -5.21999979019165
+   ],
+   [
+    9.625,
+    8.479999542236328,
+    6.099999904632568
+   ]
+  ]
+ },
+ "mid_roof_top": 8.48,
+ "mid": {
+  "tris": 633,
+  "verts": 745,
+  "regions": [
+   "O_apt_door",
+   "O_apt_slider",
+   "O_small_white",
+   "O_vent",
+   "O_win_casement",
+   "O_win_dh_white",
+   "S_clay",
+   "S_concrete",
+   "S_metal",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -8.949999809265137,
+    0.0,
+    -5.050000190734863
+   ],
+   [
+    9.600000381469727,
+    8.479999542236328,
+    6.099999904632568
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 46,
+  "regions": [
+   "F_clay",
+   "F_stucco_2",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -8.399999618530273,
+    0.0,
+    -4.5
+   ],
+   [
+    8.399999618530273,
+    8.479999542236328,
+    4.5
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "apt_door",
+   -4.95
+  ],
+  [
+   "apt_door",
+   -3.45
+  ],
+  [
+   "apt_door",
+   3.45
+  ],
+  [
+   "apt_door",
+   4.95
+  ],
+  [
+   "apt_door",
+   -4.95
+  ],
+  [
+   "apt_door",
+   -3.45
+  ],
+  [
+   "apt_door",
+   3.45
+  ],
+  [
+   "apt_door",
+   4.95
+  ]
+ ],
+ "footprint_wd": [
+  16.8,
+  9.0
+ ],
+ "footprint_area": 151.2,
+ "height": 8.48,
+ "storeys": 2,
+ "budget": [
+  3500,
+  1000,
+  80
+ ],
+ "budget_class": "apartment",
+ "time_s": 19.6
+}

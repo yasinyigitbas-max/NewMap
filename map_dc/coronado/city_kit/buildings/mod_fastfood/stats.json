@@ -1,0 +1,25 @@
+{
+ "cat": "mod",
+ "doors_front": [
+  [
+   "shopdoor",
+   -4.8
+  ],
+  [
+   "shopdoor",
+   1.2
+  ]
+ ],
+ "footprint_wd": [
+  12.0,
+  12.0
+ ],
+ "height": 5.1,
+ "merged_from": "mod_fastfood.json",
+ "name": "mod_fastfood",
+ "tris": {
+  "far": 10,
+  "mid": 552,
+  "near": 2438
+ }
+}

@@ -1,0 +1,9 @@
+.godot/
+__pycache__/
+*.tmp
+/zz_*
+/piece_ground.f32
+/piece_ground.json
+/terrain_grid.f32
+/terrain_grid.json
+/terrain_sea.u8

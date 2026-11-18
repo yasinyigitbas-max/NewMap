@@ -1,0 +1,281 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "shoes",
+ "clutter": true,
+ "signs": true,
+ "types": [
+  "shoes"
+ ],
+ "floor": "Carpet012",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  1,
+  0.97,
+  0.93
+ ],
+ "ceiling": "Plaster001",
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.0,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter",
+  "shoe_walls"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    2.2
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "accessory",
+    "jewelry"
+   ]
+  },
+  {
+   "role": "shoe_walls",
+   "prop": "shelf_wall",
+   "place": "walls",
+   "walls": [
+    "back",
+    "door_side"
+   ],
+   "goods": [
+    "shoes"
+   ]
+  },
+  {
+   "role": "try_on",
+   "prop": "chair",
+   "place": "aisles",
+   "seats": 1,
+   "max": 2
+  },
+  {
+   "role": "display_tables",
+   "prop": "display_table",
+   "place": "aisles",
+   "goods": [
+    "shoes",
+    "accessory",
+    "clothing"
+   ],
+   "max": 2
+  }
+ ],
+ "plans": [
+  {
+   "name": "walls",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "accessory",
+      "jewelry"
+     ]
+    },
+    {
+     "role": "shoe_walls",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "shoes"
+     ]
+    },
+    {
+     "role": "try_on",
+     "prop": "chair",
+     "place": "aisles",
+     "seats": 1,
+     "max": 2
+    },
+    {
+     "role": "display_tables",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "shoes",
+      "accessory",
+      "clothing"
+     ],
+     "max": 2
+    }
+   ],
+   "fixtures": "boutique_track"
+  },
+  {
+   "name": "sneaker",
+   "till": "tablet",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "accessory",
+      "jewelry"
+     ]
+    },
+    {
+     "role": "shoe_walls",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "shoes"
+     ]
+    },
+    {
+     "role": "benches",
+     "prop": "bench",
+     "place": "aisles",
+     "dims": [
+      1.2,
+      1.3
+     ],
+     "max": 2
+    },
+    {
+     "role": "mannequin",
+     "prop": "mannequin",
+     "place": "corner"
+    }
+   ],
+   "fixtures": "shop_tubes"
+  },
+  {
+   "name": "family",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.2
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "accessory",
+      "jewelry"
+     ]
+    },
+    {
+     "role": "shoe_walls",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "goods": [
+      "shoes"
+     ]
+    },
+    {
+     "role": "back_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "goods": [
+      "shoes",
+      "accessory"
+     ]
+    },
+    {
+     "role": "display_tables",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "shoes",
+      "accessory"
+     ],
+     "max": 3
+    },
+    {
+     "role": "try_on",
+     "prop": "chair",
+     "place": "aisles",
+     "seats": 1,
+     "max": 2
+    }
+   ],
+   "clutter": {
+    "floor": [
+     2,
+     4
+    ]
+   },
+   "fixtures": "shop_troffer"
+  }
+ ],
+ "styles": [
+  {
+   "floor": "Carpet012",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.98,
+    0.95
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "WoodFloor051",
+   "wall": "Bricks066",
+   "wall_tint": [
+    1,
+    0.96,
+    0.92
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "Tiles074",
+   "wall": "Plaster001",
+   "wall_tint": [
+    1,
+    1,
+    1
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  }
+ ]
+}

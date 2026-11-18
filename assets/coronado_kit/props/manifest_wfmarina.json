@@ -1,0 +1,207 @@
+{
+ "marina_float": {
+  "file_base": "prop_marina_float",
+  "batch": "wfmarina",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1470,
+   "mid": 134,
+   "far": 10
+  },
+  "footprint_w": 6.047,
+  "footprint_d": 2.72,
+  "height": 0.869,
+  "regions": [
+   "baked:marina_float"
+  ],
+  "trim": {
+   "tw_tide": {
+    "area_m2": 11.68,
+    "px_per_m": 128.0
+   },
+   "tw_rubber": {
+    "area_m2": 16.24,
+    "px_per_m": 128.0
+   },
+   "tw_timber": {
+    "area_m2": 46.42,
+    "px_per_m": 128.0
+   },
+   "tw_paint": {
+    "area_m2": 7.18,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 21754,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 91.2,
+  "col": 5,
+  "secs": 34.7
+ },
+ "marina_finger": {
+  "file_base": "prop_marina_finger",
+  "batch": "wfmarina",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1172,
+   "mid": 94,
+   "far": 16
+  },
+  "footprint_w": 3.085,
+  "footprint_d": 7.617,
+  "height": 0.869,
+  "regions": [
+   "baked:marina_finger"
+  ],
+  "trim": {
+   "tw_tide": {
+    "area_m2": 6.92,
+    "px_per_m": 128.0
+   },
+   "tw_rubber": {
+    "area_m2": 8.04,
+    "px_per_m": 128.0
+   },
+   "tw_timber": {
+    "area_m2": 36.82,
+    "px_per_m": 128.0
+   },
+   "tw_paint": {
+    "area_m2": 8.07,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 22716,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 83.9,
+  "col": 2,
+  "secs": 34.6
+ },
+ "marina_pile": {
+  "file_base": "prop_marina_pile",
+  "batch": "wfmarina",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 510,
+   "mid": 112,
+   "far": 14
+  },
+  "footprint_w": 0.6,
+  "footprint_d": 0.706,
+  "height": 5.46,
+  "regions": [
+   "baked:marina_pile"
+  ],
+  "trim": {
+   "tw_tide": {
+    "area_m2": 2.05,
+    "px_per_m": 128.0
+   },
+   "tw_conc_top": {
+    "area_m2": 5.07,
+    "px_per_m": 128.0
+   },
+   "tw_paint": {
+    "area_m2": 0.73,
+    "px_per_m": 128.0
+   },
+   "tw_rubber": {
+    "area_m2": 0.29,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 8840,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 75.3,
+  "col": 2,
+  "secs": 6.7
+ },
+ "dock_box": {
+  "file_base": "prop_dock_box",
+  "batch": "wfmarina",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 266,
+   "mid": 18,
+   "far": 10
+  },
+  "footprint_w": 1.543,
+  "footprint_d": 0.74,
+  "height": 0.62,
+  "regions": [
+   "baked:dock_box"
+  ],
+  "trim": {
+   "tw_paint": {
+    "area_m2": 2.5,
+    "px_per_m": 128.0
+   },
+   "tw_rubber": {
+    "area_m2": 0.22,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 22234,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 44.1,
+  "col": 1,
+  "secs": 19.3
+ },
+ "marina_pedestal": {
+  "file_base": "prop_marina_pedestal",
+  "batch": "wfmarina",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 188,
+   "mid": 30,
+   "far": 12
+  },
+  "footprint_w": 0.404,
+  "footprint_d": 0.356,
+  "height": 1.17,
+  "regions": [
+   "baked:marina_pedestal"
+  ],
+  "trim": {
+   "tw_rubber": {
+    "area_m2": 0.19,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 7370,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 45.0,
+  "col": 1,
+  "secs": 12.5
+ }
+}

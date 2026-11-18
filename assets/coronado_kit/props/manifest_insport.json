@@ -1,0 +1,111 @@
+{
+ "bike_stand": {
+  "file_base": "prop_bike_stand",
+  "batch": "insport",
+  "class": "medium",
+  "budget": 800,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 332
+  },
+  "footprint_w": 1.4,
+  "footprint_d": 0.7,
+  "height": 0.964,
+  "regions": [
+   "baked:bike_stand"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 2.03,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1196,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 963.0,
+  "col": 1,
+  "secs": 14.7
+ },
+ "surfboard_rack": {
+  "file_base": "prop_surfboard_rack",
+  "batch": "insport",
+  "class": "medium",
+  "budget": 800,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 560
+  },
+  "footprint_w": 0.62,
+  "footprint_d": 0.84,
+  "height": 1.526,
+  "regions": [
+   "baked:surfboard_rack"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 0.91,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.17,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.74,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1800,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1087.0,
+  "col": 1,
+  "secs": 12.4
+ },
+ "weight_bench": {
+  "file_base": "prop_weight_bench",
+  "batch": "insport",
+  "class": "medium",
+  "budget": 900,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 460
+  },
+  "footprint_w": 1.16,
+  "footprint_d": 0.84,
+  "height": 1.115,
+  "regions": [
+   "baked:weight_bench"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 1.15,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 0.62,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 1.88,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 2288,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1087.0,
+  "col": 1,
+  "secs": 14.6
+ }
+}

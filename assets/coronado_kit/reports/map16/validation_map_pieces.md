@@ -1,0 +1,70 @@
+# Map pieces validation (MAP_NEEDS_16nov nice-to-haves)
+
+64 / 64 pass
+
+| piece | group | tris near/mid/far | budget | result |
+|---|---|---|---|---|
+| house_roof_gable_endl_3m_clay_stucco_d6 | houses | 154/31/7 | 240/72/8 | PASS |
+| house_roof_gable_endl_3m_clay_stucco_peach | houses | 158/31/7 | 240/72/8 | PASS |
+| house_roof_gable_endl_3m_clay_stucco_pink | houses | 158/31/7 | 240/72/8 | PASS |
+| house_roof_gable_endl_3m_comp_siding_d6 | houses | 160/31/7 | 240/72/8 | PASS |
+| house_roof_gable_endl_3m_comp_stucco_d6 | houses | 160/31/7 | 240/72/8 | PASS |
+| house_roof_gable_endr_3m_clay_stucco_d6 | houses | 154/31/7 | 240/72/8 | PASS |
+| house_roof_gable_endr_3m_clay_stucco_peach | houses | 158/31/7 | 240/72/8 | PASS |
+| house_roof_gable_endr_3m_clay_stucco_pink | houses | 158/31/7 | 240/72/8 | PASS |
+| house_roof_gable_endr_3m_comp_siding_d6 | houses | 160/31/7 | 240/72/8 | PASS |
+| house_roof_gable_endr_3m_comp_stucco_d6 | houses | 160/31/7 | 240/72/8 | PASS |
+| house_roof_gable_run_3m_clay_d6 | houses | 72/12/4 | 160/50/8 | PASS |
+| house_roof_gable_run_3m_comp_d6 | houses | 72/12/4 | 160/50/8 | PASS |
+| house_roof_hip_10p5x7p5_clay | houses | 218/26/8 | 560/166/12 | PASS |
+| house_roof_hip_10p5x7p5_comp | houses | 218/26/8 | 560/166/12 | PASS |
+| house_roof_hip_12x7p5_clay | houses | 218/26/8 | 620/184/12 | PASS |
+| house_roof_hip_12x7p5_comp | houses | 218/26/8 | 620/184/12 | PASS |
+| house_roof_hip_9x7p5_clay | houses | 218/26/8 | 500/148/12 | PASS |
+| house_roof_hip_9x7p5_comp | houses | 226/26/8 | 500/148/12 | PASS |
+| house_wall_1p5m_small_stucco_peach | houses | 64/16/20 | 120/40/24 | PASS |
+| house_wall_1p5m_small_stucco_pink | houses | 64/16/20 | 120/40/24 | PASS |
+| house_wall_3m_bay_stucco_peach | houses | 314/100/60 | 360/120/80 | PASS |
+| house_wall_3m_bay_stucco_pink | houses | 314/100/60 | 360/120/80 | PASS |
+| house_wall_3m_door_stucco_peach | houses | 242/66/44 | 320/100/56 | PASS |
+| house_wall_3m_door_stucco_peach_clayhood | houses | 242/66/44 | 320/100/56 | PASS |
+| house_wall_3m_door_stucco_pink | houses | 242/66/44 | 320/100/56 | PASS |
+| house_wall_3m_door_stucco_pink_clayhood | houses | 242/66/44 | 320/100/56 | PASS |
+| house_wall_3m_garage_stucco_peach | houses | 36/16/16 | 160/50/24 | PASS |
+| house_wall_3m_garage_stucco_pink | houses | 36/16/16 | 160/50/24 | PASS |
+| house_wall_3m_porch_siding | houses | 538/122/20 | 600/180/56 | PASS |
+| house_wall_3m_porch_stucco | houses | 538/122/20 | 600/180/56 | PASS |
+| house_wall_3m_porch_stucco_peach_clay | houses | 538/122/20 | 600/180/56 | PASS |
+| house_wall_3m_porch_stucco_pink_clay | houses | 538/122/20 | 600/180/56 | PASS |
+| house_wall_3m_porch_stucco_white_clay | houses | 538/122/20 | 600/180/56 | PASS |
+| house_wall_3m_utility_stucco_peach | houses | 96/16/20 | 220/70/48 | PASS |
+| house_wall_3m_utility_stucco_pink | houses | 96/16/20 | 220/70/48 | PASS |
+| house_wall_3m_window_pair_stucco_peach | houses | 110/24/36 | 220/70/48 | PASS |
+| house_wall_3m_window_pair_stucco_pink | houses | 110/24/36 | 220/70/48 | PASS |
+| house_wall_3m_window_stucco_peach | houses | 84/16/20 | 220/70/48 | PASS |
+| house_wall_3m_window_stucco_pink | houses | 84/16/20 | 220/70/48 | PASS |
+| house_wall_4p5m_utility_stucco_peach | houses | 150/36/36 | 240/72/48 | PASS |
+| house_wall_4p5m_utility_stucco_pink | houses | 150/36/36 | 240/72/48 | PASS |
+| house_wall_4p5m_window_small_stucco_peach | houses | 138/36/36 | 240/72/48 | PASS |
+| house_wall_4p5m_window_small_stucco_pink | houses | 138/36/36 | 240/72/48 | PASS |
+| shop_back_6m_stucco_blank | shops | 176/52/4 | 300/90/8 | PASS |
+| urb_apt_back_6m_blank | urban | 326/68/4 | 450/140/16 | PASS |
+| urb_brk_back_6m_3sty_blank | urban | 258/64/10 | 500/150/16 | PASS |
+| urb_brk_back_6m_4sty_blank | urban | 314/76/12 | 500/150/16 | PASS |
+| urb_civ_back_6m | urban | 214/72/16 | 450/140/16 | PASS |
+| urb_civ_back_6m_blank | urban | 136/30/4 | 450/140/16 | PASS |
+| urb_civ_roof_6x12 | urban | 206/8/8 | 420/80/72 | PASS |
+| urb_civ_side_12m_l | urban | 146/30/4 | 450/140/16 | PASS |
+| urb_civ_side_12m_r | urban | 146/30/4 | 450/140/16 | PASS |
+| urb_civ_trim_return_l | urban | 28/10/10 | 60/24/12 | PASS |
+| urb_civ_trim_return_r | urban | 28/10/10 | 60/24/12 | PASS |
+| urb_svc_back_6m_bigbox | urban | 176/64/4 | 400/120/12 | PASS |
+| urb_svc_back_6m_bigbox_blank | urban | 98/20/4 | 400/120/12 | PASS |
+| urb_svc_back_6m_bigbox_dock | urban | 104/16/4 | 400/120/12 | PASS |
+| urb_svc_roof_6x12_bigbox | urban | 286/56/56 | 480/80/72 | PASS |
+| urb_svc_side_12m_bigbox | urban | 162/40/4 | 450/140/12 | PASS |
+| urb_svc_trim_return_l | urban | 32/12/12 | 60/24/12 | PASS |
+| urb_svc_trim_return_l_bigbox | urban | 32/12/12 | 60/24/12 | PASS |
+| urb_svc_trim_return_r | urban | 32/12/12 | 60/24/12 | PASS |
+| urb_svc_trim_return_r_bigbox | urban | 32/12/12 | 60/24/12 | PASS |
+| urb_wh_back_12m_blank | urban | 176/40/4 | 500/150/12 | PASS |

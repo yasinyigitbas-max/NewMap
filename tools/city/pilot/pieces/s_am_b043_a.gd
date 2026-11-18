@@ -1,0 +1,11 @@
+extends SceneTree
+## Piece s_am_b043_a (amber road kit, 17 Nov): Amber Ave, b043.
+## Section hs, z 17.5-100.0 (seam), height smoothstep [[17.5, 100.0, -2.0]].
+## Bus: southbound stop at 9th St on the high street (shelter, zone 21.5-46.5).
+## Built by road_amber.gd build_leg (every rule and its reason is there). Run once; never when locked.
+const R := preload("res://tools/city/pilot/pieces/road_amber.gd")
+const SPEC := {"sec": "hs", "z0": 17.5, "z1": 100.0, "lines": {"app": [[17.5, 41.5], [50.5, 53.5], [62.5, 65.5], [74.5, 77.5], [86.5, 89.5], [98.5, 100.0]], "dep": [[30.5, 33.5], [42.5, 45.5], [54.5, 57.5], [66.5, 69.5], [78.5, 81.5], [90.5, 93.5]]}, "prof": [[17.5, 100.0, -2.0]], "nose": true, "age": "mid", "arrows": ["left_through", "through_right"], "bus": {"a": 21.5, "b": 46.5, "kind": "shelter"}, "palms": [30.0, 42.0, 54.0, 66.0, 78.0, 90.0], "fan": 0.0, "tmarks": {"app": [26.2, 32.9, 39.6, 46.3, 53.0, 59.7, 66.4, 73.1, 79.8, 86.5, 93.2, 99.9], "dep": [51.2, 57.9, 64.6, 71.3, 78.0, 84.7, 91.4, 98.1]}, "wells": {"app": [[94.75, "tree_jacaranda_b"], [81.35, "palm_queen_a"], [67.95, "tree_jacaranda_a"], [54.55, "palm_queen_b"], [41.15, "tree_jacaranda_a"], [27.75, "palm_queen_a"]], "dep": [[94.75, "tree_jacaranda_b"], [81.35, "palm_queen_a"], [67.95, "tree_jacaranda_a"], [54.55, "palm_queen_b"], [27.75, "palm_queen_a"]]}, "lamps": [[88.05, 1.0], [88.05, -1.0], [61.25, 1.0], [61.25, -1.0], [34.45, 1.0], [34.45, -1.0]], "hyd": [74.65, 1.0], "extras": [["prop_trash_receptacle", "worn", 1.0, 19.1, 0.75, 0.0], ["prop_recycling_receptacle", "worn", 1.0, 19.9, 0.75, 0.0], ["prop_trash_receptacle", "worn", -1.0, 56.0, 0.75, 0.0], ["prop_recycling_receptacle", "worn", -1.0, 56.8, 0.75, 0.0], ["prop_newspaper_box_red", "worn", 1.0, 21.5, -0.5, "street"], ["prop_newspaper_box_blue", "worn", 1.0, 22.2, -0.5, "street"], ["prop_park_bench", "worn", 1.0, 70.0, -0.45, "street"], ["prop_bike_rack", "worn", 1.0, 48.0, 0.75, 90.0], ["prop_usps_collection_box", "worn", -1.0, 78.0, 0.8, "street"], ["prop_sign_speed25", "worn", -1.0, 64.5, 0.35, "street"]], "inlets": [[60.0, 1.0], [72.0, -1.0]], "manholes": [[-7.4, 41.0], [7.4, 78.0]], "trenches": [[-5.8, 66.0, 6.4]]}
+func _init() -> void: _run.call_deferred()
+func _run() -> void:
+	R.build_leg("s_am_b043_a", SPEC)
+	quit()

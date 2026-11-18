@@ -1,0 +1,108 @@
+{
+ "name": "prom_boardwalk",
+ "tiers": {
+  "near": 520,
+  "mid": 92,
+  "far": 10
+ },
+ "budget": 1200,
+ "class": "medium",
+ "far_paint_max": 0.2578037132213762,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_prom_boardwalk_clean_far.glb",
+   "tier": "far",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 10,
+   "verts": 20,
+   "budget": 20,
+   "size": [
+    4.0,
+    0.32,
+    3.0
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_prom_boardwalk_clean_mid.glb",
+   "tier": "mid",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "12 tris may face inward / be enclosed"
+   ],
+   "tris": 92,
+   "verts": 218,
+   "budget": 361,
+   "size": [
+    4.0,
+    0.32,
+    3.0
+   ],
+   "odd_ray": 18
+  },
+  {
+   "file": "prop_prom_boardwalk_clean_near.glb",
+   "tier": "near",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "34 tris may face inward / be enclosed"
+   ],
+   "tris": 520,
+   "verts": 1174,
+   "budget": 1200,
+   "size": [
+    4.0,
+    0.32,
+    3.004
+   ],
+   "odd_ray": 46
+  },
+  {
+   "file": "prop_prom_boardwalk_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 1,
+   "col_maxverts": 8
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.931,
+   "dE": 0.5
+  },
+  "top": {
+   "iou": 1.0,
+   "dE": 0.2
+  },
+  "left": {
+   "iou": 0.189,
+   "dE": 1.3,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 1,
+  "rail": 0
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": null,
+ "bake_px_per_m": null,
+ "high_tris": null,
+ "pass": true
+}

@@ -1,0 +1,25 @@
+{
+ "cat": "mod",
+ "doors_front": [
+  [
+   "shopdoor",
+   -4.6
+  ],
+  [
+   "apt_door",
+   3.0
+  ]
+ ],
+ "footprint_wd": [
+  12.0,
+  12.0
+ ],
+ "height": 4.8,
+ "merged_from": "ck_grt_row2.json",
+ "name": "ck_grt_row2",
+ "tris": {
+  "far": 10,
+  "mid": 302,
+  "near": 1220
+ }
+}

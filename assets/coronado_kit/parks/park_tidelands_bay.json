@@ -1,0 +1,565 @@
+{
+ "name": "park_tidelands_bay",
+ "style": "bayfront_park",
+ "footprint": [
+  90,
+  40
+ ],
+ "zones": [
+  {
+   "kind": "lawn",
+   "rect": [
+    -45,
+    45,
+    -20,
+    12
+   ]
+  },
+  {
+   "kind": "sand",
+   "rect": [
+    -45,
+    45,
+    12,
+    20
+   ]
+  },
+  {
+   "kind": "path",
+   "rect": [
+    -45,
+    45,
+    6,
+    8.4
+   ]
+  }
+ ],
+ "instances": [
+  {
+   "base": "prop_lamp_cobra",
+   "cond": "clean",
+   "pos": [
+    -39.38,
+    0.0,
+    4.4
+   ],
+   "rot_y": 0.0,
+   "role": "lamp",
+   "file": "props/street/prop_lamp_cobra_clean_near.glb",
+   "tris_near": 820
+  },
+  {
+   "base": "prop_lamp_cobra",
+   "cond": "clean",
+   "pos": [
+    -28.12,
+    0.0,
+    4.4
+   ],
+   "rot_y": 0.0,
+   "role": "lamp",
+   "file": "props/street/prop_lamp_cobra_clean_near.glb",
+   "tris_near": 820
+  },
+  {
+   "base": "prop_lamp_cobra",
+   "cond": "clean",
+   "pos": [
+    -16.88,
+    0.0,
+    4.4
+   ],
+   "rot_y": 0.0,
+   "role": "lamp",
+   "file": "props/street/prop_lamp_cobra_clean_near.glb",
+   "tris_near": 820
+  },
+  {
+   "base": "prop_lamp_cobra",
+   "cond": "clean",
+   "pos": [
+    -5.62,
+    0.0,
+    4.4
+   ],
+   "rot_y": 0.0,
+   "role": "lamp",
+   "file": "props/street/prop_lamp_cobra_clean_near.glb",
+   "tris_near": 820
+  },
+  {
+   "base": "prop_lamp_cobra",
+   "cond": "clean",
+   "pos": [
+    5.62,
+    0.0,
+    4.4
+   ],
+   "rot_y": 0.0,
+   "role": "lamp",
+   "file": "props/street/prop_lamp_cobra_clean_near.glb",
+   "tris_near": 820
+  },
+  {
+   "base": "prop_lamp_cobra",
+   "cond": "clean",
+   "pos": [
+    16.88,
+    0.0,
+    4.4
+   ],
+   "rot_y": 0.0,
+   "role": "lamp",
+   "file": "props/street/prop_lamp_cobra_clean_near.glb",
+   "tris_near": 820
+  },
+  {
+   "base": "prop_lamp_cobra",
+   "cond": "clean",
+   "pos": [
+    28.12,
+    0.0,
+    4.4
+   ],
+   "rot_y": 0.0,
+   "role": "lamp",
+   "file": "props/street/prop_lamp_cobra_clean_near.glb",
+   "tris_near": 820
+  },
+  {
+   "base": "prop_lamp_cobra",
+   "cond": "clean",
+   "pos": [
+    39.38,
+    0.0,
+    4.4
+   ],
+   "rot_y": 0.0,
+   "role": "lamp",
+   "file": "props/street/prop_lamp_cobra_clean_near.glb",
+   "tris_near": 820
+  },
+  {
+   "base": "prop_trash_receptacle",
+   "cond": "clean",
+   "pos": [
+    -36.2,
+    0.0,
+    5.4
+   ],
+   "rot_y": 0.0,
+   "role": "bin",
+   "file": "props/street/prop_trash_receptacle_clean_near.glb",
+   "tris_near": 298
+  },
+  {
+   "base": "prop_trash_receptacle",
+   "cond": "clean",
+   "pos": [
+    -6.2,
+    0.0,
+    5.4
+   ],
+   "rot_y": 0.0,
+   "role": "bin",
+   "file": "props/street/prop_trash_receptacle_clean_near.glb",
+   "tris_near": 298
+  },
+  {
+   "base": "prop_trash_receptacle",
+   "cond": "clean",
+   "pos": [
+    23.8,
+    0.0,
+    5.4
+   ],
+   "rot_y": 0.0,
+   "role": "bin",
+   "file": "props/street/prop_trash_receptacle_clean_near.glb",
+   "tris_near": 298
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    -39,
+    0.0,
+    9.2
+   ],
+   "rot_y": 0.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    -26,
+    0.0,
+    9.2
+   ],
+   "rot_y": 0.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    -13,
+    0.0,
+    9.2
+   ],
+   "rot_y": 0.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    0,
+    0.0,
+    9.2
+   ],
+   "rot_y": 0.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    13,
+    0.0,
+    9.2
+   ],
+   "rot_y": 0.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    26,
+    0.0,
+    9.2
+   ],
+   "rot_y": 0.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    39,
+    0.0,
+    9.2
+   ],
+   "rot_y": 0.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_picnic_table",
+   "cond": "clean",
+   "pos": [
+    -33,
+    0.0,
+    -6
+   ],
+   "rot_y": 0,
+   "role": "table",
+   "file": "props/park/prop_picnic_table_clean_near.glb",
+   "tris_near": 292
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "pos": [
+    -33,
+    0.0,
+    -12.5
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/palm_queen_a_normal_near.glb",
+   "tris_near": 560
+  },
+  {
+   "base": "prop_picnic_table",
+   "cond": "clean",
+   "pos": [
+    -11,
+    0.0,
+    -6
+   ],
+   "rot_y": 0,
+   "role": "table",
+   "file": "props/park/prop_picnic_table_clean_near.glb",
+   "tris_near": 292
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "pos": [
+    -11,
+    0.0,
+    -12.5
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/palm_queen_b_normal_near.glb",
+   "tris_near": 560
+  },
+  {
+   "base": "prop_picnic_table",
+   "cond": "clean",
+   "pos": [
+    11,
+    0.0,
+    -6
+   ],
+   "rot_y": 0,
+   "role": "table",
+   "file": "props/park/prop_picnic_table_clean_near.glb",
+   "tris_near": 292
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "pos": [
+    11,
+    0.0,
+    -12.5
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/palm_mexican_fan_a_normal_near.glb",
+   "tris_near": 856
+  },
+  {
+   "base": "prop_picnic_table",
+   "cond": "clean",
+   "pos": [
+    33,
+    0.0,
+    -6
+   ],
+   "rot_y": 0,
+   "role": "table",
+   "file": "props/park/prop_picnic_table_clean_near.glb",
+   "tris_near": 292
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "pos": [
+    33,
+    0.0,
+    -14
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/palm_canary_date_b_normal_near.glb",
+   "tris_near": 956
+  },
+  {
+   "base": "prop_riprap_slope",
+   "cond": "clean",
+   "pos": [
+    -40.5,
+    0.0,
+    18.6
+   ],
+   "rot_y": 0,
+   "role": "edge",
+   "file": "props/park/prop_riprap_slope_clean_near.glb",
+   "tris_near": 522
+  },
+  {
+   "base": "prop_riprap_slope",
+   "cond": "clean",
+   "pos": [
+    -31.5,
+    0.0,
+    18.6
+   ],
+   "rot_y": 0,
+   "role": "edge",
+   "file": "props/park/prop_riprap_slope_clean_near.glb",
+   "tris_near": 522
+  },
+  {
+   "base": "prop_riprap_slope",
+   "cond": "clean",
+   "pos": [
+    -22.5,
+    0.0,
+    18.6
+   ],
+   "rot_y": 0,
+   "role": "edge",
+   "file": "props/park/prop_riprap_slope_clean_near.glb",
+   "tris_near": 522
+  },
+  {
+   "base": "prop_riprap_slope",
+   "cond": "clean",
+   "pos": [
+    -13.5,
+    0.0,
+    18.6
+   ],
+   "rot_y": 0,
+   "role": "edge",
+   "file": "props/park/prop_riprap_slope_clean_near.glb",
+   "tris_near": 522
+  },
+  {
+   "base": "prop_riprap_slope",
+   "cond": "clean",
+   "pos": [
+    -4.5,
+    0.0,
+    18.6
+   ],
+   "rot_y": 0,
+   "role": "edge",
+   "file": "props/park/prop_riprap_slope_clean_near.glb",
+   "tris_near": 522
+  },
+  {
+   "base": "prop_riprap_slope",
+   "cond": "clean",
+   "pos": [
+    4.5,
+    0.0,
+    18.6
+   ],
+   "rot_y": 0,
+   "role": "edge",
+   "file": "props/park/prop_riprap_slope_clean_near.glb",
+   "tris_near": 522
+  },
+  {
+   "base": "prop_riprap_slope",
+   "cond": "clean",
+   "pos": [
+    13.5,
+    0.0,
+    18.6
+   ],
+   "rot_y": 0,
+   "role": "edge",
+   "file": "props/park/prop_riprap_slope_clean_near.glb",
+   "tris_near": 522
+  },
+  {
+   "base": "prop_riprap_slope",
+   "cond": "clean",
+   "pos": [
+    22.5,
+    0.0,
+    18.6
+   ],
+   "rot_y": 0,
+   "role": "edge",
+   "file": "props/park/prop_riprap_slope_clean_near.glb",
+   "tris_near": 522
+  },
+  {
+   "base": "prop_riprap_slope",
+   "cond": "clean",
+   "pos": [
+    31.5,
+    0.0,
+    18.6
+   ],
+   "rot_y": 0,
+   "role": "edge",
+   "file": "props/park/prop_riprap_slope_clean_near.glb",
+   "tris_near": 522
+  },
+  {
+   "base": "prop_riprap_slope",
+   "cond": "clean",
+   "pos": [
+    40.5,
+    0.0,
+    18.6
+   ],
+   "rot_y": 0,
+   "role": "edge",
+   "file": "props/park/prop_riprap_slope_clean_near.glb",
+   "tris_near": 522
+  },
+  {
+   "base": "prop_drinking_fountain",
+   "cond": "clean",
+   "pos": [
+    -2,
+    0.0,
+    4.6
+   ],
+   "rot_y": 0,
+   "role": "fountain",
+   "file": "props/park/prop_drinking_fountain_clean_near.glb",
+   "tris_near": 288
+  },
+  {
+   "base": "prop_bike_rack",
+   "cond": "clean",
+   "pos": [
+    3,
+    0.0,
+    4.6
+   ],
+   "rot_y": 0,
+   "role": "bike",
+   "file": "props/street/prop_bike_rack_clean_near.glb",
+   "tris_near": 540
+  },
+  {
+   "base": "prop_beach_sign_rules",
+   "cond": "clean",
+   "pos": [
+    10,
+    0.0,
+    4.8
+   ],
+   "rot_y": 0,
+   "role": "sign",
+   "file": "props/park/prop_beach_sign_rules_clean_near.glb",
+   "tris_near": 32
+  }
+ ],
+ "stats": {
+  "instances": 39,
+  "near_tris_sum": 18894,
+  "assets": [
+   "palm_canary_date_b",
+   "palm_mexican_fan_a",
+   "palm_queen_a",
+   "palm_queen_b",
+   "prop_beach_sign_rules",
+   "prop_bike_rack",
+   "prop_drinking_fountain",
+   "prop_lamp_cobra",
+   "prop_park_bench",
+   "prop_picnic_table",
+   "prop_riprap_slope",
+   "prop_trash_receptacle"
+  ]
+ },
+ "errors": []
+}

@@ -1,0 +1,35 @@
+{
+ "gangway": {
+  "file_base": "prop_gangway",
+  "batch": "wfgang",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 2382,
+   "mid": 226,
+   "far": 12
+  },
+  "footprint_w": 1.29,
+  "footprint_d": 11.0,
+  "height": 2.119,
+  "regions": [
+   "baked:gangway"
+  ],
+  "trim": {
+   "tw_galv": {
+    "area_m2": 60.57,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 20779,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 64.5,
+  "col": 14,
+  "secs": 40.3
+ }
+}

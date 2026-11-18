@@ -1,0 +1,91 @@
+{
+ "name": "mod_apt_row",
+ "group": "urban",
+ "outline": {
+  "kind": "block",
+  "W": 18.0,
+  "D": 12.0,
+  "storeys": 3,
+  "wall": "W_stucco",
+  "tint": [
+   0.97,
+   0.96,
+   0.93
+  ],
+  "budget": "apartment",
+  "floor": 0.3,
+  "storey": 3.0,
+  "parapet": 0.8,
+  "sills": true,
+  "foundation": true,
+  "far_facade": "F_c_tower_3",
+  "far_tile": 3.0
+ },
+ "pieces": [
+  {
+   "piece": "urb_apt_front_6m_open",
+   "x": -6.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_apt_back_6m",
+   "x": 6.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_apt_front_6m_open",
+   "x": 0.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_apt_back_6m",
+   "x": 0.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_apt_front_6m_open",
+   "x": 6.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_apt_back_6m",
+   "x": -6.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_apt_side_12m",
+   "x": 8.85,
+   "z": 0.0,
+   "rot_y": 90
+  },
+  {
+   "piece": "urb_apt_side_12m",
+   "x": -8.85,
+   "z": 0.0,
+   "rot_y": 270
+  }
+ ],
+ "budget_class": "apartment",
+ "budget": [
+  3500,
+  1000,
+  80
+ ],
+ "tris": {
+  "near": 2582,
+  "mid": 776,
+  "far": 34
+ },
+ "col_boxes": 1,
+ "far_from": "snapped outline hull",
+ "merged": {
+  "near_mid": "pieces merged, 1 mesh/1 primitive/1 material",
+  "far_col": "outline hull + <=12 boxes"
+ }
+}

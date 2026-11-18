@@ -1,0 +1,121 @@
+{
+ "name": "urb_mall",
+ "cat": "urban",
+ "style": "shopping_mall",
+ "logic_errors": [],
+ "col_boxes": 12,
+ "near": {
+  "tris": 3568,
+  "verts": 6218,
+  "regions": [
+   "AW_black",
+   "O_apt_door",
+   "O_glass_plain",
+   "O_lamp",
+   "O_louver",
+   "O_ribbon",
+   "O_rollup",
+   "O_shopdoor",
+   "O_storefront",
+   "O_vent",
+   "R_flat",
+   "S_awn_black",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -24.219999313354492,
+    -0.0,
+    -15.5
+   ],
+   [
+    24.219999313354492,
+    10.069999694824219,
+    17.802000045776367
+   ]
+  ]
+ },
+ "mid_roof_top": 10.0,
+ "mid": {
+  "tris": 734,
+  "verts": 974,
+  "regions": [
+   "AW_black",
+   "O_apt_door",
+   "O_glass_plain",
+   "O_rollup",
+   "O_shopdoor",
+   "S_awn_black",
+   "S_concrete",
+   "S_flat",
+   "S_signbg",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_dark",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -24.0,
+    0.0,
+    -15.5
+   ],
+   [
+    24.0,
+    10.0,
+    17.802000045776367
+   ]
+  ]
+ },
+ "far": {
+  "tris": 42,
+  "verts": 68,
+  "regions": [
+   "F_c_glass_3",
+   "F_c_shop_2",
+   "F_flat"
+  ],
+  "bbox": [
+   [
+    -24.0,
+    0.0,
+    -14.0
+   ],
+   [
+    24.0,
+    10.0,
+    14.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  48.0,
+  28.0
+ ],
+ "footprint_area": 1344.0,
+ "height": 10.07,
+ "storeys": 2,
+ "budget": [
+  8000,
+  2500,
+  200
+ ],
+ "budget_class": "landmark",
+ "time_s": 24.9
+}

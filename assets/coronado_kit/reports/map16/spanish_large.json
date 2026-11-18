@@ -1,0 +1,210 @@
+{
+ "name": "spanish_large",
+ "style": "spanish",
+ "module": "houses_map",
+ "stats": {
+  "near": {
+   "tris": 2347,
+   "verts": 4142,
+   "regions": [
+    "O_chimvent",
+    "O_door_french",
+    "O_door_spanish",
+    "O_lamp",
+    "O_number",
+    "O_shutter",
+    "O_tilevent",
+    "O_vent",
+    "O_win_casement",
+    "O_win_diamond",
+    "R_clay",
+    "S_black",
+    "S_concrete",
+    "S_soffit",
+    "S_stucco",
+    "S_terracotta",
+    "S_white",
+    "T_concrete",
+    "T_dark",
+    "T_metal",
+    "T_terracotta",
+    "T_white",
+    "W_stucco"
+   ],
+   "bbox": [
+    [
+     -5.75,
+     0.0,
+     -7.639999866485596
+    ],
+    [
+     5.949999809265137,
+     8.942000389099121,
+     9.399999618530273
+    ]
+   ]
+  },
+  "mid": {
+   "tris": 506,
+   "verts": 610,
+   "regions": [
+    "O_door_french",
+    "O_door_spanish",
+    "O_tilevent",
+    "O_win_casement",
+    "O_win_diamond",
+    "S_clay",
+    "S_concrete",
+    "S_soffit",
+    "S_stucco",
+    "S_terracotta",
+    "S_white",
+    "W_stucco"
+   ],
+   "bbox": [
+    [
+     -5.75,
+     0.0,
+     -7.5
+    ],
+    [
+     5.5,
+     8.562000274658203,
+     9.399999618530273
+    ]
+   ]
+  },
+  "far": {
+   "tris": 50,
+   "verts": 90,
+   "regions": [
+    "F_clay",
+    "F_stucco_1",
+    "F_stucco_2",
+    "F_stucco_blank",
+    "F_trim_white"
+   ],
+   "bbox": [
+    [
+     -5.5,
+     -0.0,
+     -7.5
+    ],
+    [
+     5.5,
+     7.961999893188477,
+     8.5
+    ]
+   ]
+  },
+  "budget": [
+   2500,
+   750,
+   60
+  ],
+  "budget_class": "house_large",
+  "storeys": 2,
+  "footprint_wd": [
+   11.0,
+   15.0
+  ],
+  "footprint_area": 165.0,
+  "height": 8.94,
+  "logic_errors": [],
+  "col_boxes": 12
+ },
+ "validator": {
+  "pass": true,
+  "errors": []
+ },
+ "railcheck": {
+  "pass": true,
+  "gaps": [],
+  "floating": [],
+  "pen": []
+ },
+ "far_match": {
+  "ok": true,
+  "reason": "ok",
+  "detail": {
+   "mid_h": 8.562,
+   "far_h": 7.962,
+   "mid_w": 11.25,
+   "far_w": 11.0,
+   "iou": 0.95,
+   "mid_px": 35921,
+   "far_px": 34123,
+   "frame": [
+    -5.75,
+    5.5,
+    0.0,
+    8.562
+   ],
+   "swing_mid": 0.423,
+   "corr": 0.919,
+   "mid_rows": 4,
+   "far_rows": 4,
+   "mid_fill": 0.202,
+   "far_fill": 0.227,
+   "delta_e": 2.0,
+   "wall_delta_e": 4.0,
+   "hv_mid": 1.03,
+   "hv_far": 1.18,
+   "light_rows_mid": 0.745,
+   "light_rows_far": 0.703,
+   "mid_rgb": [
+    0.554,
+    0.535,
+    0.494
+   ],
+   "far_rgb": [
+    0.572,
+    0.555,
+    0.516
+   ],
+   "mid_wall_rgb": [
+    0.65,
+    0.634,
+    0.586
+   ],
+   "far_wall_rgb": [
+    0.609,
+    0.592,
+    0.549
+   ]
+  },
+  "full_iou": {
+   "front": 0.9481324189786612,
+   "side": 0.9826919947933616
+  }
+ },
+ "pass": true,
+ "time_s": 27.2,
+ "wallcheck": {
+  "front": {
+   "wall_px": 72890,
+   "resid_std": 0.0074,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "left": {
+   "wall_px": 113974,
+   "resid_std": 0.0037,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "right": {
+   "wall_px": 94641,
+   "resid_std": 0.0039,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "back": {
+   "wall_px": 133906,
+   "resid_std": 0.0037,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "pass": true
+ }
+}

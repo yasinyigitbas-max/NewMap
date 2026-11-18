@@ -1,0 +1,127 @@
+{
+ "name": "apt_spanish_revival",
+ "cat": "apartment",
+ "style": "spanish_revival_apartment",
+ "logic_errors": [],
+ "col_boxes": 12,
+ "near": {
+  "tris": 3038,
+  "verts": 5220,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_lamp",
+   "O_number",
+   "O_shutter",
+   "O_small_dark",
+   "O_tilevent",
+   "O_win_casement",
+   "R_clay",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_terracotta",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -9.720000267028809,
+    0.0,
+    -6.300000190734863
+   ],
+   [
+    9.449999809265137,
+    7.699999809265137,
+    6.5
+   ]
+  ]
+ },
+ "mid_roof_top": 7.1,
+ "mid": {
+  "tris": 902,
+  "verts": 1068,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_small_dark",
+   "O_tilevent",
+   "O_win_casement",
+   "S_clay",
+   "S_concrete",
+   "S_soffit",
+   "S_terracotta",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -9.0,
+    -0.0,
+    -6.300000190734863
+   ],
+   [
+    9.0,
+    7.099999904632568,
+    6.5
+   ]
+  ]
+ },
+ "far": {
+  "tris": 10,
+  "verts": 20,
+  "regions": [
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -9.0,
+    0.0,
+    -5.0
+   ],
+   [
+    9.0,
+    7.099999904632568,
+    5.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ],
+  [
+   "apt_door",
+   -6.4
+  ],
+  [
+   "apt_door",
+   6.4
+  ],
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  18.0,
+  10.0
+ ],
+ "footprint_area": 180.0,
+ "height": 7.7,
+ "storeys": 2,
+ "budget": [
+  3500,
+  1000,
+  80
+ ],
+ "budget_class": "apartment",
+ "time_s": 33.1
+}

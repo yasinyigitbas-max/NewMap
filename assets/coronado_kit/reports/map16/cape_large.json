@@ -1,0 +1,213 @@
+{
+ "name": "cape_large",
+ "style": "cape_cod",
+ "module": "houses_map",
+ "stats": {
+  "near": {
+   "tris": 2466,
+   "verts": 4228,
+   "regions": [
+    "O_door_slider",
+    "O_door_white",
+    "O_lamp",
+    "O_number",
+    "O_shutter",
+    "O_small_white",
+    "O_vent",
+    "O_win_dh_div",
+    "O_win_dh_white",
+    "R_comp",
+    "S_black",
+    "S_concrete",
+    "S_siding",
+    "S_soffit",
+    "S_white",
+    "T_concrete",
+    "T_dark",
+    "T_deck",
+    "T_metal",
+    "T_rail",
+    "T_white",
+    "W_brick",
+    "W_shingle",
+    "W_siding",
+    "W_stucco"
+   ],
+   "bbox": [
+    [
+     -5.420000076293945,
+     0.0,
+     -9.300000190734863
+    ],
+    [
+     5.420000076293945,
+     11.300000190734863,
+     10.300000190734863
+    ]
+   ]
+  },
+  "mid": {
+   "tris": 444,
+   "verts": 552,
+   "regions": [
+    "O_door_slider",
+    "O_door_white",
+    "O_small_white",
+    "O_win_dh_div",
+    "O_win_dh_white",
+    "S_comp",
+    "S_concrete",
+    "S_deck",
+    "S_soffit",
+    "S_white",
+    "W_brick",
+    "W_shingle",
+    "W_siding",
+    "W_stucco"
+   ],
+   "bbox": [
+    [
+     -5.300000190734863,
+     0.0,
+     -9.300000190734863
+    ],
+    [
+     5.300000190734863,
+     11.300000190734863,
+     10.300000190734863
+    ]
+   ]
+  },
+  "far": {
+   "tris": 30,
+   "verts": 54,
+   "regions": [
+    "F_comp",
+    "F_shingle_blank",
+    "F_siding_2",
+    "F_trim_white"
+   ],
+   "bbox": [
+    [
+     -5.0,
+     0.0,
+     -7.5
+    ],
+    [
+     5.0,
+     10.819999694824219,
+     7.5
+    ]
+   ]
+  },
+  "budget": [
+   2500,
+   750,
+   60
+  ],
+  "budget_class": "house_large",
+  "storeys": 2,
+  "footprint_wd": [
+   10.0,
+   15.0
+  ],
+  "footprint_area": 150.0,
+  "height": 11.3,
+  "logic_errors": [],
+  "col_boxes": 15
+ },
+ "validator": {
+  "pass": true,
+  "errors": []
+ },
+ "railcheck": {
+  "pass": true,
+  "gaps": [],
+  "floating": [],
+  "pen": []
+ },
+ "far_match": {
+  "ok": true,
+  "reason": "ok",
+  "detail": {
+   "mid_h": 11.3,
+   "far_h": 10.82,
+   "mid_w": 10.6,
+   "far_w": 10.0,
+   "iou": 0.959,
+   "mid_px": 26666,
+   "far_px": 25568,
+   "frame": [
+    -5.3,
+    5.3,
+    0.0,
+    11.3
+   ],
+   "swing_mid": 0.51,
+   "corr": 0.791,
+   "mid_rows": 5,
+   "far_rows": 3,
+   "mid_fill": 0.432,
+   "far_fill": 0.379,
+   "delta_e": 1.7,
+   "wall_delta_e": 2.0,
+   "hv_mid": 1.88,
+   "hv_far": 1.69,
+   "light_rows_mid": 0.401,
+   "light_rows_far": 0.542,
+   "mid_rgb": [
+    0.424,
+    0.409,
+    0.381
+   ],
+   "far_rgb": [
+    0.427,
+    0.422,
+    0.398
+   ],
+   "mid_wall_rgb": [
+    0.445,
+    0.428,
+    0.398
+   ],
+   "far_wall_rgb": [
+    0.451,
+    0.445,
+    0.419
+   ]
+  },
+  "full_iou": {
+   "front": 0.9604229444683599,
+   "side": 0.9732722185844396
+  }
+ },
+ "pass": true,
+ "time_s": 25.8,
+ "wallcheck": {
+  "front": {
+   "wall_px": 59467,
+   "resid_std": 0.0034,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "left": {
+   "wall_px": 68084,
+   "resid_std": 0.005,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "right": {
+   "wall_px": 71203,
+   "resid_std": 0.0047,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "back": {
+   "wall_px": 133438,
+   "resid_std": 0.002,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "pass": true
+ }
+}

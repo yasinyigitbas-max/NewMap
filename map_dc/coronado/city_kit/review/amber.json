@@ -1,0 +1,315 @@
+{
+ "note": "amber review area (road kit 17 Nov): the family's pieces at their grid sites (u, pad, v) + (1600, 0, -3000), plus the locked sample Amber pieces and the ring's stub they join (review only). Never part of city_layout.json.",
+ "instances": [
+  {
+   "piece": "s_am_b037_a",
+   "pos": [
+    1600.0,
+    8.0,
+    -4400.0
+   ],
+   "yaw": 0,
+   "note": "b037 Amber Ave end A (leg)"
+  },
+  {
+   "piece": "s_am_b037_b",
+   "pos": [
+    1600.0,
+    14.0,
+    -4200.0
+   ],
+   "yaw": 180,
+   "note": "b037 Amber Ave end B (leg)"
+  },
+  {
+   "piece": "s_am_b038_a",
+   "pos": [
+    1600.0,
+    14.0,
+    -4200.0
+   ],
+   "yaw": 0,
+   "note": "b038 Amber Ave end A (leg)"
+  },
+  {
+   "piece": "s_am_b038_b",
+   "pos": [
+    1600.0,
+    12.0,
+    -4000.0
+   ],
+   "yaw": 180,
+   "note": "b038 Amber Ave end B (leg)"
+  },
+  {
+   "piece": "s_am_b039_a",
+   "pos": [
+    1600.0,
+    12.0,
+    -4000.0
+   ],
+   "yaw": 0,
+   "note": "b039 Amber Ave end A (leg)"
+  },
+  {
+   "piece": "s_am_b039_b",
+   "pos": [
+    1600.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 180,
+   "note": "b039 Amber Ave end B (leg)"
+  },
+  {
+   "piece": "s_am_b040_a",
+   "pos": [
+    1600.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 0,
+   "note": "b040 Amber Ave end A (leg)"
+  },
+  {
+   "piece": "s_am_fill_cc",
+   "pos": [
+    1600.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 180,
+   "note": "b040 Amber Ave end B (fill)"
+  },
+  {
+   "piece": "s_am_fill_cc",
+   "pos": [
+    1600.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 0,
+   "note": "b041 Amber Ave end A (fill)"
+  },
+  {
+   "piece": "s_am_b041_b",
+   "pos": [
+    1600.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": 180,
+   "note": "b041 Amber Ave end B (leg)"
+  },
+  {
+   "piece": "s_am_b042_a",
+   "pos": [
+    1600.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": 0,
+   "note": "b042 Amber Ave end A (leg)"
+  },
+  {
+   "piece": "s_am_b042_b",
+   "pos": [
+    1600.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": 180,
+   "note": "b042 Amber Ave end B (leg)"
+  },
+  {
+   "piece": "s_am_b043_a",
+   "pos": [
+    1600.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": 0,
+   "note": "b043 Amber Ave end A (leg)"
+  },
+  {
+   "piece": "s_am_fill_hs",
+   "pos": [
+    1600.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": 180,
+   "note": "b043 Amber Ave end B (fill)"
+  },
+  {
+   "piece": "s_am_fill_hs",
+   "pos": [
+    1600.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "b044 Amber Ave end A (fill)"
+  },
+  {
+   "piece": "s_am_b044_b",
+   "pos": [
+    1600.0,
+    4.0,
+    -2800.0
+   ],
+   "yaw": 180,
+   "note": "b044 Amber Ave end B (leg)"
+  },
+  {
+   "piece": "j_am_3rd",
+   "pos": [
+    1600.0,
+    8.0,
+    -4400.0
+   ],
+   "yaw": 0,
+   "note": "Amber x 3rd St junction"
+  },
+  {
+   "piece": "j_am_4th",
+   "pos": [
+    1600.0,
+    14.0,
+    -4200.0
+   ],
+   "yaw": 0,
+   "note": "Amber x 4th St junction"
+  },
+  {
+   "piece": "j_am_5th",
+   "pos": [
+    1600.0,
+    12.0,
+    -4000.0
+   ],
+   "yaw": 0,
+   "note": "Amber x 5th St junction"
+  },
+  {
+   "piece": "j_am_6th",
+   "pos": [
+    1600.0,
+    6.0,
+    -3800.0
+   ],
+   "yaw": 0,
+   "note": "Amber x 6th St junction"
+  },
+  {
+   "piece": "j_am_8th",
+   "pos": [
+    1600.0,
+    6.0,
+    -3400.0
+   ],
+   "yaw": 0,
+   "note": "Amber x 8th St junction"
+  },
+  {
+   "piece": "j_am_9th",
+   "pos": [
+    1600.0,
+    6.0,
+    -3200.0
+   ],
+   "yaw": 0,
+   "note": "Amber x 9th St junction"
+  },
+  {
+   "piece": "j_am_11th",
+   "pos": [
+    1600.0,
+    4.0,
+    -2800.0
+   ],
+   "yaw": 0,
+   "note": "Amber x 11th St junction"
+  },
+  {
+   "piece": "j_amber_10th",
+   "pos": [
+    1600.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "locked sample (review only)"
+  },
+  {
+   "piece": "s_amber_n",
+   "pos": [
+    1600.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "locked sample (review only)"
+  },
+  {
+   "piece": "s_amber_s",
+   "pos": [
+    1600.0,
+    4.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "locked sample (review only)"
+  },
+  {
+   "piece": "j_cc",
+   "pos": [
+    1600.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 0,
+   "note": "locked sample (review only)"
+  },
+  {
+   "piece": "s_cc_amber_n",
+   "pos": [
+    1600.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 0,
+   "note": "locked sample (review only)"
+  },
+  {
+   "piece": "s_cc_amber_s",
+   "pos": [
+    1600.0,
+    6.0,
+    -3600.0
+   ],
+   "yaw": 0,
+   "note": "locked sample (review only)"
+  },
+  {
+   "piece": "s_rg_b045",
+   "pos": [
+    1600.0,
+    4.0,
+    -2800.0
+   ],
+   "yaw": 0,
+   "note": "ring family's Amber stub south of 11th (review only)"
+  },
+  {
+   "piece": "zz_amber_ground",
+   "pos": [
+    1600.0,
+    0.0,
+    -3000.0
+   ],
+   "yaw": 0,
+   "note": "PREVIEW ONLY ground"
+  }
+ ]
+}

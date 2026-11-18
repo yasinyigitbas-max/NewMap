@@ -1,0 +1,110 @@
+{
+ "name": "twr_glass",
+ "cat": "tower",
+ "style": "glass_skyscraper",
+ "logic_errors": [],
+ "col_boxes": 8,
+ "near": {
+  "tris": 5368,
+  "verts": 9704,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "O_lamp",
+   "O_louver",
+   "O_shopdoor",
+   "R_flat",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -12.119999885559082,
+    -0.0,
+    -13.5
+   ],
+   [
+    12.119999885559082,
+    59.27000045776367,
+    14.699999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 59.2,
+ "mid": {
+  "tris": 386,
+  "verts": 472,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "O_louver",
+   "O_shopdoor",
+   "S_concrete",
+   "S_flat",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -12.0,
+    0.0,
+    -13.5
+   ],
+   [
+    12.0,
+    59.20000076293945,
+    14.699999809265137
+   ]
+  ]
+ },
+ "far": {
+  "tris": 106,
+  "verts": 196,
+  "regions": [
+   "F_c_glass_3",
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -12.0,
+    0.0,
+    -12.0
+   ],
+   [
+    12.0,
+    59.20000076293945,
+    12.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  24.0,
+  24.0
+ ],
+ "footprint_area": 576.0,
+ "height": 59.27,
+ "storeys": 18,
+ "budget": [
+  7200,
+  2160,
+  144
+ ],
+ "budget_units": 1.8,
+ "budget_class": "tower",
+ "time_s": 43.5
+}

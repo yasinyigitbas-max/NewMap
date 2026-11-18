@@ -1,0 +1,123 @@
+{
+ "name": "beach_large",
+ "cat": "house",
+ "style": "beach_cottage",
+ "logic_errors": [],
+ "col_boxes": 15,
+ "near": {
+  "tris": 2373,
+  "verts": 4127,
+  "regions": [
+   "O_door_french",
+   "O_door_white",
+   "O_lamp",
+   "O_number",
+   "O_shutter",
+   "O_vent",
+   "O_win_casement",
+   "R_metal",
+   "S_bb",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_white",
+   "T_concrete",
+   "T_deck",
+   "T_metal",
+   "T_rail",
+   "T_white",
+   "W_bb",
+   "W_brick",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.769999980926514,
+    -0.0,
+    -7.550000190734863
+   ],
+   [
+    5.769999980926514,
+    10.817999839782715,
+    9.649999618530273
+   ]
+  ]
+ },
+ "mid_roof_top": 10.818,
+ "mid": {
+  "tris": 432,
+  "verts": 512,
+  "regions": [
+   "O_door_french",
+   "O_door_white",
+   "O_vent",
+   "O_win_casement",
+   "S_concrete",
+   "S_deck",
+   "S_metal",
+   "S_soffit",
+   "S_white",
+   "W_bb",
+   "W_brick",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.650000095367432,
+    0.0,
+    -7.25
+   ],
+   [
+    5.650000095367432,
+    10.817999839782715,
+    9.649999618530273
+   ]
+  ]
+ },
+ "far": {
+  "tris": 30,
+  "verts": 54,
+  "regions": [
+   "F_bb_2",
+   "F_bb_blank",
+   "F_metal",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -5.25,
+    0.0,
+    -7.25
+   ],
+   [
+    5.25,
+    10.817999839782715,
+    7.25
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door",
+   -2.4
+  ],
+  [
+   "french",
+   1.2
+  ]
+ ],
+ "footprint_wd": [
+  10.5,
+  14.5
+ ],
+ "footprint_area": 152.2,
+ "height": 10.82,
+ "storeys": 2,
+ "budget": [
+  2500,
+  750,
+  60
+ ],
+ "budget_class": "house_large",
+ "time_s": 15.5
+}

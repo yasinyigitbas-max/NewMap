@@ -1,0 +1,209 @@
+{
+ "checkout_counter": {
+  "file_base": "prop_checkout_counter",
+  "batch": "ingrocery",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 822
+  },
+  "footprint_w": 2.0,
+  "footprint_d": 0.777,
+  "height": 1.4,
+  "regions": [
+   "baked:checkout_counter"
+  ],
+  "trim": {
+   "ti_laminate": {
+    "area_m2": 5.08,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 8.37,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 6.59,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 0.12,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 1.63,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.41,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.1,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 4038,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 864.9,
+  "col": 1,
+  "secs": 19.9
+ },
+ "chest_freezer": {
+  "file_base": "prop_chest_freezer",
+  "batch": "ingrocery",
+  "class": "medium",
+  "budget": 1100,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 606
+  },
+  "footprint_w": 1.64,
+  "footprint_d": 0.735,
+  "height": 0.94,
+  "regions": [
+   "baked:chest_freezer"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 7.01,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 2.35,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 2.04,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 4306,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 68.0,
+  "col": 1,
+  "secs": 17.5
+ },
+ "grocery_shelf": {
+  "file_base": "prop_grocery_shelf",
+  "batch": "ingrocery",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 702
+  },
+  "footprint_w": 1.2,
+  "footprint_d": 0.46,
+  "height": 2.05,
+  "regions": [
+   "baked:grocery_shelf"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 13.38,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 4.41,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.42,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 10542,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 55.9,
+  "col": 1,
+  "secs": 15.6
+ },
+ "produce_stand": {
+  "file_base": "prop_produce_stand",
+  "batch": "ingrocery",
+  "class": "medium",
+  "budget": 1100,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 656
+  },
+  "footprint_w": 1.4,
+  "footprint_d": 0.7,
+  "height": 1.21,
+  "regions": [
+   "baked:produce_stand"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 9.17,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 4990,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 65.9,
+  "col": 1,
+  "secs": 16.7
+ },
+ "cigarette_cabinet": {
+  "file_base": "prop_cigarette_cabinet",
+  "batch": "ingrocery",
+  "class": "medium",
+  "budget": 900,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 408
+  },
+  "footprint_w": 0.92,
+  "footprint_d": 0.34,
+  "height": 1.1,
+  "regions": [
+   "baked:cigarette_cabinet"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 7.84,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.2,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 6084,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 87.7,
+  "col": 1,
+  "secs": 9.9
+ }
+}

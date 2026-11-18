@@ -1,0 +1,182 @@
+{
+ "name": "urb_svc_front_6m_bigbox",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 3,
+ "near": {
+  "tris": 200,
+  "verts": 376,
+  "regions": [
+   "O_shopdoor",
+   "O_storefront",
+   "S_soffit",
+   "S_stucco",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.125
+   ],
+   [
+    3.0,
+    6.570000171661377,
+    2.0250000953674316
+   ]
+  ]
+ },
+ "mid_roof_top": 6.5,
+ "mid": {
+  "tris": 82,
+  "verts": 134,
+  "regions": [
+   "O_shopdoor",
+   "O_storefront",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "T_dark",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    0.02500000037252903
+   ],
+   [
+    3.0,
+    6.5,
+    2.0250000953674316
+   ]
+  ]
+ },
+ "far": {
+  "tris": 58,
+  "verts": 74,
+  "regions": [
+   "F_flat",
+   "F_glass",
+   "F_stucco_blank"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.22499999403953552
+   ],
+   [
+    3.0,
+    6.5,
+    0.22499999403953552
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  6.0,
+  0.45
+ ],
+ "footprint_area": 2.7,
+ "height": 6.57,
+ "storeys": 1,
+ "budget": [
+  800,
+  240,
+  120
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_svc_front",
+ "time_s": 0.6,
+ "open_planes": [
+  [
+   0,
+   -3.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   3.0,
+   1,
+   null
+  ],
+  [
+   2,
+   -0.225,
+   -1,
+   null
+  ],
+  [
+   1,
+   5.4,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.225
+ ],
+ "openings": [
+  {
+   "k": "shopdoor",
+   "c": 0.0,
+   "w": 1.8,
+   "t0": 0.0,
+   "t1": 3.0,
+   "depth": 0.35
+  },
+  {
+   "k": "storefront",
+   "c": -1.9,
+   "w": 1.5,
+   "t0": 0.8,
+   "t1": 3.0,
+   "depth": 0.1
+  },
+  {
+   "k": "storefront",
+   "c": 1.9,
+   "w": 1.5,
+   "t0": 0.8,
+   "t1": 3.0,
+   "depth": 0.1
+  }
+ ],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "svc_front",
+  "ends": [
+   [
+    -3.0,
+    0,
+    0.225
+   ],
+   [
+    3.0,
+    0,
+    0.225
+   ]
+  ],
+  "face_z": 0.225,
+  "plate_y": 5.4,
+  "parapet_top": 6.5
+ },
+ "no_door": false,
+ "base_y": 0.0,
+ "ground_reach": false
+}

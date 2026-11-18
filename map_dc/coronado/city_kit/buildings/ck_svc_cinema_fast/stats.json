@@ -1,0 +1,25 @@
+{
+ "cat": "mod",
+ "doors_front": [
+  [
+   "shopdoor",
+   -3.0
+  ],
+  [
+   "shopdoor",
+   1.2
+  ]
+ ],
+ "footprint_wd": [
+  12.0,
+  12.0
+ ],
+ "height": 5.1,
+ "merged_from": "ck_svc_cinema_fast.json",
+ "name": "ck_svc_cinema_fast",
+ "tris": {
+  "far": 240,
+  "mid": 554,
+  "near": 2282
+ }
+}

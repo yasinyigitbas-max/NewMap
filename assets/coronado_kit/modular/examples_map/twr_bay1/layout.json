@@ -1,0 +1,78 @@
+{
+ "name": "twr_bay1",
+ "group": "urban",
+ "outline": {
+  "kind": "tower",
+  "W": 8.0,
+  "D": 20.0,
+  "storeys": 10,
+  "wall": "W_stucco",
+  "tint": [
+   0.82,
+   0.82,
+   0.8
+  ],
+  "budget": "tower",
+  "floor": 0.3,
+  "storey": 3.0,
+  "parapet": 0.9,
+  "sills": false,
+  "foundation": true,
+  "far_facade": "F_c_tower_3",
+  "far_tile": 3.47,
+  "far_tint": [
+   0.44,
+   0.44,
+   0.43
+  ]
+ },
+ "pieces": [
+  {
+   "piece": "urb_twr_front_8m_10sty",
+   "x": 0.0,
+   "z": 9.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_twr_back_8m_10sty",
+   "x": 0.0,
+   "z": -9.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_twr_roof_8x20",
+   "x": 0.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_twr_side_20m_10sty",
+   "x": 3.85,
+   "z": 0.0,
+   "rot_y": 90
+  },
+  {
+   "piece": "urb_twr_side_20m_10sty",
+   "x": -3.85,
+   "z": 0.0,
+   "rot_y": 270
+  }
+ ],
+ "budget_class": "tower",
+ "budget": [
+  4000,
+  1200,
+  80
+ ],
+ "tris": {
+  "near": 2552,
+  "mid": 762,
+  "far": 74
+ },
+ "col_boxes": 1,
+ "far_from": "snapped outline hull",
+ "merged": {
+  "near_mid": "pieces merged, 1 mesh/1 primitive/1 material",
+  "far_col": "outline hull + <=12 boxes"
+ }
+}

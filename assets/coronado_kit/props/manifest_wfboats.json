@@ -1,0 +1,254 @@
+{
+ "boat_sloop": {
+  "file_base": "prop_boat_sloop",
+  "batch": "wfboats",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 2379,
+   "mid": 362,
+   "far": 19
+  },
+  "footprint_w": 3.22,
+  "footprint_d": 9.488,
+  "height": 14.597,
+  "regions": [
+   "baked:boat_sloop"
+  ],
+  "trim": {
+   "tw_gelcoat": {
+    "area_m2": 54.33,
+    "px_per_m": 128.0
+   },
+   "tw_foul": {
+    "area_m2": 4.0,
+    "px_per_m": 128.0
+   },
+   "tw_nonskid": {
+    "area_m2": 22.08,
+    "px_per_m": 128.0
+   },
+   "tw_rubber": {
+    "area_m2": 2.06,
+    "px_per_m": 128.0
+   },
+   "tw_teak": {
+    "area_m2": 2.17,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 12.51,
+    "px_per_m": 128.0
+   },
+   "tw_vinyl": {
+    "area_m2": 5.09,
+    "px_per_m": 128.0
+   },
+   "tw_canvas": {
+    "area_m2": 10.45,
+    "px_per_m": 128.0
+   },
+   "tw_sail": {
+    "area_m2": 0.04,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 32322,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 108.2,
+  "col": 7,
+  "secs": 8.7
+ },
+ "boat_express": {
+  "file_base": "prop_boat_express",
+  "batch": "wfboats",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 2343,
+   "mid": 255,
+   "far": 20
+  },
+  "footprint_w": 2.835,
+  "footprint_d": 9.492,
+  "height": 5.247,
+  "regions": [
+   "aluminium",
+   "glass_dark",
+   "paint_beige",
+   "paint_black",
+   "paint_navy",
+   "paint_white",
+   "plastic_black",
+   "stainless",
+   "stucco",
+   "vinyl_seat",
+   "wood_natural",
+   "wood_white"
+  ],
+  "trim": {
+   "tw_gelcoat": {
+    "area_m2": 96.99,
+    "px_per_m": 128.0
+   },
+   "tw_foul": {
+    "area_m2": 0.5,
+    "px_per_m": 128.0
+   },
+   "tw_nonskid": {
+    "area_m2": 15.77,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 6.05,
+    "px_per_m": 128.0
+   },
+   "tw_vinyl": {
+    "area_m2": 9.92,
+    "px_per_m": 128.0
+   },
+   "tw_canvas": {
+    "area_m2": 0.08,
+    "px_per_m": 128.0
+   },
+   "tw_teak": {
+    "area_m2": 3.63,
+    "px_per_m": 128.0
+   },
+   "tw_sail": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "col": 11,
+  "secs": 28.5
+ },
+ "boat_troller": {
+  "file_base": "prop_boat_troller",
+  "batch": "wfboats",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 2089,
+   "mid": 279,
+   "far": 20
+  },
+  "footprint_w": 4.106,
+  "footprint_d": 11.917,
+  "height": 14.562,
+  "regions": [
+   "baked:boat_troller"
+  ],
+  "trim": {
+   "tw_plank": {
+    "area_m2": 108.87,
+    "px_per_m": 128.0
+   },
+   "tw_foul": {
+    "area_m2": 10.12,
+    "px_per_m": 128.0
+   },
+   "tw_gelcoat": {
+    "area_m2": 41.87,
+    "px_per_m": 128.0
+   },
+   "tw_teak": {
+    "area_m2": 45.91,
+    "px_per_m": 128.0
+   },
+   "tw_timber": {
+    "area_m2": 16.13,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 2.95,
+    "px_per_m": 128.0
+   },
+   "tw_canvas": {
+    "area_m2": 0.29,
+    "px_per_m": 128.0
+   },
+   "tw_rubber": {
+    "area_m2": 2.32,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 35897,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 24.3,
+  "col": 8,
+  "secs": 11.8
+ },
+ "boat_skiff": {
+  "file_base": "prop_boat_skiff",
+  "batch": "wfboats",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1077,
+   "mid": 149,
+   "far": 15
+  },
+  "footprint_w": 1.622,
+  "footprint_d": 5.228,
+  "height": 1.116,
+  "regions": [
+   "baked:boat_skiff"
+  ],
+  "trim": {
+   "tw_gelcoat": {
+    "area_m2": 20.06,
+    "px_per_m": 128.0
+   },
+   "tw_foul": {
+    "area_m2": 0.12,
+    "px_per_m": 128.0
+   },
+   "tw_nonskid": {
+    "area_m2": 4.29,
+    "px_per_m": 128.0
+   },
+   "tw_teak": {
+    "area_m2": 6.85,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 0.24,
+    "px_per_m": 128.0
+   },
+   "tw_canvas": {
+    "area_m2": 0.14,
+    "px_per_m": 128.0
+   },
+   "tw_rubber": {
+    "area_m2": 0.77,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 12918,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 56.6,
+  "col": 3,
+  "secs": 41.6
+ }
+}

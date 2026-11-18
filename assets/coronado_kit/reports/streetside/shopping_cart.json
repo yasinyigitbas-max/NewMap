@@ -1,0 +1,106 @@
+{
+ "name": "shopping_cart",
+ "tiers": {
+  "near": 1012,
+  "mid": 104,
+  "far": 14
+ },
+ "budget": 1200,
+ "class": "medium",
+ "far_paint_max": null,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_shopping_cart_clean_far.glb",
+   "tier": "far",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 14,
+   "verts": 28,
+   "budget": 20,
+   "size": [
+    0.56,
+    1.06,
+    1.02
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_shopping_cart_clean_mid.glb",
+   "tier": "mid",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 104,
+   "verts": 266,
+   "budget": 361,
+   "size": [
+    0.544,
+    1.049,
+    1.039
+   ],
+   "odd_ray": 4
+  },
+  {
+   "file": "prop_shopping_cart_clean_near.glb",
+   "tier": "near",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "74 tris may face inward / be enclosed"
+   ],
+   "tris": 1012,
+   "verts": 2574,
+   "budget": 1200,
+   "size": [
+    0.58,
+    1.046,
+    1.059
+   ],
+   "odd_ray": 107
+  },
+  {
+   "file": "prop_shopping_cart_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 2,
+   "col_maxverts": 8
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.8,
+   "dE": 4.3
+  },
+  "top": {
+   "iou": 0.879,
+   "dE": 1.4
+  },
+  "left": {
+   "iou": 0.57,
+   "dE": 1.0,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 2,
+  "rail": 0
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 64,
+ "bake_px_per_m": 95.8,
+ "high_tris": 14161,
+ "pass": true
+}

@@ -1,0 +1,123 @@
+{
+ "name": "hipranch_sand",
+ "cat": "house",
+ "style": "ranch_hip",
+ "logic_errors": [],
+ "col_boxes": 13,
+ "near": {
+  "tris": 1451,
+  "verts": 2484,
+  "regions": [
+   "O_door_craftsman",
+   "O_garage_panel",
+   "O_lamp",
+   "O_number",
+   "O_shutter",
+   "O_small_white",
+   "O_vent",
+   "O_win_dh_div",
+   "O_win_dh_white",
+   "R_comp",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_rail",
+   "T_white",
+   "W_brick",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -6.070000171661377,
+    -0.0,
+    -4.570000171661377
+   ],
+   [
+    5.949999809265137,
+    5.948999881744385,
+    5.800000190734863
+   ]
+  ]
+ },
+ "mid_roof_top": 5.465,
+ "mid": {
+  "tris": 348,
+  "verts": 463,
+  "regions": [
+   "O_door_craftsman",
+   "O_garage_panel",
+   "O_small_white",
+   "O_win_dh_div",
+   "O_win_dh_white",
+   "S_comp",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "W_brick",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.949999809265137,
+    0.0,
+    -4.449999809265137
+   ],
+   [
+    5.949999809265137,
+    5.948999881744385,
+    5.800000190734863
+   ]
+  ]
+ },
+ "far": {
+  "tris": 38,
+  "verts": 70,
+  "regions": [
+   "F_comp",
+   "F_stucco_1",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -5.5,
+    0.0,
+    -4.0
+   ],
+   [
+    5.5,
+    5.465000152587891,
+    4.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door_craftsman",
+   -3.5
+  ],
+  [
+   "garage",
+   3.8
+  ]
+ ],
+ "footprint_wd": [
+  11.0,
+  8.0
+ ],
+ "footprint_area": 88.0,
+ "height": 5.95,
+ "storeys": 1,
+ "budget": [
+  1500,
+  450,
+  40
+ ],
+ "budget_class": "house_small",
+ "time_s": 7.0
+}

@@ -1,0 +1,527 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested); required_shallow: roles a small (shallow / narrow real building) room must have. only_types: slot used only for those shop types.",
+ "set": "store",
+ "clutter": true,
+ "signs": true,
+ "types": [
+  "hardware",
+  "pet",
+  "toys",
+  "stationery",
+  "second_hand",
+  "interior_decoration",
+  "tobacco",
+  "confectionery",
+  "copyshop",
+  "department_store"
+ ],
+ "floor": "WoodFloor051",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  1,
+  0.98,
+  0.94
+ ],
+ "ceiling": "Plaster001",
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3,
+  "max_w": 12,
+  "min_d": 4,
+  "max_d": 12
+ },
+ "required": [
+  "counter",
+  "wall_shelves"
+ ],
+ "required_shallow": [
+  "counter"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    2.4
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "candy",
+    "tobacco",
+    "stationery",
+    "postage",
+    "toy",
+    "gift"
+   ],
+   "wall": true
+  },
+  {
+   "role": "back_shelf",
+   "prop": "shelf_wall",
+   "place": "behind_counter",
+   "goods": [
+    "tobacco",
+    "postage",
+    "print",
+    "stationery",
+    "hardware",
+    "candy",
+    "pet"
+   ]
+  },
+  {
+   "role": "wall_shelves",
+   "prop": "shelf_wall",
+   "place": "walls",
+   "walls": [
+    "back",
+    "door_side"
+   ],
+   "goods": [
+    "hardware",
+    "household",
+    "pet",
+    "toy",
+    "stationery",
+    "home",
+    "books",
+    "candy",
+    "gift",
+    "tobacco",
+    "print",
+    "grocery"
+   ]
+  },
+  {
+   "role": "rails",
+   "prop": "rack",
+   "place": "aisles",
+   "only_types": [
+    "second_hand",
+    "department_store"
+   ],
+   "goods": [
+    "clothing"
+   ],
+   "max": 4
+  },
+  {
+   "role": "aisles",
+   "prop": "gondola",
+   "place": "aisles",
+   "only_types": [
+    "hardware",
+    "pet",
+    "department_store"
+   ],
+   "goods": [
+    "hardware",
+    "household",
+    "pet",
+    "grocery"
+   ]
+  },
+  {
+   "role": "tables",
+   "prop": "display_table",
+   "place": "aisles",
+   "goods": [
+    "home",
+    "gift",
+    "toy",
+    "candy",
+    "stationery",
+    "household",
+    "books"
+   ]
+  }
+ ],
+ "plans": [
+  {
+   "name": "general",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "candy",
+      "tobacco",
+      "stationery",
+      "postage",
+      "toy",
+      "gift"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_shelf",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "tobacco",
+      "postage",
+      "print",
+      "stationery",
+      "hardware",
+      "candy",
+      "pet"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "hardware",
+      "household",
+      "pet",
+      "toy",
+      "stationery",
+      "home",
+      "books",
+      "candy",
+      "gift",
+      "tobacco",
+      "print",
+      "grocery"
+     ]
+    },
+    {
+     "role": "rails",
+     "prop": "rack",
+     "place": "aisles",
+     "only_types": [
+      "second_hand",
+      "department_store"
+     ],
+     "goods": [
+      "clothing"
+     ],
+     "max": 4
+    },
+    {
+     "role": "aisles",
+     "prop": "gondola",
+     "place": "aisles",
+     "only_types": [
+      "hardware",
+      "pet",
+      "department_store"
+     ],
+     "goods": [
+      "hardware",
+      "household",
+      "pet",
+      "grocery"
+     ]
+    },
+    {
+     "role": "tables",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "home",
+      "gift",
+      "toy",
+      "candy",
+      "stationery",
+      "household",
+      "books"
+     ]
+    }
+   ],
+   "fixtures": "shop_troffer"
+  },
+  {
+   "name": "variety",
+   "till": "pick",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "candy",
+      "tobacco",
+      "stationery",
+      "postage",
+      "toy",
+      "gift"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_shelf",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "tobacco",
+      "postage",
+      "print",
+      "stationery",
+      "hardware",
+      "candy",
+      "pet"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "hardware",
+      "household",
+      "pet",
+      "toy",
+      "stationery",
+      "home",
+      "books",
+      "candy",
+      "gift",
+      "tobacco",
+      "print",
+      "grocery"
+     ]
+    },
+    {
+     "role": "tables",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "home",
+      "gift",
+      "toy",
+      "candy",
+      "stationery",
+      "household",
+      "books"
+     ],
+     "max": 2
+    },
+    {
+     "role": "spinner",
+     "prop": "spinner",
+     "place": "corner"
+    },
+    {
+     "role": "aisles",
+     "prop": "gondola",
+     "place": "aisles",
+     "goods": [
+      "hardware",
+      "household",
+      "pet",
+      "grocery",
+      "toy",
+      "stationery"
+     ],
+     "dims": [
+      1.0,
+      2.5
+     ],
+     "only_types": [
+      "hardware",
+      "pet",
+      "department_store",
+      "toys",
+      "stationery"
+     ],
+     "max": 2
+    }
+   ],
+   "clutter": {
+    "floor": [
+     3,
+     5
+    ]
+   },
+   "fixtures": "shop_tubes"
+  },
+  {
+   "name": "stockroom",
+   "till": "register",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "candy",
+      "tobacco",
+      "stationery",
+      "postage",
+      "toy",
+      "gift"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_shelf",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "tobacco",
+      "postage",
+      "print",
+      "stationery",
+      "hardware",
+      "candy",
+      "pet"
+     ]
+    },
+    {
+     "role": "wall_shelves",
+     "prop": "shelf_wall",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "goods": [
+      "hardware",
+      "household",
+      "pet",
+      "toy",
+      "stationery",
+      "home",
+      "books",
+      "candy",
+      "gift",
+      "tobacco",
+      "print",
+      "grocery"
+     ]
+    },
+    {
+     "role": "rails",
+     "prop": "rack",
+     "place": "aisles",
+     "goods": [
+      "clothing"
+     ],
+     "only_types": [
+      "second_hand",
+      "department_store"
+     ],
+     "max": 3
+    },
+    {
+     "role": "aisles",
+     "prop": "gondola",
+     "place": "aisles",
+     "goods": [
+      "hardware",
+      "household",
+      "pet",
+      "grocery"
+     ],
+     "dims": [
+      1.0,
+      3.7
+     ],
+     "only_types": [
+      "hardware",
+      "pet",
+      "department_store"
+     ]
+    },
+    {
+     "role": "tables",
+     "prop": "display_table",
+     "place": "aisles",
+     "goods": [
+      "home",
+      "gift",
+      "toy",
+      "candy",
+      "stationery",
+      "household",
+      "books"
+     ],
+     "max": 2
+    }
+   ],
+   "clutter": {
+    "floor": [
+     4,
+     7
+    ],
+    "floor_kinds": [
+     "stack",
+     "stack",
+     "crate",
+     "paper_pile"
+    ]
+   },
+   "fixtures": "shop_tubes"
+  }
+ ],
+ "styles": [
+  {
+   "floor": "WoodFloor051",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.98,
+    0.94
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  },
+  {
+   "floor": "Concrete047A",
+   "wall": "Bricks066",
+   "wall_tint": [
+    1,
+    0.97,
+    0.92
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  },
+  {
+   "floor": "Tiles012",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.95,
+    0.98,
+    1.0
+   ],
+   "wainscot": "Tiles141",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  }
+ ]
+}

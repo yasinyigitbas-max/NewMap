@@ -1,0 +1,11 @@
+extends SceneTree
+## Piece s_am_b041_b (amber road kit, 17 Nov): Amber Ave, b041.
+## Section cc, z 17.5-100.0 (seam), height flat.
+## Bus: northbound stop at 8th St, opposite the stadium (shelter, zone 21.5-46.5).
+## Built by road_amber.gd build_leg (every rule and its reason is there). Run once; never when locked.
+const R := preload("res://tools/city/pilot/pieces/road_amber.gd")
+const SPEC := {"sec": "cc", "z0": 17.5, "z1": 100.0, "lines": {"app": [[17.5, 41.5], [50.5, 53.5], [62.5, 65.5], [74.5, 77.5], [86.5, 89.5], [98.5, 100.0]], "dep": [[30.5, 33.5], [42.5, 45.5], [54.5, 57.5], [66.5, 69.5], [78.5, 81.5], [90.5, 93.5]]}, "prof": [], "nose": true, "age": "mid", "arrows": ["left_through", "through"], "bus": {"a": 21.5, "b": 46.5, "kind": "shelter"}, "palms": [30.0, 42.0, 54.0, 66.0, 78.0, 90.0], "fan": 0.0, "wells": {"app": [[88.5, "palm_queen_b"], [76.5, "tree_jacaranda_b"], [64.5, "palm_queen_b"], [52.5, "tree_jacaranda_b"], [40.5, "palm_queen_b"], [28.5, "tree_jacaranda_b"]], "dep": [[88.5, "palm_queen_b"], [76.5, "tree_jacaranda_b"], [64.5, "palm_queen_b"], [52.5, "tree_jacaranda_b"], [28.5, "tree_jacaranda_b"]]}, "lamps": [[82.5, 1.0], [82.5, -1.0], [58.5, 1.0], [58.5, -1.0], [34.5, 1.0], [34.5, -1.0]], "hyd": [70.5, 1.0], "extras": [["prop_newspaper_box_red", "worn", 1.0, 21.5, 0.75, "street"], ["prop_newspaper_box_blue", "worn", 1.0, 22.2, 0.75, "street"], ["prop_park_bench", "worn", 1.0, 46.5, 1.0, "street"], ["prop_park_bench", "worn", -1.0, 70.5, 1.0, "street"], ["prop_bike_rack", "worn", 1.0, 94.5, 0.75, 90.0], ["prop_bike_rack", "worn", -1.0, 94.5, 0.75, 90.0], ["prop_trash_receptacle", "worn", 1.0, 19.1, 0.75, 0.0], ["prop_recycling_receptacle", "worn", 1.0, 19.9, 0.75, 0.0], ["prop_trash_receptacle", "worn", -1.0, 66.0, 0.75, 0.0], ["prop_recycling_receptacle", "worn", -1.0, 66.8, 0.75, 0.0], ["prop_drinking_fountain", "worn", -1.0, 84.0, -0.6, "street"], ["prop_bike_rack", "worn", 1.0, 70.5, -0.7, 90.0], ["prop_bike_rack", "worn", 1.0, 73.5, -0.7, 90.0], ["prop_trash_receptacle", "dirty", 1.0, 90.0, -0.5, 0.0]], "inlets": [[60.0, 1.0], [72.0, -1.0]], "manholes": [[-7.4, 41.0], [7.4, 78.0]], "trenches": [[5.8, 69.0, 6.4]]}
+func _init() -> void: _run.call_deferred()
+func _run() -> void:
+	R.build_leg("s_am_b041_b", SPEC)
+	quit()

@@ -1,0 +1,117 @@
+{
+ "name": "ind_warehouse",
+ "cat": "warehouse",
+ "style": "warehouse",
+ "logic_errors": [],
+ "col_boxes": 7,
+ "near": {
+  "tris": 1879,
+  "verts": 3199,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_rollup",
+   "O_vent",
+   "O_win_casement",
+   "R_flat",
+   "S_black",
+   "S_concrete",
+   "S_glass",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -12.050000190734863,
+    -0.0,
+    -13.5
+   ],
+   [
+    12.050000190734863,
+    7.769999980926514,
+    15.5
+   ]
+  ]
+ },
+ "mid_roof_top": 7.4,
+ "mid": {
+  "tris": 448,
+  "verts": 550,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "O_rollup",
+   "S_concrete",
+   "S_flat",
+   "S_glass",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "T_dark",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -12.0,
+    0.0,
+    -13.5
+   ],
+   [
+    12.0,
+    7.400000095367432,
+    15.5
+   ]
+  ]
+ },
+ "far": {
+  "tris": 18,
+  "verts": 36,
+  "regions": [
+   "F_c_tower_3",
+   "F_flat"
+  ],
+  "bbox": [
+   [
+    -12.0,
+    0.0,
+    -12.0
+   ],
+   [
+    12.0,
+    7.400000095367432,
+    12.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "apt_door",
+   -9.0
+  ],
+  [
+   "rollup",
+   6.0
+  ]
+ ],
+ "footprint_wd": [
+  24.0,
+  24.0
+ ],
+ "footprint_area": 576.0,
+ "height": 7.77,
+ "storeys": 1,
+ "budget": [
+  2000,
+  600,
+  40
+ ],
+ "budget_class": "warehouse",
+ "time_s": 9.6
+}

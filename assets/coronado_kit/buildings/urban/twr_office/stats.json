@@ -1,0 +1,116 @@
+{
+ "name": "twr_office",
+ "cat": "tower",
+ "style": "office_tower",
+ "logic_errors": [],
+ "col_boxes": 8,
+ "near": {
+  "tris": 4418,
+  "verts": 8004,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_ribbon",
+   "O_rollup",
+   "O_shopdoor",
+   "O_storefront",
+   "O_vent",
+   "R_flat",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -12.15999984741211,
+    -0.0,
+    -11.5
+   ],
+   [
+    12.15999984741211,
+    41.06999969482422,
+    12.5
+   ]
+  ]
+ },
+ "mid_roof_top": 41.0,
+ "mid": {
+  "tris": 494,
+  "verts": 588,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "O_louver",
+   "O_rollup",
+   "O_shopdoor",
+   "S_concrete",
+   "S_flat",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "T_dark",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -12.0,
+    0.0,
+    -11.5
+   ],
+   [
+    12.0,
+    41.0,
+    12.5
+   ]
+  ]
+ },
+ "far": {
+  "tris": 82,
+  "verts": 148,
+  "regions": [
+   "F_c_tower_3",
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -12.0,
+    0.0,
+    -10.0
+   ],
+   [
+    12.0,
+    41.0,
+    10.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  24.0,
+  20.0
+ ],
+ "footprint_area": 480.0,
+ "height": 41.07,
+ "storeys": 12,
+ "budget": [
+  4800,
+  1440,
+  96
+ ],
+ "budget_units": 1.2,
+ "budget_class": "tower",
+ "time_s": 33.9
+}

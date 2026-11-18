@@ -1,0 +1,30 @@
+[
+ {
+  "joint": "straight|straight",
+  "walk_bins": 32,
+  "walk_dev_m": 0.0,
+  "deck_section_hausdorff_m": 0.003,
+  "ok": true
+ },
+ {
+  "joint": "straight|thead",
+  "walk_bins": 32,
+  "walk_dev_m": 0.0,
+  "deck_section_hausdorff_m": 0.008,
+  "ok": true
+ },
+ {
+  "joint": "straight|rail_end",
+  "walk_bins": 32,
+  "walk_dev_m": 0.0,
+  "deck_section_hausdorff_m": 0.011,
+  "ok": true
+ },
+ {
+  "joint": "pier_root|straight",
+  "walk_bins": 32,
+  "walk_dev_m": 0.0,
+  "deck_section_hausdorff_m": null,
+  "ok": true
+ }
+]

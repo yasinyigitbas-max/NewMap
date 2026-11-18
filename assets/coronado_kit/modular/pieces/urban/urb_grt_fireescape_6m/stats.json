@@ -1,0 +1,112 @@
+{
+ "name": "urb_grt_fireescape_6m",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 8,
+ "near": {
+  "tris": 380,
+  "verts": 760,
+  "regions": [
+   "S_concrete",
+   "T_metal"
+  ],
+  "bbox": [
+   [
+    -1.600000023841858,
+    0.0,
+    -0.5960000157356262
+   ],
+   [
+    1.600000023841858,
+    7.300000190734863,
+    0.6800000071525574
+   ]
+  ]
+ },
+ "mid_roof_top": 7.3,
+ "mid": {
+  "tris": 120,
+  "verts": 240,
+  "regions": [
+   "S_concrete",
+   "S_metal"
+  ],
+  "bbox": [
+   [
+    -1.600000023841858,
+    0.0,
+    -0.5960000157356262
+   ],
+   [
+    1.600000023841858,
+    7.300000190734863,
+    0.6800000071525574
+   ]
+  ]
+ },
+ "far": {
+  "tris": 120,
+  "verts": 240,
+  "regions": [
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -1.600000023841858,
+    0.0,
+    -0.5960000157356262
+   ],
+   [
+    1.600000023841858,
+    7.300000190734863,
+    0.6800000071525574
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  6.0,
+  1.4
+ ],
+ "footprint_area": 8.4,
+ "height": 7.3,
+ "storeys": 1,
+ "budget": [
+  500,
+  160,
+  120
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_grt_escape",
+ "time_s": 1.5,
+ "open_planes": [],
+ "shift": [
+  0.0,
+  0.0,
+  0.6
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "grt_escape",
+  "ends": [
+   [
+    -3.0,
+    0,
+    0.6
+   ],
+   [
+    3.0,
+    0,
+    0.6
+   ]
+  ],
+  "face_z": 1.2,
+  "plate_y": 7.3
+ },
+ "no_door": true,
+ "base_y": 0.0,
+ "ground_reach": true
+}

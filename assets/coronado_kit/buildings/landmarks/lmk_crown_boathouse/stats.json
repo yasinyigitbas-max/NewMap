@@ -1,0 +1,124 @@
+{
+ "name": "lmk_crown_boathouse",
+ "cat": "landmark",
+ "style": "victorian_boathouse",
+ "logic_errors": [],
+ "col_boxes": 12,
+ "near": {
+  "tris": 4052,
+  "verts": 7240,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_lamp",
+   "O_louver",
+   "O_rollup",
+   "O_shutter",
+   "O_win_casement",
+   "R_comp",
+   "SG_boathouse",
+   "S_black",
+   "S_concrete",
+   "S_deck",
+   "S_metal",
+   "S_siding",
+   "S_soffit",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_white",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -10.845999717712402,
+    -0.0,
+    -12.0
+   ],
+   [
+    10.473999977111816,
+    15.149999618530273,
+    9.949999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 15.15,
+ "mid": {
+  "tris": 760,
+  "verts": 939,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_louver",
+   "O_rollup",
+   "O_win_casement",
+   "SG_boathouse",
+   "S_comp",
+   "S_concrete",
+   "S_dark",
+   "S_deck",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -10.12600040435791,
+    0.0,
+    -12.0
+   ],
+   [
+    10.472999572753906,
+    15.149999618530273,
+    8.699999809265137
+   ]
+  ]
+ },
+ "far": {
+  "tris": 66,
+  "verts": 110,
+  "regions": [
+   "F_comp",
+   "F_siding_2",
+   "F_siding_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -10.12600040435791,
+    -0.0,
+    -6.0
+   ],
+   [
+    10.12600040435791,
+    15.149999618530273,
+    6.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   -0.13
+  ]
+ ],
+ "footprint_wd": [
+  20.25,
+  12.0
+ ],
+ "footprint_area": 243.0,
+ "height": 15.15,
+ "storeys": 2,
+ "budget": [
+  8000,
+  2500,
+  200
+ ],
+ "budget_class": "landmark",
+ "time_s": 44.1
+}

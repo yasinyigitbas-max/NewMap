@@ -1,0 +1,914 @@
+{
+ "palm_mexican_fan_a": {
+  "file_base": "palm_mexican_fan_a",
+  "batch": "foliage",
+  "regions": [
+   "fan_dead",
+   "fan_leaf",
+   "trunk_fan"
+  ],
+  "class": "palm",
+  "budget": 1500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 856,
+   "mid": 142,
+   "far": 2
+  },
+  "footprint_w": 6.16,
+  "footprint_d": 6.14,
+  "height": 16.67,
+  "atlas": "trees_palms",
+  "alpha": "MASK",
+  "impostor": "imp_fan",
+  "col": 1,
+  "secs": 0.3,
+  "desc": ""
+ },
+ "hedge_privet_2m": {
+  "file_base": "hedge_privet_2m",
+  "batch": "foliage",
+  "regions": [
+   "hedge_body"
+  ],
+  "class": "hedge",
+  "budget": 200,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 178
+  },
+  "footprint_w": 2.0,
+  "footprint_d": 0.95,
+  "height": 1.55,
+  "atlas": "trees_shrubs",
+  "alpha": "OPAQUE",
+  "impostor": null,
+  "col": 1,
+  "secs": 0.0,
+  "desc": ""
+ },
+ "plant_agave_americana": {
+  "file_base": "plant_agave_americana",
+  "batch": "foliage",
+  "regions": [
+   "agave_leaf"
+  ],
+  "class": "shrub",
+  "budget": 500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 468
+  },
+  "footprint_w": 2.18,
+  "footprint_d": 1.96,
+  "height": 0.73,
+  "atlas": "trees_shrubs",
+  "alpha": "OPAQUE",
+  "impostor": null,
+  "col": 1,
+  "secs": 0.0,
+  "desc": ""
+ },
+ "palm_mexican_fan_b": {
+  "file_base": "palm_mexican_fan_b",
+  "batch": "foliage",
+  "regions": [
+   "fan_dead",
+   "fan_leaf",
+   "trunk_fan"
+  ],
+  "class": "palm",
+  "budget": 1500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 856,
+   "mid": 142,
+   "far": 2
+  },
+  "footprint_w": 6.09,
+  "footprint_d": 6.23,
+  "height": 20.79,
+  "atlas": "trees_palms",
+  "alpha": "MASK",
+  "impostor": "imp_fan2",
+  "col": 1,
+  "secs": 0.2,
+  "desc": ""
+ },
+ "palm_mexican_fan_c": {
+  "file_base": "palm_mexican_fan_c",
+  "batch": "foliage",
+  "regions": [
+   "fan_dead",
+   "fan_leaf",
+   "trunk_fan"
+  ],
+  "class": "palm",
+  "budget": 1500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 856,
+   "mid": 142,
+   "far": 2
+  },
+  "footprint_w": 6.06,
+  "footprint_d": 6.03,
+  "height": 11.55,
+  "atlas": "trees_palms",
+  "alpha": "MASK",
+  "impostor": "imp_fan",
+  "col": 1,
+  "secs": 0.1,
+  "desc": ""
+ },
+ "palm_canary_date_a": {
+  "file_base": "palm_canary_date_a",
+  "batch": "foliage",
+  "regions": [
+   "feather_canary",
+   "feather_dead",
+   "trunk_canary"
+  ],
+  "class": "palm",
+  "budget": 1500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 956,
+   "mid": 152,
+   "far": 2
+  },
+  "footprint_w": 10.24,
+  "footprint_d": 9.71,
+  "height": 12.24,
+  "atlas": "trees_palms",
+  "alpha": "MASK",
+  "impostor": "imp_canary",
+  "col": 1,
+  "secs": 0.2,
+  "desc": ""
+ },
+ "palm_canary_date_b": {
+  "file_base": "palm_canary_date_b",
+  "batch": "foliage",
+  "regions": [
+   "feather_canary",
+   "feather_dead",
+   "trunk_canary"
+  ],
+  "class": "palm",
+  "budget": 1500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 956,
+   "mid": 152,
+   "far": 2
+  },
+  "footprint_w": 9.88,
+  "footprint_d": 10.08,
+  "height": 9.71,
+  "atlas": "trees_palms",
+  "alpha": "MASK",
+  "impostor": "imp_canary2",
+  "col": 1,
+  "secs": 0.1,
+  "desc": ""
+ },
+ "palm_queen_a": {
+  "file_base": "palm_queen_a",
+  "batch": "foliage",
+  "regions": [
+   "feather_dead",
+   "feather_queen",
+   "trunk_queen"
+  ],
+  "class": "palm",
+  "budget": 1500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 560,
+   "mid": 76,
+   "far": 2
+  },
+  "footprint_w": 7.09,
+  "footprint_d": 7.44,
+  "height": 13.28,
+  "atlas": "trees_palms",
+  "alpha": "MASK",
+  "impostor": "imp_queen",
+  "col": 1,
+  "secs": 0.1,
+  "desc": ""
+ },
+ "palm_queen_b": {
+  "file_base": "palm_queen_b",
+  "batch": "foliage",
+  "regions": [
+   "feather_dead",
+   "feather_queen",
+   "trunk_queen"
+  ],
+  "class": "palm",
+  "budget": 1500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 560,
+   "mid": 76,
+   "far": 2
+  },
+  "footprint_w": 7.34,
+  "footprint_d": 6.89,
+  "height": 10.49,
+  "atlas": "trees_palms",
+  "alpha": "MASK",
+  "impostor": "imp_queen",
+  "col": 1,
+  "secs": 0.1,
+  "desc": ""
+ },
+ "tree_norfolk_pine_a": {
+  "file_base": "tree_norfolk_pine_a",
+  "batch": "foliage",
+  "regions": [
+   "bark_norfolk",
+   "norfolk_tier",
+   "norfolk_tip"
+  ],
+  "class": "yardtree",
+  "budget": 2000,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1110,
+   "mid": 134,
+   "far": 2
+  },
+  "footprint_w": 8.35,
+  "footprint_d": 8.08,
+  "height": 18.2,
+  "atlas": "trees_conifer",
+  "alpha": "MASK",
+  "impostor": "imp0",
+  "col": 1,
+  "secs": 0.1,
+  "desc": ""
+ },
+ "tree_norfolk_pine_b": {
+  "file_base": "tree_norfolk_pine_b",
+  "batch": "foliage",
+  "regions": [
+   "bark_norfolk",
+   "norfolk_tier",
+   "norfolk_tip"
+  ],
+  "class": "yardtree",
+  "budget": 2000,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1310,
+   "mid": 164,
+   "far": 2
+  },
+  "footprint_w": 7.44,
+  "footprint_d": 7.6,
+  "height": 24.2,
+  "atlas": "trees_conifer",
+  "alpha": "MASK",
+  "impostor": "imp1",
+  "col": 1,
+  "secs": 0.2,
+  "desc": ""
+ },
+ "tree_norfolk_pine_c": {
+  "file_base": "tree_norfolk_pine_c",
+  "batch": "foliage",
+  "regions": [
+   "bark_norfolk",
+   "norfolk_tier",
+   "norfolk_tip"
+  ],
+  "class": "yardtree",
+  "budget": 2000,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 678,
+   "mid": 94,
+   "far": 2
+  },
+  "footprint_w": 8.28,
+  "footprint_d": 7.89,
+  "height": 11.2,
+  "atlas": "trees_conifer",
+  "alpha": "MASK",
+  "impostor": "imp2",
+  "col": 1,
+  "secs": 0.1,
+  "desc": ""
+ },
+ "tree_torrey_pine_a": {
+  "file_base": "tree_torrey_pine_a",
+  "batch": "foliage",
+  "regions": [
+   "bark_torrey",
+   "torrey_cluster"
+  ],
+  "class": "tree",
+  "budget": 2500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 336,
+   "mid": 78,
+   "far": 2
+  },
+  "footprint_w": 7.9,
+  "footprint_d": 6.68,
+  "height": 10.54,
+  "atlas": "trees_conifer",
+  "alpha": "MASK",
+  "impostor": "imp3",
+  "col": 1,
+  "secs": 0.1,
+  "desc": ""
+ },
+ "tree_torrey_pine_b": {
+  "file_base": "tree_torrey_pine_b",
+  "batch": "foliage",
+  "regions": [
+   "bark_torrey",
+   "torrey_cluster"
+  ],
+  "class": "tree",
+  "budget": 2500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 336,
+   "mid": 78,
+   "far": 2
+  },
+  "footprint_w": 8.4,
+  "footprint_d": 7.02,
+  "height": 9.21,
+  "atlas": "trees_conifer",
+  "alpha": "MASK",
+  "impostor": "imp4",
+  "col": 1,
+  "secs": 0.1,
+  "desc": ""
+ },
+ "tree_magnolia_a": {
+  "file_base": "tree_magnolia_a",
+  "batch": "foliage",
+  "regions": [
+   "bark_smooth",
+   "cl_magnolia",
+   "cl_magnolia_bloom"
+  ],
+  "class": "tree",
+  "budget": 2500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 980,
+   "mid": 154,
+   "far": 2
+  },
+  "footprint_w": 7.91,
+  "footprint_d": 8.0,
+  "height": 11.05,
+  "atlas": "trees_broadleaf",
+  "alpha": "MASK",
+  "impostor": "imp0",
+  "col": 1,
+  "secs": 0.1,
+  "desc": ""
+ },
+ "tree_magnolia_b": {
+  "file_base": "tree_magnolia_b",
+  "batch": "foliage",
+  "regions": [
+   "bark_smooth",
+   "cl_magnolia",
+   "cl_magnolia_bloom"
+  ],
+  "class": "tree",
+  "budget": 2500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 868,
+   "mid": 140,
+   "far": 2
+  },
+  "footprint_w": 7.64,
+  "footprint_d": 7.63,
+  "height": 11.22,
+  "atlas": "trees_broadleaf",
+  "alpha": "MASK",
+  "impostor": "imp1",
+  "col": 1,
+  "secs": 0.2,
+  "desc": ""
+ },
+ "tree_jacaranda_a": {
+  "file_base": "tree_jacaranda_a",
+  "batch": "foliage",
+  "regions": [
+   "bark_rough",
+   "cl_jacaranda"
+  ],
+  "class": "tree",
+  "budget": 2500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 964,
+   "mid": 160,
+   "far": 2
+  },
+  "footprint_w": 10.75,
+  "footprint_d": 10.59,
+  "height": 9.17,
+  "atlas": "trees_broadleaf",
+  "alpha": "MASK",
+  "impostor": "imp2",
+  "col": 1,
+  "secs": 0.2,
+  "desc": ""
+ },
+ "tree_jacaranda_b": {
+  "file_base": "tree_jacaranda_b",
+  "batch": "foliage",
+  "regions": [
+   "bark_rough",
+   "cl_jacaranda"
+  ],
+  "class": "tree",
+  "budget": 2500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 868,
+   "mid": 138,
+   "far": 2
+  },
+  "footprint_w": 10.66,
+  "footprint_d": 9.85,
+  "height": 9.24,
+  "atlas": "trees_broadleaf",
+  "alpha": "MASK",
+  "impostor": "imp3",
+  "col": 1,
+  "secs": 0.1,
+  "desc": ""
+ },
+ "tree_coral_a": {
+  "file_base": "tree_coral_a",
+  "batch": "foliage",
+  "regions": [
+   "bark_smooth",
+   "cl_coral"
+  ],
+  "class": "tree",
+  "budget": 2500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 880,
+   "mid": 142,
+   "far": 2
+  },
+  "footprint_w": 10.7,
+  "footprint_d": 11.32,
+  "height": 8.76,
+  "atlas": "trees_broadleaf",
+  "alpha": "MASK",
+  "impostor": "imp4",
+  "col": 1,
+  "secs": 0.0,
+  "desc": ""
+ },
+ "tree_coral_b": {
+  "file_base": "tree_coral_b",
+  "batch": "foliage",
+  "regions": [
+   "bark_smooth",
+   "cl_coral"
+  ],
+  "class": "tree",
+  "budget": 2500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 824,
+   "mid": 136,
+   "far": 2
+  },
+  "footprint_w": 11.32,
+  "footprint_d": 11.28,
+  "height": 8.81,
+  "atlas": "trees_broadleaf",
+  "alpha": "MASK",
+  "impostor": "imp4",
+  "col": 1,
+  "secs": 0.1,
+  "desc": ""
+ },
+ "tree_ficus_a": {
+  "file_base": "tree_ficus_a",
+  "batch": "foliage",
+  "regions": [
+   "bark_smooth",
+   "cl_ficus"
+  ],
+  "class": "tree",
+  "budget": 2500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1252,
+   "mid": 202,
+   "far": 2
+  },
+  "footprint_w": 12.01,
+  "footprint_d": 12.15,
+  "height": 11.41,
+  "atlas": "trees_broadleaf",
+  "alpha": "MASK",
+  "impostor": "imp5",
+  "col": 1,
+  "secs": 0.1,
+  "desc": ""
+ },
+ "tree_ficus_b": {
+  "file_base": "tree_ficus_b",
+  "batch": "foliage",
+  "regions": [
+   "bark_smooth",
+   "cl_ficus"
+  ],
+  "class": "tree",
+  "budget": 2500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1104,
+   "mid": 180,
+   "far": 2
+  },
+  "footprint_w": 12.08,
+  "footprint_d": 11.96,
+  "height": 11.19,
+  "atlas": "trees_broadleaf",
+  "alpha": "MASK",
+  "impostor": "imp6",
+  "col": 1,
+  "secs": 0.1,
+  "desc": ""
+ },
+ "tree_eucalyptus_a": {
+  "file_base": "tree_eucalyptus_a",
+  "batch": "foliage",
+  "regions": [
+   "bark_euc",
+   "cl_euc"
+  ],
+  "class": "tree",
+  "budget": 2500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 876,
+   "mid": 138,
+   "far": 2
+  },
+  "footprint_w": 10.26,
+  "footprint_d": 10.4,
+  "height": 20.67,
+  "atlas": "trees_broadleaf",
+  "alpha": "MASK",
+  "impostor": "imp7",
+  "col": 1,
+  "secs": 0.4,
+  "desc": ""
+ },
+ "tree_eucalyptus_b": {
+  "file_base": "tree_eucalyptus_b",
+  "batch": "foliage",
+  "regions": [
+   "bark_euc",
+   "cl_euc"
+  ],
+  "class": "tree",
+  "budget": 2500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 760,
+   "mid": 152,
+   "far": 2
+  },
+  "footprint_w": 10.12,
+  "footprint_d": 10.39,
+  "height": 20.94,
+  "atlas": "trees_broadleaf",
+  "alpha": "MASK",
+  "impostor": "imp8",
+  "col": 1,
+  "secs": 1.9,
+  "desc": ""
+ },
+ "hedge_boxwood_low_2m": {
+  "file_base": "hedge_boxwood_low_2m",
+  "batch": "foliage",
+  "regions": [
+   "hedge_body"
+  ],
+  "class": "hedge",
+  "budget": 200,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 178
+  },
+  "footprint_w": 2.0,
+  "footprint_d": 0.7,
+  "height": 0.94,
+  "atlas": "trees_shrubs",
+  "alpha": "OPAQUE",
+  "impostor": null,
+  "col": 1,
+  "secs": 0.0,
+  "desc": ""
+ },
+ "plant_bougainvillea_mound": {
+  "file_base": "plant_bougainvillea_mound",
+  "batch": "foliage",
+  "regions": [
+   "bougainvillea",
+   "soil"
+  ],
+  "class": "shrub",
+  "budget": 500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 468
+  },
+  "footprint_w": 3.03,
+  "footprint_d": 2.93,
+  "height": 2.18,
+  "atlas": "trees_shrubs",
+  "alpha": "MASK",
+  "impostor": null,
+  "col": 1,
+  "secs": 0.0,
+  "desc": ""
+ },
+ "plant_bougainvillea_wall": {
+  "file_base": "plant_bougainvillea_wall",
+  "batch": "foliage",
+  "regions": [
+   "bougainvillea"
+  ],
+  "class": "shrub",
+  "budget": 500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 128
+  },
+  "footprint_w": 3.7,
+  "footprint_d": 0.58,
+  "height": 2.96,
+  "atlas": "trees_shrubs",
+  "alpha": "MASK",
+  "impostor": null,
+  "col": 1,
+  "secs": 0.0,
+  "desc": ""
+ },
+ "plant_agave_americana_small": {
+  "file_base": "plant_agave_americana_small",
+  "batch": "foliage",
+  "regions": [
+   "agave_leaf"
+  ],
+  "class": "shrub",
+  "budget": 500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 468
+  },
+  "footprint_w": 1.36,
+  "footprint_d": 1.22,
+  "height": 0.45,
+  "atlas": "trees_shrubs",
+  "alpha": "OPAQUE",
+  "impostor": null,
+  "col": 1,
+  "secs": 0.0,
+  "desc": ""
+ },
+ "plant_iceplant_patch": {
+  "file_base": "plant_iceplant_patch",
+  "batch": "foliage",
+  "regions": [
+   "iceplant"
+  ],
+  "class": "shrub",
+  "budget": 500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 138
+  },
+  "footprint_w": 2.31,
+  "footprint_d": 2.4,
+  "height": 0.44,
+  "atlas": "trees_shrubs",
+  "alpha": "MASK",
+  "impostor": null,
+  "col": 0,
+  "secs": 0.1,
+  "desc": ""
+ },
+ "plant_bird_of_paradise": {
+  "file_base": "plant_bird_of_paradise",
+  "batch": "foliage",
+  "regions": [
+   "agave_leaf",
+   "bop_flower",
+   "bop_leaf"
+  ],
+  "class": "shrub",
+  "budget": 500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 346
+  },
+  "footprint_w": 1.52,
+  "footprint_d": 1.48,
+  "height": 1.33,
+  "atlas": "trees_shrubs",
+  "alpha": "MASK",
+  "impostor": null,
+  "col": 1,
+  "secs": 0.2,
+  "desc": ""
+ },
+ "plant_lawn_patch": {
+  "file_base": "plant_lawn_patch",
+  "batch": "foliage",
+  "regions": [
+   "grass_tuft",
+   "lawn"
+  ],
+  "class": "ground",
+  "budget": 300,
+  "conds": [
+   "normal",
+   "dry"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 120
+  },
+  "footprint_w": 4.0,
+  "footprint_d": 4.0,
+  "height": 0.16,
+  "atlas": "trees_shrubs",
+  "alpha": "MASK",
+  "impostor": null,
+  "col": 0,
+  "secs": 0.0,
+  "desc": ""
+ },
+ "plant_potted_leafy": {
+  "file_base": "plant_potted_leafy",
+  "batch": "foliage",
+  "regions": [
+   "pot_leaves",
+   "pot_terracotta",
+   "soil"
+  ],
+  "class": "shrub",
+  "budget": 500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 292
+  },
+  "footprint_w": 1.4,
+  "footprint_d": 1.12,
+  "height": 1.01,
+  "atlas": "trees_shrubs",
+  "alpha": "MASK",
+  "impostor": null,
+  "col": 1,
+  "secs": 0.0,
+  "desc": ""
+ },
+ "plant_potted_succulent": {
+  "file_base": "plant_potted_succulent",
+  "batch": "foliage",
+  "regions": [
+   "pot_terracotta",
+   "soil",
+   "succulent"
+  ],
+  "class": "shrub",
+  "budget": 500,
+  "conds": [
+   "normal"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 200
+  },
+  "footprint_w": 0.53,
+  "footprint_d": 0.5,
+  "height": 0.46,
+  "atlas": "trees_shrubs",
+  "alpha": "MASK",
+  "impostor": null,
+  "col": 1,
+  "secs": 0.0,
+  "desc": ""
+ }
+}

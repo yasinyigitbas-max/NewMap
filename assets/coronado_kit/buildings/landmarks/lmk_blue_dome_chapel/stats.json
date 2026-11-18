@@ -1,0 +1,124 @@
+{
+ "name": "lmk_blue_dome_chapel",
+ "cat": "landmark",
+ "style": "spanish_chapel",
+ "logic_errors": [],
+ "col_boxes": 14,
+ "near": {
+  "tris": 6118,
+  "verts": 11212,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_lamp",
+   "O_lancet",
+   "O_louver",
+   "O_vent",
+   "R_clay",
+   "R_flat",
+   "SG_church",
+   "S_black",
+   "S_concrete",
+   "S_glass",
+   "S_soffit",
+   "S_stucco",
+   "S_tile_teal",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -9.5,
+    -0.0,
+    -12.720000267028809
+   ],
+   [
+    8.850000381469727,
+    20.988000869750977,
+    14.899999618530273
+   ]
+  ]
+ },
+ "mid_roof_top": 19.888,
+ "mid": {
+  "tris": 1218,
+  "verts": 1825,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_lancet",
+   "SG_church",
+   "S_clay",
+   "S_concrete",
+   "S_deck",
+   "S_flat",
+   "S_glass",
+   "S_signbg",
+   "S_soffit",
+   "S_stucco",
+   "S_tile_teal",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -9.5,
+    0.0,
+    -12.029999732971191
+   ],
+   [
+    8.850000381469727,
+    19.88800048828125,
+    14.899999618530273
+   ]
+  ]
+ },
+ "far": {
+  "tris": 64,
+  "verts": 106,
+  "regions": [
+   "F_clay",
+   "F_metal",
+   "F_stucco_2",
+   "F_stucco_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -8.0,
+    -0.0,
+    -12.0
+   ],
+   [
+    8.0,
+    19.88800048828125,
+    12.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  16.0,
+  24.0
+ ],
+ "footprint_area": 384.0,
+ "height": 20.99,
+ "storeys": 1,
+ "budget": [
+  8000,
+  2500,
+  200
+ ],
+ "budget_class": "landmark",
+ "time_s": 86.7
+}

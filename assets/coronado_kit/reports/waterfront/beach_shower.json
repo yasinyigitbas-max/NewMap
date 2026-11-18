@@ -1,0 +1,106 @@
+{
+ "name": "beach_shower",
+ "tiers": {
+  "near": 466,
+  "mid": 56,
+  "far": 10
+ },
+ "budget": 600,
+ "class": "small",
+ "far_paint_max": 0.4352629513318742,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_beach_shower_clean_far.glb",
+   "tier": "far",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 10,
+   "verts": 20,
+   "budget": 20,
+   "size": [
+    1.1,
+    2.45,
+    1.1
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_beach_shower_clean_mid.glb",
+   "tier": "mid",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 56,
+   "verts": 123,
+   "budget": 181,
+   "size": [
+    1.1,
+    2.455,
+    1.1
+   ],
+   "odd_ray": 6
+  },
+  {
+   "file": "prop_beach_shower_clean_near.glb",
+   "tier": "near",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "60 tris may face inward / be enclosed"
+   ],
+   "tris": 466,
+   "verts": 784,
+   "budget": 600,
+   "size": [
+    1.1,
+    2.452,
+    1.11
+   ],
+   "odd_ray": 99
+  },
+  {
+   "file": "prop_beach_shower_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 2,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.8,
+   "dE": 0.8
+  },
+  "top": {
+   "iou": 1.0,
+   "dE": 0.3
+  },
+  "left": {
+   "iou": 0.0,
+   "dE": 99,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 1,
+  "rail": 1
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 64,
+ "bake_px_per_m": 139.3,
+ "high_tris": 12760,
+ "pass": true
+}

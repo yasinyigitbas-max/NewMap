@@ -1,0 +1,113 @@
+{
+ "name": "urb_brk_corner_pier_3sty",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 270,
+  "verts": 516,
+  "regions": [
+   "S_brick",
+   "T_white"
+  ],
+  "bbox": [
+   [
+    -0.5,
+    0.0,
+    -0.5
+   ],
+   [
+    0.5,
+    10.300000190734863,
+    0.5
+   ]
+  ]
+ },
+ "mid_roof_top": 10.08,
+ "mid": {
+  "tris": 42,
+  "verts": 84,
+  "regions": [
+   "S_brick",
+   "S_white"
+  ],
+  "bbox": [
+   [
+    -0.5,
+    0.0,
+    -0.5
+   ],
+   [
+    0.5,
+    10.260000228881836,
+    0.5
+   ]
+  ]
+ },
+ "far": {
+  "tris": 24,
+  "verts": 48,
+  "regions": [
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -0.5,
+    0.0,
+    -0.5
+   ],
+   [
+    0.5,
+    10.300000190734863,
+    0.5
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  1.0,
+  1.0
+ ],
+ "footprint_area": 1.0,
+ "height": 10.3,
+ "storeys": 1,
+ "budget": [
+  440,
+  100,
+  40
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_brk_corner",
+ "time_s": 0.3,
+ "open_planes": [],
+ "shift": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "module": 1.0,
+  "type": "brk_corner",
+  "ends": [
+   [
+    -0.5,
+    0,
+    0
+   ],
+   [
+    0.5,
+    0,
+    0
+   ]
+  ],
+  "face_z": 0.5,
+  "plate_y": 9.3,
+  "parapet_top": 10.3
+ },
+ "no_door": true,
+ "base_y": 0.0,
+ "ground_reach": false
+}

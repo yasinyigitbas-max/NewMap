@@ -1,0 +1,218 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "fast_food",
+ "types": [
+  "fast_food"
+ ],
+ "floor": "Tiles101",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  1,
+  1,
+  0.95
+ ],
+ "ceiling": "Plaster001",
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.0,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter",
+  "seating"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    2.4,
+    4.0
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "drink"
+   ],
+   "wall": true
+  },
+  {
+   "role": "kitchen_shelf",
+   "prop": "kitchen_line",
+   "place": "behind_counter"
+  },
+  {
+   "role": "booths",
+   "prop": "booth_set",
+   "place": "booths",
+   "max": 3
+  },
+  {
+   "role": "seating",
+   "prop": "table",
+   "place": "grid",
+   "seats": 2
+  }
+ ],
+ "clutter": true,
+ "signs": true,
+ "plans": [
+  {
+   "name": "classic",
+   "fixtures": "fastfood_troffer",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      2.4,
+      4.0
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "drink"
+     ],
+     "wall": true
+    },
+    {
+     "role": "kitchen_shelf",
+     "prop": "kitchen_line",
+     "place": "behind_counter"
+    },
+    {
+     "role": "booths",
+     "prop": "booth_set",
+     "place": "booths",
+     "max": 3
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    }
+   ],
+   "wear": 0.45,
+   "floor": "Tiles012",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    1,
+    0.95
+   ],
+   "wainscot": "Tiles141",
+   "ceiling": "Plaster001"
+  },
+  {
+   "name": "hall",
+   "fixtures": "fastfood_tubes",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      2.4,
+      4.0
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "drink"
+     ],
+     "wall": true
+    },
+    {
+     "role": "kitchen_shelf",
+     "prop": "kitchen_line",
+     "place": "behind_counter"
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    }
+   ],
+   "wear": 0.5,
+   "floor": "Terrazzo005",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.92,
+    0.8
+   ],
+   "wainscot": "Tiles074",
+   "ceiling": "Plaster001"
+  },
+  {
+   "name": "family",
+   "fixtures": "fastfood_warm",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      2.4,
+      4.0
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "drink"
+     ],
+     "wall": true
+    },
+    {
+     "role": "kitchen_shelf",
+     "prop": "kitchen_line",
+     "place": "behind_counter"
+    },
+    {
+     "role": "booths",
+     "prop": "booth_set",
+     "place": "booths",
+     "max": 4
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 4
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ],
+   "wear": 0.4,
+   "floor": "Tiles101",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.95,
+    0.97,
+    1.0
+   ],
+   "wainscot": "Tiles141",
+   "ceiling": "Plaster001"
+  }
+ ],
+ "hours": [
+  7,
+  23
+ ],
+ "busy": 0.65,
+ "dado": {
+  "h": 1.0
+ }
+}

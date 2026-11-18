@@ -1,0 +1,115 @@
+{
+ "name": "civ_museum",
+ "cat": "civic",
+ "style": "spanish_museum",
+ "logic_errors": [],
+ "col_boxes": 13,
+ "near": {
+  "tris": 4692,
+  "verts": 7938,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_lamp",
+   "O_shutter",
+   "O_win_casement",
+   "R_clay",
+   "SG_museum",
+   "S_black",
+   "S_concrete",
+   "S_metal",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -12.720000267028809,
+    -0.0,
+    -9.0
+   ],
+   [
+    12.720000267028809,
+    11.295999526977539,
+    11.449999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 11.296,
+ "mid": {
+  "tris": 686,
+  "verts": 832,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_win_casement",
+   "SG_museum",
+   "S_clay",
+   "S_concrete",
+   "S_deck",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -12.600000381469727,
+    0.0,
+    -9.0
+   ],
+   [
+    12.600000381469727,
+    11.295999526977539,
+    10.0
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 46,
+  "regions": [
+   "F_clay",
+   "F_stucco_2",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -12.0,
+    0.0,
+    -7.5
+   ],
+   [
+    12.0,
+    11.295999526977539,
+    7.5
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  24.0,
+  15.0
+ ],
+ "footprint_area": 360.0,
+ "height": 11.3,
+ "storeys": 2,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "civic",
+ "time_s": 97.7
+}

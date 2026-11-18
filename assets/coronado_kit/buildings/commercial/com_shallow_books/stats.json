@@ -1,0 +1,115 @@
+{
+ "name": "com_shallow_books",
+ "cat": "shop",
+ "style": "shallow_shop",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 987,
+  "verts": 1766,
+  "regions": [
+   "AW_navy",
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_small_white",
+   "O_storefront",
+   "O_win_casement",
+   "R_flat",
+   "SG_books",
+   "S_awn_navy",
+   "S_black",
+   "S_stucco",
+   "S_white",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.700000047683716,
+    -0.0,
+    -3.450000047683716
+   ],
+   [
+    3.700000047683716,
+    5.269999980926514,
+    4.172999858856201
+   ]
+  ]
+ },
+ "mid_roof_top": 5.1,
+ "mid": {
+  "tris": 210,
+  "verts": 266,
+  "regions": [
+   "AW_navy",
+   "O_apt_door",
+   "O_louver",
+   "O_small_white",
+   "O_storefront",
+   "O_win_casement",
+   "SG_books",
+   "S_awn_navy",
+   "S_flat",
+   "S_signbg",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.25,
+    0.0,
+    -3.0
+   ],
+   [
+    3.25,
+    5.099999904632568,
+    4.172999858856201
+   ]
+  ]
+ },
+ "far": {
+  "tris": 20,
+  "verts": 32,
+  "regions": [
+   "F_dark",
+   "F_flat",
+   "F_stucco_1",
+   "F_stucco_blank"
+  ],
+  "bbox": [
+   [
+    -3.25,
+    0.0,
+    -3.0
+   ],
+   [
+    3.25,
+    5.099999904632568,
+    3.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "apt_door",
+   -2.01
+  ]
+ ],
+ "footprint_wd": [
+  6.5,
+  6.0
+ ],
+ "footprint_area": 39.0,
+ "height": 5.27,
+ "storeys": 1,
+ "budget": [
+  1200,
+  350,
+  20
+ ],
+ "budget_units": 1,
+ "budget_class": "shop",
+ "time_s": 3.2
+}

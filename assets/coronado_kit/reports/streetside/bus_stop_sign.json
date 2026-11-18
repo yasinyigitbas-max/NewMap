@@ -1,0 +1,111 @@
+{
+ "name": "bus_stop_sign",
+ "tiers": {
+  "near": 290,
+  "mid": 32,
+  "far": 12
+ },
+ "budget": 1200,
+ "class": "medium",
+ "far_paint_max": null,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_bus_stop_sign_clean_far.glb",
+   "tier": "far",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.17,0.03) - asymmetric parts?"
+   ],
+   "tris": 12,
+   "verts": 24,
+   "budget": 20,
+   "size": [
+    0.595,
+    3.31,
+    0.15
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_bus_stop_sign_clean_mid.glb",
+   "tier": "mid",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.17,0.04) - asymmetric parts?"
+   ],
+   "tris": 32,
+   "verts": 81,
+   "budget": 361,
+   "size": [
+    0.595,
+    3.31,
+    0.137
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_bus_stop_sign_clean_near.glb",
+   "tier": "near",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.15,0.00) - asymmetric parts?",
+    "29 tris may face inward / be enclosed"
+   ],
+   "tris": 290,
+   "verts": 585,
+   "budget": 1200,
+   "size": [
+    0.625,
+    3.31,
+    0.304
+   ],
+   "odd_ray": 38
+  },
+  {
+   "file": "prop_bus_stop_sign_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 2,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 1.0,
+   "dE": 3.2
+  },
+  "top": {
+   "iou": 0.851,
+   "dE": 4.4
+  },
+  "left": {
+   "iou": 0.844,
+   "dE": 1.9,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 1,
+  "rail": 1
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 96,
+ "bake_px_per_m": 63.4,
+ "high_tris": 58266,
+ "pass": true
+}

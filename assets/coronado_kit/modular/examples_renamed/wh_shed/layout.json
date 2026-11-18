@@ -1,0 +1,92 @@
+{
+ "name": "wh_shed",
+ "group": "urban",
+ "outline": {
+  "kind": "warehouse",
+  "W": 24.0,
+  "D": 24.0,
+  "storeys": 1,
+  "wall": "W_stucco",
+  "tint": [
+   0.82,
+   0.82,
+   0.8
+  ],
+  "budget": "warehouse",
+  "floor": 0.0,
+  "storey": 6.6,
+  "parapet": 0.8,
+  "sills": false,
+  "foundation": false,
+  "far_facade": "F_c_tower_3",
+  "far_tile": 6.0
+ },
+ "pieces": [
+  {
+   "piece": "urb_wh_front_12m_office",
+   "x": -6.0,
+   "z": 11.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_wh_front_12m_rollup",
+   "x": 6.0,
+   "z": 11.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_wh_back_12m",
+   "x": 6.0,
+   "z": -11.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_wh_back_12m",
+   "x": -6.0,
+   "z": -11.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_wh_side_24m",
+   "x": 11.85,
+   "z": 0.0,
+   "rot_y": 90
+  },
+  {
+   "piece": "urb_wh_side_24m",
+   "x": -11.85,
+   "z": 0.0,
+   "rot_y": 270
+  },
+  {
+   "piece": "urb_wh_roof_12x24",
+   "x": -6.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_wh_roof_12x24",
+   "x": 6.0,
+   "z": 0.0,
+   "rot_y": 0
+  }
+ ],
+ "budget_class": "warehouse",
+ "budget": [
+  2000,
+  600,
+  40
+ ],
+ "tris": {
+  "near": 1626,
+  "mid": 444,
+  "far": 18
+ },
+ "col_boxes": 1,
+ "far_from": "snapped outline hull",
+ "merged": {
+  "near_mid": "pieces merged, 1 mesh/1 primitive/1 material",
+  "far_col": "outline hull + <=12 boxes"
+ },
+ "renamed_from": "modular/examples/mod_wh_shed/mod_mod_wh_shed_*.glb"
+}

@@ -1,0 +1,115 @@
+{
+ "name": "lmk_navy_gatehouse",
+ "cat": "landmark",
+ "style": "navy_gatehouse",
+ "logic_errors": [],
+ "col_boxes": 15,
+ "near": {
+  "tris": 2742,
+  "verts": 4978,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "O_lamp",
+   "O_louver",
+   "R_clay",
+   "R_flat",
+   "R_metal",
+   "SG_navy",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -18.062000274658203,
+    -0.0,
+    -6.5
+   ],
+   [
+    13.0,
+    9.489999771118164,
+    8.972000122070312
+   ]
+  ]
+ },
+ "mid_roof_top": 9.49,
+ "mid": {
+  "tris": 532,
+  "verts": 760,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "O_louver",
+   "SG_navy",
+   "S_clay",
+   "S_concrete",
+   "S_flat",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -18.00200080871582,
+    0.0,
+    -6.5
+   ],
+   [
+    7.0,
+    9.489999771118164,
+    8.972000122070312
+   ]
+  ]
+ },
+ "far": {
+  "tris": 36,
+  "verts": 60,
+  "regions": [
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -7.0,
+    0.0,
+    -5.0
+   ],
+   [
+    7.0,
+    9.489999771118164,
+    5.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  14.0,
+  10.0
+ ],
+ "footprint_area": 140.0,
+ "height": 9.49,
+ "storeys": 1,
+ "budget": [
+  8000,
+  2500,
+  200
+ ],
+ "budget_class": "landmark",
+ "time_s": 19.8
+}

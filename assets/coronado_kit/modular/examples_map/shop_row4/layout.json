@@ -1,0 +1,132 @@
+{
+ "name": "shop_row4",
+ "group": "shops",
+ "outline": {
+  "kind": "shop",
+  "W": 24.0,
+  "D": 12.0,
+  "wall": "W_stucco",
+  "tint": [
+   0.95,
+   0.86,
+   0.74
+  ],
+  "roof": "R_flat",
+  "budget": "shop"
+ },
+ "pieces": [
+  {
+   "piece": "shop_front_6m_cafe_red",
+   "x": -9.0,
+   "z": 5.7,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_front_6m_surf_black",
+   "x": -3.0,
+   "z": 5.7,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_front_6m_books_green",
+   "x": 3.0,
+   "z": 5.7,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_front_6m_bakery_navy",
+   "x": 9.0,
+   "z": 5.7,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_side_12m_stucco",
+   "x": 11.85,
+   "z": 0.0,
+   "rot_y": 90
+  },
+  {
+   "piece": "shop_side_12m_stucco_l",
+   "x": -11.85,
+   "z": 0.0,
+   "rot_y": 270
+  },
+  {
+   "piece": "shop_back_6m_stucco",
+   "x": 9.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "shop_back_6m_stucco",
+   "x": 3.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "shop_back_6m_stucco",
+   "x": -3.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "shop_back_6m_stucco",
+   "x": -9.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "shop_trim_cornice_corner_r",
+   "x": 12.0,
+   "z": 6.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_trim_cornice_corner_l",
+   "x": -12.0,
+   "z": 6.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_roof_6m_end",
+   "x": -9.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_roof_6m_mid",
+   "x": -3.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_roof_6m_mid",
+   "x": 3.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_roof_6m_end",
+   "x": 9.0,
+   "z": 0.0,
+   "rot_y": 180
+  }
+ ],
+ "budget_class": "shop",
+ "budget": [
+  4800,
+  1400,
+  80
+ ],
+ "tris": {
+  "near": 3878,
+  "mid": 860,
+  "far": 50
+ },
+ "col_boxes": 1,
+ "far_from": "snapped outline hull",
+ "merged": {
+  "near_mid": "pieces merged, 1 mesh/1 primitive/1 material",
+  "far_col": "outline hull + <=12 boxes"
+ }
+}

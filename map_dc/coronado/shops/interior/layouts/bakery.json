@@ -1,0 +1,236 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested).",
+ "set": "bakery",
+ "types": [
+  "bakery"
+ ],
+ "floor": "Tiles143",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  1,
+  0.93,
+  0.82
+ ],
+ "ceiling": "Plaster001",
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3.0,
+  "max_w": 9.0,
+  "min_d": 4.0,
+  "max_d": 10.0
+ },
+ "required": [
+  "counter",
+  "bread_wall"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    2.0,
+    3.6
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "pastry",
+    "bread"
+   ],
+   "wall": true
+  },
+  {
+   "role": "bread_wall",
+   "prop": "shelf_wall",
+   "place": "behind_counter",
+   "goods": [
+    "bread",
+    "pastry"
+   ]
+  },
+  {
+   "role": "seating",
+   "prop": "table",
+   "place": "grid",
+   "seats": 2,
+   "max": 2
+  },
+  {
+   "role": "plant",
+   "prop": "plant",
+   "place": "corner"
+  }
+ ],
+ "clutter": true,
+ "signs": true,
+ "plans": [
+  {
+   "name": "warm",
+   "fixtures": "bakery_warm",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      2.0,
+      3.6
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "pastry",
+      "bread"
+     ],
+     "wall": true
+    },
+    {
+     "role": "bread_wall",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "bread",
+      "pastry"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 2
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ],
+   "wear": 0.3,
+   "floor": "Tiles143",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.93,
+    0.82
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  },
+  {
+   "name": "bright",
+   "fixtures": "bakery_bright",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      2.0,
+      3.6
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "pastry",
+      "bread"
+     ],
+     "wall": true
+    },
+    {
+     "role": "bread_wall",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "bread",
+      "pastry"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 3
+    }
+   ],
+   "wear": 0.22,
+   "floor": "Tiles012",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    1,
+    0.97
+   ],
+   "wainscot": "Tiles141",
+   "ceiling": "Plaster001"
+  },
+  {
+   "name": "parlour",
+   "fixtures": "cafe_brass",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      2.0,
+      3.6
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "pastry",
+      "bread"
+     ],
+     "wall": true
+    },
+    {
+     "role": "bread_wall",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "goods": [
+      "bread",
+      "pastry"
+     ]
+    },
+    {
+     "role": "seating",
+     "prop": "table",
+     "place": "grid",
+     "seats": 2,
+     "max": 99
+    },
+    {
+     "role": "art",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "door_side",
+      "back"
+     ],
+     "max": 1
+    }
+   ],
+   "wear": 0.3,
+   "floor": "WoodFloor051",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    1,
+    0.88,
+    0.78
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "Plaster001"
+  }
+ ],
+ "hours": [
+  6,
+  17
+ ],
+ "busy": 0.45,
+ "dado": {
+  "h": 1.0
+ }
+}

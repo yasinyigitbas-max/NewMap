@@ -1,0 +1,25 @@
+{
+ "cat": "mod",
+ "doors_front": [
+  [
+   "apt_door",
+   -33.6
+  ],
+  [
+   "apt_door",
+   26.4
+  ]
+ ],
+ "footprint_wd": [
+  72.0,
+  48.0
+ ],
+ "height": 7.4,
+ "merged_from": "mod_wh_dist.json",
+ "name": "mod_wh_dist",
+ "tris": {
+  "far": 108,
+  "mid": 1900,
+  "near": 5504
+ }
+}

@@ -1,0 +1,119 @@
+{
+ "name": "pub_museum",
+ "cat": "urban",
+ "style": "museum",
+ "logic_errors": [],
+ "col_boxes": 13,
+ "near": {
+  "tris": 2038,
+  "verts": 3561,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_ribbon",
+   "O_rollup",
+   "O_shopdoor",
+   "O_storefront",
+   "R_comp",
+   "R_flat",
+   "S_black",
+   "S_concrete",
+   "S_glass",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -14.449999809265137,
+    -0.0,
+    -11.5
+   ],
+   [
+    14.449999809265137,
+    10.199999809265137,
+    14.399999618530273
+   ]
+  ]
+ },
+ "mid_roof_top": 10.2,
+ "mid": {
+  "tris": 452,
+  "verts": 642,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "O_rollup",
+   "O_shopdoor",
+   "S_comp",
+   "S_concrete",
+   "S_dark",
+   "S_flat",
+   "S_glass",
+   "S_signbg",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_dark",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -14.039999961853027,
+    0.0,
+    -11.5
+   ],
+   [
+    14.039999961853027,
+    10.199999809265137,
+    14.399999618530273
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 44,
+  "regions": [
+   "F_c_shop_2",
+   "F_flat",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -14.0,
+    0.0,
+    -10.0
+   ],
+   [
+    14.0,
+    10.199999809265137,
+    10.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  28.0,
+  20.0
+ ],
+ "footprint_area": 560.0,
+ "height": 10.2,
+ "storeys": 2,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "civic",
+ "time_s": 11.3
+}

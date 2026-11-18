@@ -1,0 +1,104 @@
+{
+ "name": "pier_lamp",
+ "tiers": {
+  "near": 406,
+  "mid": 170,
+  "far": 14
+ },
+ "budget": 600,
+ "class": "small",
+ "far_paint_max": 0.003835811716120156,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_pier_lamp_clean_far.glb",
+   "tier": "far",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 14,
+   "verts": 24,
+   "budget": 20,
+   "size": [
+    0.37,
+    4.1,
+    0.37
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_pier_lamp_clean_mid.glb",
+   "tier": "mid",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 170,
+   "verts": 425,
+   "budget": 181,
+   "size": [
+    0.4,
+    4.1,
+    0.4
+   ],
+   "odd_ray": 8
+  },
+  {
+   "file": "prop_pier_lamp_clean_near.glb",
+   "tier": "near",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 406,
+   "verts": 701,
+   "budget": 600,
+   "size": [
+    0.4,
+    4.24,
+    0.38
+   ],
+   "odd_ray": 22
+  },
+  {
+   "file": "prop_pier_lamp_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 1,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.878,
+   "dE": 0.0
+  },
+  "top": {
+   "iou": 0.908,
+   "dE": 0.3
+  },
+  "left": {
+   "iou": 0.878,
+   "dE": 0.0,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 0,
+  "rail": 1
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 64,
+ "bake_px_per_m": 35.4,
+ "high_tris": 2775,
+ "pass": true
+}

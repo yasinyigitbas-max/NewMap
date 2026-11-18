@@ -1,0 +1,115 @@
+{
+ "name": "civ_police",
+ "cat": "civic",
+ "style": "police_station",
+ "logic_errors": [],
+ "col_boxes": 11,
+ "near": {
+  "tris": 3809,
+  "verts": 6955,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "O_lamp",
+   "O_louver",
+   "O_number",
+   "O_vent",
+   "R_clay",
+   "R_metal",
+   "SG_police",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -11.720000267028809,
+    -0.0,
+    -8.5
+   ],
+   [
+    11.449999809265137,
+    13.699999809265137,
+    10.972000122070312
+   ]
+  ]
+ },
+ "mid_roof_top": 8.4,
+ "mid": {
+  "tris": 554,
+  "verts": 674,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "SG_police",
+   "S_clay",
+   "S_concrete",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -11.0,
+    0.0,
+    -8.5
+   ],
+   [
+    11.0,
+    8.399999618530273,
+    10.972000122070312
+   ]
+  ]
+ },
+ "far": {
+  "tris": 10,
+  "verts": 20,
+  "regions": [
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -11.0,
+    0.0,
+    -7.0
+   ],
+   [
+    11.0,
+    8.399999618530273,
+    7.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  22.0,
+  14.0
+ ],
+ "footprint_area": 308.0,
+ "height": 13.7,
+ "storeys": 2,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "civic",
+ "time_s": 25.1
+}

@@ -1,0 +1,178 @@
+{
+ "name": "pier_thead",
+ "tiers": {
+  "near": 2436,
+  "mid": 398,
+  "far": 20
+ },
+ "budget": 2500,
+ "class": "large",
+ "far_paint_max": 0.22568516680447356,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_pier_thead_clean_far.glb",
+   "tier": "far",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 20,
+   "verts": 40,
+   "budget": 20,
+   "size": [
+    12.0,
+    3.25,
+    6.462
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_pier_thead_clean_mid.glb",
+   "tier": "mid",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 398,
+   "verts": 1077,
+   "budget": 751,
+   "size": [
+    12.1,
+    3.25,
+    6.58
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_pier_thead_clean_near.glb",
+   "tier": "near",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 2436,
+   "verts": 5054,
+   "budget": 2500,
+   "size": [
+    12.1,
+    4.02,
+    6.582
+   ],
+   "odd_ray": 430
+  },
+  {
+   "file": "prop_pier_thead_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 26,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.934,
+   "dE": 1.5
+  },
+  "top": {
+   "iou": 0.978,
+   "dE": 0.3
+  },
+  "left": {
+   "iou": 0.885,
+   "dE": 2.2
+  }
+ },
+ "col_split": {
+  "main": 12,
+  "rail": 14
+ },
+ "col_ok": true,
+ "rail_ok": true,
+ "railcheck": [
+  {
+   "member": 0,
+   "kind": "v",
+   "end": [
+    -0.225,
+    0.6,
+    3.5
+   ],
+   "gap": 0.0025,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 1,
+   "kind": "p",
+   "end": [
+    -0.225,
+    3.0,
+    3.5
+   ],
+   "gap": 0.006,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 1,
+   "kind": "p",
+   "end": [
+    -0.225,
+    3.012,
+    2.7
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 2,
+   "kind": "v",
+   "end": [
+    0.225,
+    0.6,
+    3.5
+   ],
+   "gap": 0.0025,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 3,
+   "kind": "p",
+   "end": [
+    0.225,
+    3.0,
+    3.5
+   ],
+   "gap": 0.006,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 3,
+   "kind": "p",
+   "end": [
+    0.225,
+    3.012,
+    2.7
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  }
+ ],
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 192,
+ "bake_px_per_m": 28.0,
+ "high_tris": 158980,
+ "pass": true
+}

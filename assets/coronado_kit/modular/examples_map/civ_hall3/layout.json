@@ -1,0 +1,183 @@
+{
+ "name": "civ_hall3",
+ "group": "urban",
+ "outline": {
+  "kind": "block",
+  "W": 18.0,
+  "D": 12.0,
+  "storeys": 1,
+  "wall": "W_stucco",
+  "tint": [
+   0.97,
+   0.96,
+   0.93
+  ],
+  "budget": "civic",
+  "floor": 0.6,
+  "storey": 4.2,
+  "parapet": 0.44,
+  "sills": true,
+  "foundation": true,
+  "far_punch": true,
+  "far_front": [
+   {
+    "k": "civic_win",
+    "c": -6.0,
+    "w": 2.9,
+    "t0": 1.5,
+    "t1": 4.3
+   },
+   {
+    "k": "glass",
+    "c": 0.0,
+    "w": 3.0,
+    "t0": 0.7,
+    "t1": 2.8,
+    "far_dark": true
+   },
+   {
+    "k": "civic_win",
+    "c": 6.0,
+    "w": 2.9,
+    "t0": 1.5,
+    "t1": 4.3
+   },
+   {
+    "k": "glass",
+    "c": 0.0,
+    "w": 18.0,
+    "t0": 4.44,
+    "t1": 4.6,
+    "far_dark": true
+   }
+  ],
+  "far_pediments": [
+   [
+    -2.9,
+    2.9,
+    5.25,
+    6.3,
+    5.7,
+    6.24
+   ]
+  ]
+ },
+ "pieces": [
+  {
+   "piece": "urb_civ_window_6m",
+   "x": -6.0,
+   "z": 5.85,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_civ_entry_6m",
+   "x": 0.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_civ_window_6m",
+   "x": 6.0,
+   "z": 5.85,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_civ_cornice_6m",
+   "x": -6.0,
+   "z": 6.14,
+   "rot_y": 0,
+   "y": 4.8
+  },
+  {
+   "piece": "urb_civ_cornice_6m",
+   "x": 6.0,
+   "z": 6.14,
+   "rot_y": 0,
+   "y": 4.8
+  },
+  {
+   "piece": "urb_civ_pediment_6m",
+   "x": 0.0,
+   "z": 6.24,
+   "rot_y": 0,
+   "y": 4.8
+  },
+  {
+   "piece": "urb_civ_back_6m_blank",
+   "x": 6.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_civ_back_6m",
+   "x": 0.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_civ_back_6m_blank",
+   "x": -6.0,
+   "z": -5.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_civ_trim_return_r",
+   "x": 9.0,
+   "z": 6.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_civ_trim_return_l",
+   "x": -9.0,
+   "z": 6.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_civ_side_12m_r",
+   "x": 8.85,
+   "z": 0.0,
+   "rot_y": 90
+  },
+  {
+   "piece": "urb_civ_side_12m_l",
+   "x": -8.85,
+   "z": 0.0,
+   "rot_y": 270
+  },
+  {
+   "piece": "urb_civ_roof_6x12",
+   "x": -6.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_civ_roof_6x12",
+   "x": 0.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_civ_roof_6x12",
+   "x": 6.0,
+   "z": 0.0,
+   "rot_y": 0
+  }
+ ],
+ "budget_class": "civic",
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "tris": {
+  "near": 2848,
+  "mid": 513,
+  "far": 112
+ },
+ "col_boxes": 1,
+ "far_from": "snapped outline hull",
+ "merged": {
+  "near_mid": "pieces merged, 1 mesh/1 primitive/1 material",
+  "far_col": "outline hull + <=12 boxes"
+ }
+}

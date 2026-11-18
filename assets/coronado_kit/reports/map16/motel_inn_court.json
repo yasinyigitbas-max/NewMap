@@ -1,0 +1,202 @@
+{
+ "name": "motel_inn_court",
+ "style": "motor_inn",
+ "module": "city_map",
+ "stats": {
+  "near": {
+   "tris": 4290,
+   "verts": 7423,
+   "regions": [
+    "O_apt_door",
+    "O_apt_slider",
+    "O_lamp",
+    "O_number",
+    "O_shopdoor",
+    "O_small_white",
+    "O_storefront",
+    "O_vent",
+    "O_win_casement",
+    "O_win_dh_white",
+    "R_clay",
+    "SG_motel",
+    "S_black",
+    "S_concrete",
+    "S_metal",
+    "S_soffit",
+    "S_stucco",
+    "S_white",
+    "T_concrete",
+    "T_dark",
+    "T_metal",
+    "T_white",
+    "W_stucco"
+   ],
+   "bbox": [
+    [
+     -19.225000381469727,
+     -0.0,
+     -5.71999979019165
+    ],
+    [
+     18.139999389648438,
+     8.680000305175781,
+     6.599999904632568
+    ]
+   ]
+  },
+  "mid": {
+   "tris": 1050,
+   "verts": 1206,
+   "regions": [
+    "O_apt_door",
+    "O_apt_slider",
+    "O_shopdoor",
+    "O_small_white",
+    "O_storefront",
+    "O_vent",
+    "O_win_casement",
+    "O_win_dh_white",
+    "SG_motel",
+    "S_clay",
+    "S_concrete",
+    "S_metal",
+    "S_signbg",
+    "S_soffit",
+    "S_white",
+    "W_stucco"
+   ],
+   "bbox": [
+    [
+     -19.200000762939453,
+     0.0,
+     -5.550000190734863
+    ],
+    [
+     18.0,
+     8.680000305175781,
+     6.599999904632568
+    ]
+   ]
+  },
+  "far": {
+   "tris": 46,
+   "verts": 84,
+   "regions": [
+    "F_clay",
+    "F_flat",
+    "F_glass",
+    "F_stucco_1",
+    "F_stucco_2",
+    "F_stucco_blank",
+    "F_trim_white"
+   ],
+   "bbox": [
+    [
+     -18.0,
+     0.0,
+     -5.0
+    ],
+    [
+     18.0,
+     8.680000305175781,
+     5.0
+    ]
+   ]
+  },
+  "budget": [
+   5000,
+   1500,
+   120
+  ],
+  "budget_class": "apartment_large",
+  "storeys": 2,
+  "footprint_wd": [
+   36.0,
+   10.0
+  ],
+  "footprint_area": 360.0,
+  "height": 8.68,
+  "logic_errors": [],
+  "col_boxes": 5
+ },
+ "validator": {
+  "pass": true,
+  "errors": []
+ },
+ "railcheck": {
+  "pass": true,
+  "gaps": [],
+  "floating": [],
+  "pen": []
+ },
+ "far_match": {
+  "ok": true,
+  "reason": "ok (opening layout)",
+  "detail": {
+   "mid_h": 6.46,
+   "far_h": 6.68,
+   "mid_w": 37.2,
+   "far_w": 36.0,
+   "iou": 0.985,
+   "mid_px": 136298,
+   "far_px": 134192,
+   "frame": [
+    -19.2,
+    18.0,
+    0.0,
+    8.68
+   ],
+   "swing_mid": 0.458,
+   "corr": 0.541,
+   "mid_rows": 7,
+   "far_rows": 3,
+   "mid_fill": 0.336,
+   "far_fill": 0.263,
+   "mid_cols": 1,
+   "far_cols": 1,
+   "mid_col_x": [
+    0.908
+   ],
+   "far_col_x": [
+    0.916
+   ],
+   "mid_open_rows": 1,
+   "far_open_rows": 1
+  },
+  "full_iou": {
+   "front": 0.9839703958568535,
+   "side": 0.9719046269173832
+  }
+ },
+ "pass": true,
+ "time_s": 58.8,
+ "wallcheck": {
+  "front": {
+   "wall_px": 4630,
+   "resid_std": 0.006,
+   "worst_blob_frac": 0.0,
+   "pass": true,
+   "mode": "fine",
+   "sun": "flipped"
+  },
+  "left": {
+   "wall_px": 87025,
+   "resid_std": 0.0071,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "right": {
+   "wall_px": 124578,
+   "resid_std": 0.0049,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "back": {
+   "wall_px": 17598,
+   "resid_std": 0.0029,
+   "worst_blob_frac": 0.0,
+   "pass": true
+  },
+  "pass": true
+ }
+}

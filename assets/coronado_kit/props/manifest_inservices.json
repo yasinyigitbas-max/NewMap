@@ -1,0 +1,252 @@
+{
+ "washer": {
+  "file_base": "prop_washer",
+  "batch": "inservices",
+  "class": "medium",
+  "budget": 1100,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 764
+  },
+  "footprint_w": 0.68,
+  "footprint_d": 0.745,
+  "height": 0.984,
+  "regions": [
+   "baked:washer"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 3.8,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 1.31,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.18,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 4276,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 221.9,
+  "col": 1,
+  "secs": 10.4
+ },
+ "dryer": {
+  "file_base": "prop_dryer",
+  "batch": "inservices",
+  "class": "medium",
+  "budget": 1100,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 840
+  },
+  "footprint_w": 0.65,
+  "footprint_d": 0.8,
+  "height": 0.99,
+  "regions": [
+   "baked:dryer"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 3.78,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 1.47,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.08,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 4082,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 275.9,
+  "col": 1,
+  "secs": 10.5
+ },
+ "garment_rail": {
+  "file_base": "prop_garment_rail",
+  "batch": "inservices",
+  "class": "medium",
+  "budget": 1100,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 832
+  },
+  "footprint_w": 1.54,
+  "footprint_d": 0.408,
+  "height": 1.67,
+  "regions": [
+   "baked:garment_rail"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 1.12,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.08,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 4776,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 60.1,
+  "col": 1,
+  "secs": 11.8
+ },
+ "workbench": {
+  "file_base": "prop_workbench",
+  "batch": "inservices",
+  "class": "medium",
+  "budget": 1100,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 644
+  },
+  "footprint_w": 1.6,
+  "footprint_d": 0.891,
+  "height": 1.48,
+  "regions": [
+   "baked:workbench"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 6.29,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 1.51,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 1.84,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3688,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 963.0,
+  "col": 1,
+  "secs": 13.2
+ },
+ "laundry_counter": {
+  "file_base": "prop_laundry_counter",
+  "batch": "inservices",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 744
+  },
+  "footprint_w": 1.8,
+  "footprint_d": 0.72,
+  "height": 1.08,
+  "regions": [
+   "baked:laundry_counter"
+  ],
+  "trim": {
+   "ti_laminate": {
+    "area_m2": 4.19,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 5.97,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 7.97,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 0.15,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.32,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3824,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 401.0,
+  "col": 1,
+  "secs": 14.4
+ },
+ "pegboard_wall": {
+  "file_base": "prop_pegboard_wall",
+  "batch": "inservices",
+  "class": "medium",
+  "budget": 1100,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 714
+  },
+  "footprint_w": 1.22,
+  "footprint_d": 0.254,
+  "height": 2.0,
+  "regions": [
+   "baked:pegboard_wall"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 4.52,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.09,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 4.04,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 7362,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 146.0,
+  "col": 1,
+  "secs": 10.8
+ }
+}

@@ -1,0 +1,152 @@
+{
+ "name": "apt_stucco3_peach",
+ "cat": "apartment",
+ "style": "mediterranean_condo",
+ "logic_errors": [],
+ "col_boxes": 10,
+ "near": {
+  "tris": 3440,
+  "verts": 6000,
+  "regions": [
+   "O_apt_door",
+   "O_apt_slider",
+   "O_lamp",
+   "O_number",
+   "O_patio",
+   "O_shopdoor",
+   "O_shutter",
+   "O_vent",
+   "O_win_casement",
+   "O_win_dh_white",
+   "R_clay",
+   "S_black",
+   "S_concrete",
+   "S_metal",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_terracotta",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -10.220000267028809,
+    -0.0,
+    -7.5
+   ],
+   [
+    10.220000267028809,
+    11.855999946594238,
+    8.100000381469727
+   ]
+  ]
+ },
+ "mid_roof_top": 11.856,
+ "mid": {
+  "tris": 686,
+  "verts": 794,
+  "regions": [
+   "O_apt_door",
+   "O_apt_slider",
+   "O_patio",
+   "O_shopdoor",
+   "O_vent",
+   "O_win_casement",
+   "O_win_dh_white",
+   "S_clay",
+   "S_concrete",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -10.100000381469727,
+    0.0,
+    -7.5
+   ],
+   [
+    10.100000381469727,
+    11.855999946594238,
+    8.100000381469727
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 46,
+  "regions": [
+   "F_clay",
+   "F_stucco_2",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -9.5,
+    0.0,
+    -6.0
+   ],
+   [
+    9.5,
+    11.855999946594238,
+    6.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   0.0
+  ],
+  [
+   "patio",
+   -3.35
+  ],
+  [
+   "patio",
+   -3.35
+  ],
+  [
+   "patio",
+   -7.45
+  ],
+  [
+   "patio",
+   -7.45
+  ],
+  [
+   "patio",
+   3.35
+  ],
+  [
+   "patio",
+   3.35
+  ],
+  [
+   "patio",
+   7.45
+  ],
+  [
+   "patio",
+   7.45
+  ]
+ ],
+ "footprint_wd": [
+  19.0,
+  12.0
+ ],
+ "footprint_area": 228.0,
+ "height": 11.86,
+ "storeys": 3,
+ "budget": [
+  3500,
+  1000,
+  80
+ ],
+ "budget_class": "apartment",
+ "time_s": 33.1
+}

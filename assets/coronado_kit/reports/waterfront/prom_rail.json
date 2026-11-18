@@ -1,0 +1,263 @@
+{
+ "name": "prom_rail",
+ "tiers": {
+  "near": 544,
+  "mid": 184,
+  "far": 10
+ },
+ "budget": 1200,
+ "class": "medium",
+ "far_paint_max": 0.3906972118596665,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_prom_rail_clean_far.glb",
+   "tier": "far",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 10,
+   "verts": 20,
+   "budget": 20,
+   "size": [
+    4.04,
+    1.07,
+    0.14
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_prom_rail_clean_mid.glb",
+   "tier": "mid",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 184,
+   "verts": 529,
+   "budget": 361,
+   "size": [
+    4.0,
+    1.07,
+    0.14
+   ],
+   "odd_ray": 2
+  },
+  {
+   "file": "prop_prom_rail_clean_near.glb",
+   "tier": "near",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 544,
+   "verts": 1088,
+   "budget": 1200,
+   "size": [
+    4.09,
+    1.078,
+    0.17
+   ],
+   "odd_ray": 94
+  },
+  {
+   "file": "prop_prom_rail_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 1,
+   "col_maxverts": 8
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.814,
+   "dE": 0.9
+  },
+  "top": {
+   "iou": 1.0,
+   "dE": 0.3
+  },
+  "left": {
+   "iou": 0.0,
+   "dE": 99,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 0,
+  "rail": 1
+ },
+ "col_ok": true,
+ "rail_ok": true,
+ "railcheck": [
+  {
+   "member": 0,
+   "kind": "v",
+   "end": [
+    -1.96,
+    0.09,
+    0.0
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 1,
+   "kind": "v",
+   "end": [
+    0.0,
+    0.09,
+    0.0
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 2,
+   "kind": "v",
+   "end": [
+    1.96,
+    0.09,
+    0.0
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 3,
+   "kind": "h",
+   "end": [
+    -1.92,
+    0.145,
+    0.0
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 3,
+   "kind": "h",
+   "end": [
+    -0.04,
+    0.145,
+    0.0
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 4,
+   "kind": "h",
+   "end": [
+    -1.92,
+    0.995,
+    0.0
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 4,
+   "kind": "h",
+   "end": [
+    -0.04,
+    0.995,
+    0.0
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 5,
+   "kind": "h",
+   "end": [
+    0.04,
+    0.145,
+    0.0
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 5,
+   "kind": "h",
+   "end": [
+    1.92,
+    0.145,
+    0.0
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 6,
+   "kind": "h",
+   "end": [
+    0.04,
+    0.995,
+    0.0
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 6,
+   "kind": "h",
+   "end": [
+    1.92,
+    0.995,
+    0.0
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 7,
+   "kind": "h",
+   "end": [
+    -2.0,
+    1.05,
+    0.0
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 7,
+   "kind": "h",
+   "end": [
+    2.0,
+    1.05,
+    0.0
+   ],
+   "gap": 0.0,
+   "pen": 0.0,
+   "ok": true
+  }
+ ],
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 64,
+ "bake_px_per_m": 348.7,
+ "high_tris": 15170,
+ "pass": true
+}

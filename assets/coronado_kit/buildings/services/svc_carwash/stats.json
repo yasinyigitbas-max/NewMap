@@ -1,0 +1,112 @@
+{
+ "name": "svc_carwash",
+ "cat": "warehouse",
+ "style": "carwash",
+ "logic_errors": [],
+ "col_boxes": 16,
+ "near": {
+  "tris": 1952,
+  "verts": 3526,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "O_lamp",
+   "O_louver",
+   "O_shopdoor",
+   "O_win_casement",
+   "R_flat",
+   "S_black",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -13.199999809265137,
+    -0.0,
+    -9.5
+   ],
+   [
+    13.550000190734863,
+    7.199999809265137,
+    13.199999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 5.9,
+ "mid": {
+  "tris": 572,
+  "verts": 832,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "O_shopdoor",
+   "S_concrete",
+   "S_dark",
+   "S_flat",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "T_dark",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -13.199999809265137,
+    -0.0,
+    -9.5
+   ],
+   [
+    13.100000381469727,
+    7.199999809265137,
+    13.199999809265137
+   ]
+  ]
+ },
+ "far": {
+  "tris": 32,
+  "verts": 64,
+  "regions": [
+   "F_c_tower_3",
+   "F_flat",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -13.100000381469727,
+    0.0,
+    -8.0
+   ],
+   [
+    13.100000381469727,
+    5.900000095367432,
+    13.199999809265137
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "shopdoor",
+   -10.5
+  ]
+ ],
+ "footprint_wd": [
+  26.2,
+  16.0
+ ],
+ "footprint_area": 419.2,
+ "height": 7.2,
+ "storeys": 1,
+ "budget": [
+  2000,
+  600,
+  40
+ ],
+ "budget_class": "warehouse",
+ "time_s": 8.6
+}

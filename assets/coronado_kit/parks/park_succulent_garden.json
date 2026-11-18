@@ -1,0 +1,252 @@
+{
+ "name": "park_succulent_garden",
+ "style": "succulent_garden",
+ "footprint": [
+  30,
+  20
+ ],
+ "zones": [
+  {
+   "kind": "sand",
+   "rect": [
+    -15,
+    15,
+    -10,
+    10
+   ]
+  },
+  {
+   "kind": "path",
+   "rect": [
+    -15,
+    15,
+    -1,
+    1
+   ]
+  }
+ ],
+ "instances": [
+  {
+   "base": "prop_lamp_globe",
+   "cond": "clean",
+   "pos": [
+    -10.0,
+    0.0,
+    1.6
+   ],
+   "rot_y": 0.0,
+   "role": "lamp",
+   "file": "props/street/prop_lamp_globe_clean_near.glb",
+   "tris_near": 684
+  },
+  {
+   "base": "prop_lamp_globe",
+   "cond": "clean",
+   "pos": [
+    0.0,
+    0.0,
+    1.6
+   ],
+   "rot_y": 0.0,
+   "role": "lamp",
+   "file": "props/street/prop_lamp_globe_clean_near.glb",
+   "tris_near": 684
+  },
+  {
+   "base": "prop_lamp_globe",
+   "cond": "clean",
+   "pos": [
+    10.0,
+    0.0,
+    1.6
+   ],
+   "rot_y": 0.0,
+   "role": "lamp",
+   "file": "props/street/prop_lamp_globe_clean_near.glb",
+   "tris_near": 684
+  },
+  {
+   "base": "plant_agave_americana",
+   "cond": "normal",
+   "pos": [
+    -11,
+    0.0,
+    -6
+   ],
+   "rot_y": 173,
+   "role": "plant",
+   "file": "foliage/plant_agave_americana_normal_near.glb",
+   "tris_near": 468
+  },
+  {
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "pos": [
+    -5,
+    0.0,
+    -6
+   ],
+   "rot_y": 275,
+   "role": "plant",
+   "file": "foliage/plant_agave_americana_small_normal_near.glb",
+   "tris_near": 468
+  },
+  {
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "pos": [
+    1,
+    0.0,
+    -6
+   ],
+   "rot_y": 17,
+   "role": "plant",
+   "file": "foliage/plant_bird_of_paradise_normal_near.glb",
+   "tris_near": 346
+  },
+  {
+   "base": "plant_agave_americana",
+   "cond": "normal",
+   "pos": [
+    7,
+    0.0,
+    -6
+   ],
+   "rot_y": 119,
+   "role": "plant",
+   "file": "foliage/plant_agave_americana_normal_near.glb",
+   "tris_near": 468
+  },
+  {
+   "base": "plant_iceplant_patch",
+   "cond": "normal",
+   "pos": [
+    12,
+    0.0,
+    -6
+   ],
+   "rot_y": 204,
+   "role": "plant",
+   "file": "foliage/plant_iceplant_patch_normal_near.glb",
+   "tris_near": 138
+  },
+  {
+   "base": "plant_iceplant_patch",
+   "cond": "normal",
+   "pos": [
+    -11,
+    0.0,
+    6
+   ],
+   "rot_y": 173,
+   "role": "plant",
+   "file": "foliage/plant_iceplant_patch_normal_near.glb",
+   "tris_near": 138
+  },
+  {
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "pos": [
+    -5,
+    0.0,
+    6
+   ],
+   "rot_y": 275,
+   "role": "plant",
+   "file": "foliage/plant_bird_of_paradise_normal_near.glb",
+   "tris_near": 346
+  },
+  {
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "pos": [
+    1,
+    0.0,
+    6
+   ],
+   "rot_y": 17,
+   "role": "plant",
+   "file": "foliage/plant_agave_americana_small_normal_near.glb",
+   "tris_near": 468
+  },
+  {
+   "base": "plant_agave_americana",
+   "cond": "normal",
+   "pos": [
+    7,
+    0.0,
+    6
+   ],
+   "rot_y": 119,
+   "role": "plant",
+   "file": "foliage/plant_agave_americana_normal_near.glb",
+   "tris_near": 468
+  },
+  {
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "pos": [
+    12,
+    0.0,
+    6
+   ],
+   "rot_y": 204,
+   "role": "plant",
+   "file": "foliage/plant_bird_of_paradise_normal_near.glb",
+   "tris_near": 346
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    -8,
+    0.0,
+    2.0
+   ],
+   "rot_y": 180.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    8,
+    0.0,
+    2.0
+   ],
+   "rot_y": 180.0,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_trash_receptacle",
+   "cond": "clean",
+   "pos": [
+    4.0,
+    0.0,
+    2.0
+   ],
+   "rot_y": 0.0,
+   "role": "bin",
+   "file": "props/street/prop_trash_receptacle_clean_near.glb",
+   "tris_near": 298
+  }
+ ],
+ "stats": {
+  "instances": 16,
+  "near_tris_sum": 6364,
+  "assets": [
+   "plant_agave_americana",
+   "plant_agave_americana_small",
+   "plant_bird_of_paradise",
+   "plant_iceplant_patch",
+   "prop_lamp_globe",
+   "prop_park_bench",
+   "prop_trash_receptacle"
+  ]
+ },
+ "errors": []
+}

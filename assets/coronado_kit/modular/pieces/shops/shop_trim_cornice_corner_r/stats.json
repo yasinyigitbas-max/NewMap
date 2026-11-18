@@ -1,0 +1,109 @@
+{
+ "name": "shop_trim_cornice_corner_r",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 20,
+  "verts": 40,
+  "regions": [
+   "T_white"
+  ],
+  "bbox": [
+   [
+    0.0,
+    4.739999771118164,
+    -0.30000001192092896
+   ],
+   [
+    0.20000000298023224,
+    5.001999855041504,
+    0.20000000298023224
+   ]
+  ]
+ },
+ "mid_roof_top": 5.002,
+ "mid": {
+  "tris": 10,
+  "verts": 20,
+  "regions": [
+   "S_white"
+  ],
+  "bbox": [
+   [
+    0.0,
+    4.739999771118164,
+    -0.30000001192092896
+   ],
+   [
+    0.20000000298023224,
+    5.001999855041504,
+    0.20000000298023224
+   ]
+  ]
+ },
+ "far": {
+  "tris": 10,
+  "verts": 20,
+  "regions": [
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    0.0,
+    4.739999771118164,
+    -0.30000001192092896
+   ],
+   [
+    0.20000000298023224,
+    5.001999855041504,
+    0.20000000298023224
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  0.0,
+  0.0
+ ],
+ "footprint_area": 0.0,
+ "height": 5.0,
+ "storeys": 1,
+ "budget": [
+  40,
+  12,
+  10
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_shop_trim",
+ "time_s": 0.0,
+ "open_planes": [
+  [
+   0,
+   0.0,
+   -1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "type": "shop_corner",
+  "corner": [
+   0,
+   0,
+   0
+  ],
+  "hand": "r",
+  "note": "origin = outer front corner point at ground, no rotation (front faces +Z)"
+ },
+ "no_door": true,
+ "base_y": 4.74,
+ "ground_reach": false
+}

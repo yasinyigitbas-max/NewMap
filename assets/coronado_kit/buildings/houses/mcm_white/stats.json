@@ -1,0 +1,119 @@
+{
+ "name": "mcm_white",
+ "cat": "house",
+ "style": "midcentury",
+ "logic_errors": [],
+ "col_boxes": 11,
+ "near": {
+  "tris": 1486,
+  "verts": 2595,
+  "regions": [
+   "O_door_modern",
+   "O_garage_wood",
+   "O_lamp",
+   "O_number",
+   "O_vent",
+   "O_win_modern",
+   "R_flat",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stone",
+   "S_stucco",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_white",
+   "W_stone",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -7.400000095367432,
+    -0.0,
+    -5.53000020980835
+   ],
+   [
+    7.099999904632568,
+    4.75,
+    6.0
+   ]
+  ]
+ },
+ "mid_roof_top": 3.75,
+ "mid": {
+  "tris": 326,
+  "verts": 417,
+  "regions": [
+   "O_door_modern",
+   "O_garage_wood",
+   "O_win_modern",
+   "S_concrete",
+   "S_flat",
+   "S_metal",
+   "S_soffit",
+   "S_white",
+   "W_stone",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -7.400000095367432,
+    0.0,
+    -5.400000095367432
+   ],
+   [
+    7.099999904632568,
+    4.75,
+    6.0
+   ]
+  ]
+ },
+ "far": {
+  "tris": 31,
+  "verts": 59,
+  "regions": [
+   "F_flat",
+   "F_stone_1",
+   "F_stucco_1",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -6.5,
+    0.0,
+    -4.5
+   ],
+   [
+    6.5,
+    3.75,
+    4.5
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door_modern",
+   1.5
+  ],
+  [
+   "garage_wood",
+   4.7
+  ]
+ ],
+ "footprint_wd": [
+  13.0,
+  9.0
+ ],
+ "footprint_area": 117.0,
+ "height": 4.75,
+ "storeys": 1,
+ "budget": [
+  1500,
+  450,
+  40
+ ],
+ "budget_class": "house_small",
+ "time_s": 5.5
+}

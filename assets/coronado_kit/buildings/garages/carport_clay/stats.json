@@ -1,0 +1,92 @@
+{
+ "name": "carport_clay",
+ "cat": "garage",
+ "style": "carport",
+ "logic_errors": [],
+ "col_boxes": 3,
+ "near": {
+  "tris": 251,
+  "verts": 421,
+  "regions": [
+   "O_lamp",
+   "R_clay",
+   "S_black",
+   "S_soffit",
+   "T_concrete",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -1.75,
+    -0.0,
+    -3.0
+   ],
+   [
+    1.75,
+    3.007999897003174,
+    3.119999885559082
+   ]
+  ]
+ },
+ "mid_roof_top": 3.008,
+ "mid": {
+  "tris": 85,
+  "verts": 135,
+  "regions": [
+   "S_clay",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -1.75,
+    0.0,
+    -3.0
+   ],
+   [
+    1.75,
+    3.007999897003174,
+    3.0
+   ]
+  ]
+ },
+ "far": {
+  "tris": 10,
+  "verts": 20,
+  "regions": [
+   "F_bb_1",
+   "F_clay"
+  ],
+  "bbox": [
+   [
+    -1.5,
+    -0.0,
+    -2.75
+   ],
+   [
+    1.5,
+    3.007999897003174,
+    2.75
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  3.0,
+  5.5
+ ],
+ "footprint_area": 16.5,
+ "height": 3.01,
+ "storeys": 1,
+ "budget": [
+  300,
+  100,
+  12
+ ],
+ "budget_class": "garage",
+ "time_s": 0.7,
+ "no_door": true
+}

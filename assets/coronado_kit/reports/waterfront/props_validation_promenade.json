@@ -1,0 +1,185 @@
+[
+ {
+  "file": "prop_prom_boardwalk_clean_far.glb",
+  "tier": "far",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 10,
+  "verts": 20,
+  "budget": 20,
+  "size": [
+   4.0,
+   0.32,
+   3.0
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_prom_boardwalk_clean_mid.glb",
+  "tier": "mid",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "12 tris may face inward / be enclosed"
+  ],
+  "tris": 92,
+  "verts": 218,
+  "budget": 361,
+  "size": [
+   4.0,
+   0.32,
+   3.0
+  ],
+  "odd_ray": 18
+ },
+ {
+  "file": "prop_prom_boardwalk_clean_near.glb",
+  "tier": "near",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "34 tris may face inward / be enclosed"
+  ],
+  "tris": 520,
+  "verts": 1174,
+  "budget": 1200,
+  "size": [
+   4.0,
+   0.32,
+   3.004
+  ],
+  "odd_ray": 46
+ },
+ {
+  "file": "prop_prom_boardwalk_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 1,
+  "col_maxverts": 8
+ },
+ {
+  "file": "prop_prom_rail_clean_far.glb",
+  "tier": "far",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 10,
+  "verts": 20,
+  "budget": 20,
+  "size": [
+   4.04,
+   1.07,
+   0.14
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_prom_rail_clean_mid.glb",
+  "tier": "mid",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 184,
+  "verts": 529,
+  "budget": 361,
+  "size": [
+   4.0,
+   1.07,
+   0.14
+  ],
+  "odd_ray": 2
+ },
+ {
+  "file": "prop_prom_rail_clean_near.glb",
+  "tier": "near",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 544,
+  "verts": 1088,
+  "budget": 1200,
+  "size": [
+   4.09,
+   1.078,
+   0.17
+  ],
+  "odd_ray": 94
+ },
+ {
+  "file": "prop_prom_rail_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 1,
+  "col_maxverts": 8
+ },
+ {
+  "file": "prop_prom_rail_wall_clean_far.glb",
+  "tier": "far",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 8,
+  "verts": 16,
+  "budget": 20,
+  "size": [
+   2.02,
+   1.07,
+   0.14
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_prom_rail_wall_clean_mid.glb",
+  "tier": "mid",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 126,
+  "verts": 344,
+  "budget": 361,
+  "size": [
+   2.0,
+   1.1,
+   0.17
+  ],
+  "odd_ray": 6
+ },
+ {
+  "file": "prop_prom_rail_wall_clean_near.glb",
+  "tier": "near",
+  "cls": "medium",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "20 tris may face inward / be enclosed"
+  ],
+  "tris": 332,
+  "verts": 826,
+  "budget": 1200,
+  "size": [
+   2.045,
+   1.1,
+   0.17
+  ],
+  "odd_ray": 62
+ },
+ {
+  "file": "prop_prom_rail_wall_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 1,
+  "col_maxverts": 8
+ }
+]

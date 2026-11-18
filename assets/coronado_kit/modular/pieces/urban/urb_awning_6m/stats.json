@@ -1,0 +1,130 @@
+{
+ "name": "urb_awning_6m",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 110,
+  "verts": 220,
+  "regions": [
+   "AW_navy",
+   "S_awn_navy",
+   "S_stucco",
+   "T_dark",
+   "T_metal"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.035999998450279236,
+    -0.699999988079071
+   ],
+   [
+    3.0,
+    1.0640000104904175,
+    0.6700000166893005
+   ]
+  ]
+ },
+ "mid_roof_top": 1.064,
+ "mid": {
+  "tris": 42,
+  "verts": 84,
+  "regions": [
+   "AW_navy",
+   "S_awn_navy",
+   "S_metal",
+   "S_stucco"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.3799999952316284,
+    -0.699999988079071
+   ],
+   [
+    3.0,
+    1.0640000104904175,
+    0.6700000166893005
+   ]
+  ]
+ },
+ "far": {
+  "tris": 8,
+  "verts": 16,
+  "regions": [
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.3799999952316284,
+    -0.6000000238418579
+   ],
+   [
+    3.0,
+    1.0800000429153442,
+    0.6000000238418579
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  6.0,
+  1.2
+ ],
+ "footprint_area": 7.2,
+ "height": 1.06,
+ "storeys": 1,
+ "budget": [
+  160,
+  60,
+  16
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_awning",
+ "time_s": 0.1,
+ "open_planes": [
+  [
+   0,
+   -3.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   3.0,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  0.6
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "awning",
+  "ends": [
+   [
+    -3.0,
+    0,
+    0
+   ],
+   [
+    3.0,
+    0,
+    0
+   ]
+  ],
+  "face_z": 1.2,
+  "plate_y": 1.08
+ },
+ "no_door": true,
+ "base_y": 0.04,
+ "ground_reach": false
+}

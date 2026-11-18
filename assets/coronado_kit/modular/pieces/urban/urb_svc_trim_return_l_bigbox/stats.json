@@ -1,0 +1,111 @@
+{
+ "name": "urb_svc_trim_return_l_bigbox",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 32,
+  "verts": 48,
+  "regions": [
+   "T_white"
+  ],
+  "bbox": [
+   [
+    -0.09000000357627869,
+    0.0,
+    -0.75
+   ],
+   [
+    0.30000001192092896,
+    6.590000152587891,
+    0.09000000357627869
+   ]
+  ]
+ },
+ "mid_roof_top": 6.59,
+ "mid": {
+  "tris": 12,
+  "verts": 24,
+  "regions": [
+   "S_white"
+  ],
+  "bbox": [
+   [
+    -0.09000000357627869,
+    6.5,
+    -0.75
+   ],
+   [
+    0.30000001192092896,
+    6.590000152587891,
+    0.09000000357627869
+   ]
+  ]
+ },
+ "far": {
+  "tris": 12,
+  "verts": 24,
+  "regions": [
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -0.09000000357627869,
+    6.5,
+    -0.75
+   ],
+   [
+    0.30000001192092896,
+    6.590000152587891,
+    0.09000000357627869
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  0.0,
+  0.0
+ ],
+ "footprint_area": 0.0,
+ "height": 6.59,
+ "storeys": 1,
+ "budget": [
+  60,
+  24,
+  12
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_svc_trim",
+ "time_s": 0.0,
+ "open_planes": [
+  [
+   0,
+   0.0,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "type": "svc_corner",
+  "corner": [
+   0,
+   0,
+   0
+  ],
+  "hand": "l",
+  "plate_y": 5.4,
+  "parapet_top": 6.5,
+  "note": "origin = outer front corner point at ground, no rotation (front faces +Z); use with urb_svc_front_6m_* end bays"
+ },
+ "no_door": true,
+ "base_y": 0.0,
+ "ground_reach": false
+}

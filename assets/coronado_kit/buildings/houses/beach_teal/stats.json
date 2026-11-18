@@ -1,0 +1,119 @@
+{
+ "name": "beach_teal",
+ "cat": "house",
+ "style": "beach_cottage",
+ "logic_errors": [],
+ "col_boxes": 13,
+ "near": {
+  "tris": 1489,
+  "verts": 2505,
+  "regions": [
+   "O_door_white",
+   "O_lamp",
+   "O_number",
+   "O_shutter",
+   "O_vent",
+   "O_win_casement",
+   "R_metal",
+   "S_bb",
+   "S_black",
+   "S_brick",
+   "S_concrete",
+   "S_soffit",
+   "S_white",
+   "T_concrete",
+   "T_deck",
+   "T_metal",
+   "T_rail",
+   "T_terracotta",
+   "T_white",
+   "W_bb",
+   "W_brick",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -4.550000190734863,
+    -0.0,
+    -4.519999980926514
+   ],
+   [
+    4.550000190734863,
+    7.429999828338623,
+    6.599999904632568
+   ]
+  ]
+ },
+ "mid_roof_top": 6.32,
+ "mid": {
+  "tris": 308,
+  "verts": 384,
+  "regions": [
+   "O_door_white",
+   "O_vent",
+   "O_win_casement",
+   "S_concrete",
+   "S_deck",
+   "S_metal",
+   "S_soffit",
+   "S_white",
+   "W_bb",
+   "W_brick",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -4.300000190734863,
+    0.0,
+    -4.400000095367432
+   ],
+   [
+    4.300000190734863,
+    7.070000171661377,
+    6.599999904632568
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 42,
+  "regions": [
+   "F_bb_1",
+   "F_bb_blank",
+   "F_metal",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -4.25,
+    0.0,
+    -4.0
+   ],
+   [
+    4.25,
+    6.320000171661377,
+    4.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door",
+   1.4
+  ]
+ ],
+ "footprint_wd": [
+  8.5,
+  8.0
+ ],
+ "footprint_area": 68.0,
+ "height": 7.43,
+ "storeys": 1,
+ "budget": [
+  1500,
+  450,
+  40
+ ],
+ "budget_class": "house_small",
+ "time_s": 7.3
+}

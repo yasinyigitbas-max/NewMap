@@ -1,0 +1,111 @@
+{
+ "name": "buoy_nun",
+ "tiers": {
+  "near": 345,
+  "mid": 68,
+  "far": 15
+ },
+ "budget": 600,
+ "class": "small",
+ "far_paint_max": 0.7732554304312094,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_buoy_nun_clean_far.glb",
+   "tier": "far",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.00,-0.50) - asymmetric parts?"
+   ],
+   "tris": 15,
+   "verts": 25,
+   "budget": 20,
+   "size": [
+    0.88,
+    2.45,
+    1.761
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_buoy_nun_clean_mid.glb",
+   "tier": "mid",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.00,-0.48) - asymmetric parts?"
+   ],
+   "tris": 68,
+   "verts": 165,
+   "budget": 181,
+   "size": [
+    0.727,
+    2.45,
+    1.795
+   ],
+   "odd_ray": 1
+  },
+  {
+   "file": "prop_buoy_nun_clean_near.glb",
+   "tier": "near",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.00,-0.48) - asymmetric parts?",
+    "29 tris may face inward / be enclosed"
+   ],
+   "tris": 345,
+   "verts": 692,
+   "budget": 600,
+   "size": [
+    0.799,
+    2.951,
+    1.795
+   ],
+   "odd_ray": 43
+  },
+  {
+   "file": "prop_buoy_nun_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 2,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.841,
+   "dE": 1.9
+  },
+  "top": {
+   "iou": 0.836,
+   "dE": 0.8
+  },
+  "left": {
+   "iou": 0.0,
+   "dE": 99,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 1,
+  "rail": 1
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 48,
+ "bake_px_per_m": 83.5,
+ "high_tris": 2483,
+ "pass": true
+}

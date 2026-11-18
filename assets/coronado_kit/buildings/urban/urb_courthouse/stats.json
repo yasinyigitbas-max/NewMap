@@ -1,0 +1,111 @@
+{
+ "name": "urb_courthouse",
+ "cat": "urban",
+ "style": "courthouse",
+ "logic_errors": [],
+ "col_boxes": 13,
+ "near": {
+  "tris": 3278,
+  "verts": 5764,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "O_lamp",
+   "R_comp",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -14.670000076293945,
+    0.0,
+    -13.100000381469727
+   ],
+   [
+    14.670000076293945,
+    12.355999946594238,
+    16.0
+   ]
+  ]
+ },
+ "mid_roof_top": 12.356,
+ "mid": {
+  "tris": 510,
+  "verts": 752,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_glass_plain",
+   "S_comp",
+   "S_concrete",
+   "S_signbg",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_dark",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -14.550000190734863,
+    0.0,
+    -13.100000381469727
+   ],
+   [
+    14.550000190734863,
+    12.355999946594238,
+    16.0
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 46,
+  "regions": [
+   "F_c_apt_3",
+   "F_comp",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -14.0,
+    -0.0,
+    -10.0
+   ],
+   [
+    14.0,
+    12.355999946594238,
+    10.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  28.0,
+  20.0
+ ],
+ "footprint_area": 560.0,
+ "height": 12.36,
+ "storeys": 2,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "civic",
+ "time_s": 21.1
+}

@@ -1,0 +1,107 @@
+{
+ "name": "vending_soda",
+ "tiers": {
+  "near": 474,
+  "mid": 16,
+  "far": 10
+ },
+ "budget": 600,
+ "class": "small",
+ "far_paint_max": null,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_vending_soda_clean_far.glb",
+   "tier": "far",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 10,
+   "verts": 20,
+   "budget": 20,
+   "size": [
+    0.95,
+    1.83,
+    0.85
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_vending_soda_clean_mid.glb",
+   "tier": "mid",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 16,
+   "verts": 40,
+   "budget": 181,
+   "size": [
+    0.95,
+    1.83,
+    0.853
+   ],
+   "odd_ray": 2
+  },
+  {
+   "file": "prop_vending_soda_clean_near.glb",
+   "tier": "near",
+   "cls": "small",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "origin off footprint centre (0.04,-0.20) - asymmetric parts?",
+    "55 tris may face inward / be enclosed"
+   ],
+   "tris": 474,
+   "verts": 1017,
+   "budget": 600,
+   "size": [
+    1.032,
+    1.83,
+    1.425
+   ],
+   "odd_ray": 89
+  },
+  {
+   "file": "prop_vending_soda_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 1,
+   "col_maxverts": 8
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 1.0,
+   "dE": 3.2
+  },
+  "top": {
+   "iou": 1.0,
+   "dE": 0.0
+  },
+  "left": {
+   "iou": 1.0,
+   "dE": 0.0,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 1,
+  "rail": 0
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 160,
+ "bake_px_per_m": 83.8,
+ "high_tris": 65912,
+ "pass": true
+}

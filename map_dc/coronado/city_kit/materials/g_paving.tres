@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://map_dc/coronado/terrain/textures/travertine009/albedo.jpg" id="1_8rtvs"]
+
+[resource]
+albedo_texture = ExtResource("1_8rtvs")
+roughness = 0.8
+texture_filter = 5

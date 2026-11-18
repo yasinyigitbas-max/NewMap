@@ -1,0 +1,523 @@
+{
+ "lifering_stand": {
+  "file_base": "prop_lifering_stand",
+  "batch": "wfsmall",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 490,
+   "mid": 108,
+   "far": 16
+  },
+  "footprint_w": 0.688,
+  "footprint_d": 0.26,
+  "height": 1.774,
+  "regions": [
+   "baked:lifering_stand"
+  ],
+  "trim": {
+   "tw_galv": {
+    "area_m2": 0.83,
+    "px_per_m": 128.0
+   },
+   "tw_gelcoat": {
+    "area_m2": 0.28,
+    "px_per_m": 128.0
+   },
+   "tw_sail": {
+    "area_m2": 0.28,
+    "px_per_m": 128.0
+   },
+   "tw_canvas": {
+    "area_m2": 0.18,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 21463,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 140.4,
+  "col": 2,
+  "secs": 14.6
+ },
+ "buoy_mooring": {
+  "file_base": "prop_buoy_mooring",
+  "batch": "wfsmall",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 446,
+   "mid": 96,
+   "far": 16
+  },
+  "footprint_w": 1.03,
+  "footprint_d": 1.62,
+  "height": 2.45,
+  "regions": [
+   "baked:buoy_mooring"
+  ],
+  "trim": {
+   "tw_foul": {
+    "area_m2": 0.95,
+    "px_per_m": 128.0
+   },
+   "tw_gelcoat": {
+    "area_m2": 1.11,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 0.69,
+    "px_per_m": 128.0
+   },
+   "tw_canvas": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 7080,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 307.9,
+  "col": 2,
+  "secs": 17.3
+ },
+ "buoy_nun": {
+  "file_base": "prop_buoy_nun",
+  "batch": "wfsmall",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 345,
+   "mid": 68,
+   "far": 15
+  },
+  "footprint_w": 0.799,
+  "footprint_d": 1.795,
+  "height": 2.951,
+  "regions": [
+   "baked:buoy_nun"
+  ],
+  "trim": {
+   "tw_foul": {
+    "area_m2": 2.15,
+    "px_per_m": 128.0
+   },
+   "tw_gelcoat": {
+    "area_m2": 1.92,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 0.31,
+    "px_per_m": 128.0
+   },
+   "tw_conc_top": {
+    "area_m2": 0.96,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 2483,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 83.5,
+  "col": 2,
+  "secs": 15.1
+ },
+ "buoy_can": {
+  "file_base": "prop_buoy_can",
+  "batch": "wfsmall",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 325,
+   "mid": 68,
+   "far": 14
+  },
+  "footprint_w": 0.799,
+  "footprint_d": 1.795,
+  "height": 2.681,
+  "regions": [
+   "baked:buoy_can"
+  ],
+  "trim": {
+   "tw_foul": {
+    "area_m2": 2.15,
+    "px_per_m": 128.0
+   },
+   "tw_gelcoat": {
+    "area_m2": 2.26,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 0.31,
+    "px_per_m": 128.0
+   },
+   "tw_conc_top": {
+    "area_m2": 0.96,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 2935,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 83.5,
+  "col": 2,
+  "secs": 16.9
+ },
+ "fuel_pump": {
+  "file_base": "prop_fuel_pump",
+  "batch": "wfsmall",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 912,
+   "mid": 68,
+   "far": 18
+  },
+  "footprint_w": 1.4,
+  "footprint_d": 1.1,
+  "height": 1.78,
+  "regions": [
+   "baked:fuel_pump"
+  ],
+  "trim": {
+   "tw_conc_top": {
+    "area_m2": 2.14,
+    "px_per_m": 128.0
+   },
+   "tw_gelcoat": {
+    "area_m2": 5.42,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 0.67,
+    "px_per_m": 128.0
+   },
+   "tw_rubber": {
+    "area_m2": 0.31,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 63868,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 29.4,
+  "col": 4,
+  "secs": 27.3
+ },
+ "boat_trailer": {
+  "file_base": "prop_boat_trailer",
+  "batch": "wfsmall",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 2239,
+   "mid": 373,
+   "far": 18
+  },
+  "footprint_w": 2.0,
+  "footprint_d": 6.737,
+  "height": 1.75,
+  "regions": [
+   "baked:boat_trailer"
+  ],
+  "trim": {
+   "tw_gelcoat": {
+    "area_m2": 21.13,
+    "px_per_m": 128.0
+   },
+   "tw_foul": {
+    "area_m2": 0.2,
+    "px_per_m": 128.0
+   },
+   "tw_nonskid": {
+    "area_m2": 4.29,
+    "px_per_m": 128.0
+   },
+   "tw_teak": {
+    "area_m2": 6.85,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 8.0,
+    "px_per_m": 128.0
+   },
+   "tw_canvas": {
+    "area_m2": 0.14,
+    "px_per_m": 128.0
+   },
+   "tw_rubber": {
+    "area_m2": 4.71,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 14847,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 90.1,
+  "col": 7,
+  "secs": 40.8
+ },
+ "kayak_rack": {
+  "file_base": "prop_kayak_rack",
+  "batch": "wfsmall",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1182,
+   "mid": 260,
+   "far": 20
+  },
+  "footprint_w": 3.6,
+  "footprint_d": 1.86,
+  "height": 2.05,
+  "regions": [
+   "baked:kayak_rack"
+  ],
+  "trim": {
+   "tw_galv": {
+    "area_m2": 8.01,
+    "px_per_m": 128.0
+   },
+   "tw_rubber": {
+    "area_m2": 0.84,
+    "px_per_m": 128.0
+   },
+   "tw_teak": {
+    "area_m2": 0.48,
+    "px_per_m": 128.0
+   },
+   "tw_gelcoat": {
+    "area_m2": 19.48,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 20254,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 134.4,
+  "col": 8,
+  "secs": 40.3
+ },
+ "beach_umbrella": {
+  "file_base": "prop_beach_umbrella",
+  "batch": "wfsmall",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 546,
+   "mid": 70,
+   "far": 14
+  },
+  "footprint_w": 1.94,
+  "footprint_d": 1.94,
+  "height": 2.52,
+  "regions": [
+   "aluminium",
+   "fabric",
+   "plastic_black",
+   "wood_natural",
+   "wood_white"
+  ],
+  "trim": {
+   "tw_gelcoat": {
+    "area_m2": 0.45,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 0.39,
+    "px_per_m": 128.0
+   },
+   "tw_teak": {
+    "area_m2": 0.31,
+    "px_per_m": 128.0
+   },
+   "tw_sail": {
+    "area_m2": 1.98,
+    "px_per_m": 128.0
+   },
+   "tw_canvas": {
+    "area_m2": 2.05,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "col": 2,
+  "secs": 24.2
+ },
+ "beach_umbrella_closed": {
+  "file_base": "prop_beach_umbrella_closed",
+  "batch": "wfsmall",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 346,
+   "mid": 78,
+   "far": 13
+  },
+  "footprint_w": 0.6,
+  "footprint_d": 0.6,
+  "height": 2.46,
+  "regions": [
+   "aluminium",
+   "fabric",
+   "plastic_black",
+   "wood_natural",
+   "wood_white"
+  ],
+  "trim": {
+   "tw_gelcoat": {
+    "area_m2": 0.42,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   },
+   "tw_teak": {
+    "area_m2": 0.31,
+    "px_per_m": 128.0
+   },
+   "tw_sail": {
+    "area_m2": 0.36,
+    "px_per_m": 128.0
+   },
+   "tw_canvas": {
+    "area_m2": 0.45,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "col": 2,
+  "secs": 10.9
+ },
+ "beach_shower": {
+  "file_base": "prop_beach_shower",
+  "batch": "wfsmall",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 466,
+   "mid": 56,
+   "far": 10
+  },
+  "footprint_w": 1.1,
+  "footprint_d": 1.11,
+  "height": 2.452,
+  "regions": [
+   "baked:beach_shower"
+  ],
+  "trim": {
+   "tw_conc_top": {
+    "area_m2": 1.56,
+    "px_per_m": 128.0
+   },
+   "tw_teak": {
+    "area_m2": 1.36,
+    "px_per_m": 128.0
+   },
+   "tw_galv": {
+    "area_m2": 1.04,
+    "px_per_m": 128.0
+   },
+   "tw_gelcoat": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 12760,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 139.3,
+  "col": 2,
+  "secs": 16.4
+ },
+ "volleyball_net": {
+  "file_base": "prop_volleyball_net",
+  "batch": "wfsmall",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1056,
+   "mid": 224,
+   "far": 18
+  },
+  "footprint_w": 13.32,
+  "footprint_d": 2.12,
+  "height": 3.23,
+  "regions": [
+   "baked:volleyball_net"
+  ],
+  "trim": {
+   "tw_galv": {
+    "area_m2": 1.53,
+    "px_per_m": 128.0
+   },
+   "tw_canvas": {
+    "area_m2": 2.91,
+    "px_per_m": 128.0
+   },
+   "tw_sail": {
+    "area_m2": 3.17,
+    "px_per_m": 128.0
+   },
+   "tw_gelcoat": {
+    "area_m2": 1.48,
+    "px_per_m": 128.0
+   },
+   "tw_conc_top": {
+    "area_m2": 0.28,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_w_*",
+  "high_tris": 5538,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 238.5,
+  "col": 3,
+  "secs": 25.1
+ }
+}

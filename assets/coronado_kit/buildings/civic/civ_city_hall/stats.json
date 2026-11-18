@@ -1,0 +1,115 @@
+{
+ "name": "civ_city_hall",
+ "cat": "civic",
+ "style": "spanish_civic",
+ "logic_errors": [],
+ "col_boxes": 8,
+ "near": {
+  "tris": 4507,
+  "verts": 7773,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_lamp",
+   "O_shutter",
+   "O_win_casement",
+   "R_clay",
+   "SG_cityhall",
+   "S_black",
+   "S_concrete",
+   "S_metal",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -13.720000267028809,
+    -0.0,
+    -9.0
+   ],
+   [
+    13.720000267028809,
+    10.595999717712402,
+    11.449999809265137
+   ]
+  ]
+ },
+ "mid_roof_top": 10.596,
+ "mid": {
+  "tris": 532,
+  "verts": 641,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_win_casement",
+   "SG_cityhall",
+   "S_clay",
+   "S_concrete",
+   "S_deck",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -13.600000381469727,
+    0.0,
+    -9.0
+   ],
+   [
+    13.600000381469727,
+    10.595999717712402,
+    10.199999809265137
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 46,
+  "regions": [
+   "F_clay",
+   "F_stucco_2",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -13.0,
+    0.0,
+    -7.5
+   ],
+   [
+    13.0,
+    10.595999717712402,
+    7.5
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  26.0,
+  15.0
+ ],
+ "footprint_area": 390.0,
+ "height": 10.6,
+ "storeys": 2,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "civic",
+ "time_s": 87.4
+}

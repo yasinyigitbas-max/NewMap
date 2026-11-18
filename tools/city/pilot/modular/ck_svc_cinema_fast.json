@@ -1,0 +1,79 @@
+{
+ "name": "ck_svc_cinema_fast",
+ "group": "urban",
+ "outline": {
+  "kind": "shop",
+  "W": 12.0,
+  "D": 12.0,
+  "storeys": 1,
+  "wall": "W_stucco",
+  "tint": [
+   0.97,
+   0.9,
+   0.78
+  ],
+  "budget": "shop",
+  "floor": 0.0,
+  "storey": 4.2,
+  "parapet": 0.9,
+  "sills": false,
+  "foundation": false
+ },
+ "note": "audit fix 17 Nov: a variant of mod_svc_row (same 12 x 12 footprint) so the 13 copies stop all reading pharmacy + laundromat",
+ "pieces": [
+  {
+   "piece": "urb_svc_front_6m_cinema",
+   "x": -3.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_svc_front_6m_fastfood",
+   "x": 3.0,
+   "z": 5.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "shop_back_6m_stucco",
+   "x": 3.0,
+   "z": -5.85,
+   "rot_y": 180,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_back_6m_stucco",
+   "x": -3.0,
+   "z": -5.85,
+   "rot_y": 180,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_side_12m_stucco",
+   "x": 5.85,
+   "z": 0.0,
+   "rot_y": 90,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_side_12m_stucco_l",
+   "x": -5.85,
+   "z": 0.0,
+   "rot_y": 270,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_roof_6m_end",
+   "x": -3.0,
+   "z": 0.0,
+   "rot_y": 0,
+   "group": "shops"
+  },
+  {
+   "piece": "shop_roof_6m_end",
+   "x": 3.0,
+   "z": 0.0,
+   "rot_y": 180,
+   "group": "shops"
+  }
+ ]
+}

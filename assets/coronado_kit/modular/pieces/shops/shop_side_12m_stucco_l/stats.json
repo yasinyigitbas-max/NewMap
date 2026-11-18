@@ -1,0 +1,210 @@
+{
+ "name": "shop_side_12m_stucco_l",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 356,
+  "verts": 634,
+  "regions": [
+   "O_apt_door",
+   "O_lamp",
+   "O_louver",
+   "O_small_white",
+   "S_black",
+   "S_stucco",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    -0.0,
+    -0.10000000149011612
+   ],
+   [
+    6.0,
+    5.179999828338623,
+    0.49000000953674316
+   ]
+  ]
+ },
+ "mid_roof_top": 5.1,
+ "mid": {
+  "tris": 84,
+  "verts": 92,
+  "regions": [
+   "O_apt_door",
+   "O_louver",
+   "O_small_white",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    0.0,
+    -0.05000000074505806
+   ],
+   [
+    6.0,
+    5.099999904632568,
+    0.15000000596046448
+   ]
+  ]
+ },
+ "far": {
+  "tris": 8,
+  "verts": 16,
+  "regions": [
+   "F_stucco_1",
+   "F_stucco_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -6.0,
+    0.0,
+    -0.05000000074505806
+   ],
+   [
+    6.0,
+    5.099999904632568,
+    0.15000000596046448
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "apt_door",
+   -4.6
+  ]
+ ],
+ "footprint_wd": [
+  12.0,
+  0.3
+ ],
+ "footprint_area": 3.6,
+ "height": 5.18,
+ "storeys": 1,
+ "budget": [
+  420,
+  126,
+  10
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_shop_side",
+ "time_s": 0.7,
+ "open_planes": [
+  [
+   0,
+   -6.0,
+   -1,
+   5.1
+  ],
+  [
+   0,
+   6.0,
+   1,
+   5.1
+  ],
+  [
+   2,
+   -0.15,
+   -1,
+   null
+  ],
+  [
+   1,
+   4.2,
+   1,
+   null
+  ],
+  [
+   0,
+   -5.8,
+   -1,
+   null
+  ],
+  [
+   0,
+   5.8,
+   1,
+   null
+  ],
+  [
+   2,
+   0.15,
+   -1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.15
+ ],
+ "openings": [
+  {
+   "k": "small",
+   "c": 4.0,
+   "w": 0.7,
+   "t0": 2.0,
+   "t1": 2.7
+  },
+  {
+   "k": "louver",
+   "c": 1.6,
+   "w": 0.9,
+   "t0": 2.6,
+   "t1": 3.4
+  },
+  {
+   "k": "small",
+   "c": -0.6,
+   "w": 0.7,
+   "t0": 2.0,
+   "t1": 2.7
+  },
+  {
+   "k": "louver",
+   "c": -2.8,
+   "w": 0.9,
+   "t0": 2.6,
+   "t1": 3.4
+  },
+  {
+   "k": "apt_door",
+   "c": -4.6,
+   "w": 1.0,
+   "t0": 0.0,
+   "t1": 2.2
+  }
+ ],
+ "snap": {
+  "grid": 0.5,
+  "module": 12.0,
+  "type": "shop_side",
+  "ends": [
+   [
+    -6.0,
+    0,
+    0.15
+   ],
+   [
+    6.0,
+    0,
+    0.15
+   ]
+  ],
+  "face_z": 0.15,
+  "plate_y": 4.2,
+  "parapet_top": 5.1000000000000005,
+  "note": "one piece per side wall of a 12 m deep shop; parapet inset 0.2 m at both ends"
+ },
+ "no_door": false,
+ "base_y": 0.0,
+ "ground_reach": false
+}

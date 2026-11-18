@@ -1,0 +1,111 @@
+{
+ "name": "pub_university",
+ "cat": "urban",
+ "style": "university",
+ "logic_errors": [],
+ "col_boxes": 11,
+ "near": {
+  "tris": 3660,
+  "verts": 6481,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "O_lamp",
+   "R_comp",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -16.6200008392334,
+    -0.0,
+    -11.100000381469727
+   ],
+   [
+    16.6200008392334,
+    14.40999984741211,
+    13.300000190734863
+   ]
+  ]
+ },
+ "mid_roof_top": 14.41,
+ "mid": {
+  "tris": 422,
+  "verts": 562,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_glass_plain",
+   "S_comp",
+   "S_concrete",
+   "S_signbg",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_dark",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -16.5,
+    0.0,
+    -11.100000381469727
+   ],
+   [
+    16.5,
+    14.40999984741211,
+    13.300000190734863
+   ]
+  ]
+ },
+ "far": {
+  "tris": 22,
+  "verts": 46,
+  "regions": [
+   "F_c_apt_3",
+   "F_comp",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -16.0,
+    0.0,
+    -9.0
+   ],
+   [
+    16.0,
+    14.40999984741211,
+    9.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  32.0,
+  18.0
+ ],
+ "footprint_area": 576.0,
+ "height": 14.41,
+ "storeys": 3,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "civic",
+ "time_s": 23.3
+}

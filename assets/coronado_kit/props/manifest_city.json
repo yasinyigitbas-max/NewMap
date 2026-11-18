@@ -1,0 +1,759 @@
+{
+ "container_20ft_red": {
+  "file_base": "prop_container_20ft_red",
+  "batch": "city",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 472,
+   "mid": 176,
+   "far": 10
+  },
+  "footprint_w": 2.438,
+  "footprint_d": 6.063,
+  "height": 2.591,
+  "regions": [
+   "baked:container_20ft",
+   "vertex_tint"
+  ],
+  "atlas_page": "props_b_*",
+  "high_tris": 47251,
+  "bake_slot_px": 320,
+  "bake_px_per_m": 67.7,
+  "col": 1,
+  "secs": 21.2
+ },
+ "container_20ft_blue": {
+  "file_base": "prop_container_20ft_blue",
+  "batch": "city",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 472,
+   "mid": 176,
+   "far": 10
+  },
+  "footprint_w": 2.438,
+  "footprint_d": 6.063,
+  "height": 2.591,
+  "regions": [
+   "baked:container_20ft",
+   "vertex_tint"
+  ],
+  "atlas_page": "props_b_*",
+  "high_tris": 47251,
+  "bake_slot_px": 320,
+  "bake_px_per_m": 67.7,
+  "col": 1,
+  "secs": 20.2
+ },
+ "container_20ft_green": {
+  "file_base": "prop_container_20ft_green",
+  "batch": "city",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 472,
+   "mid": 176,
+   "far": 10
+  },
+  "footprint_w": 2.438,
+  "footprint_d": 6.063,
+  "height": 2.591,
+  "regions": [
+   "baked:container_20ft",
+   "vertex_tint"
+  ],
+  "atlas_page": "props_b_*",
+  "high_tris": 47251,
+  "bake_slot_px": 320,
+  "bake_px_per_m": 67.7,
+  "col": 1,
+  "secs": 22.7
+ },
+ "container_20ft_white": {
+  "file_base": "prop_container_20ft_white",
+  "batch": "city",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 472,
+   "mid": 176,
+   "far": 10
+  },
+  "footprint_w": 2.438,
+  "footprint_d": 6.063,
+  "height": 2.591,
+  "regions": [
+   "baked:container_20ft"
+  ],
+  "atlas_page": "props_b_*",
+  "high_tris": 47251,
+  "bake_slot_px": 320,
+  "bake_px_per_m": 67.7,
+  "col": 1,
+  "secs": 23.7
+ },
+ "water_tower": {
+  "file_base": "prop_water_tower",
+  "batch": "city",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 2476,
+   "mid": 394,
+   "far": 20
+  },
+  "footprint_w": 11.0,
+  "footprint_d": 11.0,
+  "height": 28.95,
+  "regions": [
+   "baked:water_tower"
+  ],
+  "trim": {
+   "tb_paint": {
+    "area_m2": 669.27,
+    "px_per_m": 93.3
+   },
+   "tb_concrete": {
+    "area_m2": 19.24,
+    "px_per_m": 128.0
+   },
+   "tb_galv": {
+    "area_m2": 88.94,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 22371,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 44.0,
+  "col": 1,
+  "secs": 13.7
+ },
+ "tank_vertical": {
+  "file_base": "prop_tank_vertical",
+  "batch": "city",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1636,
+   "mid": 162,
+   "far": 18
+  },
+  "footprint_w": 9.085,
+  "footprint_d": 9.021,
+  "height": 8.35,
+  "regions": [
+   "baked:tank_vertical"
+  ],
+  "trim": {
+   "tb_paint": {
+    "area_m2": 239.5,
+    "px_per_m": 128.0
+   },
+   "tb_galv": {
+    "area_m2": 7.97,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 20174,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 54.0,
+  "col": 1,
+  "secs": 29.6
+ },
+ "tank_horizontal_propane": {
+  "file_base": "prop_tank_horizontal_propane",
+  "batch": "city",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 460,
+   "mid": 180,
+   "far": 10
+  },
+  "footprint_w": 4.9,
+  "footprint_d": 1.05,
+  "height": 1.85,
+  "regions": [
+   "baked:tank_horizontal_propane"
+  ],
+  "trim": {
+   "pa_paint": {
+    "area_m2": 16.45,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 11906,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 57.9,
+  "col": 1,
+  "secs": 40.9
+ },
+ "lot_light_pole": {
+  "file_base": "prop_lot_light_pole",
+  "batch": "city",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 170,
+   "mid": 92,
+   "far": 18
+  },
+  "footprint_w": 3.0,
+  "footprint_d": 0.84,
+  "height": 9.0,
+  "regions": [
+   "baked:lot_light_pole"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 4981,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 46.0,
+  "col": 1,
+  "secs": 13.9
+ },
+ "transformer_substation": {
+  "file_base": "prop_transformer_substation",
+  "batch": "city",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1578,
+   "mid": 92,
+   "far": 20
+  },
+  "footprint_w": 3.4,
+  "footprint_d": 2.8,
+  "height": 2.65,
+  "regions": [
+   "baked:transformer_substation"
+  ],
+  "trim": {
+   "tb_concrete": {
+    "area_m2": 12.0,
+    "px_per_m": 128.0
+   },
+   "tb_paint": {
+    "area_m2": 38.16,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 61490,
+  "bake_slot_px": 112,
+  "bake_px_per_m": 109.3,
+  "col": 1,
+  "secs": 20.1
+ },
+ "switch_rack": {
+  "file_base": "prop_switch_rack",
+  "batch": "city",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1166,
+   "mid": 116,
+   "far": 18
+  },
+  "footprint_w": 3.6,
+  "footprint_d": 0.846,
+  "height": 4.404,
+  "regions": [
+   "baked:switch_rack"
+  ],
+  "trim": {
+   "galvanized": {
+    "area_m2": 13.39,
+    "px_per_m": 240.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 23692,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 95.2,
+  "col": 1,
+  "secs": 17.2
+ },
+ "dock_crane": {
+  "file_base": "prop_dock_crane",
+  "batch": "city",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 2447,
+   "mid": 389,
+   "far": 20
+  },
+  "footprint_w": 39.08,
+  "footprint_d": 4.0,
+  "height": 30.4,
+  "regions": [
+   "baked:dock_crane"
+  ],
+  "trim": {
+   "tb_concrete": {
+    "area_m2": 60.13,
+    "px_per_m": 128.0
+   },
+   "tb_paint": {
+    "area_m2": 350.58,
+    "px_per_m": 128.0
+   },
+   "tb_galv": {
+    "area_m2": 44.07,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 40879,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 27.7,
+  "col": 2,
+  "secs": 11.8
+ },
+ "billboard": {
+  "file_base": "prop_billboard",
+  "batch": "city",
+  "class": "large",
+  "budget": 2500,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 984,
+   "mid": 72,
+   "far": 18
+  },
+  "footprint_w": 14.6,
+  "footprint_d": 3.289,
+  "height": 16.45,
+  "regions": [
+   "baked:billboard"
+  ],
+  "trim": {
+   "tb_galv": {
+    "area_m2": 237.47,
+    "px_per_m": 128.0
+   },
+   "tb_concrete": {
+    "area_m2": 3.77,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_b_*",
+  "high_tris": 44766,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 19.9,
+  "col": 2,
+  "secs": 14.2
+ },
+ "headstone_upright": {
+  "file_base": "prop_headstone_upright",
+  "batch": "city",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 66
+  },
+  "footprint_w": 0.96,
+  "footprint_d": 0.34,
+  "height": 0.92,
+  "regions": [
+   "baked:headstone_upright"
+  ],
+  "trim": {
+   "ta_stone": {
+    "area_m2": 1.45,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 15200,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 87.3,
+  "col": 1,
+  "secs": 14.0
+ },
+ "headstone_cross": {
+  "file_base": "prop_headstone_cross",
+  "batch": "city",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 248,
+   "mid": 108,
+   "far": 20
+  },
+  "footprint_w": 0.7,
+  "footprint_d": 0.4,
+  "height": 1.425,
+  "regions": [
+   "baked:headstone_cross"
+  ],
+  "trim": {
+   "ta_stone": {
+    "area_m2": 1.09,
+    "px_per_m": 128.0
+   },
+   "cross_panel": {
+    "area_m2": 0.05,
+    "px_per_m": 209.3
+   },
+   "ta_knot": {
+    "area_m2": 0.4,
+    "px_per_m": 285.7
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 21662,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 87.3,
+  "col": 1,
+  "secs": 16.3
+ },
+ "headstone_flat": {
+  "file_base": "prop_headstone_flat",
+  "batch": "city",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 48
+  },
+  "footprint_w": 0.66,
+  "footprint_d": 0.375,
+  "height": 0.092,
+  "regions": [
+   "baked:headstone_flat"
+  ],
+  "trim": {
+   "ta_stone": {
+    "area_m2": 0.28,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 23724,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 141.2,
+  "col": 1,
+  "secs": 12.7
+ },
+ "skate_grind_rail": {
+  "file_base": "prop_skate_grind_rail",
+  "batch": "city",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 152
+  },
+  "footprint_w": 3.16,
+  "footprint_d": 0.42,
+  "height": 0.385,
+  "regions": [
+   "baked:skate_grind_rail"
+  ],
+  "atlas_page": "props_*",
+  "high_tris": 5066,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 49.4,
+  "col": 1,
+  "secs": 17.9
+ },
+ "obelisk_monument": {
+  "file_base": "prop_obelisk_monument",
+  "batch": "city",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 398,
+   "mid": 120,
+   "far": 20
+  },
+  "footprint_w": 0.92,
+  "footprint_d": 0.92,
+  "height": 2.3,
+  "regions": [
+   "baked:obelisk_monument"
+  ],
+  "trim": {
+   "ta_stone": {
+    "area_m2": 4.96,
+    "px_per_m": 128.0
+   },
+   "obelisk_panel": {
+    "area_m2": 0.12,
+    "px_per_m": 187.0
+   },
+   "obelisk_plaque": {
+    "area_m2": 0.06,
+    "px_per_m": 186.7
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 14460,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 377.5,
+  "secs": 28.5
+ },
+ "cemetery_gate": {
+  "file_base": "prop_cemetery_gate",
+  "batch": "city",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1180,
+   "mid": 308,
+   "far": 20
+  },
+  "footprint_w": 5.2,
+  "footprint_d": 0.9,
+  "height": 3.344,
+  "regions": [
+   "baked:cemetery_gate"
+  ],
+  "trim": {
+   "ta_stucco": {
+    "area_m2": 14.14,
+    "px_per_m": 128.0
+   },
+   "paint_black": {
+    "area_m2": 9.39,
+    "px_per_m": 240.0
+   },
+   "gate_plate": {
+    "area_m2": 0.49,
+    "px_per_m": 256.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 24768,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 35.1,
+  "col": 2,
+  "secs": 21.5
+ },
+ "skate_quarter_pipe": {
+  "file_base": "prop_skate_quarter_pipe",
+  "batch": "city",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 392,
+   "mid": 34,
+   "far": 14
+  },
+  "footprint_w": 3.612,
+  "footprint_d": 3.645,
+  "height": 1.532,
+  "regions": [
+   "baked:skate_quarter_pipe"
+  ],
+  "trim": {
+   "ta_concrete": {
+    "area_m2": 23.07,
+    "px_per_m": 128.0
+   },
+   "galvanized": {
+    "area_m2": 2.52,
+    "px_per_m": 240.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 137560,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 43.1,
+  "col": 1,
+  "secs": 31.4
+ },
+ "skate_funbox": {
+  "file_base": "prop_skate_funbox",
+  "batch": "city",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 300
+  },
+  "footprint_w": 3.92,
+  "footprint_d": 2.6,
+  "height": 0.88,
+  "regions": [
+   "baked:skate_funbox"
+  ],
+  "trim": {
+   "ta_concrete": {
+    "area_m2": 8.72,
+    "px_per_m": 128.0
+   },
+   "galvanized": {
+    "area_m2": 1.89,
+    "px_per_m": 240.0
+   },
+   "paint_yellow": {
+    "area_m2": 0.43,
+    "px_per_m": 240.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 106458,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 34.2,
+  "col": 1,
+  "secs": 25.0
+ },
+ "skate_bowl_section": {
+  "file_base": "prop_skate_bowl_section",
+  "batch": "city",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean",
+   "worn",
+   "dirty"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 308,
+   "mid": 92,
+   "far": 17
+  },
+  "footprint_w": 4.6,
+  "footprint_d": 4.6,
+  "height": 1.86,
+  "regions": [
+   "baked:skate_bowl_section"
+  ],
+  "trim": {
+   "ta_concrete": {
+    "area_m2": 35.55,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_*",
+  "high_tris": 47179,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 26.1,
+  "col": 1,
+  "secs": 43.3
+ }
+}

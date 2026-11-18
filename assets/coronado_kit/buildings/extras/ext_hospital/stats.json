@@ -1,0 +1,114 @@
+{
+ "name": "ext_hospital",
+ "cat": "civic",
+ "style": "community_hospital",
+ "logic_errors": [],
+ "col_boxes": 11,
+ "near": {
+  "tris": 4625,
+  "verts": 8189,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "O_lamp",
+   "O_louver",
+   "R_clay",
+   "SG_emergency",
+   "SG_hospital",
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -22.56999969482422,
+    -0.0,
+    -9.5
+   ],
+   [
+    15.720000267028809,
+    13.84000015258789,
+    13.569999694824219
+   ]
+  ]
+ },
+ "mid_roof_top": 12.0,
+ "mid": {
+  "tris": 890,
+  "verts": 1076,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_civic_win",
+   "SG_emergency",
+   "SG_hospital",
+   "S_clay",
+   "S_concrete",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -22.082000732421875,
+    -0.0,
+    -9.5
+   ],
+   [
+    15.0,
+    12.0,
+    13.081999778747559
+   ]
+  ]
+ },
+ "far": {
+  "tris": 10,
+  "verts": 20,
+  "regions": [
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -15.0,
+    0.0,
+    -8.0
+   ],
+   [
+    15.0,
+    12.0,
+    8.0
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  30.0,
+  16.0
+ ],
+ "footprint_area": 480.0,
+ "height": 13.84,
+ "storeys": 3,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "civic",
+ "time_s": 38.8
+}

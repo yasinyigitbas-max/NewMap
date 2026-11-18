@@ -1,0 +1,15 @@
+; Coronado city kit: the new map, separated from the game repo (coronado-source) on 18 Nov so sessions start fast.
+; A standalone Godot 4.7.2 project: builds the pieces, previews them, runs the checks. The game imports the finished
+; map at integration (see CLAUDE.md).
+config_version=5
+
+[application]
+config/name="Coronado City Kit"
+
+[rendering]
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
+
+[display]
+window/size/viewport_width=1600
+window/size/viewport_height=900

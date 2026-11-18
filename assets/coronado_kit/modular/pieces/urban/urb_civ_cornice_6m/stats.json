@@ -1,0 +1,125 @@
+{
+ "name": "urb_civ_cornice_6m",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 128,
+  "verts": 256,
+  "regions": [
+   "S_soffit",
+   "T_white"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.14000000059604645
+   ],
+   [
+    3.0,
+    0.4399999976158142,
+    0.14000000059604645
+   ]
+  ]
+ },
+ "mid_roof_top": 0.32,
+ "mid": {
+  "tris": 24,
+  "verts": 48,
+  "regions": [
+   "S_soffit",
+   "S_white"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.14000000059604645
+   ],
+   [
+    3.0,
+    0.3199999928474426,
+    0.14000000059604645
+   ]
+  ]
+ },
+ "far": {
+  "tris": 8,
+  "verts": 16,
+  "regions": [
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.14000000059604645
+   ],
+   [
+    3.0,
+    0.4399999976158142,
+    0.14000000059604645
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  6.0,
+  0.28
+ ],
+ "footprint_area": 1.7,
+ "height": 0.44,
+ "storeys": 1,
+ "budget": [
+  160,
+  50,
+  16
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_civ_cornice",
+ "time_s": 0.2,
+ "open_planes": [
+  [
+   0,
+   -3.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   3.0,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  0.14
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "civ_cornice",
+  "ends": [
+   [
+    -3.0,
+    0,
+    0
+   ],
+   [
+    3.0,
+    0,
+    0
+   ]
+  ],
+  "face_z": 0.28,
+  "plate_y": 0.44
+ },
+ "no_door": true,
+ "base_y": 0.0,
+ "ground_reach": false
+}

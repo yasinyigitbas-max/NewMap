@@ -1,0 +1,133 @@
+{
+ "name": "clothesline",
+ "tiers": {
+  "near": 755,
+  "mid": 78,
+  "far": 20
+ },
+ "budget": 1200,
+ "class": "medium",
+ "far_paint_max": null,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_clothesline_clean_far.glb",
+   "tier": "far",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 20,
+   "verts": 40,
+   "budget": 20,
+   "size": [
+    5.08,
+    2.05,
+    0.924
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_clothesline_clean_mid.glb",
+   "tier": "mid",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 78,
+   "verts": 198,
+   "budget": 361,
+   "size": [
+    5.06,
+    2.04,
+    1.717
+   ],
+   "odd_ray": 4
+  },
+  {
+   "file": "prop_clothesline_clean_near.glb",
+   "tier": "near",
+   "cls": "medium",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "46 tris may face inward / be enclosed"
+   ],
+   "tris": 755,
+   "verts": 1588,
+   "budget": 1200,
+   "size": [
+    5.2,
+    2.06,
+    1.75
+   ],
+   "odd_ray": 56
+  },
+  {
+   "file": "prop_clothesline_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 5,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 0.829,
+   "dE": 1.5
+  },
+  "top": {
+   "iou": 0.805,
+   "dE": 9.2
+  },
+  "left": {
+   "iou": 0.0,
+   "dE": 99,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 1,
+  "rail": 4
+ },
+ "col_ok": true,
+ "rail_ok": true,
+ "railcheck": [
+  {
+   "member": 0,
+   "kind": "v",
+   "end": [
+    -2.5,
+    0.04,
+    0.0
+   ],
+   "gap": 0.0023,
+   "pen": 0.0,
+   "ok": true
+  },
+  {
+   "member": 1,
+   "kind": "v",
+   "end": [
+    2.5,
+    0.04,
+    0.0
+   ],
+   "gap": 0.0023,
+   "pen": 0.0,
+   "ok": true
+  }
+ ],
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 128,
+ "bake_px_per_m": 44.2,
+ "high_tris": 4247,
+ "pass": true
+}

@@ -1,0 +1,183 @@
+{
+ "name": "urb_civ_entry_6m",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 5,
+ "near": {
+  "tris": 478,
+  "verts": 854,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "S_black",
+   "S_concrete",
+   "S_stucco",
+   "T_concrete",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    -0.0,
+    -0.02500000037252903
+   ],
+   [
+    3.0,
+    4.800000190734863,
+    3.125
+   ]
+  ]
+ },
+ "mid_roof_top": 4.8,
+ "mid": {
+  "tris": 94,
+  "verts": 130,
+  "regions": [
+   "O_apt_door",
+   "O_glass_plain",
+   "S_concrete",
+   "S_stucco",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    0.22499999403953552
+   ],
+   [
+    3.0,
+    4.800000190734863,
+    3.125
+   ]
+  ]
+ },
+ "far": {
+  "tris": 64,
+  "verts": 80,
+  "regions": [
+   "F_concrete",
+   "F_dark",
+   "F_glass",
+   "F_stucco_blank"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    0.22499999403953552
+   ],
+   [
+    3.0,
+    4.800000190734863,
+    3.125
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "apt_door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  6.0,
+  0.45
+ ],
+ "footprint_area": 2.7,
+ "height": 4.8,
+ "storeys": 1,
+ "budget": [
+  800,
+  240,
+  120
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_civ_entry",
+ "time_s": 1.2,
+ "open_planes": [
+  [
+   0,
+   -3.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   3.0,
+   1,
+   null
+  ],
+  [
+   2,
+   -0.225,
+   -1,
+   null
+  ],
+  [
+   1,
+   4.8,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.225
+ ],
+ "openings": [
+  {
+   "k": "apt_door",
+   "c": 0.0,
+   "w": 1.0,
+   "t0": 0.6,
+   "t1": 2.8000000000000003,
+   "depth": 0.25,
+   "far_dark": true
+  },
+  {
+   "k": "glass",
+   "c": -2.05,
+   "w": 0.95,
+   "t0": 0.7,
+   "t1": 2.9000000000000004,
+   "depth": 0.12
+  },
+  {
+   "k": "glass",
+   "c": 2.05,
+   "w": 0.95,
+   "t0": 0.7,
+   "t1": 2.9000000000000004,
+   "depth": 0.12
+  }
+ ],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "civ_entry",
+  "ends": [
+   [
+    -3.0,
+    0,
+    0.225
+   ],
+   [
+    3.0,
+    0,
+    0.225
+   ]
+  ],
+  "face_z": 0.225,
+  "plate_y": 4.8,
+  "parapet_top": 4.8
+ },
+ "no_door": false,
+ "base_y": 0.0,
+ "ground_reach": false
+}

@@ -1,0 +1,108 @@
+{
+ "name": "house_roof_chimney_brick",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 1,
+ "near": {
+  "tris": 72,
+  "verts": 122,
+  "regions": [
+   "S_concrete",
+   "T_concrete",
+   "W_brick"
+  ],
+  "bbox": [
+   [
+    -0.4099999964237213,
+    5.434999942779541,
+    -0.36000001430511475
+   ],
+   [
+    0.4099999964237213,
+    6.570000171661377,
+    0.36000001430511475
+   ]
+  ]
+ },
+ "mid_roof_top": 6.47,
+ "mid": {
+  "tris": 16,
+  "verts": 26,
+  "regions": [
+   "S_concrete",
+   "W_brick"
+  ],
+  "bbox": [
+   [
+    -0.3499999940395355,
+    5.434999942779541,
+    -0.30000001192092896
+   ],
+   [
+    0.3499999940395355,
+    6.46999979019165,
+    0.30000001192092896
+   ]
+  ]
+ },
+ "far": {
+  "tris": 12,
+  "verts": 24,
+  "regions": [
+   "F_brick_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -0.3499999940395355,
+    5.199999809265137,
+    -0.30000001192092896
+   ],
+   [
+    0.3499999940395355,
+    6.46999979019165,
+    0.30000001192092896
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  0.0,
+  0.0
+ ],
+ "footprint_area": 0.0,
+ "height": 6.57,
+ "storeys": 1,
+ "budget": [
+  90,
+  24,
+  12
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_house_trim",
+ "time_s": 0.1,
+ "open_planes": [],
+ "shift": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "type": "house_chimney",
+  "cut_box": [
+   -0.35,
+   0.35,
+   5.2,
+   5.57,
+   -0.3,
+   0.3
+  ],
+  "note": "origin on the house centre line at ground; place at (x,0,0) on any 3 m roof piece, x on the 0.5 m grid, >=0.5 m from a gable end"
+ },
+ "no_door": true,
+ "base_y": 5.435,
+ "ground_reach": false
+}

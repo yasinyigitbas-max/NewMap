@@ -1,0 +1,313 @@
+{
+ "name": "park_memorial_green",
+ "style": "memorial_green",
+ "footprint": [
+  40,
+  30
+ ],
+ "zones": [
+  {
+   "kind": "lawn",
+   "rect": [
+    -20,
+    20,
+    -15,
+    15
+   ]
+  },
+  {
+   "kind": "plaza",
+   "rect": [
+    -5,
+    5,
+    -5,
+    5
+   ]
+  },
+  {
+   "kind": "path",
+   "rect": [
+    -1.5,
+    1.5,
+    -15,
+    -5
+   ]
+  }
+ ],
+ "instances": [
+  {
+   "base": "tree_norfolk_pine_a",
+   "cond": "normal",
+   "pos": [
+    0,
+    0.0,
+    0
+   ],
+   "rot_y": 0,
+   "role": "focus",
+   "file": "foliage/tree_norfolk_pine_a_normal_near.glb",
+   "tris_near": 1110
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    -6,
+    0.0,
+    -6.5
+   ],
+   "rot_y": 42.7,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    6,
+    0.0,
+    -6.5
+   ],
+   "rot_y": -42.7,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    -6,
+    0.0,
+    6.5
+   ],
+   "rot_y": 137.3,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "prop_park_bench",
+   "cond": "clean",
+   "pos": [
+    6,
+    0.0,
+    6.5
+   ],
+   "rot_y": -137.3,
+   "role": "bench",
+   "file": "props/park/prop_park_bench_clean_near.glb",
+   "tris_near": 180
+  },
+  {
+   "base": "hedge_boxwood_low_2m",
+   "cond": "normal",
+   "pos": [
+    -3.5,
+    0.0,
+    -5.6
+   ],
+   "rot_y": 180.0,
+   "role": "hedge",
+   "file": "foliage/hedge_boxwood_low_2m_normal_near.glb",
+   "tris_near": 178
+  },
+  {
+   "base": "hedge_boxwood_low_2m",
+   "cond": "normal",
+   "pos": [
+    3.5,
+    0.0,
+    -5.6
+   ],
+   "rot_y": 180.0,
+   "role": "hedge",
+   "file": "foliage/hedge_boxwood_low_2m_normal_near.glb",
+   "tris_near": 178
+  },
+  {
+   "base": "hedge_boxwood_low_2m",
+   "cond": "normal",
+   "pos": [
+    -4.0,
+    0.0,
+    5.6
+   ],
+   "rot_y": 180.0,
+   "role": "hedge",
+   "file": "foliage/hedge_boxwood_low_2m_normal_near.glb",
+   "tris_near": 178
+  },
+  {
+   "base": "hedge_boxwood_low_2m",
+   "cond": "normal",
+   "pos": [
+    -2.0,
+    0.0,
+    5.6
+   ],
+   "rot_y": 180.0,
+   "role": "hedge",
+   "file": "foliage/hedge_boxwood_low_2m_normal_near.glb",
+   "tris_near": 178
+  },
+  {
+   "base": "hedge_boxwood_low_2m",
+   "cond": "normal",
+   "pos": [
+    0.0,
+    0.0,
+    5.6
+   ],
+   "rot_y": 180.0,
+   "role": "hedge",
+   "file": "foliage/hedge_boxwood_low_2m_normal_near.glb",
+   "tris_near": 178
+  },
+  {
+   "base": "hedge_boxwood_low_2m",
+   "cond": "normal",
+   "pos": [
+    2.0,
+    0.0,
+    5.6
+   ],
+   "rot_y": 180.0,
+   "role": "hedge",
+   "file": "foliage/hedge_boxwood_low_2m_normal_near.glb",
+   "tris_near": 178
+  },
+  {
+   "base": "hedge_boxwood_low_2m",
+   "cond": "normal",
+   "pos": [
+    4.0,
+    0.0,
+    5.6
+   ],
+   "rot_y": 180.0,
+   "role": "hedge",
+   "file": "foliage/hedge_boxwood_low_2m_normal_near.glb",
+   "tris_near": 178
+  },
+  {
+   "base": "plant_bougainvillea_mound",
+   "cond": "normal",
+   "pos": [
+    -15,
+    0.0,
+    -10
+   ],
+   "rot_y": 0,
+   "role": "plant",
+   "file": "foliage/plant_bougainvillea_mound_normal_near.glb",
+   "tris_near": 468
+  },
+  {
+   "base": "plant_bougainvillea_mound",
+   "cond": "normal",
+   "pos": [
+    15,
+    0.0,
+    -10
+   ],
+   "rot_y": 0,
+   "role": "plant",
+   "file": "foliage/plant_bougainvillea_mound_normal_near.glb",
+   "tris_near": 468
+  },
+  {
+   "base": "plant_bougainvillea_mound",
+   "cond": "normal",
+   "pos": [
+    -15,
+    0.0,
+    10
+   ],
+   "rot_y": 0,
+   "role": "plant",
+   "file": "foliage/plant_bougainvillea_mound_normal_near.glb",
+   "tris_near": 468
+  },
+  {
+   "base": "plant_bougainvillea_mound",
+   "cond": "normal",
+   "pos": [
+    15,
+    0.0,
+    10
+   ],
+   "rot_y": 0,
+   "role": "plant",
+   "file": "foliage/plant_bougainvillea_mound_normal_near.glb",
+   "tris_near": 468
+  },
+  {
+   "base": "prop_lamp_victorian",
+   "cond": "clean",
+   "pos": [
+    -2.4,
+    0.0,
+    -10
+   ],
+   "rot_y": 0.0,
+   "role": "lamp",
+   "file": "props/street/prop_lamp_victorian_clean_near.glb",
+   "tris_near": 1150
+  },
+  {
+   "base": "prop_lamp_victorian",
+   "cond": "clean",
+   "pos": [
+    2.4,
+    0.0,
+    -12
+   ],
+   "rot_y": 0.0,
+   "role": "lamp",
+   "file": "props/street/prop_lamp_victorian_clean_near.glb",
+   "tris_near": 1150
+  },
+  {
+   "base": "palm_canary_date_a",
+   "cond": "normal",
+   "pos": [
+    -17,
+    0.0,
+    0
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/palm_canary_date_a_normal_near.glb",
+   "tris_near": 956
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "pos": [
+    17,
+    0.0,
+    0
+   ],
+   "rot_y": 0,
+   "role": "tree",
+   "file": "foliage/palm_canary_date_b_normal_near.glb",
+   "tris_near": 956
+  }
+ ],
+ "stats": {
+  "instances": 20,
+  "near_tris_sum": 9160,
+  "assets": [
+   "hedge_boxwood_low_2m",
+   "palm_canary_date_a",
+   "palm_canary_date_b",
+   "plant_bougainvillea_mound",
+   "prop_lamp_victorian",
+   "prop_park_bench",
+   "tree_norfolk_pine_a"
+  ]
+ },
+ "errors": []
+}

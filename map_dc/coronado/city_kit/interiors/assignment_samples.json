@@ -1,0 +1,2270 @@
+{
+ "_doc": "Enterable rooms for the 8 locked samples. Door = index of the building's ground-floor shop / civic doors ordered along the facade (room_contracts.json entrances). room w/d = the set's max size clipped to the door's bay. shop = today's shops.json entry (name, goods, hours) or a new name. Not placed in the game yet.",
+ "count": 52,
+ "per_sample": {
+  "pilot_high_street": 13,
+  "city_centre": 7,
+  "industrial": 5,
+  "commercial_strip": 10,
+  "apartment_band": 4,
+  "civic_band": 4,
+  "gritty_edge": 6,
+  "waterfront": 3
+ },
+ "rooms": [
+  {
+   "sample": "pilot_high_street",
+   "piece": "b_nw",
+   "building": "urb_brick_corner",
+   "model": "urban/urb_brick_corner",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 6.8,
+    "w": 1.8,
+    "world": [
+     -16.4,
+     0.15,
+     -25.5
+    ],
+    "out": [
+     1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "cafe",
+    "w": 9.0,
+    "d": 10.0,
+    "bay_w": 17.4,
+    "bay_d": 15.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:trident_coffee_942",
+    "name": "Trident Café",
+    "type": "cafe",
+    "goods": [
+     "espresso and coffee drinks, cold brew",
+     "pastries",
+     "Trident merch (shirts)"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the corner cafe at the main junction: first coffee on the way to work, people watch the crossing",
+   "marker": 1
+  },
+  {
+   "sample": "pilot_high_street",
+   "piece": "b_nw",
+   "building": "com_bakery",
+   "model": "commercial/com_bakery",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 3.26,
+    "w": 1.6,
+    "world": [
+     -16.45,
+     0.15,
+     -53.46
+    ],
+    "out": [
+     1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "bakery",
+    "w": 8.4,
+    "d": 10.0,
+    "bay_w": 8.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:villa_nueva_bakery_cafe_956",
+    "name": "Villa Nueva Bake Shop",
+    "type": "bakery",
+    "goods": [
+     "bakery cafe: pastries, breads, breakfast",
+     "Mexican breakfast and lunch, coffee"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "a bakery building on the main street keeps its bakery, the Amber Ave bakery moves in",
+   "marker": 2
+  },
+  {
+   "sample": "pilot_high_street",
+   "piece": "b_nw",
+   "building": "com_bar_crown",
+   "model": "commercial/com_bar_crown",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -3.26,
+    "w": 1.6,
+    "world": [
+     -16.45,
+     0.15,
+     -55.94
+    ],
+    "out": [
+     1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "bar",
+    "w": 8.4,
+    "d": 10.0,
+    "bay_w": 8.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "n4360771592",
+    "name": "Mac's Pub",
+    "type": "bar",
+    "goods": [
+     "cuisine: american"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the pub of the high street, mid-block, its back door on the alley for the deliveries",
+   "marker": 3
+  },
+  {
+   "sample": "pilot_high_street",
+   "piece": "b_nw",
+   "building": "com_orange_row",
+   "model": "commercial/com_orange_row",
+   "door": {
+    "index": 1,
+    "facade": "front",
+    "along": -1.92,
+    "w": 1.6,
+    "world": [
+     -16.45,
+     0.15,
+     -34.78
+    ],
+    "out": [
+     1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "clothes",
+    "w": 5.92,
+    "d": 10.0,
+    "bay_w": 5.92,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:coronado_beach_wear_1111",
+    "name": "Crownado Beach Wear",
+    "type": "clothes",
+    "goods": [
+     "beachwear, swimwear, Coronado souvenirs, sunglasses"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the middle bay of the row: clothes need the window frontage on the busiest walk",
+   "marker": 4
+  },
+  {
+   "sample": "pilot_high_street",
+   "piece": "b_nw",
+   "building": "com_surf_shop",
+   "model": "commercial/com_surf_shop",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -3.26,
+    "w": 1.6,
+    "world": [
+     -16.45,
+     0.15,
+     -82.94
+    ],
+    "out": [
+     1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "sport",
+    "w": 8.4,
+    "d": 13.25,
+    "bay_w": 8.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:emerald_city_surf_shop_1118",
+    "name": "Emerald Surf Shop",
+    "type": "surf",
+    "goods": [
+     "surfboards, wetsuits, boogie boards, surf apparel, sandals"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the surf-shop building, the real Amber Ave surf shop",
+   "marker": 5
+  },
+  {
+   "sample": "pilot_high_street",
+   "piece": "b_ne",
+   "building": "lmk_village_theatre",
+   "model": "landmarks/lmk_village_theatre",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -1.75,
+    "w": 1.4,
+    "world": [
+     16.5,
+     0.45,
+     -43.45
+    ],
+    "out": [
+     -1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "venue",
+    "w": 7.7,
+    "d": 14.0,
+    "bay_w": 7.7,
+    "bay_d": 23.25,
+    "floor_y_local": 0.3
+   },
+   "shop": {
+    "key": "w741656926",
+    "name": "Villager Theatre",
+    "type": "cinema",
+    "goods": [
+     "UltraStar cinema: first-run movies, 3 screens",
+     "concessions"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the landmark theatre is the town cinema (Villager Theatre); its lobby is the room, the auditorium stays behind the auditorium door",
+   "marker": 6
+  },
+  {
+   "sample": "pilot_high_street",
+   "piece": "b_ne",
+   "building": "com_spanish_arcade_block",
+   "model": "commercial/com_spanish_arcade_block",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -5.08,
+    "w": 1.6,
+    "world": [
+     16.45,
+     0.15,
+     -26.78
+    ],
+    "out": [
+     -1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "salon",
+    "w": 7.7,
+    "d": 10.0,
+    "bay_w": 7.7,
+    "bay_d": 15.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:crown_barber_shop_947",
+    "name": "Crest Barber Shop",
+    "type": "barber",
+    "goods": [
+     "men's haircuts, fades, beard trims, hot-towel shaves"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "a barber under the arcade, on the corner where men wait on the bench outside",
+   "marker": 7
+  },
+  {
+   "sample": "pilot_high_street",
+   "piece": "b_ne",
+   "building": "com_orange_arcade_block",
+   "model": "commercial/com_orange_arcade_block",
+   "door": {
+    "index": 1,
+    "facade": "front",
+    "along": -5.42,
+    "w": 1.6,
+    "world": [
+     16.45,
+     0.15,
+     -68.12
+    ],
+    "out": [
+     -1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "jewelry",
+    "w": 6.5,
+    "d": 10.0,
+    "bay_w": 6.5,
+    "bay_d": 16.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:lumo_jewelry_co_940",
+    "name": "LUMO Jewels",
+    "type": "jewelry",
+    "goods": [
+     "handcrafted California jewelry: necklaces, rings, earrings, bracelets"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "jewellery behind the arcade: shaded windows, near the theatre crowd",
+   "marker": 8
+  },
+  {
+   "sample": "pilot_high_street",
+   "piece": "b_ne",
+   "building": "urb_brick_row",
+   "model": "urban/urb_brick_row",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -4.1,
+    "w": 1.6,
+    "world": [
+     16.35,
+     0.15,
+     -88.8
+    ],
+    "out": [
+     -1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "ice_cream",
+    "w": 7.6,
+    "d": 10.0,
+    "bay_w": 7.6,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "n7606558951",
+    "name": "Moo Hour Creamery",
+    "type": "ice_cream",
+    "goods": [
+     "ice cream (no finer goods source)"
+    ],
+    "opening_hours": "Su-Th 11:00-22:00; Fr-Sa 11:00-23:00",
+    "was_on": "amber ave"
+   },
+   "why": "ice cream across from the theatre: after the film, families walk over",
+   "marker": 9
+  },
+  {
+   "sample": "pilot_high_street",
+   "piece": "b_se",
+   "building": "civ_post_office",
+   "model": "civic/civ_post_office",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 0.0,
+    "w": 1.8,
+    "world": [
+     20.3,
+     0.45,
+     24.7
+    ],
+    "out": [
+     -1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "office",
+    "w": 12.0,
+    "d": 12.0,
+    "bay_w": 21.4,
+    "bay_d": 14.25,
+    "floor_y_local": 0.3
+   },
+   "shop": {
+    "key": "n358860772",
+    "name": "Crownado Post Office",
+    "type": "post_office",
+    "goods": [
+     "post office (no finer goods source)"
+    ],
+    "opening_hours": null,
+    "was_on": null
+   },
+   "why": "the town's post office keeps its building and its forecourt with the collection boxes",
+   "marker": 10
+  },
+  {
+   "sample": "pilot_high_street",
+   "piece": "b_se",
+   "building": "com_boutique_row",
+   "model": "commercial/com_boutique_row",
+   "door": {
+    "index": 1,
+    "facade": "front",
+    "along": -1.92,
+    "w": 1.6,
+    "world": [
+     16.45,
+     0.15,
+     42.78
+    ],
+    "out": [
+     -1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "shoes",
+    "w": 5.92,
+    "d": 10.0,
+    "bay_w": 5.92,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:sweet_soles_957",
+    "name": "Sweet Soles Shoes",
+    "type": "shoes",
+    "goods": [
+     "comfortable sandals, shoes, boots, accessories"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "shoes in the middle of the boutique row, next to the clothes customers",
+   "marker": 11
+  },
+  {
+   "sample": "pilot_high_street",
+   "piece": "b_se",
+   "building": "com_boutique_row",
+   "model": "commercial/com_boutique_row",
+   "door": {
+    "index": 2,
+    "facade": "front",
+    "along": 7.76,
+    "w": 1.6,
+    "world": [
+     16.45,
+     0.15,
+     52.46
+    ],
+    "out": [
+     -1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "souvenir",
+    "w": 5.78,
+    "d": 10.0,
+    "bay_w": 5.78,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:the_bay_company_1106",
+    "name": "The Bay Shop",
+    "type": "gift",
+    "goods": [
+     "beachwear, souvenirs, sunglasses"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the gift shop on the end bay, closest to the hotel and the visitors",
+   "marker": 12
+  },
+  {
+   "sample": "pilot_high_street",
+   "piece": "b_sw",
+   "building": "com_bistro",
+   "model": "commercial/com_bistro",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 4.76,
+    "w": 1.6,
+    "world": [
+     -19.45,
+     0.15,
+     37.44
+    ],
+    "out": [
+     1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "restaurant",
+    "w": 9.0,
+    "d": 10.0,
+    "bay_w": 11.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "n10942435106",
+    "name": "Little Frenchy",
+    "type": "restaurant",
+    "goods": [
+     "restaurant (no finer goods source)"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the bistro with its terrace by the pocket park: the high street's one sit-down restaurant",
+   "marker": 13
+  },
+  {
+   "sample": "city_centre",
+   "piece": "c_nw",
+   "building": "urb_brick_row",
+   "model": "urban/urb_brick_row",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -4.1,
+    "w": 1.6,
+    "world": [
+     -16.35,
+     0.15,
+     325.4
+    ],
+    "out": [
+     1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "clothes",
+    "w": 7.6,
+    "d": 10.0,
+    "bay_w": 7.6,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:paris_me_boutique_1154",
+    "name": "Paris & Me Shop",
+    "type": "clothes",
+    "goods": [
+     "women's apparel and swimwear"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "a boutique in the brick row: office workers shop at lunch",
+   "marker": 1
+  },
+  {
+   "sample": "city_centre",
+   "piece": "c_nw",
+   "building": "com_cafe_seaside",
+   "model": "commercial/com_cafe_seaside",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -1.76,
+    "w": 1.6,
+    "world": [
+     -16.45,
+     0.15,
+     311.06
+    ],
+    "out": [
+     1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "cafe",
+    "w": 5.4,
+    "d": 10.0,
+    "bay_w": 5.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:better_buzz_coffee_1305",
+    "name": "Better Buzz Café",
+    "type": "cafe",
+    "goods": [
+     "espresso drinks, breakfast burritos, acai"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the corner cafe of the centre, at the end of the Amber frontage",
+   "marker": 2
+  },
+  {
+   "sample": "city_centre",
+   "piece": "c_ne",
+   "building": "urb_brick_corner",
+   "model": "urban/urb_brick_corner",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 6.8,
+    "w": 1.8,
+    "world": [
+     16.4,
+     0.15,
+     320.1
+    ],
+    "out": [
+     -1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "restaurant",
+    "w": 9.0,
+    "d": 10.0,
+    "bay_w": 17.4,
+    "bay_d": 15.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:stake_chophouse_bar_1309",
+    "name": "Stake Chop House",
+    "type": "restaurant",
+    "goods": [
+     "steakhouse: steaks, seafood, cocktails"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the steakhouse on the plaza corner: business lunches, after-work dinners",
+   "marker": 3
+  },
+  {
+   "sample": "city_centre",
+   "piece": "c_se",
+   "building": "mod_twr_office",
+   "model": "modular/examples/mod_twr_office",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -4.0,
+    "w": 1.8,
+    "world": [
+     16.15,
+     0.45,
+     477.7
+    ],
+    "out": [
+     -1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "pharmacy",
+    "w": 7.7,
+    "d": 10.0,
+    "bay_w": 7.7,
+    "bay_d": 19.25,
+    "floor_y_local": 0.3
+   },
+   "shop": {
+    "key": "w1388008879",
+    "name": "Walgrove",
+    "type": "chemist",
+    "goods": [
+     "pharmacy, toiletries, snacks"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the pharmacy in the office tower's ground floor, where the people are",
+   "marker": 4
+  },
+  {
+   "sample": "city_centre",
+   "piece": "c_sw",
+   "building": "com_bank",
+   "model": "commercial/com_bank",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 0.0,
+    "w": 1.8,
+    "world": [
+     -16.3,
+     0.15,
+     482.7
+    ],
+    "out": [
+     1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "office",
+    "w": 12.0,
+    "d": 12.0,
+    "bay_w": 13.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "w62044197",
+    "name": "Shore Bank",
+    "type": "bank",
+    "goods": [
+     "retail banking, ATM"
+    ],
+    "opening_hours": "Mo-Fr 09:00-17:00; Sa 09:00-14:00; Su closed",
+    "was_on": "amber ave"
+   },
+   "why": "the bank building is the bank (Shore Bank)",
+   "marker": 5
+  },
+  {
+   "sample": "city_centre",
+   "piece": "c_sw",
+   "building": "ck_svc_cinema_fast",
+   "model": "ck/ck_svc_cinema_fast",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -3.0,
+    "w": 1.6,
+    "world": [
+     -35.0,
+     0.15,
+     410.05
+    ],
+    "out": [
+     0.0,
+     -1.0
+    ]
+   },
+   "room": {
+    "set": "venue",
+    "w": 4.8,
+    "d": 11.25,
+    "bay_w": 4.8,
+    "bay_d": 11.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "w1169419989",
+    "name": "Lowrey Theater",
+    "type": "cinema",
+    "goods": [
+     "cinema (no finer goods source)"
+    ],
+    "opening_hours": null,
+    "was_on": null
+   },
+   "why": "the centre's small cinema faces 10th",
+   "marker": 6
+  },
+  {
+   "sample": "city_centre",
+   "piece": "c_sw",
+   "building": "ck_svc_cinema_fast",
+   "model": "ck/ck_svc_cinema_fast",
+   "door": {
+    "index": 1,
+    "facade": "front",
+    "along": 1.2,
+    "w": 1.6,
+    "world": [
+     -39.2,
+     0.15,
+     410.05
+    ],
+    "out": [
+     0.0,
+     -1.0
+    ]
+   },
+   "room": {
+    "set": "fast_food",
+    "w": 6.6,
+    "d": 10.0,
+    "bay_w": 6.6,
+    "bay_d": 11.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "n4576223949",
+    "name": "Chilpote",
+    "type": "fast_food",
+    "goods": [
+     "cuisine: mexican",
+     "burritos, bowls (Mexican)"
+    ],
+    "opening_hours": "10:30-22:00",
+    "was_on": "amber ave"
+   },
+   "why": "fast food next to the cinema: the queue before the film",
+   "marker": 7
+  },
+  {
+   "sample": "industrial",
+   "piece": "i_ne",
+   "building": "harbor_diner",
+   "model": "commercial/com_bistro",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 4.76,
+    "w": 1.6,
+    "world": [
+     33.26,
+     0.15,
+     -409.65
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "restaurant",
+    "w": 9.0,
+    "d": 10.0,
+    "bay_w": 11.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "w620973873",
+    "name": "Clay's Diner",
+    "type": "restaurant",
+    "goods": [
+     "cuisine: cafe/diner"
+    ],
+    "opening_hours": "06:00-22:00",
+    "was_on": "amber ave"
+   },
+   "why": "the workers' diner on the corner (Clay's Diner): breakfast at 6, lunch for the whole district",
+   "marker": 1
+  },
+  {
+   "sample": "industrial",
+   "piece": "i_ne",
+   "building": "truck_repair",
+   "model": "industrial/ind_repair",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -6.5,
+    "w": 1.6,
+    "world": [
+     9.32,
+     0.15,
+     -494.5
+    ],
+    "out": [
+     -1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "cleaners",
+    "w": 12.0,
+    "d": 12.0,
+    "bay_w": 17.4,
+    "bay_d": 15.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "w1169419952",
+    "name": "Base Autoport",
+    "type": "car_repair",
+    "goods": [
+     "car repair (no finer goods source)"
+    ],
+    "opening_hours": null,
+    "was_on": null
+   },
+   "why": "the repair shop's customer counter (the bays stay a non-enterable service yard)",
+   "marker": 2
+  },
+  {
+   "sample": "industrial",
+   "piece": "i_se",
+   "building": "auto_parts",
+   "model": "ck/ck_svc_trade",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -3.0,
+    "w": 1.8,
+    "world": [
+     31.5,
+     0.15,
+     -390.45
+    ],
+    "out": [
+     0.0,
+     -1.0
+    ]
+   },
+   "room": {
+    "set": "store",
+    "w": 5.7,
+    "d": 11.25,
+    "bay_w": 5.7,
+    "bay_d": 11.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:coronado_hardware_140",
+    "name": "Crownado Hardware",
+    "type": "hardware",
+    "goods": [
+     "hardware, beachwear and Coronado gifts"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the trade counter sells parts and hardware to the trades around it",
+   "marker": 3
+  },
+  {
+   "sample": "industrial",
+   "piece": "i_sw",
+   "building": "dive_bar",
+   "model": "commercial/com_bar_crown",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -3.26,
+    "w": 1.6,
+    "world": [
+     -24.24,
+     0.15,
+     -390.35
+    ],
+    "out": [
+     0.0,
+     -1.0
+    ]
+   },
+   "room": {
+    "set": "bar",
+    "w": 8.4,
+    "d": 10.0,
+    "bay_w": 8.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "n10936222136",
+    "name": "World Famous Eye Bar",
+    "type": "bar",
+    "goods": [
+     "bar (no finer goods source)"
+    ],
+    "opening_hours": null,
+    "was_on": null
+   },
+   "why": "the shift workers' dive bar on the corner",
+   "marker": 4
+  },
+  {
+   "sample": "industrial",
+   "piece": "i_sw",
+   "building": "locksmith",
+   "model": "ck/ck_svc_pawn_fast",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -1.4,
+    "w": 1.6,
+    "world": [
+     -9.55,
+     0.15,
+     -314.1
+    ],
+    "out": [
+     1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "keys",
+    "w": 5.6,
+    "d": 10.0,
+    "bay_w": 5.6,
+    "bay_d": 11.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "w1281135763",
+    "name": "Crownado Lock & Key",
+    "type": "locksmith",
+    "goods": [
+     "locksmith (no finer goods source)"
+    ],
+    "opening_hours": "Mo-Fr 09:00-17:00",
+    "was_on": "9th st"
+   },
+   "why": "the locksmith keeps its plot (Crownado Lock & Key)",
+   "marker": 5
+  },
+  {
+   "sample": "commercial_strip",
+   "piece": "m_ne",
+   "building": "crown_fuel",
+   "model": "commercial/com_gas_station",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 3.76,
+    "w": 1.6,
+    "world": [
+     -372.24,
+     0.15,
+     -31.95
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "gas",
+    "w": 9.0,
+    "d": 8.25,
+    "bay_w": 9.4,
+    "bay_d": 8.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:shell_900",
+    "name": "Shoal",
+    "type": "fuel",
+    "goods": [
+     "gasoline, convenience store snacks and drinks"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the gas station kiosk on the corner pad",
+   "marker": 1
+  },
+  {
+   "sample": "commercial_strip",
+   "piece": "m_ne",
+   "building": "burger_barn",
+   "model": "ck/mod_fastfood",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -4.8,
+    "w": 1.6,
+    "world": [
+     -350.8,
+     0.15,
+     -32.35
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "fast_food",
+    "w": 3.9,
+    "d": 10.0,
+    "bay_w": 3.9,
+    "bay_d": 11.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "w1271545004",
+    "name": "McDowell's",
+    "type": "fast_food",
+    "goods": [
+     "cuisine: burger",
+     "burgers, fries"
+    ],
+    "opening_hours": "Mo-Su 05:00-23:00",
+    "was_on": null
+   },
+   "why": "the drive-thru burger place also lets you walk in",
+   "marker": 2
+  },
+  {
+   "sample": "commercial_strip",
+   "piece": "m_ne",
+   "building": "bank_pharmacy",
+   "model": "ck/ck_svc_bank_pharm",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 4.6,
+    "w": 1.6,
+    "world": [
+     -390.45,
+     0.15,
+     -53.4
+    ],
+    "out": [
+     -1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "office",
+    "w": 11.4,
+    "d": 11.25,
+    "bay_w": 11.4,
+    "bay_d": 11.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:wells_fargo_829",
+    "name": "Wagon Bank",
+    "type": "bank",
+    "goods": [
+     "retail banking, ATM"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the bank half of the bank + pharmacy row, on the side street",
+   "marker": 3
+  },
+  {
+   "sample": "commercial_strip",
+   "piece": "m_ne",
+   "building": "corner_bakery",
+   "model": "commercial/com_bakery",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 3.26,
+    "w": 1.6,
+    "world": [
+     -390.35,
+     0.15,
+     -67.24
+    ],
+    "out": [
+     -1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "bakery",
+    "w": 8.4,
+    "d": 10.0,
+    "bay_w": 8.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "n10962387605",
+    "name": "Clay's Bakery",
+    "type": "bakery",
+    "goods": [
+     "bakery (no finer goods source)"
+    ],
+    "opening_hours": null,
+    "was_on": null
+   },
+   "why": "the bakery that replaced the 5th Crown bar keeps its trade",
+   "marker": 4
+  },
+  {
+   "sample": "commercial_strip",
+   "piece": "m_nw",
+   "building": "crown_plaza",
+   "model": "commercial/com_strip_mall_l",
+   "door": {
+    "index": 1,
+    "facade": "front",
+    "along": -20.21,
+    "w": 1.6,
+    "world": [
+     -478.71,
+     0.15,
+     -52.45
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "salon",
+    "w": 7.72,
+    "d": 10.0,
+    "bay_w": 7.72,
+    "bay_d": 19.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:fashion_nails_861",
+    "name": "Fashion Nail Bar",
+    "type": "nail_salon",
+    "goods": [
+     "manicures, pedicures"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "a nail bar in the strip mall",
+   "marker": 5
+  },
+  {
+   "sample": "commercial_strip",
+   "piece": "m_nw",
+   "building": "crown_plaza",
+   "model": "commercial/com_strip_mall_l",
+   "door": {
+    "index": 4,
+    "facade": "front",
+    "along": -1.3,
+    "w": 1.6,
+    "world": [
+     -459.8,
+     0.15,
+     -52.45
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "cafe",
+    "w": 8.38,
+    "d": 10.0,
+    "bay_w": 8.38,
+    "bay_d": 19.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "w1166006920",
+    "name": "Starducks",
+    "type": "cafe",
+    "goods": [
+     "cuisine: coffee_shop",
+     "espresso coffee, pastries"
+    ],
+    "opening_hours": null,
+    "was_on": "rogers rd"
+   },
+   "why": "the chain coffee in the middle of the strip mall, by the benches where people wait for rides",
+   "marker": 6
+  },
+  {
+   "sample": "commercial_strip",
+   "piece": "m_nw",
+   "building": "crown_plaza",
+   "model": "commercial/com_strip_mall_l",
+   "door": {
+    "index": 7,
+    "facade": "front",
+    "along": 30.04,
+    "w": 1.6,
+    "world": [
+     -428.46,
+     0.15,
+     -52.45
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "cleaners",
+    "w": 8.38,
+    "d": 12.0,
+    "bay_w": 8.38,
+    "bay_d": 19.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:laundry_lounge_coronado_1007",
+    "name": "Laundry Lounge Crownado",
+    "type": "laundry",
+    "goods": [
+     "self-service washers and dryers",
+     "same-day wash & fold, pickup and delivery"
+    ],
+    "opening_hours": null,
+    "was_on": "isabella ave"
+   },
+   "why": "the laundromat at the far end of the mall",
+   "marker": 7
+  },
+  {
+   "sample": "commercial_strip",
+   "piece": "m_se",
+   "building": "crown_grocery",
+   "model": "commercial/com_grocery_bigbox",
+   "door": {
+    "index": 1,
+    "facade": "front",
+    "along": -3.4,
+    "w": 2.4,
+    "world": [
+     -330.6,
+     0.15,
+     43.8
+    ],
+    "out": [
+     0.0,
+     -1.0
+    ]
+   },
+   "room": {
+    "set": "grocery",
+    "w": 14.0,
+    "d": 16.0,
+    "bay_w": 14.95,
+    "bay_d": 43.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "w532622710",
+    "name": "Bonny Bay Market",
+    "type": "supermarket",
+    "goods": [
+     "supermarket (no finer goods source)"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the big-box grocery is the supermarket; one of its four doors is the entrance (the rest stay closed: exits)",
+   "marker": 8
+  },
+  {
+   "sample": "commercial_strip",
+   "piece": "m_se",
+   "building": "thrift_store",
+   "model": "commercial/com_boutique_row",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -4.08,
+    "w": 1.6,
+    "world": [
+     -390.35,
+     0.15,
+     54.92
+    ],
+    "out": [
+     -1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "store",
+    "w": 5.7,
+    "d": 12.0,
+    "bay_w": 5.7,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "n6504169566",
+    "name": "Thrift Cabin",
+    "type": "second_hand",
+    "goods": [
+     "second hand (no finer goods source)"
+    ],
+    "opening_hours": null,
+    "was_on": null
+   },
+   "why": "the thrift store on the side street",
+   "marker": 9
+  },
+  {
+   "sample": "commercial_strip",
+   "piece": "m_se",
+   "building": "pho_house",
+   "model": "commercial/com_bistro",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 4.76,
+    "w": 1.6,
+    "world": [
+     -390.35,
+     0.15,
+     96.76
+    ],
+    "out": [
+     -1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "restaurant",
+    "w": 9.0,
+    "d": 10.0,
+    "bay_w": 11.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:swaddee_thai_1001",
+    "name": "Swaddee Thai Kitchen",
+    "type": "restaurant",
+    "goods": [
+     "Thai curries and noodles"
+    ],
+    "opening_hours": null,
+    "was_on": "c ave"
+   },
+   "why": "the pho house becomes the Thai kitchen: the strip's restaurant",
+   "marker": 10
+  },
+  {
+   "sample": "apartment_band",
+   "piece": "a_ne",
+   "building": "corner_market",
+   "model": "commercial/com_orange_corner",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -1.08,
+    "w": 1.6,
+    "world": [
+     414.12,
+     0.15,
+     -12.15
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "corner_shop",
+    "w": 5.7,
+    "d": 10.0,
+    "bay_w": 5.7,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "w62044203",
+    "name": "Park Lane Liquor & Deli",
+    "type": "alcohol",
+    "goods": [
+     "alcohol (no finer goods source)"
+    ],
+    "opening_hours": null,
+    "was_on": "park pl"
+   },
+   "why": "the corner market (Park Lane Liquor & Deli): milk, beer, the paper",
+   "marker": 1
+  },
+  {
+   "sample": "apartment_band",
+   "piece": "a_nw",
+   "building": "laundromat",
+   "model": "modular/examples/mod_svc_row",
+   "door": {
+    "index": 1,
+    "facade": "front",
+    "along": 4.6,
+    "w": 1.6,
+    "world": [
+     389.4,
+     0.15,
+     -12.05
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "cleaners",
+    "w": 4.1,
+    "d": 11.25,
+    "bay_w": 4.1,
+    "bay_d": 11.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:fox_cleaners_and_alterations_1015",
+    "name": "Fox Laundry and Alterations",
+    "type": "dry_cleaning",
+    "goods": [
+     "dry cleaning, alterations"
+    ],
+    "opening_hours": null,
+    "was_on": "isabella ave"
+   },
+   "why": "the laundromat on the corner: people in flats without machines",
+   "marker": 2
+  },
+  {
+   "sample": "apartment_band",
+   "piece": "a_se",
+   "building": "corner_bar",
+   "model": "commercial/com_bar_crown",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -3.26,
+    "w": 1.6,
+    "world": [
+     416.96,
+     0.15,
+     12.15
+    ],
+    "out": [
+     0.0,
+     -1.0
+    ]
+   },
+   "room": {
+    "set": "bar",
+    "w": 8.4,
+    "d": 10.0,
+    "bay_w": 8.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "n365317713",
+    "name": "Danni's Palm Bar and Grill",
+    "type": "bar",
+    "goods": [
+     "bar (no finer goods source)"
+    ],
+    "opening_hours": null,
+    "was_on": null
+   },
+   "why": "the neighbourhood bar on its corner",
+   "marker": 3
+  },
+  {
+   "sample": "apartment_band",
+   "piece": "a_sw",
+   "building": "corner_cafe",
+   "model": "ck/ck_brk3_corner2",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 4.9,
+    "w": 1.6,
+    "world": [
+     379.9,
+     0.15,
+     12.05
+    ],
+    "out": [
+     0.0,
+     -1.0
+    ]
+   },
+   "room": {
+    "set": "cafe",
+    "w": 9.0,
+    "d": 10.0,
+    "bay_w": 11.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:heave_ho_coffee_co_1019",
+    "name": "Heave Ho Café",
+    "type": "cafe",
+    "goods": [
+     "coffee drinks"
+    ],
+    "opening_hours": null,
+    "was_on": "c ave"
+   },
+   "why": "the corner cafe with its tables out front",
+   "marker": 4
+  },
+  {
+   "sample": "civic_band",
+   "piece": "v_ne",
+   "building": "library",
+   "model": "civic/civ_library",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 0.0,
+    "w": 1.8,
+    "world": [
+     415.5,
+     0.45,
+     320.0
+    ],
+    "out": [
+     -1.0,
+     0.0
+    ]
+   },
+   "room": {
+    "set": "office",
+    "w": 12.0,
+    "d": 12.0,
+    "bay_w": 23.4,
+    "bay_d": 15.25,
+    "floor_y_local": 0.3
+   },
+   "shop": {
+    "key": null,
+    "name": "Crownado Public Library",
+    "type": "library",
+    "new": true
+   },
+   "why": "the library (needs a library room: the public-room system has one; office set until then)",
+   "marker": 1
+  },
+  {
+   "sample": "civic_band",
+   "piece": "v_ne",
+   "building": "city_hall",
+   "model": "civic/civ_city_hall",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 0.0,
+    "w": 1.8,
+    "world": [
+     480.0,
+     0.45,
+     380.5
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "office",
+    "w": 12.0,
+    "d": 12.0,
+    "bay_w": 25.4,
+    "bay_d": 14.25,
+    "floor_y_local": 0.3
+   },
+   "shop": {
+    "key": null,
+    "name": "City Hall Front Desk",
+    "type": "town_hall",
+    "new": true
+   },
+   "why": "city hall's front desk and waiting room; the offices upstairs are not enterable",
+   "marker": 2
+  },
+  {
+   "sample": "civic_band",
+   "piece": "v_nw",
+   "building": "rec_center",
+   "model": "civic/civ_rec_center",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 0.0,
+    "w": 1.8,
+    "world": [
+     320.0,
+     0.45,
+     384.5
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "sport",
+    "w": 12.0,
+    "d": 13.25,
+    "bay_w": 23.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.3
+   },
+   "shop": {
+    "key": "x:sweat_circuit_coronado_1007",
+    "name": "Sweat Circuit Crownado",
+    "type": "fitness_centre",
+    "goods": [
+     "coached circuit and strength training classes",
+     "personal training"
+    ],
+    "opening_hours": null,
+    "was_on": "isabella ave"
+   },
+   "why": "the rec centre is the gym",
+   "marker": 3
+  },
+  {
+   "sample": "civic_band",
+   "piece": "v_se",
+   "building": "police",
+   "model": "civic/civ_police",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 0.0,
+    "w": 1.8,
+    "world": [
+     431.6,
+     0.45,
+     415.5
+    ],
+    "out": [
+     0.0,
+     -1.0
+    ]
+   },
+   "room": {
+    "set": "office",
+    "w": 12.0,
+    "d": 12.0,
+    "bay_w": 21.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.3
+   },
+   "shop": {
+    "key": null,
+    "name": "Crownado Police Front Desk",
+    "type": "police",
+    "new": true
+   },
+   "why": "the police front desk (the cells and offices behind are not enterable)",
+   "marker": 4
+  },
+  {
+   "sample": "gritty_edge",
+   "piece": "g_ne",
+   "building": "corner_market",
+   "model": "extras/ext_grocery_market",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 7.92,
+    "w": 1.6,
+    "world": [
+     432.92,
+     0.15,
+     -412.15
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "grocery",
+    "w": 14.0,
+    "d": 16.0,
+    "bay_w": 23.7,
+    "bay_d": 23.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "w130008070",
+    "name": "Grove Market",
+    "type": "supermarket",
+    "goods": [
+     "full-line groceries, deli, bakery, pharmacy"
+    ],
+    "opening_hours": "Mo-Su 06:00-23:00",
+    "was_on": "amber ave"
+   },
+   "why": "the corner market building is big enough for the neighbourhood's grocer",
+   "marker": 1
+  },
+  {
+   "sample": "gritty_edge",
+   "piece": "g_ne",
+   "building": "brick_shops",
+   "model": "urban/urb_brick_row",
+   "door": {
+    "index": 1,
+    "facade": "front",
+    "along": 1.9,
+    "w": 1.6,
+    "world": [
+     487.9,
+     0.15,
+     -412.05
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "salon",
+    "w": 6.0,
+    "d": 10.0,
+    "bay_w": 6.0,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:island_barbers_857",
+    "name": "Island Barber Shop",
+    "type": "barber",
+    "goods": [
+     "men's haircuts and shaves"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "a barber in the brick row, between the dead front and the bar",
+   "marker": 2
+  },
+  {
+   "sample": "gritty_edge",
+   "piece": "g_nw",
+   "building": "pawn_laundry_row",
+   "model": "ck/ck_grt_row3",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -4.4,
+    "w": 1.6,
+    "world": [
+     373.6,
+     0.15,
+     -412.05
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "jewelry",
+    "w": 9.0,
+    "d": 10.0,
+    "bay_w": 10.3,
+    "bay_d": 11.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:coronado_vintage_859",
+    "name": "Crownado Vintage",
+    "type": "antiques",
+    "goods": [
+     "vintage and antique jewelry, gifts, collectibles"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the pawn shop (jewelry set: cases, a counter behind bars) - Crownado Vintage",
+   "marker": 3
+  },
+  {
+   "sample": "gritty_edge",
+   "piece": "g_nw",
+   "building": "pawn_laundry_row",
+   "model": "ck/ck_grt_row3",
+   "door": {
+    "index": 1,
+    "facade": "front",
+    "along": 7.6,
+    "w": 1.6,
+    "world": [
+     385.6,
+     0.15,
+     -412.05
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "cleaners",
+    "w": 7.1,
+    "d": 11.25,
+    "bay_w": 7.1,
+    "bay_d": 11.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "n11044502847",
+    "name": "Island Laundry",
+    "type": "dry_cleaning",
+    "goods": [
+     "dry cleaning (no finer goods source)"
+    ],
+    "opening_hours": null,
+    "was_on": null
+   },
+   "why": "the edge's one laundromat",
+   "marker": 4
+  },
+  {
+   "sample": "gritty_edge",
+   "piece": "g_se",
+   "building": "pawn_chicken",
+   "model": "ck/ck_svc_pawn_fast",
+   "door": {
+    "index": 1,
+    "facade": "front",
+    "along": 1.2,
+    "w": 1.6,
+    "world": [
+     414.8,
+     0.15,
+     -387.95
+    ],
+    "out": [
+     0.0,
+     -1.0
+    ]
+   },
+   "room": {
+    "set": "fast_food",
+    "w": 5.8,
+    "d": 10.0,
+    "bay_w": 5.8,
+    "bay_d": 11.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:crack_taco_shop_1009",
+    "name": "Crunch Taco Shop",
+    "type": "fast_food",
+    "goods": [
+     "tacos, burritos (Mexican taco shop)"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the fast-food half of the row on the corner: open late",
+   "marker": 5
+  },
+  {
+   "sample": "gritty_edge",
+   "piece": "g_sw",
+   "building": "corner_liquor",
+   "model": "ck/ck_brk3_corner2",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 4.9,
+    "w": 1.6,
+    "world": [
+     379.1,
+     0.15,
+     -387.95
+    ],
+    "out": [
+     0.0,
+     -1.0
+    ]
+   },
+   "room": {
+    "set": "corner_shop",
+    "w": 9.0,
+    "d": 10.0,
+    "bay_w": 11.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:high_tide_bottle_shop_kitchen_933",
+    "name": "High Tide Bottles & Kitchen",
+    "type": "alcohol",
+    "goods": [
+     "craft beer and wine bottle shop, pizza, sandwiches"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the corner liquor store under the walk-up",
+   "marker": 6
+  },
+  {
+   "sample": "waterfront",
+   "piece": "f_ne",
+   "building": "seaside_cafe",
+   "model": "commercial/com_cafe_seaside",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -1.76,
+    "w": 1.6,
+    "world": [
+     -389.56,
+     0.15,
+     387.85
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "cafe",
+    "w": 5.4,
+    "d": 10.0,
+    "bay_w": 5.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:coronado_beach_coffee_828",
+    "name": "Crownado Beach Coffee",
+    "type": "cafe",
+    "goods": [
+     "coffee drinks"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the seaside cafe facing the marina",
+   "marker": 1
+  },
+  {
+   "sample": "waterfront",
+   "piece": "f_nw",
+   "building": "surf_shop",
+   "model": "commercial/com_surf_shop",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": -3.26,
+    "w": 1.6,
+    "world": [
+     -416.96,
+     0.15,
+     387.85
+    ],
+    "out": [
+     0.0,
+     1.0
+    ]
+   },
+   "room": {
+    "set": "souvenir",
+    "w": 8.4,
+    "d": 10.0,
+    "bay_w": 8.4,
+    "bay_d": 13.25,
+    "floor_y_local": 0.0
+   },
+   "shop": {
+    "key": "x:little_sam_s_island_beach_fun_1343",
+    "name": "Little Sam's Beach Fun",
+    "type": "beach_shop",
+    "goods": [
+     "beach toys, boogie boards, beach chairs, umbrellas, souvenirs"
+    ],
+    "opening_hours": null,
+    "was_on": "amber ave"
+   },
+   "why": "the beach shop on the corner across from the beach: buckets, towels, sunscreen",
+   "marker": 2
+  },
+  {
+   "sample": "waterfront",
+   "piece": "f_se",
+   "building": "marina_office",
+   "model": "extras/ext_marina_office",
+   "door": {
+    "index": 0,
+    "facade": "front",
+    "along": 0.0,
+    "w": 1.8,
+    "world": [
+     -378.0,
+     0.45,
+     412.0
+    ],
+    "out": [
+     0.0,
+     -1.0
+    ]
+   },
+   "room": {
+    "set": "sport",
+    "w": 12.0,
+    "d": 9.25,
+    "bay_w": 13.4,
+    "bay_d": 9.25,
+    "floor_y_local": 0.3
+   },
+   "shop": {
+    "key": "w338830932",
+    "name": "The SUP & Saddlebag",
+    "type": "bicycle_rental",
+    "goods": [
+     "bike rentals: beach cruisers, electric bikes",
+     "kayak and stand-up paddleboard rentals",
+     "guided Coronado bike and kayak tours"
+    ],
+    "opening_hours": null,
+    "was_on": "1st st"
+   },
+   "why": "the marina office rents the paddle boards and bikes (The SUP & Saddlebag)",
+   "marker": 3
+  }
+ ],
+ "problems": [],
+ "not_rehomed": [
+  "n10845007460",
+  "n10871692429",
+  "n10874084837",
+  "n10948082180",
+  "n11044408082",
+  "n11044408083",
+  "n11044497998",
+  "n11044502848",
+  "n11044502849",
+  "n11044502850",
+  "n11047379332",
+  "n11047379333",
+  "n11984312476",
+  "n12091166712",
+  "n12447408180",
+  "n12468079340",
+  "n12468079341",
+  "n13394342165",
+  "n14183924535",
+  "n2445320390",
+  "n2653096337",
+  "n365356732",
+  "n365357532",
+  "n4360930290",
+  "n4519161392",
+  "n4519165285",
+  "n5026822058",
+  "n5026822527",
+  "n5026822528",
+  "n5121438421",
+  "n5180883768",
+  "n8666326046",
+  "n8666326078",
+  "n8666326090",
+  "w1164565173",
+  "w1169419994",
+  "w1173185482",
+  "w1173185483",
+  "w1178489561",
+  "w1517248651",
+  "w1517250288",
+  "w336614811",
+  "w338830927",
+  "w338830928",
+  "w363141081",
+  "w363141082",
+  "w363141083",
+  "w532610931",
+  "w532620969",
+  "w549418968",
+  "w549418981",
+  "w610123170",
+  "w675547564",
+  "w675547565",
+  "w741656928",
+  "x:accalia_salon_131",
+  "x:amalo_brew_coffee_640",
+  "x:ar_workshop_coronado_1033",
+  "x:avenu_1114",
+  "x:bay_books_1007",
+  "x:be_polished_studio_1132",
+  "x:blue_jeans_and_bikinis_971",
+  "x:bluewater_boathouse_seafood_grill_1701",
+  "x:cabrillo_cleaners_1110",
+  "x:charleston_shoe_company_1009",
+  "x:coronado_barbers_1222",
+  "x:coronado_boot_shoe_repair_863",
+  "x:coronado_coffee_company_1201",
+  "x:coronado_hat_company_916",
+  "x:coronado_mercantile_1201",
+  "x:coronado_museum_of_history_art_1100",
+  "x:crown_city_cigars_1136",
+  "x:crown_meets_sea_1158",
+  "x:domino_s_1330",
+  "x:double_standard_1202",
+  "x:emerald_c_gallery_1331",
+  "x:fiveloaves_twofish_1150",
+  "x:fran_aise_1037",
+  "x:fuzziwig_s_candy_factory_1126",
+  "x:garage_buona_forchetta_1000",
+  "x:geppetto_s_toys_1146",
+  "x:h_r_block_1033",
+  "x:habanero_s_mexican_food_900",
+  "x:ib_pet_coronado_945",
+  "x:isabella_avenue_dentistry_1012",
+  "x:island_beauty_salon_supply_1104",
+  "x:island_birkenstock_1350",
+  "x:jolie_126",
+  "x:la_corriente_1100",
+  "x:la_mer_1122",
+  "x:lamb_s_players_theatre_1142",
+  "x:lobster_west_1033",
+  "x:luxury_cleaners_110",
+  "x:miguel_s_cocina_1351",
+  "x:mj_s_boutique_1001",
+  "x:muhl_jewelers_1130",
+  "x:nado_gelato_cafe_1017",
+  "x:nado_republic_1007",
+  "x:parakeet_juicery_943",
+  "x:peohes_1201",
+  "x:pretty_place_1029",
+  "x:pretty_please_boutique_961",
+  "x:rosemary_trattoria_120",
+  "x:roses_the_salon_1016",
+  "x:s_d_trading_co_1340",
+  "x:salon_nado_1339",
+  "x:sand_beach_bikini_1121",
+  "x:savon_de_coronado_1024",
+  "x:sea_la_vie_1110",
+  "x:seaside_papery_1162",
+  "x:second_hand_prose_640",
+  "x:style_n_smile_nail_salon_1013",
+  "x:tartine_1106",
+  "x:tate_s_on_orange_841",
+  "x:the_galleria_1345",
+  "x:the_henry_1031",
+  "x:treasures_from_the_heart_1349",
+  "x:urt_urt_1019",
+  "x:village_ace_hardware_949",
+  "x:wild_dove_boutique_1029"
+ ]
+}

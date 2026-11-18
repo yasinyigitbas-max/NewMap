@@ -1,0 +1,131 @@
+{
+ "name": "urb_civ_colonnade_6m",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 6,
+ "near": {
+  "tris": 758,
+  "verts": 1354,
+  "regions": [
+   "S_black",
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "T_concrete",
+   "T_white"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -1.6799999475479126
+   ],
+   [
+    3.0,
+    4.5,
+    2.799999952316284
+   ]
+  ]
+ },
+ "mid_roof_top": 4.5,
+ "mid": {
+  "tris": 202,
+  "verts": 352,
+  "regions": [
+   "S_concrete",
+   "S_soffit",
+   "S_stucco",
+   "S_white"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -1.6799999475479126
+   ],
+   [
+    3.0,
+    4.5,
+    2.799999952316284
+   ]
+  ]
+ },
+ "far": {
+  "tris": 44,
+  "verts": 88,
+  "regions": [
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    -0.0,
+    -1.600000023841858
+   ],
+   [
+    3.0,
+    4.5,
+    1.6799999475479126
+   ]
+  ]
+ },
+ "doors_front": [],
+ "footprint_wd": [
+  6.0,
+  3.2
+ ],
+ "footprint_area": 19.2,
+ "height": 4.5,
+ "storeys": 1,
+ "budget": [
+  800,
+  220,
+  56
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_civ_colonnade",
+ "time_s": 2.4,
+ "open_planes": [
+  [
+   0,
+   -3.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   3.0,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  1.6
+ ],
+ "openings": [],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "civ_colonnade",
+  "ends": [
+   [
+    -3.0,
+    0,
+    1.6
+   ],
+   [
+    3.0,
+    0,
+    1.6
+   ]
+  ],
+  "face_z": 3.2,
+  "plate_y": 4.5
+ },
+ "no_door": true,
+ "base_y": 0.0,
+ "ground_reach": false
+}

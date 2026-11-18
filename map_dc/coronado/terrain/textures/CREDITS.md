@@ -1,0 +1,12 @@
+# Terrain / riprap textures (all CC0)
+- rock030/ — ambientCG "Rock030" (CC0 1.0), https://ambientcg.com/view?id=Rock030 — riprap stones.
+- gravel022/ — ambientCG "Gravel022" (CC0 1.0), https://ambientcg.com/view?id=Gravel022 — riprap bed.
+- gray_rocks/ — Poly Haven "Gray Rocks" by Dimitrios Savva (CC0), https://polyhaven.com/a/gray_rocks — far revetment bank (Shore Blvd).
+- grass004/ — ambientCG "Grass004 (colour + NormalGL)" (CC0 1.0), https://ambientcg.com/view?id=Grass004 — parks, golf fairways.
+- grass001/ — ambientCG "Grass001" (CC0 1.0), https://ambientcg.com/view?id=Grass001 — golf greens / pitches.
+- ground037/ — ambientCG "Ground037" (CC0 1.0), https://ambientcg.com/view?id=Ground037 — NAS dry ground, scrub.
+- concrete034/ — ambientCG "Concrete034" (CC0 1.0), https://ambientcg.com/view?id=Concrete034 — NAS hardstand patches.
+- ground054/ — ambientCG "Ground054" (CC0 1.0), https://ambientcg.com/view?id=Ground054 — sand detail (golf bunkers, beach).
+- tiles020/ — ambientCG "Tiles020" (CC0 1.0), https://ambientcg.com/view?id=Tiles020 — Hotel Bel pool interior tile (colour + NormalGL).
+- travertine009/ — ambientCG "Travertine009" (CC0 1.0), https://ambientcg.com/view?id=Travertine009 — Hotel Bel pool coping stone (colour + NormalGL).
+- concrete034/ is also the Hotel Bel pool deck (light broom-finished concrete, NAIP 2022 aerial).

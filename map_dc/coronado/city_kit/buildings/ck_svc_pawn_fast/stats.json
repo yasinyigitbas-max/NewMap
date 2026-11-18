@@ -1,0 +1,25 @@
+{
+ "cat": "mod",
+ "doors_front": [
+  [
+   "shopdoor",
+   -1.4
+  ],
+  [
+   "shopdoor",
+   1.2
+  ]
+ ],
+ "footprint_wd": [
+  12.0,
+  12.0
+ ],
+ "height": 5.1,
+ "merged_from": "ck_svc_pawn_fast.json",
+ "name": "ck_svc_pawn_fast",
+ "tris": {
+  "far": 214,
+  "mid": 534,
+  "near": 2318
+ }
+}

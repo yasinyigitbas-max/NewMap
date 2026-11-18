@@ -1,0 +1,914 @@
+{
+ "_doc": "Interior layout template (blue-dc-shopbuy). room: textures (ambientCG ids, 2K, interior/assets/tex) + size limits; slots placed in order by the layout engine (interior/shop_interior.gd). required: roles a shop of this set must have (tested); required_shallow: roles a small (shallow / narrow real building) room must have. only_types: slot used only for those shop types.",
+ "set": "office",
+ "types": [
+  "bank",
+  "tax_advisor",
+  "post_office",
+  "dentist",
+  "veterinary"
+ ],
+ "floor": "Carpet012",
+ "wall": "PaintedPlaster017",
+ "wall_tint": [
+  0.98,
+  0.98,
+  1
+ ],
+ "ceiling": "OfficeCeiling002",
+ "ceiling_scale": 3.6,
+ "wainscot": "Wood058",
+ "room": {
+  "min_w": 3,
+  "max_w": 12,
+  "min_d": 4,
+  "max_d": 12
+ },
+ "required": [
+  "counter",
+  "waiting"
+ ],
+ "required_shallow": [
+  "counter"
+ ],
+ "slots": [
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    2.6,
+    4.0
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "postage"
+   ],
+   "only_types": [
+    "bank"
+   ],
+   "wall": true
+  },
+  {
+   "role": "counter",
+   "prop": "counter",
+   "place": "by_door",
+   "len": [
+    1.8,
+    2.4
+   ],
+   "buy": "counter",
+   "staff": true,
+   "goods": [
+    "postage"
+   ],
+   "only_types": [
+    "tax_advisor",
+    "post_office",
+    "dentist",
+    "veterinary"
+   ],
+   "wall": true
+  },
+  {
+   "role": "back_shelf",
+   "prop": "shelf_wall",
+   "place": "behind_counter",
+   "only_types": [
+    "post_office"
+   ],
+   "goods": [
+    "postage"
+   ]
+  },
+  {
+   "role": "cabinets_back",
+   "prop": "cabinet",
+   "place": "behind_counter",
+   "only_types": [
+    "dentist",
+    "veterinary",
+    "bank",
+    "tax_advisor"
+   ]
+  },
+  {
+   "role": "desks",
+   "prop": "desk",
+   "place": "stations",
+   "only_types": [
+    "bank",
+    "tax_advisor"
+   ],
+   "max": 3
+  },
+  {
+   "role": "waiting",
+   "prop": "chair_row",
+   "place": "walls",
+   "walls": [
+    "back"
+   ],
+   "unit": [
+    1.8,
+    0.6
+   ],
+   "max": 2
+  },
+  {
+   "role": "waiting_side",
+   "prop": "chair_row",
+   "place": "walls",
+   "walls": [
+    "door_side"
+   ],
+   "unit": [
+    1.8,
+    0.6
+   ],
+   "only_types": [
+    "dentist",
+    "veterinary",
+    "post_office"
+   ],
+   "max": 2
+  },
+  {
+   "role": "files",
+   "prop": "cabinet",
+   "place": "walls",
+   "walls": [
+    "back"
+   ],
+   "unit": [
+    0.5,
+    0.66
+   ],
+   "max": 4,
+   "only_types": [
+    "bank",
+    "tax_advisor",
+    "post_office",
+    "dentist",
+    "veterinary"
+   ]
+  },
+  {
+   "role": "brochures",
+   "prop": "brochure_rack",
+   "place": "walls",
+   "walls": [
+    "door_side"
+   ],
+   "unit": [
+    0.55,
+    0.36
+   ],
+   "max": 1
+  },
+  {
+   "role": "art",
+   "prop": "art_wall",
+   "place": "walls",
+   "walls": [
+    "back",
+    "door_side"
+   ],
+   "unit": [
+    1.8,
+    0.12
+   ],
+   "max": 1,
+   "only_types": [
+    "bank",
+    "dentist",
+    "veterinary",
+    "tax_advisor"
+   ]
+  },
+  {
+   "role": "plant",
+   "prop": "plant",
+   "place": "corner"
+  },
+  {
+   "role": "plant2",
+   "prop": "plant",
+   "place": "corner",
+   "skip_shallow": true
+  }
+ ],
+ "plans": [
+  {
+   "name": "service",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      2.6,
+      4.0
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "postage"
+     ],
+     "only_types": [
+      "bank"
+     ],
+     "wall": true
+    },
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "postage"
+     ],
+     "only_types": [
+      "tax_advisor",
+      "post_office",
+      "dentist",
+      "veterinary"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_shelf",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "only_types": [
+      "post_office"
+     ],
+     "goods": [
+      "postage"
+     ]
+    },
+    {
+     "role": "cabinets_back",
+     "prop": "cabinet",
+     "place": "behind_counter",
+     "only_types": [
+      "dentist",
+      "veterinary",
+      "bank",
+      "tax_advisor"
+     ]
+    },
+    {
+     "role": "desks",
+     "prop": "desk",
+     "place": "stations",
+     "only_types": [
+      "bank",
+      "tax_advisor"
+     ],
+     "max": 3
+    },
+    {
+     "role": "waiting",
+     "prop": "chair_row",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "unit": [
+      1.8,
+      0.6
+     ],
+     "max": 2
+    },
+    {
+     "role": "waiting_side",
+     "prop": "chair_row",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "unit": [
+      1.8,
+      0.6
+     ],
+     "only_types": [
+      "dentist",
+      "veterinary",
+      "post_office"
+     ],
+     "max": 2
+    },
+    {
+     "role": "files",
+     "prop": "cabinet",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "unit": [
+      0.5,
+      0.66
+     ],
+     "max": 4,
+     "only_types": [
+      "bank",
+      "tax_advisor",
+      "post_office",
+      "dentist",
+      "veterinary"
+     ]
+    },
+    {
+     "role": "brochures",
+     "prop": "brochure_rack",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "unit": [
+      0.55,
+      0.36
+     ],
+     "max": 1
+    },
+    {
+     "role": "art",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "unit": [
+      1.8,
+      0.12
+     ],
+     "max": 1,
+     "only_types": [
+      "bank",
+      "dentist",
+      "veterinary",
+      "tax_advisor"
+     ]
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    },
+    {
+     "role": "plant2",
+     "prop": "plant",
+     "place": "corner",
+     "skip_shallow": true
+    }
+   ]
+  },
+  {
+   "name": "open_plan",
+   "fixtures": "office_drop",
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      2.6,
+      4.0
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "postage"
+     ],
+     "only_types": [
+      "bank"
+     ],
+     "wall": true
+    },
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "postage"
+     ],
+     "only_types": [
+      "tax_advisor",
+      "post_office",
+      "dentist",
+      "veterinary"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_shelf",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "only_types": [
+      "post_office"
+     ],
+     "goods": [
+      "postage"
+     ]
+    },
+    {
+     "role": "desks",
+     "prop": "desk",
+     "place": "stations",
+     "only_types": [
+      "bank",
+      "tax_advisor"
+     ],
+     "max": 4
+    },
+    {
+     "role": "waiting",
+     "prop": "chair_row",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "unit": [
+      1.8,
+      0.6
+     ],
+     "max": 2
+    },
+    {
+     "role": "files_side",
+     "prop": "cabinet",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "unit": [
+      0.5,
+      0.66
+     ],
+     "max": 2,
+     "only_types": [
+      "tax_advisor",
+      "bank"
+     ]
+    },
+    {
+     "role": "brochures",
+     "prop": "brochure_rack",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "unit": [
+      0.55,
+      0.36
+     ],
+     "max": 1
+    },
+    {
+     "role": "files",
+     "prop": "cabinet",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "unit": [
+      0.5,
+      0.66
+     ],
+     "max": 4,
+     "only_types": [
+      "bank",
+      "tax_advisor",
+      "post_office",
+      "dentist",
+      "veterinary"
+     ]
+    },
+    {
+     "role": "art",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "unit": [
+      1.8,
+      0.12
+     ],
+     "max": 1,
+     "only_types": [
+      "bank",
+      "dentist",
+      "veterinary",
+      "tax_advisor"
+     ]
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    }
+   ]
+  },
+  {
+   "name": "waiting_room",
+   "fixtures": [
+    "office_drop",
+    "shop_tubes"
+   ],
+   "slots": [
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      2.6,
+      4.0
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "postage"
+     ],
+     "only_types": [
+      "bank"
+     ],
+     "wall": true
+    },
+    {
+     "role": "counter",
+     "prop": "counter",
+     "place": "by_door",
+     "len": [
+      1.8,
+      2.4
+     ],
+     "buy": "counter",
+     "staff": true,
+     "goods": [
+      "postage"
+     ],
+     "only_types": [
+      "tax_advisor",
+      "post_office",
+      "dentist",
+      "veterinary"
+     ],
+     "wall": true
+    },
+    {
+     "role": "back_shelf",
+     "prop": "shelf_wall",
+     "place": "behind_counter",
+     "only_types": [
+      "post_office"
+     ],
+     "goods": [
+      "postage"
+     ]
+    },
+    {
+     "role": "cabinets_back",
+     "prop": "cabinet",
+     "place": "behind_counter",
+     "only_types": [
+      "dentist",
+      "veterinary",
+      "bank",
+      "tax_advisor"
+     ]
+    },
+    {
+     "role": "waiting_side",
+     "prop": "chair_row",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "unit": [
+      1.8,
+      0.6
+     ],
+     "only_types": [
+      "dentist",
+      "veterinary",
+      "post_office",
+      "bank"
+     ],
+     "max": 2
+    },
+    {
+     "role": "waiting",
+     "prop": "chair_row",
+     "place": "walls",
+     "walls": [
+      "back"
+     ],
+     "unit": [
+      1.8,
+      0.6
+     ],
+     "max": 2
+    },
+    {
+     "role": "desks",
+     "prop": "desk",
+     "place": "stations",
+     "only_types": [
+      "bank",
+      "tax_advisor"
+     ],
+     "max": 3
+    },
+    {
+     "role": "art",
+     "prop": "art_wall",
+     "place": "walls",
+     "walls": [
+      "back",
+      "door_side"
+     ],
+     "unit": [
+      1.8,
+      0.12
+     ],
+     "max": 1,
+     "only_types": [
+      "bank",
+      "dentist",
+      "veterinary",
+      "tax_advisor"
+     ]
+    },
+    {
+     "role": "brochures",
+     "prop": "brochure_rack",
+     "place": "walls",
+     "walls": [
+      "door_side"
+     ],
+     "unit": [
+      0.55,
+      0.36
+     ],
+     "max": 1
+    },
+    {
+     "role": "plant",
+     "prop": "plant",
+     "place": "corner"
+    },
+    {
+     "role": "plant2",
+     "prop": "plant",
+     "place": "corner",
+     "skip_shallow": true
+    }
+   ]
+  }
+ ],
+ "styles": [
+  {
+   "floor": "Carpet012",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.98,
+    0.98,
+    1.0
+   ],
+   "wainscot": "Wood058",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  },
+  {
+   "floor": "Terrazzo005",
+   "wall": "Plaster001",
+   "wall_tint": [
+    1.0,
+    0.97,
+    0.9
+   ],
+   "wainscot": "Marble006",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6,
+   "match": [
+    "bank",
+    "savings",
+    "credit union",
+    "fargo",
+    "chase"
+   ]
+  },
+  {
+   "floor": "Tiles141",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.9,
+    0.97,
+    0.95
+   ],
+   "wainscot": "Tiles141",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6,
+   "match": [
+    "dent",
+    "veterin",
+    "animal",
+    "clinic",
+    "pet",
+    "smile"
+   ]
+  },
+  {
+   "floor": "WoodFloor051",
+   "wall": "PaintedPlaster017",
+   "wall_tint": [
+    0.97,
+    0.94,
+    0.88
+   ],
+   "wainscot": "WoodSiding008",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6,
+   "match": [
+    "tax",
+    "block",
+    "account",
+    "insurance",
+    "law"
+   ]
+  },
+  {
+   "floor": "Carpet012",
+   "wall": "Plaster001",
+   "wall_tint": [
+    0.93,
+    0.95,
+    1.0
+   ],
+   "wainscot": "WoodSiding008",
+   "ceiling": "OfficeCeiling002",
+   "ceiling_scale": 3.6
+  }
+ ],
+ "wear": 0.28,
+ "wear_types": {
+  "post_office": 0.45,
+  "veterinary": 0.38
+ },
+ "clutter": {
+  "kit": "generic",
+  "counter": [
+   "terminal",
+   "papers",
+   "phone",
+   "cup",
+   "flyers",
+   "receipts"
+  ],
+  "floor": [
+   0,
+   1
+  ],
+  "floor_kinds": [
+   "paper_pile"
+  ],
+  "bin": true,
+  "trash": 0
+ },
+ "signs": {
+  "kit": "generic",
+  "posters": [
+   "poster_silver_strand",
+   "poster_ferry"
+  ],
+  "notices": [
+   "notice_hours",
+   "notice_sign_in",
+   "notice_cctv"
+  ],
+  "n_posters": [
+   1,
+   2
+  ],
+  "n_notices": [
+   1,
+   2
+  ],
+  "types": {
+   "bank": {
+    "posters": [
+     "poster_bank_rates",
+     "poster_home_loans",
+     "poster_silver_strand"
+    ],
+    "notices": [
+     "notice_now_serving",
+     "notice_please_wait",
+     "notice_cctv",
+     "notice_hours"
+    ],
+    "n_posters": [
+     2,
+     3
+    ],
+    "n_notices": [
+     2,
+     3
+    ]
+   },
+   "tax_advisor": {
+    "posters": [
+     "poster_tax_season",
+     "poster_home_loans"
+    ],
+    "notices": [
+     "notice_appointments",
+     "notice_hours",
+     "notice_please_wait"
+    ],
+    "n_posters": [
+     1,
+     2
+    ],
+    "n_notices": [
+     1,
+     2
+    ]
+   },
+   "dentist": {
+    "posters": [
+     "poster_smile",
+     "poster_floss"
+    ],
+    "notices": [
+     "notice_sign_in",
+     "notice_appointments",
+     "notice_hours"
+    ],
+    "n_posters": [
+     2,
+     2
+    ],
+    "n_notices": [
+     1,
+     2
+    ]
+   },
+   "veterinary": {
+    "posters": [
+     "poster_pet_care",
+     "poster_smile"
+    ],
+    "notices": [
+     "notice_sign_in",
+     "notice_appointments",
+     "notice_hours"
+    ],
+    "n_posters": [
+     1,
+     2
+    ],
+    "n_notices": [
+     1,
+     2
+    ]
+   },
+   "post_office": {
+    "posters": [
+     "poster_ferry",
+     "poster_local_tours"
+    ],
+    "notices": [
+     "notice_now_serving",
+     "notice_please_wait",
+     "notice_hours"
+    ],
+    "n_posters": [
+     1,
+     2
+    ],
+    "n_notices": [
+     2,
+     3
+    ]
+   }
+  }
+ },
+ "busy": 0.55
+}

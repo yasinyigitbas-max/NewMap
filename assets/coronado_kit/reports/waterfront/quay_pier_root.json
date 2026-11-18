@@ -1,0 +1,106 @@
+{
+ "name": "quay_pier_root",
+ "tiers": {
+  "near": 634,
+  "mid": 188,
+  "far": 6
+ },
+ "budget": 2500,
+ "class": "large",
+ "far_paint_max": 0.4700713082698592,
+ "validator_ok": true,
+ "validator": [
+  {
+   "file": "prop_quay_pier_root_clean_far.glb",
+   "tier": "far",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 6,
+   "verts": 12,
+   "budget": 20,
+   "size": [
+    6.0,
+    3.0,
+    1.85
+   ],
+   "odd_ray": 0
+  },
+  {
+   "file": "prop_quay_pier_root_clean_mid.glb",
+   "tier": "mid",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [
+    "16 tris may face inward / be enclosed"
+   ],
+   "tris": 188,
+   "verts": 484,
+   "budget": 751,
+   "size": [
+    6.0,
+    3.0,
+    2.01
+   ],
+   "odd_ray": 45
+  },
+  {
+   "file": "prop_quay_pier_root_clean_near.glb",
+   "tier": "near",
+   "cls": "large",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "tris": 634,
+   "verts": 1306,
+   "budget": 2500,
+   "size": [
+    6.0,
+    3.002,
+    2.025
+   ],
+   "odd_ray": 154
+  },
+  {
+   "file": "prop_quay_pier_root_col.glb",
+   "ok": true,
+   "errs": [],
+   "warn": [],
+   "col_parts": 7,
+   "col_maxverts": 24
+  }
+ ],
+ "far_match_ok": true,
+ "far_match": {
+  "front": {
+   "iou": 1.0,
+   "dE": 0.2
+  },
+  "top": {
+   "iou": 0.936,
+   "dE": 0.6
+  },
+  "left": {
+   "iou": 0.0,
+   "dE": 99,
+   "note": "info only (snap ends are open)"
+  }
+ },
+ "col_split": {
+  "main": 1,
+  "rail": 6
+ },
+ "col_ok": true,
+ "uvsrc_ok": true,
+ "uvsrc": {
+  "slot_overlaps": 0,
+  "near_foreign_tris": 0,
+  "mid_foreign_tris": 0
+ },
+ "bake_px": 128,
+ "bake_px_per_m": 34.7,
+ "high_tris": 9348,
+ "pass": true
+}

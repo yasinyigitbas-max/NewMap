@@ -1,0 +1,125 @@
+{
+ "name": "cape_large",
+ "cat": "house",
+ "style": "cape_cod",
+ "logic_errors": [],
+ "col_boxes": 15,
+ "near": {
+  "tris": 2466,
+  "verts": 4228,
+  "regions": [
+   "O_door_slider",
+   "O_door_white",
+   "O_lamp",
+   "O_number",
+   "O_shutter",
+   "O_small_white",
+   "O_vent",
+   "O_win_dh_div",
+   "O_win_dh_white",
+   "R_comp",
+   "S_black",
+   "S_concrete",
+   "S_siding",
+   "S_soffit",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_deck",
+   "T_metal",
+   "T_rail",
+   "T_white",
+   "W_brick",
+   "W_shingle",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.420000076293945,
+    0.0,
+    -9.300000190734863
+   ],
+   [
+    5.420000076293945,
+    11.300000190734863,
+    10.300000190734863
+   ]
+  ]
+ },
+ "mid_roof_top": 10.82,
+ "mid": {
+  "tris": 444,
+  "verts": 552,
+  "regions": [
+   "O_door_slider",
+   "O_door_white",
+   "O_small_white",
+   "O_win_dh_div",
+   "O_win_dh_white",
+   "S_comp",
+   "S_concrete",
+   "S_deck",
+   "S_soffit",
+   "S_white",
+   "W_brick",
+   "W_shingle",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -5.300000190734863,
+    0.0,
+    -9.300000190734863
+   ],
+   [
+    5.300000190734863,
+    11.300000190734863,
+    10.300000190734863
+   ]
+  ]
+ },
+ "far": {
+  "tris": 30,
+  "verts": 54,
+  "regions": [
+   "F_comp",
+   "F_shingle_blank",
+   "F_siding_2",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -5.0,
+    0.0,
+    -7.5
+   ],
+   [
+    5.0,
+    10.819999694824219,
+    7.5
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "door",
+   0.0
+  ]
+ ],
+ "footprint_wd": [
+  10.0,
+  15.0
+ ],
+ "footprint_area": 150.0,
+ "height": 11.3,
+ "storeys": 2,
+ "budget": [
+  2500,
+  750,
+  60
+ ],
+ "budget_class": "house_large",
+ "time_s": 17.5
+}

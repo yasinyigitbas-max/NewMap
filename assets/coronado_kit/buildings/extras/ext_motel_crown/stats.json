@@ -1,0 +1,204 @@
+{
+ "name": "ext_motel_crown",
+ "cat": "apartment",
+ "style": "motor_court_motel",
+ "logic_errors": [],
+ "col_boxes": 4,
+ "near": {
+  "tris": 4903,
+  "verts": 8529,
+  "regions": [
+   "O_apt_door",
+   "O_apt_slider",
+   "O_lamp",
+   "O_louver",
+   "O_number",
+   "O_shopdoor",
+   "O_small_white",
+   "O_storefront",
+   "O_vent",
+   "O_win_casement",
+   "O_win_dh_white",
+   "R_flat",
+   "R_metal",
+   "SG_motel",
+   "S_black",
+   "S_concrete",
+   "S_signbg",
+   "S_soffit",
+   "S_stucco",
+   "S_white",
+   "T_concrete",
+   "T_dark",
+   "T_metal",
+   "T_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -22.225000381469727,
+    -0.0,
+    -5.21999979019165
+   ],
+   [
+    25.700000762939453,
+    7.269999980926514,
+    8.125
+   ]
+  ]
+ },
+ "mid_roof_top": 7.0,
+ "mid": {
+  "tris": 1214,
+  "verts": 1406,
+  "regions": [
+   "O_apt_door",
+   "O_apt_slider",
+   "O_shopdoor",
+   "O_small_white",
+   "O_storefront",
+   "O_win_casement",
+   "O_win_dh_white",
+   "SG_motel",
+   "S_concrete",
+   "S_flat",
+   "S_metal",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -22.200000762939453,
+    -0.0,
+    -4.5
+   ],
+   [
+    25.700000762939453,
+    7.0,
+    8.125
+   ]
+  ]
+ },
+ "far": {
+  "tris": 20,
+  "verts": 38,
+  "regions": [
+   "F_flat",
+   "F_stucco_2"
+  ],
+  "bbox": [
+   [
+    -21.0,
+    0.0,
+    -4.5
+   ],
+   [
+    21.0,
+    7.0,
+    4.5
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "apt_door",
+   -18.15
+  ],
+  [
+   "apt_door",
+   -16.65
+  ],
+  [
+   "apt_door",
+   -10.95
+  ],
+  [
+   "apt_door",
+   -9.45
+  ],
+  [
+   "apt_door",
+   -3.75
+  ],
+  [
+   "apt_door",
+   -2.25
+  ],
+  [
+   "apt_door",
+   3.45
+  ],
+  [
+   "apt_door",
+   4.95
+  ],
+  [
+   "apt_door",
+   10.65
+  ],
+  [
+   "apt_door",
+   12.15
+  ],
+  [
+   "apt_door",
+   -18.15
+  ],
+  [
+   "apt_door",
+   -16.65
+  ],
+  [
+   "apt_door",
+   -10.95
+  ],
+  [
+   "apt_door",
+   -9.45
+  ],
+  [
+   "apt_door",
+   -3.75
+  ],
+  [
+   "apt_door",
+   -2.25
+  ],
+  [
+   "apt_door",
+   3.45
+  ],
+  [
+   "apt_door",
+   4.95
+  ],
+  [
+   "apt_door",
+   10.65
+  ],
+  [
+   "apt_door",
+   12.15
+  ],
+  [
+   "shopdoor",
+   16.3
+  ]
+ ],
+ "footprint_wd": [
+  42.0,
+  9.0
+ ],
+ "footprint_area": 378.0,
+ "height": 7.27,
+ "storeys": 2,
+ "budget": [
+  5000,
+  1500,
+  120
+ ],
+ "budget_class": "apartment_large",
+ "time_s": 48.4
+}

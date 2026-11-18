@@ -1,0 +1,366 @@
+[
+ {
+  "file": "prop_quay_corner_in_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 8,
+  "verts": 14,
+  "budget": 20,
+  "size": [
+   4.0,
+   3.0,
+   4.0
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_quay_corner_in_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 228,
+  "verts": 595,
+  "budget": 751,
+  "size": [
+   4.0,
+   3.119,
+   4.0
+  ],
+  "odd_ray": 39
+ },
+ {
+  "file": "prop_quay_corner_in_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "74 tris may face inward / be enclosed"
+  ],
+  "tris": 1100,
+  "verts": 2046,
+  "budget": 2500,
+  "size": [
+   4.0,
+   3.123,
+   4.0
+  ],
+  "odd_ray": 275
+ },
+ {
+  "file": "prop_quay_corner_in_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 5,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_quay_corner_out_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 12,
+  "verts": 22,
+  "budget": 20,
+  "size": [
+   1.85,
+   3.0,
+   1.85
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_quay_corner_out_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "21 tris may face inward / be enclosed"
+  ],
+  "tris": 241,
+  "verts": 660,
+  "budget": 751,
+  "size": [
+   2.01,
+   3.535,
+   2.01
+  ],
+  "odd_ray": 39
+ },
+ {
+  "file": "prop_quay_corner_out_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "99 tris may face inward / be enclosed"
+  ],
+  "tris": 1229,
+  "verts": 2163,
+  "budget": 2500,
+  "size": [
+   2.025,
+   3.535,
+   2.025
+  ],
+  "odd_ray": 214
+ },
+ {
+  "file": "prop_quay_corner_out_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 5,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_quay_pier_root_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 6,
+  "verts": 12,
+  "budget": 20,
+  "size": [
+   6.0,
+   3.0,
+   1.85
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_quay_pier_root_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "16 tris may face inward / be enclosed"
+  ],
+  "tris": 188,
+  "verts": 484,
+  "budget": 751,
+  "size": [
+   6.0,
+   3.0,
+   2.01
+  ],
+  "odd_ray": 45
+ },
+ {
+  "file": "prop_quay_pier_root_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 634,
+  "verts": 1306,
+  "budget": 2500,
+  "size": [
+   6.0,
+   3.002,
+   2.025
+  ],
+  "odd_ray": 154
+ },
+ {
+  "file": "prop_quay_pier_root_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 7,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_quay_stair_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 14,
+  "verts": 28,
+  "budget": 20,
+  "size": [
+   6.0,
+   3.0,
+   1.85
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_quay_stair_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 308,
+  "verts": 794,
+  "budget": 751,
+  "size": [
+   6.0,
+   3.535,
+   2.01
+  ],
+  "odd_ray": 53
+ },
+ {
+  "file": "prop_quay_stair_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 1848,
+  "verts": 3514,
+  "budget": 2500,
+  "size": [
+   6.0,
+   4.07,
+   2.025
+  ],
+  "odd_ray": 369
+ },
+ {
+  "file": "prop_quay_stair_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 17,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_quay_straight_bollards_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 6,
+  "verts": 12,
+  "budget": 20,
+  "size": [
+   6.0,
+   3.0,
+   1.85
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_quay_straight_bollards_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 332,
+  "verts": 924,
+  "budget": 751,
+  "size": [
+   6.0,
+   3.535,
+   2.01
+  ],
+  "odd_ray": 57
+ },
+ {
+  "file": "prop_quay_straight_bollards_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [
+   "97 tris may face inward / be enclosed"
+  ],
+  "tris": 1606,
+  "verts": 2821,
+  "budget": 2500,
+  "size": [
+   6.0,
+   3.535,
+   2.025
+  ],
+  "odd_ray": 268
+ },
+ {
+  "file": "prop_quay_straight_bollards_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 5,
+  "col_maxverts": 24
+ },
+ {
+  "file": "prop_quay_straight_clean_far.glb",
+  "tier": "far",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 6,
+  "verts": 12,
+  "budget": 20,
+  "size": [
+   6.0,
+   3.0,
+   1.85
+  ],
+  "odd_ray": 0
+ },
+ {
+  "file": "prop_quay_straight_clean_mid.glb",
+  "tier": "mid",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 234,
+  "verts": 627,
+  "budget": 751,
+  "size": [
+   6.0,
+   3.535,
+   2.01
+  ],
+  "odd_ray": 50
+ },
+ {
+  "file": "prop_quay_straight_clean_near.glb",
+  "tier": "near",
+  "cls": "large",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "tris": 1638,
+  "verts": 3031,
+  "budget": 2500,
+  "size": [
+   6.0,
+   3.7,
+   2.025
+  ],
+  "odd_ray": 318
+ },
+ {
+  "file": "prop_quay_straight_col.glb",
+  "ok": true,
+  "errs": [],
+  "warn": [],
+  "col_parts": 7,
+  "col_maxverts": 24
+ }
+]

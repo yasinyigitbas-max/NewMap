@@ -1,0 +1,24 @@
+{
+ "name": "mod_wh_shed",
+ "cat": "mod",
+ "budget_class": "warehouse",
+ "budget": [
+  2000,
+  600,
+  40
+ ],
+ "storeys": 1,
+ "footprint_wd": [
+  24.0,
+  24.0
+ ],
+ "footprint_area": 576.0,
+ "logic_errors": [],
+ "col_boxes": 1,
+ "tris": {
+  "near": 1626,
+  "mid": 444,
+  "far": 18
+ },
+ "no_door": false
+}
