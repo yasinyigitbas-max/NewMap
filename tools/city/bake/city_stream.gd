@@ -246,6 +246,16 @@ func update_focus(p: Vector3, now := false, velocity := Vector3.ZERO) -> void:
 		for w: Array in want:
 			var c2: Dictionary = cells[w[1]]
 			c2.ps = load(_path(w[1])); _build(c2); c2.ps = null; _add(w[1])      # _build takes the collision out for the usual stepwise attach (without it these cells never got any: found by the sky session, docs/look_patches/streamer_now.md)
+		# and their collision goes in now as well, all of it: this is the loading screen. Left to the stepwise attach,
+		# the start area's bodies trickled in at 1,200 triangles a frame through the warm-up and the first drive
+		# (phone, 19 Nov: a body 9.9 s after its cell, the health gate's limit is 3 s)
+		while not _pending.is_empty():
+			var e0: Array = _pending.pop_back(); var mk0 := e0[2] as Node3D
+			var body0 := StaticBody3D.new(); body0.name = mk0.name; body0.transform = mk0.transform
+			body0.collision_layer = int(mk0.get_meta(&"layer")); body0.collision_mask = int(mk0.get_meta(&"mask"))
+			for it0: Array in mk0.get_meta(&"col"):
+				var ow0 := body0.create_shape_owner(body0); body0.shape_owner_set_transform(ow0, it0[1]); body0.shape_owner_add_shape(ow0, (it0[0] as Resource).call(&"make"))
+			(e0[1] as Node).add_child(body0); mk0.free(); stats.bodies += 1
 		_flush_map(); return
 	var loading := 0; var have := 0
 	for k2: String in cells:
