@@ -125,6 +125,14 @@ no lighting, no texture read): the pilot area = 39 buildings, 23 awnings, 358 tr
 would carry its own. Into the bake: `docs/look_patches/contact_between.md`.
 - Cost: one draw per cell; a blend on the strips' pixels only, ~4 ops.
 
+## Queue job 5, night windows at a distance (patch note; `rt_far` is not mine to edit)
+Far buildings (beyond 220 m) did not light their windows (the far atlas has no glow mask). Cheapest way: the window
+mask goes into the far atlas's ALPHA (`tools/city/look/make_far_glow.py` finds the painted windows: 9.9 % of the atlas),
+and the far shader lights it at night with the near windows' rule and palette: no extra texture read. The change to
+`rt_far.gdshaderinc` and the bake is written out in `docs/look_patches/far_windows.md`; tried in memory
+(`tools/city/look/far_glow_shots.gd`): `review/look_18nov/far_windows/`.
+- Cost: no extra read; ~20 ops on far-building pixels at night only; +2 MB for the atlas's alpha.
+
 ## Picture files
 `<view>_<day|night>_<set>.jpg`, views `centre_a/b` (city centre, 0,-600), `apartments_a/b` (250,-600), `pilot_a/b`
 (high street, 0,0), eye 1.7 m above the road. Sets: `before` (all three off) and `after` (all on) for every view;
