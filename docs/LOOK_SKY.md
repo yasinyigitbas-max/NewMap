@@ -160,7 +160,9 @@ against `times/<view>_<noon|golden>.jpg`.
   puddles from the look's noise texture (one more read per ground pixel) + the sky map (one more). The ground covers
   most of the screen, so rain costs two reads a pixel on most of the screen: a mood for the game's rain, not for
   every day. The real change goes into `rt_ground.gdshader` (the building session's): the two `WET` lines.
-  Pictures: `review/look_18nov/wet/<view>_<overcast|dusk>_wet.jpg` against `times/<view>_<overcast|dusk>.jpg`.
+  Pictures: `review/look_18nov/wet/pair_<view>_<overcast|dusk>.jpg` (dry above, wet below). In the cloud it reads
+  gently (a sheen and puddle patches towards the far end, pavements catch the sky); no extra draw. Stronger: raise
+  `--wet` or the 1.3 in `ck_wet_ground()`.
 - Not done: a reflection of the city itself in the puddles (needs screen-space reflection: a full-screen pass, ruled
   out), rain drops, wet walls.
 
