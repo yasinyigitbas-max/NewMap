@@ -15,6 +15,8 @@ uniform vec3 cloud_dark : source_color = vec3(0.62, 0.68, 0.78);
 uniform float cloud_cover = 0.5;      // 0 none .. 1 overcast
 uniform float cloud_alpha = 0.9;
 uniform float cloud_scale = 0.2;     // texture repeats per unit of the cloud layer: bigger = smaller clouds
+uniform float cloud_low = 0.2;       // queue 3: the clouds melt into the haze below this height (smaller = seen lower, from the street)
+uniform float cloud_soft = 0.24;     // queue 3: width of a cloud's edge (smaller = crisper shapes)
 uniform float stars = 0.0;             // 0 by day; rises with the dusk
 // look queue 2, job 2: the sun's glare, the moon
 uniform float sun_glare = 0.35;        // a soft wide glare round the disc (no bloom pass: it is drawn into the sky)
@@ -54,7 +56,7 @@ vec3 ck_sky_color(vec3 dir) {
 		float detail = texture(noise_tex, uv * cloud_scale * 4.1 + ck_sky_drift * 2.6 + vec2(0.37, 0.11)).g;
 		float d = shape * 0.74 + detail * 0.26;
 		float edge = 1.0 - cloud_cover;
-		float c = smoothstep(edge, edge + 0.24, d) * smoothstep(0.015, 0.2, y) * cloud_alpha;      // melts into the haze
+		float c = smoothstep(edge, edge + cloud_soft, d) * smoothstep(0.015, cloud_low, y) * cloud_alpha;      // melts into the haze
 		vec3 cc = mix(cloud_lit, cloud_dark, smoothstep(edge + 0.1, edge + 0.52, d));               // thick middles are darker
 		cc += sun_col * (sd8 * sun_scatter * 1.5);
 		if (stars > 0.001) {      // thin near the horizon (haze), none round the moon

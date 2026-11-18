@@ -61,12 +61,12 @@ const NIGHT := {
 ## city's night is on (windows, lamp halos, real lamp lights: the streamer's ck_night). Cost: the same as the look
 ## itself (only numbers change); a preset change redraws the sky's reflection map once.
 static var PRESETS := {
-	"morning": {      # low sun from the east through a cool morning mist
-		"elev": 16.0, "azim": 105.0, "lights": 0.0, "moon": 0.0,
-		"zenith": Color(0.34, 0.50, 0.72), "middle": Color(0.64, 0.71, 0.80), "haze": Color(0.80, 0.82, 0.84),
-		"sun_color": Color(1.0, 0.85, 0.70), "sun_energy": 1.25, "ambient_color": Color(0.58, 0.64, 0.74), "ambient_energy": 0.75,
-		"fog_density": 0.0028, "fog_sun_scatter": 0.45,
-		"cloud_lit": Color(1.0, 0.93, 0.86), "cloud_dark": Color(0.62, 0.65, 0.70), "cloud_cover": 0.36, "cloud_alpha": 0.8, "cloud_scale": 0.2,
+	"morning": {      # low sun from the east, a light morning haze (queue 3: half the old mist, warm sun / cool shade)
+		"elev": 16.0, "azim": 105.0, "lights": 0.0, "moon": 0.0, "grade": "half",
+		"zenith": Color(0.30, 0.48, 0.74), "middle": Color(0.62, 0.70, 0.80), "haze": Color(0.84, 0.84, 0.82),
+		"sun_color": Color(1.0, 0.82, 0.62), "sun_energy": 1.45, "ambient_color": Color(0.52, 0.60, 0.76), "ambient_energy": 0.7,
+		"fog_density": 0.0016, "fog_sun_scatter": 0.45,
+		"cloud_lit": Color(1.0, 0.93, 0.86), "cloud_dark": Color(0.60, 0.64, 0.72), "cloud_cover": 0.36, "cloud_alpha": 0.85, "cloud_scale": 0.2, "cloud_low": 0.1, "cloud_soft": 0.2,
 		"sun_halo": 0.8, "sun_disc": 6.0, "disc_cos": 0.9993, "stars": 0.0},
 	"noon": {         # high, white-hot sun, short shadows, the smog flat and bright
 		"elev": 64.0, "azim": -35.0, "lights": 0.0, "moon": 0.0,
@@ -76,12 +76,28 @@ static var PRESETS := {
 		"cloud_lit": Color(1.0, 0.98, 0.94), "cloud_dark": Color(0.64, 0.66, 0.68), "cloud_cover": 0.42, "cloud_alpha": 0.85, "cloud_scale": 0.2,
 		"sun_halo": 0.6, "sun_disc": 6.0, "disc_cos": 0.9993, "stars": 0.0},
 	"day": DAY.merged({"elev": 40.0, "azim": -35.0, "lights": 0.0, "moon": 0.0}),
-	"golden": {       # late afternoon: low orange sun from the west, long shadows, amber haze
-		"elev": 11.0, "azim": -80.0, "lights": 0.0, "moon": 0.0,
-		"zenith": Color(0.30, 0.42, 0.62), "middle": Color(0.70, 0.63, 0.58), "haze": Color(0.90, 0.71, 0.50),
-		"sun_color": Color(1.0, 0.68, 0.40), "sun_energy": 1.45, "ambient_color": Color(0.50, 0.52, 0.62), "ambient_energy": 0.66,
-		"fog_density": 0.0019, "fog_sun_scatter": 0.55,
-		"cloud_lit": Color(1.0, 0.80, 0.58), "cloud_dark": Color(0.52, 0.46, 0.48), "cloud_cover": 0.46, "cloud_alpha": 0.85, "cloud_scale": 0.2,
+	# queue 3, job 2: two more days for Yasin to choose from (the default stays "day", the GTA 4 palette he asked for)
+	"day_half": {     # half the haze and half the held-back colour
+		"elev": 40.0, "azim": -35.0, "lights": 0.0, "moon": 0.0, "grade": "half",
+		"zenith": Color(0.26, 0.45, 0.73), "middle": Color(0.52, 0.66, 0.82), "haze": Color(0.77, 0.80, 0.80),
+		"sun_color": Color(1.0, 0.90, 0.74), "sun_energy": 1.55, "ambient_color": Color(0.58, 0.64, 0.73), "ambient_energy": 0.8,
+		"fog_density": 0.00085, "fog_sun_scatter": 0.2,
+		"cloud_lit": Color(0.99, 0.97, 0.93), "cloud_dark": Color(0.62, 0.65, 0.70), "cloud_cover": 0.46, "cloud_alpha": 0.9, "cloud_scale": 0.2, "cloud_low": 0.1, "cloud_soft": 0.2,
+		"sun_halo": 0.7, "sun_disc": 6.0, "disc_cos": 0.9993, "stars": 0.0},
+	"day_clear": {    # a clear Coronado day: blue sky, haze only low at the horizon, the city's own colours kept
+		"elev": 40.0, "azim": -35.0, "lights": 0.0, "moon": 0.0, "grade": "clear",
+		"zenith": Color(0.20, 0.42, 0.78), "middle": Color(0.48, 0.66, 0.88), "haze": Color(0.74, 0.81, 0.88),
+		"sun_color": Color(1.0, 0.95, 0.86), "sun_energy": 1.6, "ambient_color": Color(0.55, 0.63, 0.78), "ambient_energy": 0.8,
+		"fog_density": 0.0007, "fog_sun_scatter": 0.15,
+		"cloud_lit": Color(1.0, 1.0, 1.0), "cloud_dark": Color(0.68, 0.72, 0.80), "cloud_cover": 0.42, "cloud_alpha": 0.95, "cloud_scale": 0.2, "cloud_low": 0.06, "cloud_soft": 0.16,
+		"sun_halo": 0.6, "sun_disc": 7.0, "disc_cos": 0.9993, "stars": 0.0},
+	"golden": {       # late afternoon (queue 3: golden, not brown): a low strong orange sun along the streets, long
+		# shadows, warm walls against blue shade; the haze thinner and lighter so it does not turn into a brown fog
+		"elev": 9.0, "azim": -80.0, "lights": 0.0, "moon": 0.0, "grade": "half",
+		"zenith": Color(0.26, 0.42, 0.68), "middle": Color(0.74, 0.66, 0.58), "haze": Color(0.95, 0.78, 0.56),
+		"sun_color": Color(1.0, 0.64, 0.34), "sun_energy": 1.85, "ambient_color": Color(0.44, 0.52, 0.70), "ambient_energy": 0.6,
+		"fog_density": 0.0011, "fog_sun_scatter": 0.5,
+		"cloud_lit": Color(1.0, 0.78, 0.52), "cloud_dark": Color(0.45, 0.42, 0.48), "cloud_cover": 0.44, "cloud_alpha": 0.9, "cloud_scale": 0.2, "cloud_low": 0.1, "cloud_soft": 0.2,
 		"sun_halo": 1.0, "sun_disc": 5.0, "disc_cos": 0.9992, "stars": 0.0},
 	"dusk": {         # the sun just down: pink-orange west, blue east, windows and lamps coming on
 		"elev": 3.0, "azim": -95.0, "lights": 0.65, "moon": 0.0,
@@ -106,6 +122,7 @@ static var PRESETS := {
 @export var glow := true                            ## lamp halos and pools drawn by tools/city/look/glow.gdshader (look job 3); false = the bake's
 @export var blobs := false                          ## soft tree shadows beyond the sun shadow (look job 4). Reads each cell's meshes: off for phone drives
 @export_range(0.0, 1.0) var wet := 0.0             ## look job 5: 0 dry .. 1 after rain (global ck_wet; the ground demo below)
+@export var shadow_tune := true                     ## queue 3 job 5: the sun shadow's end fades out, 2 blended splits, softness by time of day
 @export var cars := false                           ## look queue 2 job 6 DEMO: the preview cars parked on the cells' stalls (one draw a car)
 @export var car_env := true                         ## the cars reflect the look's sky (car_env.gdshader); false = as before (nothing)
 @export var air := false                            ## look queue 2 job 5: gulls, a plane, smoke (air.gd, one draw); off until measured
@@ -134,6 +151,7 @@ var sky_map: SubViewport        # look job 5: the sky as a 128 x 64 panorama for
 var _map_mat: ShaderMaterial
 var car_map: SubViewport        # queue 2 job 6: the sky map in the car shader's layout (env_pano)
 static var _refl_added := false
+var _luts := {}
 
 func _ready() -> void:
 	# the clouds' drift is a global shader value: add it before the sky shader is loaded (it will not compile without)
@@ -150,7 +168,9 @@ func _ready() -> void:
 	env.fog_aerial_perspective = 0.0; env.fog_sky_affect = 0.0; env.fog_height_density = 0.0
 	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC; env.tonemap_exposure = 1.05; env.tonemap_white = 6.0
 	env.adjustment_enabled = true; env.adjustment_brightness = 1.0; env.adjustment_contrast = 1.0; env.adjustment_saturation = 1.0
-	if grade > 0.0: env.adjustment_color_correction = make_grade_lut(grade)
+	if grade > 0.0:
+		for gs: String in GRADES: _luts[gs] = make_grade_lut(grade, 16, gs)      # three small tables, built once (~10 ms each)
+		env.adjustment_color_correction = _luts.gta
 	if bloom:      # a blur chain of the picture at 1/2 .. 1/16 size, then one more read per pixel in the last pass
 		env.glow_enabled = true; env.glow_normalized = true
 		for i in 7: env.set_glow_level(i, 0.0)
@@ -179,6 +199,11 @@ func _ready() -> void:
 		cr.material = cm; car_map.add_child(cr); add_child(car_map)
 	sun = DirectionalLight3D.new(); sun.rotation_degrees = sun_angles
 	sun.shadow_enabled = OS.get_environment("NOSHADOW") != "1"; sun.directional_shadow_max_distance = shadow_distance; add_child(sun)
+	if shadow_tune:      # the 50 m stay; what changes is how the shadow ends
+		sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS      # (the engine's default is 4 splits: two shadow passes less)
+		sun.directional_shadow_split_1 = 0.25                                           # near split to 12.5 m: sharp under the car, softer beyond
+		sun.directional_shadow_blend_splits = true                                      # no line where the two splits meet
+		sun.directional_shadow_fade_start = 0.6                                         # the shadow fades out over its last 20 m (30 -> 50 m)
 	if weather == "rain" and wet <= 0.0: wet = 0.65      # rain wets the ground (before the cells come in: attach_stream)
 	if cycle > 0.0:
 		sky.process_mode = Sky.PROCESS_MODE_INCREMENTAL      # the reflection map is redrawn over several frames, not in one
@@ -267,27 +292,31 @@ func _process(dt: float) -> void:
 ## The colour grade as a 16 x 16 x 16 lookup table, built here (a few ms, once): the engine reads it once per pixel in
 ## its last pass. What it does, in this order: holds colours back (saturation 0.72), cool-green shadows and warm
 ## yellow highlights, the whole picture a little warmer, a soft S-curve, and blacks lifted to a smoggy dark grey.
-static func grade_color(c: Color, k: float) -> Color:
+## the three grades (queue 3): "gta" the GTA 4 grade above (the default), "half" half the held-back colour, half the
+## warm tint and half the lifted blacks, "clear" the city's own colours with only a gentle S-curve
+const GRADES := {"gta": [0.72, 1.0, 0.22, 1.0], "half": [0.86, 0.5, 0.2, 0.5], "clear": [1.0, 0.0, 0.15, 0.0]}      # [saturation, tint, S-curve, lift]
+static func grade_color(c: Color, k: float, style := "gta") -> Color:
+	var g: Array = GRADES.get(style, GRADES.gta)
 	var l := c.r * 0.2126 + c.g * 0.7152 + c.b * 0.0722
 	var v := Vector3(c.r, c.g, c.b)
-	v = Vector3(l, l, l).lerp(v, 0.72)
+	v = Vector3(l, l, l).lerp(v, float(g[0]))
 	var sh := (1.0 - l) * (1.0 - l); var hi := l * l
-	v += Vector3(-0.012, 0.004, 0.012) * sh
-	v *= Vector3(1.0, 1.0, 1.0) + Vector3(0.05, 0.03, -0.08) * hi
-	v *= Vector3(1.03, 1.01, 0.93)
+	v += Vector3(-0.012, 0.004, 0.012) * sh * float(g[1])
+	v *= Vector3(1.0, 1.0, 1.0) + Vector3(0.05, 0.03, -0.08) * hi * float(g[1])
+	v *= Vector3(1.0, 1.0, 1.0).lerp(Vector3(1.03, 1.01, 0.93), float(g[1]))
 	var s := Vector3(smoothstep(0.0, 1.0, v.x), smoothstep(0.0, 1.0, v.y), smoothstep(0.0, 1.0, v.z))
-	v = v.lerp(s, 0.22)
-	v = Vector3(0.022, 0.02, 0.016) + v * 0.965
+	v = v.lerp(s, float(g[2]))
+	v = Vector3(0.022, 0.02, 0.016) * float(g[3]) + v * (1.0 - 0.035 * float(g[3]))
 	v = Vector3(c.r, c.g, c.b).lerp(v, k)
 	return Color(clampf(v.x, 0.0, 1.0), clampf(v.y, 0.0, 1.0), clampf(v.z, 0.0, 1.0))
 
-static func make_grade_lut(k: float, n := 16) -> ImageTexture3D:
+static func make_grade_lut(k: float, n := 16, style := "gta") -> ImageTexture3D:
 	var slices: Array[Image] = []
 	for b in n:
 		var img := Image.create(n, n, false, Image.FORMAT_RGB8)
 		for g in n:
 			for r in n:
-				img.set_pixel(r, g, grade_color(Color(r / float(n - 1), g / float(n - 1), b / float(n - 1)), k))
+				img.set_pixel(r, g, grade_color(Color(r / float(n - 1), g / float(n - 1), b / float(n - 1)), k, style))
 		slices.append(img)
 	var t := ImageTexture3D.new(); t.create(Image.FORMAT_RGB8, n, n, n, false, slices)
 	return t
@@ -340,12 +369,19 @@ func _apply(t0: Dictionary) -> void:
 	sun.basis = Basis.looking_at(-light_v, Vector3.UP)
 	var haze: Color = t.haze
 	sun.light_color = t.sun_color; sun.light_energy = t.sun_energy
+	if shadow_tune:      # a low sun's shadows are longer and softer; a weak sun (overcast, storm) throws faint ones
+		sun.shadow_blur = lerpf(1.8, 1.0, clampf(float(t.elev) / 45.0, 0.0, 1.0))
+		sun.shadow_opacity = clampf(0.3 + float(t.sun_energy) * 0.5, 0.3, 1.0)
+	if cycle > 0.0 and not _luts.is_empty(): env.adjustment_color_correction = _luts.gta      # the running day: one table (switching would be a step)
+	elif t.has("grade") and _luts.has(String(t.grade)): env.adjustment_color_correction = _luts[String(t.grade)]
+	elif not _luts.is_empty(): env.adjustment_color_correction = _luts.gta
 	env.ambient_light_color = t.ambient_color; env.ambient_light_energy = t.ambient_energy
 	env.fog_light_color = haze; env.fog_light_energy = 1.0
 	env.fog_density = t.fog_density; env.fog_sun_scatter = t.fog_sun_scatter
 	for m: ShaderMaterial in [sky_mat, _map_mat]:      # the sky and its small map for reflections: the same numbers
 		for k: String in ["zenith", "middle", "haze", "cloud_lit", "cloud_dark", "cloud_cover", "cloud_alpha", "cloud_scale", "sun_halo", "sun_disc", "disc_cos", "stars"]:
 			m.set_shader_parameter(k, t[k])
+		m.set_shader_parameter(&"cloud_low", float(t.get("cloud_low", 0.2))); m.set_shader_parameter(&"cloud_soft", float(t.get("cloud_soft", 0.24)))
 		m.set_shader_parameter(&"sun_col", sun.light_color)
 		m.set_shader_parameter(&"sun_dir", sun_v if celestial else (sun_v if mo < 0.5 else light_v))      # (before job 2 the night's disc was the light's)
 		m.set_shader_parameter(&"moon_dir", moon_v)

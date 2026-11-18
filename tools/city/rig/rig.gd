@@ -23,6 +23,8 @@ extends Node3D
 ##   --weather=NAME  with the look: mist, hazy, storm or rain over the time of day (tools/city/look/weather.gd)
 ##   --cars=0|1    with the look: DEMO, the preview cars parked on the cells' stalls (one draw a car); --carenv=1|0 they
 ##             reflect the look's sky (1, default) or nothing (0, as before)
+##   --shadowtune=1|0  with the look: the sun shadow's end fades out (30-50 m), 2 blended splits, softness by time; 0 = before
+##   --look=day_half | day_clear   two more days to choose from (queue 3); --look=day is the default day
 ##   --air=0|1     with the look: gulls over the waterfront, a plane now and then, smoke and steam in the industrial zone
 ##             (tools/city/look/air.gd, one draw); OFF by default until measured
 ##   --sea=1|0     with the look: 1 (default) the look's sea (tools/city/look/sea.gd) instead of the green plane under the water
@@ -85,7 +87,7 @@ var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
-var opt := {"look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false}
+var opt := {"look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -107,7 +109,7 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots"]:
+		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
 				opt[k] = v if k in ["plan", "shots", "look", "weather"] else (float(v) if k in ["scale", "lead", "colms", "sharp", "wet", "cycle", "clock"] else int(v))
@@ -120,7 +122,7 @@ func _ready() -> void:
 	if int(opt.upscale) == 1:      # look job 2: the engine's FSR 1 mode, which Yasin's engine (patch c) runs as SGSR 1 in the Mobile renderer
 		vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_FSR; vp.fsr_sharpness = float(opt.sharp)
 	if String(opt.look) != "0":      # the look pack: sky, haze, light colours, colour treatment
-		look = Look.new(); look.bloom = int(opt.bloom) == 1; look.glow = int(opt.glow) == 1; look.blobs = int(opt.blobs) == 1; look.wet = float(opt.wet); look.cycle = float(opt.cycle); look.celestial = int(opt.celestial) == 1; look.sea = int(opt.sea) == 1; look.weather = String(opt.weather); look.air = int(opt.air) == 1; look.cars = int(opt.cars) == 1; look.car_env = int(opt.carenv) == 1; look.hour = float(opt.clock); add_child(look); env = look.env; sun = look.sun
+		look = Look.new(); look.bloom = int(opt.bloom) == 1; look.glow = int(opt.glow) == 1; look.blobs = int(opt.blobs) == 1; look.wet = float(opt.wet); look.cycle = float(opt.cycle); look.celestial = int(opt.celestial) == 1; look.sea = int(opt.sea) == 1; look.weather = String(opt.weather); look.air = int(opt.air) == 1; look.cars = int(opt.cars) == 1; look.car_env = int(opt.carenv) == 1; look.shadow_tune = int(opt.shadowtune) == 1; look.hour = float(opt.clock); add_child(look); env = look.env; sun = look.sun
 		if String(opt.look) != "1": look.set_preset(String(opt.look))
 	else:                       # the old plain setup, kept to compare against
 		env = Environment.new()
