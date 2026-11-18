@@ -38,6 +38,49 @@ const NIGHT := {
 	"cloud_lit": Color(0.24, 0.16, 0.10), "cloud_dark": Color(0.09, 0.07, 0.06), "cloud_cover": 0.5, "cloud_alpha": 0.8, "cloud_scale": 0.2,      # lit from below by the city
 	"sun_halo": 0.3, "sun_disc": 1.4, "disc_cos": 0.99975, "stars": 0.35}     # few stars through the smog
 
+## TIMES OF DAY (job 1): whole presets of the same look, chosen with `--look=NAME` (rig) or `set_preset(NAME)`.
+## Each is a full table like DAY plus: "elev" / "azim" sun height and direction in degrees, "lights" 0..1 how far the
+## city's night is on (windows, lamp halos, real lamp lights: the streamer's ck_night). Cost: the same as the look
+## itself (only numbers change); a preset change redraws the sky's reflection map once.
+static var PRESETS := {
+	"morning": {      # low sun from the east through a cool morning mist
+		"elev": 16.0, "azim": -105.0, "lights": 0.0,
+		"zenith": Color(0.34, 0.50, 0.72), "middle": Color(0.64, 0.71, 0.80), "haze": Color(0.80, 0.82, 0.84),
+		"sun_color": Color(1.0, 0.85, 0.70), "sun_energy": 1.25, "ambient_color": Color(0.58, 0.64, 0.74), "ambient_energy": 0.75,
+		"fog_density": 0.0028, "fog_sun_scatter": 0.45,
+		"cloud_lit": Color(1.0, 0.93, 0.86), "cloud_dark": Color(0.62, 0.65, 0.70), "cloud_cover": 0.36, "cloud_alpha": 0.8, "cloud_scale": 0.2,
+		"sun_halo": 0.8, "sun_disc": 6.0, "disc_cos": 0.9993, "stars": 0.0},
+	"noon": {         # high, white-hot sun, short shadows, the smog flat and bright
+		"elev": 64.0, "azim": -35.0, "lights": 0.0,
+		"zenith": Color(0.30, 0.46, 0.70), "middle": Color(0.56, 0.65, 0.76), "haze": Color(0.83, 0.81, 0.75),
+		"sun_color": Color(1.0, 0.95, 0.86), "sun_energy": 1.65, "ambient_color": Color(0.62, 0.66, 0.72), "ambient_energy": 0.8,
+		"fog_density": 0.0015, "fog_sun_scatter": 0.2,
+		"cloud_lit": Color(1.0, 0.98, 0.94), "cloud_dark": Color(0.64, 0.66, 0.68), "cloud_cover": 0.42, "cloud_alpha": 0.85, "cloud_scale": 0.2,
+		"sun_halo": 0.6, "sun_disc": 6.0, "disc_cos": 0.9993, "stars": 0.0},
+	"day": DAY.merged({"elev": 40.0, "azim": -35.0, "lights": 0.0}),
+	"golden": {       # late afternoon: low orange sun from the west, long shadows, amber haze
+		"elev": 11.0, "azim": 80.0, "lights": 0.0,
+		"zenith": Color(0.30, 0.42, 0.62), "middle": Color(0.70, 0.63, 0.58), "haze": Color(0.90, 0.71, 0.50),
+		"sun_color": Color(1.0, 0.68, 0.40), "sun_energy": 1.45, "ambient_color": Color(0.50, 0.52, 0.62), "ambient_energy": 0.66,
+		"fog_density": 0.0019, "fog_sun_scatter": 0.55,
+		"cloud_lit": Color(1.0, 0.80, 0.58), "cloud_dark": Color(0.52, 0.46, 0.48), "cloud_cover": 0.46, "cloud_alpha": 0.85, "cloud_scale": 0.2,
+		"sun_halo": 1.0, "sun_disc": 5.0, "disc_cos": 0.9992, "stars": 0.0},
+	"dusk": {         # the sun just down: pink-orange west, blue east, windows and lamps coming on
+		"elev": 3.0, "azim": 95.0, "lights": 0.65,
+		"zenith": Color(0.09, 0.12, 0.24), "middle": Color(0.40, 0.31, 0.38), "haze": Color(0.62, 0.42, 0.36),
+		"sun_color": Color(1.0, 0.50, 0.32), "sun_energy": 0.38, "ambient_color": Color(0.42, 0.42, 0.55), "ambient_energy": 0.55,
+		"fog_density": 0.002, "fog_sun_scatter": 0.9,
+		"cloud_lit": Color(0.95, 0.55, 0.42), "cloud_dark": Color(0.30, 0.24, 0.30), "cloud_cover": 0.46, "cloud_alpha": 0.85, "cloud_scale": 0.2,
+		"sun_halo": 1.2, "sun_disc": 0.0, "disc_cos": 0.9993, "stars": 0.08},
+	"night": NIGHT.merged({"elev": 40.0, "azim": -35.0, "lights": 1.0}),
+	"overcast": {     # a grey lid: soft light from everywhere, no sun to speak of, thick haze
+		"elev": 50.0, "azim": -35.0, "lights": 0.0,
+		"zenith": Color(0.55, 0.57, 0.60), "middle": Color(0.64, 0.66, 0.68), "haze": Color(0.70, 0.71, 0.70),
+		"sun_color": Color(0.92, 0.93, 0.95), "sun_energy": 0.32, "ambient_color": Color(0.70, 0.71, 0.73), "ambient_energy": 1.12,
+		"fog_density": 0.0026, "fog_sun_scatter": 0.05,
+		"cloud_lit": Color(0.78, 0.78, 0.79), "cloud_dark": Color(0.50, 0.51, 0.53), "cloud_cover": 0.93, "cloud_alpha": 1.0, "cloud_scale": 0.2,
+		"sun_halo": 0.1, "sun_disc": 0.0, "disc_cos": 0.9993, "stars": 0.0}}
+
 @export var sun_angles := Vector3(-40, -35, 0)      ## the old rig: -48 (higher); lower = longer shadows, more light on walls
 @export var cloud_speed := Vector2(0.0008, 0.0003)  ## texture units a second; 0 = still
 @export var shadow_distance := 50.0                 ## the game's sun shadow distance (unchanged)
@@ -48,6 +91,7 @@ var env: Environment
 var sun: DirectionalLight3D
 var sky_mat: ShaderMaterial
 var night := 0.0
+var preset := ""                ## a time of day from PRESETS ("" = day / night by set_night)
 var _drift := Vector2.ZERO
 static var _drift_added := false
 
@@ -117,16 +161,35 @@ static func _mix(key: String, v: float) -> Variant:
 	return lerpf(float(a), float(b), v)
 
 ## 0 day .. 1 night. Call it when the time of day changes, not every frame: a change of the sky makes the engine
-## redraw the sky's reflection cube map once.
+## redraw the sky's reflection cube map once. With a preset chosen, the preset wins (v is ignored).
 func set_night(v: float) -> void:
+	if preset != "": set_preset(preset); return
 	night = clampf(v, 0.0, 1.0)
-	var haze: Color = _mix("haze", night)
-	sun.light_color = _mix("sun_color", night); sun.light_energy = _mix("sun_energy", night)
-	env.ambient_light_color = _mix("ambient_color", night); env.ambient_light_energy = _mix("ambient_energy", night)
+	var t := {}
+	for k: String in DAY: t[k] = _mix(k, night)
+	t["elev"] = -sun_angles.x; t["azim"] = sun_angles.y
+	_apply(t)
+
+## a time of day (PRESETS), or "" to go back to set_night
+func set_preset(name: String) -> void:
+	preset = name if PRESETS.has(name) else ""
+	if preset == "": set_night(night); return
+	night = float(PRESETS[preset].lights)
+	_apply(PRESETS[preset])
+
+## how far the city's night is on for the current setting (the streamer's ck_night)
+func lights() -> float:
+	return float(PRESETS[preset].lights) if preset != "" else night
+
+func _apply(t: Dictionary) -> void:
+	sun.rotation_degrees = Vector3(-float(t.elev), float(t.azim), 0.0)
+	var haze: Color = t.haze
+	sun.light_color = t.sun_color; sun.light_energy = t.sun_energy
+	env.ambient_light_color = t.ambient_color; env.ambient_light_energy = t.ambient_energy
 	env.fog_light_color = haze; env.fog_light_energy = 1.0
-	env.fog_density = _mix("fog_density", night); env.fog_sun_scatter = _mix("fog_sun_scatter", night)
+	env.fog_density = t.fog_density; env.fog_sun_scatter = t.fog_sun_scatter
 	for k: String in ["zenith", "middle", "haze", "cloud_lit", "cloud_dark", "cloud_cover", "cloud_alpha", "cloud_scale", "sun_halo", "sun_disc", "disc_cos", "stars"]:
-		sky_mat.set_shader_parameter(k, _mix(k, night))
+		sky_mat.set_shader_parameter(k, t[k])
 	sky_mat.set_shader_parameter(&"sun_col", sun.light_color)
-	sky_mat.set_shader_parameter(&"sun_dir", sun.global_transform.basis.z if sun.is_inside_tree() else Basis.from_euler(sun_angles * PI / 180.0).z)
+	sky_mat.set_shader_parameter(&"sun_dir", Basis.from_euler(sun.rotation).z)      # towards the light (its +Z)
 	sky_mat.set_shader_parameter(&"sun_scatter", sun.light_energy * env.fog_sun_scatter)      # the fog's own sun glow, so sky and fog agree

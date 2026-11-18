@@ -14,8 +14,9 @@ extends Node3D
 ##   --lead=2  --maxcells=30  --loading=2  --bodies=6  --coltris=1200     streamer settings to compare
 ##   --lights=20   real lamp lights at night (the engine's light grid; 8 on a stock engine)
 ##   --nowarm      skip the warm-up (to see what it saves)
-##   --look=1|0    1 (default): the look pack's sky, distance haze, light colours and colour treatment
-##             (tools/city/look/look.gd, docs/LOOK_SKY.md); 0: the old plain sky and light, to compare
+##   --look=1|0|NAME  1 (default): the look pack's sky, distance haze, light colours and colour treatment
+##             (tools/city/look/look.gd, docs/LOOK_SKY.md); 0: the old plain sky and light, to compare;
+##             NAME a time of day of the look: morning, noon, day, golden, dusk, night, overcast (overrides the drives' night)
 ##   --bloom=0|1   with --look=1: 1 adds a soft glow round bright things (GTA 4 style); costs pixels, off by default
 ##   --reflect=1|0 1 (default): surfaces reflect the sky (as before); 0: no sky reflection (one cube-map read less a
 ##             pixel; the cloud preview needs it: its software GPU draws the trees black with sky reflections on)
@@ -66,7 +67,7 @@ var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
-var opt := {"look": 1, "bloom": 0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "loader": 0, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false}
+var opt := {"look": "1", "bloom": 0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "loader": 0, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -91,15 +92,16 @@ func _ready() -> void:
 		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "look", "bloom", "reflect", "shots"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
-				opt[k] = v if k in ["plan", "shots"] else (float(v) if k in ["scale", "lead"] else int(v))
+				opt[k] = v if k in ["plan", "shots", "look"] else (float(v) if k in ["scale", "lead"] else int(v))
 	if from_file and not ("--loop" in args): opt.quit = true
 	Engine.max_fps = 0
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	if float(opt.scale) <= 0.0:      # no --scale given: 720p (1640x720 on the Redmi's 2460x1080)
 		var ws := DisplayServer.window_get_size(); opt.scale = clampf(720.0 / maxf(1.0, float(mini(ws.x, ws.y))), 0.25, 1.0)
 	var vp := get_viewport(); vp.scaling_3d_scale = float(opt.scale); vp.screen_space_aa = Viewport.SCREEN_SPACE_AA_FXAA
-	if int(opt.look) == 1:      # the look pack: sky, haze, light colours, colour treatment
+	if String(opt.look) != "0":      # the look pack: sky, haze, light colours, colour treatment
 		look = Look.new(); look.bloom = int(opt.bloom) == 1; add_child(look); env = look.env; sun = look.sun
+		if String(opt.look) != "1": look.set_preset(String(opt.look))
 	else:                       # the old plain setup, kept to compare against
 		env = Environment.new()
 		var sky := Sky.new(); sky.sky_material = ProceduralSkyMaterial.new(); env.background_mode = Environment.BG_SKY; env.sky = sky
@@ -143,14 +145,17 @@ func _ground(p: Vector3, last: float) -> float:
 
 func _night(v: float) -> void:
 	st.set_night(v)
-	if look: look.set_night(v); return
+	if look:
+		look.set_night(v)
+		if look.preset != "": st.set_night(look.lights())
+		return
 	sun.light_energy = lerpf(1.25, 0.04, v); env.ambient_light_energy = lerpf(0.75, 0.22, v)
 	(env.sky.sky_material as ProceduralSkyMaterial).sky_top_color = Color(0.32, 0.52, 0.82).lerp(Color(0.01, 0.015, 0.04), v)
 	(env.sky.sky_material as ProceduralSkyMaterial).sky_horizon_color = Color(0.72, 0.8, 0.88).lerp(Color(0.05, 0.06, 0.1), v)
 
 func _run() -> void:
 	var R := RenderingServer
-	_say("start engine=%s device=%s gpu=%s screen=%s scale=%.2f look=%d bloom=%d reflect=%d plan=%s lead=%.1f maxcells=%d loading=%d bodies=%d lights=%d loader=%d coltris=%d cells_baked=%d" % [Engine.get_version_info().string, OS.get_model_name(), R.get_video_adapter_name(), str(DisplayServer.window_get_size()), float(opt.scale), int(opt.look), int(opt.bloom), int(opt.reflect), opt.plan, float(opt.lead), int(opt.maxcells), int(opt.loading), int(opt.bodies), int(opt.lights), int(opt.loader), int(opt.coltris), st.cells.size()])
+	_say("start engine=%s device=%s gpu=%s screen=%s scale=%.2f look=%s bloom=%d reflect=%d plan=%s lead=%.1f maxcells=%d loading=%d bodies=%d lights=%d loader=%d coltris=%d cells_baked=%d" % [Engine.get_version_info().string, OS.get_model_name(), R.get_video_adapter_name(), str(DisplayServer.window_get_size()), float(opt.scale), String(opt.look), int(opt.bloom), int(opt.reflect), opt.plan, float(opt.lead), int(opt.maxcells), int(opt.loading), int(opt.bodies), int(opt.lights), int(opt.loader), int(opt.coltris), st.cells.size()])
 	if st.cells.is_empty():
 		_say("ERROR no baked city found (map_dc/coronado/city_kit/runtime). Run the bake before the export."); hud.text = "no baked city in this build"
 		if opt.quit: await get_tree().create_timer(3.0).timeout; get_tree().quit()
