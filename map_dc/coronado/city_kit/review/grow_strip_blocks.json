@@ -33,6 +33,39 @@
    "yaw": 0.0,
    "site": "strip block Adela x 5th NW (u 400-491.3, v -1100 to -1009.2)",
    "variant": "C neighbourhood centre"
+  },
+  {
+   "piece": "m_gr_ad3sw",
+   "pos": [
+    500.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "site": "strip block Adela x 3rd SW (u 400-491.3, v -1385.7 to -1300)",
+   "variant": "D hospital side"
+  },
+  {
+   "piece": "m_gr_ad3se",
+   "pos": [
+    500.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "site": "strip block Adela x 3rd SE to the ring (u 508.7-645.7, v -1385.7 to -1300)",
+   "variant": "E motel and gym"
+  },
+  {
+   "piece": "m_gr_e4n",
+   "pos": [
+    500.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "site": "strip lot north of 4th St on Glorietta Blvd (u 600-645.7, v -1300 to -1214.3)",
+   "variant": "F storage yard"
   }
  ]
 }

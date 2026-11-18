@@ -65,6 +65,19 @@ const KINDS := {
 	"bank": {"floor": "Terrazzo005", "light": "panel", "counter": ["shop_counter", "shop_counter", "shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet", "filing_cabinet"], "board": false, "walls": ["brochure_rack", "waiting_bench"], "centre": "desks", "window": "waiting", "back": "office", "frames": true, "tint": Color(0.93, 0.92, 0.86)},
 	# recycling booth: the attendant's scale counter, bins of sorted cans behind
 	"recycling": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["wall_shelf", "filing_cabinet"], "board": true, "walls": ["wall_shelf"], "centre": "none", "window": "none", "back": "none", "frames": false, "tint": Color(0.88, 0.94, 0.86)},
+	# urgent care: you walk in to the reception counter, sit in the waiting rows facing the TV board, are called through
+	# the staff door to the exam rooms behind the partition
+	"clinic": {"max_d": 13.0, "floor": "Tiles012", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet", "wall_shelf"], "board": false, "walls": ["waiting_bench", "brochure_rack", "waiting_bench"], "centre": "lounge", "window": "none", "back": "office", "frames": true, "tint": Color(0.88, 0.96, 0.98)},
+	# physiotherapy: the front desk, treatment benches along one wall, the exercise corner (bike, weight bench) in the middle
+	"physio": {"max_d": 12.0, "floor": "WoodFloor051", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet", "wall_shelf"], "board": false, "walls": ["waiting_bench", "weight_bench", "wall_shelf"], "centre": "gym", "window": "waiting", "back": "office", "frames": true, "tint": Color(0.94, 0.97, 0.92)},
+	# visitors' coffee bar: the espresso counter with the pastry case, a few two-tops, the cooler of sandwiches
+	"coffee": {"floor": "WoodFloor034", "light": "pendant", "counter": ["pastry_case", "shop_counter"], "till": true, "behind": ["espresso_machine", "bakery_shelf", "drinks_fridge"], "board": true, "walls": ["drinks_fridge", "booth"], "centre": "table2", "window": "table2", "back": "none", "frames": true, "tint": Color(0.96, 0.9, 0.82)},
+	# florist: buckets of flowers on low tables, the cooler on the wall, plants everywhere, the wrapping counter at the back
+	"florist": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["wall_shelf", "drinks_fridge"], "board": false, "walls": ["drinks_fridge", "wall_shelf"], "centre": "plants", "window": "display", "back": "none", "frames": false, "tint": Color(0.92, 0.98, 0.9)},
+	# motel office: the check-in counter with the key board behind, a rack of tourist leaflets, coffee and the snack machine
+	"motel_office": {"max_d": 9.0, "floor": "Carpet012", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["pegboard_wall", "filing_cabinet"], "board": false, "walls": ["brochure_rack", "vending_snack", "waiting_bench"], "centre": "none", "window": "waiting", "back": "none", "frames": true, "tint": Color(0.98, 0.94, 0.84)},
+	# 24-hour gym: a front desk, rows of weight benches and bikes, the mirror wall, the cooler of drinks
+	"gym": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["drinks_fridge", "wall_shelf"], "board": false, "walls": ["mirror_station", "bike_stand", "mirror_station", "weight_bench"], "centre": "gym", "window": "none", "back": "none", "frames": false, "posters": true, "cap": {"mirror_station": 6, "bike_stand": 4, "weight_bench": 4}, "tint": Color(0.84, 0.86, 0.9), "lights": 3},
 	# tax prep / insurance: a reception counter, two preparer desks with a client chair each, waiting chairs at the
 	# window, filing cabinets, leaflets
 	"tax": {"max_d": 10.0, "floor": "Carpet012", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet"], "board": false, "walls": ["filing_cabinet", "brochure_rack"], "centre": "desks", "window": "waiting", "back": "office", "frames": true, "tint": Color(0.93, 0.95, 0.9)},
@@ -80,6 +93,9 @@ const DRESS := {"drive_thru": ["indoor_bin", "potted_plant", "drinks_fridge", "i
 	 "tax": ["potted_plant", "indoor_bin", "waiting_bench"],
 	 "tyre": ["display_table", "potted_plant", "indoor_bin", "brochure_rack"],
 	 "car_sales": ["potted_plant", "indoor_bin"],
+	 "clinic": ["potted_plant", "indoor_bin", "drinks_fridge"], "physio": ["potted_plant", "indoor_bin"], "coffee": ["indoor_bin", "potted_plant"],
+	 "florist": ["potted_plant", "potted_plant", "potted_plant", "potted_plant", "indoor_bin"], "motel_office": ["potted_plant", "indoor_bin", "drinks_fridge"],
+	 "gym": ["vending_soda", "indoor_bin", "potted_plant", "waiting_bench"],
 	 "discount": ["chest_freezer", "produce_stand", "indoor_bin", "potted_plant", "card_spinner"],
 	 "laundromat": ["dryer", "dryer", "vending_snack", "waiting_bench", "indoor_bin", "potted_plant"],
 	 "nails": ["potted_plant", "indoor_bin", "waiting_bench"],
@@ -88,13 +104,13 @@ const DRESS := {"drive_thru": ["indoor_bin", "potted_plant", "drinks_fridge", "i
 	 "dry_cleaner": ["waiting_bench", "garment_rail", "garment_rail", "potted_plant", "indoor_bin"],
 	 "bank": ["potted_plant", "potted_plant", "indoor_bin", "waiting_bench"],
 	 "recycling": ["potted_plant"]}
-const CAP := {"vending_soda": 1, "drinks_fridge": 1, "waiting_bench": 3, "card_spinner": 1, "brochure_rack": 1, "glass_display_case": 3, "filing_cabinet": 3}
+const CAP := {"vending_soda": 1, "vending_snack": 1, "drinks_fridge": 1, "waiting_bench": 3, "card_spinner": 1, "brochure_rack": 1, "glass_display_case": 3, "filing_cabinet": 3}
 const WALL_TINTS := [Color(1.0, 0.95, 0.86), Color(0.94, 0.96, 0.98), Color(0.98, 0.92, 0.84), Color(0.9, 0.95, 0.92), Color(1.0, 0.97, 0.93), Color(0.93, 0.9, 0.86)]
 const SHORT := {"cafe": "COFFEE", "bakery": "BAKERY", "bar": "BAR", "restaurant": "KITCHEN", "fast_food": "FOOD", "ice_cream": "ICE CREAM",
 	"clothes": "CLOTHES", "shoes": "SHOES", "jewelry": "JEWELRY", "books": "BOOKS", "gallery": "GALLERY", "salon": "SALON", "pharmacy": "PHARMACY",
 	"souvenir": "GIFTS", "office": "OFFICE", "corner_shop": "MARKET", "grocery": "GROCERY", "cleaners": "LAUNDRY", "store": "SUPPLY", "keys": "KEYS",
 	"sport": "SPORT", "gas": "FUEL", "venue": "TICKETS", "drive_thru": "CHICKEN", "taqueria": "TACOS", "diner": "DINER",
-	"wash_office": "CAR WASH", "lube": "OIL CHANGE", "auto_parts": "AUTO PARTS", "phone": "PHONES", "tax": "TAX", "tyre": "TIRES", "car_sales": "USED CARS", "discount": "MARKET", "laundromat": "LAUNDRY", "nails": "NAILS", "dentist": "DENTIST", "pizza": "PIZZA", "dry_cleaner": "CLEANERS", "bank": "CREDIT UNION", "recycling": "RECYCLING"}
+	"wash_office": "CAR WASH", "lube": "OIL CHANGE", "auto_parts": "AUTO PARTS", "phone": "PHONES", "tax": "TAX", "tyre": "TIRES", "car_sales": "USED CARS", "clinic": "URGENT CARE", "physio": "PHYSIO", "coffee": "COFFEE", "florist": "FLOWERS", "motel_office": "OFFICE", "gym": "GYM 24H", "discount": "MARKET", "laundromat": "LAUNDRY", "nails": "NAILS", "dentist": "DENTIST", "pizza": "PIZZA", "dry_cleaner": "CLEANERS", "bank": "CREDIT UNION", "recycling": "RECYCLING"}
 
 var foot := {}      # base -> Vector2(w, d)
 var tall := {}      # base -> height
@@ -299,9 +315,17 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	keep.append([staff_x - 0.5, ZBp, staff_x + 0.5, ZBp + 1.0])
 	var bx := cx - cw * 0.5
 	var low_x := -999.0
+	var backwin: Array = []       # the back wall's windows (when the back wall is the building's): [x0, x1, sill]
+	if ZBp <= ZB + 0.01:
+		for o: Dictionary in c.openings:
+			if int(o.floor) == 0 and String(o.facade) == "back": backwin.append([float(o.along) - float(o.w) * 0.5 - 0.1, float(o.along) + float(o.w) * 0.5 + 0.1, float(o.y0) - F])
 	for p: String in K.behind:
 		var f := _fp(p, 0.0)
 		while bx + f.x <= cx + cw * 0.5 + 0.01:
+			var over := false
+			for bw: Array in backwin:
+				if bx < float(bw[1]) and bx + f.x > float(bw[0]) and float(tall.get("prop_" + p, 2.0)) > float(bw[2]) - 0.05: over = true
+			if over: bx += 0.25; continue
 			if _put(p, bx + f.x * 0.5, ZBp + f.y * 0.5 + 0.09, 0.0):
 				if float(tall.get("prop_" + p, 2.0)) < 1.5: low_x = bx + f.x * 0.5
 				bx += f.x + 0.05; break
@@ -449,6 +473,16 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 			_put("display_table", IX0 + 0.75, mz1 + 0.2, 90.0)
 		"fold":       # the folding tables down the middle of a laundromat
 			for zz: float in _steps(mz0 + 0.5, mz1 - 0.5, 1.6): _put("display_table", (IX0 + IX1) * 0.5, zz, 90.0)
+		"gym":        # rows of weight benches and bikes down the floor, a walk between them
+			var gi := 0
+			for zz: float in _steps(mz0 + 0.6, mz1 - 0.6, 2.0):
+				for xx: float in _steps(IX0 + 0.8, IX1 - 0.8, 2.4):
+					_put("weight_bench" if gi % 3 != 2 else "bike_stand", xx, zz, 0.0); gi += 1
+		"plants":     # the florist's display tables, buckets of plants on the floor round them
+			for zz: float in _steps(mz0 + 0.6, mz1 - 0.6, 2.2):
+				for xx: float in _steps(IX0 + 0.8, IX1 - 0.8, 2.6):
+					if _put("display_table", xx, zz, 0.0):
+						_put("potted_plant", xx - 0.95, zz, 0.0); _put("potted_plant", xx + 0.95, zz, 0.0)
 		"salsa":      # the salsa bar (a low display) in the middle, two-tops round it
 			_put("display_table", (IX0 + IX1) * 0.5, (mz0 + mz1) * 0.5, 90.0)
 			for zz: float in _steps(mz0 + 0.5, mz1 - 0.5, 1.8):
@@ -479,10 +513,14 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 			for t2: float in [0.33, 0.7]:
 				if placed2 >= 2 or span < 1.5: break
 				var zz := ZBp + 1.2 + span * t2
-				if _on_window(sidewin, String(side2[2]), zz - 0.5, zz + 0.5, 1.1, 2.6): continue
+				var pc2 := String(deco[di % deco.size()])
+				var hwd := float(foot.get("prop_" + pc2, Vector2(0.9, 0.1)).x) * 0.5 + 0.15
+				var hy0 := _hang(pc2, 1.35 if pc2 == "gallery_frame" else (1.6 if pc2 == "menu_board" else 1.1))
+				if hy0 < 0.0: continue
+				if _on_window(sidewin, String(side2[2]), zz - hwd, zz + hwd, hy0, hy0 + float(tall.get("prop_" + pc2, 1.0))): continue
 				var blocked := false
 				for o: Array in occ:
-					if float(o[4]) > 1.25 and zz > float(o[1]) - 0.4 and zz < float(o[3]) + 0.4 and absf((float(o[0]) + float(o[2])) * 0.5 - wx2) < 1.0: blocked = true
+					if float(o[4]) > hy0 - 0.05 and zz + hwd > float(o[1]) and zz - hwd < float(o[3]) and absf((float(o[0]) + float(o[2])) * 0.5 - wx2) < 1.0: blocked = true
 				for wm2: Array in wall_marks:
 					if absf(float(wm2[0]) - wx2) < 0.5 and absf(float(wm2[1]) - zz) < 1.6: blocked = true
 				if blocked: continue
@@ -498,8 +536,9 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 			for zz: float in [(zc + cd * 0.5 + 1.0 + ZF - 1.2) * 0.5]:     # ONE promo poster per wall, at its middle
 				if _on_window(sidewin, String(side3[2]), zz - 0.5, zz + 0.5, 1.1, 2.3): continue
 				var blk := false
+				var hy4 := _hang("poster_case", 1.1)
 				for o: Array in occ:
-					if float(o[4]) > 1.1 and zz > float(o[1]) - 0.5 and zz < float(o[3]) + 0.5 and absf((float(o[0]) + float(o[2])) * 0.5 - wx3) < 1.2: blk = true
+					if float(o[4]) > hy4 - 0.05 and zz + 0.55 > float(o[1]) and zz - 0.55 < float(o[3]) and absf((float(o[0]) + float(o[2])) * 0.5 - wx3) < 1.2: blk = true
 				for wm: Array in wall_marks:
 					if absf(float(wm[0]) - wx3) < 0.5 and absf(float(wm[1]) - zz) < 1.6: blk = true
 				if not blk:

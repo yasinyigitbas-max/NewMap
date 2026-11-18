@@ -87,7 +87,7 @@
    "kind": "tyre",
    "lights": 4,
    "name": "Bridge Tire Pros",
-   "props": 19,
+   "props": 18,
    "w": 11.4
   },
   {
@@ -137,7 +137,7 @@
    "kind": "dentist",
    "lights": 4,
    "name": "Adela Family Dental",
-   "props": 17,
+   "props": 16,
    "w": 5.7
   },
   {
@@ -179,6 +179,86 @@
    "name": "Bottle & Can Recycling",
    "props": 7,
    "w": 3.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad3sw__harbor_medical_plaza__0.scn",
+   "id": "g_strip_m_gr_ad3sw__harbor_medical_plaza__0",
+   "kind": "clinic",
+   "lights": 4,
+   "name": "Bayside Urgent Care",
+   "props": 29,
+   "w": 10.7
+  },
+  {
+   "d": 12.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad3sw__harbor_medical_plaza__1.scn",
+   "id": "g_strip_m_gr_ad3sw__harbor_medical_plaza__1",
+   "kind": "physio",
+   "lights": 4,
+   "name": "Strand Physical Therapy",
+   "props": 27,
+   "w": 12.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad3sw__visitors_corner__0.scn",
+   "id": "g_strip_m_gr_ad3sw__visitors_corner__0",
+   "kind": "coffee",
+   "lights": 3,
+   "name": "Ward Coffee",
+   "props": 19,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad3sw__visitors_corner__1.scn",
+   "id": "g_strip_m_gr_ad3sw__visitors_corner__1",
+   "kind": "florist",
+   "lights": 3,
+   "name": "Get Well Flowers",
+   "props": 20,
+   "w": 5.7
+  },
+  {
+   "d": 9.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad3se__harbor_view_motel__0.scn",
+   "id": "g_strip_m_gr_ad3se__harbor_view_motel__0",
+   "kind": "motel_office",
+   "lights": 3,
+   "name": "Harbor View Motel",
+   "props": 14,
+   "w": 7.7
+  },
+  {
+   "d": 9.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad3se__harbor_view_motel_east__0.scn",
+   "id": "g_strip_m_gr_ad3se__harbor_view_motel_east__0",
+   "kind": "laundromat",
+   "lights": 3,
+   "name": "Guest Laundry",
+   "props": 23,
+   "w": 7.7
+  },
+  {
+   "d": 5.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad3se__crosswalk_coffee__0.scn",
+   "id": "g_strip_m_gr_ad3se__crosswalk_coffee__0",
+   "kind": "coffee",
+   "lights": 2,
+   "name": "Crosswalk Coffee",
+   "props": 5,
+   "w": 3.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad3se__iron_tide_gym__0.scn",
+   "id": "g_strip_m_gr_ad3se__iron_tide_gym__0",
+   "kind": "gym",
+   "lights": 4,
+   "name": "Iron Tide Gym 24/7",
+   "props": 60,
+   "w": 23.4
   }
  ]
 }
