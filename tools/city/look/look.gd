@@ -16,6 +16,9 @@ extends Node
 ##    halos 1.8 x wider (small quads), pools 0.85 x (the big overlapping ones: fewer pixels than before).
 ##  - BLOB SHADOWS (blob_shadows.gd + blob.gdshader, look job 4, OFF by default): one draw a cell, only beyond ~40 m,
 ##    a multiply blend of small far quads, no texture read.
+##  - SKY MAP (look job 5): the sky drawn into a 128 x 64 panorama when the time of day changes (8,192 pixels, once),
+##    global ck_sky_map for glass and wet ground (sky_reflect.gdshaderinc): one read on those pixels only. --wet DEMO
+##    swaps the ground's shader for rt_ground + the snippet: one more read (puddles) + one (sky map) per ground pixel.
 ##  - BLOOM: only with --bloom=1 (off by default): a blur chain at 1/4 .. 1/16 size plus one read per pixel. Measure
 ##    it on the phone before it is kept (Yasin 18 Nov: "does the bloom cost that much?").
 ##  - NOT used, on purpose: SSAO, SSR, volumetric fog, depth of field.
@@ -92,6 +95,7 @@ static var PRESETS := {
 @export var bloom := false                          ## glow round bright things (GTA 4 has it). COSTS PIXELS: off by default, see docs/LOOK_SKY.md
 @export var glow := true                            ## lamp halos and pools drawn by tools/city/look/glow.gdshader (look job 3); false = the bake's
 @export var blobs := false                          ## soft tree shadows beyond the sun shadow (look job 4). Reads each cell's meshes: off for phone drives
+@export_range(0.0, 1.0) var wet := 0.0             ## look job 5: 0 dry .. 1 after rain (global ck_wet; the ground demo below)
 @export_range(0.0, 1.0) var grade := 1.0           ## strength of the colour grade (the lookup table); 0 = none
 
 var env: Environment
@@ -101,6 +105,9 @@ var night := 0.0
 var preset := ""                ## a time of day from PRESETS ("" = day / night by set_night)
 var _drift := Vector2.ZERO
 static var _drift_added := false
+static var _map_added := false
+var sky_map: SubViewport        # look job 5: the sky as a 128 x 64 panorama for reflections (global ck_sky_map)
+var _map_mat: ShaderMaterial
 
 func _ready() -> void:
 	# the clouds' drift is a global shader value: add it before the sky shader is loaded (it will not compile without)
@@ -125,6 +132,16 @@ func _ready() -> void:
 		env.glow_intensity = 0.7; env.glow_strength = 1.0; env.glow_bloom = 0.04; env.glow_hdr_threshold = 0.9; env.glow_hdr_scale = 2.0
 		env.glow_blend_mode = Environment.GLOW_BLEND_MODE_SOFTLIGHT
 	var we := WorldEnvironment.new(); we.environment = env; add_child(we)
+	# look job 5: the small sky map. Drawn only when the time of day changes (UPDATE_ONCE in _apply).
+	sky_map = SubViewport.new(); sky_map.size = Vector2i(128, 64); sky_map.use_hdr_2d = true; sky_map.transparent_bg = false
+	sky_map.render_target_update_mode = SubViewport.UPDATE_ONCE; sky_map.disable_3d = true
+	var rect := ColorRect.new(); rect.size = Vector2(128, 64)
+	_map_mat = ShaderMaterial.new(); _map_mat.shader = load("res://tools/city/look/sky_map.gdshader"); _map_mat.set_shader_parameter(&"noise_tex", load(NOISE_PATH))
+	rect.material = _map_mat; sky_map.add_child(rect); add_child(sky_map)
+	if not _map_added:      # (in the game: project.godot [shader_globals], see sky_reflect.gdshaderinc)
+		RenderingServer.global_shader_parameter_add(&"ck_sky_map", RenderingServer.GLOBAL_VAR_TYPE_SAMPLER2D, sky_map.get_texture())
+		RenderingServer.global_shader_parameter_add(&"ck_wet", RenderingServer.GLOBAL_VAR_TYPE_FLOAT, wet); _map_added = true
+	else: RenderingServer.global_shader_parameter_set(&"ck_sky_map", sky_map.get_texture())
 	sun = DirectionalLight3D.new(); sun.rotation_degrees = sun_angles
 	sun.shadow_enabled = OS.get_environment("NOSHADOW") != "1"; sun.directional_shadow_max_distance = shadow_distance; add_child(sun)
 	set_night(night)
@@ -133,7 +150,7 @@ func _ready() -> void:
 ## comes in (two shared materials, nothing per frame; the bake's energy per kind is kept).
 var _glow_mats := {}
 func attach_stream(st: Node) -> void:
-	if not glow and not blobs: return
+	if not glow and not blobs and wet <= 0.0: return
 	st.cell_in.connect(func(k: String) -> void: _restyle(st.cells[k].node))
 	for k: String in st.cells:
 		if st.cells[k].state == st.IN: _restyle(st.cells[k].node)
@@ -143,6 +160,7 @@ func _restyle(cell: Node) -> void:
 	if blobs and cell.get_node_or_null("look_blobs") == null:
 		var b := Blobs.build(cell)
 		if b: cell.add_child(b)
+	if wet > 0.0: _wet_ground(cell)
 	if not glow: return
 	for nm: String in ["glow_halo", "glow_pool"]:
 		var g := cell.get_node_or_null(nm) as GeometryInstance3D
@@ -154,6 +172,17 @@ func _restyle(cell: Node) -> void:
 			m.set_shader_parameter(&"energy", old.get_shader_parameter(&"energy") if old else (1.6 if nm == "glow_halo" else 0.22))
 			_glow_mats[nm] = m
 		g.material_override = _glow_mats[nm]
+
+## DEMO (look job 5, --wet above 0): each cell's ground drawn by demo_wet_ground.gdshader (rt_ground + the wet snippet)
+var _wet_mat: ShaderMaterial
+func _wet_ground(cell: Node) -> void:
+	for g: Node in cell.find_children("*", "GeometryInstance3D", true, false):
+		var gi := g as GeometryInstance3D; var sm := gi.material_override as ShaderMaterial
+		if sm == null or sm.shader == null or not sm.shader.resource_path.ends_with("rt_ground.gdshader"): continue
+		if _wet_mat == null:
+			_wet_mat = ShaderMaterial.new(); _wet_mat.shader = load("res://tools/city/look/demo_wet_ground.gdshader")
+			_wet_mat.set_shader_parameter(&"ground_arr", sm.get_shader_parameter(&"ground_arr")); _wet_mat.set_shader_parameter(&"puddle_tex", load(NOISE_PATH))
+		gi.material_override = _wet_mat
 
 func _process(dt: float) -> void:
 	if cloud_speed == Vector2.ZERO: return
@@ -221,11 +250,14 @@ func _apply(t: Dictionary) -> void:
 	env.ambient_light_color = t.ambient_color; env.ambient_light_energy = t.ambient_energy
 	env.fog_light_color = haze; env.fog_light_energy = 1.0
 	env.fog_density = t.fog_density; env.fog_sun_scatter = t.fog_sun_scatter
-	for k: String in ["zenith", "middle", "haze", "cloud_lit", "cloud_dark", "cloud_cover", "cloud_alpha", "cloud_scale", "sun_halo", "sun_disc", "disc_cos", "stars"]:
-		sky_mat.set_shader_parameter(k, t[k])
-	sky_mat.set_shader_parameter(&"sun_col", sun.light_color)
-	sky_mat.set_shader_parameter(&"sun_dir", Basis.from_euler(sun.rotation).z)      # towards the light (its +Z)
-	sky_mat.set_shader_parameter(&"sun_scatter", sun.light_energy * env.fog_sun_scatter)      # the fog's own sun glow, so sky and fog agree
+	for m: ShaderMaterial in [sky_mat, _map_mat]:      # the sky and its small map for reflections: the same numbers
+		for k: String in ["zenith", "middle", "haze", "cloud_lit", "cloud_dark", "cloud_cover", "cloud_alpha", "cloud_scale", "sun_halo", "sun_disc", "disc_cos", "stars"]:
+			m.set_shader_parameter(k, t[k])
+		m.set_shader_parameter(&"sun_col", sun.light_color)
+		m.set_shader_parameter(&"sun_dir", Basis.from_euler(sun.rotation).z)      # towards the light (its +Z)
+		m.set_shader_parameter(&"sun_scatter", sun.light_energy * env.fog_sun_scatter)      # the fog's own sun glow, so sky and fog agree
+	sky_map.render_target_update_mode = SubViewport.UPDATE_ONCE
+	RenderingServer.global_shader_parameter_set(&"ck_wet", wet)
 	var bm := Blobs.material()      # the blob shadows follow the sun: where it stands, how strong (none at night)
 	bm.set_shader_parameter(&"sun_dir", Basis.from_euler(sun.rotation).z)
 	bm.set_shader_parameter(&"strength", 0.5 * clampf(sun.light_energy / 1.55, 0.0, 1.0) * (1.0 - float(t.get("lights", night))))
