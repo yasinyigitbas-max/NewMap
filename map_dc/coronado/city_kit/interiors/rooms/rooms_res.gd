@@ -10,6 +10,11 @@ extends SceneTree
 ##   g_res_cafe   Ridge Coffee (com_shallow_cafe): the regulars' corner cafe - one booth, small tables in the window,
 ##                the pastry case and the espresso machine on a short counter, the notice board, the fridge you serve
 ##                yourself from
+##   g_res_wash   Glorietta Wash & Fold (com_realty): the block's laundromat - washers down one wall, dryers down the
+##                other, folding tables between, a bench in the window, the soap machine, the attendant's counter at the
+##                back with the dry-cleaning rail behind it (19 Nov, the zone roll-out)
+##   g_res_market Hilltop Market (com_bakery): Crown Hill's corner market - the till by the door facing in, three short
+##                aisles, produce in the window, fridges and a freezer along the stockroom wall (19 Nov)
 ##   g_res_surf   Ocean Blvd Surf (com_surf_shop): a surf shop and ding-repair two blocks from the beach - boards up the
 ##                long wall, wetsuits and a changing room on the other, the rental quiver in the middle, the repair
 ##                bench in the back room behind the staff door
@@ -28,7 +33,7 @@ func _init() -> void: _run.call_deferred()
 func _run() -> void:
 	rc = JSON.parse_string(FileAccess.get_file_as_string(RC)).models
 	asg = JSON.parse_string(FileAccess.get_file_as_string(ASG))
-	await _books(); await _cafe(); await _surf()
+	await _books(); await _cafe(); await _surf(); await _wash(); await _market()
 	quit()
 
 func _entry(id: String) -> Dictionary:
@@ -237,4 +242,87 @@ func _surf() -> void:
 	_signs(r, c, e, "SURF")
 	await r.make_signs(self)
 	var root := r.build(); root.set_meta(&"shop", {"id": String(e.id), "kind": "sport", "name": String(e.name)}); r.save("g_res_surf")
+	root.free()
+
+## ================================================================================================ Glorietta Wash & Fold
+## com_realty, inside 5.4 x 13. The door is front right: the long room runs away from it, washers on the left wall under
+## the side windows, dryers on the right, two folding tables down the middle (people fold where they unload), a bench
+## and a chair in the window to wait in, the soap and soda machines at the back, the attendant's counter across the
+## back with the dry-cleaning rail behind it and the back door kept clear.
+func _wash() -> void:
+	var s := _start("g_res_wash", 0.02); var r: R = s[0]; var e: Dictionary = s[1]
+	var model := "commercial/com_realty"
+	var c: Dictionary = rc[model]
+	_mats(r, "Tiles143", 1.0, Color(0.9, 0.95, 0.96))
+	var X0 := -2.7; var X1 := 2.7; var ZB := -6.7; var ZF := 6.3; var F := 0.02; var H := 3.6
+	r.flat("floor", X0, ZB, X1, ZF, F); r.flat("ceil", X0, ZB, X1, ZF, H, false)
+	r.walls4(c, X0, X1, ZB, ZF, F, H)
+	for k in 10: r.prop("washer", X0 + 0.37, 4.55 - k * 0.74, 90.0)
+	for k in 9: r.prop("dryer", X1 - 0.42, 4.05 - k * 0.74, -90.0)
+	for tz: float in [2.0, -0.6]: r.prop("display_table", 0.0, tz, 90.0)
+	r.prop("waiting_bench", -1.45, 5.85, 180.0); r.prop("side_chair", 0.15, 5.9, 180.0)
+	r.prop("vending_snack", X0 + 0.45, -3.2, 90.0); r.prop("vending_soda", X0 + 0.45, -4.15, 90.0)
+	r.prop("laundry_counter", 0.75, -4.75, 180.0)
+	r.prop("office_chair", 0.75, -5.55, 0.0)
+	r.prop("garment_rail", 1.45, -6.42, 0.0)
+	r.prop("indoor_bin", -0.75, -3.55); r.prop("recycling_receptacle", -0.35, -3.55)
+	r.prop("potted_plant", X1 - 0.3, -2.95)
+	r.prop("poster_case", -2.2, ZB + 0.06, 0.0, 1.0)
+	for lz: float in [3.6, -0.4]:
+		for lx: float in [-1.0, 1.0]: r.pendant(lx, lz, H, 0.0, Color(0.96, 0.98, 1.0), 1.2, 5.0, true)
+	r.pendant(0.0, -5.2, H, 0.0, Color(0.96, 0.98, 1.0), 1.0, 4.0, true)
+	_daylight(r, -1.0, 2.0, 5.7)
+	_wear(r, F, [[1.75, 5.0, 1.2, 2.0], [-1.25, 1.5, 1.0, 6.0], [1.2, 1.5, 1.0, 6.0], [0.75, -3.7, 2.0, 0.9]])
+	_signs(r, c, e, "LAUNDRY")
+	await r.make_signs(self)
+	var root := r.build(); root.set_meta(&"shop", {"id": String(e.id), "kind": "cleaners", "name": String(e.name)}); r.save("g_res_wash")
+	root.free()
+
+## ================================================================================================ Hilltop Market
+## com_bakery, inside 8.4 x 13 (floor 0). The door is front right: the till is right there, the counter along the right
+## wall facing the room with the cigarette cabinet and a stool behind it (the owner sees the door and the aisles); three
+## short aisles of shelves run front to back, more shelves on the left wall, produce stands in the window, the cold drinks
+## and a freezer along the stockroom partition at the back; the stockroom behind the staff door (in line with the back
+## door) holds shelves of stock.
+func _market() -> void:
+	var s := _start("g_res_market", 0.02); var r: R = s[0]; var e: Dictionary = s[1]
+	var model := "commercial/com_bakery"
+	var c: Dictionary = rc[model]
+	_mats(r, "Tiles074", 1.0, Color(0.97, 0.95, 0.88))
+	r.mat("kfloor", "Concrete034", 2.0)
+	var X0 := -4.2; var X1 := 4.2; var ZB := -6.7; var ZF := 6.3; var F := 0.02; var H := 3.6; var ZP := -4.6
+	r.flat("floor", X0, ZP, X1, ZF, F); r.flat("kfloor", X0, ZB, X1, ZP, F); r.flat("ceil", X0, ZB, X1, ZF, H, false)
+	r.walls4(c, X0, X1, ZB, ZF, F, H)
+	var d0 := -2.3; var d1 := -1.3
+	r.box("wall", Vector3((X0 + d0) * 0.5, (F + H) * 0.5, ZP), Vector3(d0 - X0, H - F, 0.12))
+	r.box("wall", Vector3((d1 + X1) * 0.5, (F + H) * 0.5, ZP), Vector3(X1 - d1, H - F, 0.12))
+	r.box("wall", Vector3((d0 + d1) * 0.5, (F + 2.2 + H) * 0.5, ZP), Vector3(d1 - d0, H - F - 2.2, 0.12))
+	r.solid_door("z", ZP, d0, d1, F, F + 2.2)
+	# the till by the door
+	r.prop("checkout_counter", 2.9, 2.6, 90.0)
+	r.prop("cigarette_cabinet", X1 - 0.17, 2.6, -90.0)
+	r.prop("bar_stool", 3.6, 1.6, -90.0)
+	r.prop("indoor_bin", 2.0, 4.35)
+	# aisles and the left wall
+	for ax: float in [-2.3, -0.7, 0.9]:
+		for az: float in [0.8, -0.4, -1.6]: r.prop("gondola_aisle", ax, az, 90.0)
+	for lz: float in [1.8, 0.6, -0.6, -1.8, -3.0]: r.prop("grocery_shelf", X0 + 0.26, lz, 90.0)
+	# the window: produce
+	r.prop("produce_stand", -3.0, 5.6, 0.0); r.prop("produce_stand", -1.3, 5.6, 0.0)
+	r.prop("potted_plant", 0.5, 5.85)
+	# cold along the partition, a freezer at its right end, the notice board over the freezer
+	for fx: float in [-3.65, -2.8, 0.0, 0.85, 1.7]: r.prop("drinks_fridge", fx, ZP + 0.45, 0.0)
+	r.prop("chest_freezer", 3.25, ZP + 0.42, 0.0)
+	r.prop("poster_case", 3.25, ZP + 0.1, 0.0, 1.1)
+	# the stockroom
+	for sx2: float in [0.3, 1.35, 2.4]: r.prop("wall_shelf", sx2, ZB + 0.18, 0.0)
+	r.prop("wall_shelf", X0 + 0.18, -5.7, 90.0)
+	for lz2: float in [3.4, 0.0, -3.0]:
+		for lx2: float in [-2.6, 1.0]: r.pendant(lx2, lz2, H, 0.0, Color(1.0, 0.98, 0.94), 1.1, 5.0, true)
+	r.pendant(0.0, -5.6, H, 0.0, Color(0.95, 0.97, 1.0), 0.9, 4.0, true)
+	_daylight(r, -1.5, 2.0, 5.6)
+	_wear(r, F, [[3.3, 5.0, 1.4, 2.0], [2.2, 2.6, 1.0, 2.4], [-1.5, -0.4, 0.9, 3.6], [0.1, -0.4, 0.9, 3.6], [-1.0, -3.4, 4.6, 0.9]])
+	_signs(r, c, e, "MARKET")
+	await r.make_signs(self)
+	var root := r.build(); root.set_meta(&"shop", {"id": String(e.id), "kind": "corner_shop", "name": String(e.name)}); r.save("g_res_market")
 	root.free()

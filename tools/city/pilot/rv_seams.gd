@@ -28,12 +28,13 @@ func _run() -> void:
 		var sx := float(site.sx); var sz := float(site.sz)
 		var o := n.position
 		var P := func(u: float, v: float) -> Vector2: return Vector2(o.x + sx * u, o.z + sz * v)
+		var hu := float(site.get("Lu", 200.0)) * 0.5; var hv := float(site.get("Lv", 200.0)) * 0.5
 		var checks: Array = []
 		for c: float in [55.0, 57.0, 59.0]:
 			checks.append(["mouth u-alley", P.call(9.25, c), P.call(9.15, c)])      # the alley along u starts at the side street
 			checks.append(["mouth v-alley", P.call(c, 9.25), P.call(c, 9.15)])
-			checks.append(["mid u-alley", P.call(99.95, c), P.call(100.05, c)])
-			checks.append(["mid v-alley", P.call(c, 99.95), P.call(c, 100.05)])
+			checks.append(["mid u-alley", P.call(hu - 0.05, c), P.call(hu + 0.05, c)])
+			checks.append(["mid v-alley", P.call(c, hv - 0.05), P.call(c, hv + 0.05)])
 		for ck: Array in checks:
 			var a: Vector2 = ck[1]; var b: Vector2 = ck[2]
 			var ya: float = hy.call(a.x, a.y); var yb: float = hy.call(b.x, b.y)
