@@ -205,6 +205,32 @@ func _col_add(m: Node3D, src: Shape3D, xf: Transform3D) -> void:
 	if cd == null: return
 	(m.get_meta(&"col") as Array).append([cd, xf]); m.set_meta(&"w", int(m.get_meta(&"w")) + int(cd.call(&"weight")))
 
+## What kind of material a mesh is drawn with, as far as the renderer cares: the shader, the textures, the on / off
+## and choice settings, and the vertex layout. Colours and strengths do not count.
+func _mat_sig(mesh: Mesh, ov: Material) -> String:
+	var parts: Array = []
+	for si in mesh.get_surface_count():
+		var mt: Material = ov if ov else mesh.surface_get_material(si)
+		var s := "fmt%d" % (int((mesh as ArrayMesh).surface_get_format(si)) if mesh is ArrayMesh else 0)
+		if mt == null: parts.append(s + "none"); continue
+		s += mt.get_class()
+		for p: Dictionary in mt.get_property_list():
+			if not (int(p.usage) & PROPERTY_USAGE_STORAGE): continue
+			var v: Variant = mt.get(p.name)
+			if v is Texture or v is Shader: s += "|%s=%s" % [p.name, (v as Resource).resource_path]
+			elif v is bool or v is int: s += "|%s=%s" % [p.name, str(v)]
+		parts.append(s)
+	parts.sort()
+	return str(hash("#".join(parts)))
+
+## every file `path` needs, and what those need
+func _deps(path: String, seen: Dictionary) -> void:
+	for d: String in ResourceLoader.get_dependencies(path):
+		var p := d.get_slice("::", 2) if d.contains("::") else d
+		if p == "" or seen.has(p): continue
+		seen[p] = true
+		_deps(p, seen)
+
 func _tex_name(t: Texture2D) -> String: return t.resource_path.get_file().get_basename() if t else "none"
 
 func _save_mat(sig: String, m: Material) -> Material:
@@ -591,6 +617,16 @@ func _build_cell(c: Vector2i) -> Dictionary:
 		for m: Dictionary in rec.misc:
 			var mi4 := MeshInstance3D.new(); mi4.name = String(m.name); mi4.mesh = _lib_mesh(m.mesh, true); mi4.transform = m.xf
 			if m.ov: mi4.material_override = m.ov
+			# These keep the materials they were built with. The first of every KIND of material (shader, textures,
+			# switches, vertex layout) is drawn in the warm-up and held for good, so the cell that brings the first
+			# park ground or the first wire does not load its textures and build its shader in the middle of a drive
+			# (phone, 18 Nov: one frame of 60-350 ms at the same place in every run).
+			var sig := "misc" + _mat_sig(mi4.mesh, m.ov)
+			if not warm.has(sig):
+				var wm4 := MeshInstance3D.new(); wm4.mesh = mi4.mesh; wm4.scale = Vector3.ONE * 0.01
+				if m.ov: wm4.material_override = m.ov
+				warm[sig] = wm4; keep[mi4.mesh.resource_path] = true
+				if m.ov and (m.ov as Material).resource_path != "" and not (m.ov as Material).resource_path.contains("::"): keep[(m.ov as Material).resource_path] = true
 			mi4.visibility_range_begin = m.vb; mi4.visibility_range_end = m.ve; mi4.visibility_range_begin_margin = m.vbm; mi4.visibility_range_end_margin = m.vem; mi4.cast_shadow = m.shadow
 			mn.add_child(mi4); counts.draw_nodes += 1
 	# collision of ground and props: one static body per layer / mask pair
@@ -767,6 +803,20 @@ func _run() -> void:
 	_own(wroot, wroot)
 	var wps := PackedScene.new(); wps.pack(wroot); ResourceSaver.save(wps, out + "lib/warm.scn", ResourceSaver.FLAG_COMPRESS); wroot.free()
 	for mk: String in mats: keep[(mats[mk] as Material).resource_path] = true
+	# The net under all of the above: any texture, shader or material file a cell needs that is not already held from
+	# the start is added to the list the streamer holds. Printed, so new content that brings a new kind shows up here.
+	var held := {}
+	for kp: String in keep: held[kp] = true; _deps(kp, held)
+	for hp: String in [out + "far/far_world.scn", out + "lib/warm.scn"]:
+		if ResourceLoader.exists(hp): held[hp] = true; _deps(hp, held)
+	var late := {}
+	for ck: Vector2i in cells:
+		var seen := {}
+		_deps(out + "cells/cell_%d_%d.scn" % [ck.x, ck.y], seen)
+		for sp: String in seen:
+			if not held.has(sp) and sp.get_extension() in ["png", "jpg", "webp", "gdshader", "gdshaderinc", "tres", "gd"]: late[sp] = true
+	for lp: String in late: keep[lp] = true
+	print("BAKE check first use: %d texture / shader / material files the cells need were not held from the start, now on the keep list: %s" % [late.size(), str(late.keys()).substr(0, 600)])
 	var man := {"version": VERSION, "keep": keep.keys(), "warm": wi, "layout_sha": FileAccess.get_sha256(LAYOUT), "area": area, "tint": tint_on, "cells": manifest_cells, "far": fw, "stat": stat, "cell_m": CELL}
 	var f := FileAccess.open(out + "manifest.json", FileAccess.WRITE); f.store_string(JSON.stringify(man, " ")); f.close()
 	print("BAKE collision: %d triangle shapes cut into pieces, %d pieces in all, largest %d triangles; shape kinds left out: %s" % [int(stat.col_split), int(stat.col_pieces), int(stat.col_piece_max), str(stat.get("col_unknown", {}))])

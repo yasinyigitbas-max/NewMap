@@ -66,22 +66,60 @@ a mesh loads, collider adds hitch, more than 3 loads at once froze the Redmi).
 | Part | What it does | Measured (cloud) |
 |---|---|---|
 | Forward lead | the loading range is swept ahead by 2 s of travel (max 200 m) | 60 m/s drawing: 15 m late -> 2 m |
-| Queue | nearest first, 2 loads at a time, stale requests dropped | no cell late at 209, 281, 360 km/h (not drawing) |
+| Queue | nearest first, 2 loads at a time on the streamer's OWN low-priority threads (not the engine's pool), stale requests taken off the list or dropped | no cell late at 209, 281, 360 km/h (not drawing); phone: none late at 108-281 km/h |
 | No hole | the far world shows a cell's far versions until the cell is really in (`ck_cells_loaded`) | - |
 | Shared things stay | every baked material is held for the streamer's life | letting one go cost ~250 ms |
 | Cell add | built on a worker thread, added whole | 0.3-0.5 ms (was up to 33 ms) |
-| Collision in steps | bodies of at most 24 shapes per 32 m, 2 a frame, nearest first, in frames when nothing loads | attach itself 0.05 ms; waiting on a loader's lock: up to 14-20 ms |
+| Collision as data, made in steps | a cell carries its collision as plain data (`col_data.gd`), triangle shapes cut to 400 triangles; the streamer makes the bodies itself, nearest first: at most 6 bodies, 1,200 new triangles and 2 ms of main thread a frame | phone: a body is in the world within 1.6 s of its cell, the physics thread's wait is 0.5 ms median, 6 ms at 99 % |
 | Removal in parts | 1.5 ms a frame, in frames when nothing loads | step worst 2-3 ms (was 45) |
 | Memory cap | at most 30 cells; beyond it far versions | cap never hit (17-18 cells at once) |
-| `prepare()` / `is_ready()` | get a place ready before the player is put there | used by the rig between drives |
-| `warm_up()` | draws `lib/warm.scn`: one of every material and vertex format | 31 draws; cloud 20 s |
+| `prepare()` / `is_ready()` | get a place ready before the player is put there; ready = every cell in AND the collision within 70 m attached | phone: 0.5-2.6 s for a far jump, no frame over 39 ms meanwhile |
+| `warm_up()` | draws `lib/warm.scn`: one of every kind of material and vertex format (41 draws), keeps them, and takes 192 MB of graphics memory once and gives it back | phone: 0.5 s (0.07-0.12 s of it the memory) |
 
 Whole city (140 cells, 208 MB cells + 33 MB models, baked in 65 s). Drives, not drawing: ring 6.5 km at 281 km/h: 101
 cells in, 94 out, none late; frame median 2.4 ms, 99 % 6.6 ms, 3 frames over 50 ms. Zigzag 6.8 km at 209 km/h: none
 late, 2 over 50 ms. Diagonal at 360 km/h: none late.
-STILL OPEN: the slow frames left (20-46 ms here) happen while a cell is loading: the loader thread's mesh and shape
-creation is carried out through the main thread's servers. How big that is on a real phone GPU is unknown: it is the
-first thing the phone run answers. If it is large the next step is cells that arrive in parts.
+ANSWERED on the phone the same evening: see "The streamer on the phone" below. Cells in parts were not needed.
+
+### The streamer on the phone: what the hitches were, and what was done (18 Nov evening)
+Yasin: "streaming is the backbone of this game, we need it to work healthy agile and robust ... tackle the problem".
+Method: a loop of 3 km on streets through civic, centre, apartments and the gritty edge (`--plan=stream`: 108, 210,
+281 km/h), a probe that times the physics and the render server every frame (`--probe`), switches that turn one thing
+off (`--nocol`, `--hide`, `--loader=`), marks through a slow frame (scripts, streamer, draw, wait for physics). One
+cause at a time, each proven on the Redmi before the next.
+
+| # | What a slow frame was | How it was proven | What was done |
+|---|---|---|---|
+| 1 | Attaching a collision body: 29-41 ms of waiting for the physics thread | `--nocol`: those frames gone (8 -> 0); `tools/city/audit/col_census.gd`: every populated cell had ONE body of 7,000-25,000 triangles | the bake cuts triangle collision to 400 triangles a piece, 1,600 a body |
+| 2 | The moment two cells are asked for: 52-350 ms of waiting for the physics step, with no shape being made | the probe caught the wait; unchanged by `--nocol` and `--hide` | a threaded load with sub-threads fills the engine's thread pool with a cell's hundreds of files, and the physics engine and the renderer run their jobs on that pool. The streamer now has its own loader threads |
+| 3 | 600 small collision files a cell, read one after another: 1-3 s a cell (PC) | request-to-in times with the own loader | a cell's collision data is stored in the cell's own file |
+| 4 | The first cell that brings a new kind of material: textures loaded, shader built in the drive | `tools/city/audit/cell_deps.gd`: the kit's ground atlas and the wire shader were not held | the bake warms and holds the first of every kind; a check line prints anything a cell needs that is not held (`mat_census.gd` lists kinds) |
+| 5 | Once a session, the first cells streamed after the start: 61-546 ms inside the draw with 0.9 ms of drawing | the marks | the render side fetching its next block of graphics memory. The warm-up now takes 192 MB and gives it back, so that happens behind the loading screen (69-120 ms there) |
+| 6 | One cell in plus six bodies in a frame: 16 ms of main thread in the streamer | the marks | bodies are made inside 2 ms a frame; their shapes go straight on the body (no node a shape): 3.5 -> 2.4 ms for the heaviest |
+
+The loop on the Redmi, before and after (frames over 33 / 50 / 100 ms in 2.6 minutes of driving):
+`stream_probe` (this morning's streamer) 36 / 12 / 1 -> `stream_split` 10 / 8 / 1 -> `stream_own` 2 / 1 / 1 ->
+`stream_reserve` 0 / 0 / 0 -> `stream_final` 1 / 0 / 0 (one frame of 39 ms). No cell late in any of them.
+The zones test: `zones_720` 36 / 3 / 0 with teleports of 1.0-5.5 s and frames up to 81 ms while they load ->
+`zones_final` 6 / 1 / 0 with teleports of 0.6-2.7 s and no frame over 29 ms while they load. Its one frame over 50 ms
+(53 ms, 47 of them in the draw) is the instant the test flips day to night at the start of the night drive; a
+44 ms frame at the waterfront waited 35 ms for the physics step with nothing loading or attaching (once, not
+explained).
+
+THE BUDGET AND THE GATE. `tools/city/rig/health.py` grades a phone run PASS or FAIL: no cell late, no collision late
+within 40 m, no frame over 50 ms, at most 0.2 % of a drive's frames over 33 ms, a teleport ready in 3 s with no frame
+over 50 ms meanwhile, a collision body in the world within 3 s of its cell, no error. `phone_rig.sh` prints it after
+every run. `stream_final` is the first run that passes; `zones_final` fails on the day-to-night frame alone.
+
+What the streamer does NOT solve (measured, not streaming):
+- The frame rate itself: at 720p the phone sits at the 60 fps step with a 99 % frame of 25-26 ms, in every zone, with
+  nothing loading. That is pixels and triangles (the centre sends 0.7-1.4 M), not streaming.
+- Graphics memory: 584 MB from the system against 190-290 MB of the engine's own count, at every resolution. The
+  reading of cause 5 (the driver holds memory in big blocks) fits it, but it was not measured block by block. If it is
+  that, the lasting fix is in the engine build (smaller blocks for a streaming game), not here.
+- The tiers still switch in hard cuts and a cell's far -> mid switch is the whole cell at once (see "THE TIERS").
+  That is the next streaming job: fades, and roads in the far world.
+- One run each, debug build. The numbers moved by about 7 frames over 33 ms between two identical zones runs.
 
 ### The phone test (`tools/city/rig/`)
 `rig.tscn` is the project's main scene: an Android export of this repo is the test app. It drives five routes
