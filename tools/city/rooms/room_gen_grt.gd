@@ -103,12 +103,19 @@ func _free(x0: float, z0: float, x1: float, z1: float, use_keep := true) -> bool
 	return true
 
 ## put a prop centred at (x, z) facing yaw if its footprint is free; true when placed
+## a customer should not see the same thing over and over (Yasin, to the strip rooms: "shops filled with vending
+## machines"): at most this many of one kind in a room
+const LIMIT := {"brochure_rack": 2, "card_spinner": 2, "vending_soda": 1, "vending_snack": 1}
+var counts := {}
 func _put(base: String, x: float, z: float, yaw := 0.0, use_keep := true) -> bool:
+	if LIMIT.has(base) and int(counts.get(base, 0)) >= int(LIMIT[base]): return false
+	if base == "drinks_fridge" and not FOOD.has(cur_kind) and int(counts.get(base, 0)) >= 4: return false
 	var f := _fp(base, yaw)
 	var x0 := x - f.x * 0.5; var x1 := x + f.x * 0.5; var z0 := z - f.y * 0.5; var z1 := z + f.y * 0.5
 	if not _free(x0, z0, x1, z1, use_keep): return false
 	rr.prop(base, x, z, yaw)
 	occ.append([x0, z0, x1, z1, float(tall.get("prop_" + base, 1.0))])
+	counts[base] = int(counts.get(base, 0)) + 1
 	return true
 
 ## a group (table + chairs, booth) placed whole or not at all
@@ -126,6 +133,8 @@ func _group(items: Array, use_keep := true) -> bool:
 	occ.append([b[0], b[1], b[2], b[3], ht])
 	return true
 
+const FOOD := ["liquor", "bodega", "diner", "takeout", "bar"]
+var cur_kind := ""
 var mix := false
 var _mixn := 0
 ## chairs that never matched (gritty rooms with "mix"): every other seat is the other kind
@@ -167,7 +176,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	var ZP := ZB
 	if depth >= 9.0 and back != "none": ZP = ZB + (2.9 if back == "kitchen" else 2.3)
 	ZBp = ZP
-	occ = []; keep = []; wall_items = []; CON = c
+	occ = []; keep = []; wall_items = []; CON = c; counts = {}; cur_kind = kind
 	mix = bool(K.get("mix", false)); _mixn = hv % 3
 	seed(hv)     # the wear below is the same on every rebuild
 	rr = R.new(id, F)
@@ -379,7 +388,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 			for o4: Array in occ:
 				if float(o4[4]) > 1.2 and zz4 > float(o4[1]) - 0.5 and zz4 < float(o4[3]) + 0.5 and absf((float(o4[0]) + float(o4[2])) * 0.5 - wx3) < 1.0: blk = true
 			if not blk: _wall_put("poster_case", String(side3[2]), zz4, wx3 + inn3 * 0.04, zz4, float(side3[1]), 1.15, 1.2, 0.42, 0.85)
-	if cx + cw * 0.5 + 0.3 < X1 - 0.9: _put("indoor_bin", cx + cw * 0.5 + 0.3, zc + cd * 0.5 + 0.25)     # never in front of the wall goods
+	# (no bin at the counter end: it stood in the middle of the floor - "the bin is in the middle of the room")
 	if kind in ["office", "pharmacy", "souvenir", "venue", "gallery"]: _put("brochure_rack", dx + (1.3 if dx < (X0 + X1) * 0.5 else -1.3), ZF - 1.9, 180.0)
 	if bool(K.frames) or String(K.walls[0]) in ["frames_only", "poster_wall"]:
 		var mount := "poster_case" if String(K.walls[0]) == "poster_wall" else "gallery_frame"
@@ -507,6 +516,13 @@ func _stock(hv: int) -> void:
 ## rows too) and of everything already hung there. wall = "front" / "back" / "left" / "right" ("" = an inner
 ## partition: no openings), s = position along the wall (x on front / back, z on the sides). false when it does not fit.
 func _wall_put(base: String, wall: String, s: float, x: float, z: float, yaw: float, lift: float, h: float, half: float, min_lift: float) -> bool:
+	# at most 2 decorations on a wall and 6 in the room ("you just filled every wall with paintings")
+	if base in ["gallery_frame", "poster_case", "menu_board"]:
+		var on_wall := 0; var in_room := 0
+		for it0: Array in wall_items:
+			if bool(it0[5]): in_room += 1
+			if bool(it0[5]) and String(it0[0]) == wall: on_wall += 1
+		if on_wall >= 2 or in_room >= 6: return false
 	var y0 := minf(lift, HC - F - 0.08 - h)
 	if y0 < min_lift: return false
 	var y1 := y0 + h
@@ -521,6 +537,6 @@ func _wall_put(base: String, wall: String, s: float, x: float, z: float, yaw: fl
 		elif absf(oz - z) < 0.95 and s - half < float(o2[2]) and s + half > float(o2[0]): return false
 	for it: Array in wall_items:
 		if String(it[0]) == wall and wall != "" and s - half < float(it[2]) + 0.15 and s + half > float(it[1]) - 0.15 and y0 < float(it[4]) + 0.1 and y1 > float(it[3]) - 0.1: return false
-	wall_items.append([wall, s - half, s + half, y0, y1])
+	wall_items.append([wall, s - half, s + half, y0, y1, base in ["gallery_frame", "poster_case", "menu_board"]])
 	rr.prop(base, x, z, yaw, y0)
 	return true
