@@ -1,0 +1,263 @@
+# Traffic and people for the new map, in C++ (Stage 0: inventory and plan, 18-19 Nov 2026)
+
+Yasin: "bring the traffic and people here as completely cplus plus first, then we run the extensions on the phone".
+And, while this was being written: "all of them must fit into the new map flawlessly, improve the code whereevr you
+can, think that you work at rockstar studios and you need to implement npc and traffic for the new GTA game.
+everything must be in C PLUS PLUS".
+
+This page is the plan. No code yet. How it was made: the old game was READ ONLY, at the snapshot on this PC
+(`C:\coronado_..._src6_source\coronado-actprobe1-source\project`, commit `bd26fce`, the same one
+`docs/OLD_GAME_SYSTEMS_REVIEW.md` read). I read the C++ headers and the setup, spawn and drawing code myself; three
+helpers read the script layer, the crowd assets and the talking characters and reported with file and line. Nothing
+there was run or changed. Numbers marked "estimate" are not measured.
+
+## 1. The short version
+- The old game's traffic and crowd each have a clean C++ core with NO engine types in it (`tc::Sim`, `cc::Sim`):
+  flat arrays, a fixed number of cars and walkers, a step that allocates nothing. Those cores come over.
+- Round each core the old game still runs a script layer EVERY tick and EVERY frame (lists below). None of that comes
+  over. It is written new, in C++, for this map: fed by the streamer, drawn as batches, no node per car.
+- The old data does not fit: its lane graph is the OLD streets. The new map needs its own lane graph, pavements,
+  crossings and signal plan, made by a tool from the locked street skeleton and checked against the baked ground.
+- One thing only Yasin can decide: the TALKING characters (section 4). The walking crowd does not need them.
+
+## 2. The old C++ (`native/src`, 7,900 lines), file by file
+| File | Lines | What it is | Here |
+|---|---|---|---|
+| `traffic_sim.h` | 374 | the traffic core's data: lanes and junction connectors as flat polylines, up to 128 cars as arrays, config | TAKE, then change (section 8) |
+| `traffic_setup.cpp` | 589 | lanes -> pieces, Bezier connectors through junctions, speed caps in curves, which movements conflict, grids, parked cars that reach into a lane | TAKE; parked cars become per cell (they stream) |
+| `traffic_step.cpp` | 1,165 | one tick: following (IDM), junction reservations, signals, stop signs, lane changes, passing a parked car, "never move into a body", spawning and removing | TAKE; the spawn ring is rewritten (speed) |
+| `traffic_route.cpp` | 403 | routed cars: timetable buses, scripted cars (the old taxi ride) | TAKE the router; buses wait for bus routes on the new streets (not in this job) |
+| `traffic_peds.cpp` | 514 | a second, simpler walker system inside the traffic (pavements beside the lanes, crossings), drawn by the crowd as "guests" | NOT taken: one walker system instead of two (section 8) |
+| `traffic_core.h/.cpp` | 526 | the script face of the core: packed arrays in, packed arrays out | NOT taken: nothing calls it from script any more |
+| `traffic_draw.h/.cpp` | 446 | moves one NODE RIG per car, spins wheels, fills far-car batches | NOT taken as it is: its interpolation and "upload only what changed" ideas are kept, the node rigs go |
+| `crowd_sim.h/.cpp` | 2,069 | the crowd core: walk graph, A* routes, keep-right lanes, passing, parties (couples, families), places (homes, shops, benches, bus stops), meetings, pauses, crossings with gap acceptance, fleeing, up to 1,024 walkers in three tiers | TAKE, then change |
+| `crowd_core.h/.cpp` | 611 | the script face of the crowd + the far-figure rows | far-figure rows kept, the face is written new |
+| `car_core.h/.cpp` | 1,267 | the PLAYER's car (engine, gears, steering, sound) | not in this job (no player car here yet) |
+| `bike_riders.h/.cpp` | 220 | up to 8 cyclists | not in this job; listed for later |
+| `breakables_core`, `ground_native` | 603 | hit scan for breakable props; ground heights from the old road meshes | not needed: heights come with the new graph |
+
+## 3. The old scripts: what still runs every tick, and where it goes
+"Live" = runs in the old game's default path today.
+
+| Script | Lines | Live? | What it does | In the new map |
+|---|---|---|---|---|
+| `traffic/traffic.gd` (the autoload) | 403 | live | steps the sim at 20 Hz; builds and pools a node rig per car (1 ms a frame, one new rig a frame: a car is INVISIBLE until its rig exists); far batches; a collider node per near car; signal lamps (a mesh per lamp, a string compare per approach) | C++ node `CityTraffic` |
+| `traffic2/traffic2_sim.gd` | 347 | live | per tick: pushes camera, player, other bodies; rebuilds a dictionary per car and per walker for the other scripts (in practice almost every tick) | gone: C++ reads the arrays directly |
+| `traffic2/traffic2_data.gd` | 299 | load | packs the old road graph, parked cars, pavements, bus routes | replaced by the graph tool (C++) |
+| `traffic/traffic_wrecks.gd` | 92 | live | turns a hit car into a physics wreck | later, with the player's car |
+| `traffic/traffic_sim.gd` | 2,179 | fallback only | the OLD script traffic | not taken |
+| `traffic/car_mesh.gd` | 431 | dead | procedural test cars | not taken |
+| `vehicles/car_models.gd` | 1,067 | live | the car catalogue, rigs, LODs, paint | its TABLE (sizes, weights, colours) goes into C++ data; the rigs go |
+| `crowd2/crowd2.gd` | 803 | live | per frame: feeds view, player, props, signals (0.25 s); steps; picks the near bodies; plays their clips; shows / grows the far batches; towels; 12 capsules round the player | C++ node `CityCrowd` |
+| `crowd2/crowd2_data.gd` | 312 | load + 0.25 s | reads the OLD walk graph (23,007 nodes, 153 km), homes, shops, benches, densities | replaced by the graph tool; densities by zone |
+| `crowd2/crowd2_life.gd` | 382 | live | reactions (danger, scream, film), beggars, night workers, umbrellas, murmur sound | later (3b): separable, the walking does not need it |
+| `crowd2/crowd2_social.gd`, `crowd2_person.gd` | 107 | live | the bridge to the TALKING feature | section 4 |
+| `map_dc/coronado/npc/people/npc_people.gd` | 807 | live | the body library: 41 bodies, looks, materials; skins every far body into 12 poses in SCRIPT at load | the pose bake becomes an offline tool; the library a C++ table |
+
+Per frame and per tick, the old game runs in SCRIPT (its own numbers: traffic 2.5-3.2 ms a frame on the Redmi before
+the C++ core, 0.82 ms a frame in the cloud after it; there is no phone number since the rewrite):
+1. traffic: the 20 Hz step call, the gathering of other bodies, a NEW packed array of them every tick, the dictionary
+   rebuild for other scripts, rig building, collider on / off, the signal lamps;
+2. crowd: the whole frame loop (view, feed, step call, near list, clip playing per body, far batch show / grow,
+   events), the slow tick, umbrellas, reactions.
+In the new map ALL of it is C++ inside two engine nodes. The test app's script only creates the two nodes and sets
+numbers on them (three lines in `rig.gd`); it calls nothing per frame.
+
+## 4. What "people" covers, and the question for Yasin
+IN this job: the walking street crowd. People walk the pavements, keep right, pass each other, wait at kerbs, cross
+at crossings (on green at signals, in a gap elsewhere, cars yield), walk in pairs and families, stop for a phone
+call or a shop window, step aside for the player, run from danger.
+
+NOT in this job unless Yasin says so: the TALKING. What it is in the old game (read, not run):
+- There are no special talking characters. ANY walker of the street crowd within 2 m of the player on foot gets a
+  "Talk" button. It is the English-practice small talk (A1-A2 level, with a Turkish helper line): a greeting, then
+  three choices (the nearest named place, the active mission or a hint, one small-talk topic). The player taps a
+  line and must SAY it into the microphone (Android's Google speech-to-text, online only, three tries; typing or
+  skip as fallback). The walker answers with a recorded clip and a caption box. Its party stands still meanwhile and
+  its body plays a talk animation. Each person remembers the player for a while (a grudge for 24 h, "Hi again").
+- All scripted, nothing generated: templates filled with a place name, a direction, walking minutes, the clock.
+- Size. Code: talk logic 890 lines (`npc/talk/npc_talk.gd`, `npc_memory_store.gd`), interface 830
+  (`ui/npc/*`, `ui/dialogue/choice_list.gd`, `ui/caption_help.gd`), voice and captions 2,000 (`voice/*`), the Android
+  speech plugin (202 lines of Java + its build). Content: four JSON files (8 topics, 92 situations and 14 shop talks
+  that are not used today, the groups), and 2,658 recorded clips, 39 MB (`audio/npc/f`, `audio/npc/m`).
+- Per frame it costs nothing until a talk is open.
+- What ties it to the OLD map: the walk graph, homes and shops with the real town's names, "the Hotel Bel", "the
+  ferry landing", the zone names, and A CLIP PER PLACE NAME: new shop and street names need new recordings.
+- What it needs that this repo does not have: a player on foot, an interact button, the caption and choice
+  interface, the microphone plugin in the Android build, the save file (memory), the mission and job lists it quotes.
+
+THE QUESTION FOR YASIN: what to do with the talking?
+- (a) NOT NOW (my advice): the crowd walks, crosses and lives; the crowd core keeps the hooks the talk needs (hold a
+  person in place, turn them to the player, parties, the "who is near" list). The talk comes when the new game has a
+  player on foot and its interface, and when the new map's place names are fixed (they decide which clips must be
+  recorded again).
+- (b) AS STAGE 4 of this job: the talk logic in C++ on the new crowd, the old clips reused where a line has no
+  place name, a new place table for the new map; the interface is engine controls whatever the language; the
+  microphone plugin goes into the test app's Android build. It could only be tried in a test scene with a stand-in
+  player.
+- (c) DROP it for the new game.
+
+## 5. The DATA the new map must give (none of it exists yet)
+This repo only borrows `map_dc/roads/lane_graph.json`, which is the OLD streets (4,892 edges from the real town's
+map). It is not used. What the new streets have: the locked skeleton (`zoning/grading.json`, `review/sites.json`: 93
+junctions, 165 blocks, 34.3 km: residential 11.1 km, standard 7.5, ring 6.9, the 3rd / 4th St arterials 3.2, high
+street 1.9, centre 1.6, bridge 1.3, strip 0.6, truck 0.4), the cross-sections (`ROADKIT_SPEC.md` and the piece
+libraries: lane edges, kerbs, parkways, pavements, crossings, stop bars as constants), the pieces placed
+(`city_grid_layout.json`, `review/*_sites.json`) and the baked ground.
+
+| Data | From what | How |
+|---|---|---|
+| LANE GRAPH: lane centre lines, lane count and width, speed limit, lane neighbours | skeleton + section table | a C++ builder (`StreetGraph`) lays lanes beside each block's centre line. Two-way everywhere (3rd / 4th St are two-way arterials with a centre turn lane, per ROADKIT_SPEC). The ring's curves and the bridge use the blocks' own point lists |
+| JUNCTIONS: which lane leads to which, stop line positions, who has right of way | `sites.json` legs + the junction rules of ROADKIT_SPEC (residential / standard: all-way stop; any arterial or Amber crossing: signals; a T into the ring: the stem stops) | connectors per junction (straight, left, right; no U-turns); the old core then builds the curves and the conflict lists itself |
+| SIGNALS | the bake's signal shader | the lamps already cycle in the shader (30 s: green 40 %, amber 10 %, red 50 %, cross street half a cycle later, a start time per junction). The sim will use EXACTLY that plan and drive the shader's clock (`ck_signal_time`, the hook the shader comment already names), so a car stops at the red the player sees |
+| HEIGHTS | the baked ground | every lane and pavement point is dropped on the baked ground once, by the tool. Rule kept: smooth heights, no jumps |
+| A CHECK that the graph is ON the street | the baked ground | the ring leaves the skeleton line by up to 20 m at the waterfront, so the skeleton alone is not trusted: the tool measures kerb to kerb at every point, moves the lanes where the built street differs, and must report 0 lane points off the asphalt and 0 pavement points off a walk |
+| PAVEMENTS and CORNERS | section table (walk between kerb / parkway and the property line) | both sides of every block, joined at the corners |
+| CROSSINGS | the crosswalk positions of the junction libraries | at signals: walk on the crossing street's red; at stops and mid-block: gap acceptance |
+| PARKING STALLS | the baked cells' meta `stalls` ([x, y, z, yaw, grade], already there) | the tool reads all cells once and stores the stalls with the graph, so the sim knows where parked cars reach into a lane BEFORE a cell loads. Which stalls are taken is decided by a hash of the stall (the same answer in the sim and on screen, every session) |
+| DENSITY: how many cars and people where, by hour | zone of the block (`zoning`) | a small table by section and zone (centre and high street busy, residential quiet, industrial trucks by day). The old game had measured traffic counts of the real town; the new town has none, so this is a design table. YASIN may want to tune it |
+| PLACES people go: doors, benches, bus stops, park and beach spots | the pieces' props and the interiors' door list | NOT in the first crowd stage (people walk and cross first); added after it (3b) |
+| BUS ROUTES and stops | - | does not exist for the new streets. Buses are left out until Yasin wants them |
+
+Output: `map_dc/coronado/city_kit/traffic/streets.bin` (small, in git, made by the tool) and a top-view picture of the
+lanes, pavements and crossings over the street map for Yasin to look at. Frame: the grid frame the pieces, the bake
+and the rig already use (x = u, z = v). The game's placement (Amber's 26 degree bearing, the world offset) is one
+transform at integration.
+
+The bake is NOT changed for any of this: the tool reads the baked cells. If Stage 2 finds something the cells do not
+carry, it will be added in the smallest way and said.
+
+## 6. The ASSETS
+Cars. This repo has, borrowed from the game: `vehicles/models/lod/<id>_q.res` for 12 vehicles (volt_s, volt_x,
+stern_e, stern_g, sakura, sakura_t, van, fiamma_r, fiamma_gt, taxi, bus_city, bus_mini; body and wheels in one mesh),
+the paint shader and the 1024 atlas. Enough for the near car. Missing here, present in the old game's
+`vehicles/models/lod/` (5.7 MB in all): `<id>_far.res` (the cheaper mid model), `<id>_imp.res` (a 40-triangle
+far box), `<id>_q_body.res` + `<id>_q_w0..3.res` (body and wheels apart, for turning wheels) and
+`Textures/car_atlas_512.png`. Stage 2 copies the far, box and wheel meshes and the small atlas (about 3 MB).
+That is 8 cars, a pickup, a van and two buses; there is no truck (the industrial zone would want one: an asset to
+find, not in this job). WHERE THEY COME FROM, and a gap to close: the nine `sf_*` cars are by Daniel Zhabotinsky
+(Sketchfab, CC BY 4.0, modified), the city bus by MaG80 (CC BY 4.0), the minibus by Innerscene (CC0). CC BY needs
+the credit shown; this repo has the meshes but NO credits file for them. Stage 2 adds `vehicles/CREDITS.md` from the
+old game's `vehicles/CAR_CREDITS.md`.
+
+People. None here. The old game's are Microsoft Rocketbox (MIT licence), in `characters/rocketbox/`: 41 bodies (22
+men, 19 women) as near (2,500 triangles), `_l1` (1,500) and far (500) meshes, 9.8 MB; two skeleton scenes 2.6 MB;
+two clip libraries 12.4 MB (49 clips each: walk, run, idle, sit, phone, wave, talk ...); one colour and one mask
+texture, 16.6 MB (512 x 512 x 41 layers). About 41 MB for all 41 bodies. Stage 3 starts with 10-12 bodies (each body
+in view is a draw call; see section 9), about 15-18 MB, and says the size before it copies. The originals
+(`rb_male.glb`, `rb_female.glb`, 60 MB) are not needed.
+
+Sound (engine, horns, crowd murmur): not in this job.
+
+## 7. The BUILD
+How the old game builds (checked on this PC, not from memory):
+- `native/SConstruct` (25 lines) compiles `src/*.cpp` against a godot-cpp checkout given by `GODOT_CPP`.
+- godot-cpp: branch `4.5` at `27d9dd2`, with one local line (`#include <cstdlib>` in `src/godot.cpp`, needed by the
+  new llvm-mingw). `compatibility_minimum = "4.5"`. The engine is 4.7.2 (Yasin's build `coronado_all7`: 4.7.2 plus
+  patches that, by the engine notes' own rule, never change bound methods or the extension interface), so a 4.5
+  module loads in it. Proven by the old game on the same phone.
+- Windows: llvm-mingw (`tools_native/llvm-mingw-20261104-ucrt-x86_64`), `scons platform=windows use_mingw=yes
+  use_llvm=yes arch=x86_64 target=template_debug`.
+- Android: NDK `29.0.14206865` (in the PC's Android SDK), `scons platform=android arch=arm64 target=template_debug`
+  and again `template_release`, linked with `-static-libstdc++` (the APK ships no C++ runtime library). Two files:
+  a debug .so and a release .so; a release APK with only the debug one crashed at start in the old game.
+- Present on this PC: Python 3.12, SCons 4.8.1, JDK 17, the NDK, llvm-mingw, godot-cpp with its Windows debug and
+  Android release libraries built.
+
+How it will be built here:
+- `native/` in this repo: `src/`, `SConstruct`, `build.sh` (one command builds Windows + Android debug + Android
+  release, about a minute once godot-cpp itself is built), `coronado_city.gdextension.in`.
+- godot-cpp gets its OWN copy for this repo, outside git, at `C:\Users\yasin\NewMap\OUT\native_tools\godot-cpp`
+  (same commit, same one-line fix), so nothing is built inside the old game's folders. `build.sh` makes it if it is
+  missing. (Started while this page was written.)
+- THE BINARIES AND THE `.gdextension` FILE STAY OUT OF GIT, like the bake (`runtime/`) and the Android template:
+  `build.sh` writes them. Why: every checkout that has a `.gdextension` file loads it, and a cloud session on Linux
+  would print an error on every run (there is no Linux library unless it builds one). This way the four zone
+  sessions and the look sessions never see the module. `phone_rig.sh export` will call `build.sh` first when the
+  sources are newer than the libraries. At integration into the game the binaries can go into git as the old game
+  does: Yasin's or the PC session's call then.
+- Export: preset "Rig" already exports all resources; the exporter packs the Android .so of a `.gdextension` into
+  the APK by itself. No preset change expected; Stage 1 proves it.
+- No script fallback: when the module is missing and traffic or people are asked for, the test app says so in one
+  `RIG ERROR` line and runs without them.
+
+## 8. How it will be built: the design, and what is better than the old
+Three engine classes, all C++ (`native/src`), plus the two plain cores:
+
+| Class | What |
+|---|---|
+| `StreetGraph` | builds the graph of section 5 from the skeleton, checks it against the baked ground, saves / loads `streets.bin`. The tool script is ten lines that call it |
+| `CityTraffic` (a node) | owns the traffic core, its own thread, the car batches, the parked cars, the collision pool. Hooks: the streamer's `cell_in` / `cell_out` signals and its loaded-cell list |
+| `CityCrowd` (a node) | the same for the walkers |
+
+What changes against the old game, and why:
+1. THE STEP LEAVES THE MAIN THREAD. The old step runs on the main thread (the review's one leftover: perhaps
+   0.5-1 ms on the phone). Here each core steps on its OWN thread at 20 Hz (never the engine's thread pool: the
+   streamer's lesson, physics and drawing run their jobs there). The main thread only blends between the last two
+   states of each car and writes the batch rows.
+2. NO NODE PER CAR. The old game builds a node tree per car at ANY distance (body + a wheel batch = 2 draws a near
+   car, and a car is invisible until its rig is built, one a frame). Here every car is a row in a batch:
+   per car model one batch for near cars (wheels turn and steer in the vertex shader), one for the mid model, and
+   ONE batch of 40-triangle boxes for every far car of every model. Draws depend on how many MODELS are in view, not
+   on how many cars. Parked cars are rows in the same batches, so they add no draws. Estimate: 10-25 draws for
+   traffic, to be measured.
+3. THE SPAWN RING MOVES WITH SPEED. Old: a fixed ring 70-340 m round the camera, never nearer than 160 m in view,
+   4 tries a tick: at 280 km/h that is 2.3 s of road, the street ahead empties. New: cars are placed on lanes inside
+   the cells the streamer has loaded or asked for (it already leads 2 s ahead, up to 200 m), weighted forward by the
+   closing speed; the nearest a car may appear in view grows with speed (4 s of travel, at least 160 m); cars behind
+   are let go sooner. Cars leave with their cell.
+4. PARKED CARS STREAM WITH THE CELLS. Old: all parked boxes fixed at build, attached one cell per 0.1 s (the review:
+   too slow above 130 km/h). New: a cell's stalls become batch rows in the frame the cell is in; no node, no limit.
+5. COLLISION WITHOUT ATTACH HITCHES. A fixed pool of box bodies is made ONCE behind the loading screen and only
+   MOVED afterwards (the nearest moving cars). Parked cars: one static body of boxes per cell, handed over through
+   a queue, nearest first, one a frame. Boxes, not triangle meshes: the streamer's hitch was triangles.
+6. ONE WALKER SYSTEM. The old game has two (the traffic's own walkers and the crowd, glued by a "guest" list).
+   Here the crowd core owns every walker; the traffic sees them as moving boxes and yields at crossings (the
+   traffic core already has that rule).
+7. SIGNALS: one clock for the lamps the player sees and the cars' rule (section 5). The old game compared strings
+   per approach every 0.25 s in script and drew a mesh per lamp.
+8. LOAD: the old game skins 41 bodies into 12 poses in script at every start. Here that is baked once by a tool.
+
+Kept as it is because it is good: the cores' model (following, reservations at junctions, "never move into a body",
+tiers by distance, deterministic for a seed), the far figures (one pose picture per body, no skeleton), the
+upload-only-on-change rule.
+
+## 9. What it will cost (said before it is measured)
+`docs/DRAW_CENSUS.md`: in the dense zones the city already draws 88-121 calls on average and up to 189 (apartments),
+against a budget of 150, and trees and shadows take most of the GPU. So:
+- Traffic: 10-25 draws by estimate. Fine in most zones, over the budget's worst views in apartments and on 7th St.
+- People, on the old game's budget: 18 near skinned bodies = 18 draws (+ their shadows) and 18 skeletons on the CPU,
+  plus one draw per body MODEL in view for the far figures. With 12 models: about 30 draws. Together with traffic a
+  busy street adds 40-55 draws by estimate. That will NOT fit under 150 in the dense zones as they are.
+- The way out, if the phone confirms it: near people drawn like the far ones (pose pictures, no skeleton, one draw
+  per model whatever the count), keeping a handful of real skinned bodies only right next to the player. Stage 3
+  starts with 18 as asked, measures, and says.
+Every stage reports the real numbers from the rig's probe at 720p: main thread ms, physics thread wait, GPU ms, draws.
+
+## 10. The order of work, and what each stage is measured by
+| Stage | What | Done when |
+|---|---|---|
+| 0 | this page | pushed; Yasin answers section 4 |
+| 1 | `native/` builds for Windows and Android (debug + release); the test app loads it and prints one line from a C++ class | the line in the PC log AND in a phone run; stream health gate PASS; lock test RESULT PASS |
+| 2a | `StreetGraph` and its tool; `streets.bin`; the picture | 0 lane points off the asphalt, heights within 3 cm of the ground, every junction leg connected; the picture pushed |
+| 2b | the traffic core on the new graph, on its own thread, no drawing | a PC test: 30 sim-minutes at 80 cars: 0 overlapping cars (the core's own audit), no car standing over 2 minutes except at a red, the same result twice for one seed; step time printed |
+| 2c | car batches, parked cars, signals on the shader clock, the speed ring, collision pool; rig options `--traffic=N` `--parked=0/1` (`--cars` is already the look session's demo and stays theirs) | PC pictures by day and night; a 280 km/h drive on the PC with cars ahead all the way |
+| 2d | the phone | gate PASS with `--traffic=20`, `40`, `80`; a table: main thread ms, physics wait, GPU ms, draws, against the same run without traffic; runs in `review/phone/` |
+| 3a | the crowd core on the new pavements and crossings; far figures; 18 near bodies; `--people=N` | PC test: 0 walkers off a walk, 0 inside a car, crossings used; pictures |
+| 3b | the phone; then places (doors, benches, bus stops) | gate PASS with people on; the same cost table; the honest answer on the draw budget |
+After every stage: lock test RESULT PASS, commit, push, a job board line.
+
+## 11. Not in this job (listed so nothing is lost)
+The player's car (`car_core`), wrecks, honks and hits (they need a player), buses and their timetable, the taxi ride,
+cyclists, breakable props, engine and street sound, the talking characters (until Yasin answers), the crowd's
+reactions and beggars (3b or later). The core's hooks for them (events, scripted cars, routes) stay in the code.
+
+## 12. Risks, said now
+- The graph tool is the hard part: lanes must sit on streets that were built by hand, family by family. The check
+  against the baked ground is what makes it safe; where it fails, the block is listed, not hidden.
+- Junction deadlocks: the old game still had one cluster that jammed after 15 minutes without its "remove a stuck
+  car" rule. The new grid is simpler (crossroads and T's on a 200 m lattice), but it is not proven until 2b runs.
+- The phone at 720p lowers its GPU clock (census), so small GPU costs do not show there; costs will be given as
+  measured, with that caveat.
+- The module is built against the 4.5 extension API: anything added to the engine in 4.6 / 4.7 is not reachable from
+  it. Nothing in this plan needs it.

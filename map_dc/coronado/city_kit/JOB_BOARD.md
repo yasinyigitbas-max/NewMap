@@ -5,6 +5,17 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov (PC session, branch `claude/strange-jang-5426ac`, not merged): TRAFFIC AND PEOPLE IN C++ (Yasin: "bring the
+  traffic and people here as completely cplus plus first, then we run the extensions on the phone"; "all of them must
+  fit into the new map flawlessly, improve the code whereevr you can ... everything must be in C PLUS PLUS").
+  STAGE 0 DONE: the inventory and plan, `docs/TRAFFIC_PEOPLE_PORT.md` (read it first). The old game's two plain C++
+  cores come over; its script layer (which still runs every tick) does not: it is written new in C++ for this map
+  (own threads, cars as batches, a spawn ring that moves with speed, one walker system). The new map must get its own
+  lane graph, pavements, crossings and signal plan, made by a C++ tool from the locked skeleton and checked against
+  the baked ground. The module's binaries and its `.gdextension` file stay OUT of git (built by `native/build.sh`), so
+  cloud sessions never load it. WAITING FOR YASIN: the talking (any walker can be talked to in the old game, with the
+  microphone and 2,658 recorded clips tied to the old place names): not now / as a stage 4 / drop. NEXT: stage 1, the
+  module on the PC and the phone.
 - 18 Nov (cloud, branch `claude/grow-industrial`): INDUSTRIAL GROWTH, stage 1 + 2 done, NOTHING LOCKED, WAITING for
   Yasin's word on the variants. Read `review/grow_ind/README.md`. Three variants (A port, B fleet, C cold chain),
   each dressed twice = six 100 m blocks round the sample. They form the pilot area u -900..-500, v -1600..-1400
