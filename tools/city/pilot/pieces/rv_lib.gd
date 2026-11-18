@@ -488,7 +488,7 @@ func house_lot(lot: Dictionary) -> void:
 	if rr.randf() < 0.3: on_wall(b, "prop_satellite_dish_round" if rr.randf() < 0.5 else "prop_satellite_dish", "worn", -lx, -hd * 0.3, 2.7, yaw + (90.0 if -lx > 0 else -90.0))
 	if rr.randf() < 0.35: on_wall(b, "prop_ac_window", "worn", -lx, hd * 0.15, 1.3, yaw + (90.0 if -lx > 0 else -90.0))
 	var wall_plants: bool = design.get("wall_plants", false)
-	if wall_plants:
+	if wall_plants and hw > 9.8:          # the 3.7 m vine clears the corner downspouts only on a wide front
 		on_wall(b, "plant_bougainvillea_wall", "normal", hw * 0.25, hd * 0.5 + 0.3, 0.0, yaw)
 		for kb: float in [-1.5, 0.0, 1.5]:
 			var bwp := bq(b, hw * 0.25 + kb, hd * 0.5 + 0.4); occ.append([bwp.x, bwp.y, 0.55])
@@ -790,6 +790,7 @@ func alley_poles() -> void:
 				for dp: Vector2 in doorpts:
 					if pu2.distance_to(dp) < 2.2: ok = false; break
 				if ok and not free_at(pu2.x, pu2.y, 0.3): ok = false
+				if ok and near_fence(pu2.x, pu2.y, 0.45): ok = false
 				if ok:
 					var lp2 := L2(pu2.x, pu2.y)
 					for pr: Array in paints:     # never on a paved lot (the corner shops' staff parking)
@@ -899,8 +900,12 @@ func park_d(kind: String) -> void:
 func clear_fences() -> void:
 	var walls: Array = []
 	for k: String in props.items:
-		if k.begins_with("prop_downspout") or k.begins_with("plant_bougainvillea_wall"):
-			for t: Transform3D in props.items[k]: walls.append(Q2(t.origin))
+		if k.begins_with("prop_downspout"):
+			for t: Transform3D in props.items[k]: walls.append([Q2(t.origin), Q2(t.origin)])
+		elif k.begins_with("plant_bougainvillea_wall"):
+			for t: Transform3D in props.items[k]:
+				var hx := t.basis.x.normalized() * 1.85
+				walls.append([Q2(t.origin - hx), Q2(t.origin + hx)])
 	var kept_pts: Array = []
 	for k: String in props.items.keys():
 		var base := k.get_slice("|", 0)
@@ -914,8 +919,10 @@ func clear_fences() -> void:
 			var q := Q2(t.origin)
 			var ok := not near_fence(q.x, q.y, r + 0.05)
 			if ok:
-				for wq: Vector2 in walls:
-					if q.distance_to(wq) < r + 0.35: ok = false; break
+				for wq: Array in walls:
+					var wa: Vector2 = wq[0]; var wb: Vector2 = wq[1]
+					var tt := clampf((q - wa).dot(wb - wa) / maxf((wb - wa).length_squared(), 1e-6), 0.0, 1.0)
+					if q.distance_to(wa.lerp(wb, tt)) < r + 0.35: ok = false; break
 			# yard furniture never stands on a paved path or pad (the checker's "path" rule)
 			if ok and base in ["prop_clothesline", "prop_patio_set_4", "prop_garden_arbor", "prop_adirondack_wood", "prop_adirondack_white", "prop_bbq_kettle", "prop_bbq_gas_cart", "prop_swing_set", "prop_kayak_rack"]:
 				var lq := L2(q.x, q.y)

@@ -3,6 +3,8 @@ that lies in the residential zone of the locked zoning map and can carry a resid
   - its block is a lattice block (four lattice junctions, 200 m along v, 200 or 250 m along u), no ring junction;
   - both legs at its junction are residential-section streets (res / std: kerb 5.7, property line 9.2, alley mouth 54-60);
   - its centre lies in the residential zone and in no other zone (zones.py order: the other zones win);
+  - neither leg is Amber Ave (the amber family builds it as the divided avenue even where the section is "res": its
+    road runs past the 9.2 m property line);
   - it is not a locked sample's quadrant, and it is clear of the pilot's hill rows (x 0-150 along 10th St).
 Read-only; prints the list and a summary. Used by res_grow.py.
 """
@@ -46,6 +48,10 @@ def quadrants():
                 if any(c not in nodes or nodes[c]["kind"] != "lattice" for c in corners):
                     why = "ring / no lattice block"
                 legs = {tuple(l["dir"]): l["section"] for l in n["legs"]}
+                owners = {b["id"]: b["owner"] for b in d["blocks"]}
+                leg_own = {tuple(l["dir"]): owners.get(l["block"]) for l in n["legs"]}
+                if not why and "amber" in (leg_own.get((sx, 0.0)), leg_own.get((0.0, sz))):
+                    why = "Amber Ave leg (divided avenue, wider than the residential section)"
                 if not why and (legs.get((sx, 0.0)) not in OK_SECTIONS or legs.get((0.0, sz)) not in OK_SECTIONS):
                     why = "leg section %s / %s" % (legs.get((sx, 0.0)), legs.get((0.0, sz)))
                 cu, cv = u + sx * Lu / 4, v + sz * Lv / 4

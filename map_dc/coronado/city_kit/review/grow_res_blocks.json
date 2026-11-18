@@ -12,7 +12,7 @@
   "blocks": 6,
   "quadrants": 24
  },
- "quadrants": 44,
+ "quadrants": 40,
  "grow": true,
  "rows": [
   {
@@ -535,78 +535,6 @@
    "rise_u": 0.0,
    "rise_v": 2.0,
    "twist": 2.0,
-   "shop": ""
-  },
-  {
-   "piece": "r_q_0_m1000_nw",
-   "pos": [
-    0.0,
-    12.0,
-    -1000.0
-   ],
-   "yaw": 0.0,
-   "design": "V2",
-   "cell": [
-    -200.0,
-    -1200.0
-   ],
-   "rise_u": -4.0,
-   "rise_v": 2.0,
-   "twist": 0.0,
-   "shop": ""
-  },
-  {
-   "piece": "r_q_0_m1000_sw",
-   "pos": [
-    0.0,
-    12.0,
-    -1000.0
-   ],
-   "yaw": 0.0,
-   "design": "V4",
-   "cell": [
-    -200.0,
-    -1000.0
-   ],
-   "rise_u": -4.0,
-   "rise_v": -6.0,
-   "twist": 4.0,
-   "shop": ""
-  },
-  {
-   "piece": "r_q_0_m1000_ne",
-   "pos": [
-    0.0,
-    12.0,
-    -1000.0
-   ],
-   "yaw": 0.0,
-   "design": "V1",
-   "cell": [
-    0.0,
-    -1200.0
-   ],
-   "rise_u": -6.0,
-   "rise_v": 2.0,
-   "twist": 0.0,
-   "shop": ""
-  },
-  {
-   "piece": "r_q_0_m1000_se",
-   "pos": [
-    0.0,
-    12.0,
-    -1000.0
-   ],
-   "yaw": 0.0,
-   "design": "V3",
-   "cell": [
-    0.0,
-    -1000.0
-   ],
-   "rise_u": -6.0,
-   "rise_v": -6.0,
-   "twist": 6.0,
    "shop": ""
   },
   {
