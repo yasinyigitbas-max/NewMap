@@ -10,6 +10,9 @@ extends SceneTree
 ##   hidden    a wall-mounted print / board with a taller floor prop in front of it
 ##   pot       a garden plant without a pot standing on the indoor floor
 ##   squeeze   the walkway from the entrance to the room's deepest reachable floor narrows under 0.8 m
+##   cover     (19 Nov, Yasin: "this thing is overlapping the door") a wall-mounted board, print, menu or shelf hangs
+##             over a door or a window of its wall (rooms built since 19 Nov record their openings: meta "openings";
+##             older rooms are skipped until they are rebuilt, and counted on the last line)
 ## Output like the city validator (tools/city/pilot/validate.gd): "CHECK <kind> ..." per problem, then
 ## "CHECKS n problems"; exit code 1 if any. Run it after every room build, next to validate / audit_trees / the lock test.
 ## Run with the real renderer (MultiMesh data): godot --path <preview> --rendering-method mobile -s <this>
@@ -23,6 +26,7 @@ var foot := {}
 var tall := {}
 var wallm := {}     # props the kit manifests mount on a wall (poster case, menu board ...)
 var problems := 0
+var no_openings := 0
 
 func _init() -> void: _run.call_deferred()
 
@@ -35,6 +39,7 @@ func _run() -> void:
 		if f.ends_with(".scn"): rooms.append(f)
 	print("CHECKS loaded %d rooms" % rooms.size())
 	for f: String in rooms: _room(f.get_basename(), (load(DIR + f) as PackedScene).instantiate())
+	print("CHECKS cover rule: %d rooms built before 19 Nov have no recorded openings (rebuild them to check)" % no_openings)
 	print("CHECKS %d problems" % problems)
 	quit(1 if problems else 0)
 
@@ -103,6 +108,23 @@ func _room(name: String, root: Node3D) -> void:
 			if String(m[0]) == "prop_pegboard_wall" and String(g[0]) == "prop_workbench": continue   # the tool board over its bench
 			if _hit(zone_c, Vector2(float((m[2] as Vector2).x), 0.45), float(m[3]), g[1], g[2], g[3]):
 				_report(name, "hidden", "%s at %s is covered by %s at %s" % [m[0], _v(m[1]), g[0], _v(g[1])])
+	# cover: a wall item over a door or window of the same wall (the room's recorded openings)
+	var ops: Array = root.get_meta(&"openings", [])
+	if not root.has_meta(&"openings"): no_openings += 1
+	for m2: Array in props:
+		if not base_mounted(String(m2[0])): continue
+		var fwd2 := Vector2(sin(float(m2[3])), cos(float(m2[3])))
+		var along_x := absf(fwd2.y) > absf(fwd2.x)            # faces +-z: hangs on a wall running along x (axis "z")
+		var c2: Vector2 = m2[1]
+		var hw := float((m2[2] as Vector2).x)
+		var y0 := float(m2[4]) - miny; var y1 := y0 + float(tall.get(String(m2[0]), 0.5))
+		for o: Array in ops:
+			if (String(o[0]) == "z") != along_x: continue
+			var dist := absf((c2.y if along_x else c2.x) - float(o[1]))
+			if dist > 0.35: continue
+			var a0 := (c2.x if along_x else c2.y) - hw; var a1 := (c2.x if along_x else c2.y) + hw
+			if a0 < float(o[3]) - 0.03 and a1 > float(o[2]) + 0.03 and y0 < float(o[5]) - 0.03 and y1 > float(o[4]) + 0.03:
+				_report(name, "cover", "%s at %s hangs over a %s (%.2f..%.2f along the wall, %.2f..%.2f m up)" % [m2[0], _v(c2), o[6], float(o[2]), float(o[3]), float(o[4]), float(o[5])])
 	# pot: indoors a plant stands in a pot - a garden plant (no pot in its model) cannot grow out of the floor
 	for g2: Array in ground:
 		var b2 := String(g2[0])
