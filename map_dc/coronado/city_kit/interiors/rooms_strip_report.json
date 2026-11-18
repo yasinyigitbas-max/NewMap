@@ -1,26 +1,6 @@
 {
  "rooms": [
   {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__crown_car_care_row__0.scn",
-   "id": "g_strip_m_gr_ad5ne__crown_car_care_row__0",
-   "kind": "auto_parts",
-   "lights": 4,
-   "name": "Strand Auto Parts",
-   "props": 35,
-   "w": 11.7
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__crown_car_care_row__1.scn",
-   "id": "g_strip_m_gr_ad5ne__crown_car_care_row__1",
-   "kind": "phone",
-   "lights": 3,
-   "name": "Bridge Cell & Vape",
-   "props": 17,
-   "w": 5.7
-  },
-  {
    "d": 8.5,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__quick_lube__0.scn",
    "id": "g_strip_m_gr_ad5ne__quick_lube__0",
@@ -29,56 +9,6 @@
    "name": "Ten Minute Lube",
    "props": 14,
    "w": 5.3
-  },
-  {
-   "d": 6.25,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__taqueria_adela__0.scn",
-   "id": "g_strip_m_gr_ad5ne__taqueria_adela__0",
-   "kind": "taqueria",
-   "lights": 3,
-   "name": "Tacos El Puente",
-   "props": 19,
-   "w": 8.4
-  },
-  {
-   "d": 10.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__tax_office__0.scn",
-   "id": "g_strip_m_gr_ad5ne__tax_office__0",
-   "kind": "tax",
-   "lights": 4,
-   "name": "Island Tax & Insurance",
-   "props": 18,
-   "w": 5.4
-  },
-  {
-   "d": 11.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__chicken_drive__0.scn",
-   "id": "g_strip_m_gr_ad5ne__chicken_drive__0",
-   "kind": "drive_thru",
-   "lights": 4,
-   "name": "Coop & Go Chicken",
-   "props": 35,
-   "w": 11.4
-  },
-  {
-   "d": 8.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__bayside_express_wash__0.scn",
-   "id": "g_strip_m_gr_ad5ne__bayside_express_wash__0",
-   "kind": "wash_office",
-   "lights": 3,
-   "name": "Bayside Express Wash",
-   "props": 14,
-   "w": 5.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__route_75_diner__0.scn",
-   "id": "g_strip_m_gr_ad5ne__route_75_diner__0",
-   "kind": "diner",
-   "lights": 4,
-   "name": "Route 75 Diner",
-   "props": 67,
-   "w": 11.4
   }
  ]
 }

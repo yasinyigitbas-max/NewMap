@@ -22,7 +22,7 @@ const KINDS := {
 	# chicken / burger drive-thru: order at the long counter facing the door, the kitchen line in view behind it (people
 	# like to see the food made), menu boards over it, a soda fountain on the customers' side to refill, booths along the
 	# walls for families, two-tops in the window for the lone driver eating fast
-	"drive_thru": {"floor": "Tiles074", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["kitchen_line", "soda_fountain", "drinks_fridge"], "board": true, "walls": ["booth"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": false, "posters": true, "tint": Color(0.98, 0.78, 0.62), "extra": ["soda_fountain", "indoor_bin"]},
+	"drive_thru": {"floor": "Tiles074", "light": "panel", "counter": ["shop_counter", "shop_counter", "shop_counter"], "till": true, "behind": ["kitchen_line", "kitchen_line", "soda_fountain", "drinks_fridge"], "board": true, "walls": ["booth"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": false, "posters": true, "tint": Color(0.98, 0.78, 0.62), "extra": ["soda_fountain", "indoor_bin"]},
 	# taqueria: a small order counter with the menu board, the salsa bar in the middle, the drinks fridge by the door,
 	# bright painted walls, a few tables; people stand in the queue looking at the board
 	"taqueria": {"floor": "Tiles143", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["kitchen_line"], "board": true, "walls": ["drinks_fridge", "booth"], "centre": "salsa", "window": "table2", "back": "none", "frames": true, "tint": Color(1.0, 0.86, 0.5)},
@@ -31,7 +31,7 @@ const KINDS := {
 	"diner": {"floor": "Tiles101", "light": "pendant", "counter": ["bar_counter", "bar_counter", "pastry_case"], "stools": true, "till": false, "behind": ["soda_fountain", "espresso_machine", "wall_shelf"], "board": true, "walls": ["booth"], "centre": "table4", "window": "booths", "back": "kitchen", "frames": true, "tint": Color(0.97, 0.9, 0.82)},
 	# car wash office: you pay and wait for the car: benches facing the window onto the bays, the vending machine, air
 	# fresheners and car care on the wall behind the till, a drinks fridge
-	"wash_office": {"max_d": 8.0, "floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["cigarette_cabinet", "wall_shelf", "wall_shelf"], "board": false, "walls": ["vending_soda", "drinks_fridge", "card_spinner"], "centre": "none", "window": "watch", "back": "none", "frames": false, "posters": true, "tint": Color(0.78, 0.92, 0.96)},
+	"wash_office": {"max_d": 8.0, "floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["cigarette_cabinet", "wall_shelf", "wall_shelf"], "board": false, "walls": ["vending_soda", "card_spinner", "drinks_fridge", "brochure_rack", "wall_shelf"], "centre": "lounge", "window": "watch", "back": "none", "frames": false, "posters": true, "tint": Color(0.78, 0.92, 0.96)},
 	# quick-lube waiting room: the service desk where you hand in the keys, filing behind it, coffee on a side counter,
 	# chairs facing the window onto the bays (you watch your car go up), a brochure rack of upsells
 	"lube": {"max_d": 8.5, "floor": "Concrete047A", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["filing_cabinet", "pegboard_wall", "filing_cabinet"], "board": false, "walls": ["drinks_fridge", "brochure_rack", "waiting_bench"], "centre": "none", "window": "watch", "back": "stock", "frames": false, "posters": true, "tint": Color(0.86, 0.88, 0.92)},
@@ -353,6 +353,10 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 				var t := 0
 				for xx: float in _steps(IX0 + 0.68, IX1 - 0.68, 2.2):
 					_put("display_table" if t % 2 == 0 else "card_spinner", xx, zz, 0.0); t += 1
+		"lounge":     # waiting seats in the middle facing the window (where the car is), a side chair or two, a table of magazines
+			for zz: float in _steps(mz0 + 0.4, mz1 - 0.2, 1.6):
+				for xx: float in _steps(IX0 + 0.8, IX1 - 0.8, 2.0): _put("waiting_bench", xx, zz, 0.0)
+			_put("display_table", IX0 + 0.75, mz1 + 0.2, 90.0)
 		"salsa":      # the salsa bar (a low display) in the middle, two-tops round it
 			_put("display_table", (IX0 + IX1) * 0.5, (mz0 + mz1) * 0.5, 90.0)
 			for zz: float in _steps(mz0 + 0.5, mz1 - 0.5, 1.8):
