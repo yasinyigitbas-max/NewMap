@@ -46,6 +46,12 @@ signal cell_out(key: String)
 @export var ready_col_m := 70.0      ## is_ready(): collision this near the place must be attached
 @export var probe := false           ## test switch: time how long the physics and render servers take to digest what this frame gave them
 @export var urgent_m := 90.0          ## a body this near the player is attached even while a cell is loading
+## COLLISION RANGE AND TELEPORT BOOST (19 Nov; the first growth doubled the gritty edge's collision and a teleport there
+## took 3.6 s, see docs/RUNTIME_BAKE.md "Collision per place"). Nothing can touch a body 200 m away (traffic and people
+## follow lane graphs), so a cell's bodies are made only once they are within `col_range` of the player, of the lead
+## swept ahead of the player, or of a place being prepared; farther ones wait as data and leave with their cell.
+@export var col_range := 100.0        ## 0 = every body of every loaded cell (as before 19 Nov)
+@export var prepare_boost := 4.0      ## while a prepare() is pending (a teleport behind a fade: the player is not there), the collision budgets a frame are this many times larger
 ## THE TIERS (19 Nov, Yasin: "it snaps from near to far directly"; shaders/rt/rt_tier.gdshaderinc, docs/RUNTIME_BAKE.md
 ## "The tiers"). All off = the city draws exactly as the bake made it. Set before the node enters the tree, or call
 ## set_tiers() / set_far_ground() later (set_tiers before warm_up(): it swaps shaders, which are then built).
@@ -78,7 +84,8 @@ var _done: Array = []          # [key, node, bodies] loaded and built, waiting f
 var _mx := Mutex.new()
 var _sem := Semaphore.new()
 var _quit := false
-var _pending: Array = []       # collision bodies waiting to be attached: [centre, parent, body, cell key]
+var _pending: Array = []       # collision bodies waiting to be attached: [centre, parent, body, cell key, arrival msec, in-range msec (0 = not yet)]
+var _col_pts: Array = []       # the player, the lead swept ahead and the prepared places (update_focus): collision is made near these
 var add_ms: Array[float] = []
 var ready_ms: Array[float] = []
 var _ramping := {}             # cell key -> arrival time (usec) while its switch to far sweeps out (tiers, arrive_s)
@@ -160,6 +167,13 @@ func _dist(k: String, p: Vector3) -> float:
 	var dx := maxf(maxf(cx - p.x, p.x - (cx + cell_m)), 0.0); var dz := maxf(maxf(cz - p.z, p.z - (cz + cell_m)), 0.0)
 	return sqrt(dx * dx + dz * dz)
 
+## squared distance from a body's centre to the nearest point collision is wanted at (the player, the lead, prepared places)
+func _col_d2(c: Vector3) -> float:
+	var dd := c.distance_squared_to(focus)
+	for q: Vector3 in _col_pts: dd = minf(dd, c.distance_squared_to(q))
+	for q2: Vector3 in _prepared: dd = minf(dd, c.distance_squared_to(q2))
+	return dd
+
 func _path(k: String) -> String: return runtime_dir + "cells/cell_%s.scn" % k
 
 func loaded_count() -> int:
@@ -186,8 +200,9 @@ func is_ready(p: Vector3) -> bool:
 		if (e[0] as Vector3).distance_to(p) < ready_col_m: return false
 	for k: String in cells:
 		if _dist(k, p) <= load_dist and cells[k].state != IN: return false
+	var stand := 120.0 if col_range <= 0.0 else minf(120.0, col_range)
 	for b: Array in _pending:      # and the ground near it can be stood on
-		if (b[0] as Vector3).distance_to(p) < 120.0: return false
+		if (b[0] as Vector3).distance_to(p) < stand: return false
 	return true
 
 ## start getting the place round `p` ready (it stays wanted until `release(p)` or the player arrives)
@@ -238,6 +253,7 @@ func update_focus(p: Vector3, now := false, velocity := Vector3.ZERO) -> void:
 	var pts: Array = [p]
 	for i in range(1, steps + 1): pts.append(p + lead * (float(i) / steps))
 	for q: Vector3 in _prepared: pts.append(q)
+	_col_pts = pts
 	var want: Array = []      # [priority distance, key]
 	# the box round every point of interest: a cell outside it that is not loaded needs no look (the city can grow
 	# without this loop growing with it: phone, 18 Nov, 1-3 ms a frame went here for 141 cells)
@@ -263,8 +279,11 @@ func update_focus(p: Vector3, now := false, velocity := Vector3.ZERO) -> void:
 		# and their collision goes in now as well, all of it: this is the loading screen. Left to the stepwise attach,
 		# the start area's bodies trickled in at 1,200 triangles a frame through the warm-up and the first drive
 		# (phone, 19 Nov: a body 9.9 s after its cell, the health gate's limit is 3 s)
-		while not _pending.is_empty():
-			var e0: Array = _pending.pop_back(); var mk0 := e0[2] as Node3D
+		_col_pts = [p]
+		for j0 in range(_pending.size() - 1, -1, -1):
+			var e0: Array = _pending[j0]
+			if col_range > 0.0 and _col_d2(e0[0]) > col_range * col_range: continue      # out of range: made when it comes near
+			_pending.remove_at(j0); var mk0 := e0[2] as Node3D
 			var body0 := StaticBody3D.new(); body0.name = mk0.name; body0.transform = mk0.transform
 			body0.collision_layer = int(mk0.get_meta(&"layer")); body0.collision_mask = int(mk0.get_meta(&"mask"))
 			for it0: Array in mk0.get_meta(&"col"):
@@ -348,21 +367,26 @@ func _process_stream(t0: int) -> void:
 	# collision: the nearest waiting bodies first, a few a frame
 	if not _pending.is_empty():
 		var spent := 0; var ta0 := Time.get_ticks_usec()
-		for i in bodies_per_frame:
+		var boost := 1.0 if _prepared.is_empty() else maxf(prepare_boost, 1.0)
+		var now_ms := Time.get_ticks_msec(); var r2 := col_range * col_range
+		for e3: Array in _pending:      # stamp when a body first comes into range (the rig's "a body waited" counts from there)
+			if int(e3[5]) == 0 and (col_range <= 0.0 or _col_d2(e3[0]) <= r2): e3[5] = now_ms
+		for i in int(bodies_per_frame * boost):
 			if _pending.is_empty(): break
-			if i > 0 and (Time.get_ticks_usec() - ta0) > int(col_ms_per_frame * 1000.0): break
-			var bi := 0; var bdist := 1.0e18
+			if i > 0 and (Time.get_ticks_usec() - ta0) > int(col_ms_per_frame * boost * 1000.0): break
+			var bi := -1; var bdist := 1.0e18
 			for j in _pending.size():
-				# nearest to the player OR to a place being prepared (a teleport's destination: until 19 Nov only the
+				# nearest to the player, the lead OR a place being prepared (a teleport's destination: until 19 Nov only the
 				# player counted, so a destination's collision came in no useful order and is_ready() waited for it)
-				var dd := (_pending[j][0] as Vector3).distance_squared_to(focus)
-				for q: Vector3 in _prepared: dd = minf(dd, (_pending[j][0] as Vector3).distance_squared_to(q))
+				var dd := _col_d2(_pending[j][0])
+				if col_range > 0.0 and dd > r2: continue      # out of range: stays data
 				if dd < bdist: bdist = dd; bi = j
+			if bi < 0: break
 			var mk := _pending[bi][2] as Node3D
 			var cost := 0      # only shapes not made yet cost: one that a neighbour cell already uses is there
 			for it: Array in mk.get_meta(&"col"):
 				if (it[0] as Resource).get(&"shape") == null: cost += int((it[0] as Resource).call(&"weight"))
-			if i > 0 and spent + cost > body_tris_per_frame: break
+			if i > 0 and spent + cost > body_tris_per_frame * boost: break
 			spent += cost
 			var e: Array = _pending[bi]; _pending.remove_at(bi)
 			var tb := Time.get_ticks_usec()
@@ -374,7 +398,7 @@ func _process_stream(t0: int) -> void:
 			var bms := (Time.get_ticks_usec() - tb) / 1000.0
 			if bms > float(stats.body_ms_worst): stats.body_ms_worst = bms; stats["body_worst_what"] = "%s shapes=%d new=%d" % [body.name, body.get_shape_owners().size(), cost]
 			stats.bodies += 1; stats["col_units"] = int(stats.get("col_units", 0)) + cost
-			stats["body_wait_ms_worst"] = maxi(int(stats.get("body_wait_ms_worst", 0)), Time.get_ticks_msec() - int(e[4]))      # from its cell's arrival to the body being in the world
+			stats["body_wait_ms_worst"] = maxi(int(stats.get("body_wait_ms_worst", 0)), Time.get_ticks_msec() - (int(e[5]) if int(e[5]) > 0 else int(e[4])))      # from coming into range (or its cell's arrival) to being in the world
 		for e2: Array in _pending:      # a body still waiting with the player 40 m away would be a hole in the ground
 			if (e2[0] as Vector3).distance_to(focus) < 40.0: stats.body_late += 1; break
 	# cells on their way out: a part at a time inside the frame budget
@@ -436,7 +460,7 @@ func _add(k: String) -> void:
 	if not show_cells: (c.node as Node3D).visible = false
 	add_child(c.node); _apply_night(c.node)
 	for b: Array in c.bodies:
-		if attach_bodies: _pending.append([b[0], b[1], b[2], k, Time.get_ticks_msec()])
+		if attach_bodies: _pending.append([b[0], b[1], b[2], k, Time.get_ticks_msec(), 0])
 		else: _leaving.append(b[2])
 	c.bodies = []
 	c.state = IN; stats["in"] += 1; _mark(k, true); cell_in.emit(k)
