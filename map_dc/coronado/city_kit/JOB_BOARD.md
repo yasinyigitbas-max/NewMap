@@ -5,6 +5,14 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov (cloud session, branch `claude/look-buildings`, NOT merged): LOOK PACK, BUILDINGS (Yasin: "we need a visible
+  jump"; the sky / haze / colour half is another cloud session in rig.gd). Read `docs/LOOK_BUILDINGS.md`. Three changes
+  in `shaders/rt/rt_bldg.gdshader`, each behind a global switch (`ck_look_contact`, `ck_look_windows`, `ck_look_glass`,
+  0 off / 1 on, default on): the kit's own AO also dims sunlight + a thin line at the wall foot (no second AO: the kit
+  has it, PC session's correction); night windows found per window, each its own colour / brightness; day glass reflects
+  a sky gradient (`ck_look_sky_top` / `_horizon`). No texture read, no draw, no re-bake added. Pictures
+  `review/look_18nov/buildings/` (cloud: ~40 % too dark, no shadows). Lock test PASS. NOT checked on the phone: look and
+  cost (the PC session takes the real pictures). WAITING for Yasin: keep / tune / drop each.
 - 18 Nov ~18:10 (PC time): SETTING TESTS at 720p done (Yasin: "ok run the tests"; "make the games default resolution
   720p ... just inject it": rig default is now 720 lines, app not rebuilt, runs pass --scale=0.6667). Table in
   RUNTIME_BAKE.md "THE SETTING TESTS AT 720p". --loading=1 and --bodies=1 change nothing measurable (two identical
