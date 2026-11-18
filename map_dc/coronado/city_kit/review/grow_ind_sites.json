@@ -1,0 +1,73 @@
+{
+ "zone_growth": true,
+ "zone": "industrial",
+ "note": "Industrial growth (18 Nov, branch claude/grow-industrial): block pieces of the variants A/B/C, NOT locked. Each row: piece at its junction (grid frame, y = pad 2.0). Read by tools/city/pilot/zoning/integrate.py.",
+ "rows": [
+  {
+   "piece": "i_va_w800_n1600_sw",
+   "pos": [
+    -800.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "variant": "A port (1st dressing): Harbor Freight Station",
+   "site": "1st St x J Ave, SW"
+  },
+  {
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -800.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "variant": "B fleet (1st): City Yard",
+   "site": "1st St x J Ave, SE"
+  },
+  {
+   "piece": "i_vc_w600_n1600_sw",
+   "pos": [
+    -600.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "variant": "C cold chain (1st): Pacific Seafood + Bay Ice Plant",
+   "site": "1st St x G Ave, SW"
+  },
+  {
+   "piece": "i_va_w600_n1600_se",
+   "pos": [
+    -600.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "variant": "A port (2nd): Bay Boatworks, transition to houses",
+   "site": "1st St x G Ave, SE"
+  },
+  {
+   "piece": "i_vb_w600_n1400_nw",
+   "pos": [
+    -600.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "variant": "B fleet (2nd): 3rd St Truck Services",
+   "site": "3rd St x G Ave, NW"
+  },
+  {
+   "piece": "i_vc_w600_n1400_ne",
+   "pos": [
+    -600.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "variant": "C cold chain (2nd): 3rd St Food Wholesale, transition",
+   "site": "3rd St x G Ave, NE"
+  }
+ ]
+}

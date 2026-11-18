@@ -1602,6 +1602,72 @@
    "site": "b164"
   },
   {
+   "piece": "i_va_w800_n1600_sw",
+   "pos": [
+    -800.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind",
+   "site": "1st St x J Ave, SW"
+  },
+  {
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -800.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind",
+   "site": "1st St x J Ave, SE"
+  },
+  {
+   "piece": "i_vc_w600_n1600_sw",
+   "pos": [
+    -600.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind",
+   "site": "1st St x G Ave, SW"
+  },
+  {
+   "piece": "i_va_w600_n1600_se",
+   "pos": [
+    -600.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind",
+   "site": "1st St x G Ave, SE"
+  },
+  {
+   "piece": "i_vb_w600_n1400_nw",
+   "pos": [
+    -600.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind",
+   "site": "3rd St x G Ave, NW"
+  },
+  {
+   "piece": "i_vc_w600_n1400_ne",
+   "pos": [
+    -600.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind",
+   "site": "3rd St x G Ave, NE"
+  },
+  {
    "piece": "j_rs_t_lll_a",
    "pos": [
     -800.0,
@@ -4947,7 +5013,7 @@
  ],
  "coverage": {
   "sample_rows": 84,
-  "family_rows": 372,
+  "family_rows": 378,
   "gap_nodes": 2,
   "gap_blocks": 0,
   "gaps": {
