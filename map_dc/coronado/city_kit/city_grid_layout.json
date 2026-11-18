@@ -5155,6 +5155,16 @@
    "from": "grow_ind"
   },
   {
+   "piece": "i_life_w800_n1400",
+   "pos": [
+    -800.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind"
+  },
+  {
    "piece": "r_q_m800_m200_ne",
    "pos": [
     -800.0,

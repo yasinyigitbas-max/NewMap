@@ -111,6 +111,17 @@
    "yaw": 0.0,
    "variant": "Alameda Green (the district's lunch green)",
    "site": "Alameda strip south of 3rd St"
+  },
+  {
+   "piece": "i_life_w800_n1400",
+   "pos": [
+    -800.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "variant": "life overlay for the locked sample",
+   "site": "J Ave x 3rd St (the sample)"
   }
  ]
 }

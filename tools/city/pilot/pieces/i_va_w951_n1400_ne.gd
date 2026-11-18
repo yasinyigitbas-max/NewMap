@@ -56,7 +56,7 @@ func _run() -> void:
 	I.truck_path(dec, rr, Vector2(sx * 50.8, sz * 140.5), Vector2(sx * 46.0, sz * 140.5))
 	I.truck_path(dec, rr, Vector2(sx * 46.0, sz * 22.0), Vector2(sx * 46.0, sz * 178.0))
 	for v1: float in [61.0, 101.0, 145.0]: I.truck_path(dec, rr, Vector2(sx * 46.0, sz * v1), Vector2(sx * 17.0, sz * v1))
-	I.yard_wear(dec, rr, sx, sz, 16.0, 20.0, 50.0, 175.0, 1.0)
+	G.yard_wear(dec, rr, sx, sz, 16.0, 20.0, 50.0, 175.0, 1.0)
 	I.bld_wear(dec, rr, ck, 4.0, 6.0, "commercial/com_kiosk")
 	root.set_meta("stalls", [])
 	I.finish(root, g, props, dec, NAME)

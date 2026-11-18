@@ -237,10 +237,14 @@ static func overhang(folder: String) -> Vector2:
 	_over[folder] = o
 	return o
 static func put(bl: Node3D, props: K.Props, sx: float, sz: float, axis: String, s0: float, f: float, folder: String, label := "", services := true) -> Array:
-	return I.put(bl, props, sx, sz, axis, s0, f + overhang(folder).x, folder, label, services)
+	var r := I.put(bl, props, sx, sz, axis, s0, f + overhang(folder).x, folder, label, false)
+	if services: G_services(props, r[0], folder)
+	return r
 static func put_back(bl: Node3D, props: K.Props, sx: float, sz: float, axis: String, s0: float, folder: String, label := "", back := 97.5) -> Array:
 	var d: float = float(K.building_stats(folder).footprint_wd[1])
-	return I.put(bl, props, sx, sz, axis, s0, back - d - overhang(folder).y, folder, label, true)
+	var r := I.put(bl, props, sx, sz, axis, s0, back - d - overhang(folder).y, folder, label, false)
+	G_services(props, r[0], folder)
+	return r
 
 ## ------------------------------------------------------------------ polish (Yasin 18 Nov: "run a polish pass on your
 ## part, lots of props ... think like an interior and exterior designer, customer and city planner"). place() puts ONE
@@ -272,7 +276,7 @@ static func obstacles(bl: Node3D, props: K.Props, stalls: Array = []) -> Array:
 		var yaw := rad_to_deg(n.rotation.y)
 		var lc := Vector3(0.0, 0.0, (o.x - o.y) * 0.5)
 		var wc: Vector3 = n.transform * lc
-		out.append(_obb(Vector2(wc.x, wc.z), yaw, w + 0.4, d + o.x + o.y + 0.4))
+		out.append(_obb(Vector2(wc.x, wc.z), yaw, w + 0.4, d + o.x + o.y + 0.4) + [true])
 		for e: Array in st.get("doors_front", []):
 			var dp: Vector3 = n.transform * Vector3(float(e[1]), 0.0, d * 0.5 + 0.8)
 			out.append(_obb(Vector2(dp.x, dp.z), yaw, 3.2, 3.2))
@@ -284,6 +288,7 @@ static func obstacles(bl: Node3D, props: K.Props, stalls: Array = []) -> Array:
 			out.append(_obb(Vector2(t.origin.x, t.origin.z), rad_to_deg(t.basis.get_euler().y), f2.x + 0.25, f2.y + 0.25))
 	return out
 ## one prop in the zone [u0..u1] x [v0..v1] (block-local), yaw = the zone's facing (+- jitter); keep = [[u0, v0, u1, v1]]
+const NEAR_WALL := ["prop_hydrant_red", "prop_hose_reel_cart"]
 static func place(props: K.Props, obs: Array, rr: RandomNumberGenerator, sx: float, sz: float, base: String, cond: String, u0: float, v0: float, u1: float, v1: float, yaw: float, keep: Array = [], jitter := 8.0) -> bool:
 	var f := _fp(base)
 	for t in 60:
@@ -293,6 +298,15 @@ static func place(props: K.Props, obs: Array, rr: RandomNumberGenerator, sx: flo
 			if u > float(k[0]) - f.x * 0.6 and u < float(k[2]) + f.x * 0.6 and v > float(k[1]) - f.y * 0.6 and v < float(k[3]) + f.y * 0.6: bad = true; break
 		if bad: continue
 		var y := yaw + rr.randf_range(-jitter, jitter)
+		if base in NEAR_WALL:
+			# 19 Nov, Yasin: "fire hydrant in the middle of nowhere": a hydrant stands by the building it serves
+			var near := false
+			for A2: Array in obs:
+				if A2.size() < 6: continue
+				var d2 := Vector2(sx * u, sz * v) - Vector2(A2[0])
+				var lx := absf(d2.dot(A2[1])) - (float(A2[3]) - 0.2); var lz := absf(d2.dot(A2[2])) - (float(A2[4]) - 0.2)
+				if maxf(lx, lz) < 2.0 and maxf(lx, lz) > 0.3: near = true; break
+			if not near: continue
 		var B := _obb(Vector2(sx * u, sz * v), y, f.x, f.y)
 		for A: Array in obs:
 			if not _sep(A, B): bad = true; break
@@ -411,8 +425,30 @@ static func measure_rows(tree: SceneTree, j: Vector3, sx: float, sz: float, Lu: 
 	print("MEASURE_ROWS rows %d, first v %.2f; heights N %.2f..%.2f F %.2f..%.2f L %.2f..%.2f R %.2f..%.2f" % [rows.size(), v_first, hN[0], hN[20], hF[0], hF[20], hL[0], hL[20], hR[0], hR[20]])
 	return {"rows": rows, "Lu": Lu, "Lv": Lv, "hN": hN, "hF": hF, "hL": hL, "hR": hR}
 
-## the ground height at block-local (u, v): a Coons patch of the four measured edge height lines
+## level pads under buildings on a slope (19 Nov, Yasin: "shop is sunk"): [u0, v0, u1, v1, h] block-local; the ground
+## is flat at h inside a pad (+1 m) and eases back into the slope over the next 5 m (smoothstep)
+static func pad(m: Dictionary, sx: float, sz: float, node: Node3D, folder: String) -> void:
+	var st := K.building_stats(folder); var o := overhang(folder)
+	var w: float = float(st.footprint_wd[0]); var d: float = float(st.footprint_wd[1])
+	var lo := Vector2(INF, INF); var hi := Vector2(-INF, -INF); var front := Vector2.ZERO
+	for c: Vector3 in [Vector3(-w * 0.5, 0, -d * 0.5 - o.y), Vector3(w * 0.5, 0, -d * 0.5 - o.y), Vector3(-w * 0.5, 0, d * 0.5 + o.x), Vector3(w * 0.5, 0, d * 0.5 + o.x)]:
+		var p: Vector3 = node.transform * c
+		var q := Vector2(sx * p.x, sz * p.z); lo = lo.min(q); hi = hi.max(q)
+	var fp: Vector3 = node.transform * Vector3(0, 0, d * 0.5 + o.x)
+	var h := _coons(m, sx * fp.x, sz * fp.z)       # the street-side door level: the shop meets its sidewalk
+	if not m.has("pads"): m["pads"] = []
+	(m["pads"] as Array).append([lo.x, lo.y, hi.x, hi.y, h])
+## the ground height at block-local (u, v): the Coons patch, levelled under the building pads
 static func h_at(m: Dictionary, u: float, v: float) -> float:
+	var h := _coons(m, u, v)
+	for pd: Array in m.get("pads", []):
+		var dx := maxf(maxf(float(pd[0]) - u, u - float(pd[2])), 0.0); var dz := maxf(maxf(float(pd[1]) - v, v - float(pd[3])), 0.0)
+		var dist := sqrt(dx * dx + dz * dz)
+		if dist < 6.0:
+			var t := clampf((dist - 1.0) / 5.0, 0.0, 1.0); t = t * t * (3.0 - 2.0 * t)
+			h = lerpf(float(pd[4]), h, t)
+	return h
+static func _coons(m: Dictionary, u: float, v: float) -> float:
 	var Lu: float = m.Lu; var Lv: float = m.Lv
 	var s := clampf(u / Lu, 0.0, 1.0); var t := clampf(v / Lv, 0.0, 1.0)
 	var at := func(a: PackedFloat32Array, f: float) -> float:
@@ -460,12 +496,24 @@ static func floor_rows(g: K.Ground, m: Dictionary, sx: float, sz: float, paints:
 static func drape(m: Dictionary, sx: float, sz: float, props: K.Props, dec: K.Decals, bl: Node3D) -> void:
 	for key: String in props.items:
 		var arr: Array = props.items[key]
+		var is_run := key.begins_with("fence_")
 		for i in arr.size():
 			var t: Transform3D = arr[i]
-			t.origin.y += dh(m, sx * t.origin.x, sz * t.origin.z); arr[i] = t
+			var dd := dh(m, sx * t.origin.x, sz * t.origin.z)
+			if is_run:
+				# 19 Nov, Yasin: "wall bulges off the ground": a panel stands at the LOWEST ground along its length
+				var ax: Vector3 = t.basis.x.normalized() * 1.05
+				for e: Vector3 in [t.origin + ax, t.origin - ax]: dd = minf(dd, dh(m, sx * e.x, sz * e.z))
+				dd -= 0.03
+			t.origin.y += dd; arr[i] = t
 	for i2 in props.col_items.size():
 		var c: Array = props.col_items[i2]; var t2: Transform3D = c[2]
-		t2.origin.y += dh(m, sx * t2.origin.x, sz * t2.origin.z); c[2] = t2
+		var d3 := dh(m, sx * t2.origin.x, sz * t2.origin.z)
+		if String(c[0]).begins_with("fence_"):
+			var ax2: Vector3 = t2.basis.x.normalized() * 1.05
+			for e2: Vector3 in [t2.origin + ax2, t2.origin - ax2]: d3 = minf(d3, dh(m, sx * e2.x, sz * e2.z))
+			d3 -= 0.03
+		t2.origin.y += d3; c[2] = t2
 	var vv := dec.V
 	for i3 in vv.size(): vv[i3].y += dh(m, sx * vv[i3].x, sz * vv[i3].z)
 	dec.V = vv
@@ -479,7 +527,7 @@ static func drape(m: Dictionary, sx: float, sz: float, props: K.Props, dec: K.De
 			for cz: float in [-0.5, 0.0, 0.5]:
 				var p3: Vector3 = n.transform * Vector3(cx * w, 0.0, cz * d)
 				lo = minf(lo, dh(m, sx * p3.x, sz * p3.z))
-		n.position.y += lo
+		n.position.y += lo        # on its pad the ground is level, so this is the pad's height
 
 ## the free interval [a, b] of the measured row nearest to v (block-local u), or [] when the row is covered
 static func row_at(mr: Dictionary, v: float) -> Array:
@@ -513,3 +561,85 @@ static func wall_left(props: K.Props, mr: Dictionary, sx: float, sz: float, v0: 
 				I.add(props, "fence_graffiti_cmu_panel" if tag_every > 0 and k % tag_every == tag_every / 2 else base, "worn", q(sx, sz, c.x, c.y), yaw)
 			k += 1
 		acc += L - t
+
+## obstacles of pieces that are already built (a locked sample, read-only): their buildings by real mesh outline and
+## doors, their ground props, their parked cars; `nodes` = instanced piece scenes in this piece's frame, in the tree
+static func obstacles_scene(nodes: Array) -> Array:
+	var out: Array = []
+	for n: Node3D in nodes:
+		var bn := n.get_node_or_null("Buildings")
+		if bn:
+			for b: Node in bn.get_children():
+				if not b.has_meta(&"kit"): continue
+				var nb := b as Node3D; var f := String(b.get_meta(&"kit"))
+				var st := K.building_stats(f)
+				if st.is_empty(): continue
+				var w: float = float(st.footprint_wd[0]); var d: float = float(st.footprint_wd[1]); var o := overhang(f)
+				var xf := n.transform * nb.transform
+				var wc: Vector3 = xf * Vector3(0.0, 0.0, (o.x - o.y) * 0.5)
+				var yaw := rad_to_deg(xf.basis.get_euler().y)
+				out.append(_obb(Vector2(wc.x, wc.z), yaw, w + 0.4, d + o.x + o.y + 0.4) + [true])
+				for e: Array in st.get("doors_front", []):
+					var dp: Vector3 = xf * Vector3(float(e[1]), 0.0, d * 0.5 + 0.8)
+					out.append(_obb(Vector2(dp.x, dp.z), yaw, 3.2, 3.2))
+		for mm: Node in n.find_children("*_near", "MultiMeshInstance3D", true, false):
+			var mmi := mm as MultiMeshInstance3D
+			var nm := String(mmi.name).trim_suffix("_near"); var base := nm.substr(0, nm.rfind("_"))
+			var f2 := _fp(base)
+			if base.begins_with("tree_") or base.begins_with("palm_"): f2 = Vector2(1.0, 1.0)
+			for i in mmi.multimesh.instance_count:
+				var t: Transform3D = mmi.global_transform * mmi.multimesh.get_instance_transform(i)
+				if t.origin.y - n.global_position.y > 1.2: continue
+				out.append(_obb(Vector2(t.origin.x, t.origin.z), rad_to_deg(t.basis.get_euler().y), f2.x + 0.25, f2.y + 0.25))
+		for r: Array in n.get_meta(&"stalls", []):
+			out.append(_obb(Vector2(float(r[0]), float(r[1])), float(r[2]), 2.6, 5.4))
+	return out
+
+## yard ageing for the growth blocks (19 Nov): ind_lib.yard_wear's dark patch tiles (2/3) as free-standing 2.5-6 m
+## squares read as shadows of nothing (the kit skill's trap; seen in the industrial pictures). Here the dark patches are
+## what they really are, long narrow trench repairs (a cable or a drain dug in and patched), axis-aligned; the rest as
+## ind_lib: cracks half sealed, pale repairs tinted grey, oil where vehicles stood, grime where water sits.
+static func yard_wear(dec: K.Decals, rr: RandomNumberGenerator, sx: float, sz: float, u0: float, v0: float, u1: float, v1: float, density := 1.0) -> void:
+	var area := absf((u1 - u0) * (v1 - v0))
+	var n := int(area / 35.0 * density)
+	var a := Vector2(sx * u0, sz * v0); var b := Vector2(sx * u1, sz * v1)
+	W.cracks(dec, rr, minf(a.x, b.x), minf(a.y, b.y), maxf(a.x, b.x), maxf(a.y, b.y), n, S.walk_y, 0.45)
+	var rp := func() -> Vector2: return Vector2(rr.randf_range(minf(a.x, b.x), maxf(a.x, b.x)), rr.randf_range(minf(a.y, b.y), maxf(a.y, b.y)))
+	for k in int(n * 0.12): dec.add(3, rp.call(), 0.0 if k % 2 else 90.0, rr.randf_range(0.8, 1.2), rr.randf_range(5.0, 11.0), S.walk_y, Color(1, 1, 1, 0.75))
+	for k in int(n * 0.15): dec.add(4 + k % 2, rp.call(), rr.randf_range(0, 180), rr.randf_range(2.0, 4.0), rr.randf_range(2.0, 4.0), S.walk_y, Color(0.5, 0.49, 0.47, 0.75))
+	for k in int(n * 0.5): W.oil(dec, rr, rp.call(), rr.randf_range(0, 180), S.walk_y, rr.randf_range(0.5, 0.9))
+	for k in int(n * 0.25): dec.add(14, rp.call(), rr.randf_range(0, 180), rr.randf_range(2.0, 5.0), rr.randf_range(2.0, 5.0), S.walk_y, Color(1, 1, 1, rr.randf_range(0.4, 0.7)))
+
+
+## back-of-house services (meters, gas meter, AC units, bins: cc_lib.back_of_house) WITHOUT the ones that would land on
+## the building's own back doors or windows (19 Nov, Yasin: "prop overlaps on the wall": a meter bank ran into a door,
+## a box sat on the door itself). The doors and windows come from the room contracts (every opening of the model's
+## back wall, both signs of "along" since back-wall coordinates mirror); a wall item is dropped when it is within
+## 0.35 m of a door or overlaps a window's height, a ground item (AC, bins) when it stands in front of a door.
+const CC2 := preload("res://tools/city/pilot/pieces/cc_lib.gd")
+static var _rc := {}
+static func G_services(props: K.Props, node: Node3D, folder: String) -> void:
+	if _rc.is_empty():
+		_rc = (JSON.parse_string(FileAccess.get_file_as_string("res://map_dc/coronado/city_kit/interiors/room_contracts.json")) as Dictionary).models
+	var ops: Array = []
+	for o: Dictionary in (_rc.get(folder, {}) as Dictionary).get("openings", []):
+		if int(o.floor) == 0 and String(o.facade) == "back": ops.append(o)
+	var tmp := K.Props.new()
+	CC2.back_of_house(tmp, node, folder)
+	var inv := node.transform.affine_inverse()
+	for key: String in tmp.items:
+		var parts := key.split("|"); var base := parts[0]; var cond := parts[1]
+		var mounted := String(K.manifest(base).get("mount", "ground")) != "ground"
+		for t: Transform3D in tmp.items[key]:
+			var lp: Vector3 = inv * t.origin
+			var ly := t.origin.y - S.walk_y(0.0)
+			var bad := false
+			for o: Dictionary in ops:
+				var half := float(o.w) * 0.5 + (0.35 if String(o.region).contains("door") or String(o.region).contains("rollup") else 0.9)
+				var near := absf(lp.x - float(o.along)) < half or absf(lp.x + float(o.along)) < half
+				if not near: continue
+				var is_door := String(o.region).contains("door") or String(o.region).contains("rollup")
+				if is_door: bad = true
+				elif (mounted or ly > 0.6) and (absf(lp.x - float(o.along)) < float(o.w) * 0.5 + 0.9 or absf(lp.x + float(o.along)) < float(o.w) * 0.5 + 0.9) and ly + 0.6 > float(o.y0) - 0.3 and ly < float(o.y1) + 0.3: bad = true
+				if bad: break
+			if not bad: props.add(base, cond, t.origin, rad_to_deg(t.basis.get_euler().y))

@@ -139,6 +139,26 @@
    "name": "Shift Linen & Uniforms",
    "props": 28,
    "w": 5.7
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_vb_w600_n1400_sw__island_movers_office__0.scn",
+   "id": "g_ind_vb_w600_n1400_sw__island_movers_office__0",
+   "kind": "sales_office",
+   "lights": 5,
+   "name": "Island Movers",
+   "props": 16,
+   "w": 7.7
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_vc_w600_n1400_se__brewery_taproom__0.scn",
+   "id": "g_ind_vc_w600_n1400_se__brewery_taproom__0",
+   "kind": "taproom",
+   "lights": 6,
+   "name": "Coronado Brewing Taproom",
+   "props": 34,
+   "w": 7.9
   }
  ]
 }
