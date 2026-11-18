@@ -159,6 +159,31 @@ centre and apartments at 210 km/h; then the centre and the gritty edge at night.
 - The rig now takes drives of its own without a rebuild: `--drive=NAME/ROUTE/KMH/SECONDS/NIGHT` (Yasin: "inject
   this run ... instead of rebuilding"). 3D is drawn at 1230x540 (scale 0.5); `--scale=1.0` for the full screen.
 
+THIRD RUN, THE SAME ZONES AT FULL RESOLUTION (`review/phone/zones_full.txt`, `--plan=zones --scale=1.0`: 3D at
+2460x1080 instead of 1230x540; Yasin: "i need a test run at full res too"). Median frame, half | full:
+gritty 8.9 | 16.9, centre 14.5 | 19.2, waterfront 10.4 | 16.4, industrial 10.3 | 16.3, apartments 15.8 | 24.4,
+pilot 12.3 | 17.0, strip 10.6 | 16.9, civic 13.4 | 20.2, stadium 9.7 | 24.9, 7th St at 210 km/h 14.6 | 24.7,
+centre at night 16.4 | 31.0, gritty at night 16.8 | 17.1 ms.
+- The phone is limited by PIXELS, not by the map's draws: the same draws and triangles cost 1.3-2.6 times the frame
+  time at four times the pixels. At full resolution no zone holds 60 fps (40-60 fps by day, 32 fps in the centre at
+  night). The stadium's jump (9.7 -> 24.9 ms with the fewest triangles of all) is not explained: late in the run,
+  battery 29.4 -> 32.1 C; heat or overdraw, not checked.
+- 15,193 frames: 362 over 33 ms (219 of them are the night centre simply running at 31 ms), 15 over 50, 1 over 100
+  (181 ms, gritty, two cells loading at once). No cell late, none dropped.
+- Of the 16 frames of 45 ms or more, 13 are frames in which collision bodies were attached ("bodies +2") or a cell
+  came in, though the attach itself is timed at 1.3 ms at most on the main thread. Two candidates, not told apart
+  yet: the physics thread taking the bodies, or the first drawing of the cell that just arrived. `--bodies=1` and
+  `--loading=1` (no rebuild) would tell.
+- Teleports take longer: 2.0-5.6 s (half resolution: 2.0-3.9 s).
+- Memory at 60 s: 901 MB, graphics 584 MB: the same graphics figure as at half resolution, so it is not the
+  picture buffers.
+
+THE TIERS (Yasin, watching the phone: "i think it snaps from near to far directly and everythings appereance
+change suddenly as we get near"). From the code, not yet from pictures: near 0-60 m, mid 60-220 m, far world beyond;
+every switch is a hard cut (`VISIBILITY_RANGE_FADE_DISABLED`); far -> mid happens for a whole 200 m cell in the
+frame the cell arrives; props under 2.5 m and a cell's roads and ground have no far version at all (the rig shows a
+flat green plane there). Not checked: how different the kit's mid meshes are from the near ones.
+
 What the first runs on Windows found (all fixed, in the script or the rig):
 - The export never returned: gradle's daemon outlives the build on Windows and holds the log open. Now run without it.
 - The template copy took the game's whole last build with it (1.6 GB): the editor scanned it and about 1,200 of the
@@ -218,7 +243,7 @@ Preview and measure: `tools/city/bake/rt_shots.gd` (`--cams`, `--probe --detail`
 - Whole-city bake and the game side (the game repo's streamer and global shader values).
 - Signals: the flaw above. Far buildings do not light their windows at night (the far atlas has no glow mask).
 - Far ground: beyond the loaded cells the game's terrain shows, not the roads.
-- Phone: two runs (run1, zones1; debug build, see "The phone test"). Not run: `--loading=1` (the next one to do),
+- Phone: three runs (run1, zones1, zones_full; debug build, see "The phone test"). Not run: `--loading=1` (the next one to do),
   `--nowarm`, `--plan=speed`, `--scale=1.0`, a release build, a repeat to see how much the numbers move.
 
 ## Decisions for Yasin

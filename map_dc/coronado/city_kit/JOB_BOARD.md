@@ -5,6 +5,14 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov ~17:30 (PC time): FULL-RESOLUTION zones run (Yasin: "i need a test run at full res too"; "check the results
+  of both runs and tell me what can be done"): `review/phone/zones_full.txt`, written up in RUNTIME_BAKE.md. The phone
+  is pixel-limited: medians 16-25 ms by day and 31 ms in the night centre at 2460x1080 (half res: 9-16 / 16.4); 15
+  frames over 50 ms, one of 181 ms with two cells loading; most hitches fall on frames that attach collision bodies
+  or take a cell in. Yasin also saw the tiers snap ("snaps from near to far directly"): hard cuts, far -> mid per
+  whole cell, no far roads (see RUNTIME_BAKE.md "THE TIERS"). TOLD Yasin the options (resolution + upscaler, the free
+  setting tests --loading=1 / --bodies=1 / --lights=8 / --scale=0.75, tier fades + far ground, cells in parts,
+  lighter centre / apartments, teleport behind a fade, the 0.9 GB memory). WAITING for his pick. Nothing started.
 - 18 Nov ~17:15 (PC time): ZONES RUN on the Redmi (Yasin: "the test was mostly in empty ground ... make it
   teleport between gritty, city center, waterfront etc"; "can you inject this run to the apk instead of rebuilding").
   New plan `--plan=zones` in rig.gd (9 zones by day at 60 km/h, 7th St at 210, centre + gritty at night) and
