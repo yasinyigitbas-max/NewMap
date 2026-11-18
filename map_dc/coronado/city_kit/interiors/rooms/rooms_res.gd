@@ -145,7 +145,7 @@ func _cafe() -> void:
 	r.prop("pastry_case", 0.5, -1.4, 0.0)
 	r.prop("cash_register", -0.5, -1.45, 180.0, 0.964)
 	r.prop("espresso_machine", -1.65, -1.5, 180.0, 0.964)
-	r.prop("bakery_shelf", 1.5, ZB + 0.22, 0.0)
+	r.prop("wall_shelf", 1.5, ZB + 0.18, 0.0)          # beans, cups and the house mugs for sale
 	r.prop("menu_board", 0.0, ZB + 0.06, 0.0, 1.75)
 	r.prop("bar_stool", -1.1, -2.4, 0.0)
 	# the booth on the left wall
@@ -166,7 +166,7 @@ func _cafe() -> void:
 	r.prop("gallery_frame", X0 + 0.04, -0.1, 90.0, 1.7)
 	r.prop("gallery_frame", X1 - 0.04, 2.1, -90.0, 1.6)
 	r.prop("potted_plant", X0 + 0.25, -2.65)
-	r.box("wains", Vector3(0.0, F + 0.45, ZF - 0.015), Vector3(X1 - X0, 0.9, 0.03))
+	r.box("wains", Vector3((X0 + 1.9) * 0.5, F + 0.45, ZF - 0.015), Vector3(1.9 - X0, 0.9, 0.03))     # stops short of the door (2.01)
 	for px: float in [-2.2, 0.0, 2.2]: r.pendant(px, 0.4, H, 0.8, Color(1.0, 0.8, 0.55), 1.1, 4.5)
 	_daylight(r, -1.0, 1.9, 2.2)
 	_wear(r, F, [[2.4, 1.6, 1.2, 2.0], [1.2, -0.2, 2.6, 1.0], [-0.3, -0.75, 2.6, 0.9], [-2.6, 1.2, 1.0, 0.8]])
