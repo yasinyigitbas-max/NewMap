@@ -56,6 +56,26 @@ fronts across the street, high ones see over the roofs; each window leans a tiny
 so a glass tower shows panes instead of one sheet. It fades out at night. No texture: the brief allowed one texture read,
 this uses none.
 
+## Queue job 1, shop windows with depth: DROPPED (Yasin)
+The PC session's queue asked for a fake room behind ground-floor glass (interior mapping). Yasin, 18 Nov: "we had fake
+windows, i didnt like them and we switched to real indoor showing windows"; "we already have real indoor windows, and
+id like to keep them, in the shops on water front"; "ideally, id like to have those store signs, real windows and see
+thru doors of those shops all over the map". So no fake rooms: the prototype (a room atlas and a box behind the glass)
+was taken out again before it was committed. Nothing of it is in the shader.
+- The waterfront shops with real rooms were checked with the interiors' own preview:
+  `review/look_18nov/waterfront_rooms/` (cafe, beach shop, marina and harbour office: signs, clear glass, furnished
+  rooms). The look pack does not touch them: in the preview they use the kit's `bldg_wear` shader, and once the bake
+  cuts their windows, what shows is the room's own clear glass, not `rt_bldg`.
+- FOUND: the real rooms are NOT in the runtime bake yet (`bake_runtime.gd` has no rooms and no window / door cuts;
+  `interiors/PLAN.md` sections 3-4). In the streamed city on the phone these shops show the kit's painted glass, and
+  the look pack's glass and night windows apply to it like everywhere else.
+- Real rooms everywhere (Yasin's wish), what it takes: 12 rooms are built (4 waterfront, 4 civic, 4 apartments) of
+  52 shop doors assigned in the 8 sample zones; the whole city has roughly 100 buildings with about 150 shop doors (a
+  count from the baked cells and `room_contracts.json`, approximate). Each room is designed by hand with `room_lib`
+  (the interiors skill) and checked; each brings its own signs. The bake then has to cut the doors / windows and pack
+  the rooms into the cells (PLAN.md section 4), which is the streaming work the PC session is changing now. Phone
+  cost: each room adds draws and lights while within 62 m; not measured on the phone.
+
 ## Picture files
 `<view>_<day|night>_<set>.jpg`, views `centre_a/b` (city centre, 0,-600), `apartments_a/b` (250,-600), `pilot_a/b`
 (high street, 0,0), eye 1.7 m above the road. Sets: `before` (all three off) and `after` (all on) for every view;
