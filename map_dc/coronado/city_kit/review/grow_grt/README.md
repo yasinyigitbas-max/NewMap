@@ -62,3 +62,20 @@ that were white once, floors worn grey where people stand, notices on the walls 
 ceiling, never over each other), hand-painted plates outside in faded colours; the pawn shop and the thrift store take
 in everything (pawned bikes, gym benches, surfboards), laundromats have folding tables down the middle, the owner's
 stool at the staff end of the counter.
+
+## Numbers (GRT_NUMBERS; cloud measurements, NOT the phone)
+Measured on the BAKED area (`bake_runtime.gd --area=-650,-1100,120 --nofarground`: the six cells of the pilot area, no
+far ground, no rooms in the bake yet: docs/look_patches/rooms_bake.md), `rt_shots.gd` from the same 24 viewpoints (each
+block from above, along its numbered street and along its Ave), before (samples + streets only) -> after:
+- **Draws per view: 44-106 after (23-66 before).** Inside the phone's ~150 in every view.
+- **Triangles per view: 386k-874k after (97k-236k before).** Over the ~500k mark in 16 of 24 views; worst along G Ave
+  (874k, both sides filled). Per block the new pieces are no heavier than the sample's own (near buildings 14-27k
+  triangles a block, sample 7-38k; near props ~75k a block, sample ~88k): the view total rises because every view now
+  looks over filled blocks instead of empty ones. Yasin's rule: draws first, triangles are fine - but say it.
+- **Download: the six baked cells grow from 15.1 to 28.0 MB (+12.8 MB, about 1.6 MB a block; a sample block with its
+  streets bakes to ~2.5 MB), shared models (lib) +1.6 MB** (the car wash, the narrow houses, the garages ...). The
+  blocks' ground is split only where the slope bends (3-6k triangles a block; 18k at a fixed 2 m grid).
+- **Rooms** (25, as built, not merged): 26-36 draws and 4-5 real lights each (3 fixtures, the back room, daylight at
+  the window), 9k-41k triangles. The merge tool (tools/city/rooms/room_merge.gd) is not yet run on them.
+- Validator CHECKS 0 problems (area 8,156 props; whole city 25,992+), trees 0 in hard ground, sink 0, indoor checker 0
+  problems in the gritty rooms, lock test RESULT PASS. Nothing locked.
