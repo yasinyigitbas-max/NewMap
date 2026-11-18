@@ -127,6 +127,17 @@ def family_rows():
     return rows
 
 
+def grow_rows():
+    """block pieces of the zone growth sessions (18 Nov): review/grow_*_blocks.json, {"rows": [{piece, pos [u, y, v],
+    yaw}]} in the grid frame (each zone session keeps its own table: grow_grt_blocks.json = the gritty edge)"""
+    rows = []
+    for f in sorted(glob.glob(os.path.join(KIT, "review/grow_*_blocks.json"))):
+        fam = os.path.basename(f)[:-len("_blocks.json")]
+        for r in json.load(open(f)).get("rows", []):
+            rows.append({"piece": r["piece"], "pos": [float(c) for c in r["pos"]], "yaw": float(r.get("yaw", 0.0)), "from": fam})
+    return rows
+
+
 def coverage(rows):
     sites = json.load(open(os.path.join(KIT, "review/sites.json")))
     at = collections.defaultdict(list)
@@ -166,7 +177,7 @@ def main():
     ST, pad = load_skeleton()
     srows = samples(ST, pad)
     frows = family_rows()
-    rows = srows + frows
+    rows = srows + frows + grow_rows()
     # whole-city pieces built in the grid frame itself (17 Nov): the shore foam along every beach (x_shore_foam.gd)
     for piece in ("x_shore_foam",):
         if os.path.exists(os.path.join(KIT, "pieces", piece + ".scn")):

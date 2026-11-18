@@ -46,6 +46,13 @@ signal cell_out(key: String)
 @export var ready_col_m := 70.0      ## is_ready(): collision this near the place must be attached
 @export var probe := false           ## test switch: time how long the physics and render servers take to digest what this frame gave them
 @export var urgent_m := 90.0          ## a body this near the player is attached even while a cell is loading
+## THE TIERS (19 Nov, Yasin: "it snaps from near to far directly"; shaders/rt/rt_tier.gdshaderinc, docs/RUNTIME_BAKE.md
+## "The tiers"). All off = the city draws exactly as the bake made it. Set before the node enters the tree, or call
+## set_tiers() / set_far_ground() later (set_tiers before warm_up(): it swaps shaders, which are then built).
+@export var tiers := false            ## the tier hand-over: every held material gets a copy of its shader with CK_TIERS on (fades and the sweep below)
+@export var tier_band := 8.0          ## with tiers: metres of dithered overlap at each tier switch (0 = hard cuts; at most 8, the bake's node ranges)
+@export var arrive_s := 0.5           ## with tiers: an arriving cell's switch to far sweeps from the camera out to 220 m in this time (0 = all at once)
+@export var far_ground := true        ## the far world's ground (streets before their cell loads); false hides it
 
 enum {NONE, LOADING, BUILDING, READY, IN}
 const MAP := 64                       ## ck_cells_loaded is MAP x MAP texels, cell (0, 0) at its middle
@@ -74,6 +81,13 @@ var _quit := false
 var _pending: Array = []       # collision bodies waiting to be attached: [centre, parent, body, cell key]
 var add_ms: Array[float] = []
 var ready_ms: Array[float] = []
+var _ramping := {}             # cell key -> arrival time (usec) while its switch to far sweeps out (tiers, arrive_s)
+var _sh_plain := {}            # held material -> the shader the bake gave it
+var _sh_tiers := {}            # baked shader path + defines -> its copy (shader_variant)
+var ready_dropped := 0         # add_ms / ready_ms keep the last ADD_KEEP numbers (a 25-minute soak grew them by one a cell for the whole session); this many were let go
+const ADD_KEEP := 4096
+const RT_SH := "res://map_dc/coronado/city_kit/shaders/rt/"
+const TIER_SHADERS := ["rt_bldg", "rt_prop_", "rt_foliage_", "rt_far_cut", "rt_far_solid"]      # the shaders that include rt_tier.gdshaderinc
 
 func _ready() -> void:
 	var mp := runtime_dir + "manifest.json"
@@ -91,6 +105,54 @@ func _ready() -> void:
 	var fp := runtime_dir + "far/far_world.scn"
 	if ResourceLoader.exists(fp):
 		far_world = (load(fp) as PackedScene).instantiate(); add_child(far_world)
+	set_far_ground(far_ground)
+	set_tiers(tiers, tier_band, arrive_s)
+
+## The tier hand-over on or off (see rt_tier.gdshaderinc). On: every held material of a tier shader draws with a copy
+## of it that has CK_TIERS defined (made here from the shader's own text, so there is one source); off: the baked one.
+func set_tiers(on: bool, band := tier_band, arrive := arrive_s) -> void:
+	tiers = on; tier_band = clampf(band, 0.0, 8.0); arrive_s = maxf(arrive, 0.0)
+	RenderingServer.global_shader_parameter_set(&"ck_tier_band", tier_band)
+	var n := 0
+	for r: Resource in _keep:
+		if not (r is ShaderMaterial): continue
+		var m := r as ShaderMaterial
+		if not _sh_plain.has(m):
+			if m.shader == null or not m.shader.resource_path.begins_with(RT_SH): continue
+			var f := m.shader.resource_path.get_file(); var hit := false
+			for pre: String in TIER_SHADERS: hit = hit or f.begins_with(pre)
+			if not hit: continue
+			_sh_plain[m] = m.shader
+		var plain: Shader = _sh_plain[m]
+		if on:
+			m.shader = shader_variant(plain, ["CK_TIERS"])
+		else: m.shader = plain
+		n += 1
+	stats["tier_materials"] = n
+	if not on:      # no sweep without the tier shaders: cells are in or out
+		for k: String in _ramping: _set_texel(k, 1.0)
+		_ramping.clear(); _flush_map()
+
+## A copy of a baked shader with some #defines on (CK_TIERS, and the drawing census's CK_CHEAP / CK_OPAQUE), made from
+## the shader's own text, once each. Includes are made absolute, since the copy has no path of its own.
+func shader_variant(plain: Shader, defines: Array) -> Shader:
+	var key := plain.resource_path + "|" + ",".join(defines)
+	if not _sh_tiers.has(key):
+		var head := "shader_type spatial;"
+		for d: String in defines: head += "\n#define " + d
+		var sh := Shader.new()
+		sh.code = plain.code.replace("#include \"", "#include \"" + RT_SH).replace("shader_type spatial;", head)
+		_sh_tiers[key] = sh
+	return _sh_tiers[key]
+
+## the shader the bake gave a held material (whatever set_tiers swapped in since)
+func baked_shader(m: ShaderMaterial) -> Shader:
+	return _sh_plain.get(m, m.shader)
+
+func set_far_ground(on: bool) -> void:
+	far_ground = on
+	var fg := far_world.get_node_or_null("far_ground") if far_world else null
+	if fg: (fg as Node3D).visible = on
 
 # ---------------------------------------------------------------- queries
 func _dist(k: String, p: Vector3) -> float:
@@ -148,9 +210,24 @@ func _apply_night(cell: Node) -> void:
 		if g: (g as Node3D).visible = night > 0.02
 
 func _mark(k: String, on: bool) -> void:
+	_ramping.erase(k)
+	if on and tiers and arrive_s > 0.0:      # arriving: the shaders' switch to far starts at the camera (rt_tier)
+		_ramping[k] = Time.get_ticks_usec(); _set_texel(k, 1.0 / 255.0)
+	else: _set_texel(k, 1.0 if on else 0.0)
+
+func _set_texel(k: String, v: float) -> void:
 	var x := int(k.get_slice("_", 0)) + MAP / 2; var z := int(k.get_slice("_", 1)) + MAP / 2
 	if x < 0 or z < 0 or x >= MAP or z >= MAP: return
-	_map_img.set_pixel(x, z, Color(1, 0, 0) if on else Color(0, 0, 0)); _map_dirty = true
+	_map_img.set_pixel(x, z, Color(v, 0, 0)); _map_dirty = true
+
+func _ramp_cells() -> void:
+	if _ramping.is_empty(): return
+	var now := Time.get_ticks_usec(); var done: Array = []
+	for k: String in _ramping:
+		var r := clampf((now - int(_ramping[k])) / (arrive_s * 1.0e6), 1.0 / 255.0, 1.0)
+		_set_texel(k, r)
+		if r >= 1.0: done.append(k)
+	for k2: String in done: _ramping.erase(k2)
 
 # ---------------------------------------------------------------- the loop
 func update_focus(p: Vector3, now := false, velocity := Vector3.ZERO) -> void:
@@ -183,6 +260,16 @@ func update_focus(p: Vector3, now := false, velocity := Vector3.ZERO) -> void:
 		for w: Array in want:
 			var c2: Dictionary = cells[w[1]]
 			c2.ps = load(_path(w[1])); _build(c2); c2.ps = null; _add(w[1])      # _build takes the collision out for the usual stepwise attach (without it these cells never got any: found by the sky session, docs/look_patches/streamer_now.md)
+		# and their collision goes in now as well, all of it: this is the loading screen. Left to the stepwise attach,
+		# the start area's bodies trickled in at 1,200 triangles a frame through the warm-up and the first drive
+		# (phone, 19 Nov: a body 9.9 s after its cell, the health gate's limit is 3 s)
+		while not _pending.is_empty():
+			var e0: Array = _pending.pop_back(); var mk0 := e0[2] as Node3D
+			var body0 := StaticBody3D.new(); body0.name = mk0.name; body0.transform = mk0.transform
+			body0.collision_layer = int(mk0.get_meta(&"layer")); body0.collision_mask = int(mk0.get_meta(&"mask"))
+			for it0: Array in mk0.get_meta(&"col"):
+				var ow0 := body0.create_shape_owner(body0); body0.shape_owner_set_transform(ow0, it0[1]); body0.shape_owner_add_shape(ow0, (it0[0] as Resource).call(&"make"))
+			(e0[1] as Node).add_child(body0); mk0.free(); stats.bodies += 1
 		_flush_map(); return
 	var loading := 0; var have := 0
 	for k2: String in cells:
@@ -247,6 +334,8 @@ func _process_stream(t0: int) -> void:
 	if best != "":
 		var ta := Time.get_ticks_usec(); _add(best); var ms := (Time.get_ticks_usec() - ta) / 1000.0
 		add_ms.append(ms); stats.add_ms_worst = maxf(stats.add_ms_worst, ms)
+		if ready_ms.size() >= ADD_KEEP:      # let the oldest half go (the rig counts from ready_ms.size() + ready_dropped)
+			add_ms = add_ms.slice(ADD_KEEP / 2); ready_ms = ready_ms.slice(ADD_KEEP / 2); ready_dropped += ADD_KEEP / 2
 		var rm := (Time.get_ticks_usec() - int(cells[best].t_req)) / 1000.0
 		ready_ms.append(rm); stats.ready_ms_worst = maxf(stats.ready_ms_worst, rm); stats.ready_ms_sum += rm
 	# While a loader thread is creating a cell's meshes and shapes it holds the render and physics servers' locks for
@@ -294,6 +383,7 @@ func _process_stream(t0: int) -> void:
 		else:
 			_leaving.pop_back(); n.free()
 		stats.remove_ms_worst = maxf(stats.remove_ms_worst, (Time.get_ticks_usec() - tr) / 1000.0)
+	_ramp_cells()
 	_flush_map()
 
 func _flush_map() -> void:

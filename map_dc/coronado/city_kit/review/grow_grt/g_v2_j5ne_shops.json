@@ -1,0 +1,57 @@
+{
+ "piece": "g_v2_j5ne",
+ "shops": [
+  {
+   "door_index": 1,
+   "kind": "bodega",
+   "label": "corner_block",
+   "model": "ck/ck_brk3_corner2",
+   "name": "Fifth St Market",
+   "pos": [
+    -783.799999237061,
+    4.14917767047882,
+    -1018.70000076294
+   ],
+   "yaw": 0.0
+  },
+  {
+   "door_index": 0,
+   "kind": "tattoo",
+   "label": "corner_next",
+   "model": "ck/ck_svc_trade_1d",
+   "name": "Black Anchor Tattoo",
+   "pos": [
+    -771.200000762939,
+    4.22098413109779,
+    -1017.70000076294
+   ],
+   "yaw": 0.0
+  },
+  {
+   "door_index": 1,
+   "kind": "laundry",
+   "label": "brick_row",
+   "model": "urban/urb_brick_row",
+   "name": "Bubbles Coin Wash",
+   "pos": [
+    -730.0,
+    5.52182459831238,
+    -1018.70000076294
+   ],
+   "yaw": 0.0
+  },
+  {
+   "door_index": 2,
+   "kind": "thrift",
+   "label": "brick_row",
+   "model": "urban/urb_brick_row",
+   "name": "Junk & Treasures",
+   "pos": [
+    -730.0,
+    5.52182459831238,
+    -1018.70000076294
+   ],
+   "yaw": 0.0
+  }
+ ]
+}
