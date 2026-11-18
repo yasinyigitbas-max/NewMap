@@ -178,3 +178,77 @@ crop; `tools/city/look/upscale_sheet.py`), bilinear -> SGSR: centre 8.11 -> 10.5
 -> 7.11 and 8.48 -> 10.34, gritty 5.71 -> 7.22 and 5.79 -> 7.43, waterfront 4.49 -> 5.47 and 5.39 -> 6.56: 18-30 %
 sharper everywhere; leaves, signals, wires and edges visibly crisper, no ringing seen at this sharpness. The JPEGs grow
 14-17 % (more fine detail). Times in the cloud mean nothing for the phone: its cost is still to be measured there.
+
+---------------------------------------------------------------------------------------------------------------------
+# Queue 2 (18 Nov, night): the day, the sky, the sea, weather, life, cars, the phone runs
+| Job | Switch | Pictures | What it adds per pixel |
+|---|---|---|---|
+| 1 running day | `--cycle=120 --clock=7` (shots: `--hours=...`) | `day/sheet_*.jpg` (12 hours, waterfront and centre) | nothing: numbers. Sky and sky map step every 0.5 s; one step 0.44 ms on the main thread (cloud); the engine's sky reflection map is redrawn over several frames (`Sky.PROCESS_MODE_INCREMENTAL`). The sky map's own redraw read 0 ms in the cloud (its timer does not see so small a pass): the phone line `RIG look running day: ...` tells |
+| 2 sun, moon, stars | `--celestial=1` (0 = before) | `celestial/pair_*.jpg` | sky pixels only: a few sums; one texture read on the moon's own pixels |
+| 3 the sea | `--sea=1` (0 = the green plane) | `sea/pair_*.jpg` | 3 reads per water pixel (2 ripples, the sky map), unshaded; one draw, ~33k triangles |
+| 4 weather | `--weather=mist\|hazy\|storm\|rain` | `weather/sheet_*.jpg` | numbers only; rain: the wet ground (2 reads a ground pixel) |
+| 5 life in the air | `--air=1` (off) | `air/pair_*.jpg` | one draw of small see-through quads, no texture |
+| 6 car paint | `--cars=1` (demo), `--carenv=1\|0` | `cars/pair_*.jpg` | none extra: the game's car shader reads its panorama anyway; the look supplies it (128 x 128 once per time change) |
+| 7 phone runs | | `docs/LOOK_PHONE_TESTS.md` | |
+
+Notes:
+- Running day: nothing steps at once. Lamp glow, windows and the real lamps follow `ck_night`, which is blended. The
+  one thing that does switch: the streamer shows a cell's glow nodes when `ck_night` passes 0.02 (in the same frame
+  for all loaded cells); they draw nothing at that moment (glow 0 below 0.15), but it is the first draw of their
+  material. If the phone shows a hitch at dusk, show them earlier, a few cells a frame (streamer, not mine).
+- The moon: a fixed direction (40 degrees up, south-west), the same direction the night's light had before, so the
+  night preset did not change; the light swings from the sun to the moon with the blend.
+- FOUND and fixed on the way: the sun's east and west were swapped (morning sun in the west). The first time-of-day
+  pictures (`times/`) still show the old sides; the moods in them are right.
+- The sea: from `coast.json` (its "sea" line is the island's outline) and the terrain's depths; it reaches 25 m onto
+  the land so the waterline is where the water cuts the beach (the 0 m contour the shore foam follows): no seam to
+  close, nothing to edit in `x_shore_foam`. Ponds left out (they lie at land height, outside the city's cells).
+- Air: the smoke rises from the steel mill's chimney (found once offline at -704.7, 20.2, -1470), steam from a
+  warehouse vent; gulls circle off the waterfront promenade; the plane crosses every 120 s for 60 s.
+- Cars: the sky map's lower half is now the street (dimly lit asphalt), so car sides reflect a dark street, not haze.
+
+# Queue 3 (18 Nov, night): what a real graphics card showed
+The PC session's pictures on an NVIDIA card (sun shadows, sky reflections): night, dusk, overcast good; the DAY one
+flat beige wash, no blue, no cloud shapes, jacaranda purple and brick red gone grey-green, murky; golden hour brown.
+## Job 1: the numbers (`tools/city/look/measure.py`)
+Cloud pictures (darker than a real card; compare them with each other): before = the old look, after = the look's day.
+| picture | bright | contrast | sat % | sky sat % | black % | white % |
+|---|---|---|---|---|---|---|
+| sky/centre_day_before.jpg | 96 | 178 | 26 | 35 | 3.8 | 0.0 |
+| sky/apartments_day_before.jpg | 101 | 177 | 26 | 45 | 0.6 | 0.0 |
+| sky/gritty_day_before.jpg | 108 | 168 | 25 | 42 | 0.5 | 0.0 |
+| sky/waterfront_day_before.jpg | 127 | 155 | 21 | 42 | 0.3 | 0.0 |
+| sky/centre_day_after.jpg | 88 | 141 | 28 | 20 | 0.0 | 0.0 |
+| sky/apartments_day_after.jpg | 92 | 174 | 32 | 31 | 0.0 | 0.0 |
+| sky/gritty_day_after.jpg | 97 | 149 | 29 | 18 | 0.0 | 0.0 |
+| sky/waterfront_day_after.jpg | 116 | 162 | 25 | 13 | 0.0 | 0.0 |
+| times/centre_golden.jpg | 72 | 159 | 44 | 33 | 0.0 | 0.0 |
+| times/centre_morning.jpg | 88 | 135 | 19 | 15 | 0.0 | 0.0 |
+| times/centre_noon.jpg | 94 | 158 | 23 | 19 | 0.0 | 0.0 |
+| times/centre_overcast.jpg | 86 | 162 | 19 | 19 | 0.0 | 0.0 |
+| times/centre_dusk.jpg | 42 | 111 | 38 | 34 | 0.1 | 0.0 |
+| times/centre_night.jpg | 29 | 106 | 43 | 40 | 1.5 | 0.0 |
+
+By day the look is about 10 % darker, its contrast lower (mean 157 against 170) and the SKY's saturation halved
+(13-31 % against 35-45 %): the beige wash in numbers. Golden is saturated (44 %) but dark: its trouble is the brown haze.
+## Job 2: three days to choose from (`--look=day` default unchanged, `day_half`, `day_clear`)
+Each preset can pick its own colour table now (`grade`: `gta`, `half`, `clear`; all three built at start, ~10 ms
+each; the running day keeps `gta`, switching tables would be a visible step). `day_half`: half the haze (fog 0.00085),
+half the held-back colour. `day_clear`: blue sky, haze only low at the horizon (fog 0.0007), colours kept (no
+desaturation, a gentle S-curve). Pictures: `variants/sheet_<view>.jpg` = old look | day | day_half | day_clear.
+## Job 3: clouds seen from the street
+Two new sky values: `cloud_low` (where clouds melt into the haze; 0.2 before, 0.06-0.1 in the new days, so they reach
+down between the buildings) and `cloud_soft` (edge width; 0.24 before, 0.16-0.2: crisper shapes). Same shader, same
+two reads; the default day keeps its values.
+## Job 4: golden and morning
+Golden: haze thinner and lighter (fog 0.0019 -> 0.0011, haze colour pale gold instead of brown), the sun lower (9 deg)
+and stronger (1.85, deep orange), the shade bluer (warm walls against cool shade), the "half" table. Morning: the same
+idea, mist halved (0.0028 -> 0.0016). Pictures: `variants/<view>_golden.jpg`, `_morning.jpg` against `times/`.
+## Job 5: the sun shadow's end (`--shadowtune=1`, 0 = before)
+The 50 m stay. 2 splits instead of the engine's 4 (two shadow passes less), the first to 12.5 m, blended where they
+meet; the shadow fades out from 30 to 50 m (`directional_shadow_fade_start` 0.6); softer for a low sun
+(`shadow_blur` 1.8 at the horizon .. 1.0 above 45 deg), fainter when the sun is weak (`shadow_opacity` 0.3 + energy x 0.5:
+overcast and storm throw faint shadows). Pictures with shadows on: `shadow/pair_*.jpg` (the cloud GPU draws the trees
+near the camera black with shadows on: ignore them, look at the road).
+## Open questions (Yasin)
+- Which day: `day`, `day_half` or `day_clear`? (And should golden / morning follow the pick's table?)
