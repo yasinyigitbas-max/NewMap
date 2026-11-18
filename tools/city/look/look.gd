@@ -46,14 +46,16 @@ const DAY := {
 	"sun_color": Color(1.0, 0.87, 0.66), "sun_energy": 1.55,                  # warm amber sun ...
 	"ambient_color": Color(0.60, 0.64, 0.69), "ambient_energy": 0.8,          # ... grey-blue shade
 	"fog_density": 0.0017, "fog_sun_scatter": 0.25,
-	"cloud_lit": Color(0.96, 0.93, 0.86), "cloud_dark": Color(0.60, 0.61, 0.62), "cloud_cover": 0.5, "cloud_alpha": 0.85, "cloud_scale": 0.2,
+	# queue 3 (Yasin: "i go for gta4 look", the palette stays): the clouds readable from the street, the sky NOT bluer:
+	# they reach lower (cloud_low 0.2 -> 0.1), crisper edges (0.24 -> 0.18), brighter tops and greyer undersides
+	"cloud_lit": Color(1.0, 0.96, 0.89), "cloud_dark": Color(0.54, 0.55, 0.57), "cloud_cover": 0.5, "cloud_alpha": 0.9, "cloud_scale": 0.2, "cloud_low": 0.1, "cloud_soft": 0.18,
 	"sun_halo": 0.7, "sun_disc": 6.0, "disc_cos": 0.9993, "stars": 0.0}
 const NIGHT := {
 	"zenith": Color(0.018, 0.018, 0.026), "middle": Color(0.06, 0.047, 0.042), "haze": Color(0.21, 0.135, 0.075),      # the city's light in the smog
 	"sun_color": Color(0.60, 0.66, 0.85), "sun_energy": 0.16,                 # the same light is the moon
 	"ambient_color": Color(0.44, 0.38, 0.34), "ambient_energy": 0.6,          # dark brown-grey, still readable
 	"fog_density": 0.0021, "fog_sun_scatter": 0.15,
-	"cloud_lit": Color(0.24, 0.16, 0.10), "cloud_dark": Color(0.09, 0.07, 0.06), "cloud_cover": 0.5, "cloud_alpha": 0.8, "cloud_scale": 0.2,      # lit from below by the city
+	"cloud_lit": Color(0.24, 0.16, 0.10), "cloud_dark": Color(0.09, 0.07, 0.06), "cloud_cover": 0.5, "cloud_alpha": 0.8, "cloud_scale": 0.2, "cloud_low": 0.2, "cloud_soft": 0.24,      # lit from below by the city
 	"sun_halo": 0.3, "sun_disc": 1.4, "disc_cos": 0.99975, "stars": 0.35}     # few stars through the smog
 
 ## TIMES OF DAY (job 1): whole presets of the same look, chosen with `--look=NAME` (rig) or `set_preset(NAME)`.
@@ -62,7 +64,7 @@ const NIGHT := {
 ## itself (only numbers change); a preset change redraws the sky's reflection map once.
 static var PRESETS := {
 	"morning": {      # low sun from the east, a light morning haze (queue 3: half the old mist, warm sun / cool shade)
-		"elev": 16.0, "azim": 105.0, "lights": 0.0, "moon": 0.0, "grade": "half",
+		"elev": 16.0, "azim": 105.0, "lights": 0.0, "moon": 0.0, "grade": "gta",
 		"zenith": Color(0.30, 0.48, 0.74), "middle": Color(0.62, 0.70, 0.80), "haze": Color(0.84, 0.84, 0.82),
 		"sun_color": Color(1.0, 0.82, 0.62), "sun_energy": 1.45, "ambient_color": Color(0.52, 0.60, 0.76), "ambient_energy": 0.7,
 		"fog_density": 0.0016, "fog_sun_scatter": 0.45,
@@ -93,7 +95,7 @@ static var PRESETS := {
 		"sun_halo": 0.6, "sun_disc": 7.0, "disc_cos": 0.9993, "stars": 0.0},
 	"golden": {       # late afternoon (queue 3: golden, not brown): a low strong orange sun along the streets, long
 		# shadows, warm walls against blue shade; the haze thinner and lighter so it does not turn into a brown fog
-		"elev": 12.0, "azim": -80.0, "lights": 0.0, "moon": 0.0, "grade": "half",
+		"elev": 12.0, "azim": -80.0, "lights": 0.0, "moon": 0.0, "grade": "gta",
 		"zenith": Color(0.26, 0.42, 0.68), "middle": Color(0.74, 0.66, 0.58), "haze": Color(0.95, 0.78, 0.56),
 		"sun_color": Color(1.0, 0.64, 0.34), "sun_energy": 1.85, "ambient_color": Color(0.46, 0.54, 0.72), "ambient_energy": 0.75,
 		"fog_density": 0.0011, "fog_sun_scatter": 0.5,
