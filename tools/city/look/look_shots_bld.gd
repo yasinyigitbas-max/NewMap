@@ -5,7 +5,7 @@ const Lights := preload("res://tools/city/bake/city_lights.gd")
 ## ambient light as the phone rig (tools/city/rig/rig.gd). The three changes are global shader values, so one run
 ## takes every picture: nothing is rebuilt, nothing baked changes.
 ##   xvfb-run -a godot --path . --resolution 1640x720 --rendering-method mobile --rendering-driver vulkan \
-##       -s res://tools/city/look/look_shots.gd -- --out=res://map_dc/coronado/city_kit/review/look_18nov/buildings
+##       -s res://tools/city/look/look_shots_bld.gd -- --out=res://map_dc/coronado/city_kit/review/look_18nov/buildings
 ##   --cams=name:x,y,z:tx,ty,tz;...   own cameras instead of the built-in street views
 ##   --only=centre,apartments         built-in views whose name starts with one of these
 ##   --times=day,night                (default both)

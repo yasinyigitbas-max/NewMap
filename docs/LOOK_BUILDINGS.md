@@ -97,7 +97,7 @@ The phone sits at the 60 fps step at 720p, so it shows only if it pushes frames 
 
 ## Commands
 ```bash
-NOSHADOW=1 xvfb-run -a godot --path . --resolution 1640x720 --rendering-method mobile --rendering-driver vulkan -s res://tools/city/look/look_shots.gd -- --out=res://map_dc/coronado/city_kit/review/look_18nov/buildings
+NOSHADOW=1 xvfb-run -a godot --path . --resolution 1640x720 --rendering-method mobile --rendering-driver vulkan -s res://tools/city/look/look_shots_bld.gd -- --out=res://map_dc/coronado/city_kit/review/look_18nov/buildings
 ```
 Options: `--only=centre,apartments,pilot`, `--times=day,night`, `--sets=before,after,contact,windows,glass`, `--ao`,
 `--cams=name:x,y,z:tx,ty,tz;...`, `--png`. Needs the baked city (`docs/RUNTIME_BAKE.md` "Commands").
