@@ -16,11 +16,12 @@ extends SceneTree
 ##   ... -- --area=60,-600,520      only the cells whose rectangle is within 520 m of (60, -600); the far world is always whole
 ##   ... -- --check                 compare the manifest with the pieces, write nothing
 ##   options: --tint (trial: a paint tint per building from its position)   --out=res://... (another runtime folder)
+const ColData := preload("res://tools/city/bake/col_data.gd")
 const PIECES := "res://map_dc/coronado/city_kit/pieces/"
 const LAYOUT := "res://map_dc/coronado/city_kit/city_grid_layout.json"
 const SH := "res://map_dc/coronado/city_kit/shaders/rt/"
 const TEX := "res://map_dc/coronado/city_kit/runtime_tex/"      ## texture arrays (tools/city/bake/make_arrays.py)
-const VERSION := 5
+const VERSION := 6
 const CELL := 200.0
 const SUB_NEAR := 64.0
 const SUB_MID := 200.0
@@ -173,18 +174,38 @@ func _split_concave(s: ConcavePolygonShape3D) -> Array:
 	split_cache[id] = res
 	return res
 
-func _lib_shape(s: Shape3D) -> Shape3D:
-	var k := ""
-	if s is ConvexPolygonShape3D: k = "cx" + str(hash((s as ConvexPolygonShape3D).points))
-	elif s is ConcavePolygonShape3D: k = "cc" + str(hash((s as ConcavePolygonShape3D).get_faces()))
-	elif s is BoxShape3D: k = "bx" + str((s as BoxShape3D).size)
-	else: k = s.get_class() + str(s.get_instance_id())
-	k = k.md5_text().substr(0, 12)
+## A shape as plain data in lib/ (col_data.gd says why it is not saved as a Shape3D). Returns null for a kind the kit
+## does not use (sphere, capsule ...): counted, reported at the end, left out.
+func _lib_shape(s: Shape3D) -> Resource:
+	var k := ""; var kind := -1; var data := PackedVector3Array()
+	if s is ConvexPolygonShape3D: kind = 1; data = (s as ConvexPolygonShape3D).points; k = "cx" + str(hash(data))
+	elif s is ConcavePolygonShape3D: kind = 0; data = (s as ConcavePolygonShape3D).get_faces(); k = "cc" + str(hash(data)) + str((s as ConcavePolygonShape3D).backface_collision)
+	elif s is BoxShape3D: kind = 2; data = PackedVector3Array([(s as BoxShape3D).size]); k = "bx" + str((s as BoxShape3D).size)
+	else:
+		if not stat.has("col_unknown"): stat["col_unknown"] = {}
+		stat.col_unknown[s.get_class()] = int(stat.col_unknown.get(s.get_class(), 0)) + 1
+		return null
+	k = ("d" + k).md5_text().substr(0, 12)
 	if lib_shape.has(k): return lib_shape[k]
 	var path := out + "lib/s_%s.res" % k
-	if not ResourceLoader.exists(path): ResourceSaver.save(s.duplicate(), path, ResourceSaver.FLAG_COMPRESS)
+	if not ResourceLoader.exists(path):
+		var cd: Resource = ColData.new(); cd.kind = kind; cd.data = data
+		if s is ConcavePolygonShape3D: cd.backface = (s as ConcavePolygonShape3D).backface_collision
+		ResourceSaver.save(cd, path, ResourceSaver.FLAG_COMPRESS)
 	lib_shape[k] = load(path)
 	return lib_shape[k]
+
+## A body-to-be: a plain Node3D that carries the body's layer, mask and its shapes as [ColData, Transform3D]. The
+## streamer turns it into a StaticBody3D on the main thread.
+func _col_marker(nm: String, layer: int, mask: int) -> Node3D:
+	var m := Node3D.new(); m.name = nm
+	m.set_meta(&"col", []); m.set_meta(&"layer", layer); m.set_meta(&"mask", mask); m.set_meta(&"w", 0)
+	return m
+
+func _col_add(m: Node3D, src: Shape3D, xf: Transform3D) -> void:
+	var cd := _lib_shape(src)
+	if cd == null: return
+	(m.get_meta(&"col") as Array).append([cd, xf]); m.set_meta(&"w", int(m.get_meta(&"w")) + int(cd.call(&"weight")))
 
 func _tex_name(t: Texture2D) -> String: return t.resource_path.get_file().get_basename() if t else "none"
 
@@ -527,9 +548,8 @@ func _build_cell(c: Vector2i) -> Dictionary:
 			mi2.set_instance_shader_parameter(&"lit_seed", seed_v); mi2.set_instance_shader_parameter(&"tint", tv[0]); mi2.set_instance_shader_parameter(&"wear_add", tv[1])
 			node.add_child(mi2); counts.draw_nodes += 1
 		if not b.col.is_empty():
-			var body := StaticBody3D.new(); body.name = "col"; body.collision_layer = int(b.col[0][2]); body.collision_mask = int(b.col[0][3]); node.add_child(body)
-			for cs: Array in b.col:
-				var s := CollisionShape3D.new(); s.shape = _lib_shape(cs[0]); s.transform = cs[1]; body.add_child(s)
+			var body := _col_marker("col", int(b.col[0][2]), int(b.col[0][3])); node.add_child(body)
+			for cs: Array in b.col: _col_add(body, cs[0], cs[1])
 	# props
 	var pn := Node3D.new(); pn.name = "Props"; root.add_child(pn)
 	var k := 0
@@ -582,12 +602,11 @@ func _build_cell(c: Vector2i) -> Dictionary:
 		# small bodies (a 32 m block, at most 24 shapes): each is quick to attach and to free (136 shapes in one body
 		# took 15-25 ms to attach in the cloud test)
 		var bk := [cs2[2], cs2[3], floori(co.x / 32.0), floori(co.z / 32.0), 0]
-		while bodies.has(bk) and ((bodies[bk] as Node).get_child_count() >= 24 or (st2 > 0 and int(body_tris.get(bodies[bk], 0)) + st2 > COL_BODY_TRIS)): bk[4] += 1
+		while bodies.has(bk) and (((bodies[bk] as Node).get_meta(&"col") as Array).size() >= 24 or (st2 > 0 and int(body_tris.get(bodies[bk], 0)) + st2 > COL_BODY_TRIS)): bk[4] += 1
 		if not bodies.has(bk):
-			var body2 := StaticBody3D.new(); body2.name = "col_%d" % bodies.size(); body2.collision_layer = int(cs2[2]); body2.collision_mask = int(cs2[3]); root.add_child(body2); bodies[bk] = body2
-		var s2 := CollisionShape3D.new(); s2.shape = _lib_shape(cs2[0]); s2.transform = cs2[1]; (bodies[bk] as Node).add_child(s2)
+			var body2 := _col_marker("col_%d" % bodies.size(), int(cs2[2]), int(cs2[3])); body2.position = co; root.add_child(body2); bodies[bk] = body2
+		_col_add(bodies[bk], cs2[0], Transform3D(Basis(), -(bodies[bk] as Node3D).position) * (cs2[1] as Transform3D))
 		body_tris[bodies[bk]] = int(body_tris.get(bodies[bk], 0)) + st2
-	for bd: Node in bodies.values(): bd.set_meta(&"tris", int(body_tris.get(bd, 0)))      # the streamer attaches by this weight
 	# night: every lamp of the cell as a halo at its head and a pool on the ground (two draws, drawn only at night),
 	# and as a light anchor [x, y, z, reach, r, g, b, kind (0 street, 1 porch), ground y] for the real lights
 	if not rec.lights.is_empty():
@@ -751,7 +770,7 @@ func _run() -> void:
 	for mk: String in mats: keep[(mats[mk] as Material).resource_path] = true
 	var man := {"version": VERSION, "keep": keep.keys(), "warm": wi, "layout_sha": FileAccess.get_sha256(LAYOUT), "area": area, "tint": tint_on, "cells": manifest_cells, "far": fw, "stat": stat, "cell_m": CELL}
 	var f := FileAccess.open(out + "manifest.json", FileAccess.WRITE); f.store_string(JSON.stringify(man, " ")); f.close()
-	print("BAKE collision: %d triangle shapes cut into pieces, %d pieces in all, largest %d triangles" % [int(stat.col_split), int(stat.col_pieces), int(stat.col_piece_max)])
+	print("BAKE collision: %d triangle shapes cut into pieces, %d pieces in all, largest %d triangles; shape kinds left out: %s" % [int(stat.col_split), int(stat.col_pieces), int(stat.col_piece_max), str(stat.get("col_unknown", {}))])
 	print("BAKE_DONE cells=%d draw nodes=%d nodes=%d lib meshes=%d shapes=%d materials=%d in %d ms" % [cells.size(), tot.draw_nodes, tot.nodes, lib_mesh.size(), lib_shape.size(), mats.size(), Time.get_ticks_msec() - t0])
 	quit()
 

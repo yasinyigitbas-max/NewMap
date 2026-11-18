@@ -10,23 +10,19 @@ func _init() -> void:
 		var path := "res://map_dc/coronado/city_kit/runtime/cells/cell_%s.scn" % k
 		if not ResourceLoader.exists(path): print("COL %s: no such cell" % k); continue
 		var node: Node = (load(path) as PackedScene).instantiate()
-		var bodies := node.find_children("*", "StaticBody3D", true, false)
-		var kinds := {}; var tris_all := 0; var worst := 0; var worst_name := ""; var per_body: Array = []; var shared := {}
-		for b: Node in bodies:
-			var bt := 0
-			for cs: Node in b.get_children():
-				if not (cs is CollisionShape3D) or (cs as CollisionShape3D).shape == null: continue
-				var sh: Shape3D = (cs as CollisionShape3D).shape
-				var kind := sh.get_class().replace("Shape3D", "")
+		# since 18 Nov a body is a plain Node3D with its shapes as data (bake_runtime.gd _col_marker, col_data.gd)
+		var kinds := {}; var w_all := 0; var worst := 0; var worst_name := ""; var per_body: Array = []; var n := 0
+		for b: Node in node.find_children("col*", "Node3D", true, false):
+			if not b.has_meta(&"col"): continue
+			n += 1
+			var bw := 0
+			for it: Array in b.get_meta(&"col"):
+				var kind: String = ["triangles", "convex", "box"][int((it[0] as Resource).get(&"kind"))]
 				kinds[kind] = int(kinds.get(kind, 0)) + 1
-				if sh is ConcavePolygonShape3D:
-					var t := (sh as ConcavePolygonShape3D).get_faces().size() / 3
-					bt += t
-					if sh.resource_path != "" and not sh.resource_path.contains("::"): shared[sh.resource_path] = t
-			tris_all += bt; per_body.append(bt)
-			if bt > worst: worst = bt; worst_name = "%s (%d shapes)" % [b.name, b.get_child_count()]
+				bw += int((it[0] as Resource).call(&"weight"))
+			w_all += bw; per_body.append(bw)
+			if bw > worst: worst = bw; worst_name = "%s (%d shapes)" % [b.name, (b.get_meta(&"col") as Array).size()]
 		per_body.sort()
-		var n := per_body.size()
-		print("COL %s: bodies=%d shapes=%s | triangles in concave shapes: all=%d, per body median=%d p90=%d worst=%d in %s | concave shapes shared from lib=%d" % [k, n, str(kinds), tris_all, per_body[n / 2] if n > 0 else 0, per_body[int(n * 0.9)] if n > 0 else 0, worst, worst_name, shared.size()])
+		print("COL %s: bodies=%d shapes=%s | weight (triangles + convex points): all=%d, per body median=%d p90=%d worst=%d in %s" % [k, n, str(kinds), w_all, per_body[n / 2] if n > 0 else 0, per_body[int(n * 0.9)] if n > 0 else 0, worst, worst_name])
 		node.free()
 	quit()

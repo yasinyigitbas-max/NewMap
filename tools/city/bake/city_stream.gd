@@ -35,8 +35,8 @@ signal cell_out(key: String)
 @export var max_loading := 2          ## cells on the loader threads at once
 @export var max_cells := 30           ## memory cap: cells in the scene
 @export var frame_budget_ms := 1.5    ## main-thread time a frame may spend removing (the old game's phone budget for streaming)
-@export var bodies_per_frame := 2     ## collision bodies attached a frame, at most
-@export var body_tris_per_frame := 1600   ## and at most this many collision triangles a frame (the first body always goes)
+@export var bodies_per_frame := 6     ## collision bodies made and attached a frame, at most
+@export var body_tris_per_frame := 1200   ## and at most this much NEW collision a frame, in triangles (a convex point counts as one; the first body always goes). The phone builds roughly 5 microseconds a triangle on its physics thread.
 @export var attach_bodies := true    ## test switch: false = a cell's collision is never attached (to see what attaching costs)
 @export var show_cells := true       ## test switch: false = cells are added hidden (to see what their first drawing costs)
 @export var probe := false           ## test switch: time how long the physics and render servers take to digest what this frame gave them
@@ -230,16 +230,23 @@ func _process_stream(t0: int) -> void:
 			for j in _pending.size():
 				var dd := (_pending[j][0] as Vector3).distance_squared_to(focus)
 				if dd < bdist: bdist = dd; bi = j
-			if not quiet and bdist > urgent_m * urgent_m: break
-			var cost := int((_pending[bi][2] as Node).get_meta(&"tris", 0))
+			var mk := _pending[bi][2] as Node3D
+			var cost := 0      # only shapes not made yet cost: one that a neighbour cell already uses is there
+			for it: Array in mk.get_meta(&"col"):
+				if (it[0] as Resource).get(&"shape") == null: cost += int((it[0] as Resource).call(&"weight"))
 			if i > 0 and spent + cost > body_tris_per_frame: break
 			spent += cost
 			var e: Array = _pending[bi]; _pending.remove_at(bi)
-			(e[2] as Node).owner = null      # it was taken out of its cell at load: with the old owner kept, every add prints a warning (phone run 18 Nov: 302 of them)
-			var tb := Time.get_ticks_usec(); (e[1] as Node).add_child(e[2])
+			var tb := Time.get_ticks_usec()
+			var body := StaticBody3D.new(); body.name = mk.name; body.transform = mk.transform
+			body.collision_layer = int(mk.get_meta(&"layer")); body.collision_mask = int(mk.get_meta(&"mask"))
+			for it2: Array in mk.get_meta(&"col"):
+				var cs := CollisionShape3D.new(); cs.shape = (it2[0] as Resource).call(&"make"); cs.transform = it2[1]; body.add_child(cs)
+			(e[1] as Node).add_child(body); mk.free()
 			var bms := (Time.get_ticks_usec() - tb) / 1000.0
-			if bms > float(stats.body_ms_worst): stats.body_ms_worst = bms; stats["body_worst_what"] = "%s shapes=%d" % [(e[2] as Node).name, (e[2] as Node).get_child_count()]
-			stats.bodies += 1
+			if bms > float(stats.body_ms_worst): stats.body_ms_worst = bms; stats["body_worst_what"] = "%s shapes=%d new=%d" % [body.name, body.get_child_count(), cost]
+			stats.bodies += 1; stats["col_units"] = int(stats.get("col_units", 0)) + cost
+			stats["body_wait_ms_worst"] = maxi(int(stats.get("body_wait_ms_worst", 0)), Time.get_ticks_msec() - int(e[4]))      # from its cell's arrival to the body being in the world
 		for e2: Array in _pending:      # a body still waiting with the player 40 m away would be a hole in the ground
 			if (e2[0] as Vector3).distance_to(focus) < 40.0: stats.body_late += 1; break
 	# cells on their way out: a part at a time inside the frame budget
@@ -260,10 +267,11 @@ func _flush_map() -> void:
 func _build(c: Dictionary) -> void:
 	var node: Node3D = (c.ps as PackedScene).instantiate()
 	var bodies: Array = []
-	for b: Node in node.find_children("*", "StaticBody3D", true, false):
+	for b: Node in node.find_children("col*", "Node3D", true, false):      # the bodies-to-be (bake_runtime.gd _col_marker)
+		if not b.has_meta(&"col"): continue
 		var par := b.get_parent(); var centre := Vector3.ZERO
 		if par != node and par is Node3D: centre = (par as Node3D).position
-		elif b.get_child_count() > 0: centre = (b.get_child(0) as Node3D).position
+		else: centre = (b as Node3D).position
 		par.remove_child(b); bodies.append([centre, par, b])
 	c.bodies = bodies; c.node = node
 
@@ -272,7 +280,7 @@ func _add(k: String) -> void:
 	if not show_cells: (c.node as Node3D).visible = false
 	add_child(c.node); _apply_night(c.node)
 	for b: Array in c.bodies:
-		if attach_bodies: _pending.append([b[0], b[1], b[2], k])
+		if attach_bodies: _pending.append([b[0], b[1], b[2], k, Time.get_ticks_msec()])
 		else: _leaving.append(b[2])
 	c.bodies = []
 	c.state = IN; stats["in"] += 1; _mark(k, true); cell_in.emit(k)

@@ -11,7 +11,7 @@ extends Node3D
 ##             rebuild needed for a new route. ROUTE is a route name or points x,z:x,z:... (NIGHT 0 or 1), e.g.
 ##             --drive=gritty/-740,-1000:-600,-1000:-600,-860/60/25/0
 ##   --quit    leave when the plan is done (default with a plan from the args file; by hand it loops)
-##   --lead=2  --maxcells=30  --loading=2  --bodies=2      streamer settings to compare
+##   --lead=2  --maxcells=30  --loading=2  --bodies=6  --coltris=1200     streamer settings to compare
 ##   --lights=20   real lamp lights at night (the engine's light grid; 8 on a stock engine)
 ##   --nowarm      skip the warm-up (to see what it saves)
 ##   --probe       time the physics and render servers' digestion each frame (shown in the slow lines)
@@ -55,7 +55,7 @@ var cam: Camera3D
 var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
-var opt := {"plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 2, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false}
+var opt := {"plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -77,7 +77,7 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights"]:
+		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
 				opt[k] = v if k == "plan" else (float(v) if k in ["scale", "lead"] else int(v))
@@ -96,7 +96,7 @@ func _ready() -> void:
 	sun.shadow_enabled = true; sun.directional_shadow_max_distance = 50.0; add_child(sun)      # the game's sun shadow distance
 	var gp := MeshInstance3D.new(); var pm := PlaneMesh.new(); pm.size = Vector2(6000, 6000); gp.mesh = pm
 	var gm := StandardMaterial3D.new(); gm.albedo_color = Color(0.36, 0.42, 0.3); gm.roughness = 1.0; gp.material_override = gm; gp.position.y = -0.05; add_child(gp)
-	st = Stream.new(); st.name = "City"; st.lead_seconds = float(opt.lead); st.max_cells = int(opt.maxcells); st.max_loading = int(opt.loading); st.bodies_per_frame = int(opt.bodies); st.attach_bodies = not opt.nocol; st.show_cells = not opt.hide; st.probe = opt.probe; add_child(st)
+	st = Stream.new(); st.name = "City"; st.lead_seconds = float(opt.lead); st.max_cells = int(opt.maxcells); st.max_loading = int(opt.loading); st.bodies_per_frame = int(opt.bodies); st.body_tris_per_frame = int(opt.coltris); st.attach_bodies = not opt.nocol; st.show_cells = not opt.hide; st.probe = opt.probe; add_child(st)
 	RenderingServer.viewport_set_measure_render_time(get_viewport().get_viewport_rid(), true)
 	lights = Lights.new(); lights.budget = int(opt.lights); lights.stream = st; add_child(lights)
 	cam = Camera3D.new(); cam.fov = 74.0; cam.near = 0.08; cam.far = 900.0; add_child(cam); cam.current = true      # the game's driving camera
@@ -186,7 +186,8 @@ func _drive(seg: Array) -> void:
 	var dts := PackedFloat32Array(); var draws_sum := 0.0; var draws_max := 0; var tris_sum := 0.0; var tris_max := 0
 	var late220 := 0; var late60 := 0; var deepest := 0.0; var max_cells := 0; var slow := 0; var gy := 8.0
 	var segi := 0; var along := 0.0; var t := 0.0; var t_prev := Time.get_ticks_usec(); var hud_t := 0.0; var prev := [S0["in"], S0.out, S0.bodies]
-	var ready0: int = st.ready_ms.size(); var slow_line := ""; var cause := {}; var cause45 := {}
+	var ready0: int = st.ready_ms.size(); var slow_line := ""; var cause := {}; var cause45 := {}; var pw := PackedFloat32Array()
+	st.stats["body_wait_ms_worst"] = 0; var units0 := int(st.stats.get("col_units", 0))
 	var on_ground := false; _g_hit = false; _g_at = pts[0]
 	while t < secs:
 		var a0: Vector3 = pts[segi]; var a1: Vector3 = pts[segi + 1]; var sl := a0.distance_to(a1)
@@ -210,6 +211,7 @@ func _drive(seg: Array) -> void:
 				if dd < 60.0: late60 += 1
 				if dd < 220.0: late220 += 1; deepest = maxf(deepest, 220.0 - dd)
 		var S: Dictionary = st.stats
+		if opt.probe: pw.append(float(S.get("phys_wait_ms", 0.0)))
 		if slow_line != "":      # the slow frame of one frame ago, now with the engine's counters for it
 			_say(slow_line + " | then: " + _parts()); slow_line = ""
 		if dt > 0.0333:      # a frame a player would notice (over 33 ms since the zones run; 50 ms before): what was the streamer doing?
@@ -238,4 +240,6 @@ func _drive(seg: Array) -> void:
 	_say("  map %s draws avg=%.0f max=%d | tris avg=%.0fk max=%dk | cells most=%d in=%d out=%d dropped=%d cap_hits=%d" % [name, draws_sum / n, draws_max, tris_sum / n / 1000.0, tris_max / 1000, max_cells, int(S1["in"]) - int(S0["in"]), int(S1.out) - int(S0.out), int(S1.dropped) - int(S0.dropped), int(S1.capped) - int(S0.capped)])
 	_say("  stream %s start_ready_ms=%d (worst frame meanwhile %.0f ms) | request_to_in ms mean=%.0f worst=%.0f | late frames: 220m=%d (deepest %.0f m) 60m=%d | main thread worst ms: cell add %.2f, body %.2f (%s), removal step %.2f | bodies late=%d" % [name, prep_ms, prep_worst, rs / maxf(1.0, st.ready_ms.size() - ready0), rw, late220, deepest, late60, float(S1.add_ms_worst), float(S1.body_ms_worst), str(S1.get("body_worst_what", "")), float(S1.remove_ms_worst), int(S1.body_late) - int(S0.body_late)])
 	_say("  slow %s frames over 33 ms by what the streamer was doing: %s | over 45 ms: %s" % [name, str(cause), str(cause45)])
+	pw.sort()
+	_say("  collision %s made=%d units, a body waited at most %d ms from its cell's arrival | physics thread wait a frame (probe): median %.1f p99 %.1f worst %.1f ms" % [name, int(st.stats.get("col_units", 0)) - units0, int(st.stats.get("body_wait_ms_worst", 0)), pw[pw.size() / 2] if pw.size() > 0 else -1.0, pw[int(pw.size() * 0.99)] if pw.size() > 0 else -1.0, pw[pw.size() - 1] if pw.size() > 0 else -1.0])
 	_say("  mem %s static_mb=%.0f video_mb=%.0f tex_mb=%.0f buf_mb=%.0f" % [name, Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_TEXTURE_MEM_USED) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_BUFFER_MEM_USED) / 1048576.0])
