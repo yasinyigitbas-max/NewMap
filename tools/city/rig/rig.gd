@@ -17,6 +17,8 @@ extends Node3D
 ##   --look=1|0|NAME  1 (default): the look pack's sky, distance haze, light colours and colour treatment
 ##             (tools/city/look/look.gd, docs/LOOK_SKY.md); 0: the old plain sky and light, to compare;
 ##             NAME a time of day of the look: morning, noon, day, golden, dusk, night, overcast (overrides the drives' night)
+##   --cycle=120   with the look: a running day, the whole day in this many seconds (0 = off); --clock=7.0 its start hour.
+##             Overrides the drives' night. Smooth: the sky and its maps step every 0.5 s, nothing jumps
 ##   --bloom=0|1   with --look=1: 1 adds a soft glow round bright things (GTA 4 style); costs pixels, off by default
 ##   --glow=1|0    with the look: 1 (default) the look's lamp halos and pools (tools/city/look/glow.gdshader), 0 the bake's
 ##   --blobs=0|1   with the look: 1 soft tree shadows beyond the 50 m sun shadow (look job 4); OFF by default: it reads
@@ -76,7 +78,7 @@ var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
-var opt := {"look": "1", "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false}
+var opt := {"look": "1", "cycle": 0.0, "clock": 7.0, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -98,10 +100,10 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "look", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots"]:
+		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "look", "cycle", "clock", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
-				opt[k] = v if k in ["plan", "shots", "look"] else (float(v) if k in ["scale", "lead", "colms", "sharp", "wet"] else int(v))
+				opt[k] = v if k in ["plan", "shots", "look"] else (float(v) if k in ["scale", "lead", "colms", "sharp", "wet", "cycle", "clock"] else int(v))
 	if from_file and not ("--loop" in args): opt.quit = true
 	Engine.max_fps = 0
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
@@ -111,7 +113,7 @@ func _ready() -> void:
 	if int(opt.upscale) == 1:      # look job 2: the engine's FSR 1 mode, which Yasin's engine (patch c) runs as SGSR 1 in the Mobile renderer
 		vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_FSR; vp.fsr_sharpness = float(opt.sharp)
 	if String(opt.look) != "0":      # the look pack: sky, haze, light colours, colour treatment
-		look = Look.new(); look.bloom = int(opt.bloom) == 1; look.glow = int(opt.glow) == 1; look.blobs = int(opt.blobs) == 1; look.wet = float(opt.wet); add_child(look); env = look.env; sun = look.sun
+		look = Look.new(); look.bloom = int(opt.bloom) == 1; look.glow = int(opt.glow) == 1; look.blobs = int(opt.blobs) == 1; look.wet = float(opt.wet); look.cycle = float(opt.cycle); look.hour = float(opt.clock); add_child(look); env = look.env; sun = look.sun
 		if String(opt.look) != "1": look.set_preset(String(opt.look))
 	else:                       # the old plain setup, kept to compare against
 		env = Environment.new()
@@ -165,8 +167,7 @@ func _ground(p: Vector3, last: float) -> float:
 func _night(v: float) -> void:
 	st.set_night(v)
 	if look:
-		look.set_night(v)
-		if look.preset != "": st.set_night(look.lights())
+		look.set_night(v); st.set_night(look.lights())      # a preset or the running day decides the night itself
 		return
 	sun.light_energy = lerpf(1.25, 0.04, v); env.ambient_light_energy = lerpf(0.75, 0.22, v)
 	(env.sky.sky_material as ProceduralSkyMaterial).sky_top_color = Color(0.32, 0.52, 0.82).lerp(Color(0.01, 0.015, 0.04), v)
@@ -242,7 +243,8 @@ func _drive(seg: Array) -> void:
 		var t_f0 := Time.get_ticks_usec()
 		st.update_focus(p, false, dir * sp)
 		var t_f1 := Time.get_ticks_usec()
-		if float(seg[4]) > 0.05 and Engine.get_process_frames() % 15 == 0: lights.update_lights(cam.global_position, float(seg[4]))
+		var lit: float = look.lights() if look else float(seg[4])      # (the look's time of day may differ from the drive's)
+		if lit > 0.05 and Engine.get_process_frames() % 15 == 0: lights.update_lights(cam.global_position, lit)
 		await get_tree().process_frame
 		var now := Time.get_ticks_usec(); var dt := (now - t_prev) / 1000000.0; t += dt; dts.append(dt * 1000.0)
 		# where the frame that just ended spent its time, mark to mark (ms): this script | the streamer's update_focus |

@@ -7,6 +7,7 @@ extends RefCounted
 ##   --views=name:x,z:yaw[:pitch];...   views of your own instead of the list (yaw 0 looks north (-Z), 90 east (+X))
 ##   --times=day | night                only one of the two
 ##   --hold=40                          frames to wait before a picture is taken
+##   --hours=6,7.5,12   the running day's look at these hours (look job 2.1): <view>_h0600.jpg ...
 ##   --savemap                          also save the look's small sky map (look job 5) beside each picture
 ##   --fullsize                         keep the window's size (e.g. 2460 x 1080 to judge the upscaler) instead of 1640 x 720
 ## With --upscale=1 the file names end in _sgsr, with --glow=0 (and the look) in _glow0.
@@ -19,7 +20,7 @@ const VIEWS := [
 const SIZE := Vector2i(1640, 720)
 
 static func run(rig: Node, folder: String, args: PackedStringArray) -> void:
-	var views: Array = VIEWS; var times: Array = [0.0, 1.0]; var hold := 40; var presets: Array = []; var full := "--fullsize" in args
+	var views: Array = VIEWS; var times: Array = [0.0, 1.0]; var hold := 40; var presets: Array = []; var hours: Array = []; var full := "--fullsize" in args
 	for a in args:
 		if a.begins_with("--views="):
 			views = []
@@ -30,14 +31,17 @@ static func run(rig: Node, folder: String, args: PackedStringArray) -> void:
 		if a == "--times=night": times = [1.0]
 		if a.begins_with("--hold="): hold = int(a.trim_prefix("--hold="))
 		if a.begins_with("--presets="): presets = Array(a.trim_prefix("--presets=").split(",", false))
+		if a.begins_with("--hours="): hours = Array(a.trim_prefix("--hours=").split_floats(","))
 	var lk := String(rig.opt.look)
 	if presets.is_empty() and not (lk in ["0", "1"]): presets = [lk]
-	if not presets.is_empty() and rig.look == null: rig._say("ERROR --presets needs the look (--look=1)"); return
+	if (not presets.is_empty() or not hours.is_empty()) and rig.look == null: rig._say("ERROR --presets needs the look (--look=1)"); return
 	var dir := ProjectSettings.globalize_path(folder) if folder.begins_with("res://") or folder.begins_with("user://") else folder
 	DirAccess.make_dir_recursive_absolute(dir)
 	var tag := ("after_bloom" if int(rig.opt.bloom) == 1 else "after") if lk != "0" else "before"
 	var conds: Array = []      # [file name part, preset or "", night]
-	if presets.is_empty():
+	if not hours.is_empty():      # the running day at these hours (--hours=6,7.5,...): <view>_h0600.jpg
+		for hh: float in hours: conds.append(["h%02d%02d" % [int(hh), int(round(fmod(hh, 1.0) * 60.0))], "@%f" % hh, 0.0])
+	elif presets.is_empty():
 		for n: float in times: conds.append(["%s_%s" % ["night" if n > 0.5 else "day", tag], "", n])
 	else:
 		for pr: String in presets: conds.append([pr + ("_bloom" if int(rig.opt.bloom) == 1 else ""), pr, 0.0])
@@ -60,8 +64,9 @@ static func run(rig: Node, folder: String, args: PackedStringArray) -> void:
 		var fwd := Vector3(sin(yaw) * cos(pitch), sin(pitch), -cos(yaw) * cos(pitch))
 		rig.cam.global_position = Vector3(p.x, gy + 1.6, p.z); rig.cam.look_at(rig.cam.global_position + fwd * 50.0)
 		for c: Array in conds:
-			if String(c[1]) != "": rig.look.set_preset(String(c[1]))
-			rig._night(float(c[2]))
+			if String(c[1]).begins_with("@"): rig.look.cycle = 0.0; rig.look.preset = ""; rig.look.set_hour(float(String(c[1]).substr(1))); rig.st.set_night(rig.look.lights())
+			elif String(c[1]) != "": rig.look.set_preset(String(c[1]))
+			if not String(c[1]).begins_with("@"): rig._night(float(c[2]))
 			var lit: float = rig.look.lights() if rig.look else float(c[2])
 			rig.lights.update_lights(rig.cam.global_position, lit)
 			for i in hold: await tree.process_frame
