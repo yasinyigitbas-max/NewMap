@@ -5,6 +5,15 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov (strip session, claude/grow-strip): NEW INDOOR PROPS (Yasin, relayed by the PC session: "there are new indoor
+  assets to replace old lower quality ones ... fetch them and replace all indoor props with them"; asked directly in
+  this session whether the 12 locked hand-made rooms may be unlocked and relocked for it: "Yes, unlock and relock").
+  Taken: coronado-source `assets` dd8d53a, only its 178 indoor files (models, page I atlas, manifests, previews,
+  tools, report); .import / .uid of this repo kept. Rebuilt with them: the 18 strip rooms (g_strip_*), the 150
+  generated rooms of the existing map (tools/city/rooms/room_gen.gd, unchanged), the 12 hand-made rooms (unlocked
+  --by=Yasin, rebuilt from rooms_civic_apt.gd / rooms_waterfront.gd unchanged, none needed re-dressing, relocked).
+  Lock test RESULT PASS. Indoor checker: 1 problem left in a generated room of the sample (g_m_nw__crown_plaza__2,
+  a grocery shelf grew and cannot be walked up to).
 - 18 Nov (cloud, branch `claude/grow-industrial`): INDUSTRIAL GROWTH, stage 1 + 2 done, NOTHING LOCKED, WAITING for
   Yasin's word on the variants. Read `review/grow_ind/README.md`. Three variants (A port, B fleet, C cold chain),
   each dressed twice = six 100 m blocks round the sample. They form the pilot area u -900..-500, v -1600..-1400

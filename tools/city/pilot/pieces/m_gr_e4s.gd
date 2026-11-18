@@ -43,7 +43,7 @@ func _run() -> void:
 	for k in 6: b.add("prop_bollard_iron", "worn", 142.2, 22.0 + k * 9.0, 0.0)  # nobody drives a sale car into the planting
 	b.add("prop_pylon_sign", "worn", 141.0, 15.9, 180.0)                      # BRIDGE MOTORS, facing 4th St and the bridge traffic
 	b.island(136.6, 45.3, 142.4, 56.7, 1, ["palm_queen_b"])                    # the gap in the front line: a planted island
-	for p: Vector2 in [Vector2(109.75, 45.0), Vector2(139.5, 49.0), Vector2(104.0, 78.5), Vector2(139.5, 79.0), Vector2(131.0, 46.0)]:
+	for p: Vector2 in [Vector2(139.5, 49.0), Vector2(104.0, 78.5), Vector2(139.5, 79.0), Vector2(131.0, 46.0)]:
 		b.add("prop_lot_light_pole", "worn", p.x, p.y, 0.0)
 	# ---------------------------------------------------------------- the service / detail garage at the back
 	var gar := b.bld("industrial/ind_repair", 112.0, 89.0, 180.0, "bridge_motors_service", 0.85, true, false)   # bays face the lot (north)
@@ -54,6 +54,20 @@ func _run() -> void:
 	b.stalls_z(82.0, 5, 136.5, 1.0)                                            # cars waiting for detailing
 	b.add("prop_sign_no_parking", "worn", 101.0, 77.0, 0.0)
 	b.roof(gar, ["prop_vent_turbine", "prop_ac_condenser", "prop_solar_panel_x3"])
+	# ---------------------------------------------------------------- polish pass (lots of props, fitting a used-car lot)
+	var tries := func(base: String, cond: String, x: float, z: float, yaw: float) -> void:
+		if b.free_at(x, z, b.half(base)): b.add(base, cond, x, z, yaw)
+	b.door_life()
+	b.pole_line(102.0, 99.3, 141.0, 99.3)
+	for m: Vector2 in [Vector2(103.5, 60.0), Vector2(116.0, 50.0), Vector2(133.5, 62.0)]:
+		b.add("prop_manhole_cover", "dirty", m.x, m.y, 0.0, false, 0.002)
+	tries.call("prop_vending_soda", "worn", 123.0, 46.0, 90.0)              # buyers wait for the paperwork with a soda
+	tries.call("prop_ice_chest", "worn", 123.0, 54.0, 90.0)
+	tries.call("prop_cone_28in", "dirty", 104.5, 76.0, 0.0); tries.call("prop_cone_28in", "dirty", 120.0, 76.2, 0.0)   # the detail bay's wet floor
+	tries.call("prop_water_barrier_white", "dirty", 101.5, 72.0, 0.0)      # keeps test drives off the bay apron
+	tries.call("prop_recycling_receptacle", "worn", 121.8, 81.6, 0.0)
+	tries.call("prop_channelizer_drum", "dirty", 120.6, 95.0, 0.0)
+	tries.call("prop_trash_cart_black", "worn", 102.0, 96.5, 0.0)
 	# ---------------------------------------------------------------- wear: polished aisles, water from the detail bay
 	b.building_wear()
 	b.stall_wear(0.25)                                                         # sale cars sit: little oil
