@@ -266,6 +266,13 @@ func fence(kind: String, ax: float, az: float, bx: float, bz: float, cond := "wo
 ## a dumpster enclosure (strip_lib.enclosure, on this ground): CMU on three sides, open toward yaw
 func enclosure(x: float, z: float, yaw: float, mess := true) -> void:
 	L.enclosure(props, p3(x, z), yaw)
+	# its two gate leaves, closed in line with the front and hinged on the side walls' ends; the gap between them is
+	# where the bins roll out (checker "fence": a wall end must meet something - two ends facing across a gap do)
+	var bq := Basis(Vector3.UP, deg_to_rad(yaw))
+	var gl := float(K.manifest("fence_gate_privacy").get("footprint_w", 1.105))
+	for side: float in [-1.0, 1.0]:
+		var gp: Vector3 = p3(x, z) + bq * Vector3(side * (3.15 - gl * 0.5), 0, 2.46)
+		I.add(props, "fence_gate_privacy", "worn", Vector3(gp.x, y(gp.x, gp.z), gp.z), yaw)
 	if mess: L.enclosure_mess(props, rr, p3(x, z), yaw)
 
 ## grime at a building's feet and oil / tyre marks at its rollups (ind_lib.bld_wear, on this ground)
@@ -372,7 +379,9 @@ func pole_line(ax: float, az: float, bx: float, bz: float, every := 34.0) -> voi
 	var yaw := rad_to_deg(atan2(bb.x - a.x, bb.y - a.y))
 	for i in n + 1:
 		var q := a.lerp(bb, float(i) / n)
-		if free_at(q.x, q.y, 1.0): add("prop_utility_pole_transformer" if i % 3 == 1 else "prop_utility_pole", "worn", q.x, q.y, yaw)
+		if free_at(q.x, q.y, 1.0):
+			paints.insert(0, rect(q.x - 0.8, q.y - 0.8, q.x + 0.8, q.y + 0.8, "gravel"))     # a pole stands in an unpaved pad, never in the asphalt (checker "pole")
+			add("prop_utility_pole_transformer" if i % 3 == 1 else "prop_utility_pole", "worn", q.x, q.y, yaw)
 
 ## red fire-lane kerb paint along a shop walk's lot edge (a, b), road side `side` (unit x / z)
 func fire_lane(ax: float, az: float, bx: float, bz: float, side: Vector2) -> void:

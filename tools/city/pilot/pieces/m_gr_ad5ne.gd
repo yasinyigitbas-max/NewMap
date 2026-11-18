@@ -83,11 +83,8 @@ func _run() -> void:
 	b.arrow_z(112.0, -60.0, -50.0)                                             # out of the back, south to the vacuums
 	b.paints.append(b.rect(108.0, -64.0, 115.0, -30.0, "asphalt"))
 	b.stalls_x(108.0, 6, -30.0, 1.0, 3.4)                                     # vacuum bays along a stucco screen wall
-	var wx := 107.0
-	while wx < 129.0:
-		b.add("fence_stucco_wall", "worn", wx + 1.0, -23.3, 0.0); wx += 2.03
-	b.paints.append(b.rect(107.0, -23.0, 129.0, -17.3, "grass"))                # the wall's street side is a planting bed
-	b.add("plant_bougainvillea_wall", "normal", 113.0, -22.6, 0.0); b.add("plant_bougainvillea_wall", "normal", 122.0, -22.6, 0.0)
+	b.paints.append(b.rect(107.0, -23.6, 129.0, -17.3, "grass"))                # a privet screen in a planting bed (spray and blower noise stay in)
+	for k in 11: b.add("hedge_privet_2m", "normal", 108.0 + k * 2.0, -22.4, 0.0)
 	for k in 6: b.add("prop_trash_receptacle", "worn", 108.0 + 3.4 * k + 1.7, -24.2, 0.0)   # one bin per vacuum bay
 	b.add("prop_vending_soda", "worn", 133.6, -37.5, 90.0); b.add("prop_ice_chest", "worn", 133.8, -35.4, 90.0)   # drinks + bagged ice by the office
 	b.add("prop_hose_reel_cart", "worn", 114.8, -42.0, 0.0)                   # the attendant's pre-soak hose
@@ -102,9 +99,6 @@ func _run() -> void:
 	b.enclosure(80.0, -47.6, 180.0)
 	# ---------------------------------------------------------------- landscape strip on 5th St and the ring, pylons, billboard
 	b.island(10.0, -17.3, 106.0, -14.6, 9, PALMS + ["tree_torrey_pine_b"])
-	var vx := 40.0
-	while vx < 104.0:                                                          # white rail along the strip (a newer lot)
-		b.add("fence_vinyl_canal_rail", "clean", vx + 1.0, -17.6, 0.0); vx += 2.015
 	b.island(142.9, -98.0, 145.5, -78.0, 2, PALMS); b.island(142.9, -34.0, 145.5, -14.6, 2, PALMS)
 	b.add("prop_pylon_sign", "worn", 44.0, -15.95, 0.0)                     # CAR CARE CENTER tenants, facing 5th St
 	b.add("prop_pylon_sign", "worn", 144.2, -30.3, 90.0)                     # the wash, facing the ring

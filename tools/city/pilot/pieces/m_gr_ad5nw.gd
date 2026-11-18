@@ -46,7 +46,7 @@ func _run() -> void:
 	var cu := b.bld("commercial/com_bank", -29.0, -31.0, 0.0, "community_credit_union", 0.7)
 	b.paints.append(b.rect(-36.5, -24.0, -21.5, -22.0, "concrete"))
 	b.stalls_z(-40.5, 5, -38.0, -1.0)                                         # its own short row on the west side
-	b.add("prop_trash_receptacle", "worn", -21.9, -22.6, 0.0); b.add("plant_potted_succulent", "normal", -35.8, -22.6)
+	b.add("prop_trash_receptacle", "worn", -21.9, -22.6, 0.0); b.add("plant_potted_succulent", "normal", -35.2, -22.7)
 	b.roof(cu, ["prop_ac_condenser", "prop_vent_plumbing"])
 	# ---------------------------------------------------------------- recycling booth + the grocer's loading yard (west side)
 	var bo := b.bld("commercial/com_kiosk", -80.0, -44.0, 90.0, "recycling_booth", 0.85)
@@ -59,19 +59,19 @@ func _run() -> void:
 	b.add("prop_dumpster_rolloff_20yd", "rusty", -84.0, -61.5, 0.0)          # cardboard
 	b.add("prop_k_rail", "worn", -77.0, -63.0, 90.0)
 	# ---------------------------------------------------------------- toward the houses: CMU wall + eucalyptus, stucco garden wall
-	b.fence("cmu", -99.6, -99.5, -99.6, -10.0, "worn", 5)
+	b.fence("cmu", -99.7, -100.0, -99.7, -11.4, "worn", 5)                   # from the garage yard fence to the garden wall corner
 	b.paints.append(b.rect(-99.3, -55.0, -95.0, -20.0, "grass"))            # the buffer strip beside the wall (trees stand in grass)
 	for k in 3: b.add(["tree_eucalyptus_a", "tree_eucalyptus_b"][k % 2], "normal", -97.2, -51.0 + k * 13.0, k * 47.0)
-	var x := -97.0
-	while x < -12.0:
-		if absf(x + 46.0) > 2.2: b.add("fence_stucco_wall", "worn", x + 1.0, -11.2, 0.0)   # a gap for the walk-in path from the houses
-		x += 2.03
+	b.fence("stucco", -99.4, -11.2, -48.6, -11.2)                              # the garden wall from the corner to the walk-in path,
+	b.fence("stucco", -43.4, -11.2, -36.2, -11.2)                              # on across the path (the two ends face each other)
+	b.fence("stucco", -36.2, -11.2, -36.2, -23.6)                              # and in to the credit union's corner
 	b.paints.append(b.rect(-95.0, -20.0, -12.0, -9.2, "grass"))
 	for hx: float in [-92.0, -82.0, -72.0, -62.0, -54.0, -38.0, -28.0, -18.0]: b.add("hedge_privet_2m", "normal", hx, -12.6, 0.0)
 	for t: Array in [["tree_magnolia_a", -86.0], ["tree_torrey_pine_b", -66.0], ["tree_magnolia_b", -34.0], ["tree_torrey_pine_a", -18.0]]:
 		b.add(String(t[0]), "normal", float(t[1]), -16.5, float(t[1]) * 7.0)
 	b.paints.append(b.rect(-48.0, -20.0, -44.0, -11.6, "concrete"))          # the path from 5th St into the lot
-	b.add("plant_bougainvillea_wall", "normal", -56.0, -10.5, 0.0); b.add("plant_bougainvillea_wall", "normal", -30.0, -10.5, 0.0)   # on the street side of the wall
+	b.add("plant_bougainvillea_wall", "normal", -66.0, -10.5, 0.0); b.add("plant_bougainvillea_wall", "normal", -84.0, -10.5, 0.0)   # on the street side of the wall
+	for hx2: float in [-42.0, -34.0, -26.0, -20.0, -14.0]: b.add("hedge_privet_2m", "normal", hx2, -10.4, 0.0)    # east of the path: a hedge, not a wall
 	b.island(-12.0, -74.0, -9.0, -52.0, 1, ["palm_queen_a"])               # planting on Adela between the two entrances
 	b.add("prop_pylon_sign", "worn", -10.5, -66.0, 90.0)                     # ADELA PLAZA tenants, facing Adela
 	# ---------------------------------------------------------------- polish pass (lots of props, a neighbourhood centre's life)
