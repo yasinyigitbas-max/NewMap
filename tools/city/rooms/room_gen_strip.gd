@@ -34,7 +34,7 @@ const KINDS := {
 	"wash_office": {"max_d": 8.0, "floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["cigarette_cabinet", "wall_shelf", "wall_shelf"], "board": false, "walls": ["waiting_bench", "vending_soda", "waiting_bench", "drinks_fridge", "card_spinner"], "centre": "none", "window": "watch", "back": "none", "frames": false, "posters": true, "tint": Color(0.78, 0.92, 0.96)},
 	# quick-lube waiting room: the service desk where you hand in the keys, filing behind it, coffee on a side counter,
 	# chairs facing the window onto the bays (you watch your car go up), a brochure rack of upsells
-	"lube": {"max_d": 8.5, "floor": "Concrete047A", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["filing_cabinet", "pegboard_wall", "filing_cabinet"], "board": false, "walls": ["waiting_bench", "drinks_fridge", "waiting_bench", "brochure_rack"], "centre": "none", "window": "watch", "back": "stock", "frames": false, "posters": true, "tint": Color(0.86, 0.88, 0.92)},
+	"lube": {"max_d": 8.5, "floor": "Concrete047A", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["filing_cabinet", "pegboard_wall", "filing_cabinet"], "board": false, "walls": ["waiting_bench", "drinks_fridge", "waiting_bench", "wall_shelf", "pegboard_wall", "brochure_rack"], "centre": "none", "cap": {"wall_shelf": 1, "pegboard_wall": 1}, "window": "watch", "back": "stock", "frames": false, "posters": true, "tint": Color(0.86, 0.88, 0.92)},
 	# auto parts: the parts counter across the back (the parts are behind it, the clerk looks them up), aisles of oil,
 	# wipers and bulbs in the middle, batteries and tools on pegboards on the walls, oil specials in the window
 	"auto_parts": {"floor": "Tiles141", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["wall_shelf", "wall_shelf", "wall_shelf", "workbench"], "board": false, "walls": ["pegboard_wall", "wall_shelf", "pegboard_wall"], "centre": "rows", "window": "display", "back": "stock", "frames": false, "posters": true, "tint": Color(0.96, 0.88, 0.86)},
@@ -252,6 +252,20 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		for o: Array in occ:
 			if float(o[4]) > 1.7 and mx > float(o[0]) - 0.85 and mx < float(o[2]) + 0.85 and float(o[1]) < ZBp + 0.6: free_board = false
 		if free_board: rr.prop("menu_board", mx, ZBp + 0.06, 0.0, 1.75)
+	# ---- the lube waiting room's own corner (Yasin 18 Nov: "do that"): what a customer finds while the car is done -
+	# free coffee on a side counter with a bin, the rack of oil, wipers and air filters next to the service desk (the
+	# upsell), the specials table in front of it, the promo board where people look up from their phones
+	if kind == "lube":
+		var far_x := X1 if dx < (X0 + X1) * 0.5 else X0            # the side wall away from the door
+		var inn4 := -1.0 if far_x == X1 else 1.0; var yw4 := -90.0 if far_x == X1 else 90.0
+		var zcf := (zc + cd * 0.5 + ZF) * 0.5
+		if _put("shop_counter", far_x + inn4 * 0.37, zcf, yw4):
+			rr.prop("espresso_machine", far_x + inn4 * 0.4, zcf - 0.45, yw4 + 180.0, 0.964)       # staff side +Z: turned to face the room
+			_put("indoor_bin", far_x + inn4 * 0.25, zcf + 1.25, yw4)
+			rr.prop("poster_case", far_x + inn4 * 0.05, zcf, yw4, 1.55)                          # the promo board over the coffee
+		var near_x := X0 if far_x == X1 else X1; var inn5 := -inn4
+		_put("display_table", cx + (1.6 if far_x == X1 else -1.6), zc + cd * 0.5 + 2.2, 0.0)   # this week's oil specials, beside the queue
+		_put("potted_plant", near_x + inn5 * 0.3, ZF - 1.1, -yw4)
 	# ---- the side walls: the shop's goods / seats along them (low things only under the side windows)
 	var sidewin := _side_windows(c)
 	var used := {}         # per ROOM (not per wall): one soda machine, at most two fridges in the whole room
@@ -270,7 +284,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 				continue
 			var it := String(items[k % items.size()])
 			# nobody has four soda machines: appliances and racks appear once or twice a room, then the wall stays bare
-			if int(used.get(it, 0)) >= int(CAP.get(it, 99)):
+			if int(used.get(it, 0)) >= int((K.get("cap", {}) as Dictionary).get(it, CAP.get(it, 99))):
 				k += 1
 				if k > items.size() * 3: break
 				continue
@@ -314,8 +328,8 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 			for xx: float in _steps(X0 + 1.0, X1 - 1.0, 2.4): _put("waiting_bench", xx, wz - 0.32, 180.0)
 		"produce":
 			for xx: float in _steps(X0 + 1.0, X1 - 1.0, 2.3): _put("produce_stand", xx, wz - 0.4, 0.0)
-		"watch":      # benches at the window facing OUT: the customers watch their car
-			for xx: float in _steps(X0 + 1.0, X1 - 1.0, 2.2): _put("waiting_bench", xx, wz - 0.95, 0.0)     # yaw 0 = facing +Z, the window
+		"watch":      # benches under the window, their backs to it, facing the room
+			for xx: float in _steps(X0 + 1.0, X1 - 1.0, 2.2): _put("waiting_bench", xx, wz - 0.75, 180.0)   # back to the window, facing the room (Yasin 18 Nov: facing out "looks awkward")
 		"booths":     # diner booths along the window wall, the table's long side out from the glass
 			for xx: float in _steps(X0 + 1.0, X1 - 1.0, 2.4):
 				_group([["restaurant_table", xx, wz - 0.75, 90.0], ["booth_bench", xx - 0.73, wz - 0.75, 90.0], ["booth_bench", xx + 0.73, wz - 0.75, -90.0]])
