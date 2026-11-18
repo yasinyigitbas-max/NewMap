@@ -70,6 +70,24 @@ const KINDS := {
 	"tax": {"max_d": 10.0, "floor": "Carpet012", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet"], "board": false, "walls": ["filing_cabinet", "brochure_rack"], "centre": "desks", "window": "waiting", "back": "office", "frames": true, "tint": Color(0.93, 0.95, 0.9)},
 }
 const WARM := ["diner", "taqueria"]
+const DRESS := {"drive_thru": ["indoor_bin", "potted_plant", "drinks_fridge", "indoor_bin", "brochure_rack"],
+	 "taqueria": ["drinks_fridge", "potted_plant", "indoor_bin"],
+	 "diner": ["potted_plant", "indoor_bin", "drinks_fridge"],
+	 "wash_office": ["potted_plant", "indoor_bin", "brochure_rack", "waiting_bench"],
+	 "lube": ["potted_plant", "indoor_bin", "wall_shelf"],
+	 "auto_parts": ["display_table", "indoor_bin", "potted_plant", "card_spinner"],
+	 "phone": ["waiting_bench", "card_spinner", "potted_plant", "indoor_bin", "brochure_rack"],
+	 "tax": ["potted_plant", "indoor_bin", "waiting_bench"],
+	 "tyre": ["display_table", "potted_plant", "indoor_bin", "brochure_rack"],
+	 "car_sales": ["potted_plant", "indoor_bin", "waiting_bench"],
+	 "discount": ["chest_freezer", "produce_stand", "indoor_bin", "potted_plant", "card_spinner"],
+	 "laundromat": ["dryer", "dryer", "vending_snack", "waiting_bench", "indoor_bin", "potted_plant"],
+	 "nails": ["potted_plant", "indoor_bin", "waiting_bench"],
+	 "dentist": ["potted_plant", "display_table", "indoor_bin", "brochure_rack"],
+	 "pizza": ["indoor_bin", "potted_plant", "drinks_fridge"],
+	 "dry_cleaner": ["waiting_bench", "garment_rail", "garment_rail", "potted_plant", "indoor_bin"],
+	 "bank": ["potted_plant", "potted_plant", "indoor_bin", "waiting_bench"],
+	 "recycling": ["recycling_receptacle", "recycling_receptacle", "indoor_bin"]}
 const CAP := {"vending_soda": 1, "drinks_fridge": 1, "waiting_bench": 3, "card_spinner": 1, "brochure_rack": 1, "glass_display_case": 3, "filing_cabinet": 3}
 const WALL_TINTS := [Color(1.0, 0.95, 0.86), Color(0.94, 0.96, 0.98), Color(0.98, 0.92, 0.84), Color(0.9, 0.95, 0.92), Color(1.0, 0.97, 0.93), Color(0.93, 0.9, 0.86)]
 const SHORT := {"cafe": "COFFEE", "bakery": "BAKERY", "bar": "BAR", "restaurant": "KITCHEN", "fast_food": "FOOD", "ice_cream": "ICE CREAM",
@@ -472,6 +490,19 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		for zz2: float in _steps(zc + cd * 0.5 + 1.4, ZF - 2.0, 0.6):
 			var xx2 := X0 + exs.x * 0.5 + 0.05 if dx > (X0 + X1) * 0.5 else X1 - exs.x * 0.5 - 0.05
 			if _put(ex, xx2, zz2, 90.0 if xx2 < (X0 + X1) * 0.5 else -90.0): break
+	# ---- polish pass (Yasin 18 Nov: "lots of props ... think like an interior designer, customer"): what each shop still
+	# lacks goes on the free wall space - against a side wall facing the room, from the back toward the window, never in
+	# the walk from the door, the queue or a doorway (the same _put rules as everything else)
+	for dz: String in DRESS.get(kind, []):
+		var placed_d := false
+		for side4: Array in [[X0, 90.0], [X1, -90.0]]:
+			if placed_d: break
+			var wx4 := float(side4[0]); var inn4b := 1.0 if float(side4[1]) > 0.0 else -1.0
+			var f4 := _fp(dz, float(side4[1]))
+			var z4 := ZBp + f4.y * 0.5 + 0.6
+			while z4 < ZF - 0.8 and not placed_d:
+				if _put(dz, wx4 + inn4b * (f4.x * 0.5 + 0.03), z4, float(side4[1])): placed_d = true
+				z4 += 0.35
 	# ---- back of house
 	if ZP > ZB + 0.01:
 		var kx := X0 + 0.2
