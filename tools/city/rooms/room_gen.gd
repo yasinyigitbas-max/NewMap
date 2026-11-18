@@ -180,7 +180,14 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	if ZP > ZB + 0.01: rr.flat("kfloor", X0, ZB, X1, ZP, F)
 	rr.flat("ceil", X0, ZB, X1, ZF, H, false)
 	var outer := {"front": true, "back": ZB <= zb_bld + 0.01, "left": X0 <= float(fl.box_min[0]) + 0.01, "right": X1 >= float(fl.box_max[0]) - 0.01}
-	rr.walls4(c, X0, X1, ZB, ZF, F, H, outer)
+	# the walls with every opening of the building inside the room (room_lib.walls4, with a bounds 0.15 m wider at the
+	# building's outer walls: some kit openings run a few cm past the measured box at the corners and were left shut)
+	var bnd := [X0 - (0.15 if bool(outer.left) else 0.0), ZB - (0.15 if bool(outer.back) else 0.0), X1 + (0.15 if bool(outer.right) else 0.0), ZF + 0.4]
+	var holes: Dictionary = rr.openings(c, {"front": ZF, "back": ZB, "left": X0, "right": X1}, bnd, outer)
+	rr.wall("wall", "z", ZF, X0, X1, F, H, -1.0, holes.front)
+	rr.wall("wall", "z", ZB, X0, X1, F, H, 1.0, holes.back)
+	rr.wall("wall", "x", X0, ZB, ZF, F, H, 1.0, holes.left)
+	rr.wall("wall", "x", X1, ZB, ZF, F, H, -1.0, holes.right)
 	var dx := float(e.door_along); var dw := float(e.door_w)
 	var staff_x := X1 - 0.75 if dx < (X0 + X1) * 0.5 else X0 + 0.75      # the staff end: away from the door side
 	if ZP > ZB + 0.01:
@@ -240,27 +247,34 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		var wx := float(side[0]); var yaw := float(side[1]); var inn := 1.0 if yaw > 0.0 else -1.0
 		var items: Array = K.walls
 		var z := ZF - 0.45; var k := 0
-		var tries := 0
+		var tries := 0; var run := 0; var stations := 0
 		while z > ZBp + 0.4 and tries < 60:
 			tries += 1
+			# no endless runs of one thing: after three a break (a plant in the gap), and a barber has three chairs a side
+			if run >= 3:
+				run = 0
+				if _put("potted_plant", wx + inn * 0.3, z - 0.25, yaw): z -= 0.6
+				else: z -= 0.3
+				continue
 			var it := String(items[k % items.size()])
+			if it == "station" and stations >= 3: break
 			if it == "frames_only" or it == "poster_wall": break
 			if it == "booth":
 				# as the waterfront cafe's booths: the table's long side out from the wall, a bench on each side of it
 				var bxw := wx + inn * 0.72; var zt := z - 1.05
 				if _group([["restaurant_table", bxw, zt, 0.0], ["booth_bench", bxw, zt + 0.73, 180.0], ["booth_bench", bxw, zt - 0.73, 0.0]]):
-					z -= 2.25; k += 1; continue
+					z -= 2.25; k += 1; run += 1; continue
 				z -= 0.3; continue
 			if it == "station":
 				var sx := wx + inn * 0.24
 				if _put("mirror_station", sx, z - 0.6, yaw) and _put("barber_chair", wx + inn * 1.05, z - 0.6, yaw + 180.0):
-					z -= 1.45; continue
+					z -= 1.45; stations += 1; run += 1; continue
 				z -= 0.3; continue
 			var f := _fp(it, yaw)
 			var ht := float(tall.get("prop_" + it, 1.0))
 			if _under_window(sidewin, String(side[2]), z - f.y, z, ht):
 				z -= 0.3; continue
-			if _put(it, wx + inn * (f.x * 0.5 + 0.02), z - f.y * 0.5, yaw): z -= f.y + 0.06; k += 1
+			if _put(it, wx + inn * (f.x * 0.5 + 0.02), z - f.y * 0.5, yaw): z -= f.y + 0.06; k += 1; run += 1
 			else: z -= 0.3
 	# how far the side walls' goods reach into the room: the middle keeps a 1 m aisle clear of them
 	var sl := X0; var sr := X1
@@ -272,7 +286,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	var wz := ZF - 0.4
 	match String(K.window):
 		"table2":
-			for xx: float in _steps(X0 + 1.0, X1 - 1.0, 2.0): _group(_table2(xx, wz - 0.45))
+			for xx: float in _steps(X0 + 1.0, X1 - 1.0, 2.7): _group(_table2(xx, wz - 0.45))
 		"display":
 			for xx: float in _steps(X0 + 0.9, X1 - 0.9, 2.2): _put("display_table", xx, wz - 0.45, 0.0)
 		"mannequins":
@@ -286,7 +300,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		"brochures":
 			for xx: float in _steps(X0 + 0.6, X1 - 0.6, 2.0): _put("brochure_rack", xx, wz - 0.3, 180.0)
 	# ---- the middle of the shop
-	var mz0 := zc + cd * 0.5 + 1.3; var mz1 := ZF - 1.6
+	var mz0 := zc + cd * 0.5 + 1.3; var mz1 := ZF - (1.6 if String(K.window) == "none" else 2.4)      # a walkway between the middle and the window display
 	match String(K.centre):
 		"table2":
 			for zz: float in _steps(mz0 + 0.5, mz1 - 0.5, 1.8):

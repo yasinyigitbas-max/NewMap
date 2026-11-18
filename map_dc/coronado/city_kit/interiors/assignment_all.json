@@ -325,7 +325,7 @@
    "door_w": 1.6,
    "bay": [
     -8.7,
-    -1.1
+    -2.46
    ],
    "kind": "restaurant",
    "name": "Dot's Trattoria",
@@ -357,8 +357,8 @@
    "door_along": 1.9,
    "door_w": 1.6,
    "bay": [
-    -1.1,
-    4.9
+    -2.46,
+    3.54
    ],
    "kind": "fast_food",
    "name": "Ferry Burgers",
@@ -390,7 +390,7 @@
    "door_along": 7.9,
    "door_w": 1.6,
    "bay": [
-    4.9,
+    3.54,
     8.7
    ],
    "kind": "cleaners",
@@ -543,7 +543,7 @@
    "door_w": 1.6,
    "bay": [
     -8.7,
-    -1.1
+    -2.46
    ],
    "kind": "store",
    "name": "Tern Hardware",
@@ -575,8 +575,8 @@
    "door_along": 1.9,
    "door_w": 1.6,
    "bay": [
-    -1.1,
-    4.9
+    -2.46,
+    3.54
    ],
    "kind": "bar",
    "name": "Island Bar",
@@ -608,7 +608,7 @@
    "door_along": 7.9,
    "door_w": 1.6,
    "bay": [
-    4.9,
+    3.54,
     8.7
    ],
    "kind": "restaurant",
@@ -753,7 +753,7 @@
    "door_w": 1.6,
    "bay": [
     -8.7,
-    -1.1
+    -2.46
    ],
    "kind": "keys",
    "name": "Theo's Keys & Repairs",
@@ -866,8 +866,8 @@
    "door_along": 1.9,
    "door_w": 1.6,
    "bay": [
-    -1.1,
-    4.9
+    -2.46,
+    3.54
    ],
    "kind": "store",
    "name": "Gus' Supply",
@@ -932,7 +932,7 @@
    "door_along": 7.9,
    "door_w": 1.6,
    "bay": [
-    4.9,
+    3.54,
     8.7
    ],
    "kind": "bar",
@@ -1366,7 +1366,7 @@
    "door_w": 2.4,
    "bay": [
     -39.2,
-    -26.855
+    -27.12
    ],
    "kind": "pharmacy",
    "name": "Dot's Drugstore",
@@ -1398,7 +1398,7 @@
    "door_along": -20.21,
    "door_w": 1.6,
    "bay": [
-    -26.855,
+    -27.12,
     -19.13
    ],
    "kind": "salon",
@@ -1688,7 +1688,7 @@
    "door_w": 1.6,
    "bay": [
     -5.7,
-    -1.8
+    -3.06
    ],
    "kind": "fast_food",
    "name": "McDowell's",
@@ -1696,13 +1696,7 @@
    "why": "(sample) the drive-thru burger place also lets you walk in",
    "source": "sample",
    "built": "",
-   "signs": [
-    {
-     "facade": "front",
-     "along": -3.0,
-     "w": 4.0
-    }
-   ]
+   "signs": []
   },
   {
    "id": "m_ne__burger_barn__1",
@@ -1720,7 +1714,7 @@
    "door_along": 1.2,
    "door_w": 1.6,
    "bay": [
-    -1.8,
+    -3.06,
     5.7
    ],
    "kind": "salon",
@@ -1730,6 +1724,11 @@
    "source": "new",
    "built": "",
    "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 4.0
+    },
     {
      "facade": "front",
      "along": 3.0,
@@ -1885,7 +1884,7 @@
    "door_w": 1.6,
    "bay": [
     -5.7,
-    1.6
+    0.14
    ],
    "kind": "pharmacy",
    "name": "Pelican Pharmacy",
@@ -1917,7 +1916,7 @@
    "door_along": 4.6,
    "door_w": 1.6,
    "bay": [
-    1.6,
+    0.14,
     5.7
    ],
    "kind": "cafe",
@@ -1988,8 +1987,8 @@
    "door_along": -3.4,
    "door_w": 2.4,
    "bay": [
-    -14.95,
-    0.0
+    -8.94,
+    1.66
    ],
    "kind": "grocery",
    "name": "Bonny Bay Market",
@@ -2579,7 +2578,7 @@
    "door_w": 1.6,
    "bay": [
     -8.7,
-    -1.1
+    -2.46
    ],
    "kind": "bar",
    "name": "The Saltwater Room",
@@ -2611,8 +2610,8 @@
    "door_along": 1.9,
    "door_w": 1.6,
    "bay": [
-    -1.1,
-    4.9
+    -2.46,
+    3.54
    ],
    "kind": "salon",
    "name": "Island Barber Shop",
@@ -2644,7 +2643,7 @@
    "door_along": 7.9,
    "door_w": 1.6,
    "bay": [
-    4.9,
+    3.54,
     8.7
    ],
    "kind": "fast_food",
@@ -2947,7 +2946,7 @@
    "door_w": 1.6,
    "bay": [
     -8.7,
-    -1.1
+    -2.46
    ],
    "kind": "store",
    "name": "Ocean Home & Garden",
@@ -3012,8 +3011,8 @@
    "door_along": 1.9,
    "door_w": 1.6,
    "bay": [
-    -1.1,
-    4.9
+    -2.46,
+    3.54
    ],
    "kind": "cleaners",
    "name": "Abe's Cleaners",
@@ -3045,7 +3044,7 @@
    "door_along": 7.9,
    "door_w": 1.6,
    "bay": [
-    4.9,
+    3.54,
     8.7
    ],
    "kind": "salon",
@@ -3220,7 +3219,7 @@
    "door_along": 7.9,
    "door_w": 1.6,
    "bay": [
-    4.9,
+    3.54,
     8.7
    ],
    "kind": "gallery",
@@ -3253,8 +3252,8 @@
    "door_along": 1.9,
    "door_w": 1.6,
    "bay": [
-    -1.1,
-    4.9
+    -2.46,
+    3.54
    ],
    "kind": "books",
    "name": "Jetty Pages",
@@ -3347,7 +3346,7 @@
    "door_w": 1.6,
    "bay": [
     -8.7,
-    -1.1
+    -2.46
    ],
    "kind": "clothes",
    "name": "Paris & Me Shop",
@@ -3791,7 +3790,7 @@
    "door_w": 1.6,
    "bay": [
     -5.7,
-    1.6
+    0.14
    ],
    "kind": "salon",
    "name": "Lighthouse Barbers",
@@ -3823,7 +3822,7 @@
    "door_along": 4.6,
    "door_w": 1.6,
    "bay": [
-    1.6,
+    0.14,
     5.7
    ],
    "kind": "cleaners",
@@ -3938,7 +3937,7 @@
    "door_w": 1.6,
    "bay": [
     -5.7,
-    -0.9
+    -0.14
    ],
    "kind": "venue",
    "name": "Lowrey Theater",
@@ -3970,7 +3969,7 @@
    "door_along": 1.2,
    "door_w": 1.6,
    "bay": [
-    -0.9,
+    -0.14,
     5.7
    ],
    "kind": "fast_food",
@@ -4338,7 +4337,7 @@
    "door_w": 1.6,
    "bay": [
     -5.7,
-    1.6
+    0.14
    ],
    "kind": "gallery",
    "name": "Cove Gallery",
@@ -4451,7 +4450,7 @@
    "door_along": 4.6,
    "door_w": 1.6,
    "bay": [
-    1.6,
+    0.14,
     5.7
    ],
    "kind": "books",
@@ -4556,7 +4555,7 @@
    "door_w": 1.6,
    "bay": [
     -8.7,
-    -1.1
+    -2.46
    ],
    "kind": "ice_cream",
    "name": "Moo Hour Creamery",
@@ -4636,8 +4635,8 @@
    "door_along": 1.9,
    "door_w": 1.6,
    "bay": [
-    -1.1,
-    4.9
+    -2.46,
+    3.54
    ],
    "kind": "gallery",
    "name": "Bill's Art House",
@@ -4669,7 +4668,7 @@
    "door_along": 7.9,
    "door_w": 1.6,
    "bay": [
-    4.9,
+    3.54,
     8.7
    ],
    "kind": "books",
@@ -4702,7 +4701,7 @@
    "door_along": 7.9,
    "door_w": 1.6,
    "bay": [
-    4.9,
+    3.54,
     8.7
    ],
    "kind": "pharmacy",
@@ -4735,8 +4734,8 @@
    "door_along": 1.9,
    "door_w": 1.6,
    "bay": [
-    -1.1,
-    4.9
+    -2.46,
+    3.54
    ],
    "kind": "clothes",
    "name": "Mariner Outfitters",
@@ -4802,7 +4801,7 @@
    "door_w": 1.6,
    "bay": [
     -8.7,
-    -1.1
+    -2.46
    ],
    "kind": "cafe",
    "name": "Pelican Cafe",
@@ -5268,7 +5267,7 @@
    "door_w": 1.6,
    "bay": [
     -4.0,
-    1.08
+    3.775
    ],
    "kind": "shoes",
    "name": "Orange Soles",
@@ -5300,7 +5299,7 @@
    "door_along": 5.08,
    "door_w": 1.6,
    "bay": [
-    1.08,
+    3.775,
     11.7
    ],
    "kind": "gallery",

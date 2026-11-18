@@ -126,10 +126,26 @@ def bays(contract):
     fl = contract["floors"][0]
     x0, x1 = float(fl["box_min"][0]), float(fl["box_max"][0])
     doors = sorted([e for e in contract.get("entrances", []) if e["kind"] in ("shop", "civic") and e.get("floor", 0) == 0], key=lambda e: e["along"])
+    # a split between two shops never runs through a window or door: it moves into the wall between openings, and the
+    # opening goes to the shop whose door is nearer
+    ops = [o for o in contract.get("openings", []) if int(o["floor"]) == 0 and o["facade"] == "front"]
+    cuts = []
+    for i in range(len(doors) - 1):
+        m = (doors[i]["along"] + doors[i + 1]["along"]) * 0.5
+        for _ in range(6):
+            hit = [o for o in ops if o["along"] - o["w"] * 0.5 < m < o["along"] + o["w"] * 0.5]
+            if not hit:
+                break
+            o = hit[0]
+            if abs(o["along"] - doors[i]["along"]) <= abs(o["along"] - doors[i + 1]["along"]):
+                m = o["along"] + o["w"] * 0.5 + 0.06
+            else:
+                m = o["along"] - o["w"] * 0.5 - 0.06
+        cuts.append(m)
     out = []
     for i, e in enumerate(doors):
-        a = x0 if i == 0 else (doors[i - 1]["along"] + e["along"]) * 0.5
-        b = x1 if i == len(doors) - 1 else (e["along"] + doors[i + 1]["along"]) * 0.5
+        a = x0 if i == 0 else cuts[i - 1]
+        b = x1 if i == len(doors) - 1 else cuts[i]
         out.append((i, e, a, b))
     return out
 
