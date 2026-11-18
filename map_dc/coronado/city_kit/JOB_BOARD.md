@@ -5,6 +5,10 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov ~14:00: HANDOVER TO A SESSION ON YASIN'S PC (Yasin: "i did both but nothing happens, can you handover the work
+  to a local session on my pc?"). Read `docs/HANDOVER_PHONE_TEST.md`: the job is one clean run of
+  `tools/city/rig/phone_rig.sh all run1` on the Redmi (the script has never run on Windows: debug it step by step),
+  the result pushed to `review/phone/run1.txt`, and a plain report to Yasin.
 - 18 Nov ~13:30: STREAMING (Yasin: "go for it"; "try not to copy anything at all" from the old game; "i hope we can go
   for speeds like 280km"; no fast travel; "triangles are fine ... keep draw calls as low as possible"). Streamer
   rewritten (`tools/city/bake/city_stream.gd`, read docs/RUNTIME_BAKE.md "The streamer"), whole city baked locally (140
