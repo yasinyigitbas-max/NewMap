@@ -42,8 +42,9 @@ cut into differently lit blocks and a whole tower looked like one orange chequer
   all 120 kit buildings, 4-6 % of window triangles are still cut, against about 40 % for the old bays. Wide glass bands
   (the towers) are cut into 3 m bays, which reads as offices.
 - each window: on or off (a third stay dark, the rest switch on one by one at dusk with `ck_night`, as before),
-  brightness 0.35-1.25, and a light colour: mostly warm bulbs (2700-3000 K), some neutral white (4000 K), one in ten a
-  cold tube or a TV. Two neighbouring windows on a floor share a colour (one home or office).
+  brightness 0.3-0.95 of the old maximum (kept under 1 so big shopfronts do not burn white), and a light colour: mostly
+  warm bulbs (2700-3000 K), some neutral white (3500 K), one in twelve a
+  dimmer, bluish cold tube or a TV. Two neighbouring windows on a floor share a colour (one home or office).
 - it uses model space, so near and mid tiers of a building show the same pattern (no change when the tier switches),
   and the per-building `lit_seed` makes copies of a model differ.
 - `ck_night` works as before; by day nothing is computed.

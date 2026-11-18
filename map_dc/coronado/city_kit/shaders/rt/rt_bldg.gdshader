@@ -112,15 +112,15 @@ void fragment() {
 	if (has_emission && ck_night > 0.001) {
 		if (ck_look_windows > 0.5) {
 			// every window its own lamp: a third stay dark, the rest come on one by one at dusk. One home or office (two
-			// windows of a floor) has one kind of light: mostly warm bulbs (2700-3000 K), some neutral (4000 K), one in
-			// ten a cold tube or a television; each window a little brighter or dimmer than its neighbour
+			// windows of a floor) has one kind of light: mostly warm bulbs (2700-3000 K), some neutral (3500 K), one in
+			// twelve a cold tube or a television; each window a little brighter or dimmer than its neighbour
 			vec2 hw = win_hash(floor(v_win) + lit_seed);
 			vec2 hr = win_hash(floor(v_win * vec2(0.5, 1.0)) + lit_seed * 1.7 + 0.31);
 			float on = step(0.34, hw.x) * smoothstep(hw.x * 0.6, hw.x * 0.6 + 0.25, ck_night);
-			float bright = mix(0.45, 1.15, hr.x) * mix(0.75, 1.1, hw.y);
+			float bright = mix(0.35, 0.85, hr.x) * mix(0.8, 1.1, hw.y);      // under 1: big shopfronts must not burn white
 			vec3 lamp = mix(vec3(1.0, 0.56, 0.24), vec3(1.0, 0.7, 0.42), smoothstep(0.0, 0.55, hr.y));      // tungsten .. warm LED
-			lamp = mix(lamp, vec3(1.0, 0.84, 0.66), step(0.72, hr.y));                                         // neutral
-			lamp = mix(lamp, vec3(0.7, 0.84, 1.0), step(0.9, hr.y));                                           // tube / TV
+			lamp = mix(lamp, vec3(1.0, 0.8, 0.58), step(0.72, hr.y));                                          // neutral
+			lamp = mix(lamp, vec3(0.5, 0.6, 0.78), step(0.92, hr.y));                                          // tube / TV: bluish, dimmer
 			emi += texture(emission_tex, UV).r * lamp * (emission_energy * night_energy * on * bright);
 		} else {
 			// the look before: 3 m x 3 m bays of each wall, one colour
