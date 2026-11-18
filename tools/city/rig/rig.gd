@@ -6,12 +6,12 @@ extends Node3D
 ## Results: "RIG ..." lines in the log (adb logcat -s godot) and user://rig/summary_<n>.txt. tools/city/rig/phone_rig.sh
 ## builds, installs, runs and collects.
 ## Options: user args on the PC (after --), or the file user://rig_args.txt on the phone (the script writes it):
-##   --plan=default|quick|speed|zones   which list of drives (zones: teleports between the populated zones)      --scale=0.667  3D render scale; default: 720 lines high on any screen (Yasin 18 Nov: "default resolution 720p")
+##   --plan=default|quick|speed|zones|stream   which list of drives (zones: teleports between the populated zones; stream: a loop through them at 108, 210, 280 km/h)      --scale=0.667  3D render scale; default: 720 lines high on any screen (Yasin 18 Nov: "default resolution 720p")
 ##   --drive=NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT   a drive of your own, as often as you like, instead of a plan: no
 ##             rebuild needed for a new route. ROUTE is a route name or points x,z:x,z:... (NIGHT 0 or 1), e.g.
 ##             --drive=gritty/-740,-1000:-600,-1000:-600,-860/60/25/0
 ##   --quit    leave when the plan is done (default with a plan from the args file; by hand it loops)
-##   --lead=2  --maxcells=30  --loading=2  --bodies=2      streamer settings to compare
+##   --lead=2  --maxcells=30  --loading=2  --bodies=6  --coltris=1200     streamer settings to compare
 ##   --lights=20   real lamp lights at night (the engine's light grid; 8 on a stock engine)
 ##   --nowarm      skip the warm-up (to see what it saves)
 ##   --look=1|0    1 (default): the look pack's sky, distance haze, light colours and colour treatment
@@ -21,6 +21,10 @@ extends Node3D
 ##             pixel; the cloud preview needs it: its software GPU draws the trees black with sky reflections on)
 ##   --shots=FOLDER   no drive: save pictures from set viewpoints, by day and at night, and leave
 ##             (tools/city/look/look_shots.gd; run with --look=1 and with --look=0 for before / after pairs)
+##   --loader=0|1|2   0 the streamer's own loader threads (default); 1 / 2 the engine's pool without / with sub-threads
+##   --probe       time the physics and render servers' digestion each frame (shown in the slow lines)
+##   --nocol       never attach the cells' collision; --hide  add the cells hidden: the two switches that tell what a
+##                 slow frame is made of (attaching collision, or the first drawing of a new cell)
 const Stream := preload("res://tools/city/bake/city_stream.gd")
 const Lights := preload("res://tools/city/bake/city_lights.gd")
 const Look := preload("res://tools/city/look/look.gd")
@@ -40,7 +44,10 @@ const ROUTES := {"zigzag": "-900,-1400;500,-1400;500,-1000;-900,-1000;-900,-600;
 	"z_strip": "360,-1200;500,-1200;500,-1060;500,-1200;640,-1200;500,-1200;500,-1340;500,-1200;360,-1200",
 	"z_civic": "-340,-600;-200,-600;-200,-740;-200,-600;-60,-600;-200,-600;-340,-600",
 	"z_stadium": "-400,-560;-400,-200;-200,-200;-400,-200;-400,-560",
-	"seventh_pop": "-400,-600;500,-600;-400,-600"}
+	"seventh_pop": "-400,-600;500,-600;-400,-600",
+	# a 3 km loop on streets through civic, centre, apartments (7th St) and back past the gritty edge (5th St): cells
+	# arrive and leave all the way round, in populated ground
+	"pop_loop": "-600,-600;500,-600;500,-1000;-600,-1000;-600,-600"}
 ## [name, route, speed m/s, seconds, night 0..1]
 const PLANS := {
 	"default": [["town_50kmh", "zigzag", 14.0, 60.0, 0.0], ["ring_108kmh", "ring", 30.0, 45.0, 0.0], ["cross_210kmh", "zigzag", 58.0, 35.0, 0.0],
@@ -49,6 +56,7 @@ const PLANS := {
 	# far jumps on purpose: every teleport throws the loaded cells away and needs a whole new neighbourhood
 	"zones": [["gritty_60kmh", "z_gritty", 16.7, 25.0, 0.0], ["centre_60kmh", "z_centre", 16.7, 25.0, 0.0], ["waterfront_60kmh", "z_waterfront", 16.7, 25.0, 0.0], ["industrial_60kmh", "z_industrial", 16.7, 25.0, 0.0], ["apartments_60kmh", "z_apartments", 16.7, 25.0, 0.0], ["pilot_60kmh", "z_pilot", 16.7, 25.0, 0.0], ["strip_60kmh", "z_strip", 16.7, 25.0, 0.0], ["civic_60kmh", "z_civic", 16.7, 25.0, 0.0], ["stadium_60kmh", "z_stadium", 16.7, 25.0, 0.0],
 		["seventh_210kmh", "seventh_pop", 58.0, 20.0, 0.0], ["centre_night_60kmh", "z_centre", 16.7, 25.0, 1.0], ["gritty_night_60kmh", "z_gritty", 16.7, 25.0, 1.0]],
+	"stream": [["loop_108kmh", "pop_loop", 30.0, 60.0, 0.0], ["loop_210kmh", "pop_loop", 58.0, 55.0, 0.0], ["loop_280kmh", "pop_loop", 78.0, 40.0, 0.0]],
 	"speed": [["ring_108kmh", "ring", 30.0, 60.0, 0.0], ["ring_210kmh", "ring", 58.0, 60.0, 0.0], ["ring_280kmh", "ring", 78.0, 60.0, 0.0], ["ring_360kmh", "ring", 100.0, 40.0, 0.0]]}
 
 var st: Node3D
@@ -58,7 +66,7 @@ var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
-var opt := {"look": 1, "bloom": 0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 2, "lights": 20, "nowarm": false}
+var opt := {"look": 1, "bloom": 0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "loader": 0, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -73,11 +81,14 @@ func _ready() -> void:
 	for a in args:
 		if a == "--quit": opt.quit = true
 		if a == "--nowarm": opt.nowarm = true
+		if a == "--nocol": opt.nocol = true
+		if a == "--probe": opt.probe = true
+		if a == "--hide": opt.hide = true
 		if a.begins_with("--drive="):
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "look", "bloom", "reflect", "shots"]:
+		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "look", "bloom", "reflect", "shots"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
 				opt[k] = v if k in ["plan", "shots"] else (float(v) if k in ["scale", "lead"] else int(v))
@@ -100,7 +111,8 @@ func _ready() -> void:
 	if int(opt.reflect) == 0: env.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED
 	var gp := MeshInstance3D.new(); var pm := PlaneMesh.new(); pm.size = Vector2(6000, 6000); gp.mesh = pm
 	var gm := StandardMaterial3D.new(); gm.albedo_color = Color(0.36, 0.42, 0.3); gm.roughness = 1.0; gp.material_override = gm; gp.position.y = -0.05; add_child(gp)
-	st = Stream.new(); st.name = "City"; st.lead_seconds = float(opt.lead); st.max_cells = int(opt.maxcells); st.max_loading = int(opt.loading); st.bodies_per_frame = int(opt.bodies); add_child(st)
+	st = Stream.new(); st.name = "City"; st.lead_seconds = float(opt.lead); st.max_cells = int(opt.maxcells); st.max_loading = int(opt.loading); st.bodies_per_frame = int(opt.bodies); st.body_tris_per_frame = int(opt.coltris); st.loader_mode = int(opt.loader); st.attach_bodies = not opt.nocol; st.show_cells = not opt.hide; st.probe = opt.probe; add_child(st)
+	RenderingServer.viewport_set_measure_render_time(get_viewport().get_viewport_rid(), true)
 	lights = Lights.new(); lights.budget = int(opt.lights); lights.stream = st; add_child(lights)
 	cam = Camera3D.new(); cam.fov = 74.0; cam.near = 0.08; cam.far = 900.0; add_child(cam); cam.current = true      # the game's driving camera
 	var layer := CanvasLayer.new(); add_child(layer)
@@ -138,7 +150,7 @@ func _night(v: float) -> void:
 
 func _run() -> void:
 	var R := RenderingServer
-	_say("start engine=%s device=%s gpu=%s screen=%s scale=%.2f look=%d bloom=%d reflect=%d plan=%s lead=%.1f maxcells=%d loading=%d bodies=%d lights=%d cells_baked=%d" % [Engine.get_version_info().string, OS.get_model_name(), R.get_video_adapter_name(), str(DisplayServer.window_get_size()), float(opt.scale), int(opt.look), int(opt.bloom), int(opt.reflect), opt.plan, float(opt.lead), int(opt.maxcells), int(opt.loading), int(opt.bodies), int(opt.lights), st.cells.size()])
+	_say("start engine=%s device=%s gpu=%s screen=%s scale=%.2f look=%d bloom=%d reflect=%d plan=%s lead=%.1f maxcells=%d loading=%d bodies=%d lights=%d loader=%d coltris=%d cells_baked=%d" % [Engine.get_version_info().string, OS.get_model_name(), R.get_video_adapter_name(), str(DisplayServer.window_get_size()), float(opt.scale), int(opt.look), int(opt.bloom), int(opt.reflect), opt.plan, float(opt.lead), int(opt.maxcells), int(opt.loading), int(opt.bodies), int(opt.lights), int(opt.loader), int(opt.coltris), st.cells.size()])
 	if st.cells.is_empty():
 		_say("ERROR no baked city found (map_dc/coronado/city_kit/runtime). Run the bake before the export."); hud.text = "no baked city in this build"
 		if opt.quit: await get_tree().create_timer(3.0).timeout; get_tree().quit()
@@ -168,6 +180,13 @@ func _run() -> void:
 	await get_tree().create_timer(0.5).timeout
 	get_tree().quit()
 
+## Where a frame's time went: with --probe the wait for the physics thread and for the render server to digest what the
+## streamer handed over (-1 without it), the streamer's own main-thread part, draw preparation, drawing on the CPU and
+## on the GPU. A slow frame is printed one frame late with both frames' readings.
+func _parts() -> String:
+	var R := RenderingServer; var vr := get_viewport().get_viewport_rid()
+	return "physics_wait %.1f render_wait %.1f streamer %.2f setup %.1f draw_cpu %.1f gpu %.1f" % [float(st.stats.get("phys_wait_ms", -1.0)), float(st.stats.get("rs_wait_ms", -1.0)), float(st.stats.get("proc_ms", 0.0)), R.get_frame_setup_time_cpu(), R.viewport_get_measured_render_time_cpu(vr), R.viewport_get_measured_render_time_gpu(vr)]
+
 func _drive(seg: Array) -> void:
 	var R := RenderingServer
 	var name := String(seg[0]); var pts := _pts(seg[1]); var sp := float(seg[2]); var secs := float(seg[3])
@@ -186,7 +205,8 @@ func _drive(seg: Array) -> void:
 	var dts := PackedFloat32Array(); var draws_sum := 0.0; var draws_max := 0; var tris_sum := 0.0; var tris_max := 0
 	var late220 := 0; var late60 := 0; var deepest := 0.0; var max_cells := 0; var slow := 0; var gy := 8.0
 	var segi := 0; var along := 0.0; var t := 0.0; var t_prev := Time.get_ticks_usec(); var hud_t := 0.0; var prev := [S0["in"], S0.out, S0.bodies]
-	var ready0: int = st.ready_ms.size()
+	var ready0: int = st.ready_ms.size(); var slow_line := ""; var cause := {}; var cause45 := {}; var pw := PackedFloat32Array()
+	st.stats["body_wait_ms_worst"] = 0; var units0 := int(st.stats.get("col_units", 0))
 	var on_ground := false; _g_hit = false; _g_at = pts[0]
 	while t < secs:
 		var a0: Vector3 = pts[segi]; var a1: Vector3 = pts[segi + 1]; var sl := a0.distance_to(a1)
@@ -210,9 +230,17 @@ func _drive(seg: Array) -> void:
 				if dd < 60.0: late60 += 1
 				if dd < 220.0: late220 += 1; deepest = maxf(deepest, 220.0 - dd)
 		var S: Dictionary = st.stats
-		if dt > 0.0333 and slow < 15:      # a frame a player would notice (over 33 ms since the zones run; 50 ms before): what was the streamer doing?
-			slow += 1
-			_say("slow %s %.0f ms at t=%.1f s pos=(%.0f, %.0f): cells in +%d out +%d, bodies +%d, loading %s" % [name, dt * 1000.0, t, p.x, p.z, int(S["in"]) - int(prev[0]), int(S.out) - int(prev[1]), int(S.bodies) - int(prev[2]), str(st.loading_keys())])
+		if opt.probe: pw.append(float(S.get("phys_wait_ms", 0.0)))
+		if slow_line != "":      # the slow frame of one frame ago, now with the engine's counters for it
+			_say(slow_line + " | then: " + _parts()); slow_line = ""
+		if dt > 0.0333:      # a frame a player would notice (over 33 ms since the zones run; 50 ms before): what was the streamer doing?
+			var d_in := int(S["in"]) - int(prev[0]); var d_b := int(S.bodies) - int(prev[2]); var ld: Array = st.loading_keys()
+			var why := "loading" if not ld.is_empty() else ("cell_in" if d_in > 0 else ("bodies" if d_b > 0 else "none"))
+			cause[why] = int(cause.get(why, 0)) + 1
+			if dt > 0.045: cause45[why] = int(cause45.get(why, 0)) + 1
+			if slow < 25 and dt > 0.040:
+				slow += 1
+				slow_line = "slow %s %.0f ms at t=%.1f s pos=(%.0f, %.0f): cells in +%d out +%d, bodies +%d, loading %s | at: %s" % [name, dt * 1000.0, t, p.x, p.z, d_in, int(S.out) - int(prev[1]), d_b, str(ld), _parts()]
 		prev = [S["in"], S.out, S.bodies]
 		hud_t += dt
 		if hud_t > 0.25:
@@ -229,5 +257,8 @@ func _drive(seg: Array) -> void:
 	for i in range(ready0, st.ready_ms.size()): rs += st.ready_ms[i]; rw = maxf(rw, st.ready_ms[i])
 	_say("drive %s speed=%.0f km/h secs=%.0f frames=%d fps=%.1f | frame_ms med=%.1f p95=%.1f p99=%.1f worst=%.0f | over16.7=%.1f%% over33=%d over50=%d over100=%d" % [name, sp * 3.6, t, n, n / t, sorted[n / 2], sorted[int(n * 0.95)], sorted[int(n * 0.99)], sorted[n - 1], 100.0 * o17 / n, o33, o50, o100])
 	_say("  map %s draws avg=%.0f max=%d | tris avg=%.0fk max=%dk | cells most=%d in=%d out=%d dropped=%d cap_hits=%d" % [name, draws_sum / n, draws_max, tris_sum / n / 1000.0, tris_max / 1000, max_cells, int(S1["in"]) - int(S0["in"]), int(S1.out) - int(S0.out), int(S1.dropped) - int(S0.dropped), int(S1.capped) - int(S0.capped)])
-	_say("  stream %s start_ready_ms=%d (worst frame meanwhile %.0f ms) | request_to_in ms mean=%.0f worst=%.0f | late frames: 220m=%d (deepest %.0f m) 60m=%d | main thread worst ms: cell add %.2f, body %.2f, removal step %.2f | bodies late=%d" % [name, prep_ms, prep_worst, rs / maxf(1.0, st.ready_ms.size() - ready0), rw, late220, deepest, late60, float(S1.add_ms_worst), float(S1.body_ms_worst), float(S1.remove_ms_worst), int(S1.body_late) - int(S0.body_late)])
+	_say("  stream %s start_ready_ms=%d (worst frame meanwhile %.0f ms) | request_to_in ms mean=%.0f worst=%.0f | late frames: 220m=%d (deepest %.0f m) 60m=%d | main thread worst ms: cell add %.2f, body %.2f (%s), removal step %.2f | bodies late=%d" % [name, prep_ms, prep_worst, rs / maxf(1.0, st.ready_ms.size() - ready0), rw, late220, deepest, late60, float(S1.add_ms_worst), float(S1.body_ms_worst), str(S1.get("body_worst_what", "")), float(S1.remove_ms_worst), int(S1.body_late) - int(S0.body_late)])
+	_say("  slow %s frames over 33 ms by what the streamer was doing: %s | over 45 ms: %s" % [name, str(cause), str(cause45)])
+	pw.sort()
+	_say("  collision %s made=%d units, a body waited at most %d ms from its cell's arrival | physics thread wait a frame (probe): median %.1f p99 %.1f worst %.1f ms" % [name, int(st.stats.get("col_units", 0)) - units0, int(st.stats.get("body_wait_ms_worst", 0)), pw[pw.size() / 2] if pw.size() > 0 else -1.0, pw[int(pw.size() * 0.99)] if pw.size() > 0 else -1.0, pw[pw.size() - 1] if pw.size() > 0 else -1.0])
 	_say("  mem %s static_mb=%.0f video_mb=%.0f tex_mb=%.0f buf_mb=%.0f" % [name, Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_TEXTURE_MEM_USED) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_BUFFER_MEM_USED) / 1048576.0])
