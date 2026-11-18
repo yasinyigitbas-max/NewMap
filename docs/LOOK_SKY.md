@@ -163,3 +163,16 @@ against `times/<view>_<noon|golden>.jpg`.
   Pictures: `review/look_18nov/wet/<view>_<overcast|dusk>_wet.jpg` against `times/<view>_<overcast|dusk>.jpg`.
 - Not done: a reflection of the city itself in the puddles (needs screen-space reflection: a full-screen pass, ruled
   out), rain drops, wet walls.
+
+### Job 2 in the cloud (done: a Linux engine with patch c was built here)
+`/e/godot` at 4.7.2-stable + `docs/engine/patches/c_sgsr1_mobile_upscaler.patch` only, `scons platform=linuxbsd
+target=template_debug disable_path_overrides=no` (33 min on 4 cores; not kept: the cloud is wiped). The same rig, the
+same views, screen 2460 x 1080 (the Redmi's), 3D drawn 720 lines high (rig default, scale 0.667), `--look=day`,
+`--fullsize`: `--upscale=0` (today: bilinear) against `--upscale=1 --sharp=0.2`. The engine printed no "FSR1 ... only
+available" warning, so SGSR ran.
+Pictures: `review/look_18nov/upscale/<view>_day.jpg` and `<view>_day_sgsr.jpg` (full size), `crop_<view>.jpg` (two
+areas zoomed 2 x, bilinear left, SGSR right). Sharpness (mean brightness step between neighbouring pixels in the
+crop; `tools/city/look/upscale_sheet.py`), bilinear -> SGSR: centre 8.11 -> 10.52 and 2.11 -> 2.50, apartments 5.74
+-> 7.11 and 8.48 -> 10.34, gritty 5.71 -> 7.22 and 5.79 -> 7.43, waterfront 4.49 -> 5.47 and 5.39 -> 6.56: 18-30 %
+sharper everywhere; leaves, signals, wires and edges visibly crisper, no ringing seen at this sharpness. The JPEGs grow
+14-17 % (more fine detail). Times in the cloud mean nothing for the phone: its cost is still to be measured there.
