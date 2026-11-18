@@ -111,6 +111,16 @@ within 40 m, no frame over 50 ms, at most 0.2 % of a drive's frames over 33 ms, 
 over 50 ms meanwhile, a collision body in the world within 3 s of its cell, no error. `phone_rig.sh` prints it after
 every run. `stream_final` is the first run that passes; `zones_final` fails on the day-to-night frame alone.
 
+SOAK (PC, 18 Nov 20:22-20:47, `OUT/soak.log`, not in git): 48 drives in one process, six rounds of the loop at
+210 km/h, the ring at 281 km/h and six teleports to zones (two at night). Round by round, at the end of the same
+drive: objects, nodes and resources the same (ring: 3,274 objects five rounds running; centre 6,219-6,226), video
+memory the same to the megabyte (206-299 MB by drive), static memory +1 MB after the second round and flat from the
+fourth, no orphan nodes left at the end of any teleport drive, nothing waiting in the streamer's queues. No leak and
+nothing piling up in 25 minutes. Its frame times do not count: the look pictures (round 2) and another session's bake
+(rounds 3-5) ran on the same graphics card; in the one undisturbed round (6) no drive had a frame over 33 ms but the
+ring (2). Three late frames (220 m) in round 4's loop fall inside the other session's bake. Unbounded but tiny:
+`add_ms` / `ready_ms` in city_stream.gd grow by one number per cell that arrives.
+
 What the streamer does NOT solve (measured, not streaming):
 - The frame rate itself: at 720p the phone sits at the 60 fps step with a 99 % frame of 25-26 ms, in every zone, with
   nothing loading. That is pixels and triangles (the centre sends 0.7-1.4 M), not streaming.

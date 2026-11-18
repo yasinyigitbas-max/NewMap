@@ -16,6 +16,19 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   `phone_rig.sh shots NAME`, `gpu_ms` on the map line; pictures `review/tiers/before|after_farground|after_tiers`.
   WAITING FOR YASIN: look at the pictures and at `--tiers` on the phone; fades for buildings only (cheaper) is the
   next thing to try. Lock test RESULT PASS.
+- 18 Nov ~20:50 (PC time): WHILE THE TIER SESSION WORKS (Yasin: "do 1 and 2 together"). (1) LOOK PACK ON A REAL GRAPHICS
+  CARD: `claude/look-sky` + `claude/look-buildings` merged onto the working branch in a scratch worktree
+  (`OUT/look_wt`, branch `claude/look-merge-test`, local only, NOT merged anywhere): collisions only in rig.gd's
+  option dictionary / list, the job board and one .uid. Pictures on the PC's NVIDIA card in
+  `OUT/look_wt/OUT/look_pc/` (pair_*.jpg, times_*.jpg), shown to Yasin. My read, told to him: night, dusk and
+  overcast clearly better; day is a flat beige sky, trees lose their purple, murky; golden hour brown. The sky session
+  got a third queue from that (three day variants for Yasin to choose, visible clouds, a golden golden hour, numbers
+  for "murky", the 50 m shadow end, a hand-over page for the game). WAITING for Yasin's word on the day palette.
+  (2) SOAK of the new streamer on the PC, 48 drives / 25 minutes: no leak, nothing piling up (RUNTIME_BAKE.md
+  "SOAK"). A start-area bug from the collision change was found by the sky session and fixed (e31d850): the
+  evening's phone runs were taken before it; the tier session was told to take a fresh baseline. Tier session:
+  "Streaming: tier fades and far roads", an Opus session on this PC in its own worktree, branch
+  `claude/ecstatic-archimedes-922d2c`; it has the phone.
 - 18 Nov ~20:10 (PC time): STREAMING MADE HEALTHY ON THE PHONE (Yasin: "streaming is the backbone of this game, we
   need it to work healthy agile and robust ... think that you are the streaming engineer in rockstar studios"; "do
   whatever you need"). Full account: docs/RUNTIME_BAKE.md "The streamer on the phone". Six causes found and fixed one
