@@ -265,7 +265,10 @@ near the camera black with shadows on: ignore them, look at the road).
 - `day_clear` gets the sky's colour and the contrast of the old look back (sky 40 % against 41), keeping the haze
   towards the horizon; `day_half` sits between. Sheets: `variants/sheet_<view>.jpg` (old | day | day_half | day_clear).
 - Golden at 9 degrees put most of the street in the shade and measured darker (73 against 83): raised to 12 degrees,
-  shade light 0.6 -> 0.75 (the `variants/*_golden.jpg` pictures are re-rendered with it).
+  shade light 0.6 -> 0.75 (the `variants/*_golden.jpg` pictures are re-rendered with it): bright 75, contrast 168,
+  sat 44, sky 30. It still measures a little darker than queue 2's golden (83), but that one had the sun on the wrong
+  side (in front of most views, a bright sky in the picture); now the sun is behind the east-facing views and lights
+  the walls warm against blue shade, with blue sky between the clouds (`variants/pair_*_golden.jpg`).
 - FOUND: with `--shadowtune=1` (2 splits) the cloud's software GPU draws the near trees properly WITH sun shadows on
   (`shadow/pair_apartments_golden.jpg`); with the engine's 4 splits they came out black. The "trees black with
   shadows" cloud flaw is tied to the 4-split mode. Cloud pictures can have shadows from now on.
