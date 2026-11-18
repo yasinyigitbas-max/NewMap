@@ -13,6 +13,7 @@ var cell_m := 200.0
 var cells := {}          # "x_z" -> {"state": 0 none / 1 loading / 2 building / 3 in, "node": Node3D, "task": int, "ps": PackedScene}
 var far_world: Node3D
 var add_ms: Array[float] = []      ## main-thread cost of each cell added (the hitch a player could feel)
+var ready_ms: Array[float] = []    ## from the request of a cell to the cell being in the scene
 var focus := Vector3.ZERO
 var night := 0.0
 
@@ -52,7 +53,7 @@ func update_focus(p: Vector3, now := false) -> void:
 			if now:
 				c.node = (load(_path(k)) as PackedScene).instantiate(); add_child(c.node); c.state = 3; _apply_night(c.node)
 			else:
-				ResourceLoader.load_threaded_request(_path(k), "", true); c.state = 1
+				ResourceLoader.load_threaded_request(_path(k), "", true); c.state = 1; c["t_req"] = Time.get_ticks_usec()
 		elif c.state == 3 and d > unload_dist:
 			(c.node as Node).queue_free(); c.node = null; c.state = 0
 
@@ -68,7 +69,7 @@ func _process(_dt: float) -> void:
 			WorkerThreadPool.wait_for_task_completion(c.task)
 			var t0 := Time.get_ticks_usec()
 			add_child(c.node); _apply_night(c.node)
-			add_ms.append((Time.get_ticks_usec() - t0) / 1000.0)
+			add_ms.append((Time.get_ticks_usec() - t0) / 1000.0); ready_ms.append((Time.get_ticks_usec() - int(c.get("t_req", t0))) / 1000.0)
 			c.state = 3; c.ps = null; added = true
 
 func loaded_count() -> int:

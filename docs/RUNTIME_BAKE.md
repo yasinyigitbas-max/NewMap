@@ -52,7 +52,11 @@ How it gets the draw calls down:
 - Loaded set (12-14 cells + far world): 224 MB video memory (79 textures, 134 meshes).
 - A cell loads in 18 ms on average, 46 ms worst (this machine, warm), on a loader thread; it is built on a worker
   thread; adding it to the scene costs at most 1.9 ms on the main thread.
-- Drive at 30 m/s through the sample (840 m): 14 cells streamed in, none late.
+- Drive through the sample (840 m, 14 cells streamed in), cloud machine at about 10 frames a second:
+  15 and 30 m/s: no cell late. 60 m/s: no cell late for the near tier (60 m); cells arrived up to 11 m late for the
+  mid tier (220 m). A cell takes 0.4 s on average, 1.0 s worst, from request to in-scene here. The streaming distance
+  is the same in every direction (load 240 m from the cell's edge, unload 300 m): the 20 m between 240 and 220 is
+  the whole margin, 0.67 s at 30 m/s. A forward lead by speed is the fix for fast cars (not built).
 - Disk: 79 MB of cells + 14 MB of models for the 32 sample cells. Merging trees is what makes cells big (46 MB with a
   600-triangle merge limit, at about 8 more draws a view).
 - `bake_runtime.gd --check`: 32 cells, 0 stale.

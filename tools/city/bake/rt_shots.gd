@@ -132,17 +132,23 @@ func _run() -> void:
 		cam.fov = 70.0; var dist := a0.distance_to(a1); var t := 0.0; var worst := 0.0; var nframes := 0
 		st.update_focus(a0, true)
 		for i in 5: await process_frame
-		var t_prev := Time.get_ticks_usec(); var late := 0
+		var t_prev := Time.get_ticks_usec(); var late60 := 0; var late220 := 0; var worst_gap := 0.0
 		while t * sp < dist:
 			var p := a0.lerp(a1, t * sp / dist)
 			cam.global_position = p + Vector3(0, 7.7, 0); cam.look_at(cam.global_position + (a1 - a0).normalized() * 50.0)
 			st.update_focus(p)
 			await process_frame
 			var now := Time.get_ticks_usec(); t += (now - t_prev) / 1000000.0; t_prev = now; nframes += 1
-			# a cell is late when the focus is inside its 200 m rectangle + 60 m (the near tier's reach) before it is in
+			# a cell is late when the player is nearer to it than a tier needs it and it is not in yet:
+			# 220 m = its mid tier should already show; 60 m = its near tier should
 			for k: String in st.cells:
-				if st.cells[k].state != 3 and st._dist(k, p) < 60.0: late += 1
+				if st.cells[k].state != 3:
+					var dd: float = st._dist(k, p)
+					if dd < 60.0: late60 += 1
+					if dd < 220.0: late220 += 1; worst_gap = maxf(worst_gap, 220.0 - dd)
 		for ms: float in st.add_ms: worst = maxf(worst, ms)
 		while st.busy(): await process_frame
-		print("DRIVE %.0f m at %.0f m/s: %d cells added, main-thread add ms worst %.2f mean %.2f, frames with a late cell %d of %d" % [dist, sp, st.add_ms.size(), worst, (st.add_ms.reduce(func(x: float, y: float) -> float: return x + y, 0.0) / maxf(1.0, st.add_ms.size())), late, nframes])
+		var rworst := 0.0; var rsum := 0.0
+		for ms2: float in st.ready_ms: rworst = maxf(rworst, ms2); rsum += ms2
+		print("DRIVE %.0f m at %.0f m/s (%.1f frames a second here): %d cells added | request to in-scene ms mean %.0f worst %.0f | main-thread add ms worst %.2f | frames with a cell missing inside 220 m: %d (deepest %.0f m), inside 60 m: %d, of %d frames" % [dist, sp, nframes / maxf(t, 0.001), st.add_ms.size(), rsum / maxf(1.0, st.ready_ms.size()), rworst, worst, late220, worst_gap, late60, nframes])
 	quit()
