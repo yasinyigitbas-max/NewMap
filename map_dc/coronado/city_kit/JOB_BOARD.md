@@ -5,6 +5,16 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov ~18:40 (PC time): LOOK PACK IN TWO CLOUD SESSIONS (Yasin: "do them on cloud sessions"): "Look pack: sky, haze
+  and colour" -> branch `claude/look-sky` (rig.gd environment, tools/city/look/), "Look pack: building shader" ->
+  `claude/look-buildings` (rt_bldg.gdshader, shader globals). Neither merges; the PC session takes the real phone
+  pictures when they are pushed. AO CHECK (Yasin: "our assets were supposed to have ao already"): he is right. Kit
+  SPEC.md 32, 45-46: AO baked into the base colour + ORM R channel; rt_bldg.gdshader uses it (`AO = orm.r`, cavity,
+  wall-foot band), baked building materials have the ORM bound; rt_prop reads the props' ORM array too. What is NOT
+  there: anything between models (building to pavement, under trees and cars), AO on direct sun (Godot's AO dims
+  ambient light only), the mid tier (colour only), the ground (rt_ground uses no occlusion; ground_orm.png has one).
+  The building-shader session was told to add only what is missing. My earlier list item "wall darkening" mostly
+  exists already.
 - 18 Nov ~18:10 (PC time): SETTING TESTS at 720p done (Yasin: "ok run the tests"; "make the games default resolution
   720p ... just inject it": rig default is now 720 lines, app not rebuilt, runs pass --scale=0.6667). Table in
   RUNTIME_BAKE.md "THE SETTING TESTS AT 720p". --loading=1 and --bodies=1 change nothing measurable (two identical
