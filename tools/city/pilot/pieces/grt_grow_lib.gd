@@ -414,6 +414,7 @@ static func done(ctx: Dictionary, base := "grass", fill := true) -> void:
 			if absf(lp.x) < float(bd.w) * 0.5 + 0.5 and absf(lp.z) < float(bd.d) * 0.5 + 3.5: under = true
 		if not under: open.append(st)
 	SL.wheel_stops(props, ctx.rr, open, "prop_wheel_stop_rubber" if ctx.rr.randf() < 0.5 else "prop_wheel_stop_concrete")
+	_prune(ctx)
 	# no tree within 0.9 m of a fence (apt_lib.done)
 	var fence_pts: Array = []
 	for k2: String in props.items:
@@ -440,6 +441,88 @@ static func done(ctx: Dictionary, base := "grass", fill := true) -> void:
 	root.set_meta("shops", ctx.shoplist)
 	A.finish(root, g, props, ctx.dec, String(ctx.name), ctx.stalls, ctx.poles)
 	_write_shops(ctx)
+
+## the ground material at (x, z): the first paint that holds the point (painted_rect's rule), else the base
+static func _mat_at(ctx: Dictionary, x: float, z: float, base: String) -> String:
+	for p: Array in ctx.paints:
+		if x > float(p[0]) and x < float(p[2]) and z > float(p[1]) and z < float(p[3]): return String(p[4])
+	return base
+
+## the validator's rules applied while building (validate.gd overlap / inside, audit_trees): every ground prop keeps
+## clear of the others and of the buildings; when two collide the one that matters less goes (fences and gates first,
+## then trees, then big things, then small clutter), a tree on paving goes. Mounted / lifted props are not touched.
+static func _prune(ctx: Dictionary, base_mat := "grass") -> void:
+	var props: K.Props = ctx.props
+	var items: Array = []     # [rank, key, index, centre, half, ang, y]
+	for k: String in props.items:
+		var bname := k.get_slice("|", 0)
+		var e := K.manifest(bname)
+		var mounted := String(e.get("mount", "ground")) != "ground"
+		if bname.begins_with("plant_iceplant") or bname.begins_with("prop_shade_sail"): continue
+		var fw := float(e.get("footprint_w", 0.5)); var fd := float(e.get("footprint_d", 0.5))
+		var rank := 3
+		if bname.begins_with("fence_"): rank = 0
+		elif bname.begins_with("tree_") or bname.begins_with("palm_"): rank = 1; fw = 0.6; fd = 0.6
+		elif fw * fd > 3.0: rank = 2
+		if bname.begins_with("prop_utility_pole") or bname.begins_with("prop_lot_light") or bname.begins_with("prop_billboard"): fw = 0.45; fd = 0.45; rank = 0
+		var arr: Array = props.items[k]
+		for i in arr.size():
+			var t: Transform3D = arr[i]
+			var up := mounted or t.origin.y - 0.15 > 1.2
+			items.append([rank + (4 if up else 0), k, i, Vector2(t.origin.x, t.origin.z), Vector2(fw, fd) * 0.5, atan2(t.basis.z.x, t.basis.z.z), t.origin.y, up])
+	items.sort_custom(func(a: Array, b: Array) -> bool: return int(a[0]) < int(b[0]))
+	var boxes: Array = []
+	for b: Dictionary in ctx.blds:
+		var n: Node3D = b.node
+		boxes.append([Vector2(n.position.x, n.position.z), Vector2(float(b.w), float(b.d)) * 0.5 - Vector2(0.15, 0.15), atan2(n.transform.basis.z.x, n.transform.basis.z.z)])
+	var kept: Array = []
+	var drop := {}
+	for it: Array in items:
+		var ok := true
+		var key := String(it[1])
+		if int(it[0]) == 1:
+			var m := _mat_at(ctx, (it[3] as Vector2).x, (it[3] as Vector2).y, base_mat)
+			if not (m in ["grass", "mulch", "gravel"]): ok = false
+		if ok and not bool(it[7]):
+			for bx: Array in boxes:
+				if _hit(it[3], it[4], it[5], bx[0], bx[1], bx[2]): ok = false; break
+		if ok:
+			for o: Array in kept:
+				if (it[3] as Vector2).distance_to(o[3]) > (it[4] as Vector2).length() + (o[4] as Vector2).length(): continue
+				if key.begins_with("fence_") and String(o[1]).begins_with("fence_"): continue
+				if absf(float(it[6]) - float(o[6])) > 1.5: continue
+				if bool(it[7]) and bool(o[7]) and absf(float(it[6]) - float(o[6])) > 0.6: continue
+				if _hit(it[3], (it[4] as Vector2) * 0.97, it[5], o[3], (o[4] as Vector2) * 0.97, o[5]): ok = false; break
+		if ok: kept.append(it)
+		else:
+			if not drop.has(key): drop[key] = {}
+			drop[key][int(it[2])] = true
+	var nd := 0
+	for k2: String in drop:
+		var arr2: Array = props.items[k2]; var keep: Array = []
+		for i2 in arr2.size():
+			if not drop[k2].has(i2): keep.append(arr2[i2])
+			else: nd += 1
+		props.items[k2] = keep
+	# colliders of dropped props: keep only colliders that still have a drawn twin
+	var live := {}
+	for k3: String in props.items:
+		for t3: Transform3D in props.items[k3]: live["%s@%.2f,%.2f" % [k3, t3.origin.x, t3.origin.z]] = true
+	var kc: Array = []
+	for ci: Array in props.col_items:
+		var tt: Transform3D = ci[2]
+		if live.has("%s|%s@%.2f,%.2f" % [ci[0], ci[1], tt.origin.x, tt.origin.z]): kc.append(ci)
+	props.col_items = kc
+	print("GRT_PRUNE %s: %d props dropped (validator rules)" % [ctx.name, nd])
+
+static func _hit(ca: Vector2, ha: Vector2, aa: float, cb: Vector2, hb: Vector2, ab: float) -> bool:
+	var axes := [Vector2(cos(aa), -sin(aa)), Vector2(sin(aa), cos(aa)), Vector2(cos(ab), -sin(ab)), Vector2(sin(ab), cos(ab))]
+	var d := cb - ca
+	for ax: Vector2 in axes:
+		var ra := ha.x * absf(Vector2(cos(aa), -sin(aa)).dot(ax)) + ha.y * absf(Vector2(sin(aa), cos(aa)).dot(ax))
+		var rb := hb.x * absf(Vector2(cos(ab), -sin(ab)).dot(ax)) + hb.y * absf(Vector2(sin(ab), cos(ab)).dot(ax))
+		if absf(d.dot(ax)) > ra + rb: return false
+	return true
 
 ## the open shops of this piece for the rooms (tools/city/rooms/assign_grt.py reads these)
 static func _write_shops(ctx: Dictionary) -> void:

@@ -176,9 +176,9 @@ static func _v2(ctx: Dictionary) -> void:
 	G.bins(ctx, 44.0, back + 3.2, rad_to_deg(atan2(A.face_dir(sx, sz, "+v").x, A.face_dir(sx, sz, "+v").y)))
 	I.yard_wear(dec, rr, sx, sz, 24.0, back, 54.0, 54.0, 1.4)
 	# the corner block's own Ave side: a brick walk-up with the fire escape over its alley side
-	_row_u(ctx, back + 0.5, 53.0, [["ck/ck_brk3_row2_fe", "home", "walkup_a", 1.5]])
+	_row_u(ctx, back + 4.5, 53.0, [["ck/ck_brk3_row2_fe", "home", "walkup_a", 1.5]])
 	# ---- B: the row of small businesses, a drive in at each apron to the tenants' and staff parking
-	var rb := _row_v(ctx, 61.0, 99.0, cfg.b, 0.4)
+	var rb := _row_v(ctx, 61.0, 99.6, cfg.b, 0.4)
 	for b1: Dictionary in rb: GL.roof(ctx, b1, 3); GL.downspouts(ctx, b1)
 	paints.append(A.rect(sx, sz, 60.0, L + GL.FORE + 14.5, 100.0, 54.0, "asphalt"))
 	A.pad(paints, ctx.stalls, dec, rr, sx, sz, true, 62.0, 98.0, GL.AL0, -1.0)
@@ -189,7 +189,7 @@ static func _v2(ctx: Dictionary) -> void:
 	if seed % 2 == 1: walkups = [walkups[1], walkups[0], ["ck/ck_apt3_row3", "home", "walkup_c2", 2.5]]
 	_row_u(ctx, 61.0, 99.5, walkups, 0.8)
 	# ---- D: the inside of the block
-	match seed % 3:
+	match {1: 1, 3: 2, 6: 0}.get(seed, 0):
 		0:   # a vacant lot the owner fenced and forgot: gravel, self-seeded agaves, dumped stuff (ONE gate on the lane)
 			G.lot(ctx, "vacant", 62.0, 62.0, 98.0, 98.0, "v0")
 			paints.append(A.rect(sx, sz, 76.0, 60.0, 84.0, 62.0, "asphalt"))
@@ -235,7 +235,7 @@ static func _v3(ctx: Dictionary) -> void:
 	var ra := _row_v(ctx, 10.2, 53.0, a_items, 0.6)
 	for b0: Dictionary in ra: GL.roof(ctx, b0, 2)
 	var back := L + GL.FORE + 14.5
-	_row_u(ctx, back + 1.0, 53.0, [["houses/narrow_2sty_stucco_clay", "home", "house_a0", 3.0], ["houses/narrow_cottage_siding", "home", "house_a1", 3.0]], 1.6)
+	_row_u(ctx, back + 4.5, 53.0, [["houses/narrow_2sty_stucco_clay", "home", "house_a0", 3.0], ["houses/narrow_cottage_siding", "home", "house_a1", 3.0]], 1.6)
 	A.pad(paints, ctx.stalls, dec, rr, sx, sz, true, 30.0, 53.0, GL.AL0, -1.0)
 	G.bins(ctx, 26.0, GL.AL0 - 3.0, rad_to_deg(atan2(A.face_dir(sx, sz, "+v").x, A.face_dir(sx, sz, "+v").y)))
 	# ---- B: apartment rows behind small yards on the numbered street, a dingbat on lane U behind them
@@ -243,9 +243,11 @@ static func _v3(ctx: Dictionary) -> void:
 	_row_v(ctx, 61.0, 99.0, [[bl[0], "home", "apts_b0", 3.0], [bl[1], "home", "apts_b1", 3.0]], 1.2)
 	G.dingbat(ctx, String(cfg.ding), 84.0, "+v", "lane_dingbat")
 	# ---- C: narrow houses and a walk-up on the Ave, garages on lane V
+	# the Ave side differs per site: narrow houses (G Ave west), walk-ups facing E Ave's apartments, student rentals
 	var hs: Array = [["houses/narrow_cottage_stucco_clay", "home", "house_c0", 3.0], ["houses/narrow_2sty_siding", "home", "house_c1", 3.0],
 		["ck/ck_apt3_row2", "home", "walkup_c", 2.5], ["houses/narrow_cottage_siding", "home", "house_c2", 3.0]]
-	if seed % 2 == 1: hs.reverse()
+	if seed == 5: hs = [["ck/ck_brk3_row2", "home", "walkup_c0", 1.5], ["apartments/apt_garden_mint", "home", "garden_apts", 3.0], ["houses/mcm_shed", "home", "house_c1", 3.0]]
+	if seed == 7: hs = [["houses/ranch_siding", "home", "rental_c0", 3.0], ["houses/narrow_2sty_stucco_clay", "home", "rental_c1", 3.0], ["ck/ck_apt3_row3", "home", "student_row", 2.5], ["houses/narrow_cottage_siding", "home", "rental_c2", 3.0]]
 	_row_u(ctx, 61.0, 99.5, hs, 1.4)
 	for k in 3: GL.garage(ctx, ["garages/single_stucco_clay", "garages/single_stucco_flat"][(k + seed) % 2], 66.0 + k * 10.0, "+u", "garage_%d" % k)
 	# ---- D: the shared court: a home along lane U, the community garden behind chain-link (ONE gate), a kids' corner
@@ -265,7 +267,7 @@ static func _v3(ctx: Dictionary) -> void:
 		var pu := 70.0 + (k2 % 7) * 3.8; var pv := gv0 + 2.0 + float(k2 / 7) * (98.0 - gv0 - 4.0)
 		I.add(props, beds[(k2 + seed) % beds.size()], "normal", A.q(sx, sz, pu, pv), rr.randf_range(0, 360))
 	I.add(props, "prop_hose_reel_cart", "worn", A.q(sx, sz, 82.0, gv0 + 1.2), 0.0)
-	I.add(props, "plant_bougainvillea_wall", "normal", A.q(sx, sz, 96.4, (gv0 + 98.0) * 0.5), 90.0)
+	I.add(props, "plant_bougainvillea_wall", "normal", A.q(sx, sz, 95.2, (gv0 + 98.0) * 0.5), 90.0)
 	I.add(props, "prop_park_bench", "worn", A.q(sx, sz, 64.0, gv0 + 4.0), rad_to_deg(atan2(A.face_dir(sx, sz, "+u").x, A.face_dir(sx, sz, "+u").y)))
 	_drives(ctx)
 	GL.done(ctx, "grass", true)
