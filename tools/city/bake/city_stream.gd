@@ -245,7 +245,7 @@ func update_focus(p: Vector3, now := false, velocity := Vector3.ZERO) -> void:
 	if now:
 		for w: Array in want:
 			var c2: Dictionary = cells[w[1]]
-			c2.node = (load(_path(w[1])) as PackedScene).instantiate(); _add(w[1])
+			c2.ps = load(_path(w[1])); _build(c2); c2.ps = null; _add(w[1])      # _build takes the collision out for the usual stepwise attach (without it these cells never got any: found by the sky session, docs/look_patches/streamer_now.md)
 		_flush_map(); return
 	var loading := 0; var have := 0
 	for k2: String in cells:
