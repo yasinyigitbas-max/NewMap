@@ -132,11 +132,18 @@ func near_fence(u: float, v: float, d: float) -> bool:
 ## place a ground prop at quadrant (u, v) on the ground under it (y lift for wall-mounted items)
 func add(base: String, cond: String, u: float, v: float, yaw: float, lift := 0.0, collide := true, scale := 1.0, r := 0.0) -> void:
 	props.add(base, cond, L(u, v, gy(u, v) + lift), yaw, collide, scale)
-	if r > 0.0: occ.append([u, v, r])
+	if r > 0.0: occ.append([u, v, fp_r(base, r)])
 
 ## try a spot; true when placed
+func fp_r(base: String, r: float) -> float:
+	if base.begins_with("tree_") or base.begins_with("palm_"): return r      # trees: the trunk counts (validator rule)
+	var e := K.manifest(base)
+	return maxf(r, 0.5 * maxf(float(e.get("footprint_w", 0.5)), float(e.get("footprint_d", 0.5))) + 0.05)
+
 func try_add(base: String, cond: String, u: float, v: float, yaw: float, r: float, scale := 1.0) -> bool:
+	r = fp_r(base, r)
 	if not free_at(u, v, r): return false
+	if not (base.begins_with("tree_") or base.begins_with("palm_")) and near_fence(u, v, r): return false
 	if (base.begins_with("tree_") or base.begins_with("palm_")) and near_fence(u, v, 1.2): return false
 	add(base, cond, u, v, yaw, 0.0, true, scale, r)
 	return true
@@ -346,7 +353,7 @@ func house_lot(lot: Dictionary) -> void:
 		# driveway from the alley / street edge to the house's own garage door: a ramp over the front yard
 		_driveway(axis, garage_door_s, f, house_front, H)
 	# planting bed along the house front (the path and the driveway cut through it)
-	var bed0 := house_front - 1.3
+	var bed0 := house_front - 1.8
 	var gap_s := [door_s]
 	if own_garage: gap_s.append(garage_door_s)
 	var bs := hs - hw * 0.5
@@ -360,23 +367,29 @@ func house_lot(lot: Dictionary) -> void:
 			prect(minf(m0.x, m1.x), minf(m0.y, m1.y), maxf(m0.x, m1.x), maxf(m0.y, m1.y), "mulch")
 		bs = be
 	var plants: Array = design.get("plants", ["plant_bird_of_paradise", "plant_agave_americana_small"])
-	for k in 3:
+	for k in 5:
 		var ps := hs + rr.randf_range(-hw * 0.45, hw * 0.45)
-		var pp: Vector2 = pt(axis, ps, house_front - 0.65)
+		var pp: Vector2 = pt(axis, ps, house_front - 1.05)
 		var okp := true
 		for gsx: float in gap_s:
 			if absf(ps - gsx) < 1.8: okp = false
 		if okp: try_add(String(plants[rr.randi() % plants.size()]), "normal", pp.x, pp.y, rr.randf_range(0, 360), 0.6)
 	# front fence / hedge on the terrace edge, open at the path (a gate) and the driveway
 	var front := String(lot.get("front", ""))
-	var fa: Vector2 = pt(axis, s0 + 0.3, f + 0.35); var fb: Vector2 = pt(axis, s1 - 0.3, f + 0.35)
-	var gaps: Array = [[door_s - (s0 + 0.3), 1.2]]
-	if own_garage: gaps.append([garage_door_s - (s0 + 0.3), 4.6])
+	var fa: Vector2 = pt(axis, s0, f + 0.35); var fb: Vector2 = pt(axis, s1, f + 0.35)
+	var gaps: Array = [[door_s - s0, 1.2]]
+	if own_garage: gaps.append([garage_door_s - s0, 4.6])
+	var t_r := f + set + hd - 1.0                     # where the back yard is closed off: just in front of the rear wall
 	if FENCE.has(front):
 		var fd: Array = FENCE[front]
 		fence_line(fa, fb, gaps, String(fd[0]), String(fd[1]), float(fd[2]), String(fd[3]) if not own_garage else "", H)
+		# the front fence turns back along the lot lines to the back-yard fence (each shared line drawn once)
+		var sides_f: Array = [s0]
+		if bool(lot.get("last", false)) or not FENCE.has(String(lot.get("next_front", ""))): sides_f.append(s1)
+		for e9: float in sides_f:
+			fence_run(pt(axis, e9, f + 0.35), pt(axis, e9, t_r), String(fd[0]), String(fd[1]), float(fd[2]), maxf(H, float(lot.get("Hprev", H))) if e9 == s0 else H)
 		if rr.randf() < 0.7:
-			var mb: Vector2 = pt(axis, door_s + 1.0, f + 0.6)
+			var mb: Vector2 = pt(axis, door_s + 1.0, f + 1.0)
 			if free_at(mb.x, mb.y, 0.3): add("prop_mailbox_post_wood" if rr.randf() < 0.5 else "prop_mailbox_post_metal", "worn", mb.x, mb.y, yaw, 0.0, true, 1.0, 0.3)
 	elif front == "hedge" or front == "privet":
 		var hk := "hedge_boxwood_low_2m" if front == "hedge" else "hedge_privet_2m"
@@ -392,11 +405,15 @@ func house_lot(lot: Dictionary) -> void:
 			else:
 				x += 0.5
 	# planting along the inside of the front edge (owners soften the fence / hedge line), clear of the gate and drive
-	for k5 in 2:
+	for k5 in 3:
 		var es := rr.randf_range(s0 + 1.2, s1 - 1.2)
 		if absf(es - door_s) < 1.8 or (own_garage and absf(es - garage_door_s) < 3.0): continue
 		var ep: Vector2 = pt(axis, es, f + 1.3)
 		try_add(String(plants[rr.randi() % plants.size()]), "normal", ep.x, ep.y, rr.randf_range(0, 360), 0.7)
+	if H - fh(pt(axis, (s0 + s1) * 0.5, f).x, pt(axis, (s0 + s1) * 0.5, f).y) > 0.35:
+		for k8 in 2:
+			var ip: Vector2 = pt(axis, rr.randf_range(s0 + 1.5, s1 - 1.5), f + 1.4)
+			if absf(ip.x + ip.y - (pt(axis, door_s, f).x + pt(axis, door_s, f).y)) > 2.0: try_add("plant_iceplant_patch", "normal", ip.x, ip.y, rr.randf_range(0, 360), 1.0)
 	# a yard tree in some front yards (owners plant one; never in front of the door or the windows' middle)
 	if rr.randf() < float(design.get("front_tree", 0.4)):
 		var trees: Array = design.get("front_trees", ["tree_magnolia_a", "tree_jacaranda_a", "palm_queen_a"])
@@ -426,8 +443,15 @@ func house_lot(lot: Dictionary) -> void:
 	if not FENCE.has(front): on_wall(b, "prop_mailbox_wall_black" if rr.randf() < 0.5 else "prop_mailbox_wall_brass", "worn", dl_x + 1.25, hd * 0.5 + 0.05, 1.2, yaw)
 	var pot: Vector2 = bq(b, dl_x - 1.3, hd * 0.5 + 0.4)
 	if free_at(pot.x, pot.y, 0.3): add("plant_potted_succulent", "normal", pot.x, pot.y, 0.0, 0.0, true, 1.0, 0.3)
+	var pot2: Vector2 = bq(b, dl_x + 1.35, hd * 0.5 + 0.45)
+	if rr.randf() < 0.6: try_add("plant_potted_leafy" if rr.randf() < 0.5 else "plant_potted_succulent", "normal", pot2.x, pot2.y, 0.0, 0.3)
+	# people sit out front in the evening: a chair or two on the lawn by the door, facing the street
+	if rr.randf() < float(design.get("front_chairs", 0.35)):
+		var ch2: Vector2 = bq(b, dl_x + (2.4 if rr.randf() < 0.5 else -2.4), hd * 0.5 + 2.0)
+		try_add(String(design.get("front_chair", "prop_adirondack_white")), "worn", ch2.x, ch2.y, yaw + rr.randf_range(-20, 20), 0.6)
 	for c: Vector2 in [Vector2(-1, 1), Vector2(1, 1), Vector2(-1, -1), Vector2(1, -1)]:
 		on_wall(b, "prop_downspout_3m", "worn", c.x * (hw * 0.5 - 0.2), c.y * (hd * 0.5 + 0.04), 0.0, yaw + (0.0 if c.y > 0 else 180.0))
+		var dsp := bq(b, c.x * (hw * 0.5 - 0.2), c.y * (hd * 0.5 + 0.3)); occ.append([dsp.x, dsp.y, 0.45])
 	# services on the side wall facing the wider side yard: meters, AC on the ground beside it, hose reel
 	var ws := side                                   # +1: the house's +x side in its own frame? use the lot side
 	var lx := (hw * 0.5 + 0.02) * (1.0 if bq(b, 1.0, 0.0).distance_to(pt(axis, s1, ht)) < bq(b, -1.0, 0.0).distance_to(pt(axis, s1, ht)) else -1.0) * ws
@@ -445,6 +469,8 @@ func house_lot(lot: Dictionary) -> void:
 	var wall_plants: bool = design.get("wall_plants", false)
 	if wall_plants:
 		on_wall(b, "plant_bougainvillea_wall", "normal", hw * 0.25, hd * 0.5 + 0.3, 0.0, yaw)
+		for kb: float in [-1.5, 0.0, 1.5]:
+			var bwp := bq(b, hw * 0.25 + kb, hd * 0.5 + 0.4); occ.append([bwp.x, bwp.y, 0.55])
 	# ---------------------------------------------------------------- back yard and garage strip
 	var back := String(lot.get("back", "privacy"))
 	var bf: Array = FENCE.get(back, FENCE["privacy"])
@@ -453,15 +479,26 @@ func house_lot(lot: Dictionary) -> void:
 	# side fences from the back corners of the house to the back line (on the higher terrace of the two)
 	for e2: float in [s0, s1]:
 		if e2 == s1 and not bool(lot.get("last", false)): continue     # each shared line once (the lot to the right draws it)
-		var a3: Vector2 = pt(axis, e2 + (0.15 if e2 == s0 else -0.15), rear + 0.6)
-		var b3: Vector2 = pt(axis, e2 + (0.15 if e2 == s0 else -0.15), tb - 0.3)
+		var a3: Vector2 = pt(axis, e2, t_r)
+		var b3: Vector2 = pt(axis, e2, tb - 0.25)
 		var yy := maxf(H, float(lot.get("Hprev", H)) if e2 == s0 else H)
 		fence_run(a3, b3, String(sf[0]), String(sf[1]), float(sf[2]), yy)
+	# the returns: from each side wall of the house to the lot line, touching both; the side gate on the wider side
+	for sd: float in [-1.0, 1.0]:
+		var wall_s := hs + sd * hw * 0.5
+		var line_s := s1 if sd > 0 else s0
+		var Lr := absf(line_s - wall_s)
+		if Lr < 0.3: continue
+		var ra: Vector2 = pt(axis, wall_s, t_r); var rb: Vector2 = pt(axis, line_s, t_r)
+		if Lr >= 1.6 and sd == side:
+			fence_line(ra, rb, [[Lr * 0.5, 1.15]], String(sf[0]), String(sf[1]), float(sf[2]), "fence_gate_privacy", H)
+		else:
+			fence_run(ra, rb, String(sf[0]), String(sf[1]), float(sf[2]), H)
 	if gs > 0.0:
 		# the yard's back fence along the strip edge, with a gate (steps if the strip is lower / higher)
 		var gate_s := (s0 + s1) * 0.5 - side * (w * 0.5 - 2.0)
-		var ba: Vector2 = pt(axis, s0 + 0.2, tb - 0.25); var bb: Vector2 = pt(axis, s1 - 0.2, tb - 0.25)
-		fence_line(ba, bb, [[gate_s - (s0 + 0.2), 1.2]], String(bf[0]), String(bf[1]), float(bf[2]), String(bf[3]), H)
+		var ba: Vector2 = pt(axis, s0, tb - 0.25); var bb: Vector2 = pt(axis, s1, tb - 0.25)
+		fence_line(ba, bb, [[gate_s - s0, 1.2]], String(bf[0]), String(bf[1]), float(bf[2]), String(bf[3]), H)
 		var cS := (func(u: float, v: float) -> float: return fh(u, bk)) if axis == "v" else (func(u: float, v: float) -> float: return fh(bk, v))
 		steps(axis, gate_s, tb, -1.0, H, cS)
 		# garage at the alley edge, its door to the alley; a second car on the pad beside it; bins by the gate
@@ -477,13 +514,19 @@ func house_lot(lot: Dictionary) -> void:
 			var gy0 := minf(gy(pt(axis, gar_s - gw * 0.5, gt).x, pt(axis, gar_s - gw * 0.5, gt).y), gy(pt(axis, gar_s + gw * 0.5, gt).x, pt(axis, gar_s + gw * 0.5, gt).y))
 			var gb := building(gar, gp.x, gp.y, gy0, yaw_of(-fdu, -fdv), false, "", float(design.get("wear", 0.65)) + 0.1)
 			used[gar] = int(used.get(gar, 0)) + 1
+			if not gar.contains("carport"):
+				on_wall(gb, "prop_porch_light_barn", "worn", gw * 0.5 - 0.3, gd * 0.5 + 0.05, 2.35, yaw_of(-fdu, -fdv))
+				if wall_plants: on_wall(gb, "plant_bougainvillea_wall", "normal", 0.0, -gd * 0.5 - 0.3, 0.0, yaw_of(fdu, fdv))
 			var ap0: Vector2 = pt(axis, gar_s - gw * 0.5, bk - 1.2); var ap1: Vector2 = pt(axis, gar_s + gw * 0.5, bk)
 			prect(minf(ap0.x, ap1.x), minf(ap0.y, ap1.y), maxf(ap0.x, ap1.x), maxf(ap0.y, ap1.y), "concrete")
 			var oc: Vector2 = pt(axis, gar_s, bk - 0.8)
 			W.oil(dec, rr, L2(oc.x, oc.y), yaw, Hc, 0.5)
-			if gar.contains("flat") and rr.randf() < 0.8:
+			# roof items only where the roof stands clearly above the junction pad (the validator reads "on a roof" by
+			# height over the piece origin; on the downhill side a garage roof can sit lower than that)
+			var roof_ok := gy0 + float(gst.get("height", 2.8)) > 1.5
+			if roof_ok and gar.contains("flat") and rr.randf() < 0.8:
 				on_wall(gb, "prop_solar_panel_x3", "clean", 0.0, 0.0, float(gst.get("height", 2.8)) + 0.02, yaw_of(-fdu, -fdv))
-			elif rr.randf() < 0.25:
+			elif roof_ok and rr.randf() < 0.25:
 				on_wall(gb, "prop_vent_turbine", "rusty", 0.6, -0.8, float(gst.get("height", 3.0)) - 0.1, 0.0)
 			# the pad beside the garage: a car, a boat trailer or a golf cart
 			var pad_s := gar_s - side * (gw * 0.5 + 1.7)
@@ -508,12 +551,12 @@ func house_lot(lot: Dictionary) -> void:
 					var cn: Vector2 = pt(axis, rs + (k6 * 2.0 - 1.0) * 2.0, bk + 0.6)
 					add("prop_cone_28in" if k6 == 0 else "prop_cone_18in", "dirty", cn.x, cn.y, rr.randf_range(0, 360), 0.0, false)
 				var t0: Vector2 = pt(axis, s0 + 0.8, rear + 1.5); var t1: Vector2 = pt(axis, s1 - 0.8, rear + 1.5)
-				fence_run(t0, t1, "fence_temp_fence_panel_screen", "prop_temp_fence_stand", 3.5, H, "dirty")
+				fence_run(t0, t1, "fence_temp_fence_panel_screen", "", 3.3, H, "dirty")
 				dec.add(14, L2(rp.x, rp.y), yaw, 3.5, 7.0, Hc, Color(0.85, 0.8, 0.7, 0.6))
 		# three carts inside the back gate, against the fence (not collection day)
 		for k3 in 3:
-			var cp: Vector2 = pt(axis, gate_s + (1.2 + k3 * 0.75) * (1.0 if gate_s < (s0 + s1) * 0.5 else -1.0), tb + 0.75)
-			if free_at(cp.x, cp.y, 0.35): add(["prop_trash_cart_black", "prop_trash_cart_blue", "prop_trash_cart_green"][k3], "worn", cp.x, cp.y, yaw_of(fdu, fdv) + rr.randf_range(-12, 12), 0.0, true, 1.0, 0.35)
+			var cp: Vector2 = pt(axis, gate_s + (1.25 + k3 * 0.9) * (1.0 if gate_s < (s0 + s1) * 0.5 else -1.0), tb + 0.8)
+			if free_at(cp.x, cp.y, 0.38): add(["prop_trash_cart_black", "prop_trash_cart_blue", "prop_trash_cart_green"][k3], "worn", cp.x, cp.y, yaw_of(fdu, fdv) + rr.randf_range(-4, 4), 0.0, true, 1.0, 0.38)
 		var gc: Vector2 = pt(axis, gate_s, tb + 1.0)
 		dec.add(14, L2(gc.x, gc.y), yaw, 2.2, 1.6, Hc, Color(1, 1, 1, 0.55))
 	# the yard: one shade tree in a back corner, and what this household does out there
@@ -528,6 +571,8 @@ func house_lot(lot: Dictionary) -> void:
 	match pick:
 		"patio":
 			if try_add("prop_patio_set_4", "worn", yc.x, yc.y, rr.randf_range(-20, 20), 1.3):
+				var pp3: Vector2 = pt(axis, hs - 1.9, by - 1.2)
+				try_add("plant_potted_leafy", "normal", pp3.x, pp3.y, 0.0, 0.7)
 				var bq2: Vector2 = pt(axis, hs + 2.6, by - 1.0)
 				try_add("prop_bbq_kettle" if rr.randf() < 0.5 else "prop_bbq_gas_cart", "worn", bq2.x, bq2.y, yaw + 180.0, 0.7)
 				dec.add(14, L2(yc.x, yc.y), yaw, 3.4, 3.0, Hc, Color(1, 1, 1, 0.5))
@@ -552,8 +597,29 @@ func house_lot(lot: Dictionary) -> void:
 		"kayak":
 			var kc: Vector2 = pt(axis, s0 + 1.2 if side < 0 else s1 - 1.2, rear + 2.5)
 			try_add("prop_kayak_rack", "worn", kc.x, kc.y, yaw + 90.0, 1.0)
+			var icp: Vector2 = pt(axis, hs + 1.5, rear + 1.0)
+			try_add("prop_ice_chest", "worn", icp.x, icp.y, yaw, 0.5)
 			var uc: Vector2 = pt(axis, hs, by)
 			try_add("prop_beach_umbrella_closed", "worn", uc.x, uc.y, 0.0, 0.4)
+	var pick2 := String(yard[(yard.find(pick) + 1 + rr.randi() % maxi(1, yard.size() - 1)) % yard.size()])
+	var y2: Vector2 = pt(axis, hs + side * 3.5, by + 4.5)
+	match pick2:
+		"patio": try_add("prop_patio_set_4", "worn", y2.x, y2.y, rr.randf_range(-20, 20), 1.3)
+		"bbq": try_add("prop_bbq_kettle", "worn", y2.x, y2.y, yaw, 0.5)
+		"chairs": try_add("prop_adirondack_wood", "worn", y2.x, y2.y, yaw + 180.0 + rr.randf_range(-20, 20), 0.6)
+		"arbor": try_add("prop_garden_arbor", "worn", y2.x, y2.y, yaw, 1.0)
+		"line": if free_at(y2.x, y2.y, 2.8): add("prop_clothesline", "worn", y2.x, y2.y, yaw + 90.0, 0.0, true, 1.0, 2.8)
+		"kayak": try_add("prop_beach_umbrella_closed", "worn", y2.x, y2.y, 0.0, 0.4)
+	if rr.randf() < float(design.get("swing", 0.15)):
+		var sw: Vector2 = pt(axis, (s0 + s1) * 0.5, tb - 5.5)
+		try_add("prop_swing_set", "worn", sw.x, sw.y, yaw + 90.0, 2.6)
+	var fr: Array = design.get("fruit", ["tree_coral_b", "tree_magnolia_a", "tree_jacaranda_a"])
+	if rr.randf() < 0.55:
+		var ft: Vector2 = pt(axis, s1 - 3.0 if side > 0 else s0 + 3.0, rear + rr.randf_range(5.0, 9.0))
+		try_add(String(fr[rr.randi() % fr.size()]), "normal", ft.x, ft.y, rr.randf_range(0, 360), 1.0, rr.randf_range(0.55, 0.75))
+	for k7 in 3:
+		var bp: Vector2 = pt(axis, rr.randf_range(s0 + 1.2, s1 - 1.2), tb - 1.2)
+		try_add(String(plants[rr.randi() % plants.size()]), "normal", bp.x, bp.y, rr.randf_range(0, 360), 0.6)
 	var hr: Vector2 = pt(axis, hs - hw * 0.5 + 0.8, rear + 0.6)
 	if rr.randf() < 0.5: try_add("prop_hose_reel_cart", "worn", hr.x, hr.y, yaw, 0.45)
 	# wear: grime at the foot of the house front, the path to the back gate worn into the grass
@@ -591,7 +657,7 @@ func corner_shop(lot: Dictionary, folder: String, label: String, kind: String) -
 	var st := K.building_stats(folder)
 	var w: float = st.footprint_wd[0]; var d: float = st.footprint_wd[1]
 	var s0 := float(lot.s0); var s1 := float(lot.s1)
-	var su := s0 + 0.6 + w * 0.5
+	var su := s0 + 1.4 + w * 0.5
 	var tv := PROP + FORE + d * 0.5
 	var b := building(folder, su, tv, H, yaw_of(0.0, -1.0), false, label, 0.7)
 	lot.bld = b
@@ -618,6 +684,17 @@ func corner_shop(lot: Dictionary, folder: String, label: String, kind: String) -
 		if String(t[0]).begins_with("prop_vending") or String(t[0]) == "prop_ice_chest": yy = yaw_of(0.0, -1.0)
 		if try_add(String(t[0]), "worn", sp, PROP + 1.2, yy, 0.5): k += 1
 	dec.add(14, L2(door_s, PROP + 1.4), 0.0, 2.0, 2.4, func(x: float, z: float) -> float: return gyl(x, z), Color(1, 1, 1, 0.55))
+	# the corner: the neighbourhood's mailbox and a paper box where people pass; pots either side of the door; a lamp
+	try_add("prop_usps_collection_box", "worn", s1 - 0.8, PROP + 0.6, yaw_of(0.0, -1.0), 0.5)
+	for sd2: float in [-1.0, 1.0]:
+		try_add("plant_potted_leafy" if kind == "cafe" else "plant_potted_succulent", "normal", door_s + sd2 * 1.1, PROP + FORE - 0.35, 0.0, 0.3)
+	on_wall(b, "prop_porch_light_coach_bronze", "worn", -w * 0.35, d * 0.5 + 0.05, 2.4, yaw_of(0.0, -1.0))
+	on_wall(b, "prop_porch_light_coach_bronze", "worn", w * 0.35, d * 0.5 + 0.05, 2.4, yaw_of(0.0, -1.0))
+	if kind == "sport":       # boards and kayaks out front in the morning (the shop rents them)
+		try_add("prop_kayak_rack", "worn", s0 + 2.0, PROP + 1.0, yaw_of(1.0, 0.0), 0.9)
+		try_add("prop_beach_umbrella_closed", "worn", s0 + 3.2, PROP + 0.8, 0.0, 0.3)
+	if kind == "cafe":        # two small tables outside on the forecourt, chairs pushed in
+		try_add("prop_patio_set_4", "worn", s1 - 2.6, PROP + 1.25, 0.0, 1.0)
 	# back of house: meters, AC, the bins in an enclosure off the alley, two staff stalls
 	on_wall(b, "prop_meter_electric", "worn", -w * 0.3, -d * 0.5 - 0.02, 1.05, yaw_of(0.0, 1.0))
 	on_wall(b, "prop_meter_gas", "rusty", -w * 0.3 + 0.9, -d * 0.5 - 0.02, 0.2, yaw_of(0.0, 1.0))
@@ -634,7 +711,7 @@ func corner_shop(lot: Dictionary, folder: String, label: String, kind: String) -
 		W.oil(dec, rr, L2(sc.x, sc.y), 0.0, func(x: float, z: float) -> float: return gyl(x, z), 0.7)
 	W.cracks(dec, rr, minf(L2(s0, float(lot.b) - 13.0).x, L2(s1, float(lot.b)).x), minf(L2(s0, float(lot.b) - 13.0).y, L2(s1, float(lot.b)).y), maxf(L2(s0, float(lot.b) - 13.0).x, L2(s1, float(lot.b)).x), maxf(L2(s0, float(lot.b) - 13.0).y, L2(s1, float(lot.b)).y), 6, func(x: float, z: float) -> float: return gyl(x, z), 0.5)
 	# a low hedge on the side-street edge (the side yard), the rest is lawn
-	var x := float(lot.f) + FORE + 1.0
+	var x := float(lot.f) + FORE + d + 0.6           # the side yard behind the shop
 	while x + 2.0 < float(lot.b) - 14.0:
 		props.add("hedge_boxwood_low_2m", "normal", L(s0 + 0.5, x + 1.0, H), yaw_of(1.0, 0.0))
 		occ.append([s0 + 0.5, x + 1.0, 0.5])
@@ -655,16 +732,6 @@ func alleys() -> void:
 	surfs.append([AL0, AL1, AL1, LEN, "field", 0.0])
 	var Hc := func(x: float, z: float) -> float: return gyl(x, z)
 	for along_u: bool in [true, false]:
-		var s := 18.0 if along_u else 24.0
-		while s < LEN - 4.0:
-			if absf(s - c) > 5.0:
-				var pu2 := Vector2(s, AL0 + 0.35) if along_u else Vector2(AL0 + 0.35, s)
-				var pyaw := yaw_of(1.0, 0.0) if along_u else yaw_of(0.0, 1.0)
-				pyaw = 90.0 if along_u else 0.0
-				props.add("prop_utility_pole_transformer" if poles.size() % 3 == 1 else "prop_utility_pole", "worn", L(pu2.x, pu2.y, fh(pu2.x, pu2.y) - KERB_H + 0.02), pyaw)
-				occ.append([pu2.x, pu2.y, 0.4])
-				poles.append([L(pu2.x, pu2.y, fh(pu2.x, pu2.y)), pyaw, "u" if along_u else "v"])
-			s += 30.0
 		var a := L2(PROP, AL0) if along_u else L2(AL0, PROP)
 		var b := L2(LEN, AL1) if along_u else L2(AL1, LEN)
 		W.cracks(dec, rr, minf(a.x, b.x), minf(a.y, b.y), maxf(a.x, b.x), maxf(a.y, b.y), 18, Hc, 0.4)
@@ -684,6 +751,30 @@ func alleys() -> void:
 		var pq := Vector2(ps, c - 1.2) if along_u else Vector2(c - 1.2, ps)
 		W.pale_patch(dec, rr, L2(pq.x, pq.y), 90.0 if along_u else 0.0, 1.6, 2.4, Hc)     # a utility cut, patched
 
+## the alley poles (after the lots): every ~30 m on one alley edge, each slid along the alley until it is clear of
+## every garage door and gate (a pole never stands in front of a garage)
+func alley_poles() -> void:
+	var c := (AL0 + AL1) * 0.5
+	for along_u: bool in [true, false]:
+		var s := 18.0 if along_u else 24.0
+		while s < LEN - 4.0:
+			var placed := false
+			for dk: float in [0.0, 2.0, -2.0, 4.0, -4.0, 6.0, -6.0, 8.0, -8.0]:
+				var ss2 := s + dk
+				if absf(ss2 - c) < 5.0 or ss2 < PROP + 4.0 or ss2 > LEN - 2.0: continue
+				var pu2 := Vector2(ss2, AL0 - 0.45) if along_u else Vector2(AL0 - 0.45, ss2)      # in the rear easement, off the asphalt
+				var ok := true
+				for dp: Vector2 in doorpts:
+					if pu2.distance_to(dp) < 2.2: ok = false; break
+				if ok and not free_at(pu2.x, pu2.y, 0.3): ok = false
+				if not ok: continue
+				var pyaw := 90.0 if along_u else 0.0
+				props.add("prop_utility_pole_transformer" if poles.size() % 3 == 1 else "prop_utility_pole", "worn", L(pu2.x, pu2.y, fh(pu2.x, pu2.y) - KERB_H + 0.02), pyaw)
+				occ.append([pu2.x, pu2.y, 0.4])
+				poles.append([L(pu2.x, pu2.y, fh(pu2.x, pu2.y)), pyaw, "u" if along_u else "v"])
+				placed = true; break
+			s += 30.0
+
 ## ------------------------------------------------------------------------------------------------ sub-block D
 ## pocket park (the block's kids play here; parents watch from the benches): iron fence round it, ONE gate off the
 ## alley, a level play pad of bark with a low edge, swings, slide, picnic under a sail, fountain, bins, shade trees, a
@@ -701,46 +792,107 @@ func park_d(kind: String) -> void:
 	prect(u0, gate_v - 1.0, u0 + 8.0, gate_v + 1.0, "concrete")
 	add("prop_lamp_globe", "worn", u0 + 1.6, gate_v + 2.4, 0.0, 0.0, true, 1.0, 0.4)
 	if kind == "park":
-		# level play pad: bark, a low timber edge (the wall faces)
-		var pu0 := 68.0; var pv0 := 64.0; var pu1 := 96.0; var pv1 := 84.0
+		# the play area: a level bark pad with a low edge, three things to play on, a shade sail over the parents'
+		# bench, benches round it facing the play (parents watch the kids, not a wall)
+		var pu0 := 68.0; var pv0 := 63.5; var pu1 := 91.0; var pv1 := 80.5
 		var Hp := snappedf(fh((pu0 + pu1) * 0.5, (pv0 + pv1) * 0.5), 0.01)
 		surfs.append([pu0, pv0, pu1, pv1, "level", Hp])
 		prect(pu0, pv0, pu1, pv1, "mulch")
 		var cP := c_const(Hp); var cF := c_field()
 		seam(Vector2(pu0, pv0), Vector2(pu1, pv0), cP, cF); seam(Vector2(pu1, pv0), Vector2(pu1, pv1), cP, cF)
 		seam(Vector2(pu1, pv1), Vector2(pu0, pv1), cP, cF); seam(Vector2(pu0, pv1), Vector2(pu0, pv0), cP, cF)
-		add("prop_play_structure", "worn", 82.0, 74.0, yaw_of(-1.0, 0.0), 0.0, true, 1.0, 4.5)
-		add("prop_swing_set", "worn", 72.0, 68.5, 90.0, 0.0, true, 1.0, 2.6)
-		add("prop_slide", "worn", 92.0, 79.0, yaw_of(0.0, 1.0), 0.0, true, 1.0, 1.6)
-		dec.add(14, L2(72.0, 68.5), 0.0, 3.0, 2.0, Hc, Color(1, 1, 1, 0.6))
-		# benches at the pad edge facing the play (parents watch the kids, not a wall)
-		for e: Array in [[66.4, 72.0, 1.0, 0.0], [66.4, 80.0, 1.0, 0.0], [80.0, 86.0, 0.0, -1.0]]:
+		add("prop_play_structure", "worn", 80.5, 71.5, yaw_of(-1.0, 0.0), 0.0, true, 1.0, 4.0)
+		add("prop_swing_set", "worn", 72.5, 67.8, 90.0, 0.0, true, 1.0, 2.6)
+		add("prop_slide", "worn", 87.5, 66.5, yaw_of(0.0, 1.0), 0.0, true, 1.0, 1.6)
+		add("prop_swing_set", "dirty", 87.5, 77.0, 0.0, 0.0, true, 1.0, 2.6)
+		dec.add(14, L2(72.5, 67.8), 0.0, 3.0, 2.0, Hc, Color(1, 1, 1, 0.6))
+		dec.add(14, L2(87.5, 77.0), 90.0, 3.0, 2.0, Hc, Color(1, 1, 1, 0.6))
+		dec.add(14, L2(80.5, 75.5), 0.0, 4.0, 2.4, Hc, Color(1, 1, 1, 0.45))
+		for e: Array in [[66.3, 69.0, 1.0, 0.0], [66.3, 73.5, 1.0, 0.0], [76.0, 82.3, 0.0, -1.0], [83.0, 82.3, 0.0, -1.0]]:
 			add("prop_park_bench", "worn", float(e[0]), float(e[1]), yaw_of(float(e[2]), float(e[3])), 0.0, true, 1.0, 1.0)
-		add("prop_trash_receptacle", "worn", 66.4, 76.0, 0.0, 0.0, true, 1.0, 0.4)
-		add("prop_drinking_fountain", "worn", 62.6, 72.0, yaw_of(1.0, 0.0), 0.0, true, 1.0, 0.5)
-		# picnic: a table under its own sail
-		add("prop_picnic_table", "worn", 90.0, 93.0, 0.0, 0.0, true, 1.0, 1.4)
-		props.add("prop_shade_sail", "worn", L(90.0, 93.0, gy(90.0, 93.0)), 0.0)
-		dec.add(14, L2(64.0, 76.0), 90.0, 1.6, 6.0, Hc, Color(1, 1, 1, 0.5))
-		for t: Array in [["tree_coral_b", 95.5, 64.5], ["tree_jacaranda_a", 64.5, 95.0], ["tree_magnolia_a", 96.0, 96.0]]:
+		props.add("prop_shade_sail", "worn", L(66.3, 71.2, gy(66.3, 71.2)), 90.0)
+		# the gate: path, a bin and the fountain beside it (never on it), a lamp
+		add("prop_trash_receptacle", "worn", 64.0, 79.2, 0.0, 0.0, true, 1.0, 0.4)
+		add("prop_recycling_receptacle", "worn", 65.0, 79.2, 0.0, 0.0, true, 1.0, 0.4)
+		add("prop_drinking_fountain", "worn", 64.0, 72.6, yaw_of(1.0, 0.0), 0.0, true, 1.0, 0.5)
+		# the picnic lawn at the back: two tables, each under its own sail, a grill, a bin at the lawn's edge
+		for k in 2:
+			var tu := 72.0 + k * 10.0
+			add("prop_picnic_table", "worn", tu, 91.0, 0.0, 0.0, true, 1.0, 1.4)
+			props.add("prop_shade_sail", "worn", L(tu, 91.0, gy(tu, 91.0)), 0.0)
+			dec.add(14, L2(tu, 91.0), 0.0, 3.4, 3.0, Hc, Color(1, 1, 1, 0.45))
+		add("prop_bbq_kettle", "dirty", 77.0, 95.5, 0.0, 0.0, true, 1.0, 0.5)
+		add("prop_trash_receptacle", "dirty", 88.5, 96.5, 0.0, 0.0, true, 1.0, 0.4)
+		# planting: beds along the fence, trees in the corners and the lawn
+		for t: Array in [["tree_coral_b", 95.5, 64.5], ["tree_jacaranda_a", 64.5, 95.0], ["tree_magnolia_a", 96.0, 96.0], ["tree_torrey_pine_a", 95.5, 84.0], ["tree_jacaranda_b", 64.5, 86.0]]:
 			try_add(String(t[0]), "normal", float(t[1]), float(t[2]), rr.randf_range(0, 360), 1.0)
-		add("prop_lamp_globe", "worn", 90.0, 87.0, 0.0, 0.0, true, 1.0, 0.4)
+		for bed: Array in [[62.0, 64.0, 0.0], [70.0, 62.0, 90.0], [97.8, 72.0, 0.0], [92.0, 97.8, 90.0], [62.0, 90.0, 0.0]]:
+			var pb: String = ["plant_bird_of_paradise", "plant_agave_americana", "plant_iceplant_patch", "plant_bougainvillea_mound"][rr.randi() % 4]
+			try_add(pb, "normal", float(bed[0]), float(bed[1]), float(bed[2]), 1.0)
+		for hb in 4:
+			var hu := 74.0 + hb * 4.0
+			props.add("hedge_boxwood_low_2m", "normal", L(hu, 98.6, gy(hu, 98.6)), yaw_of(1.0, 0.0))
+		add("prop_lamp_globe", "worn", 91.5, 86.5, 0.0, 0.0, true, 1.0, 0.4)
+		dec.add(14, L2(66.0, 76.0), 90.0, 1.4, 6.0, Hc, Color(1, 1, 1, 0.5))
 	else:
-		# a quiet green: a big old Norfolk pine and a Torrey pine, lawn, two benches under them facing the lawn,
-		# picnic tables, a dog-walkers' bin; the diagonal shortcut worn into the grass from the gate
-		try_add("tree_norfolk_pine_c", "normal", 86.0, 84.0, 30.0, 1.5)
-		try_add("tree_torrey_pine_b", "normal", 70.0, 90.0, 110.0, 1.5)
-		try_add("tree_coral_a", "normal", 92.0, 66.0, 200.0, 1.2)
-		add("prop_park_bench", "worn", 82.0, 88.5, yaw_of(0.0, -1.0), 0.0, true, 1.0, 1.0)
-		add("prop_park_bench", "worn", 74.0, 86.5, yaw_of(0.0, -1.0), 0.0, true, 1.0, 1.0)
-		for k in 2: add("prop_picnic_table", "worn", 70.0 + k * 9.0, 68.0, 0.0, 0.0, true, 1.0, 1.5)
-		add("prop_trash_receptacle", "worn", 64.0, 79.0, 0.0, 0.0, true, 1.0, 0.4)
-		add("prop_beach_sign_dog", "worn", 63.4, 73.5, yaw_of(1.0, 0.0), 0.0, true, 1.0, 0.3)
-		dec.add(14, L2(74.0, 80.0), yaw_of(1.0, 0.6), 1.2, 22.0, Hc, Color(1, 1, 1, 0.55))
-		add("plant_agave_americana", "normal", 95.0, 78.0, 0.0, 0.0, true, 1.0, 1.1)
+		# a quiet green: the block's old trees (a Norfolk pine and a Torrey pine), a small memorial with a bench each
+		# side facing it, picnic tables under sails, beds along the fence, the dog walkers' bin and sign at the gate,
+		# the diagonal shortcut worn into the grass
+		try_add("tree_norfolk_pine_c", "normal", 88.0, 88.0, 30.0, 1.5)
+		try_add("tree_torrey_pine_b", "normal", 68.0, 92.0, 110.0, 1.5)
+		try_add("tree_coral_a", "normal", 93.0, 66.0, 200.0, 1.2)
+		try_add("tree_magnolia_b", "normal", 70.0, 66.0, 60.0, 1.2)
+		var mc := Vector2(80.0, 79.0)
+		var Hm := snappedf(fh(mc.x, mc.y), 0.01)
+		surfs.append([mc.x - 4.0, mc.y - 4.0, mc.x + 4.0, mc.y + 4.0, "level", Hm])
+		prect(mc.x - 4.0, mc.y - 4.0, mc.x + 4.0, mc.y + 4.0, "paving")
+		var cM := c_const(Hm); var cF2 := c_field()
+		seam(Vector2(mc.x - 4.0, mc.y - 4.0), Vector2(mc.x + 4.0, mc.y - 4.0), cM, cF2); seam(Vector2(mc.x + 4.0, mc.y - 4.0), Vector2(mc.x + 4.0, mc.y + 4.0), cM, cF2)
+		seam(Vector2(mc.x + 4.0, mc.y + 4.0), Vector2(mc.x - 4.0, mc.y + 4.0), cM, cF2); seam(Vector2(mc.x - 4.0, mc.y + 4.0), Vector2(mc.x - 4.0, mc.y - 4.0), cM, cF2)
+		add("prop_obelisk_monument", "worn", mc.x, mc.y, 0.0, 0.0, true, 1.0, 1.2)
+		for e: Array in [[mc.x - 3.0, mc.y, 1.0, 0.0], [mc.x + 3.0, mc.y, -1.0, 0.0]]:
+			add("prop_park_bench", "worn", float(e[0]), float(e[1]), yaw_of(float(e[2]), float(e[3])), 0.0, true, 1.0, 1.0)
+		for k2 in 4: props.add("plant_potted_succulent", "normal", L(mc.x + [-1.2, 1.2, -1.2, 1.2][k2], mc.y + [-1.2, -1.2, 1.2, 1.2][k2], Hm), 0.0)
+		for k in 2:
+			var tu2 := 70.0 + k * 10.0
+			add("prop_picnic_table", "worn", tu2, 67.5, 0.0, 0.0, true, 1.0, 1.4)
+			props.add("prop_shade_sail", "worn", L(tu2, 67.5, gy(tu2, 67.5)), 0.0)
+		add("prop_park_bench", "worn", 92.0, 95.0, yaw_of(-1.0, -1.0), 0.0, true, 1.0, 1.0)
+		add("prop_trash_receptacle", "worn", 64.0, 79.2, 0.0, 0.0, true, 1.0, 0.4)
+		add("prop_beach_sign_dog", "worn", 63.6, 72.8, yaw_of(1.0, 0.0), 0.0, true, 1.0, 0.3)
+		for bed2: Array in [[97.6, 74.0], [97.6, 80.0], [62.2, 86.0], [75.0, 97.8], [84.0, 62.2]]:
+			var pb2: String = ["plant_agave_americana", "plant_iceplant_patch", "plant_bird_of_paradise", "plant_bougainvillea_mound"][rr.randi() % 4]
+			try_add(pb2, "normal", float(bed2[0]), float(bed2[1]), 0.0, 1.0)
+		add("prop_lamp_globe", "worn", 74.0, 74.0, 0.0, 0.0, true, 1.0, 0.4)
+		dec.add(14, L2(72.0, 77.5), yaw_of(1.0, 0.3), 1.2, 16.0, Hc, Color(1, 1, 1, 0.55))
 
 ## ------------------------------------------------------------------------------------------------ finish
+## after everything is placed: drop any small ground item a fence line or a wall-mounted bush crosses (the yard
+## fences are drawn after the planting and the services, so they can cut through them), and items on top of each other
+func clear_fences() -> void:
+	var walls: Array = []
+	for k: String in props.items:
+		if k.begins_with("prop_downspout") or k.begins_with("plant_bougainvillea_wall"):
+			for t: Transform3D in props.items[k]: walls.append(Q2(t.origin))
+	var kept_pts: Array = []
+	for k: String in props.items.keys():
+		var base := k.get_slice("|", 0)
+		if base.begins_with("fence_") or base.begins_with("tree_") or base.begins_with("palm_") or base.begins_with("prop_utility_pole") or base.begins_with("prop_shade_sail"): continue
+		var e := K.manifest(base)
+		if String(e.get("mount", "ground")) != "ground": continue
+		var r := 0.5 * maxf(float(e.get("footprint_w", 0.5)), float(e.get("footprint_d", 0.5)))
+		var keep: Array = []
+		for t: Transform3D in props.items[k]:
+			var q := Q2(t.origin)
+			var ok := not near_fence(q.x, q.y, r + 0.05)
+			if ok:
+				for wq: Vector2 in walls:
+					if q.distance_to(wq) < r + 0.35: ok = false; break
+			if ok: keep.append(t)
+		props.items[k] = keep
+
 func finish() -> void:
+	clear_fences()
 	# the ground: every surface with the paints (holes "-" where steps / ramps are built)
 	for s: Array in surfs:
 		var a := L2(float(s[0]), float(s[1])); var b := L2(float(s[2]), float(s[3]))
@@ -807,6 +959,7 @@ func build(piece: String, site: Dictionary, des: Dictionary) -> void:
 		for i in lots.size():
 			var lot: Dictionary = lots[i]
 			lot.last = i == lots.size() - 1
+			lot.next_front = String(lots[i + 1].get("front", "")) if i + 1 < lots.size() else ""
 			lot.Hprev = prevH if prevH > -999.0 else float(lot.Ht)
 			prevH = float(lot.Ht)
 			if bool(lot.get("shop", false)): corner_shop(lot, String(shop[0]), String(shop[1]), String(shop[2]))
@@ -825,6 +978,7 @@ func build(piece: String, site: Dictionary, des: Dictionary) -> void:
 			for i in lots2.size():
 				var lot2: Dictionary = lots2[i]
 				lot2.last = i == lots2.size() - 1
+				lot2.next_front = String(lots2[i + 1].get("front", "")) if i + 1 < lots2.size() else ""
 				lot2.Hprev = prev2 if prev2 > -999.0 else float(lot2.Ht)
 				prev2 = float(lot2.Ht)
 				house_lot(lot2)
@@ -833,4 +987,5 @@ func build(piece: String, site: Dictionary, des: Dictionary) -> void:
 				fence_run(Vector2(float(lot2.s0) + 0.2, LEN - 0.3), Vector2(float(lot2.s1) - 0.2, LEN - 0.3), String(bf[0]), String(bf[1]), float(bf[2]), float(lot2.Ht))
 		"green": park_d("green")
 		_: park_d("park")
+	alley_poles()
 	finish()
