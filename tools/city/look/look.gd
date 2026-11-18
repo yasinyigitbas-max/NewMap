@@ -182,6 +182,7 @@ func _wet_ground(cell: Node) -> void:
 		if _wet_mat == null:
 			_wet_mat = ShaderMaterial.new(); _wet_mat.shader = load("res://tools/city/look/demo_wet_ground.gdshader")
 			_wet_mat.set_shader_parameter(&"ground_arr", sm.get_shader_parameter(&"ground_arr")); _wet_mat.set_shader_parameter(&"puddle_tex", load(NOISE_PATH))
+			_wet_mat.set_shader_parameter(&"debug", OS.get_environment("LOOK_DEBUG_WET") == "1")
 		gi.material_override = _wet_mat
 
 func _process(dt: float) -> void:

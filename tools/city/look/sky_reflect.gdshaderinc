@@ -40,9 +40,9 @@ vec3 ck_sky_reflect(vec3 normal_view, vec3 view_view, mat4 inv_view, float f0, f
 void ck_wet_ground(inout vec3 albedo, inout float roughness, inout vec3 emission, vec3 normal_view, vec3 view_view, mat4 inv_view, float puddle) {
 	float w = ck_wet * puddle;
 	if (w <= 0.001) return;
-	albedo *= mix(1.0, 0.62, ck_wet);                                  // all of it a little darker when wet
+	albedo *= mix(1.0, 0.55, ck_wet);                                  // all of it darker when wet
 	roughness = mix(roughness, 0.12, w);
 	vec3 flat_n = transpose(mat3(inv_view)) * vec3(0.0, 1.0, 0.0);      // still water is flat (world up, in view space)
 	vec3 n = normalize(mix(normal_view, flat_n, w));
-	emission += ck_sky_reflect(n, view_view, inv_view, 0.02, w);
+	emission += ck_sky_reflect(n, view_view, inv_view, 0.12, w * 1.3);      // more than water's real 2 %: a game's wet road (GTA 4's rain)
 }

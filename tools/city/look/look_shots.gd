@@ -7,6 +7,7 @@ extends RefCounted
 ##   --views=name:x,z:yaw[:pitch];...   views of your own instead of the list (yaw 0 looks north (-Z), 90 east (+X))
 ##   --times=day | night                only one of the two
 ##   --hold=40                          frames to wait before a picture is taken
+##   --savemap                          also save the look's small sky map (look job 5) beside each picture
 ##   --fullsize                         keep the window's size (e.g. 2460 x 1080 to judge the upscaler) instead of 1640 x 720
 ## With --upscale=1 the file names end in _sgsr, with --glow=0 (and the look) in _glow0.
 ## [name, x, z, yaw, pitch]: street level, eye 1.6 m over the road.
@@ -71,5 +72,6 @@ static func run(rig: Node, folder: String, args: PackedStringArray) -> void:
 			var sfx := ("_sgsr" if int(rig.opt.upscale) == 1 else "") + ("_glow0" if int(rig.opt.glow) == 0 and lk != "0" else "") + ("_blobs" if int(rig.opt.blobs) == 1 else "") + ("_wet" if float(rig.opt.wet) > 0.0 else "")
 			var path := dir.path_join("%s_%s%s.jpg" % [v[0], c[0], sfx])
 			img.save_jpg(path, 0.9)
+			if "--savemap" in args and rig.look: rig.look.sky_map.get_texture().get_image().save_png(path.get_basename() + "_skymap.png")
 			rig._say("shot %s look=%s ground=%.1f draws=%d" % [path.get_file(), lk, gy, RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)])
 	rig._say("shots_done %s" % dir)
