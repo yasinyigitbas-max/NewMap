@@ -51,13 +51,18 @@ func _run() -> void:
 	var rc: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(D + "room_contracts.json")).models
 	rc.merge(JSON.parse_string(FileAccess.get_file_as_string(D + "room_contracts_strip.json")).models, true)
 	var asg: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(D + "assignment_strip.json"))
+	# the neighbours' rooms too (the room session's rooms of the existing shops, g_<id>), so a picture never shows a
+	# neighbour as an empty model with its old painted sign; they are only placed, never shot one by one
+	var asg_all: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(D + "assignment_all.json"))
+	for e0: Dictionary in asg_all.rooms:
+		var e1 := e0.duplicate(); e1["_neighbour"] = true; (asg.rooms as Array).append(e1)
 	var cam := Camera3D.new(); cam.fov = 62.0; cam.near = 0.05; cam.far = 1500.0; root.add_child(cam)
 	# every room of the chosen pieces: cut its openings, place it
 	var cuts := {}      # building node -> Array of [facade, along]
 	var rooms: Array = []
 	for e: Dictionary in asg.rooms:
 		if not pieces_only.is_empty() and not pieces_only.has(String(e.piece)): continue
-		var scn := String(e.built) if String(e.built) != "" else "g_strip_" + String(e.id)
+		var scn := String(e.built) if String(e.built) != "" else ("g_" if e.has("_neighbour") else "g_strip_") + String(e.id)
 		var path := rdir + scn + ".scn"
 		if not ResourceLoader.exists(path): continue
 		var bld: Node3D = null
@@ -82,6 +87,7 @@ func _run() -> void:
 	if each:
 		for rr: Array in rooms:
 			var e: Dictionary = rr[0]; var bld: Node3D = rr[1]
+			if e.has("_neighbour"): continue
 			var c: Dictionary = rc[String(e.model)]
 			var dx := float(e.door_along); var fz := float(c.floors[0].box_max[2]); var fy := float(c.floors[0].y)
 			var xf := bld.global_transform
