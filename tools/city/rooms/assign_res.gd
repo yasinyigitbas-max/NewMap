@@ -10,6 +10,8 @@ const RC := "res://map_dc/coronado/city_kit/interiors/room_contracts.json"
 const SHOPS := {
 	"r_shop_books": ["g_res_books", "Hillside Books", "cream", "a used bookshop on the corner of 10th and E Ave: the walk from the houses up the hill passes it, and it has been there longer than most of the owners"],
 	"r_shop_cafe": ["g_res_cafe", "Ridge Coffee", "green", "the regulars' cafe at 9th and G Ave, at the top of Country Club Ridge: dog walkers and the morning commute down the hill stop here"],
+	"r_shop_wash": ["g_res_wash", "Glorietta Wash & Fold", "blue", "the laundromat at 9th St and B Ave on Glorietta Heights: the houses here have no room for a dryer in the old bungalows, and the attendant does wash-and-fold for the hotel staff down the hill"],
+	"r_shop_market": ["g_res_market", "Hilltop Market", "red", "Crown Hill's corner market at 5th St and C Ave: the villas on the hill are a long walk from the centre, so milk, bread and the paper come from here"],
 	"r_shop_surf": ["g_res_surf", "Ocean Blvd Surf", "teal", "surf shop and ding repair at 11th and J Ave, one block from Ocean Blvd and the beach: boards walk down to the water from here"],
 }
 
@@ -40,7 +42,7 @@ func _init() -> void:
 			"door_index": 0, "door_along": float(door.along), "door_w": float(door.w), "bay": [float(fl.box_min[0]), float(fl.box_max[0])],
 			"kind": row.get("kind", ""), "name": s[1], "style": s[2], "why": s[3], "source": "res_grow", "built": s[0], "signs": signs})
 		sc.free()
-	var kinds := {"r_shop_books": "books", "r_shop_cafe": "cafe", "r_shop_surf": "sport"}
+	var kinds := {"r_shop_books": "books", "r_shop_cafe": "cafe", "r_shop_surf": "sport", "r_shop_wash": "cleaners", "r_shop_market": "corner_shop"}
 	for e: Dictionary in rooms: e.kind = kinds[e.label]
 	var fo := FileAccess.open("res://map_dc/coronado/city_kit/interiors/assignment_res.json", FileAccess.WRITE)
 	fo.store_string(JSON.stringify({"_doc": "the residential zone's walk-in shops (tools/city/rooms/assign_res.gd from review/grow_res_blocks.json; rooms: interiors/rooms/rooms_res.gd). Same shape as assignment_all.json.", "count": rooms.size(), "rooms": rooms}, " "))

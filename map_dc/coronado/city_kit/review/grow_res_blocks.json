@@ -1,6 +1,6 @@
 {
- "note": "Residential growth, pilot area (res_grow.py): one quadrant piece per junction corner, pos = the junction centre at its pad, yaw 0 (each piece is built for its own corner).",
- "area": {
+ "note": "Residential growth (res_grow.py): one quadrant piece per junction corner of the residential zone that the variants can carry (res_zone.py), pos = the junction centre at its pad, yaw 0 (each piece is built for its own corner). The pilot area (u -800..-200, v -200..200) came first (18 Nov); the rest of the zone 19 Nov (Yasin: 'roll out to your whole zone').",
+ "pilot_area": {
   "u": [
    -800,
    -200
@@ -10,10 +10,29 @@
    200
   ],
   "blocks": 6,
-  "quadrants": 25
+  "quadrants": 24
  },
+ "quadrants": 44,
  "grow": true,
  "rows": [
+  {
+   "piece": "r_q_m800_m200_ne",
+   "pos": [
+    -800.0,
+    4.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "design": "V2",
+   "cell": [
+    -800.0,
+    -400.0
+   ],
+   "rise_u": 2.0,
+   "rise_v": 0.0,
+   "twist": 0.0,
+   "shop": ""
+  },
   {
    "piece": "r_q_m800_m200_se",
    "pos": [
@@ -48,42 +67,6 @@
    "rise_u": 4.0,
    "rise_v": -4.0,
    "twist": -2.0,
-   "shop": ""
-  },
-  {
-   "piece": "r_q_m600_m200_sw",
-   "pos": [
-    -600.0,
-    6.0,
-    -200.0
-   ],
-   "yaw": 0.0,
-   "design": "V2",
-   "cell": [
-    -800.0,
-    -200.0
-   ],
-   "rise_u": -2.0,
-   "rise_v": 6.0,
-   "twist": -2.0,
-   "shop": ""
-  },
-  {
-   "piece": "r_q_m600_0_nw",
-   "pos": [
-    -600.0,
-    12.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "design": "V1",
-   "cell": [
-    -800.0,
-    -200.0
-   ],
-   "rise_u": -4.0,
-   "rise_v": -6.0,
-   "twist": 2.0,
    "shop": ""
   },
   {
@@ -123,39 +106,57 @@
    "shop": "r_shop_surf"
   },
   {
-   "piece": "r_q_m600_0_sw",
+   "piece": "r_q_m600_m200_nw",
    "pos": [
     -600.0,
-    12.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "design": "V4",
-   "cell": [
-    -800.0,
-    0.0
-   ],
-   "rise_u": -4.0,
-   "rise_v": -8.0,
-   "twist": 2.0,
-   "shop": ""
-  },
-  {
-   "piece": "r_q_m600_200_nw",
-   "pos": [
-    -600.0,
-    4.0,
-    200.0
+    6.0,
+    -200.0
    ],
    "yaw": 0.0,
    "design": "V1",
    "cell": [
     -800.0,
-    0.0
+    -400.0
    ],
    "rise_u": -2.0,
-   "rise_v": 8.0,
+   "rise_v": 0.0,
+   "twist": 0.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_m600_m200_sw",
+   "pos": [
+    -600.0,
+    6.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "design": "V2",
+   "cell": [
+    -800.0,
+    -200.0
+   ],
+   "rise_u": -2.0,
+   "rise_v": 6.0,
    "twist": -2.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_m600_m200_ne",
+   "pos": [
+    -600.0,
+    6.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "design": "V3",
+   "cell": [
+    -600.0,
+    -400.0
+   ],
+   "rise_u": 0.0,
+   "rise_v": 0.0,
+   "twist": 0.0,
    "shop": ""
   },
   {
@@ -177,6 +178,42 @@
    "shop": "r_shop_cafe"
   },
   {
+   "piece": "r_q_m600_0_nw",
+   "pos": [
+    -600.0,
+    12.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "design": "V1",
+   "cell": [
+    -800.0,
+    -200.0
+   ],
+   "rise_u": -4.0,
+   "rise_v": -6.0,
+   "twist": 2.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_m600_0_sw",
+   "pos": [
+    -600.0,
+    12.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "design": "V4",
+   "cell": [
+    -800.0,
+    0.0
+   ],
+   "rise_u": -4.0,
+   "rise_v": -8.0,
+   "twist": 2.0,
+   "shop": ""
+  },
+  {
    "piece": "r_q_m600_0_ne",
    "pos": [
     -600.0,
@@ -192,42 +229,6 @@
    "rise_u": -6.0,
    "rise_v": -6.0,
    "twist": 6.0,
-   "shop": ""
-  },
-  {
-   "piece": "r_q_m400_m200_sw",
-   "pos": [
-    -400.0,
-    6.0,
-    -200.0
-   ],
-   "yaw": 0.0,
-   "design": "V1",
-   "cell": [
-    -600.0,
-    -200.0
-   ],
-   "rise_u": 0.0,
-   "rise_v": 0.0,
-   "twist": 6.0,
-   "shop": ""
-  },
-  {
-   "piece": "r_q_m400_0_nw",
-   "pos": [
-    -400.0,
-    6.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "design": "V2",
-   "cell": [
-    -600.0,
-    -200.0
-   ],
-   "rise_u": 6.0,
-   "rise_v": 0.0,
-   "twist": -6.0,
    "shop": ""
   },
   {
@@ -249,6 +250,24 @@
    "shop": ""
   },
   {
+   "piece": "r_q_m600_200_nw",
+   "pos": [
+    -600.0,
+    4.0,
+    200.0
+   ],
+   "yaw": 0.0,
+   "design": "V1",
+   "cell": [
+    -800.0,
+    0.0
+   ],
+   "rise_u": -2.0,
+   "rise_v": 8.0,
+   "twist": -2.0,
+   "shop": ""
+  },
+  {
    "piece": "r_q_m600_200_ne",
    "pos": [
     -600.0,
@@ -267,39 +286,21 @@
    "shop": ""
   },
   {
-   "piece": "r_q_m400_0_sw",
+   "piece": "r_q_m400_m200_sw",
    "pos": [
     -400.0,
     6.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "design": "V4",
-   "cell": [
-    -600.0,
-    0.0
-   ],
-   "rise_u": 6.0,
-   "rise_v": -4.0,
-   "twist": -4.0,
-   "shop": ""
-  },
-  {
-   "piece": "r_q_m400_200_nw",
-   "pos": [
-    -400.0,
-    2.0,
-    200.0
+    -200.0
    ],
    "yaw": 0.0,
    "design": "V1",
    "cell": [
     -600.0,
-    0.0
+    -200.0
    ],
-   "rise_u": 2.0,
-   "rise_v": 4.0,
-   "twist": 4.0,
+   "rise_u": 0.0,
+   "rise_v": 0.0,
+   "twist": 6.0,
    "shop": ""
   },
   {
@@ -321,6 +322,42 @@
    "shop": ""
   },
   {
+   "piece": "r_q_m400_0_nw",
+   "pos": [
+    -400.0,
+    6.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "design": "V2",
+   "cell": [
+    -600.0,
+    -200.0
+   ],
+   "rise_u": 6.0,
+   "rise_v": 0.0,
+   "twist": -6.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_m400_0_sw",
+   "pos": [
+    -400.0,
+    6.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "design": "V4",
+   "cell": [
+    -600.0,
+    0.0
+   ],
+   "rise_u": 6.0,
+   "rise_v": -4.0,
+   "twist": -4.0,
+   "shop": ""
+  },
+  {
    "piece": "r_q_m400_0_ne",
    "pos": [
     -400.0,
@@ -337,6 +374,96 @@
    "rise_v": 0.0,
    "twist": 2.0,
    "shop": ""
+  },
+  {
+   "piece": "r_q_m400_0_se",
+   "pos": [
+    -400.0,
+    6.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "design": "V1",
+   "cell": [
+    -400.0,
+    0.0
+   ],
+   "rise_u": -2.0,
+   "rise_v": -4.0,
+   "twist": 2.0,
+   "shop": "r_shop_books"
+  },
+  {
+   "piece": "r_q_m400_200_nw",
+   "pos": [
+    -400.0,
+    2.0,
+    200.0
+   ],
+   "yaw": 0.0,
+   "design": "V1",
+   "cell": [
+    -600.0,
+    0.0
+   ],
+   "rise_u": 2.0,
+   "rise_v": 4.0,
+   "twist": 4.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_m400_200_ne",
+   "pos": [
+    -400.0,
+    2.0,
+    200.0
+   ],
+   "yaw": 0.0,
+   "design": "V3",
+   "cell": [
+    -400.0,
+    0.0
+   ],
+   "rise_u": 0.0,
+   "rise_v": 4.0,
+   "twist": -2.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_m200_m1000_ne",
+   "pos": [
+    -200.0,
+    8.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "design": "V1",
+   "cell": [
+    -200.0,
+    -1200.0
+   ],
+   "rise_u": 4.0,
+   "rise_v": 2.0,
+   "twist": 0.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_m200_m1000_se",
+   "pos": [
+    -200.0,
+    8.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "design": "V2",
+   "cell": [
+    -200.0,
+    -1000.0
+   ],
+   "rise_u": 4.0,
+   "rise_v": -2.0,
+   "twist": -4.0,
+   "shop": "r_shop_market"
   },
   {
    "piece": "r_q_m200_m200_sw",
@@ -375,42 +502,6 @@
    "shop": ""
   },
   {
-   "piece": "r_q_m400_0_se",
-   "pos": [
-    -400.0,
-    6.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "design": "V1",
-   "cell": [
-    -400.0,
-    0.0
-   ],
-   "rise_u": -2.0,
-   "rise_v": -4.0,
-   "twist": 2.0,
-   "shop": "r_shop_books"
-  },
-  {
-   "piece": "r_q_m400_200_ne",
-   "pos": [
-    -400.0,
-    2.0,
-    200.0
-   ],
-   "yaw": 0.0,
-   "design": "V3",
-   "cell": [
-    -400.0,
-    0.0
-   ],
-   "rise_u": 0.0,
-   "rise_v": 4.0,
-   "twist": -2.0,
-   "shop": ""
-  },
-  {
    "piece": "r_q_m200_0_sw",
    "pos": [
     -200.0,
@@ -444,6 +535,258 @@
    "rise_u": 0.0,
    "rise_v": 2.0,
    "twist": 2.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_0_m1000_nw",
+   "pos": [
+    0.0,
+    12.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "design": "V2",
+   "cell": [
+    -200.0,
+    -1200.0
+   ],
+   "rise_u": -4.0,
+   "rise_v": 2.0,
+   "twist": 0.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_0_m1000_sw",
+   "pos": [
+    0.0,
+    12.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "design": "V4",
+   "cell": [
+    -200.0,
+    -1000.0
+   ],
+   "rise_u": -4.0,
+   "rise_v": -6.0,
+   "twist": 4.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_0_m1000_ne",
+   "pos": [
+    0.0,
+    12.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "design": "V1",
+   "cell": [
+    0.0,
+    -1200.0
+   ],
+   "rise_u": -6.0,
+   "rise_v": 2.0,
+   "twist": 0.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_0_m1000_se",
+   "pos": [
+    0.0,
+    12.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "design": "V3",
+   "cell": [
+    0.0,
+    -1000.0
+   ],
+   "rise_u": -6.0,
+   "rise_v": -6.0,
+   "twist": 6.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_250_m1000_nw",
+   "pos": [
+    250.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "design": "V2",
+   "cell": [
+    0.0,
+    -1200.0
+   ],
+   "rise_u": 6.0,
+   "rise_v": 2.0,
+   "twist": 0.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_250_m1000_sw",
+   "pos": [
+    250.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "design": "V4",
+   "cell": [
+    0.0,
+    -1000.0
+   ],
+   "rise_u": 6.0,
+   "rise_v": 0.0,
+   "twist": -6.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_250_m1000_ne",
+   "pos": [
+    250.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "design": "V3",
+   "cell": [
+    250.0,
+    -1200.0
+   ],
+   "rise_u": -2.0,
+   "rise_v": 2.0,
+   "twist": -2.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_250_m1000_se",
+   "pos": [
+    250.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "design": "V1",
+   "cell": [
+    250.0,
+    -1000.0
+   ],
+   "rise_u": -2.0,
+   "rise_v": 0.0,
+   "twist": 2.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_250_m200_ne",
+   "pos": [
+    250.0,
+    12.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "design": "V3",
+   "cell": [
+    250.0,
+    -400.0
+   ],
+   "rise_u": -4.0,
+   "rise_v": -4.0,
+   "twist": 2.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_250_m200_se",
+   "pos": [
+    250.0,
+    12.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "design": "V1",
+   "cell": [
+    250.0,
+    -200.0
+   ],
+   "rise_u": -4.0,
+   "rise_v": -2.0,
+   "twist": -2.0,
+   "shop": "r_shop_wash"
+  },
+  {
+   "piece": "r_q_250_0_ne",
+   "pos": [
+    250.0,
+    10.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "design": "V4",
+   "cell": [
+    250.0,
+    -200.0
+   ],
+   "rise_u": -6.0,
+   "rise_v": 2.0,
+   "twist": 2.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_500_m200_nw",
+   "pos": [
+    500.0,
+    8.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "design": "V4",
+   "cell": [
+    250.0,
+    -400.0
+   ],
+   "rise_u": 4.0,
+   "rise_v": -2.0,
+   "twist": -2.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_500_m200_sw",
+   "pos": [
+    500.0,
+    8.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "design": "V3",
+   "cell": [
+    250.0,
+    -200.0
+   ],
+   "rise_u": 4.0,
+   "rise_v": -4.0,
+   "twist": 2.0,
+   "shop": ""
+  },
+  {
+   "piece": "r_q_500_0_nw",
+   "pos": [
+    500.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "design": "V2",
+   "cell": [
+    250.0,
+    -200.0
+   ],
+   "rise_u": 6.0,
+   "rise_v": 4.0,
+   "twist": -2.0,
    "shop": ""
   },
   {

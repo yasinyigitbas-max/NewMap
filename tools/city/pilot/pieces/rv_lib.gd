@@ -30,7 +30,12 @@ const W := preload("res://tools/city/pilot/pieces/wear_lib.gd")
 const PROP := 9.2
 const AL0 := 54.0
 const AL1 := 60.0
-const LEN := 100.0
+## quadrant depth along u / v (half the block: 100 m, or 125 m in the 250 m blocks east of Amber) and the block
+## lengths the street profiles span (the legs rise between the junction tiles: 20 .. L - 20)
+var LU := 100.0
+var LV := 100.0
+var BU := 200.0
+var BV := 200.0
 const KERB_H := 0.15
 const SET := 6.0          # front yard
 const GS := 8.0           # garage strip at the back of a street lot (on the alley)
@@ -66,11 +71,12 @@ static func ss(t: float) -> float:
 	var x := clampf(t, 0.0, 1.0)
 	return x * x * (3.0 - 2.0 * x)
 
-func S(t: float) -> float: return ss((t - 20.0) / 160.0)
+func Su(t: float) -> float: return ss((t - 20.0) / (BU - 40.0))
+func Sv(t: float) -> float: return ss((t - 20.0) / (BV - 40.0))
 
 ## walking height (street surface + kerb) of the block surface at quadrant (u, v), relative to this junction's pad
 func fh(u: float, v: float) -> float:
-	var a := S(u); var b := S(v)
+	var a := Su(u); var b := Sv(v)
 	return (pu - p0) * a + (pv - p0) * b + (puv - pu - pv + p0) * a * b + KERB_H
 
 ## ground height under quadrant (u, v): the last surface that holds the point, else the block surface
@@ -103,6 +109,7 @@ func begin(piece: String, site: Dictionary, des: Dictionary) -> void:
 	name = piece; design = des
 	sx = float(site.sx); sz = float(site.sz)
 	p0 = float(site.p0); pu = float(site.pu); pv = float(site.pv); puv = float(site.puv)
+	BU = float(site.get("Lu", 200.0)); BV = float(site.get("Lv", 200.0)); LU = BU * 0.5; LV = BV * 0.5
 	rr = W.rng_for(piece)
 	g = K.Ground.new(); props = K.Props.new(); dec = K.Decals.new()
 	root = Node3D.new(); root.name = piece
@@ -111,7 +118,7 @@ func begin(piece: String, site: Dictionary, des: Dictionary) -> void:
 
 ## ------------------------------------------------------------------------------------------------ props
 func free_at(u: float, v: float, r: float) -> bool:
-	if u - r < PROP or v - r < PROP or u + r > LEN or v + r > LEN: return false
+	if u - r < PROP or v - r < PROP or u + r > LU or v + r > LV: return false
 	for o: Array in occ:
 		if Vector2(u, v).distance_to(Vector2(float(o[0]), float(o[1]))) < r + float(o[2]): return false
 	for dp: Vector2 in doorpts:
@@ -737,20 +744,21 @@ func corner_shop(lot: Dictionary, folder: String, label: String, kind: String) -
 func alleys() -> void:
 	var c := (AL0 + AL1) * 0.5
 	# gutter first (the first matching paint wins)
-	prect(PROP, c - 0.4, LEN, c + 0.4, "concrete")
-	prect(PROP, AL0, LEN, AL1, "asphalt")
-	prect(c - 0.4, PROP, c + 0.4, AL0, "concrete"); prect(c - 0.4, AL1, c + 0.4, LEN, "concrete")
-	prect(AL0, PROP, AL1, AL0, "asphalt"); prect(AL0, AL1, AL1, LEN, "asphalt")
-	surfs.append([PROP, AL0, LEN, AL1, "field", 0.0])
+	prect(PROP, c - 0.4, LU, c + 0.4, "concrete")
+	prect(PROP, AL0, LU, AL1, "asphalt")
+	prect(c - 0.4, PROP, c + 0.4, AL0, "concrete"); prect(c - 0.4, AL1, c + 0.4, LV, "concrete")
+	prect(AL0, PROP, AL1, AL0, "asphalt"); prect(AL0, AL1, AL1, LV, "asphalt")
+	surfs.append([PROP, AL0, LU, AL1, "field", 0.0])
 	surfs.append([AL0, PROP, AL1, AL0, "field", 0.0])
-	surfs.append([AL0, AL1, AL1, LEN, "field", 0.0])
+	surfs.append([AL0, AL1, AL1, LV, "field", 0.0])
 	var Hc := func(x: float, z: float) -> float: return gyl(x, z)
 	for along_u: bool in [true, false]:
 		var a := L2(PROP, AL0) if along_u else L2(AL0, PROP)
-		var b := L2(LEN, AL1) if along_u else L2(AL1, LEN)
+		var b := L2(LU, AL1) if along_u else L2(AL1, LV)
+		var LL := LU if along_u else LV
 		W.cracks(dec, rr, minf(a.x, b.x), minf(a.y, b.y), maxf(a.x, b.x), maxf(a.y, b.y), 18, Hc, 0.4)
 		var k := PROP + 3.0
-		while k < LEN - 3.0:
+		while k < LL - 3.0:
 			var o := Vector2(k, c + rr.randf_range(-1.6, 1.6)) if along_u else Vector2(c + rr.randf_range(-1.6, 1.6), k)
 			W.oil(dec, rr, L2(o.x, o.y), 90.0 if along_u else 0.0, Hc, rr.randf_range(0.45, 0.8))
 			for e: float in [AL0 + 0.3, AL1 - 0.3]:
@@ -758,7 +766,7 @@ func alleys() -> void:
 				dec.add(14, L2(gp.x, gp.y), 90.0 if along_u else 0.0, 0.7, 3.0, Hc, Color(1, 1, 1, rr.randf_range(0.4, 0.65)))
 			k += rr.randf_range(6.0, 10.0)
 		for t in 2:
-			var tp := rr.randf_range(PROP + 6.0, LEN - 6.0)
+			var tp := rr.randf_range(PROP + 6.0, LL - 6.0)
 			var pv2 := Vector2(tp, c) if along_u else Vector2(c, tp)
 			dec.add(2 + t, L2(pv2.x, pv2.y), 90.0 if along_u else 0.0, 2.4, 6.0, Hc, Color(1, 1, 1, 0.9))
 		var ps := rr.randf_range(30.0, 90.0)
@@ -771,11 +779,12 @@ func alley_poles() -> void:
 	var c := (AL0 + AL1) * 0.5
 	for along_u: bool in [true, false]:
 		var s := 18.0 if along_u else 24.0
-		while s < LEN - 4.0:
+		var LL2 := LU if along_u else LV
+		while s < LL2 - 4.0:
 			var placed := false
 			for dk: float in [0.0, 2.0, -2.0, 4.0, -4.0, 6.0, -6.0, 8.0, -8.0]:
 				var ss2 := s + dk
-				if absf(ss2 - c) < 5.0 or ss2 < PROP + 4.0 or ss2 > LEN - 2.0: continue
+				if absf(ss2 - c) < 5.0 or ss2 < PROP + 4.0 or ss2 > LL2 - 2.0: continue
 				var pu2 := Vector2(ss2, AL0 - 0.45) if along_u else Vector2(AL0 - 0.45, ss2)      # in the rear easement, off the asphalt
 				var ok := true
 				for dp: Vector2 in doorpts:
@@ -798,7 +807,7 @@ func alley_poles() -> void:
 ## alley, a level play pad of bark with a low edge, swings, slide, picnic under a sail, fountain, bins, shade trees, a
 ## lamp at the gate; the lawn follows the hill.
 func park_d(kind: String) -> void:
-	var u0 := AL1; var v0 := AL1; var u1 := LEN; var v1 := LEN
+	var u0 := AL1; var v0 := AL1; var u1 := LU; var v1 := LV
 	surfs.append([u0, v0, u1, v1, "field", 0.0])
 	var Hc := func(x: float, z: float) -> float: return gyl(x, z)
 	var gate_v := 76.0
@@ -971,8 +980,9 @@ func build(piece: String, site: Dictionary, des: Dictionary) -> void:
 		var n: int = int(des.get(sub, 3))
 		var axis := "u" if sub == "C" else "v"
 		var s0 := PROP if sub != "B" else AL1
-		var s1 := AL0 if sub == "A" else LEN
-		if sub == "C": s0 = AL1; s1 = LEN
+		var s1 := AL0 if sub == "A" else LU
+		if sub == "C": s0 = AL1; s1 = LV
+		if sub != "A": n = maxi(1, roundi(float(n) * (s1 - s0) / 40.0))      # the design's count is for a 40 m frontage
 		var specs: Array = []
 		var lw := (s1 - s0) / n
 		for i in n:
@@ -993,13 +1003,13 @@ func build(piece: String, site: Dictionary, des: Dictionary) -> void:
 	match String(des.get("D", "park")):
 		"cottages":
 			var dh: Array = des.d_houses
-			var nd: int = int(des.get("D_n", 2))
+			var nd: int = maxi(1, roundi(float(des.get("D_n", 2)) * (LU - AL1) / 40.0))
 			var specs2: Array = []
-			var lw2 := (LEN - AL1) / nd
+			var lw2 := (LU - AL1) / nd
 			for i in nd:
 				var h2 := String(dh[(rr.randi() + i) % dh.size()])
 				specs2.append({"w": lw2, "house": h2, "garage": "own", "front": String(des.get("d_front", "")), "back": String(des.get("back", "privacy")), "gs": 0.0, "i": i, "set_extra": -2.0})
-			var lots2 := row("v", AL1, AL1, LEN, specs2)
+			var lots2 := row("v", AL1, AL1, LV, specs2)
 			var prev2 := -1000.0
 			for i in lots2.size():
 				var lot2: Dictionary = lots2[i]
@@ -1011,7 +1021,7 @@ func build(piece: String, site: Dictionary, des: Dictionary) -> void:
 				house_lot(lot2)
 				# the back line (mid-block): a privacy fence on the terrace
 				var bf: Array = FENCE.get(String(des.get("back", "privacy")), FENCE["privacy"])
-				fence_run(Vector2(float(lot2.s0) + 0.2, LEN - 0.3), Vector2(float(lot2.s1) - 0.2, LEN - 0.3), String(bf[0]), String(bf[1]), float(bf[2]), float(lot2.Ht))
+				fence_run(Vector2(float(lot2.s0) + 0.2, LV - 0.3), Vector2(float(lot2.s1) - 0.2, LV - 0.3), String(bf[0]), String(bf[1]), float(bf[2]), float(lot2.Ht))
 		"green": park_d("green")
 		_: park_d("park")
 	alley_poles()

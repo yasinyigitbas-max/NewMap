@@ -28,7 +28,9 @@ DES = ["V1", "V2", "V3", "V4"]
 SHOPS = {(-400.0, 0.0, 1.0, 1.0): ["commercial/com_shallow_books", "r_shop_books", "books"],
          (-600.0, -200.0, 1.0, 1.0): ["commercial/com_shallow_cafe", "r_shop_cafe", "cafe"],
          (-800.0, 200.0, 1.0, -1.0): ["commercial/com_surf_shop", "r_shop_surf", "sport"]}
-SHOP_DES = {"r_shop_books": "V1", "r_shop_cafe": "V4", "r_shop_surf": "V3"}
+SHOPS[(250.0, -200.0, 1.0, 1.0)] = ["commercial/com_realty", "r_shop_wash", "cleaners"]      # Glorietta Heights
+SHOPS[(-200.0, -1000.0, 1.0, 1.0)] = ["commercial/com_bakery", "r_shop_market", "corner_shop"]  # Crown Hill
+SHOP_DES = {"r_shop_books": "V1", "r_shop_cafe": "V4", "r_shop_surf": "V3", "r_shop_wash": "V1", "r_shop_market": "V2"}
 
 
 def pads():
@@ -37,12 +39,10 @@ def pads():
 
 
 def quadrants():
-    out = []
-    for cu in CU:
-        for cv in CV:
-            for (ju, sx) in ((cu, 1.0), (cu + 200.0, -1.0)):
-                for (jv, sz) in ((cv, 1.0), (cv + 200.0, -1.0)):
-                    out.append({"cell": (cu, cv), "j": (ju, jv), "sx": sx, "sz": sz})
+    """every growable residential quadrant of the zone (res_zone.py); the pilot area's 24 come first"""
+    import res_zone
+    qs, _ = res_zone.quadrants()
+    out = [{"cell": q["cell"], "j": q["j"], "sx": q["sx"], "sz": q["sz"], "Lu": q["Lu"], "Lv": q["Lv"]} for q in qs]
     return out
 
 
@@ -58,12 +58,20 @@ def neighbours(qs):
 
 def assign(qs):
     pairs = neighbours(qs)
+    # designs already built (the pilot area, 18 Nov) stay as they are
+    try:
+        old = {r["piece"]: r["design"] for r in json.load(open(os.path.join(KIT, "review/grow_res_blocks.json")))["rows"] if r.get("design")}
+    except Exception:
+        old = {}
     cells = sorted({q["cell"] for q in qs})
     fixed = {}
     for i, q in enumerate(qs):
         k = (q["j"][0], q["j"][1], q["sx"], q["sz"])
         if k in SHOPS:
             fixed[i] = SHOP_DES[SHOPS[k][1]]
+        nm = name_of(q)
+        if nm in old:
+            fixed[i] = old[nm]
     # backtracking: every cell holds all four designs, faced quadrants differ
     order = sorted(range(len(qs)), key=lambda i: (qs[i]["cell"], qs[i]["sx"], qs[i]["sz"]))
     res = {}
@@ -96,6 +104,11 @@ def assign(qs):
     return [res[i] for i in range(len(qs))]
 
 
+def name_of(q):
+    ju, jv = q["j"]; sx, sz = q["sx"], q["sz"]
+    return "r_q_%s_%s_%s" % (tag(ju), tag(jv), ("s" if sz > 0 else "n") + ("e" if sx > 0 else "w"))
+
+
 def tag(x):
     return ("m%d" % -x if x < 0 else "%d" % x)
 
@@ -109,14 +122,15 @@ def main():
         ju, jv = q["j"]; sx, sz = q["sx"], q["sz"]
         corner = ("s" if sz > 0 else "n") + ("e" if sx > 0 else "w")
         name = "r_q_%s_%s_%s" % (tag(ju), tag(jv), corner)
-        site = {"j": [ju, jv], "sx": sx, "sz": sz, "p0": P[(ju, jv)], "pu": P[(ju + 200 * sx, jv)],
-                "pv": P[(ju, jv + 200 * sz)], "puv": P[(ju + 200 * sx, jv + 200 * sz)]}
+        Lu, Lv = q["Lu"], q["Lv"]
+        site = {"j": [ju, jv], "sx": sx, "sz": sz, "p0": P[(ju, jv)], "pu": P[(ju + Lu * sx, jv)],
+                "pv": P[(ju, jv + Lv * sz)], "puv": P[(ju + Lu * sx, jv + Lv * sz)], "Lu": Lu, "Lv": Lv}
         shop = SHOPS.get((ju, jv, sx, sz))
         if shop:
             site["shop"] = shop
         rise_u = site["pu"] - site["p0"]; rise_v = site["pv"] - site["p0"]
         twist = site["puv"] - site["pu"] - site["pv"] + site["p0"]
-        doc = ("## Piece %s (residential growth, pilot area, 18 Nov): the %s quadrant of junction (%g, %g), design %s.\n"
+        doc = ("## Piece %s (residential growth, 18-19 Nov): the %s quadrant of junction (%g, %g), design %s.\n"
                "## Hill: pad %.1f m; the block rises %+.1f m along u, %+.1f m along v (twist %+.1f) - the quadrant follows it.\n"
                "## Built by rv_lib.gd (every rule and its reason is there). Run once; never when locked.\n") % (
             name, corner.upper(), ju, jv, d, site["p0"], rise_u, rise_v, twist)
@@ -135,9 +149,11 @@ def main():
                      "rise_u": rise_u, "rise_v": rise_v, "twist": twist, "shop": shop[1] if shop else ""})
     # the area's overhead lines (w_rv.gd): built in the grid frame from the quadrants' poles, row at the origin
     rows.append({"piece": "w_rv", "pos": [0.0, 0.0, 0.0], "yaw": 0.0, "design": "", "cell": [], "rise_u": 0, "rise_v": 0, "twist": 0, "shop": ""})
-    tab = {"note": "Residential growth, pilot area (res_grow.py): one quadrant piece per junction corner, pos = the "
-                   "junction centre at its pad, yaw 0 (each piece is built for its own corner).",
-           "area": {"u": [-800, -200], "v": [-200, 200], "blocks": 6, "quadrants": len(rows)}, "grow": True, "rows": rows}
+    tab = {"note": "Residential growth (res_grow.py): one quadrant piece per junction corner of the residential zone that "
+                   "the variants can carry (res_zone.py), pos = the junction centre at its pad, yaw 0 (each piece is built "
+                   "for its own corner). The pilot area (u -800..-200, v -200..200) came first (18 Nov); the rest of the "
+                   "zone 19 Nov (Yasin: 'roll out to your whole zone').",
+           "pilot_area": {"u": [-800, -200], "v": [-200, 200], "blocks": 6, "quadrants": 24}, "quadrants": len(rows), "grow": True, "rows": rows}
     json.dump(tab, open(os.path.join(KIT, "review/grow_res_blocks.json"), "w"), indent=1)
     for r in rows[:-1]:
         print(r["piece"], r["design"], "rise u %+.0f v %+.0f twist %+.0f" % (r["rise_u"], r["rise_v"], r["twist"]), r["shop"])

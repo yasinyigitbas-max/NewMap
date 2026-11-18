@@ -1,10 +1,10 @@
 extends SceneTree
-## Piece r_q_m600_0_se (residential growth, pilot area, 18 Nov): the SE quadrant of junction (-600, 0), design V2.
+## Piece r_q_m600_0_se (residential growth, 18-19 Nov): the SE quadrant of junction (-600, 0), design V2.
 ## Hill: pad 12.0 m; the block rises -6.0 m along u, -8.0 m along v (twist +4.0) - the quadrant follows it.
 ## Built by rv_lib.gd (every rule and its reason is there). Run once; never when locked.
 const RV := preload("res://tools/city/pilot/pieces/rv_lib.gd")
 const D := preload("res://tools/city/pilot/pieces/rv_designs.gd")
-const SITE := {"j": [-600.0, 0.0], "sx": 1.0, "sz": 1.0, "p0": 12.0, "pu": 6.0, "pv": 4.0, "puv": 2.0}
+const SITE := {"j": [-600.0, 0.0], "sx": 1.0, "sz": 1.0, "p0": 12.0, "pu": 6.0, "pv": 4.0, "puv": 2.0, "Lu": 200.0, "Lv": 200.0}
 func _init() -> void: _run.call_deferred()
 func _run() -> void:
 	RV.new().build("r_q_m600_0_se", SITE, D.get_design("V2"))
