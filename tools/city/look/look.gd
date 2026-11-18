@@ -56,7 +56,7 @@ const NIGHT := {
 ## itself (only numbers change); a preset change redraws the sky's reflection map once.
 static var PRESETS := {
 	"morning": {      # low sun from the east through a cool morning mist
-		"elev": 16.0, "azim": -105.0, "lights": 0.0, "moon": 0.0,
+		"elev": 16.0, "azim": 105.0, "lights": 0.0, "moon": 0.0,
 		"zenith": Color(0.34, 0.50, 0.72), "middle": Color(0.64, 0.71, 0.80), "haze": Color(0.80, 0.82, 0.84),
 		"sun_color": Color(1.0, 0.85, 0.70), "sun_energy": 1.25, "ambient_color": Color(0.58, 0.64, 0.74), "ambient_energy": 0.75,
 		"fog_density": 0.0028, "fog_sun_scatter": 0.45,
@@ -71,14 +71,14 @@ static var PRESETS := {
 		"sun_halo": 0.6, "sun_disc": 6.0, "disc_cos": 0.9993, "stars": 0.0},
 	"day": DAY.merged({"elev": 40.0, "azim": -35.0, "lights": 0.0, "moon": 0.0}),
 	"golden": {       # late afternoon: low orange sun from the west, long shadows, amber haze
-		"elev": 11.0, "azim": 80.0, "lights": 0.0, "moon": 0.0,
+		"elev": 11.0, "azim": -80.0, "lights": 0.0, "moon": 0.0,
 		"zenith": Color(0.30, 0.42, 0.62), "middle": Color(0.70, 0.63, 0.58), "haze": Color(0.90, 0.71, 0.50),
 		"sun_color": Color(1.0, 0.68, 0.40), "sun_energy": 1.45, "ambient_color": Color(0.50, 0.52, 0.62), "ambient_energy": 0.66,
 		"fog_density": 0.0019, "fog_sun_scatter": 0.55,
 		"cloud_lit": Color(1.0, 0.80, 0.58), "cloud_dark": Color(0.52, 0.46, 0.48), "cloud_cover": 0.46, "cloud_alpha": 0.85, "cloud_scale": 0.2,
 		"sun_halo": 1.0, "sun_disc": 5.0, "disc_cos": 0.9992, "stars": 0.0},
 	"dusk": {         # the sun just down: pink-orange west, blue east, windows and lamps coming on
-		"elev": 3.0, "azim": 95.0, "lights": 0.65, "moon": 0.0,
+		"elev": 3.0, "azim": -95.0, "lights": 0.65, "moon": 0.0,
 		"zenith": Color(0.09, 0.12, 0.24), "middle": Color(0.40, 0.31, 0.38), "haze": Color(0.62, 0.42, 0.36),
 		"sun_color": Color(1.0, 0.50, 0.32), "sun_energy": 0.38, "ambient_color": Color(0.42, 0.42, 0.55), "ambient_energy": 0.55,
 		"fog_density": 0.002, "fog_sun_scatter": 0.9,
@@ -205,10 +205,10 @@ func _wet_ground(cell: Node) -> void:
 func _process(dt: float) -> void:
 	if cycle > 0.0:      # the running day: the clock moves every frame, the look follows every `cycle_step` seconds
 		hour = fposmod(hour + 24.0 * dt / cycle, 24.0); _cycle_t += dt
-		if _map_seen > 0 and _map_seen < 40:      # the redraw asked for in the last step: what did it cost?
+		if _map_seen > 0 and _map_seen < 39:      # the redraw asked for in the last step: what did it cost?
 			var rid := sky_map.get_viewport_rid()
 			_map_ms[0] = maxf(_map_ms[0], RenderingServer.viewport_get_measured_render_time_gpu(rid)); _map_ms[1] = maxf(_map_ms[1], RenderingServer.viewport_get_measured_render_time_cpu(rid))
-			if _map_seen == 39: print("RIG look running day: sky_map redraw worst gpu_ms=%.3f cpu_ms=%.3f (128 x 64), one step on the main thread worst %.3f ms (every %.1f s)" % [_map_ms[0], _map_ms[1], _step_ms, cycle_step])
+			if _map_seen == 38 and _cycle_t + dt >= cycle_step: print("RIG look running day: sky_map redraw worst gpu_ms=%.3f cpu_ms=%.3f (128 x 64), one step on the main thread worst %.3f ms (every %.1f s)" % [_map_ms[0], _map_ms[1], _step_ms, cycle_step])
 		if _cycle_t >= cycle_step:
 			var t0 := Time.get_ticks_usec()
 			_cycle_t = 0.0; set_hour(hour); _map_seen += 1
@@ -280,7 +280,9 @@ func set_preset(name: String) -> void:
 func lights() -> float:
 	return float(PRESETS[preset].lights) if preset != "" and cycle <= 0.0 else night
 
-static func _dir(elev: float, azim: float) -> Vector3:      # towards the sun (or moon) at that height and bearing
+## towards the sun (or moon). Azimuth: 90 = east (+X), 0 = south (+Z), -90 = west (-X): the sun's day runs from
+## about +105 (morning) through 0 (noon) to -95 (dusk). (Before 18 Nov evening morning and golden were swapped.)
+static func _dir(elev: float, azim: float) -> Vector3:
 	return Basis.from_euler(Vector3(deg_to_rad(-elev), deg_to_rad(azim), 0.0)).z
 
 func _apply(t: Dictionary) -> void:
@@ -299,7 +301,9 @@ func _apply(t: Dictionary) -> void:
 		for k: String in ["zenith", "middle", "haze", "cloud_lit", "cloud_dark", "cloud_cover", "cloud_alpha", "cloud_scale", "sun_halo", "sun_disc", "disc_cos", "stars"]:
 			m.set_shader_parameter(k, t[k])
 		m.set_shader_parameter(&"sun_col", sun.light_color)
-		m.set_shader_parameter(&"sun_dir", sun_v if mo < 0.5 else light_v)      # the disc: the sun by day, the moon at night (job 2 draws both)
+		m.set_shader_parameter(&"sun_dir", sun_v)
+		m.set_shader_parameter(&"moon_dir", moon_v)
+		m.set_shader_parameter(&"moon_amount", clampf(maxf(mo, float(t.get("lights", 0.0)) * 0.5), 0.0, 1.0))      # up with the dusk
 		m.set_shader_parameter(&"sun_scatter", sun.light_energy * env.fog_sun_scatter)      # the fog's own sun glow, so sky and fog agree
 	sky_map.render_target_update_mode = SubViewport.UPDATE_ONCE
 	# the building session's glass (claude/look-buildings, rt_bldg.gdshader) reflects a two-colour sky: keep it this sky
