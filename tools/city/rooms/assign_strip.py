@@ -23,7 +23,17 @@ SHOPS = {
     ("m_gr_ad5ne", "tax_office"): [(1.8, None, "tax", "Island Tax & Insurance", "navy")],
     ("m_gr_ad5ne", "chicken_drive"): [(1.2, None, "drive_thru", "Coop & Go Chicken", "red")],
     ("m_gr_ad5ne", "route_75_diner"): [(4.8, None, "diner", "Route 75 Diner", "teal")],
+    ("m_gr_ad5ne", "bridge_tire_pros"): [(-3.0, None, "tyre", "Bridge Tire Pros", "sun")],
     ("m_gr_ad5ne", "bayside_express_wash"): [(-10.5, [-12.8, -7.4], "wash_office", "Bayside Express Wash", "sea")],
+    ("m_gr_e4s", "bridge_motors_office"): [(3.3, None, "car_sales", "Bridge Motors", "navy")],
+    ("m_gr_ad5nw", "dollar_plus_market"): [(7.9, None, "discount", "Dollar Plus Market", "sun")],
+    ("m_gr_ad5nw", "adela_plaza_row"): [(-4.0, [-8.7, -3.0], "laundromat", "Suds & Spin Laundry", "sea"),
+                                        (-2.0, [-3.0, 3.0], "nails", "Lucky Nails", "red"),
+                                        (8.0, [3.0, 8.7], "dentist", "Adela Family Dental", "teal")],
+    ("m_gr_ad5nw", "adela_plaza_corner"): [(-1.0, [-5.7, 0.0], "pizza", "Slice of the Strand", "red"),
+                                           (1.0, [0.0, 5.7], "dry_cleaner", "Pressed Right Cleaners", "navy")],
+    ("m_gr_ad5nw", "community_credit_union"): [(0.0, None, "bank", "Coronado Community Credit Union", "green")],
+    ("m_gr_ad5nw", "recycling_booth"): [(1.1, None, "recycling", "Bottle & Can Recycling", "green")],
 }
 
 
@@ -38,6 +48,7 @@ def main():
         c = rc[b["model"]]
         fl = c["floors"][0]
         for k, (along, bay, kind, name, style) in enumerate(SHOPS[key]):
+            if kind is None: continue        # a second door of the shop before it
             ent = min([e for e in c["entrances"] if e["facade"] == "front" and e["floor"] == 0], key=lambda e: abs(e["along"] - along))
             bx = bay if bay is not None else [fl["box_min"][0], fl["box_max"][0]]
             # the shop's boards: every front board over its bay; a building with one shop also takes its side boards

@@ -139,6 +139,170 @@
     -1036.0
    ],
    "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -3.0
+    ],
+    [
+     "shopdoor",
+     3.0
+    ]
+   ],
+   "label": "bridge_tire_pros",
+   "model": "ck/ck_svc_trade",
+   "piece": "m_gr_ad5ne",
+   "pos": [
+    612.0,
+    4.144,
+    -1091.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -2.01
+    ]
+   ],
+   "label": "bridge_motors_office",
+   "model": "commercial/com_shallow_books",
+   "piece": "m_gr_e4s",
+   "pos": [
+    625.0,
+    4.15,
+    -1150.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -6.5
+    ],
+    [
+     "rollup",
+     0.6
+    ],
+    [
+     "rollup",
+     6.0
+    ]
+   ],
+   "label": "bridge_motors_service",
+   "model": "industrial/ind_repair",
+   "piece": "m_gr_e4s",
+   "pos": [
+    612.0,
+    4.15,
+    -1111.0
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     7.92
+    ],
+    [
+     "shopdoor",
+     10.08
+    ]
+   ],
+   "label": "dollar_plus_market",
+   "model": "extras/ext_grocery_market",
+   "piece": "m_gr_ad5nw",
+   "pos": [
+    414.0,
+    4.18,
+    -1084.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.08
+    ],
+    [
+     "shopdoor",
+     -1.92
+    ],
+    [
+     "shopdoor",
+     7.76
+    ]
+   ],
+   "label": "adela_plaza_row",
+   "model": "commercial/com_boutique_row",
+   "piece": "m_gr_ad5nw",
+   "pos": [
+    437.0,
+    4.161,
+    -1092.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.08
+    ],
+    [
+     "shopdoor",
+     1.08
+    ]
+   ],
+   "label": "adela_plaza_corner",
+   "model": "commercial/com_orange_corner",
+   "piece": "m_gr_ad5nw",
+   "pos": [
+    454.0,
+    4.158,
+    -1092.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "community_credit_union",
+   "model": "commercial/com_bank",
+   "piece": "m_gr_ad5nw",
+   "pos": [
+    471.0,
+    4.176,
+    -1031.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     1.15
+    ]
+   ],
+   "label": "recycling_booth",
+   "model": "commercial/com_kiosk",
+   "piece": "m_gr_ad5nw",
+   "pos": [
+    420.0,
+    4.286,
+    -1044.0
+   ],
+   "yaw": 90.0
   }
  ]
 }

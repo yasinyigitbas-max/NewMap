@@ -41,6 +41,30 @@ const KINDS := {
 	# phone repair + vape: glass cases of phones and cases on both walls, the repair bench behind the counter (you
 	# watch them open your phone), a spinner of chargers
 	"phone": {"floor": "Terrazzo005", "light": "panel", "counter": ["glass_display_case", "shop_counter"], "till": true, "behind": ["workbench", "wall_shelf"], "board": false, "walls": ["glass_display_case", "card_spinner", "wall_shelf"], "centre": "none", "window": "cases", "back": "none", "frames": false, "posters": true, "tint": Color(0.86, 0.84, 0.96)},
+	# tyre shop: the counter where you pick tyres off a catalogue, the fitting bay's door behind it, tyre-care and rims
+	# on shelves along the walls, waiting benches facing the room, a fridge; loud yellow walls of a discount chain
+	"tyre": {"max_d": 10.0, "floor": "Concrete047A", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["pegboard_wall", "wall_shelf", "workbench"], "board": false, "walls": ["wall_shelf", "waiting_bench", "drinks_fridge", "waiting_bench", "wall_shelf"], "centre": "none", "window": "display", "back": "stock", "frames": false, "posters": true, "cap": {"wall_shelf": 2}, "tint": Color(0.98, 0.92, 0.66)},
+	# used-car sales office: one salesman's desk with the buyer's chair facing it, a coffee counter, key cabinet (a
+	# filing cabinet), brochures and the "finance today" posters; the window looks onto the lot
+	"car_sales": {"max_d": 10.0, "floor": "Tiles141", "light": "panel", "counter": ["filing_cabinet"], "till": false, "behind": ["filing_cabinet", "wall_shelf"], "board": false, "walls": ["brochure_rack", "drinks_fridge", "waiting_bench"], "centre": "none", "window": "waiting", "back": "none", "frames": false, "posters": true, "tint": Color(0.86, 0.9, 0.98)},
+	# discount grocer: checkouts by the door (you queue to leave), long gondolas, fridges and freezers along the walls,
+	# produce in the window, cheap bright signage
+	"discount": {"floor": "Tiles141", "light": "panel", "counter": ["checkout_counter", "checkout_counter"], "till": false, "behind": ["wall_shelf", "cigarette_cabinet"], "board": false, "walls": ["drinks_fridge", "chest_freezer", "drinks_fridge", "grocery_shelf"], "centre": "rows", "window": "produce", "back": "stock", "frames": false, "posters": true, "cap": {"drinks_fridge": 4, "chest_freezer": 3}, "tint": Color(1.0, 0.94, 0.78)},
+	# laundromat: washers along one wall, dryers along the other, the folding table in the middle, chairs in the window,
+	# the attendant's counter and the soap machine
+	"laundromat": {"floor": "Tiles143", "light": "panel", "counter": ["laundry_counter"], "till": false, "behind": ["vending_snack", "wall_shelf"], "board": false, "walls": ["washer", "washer", "dryer", "dryer"], "centre": "fold", "window": "waiting", "back": "none", "frames": false, "posters": true, "cap": {"washer": 8, "dryer": 8}, "tint": Color(0.84, 0.94, 0.98)},
+	# nail salon: nail tables along both walls with a chair each side, the polish shelf, pedicure basins at the back
+	"nails": {"floor": "Tiles012", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["salon_product_shelf", "wash_basin"], "board": false, "walls": ["nail"], "centre": "none", "window": "waiting", "back": "none", "frames": true, "tint": Color(1.0, 0.88, 0.92)},
+	# dentist: reception counter, waiting chairs in the window, the treatment room behind the partition
+	"dentist": {"max_d": 12.0, "floor": "Tiles012", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet"], "board": false, "walls": ["waiting_bench", "brochure_rack"], "centre": "none", "window": "waiting", "back": "office", "frames": true, "tint": Color(0.9, 0.97, 0.96)},
+	# slice pizza: order counter with the pizza case, ovens behind, two-tops and a booth
+	"pizza": {"floor": "Tiles101", "light": "panel", "counter": ["pastry_case", "shop_counter"], "till": true, "behind": ["kitchen_line", "drinks_fridge"], "board": true, "walls": ["booth", "drinks_fridge"], "centre": "table2", "window": "table2", "back": "none", "frames": true, "tint": Color(0.98, 0.84, 0.7)},
+	# dry cleaner: the counter at the front half, the garment rails filling the back, a waiting chair
+	"dry_cleaner": {"floor": "Tiles143", "light": "panel", "counter": ["laundry_counter"], "till": true, "behind": ["garment_rail", "garment_rail", "garment_rail"], "board": false, "walls": ["garment_rail", "garment_rail"], "centre": "none", "window": "waiting", "back": "none", "frames": false, "cap": {"garment_rail": 6}, "tint": Color(0.94, 0.94, 0.98)},
+	# credit union: teller counter across the back, a desk for loans, a waiting bench, brochures
+	"bank": {"floor": "Terrazzo005", "light": "panel", "counter": ["shop_counter", "shop_counter", "shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet", "filing_cabinet"], "board": false, "walls": ["brochure_rack", "waiting_bench"], "centre": "desks", "window": "waiting", "back": "office", "frames": true, "tint": Color(0.93, 0.92, 0.86)},
+	# recycling booth: the attendant's scale counter, bins of sorted cans behind
+	"recycling": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["recycling_receptacle", "recycling_receptacle"], "board": false, "walls": ["wall_shelf"], "centre": "none", "window": "none", "back": "none", "frames": false, "tint": Color(0.88, 0.94, 0.86)},
 	# tax prep / insurance: a reception counter, two preparer desks with a client chair each, waiting chairs at the
 	# window, filing cabinets, leaflets
 	"tax": {"max_d": 10.0, "floor": "Carpet012", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet"], "board": false, "walls": ["filing_cabinet", "brochure_rack"], "centre": "desks", "window": "waiting", "back": "office", "frames": true, "tint": Color(0.93, 0.95, 0.9)},
@@ -52,7 +76,7 @@ const SHORT := {"cafe": "COFFEE", "bakery": "BAKERY", "bar": "BAR", "restaurant"
 	"clothes": "CLOTHES", "shoes": "SHOES", "jewelry": "JEWELRY", "books": "BOOKS", "gallery": "GALLERY", "salon": "SALON", "pharmacy": "PHARMACY",
 	"souvenir": "GIFTS", "office": "OFFICE", "corner_shop": "MARKET", "grocery": "GROCERY", "cleaners": "LAUNDRY", "store": "SUPPLY", "keys": "KEYS",
 	"sport": "SPORT", "gas": "FUEL", "venue": "TICKETS", "drive_thru": "CHICKEN", "taqueria": "TACOS", "diner": "DINER",
-	"wash_office": "CAR WASH", "lube": "OIL CHANGE", "auto_parts": "AUTO PARTS", "phone": "PHONES", "tax": "TAX"}
+	"wash_office": "CAR WASH", "lube": "OIL CHANGE", "auto_parts": "AUTO PARTS", "phone": "PHONES", "tax": "TAX", "tyre": "TIRES", "car_sales": "USED CARS", "discount": "MARKET", "laundromat": "LAUNDRY", "nails": "NAILS", "dentist": "DENTIST", "pizza": "PIZZA", "dry_cleaner": "CLEANERS", "bank": "CREDIT UNION", "recycling": "RECYCLING"}
 
 var foot := {}      # base -> Vector2(w, d)
 var tall := {}      # base -> height
@@ -266,6 +290,12 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		var near_x := X0 if far_x == X1 else X1; var inn5 := -inn4
 		_put("display_table", cx + (1.6 if far_x == X1 else -1.6), zc + cd * 0.5 + 2.2, 0.0)   # this week's oil specials, beside the queue
 		_put("potted_plant", near_x + inn5 * 0.3, ZF - 1.1, -yw4)
+	# ---- the used-car office: the salesman's desk is the room (he sits behind it facing the door, the buyers' two chairs
+	# face him, the "finance today" board over his shoulder)
+	if kind == "car_sales":
+		var mx := (X0 + X1) * 0.5 + (0.6 if dx < (X0 + X1) * 0.5 else -0.6)
+		var zm := zc + cd * 0.5 + 1.6
+		_group([["office_desk", mx, zm, 180.0], ["office_chair", mx, zm - 0.75, 180.0], ["side_chair", mx - 0.4, zm + 0.8, 180.0], ["side_chair", mx + 0.4, zm + 0.8, 180.0]])
 	# ---- the side walls: the shop's goods / seats along them (low things only under the side windows)
 	var sidewin := _side_windows(c)
 	var used := {}         # per ROOM (not per wall): one soda machine, at most two fridges in the whole room
@@ -295,6 +325,11 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 				var bxw := wx + inn * 0.72; var zt := z - 1.05
 				if _group([["restaurant_table", bxw, zt, 0.0], ["booth_bench", bxw, zt + 0.73, 180.0], ["booth_bench", bxw, zt - 0.73, 0.0]]):
 					z -= 2.25; k += 1; run += 1; continue
+				z -= 0.3; continue
+			if it == "nail":       # a nail table out from the wall, the client's chair on the room side, the tech's at the wall
+				var nx := wx + inn * 0.9
+				if _group([["nail_table", nx, z - 0.6, yaw], ["side_chair", nx + inn * 0.65, z - 0.6, yaw + 180.0], ["side_chair", nx - inn * 0.6, z - 0.6, yaw]]):
+					z -= 1.5; run += 1; continue
 				z -= 0.3; continue
 			if it == "station":
 				var sx := wx + inn * 0.24
@@ -371,6 +406,8 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 			for zz: float in _steps(mz0 + 0.4, mz1 - 0.2, 1.6):
 				for xx: float in _steps(IX0 + 0.8, IX1 - 0.8, 2.0): _put("waiting_bench", xx, zz, 0.0)
 			_put("display_table", IX0 + 0.75, mz1 + 0.2, 90.0)
+		"fold":       # the folding tables down the middle of a laundromat
+			for zz: float in _steps(mz0 + 0.5, mz1 - 0.5, 1.6): _put("display_table", (IX0 + IX1) * 0.5, zz, 90.0)
 		"salsa":      # the salsa bar (a low display) in the middle, two-tops round it
 			_put("display_table", (IX0 + IX1) * 0.5, (mz0 + mz1) * 0.5, 90.0)
 			for zz: float in _steps(mz0 + 0.5, mz1 - 0.5, 1.8):

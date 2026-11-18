@@ -1,14 +1,14 @@
 {
  "rooms": [
   {
-   "d": 8.5,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__quick_lube__0.scn",
-   "id": "g_strip_m_gr_ad5ne__quick_lube__0",
-   "kind": "lube",
-   "lights": 3,
-   "name": "Ten Minute Lube",
-   "props": 21,
-   "w": 7.4
+   "d": 5.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_e4s__bridge_motors_office__0.scn",
+   "id": "g_strip_m_gr_e4s__bridge_motors_office__0",
+   "kind": "car_sales",
+   "lights": 2,
+   "name": "Bridge Motors",
+   "props": 10,
+   "w": 5.9
   }
  ]
 }

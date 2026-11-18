@@ -105,8 +105,8 @@ func _run() -> void:
 	while vx < 104.0:                                                          # white rail along the strip (a newer lot)
 		b.add("fence_vinyl_canal_rail", "clean", vx + 1.0, -17.6, 0.0); vx += 2.015
 	b.island(142.9, -98.0, 145.5, -78.0, 2, PALMS); b.island(142.9, -34.0, 145.5, -14.6, 2, PALMS)
-	b.add("prop_pylon_sign", "worn", 44.0, -15.95, 180.0)                     # CAR CARE CENTER tenants, facing 5th St
-	b.add("prop_pylon_sign", "worn", 144.2, -26.0, -90.0)                     # the wash, facing the ring
+	b.add("prop_pylon_sign", "worn", 44.0, -15.95, 0.0)                     # CAR CARE CENTER tenants, facing 5th St
+	b.add("prop_pylon_sign", "worn", 144.2, -26.0, 90.0)                     # the wash, facing the ring
 	b.add("prop_billboard", "worn", 92.0, -97.5, 180.0)                       # over the lube's yard, facing 5th St traffic
 	# ---------------------------------------------------------------- polish: drains, roof plant, back of house, bins
 	for p2: Vector2 in [Vector2(80.0, -74.0), Vector2(55.0, -56.0), Vector2(90.0, -49.0), Vector2(30.0, -46.0), Vector2(125.0, -27.0)]:
@@ -118,6 +118,38 @@ func _run() -> void:
 	b.roof(cw, ["prop_vent_box", "prop_solar_panel_x3", "prop_solar_panel_x3", "prop_solar_panel_x3"])
 	b.add("prop_ac_condenser_compact", "worn", 41.2, -88.0, 90.0)
 	b.add("prop_golf_cart_blue", "worn", 98.5, -88.0, 0.0)                    # lube shop runner
+	# ---------------------------------------------------------------- filling the north-east corner (Yasin 18 Nov: "okay go ahead")
+	# a tyre shop next to the lube (the two feed each other: the lube sends worn tyres next door), its customers' row in
+	# front, its stock in a fenced yard of storage containers against the ring road, a planted strip and a torrey
+	# pine at the yard's street side
+	var tyre := b.bld("ck/ck_svc_trade", 112.0, -91.0, 0.0, "bridge_tire_pros", 0.85)
+	b.roof(tyre, ["prop_vent_turbine", "prop_ac_condenser"])
+	b.paints.append(b.rect(106.0, -85.0, 118.0, -83.0, "concrete"))
+	b.stalls_x(100.0, 7, -77.5, -1.0)                                         # customers nose to the shop, cars waiting for fitting
+	b.add("prop_trash_receptacle", "worn", 105.0, -83.6, 0.0); b.add("prop_newspaper_box_red", "worn", 118.7, -83.6, 0.0)
+	b.add("plant_potted_succulent", "normal", 106.6, -84.4); b.add("plant_potted_succulent", "normal", 117.4, -84.4)
+	b.fence("chain", 121.0, -98.5, 141.5, -98.5); b.fence("chain", 141.5, -98.5, 141.5, -84.0)
+	b.fence("chain", 121.0, -84.0, 128.0, -84.0); b.fence("chain", 134.0, -84.0, 141.5, -84.0)
+	b.fence("chain", 121.0, -98.5, 121.0, -84.0)
+	b.add("fence_gate_rolling_chainlink", "worn", 130.0, -83.6, 0.0)          # open, slid back along the fence
+	for k in 4:
+		b.add(["prop_container_20ft_white", "prop_container_20ft_blue", "prop_container_20ft_green", "prop_container_20ft_red"][k], "dirty" if k % 2 == 0 else "worn", 124.5 + k * 2.6, -92.0, 90.0)
+	b.add("prop_dumpster_rolloff_20yd", "rusty", 137.0, -91.0, 0.0)          # scrap tyres to the recycler
+	b.add("prop_water_barrier_orange", "dirty", 138.5, -86.0, 30.0)
+	b.island(142.9, -78.0, 145.5, -66.0, 1, ["tree_torrey_pine_b"])
+	# staff parking along the car wash's north wall (the attendants park out of the queue's way)
+	b.stalls_x(116.5, 5, -70.6, 1.0)
+	b.add("prop_sign_no_parking", "worn", 115.8, -70.4, 0.0)
+	# the west part of the lot (taqueria / tax office customers) and the frontage rows facing 5th St
+	b.stalls_x(27.5, 6, -70.5, 1.0); b.stalls_x(27.5, 6, -59.5, -1.0)
+	b.island(24.7, -70.4, 27.5, -59.6, 1, ["palm_mexican_fan_b"])
+	b.stalls_x(46.5, 8, -36.0, -1.0); b.island(68.2, -41.4, 70.2, -36.1, 0, PALMS)
+	b.stalls_x(46.5, 8, -24.0, 1.0); b.stalls_x(90.5, 6, -24.0, 1.0)
+	b.island(43.6, -24.0, 46.4, -18.6, 1, ["tree_coral_a"]); b.island(87.6, -24.0, 90.4, -18.6, 0, PALMS)
+	# more shade and light in the lot
+	b.island(98.5, -52.4, 100.5, -47.0, 1, ["tree_coral_b"])
+	for p3: Vector2 in [Vector2(118.0, -80.5), Vector2(96.0, -80.5), Vector2(36.0, -60.0)]:
+		b.add("prop_lot_light_pole", "worn", p3.x, p3.y, 0.0)
 	# ---------------------------------------------------------------- wear
 	b.building_wear()
 	b.stall_wear(0.6)
@@ -127,6 +159,7 @@ func _run() -> void:
 	for k in 6: b.dec.add(14, Vector2(b.rr.randf_range(108.0, 116.0), b.rr.randf_range(-62.0, -40.0)), b.rr.randf_range(0, 180), 3.0, 3.0, b.yfn, Color(1, 1, 1, 0.55))  # wash water
 	b.yard_wear(10.0, -99.0, 108.0, -18.0, 0.9)
 	b.yard_wear(108.0, -99.0, 142.0, -24.0, 1.2)
+	b.tyre_path(131.0, -77.0, 131.0, -86.0)                                   # trucks into the tyre yard
 	b.finish("prop_wheel_stop_rubber")
 	quit()
 

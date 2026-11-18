@@ -1,6 +1,6 @@
 {
  "_doc": "Which shop is behind every shop door of the commercial strip's GROWTH blocks (claude/grow-strip, 18 Nov; Yasin:",
- "count": 8,
+ "count": 18,
  "rooms": [
   {
    "id": "m_gr_ad5ne__crown_car_care_row__0",
@@ -325,6 +325,331 @@
      "facade": "right",
      "along": 2.4,
      "w": 3.2
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5ne__bridge_tire_pros__0",
+   "piece": "m_gr_ad5ne",
+   "label": "bridge_tire_pros",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    612.0,
+    4.144,
+    -1091.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "tyre",
+   "name": "Bridge Tire Pros",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.2
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_e4s__bridge_motors_office__0",
+   "piece": "m_gr_e4s",
+   "label": "bridge_motors_office",
+   "model": "commercial/com_shallow_books",
+   "pos": [
+    625.0,
+    4.15,
+    -1150.0
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -2.01,
+   "door_w": 1.0,
+   "bay": [
+    -2.95,
+    2.95
+   ],
+   "kind": "car_sales",
+   "name": "Bridge Motors",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.68
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5nw__dollar_plus_market__0",
+   "piece": "m_gr_ad5nw",
+   "label": "dollar_plus_market",
+   "model": "extras/ext_grocery_market",
+   "pos": [
+    414.0,
+    4.18,
+    -1084.0
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 7.92,
+   "door_w": 1.6,
+   "bay": [
+    -14.7,
+    14.7
+   ],
+   "kind": "discount",
+   "name": "Dollar Plus Market",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 23.18
+    },
+    {
+     "facade": "front",
+     "along": 12.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5nw__adela_plaza_row__0",
+   "piece": "m_gr_ad5nw",
+   "label": "adela_plaza_row",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    437.0,
+    4.161,
+    -1092.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -4.08,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -3.0
+   ],
+   "kind": "laundromat",
+   "name": "Suds & Spin Laundry",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 5.18
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5nw__adela_plaza_row__1",
+   "piece": "m_gr_ad5nw",
+   "label": "adela_plaza_row",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    437.0,
+    4.161,
+    -1092.0
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": -1.92,
+   "door_w": 1.6,
+   "bay": [
+    -3.0,
+    3.0
+   ],
+   "kind": "nails",
+   "name": "Lucky Nails",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5nw__adela_plaza_row__2",
+   "piece": "m_gr_ad5nw",
+   "label": "adela_plaza_row",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    437.0,
+    4.161,
+    -1092.0
+   ],
+   "yaw": 0.0,
+   "door_index": 2,
+   "door_along": 7.76,
+   "door_w": 1.6,
+   "bay": [
+    3.0,
+    8.7
+   ],
+   "kind": "dentist",
+   "name": "Adela Family Dental",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 5.18
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5nw__adela_plaza_corner__0",
+   "piece": "m_gr_ad5nw",
+   "label": "adela_plaza_corner",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    454.0,
+    4.158,
+    -1092.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -1.08,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "pizza",
+   "name": "Slice of the Strand",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.18
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5nw__adela_plaza_corner__1",
+   "piece": "m_gr_ad5nw",
+   "label": "adela_plaza_corner",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    454.0,
+    4.158,
+    -1092.0
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 1.08,
+   "door_w": 1.6,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "dry_cleaner",
+   "name": "Pressed Right Cleaners",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.18
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5nw__community_credit_union__0",
+   "piece": "m_gr_ad5nw",
+   "label": "community_credit_union",
+   "model": "commercial/com_bank",
+   "pos": [
+    471.0,
+    4.176,
+    -1031.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -6.7,
+    6.7
+   ],
+   "kind": "bank",
+   "name": "Coronado Community Credit Union",
+   "style": "green",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 3.6
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5nw__recycling_booth__0",
+   "piece": "m_gr_ad5nw",
+   "label": "recycling_booth",
+   "model": "commercial/com_kiosk",
+   "pos": [
+    420.0,
+    4.286,
+    -1044.0
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 1.15,
+   "door_w": 0.9,
+   "bay": [
+    -1.7,
+    1.7
+   ],
+   "kind": "recycling",
+   "name": "Bottle & Can Recycling",
+   "style": "green",
+   "signs": [
+    {
+     "facade": "left",
+     "along": 0.9,
+     "w": 1.2
     }
    ],
    "source": "strip growth (hand-made shop list)",
