@@ -56,6 +56,10 @@ ck_look_sky_horizon={
 "type": "color",
 "value": Color(0.72, 0.8, 0.88, 1)
 }
+ck_look_propmaps={
+"type": "float",
+"value": 1.0
+}
 ck_cells_loaded={
 "type": "sampler2D",
 "value": ""

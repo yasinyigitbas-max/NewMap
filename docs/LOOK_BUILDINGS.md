@@ -18,6 +18,7 @@ Global shader values in `project.godot` `[shader_globals]`, 0 = off (the look be
 | `ck_look_contact` | 1. contact darkening |
 | `ck_look_windows` | 2. night windows |
 | `ck_look_glass` | 3. glass by day |
+| `ck_look_propmaps` | props' ORM maps (queue job 2) |
 | `ck_look_sky_top`, `ck_look_sky_horizon` | the day sky colours the glass reflects (set to the rig's sky; the sky session or the game's day cycle should set these to its own sky) |
 
 From code: `RenderingServer.global_shader_parameter_set(&"ck_look_glass", 0.0)`. Takes effect the next frame, no reload.
@@ -92,6 +93,17 @@ sign board. Instead of fake rooms (dropped, see above).
 - Generated, not hand-designed: the rooms follow the rules but are plainer than the hand-made ones (fewer one-off
   touches). Yasin should look at the pictures and say which kinds need a hand pass.
 - Not checked: on the phone (draws, pixels, lights), and the generated rooms' signs at night.
+
+## Queue job 2, props' maps (`ck_look_propmaps`)
+Why most near props had no normal or roughness map: `kit_lib.prop_wear_mat()` names a prop material by its colour atlas
+only; the first prop to make each file was a mid tier without maps, and every near prop of that page reuses it. 6 of
+the 18 `materials/pw_*.tres` have no maps: the main prop page A (benches, bins, lamps, kerb inlets) at every wear, and
+page W two-sided. Without an ORM the shader took those props as fully metal and fully rough.
+- Fixed in `rt_prop.gdshaderinc`: with `ck_look_propmaps` = 1 (default) near props always read their page's ORM layer
+  (the texture array has it for every page). Pictures `review/look_18nov/props/` (`corner`, `bench`): the false metal
+  shine goes, concrete and plastic read as such; 6-10 % of the pixels change.
+- Normal maps: need tangents the bake does not write for these props: `docs/look_patches/prop_maps.md`.
+- Cost: one more texture read (ORM) on near pixels of page-A props only; with the patch, one more (normal).
 
 ## Picture files
 `<view>_<day|night>_<set>.jpg`, views `centre_a/b` (city centre, 0,-600), `apartments_a/b` (250,-600), `pilot_a/b`
