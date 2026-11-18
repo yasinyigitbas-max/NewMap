@@ -5075,6 +5075,46 @@
    "from": "grow_ind"
   },
   {
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -600.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind"
+  },
+  {
+   "piece": "i_vc_w600_n1400_se",
+   "pos": [
+    -600.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind"
+  },
+  {
+   "piece": "i_va_w951_n1400_ne",
+   "pos": [
+    -950.889,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind"
+  },
+  {
+   "piece": "i_green_w951_n1400_se",
+   "pos": [
+    -950.889,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind"
+  },
+  {
    "piece": "r_q_m800_m200_se",
    "pos": [
     -800.0,

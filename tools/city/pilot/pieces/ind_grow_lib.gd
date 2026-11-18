@@ -307,3 +307,209 @@ static func spot(props: K.Props, obs: Array, rr: RandomNumberGenerator, sx: floa
 	for it: Array in items:
 		if place(props, obs, rr, sx, sz, String(it[0]), String(it[1]), u0, v0, u1, v1, yaw + float(it[2]) if it.size() > 2 else yaw, keep): n += 1
 	return n
+
+## ------------------------------------------------------------------ the rest of the zone (19 Nov, Yasin: "roll out to
+## your whole zone"): blocks that are not 100 x 100 m corners on flat ground. measure_rows() reads the ground of EVERY
+## piece around (streets and the neighbouring blocks) along rows 0.5 m apart, so a strip ending in the ring's rounded
+## corner, or a block between a sloping street and flat neighbours, gets its exact free area; floor_rows() lays it as
+## trapezoids between the rows (smooth edges, no stair steps) and drapes each vertex onto heights interpolated from
+## the measured heights all round its edge (a Coons patch: the street's own walk on the street sides, the neighbour's
+## ground on the others), so there is no step at any seam.
+static func measure_rows(tree: SceneTree, j: Vector3, sx: float, sz: float, Lu: float, Lv: float, own: Array = []) -> Dictionary:
+	var lay: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(LAYOUT))
+	var tmp := Node3D.new(); tree.get_root().add_child(tmp)
+	for r: Dictionary in lay.instances:
+		var pc := String(r.piece)
+		if pc in own or pc.begins_with("w_") or pc.begins_with("x_"): continue
+		var p: Array = r.pos
+		if absf(float(p[0]) - j.x) > 320.0 or absf(float(p[2]) - j.z) > 320.0: continue
+		var path := "res://map_dc/coronado/city_kit/pieces/%s.scn" % pc
+		if not ResourceLoader.exists(path): continue
+		var n: Node3D = (load(path) as PackedScene).instantiate()
+		n.position = Vector3(float(p[0]) - j.x, float(p[1]) - j.y, float(p[2]) - j.z); n.rotation.y = deg_to_rad(float(r.yaw))
+		tmp.add_child(n)
+	for k in 4: await tree.physics_frame
+	var space := tmp.get_world_3d().direct_space_state
+	var ray := func(u: float, v: float) -> Dictionary:
+		return space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(sx * u, 40.0, sz * v), Vector3(sx * u, -40.0, sz * v)))
+	var free := func(u: float, v: float) -> bool: return (ray.call(u, v) as Dictionary).is_empty()
+	var rows: Array = []      # [v, a, b]
+	var v := 0.25
+	while v <= Lv - 0.01:
+		var a := -1.0; var b := -1.0
+		var u := 0.125
+		while u < Lu:
+			if free.call(u, v):
+				if a < 0.0: a = u
+				b = u
+			elif a >= 0.0: break
+			u += 0.25
+		if a >= 0.0:
+			var lo := maxf(a - 0.25, 0.0); var hi := a
+			for it in 5:
+				var m := (lo + hi) * 0.5
+				if free.call(m, v): hi = m
+				else: lo = m
+			a = 0.0 if a <= 0.13 else hi
+			lo = b; hi = minf(b + 0.25, Lu)
+			for it in 5:
+				var m2 := (lo + hi) * 0.5
+				if free.call(m2, v): lo = m2
+				else: hi = m2
+			b = Lu if b >= Lu - 0.13 else lo
+			rows.append([v, a, b])
+		v += 0.5
+	# heights all round: just outside the free area on each side (street walk or neighbour ground); none -> pad
+	var hy := func(u: float, v2: float) -> float:
+		var h: Dictionary = ray.call(u, v2)
+		return -999.0 if h.is_empty() else float((h.position as Vector3).y)      # nothing there: open land
+	var hN := PackedFloat32Array(); var hF := PackedFloat32Array(); var hL := PackedFloat32Array(); var hR := PackedFloat32Array()
+	var v_first: float = float(rows[0][0]) if not rows.is_empty() else 0.0
+	# each edge height is read just OUTSIDE the free area at that point (on the walk or the neighbour's ground, never
+	# on the road beyond): N/F at the first/last row holding u, L/R beside each row's ends; gaps take the nearest value
+	var fill := func(arr: PackedFloat32Array, ok: Array) -> PackedFloat32Array:
+		for i in arr.size():
+			if ok[i]: continue
+			for d in range(1, arr.size()):
+				if i - d >= 0 and ok[i - d]: arr[i] = arr[i - d]; break
+				if i + d < arr.size() and ok[i + d]: arr[i] = arr[i + d]; break
+		return arr
+	var okN: Array = []; var okF: Array = []; var okL: Array = []; var okR: Array = []
+	for i in 21:
+		var uu := clampf(Lu * i / 20.0, 0.3, Lu - 0.3)
+		var vmin := INF; var vmax := -INF
+		for rw: Array in rows:
+			if uu >= float(rw[1]) and uu <= float(rw[2]): vmin = minf(vmin, float(rw[0])); vmax = maxf(vmax, float(rw[0]))
+		var a1: float = hy.call(uu, vmin - 0.6) if vmin < INF else -999.0
+		var a2: float = hy.call(uu, vmax + 0.6) if vmax > -INF else -999.0
+		hN.append(a1); okN.append(a1 > -900.0); hF.append(a2); okF.append(a2 > -900.0)
+	for i2 in 21:
+		var vv := clampf(Lv * i2 / 20.0, 0.3, Lv - 0.3)
+		var rw2 := []
+		for rw: Array in rows: if absf(float(rw[0]) - vv) < 0.3: rw2 = rw
+		var a3: float = hy.call(float(rw2[1]) - 0.6, vv) if not rw2.is_empty() else -999.0
+		var a4: float = hy.call(float(rw2[2]) + 0.6, vv) if not rw2.is_empty() else -999.0
+		hL.append(a3); okL.append(a3 > -900.0); hR.append(a4); okR.append(a4 > -900.0)
+	# an edge with nothing beside it at all (open land: the terrain will be fitted to us) takes the straight line between
+	# the neighbouring edges' ends, so no corner gets a step; a partly open edge takes its nearest measured value
+	var none := func(ok: Array) -> bool: return not ok.has(true)
+	if not none.call(okN): hN = fill.call(hN, okN)
+	if not none.call(okF): hF = fill.call(hF, okF)
+	if not none.call(okL): hL = fill.call(hL, okL)
+	if not none.call(okR): hR = fill.call(hR, okR)
+	var walk := S.walk_y(0.0)
+	for i3 in 21:
+		var t := i3 / 20.0
+		if none.call(okL): hL[i3] = lerpf(hN[0] if not none.call(okN) else walk, hF[0] if not none.call(okF) else walk, t)
+		if none.call(okR): hR[i3] = lerpf(hN[20] if not none.call(okN) else walk, hF[20] if not none.call(okF) else walk, t)
+	for i4 in 21:
+		var s4 := i4 / 20.0
+		if none.call(okN): hN[i4] = lerpf(hL[0], hR[0], s4)
+		if none.call(okF): hF[i4] = lerpf(hL[20], hR[20], s4)
+	tmp.queue_free()
+	for k in 2: await tree.process_frame
+	print("MEASURE_ROWS rows %d, first v %.2f; heights N %.2f..%.2f F %.2f..%.2f L %.2f..%.2f R %.2f..%.2f" % [rows.size(), v_first, hN[0], hN[20], hF[0], hF[20], hL[0], hL[20], hR[0], hR[20]])
+	return {"rows": rows, "Lu": Lu, "Lv": Lv, "hN": hN, "hF": hF, "hL": hL, "hR": hR}
+
+## the ground height at block-local (u, v): a Coons patch of the four measured edge height lines
+static func h_at(m: Dictionary, u: float, v: float) -> float:
+	var Lu: float = m.Lu; var Lv: float = m.Lv
+	var s := clampf(u / Lu, 0.0, 1.0); var t := clampf(v / Lv, 0.0, 1.0)
+	var at := func(a: PackedFloat32Array, f: float) -> float:
+		var x := f * 20.0; var i := mini(int(x), 19); return lerpf(a[i], a[i + 1], x - i)
+	var hN: PackedFloat32Array = m.hN; var hF: PackedFloat32Array = m.hF; var hL: PackedFloat32Array = m.hL; var hR: PackedFloat32Array = m.hR
+	var c00 := (hN[0] + hL[0]) * 0.5; var c10 := (hN[20] + hR[0]) * 0.5; var c01 := (hF[0] + hL[20]) * 0.5; var c11 := (hF[20] + hR[20]) * 0.5
+	return (1.0 - s) * float(at.call(hL, t)) + s * float(at.call(hR, t)) + (1.0 - t) * float(at.call(hN, s)) + t * float(at.call(hF, s)) \
+		- ((1.0 - s) * (1.0 - t) * c00 + s * (1.0 - t) * c10 + (1.0 - s) * t * c01 + s * t * c11)
+## the drape offset (0 on flat ground) at block-local (u, v)
+static func dh(m: Dictionary, u: float, v: float) -> float:
+	return h_at(m, u, v) - S.walk_y(0.0)
+
+## the floor as trapezoids between measured rows, its surface by paint rectangles [u0, v0, u1, v1, surface] (block-
+## local, the first match wins, else `base`), heights already draped (the drape pass skips the ground)
+static func floor_rows(g: K.Ground, m: Dictionary, sx: float, sz: float, paints: Array, base := "asphalt") -> void:
+	var rows: Array = m.rows
+	var surf_at := func(u: float, v: float) -> String:
+		for p: Array in paints:
+			if u >= float(p[0]) and u <= float(p[2]) and v >= float(p[1]) and v <= float(p[3]): return String(p[4])
+		return base
+	var y := func(u: float, v: float) -> float: return h_at(m, u, v)
+	for i in rows.size() - 1:
+		var r0: Array = rows[i]; var r1: Array = rows[i + 1]
+		if float(r1[0]) - float(r0[0]) > 0.75: continue
+		var cuts: Array = [0.0, 1.0]
+		for p: Array in paints:
+			for e: float in [float(p[0]), float(p[2])]:
+				for rr2: Array in [r0, r1]:
+					var f := (e - float(rr2[1])) / maxf(float(rr2[2]) - float(rr2[1]), 0.01)
+					if f > 0.0 and f < 1.0: cuts.append(f)
+		cuts.sort()
+		for k in cuts.size() - 1:
+			var f0: float = cuts[k]; var f1: float = cuts[k + 1]
+			if f1 - f0 < 0.002: continue
+			var a0 := lerpf(float(r0[1]), float(r0[2]), f0); var b0 := lerpf(float(r0[1]), float(r0[2]), f1)
+			var a1 := lerpf(float(r1[1]), float(r1[2]), f0); var b1 := lerpf(float(r1[1]), float(r1[2]), f1)
+			var vm := (float(r0[0]) + float(r1[0])) * 0.5
+			var sfc: String = surf_at.call((a0 + b0 + a1 + b1) * 0.25, vm)
+			var v0 := float(r0[0]) - (0.25 if i == 0 else 0.0); var v1 := float(r1[0]) + (0.25 if i == rows.size() - 2 else 0.0)
+			var P := func(u: float, vv: float) -> Vector3: return Vector3(sx * u, float(y.call(u, vv)), sz * vv)
+			g.quad(sfc, P.call(a0, v0), P.call(b0, v0), P.call(b1, v1), P.call(a1, v1))
+
+## lay everything built flat onto the measured heights: props, decals, buildings (each at the lowest ground under
+## its footprint, so no side floats); the ground from floor_rows is already draped
+static func drape(m: Dictionary, sx: float, sz: float, props: K.Props, dec: K.Decals, bl: Node3D) -> void:
+	for key: String in props.items:
+		var arr: Array = props.items[key]
+		for i in arr.size():
+			var t: Transform3D = arr[i]
+			t.origin.y += dh(m, sx * t.origin.x, sz * t.origin.z); arr[i] = t
+	for i2 in props.col_items.size():
+		var c: Array = props.col_items[i2]; var t2: Transform3D = c[2]
+		t2.origin.y += dh(m, sx * t2.origin.x, sz * t2.origin.z); c[2] = t2
+	var vv := dec.V
+	for i3 in vv.size(): vv[i3].y += dh(m, sx * vv[i3].x, sz * vv[i3].z)
+	dec.V = vv
+	for b: Node in bl.get_children():
+		var n := b as Node3D
+		var st := K.building_stats(String(b.get_meta(&"kit", "")))
+		var w: float = 4.0; var d: float = 4.0
+		if not st.is_empty(): w = float(st.footprint_wd[0]); d = float(st.footprint_wd[1])
+		var lo := INF
+		for cx: float in [-0.5, 0.0, 0.5]:
+			for cz: float in [-0.5, 0.0, 0.5]:
+				var p3: Vector3 = n.transform * Vector3(cx * w, 0.0, cz * d)
+				lo = minf(lo, dh(m, sx * p3.x, sz * p3.z))
+		n.position.y += lo
+
+## the free interval [a, b] of the measured row nearest to v (block-local u), or [] when the row is covered
+static func row_at(mr: Dictionary, v: float) -> Array:
+	var best: Array = []; var dv := 1e9
+	for r: Array in mr.rows:
+		if absf(float(r[0]) - v) < dv: dv = absf(float(r[0]) - v); best = r
+	return best if dv < 0.6 else []
+## a wall along the LEFT edge of the measured rows (a street side that curves, like the ring's corner), from v0 to v1,
+## 0.2 m in from the street's walk; panels of 2.03 m following the edge, skipping the rows given in `gaps` [[v0, v1]]
+static func wall_left(props: K.Props, mr: Dictionary, sx: float, sz: float, v0: float, v1: float, base := "fence_cmu_wall", tag_every := 0, gaps: Array = []) -> void:
+	var pts: Array = []
+	var v := v0
+	while v <= v1:
+		var r := row_at(mr, v)
+		if not r.is_empty() and float(r[1]) < float(mr.Lu) - 1.0: pts.append(Vector2(float(r[1]) + 0.2, v))
+		v += 0.5
+	if pts.size() < 2: return
+	# walk the polyline, a panel every 2.03 m of its length
+	var acc := 0.0; var k := 0
+	for i in pts.size() - 1:
+		var a: Vector2 = pts[i]; var b: Vector2 = pts[i + 1]
+		var L := a.distance_to(b)
+		var t := 0.0
+		while acc + (L - t) >= 2.03:
+			t += 2.03 - acc; acc = 0.0
+			var c := a.lerp(b, t / L) - (b - a).normalized() * 1.015
+			var skip := false
+			for gp: Array in gaps: if c.y > float(gp[0]) and c.y < float(gp[1]): skip = true
+			if not skip:
+				var yaw := rad_to_deg(atan2(sx * (b.x - a.x), sz * (b.y - a.y))) + 90.0
+				I.add(props, "fence_graffiti_cmu_panel" if tag_every > 0 and k % tag_every == tag_every / 2 else base, "worn", q(sx, sz, c.x, c.y), yaw)
+			k += 1
+		acc += L - t
