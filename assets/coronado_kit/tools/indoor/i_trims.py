@@ -9,6 +9,7 @@ Run: python3 tools/i_trims.py && IN_KIT=... python3 kit/props/_tools/props_compo
 import json, os, sys, numpy as np, cv2
 from PIL import Image
 sys.path.insert(0,'/workspace/coronado_kit_v2/props/_tools')
+sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 import trim_regions as TR
 from trim_regions import crop, hp, lum, nrm_from_height, streaks, norm01
 K=os.environ.get('IN_KIT','/workspace/coronado_kit_v2/_staging/indoor/kit')
@@ -32,38 +33,57 @@ def cav_ao(h,s=3.0,k=2.5):
     return np.clip(1-k*np.clip(blur(h,SS*s)-h,0,None),0.25,1)
 
 def T_wood():
-    # Furniture oak: 4 long boards, grain running along u, mid brown (not orange blotch).
+    # Furniture oak: vertical planks, grain running along V (up the panel).
+    # Cathedral figure and pores — not OSB / strand-board (no horizontal flake streaks).
     nboard=4
     bw=PM/nboard
-    v=yy/ppm
-    bi=np.floor(v/bw).astype(int)
-    fv=(v%bw)/bw
-    # anisotropic grain (long along u) + a little photo grain for pores
+    u=xx/ppm; v=yy/ppm
+    bi=np.floor(u/bw).astype(int)%nboard
+    fu=(u%bw)/bw
+    # fine axial pores / fibre: long along V, short along U
     nse=rng.random((S,S)).astype(np.float32)
     q=np.pad(nse,((S,S),(S,S)),mode='wrap')
-    grain=stdz(cv2.GaussianBlur(q,(0,0),sigmaX=SS*12,sigmaY=SS*0.35)[S:2*S,S:2*S])
-    vessels=stdz(streaks(TU,TV,74,n=18,width=(0.0015,0.004)).T)
-    try:
-        photo=stdz(lum(crop('fine_grained_wood',PM,PM,TV,TU,71).transpose(1,0,2)))
-    except Exception:
-        photo=grain*0
-    gl=np.clip(0.70*grain+0.22*vessels+0.08*photo,-2,2)
-    base=np.array([0.50,0.37,0.24],np.float32)
+    fibre=stdz(cv2.GaussianBlur(q,(0,0),sigmaX=SS*0.45,sigmaY=SS*9.0)[S:2*S,S:2*S])
+    pore=stdz(cv2.GaussianBlur(q,(0,0),sigmaX=SS*0.22,sigmaY=SS*2.2)[S:2*S,S:2*S])
     col=np.zeros((S,S,3),np.float32)
+    h=np.zeros((S,S),np.float32)
+    # mid oak, slightly golden, not orange, not muddy
+    base=np.array([0.55,0.38,0.21],np.float32)
+    dark=np.array([0.38,0.24,0.13],np.float32)
     for k in range(nboard):
-        sh=np.roll(gl,int(rng.integers(0,S)),1)
-        val=1+rng.uniform(-0.035,0.035)
         m=(bi==k)
-        board=np.clip(base[None,None,:]*(0.93+0.14*sh[...,None])*val,0,1)
-        col=np.where(m[...,None],board,col)
-    # visible but tight board seams
-    gap=(np.minimum(fv,1-fv)*bw<0.0011).astype(np.float32)
-    gap=blur(gap,SS*0.25)
-    col=col*(1-gap[...,None]*0.32)
-    h=0.12*np.sin(np.clip(fv,0,1)*np.pi)-gap*0.55+gl*0.07
+        rng_k=np.random.default_rng(21+k*17)
+        val=1+rng_k.uniform(-0.06,0.05)
+        hue=np.array([1.0, rng_k.uniform(0.96,1.04), rng_k.uniform(0.92,1.02)],np.float32)
+        # cathedral centreline, periods that tile in V (PM and PM/2)
+        ph=rng_k.uniform(0,2*np.pi)
+        ph2=rng_k.uniform(0,2*np.pi)
+        cx=(k+0.5)*bw
+        cl=cx+(0.038*np.sin(v*(2*np.pi/(PM/2))+ph)
+               +0.016*np.sin(v*(2*np.pi/PM)+ph2))
+        dist=u-cl
+        # growth rings (latewood darker, thinner). Period tiles across a board width enough to vary.
+        ring_ph=rng_k.uniform(0,2*np.pi)
+        rings=np.sin(dist*(2*np.pi/0.020)+0.35*np.sin(v*(2*np.pi/(PM/2))+ring_ph))
+        late=np.clip(rings,0,1)**1.6
+        board=base[None,None,:]*hue[None,None,:]*val
+        board=board*(1-0.34*late[...,None])+dark[None,None,:]*hue[None,None,:]*val*0.34*late[...,None]
+        board=board*(1+0.06*fibre[...,None]-0.04*pore[...,None])
+        col=np.where(m[...,None],np.clip(board,0,1),col)
+        # slight crown on each plank + ring micro-height + pores
+        crown=np.sin(np.clip(fu,0,1)*np.pi)
+        hk=0.10*crown-0.05*late+0.03*fibre-0.02*pore
+        h=np.where(m,hk,h)
+    # visible tight plank seams (vertical)
+    gap=(np.minimum(fu,1-fu)*bw<0.0012).astype(np.float32)
+    gap=blur(gap,SS*0.28)
+    col=col*(1-gap[...,None]*0.38)
+    # a hair darker along the seam
+    col=col*(1-gap[...,None]*np.array([0.02,0.03,0.04],np.float32))
+    h=h-gap*0.60
     ao=cav_ao(h,1.6,0.85)
-    ro=np.clip(0.46+0.07*gl,0.25,0.7)
-    nrm=nrm_from_height(blur(h,SS*0.4),1.15)
+    ro=np.clip(0.44+0.07*fibre-0.12*gap,0.22,0.68)
+    nrm=nrm_from_height(blur(h,SS*0.35),1.20)
     return np.clip(col,0,1),nrm,np.dstack([ao,ro,np.zeros_like(h)])
 
 def T_laminate():
@@ -96,13 +116,15 @@ def T_metal():
     return np.clip(col,0,1),nrm_from_height(blur(h,SS*0.3),1.0),np.dstack([ao,np.full_like(h,0.20),np.full_like(h,0.92)])
 
 def T_paint():
-    # light enamel, orange-peel, vertex-tintable (authored light grey)
-    c=crop('painted_concrete_02',PM,PM,TU,TV,31)
-    col=tone(c,[0.86,0.86,0.84],0.04)
-    peel=stdz(blur(rng.random((S,S)).astype(np.float32),SS*0.6))*0.02
-    h=peel+stdz(lum(c))*0.01
-    ao=cav_ao(h,1.5,0.7)
-    return col,nrm_from_height(blur(h,SS*0.5),0.7),np.dstack([ao,np.full_like(h,0.45),np.zeros_like(h)])
+    # smooth satin enamel (vertex-tintable, authored light grey): faint orange peel and roller mottle only.
+    # No concrete photo (it read as plaster / concrete and showed a seam).
+    nse=stdz(blur(rng.random((S,S)).astype(np.float32),SS*0.5))
+    mot=stdz(blur(rng.random((S,S)).astype(np.float32),SS*6.0))
+    col=np.array([0.86,0.86,0.85],np.float32)[None,None,:]*(1+0.008*nse[...,None]+0.008*mot[...,None])
+    h=nse*0.012
+    ao=np.clip(0.97+0.03*mot,0.9,1)
+    ro=np.clip(0.42+0.04*mot,0.3,0.55)
+    return np.clip(col,0,1),nrm_from_height(blur(h,SS*0.5),0.5),np.dstack([ao,ro,np.zeros_like(h)])
 
 def T_fabric():
     # tight woven upholstery, light neutral for tint
@@ -114,19 +136,20 @@ def T_fabric():
     return col,nrm_from_height(blur(h,SS*0.3),0.9),np.dstack([ao,np.full_like(h,0.82),np.zeros_like(h)])
 
 def T_glass():
-    # opaque kit glass: cool grey-green with a readable reflection, never a black void, never transparent
-    base=np.array([0.28,0.32,0.34],np.float32)
+    # Opaque kit glass / mirror: cool mid grey-blue with a readable interior reflection.
+    # Never a black void, never transparent. Light enough to read as glass in shadow.
+    base=np.array([0.48,0.54,0.58],np.float32)
     nse=blur(rng.random((S,S)).astype(np.float32),SS*2.0)
     st=streaks(TU,TV,51,n=5,width=(0.01,0.04))
-    col=np.clip(base[None,None,:]*(0.88+0.18*nse[...,None])+np.array([0.40,0.43,0.45])*0.18*st[...,None],0,1)
-    # painted-in window reflection (soft vertical bands + a faint horizon)
-    band=0.5+0.5*np.sin((xx/S)*2*np.pi*1.6 + 0.5*np.sin(yy/S*2*np.pi))
-    horiz=np.clip(1-np.abs((yy/S)-0.38)/0.18,0,1)
-    col=col+np.array([0.18,0.20,0.22])*0.45*band[...,None]*(0.35+0.65*nse[...,None])
-    col=col+np.array([0.10,0.12,0.14])*0.25*horiz[...,None]
-    h=st*0.04+stdz(nse)*0.02
-    ao=np.clip(0.92+0.08*nse,0.75,1)
-    return np.clip(col,0,1),nrm_from_height(blur(h,SS*0.6),0.5),np.dstack([ao,np.full_like(h,0.10),np.full_like(h,0.62)])
+    col=np.clip(base[None,None,:]*(0.90+0.12*nse[...,None])+np.array([0.62,0.66,0.70])*0.16*st[...,None],0,1)
+    u=xx/S; v=yy/S
+    # soft periodic diagonal reflection bands (tile in u and v) and a faint lighter top
+    band=0.5+0.5*np.sin((u+v)*2*np.pi*2)
+    band2=np.clip(np.sin((u+v*1.0)*2*np.pi*1+0.6),0,1)**6
+    col=col+np.array([0.10,0.12,0.13])*0.5*band[...,None]+np.array([0.30,0.32,0.34])*0.45*band2[...,None]
+    h=st*0.03+stdz(nse)*0.015
+    ao=np.clip(0.94+0.06*nse,0.80,1)
+    return np.clip(col,0,1),nrm_from_height(blur(h,SS*0.6),0.4),np.dstack([ao,np.full_like(h,0.08),np.full_like(h,0.72)])
 
 def T_plastic():
     # smooth injection ABS: faint flow lines and a few ejector dimples, no tile grid
@@ -144,16 +167,16 @@ def T_plastic():
     return np.clip(col,0,1),nrm_from_height(blur(h,SS*0.4),0.6),np.dstack([ao,np.full_like(h,0.38),np.zeros_like(h)])
 
 def T_brass():
-    # warm brushed brass, slight tarnish in micro-crevices
-    c=crop('metal_plate_02',PM,PM,TU,TV,71) if os.path.exists('/workspace/coronado_kit_v2/props/_src/ph/metal_plate_02') else crop('metal_plate',PM,PM,TU,TV,71)
-    col=tone(c,[0.72,0.55,0.28],0.12)
-    st=streaks(TU,TV,72,n=10,width=(0.004,0.01))
-    tarn=np.clip(stdz(blur(rng.random((S,S)).astype(np.float32),SS*4))-0.3,0,1)
-    col=col*(1-0.06*st[...,None])
-    col=col*(1-0.18*tarn[...,None])+np.array([0.42,0.32,0.16])*0.18*tarn[...,None]
-    h=stdz(lum(c))*0.04+st*0.04
-    ao=cav_ao(h,1.2,0.8)
-    return col,nrm_from_height(blur(h,SS*0.35),1.0),np.dstack([ao,np.full_like(h,0.30),np.full_like(h,0.85)])
+    # satin brushed brass, horizontal brushing, light tarnish (procedural; the metal_plate crop read as gold foil)
+    nse=blur(rng.random((S,S)).astype(np.float32),SS*0.4)
+    st=streaks(TU,TV,72,n=40,width=(0.0008,0.003)).T
+    tarn=np.clip(stdz(blur(rng.random((S,S)).astype(np.float32),SS*5))-0.6,0,1)
+    col=np.array([0.78,0.60,0.32],np.float32)[None,None,:]*(0.95+0.06*nse[...,None])
+    col=col*(1-0.08*st[...,None])+np.array([0.92,0.78,0.50])*0.08*st[...,None]
+    col=col*(1-0.12*tarn[...,None])+np.array([0.45,0.36,0.20])*0.12*tarn[...,None]
+    h=st*0.05+stdz(nse)*0.01
+    ao=cav_ao(h,1.0,0.5)
+    return np.clip(col,0,1),nrm_from_height(blur(h,SS*0.3),0.8),np.dstack([ao,np.full_like(h,0.32),np.full_like(h,0.9)])
 
 TILES=[
     ('ti_wood',0,0,T_wood),
@@ -244,9 +267,12 @@ def blit_swatches(P, nor, orm, R):
                 src[:,k:k+3]=np.clip(src[:,k:k+3]*np.array([0.6,0.8,1.1]),0,1)
         if name=='mirror':
             yy,xx=np.mgrid[0:side,0:side]
-            grad=0.55+0.45*(yy/side)
-            src=np.clip(np.array([0.55,0.62,0.68],np.float32)*grad[...,None]
-                        +np.array([0.18,0.20,0.22])*0.4*np.sin(xx/5.0)[...,None],0,1)
+            grad=0.70+0.30*(yy/side)
+            src=np.clip(np.array([0.62,0.70,0.76],np.float32)*grad[...,None]
+                        +np.array([0.22,0.24,0.26])*0.35*np.sin(xx/5.0)[...,None],0,1)
+            # faint bright window in the upper half
+            win=np.clip(1-np.maximum(np.abs(xx-side/2)/(side*0.28), np.abs(yy-side*0.38)/(side*0.18)),0,1)
+            src=src*(1-0.4*win[...,None])+np.array([0.82,0.88,0.94])*0.4*win[...,None]
         c8=(src*255+0.5).astype(np.uint8)
         for c in P:
             P[c][y:y+side,x:x+side,:3]=c8; P[c][y:y+side,x:x+side,3]=255
@@ -274,6 +300,14 @@ def main():
             R[f'{name}.{c}']={'px':[x,y,w,h],'uv':[(x+PAD)/N,(y+PAD)/N,(x+PAD+TU)/N,(y+PAD+TV)/N],'m':[PM,PM],'trim':True,'page':'i','tile_px':TU}
         print('tile',name,(x,y),'mean',np.round(col.reshape(-1,3).mean(0),3), flush=True)
     blit_swatches(P,nor,orm,R)
+    import i_goods
+    for k,(gname,kind,seed) in enumerate(i_goods.BANDS):
+        gc,gn,go=i_goods.band(kind,seed); y=160+32*k
+        for c in P: P[c][y:y+32,:,:3]=(gc*255+0.5).astype(np.uint8); P[c][y:y+32,:,3]=255
+        nor[y:y+32,:]=(np.clip(gn,0,1)*255+0.5).astype(np.uint8); orm[y:y+32,:]=(np.clip(go,0,1)*255+0.5).astype(np.uint8)
+        for c in ('clean','worn','dirty'):
+            R[f'{gname}.{c}']={'px':[0,y,1024,32],'uv':[0.0,(y+1)/N,1.0,(y+31)/N],'m':[8.0,0.25],'trim':True,'page':'i','tile_px':128,'goods':True}
+        print('goods band',gname,y)
     for c in P: Image.fromarray(P[c]).save(f'{SRC}/props_i_base_color_{c}.png')
     Image.fromarray(nor).save(f'{SRC}/props_i_base_normal.png'); Image.fromarray(orm).save(f'{SRC}/props_i_base_orm.png')
     # high-poly bake source (1024 working size, not the shipped 512/256 maps)

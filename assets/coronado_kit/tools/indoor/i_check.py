@@ -101,6 +101,9 @@ def check(name, rec):
     near=mesh_info(fs['near'])
     out['near_tris']=near['tris']; out['near_info']=near
     cap=int(rec.get('budget') or BUDGET.get(rec.get('class'),0) or 0)
+    ccap=BUDGET.get(rec.get('class'))
+    if ccap and cap>ccap: out['errors'].append(f"budget {cap} above class cap {ccap}")
+    if ccap and near['tris']>ccap: out['errors'].append(f"{near['tris']} tris over class cap {ccap}")
     if cap and near['tris']>cap:
         out['errors'].append(f"{near['tris']} tris over near budget {cap}")
     out['errors']+=[f'near: {e}' for e in near['errors']]
