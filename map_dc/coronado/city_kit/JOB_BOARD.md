@@ -84,6 +84,14 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   `gen_shots_grt.gd`. Yasin's fix in the same round: "many on the wall props overlap, some of them are on windows, some of
   them are inside the ceiling" -> one fit check for every hung item indoors; outdoors wall props slide off windows / doors.
   Checks: validator 0, trees 0, sink 0, rooms 0, lock test RESULT PASS. Numbers in the README (GRT_NUMBERS).
+  19 Nov: counter cages REMOVED from every gritty room (Yasin: "remove all of the cages, they arent prison cells").
+  Combined indoor checker (working branch 8e42e9a) on the gritty rooms: 19 -> 0 (deco: at most 2 decorations a wall,
+  6 a room; repeat: at most 2 leaflet racks / spinners, 1 vending; lone: no bin at the counter end).
+  GYM ("what floats", answer to the PC session): a checker that knows only props cannot see it; the floating thing in
+  the gritty rooms was the room's OWN build (a box of bars). Rule to add for the room's own boxes (room_lib.box and
+  the fittings): every built part must be HELD - its bottom on the floor (within 2 cm) or on a prop's top, or one face
+  against a wall / partition (within 3 cm), or its top at the ceiling (within 3 cm); anything else floats. A grille
+  or rail must be held at BOTH ends. Needs room_lib to record its boxes (meta "boxes": [centre, size, key]).
   OPEN QUESTIONS FOR YASIN: (1) approve / change the three variants before any wider growth; (2) the same "wall props on
   windows" fault is very likely in the LOCKED samples too (shared dress helper): fix needs his word to unlock;
   (3) the modular map rows (`@map:brk3_row3`, `shop_row4`, `svb_row*`, `stg_row*`) would suit the next gritty round: merge them?
