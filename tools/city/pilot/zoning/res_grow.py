@@ -27,7 +27,7 @@ DES = ["V1", "V2", "V3", "V4"]
 # corner shops: (junction u, v, sx, sz) -> [model, label, room kind]
 SHOPS = {(-400.0, 0.0, 1.0, 1.0): ["commercial/com_shallow_books", "r_shop_books", "books"],
          (-600.0, -200.0, 1.0, 1.0): ["commercial/com_shallow_cafe", "r_shop_cafe", "cafe"],
-         (-800.0, 200.0, 1.0, -1.0): ["commercial/com_shallow_surf", "r_shop_surf", "sport"]}
+         (-800.0, 200.0, 1.0, -1.0): ["commercial/com_surf_shop", "r_shop_surf", "sport"]}
 SHOP_DES = {"r_shop_books": "V1", "r_shop_cafe": "V4", "r_shop_surf": "V3"}
 
 
@@ -133,11 +133,13 @@ def main():
         open(os.path.join(PIECES, name + ".gd"), "w", newline="\n").write(src)
         rows.append({"piece": name, "pos": [ju, site["p0"], jv], "yaw": 0.0, "design": d, "cell": list(q["cell"]),
                      "rise_u": rise_u, "rise_v": rise_v, "twist": twist, "shop": shop[1] if shop else ""})
+    # the area's overhead lines (w_rv.gd): built in the grid frame from the quadrants' poles, row at the origin
+    rows.append({"piece": "w_rv", "pos": [0.0, 0.0, 0.0], "yaw": 0.0, "design": "", "cell": [], "rise_u": 0, "rise_v": 0, "twist": 0, "shop": ""})
     tab = {"note": "Residential growth, pilot area (res_grow.py): one quadrant piece per junction corner, pos = the "
                    "junction centre at its pad, yaw 0 (each piece is built for its own corner).",
            "area": {"u": [-800, -200], "v": [-200, 200], "blocks": 6, "quadrants": len(rows)}, "grow": True, "rows": rows}
     json.dump(tab, open(os.path.join(KIT, "review/res_grow_sites.json"), "w"), indent=1)
-    for r in rows:
+    for r in rows[:-1]:
         print(r["piece"], r["design"], "rise u %+.0f v %+.0f twist %+.0f" % (r["rise_u"], r["rise_v"], r["twist"]), r["shop"])
 
 
