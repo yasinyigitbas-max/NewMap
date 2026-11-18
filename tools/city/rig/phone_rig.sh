@@ -106,6 +106,8 @@ do_run() {
   A logcat -d -s godot:* | tr -d '\r' > "$OUT/logcat_$NAME.txt"
   A shell am force-stop $PKG; A shell "run-as $PKG rm -f files/rig_args.txt"
   echo "PHONE_RIG result: map_dc/coronado/city_kit/review/phone/$NAME.txt"; grep -a "RIG drive\|RIG boot\|ERROR" "$RES/$NAME.txt" | cut -c1-230
+  # the streaming budget: PASS or FAIL with the reasons (tools/city/rig/health.py holds the limits)
+  local PYH; PYH=$(command -v python || command -v python3 || command -v py) && "$PYH" tools/city/rig/health.py "map_dc/coronado/city_kit/review/phone/$NAME.txt"
   if [ "${PUSH:-1}" = "1" ]; then
     # a path inside the repo, not $RES: with MSYS_NO_PATHCONV=1 git for Windows gets /c/... unchanged and says "Invalid path '/c'"
     git add map_dc/coronado/city_kit/review/phone && git commit -q -m "Phone rig run '$NAME'" && git push -q origin HEAD && echo "PHONE_RIG pushed to $(git rev-parse --abbrev-ref HEAD)" || echo "PHONE_RIG could not push: send the file by hand"

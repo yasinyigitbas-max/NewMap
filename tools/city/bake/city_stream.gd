@@ -41,6 +41,7 @@ signal cell_out(key: String)
 @export var attach_bodies := true    ## test switch: false = a cell's collision is never attached (to see what attaching costs)
 @export var show_cells := true       ## test switch: false = cells are added hidden (to see what their first drawing costs)
 @export var loader_mode := 0         ## 0 = the streamer's own loader threads (the way to run it). 1 / 2 = the engine's thread pool without / with sub-threads, kept to compare: the pool is also what the physics engine and the renderer run their jobs on, and a cell's hundreds of files filled it (phone, 18 Nov: the main thread waited 65-350 ms for the physics step each time two cells were asked for)
+@export var ready_col_m := 70.0      ## is_ready(): collision this near the place must be attached
 @export var probe := false           ## test switch: time how long the physics and render servers take to digest what this frame gave them
 @export var urgent_m := 90.0          ## a body this near the player is attached even while a cell is loading
 
@@ -114,8 +115,11 @@ func busy() -> bool:
 		if cells[k].state in [LOADING, BUILDING, READY]: return true
 	return not _leaving.is_empty() or not _pending.is_empty()
 
-## every cell within `load_dist` of `p` is in the scene
+## every cell within `load_dist` of `p` is in the scene, and the collision within `ready_col_m` of it is in the world
+## (so a player put there stands on something)
 func is_ready(p: Vector3) -> bool:
+	for e: Array in _pending:
+		if (e[0] as Vector3).distance_to(p) < ready_col_m: return false
 	for k: String in cells:
 		if _dist(k, p) <= load_dist and cells[k].state != IN: return false
 	for b: Array in _pending:      # and the ground near it can be stood on
@@ -189,6 +193,7 @@ func _process(_dt: float) -> void:
 	var t0 := Time.get_ticks_usec()
 	_process_stream(t0)
 	stats["proc_ms"] = (Time.get_ticks_usec() - t0) / 1000.0      # this frame's main-thread time in here, for the rig's breakdown
+	stats["t_proc0"] = t0
 	if probe:
 		# A question with an answer makes the caller wait until the server has worked off everything queued before it.
 		# So these two waits are the cost of what was just handed over: bodies to the physics thread (which builds
@@ -200,6 +205,7 @@ func _process(_dt: float) -> void:
 		var t2 := Time.get_ticks_usec()
 		RenderingServer.force_sync()
 		stats["phys_wait_ms"] = (t2 - t1) / 1000.0; stats["rs_wait_ms"] = (Time.get_ticks_usec() - t2) / 1000.0
+	stats["t_proc1"] = Time.get_ticks_usec()
 
 func _process_stream(t0: int) -> void:
 	if loader_mode == 0:      # what the loader threads finished since the last frame
