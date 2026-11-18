@@ -1,0 +1,6 @@
+name: coronado_e2_light_grid
+godot: 4.7.2-stable ed1daf0bf001b61586d9930840f2f1394092c079
+patches: engine/patches/e_mobile_light_grid.patch
+b509f8962456ff3101f79327a45c92f05abc9d0f7eb75b5a8bd07a16b8efa402  engine/patches/e_mobile_light_grid.patch
+scons: platform=android arch=arm64 production=yes debug_symbols=no verbose=no warnings=no progress=no target=template_{release debug}
+ndk: 29.0.14206865

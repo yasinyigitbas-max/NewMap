@@ -1,0 +1,6 @@
+name: coronado_b1_respv_off
+godot: 4.7.2-stable ed1daf0bf001b61586d9930840f2f1394092c079
+patches: engine/patches/b1_respv_off_for_spec_constants.patch
+e4e2841924b04cf3fb67e4a8b5d82241956847bba83c2ac9384b3ce533857825  engine/patches/b1_respv_off_for_spec_constants.patch
+scons: platform=android arch=arm64 production=yes debug_symbols=no verbose=no warnings=no progress=no target=template_{release debug}
+ndk: 29.0.14206865

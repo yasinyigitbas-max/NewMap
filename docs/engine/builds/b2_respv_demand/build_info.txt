@@ -1,0 +1,6 @@
+name: coronado_b2_respv_demand
+godot: 4.7.2-stable ed1daf0bf001b61586d9930840f2f1394092c079
+patches: engine/patches/b2_respv_parse_on_demand.patch
+01db463313cca52d14965228d5aeabdf47c3fcef64cb92b8c4b5a468177009fa  engine/patches/b2_respv_parse_on_demand.patch
+scons: platform=android arch=arm64 production=yes debug_symbols=no verbose=no warnings=no progress=no target=template_{release debug}
+ndk: 29.0.14206865

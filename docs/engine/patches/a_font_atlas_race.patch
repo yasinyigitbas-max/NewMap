@@ -1,0 +1,82 @@
+diff --git a/modules/text_server_adv/text_server_adv.cpp b/modules/text_server_adv/text_server_adv.cpp
+index ed59f58..bd2e28b 100644
+--- a/modules/text_server_adv/text_server_adv.cpp
++++ b/modules/text_server_adv/text_server_adv.cpp
+@@ -3374,6 +3374,20 @@ void TextServerAdvanced::_font_remove_texture(const RID &p_font_rid, const Vecto
+ 	ffsd->textures.remove_at(p_texture_index);
+ }
+ 
++
++// Coronado patch a (font atlas race): the atlas image handed to the RenderingServer must not be the one the text
++// server keeps rasterizing glyphs into. With a separate render thread the upload is only queued; when the next glyph
++// is written, Image::ptrw() forks the shared pixel buffer (copy-on-write) and for the duration of that copy the live
++// image's data pointer is null, so a queued texture_2d_update that runs meanwhile sees an empty image and is dropped
++// ("p_image.is_null() || p_image->is_empty()"). duplicate() makes a second Image that shares the pixel buffer (no
++// pixel copy here); it is never written to again, so the render thread always sees a complete image.
++static _FORCE_INLINE_ Ref<Image> _atlas_upload_snapshot(const Ref<Image> &p_img, const Ref<Image> &p_live) {
++	if (p_img == p_live) {
++		return p_img->duplicate();
++	}
++	return p_img;
++}
++
+ void TextServerAdvanced::_font_set_texture_image(const RID &p_font_rid, const Vector2i &p_size, int64_t p_texture_index, const Ref<Image> &p_image) {
+ 	FontAdvanced *fd = _get_font_data(p_font_rid);
+ 	ERR_FAIL_NULL(fd);
+@@ -3399,7 +3413,7 @@ void TextServerAdvanced::_font_set_texture_image(const RID &p_font_rid, const Ve
+ 		img = p_image->duplicate();
+ 		img->generate_mipmaps();
+ 	}
+-	tex.texture = ImageTexture::create_from_image(img);
++	tex.texture = ImageTexture::create_from_image(_atlas_upload_snapshot(img, tex.image));
+ 	tex.dirty = false;
+ }
+ 
+@@ -3805,9 +3819,9 @@ RID TextServerAdvanced::_font_get_glyph_texture_rid(const RID &p_font_rid, const
+ 				img->generate_mipmaps();
+ 			}
+ 			if (tex.texture.is_null()) {
+-				tex.texture = ImageTexture::create_from_image(img);
++				tex.texture = ImageTexture::create_from_image(_atlas_upload_snapshot(img, tex.image));
+ 			} else {
+-				tex.texture->update(img);
++				tex.texture->update(_atlas_upload_snapshot(img, tex.image));
+ 			}
+ 			tex.dirty = false;
+ 		}
+@@ -3855,9 +3869,9 @@ Size2 TextServerAdvanced::_font_get_glyph_texture_size(const RID &p_font_rid, co
+ 				img->generate_mipmaps();
+ 			}
+ 			if (tex.texture.is_null()) {
+-				tex.texture = ImageTexture::create_from_image(img);
++				tex.texture = ImageTexture::create_from_image(_atlas_upload_snapshot(img, tex.image));
+ 			} else {
+-				tex.texture->update(img);
++				tex.texture->update(_atlas_upload_snapshot(img, tex.image));
+ 			}
+ 			tex.dirty = false;
+ 		}
+@@ -4331,9 +4345,9 @@ void TextServerAdvanced::_font_draw_glyph(const RID &p_font_rid, const RID &p_ca
+ 					img->generate_mipmaps();
+ 				}
+ 				if (tex.texture.is_null()) {
+-					tex.texture = ImageTexture::create_from_image(img);
++					tex.texture = ImageTexture::create_from_image(_atlas_upload_snapshot(img, tex.image));
+ 				} else {
+-					tex.texture->update(img);
++					tex.texture->update(_atlas_upload_snapshot(img, tex.image));
+ 				}
+ 				tex.dirty = false;
+ 			}
+@@ -4470,9 +4484,9 @@ void TextServerAdvanced::_font_draw_glyph_outline(const RID &p_font_rid, const R
+ 					img->generate_mipmaps();
+ 				}
+ 				if (tex.texture.is_null()) {
+-					tex.texture = ImageTexture::create_from_image(img);
++					tex.texture = ImageTexture::create_from_image(_atlas_upload_snapshot(img, tex.image));
+ 				} else {
+-					tex.texture->update(img);
++					tex.texture->update(_atlas_upload_snapshot(img, tex.image));
+ 				}
+ 				tex.dirty = false;
+ 			}

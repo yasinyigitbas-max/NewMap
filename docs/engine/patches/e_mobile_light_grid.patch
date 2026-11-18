@@ -1,0 +1,373 @@
+diff --git a/servers/rendering/renderer_rd/forward_mobile/render_forward_mobile.cpp b/servers/rendering/renderer_rd/forward_mobile/render_forward_mobile.cpp
+index b30e19c..0c5463a 100644
+--- a/servers/rendering/renderer_rd/forward_mobile/render_forward_mobile.cpp
++++ b/servers/rendering/renderer_rd/forward_mobile/render_forward_mobile.cpp
+@@ -720,9 +720,122 @@ RID RenderForwardMobile::_setup_render_pass_uniform_set(RenderListType p_render_
+ 
+ 	p_samplers.append_uniforms(uniforms, 13);
+ 
++	{
++		// Coronado patch e: tile light grid.
++		RD::Uniform u;
++		u.binding = 25;
++		u.uniform_type = RD::UNIFORM_TYPE_UNIFORM_BUFFER;
++		u.append_id(scene_state.light_grid_buffer);
++		uniforms.push_back(u);
++	}
++
+ 	return UniformSetCacheRD::get_singleton()->get_cache_vec(scene_shader.default_shader_rd, RENDER_PASS_UNIFORM_SET, uniforms);
+ }
+ 
++// Coronado patch e: build the tile light grid for the view about to be rendered.
++// Lights are bounded by their range sphere in view space (spots too: conservative). In the plane of one screen axis
++// and the view depth the sphere is a circle, and the two tangent lines from the eye give its exact extent in
++// tan(angle) units, which is what the shader computes per pixel as view.xy / -view.z.
++static void _light_grid_axis_range(float p_center, float p_depth, float p_radius, float p_scale, float p_offset, uint32_t p_tiles, uint32_t &r_from, uint32_t &r_to) {
++	r_from = 0;
++	r_to = p_tiles - 1;
++	const float dist_sq = p_center * p_center + p_depth * p_depth;
++	if (dist_sq <= p_radius * p_radius * 1.0001f) {
++		return; // The eye is inside the circle: every tile on this axis.
++	}
++	const float theta = Math::atan2(p_center, p_depth); // 0 = straight ahead.
++	const float alpha = Math::asin(p_radius / Math::sqrt(dist_sq));
++	const float limit = float(Math::PI) * 0.5f - 0.01f;
++	float lo = theta - alpha;
++	float hi = theta + alpha;
++	if (lo >= limit || hi <= -limit) {
++		return; // Entirely beside or behind the eye on this axis; the light culling normally removes these.
++	}
++	// Unbounded sides stay at the screen edge.
++	float u_lo = lo <= -limit ? -1e30f : Math::tan(lo) * p_scale + p_offset;
++	float u_hi = hi >= limit ? 1e30f : Math::tan(hi) * p_scale + p_offset;
++	if (p_scale < 0.0f) {
++		SWAP(u_lo, u_hi);
++		if (lo <= -limit) {
++			u_hi = 1e30f;
++		}
++		if (hi >= limit) {
++			u_lo = -1e30f;
++		}
++	}
++	const float t_lo = Math::floor(u_lo * float(p_tiles));
++	const float t_hi = Math::floor(u_hi * float(p_tiles));
++	r_from = uint32_t(CLAMP(t_lo, 0.0f, float(p_tiles - 1)));
++	r_to = uint32_t(CLAMP(t_hi, 0.0f, float(p_tiles - 1)));
++	if (t_hi < 0.0f || t_lo > float(p_tiles - 1)) {
++		r_from = 1; // Off screen on this axis: an empty range.
++		r_to = 0;
++	}
++}
++
++void RenderForwardMobile::_update_light_grid(const RenderDataRD *p_render_data) {
++	RendererRD::LightStorage *light_storage = RendererRD::LightStorage::get_singleton();
++	const bool wanted = GLOBAL_GET_CACHED(bool, "rendering/lights_and_shadows/mobile_light_grid");
++	const bool single_view = p_render_data->render_buffers.is_null() || p_render_data->render_buffers->get_view_count() == 1;
++	scene_state.light_grid_active = wanted && single_view && !p_render_data->scene_data->cam_orthogonal;
++	if (!scene_state.light_grid_active) {
++		return;
++	}
++
++	SceneState::LightGridData &grid = scene_state.light_grid;
++	const Projection &proj = p_render_data->scene_data->cam_projection;
++	// ndc.x = (m00 * x + m20 * z) / -z = m00 * (x / -z) - m20, and the same for y; uv = ndc * 0.5 + 0.5.
++	grid.uv_scale[0] = 0.5f * proj.columns[0][0];
++	grid.uv_scale[1] = 0.5f * proj.columns[1][1];
++	grid.uv_offset[0] = 0.5f - 0.5f * proj.columns[2][0];
++	grid.uv_offset[1] = 0.5f - 0.5f * proj.columns[2][1];
++	grid.flags = 0;
++	memset(grid.tiles, 0, sizeof(grid.tiles));
++	memset(grid.slices, 0, sizeof(grid.slices));
++
++	// Depth slices: equal length, from the eye to the far side of the farthest light. The last slice is kept
++	// empty so that everything beyond gets no lights.
++	float z_far = 1.0f;
++	for (uint32_t type = 0; type < 2; type++) {
++		const uint32_t count = MIN(type == 0 ? light_storage->get_omni_light_data_count() : light_storage->get_spot_light_data_count(), 32u);
++		for (uint32_t i = 0; i < count; i++) {
++			float position[3];
++			float radius;
++			light_storage->get_light_data_sphere(type == 1, i, position, radius);
++			z_far = MAX(z_far, -position[2] + radius);
++		}
++	}
++	grid.z_scale = float(SceneState::LIGHT_GRID_Z - 1) / z_far;
++
++	for (uint32_t type = 0; type < 2; type++) {
++		const uint32_t count = MIN(type == 0 ? light_storage->get_omni_light_data_count() : light_storage->get_spot_light_data_count(), 32u);
++		for (uint32_t i = 0; i < count; i++) {
++			float position[3];
++			float radius;
++			if (light_storage->get_light_data_sphere(type == 1, i, position, radius)) {
++				grid.flags = 1;
++			}
++			const float depth = -position[2]; // View space looks down -Z.
++			uint32_t x0, x1, y0, y1;
++			_light_grid_axis_range(position[0], depth, radius, grid.uv_scale[0], grid.uv_offset[0], SceneState::LIGHT_GRID_W, x0, x1);
++			_light_grid_axis_range(position[1], depth, radius, grid.uv_scale[1], grid.uv_offset[1], SceneState::LIGHT_GRID_H, y0, y1);
++			const uint32_t bit = 1u << i;
++			const int32_t z0 = CLAMP(int32_t(Math::floor((depth - radius) * grid.z_scale)), 0, int32_t(SceneState::LIGHT_GRID_Z) - 2);
++			const int32_t z1 = CLAMP(int32_t(Math::floor((depth + radius) * grid.z_scale)), -1, int32_t(SceneState::LIGHT_GRID_Z) - 2);
++			for (int32_t z = z0; z <= z1; z++) {
++				grid.slices[z][type] |= bit;
++			}
++			for (uint32_t y = y0; y <= y1 && y1 < SceneState::LIGHT_GRID_H; y++) {
++				for (uint32_t x = x0; x <= x1 && x1 < SceneState::LIGHT_GRID_W; x++) {
++					grid.tiles[y * SceneState::LIGHT_GRID_W + x][type] |= bit;
++				}
++			}
++		}
++	}
++
++	RD::get_singleton()->buffer_update(scene_state.light_grid_buffer, 0, sizeof(SceneState::LightGridData), &grid);
++}
++
+ void RenderForwardMobile::_setup_lightmaps(const RenderDataRD *p_render_data, const PagedArray<RID> &p_lightmaps, const Transform3D &p_cam_transform) {
+ 	RendererRD::LightStorage *light_storage = RendererRD::LightStorage::get_singleton();
+ 
+@@ -925,6 +1038,7 @@ void RenderForwardMobile::_render_scene(RenderDataRD *p_render_data, const Color
+ 	uint32_t positional_light_count = 0;
+ 	light_storage->update_light_buffers(p_render_data, *p_render_data->lights, p_render_data->scene_data->cam_transform, p_render_data->shadow_atlas, using_shadows, directional_light_count, positional_light_count, p_render_data->directional_light_soft_shadows);
+ 	texture_storage->update_decal_buffer(*p_render_data->decals, p_render_data->scene_data->cam_transform);
++	_update_light_grid(p_render_data); // Coronado patch e.
+ 
+ 	p_render_data->directional_light_count = directional_light_count;
+ 
+@@ -1158,6 +1272,7 @@ void RenderForwardMobile::_render_scene(RenderDataRD *p_render_data, const Color
+ 	SceneShaderForwardMobile::ShaderSpecialization base_specialization = scene_shader.default_specialization;
+ 
+ 	{
++		base_specialization.use_light_grid = scene_state.light_grid_active; // Coronado patch e.
+ 		base_specialization.use_directional_soft_shadows = p_render_data->directional_light_count > 0 ? p_render_data->directional_light_soft_shadows : false;
+ 		base_specialization.directional_lights = SceneShaderForwardMobile::shader_count_for(p_render_data->directional_light_count);
+ 		base_specialization.directional_light_blend_splits = light_storage->get_directional_light_blend_splits(p_render_data->directional_light_count);
+@@ -3593,6 +3708,15 @@ RenderForwardMobile::RenderForwardMobile() {
+ 
+ 		scene_state.lightmap_buffer = RD::get_singleton()->storage_buffer_create(sizeof(LightmapData) * scene_state.max_lightmaps);
+ 	}
++	{
++		// Coronado patch e: tile light grid. Off by default; can be switched while running with
++		// ProjectSettings.set_setting("rendering/lights_and_shadows/mobile_light_grid", true).
++		GLOBAL_DEF("rendering/lights_and_shadows/mobile_light_grid", false);
++		memset(&scene_state.light_grid, 0, sizeof(SceneState::LightGridData));
++		Vector<uint8_t> zero;
++		zero.resize_initialized(sizeof(SceneState::LightGridData));
++		scene_state.light_grid_buffer = RD::get_singleton()->uniform_buffer_create(sizeof(SceneState::LightGridData), zero);
++	}
+ 	{
+ 		//captures
+ 		scene_state.max_lightmap_captures = 2048;
+@@ -3635,6 +3759,7 @@ RenderForwardMobile::~RenderForwardMobile() {
+ 			scene_state.instance_buffer[i].uninit();
+ 		}
+ 		RD::get_singleton()->free_rid(scene_state.lightmap_buffer);
++		RD::get_singleton()->free_rid(scene_state.light_grid_buffer);
+ 		RD::get_singleton()->free_rid(scene_state.lightmap_capture_buffer);
+ 		memdelete_arr(scene_state.lightmap_captures);
+ 	}
+diff --git a/servers/rendering/renderer_rd/forward_mobile/render_forward_mobile.h b/servers/rendering/renderer_rd/forward_mobile/render_forward_mobile.h
+index 0b156b0..38e475a 100644
+--- a/servers/rendering/renderer_rd/forward_mobile/render_forward_mobile.h
++++ b/servers/rendering/renderer_rd/forward_mobile/render_forward_mobile.h
+@@ -180,6 +180,7 @@ private:
+ 
+ 	void _setup_environment(const RenderDataRD *p_render_data, bool p_no_fog, const Size2i &p_screen_size, const Size2 &p_viewport_size, const Color &p_default_bg_color, bool p_opaque_render_buffers = false, bool p_pancake_shadows = false);
+ 	void _setup_lightmaps(const RenderDataRD *p_render_data, const PagedArray<RID> &p_lightmaps, const Transform3D &p_cam_transform);
++	void _update_light_grid(const RenderDataRD *p_render_data);
+ 
+ 	RID render_base_uniform_set;
+ 
+@@ -297,6 +298,23 @@ private:
+ 		uint32_t max_lightmap_captures;
+ 		RID lightmap_capture_buffer;
+ 
++		// Coronado patch e: tile light grid (see scene_forward_mobile_inc.glsl, LightGrid).
++		static constexpr uint32_t LIGHT_GRID_W = 24;
++		static constexpr uint32_t LIGHT_GRID_H = 12;
++		static constexpr uint32_t LIGHT_GRID_Z = 64;
++		struct LightGridData {
++			float uv_scale[2];
++			float uv_offset[2];
++			uint32_t flags; // 1 = per-instance light tests needed.
++			float z_scale; // Depth slices per unit of view depth.
++			uint32_t pad[2];
++			uint32_t tiles[LIGHT_GRID_W * LIGHT_GRID_H][4]; // [0] omni bits, [1] spot bits.
++			uint32_t slices[LIGHT_GRID_Z][4]; // The same bits per depth slice. The last slice stays empty.
++		};
++		LightGridData light_grid;
++		RID light_grid_buffer;
++		bool light_grid_active = false;
++
+ 		bool used_screen_texture = false;
+ 		bool used_depth_texture = false;
+ 		bool used_lightmap = false;
+diff --git a/servers/rendering/renderer_rd/forward_mobile/scene_shader_forward_mobile.h b/servers/rendering/renderer_rd/forward_mobile/scene_shader_forward_mobile.h
+index 78d7c94..d6138d6 100644
+--- a/servers/rendering/renderer_rd/forward_mobile/scene_shader_forward_mobile.h
++++ b/servers/rendering/renderer_rd/forward_mobile/scene_shader_forward_mobile.h
+@@ -109,7 +109,7 @@ public:
+ 				uint32_t scene_use_ambient_cubemap : 1;
+ 				uint32_t scene_use_reflection_cubemap : 1;
+ 				uint32_t scene_roughness_limiter_enabled : 1;
+-				uint32_t padding_0 : 1;
++				uint32_t use_light_grid : 1; // Coronado patch e: omni / spot lights come from the tile light grid.
+ 
+ 				uint32_t soft_shadow_samples : 6;
+ 				uint32_t penumbra_shadow_samples : 6;
+diff --git a/servers/rendering/renderer_rd/shaders/forward_mobile/scene_forward_mobile.glsl b/servers/rendering/renderer_rd/shaders/forward_mobile/scene_forward_mobile.glsl
+index 7845f5d..74db8ea 100644
+--- a/servers/rendering/renderer_rd/shaders/forward_mobile/scene_forward_mobile.glsl
++++ b/servers/rendering/renderer_rd/shaders/forward_mobile/scene_forward_mobile.glsl
+@@ -2165,12 +2165,54 @@ void main() {
+ 	} //directional light
+ 
+ #ifndef USE_VERTEX_LIGHTING
+-	uint omni_light_count = sc_omni_lights(8);
++	// Coronado patch e: with the light grid on, the lights of this pixel's screen tile replace the instance's list.
++	uvec2 light_grid_bits = uvec2(0u);
++	if (sc_use_light_grid()) {
++		vec2 grid_uv = (vertex.xy / -vertex.z) * light_grid.uv_scale + light_grid.uv_offset;
++		ivec2 grid_tile = clamp(ivec2(grid_uv * vec2(float(LIGHT_GRID_W), float(LIGHT_GRID_H))), ivec2(0), ivec2(LIGHT_GRID_W - 1, LIGHT_GRID_H - 1));
++		// Past the last slice no light reaches: the clamp is on the CPU side (the last slice is left empty).
++		int grid_slice = min(int(-vertex.z * light_grid.z_scale), LIGHT_GRID_Z - 1);
++		light_grid_bits = light_grid.tiles[grid_tile.y * LIGHT_GRID_W + grid_tile.x].xy & light_grid.slices[grid_slice].xy;
++		if (light_grid.flags != 0u) {
++			// Some light in view has a cull mask or is baked static: apply the tests the per-instance pairing does
++			// on the CPU. The bits are filtered here, before the light loops, so the loops below call the light
++			// functions unconditionally (a call under a run-time condition lost its diffuse term on lavapipe).
++			uint layer_mask = instances.data[draw_call.instance_index].layer_mask;
++			bool skip_static = bool(instances.data[draw_call.instance_index].flags & INSTANCE_FLAGS_USE_LIGHTMAP);
++			uvec2 pending = light_grid_bits;
++			light_grid_bits = uvec2(0u);
++			for (uint k = 0u; k < 32u && pending.x != 0u; k++) {
++				uint li = uint(findLSB(pending.x));
++				pending.x &= pending.x - 1u;
++				if (bool(omni_lights.data[li].mask & layer_mask) && !(skip_static && omni_lights.data[li].bake_mode == LIGHT_BAKE_STATIC)) {
++					light_grid_bits.x |= 1u << li;
++				}
++			}
++			for (uint k = 0u; k < 32u && pending.y != 0u; k++) {
++				uint li = uint(findLSB(pending.y));
++				pending.y &= pending.y - 1u;
++				if (bool(spot_lights.data[li].mask & layer_mask) && !(skip_static && spot_lights.data[li].bake_mode == LIGHT_BAKE_STATIC)) {
++					light_grid_bits.y |= 1u << li;
++				}
++			}
++		}
++	}
++
++	uint omni_light_count = sc_use_light_grid() ? 32u : sc_omni_lights(8);
+ 	uvec2 omni_indices = instances.data[draw_call.instance_index].omni_lights;
+ 	for (uint i = 0; i < omni_light_count; i++) {
+-		uint light_index = (i > 3) ? ((omni_indices.y >> ((i - 4) * 8)) & 0xFF) : ((omni_indices.x >> (i * 8)) & 0xFF);
+-		if (i > 0 && light_index == 0xFF) {
+-			break;
++		uint light_index;
++		if (sc_use_light_grid()) {
++			if (light_grid_bits.x == 0u) {
++				break;
++			}
++			light_index = uint(findLSB(light_grid_bits.x));
++			light_grid_bits.x &= light_grid_bits.x - 1u;
++		} else {
++			light_index = (i > 3) ? ((omni_indices.y >> ((i - 4) * 8)) & 0xFF) : ((omni_indices.x >> (i * 8)) & 0xFF);
++			if (i > 0 && light_index == 0xFF) {
++				break;
++			}
+ 		}
+ 
+ 		light_process_omni(light_index, vertex, view, normal, vertex_ddx, vertex_ddy, f0, roughness, metallic, scene_data.taa_frame_count, albedo, alpha, screen_uv, hvec3(1.0),
+@@ -2197,12 +2239,21 @@ void main() {
+ 				diffuse_light, direct_specular_light);
+ 	}
+ 
+-	uint spot_light_count = sc_spot_lights(8);
++	uint spot_light_count = sc_use_light_grid() ? 32u : sc_spot_lights(8);
+ 	uvec2 spot_indices = instances.data[draw_call.instance_index].spot_lights;
+ 	for (uint i = 0; i < spot_light_count; i++) {
+-		uint light_index = (i > 3) ? ((spot_indices.y >> ((i - 4) * 8)) & 0xFF) : ((spot_indices.x >> (i * 8)) & 0xFF);
+-		if (i > 0 && light_index == 0xFF) {
+-			break;
++		uint light_index;
++		if (sc_use_light_grid()) {
++			if (light_grid_bits.y == 0u) {
++				break;
++			}
++			light_index = uint(findLSB(light_grid_bits.y));
++			light_grid_bits.y &= light_grid_bits.y - 1u;
++		} else {
++			light_index = (i > 3) ? ((spot_indices.y >> ((i - 4) * 8)) & 0xFF) : ((spot_indices.x >> (i * 8)) & 0xFF);
++			if (i > 0 && light_index == 0xFF) {
++				break;
++			}
+ 		}
+ 
+ 		light_process_spot(light_index, vertex, view, normal, vertex_ddx, vertex_ddy, f0, roughness, metallic, scene_data.taa_frame_count, albedo, alpha, screen_uv, hvec3(1.0),
+diff --git a/servers/rendering/renderer_rd/shaders/forward_mobile/scene_forward_mobile_inc.glsl b/servers/rendering/renderer_rd/shaders/forward_mobile/scene_forward_mobile_inc.glsl
+index 99ecf3a..0c6c597 100644
+--- a/servers/rendering/renderer_rd/shaders/forward_mobile/scene_forward_mobile_inc.glsl
++++ b/servers/rendering/renderer_rd/shaders/forward_mobile/scene_forward_mobile_inc.glsl
+@@ -149,6 +149,12 @@ bool sc_scene_roughness_limiter_enabled() {
+ 	return ((sc_packed_0() >> 18) & 1U) != 0;
+ }
+ 
++// Coronado patch e: omni / spot lights are looked up per pixel in the tile light grid instead of the
++// per-instance list of at most 8.
++bool sc_use_light_grid() {
++	return ((sc_packed_0() >> 19) & 1U) != 0;
++}
++
+ uint sc_soft_shadow_samples() {
+ 	return (sc_packed_0() >> 20) & 63U;
+ }
+@@ -416,6 +422,27 @@ layout(set = 1, binding = 13 + 9) uniform sampler SAMPLER_LINEAR_WITH_MIPMAPS_RE
+ layout(set = 1, binding = 13 + 10) uniform sampler SAMPLER_NEAREST_WITH_MIPMAPS_ANISOTROPIC_REPEAT;
+ layout(set = 1, binding = 13 + 11) uniform sampler SAMPLER_LINEAR_WITH_MIPMAPS_ANISOTROPIC_REPEAT;
+ 
++// Coronado patch e: tile light grid, built on the CPU each frame for the view being rendered.
++// The screen is cut in LIGHT_GRID_W x LIGHT_GRID_H tiles; each tile holds one bit per light for the nearest
++// 32 omni lights (x) and the nearest 32 spot lights (y) whose bounding sphere touches the tile.
++// The view depth is cut in LIGHT_GRID_Z slices of equal length up to the farthest light; each slice holds the
++// same kind of bits for the lights whose depth range touches it. A pixel's lights = tile bits AND slice bits.
++#define LIGHT_GRID_W 24
++#define LIGHT_GRID_H 12
++#define LIGHT_GRID_Z 64
++
++layout(set = 1, binding = 25, std140) uniform LightGrid {
++	vec2 uv_scale; // tile uv = (view.xy / -view.z) * uv_scale + uv_offset
++	vec2 uv_offset;
++	uint flags; // 1 = a light in the grid has a cull mask or is baked static (per-instance tests needed).
++	float z_scale; // depth slice = view depth * z_scale
++	uint pad1;
++	uint pad2;
++	uvec4 tiles[LIGHT_GRID_W * LIGHT_GRID_H];
++	uvec4 slices[LIGHT_GRID_Z];
++}
++light_grid;
++
+ /* Set 2 Skeleton & Instancing (can change per item) */
+ 
+ layout(set = 2, binding = 0, std430) restrict readonly buffer Transforms {
+diff --git a/servers/rendering/renderer_rd/storage_rd/light_storage.h b/servers/rendering/renderer_rd/storage_rd/light_storage.h
+index 71043e4..71ab748 100644
+--- a/servers/rendering/renderer_rd/storage_rd/light_storage.h
++++ b/servers/rendering/renderer_rd/storage_rd/light_storage.h
+@@ -830,6 +830,18 @@ public:
+ 	void free_light_data();
+ 	void set_max_lights(const uint32_t p_max_lights);
+ 	RID get_omni_light_buffer() { return omni_light_buffer; }
++	// Coronado patch e: CPU copies of the light data last written by update_light_buffers() (view space, nearest first).
++	uint32_t get_omni_light_data_count() const { return omni_light_count; }
++	uint32_t get_spot_light_data_count() const { return spot_light_count; }
++	// Returns true if the light needs a per-instance test in the shader (cull mask set, or baked static).
++	bool get_light_data_sphere(bool p_spot, uint32_t p_index, float r_position[3], float &r_radius) const {
++		const LightData &ld = p_spot ? spot_lights[p_index] : omni_lights[p_index];
++		r_position[0] = ld.position[0];
++		r_position[1] = ld.position[1];
++		r_position[2] = ld.position[2];
++		r_radius = 1.0f / ld.inv_radius;
++		return ld.mask != 0xFFFFFFFF || ld.bake_mode == RSE::LIGHT_BAKE_STATIC;
++	}
+ 	RID get_spot_light_buffer() { return spot_light_buffer; }
+ 	RID get_area_light_buffer() { return area_light_buffer; }
+ 	RID get_directional_light_buffer() { return directional_light_buffer; }

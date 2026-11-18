@@ -1,0 +1,11 @@
+; Test project for engine patch a (font atlas race). Not part of the game (.gdignore keeps the game's import away).
+config_version=5
+
+[application]
+config/name="font_race"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7", "Mobile")
+
+[rendering]
+renderer/rendering_method="mobile"
+driver/threads/thread_model=2

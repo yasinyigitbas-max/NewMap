@@ -1,0 +1,6 @@
+name: coronado_c_sgsr1
+godot: 4.7.2-stable ed1daf0bf001b61586d9930840f2f1394092c079
+patches: engine/patches/c_sgsr1_mobile_upscaler.patch
+77a33dd2c339aa38733b5332882b44867dee49c3a3e333f6b5e0b57c72faafe1  engine/patches/c_sgsr1_mobile_upscaler.patch
+scons: platform=android arch=arm64 production=yes debug_symbols=no verbose=no warnings=no progress=no target=template_{release debug}
+ndk: 29.0.14206865
