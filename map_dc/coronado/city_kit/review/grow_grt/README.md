@@ -101,3 +101,12 @@ block from above, along its numbered street and along its Ave), before (samples 
   (most fronts are full with the bench, the soda machine and the cart: none fitted there, said plainly).
 - Checks: validator 0 (10,714 props in the zone's area), trees 0, sink 0, indoor checker 0 in all 37 gritty rooms
   (incl. the new "unheld"), lock test RESULT PASS. Nothing locked.
+- **Numbers for the whole zone** (19 Nov, baked area `--area=-700,-1100,180 --nofarground`, 9 cells, 36 viewpoints:
+  each of the 12 blocks from above, along its numbered street and along its Ave; before = the same bake without the
+  gritty blocks; cloud counts, NOT the phone):
+  - draws per view **34-129** (before 21-68): every view under the phone's 150;
+  - triangles per view **485k-1,160k** (before 126k-453k): over the ~500k mark in 34 of 36 views. The blocks are no
+    heavier one by one than the samples; it is how much more is in view now. Yasin's rule: draws first, triangles are
+    fine - but the phone has not seen this zone filled yet: the PC session's phone run is the real test;
+  - download: the 9 cells grow from 22.1 to 42.8 MB (+20.6 MB, about 1.7 MB a block), shared models +2.1 MB;
+  - rooms not in the bake yet (merged: 7-9 draws, 4-5 lights each).
