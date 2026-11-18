@@ -3,17 +3,17 @@
   "file_base": "prop_shop_counter",
   "batch": "inshared",
   "class": "medium",
-  "budget": 900,
+  "budget": 1200,
   "conds": [
    "clean"
   ],
   "mount": "ground",
   "tiers": {
-   "near": 648
+   "near": 1044
   },
   "footprint_w": 1.82,
   "footprint_d": 0.672,
-  "height": 0.964,
+  "height": 1.09,
   "regions": [
    "baked:shop_counter"
   ],
@@ -23,15 +23,15 @@
     "px_per_m": 128.0
    },
    "ti_plastic": {
-    "area_m2": 0.12,
+    "area_m2": 0.18,
     "px_per_m": 128.0
    },
    "ti_paint": {
-    "area_m2": 4.7,
+    "area_m2": 9.19,
     "px_per_m": 128.0
    },
    "ti_wood": {
-    "area_m2": 3.78,
+    "area_m2": 4.07,
     "px_per_m": 128.0
    },
    "ti_brass": {
@@ -41,26 +41,30 @@
    "ti_metal": {
     "area_m2": 0.37,
     "px_per_m": 128.0
+   },
+   "tg_grocery": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
    }
   },
   "atlas_page": "props_i_*",
-  "high_tris": 3502,
+  "high_tris": 4674,
   "bake_slot_px": 64,
-  "bake_px_per_m": 154.1,
+  "bake_px_per_m": 151.2,
   "col": 1,
-  "secs": 18.3
+  "secs": 21.3
  },
  "cash_register": {
   "file_base": "prop_cash_register",
   "batch": "inshared",
   "class": "small",
-  "budget": 500,
+  "budget": 600,
   "conds": [
    "clean"
   ],
   "mount": "ground",
   "tiers": {
-   "near": 334
+   "near": 482
   },
   "footprint_w": 0.454,
   "footprint_d": 0.412,
@@ -70,11 +74,11 @@
   ],
   "trim": {
    "ti_paint": {
-    "area_m2": 0.83,
+    "area_m2": 0.82,
     "px_per_m": 128.0
    },
    "ti_plastic": {
-    "area_m2": 0.34,
+    "area_m2": 0.33,
     "px_per_m": 128.0
    },
    "ti_metal": {
@@ -83,23 +87,23 @@
    }
   },
   "atlas_page": "props_i_*",
-  "high_tris": 2526,
+  "high_tris": 2844,
   "bake_slot_px": 96,
   "bake_px_per_m": 247.0,
   "col": 1,
-  "secs": 9.3
+  "secs": 10.7
  },
  "wall_shelf": {
   "file_base": "prop_wall_shelf",
   "batch": "inshared",
   "class": "medium",
-  "budget": 1000,
+  "budget": 1200,
   "conds": [
    "clean"
   ],
   "mount": "ground",
   "tiers": {
-   "near": 526
+   "near": 618
   },
   "footprint_w": 1.0,
   "footprint_d": 0.33,
@@ -113,7 +117,7 @@
     "px_per_m": 128.0
    },
    "ti_wood": {
-    "area_m2": 6.18,
+    "area_m2": 6.13,
     "px_per_m": 128.0
    },
    "ti_plastic": {
@@ -121,7 +125,19 @@
     "px_per_m": 128.0
    },
    "ti_paint": {
-    "area_m2": 3.65,
+    "area_m2": 5.06,
+    "px_per_m": 128.0
+   },
+   "tg_grocery": {
+    "area_m2": 0.68,
+    "px_per_m": 128.0
+   },
+   "tg_bottles": {
+    "area_m2": 0.23,
+    "px_per_m": 128.0
+   },
+   "tg_spines": {
+    "area_m2": 0.22,
     "px_per_m": 128.0
    }
   },
@@ -130,19 +146,19 @@
   "bake_slot_px": 64,
   "bake_px_per_m": 830.4,
   "col": 1,
-  "secs": 12.7
+  "secs": 15.0
  },
  "gondola_aisle": {
   "file_base": "prop_gondola_aisle",
   "batch": "inshared",
   "class": "medium",
-  "budget": 1100,
+  "budget": 1200,
   "conds": [
    "clean"
   ],
   "mount": "ground",
   "tiers": {
-   "near": 560
+   "near": 872
   },
   "footprint_w": 1.222,
   "footprint_d": 0.54,
@@ -152,11 +168,11 @@
   ],
   "trim": {
    "ti_paint": {
-    "area_m2": 17.33,
+    "area_m2": 19.71,
     "px_per_m": 128.0
    },
    "ti_metal": {
-    "area_m2": 0.93,
+    "area_m2": 0.84,
     "px_per_m": 128.0
    },
    "ti_wood": {
@@ -166,36 +182,44 @@
    "ti_plastic": {
     "area_m2": 0.38,
     "px_per_m": 128.0
+   },
+   "tg_grocery": {
+    "area_m2": 1.61,
+    "px_per_m": 128.0
+   },
+   "tg_bottles": {
+    "area_m2": 0.53,
+    "px_per_m": 128.0
    }
   },
   "atlas_page": "props_i_*",
-  "high_tris": 4348,
+  "high_tris": 5068,
   "bake_slot_px": 64,
-  "bake_px_per_m": 224.0,
+  "bake_px_per_m": 166.1,
   "col": 1,
-  "secs": 16.7
+  "secs": 18.4
  },
  "display_table": {
   "file_base": "prop_display_table",
   "batch": "inshared",
   "class": "medium",
-  "budget": 800,
+  "budget": 1100,
   "conds": [
    "clean"
   ],
   "mount": "ground",
   "tiers": {
-   "near": 548
+   "near": 1000
   },
   "footprint_w": 1.36,
   "footprint_d": 0.771,
-  "height": 0.78,
+  "height": 0.94,
   "regions": [
    "baked:display_table"
   ],
   "trim": {
    "ti_wood": {
-    "area_m2": 7.87,
+    "area_m2": 7.85,
     "px_per_m": 128.0
    },
    "ti_brass": {
@@ -205,26 +229,34 @@
    "ti_plastic": {
     "area_m2": 0.01,
     "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 3.0,
+    "px_per_m": 128.0
+   },
+   "tg_spines": {
+    "area_m2": 0.17,
+    "px_per_m": 128.0
    }
   },
   "atlas_page": "props_i_*",
-  "high_tris": 3580,
+  "high_tris": 4660,
   "bake_slot_px": 64,
-  "bake_px_per_m": 864.9,
+  "bake_px_per_m": 203.9,
   "col": 1,
-  "secs": 12.4
+  "secs": 18.3
  },
  "glass_display_case": {
   "file_base": "prop_glass_display_case",
   "batch": "inshared",
   "class": "medium",
-  "budget": 1100,
+  "budget": 1200,
   "conds": [
    "clean"
   ],
   "mount": "ground",
   "tiers": {
-   "near": 466
+   "near": 796
   },
   "footprint_w": 1.24,
   "footprint_d": 0.588,
@@ -234,7 +266,7 @@
   ],
   "trim": {
    "ti_paint": {
-    "area_m2": 4.9,
+    "area_m2": 4.82,
     "px_per_m": 128.0
    },
    "ti_fabric": {
@@ -242,11 +274,23 @@
     "px_per_m": 128.0
    },
    "ti_brass": {
-    "area_m2": 1.66,
+    "area_m2": 1.53,
     "px_per_m": 128.0
    },
    "ti_glass": {
-    "area_m2": 3.91,
+    "area_m2": 6.01,
+    "px_per_m": 128.0
+   },
+   "tg_spines": {
+    "area_m2": 0.25,
+    "px_per_m": 128.0
+   },
+   "tg_grocery": {
+    "area_m2": 0.25,
+    "px_per_m": 128.0
+   },
+   "tg_bottles": {
+    "area_m2": 0.25,
     "px_per_m": 128.0
    },
    "ti_metal": {
@@ -261,9 +305,9 @@
   "atlas_page": "props_i_*",
   "high_tris": 4446,
   "bake_slot_px": 96,
-  "bake_px_per_m": 57.1,
+  "bake_px_per_m": 1885.6,
   "col": 1,
-  "secs": 11.8
+  "secs": 19.2
  },
  "waiting_bench": {
   "file_base": "prop_waiting_bench",
@@ -302,7 +346,7 @@
   "bake_slot_px": 64,
   "bake_px_per_m": 1035.1,
   "col": 1,
-  "secs": 11.8
+  "secs": 20.0
  },
  "side_chair": {
   "file_base": "prop_side_chair",
@@ -341,7 +385,7 @@
   "bake_slot_px": 64,
   "bake_px_per_m": 1183.0,
   "col": 1,
-  "secs": 7.9
+  "secs": 11.8
  },
  "potted_plant": {
   "file_base": "prop_potted_plant",
@@ -376,7 +420,7 @@
   "bake_slot_px": 64,
   "bake_px_per_m": 1143.6,
   "col": 1,
-  "secs": 7.3
+  "secs": 11.1
  },
  "indoor_bin": {
   "file_base": "prop_indoor_bin",
@@ -411,19 +455,19 @@
   "bake_slot_px": 64,
   "bake_px_per_m": 913.0,
   "col": 1,
-  "secs": 7.0
+  "secs": 10.1
  },
  "drinks_fridge": {
   "file_base": "prop_drinks_fridge",
   "batch": "inshared",
   "class": "medium",
-  "budget": 1100,
+  "budget": 1200,
   "conds": [
    "clean"
   ],
   "mount": "ground",
   "tiers": {
-   "near": 486
+   "near": 722
   },
   "footprint_w": 0.785,
   "footprint_d": 0.762,
@@ -433,11 +477,23 @@
   ],
   "trim": {
    "ti_paint": {
-    "area_m2": 8.13,
+    "area_m2": 8.01,
     "px_per_m": 128.0
    },
    "ti_metal": {
-    "area_m2": 1.22,
+    "area_m2": 1.33,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 2.09,
+    "px_per_m": 128.0
+   },
+   "tg_bottles": {
+    "area_m2": 0.6,
+    "px_per_m": 128.0
+   },
+   "tg_grocery": {
+    "area_m2": 0.3,
     "px_per_m": 128.0
    },
    "ti_plastic": {
@@ -448,9 +504,9 @@
   "atlas_page": "props_i_*",
   "high_tris": 7852,
   "bake_slot_px": 128,
-  "bake_px_per_m": 73.9,
+  "bake_px_per_m": 308.4,
   "col": 1,
-  "secs": 11.6
+  "secs": 17.0
  },
  "brochure_rack": {
   "file_base": "prop_brochure_rack",
@@ -489,7 +545,7 @@
   "bake_slot_px": 64,
   "bake_px_per_m": 78.2,
   "col": 1,
-  "secs": 8.0
+  "secs": 12.3
  },
  "menu_board": {
   "file_base": "prop_menu_board",
@@ -501,7 +557,7 @@
   ],
   "mount": "wall",
   "tiers": {
-   "near": 236
+   "near": 340
   },
   "footprint_w": 1.7,
   "footprint_d": 0.08,
@@ -511,7 +567,7 @@
   ],
   "trim": {
    "ti_wood": {
-    "area_m2": 1.05,
+    "area_m2": 0.93,
     "px_per_m": 128.0
    },
    "ti_paint": {
@@ -533,6 +589,6 @@
   "bake_slot_px": 128,
   "bake_px_per_m": 71.2,
   "col": 1,
-  "secs": 12.1
+  "secs": 19.3
  }
 }

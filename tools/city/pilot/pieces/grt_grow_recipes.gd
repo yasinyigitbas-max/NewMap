@@ -12,6 +12,7 @@ extends RefCounted
 ##   v3 WALK-UP HOMES (toward the Crown Hill apartments and the campus): one corner shop and a laundromat, then homes -
 ##      apartment rows behind small yards, a dingbat on the lane, narrow houses on the Ave - and a shared court with a
 ##      fenced community garden and a kids' corner inside the block.
+## (ck_grt_row2 paints its windows boarded: only dead fronts go in it, never a shop people should see into.)
 ## Fencing (the phone's see-through cost, RUNTIME_BAKE.md): chain-link only round a yard / lot inside the block, with
 ## its streetward side behind a building; board fences only between front yards, across the street line, short.
 const GL := preload("res://tools/city/pilot/pieces/grt_grow_lib.gd")
@@ -88,6 +89,8 @@ static func _v1(ctx: Dictionary) -> void:
 	G.bins(ctx, 14.5, 46.0, rad_to_deg(atan2(A.face_dir(sx, sz, "+u").x, A.face_dir(sx, sz, "+u").y)))
 	I.add(props, "prop_cone_18in", "dirty", A.q(sx, sz, 30.0, L + 17.0), 20.0)
 	I.add(props, "prop_tank_horizontal_propane", "rusty", A.q(sx, sz, 44.0, L + 18.5), 90.0)     # the old station's last tank
+	var fvv := A.face_dir(sx, sz, "-v")       # the billboard over the dead station faces 4th St: the only rent the lot still earns
+	I.add(props, "prop_billboard", "worn", A.q(sx, sz, 41.0, L + 3.2), rad_to_deg(atan2(fvv.x, fvv.y)))
 	# ---- B: the hand car wash (or a tyre shop) on 4th St, entered from the apron next to the lane mouth
 	if seed == 0:
 		var cw := GL.work(ctx, "services/svc_carwash", 81.0, L + GL.FORE + 8.0, "-v", "hand_car_wash")
@@ -156,7 +159,7 @@ static func _v2(ctx: Dictionary) -> void:
 		3: {"corner": "ck/ck_brk3_corner2", "cn": [[0, "liquor", "Fourth St Liquor"]], "ck": ["liquor"],
 			"a2": ["ck/ck_svc_trade", ["pawn", "none"], [[0, "pawn", "Gold & Pawn"], [1, "barber", "Fade Kings Barber"]]],
 			"b": [["ck/ck_svc_pawn_fast", "shop", "row_b", [["dead", "diner"], [[1, "takeout", "Taco Shack"]]]],
-				["ck/ck_grt_row2", "shop", "launder", [["laundry"], [[0, "laundry", "Suds City Laundry"]]]]]},
+				["ck/ck_svc_trade_1d", "shop", "launder", [["laundry"], [[0, "laundry", "Suds City Laundry"]]]]]},
 		6: {"corner": "ck/ck_brk3_corner2", "cn": [[0, "bodega", "Fifth St Market"]], "ck": ["liquor"],
 			"a2": ["ck/ck_svc_trade_1d", ["cash"], [[0, "tattoo", "Black Anchor Tattoo"]]],
 			"b": [["urban/urb_brick_row", "shop", "brick_row", [["dead", "laundry", "none"], [[1, "laundry", "Bubbles Coin Wash"], [2, "thrift", "Junk & Treasures"]]]],
@@ -195,11 +198,12 @@ static func _v2(ctx: Dictionary) -> void:
 			paints.append(A.rect(sx, sz, 76.0, 60.0, 84.0, 62.0, "asphalt"))
 		1:   # a pay lot for the strip (people who work on 4th St park here): stalls, a pay station, a lot light
 			paints.append(A.rect(sx, sz, 60.0, 60.0, 100.0, 100.0, "asphalt"))
-			SL.stalls_u(paints, ctx.stalls, sx, sz, 62.0, 13, 61.0, 1.0)
-			SL.stalls_u(paints, ctx.stalls, sx, sz, 62.0, 13, 78.0, -1.0)
-			SL.stalls_u(paints, ctx.stalls, sx, sz, 62.0, 13, 81.0, 1.0)
-			SL.stalls_u(paints, ctx.stalls, sx, sz, 62.0, 13, 98.5, -1.0)
-			SL.stall_wear(dec, rr, ctx.stalls.slice(ctx.stalls.size() - 52), 0.7)
+			SL.stalls_u(paints, ctx.stalls, sx, sz, 68.5, 11, 61.0, 1.0)
+			SL.stalls_u(paints, ctx.stalls, sx, sz, 68.5, 11, 78.0, -1.0)
+			SL.stalls_u(paints, ctx.stalls, sx, sz, 68.5, 11, 81.0, 1.0)
+			SL.stalls_u(paints, ctx.stalls, sx, sz, 68.5, 11, 98.5, -1.0)
+			SL.stall_wear(dec, rr, ctx.stalls.slice(ctx.stalls.size() - 44), 0.7)
+			GL.work(ctx, "commercial/com_kiosk", 64.0, 70.0, "+u", "lot_booth")     # the attendant's booth by the way in
 			I.add(props, "prop_pay_station", "worn", A.q(sx, sz, 61.5, 79.5), 90.0)
 			SL.lot_light(props, sx, sz, 99.0, 79.5)
 			G.bins(ctx, 96.0, 90.0, rad_to_deg(atan2(A.face_dir(sx, sz, "-u").x, A.face_dir(sx, sz, "-u").y)))
@@ -219,7 +223,7 @@ static func _v3(ctx: Dictionary) -> void:
 	var rr: RandomNumberGenerator = ctx.rr; var props: K.Props = ctx.props; var dec: K.Decals = ctx.dec; var paints: Array = ctx.paints
 	var seed := int(ctx.site.seed)
 	var sets := {
-		4: {"shop": ["ck/ck_svc_trade_1d", ["liquor"], [[0, "bodega", "G Ave Mini Mart"]]], "shop2": ["ck/ck_grt_row2", ["laundry"], [[0, "laundry", "Wash Tub Laundromat"]]],
+		4: {"shop": ["ck/ck_svc_trade_1d", ["liquor"], [[0, "bodega", "G Ave Mini Mart"]]], "shop2": ["ck/ck_svc_trade", ["laundry", "dead"], [[0, "laundry", "Wash Tub Laundromat"]]],
 			"b": ["ck/ck_apt3_row3", "apartments/apt_stucco3_peach"], "ding": "apartments/apt_dingbat_teal", "court": "apartments/apt_court_white"},
 		5: {"shop": ["ck/ck_svc_bank_pharm", ["cash"], [[0, "cash", "Cash Now"]]], "shop2": ["commercial/com_realty", ["none"], [[0, "botanica", "Botanica San Miguel"]]],
 			"b": ["apartments/apt_stucco3_cream", "ck/ck_apt3_row2"], "ding": "apartments/apt_dingbat_pink", "court": "ck/ck_apt3_row3_boarded"},
@@ -257,17 +261,23 @@ static func _v3(ctx: Dictionary) -> void:
 	A.dress(hb, paints, props, dec, rr, sx, sz, GL.AL1, false, false)
 	var gv0 := GL.AL1 + 3.0 + _d(cf) + 4.0
 	paints.append(A.rect(sx, sz, 68.0, gv0, 96.0, 98.0, "mulch"))
-	for side: Array in [[Vector2(68.0, gv0), Vector2(68.0, 98.0)], [Vector2(68.0, 98.0), Vector2(96.0, 98.0)], [Vector2(96.0, 98.0), Vector2(96.0, gv0)]]:
-		var a0: Vector2 = side[0]; var a1: Vector2 = side[1]
-		I.lot_fence(props, Vector2(sx * a0.x, sz * a0.y), Vector2(sx * a1.x, sz * a1.y), false)
-	I.lot_fence(props, Vector2(sx * 96.0, sz * gv0), Vector2(sx * 84.0, sz * gv0), false)      # the gate side: one 4 m gap
-	I.lot_fence(props, Vector2(sx * 80.0, sz * gv0), Vector2(sx * 68.0, sz * gv0), false)
+	# the garden's wall: stucco (solid: the phone pays for layered see-through fences in this zone, and a wall keeps the
+	# tomatoes from walking off), ONE wooden gate toward the court
+	var P := func(u: float, v: float) -> Vector2: return Vector2(sx * u, sz * v)
+	GL.wall_run(ctx, P.call(68.0, gv0), P.call(68.0, 98.0))
+	GL.wall_run(ctx, P.call(68.0, 98.0), P.call(96.0, 98.0))
+	GL.wall_run(ctx, P.call(96.0, 98.0), P.call(96.0, gv0))
+	GL.wall_run(ctx, P.call(96.0, gv0), P.call(83.2, gv0))
+	GL.wall_run(ctx, P.call(80.8, gv0), P.call(68.0, gv0))
+	var gdir := A.face_dir(sx, sz, "-v")
+	I.add(props, "fence_gate_privacy", "worn", A.q(sx, sz, 82.0, gv0), rad_to_deg(atan2(gdir.x, gdir.y)))
+	I.add(props, "tree_torrey_pine_b", "normal", A.q(sx, sz, 63.5, 95.0), rr.randf_range(0, 360), true)
 	var beds := ["plant_bird_of_paradise", "plant_agave_americana_small", "plant_bougainvillea_mound", "plant_potted_leafy", "plant_iceplant_patch"]
 	for k2 in 14:
 		var pu := 70.0 + (k2 % 7) * 3.8; var pv := gv0 + 2.0 + float(k2 / 7) * (98.0 - gv0 - 4.0)
 		I.add(props, beds[(k2 + seed) % beds.size()], "normal", A.q(sx, sz, pu, pv), rr.randf_range(0, 360))
 	I.add(props, "prop_hose_reel_cart", "worn", A.q(sx, sz, 82.0, gv0 + 1.2), 0.0)
-	I.add(props, "plant_bougainvillea_wall", "normal", A.q(sx, sz, 95.2, (gv0 + 98.0) * 0.5), 90.0)
+	I.add(props, "plant_bougainvillea_wall", "normal", A.q(sx, sz, 95.2, (gv0 + 98.0) * 0.5), rad_to_deg(atan2(A.face_dir(sx, sz, "-u").x, A.face_dir(sx, sz, "-u").y)))
 	I.add(props, "prop_park_bench", "worn", A.q(sx, sz, 64.0, gv0 + 4.0), rad_to_deg(atan2(A.face_dir(sx, sz, "+u").x, A.face_dir(sx, sz, "+u").y)))
 	_drives(ctx)
 	GL.done(ctx, "grass", true)

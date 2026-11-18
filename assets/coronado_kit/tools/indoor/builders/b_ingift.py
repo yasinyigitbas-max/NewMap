@@ -6,7 +6,7 @@ Delete stale _bake/tiles/<name>_* after any geometry change.
 """
 import math
 from b_inshared import (
-    sg, leveler, screw, maker_plate, bottle_card, can_card, TR, TINT,
+    sg, leveler, screw, maker_plate, bottle_card, can_card, TR, TINT, stock,
 )
 
 # ------------------------------------------------------------------ card_spinner
@@ -39,7 +39,7 @@ def card_spinner(b, hi=False):
                 b.box((cx+ox*1.2,cy+oy*1.2,z+0.15),(0.05,0.003,0.04),'label',rz=deg)
     b.tube((0,0,H-0.06),(0,0,H),0.04,0.015,sg(hi,8,12),'chrome',cap0=False,cap1=True,smooth=True)
     maker_plate(b,(0,-0.16,0.05),hi,w=0.06,h=0.014)
-    b.ccyl((0,0,0),0.32,H)
+    b.cbox((0,0,0),(0.640,0.640,H))
 
 
 def gallery_frame(b, hi=False):
@@ -58,15 +58,22 @@ def gallery_frame(b, hi=False):
     b.box(((W/2)-fw-fw2/2+0.006,-0.008,fw),(fw2,0.02,H-2*fw),'oak')
     # back board
     b.box((0,D/2-0.006,fw),(W-2*fw,0.010,H-2*fw),'paint_cream')
-    # art on the front of the opening
-    if not hi:
-        b.box((0,-0.010,fw+0.02),(W-2*fw-0.04,0.006,H-2*fw-0.04),'goods')
-    else:
-        y=-0.010-0.006
-        b.box((0,y,0.18),(W-0.22,0.004,H-0.32),'paint_navy')
-        b.box((-0.08,y,0.34),(0.22,0.004,0.28),'leaf')
-        b.box((0.10,y,0.26),(0.16,0.004,0.16),'brass')
-        b.box((0,y,0.68),(W-0.28,0.004,0.06),'paint_cream')
+    # framed print: white mat + mid-century abstract (colour fields + half sun), 2-tri quads, near and hi alike
+    y=-0.012; x0,x1=-(W/2)+fw+0.01,(W/2)-fw-0.01; z0,z1=fw+0.01,H-fw-0.01
+    def pq(xa,xb,za,zb,k,dy=0.0):
+        b.quad([(xa,y-dy,za),(xb,y-dy,za),(xb,y-dy,zb),(xa,y-dy,zb)],k)
+    pq(x0,x1,z0,z1,'paint_white')                                   # mat
+    ax0,ax1,az0,az1=x0+0.07,x1-0.07,z0+0.10,z1-0.08
+    pq(ax0,ax1,az0,az1,'paint_cream',0.001)                         # paper
+    pq(ax0,ax1,az0,az0+0.22,'paint_navy',0.002)                     # sea field
+    pq(ax0,ax0+0.20,az0+0.22,az0+0.40,'paint_green',0.002)          # hill block
+    pq(ax1-0.12,ax1,az1-0.30,az1,'paint_red',0.002)                 # vertical red bar
+    import math as _m
+    from mathutils import Vector as _V
+    cx,cz,r=0.03,az0+0.22,0.13; n=8
+    pts=[_V((cx+r*_m.cos(_m.pi*i/n),y-0.003,cz+r*_m.sin(_m.pi*i/n))) for i in range(n+1)]
+    b.faces([_V((cx,y-0.003,cz))]+pts,[(0,i+1,i+2) for i in range(n)],'paint_orange',[[(0,0),(pts[i].x,pts[i].z),(pts[i+1].x,pts[i+1].z)] for i in range(n)])
+    pq(ax0+0.04,ax0+0.20,z0+0.035,z0+0.045,'paint_grey',0.001)       # pencil signature line
     # hanging hardware + wall flanges
     b.box((0,D/2+0.004,H-0.10),(0.16,0.010,0.04),'steel')
     for x in (-W/2+0.10,W/2-0.10):
@@ -94,8 +101,8 @@ def pharmacy_shelf(b, hi=False):
     for z in zs:
         b.box((0,-0.01,z),(W-0.06,D-0.04,0.016),'paint_cream')
         b.box((0,-(D/2)+0.016,z-0.014),(W-0.10,0.012,0.018),'plastic')
-        if not hi:
-            b.box((0,-(D/2)+0.08,z+0.12),(W-0.14,0.008,0.20),'goods')
+        for x0,x1 in ((-W/2+0.045,-0.016),(0.016,W/2-0.045)):
+            stock(b,x0,x1,-(D/2)+0.05+0.012*((zs.index(z)+(x0>0))%2),z+0.016,0.25 if z<1.6 else 0.22,'tg_grocery',depth=0.26,hi=hi)
     if hi:
         y=-(D/2)+0.08-0.006
         bodies=('paint_navy','paint_cream','leaf','plastic','brass','oak','paint_black')
@@ -105,6 +112,9 @@ def pharmacy_shelf(b, hi=False):
                 # medicine box
                 b.box((x,y,z+0.03),(0.09,0.004,0.16),bodies[(row+col)%len(bodies)])
                 b.box((x,y-0.003,z+0.12),(0.07,0.003,0.05),'label')
+    # category header: green band with a white cross plaque
+    b.box((0,-(D/2)-0.004,H-0.075),(W-0.04,0.008,0.065),'paint_green')
+    b.box((0,-(D/2)-0.009,H-0.065),(0.045,0.004,0.045),'paint_white'); b.box((0,-(D/2)-0.010,H-0.055),(0.015,0.004,0.025),'paint_green')
     # lockable lower cupboard
     b.box((0,0.0,0.08),(W-0.08,D-0.04,0.16),'paint_cream')
     b.box((0,-(D/2)+0.02,0.10),(0.40,0.02,0.12),'paint_cream')
@@ -137,8 +147,8 @@ def bookcase(b, hi=False):
     zs=(0.58,0.94,1.30,1.66)
     for z in zs:
         b.box((0,0.0,z),(W-0.08,D-0.04,0.018),'oak')
-        if not hi:
-            b.box((0,-(D/2)+0.06,z+0.14),(W-0.14,0.008,0.24),'goods')
+        for x0,x1 in ((-W/2+0.05,-0.018),(0.018,W/2-0.05)):
+            stock(b,x0,x1,-(D/2)+0.05+0.015*((zs.index(z)+(x0>0))%2),z+0.018,0.25,'tg_spines',depth=0.24,hi=hi)
     if hi:
         y=-(D/2)+0.06-0.006
         bodies=('oak','walnut','paint_navy','paint_cream','leaf','paint_black','brass','fabric')
@@ -170,6 +180,8 @@ def _p(name,fn,cls,budget=None,**kw):
 PROPS=[
     _p('card_spinner',card_spinner,'medium',900,side=96,cage=0.04,ray=0.12),
     _p('gallery_frame',gallery_frame,'small',400,side=96,mount='wall',cage=0.04,ray=0.12),
-    _p('pharmacy_shelf',pharmacy_shelf,'medium',1100,side=96,cage=0.04,ray=0.12),
-    _p('bookcase',bookcase,'medium',1100,side=128,cage=0.04,ray=0.12),
+    _p('pharmacy_shelf',pharmacy_shelf,'medium',1200,side=96,cage=0.04,ray=0.12),
+    _p('bookcase',bookcase,'medium',1200,side=128,cage=0.04,ray=0.12),
 ]
+
+INDOOR_LOOK=True   # run.py: chamfer edge highlight + per-part colour variation in COLOR_0

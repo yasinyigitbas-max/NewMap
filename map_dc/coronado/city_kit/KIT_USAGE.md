@@ -601,3 +601,19 @@ one more see-through layer at the house edge), roof vents and solar (need roof h
 per district is enough).
 Kit shelves: `wall_shelf` and `gondola_aisle` are EMPTY models (no goods). The industrial rooms use the stocked
 `grocery_shelf` / `pharmacy_shelf` instead (Yasin 18 Nov: "most shelves are empty").
+## Gritty edge growth (18 Nov, branch claude/grow-gritty; added, the table above is not rewritten)
+Counted over the eight new pilot-area blocks (`g_v1_*`, `g_v2_*`, `g_v3_*`, review/grow_grt_blocks.json): 2,865 props of
+96 types, 87 buildings of 36 types.
+- **Unused before, used now (props, 17):** fence_weathered_board (side fences between front yards), fence_stucco_wall +
+  fence_gate_privacy (community garden wall, one gate), hedge_privet_2m (old cottages), plant_bougainvillea_wall (garden
+  wall), prop_vent_box / prop_vent_turbine / prop_vent_plumbing / prop_ac_condenser_compact (roofs of the old flat-roofed
+  shops), prop_downspout_3m, prop_house_numbers_tile / _wood, prop_mailbox_post_metal, prop_satellite_dish_round,
+  prop_cone_18in, prop_wheel_stop_rubber, tree_torrey_pine_b.
+- **Unused before, used now (buildings, 8):** houses/narrow_cottage_siding, narrow_cottage_stucco_clay, narrow_2sty_siding,
+  narrow_2sty_stucco_clay, ranch_siding; garages/single_stucco_flat, single_stucco_clay; services/svc_carwash.
+- **Still unused and would fit the gritty edge** (next round, needs Yasin's yes): the modular map rows `@map:brk3_row3`,
+  `shop_row4`, `svb_row2/3`, `stg_row2/3` (they must first be merged into `ck_` buildings with merge_modular.gd and get room
+  contracts); prop_gutter_kstyle_2m (eaves runs: needs a roof-edge rule); prop_bollard_iron (in the pawn recipe, but every
+  spot was in front of a door: dropped by the door rule).
+- **Left out on purpose here:** picket / vinyl fences, golf carts, solar panels, beach / riprap / marina pieces, the
+  suburban house types (colonial, cape, tudor, craftsman ...): they belong to other zones.

@@ -6,11 +6,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 822,
+  "near_tris": 1102,
   "near_info": {
    "errors": [],
-   "tris": 822,
-   "verts": 1745,
+   "tris": 1102,
+   "verts": 2401,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -29,11 +29,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 606,
+  "near_tris": 846,
   "near_info": {
    "errors": [],
-   "tris": 606,
-   "verts": 1236,
+   "tris": 846,
+   "verts": 1817,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -52,11 +52,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 702,
+  "near_tris": 810,
   "near_info": {
    "errors": [],
-   "tris": 702,
-   "verts": 1474,
+   "tris": 810,
+   "verts": 1747,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -71,22 +71,22 @@
  {
   "name": "produce_stand",
   "class": "medium",
-  "budget": 1100,
+  "budget": 1200,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 656,
+  "near_tris": 1108,
   "near_info": {
    "errors": [],
-   "tris": 656,
-   "verts": 1545,
+   "tris": 1108,
+   "verts": 2683,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
     "../../../atlases/props_i_normal.png",
     "../../../atlases/props_i_orm.png"
    ],
-   "h": 1.21,
+   "h": 1.3,
    "ymin": 0.0
   },
   "col_tris": 12
@@ -94,15 +94,15 @@
  {
   "name": "cigarette_cabinet",
   "class": "medium",
-  "budget": 900,
+  "budget": 1000,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 408,
+  "near_tris": 548,
   "near_info": {
    "errors": [],
-   "tris": 408,
-   "verts": 865,
+   "tris": 548,
+   "verts": 1207,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -120,14 +120,12 @@
   "budget": 600,
   "pass": true,
   "errors": [],
-  "notes": [
-   "col has 44 tris (SPEC prefers one box or one cylinder)"
-  ],
-  "near_tris": 384,
+  "notes": [],
+  "near_tris": 416,
   "near_info": {
    "errors": [],
-   "tris": 384,
-   "verts": 704,
+   "tris": 416,
+   "verts": 784,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -137,7 +135,7 @@
    "h": 0.75,
    "ymin": 0.0
   },
-  "col_tris": 44
+  "col_tris": 28
  },
  {
   "name": "restaurant_table",
@@ -146,11 +144,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 420,
+  "near_tris": 756,
   "near_info": {
    "errors": [],
-   "tris": 420,
-   "verts": 982,
+   "tris": 756,
+   "verts": 1841,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -173,7 +171,7 @@
   "near_info": {
    "errors": [],
    "tris": 494,
-   "verts": 1100,
+   "verts": 1094,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -191,14 +189,12 @@
   "budget": 550,
   "pass": true,
   "errors": [],
-  "notes": [
-   "col has 44 tris (SPEC prefers one box or one cylinder)"
-  ],
+  "notes": [],
   "near_tris": 472,
   "near_info": {
    "errors": [],
    "tris": 472,
-   "verts": 957,
+   "verts": 953,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -208,7 +204,7 @@
    "h": 0.93,
    "ymin": 0.0
   },
-  "col_tris": 44
+  "col_tris": 28
  },
  {
   "name": "booth_bench",
@@ -217,11 +213,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 340,
+  "near_tris": 524,
   "near_info": {
    "errors": [],
-   "tris": 340,
-   "verts": 756,
+   "tris": 524,
+   "verts": 1216,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -240,11 +236,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 814,
+  "near_tris": 1034,
   "near_info": {
    "errors": [],
-   "tris": 814,
-   "verts": 1721,
+   "tris": 1034,
+   "verts": 2272,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -259,15 +255,15 @@
  {
   "name": "pastry_case",
   "class": "medium",
-  "budget": 1100,
+  "budget": 1200,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 608,
+  "near_tris": 1125,
   "near_info": {
    "errors": [],
-   "tris": 608,
-   "verts": 1346,
+   "tris": 1125,
+   "verts": 2586,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -282,15 +278,15 @@
  {
   "name": "gelato_case",
   "class": "medium",
-  "budget": 1100,
+  "budget": 1200,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 486,
+  "near_tris": 1026,
   "near_info": {
    "errors": [],
-   "tris": 486,
-   "verts": 1081,
+   "tris": 1026,
+   "verts": 2316,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -309,11 +305,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 640,
+  "near_tris": 770,
   "near_info": {
    "errors": [],
-   "tris": 640,
-   "verts": 1357,
+   "tris": 770,
+   "verts": 1655,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -332,11 +328,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 394,
+  "near_tris": 882,
   "near_info": {
    "errors": [],
-   "tris": 394,
-   "verts": 843,
+   "tris": 882,
+   "verts": 1849,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -355,11 +351,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 580,
+  "near_tris": 1062,
   "near_info": {
    "errors": [],
-   "tris": 580,
-   "verts": 1260,
+   "tris": 1062,
+   "verts": 2310,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -378,11 +374,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 1504,
+  "near_tris": 1894,
   "near_info": {
    "errors": [],
-   "tris": 1504,
-   "verts": 3272,
+   "tris": 1894,
+   "verts": 4192,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -401,18 +397,18 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 494,
+  "near_tris": 546,
   "near_info": {
    "errors": [],
-   "tris": 494,
-   "verts": 1068,
+   "tris": 546,
+   "verts": 1216,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
     "../../../atlases/props_i_normal.png",
     "../../../atlases/props_i_orm.png"
    ],
-   "h": 0.62,
+   "h": 0.63,
    "ymin": 0.0
   },
   "col_tris": 12
@@ -424,11 +420,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 560,
+  "near_tris": 976,
   "near_info": {
    "errors": [],
-   "tris": 560,
-   "verts": 1158,
+   "tris": 976,
+   "verts": 2154,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -443,22 +439,22 @@
  {
   "name": "shop_counter",
   "class": "medium",
-  "budget": 900,
+  "budget": 1200,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 648,
+  "near_tris": 1044,
   "near_info": {
    "errors": [],
-   "tris": 648,
-   "verts": 1341,
+   "tris": 1044,
+   "verts": 2278,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
     "../../../atlases/props_i_normal.png",
     "../../../atlases/props_i_orm.png"
    ],
-   "h": 0.964,
+   "h": 1.09,
    "ymin": 0.0
   },
   "col_tris": 12
@@ -466,15 +462,15 @@
  {
   "name": "cash_register",
   "class": "small",
-  "budget": 500,
+  "budget": 600,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 334,
+  "near_tris": 482,
   "near_info": {
    "errors": [],
-   "tris": 334,
-   "verts": 702,
+   "tris": 482,
+   "verts": 1053,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -489,15 +485,15 @@
  {
   "name": "wall_shelf",
   "class": "medium",
-  "budget": 1000,
+  "budget": 1200,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 526,
+  "near_tris": 618,
   "near_info": {
    "errors": [],
-   "tris": 526,
-   "verts": 1147,
+   "tris": 618,
+   "verts": 1360,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -512,15 +508,15 @@
  {
   "name": "gondola_aisle",
   "class": "medium",
-  "budget": 1100,
+  "budget": 1200,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 560,
+  "near_tris": 872,
   "near_info": {
    "errors": [],
-   "tris": 560,
-   "verts": 1237,
+   "tris": 872,
+   "verts": 1945,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -535,22 +531,22 @@
  {
   "name": "display_table",
   "class": "medium",
-  "budget": 800,
+  "budget": 1100,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 548,
+  "near_tris": 1000,
   "near_info": {
    "errors": [],
-   "tris": 548,
-   "verts": 1295,
+   "tris": 1000,
+   "verts": 2420,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
     "../../../atlases/props_i_normal.png",
     "../../../atlases/props_i_orm.png"
    ],
-   "h": 0.78,
+   "h": 0.94,
    "ymin": 0.0
   },
   "col_tris": 12
@@ -558,15 +554,15 @@
  {
   "name": "glass_display_case",
   "class": "medium",
-  "budget": 1100,
+  "budget": 1200,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 466,
+  "near_tris": 796,
   "near_info": {
    "errors": [],
-   "tris": 466,
-   "verts": 1014,
+   "tris": 796,
+   "verts": 1879,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -630,14 +626,12 @@
   "budget": 400,
   "pass": true,
   "errors": [],
-  "notes": [
-   "col has 44 tris (SPEC prefers one box or one cylinder)"
-  ],
+  "notes": [],
   "near_tris": 349,
   "near_info": {
    "errors": [],
    "tris": 349,
-   "verts": 750,
+   "verts": 748,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -647,7 +641,7 @@
    "h": 0.854,
    "ymin": 0.0
   },
-  "col_tris": 44
+  "col_tris": 28
  },
  {
   "name": "indoor_bin",
@@ -655,14 +649,12 @@
   "budget": 250,
   "pass": true,
   "errors": [],
-  "notes": [
-   "col has 44 tris (SPEC prefers one box or one cylinder)"
-  ],
+  "notes": [],
   "near_tris": 246,
   "near_info": {
    "errors": [],
    "tris": 246,
-   "verts": 429,
+   "verts": 430,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -672,20 +664,20 @@
    "h": 0.542,
    "ymin": 0.0
   },
-  "col_tris": 44
+  "col_tris": 28
  },
  {
   "name": "drinks_fridge",
   "class": "medium",
-  "budget": 1100,
+  "budget": 1200,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 486,
+  "near_tris": 722,
   "near_info": {
    "errors": [],
-   "tris": 486,
-   "verts": 1021,
+   "tris": 722,
+   "verts": 1593,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -727,11 +719,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 236,
+  "near_tris": 340,
   "near_info": {
    "errors": [],
-   "tris": 236,
-   "verts": 503,
+   "tris": 340,
+   "verts": 776,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -746,15 +738,15 @@
  {
   "name": "bike_stand",
   "class": "medium",
-  "budget": 800,
+  "budget": 1100,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 332,
+  "near_tris": 904,
   "near_info": {
    "errors": [],
-   "tris": 332,
-   "verts": 761,
+   "tris": 904,
+   "verts": 2148,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -773,11 +765,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 560,
+  "near_tris": 776,
   "near_info": {
    "errors": [],
-   "tris": 560,
-   "verts": 1309,
+   "tris": 776,
+   "verts": 1889,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -796,18 +788,18 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 460,
+  "near_tris": 852,
   "near_info": {
    "errors": [],
-   "tris": 460,
-   "verts": 1016,
+   "tris": 852,
+   "verts": 1918,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
     "../../../atlases/props_i_normal.png",
     "../../../atlases/props_i_orm.png"
    ],
-   "h": 1.155,
+   "h": 1.17,
    "ymin": 0.04
   },
   "col_tris": 12
@@ -819,18 +811,18 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 738,
+  "near_tris": 1001,
   "near_info": {
    "errors": [],
-   "tris": 738,
-   "verts": 1623,
+   "tris": 1001,
+   "verts": 2257,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
     "../../../atlases/props_i_normal.png",
     "../../../atlases/props_i_orm.png"
    ],
-   "h": 1.3,
+   "h": 1.255,
    "ymin": 0.0
   },
   "col_tris": 12
@@ -842,11 +834,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 916,
+  "near_tris": 1024,
   "near_info": {
    "errors": [],
-   "tris": 916,
-   "verts": 1952,
+   "tris": 1024,
+   "verts": 2200,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -865,11 +857,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 406,
+  "near_tris": 738,
   "near_info": {
    "errors": [],
-   "tris": 406,
-   "verts": 875,
+   "tris": 738,
+   "verts": 1678,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -888,18 +880,18 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 562,
+  "near_tris": 930,
   "near_info": {
    "errors": [],
-   "tris": 562,
-   "verts": 1194,
+   "tris": 930,
+   "verts": 2089,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
     "../../../atlases/props_i_normal.png",
     "../../../atlases/props_i_orm.png"
    ],
-   "h": 2.02,
+   "h": 2.0,
    "ymin": 0.0
   },
   "col_tris": 12
@@ -907,15 +899,15 @@
  {
   "name": "wash_basin",
   "class": "medium",
-  "budget": 1000,
+  "budget": 1200,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 758,
+  "near_tris": 1164,
   "near_info": {
    "errors": [],
-   "tris": 758,
-   "verts": 1649,
+   "tris": 1164,
+   "verts": 2682,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -934,18 +926,18 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 386,
+  "near_tris": 732,
   "near_info": {
    "errors": [],
-   "tris": 386,
-   "verts": 883,
+   "tris": 732,
+   "verts": 1787,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
     "../../../atlases/props_i_normal.png",
     "../../../atlases/props_i_orm.png"
    ],
-   "h": 1.02,
+   "h": 0.985,
    "ymin": 0.0
   },
   "col_tris": 12
@@ -957,11 +949,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 880,
+  "near_tris": 1328,
   "near_info": {
    "errors": [],
-   "tris": 880,
-   "verts": 1936,
+   "tris": 1328,
+   "verts": 3072,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -980,18 +972,18 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 180,
+  "near_tris": 478,
   "near_info": {
    "errors": [],
-   "tris": 180,
-   "verts": 301,
+   "tris": 478,
+   "verts": 851,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
     "../../../atlases/props_i_normal.png",
     "../../../atlases/props_i_orm.png"
    ],
-   "h": 0.99,
+   "h": 1.006,
    "ymin": 0.0
   },
   "col_tris": 12
@@ -1003,11 +995,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 224,
+  "near_tris": 348,
   "near_info": {
    "errors": [],
-   "tris": 224,
-   "verts": 484,
+   "tris": 348,
+   "verts": 804,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -1022,22 +1014,22 @@
  {
   "name": "filing_cabinet",
   "class": "medium",
-  "budget": 800,
+  "budget": 1000,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 434,
+  "near_tris": 772,
   "near_info": {
    "errors": [],
-   "tris": 434,
-   "verts": 909,
+   "tris": 772,
+   "verts": 1691,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
     "../../../atlases/props_i_normal.png",
     "../../../atlases/props_i_orm.png"
    ],
-   "h": 1.32,
+   "h": 1.322,
    "ymin": 0.0
   },
   "col_tris": 12
@@ -1045,45 +1037,45 @@
  {
   "name": "office_chair",
   "class": "medium",
-  "budget": 800,
+  "budget": 1000,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 608,
+  "near_tris": 801,
   "near_info": {
    "errors": [],
-   "tris": 608,
-   "verts": 1329,
+   "tris": 801,
+   "verts": 1773,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
     "../../../atlases/props_i_normal.png",
     "../../../atlases/props_i_orm.png"
    ],
-   "h": 1.06,
-   "ymin": 0.008
+   "h": 1.02,
+   "ymin": 0.001
   },
   "col_tris": 12
  },
  {
   "name": "office_desk",
   "class": "medium",
-  "budget": 1000,
+  "budget": 1200,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 420,
+  "near_tris": 1154,
   "near_info": {
    "errors": [],
-   "tris": 420,
-   "verts": 893,
+   "tris": 1154,
+   "verts": 2682,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
     "../../../atlases/props_i_normal.png",
     "../../../atlases/props_i_orm.png"
    ],
-   "h": 0.744,
+   "h": 1.17,
    "ymin": 0.0
   },
   "col_tris": 12
@@ -1091,15 +1083,15 @@
  {
   "name": "clothes_rack",
   "class": "medium",
-  "budget": 1000,
+  "budget": 1200,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 956,
+  "near_tris": 1012,
   "near_info": {
    "errors": [],
-   "tris": 956,
-   "verts": 1967,
+   "tris": 1012,
+   "verts": 2252,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -1118,11 +1110,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 1088,
+  "near_tris": 1888,
   "near_info": {
    "errors": [],
-   "tris": 1088,
-   "verts": 2458,
+   "tris": 1888,
+   "verts": 4441,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -1140,14 +1132,12 @@
   "budget": 900,
   "pass": true,
   "errors": [],
-  "notes": [
-   "col has 44 tris (SPEC prefers one box or one cylinder)"
-  ],
-  "near_tris": 590,
+  "notes": [],
+  "near_tris": 752,
   "near_info": {
    "errors": [],
-   "tris": 590,
-   "verts": 1168,
+   "tris": 752,
+   "verts": 1568,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -1157,7 +1147,7 @@
    "h": 1.74,
    "ymin": 0.0
   },
-  "col_tris": 44
+  "col_tris": 12
  },
  {
   "name": "shoe_bench",
@@ -1185,15 +1175,15 @@
  {
   "name": "shoe_wall",
   "class": "medium",
-  "budget": 1100,
+  "budget": 1200,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 486,
+  "near_tris": 1064,
   "near_info": {
    "errors": [],
-   "tris": 486,
-   "verts": 1043,
+   "tris": 1064,
+   "verts": 2327,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -1212,18 +1202,18 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 764,
+  "near_tris": 1046,
   "near_info": {
    "errors": [],
-   "tris": 764,
-   "verts": 1456,
+   "tris": 1046,
+   "verts": 2102,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
     "../../../atlases/props_i_normal.png",
     "../../../atlases/props_i_orm.png"
    ],
-   "h": 0.984,
+   "h": 0.95,
    "ymin": 0.0
   },
   "col_tris": 12
@@ -1235,18 +1225,18 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 840,
+  "near_tris": 1040,
   "near_info": {
    "errors": [],
-   "tris": 840,
-   "verts": 1614,
+   "tris": 1040,
+   "verts": 2106,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
     "../../../atlases/props_i_normal.png",
     "../../../atlases/props_i_orm.png"
    ],
-   "h": 0.99,
+   "h": 0.95,
    "ymin": 0.0
   },
   "col_tris": 12
@@ -1258,11 +1248,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 832,
+  "near_tris": 1084,
   "near_info": {
    "errors": [],
-   "tris": 832,
-   "verts": 1681,
+   "tris": 1084,
+   "verts": 2284,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -1281,11 +1271,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 644,
+  "near_tris": 981,
   "near_info": {
    "errors": [],
-   "tris": 644,
-   "verts": 1433,
+   "tris": 981,
+   "verts": 2219,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -1304,11 +1294,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 744,
+  "near_tris": 1124,
   "near_info": {
    "errors": [],
-   "tris": 744,
-   "verts": 1630,
+   "tris": 1124,
+   "verts": 2541,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -1323,15 +1313,15 @@
  {
   "name": "pegboard_wall",
   "class": "medium",
-  "budget": 1100,
+  "budget": 1200,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 714,
+  "near_tris": 1106,
   "near_info": {
    "errors": [],
-   "tris": 714,
-   "verts": 1544,
+   "tris": 1106,
+   "verts": 2579,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -1349,14 +1339,12 @@
   "budget": 900,
   "pass": true,
   "errors": [],
-  "notes": [
-   "col has 44 tris (SPEC prefers one box or one cylinder)"
-  ],
+  "notes": [],
   "near_tris": 720,
   "near_info": {
    "errors": [],
    "tris": 720,
-   "verts": 1493,
+   "verts": 1497,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -1366,7 +1354,7 @@
    "h": 1.55,
    "ymin": 0.0
   },
-  "col_tris": 44
+  "col_tris": 12
  },
  {
   "name": "gallery_frame",
@@ -1375,11 +1363,11 @@
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 222,
+  "near_tris": 322,
   "near_info": {
    "errors": [],
-   "tris": 222,
-   "verts": 471,
+   "tris": 322,
+   "verts": 717,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -1394,15 +1382,15 @@
  {
   "name": "pharmacy_shelf",
   "class": "medium",
-  "budget": 1100,
+  "budget": 1200,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 514,
+  "near_tris": 742,
   "near_info": {
    "errors": [],
-   "tris": 514,
-   "verts": 1070,
+   "tris": 742,
+   "verts": 1647,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",
@@ -1417,15 +1405,15 @@
  {
   "name": "bookcase",
   "class": "medium",
-  "budget": 1100,
+  "budget": 1200,
   "pass": true,
   "errors": [],
   "notes": [],
-  "near_tris": 418,
+  "near_tris": 670,
   "near_info": {
    "errors": [],
-   "tris": 418,
-   "verts": 886,
+   "tris": 670,
+   "verts": 1502,
    "mats": 1,
    "tex": [
     "../../../atlases/props_i_color_clean.png",

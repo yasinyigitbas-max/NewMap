@@ -10,6 +10,13 @@ extends SceneTree
 ##   hidden    a wall-mounted print / board with a taller floor prop in front of it
 ##   pot       a garden plant without a pot standing on the indoor floor
 ##   squeeze   the walkway from the entrance to the room's deepest reachable floor narrows under 0.8 m
+## Added 18 Nov (Yasin: "many on the wall props overlap, some of them are on windows, some of them are inside the
+## ceiling"), for every wall-mounted item (prints, notices, menu boards, pegboards; size from the kit manifest):
+##   ceiling   its top reaches into the ceiling (the lowest ceiling face over it, measured from the room's own mesh)
+##   window    it hangs over a window or a door of its wall (the room's glass panes and door leaves within 0.6 m of
+##             its wall plane, and the entrances the room records)
+##   wallover  it overlaps another wall item on the same wall
+## A LOCKED room (locked.json "files") is reported as NOTE, not counted: it changes only with Yasin's word.
 ## Output like the city validator (tools/city/pilot/validate.gd): "CHECK <kind> ..." per problem, then
 ## "CHECKS n problems"; exit code 1 if any. Run it after every room build, next to validate / audit_trees / the lock test.
 ## Run with the real renderer (MultiMesh data): godot --path <preview> --rendering-method mobile -s <this>
@@ -23,6 +30,9 @@ var foot := {}
 var tall := {}
 var wallm := {}     # props the kit manifests mount on a wall (poster case, menu board ...)
 var problems := 0
+var notes := 0
+var locked := {}     # res:// paths of locked room files
+var cur_locked := false
 
 func _init() -> void: _run.call_deferred()
 
@@ -30,11 +40,18 @@ func _run() -> void:
 	for f in DirAccess.get_files_at(MAN):
 		if f.begins_with("manifest_") and f.ends_with(".json"): _man(MAN + f)   # indoor kit + street kit props used indoors (vending, fountain)
 	_man("res://assets/coronado_kit/foliage/manifest_foliage.json")
+	var lk: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://map_dc/coronado/city_kit/locked.json"))
+	if lk is Dictionary:
+		var fl: Variant = (lk as Dictionary).get("files", {})
+		for k: Variant in (fl as Dictionary).keys() if fl is Dictionary else (fl as Array): locked[String(k).trim_prefix("res://")] = true
 	var rooms: Array = []
 	for f in DirAccess.get_files_at(DIR):
 		if f.ends_with(".scn"): rooms.append(f)
 	print("CHECKS loaded %d rooms" % rooms.size())
-	for f: String in rooms: _room(f.get_basename(), (load(DIR + f) as PackedScene).instantiate())
+	for f: String in rooms:
+		cur_locked = locked.has((DIR + f).trim_prefix("res://"))
+		_room(f.get_basename(), (load(DIR + f) as PackedScene).instantiate())
+	if notes > 0: print("CHECKS-NOTE %d wall-item faults in LOCKED rooms (not counted: they change only with Yasin's word)" % notes)
 	print("CHECKS %d problems" % problems)
 	quit(1 if problems else 0)
 
@@ -48,6 +65,8 @@ func _man(p: String) -> void:
 		if String(e.get("mount", "")) == "wall": wallm[String(e.file_base)] = true
 
 func _report(room: String, kind: String, msg: String) -> void:
+	if cur_locked and kind in ["ceiling", "window", "wallover"]:
+		notes += 1; print("NOTE  %-8s %s (locked): %s" % [kind, room, msg]); return
 	problems += 1
 	print("CHECK %-8s %s: %s" % [kind, room, msg])
 
@@ -103,6 +122,7 @@ func _room(name: String, root: Node3D) -> void:
 			if String(m[0]) == "prop_pegboard_wall" and String(g[0]) == "prop_workbench": continue   # the tool board over its bench
 			if _hit(zone_c, Vector2(float((m[2] as Vector2).x), 0.45), float(m[3]), g[1], g[2], g[3]):
 				_report(name, "hidden", "%s at %s is covered by %s at %s" % [m[0], _v(m[1]), g[0], _v(g[1])])
+	_wall_items(name, root, props, miny)
 	# pot: indoors a plant stands in a pot - a garden plant (no pot in its model) cannot grow out of the floor
 	for g2: Array in ground:
 		var b2 := String(g2[0])
@@ -180,6 +200,80 @@ func _room(name: String, root: Node3D) -> void:
 	for k2 in free.size(): nfree += int(free[k2]); nseen += int(seen[k2])
 	if nseen < nfree * 0.8: _report(name, "reach", "only %d of %d walkable floor cells reachable from the doors" % [nseen, nfree])
 	print("ROOM %s: %d props (%d on the floor), %d doors, %d of %d floor cells reachable" % [name, props.size(), ground.size(), doors.size(), nseen, nfree])
+
+## the wall items' own checks (ceiling / window / wallover, see the header)
+func _wall_items(name: String, root: Node3D, props: Array, miny: float) -> void:
+	var ceil_t: Array = []      # downward faces (the ceiling): [a, b, c] Vector3
+	var open_t: Array = []      # glass panes and door leaves: [a, b, c]
+	for mi: MeshInstance3D in root.find_children("*", "MeshInstance3D", true, false):
+		if mi.mesh == null or String(mi.get_path()).contains("Props"): continue
+		var xf := mi.transform
+		var par := mi.get_parent()
+		while par != null and par != root:
+			if par is Node3D: xf = (par as Node3D).transform * xf
+			par = par.get_parent()
+		var is_leaf := mi.has_meta(&"hinge_axis") or (mi.get_parent() != null and mi.get_parent().has_meta(&"hinge_axis"))
+		for si in mi.mesh.get_surface_count():
+			var mat := mi.get_active_material(si)
+			var glass := is_leaf or (mat is BaseMaterial3D and (mat as BaseMaterial3D).transparency != BaseMaterial3D.TRANSPARENCY_DISABLED) or String(mi.mesh.surface_get_name(si)).contains("glass")
+			var arr := mi.mesh.surface_get_arrays(si)
+			var vv: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+			var ii: PackedInt32Array = arr[Mesh.ARRAY_INDEX] if arr[Mesh.ARRAY_INDEX] != null else PackedInt32Array()
+			var n := ii.size() if ii.size() > 0 else vv.size()
+			for k in range(0, n, 3):
+				var a := xf * vv[ii[k] if ii.size() > 0 else k]; var b := xf * vv[ii[k + 1] if ii.size() > 0 else k + 1]; var c := xf * vv[ii[k + 2] if ii.size() > 0 else k + 2]
+				var nn := (b - a).cross(c - a)
+				if nn.length_squared() < 1e-10: continue
+				nn = nn.normalized()
+				if glass and absf(nn.y) < 0.3: open_t.append([a, b, c])
+				elif not glass and absf(nn.y) > 0.9 and (a.y + b.y + c.y) / 3.0 > miny + 1.8: ceil_t.append([a, b, c])
+	var doors: Array = root.get_meta(&"entrances", [])
+	var items: Array = []      # [base, centre Vector2, half width, y0, y1, facing Vector2]
+	for p: Array in props:
+		var bs := String(p[0])
+		if not base_mounted(bs): continue
+		var fw := float((p[2] as Vector2).x) * 2.0
+		var h := float(tall.get(bs, 1.0))
+		var y0 := float(p[4]); var y1 := y0 + h
+		var fwd := Vector2(sin(float(p[3])), cos(float(p[3])))
+		items.append([bs, p[1], fw * 0.5, y0, y1, fwd])
+		# ceiling: the lowest ceiling face within the item's width over it
+		var c_y := INF
+		var side := Vector2(fwd.y, -fwd.x)
+		for t: Array in ceil_t:
+			var cc: Vector3 = ((t[0] as Vector3) + (t[1] as Vector3) + (t[2] as Vector3)) / 3.0
+			for sgn: float in [-0.9, 0.0, 0.9]:
+				var q2: Vector2 = (p[1] as Vector2) + side * fw * 0.5 * sgn + fwd * 0.15
+				if Geometry2D.point_is_inside_triangle(q2, Vector2(t[0].x, t[0].z), Vector2(t[1].x, t[1].z), Vector2(t[2].x, t[2].z)): c_y = minf(c_y, cc.y)
+		if c_y < INF and y1 > c_y - 0.01: _report(name, "ceiling", "%s at %s reaches %.2f m, the ceiling is at %.2f m" % [bs, _v(p[1]), y1 - miny, c_y - miny])
+		# windows and doors in its wall: glass / door-leaf faces within 0.6 m of its plane, overlapping its rectangle
+		var hit_open := false
+		for t2: Array in open_t:
+			var tc: Vector3 = ((t2[0] as Vector3) + (t2[1] as Vector3) + (t2[2] as Vector3)) / 3.0
+			var d2 := Vector2(tc.x, tc.z) - (p[1] as Vector2)
+			if absf(d2.dot(fwd)) > 0.6: continue
+			var a0 := INF; var a1 := -INF; var ty0 := INF; var ty1 := -INF
+			for v3: Vector3 in [t2[0], t2[1], t2[2]]:
+				var al := (Vector2(v3.x, v3.z) - (p[1] as Vector2)).dot(side)
+				a0 = minf(a0, al); a1 = maxf(a1, al); ty0 = minf(ty0, v3.y); ty1 = maxf(ty1, v3.y)
+			if a1 > -fw * 0.5 + 0.02 and a0 < fw * 0.5 - 0.02 and ty1 > y0 + 0.02 and ty0 < y1 - 0.02: hit_open = true; break
+		if not hit_open:
+			for d: Array in doors:      # [axis, at, s0, s1, ...]: the opening up to 2.3 m
+				var on_wall := (String(d[0]) == "z" and absf((p[1] as Vector2).y - float(d[1])) < 0.6) or (String(d[0]) == "x" and absf((p[1] as Vector2).x - float(d[1])) < 0.6)
+				if not on_wall: continue
+				var al2 := (p[1] as Vector2).x if String(d[0]) == "z" else (p[1] as Vector2).y
+				if al2 + fw * 0.5 > float(d[2]) and al2 - fw * 0.5 < float(d[3]) and y0 - miny < 2.3: hit_open = true; break
+		if hit_open: _report(name, "window", "%s at %s hangs over a window or door of its wall" % [bs, _v(p[1])])
+	# two wall items on one wall overlapping
+	for i in items.size():
+		for j in range(i + 1, items.size()):
+			var A: Array = items[i]; var B: Array = items[j]
+			if (A[5] as Vector2).dot(B[5]) < 0.95: continue
+			var dd := (B[1] as Vector2) - (A[1] as Vector2)
+			if absf(dd.dot(A[5])) > 0.3: continue
+			var sd := Vector2((A[5] as Vector2).y, -(A[5] as Vector2).x)
+			if absf(dd.dot(sd)) < float(A[2]) + float(B[2]) - 0.02 and float(A[3]) < float(B[4]) - 0.02 and float(B[3]) < float(A[4]) - 0.02:
+				_report(name, "wallover", "%s at %s overlaps %s at %s on the same wall" % [A[0], _v(A[1]), B[0], _v(B[1])])
 
 func base_mounted(b: String) -> bool: return b in WALL_MOUNT or wallm.has(b)
 

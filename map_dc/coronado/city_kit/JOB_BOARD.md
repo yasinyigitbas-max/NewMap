@@ -39,6 +39,22 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   the sky reflection back on left the GPU ~28 ms slower until a teleport (not explained). NEW: docs/TREE_ARTIST_BRIEF.md
   (Yasin: new tree models; what they must be). Stream gate on the merged build (look + tiers code + growth): PASS.
   Release build not made (Yasin: "dont make the release build yet"). Lock test RESULT PASS.
+- 18 Nov (cloud session, branch `claude/grow-gritty`): GRITTY EDGE GROWTH, Stage 1 + 2 done, WAITING FOR YASIN (nothing
+  locked, nothing merged by me). Read `review/grow_grt/README.md`. Three variants of the locked gritty sample (v1 yard edge,
+  v2 trade street, v3 walk-up homes; recipes `tools/city/pilot/pieces/grt_grow_recipes.gd`, site frame + slope drape
+  `grt_grow_lib.gd`) filling the PILOT AREA u -800..-500, v -1300..-900 between the industrial and the gritty samples:
+  8 block pieces `g_v1_j4ne g_v2_g4nw g_v1_g4ne g_v2_j4se g_v3_g4sw g_v3_g4se g_v2_j5ne g_v3_j5se` (table
+  `review/grow_grt_blocks.json`, rows picked up by `integrate.py`'s new `grow_rows()`; city_grid_layout regenerated). 25 shop
+  rooms (Yasin: "do out and indoors together"): `interiors/assignment_grt.json`, `tools/city/rooms/room_gen_grt.gd` (copy),
+  `gen_shots_grt.gd`. Yasin's fix in the same round: "many on the wall props overlap, some of them are on windows, some of
+  them are inside the ceiling" -> one fit check for every hung item indoors; outdoors wall props slide off windows / doors.
+  Checks: validator 0, trees 0, sink 0, rooms 0, lock test RESULT PASS. Numbers in the README (GRT_NUMBERS).
+  OPEN QUESTIONS FOR YASIN: (1) approve / change the three variants before any wider growth; (2) the same "wall props on
+  windows" fault is very likely in the LOCKED samples too (shared dress helper): fix needs his word to unlock;
+  (3) the modular map rows (`@map:brk3_row3`, `shop_row4`, `svb_row*`, `stg_row*`) would suit the next gritty round: merge them?
+  NOTE for the PC / strip session (cloud could not message the PC): new indoor kit dd8d53a is on this branch (546f76f, file
+  for file the same as `claude/kit-indoor-props` 9fce731); after it the indoor checker reports 12 problems, ALL in the old
+  rooms (generated / hand-made), none in the gritty rooms. Polish pass done (Yasin: "run a polish pass ... lots of props").
 - 18 Nov ~21:50 (PC time): YASIN DECIDED THE DAY LOOK: "i go for gta4 look" (the sky session's current default palette
   stays; the half-haze and clear-day variants are not needed). He also asked whether merging must wait for the census
   ("do we have to wait for the cencus?"): no. MERGED into the working branch: the tier session's branch
