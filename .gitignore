@@ -15,3 +15,10 @@ __pycache__/
 # phone test rig: the Android build template (copied from the game project on the PC) and its outputs
 /android/
 /OUT/
+
+# the native module (traffic and people in C++): built by native/build.sh. The libraries, the objects and the
+# .gdextension file Godot reads stay out of git, so a checkout that has not built it never loads it
+/native/bin/
+/native/build/
+/native/coronado_city.gdextension
+/native/coronado_city.gdextension.uid

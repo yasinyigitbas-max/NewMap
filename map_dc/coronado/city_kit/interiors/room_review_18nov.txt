@@ -1,0 +1,312 @@
+REVIEW DECO    ap_corner_bar: 3 wall decorations on one wall
+REVIEW LONE    ap_corner_cafe: prop_drinks_fridge at (2.20, -2.45) stands in the open with no wall behind it
+REVIEW LONE    ap_laundromat: bin at (3.60, 3.40) stands in the middle of the floor
+REVIEW DECO    cv_city_hall: 4 wall decorations on one wall
+REVIEW LONE    cv_city_hall: bin at (-7.00, 5.90) stands in the middle of the floor
+REVIEW LONE    cv_city_hall: bin at (7.00, 5.90) stands in the middle of the floor
+REVIEW DECO    cv_library: 3 wall decorations on one wall
+REVIEW DECO    cv_library: 3 wall decorations on one wall
+REVIEW LONE    cv_library: prop_filing_cabinet at (5.30, 1.75) stands in the open with no wall behind it
+REVIEW LONE    cv_library: bin at (2.40, 5.80) stands in the middle of the floor
+REVIEW DECO    cv_police: 3 wall decorations on one wall
+REVIEW LONE    cv_police: bin at (3.40, 4.20) stands in the middle of the floor
+REVIEW LONE    cv_police: bin at (9.50, -1.00) stands in the middle of the floor
+REVIEW LONE    cv_rec_center: prop_salon_product_shelf at (-3.60, 1.75) stands in the open with no wall behind it
+REVIEW LONE    cv_rec_center: prop_mirror_station at (-0.65, -5.00) stands in the open with no wall behind it
+REVIEW LONE    cv_rec_center: prop_mirror_station at (0.65, -5.00) stands in the open with no wall behind it
+REVIEW REPEAT  g_a_nw__apt_beach_condo__0: 9 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW LONE    g_a_nw__apt_beach_condo__0: bin at (2.57, -0.58) stands in the middle of the floor
+REVIEW LONE    g_a_nw__apt_stucco3_cream__0: bin at (2.75, -0.97) stands in the middle of the floor
+REVIEW WIN     g_a_nw__laundromat__0: prop_gallery_frame at (-5.66, -0.85) hangs over the left opening at -0.60
+REVIEW REPEAT  g_a_se__apt_stucco3_cream__0: 9 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW LONE    g_a_se__apt_stucco3_cream__0: bin at (2.57, -1.08) stands in the middle of the floor
+REVIEW DECO    g_b_ne__com_orange_arcade_block__0: 6 wall decorations on one wall
+REVIEW DECO    g_b_ne__com_orange_arcade_block__0: 8 wall decorations in the room
+REVIEW WIN     g_b_ne__com_orange_arcade_block__0: prop_gallery_frame at (-12.66, 6.15) hangs over the left opening at 5.90
+REVIEW DECO    g_b_ne__com_orange_arcade_block__1: 8 wall decorations on one wall
+REVIEW DECO    g_b_ne__com_orange_arcade_block__1: 8 wall decorations on one wall
+REVIEW DECO    g_b_ne__com_orange_arcade_block__1: 16 wall decorations in the room
+REVIEW LONE    g_b_ne__com_orange_arcade_block__1: bin at (-1.87, -3.58) stands in the middle of the floor
+REVIEW DECO    g_b_ne__com_orange_arcade_block__2: 7 wall decorations on one wall
+REVIEW DECO    g_b_ne__com_orange_arcade_block__2: 7 wall decorations on one wall
+REVIEW DECO    g_b_ne__com_orange_arcade_block__2: 14 wall decorations in the room
+REVIEW DECO    g_b_ne__com_orange_arcade_block__3: 6 wall decorations on one wall
+REVIEW DECO    g_b_ne__com_orange_arcade_block__3: 7 wall decorations in the room
+REVIEW WIN     g_b_ne__com_orange_arcade_block__3: prop_gallery_frame at (12.66, -6.50) hangs over the right opening at -6.30
+REVIEW DECO    g_b_ne__com_spanish_arcade_block__0: 6 wall decorations on one wall
+REVIEW DECO    g_b_ne__com_spanish_arcade_block__0: 8 wall decorations in the room
+REVIEW DECO    g_b_ne__com_spanish_arcade_block__2: 9 wall decorations on one wall
+REVIEW DECO    g_b_ne__com_spanish_arcade_block__2: 9 wall decorations on one wall
+REVIEW DECO    g_b_ne__com_spanish_arcade_block__2: 18 wall decorations in the room
+REVIEW DECO    g_b_ne__lmk_village_theatre__0: 6 wall decorations on one wall
+REVIEW DECO    g_b_ne__lmk_village_theatre__0: 5 wall decorations on one wall
+REVIEW DECO    g_b_ne__lmk_village_theatre__0: 12 wall decorations in the room
+REVIEW WIN     g_b_ne__urb_brick_row__0: prop_menu_board at (-5.13, -6.64) hangs over the back opening at -6.00
+REVIEW WIN     g_b_ne__urb_brick_row__0: prop_menu_board at (-5.13, -6.64) hangs over the back opening at -4.40
+REVIEW DECO    g_b_ne__urb_brick_row__1: 3 wall decorations on one wall
+REVIEW DECO    g_b_ne__urb_brick_row__1: 3 wall decorations on one wall
+REVIEW DECO    g_b_nw__com_bakery__0: 4 wall decorations on one wall
+REVIEW WIN     g_b_nw__com_bakery__0: prop_gallery_frame at (-4.16, 4.55) hangs over the left opening at 4.40
+REVIEW WIN     g_b_nw__com_bakery__0: prop_gallery_frame at (4.16, 4.55) hangs over the right opening at 4.40
+REVIEW DECO    g_b_nw__com_bar_crown__0: 5 wall decorations on one wall
+REVIEW DECO    g_b_nw__com_bar_crown__0: 6 wall decorations on one wall
+REVIEW DECO    g_b_nw__com_bar_crown__0: 11 wall decorations in the room
+REVIEW WIN     g_b_nw__com_bar_crown__0: prop_gallery_frame at (4.16, 5.05) hangs over the right opening at 4.40
+REVIEW LONE    g_b_nw__com_bar_crown__0: bin at (2.05, -1.94) stands in the middle of the floor
+REVIEW REPEAT  g_b_nw__com_orange_row__0: 5 x prop_card_spinner (a customer sees the same thing over and over)
+REVIEW DECO    g_b_nw__com_orange_row__0: 6 wall decorations on one wall
+REVIEW DECO    g_b_nw__com_orange_row__2: 6 wall decorations on one wall
+REVIEW DECO    g_b_nw__com_orange_row__2: 6 wall decorations on one wall
+REVIEW DECO    g_b_nw__com_orange_row__2: 12 wall decorations in the room
+REVIEW WIN     g_b_nw__com_orange_row__2: prop_gallery_frame at (8.66, 5.05) hangs over the right opening at 4.40
+REVIEW REPEAT  g_b_nw__com_realty__0: 4 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW DECO    g_b_nw__com_realty__0: 6 wall decorations on one wall
+REVIEW DECO    g_b_nw__com_realty__0: 8 wall decorations in the room
+REVIEW WIN     g_b_nw__com_realty__0: prop_gallery_frame at (2.66, 5.05) hangs over the right opening at 4.40
+REVIEW SEAT    g_b_nw__com_realty__0: prop_waiting_bench at (-2.42, 5.11) has prop_waiting_bench right in front of it - no room to sit
+REVIEW DECO    g_b_nw__urb_brick_corner__0: 3 wall decorations on one wall
+REVIEW LONE    g_b_nw__urb_brick_corner__0: bin at (2.36, -2.44) stands in the middle of the floor
+REVIEW DECO    g_b_nw__urb_brick_row__0: 3 wall decorations on one wall
+REVIEW DECO    g_b_nw__urb_brick_row__0: 5 wall decorations on one wall
+REVIEW DECO    g_b_nw__urb_brick_row__0: 9 wall decorations in the room
+REVIEW REPEAT  g_b_se__civ_post_office__0: 7 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW LONE    g_b_se__civ_post_office__0: bin at (2.57, -2.58) stands in the middle of the floor
+REVIEW SPARSE  g_b_se__civ_post_office__0: 32 things on 303 m2 - it looks bare
+REVIEW REPEAT  g_b_se__com_boutique_row__0: 3 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW REPEAT  g_b_se__com_boutique_row__2: 5 x prop_card_spinner (a customer sees the same thing over and over)
+REVIEW DECO    g_b_se__com_boutique_row__2: 6 wall decorations on one wall
+REVIEW WIN     g_b_se__com_boutique_row__2: prop_gallery_frame at (8.66, -4.90) hangs over the right opening at -4.80
+REVIEW WIN     g_b_se__com_boutique_row__2: prop_gallery_frame at (8.66, 4.70) hangs over the right opening at 4.40
+REVIEW DECO    g_b_se__com_cafe_seaside__0: 3 wall decorations on one wall
+REVIEW DECO    g_b_se__com_cafe_seaside__0: 3 wall decorations on one wall
+REVIEW DECO    g_b_se__com_cafe_seaside__0: 7 wall decorations in the room
+REVIEW WIN     g_b_se__com_cafe_seaside__0: prop_gallery_frame at (2.66, 4.55) hangs over the right opening at 4.40
+REVIEW REPEAT  g_b_se__urb_dept_store__0: 112 x prop_cafe_chair (a customer sees the same thing over and over)
+REVIEW WIN     g_b_sw__apt_stucco3_cream__0: prop_menu_board at (0.45, -5.64) hangs over the back opening at 0.00
+REVIEW LONE    g_b_sw__apt_stucco3_cream__0: bin at (2.47, -3.26) stands in the middle of the floor
+REVIEW DECO    g_b_sw__com_bistro__0: 5 wall decorations on one wall
+REVIEW DECO    g_b_sw__com_bistro__0: 5 wall decorations on one wall
+REVIEW DECO    g_b_sw__com_bistro__0: 10 wall decorations in the room
+REVIEW WIN     g_b_sw__com_bistro__0: prop_gallery_frame at (-5.66, 4.55) hangs over the left opening at 4.40
+REVIEW WIN     g_b_sw__com_bistro__0: prop_gallery_frame at (5.66, 4.55) hangs over the right opening at 4.40
+REVIEW LONE    g_c_ne__twr_hotel__0: bin at (2.28, -2.83) stands in the middle of the floor
+REVIEW DECO    g_c_ne__urb_brick_corner__0: 4 wall decorations on one wall
+REVIEW DECO    g_c_nw__com_cafe_seaside__0: 3 wall decorations on one wall
+REVIEW DECO    g_c_nw__com_cafe_seaside__0: 3 wall decorations on one wall
+REVIEW DECO    g_c_nw__com_cafe_seaside__0: 7 wall decorations in the room
+REVIEW WIN     g_c_nw__com_cafe_seaside__0: prop_gallery_frame at (2.66, 4.55) hangs over the right opening at 4.40
+REVIEW SPARSE  g_c_nw__twr_office__0: 23 things on 374 m2 - it looks bare
+REVIEW DECO    g_c_nw__urb_brick_row__2: 3 wall decorations on one wall
+REVIEW DECO    g_c_nw__urb_brick_row__2: 3 wall decorations on one wall
+REVIEW REPEAT  g_c_se__mod_twr_office__0: 3 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW LONE    g_c_se__mod_twr_office__0: bin at (-2.18, -1.83) stands in the middle of the floor
+REVIEW DECO    g_c_sw__ck_svc_cinema_fast__0: 6 wall decorations on one wall
+REVIEW DECO    g_c_sw__ck_svc_cinema_fast__0: 6 wall decorations on one wall
+REVIEW DECO    g_c_sw__ck_svc_cinema_fast__0: 13 wall decorations in the room
+REVIEW WIN     g_c_sw__ck_svc_cinema_fast__0: prop_poster_case at (-5.66, -0.05) hangs over the left opening at -0.60
+REVIEW WIN     g_c_sw__ck_svc_cinema_fast__0: prop_poster_case at (-5.66, 4.15) hangs over the left opening at 4.00
+REVIEW LONE    g_c_sw__ck_svc_cinema_fast__0: bin at (-1.80, -3.37) stands in the middle of the floor
+REVIEW REPEAT  g_c_sw__com_bank__0: 3 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW LONE    g_c_sw__com_bank__0: bin at (2.57, -2.08) stands in the middle of the floor
+REVIEW SPARSE  g_c_sw__com_bank__0: 18 things on 176 m2 - it looks bare
+REVIEW DECO    g_c_sw__mod_svc_row__0: 5 wall decorations on one wall
+REVIEW DECO    g_c_sw__mod_svc_row__0: 5 wall decorations on one wall
+REVIEW DECO    g_c_sw__mod_svc_row__0: 10 wall decorations in the room
+REVIEW WIN     g_c_sw__mod_svc_row__0: prop_gallery_frame at (-5.66, -0.85) hangs over the left opening at -0.60
+REVIEW WIN     g_c_sw__mod_svc_row__0: prop_gallery_frame at (-5.66, 3.95) hangs over the left opening at 4.00
+REVIEW DECO    g_c_sw__urb_brick_corner__0: 3 wall decorations on one wall
+REVIEW LONE    g_c_sw__urb_brick_corner__0: bin at (2.95, -2.94) stands in the middle of the floor
+REVIEW REPEAT  g_c_sw__urb_mall__0: 106 x prop_clothes_rack (a customer sees the same thing over and over)
+REVIEW WIN     g_f_ne__@Node3D@6__0: prop_menu_board at (0.45, -5.14) hangs over the back opening at 0.00
+REVIEW LONE    g_f_ne__@Node3D@6__0: bin at (2.47, -2.76) stands in the middle of the floor
+REVIEW DECO    g_g_ne__brick_shops__0: 3 wall decorations on one wall
+REVIEW DECO    g_g_ne__brick_shops__0: 3 wall decorations on one wall
+REVIEW LONE    g_g_ne__corner_market__0: bin at (-0.10, 0.03) stands in the middle of the floor
+REVIEW DECO    g_g_ne__dive_bar__0: 5 wall decorations on one wall
+REVIEW DECO    g_g_ne__dive_bar__0: 6 wall decorations on one wall
+REVIEW DECO    g_g_ne__dive_bar__0: 11 wall decorations in the room
+REVIEW WIN     g_g_ne__dive_bar__0: prop_gallery_frame at (4.16, 5.05) hangs over the right opening at 4.40
+REVIEW LONE    g_g_ne__dive_bar__0: bin at (2.05, -1.94) stands in the middle of the floor
+REVIEW DECO    g_g_nw__body_shop__0: 4 wall decorations on one wall
+REVIEW DECO    g_g_nw__body_shop__0: 6 wall decorations on one wall
+REVIEW DECO    g_g_nw__body_shop__0: 10 wall decorations in the room
+REVIEW DECO    g_g_nw__pawn_laundry_row__0: 4 wall decorations on one wall
+REVIEW DECO    g_g_nw__pawn_laundry_row__0: 4 wall decorations on one wall
+REVIEW DECO    g_g_nw__pawn_laundry_row__0: 8 wall decorations in the room
+REVIEW WIN     g_g_nw__pawn_laundry_row__0: prop_gallery_frame at (-8.66, -0.50) hangs over the left opening at -0.60
+REVIEW WIN     g_g_nw__pawn_laundry_row__0: prop_gallery_frame at (-8.66, 4.30) hangs over the left opening at 4.00
+REVIEW LONE    g_g_nw__pawn_laundry_row__0: bin at (-2.17, -1.08) stands in the middle of the floor
+REVIEW DECO    g_g_se__bar_walkup__0: 3 wall decorations on one wall
+REVIEW DECO    g_g_se__bar_walkup__0: 3 wall decorations on one wall
+REVIEW LONE    g_g_se__bar_walkup__0: bin at (2.05, -1.94) stands in the middle of the floor
+REVIEW DECO    g_g_se__brick_shops_c__2: 3 wall decorations on one wall
+REVIEW WIN     g_g_se__motel__0: prop_gallery_frame at (-17.66, -1.62) hangs over the left opening at -1.80
+REVIEW SPARSE  g_g_se__motel__0: 31 things on 324 m2 - it looks bare
+REVIEW DECO    g_g_se__pawn_chicken__0: 4 wall decorations on one wall
+REVIEW DECO    g_g_se__pawn_chicken__0: 5 wall decorations on one wall
+REVIEW DECO    g_g_se__pawn_chicken__0: 9 wall decorations in the room
+REVIEW WIN     g_g_se__pawn_chicken__0: prop_gallery_frame at (-5.66, -0.50) hangs over the left opening at -0.60
+REVIEW WIN     g_g_se__pawn_chicken__0: prop_gallery_frame at (-5.66, 4.30) hangs over the left opening at 4.00
+REVIEW DECO    g_g_sw__rear_walkup_b__0: 3 wall decorations on one wall
+REVIEW DECO    g_g_sw__rear_walkup_b__0: 3 wall decorations on one wall
+REVIEW LONE    g_g_sw__rear_walkup_b__0: bin at (2.05, -1.94) stands in the middle of the floor
+REVIEW LONE    g_g_sw__rear_walkup_c__0: bin at (1.67, -1.48) stands in the middle of the floor
+REVIEW REPEAT  g_grt_v1_g4ne_trade_corner_0: 3 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW DECO    g_grt_v1_g4ne_trade_corner_1: 3 wall decorations on one wall
+REVIEW REPEAT  g_grt_v1_j4ne_trade_corner_0: 3 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW DECO    g_grt_v1_j4ne_trade_corner_1: 3 wall decorations on one wall
+REVIEW LONE    g_grt_v2_g4nw_corner_block_0: bin at (2.95, -2.38) stands in the middle of the floor
+REVIEW DECO    g_grt_v2_g4nw_dive_bar_0: 5 wall decorations on one wall
+REVIEW LONE    g_grt_v2_g4nw_dive_bar_0: bin at (2.05, -1.98) stands in the middle of the floor
+REVIEW REPEAT  g_grt_v2_g4nw_row3_1: 5 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW DECO    g_grt_v2_j4se_corner_block_0: 3 wall decorations on one wall
+REVIEW DECO    g_grt_v2_j4se_corner_next_1: 3 wall decorations on one wall
+REVIEW DECO    g_grt_v2_j4se_launder_0: 4 wall decorations on one wall
+REVIEW DECO    g_grt_v2_j5ne_brick_row_2: 3 wall decorations on one wall
+REVIEW DECO    g_grt_v2_j5ne_corner_block_0: 3 wall decorations on one wall
+REVIEW DECO    g_grt_v2_j5ne_corner_next_0: 3 wall decorations on one wall
+REVIEW LONE    g_grt_v2_j5ne_corner_next_0: bin at (1.38, -3.38) stands in the middle of the floor
+REVIEW REPEAT  g_grt_v3_g4se_corner_shop_0: 5 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW DECO    g_grt_v3_g4sw_shop_two_0: 4 wall decorations on one wall
+REVIEW LONE    g_grt_v3_j5se_corner_shop_0: bin at (-1.50, -0.38) stands in the middle of the floor
+REVIEW DECO    g_i_ne__harbor_diner__0: 5 wall decorations on one wall
+REVIEW DECO    g_i_ne__harbor_diner__0: 5 wall decorations on one wall
+REVIEW DECO    g_i_ne__harbor_diner__0: 10 wall decorations in the room
+REVIEW WIN     g_i_ne__harbor_diner__0: prop_gallery_frame at (-5.66, 4.55) hangs over the left opening at 4.40
+REVIEW WIN     g_i_ne__harbor_diner__0: prop_gallery_frame at (5.66, 4.55) hangs over the right opening at 4.40
+REVIEW SPARSE  g_i_ne__harbor_steel_mill__0: 45 things on 566 m2 - it looks bare
+REVIEW DECO    g_i_ne__harbor_steel_office__1: 3 wall decorations on one wall
+REVIEW DECO    g_i_ne__harbor_steel_office__1: 3 wall decorations on one wall
+REVIEW DECO    g_i_ne__harbor_steel_office__2: 5 wall decorations on one wall
+REVIEW DECO    g_i_ne__harbor_steel_office__2: 5 wall decorations on one wall
+REVIEW DECO    g_i_ne__harbor_steel_office__2: 10 wall decorations in the room
+REVIEW REPEAT  g_i_ne__machine_shop__0: 4 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW DECO    g_i_ne__machine_shop__0: 3 wall decorations on one wall
+REVIEW DECO    g_i_ne__machine_shop__0: 5 wall decorations on one wall
+REVIEW DECO    g_i_ne__machine_shop__0: 8 wall decorations in the room
+REVIEW DECO    g_i_ne__machine_shop__1: 5 wall decorations on one wall
+REVIEW DECO    g_i_ne__machine_shop__1: 5 wall decorations on one wall
+REVIEW DECO    g_i_ne__machine_shop__1: 10 wall decorations in the room
+REVIEW DECO    g_i_nw__bayline_freight_office__0: 5 wall decorations on one wall
+REVIEW DECO    g_i_nw__bayline_freight_office__0: 5 wall decorations on one wall
+REVIEW DECO    g_i_nw__bayline_freight_office__0: 10 wall decorations in the room
+REVIEW DECO    g_i_nw__drivers_cafe__0: 3 wall decorations on one wall
+REVIEW DECO    g_i_nw__drivers_cafe__0: 5 wall decorations on one wall
+REVIEW DECO    g_i_nw__drivers_cafe__0: 9 wall decorations in the room
+REVIEW WIN     g_i_nw__drivers_cafe__0: prop_gallery_frame at (-5.66, 4.55) hangs over the left opening at 4.40
+REVIEW REPEAT  g_i_nw__drivers_cafe__1: 4 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW DECO    g_i_nw__drivers_cafe__1: 6 wall decorations on one wall
+REVIEW DECO    g_i_nw__drivers_cafe__1: 3 wall decorations on one wall
+REVIEW DECO    g_i_nw__drivers_cafe__1: 9 wall decorations in the room
+REVIEW WIN     g_i_nw__drivers_cafe__1: prop_gallery_frame at (5.66, 5.05) hangs over the right opening at 4.40
+REVIEW SEAT    g_i_nw__drivers_cafe__1: prop_waiting_bench at (5.42, 5.11) has prop_waiting_bench right in front of it - no room to sit
+REVIEW REPEAT  g_i_se__auto_parts__1: 4 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW DECO    g_i_se__auto_parts__1: 5 wall decorations on one wall
+REVIEW DECO    g_i_se__auto_parts__1: 3 wall decorations on one wall
+REVIEW DECO    g_i_se__auto_parts__1: 8 wall decorations in the room
+REVIEW LONE    g_i_se__electrical_contractor__0: bin at (1.67, -0.48) stands in the middle of the floor
+REVIEW DECO    g_i_se__wholesale_bakery__0: 4 wall decorations on one wall
+REVIEW WIN     g_i_se__wholesale_bakery__0: prop_gallery_frame at (-4.16, 4.55) hangs over the left opening at 4.40
+REVIEW WIN     g_i_se__wholesale_bakery__0: prop_gallery_frame at (4.16, 4.55) hangs over the right opening at 4.40
+REVIEW DECO    g_i_sw__cash_and_carry__0: 4 wall decorations on one wall
+REVIEW DECO    g_i_sw__cash_and_carry__0: 4 wall decorations on one wall
+REVIEW DECO    g_i_sw__cash_and_carry__0: 8 wall decorations in the room
+REVIEW DECO    g_i_sw__dive_bar__0: 5 wall decorations on one wall
+REVIEW DECO    g_i_sw__dive_bar__0: 6 wall decorations on one wall
+REVIEW DECO    g_i_sw__dive_bar__0: 11 wall decorations in the room
+REVIEW WIN     g_i_sw__dive_bar__0: prop_gallery_frame at (4.16, 5.05) hangs over the right opening at 4.40
+REVIEW LONE    g_i_sw__dive_bar__0: bin at (2.05, -1.94) stands in the middle of the floor
+REVIEW REPEAT  g_i_sw__locksmith__1: 4 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW DECO    g_i_sw__locksmith__1: 5 wall decorations on one wall
+REVIEW DECO    g_i_sw__locksmith__1: 3 wall decorations on one wall
+REVIEW DECO    g_i_sw__locksmith__1: 8 wall decorations in the room
+REVIEW WIN     g_i_sw__locksmith__1: prop_gallery_frame at (5.66, -0.50) hangs over the right opening at -0.60
+REVIEW WIN     g_i_sw__locksmith__1: prop_gallery_frame at (5.66, 4.30) hangs over the right opening at 4.00
+REVIEW SEAT    g_i_sw__locksmith__1: prop_waiting_bench at (5.42, 4.21) has prop_waiting_bench right in front of it - no room to sit
+REVIEW DECO    g_i_sw__print_works__2: 3 wall decorations on one wall
+REVIEW DECO    g_i_sw__print_works__2: 3 wall decorations on one wall
+REVIEW REPEAT  g_ind_va_w600_n1600_se__bay_boatworks_office__0: 4 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW REPEAT  g_ind_va_w600_n1600_se__marine_engines__0: 5 x prop_drinks_fridge (a customer sees the same thing over and over)
+REVIEW LONE    g_ind_va_w800_n1600_sw__bayside_chandlery__0: bin at (1.67, -1.08) stands in the middle of the floor
+REVIEW REPEAT  g_ind_va_w800_n1600_sw__hfs_office__0: 2 x prop_vending_soda (a customer sees the same thing over and over)
+REVIEW LONE    g_ind_va_w800_n1600_sw__hfs_office__0: bin at (2.57, -2.08) stands in the middle of the floor
+REVIEW REPEAT  g_ind_va_w800_n1600_sw__reefer_repair__0: 5 x prop_drinks_fridge (a customer sees the same thing over and over)
+REVIEW LONE    g_ind_vb_w600_n1400_nw__truck_parts__0: bin at (1.67, -1.08) stands in the middle of the floor
+REVIEW LONE    g_ind_vb_w600_n1400_nw__truck_stop_diner__0: bin at (2.05, -0.38) stands in the middle of the floor
+REVIEW REPEAT  g_ind_vb_w800_n1600_se__public_works_office__1: 5 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW LONE    g_ind_vc_w600_n1400_ne__shift_canteen__0: bin at (1.11, -1.48) stands in the middle of the floor
+REVIEW LONE    g_ind_vc_w600_n1600_sw__dockside_fish_market__0: bin at (3.30, -1.41) stands in the middle of the floor
+REVIEW DECO    g_ind_vc_w600_n1600_sw__pacific_seafood_sales__0: 6 wall decorations on one wall
+REVIEW DECO    g_ind_vc_w600_n1600_sw__pacific_seafood_sales__0: 8 wall decorations in the room
+REVIEW WIN     g_ind_vc_w600_n1600_sw__pacific_seafood_sales__0: prop_gallery_frame at (2.66, 4.70) hangs over the right opening at 4.40
+REVIEW REPEAT  g_m_ne__bank_pharmacy__0: 6 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW DECO    g_m_ne__bank_pharmacy__0: 3 wall decorations on one wall
+REVIEW DECO    g_m_ne__bank_pharmacy__0: 4 wall decorations on one wall
+REVIEW DECO    g_m_ne__bank_pharmacy__0: 7 wall decorations in the room
+REVIEW WIN     g_m_ne__bank_pharmacy__0: prop_gallery_frame at (-5.66, -0.50) hangs over the left opening at -0.60
+REVIEW WIN     g_m_ne__bank_pharmacy__0: prop_gallery_frame at (-5.66, 4.30) hangs over the left opening at 4.00
+REVIEW WIN     g_m_ne__bank_pharmacy__0: prop_gallery_frame at (5.66, 4.30) hangs over the right opening at 4.00
+REVIEW LONE    g_m_ne__bank_pharmacy__0: bin at (2.57, -1.08) stands in the middle of the floor
+REVIEW WIN     g_m_ne__burger_barn__1: prop_gallery_frame at (5.66, -0.85) hangs over the right opening at -0.60
+REVIEW DECO    g_m_ne__corner_bakery__0: 4 wall decorations on one wall
+REVIEW WIN     g_m_ne__corner_bakery__0: prop_gallery_frame at (-4.16, 4.55) hangs over the left opening at 4.40
+REVIEW WIN     g_m_ne__corner_bakery__0: prop_gallery_frame at (4.16, 4.55) hangs over the right opening at 4.40
+REVIEW REPEAT  g_m_ne__insurance_office__0: 4 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW DECO    g_m_ne__insurance_office__0: 6 wall decorations on one wall
+REVIEW DECO    g_m_ne__insurance_office__0: 8 wall decorations in the room
+REVIEW WIN     g_m_ne__insurance_office__0: prop_gallery_frame at (2.66, 5.05) hangs over the right opening at 4.40
+REVIEW SEAT    g_m_ne__insurance_office__0: prop_waiting_bench at (-2.42, 5.11) has prop_waiting_bench right in front of it - no room to sit
+REVIEW REPEAT  g_m_ne__tyre_lube__0: 7 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW LONE    g_m_ne__tyre_lube__0: bin at (1.67, -3.08) stands in the middle of the floor
+REVIEW REPEAT  g_m_nw__crown_plaza__0: 5 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW LONE    g_m_nw__crown_plaza__0: bin at (-31.49, -2.03) stands in the middle of the floor
+REVIEW DECO    g_m_nw__crown_plaza__1: 3 wall decorations on one wall
+REVIEW LONE    g_m_nw__crown_plaza__2: bin at (-13.09, -4.97) stands in the middle of the floor
+REVIEW DECO    g_m_nw__crown_plaza__4: 4 wall decorations on one wall
+REVIEW DECO    g_m_nw__crown_plaza__4: 7 wall decorations in the room
+REVIEW LONE    g_m_nw__crown_plaza__4: bin at (3.27, -4.44) stands in the middle of the floor
+REVIEW DECO    g_m_nw__crown_plaza__5: 4 wall decorations on one wall
+REVIEW LONE    g_m_nw__crown_plaza__8: bin at (36.83, -4.48) stands in the middle of the floor
+REVIEW REPEAT  g_m_se__corner_pharmacy__0: 3 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW DECO    g_m_se__corner_pharmacy__1: 3 wall decorations on one wall
+REVIEW DECO    g_m_se__corner_pharmacy__1: 4 wall decorations on one wall
+REVIEW DECO    g_m_se__corner_pharmacy__1: 8 wall decorations in the room
+REVIEW WIN     g_m_se__corner_pharmacy__1: prop_gallery_frame at (5.66, -1.00) hangs over the right opening at -0.60
+REVIEW WIN     g_m_se__corner_pharmacy__1: prop_gallery_frame at (5.66, 3.80) hangs over the right opening at 4.00
+REVIEW LONE    g_m_se__crown_grocery__1: bin at (-0.89, 10.18) stands in the middle of the floor
+REVIEW DECO    g_m_se__pho_house__0: 5 wall decorations on one wall
+REVIEW DECO    g_m_se__pho_house__0: 5 wall decorations on one wall
+REVIEW DECO    g_m_se__pho_house__0: 10 wall decorations in the room
+REVIEW WIN     g_m_se__pho_house__0: prop_gallery_frame at (-5.66, 4.55) hangs over the left opening at 4.40
+REVIEW WIN     g_m_se__pho_house__0: prop_gallery_frame at (5.66, 4.55) hangs over the right opening at 4.40
+REVIEW REPEAT  g_m_sw__check_cashing__0: 4 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW DECO    g_m_sw__check_cashing__0: 6 wall decorations on one wall
+REVIEW DECO    g_m_sw__check_cashing__0: 8 wall decorations in the room
+REVIEW WIN     g_m_sw__check_cashing__0: prop_gallery_frame at (2.66, 5.05) hangs over the right opening at 4.40
+REVIEW SEAT    g_m_sw__check_cashing__0: prop_waiting_bench at (-2.42, 5.11) has prop_waiting_bench right in front of it - no room to sit
+REVIEW DECO    g_m_sw__donut_shop__0: 4 wall decorations on one wall
+REVIEW WIN     g_m_sw__donut_shop__0: prop_gallery_frame at (-4.16, 4.55) hangs over the left opening at 4.40
+REVIEW WIN     g_m_sw__donut_shop__0: prop_gallery_frame at (4.16, 4.55) hangs over the right opening at 4.40
+REVIEW WIN     g_m_sw__sea_breeze_motel__0: prop_menu_board at (0.45, -4.14) hangs over the back opening at -0.70
+REVIEW LONE    g_m_sw__sea_breeze_motel__0: bin at (2.57, -1.88) stands in the middle of the floor
+REVIEW WIN     g_m_sw__sea_breeze_west_wing__0: prop_gallery_frame at (-17.66, -1.62) hangs over the left opening at -1.80
+REVIEW SPARSE  g_m_sw__sea_breeze_west_wing__0: 31 things on 324 m2 - it looks bare
+REVIEW LONE    g_r_n__hipranch_grey__0: bin at (2.28, -1.63) stands in the middle of the floor
+REVIEW DECO    g_r_n__spanish_white__0: 4 wall decorations on one wall
+REVIEW DECO    g_r_n__spanish_white__0: 3 wall decorations on one wall
+REVIEW DECO    g_r_n__spanish_white__0: 7 wall decorations in the room
+REVIEW WIN     g_r_n__spanish_white__0: prop_gallery_frame at (-5.66, -1.93) hangs over the left opening at -1.90
+REVIEW WIN     g_r_n__spanish_white__0: prop_gallery_frame at (5.66, -1.93) hangs over the right opening at -2.30
+REVIEW REPEAT  g_r_s__craftsman_sage__0: 3 x prop_brochure_rack (a customer sees the same thing over and over)
+REVIEW WIN     g_r_s__hipranch_sand__0: prop_menu_board at (-0.45, -3.64) hangs over the back opening at 0.30
+REVIEW LONE    g_r_s__hipranch_sand__0: bin at (1.46, -1.34) stands in the middle of the floor
+REVIEW DECO    g_r_s__tudor_stucco__0: 3 wall decorations on one wall
+REVIEW DECO    g_r_s__tudor_stucco__0: 3 wall decorations on one wall
+REVIEW LONE    g_r_s__tudor_stucco__0: bin at (2.95, -2.34) stands in the middle of the floor
+REVIEW DECO    g_v_nw__skate_shed__0: 3 wall decorations on one wall
+REVIEW LONE    g_v_nw__skate_shed__0: bin at (2.05, 0.06) stands in the middle of the floor
+REVIEW DECO    wf_cafe: 3 wall decorations on one wall
+REVIEW DECO    wf_marina_office: 3 wall decorations on one wall
+REVIEW WIN     wf_marina_office: prop_gallery_frame at (-6.60, -1.40) hangs over the left opening at -2.40
+REVIEW WIN     wf_marina_office: prop_gallery_frame at (-6.60, -2.60) hangs over the left opening at -2.40
+REVIEW_DONE 311 findings in 219 rooms

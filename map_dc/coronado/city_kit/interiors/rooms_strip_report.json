@@ -1,0 +1,184 @@
+{
+ "rooms": [
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__crown_car_care_row__0.scn",
+   "id": "g_strip_m_gr_ad5ne__crown_car_care_row__0",
+   "kind": "auto_parts",
+   "lights": 4,
+   "name": "Strand Auto Parts",
+   "props": 35,
+   "w": 11.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__crown_car_care_row__1.scn",
+   "id": "g_strip_m_gr_ad5ne__crown_car_care_row__1",
+   "kind": "phone",
+   "lights": 3,
+   "name": "Bridge Cell & Vape",
+   "props": 18,
+   "w": 5.7
+  },
+  {
+   "d": 8.5,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__quick_lube__0.scn",
+   "id": "g_strip_m_gr_ad5ne__quick_lube__0",
+   "kind": "lube",
+   "lights": 3,
+   "name": "Ten Minute Lube",
+   "props": 19,
+   "w": 7.4
+  },
+  {
+   "d": 6.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__taqueria_adela__0.scn",
+   "id": "g_strip_m_gr_ad5ne__taqueria_adela__0",
+   "kind": "taqueria",
+   "lights": 3,
+   "name": "Tacos El Puente",
+   "props": 18,
+   "w": 8.4
+  },
+  {
+   "d": 10.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__tax_office__0.scn",
+   "id": "g_strip_m_gr_ad5ne__tax_office__0",
+   "kind": "tax",
+   "lights": 4,
+   "name": "Island Tax & Insurance",
+   "props": 17,
+   "w": 5.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__chicken_drive__0.scn",
+   "id": "g_strip_m_gr_ad5ne__chicken_drive__0",
+   "kind": "drive_thru",
+   "lights": 4,
+   "name": "Coop & Go Chicken",
+   "props": 37,
+   "w": 11.4
+  },
+  {
+   "d": 8.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__bayside_express_wash__0.scn",
+   "id": "g_strip_m_gr_ad5ne__bayside_express_wash__0",
+   "kind": "wash_office",
+   "lights": 3,
+   "name": "Bayside Express Wash",
+   "props": 17,
+   "w": 5.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__route_75_diner__0.scn",
+   "id": "g_strip_m_gr_ad5ne__route_75_diner__0",
+   "kind": "diner",
+   "lights": 4,
+   "name": "Route 75 Diner",
+   "props": 61,
+   "w": 11.4
+  },
+  {
+   "d": 10.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5ne__bridge_tire_pros__0.scn",
+   "id": "g_strip_m_gr_ad5ne__bridge_tire_pros__0",
+   "kind": "tyre",
+   "lights": 4,
+   "name": "Bridge Tire Pros",
+   "props": 19,
+   "w": 11.4
+  },
+  {
+   "d": 5.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_e4s__bridge_motors_office__0.scn",
+   "id": "g_strip_m_gr_e4s__bridge_motors_office__0",
+   "kind": "car_sales",
+   "lights": 2,
+   "name": "Bridge Motors",
+   "props": 8,
+   "w": 5.9
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5nw__dollar_plus_market__0.scn",
+   "id": "g_strip_m_gr_ad5nw__dollar_plus_market__0",
+   "kind": "discount",
+   "lights": 4,
+   "name": "Dollar Plus Market",
+   "props": 80,
+   "w": 29.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5nw__adela_plaza_row__0.scn",
+   "id": "g_strip_m_gr_ad5nw__adela_plaza_row__0",
+   "kind": "laundromat",
+   "lights": 3,
+   "name": "Suds & Spin Laundry",
+   "props": 25,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5nw__adela_plaza_row__1.scn",
+   "id": "g_strip_m_gr_ad5nw__adela_plaza_row__1",
+   "kind": "nails",
+   "lights": 3,
+   "name": "Lucky Nails",
+   "props": 30,
+   "w": 6.0
+  },
+  {
+   "d": 12.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5nw__adela_plaza_row__2.scn",
+   "id": "g_strip_m_gr_ad5nw__adela_plaza_row__2",
+   "kind": "dentist",
+   "lights": 4,
+   "name": "Adela Family Dental",
+   "props": 17,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5nw__adela_plaza_corner__0.scn",
+   "id": "g_strip_m_gr_ad5nw__adela_plaza_corner__0",
+   "kind": "pizza",
+   "lights": 3,
+   "name": "Slice of the Strand",
+   "props": 22,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5nw__adela_plaza_corner__1.scn",
+   "id": "g_strip_m_gr_ad5nw__adela_plaza_corner__1",
+   "kind": "dry_cleaner",
+   "lights": 3,
+   "name": "Pressed Right Cleaners",
+   "props": 15,
+   "w": 5.7
+  },
+  {
+   "d": 13.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5nw__community_credit_union__0.scn",
+   "id": "g_strip_m_gr_ad5nw__community_credit_union__0",
+   "kind": "bank",
+   "lights": 4,
+   "name": "Coronado Community Credit Union",
+   "props": 27,
+   "w": 13.4
+  },
+  {
+   "d": 5.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5nw__recycling_booth__0.scn",
+   "id": "g_strip_m_gr_ad5nw__recycling_booth__0",
+   "kind": "recycling",
+   "lights": 2,
+   "name": "Bottle & Can Recycling",
+   "props": 7,
+   "w": 3.4
+  }
+ ]
+}

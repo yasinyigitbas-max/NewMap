@@ -1,0 +1,144 @@
+{
+ "rooms": [
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_va_w800_n1600_sw__hfs_office__0.scn",
+   "id": "g_ind_va_w800_n1600_sw__hfs_office__0",
+   "kind": "freight_office",
+   "lights": 6,
+   "name": "Harbor Freight Station",
+   "props": 28,
+   "w": 11.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_va_w800_n1600_sw__bayside_chandlery__0.scn",
+   "id": "g_ind_va_w800_n1600_sw__bayside_chandlery__0",
+   "kind": "trade_counter",
+   "lights": 6,
+   "name": "Bayside Chandlery",
+   "props": 30,
+   "w": 11.4
+  },
+  {
+   "d": 15.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_va_w800_n1600_sw__reefer_repair__0.scn",
+   "id": "g_ind_va_w800_n1600_sw__reefer_repair__0",
+   "kind": "parts_counter",
+   "lights": 5,
+   "name": "Cold Line Reefer Service",
+   "props": 36,
+   "w": 6.1
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_vb_w800_n1600_se__public_works_office__1.scn",
+   "id": "g_ind_vb_w800_n1600_se__public_works_office__1",
+   "kind": "permits",
+   "lights": 5,
+   "name": "Public Works Permits",
+   "props": 26,
+   "w": 6.0
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_vb_w800_n1600_se__workwear_store__1.scn",
+   "id": "g_ind_vb_w800_n1600_se__workwear_store__1",
+   "kind": "workwear",
+   "lights": 6,
+   "name": "Harbor Workwear",
+   "props": 24,
+   "w": 11.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_vc_w600_n1600_sw__dockside_fish_market__0.scn",
+   "id": "g_ind_vc_w600_n1600_sw__dockside_fish_market__0",
+   "kind": "fish_counter",
+   "lights": 6,
+   "name": "Dockside Fish Market",
+   "props": 58,
+   "w": 11.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_vc_w600_n1600_sw__pacific_seafood_sales__0.scn",
+   "id": "g_ind_vc_w600_n1600_sw__pacific_seafood_sales__0",
+   "kind": "sales_office",
+   "lights": 4,
+   "name": "Pacific Seafood Co.",
+   "props": 22,
+   "w": 5.4
+  },
+  {
+   "d": 11.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_va_w600_n1600_se__bay_boatworks_office__0.scn",
+   "id": "g_ind_va_w600_n1600_se__bay_boatworks_office__0",
+   "kind": "broker",
+   "lights": 6,
+   "name": "Bay Boatworks",
+   "props": 26,
+   "w": 15.4
+  },
+  {
+   "d": 15.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_va_w600_n1600_se__marine_engines__0.scn",
+   "id": "g_ind_va_w600_n1600_se__marine_engines__0",
+   "kind": "parts_counter",
+   "lights": 5,
+   "name": "Tidewater Marine Engines",
+   "props": 36,
+   "w": 6.1
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_vb_w600_n1400_nw__truck_stop_diner__0.scn",
+   "id": "g_ind_vb_w600_n1400_nw__truck_stop_diner__0",
+   "kind": "diner",
+   "lights": 6,
+   "name": "3rd St Truck Stop",
+   "props": 43,
+   "w": 11.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_vb_w600_n1400_nw__truck_parts__0.scn",
+   "id": "g_ind_vb_w600_n1400_nw__truck_parts__0",
+   "kind": "trade_counter",
+   "lights": 6,
+   "name": "Bayline Truck Parts",
+   "props": 30,
+   "w": 11.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_vc_w600_n1400_ne__shift_canteen__0.scn",
+   "id": "g_ind_vc_w600_n1400_ne__shift_canteen__0",
+   "kind": "canteen",
+   "lights": 6,
+   "name": "Shift Canteen",
+   "props": 51,
+   "w": 11.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_vc_w600_n1400_ne__island_restaurant_supply__1.scn",
+   "id": "g_ind_vc_w600_n1400_ne__island_restaurant_supply__1",
+   "kind": "trade_counter",
+   "lights": 4,
+   "name": "Island Restaurant Supply",
+   "props": 24,
+   "w": 5.7
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_vc_w600_n1400_ne__island_restaurant_supply__0.scn",
+   "id": "g_ind_vc_w600_n1400_ne__island_restaurant_supply__0",
+   "kind": "uniform",
+   "lights": 4,
+   "name": "Shift Linen & Uniforms",
+   "props": 29,
+   "w": 5.7
+  }
+ ]
+}

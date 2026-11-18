@@ -64,6 +64,9 @@ do_export() {
     rm -rf android/build/src/main/assets android/build/src/instrumented/assets
     [ -f "$GAME_P/android/.build_version" ] && cp "$GAME_P/android/.build_version" android/
   fi
+  # the native module (traffic and people in C++, docs/TRAFFIC_PEOPLE_PORT.md) is built here, not kept in git: a
+  # few seconds when nothing changed. If it cannot be built the app is exported without it and says so at start.
+  if [ -f native/build.sh ]; then bash native/build.sh | grep -a "NATIVE_BUILD" || true; [ -f native/bin/libcoronado_city.android.arm64.so ] || echo "PHONE_RIG the native module did not build: exporting without it"; fi
   touch android/build/.gdignore      # the editor must not read the template folder as project files (the stock template ships this file)
   # No gradle daemon: on Windows it stays alive after the build, holds the log open, and the export never returns.
   export GRADLE_OPTS="${GRADLE_OPTS:-} -Dorg.gradle.daemon=false"

@@ -1,0 +1,467 @@
+{
+ "_doc": "industrial growth buildings (tools/city/rooms/list_buildings_ind.gd)",
+ "buildings": [
+  {
+   "kit": "ck/ck_brk3_corner2",
+   "label": "hfs_office",
+   "piece": "i_va_w800_n1600_sw",
+   "pos": [
+    -829.0,
+    2.15000009536743,
+    -1576.58752441406
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "ck/ck_svc_trade_1d",
+   "label": "bayside_chandlery",
+   "piece": "i_va_w800_n1600_sw",
+   "pos": [
+    -845.0,
+    2.15000009536743,
+    -1577.38745117188
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "industrial/ind_repair",
+   "label": "reefer_repair",
+   "piece": "i_va_w800_n1600_sw",
+   "pos": [
+    -819.065612792969,
+    2.15000009536743,
+    -1559.5
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "kit": "modular/examples/mod_wh_shed",
+   "label": "packing_shed",
+   "piece": "i_va_w800_n1600_sw",
+   "pos": [
+    -822.765625,
+    2.15000009536743,
+    -1538.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "kit": "industrial/ind_warehouse",
+   "label": "devanning_shed",
+   "piece": "i_va_w800_n1600_sw",
+   "pos": [
+    -882.0,
+    2.15000009536743,
+    -1516.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "commercial/com_kiosk",
+   "label": "gate_booth",
+   "piece": "i_va_w800_n1600_sw",
+   "pos": [
+    -815.0,
+    2.15000009536743,
+    -1510.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "modular/examples/mod_brk_row",
+   "label": "public_works_office",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -768.0,
+    2.15000009536743,
+    -1577.01452636719
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "ck/ck_svc_pawn_fast",
+   "label": "workwear_store",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -751.0,
+    2.15000009536743,
+    -1577.48754882812
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "ck/mod_stg_row_roofed",
+   "label": "salt_and_sign_store",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -784.652404785156,
+    2.15000009536743,
+    -1559.0
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "kit": "services/svc_carwash",
+   "label": "fleet_wash",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -724.900024414062,
+    2.15000009536743,
+    -1512.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_0",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -703.349975585938,
+    2.15000009536743,
+    -1574.25
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_1",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -703.349975585938,
+    2.15000009536743,
+    -1570.65002441406
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_2",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -703.349975585938,
+    2.15000009536743,
+    -1567.05004882812
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "kit": "garages/single_stucco_clay",
+   "label": "lockup_3",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -703.200012207031,
+    2.15000009536743,
+    -1563.44995117188
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_4",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -703.349975585938,
+    2.15000009536743,
+    -1559.84997558594
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_5",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -703.349975585938,
+    2.15000009536743,
+    -1556.25
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_6",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -703.349975585938,
+    2.15000009536743,
+    -1552.65002441406
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "kit": "garages/single_stucco_clay",
+   "label": "lockup_7",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -703.200012207031,
+    2.15000009536743,
+    -1549.05004882812
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_8",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -703.349975585938,
+    2.15000009536743,
+    -1545.44995117188
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_9",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -703.349975585938,
+    2.15000009536743,
+    -1541.84997558594
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_10",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -703.349975585938,
+    2.15000009536743,
+    -1538.25
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "kit": "garages/single_stucco_clay",
+   "label": "lockup_11",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -703.200012207031,
+    2.15000009536743,
+    -1534.65002441406
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "kit": "commercial/com_kiosk",
+   "label": "gate_booth",
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -785.0,
+    2.15000009536743,
+    -1510.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "commercial/com_bistro",
+   "label": "dockside_fish_market",
+   "piece": "i_vc_w600_n1600_sw",
+   "pos": [
+    -629.0,
+    2.15000009536743,
+    -1577.01452636719
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "commercial/com_realty",
+   "label": "pacific_seafood_sales",
+   "piece": "i_vc_w600_n1600_sw",
+   "pos": [
+    -640.0,
+    2.15000009536743,
+    -1577.01452636719
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "modular/examples/mod_wh_shed",
+   "label": "fish_packing_hall",
+   "piece": "i_vc_w600_n1600_sw",
+   "pos": [
+    -658.0,
+    2.15000009536743,
+    -1571.6875
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "ck/mod_stg_row_roofed",
+   "label": "dry_store",
+   "piece": "i_vc_w600_n1600_sw",
+   "pos": [
+    -615.347595214844,
+    2.15000009536743,
+    -1560.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "kit": "industrial/ind_warehouse",
+   "label": "cold_store",
+   "piece": "i_vc_w600_n1600_sw",
+   "pos": [
+    -624.765625,
+    2.15000009536743,
+    -1532.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "kit": "industrial/ind_factory",
+   "label": "bay_ice_plant",
+   "piece": "i_vc_w600_n1600_sw",
+   "pos": [
+    -658.0,
+    2.15000009536743,
+    -1516.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "civic/civ_harbor_office",
+   "label": "bay_boatworks_office",
+   "piece": "i_va_w600_n1600_se",
+   "pos": [
+    -564.0,
+    2.15000009536743,
+    -1575.23754882812
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "industrial/ind_repair",
+   "label": "marine_engines",
+   "piece": "i_va_w600_n1600_se",
+   "pos": [
+    -580.934387207031,
+    2.15000009536743,
+    -1564.0
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "kit": "industrial/ind_warehouse",
+   "label": "boat_shed",
+   "piece": "i_va_w600_n1600_se",
+   "pos": [
+    -575.234375,
+    2.15000009536743,
+    -1532.0
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "kit": "ck/mod_stg_row_roofed",
+   "label": "sail_loft",
+   "piece": "i_va_w600_n1600_se",
+   "pos": [
+    -551.0,
+    2.15000009536743,
+    -1508.55004882812
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "ck/mod_fastfood",
+   "label": "truck_stop_diner",
+   "piece": "i_vb_w600_n1400_nw",
+   "pos": [
+    -628.5,
+    2.15000009536743,
+    -1422.51245117188
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "services/svc_carwash",
+   "label": "truck_wash",
+   "piece": "i_vb_w600_n1400_nw",
+   "pos": [
+    -656.099975585938,
+    2.15000009536743,
+    -1428.01245117188
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "ck/mod_stg_row_roofed",
+   "label": "tyre_store",
+   "piece": "i_vb_w600_n1400_nw",
+   "pos": [
+    -681.0,
+    2.15000009536743,
+    -1417.67578125
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "ck/ck_svc_trade_1d",
+   "label": "truck_parts",
+   "piece": "i_vb_w600_n1400_nw",
+   "pos": [
+    -617.003112792969,
+    2.15000009536743,
+    -1434.5
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "kit": "industrial/ind_repair",
+   "label": "heavy_repair",
+   "piece": "i_vb_w600_n1400_nw",
+   "pos": [
+    -619.003112792969,
+    2.15000009536743,
+    -1459.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "kit": "commercial/com_orange_corner",
+   "label": "shift_canteen",
+   "piece": "i_vc_w600_n1400_ne",
+   "pos": [
+    -571.0,
+    2.15000009536743,
+    -1422.98547363281
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "ck/ck_svc_trade",
+   "label": "island_restaurant_supply",
+   "piece": "i_vc_w600_n1400_ne",
+   "pos": [
+    -557.0,
+    2.15000009536743,
+    -1422.61254882812
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "industrial/ind_warehouse",
+   "label": "produce_hall",
+   "piece": "i_vc_w600_n1400_ne",
+   "pos": [
+    -522.0,
+    2.15000009536743,
+    -1430.3125
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "modular/examples/mod_wh_shed",
+   "label": "meat_packers",
+   "piece": "i_vc_w600_n1400_ne",
+   "pos": [
+    -577.296875,
+    2.15000009536743,
+    -1460.0
+   ],
+   "yaw": -90.0000025044782
+  }
+ ]
+}

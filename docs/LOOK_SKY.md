@@ -277,3 +277,13 @@ on the cloud's GPU, 83 s; no `--nofarground` needed).
 - FOUND: with `--shadowtune=1` (2 splits) the cloud's software GPU draws the near trees properly WITH sun shadows on
   (`shadow/pair_apartments_golden.jpg`); with the engine's 4 splits they came out black. The "trees black with
   shadows" cloud flaw is tied to the 4-split mode. Cloud pictures can have shadows from now on.
+
+### In the GTA palette, with sun shadows (cloud, 4 views)
+| preset | bright | contrast | sat % | sky sat % |
+|---|---|---|---|---|
+| day (clouds readable from the street) | 89 | 169 | 25 | 20 |
+| golden (GTA table, shade 0.92 warm-grey) | 71 | 171 | 26 | 25 |
+| morning (GTA table) | 91 | 187 | 23 | 18 |
+With real shadows the low golden sun leaves most streets in shade: the warm light falls on tree tops and the walls
+that face west (`gta/sheet_*.jpg`); the shade was lifted (0.75 -> 0.92) so the street does not sink. Darker than the
+day is right for a low sun; judge it on the phone.

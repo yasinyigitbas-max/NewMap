@@ -5,6 +5,75 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov (strip session, claude/grow-strip): NEW INDOOR PROPS (Yasin, relayed by the PC session: "there are new indoor
+  assets to replace old lower quality ones ... fetch them and replace all indoor props with them"; asked directly in
+  this session whether the 12 locked hand-made rooms may be unlocked and relocked for it: "Yes, unlock and relock").
+  Taken: coronado-source `assets` dd8d53a, only its 178 indoor files (models, page I atlas, manifests, previews,
+  tools, report); .import / .uid of this repo kept. Rebuilt with them: the 18 strip rooms (g_strip_*), the 150
+  generated rooms of the existing map (tools/city/rooms/room_gen.gd, unchanged), the 12 hand-made rooms (unlocked
+  --by=Yasin, rebuilt from rooms_civic_apt.gd / rooms_waterfront.gd unchanged, none needed re-dressing, relocked).
+  Lock test RESULT PASS. Indoor checker: 1 problem left in a generated room of the sample (g_m_nw__crown_plaza__2,
+  a grocery shelf grew and cannot be walked up to).
+- 19 Nov (PC session, branch `claude/strange-jang-5426ac`, not merged): TRAFFIC AND PEOPLE IN C++ (Yasin: "bring the
+  traffic and people here as completely cplus plus first, then we run the extensions on the phone"; "all of them must
+  fit into the new map flawlessly, improve the code whereevr you can ... everything must be in C PLUS PLUS").
+  STAGE 0 DONE: the inventory and plan, `docs/TRAFFIC_PEOPLE_PORT.md` (read it first). The old game's two plain C++
+  cores come over; its script layer (which still runs every tick) does not: it is written new in C++ for this map
+  (own threads, cars as batches, a spawn ring that moves with speed, one walker system). The new map must get its own
+  lane graph, pavements, crossings and signal plan, made by a C++ tool from the locked skeleton and checked against
+  the baked ground. The module's binaries and its `.gdextension` file stay OUT of git (built by `native/build.sh`), so
+  cloud sessions never load it. YASIN ANSWERED the talking question (19 Nov): "does your work include every single
+  one of npc related systems right? npcs meeting, ractions, city life, speaking to them etc": ALL of it is in the
+  job, in C++ (reactions and city life = stage 3c, speaking = stage 4; the voice clips that name OLD places need new
+  recordings once the new map's place names are fixed). STAGE 1 DONE, PC and PHONE: `native/` builds the Windows dll
+  and the Android .so in under a minute (`bash native/build.sh`; `phone_rig.sh export` runs it), the rig prints
+  `RIG native coronado_city ...` on both; phone run `review/phone/native1_stream.txt`: STREAM HEALTH PASS, engine
+  `coronado_all7`; lock test RESULT PASS. Baseline for what comes next (same run): draws 79-82 average, 198 worst,
+  GPU 13.5 ms. PARKED CARS ARE IN (Yasin 19 Nov: "tell it to bring parked cars to the game", "i think the traffic code
+  needs to know about the parked cars locations right?"): doc section 14. The bake carries 4,524 stalls (3,008 at
+  the kerb, 1,516 in car parks); parked and moving cars are one pool; driveways are NOT recorded by the pieces, so
+  only kerb stalls take part in traffic until they are (a note, nothing changed). NEXT: stage 2a, the lane graph of
+  the new streets (`StreetGraph`, with the stalls, checked against the baked ground).
+- 18 Nov (cloud, branch `claude/grow-industrial`): INDUSTRIAL GROWTH, stage 1 + 2 done, NOTHING LOCKED, WAITING for
+  Yasin's word on the variants. Read `review/grow_ind/README.md`. Three variants (A port, B fleet, C cold chain),
+  each dressed twice = six 100 m blocks round the sample. They form the pilot area u -900..-500, v -1600..-1400
+  (1st St to 3rd St, J Ave to the house edge). Table `review/grow_ind_blocks.json` (the shared grow_* form).
+  `pieces/ind_grow_lib.gd` MEASURES the road pieces, so every block meets the walk flush and its gates sit on the
+  street's aprons. 14 rooms with an industrial character: `tools/city/rooms/room_gen_ind.gd` + `assign_ind.py`
+  (stocked shelves only). Checks in the area: validator 0, trees 0, sink 0, rooms 0, lock PASS. Baked: worst view
+  78 draws / 387k tris; +5.8 MB download; rooms not in the bake (21-36 draws, 4-6 lights each, unmerged). Not done:
+  the two sloped blocks south of 3rd St at G Ave, the Alameda strip, pictures in the GTA IV look (they need a full
+  bake on the PC), the phone.
+- 19 Nov (PC session, after the census): EVERYTHING PUSHED IS MERGED into `claude/festive-faraday-20ltx2` (Yasin: "merge
+  them yes i saw their works"; "dont leave anything unmerged"): the look pack (he chose "gta4 look"), the tier work
+  and the DRAWING CENSUS (`docs/DRAW_CENSUS.md`, `docs/TREE_ARTIST_BRIEF.md`), and the four zone sessions' first work
+  (gritty 8 blocks, industrial 6, residential 25, strip 3: unlocked, waiting for his approval). `OUT/sweep.sh` (local)
+  merges every pushed branch; `city_grid_layout.json` is regenerated after such a merge with
+  `python tools/city/pilot/zoning/integrate.py` (needs numpy + shapely; it reads `review/grow_*_blocks.json`).
+  Yasin: "i like the new terrain" (the far ground / roads in the far world). The rig now draws the night once in the
+  warm-up by default (the census found it removes the first-dusk frames). CENSUS IN ONE LINE: at 720p the phone
+  lowers its GPU clock, so "13-14 ms of GPU" there is NOT a limit; with the GPU kept busy (1.5 x full screen) the
+  costs are trees 11 / 3 ms (apartments / gritty), near buildings 7 / 3, sun shadows 5 / 3, sky reflection 5 / 3,
+  FXAA 4 / 4, near props 3 / 1, wear marks 2 / 2; the mid tier and the look's building parts cost almost nothing.
+  NOT on the phone yet: the merged build with the grown blocks.
+- 19 Nov ~01:00 (PC time): COLLISION PER PLACE (the growth doubled the gritty edge's collision; teleport 3.6 s). Branch
+  `claude/ecstatic-archimedes-922d2c`, docs/RUNTIME_BAKE.md "Collision per place". ON: a teleport's destination's
+  collision first, and 4 x the collision budget while a teleport prepares: teleports 0.1-1.3 s, stream gate PASS; zones
+  gate still FAILS on one body (3.2 s against 3 s, gritty night). TRIAL, OFF: collision only within 100 m
+  (`--colrange=100`): a fifth of the collision and the zones' waits under 1 s, but one 86-414 ms draw stall per lap on
+  5th St at 210 km/h, not understood. The phone has the build with the range ON (installed before it was turned off).
+- 19 Nov ~00:30 (PC time): DRAWING CENSUS ON THE PHONE (Yasin: "queue the drawing cost census"), branch
+  `claude/ecstatic-archimedes-922d2c`, not merged. Full account: docs/DRAW_CENSUS.md. Rig `--plan=census` (states one at
+  a time, standing viewpoints, day / night, `--warmnight`). KEY FINDING: at 720p the phone lowers its GPU clock, so GPU
+  time there does not show costs (half the pixels saved 0.0-0.3 ms); the census was read at 1.5 x full screen. Biggest
+  costs (apartments / gritty): plants 10.9 / 3.4 ms (cut-out leaves 4.0 / 2.8 of it), near buildings 7.0 / 3.3, sun
+  shadows 4.9 / 3.4, sky reflection 5.1 / 3.2, FXAA 3.9 / 3.6, near props 2.6 / 1.3, wear marks 1.9 / 1.9. Cheap: mid
+  tiers, far world, far ground, the look's parts (0.6 together). The first dusk of a session (40-120 ms frames) is
+  first-time building, gone with `--warmnight`: NOW THE RIG'S DEFAULT (Yasin: "Yes, add it"; night drives with no
+  frame over 33 ms). Zones gate still fails, newly: the growth doubled the gritty edge's collision, teleport 3.6 s. Switching
+  the sky reflection back on left the GPU ~28 ms slower until a teleport (not explained). NEW: docs/TREE_ARTIST_BRIEF.md
+  (Yasin: new tree models; what they must be). Stream gate on the merged build (look + tiers code + growth): PASS.
+  Release build not made (Yasin: "dont make the release build yet"). Lock test RESULT PASS.
 - 18 Nov (cloud session, branch `claude/grow-gritty`): GRITTY EDGE GROWTH, Stage 1 + 2 done, WAITING FOR YASIN (nothing
   locked, nothing merged by me). Read `review/grow_grt/README.md`. Three variants of the locked gritty sample (v1 yard edge,
   v2 trade street, v3 walk-up homes; recipes `tools/city/pilot/pieces/grt_grow_recipes.gd`, site frame + slope drape
