@@ -70,9 +70,10 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 - 19 Nov ~01:00 (PC time): COLLISION PER PLACE (the growth doubled the gritty edge's collision; teleport 3.6 s). Branch
   `claude/ecstatic-archimedes-922d2c`, docs/RUNTIME_BAKE.md "Collision per place". ON: a teleport's destination's
   collision first, and 4 x the collision budget while a teleport prepares: teleports 0.1-1.3 s, stream gate PASS; zones
-  gate still FAILS on one body (3.2 s against 3 s, gritty night). TRIAL, OFF: collision only within 100 m
-  (`--colrange=100`): a fifth of the collision and the zones' waits under 1 s, but one 86-414 ms draw stall per lap on
-  5th St at 210 km/h, not understood. The phone has the build with the range ON (installed before it was turned off).
+  gate failed on one body (3.2 s, gritty night). Then (Yasin: "keep digging") collision within 100 m first and the
+  rest in quiet frames (the first try left far collision unmade and gave a draw stall of 86-414 ms per lap while the
+  growth's heavy cell loaded: cured by the background work, cause not understood). NOW BOTH GATES PASS (`colbg_zones`,
+  the first zones PASS; `colbg_stream`): teleports 0.2-1.6 s, collision waits under 0.6 s, worst frame 39 ms.
 - 19 Nov ~00:30 (PC time): DRAWING CENSUS ON THE PHONE (Yasin: "queue the drawing cost census"), branch
   `claude/ecstatic-archimedes-922d2c`, not merged. Full account: docs/DRAW_CENSUS.md. Rig `--plan=census` (states one at
   a time, standing viewpoints, day / night, `--warmnight`). KEY FINDING: at 720p the phone lowers its GPU clock, so GPU

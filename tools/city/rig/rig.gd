@@ -14,7 +14,8 @@ extends Node3D
 ##   --lead=2  --maxcells=30  --loading=2  --bodies=6  --coltris=1200  --colms=2     streamer settings to compare
 ##   --lights=20   real lamp lights at night (the engine's light grid; 8 on a stock engine)
 ##   --nowarm      skip the warm-up (to see what it saves)
-##   --colrange=0  collision is made only this near the player / the lead / a teleport's destination; 0 = all (default; 100 is a trial, see city_stream.gd col_range)
+##   --colrange=100  collision this near the player / the lead / a teleport's destination first, the rest in quiet frames (default); 0 = all alike
+##   --colnobg     with a range: farther collision is NOT made in the background (the first try; it gave draw stalls)
 ##   --boost=4     collision budgets a frame times this while a teleport's destination is being prepared (1 = as before)
 ##   --nowarmnight skip drawing the night once in the warm-up (on by default since 19 Nov: it removes the first dusk's hitch)
 ##   --look=1|0|NAME  1 (default): the look pack's sky, distance haze, light colours and colour treatment
@@ -99,7 +100,7 @@ var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
-var opt := {"look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 0.0, "boost": 4.0}
+var opt := {"look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
