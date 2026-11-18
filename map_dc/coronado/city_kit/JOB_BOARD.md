@@ -5,6 +5,18 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov ~21:50 (PC time): YASIN DECIDED THE DAY LOOK: "i go for gta4 look" (the sky session's current default palette
+  stays; the half-haze and clear-day variants are not needed). He also asked whether merging must wait for the census
+  ("do we have to wait for the cencus?"): no. MERGED into the working branch: the tier session's branch
+  `claude/ecstatic-archimedes-922d2c` as of bd74fd0 (far ground ON, tiers built and OFF). Still NOT merged:
+  `claude/look-sky`, `claude/look-buildings`, the four `claude/grow-*` branches. FOUR ZONE SESSIONS started in the
+  cloud (Yasin: "start 4 of them, since we have 4 different zones"; "tell them to do out and indoors together. thats
+  the point of having 4 different agents, i want the shops to look different"; "fetch the tool and give it to them"):
+  residential, commercial strip, industrial, gritty edge, each on `claude/grow-<zone>`, variants + one pilot area +
+  their own shop rooms with the room tool (`tools/city/rooms/`, copied here from `claude/look-buildings`, 3203b2d).
+  Nothing of theirs is locked; they wait for Yasin's approval. The tier session is now running a DRAWING-COST CENSUS
+  on the phone (brief: where the 13-14 ms of GPU at 720p go, one switch at a time; result `docs/DRAW_CENSUS.md` on
+  its branch).
 - 18 Nov ~20:50 (PC time): WHILE THE TIER SESSION WORKS (Yasin: "do 1 and 2 together"). (1) LOOK PACK ON A REAL GRAPHICS
   CARD: `claude/look-sky` + `claude/look-buildings` merged onto the working branch in a scratch worktree
   (`OUT/look_wt`, branch `claude/look-merge-test`, local only, NOT merged anywhere): collisions only in rig.gd's
@@ -18,6 +30,17 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   evening's phone runs were taken before it; the tier session was told to take a fresh baseline. Tier session:
   "Streaming: tier fades and far roads", an Opus session on this PC in its own worktree, branch
   `claude/ecstatic-archimedes-922d2c`; it has the phone.
+- 18 Nov ~22:30 (PC time): THE TIERS (Yasin: "it snaps from near to far directly"), branch
+  `claude/ecstatic-archimedes-922d2c`, not merged. Full account: docs/RUNTIME_BAKE.md "The tiers". (1) FAR GROUND, ON:
+  the streets and ground of all 100 cells that have ground in the far world, 1 draw, 20k triangles, one 1.3 MB
+  picture, no GPU cost measured. (2) An arriving cell's objects take over nearest first and (3) dithered fades at
+  60 m / 220 m: built, behind ONE switch (`--tiers`, streamer `tiers`), OFF. On the Redmi they cost 0.1-0.4 ms of GPU
+  in most zones and 4 ms (40 %) in the gritty edge. Gate: `tiers_off_stream` and `tiers_on_stream` PASS. The zones
+  fail only on the known day-to-night frame (as `zones_final`; the same without the far ground). Also fixed: a
+  start load attaches its collision at once (it trickled in, one body 9.9 s late). NEW: rig `--plan=shots`,
+  `phone_rig.sh shots NAME`, `gpu_ms` on the map line; pictures `review/tiers/before|after_farground|after_tiers`.
+  WAITING FOR YASIN: look at the pictures and at `--tiers` on the phone; fades for buildings only (cheaper) is the
+  next thing to try. Lock test RESULT PASS.
 - 18 Nov ~20:10 (PC time): STREAMING MADE HEALTHY ON THE PHONE (Yasin: "streaming is the backbone of this game, we
   need it to work healthy agile and robust ... think that you are the streaming engineer in rockstar studios"; "do
   whatever you need"). Full account: docs/RUNTIME_BAKE.md "The streamer on the phone". Six causes found and fixed one

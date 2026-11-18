@@ -40,3 +40,7 @@ ck_cells_loaded={
 "type": "sampler2D",
 "value": ""
 }
+ck_tier_band={
+"type": "float",
+"value": 0.0
+}

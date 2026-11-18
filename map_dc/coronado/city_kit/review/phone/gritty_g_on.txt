@@ -1,0 +1,23 @@
+# phone rig run 'gritty_g_on'  2026-11-18T18:23Z  args: --drive=gday/z_gritty/60/20/0 --drive=gnight/z_gritty/60/20/1 --tiers
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 333 -> 336 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit 5df5e24 | meminfo at 60 s: 
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 plan=default lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=141 tiers=true band=8.0 arrive=0.50 far_ground=true tier_materials=19
+RIG own drives: 2
+RIG boot first_area_ms=466 warm_ms=589 (graphics memory reserve 192 MB: 42 ms) cells=10 static_mb=105 video_mb=225
+RIG drive gday speed=60 km/h secs=20 frames=1251 fps=62.5 | frame_ms med=16.5 p95=22.8 p99=26.1 worst=29 | over16.7=47.7% over33=0 over50=0 over100=0
+RIG   map gday draws avg=102 max=131 | tris avg=499k max=723k | cells most=14 in=7 out=5 dropped=0 cap_hits=0 | gpu_ms med=13.88 p95=14.72
+RIG   stream gday start_ready_ms=1 (worst frame meanwhile 0 ms) | request_to_in ms mean=155 worst=581 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 0.65, body 1.82 (col_10 shapes=24 new=1582), removal step 0.50 | bodies late=0
+RIG   slow gday frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision gday made=42571 units, a body waited at most 229 ms from its cell's arrival | physics thread wait a frame (probe): median -1.0 p99 -1.0 worst -1.0 ms
+RIG   objects gday all=4631 nodes=1110 orphan_nodes=0 resources=832 | streamer: cells in=12, bodies waiting=0, nodes leaving=0
+RIG   mem gday static_mb=107 video_mb=239 tex_mb=115 buf_mb=98
+RIG slow gnight 47 ms at t=0.3 s pos=(-736, -1000): cells in +0 out +0, bodies +6, loading [] | marks: rig 0.6 focus 0.4 | to_streamer 0.1 streamer 1.6 | to_draw 0.0 draw 43.9 | to_physics 0.3 physics 0.5 | at: physics_wait -1.0 render_wait -1.0 streamer 1.61 setup 0.0 draw_cpu 2.6 gpu 40.5 | then: physics_wait -1.0 render_wait -1.0 streamer 1.59 setup 0.0 draw_cpu 0.7 gpu 20.1
+RIG drive gnight speed=60 km/h secs=20 frames=1179 fps=58.9 | frame_ms med=16.7 p95=24.7 p99=26.9 worst=47 | over16.7=51.1% over33=1 over50=0 over100=0
+RIG   map gnight draws avg=115 max=143 | tris avg=500k max=726k | cells most=14 in=6 out=8 dropped=0 cap_hits=0 | gpu_ms med=14.13 p95=14.94
+RIG   stream gnight start_ready_ms=188 (worst frame meanwhile 26 ms) | request_to_in ms mean=71 worst=111 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.74, body 1.82 (col_10 shapes=24 new=1582), removal step 1.01 | bodies late=0
+RIG   slow gnight frames over 33 ms by what the streamer was doing: { "bodies": 1 } | over 45 ms: { "bodies": 1 }
+RIG   collision gnight made=70948 units, a body waited at most 831 ms from its cell's arrival | physics thread wait a frame (probe): median -1.0 p99 -1.0 worst -1.0 ms
+RIG   objects gnight all=4631 nodes=1110 orphan_nodes=0 resources=832 | streamer: cells in=12, bodies waiting=0, nodes leaving=0
+RIG   mem gnight static_mb=108 video_mb=239 tex_mb=115 buf_mb=98
+RIG plan_done lap=1

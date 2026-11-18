@@ -19,6 +19,12 @@ extends Node3D
 ##   --probe       time the physics and render servers' digestion each frame (shown in the slow lines)
 ##   --nocol       never attach the cells' collision; --hide  add the cells hidden: the two switches that tell what a
 ##                 slow frame is made of (attaching collision, or the first drawing of a new cell)
+##   THE TIERS (19 Nov, docs/RUNTIME_BAKE.md "The tiers"; all off by default = as before):
+##   --tiers       the tier hand-over: fades at 60 m and 220 m, an arriving cell's objects take over nearest first
+##   --band=8      with --tiers: metres of overlap at each switch (0 = hard cuts)     --arrive=0.5  seconds of the sweep
+##   --nofarground hide the far world's ground (the streets beyond the loaded cells)
+##   --plan=shots  no drives: pictures of a building at set distances and of a street, saved as JPG in
+##                 user://rig/shots/ (phone_rig.sh shots NAME ... pulls them to review/tiers/NAME/)
 const Stream := preload("res://tools/city/bake/city_stream.gd")
 const Lights := preload("res://tools/city/bake/city_lights.gd")
 const ROUTES := {"zigzag": "-900,-1400;500,-1400;500,-1000;-900,-1000;-900,-600;500,-600;500,-200;-900,-200",
@@ -48,6 +54,7 @@ const PLANS := {
 	# far jumps on purpose: every teleport throws the loaded cells away and needs a whole new neighbourhood
 	"zones": [["gritty_60kmh", "z_gritty", 16.7, 25.0, 0.0], ["centre_60kmh", "z_centre", 16.7, 25.0, 0.0], ["waterfront_60kmh", "z_waterfront", 16.7, 25.0, 0.0], ["industrial_60kmh", "z_industrial", 16.7, 25.0, 0.0], ["apartments_60kmh", "z_apartments", 16.7, 25.0, 0.0], ["pilot_60kmh", "z_pilot", 16.7, 25.0, 0.0], ["strip_60kmh", "z_strip", 16.7, 25.0, 0.0], ["civic_60kmh", "z_civic", 16.7, 25.0, 0.0], ["stadium_60kmh", "z_stadium", 16.7, 25.0, 0.0],
 		["seventh_210kmh", "seventh_pop", 58.0, 20.0, 0.0], ["centre_night_60kmh", "z_centre", 16.7, 25.0, 1.0], ["gritty_night_60kmh", "z_gritty", 16.7, 25.0, 1.0]],
+	"shots": [["shots", "seventh_pop", 1.0, 1.0, 0.0]],      # (only its first point: where the app starts; see _shots)
 	"stream": [["loop_108kmh", "pop_loop", 30.0, 60.0, 0.0], ["loop_210kmh", "pop_loop", 58.0, 55.0, 0.0], ["loop_280kmh", "pop_loop", 78.0, 40.0, 0.0]],
 	"speed": [["ring_108kmh", "ring", 30.0, 60.0, 0.0], ["ring_210kmh", "ring", 58.0, 60.0, 0.0], ["ring_280kmh", "ring", 78.0, 60.0, 0.0], ["ring_360kmh", "ring", 100.0, 40.0, 0.0]]}
 
@@ -57,7 +64,7 @@ var cam: Camera3D
 var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
-var opt := {"plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false}
+var opt := {"plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -75,14 +82,16 @@ func _ready() -> void:
 		if a == "--nocol": opt.nocol = true
 		if a == "--probe": opt.probe = true
 		if a == "--hide": opt.hide = true
+		if a == "--tiers": opt.tiers = true
+		if a == "--nofarground": opt.nofarground = true
 		if a.begins_with("--drive="):
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms"]:
+		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
-				opt[k] = v if k == "plan" else (float(v) if k in ["scale", "lead", "colms"] else int(v))
+				opt[k] = v if k == "plan" else (float(v) if k in ["scale", "lead", "colms", "band", "arrive"] else int(v))
 	if from_file and not ("--loop" in args): opt.quit = true
 	Engine.max_fps = 0
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
@@ -98,7 +107,8 @@ func _ready() -> void:
 	sun.shadow_enabled = true; sun.directional_shadow_max_distance = 50.0; add_child(sun)      # the game's sun shadow distance
 	var gp := MeshInstance3D.new(); var pm := PlaneMesh.new(); pm.size = Vector2(6000, 6000); gp.mesh = pm
 	var gm := StandardMaterial3D.new(); gm.albedo_color = Color(0.36, 0.42, 0.3); gm.roughness = 1.0; gp.material_override = gm; gp.position.y = -0.05; add_child(gp)
-	st = Stream.new(); st.name = "City"; st.lead_seconds = float(opt.lead); st.max_cells = int(opt.maxcells); st.max_loading = int(opt.loading); st.bodies_per_frame = int(opt.bodies); st.body_tris_per_frame = int(opt.coltris); st.loader_mode = int(opt.loader); st.gpu_reserve_mb = int(opt.gpureserve); st.col_ms_per_frame = float(opt.colms); st.attach_bodies = not opt.nocol; st.show_cells = not opt.hide; st.probe = opt.probe; add_child(st)
+	st = Stream.new(); st.name = "City"; st.lead_seconds = float(opt.lead); st.max_cells = int(opt.maxcells); st.max_loading = int(opt.loading); st.bodies_per_frame = int(opt.bodies); st.body_tris_per_frame = int(opt.coltris); st.loader_mode = int(opt.loader); st.gpu_reserve_mb = int(opt.gpureserve); st.col_ms_per_frame = float(opt.colms); st.attach_bodies = not opt.nocol; st.show_cells = not opt.hide; st.probe = opt.probe
+	st.tiers = opt.tiers; st.tier_band = float(opt.band); st.arrive_s = float(opt.arrive); st.far_ground = not opt.nofarground; add_child(st)
 	RenderingServer.viewport_set_measure_render_time(get_viewport().get_viewport_rid(), true)
 	RenderingServer.frame_pre_draw.connect(func() -> void: _t_pre = Time.get_ticks_usec())
 	RenderingServer.frame_post_draw.connect(func() -> void: _t_post = Time.get_ticks_usec())
@@ -143,7 +153,7 @@ func _night(v: float) -> void:
 
 func _run() -> void:
 	var R := RenderingServer
-	_say("start engine=%s device=%s gpu=%s screen=%s scale=%.2f plan=%s lead=%.1f maxcells=%d loading=%d bodies=%d lights=%d loader=%d coltris=%d cells_baked=%d" % [Engine.get_version_info().string, OS.get_model_name(), R.get_video_adapter_name(), str(DisplayServer.window_get_size()), float(opt.scale), opt.plan, float(opt.lead), int(opt.maxcells), int(opt.loading), int(opt.bodies), int(opt.lights), int(opt.loader), int(opt.coltris), st.cells.size()])
+	_say("start engine=%s device=%s gpu=%s screen=%s scale=%.2f plan=%s lead=%.1f maxcells=%d loading=%d bodies=%d lights=%d loader=%d coltris=%d cells_baked=%d tiers=%s band=%.1f arrive=%.2f far_ground=%s tier_materials=%d" % [Engine.get_version_info().string, OS.get_model_name(), R.get_video_adapter_name(), str(DisplayServer.window_get_size()), float(opt.scale), opt.plan, float(opt.lead), int(opt.maxcells), int(opt.loading), int(opt.bodies), int(opt.lights), int(opt.loader), int(opt.coltris), st.cells.size(), str(opt.tiers), float(opt.band), float(opt.arrive), str(not opt.nofarground), int(st.stats.get("tier_materials", 0))])
 	if st.cells.is_empty():
 		_say("ERROR no baked city found (map_dc/coronado/city_kit/runtime). Run the bake before the export."); hud.text = "no baked city in this build"
 		if opt.quit: await get_tree().create_timer(3.0).timeout; get_tree().quit()
@@ -158,6 +168,11 @@ func _run() -> void:
 	if not opt.nowarm: await st.warm_up(cam, 4)
 	for i in 10: await get_tree().process_frame
 	_say("boot first_area_ms=%d warm_ms=%d (graphics memory reserve %d MB: %d ms) cells=%d static_mb=%.0f video_mb=%.0f" % [t1 - t0, Time.get_ticks_msec() - t1, int(opt.gpureserve), int(st.stats.get("reserve_ms", 0)), st.loaded_count(), Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0])
+	if String(opt.plan) == "shots":
+		await _shots()
+		await get_tree().create_timer(0.5).timeout
+		get_tree().quit()
+		return
 	var lap := 0
 	while true:
 		for seg: Array in plan: await _drive(seg)
@@ -195,7 +210,7 @@ func _drive(seg: Array) -> void:
 	var dts := PackedFloat32Array(); var draws_sum := 0.0; var draws_max := 0; var tris_sum := 0.0; var tris_max := 0
 	var late220 := 0; var late60 := 0; var deepest := 0.0; var max_cells := 0; var slow := 0; var gy := 8.0
 	var segi := 0; var along := 0.0; var t := 0.0; var t_prev := Time.get_ticks_usec(); var hud_t := 0.0; var prev := [S0["in"], S0.out, S0.bodies]
-	var ready0: int = st.ready_ms.size(); var slow_line := ""; var cause := {}; var cause45 := {}; var pw := PackedFloat32Array()
+	var ready0: int = st.ready_ms.size(); var slow_line := ""; var cause := {}; var cause45 := {}; var pw := PackedFloat32Array(); var gpu := PackedFloat32Array()
 	st.stats["body_wait_ms_worst"] = 0; var units0 := int(st.stats.get("col_units", 0))
 	var on_ground := false; _g_hit = false; _g_at = pts[0]
 	while t < secs:
@@ -223,6 +238,7 @@ func _drive(seg: Array) -> void:
 		while along >= (pts[segi] as Vector3).distance_to(pts[segi + 1]):
 			along -= (pts[segi] as Vector3).distance_to(pts[segi + 1]); segi = (segi + 1) % (pts.size() - 1)
 		var dr := int(R.get_rendering_info(R.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)); var tr := int(R.get_rendering_info(R.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME))
+		gpu.append(R.viewport_get_measured_render_time_gpu(get_viewport().get_viewport_rid()))
 		draws_sum += dr; tris_sum += tr; draws_max = maxi(draws_max, dr); tris_max = maxi(tris_max, tr); max_cells = maxi(max_cells, st.loaded_count())
 		for k: String in st.cells:
 			if st.cells[k].state != st.IN:
@@ -256,7 +272,8 @@ func _drive(seg: Array) -> void:
 	var S1: Dictionary = st.stats; var rs := 0.0; var rw := 0.0
 	for i in range(ready0, st.ready_ms.size()): rs += st.ready_ms[i]; rw = maxf(rw, st.ready_ms[i])
 	_say("drive %s speed=%.0f km/h secs=%.0f frames=%d fps=%.1f | frame_ms med=%.1f p95=%.1f p99=%.1f worst=%.0f | over16.7=%.1f%% over33=%d over50=%d over100=%d" % [name, sp * 3.6, t, n, n / t, sorted[n / 2], sorted[int(n * 0.95)], sorted[int(n * 0.99)], sorted[n - 1], 100.0 * o17 / n, o33, o50, o100])
-	_say("  map %s draws avg=%.0f max=%d | tris avg=%.0fk max=%dk | cells most=%d in=%d out=%d dropped=%d cap_hits=%d" % [name, draws_sum / n, draws_max, tris_sum / n / 1000.0, tris_max / 1000, max_cells, int(S1["in"]) - int(S0["in"]), int(S1.out) - int(S0.out), int(S1.dropped) - int(S0.dropped), int(S1.capped) - int(S0.capped)])
+	gpu.sort()      # the GPU's own time a frame (the phone is held at the 60 fps step by vsync, so the frame time hides small costs)
+	_say("  map %s draws avg=%.0f max=%d | tris avg=%.0fk max=%dk | cells most=%d in=%d out=%d dropped=%d cap_hits=%d | gpu_ms med=%.2f p95=%.2f" % [name, draws_sum / n, draws_max, tris_sum / n / 1000.0, tris_max / 1000, max_cells, int(S1["in"]) - int(S0["in"]), int(S1.out) - int(S0.out), int(S1.dropped) - int(S0.dropped), int(S1.capped) - int(S0.capped), gpu[gpu.size() / 2] if gpu.size() > 0 else -1.0, gpu[int(gpu.size() * 0.95)] if gpu.size() > 0 else -1.0])
 	_say("  stream %s start_ready_ms=%d (worst frame meanwhile %.0f ms) | request_to_in ms mean=%.0f worst=%.0f | late frames: 220m=%d (deepest %.0f m) 60m=%d | main thread worst ms: cell add %.2f, body %.2f (%s), removal step %.2f | bodies late=%d" % [name, prep_ms, prep_worst, rs / maxf(1.0, st.ready_ms.size() - ready0), rw, late220, deepest, late60, float(S1.add_ms_worst), float(S1.body_ms_worst), str(S1.get("body_worst_what", "")), float(S1.remove_ms_worst), int(S1.body_late) - int(S0.body_late)])
 	_say("  slow %s frames over 33 ms by what the streamer was doing: %s | over 45 ms: %s" % [name, str(cause), str(cause45)])
 	pw.sort()
@@ -264,3 +281,81 @@ func _drive(seg: Array) -> void:
 	# for long runs: none of these may grow lap after lap (a leak, or work piling up)
 	_say("  objects %s all=%d nodes=%d orphan_nodes=%d resources=%d | streamer: cells in=%d, bodies waiting=%d, nodes leaving=%d" % [name, int(Performance.get_monitor(Performance.OBJECT_COUNT)), int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT)), int(Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT)), int(Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT)), st.loaded_count(), st._pending.size(), st._leaving.size()])
 	_say("  mem %s static_mb=%.0f video_mb=%.0f tex_mb=%.0f buf_mb=%.0f" % [name, Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_TEXTURE_MEM_USED) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_BUFFER_MEM_USED) / 1048576.0])
+
+## --plan=shots (19 Nov, the tiers): pictures from the phone at set distances, to compare the tier settings. A building
+## on 7th St at distances round the two switches (60 m, 220 m), and the street ahead (the far ground beyond the loaded
+## cells). Each picture waits for the place to be ready and the arrival sweep to end. Saved as user://rig/shots/*.jpg
+## (half the screen's size); phone_rig.sh shots NAME pulls them.
+const SHOT_STREET := [Vector3(-400, 0, -600), Vector3(1, 0, 0)]      # a point on 7th St and its direction
+const SHOT_TARGET := Vector3(60, 0, -625)                             # the building nearest this is the one looked at
+const SHOT_DISTS := [40.0, 56.0, 60.0, 64.0, 80.0, 150.0, 212.0, 218.0, 222.0, 228.0, 260.0]
+## [name, camera x, z, height above ground, look x, z, look height]
+const SHOT_VIEWS := [["street_eye", -950.0, -600.0, 1.6, 600.0, -600.0, 1.0], ["street_high", -950.0, -600.0, 30.0, 0.0, -600.0, 0.0],
+	["junction_north", 0.0, -560.0, 1.6, 0.0, 200.0, 1.0], ["hill_view", -600.0, -1000.0, 12.0, 400.0, -1000.0, 0.0], ["aerial", -950.0, -600.0, 120.0, 200.0, -600.0, 0.0]]
+
+var _shot_last_y := 6.0
+func _shot_ground(p: Vector3) -> float:
+	_g_at = p; _g_hit = false
+	for i in 30:      # the ray is cast in the physics step; the collision there may still be attaching
+		await get_tree().physics_frame
+		if _g_hit and i >= 3: break
+	await get_tree().process_frame
+	if not _g_hit: _say("shot: no ground under (%.0f, %.0f)" % [p.x, p.z])
+	return _g_y if _g_hit else _shot_last_y
+
+func _shot_ready(p: Vector3) -> void:
+	st.prepare(p)
+	var t0 := Time.get_ticks_msec()
+	while (not st.is_ready(p) or st.busy()) and Time.get_ticks_msec() - t0 < 20000:
+		st.update_focus(p, false); await get_tree().process_frame
+	st.release_prepared(); st.update_focus(p, false)
+	var t1 := Time.get_ticks_msec()
+	while Time.get_ticks_msec() - t1 < int((float(opt.arrive) + 0.6) * 1000.0):
+		st.update_focus(p, false); await get_tree().process_frame
+
+func _shot_save(name: String) -> void:
+	hud.visible = false
+	for i in 3: await get_tree().process_frame
+	await RenderingServer.frame_post_draw
+	var img := get_viewport().get_texture().get_image()
+	hud.visible = true
+	DirAccess.make_dir_recursive_absolute("user://rig/shots")
+	img.resize(img.get_width() / 2, img.get_height() / 2, Image.INTERPOLATE_BILINEAR)
+	var err := img.save_jpg("user://rig/shots/%s.jpg" % name, 0.88)
+	var R := RenderingServer
+	_say("shot %s pos=(%.1f, %.1f, %.1f) draws=%d tris=%dk saved=%s" % [name, cam.global_position.x, cam.global_position.y, cam.global_position.z, R.get_rendering_info(R.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME), R.get_rendering_info(R.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME) / 1000, error_string(err)])
+
+func _shots() -> void:
+	var s0: Vector3 = SHOT_STREET[0]; var dir: Vector3 = SHOT_STREET[1]
+	await _shot_ready(SHOT_TARGET)
+	# the building: the one nearest SHOT_TARGET among the loaded cells (its node origin is where its tiers measure from)
+	var best: Node3D = null; var bd := 1.0e9
+	for k: String in st.cells:
+		var cn: Node = st.cells[k].node
+		if cn == null or st.cells[k].state != st.IN: continue
+		var bn := cn.get_node_or_null("Buildings")
+		if bn == null: continue
+		for b: Node in bn.get_children():
+			var d := Vector2((b as Node3D).global_position.x - SHOT_TARGET.x, (b as Node3D).global_position.z - SHOT_TARGET.z).length()
+			if d < bd: bd = d; best = b
+	if best == null: _say("ERROR shots: no building near %s" % str(SHOT_TARGET)); return
+	var bp := best.global_position
+	var lat := absf((bp - s0).dot(Vector3(-dir.z, 0, dir.x)))      # how far the building stands off the street line
+	var along := (bp - s0).dot(dir)
+	_say("shots building %s (%s) at (%.0f, %.0f), %.1f m off the street" % [best.name, str(best.get_meta(&"kit", "")), bp.x, bp.z, lat])
+	for d: float in SHOT_DISTS:
+		var a := sqrt(maxf(d * d - lat * lat, 0.0))      # so the distance to the building's pivot is d
+		var p := s0 + dir * (along - a)
+		await _shot_ready(p)
+		var gy: float = await _shot_ground(p); _shot_last_y = gy
+		cam.global_position = Vector3(p.x, gy + 1.6, p.z); cam.look_at(Vector3(bp.x, gy + 6.0, bp.z))
+		st.update_focus(p, false)
+		await _shot_save("bldg_%03dm" % int(d))
+	for v: Array in SHOT_VIEWS:
+		var p2 := Vector3(float(v[1]), 0, float(v[2]))
+		await _shot_ready(p2)
+		var gy2: float = await _shot_ground(p2)
+		cam.global_position = Vector3(p2.x, gy2 + float(v[3]), p2.z); cam.look_at(Vector3(float(v[4]), gy2 + float(v[6]), float(v[5])))
+		st.update_focus(p2, false)
+		await _shot_save(String(v[0]))
+	_say("plan_done shots")
