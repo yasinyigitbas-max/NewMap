@@ -320,7 +320,8 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	if kind == "car_sales":
 		var mx := (X0 + X1) * 0.5 + (0.6 if dx < (X0 + X1) * 0.5 else -0.6)
 		var zm := zc + cd * 0.5 + 1.6
-		_group([["office_desk", mx, zm, 180.0], ["office_chair", mx, zm - 0.75, 180.0], ["side_chair", mx - 0.4, zm + 0.8, 180.0], ["side_chair", mx + 0.4, zm + 0.8, 180.0]])
+		# chair yaw 0: the salesman faces the desk and the door (desk yaw 180 = knee-hole on -Z, the skill's rule desk = chair + 180)
+		_group([["office_desk", mx, zm, 180.0], ["office_chair", mx, zm - 0.75, 0.0], ["side_chair", mx - 0.4, zm + 0.8, 180.0], ["side_chair", mx + 0.4, zm + 0.8, 180.0]])
 	if kind == "recycling":     # the attendant sits behind the scale counter, facing the window where people bring their bags
 		_put("office_chair", cx, zc - cd * 0.5 - 0.35, 0.0, false)
 	# ---- the side walls: the shop's goods / seats along them (low things only under the side windows)
@@ -449,7 +450,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 				for xx: float in _steps(IX0 + 0.74, IX1 - 0.74, 2.6): _put("waiting_bench", xx, zz, 0.0)
 	# ---- dressing: plants in the front corners, a bin by the counter end, prints on the bare walls
 	_put("potted_plant", X0 + 0.3, ZF - 0.3); _put("potted_plant", X1 - 0.3, ZF - 0.3)
-	_put("indoor_bin", cx + cw * 0.5 + 0.3, zc + cd * 0.5 + 0.25)
+	if cw > 0.1: _put("indoor_bin", cx + cw * 0.5 + 0.3, zc + cd * 0.5 + 0.25)     # by the counter end (a room without a counter has its bins by the walls)
 	if kind in ["office", "pharmacy", "souvenir", "venue", "gallery"]: _put("brochure_rack", dx + (1.3 if dx < (X0 + X1) * 0.5 else -1.3), ZF - 1.9, 180.0)
 	# ---- wall decoration (Yasin 18 Nov: "it looks as if you just filled every wall with paintings, its too repetitive"):
 	# only where art belongs (frames: true), at most TWO pieces per wall, never the same piece twice in a row, at a third

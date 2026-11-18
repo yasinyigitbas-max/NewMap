@@ -7,18 +7,8 @@
    "kind": "car_sales",
    "lights": 2,
    "name": "Bridge Motors",
-   "props": 12,
+   "props": 11,
    "w": 5.9
-  },
-  {
-   "d": 5.25,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5nw__recycling_booth__0.scn",
-   "id": "g_strip_m_gr_ad5nw__recycling_booth__0",
-   "kind": "recycling",
-   "lights": 2,
-   "name": "Bottle & Can Recycling",
-   "props": 7,
-   "w": 3.4
   }
  ]
 }
