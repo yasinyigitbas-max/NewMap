@@ -10,7 +10,8 @@ const Lights := preload("res://tools/city/bake/city_lights.gd")
 ##   --only=centre,apartments         built-in views whose name starts with one of these
 ##   --times=day,night                (default both)
 ##   --sets=before,after              which pictures per camera and time. A set is "before" (all three off), "after"
-##                                    (all on) or one change alone: "contact", "windows", "glass"
+##                                    (all on), one change alone ("contact", "windows", "glass"), or all but one
+##                                    ("-glass": everything on except the glass: the "before" of that job)
 ##   --ao    also "ao_off" / "ao_on": the kit's own occlusion (ORM red) switched off in memory, to show how much the
 ##           kit already does (look changes off in both)
 ##   --png   lossless files instead of JPG        --hold=frames before each picture (default 30)
@@ -82,12 +83,14 @@ func _run() -> void:
 			lights.update_lights(c[1], night)
 			for s: String in all_sets:
 				for g: StringName in LOOKS:
-					R.global_shader_parameter_set(g, 1.0 if (s == "after" or s == String(g).trim_prefix("ck_look_")) else 0.0)
+					var nm := String(g).trim_prefix("ck_look_")
+					var on := s == "after" or s == nm or (s.begins_with("-") and s != "-" + nm)
+					R.global_shader_parameter_set(g, 1.0 if on else 0.0)
 				if s == "ao_off": shader.code = code.replace("AO = orm.r;", "AO = 1.0;")
 				for i in hold: await process_frame
 				await R.frame_post_draw
 				var img := root.get_viewport().get_texture().get_image()
-				var path := out.path_join("%s_%s_%s.%s" % [c[0], tm, s, "png" if png else "jpg"])
+				var path := out.path_join("%s_%s_%s.%s" % [c[0], tm, s.replace("-", "no_"), "png" if png else "jpg"])
 				if png: img.save_png(path)
 				else: img.save_jpg(path, 0.92)
 				if s == "ao_off": shader.code = code
