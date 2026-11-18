@@ -36,11 +36,8 @@ func _run() -> void:
 	# ---------------------------------------------------------------- frontage: rail, bollards, landscape, pylon
 	b.island(100.5, 14.6, 145.4, 17.3, 4, PALMS)
 	b.island(142.9, 17.3, 145.5, 78.0, 4, PALMS + ["palm_queen_a"])
-	var z := 18.5
-	while z < 77.0:
-		b.add("fence_vinyl_canal_rail", "clean", 142.6, z + 1.0, 90.0); z += 2.015
-	b.fence("vinyl", 101.0, 17.6, 140.0, 17.6, "clean")
-	for k in 6: b.add("prop_bollard_iron", "worn", 142.2, 22.0 + k * 9.0, 0.0)  # nobody drives a sale car into the planting
+	for k in 28: b.add("prop_bollard_iron", "worn", 142.3, 19.0 + k * 2.1, 0.0)    # a bollard line: no sale car rolls into the planting
+	for k in 19: b.add("prop_bollard_iron", "worn", 102.0 + k * 2.1, 17.8, 0.0)
 	b.add("prop_pylon_sign", "worn", 141.0, 15.9, 180.0)                      # BRIDGE MOTORS, facing 4th St and the bridge traffic
 	b.island(136.6, 45.3, 142.4, 56.7, 1, ["palm_queen_b"])                    # the gap in the front line: a planted island
 	for p: Vector2 in [Vector2(139.5, 49.0), Vector2(104.0, 78.5), Vector2(139.5, 79.0), Vector2(131.0, 46.0)]:
