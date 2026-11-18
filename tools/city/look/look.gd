@@ -58,6 +58,7 @@ func _ready() -> void:
 	sky_mat = ShaderMaterial.new(); sky_mat.shader = load(SKY_SHADER_PATH)
 	sky_mat.set_shader_parameter(&"noise_tex", load(NOISE_PATH))
 	var sky := Sky.new(); sky.sky_material = sky_mat
+	sky.radiance_size = Sky.RADIANCE_SIZE_128      # the reflection map (ambient is a plain colour): small, so a redraw at a time-of-day change is cheap
 	env = Environment.new()
 	env.background_mode = Environment.BG_SKY; env.sky = sky
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR      # (sky ambient would cost a cube map read per pixel)

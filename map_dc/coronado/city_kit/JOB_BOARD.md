@@ -5,6 +5,15 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov (cloud session, branch `claude/look-sky`, NOT merged): LOOK PACK, SKY HALF (Yasin: "a visible jump"; mid-way:
+  "we are going for a gta 4 like look"; "does the bloom cost that much?"). Read `docs/LOOK_SKY.md`. New
+  `tools/city/look/` (sky shader + 256 px noise texture, look.gd: haze = distance fog in the sky's horizon colour,
+  amber sun / grey-blue shade, Filmic + a 16^3 colour table: held-back colours, warm highlights, smoggy blacks; night:
+  brown-orange smog glow, few stars). Rig: `--look=1|0` (default 1), `--bloom=0|1` (default 0: costs pixels, guessed
+  1-2 ms, NOT measured), `--reflect=1|0`, `--shots=FOLDER`. Pictures: `review/look_18nov/sky/` (cloud: no shadows, no
+  sky reflection - the software GPU draws near trees black with either on - and buildings ~40 % too dark).
+  NEXT (PC session): `--plan=zones` with `--look=0`, `--look=1`, `--look=1 --bloom=1` on the Redmi, and the real
+  pictures. Told Yasin the bloom answer: a blur chain + one read a pixel; the 720p runs sit at the 60 fps step.
 - 18 Nov ~18:10 (PC time): SETTING TESTS at 720p done (Yasin: "ok run the tests"; "make the games default resolution
   720p ... just inject it": rig default is now 720 lines, app not rebuilt, runs pass --scale=0.6667). Table in
   RUNTIME_BAKE.md "THE SETTING TESTS AT 720p". --loading=1 and --bodies=1 change nothing measurable (two identical
