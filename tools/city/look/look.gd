@@ -106,6 +106,8 @@ static var PRESETS := {
 @export var glow := true                            ## lamp halos and pools drawn by tools/city/look/glow.gdshader (look job 3); false = the bake's
 @export var blobs := false                          ## soft tree shadows beyond the sun shadow (look job 4). Reads each cell's meshes: off for phone drives
 @export_range(0.0, 1.0) var wet := 0.0             ## look job 5: 0 dry .. 1 after rain (global ck_wet; the ground demo below)
+@export var cars := false                           ## look queue 2 job 6 DEMO: the preview cars parked on the cells' stalls (one draw a car)
+@export var car_env := true                         ## the cars reflect the look's sky (car_env.gdshader); false = as before (nothing)
 @export var air := false                            ## look queue 2 job 5: gulls, a plane, smoke (air.gd, one draw); off until measured
 @export var weather := ""                           ## look queue 2 job 4: mist, hazy, storm, rain (weather.gd) over the time of day
 @export var sea := true                             ## look queue 2 job 3: the sea in the place of the green plane (sea.gd)
@@ -130,6 +132,8 @@ static var _drift_added := false
 static var _map_added := false
 var sky_map: SubViewport        # look job 5: the sky as a 128 x 64 panorama for reflections (global ck_sky_map)
 var _map_mat: ShaderMaterial
+var car_map: SubViewport        # queue 2 job 6: the sky map in the car shader's layout (env_pano)
+static var _refl_added := false
 
 func _ready() -> void:
 	# the clouds' drift is a global shader value: add it before the sky shader is loaded (it will not compile without)
@@ -166,6 +170,13 @@ func _ready() -> void:
 	else: RenderingServer.global_shader_parameter_set(&"ck_sky_map", sky_map.get_texture())
 	if sea: add_child(Sea.build())      # one draw, built once (tens of ms at start)
 	if air: add_child(Air.build())      # one draw, nothing per frame
+	if cars:      # the game's car shader needs its global refl_env (x daylight, y cloud) before it is loaded
+		if not _refl_added:
+			RenderingServer.global_shader_parameter_add(&"refl_env", RenderingServer.GLOBAL_VAR_TYPE_VEC2, Vector2(1.0, 0.0)); _refl_added = true
+		car_map = SubViewport.new(); car_map.size = Vector2i(128, 128); car_map.use_hdr_2d = true; car_map.disable_3d = true
+		car_map.render_target_update_mode = SubViewport.UPDATE_ONCE
+		var cr := ColorRect.new(); cr.size = Vector2(128, 128); var cm := ShaderMaterial.new(); cm.shader = load("res://tools/city/look/car_env.gdshader")
+		cr.material = cm; car_map.add_child(cr); add_child(car_map)
 	sun = DirectionalLight3D.new(); sun.rotation_degrees = sun_angles
 	sun.shadow_enabled = OS.get_environment("NOSHADOW") != "1"; sun.directional_shadow_max_distance = shadow_distance; add_child(sun)
 	if weather == "rain" and wet <= 0.0: wet = 0.65      # rain wets the ground (before the cells come in: attach_stream)
@@ -180,7 +191,7 @@ func _ready() -> void:
 var _glow_mats := {}
 func attach_stream(st: Node) -> void:
 	_stream = st
-	if not glow and not blobs and wet <= 0.0: return
+	if not glow and not blobs and wet <= 0.0 and not cars: return
 	st.cell_in.connect(func(k: String) -> void: _restyle(st.cells[k].node))
 	for k: String in st.cells:
 		if st.cells[k].state == st.IN: _restyle(st.cells[k].node)
@@ -191,6 +202,7 @@ func _restyle(cell: Node) -> void:
 		var b := Blobs.build(cell)
 		if b: cell.add_child(b)
 	if wet > 0.0: _wet_ground(cell)
+	if cars and cell.get_node_or_null("look_cars") == null: _park(cell)
 	if not glow: return
 	for nm: String in ["glow_halo", "glow_pool"]:
 		var g := cell.get_node_or_null(nm) as GeometryInstance3D
@@ -214,6 +226,28 @@ func _wet_ground(cell: Node) -> void:
 			_wet_mat.set_shader_parameter(&"ground_arr", sm.get_shader_parameter(&"ground_arr")); _wet_mat.set_shader_parameter(&"puddle_tex", load(NOISE_PATH))
 			_wet_mat.set_shader_parameter(&"debug", OS.get_environment("LOOK_DEBUG_WET") == "1")
 		gi.material_override = _wet_mat
+
+## DEMO (queue 2 job 6, --cars=1): the preview cars (vehicles/, read-only) on 3 in 4 of a cell's stalls, painted by
+## the game's car shader with the look's sky as its env_pano. One draw a car: for pictures, not for phone drives.
+const CAR_IDS := ["volt_s", "volt_x", "stern_e", "stern_g", "sakura", "sakura_t", "van"]
+const CAR_COLS := [Color(0.92, 0.92, 0.92), Color(0.08, 0.08, 0.09), Color(0.6, 0.62, 0.65), Color(0.32, 0.33, 0.35), Color(0.55, 0.1, 0.1), Color(0.2, 0.28, 0.45), Color(0.43, 0.5, 0.38), Color(0.7, 0.62, 0.48)]
+var _car_mats := {}
+func _park(cell: Node) -> void:
+	var stalls: Array = cell.get_meta(&"stalls", [])
+	if stalls.is_empty(): return
+	var holder := Node3D.new(); holder.name = "look_cars"; holder.top_level = true; cell.add_child(holder)
+	var rr := RandomNumberGenerator.new(); rr.seed = hash(String(cell.name))
+	for s: Array in stalls:
+		if rr.randf() > 0.75: continue
+		var id: String = CAR_IDS[rr.randi() % CAR_IDS.size()]; var ci := rr.randi() % CAR_COLS.size()
+		if not _car_mats.has(ci):
+			var m := ShaderMaterial.new(); m.shader = load("res://vehicles/car_paint.gdshader")
+			m.set_shader_parameter(&"atlas", load("res://vehicles/models/Textures/car_atlas_1024.png")); m.set_shader_parameter(&"paint", CAR_COLS[ci])
+			if car_env and car_map: m.set_shader_parameter(&"env_pano", car_map.get_texture())
+			_car_mats[ci] = m
+		var mi := MeshInstance3D.new(); mi.mesh = load("res://vehicles/models/lod/%s_q.res" % id); mi.material_override = _car_mats[ci]
+		mi.transform = Transform3D(Basis(Vector3.UP, deg_to_rad(float(s[3]) + (180.0 if rr.randf() < 0.2 else 0.0))), Vector3(float(s[0]), float(s[1]) + 0.02, float(s[2])))
+		holder.add_child(mi)
 
 func _process(dt: float) -> void:
 	if cycle > 0.0:      # the running day: the clock moves every frame, the look follows every `cycle_step` seconds
@@ -319,6 +353,9 @@ func _apply(t0: Dictionary) -> void:
 		m.set_shader_parameter(&"sun_glare", 0.35 if celestial else 0.0); m.set_shader_parameter(&"new_stars", celestial)
 		m.set_shader_parameter(&"sun_scatter", sun.light_energy * env.fog_sun_scatter)      # the fog's own sun glow, so sky and fog agree
 	sky_map.render_target_update_mode = SubViewport.UPDATE_ONCE
+	if car_map: car_map.render_target_update_mode = SubViewport.UPDATE_ONCE
+	var gl := Vector3(env.ambient_light_color.r, env.ambient_light_color.g, env.ambient_light_color.b) * env.ambient_light_energy + Vector3(sun.light_color.r, sun.light_color.g, sun.light_color.b) * sun.light_energy * maxf(light_v.y, 0.0) * 0.6
+	_map_mat.set_shader_parameter(&"ground_col", gl * 0.11)      # asphalt-dark street under the horizon of the sky map
 	# the building session's glass (claude/look-buildings, rt_bldg.gdshader) reflects a two-colour sky: keep it this sky
 	if ProjectSettings.has_setting("shader_globals/ck_look_sky_top"):
 		RenderingServer.global_shader_parameter_set(&"ck_look_sky_top", t.zenith.lerp(t.middle, 0.4))
