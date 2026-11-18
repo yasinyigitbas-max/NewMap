@@ -353,7 +353,10 @@ func _process_stream(t0: int) -> void:
 			if i > 0 and (Time.get_ticks_usec() - ta0) > int(col_ms_per_frame * 1000.0): break
 			var bi := 0; var bdist := 1.0e18
 			for j in _pending.size():
+				# nearest to the player OR to a place being prepared (a teleport's destination: until 19 Nov only the
+				# player counted, so a destination's collision came in no useful order and is_ready() waited for it)
 				var dd := (_pending[j][0] as Vector3).distance_squared_to(focus)
+				for q: Vector3 in _prepared: dd = minf(dd, (_pending[j][0] as Vector3).distance_squared_to(q))
 				if dd < bdist: bdist = dd; bi = j
 			var mk := _pending[bi][2] as Node3D
 			var cost := 0      # only shapes not made yet cost: one that a neighbour cell already uses is there
