@@ -1,6 +1,6 @@
 {
  "_doc": "the residential zone's walk-in shops (tools/city/rooms/assign_res.gd from review/grow_res_blocks.json; rooms: interiors/rooms/rooms_res.gd). Same shape as assignment_all.json.",
- "count": 3,
+ "count": 5,
  "rooms": [
   {
    "bay": [
@@ -111,6 +111,85 @@
    "source": "res_grow",
    "style": "cream",
    "why": "a used bookshop on the corner of 10th and E Ave: the walk from the houses up the hill passes it, and it has been there longer than most of the owners",
+   "yaw": -179.999991348578
+  },
+  {
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "built": "g_res_market",
+   "door_along": 3.26,
+   "door_index": 0,
+   "door_w": 1.6,
+   "id": "res_market",
+   "kind": "corner_shop",
+   "label": "r_shop_market",
+   "model": "commercial/com_bakery",
+   "name": "Hilltop Market",
+   "piece": "r_q_m200_m1000_se",
+   "pos": [
+    -184.899993896484,
+    8.14999961853027,
+    -981.299987792969
+   ],
+   "signs": [
+    {
+     "along": 0.0,
+     "facade": "front",
+     "w": 8.18
+    },
+    {
+     "along": 7.55,
+     "facade": "right",
+     "w": 0.8
+    },
+    {
+     "along": 7.55,
+     "facade": "left",
+     "w": 0.8
+    }
+   ],
+   "source": "res_grow",
+   "style": "red",
+   "why": "Crown Hill's corner market at 5th St and C Ave: the villas on the hill are a long walk from the centre, so milk, bread and the paper come from here",
+   "yaw": -179.999991348578
+  },
+  {
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "built": "g_res_wash",
+   "door_along": 1.76,
+   "door_index": 0,
+   "door_w": 1.6,
+   "id": "res_wash",
+   "kind": "cleaners",
+   "label": "r_shop_wash",
+   "model": "commercial/com_realty",
+   "name": "Glorietta Wash & Fold",
+   "piece": "r_q_250_m200_se",
+   "pos": [
+    263.600006103516,
+    12.1499996185303,
+    -181.300003051758
+   ],
+   "signs": [
+    {
+     "along": 0.0,
+     "facade": "front",
+     "w": 5.18
+    },
+    {
+     "along": -3.4,
+     "facade": "left",
+     "w": 2.6
+    }
+   ],
+   "source": "res_grow",
+   "style": "blue",
+   "why": "the laundromat at 9th St and B Ave on Glorietta Heights: the houses here have no room for a dryer in the old bungalows, and the attendant does wash-and-fold for the hotel staff down the hill",
    "yaw": -179.999991348578
   }
  ]

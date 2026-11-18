@@ -257,17 +257,17 @@ func _wash() -> void:
 	var X0 := -2.7; var X1 := 2.7; var ZB := -6.7; var ZF := 6.3; var F := 0.02; var H := 3.6
 	r.flat("floor", X0, ZB, X1, ZF, F); r.flat("ceil", X0, ZB, X1, ZF, H, false)
 	r.walls4(c, X0, X1, ZB, ZF, F, H)
-	for k in 10: r.prop("washer", X0 + 0.37, 4.55 - k * 0.74, 90.0)
+	for k in 10: r.prop("washer", X0 + 0.42, 4.55 - k * 0.74, 90.0)
 	for k in 9: r.prop("dryer", X1 - 0.42, 4.05 - k * 0.74, -90.0)
 	for tz: float in [2.0, -0.6]: r.prop("display_table", 0.0, tz, 90.0)
 	r.prop("waiting_bench", -1.45, 5.85, 180.0); r.prop("side_chair", 0.15, 5.9, 180.0)
-	r.prop("vending_snack", X0 + 0.45, -3.2, 90.0); r.prop("vending_soda", X0 + 0.45, -4.15, 90.0)
+	r.prop("vending_snack", X0 + 0.76, -3.15, 90.0); r.prop("vending_soda", X0 + 0.76, -4.3, 90.0)
 	r.prop("laundry_counter", 0.75, -4.75, 180.0)
 	r.prop("office_chair", 0.75, -5.55, 0.0)
 	r.prop("garment_rail", 1.45, -6.42, 0.0)
-	r.prop("indoor_bin", -0.75, -3.55); r.prop("recycling_receptacle", -0.35, -3.55)
+	r.prop("indoor_bin", X0 + 0.22, -5.25); r.prop("recycling_receptacle", X0 + 0.36, -5.85)
 	r.prop("potted_plant", X1 - 0.3, -2.95)
-	r.prop("poster_case", -2.2, ZB + 0.06, 0.0, 1.0)
+	r.prop("poster_case", X1 - 0.06, -5.3, -90.0, 1.0)
 	for lz: float in [3.6, -0.4]:
 		for lx: float in [-1.0, 1.0]: r.pendant(lx, lz, H, 0.0, Color(0.96, 0.98, 1.0), 1.2, 5.0, true)
 	r.pendant(0.0, -5.2, H, 0.0, Color(0.96, 0.98, 1.0), 1.0, 4.0, true)
@@ -302,7 +302,7 @@ func _market() -> void:
 	r.prop("checkout_counter", 2.9, 2.6, 90.0)
 	r.prop("cigarette_cabinet", X1 - 0.17, 2.6, -90.0)
 	r.prop("bar_stool", 3.6, 1.6, -90.0)
-	r.prop("indoor_bin", 2.0, 4.35)
+	r.prop("indoor_bin", 2.95, 1.4)
 	# aisles and the left wall
 	for ax: float in [-2.3, -0.7, 0.9]:
 		for az: float in [0.8, -0.4, -1.6]: r.prop("gondola_aisle", ax, az, 90.0)
