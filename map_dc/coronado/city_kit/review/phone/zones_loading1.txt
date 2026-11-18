@@ -1,0 +1,10 @@
+# phone rig run 'zones_loading1'  2026-11-18T14:28Z  args: --plan=zones --loading=1
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 299 -> 295 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit d807068 | meminfo at 60 s: 
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.50 plan=zones lead=2.0 maxcells=30 loading=1 bodies=2 lights=20 cells_baked=140
+RIG boot first_area_ms=554 warm_ms=359 cells=10 static_mb=102 video_mb=193
+RIG drive gritty_60kmh speed=60 km/h secs=25 frames=2275 fps=91.0 | frame_ms med=8.9 p95=18.1 p99=18.8 worst=20 | over16.7=18.9% over33=0 over50=0 over100=0
+RIG   map gritty_60kmh draws avg=98 max=129 | tris avg=489k max=721k | cells most=14 in=9 out=5 dropped=0 cap_hits=0
+RIG   stream gritty_60kmh start_ready_ms=1 (worst frame meanwhile 0 ms) | request_to_in ms mean=56 worst=124 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 0.38, body 0.27, removal step 0.34 | bodies late=0
+RIG   mem gritty_60kmh static_mb=105 video_mb=217 tex_mb=92 buf_mb=107
