@@ -101,7 +101,7 @@ def family_rows():
             elif isinstance(o.get("at"), list): c["uv"] = o["at"]
             if "pad" in o: c["y"] = o["pad"]
             if isinstance(o.get("site"), str) or "id" in o: c["sid"] = o.get("id", o.get("site"))
-            if isinstance(o.get("piece"), str) and (o["piece"].startswith(("j_", "s_")) or c.get("grow")):
+            if isinstance(o.get("piece"), str) and (o["piece"].startswith(("j_", "s_")) ):
                 pos = place(o, c)
                 if pos is not None:
                     key = (o["piece"], round(pos[0], 2), round(pos[1], 2), round(pos[2], 2), round(float(o.get("yaw", 0.0)), 1))
@@ -120,9 +120,7 @@ def family_rows():
         if os.path.basename(f) in ("sites.json", "ring_sites.json"):
             continue      # ring_sites.json = the ring core's examples, superseded by ring_nw / ring_se (which list the core pieces they keep)
         fam = os.path.basename(f)[:-len("_sites.json")]
-        tab = json.load(open(f))
-        # (18 Nov, zone growth) a zone's growth table ({"grow": true, "rows": [...]}) places its block pieces too
-        walk(tab, fam, {"grow": True} if isinstance(tab, dict) and tab.get("grow") else {})
+        walk(json.load(open(f)), fam, {})
     return rows
 
 

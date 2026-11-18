@@ -1,7 +1,7 @@
 """Residential growth, pilot area (18 Nov, zone session "grow residential"). Writes, for ONE connected area of the
 residential zone, a quadrant piece script per junction corner (tools/city/pilot/pieces/r_q_*.gd, built by rv_lib.gd with a
-design from rv_designs.gd) and this zone's own placement table map_dc/coronado/city_kit/review/res_grow_sites.json
-(read by integrate.py like the road kit's *_sites.json tables).
+design from rv_designs.gd) and this zone's own placement table map_dc/coronado/city_kit/review/grow_res_blocks.json
+(read by integrate.py grow_rows(), the zone sessions' review/grow_*_blocks.json convention).
 
 THE AREA: the six blocks between J, G, E and C Ave (u -800 .. -200) and 9th, 10th and 11th St (v -200 .. 200), on
 Country Club Ridge (junction pads 2 - 12 m). Why there: it is the largest stretch of the residential zone on the zoning
@@ -138,7 +138,7 @@ def main():
     tab = {"note": "Residential growth, pilot area (res_grow.py): one quadrant piece per junction corner, pos = the "
                    "junction centre at its pad, yaw 0 (each piece is built for its own corner).",
            "area": {"u": [-800, -200], "v": [-200, 200], "blocks": 6, "quadrants": len(rows)}, "grow": True, "rows": rows}
-    json.dump(tab, open(os.path.join(KIT, "review/res_grow_sites.json"), "w"), indent=1)
+    json.dump(tab, open(os.path.join(KIT, "review/grow_res_blocks.json"), "w"), indent=1)
     for r in rows[:-1]:
         print(r["piece"], r["design"], "rise u %+.0f v %+.0f twist %+.0f" % (r["rise_u"], r["rise_v"], r["twist"]), r["shop"])
 

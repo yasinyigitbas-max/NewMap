@@ -1,10 +1,10 @@
 extends SceneTree
 ## The residential zone's shop table (18 Nov, zone growth): every corner shop of the pilot area's quadrant pieces
-## (review/res_grow_sites.json rows with a "shop") -> map_dc/coronado/city_kit/interiors/assignment_res.json, in the
+## (review/grow_res_blocks.json rows with a "shop") -> map_dc/coronado/city_kit/interiors/assignment_res.json, in the
 ## same shape as assignment_all.json (id, piece, label, model, grid-frame pos / yaw of the building, door, bay, kind,
 ## name, sign style, built room). The rooms themselves: interiors/rooms/rooms_res.gd. Read-only on the pieces.
 ##   godot --headless --path . -s res://tools/city/rooms/assign_res.gd
-const TAB := "res://map_dc/coronado/city_kit/review/res_grow_sites.json"
+const TAB := "res://map_dc/coronado/city_kit/review/grow_res_blocks.json"
 const RC := "res://map_dc/coronado/city_kit/interiors/room_contracts.json"
 ## per shop label: room, name, sign style, why this shop here
 const SHOPS := {
@@ -43,7 +43,7 @@ func _init() -> void:
 	var kinds := {"r_shop_books": "books", "r_shop_cafe": "cafe", "r_shop_surf": "sport"}
 	for e: Dictionary in rooms: e.kind = kinds[e.label]
 	var fo := FileAccess.open("res://map_dc/coronado/city_kit/interiors/assignment_res.json", FileAccess.WRITE)
-	fo.store_string(JSON.stringify({"_doc": "the residential zone's walk-in shops (tools/city/rooms/assign_res.gd from review/res_grow_sites.json; rooms: interiors/rooms/rooms_res.gd). Same shape as assignment_all.json.", "count": rooms.size(), "rooms": rooms}, " "))
+	fo.store_string(JSON.stringify({"_doc": "the residential zone's walk-in shops (tools/city/rooms/assign_res.gd from review/grow_res_blocks.json; rooms: interiors/rooms/rooms_res.gd). Same shape as assignment_all.json.", "count": rooms.size(), "rooms": rooms}, " "))
 	fo.close()
 	print("ASSIGN_RES rooms=%d" % rooms.size())
 	quit()
