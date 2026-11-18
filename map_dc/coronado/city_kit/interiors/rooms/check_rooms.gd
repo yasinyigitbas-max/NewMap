@@ -16,6 +16,9 @@ extends SceneTree
 ##   window    it hangs over a window or a door of its wall (glass panes and door leaves within 0.6 m of its wall
 ##             plane, and the entrances the room records)
 ##   wallover  it overlaps another wall item on the same wall
+##   behind    (19 Nov, Yasin: "there is a painting behind the mirror") it hangs behind a piece of furniture standing
+##             within 0.8 m of its wall (a mirror station, a shelf, a fridge) that covers part of it along the wall and
+##             is taller than its lower edge. "hidden" (0.45 m) stays as it was; "behind" reports what it misses.
 ## 18 Nov, from the industrial zone session:
 ##   doorway   (Yasin: "something blocking the door", "a thick seam like object") any part of the room's own build -
 ##             a storefront bulkhead, a plinth, a wall, a frame, a fixed pane - inside a door's passage: the door's
@@ -31,6 +34,25 @@ extends SceneTree
 ##             top of the passage is touched: a lintel or transom under 2 m), so the two are not mixed up; it reads
 ##             every mesh of the room's build, not only the top-level shell
 ##   One pass reads the room's meshes for all of these.
+##   window    ONE rule from the three the zone sessions wrote (gritty "window", residential "cover", strip "WIN"):
+##             a wall item over a door or window of its wall, from every source there is: the openings the room
+##             records (meta "openings", rooms built since 19 Nov: exact), the room's own glass panes and door
+##             leaves, the entrances, and the building's contract openings at the item's hanging height. The message
+##             says which source found it.
+## 19 Nov, from the strip zone session (tools/city/rooms/room_review.gd, Yasin's corrections to the shop rooms), now
+## part of this checker; what a customer sees:
+##   repeat    "shops filled with vending machines": the same appliance or rack too often (vending more than 1,
+##             spinners / brochure racks more than 2, fridges more than 4 outside a food store)
+##   deco      "you just filled every wall with paintings": more than 2 wall decorations on one wall, more than 6 a room
+##   lone      "a filing cabinet in the middle of nowhere", "the bin is in the middle of the room": a piece that belongs
+##             against a wall standing free (not back to back with another), or a bin far from any wall, table or seat
+##   face      "chair is facing the wrong direction": a desk chair with its back to its desk, a seat facing a wall
+##   seat      "no room for benches for people to sit": less than 0.45 m of free floor in front of a seat (the table,
+##             desk or counter it belongs to excepted)
+##   outseat   "bench looking out looks awkward": a waiting bench turned to face a window at arm's length
+##   binshop   "trash store?": bins making up more than a quarter of a room's things
+##   sparse    "bare": fewer than 1.2 things per 10 m2 of floor
+##   (--no-review leaves these eight out.)
 ## A LOCKED room (locked.json "files"): faults of the kinds added after it was locked (NEW_KINDS) are printed as NOTE
 ## and not counted: a locked room changes only with Yasin's word.
 ## Output like the city validator (tools/city/pilot/validate.gd): "CHECK <kind> room: ..." per problem, a table of
@@ -40,6 +62,7 @@ extends SceneTree
 ##                      --kinds=doorway,bare    only these kinds are reported and counted
 ##                      --json=OUT/rooms.json   every finding as a list, to compare two runs
 ##                      --quiet                 no "ROOM ..." line per room
+##                      --no-review             only the hard faults, not the eight customer's-eye kinds
 ## Needs the real renderer (MultiMesh data).
 const K := preload("res://tools/city/pilot/kit_lib.gd")
 const DIR := "res://map_dc/coronado/city_kit/interiors/rooms/"
@@ -49,7 +72,24 @@ const DECOR := ["prop_potted_plant", "prop_indoor_bin"]
 const WALL_MOUNT := ["prop_gallery_frame", "prop_menu_board", "prop_pegboard_wall"]
 const STORAGE := ["shelf", "gondola", "bookcase", "backbar"]
 ## kinds that did not exist when the hand-made rooms were locked
-const NEW_KINDS := ["ceiling", "window", "wallover", "doorway", "bare", "stack", "offwall"]
+const REVIEW_KINDS := ["repeat", "deco", "lone", "face", "seat", "outseat", "binshop", "sparse"]
+const NEW_KINDS := ["behind", "ceiling", "window", "wallover", "doorway", "bare", "stack", "offwall", "repeat", "deco", "lone", "face", "seat", "outseat", "binshop", "sparse"]
+const INTERIORS := "res://map_dc/coronado/city_kit/interiors/"
+## the review's lists (from room_review.gd)
+const AGAINST_WALL := ["prop_filing_cabinet", "prop_wall_shelf", "prop_pegboard_wall", "prop_drinks_fridge", "prop_vending_soda",
+	"prop_vending_snack", "prop_cigarette_cabinet", "prop_salon_product_shelf", "prop_pharmacy_shelf", "prop_shoe_wall",
+	"prop_wine_backbar", "prop_bakery_shelf", "prop_kitchen_line", "prop_mirror_station", "prop_washer", "prop_dryer"]   # (bookcases and gondolas stand free in rows: not listed)
+const REV_SEATS := ["prop_waiting_bench", "prop_side_chair", "prop_office_chair", "prop_cafe_chair", "prop_booth_bench", "prop_bar_stool",
+	"prop_barber_chair", "prop_park_bench"]
+const SIT_AT := ["prop_cafe_table", "prop_restaurant_table", "prop_office_desk", "prop_nail_table", "prop_bar_counter", "prop_shop_counter",
+	"prop_mirror_station", "prop_wash_basin", "prop_booth_bench", "prop_cash_register", "prop_espresso_machine", "prop_checkout_counter",
+	"prop_laundry_counter", "prop_glass_display_case", "prop_pastry_case", "prop_display_table"]
+const REV_TABLES := ["prop_cafe_table", "prop_restaurant_table", "prop_office_desk", "prop_nail_table", "prop_bar_counter", "prop_shop_counter",
+	"prop_checkout_counter", "prop_laundry_counter", "prop_display_table", "prop_glass_display_case", "prop_pastry_case", "prop_workbench"]
+const DECO_ITEMS := ["prop_gallery_frame", "prop_poster_case", "prop_menu_board"]
+const BINS := ["prop_indoor_bin", "prop_recycling_receptacle", "prop_trash_receptacle", "prop_trash_cart_black", "prop_trash_cart_blue", "prop_trash_cart_green"]
+const FOOD := ["grocery", "corner_shop", "gas", "discount", "drive_thru", "fast_food", "diner", "taqueria", "pizza", "bakery", "cafe", "ice_cream", "bar", "restaurant"]
+const LIMIT := {"prop_vending_soda": 1, "prop_vending_snack": 1, "prop_card_spinner": 2, "prop_brochure_rack": 2}
 var foot := {}
 var tall := {}
 var wallm := {}     # props the kit manifests mount on a wall (poster case, menu board ...)
@@ -65,6 +105,10 @@ var only: PackedStringArray = []
 var kinds_only: PackedStringArray = []
 var json_out := ""
 var quiet := false
+var no_review := false
+var info := {}          # room name -> {model, kind} from every interiors/assignment_*.json
+var contracts := {}     # building model -> its contract (openings ...) from every interiors/room_contracts*.json
+var no_openings := 0    # rooms that do not record their openings (built before 19 Nov)
 
 func _init() -> void: _run.call_deferred()
 
@@ -74,6 +118,7 @@ func _run() -> void:
 		if a.begins_with("--kinds="): kinds_only = a.trim_prefix("--kinds=").split(",", false)
 		if a.begins_with("--json="): json_out = a.trim_prefix("--json=")
 		if a == "--quiet": quiet = true
+		if a == "--no-review": no_review = true
 	for f in DirAccess.get_files_at(MAN):
 		if f.begins_with("manifest_") and f.ends_with(".json"): _man(MAN + f)   # indoor kit + street kit props used indoors (vending, fountain)
 	_man("res://assets/coronado_kit/foliage/manifest_foliage.json")
@@ -81,6 +126,23 @@ func _run() -> void:
 	if lk is Dictionary:
 		var fl: Variant = (lk as Dictionary).get("files", {})
 		for k: Variant in (fl as Dictionary).keys() if fl is Dictionary else (fl as Array): locked[String(k).trim_prefix("res://")] = true
+	# which building model and what kind of shop each room is (for the contract openings and the review)
+	for f in DirAccess.get_files_at(INTERIORS):
+		if f.begins_with("room_contracts") and f.ends_with(".json"):
+			var cv: Variant = JSON.parse_string(FileAccess.get_file_as_string(INTERIORS + f))
+			if cv is Dictionary and (cv as Dictionary).get("models") is Dictionary: contracts.merge((cv as Dictionary).models, true)
+		if f.begins_with("assignment_") and f.ends_with(".json"):
+			var zone := f.trim_prefix("assignment_").trim_suffix(".json")
+			var av: Variant = JSON.parse_string(FileAccess.get_file_as_string(INTERIORS + f))
+			var rows: Variant = (av as Dictionary).get("rooms", []) if av is Dictionary else []
+			if rows is Array:
+				for e: Variant in rows:
+					if not (e is Dictionary) or not (e as Dictionary).has("id"): continue
+					var ed: Dictionary = e
+					var names: Array = ["g_" + String(ed.id), "g_%s_%s" % [zone, String(ed.id)]]
+					if String(ed.get("built", "")) != "": names.append(String(ed.built))
+					for nm: String in names:
+						if not info.has(nm): info[nm] = {"model": String(ed.get("model", "")), "kind": String(ed.get("kind", ""))}
 	var rooms: Array = []
 	for f in DirAccess.get_files_at(DIR):
 		if not f.ends_with(".scn"): continue
@@ -101,6 +163,7 @@ func _run() -> void:
 	var rr: Array = by_room.keys()
 	rr.sort_custom(func(a: String, b: String) -> bool: return int(by_room[a]) > int(by_room[b]))
 	if not rr.is_empty(): print("CHECKS-ROOMS %d of %d rooms have problems; most: %s" % [rr.size(), rooms.size(), ", ".join(rr.slice(0, 8).map(func(r: String) -> String: return "%s (%d)" % [r, int(by_room[r])]))])
+	if no_openings > 0: print("CHECKS-INFO %d rooms do not record their openings (built before 19 Nov): for them 'window' relies on their glass, their entrances and the building's contract; a rebuild makes it exact" % no_openings)
 	if notes > 0: print("CHECKS-NOTE %d faults of the newer kinds in LOCKED rooms (not counted: they change only with Yasin's word)" % notes)
 	if json_out != "":
 		var jf := FileAccess.open(json_out, FileAccess.WRITE)
@@ -124,6 +187,7 @@ func _man(p: String) -> void:
 
 func _report(room: String, kind: String, msg: String) -> void:
 	if not kinds_only.is_empty() and not (kind in kinds_only): return
+	if no_review and kind in REVIEW_KINDS: return
 	if not by_kind.has(kind): by_kind[kind] = [0, 0]
 	if cur_locked and kind in NEW_KINDS:
 		notes += 1; by_kind[kind][1] = int(by_kind[kind][1]) + 1
@@ -227,7 +291,9 @@ func _room(name: String, root: Node3D) -> void:
 			if _hit(zone_c, Vector2(float((m[2] as Vector2).x), 0.45), float(m[3]), g[1], g[2], g[3]):
 				_report(name, "hidden", "%s at %s is covered by %s at %s" % [m[0], _v(m[1]), g[0], _v(g[1])])
 	var shell := _shell(root)
-	_wall_items(name, root, props, miny, shell, floors, solids)
+	var ops := _openings(name, root, miny)
+	_wall_items(name, root, props, miny, shell, floors, solids, ops)
+	_review(name, props, ground, miny, floors, solids, ops)
 	_ceiling_all(name, props, miny, shell)
 	# pot: indoors a plant stands in a pot - a garden plant (no pot in its model) cannot grow out of the floor
 	for g2: Array in ground:
@@ -346,7 +412,7 @@ func _ceiling_all(name: String, props: Array, miny: float, shell: Array) -> void
 			_report(name, "ceiling", "%s at %s reaches %.2f m, the ceiling is at %.2f m" % [bs, _v(p[1]), top - miny, c_y - miny])
 
 ## the wall items' own checks (ceiling / window / wallover / offwall, see the header)
-func _wall_items(name: String, root: Node3D, props: Array, miny: float, shell: Array, floors: Array, solids: Array) -> void:
+func _wall_items(name: String, root: Node3D, props: Array, miny: float, shell: Array, floors: Array, solids: Array, ops: Array) -> void:
 	var open_t: Array = []      # glass panes and door leaves: upright faces
 	for t: Array in shell:
 		if int(t[3]) == 0: continue
@@ -370,7 +436,19 @@ func _wall_items(name: String, root: Node3D, props: Array, miny: float, shell: A
 		if c_y < INF and y1 > c_y - 0.01: _report(name, "ceiling", "%s at %s reaches %.2f m, the ceiling is at %.2f m" % [bs, _v(p[1]), y1 - miny, c_y - miny])
 		# windows and doors in its wall: glass / door-leaf faces within 0.6 m of its plane, overlapping its rectangle
 		var hit_open := false
+		var src := "the room's glass"
+		# 1. the openings on record (the room's own, the entrances, the building's contract), at the item's height
+		var along_x := absf(fwd.y) > absf(fwd.x)      # faces +-z: it hangs on a wall running along x (axis "z")
+		var ia := (p[1] as Vector2).x if along_x else (p[1] as Vector2).y
+		var iw := (p[1] as Vector2).y if along_x else (p[1] as Vector2).x
+		for o: Array in ops:
+			if (String(o[0]) == "z") != along_x: continue
+			if absf(iw - float(o[1])) > float(o[8]): continue
+			if ia - fw * 0.5 < float(o[3]) - 0.03 and ia + fw * 0.5 > float(o[2]) + 0.03 and y0 - miny < float(o[5]) - 0.03 and y1 - miny > float(o[4]) + 0.03:
+				hit_open = true; src = "%s %s, %.2f..%.2f along the wall, %.2f..%.2f m up" % [o[7], o[6], float(o[2]), float(o[3]), float(o[4]), float(o[5])]; break
+		# 2. the room's own glass panes and door leaves
 		for t2: Array in open_t:
+			if hit_open: break
 			var tc: Vector3 = ((t2[0] as Vector3) + (t2[1] as Vector3) + (t2[2] as Vector3)) / 3.0
 			var d2 := Vector2(tc.x, tc.z) - (p[1] as Vector2)
 			if absf(d2.dot(fwd)) > 0.6: continue
@@ -379,31 +457,32 @@ func _wall_items(name: String, root: Node3D, props: Array, miny: float, shell: A
 				var al := (Vector2(v3.x, v3.z) - (p[1] as Vector2)).dot(side)
 				a0 = minf(a0, al); a1 = maxf(a1, al); ty0 = minf(ty0, v3.y); ty1 = maxf(ty1, v3.y)
 			if a1 > -fw * 0.5 + 0.02 and a0 < fw * 0.5 - 0.02 and ty1 > y0 + 0.02 and ty0 < y1 - 0.02: hit_open = true; break
-		if not hit_open:
-			for d: Array in doors:      # [axis, at, s0, s1, ...]: the opening up to 2.3 m
-				var on_wall := (String(d[0]) == "z" and absf((p[1] as Vector2).y - float(d[1])) < 0.6) or (String(d[0]) == "x" and absf((p[1] as Vector2).x - float(d[1])) < 0.6)
-				if not on_wall: continue
-				var al2 := (p[1] as Vector2).x if String(d[0]) == "z" else (p[1] as Vector2).y
-				if al2 + fw * 0.5 > float(d[2]) and al2 - fw * 0.5 < float(d[3]) and y0 - miny < 2.3: hit_open = true; break
-		if hit_open: _report(name, "window", "%s at %s hangs over a window or door of its wall" % [bs, _v(p[1])])
+		if hit_open: _report(name, "window", "%s at %s hangs over a window or door of its wall (%s)" % [bs, _v(p[1]), src])
 		# offwall: a wall item needs a wall behind it: the edge of a floor rectangle that is not shared with another
 		# floor rectangle, or the face of a partition
 		if not floors.is_empty():
-			var near := INF
-			var c: Vector2 = p[1]
-			for r: Array in floors:
-				var x0 := float(r[0]); var z0 := float(r[1]); var x1 := float(r[2]); var z1 := float(r[3])
-				if c.x < x0 - 0.5 or c.x > x1 + 0.5 or c.y < z0 - 0.5 or c.y > z1 + 0.5: continue
-				for e: Array in [[absf(c.x - x0), Vector2(x0 - 0.2, c.y)], [absf(c.x - x1), Vector2(x1 + 0.2, c.y)], [absf(c.y - z0), Vector2(c.x, z0 - 0.2)], [absf(c.y - z1), Vector2(c.x, z1 + 0.2)]]:
-					var beyond: Vector2 = e[1]
-					var open_side := false      # the far side of this edge is another floor rectangle: no wall there
-					for r2: Array in floors:
-						if r2 != r and beyond.x > float(r2[0]) and beyond.x < float(r2[2]) and beyond.y > float(r2[1]) and beyond.y < float(r2[3]): open_side = true; break
-					if not open_side: near = minf(near, float(e[0]))
-			for s: Array in solids:
-				var dx := maxf(maxf(float(s[0]) - c.x, c.x - float(s[2])), 0.0); var dz := maxf(maxf(float(s[1]) - c.y, c.y - float(s[3])), 0.0)
-				near = minf(near, Vector2(dx, dz).length())
-			if near > 0.35 and near < INF: _report(name, "offwall", "%s at %s has no wall behind it (the nearest is %.2f m away)" % [bs, _v(c), near])
+			var near := _wall_dist(p[1], floors, solids)
+			if near > 0.35 and near < INF: _report(name, "offwall", "%s at %s has no wall behind it (the nearest is %.2f m away)" % [bs, _v(p[1]), near])
+	# behind furniture: a floor prop within 0.8 m of the item's wall whose footprint overlaps the item along the wall
+	# and whose top is above the item's lower edge (not reported again where "hidden" already has the pair)
+	for it: Array in items:
+		var fw2 := it[5] as Vector2; var sd2 := Vector2(fw2.y, -fw2.x)
+		for g: Array in props:
+			if base_mounted(String(g[0])) or float(g[4]) - miny > 0.3: continue
+			var gb := String(g[0])
+			if float(tall.get(gb, 1.0)) <= float(it[3]) - miny + 0.02: continue
+			if gb == "prop_workbench" and String(it[0]) == "prop_pegboard_wall": continue
+			var rel := (g[1] as Vector2) - (it[1] as Vector2)
+			var depth := rel.dot(fw2)
+			var ghalf := g[2] as Vector2
+			var ga := float(g[3])
+			var ext_along := absf(ghalf.x * Vector2(cos(ga), -sin(ga)).dot(sd2)) + absf(ghalf.y * Vector2(sin(ga), cos(ga)).dot(sd2))
+			var ext_out := absf(ghalf.x * Vector2(cos(ga), -sin(ga)).dot(fw2)) + absf(ghalf.y * Vector2(sin(ga), cos(ga)).dot(fw2))
+			if depth - ext_out > 0.8 or depth + ext_out < 0.0: continue
+			if absf(rel.dot(sd2)) >= float(it[2]) + ext_along - 0.03: continue
+			var ang_it := atan2(fw2.x, fw2.y)
+			if _hit((it[1] as Vector2) + fw2 * 0.45, Vector2(float(it[2]), 0.45), ang_it, g[1], g[2], g[3]): continue      # "hidden" has it
+			_report(name, "behind", "%s at %s hangs behind %s at %s" % [it[0], _v(it[1]), gb, _v(g[1])])
 	# two wall items on one wall overlapping
 	for i in items.size():
 		for j in range(i + 1, items.size()):
@@ -414,6 +493,138 @@ func _wall_items(name: String, root: Node3D, props: Array, miny: float, shell: A
 			var sd := Vector2((A[5] as Vector2).y, -(A[5] as Vector2).x)
 			if absf(dd.dot(sd)) < float(A[2]) + float(B[2]) - 0.02 and float(A[3]) < float(B[4]) - 0.02 and float(B[3]) < float(A[4]) - 0.02:
 				_report(name, "wallover", "%s at %s overlaps %s at %s on the same wall" % [A[0], _v(A[1]), B[0], _v(B[1])])
+
+## How far a point is from the nearest wall of the room: an edge of a floor rectangle that is not shared with
+## another floor rectangle (so the join of an L-shaped room is no wall), or the face of a partition. INF if the point
+## is on no floor.
+func _wall_dist(c: Vector2, floors: Array, solids: Array) -> float:
+	var near := INF
+	for r: Array in floors:
+		var x0 := float(r[0]); var z0 := float(r[1]); var x1 := float(r[2]); var z1 := float(r[3])
+		if c.x < x0 - 0.5 or c.x > x1 + 0.5 or c.y < z0 - 0.5 or c.y > z1 + 0.5: continue
+		for e: Array in [[absf(c.x - x0), Vector2(x0 - 0.2, c.y)], [absf(c.x - x1), Vector2(x1 + 0.2, c.y)], [absf(c.y - z0), Vector2(c.x, z0 - 0.2)], [absf(c.y - z1), Vector2(c.x, z1 + 0.2)]]:
+			var beyond: Vector2 = e[1]
+			var open_side := false      # the far side of this edge is another floor rectangle: no wall there
+			for r2: Array in floors:
+				if r2 != r and beyond.x > float(r2[0]) and beyond.x < float(r2[2]) and beyond.y > float(r2[1]) and beyond.y < float(r2[3]): open_side = true; break
+			if not open_side: near = minf(near, float(e[0]))
+	for s: Array in solids:
+		var dx := maxf(maxf(float(s[0]) - c.x, c.x - float(s[2])), 0.0); var dz := maxf(maxf(float(s[1]) - c.y, c.y - float(s[3])), 0.0)
+		near = minf(near, Vector2(dx, dz).length())
+	return near
+
+func _on_floor(c: Vector2, floors: Array, solids: Array) -> bool:
+	var inside := false
+	for r: Array in floors:
+		if c.x > float(r[0]) and c.x < float(r[2]) and c.y > float(r[1]) and c.y < float(r[3]): inside = true; break
+	if not inside: return false
+	for s: Array in solids:
+		if c.x > float(s[0]) and c.x < float(s[2]) and c.y > float(s[1]) and c.y < float(s[3]): return false
+	return true
+
+## Every door and window of the room's walls that is on record, heights from the floor:
+## [axis ("z" = a wall running along x), at, s0, s1, y0, y1, "door" | "window", source, how near the wall plane counts].
+## Sources: the room's own record (meta "openings", exact), its entrances (to 2.3 m), and the contract of the building
+## it is in (ground floor; the room is authored in its building model's frame, its wall stands inside the facade).
+func _openings(name: String, root: Node3D, miny: float) -> Array:
+	var out: Array = []
+	if root.has_meta(&"openings"):
+		for o: Array in root.get_meta(&"openings", []):
+			if o.size() >= 7: out.append([String(o[0]), float(o[1]), float(o[2]), float(o[3]), float(o[4]), float(o[5]), String(o[6]), "the room's recorded", 0.35])
+	else: no_openings += 1
+	for d: Array in root.get_meta(&"entrances", []):
+		out.append([String(d[0]), float(d[1]), float(d[2]), float(d[3]), 0.0, 2.3, "door", "the room's entrance", 0.6])
+	var model := String((info.get(name, {}) as Dictionary).get("model", ""))
+	if contracts.has(model):
+		for o2: Variant in (contracts[model] as Dictionary).get("openings", []):
+			if not (o2 is Dictionary) or int((o2 as Dictionary).get("floor", 0)) != 0: continue
+			var od: Dictionary = o2
+			if not (od.has("along") and od.has("w") and od.has("plane") and od.has("y0") and od.has("y1")): continue
+			var fr := String(od.get("facade", "")) in ["front", "back"]
+			var a := float(od.along); var w := float(od.w)
+			out.append(["z" if fr else "x", float(od.plane), a - w * 0.5, a + w * 0.5, float(od.y0) - miny, float(od.y1) - miny, "door" if String(od.get("region", "")).contains("door") else "window", "the building's %s" % String(od.get("facade", "")), 0.8])
+	return out
+
+## The customer's-eye review (the strip session's room_review.gd, Yasin's corrections): see the header.
+func _review(name: String, props: Array, ground: Array, miny: float, floors: Array, solids: Array, ops: Array) -> void:
+	if no_review or props.is_empty(): return
+	var shop := String((info.get(name, {}) as Dictionary).get("kind", ""))
+	# repeat
+	var count := {}
+	for p: Array in props: count[p[0]] = int(count.get(p[0], 0)) + 1
+	for b: String in count:
+		var lim := int(LIMIT.get(b, 99))
+		if b == "prop_drinks_fridge" and not (shop in FOOD): lim = 4
+		if int(count[b]) > lim: _report(name, "repeat", "%d x %s (a customer sees the same thing over and over; at most %d)" % [int(count[b]), b, lim])
+	# deco: wall decorations per wall and per room
+	var per_wall := {}; var n_dec := 0
+	for p: Array in props:
+		if not (String(p[0]) in DECO_ITEMS) or not (base_mounted(String(p[0])) or float(p[4]) - miny > 0.8): continue
+		n_dec += 1
+		var fw := Vector2(sin(float(p[3])), cos(float(p[3])))
+		var key := "%d_%d_%d" % [roundi(fw.x * 2), roundi(fw.y * 2), roundi(((p[1] as Vector2).x if absf(fw.x) > 0.5 else (p[1] as Vector2).y) * 2.0)]
+		per_wall[key] = int(per_wall.get(key, 0)) + 1
+	for k: String in per_wall:
+		if int(per_wall[k]) > 2: _report(name, "deco", "%d wall decorations on one wall (at most 2)" % int(per_wall[k]))
+	if n_dec > 6: _report(name, "deco", "%d wall decorations in the room (at most 6)" % n_dec)
+	if not floors.is_empty():
+		# lone: wall pieces standing free, bins in the open
+		for p: Array in ground:
+			var b2 := String(p[0]); var c: Vector2 = p[1]
+			var fwd := Vector2(sin(float(p[3])), cos(float(p[3])))
+			var depth := float((p[2] as Vector2).y) * 2.0
+			if b2 in AGAINST_WALL:
+				var back := c - fwd * (depth * 0.5 + 0.35)
+				var behind_wall := not _on_floor(back, floors, solids) or _wall_dist(back, floors, solids) <= 0.45
+				if not behind_wall and _wall_dist(c, floors, solids) > depth * 0.5 + 0.5:
+					var paired := false
+					for o: Array in ground:
+						if o != p and String(o[0]) in AGAINST_WALL and (o[1] as Vector2).distance_to(back) < 0.6: paired = true; break
+					if not paired: _report(name, "lone", "%s at %s stands in the open with no wall behind it" % [b2, _v(c)])
+			if b2 == "prop_indoor_bin" and _wall_dist(c, floors, solids) > 1.0:
+				var by := false
+				for o3: Array in ground:
+					if (String(o3[0]) in REV_TABLES or String(o3[0]) in REV_SEATS) and (o3[1] as Vector2).distance_to(c) - maxf(float((o3[2] as Vector2).x), float((o3[2] as Vector2).y)) < 0.9: by = true; break
+				if not by: _report(name, "lone", "bin at %s stands in the middle of the floor" % _v(c))
+		# face, seat, outseat
+		for S: Array in ground:
+			var sb := String(S[0])
+			if not (sb in REV_SEATS): continue
+			var sc: Vector2 = S[1]
+			var sf := Vector2(sin(float(S[3])), cos(float(S[3])))
+			var sdepth := float((S[2] as Vector2).y) * 2.0
+			if sb == "prop_office_chair":
+				var ahead := false; var behind := false
+				for P: Array in ground:
+					if String(P[0]) != "prop_office_desk": continue
+					var dp := (P[1] as Vector2) - sc
+					if dp.length() > 1.3: continue
+					if dp.dot(sf) > 0.2: ahead = true
+					elif dp.dot(sf) < -0.2: behind = true
+				if behind and not ahead: _report(name, "face", "desk chair at %s has its back to its desk" % _v(sc))
+			var front := sc + sf * (sdepth * 0.5 + 0.25)
+			if sb != "prop_booth_bench" and (not _on_floor(front, floors, solids) or _wall_dist(front, floors, solids) < 0.05):
+				_report(name, "face", "%s at %s faces a wall" % [sb, _v(sc)])
+			for P2: Array in ground:
+				if P2 == S or String(P2[0]) in SIT_AT or String(P2[0]) in ["prop_potted_plant", "prop_indoor_bin"]: continue
+				if _hit(front, Vector2(float((S[2] as Vector2).x) * 0.8, 0.225), float(S[3]), P2[1], P2[2], P2[3]):
+					_report(name, "seat", "%s at %s has %s right in front of it: no room to sit" % [sb, _v(sc), P2[0]]); break
+			if sb == "prop_waiting_bench":
+				for o4: Array in ops:
+					if String(o4[6]) != "window" or float(o4[4]) > 1.3: continue      # high windows are not looked out of
+					var along := sc.x if String(o4[0]) == "z" else sc.y
+					var across := sc.y if String(o4[0]) == "z" else sc.x
+					var toward := (sf.y if String(o4[0]) == "z" else sf.x) * signf(float(o4[1]) - across)
+					if along > float(o4[2]) and along < float(o4[3]) and absf(float(o4[1]) - across) < 1.4 + float(o4[8]) and toward > 0.7:
+						_report(name, "outseat", "bench at %s faces the window glass at arm's length" % _v(sc)); break
+	# binshop and sparse
+	var n_bins := 0
+	for p: Array in props:
+		if String(p[0]) in BINS: n_bins += 1
+	if n_bins >= 2 and float(n_bins) / props.size() > 0.25: _report(name, "binshop", "%d of its %d things are bins: it reads as a trash shop" % [n_bins, props.size()])
+	var area := 0.0
+	for r: Array in floors: area += absf((float(r[2]) - float(r[0])) * (float(r[3]) - float(r[1])))
+	if area > 12.0 and props.size() / area * 10.0 < 1.2: _report(name, "sparse", "%d things on %.0f m2: it looks bare" % [props.size(), area])
 
 ## doorway: the room's own build (solid faces and fixed panes, not the door leaves) inside a door's passage
 func _doorways(name: String, doors: Array, miny: float, shell: Array) -> void:
