@@ -1,14 +1,14 @@
 {
  "rooms": [
   {
-   "d": 5.25,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_e4s__bridge_motors_office__0.scn",
-   "id": "g_strip_m_gr_e4s__bridge_motors_office__0",
-   "kind": "car_sales",
-   "lights": 2,
-   "name": "Bridge Motors",
-   "props": 10,
-   "w": 5.9
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_strip_m_gr_ad5nw__adela_plaza_row__1.scn",
+   "id": "g_strip_m_gr_ad5nw__adela_plaza_row__1",
+   "kind": "nails",
+   "lights": 3,
+   "name": "Lucky Nails",
+   "props": 14,
+   "w": 6.0
   }
  ]
 }

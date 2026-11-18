@@ -100,7 +100,11 @@ func bld(folder: String, x: float, z: float, yaw: float, label: String, wear := 
 	var h := pad(x - hx - 1.2, z - hz - 1.2, x + hx + 1.2, z + hz + 1.2)
 	var n := K.building(bl, folder, Vector3(x, h, z), yaw, label, wear)
 	n.set_meta(&"label", label)
-	if services: back_of_house(n, folder, w, d)
+	if services:
+		# a back wall within 2 m of the block edge (a lot fence behind it) gets the compact AC units, tight to the wall
+		var back_c: Vector3 = n.transform * Vector3(0, 0, -d * 0.5)
+		var tight := minf(minf(back_c.x - x0, x1 - back_c.x), minf(back_c.z - z0, z1 - back_c.z)) < 2.0
+		back_of_house(n, folder, w, d, tight)
 	B.append([n, w, d, folder])
 	if shop and not (st.get("doors_front", []) as Array).is_empty(): shops.append([label, folder])
 	return [n, w, d]
@@ -116,7 +120,7 @@ func back_of_house(node: Node3D, folder: String, w: float, d: float, compact := 
 	props.add("prop_meter_gas", "rusty", at.call(xa + 1.7, 0.2, -d * 0.5 - 0.02), yaw)
 	var n_ac := 1 if w < 14.0 else 2
 	for k in n_ac:
-		props.add("prop_ac_condenser_compact" if compact else "prop_ac_condenser", "worn", at.call(xa + 3.4 + k * 1.3, 0.0, -d * 0.5 - 0.75), yaw)
+		props.add("prop_ac_condenser_compact" if compact else "prop_ac_condenser", "worn", at.call(xa + 3.4 + k * 1.3, 0.0, -d * 0.5 - (0.47 if compact else 0.75)), yaw)
 
 ## a world point on a building: local (lx, lz) of its footprint, at its pad height (+ly)
 func on_bld(b: Array, lx: float, lz: float, ly := 0.0) -> Vector3:

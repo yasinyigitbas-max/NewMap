@@ -23,13 +23,13 @@ func _run() -> void:
 	b.paints.append(b.rect(-74.0, -99.0, -72.0, -69.0, "concrete"))          # the grocer's walk
 	b.add("prop_cart_corral", "worn", -73.0, -72.5, 90.0)
 	for k in 3: b.add("prop_shopping_cart", "worn", -72.6, -90.0 + k * 0.9, 90.0)
-	b.add("prop_ice_chest", "worn", -73.2, -95.5, 90.0); b.add("prop_propane_cylinder_100lb", "rusty", -73.0, -97.6, 0.0)
+	b.add("prop_ice_chest", "worn", -73.2, -76.6, 90.0); b.add("prop_propane_cylinder_100lb", "rusty", -73.0, -78.6, 0.0)
 	var row := b.bld("commercial/com_boutique_row", -63.0, -92.0, 0.0, "adela_plaza_row", 0.8)
 	var cor := b.bld("commercial/com_orange_corner", -46.0, -92.0, 0.0, "adela_plaza_corner", 0.8)
 	b.paints.append(b.rect(-72.0, -85.0, -40.0, -83.0, "concrete"))          # covered walk along the row
-	for e: Array in [[-70.6, "prop_park_bench"], [-64.8, "prop_trash_receptacle"], [-56.8, "prop_bike_rack"], [-49.6, "prop_newspaper_box_blue"], [-41.4, "prop_trash_receptacle"]]:
+	for e: Array in [[-70.6, "prop_park_bench"], [-62.6, "prop_trash_receptacle"], [-59.5, "prop_bike_rack"], [-50.0, "prop_newspaper_box_blue"], [-41.4, "prop_trash_receptacle"]]:
 		b.add(String(e[1]), "worn", float(e[0]), -83.6, 0.0)
-	b.add("plant_potted_leafy", "normal", -60.6, -84.3); b.add("plant_potted_succulent", "normal", -52.4, -84.4)
+	b.add("plant_potted_leafy", "normal", -57.2, -84.3); b.add("plant_potted_succulent", "normal", -52.2, -84.4)
 	b.add("prop_usps_collection_box", "worn", -39.0, -83.4, 0.0)
 	b.roof(gro, ["prop_ac_condenser", "prop_ac_condenser", "prop_vent_box", "prop_solar_panel_x3", "prop_solar_panel_x3"])
 	b.roof(row, ["prop_ac_condenser_compact", "prop_vent_plumbing", "prop_satellite_dish_round"])
@@ -40,7 +40,7 @@ func _run() -> void:
 	b.island(-24.8, -69.4, -22.0, -58.6, 1, ["tree_magnolia_a"])
 	b.stalls_x(-68.0, 11, -51.5, 1.0)
 	b.island(-38.3, -51.4, -35.5, -46.1, 1, ["tree_magnolia_b"])
-	for p: Vector2 in [Vector2(-23.4, -64.0), Vector2(-46.0, -64.0), Vector2(-70.0, -55.0), Vector2(-25.0, -81.0)]:
+	for p: Vector2 in [Vector2(-23.4, -61.0), Vector2(-46.0, -64.0), Vector2(-70.0, -55.0), Vector2(-25.0, -81.0)]:
 		b.add("prop_lot_light_pole", "worn", p.x, p.y, 0.0)
 	# ---------------------------------------------------------------- the credit union on the corner pad at the signal
 	var cu := b.bld("commercial/com_bank", -29.0, -31.0, 0.0, "community_credit_union", 0.7)
@@ -71,11 +71,11 @@ func _run() -> void:
 	for t: Array in [["tree_magnolia_a", -86.0], ["tree_torrey_pine_b", -66.0], ["tree_magnolia_b", -34.0], ["tree_torrey_pine_a", -18.0]]:
 		b.add(String(t[0]), "normal", float(t[1]), -16.5, float(t[1]) * 7.0)
 	b.paints.append(b.rect(-48.0, -20.0, -44.0, -11.6, "concrete"))          # the path from 5th St into the lot
-	b.add("plant_bougainvillea_wall", "normal", -56.0, -11.5, 180.0); b.add("plant_bougainvillea_wall", "normal", -30.0, -11.5, 180.0)
+	b.add("plant_bougainvillea_wall", "normal", -56.0, -10.5, 0.0); b.add("plant_bougainvillea_wall", "normal", -30.0, -10.5, 0.0)   # on the street side of the wall
 	b.island(-12.0, -74.0, -9.0, -52.0, 1, ["palm_queen_a"])               # planting on Adela between the two entrances
 	b.add("prop_pylon_sign", "worn", -10.5, -66.0, 90.0)                     # ADELA PLAZA tenants, facing Adela
 	# ---------------------------------------------------------------- polish, wear
-	for p2: Vector2 in [Vector2(-50.0, -73.0), Vector2(-30.0, -55.0), Vector2(-60.0, -45.0), Vector2(-85.0, -62.0)]:
+	for p2: Vector2 in [Vector2(-50.0, -73.0), Vector2(-30.0, -55.0), Vector2(-60.0, -45.0), Vector2(-80.0, -66.5)]:
 		b.add("prop_storm_drain_grate", "dirty", p2.x, p2.y, 0.0, false, 0.002)
 	b.building_wear()
 	b.stall_wear(0.7)

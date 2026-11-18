@@ -43,7 +43,7 @@ func _run() -> void:
 	for k in 6: b.add("prop_bollard_iron", "worn", 142.2, 22.0 + k * 9.0, 0.0)  # nobody drives a sale car into the planting
 	b.add("prop_pylon_sign", "worn", 141.0, 15.9, 180.0)                      # BRIDGE MOTORS, facing 4th St and the bridge traffic
 	b.island(136.6, 45.3, 142.4, 56.7, 1, ["palm_queen_b"])                    # the gap in the front line: a planted island
-	for p: Vector2 in [Vector2(109.75, 45.0), Vector2(139.5, 49.0), Vector2(104.0, 78.5), Vector2(139.5, 79.0), Vector2(131.0, 46.0)]:
+	for p: Vector2 in [Vector2(139.5, 49.0), Vector2(104.0, 78.5), Vector2(139.5, 79.0), Vector2(131.0, 46.0)]:
 		b.add("prop_lot_light_pole", "worn", p.x, p.y, 0.0)
 	# ---------------------------------------------------------------- the service / detail garage at the back
 	var gar := b.bld("industrial/ind_repair", 112.0, 89.0, 180.0, "bridge_motors_service", 0.85, true, false)   # bays face the lot (north)

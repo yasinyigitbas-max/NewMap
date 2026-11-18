@@ -54,7 +54,7 @@ const KINDS := {
 	# the attendant's counter and the soap machine
 	"laundromat": {"floor": "Tiles143", "light": "panel", "counter": ["laundry_counter"], "till": false, "behind": ["vending_snack", "wall_shelf"], "board": false, "walls": ["washer", "washer", "dryer", "dryer"], "centre": "fold", "window": "waiting", "back": "none", "frames": false, "posters": true, "cap": {"washer": 8, "dryer": 8}, "tint": Color(0.84, 0.94, 0.98)},
 	# nail salon: nail tables along both walls with a chair each side, the polish shelf, pedicure basins at the back
-	"nails": {"floor": "Tiles012", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["salon_product_shelf", "wash_basin"], "board": false, "walls": ["nail"], "centre": "none", "window": "waiting", "back": "none", "frames": true, "tint": Color(1.0, 0.88, 0.92)},
+	"nails": {"floor": "Tiles012", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["salon_product_shelf", "wash_basin"], "board": false, "walls": ["nail", "salon_product_shelf", "nail", "waiting_bench", "nail", "salon_product_shelf"], "centre": "none", "window": "waiting", "cap": {"salon_product_shelf": 3, "waiting_bench": 2}, "back": "none", "frames": true, "tint": Color(1.0, 0.88, 0.92)},
 	# dentist: reception counter, waiting chairs in the window, the treatment room behind the partition
 	"dentist": {"max_d": 12.0, "floor": "Tiles012", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet"], "board": false, "walls": ["waiting_bench", "brochure_rack"], "centre": "none", "window": "waiting", "back": "office", "frames": true, "tint": Color(0.9, 0.97, 0.96)},
 	# slice pizza: order counter with the pizza case, ovens behind, two-tops and a booth
@@ -85,6 +85,7 @@ var keep: Array = [] # [x0, z0, x1, z1] floor that stays free
 var X0 := 0.0; var X1 := 0.0; var ZF := 0.0; var ZB := 0.0; var ZBp := 0.0; var F := 0.0
 var rr: R
 var report: Array = []
+var wall_marks: Array = []   # [wall x, z] of every wall poster / frame already hung: the next keeps 1.6 m clear (Yasin 18 Nov: wall props overlapping)
 
 func _init() -> void: _run.call_deferred()
 
@@ -189,7 +190,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	var ZP := ZB
 	if depth >= 9.0 and back != "none": ZP = ZB + (2.9 if back == "kitchen" else 2.3)
 	ZBp = ZP
-	occ = []; keep = []
+	occ = []; keep = []; wall_marks = []
 	rr = R.new(id, F)
 	rr.world_xf = Transform3D(Basis(Vector3.UP, deg_to_rad(float(e.yaw))), Vector3(float(e.pos[0]), float(e.pos[1]), float(e.pos[2])))
 	var hh := _h(id)
@@ -212,6 +213,11 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	if ZP > ZB + 0.01: rr.flat("kfloor", X0, ZB, X1, ZP, F)
 	rr.flat("ceil", X0, ZB, X1, ZF, H, false)
 	var outer := {"front": true, "back": ZB <= zb_bld + 0.01, "left": X0 <= float(fl.box_min[0]) + 0.01, "right": X1 >= float(fl.box_max[0]) - 0.01}
+	# a wall shared with the neighbouring shop (a row's bay boundary) stands 0.12 m inside THIS shop, so the two rooms
+	# have a real wall between them: in one plane, whatever hangs on one side (frames, posters) showed its back on the
+	# other as dark marks on a bare wall (Yasin 18 Nov, picture of the dry cleaner's wall)
+	if not bool(outer.left): X0 += 0.12
+	if not bool(outer.right): X1 -= 0.12
 	# the walls with every opening of the building inside the room (room_lib.walls4, with a bounds 0.15 m wider at the
 	# building's outer walls: some kit openings run a few cm past the measured box at the corners and were left shut)
 	var bnd := [X0 - (0.15 if bool(outer.left) else 0.0), ZB - (0.15 if bool(outer.back) else 0.0), X1 + (0.15 if bool(outer.right) else 0.0), ZF + 0.4]
@@ -286,7 +292,8 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		if _put("shop_counter", far_x + inn4 * 0.37, zcf, yw4):
 			rr.prop("espresso_machine", far_x + inn4 * 0.4, zcf - 0.45, yw4 + 180.0, 0.964)       # staff side +Z: turned to face the room
 			_put("indoor_bin", far_x + inn4 * 0.25, zcf + 1.25, yw4)
-			rr.prop("poster_case", far_x + inn4 * 0.05, zcf, yw4, 1.55)                          # the promo board over the coffee
+			rr.prop("poster_case", far_x + inn4 * 0.05, zcf, yw4, 1.1)                           # the promo board over the coffee (same line as the posters)
+			wall_marks.append([far_x, zcf])
 		var near_x := X0 if far_x == X1 else X1; var inn5 := -inn4
 		_put("display_table", cx + (1.6 if far_x == X1 else -1.6), zc + cd * 0.5 + 2.2, 0.0)   # this week's oil specials, beside the queue
 		_put("potted_plant", near_x + inn5 * 0.3, ZF - 1.1, -yw4)
@@ -327,6 +334,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 					z -= 2.25; k += 1; run += 1; continue
 				z -= 0.3; continue
 			if it == "nail":       # a nail table out from the wall, the client's chair on the room side, the tech's at the wall
+				if String(side[2]) == "right" and X1 - X0 < 7.5: k += 1; continue     # a narrow salon has its tables along ONE wall: the other wall gets the shelves
 				var nx := wx + inn * 0.9
 				if _group([["nail_table", nx, z - 0.6, yaw], ["side_chair", nx + inn * 0.65, z - 0.6, yaw + 180.0], ["side_chair", nx - inn * 0.6, z - 0.6, yaw]]):
 					z -= 1.5; run += 1; continue
@@ -423,26 +431,42 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	_put("potted_plant", X0 + 0.3, ZF - 0.3); _put("potted_plant", X1 - 0.3, ZF - 0.3)
 	_put("indoor_bin", cx + cw * 0.5 + 0.3, zc + cd * 0.5 + 0.25)
 	if kind in ["office", "pharmacy", "souvenir", "venue", "gallery"]: _put("brochure_rack", dx + (1.3 if dx < (X0 + X1) * 0.5 else -1.3), ZF - 1.9, 180.0)
-	if bool(K.frames) or String(K.walls[0]) in ["frames_only", "poster_wall"]:
-		var mount := "poster_case" if String(K.walls[0]) == "poster_wall" else "gallery_frame"
+	# ---- wall decoration (Yasin 18 Nov: "it looks as if you just filled every wall with paintings, its too repetitive"):
+	# only where art belongs (frames: true), at most TWO pieces per wall, never the same piece twice in a row, at a third
+	# and two thirds of the wall's free run, all on one height line
+	if bool(K.frames):
+		var deco := ["gallery_frame", "poster_case", "gallery_frame", "menu_board"]
+		var di := _h(id + "deco") % deco.size()
 		for side2: Array in [[X0, 90.0, "left"], [X1, -90.0, "right"]]:
 			var wx2 := float(side2[0]); var inn2 := 1.0 if float(side2[1]) > 0.0 else -1.0
-			for zz: float in _steps(ZBp + 1.2, ZF - 1.0, 1.6 if mount == "gallery_frame" else 1.4):
+			var span := ZF - 1.0 - (ZBp + 1.2)
+			var placed2 := 0
+			for t2: float in [0.33, 0.7]:
+				if placed2 >= 2 or span < 1.5: break
+				var zz := ZBp + 1.2 + span * t2
 				if _under_window(sidewin, String(side2[2]), zz - 0.5, zz + 0.5, 1.2): continue
 				var blocked := false
 				for o: Array in occ:
 					if float(o[4]) > 1.25 and zz > float(o[1]) - 0.4 and zz < float(o[3]) + 0.4 and absf((float(o[0]) + float(o[2])) * 0.5 - wx2) < 1.0: blocked = true
-				if not blocked: rr.prop(mount, wx2 + inn2 * 0.04, zz, float(side2[1]), 1.35)
+				for wm2: Array in wall_marks:
+					if absf(float(wm2[0]) - wx2) < 0.5 and absf(float(wm2[1]) - zz) < 1.6: blocked = true
+				if blocked: continue
+				var piece := String(deco[di % deco.size()]); di += 1
+				rr.prop(piece, wx2 + inn2 * 0.04, zz, float(side2[1]), 1.35 if piece == "gallery_frame" else (1.6 if piece == "menu_board" else 1.1))
+				wall_marks.append([wx2, zz]); placed2 += 1
 	# ---- strip chains: promo posters on the bare side walls, extras (refill station, bins) by the queue
 	if bool(K.get("posters", false)):
 		for side3: Array in [[X0, 90.0, "left"], [X1, -90.0, "right"]]:
 			var wx3 := float(side3[0]); var inn3 := 1.0 if float(side3[1]) > 0.0 else -1.0
-			for zz: float in _steps(zc + cd * 0.5 + 1.0, ZF - 1.2, 2.2):
+			for zz: float in [(zc + cd * 0.5 + 1.0 + ZF - 1.2) * 0.5]:     # ONE promo poster per wall, at its middle
 				if _under_window(sidewin, String(side3[2]), zz - 0.5, zz + 0.5, 1.2): continue
 				var blk := false
 				for o: Array in occ:
 					if float(o[4]) > 1.1 and zz > float(o[1]) - 0.5 and zz < float(o[3]) + 0.5 and absf((float(o[0]) + float(o[2])) * 0.5 - wx3) < 1.2: blk = true
-				if not blk: rr.prop("poster_case", wx3 + inn3 * 0.05, zz, float(side3[1]), 1.1)
+				for wm: Array in wall_marks:
+					if absf(float(wm[0]) - wx3) < 0.5 and absf(float(wm[1]) - zz) < 1.6: blk = true
+				if not blk:
+					rr.prop("poster_case", wx3 + inn3 * 0.05, zz, float(side3[1]), 1.1); wall_marks.append([wx3, zz])
 	for ex: String in K.get("extra", []):
 		var exs := _fp(ex, 180.0)
 		for zz2: float in _steps(zc + cd * 0.5 + 1.4, ZF - 2.0, 0.6):

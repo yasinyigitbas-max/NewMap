@@ -36,8 +36,8 @@ func _run() -> void:
 	b.enclosure(42.0, -95.5, 180.0)                                            # the row's bins, on its west end
 	# ---------------------------------------------------------------- Adela walk: taqueria + tax office (shops on the sidewalk)
 	b.bld("commercial/com_shallow_surf", 12.7, -62.0, -90.0, "taqueria_adela", 0.75)
-	b.add("prop_picnic_table", "worn", 18.6, -60.0, 0.0); b.add("prop_beach_umbrella", "worn", 18.6, -60.0, 0.0)  # two tables at the window
-	b.add("prop_picnic_table", "worn", 18.6, -64.6, 0.0); b.add("prop_beach_umbrella_closed", "worn", 18.6, -64.6, 0.0)
+	b.add("prop_picnic_table", "worn", 18.6, -60.0, 0.0)   # two tables at the window (umbrellas dropped: the validator counts one over a table as an overlap)
+	b.add("prop_picnic_table", "worn", 18.6, -64.6, 0.0)
 	b.paints.append(b.rect(16.2, -67.0, 22.0, -57.0, "concrete"))
 	b.add("prop_trash_receptacle", "dirty", 16.8, -56.6, 0.0)
 	b.bld("commercial/com_realty", 16.2, -94.0, -90.0, "tax_office", 0.7)
@@ -53,7 +53,7 @@ func _run() -> void:
 	b.island(41.0, -52.4, 46.4, -47.0, 1, ["tree_jacaranda_a"])
 	b.island(70.4, -52.4, 72.4, -47.0, 0, PALMS); b.island(87.6, -52.4, 89.9, -47.0, 0, PALMS)
 	b.island(106.3, -52.4, 108.0, -47.0, 0, PALMS)
-	for p: Vector2 in [Vector2(67.0, -65.0), Vector2(105.1, -65.0), Vector2(30.0, -72.0), Vector2(60.0, -40.0), Vector2(100.0, -40.0)]:
+	for p: Vector2 in [Vector2(67.0, -62.6), Vector2(105.1, -62.6), Vector2(30.0, -72.0), Vector2(60.0, -40.0), Vector2(100.0, -40.0)]:
 		b.add("prop_lot_light_pole", "worn", p.x, p.y, 0.0)
 	b.stalls_x(46.5, 9, -52.5, 1.0); b.stalls_x(90.0, 6, -52.5, 1.0)                                           # south side of aisle B: diner / chicken customers
 	# ---------------------------------------------------------------- the chicken drive-thru on the corner pad
@@ -86,7 +86,8 @@ func _run() -> void:
 	var wx := 107.0
 	while wx < 129.0:
 		b.add("fence_stucco_wall", "worn", wx + 1.0, -23.3, 0.0); wx += 2.03
-	b.add("plant_bougainvillea_wall", "normal", 113.0, -23.0, 180.0); b.add("plant_bougainvillea_wall", "normal", 122.0, -23.0, 180.0)
+	b.paints.append(b.rect(107.0, -23.0, 129.0, -17.3, "grass"))                # the wall's street side is a planting bed
+	b.add("plant_bougainvillea_wall", "normal", 113.0, -22.6, 0.0); b.add("plant_bougainvillea_wall", "normal", 122.0, -22.6, 0.0)
 	for k in 6: b.add("prop_trash_receptacle", "worn", 108.0 + 3.4 * k + 1.7, -24.2, 0.0)   # one bin per vacuum bay
 	b.add("prop_vending_soda", "worn", 133.6, -37.5, 90.0); b.add("prop_ice_chest", "worn", 133.8, -35.4, 90.0)   # drinks + bagged ice by the office
 	b.add("prop_hose_reel_cart", "worn", 114.8, -42.0, 0.0)                   # the attendant's pre-soak hose
@@ -97,8 +98,8 @@ func _run() -> void:
 	b.stalls_z(-42.0, 5, 72.5, -1.0); b.stalls_z(-42.0, 5, 87.5, 1.0)       # side rows at the diner
 	b.add("prop_newspaper_box_red", "worn", 74.2, -27.6, 0.0); b.add("prop_newspaper_box_blue", "worn", 75.0, -27.6, 0.0)
 	b.add("prop_park_bench", "worn", 82.0, -27.5, 0.0)                          # people wait for a table, facing the street
-	b.add("plant_potted_leafy", "normal", 86.0, -27.5, 0.0)
-	b.enclosure(80.0, -45.5, 180.0)
+	b.add("plant_potted_leafy", "normal", 87.6, -27.5, 0.0)
+	b.enclosure(80.0, -47.6, 180.0)
 	# ---------------------------------------------------------------- landscape strip on 5th St and the ring, pylons, billboard
 	b.island(10.0, -17.3, 106.0, -14.6, 9, PALMS + ["tree_torrey_pine_b"])
 	var vx := 40.0
@@ -106,7 +107,7 @@ func _run() -> void:
 		b.add("fence_vinyl_canal_rail", "clean", vx + 1.0, -17.6, 0.0); vx += 2.015
 	b.island(142.9, -98.0, 145.5, -78.0, 2, PALMS); b.island(142.9, -34.0, 145.5, -14.6, 2, PALMS)
 	b.add("prop_pylon_sign", "worn", 44.0, -15.95, 0.0)                     # CAR CARE CENTER tenants, facing 5th St
-	b.add("prop_pylon_sign", "worn", 144.2, -26.0, 90.0)                     # the wash, facing the ring
+	b.add("prop_pylon_sign", "worn", 144.2, -30.3, 90.0)                     # the wash, facing the ring
 	b.add("prop_billboard", "worn", 92.0, -97.5, 180.0)                       # over the lube's yard, facing 5th St traffic
 	# ---------------------------------------------------------------- polish: drains, roof plant, back of house, bins
 	for p2: Vector2 in [Vector2(80.0, -74.0), Vector2(55.0, -56.0), Vector2(90.0, -49.0), Vector2(30.0, -46.0), Vector2(125.0, -27.0)]:
@@ -133,7 +134,7 @@ func _run() -> void:
 	b.fence("chain", 121.0, -98.5, 121.0, -84.0)
 	b.add("fence_gate_rolling_chainlink", "worn", 130.0, -83.6, 0.0)          # open, slid back along the fence
 	for k in 4:
-		b.add(["prop_container_20ft_white", "prop_container_20ft_blue", "prop_container_20ft_green", "prop_container_20ft_red"][k], "dirty" if k % 2 == 0 else "worn", 124.5 + k * 2.6, -92.0, 90.0)
+		b.add(["prop_container_20ft_white", "prop_container_20ft_blue", "prop_container_20ft_green", "prop_container_20ft_red"][k], "dirty" if k % 2 == 0 else "worn", 124.5 + k * 2.6, -92.0, 0.0)
 	b.add("prop_dumpster_rolloff_20yd", "rusty", 137.0, -91.0, 0.0)          # scrap tyres to the recycler
 	b.add("prop_water_barrier_orange", "dirty", 138.5, -86.0, 30.0)
 	b.island(142.9, -78.0, 145.5, -66.0, 1, ["tree_torrey_pine_b"])
@@ -143,11 +144,10 @@ func _run() -> void:
 	# the west part of the lot (taqueria / tax office customers) and the frontage rows facing 5th St
 	b.stalls_x(27.5, 6, -70.5, 1.0); b.stalls_x(27.5, 6, -59.5, -1.0)
 	b.island(24.7, -70.4, 27.5, -59.6, 1, ["palm_mexican_fan_b"])
-	b.stalls_x(46.5, 8, -36.0, -1.0); b.island(68.2, -41.4, 70.2, -36.1, 0, PALMS)
+	b.stalls_x(46.5, 7, -36.0, -1.0)
 	b.stalls_x(46.5, 8, -24.0, 1.0); b.stalls_x(90.5, 6, -24.0, 1.0)
 	b.island(43.6, -24.0, 46.4, -18.6, 1, ["tree_coral_a"]); b.island(87.6, -24.0, 90.4, -18.6, 0, PALMS)
 	# more shade and light in the lot
-	b.island(98.5, -52.4, 100.5, -47.0, 1, ["tree_coral_b"])
 	for p3: Vector2 in [Vector2(118.0, -80.5), Vector2(96.0, -80.5), Vector2(36.0, -60.0)]:
 		b.add("prop_lot_light_pole", "worn", p3.x, p3.y, 0.0)
 	# ---------------------------------------------------------------- wear
