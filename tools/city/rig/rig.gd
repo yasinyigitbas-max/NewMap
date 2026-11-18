@@ -14,6 +14,7 @@ extends Node3D
 ##   --lead=2  --maxcells=30  --loading=2  --bodies=6  --coltris=1200     streamer settings to compare
 ##   --lights=20   real lamp lights at night (the engine's light grid; 8 on a stock engine)
 ##   --nowarm      skip the warm-up (to see what it saves)
+##   --loader=0|1|2   0 the streamer's own loader threads (default); 1 / 2 the engine's pool without / with sub-threads
 ##   --probe       time the physics and render servers' digestion each frame (shown in the slow lines)
 ##   --nocol       never attach the cells' collision; --hide  add the cells hidden: the two switches that tell what a
 ##                 slow frame is made of (attaching collision, or the first drawing of a new cell)
@@ -55,7 +56,7 @@ var cam: Camera3D
 var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
-var opt := {"plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false}
+var opt := {"plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "loader": 0, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -77,7 +78,7 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris"]:
+		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
 				opt[k] = v if k == "plan" else (float(v) if k in ["scale", "lead"] else int(v))
@@ -96,7 +97,7 @@ func _ready() -> void:
 	sun.shadow_enabled = true; sun.directional_shadow_max_distance = 50.0; add_child(sun)      # the game's sun shadow distance
 	var gp := MeshInstance3D.new(); var pm := PlaneMesh.new(); pm.size = Vector2(6000, 6000); gp.mesh = pm
 	var gm := StandardMaterial3D.new(); gm.albedo_color = Color(0.36, 0.42, 0.3); gm.roughness = 1.0; gp.material_override = gm; gp.position.y = -0.05; add_child(gp)
-	st = Stream.new(); st.name = "City"; st.lead_seconds = float(opt.lead); st.max_cells = int(opt.maxcells); st.max_loading = int(opt.loading); st.bodies_per_frame = int(opt.bodies); st.body_tris_per_frame = int(opt.coltris); st.attach_bodies = not opt.nocol; st.show_cells = not opt.hide; st.probe = opt.probe; add_child(st)
+	st = Stream.new(); st.name = "City"; st.lead_seconds = float(opt.lead); st.max_cells = int(opt.maxcells); st.max_loading = int(opt.loading); st.bodies_per_frame = int(opt.bodies); st.body_tris_per_frame = int(opt.coltris); st.loader_mode = int(opt.loader); st.attach_bodies = not opt.nocol; st.show_cells = not opt.hide; st.probe = opt.probe; add_child(st)
 	RenderingServer.viewport_set_measure_render_time(get_viewport().get_viewport_rid(), true)
 	lights = Lights.new(); lights.budget = int(opt.lights); lights.stream = st; add_child(lights)
 	cam = Camera3D.new(); cam.fov = 74.0; cam.near = 0.08; cam.far = 900.0; add_child(cam); cam.current = true      # the game's driving camera
@@ -134,7 +135,7 @@ func _night(v: float) -> void:
 
 func _run() -> void:
 	var R := RenderingServer
-	_say("start engine=%s device=%s gpu=%s screen=%s scale=%.2f plan=%s lead=%.1f maxcells=%d loading=%d bodies=%d lights=%d cells_baked=%d" % [Engine.get_version_info().string, OS.get_model_name(), R.get_video_adapter_name(), str(DisplayServer.window_get_size()), float(opt.scale), opt.plan, float(opt.lead), int(opt.maxcells), int(opt.loading), int(opt.bodies), int(opt.lights), st.cells.size()])
+	_say("start engine=%s device=%s gpu=%s screen=%s scale=%.2f plan=%s lead=%.1f maxcells=%d loading=%d bodies=%d lights=%d loader=%d coltris=%d cells_baked=%d" % [Engine.get_version_info().string, OS.get_model_name(), R.get_video_adapter_name(), str(DisplayServer.window_get_size()), float(opt.scale), opt.plan, float(opt.lead), int(opt.maxcells), int(opt.loading), int(opt.bodies), int(opt.lights), int(opt.loader), int(opt.coltris), st.cells.size()])
 	if st.cells.is_empty():
 		_say("ERROR no baked city found (map_dc/coronado/city_kit/runtime). Run the bake before the export."); hud.text = "no baked city in this build"
 		if opt.quit: await get_tree().create_timer(3.0).timeout; get_tree().quit()

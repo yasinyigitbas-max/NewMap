@@ -7,8 +7,9 @@ extends Node3D
 ##
 ## What makes it hold up at speed (each point was measured, see docs/RUNTIME_BAKE.md):
 ##  - FORWARD LEAD: the loading range is swept ahead of a moving player by `lead_seconds` of travel (at most `max_lead`).
-##  - A QUEUE: wanted cells are loaded nearest-first, at most `max_loading` at a time, on loader threads; a cell built
-##    (instantiated) on a worker thread; a request the player has left behind is dropped when it arrives.
+##  - A QUEUE: wanted cells are loaded nearest-first, at most `max_loading` at a time, on the streamer's OWN loader
+##    threads (low priority), which also build (instantiate) the cell; a request the player has left behind is taken
+##    off the list, or dropped when it arrives. Not the engine's thread pool: physics and drawing run their jobs there.
 ##  - NO HOLE: the far world shows the far version of everything in a cell until that cell is really in the scene
 ##    (global shader texture ck_cells_loaded, read by rt_far), so a late cell looks like low detail, never like nothing.
 ##  - SHARED THINGS STAY: every material of the bake (manifest "keep") is loaded at start and held. Measured: letting the
@@ -39,6 +40,7 @@ signal cell_out(key: String)
 @export var body_tris_per_frame := 1200   ## and at most this much NEW collision a frame, in triangles (a convex point counts as one; the first body always goes). The phone builds roughly 5 microseconds a triangle on its physics thread.
 @export var attach_bodies := true    ## test switch: false = a cell's collision is never attached (to see what attaching costs)
 @export var show_cells := true       ## test switch: false = cells are added hidden (to see what their first drawing costs)
+@export var loader_mode := 0         ## 0 = the streamer's own loader threads (the way to run it). 1 / 2 = the engine's thread pool without / with sub-threads, kept to compare: the pool is also what the physics engine and the renderer run their jobs on, and a cell's hundreds of files filled it (phone, 18 Nov: the main thread waited 65-350 ms for the physics step each time two cells were asked for)
 @export var probe := false           ## test switch: time how long the physics and render servers take to digest what this frame gave them
 @export var urgent_m := 90.0          ## a body this near the player is attached even while a cell is loading
 
@@ -60,6 +62,12 @@ var _prepared: Array = []      # extra focus points (prepare)
 ## counters for tests and the game's own overlay
 var stats := {"in": 0, "out": 0, "dropped": 0, "add_ms_worst": 0.0, "remove_ms_worst": 0.0, "ready_ms_worst": 0.0, "ready_ms_sum": 0.0, "capped": 0, "bodies": 0, "body_ms_worst": 0.0, "body_late": 0}
 var _probe_body: StaticBody3D
+var _threads: Array = []       # own loader threads (loader_mode 0)
+var _jobs: Array = []          # [key, path] waiting for a loader thread, nearest first (under _mx)
+var _done: Array = []          # [key, node, bodies] loaded and built, waiting for the main thread (under _mx)
+var _mx := Mutex.new()
+var _sem := Semaphore.new()
+var _quit := false
 var _pending: Array = []       # collision bodies waiting to be attached: [centre, parent, body, cell key]
 var add_ms: Array[float] = []
 var ready_ms: Array[float] = []
@@ -74,6 +82,9 @@ func _ready() -> void:
 	_map_img = Image.create(MAP, MAP, false, Image.FORMAT_R8); _map_img.fill(Color(0, 0, 0))
 	_map_tex = ImageTexture.create_from_image(_map_img)
 	RenderingServer.global_shader_parameter_set(&"ck_cells_loaded", _map_tex)
+	if loader_mode == 0:
+		for i in max_loading:
+			var th := Thread.new(); th.start(_loader, Thread.PRIORITY_LOW); _threads.append(th)
 	var fp := runtime_dir + "far/far_world.scn"
 	if ResourceLoader.exists(fp):
 		far_world = (load(fp) as PackedScene).instantiate(); add_child(far_world)
@@ -153,6 +164,7 @@ func update_focus(p: Vector3, now := false, velocity := Vector3.ZERO) -> void:
 			if c.state == NONE: want.append([d, k])
 		elif d > unload_dist:
 			if c.state == IN: _remove(k)
+			elif c.state == LOADING and loader_mode == 0 and _unqueue(k): c.state = NONE; stats.dropped += 1      # not started yet: just taken off the list
 			elif c.state != NONE: c.cancel = true      # asked for, no longer needed: dropped when it arrives
 	want.sort_custom(func(a: Array, b: Array) -> bool: return a[0] < b[0])
 	if now:
@@ -168,7 +180,9 @@ func update_focus(p: Vector3, now := false, velocity := Vector3.ZERO) -> void:
 		if loading >= max_loading: break
 		if have >= max_cells: stats.capped += 1; break      # the cap: the rest stay far versions
 		var c3: Dictionary = cells[w2[1]]
-		ResourceLoader.load_threaded_request(_path(w2[1]), "", true)
+		if loader_mode == 0:
+			_mx.lock(); _jobs.append([w2[1], _path(w2[1])]); _mx.unlock(); _sem.post()
+		else: ResourceLoader.load_threaded_request(_path(w2[1]), "", loader_mode == 2)
 		c3.state = LOADING; c3.t_req = Time.get_ticks_usec(); loading += 1; have += 1
 
 func _process(_dt: float) -> void:
@@ -188,7 +202,13 @@ func _process(_dt: float) -> void:
 		stats["phys_wait_ms"] = (t2 - t1) / 1000.0; stats["rs_wait_ms"] = (Time.get_ticks_usec() - t2) / 1000.0
 
 func _process_stream(t0: int) -> void:
+	if loader_mode == 0:      # what the loader threads finished since the last frame
+		_mx.lock(); var fin: Array = _done; _done = []; _mx.unlock()
+		for r: Array in fin:
+			var cf: Dictionary = cells[r[0]]
+			cf.node = r[1]; cf.bodies = r[2]; cf.state = READY      # a cancelled one is dropped in the arrival step below
 	for k: String in cells:
+		if loader_mode == 0: break
 		var c: Dictionary = cells[k]
 		if c.state == LOADING:
 			var st := ResourceLoader.load_threaded_get_status(_path(k))
@@ -204,6 +224,7 @@ func _process_stream(t0: int) -> void:
 	var best := ""; var bd := 1.0e9
 	for k2: String in cells:
 		if cells[k2].state == READY:
+			if cells[k2].node == null: cells[k2].state = NONE; continue      # its file did not load: asked for again when wanted
 			if cells[k2].cancel:
 				for b0: Array in cells[k2].bodies: _leaving.append(b0[2])
 				_leaving.append(cells[k2].node); cells[k2].bodies = []; cells[k2].node = null; cells[k2].state = NONE; stats.dropped += 1; continue
@@ -263,7 +284,34 @@ func _process_stream(t0: int) -> void:
 func _flush_map() -> void:
 	if _map_dirty: _map_tex.update(_map_img); _map_dirty = false
 
-## worker thread: build the cell and take its collision bodies off, to be attached in steps
+## A loader thread of the streamer's own: it loads a cell's file with everything in it, builds the cell, and hands
+## it over. It never uses the engine's thread pool and never touches `cells`: the main thread owns that.
+func _loader() -> void:
+	while true:
+		_sem.wait()
+		if _quit: return
+		_mx.lock(); var job: Array = _jobs.pop_front() if not _jobs.is_empty() else []; _mx.unlock()
+		if job.is_empty(): continue
+		var ps := ResourceLoader.load(job[1]) as PackedScene
+		var tmp := {"ps": ps, "node": null, "bodies": []}
+		if ps: _build(tmp)
+		_mx.lock(); _done.append([job[0], tmp.node, tmp.bodies]); _mx.unlock()
+
+func _unqueue(k: String) -> bool:
+	var hit := false
+	_mx.lock()
+	for i in _jobs.size():
+		if String(_jobs[i][0]) == k: _jobs.remove_at(i); hit = true; break
+	_mx.unlock()
+	return hit
+
+func _exit_tree() -> void:
+	_quit = true
+	for th: Thread in _threads: _sem.post()
+	for th2: Thread in _threads: th2.wait_to_finish()
+	_threads.clear()
+
+## loader or worker thread: build the cell and take its collision bodies off, to be attached in steps
 func _build(c: Dictionary) -> void:
 	var node: Node3D = (c.ps as PackedScene).instantiate()
 	var bodies: Array = []

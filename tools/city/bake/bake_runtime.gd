@@ -46,7 +46,7 @@ var far := {}                # [chunk Vector2i, matkey] -> Array of entries
 var far_mats := {}           # matkey -> Material
 var mesh_keys := {}          # instance id -> key
 var lib_mesh := {}           # key (+ "_m") -> Mesh (lib resource)
-var lib_shape := {}          # key -> Shape3D
+var lib_shape := {}          # key -> ColData of the cell being written (emptied for every cell)
 var split_cache := {}        # concave shape instance id -> Array of [piece of it (ConcavePolygonShape3D), its centre]
 var arr_cache := {}          # instance id -> surface arrays
 var mats := {}               # signature -> Material
@@ -174,8 +174,10 @@ func _split_concave(s: ConcavePolygonShape3D) -> Array:
 	split_cache[id] = res
 	return res
 
-## A shape as plain data in lib/ (col_data.gd says why it is not saved as a Shape3D). Returns null for a kind the kit
-## does not use (sphere, capsule ...): counted, reported at the end, left out.
+## A shape as plain data (col_data.gd says why it is not a Shape3D), kept INSIDE the cell's own file: one per cell
+## however often the cell uses it. Not a file each in lib/: a cell uses about 600 shapes, and 600 small files read one
+## after another took 1-3 s a cell (PC, 18 Nov). Returns null for a kind the kit does not use (sphere, capsule ...):
+## counted, reported at the end, left out.
 func _lib_shape(s: Shape3D) -> Resource:
 	var k := ""; var kind := -1; var data := PackedVector3Array()
 	if s is ConvexPolygonShape3D: kind = 1; data = (s as ConvexPolygonShape3D).points; k = "cx" + str(hash(data))
@@ -185,15 +187,11 @@ func _lib_shape(s: Shape3D) -> Resource:
 		if not stat.has("col_unknown"): stat["col_unknown"] = {}
 		stat.col_unknown[s.get_class()] = int(stat.col_unknown.get(s.get_class(), 0)) + 1
 		return null
-	k = ("d" + k).md5_text().substr(0, 12)
 	if lib_shape.has(k): return lib_shape[k]
-	var path := out + "lib/s_%s.res" % k
-	if not ResourceLoader.exists(path):
-		var cd: Resource = ColData.new(); cd.kind = kind; cd.data = data
-		if s is ConcavePolygonShape3D: cd.backface = (s as ConcavePolygonShape3D).backface_collision
-		ResourceSaver.save(cd, path, ResourceSaver.FLAG_COMPRESS)
-	lib_shape[k] = load(path)
-	return lib_shape[k]
+	var cd: Resource = ColData.new(); cd.kind = kind; cd.data = data
+	if s is ConcavePolygonShape3D: cd.backface = (s as ConcavePolygonShape3D).backface_collision
+	lib_shape[k] = cd; stat["col_shapes"] = int(stat.get("col_shapes", 0)) + 1
+	return cd
 
 ## A body-to-be: a plain Node3D that carries the body's layer, mask and its shapes as [ColData, Transform3D]. The
 ## streamer turns it into a StaticBody3D on the main thread.
@@ -481,6 +479,7 @@ func _centre_radius(pts: Array) -> Array:
 	return [c, r]
 
 func _build_cell(c: Vector2i) -> Dictionary:
+	lib_shape = {}
 	var rec: Dictionary = cells[c]
 	var root := Node3D.new(); root.name = "cell_%d_%d" % [c.x, c.y]
 	var counts := {"draw_nodes": 0, "tris": 0}
@@ -771,7 +770,7 @@ func _run() -> void:
 	var man := {"version": VERSION, "keep": keep.keys(), "warm": wi, "layout_sha": FileAccess.get_sha256(LAYOUT), "area": area, "tint": tint_on, "cells": manifest_cells, "far": fw, "stat": stat, "cell_m": CELL}
 	var f := FileAccess.open(out + "manifest.json", FileAccess.WRITE); f.store_string(JSON.stringify(man, " ")); f.close()
 	print("BAKE collision: %d triangle shapes cut into pieces, %d pieces in all, largest %d triangles; shape kinds left out: %s" % [int(stat.col_split), int(stat.col_pieces), int(stat.col_piece_max), str(stat.get("col_unknown", {}))])
-	print("BAKE_DONE cells=%d draw nodes=%d nodes=%d lib meshes=%d shapes=%d materials=%d in %d ms" % [cells.size(), tot.draw_nodes, tot.nodes, lib_mesh.size(), lib_shape.size(), mats.size(), Time.get_ticks_msec() - t0])
+	print("BAKE_DONE cells=%d draw nodes=%d nodes=%d lib meshes=%d shapes=%d materials=%d in %d ms" % [cells.size(), tot.draw_nodes, tot.nodes, lib_mesh.size(), int(stat.get("col_shapes", 0)), mats.size(), Time.get_ticks_msec() - t0])
 	quit()
 
 func _count(c: Dictionary) -> int:
