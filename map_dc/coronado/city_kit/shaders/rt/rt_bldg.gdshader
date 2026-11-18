@@ -51,6 +51,12 @@ void fragment() {
 #ifdef CK_TIERS
 	CK_DITHER
 #endif
+#ifdef CK_CHEAP
+	// CK_CHEAP (19 Nov, the drawing census: tools/city/rig/rig.gd --plan=census, docs/DRAW_CENSUS.md): colour only, to
+	// measure what the full shader costs. Never baked in: the rig swaps it in for one measurement.
+	ALBEDO = texture(albedo_tex, UV).rgb * COLOR.rgb;
+	ROUGHNESS = 0.9;
+#else
 	vec4 alb = texture(albedo_tex, UV);
 	vec3 orm = has_orm ? texture(orm_tex, UV).rgb : vec3(1.0, 0.8, 0.0);
 	vec3 a = abs(v_wn);
@@ -82,4 +88,5 @@ void fragment() {
 		float on = step(0.34, hsh) * smoothstep(hsh * 0.6, hsh * 0.6 + 0.25, ck_night) * mix(0.35, 1.0, fract(hsh * 7.31));      // and not all equally bright
 		EMISSION = texture(emission_tex, UV).rgb * night_color * emission_energy * night_energy * on;
 	}
+#endif
 }

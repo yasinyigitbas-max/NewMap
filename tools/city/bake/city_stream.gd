@@ -83,7 +83,9 @@ var add_ms: Array[float] = []
 var ready_ms: Array[float] = []
 var _ramping := {}             # cell key -> arrival time (usec) while its switch to far sweeps out (tiers, arrive_s)
 var _sh_plain := {}            # held material -> the shader the bake gave it
-var _sh_tiers := {}            # baked shader path -> its copy with CK_TIERS
+var _sh_tiers := {}            # baked shader path + defines -> its copy (shader_variant)
+var ready_dropped := 0         # add_ms / ready_ms keep the last ADD_KEEP numbers (a 25-minute soak grew them by one a cell for the whole session); this many were let go
+const ADD_KEEP := 4096
 const RT_SH := "res://map_dc/coronado/city_kit/shaders/rt/"
 const TIER_SHADERS := ["rt_bldg", "rt_prop_", "rt_foliage_", "rt_far_cut", "rt_far_solid"]      # the shaders that include rt_tier.gdshaderinc
 
@@ -123,17 +125,29 @@ func set_tiers(on: bool, band := tier_band, arrive := arrive_s) -> void:
 			_sh_plain[m] = m.shader
 		var plain: Shader = _sh_plain[m]
 		if on:
-			if not _sh_tiers.has(plain.resource_path):
-				var sh := Shader.new()
-				sh.code = plain.code.replace("#include \"", "#include \"" + RT_SH).replace("shader_type spatial;", "shader_type spatial;\n#define CK_TIERS")
-				_sh_tiers[plain.resource_path] = sh
-			m.shader = _sh_tiers[plain.resource_path]
+			m.shader = shader_variant(plain, ["CK_TIERS"])
 		else: m.shader = plain
 		n += 1
 	stats["tier_materials"] = n
 	if not on:      # no sweep without the tier shaders: cells are in or out
 		for k: String in _ramping: _set_texel(k, 1.0)
 		_ramping.clear(); _flush_map()
+
+## A copy of a baked shader with some #defines on (CK_TIERS, and the drawing census's CK_CHEAP / CK_OPAQUE), made from
+## the shader's own text, once each. Includes are made absolute, since the copy has no path of its own.
+func shader_variant(plain: Shader, defines: Array) -> Shader:
+	var key := plain.resource_path + "|" + ",".join(defines)
+	if not _sh_tiers.has(key):
+		var head := "shader_type spatial;"
+		for d: String in defines: head += "\n#define " + d
+		var sh := Shader.new()
+		sh.code = plain.code.replace("#include \"", "#include \"" + RT_SH).replace("shader_type spatial;", head)
+		_sh_tiers[key] = sh
+	return _sh_tiers[key]
+
+## the shader the bake gave a held material (whatever set_tiers swapped in since)
+func baked_shader(m: ShaderMaterial) -> Shader:
+	return _sh_plain.get(m, m.shader)
 
 func set_far_ground(on: bool) -> void:
 	far_ground = on
@@ -320,6 +334,8 @@ func _process_stream(t0: int) -> void:
 	if best != "":
 		var ta := Time.get_ticks_usec(); _add(best); var ms := (Time.get_ticks_usec() - ta) / 1000.0
 		add_ms.append(ms); stats.add_ms_worst = maxf(stats.add_ms_worst, ms)
+		if ready_ms.size() >= ADD_KEEP:      # let the oldest half go (the rig counts from ready_ms.size() + ready_dropped)
+			add_ms = add_ms.slice(ADD_KEEP / 2); ready_ms = ready_ms.slice(ADD_KEEP / 2); ready_dropped += ADD_KEEP / 2
 		var rm := (Time.get_ticks_usec() - int(cells[best].t_req)) / 1000.0
 		ready_ms.append(rm); stats.ready_ms_worst = maxf(stats.ready_ms_worst, rm); stats.ready_ms_sum += rm
 	# While a loader thread is creating a cell's meshes and shapes it holds the render and physics servers' locks for
