@@ -143,7 +143,9 @@ Three changes, measured one at a time on the Redmi (zones gate, stream gate):
 | - | before (`warmnight_zones`) | - | 0.1-3.6 s / 4.8 s: FAIL | PASS |
 | 1 | the nearest body first counts the places being prepared too (a teleport's destination), not only the player | ON | 0.1-1.8 s / 5.3 s: FAIL on body waits (`col1_zones`) | PASS (`col1_stream`) |
 | 2 | while a prepare() is pending (a teleport: the player is not there), the collision budgets a frame are `prepare_boost` (4) times larger | ON | 0.1-1.3 s / 3.2 s: FAIL on one body (`col2_zones`, with 1) | PASS, worst frame 32 ms (`col2_stream`) |
-| 3 | collision only within `col_range` (100 m) of the player, the lead and prepared places; farther bodies wait as data; "a body waited" counts from coming into range | OFF (trial) | 0.1-1.0 s / 0.9 s; collision made down to about a fifth (gritty night 236k -> 29k) | FAIL: one frame of 86-414 ms |
+| 3 | collision only within `col_range` (100 m) of the player, the lead and prepared places; farther bodies wait as data; "a body waited" counts from coming into range | first try, replaced by 3b | 0.1-1.0 s / 0.9 s; collision made down to about a fifth (gritty night 236k -> 29k) | FAIL: one frame of 86-414 ms |
+
+| 3b | as 3, but bodies out of range are still made, after those in range, in frames when no cell is loading (`col_background`); a body made before it came into range does not count as waiting | ON | 0.2-1.6 s / 0.5 s, worst frame 39 ms: **PASS** (`colbg_zones`, the first zones PASS) | **PASS**, worst frame 37 ms (`colbg_stream`) |
 
 - Change 3 does what it should for collision, but EVERY stream run with a range had one frame stalled in the draw
   (81-406 ms of it in the draw, GPU 13-14 ms, nothing attaching) on 5th St at 210 km/h, at the same place each time,
@@ -151,14 +153,22 @@ Three changes, measured one at a time on the Redmi (zones gate, stream gate):
   `col150_stream` (150 m) 328 ms; the zones runs with it had one 75-96 ms frame during a teleport. Without a range
   (`col2_stream`) the same lap is clean. Why a smaller collision load makes the DRAW stall is not understood: the
   signature is that of cause 5 above (the driver fetching graphics memory inside the draw), whose timing the range
-  may shift. So change 3 stays OFF (`--colrange=100` to try it) until that is found.
-- With the defaults (1 and 2) the zones gate still FAILS on one body: in the gritty night drive a body waited 3.2 s
-  from its cell's arrival (limit 3 s). Teleports are all under 1.4 s.
-- THE LIMIT OF COLLISION PER PLACE NOW: the streamer makes 1,200 units a frame while driving (4,800 during a teleport).
-  A place stays inside the 3 s body budget while the collision of the cells round it stays under about
-  1,200 x 60 x 3 = 216k units; the gritty edge with the growth is at about 236-268k in the night drive. Growth beyond
-  that needs change 3 working, or a higher budget a frame (measure the physics wait with `--probe`), or cheaper
-  collision in the pieces (a convex point counts as one unit: a guess, not measured).
+  may shift. Searched on the phone (runs `dig_*`, not pushed as results): with NO collision at all (`--nocol`) the lap
+  is clean; with the range and ONE cell loading at a time (`--loading=1`) a 70 ms stall stays; with twice the graphics
+  memory reserve (`--gpureserve=384`) a 63 ms stall stays. Every stall fell while the growth's heavy cell -3_-6 (or
+  its neighbour) was loading. What the range had taken away was the background work: without it, far bodies are made
+  over the drive; with it, never. Change 3b gives that back (far bodies in quiet frames, after the near ones) and the
+  stall is gone (`dig_bg_stream`: worst 35 ms). WHY leaving far collision unmade lets a heavy cell's loading stall the
+  draw is still not understood; 3b is the measured cure, not an explanation. `--colnobg` brings the first try back.
+- With 1 and 2 alone the zones gate failed on one body (3.2 s, gritty night). With 1, 2 and 3b (the defaults now)
+  both gates PASS: `colbg_zones` and `colbg_stream`, run with `--colrange=100` on the build just before 100 became the
+  default (the same code and value). One run each.
+- THE LIMIT OF COLLISION PER PLACE NOW: what has to be made in time is only the collision within 100 m of the player
+  and of the lead (2 s ahead): 13k-69k units a zones drive against 35k-268k before (gritty night: 29k). The streamer
+  makes 1,200 units a frame while driving (4,800 during a teleport), so a body's 3 s budget holds while the collision
+  within 100 m of the road ahead stays under about 1,200 x 60 x 3 = 216k units: about four times today's densest
+  place. The rest is made in quiet frames; how full a whole cell may get before that background falls behind was not
+  measured (a cell's bodies wait as data, nothing is late). A convex point counts as one unit: a guess, not measured.
 
 ### The tiers (19 Nov, a PC session with the Redmi; branch `claude/ecstatic-archimedes-922d2c`)
 Yasin: "i think it snaps from near to far directly and everythings appereance change suddenly as we get near".
