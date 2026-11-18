@@ -276,11 +276,11 @@ func _process_stream(t0: int) -> void:
 			var tb := Time.get_ticks_usec()
 			var body := StaticBody3D.new(); body.name = mk.name; body.transform = mk.transform
 			body.collision_layer = int(mk.get_meta(&"layer")); body.collision_mask = int(mk.get_meta(&"mask"))
-			for it2: Array in mk.get_meta(&"col"):
-				var cs := CollisionShape3D.new(); cs.shape = (it2[0] as Resource).call(&"make"); cs.transform = it2[1]; body.add_child(cs)
+			for it2: Array in mk.get_meta(&"col"):      # shapes straight on the body: no CollisionShape3D node for each (a body of 24 shapes cost 3.5 ms of main thread on the phone with them)
+				var ow := body.create_shape_owner(body); body.shape_owner_set_transform(ow, it2[1]); body.shape_owner_add_shape(ow, (it2[0] as Resource).call(&"make"))
 			(e[1] as Node).add_child(body); mk.free()
 			var bms := (Time.get_ticks_usec() - tb) / 1000.0
-			if bms > float(stats.body_ms_worst): stats.body_ms_worst = bms; stats["body_worst_what"] = "%s shapes=%d new=%d" % [body.name, body.get_child_count(), cost]
+			if bms > float(stats.body_ms_worst): stats.body_ms_worst = bms; stats["body_worst_what"] = "%s shapes=%d new=%d" % [body.name, body.get_shape_owners().size(), cost]
 			stats.bodies += 1; stats["col_units"] = int(stats.get("col_units", 0)) + cost
 			stats["body_wait_ms_worst"] = maxi(int(stats.get("body_wait_ms_worst", 0)), Time.get_ticks_msec() - int(e[4]))      # from its cell's arrival to the body being in the world
 		for e2: Array in _pending:      # a body still waiting with the player 40 m away would be a hole in the ground
