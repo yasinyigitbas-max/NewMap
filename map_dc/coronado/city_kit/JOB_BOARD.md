@@ -5,6 +5,16 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov ~17:00 (PC time): PHONE TEST DONE on the Redmi by the session on Yasin's PC (Yasin: "go ahead"). Result
+  `review/phone/run1.txt`, full write-up in docs/RUNTIME_BAKE.md "The phone test". Clone is at C:\Users\yasin\NewMap.
+  Numbers: by day median 8.6-10.1 ms (the 120 Hz cap), 99 % 19-27 ms; night centre median 16.8 ms; 18,681 frames,
+  11 over 33 ms, 3 over 50 ms (64, 76, 59), none over 100; no cell late at 50-280 km/h; draws max 119 by day, 205 at
+  night (budget 150); 607 MB. Engine `coronado_all7` (light grid present). Open question answered: a loading cell
+  does hitch on the phone, rarely (2 frames of 59 / 76 ms in 215 s). WAITING for Yasin: cells in parts or not; the
+  night centre over the draw budget. Script fixed for Windows (gradle daemon hang, template copy, git push path, git
+  author); rig fixed (ground ray in the physics step: the first run had the camera sunk into the road, Yasin saw it,
+  that run was discarded); `.gitattributes` added (a Windows clone failed the lock test on line endings). Lock test
+  RESULT PASS. Not run yet: `--nowarm`, `--plan=speed`, `--loading=1`, a release build.
 - 18 Nov ~14:00: HANDOVER TO A SESSION ON YASIN'S PC (Yasin: "i did both but nothing happens, can you handover the work
   to a local session on my pc?"). Read `docs/HANDOVER_PHONE_TEST.md`: the job is one clean run of
   `tools/city/rig/phone_rig.sh all run1` on the Redmi (the script has never run on Windows: debug it step by step),
