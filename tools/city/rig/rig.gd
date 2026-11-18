@@ -50,6 +50,7 @@ extends Node3D
 ##   --tiers       the tier hand-over: fades at 60 m and 220 m, an arriving cell's objects take over nearest first
 ##   --band=8      with --tiers: metres of overlap at each switch (0 = hard cuts)     --arrive=0.5  seconds of the sweep
 ##   --nofarground hide the far world's ground (the streets beyond the loaded cells)
+##   --plan=census no drives: the drawing cost census (see _census below; --census=day|night|both --views=a,b --censussecs=2 --warmnight)
 ##   --plan=shots  no drives: pictures of a building at set distances and of a street, saved as JPG in
 ##                 user://rig/shots/ (phone_rig.sh shots NAME ... pulls them to review/tiers/NAME/)
 const Stream := preload("res://tools/city/bake/city_stream.gd")
@@ -83,7 +84,8 @@ const PLANS := {
 	# far jumps on purpose: every teleport throws the loaded cells away and needs a whole new neighbourhood
 	"zones": [["gritty_60kmh", "z_gritty", 16.7, 25.0, 0.0], ["centre_60kmh", "z_centre", 16.7, 25.0, 0.0], ["waterfront_60kmh", "z_waterfront", 16.7, 25.0, 0.0], ["industrial_60kmh", "z_industrial", 16.7, 25.0, 0.0], ["apartments_60kmh", "z_apartments", 16.7, 25.0, 0.0], ["pilot_60kmh", "z_pilot", 16.7, 25.0, 0.0], ["strip_60kmh", "z_strip", 16.7, 25.0, 0.0], ["civic_60kmh", "z_civic", 16.7, 25.0, 0.0], ["stadium_60kmh", "z_stadium", 16.7, 25.0, 0.0],
 		["seventh_210kmh", "seventh_pop", 58.0, 20.0, 0.0], ["centre_night_60kmh", "z_centre", 16.7, 25.0, 1.0], ["gritty_night_60kmh", "z_gritty", 16.7, 25.0, 1.0]],
-	"shots": [["shots", "seventh_pop", 1.0, 1.0, 0.0]],      # (only its first point: where the app starts; see _shots)
+	"shots": [["shots", "seventh_pop", 1.0, 1.0, 0.0]],
+	"census": [["census", "z_centre", 1.0, 1.0, 0.0]],      # (only its first point; see _census)      # (only its first point: where the app starts; see _shots)
 	"stream": [["loop_108kmh", "pop_loop", 30.0, 60.0, 0.0], ["loop_210kmh", "pop_loop", 58.0, 55.0, 0.0], ["loop_280kmh", "pop_loop", 78.0, 40.0, 0.0]],
 	"speed": [["ring_108kmh", "ring", 30.0, 60.0, 0.0], ["ring_210kmh", "ring", 58.0, 60.0, 0.0], ["ring_280kmh", "ring", 78.0, 60.0, 0.0], ["ring_360kmh", "ring", 100.0, 40.0, 0.0]]}
 
@@ -94,7 +96,7 @@ var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
-var opt := {"look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false}
+var opt := {"look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": false}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -114,14 +116,15 @@ func _ready() -> void:
 		if a == "--hide": opt.hide = true
 		if a == "--tiers": opt.tiers = true
 		if a == "--nofarground": opt.nofarground = true
+		if a == "--warmnight": opt.warmnight = true
 		if a.begins_with("--drive="):
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots"]:
+		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
-				opt[k] = v if k in ["plan", "shots", "look", "weather"] else (float(v) if k in ["scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock"] else int(v))
+				opt[k] = v if k in ["plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs"] else int(v))
 	if from_file and not ("--loop" in args): opt.quit = true
 	Engine.max_fps = 0
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
@@ -213,6 +216,17 @@ func _run() -> void:
 	if not opt.nowarm: await st.warm_up(cam, 4)
 	for i in 10: await get_tree().process_frame
 	_say("boot first_area_ms=%d warm_ms=%d (graphics memory reserve %d MB: %d ms) cells=%d static_mb=%.0f video_mb=%.0f" % [t1 - t0, Time.get_ticks_msec() - t1, int(opt.gpureserve), int(st.stats.get("reserve_ms", 0)), st.loaded_count(), Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0])
+	if opt.warmnight:      # census test: draw the night once behind the loading screen (does it remove the first-night frames?)
+		_night(1.0); lights.update_lights(cam.global_position, 1.0)
+		for i in 20: await get_tree().process_frame
+		_night(0.0); lights.update_lights(cam.global_position, 0.0)
+		for i in 10: await get_tree().process_frame
+		_say("warmnight done")
+	if String(opt.plan) == "census":
+		await _census()
+		await get_tree().create_timer(0.5).timeout
+		get_tree().quit()
+		return
 	if String(opt.plan) == "shots":
 		await _shots()
 		await get_tree().create_timer(0.5).timeout
@@ -255,7 +269,7 @@ func _drive(seg: Array) -> void:
 	var dts := PackedFloat32Array(); var draws_sum := 0.0; var draws_max := 0; var tris_sum := 0.0; var tris_max := 0
 	var late220 := 0; var late60 := 0; var deepest := 0.0; var max_cells := 0; var slow := 0; var gy := 8.0
 	var segi := 0; var along := 0.0; var t := 0.0; var t_prev := Time.get_ticks_usec(); var hud_t := 0.0; var prev := [S0["in"], S0.out, S0.bodies]
-	var ready0: int = st.ready_ms.size(); var slow_line := ""; var cause := {}; var cause45 := {}; var pw := PackedFloat32Array(); var gpu := PackedFloat32Array()
+	var ready0: int = st.ready_ms.size() + st.ready_dropped; var slow_line := ""; var cause := {}; var cause45 := {}; var pw := PackedFloat32Array(); var gpu := PackedFloat32Array()
 	st.stats["body_wait_ms_worst"] = 0; var units0 := int(st.stats.get("col_units", 0))
 	var on_ground := false; _g_hit = false; _g_at = pts[0]
 	while t < secs:
@@ -316,11 +330,11 @@ func _drive(seg: Array) -> void:
 		if d > 50.0: o50 += 1
 		if d > 100.0: o100 += 1
 	var S1: Dictionary = st.stats; var rs := 0.0; var rw := 0.0
-	for i in range(ready0, st.ready_ms.size()): rs += st.ready_ms[i]; rw = maxf(rw, st.ready_ms[i])
+	for i in range(maxi(ready0 - st.ready_dropped, 0), st.ready_ms.size()): rs += st.ready_ms[i]; rw = maxf(rw, st.ready_ms[i])
 	_say("drive %s speed=%.0f km/h secs=%.0f frames=%d fps=%.1f | frame_ms med=%.1f p95=%.1f p99=%.1f worst=%.0f | over16.7=%.1f%% over33=%d over50=%d over100=%d" % [name, sp * 3.6, t, n, n / t, sorted[n / 2], sorted[int(n * 0.95)], sorted[int(n * 0.99)], sorted[n - 1], 100.0 * o17 / n, o33, o50, o100])
 	gpu.sort()      # the GPU's own time a frame (the phone is held at the 60 fps step by vsync, so the frame time hides small costs)
 	_say("  map %s draws avg=%.0f max=%d | tris avg=%.0fk max=%dk | cells most=%d in=%d out=%d dropped=%d cap_hits=%d | gpu_ms med=%.2f p95=%.2f" % [name, draws_sum / n, draws_max, tris_sum / n / 1000.0, tris_max / 1000, max_cells, int(S1["in"]) - int(S0["in"]), int(S1.out) - int(S0.out), int(S1.dropped) - int(S0.dropped), int(S1.capped) - int(S0.capped), gpu[gpu.size() / 2] if gpu.size() > 0 else -1.0, gpu[int(gpu.size() * 0.95)] if gpu.size() > 0 else -1.0])
-	_say("  stream %s start_ready_ms=%d (worst frame meanwhile %.0f ms) | request_to_in ms mean=%.0f worst=%.0f | late frames: 220m=%d (deepest %.0f m) 60m=%d | main thread worst ms: cell add %.2f, body %.2f (%s), removal step %.2f | bodies late=%d" % [name, prep_ms, prep_worst, rs / maxf(1.0, st.ready_ms.size() - ready0), rw, late220, deepest, late60, float(S1.add_ms_worst), float(S1.body_ms_worst), str(S1.get("body_worst_what", "")), float(S1.remove_ms_worst), int(S1.body_late) - int(S0.body_late)])
+	_say("  stream %s start_ready_ms=%d (worst frame meanwhile %.0f ms) | request_to_in ms mean=%.0f worst=%.0f | late frames: 220m=%d (deepest %.0f m) 60m=%d | main thread worst ms: cell add %.2f, body %.2f (%s), removal step %.2f | bodies late=%d" % [name, prep_ms, prep_worst, rs / maxf(1.0, st.ready_ms.size() + st.ready_dropped - ready0), rw, late220, deepest, late60, float(S1.add_ms_worst), float(S1.body_ms_worst), str(S1.get("body_worst_what", "")), float(S1.remove_ms_worst), int(S1.body_late) - int(S0.body_late)])
 	_say("  slow %s frames over 33 ms by what the streamer was doing: %s | over 45 ms: %s" % [name, str(cause), str(cause45)])
 	pw.sort()
 	_say("  collision %s made=%d units, a body waited at most %d ms from its cell's arrival | physics thread wait a frame (probe): median %.1f p99 %.1f worst %.1f ms" % [name, int(st.stats.get("col_units", 0)) - units0, int(st.stats.get("body_wait_ms_worst", 0)), pw[pw.size() / 2] if pw.size() > 0 else -1.0, pw[int(pw.size() * 0.99)] if pw.size() > 0 else -1.0, pw[pw.size() - 1] if pw.size() > 0 else -1.0])
@@ -405,3 +419,215 @@ func _shots() -> void:
 		st.update_focus(p2, false)
 		await _shot_save(String(v[0]))
 	_say("plan_done shots")
+
+## --plan=census (19 Nov; Yasin: "queue the drawing cost census"): where a frame's GPU time goes. The camera STANDS at a
+## street-level viewpoint, waits until the place is ready and nothing loads, then goes through a list of states, each
+## the baseline with ONE thing changed, a few seconds each, and prints per state the median and 95 % GPU time, the
+## CPU draw time, draws and triangles. Baseline first and last at every viewpoint (heat drift). GPU time, not frame
+## time: the frame sits on the vsync step. Nothing of this changes the defaults; every state is undone after it.
+##   --census=day|night|both   --views=centre,gritty,...   --censussecs=2.0   --warmnight (draw the night once at boot)
+## Results: "RIG census VIEW STATE ..." lines; docs/DRAW_CENSUS.md.
+const CENSUS_VIEWS := [["centre", 0.0, -600.0, 1.0, 0.0], ["apartments", 250.0, -600.0, 1.0, 0.0], ["gritty", -600.0, -1000.0, 1.0, 0.0],
+	["waterfront", 570.0, 200.0, -1.0, 0.0], ["industrial", -800.0, -1400.0, 1.0, 0.0], ["pilot", 0.0, 0.0, 0.0, 1.0], ["civic", -200.0, -600.0, 1.0, 0.0]]
+const CENSUS_DAY := ["baseline", "hide_plants", "hide_props_near", "hide_props_mid", "hide_props_other", "hide_bldg_near", "hide_bldg_mid",
+	"hide_ground", "hide_wear", "hide_far", "hide_far_ground", "hide_misc", "shadows_off", "shadow_map_2048", "shadow_map_1024",
+	"fxaa_off", "sky_reflection_off", "scale_0.50", "scale_0.85", "scale_1.00", "cheap_bldg_mid", "cheap_bldg_all", "cheap_props_mid",
+	"cheap_plants_mid", "plants_opaque", "baseline"]
+const CENSUS_NIGHT := ["baseline", "lights_0", "lights_1", "window_glow_off", "hide_glow", "baseline"]
+var _cz_undo: Array = []         # [callable] to undo the current state
+var _cz_mat_cache := {}
+
+func _census_temp() -> String:
+	var f := FileAccess.open("/sys/class/power_supply/battery/temp", FileAccess.READ)
+	return f.get_as_text().strip_edges() if f else "?"
+
+## every loaded cell's (and the far world's) nodes of one kind
+func _census_nodes(kind: String) -> Array:
+	var out: Array = []
+	if kind == "far" or kind == "far_ground":
+		for ch: Node in st.far_world.get_children():
+			if (String(ch.name) == "far_ground") == (kind == "far_ground"): out.append(ch)
+		return out
+	for k: String in st.cells:
+		if st.cells[k].state != st.IN: continue
+		var cn: Node = st.cells[k].node
+		match kind:
+			"ground":
+				var g := cn.get_node_or_null("Ground")
+				if g: out.append_array(g.get_children())
+			"wear":
+				if cn.get_node_or_null("wear"): out.append(cn.get_node("wear"))
+			"glow":
+				for nm in ["glow_halo", "glow_pool"]:
+					if cn.get_node_or_null(nm): out.append(cn.get_node(nm))
+			"misc":
+				var m := cn.get_node_or_null("Misc")
+				if m: out.append_array(m.get_children())
+			"bldg_near", "bldg_mid":
+				var bn := cn.get_node_or_null("Buildings")
+				if bn:
+					for b: Node in bn.get_children():
+						var t := b.get_node_or_null("near" if kind == "bldg_near" else "mid")
+						if t: out.append(t)
+			"plants", "props_near", "props_mid", "props_other", "plants_mid":
+				var pn := cn.get_node_or_null("Props")
+				if pn == null: continue
+				for g2: Node in pn.get_children():
+					if _census_prop_kind(g2 as GeometryInstance3D) == kind or (kind == "plants" and _census_prop_kind(g2 as GeometryInstance3D) == "plants_mid"): out.append(g2)
+	return out
+
+func _census_prop_kind(g: GeometryInstance3D) -> String:
+	var m := g.material_override as ShaderMaterial
+	if m == null: return "props_other"
+	var f: String = (st.baked_shader(m) as Shader).resource_path.get_file()
+	var re: Variant = m.get_shader_parameter(&"range_end")      # (not stored when it is the shader default, 60)
+	var mid := re != null and float(re) > 61.0
+	if f.begins_with("rt_foliage"): return "plants_mid" if mid else "plants"
+	if f.begins_with("rt_prop"): return "props_mid" if mid else "props_near"
+	return "props_other"
+
+func _census_hide(nodes: Array) -> void:
+	for n: Node in nodes:
+		var g := n as Node3D
+		if g == null: continue
+		var was := g.visible; g.visible = false
+		_cz_undo.append(func() -> void: g.visible = was)
+
+## the materials of a kind of prop batch, each once
+func _census_prop_mats(kind: String) -> Array:
+	var seen := {}
+	for n: Node in _census_nodes(kind):
+		var m := (n as GeometryInstance3D).material_override
+		if m: seen[m] = true
+	return seen.keys()
+
+func _census_swap_shader(mats: Array, defines: Array) -> void:
+	for m: ShaderMaterial in mats:
+		var was := m.shader; m.shader = st.shader_variant(st.baked_shader(m), defines)
+		_cz_undo.append(func() -> void: m.shader = was)
+
+func _census_cheap_bldg(tiers: Array) -> void:
+	for tname: String in tiers:
+		for n: Node in _census_nodes("bldg_" + tname):
+			var mi := n as MeshInstance3D; var was := mi.get_surface_override_material(0) as ShaderMaterial
+			if was == null or not st.baked_shader(was).resource_path.ends_with("rt_bldg.gdshader"): continue
+			if not _cz_mat_cache.has(was):
+				var c := was.duplicate() as ShaderMaterial; c.shader = st.shader_variant(st.baked_shader(was), ["CK_CHEAP"]); _cz_mat_cache[was] = c
+			mi.set_surface_override_material(0, _cz_mat_cache[was])
+			_cz_undo.append(func() -> void: mi.set_surface_override_material(0, was))
+
+func _census_apply(state: String) -> void:
+	var R := RenderingServer
+	if state.begins_with("hide_"):
+		var kind := state.trim_prefix("hide_")
+		_census_hide(_census_nodes(kind))
+		if kind == "plants": _census_hide(_census_nodes("plants_mid"))
+	elif state == "shadows_off":
+		sun.shadow_enabled = false; _cz_undo.append(func() -> void: sun.shadow_enabled = true)
+	elif state.begins_with("shadow_map_"):
+		var sz := int(state.trim_prefix("shadow_map_")); var was := int(ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/size", 4096))
+		R.directional_shadow_atlas_set_size(sz, true); _cz_undo.append(func() -> void: R.directional_shadow_atlas_set_size(was, true))
+	elif state == "fxaa_off":
+		var vp := get_viewport(); vp.screen_space_aa = Viewport.SCREEN_SPACE_AA_DISABLED; _cz_undo.append(func() -> void: vp.screen_space_aa = Viewport.SCREEN_SPACE_AA_FXAA)
+	elif state == "sky_reflection_off":
+		var was2 := env.reflected_light_source; env.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED; _cz_undo.append(func() -> void: env.reflected_light_source = was2)
+	elif state.begins_with("scale_"):
+		var vp2 := get_viewport(); vp2.scaling_3d_scale = float(state.trim_prefix("scale_")); _cz_undo.append(func() -> void: vp2.scaling_3d_scale = float(opt.scale))
+	elif state == "cheap_bldg_mid": _census_cheap_bldg(["mid"])
+	elif state == "cheap_bldg_all": _census_cheap_bldg(["near", "mid"])
+	elif state == "cheap_props_mid": _census_swap_shader(_census_prop_mats("props_mid"), ["CK_CHEAP"])
+	elif state == "cheap_plants_mid": _census_swap_shader(_census_prop_mats("plants_mid"), ["CK_CHEAP"])
+	elif state == "plants_opaque":
+		var cut: Array = []
+		for m: Material in _census_prop_mats("plants") + _census_prop_mats("plants_mid"):
+			if st.baked_shader(m as ShaderMaterial).resource_path.contains("_cut"): cut.append(m)
+		_census_swap_shader(cut, ["CK_OPAQUE"])
+	elif state == "lights_0" or state == "lights_1":
+		var i := 0
+		for l: Node in lights.get_children():
+			if l is OmniLight3D:
+				var ol := l as OmniLight3D; var was3 := ol.visible
+				if i >= (1 if state == "lights_1" else 0): ol.visible = false
+				_cz_undo.append(func() -> void: ol.visible = was3); i += 1
+	elif state == "window_glow_off":
+		var mats := {}
+		for tname in ["near", "mid"]:
+			for n: Node in _census_nodes("bldg_" + tname):
+				var m2 := (n as MeshInstance3D).get_surface_override_material(0) as ShaderMaterial
+				if m2 and m2.get_shader_parameter(&"has_emission") == true: mats[m2] = true
+		for m3: ShaderMaterial in mats.keys():
+			m3.set_shader_parameter(&"has_emission", false); _cz_undo.append(func() -> void: m3.set_shader_parameter(&"has_emission", true))
+
+func _census_undo() -> void:
+	for i in range(_cz_undo.size() - 1, -1, -1): (_cz_undo[i] as Callable).call()
+	_cz_undo.clear()
+
+func _census_frames(secs: float, p: Vector3) -> Dictionary:
+	var R := RenderingServer; var vr := get_viewport().get_viewport_rid()
+	var g := PackedFloat32Array(); var c := PackedFloat32Array(); var dr := 0; var tr := 0
+	var t0 := Time.get_ticks_msec()
+	while Time.get_ticks_msec() - t0 < int(secs * 1000.0):
+		st.update_focus(p, false)
+		await get_tree().process_frame
+		g.append(R.viewport_get_measured_render_time_gpu(vr)); c.append(R.viewport_get_measured_render_time_cpu(vr))
+		dr += int(R.get_rendering_info(R.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)); tr += int(R.get_rendering_info(R.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME))
+	var n := maxi(g.size(), 1); g.sort(); c.sort()
+	return {"gpu": g[g.size() / 2] if g.size() else -1.0, "gpu95": g[int(g.size() * 0.95)] if g.size() else -1.0, "cpu": c[c.size() / 2] if c.size() else -1.0, "draws": dr / n, "tris": tr / n, "frames": g.size()}
+
+func _census_state(view: String, state: String, p: Vector3, base: float, secs: float) -> float:
+	_census_apply(state)
+	for i in 2: await _census_frames(0.25, p)      # settle: the new state's first frames (a shader built for the first time) are not counted
+	var r: Dictionary = await _census_frames(secs, p)
+	_census_undo()
+	var save := base - float(r.gpu) if base > 0.0 else 0.0
+	_say("census %s %s gpu_ms med=%.2f p95=%.2f saves=%.2f | draw_cpu_ms med=%.2f | draws=%d tris=%dk frames=%d" % [view, state, float(r.gpu), float(r.gpu95), save, float(r.cpu), int(r.draws), int(r.tris) / 1000, int(r.frames)])
+	return float(r.gpu)
+
+## the first frames after day turns to night, three ways: everything as the rig does it, without the sky's colours
+## (the sky's reflection is rendered again when they change), and the sky's colours alone
+func _census_flip(view: String, how: String, p: Vector3) -> void:
+	var R := RenderingServer; var vr := get_viewport().get_viewport_rid()
+	var sm := env.sky.sky_material as ProceduralSkyMaterial
+	if how != "sky_only": st.set_night(1.0); sun.light_energy = 0.04; env.ambient_light_energy = 0.22; lights.update_lights(p, 1.0)
+	if how != "no_sky": sm.sky_top_color = Color(0.01, 0.015, 0.04); sm.sky_horizon_color = Color(0.05, 0.06, 0.1)
+	var gs: Array = []; var worst := 0.0; var t_prev := Time.get_ticks_usec(); var fw := 0.0
+	for i in 45:
+		await get_tree().process_frame
+		var now := Time.get_ticks_usec(); fw = maxf(fw, (now - t_prev) / 1000.0); t_prev = now
+		var gv := R.viewport_get_measured_render_time_gpu(vr); worst = maxf(worst, gv)
+		if i < 12: gs.append("%.0f" % gv)
+	_say("census %s flip_%s gpu_ms first frames %s | worst gpu %.1f, worst frame %.0f ms (45 frames)" % [view, how, " ".join(gs), worst, fw])
+	_night(0.0); lights.update_lights(p, 0.0)
+	for i2 in 40: await get_tree().process_frame
+
+func _census() -> void:
+	var which := String(opt.census); var secs := float(opt.censussecs)
+	var only: PackedStringArray = String(opt.views).split(",", false)
+	for v: Array in CENSUS_VIEWS:
+		if not only.is_empty() and not (String(v[0]) in only): continue
+		var name := String(v[0]); var p := Vector3(float(v[1]), 0, float(v[2])); var dir := Vector3(float(v[3]), 0, float(v[4]))
+		_night(0.0)
+		await _shot_ready(p)
+		var gy: float = await _shot_ground(p); _shot_last_y = gy
+		cam.global_position = Vector3(p.x, gy + 1.6, p.z); cam.look_at(cam.global_position + dir * 50.0)
+		await _shot_ready(p)
+		_say("census %s view at (%.0f, %.0f) looking (%.0f, %.0f) battery_temp=%s cells=%d" % [name, p.x, p.z, dir.x, dir.z, _census_temp(), st.loaded_count()])
+		if which != "night":
+			var base := -1.0
+			for s: String in CENSUS_DAY:
+				var gv: float = await _census_state(name, s, p, base, secs)
+				if s == "baseline" and base < 0.0: base = gv
+		if which != "day":
+			await _census_flip(name, "full", p)
+			await _census_flip(name, "no_sky", p)
+			await _census_flip(name, "sky_only", p)
+			await _census_flip(name, "full", p)      # again: is it only the first time?
+			_night(1.0); lights.update_lights(p, 1.0)
+			for i in 60: await get_tree().process_frame
+			var nbase := -1.0
+			for s2: String in CENSUS_NIGHT:
+				var gv2: float = await _census_state(name + "_night", s2, p, nbase, secs)
+				if s2 == "baseline" and nbase < 0.0: nbase = gv2
+			_night(0.0); lights.update_lights(p, 0.0)
+		_say("census %s done battery_temp=%s" % [name, _census_temp()])
+	_say("plan_done census")

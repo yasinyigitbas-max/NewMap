@@ -63,14 +63,19 @@ void fragment() {
 	vec4 t = texture(albedo_arr, uvw);
 	ALBEDO = t.rgb;
 	ROUGHNESS = roughness;
+#ifndef CK_CHEAP
 	vec3 nm = vec3(0.5, 0.5, 1.0);
 	if (v_hasn > 0.5) nm = texture(normal_arr, uvw).rgb;
 	NORMAL_MAP = nm;
+#endif
+// CK_CHEAP: no normal map; CK_OPAQUE: the cut-out drawn solid (both only for the drawing census, never baked in)
+#ifndef CK_OPAQUE
 #ifdef RT_CUT
 	vec2 ts = vec2(textureSize(albedo_arr, 0).xy);
 	vec2 dx = dFdx(UV * ts); vec2 dy = dFdy(UV * ts);
 	float lod = max(0.0, 0.5 * log2(max(dot(dx, dx), dot(dy, dy))));
 	ALPHA = clamp(t.a * (1.0 + lod * 0.3), 0.0, 1.0);
 	ALPHA_SCISSOR_THRESHOLD = scissor;
+#endif
 #endif
 }
