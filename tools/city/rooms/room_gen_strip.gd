@@ -31,10 +31,10 @@ const KINDS := {
 	"diner": {"floor": "Tiles101", "light": "pendant", "counter": ["bar_counter", "bar_counter", "pastry_case"], "stools": true, "till": false, "behind": ["soda_fountain", "espresso_machine", "wall_shelf"], "board": true, "walls": ["booth"], "centre": "table4", "window": "booths", "back": "kitchen", "frames": true, "tint": Color(0.97, 0.9, 0.82)},
 	# car wash office: you pay and wait for the car: benches facing the window onto the bays, the vending machine, air
 	# fresheners and car care on the wall behind the till, a drinks fridge
-	"wash_office": {"max_d": 8.0, "floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["cigarette_cabinet", "wall_shelf", "wall_shelf"], "board": false, "walls": ["vending_soda", "card_spinner", "drinks_fridge", "brochure_rack", "wall_shelf"], "centre": "lounge", "window": "watch", "back": "none", "frames": false, "posters": true, "tint": Color(0.78, 0.92, 0.96)},
+	"wash_office": {"max_d": 8.0, "floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["cigarette_cabinet", "wall_shelf", "wall_shelf"], "board": false, "walls": ["waiting_bench", "vending_soda", "waiting_bench", "drinks_fridge", "card_spinner"], "centre": "none", "window": "watch", "back": "none", "frames": false, "posters": true, "tint": Color(0.78, 0.92, 0.96)},
 	# quick-lube waiting room: the service desk where you hand in the keys, filing behind it, coffee on a side counter,
 	# chairs facing the window onto the bays (you watch your car go up), a brochure rack of upsells
-	"lube": {"max_d": 8.5, "floor": "Concrete047A", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["filing_cabinet", "pegboard_wall", "filing_cabinet"], "board": false, "walls": ["drinks_fridge", "brochure_rack", "waiting_bench"], "centre": "none", "window": "watch", "back": "stock", "frames": false, "posters": true, "tint": Color(0.86, 0.88, 0.92)},
+	"lube": {"max_d": 8.5, "floor": "Concrete047A", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["filing_cabinet", "pegboard_wall", "filing_cabinet"], "board": false, "walls": ["waiting_bench", "drinks_fridge", "waiting_bench", "brochure_rack"], "centre": "none", "window": "watch", "back": "stock", "frames": false, "posters": true, "tint": Color(0.86, 0.88, 0.92)},
 	# auto parts: the parts counter across the back (the parts are behind it, the clerk looks them up), aisles of oil,
 	# wipers and bulbs in the middle, batteries and tools on pegboards on the walls, oil specials in the window
 	"auto_parts": {"floor": "Tiles141", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["wall_shelf", "wall_shelf", "wall_shelf", "workbench"], "board": false, "walls": ["pegboard_wall", "wall_shelf", "pegboard_wall"], "centre": "rows", "window": "display", "back": "stock", "frames": false, "posters": true, "tint": Color(0.96, 0.88, 0.86)},
@@ -46,7 +46,7 @@ const KINDS := {
 	"tax": {"max_d": 10.0, "floor": "Carpet012", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet"], "board": false, "walls": ["filing_cabinet", "brochure_rack"], "centre": "desks", "window": "waiting", "back": "office", "frames": true, "tint": Color(0.93, 0.95, 0.9)},
 }
 const WARM := ["diner", "taqueria"]
-const CAP := {"vending_soda": 1, "drinks_fridge": 2, "card_spinner": 1, "brochure_rack": 1, "waiting_bench": 2, "glass_display_case": 3, "filing_cabinet": 3}
+const CAP := {"vending_soda": 1, "drinks_fridge": 1, "waiting_bench": 3, "card_spinner": 1, "brochure_rack": 1, "glass_display_case": 3, "filing_cabinet": 3}
 const WALL_TINTS := [Color(1.0, 0.95, 0.86), Color(0.94, 0.96, 0.98), Color(0.98, 0.92, 0.84), Color(0.9, 0.95, 0.92), Color(1.0, 0.97, 0.93), Color(0.93, 0.9, 0.86)]
 const SHORT := {"cafe": "COFFEE", "bakery": "BAKERY", "bar": "BAR", "restaurant": "KITCHEN", "fast_food": "FOOD", "ice_cream": "ICE CREAM",
 	"clothes": "CLOTHES", "shoes": "SHOES", "jewelry": "JEWELRY", "books": "BOOKS", "gallery": "GALLERY", "salon": "SALON", "pharmacy": "PHARMACY",
@@ -254,12 +254,12 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		if free_board: rr.prop("menu_board", mx, ZBp + 0.06, 0.0, 1.75)
 	# ---- the side walls: the shop's goods / seats along them (low things only under the side windows)
 	var sidewin := _side_windows(c)
+	var used := {}         # per ROOM (not per wall): one soda machine, at most two fridges in the whole room
 	for side: Array in [[X0, 90.0, "left"], [X1, -90.0, "right"]]:
 		var wx := float(side[0]); var yaw := float(side[1]); var inn := 1.0 if yaw > 0.0 else -1.0
 		var items: Array = K.walls
 		var z := ZF - 0.45; var k := 0
 		var tries := 0; var run := 0; var stations := 0
-		var used := {}
 		while z > ZBp + 0.4 and tries < 60:
 			tries += 1
 			# no endless runs of one thing: after three a break (a plant in the gap), and a barber has three chairs a side
@@ -315,7 +315,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		"produce":
 			for xx: float in _steps(X0 + 1.0, X1 - 1.0, 2.3): _put("produce_stand", xx, wz - 0.4, 0.0)
 		"watch":      # benches at the window facing OUT: the customers watch their car
-			for xx: float in _steps(X0 + 1.0, X1 - 1.0, 2.2): _put("waiting_bench", xx, wz - 0.75, 180.0)
+			for xx: float in _steps(X0 + 1.0, X1 - 1.0, 2.2): _put("waiting_bench", xx, wz - 0.95, 0.0)     # yaw 0 = facing +Z, the window
 		"booths":     # diner booths along the window wall, the table's long side out from the glass
 			for xx: float in _steps(X0 + 1.0, X1 - 1.0, 2.4):
 				_group([["restaurant_table", xx, wz - 0.75, 90.0], ["booth_bench", xx - 0.73, wz - 0.75, 90.0], ["booth_bench", xx + 0.73, wz - 0.75, -90.0]])

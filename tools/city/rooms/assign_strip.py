@@ -18,7 +18,7 @@ IN = os.path.join(ROOT, "map_dc/coronado/city_kit/interiors")
 SHOPS = {
     ("m_gr_ad5ne", "crown_car_care_row"): [(-4.08, [-8.7, 3.0], "auto_parts", "Strand Auto Parts", "red"),
                                            (7.76, [3.0, 8.7], "phone", "Bridge Cell & Vape", "black")],
-    ("m_gr_ad5ne", "quick_lube"): [(-6.5, [-8.7, -3.4], "lube", "Ten Minute Lube", "sun")],
+    ("m_gr_ad5ne", "quick_lube"): [(-6.5, [-8.7, -1.3], "lube", "Ten Minute Lube", "sun")],
     ("m_gr_ad5ne", "taqueria_adela"): [(3.3, None, "taqueria", "Tacos El Puente", "sun")],
     ("m_gr_ad5ne", "tax_office"): [(1.8, None, "tax", "Island Tax & Insurance", "navy")],
     ("m_gr_ad5ne", "chicken_drive"): [(1.2, None, "drive_thru", "Coop & Go Chicken", "red")],
