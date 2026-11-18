@@ -10,6 +10,13 @@ extends SceneTree
 ##   hidden    a wall-mounted print / board with a taller floor prop in front of it
 ##   pot       a garden plant without a pot standing on the indoor floor
 ##   squeeze   the walkway from the entrance to the room's deepest reachable floor narrows under 0.8 m
+##   doorway   (18 Nov, Yasin: "something blocking the door", "a thick seam like object") any part of the room's own
+##             build - a storefront bulkhead, a plinth, a wall, a frame - inside a door's passage: the door's width
+##             (less 0.12 m at each jamb, where the frame belongs), 0.06 to 2.0 m above the floor, from 0.25 m inside
+##             the room's wall through the facade to 0.9 m outside (the step slab, lower than 0.06 m, is allowed). The
+##             door leaves themselves are not part of the room's shell and are not tested.
+##   bare      (18 Nov, Yasin: "most shelves are empty") a shelf model the kit ships without goods: a shelf, gondola,
+##             bookcase or back bar whose manifest has no goods trim (tg_*) stands in a shop
 ## Output like the city validator (tools/city/pilot/validate.gd): "CHECK <kind> ..." per problem, then
 ## "CHECKS n problems"; exit code 1 if any. Run it after every room build, next to validate / audit_trees / the lock test.
 ## Run with the real renderer (MultiMesh data): godot --path <preview> --rendering-method mobile -s <this>
@@ -23,6 +30,8 @@ var foot := {}
 var tall := {}
 var wallm := {}     # props the kit manifests mount on a wall (poster case, menu board ...)
 var problems := 0
+var goods := {}     # base -> true when the kit model carries goods (a tg_* trim in its manifest)
+const STORAGE := ["shelf", "gondola", "bookcase", "backbar"]
 
 func _init() -> void: _run.call_deferred()
 
@@ -46,6 +55,9 @@ func _man(p: String) -> void:
 		foot[String(e.file_base)] = Vector2(float(e.get("footprint_w", 0.5)), float(e.get("footprint_d", 0.5)))
 		tall[String(e.file_base)] = float(e.get("height", 1.0))
 		if String(e.get("mount", "")) == "wall": wallm[String(e.file_base)] = true
+		var tr: Variant = e.get("trim", {})
+		if tr is Dictionary:
+			for tk: String in (tr as Dictionary): if tk.begins_with("tg_"): goods[String(e.file_base)] = true
 
 func _report(room: String, kind: String, msg: String) -> void:
 	problems += 1
@@ -130,6 +142,54 @@ func _room(name: String, root: Node3D) -> void:
 		zones.append(r)
 		for p: Array in ground:
 			if _hit(p[1], p[2], p[3], r.get_center(), r.size * 0.5, 0.0): _report(name, "door", "%s at %s stands in the door swing at %s" % [p[0], _v(p[1]), _v(r.get_center())])
+	# bare: shelving the kit ships empty
+	var seen_bare := {}
+	for p: Array in props:
+		var bp := String(p[0])
+		var is_store := false
+		for w: String in STORAGE: if bp.contains(w): is_store = true
+		if is_store and not goods.has(bp) and not seen_bare.has(bp):
+			seen_bare[bp] = true
+			_report(name, "bare", "%s at %s is an empty shelf model (no goods in the kit)" % [bp, _v(p[1])])
+	# doorway: the room's own build inside a door's passage
+	var fl0 := miny if miny < INF else 0.0
+	var tris: Array = []      # [a, b, c] room-local, shell meshes only (direct children of the room root)
+	for mi: Node in root.get_children():
+		if not (mi is MeshInstance3D): continue
+		var mesh := (mi as MeshInstance3D).mesh
+		if mesh == null: continue
+		var xf := (mi as MeshInstance3D).transform
+		for si in mesh.get_surface_count():
+			var arr := mesh.surface_get_arrays(si)
+			var vv: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+			var ix: PackedInt32Array = arr[Mesh.ARRAY_INDEX] if arr[Mesh.ARRAY_INDEX] != null else PackedInt32Array()
+			var nt := ix.size() if ix.size() > 0 else vv.size()
+			for k in range(0, nt, 3):
+				tris.append([xf * vv[ix[k] if ix.size() > 0 else k], xf * vv[ix[k + 1] if ix.size() > 0 else k + 1], xf * vv[ix[k + 2] if ix.size() > 0 else k + 2]])
+	for d: Array in doors:
+		var s0 := float(d[2]) + 0.12; var s1 := float(d[3]) - 0.12
+		if s1 <= s0: continue
+		var at := float(d[1]); var pl := float(d[4])
+		var outward := signf(pl - at)
+		var t0 := minf(at - outward * 0.25, pl + outward * 0.9); var t1 := maxf(at - outward * 0.25, pl + outward * 0.9)
+		var box := AABB()
+		if d[0] == "z": box = AABB(Vector3(s0, fl0 + 0.06, t0), Vector3(s1 - s0, 1.94, t1 - t0))
+		else: box = AABB(Vector3(t0, fl0 + 0.06, s0), Vector3(t1 - t0, 1.94, s1 - s0))
+		var hit := false
+		for t: Array in tris:
+			var tb := AABB(t[0], Vector3.ZERO).expand(t[1]).expand(t[2])
+			if not tb.intersects(box): continue
+			for i in 7:
+				for j in 7 - i:
+					var u := (i + 0.5) / 7.0; var v := (j + 0.5) / 7.0
+					if u + v > 1.0: continue
+					var pnt: Vector3 = (t[0] as Vector3) + ((t[1] as Vector3) - (t[0] as Vector3)) * u + ((t[2] as Vector3) - (t[0] as Vector3)) * v
+					if box.has_point(pnt): hit = true; break
+				if hit: break
+			if hit:
+				var c0: Vector3 = ((t[0] as Vector3) + (t[1] as Vector3) + (t[2] as Vector3)) / 3.0
+				_report(name, "doorway", "the room's build stands in the door at %.2f..%.2f (%s %.2f): a face near (%.2f, %.2f, %.2f)" % [float(d[2]), float(d[3]), d[0], at, c0.x, c0.y, c0.z])
+				break
 	# reach: walkable grid flood from the door zones
 	if floors.is_empty() or zones.is_empty(): return
 	var bb := Rect2(Vector2(floors[0][0], floors[0][1]), Vector2.ZERO)
