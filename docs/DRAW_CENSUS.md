@@ -94,8 +94,14 @@ THE FIRST NIGHT (the 40-49 ms half second found in the tier work). GPU ms of the
 - It happens once a session: what is built or loaded the first time the night is drawn (the look's night shaders,
   window and glow textures, the lights' shader versions), not the drawing itself.
 - `--warmnight` (draw the night 20 frames behind the loading screen, then day again): first dusk 12 14 15 13 ...,
-  worst frame 19 ms (`census_warmnight`). IT IS GONE. The fix for the game: draw the night once in the warm-up
-  (not done: this job ends with numbers; the switch is in the rig).
+  worst frame 19 ms (`census_warmnight`). IT IS GONE.
+- APPLIED (Yasin: "Yes, add it"): the rig draws the night once in its warm-up by default (`--nowarmnight` to compare);
+  0.5 s more behind the loading screen. Phone, `warmnight_zones`: centre and gritty at night with no frame over 33 ms
+  (before: 9 frames over 33, two of 52 ms in `tiers_off_zones`). The game should do the same in its own loading.
+  The zones gate still FAILS, on something new: the teleport to the gritty edge at night took 3.6 s (limit 3 s) and a
+  collision body waited 4.8 s. The first growth's pieces south of the gritty edge nearly doubled the collision there
+  (123k -> 236k units in that drive), and the streamer makes 1,200 units a frame. Not a drawing matter; not changed.
+  `warmnight_stream`: STREAM HEALTH PASS.
 
 ## What costs most, and what removing or cheapening it would give (apartments / gritty, 1.5 x)
 1. **Trees and plants: 10.9 / 3.4 ms** (27 % / 13 %); in civic 15 ms, pilot 5.7 ms. The biggest single cost. Of it,

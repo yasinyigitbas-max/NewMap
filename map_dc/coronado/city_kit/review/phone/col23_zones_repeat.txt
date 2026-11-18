@@ -1,0 +1,92 @@
+# phone rig run 'col23_zones_repeat'  2026-11-18T21:19Z  args: --plan=zones --probe
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 352 -> 360 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit efc0438 | meminfo at 60 s:          Native Heap:   262328                         263532;            Graphics:   863380                         863380;           TOTAL PSS:  1227719            TOTAL RSS:  1321852       TOTAL SWAP PSS:      270;
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 look=1 bloom=0 upscale=0 sharp=0.20 reflect=1 plan=zones lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=141 tiers=false band=8.0 arrive=0.50 far_ground=true tier_materials=20
+RIG warmnight 515 ms
+RIG boot first_area_ms=630 warm_ms=1155 (graphics memory reserve 192 MB: 52 ms) cells=10 static_mb=120 video_mb=268
+RIG drive gritty_60kmh speed=60 km/h secs=25 frames=1484 fps=59.3 | frame_ms med=16.8 p95=23.5 p99=25.8 worst=29 | over16.7=51.8% over33=0 over50=0 over100=0
+RIG   map gritty_60kmh draws avg=121 max=165 | tris avg=615k max=843k | cells most=14 in=9 out=5 dropped=0 cap_hits=0 | gpu_ms med=14.09 p95=14.81
+RIG   stream gritty_60kmh start_ready_ms=2 (worst frame meanwhile 0 ms) | request_to_in ms mean=138 worst=424 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.35, body 1.78 (col_4 shapes=16 new=737), removal step 0.17 | bodies late=0
+RIG   slow gritty_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision gritty_60kmh made=32286 units, a body waited at most 337 ms from coming into range | physics thread wait a frame (probe): median 0.5 p99 2.6 worst 5.8 ms
+RIG   objects gritty_60kmh all=7598 nodes=1442 orphan_nodes=1049 resources=2900 | streamer: cells in=14, bodies waiting=489, nodes leaving=254
+RIG   mem gritty_60kmh static_mb=129 video_mb=304 tex_mb=114 buf_mb=164
+RIG drive centre_60kmh speed=60 km/h secs=25 frames=1468 fps=58.7 | frame_ms med=16.8 p95=24.4 p99=25.9 worst=30 | over16.7=52.9% over33=0 over50=0 over100=0
+RIG   map centre_60kmh draws avg=96 max=129 | tris avg=677k max=1124k | cells most=14 in=9 out=17 dropped=0 cap_hits=0 | gpu_ms med=14.21 p95=16.19
+RIG   stream centre_60kmh start_ready_ms=749 (worst frame meanwhile 26 ms) | request_to_in ms mean=129 worst=286 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.35, body 1.78 (col_4 shapes=16 new=737), removal step 0.17 | bodies late=0
+RIG   slow centre_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision centre_60kmh made=36181 units, a body waited at most 358 ms from coming into range | physics thread wait a frame (probe): median 0.5 p99 2.8 worst 8.0 ms
+RIG   objects centre_60kmh all=12689 nodes=1275 orphan_nodes=3188 resources=5358 | streamer: cells in=14, bodies waiting=560, nodes leaving=851
+RIG   mem centre_60kmh static_mb=154 video_mb=470 tex_mb=114 buf_mb=324
+RIG drive waterfront_60kmh speed=60 km/h secs=25 frames=1484 fps=59.3 | frame_ms med=16.8 p95=23.3 p99=25.9 worst=35 | over16.7=51.7% over33=1 over50=0 over100=0
+RIG   map waterfront_60kmh draws avg=98 max=129 | tris avg=549k max=708k | cells most=13 in=6 out=20 dropped=0 cap_hits=0 | gpu_ms med=13.92 p95=14.64
+RIG   stream waterfront_60kmh start_ready_ms=848 (worst frame meanwhile 75 ms) | request_to_in ms mean=41 worst=51 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.35, body 1.78 (col_4 shapes=16 new=737), removal step 0.38 | bodies late=0
+RIG   slow waterfront_60kmh frames over 33 ms by what the streamer was doing: { "none": 1 } | over 45 ms: {  }
+RIG   collision waterfront_60kmh made=27020 units, a body waited at most 221 ms from coming into range | physics thread wait a frame (probe): median 0.5 p99 2.6 worst 5.8 ms
+RIG   objects waterfront_60kmh all=13105 nodes=603 orphan_nodes=3849 resources=5408 | streamer: cells in=12, bodies waiting=115, nodes leaving=1197
+RIG   mem waterfront_60kmh static_mb=157 video_mb=478 tex_mb=116 buf_mb=331
+RIG drive industrial_60kmh speed=60 km/h secs=25 frames=1485 fps=59.4 | frame_ms med=16.7 p95=22.9 p99=25.4 worst=28 | over16.7=50.6% over33=0 over50=0 over100=0
+RIG   map industrial_60kmh draws avg=112 max=140 | tris avg=575k max=705k | cells most=12 in=9 out=17 dropped=0 cap_hits=0 | gpu_ms med=13.97 p95=14.65
+RIG   stream industrial_60kmh start_ready_ms=326 (worst frame meanwhile 23 ms) | request_to_in ms mean=45 worst=71 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.35, body 1.78 (col_4 shapes=16 new=737), removal step 0.38 | bodies late=0
+RIG   slow industrial_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision industrial_60kmh made=61816 units, a body waited at most 130 ms from coming into range | physics thread wait a frame (probe): median 0.6 p99 5.0 worst 8.3 ms
+RIG   objects industrial_60kmh all=16488 nodes=1171 orphan_nodes=5057 resources=6338 | streamer: cells in=12, bodies waiting=399, nodes leaving=1440
+RIG   mem industrial_60kmh static_mb=172 video_mb=506 tex_mb=116 buf_mb=359
+RIG drive apartments_60kmh speed=60 km/h secs=25 frames=1400 fps=56.0 | frame_ms med=17.0 p95=25.5 p99=27.5 worst=36 | over16.7=56.4% over33=2 over50=0 over100=0
+RIG   map apartments_60kmh draws avg=133 max=196 | tris avg=744k max=1041k | cells most=14 in=9 out=19 dropped=0 cap_hits=0 | gpu_ms med=15.02 p95=17.11
+RIG   stream apartments_60kmh start_ready_ms=580 (worst frame meanwhile 26 ms) | request_to_in ms mean=56 worst=99 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.35, body 2.03 (col_16 shapes=24 new=728), removal step 0.38 | bodies late=0
+RIG   slow apartments_60kmh frames over 33 ms by what the streamer was doing: { "bodies": 1, "none": 1 } | over 45 ms: {  }
+RIG   collision apartments_60kmh made=32762 units, a body waited at most 595 ms from coming into range | physics thread wait a frame (probe): median 0.5 p99 2.8 worst 6.3 ms
+RIG   objects apartments_60kmh all=18833 nodes=1164 orphan_nodes=6079 resources=7367 | streamer: cells in=14, bodies waiting=354, nodes leaving=1790
+RIG   mem apartments_60kmh static_mb=183 video_mb=565 tex_mb=116 buf_mb=418
+RIG drive pilot_60kmh speed=60 km/h secs=25 frames=1481 fps=59.2 | frame_ms med=16.8 p95=23.4 p99=25.8 worst=31 | over16.7=53.4% over33=0 over50=0 over100=0
+RIG   map pilot_60kmh draws avg=97 max=127 | tris avg=491k max=671k | cells most=14 in=8 out=18 dropped=0 cap_hits=0 | gpu_ms med=14.00 p95=14.73
+RIG   stream pilot_60kmh start_ready_ms=435 (worst frame meanwhile 24 ms) | request_to_in ms mean=66 worst=176 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.35, body 2.03 (col_16 shapes=24 new=728), removal step 0.38 | bodies late=0
+RIG   slow pilot_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision pilot_60kmh made=38794 units, a body waited at most 137 ms from coming into range | physics thread wait a frame (probe): median 0.6 p99 4.2 worst 11.0 ms
+RIG   objects pilot_60kmh all=21011 nodes=858 orphan_nodes=7377 resources=8016 | streamer: cells in=14, bodies waiting=321, nodes leaving=2114
+RIG   mem pilot_60kmh static_mb=194 video_mb=606 tex_mb=116 buf_mb=460
+RIG drive strip_60kmh speed=60 km/h secs=25 frames=1477 fps=59.1 | frame_ms med=16.8 p95=23.7 p99=25.6 worst=28 | over16.7=54.0% over33=0 over50=0 over100=0
+RIG   map strip_60kmh draws avg=82 max=109 | tris avg=449k max=592k | cells most=14 in=6 out=19 dropped=0 cap_hits=0 | gpu_ms med=13.88 p95=14.66
+RIG   stream strip_60kmh start_ready_ms=701 (worst frame meanwhile 28 ms) | request_to_in ms mean=113 worst=253 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.35, body 2.26 (col_9 shapes=22 new=1561), removal step 0.44 | bodies late=0
+RIG   slow strip_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision strip_60kmh made=45348 units, a body waited at most 201 ms from coming into range | physics thread wait a frame (probe): median 0.6 p99 4.6 worst 7.5 ms
+RIG   objects strip_60kmh all=23331 nodes=713 orphan_nodes=8221 resources=9113 | streamer: cells in=13, bodies waiting=239, nodes leaving=2369
+RIG   mem strip_60kmh static_mb=209 video_mb=675 tex_mb=116 buf_mb=528
+RIG drive civic_60kmh speed=60 km/h secs=25 frames=1461 fps=58.4 | frame_ms med=16.8 p95=24.4 p99=26.7 worst=35 | over16.7=52.3% over33=1 over50=0 over100=0
+RIG   map civic_60kmh draws avg=104 max=143 | tris avg=493k max=718k | cells most=14 in=9 out=18 dropped=0 cap_hits=0 | gpu_ms med=14.30 p95=15.69
+RIG   stream civic_60kmh start_ready_ms=312 (worst frame meanwhile 24 ms) | request_to_in ms mean=39 worst=64 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.35, body 2.26 (col_9 shapes=22 new=1561), removal step 0.44 | bodies late=0
+RIG   slow civic_60kmh frames over 33 ms by what the streamer was doing: { "loading": 1 } | over 45 ms: {  }
+RIG   collision civic_60kmh made=31040 units, a body waited at most 381 ms from coming into range | physics thread wait a frame (probe): median 0.5 p99 2.6 worst 4.1 ms
+RIG   objects civic_60kmh all=25342 nodes=1096 orphan_nodes=9337 resources=9115 | streamer: cells in=14, bodies waiting=474, nodes leaving=2634
+RIG   mem civic_60kmh static_mb=217 video_mb=664 tex_mb=116 buf_mb=517
+RIG drive stadium_60kmh speed=60 km/h secs=25 frames=1489 fps=59.6 | frame_ms med=16.8 p95=22.6 p99=25.2 worst=27 | over16.7=52.1% over33=0 over50=0 over100=0
+RIG   map stadium_60kmh draws avg=64 max=78 | tris avg=231k max=268k | cells most=14 in=8 out=11 dropped=0 cap_hits=0 | gpu_ms med=13.42 p95=14.17
+RIG   stream stadium_60kmh start_ready_ms=99 (worst frame meanwhile 20 ms) | request_to_in ms mean=40 worst=56 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.35, body 2.26 (col_9 shapes=22 new=1561), removal step 0.44 | bodies late=0
+RIG   slow stadium_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision stadium_60kmh made=13360 units, a body waited at most 91 ms from coming into range | physics thread wait a frame (probe): median 0.6 p99 2.0 worst 6.3 ms
+RIG   objects stadium_60kmh all=26585 nodes=888 orphan_nodes=10072 resources=9673 | streamer: cells in=14, bodies waiting=368, nodes leaving=2936
+RIG   mem stadium_60kmh static_mb=222 video_mb=685 tex_mb=116 buf_mb=538
+RIG drive seventh_210kmh speed=209 km/h secs=20 frames=1159 fps=57.9 | frame_ms med=16.8 p95=25.2 p99=26.8 worst=31 | over16.7=52.6% over33=0 over50=0 over100=0
+RIG   map seventh_210kmh draws avg=113 max=198 | tris avg=609k max=1168k | cells most=16 in=23 out=28 dropped=0 cap_hits=0 | gpu_ms med=14.30 p95=16.74
+RIG   stream seventh_210kmh start_ready_ms=168 (worst frame meanwhile 23 ms) | request_to_in ms mean=45 worst=98 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.35, body 2.26 (col_9 shapes=22 new=1561), removal step 0.44 | bodies late=0
+RIG   slow seventh_210kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision seventh_210kmh made=75175 units, a body waited at most 934 ms from coming into range | physics thread wait a frame (probe): median 0.5 p99 4.6 worst 7.8 ms
+RIG   objects seventh_210kmh all=29718 nodes=1296 orphan_nodes=11973 resources=9874 | streamer: cells in=16, bodies waiting=414, nodes leaving=3527
+RIG   mem seventh_210kmh static_mb=235 video_mb=695 tex_mb=116 buf_mb=548
+RIG drive centre_night_60kmh speed=60 km/h secs=25 frames=1418 fps=56.7 | frame_ms med=16.9 p95=25.4 p99=26.7 worst=29 | over16.7=53.8% over33=0 over50=0 over100=0
+RIG   map centre_night_60kmh draws avg=110 max=145 | tris avg=674k max=1126k | cells most=14 in=7 out=13 dropped=0 cap_hits=0 | gpu_ms med=14.51 p95=18.78
+RIG   stream centre_night_60kmh start_ready_ms=137 (worst frame meanwhile 27 ms) | request_to_in ms mean=38 worst=61 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.35, body 2.26 (col_9 shapes=22 new=1561), removal step 0.44 | bodies late=0
+RIG   slow centre_night_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision centre_night_60kmh made=13175 units, a body waited at most 263 ms from coming into range | physics thread wait a frame (probe): median 0.5 p99 1.8 worst 5.4 ms
+RIG   objects centre_night_60kmh all=30978 nodes=1325 orphan_nodes=12898 resources=10063 | streamer: cells in=14, bodies waiting=510, nodes leaving=3724
+RIG   mem centre_night_60kmh static_mb=242 video_mb=690 tex_mb=116 buf_mb=544
+RIG drive gritty_night_60kmh speed=60 km/h secs=25 frames=1473 fps=58.9 | frame_ms med=16.8 p95=24.3 p99=26.6 worst=33 | over16.7=51.3% over33=1 over50=0 over100=0
+RIG   map gritty_night_60kmh draws avg=135 max=179 | tris avg=616k max=845k | cells most=14 in=9 out=19 dropped=0 cap_hits=0 | gpu_ms med=14.24 p95=15.40
+RIG   stream gritty_night_60kmh start_ready_ms=323 (worst frame meanwhile 24 ms) | request_to_in ms mean=36 worst=67 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.35, body 2.26 (col_9 shapes=22 new=1561), removal step 0.51 | bodies late=0
+RIG   slow gritty_night_60kmh frames over 33 ms by what the streamer was doing: { "none": 1 } | over 45 ms: {  }
+RIG   collision gritty_night_60kmh made=27814 units, a body waited at most 281 ms from coming into range | physics thread wait a frame (probe): median 0.5 p99 1.9 worst 5.9 ms
+RIG   objects gritty_night_60kmh all=33801 nodes=1442 orphan_nodes=14941 resources=10094 | streamer: cells in=14, bodies waiting=489, nodes leaving=4449
+RIG   mem gritty_night_60kmh static_mb=254 video_mb=690 tex_mb=116 buf_mb=544
+RIG plan_done lap=1
