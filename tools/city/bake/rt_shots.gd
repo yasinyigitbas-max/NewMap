@@ -7,6 +7,7 @@ const Plates := preload("res://tools/city/bake/sign_plates.gd")
 ##   ... -s res://tools/city/bake/rt_shots.gd -- --out=DIR "--cams=name:x,y,z:tx,ty,tz;..."     pictures + draws / tris
 ##   ... -- --probe            the audit's street spots x 4 directions: PROBE lines (draws, tris) like tools/city/audit/probe.gd
 ##   ... -- --drive=x0,z0,x1,z1,speed    move the focus along a line and report every cell added (ms on the main thread)
+##                                        --lead=seconds of travel the loading range reaches ahead (default 2, 0 = none)
 ##   options: --night=0..1   --wind=strength   --frames=N (N pictures per camera, run with --fixed-fps 20 for a clip)
 ##            --runtime=res://...   --hold=frames before each shot (default 40)
 ##            --lights=N  (with --night) the N lamps nearest the camera as real lights (city_lights.gd; stock engine: <= 8)
@@ -24,7 +25,7 @@ func _info() -> Array:
 	var R := RenderingServer
 	return [R.get_rendering_info(R.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME), R.get_rendering_info(R.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME)]
 func _run() -> void:
-	var out := "user://rt_shots"; var cams: Array = []; var probe := false; var night := 0.0; var wind := 1.0; var frames := 1; var rt := "res://map_dc/coronado/city_kit/runtime/"; var hold := 40; var drive := PackedFloat64Array(); var only := ""; var detail := false; var tint := false; var plates := false; var nlights := 0; var prefix := ""
+	var out := "user://rt_shots"; var cams: Array = []; var probe := false; var night := 0.0; var wind := 1.0; var frames := 1; var rt := "res://map_dc/coronado/city_kit/runtime/"; var hold := 40; var drive := PackedFloat64Array(); var only := ""; var lead_s := 2.0; var detail := false; var tint := false; var plates := false; var nlights := 0; var prefix := ""
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--out="): out = a.trim_prefix("--out=")
 		if a == "--probe": probe = true
@@ -40,6 +41,7 @@ func _run() -> void:
 		if a.begins_with("--hold="): hold = int(a.trim_prefix("--hold="))
 		if a.begins_with("--runtime="): rt = a.trim_prefix("--runtime=")
 		if a.begins_with("--drive="): drive = a.trim_prefix("--drive=").split_floats(",")
+		if a.begins_with("--lead="): lead_s = float(a.trim_prefix("--lead="))
 		if a.begins_with("--cams="):
 			for c in a.trim_prefix("--cams=").split(";", false):
 				var p := c.split(":"); cams.append([p[0], _v(p[1]), _v(p[2])])
@@ -60,7 +62,7 @@ func _run() -> void:
 	var gp := MeshInstance3D.new(); var pm := PlaneMesh.new(); pm.size = Vector2(4000, 4000); gp.mesh = pm
 	var gm := StandardMaterial3D.new(); gm.albedo_color = Color(0.36, 0.42, 0.3); gm.roughness = 1.0; gp.material_override = gm; gp.position.y = -0.05; root.add_child(gp)
 	var st: Node3D = Stream.new(); st.runtime_dir = rt; st.name = "City"; root.add_child(st)
-	st.set_night(night)
+	st.set_night(night); st.lead_seconds = lead_s
 	var cam := Camera3D.new(); cam.fov = 60.0; cam.far = 2000.0; root.add_child(cam); cam.current = true
 	if "--nofar" in OS.get_cmdline_user_args() and st.far_world: st.far_world.visible = false
 	var lights: Node3D = null
@@ -132,13 +134,17 @@ func _run() -> void:
 		cam.fov = 70.0; var dist := a0.distance_to(a1); var t := 0.0; var worst := 0.0; var nframes := 0
 		st.update_focus(a0, true)
 		for i in 5: await process_frame
-		var t_prev := Time.get_ticks_usec(); var late60 := 0; var late220 := 0; var worst_gap := 0.0
+		# --blind: draw nothing during the drive. On the cloud the software GPU takes every CPU core to draw, which
+		# starves the loader threads; blind, the timings are the loader's own (meshes are still uploaded).
+		if "--blind" in OS.get_cmdline_user_args(): st.visible = false; gp.visible = false
+		var t_prev := Time.get_ticks_usec(); var late60 := 0; var late220 := 0; var worst_gap := 0.0; var max_cells := 0
 		while t * sp < dist:
 			var p := a0.lerp(a1, t * sp / dist)
 			cam.global_position = p + Vector3(0, 7.7, 0); cam.look_at(cam.global_position + (a1 - a0).normalized() * 50.0)
-			st.update_focus(p)
+			st.update_focus(p, false, (a1 - a0).normalized() * sp)
 			await process_frame
 			var now := Time.get_ticks_usec(); t += (now - t_prev) / 1000000.0; t_prev = now; nframes += 1
+			max_cells = maxi(max_cells, st.loaded_count())
 			# a cell is late when the player is nearer to it than a tier needs it and it is not in yet:
 			# 220 m = its mid tier should already show; 60 m = its near tier should
 			for k: String in st.cells:
@@ -150,5 +156,5 @@ func _run() -> void:
 		while st.busy(): await process_frame
 		var rworst := 0.0; var rsum := 0.0
 		for ms2: float in st.ready_ms: rworst = maxf(rworst, ms2); rsum += ms2
-		print("DRIVE %.0f m at %.0f m/s (%.1f frames a second here): %d cells added | request to in-scene ms mean %.0f worst %.0f | main-thread add ms worst %.2f | frames with a cell missing inside 220 m: %d (deepest %.0f m), inside 60 m: %d, of %d frames" % [dist, sp, nframes / maxf(t, 0.001), st.add_ms.size(), rsum / maxf(1.0, st.ready_ms.size()), rworst, worst, late220, worst_gap, late60, nframes])
+		print("DRIVE %.0f m at %.0f m/s (%.1f frames a second here): %d cells added | request to in-scene ms mean %.0f worst %.0f | main-thread add ms worst %.2f | frames with a cell missing inside 220 m: %d (deepest %.0f m), inside 60 m: %d, of %d frames | lead %.1f s, most cells loaded at once %d" % [dist, sp, nframes / maxf(t, 0.001), st.add_ms.size(), rsum / maxf(1.0, st.ready_ms.size()), rworst, worst, late220, worst_gap, late60, nframes, st.lead_seconds, max_cells])
 	quit()

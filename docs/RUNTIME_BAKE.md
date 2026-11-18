@@ -52,11 +52,18 @@ How it gets the draw calls down:
 - Loaded set (12-14 cells + far world): 224 MB video memory (79 textures, 134 meshes).
 - A cell loads in 18 ms on average, 46 ms worst (this machine, warm), on a loader thread; it is built on a worker
   thread; adding it to the scene costs at most 1.9 ms on the main thread.
-- Drive through the sample (840 m, 14 cells streamed in), cloud machine at about 10 frames a second:
-  15 and 30 m/s: no cell late. 60 m/s: no cell late for the near tier (60 m); cells arrived up to 11 m late for the
-  mid tier (220 m). A cell takes 0.4 s on average, 1.0 s worst, from request to in-scene here. The streaming distance
-  is the same in every direction (load 240 m from the cell's edge, unload 300 m): the 20 m between 240 and 220 is
-  the whole margin, 0.67 s at 30 m/s. A forward lead by speed is the fix for fast cars (not built).
+- Drive through the sample (840 m, 14 cells streamed in). The streamer loads 240 m from a cell's edge in every
+  direction, unloads at 300 m, and since 18 Nov reaches AHEAD of a moving player by 2 s of travel (at most 200 m;
+  `lead_seconds`, `max_lead`). Nothing is trimmed behind (looking back needs the mid tier to 220 m).
+  | Run | 30 m/s | 60 m/s, no lead | 60 m/s, lead | 80 m/s, lead | 100 m/s, lead |
+  |---|---|---|---|---|---|
+  | Drawing (cloud: ~10 frames a second, the software GPU starves the loader) | no cell late | up to 15 m late for the mid tier | 2 m late in one frame | up to 105 m late | not run |
+  | Not drawing (`--blind`: the loader's own speed) | not run | no cell late | no cell late | no cell late | no cell late |
+  No run had a cell missing inside 60 m (the near tier). Request to in-scene, not drawing: 0.09-0.3 s on average,
+  0.2-0.8 s worst. The lead costs 2-4 more cells in memory (16-18 instead of 14).
+  Adding a cell to the scene took up to 2 ms on the main thread in most drawing runs, but 8-33 ms worst in the
+  not-drawing runs and 13-15 ms in two drawing runs: a possible dropped frame. Not solved: add a cell in parts over a
+  few frames.
 - Disk: 79 MB of cells + 14 MB of models for the 32 sample cells. Merging trees is what makes cells big (46 MB with a
   600-triangle merge limit, at about 8 more draws a view).
 - `bake_runtime.gd --check`: 32 cells, 0 stale.

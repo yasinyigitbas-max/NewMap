@@ -3,11 +3,17 @@ extends Node3D
 ##  - far/far_world.scn is loaded once and stays (the skyline of the whole island);
 ##  - a 200 m cell is requested on a loader thread when its rectangle comes within `load_dist` of the focus, built
 ##    (instantiated) on a worker thread, and added to the scene at most one per frame; it is dropped past `unload_dist`.
-## The game may use this node as it is (call `update_focus(player position)` every frame or so) or point its own
-## streamer at the same cell scenes. `update_focus(pos, true)` loads everything in range at once (previews, checks).
+## The game may use this node as it is (call `update_focus(player position, false, player velocity)` every frame or
+## so) or point its own streamer at the same cell scenes. `update_focus(pos, true)` loads everything in range at once
+## (previews, checks).
+## FORWARD LEAD (18 Nov, Yasin's go): the loading range reaches ahead of a moving player by `lead_seconds` of travel
+## (at most `max_lead` m), so a fast car gets its cells earlier; standing still it is the same in every direction.
+## Nothing is trimmed behind: a player who looks back still needs the mid tier to 220 m.
 @export var runtime_dir := "res://map_dc/coronado/city_kit/runtime/"
 @export var load_dist := 240.0
 @export var unload_dist := 300.0
+@export var lead_seconds := 2.0
+@export var max_lead := 200.0
 var manifest := {}
 var cell_m := 200.0
 var cells := {}          # "x_z" -> {"state": 0 none / 1 loading / 2 building / 3 in, "node": Node3D, "task": int, "ps": PackedScene}
@@ -45,10 +51,14 @@ func _dist(k: String, p: Vector3) -> float:
 
 func _path(k: String) -> String: return runtime_dir + "cells/cell_%s.scn" % k
 
-func update_focus(p: Vector3, now := false) -> void:
+func update_focus(p: Vector3, now := false, velocity := Vector3.ZERO) -> void:
 	focus = p
+	var lead := Vector3(velocity.x, 0, velocity.z) * lead_seconds
+	if lead.length() > max_lead: lead = lead.normalized() * max_lead
+	var steps := 1 + int(lead.length() / 60.0)      # the range is swept along the lead, a point every 60 m or less
 	for k: String in cells:
 		var c: Dictionary = cells[k]; var d := _dist(k, p)
+		for i in range(1, steps + 1): d = minf(d, _dist(k, p + lead * (float(i) / steps)))
 		if c.state == 0 and d <= load_dist:
 			if now:
 				c.node = (load(_path(k)) as PackedScene).instantiate(); add_child(c.node); c.state = 3; _apply_night(c.node)
