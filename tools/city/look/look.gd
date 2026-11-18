@@ -31,6 +31,7 @@ const NOISE_PATH := "res://tools/city/look/sky_noise.png"
 const Blobs := preload("res://tools/city/look/blob_shadows.gd")
 const DayCycle := preload("res://tools/city/look/day_cycle.gd")
 const Sea := preload("res://tools/city/look/sea.gd")
+const Weather := preload("res://tools/city/look/weather.gd")
 ## the moon: where the night's light comes from (the same direction the night used before the running day)
 const MOON_ELEV := 40.0
 const MOON_AZIM := -35.0
@@ -103,6 +104,7 @@ static var PRESETS := {
 @export var glow := true                            ## lamp halos and pools drawn by tools/city/look/glow.gdshader (look job 3); false = the bake's
 @export var blobs := false                          ## soft tree shadows beyond the sun shadow (look job 4). Reads each cell's meshes: off for phone drives
 @export_range(0.0, 1.0) var wet := 0.0             ## look job 5: 0 dry .. 1 after rain (global ck_wet; the ground demo below)
+@export var weather := ""                           ## look queue 2 job 4: mist, hazy, storm, rain (weather.gd) over the time of day
 @export var sea := true                             ## look queue 2 job 3: the sea in the place of the green plane (sea.gd)
 @export var celestial := true                       ## look queue 2 job 2: sun glare, the moon, new stars; false = the sky as before
 @export var cycle := 0.0                            ## look job 2.1: seconds for a whole day (0 = no running day)
@@ -162,6 +164,7 @@ func _ready() -> void:
 	if sea: add_child(Sea.build())      # one draw, built once (tens of ms at start)
 	sun = DirectionalLight3D.new(); sun.rotation_degrees = sun_angles
 	sun.shadow_enabled = OS.get_environment("NOSHADOW") != "1"; sun.directional_shadow_max_distance = shadow_distance; add_child(sun)
+	if weather == "rain" and wet <= 0.0: wet = 0.65      # rain wets the ground (before the cells come in: attach_stream)
 	if cycle > 0.0:
 		sky.process_mode = Sky.PROCESS_MODE_INCREMENTAL      # the reflection map is redrawn over several frames, not in one
 		RenderingServer.viewport_set_measure_render_time(sky_map.get_viewport_rid(), true)
@@ -270,28 +273,27 @@ func set_night(v: float) -> void:
 ## the running day (and pictures of it): the look at an hour of the clock, 0..24
 func set_hour(h: float) -> void:
 	hour = fposmod(h, 24.0)
-	var t := DayCycle.at(hour, PRESETS)
-	night = float(t.lights)
-	_apply(t)
+	_apply(DayCycle.at(hour, PRESETS))
 	if _stream: _stream.set_night(night)
 
 ## a time of day (PRESETS), or "" to go back to set_night
 func set_preset(name: String) -> void:
 	preset = name if PRESETS.has(name) else ""
 	if preset == "": set_night(night); return
-	night = float(PRESETS[preset].lights)
 	_apply(PRESETS[preset])
 
 ## how far the city's night is on for the current setting (the streamer's ck_night)
 func lights() -> float:
-	return float(PRESETS[preset].lights) if preset != "" and cycle <= 0.0 else night
+	return night      # (_apply keeps it: the time of day's, raised by a gloomy weather)
 
 ## towards the sun (or moon). Azimuth: 90 = east (+X), 0 = south (+Z), -90 = west (-X): the sun's day runs from
 ## about +105 (morning) through 0 (noon) to -95 (dusk). (Before 18 Nov evening morning and golden were swapped.)
 static func _dir(elev: float, azim: float) -> Vector3:
 	return Basis.from_euler(Vector3(deg_to_rad(-elev), deg_to_rad(azim), 0.0)).z
 
-func _apply(t: Dictionary) -> void:
+func _apply(t0: Dictionary) -> void:
+	var t := Weather.apply(t0, weather, hour if cycle > 0.0 or t0.has("hour") else -1.0)
+	night = float(t.get("lights", night))
 	# the light: the sun by day, the moon by night (blended by "moon", so the light never jumps)
 	var sun_v := _dir(float(t.elev), float(t.azim)); var moon_v := _dir(MOON_ELEV, MOON_AZIM)
 	var mo := clampf(float(t.get("moon", 0.0)), 0.0, 1.0)
