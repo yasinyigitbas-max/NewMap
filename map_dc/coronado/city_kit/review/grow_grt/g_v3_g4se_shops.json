@@ -1,0 +1,31 @@
+{
+ "piece": "g_v3_g4se",
+ "shops": [
+  {
+   "door_index": 1,
+   "kind": "cash",
+   "label": "corner_shop",
+   "model": "ck/ck_svc_bank_pharm",
+   "name": "Cash Now",
+   "pos": [
+    -583.799999237061,
+    4.15038596093655,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956
+  },
+  {
+   "door_index": 0,
+   "kind": "botanica",
+   "label": "shop_two",
+   "model": "commercial/com_realty",
+   "name": "Botanica San Miguel",
+   "pos": [
+    -574.200000762939,
+    4.15091529488564,
+    -1176.20000076294
+   ],
+   "yaw": 180.000005008956
+  }
+ ]
+}
