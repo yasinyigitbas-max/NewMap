@@ -12,7 +12,8 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   costs (apartments / gritty): plants 10.9 / 3.4 ms (cut-out leaves 4.0 / 2.8 of it), near buildings 7.0 / 3.3, sun
   shadows 4.9 / 3.4, sky reflection 5.1 / 3.2, FXAA 3.9 / 3.6, near props 2.6 / 1.3, wear marks 1.9 / 1.9. Cheap: mid
   tiers, far world, far ground, the look's parts (0.6 together). The first dusk of a session (40-120 ms frames) is
-  first-time building, gone with `--warmnight` (draw the night once in the warm-up: the fix, not applied). Switching
+  first-time building, gone with `--warmnight`: NOW THE RIG'S DEFAULT (Yasin: "Yes, add it"; night drives with no
+  frame over 33 ms). Zones gate still fails, newly: the growth doubled the gritty edge's collision, teleport 3.6 s. Switching
   the sky reflection back on left the GPU ~28 ms slower until a teleport (not explained). NEW: docs/TREE_ARTIST_BRIEF.md
   (Yasin: new tree models; what they must be). Stream gate on the merged build (look + tiers code + growth): PASS.
   Release build not made (Yasin: "dont make the release build yet"). Lock test RESULT PASS.
