@@ -19,6 +19,7 @@ extends Node3D
 ##             NAME a time of day of the look: morning, noon, day, golden, dusk, night, overcast (overrides the drives' night)
 ##   --cycle=120   with the look: a running day, the whole day in this many seconds (0 = off); --clock=7.0 its start hour.
 ##             Overrides the drives' night. Smooth: the sky and its maps step every 0.5 s, nothing jumps
+##   --celestial=1|0  with the look: 1 (default) sun glare, a moon with its own light, stars rising with the dusk; 0 the sky before
 ##   --bloom=0|1   with --look=1: 1 adds a soft glow round bright things (GTA 4 style); costs pixels, off by default
 ##   --glow=1|0    with the look: 1 (default) the look's lamp halos and pools (tools/city/look/glow.gdshader), 0 the bake's
 ##   --blobs=0|1   with the look: 1 soft tree shadows beyond the 50 m sun shadow (look job 4); OFF by default: it reads
@@ -78,7 +79,7 @@ var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
-var opt := {"look": "1", "cycle": 0.0, "clock": 7.0, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false}
+var opt := {"look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -100,7 +101,7 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "look", "cycle", "clock", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots"]:
+		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "look", "cycle", "clock", "celestial", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
 				opt[k] = v if k in ["plan", "shots", "look"] else (float(v) if k in ["scale", "lead", "colms", "sharp", "wet", "cycle", "clock"] else int(v))
@@ -113,7 +114,7 @@ func _ready() -> void:
 	if int(opt.upscale) == 1:      # look job 2: the engine's FSR 1 mode, which Yasin's engine (patch c) runs as SGSR 1 in the Mobile renderer
 		vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_FSR; vp.fsr_sharpness = float(opt.sharp)
 	if String(opt.look) != "0":      # the look pack: sky, haze, light colours, colour treatment
-		look = Look.new(); look.bloom = int(opt.bloom) == 1; look.glow = int(opt.glow) == 1; look.blobs = int(opt.blobs) == 1; look.wet = float(opt.wet); look.cycle = float(opt.cycle); look.hour = float(opt.clock); add_child(look); env = look.env; sun = look.sun
+		look = Look.new(); look.bloom = int(opt.bloom) == 1; look.glow = int(opt.glow) == 1; look.blobs = int(opt.blobs) == 1; look.wet = float(opt.wet); look.cycle = float(opt.cycle); look.celestial = int(opt.celestial) == 1; look.hour = float(opt.clock); add_child(look); env = look.env; sun = look.sun
 		if String(opt.look) != "1": look.set_preset(String(opt.look))
 	else:                       # the old plain setup, kept to compare against
 		env = Environment.new()

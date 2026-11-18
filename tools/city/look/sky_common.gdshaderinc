@@ -21,6 +21,7 @@ uniform float sun_glare = 0.35;        // a soft wide glare round the disc (no b
 uniform vec3 moon_dir = vec3(0.0, 0.64, -0.77);
 uniform float moon_amount = 0.0;       // 0 by day .. 1 at night
 uniform vec3 moon_col : source_color = vec3(0.86, 0.89, 0.97);
+uniform bool new_stars = true;         // false: the stars as before job 2 (look.gd celestial = false)
 global uniform vec2 ck_sky_drift;
 
 vec3 ck_sky_color(vec3 dir) {
@@ -58,7 +59,8 @@ vec3 ck_sky_color(vec3 dir) {
 		cc += sun_col * (sd8 * sun_scatter * 1.5);
 		if (stars > 0.001) {      // thin near the horizon (haze), none round the moon
 			float st = texture(noise_tex, uv * 1.7).b;
-			col += st * st * 1.6 * stars * smoothstep(0.05, 0.45, y) * (1.0 - moon_amount * exp(-(1.0 - dot(dir, moon_dir)) * 60.0));
+			if (new_stars) col += st * st * 1.6 * stars * smoothstep(0.05, 0.45, y) * (1.0 - moon_amount * exp(-(1.0 - dot(dir, moon_dir)) * 60.0));
+			else col += st * stars * smoothstep(0.05, 0.4, y);
 		}
 		col = mix(col + glow, cc, c);
 	} else {

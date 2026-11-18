@@ -100,6 +100,7 @@ static var PRESETS := {
 @export var glow := true                            ## lamp halos and pools drawn by tools/city/look/glow.gdshader (look job 3); false = the bake's
 @export var blobs := false                          ## soft tree shadows beyond the sun shadow (look job 4). Reads each cell's meshes: off for phone drives
 @export_range(0.0, 1.0) var wet := 0.0             ## look job 5: 0 dry .. 1 after rain (global ck_wet; the ground demo below)
+@export var celestial := true                       ## look queue 2 job 2: sun glare, the moon, new stars; false = the sky as before
 @export var cycle := 0.0                            ## look job 2.1: seconds for a whole day (0 = no running day)
 @export var hour := 7.0                             ## the clock of the running day
 @export var cycle_step := 0.5                       ## seconds between two updates of the sky (and its reflection maps)
@@ -301,9 +302,10 @@ func _apply(t: Dictionary) -> void:
 		for k: String in ["zenith", "middle", "haze", "cloud_lit", "cloud_dark", "cloud_cover", "cloud_alpha", "cloud_scale", "sun_halo", "sun_disc", "disc_cos", "stars"]:
 			m.set_shader_parameter(k, t[k])
 		m.set_shader_parameter(&"sun_col", sun.light_color)
-		m.set_shader_parameter(&"sun_dir", sun_v)
+		m.set_shader_parameter(&"sun_dir", sun_v if celestial else (sun_v if mo < 0.5 else light_v))      # (before job 2 the night's disc was the light's)
 		m.set_shader_parameter(&"moon_dir", moon_v)
-		m.set_shader_parameter(&"moon_amount", clampf(maxf(mo, float(t.get("lights", 0.0)) * 0.5), 0.0, 1.0))      # up with the dusk
+		m.set_shader_parameter(&"moon_amount", clampf(maxf(mo, float(t.get("lights", 0.0)) * 0.5), 0.0, 1.0) if celestial else 0.0)      # up with the dusk
+		m.set_shader_parameter(&"sun_glare", 0.35 if celestial else 0.0); m.set_shader_parameter(&"new_stars", celestial)
 		m.set_shader_parameter(&"sun_scatter", sun.light_energy * env.fog_sun_scatter)      # the fog's own sun glow, so sky and fog agree
 	sky_map.render_target_update_mode = SubViewport.UPDATE_ONCE
 	# the building session's glass (claude/look-buildings, rt_bldg.gdshader) reflects a two-colour sky: keep it this sky
