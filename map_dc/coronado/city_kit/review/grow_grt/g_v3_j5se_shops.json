@@ -1,0 +1,31 @@
+{
+ "piece": "g_v3_j5se",
+ "shops": [
+  {
+   "door_index": 0,
+   "kind": "diner",
+   "label": "corner_shop",
+   "model": "ck/ck_grt_row3",
+   "name": "Campus Grill",
+   "pos": [
+    -780.799999237061,
+    4.15396055579185,
+    -982.299999237061
+   ],
+   "yaw": 180.000005008956
+  },
+  {
+   "door_index": 2,
+   "kind": "laundry",
+   "label": "corner_shop",
+   "model": "ck/ck_grt_row3",
+   "name": "Spin Cycle",
+   "pos": [
+    -780.799999237061,
+    4.15396055579185,
+    -982.299999237061
+   ],
+   "yaw": 180.000005008956
+  }
+ ]
+}

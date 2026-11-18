@@ -1,0 +1,44 @@
+{
+ "piece": "g_v2_g4nw",
+ "shops": [
+  {
+   "door_index": 0,
+   "kind": "diner",
+   "label": "corner_block",
+   "model": "urban/urb_brick_corner",
+   "name": "Rosie's Diner",
+   "pos": [
+    -619.200000762939,
+    4.14874076843262,
+    -1224.79999923706
+   ],
+   "yaw": 0.0
+  },
+  {
+   "door_index": 1,
+   "kind": "takeout",
+   "label": "corner_next",
+   "model": "ck/ck_svc_cinema_fast",
+   "name": "Wok N Roll",
+   "pos": [
+    -634.799999237061,
+    4.10593732446432,
+    -1222.79999923706
+   ],
+   "yaw": 0.0
+  },
+  {
+   "door_index": 0,
+   "kind": "bar",
+   "label": "dive_bar",
+   "model": "commercial/com_bar_crown",
+   "name": "The Anchor Inn",
+   "pos": [
+    -666.5,
+    3.74398717284203,
+    -1223.79999923706
+   ],
+   "yaw": 0.0
+  }
+ ]
+}

@@ -1,0 +1,31 @@
+{
+ "piece": "g_v3_g4sw",
+ "shops": [
+  {
+   "door_index": 0,
+   "kind": "bodega",
+   "label": "corner_shop",
+   "model": "ck/ck_svc_trade_1d",
+   "name": "G Ave Mini Mart",
+   "pos": [
+    -616.200000762939,
+    4.14833003282547,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956
+  },
+  {
+   "door_index": 0,
+   "kind": "laundry",
+   "label": "shop_two",
+   "model": "ck/ck_grt_row2",
+   "name": "Wash Tub Laundromat",
+   "pos": [
+    -628.799999237061,
+    4.13393557071686,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956
+  }
+ ]
+}

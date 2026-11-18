@@ -3,6 +3,8 @@
 #   bash tools/city/rig/phone_rig.sh all   [NAME] [rig args]   bake the city, export the rig app, install, run, collect
 #   bash tools/city/rig/phone_rig.sh run   [NAME] [rig args]   run again (app already on the phone), e.g. other settings
 #   bash tools/city/rig/phone_rig.sh bake | export | install | status
+#   bash tools/city/rig/phone_rig.sh shots NAME [rig args]   pictures (rig --plan=shots), pulled to city_kit/review/tiers/NAME/
+#        e.g.  shots before   and   shots after --tiers      (the same views, to compare tier settings)
 # NAME labels the result (default: run1). Rig args: see tools/city/rig/rig.gd (--plan=default|quick|speed|zones --lead=2 ...).
 #   bash tools/city/rig/phone_rig.sh run zones1 --plan=zones        teleports between the populated zones (about 6 minutes)
 #   bash tools/city/rig/phone_rig.sh run mine --drive=NAME/ROUTE/KMH/SECONDS/NIGHT ...   drives of your own, no rebuild
@@ -104,10 +106,18 @@ do_run() {
     A logcat -d -s godot:* | tr -d '\r' | grep -a "Godot Engine v\|RIG \|SCRIPT ERROR\|ERROR:\|Shader cache miss" | sed 's/^.*godot *: //' | head -400
   } > "$RES/$NAME.txt"
   A logcat -d -s godot:* | tr -d '\r' > "$OUT/logcat_$NAME.txt"
+  local SHOTS=""
+  case " $* " in *" --plan=shots "*) SHOTS=map_dc/coronado/city_kit/review/tiers/$NAME ;; esac
+  if [ -n "$SHOTS" ]; then      # the pictures the app saved, as one tar stream (exec-out keeps the bytes as they are)
+    rm -rf "$SHOTS"; mkdir -p "$SHOTS"; touch "$ROOT/map_dc/coronado/city_kit/review/tiers/.gdignore"
+    A exec-out run-as $PKG sh -c 'cd files/rig/shots && tar cf - *.jpg' | tar xf - -C "$SHOTS" && echo "PHONE_RIG pictures: $(ls "$SHOTS" | wc -l) in $SHOTS"
+    A shell "run-as $PKG rm -rf files/rig/shots"
+  fi
   A shell am force-stop $PKG; A shell "run-as $PKG rm -f files/rig_args.txt"
   echo "PHONE_RIG result: map_dc/coronado/city_kit/review/phone/$NAME.txt"; grep -a "RIG drive\|RIG boot\|ERROR" "$RES/$NAME.txt" | cut -c1-230
   # the streaming budget: PASS or FAIL with the reasons (tools/city/rig/health.py holds the limits)
-  local PYH; PYH=$(command -v python || command -v python3 || command -v py) && "$PYH" tools/city/rig/health.py "map_dc/coronado/city_kit/review/phone/$NAME.txt"
+  local PYH; [ -z "$SHOTS" ] && PYH=$(command -v python || command -v python3 || command -v py) && "$PYH" tools/city/rig/health.py "map_dc/coronado/city_kit/review/phone/$NAME.txt"
+  [ -n "$SHOTS" ] && git add "$SHOTS"
   if [ "${PUSH:-1}" = "1" ]; then
     # a path inside the repo, not $RES: with MSYS_NO_PATHCONV=1 git for Windows gets /c/... unchanged and says "Invalid path '/c'"
     git add map_dc/coronado/city_kit/review/phone && git commit -q -m "Phone rig run '$NAME'" && git push -q origin HEAD && echo "PHONE_RIG pushed to $(git rev-parse --abbrev-ref HEAD)" || echo "PHONE_RIG could not push: send the file by hand"
@@ -120,6 +130,7 @@ case $cmd in
   export) do_export ;;
   install) do_install ;;
   run) NAME=${1:-run1}; shift || true; do_run "$NAME" "$@" ;;
+  shots) NAME=${1:-shots1}; shift || true; do_run "$NAME" --plan=shots "$@" ;;
   all) NAME=${1:-run1}; shift || true; do_bake; do_export; do_install; do_run "$NAME" "$@" ;;
   status) echo "godot: $GODOT"; echo "exporter: $GODOT_EXPORT"; echo "adb: $ADB"; "$ADB" devices; ls -la "$OUT" 2>/dev/null | tail -5 ;;
   *) echo "usage: phone_rig.sh all|run|bake|export|install|status [NAME] [rig args]" ;;

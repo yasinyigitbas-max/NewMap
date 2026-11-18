@@ -4935,6 +4935,86 @@
    "site": "b045"
   },
   {
+   "piece": "g_v1_j4ne",
+   "pos": [
+    -800.0,
+    2.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v2_g4nw",
+   "pos": [
+    -600.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v1_g4ne",
+   "pos": [
+    -600.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v2_j4se",
+   "pos": [
+    -800.0,
+    2.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v3_g4sw",
+   "pos": [
+    -600.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v3_g4se",
+   "pos": [
+    -600.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v2_j5ne",
+   "pos": [
+    -800.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v3_j5se",
+   "pos": [
+    -800.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
    "piece": "m_gr_ad5ne",
    "pos": [
     500.0,
@@ -4942,8 +5022,7 @@
     -1000.0
    ],
    "yaw": 0.0,
-   "from": "strip_grow",
-   "site": "strip block Adela x 5th NE (u 508.7-645.7, v -1100 to -1014.3)"
+   "from": "grow_strip"
   },
   {
    "piece": "x_shore_foam",
@@ -4958,7 +5037,7 @@
  ],
  "coverage": {
   "sample_rows": 84,
-  "family_rows": 373,
+  "family_rows": 372,
   "gap_nodes": 2,
   "gap_blocks": 0,
   "gaps": {
