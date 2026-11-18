@@ -5,6 +5,18 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov (PC session, after the census): EVERYTHING PUSHED IS MERGED into `claude/festive-faraday-20ltx2` (Yasin: "merge
+  them yes i saw their works"; "dont leave anything unmerged"): the look pack (he chose "gta4 look"), the tier work
+  and the DRAWING CENSUS (`docs/DRAW_CENSUS.md`, `docs/TREE_ARTIST_BRIEF.md`), and the four zone sessions' first work
+  (gritty 8 blocks, industrial 6, residential 25, strip 3: unlocked, waiting for his approval). `OUT/sweep.sh` (local)
+  merges every pushed branch; `city_grid_layout.json` is regenerated after such a merge with
+  `python tools/city/pilot/zoning/integrate.py` (needs numpy + shapely; it reads `review/grow_*_blocks.json`).
+  Yasin: "i like the new terrain" (the far ground / roads in the far world). The rig now draws the night once in the
+  warm-up by default (the census found it removes the first-dusk frames). CENSUS IN ONE LINE: at 720p the phone
+  lowers its GPU clock, so "13-14 ms of GPU" there is NOT a limit; with the GPU kept busy (1.5 x full screen) the
+  costs are trees 11 / 3 ms (apartments / gritty), near buildings 7 / 3, sun shadows 5 / 3, sky reflection 5 / 3,
+  FXAA 4 / 4, near props 3 / 1, wear marks 2 / 2; the mid tier and the look's building parts cost almost nothing.
+  NOT on the phone yet: the merged build with the grown blocks.
 - 19 Nov ~00:30 (PC time): DRAWING CENSUS ON THE PHONE (Yasin: "queue the drawing cost census"), branch
   `claude/ecstatic-archimedes-922d2c`, not merged. Full account: docs/DRAW_CENSUS.md. Rig `--plan=census` (states one at
   a time, standing viewpoints, day / night, `--warmnight`). KEY FINDING: at 720p the phone lowers its GPU clock, so GPU

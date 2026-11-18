@@ -96,7 +96,7 @@ var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
-var opt := {"look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": false}
+var opt := {"look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -117,6 +117,7 @@ func _ready() -> void:
 		if a == "--tiers": opt.tiers = true
 		if a == "--nofarground": opt.nofarground = true
 		if a == "--warmnight": opt.warmnight = true
+		if a == "--nowarmnight": opt.warmnight = false
 		if a.begins_with("--drive="):
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
@@ -216,7 +217,7 @@ func _run() -> void:
 	if not opt.nowarm: await st.warm_up(cam, 4)
 	for i in 10: await get_tree().process_frame
 	_say("boot first_area_ms=%d warm_ms=%d (graphics memory reserve %d MB: %d ms) cells=%d static_mb=%.0f video_mb=%.0f" % [t1 - t0, Time.get_ticks_msec() - t1, int(opt.gpureserve), int(st.stats.get("reserve_ms", 0)), st.loaded_count(), Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0])
-	if opt.warmnight:      # census test: draw the night once behind the loading screen (does it remove the first-night frames?)
+	if opt.warmnight:      # draw the night once behind the loading screen. ON by default since the census (19 Nov): the first dusk of a session cost frames of 41 ms at 720p, with this 19 ms (census_warmnight). --nowarmnight to compare
 		_night(1.0); lights.update_lights(cam.global_position, 1.0)
 		for i in 20: await get_tree().process_frame
 		_night(0.0); lights.update_lights(cam.global_position, 0.0)
