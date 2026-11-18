@@ -29,6 +29,28 @@ def maker_plate(b, c, hi=False, w=0.07, h=0.022, rz=0.0):
         screw(b,(c[0]+w*0.35,c[1]+0.004,c[2]+h*0.5),(0,-1,0) if abs(rz)<0.01 else (0,1,0),True,'steel',0.0025)
 
 
+def stock(b, x0, x1, y, z, h, band='tg_grocery', depth=0.0, face=-1, hi=False):
+    """one shelf run of product facings (page-I goods band). face=-1: faces -Y (viewer at -Y), +1: faces +Y.
+    Near only (the hi-poly skips it: goods faces are trim, never sampled by the unique bake)."""
+    if hi: return
+    if face<0: b.facing((x0,y),(x1,y),z,h,band,depth=depth)
+    else: b.facing((x1,y),(x0,y),z,h,band,depth=depth)
+
+def arc_slab(b, c, r, a0, a1, z0, z1, t, key, seg=4, back_key=None, caps=True):
+    """curved panel: annular sector (radius r outer face, thickness t inward) between angles a0..a1 (deg, 0=+X,
+    -90 = facing -Y) extruded z0..z1. Upholstered backs, curved fronts. 8*seg+4 tris."""
+    cx,cy=c; A=[math.radians(a0+(a1-a0)*i/seg) for i in range(seg+1)]
+    O=[(cx+r*math.cos(a),cy+r*math.sin(a)) for a in A]; I=[(cx+(r-t)*math.cos(a),cy+(r-t)*math.sin(a)) for a in A]
+    V=Vector
+    for i in range(seg):
+        b.quad([V((O[i][0],O[i][1],z0)),V((O[i+1][0],O[i+1][1],z0)),V((O[i+1][0],O[i+1][1],z1)),V((O[i][0],O[i][1],z1))],key,flip=(a1<a0))
+        b.quad([V((I[i+1][0],I[i+1][1],z0)),V((I[i][0],I[i][1],z0)),V((I[i][0],I[i][1],z1)),V((I[i+1][0],I[i+1][1],z1))],back_key or key,flip=(a1<a0))
+        b.quad([V((O[i][0],O[i][1],z1)),V((O[i+1][0],O[i+1][1],z1)),V((I[i+1][0],I[i+1][1],z1)),V((I[i][0],I[i][1],z1))],key,flip=(a1<a0))
+        b.quad([V((O[i+1][0],O[i+1][1],z0)),V((O[i][0],O[i][1],z0)),V((I[i][0],I[i][1],z0)),V((I[i+1][0],I[i+1][1],z0))],back_key or key,flip=(a1<a0))
+    if caps:
+        for k,fl in ((0,True),(seg,False)):
+            b.quad([V((O[k][0],O[k][1],z0)),V((I[k][0],I[k][1],z0)),V((I[k][0],I[k][1],z1)),V((O[k][0],O[k][1],z1))],key,flip=(fl!=(a1<a0)))
+
 def leaf_blade(b, c, length, width, thick=0.003, yaw=0.0, pitch=0.0, roll=0.0, key='leaf'):
     """Solid ovate / diamond leaf (4 tris). Opaque kit leaf, no alpha."""
     from mathutils import Matrix, Vector
@@ -123,8 +145,19 @@ def shop_counter(b, hi=False):
     for x in (-W/2+inset,W/2-inset):
         for y in (-D/2+inset+kick_d*0.4,D/2-inset):
             leveler(b,(x,y),hi)
+    # customer face: three proud navy panels in an oak frame (break the slab), oak top edge band
+    for x in (-W/3,0.0,W/3):
+        b.box((x,-(D/2)+0.006,kick_h+0.05),(W/3-0.07,0.012,H-th-kick_h-0.10),'paint_navy')
+        b.box((x,-(D/2)+0.001,kick_h+0.07),(W/3-0.11,0.004,H-th-kick_h-0.14),'paint_navy')
+    b.box((0,-(D/2+ov*0.3)-0.001,H-th),(W,0.006,th),'oak')
     # till recess ring (unique, shallow)
     b.box((0.10,0.0,H+0.001),(0.28,0.22,0.003),'label')
+    # card terminal on a swivel, impulse tray of small goods
+    b.box((-0.34,-0.12,H),(0.08,0.08,0.03),'plastic_black')
+    b.box((-0.34,-0.12,H+0.03),(0.075,0.16,0.05),'plastic_black',rx=math.radians(-25))
+    b.box((-0.34,-0.13,H+0.05),(0.06,0.004,0.035),'screen',rx=math.radians(-25))
+    b.box((-0.64,-0.16,H),(0.36,0.20,0.03),'oak')
+    stock(b,-0.80,-0.48,-0.255,H+0.03,0.10,'tg_grocery',depth=0.17,hi=hi)
     b.cbox((0,0,0),(W,D+0.04,H))
 
 # ------------------------------------------------------------------ cash_register
@@ -215,6 +248,9 @@ def wall_shelf(b, hi=False):
     b.box((0,0.0,H-0.04),(W,D,0.04),'oak')
     # back panel
     b.box((0,D/2-0.038,0.10),(W-0.02,0.008,H-0.16),'paint_cream')
+    # stock: one run per shelf (base deck too), varied depth so the faces do not line up like a wall
+    for i,z in enumerate((0.10,0.298,0.738,1.178,1.618)):
+        stock(b,-W/2+0.045,W/2-0.045,-D/2+0.045+0.01*(i%2),z,0.25 if i<4 else 0.24,('tg_grocery','tg_grocery','tg_bottles','tg_grocery','tg_spines')[i],depth=0.20,hi=hi)
     # end panels
     for x,sgn in ((-W/2,1),(W/2,-1)):
         b.box((x+sgn*0.01,0.0,0.10),(0.018,D,H-0.14),'oak',skip=('bottom',))
@@ -254,8 +290,15 @@ def gondola_aisle(b, hi=False):
             if hi:
                 for x in (-W/2+0.04,W/2-0.04):
                     b.box((x,ysgn*0.10,z-0.02),(0.03,0.10,0.014),'steel')
-    # top cap / cornice
+    # top cap / cornice with a navy category header both sides
     b.box((0,0,H-0.08),(W,D-0.04,0.08),'paint_cream')
+    for ysgn in (-1,1):
+        b.box((0,ysgn*((D-0.04)/2+0.004),H-0.07),(W-0.10,0.008,0.06),'paint_navy')
+        b.box((0,ysgn*((D-0.04)/2+0.009),H-0.055),(0.36,0.004,0.03),'label')
+    # stock both sides: base deck + three shelves
+    for ysgn in (-1,1):
+        for i,z in enumerate((0.12,0.396,0.836,1.276)):
+            stock(b,-W/2+0.075,W/2-0.075,ysgn*(D/2-0.035-0.012*(i%2)),z,0.25,('tg_grocery','tg_grocery','tg_bottles','tg_grocery')[(i+(ysgn>0))%4],depth=0.18,face=ysgn,hi=hi)
     # end caps
     for x,sgn in ((-W/2,1),(W/2,-1)):
         b.box((x+sgn*0.015,0,0.12),(0.03,D-0.02,H-0.20),'paint_cream')
@@ -319,6 +362,14 @@ def display_table(b, hi=False):
     if hi:
         for x in (-0.3,0.0,0.3):
             b.box((x,0,H+0.0005),(0.04,0.012,0.002),'oak')
+    # merchandised: folded textile stacks, a book stack, boxed goods; baskets of boxes on the lower shelf
+    for i,(x,y,k) in enumerate(((-0.42,-0.12,'paint_navy'),(-0.42,0.16,'paint_cream'),(-0.10,-0.14,'paint_red'),(0.22,0.14,'paint_green'))):
+        for j in range(3):
+            b.box((x+0.004*((i+j)%2),y,H+j*0.045),(0.28,0.22,0.045-0.004),k,rz=math.radians((i*7+j*3)%9-4))
+    for j,k in enumerate(('card','paint_navy','paint_red','label')):
+        b.box((0.42,-0.12,H+j*0.03),(0.20-0.01*j,0.15,0.028),k,rz=math.radians(j*6-8))
+    b.box((0.46,0.18,H),(0.12,0.12,0.16),'card'); b.box((0.30,0.20,H),(0.10,0.10,0.11),'paint_cream')
+    stock(b,-W/2+0.15,W/2-0.15,-(D/2)+0.13,0.238,0.16,'tg_spines',depth=0.46,hi=hi)
     maker_plate(b,(0,-(D/2)+0.02,H-th-0.08),hi,w=0.08,h=0.018)
     b.cbox((0,0,0),(W,D,H))
 
@@ -344,7 +395,9 @@ def glass_display_case(b, hi=False):
     # opaque glass sides; full-height front is a goods card on near only.
     # High-poly stock sits in the same plane so the bake sees bottles, not the card.
     if not hi:
-        b.box((0,-(D/2)+fw*0.45,pl+0.03),(W-2*fw-0.004,0.008,H-pl-0.12),'goods')
+        b.box((0,-(D/2)+fw*0.45+0.004,pl+0.03),(W-2*fw-0.004,0.008,H-pl-0.12),'glass')
+        for z,bd in ((pl+0.04,'tg_spines'),(0.41,'tg_grocery'),(0.79,'tg_bottles')):
+            stock(b,-W/2+fw+0.01,W/2-fw-0.01,-(D/2)+fw*0.45-0.002,z,0.22,bd)
     for x,sgn in ((-W/2+fw*0.45,1),(W/2-fw*0.45,-1)):
         b.box((x,0,pl+0.03),(0.008,D-2*fw-0.004,H-pl-0.10),'glass')
     # glass shelves (visible as slim lips on the front bake / at the frame)
@@ -566,7 +619,10 @@ def drinks_fridge(b, hi=False):
     fw=0.04
     # door frame is built as rails around the glass below
     if not hi:
-        b.box((0,-(D/2)+0.008,0.20),(W-0.14,0.010,H-0.40),'goods')  # baked bottle rows + opaque glass
+        b.box((0,-(D/2)+0.024,0.20),(W-0.14,0.010,H-0.40),'glass')
+        for i,z in enumerate((0.22,0.475,0.73,0.985,1.24,1.495)):
+            stock(b,-(W/2)+0.07,(W/2)-0.07,-(D/2)+0.010,z,0.235,'tg_bottles' if i%3!=1 else 'tg_grocery')
+            b.box((0,-(D/2)+0.008,z-0.012),(W-0.14,0.006,0.012),'chrome')   # wire shelf lip
     # frame rails around the glass (sit proud)
     b.box((0,-(D/2)+0.004,0.12),(W-0.04,0.028,0.08),'steel')  # bottom rail
     b.box((0,-(D/2)+0.004,H-0.20),(W-0.04,0.028,0.08),'steel')  # top rail
@@ -704,12 +760,24 @@ TR={
     'paint_navy':('ti_paint',(0.875,0.875)),
     'fabric':('ti_fabric',(0.875,0.875)),
     'glass':('ti_glass',(0.875,0.875)),
+    'mirror':('ti_glass',(0.875,0.875)),
     'plastic':('ti_plastic',(0.875,0.875)),
     'plastic_black':('ti_plastic',(0.875,0.875)),
     'rubber':('ti_plastic',(0.875,0.875)),
     'ceramic':('ti_paint',(0.875,0.875)),
     'leaf':('ti_paint',(0.875,0.875)),
     'soil':('ti_paint',(0.875,0.875)),
+    'pk_top':('ti_paint',(0.875,0.875)),
+    'pk_side':('ti_paint',(0.875,0.875)),
+    'card':('ti_paint',(0.875,0.875)),
+    'vinyl':('ti_fabric',(0.875,0.875)),
+    'paint_red':('ti_paint',(0.875,0.875)),
+    'paint_green':('ti_paint',(0.875,0.875)),
+    'paint_white':('ti_paint',(0.875,0.875)),
+    'paint_grey':('ti_paint',(0.875,0.875)),
+    'paint_yellow':('ti_paint',(0.875,0.875)),
+    'paint_orange':('ti_paint',(0.875,0.875)),
+    'paint_purple':('ti_paint',(0.875,0.875)),
 }
 TINT={
     'oak':(1.00,0.96,0.90),
@@ -721,15 +789,27 @@ TINT={
     'brass':(1.0,1.0,1.0),
     'paint_cream':(1.0,0.96,0.88),
     'paint_black':(0.12,0.12,0.12),
-    'paint_navy':(0.16,0.20,0.38),
+    'paint_navy':(0.07,0.10,0.24),
     'fabric':(0.55,0.22,0.18),
     'glass':(1.0,1.0,1.0),
+    'mirror':(1.10,1.14,1.18),
     'plastic':(0.92,0.92,0.90),
     'plastic_black':(0.12,0.12,0.13),
     'rubber':(0.10,0.10,0.10),
     'ceramic':(0.82,0.28,0.18),  # terracotta / glaze
     'leaf':(0.22,0.42,0.20),
     'soil':(0.22,0.16,0.10),
+    'pk_top':(0.42,0.40,0.37),
+    'pk_side':(0.30,0.29,0.28),
+    'card':(0.72,0.60,0.44),
+    'vinyl':(0.20,0.15,0.13),
+    'paint_red':(0.62,0.10,0.08),
+    'paint_green':(0.16,0.32,0.22),
+    'paint_white':(1.08,1.08,1.06),
+    'paint_grey':(0.24,0.25,0.27),
+    'paint_yellow':(0.90,0.72,0.10),
+    'paint_orange':(0.95,0.42,0.06),
+    'paint_purple':(0.22,0.08,0.20),
 }
 _C=dict(dir='props/indoor/shared',pdir='indoor_shared',trim=TR,trim_tint=TINT,page='i',
         conds=['clean'],cat='prop',max_side=80,bevel=0.003)
@@ -738,17 +818,19 @@ def _p(name,fn,cls,budget=None,**kw):
     if budget is not None: d['budget']=budget
     return d
 PROPS=[
-    _p('shop_counter',shop_counter,'medium',900),
-    _p('cash_register',cash_register,'small',500,side=96,dir='props/indoor/shared'),
-    _p('wall_shelf',wall_shelf,'medium',1000),
-    _p('gondola_aisle',gondola_aisle,'medium',1100),
-    _p('display_table',display_table,'medium',800),
-    _p('glass_display_case',glass_display_case,'medium',1100,side=96,cage=0.04,ray=0.12),
+    _p('shop_counter',shop_counter,'medium',1200),
+    _p('cash_register',cash_register,'small',600,side=96,dir='props/indoor/shared'),
+    _p('wall_shelf',wall_shelf,'medium',1200),
+    _p('gondola_aisle',gondola_aisle,'medium',1200),
+    _p('display_table',display_table,'medium',1100),
+    _p('glass_display_case',glass_display_case,'medium',1200,side=96,cage=0.04,ray=0.12),
     _p('waiting_bench',waiting_bench,'small',500),
     _p('side_chair',side_chair,'small',550),
     _p('potted_plant',potted_plant,'small',400),
     _p('indoor_bin',indoor_bin,'tiny',250),
-    _p('drinks_fridge',drinks_fridge,'medium',1100,side=128,cage=0.04,ray=0.12),
+    _p('drinks_fridge',drinks_fridge,'medium',1200,side=128,cage=0.04,ray=0.12),
     _p('brochure_rack',brochure_rack,'small',400,cage=0.04,ray=0.12),
     _p('menu_board',menu_board,'small',400,side=128,mount='wall',cage=0.04,ray=0.12),
 ]
+
+INDOOR_LOOK=True   # run.py: chamfer edge highlight + per-part colour variation in COLOR_0

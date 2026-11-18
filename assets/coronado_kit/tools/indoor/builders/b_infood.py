@@ -11,7 +11,7 @@ card on the high mesh; silhouettes sit inside the cage).
 import math
 from mathutils import Vector, Matrix
 from b_inshared import (
-    sg, leveler, screw, maker_plate, bottle_card, can_card, TR, TINT,
+    sg, leveler, screw, maker_plate, bottle_card, can_card, TR, TINT, stock, arc_slab,
 )
 
 def footring(b, z, R, r=0.010, seg=8, n=10, key='chrome'):
@@ -179,12 +179,11 @@ def booth_bench(b, hi=False):
     b.box((0,-0.03,sh),(W-0.12,D-0.16,0.08),'fabric')
     b.box((0,-0.03,sh+0.076),(W-0.10,D-0.14,0.010),'fabric')
     b.box((0,-(D/2)+0.05,sh+0.01),(W-0.16,0.024,0.06),'fabric')
-    # tall back, two cushions, wood cap and end panels
+    # tall back with five channel-tufted pleats (chamfered channels, slight rake), wood cap and end panels
     b.box((0,(D/2)-0.06,sh),(W-0.08,0.08,H-sh-0.04),'paint_cream')
-    gap=0.02; bw=(W-0.16-gap)/2
-    for x in (-(bw+gap)/2,(bw+gap)/2):
-        b.box((x,(D/2)-0.10,sh+0.04),(bw,0.07,H-sh-0.14),'fabric')
-    b.box((0,(D/2)-0.08,sh+0.06),(0.016,0.05,H-sh-0.18),'walnut')
+    nch=5; cw=(W-0.16)/nch
+    for k in range(nch):
+        b.box((-(W-0.16)/2+cw*(k+0.5),(D/2)-0.11,sh+0.04),(cw-0.004,0.07,H-sh-0.14),'fabric',rx=math.radians(-6),ch=0.016)
     b.box((0,(D/2)-0.07,H-0.05),(W-0.06,0.08,0.05),'walnut')  # cap rail
     # back panel dados so the rear is not a blank slab
     for z in (0.20,0.55,0.85):
@@ -277,9 +276,32 @@ def pastry_case(b, hi=False):
         b.box((0,(D/2)-fw/2,z),(W-2*fw,fw,0.022),'brass')
         b.box((-(W/2)+fw/2,0,z),(fw,D-2*fw,0.022),'brass')
         b.box(((W/2)-fw/2,0,z),(fw,D-2*fw,0.022),'brass')
-    # sloped front: two glass steps + a goods card on near
-    if not hi:
-        b.box((0,-(D/2)+0.04,pl+0.06),(W-2*fw-0.01,0.010,H-pl-0.16),'goods')
+    # open serve-over front (kit glass is opaque, so the front stays open and a sneeze-guard sits on top);
+    # bakes are real geometry on steel trays on three tiers
+    tiers=((pl+0.04,-0.12),(0.43,0.02),(0.75,0.14))
+    for t,(z,yc) in enumerate(tiers):
+        b.box((0,yc,z),(W-0.16,0.30,0.012),'steel')
+        b.box((0,yc-0.152,z),(W-0.16,0.006,0.03),'steel')
+        b.box((0,yc-0.158,z+0.002),(W-0.20,0.002,0.02),'label')   # price ticket strip
+        for k in range(4):
+            x=-0.45+k*0.30; kind=(t*2+k)%5
+            if kind==0:   # round cake with a cut slice
+                b.lathe([(0.10,z+0.012),(0.10,z+0.075),(0.0,z+0.09)],sg(hi,6,16),'paint_cream' if (t+k)%2 else 'walnut',c=(x,yc,0),cap_top=False)
+                b.box((x+0.06,yc-0.05,z+0.012),(0.07,0.06,0.07),'paint_red',rz=0.6,skip=('bottom',))
+            elif kind==1: # croissants
+                for q in range(4):
+                    cx_=x-0.08+(q%2)*0.12+0.02*(q//2); cy_=yc-0.05+(q//2)*0.10
+                    b.tube((cx_-0.035,cy_,z+0.03),(cx_+0.035,cy_,z+0.03),0.022,0.016,sg(hi,4,8),'oak',cap0=False,cap1=False,smooth=True)
+            elif kind==2: # muffins
+                for q in range(3):
+                    b.lathe([(0.030,z+0.012),(0.038,z+0.055),(0.0,z+0.08)],sg(hi,5,10),'walnut' if q%2 else 'oak',c=(x-0.09+q*0.09,yc-0.03+0.05*(q%2),0),cap_top=False)
+            elif kind==3: # tray bake with a cut corner
+                b.box((x,yc,z+0.012),(0.22,0.18,0.05),'paint_cream',skip=('bottom',))
+                b.box((x,yc,z+0.062),(0.22,0.18,0.012),'paint_red',skip=('bottom',))
+            else:         # cookie stacks
+                for q in range(3):
+                    b.tube((x-0.07+q*0.07,yc,z+0.012),(x-0.07+q*0.07,yc,z+0.04),0.03,0.03,sg(hi,5,10),'walnut' if q==1 else 'oak',cap0=False,cap1=True)
+    b.box((0,-(D/2)+0.10,H-0.07),(W-2*fw,0.22,0.010),'glass',rx=math.radians(-12))   # sneeze guard
     for x,sgn in ((-W/2+fw*0.45,1),(W/2-fw*0.45,-1)):
         b.box((x,0,pl+0.04),(0.008,D-2*fw,H-pl-0.14),'glass')
     # rear staff access panel
@@ -332,9 +354,15 @@ def gelato_case(b, hi=False):
     b.box((0,-(D/2)+0.04,0.52),(W-0.10,0.10,0.05),'steel')
     b.box((0,-(D/2)+0.04,0.57),(W-0.16,0.08,0.012),'steel')
     # tubs face -Y, mid-well, fully visible through the open front
-    if not hi:
-        b.box((0,0.02,0.70),(W-0.22,0.010,0.28),'goods')
-    if hi:
+    flav=('paint_cream','paint_red','paint_green','walnut','oak','leaf','card','ceramic')
+    for r_ in range(2):
+        for k in range(6):
+            x=-0.60+k*0.24; y=-0.14+r_*0.22; f=flav[(k+r_*3)%len(flav)]
+            b.box((x,y,0.55),(0.22,0.20,0.10),'steel',skip=('bottom',))
+            b.box((x,y,0.65),(0.20,0.18,0.03),f)
+            b.box((x-0.02,y-0.01,0.68),(0.12,0.10,0.04),f,rz=0.4+k)
+            b.box((x,y-0.101,0.60),(0.09,0.003,0.03),'label')
+    if False:
         y=0.02-0.006
         bodies=('paint_cream','oak','leaf','paint_navy','plastic','brass','fabric','paint_black')
         for col in range(6):
@@ -363,30 +391,63 @@ def gelato_case(b, hi=False):
     b.cbox((0,0,0),(W,D,H))
 
 # ------------------------------------------------------------------ soda_fountain
+def bakery_loaf(b, c, hi=False, kind='baguette', key='oak', length=0.36):
+    """A loaf that sits on a bakery shelf (near + high)."""
+    x,y,z=c
+    seg=sg(hi,8,12)
+    if kind=='baguette':
+        b.tube((x-length/2,y,z),(x+length/2,y,z),0.026,0.024,seg,key,cap0=True,cap1=True,smooth=True)
+    elif kind=='tin':
+        b.box((x,y,z),(0.16,0.08,0.08),key)
+        b.box((x,y,z+0.06),(0.14,0.07,0.03),key)
+    else:  # boule
+        b.tube((x,y,z),(x,y,z+0.07),0.050,0.044,seg,key,cap0=True,cap1=True,smooth=True)
+
+
+def wine_bottle(b, c, hi=False, h=0.26, body='paint_navy', cap='brass'):
+    """A standing wine bottle (near + high). Three boxes, no label card."""
+    x,y,z=c
+    b.box((x,y,z),(0.054,0.054,h*0.62),body)
+    b.box((x,y,z+h*0.62),(0.020,0.020,h*0.26),body)
+    b.box((x,y,z+h*0.86),(0.024,0.024,h*0.14),cap)
+
+
 def soda_fountain(b, hi=False):
     W,D,H=0.70,0.62,1.15
-    b.box((0,0.0,0.0),(W,D,0.90),'paint_navy',skip=('bottom',))
+    # closed carcass (keep the bottom) plus proud side skins so the sides stay opaque navy
+    b.box((0,0.0,0.0),(W,D,0.90),'paint_navy')
+    for x,sgn in ((-W/2,1),(W/2,-1)):
+        b.box((x+sgn*0.004,0.0,0.0),(0.010,D,0.90),'paint_navy')
+    # front panel reveals — break the navy slab into a door and a mid belt
+    b.box((0,-(D/2)+0.006,0.16),(W-0.10,0.012,0.008),'paint_black')
+    b.box((0,-(D/2)+0.006,0.48),(W-0.10,0.012,0.008),'paint_black')
+    for x in (-W/2+0.06,W/2-0.06):
+        b.box((x,-(D/2)+0.006,0.16),(0.008,0.012,0.32),'paint_black')
+    b.box((0,-(D/2)+0.004,0.32),(0.10,0.016,0.016),'chrome')  # door handle
     b.box((0,0.0,0.90),(W,D,0.08),'steel')
-    # merchandiser header
+    # merchandiser header (paint, not a unique label card — unique islands were going black)
     b.box((0,0.0,0.98),(W,D,0.17),'paint_navy')
-    b.box((0,-(D/2)+0.01,1.02),(W-0.10,0.01,0.10),'label')
+    b.box((0,-(D/2)+0.01,1.02),(W-0.16,0.012,0.08),'paint_cream')
+    b.box((0,-(D/2)+0.006,1.02),(W-0.22,0.008,0.04),'paint_navy')
     # drip grill
     b.box((0,-(D/2)+0.10,0.90),(W-0.12,0.22,0.02),'steel')
-    for i in range(6):
-        b.box((-0.22+i*0.09,-(D/2)+0.10,0.922),(0.012,0.20,0.006),'steel')
+    for i in range(4):
+        b.box((-0.18+i*0.12,-(D/2)+0.10,0.922),(0.012,0.20,0.006),'steel')
     # ice / bin lid
     b.box((0,0.08,0.90),(0.36,0.28,0.04),'steel')
     b.box((0,0.08,0.94),(0.12,0.06,0.02),'plastic_black')  # handle
-    # valve bank — 6 nozzles
+    # valve bank — 6 nozzles with flavour colour chips
+    flav=('leaf','paint_navy','oak','paint_cream','plastic','paint_black')
     for i,x in enumerate((-0.22,-0.13,-0.04,0.05,0.14,0.23)):
         b.box((x,-(D/2)+0.04,0.96),(0.05,0.06,0.08),'chrome')
-        b.tube((x,-(D/2)+0.00,0.96),(x,-(D/2)-0.04,0.88),0.008,0.008,sg(hi,6,10),'chrome',cap0=False,cap1=True,smooth=True)
+        b.tube((x,-(D/2)+0.00,0.96),(x,-(D/2)-0.05,0.86),0.009,0.008,sg(hi,6,10),'chrome',cap0=False,cap1=True,smooth=True)
         b.box((x,-(D/2)+0.01,1.04),(0.04,0.04,0.03),'plastic')  # button
-        if hi:
-            b.box((x,-(D/2)-0.005,1.03),(0.03,0.004,0.02),'label')
-    # cup wells / lid caddy on the right
-    b.tube((W/2-0.10,D/2-0.14,0.90),(W/2-0.10,D/2-0.14,1.02),0.05,0.05,sg(hi,10,14),'plastic',cap0=True,cap1=True,smooth=True)
-    b.tube((W/2-0.10,D/2-0.14,1.02),(W/2-0.10,D/2-0.14,1.16),0.055,0.04,sg(hi,10,14),'plastic',cap0=False,cap1=True,smooth=True)
+        b.box((x,-(D/2)-0.01,1.055),(0.028,0.008,0.012),flav[i])  # flavour chip
+    # cup stack on the front-right of the deck (boxes, tubes were blowing the budget)
+    b.box((W/2-0.12,-(D/2)+0.16,0.98),(0.08,0.08,0.14),'plastic')
+    b.box((W/2-0.12,-(D/2)+0.16,1.12),(0.084,0.084,0.04),'plastic')
+    # mid bumper
+    b.box((0,0.0,0.54),(W+0.016,D+0.016,0.04),'rubber')
     # kick / vent
     b.box((0,-(D/2)+0.02,0.0),(W-0.08,0.04,0.10),'paint_black',skip=('bottom',))
     for i in range(4):
@@ -394,6 +455,7 @@ def soda_fountain(b, hi=False):
     for x in (-W/2+0.08,W/2-0.08):
         for y in (-D/2+0.08,D/2-0.08):
             leveler(b,(x,y),hi)
+    maker_plate(b,(0,-(D/2)+0.03,0.20),hi,w=0.08,h=0.018)
     b.cbox((0,0,0),(W,D+0.06,H+0.02))
 
 # ------------------------------------------------------------------ bakery_shelf
@@ -402,30 +464,26 @@ def bakery_shelf(b, hi=False):
     # standards + end panels
     for x,sgn in ((-W/2,1),(W/2,-1)):
         b.box((x+sgn*0.02,0.0,0.08),(0.04,D,H-0.16),'oak',skip=('bottom',))
-    b.box((0,D/2-0.02,0.08),(W-0.06,0.016,H-0.16),'paint_cream')  # back
+    b.box((0,D/2-0.02,0.08),(W-0.06,0.016,H-0.16),'oak')  # wood back, not a cream slab
     b.box((0,0.0,0.0),(W,D,0.10),'oak',skip=('bottom',))  # kick
     b.box((0,0.0,H-0.08),(W,D,0.08),'oak')  # cornice
     b.box((0,-0.01,H-0.12),(W-0.04,D-0.04,0.04),'oak')
     # mid upright
     b.box((0,0.0,0.10),(0.03,D-0.04,H-0.20),'oak')
     zs=(0.28,0.70,1.12,1.54)
-    for z in zs:
+    keys=('paint_cream','plastic','walnut','paint_cream')
+    for si,z in enumerate(zs):
         b.box((0,-0.01,z),(W-0.10,D-0.06,0.022),'oak')
         b.box((0,-D/2+0.02,z-0.018),(W-0.14,0.014,0.020),'plastic')  # price lip
         # close-in cream backer so the bay is not a black cavity
         b.box((0,0.06,z+0.022),(W-0.14,0.04,0.36),'paint_cream')
-        if not hi:
-            # unique loaf card along the shelf front
-            b.box((0,-D/2+0.04,z+0.01),(W-0.16,0.008,0.14),'goods')
-    if hi:
-        y=-D/2+0.04-0.006
-        bodies=('oak','paint_cream','walnut','plastic')
-        for si,z in enumerate((0.30,0.72,1.14,1.56)):
-            for col in range(5):
-                x=-0.44+col*0.22
-                key=bodies[(si+col)%len(bodies)]
-                b.box((x,y,z),(0.16,0.004,0.10),key)  # loaf
-                b.box((x,y-0.003,z+0.04),(0.10,0.003,0.03),'label')
+        # real loaves on the near mesh (baguette / boule / tin loaf)
+        y=-D/2+0.08
+        # one baguette per bay, clear of the mid upright; a boule/tin behind each
+        bakery_loaf(b,(-0.28,y,z+0.050),hi,kind='baguette',key=keys[si%4],length=0.36)
+        bakery_loaf(b,( 0.28,y,z+0.050),hi,kind='baguette',key=keys[(si+1)%4],length=0.36)
+        bakery_loaf(b,(-0.28,y+0.10,z+0.048),hi,kind='boule' if si%2==0 else 'tin',key=keys[(si+2)%4])
+        bakery_loaf(b,( 0.28,y+0.10,z+0.048),hi,kind='tin' if si%2==0 else 'boule',key=keys[(si+3)%4])
     for x in (-W/2+0.08,W/2-0.08):
         for y in (-D/2+0.06,D/2-0.06):
             leveler(b,(x,y),hi)
@@ -439,7 +497,7 @@ def wine_backbar(b, hi=False):
     b.box((0,0.0,0.0),(W,D,0.12),'walnut',skip=('bottom',))
     for x,sgn in ((-W/2,1),(W/2,-1)):
         b.box((x+sgn*0.025,0.0,0.12),(0.05,D,H-0.20),'walnut',skip=('bottom',))
-    b.box((0,D/2-0.012,0.12),(W-0.10,0.016,H-0.22),'paint_cream')  # back (could read as opaque glass)
+    b.box((0,D/2-0.012,0.12),(W-0.10,0.016,H-0.22),'walnut')  # wood back
     b.box((0,0.0,H-0.08),(W,D,0.08),'walnut')  # cornice
     # lower cupboards
     b.box((0,0.0,0.12),(W-0.10,D,0.48),'walnut',skip=('bottom',))
@@ -455,17 +513,20 @@ def wine_backbar(b, hi=False):
     # upright dividers
     for x in (-0.50,-0.16,0.16,0.50):
         b.box((x,0.0,0.66),(0.016,D-0.06,H-0.66-0.12),'oak')
-    # one unique card per row so the bottle bake stays readable
-    for z in (0.72,1.02,1.32,1.62,1.88):
-        if not hi:
-            b.box((0,-(D/2)+0.02,z),(W-0.16,0.008,0.20),'goods')
-    if hi:
-        y=-(D/2)+0.02-0.006
-        bodies=('paint_navy','leaf','oak','paint_cream','plastic_black','brass')
-        for row,z in enumerate((0.74,1.04,1.34,1.64,1.90)):
-            for col in range(8):
-                x=-0.64+col*0.18
-                bottle_card(b,(x,y,z),h=0.18,w=0.04,body=bodies[(row+col)%len(bodies)],cap='brass')
+    # stocked bays: bottle facings on every shelf (2 tris a run), mirror back in the centre bay with glassware
+    bays=((-W/2+0.05,-0.508),(-0.492,-0.168),(0.168,0.492),(0.508,W/2-0.05))
+    for row,z in enumerate((0.64,0.916,1.216,1.516,1.816)):
+        for k,(x0,x1) in enumerate(bays):
+            stock(b,x0+0.006,x1-0.006,-(D/2)+0.07,z,0.24 if row<4 else 0.20,'tg_bottles',depth=0.22,hi=hi)
+    b.box((0,D/2-0.022,0.66),(0.30,0.006,H-0.80),'mirror')
+    for z in (0.916,1.216,1.516):
+        for k in range(4):
+            b.tube((-0.11+k*0.073,0.02,z),(-0.11+k*0.073,0.02,z+0.10),0.03,0.036,sg(hi,6,10),'glass',cap0=False,cap1=True,smooth=True)
+    # hero bottles + bar tools on the work top
+    for k,(x,body) in enumerate(((-0.62,'leaf'),(-0.54,'oak'),(0.55,'paint_navy'),(0.63,'paint_cream'))):
+        wine_bottle(b,(x,-(D/2)+0.10,0.64),hi,h=0.30,body=body,cap='brass')
+    b.box((0.0,-(D/2)+0.12,0.64),(0.40,0.12,0.012),'rubber')
+    b.tube((0.10,-(D/2)+0.12,0.652),(0.10,-(D/2)+0.12,0.75),0.035,0.045,sg(hi,8,12),'chrome',cap0=True,cap1=False,smooth=True)
     for x in (-W/2+0.08,W/2-0.08):
         for y in (-D/2+0.06,D/2-0.06):
             leveler(b,(x,y),hi)
@@ -491,7 +552,7 @@ def kitchen_line(b, hi=False):
     # oven doors (two)
     for x in (-0.55,0.55):
         b.box((x,-(D/2)+0.01,0.12),(0.90,0.02,0.70),'steel')
-        b.box((x,-(D/2)+0.00,0.14),(0.80,0.016,0.54),'paint_black')  # glass window, opaque
+        b.box((x,-(D/2)+0.00,0.14),(0.80,0.016,0.54),'glass')  # opaque kit glass, not a black hole
         b.box((x,-(D/2)-0.025,0.70),(0.36,0.018,0.020),'steel')  # handle
         for hx in (x-0.14,x+0.14):
             b.tube((hx,-(D/2)+0.01,0.70),(hx,-(D/2)-0.03,0.70),0.007,0.007,sg(hi,6,10),'steel',cap0=True,cap1=True)
@@ -517,6 +578,13 @@ def kitchen_line(b, hi=False):
     b.box((0,0.04,1.88),(W-0.04,D-0.12,0.08),'steel')
     b.box((0,0.04,1.80),(W-0.20,D-0.28,0.08),'paint_black')  # filters
     b.box((0,D/2-0.16,H-0.06),(0.36,0.20,0.12),'steel')  # duct stub
+    # salamander / cheese melter under the pass
+    b.box((0,D/2-0.22,1.48),(0.70,0.22,0.08),'steel')
+    b.box((0,D/2-0.22,1.46),(0.60,0.18,0.03),'paint_black')
+    b.box((0,-(0.0)+D/2-0.32,1.48),(0.50,0.04,0.016),'steel')  # drop door lip
+    # close the open bottom at the back (body skips bottom) and a side utensil rail
+    b.box((0,(D/2)-0.02,0.0),(W,0.04,0.10),'paint_black',skip=('bottom',))
+    b.tube((W/2-0.02,-0.20,1.10),(W/2-0.02,0.20,1.10),0.008,0.008,sg(hi,6,10),'chrome',cap0=True,cap1=True,smooth=True)
     # towel bar on the front rail
     b.tube((-0.20,-(D/2)-0.03,0.78),(0.20,-(D/2)-0.03,0.78),0.008,0.008,sg(hi,6,10),'chrome',cap0=True,cap1=True)
     b.tube((-0.20,-(D/2)+0.01,0.78),(-0.20,-(D/2)-0.03,0.78),0.007,0.007,sg(hi,6,8),'chrome',cap0=True,cap1=True)
@@ -545,11 +613,12 @@ def beer_taps(b, hi=False):
     for i,x in enumerate((-0.20,-0.07,0.07,0.20)):
         b.tube((x,0.02,0.46),(x,-0.06,0.40),0.010,0.010,sg(hi,6,10),'chrome',cap0=False,cap1=True,smooth=True)
         b.tube((x,-0.06,0.40),(x,-0.08,0.32),0.012,0.012,sg(hi,6,10),'chrome',cap0=False,cap1=True,smooth=True)
-        # handle
+        # shaped handle (tapered grip + chrome pommel), not a plain rod
         col=('leaf','paint_navy','oak','paint_cream')[i]
-        b.tube((x,-0.06,0.42),(x,-0.06,0.58),0.012,0.010,sg(hi,6,10),col,cap0=False,cap1=True,smooth=True)
-        b.tube((x,-0.06,0.58),(x,-0.06,0.62),0.016,0.016,sg(hi,6,10),'chrome',cap0=False,cap1=True,smooth=True)
-        b.box((x,-0.07,0.50),(0.03,0.008,0.04),'badge')  # tap badge
+        b.tube((x,-0.06,0.42),(x,-0.06,0.50),0.010,0.016,sg(hi,6,10),col,cap0=False,cap1=False,smooth=True)
+        b.tube((x,-0.06,0.50),(x,-0.06,0.58),0.016,0.011,sg(hi,6,10),col,cap0=False,cap1=False,smooth=True)
+        b.tube((x,-0.06,0.58),(x,-0.06,0.63),0.016,0.016,sg(hi,6,10),'chrome',cap0=False,cap1=True,smooth=True)
+        b.box((x,-0.078,0.48),(0.036,0.010,0.045),'badge')  # tap badge
     # badge on the column
     b.box((0,-0.01,0.28),(0.05,0.006,0.04),'badge')
     b.cbox((0,0,0),(W,D+0.08,H))
@@ -561,7 +630,7 @@ def bar_counter(b, hi=False):
     # thick top + bullnose / armrest pad on the customer edge
     b.box((0,-0.02,H-th),(W,D+0.04,th),'oak')
     b.box((0,-(D/2)-0.02,H-th-0.02),(W-0.06,0.08,0.04),'oak')
-    b.box((0,-(D/2)-0.02,H-0.01),(W-0.10,0.07,0.02),'fabric')  # padded armrest
+    b.box((0,-(D/2)-0.02,H-0.01),(W-0.10,0.07,0.02),'paint_navy')  # padded leather armrest
     # die / front
     b.box((0,0.02,0.10),(W-0.06,D-0.08,H-th-0.12),'paint_cream',skip=('bottom',))
     # kick
@@ -570,16 +639,17 @@ def bar_counter(b, hi=False):
     # staff work top / drip and speed rail on +Y
     b.box((0,(D/2)-0.10,H-th-0.04),(W-0.16,0.22,0.02),'steel')
     b.box((0,(D/2)-0.02,H-th-0.06),(W-0.20,0.04,0.06),'steel')  # speed rail
-    # chrome footrail, returns into end posts (free-standing segment)
-    rz,ry=0.30,-(D/2)+0.02
-    b.tube((-W/2+0.12,ry,rz),(W/2-0.12,ry,rz),0.018,0.018,sg(hi,8,14),'chrome',cap0=False,cap1=False,smooth=True)
-    for x in (-W/2+0.12,W/2-0.12):
-        # down into a grounded post (not a floating end)
-        b.tube((x,ry,rz),(x,ry,0.0),0.018,0.018,sg(hi,8,14),'chrome',cap0=False,cap1=True,smooth=True)
-        b.tube((x,ry,0.0),(x,ry,0.04),0.04,0.04,sg(hi,8,12),'steel',cap0=True,cap1=False,smooth=True)  # base flange
-        b.box((x,ry+0.03,0.12),(0.05,0.04,0.04),'steel')  # clip to kick
-        if hi:
-            screw(b,(x,ry+0.04,0.13),(0,1,0),True,'steel',0.003)
+    # brass footrail, proud of the customer kick, returns into grounded posts
+    rz,ry=0.22,-(D/2)-0.06
+    b.tube((-W/2+0.10,ry,rz),(W/2-0.10,ry,rz),0.018,0.018,sg(hi,8,14),'brass',cap0=False,cap1=False,smooth=True)
+    for x in (-W/2+0.10,-0.37,0.37,W/2-0.10):
+        # post from the kick out to the rail (meets the kick, not a floating bar)
+        b.tube((x,-(D/2)+0.02,0.12),(x,ry,rz),0.014,0.014,sg(hi,8,12),'brass',cap0=True,cap1=True,smooth=True)
+        b.box((x,-(D/2)+0.04,0.10),(0.05,0.04,0.04),'brass')
+    # end returns down to a floor flange
+    for x in (-W/2+0.10,W/2-0.10):
+        b.tube((x,ry,rz),(x,ry,0.0),0.016,0.016,sg(hi,8,12),'brass',cap0=False,cap1=True,smooth=True)
+        b.tube((x,ry,0.0),(x,ry,0.03),0.036,0.036,sg(hi,8,12),'brass',cap0=True,cap1=False,smooth=True)
     # end panels / posts
     for x,sgn in ((-W/2,1),(W/2,-1)):
         b.box((x+sgn*0.03,0.0,0.0),(0.06,D,H-0.02),'oak',skip=('bottom',))
@@ -589,7 +659,7 @@ def bar_counter(b, hi=False):
     for x in (-0.55,0.55):
         b.box((x,-(D/2)+0.025,0.20),(0.90,0.02,0.70),'oak')
         b.box((x,-(D/2)+0.012,0.22),(0.82,0.016,0.66),'lam')
-        b.box((x,-(D/2)+0.006,0.26),(0.74,0.012,0.58),'paint_cream')
+        b.box((x,-(D/2)+0.006,0.26),(0.74,0.012,0.58),'paint_navy')
     b.box((0,-(D/2)+0.008,0.52),(W-0.20,0.016,0.020),'brass')
     b.box((0,-(D/2)+0.008,0.18),(W-0.16,0.016,0.016),'brass')
     maker_plate(b,(0,-(D/2)+0.03,0.18),hi,w=0.08,h=0.018)
@@ -610,10 +680,10 @@ PROPS=[
     _p('restaurant_table',restaurant_table,'medium',800),
     _p('cafe_chair',cafe_chair,'small',550),
     _p('bar_stool',bar_stool,'small',550),
-    _p('booth_bench',booth_bench,'small',600),
+    _p('booth_bench',booth_bench,'small',600,no_ch=True),
     _p('espresso_machine',espresso_machine,'medium',1100,side=96),
-    _p('pastry_case',pastry_case,'medium',1100,side=96,cage=0.04,ray=0.12),
-    _p('gelato_case',gelato_case,'medium',1100,side=96,cage=0.04,ray=0.12),
+    _p('pastry_case',pastry_case,'medium',1200,side=96,cage=0.04,ray=0.12),
+    _p('gelato_case',gelato_case,'medium',1200,side=96,cage=0.04,ray=0.12),
     _p('soda_fountain',soda_fountain,'medium',800,side=96),
     _p('bakery_shelf',bakery_shelf,'medium',1100,cage=0.04,ray=0.12),
     _p('wine_backbar',wine_backbar,'medium',1200,side=128,cage=0.04,ray=0.12),
@@ -621,3 +691,5 @@ PROPS=[
     _p('beer_taps',beer_taps,'small',600,side=96),
     _p('bar_counter',bar_counter,'medium',1200),
 ]
+
+INDOOR_LOOK=True   # run.py: chamfer edge highlight + per-part colour variation in COLOR_0

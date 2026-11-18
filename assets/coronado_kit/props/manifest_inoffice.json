@@ -3,113 +3,27 @@
   "file_base": "prop_filing_cabinet",
   "batch": "inoffice",
   "class": "medium",
-  "budget": 800,
-  "conds": [
-   "clean"
-  ],
-  "mount": "ground",
-  "tiers": {
-   "near": 434
-  },
-  "footprint_w": 0.5,
-  "footprint_d": 0.665,
-  "height": 1.32,
-  "regions": [
-   "baked:filing_cabinet"
-  ],
-  "trim": {
-   "ti_paint": {
-    "area_m2": 1.74,
-    "px_per_m": 128.0
-   },
-   "ti_metal": {
-    "area_m2": 3.38,
-    "px_per_m": 128.0
-   },
-   "ti_plastic": {
-    "area_m2": 0.01,
-    "px_per_m": 128.0
-   }
-  },
-  "atlas_page": "props_i_*",
-  "high_tris": 2846,
-  "bake_slot_px": 64,
-  "bake_px_per_m": 1087.0,
-  "col": 1,
-  "secs": 12.7
- },
- "office_chair": {
-  "file_base": "prop_office_chair",
-  "batch": "inoffice",
-  "class": "medium",
-  "budget": 800,
-  "conds": [
-   "clean"
-  ],
-  "mount": "ground",
-  "tiers": {
-   "near": 608
-  },
-  "footprint_w": 0.558,
-  "footprint_d": 0.587,
-  "height": 1.052,
-  "regions": [
-   "baked:office_chair"
-  ],
-  "trim": {
-   "ti_metal": {
-    "area_m2": 1.3,
-    "px_per_m": 128.0
-   },
-   "ti_plastic": {
-    "area_m2": 0.04,
-    "px_per_m": 128.0
-   },
-   "ti_fabric": {
-    "area_m2": 0.81,
-    "px_per_m": 128.0
-   },
-   "ti_paint": {
-    "area_m2": 0.44,
-    "px_per_m": 128.0
-   }
-  },
-  "atlas_page": "props_i_*",
-  "high_tris": 2556,
-  "bake_slot_px": 64,
-  "bake_px_per_m": 1249.3,
-  "col": 1,
-  "secs": 11.1
- },
- "office_desk": {
-  "file_base": "prop_office_desk",
-  "batch": "inoffice",
-  "class": "medium",
   "budget": 1000,
   "conds": [
    "clean"
   ],
   "mount": "ground",
   "tiers": {
-   "near": 420
+   "near": 772
   },
-  "footprint_w": 1.5,
-  "footprint_d": 0.75,
-  "height": 0.744,
+  "footprint_w": 0.482,
+  "footprint_d": 0.668,
+  "height": 1.322,
   "regions": [
-   "baked:office_desk"
+   "baked:filing_cabinet"
   ],
   "trim": {
-   "ti_wood": {
-    "area_m2": 3.94,
+   "ti_paint": {
+    "area_m2": 6.7,
     "px_per_m": 128.0
    },
    "ti_metal": {
-    "area_m2": 0.22,
-    "px_per_m": 128.0
-   },
-   "ti_paint": {
-    "area_m2": 3.93,
+    "area_m2": 0.04,
     "px_per_m": 128.0
    },
    "ti_brass": {
@@ -122,10 +36,92 @@
    }
   },
   "atlas_page": "props_i_*",
-  "high_tris": 2424,
+  "high_tris": 3348,
   "bake_slot_px": 64,
-  "bake_px_per_m": 1011.1,
+  "bake_px_per_m": 331.8,
   "col": 1,
-  "secs": 16.4
+  "secs": 13.2
+ },
+ "office_chair": {
+  "file_base": "prop_office_chair",
+  "batch": "inoffice",
+  "class": "medium",
+  "budget": 1000,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 801
+  },
+  "footprint_w": 0.61,
+  "footprint_d": 0.617,
+  "height": 1.019,
+  "regions": [
+   "baked:office_chair"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 0.18,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 1.16,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 1.05,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3162,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1249.3,
+  "col": 1,
+  "secs": 12.4
+ },
+ "office_desk": {
+  "file_base": "prop_office_desk",
+  "batch": "inoffice",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1154
+  },
+  "footprint_w": 1.5,
+  "footprint_d": 0.755,
+  "height": 1.17,
+  "regions": [
+   "baked:office_desk"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 4.05,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 4.98,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 1.28,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 4812,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 95.8,
+  "col": 1,
+  "secs": 19.0
  }
 }

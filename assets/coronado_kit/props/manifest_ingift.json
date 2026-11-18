@@ -28,7 +28,7 @@
   "bake_slot_px": 96,
   "bake_px_per_m": 103.4,
   "col": 1,
-  "secs": 11.3
+  "secs": 12.3
  },
  "gallery_frame": {
   "file_base": "prop_gallery_frame",
@@ -40,7 +40,7 @@
   ],
   "mount": "wall",
   "tiers": {
-   "near": 222
+   "near": 322
   },
   "footprint_w": 0.7,
   "footprint_d": 0.072,
@@ -50,11 +50,11 @@
   ],
   "trim": {
    "ti_wood": {
-    "area_m2": 0.99,
+    "area_m2": 0.93,
     "px_per_m": 128.0
    },
    "ti_paint": {
-    "area_m2": 0.96,
+    "area_m2": 1.85,
     "px_per_m": 128.0
    },
    "ti_metal": {
@@ -64,9 +64,9 @@
   },
   "mount_height": 0.0,
   "atlas_page": "props_i_*",
-  "high_tris": 1600,
+  "high_tris": 1378,
   "bake_slot_px": 96,
-  "bake_px_per_m": 90.0,
+  "bake_px_per_m": 1873.9,
   "col": 1,
   "secs": 9.5
  },
@@ -74,23 +74,23 @@
   "file_base": "prop_pharmacy_shelf",
   "batch": "ingift",
   "class": "medium",
-  "budget": 1100,
+  "budget": 1200,
   "conds": [
    "clean"
   ],
   "mount": "ground",
   "tiers": {
-   "near": 514
+   "near": 742
   },
   "footprint_w": 1.13,
-  "footprint_d": 0.401,
+  "footprint_d": 0.403,
   "height": 2.0,
   "regions": [
    "baked:pharmacy_shelf"
   ],
   "trim": {
    "ti_paint": {
-    "area_m2": 15.9,
+    "area_m2": 18.38,
     "px_per_m": 128.0
    },
    "ti_metal": {
@@ -100,26 +100,30 @@
    "ti_plastic": {
     "area_m2": 0.32,
     "px_per_m": 128.0
+   },
+   "tg_grocery": {
+    "area_m2": 1.19,
+    "px_per_m": 128.0
    }
   },
   "atlas_page": "props_i_*",
-  "high_tris": 7390,
+  "high_tris": 7574,
   "bake_slot_px": 96,
-  "bake_px_per_m": 58.2,
+  "bake_px_per_m": 1516.6,
   "col": 1,
-  "secs": 14.2
+  "secs": 14.6
  },
  "bookcase": {
   "file_base": "prop_bookcase",
   "batch": "ingift",
   "class": "medium",
-  "budget": 1100,
+  "budget": 1200,
   "conds": [
    "clean"
   ],
   "mount": "ground",
   "tiers": {
-   "near": 418
+   "near": 670
   },
   "footprint_w": 1.02,
   "footprint_d": 0.36,
@@ -129,11 +133,19 @@
   ],
   "trim": {
    "ti_wood": {
-    "area_m2": 14.58,
+    "area_m2": 14.33,
     "px_per_m": 128.0
    },
    "ti_brass": {
     "area_m2": 0.01,
+    "px_per_m": 128.0
+   },
+   "tg_spines": {
+    "area_m2": 0.86,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 1.79,
     "px_per_m": 128.0
    },
    "ti_plastic": {
@@ -144,8 +156,8 @@
   "atlas_page": "props_i_*",
   "high_tris": 6926,
   "bake_slot_px": 128,
-  "bake_px_per_m": 83.9,
+  "bake_px_per_m": 2022.1,
   "col": 1,
-  "secs": 10.4
+  "secs": 14.1
  }
 }
