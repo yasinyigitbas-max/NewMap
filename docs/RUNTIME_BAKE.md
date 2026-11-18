@@ -52,21 +52,44 @@ How it gets the draw calls down:
 - Loaded set (12-14 cells + far world): 224 MB video memory (79 textures, 134 meshes).
 - A cell loads in 18 ms on average, 46 ms worst (this machine, warm), on a loader thread; it is built on a worker
   thread; adding it to the scene costs at most 1.9 ms on the main thread.
-- Drive through the sample (840 m, 14 cells streamed in). The streamer loads 240 m from a cell's edge in every
-  direction, unloads at 300 m, and since 18 Nov reaches AHEAD of a moving player by 2 s of travel (at most 200 m;
-  `lead_seconds`, `max_lead`). Nothing is trimmed behind (looking back needs the mid tier to 220 m).
-  | Run | 30 m/s | 60 m/s, no lead | 60 m/s, lead | 80 m/s, lead | 100 m/s, lead |
-  |---|---|---|---|---|---|
-  | Drawing (cloud: ~10 frames a second, the software GPU starves the loader) | no cell late | up to 15 m late for the mid tier | 2 m late in one frame | up to 105 m late | not run |
-  | Not drawing (`--blind`: the loader's own speed) | not run | no cell late | no cell late | no cell late | no cell late |
-  No run had a cell missing inside 60 m (the near tier). Request to in-scene, not drawing: 0.09-0.3 s on average,
-  0.2-0.8 s worst. The lead costs 2-4 more cells in memory (16-18 instead of 14).
-  Adding a cell to the scene took up to 2 ms on the main thread in most drawing runs, but 8-33 ms worst in the
-  not-drawing runs and 13-15 ms in two drawing runs: a possible dropped frame. Not solved: add a cell in parts over a
-  few frames.
+- Streaming: see "The streamer" below.
 - Disk: 79 MB of cells + 14 MB of models for the 32 sample cells. Merging trees is what makes cells big (46 MB with a
   600-triangle merge limit, at about 8 more draws a view).
 - `bake_runtime.gd --check`: 32 cells, 0 stale.
+
+### The streamer (`tools/city/bake/city_stream.gd`, rewritten 18 Nov; nothing taken from the old game)
+Yasin: "go for it" (a robust streaming setup), hoped top speed about 280 km/h (78 m/s), no fast travel. From the old
+game only FACTS were read (fastest car 210 km/h, first person, the player can look back, camera far 900 m, sun
+shadows 50 m, Jolt physics, phone budget 1.5 ms a frame for streaming, and its phone lessons: shaders are built when
+a mesh loads, collider adds hitch, more than 3 loads at once froze the Redmi).
+
+| Part | What it does | Measured (cloud) |
+|---|---|---|
+| Forward lead | the loading range is swept ahead by 2 s of travel (max 200 m) | 60 m/s drawing: 15 m late -> 2 m |
+| Queue | nearest first, 2 loads at a time, stale requests dropped | no cell late at 209, 281, 360 km/h (not drawing) |
+| No hole | the far world shows a cell's far versions until the cell is really in (`ck_cells_loaded`) | - |
+| Shared things stay | every baked material is held for the streamer's life | letting one go cost ~250 ms |
+| Cell add | built on a worker thread, added whole | 0.3-0.5 ms (was up to 33 ms) |
+| Collision in steps | bodies of at most 24 shapes per 32 m, 2 a frame, nearest first, in frames when nothing loads | attach itself 0.05 ms; waiting on a loader's lock: up to 14-20 ms |
+| Removal in parts | 1.5 ms a frame, in frames when nothing loads | step worst 2-3 ms (was 45) |
+| Memory cap | at most 30 cells; beyond it far versions | cap never hit (17-18 cells at once) |
+| `prepare()` / `is_ready()` | get a place ready before the player is put there | used by the rig between drives |
+| `warm_up()` | draws `lib/warm.scn`: one of every material and vertex format | 31 draws; cloud 20 s |
+
+Whole city (140 cells, 208 MB cells + 33 MB models, baked in 65 s). Drives, not drawing: ring 6.5 km at 281 km/h: 101
+cells in, 94 out, none late; frame median 2.4 ms, 99 % 6.6 ms, 3 frames over 50 ms. Zigzag 6.8 km at 209 km/h: none
+late, 2 over 50 ms. Diagonal at 360 km/h: none late.
+STILL OPEN: the slow frames left (20-46 ms here) happen while a cell is loading: the loader thread's mesh and shape
+creation is carried out through the main thread's servers. How big that is on a real phone GPU is unknown: it is the
+first thing the phone run answers. If it is large the next step is cells that arrive in parts.
+
+### The phone test (`tools/city/rig/`)
+`rig.tscn` is the project's main scene: an Android export of this repo is the test app. It drives five routes
+(50, 108, 210, 280 km/h by day, 50 km/h at night with lamp lights) and logs frame times, slow frames with what the
+streamer was doing, late cells, draws, triangles, memory. On Yasin's PC, Git Bash, in the clone:
+`bash tools/city/rig/phone_rig.sh all run1` bakes, exports (preset "Rig", the game's Android template and engine),
+installs, runs and pushes `map_dc/coronado/city_kit/review/phone/run1.txt`. Remote Control showed the PC's folders
+but the PC does not offer them to a cloud session, so the script is the way. NOT RUN YET on Windows.
 
 ### Commands (repo root, real renderer)
 ```bash

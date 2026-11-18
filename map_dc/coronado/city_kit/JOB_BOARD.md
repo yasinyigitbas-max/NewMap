@@ -5,6 +5,17 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov ~13:30: STREAMING (Yasin: "go for it"; "try not to copy anything at all" from the old game; "i hope we can go
+  for speeds like 280km"; no fast travel; "triangles are fine ... keep draw calls as low as possible"). Streamer
+  rewritten (`tools/city/bake/city_stream.gd`, read docs/RUNTIME_BAKE.md "The streamer"), whole city baked locally (140
+  cells; `runtime/` is not in git), cloud drives pass at 209 / 281 / 360 km/h with no cell late. Phone rig +
+  `tools/city/rig/phone_rig.sh all run1` pushed for Yasin to run on the PC (Redmi on adb); the result lands in
+  `review/phone/run1.txt` on the branch. WAITING for that run: fetch the branch and read it. First attempt on the PC
+  said "no such directory" (no clone at /c/NewMap): told him to clone into ~ and run from ~/NewMap. Remote Control:
+  his PC lists folders `project` and the Godot folder but refuses them to cloud sessions.
+  Yasin asked if the repo is a good fresh start: told him honestly: foundation good, ORDER wrong (content before a
+  phone-proven slice, nothing judged on real hardware, top speed / camera not decided). Next after the phone data:
+  cells in parts if uploads hitch; then a playable slice (player, one car) on the phone.
 - 18 Nov ~11:40: THE 4 THINGS (Yasin: "yes replace it and do the 4 things ... show me samples where its possible before
   a map wide roll out"; "triangles are fine ... keep draw calls as low as possible"; the engine's light grid gives 32
   live lights: "use that for the lights problem"). Read `docs/RUNTIME_BAKE.md`. DONE: plan picture replaced; kit atlases

@@ -35,6 +35,7 @@ signal cell_out(key: String)
 @export var max_cells := 30           ## memory cap: cells in the scene
 @export var frame_budget_ms := 1.5    ## main-thread time a frame may spend removing (the old game's phone budget for streaming)
 @export var bodies_per_frame := 2     ## collision bodies attached a frame
+@export var urgent_m := 90.0          ## a body this near the player is attached even while a cell is loading
 
 enum {NONE, LOADING, BUILDING, READY, IN}
 const MAP := 64                       ## ck_cells_loaded is MAP x MAP texels, cell (0, 0) at its middle
@@ -192,6 +193,13 @@ func _process(_dt: float) -> void:
 		add_ms.append(ms); stats.add_ms_worst = maxf(stats.add_ms_worst, ms)
 		var rm := (Time.get_ticks_usec() - int(cells[best].t_req)) / 1000.0
 		ready_ms.append(rm); stats.ready_ms_worst = maxf(stats.ready_ms_worst, rm); stats.ready_ms_sum += rm
+	# While a loader thread is creating a cell's meshes and shapes it holds the render and physics servers' locks for
+	# moments, and anything the main thread asks of them then waits (measured: a 0.05 ms body attach took 14-35 ms,
+	# a removal step 45 ms). So collision and removals run in the frames when nothing is loading - unless a body is
+	# needed soon (within `urgent_m` of the player).
+	var quiet := true
+	for kq: String in cells:
+		if cells[kq].state in [LOADING, BUILDING]: quiet = false; break
 	# collision: the nearest waiting bodies first, a few a frame
 	if not _pending.is_empty():
 		for i in bodies_per_frame:
@@ -200,6 +208,7 @@ func _process(_dt: float) -> void:
 			for j in _pending.size():
 				var dd := (_pending[j][0] as Vector3).distance_squared_to(focus)
 				if dd < bdist: bdist = dd; bi = j
+			if not quiet and bdist > urgent_m * urgent_m: break
 			var e: Array = _pending[bi]; _pending.remove_at(bi)
 			var tb := Time.get_ticks_usec(); (e[1] as Node).add_child(e[2])
 			var bms := (Time.get_ticks_usec() - tb) / 1000.0
@@ -208,7 +217,7 @@ func _process(_dt: float) -> void:
 		for e2: Array in _pending:      # a body still waiting with the player 40 m away would be a hole in the ground
 			if (e2[0] as Vector3).distance_to(focus) < 40.0: stats.body_late += 1; break
 	# cells on their way out: a part at a time inside the frame budget
-	while not _leaving.is_empty() and (Time.get_ticks_usec() - t0) / 1000.0 < frame_budget_ms:
+	while quiet and not _leaving.is_empty() and (Time.get_ticks_usec() - t0) / 1000.0 < frame_budget_ms:
 		var tr := Time.get_ticks_usec()
 		var n: Node = _leaving[_leaving.size() - 1]
 		if n.get_child_count() > 0 and not (n is CollisionObject3D):
