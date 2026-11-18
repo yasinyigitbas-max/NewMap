@@ -2,7 +2,7 @@
  "piece": "g_v2_j4se",
  "shops": [
   {
-   "door_index": 1,
+   "door_index": 0,
    "kind": "liquor",
    "label": "corner_block",
    "model": "ck/ck_brk3_corner2",
@@ -60,8 +60,8 @@
    "model": "ck/ck_grt_row2",
    "name": "Suds City Laundry",
    "pos": [
-    -707.599998474121,
-    3.01873588562012,
+    -708.599998474121,
+    3.00040066242218,
     -1177.20000076294
    ],
    "yaw": 180.000005008956

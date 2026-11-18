@@ -5,6 +5,39 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov (cloud, branch `claude/grow-industrial`): INDUSTRIAL GROWTH, stage 1 + 2 done, NOTHING LOCKED, WAITING for
+  Yasin's word on the variants. Read `review/grow_ind/README.md`. Three variants (A port, B fleet, C cold chain),
+  each dressed twice = six 100 m blocks round the sample. They form the pilot area u -900..-500, v -1600..-1400
+  (1st St to 3rd St, J Ave to the house edge). Table `review/grow_ind_blocks.json` (the shared grow_* form).
+  `pieces/ind_grow_lib.gd` MEASURES the road pieces, so every block meets the walk flush and its gates sit on the
+  street's aprons. 14 rooms with an industrial character: `tools/city/rooms/room_gen_ind.gd` + `assign_ind.py`
+  (stocked shelves only). Checks in the area: validator 0, trees 0, sink 0, rooms 0, lock PASS. Baked: worst view
+  78 draws / 387k tris; +5.8 MB download; rooms not in the bake (21-36 draws, 4-6 lights each, unmerged). Not done:
+  the two sloped blocks south of 3rd St at G Ave, the Alameda strip, pictures in the GTA IV look (they need a full
+  bake on the PC), the phone.
+- 19 Nov (PC session, after the census): EVERYTHING PUSHED IS MERGED into `claude/festive-faraday-20ltx2` (Yasin: "merge
+  them yes i saw their works"; "dont leave anything unmerged"): the look pack (he chose "gta4 look"), the tier work
+  and the DRAWING CENSUS (`docs/DRAW_CENSUS.md`, `docs/TREE_ARTIST_BRIEF.md`), and the four zone sessions' first work
+  (gritty 8 blocks, industrial 6, residential 25, strip 3: unlocked, waiting for his approval). `OUT/sweep.sh` (local)
+  merges every pushed branch; `city_grid_layout.json` is regenerated after such a merge with
+  `python tools/city/pilot/zoning/integrate.py` (needs numpy + shapely; it reads `review/grow_*_blocks.json`).
+  Yasin: "i like the new terrain" (the far ground / roads in the far world). The rig now draws the night once in the
+  warm-up by default (the census found it removes the first-dusk frames). CENSUS IN ONE LINE: at 720p the phone
+  lowers its GPU clock, so "13-14 ms of GPU" there is NOT a limit; with the GPU kept busy (1.5 x full screen) the
+  costs are trees 11 / 3 ms (apartments / gritty), near buildings 7 / 3, sun shadows 5 / 3, sky reflection 5 / 3,
+  FXAA 4 / 4, near props 3 / 1, wear marks 2 / 2; the mid tier and the look's building parts cost almost nothing.
+  NOT on the phone yet: the merged build with the grown blocks.
+- 19 Nov ~00:30 (PC time): DRAWING CENSUS ON THE PHONE (Yasin: "queue the drawing cost census"), branch
+  `claude/ecstatic-archimedes-922d2c`, not merged. Full account: docs/DRAW_CENSUS.md. Rig `--plan=census` (states one at
+  a time, standing viewpoints, day / night, `--warmnight`). KEY FINDING: at 720p the phone lowers its GPU clock, so GPU
+  time there does not show costs (half the pixels saved 0.0-0.3 ms); the census was read at 1.5 x full screen. Biggest
+  costs (apartments / gritty): plants 10.9 / 3.4 ms (cut-out leaves 4.0 / 2.8 of it), near buildings 7.0 / 3.3, sun
+  shadows 4.9 / 3.4, sky reflection 5.1 / 3.2, FXAA 3.9 / 3.6, near props 2.6 / 1.3, wear marks 1.9 / 1.9. Cheap: mid
+  tiers, far world, far ground, the look's parts (0.6 together). The first dusk of a session (40-120 ms frames) is
+  first-time building, gone with `--warmnight` (draw the night once in the warm-up: the fix, not applied). Switching
+  the sky reflection back on left the GPU ~28 ms slower until a teleport (not explained). NEW: docs/TREE_ARTIST_BRIEF.md
+  (Yasin: new tree models; what they must be). Stream gate on the merged build (look + tiers code + growth): PASS.
+  Release build not made (Yasin: "dont make the release build yet"). Lock test RESULT PASS.
 - 18 Nov ~21:50 (PC time): YASIN DECIDED THE DAY LOOK: "i go for gta4 look" (the sky session's current default palette
   stays; the half-haze and clear-day variants are not needed). He also asked whether merging must wait for the census
   ("do we have to wait for the cencus?"): no. MERGED into the working branch: the tier session's branch

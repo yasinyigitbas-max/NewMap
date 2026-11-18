@@ -5015,6 +5015,66 @@
    "from": "grow_grt"
   },
   {
+   "piece": "i_va_w800_n1600_sw",
+   "pos": [
+    -800.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind"
+  },
+  {
+   "piece": "i_vb_w800_n1600_se",
+   "pos": [
+    -800.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind"
+  },
+  {
+   "piece": "i_vc_w600_n1600_sw",
+   "pos": [
+    -600.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind"
+  },
+  {
+   "piece": "i_va_w600_n1600_se",
+   "pos": [
+    -600.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind"
+  },
+  {
+   "piece": "i_vb_w600_n1400_nw",
+   "pos": [
+    -600.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind"
+  },
+  {
+   "piece": "i_vc_w600_n1400_ne",
+   "pos": [
+    -600.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ind"
+  },
+  {
    "piece": "r_q_m800_m200_se",
    "pos": [
     -800.0,
@@ -5263,6 +5323,36 @@
    ],
    "yaw": 0.0,
    "from": "grow_res"
+  },
+  {
+   "piece": "m_gr_ad5ne",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_strip"
+  },
+  {
+   "piece": "m_gr_e4s",
+   "pos": [
+    500.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_strip"
+  },
+  {
+   "piece": "m_gr_ad5nw",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_strip"
   },
   {
    "piece": "x_shore_foam",

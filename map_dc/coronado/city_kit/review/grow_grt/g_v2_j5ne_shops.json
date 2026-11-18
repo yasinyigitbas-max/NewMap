@@ -2,7 +2,7 @@
  "piece": "g_v2_j5ne",
  "shops": [
   {
-   "door_index": 1,
+   "door_index": 0,
    "kind": "bodega",
    "label": "corner_block",
    "model": "ck/ck_brk3_corner2",

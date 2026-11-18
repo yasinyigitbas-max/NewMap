@@ -1,0 +1,44 @@
+# phone rig run 'census_x15_night'  2026-11-18T19:57Z  args: --plan=census --census=night --views=centre,apartments,gritty --scale=1.5
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 330 -> 332 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit 2505e43 | meminfo at 60 s:          Native Heap:   213964                         215172;            Graphics:   864768                         864768;           TOTAL PSS:  1184044            TOTAL RSS:  1275600       TOTAL SWAP PSS:      304;
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=1.50 look=1 bloom=0 upscale=0 sharp=0.20 reflect=1 plan=census lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=141 tiers=false band=8.0 arrive=0.50 far_ground=true tier_materials=20
+RIG boot first_area_ms=715 warm_ms=1203 (graphics memory reserve 192 MB: 146 ms) cells=10 static_mb=113 video_mb=321
+RIG census look=1 glow=1 reflect=1
+RIG census centre view at (0, -600) looking (1, 0) battery_temp=? cells=14
+RIG census centre flip_full gpu_ms first frames 30 120 117 117 115 95 83 83 81 56 44 44 | worst gpu 119.8, worst frame 118 ms (45 frames)
+RIG census centre flip_full gpu_ms first frames 37 42 37 36 37 36 37 37 37 37 37 37 | worst gpu 41.8, worst frame 44 ms (45 frames)
+RIG census centre_night baseline gpu_ms med=36.80 p95=37.21 saves=0.00 | draw_cpu_ms med=3.18 | draws=115 tris=773k frames=53
+RIG census centre_night lights_0 gpu_ms med=36.64 p95=37.16 saves=0.16 | draw_cpu_ms med=3.06 | draws=115 tris=773k frames=53
+RIG census centre_night lights_1 gpu_ms med=37.13 p95=42.60 saves=-0.33 | draw_cpu_ms med=3.14 | draws=115 tris=773k frames=52
+RIG census centre_night window_glow_off gpu_ms med=36.92 p95=37.30 saves=-0.12 | draw_cpu_ms med=3.02 | draws=115 tris=773k frames=53
+RIG census centre_night look_windows_off gpu_ms med=36.47 p95=37.79 saves=0.33 | draw_cpu_ms med=3.07 | draws=115 tris=773k frames=53
+RIG census centre_night look_signs_off gpu_ms med=36.73 p95=37.15 saves=0.07 | draw_cpu_ms med=3.15 | draws=115 tris=773k frames=52
+RIG census centre_night hide_glow gpu_ms med=36.69 p95=37.10 saves=0.11 | draw_cpu_ms med=3.04 | draws=103 tris=772k frames=53
+RIG census centre_night baseline gpu_ms med=36.89 p95=37.29 saves=-0.09 | draw_cpu_ms med=3.13 | draws=115 tris=773k frames=52
+RIG census centre done battery_temp=?
+RIG census apartments view at (250, -600) looking (1, 0) battery_temp=? cells=12
+RIG census apartments flip_full gpu_ms first frames 39 46 47 41 41 41 41 41 41 42 40 41 | worst gpu 47.2, worst frame 52 ms (45 frames)
+RIG census apartments flip_full gpu_ms first frames 39 41 42 41 41 41 41 41 41 40 40 40 | worst gpu 42.0, worst frame 52 ms (45 frames)
+RIG census apartments_night baseline gpu_ms med=40.65 p95=40.90 saves=0.00 | draw_cpu_ms med=3.10 | draws=128 tris=918k frames=48
+RIG census apartments_night lights_0 gpu_ms med=39.14 p95=39.37 saves=1.51 | draw_cpu_ms med=3.02 | draws=128 tris=918k frames=49
+RIG census apartments_night lights_1 gpu_ms med=39.72 p95=40.06 saves=0.93 | draw_cpu_ms med=2.94 | draws=128 tris=918k frames=49
+RIG census apartments_night window_glow_off gpu_ms med=39.24 p95=39.41 saves=1.41 | draw_cpu_ms med=3.17 | draws=128 tris=918k frames=49
+RIG census apartments_night look_windows_off gpu_ms med=40.06 p95=40.33 saves=0.59 | draw_cpu_ms med=3.18 | draws=128 tris=918k frames=48
+RIG census apartments_night look_signs_off gpu_ms med=40.35 p95=40.83 saves=0.30 | draw_cpu_ms med=3.13 | draws=128 tris=918k frames=48
+RIG census apartments_night hide_glow gpu_ms med=40.56 p95=41.08 saves=0.09 | draw_cpu_ms med=2.96 | draws=118 tris=918k frames=48
+RIG census apartments_night baseline gpu_ms med=40.53 p95=41.02 saves=0.12 | draw_cpu_ms med=2.98 | draws=128 tris=918k frames=48
+RIG census apartments done battery_temp=?
+RIG census gritty view at (-600, -1000) looking (1, 0) battery_temp=? cells=12
+RIG census gritty flip_full gpu_ms first frames 24 26 27 26 27 26 26 26 26 26 25 25 | worst gpu 27.2, worst frame 35 ms (45 frames)
+RIG census gritty flip_full gpu_ms first frames 24 27 27 26 26 25 25 26 25 25 25 25 | worst gpu 26.9, worst frame 35 ms (45 frames)
+RIG census gritty_night baseline gpu_ms med=25.22 p95=25.46 saves=0.00 | draw_cpu_ms med=2.78 | draws=114 tris=544k frames=75
+RIG census gritty_night lights_0 gpu_ms med=24.32 p95=24.57 saves=0.89 | draw_cpu_ms med=2.75 | draws=114 tris=544k frames=77
+RIG census gritty_night lights_1 gpu_ms med=24.48 p95=24.77 saves=0.73 | draw_cpu_ms med=2.75 | draws=114 tris=544k frames=77
+RIG census gritty_night window_glow_off gpu_ms med=24.44 p95=24.76 saves=0.77 | draw_cpu_ms med=2.69 | draws=114 tris=544k frames=77
+RIG census gritty_night look_windows_off gpu_ms med=24.92 p95=25.30 saves=0.29 | draw_cpu_ms med=2.75 | draws=114 tris=544k frames=75
+RIG census gritty_night look_signs_off gpu_ms med=25.03 p95=25.34 saves=0.19 | draw_cpu_ms med=2.81 | draws=114 tris=544k frames=75
+RIG census gritty_night hide_glow gpu_ms med=25.24 p95=25.50 saves=-0.02 | draw_cpu_ms med=2.51 | draws=100 tris=544k frames=75
+RIG census gritty_night baseline gpu_ms med=25.22 p95=25.44 saves=-0.01 | draw_cpu_ms med=2.78 | draws=114 tris=544k frames=74
+RIG census gritty done battery_temp=?
+RIG plan_done census
