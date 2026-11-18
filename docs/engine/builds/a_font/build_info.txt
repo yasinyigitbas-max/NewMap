@@ -1,0 +1,6 @@
+name: coronado_a_font
+godot: 4.7.2-stable ed1daf0bf001b61586d9930840f2f1394092c079
+patches: engine/patches/a_font_atlas_race.patch
+5bd83280aadce87517b5e8790e099bd55b836fe5ba82833daa084c2e91d96d72  engine/patches/a_font_atlas_race.patch
+scons: platform=android arch=arm64 production=yes debug_symbols=no verbose=no warnings=no progress=no target=template_{release debug}
+ndk: 29.0.14206865

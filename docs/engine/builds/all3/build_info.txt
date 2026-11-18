@@ -1,0 +1,10 @@
+name: coronado_all3
+godot: 4.7.2-stable ed1daf0bf001b61586d9930840f2f1394092c079
+patches: engine/patches/a_font_atlas_race.patch engine/patches/b2_respv_parse_on_demand.patch engine/patches/b3_free_variant_bytes.patch engine/patches/c_sgsr1_mobile_upscaler.patch engine/patches/e_mobile_light_grid.patch
+5bd83280aadce87517b5e8790e099bd55b836fe5ba82833daa084c2e91d96d72  engine/patches/a_font_atlas_race.patch
+01db463313cca52d14965228d5aeabdf47c3fcef64cb92b8c4b5a468177009fa  engine/patches/b2_respv_parse_on_demand.patch
+6d5ad8df3ad359c88310c90b90d86b9bbbe40972d4e78da3db34bf0a0ba46b5c  engine/patches/b3_free_variant_bytes.patch
+77a33dd2c339aa38733b5332882b44867dee49c3a3e333f6b5e0b57c72faafe1  engine/patches/c_sgsr1_mobile_upscaler.patch
+b509f8962456ff3101f79327a45c92f05abc9d0f7eb75b5a8bd07a16b8efa402  engine/patches/e_mobile_light_grid.patch
+scons: platform=android arch=arm64 production=yes debug_symbols=no verbose=no warnings=no progress=no target=template_{release debug}
+ndk: 29.0.14206865

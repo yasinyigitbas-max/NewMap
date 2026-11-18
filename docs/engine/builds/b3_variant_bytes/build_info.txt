@@ -1,0 +1,6 @@
+name: coronado_b3_variant_bytes
+godot: 4.7.2-stable ed1daf0bf001b61586d9930840f2f1394092c079
+patches: engine/patches/b3_free_variant_bytes.patch
+6d5ad8df3ad359c88310c90b90d86b9bbbe40972d4e78da3db34bf0a0ba46b5c  engine/patches/b3_free_variant_bytes.patch
+scons: platform=android arch=arm64 production=yes debug_symbols=no verbose=no warnings=no progress=no target=template_{release debug}
+ndk: 29.0.14206865

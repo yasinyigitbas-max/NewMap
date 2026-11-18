@@ -1,0 +1,15 @@
+; Test project for engine patch c (spatial upscaler in the Mobile renderer). Not part of the game.
+config_version=5
+
+[application]
+config/name="upscale"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7", "Mobile")
+
+[display]
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[rendering]
+renderer/rendering_method="mobile"
+driver/threads/thread_model=2

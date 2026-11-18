@@ -1,0 +1,377 @@
+diff --git a/COPYRIGHT.txt b/COPYRIGHT.txt
+index 758917a..6d936af 100644
+--- a/COPYRIGHT.txt
++++ b/COPYRIGHT.txt
+@@ -191,6 +191,11 @@ Comment: AccessKit
+ Copyright: 2023, The AccessKit Authors.
+ License: Expat
+ 
++Files: servers/rendering/renderer_rd/shaders/effects/sgsr_upscale.glsl
++Comment: Snapdragon Game Super Resolution
++Copyright: 2023-2025, Qualcomm Innovation Center, Inc.
++License: BSD-3-clause
++
+ Files: thirdparty/amd-fsr/*
+ Comment: AMD FidelityFX Super Resolution
+ Copyright: 2021, Advanced Micro Devices, Inc.
+diff --git a/servers/rendering/renderer_rd/effects/sgsr.cpp b/servers/rendering/renderer_rd/effects/sgsr.cpp
+new file mode 100644
+index 0000000..b301d61
+--- /dev/null
++++ b/servers/rendering/renderer_rd/effects/sgsr.cpp
+@@ -0,0 +1,64 @@
++/**************************************************************************/
++/*  sgsr.cpp                                                              */
++/**************************************************************************/
++/*  Coronado patch c: Snapdragon Game Super Resolution 1 as the spatial   */
++/*  upscaler of renderers without compute post-processing (Mobile).       */
++/**************************************************************************/
++
++#include "sgsr.h"
++
++#include "servers/rendering/renderer_rd/framebuffer_cache_rd.h"
++#include "servers/rendering/renderer_rd/storage_rd/material_storage.h"
++#include "servers/rendering/renderer_rd/uniform_set_cache_rd.h"
++
++using namespace RendererRD;
++
++SGSR::SGSR() {
++	Vector<String> modes;
++	// Edge direction on: smoother diagonal edges than the plain mode for a small extra cost on edge pixels
++	// (the plain mode re-sharpened FXAA's steps into wobbly lines in the test scene).
++	modes.push_back("\n#define USE_EDGE_DIRECTION\n");
++	sgsr_shader.initialize(modes);
++	shader_version = sgsr_shader.version_create();
++	pipeline.setup(sgsr_shader.version_get_shader(shader_version, 0), RD::RENDER_PRIMITIVE_TRIANGLES, RD::PipelineRasterizationState(), RD::PipelineMultisampleState(), RD::PipelineDepthStencilState(), RD::PipelineColorBlendState::create_disabled(), 0);
++}
++
++SGSR::~SGSR() {
++	pipeline.clear();
++	sgsr_shader.version_free(shader_version);
++}
++
++void SGSR::process(Ref<RenderSceneBuffersRD> p_render_buffers, RID p_source_rd_texture, RID p_destination_texture) {
++	UniformSetCacheRD *uniform_set_cache = UniformSetCacheRD::get_singleton();
++	ERR_FAIL_NULL(uniform_set_cache);
++	MaterialStorage *material_storage = MaterialStorage::get_singleton();
++	ERR_FAIL_NULL(material_storage);
++
++	Size2i internal_size = p_render_buffers->get_internal_size();
++
++	SGSRPushConstant push_constant;
++	memset(&push_constant, 0, sizeof(SGSRPushConstant));
++	push_constant.viewport_info[0] = 1.0f / float(internal_size.width);
++	push_constant.viewport_info[1] = 1.0f / float(internal_size.height);
++	push_constant.viewport_info[2] = float(internal_size.width);
++	push_constant.viewport_info[3] = float(internal_size.height);
++	// "rendering/scaling_3d/fsr_sharpness": 0.0 is sharpest, 2.0 least sharp, default 0.2.
++	// SGSR's edge sharpness: 1.0 to 2.25, higher is sharper, 2.0 is its default.
++	push_constant.edge_sharpness = CLAMP(2.1f - 0.5f * p_render_buffers->get_fsr_sharpness(), 1.0f, 2.25f);
++	push_constant.edge_threshold = 8.0f / 255.0f;
++
++	RID shader = sgsr_shader.version_get_shader(shader_version, 0);
++	ERR_FAIL_COND(shader.is_null());
++
++	RID default_sampler = material_storage->sampler_rd_get_default(RSE::CANVAS_ITEM_TEXTURE_FILTER_LINEAR, RSE::CANVAS_ITEM_TEXTURE_REPEAT_DISABLED);
++	RD::Uniform u_source_rd_texture(RD::UNIFORM_TYPE_SAMPLER_WITH_TEXTURE, 0, { default_sampler, p_source_rd_texture });
++
++	RID dest_framebuffer = FramebufferCacheRD::get_singleton()->get_cache(p_destination_texture);
++
++	RD::DrawListID draw_list = RD::get_singleton()->draw_list_begin(dest_framebuffer);
++	RD::get_singleton()->draw_list_bind_render_pipeline(draw_list, pipeline.get_render_pipeline(RD::INVALID_ID, RD::get_singleton()->framebuffer_get_format(dest_framebuffer), false, RD::get_singleton()->draw_list_get_current_pass()));
++	RD::get_singleton()->draw_list_bind_uniform_set(draw_list, uniform_set_cache->get_cache(shader, 0, u_source_rd_texture), 0);
++	RD::get_singleton()->draw_list_set_push_constant(draw_list, &push_constant, sizeof(SGSRPushConstant));
++	RD::get_singleton()->draw_list_draw(draw_list, false, 1u, 3u);
++	RD::get_singleton()->draw_list_end();
++}
+diff --git a/servers/rendering/renderer_rd/effects/sgsr.h b/servers/rendering/renderer_rd/effects/sgsr.h
+new file mode 100644
+index 0000000..74e5007
+--- /dev/null
++++ b/servers/rendering/renderer_rd/effects/sgsr.h
+@@ -0,0 +1,40 @@
++/**************************************************************************/
++/*  sgsr.h                                                                */
++/**************************************************************************/
++/*  Coronado patch c: Snapdragon Game Super Resolution 1 as the spatial   */
++/*  upscaler of renderers without compute post-processing (Mobile).       */
++/*  Shader: BSD-3-Clause, Qualcomm Innovation Center, Inc.                */
++/**************************************************************************/
++
++#pragma once
++
++#include "servers/rendering/renderer_rd/effects/spatial_upscaler.h"
++#include "servers/rendering/renderer_rd/pipeline_cache_rd.h"
++#include "servers/rendering/renderer_rd/shaders/effects/sgsr_upscale.glsl.gen.h"
++#include "servers/rendering/renderer_rd/storage_rd/render_scene_buffers_rd.h"
++
++namespace RendererRD {
++
++class SGSR : public SpatialUpscaler {
++public:
++	SGSR();
++	~SGSR();
++
++	virtual const Span<char> get_label() const final { return "SGSR 1 Upscale"; }
++	virtual void ensure_context(Ref<RenderSceneBuffersRD> p_render_buffers) final {}
++	virtual void process(Ref<RenderSceneBuffersRD> p_render_buffers, RID p_source_rd_texture, RID p_destination_texture) final;
++
++private:
++	struct SGSRPushConstant {
++		float viewport_info[4]; // xy = 1.0 / source size, zw = source size.
++		float edge_sharpness;
++		float edge_threshold;
++		float pad[2];
++	};
++
++	SgsrUpscaleShaderRD sgsr_shader;
++	RID shader_version;
++	PipelineCacheRD pipeline;
++};
++
++} // namespace RendererRD
+diff --git a/servers/rendering/renderer_rd/renderer_scene_render_rd.cpp b/servers/rendering/renderer_rd/renderer_scene_render_rd.cpp
+index fb4d422..d82928f 100644
+--- a/servers/rendering/renderer_rd/renderer_scene_render_rd.cpp
++++ b/servers/rendering/renderer_rd/renderer_scene_render_rd.cpp
+@@ -474,7 +474,9 @@ void RendererSceneRenderRD::_render_buffers_post_process_and_tonemap(const Rende
+ 	SpatialUpscaler *spatial_upscaler = nullptr;
+ 	if (can_use_effects) {
+ 		if (scale_mode == RSE::VIEWPORT_SCALING_3D_MODE_FSR) {
+-			spatial_upscaler = fsr;
++			// Coronado patch c: without compute post-processing (Mobile renderer) the FSR 1 mode runs SGSR 1,
++			// a single raster pass that upscales and sharpens.
++			spatial_upscaler = fsr ? static_cast<SpatialUpscaler *>(fsr) : static_cast<SpatialUpscaler *>(sgsr);
+ 		} else if (scale_mode == RSE::VIEWPORT_SCALING_3D_MODE_METALFX_SPATIAL) {
+ #if METAL_ENABLED
+ 			spatial_upscaler = mfx_spatial;
+@@ -1877,6 +1879,8 @@ void RendererSceneRenderRD::init() {
+ 	}
+ 	if (can_use_storage) {
+ 		fsr = memnew(RendererRD::FSR);
++	} else {
++		sgsr = memnew(RendererRD::SGSR);
+ 	}
+ #ifdef METAL_ENABLED
+ 	mfx_spatial = memnew(RendererRD::MFXSpatialEffect);
+@@ -1910,6 +1914,9 @@ RendererSceneRenderRD::~RendererSceneRenderRD() {
+ 	if (vrs) {
+ 		memdelete(vrs);
+ 	}
++	if (sgsr) {
++		memdelete(sgsr);
++	}
+ 	if (fsr) {
+ 		memdelete(fsr);
+ 	}
+diff --git a/servers/rendering/renderer_rd/renderer_scene_render_rd.h b/servers/rendering/renderer_rd/renderer_scene_render_rd.h
+index 5c13984..54e8e08 100644
+--- a/servers/rendering/renderer_rd/renderer_scene_render_rd.h
++++ b/servers/rendering/renderer_rd/renderer_scene_render_rd.h
+@@ -35,6 +35,7 @@
+ #include "servers/rendering/renderer_rd/effects/copy_effects.h"
+ #include "servers/rendering/renderer_rd/effects/debug_effects.h"
+ #include "servers/rendering/renderer_rd/effects/fsr.h"
++#include "servers/rendering/renderer_rd/effects/sgsr.h"
+ #include "servers/rendering/renderer_rd/effects/luminance.h"
+ #include "servers/rendering/renderer_rd/effects/resolve.h"
+ #include "servers/rendering/renderer_rd/effects/smaa.h"
+@@ -67,6 +68,7 @@ protected:
+ 	RendererRD::SMAA *smaa = nullptr;
+ 	RendererRD::ToneMapper *tone_mapper = nullptr;
+ 	RendererRD::FSR *fsr = nullptr;
++	RendererRD::SGSR *sgsr = nullptr; // Coronado patch c: spatial upscaler where FSR 1 (compute) cannot run.
+ 	RendererRD::VRS *vrs = nullptr;
+ 	RendererRD::Resolve *resolve_effects = nullptr;
+ #ifdef METAL_ENABLED
+diff --git a/servers/rendering/renderer_rd/shaders/effects/sgsr_upscale.glsl b/servers/rendering/renderer_rd/shaders/effects/sgsr_upscale.glsl
+new file mode 100644
+index 0000000..a2e0170
+--- /dev/null
++++ b/servers/rendering/renderer_rd/shaders/effects/sgsr_upscale.glsl
+@@ -0,0 +1,155 @@
++//============================================================================================================
++//
++//                  Copyright (c) 2025, Qualcomm Innovation Center, Inc. All rights reserved.
++//                              SPDX-License-Identifier: BSD-3-Clause
++//
++//  Snapdragon Game Super Resolution 1 (sgsr/v1/include/glsl/sgsr1_shader_mobile.frag, RGBA mode), adapted to
++//  Godot's fullscreen-triangle effects: viewport info, edge sharpness and edge threshold come as push constants.
++//
++//============================================================================================================
++
++#[vertex]
++
++#version 450
++
++#VERSION_DEFINES
++
++layout(location = 0) out vec2 uv_interp;
++
++void main() {
++	vec2 vertex_base;
++	if (gl_VertexIndex == 0) {
++		vertex_base = vec2(-1.0, -1.0);
++	} else if (gl_VertexIndex == 1) {
++		vertex_base = vec2(-1.0, 3.0);
++	} else {
++		vertex_base = vec2(3.0, -1.0);
++	}
++	gl_Position = vec4(vertex_base, 0.0, 1.0);
++	uv_interp = clamp(vertex_base, vec2(0.0, 0.0), vec2(1.0, 1.0)) * 2.0; // saturate(x) * 2.0
++}
++
++#[fragment]
++
++#version 450
++
++#VERSION_DEFINES
++
++layout(location = 0) in highp vec2 uv_interp;
++
++layout(set = 0, binding = 0) uniform mediump sampler2D source_color;
++
++layout(push_constant, std430) uniform Params {
++	highp vec4 viewport_info; // xy = 1.0 / source size, zw = source size.
++	float edge_sharpness;
++	float edge_threshold;
++	float pad[2];
++}
++params;
++
++layout(location = 0) out vec4 frag_color;
++
++float fast_lanczos2(float x) {
++	float wA = x - 4.0;
++	float wB = x * wA - wA;
++	wA *= wA;
++	return wB * wA;
++}
++
++#ifdef USE_EDGE_DIRECTION
++// sgsr1_shader_mobile_edge_direction.frag: the filter is stretched along the local edge.
++#define WEIGHT_DATA vec3
++
++vec2 weight_y(float dx, float dy, float c, vec3 data) {
++	float std = data.x;
++	vec2 dir = data.yz;
++	float edge_dis = ((dx * dir.y) + (dy * dir.x));
++	float x = (((dx * dx) + (dy * dy)) + ((edge_dis * edge_dis) * ((clamp(((c * c) * std), 0.0, 1.0) * 0.7) + -1.0)));
++	float w = fast_lanczos2(x);
++	return vec2(w, w * c);
++}
++
++vec2 edge_direction(vec4 left, vec4 right) {
++	vec2 dir;
++	float RxLz = (right.x + (-left.z));
++	float RwLy = (right.w + (-left.y));
++	vec2 delta;
++	delta.x = (RxLz + RwLy);
++	delta.y = (RxLz + (-RwLy));
++	float length_inv = inversesqrt((delta.x * delta.x + 3.075740e-05) + (delta.y * delta.y));
++	dir.x = (delta.x * length_inv);
++	dir.y = (delta.y * length_inv);
++	return dir;
++}
++#else
++#define WEIGHT_DATA float
++
++vec2 weight_y(float dx, float dy, float c, float std) {
++	float x = ((dx * dx) + (dy * dy)) * 0.55 + clamp(abs(c) * std, 0.0, 1.0);
++	float w = fast_lanczos2(x);
++	return vec2(w, w * c);
++}
++#endif
++
++void main() {
++	vec4 color;
++	color.xyz = textureLod(source_color, uv_interp, 0.0).xyz;
++
++	highp vec2 img_coord = ((uv_interp * params.viewport_info.zw) + vec2(-0.5, 0.5));
++	highp vec2 img_coord_pixel = floor(img_coord);
++	highp vec2 coord = (img_coord_pixel * params.viewport_info.xy);
++	vec2 pl = (img_coord + (-img_coord_pixel));
++	vec4 left = textureGather(source_color, coord, 1);
++
++	float edge_vote = abs(left.z - left.y) + abs(color.y - left.y) + abs(color.y - left.z);
++	if (edge_vote > params.edge_threshold) {
++		coord.x += params.viewport_info.x;
++
++		vec4 right = textureGather(source_color, coord + vec2(params.viewport_info.x, 0.0), 1);
++		vec4 up_down;
++		up_down.xy = textureGather(source_color, coord + vec2(0.0, -params.viewport_info.y), 1).wz;
++		up_down.zw = textureGather(source_color, coord + vec2(0.0, params.viewport_info.y), 1).yx;
++
++		float mean = (left.y + left.z + right.x + right.w) * 0.25;
++		left = left - vec4(mean);
++		right = right - vec4(mean);
++		up_down = up_down - vec4(mean);
++		color.w = color.y - mean;
++
++		float sum = (((((abs(left.x) + abs(left.y)) + abs(left.z)) + abs(left.w)) + (((abs(right.x) + abs(right.y)) + abs(right.z)) + abs(right.w))) + (((abs(up_down.x) + abs(up_down.y)) + abs(up_down.z)) + abs(up_down.w)));
++#ifdef USE_EDGE_DIRECTION
++		float sum_mean = 1.014185e+01 / sum;
++		WEIGHT_DATA std = vec3(sum_mean * sum_mean, edge_direction(left, right));
++#else
++		WEIGHT_DATA std = 2.181818 / sum;
++#endif
++
++		vec2 aWY = weight_y(pl.x, pl.y + 1.0, up_down.x, std);
++		aWY += weight_y(pl.x - 1.0, pl.y + 1.0, up_down.y, std);
++		aWY += weight_y(pl.x - 1.0, pl.y - 2.0, up_down.z, std);
++		aWY += weight_y(pl.x, pl.y - 2.0, up_down.w, std);
++		aWY += weight_y(pl.x + 1.0, pl.y - 1.0, left.x, std);
++		aWY += weight_y(pl.x, pl.y - 1.0, left.y, std);
++		aWY += weight_y(pl.x, pl.y, left.z, std);
++		aWY += weight_y(pl.x + 1.0, pl.y, left.w, std);
++		aWY += weight_y(pl.x - 1.0, pl.y - 1.0, right.x, std);
++		aWY += weight_y(pl.x - 2.0, pl.y - 1.0, right.y, std);
++		aWY += weight_y(pl.x - 2.0, pl.y, right.z, std);
++		aWY += weight_y(pl.x - 1.0, pl.y, right.w, std);
++
++		float final_y = aWY.y / aWY.x;
++
++		float max_y = max(max(left.y, left.z), max(right.x, right.w));
++		float min_y = min(min(left.y, left.z), min(right.x, right.w));
++		final_y = clamp(params.edge_sharpness * final_y, min_y, max_y);
++
++		float delta_y = final_y - color.w;
++
++		// Smooth high contrast input.
++		delta_y = clamp(delta_y, -23.0 / 255.0, 23.0 / 255.0);
++
++		color.xyz = clamp(color.xyz + vec3(delta_y), vec3(0.0), vec3(1.0));
++	}
++
++	frag_color = vec4(color.xyz, 1.0);
++}
+diff --git a/servers/rendering/renderer_viewport.cpp b/servers/rendering/renderer_viewport.cpp
+index 8098fea..393160e 100644
+--- a/servers/rendering/renderer_viewport.cpp
++++ b/servers/rendering/renderer_viewport.cpp
+@@ -159,10 +159,11 @@ void RendererViewport::_configure_3d_render_buffers(Viewport *p_viewport) {
+ 				WARN_PRINT_ONCE("MetalFX and FSR upscaling are not supported in the Compatibility renderer. Falling back to bilinear scaling.");
+ 			}
+ 
+-			if ((scaling_3d_mode == RSE::VIEWPORT_SCALING_3D_MODE_FSR || scaling_3d_mode == RSE::VIEWPORT_SCALING_3D_MODE_FSR2 || scaling_3d_mode == RSE::VIEWPORT_SCALING_3D_MODE_METALFX_TEMPORAL) && OS::get_singleton()->get_current_rendering_method() == "mobile") {
++			// Coronado patch c: the FSR 1 mode is allowed in the Mobile renderer (it runs SGSR 1 there).
++			if ((scaling_3d_mode == RSE::VIEWPORT_SCALING_3D_MODE_FSR2 || scaling_3d_mode == RSE::VIEWPORT_SCALING_3D_MODE_METALFX_TEMPORAL) && OS::get_singleton()->get_current_rendering_method() == "mobile") {
+ 				scaling_3d_mode = RSE::VIEWPORT_SCALING_3D_MODE_BILINEAR;
+ 				scaling_type = RSE::scaling_3d_mode_type(scaling_3d_mode);
+-				WARN_PRINT_ONCE("MetalFX temporal and FSR upscaling are not supported in the Mobile renderer. Falling back to bilinear scaling.");
++				WARN_PRINT_ONCE("MetalFX temporal and FSR 2 upscaling are not supported in the Mobile renderer. Falling back to bilinear scaling.");
+ 			}
+ 
+ 			if (scaling_3d_mode == RSE::VIEWPORT_SCALING_3D_MODE_METALFX_TEMPORAL && !RD::get_singleton()->has_feature(RD::SUPPORTS_METALFX_TEMPORAL)) {
+@@ -1024,8 +1025,9 @@ void RendererViewport::viewport_set_scaling_3d_mode(RID p_viewport, RSE::Viewpor
+ 	ERR_FAIL_NULL(viewport);
+ 	const String rendering_method = OS::get_singleton()->get_current_rendering_method();
+ 	if (rendering_method != "forward_plus") {
+-		if (p_mode == RSE::VIEWPORT_SCALING_3D_MODE_FSR) {
+-			WARN_PRINT_ONCE_ED("FSR1 3D scaling is only available when using the Forward+ renderer.");
++		// Coronado patch c: the Mobile renderer accepts the FSR 1 mode (it runs SGSR 1 there).
++		if (p_mode == RSE::VIEWPORT_SCALING_3D_MODE_FSR && rendering_method != "mobile") {
++			WARN_PRINT_ONCE_ED("FSR1 3D scaling is only available when using the Forward+ and Mobile renderers.");
+ 			return;
+ 		}
+ 		if (p_mode == RSE::VIEWPORT_SCALING_3D_MODE_FSR2) {

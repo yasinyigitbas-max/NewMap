@@ -1,0 +1,69 @@
+diff --git a/drivers/vulkan/rendering_device_driver_vulkan.cpp b/drivers/vulkan/rendering_device_driver_vulkan.cpp
+index 4b1bd9f..065be3e 100644
+--- a/drivers/vulkan/rendering_device_driver_vulkan.cpp
++++ b/drivers/vulkan/rendering_device_driver_vulkan.cpp
+@@ -58,6 +58,16 @@
+ #define PRINT_NATIVE_COMMANDS 0
+ 
+ // Enable the use of re-spirv for optimizing shaders after applying specialization constants.
++#include <atomic>
++static std::atomic<uint64_t> cs_shaders{0}, cs_stages{0}, cs_spirv{0}, cs_comp{0}, cs_respv{0}, cs_inl{0}, cs_parse_us{0}, cs_pipes{0}, cs_opt_us{0}, cs_optcalls{0}, cs_allshaders{0}, cs_allspirv{0};
++template <typename V> static uint64_t cs_vb(const V &v) { return v.capacity() * sizeof(typename V::value_type); }
++static uint64_t cs_respv_bytes(const respv::Shader &sh) {
++	return sizeof(respv::Shader) + cs_vb(sh.inlinedSpirvWords) + cs_vb(sh.instructions) + cs_vb(sh.instructionAdjacentListIndices) + cs_vb(sh.instructionInDegrees) + cs_vb(sh.instructionOutDegrees) + cs_vb(sh.instructionOrder) + cs_vb(sh.blocks) + cs_vb(sh.blockPreOrderIndices) + cs_vb(sh.blockPostOrderIndices) + cs_vb(sh.functions) + cs_vb(sh.variableOrder) + cs_vb(sh.results) + cs_vb(sh.specializations) + cs_vb(sh.decorations) + cs_vb(sh.phis) + cs_vb(sh.loopHeaders) + cs_vb(sh.listNodes);
++}
++static void cs_print() {
++	print_line(vformat("CSTAT shaders_all=%d spirv_all_kb=%d | speccon shaders=%d stages=%d spirv_kb=%d compressed_kb=%d respv_kb=%d (inlined_words_kb=%d) parse_ms=%d | pipelines=%d optcalls=%d opt_ms=%d",
++			cs_allshaders.load(), cs_allspirv.load() / 1024, cs_shaders.load(), cs_stages.load(), cs_spirv.load() / 1024, cs_comp.load() / 1024, cs_respv.load() / 1024, cs_inl.load() / 1024, cs_parse_us.load() / 1000, cs_pipes.load(), cs_optcalls.load(), cs_opt_us.load() / 1000));
++}
+ #define RESPV_ENABLED 1
+ 
+ // Only enable function inlining for re-spirv when dealing with a shader that uses specialization constants.
+@@ -4345,6 +4355,12 @@ RDD::ShaderID RenderingDeviceDriverVulkan::shader_create_from_container(const Re
+ 	if (store_respv) {
+ 		shader_info.respv_stage_shaders.reserve(stage_count);
+ 	}
++	cs_allshaders++;
++	if (store_respv) {
++		if ((++cs_shaders % 100) == 0) {
++			cs_print();
++		}
++	}
+ 
+ 	for (int i = 0; i < stage_count; i++) {
+ 		const RenderingShaderContainer::Shader &shader = p_shader_container->shaders[i];
+@@ -4380,7 +4396,18 @@ RDD::ShaderID RenderingDeviceDriverVulkan::shader_create_from_container(const Re
+ 
+ 		if (use_respv) {
+ 			const bool inline_data = store_respv || (RESPV_ONLY_INLINE_SHADERS_WITH_SPEC_CONSTANTS == 0);
++			uint64_t cs_t0 = OS::get_singleton()->get_ticks_usec();
+ 			respv::Shader respv_shader(decoded_spirv.ptr(), decoded_spirv.size(), inline_data);
++			cs_allspirv += decoded_spirv.size();
++			if (store_respv) {
++				cs_parse_us += OS::get_singleton()->get_ticks_usec() - cs_t0;
++				cs_stages++;
++				cs_spirv += decoded_spirv.size();
++				cs_comp += shader.code_compressed_bytes.size();
++				respv::Shader cs_copy = respv_shader;
++				cs_respv += cs_respv_bytes(cs_copy);
++				cs_inl += cs_copy.inlinedSpirvWords.size() * 4;
++			}
+ 			if (respv_shader.empty()) {
+ #if RESPV_VERBOSE
+ 				print_line("re-spirv failed to parse the shader, skipping optimization.");
+@@ -6145,7 +6172,14 @@ RDD::PipelineID RenderingDeviceDriverVulkan::render_pipeline_create(
+ #if RESPV_DONT_REMOVE_DEAD_CODE
+ 				respv_options.removeDeadCode = false;
+ #endif
+-				if (respv::Optimizer::run(shader_info->respv_stage_shaders[i], respv_spec_constants.ptr(), respv_spec_constants.size(), respv_optimized_data, respv_options)) {
++				uint64_t cs_t1 = OS::get_singleton()->get_ticks_usec();
++				bool cs_ok = respv::Optimizer::run(shader_info->respv_stage_shaders[i], respv_spec_constants.ptr(), respv_spec_constants.size(), respv_optimized_data, respv_options);
++				cs_opt_us += OS::get_singleton()->get_ticks_usec() - cs_t1;
++				cs_optcalls++;
++				if (i == 0 && (++cs_pipes % 200) == 0) {
++					cs_print();
++				}
++				if (cs_ok) {
+ #if RESPV_VERBOSE
+ 					String spec_constants;
+ 					for (uint32_t j = 0; j < p_specialization_constants.size(); j++) {

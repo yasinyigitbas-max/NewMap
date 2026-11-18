@@ -1,0 +1,19 @@
+diff --git a/drivers/vulkan/rendering_device_driver_vulkan.cpp b/drivers/vulkan/rendering_device_driver_vulkan.cpp
+index 4b1bd9f..1660e29 100644
+--- a/drivers/vulkan/rendering_device_driver_vulkan.cpp
++++ b/drivers/vulkan/rendering_device_driver_vulkan.cpp
+@@ -4332,8 +4332,12 @@ RDD::ShaderID RenderingDeviceDriverVulkan::shader_create_from_container(const Re
+ 	Vector<uint8_t> decompressed_code;
+ 	VkShaderModule vk_module;
+ 	PackedByteArray decoded_spirv;
+-	const bool use_respv = (RESPV_ENABLED == 1) && !shader_container_format.get_debug_info_enabled();
+-	const bool store_respv = use_respv && !shader_refl.specialization_constants.is_empty();
++	// Coronado patch b1: never keep a parsed re-spirv copy. Shaders with specialization constants are created from
++	// the SPIR-V as it is and the Vulkan driver applies the constants at pipeline creation (pSpecializationInfo),
++	// which is the path render_pipeline_create() already falls back to when re-spirv cannot parse a stage.
++	const bool has_spec_constants = !shader_refl.specialization_constants.is_empty();
++	const bool use_respv = (RESPV_ENABLED == 1) && !shader_container_format.get_debug_info_enabled() && !has_spec_constants;
++	const bool store_respv = false;
+ 	const int64_t stage_count = shader_refl.stages_vector.size();
+ 	shader_info.vk_stages_create_info.reserve(stage_count);
+ 	shader_info.original_stage_size.reserve(stage_count);

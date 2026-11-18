@@ -1,0 +1,13 @@
+# Pin for Coronado's own Godot build. Read by engine/build.sh (shell syntax, LF).
+GODOT_REPO=https://github.com/godotengine/godot.git
+GODOT_TAG=4.7.2-stable
+GODOT_COMMIT=ed1daf0bf001b61586d9930840f2f1394092c079
+# Android toolchain: the same versions platform/android/java/app/config.gradle and detect.py name at this tag.
+NDK_ZIP=https://dl.google.com/android/repository/android-ndk-r29-linux.zip
+NDK_VERSION=29.0.14206865
+CMDLINE_TOOLS_ZIP=https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip
+SDK_PACKAGES="platforms;android-36 build-tools;36.1.0 platform-tools cmake;3.10.2.4988404"
+# Swappy frame pacing: misc/scripts/install_swappy_android.py at this tag fetches godot-swappy "from-source-2025-01-31".
+# Official scons options (godot-build-scripts build-android/build.sh): production=yes debug_symbols=yes.
+# Ours: production=yes debug_symbols=no (Gradle strips the symbols from the .aar anyway; the code is the same).
+SCONS_OPTIONS="platform=android arch=arm64 production=yes debug_symbols=no verbose=no warnings=no progress=no"

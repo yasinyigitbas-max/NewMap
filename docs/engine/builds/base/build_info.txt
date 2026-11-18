@@ -1,0 +1,5 @@
+name: coronado_base
+godot: 4.7.2-stable ed1daf0bf001b61586d9930840f2f1394092c079
+patches: none
+scons: platform=android arch=arm64 production=yes debug_symbols=no verbose=no warnings=no progress=no target=template_{release debug}
+ndk: 29.0.14206865

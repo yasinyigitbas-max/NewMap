@@ -1,0 +1,30 @@
+diff --git a/servers/rendering/renderer_rd/shader_rd.cpp b/servers/rendering/renderer_rd/shader_rd.cpp
+index a9739f2..7210ce0 100644
+--- a/servers/rendering/renderer_rd/shader_rd.cpp
++++ b/servers/rendering/renderer_rd/shader_rd.cpp
+@@ -684,6 +684,13 @@ bool ShaderRD::_load_from_cache(Version *p_version, int p_group) {
+ 		}
+ 	}
+ 
++	// Coronado patch b3: the cache bytes were only needed to create the shaders above. Keeping them holds a second
++	// copy of every loaded variant for the life of the shader (they are only read again by _save_to_cache(), which
++	// is not called for a group that came from the cache).
++	for (uint32_t i = 0; i < variant_count; i++) {
++		p_version->variant_data.write[group_to_variant_map[p_group][i]] = Vector<uint8_t>();
++	}
++
+ 	p_version->valid = true;
+ 	return true;
+ }
+@@ -697,6 +704,11 @@ void ShaderRD::_save_to_cache(Version *p_version, int p_group) {
+ 
+ 	PackedByteArray shader_cache_bytes = ShaderRD::save_shader_cache_bytes(group_to_variant_map[p_group], p_version->variant_data);
+ 	f->store_buffer(shader_cache_bytes);
++
++	// Coronado patch b3: written to the cache, not needed in memory any more.
++	for (uint32_t i = 0; i < group_to_variant_map[p_group].size(); i++) {
++		p_version->variant_data.write[group_to_variant_map[p_group][i]] = Vector<uint8_t>();
++	}
+ }
+ 
+ void ShaderRD::_allocate_placeholders(Version *p_version, int p_group) {
