@@ -115,7 +115,7 @@ func _books() -> void:
 	r.prop("potted_plant", 2.7, 1.9)
 	# old maps and prints where nothing tall stands in front
 	r.prop("gallery_frame", X1 - 0.04, 1.0, -90.0, 1.55)
-	r.prop("gallery_frame", X1 - 0.04, -0.2, -90.0, 1.5)
+	r.prop("gallery_frame", X1 - 0.04, -1.6, -90.0, 1.5)
 	r.box("wains", Vector3(X1 - 0.015, F + 0.45, -0.4), Vector3(0.03, 0.9, 4.2))
 	r.pendant(-1.6, -0.6, H, 0.7, Color(1.0, 0.78, 0.5), 1.2, 4.5)
 	r.pendant(1.0, 0.6, H, 0.7, Color(1.0, 0.78, 0.5), 1.2, 4.5)
@@ -145,8 +145,8 @@ func _cafe() -> void:
 	r.prop("pastry_case", 0.5, -1.4, 0.0)
 	r.prop("cash_register", -0.5, -1.45, 180.0, 0.964)
 	r.prop("espresso_machine", -1.65, -1.5, 180.0, 0.964)
-	r.prop("bakery_shelf", 1.35, ZB + 0.22, 0.0)
-	r.prop("menu_board", -0.4, ZB + 0.06, 0.0, 1.75)
+	r.prop("bakery_shelf", 1.5, ZB + 0.22, 0.0)
+	r.prop("menu_board", 0.0, ZB + 0.06, 0.0, 1.75)
 	r.prop("bar_stool", -1.1, -2.4, 0.0)
 	# the booth on the left wall
 	r.prop("restaurant_table", X0 + 0.66, -0.1, 0.0)
