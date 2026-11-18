@@ -83,6 +83,14 @@ func _run() -> void:
 	for b3: Array in hard: dec.add(13, Vector2(sx * float(b3[1]), sz * float(b3[2])), 0.0, 4.0, 10.0, S.walk_y, Color(0.6, 0.62, 0.7, 0.35))
 	I.yard_wear(dec, rr, sx, sz, 34.0, 30.0, 91.0, 70.0, 1.1)
 	I.yard_wear(dec, rr, sx, sz, 22.0, 80.0, 40.0, 99.0, 0.8)
+	# ---- POLISH (Yasin 18 Nov: "lots of props"; each with its reason; placed only where free, G.place)
+	var obs := G.obstacles(bl, props, stl); var kp := [[8.0, 40.0, 84.0, 52.5], [8.0, 77.0, 40.0, 89.0]]
+	G.place(props, obs, rr, sx, sz, "prop_sign_stop", "worn", 10.0, 46.0, 13.0, 49.0, 90.0 * sx, kp, 3.0)          # trailers leaving at the 51 m gate
+	G.place(props, obs, rr, sx, sz, "prop_hydrant_red", "rusty", 37.5, 82.0, 39.5, 92.0, 0.0, kp)                 # the boat shed's fire hydrant
+	G.spot(props, obs, rr, sx, sz, [["prop_picnic_table", "worn"], ["prop_park_bench", "worn", 180.0], ["prop_trash_receptacle", "worn"], ["prop_dock_box", "worn"], ["prop_dock_box", "worn"]], 60.0, 86.0, 90.0, 98.0, 180.0, kp)   # owners working on their boats eat here, facing the yard
+	G.place(props, obs, rr, sx, sz, "prop_hose_reel_cart", "worn", 86.0, 70.0, 90.5, 82.0, -90.0, kp)              # fresh-water rinse for the boats on the hard
+	G.spot(props, obs, rr, sx, sz, [["prop_buoy_can", "clean"], ["prop_buoy_nun", "clean"], ["prop_lifering_stand", "clean"]], 60.0, 41.0, 90.0, 51.0, 0.0, kp)   # moorings waiting for the season
+	G.spot(props, obs, rr, sx, sz, [["prop_cone_18in", "dirty"], ["prop_cone_18in", "dirty"], ["prop_channelizer_drum", "dirty"]], 40.0, 68.0, 44.0, 72.0, 0.0, kp)   # antifouling drums by the hard
 	root.set_meta("stalls", stl)
 	I.finish(root, g, props, dec, NAME)
 	quit()

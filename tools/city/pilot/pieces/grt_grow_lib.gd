@@ -16,7 +16,7 @@ extends RefCounted
 ##   the block's centre (smoothstep inner edges, shared with the neighbour quadrant, flat along a locked sample);
 ##   every building stands on a level terrace at the height of its front's middle, the ground blends back to the
 ##   slope over 5 m round it (and to the sidewalk within 2 m of a property line / the neighbour within 2 m of an
-##   inner edge); ground re-tessellated to 2 m, props / decals / stalls / poles lifted with it;
+##   inner edge); ground split where the slope bends (3 cm), props / decals / stalls / poles lifted with it;
 ## - the gritty rules for fences (the phone found layered see-through things costly here, 40 % more GPU at a tier
 ##   fade): chain-link only round lots inside the block, never a front fence in line with a lot fence or trees behind
 ##   it; front yards on the streets get weathered board side fences (perpendicular to the street) and no front fence.
@@ -167,8 +167,25 @@ static func home(ctx: Dictionary, folder: String, s: float, face: String, label:
 			var a0: float = s + e * (w * 0.5 + 0.7)
 			if face.ends_with("v"): A.privacy(ctx.props, Vector2(sx * a0, sz * (line + yard + 0.5)), Vector2(sx * a0, sz * (line + yard + 8.5)), "fence_weathered_board", "fence_post_privacy")
 			else: A.privacy(ctx.props, Vector2(sx * (line + yard + 0.5), sz * a0), Vector2(sx * (line + yard + 8.5), sz * a0), "fence_weathered_board", "fence_post_privacy")
-	I.add(ctx.props, ["prop_house_numbers_tile", "prop_house_numbers_wood"][ctx.rr.randi() % 2], "worn", A.at(b, w * 0.5 - 0.6, d * 0.5 + 0.04, 2.0), rad_to_deg((b.node as Node3D).rotation.y), false)
+	var yb := rad_to_deg((b.node as Node3D).rotation.y)
+	I.add(ctx.props, ["prop_house_numbers_tile", "prop_house_numbers_wood"][ctx.rr.randi() % 2], "worn", A.at(b, w * 0.5 - 0.6, d * 0.5 + 0.04, 2.0), yb, false)
+	var dr: Array = st.get("doors_front", [])
+	var d0 := float(dr[0][1]) if not dr.is_empty() else 0.0
+	if yard >= 2.5 and ctx.rr.randf() < 0.4:      # a post mailbox at the walk's end (the old houses never got a wall box)
+		I.add(ctx.props, "prop_mailbox_post_metal", "rusty", A.at(b, d0 + 1.1, d * 0.5 + yard - 0.6), yb)
+	if ctx.rr.randf() < 0.35:                     # the round dish of the tenant who pays for the sports channel
+		I.add(ctx.props, "prop_satellite_dish_round", "worn", A.at(b, -w * 0.5 + 0.06, -d * 0.25, minf(float(st.get("height", 6.0)) - 1.2, 4.2)), yb - 90.0, false)
+	if yard >= 3.0 and w <= 7.0 and ctx.rr.randf() < 0.3:     # an old cottage's privet, grown wild along the front
+		I.add(ctx.props, "hedge_privet_2m", "normal", A.at(b, d0 + (1.9 if d0 < 0.0 else -1.9), d * 0.5 + yard - 0.7), yb)
 	return b
+
+## a run of wall panels (stucco / CMU: solid walls, no posts) from a to b
+static func wall_run(ctx: Dictionary, a: Vector2, b: Vector2, kind := "fence_stucco_wall", L := 2.03) -> void:
+	var n := maxi(1, int(round(a.distance_to(b) / L)))
+	var yaw := rad_to_deg(atan2(b.x - a.x, b.y - a.y)) + 90.0
+	for i in n:
+		var m := a.lerp(b, (i + 0.5) / n)
+		I.add(ctx.props, kind, "worn", Vector3(m.x, S.walk_y(0.0), m.y), yaw)
 
 ## a garage on a lane (rear of a house lot), door to the lane: face "+u" / "+v" toward the lane at 54 from inside
 static func garage(ctx: Dictionary, folder: String, s: float, face: String, label: String) -> Dictionary:
@@ -345,7 +362,14 @@ static func drape(ctx: Dictionary) -> void:
 				var a: Vector3 = t[0]; var b2: Vector3 = t[1]; var c2: Vector3 = t[2]
 				var lab := Vector2(a.x - b2.x, a.z - b2.z).length(); var lbc := Vector2(b2.x - c2.x, b2.z - c2.z).length(); var lca := Vector2(c2.x - a.x, c2.z - a.z).length()
 				var mx := maxf(lab, maxf(lbc, lca))
-				if mx > 2.0:
+				# split only where the ground really bends: the longest edge's midpoint is more than 3 cm off the straight
+				# line between its ends (or the edge is longer than 8 m); flat yards and lots keep their big cells
+				var ma := a; var mb := b2
+				if mx == lbc: ma = b2; mb = c2
+				elif mx == lca: ma = c2; mb = a
+				var mid := (ma + mb) * 0.5
+				var bend := absf(F.h(mid.x, mid.z) - (F.h(ma.x, ma.z) + F.h(mb.x, mb.z)) * 0.5)
+				if mx > 0.6 and (mx > 8.0 or bend > 0.03):
 					# split the longest edge (keeps the winding)
 					if mx == lab:
 						var m3 := (a + b2) * 0.5; var mu: Vector2 = (t[3] + t[4]) * 0.5
@@ -414,6 +438,7 @@ static func done(ctx: Dictionary, base := "grass", fill := true) -> void:
 			if absf(lp.x) < float(bd.w) * 0.5 + 0.5 and absf(lp.z) < float(bd.d) * 0.5 + 3.5: under = true
 		if not under: open.append(st)
 	SL.wheel_stops(props, ctx.rr, open, "prop_wheel_stop_rubber" if ctx.rr.randf() < 0.5 else "prop_wheel_stop_concrete")
+	_polish(ctx)
 	_prune(ctx)
 	# no tree within 0.9 m of a fence (apt_lib.done)
 	var fence_pts: Array = []
@@ -441,6 +466,94 @@ static func done(ctx: Dictionary, base := "grass", fill := true) -> void:
 	root.set_meta("shops", ctx.shoplist)
 	A.finish(root, g, props, ctx.dec, String(ctx.name), ctx.stalls, ctx.poles)
 	_write_shops(ctx)
+
+## ------------------------------------------------------------------------------------------------ polish (Yasin 18 Nov:
+## "run a polish pass on your part, lots of props ... think like an interior and exterior designer, customer and city
+## planner"). Every item has a reason where it stands; the prune after it keeps the validator's rules.
+## - the LANES are where the edge lives: every 9-14 m on each side, just off the asphalt, what the lot beside it puts
+##   out: behind shops and yards (paving) a dumpster or a roll of bin carts, drums, a dumped cart, a tagged CMU wall
+##   where the bins stand; behind homes (grass) the three bin carts and sometimes a dumped couch-less cart;
+## - FRONT YARDS of homes: a plastic chair and a pot by the stoop (people sit out front here), the odd kettle grill,
+##   a cart someone wheeled home;
+## - SERVICE YARDS: junk along the back walls (drums, cones, a water barrier, a cart);
+## nothing on a parking stall, in a lane mouth, on a walk or a door step (the prune drops what collides).
+static func _polish(ctx: Dictionary) -> void:
+	var sx: float = ctx.sx; var sz: float = ctx.sz
+	var props: K.Props = ctx.props; var rr: RandomNumberGenerator = ctx.rr; var dec: K.Decals = ctx.dec
+	var n0 := props.count()
+	var stall_pts: Array = []
+	for st: Array in ctx.stalls: stall_pts.append(Vector2(float(st[0]), float(st[1])))
+	var free := func(p: Vector2, r: float) -> bool:
+		for q: Vector2 in stall_pts:
+			if q.distance_to(p) < r + 3.2: return false
+		var u := p.x * sx; var v := p.y * sz
+		if u < float(ctx.plu) + 1.0 or v < float(ctx.plv) + 1.0 or u > LEN - 0.8 or v > LEN - 0.8: return false
+		for b: Dictionary in ctx.blds:      # door steps stay free (2 m in front of every ground-floor door)
+			for e: Array in K.building_stats(String(b.folder)).get("doors_front", []):
+				var dp: Vector3 = (b.node as Node3D).transform * Vector3(float(e[1]), 0.0, float(b.d) * 0.5 + 1.0)
+				if Vector2(dp.x, dp.z).distance_to(p) < 1.8 + r: return false
+		return true
+	# lanes: U runs along u at v 54-60, V along v at u 54-60; clusters on both sides, 1.0 m off the edge
+	for lane: Array in [["u", AL0 - 1.0, -1.0], ["u", AL1 + 1.0, 1.0], ["v", AL0 - 1.0, -1.0], ["v", AL1 + 1.0, 1.0]]:
+		var s := float(ctx.plu if String(lane[0]) == "u" else ctx.plv) + 8.0
+		while s < LEN - 4.0:
+			s += rr.randf_range(9.0, 14.0)
+			if s > AL0 - 4.0 and s < AL1 + 4.0: continue        # the lane crossing
+			var c: float = lane[1]
+			var p2 := Vector2(sx * s, sz * c) if String(lane[0]) == "u" else Vector2(sx * c, sz * s)
+			if not free.call(p2, 1.5): continue
+			var m := _mat_at(ctx, p2.x, p2.y, "grass")
+			var yaw := 0.0 if String(lane[0]) == "u" else 90.0
+			var along := Vector2(sx, 0.0) if String(lane[0]) == "u" else Vector2(0.0, sz)
+			var y := S.walk_y(0.0)
+			if m == "grass" or m == "mulch":
+				for k in 3: I.add(props, ["prop_trash_cart_black", "prop_trash_cart_blue", "prop_trash_cart_green"][k], "worn", Vector3(p2.x + along.x * (k - 1) * 0.75, y, p2.y + along.y * (k - 1) * 0.75), yaw + (180.0 if float(lane[2]) > 0 else 0.0))
+				if rr.randf() < 0.2: I.add(props, "prop_shopping_cart", "rusty", Vector3(p2.x + along.x * 2.2, y, p2.y + along.y * 2.2), rr.randf_range(0, 360))
+			else:
+				match rr.randi() % 4:
+					0: I.add(props, ["prop_dumpster_3yd_green", "prop_dumpster_3yd_blue"][rr.randi() % 2], "rusty", Vector3(p2.x, y, p2.y), yaw)
+					1:
+						for k2 in 2: I.add(props, "prop_trash_cart_black", "dirty", Vector3(p2.x + along.x * k2 * 0.8, y, p2.y + along.y * k2 * 0.8), yaw)
+						I.add(props, "prop_channelizer_drum", "dirty", Vector3(p2.x + along.x * 2.0, y, p2.y + along.y * 2.0), 0.0)
+					2:
+						for k3: float in [-1.02, 1.02]: I.add(props, "fence_graffiti_cmu_panel", "worn", Vector3(p2.x + along.x * k3 - (Vector2(-along.y, along.x) * float(lane[2]) * 0.8).x, y, p2.y + along.y * k3 - (Vector2(-along.y, along.x) * float(lane[2]) * 0.8).y), yaw)
+						I.add(props, "prop_trash_cart_green", "dirty", Vector3(p2.x, y, p2.y), yaw)
+					3:
+						I.add(props, "prop_shopping_cart", "rusty", Vector3(p2.x, y, p2.y), rr.randf_range(0, 360))
+						I.add(props, "prop_cone_28in", "dirty", Vector3(p2.x + along.x * 1.4, y, p2.y + along.y * 1.4), rr.randf_range(0, 90))
+				dec.add(14, p2, yaw, 2.5, 1.6, S.walk_y, Color(1, 1, 1, 0.55))
+	# homes: front-yard life (a yard of 2.5 m or more between the property line and the front)
+	for b: Dictionary in ctx.blds:
+		var f := String(b.folder)
+		if not (f.begins_with("houses/") or f.begins_with("ck/ck_apt3") or f.begins_with("apartments/") or f.begins_with("ck/ck_brk3_row2")): continue
+		var n: Node3D = b.node
+		var yb := rad_to_deg(n.rotation.y)
+		var front := A.at(b, 0.0, float(b.d) * 0.5 + 1.6)
+		var line := float(ctx.plv) if String(b.face).ends_with("v") else float(ctx.plu)
+		var fv := (front.z * sz if String(b.face).ends_with("v") else front.x * sx)
+		if String(b.face).begins_with("+") or fv - line < 1.2: continue
+		var side := 1.0 if rr.randf() < 0.5 else -1.0
+		var cp := A.at(b, side * (float(b.w) * 0.5 - 1.2), float(b.d) * 0.5 + 1.3)
+		if free.call(Vector2(cp.x, cp.z), 0.6):
+			I.add(props, "prop_adirondack_white" if rr.randf() < 0.6 else "prop_adirondack_wood", "worn", cp, yb + rr.randf_range(-25, 25))
+			I.add(props, "plant_potted_succulent", "normal", A.at(b, side * (float(b.w) * 0.5 - 0.5), float(b.d) * 0.5 + 0.5), yb)
+		var gp := A.at(b, -side * (float(b.w) * 0.5 - 1.0), float(b.d) * 0.5 + 1.5)
+		if rr.randf() < 0.3 and free.call(Vector2(gp.x, gp.z), 0.6): I.add(props, "prop_bbq_kettle", "rusty", gp, yb)
+		elif rr.randf() < 0.2 and free.call(Vector2(gp.x, gp.z), 0.6): I.add(props, "prop_shopping_cart", "rusty", gp, rr.randf_range(0, 360))
+	# service yards: junk along the back walls of shops and work buildings
+	for b2: Dictionary in ctx.blds:
+		var f2 := String(b2.folder)
+		if f2.begins_with("houses/") or f2.begins_with("garages/") or f2.begins_with("apartments/") or f2.begins_with("ck/ck_apt3"): continue
+		var w2 := float(b2.w); var d2 := float(b2.d)
+		var y2 := rad_to_deg((b2.node as Node3D).rotation.y)
+		for k4 in int(w2 / 6.0):
+			var lx := -w2 * 0.5 + 2.0 + k4 * 6.0 + rr.randf_range(-0.8, 0.8)
+			var jp := A.at(b2, lx, -d2 * 0.5 - 1.1)
+			if not free.call(Vector2(jp.x, jp.z), 0.8): continue
+			var mm := _mat_at(ctx, jp.x, jp.z, "grass")
+			if mm == "grass": continue
+			I.add(props, ["prop_channelizer_drum", "prop_cone_28in", "prop_water_barrier_orange", "prop_shopping_cart", "prop_propane_cylinder_100lb", "prop_cone_18in"][rr.randi() % 6], ["dirty", "rusty"][rr.randi() % 2], jp, y2 + rr.randf_range(-30, 30))
+	print("GRT_POLISH %s: +%d props" % [ctx.name, props.count() - n0])
 
 ## the ground material at (x, z): the first paint that holds the point (painted_rect's rule), else the base
 static func _mat_at(ctx: Dictionary, x: float, z: float, base: String) -> String:

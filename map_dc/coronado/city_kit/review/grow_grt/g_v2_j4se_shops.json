@@ -57,7 +57,7 @@
    "door_index": 0,
    "kind": "laundry",
    "label": "launder",
-   "model": "ck/ck_grt_row2",
+   "model": "ck/ck_svc_trade_1d",
    "name": "Suds City Laundry",
    "pos": [
     -708.599998474121,

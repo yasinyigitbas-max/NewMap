@@ -131,6 +131,35 @@ What the streamer does NOT solve (measured, not streaming):
   That is the next streaming job: fades, and roads in the far world.
 - One run each, debug build. The numbers moved by about 7 frames over 33 ms between two identical zones runs.
 
+### Collision per place (19 Nov, after the first growth)
+The first growth's pieces south of the gritty edge (-600 / -800, -1200) nearly doubled the collision made there: 123k ->
+236k units in the gritty night drive of the zones test. The streamer makes 1,200 units a frame (and 2 ms), so the
+teleport to the gritty edge at night took 3.6 s (limit 3 s) and a body waited 4.8 s (`warmnight_zones`). The
+streamer's collision work was all tuned before the growth (the PC session confirmed there was nothing further to merge).
+Three changes, measured one at a time on the Redmi (zones gate, stream gate):
+
+| # | Change | Default | Zones: teleports / worst body wait | Stream gate |
+|---|---|---|---|---|
+| - | before (`warmnight_zones`) | - | 0.1-3.6 s / 4.8 s: FAIL | PASS |
+| 1 | the nearest body first counts the places being prepared too (a teleport's destination), not only the player | ON | 0.1-1.8 s / 5.3 s: FAIL on body waits (`col1_zones`) | PASS (`col1_stream`) |
+| 2 | while a prepare() is pending (a teleport: the player is not there), the collision budgets a frame are `prepare_boost` (4) times larger | ON | 0.1-1.3 s / 3.2 s: FAIL on one body (`col2_zones`, with 1) | PASS, worst frame 32 ms (`col2_stream`) |
+| 3 | collision only within `col_range` (100 m) of the player, the lead and prepared places; farther bodies wait as data; "a body waited" counts from coming into range | OFF (trial) | 0.1-1.0 s / 0.9 s; collision made down to about a fifth (gritty night 236k -> 29k) | FAIL: one frame of 86-414 ms |
+
+- Change 3 does what it should for collision, but EVERY stream run with a range had one frame stalled in the draw
+  (81-406 ms of it in the draw, GPU 13-14 ms, nothing attaching) on 5th St at 210 km/h, at the same place each time,
+  while two cells were loading: `col23_stream` 86 ms, `col23_stream_repeat` 101 ms, `col3_stream` (range alone) 414 ms,
+  `col150_stream` (150 m) 328 ms; the zones runs with it had one 75-96 ms frame during a teleport. Without a range
+  (`col2_stream`) the same lap is clean. Why a smaller collision load makes the DRAW stall is not understood: the
+  signature is that of cause 5 above (the driver fetching graphics memory inside the draw), whose timing the range
+  may shift. So change 3 stays OFF (`--colrange=100` to try it) until that is found.
+- With the defaults (1 and 2) the zones gate still FAILS on one body: in the gritty night drive a body waited 3.2 s
+  from its cell's arrival (limit 3 s). Teleports are all under 1.4 s.
+- THE LIMIT OF COLLISION PER PLACE NOW: the streamer makes 1,200 units a frame while driving (4,800 during a teleport).
+  A place stays inside the 3 s body budget while the collision of the cells round it stays under about
+  1,200 x 60 x 3 = 216k units; the gritty edge with the growth is at about 236-268k in the night drive. Growth beyond
+  that needs change 3 working, or a higher budget a frame (measure the physics wait with `--probe`), or cheaper
+  collision in the pieces (a convex point counts as one unit: a guess, not measured).
+
 ### The tiers (19 Nov, a PC session with the Redmi; branch `claude/ecstatic-archimedes-922d2c`)
 Yasin: "i think it snaps from near to far directly and everythings appereance change suddenly as we get near".
 Three things were built. Each has its own switch, and each was measured on the phone (Redmi, 720p, debug build, one

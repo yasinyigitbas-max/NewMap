@@ -90,6 +90,14 @@ func _run() -> void:
 	I.yard_wear(dec, rr, sx, sz, 36.0, 32.0, 99.0, 72.0, 1.8)
 	I.yard_wear(dec, rr, sx, sz, 30.0, 72.0, 70.0, 99.0, 1.0)
 	I.yard_wear(dec, rr, sx, sz, 28.0, 28.0, 99.0, 36.0, 0.8)
+	# ---- POLISH (Yasin 18 Nov: "lots of props"; each with its reason; placed only where free, G.place)
+	var obs := G.obstacles(bl, props, stl); var kp := [[8.0, 78.0, 64.0, 86.0], [59.0, 70.0, 65.0, 86.0]]
+	G.place(props, obs, rr, sx, sz, "prop_sign_stop", "worn", 10.0, 73.0, 14.0, 77.5, 90.0 * sx, kp, 3.0)          # trucks leaving onto J Ave
+	G.place(props, obs, rr, sx, sz, "prop_hydrant_red", "rusty", 64.0, 68.5, 69.5, 72.0, 0.0, kp)                 # the devanning shed's fire hydrant
+	G.spot(props, obs, rr, sx, sz, [["prop_picnic_table", "worn"], ["prop_park_bench", "worn"], ["prop_trash_receptacle", "dirty"], ["prop_vending_soda", "clean", 180.0]], 36.0, 52.0, 44.5, 68.0, 90.0 * sx, kp)   # the yard crew's lunch spot in the shed's shade, watching the stacks
+	G.spot(props, obs, rr, sx, sz, [["prop_trash_cart_black", "worn"], ["prop_trash_cart_blue", "worn"], ["prop_bike_rack", "rusty", 90.0]], 23.0, 30.5, 37.0, 35.5, 180.0, kp)   # behind the office: its bins and the staff's bikes
+	G.spot(props, obs, rr, sx, sz, [["prop_dumpster_3yd_green", "rusty"], ["prop_channelizer_drum", "dirty"], ["prop_channelizer_drum", "dirty"], ["prop_water_barrier_white", "dirty"], ["prop_cone_18in", "dirty"]], 82.0, 30.0, 98.0, 44.0, 0.0, kp)   # strapping, lashing bars and spill kit by the crane feed
+	G.spot(props, obs, rr, sx, sz, [["prop_cone_28in", "dirty"], ["prop_cone_28in", "dirty"], ["prop_barricade_type1", "worn"]], 58.0, 27.0, 66.0, 30.0, 0.0, kp)   # the closed crane lane's end
 	root.set_meta("stalls", stl)
 	I.finish(root, g, props, dec, NAME)
 	quit()

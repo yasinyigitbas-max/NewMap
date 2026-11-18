@@ -19,19 +19,19 @@ const MAN := "res://assets/coronado_kit/props/"
 ## per kind: floor texture, light (pendant / panel), the counter row, what stands behind it, the side walls' items,
 ## the middle of the room, the window zone, back of house (kitchen / stock / none), extras
 const KINDS := {
-	"pawn": {"floor": "Tiles074", "light": "panel", "counter": ["glass_display_case", "glass_display_case"], "till": false, "behind": ["pegboard_wall", "wall_shelf", "wall_shelf"], "board": false, "walls": ["glass_display_case", "wall_shelf", "pegboard_wall"], "centre": "cases", "window": "cases", "back": "stock", "frames": false, "bars": true},
+	"pawn": {"floor": "Tiles074", "light": "panel", "counter": ["glass_display_case", "glass_display_case"], "till": false, "behind": ["pegboard_wall", "wall_shelf", "wall_shelf"], "board": false, "walls": ["glass_display_case", "bike_stand", "wall_shelf", "weight_bench", "pegboard_wall", "surfboard_rack"], "centre": "cases", "window": "cases", "back": "stock", "frames": false, "bars": true},
 	"cash": {"floor": "Carpet012", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["filing_cabinet", "filing_cabinet", "office_desk"], "board": false, "walls": ["waiting_bench", "brochure_rack"], "centre": "none", "window": "waiting", "back": "office", "frames": false, "bars": true},
 	"liquor": {"floor": "Tiles074", "light": "panel", "counter": ["checkout_counter"], "till": false, "behind": ["cigarette_cabinet", "wall_shelf", "cigarette_cabinet"], "board": false, "walls": ["drinks_fridge", "drinks_fridge", "grocery_shelf"], "centre": "rows", "window": "none", "back": "stock", "frames": false, "bars": true},
-	"bodega": {"floor": "Tiles141", "light": "panel", "counter": ["checkout_counter"], "till": false, "behind": ["cigarette_cabinet", "wall_shelf"], "board": false, "walls": ["grocery_shelf", "drinks_fridge", "chest_freezer"], "centre": "rows", "window": "produce", "back": "stock", "frames": false, "bars": true},
+	"bodega": {"floor": "Tiles141", "light": "panel", "counter": ["checkout_counter"], "till": false, "behind": ["cigarette_cabinet", "wall_shelf"], "board": false, "walls": ["grocery_shelf", "drinks_fridge", "grocery_shelf", "chest_freezer"], "centre": "rows", "window": "produce", "back": "stock", "frames": false, "bars": true},
 	"diner": {"floor": "Tiles143", "light": "pendant", "counter": ["bar_counter", "bar_counter"], "stools": true, "behind": ["soda_fountain", "espresso_machine", "bakery_shelf"], "board": true, "walls": ["booth"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": true, "mix": true},
 	"takeout": {"floor": "Tiles074", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["soda_fountain", "kitchen_line"], "board": true, "walls": ["drinks_fridge", "booth"], "centre": "none", "window": "table2", "back": "kitchen", "frames": false, "mix": true},
 	"bar": {"floor": "WoodFloor051", "light": "pendant", "counter": ["bar_counter", "bar_counter"], "stools": true, "behind": ["wine_backbar", "drinks_fridge"], "board": false, "walls": ["booth"], "centre": "table2", "window": "table2", "back": "stock", "frames": true, "mix": true},
-	"laundry": {"floor": "Tiles143", "light": "panel", "counter": ["laundry_counter"], "till": false, "behind": ["garment_rail", "wall_shelf"], "board": false, "walls": ["washer", "washer", "dryer", "dryer"], "centre": "benches", "window": "waiting", "back": "none", "frames": false},
+	"laundry": {"floor": "Tiles143", "light": "panel", "counter": ["laundry_counter"], "till": false, "behind": ["garment_rail", "wall_shelf"], "board": false, "walls": ["washer", "washer", "dryer", "dryer"], "centre": "folding", "window": "waiting", "back": "none", "frames": false},
 	"barber": {"floor": "Tiles012", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["salon_product_shelf", "wash_basin"], "board": false, "walls": ["station"], "centre": "none", "window": "waiting", "back": "none", "frames": true},
 	"tattoo": {"floor": "Concrete047A", "light": "panel", "counter": ["glass_display_case", "shop_counter"], "till": true, "behind": ["wall_shelf", "filing_cabinet"], "board": false, "walls": ["station"], "centre": "none", "window": "waiting", "back": "none", "frames": true},
-	"thrift": {"floor": "WoodFloor034", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["wall_shelf", "bookcase"], "board": false, "walls": ["garment_rail", "bookcase", "shoe_wall", "clothes_rack"], "centre": "racks", "window": "mannequins", "back": "stock", "frames": false},
+	"thrift": {"floor": "WoodFloor034", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["wall_shelf", "bookcase"], "board": false, "walls": ["garment_rail", "bookcase", "shoe_wall", "bike_stand", "clothes_rack", "weight_bench"], "centre": "racks", "window": "mannequins", "back": "stock", "frames": false},
 	"botanica": {"floor": "Tiles074", "light": "panel", "counter": ["glass_display_case", "shop_counter"], "till": true, "behind": ["wall_shelf", "wall_shelf"], "board": false, "walls": ["wall_shelf", "bookcase"], "centre": "display", "window": "display", "back": "none", "frames": true},
-	"tyres": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["pegboard_wall", "wall_shelf"], "board": false, "walls": ["wall_shelf", "pegboard_wall"], "centre": "none", "window": "waiting", "back": "none", "frames": false},
+	"tyres": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["pegboard_wall", "wall_shelf"], "board": false, "walls": ["wall_shelf", "pegboard_wall", "workbench"], "centre": "none", "window": "waiting", "back": "none", "frames": false},
 	"parts": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["pegboard_wall", "wall_shelf", "wall_shelf"], "board": false, "walls": ["wall_shelf", "pegboard_wall", "wall_shelf"], "centre": "rows", "window": "display", "back": "stock", "frames": false},
 }
 const ALT_FLOOR := {"Tiles074": "Tiles143", "Tiles143": "Tiles141", "Tiles141": "Tiles074", "Carpet012": "Tiles012", "Concrete047A": "Tiles074", "WoodFloor034": "WoodFloor051", "WoodFloor051": "WoodFloor034", "Tiles012": "Tiles143"}
@@ -345,11 +345,22 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 				var t := 0
 				for xx: float in _steps(IX0 + 0.68, IX1 - 0.68, 2.2):
 					_put("display_table" if t % 2 == 0 else "card_spinner", xx, zz, 0.0); t += 1
+		"folding":     # laundromat: folding tables down the middle, a bench at each end to wait on
+			for zz: float in _steps(mz0 + 0.5, mz1 - 0.5, 2.0):
+				var t2 := 0
+				for xx: float in _steps(IX0 + 0.75, IX1 - 0.75, 2.4):
+					_put("display_table" if t2 % 2 == 0 else "waiting_bench", xx, zz, 0.0); t2 += 1
 		"benches":
 			for zz: float in _steps(mz0 + 0.4, mz1 - 0.4, 2.4):
 				for xx: float in _steps(IX0 + 0.74, IX1 - 0.74, 2.6): _put("waiting_bench", xx, zz, 0.0)
 	# ---- dressing: plants in the front corners, a bin by the counter end, prints on the bare walls
 	_put("potted_plant", X0 + 0.3, ZF - 0.3); _put("potted_plant", X1 - 0.3, ZF - 0.3)
+	# ---- the staff stool at the counter's staff end (people stand all day here; the owner sits)
+	var stx := clampf(staff_x, cx - cw * 0.5 + 0.3, cx + cw * 0.5 - 0.3)
+	var behind_tall := false        # never in front of the goods on the back wall (a stool hides the pegboard)
+	for o5: Array in occ:
+		if float(o5[4]) > 1.3 and float(o5[1]) < ZBp + 0.8 and stx > float(o5[0]) - 0.6 and stx < float(o5[2]) + 0.6: behind_tall = true
+	if not behind_tall: _put("bar_stool" if kind in ["bar", "diner", "takeout", "pawn", "liquor", "bodega"] else "office_chair", stx, zc - cd * 0.5 - 0.35, 0.0, false)
 	# ---- gritty clutter (a first draft already looks used): the lottery / card rack and the bin at the counter end,
 	# a second bin and a stack of leaflets by the door, a bench or chairs to wait on, more stock where there is wall
 	if kind in ["liquor", "bodega", "cash", "pawn"]: _put("card_spinner", cx + cw * 0.5 + 0.55, zc + cd * 0.5 + 0.55)
@@ -363,7 +374,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	# hand-written notices taped on the bare walls (poster cases: NO CHECKS, RESTROOM FOR CUSTOMERS ONLY, ...)
 	for side3: Array in [[X0, 90.0, "left"], [X1, -90.0, "right"]]:
 		var wx3 := float(side3[0]); var inn3 := 1.0 if float(side3[1]) > 0.0 else -1.0
-		for zz4: float in _steps(ZBp + 1.0, ZF - 0.9, 2.3):
+		for zz4: float in _steps(ZBp + 0.9, ZF - 0.8, 1.5):
 			if _under_window(sidewin, String(side3[2]), zz4 - 0.5, zz4 + 0.5, 1.4): continue
 			var blk := false
 			for o4: Array in occ:
@@ -412,22 +423,33 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	for k2 in steps: rr.dec.add(14, Vector2(lerpf(dx, cx, float(k2) / steps), ZF - 0.6 - k2 * 1.25), 0.0, 1.0, 1.4, fy, Color(1, 1, 1, 0.3), 0.004)
 	rr.dec.add(14, Vector2(cx, zc + cd * 0.5 + 0.6), 0.0, cw, 0.9, fy, Color(1, 1, 1, 0.4), 0.004)
 	# ---- gritty: steel bars over the counter (a pass-through slot left at the till), the wall above the counter run
-	if bool(K.get("bars", false)):
+	if bool(K.get("bars", false)) and not placed_counter.is_empty():
+		# a cashier's cage on the counter that was really placed (Yasin 18 Nov: "whats that thing flying there?" - the
+		# bars were sized to the planned counter row and hung in the air): bars stand ON the counter top and run up to
+		# the ceiling, a post at each end from the floor, a rail under the ceiling, the pass-through slot at the till
 		rr.plain("bars", Color(0.2, 0.21, 0.22), 0.45)
-		var cx0 := cx - cw * 0.5; var cx1 := cx + cw * 0.5
-		var ztop := zc + cd * 0.5 - 0.06
-		var top := minf(H - 0.05, F + 2.35)
-		rr.box("bars", Vector3(cx, top, ztop), Vector3(cw, 0.05, 0.05))
-		rr.box("bars", Vector3(cx, F + 1.62, ztop), Vector3(cw, 0.04, 0.04))
-		var bx2 := cx0 + 0.06
-		while bx2 < cx1 - 0.03:
-			if absf(bx2 - cx) > 0.25: rr.box("bars", Vector3(bx2, (F + 1.05 + top) * 0.5, ztop), Vector3(0.022, top - F - 1.05, 0.022))
+		var cx0 := INF; var cx1 := -INF; var ctop := F + 1.0
+		for pc2: Array in placed_counter:
+			var w2 := _fp(String(pc2[0]), 0.0).x
+			cx0 = minf(cx0, float(pc2[1]) - w2 * 0.5); cx1 = maxf(cx1, float(pc2[1]) + w2 * 0.5)
+			ctop = maxf(ctop, F + float(tall.get("prop_" + String(pc2[0]), 1.0)))
+		var ztop := zc + cd * 0.5 - 0.05
+		var top := H - 0.02
+		var mid := (cx0 + cx1) * 0.5; var span := cx1 - cx0
+		var slot := float(placed_counter[0][1])      # the till's spot: an open slot to pass the cash through
+		rr.box("bars", Vector3(mid, top - 0.03, ztop), Vector3(span, 0.06, 0.06))           # rail under the ceiling
+		rr.box("bars", Vector3(mid, ctop + 0.55, ztop), Vector3(span, 0.04, 0.04))         # cross bar over the slot
+		for ex: float in [cx0 + 0.025, cx1 - 0.025]: rr.box("bars", Vector3(ex, (F + top) * 0.5, ztop), Vector3(0.05, top - F, 0.05))   # end posts to the floor
+		var bx2 := cx0 + 0.13
+		while bx2 < cx1 - 0.1:
+			var y0b := ctop + (0.55 if absf(bx2 - slot) < 0.3 else 0.0)
+			rr.box("bars", Vector3(bx2, (y0b + top) * 0.5, ztop), Vector3(0.022, top - y0b, 0.022))
 			bx2 += 0.13
 	# ---- gritty wear: the floor worn grey where people stand and walk, scuffs along the walls, cracked tiles
 	for k3 in 6: rr.dec.add(14, Vector2(randf_range(X0 + 0.6, X1 - 0.6), randf_range(ZBp + 0.6, ZF - 0.6)), randf_range(0, 180), randf_range(0.8, 1.8), randf_range(0.8, 1.8), fy, Color(1, 1, 1, 0.45), 0.004)
 	for k4 in 4: rr.dec.add(0, Vector2(randf_range(X0 + 0.5, X1 - 0.5), randf_range(ZBp + 0.5, ZF - 0.5)), randf_range(0, 180), 0.9, 0.9, fy, Color(0.4, 0.4, 0.4, 0.5), 0.004)
 	rr.dec.add(14, Vector2(dx, ZF - 0.5), 0.0, dw + 0.6, 1.0, fy, Color(1, 1, 1, 0.6), 0.004)     # the doormat that wore through
-	_stock(hv)
+	# _stock(hv)     # off since the kit indoor set dd8d53a (18 Nov): its shelves come stocked
 	# ---- the shop's own name on the building's boards
 	for sg: Dictionary in e.signs:
 		var txt := String(e.name).to_upper() if float(sg.w) >= 2.4 else String(SHORT.get(kind, "SHOP"))

@@ -7,7 +7,7 @@
    "kind": "cleaners",
    "lights": 5,
    "name": "Base Autoport",
-   "props": 41,
+   "props": 44,
    "w": 17.4
   },
   {
@@ -157,7 +157,7 @@
    "kind": "cleaners",
    "lights": 5,
    "name": "Sandpiper Wash & Fold",
-   "props": 41,
+   "props": 44,
    "w": 17.4
   },
   {
@@ -267,7 +267,7 @@
    "kind": "cleaners",
    "lights": 5,
    "name": "Gull Laundry",
-   "props": 41,
+   "props": 44,
    "w": 17.4
   },
   {
@@ -367,7 +367,7 @@
    "kind": "sport",
    "lights": 6,
    "name": "Driftwood Fitness",
-   "props": 18,
+   "props": 17,
    "w": 8.38
   },
   {
@@ -527,7 +527,7 @@
    "kind": "cleaners",
    "lights": 4,
    "name": "Bougainvillea Laundry",
-   "props": 19,
+   "props": 20,
    "w": 5.92
   },
   {
@@ -617,7 +617,7 @@
    "kind": "cleaners",
    "lights": 5,
    "name": "Island Laundry",
-   "props": 15,
+   "props": 16,
    "w": 7.1
   },
   {
@@ -687,7 +687,7 @@
    "kind": "cleaners",
    "lights": 5,
    "name": "Lantern Wash & Fold",
-   "props": 18,
+   "props": 19,
    "w": 11.4
   },
   {
@@ -1117,7 +1117,7 @@
    "kind": "sport",
    "lights": 6,
    "name": "Emerald Surf Shop",
-   "props": 23,
+   "props": 21,
    "w": 8.4
   },
   {
@@ -1257,7 +1257,7 @@
    "kind": "clothes",
    "lights": 5,
    "name": "Crownado Beach Wear",
-   "props": 24,
+   "props": 21,
    "w": 5.92
   },
   {

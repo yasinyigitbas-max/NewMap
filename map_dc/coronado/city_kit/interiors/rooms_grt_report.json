@@ -17,7 +17,7 @@
    "kind": "parts",
    "lights": 4,
    "name": "Brake Masters Used Parts",
-   "props": 20,
+   "props": 22,
    "w": 5.7
   },
   {
@@ -47,7 +47,7 @@
    "kind": "parts",
    "lights": 4,
    "name": "Rim & Tire",
-   "props": 20,
+   "props": 22,
    "w": 5.7
   },
   {
@@ -57,7 +57,7 @@
    "kind": "diner",
    "lights": 5,
    "name": "Rosie's Diner",
-   "props": 96,
+   "props": 97,
    "w": 17.4
   },
   {
@@ -67,7 +67,7 @@
    "kind": "takeout",
    "lights": 4,
    "name": "Wok N Roll",
-   "props": 19,
+   "props": 22,
    "w": 5.84
   },
   {
@@ -87,7 +87,7 @@
    "kind": "cash",
    "lights": 5,
    "name": "Check Express",
-   "props": 20,
+   "props": 21,
    "w": 7.1
   },
   {
@@ -97,7 +97,7 @@
    "kind": "bar",
    "lights": 5,
    "name": "The Anchor Inn",
-   "props": 46,
+   "props": 49,
    "w": 8.4
   },
   {
@@ -107,7 +107,7 @@
    "kind": "liquor",
    "lights": 5,
    "name": "Fourth St Liquor",
-   "props": 28,
+   "props": 31,
    "w": 11.4
   },
   {
@@ -127,7 +127,7 @@
    "kind": "barber",
    "lights": 4,
    "name": "Fade Kings Barber",
-   "props": 23,
+   "props": 25,
    "w": 5.7
   },
   {
@@ -137,17 +137,17 @@
    "kind": "takeout",
    "lights": 4,
    "name": "Taco Shack",
-   "props": 19,
+   "props": 22,
    "w": 5.8
   },
   {
-   "d": 11.2,
+   "d": 11.1,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v2_j4se_launder_0.scn",
    "id": "g_grt_v2_j4se_launder_0",
    "kind": "laundry",
    "lights": 4,
    "name": "Suds City Laundry",
-   "props": 33,
+   "props": 40,
    "w": 11.4
   },
   {
@@ -157,7 +157,7 @@
    "kind": "bodega",
    "lights": 5,
    "name": "Fifth St Market",
-   "props": 32,
+   "props": 34,
    "w": 11.4
   },
   {
@@ -167,7 +167,7 @@
    "kind": "tattoo",
    "lights": 4,
    "name": "Black Anchor Tattoo",
-   "props": 24,
+   "props": 26,
    "w": 11.4
   },
   {
@@ -177,7 +177,7 @@
    "kind": "laundry",
    "lights": 4,
    "name": "Bubbles Coin Wash",
-   "props": 39,
+   "props": 42,
    "w": 6.0
   },
   {
@@ -187,7 +187,7 @@
    "kind": "thrift",
    "lights": 5,
    "name": "Junk & Treasures",
-   "props": 20,
+   "props": 22,
    "w": 5.16
   },
   {
@@ -197,7 +197,7 @@
    "kind": "cash",
    "lights": 5,
    "name": "Cash Now",
-   "props": 23,
+   "props": 24,
    "w": 11.4
   },
   {
@@ -207,7 +207,7 @@
    "kind": "botanica",
    "lights": 4,
    "name": "Botanica San Miguel",
-   "props": 26,
+   "props": 27,
    "w": 5.4
   },
   {
@@ -217,18 +217,18 @@
    "kind": "bodega",
    "lights": 5,
    "name": "G Ave Mini Mart",
-   "props": 28,
+   "props": 26,
    "w": 11.4
   },
   {
-   "d": 11.2,
+   "d": 11.1,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v3_g4sw_shop_two_0.scn",
    "id": "g_grt_v3_g4sw_shop_two_0",
    "kind": "laundry",
    "lights": 4,
    "name": "Wash Tub Laundromat",
-   "props": 33,
-   "w": 11.4
+   "props": 31,
+   "w": 5.7
   },
   {
    "d": 11.1,
@@ -237,7 +237,7 @@
    "kind": "diner",
    "lights": 5,
    "name": "Campus Grill",
-   "props": 28,
+   "props": 31,
    "w": 10.3
   },
   {
@@ -247,7 +247,7 @@
    "kind": "laundry",
    "lights": 4,
    "name": "Spin Cycle",
-   "props": 22,
+   "props": 26,
    "w": 7.1
   }
  ]

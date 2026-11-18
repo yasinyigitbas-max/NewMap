@@ -3,7 +3,7 @@ extends SceneTree
 ## different"). A copy of tools/city/rooms/room_gen.gd (the shared generator is not edited) with the industrial zone's
 ## own kinds and character: bare and worn, functional, nothing decorative. Floors are sealed concrete or quarry tile,
 ## the ceilings drop-in panels, the light comes from cool fluorescent strips, and the fittings are steel shelving,
-## pegboard, filing cabinets (only stocked shelving: the kit's wall_shelf and gondola models are empty, Yasin 18 Nov), a workbench behind the parts counters, a soda machine for the drivers, stock on the floor
+## pegboard, filing cabinets (stocked shelving: the kit's indoor props of dd8d53a; Yasin 18 Nov: "most shelves are empty"), a workbench behind the parts counters, a soda machine for the drivers, stock on the floor
 ## and the notices board. Only the places of interiors/assignment_ind.json are built (tools/city/rooms/assign_ind.py),
 ## saved as interiors/rooms/g_ind_<...>.scn; no other room is touched.
 ##   xvfb-run -a godot --path . --rendering-method mobile --resolution 320x180 -s res://tools/city/rooms/room_gen_ind.gd -- [--only=ID,ID]
@@ -15,17 +15,17 @@ const MAN := "res://assets/coronado_kit/props/"
 ## per kind: floor texture, light (pendant / panel), the counter row, what stands behind it, the side walls' items,
 ## the middle of the room, the window zone, back of house (kitchen / stock / none), extras
 const KINDS := {
-	"freight_office": {"floor": "Concrete047A", "light": "strip", "counter": ["shop_counter", "shop_counter"], "till": false, "behind": ["office_desk", "filing_cabinet", "filing_cabinet"], "board": true, "walls": ["waiting_bench", "vending_soda", "filing_cabinet"], "centre": "none", "window": "waiting", "back": "office", "frames": false, "stock": ["indoor_bin"]},
-	"trade_counter": {"floor": "Concrete047A", "light": "strip", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["pegboard_wall", "pharmacy_shelf", "grocery_shelf"], "board": false, "walls": ["grocery_shelf", "pharmacy_shelf", "pegboard_wall"], "centre": "rows", "window": "display", "back": "stock", "frames": false, "stock": ["cone_28in", "channelizer_drum"]},
-	"parts_counter": {"floor": "Concrete047A", "light": "strip", "counter": ["shop_counter"], "till": true, "behind": ["workbench", "pegboard_wall", "pharmacy_shelf"], "board": false, "walls": ["grocery_shelf", "drinks_fridge", "pharmacy_shelf"], "centre": "none", "window": "waiting", "back": "none", "frames": false, "stock": ["channelizer_drum", "propane_cylinder_100lb"]},
-	"permits": {"floor": "Tiles012", "light": "strip", "counter": ["shop_counter", "shop_counter"], "till": false, "behind": ["office_desk", "filing_cabinet", "filing_cabinet"], "board": true, "walls": ["waiting_bench", "brochure_rack", "vending_snack"], "centre": "benches", "window": "brochures", "back": "office", "frames": false, "stock": ["cone_28in"]},
-	"workwear": {"floor": "Concrete047A", "light": "strip", "counter": ["checkout_counter"], "till": false, "behind": ["shoe_wall", "pharmacy_shelf"], "board": false, "walls": ["garment_rail", "shoe_wall", "grocery_shelf"], "centre": "racks", "window": "mannequins", "back": "stock", "frames": false, "stock": []},
-	"fish_counter": {"floor": "Tiles143", "light": "strip", "counter": ["chest_freezer", "shop_counter", "chest_freezer"], "till": true, "behind": ["drinks_fridge", "grocery_shelf"], "board": true, "walls": ["chest_freezer", "drinks_fridge"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": false, "stock": ["ice_chest"]},
-	"sales_office": {"floor": "Carpet012", "light": "strip", "counter": ["shop_counter"], "till": false, "behind": ["office_desk", "filing_cabinet"], "board": false, "walls": ["filing_cabinet", "waiting_bench"], "centre": "none", "window": "waiting", "back": "none", "frames": true, "stock": ["ice_chest"]},
-	"broker": {"floor": "WoodFloor051", "light": "strip", "counter": ["shop_counter"], "till": false, "behind": ["office_desk", "filing_cabinet", "filing_cabinet"], "board": true, "walls": ["brochure_rack", "waiting_bench", "filing_cabinet"], "centre": "none", "window": "display", "back": "office", "frames": true, "stock": []},
-	"diner": {"floor": "Tiles074", "light": "strip", "counter": ["bar_counter", "bar_counter"], "stools": true, "till": false, "behind": ["kitchen_line", "soda_fountain"], "board": true, "walls": ["booth"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": false, "stock": ["vending_soda"]},
-	"canteen": {"floor": "Tiles141", "light": "strip", "counter": ["shop_counter", "soda_fountain"], "till": true, "behind": ["kitchen_line", "drinks_fridge"], "board": true, "walls": ["drinks_fridge", "booth"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": false, "stock": ["vending_snack"]},
-	"uniform": {"floor": "Tiles143", "light": "strip", "counter": ["laundry_counter"], "till": false, "behind": ["garment_rail", "garment_rail"], "board": false, "walls": ["washer", "dryer"], "centre": "none", "window": "waiting", "back": "none", "frames": false, "stock": ["indoor_bin"]},
+	"freight_office": {"floor": "Concrete047A", "light": "strip", "counter": ["shop_counter", "shop_counter"], "till": false, "behind": ["office_desk", "filing_cabinet", "filing_cabinet"], "board": true, "walls": ["waiting_bench", "vending_soda", "filing_cabinet"], "centre": "none", "window": "waiting", "back": "office", "frames": true, "stock": ["indoor_bin"], "extras": ["potted_plant", "indoor_bin", "drinks_fridge", "brochure_rack", "waiting_bench", "filing_cabinet", "potted_plant"]},
+	"trade_counter": {"floor": "Concrete047A", "light": "strip", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["pegboard_wall", "pharmacy_shelf", "grocery_shelf"], "board": false, "walls": ["grocery_shelf", "wall_shelf", "pegboard_wall", "pharmacy_shelf"], "centre": "rows", "window": "display", "back": "stock", "frames": true, "stock": ["cone_28in", "channelizer_drum"], "extras": ["display_table", "cone_28in", "channelizer_drum", "indoor_bin", "potted_plant", "wall_shelf"]},
+	"parts_counter": {"floor": "Concrete047A", "light": "strip", "counter": ["shop_counter"], "till": true, "behind": ["workbench", "pegboard_wall", "pharmacy_shelf"], "board": false, "walls": ["wall_shelf", "drinks_fridge", "grocery_shelf"], "centre": "none", "window": "waiting", "back": "none", "frames": true, "stock": ["channelizer_drum", "propane_cylinder_100lb"], "extras": ["display_table", "propane_cylinder_100lb", "cone_18in", "cone_18in", "indoor_bin", "waiting_bench", "vending_snack"]},
+	"permits": {"floor": "Tiles012", "light": "strip", "counter": ["shop_counter", "shop_counter"], "till": false, "behind": ["office_desk", "filing_cabinet", "filing_cabinet"], "board": true, "walls": ["waiting_bench", "brochure_rack", "vending_snack"], "centre": "benches", "window": "brochures", "back": "office", "frames": true, "stock": ["cone_28in"], "extras": ["drinking_fountain", "potted_plant", "indoor_bin", "brochure_rack", "waiting_bench", "filing_cabinet"]},
+	"workwear": {"floor": "Concrete047A", "light": "strip", "counter": ["checkout_counter"], "till": false, "behind": ["shoe_wall", "pharmacy_shelf"], "board": false, "walls": ["garment_rail", "shoe_wall", "grocery_shelf"], "centre": "racks", "window": "mannequins", "back": "stock", "frames": true, "stock": [], "extras": ["clothes_rack", "shoe_bench", "mannequin", "display_table", "fitting_room", "indoor_bin", "potted_plant"]},
+	"fish_counter": {"floor": "Tiles143", "light": "strip", "counter": ["chest_freezer", "shop_counter", "chest_freezer"], "till": true, "behind": ["drinks_fridge", "grocery_shelf"], "board": true, "walls": ["chest_freezer", "drinks_fridge"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": true, "stock": ["ice_chest"], "extras": ["ice_chest", "chest_freezer", "indoor_bin", "potted_plant", "drinks_fridge"]},
+	"sales_office": {"floor": "Carpet012", "light": "strip", "counter": ["shop_counter"], "till": false, "behind": ["office_desk", "filing_cabinet"], "board": false, "walls": ["filing_cabinet", "waiting_bench"], "centre": "none", "window": "waiting", "back": "none", "frames": true, "stock": ["ice_chest"], "extras": ["potted_plant", "filing_cabinet", "indoor_bin", "drinks_fridge", "brochure_rack"]},
+	"broker": {"floor": "WoodFloor051", "light": "strip", "counter": ["shop_counter"], "till": false, "behind": ["office_desk", "filing_cabinet", "filing_cabinet"], "board": true, "walls": ["brochure_rack", "waiting_bench", "filing_cabinet"], "centre": "none", "window": "display", "back": "office", "frames": true, "stock": [], "extras": ["display_table", "lifering_stand", "potted_plant", "indoor_bin", "brochure_rack", "waiting_bench"]},
+	"diner": {"floor": "Tiles074", "light": "strip", "counter": ["bar_counter", "bar_counter"], "stools": true, "till": false, "behind": ["kitchen_line", "soda_fountain"], "board": true, "walls": ["booth"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": true, "stock": ["vending_soda"], "extras": ["vending_soda", "indoor_bin", "potted_plant", "drinks_fridge"]},
+	"canteen": {"floor": "Tiles141", "light": "strip", "counter": ["shop_counter", "soda_fountain"], "till": true, "behind": ["kitchen_line", "drinks_fridge"], "board": true, "walls": ["drinks_fridge", "booth"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": true, "stock": ["vending_snack"], "extras": ["vending_soda", "indoor_bin", "drinks_fridge", "potted_plant"]},
+	"uniform": {"floor": "Tiles143", "light": "strip", "counter": ["laundry_counter"], "till": false, "behind": ["garment_rail", "garment_rail"], "board": false, "walls": ["washer", "dryer"], "centre": "none", "window": "waiting", "back": "none", "frames": true, "stock": ["indoor_bin"], "extras": ["garment_rail", "waiting_bench", "indoor_bin", "potted_plant", "garment_rail"]},
 }
 const WARM := []     # nothing warm and plastered in the industrial zone: drop-in ceilings everywhere
 const WALL_TINTS := [Color(0.80, 0.83, 0.78), Color(0.84, 0.84, 0.82), Color(0.86, 0.84, 0.76), Color(0.76, 0.8, 0.82), Color(0.82, 0.8, 0.76)]   # institutional greens, greys, nicotine cream
@@ -304,9 +304,9 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 			for xx: float in _steps(IX0 + 0.27, IX1 - 0.27, 1.65):
 				var zz := mz1 - 0.65
 				while zz - 0.61 > mz0:
-					# the kit's gondola is an empty model: two stocked steel shelves back to back make the aisle instead
-					_group([["grocery_shelf", xx - 0.235, zz, -90.0], ["grocery_shelf", xx + 0.235, zz, 90.0]])
-					zz -= 1.26
+					# the kit's gondola is stocked on both faces since the indoor props of dd8d53a
+					_put("gondola_aisle", xx, zz, 90.0)
+					zz -= 1.24
 		"racks":
 			for xx: float in _steps(IX0 + 0.24, IX1 - 0.24, 1.7):
 				for zz: float in _steps(mz0 + 0.8, mz1 - 0.8, 1.9): _put("clothes_rack", xx, zz, 90.0)
@@ -327,19 +327,51 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		"benches":
 			for zz: float in _steps(mz0 + 0.4, mz1 - 0.4, 2.4):
 				for xx: float in _steps(IX0 + 0.74, IX1 - 0.74, 2.6): _put("waiting_bench", xx, zz, 0.0)
+	# ---- industrial clutter: the stock that does not fit on a shelf stands on the floor along the walls, a second
+	# the floor stock is what the place sells or uses (cones, drums, gas bottles, ice chests, a vending machine)
+	var stock: Array = K.get("stock", [])
+	var sz2 := ZBp + 1.6
+	for st: String in stock:
+		var placed := false
+		for side3: Array in [[X0, 90.0], [X1, -90.0]]:
+			if placed: break
+			var f3 := _fp(st, float(side3[1])); var inn3 := 1.0 if float(side3[1]) > 0.0 else -1.0
+			var zz3 := sz2
+			while zz3 < ZF - 1.8 and not placed:
+				placed = _put(st, float(side3[0]) + inn3 * (f3.x * 0.5 + 0.05), zz3, float(side3[1]))
+				zz3 += 0.4
+	# ---- polish (Yasin 18 Nov: "lots of props ... think like an interior designer and the customer"): what this
+	# kind of place still needs, set on free floor along the walls (side walls front to back, then the back wall),
+	# facing into the room; low things only under side windows; doors, queues and aisles stay free (keep)
+	for it2: String in K.get("extras", []):
+		var placed2 := false
+		var f4 := _fp(it2, 90.0); var ht2 := float(tall.get("prop_" + it2, 1.0))
+		for side4: Array in [[X0, 90.0, "left"], [X1, -90.0, "right"]]:
+			if placed2: break
+			var inn4 := 1.0 if float(side4[1]) > 0.0 else -1.0
+			var zz4 := ZF - 1.9
+			while zz4 > ZBp + 0.5 and not placed2:
+				if not _under_window(sidewin, String(side4[2]), zz4 - f4.y * 0.5, zz4 + f4.y * 0.5, ht2):
+					placed2 = _put(it2, float(side4[0]) + inn4 * (f4.x * 0.5 + 0.05), zz4, float(side4[1]))
+				zz4 -= 0.35
+		if not placed2:
+			var f5 := _fp(it2, 0.0); var xx5 := X0 + 0.4 + f5.x * 0.5
+			while xx5 < X1 - 0.4 - f5.x * 0.5 and not placed2:
+				placed2 = _put(it2, xx5, ZBp + f5.y * 0.5 + 0.06, 0.0)
+				xx5 += 0.35
 	# ---- dressing: plants in the front corners, a bin by the counter end, prints on the bare walls
 	_put("potted_plant", X0 + 0.3, ZF - 0.3); _put("potted_plant", X1 - 0.3, ZF - 0.3)
 	_put("indoor_bin", cx + cw * 0.5 + 0.3, zc + cd * 0.5 + 0.25)
 	if kind in ["office", "pharmacy", "souvenir", "venue", "gallery"]: _put("brochure_rack", dx + (1.3 if dx < (X0 + X1) * 0.5 else -1.3), ZF - 1.9, 180.0)
 	if bool(K.frames) or String(K.walls[0]) in ["frames_only", "poster_wall"]:
-		var mount := "poster_case" if String(K.walls[0]) == "poster_wall" else "gallery_frame"
+		var mount := "poster_case"      # industrial: notice and safety boards, never gallery prints
 		for side2: Array in [[X0, 90.0, "left"], [X1, -90.0, "right"]]:
 			var wx2 := float(side2[0]); var inn2 := 1.0 if float(side2[1]) > 0.0 else -1.0
 			for zz: float in _steps(ZBp + 1.2, ZF - 1.0, 1.6 if mount == "gallery_frame" else 1.4):
 				if _under_window(sidewin, String(side2[2]), zz - 0.5, zz + 0.5, 1.2): continue
 				var blocked := false
 				for o: Array in occ:
-					if float(o[4]) > 1.25 and zz > float(o[1]) - 0.4 and zz < float(o[3]) + 0.4 and absf((float(o[0]) + float(o[2])) * 0.5 - wx2) < 1.0: blocked = true
+					if float(o[4]) > 0.5 and zz > float(o[1]) - 0.5 and zz < float(o[3]) + 0.5 and absf((float(o[0]) + float(o[2])) * 0.5 - wx2) < 1.4: blocked = true
 				if not blocked: rr.prop(mount, wx2 + inn2 * 0.04, zz, float(side2[1]), 1.35)
 	# ---- back of house
 	if ZP > ZB + 0.01:
@@ -365,19 +397,6 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	if ZP > ZB + 0.01: _strip((X0 + X1) * 0.5, (ZB + ZP) * 0.5, H, 0.8)
 	var day := OmniLight3D.new(); day.position = Vector3(dx, F + 1.9, ZF - 0.7); day.light_color = Color(0.86, 0.92, 1.0); day.light_energy = 0.8; day.omni_range = 5.0
 	rr.lights.add_child(day)
-	# ---- industrial clutter: the stock that does not fit on a shelf stands on the floor along the walls, a second
-	# the floor stock is what the place sells or uses (cones, drums, gas bottles, ice chests, a vending machine)
-	var stock: Array = K.get("stock", [])
-	var sz2 := ZBp + 1.6
-	for st: String in stock:
-		var placed := false
-		for side3: Array in [[X0, 90.0], [X1, -90.0]]:
-			if placed: break
-			var f3 := _fp(st, float(side3[1])); var inn3 := 1.0 if float(side3[1]) > 0.0 else -1.0
-			var zz3 := sz2
-			while zz3 < ZF - 1.8 and not placed:
-				placed = _put(st, float(side3[0]) + inn3 * (f3.x * 0.5 + 0.05), zz3, float(side3[1]))
-				zz3 += 0.4
 	# ---- wear: the walk from the door to the counter and the queue (heavier than a high-street shop: boots, grit)
 	for k3 in 6: rr.dec.add(14, Vector2(randf_range(X0 + 0.5, X1 - 0.5), randf_range(ZBp + 0.5, ZF - 0.6)), randf_range(0, 180), 1.4, 1.4, func(_x: float, _z: float) -> float: return F, Color(1, 1, 1, 0.35), 0.004)
 	var fy := func(_x: float, _z: float) -> float: return F

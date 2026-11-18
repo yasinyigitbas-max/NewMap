@@ -150,19 +150,19 @@
    ]
   },
   {
-   "id": "ind_vb_w800_n1600_se__workwear_store__0",
+   "id": "ind_vb_w800_n1600_se__workwear_store__1",
    "piece": "i_vb_w800_n1600_se",
    "label": "workwear_store",
-   "model": "ck/ck_grt_row2",
+   "model": "ck/ck_svc_pawn_fast",
    "pos": [
     -751.0,
     2.15000009536743,
-    -1578.28747558594
+    -1577.48754882812
    ],
    "yaw": -179.999991348578,
-   "door_index": 0,
-   "door_along": -4.6,
-   "door_w": 1.2,
+   "door_index": 1,
+   "door_along": 1.2,
+   "door_w": 1.6,
    "bay": [
     -5.7,
     5.7
@@ -176,13 +176,13 @@
    "signs": [
     {
      "facade": "front",
-     "along": -2.0,
-     "w": 2.4
+     "along": -3.0,
+     "w": 3.4
     },
     {
      "facade": "front",
      "along": 3.0,
-     "w": 2.8
+     "w": 4.0
     }
    ]
   },
@@ -348,16 +348,16 @@
    "id": "ind_vb_w600_n1400_nw__truck_stop_diner__0",
    "piece": "i_vb_w600_n1400_nw",
    "label": "truck_stop_diner",
-   "model": "ck/ck_grt_row2",
+   "model": "ck/mod_fastfood",
    "pos": [
     -628.5,
     2.15000009536743,
-    -1421.71252441406
+    -1422.51245117188
    ],
    "yaw": 0.0,
    "door_index": 0,
-   "door_along": -4.6,
-   "door_w": 1.2,
+   "door_along": -4.8,
+   "door_w": 1.6,
    "bay": [
     -5.7,
     5.7
@@ -371,13 +371,13 @@
    "signs": [
     {
      "facade": "front",
-     "along": -2.0,
-     "w": 2.4
+     "along": -3.0,
+     "w": 4.0
     },
     {
      "facade": "front",
      "along": 3.0,
-     "w": 2.8
+     "w": 4.0
     }
    ]
   },

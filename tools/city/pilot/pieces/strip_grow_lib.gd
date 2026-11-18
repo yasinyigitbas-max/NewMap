@@ -100,7 +100,11 @@ func bld(folder: String, x: float, z: float, yaw: float, label: String, wear := 
 	var h := pad(x - hx - 1.2, z - hz - 1.2, x + hx + 1.2, z + hz + 1.2)
 	var n := K.building(bl, folder, Vector3(x, h, z), yaw, label, wear)
 	n.set_meta(&"label", label)
-	if services: back_of_house(n, folder, w, d)
+	if services:
+		# a back wall within 2 m of the block edge (a lot fence behind it) gets the compact AC units, tight to the wall
+		var back_c: Vector3 = n.transform * Vector3(0, 0, -d * 0.5)
+		var tight := minf(minf(back_c.x - x0, x1 - back_c.x), minf(back_c.z - z0, z1 - back_c.z)) < 2.0
+		back_of_house(n, folder, w, d, tight)
 	B.append([n, w, d, folder])
 	if shop and not (st.get("doors_front", []) as Array).is_empty(): shops.append([label, folder])
 	return [n, w, d]
@@ -116,7 +120,7 @@ func back_of_house(node: Node3D, folder: String, w: float, d: float, compact := 
 	props.add("prop_meter_gas", "rusty", at.call(xa + 1.7, 0.2, -d * 0.5 - 0.02), yaw)
 	var n_ac := 1 if w < 14.0 else 2
 	for k in n_ac:
-		props.add("prop_ac_condenser_compact" if compact else "prop_ac_condenser", "worn", at.call(xa + 3.4 + k * 1.3, 0.0, -d * 0.5 - 0.75), yaw)
+		props.add("prop_ac_condenser_compact" if compact else "prop_ac_condenser", "worn", at.call(xa + 3.4 + k * 1.3, 0.0, -d * 0.5 - (0.47 if compact else 0.75)), yaw)
 
 ## a world point on a building: local (lx, lz) of its footprint, at its pad height (+ly)
 func on_bld(b: Array, lx: float, lz: float, ly := 0.0) -> Vector3:
@@ -301,6 +305,78 @@ func arrow_z(x: float, za: float, zb: float, scale := 0.75) -> void:
 
 func arrow_x(z: float, xa: float, xb: float, scale := 0.75) -> void:
 	var a := S.arrow2("through", z, xa, xb, true, scale); arrows.append(a); paints.insert(0, (a.box as Array) + ["-"])
+
+## ---------------------------------------------------------------- polish (Yasin 18 Nov: "run a polish pass on your part, lots
+## of props ... think like an interior and exterior designer, customer and city planner, use fitting props for your zone")
+## half the longest side of a prop's footprint (manifest)
+func half(base: String) -> float:
+	var e := K.manifest(base)
+	return maxf(float(e.get("footprint_w", 0.6)), float(e.get("footprint_d", 0.6))) * 0.5
+
+## is (x, z) clear for a prop of half-length r: of every prop placed so far (each by its own size), every building
+## (and 1.75 m + r round each of its doors), every stall and the block's edge?
+func free_at(x: float, z: float, r := 0.9) -> bool:
+	if x < x0 + 0.6 or x > x1 - 0.6 or z < z0 + 0.6 or z > z1 - 0.6: return false
+	for k: String in props.items:
+		var hk := half(k.get_slice("|", 0))
+		if hk > 6.0: continue                               # long runs (fences, rails) are checked by the validator
+		for t: Transform3D in props.items[k]:
+			if absf(t.origin.x - x) < r + hk + 0.15 and absf(t.origin.z - z) < r + hk + 0.15: return false
+	for st: Array in stalls:
+		if absf(float(st[0]) - x) < 1.9 and absf(float(st[1]) - z) < 3.3: return false
+	for b: Array in B:
+		var n: Node3D = b[0]; var w: float = b[1]; var d: float = b[2]
+		var lp: Vector3 = n.transform.affine_inverse() * Vector3(x, n.position.y, z)
+		if absf(lp.x) < w * 0.5 + 0.3 and absf(lp.z) < d * 0.5 + 0.3: return false
+		for e: Array in K.building_stats(String(b[3])).get("doors_front", []):
+			if Vector2(lp.x - float(e[1]), lp.z - d * 0.5).length() < 1.75 + r: return false
+	return true
+
+## the life at every shop door: what its customers use there, on the walk in front of the facade between the doors,
+## facing the street; bike racks lie parallel to the shopfront. Kinds cycle per building so no two fronts match.
+const DOOR_KIT := [["prop_trash_receptacle", "prop_recycling_receptacle"], ["prop_newspaper_box_red", "prop_newspaper_box_blue"],
+	["plant_potted_succulent", "plant_potted_leafy"], ["prop_bike_rack"], ["prop_trash_receptacle", "prop_newspaper_box_blue"]]
+func door_life() -> int:
+	var placed := 0
+	for bi in B.size():
+		var b: Array = B[bi]
+		var n: Node3D = b[0]; var w: float = b[1]; var d: float = b[2]
+		var ds: Array = K.building_stats(String(b[3])).get("doors_front", [])
+		var yaw := rad_to_deg(n.rotation.y)
+		var k := bi
+		for e: Array in ds:
+			if String(e[0]) == "rollup": continue
+			for off: float in [2.6, -2.6, 4.0, -4.0]:
+				var group: Array = DOOR_KIT[k % DOOR_KIT.size()]
+				var lx := float(e[1]) + off
+				if absf(lx) > w * 0.5 - 0.4: continue
+				var wp: Vector3 = n.transform * Vector3(lx, 0, d * 0.5 + 1.05)
+				if not free_at(wp.x, wp.z, half(String(group[0]))): continue
+				var cursor := lx
+				for gi in group.size():
+					var base := String(group[gi])
+					if gi > 0: cursor += signf(off) * (half(String(group[gi - 1])) + half(base) + 0.3)
+					var gp: Vector3 = n.transform * Vector3(cursor, 0, d * 0.5 + 1.05)
+					if absf(cursor) > w * 0.5 - 0.3 or not free_at(gp.x, gp.z, half(base)): break
+					add(base, "normal" if base.begins_with("plant_") else "worn", gp.x, gp.z, yaw)
+					placed += 1
+				k += 1
+				break
+	return placed
+
+## a utility pole line along a block's back lot line (power reaches the shops from the rear, as in the sample); a
+## transformer pole every third. The wires piece draws the lines.
+func pole_line(ax: float, az: float, bx: float, bz: float, every := 34.0) -> void:
+	var a := Vector2(ax, az); var bb := Vector2(bx, bz)
+	var n := maxi(1, int(a.distance_to(bb) / every))
+	var yaw := rad_to_deg(atan2(bb.x - a.x, bb.y - a.y))
+	for i in n + 1:
+		var q := a.lerp(bb, float(i) / n)
+		if free_at(q.x, q.y, 1.0): add("prop_utility_pole_transformer" if i % 3 == 1 else "prop_utility_pole", "worn", q.x, q.y, yaw)
+
+## red fire-lane kerb paint along a shop walk's lot edge (a, b), road side `side` (unit x / z)
+func fire_lane(ax: float, az: float, bx: float, bz: float, side: Vector2) -> void:
+	W.red_kerb(dec, Vector2(ax, az), Vector2(bx, bz), side)
 
 ## ---------------------------------------------------------------- finish
 ## floor over the whole rectangle (asphalt base, paints cut in), arrows, wear, props, meta, save

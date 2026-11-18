@@ -18,7 +18,7 @@
    "door_index": 0,
    "kind": "laundry",
    "label": "shop_two",
-   "model": "ck/ck_grt_row2",
+   "model": "ck/ck_svc_trade",
    "name": "Wash Tub Laundromat",
    "pos": [
     -628.799999237061,
