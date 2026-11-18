@@ -432,8 +432,11 @@ const CENSUS_VIEWS := [["centre", 0.0, -600.0, 1.0, 0.0], ["apartments", 250.0, 
 const CENSUS_DAY := ["baseline", "hide_plants", "hide_props_near", "hide_props_mid", "hide_props_other", "hide_bldg_near", "hide_bldg_mid",
 	"hide_ground", "hide_wear", "hide_far", "hide_far_ground", "hide_misc", "shadows_off", "shadow_map_2048", "shadow_map_1024",
 	"fxaa_off", "sky_reflection_off", "scale_0.50", "scale_0.85", "scale_1.00", "cheap_bldg_mid", "cheap_bldg_all", "cheap_props_mid",
-	"cheap_plants_mid", "plants_opaque", "baseline"]
-const CENSUS_NIGHT := ["baseline", "lights_0", "lights_1", "window_glow_off", "hide_glow", "baseline"]
+	"cheap_plants_mid", "plants_opaque", "look_parts_off", "look_contact_off", "look_windows_off", "look_glass_off", "look_detail_off",
+	"look_signs_off", "look_propmaps_off", "look_between_off", "baseline"]
+const CENSUS_NIGHT := ["baseline", "lights_0", "lights_1", "window_glow_off", "look_windows_off", "look_signs_off", "hide_glow", "baseline"]
+## the look pack's parts that have a global switch (docs/LOOK_OVERVIEW.md); 1 = on (the default), 0 = off
+const LOOK_PARTS := ["contact", "windows", "glass", "detail", "signs", "propmaps", "between"]
 var _cz_undo: Array = []         # [callable] to undo the current state
 var _cz_mat_cache := {}
 
@@ -549,6 +552,12 @@ func _census_apply(state: String) -> void:
 				var ol := l as OmniLight3D; var was3 := ol.visible
 				if i >= (1 if state == "lights_1" else 0): ol.visible = false
 				_cz_undo.append(func() -> void: ol.visible = was3); i += 1
+	elif state.begins_with("look_") and state.ends_with("_off"):
+		var parts: Array = LOOK_PARTS if state == "look_parts_off" else [state.trim_prefix("look_").trim_suffix("_off")]
+		for part: String in parts:
+			var gname := StringName("ck_look_" + part)
+			RenderingServer.global_shader_parameter_set(gname, 0.0)      # (back to 1 = on: the census runs with the look's parts at their default)
+			_cz_undo.append(func() -> void: RenderingServer.global_shader_parameter_set(gname, 1.0))
 	elif state == "window_glow_off":
 		var mats := {}
 		for tname in ["near", "mid"]:
@@ -587,9 +596,11 @@ func _census_state(view: String, state: String, p: Vector3, base: float, secs: f
 ## (the sky's reflection is rendered again when they change), and the sky's colours alone
 func _census_flip(view: String, how: String, p: Vector3) -> void:
 	var R := RenderingServer; var vr := get_viewport().get_viewport_rid()
-	var sm := env.sky.sky_material as ProceduralSkyMaterial
-	if how != "sky_only": st.set_night(1.0); sun.light_energy = 0.04; env.ambient_light_energy = 0.22; lights.update_lights(p, 1.0)
-	if how != "no_sky": sm.sky_top_color = Color(0.01, 0.015, 0.04); sm.sky_horizon_color = Color(0.05, 0.06, 0.1)
+	if how == "full": _night(1.0); lights.update_lights(p, 1.0)      # as the drives do it (with the look: the look's night)
+	else:      # the old plain sky only (--look=0): night without the sky's colours, or the sky's colours alone
+		var sm := env.sky.sky_material as ProceduralSkyMaterial
+		if how != "sky_only": st.set_night(1.0); sun.light_energy = 0.04; env.ambient_light_energy = 0.22; lights.update_lights(p, 1.0)
+		if how != "no_sky": sm.sky_top_color = Color(0.01, 0.015, 0.04); sm.sky_horizon_color = Color(0.05, 0.06, 0.1)
 	var gs: Array = []; var worst := 0.0; var t_prev := Time.get_ticks_usec(); var fw := 0.0
 	for i in 45:
 		await get_tree().process_frame
@@ -602,6 +613,9 @@ func _census_flip(view: String, how: String, p: Vector3) -> void:
 
 func _census() -> void:
 	var which := String(opt.census); var secs := float(opt.censussecs)
+	if look == null:      # the whole look off (--look=0): its shader parts off too, so the city draws as before the look
+		for part: String in LOOK_PARTS: RenderingServer.global_shader_parameter_set(StringName("ck_look_" + part), 0.0)
+	_say("census look=%s glow=%s reflect=%s" % [String(opt.look), str(opt.get("glow", "?")), str(opt.get("reflect", "?"))])
 	var only: PackedStringArray = String(opt.views).split(",", false)
 	for v: Array in CENSUS_VIEWS:
 		if not only.is_empty() and not (String(v[0]) in only): continue
@@ -619,8 +633,9 @@ func _census() -> void:
 				if s == "baseline" and base < 0.0: base = gv
 		if which != "day":
 			await _census_flip(name, "full", p)
-			await _census_flip(name, "no_sky", p)
-			await _census_flip(name, "sky_only", p)
+			if look == null and env.sky.sky_material is ProceduralSkyMaterial:
+				await _census_flip(name, "no_sky", p)
+				await _census_flip(name, "sky_only", p)
 			await _census_flip(name, "full", p)      # again: is it only the first time?
 			_night(1.0); lights.update_lights(p, 1.0)
 			for i in 60: await get_tree().process_frame
