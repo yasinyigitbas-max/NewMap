@@ -81,6 +81,12 @@ func _run() -> void:
 	tries.call("prop_park_bench", "worn", 101.4, 72.0, -90.0)                 # outside the gym door, facing the lot
 	tries.call("prop_bike_rack", "worn", 101.4, 90.0, 90.0)
 	tries.call("prop_newspaper_box_red", "worn", 66.0, 30.0, 0.0)
+	# polish 19 Nov (whole-zone pass): a chair set between the kiosk's picnic tables, a table in the wings' gap, carts at the motel
+	tries.call("prop_patio_set_4", "worn", 19.5, 29.6, 0.0)
+	tries.call("prop_patio_set_4", "worn", 73.8, 26.4, 0.0)
+	for x: float in [32.6, 117.4]: tries.call("prop_trash_cart_green", "dirty", x, 27.0, 0.0)
+	tries.call("prop_hydrant_red", "worn", 75.0, 32.6, 0.0)
+	tries.call("prop_drinking_fountain", "worn", 101.4, 67.6, -90.0)           # at the gym door
 	# ---------------------------------------------------------------- wear
 	b.building_wear()
 	b.stall_wear(0.7)

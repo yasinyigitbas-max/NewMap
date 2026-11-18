@@ -51,6 +51,12 @@ func _run() -> void:
 		if b.free_at(p.x, p.y, 1.6): b.add("prop_lot_light_pole", "worn", p.x, p.y, 0.0)
 	b.add("prop_sign_no_parking", "worn", 131.0, -98.8, 0.0)                  # KEEP CLEAR - GATE
 	b.add("prop_cone_28in", "dirty", 128.6, -97.6, 0.0)
+	# polish 19 Nov (whole-zone pass): the yard sells propane to the campers - a refill tank behind bollards by the drive
+	b.add("prop_tank_horizontal_propane", "worn", 108.0, -48.0, 90.0)
+	for q: Vector2 in [Vector2(106.6, -51.2), Vector2(109.4, -51.2), Vector2(106.6, -44.8), Vector2(109.4, -44.8)]:
+		b.add("prop_bollard_concrete", "worn", q.x, q.y, 0.0)
+	b.add("prop_sign_no_parking", "worn", 110.4, -48.0, -90.0)                # PROPANE - NO SMOKING
+	for k in 3: b.add("prop_propane_cylinder_100lb", "worn", 105.6, -47.0 + k * 0.6, 0.0)
 	# ---------------------------------------------------------------- wear: tyre ruts on the gravel, oil under the trailers
 	b.tyre_path(133.0, -99.0, 127.0, -40.0); b.tyre_path(127.0, -40.0, 108.0, -45.0)
 	for k in 12: W.oil(b.dec, b.rr, Vector2(b.rr.randf_range(112.0, 140.0), b.rr.randf_range(-96.0, -40.0)), 90.0, b.yfn, 0.7)

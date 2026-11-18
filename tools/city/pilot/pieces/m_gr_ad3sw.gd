@@ -71,6 +71,11 @@ func _run() -> void:
 	for d: Vector2 in [Vector2(-45.5, 30.0), Vector2(-80.5, 40.0), Vector2(-60.0, 63.0)]:
 		b.add("prop_storm_drain_grate", "dirty", d.x, d.y, 0.0, false, 0.002)
 	b.pole_line(-90.0, 99.3, -76.0, 99.3, 14.0)
+	# polish 19 Nov (whole-zone pass): bollards keep the nose-in cars off the clinic walk, a fountain and a hydrant at the row
+	for k in 9: tries.call("prop_bollard_concrete", "worn", -74.0 + k * 3.4, 72.8, 0.0)
+	tries.call("prop_drinking_fountain", "worn", -62.0, 74.0, 180.0)
+	tries.call("prop_hydrant_red", "worn", -44.8, 75.4, 0.0)
+	tries.call("prop_recycling_receptacle", "worn", -27.0, 19.0, 180.0)        # cups from the coffee window
 	# ---------------------------------------------------------------- wear
 	b.building_wear()
 	b.stall_wear(0.5)
