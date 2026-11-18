@@ -121,6 +121,88 @@ What the streamer does NOT solve (measured, not streaming):
   That is the next streaming job: fades, and roads in the far world.
 - One run each, debug build. The numbers moved by about 7 frames over 33 ms between two identical zones runs.
 
+### The tiers (19 Nov, a PC session with the Redmi; branch `claude/ecstatic-archimedes-922d2c`)
+Yasin: "i think it snaps from near to far directly and everythings appereance change suddenly as we get near".
+Three things were built. Each has its own switch, and each was measured on the phone (Redmi, 720p, debug build, one
+run each unless said). Runs are in `review/phone/tiers_*`, `night_*`, `gritty_*`. Pictures are in `review/tiers/`.
+
+| # | What | Switch | Default | Cost on the phone |
+|---|---|---|---|---|
+| 1 | FAR GROUND: every cell's ground (streets, pavements, plazas, park ground) in the far world | streamer `far_ground`, rig `--nofarground` | ON | 1 draw, 20,000 triangles (12,100 vertices) for the whole island, one 1760 x 1760 ETC2 picture (1.3 MB file). GPU time the same: night centre with it off / on 11.39 / 11.40 ms by day, 14.24 / 14.23 at night |
+| 2 | FAR TO MID BY DISTANCE: an arriving cell's objects take over from their far versions nearest first, sweeping out from the camera to 220 m in `arrive_s` (0.5 s), not all in the arrival frame | streamer `tiers` + `arrive_s`, rig `--tiers --arrive=` | OFF | included in 3 (same compile switch) |
+| 3 | FADES at 60 m and 220 m: the two tiers overlap over `tier_band` (8 m) and share its pixels by a screen-door dither (opaque, no blending, never a hole, never a pixel twice) | streamer `tiers` + `tier_band`, rig `--tiers --band=` | OFF | see below: about 0.1-0.4 ms of GPU in most zones, 4 ms (40 %) in the gritty edge |
+
+How it works:
+- `bake_runtime.gd _build_far_ground`: one height grid for the island (20 m, the highest ground triangle over each
+  point, so neighbouring patches meet without cracks) and a top-down picture of the real ground. The bake renders
+  the ground with its own materials, unlit, at twice the size, then scales it down to 1.25 m a texel, with mipmaps,
+  VRAM-compressed. One 200 m patch per cell, all in one mesh (`far_world.scn` node `far_ground`,
+  `shaders/rt/rt_far_ground.gdshader`). A patch collapses in its vertex shader in the frame its cell is in. Per
+  pixel: one texture read, lit like the ground. 100 of the 141 cells have ground pieces. A quarter-size copy of the
+  picture is in `review/tiers/pc_check/`.
+- `shaders/rt/rt_tier.gdshaderinc`: every tier shader (rt_bldg, rt_prop_*, rt_foliage_*, rt_far_*) now cuts its
+  tier exactly at its window in the vertex shader. Buildings get their window and pivot as instance values (near
+  0-60 m, mid 60-220 m, measured to the same pivot as the far box). The bake widens node ranges by 4 m (BAND_MAX / 2)
+  so a band can be drawn. The kit's 2 m hysteresis already gave that much overlap (56-64 m, 218-224 m), and draws did
+  not change: stream 77 / 72 / 74 average, zones 61-128.
+- The fade and sweep code sits behind `#define CK_TIERS`. The baked materials do NOT have it, so with tiers off the
+  city pays nothing for it. `city_stream.gd set_tiers(true)` gives every held material a copy of its shader with the
+  define, made at runtime from the shader's own text (one source, no extra files). Call it before `warm_up()`: the
+  first warm-up with tiers on took 7 s on the phone (new shaders compiled); later starts use the cache.
+- `ck_cells_loaded` now holds 0..1 per cell. With tiers on, a cell ramps from 0 to 1 over `arrive_s` after it is
+  added, and the shaders' switch to far is S = 220 m x ramp. New global shader value `ck_tier_band`
+  (project.godot `[shader_globals]`; the game repo needs it too at integration).
+- Per pixel with tiers on: one branch on a per-object value. Inside a band, 5 ALU of noise and a discard. The real
+  cost is that a shader that CAN discard loses the GPU's early hidden-pixel removal for everything it draws.
+
+The cost of tiers on, measured (GPU median ms a frame; the frame time itself sits on the 60 fps vsync step and hides
+small costs, so the rig now prints `gpu_ms` on every `map` line):
+
+| Run | off | on |
+|---|---|---|
+| stream loop 108 / 210 / 280 km/h | 13.13 / 13.38 / 12.99 | 13.57 / 13.48 / 13.37 |
+| zones, by day (9 zones and 7th St) | 9.9 (gritty), 13.4-14.5 | 13.9 (gritty), 13.3-14.8 |
+| centre / gritty at night | 14.28 / 14.06 | 14.57 / 19.02 |
+| gritty alone, day / night (`gritty_g_*`) | 9.75 / 10.19 (repeat 9.72 / 10.17) | 13.88 / 14.13; band 0: 10.22 / 14.05 |
+
+- Both stream loops pass the health gate (`tiers_off_stream`, `tiers_on_stream`: STREAM HEALTH PASS, no cell late).
+  Frames over 33 ms: off 0 / 0 / 1, on 2 / 1 / 2, none over 50 ms.
+- Zones medians against `zones_final` (16.5-16.8 ms): tiers off 14.9-16.9 (gritty by day is faster, 14.9 against
+  16.5; three drives are 0.1 ms slower, within what two identical runs differ by). Tiers on: 16.6-17.1 by day and
+  23.7 ms in the gritty edge at night.
+- So the tiers cost GPU time where much is drawn over itself (the gritty edge: chain-link, trees, fences). The fade
+  pattern itself is part of it (by day band 0 is free, the full band costs 4 ms), and so is the possible discard
+  (at night band 0 already costs 4 ms). They stay OFF until there is a cheaper way. Candidates, not tried: the fade
+  only on buildings (the switch Yasin sees most), not on plants and fences; or a separate fading material only for
+  objects inside a band.
+
+What is NOT solved:
+- With tiers off (the default) the near / mid / far switches are still hard cuts, now exactly at 60 m and 220 m,
+  with no 56-64 m double draw any more. The pop Yasin saw is still there by default. The fades exist and can be
+  seen with `--tiers`, but they cost too much in dense, layered places.
+- The zones gate fails on the day-to-night switch alone: the first half second of night draws at 40-49 ms of GPU a
+  frame (two frames of 52 ms). The same with the far ground off (`night_nofg` / `night_fg`), and `zones_final`
+  failed on the same moment (53 ms). Not a streaming or tier matter: the first frames of window glow, lamp halos
+  and lights. Untouched.
+- Pictures are stills. A dither band shows only as a fine pattern in a still (`after_tiers/bldg_*`), and the sweep
+  is not in the pictures. Judge both on the phone with `--tiers`.
+- Far ground: where no piece has ground (most blocks between the streets) it shows the rig's plane green; in the
+  game that is the terrain's place. The far picture's greens and road greys are a little lighter than the real
+  ground at the switch (seen from the air in `pc_check/aerial_*`). Wires, park ground tiers and small props still
+  appear only when their cell arrives (about 240 m or farther away).
+- The bake's small props (the kit gives them a mid range of 58-60 m) are drawn by the bake's mid batches over
+  60-220 m. Seen while reading the code, not changed: a look decision.
+- One run each. Battery 30-34 C over the evening.
+
+Also found and fixed on the way: a start load (`update_focus(p, true)`) now attaches its collision at once. Since the
+sibling fix of this evening, the start cells' bodies trickled in at 1,200 triangles a frame through the warm-up: one
+body 9.9 s after its cell, and the gate failed (`tiers_off_stream` first try).
+
+Pictures (`review/tiers/`, from the phone, `bash tools/city/rig/phone_rig.sh shots NAME [rig args]`): `before`
+(far ground off, tiers off), `after_farground` (the default now), `after_tiers` (`--tiers`). The same 16 views each:
+a tower on 7th St (`c_ne_18__twr_glass`, 36 m off the street) at 40, 56, 60, 64, 80, 150, 212, 218, 222, 228, 260 m,
+then `street_eye`, `street_high`, `junction_north`, `hill_view`, `aerial`.
+
 ### The phone test (`tools/city/rig/`)
 `rig.tscn` is the project's main scene: an Android export of this repo is the test app. It drives five routes
 (50, 108, 210, 280 km/h by day, 50 km/h at night with lamp lights) and logs frame times, slow frames with what the
@@ -244,7 +326,7 @@ no rebuild). All runs `--plan=zones`, results in `review/phone/`:
 - Heat: the battery went from 29.5 to 36.2 C over the afternoon's runs; the repeat at 35 C was not slower.
 - Memory: 857-873 MB in all, 568-575 MB graphics, in every run.
 
-THE TIERS (Yasin, watching the phone: "i think it snaps from near to far directly and everythings appereance
+THE TIERS (done on 19 Nov: see "The tiers" above; what follows is how it stood before). (Yasin, watching the phone: "i think it snaps from near to far directly and everythings appereance
 change suddenly as we get near"). From the code, not yet from pictures: near 0-60 m, mid 60-220 m, far world beyond;
 every switch is a hard cut (`VISIBILITY_RANGE_FADE_DISABLED`); far -> mid happens for a whole 200 m cell in the
 frame the cell arrives; props under 2.5 m and a cell's roads and ground have no far version at all (the rig shows a
@@ -308,7 +390,7 @@ Preview and measure: `tools/city/bake/rt_shots.gd` (`--cams`, `--probe --detail`
 ## Not done
 - Whole-city bake and the game side (the game repo's streamer and global shader values).
 - Signals: the flaw above. Far buildings do not light their windows at night (the far atlas has no glow mask).
-- Far ground: beyond the loaded cells the game's terrain shows, not the roads.
+- Far ground: done 19 Nov (see "The tiers"); where no piece has ground the terrain (rig: a plane) shows.
 - Phone: eleven runs (run1, zones1, zones_full, the 720p set; debug build, see "The phone test"). Not run: `--loading=1` (the next one to do),
   `--nowarm`, `--plan=speed`, `--scale=1.0`, a release build, a repeat to see how much the numbers move.
 
