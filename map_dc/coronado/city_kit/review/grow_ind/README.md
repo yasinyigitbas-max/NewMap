@@ -120,3 +120,26 @@ and the light budget proposed in rooms_bake.md before they go on the phone.
 Validator **0 problems**, trees **0 in hard ground**, sink **0**, indoor checker **0 problems** (all 176 rooms), lock
 test **RESULT PASS**. The city-wide validator also lists problems in the gritty edge growth blocks (g_v*, another
 session's work); none of them are in these blocks.
+
+## Polish pass and the new indoor props (18 Nov, Yasin: "did you replace the props? ... run a polish pass on your part,
+## lots of props ... think like an interior and exterior designer, customer and city planner")
+- **New indoor props:** commit 9fce731 (`claude/kit-indoor-props`, the assets branch's dd8d53a) taken. All 14 rooms
+  were rebuilt with them. The kit's wall shelves and aisle gondolas are now stocked, so they are back in the rooms.
+- **Rooms:** each kind gets what its staff and customers still lacked, on free wall space. Examples:
+  - permits counter: a water fountain, benches, brochure racks, a snack machine
+  - parts counters: gas bottles and cones for sale, a display table
+  - workwear store: a fitting room, boot bench, mannequin
+  - canteen and diner: vending machines, fridges
+  - every room: safety and notice boards on walls with nothing in front of them, plants and bins
+  Indoor checker 0 in these rooms. Pictures: `rooms/`, retaken.
+- **Outdoors:** each block got a polish list, every item with its reason in the script. Each item goes in a zone
+  chosen for its purpose, and a careful placer (`ind_grow_lib.place`) sets it only where it clears buildings, doors,
+  other props, truck lanes and parked cars.
+  - stop signs at every yard exit
+  - fire hydrants by the big sheds
+  - workers' break spots (picnic table, bench, bin, vending machine)
+  - the city yard's stock of new household bins and the signs crew's spare signs
+  - mooring buoys waiting for the season, antifouling drums by the boats
+  - the canteen's outdoor tables, carts left at the cash-and-carry
+  - wash-down hoses at the fish and ice doors
+  Pictures: `polish_*.jpg`. Area checks: validator 0, trees 0, sink 0.

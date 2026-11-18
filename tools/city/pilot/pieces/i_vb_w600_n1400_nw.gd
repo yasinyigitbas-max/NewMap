@@ -77,6 +77,13 @@ func _run() -> void:
 	I.truck_path(dec, rr, Vector2(sx * 72.0, sz * 36.0), Vector2(sx * 40.0, sz * 36.0))
 	for k in 5: dec.add(15, Vector2(sx * rr.randf_range(30.0, 80.0), sz * rr.randf_range(40.0, 85.0)), rr.randf_range(0, 180), 4.0, 4.0, S.walk_y, Color(1, 1, 1, 0.5))
 	I.yard_wear(dec, rr, sx, sz, 22.0, 32.0, 99.0, 92.0, 1.8)
+	# ---- POLISH (Yasin 18 Nov: "lots of props"; each with its reason; placed only where free, G.place)
+	var obs := G.obstacles(bl, props, stl); var kp := [[8.0, 41.5, 56.0, 47.0], [8.0, 72.5, 63.0, 82.0], [39.0, 33.0, 73.0, 39.0], [34.0, 13.0, 42.0, 34.0]]
+	G.place(props, obs, rr, sx, sz, "prop_sign_stop", "worn", 10.0, 82.5, 13.0, 86.0, 90.0 * sx, kp, 3.0)          # trucks leaving at the 79 m gate
+	G.place(props, obs, rr, sx, sz, "prop_hydrant_red", "rusty", 26.5, 54.0, 30.0, 66.0, 0.0, kp)                 # the heavy repair's fire hydrant
+	G.spot(props, obs, rr, sx, sz, [["prop_picnic_table", "worn"], ["prop_park_bench", "worn"], ["prop_trash_receptacle", "dirty"], ["prop_vending_soda", "clean"]], 24.0, 29.0, 33.5, 41.0, -90.0 * sx, kp)   # drivers wait for their truck here, behind the diner
+	G.spot(props, obs, rr, sx, sz, [["prop_channelizer_drum", "dirty"], ["prop_channelizer_drum", "dirty"], ["prop_channelizer_drum", "rusty"], ["prop_propane_cylinder_100lb", "rusty"]], 26.5, 68.5, 36.0, 72.0, 0.0, kp)   # used oil and coolant drums at the repair's rollups
+	G.spot(props, obs, rr, sx, sz, [["prop_k_rail", "dirty"], ["prop_water_barrier_orange", "dirty"]], 76.0, 48.0, 96.0, 58.0, 0.0, kp)   # kept for blocking off the wash bay on busy days
 	root.set_meta("stalls", stl)
 	I.finish(root, g, props, dec, NAME)
 	quit()

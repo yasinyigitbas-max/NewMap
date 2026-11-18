@@ -84,6 +84,15 @@ func _run() -> void:
 	for k6 in 5: dec.add(14, Vector2(sx * rr.randf_range(64.0, 76.0), sz * rr.randf_range(40.0, 52.0)), rr.randf_range(0, 180), 3.5, 2.5, S.walk_y, Color(1, 1, 1, 0.6))
 	I.yard_wear(dec, rr, sx, sz, 34.0, 39.0, 99.0, 72.0, 1.6)
 	I.yard_wear(dec, rr, sx, sz, 22.0, 80.0, 40.0, 99.0, 1.0)
+	# ---- POLISH (Yasin 18 Nov: "lots of props"; each with its reason; placed only where free, G.place)
+	var obs := G.obstacles(bl, props, stl); var kp := [[8.0, 48.0, 62.0, 54.0], [53.0, 50.0, 60.0, 71.0], [8.0, 83.0, 40.0, 89.0]]
+	G.place(props, obs, rr, sx, sz, "prop_sign_stop", "worn", 10.0, 54.5, 14.0, 57.0, 90.0 * sx, kp, 3.0)          # trucks leaving at the 51 m gate
+	G.place(props, obs, rr, sx, sz, "prop_sign_stop", "worn", 10.0, 89.5, 14.0, 92.0, 90.0 * sx, kp, 3.0)          # and at the 86 m gate
+	G.place(props, obs, rr, sx, sz, "prop_hydrant_red", "rusty", 37.0, 82.0, 39.5, 92.0, 0.0, kp)                 # the ice plant's fire hydrant
+	G.spot(props, obs, rr, sx, sz, [["prop_picnic_table", "worn"], ["prop_park_bench", "worn"], ["prop_trash_receptacle", "dirty"]], 71.0, 18.0, 82.0, 38.0, -90.0 * sx, kp)   # the packers' break spot beside the hall, out of the trucks' way
+	G.place(props, obs, rr, sx, sz, "prop_hose_reel_cart", "worn", 37.5, 58.0, 41.5, 70.0, 0.0, kp)               # wash-down hose at the cold store doors
+	G.spot(props, obs, rr, sx, sz, [["prop_dumpster_3yd_green", "rusty"], ["prop_ice_chest", "clean"], ["prop_ice_chest", "clean"]], 70.0, 66.0, 82.0, 71.0, 0.0, kp)   # by the ice plant's door: crushed-ice totes, the waste bin
+	G.spot(props, obs, rr, sx, sz, [["prop_trash_cart_green", "dirty"], ["prop_trash_cart_green", "dirty"]], 43.5, 30.5, 46.0, 39.0, 0.0, kp)   # fish waste from the sales office side
 	root.set_meta("stalls", stl)
 	I.finish(root, g, props, dec, NAME)
 	quit()
