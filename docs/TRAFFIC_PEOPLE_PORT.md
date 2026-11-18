@@ -279,3 +279,24 @@ in the code. (The talking, the reactions and the city life were on this list in 
   measured, with that caveat.
 - The module is built against the 4.5 extension API: anything added to the engine in 4.6 / 4.7 is not reachable from
   it. Nothing in this plan needs it.
+
+## 13. Stage 1 result: the module on the PC and on the phone (19 Nov, 00:26)
+- `native/`: `src/` (class `CityNative`: a version line and a test that starts the module's own threads),
+  `build.sh`, `coronado_city.gdextension.in`. `bash native/build.sh`: Windows dll 717 KB, Android .so 727 KB, 47 s
+  from nothing, seconds after a change.
+- PC (official 4.7.2): `RIG native coronado_city 0.1 debug windows x86_64, godot-cpp 4.5 | its own threads: ok`.
+- PHONE (`review/phone/native1_stream.txt`, engine `coronado_all7`, Redmi, 720p, debug export, `--plan=stream
+  --probe`): `RIG native coronado_city 0.1 release android arm64, godot-cpp 4.5 | its own threads: ok (4 threads,
+  2.0 ms; the device reports 8)`. The exporter packed the .so by itself (`lib/arm64-v8a/` in the APK); the export
+  preset was not changed. STREAM HEALTH PASS: no cell late, no frame over 33 ms in any of the three drives
+  (108 / 210 / 280 km/h: median 16.2 / 16.8 / 16.7 ms, worst 30 / 31 / 31 ms).
+- THE BASELINE the traffic and the people will be measured against (this run, nothing of theirs on): draws 79-82 on
+  average, 196-198 at the worst view; GPU 13.5 ms median; physics thread wait 0.5-0.6 ms median, 6-7 ms at 99 %;
+  905 MB in all at 60 s. The worst view is already over the 150-draw budget before a single car is drawn.
+- Seen, not mine: a collision body waited 2.9 s for its place at 210 km/h, just under the gate's 3 s (the collision
+  session is on it).
+- Lock test RESULT PASS (401 pieces, 19 plan files), with the module loaded, no error line.
+- `phone_rig.sh export` builds the module first; `rig.gd` prints the `RIG native` line (or says the module is not in
+  the build). Nothing else in the rig, the streamer or the bake was touched.
+- The phone was shared: another session's test series was running. This run waited for it, and that session's APK
+  was put back on the phone afterwards.

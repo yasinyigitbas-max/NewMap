@@ -16,9 +16,11 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   cloud sessions never load it. YASIN ANSWERED the talking question (19 Nov): "does your work include every single
   one of npc related systems right? npcs meeting, ractions, city life, speaking to them etc": ALL of it is in the
   job, in C++ (reactions and city life = stage 3c, speaking = stage 4; the voice clips that name OLD places need new
-  recordings once the new map's place names are fixed). STAGE 1 on the PC DONE (9e5c111): `native/` builds the
-  Windows dll and the Android .so in under a minute (`bash native/build.sh`), the rig prints
-  `RIG native coronado_city ...`; lock test RESULT PASS.
+  recordings once the new map's place names are fixed). STAGE 1 DONE, PC and PHONE: `native/` builds the Windows dll
+  and the Android .so in under a minute (`bash native/build.sh`; `phone_rig.sh export` runs it), the rig prints
+  `RIG native coronado_city ...` on both; phone run `review/phone/native1_stream.txt`: STREAM HEALTH PASS, engine
+  `coronado_all7`; lock test RESULT PASS. Baseline for what comes next (same run): draws 79-82 average, 198 worst,
+  GPU 13.5 ms. NEXT: stage 2a, the lane graph of the new streets (`StreetGraph`, checked against the baked ground).
 - 18 Nov (cloud, branch `claude/grow-industrial`): INDUSTRIAL GROWTH, stage 1 + 2 done, NOTHING LOCKED, WAITING for
   Yasin's word on the variants. Read `review/grow_ind/README.md`. Three variants (A port, B fleet, C cold chain),
   each dressed twice = six 100 m blocks round the sample. They form the pilot area u -900..-500, v -1600..-1400
