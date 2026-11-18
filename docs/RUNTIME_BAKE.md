@@ -178,6 +178,34 @@ centre at night 16.4 | 31.0, gritty at night 16.8 | 17.1 ms.
 - Memory at 60 s: 901 MB, graphics 584 MB: the same graphics figure as at half resolution, so it is not the
   picture buffers.
 
+THE SETTING TESTS AT 720p (Yasin: "ok run the tests"; "make the games default resolution 720p ... just inject it").
+The rig now draws 3D 720 lines high by default (1640x720 on the Redmi; the installed app was given `--scale=0.6667`,
+no rebuild). All runs `--plan=zones`, results in `review/phone/`:
+
+| Run | frames over 33 / 50 / 100 ms | worst | late cells | teleport ready |
+|---|---|---|---|---|
+| `zones_720` (baseline) | 36 / 3 / 0 | 72 ms | 0 | 1.0-5.5 s |
+| `zones_720_repeat` (the same again) | 29 / 2 / 0 | 60 ms | 0 | 0.8-5.5 s |
+| `zones_720_loading1` (`--loading=1`) | 36 / 4 / 0 | 52 ms | 0 | 0.9-5.3 s |
+| `zones_720_bodies1` (`--bodies=1`) | 33 / 2 / 1 | 124 ms | 0 | 1.5-8.7 s |
+
+- At 720p every zone but the gritty edge by day sits at the 60 fps step (median 16.5-16.9 ms; gritty 10.4): the
+  phone cannot reach 120 fps there, so vsync holds it at 60. 99 % 25-28 ms. This hides small differences: a change
+  only shows if it pushes frames over a step.
+- Two identical runs differ by 7 frames over 33 ms (36 and 29). So `--loading=1` and `--bodies=1` changed NOTHING
+  that can be measured; one body a frame makes teleports slower. One loader at a time still had no late cell at
+  210 km/h (request to in: 265 ms worst, against 572).
+- So the hitches (45-70 ms, 5 to 9 a run) do not come from how much is done in a frame. Most fall on a frame that
+  attaches a collision body or takes a cell in, whatever the count. Still two candidates: the physics thread taking
+  a body, or the first drawing of a new cell. To tell them apart the rig needs a switch that is not there yet
+  (collision off, or physics on the main thread): a rebuild. NOT DONE.
+- LIGHTS (Yasin: the engine's grid makes 1 or 20 lights cost the same). Night drives in centre, apartments and gritty,
+  `night_720_lights20` / `_lights20_repeat` / `_lights1` / `_lights0`: medians 16.6 / 16.1 / 16.5 (centre), 17.0 /
+  16.9 / 16.8 (apartments), 16.8 / 16.8 / 16.8 (gritty) for 20 / 1 / 0 lights. The same, inside the 60 fps step. The
+  first 20-light run had one odd drive (gritty 23.9 ms) that the repeat did not show: noise.
+- Heat: the battery went from 29.5 to 36.2 C over the afternoon's runs; the repeat at 35 C was not slower.
+- Memory: 857-873 MB in all, 568-575 MB graphics, in every run.
+
 THE TIERS (Yasin, watching the phone: "i think it snaps from near to far directly and everythings appereance
 change suddenly as we get near"). From the code, not yet from pictures: near 0-60 m, mid 60-220 m, far world beyond;
 every switch is a hard cut (`VISIBILITY_RANGE_FADE_DISABLED`); far -> mid happens for a whole 200 m cell in the
@@ -243,7 +271,7 @@ Preview and measure: `tools/city/bake/rt_shots.gd` (`--cams`, `--probe --detail`
 - Whole-city bake and the game side (the game repo's streamer and global shader values).
 - Signals: the flaw above. Far buildings do not light their windows at night (the far atlas has no glow mask).
 - Far ground: beyond the loaded cells the game's terrain shows, not the roads.
-- Phone: three runs (run1, zones1, zones_full; debug build, see "The phone test"). Not run: `--loading=1` (the next one to do),
+- Phone: eleven runs (run1, zones1, zones_full, the 720p set; debug build, see "The phone test"). Not run: `--loading=1` (the next one to do),
   `--nowarm`, `--plan=speed`, `--scale=1.0`, a release build, a repeat to see how much the numbers move.
 
 ## Decisions for Yasin

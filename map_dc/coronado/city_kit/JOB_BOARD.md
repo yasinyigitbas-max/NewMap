@@ -5,6 +5,17 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov ~18:10 (PC time): SETTING TESTS at 720p done (Yasin: "ok run the tests"; "make the games default resolution
+  720p ... just inject it": rig default is now 720 lines, app not rebuilt, runs pass --scale=0.6667). Table in
+  RUNTIME_BAKE.md "THE SETTING TESTS AT 720p". --loading=1 and --bodies=1 change nothing measurable (two identical
+  baselines differ by as much); 0 / 1 / 20 lights cost the same (Yasin's light grid: confirmed); at 720p the phone
+  holds the 60 fps step in every zone, 29-36 frames over 33 ms a run, no late cell. The hitches fall on frames that
+  attach a collision body or take a cell in: physics thread or first draw, NOT told apart (needs a rig switch + a
+  rebuild). YASIN WANTS A VISIBLE JUMP IN LOOK ("we need a visible jump"; asked about deferred lighting: told him no,
+  it only pays with many lights and costs pixels; the light grid already covers lights). Gave him 14 look changes
+  ranked by work (colour grade, sky + haze, upscaler, wall darkening, night windows, glass reflection, normal maps,
+  blob shadows, detail texture, baked AO, tier fades + far roads, fake interiors, far shadows, life) and which fit an
+  Opus session. PROPOSED two separate sessions (sky / haze / colour; building shader). WAITING for his pick.
 - 18 Nov ~17:30 (PC time): FULL-RESOLUTION zones run (Yasin: "i need a test run at full res too"; "check the results
   of both runs and tell me what can be done"): `review/phone/zones_full.txt`, written up in RUNTIME_BAKE.md. The phone
   is pixel-limited: medians 16-25 ms by day and 31 ms in the night centre at 2460x1080 (half res: 9-16 / 16.4); 15
