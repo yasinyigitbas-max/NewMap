@@ -5,6 +5,17 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov (cloud, `claude/grow-industrial`): the combined indoor checker (8e42e9a) is merged here, and the 14 industrial
+  rooms are rebuilt to fit it. `check_rooms.gd -- --only=g_ind_` gives 0 problems (it was 20: repeat, lone, deco,
+  window). room_gen_ind.gd now caps repeats with the checker's limits, puts bins only at walls, allows 2 boards a wall
+  and 5 a room, and hangs no board over a window at any height. The rooms now record their openings.
+  Hello's question about the ck_grt_row2 band (Yasin's picture): the reddish band across that door was room_lib's
+  storefront BULKHEAD (room_lib.gd ~184, Tiles101 tinted 0.62/0.30/0.26), so it was in the ROOM file, not the
+  building mesh. It showed up in my two rooms in that model, which were moved to ck/mod_fastfood and
+  ck/ck_svc_pawn_fast. If the gritty rooms in ck_grt_row2 show no band today, they were built with a different bay
+  or window set. Not tested from gen_shots' cut.
+  Still open: the outdoor checks from Yasin's corrections in validate.gd (a building reaching into the street, props
+  inside a building's real outline, a wider clear zone at shop doors).
 - 18 Nov (strip session, claude/grow-strip): NEW INDOOR PROPS (Yasin, relayed by the PC session: "there are new indoor
   assets to replace old lower quality ones ... fetch them and replace all indoor props with them"; asked directly in
   this session whether the 12 locked hand-made rooms may be unlocked and relocked for it: "Yes, unlock and relock").
@@ -84,6 +95,14 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   `gen_shots_grt.gd`. Yasin's fix in the same round: "many on the wall props overlap, some of them are on windows, some of
   them are inside the ceiling" -> one fit check for every hung item indoors; outdoors wall props slide off windows / doors.
   Checks: validator 0, trees 0, sink 0, rooms 0, lock test RESULT PASS. Numbers in the README (GRT_NUMBERS).
+  19 Nov: counter cages REMOVED from every gritty room (Yasin: "remove all of the cages, they arent prison cells").
+  Combined indoor checker (working branch 8e42e9a) on the gritty rooms: 19 -> 0 (deco: at most 2 decorations a wall,
+  6 a room; repeat: at most 2 leaflet racks / spinners, 1 vending; lone: no bin at the counter end).
+  GYM ("what floats", answer to the PC session): a checker that knows only props cannot see it; the floating thing in
+  the gritty rooms was the room's OWN build (a box of bars). Rule to add for the room's own boxes (room_lib.box and
+  the fittings): every built part must be HELD - its bottom on the floor (within 2 cm) or on a prop's top, or one face
+  against a wall / partition (within 3 cm), or its top at the ceiling (within 3 cm); anything else floats. A grille
+  or rail must be held at BOTH ends. Needs room_lib to record its boxes (meta "boxes": [centre, size, key]).
   OPEN QUESTIONS FOR YASIN: (1) approve / change the three variants before any wider growth; (2) the same "wall props on
   windows" fault is very likely in the LOCKED samples too (shared dress helper): fix needs his word to unlock;
   (3) the modular map rows (`@map:brk3_row3`, `shop_row4`, `svb_row*`, `stg_row*`) would suit the next gritty round: merge them?
