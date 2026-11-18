@@ -136,7 +136,7 @@ a loaded cell's trees in what the cell already holds (instanced plants: their po
 vertex carries in CUSTOM0) and adds one MultiMesh of soft blobs (`blob.gdshader`): a multiply blend that darkens the
 ground, moved away from the sun by the crown's height and stretched for a low sun, fading in from 38 m (where the
 real shadow fades out) and out with the haze; strength follows the time of day (none at night, faint when overcast).
-Cost on screen: one draw per cell with trees (+10-14 draws a view), only far blobs reach the pixel stage (nearer ones
+Cost on screen: one draw per cell with trees (measured: +5 to +8 draws a view, 77 -> 84, 99 -> 107, 70 -> 78, 60 -> 65), only far blobs reach the pixel stage (nearer ones
 are collapsed in the vertex shader), small quads, a few arithmetic steps, no texture read.
 Why OFF: finding the trees reads every foliage mesh back from the GPU when the cell comes in (tens of ms a cell):
 fine for pictures, a hitch on the phone, and it would spoil the streaming measurements. The bake should record the

@@ -5,6 +5,17 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov evening (cloud session, branch `claude/look-sky`, NOT merged): THE LOOK QUEUE (from the PC session for Yasin:
+  "give them all the improvements lists and have them do them non stop"). Read `docs/LOOK_OVERVIEW.md` (every look
+  switch on both branches, cost, safe or not) and `docs/LOOK_SKY.md` "The look queue". 1 times of day `--look=morning|
+  noon|day|golden|dusk|night|overcast` (`review/look_18nov/times/sheet_*`). 2 upscaler `--upscale=1 --sharp=0.2`
+  (SGSR via the FSR 1 mode, patch c): a patched Linux engine built in the cloud, 18-30 % sharper (`upscale/crop_*`);
+  phone test steps in LOOK_SKY.md. 3 lamp glow `--glow=1` (own shader, the bake's untouched; patch note). 4 blob
+  shadows past 50 m `--blobs=1` (OFF: reads meshes at load; +5-8 draws; bake patch note). 5 sky map `ck_sky_map` +
+  snippet `tools/city/look/sky_reflect.gdshaderinc` for glass / wet ground, `--wet=0..1` demo. 6 the overview.
+  FOUND: `docs/look_patches/streamer_now.md`: `update_focus(p, true)` adds cells WITHOUT collision since the streamer
+  rewrite (the rig's start uses it): one-line fix in the note. Shaders in `city_kit/shaders/` not edited (Yasin's
+  brief: the building session's). Lock test RESULT PASS.
 - 18 Nov (cloud session, branch `claude/look-sky`, NOT merged): LOOK PACK, SKY HALF (Yasin: "a visible jump"; mid-way:
   "we are going for a gta 4 like look"; "does the bloom cost that much?"). Read `docs/LOOK_SKY.md`. New
   `tools/city/look/` (sky shader + 256 px noise texture, look.gd: haze = distance fog in the sky's horizon colour,

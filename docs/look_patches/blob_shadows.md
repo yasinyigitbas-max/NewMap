@@ -26,7 +26,7 @@ Sun shadows end at 50 m (the game's setting; more would cost the phone a bigger 
 every tree stands on bright ground and the street looks flat and cut out.
 
 ## Cost
-- One draw per cell that has trees (about 10-14 cells loaded: +10-14 draws a view; the budget is 150, the views
+- One draw per cell that has trees (measured in the cloud: +5 to +8 draws a view; the budget is 150, the views
   measure 60-120).
 - Pixels: only blobs beyond ~40 m reach the fragment stage (nearer ones are collapsed in the vertex shader), and those
   are small; a multiply blend, a few arithmetic steps, no texture read.
