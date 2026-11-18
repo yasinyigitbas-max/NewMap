@@ -16,6 +16,11 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   ranked by work (colour grade, sky + haze, upscaler, wall darkening, night windows, glass reflection, normal maps,
   blob shadows, detail texture, baked AO, tier fades + far roads, fake interiors, far shadows, life) and which fit an
   Opus session. PROPOSED two separate sessions (sky / haze / colour; building shader). WAITING for his pick.
+- 18 Nov ~15:00: OLD GAME REVIEW (Yasin: "check old games systems one by one ... tell me which ones can be made faster
+  and honestly tell me if you cant"): `docs/OLD_GAME_SYSTEMS_REVIEW.md` (read-only in coronado-source, nothing run).
+  Clearly faster: cell packages, far areas, building streaming, walk-in rooms (waiting time), loading, road and sea
+  shaders, parked cars drawn twice. Cannot improve: sky, simple shaders, HUD, physics, colliders, save, story, jobs.
+  Also lists what breaks at 280 km/h. No work started from it.
 - 18 Nov ~17:30 (PC time): FULL-RESOLUTION zones run (Yasin: "i need a test run at full res too"; "check the results
   of both runs and tell me what can be done"): `review/phone/zones_full.txt`, written up in RUNTIME_BAKE.md. The phone
   is pixel-limited: medians 16-25 ms by day and 31 ms in the night centre at 2460x1080 (half res: 9-16 / 16.4); 15
