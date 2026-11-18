@@ -9,38 +9,46 @@
   ],
   "mount": "ground",
   "tiers": {
-   "near": 386
+   "near": 732
   },
-  "footprint_w": 0.583,
-  "footprint_d": 0.59,
-  "height": 1.02,
+  "footprint_w": 0.632,
+  "footprint_d": 0.56,
+  "height": 0.985,
   "regions": [
    "baked:theatre_seat"
   ],
   "trim": {
-   "ti_metal": {
-    "area_m2": 1.99,
-    "px_per_m": 128.0
-   },
-   "ti_fabric": {
-    "area_m2": 1.2,
-    "px_per_m": 128.0
-   },
    "ti_paint": {
-    "area_m2": 0.63,
+    "area_m2": 1.91,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 0.24,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.09,
     "px_per_m": 128.0
    },
    "ti_plastic": {
+    "area_m2": 1.05,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 1.02,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
     "area_m2": 0.02,
     "px_per_m": 128.0
    }
   },
   "atlas_page": "props_i_*",
-  "high_tris": 1750,
+  "high_tris": 2756,
   "bake_slot_px": 64,
-  "bake_px_per_m": 480.5,
+  "bake_px_per_m": 1249.3,
   "col": 1,
-  "secs": 11.3
+  "secs": 11.2
  },
  "ticket_booth": {
   "file_base": "prop_ticket_booth",
@@ -52,10 +60,10 @@
   ],
   "mount": "ground",
   "tiers": {
-   "near": 880
+   "near": 1328
   },
   "footprint_w": 1.26,
-  "footprint_d": 1.14,
+  "footprint_d": 1.275,
   "height": 2.2,
   "regions": [
    "baked:ticket_booth"
@@ -66,19 +74,23 @@
     "px_per_m": 128.0
    },
    "ti_paint": {
-    "area_m2": 27.09,
+    "area_m2": 29.08,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 0.38,
     "px_per_m": 128.0
    },
    "ti_wood": {
     "area_m2": 10.7,
     "px_per_m": 128.0
    },
-   "ti_metal": {
-    "area_m2": 0.18,
+   "ti_glass": {
+    "area_m2": 0.74,
     "px_per_m": 128.0
    },
-   "ti_brass": {
-    "area_m2": 0.05,
+   "ti_metal": {
+    "area_m2": 0.19,
     "px_per_m": 128.0
    },
    "ti_plastic": {
@@ -87,11 +99,11 @@
    }
   },
   "atlas_page": "props_i_*",
-  "high_tris": 4496,
+  "high_tris": 6220,
   "bake_slot_px": 96,
-  "bake_px_per_m": 98.5,
+  "bake_px_per_m": 1444.4,
   "col": 1,
-  "secs": 13.9
+  "secs": 18.7
  },
  "stanchion": {
   "file_base": "prop_stanchion",
@@ -103,30 +115,34 @@
   ],
   "mount": "ground",
   "tiers": {
-   "near": 180
+   "near": 478
   },
-  "footprint_w": 0.4,
-  "footprint_d": 0.74,
-  "height": 0.99,
+  "footprint_w": 0.37,
+  "footprint_d": 0.755,
+  "height": 1.006,
   "regions": [
    "baked:stanchion"
   ],
   "trim": {
+   "ti_plastic": {
+    "area_m2": 0.14,
+    "px_per_m": 128.0
+   },
    "ti_metal": {
-    "area_m2": 0.53,
+    "area_m2": 0.29,
     "px_per_m": 128.0
    },
    "ti_paint": {
-    "area_m2": 0.07,
+    "area_m2": 0.06,
     "px_per_m": 128.0
    }
   },
   "atlas_page": "props_i_*",
-  "high_tris": 916,
+  "high_tris": 1442,
   "bake_slot_px": 64,
   "bake_px_per_m": 1249.3,
   "col": 1,
-  "secs": 8.0
+  "secs": 9.6
  },
  "poster_case": {
   "file_base": "prop_poster_case",
@@ -138,7 +154,7 @@
   ],
   "mount": "wall",
   "tiers": {
-   "near": 224
+   "near": 348
   },
   "footprint_w": 0.839,
   "footprint_d": 0.095,
@@ -148,20 +164,20 @@
   ],
   "trim": {
    "ti_metal": {
-    "area_m2": 1.16,
+    "area_m2": 1.06,
     "px_per_m": 128.0
    },
    "ti_paint": {
-    "area_m2": 1.58,
+    "area_m2": 2.8,
     "px_per_m": 128.0
    }
   },
   "mount_height": 0.0,
   "atlas_page": "props_i_*",
-  "high_tris": 1479,
+  "high_tris": 1289,
   "bake_slot_px": 96,
-  "bake_px_per_m": 70.0,
+  "bake_px_per_m": 1873.9,
   "col": 1,
-  "secs": 8.8
+  "secs": 10.6
  }
 }

@@ -7,7 +7,7 @@ any geometry change.
 """
 import math
 from b_inshared import (
-    sg, leveler, screw, maker_plate, bottle_card, can_card, TR, TINT,
+    sg, leveler, screw, maker_plate, bottle_card, can_card, TR, TINT, stock,
 )
 
 # ------------------------------------------------------------------ checkout_counter
@@ -154,7 +154,9 @@ def grocery_shelf(b, hi=False):
     # kick + cornice
     b.box((0,0.0,0.0),(W,D,0.10),'steel',skip=('bottom',))
     b.box((0,-(D/2)+0.02,0.02),(W-0.10,0.02,0.06),'paint_black')
+    stock(b,-W/2+0.06,W/2-0.06,-(D/2)+0.06,0.10,0.15,'tg_grocery',depth=0.30,hi=hi)   # bulk on the base deck
     b.box((0,0.0,H-0.08),(W,D,0.08),'steel')
+    b.box((0,-(D/2)-0.004,H-0.075),(W-0.06,0.008,0.06),'paint_red')                   # aisle header band
     b.box((0,-0.01,H-0.12),(W-0.04,D-0.04,0.03),'steel')
     # mid upright
     b.box((0,0.0,0.10),(0.03,D-0.04,H-0.22),'steel')
@@ -166,8 +168,7 @@ def grocery_shelf(b, hi=False):
         if hi:
             b.box((0,-(D/2)+0.03,z-0.018),(W-0.20,0.006,0.014),'label')
         # goods card on the shelf, facing -Y
-        if not hi:
-            b.box((0,-(D/2)+0.10,z+0.12),(W-0.16,0.008,0.20),'goods')
+        stock(b,-W/2+0.06,W/2-0.06,-(D/2)+0.06+0.01*(zs.index(z)%2),z+0.018,0.25 if z<1.6 else 0.24,('tg_grocery','tg_bottles','tg_grocery','tg_grocery','tg_spines')[zs.index(z)],depth=0.30,hi=hi)
     if hi:
         y=-(D/2)+0.10-0.006
         bodies=('paint_navy','paint_cream','leaf','oak','plastic','brass','paint_black')
@@ -189,62 +190,54 @@ def grocery_shelf(b, hi=False):
 
 # ------------------------------------------------------------------ produce_stand
 def produce_stand(b, hi=False):
-    W,D,H=1.40,0.70,1.15
-    # base table
-    b.box((0,0.0,0.0),(W,D,0.08),'oak',skip=('bottom',))
-    b.box((0,0.0,0.08),(W-0.08,D-0.08,0.04),'oak')
-    # four turned-ish legs
-    for x in (-W/2+0.08,W/2-0.08):
-        for y in (-D/2+0.08,D/2-0.08):
-            b.box((x,y,0.08),(0.06,0.06,0.46),'oak')
-            b.box((x,y,0.20),(0.08,0.08,0.04),'oak')  # collar
+    """market produce stand: slatted oak base cabinet, two stepped tiers of tilted crates (three crates
+    per tier) heaped with fruit and veg, chalkboard price cards, back rail with a header board."""
+    W,D,H=1.40,0.80,1.30
+    bz=0.50
+    b.box((0,0.0,0.0),(W-0.04,D-0.04,0.06),'paint_black',skip=('bottom',))
+    b.box((0,0.0,0.06),(W,D,bz-0.06),'oak',skip=('bottom',))
+    for k in range(9):                                                          # vertical front slats
+        b.box((-W/2+0.08+k*(W-0.16)/8,-(D/2)-0.004,0.09),(0.012,0.008,bz-0.12),'walnut')
+    b.box((0,-(D/2)-0.006,bz-0.03),(W,0.012,0.03),'walnut')
+    fruit=(('paint_red',0.040),('paint_orange',0.042),('paint_yellow',0.036),('leaf',0.045),('paint_purple',0.038),('card',0.034))
+    for t in range(2):
+        z=bz+t*0.20; yc=-0.18+t*0.30; cw=(W-0.06)/3; dd=0.30; ch=0.12
+        tilt=math.radians(12)
+        if t==1: b.box((0,yc,bz),(W-0.04,dd+0.04,0.20),'oak')                    # riser under the back tier
+        for k in range(3):
+            x=-W/2+0.03+cw*(k+0.5)
+            f,r=fruit[(t*3+k)%len(fruit)]
+            # crate: floor, ends, front (low) and back; tilted towards the customer
+            b.box((x,yc,z),(cw-0.02,dd,0.015),'oak',rx=tilt)
+            for sx in (-1,1):
+                b.box((x+sx*(cw/2-0.02),yc,z),(0.016,dd,ch),'oak',rx=tilt)
+            b.box((x,yc-dd/2+0.008,z-0.03),(cw-0.04,0.016,ch-0.03),'oak',rx=tilt)
+            b.box((x,yc+dd/2-0.008,z),(cw-0.04,0.016,ch+0.02),'oak',rx=tilt)
+            # heaped fill: near = tilted block whose top is the unique bake (fruit heap baked from the hi-poly),
+            # plus three low-poly fruit proud of the heap for silhouette; hi = a full heap of fruit
+            b.box((x,yc,z+0.02),(cw-0.07,dd-0.05,0.07),f,rx=tilt,keys={'top':'goods'})
+            nq=12 if hi else 3
+            for q in range(nq):
+                fx=x-cw/2+0.07+(q%4 if hi else q*1.5)*(cw-0.12)/(3 if hi else 3)
+                fy=yc-0.08+0.055*((q//4) if hi else 1)
+                fz=z+0.085+(fy-yc)*math.tan(tilt)
+                b.lathe([(0.0,fz-r*0.2),(r*0.95,fz+r*0.6),(0.0,fz+r*1.5)],sg(hi,4,10),f,c=(fx,fy,0),cap_top=False)
+            # chalkboard price card on a pick
+            b.box((x+cw*0.28,yc-dd/2-0.02,z+0.02),(0.09,0.006,0.065),'paint_black',rx=tilt)
+            b.box((x+cw*0.28,yc-dd/2-0.024,z+0.035),(0.06,0.002,0.012),'label',rx=tilt)
+    # back rail posts meeting the base, header board
+    for sx in (-1,1):
+        b.box((sx*(W/2-0.04),D/2-0.05,bz),(0.05,0.05,H-bz),'walnut')
+    b.box((0,D/2-0.05,H-0.20),(W,0.035,0.20),'walnut')
+    b.box((0,D/2-0.07,H-0.18),(W-0.20,0.006,0.16),'paint_green')
+    b.box((0,D/2-0.074,H-0.14),(0.50,0.003,0.06),'label')
+    maker_plate(b,(0,-(D/2)-0.006,0.04),hi,w=0.08,h=0.016)
+    for x in (-W/2+0.10,W/2-0.10):
+        for y in (-D/2+0.10,D/2-0.10):
             leveler(b,(x,y),hi)
-    # lower storage shelf
-    b.box((0,0.0,0.28),(W-0.16,D-0.16,0.024),'oak')
-    # three stepped bins, front-to-back, slightly tilted toward the customer
-    # tier floors
-    tiers=(
-        (0.52, 0.18, -0.16, 0.12),  # z, height of crate, y centre, depth
-        (0.68, 0.20,  0.04, 0.16),
-        (0.86, 0.22,  0.24, 0.18),
-    )
-    colors=('leaf','ceramic','oak','paint_cream','paint_navy')
-    for i,(z,ch,yc,dd) in enumerate(tiers):
-        # crate floor
-        b.box((0,yc,z),(W-0.16,dd,0.020),'oak',rx=8)
-        # crate ends
-        for x,sgn in ((-W/2+0.10,1),(W/2-0.10,-1)):
-            b.box((x,yc,z+ch*0.45),(0.018,dd,ch),'oak',rx=8)
-        # front slats (the silhouette that reads "produce crate")
-        nslat=4
-        for s in range(nslat):
-            zz=z+0.04+s*(ch-0.06)/(nslat-1)
-            b.box((0,yc-(dd/2)+0.01,zz),(W-0.20,0.016,0.028),'oak',rx=8)
-        # mid divider
-        b.box((0,yc,z+ch*0.45),(0.016,dd-0.02,ch-0.02),'oak',rx=8)
-        # produce card standing in the crate, facing -Y
-        if not hi:
-            b.box((0,yc-(dd/2)+0.04,z+ch*0.50),(W-0.24,0.008,ch-0.04),'goods',rx=8)
-        if hi:
-            y=yc-(dd/2)+0.04-0.006
-            for col in range(4):
-                x=-0.48+col*0.32
-                key=colors[(i+col)%len(colors)]
-                b.box((x,y,z+0.06),(0.26,0.004,ch-0.08),key,rx=8)
-                b.box((x,y-0.003,z+ch*0.55),(0.16,0.003,0.05),'label',rx=8)
-    # price rail across the front of each tier already implied; add a top sign board
-    b.box((0,D/2-0.06,H-0.16),(W-0.20,0.03,0.22),'oak')
-    b.box((0,D/2-0.08,H-0.16),(W-0.28,0.012,0.16),'label')
-    # stretchers
-    b.box((0,0.0,0.14),(W-0.20,0.04,0.03),'oak')
-    b.box((0,0.0,0.14),(0.04,D-0.20,0.03),'oak')
-    maker_plate(b,(0,-(D/2)+0.04,0.10),hi,w=0.08,h=0.016)
     b.cbox((0,0,0),(W,D,H))
 
 
-# ------------------------------------------------------------------ registry
-
-# ------------------------------------------------------------------ cigarette_cabinet
 def cigarette_cabinet(b, hi=False):
     W,D,H=0.90,0.32,1.10
     # behind-counter cabinet, lockable, rows of pack slots
@@ -262,8 +255,7 @@ def cigarette_cabinet(b, hi=False):
         b.box((0,0.0,z),(W-0.10,D-0.04,0.016),'oak')
         # ticket lip
         b.box((0,-(D/2)+0.02,z-0.012),(W-0.14,0.014,0.016),'plastic')
-        if not hi:
-            b.box((0,-(D/2)+0.06,z+0.08),(W-0.16,0.008,0.14),'goods')
+        stock(b,-W/2+0.06,W/2-0.06,-(D/2)+0.05,z+0.016,0.18,'tg_grocery' if zs.index(z)%2 else 'tg_spines',depth=0.20,hi=hi)
     if hi:
         y=-(D/2)+0.06-0.006
         bodies=('paint_navy','paint_cream','leaf','paint_black','brass','oak','fabric')
@@ -293,6 +285,8 @@ PROPS=[
     _p('checkout_counter',checkout_counter,'medium',1200),
     _p('chest_freezer',chest_freezer,'medium',1100,side=96,cage=0.04,ray=0.12),
     _p('grocery_shelf',grocery_shelf,'medium',1200,side=96,cage=0.04,ray=0.12),
-    _p('produce_stand',produce_stand,'medium',1100,side=96,cage=0.04,ray=0.12),
-    _p('cigarette_cabinet',cigarette_cabinet,'medium',900,side=96,cage=0.04,ray=0.12),
+    _p('produce_stand',produce_stand,'medium',1200,side=96,cage=0.04,ray=0.12,no_ch=True),
+    _p('cigarette_cabinet',cigarette_cabinet,'medium',1000,side=96,cage=0.04,ray=0.12),
 ]
+
+INDOOR_LOOK=True   # run.py: chamfer edge highlight + per-part colour variation in COLOR_0
