@@ -1,5 +1,7 @@
 # Look pack: the phone runs, in order (for the PC session, 18 Nov)
 
+The day look is decided (Yasin: "i go for gta4 look"): the runs below use the default day; no day-variant runs.
+
 Every switch of the look pack (branch `claude/look-sky`, `docs/LOOK_SKY.md`, `docs/LOOK_OVERVIEW.md`) measured on the
 Redmi one change at a time, each against the run before. The cloud cannot measure a phone: these runs are the only
 numbers that count. All runs use `tools/city/rig/phone_rig.sh` as for the streaming runs.
@@ -35,7 +37,6 @@ numbers sit beside `zones_720` / `zones_final` in `review/phone/`.
 | 13 | `phone_rig.sh run look_storm --plan=zones --weather=storm` | a mood without wet ground | should equal 5 (numbers only) |
 | 14 | `phone_rig.sh run look_air --plan=zones --air=1` | gulls, a plane, smoke (one draw, against 5) | waterfront and industrial zones; draws +1 |
 | 16 | `phone_rig.sh run look_shadow0 --plan=zones --shadowtune=0` | the sun shadow as before (4 splits, hard end; against 5) | 5 should be the cheaper one (2 shadow passes less); on the screen: is the shadow's end still a line in 5? |
-| 17 | `phone_rig.sh run look_dayclear --plan=zones --look=day_clear` | the clear day instead of `--look=1`'s day / night | should equal 5 by day (numbers only) |
 | 15 | `phone_rig.sh run look_blobs --plan=zones --blobs=1` | blob shadows: EXPECTED TO HITCH (meshes read at load) | the streaming health check will likely FAIL: this run only says how bad, the fix is the bake note `docs/look_patches/blob_shadows.md` |
 
 After each run: `python tools/city/rig/health.py` prints PASS / FAIL (the streaming budget); a look change should
@@ -51,7 +52,6 @@ Each `--shots` run takes pictures at fixed views and quits; the files land in th
 | `phone_rig.sh run shots_before --shots=user://look --look=0` | the old look: centre, apartments, gritty, waterfront by day and night |
 | `phone_rig.sh run shots_after --shots=user://look --look=1` | the same with the look |
 | `phone_rig.sh run shots_times --shots=user://look --presets=morning,noon,golden,dusk,night,overcast` | the six times of day |
-| `phone_rig.sh run shots_days --shots=user://look --presets=day,day_half,day_clear` | THE THREE DAYS for Yasin's pick, on a real GPU |
 | `phone_rig.sh run shots_shadow --shots=user://look --presets=day,golden "--views=centre:-6,-560:0:4;apartments:215,-600:90:5"` and the same with `--shadowtune=0` | the shadow's end, before / after |
 | `phone_rig.sh run shots_sea --shots=user://look --presets=day,golden,night "--views=shore:600,200:95:1;waterfront:535,200:75:2;bridge:898,-1098:135:2"` | the sea |
 | `phone_rig.sh run shots_weather --shots=user://look --weather=rain --presets=day,dusk` | rain (and the same with `--weather=mist`, `hazy`, `storm`) |
