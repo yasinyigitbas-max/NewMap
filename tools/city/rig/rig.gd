@@ -204,6 +204,13 @@ func _night(v: float) -> void:
 func _run() -> void:
 	var R := RenderingServer
 	_say("start engine=%s device=%s gpu=%s screen=%s scale=%.2f look=%s bloom=%d upscale=%d sharp=%.2f reflect=%d plan=%s lead=%.1f maxcells=%d loading=%d bodies=%d lights=%d loader=%d coltris=%d cells_baked=%d tiers=%s band=%.1f arrive=%.2f far_ground=%s tier_materials=%d" % [Engine.get_version_info().string, OS.get_model_name(), R.get_video_adapter_name(), str(DisplayServer.window_get_size()), float(opt.scale), String(opt.look), int(opt.bloom), int(opt.upscale), float(opt.sharp), int(opt.reflect), opt.plan, float(opt.lead), int(opt.maxcells), int(opt.loading), int(opt.bodies), int(opt.lights), int(opt.loader), int(opt.coltris), st.cells.size(), str(opt.tiers), float(opt.band), float(opt.arrive), str(not opt.nofarground), int(st.stats.get("tier_materials", 0))])
+	# The native module (traffic and people in C++, docs/TRAFFIC_PEOPLE_PORT.md; built by native/build.sh, not in git).
+	# Asked through ClassDB by name: this script must still load in a checkout that has not built it. No script fall-back.
+	if ClassDB.class_exists(&"CityNative"):
+		var nt: Dictionary = ClassDB.class_call_static(&"CityNative", &"self_test", 4, 2000000)
+		_say("native %s | its own threads: %s (%d threads, %.1f ms; the device reports %d)" % [str(ClassDB.class_call_static(&"CityNative", &"version")), "ok" if nt.get("ok", false) else "FAILED", int(nt.get("threads", 0)), float(nt.get("ms", 0.0)), int(nt.get("hw", 0))])
+	else:
+		_say("native: the module is not in this build (native/build.sh makes it; nothing in this run needs it)")
 	if st.cells.is_empty():
 		_say("ERROR no baked city found (map_dc/coronado/city_kit/runtime). Run the bake before the export."); hud.text = "no baked city in this build"
 		if opt.quit: await get_tree().create_timer(3.0).timeout; get_tree().quit()

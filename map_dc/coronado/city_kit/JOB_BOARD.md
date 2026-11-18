@@ -14,6 +14,26 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   --by=Yasin, rebuilt from rooms_civic_apt.gd / rooms_waterfront.gd unchanged, none needed re-dressing, relocked).
   Lock test RESULT PASS. Indoor checker: 1 problem left in a generated room of the sample (g_m_nw__crown_plaza__2,
   a grocery shelf grew and cannot be walked up to).
+- 19 Nov (PC session, branch `claude/strange-jang-5426ac`, not merged): TRAFFIC AND PEOPLE IN C++ (Yasin: "bring the
+  traffic and people here as completely cplus plus first, then we run the extensions on the phone"; "all of them must
+  fit into the new map flawlessly, improve the code whereevr you can ... everything must be in C PLUS PLUS").
+  STAGE 0 DONE: the inventory and plan, `docs/TRAFFIC_PEOPLE_PORT.md` (read it first). The old game's two plain C++
+  cores come over; its script layer (which still runs every tick) does not: it is written new in C++ for this map
+  (own threads, cars as batches, a spawn ring that moves with speed, one walker system). The new map must get its own
+  lane graph, pavements, crossings and signal plan, made by a C++ tool from the locked skeleton and checked against
+  the baked ground. The module's binaries and its `.gdextension` file stay OUT of git (built by `native/build.sh`), so
+  cloud sessions never load it. YASIN ANSWERED the talking question (19 Nov): "does your work include every single
+  one of npc related systems right? npcs meeting, ractions, city life, speaking to them etc": ALL of it is in the
+  job, in C++ (reactions and city life = stage 3c, speaking = stage 4; the voice clips that name OLD places need new
+  recordings once the new map's place names are fixed). STAGE 1 DONE, PC and PHONE: `native/` builds the Windows dll
+  and the Android .so in under a minute (`bash native/build.sh`; `phone_rig.sh export` runs it), the rig prints
+  `RIG native coronado_city ...` on both; phone run `review/phone/native1_stream.txt`: STREAM HEALTH PASS, engine
+  `coronado_all7`; lock test RESULT PASS. Baseline for what comes next (same run): draws 79-82 average, 198 worst,
+  GPU 13.5 ms. PARKED CARS ARE IN (Yasin 19 Nov: "tell it to bring parked cars to the game", "i think the traffic code
+  needs to know about the parked cars locations right?"): doc section 14. The bake carries 4,524 stalls (3,008 at
+  the kerb, 1,516 in car parks); parked and moving cars are one pool; driveways are NOT recorded by the pieces, so
+  only kerb stalls take part in traffic until they are (a note, nothing changed). NEXT: stage 2a, the lane graph of
+  the new streets (`StreetGraph`, with the stalls, checked against the baked ground).
 - 18 Nov (cloud, branch `claude/grow-industrial`): INDUSTRIAL GROWTH, stage 1 + 2 done, NOTHING LOCKED, WAITING for
   Yasin's word on the variants. Read `review/grow_ind/README.md`. Three variants (A port, B fleet, C cold chain),
   each dressed twice = six 100 m blocks round the sample. They form the pilot area u -900..-500, v -1600..-1400
