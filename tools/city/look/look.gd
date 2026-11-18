@@ -14,6 +14,8 @@ extends Node
 ##    tonemap curve, then ONE read of a 16 x 16 x 16 colour table (12 KB, built at start) per screen pixel.
 ##  - LAMP GLOW (glow.gdshader, look job 3): the same quads as before, a few more arithmetic steps, no texture read;
 ##    halos 1.8 x wider (small quads), pools 0.85 x (the big overlapping ones: fewer pixels than before).
+##  - BLOB SHADOWS (blob_shadows.gd + blob.gdshader, look job 4, OFF by default): one draw a cell, only beyond ~40 m,
+##    a multiply blend of small far quads, no texture read.
 ##  - BLOOM: only with --bloom=1 (off by default): a blur chain at 1/4 .. 1/16 size plus one read per pixel. Measure
 ##    it on the phone before it is kept (Yasin 18 Nov: "does the bloom cost that much?").
 ##  - NOT used, on purpose: SSAO, SSR, volumetric fog, depth of field.
@@ -21,6 +23,7 @@ extends Node
 
 const SKY_SHADER_PATH := "res://tools/city/look/sky.gdshader"
 const NOISE_PATH := "res://tools/city/look/sky_noise.png"
+const Blobs := preload("res://tools/city/look/blob_shadows.gd")
 
 ## Day and night. `set_night(v)` blends the two (v 0..1), so a dusk in between works too.
 ## The target (Yasin 18 Nov): "a gta 4 like look": smoggy air, a pale washed sky, warm yellow-brown light, soft
@@ -88,6 +91,7 @@ static var PRESETS := {
 @export var shadow_distance := 50.0                 ## the game's sun shadow distance (unchanged)
 @export var bloom := false                          ## glow round bright things (GTA 4 has it). COSTS PIXELS: off by default, see docs/LOOK_SKY.md
 @export var glow := true                            ## lamp halos and pools drawn by tools/city/look/glow.gdshader (look job 3); false = the bake's
+@export var blobs := false                          ## soft tree shadows beyond the sun shadow (look job 4). Reads each cell's meshes: off for phone drives
 @export_range(0.0, 1.0) var grade := 1.0           ## strength of the colour grade (the lookup table); 0 = none
 
 var env: Environment
@@ -129,13 +133,17 @@ func _ready() -> void:
 ## comes in (two shared materials, nothing per frame; the bake's energy per kind is kept).
 var _glow_mats := {}
 func attach_stream(st: Node) -> void:
-	if not glow: return
+	if not glow and not blobs: return
 	st.cell_in.connect(func(k: String) -> void: _restyle(st.cells[k].node))
 	for k: String in st.cells:
 		if st.cells[k].state == st.IN: _restyle(st.cells[k].node)
 
 func _restyle(cell: Node) -> void:
 	if cell == null: return
+	if blobs and cell.get_node_or_null("look_blobs") == null:
+		var b := Blobs.build(cell)
+		if b: cell.add_child(b)
+	if not glow: return
 	for nm: String in ["glow_halo", "glow_pool"]:
 		var g := cell.get_node_or_null(nm) as GeometryInstance3D
 		if g == null: continue
@@ -218,3 +226,7 @@ func _apply(t: Dictionary) -> void:
 	sky_mat.set_shader_parameter(&"sun_col", sun.light_color)
 	sky_mat.set_shader_parameter(&"sun_dir", Basis.from_euler(sun.rotation).z)      # towards the light (its +Z)
 	sky_mat.set_shader_parameter(&"sun_scatter", sun.light_energy * env.fog_sun_scatter)      # the fog's own sun glow, so sky and fog agree
+	var bm := Blobs.material()      # the blob shadows follow the sun: where it stands, how strong (none at night)
+	bm.set_shader_parameter(&"sun_dir", Basis.from_euler(sun.rotation).z)
+	bm.set_shader_parameter(&"strength", 0.5 * clampf(sun.light_energy / 1.55, 0.0, 1.0) * (1.0 - float(t.get("lights", night))))
+	bm.set_shader_parameter(&"haze", env.fog_density)
