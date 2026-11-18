@@ -51,6 +51,26 @@
    "w": 5.7
   },
   {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v1_j4nw_trade_corner_0.scn",
+   "id": "g_grt_v1_j4nw_trade_corner_0",
+   "kind": "cash",
+   "lights": 4,
+   "name": "Envios Rapidos",
+   "props": 18,
+   "w": 5.7
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v1_j4nw_trade_corner_1.scn",
+   "id": "g_grt_v1_j4nw_trade_corner_1",
+   "kind": "parts",
+   "lights": 4,
+   "name": "Junction Auto Glass",
+   "props": 19,
+   "w": 5.7
+  },
+  {
    "d": 15.05,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v2_g4nw_corner_block_0.scn",
    "id": "g_grt_v2_g4nw_corner_block_0",
@@ -151,6 +171,66 @@
    "w": 11.4
   },
   {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v2_j4sw_corner_block_0.scn",
+   "id": "g_grt_v2_j4sw_corner_block_0",
+   "kind": "takeout",
+   "lights": 5,
+   "name": "Pupuseria Lupita",
+   "props": 20,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v2_j4sw_corner_block_1.scn",
+   "id": "g_grt_v2_j4sw_corner_block_1",
+   "kind": "cash",
+   "lights": 5,
+   "name": "Envios y Cambio",
+   "props": 18,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v2_j4sw_corner_next_0.scn",
+   "id": "g_grt_v2_j4sw_corner_next_0",
+   "kind": "panaderia",
+   "lights": 5,
+   "name": "Panaderia La Esquina",
+   "props": 18,
+   "w": 8.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v2_j4sw_row3_0.scn",
+   "id": "g_grt_v2_j4sw_row3_0",
+   "kind": "phones",
+   "lights": 4,
+   "name": "Cell Fix & Unlock",
+   "props": 18,
+   "w": 10.3
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v2_j4sw_row3_1.scn",
+   "id": "g_grt_v2_j4sw_row3_1",
+   "kind": "thrift",
+   "lights": 5,
+   "name": "Mercado de Pulgas",
+   "props": 20,
+   "w": 7.1
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v2_j4sw_laundry_b_0.scn",
+   "id": "g_grt_v2_j4sw_laundry_b_0",
+   "kind": "laundry",
+   "lights": 4,
+   "name": "Lavanderia Sol",
+   "props": 39,
+   "w": 11.4
+  },
+  {
    "d": 13.1,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v2_j5ne_corner_block_0.scn",
    "id": "g_grt_v2_j5ne_corner_block_0",
@@ -231,6 +311,26 @@
    "w": 5.7
   },
   {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v3_j5nw_corner_shop_0.scn",
+   "id": "g_grt_v3_j5nw_corner_shop_0",
+   "kind": "phones",
+   "lights": 4,
+   "name": "Phone Doctor",
+   "props": 15,
+   "w": 5.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v3_j5nw_shop_two_0.scn",
+   "id": "g_grt_v3_j5nw_shop_two_0",
+   "kind": "laundry",
+   "lights": 4,
+   "name": "Lavanderia Luz",
+   "props": 39,
+   "w": 11.4
+  },
+  {
    "d": 11.1,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v3_j5se_corner_shop_0.scn",
    "id": "g_grt_v3_j5se_corner_shop_0",
@@ -249,6 +349,26 @@
    "name": "Spin Cycle",
    "props": 23,
    "w": 7.1
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v3_j5sw_corner_shop_0.scn",
+   "id": "g_grt_v3_j5sw_corner_shop_0",
+   "kind": "takeout",
+   "lights": 4,
+   "name": "Late Night Noodles",
+   "props": 8,
+   "w": 2.64
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v3_j5sw_corner_shop_1.scn",
+   "id": "g_grt_v3_j5sw_corner_shop_1",
+   "kind": "pawn",
+   "lights": 5,
+   "name": "Textbook Pawn & Loan",
+   "props": 22,
+   "w": 8.76
   }
  ]
 }

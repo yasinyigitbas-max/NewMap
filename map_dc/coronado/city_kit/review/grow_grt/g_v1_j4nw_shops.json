@@ -1,0 +1,31 @@
+{
+ "piece": "g_v1_j4nw",
+ "shops": [
+  {
+   "door_index": 0,
+   "kind": "cash",
+   "label": "trade_corner",
+   "model": "ck/ck_svc_trade",
+   "name": "Envios Rapidos",
+   "pos": [
+    -816.5,
+    2.1499999910593,
+    -1222.79999923706
+   ],
+   "yaw": 0.0
+  },
+  {
+   "door_index": 1,
+   "kind": "parts",
+   "label": "trade_corner",
+   "model": "ck/ck_svc_trade",
+   "name": "Junction Auto Glass",
+   "pos": [
+    -816.5,
+    2.1499999910593,
+    -1222.79999923706
+   ],
+   "yaw": 0.0
+  }
+ ]
+}

@@ -46,17 +46,29 @@ SITES = [
      "J Ave x 5th, NE: 5th St shops facing the sample (bus route on 5th St)"),
     ("g_v3_j5se", J5, 1, 1, 9.2, 9.2, [], True, 6.0, "v3",
      "J Ave x 5th, SE: toward the campus (students live in the gritty edge, ZONING.md)"),
+    # 19 Nov, the rest of the zone (Yasin: "roll out to your whole zone"): the four quadrants between J Ave and the
+    # ring road (Alameda Blvd along the base fence). The ring's 4th St stub has no driveway aprons (road_rg _stub_art):
+    # lane V stays closed to 4th St there; 5th St's stub has its alley apron at 54-60.
+    ("g_v1_j4nw", J4, -1, -1, 9.2, 14.3, [], False, 2.0, "v1",
+     "J Ave x 4th, NW: backs onto the industrial sample's i_sw, the base fence beyond the ring: used cars and salvage"),
+    ("g_v2_j4sw", J4, -1, 1, 9.2, 14.3, [], False, 3.0, "v2",
+     "J Ave x 4th, SW: the 4th St shop front toward the ring"),
+    ("g_v3_j5nw", J5, -1, -1, 9.2, 9.2, [], True, 3.0, "v3",
+     "J Ave x 5th, NW: homes behind a phone shop and a laundromat"),
+    ("g_v3_j5sw", J5, -1, 1, 9.2, 9.2, [], True, 4.5, "v3",
+     "J Ave x 5th, SW: toward the campus: student rentals over a noodle bar"),
 ]
 
 
 def main():
     sites = []; rows = []
     for k, (piece, (u, v, pad), sx, sz, plu, plv, apr, lvo, centre, recipe, why) in enumerate(SITES):
+        if k >= 8: k = {8: 8, 9: 9, 10: 10, 11: 11}[k]      # the rollout sites' seeds pick their own versions
         sites.append({"piece": piece, "junction": [u, v], "pad": pad, "sx": sx, "sz": sz, "plu": plu, "plv": plv,
                       "apr": apr, "lane_v_open": lvo, "centre": centre, "recipe": recipe, "seed": k, "why": why,
                       "cells_uv": [[u + sx * 9.2, v + sz * 9.2], [u + sx * 100.0, v + sz * 100.0]]})
         rows.append({"piece": piece, "pos": [u, pad, v], "yaw": 0.0})
-    out = {"note": __doc__.strip().split("\n")[0], "area": "u -800..-500, v -1300..-900 (grid frame)",
+    out = {"note": __doc__.strip().split("\n")[0], "area": "pilot u -800..-500, v -1300..-900; zone rollout adds u -900..-800, v -1300..-900 (grid frame)",
            "sites": sites, "rows": rows}
     p = os.path.join(KIT, "review/grow_grt_blocks.json")
     json.dump(out, open(p, "w"), indent=1)

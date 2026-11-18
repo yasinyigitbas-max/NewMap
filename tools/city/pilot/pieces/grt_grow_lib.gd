@@ -190,6 +190,16 @@ static func wall_run(ctx: Dictionary, a: Vector2, b: Vector2, kind := "fence_stu
 ## a garage on a lane (rear of a house lot), door to the lane: face "+u" / "+v" toward the lane at 54 from inside
 static func garage(ctx: Dictionary, folder: String, s: float, face: String, label: String) -> Dictionary:
 	var st := K.building_stats(folder)
+	# never a lane's utility pole in front of the garage door: slide along the lane to a gap between the poles
+	for it in 8:
+		var hit := false
+		for pl: Array in ctx.poles:
+			var pp: Vector3 = pl[0]
+			var along := (pp.z * float(ctx.sz)) if face.ends_with("u") else (pp.x * float(ctx.sx))
+			var acr := (pp.x * float(ctx.sx)) if face.ends_with("u") else (pp.z * float(ctx.sz))
+			if absf(acr - AL0) < 1.5 and absf(along - s) < float(st.footprint_wd[0]) * 0.5 + 1.0: hit = true
+		if not hit: break
+		s += 2.5
 	var d: float = st.footprint_wd[1]
 	var across := AL0 - 0.6 - d * 0.5
 	var b: Dictionary = A.place(ctx.bl, ctx.sx, ctx.sz, folder, s if face.ends_with("v") else across, across if face.ends_with("v") else s, face, label, WEAR)
@@ -585,6 +595,9 @@ static func _prune(ctx: Dictionary, base_mat := "grass") -> void:
 			var up := mounted or t.origin.y - 0.15 > 1.2
 			items.append([rank + (4 if up else 0), k, i, Vector2(t.origin.x, t.origin.z), Vector2(fw, fd) * 0.5, atan2(t.basis.z.x, t.basis.z.z), t.origin.y, up])
 	items.sort_custom(func(a: Array, b: Array) -> bool: return int(a[0]) < int(b[0]))
+	var bound := func(p: Vector2, h: Vector2) -> bool:      # loose things keep 0.5 m inside the block's edges (the neighbour's wall is there)
+		var u := p.x * float(ctx.sx); var v := p.y * float(ctx.sz); var r := h.length()
+		return u - r >= float(ctx.plu) and v - r >= float(ctx.plv) and u + r <= LEN - 0.5 and v + r <= LEN - 0.5
 	var boxes: Array = []
 	for b: Dictionary in ctx.blds:
 		var n: Node3D = b.node
@@ -597,6 +610,7 @@ static func _prune(ctx: Dictionary, base_mat := "grass") -> void:
 		if int(it[0]) == 1:
 			var m := _mat_at(ctx, (it[3] as Vector2).x, (it[3] as Vector2).y, base_mat)
 			if not (m in ["grass", "mulch", "gravel"]): ok = false
+		if ok and int(it[0]) >= 2 and not bool(it[7]) and not bound.call(it[3], it[4]): ok = false
 		if ok and not bool(it[7]):
 			for bx: Array in boxes:
 				if _hit(it[3], it[4], it[5], bx[0], bx[1], bx[2]): ok = false; break

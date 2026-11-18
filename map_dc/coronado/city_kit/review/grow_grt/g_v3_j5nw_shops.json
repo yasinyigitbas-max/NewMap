@@ -1,0 +1,31 @@
+{
+ "piece": "g_v3_j5nw",
+ "shops": [
+  {
+   "door_index": 0,
+   "kind": "phones",
+   "label": "corner_shop",
+   "model": "commercial/com_realty",
+   "name": "Phone Doctor",
+   "pos": [
+    -813.199999809265,
+    4.14983989298344,
+    -1018.70000076294
+   ],
+   "yaw": 0.0
+  },
+  {
+   "door_index": 0,
+   "kind": "laundry",
+   "label": "shop_two",
+   "model": "ck/ck_svc_trade_1d",
+   "name": "Lavanderia Luz",
+   "pos": [
+    -822.799999237061,
+    4.14952218532562,
+    -1017.70000076294
+   ],
+   "yaw": 0.0
+  }
+ ]
+}

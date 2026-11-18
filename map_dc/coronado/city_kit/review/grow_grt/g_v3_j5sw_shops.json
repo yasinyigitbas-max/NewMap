@@ -1,0 +1,31 @@
+{
+ "piece": "g_v3_j5sw",
+ "shops": [
+  {
+   "door_index": 0,
+   "kind": "takeout",
+   "label": "corner_shop",
+   "model": "ck/mod_fastfood",
+   "name": "Late Night Noodles",
+   "pos": [
+    -816.200000762939,
+    4.15091450512409,
+    -982.299999237061
+   ],
+   "yaw": 180.000005008956
+  },
+  {
+   "door_index": 1,
+   "kind": "pawn",
+   "label": "corner_shop",
+   "model": "ck/mod_fastfood",
+   "name": "Textbook Pawn & Loan",
+   "pos": [
+    -816.200000762939,
+    4.15091450512409,
+    -982.299999237061
+   ],
+   "yaw": 180.000005008956
+  }
+ ]
+}

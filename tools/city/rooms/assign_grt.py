@@ -20,7 +20,7 @@ from assign_all import bays     # the bay split between doors (same rule as ever
 STYLE = {"pawn": ("sun", "Overpass"), "cash": ("sun", "Overpass"), "liquor": ("red", "Overpass"), "bodega": ("red", "Nunito"),
          "diner": ("cream", "Nunito"), "takeout": ("red", "Nunito"), "bar": ("black", "Nunito"), "laundry": ("teal", "Overpass"),
          "barber": ("navy", "Nunito"), "tattoo": ("black", "Overpass"), "thrift": ("cream", "Nunito"), "botanica": ("green", "Nunito"),
-         "tyres": ("sun", "Overpass"), "parts": ("navy", "Overpass")}
+         "tyres": ("sun", "Overpass"), "parts": ("navy", "Overpass"), "panaderia": ("cream", "Nunito"), "phones": ("teal", "Overpass")}
 
 
 def main():

@@ -77,12 +77,16 @@ static func _v1(ctx: Dictionary) -> void:
 	var rr: RandomNumberGenerator = ctx.rr; var props: K.Props = ctx.props; var dec: K.Decals = ctx.dec; var paints: Array = ctx.paints
 	var seed := int(ctx.site.seed)
 	# ---- A: the trade corner on 4th St, its customers' lot behind, the last cottage on the Ave
-	var names: Array = [["Rim & Tire", "Quik Check Cash"], ["Brake Masters Used Parts", "Payday Loans 4U"]][(seed / 2) % 2]
+	var names: Array = [["Rim & Tire", "Quik Check Cash"], ["Brake Masters Used Parts", "Payday Loans 4U"], ["Junction Auto Glass", "Envios Rapidos"]][mini(seed / 2, 2) if seed != 8 else 2]
 	var tr := GL.shop(ctx, "ck/ck_svc_trade", 16.5, "-v", "trade_corner", ["cash", "none"], [[0, "cash", names[1]], [1, "parts", names[0]]])
 	GL.roof(ctx, tr, 4); GL.downspouts(ctx, tr)
 	var nx := 16.5 + 6.0 + 1.0
-	var gs := GL.shop(ctx, "commercial/com_gas_station", nx + 5.0, "-v", "old_station", ["dead"], [])     # the old filling station: pumps gone, boarded
-	GL.roof(ctx, gs, 2)
+	if seed == 8:      # by the base fence: a boarded pair where the station would be (no third dead station on 4th St)
+		var bp := GL.shop(ctx, "ck/ck_grt_row2", nx + 6.0, "-v", "boarded_pair", ["dead"], [])
+		GL.roof(ctx, bp, 2)
+	else:
+		var gs := GL.shop(ctx, "commercial/com_gas_station", nx + 5.0, "-v", "old_station", ["dead"], [])     # the old filling station: pumps gone, boarded
+		GL.roof(ctx, gs, 2)
 	paints.append(A.rect(sx, sz, GL.FORE + 9.2, L + GL.FORE + 12.5, 54.0, 54.0, "asphalt"))
 	A.pad(paints, ctx.stalls, dec, rr, sx, sz, true, 24.0, 53.0, GL.AL0, -1.0)
 	I.yard_wear(dec, rr, sx, sz, 12.0, L + 16.0, 54.0, 54.0, 1.3)
@@ -92,7 +96,19 @@ static func _v1(ctx: Dictionary) -> void:
 	var fvv := A.face_dir(sx, sz, "-v")       # the billboard over the dead station faces 4th St: the only rent the lot still earns
 	I.add(props, "prop_billboard", "worn", A.q(sx, sz, 41.0, L + 3.2), rad_to_deg(atan2(fvv.x, fvv.y)))
 	# ---- B: the hand car wash (or a tyre shop) on 4th St, entered from the apron next to the lane mouth
-	if seed == 0:
+	if seed == 8:
+		# a used-car lot on 4th St: cars nose to the street behind a row of concrete bollards (no fence on the street:
+		# see the fencing rule), the salesman's kiosk office, a pennant of lot lights; in and out from lane V
+		paints.append(A.rect(sx, sz, 60.0, L, 100.0, 54.0, "asphalt"))
+		SL.stalls_u(paints, ctx.stalls, sx, sz, 62.0, 13, L + 2.4, 1.0)
+		SL.stalls_u(paints, ctx.stalls, sx, sz, 62.0, 13, L + 21.0, -1.0)
+		SL.stalls_u(paints, ctx.stalls, sx, sz, 62.0, 13, L + 24.5, 1.0)
+		for k8 in 14: I.add(props, "prop_bollard_concrete", "worn", A.q(sx, sz, 61.0 + k8 * 2.8, L + 1.0), 0.0)
+		GL.work(ctx, "commercial/com_kiosk", 97.0, 49.0, "-u", "car_lot_office")
+		SL.lot_light(props, sx, sz, 61.0, L + 12.0); SL.lot_light(props, sx, sz, 99.0, L + 12.0)
+		I.add(props, "prop_pylon_sign", "worn", A.q(sx, sz, 60.6, L + 1.6), 0.0)
+		SL.stall_wear(dec, rr, ctx.stalls.slice(ctx.stalls.size() - 39), 0.5)
+	elif seed == 0:
 		var cw := GL.work(ctx, "services/svc_carwash", 81.0, L + GL.FORE + 8.0, "-v", "hand_car_wash")
 		GL.roof(ctx, cw, 2)
 		paints.append(A.rect(sx, sz, 66.5, L, 98.0, L + GL.FORE + 0.05, "concrete"))
@@ -118,7 +134,10 @@ static func _v1(ctx: Dictionary) -> void:
 	_row_u(ctx, 61.5, 99.0, hs, 1.6)
 	for k5 in 4: GL.garage(ctx, ["garages/single_stucco_flat", "garages/single_stucco_clay"][(k5 + seed) % 2], 64.0 + k5 * 9.0, "+u", "garage_%d" % k5)
 	# ---- D: the contractor's yard (warehouse to the lane, open yard behind, fenced on the lane sides only)
-	if seed == 0:
+	if seed == 8:      # the auto salvage behind the car lot: what the lot cannot sell
+		G.lot(ctx, "scrap", 62.0, 62.0, 98.0, 98.0, "u0")
+		paints.append(A.rect(sx, sz, 60.0, 76.0, 62.0, 84.0, "asphalt"))
+	elif seed == 0:
 		var wh := GL.work(ctx, "industrial/ind_warehouse", 80.0, GL.AL1 + 0.8 + 12.0, "-v", "contractor_shed")
 		GL.roof(ctx, wh, 3)
 		I.containers(props, sx, sz, 64.0, 90.0, 2, false, rr, 1)
@@ -139,9 +158,10 @@ static func _v1(ctx: Dictionary) -> void:
 		I.yard_wear(dec, rr, sx, sz, 61.0, 86.0, 99.0, 99.0, 1.2)
 	# the yard's fence: chain-link along the two lanes, ONE rolling gate on lane V; the inner edges stay open (the
 	# neighbouring yards / the industrial sample close them), so no fence stands in front of another
-	I.lot_fence(props, Vector2(sx * 61.0, sz * 61.0), Vector2(sx * 61.0, sz * 78.0), true)
-	I.lot_fence(props, Vector2(sx * 61.0, sz * 84.0), Vector2(sx * 61.0, sz * 99.0), true)
-	I.add(props, "fence_gate_rolling_chainlink", "rusty", A.q(sx, sz, 61.4, 87.0), 0.0)
+	if seed != 8:      # (the salvage yard has its own ring of fence: never a second one in front of it)
+		I.lot_fence(props, Vector2(sx * 61.0, sz * 61.0), Vector2(sx * 61.0, sz * 78.0), true)
+		I.lot_fence(props, Vector2(sx * 61.0, sz * 84.0), Vector2(sx * 61.0, sz * 99.0), true)
+		I.add(props, "fence_gate_rolling_chainlink", "rusty", A.q(sx, sz, 61.4, 87.0), 0.0)
 	_drives(ctx)
 	GL.done(ctx, "gravel", true)
 
@@ -165,6 +185,10 @@ static func _v2(ctx: Dictionary) -> void:
 			"b": [["urban/urb_brick_row", "shop", "brick_row", [["dead", "laundry", "none"], [[1, "laundry", "Bubbles Coin Wash"], [2, "thrift", "Junk & Treasures"]]]],
 				["ck/ck_grt_row2", "shop", "boarded", [["dead"], []]]]},
 	}
+	sets[9] = {"corner": "commercial/com_orange_corner", "cn": [[0, "takeout", "Pupuseria Lupita"], [1, "cash", "Envios y Cambio"]], "ck": ["diner", "cash"],
+		"a2": ["commercial/com_bakery", ["diner"], [[0, "panaderia", "Panaderia La Esquina"]]],
+		"b": [["ck/ck_grt_row3", "shop", "row3", [["none", "dead", "none"], [[0, "phones", "Cell Fix & Unlock"], [1, "thrift", "Mercado de Pulgas"]]]],
+			["ck/ck_svc_trade_1d", "shop", "laundry_b", [["laundry"], [[0, "laundry", "Lavanderia Sol"]]]]]}
 	var cfg: Dictionary = sets.get(seed, sets[3])
 	# ---- A: the corner block (shops under flats) and the next business on 4th / 5th St, the service yard behind
 	var cf := String(cfg.corner)
@@ -192,7 +216,7 @@ static func _v2(ctx: Dictionary) -> void:
 	if seed % 2 == 1: walkups = [walkups[1], walkups[0], ["ck/ck_apt3_row3", "home", "walkup_c2", 2.5]]
 	_row_u(ctx, 61.0, 99.5, walkups, 0.8)
 	# ---- D: the inside of the block
-	match {1: 1, 3: 2, 6: 0}.get(seed, 0):
+	match {1: 1, 3: 2, 6: 0, 9: 0}.get(seed, 0):
 		0:   # a vacant lot the owner fenced and forgot: gravel, self-seeded agaves, dumped stuff (ONE gate on the lane)
 			G.lot(ctx, "vacant", 62.0, 62.0, 98.0, 98.0, "v0")
 			paints.append(A.rect(sx, sz, 76.0, 60.0, 84.0, 62.0, "asphalt"))
@@ -230,6 +254,10 @@ static func _v3(ctx: Dictionary) -> void:
 		7: {"shop": ["ck/ck_grt_row3", ["diner", "none", "laundry"], [[0, "diner", "Campus Grill"], [1, "laundry", "Spin Cycle"]]], "shop2": ["", [], []],
 			"b": ["apartments/apt_court_white", "ck/ck_apt3_row3"], "ding": "apartments/apt_dingbat_teal", "court": "apartments/apt_garden_cream"},
 	}
+	sets[10] = {"shop": ["commercial/com_realty", ["none"], [[0, "phones", "Phone Doctor"]]], "shop2": ["ck/ck_svc_trade_1d", ["laundry"], [[0, "laundry", "Lavanderia Luz"]]],
+		"b": ["ck/ck_apt3_row2", "apartments/apt_spanish_revival"], "ding": "apartments/apt_dingbat_pink", "court": "ck/ck_apt3_row3"}
+	sets[11] = {"shop": ["ck/mod_fastfood", ["diner", "cash"], [[0, "takeout", "Late Night Noodles"], [1, "pawn", "Textbook Pawn & Loan"]]], "shop2": ["", [], []],
+		"b": ["apartments/apt_court_white", "apartments/apt_townhouse_modern"], "ding": "apartments/apt_dingbat_teal", "court": "apartments/apt_stucco3_peach"}
 	var cfg: Dictionary = sets.get(seed, sets[4])
 	# ---- A: the corner shop (and a laundromat) on the numbered street, homes behind on the Ave
 	var s1: Array = cfg.shop
@@ -251,6 +279,7 @@ static func _v3(ctx: Dictionary) -> void:
 	var hs: Array = [["houses/narrow_cottage_stucco_clay", "home", "house_c0", 3.0], ["houses/narrow_2sty_siding", "home", "house_c1", 3.0],
 		["ck/ck_apt3_row2", "home", "walkup_c", 2.5], ["houses/narrow_cottage_siding", "home", "house_c2", 3.0]]
 	if seed == 5: hs = [["ck/ck_brk3_row2", "home", "walkup_c0", 1.5], ["apartments/apt_garden_mint", "home", "garden_apts", 3.0], ["houses/mcm_shed", "home", "house_c1", 3.0]]
+	if seed == 11: hs = [["houses/narrow_2sty_siding", "home", "rental_c0", 3.0], ["ck/ck_brk3_row2", "home", "walkup_c0", 1.5], ["houses/ranch_siding", "home", "rental_c1", 3.0], ["houses/narrow_cottage_stucco_clay", "home", "rental_c2", 3.0]]
 	if seed == 7: hs = [["houses/ranch_siding", "home", "rental_c0", 3.0], ["houses/narrow_2sty_stucco_clay", "home", "rental_c1", 3.0], ["ck/ck_apt3_row3", "home", "student_row", 2.5], ["houses/narrow_cottage_siding", "home", "rental_c2", 3.0]]
 	_row_u(ctx, 61.0, 99.5, hs, 1.4)
 	for k in 3: GL.garage(ctx, ["garages/single_stucco_clay", "garages/single_stucco_flat"][(k + seed) % 2], 66.0 + k * 10.0, "+u", "garage_%d" % k)

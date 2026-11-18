@@ -1,6 +1,6 @@
 {
  "note": "Gritty edge growth (18 Nov, claude/grow-gritty): the pilot area's block sites -> map_dc/coronado/city_kit/review/grow_grt_blocks.json.",
- "area": "u -800..-500, v -1300..-900 (grid frame)",
+ "area": "pilot u -800..-500, v -1300..-900; zone rollout adds u -900..-800, v -1300..-900 (grid frame)",
  "sites": [
   {
    "piece": "g_v1_j4ne",
@@ -240,6 +240,118 @@
      -900.0
     ]
    ]
+  },
+  {
+   "piece": "g_v1_j4nw",
+   "junction": [
+    -800.0,
+    -1200.0
+   ],
+   "pad": 2.0,
+   "sx": -1,
+   "sz": -1,
+   "plu": 9.2,
+   "plv": 14.3,
+   "apr": [],
+   "lane_v_open": false,
+   "centre": 2.0,
+   "recipe": "v1",
+   "seed": 8,
+   "why": "J Ave x 4th, NW: backs onto the industrial sample's i_sw, the base fence beyond the ring: used cars and salvage",
+   "cells_uv": [
+    [
+     -809.2,
+     -1209.2
+    ],
+    [
+     -900.0,
+     -1300.0
+    ]
+   ]
+  },
+  {
+   "piece": "g_v2_j4sw",
+   "junction": [
+    -800.0,
+    -1200.0
+   ],
+   "pad": 2.0,
+   "sx": -1,
+   "sz": 1,
+   "plu": 9.2,
+   "plv": 14.3,
+   "apr": [],
+   "lane_v_open": false,
+   "centre": 3.0,
+   "recipe": "v2",
+   "seed": 9,
+   "why": "J Ave x 4th, SW: the 4th St shop front toward the ring",
+   "cells_uv": [
+    [
+     -809.2,
+     -1190.8
+    ],
+    [
+     -900.0,
+     -1100.0
+    ]
+   ]
+  },
+  {
+   "piece": "g_v3_j5nw",
+   "junction": [
+    -800.0,
+    -1000.0
+   ],
+   "pad": 4.0,
+   "sx": -1,
+   "sz": -1,
+   "plu": 9.2,
+   "plv": 9.2,
+   "apr": [],
+   "lane_v_open": true,
+   "centre": 3.0,
+   "recipe": "v3",
+   "seed": 10,
+   "why": "J Ave x 5th, NW: homes behind a phone shop and a laundromat",
+   "cells_uv": [
+    [
+     -809.2,
+     -1009.2
+    ],
+    [
+     -900.0,
+     -1100.0
+    ]
+   ]
+  },
+  {
+   "piece": "g_v3_j5sw",
+   "junction": [
+    -800.0,
+    -1000.0
+   ],
+   "pad": 4.0,
+   "sx": -1,
+   "sz": 1,
+   "plu": 9.2,
+   "plv": 9.2,
+   "apr": [],
+   "lane_v_open": true,
+   "centre": 4.5,
+   "recipe": "v3",
+   "seed": 11,
+   "why": "J Ave x 5th, SW: toward the campus: student rentals over a noodle bar",
+   "cells_uv": [
+    [
+     -809.2,
+     -990.8
+    ],
+    [
+     -900.0,
+     -900.0
+    ]
+   ]
   }
  ],
  "rows": [
@@ -308,6 +420,42 @@
   },
   {
    "piece": "g_v3_j5se",
+   "pos": [
+    -800.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "g_v1_j4nw",
+   "pos": [
+    -800.0,
+    2.0,
+    -1200.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "g_v2_j4sw",
+   "pos": [
+    -800.0,
+    2.0,
+    -1200.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "g_v3_j5nw",
+   "pos": [
+    -800.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "g_v3_j5sw",
    "pos": [
     -800.0,
     4.0,

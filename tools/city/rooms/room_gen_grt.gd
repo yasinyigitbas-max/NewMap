@@ -22,7 +22,7 @@ const KINDS := {
 	"cash": {"floor": "Carpet012", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["filing_cabinet", "filing_cabinet", "office_desk"], "board": false, "walls": ["waiting_bench", "brochure_rack"], "centre": "none", "window": "waiting", "back": "office", "frames": false},
 	"liquor": {"floor": "Tiles074", "light": "panel", "counter": ["checkout_counter"], "till": false, "behind": ["cigarette_cabinet", "wall_shelf", "cigarette_cabinet"], "board": false, "walls": ["drinks_fridge", "drinks_fridge", "grocery_shelf"], "centre": "rows", "window": "none", "back": "stock", "frames": false},
 	"bodega": {"floor": "Tiles141", "light": "panel", "counter": ["checkout_counter"], "till": false, "behind": ["cigarette_cabinet", "wall_shelf"], "board": false, "walls": ["grocery_shelf", "drinks_fridge", "grocery_shelf", "chest_freezer"], "centre": "rows", "window": "produce", "back": "stock", "frames": false},
-	"diner": {"floor": "Tiles143", "light": "pendant", "counter": ["bar_counter", "bar_counter"], "stools": true, "behind": ["soda_fountain", "espresso_machine", "bakery_shelf"], "board": true, "walls": ["booth"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": true, "mix": true},
+	"diner": {"floor": "Tiles143", "light": "pendant", "counter": ["bar_counter", "bar_counter"], "stools": true, "behind": ["soda_fountain", "espresso_machine", "wall_shelf"], "board": true, "walls": ["booth"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": true, "mix": true},
 	"takeout": {"floor": "Tiles074", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["soda_fountain", "kitchen_line"], "board": true, "walls": ["drinks_fridge", "booth"], "centre": "none", "window": "table2", "back": "kitchen", "frames": false, "mix": true},
 	"bar": {"floor": "WoodFloor051", "light": "pendant", "counter": ["bar_counter", "bar_counter"], "stools": true, "behind": ["wine_backbar", "drinks_fridge"], "board": false, "walls": ["booth"], "centre": "table2", "window": "table2", "back": "stock", "frames": true, "mix": true},
 	"laundry": {"floor": "Tiles143", "light": "panel", "counter": ["laundry_counter"], "till": false, "behind": ["garment_rail", "wall_shelf"], "board": false, "walls": ["washer", "washer", "dryer", "dryer"], "centre": "folding", "window": "waiting", "back": "none", "frames": false},
@@ -31,6 +31,8 @@ const KINDS := {
 	"thrift": {"floor": "WoodFloor034", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["wall_shelf", "bookcase"], "board": false, "walls": ["garment_rail", "bookcase", "shoe_wall", "bike_stand", "clothes_rack", "weight_bench"], "centre": "racks", "window": "mannequins", "back": "stock", "frames": false},
 	"botanica": {"floor": "Tiles074", "light": "panel", "counter": ["glass_display_case", "shop_counter"], "till": true, "behind": ["wall_shelf", "wall_shelf"], "board": false, "walls": ["wall_shelf", "bookcase"], "centre": "display", "window": "display", "back": "none", "frames": true},
 	"tyres": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["pegboard_wall", "wall_shelf"], "board": false, "walls": ["wall_shelf", "pegboard_wall", "workbench"], "centre": "none", "window": "waiting", "back": "none", "frames": false},
+	"panaderia": {"floor": "Tiles143", "light": "panel", "counter": ["pastry_case", "shop_counter"], "till": true, "behind": ["wall_shelf", "wall_shelf"], "board": true, "walls": ["wall_shelf", "drinks_fridge"], "centre": "none", "window": "display", "back": "kitchen", "frames": false},
+	"phones": {"floor": "Tiles074", "light": "panel", "counter": ["glass_display_case", "shop_counter"], "till": true, "behind": ["pegboard_wall", "wall_shelf"], "board": false, "walls": ["glass_display_case", "wall_shelf"], "centre": "none", "window": "waiting", "back": "none", "frames": false},
 	"parts": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["pegboard_wall", "wall_shelf", "wall_shelf"], "board": false, "walls": ["wall_shelf", "pegboard_wall", "wall_shelf"], "centre": "rows", "window": "display", "back": "stock", "frames": false},
 }
 const ALT_FLOOR := {"Tiles074": "Tiles143", "Tiles143": "Tiles141", "Tiles141": "Tiles074", "Carpet012": "Tiles012", "Concrete047A": "Tiles074", "WoodFloor034": "WoodFloor051", "WoodFloor051": "WoodFloor034", "Tiles012": "Tiles143"}
@@ -38,7 +40,7 @@ const WARM := ["bar", "diner"]
 const WALL_TINTS := [Color(0.86, 0.82, 0.7), Color(0.78, 0.8, 0.74), Color(0.84, 0.76, 0.66), Color(0.72, 0.78, 0.8), Color(0.88, 0.84, 0.76), Color(0.8, 0.72, 0.62)]
 const SHORT := {"pawn": "PAWN", "cash": "CHECKS CASHED", "liquor": "LIQUOR", "bodega": "MARKET", "diner": "DINER", "takeout": "TO GO",
 	"bar": "COCKTAILS", "laundry": "COIN LAUNDRY", "barber": "BARBER", "tattoo": "TATTOO", "thrift": "THRIFT", "botanica": "BOTANICA",
-	"tyres": "TIRES", "parts": "AUTO PARTS"}
+	"tyres": "TIRES", "parts": "AUTO PARTS", "panaderia": "PANADERIA", "phones": "PHONE REPAIR"}
 
 var foot := {}      # base -> Vector2(w, d)
 var tall := {}      # base -> height
@@ -133,7 +135,7 @@ func _group(items: Array, use_keep := true) -> bool:
 	occ.append([b[0], b[1], b[2], b[3], ht])
 	return true
 
-const FOOD := ["liquor", "bodega", "diner", "takeout", "bar"]
+const FOOD := ["liquor", "bodega", "diner", "takeout", "bar", "panaderia"]
 var cur_kind := ""
 var mix := false
 var _mixn := 0
@@ -253,6 +255,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	for p: String in K.behind:
 		var f := _fp(p, 0.0)
 		while bx + f.x <= cx + cw * 0.5 + 0.01:
+			if ZBp <= ZB + 0.01 and _over_opening("back", bx + f.x * 0.5, f.x * 0.5, float(tall.get("prop_" + p, 2.0))): bx += 0.25; continue
 			if _put(p, bx + f.x * 0.5, ZBp + f.y * 0.5 + 0.09, 0.0):
 				if float(tall.get("prop_" + p, 2.0)) < 1.5: low_x = bx + f.x * 0.5
 				bx += f.x + 0.05; break
@@ -315,8 +318,8 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 			for xx: float in _steps(X0 + 0.7, X1 - 0.7, 1.3): _put("mannequin", xx, wz - 0.35, 0.0)
 		"cases":
 			for xx: float in _steps(X0 + 0.9, X1 - 0.9, 2.0): _put("glass_display_case", xx, wz - 0.35, 180.0)
-		"waiting":
-			for xx: float in _steps(X0 + 1.0, X1 - 1.0, 2.4): _put("waiting_bench", xx, wz - 0.32, 180.0)
+		"waiting":     # clear of the corners: a side-wall seat must keep its leg room
+			for xx: float in _steps(X0 + 1.7, X1 - 1.7, 2.4): _put("waiting_bench", xx, wz - 0.32, 180.0)
 		"produce":
 			for xx: float in _steps(X0 + 1.0, X1 - 1.0, 2.3): _put("produce_stand", xx, wz - 0.4, 0.0)
 		"brochures":
@@ -540,3 +543,11 @@ func _wall_put(base: String, wall: String, s: float, x: float, z: float, yaw: fl
 	wall_items.append([wall, s - half, s + half, y0, y1, base in ["gallery_frame", "poster_case", "menu_board"]])
 	rr.prop(base, x, z, yaw, y0)
 	return true
+
+## true when an item of half width `half` and height `h` at `s` along the outer wall `wall` covers one of its openings
+## (a back door, a window: the room records them, the building's contract has them)
+func _over_opening(wall: String, s: float, half: float, h: float) -> bool:
+	for o: Dictionary in CON.get("openings", []):
+		if int(o.floor) != 0 or String(o.facade) != wall: continue
+		if absf(s - float(o.along)) < half + float(o.w) * 0.5 + 0.1 and float(o.y0) - F < h: return true
+	return false
