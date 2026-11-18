@@ -497,7 +497,7 @@ static func _polish(ctx: Dictionary) -> void:
 		for q: Vector2 in stall_pts:
 			if q.distance_to(p) < r + 3.2: return false
 		var u := p.x * sx; var v := p.y * sz
-		if u < float(ctx.plu) + 1.0 or v < float(ctx.plv) + 1.0 or u > LEN - 0.8 or v > LEN - 0.8: return false
+		if u < float(ctx.plu) + 0.5 or v < float(ctx.plv) + 0.5 or u > LEN - 0.8 or v > LEN - 0.8: return false
 		for b: Dictionary in ctx.blds:      # door steps stay free (2 m in front of every ground-floor door)
 			for e: Array in K.building_stats(String(b.folder)).get("doors_front", []):
 				var dp: Vector3 = (b.node as Node3D).transform * Vector3(float(e[1]), 0.0, float(b.d) * 0.5 + 1.0)
@@ -563,7 +563,63 @@ static func _polish(ctx: Dictionary) -> void:
 			var mm := _mat_at(ctx, jp.x, jp.z, "grass")
 			if mm == "grass": continue
 			I.add(props, ["prop_channelizer_drum", "prop_cone_28in", "prop_water_barrier_orange", "prop_shopping_cart", "prop_propane_cylinder_100lb", "prop_cone_18in"][rr.randi() % 6], ["dirty", "rusty"][rr.randi() % 2], jp, y2 + rr.randf_range(-30, 30))
+	# polish 2 (19 Nov, Yasin: "roll out to your whole zone, then do a polish pass"):
+	# - the lots are private: a tow-away sign at every way in (each lane mouth, each driveway apron), on the lot's corner
+	var ty := rad_to_deg(atan2(A.face_dir(sx, sz, "-v").x, A.face_dir(sx, sz, "-v").y))
+	var tu := rad_to_deg(atan2(A.face_dir(sx, sz, "-u").x, A.face_dir(sx, sz, "-u").y))
+	var mouths: Array = [[float(ctx.plu) + 0.7, AL0 - 1.2, tu], [float(ctx.plu) + 0.7, AL1 + 1.2, tu]]
+	if bool((ctx.site as Dictionary).lane_v_open): mouths += [[AL0 - 1.2, float(ctx.plv) + 0.7, ty], [AL1 + 1.2, float(ctx.plv) + 0.7, ty]]
+	for a2: float in ctx.apr:
+		if a2 - 4.5 < AL1 and a2 + 4.5 > AL0: continue
+		mouths.append([a2 - 4.3, float(ctx.plv) + 0.7, ty])
+	for mo: Array in mouths:
+		var mp := A.q(sx, sz, float(mo[0]), float(mo[1]))
+		if free.call(Vector2(mp.x, mp.z), 0.3): I.add(props, "prop_sign_no_parking", "worn", mp, float(mo[2]))
+	# - the corner shop's corner: the papers and the mailbox, where people stop on the way past
+	for e: Dictionary in ctx.shoplist:
+		if not (String(e.kind) in ["liquor", "bodega", "cash", "takeout", "diner"]): continue
+		var kit3 := ["prop_newspaper_box_red", "prop_newspaper_box_blue", "prop_usps_collection_box"]
+		var ki := 0; var sa := float(ctx.plu) + 1.6
+		while ki < 3 and sa < 40.0:       # along the forecourt edge from the corner, wherever the door steps leave room
+			var cp2 := A.q(sx, sz, sa, float(ctx.plv) + 0.7)
+			if free.call(Vector2(cp2.x, cp2.z), 0.4) and _clear_of(props, Vector2(cp2.x, cp2.z), 0.75):
+				I.add(props, kit3[ki], "worn", cp2, ty); ki += 1; sa += 0.75
+			else: sa += 0.5
+		break
+	# - laundromats: a bike rack along the front (people wait an hour with their bikes)
+	for b3: Dictionary in ctx.blds:
+		var lbl := String((b3.node as Node3D).name)
+		var is_l := false
+		for e3: Dictionary in ctx.shoplist:
+			if String(e3.label) == lbl and String(e3.kind) == "laundry": is_l = true
+		if not is_l: continue
+		for lx3: float in [float(b3.w) * 0.5 - 1.6, -float(b3.w) * 0.5 + 1.6, 0.0, float(b3.w) * 0.25, -float(b3.w) * 0.25]:
+			var rp := A.at(b3, lx3, float(b3.d) * 0.5 + 1.9)
+			if free.call(Vector2(rp.x, rp.z), 1.3) and _clear_of(props, Vector2(rp.x, rp.z), 1.6):
+				I.add(props, "prop_bike_rack", "worn", rp, rad_to_deg((b3.node as Node3D).rotation.y)); break
+	# - by the base fence an old boat on its trailer in a cottage's back yard (the navy town's fishermen)
+	if int((ctx.site as Dictionary).seed) == 8:
+		for b4: Dictionary in ctx.blds:
+			if String(b4.folder).begins_with("houses/"):
+				var done_b := false
+				for off: Vector2 in [Vector2(0, -4.5), Vector2(0, -7.0), Vector2(-1.5, -5.5), Vector2(1.5, -5.5), Vector2(0, -9.5)]:
+					var bp4 := A.at(b4, off.x, -float(b4.d) * 0.5 + off.y)
+					var clear4 := true
+					for k6: String in props.items:      # 3.6 m clear of everything (the trailer is 6.7 m long)
+						for t6: Transform3D in props.items[k6]:
+							if Vector2(t6.origin.x, t6.origin.z).distance_to(Vector2(bp4.x, bp4.z)) < 3.6: clear4 = false; break
+						if not clear4: break
+					if clear4 and free.call(Vector2(bp4.x, bp4.z), 2.5):
+						I.add(props, "prop_boat_trailer", "rusty", bp4, rad_to_deg((b4.node as Node3D).rotation.y) + 90.0); done_b = true; break
+				if done_b: break
 	print("GRT_POLISH %s: +%d props" % [ctx.name, props.count() - n0])
+
+## true when no prop stands within r of p (a quick spacing test before placing)
+static func _clear_of(props: K.Props, p: Vector2, r: float) -> bool:
+	for k: String in props.items:
+		for t: Transform3D in props.items[k]:
+			if Vector2(t.origin.x, t.origin.z).distance_to(p) < r and t.origin.y < 1.4: return false
+	return true
 
 ## the ground material at (x, z): the first paint that holds the point (painted_rect's rule), else the base
 static func _mat_at(ctx: Dictionary, x: float, z: float, base: String) -> String:
