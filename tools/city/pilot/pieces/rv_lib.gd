@@ -916,6 +916,11 @@ func clear_fences() -> void:
 			if ok:
 				for wq: Vector2 in walls:
 					if q.distance_to(wq) < r + 0.35: ok = false; break
+			# yard furniture never stands on a paved path or pad (the checker's "path" rule)
+			if ok and base in ["prop_clothesline", "prop_patio_set_4", "prop_garden_arbor", "prop_adirondack_wood", "prop_adirondack_white", "prop_bbq_kettle", "prop_bbq_gas_cart", "prop_swing_set", "prop_kayak_rack"]:
+				var lq := L2(q.x, q.y)
+				for pr: Array in paints:
+					if (String(pr[4]) == "concrete" or String(pr[4]) == "paving") and lq.x > float(pr[0]) - r * 0.5 and lq.x < float(pr[2]) + r * 0.5 and lq.y > float(pr[1]) - r * 0.5 and lq.y < float(pr[3]) + r * 0.5: ok = false; break
 			if ok: keep.append(t)
 		props.items[k] = keep
 
