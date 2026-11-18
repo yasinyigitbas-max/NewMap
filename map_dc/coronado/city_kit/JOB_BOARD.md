@@ -5,6 +5,14 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov ~17:15 (PC time): ZONES RUN on the Redmi (Yasin: "the test was mostly in empty ground ... make it
+  teleport between gritty, city center, waterfront etc"; "can you inject this run to the apk instead of rebuilding").
+  New plan `--plan=zones` in rig.gd (9 zones by day at 60 km/h, 7th St at 210, centre + gritty at night) and
+  `--drive=NAME/ROUTE/KMH/SECONDS/NIGHT` (own drives, no rebuild). Result `review/phone/zones1.txt`, table in
+  docs/RUNTIME_BAKE.md. 22,841 frames: 5 over 33 ms, 1 over 50 (93 ms, night centre, two cells loading at once), none
+  late. Day zones clean (worst 36 ms). Teleport 2.0-3.9 s, frames stutter while it loads (up to 245 ms). Night zones
+  at 60 fps or under. Memory 873 MB at 60 s (583 graphics): not understood. NEXT, if Yasin wants: the same run with
+  `--loading=1`. WAITING for Yasin as below.
 - 18 Nov ~17:00 (PC time): PHONE TEST DONE on the Redmi by the session on Yasin's PC (Yasin: "go ahead"). Result
   `review/phone/run1.txt`, full write-up in docs/RUNTIME_BAKE.md "The phone test". Clone is at C:\Users\yasin\NewMap.
   Numbers: by day median 8.6-10.1 ms (the 120 Hz cap), 99 % 19-27 ms; night centre median 16.8 ms; 18,681 frames,

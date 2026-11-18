@@ -122,6 +122,43 @@ Vsync could not be turned off on the phone ("V-Sync mode Disabled is not availab
   186-278 MB video. Start: first area 481 ms, warm-up 9.6 s; a far start made ready in 1.9-2.0 s by day, 3.6 s at night.
   Battery 26.9 -> 28.7 C. No `Shader cache miss`, no error in the log.
 
+SECOND RUN, THE POPULATED ZONES (`review/phone/zones1.txt`, commit ac5932a; Yasin: "the test was mostly in empty
+ground ... make it teleport between gritty, city center, waterfront etc"). Plan `zones` (`--plan=zones`): a teleport
+to each zone's sample junction, 25 s at 60 km/h on its own streets, far jumps on purpose; then 7th St through civic,
+centre and apartments at 210 km/h; then the centre and the gritty edge at night. Same phone, same settings.
+
+| Zone | median | 99 % | worst | over 33 / 50 ms | draws avg / max | triangles avg / max | teleport ready | worst frame while it loads |
+|---|---|---|---|---|---|---|---|---|
+| gritty edge | 8.9 ms | 19.2 | 21 | 0 / 0 | 98 / 129 | 490k / 721k | (start) | - |
+| city centre | 14.5 ms | 21.1 | 27 | 0 / 0 | 88 / 122 | 737k / 1,353k | 2.2 s | 245 ms |
+| waterfront | 10.4 ms | 19.3 | 36 | 1 / 0 | 89 / 123 | 601k / 820k | 2.7 s | 23 ms |
+| industrial | 10.3 ms | 19.2 | 22 | 0 / 0 | 87 / 119 | 394k / 530k | 2.0 s | 19 ms |
+| apartments | 15.8 ms | 22.0 | 29 | 0 / 0 | 121 / 189 | 815k / 1,220k | 3.9 s | 33 ms |
+| pilot (high street) | 12.3 ms | 20.0 | 32 | 0 / 0 | 89 / 120 | 517k / 775k | 2.8 s | 27 ms |
+| commercial strip | 10.6 ms | 19.4 | 32 | 0 / 0 | 75 / 103 | 446k / 672k | 2.3 s | 38 ms |
+| civic | 13.4 ms | 19.5 | 30 | 0 / 0 | 95 / 134 | 492k / 751k | 2.7 s | 19 ms |
+| stadium | 9.7 ms | 19.2 | 23 | 0 / 0 | 58 / 73 | 186k / 228k | 0.1 s (next door) | 18 ms |
+| 7th St at 210 km/h | 14.6 ms | 23.0 | 30 | 0 / 0 | 104 / 191 | 630k / 1,365k | 0.7 s | 60 ms |
+| centre at night | 16.4 ms | 25.8 | 93 | 3 / 1 | 103 / 138 | 742k / 1,355k | 0.8 s | 57 ms |
+| gritty edge at night | 16.8 ms | 26.1 | 39 | 1 / 0 | 113 / 141 | 496k / 721k | 3.1 s | 73 ms |
+
+- 22,841 frames in 295 s of driving: 5 over 33 ms, 1 over 50 ms, none over 100 ms. No cell late, none dropped.
+- By day, in the zones, nothing over 36 ms, the fast pass down 7th St included (21 cells in, 28 out).
+- The one real hitch: 93 ms at night in the centre while TWO cells were loading at once (`-1_-1`, `0_-1`). The 76 ms
+  frame of run1 was also with two cells loading. Worth one run with `--loading=1` (no rebuild) before building
+  cells in parts.
+- A teleport takes 2.0-3.9 s until the new zone is ready. The frames meanwhile (the player still looks at the old
+  place) stutter: 19-73 ms, once 245 ms. A fade or a held picture would hide it; nothing does so far.
+- Frame rate: the centre and the apartments run at about 65-70 fps by day (median 14.5-15.8 ms); at night the two
+  zones measured sit at 60 fps or under (median 16.4-16.8 ms, half the frames over 16.7 ms).
+- Draws stay inside 150 except the apartments (189 at the worst view) and the 7th St pass (191). Triangles are far
+  over the 300k gate in every zone but the stadium (Yasin: triangles are fine).
+- Memory at 60 s: 873 MB in all, 583 MB of it graphics (run1: 607 / 330). The engine's own count never passed 294 MB
+  video, so the rest is the driver's; taken once, right after the first teleport. Not understood yet: watch it.
+- Warm-up took 0.4 s (run1: 9.6 s): the phone kept the shaders from run1. Battery 26.8 -> 30.4 C.
+- The rig now takes drives of its own without a rebuild: `--drive=NAME/ROUTE/KMH/SECONDS/NIGHT` (Yasin: "inject
+  this run ... instead of rebuilding"). 3D is drawn at 1230x540 (scale 0.5); `--scale=1.0` for the full screen.
+
 What the first runs on Windows found (all fixed, in the script or the rig):
 - The export never returned: gradle's daemon outlives the build on Windows and holds the log open. Now run without it.
 - The template copy took the game's whole last build with it (1.6 GB): the editor scanned it and about 1,200 of the
@@ -181,8 +218,8 @@ Preview and measure: `tools/city/bake/rt_shots.gd` (`--cams`, `--probe --detail`
 - Whole-city bake and the game side (the game repo's streamer and global shader values).
 - Signals: the flaw above. Far buildings do not light their windows at night (the far atlas has no glow mask).
 - Far ground: beyond the loaded cells the game's terrain shows, not the roads.
-- Phone: one run only (run1, debug build, see "The phone test"). Not run: `--nowarm`, `--plan=speed`, `--loading=1`,
-  a release build, a second run to see how much the numbers move.
+- Phone: two runs (run1, zones1; debug build, see "The phone test"). Not run: `--loading=1` (the next one to do),
+  `--nowarm`, `--plan=speed`, `--scale=1.0`, a release build, a repeat to see how much the numbers move.
 
 ## Decisions for Yasin
 1. Roll the bake out to the whole city? (`--all`; a few minutes by my estimate, the sample area took 45 s.)
