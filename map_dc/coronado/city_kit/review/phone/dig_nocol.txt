@@ -1,0 +1,29 @@
+# phone rig run 'dig_nocol'  2026-11-18T21:44Z  args: --plan=stream --probe --colrange=0 --nocol
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 335 -> 337 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit 06c4cb8 | meminfo at 60 s:          Native Heap:   206832                         208032;            Graphics:   591560                         591560;           TOTAL PSS:   901758            TOTAL RSS:   992012       TOTAL SWAP PSS:      289;
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 look=1 bloom=0 upscale=0 sharp=0.20 reflect=1 plan=stream lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=141 tiers=false band=8.0 arrive=0.50 far_ground=true tier_materials=20
+RIG warmnight 244 ms
+RIG boot first_area_ms=363 warm_ms=760 (graphics memory reserve 192 MB: 28 ms) cells=12 static_mb=103 video_mb=229
+RIG drive loop_108kmh speed=108 km/h secs=60 frames=3844 fps=64.1 | frame_ms med=16.3 p95=23.9 p99=25.9 worst=29 | over16.7=42.5% over33=0 over50=0 over100=0
+RIG   map loop_108kmh draws avg=79 max=196 | tris avg=412k max=1124k | cells most=16 in=34 out=32 dropped=0 cap_hits=0 | gpu_ms med=13.59 p95=15.99
+RIG   stream loop_108kmh start_ready_ms=1 (worst frame meanwhile 0 ms) | request_to_in ms mean=154 worst=444 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.89, body 0.00 (), removal step 1.19 | bodies late=0
+RIG   slow loop_108kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision loop_108kmh made=0 units, a body waited at most 0 ms from coming into range | physics thread wait a frame (probe): median 0.4 p99 1.2 worst 1.9 ms
+RIG   objects loop_108kmh all=3174 nodes=776 orphan_nodes=0 resources=974 | streamer: cells in=14, bodies waiting=0, nodes leaving=0
+RIG   mem loop_108kmh static_mb=106 video_mb=275 tex_mb=114 buf_mb=134
+RIG drive loop_210kmh speed=209 km/h secs=55 frames=3240 fps=58.9 | frame_ms med=16.8 p95=24.3 p99=26.3 worst=31 | over16.7=51.0% over33=0 over50=0 over100=0
+RIG   map loop_210kmh draws avg=77 max=197 | tris avg=396k max=1133k | cells most=16 in=64 out=74 dropped=0 cap_hits=0 | gpu_ms med=13.52 p95=15.58
+RIG   stream loop_210kmh start_ready_ms=614 (worst frame meanwhile 34 ms) | request_to_in ms mean=181 worst=531 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.15, body 0.00 (), removal step 1.76 | bodies late=0
+RIG   slow loop_210kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision loop_210kmh made=0 units, a body waited at most 0 ms from coming into range | physics thread wait a frame (probe): median 0.4 p99 1.1 worst 2.0 ms
+RIG   objects loop_210kmh all=3701 nodes=1019 orphan_nodes=0 resources=1258 | streamer: cells in=16, bodies waiting=0, nodes leaving=0
+RIG   mem loop_210kmh static_mb=110 video_mb=292 tex_mb=114 buf_mb=147
+RIG drive loop_280kmh speed=281 km/h secs=40 frames=2366 fps=59.1 | frame_ms med=16.8 p95=24.2 p99=26.1 worst=31 | over16.7=51.2% over33=0 over50=0 over100=0
+RIG   map loop_280kmh draws avg=78 max=197 | tris avg=407k max=1133k | cells most=18 in=58 out=62 dropped=0 cap_hits=0 | gpu_ms med=13.48 p95=15.85
+RIG   stream loop_280kmh start_ready_ms=173 (worst frame meanwhile 24 ms) | request_to_in ms mean=166 worst=417 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.15, body 0.00 (), removal step 1.76 | bodies late=0
+RIG   slow loop_280kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision loop_280kmh made=0 units, a body waited at most 0 ms from coming into range | physics thread wait a frame (probe): median 0.4 p99 1.2 worst 2.4 ms
+RIG   objects loop_280kmh all=3811 nodes=916 orphan_nodes=35 resources=1399 | streamer: cells in=14, bodies waiting=0, nodes leaving=3
+RIG   mem loop_280kmh static_mb=112 video_mb=286 tex_mb=114 buf_mb=141
+RIG plan_done lap=1

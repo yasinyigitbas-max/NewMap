@@ -406,7 +406,8 @@ func _process_stream(t0: int) -> void:
 			var bms := (Time.get_ticks_usec() - tb) / 1000.0
 			if bms > float(stats.body_ms_worst): stats.body_ms_worst = bms; stats["body_worst_what"] = "%s shapes=%d new=%d" % [body.name, body.get_shape_owners().size(), cost]
 			stats.bodies += 1; stats["col_units"] = int(stats.get("col_units", 0)) + cost
-			stats["body_wait_ms_worst"] = maxi(int(stats.get("body_wait_ms_worst", 0)), Time.get_ticks_msec() - (int(e[5]) if int(e[5]) > 0 else int(e[4])))      # from coming into range (or its cell's arrival) to being in the world
+			if col_range <= 0.0 or int(e[5]) > 0:      # from coming into range (all of them: from its cell's arrival) to being in the world; one made in the background before it was needed did not wait
+				stats["body_wait_ms_worst"] = maxi(int(stats.get("body_wait_ms_worst", 0)), Time.get_ticks_msec() - (int(e[5]) if int(e[5]) > 0 else int(e[4])))
 		for e2: Array in _pending:      # a body still waiting with the player 40 m away would be a hole in the ground
 			if (e2[0] as Vector3).distance_to(focus) < 40.0: stats.body_late += 1; break
 	# cells on their way out: a part at a time inside the frame budget
