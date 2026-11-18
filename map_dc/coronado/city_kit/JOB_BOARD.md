@@ -5,6 +5,24 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov ~20:10 (PC time): STREAMING MADE HEALTHY ON THE PHONE (Yasin: "streaming is the backbone of this game, we
+  need it to work healthy agile and robust ... think that you are the streaming engineer in rockstar studios"; "do
+  whatever you need"). Full account: docs/RUNTIME_BAKE.md "The streamer on the phone". Six causes found and fixed one
+  by one, each proven on the Redmi: (1) a 7,000-25,000 triangle collision body per cell -> pieces of 400; (2) threaded
+  loading filled the engine's thread pool, which the physics step runs on -> the streamer's own loader threads;
+  (3) 600 small collision files a cell -> the data in the cell's file (`tools/city/bake/col_data.gd`: collision is
+  plain data, the streamer makes the bodies, by weight and by time a frame); (4) the first cell with a new kind of
+  material -> warmed and held, bake check line; (5) the driver fetching graphics memory at the first streamed cells ->
+  192 MB taken and given back in the warm-up; (6) too much body-making in one frame -> 2 ms a frame, shapes straight on
+  the body. Loop at 108 / 210 / 281 km/h, frames over 33 / 50 / 100 ms: 36 / 12 / 1 -> 1 / 0 / 0, no cell late.
+  Zones: 36 / 3 / 0 -> 6 / 1 / 0, teleports 1.0-5.5 s -> 0.6-2.7 s. NEW: `tools/city/rig/health.py` (the streaming
+  budget, PASS / FAIL after every run), plan `--plan=stream`, `--probe`, `--nocol`, `--hide`, `--loader=`,
+  `--coltris=`, `--colms=`, `--gpureserve=`; audit tools col_census.gd, cell_deps.gd, mat_census.gd. The bake now
+  writes 141 cells (ground pieces go to the cell they lie in), manifest version 6. Lock test RESULT PASS (19:00).
+  NOT DONE: tier fades and far roads (the visible pop, next streaming job); the 584 MB of graphics memory (probably
+  the driver's block size: an engine-build matter); a release build; repeats. Cloud sessions were given queues of
+  further look jobs (Yasin: "give them all the improvements lists and have them do them non stop"; "we already have
+  real indoor windows, and id like to keep them, in the shops on water front": told the buildings session).
 - 18 Nov ~18:40 (PC time): LOOK PACK IN TWO CLOUD SESSIONS (Yasin: "do them on cloud sessions"): "Look pack: sky, haze
   and colour" -> branch `claude/look-sky` (rig.gd environment, tools/city/look/), "Look pack: building shader" ->
   `claude/look-buildings` (rt_bldg.gdshader, shader globals). Neither merges; the PC session takes the real phone
