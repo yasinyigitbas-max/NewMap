@@ -74,7 +74,7 @@ static func run(rig: Node, folder: String, args: PackedStringArray) -> void:
 			var img := vp.get_texture().get_image()
 			if not full and img.get_size() != SIZE: img.resize(SIZE.x, SIZE.y, Image.INTERPOLATE_LANCZOS)
 			img.convert(Image.FORMAT_RGB8)
-			var sfx := ("_sgsr" if int(rig.opt.upscale) == 1 else "") + ("_glow0" if int(rig.opt.glow) == 0 and lk != "0" else "") + ("_blobs" if int(rig.opt.blobs) == 1 else "") + ("_wet" if float(rig.opt.wet) > 0.0 else "") + ("_sky0" if int(rig.opt.celestial) == 0 else "")
+			var sfx := ("_sgsr" if int(rig.opt.upscale) == 1 else "") + ("_glow0" if int(rig.opt.glow) == 0 and lk != "0" else "") + ("_blobs" if int(rig.opt.blobs) == 1 else "") + ("_wet" if float(rig.opt.wet) > 0.0 else "") + ("_sky0" if int(rig.opt.celestial) == 0 else "") + ("_sea0" if int(rig.opt.sea) == 0 and lk != "0" else "")
 			var path := dir.path_join("%s_%s%s.jpg" % [v[0], c[0], sfx])
 			img.save_jpg(path, 0.9)
 			if "--savemap" in args and rig.look: rig.look.sky_map.get_texture().get_image().save_png(path.get_basename() + "_skymap.png")
