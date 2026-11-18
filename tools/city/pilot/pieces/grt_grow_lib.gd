@@ -16,7 +16,7 @@ extends RefCounted
 ##   the block's centre (smoothstep inner edges, shared with the neighbour quadrant, flat along a locked sample);
 ##   every building stands on a level terrace at the height of its front's middle, the ground blends back to the
 ##   slope over 5 m round it (and to the sidewalk within 2 m of a property line / the neighbour within 2 m of an
-##   inner edge); ground re-tessellated to 2 m, props / decals / stalls / poles lifted with it;
+##   inner edge); ground split where the slope bends (3 cm), props / decals / stalls / poles lifted with it;
 ## - the gritty rules for fences (the phone found layered see-through things costly here, 40 % more GPU at a tier
 ##   fade): chain-link only round lots inside the block, never a front fence in line with a lot fence or trees behind
 ##   it; front yards on the streets get weathered board side fences (perpendicular to the street) and no front fence.
@@ -167,8 +167,25 @@ static func home(ctx: Dictionary, folder: String, s: float, face: String, label:
 			var a0: float = s + e * (w * 0.5 + 0.7)
 			if face.ends_with("v"): A.privacy(ctx.props, Vector2(sx * a0, sz * (line + yard + 0.5)), Vector2(sx * a0, sz * (line + yard + 8.5)), "fence_weathered_board", "fence_post_privacy")
 			else: A.privacy(ctx.props, Vector2(sx * (line + yard + 0.5), sz * a0), Vector2(sx * (line + yard + 8.5), sz * a0), "fence_weathered_board", "fence_post_privacy")
-	I.add(ctx.props, ["prop_house_numbers_tile", "prop_house_numbers_wood"][ctx.rr.randi() % 2], "worn", A.at(b, w * 0.5 - 0.6, d * 0.5 + 0.04, 2.0), rad_to_deg((b.node as Node3D).rotation.y), false)
+	var yb := rad_to_deg((b.node as Node3D).rotation.y)
+	I.add(ctx.props, ["prop_house_numbers_tile", "prop_house_numbers_wood"][ctx.rr.randi() % 2], "worn", A.at(b, w * 0.5 - 0.6, d * 0.5 + 0.04, 2.0), yb, false)
+	var dr: Array = st.get("doors_front", [])
+	var d0 := float(dr[0][1]) if not dr.is_empty() else 0.0
+	if yard >= 2.5 and ctx.rr.randf() < 0.4:      # a post mailbox at the walk's end (the old houses never got a wall box)
+		I.add(ctx.props, "prop_mailbox_post_metal", "rusty", A.at(b, d0 + 1.1, d * 0.5 + yard - 0.6), yb)
+	if ctx.rr.randf() < 0.35:                     # the round dish of the tenant who pays for the sports channel
+		I.add(ctx.props, "prop_satellite_dish_round", "worn", A.at(b, -w * 0.5 + 0.06, -d * 0.25, minf(float(st.get("height", 6.0)) - 1.2, 4.2)), yb - 90.0, false)
+	if yard >= 3.0 and w <= 7.0 and ctx.rr.randf() < 0.3:     # an old cottage's privet, grown wild along the front
+		I.add(ctx.props, "hedge_privet_2m", "normal", A.at(b, d0 + (1.9 if d0 < 0.0 else -1.9), d * 0.5 + yard - 0.7), yb)
 	return b
+
+## a run of wall panels (stucco / CMU: solid walls, no posts) from a to b
+static func wall_run(ctx: Dictionary, a: Vector2, b: Vector2, kind := "fence_stucco_wall", L := 2.03) -> void:
+	var n := maxi(1, int(round(a.distance_to(b) / L)))
+	var yaw := rad_to_deg(atan2(b.x - a.x, b.y - a.y)) + 90.0
+	for i in n:
+		var m := a.lerp(b, (i + 0.5) / n)
+		I.add(ctx.props, kind, "worn", Vector3(m.x, S.walk_y(0.0), m.y), yaw)
 
 ## a garage on a lane (rear of a house lot), door to the lane: face "+u" / "+v" toward the lane at 54 from inside
 static func garage(ctx: Dictionary, folder: String, s: float, face: String, label: String) -> Dictionary:
@@ -345,7 +362,14 @@ static func drape(ctx: Dictionary) -> void:
 				var a: Vector3 = t[0]; var b2: Vector3 = t[1]; var c2: Vector3 = t[2]
 				var lab := Vector2(a.x - b2.x, a.z - b2.z).length(); var lbc := Vector2(b2.x - c2.x, b2.z - c2.z).length(); var lca := Vector2(c2.x - a.x, c2.z - a.z).length()
 				var mx := maxf(lab, maxf(lbc, lca))
-				if mx > 2.0:
+				# split only where the ground really bends: the longest edge's midpoint is more than 3 cm off the straight
+				# line between its ends (or the edge is longer than 8 m); flat yards and lots keep their big cells
+				var ma := a; var mb := b2
+				if mx == lbc: ma = b2; mb = c2
+				elif mx == lca: ma = c2; mb = a
+				var mid := (ma + mb) * 0.5
+				var bend := absf(F.h(mid.x, mid.z) - (F.h(ma.x, ma.z) + F.h(mb.x, mb.z)) * 0.5)
+				if mx > 0.6 and (mx > 8.0 or bend > 0.03):
 					# split the longest edge (keeps the winding)
 					if mx == lab:
 						var m3 := (a + b2) * 0.5; var mu: Vector2 = (t[3] + t[4]) * 0.5

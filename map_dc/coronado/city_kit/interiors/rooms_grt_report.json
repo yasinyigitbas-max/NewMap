@@ -141,13 +141,13 @@
    "w": 5.8
   },
   {
-   "d": 11.2,
+   "d": 11.1,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v2_j4se_launder_0.scn",
    "id": "g_grt_v2_j4se_launder_0",
    "kind": "laundry",
    "lights": 4,
    "name": "Suds City Laundry",
-   "props": 33,
+   "props": 38,
    "w": 11.4
   },
   {
@@ -221,14 +221,14 @@
    "w": 11.4
   },
   {
-   "d": 11.2,
+   "d": 11.1,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v3_g4sw_shop_two_0.scn",
    "id": "g_grt_v3_g4sw_shop_two_0",
    "kind": "laundry",
    "lights": 4,
    "name": "Wash Tub Laundromat",
-   "props": 33,
-   "w": 11.4
+   "props": 31,
+   "w": 5.7
   },
   {
    "d": 11.1,

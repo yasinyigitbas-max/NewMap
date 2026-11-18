@@ -495,7 +495,7 @@
    "id": "grt_v2_j4se_launder_0",
    "piece": "g_v2_j4se",
    "label": "launder",
-   "model": "ck/ck_grt_row2",
+   "model": "ck/ck_svc_trade_1d",
    "pos": [
     -708.599998474121,
     3.00040066242218,
@@ -503,8 +503,8 @@
    ],
    "yaw": 180.000005008956,
    "door_index": 0,
-   "door_along": -4.6,
-   "door_w": 1.2,
+   "door_along": -3.0,
+   "door_w": 1.8,
    "bay": [
     -5.7,
     5.7
@@ -518,13 +518,8 @@
    "signs": [
     {
      "facade": "front",
-     "along": -2.0,
-     "w": 2.4
-    },
-    {
-     "facade": "front",
-     "along": 3.0,
-     "w": 2.8
+     "along": -3.0,
+     "w": 5.2
     }
    ]
   },
@@ -766,7 +761,7 @@
    "id": "grt_v3_g4sw_shop_two_0",
    "piece": "g_v3_g4sw",
    "label": "shop_two",
-   "model": "ck/ck_grt_row2",
+   "model": "ck/ck_svc_trade",
    "pos": [
     -628.799999237061,
     4.13393557071686,
@@ -774,11 +769,11 @@
    ],
    "yaw": 180.000005008956,
    "door_index": 0,
-   "door_along": -4.6,
-   "door_w": 1.2,
+   "door_along": -3.0,
+   "door_w": 1.8,
    "bay": [
     -5.7,
-    5.7
+    0.0
    ],
    "kind": "laundry",
    "name": "Wash Tub Laundromat",
@@ -789,13 +784,8 @@
    "signs": [
     {
      "facade": "front",
-     "along": -2.0,
-     "w": 2.4
-    },
-    {
-     "facade": "front",
-     "along": 3.0,
-     "w": 2.8
+     "along": -3.0,
+     "w": 5.2
     }
    ]
   },
