@@ -257,8 +257,8 @@ Every stage reports the real numbers from the rig's probe at 720p: main thread m
 | 1 | `native/` builds for Windows and Android; the test app loads it and prints one line from a C++ class | the line in the PC log AND in a phone run; stream health gate PASS; lock test RESULT PASS |
 | 2a | `StreetGraph` and its tool; `streets.bin`; the picture | 0 lane points off the asphalt, heights within 3 cm of the ground, every junction leg connected; the picture pushed |
 | 2b | the traffic core on the new graph, on its own thread, no drawing | a PC test: 30 sim-minutes at 80 cars: 0 overlapping cars (the core's own audit), no car standing over 2 minutes except at a red, the same result twice for one seed; step time printed |
-| 2c | car batches, parked cars, signals on the shader clock, the speed ring, collision pool; rig options `--traffic=N` `--parked=0/1` (`--cars` is already the look session's demo and stays theirs) | PC pictures by day and night; a 280 km/h drive on the PC with cars ahead all the way |
-| 2d | the phone | gate PASS with `--traffic=20`, `40`, `80`; a table: main thread ms, physics wait, GPU ms, draws, against the same run without traffic; runs in `review/phone/` |
+| 2c | car batches, parked cars (section 14: one pool with the moving cars, pulling in and out of kerb stalls, the same street every time), signals on the shader clock, the speed ring, collision; rig options `--traffic=N` `--parked=0/1` (`--cars` is already the look session's demo and stays theirs) | PC pictures by day and night; a 280 km/h drive on the PC with cars ahead all the way |
+| 2d | the phone | gate PASS with `--traffic=20`, `40`, `80`, and with parked cars off and on as their own line; a table: main thread ms, physics wait, GPU ms, draws, against the same run without traffic; runs in `review/phone/` |
 | 3a | the crowd core on the new pavements and crossings; far figures; 18 near bodies; `--people=N` | PC test: 0 walkers off a walk, 0 inside a car, crossings used; pictures |
 | 3b | the phone; then places (doors, benches, bus stops) | gate PASS with people on; the same cost table; the honest answer on the draw budget |
 | 3c | reactions and city life in C++ (danger, witnesses, beggars, night workers, umbrellas, murmur) | a PC test that triggers each; pictures; phone gate PASS |
@@ -300,3 +300,53 @@ in the code. (The talking, the reactions and the city life were on this list in 
   the build). Nothing else in the rig, the streamer or the bake was touched.
 - The phone was shared: another session's test series was running. This run waited for it, and that session's APK
   was put back on the phone afterwards.
+
+## 14. PARKED CARS (added 19 Nov; Yasin: "tell it to bring parked cars to the game", "i think the traffic code needs to know about the parked cars locations right?")
+Yes: the traffic must know them, and here it does from the start. Parked cars are a full part of the port, in C++,
+and they share everything with the moving cars. This section goes with sections 5, 8 and 10.
+
+What the old game does (`vehicles/parked_cars.gd`, 403 lines of script; read, not run): parked cars from a list
+measured on the real town, one batch per car model and distance band (up to 28 draws), box colliders per 50 m cell.
+What the review found wrong: near cars drawn twice, every batch uploaded again every 0.1 s whether anything changed
+or not, one cell attached per 0.1 s (too slow above 130 km/h). The traffic core gets the parked boxes ONCE at build
+and can never change them. What it does is kept; how it does it is not.
+
+What the new map already gives (measured from the bake of 18 Nov, 141 cells, by a throwaway script):
+- 4,524 stalls in 86 cells, each `[x, y, z, yaw, grade]`; the busiest cell has 226.
+- 3,008 are at the KERB, parallel to the street, in the parking lane: 4.5 m from the street's centre line on
+  residential, standard and strip side streets (lane edge 3.3 m, kerb 5.7 m), 10.3 m on Amber (lanes to 9.1 m, kerb
+  11.5 m). None on the 3rd / 4th St arterials, none on truck streets, a few on the ring.
+- 1,516 are OFF the street: car parks and alley parking behind the buildings (978 across their aisle, 507 along
+  it), 20 to 125 m from a street's centre line; 17 nose-in stalls along the ring.
+
+What the data LACKS (a note for the pieces and the bake; pieces are locked, nothing is changed here):
+- a stall has no KIND (kerb / car park, parallel / nose-in) and no SIZE. Both can be told from where it lies and how
+  it is turned, so the tool works them out and prints what it could not class (must be 0);
+- DRIVEWAYS are not recorded: the pieces know their aprons (constants in the piece libraries) but do not write them
+  down as they do the stalls. So the graph knows where a kerb has NO stall (a hydrant, a bus zone, an apron), which is
+  what a parking car needs, but it does not know the way INTO a car park. Until the pieces record their aprons and
+  aisles (one more list beside `stalls`: `[x, z, yaw, width]`), cars in car parks are parked for good; only kerb
+  stalls take part in the traffic. Yasin's word would be needed to add that list to locked pieces.
+
+How it is built (Stage 2):
+1. THE GRAPH KNOWS THE STALLS. The tool reads every cell's stalls into `streets.bin`: each kerb stall is tied to its
+   lane (which lane, where along it, which side), each car-park stall to its cell. So before any cell loads the sim
+   knows which kerb has parking, where a parked row runs beside a lane, and where the gaps are.
+2. ONE CAR, TWO STATES. A parked car and a moving car are rows of the same pool and the same batches. A moving car
+   can pull over into a free kerb stall, stop, and become parked; a parked car signals, waits for a gap and pulls
+   out. (The old core already has the moves for this, written for its taxi: pull over to the kerb, hold, release.
+   They are opened to every car.) This is also the best answer to the speed problem: new cars can come from the kerb
+   in plain view instead of appearing at the edge of sight, and leave the same way.
+3. THE SAME STREET EVERY TIME. Which stalls are filled, with which model and colour, comes from a fixed seed per
+   cell, kept in one small table for the whole city (two bytes a stall). A stall that traffic changed keeps its
+   change for the session, so a street the player comes back to is as they left it.
+4. STREAMED AND CHEAP. A cell's parked cars are drawn from the frame the cell is in and gone when it leaves: rows
+   in the shared batches (near model, mid model, the 40-triangle far box), no node, no extra draw. When nothing
+   moves nothing is uploaded; a moving car re-sends only its own block of rows. Collision: small static bodies of
+   boxes (a 32 m block each, as the streamer does its own), handed to the physics thread nearest first, a few a
+   frame; a car that drives off switches its box off.
+5. THE WALKERS go round parked cars: the crowd gets the parked boxes near each walker as standing obstacles, as it
+   gets the moving ones.
+
+Measured on the phone as its own line (Stage 2d): 0 parked cars against a normal street's worth, with the same
+numbers as the traffic table (main thread ms, physics wait, GPU ms, draws).

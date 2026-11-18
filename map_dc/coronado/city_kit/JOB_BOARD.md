@@ -20,7 +20,11 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   and the Android .so in under a minute (`bash native/build.sh`; `phone_rig.sh export` runs it), the rig prints
   `RIG native coronado_city ...` on both; phone run `review/phone/native1_stream.txt`: STREAM HEALTH PASS, engine
   `coronado_all7`; lock test RESULT PASS. Baseline for what comes next (same run): draws 79-82 average, 198 worst,
-  GPU 13.5 ms. NEXT: stage 2a, the lane graph of the new streets (`StreetGraph`, checked against the baked ground).
+  GPU 13.5 ms. PARKED CARS ARE IN (Yasin 19 Nov: "tell it to bring parked cars to the game", "i think the traffic code
+  needs to know about the parked cars locations right?"): doc section 14. The bake carries 4,524 stalls (3,008 at
+  the kerb, 1,516 in car parks); parked and moving cars are one pool; driveways are NOT recorded by the pieces, so
+  only kerb stalls take part in traffic until they are (a note, nothing changed). NEXT: stage 2a, the lane graph of
+  the new streets (`StreetGraph`, with the stalls, checked against the baked ground).
 - 18 Nov (cloud, branch `claude/grow-industrial`): INDUSTRIAL GROWTH, stage 1 + 2 done, NOTHING LOCKED, WAITING for
   Yasin's word on the variants. Read `review/grow_ind/README.md`. Three variants (A port, B fleet, C cold chain),
   each dressed twice = six 100 m blocks round the sample. They form the pilot area u -900..-500, v -1600..-1400
