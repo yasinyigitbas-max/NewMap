@@ -39,6 +39,9 @@ var keep: Array = [] # [x0, z0, x1, z1] floor that stays free
 var X0 := 0.0; var X1 := 0.0; var ZF := 0.0; var ZB := 0.0; var ZBp := 0.0; var F := 0.0
 var rr: R
 var report: Array = []
+var cnt := {}      # props placed per type in this room
+## the combined checker's "repeat" rule (Yasin 19 Nov: a customer sees the same thing over and over): at most this many
+const CAP := {"vending_soda": 1, "vending_snack": 1, "card_spinner": 2, "brochure_rack": 2, "drinks_fridge": 4}
 
 func _init() -> void: _run.call_deferred()
 
@@ -93,11 +96,13 @@ func _free(x0: float, z0: float, x1: float, z1: float, use_keep := true) -> bool
 
 ## put a prop centred at (x, z) facing yaw if its footprint is free; true when placed
 func _put(base: String, x: float, z: float, yaw := 0.0, use_keep := true) -> bool:
+	if CAP.has(base) and int(cnt.get(base, 0)) >= int(CAP[base]): return false
 	var f := _fp(base, yaw)
 	var x0 := x - f.x * 0.5; var x1 := x + f.x * 0.5; var z0 := z - f.y * 0.5; var z1 := z + f.y * 0.5
 	if not _free(x0, z0, x1, z1, use_keep): return false
 	rr.prop(base, x, z, yaw)
 	occ.append([x0, z0, x1, z1, float(tall.get("prop_" + base, 1.0))])
+	cnt[base] = int(cnt.get(base, 0)) + 1
 	return true
 
 ## a group (table + chairs, booth) placed whole or not at all
@@ -142,7 +147,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	var ZP := ZB
 	if depth >= 9.0 and back != "none": ZP = ZB + (2.9 if back == "kitchen" else 2.3)
 	ZBp = ZP
-	occ = []; keep = []
+	occ = []; keep = []; cnt = {}
 	rr = R.new(id, F)
 	seed(_h(id))        # the wear scatter below is the same on every run
 	rr.world_xf = Transform3D(Basis(Vector3.UP, deg_to_rad(float(e.yaw))), Vector3(float(e.pos[0]), float(e.pos[1]), float(e.pos[2])))
@@ -361,18 +366,21 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 				xx5 += 0.35
 	# ---- dressing: plants in the front corners, a bin by the counter end, prints on the bare walls
 	_put("potted_plant", X0 + 0.3, ZF - 0.3); _put("potted_plant", X1 - 0.3, ZF - 0.3)
-	_put("indoor_bin", cx + cw * 0.5 + 0.3, zc + cd * 0.5 + 0.25)
 	if kind in ["office", "pharmacy", "souvenir", "venue", "gallery"]: _put("brochure_rack", dx + (1.3 if dx < (X0 + X1) * 0.5 else -1.3), ZF - 1.9, 180.0)
 	if bool(K.frames) or String(K.walls[0]) in ["frames_only", "poster_wall"]:
 		var mount := "poster_case"      # industrial: notice and safety boards, never gallery prints
+		var n_deco := 1 if bool(K.get("board", false)) else 0
 		for side2: Array in [[X0, 90.0, "left"], [X1, -90.0, "right"]]:
 			var wx2 := float(side2[0]); var inn2 := 1.0 if float(side2[1]) > 0.0 else -1.0
+			var on_wall := 0
 			for zz: float in _steps(ZBp + 1.2, ZF - 1.0, 1.6 if mount == "gallery_frame" else 1.4):
-				if _under_window(sidewin, String(side2[2]), zz - 0.5, zz + 0.5, 1.2): continue
+				if on_wall >= 2 or n_deco >= 5: break       # the checker's "deco": 2 a wall, 6 a room
+				if _under_window(sidewin, String(side2[2]), zz - 0.6, zz + 0.6, 99.0): continue   # high windows too
 				var blocked := false
 				for o: Array in occ:
 					if float(o[4]) > 0.5 and zz > float(o[1]) - 0.5 and zz < float(o[3]) + 0.5 and absf((float(o[0]) + float(o[2])) * 0.5 - wx2) < 1.4: blocked = true
-				if not blocked: rr.prop(mount, wx2 + inn2 * 0.04, zz, float(side2[1]), 1.35)
+				if not blocked:
+					rr.prop(mount, wx2 + inn2 * 0.04, zz, float(side2[1]), 1.35); on_wall += 1; n_deco += 1
 	# ---- back of house
 	if ZP > ZB + 0.01:
 		var kx := X0 + 0.2
