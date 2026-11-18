@@ -68,6 +68,7 @@ func _run() -> void:
 		I.add(props, "prop_lot_light_pole", "dirty", G.q(sx, sz, p.x, p.y), 45.0)
 	I.add(props, "prop_utility_pole_transformer", "dirty", G.q(sx, sz, 96.5, 40.0), 0.0)   # the crane's feed
 	I.add(props, "prop_switch_rack", "worn", G.q(sx, sz, 95.5, 46.0), 90.0)
+	I.add(props, "prop_transformer_substation", "dirty", G.q(sx, sz, 95.0, 52.0), 90.0)   # the crane's own supply
 	# ---- staff parking behind the office and the chandlery (rubber stops: cars nose to the walls)
 	stl.append_array(G.stalls(props, sx, sz, 40.0, 5, 33.0, -1.0))
 	# ---- the back doors: office bins, chandlery's rope-and-gas corner, the repair shop's drums and the yard skip

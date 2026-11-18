@@ -1,0 +1,533 @@
+{
+ "_doc": "The walk-in places of the industrial growth blocks (18 Nov, claude/grow-industrial; Yasin: \"do out and indoors -> rooms g_<id> by tools/city/rooms/room_gen_ind.gd",
+ "rooms": [
+  {
+   "id": "ind_va_w800_n1600_sw__hfs_office__0",
+   "piece": "i_va_w800_n1600_sw",
+   "label": "hfs_office",
+   "model": "ck/ck_brk3_corner2",
+   "pos": [
+    -829.0,
+    2.15000009536743,
+    -1576.58752441406
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "freight_office",
+   "name": "Harbor Freight Station",
+   "style": "navy",
+   "why": "drivers check in and brokers clear the boxes: the freight station's public counter on the boulevard",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ]
+  },
+  {
+   "id": "ind_va_w800_n1600_sw__bayside_chandlery__0",
+   "piece": "i_va_w800_n1600_sw",
+   "label": "bayside_chandlery",
+   "model": "ck/ck_svc_trade_1d",
+   "pos": [
+    -845.0,
+    2.15000009536743,
+    -1577.38745117188
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "trade_counter",
+   "name": "Bayside Chandlery",
+   "style": "green",
+   "why": "rope, paint, shackles and engine oil for the boats across 1st St",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "ind_va_w800_n1600_sw__reefer_repair__0",
+   "piece": "i_va_w800_n1600_sw",
+   "label": "reefer_repair",
+   "model": "industrial/ind_repair",
+   "pos": [
+    -819.065612792969,
+    2.15000009536743,
+    -1561.0
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -6.5,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -2.6
+   ],
+   "kind": "parts_counter",
+   "name": "Cold Line Reefer Service",
+   "style": "teal",
+   "why": "the repair shop's parts counter on J Ave; the bays stay a service yard",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "front",
+     "along": -5.0,
+     "w": 3.6
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    }
+   ]
+  },
+  {
+   "id": "ind_vb_w800_n1600_se__public_works_office__1",
+   "piece": "i_vb_w800_n1600_se",
+   "label": "public_works_office",
+   "model": "modular/examples/mod_brk_row",
+   "pos": [
+    -768.0,
+    2.15000009536743,
+    -1577.01452636719
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -2.46,
+    3.54
+   ],
+   "kind": "permits",
+   "name": "Public Works Permits",
+   "style": "navy",
+   "why": "the city yard's civic face: the permits and complaints counter (the row's other two fronts are its offices)",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "ind_vb_w800_n1600_se__workwear_store__0",
+   "piece": "i_vb_w800_n1600_se",
+   "label": "workwear_store",
+   "model": "ck/ck_grt_row2",
+   "pos": [
+    -751.0,
+    2.15000009536743,
+    -1578.28747558594
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -4.6,
+   "door_w": 1.2,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "workwear",
+   "name": "Harbor Workwear",
+   "style": "orange",
+   "why": "boots, hi-vis and gloves for the crews and the district's trades, by the bus stop",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -2.0,
+     "w": 2.4
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 2.8
+    }
+   ]
+  },
+  {
+   "id": "ind_vc_w600_n1600_sw__dockside_fish_market__0",
+   "piece": "i_vc_w600_n1600_sw",
+   "label": "dockside_fish_market",
+   "model": "commercial/com_bistro",
+   "pos": [
+    -629.0,
+    2.15000009536743,
+    -1577.01452636719
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 4.76,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "fish_counter",
+   "name": "Dockside Fish Market",
+   "style": "teal",
+   "why": "the catch landed across the road, sold over the counter and fried for the district's lunch",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 11.18
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "ind_vc_w600_n1600_sw__pacific_seafood_sales__0",
+   "piece": "i_vc_w600_n1600_sw",
+   "label": "pacific_seafood_sales",
+   "model": "commercial/com_realty",
+   "pos": [
+    -640.0,
+    2.15000009536743,
+    -1577.01452636719
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "sales_office",
+   "name": "Pacific Seafood Co.",
+   "style": "navy",
+   "why": "the wholesaler's sales office: restaurants and markets place their orders here",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": -3.4,
+     "w": 2.6
+    }
+   ]
+  },
+  {
+   "id": "ind_va_w600_n1600_se__bay_boatworks_office__0",
+   "piece": "i_va_w600_n1600_se",
+   "label": "bay_boatworks_office",
+   "model": "civic/civ_harbor_office",
+   "pos": [
+    -569.0,
+    2.15000009536743,
+    -1575.23754882812
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -7.7,
+    7.7
+   ],
+   "kind": "broker",
+   "name": "Bay Boatworks",
+   "style": "navy",
+   "why": "the boatyard's office and yacht broker: storage contracts, haul-outs, boats for sale",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 4.2
+    }
+   ]
+  },
+  {
+   "id": "ind_va_w600_n1600_se__marine_engines__0",
+   "piece": "i_va_w600_n1600_se",
+   "label": "marine_engines",
+   "model": "industrial/ind_repair",
+   "pos": [
+    -580.934387207031,
+    2.15000009536743,
+    -1564.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -6.5,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -2.6
+   ],
+   "kind": "parts_counter",
+   "name": "Tidewater Marine Engines",
+   "style": "green",
+   "why": "outboard and diesel parts over the counter; the bays work on the yard's boats",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "front",
+     "along": -5.0,
+     "w": 3.6
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    }
+   ]
+  },
+  {
+   "id": "ind_vb_w600_n1400_nw__truck_stop_diner__0",
+   "piece": "i_vb_w600_n1400_nw",
+   "label": "truck_stop_diner",
+   "model": "ck/ck_grt_row2",
+   "pos": [
+    -628.5,
+    2.15000009536743,
+    -1421.71252441406
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -4.6,
+   "door_w": 1.2,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "diner",
+   "name": "3rd St Truck Stop",
+   "style": "red",
+   "why": "the drivers' diner on the truck route: breakfast at 4 am, coffee all day",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -2.0,
+     "w": 2.4
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 2.8
+    }
+   ]
+  },
+  {
+   "id": "ind_vb_w600_n1400_nw__truck_parts__0",
+   "piece": "i_vb_w600_n1400_nw",
+   "label": "truck_parts",
+   "model": "ck/ck_svc_trade_1d",
+   "pos": [
+    -617.003112792969,
+    2.15000009536743,
+    -1433.0
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "trade_counter",
+   "name": "Bayline Truck Parts",
+   "style": "orange",
+   "why": "filters, belts and lights for the trucks serviced next door",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "ind_vc_w600_n1400_ne__shift_canteen__0",
+   "piece": "i_vc_w600_n1400_ne",
+   "label": "shift_canteen",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    -571.0,
+    2.15000009536743,
+    -1422.98547363281
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -1.08,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "canteen",
+   "name": "Shift Canteen",
+   "style": "cream",
+   "why": "the food wholesale block's canteen, open to the truck services across G Ave (both doors are its own)",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "ind_vc_w600_n1400_ne__island_restaurant_supply__1",
+   "piece": "i_vc_w600_n1400_ne",
+   "label": "island_restaurant_supply",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    -557.0,
+    2.15000009536743,
+    -1422.61254882812
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 3.0,
+   "door_w": 1.8,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "trade_counter",
+   "name": "Island Restaurant Supply",
+   "style": "green",
+   "why": "cash and carry for the island's kitchens: pans, gloves, boxes, dry goods",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "ind_vc_w600_n1400_ne__island_restaurant_supply__0",
+   "piece": "i_vc_w600_n1400_ne",
+   "label": "island_restaurant_supply",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    -557.0,
+    2.15000009536743,
+    -1422.61254882812
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "uniform",
+   "name": "Shift Linen & Uniforms",
+   "style": "teal",
+   "why": "aprons, chef whites and shop towels washed and handed back over the counter",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  }
+ ]
+}

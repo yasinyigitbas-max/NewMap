@@ -69,7 +69,8 @@ func _run() -> void:
 	for k5 in 3: I.add(props, "prop_cone_18in", "dirty", G.q(sx, sz, 62.0 + k5 * 1.2, 50.0), k5 * 50.0)
 	for p: Vector2 in [Vector2(38.0, 56.0), Vector2(62.0, 56.0), Vector2(90.0, 50.0)]:
 		I.add(props, "prop_lot_light_pole", "dirty", G.q(sx, sz, p.x, p.y), 0.0)
-	I.add(props, "prop_utility_pole_transformer", "dirty", G.q(sx, sz, 98.5, 60.0), 0.0)
+	I.add(props, "prop_utility_pole_transformer", "dirty", G.q(sx, sz, 98.5, 48.0), 0.0)
+	I.add(props, "prop_water_tower", "dirty", G.q(sx, sz, 90.0, 60.0), 20.0)    # the ice plant's own water, seen from the bay
 	stl.append_array(G.stalls(props, sx, sz, 44.0, 9, 44.5, -1.0))
 	# ---- the market's sidewalk: a bench facing the street for the lunch crowd, its bin, the paper box
 	G.walk_prop(props, m, sx, sz, "x", 33.0, "prop_trash_receptacle", "dirty")

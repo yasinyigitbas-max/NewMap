@@ -57,6 +57,7 @@ func _run() -> void:
 	I.back_door_clutter(props, rr, G.q(sx, sz, 43.0, 30.2), 180.0, "shop")
 	I.add(props, "prop_vending_soda", "clean", G.q(sx, sz, 22.3, 24.0), -90.0)
 	I.add(props, "prop_vending_snack", "clean", G.q(sx, sz, 22.3, 25.3), -90.0)
+	for bv: float in [23.0, 26.6]: I.add(props, "prop_bollard_steel", "rusty", G.q(sx, sz, 20.9, bv), 0.0)    # cars park by the machines
 	for p: Vector2 in [Vector2(54.0, 40.0), Vector2(60.0, 66.0), Vector2(86.0, 70.0)]:
 		I.add(props, "prop_lot_light_pole", "dirty", G.q(sx, sz, p.x, p.y), 0.0)
 	I.add(props, "prop_utility_pole_transformer", "dirty", G.q(sx, sz, 88.0, 92.0), 0.0)

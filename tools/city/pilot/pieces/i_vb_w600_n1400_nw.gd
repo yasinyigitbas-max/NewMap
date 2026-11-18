@@ -46,9 +46,9 @@ func _run() -> void:
 	for bu: float in [47.6, 54.0, 60.4]:
 		for bv: float in [45.4, 48.6]: I.add(props, "prop_bollard_iron", "rusty", G.q(sx, sz, bu, bv), 0.0)
 	I.add(props, "prop_tank_vertical", "dirty", G.q(sx, sz, 70.0, 56.0), 0.0)
-	for k in 2: I.add(props, "prop_k_rail", "dirty", G.q(sx, sz, 66.0, 54.0 + k * 4.2), 90.0)
+	for k in 2: I.add(props, "prop_k_rail", "dirty", G.q(sx, sz, 64.4, 54.0 + k * 4.2), 90.0)    # the tank is 9 m across
 	# ---- the tyre store's back: rolloff of scrap tyres, the heavy repair shop's drums, the wash's soap drums
-	I.add(props, "prop_dumpster_rolloff_20yd", "rusty", G.q(sx, sz, 84.0, 30.0), 90.0)
+	I.add(props, "prop_dumpster_rolloff_20yd", "rusty", G.q(sx, sz, 60.0, 86.0), 90.0)
 	for k in 6: I.add(props, "prop_channelizer_drum", "dirty", G.q(sx, sz, 27.5, 70.0 + (k % 3) * 0.85 + (k / 3) * 0.0), 0.0)
 	for k in 3: I.add(props, "prop_channelizer_drum", "worn", G.q(sx, sz, 40.0 + k * 0.85, 33.0), 0.0)
 	I.add(props, "prop_propane_tank_250gal", "rusty", G.q(sx, sz, 28.0, 48.5), 0.0)
@@ -57,6 +57,10 @@ func _run() -> void:
 	for p: Vector2 in [Vector2(40.0, 60.0), Vector2(75.0, 70.0), Vector2(50.0, 86.0), Vector2(85.0, 45.0)]:
 		I.add(props, "prop_lot_light_pole", "dirty", G.q(sx, sz, p.x, p.y), 0.0)
 	I.add(props, "prop_utility_pole_transformer", "dirty", G.q(sx, sz, 97.0, 60.0), 0.0)
+	# a billboard over the tyre store, faced to the 3rd St traffic (the arterial is where they pay)
+	I.add(props, "prop_billboard", "worn", G.q(sx, sz, 91.0, 30.0), 0.0)
+	# concrete bollards between the diner's side wall and the wash's exit: trucks cut that corner
+	for bv: float in [17.0, 20.0, 23.0, 26.0]: I.add(props, "prop_bollard_concrete", "dirty", G.q(sx, sz, 35.1, bv), 0.0)
 	# ---- drivers' own cars along the back wall
 	stl.append_array(G.stalls(props, sx, sz, 30.0, 18, 94.6, 1.0, "prop_wheel_stop_concrete", [7]))
 	# ---- the diner's sidewalk: a bench facing 3rd St (drivers wait for a lift), bin, paper box; the parts counter's rack

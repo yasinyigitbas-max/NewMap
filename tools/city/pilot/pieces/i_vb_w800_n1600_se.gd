@@ -62,8 +62,8 @@ func _run() -> void:
 	for k2 in 2: I.add(props, "prop_fuel_pump", "clean", G.q(sx, sz, 32.0 + k2 * 6.0, 64.5), 0.0)
 	for bu: float in [29.6, 35.0, 40.4]:
 		for bv: float in [63.0, 66.0]: I.add(props, "prop_bollard_iron", "rusty", G.q(sx, sz, bu, bv), 0.0)
-	I.add(props, "prop_tank_vertical", "dirty", G.q(sx, sz, 24.0, 70.0), 0.0)
-	I.add(props, "prop_k_rail", "dirty", G.q(sx, sz, 24.0, 66.2), 0.0)
+	I.add(props, "prop_tank_vertical", "dirty", G.q(sx, sz, 21.5, 72.0), 0.0)          # 9 m across
+	I.add(props, "prop_k_rail", "dirty", G.q(sx, sz, 28.5, 77.4), 0.0)                 # the tank's corner, by the truck path
 	# ---- the wash's apron: grime runs off it, a hose reel, drums of soap
 	for k3 in 3: I.add(props, "prop_channelizer_drum", "dirty", G.q(sx, sz, 92.5, 74.0 + k3 * 0.9), 0.0)
 	I.add(props, "prop_hose_reel_cart", "worn", G.q(sx, sz, 60.0, 80.0), 90.0)
@@ -73,6 +73,8 @@ func _run() -> void:
 	for k6 in 4: I.add(props, "prop_water_barrier_orange", "dirty", G.q(sx, sz, 88.5, 47.0 + k6 * 2.1), 90.0)
 	I.add(props, "prop_dumpster_rolloff_20yd", "rusty", G.q(sx, sz, 56.0, 92.0), 0.0)
 	I.add(props, "prop_temp_fence_stand", "worn", G.q(sx, sz, 85.0, 60.0), 0.0)
+	for k9 in 3: I.add(props, "prop_barricade_type3", "worn", G.q(sx, sz, 88.0, 67.5 + k9 * 2.8), 90.0)     # road-closure stock
+	for k9 in 2: I.add(props, "fence_temp_fence_panel_screen", "rusty", G.q(sx, sz, 82.5, 61.0 + k9 * 0.3), 90.0, false)
 	for k7 in 3: I.add(props, "fence_temp_fence_panel", "worn", G.q(sx, sz, 84.0, 61.5 + k7 * 0.3), 90.0, false)
 	for p: Vector2 in [Vector2(36.0, 44.0), Vector2(70.0, 44.0), Vector2(46.0, 70.0), Vector2(80.0, 66.0)]:
 		I.add(props, "prop_lot_light_pole", "dirty", G.q(sx, sz, p.x, p.y), 0.0)
