@@ -1,0 +1,38 @@
+{
+ "_doc": "Commercial strip growth (claude/grow-strip): one row per new strip block piece (m_gr_*), grid frame [u, pad, v], yaw 0. Read by tools/city/pilot/zoning/integrate.py (review/grow_*_blocks.json) into city_grid_layout.json.",
+ "rows": [
+  {
+   "piece": "m_gr_ad5ne",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "site": "strip block Adela x 5th NE (u 508.7-645.7, v -1100 to -1014.3)",
+   "variant": "A car care corner"
+  },
+  {
+   "piece": "m_gr_e4s",
+   "pos": [
+    500.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "site": "strip pad south of 4th St on Glorietta Blvd (u 600-645.7, v -1185.7 to -1100)",
+   "variant": "B bridge-mouth pad"
+  },
+  {
+   "piece": "m_gr_ad5nw",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "site": "strip block Adela x 5th NW (u 400-491.3, v -1100 to -1009.2)",
+   "variant": "C neighbourhood centre"
+  }
+ ]
+}
