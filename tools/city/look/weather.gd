@@ -15,6 +15,11 @@ static func _toward(c: Color, target: Color, k: float) -> Color:
 	var s := _lum(c) / maxf(_lum(target), 0.001)
 	return c.lerp(target * s, k)
 
+## a colour towards `target` at the target's OWN brightness by day (a storm is darker than a fair sky), at the time
+## of day's brightness at night (so it never lights the night up)
+static func _dark(c: Color, target: Color, k: float, day: float) -> Color:
+	return c.lerp(target.lerp(target * (_lum(c) / maxf(_lum(target), 0.001)), 1.0 - day), k)
+
 static func apply(t: Dictionary, name: String, hour := -1.0) -> Dictionary:
 	if not (name in NAMES): return t
 	var o := t.duplicate()
@@ -39,9 +44,9 @@ static func apply(t: Dictionary, name: String, hour := -1.0) -> Dictionary:
 		"storm", "rain":
 			var rain := name == "rain"
 			o.cloud_cover = 0.9 if rain else 0.97; o.cloud_alpha = 1.0; o.cloud_scale = 0.14
-			o.cloud_lit = _toward(t.cloud_lit, Color(0.46, 0.48, 0.52), 0.85); o.cloud_dark = _toward(t.cloud_dark, Color(0.16, 0.18, 0.21), 0.85)
-			o.zenith = _toward(t.zenith, Color(0.30, 0.33, 0.37), 0.85); o.middle = _toward(t.middle, Color(0.40, 0.42, 0.45), 0.85)
-			o.haze = _toward(t.haze, Color(0.52, 0.54, 0.55) if rain else Color(0.46, 0.48, 0.50), 0.8)
+			o.cloud_lit = _dark(t.cloud_lit, Color(0.50, 0.52, 0.56) if rain else Color(0.40, 0.42, 0.46), 0.9, day); o.cloud_dark = _dark(t.cloud_dark, Color(0.18, 0.20, 0.23), 0.9, day)
+			o.zenith = _dark(t.zenith, Color(0.30, 0.33, 0.37), 0.9, day); o.middle = _dark(t.middle, Color(0.40, 0.42, 0.45), 0.9, day)
+			o.haze = _dark(t.haze, Color(0.56, 0.58, 0.59) if rain else Color(0.48, 0.50, 0.52), 0.85, day)
 			o.sun_energy = float(t.sun_energy) * (0.3 if rain else 0.22); o.sun_halo = 0.0; o.sun_disc = 0.0
 			o.ambient_color = _toward(t.ambient_color, Color(0.56, 0.60, 0.66), 0.7); o.ambient_energy = float(t.ambient_energy) * (0.85 if rain else 0.75)
 			o.fog_density = float(t.fog_density) * (2.4 if rain else 1.5); o.fog_sun_scatter = 0.05
