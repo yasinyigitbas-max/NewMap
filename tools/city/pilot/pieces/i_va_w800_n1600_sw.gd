@@ -43,7 +43,12 @@ func _run() -> void:
 	G.frontage(props, m, sx, sz, "x", [[23.0, 35.0], [39.0, 51.0]], [], "cmu", 51.0, 99.8)
 	G.frontage(props, m, sx, sz, "z", [[31.5, 49.5], [50.0, 74.0]], [82.0], "chain", 74.0, 99.8)
 	# the west edge toward the empty base-fence strip: block wall (the strip is not built yet)
-	G.wall(props, sx, sz, Vector2(99.8, m.ex[199] + 0.2), Vector2(99.8, 99.6), "fence_cmu_wall", 7, "dirty")
+	# the west edge: a block wall toward the empties depot strip (i_va_w951_n1400_ne), with the depot's gate at 56-63 m
+	# (19 Nov: the depot is reached only through this yard; its streets have no driveway)
+	G.wall(props, sx, sz, Vector2(99.8, m.ex[199] + 0.2), Vector2(99.8, 56.0), "fence_cmu_wall", 7, "dirty")
+	G.wall(props, sx, sz, Vector2(99.8, 63.0), Vector2(99.8, 99.6), "fence_cmu_wall", 7, "dirty")
+	I.add(props, "fence_gate_rolling_chainlink", "worn", G.q(sx, sz, 99.2, 52.3), 90.0)
+	I.truck_path(dec, rr, Vector2(sx * 99.8, sz * 59.5), Vector2(sx * 82.0, sz * 59.5))
 	K.building(bl, "commercial/com_kiosk", G.q(sx, sz, 15.0, 90.0), 180.0, "gate_booth")   # its door to the driveway
 	# ---- the stacks under the gantry: six columns along v (the crane travels along them), a truck lane in the middle
 	I.add(props, "prop_dock_crane", "dirty", G.q(sx, sz, 62.0, 50.0), 90.0)    # its base and jib along the truck lane, between the stacks
