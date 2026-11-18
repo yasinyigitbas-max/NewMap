@@ -55,6 +55,27 @@ def sheet(folder, names, cols=2):
         print("wrote", dst)
 
 
+def compare(out_path, rows):
+    """one sheet of labelled pictures stacked: rows = [(label, path), ...] (missing paths are left out)"""
+    font = ImageFont.truetype(os.path.join("ui", "fonts", "Overpass.ttf"), 26)
+    small = ImageFont.truetype(os.path.join("ui", "fonts", "Overpass.ttf"), 20)
+    rows = [(l, p) for l, p in rows if os.path.exists(p)]
+    if len(rows) < 2:
+        return
+    ims = [Image.open(p).convert("RGB") for _, p in rows]
+    w, h = ims[0].size
+    bar = 40
+    sheet_im = Image.new("RGB", (w, (h + bar) * len(ims)), (20, 20, 20))
+    d = ImageDraw.Draw(sheet_im)
+    for i, ((label, _), im) in enumerate(zip(rows, ims)):
+        y = i * (h + bar)
+        d.text((14, y + 6), label, fill=(240, 240, 240), font=font)
+        d.text((w - 14, y + 10), NOTE, fill=(170, 170, 170), font=small, anchor="ra")
+        sheet_im.paste(im.resize((w, h)), (0, y + bar))
+    sheet_im.save(out_path, quality=88)
+    print("wrote", out_path)
+
+
 if __name__ == "__main__":
     if len(sys.argv) > 2 and sys.argv[2].startswith("--sheet="):
         sheet(sys.argv[1], sys.argv[2].split("=", 1)[1].split(","))
