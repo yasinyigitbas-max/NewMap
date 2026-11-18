@@ -3,7 +3,9 @@
 #   bash tools/city/rig/phone_rig.sh all   [NAME] [rig args]   bake the city, export the rig app, install, run, collect
 #   bash tools/city/rig/phone_rig.sh run   [NAME] [rig args]   run again (app already on the phone), e.g. other settings
 #   bash tools/city/rig/phone_rig.sh bake | export | install | status
-# NAME labels the result (default: run1). Rig args: see tools/city/rig/rig.gd (--plan=default|quick|speed --lead=2 ...).
+# NAME labels the result (default: run1). Rig args: see tools/city/rig/rig.gd (--plan=default|quick|speed|zones --lead=2 ...).
+#   bash tools/city/rig/phone_rig.sh run zones1 --plan=zones        teleports between the populated zones (about 6 minutes)
+#   bash tools/city/rig/phone_rig.sh run mine --drive=NAME/ROUTE/KMH/SECONDS/NIGHT ...   drives of your own, no rebuild
 # The result (the app's RIG lines, phone model, temperature) is written to
 # map_dc/coronado/city_kit/review/phone/NAME.txt and pushed to the branch, so the cloud session can read it.
 # PUSH=0 keeps it local. DEV=<serial> picks the phone (default: the Redmi).
