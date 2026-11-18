@@ -287,6 +287,7 @@ func openings(contract: Dictionary, walls: Dictionary, bounds: Array = [], outer
 			var c0 := s0; var c1 := s1
 			if o.has("clear"): c0 = float(o.clear[0]); c1 = float(o.clear[1])
 			(holes[fac] as Array).append([c0, c1, y0, y1])
+			_openings.append([axis, at, c0, c1, y0, y1, "door"])
 			door(axis, at, float(o.plane), c0, c1, y0, y1, "civic" if reg == "O_civic_door" else "shop")
 			_doors.append([axis, at, c0, c1, float(o.plane)])
 			for bl: Array in [[s0, c0], [c1, s1]]:
@@ -301,9 +302,11 @@ func openings(contract: Dictionary, walls: Dictionary, bounds: Array = [], outer
 				# the storefront panel runs from the ground: glass over a tiled bulkhead, a spandrel under the head
 				var gy0 := y0 + 0.55; var gy1 := y1 - 0.25
 				(holes[fac] as Array).append([s0, s1, gy0, gy1])
+				_openings.append([axis, at, s0, s1, y0, y1, "window"])
 				window(axis, at, float(o.plane), s0, s1, gy0, gy1, kind, y0, y1)
 			else:
 				(holes[fac] as Array).append([s0, s1, y0, y1])
+				_openings.append([axis, at, s0, s1, y0, y1, "window"])
 				window(axis, at, float(o.plane), s0, s1, y0, y1, kind)
 	return holes
 
@@ -329,7 +332,11 @@ func _closed_part(axis: String, wall_at: float, plane: float, s0: float, s1: flo
 	else: box("wall", Vector3(mz, (y0 + y1) * 0.5, (s0 + s1) * 0.5), Vector3(dz, y1 - y0, s1 - s0))
 
 ## a closed solid door leaf filling a hole in the room wall (back and side doors: staff, deliveries)
+## every opening built in the room's walls, for the indoor checker's "cover" rule: [axis, at, s0, s1, y0, y1, kind]
+var _openings: Array = []
+
 func solid_door(axis: String, at: float, s0: float, s1: float, y0: float, y1: float) -> void:
+	_openings.append([axis, at, s0, s1, y0, y1, "door"])
 	if not _mats.has("door"): mat("door", "Wood058", 1.0, Color(0.55, 0.42, 0.3))
 	var c := (s0 + s1) * 0.5
 	if axis == "z": box("door", Vector3(c, (y0 + y1) * 0.5, at), Vector3(s1 - s0, y1 - y0, 0.06))
@@ -475,7 +482,7 @@ func build() -> Node3D:
 		pn.add_child(mmi); inst.free()
 	var wm := dec.build()
 	if wm: wm.name = "wear"; root.add_child(wm)
-	root.set_meta(&"floors", _floors); root.set_meta(&"solids", _solids); root.set_meta(&"entrances", _doors); root.set_meta(&"cut", _cut)
+	root.set_meta(&"floors", _floors); root.set_meta(&"solids", _solids); root.set_meta(&"entrances", _doors); root.set_meta(&"cut", _cut); root.set_meta(&"openings", _openings)
 	# the room is drawn exactly as long as its building shows the near tier (0-62 m, the tier with the openings cut);
 	# past that the building's mid tier paints its windows shut again and the room is not needed. Lights fade out
 	# over the last 12 m so nothing pops.

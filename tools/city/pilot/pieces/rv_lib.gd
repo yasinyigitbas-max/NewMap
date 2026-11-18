@@ -152,18 +152,30 @@ func try_add(base: String, cond: String, u: float, v: float, yaw: float, r: floa
 ## y < -100: each panel / post on the ground under it; else at y.
 func fence_run(a: Vector2, b: Vector2, panel: String, post: String, pw: float, y := -1000.0, cond := "worn") -> void:
 	var Lr := a.distance_to(b)
-	if Lr < 0.5: return
+	if Lr < 0.3: return
 	fences.append([a, b])
-	var n := maxi(1, int(ceil(Lr / pw - 0.02)))
 	var la := L2(a.x, a.y); var lb := L2(b.x, b.y)
 	var yaw := rad_to_deg(atan2(lb.x - la.x, lb.y - la.y)) + 90.0
-	for i in n:
-		var m := a.lerp(b, (i + 0.5) / n)
-		props.add(panel, cond, L(m.x, m.y, gy(m.x, m.y) if y < -100.0 else y), yaw)
+	var dir := (b - a) / Lr
+	var gyf := func(q: Vector2) -> float: return gy(q.x, q.y) if y < -100.0 else y
+	var joints: Array = [a, b]
+	if Lr < pw:
+		# shorter than one panel: one shortened panel (never stretched), flush with both ends
+		var m := (a + b) * 0.5
+		var bs := Basis(Vector3.UP, deg_to_rad(yaw)) * Basis().scaled(Vector3(Lr / pw, 1.0, 1.0))
+		var k := panel + "|" + cond
+		if not props.items.has(k): props.items[k] = []
+		(props.items[k] as Array).append(Transform3D(bs, L(m.x, m.y, float(gyf.call(m)))))
+	else:
+		# whole panels, the end ones flush with the run's ends (posts there), the overlap shared out in the middle
+		var n := maxi(1, int(ceil(Lr / pw - 0.02)))
+		for i in n:
+			var c := a + dir * (pw * 0.5) if n == 1 else a.lerp(b - dir * pw, float(i) / float(n - 1)) + dir * (pw * 0.5)
+			if n == 1: c = (a + b) * 0.5
+			props.add(panel, cond, L(c.x, c.y, float(gyf.call(c))), yaw)
+			if i > 0: joints.append(c - dir * (pw * 0.5))
 	if post != "":
-		for i in n + 1:
-			var e := a.lerp(b, float(i) / n)
-			props.add(post, cond, L(e.x, e.y, gy(e.x, e.y) if y < -100.0 else y), yaw)
+		for e: Vector2 in joints: props.add(post, cond, L(e.x, e.y, float(gyf.call(e))), yaw)
 
 ## the same run with gaps [s, width] (gates or openings) along it; a gate model goes in each gap if gate != ""
 func fence_line(a: Vector2, b: Vector2, gaps: Array, panel: String, post: String, pw: float, gate := "", y := -1000.0) -> void:
@@ -380,6 +392,7 @@ func house_lot(lot: Dictionary) -> void:
 	var gaps: Array = [[door_s - s0, 1.2]]
 	if own_garage: gaps.append([garage_door_s - s0, 4.6])
 	var t_r := f + set + hd - 1.0                     # where the back yard is closed off: just in front of the rear wall
+	lot.t_r = t_r
 	if FENCE.has(front):
 		var fd: Array = FENCE[front]
 		fence_line(fa, fb, gaps, String(fd[0]), String(fd[1]), float(fd[2]), String(fd[3]) if not own_garage else "", H)
@@ -479,7 +492,7 @@ func house_lot(lot: Dictionary) -> void:
 	# side fences from the back corners of the house to the back line (on the higher terrace of the two)
 	for e2: float in [s0, s1]:
 		if e2 == s1 and not bool(lot.get("last", false)): continue     # each shared line once (the lot to the right draws it)
-		var a3: Vector2 = pt(axis, e2, t_r)
+		var a3: Vector2 = pt(axis, e2, minf(t_r, float(lot.get("t_r_prev", t_r))) if e2 == s0 else t_r)   # a shared line starts where the first of the two yards closes
 		var b3: Vector2 = pt(axis, e2, tb - 0.25)
 		var yy := maxf(H, float(lot.get("Hprev", H)) if e2 == s0 else H)
 		fence_run(a3, b3, String(sf[0]), String(sf[1]), float(sf[2]), yy)
@@ -490,7 +503,7 @@ func house_lot(lot: Dictionary) -> void:
 		var Lr := absf(line_s - wall_s)
 		if Lr < 0.3: continue
 		var ra: Vector2 = pt(axis, wall_s, t_r); var rb: Vector2 = pt(axis, line_s, t_r)
-		if Lr >= 1.6 and sd == side:
+		if Lr >= 2.6 and sd == side:
 			fence_line(ra, rb, [[Lr * 0.5, 1.15]], String(sf[0]), String(sf[1]), float(sf[2]), "fence_gate_privacy", H)
 		else:
 			fence_run(ra, rb, String(sf[0]), String(sf[1]), float(sf[2]), H)
@@ -767,6 +780,10 @@ func alley_poles() -> void:
 				for dp: Vector2 in doorpts:
 					if pu2.distance_to(dp) < 2.2: ok = false; break
 				if ok and not free_at(pu2.x, pu2.y, 0.3): ok = false
+				if ok:
+					var lp2 := L2(pu2.x, pu2.y)
+					for pr: Array in paints:     # never on a paved lot (the corner shops' staff parking)
+						if String(pr[4]) == "asphalt" and lp2.x > float(pr[0]) - 0.3 and lp2.x < float(pr[2]) + 0.3 and lp2.y > float(pr[1]) - 0.3 and lp2.y < float(pr[3]) + 0.3 and not (absf(pu2.y - (AL0 + AL1) * 0.5) < 3.0 or absf(pu2.x - (AL0 + AL1) * 0.5) < 3.0): ok = false; break
 				if not ok: continue
 				var pyaw := 90.0 if along_u else 0.0
 				props.add("prop_utility_pole_transformer" if poles.size() % 3 == 1 else "prop_utility_pole", "worn", L(pu2.x, pu2.y, fh(pu2.x, pu2.y) - KERB_H + 0.02), pyaw)
@@ -961,6 +978,7 @@ func build(piece: String, site: Dictionary, des: Dictionary) -> void:
 			lot.last = i == lots.size() - 1
 			lot.next_front = String(lots[i + 1].get("front", "")) if i + 1 < lots.size() else ""
 			lot.Hprev = prevH if prevH > -999.0 else float(lot.Ht)
+			if i > 0 and (lots[i - 1] as Dictionary).has("t_r"): lot.t_r_prev = float(lots[i - 1].t_r)
 			prevH = float(lot.Ht)
 			if bool(lot.get("shop", false)): corner_shop(lot, String(shop[0]), String(shop[1]), String(shop[2]))
 			else: house_lot(lot)
@@ -980,6 +998,7 @@ func build(piece: String, site: Dictionary, des: Dictionary) -> void:
 				lot2.last = i == lots2.size() - 1
 				lot2.next_front = String(lots2[i + 1].get("front", "")) if i + 1 < lots2.size() else ""
 				lot2.Hprev = prev2 if prev2 > -999.0 else float(lot2.Ht)
+				if i > 0 and (lots2[i - 1] as Dictionary).has("t_r"): lot2.t_r_prev = float(lots2[i - 1].t_r)
 				prev2 = float(lot2.Ht)
 				house_lot(lot2)
 				# the back line (mid-block): a privacy fence on the terrace
