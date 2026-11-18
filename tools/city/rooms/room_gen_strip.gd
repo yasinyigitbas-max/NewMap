@@ -46,7 +46,7 @@ const KINDS := {
 	"tyre": {"max_d": 10.0, "floor": "Concrete047A", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["pegboard_wall", "wall_shelf", "workbench"], "board": false, "walls": ["wall_shelf", "waiting_bench", "drinks_fridge", "waiting_bench", "wall_shelf"], "centre": "none", "window": "display", "back": "stock", "frames": false, "posters": true, "cap": {"wall_shelf": 2}, "tint": Color(0.98, 0.92, 0.66)},
 	# used-car sales office: one salesman's desk with the buyer's chair facing it, a coffee counter, key cabinet (a
 	# filing cabinet), brochures and the "finance today" posters; the window looks onto the lot
-	"car_sales": {"max_d": 10.0, "floor": "Tiles141", "light": "panel", "counter": ["filing_cabinet"], "till": false, "behind": ["filing_cabinet", "wall_shelf"], "board": false, "walls": ["brochure_rack", "drinks_fridge", "waiting_bench"], "centre": "none", "window": "waiting", "back": "none", "frames": false, "posters": true, "tint": Color(0.86, 0.9, 0.98)},
+	"car_sales": {"max_d": 10.0, "floor": "Tiles141", "light": "panel", "counter": [], "till": false, "behind": ["filing_cabinet", "filing_cabinet", "wall_shelf"], "board": false, "walls": ["brochure_rack", "drinks_fridge", "waiting_bench"], "centre": "none", "window": "waiting", "back": "none", "frames": false, "posters": true, "tint": Color(0.86, 0.9, 0.98)},
 	# discount grocer: checkouts by the door (you queue to leave), long gondolas, fridges and freezers along the walls,
 	# produce in the window, cheap bright signage
 	"discount": {"floor": "Tiles141", "light": "panel", "counter": ["checkout_counter", "checkout_counter"], "till": false, "behind": ["wall_shelf", "cigarette_cabinet"], "board": false, "walls": ["drinks_fridge", "chest_freezer", "drinks_fridge", "grocery_shelf"], "centre": "rows", "window": "produce", "back": "stock", "frames": false, "posters": true, "cap": {"drinks_fridge": 4, "chest_freezer": 3}, "tint": Color(1.0, 0.94, 0.78)},
@@ -64,7 +64,7 @@ const KINDS := {
 	# credit union: teller counter across the back, a desk for loans, a waiting bench, brochures
 	"bank": {"floor": "Terrazzo005", "light": "panel", "counter": ["shop_counter", "shop_counter", "shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet", "filing_cabinet"], "board": false, "walls": ["brochure_rack", "waiting_bench"], "centre": "desks", "window": "waiting", "back": "office", "frames": true, "tint": Color(0.93, 0.92, 0.86)},
 	# recycling booth: the attendant's scale counter, bins of sorted cans behind
-	"recycling": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["recycling_receptacle", "recycling_receptacle"], "board": false, "walls": ["wall_shelf"], "centre": "none", "window": "none", "back": "none", "frames": false, "tint": Color(0.88, 0.94, 0.86)},
+	"recycling": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["wall_shelf", "filing_cabinet"], "board": true, "walls": ["wall_shelf"], "centre": "none", "window": "none", "back": "none", "frames": false, "tint": Color(0.88, 0.94, 0.86)},
 	# tax prep / insurance: a reception counter, two preparer desks with a client chair each, waiting chairs at the
 	# window, filing cabinets, leaflets
 	"tax": {"max_d": 10.0, "floor": "Carpet012", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet"], "board": false, "walls": ["filing_cabinet", "brochure_rack"], "centre": "desks", "window": "waiting", "back": "office", "frames": true, "tint": Color(0.93, 0.95, 0.9)},
@@ -87,7 +87,7 @@ const DRESS := {"drive_thru": ["indoor_bin", "potted_plant", "drinks_fridge", "i
 	 "pizza": ["indoor_bin", "potted_plant", "drinks_fridge"],
 	 "dry_cleaner": ["waiting_bench", "garment_rail", "garment_rail", "potted_plant", "indoor_bin"],
 	 "bank": ["potted_plant", "potted_plant", "indoor_bin", "waiting_bench"],
-	 "recycling": ["recycling_receptacle", "recycling_receptacle", "indoor_bin"]}
+	 "recycling": ["potted_plant"]}
 const CAP := {"vending_soda": 1, "drinks_fridge": 1, "waiting_bench": 3, "card_spinner": 1, "brochure_rack": 1, "glass_display_case": 3, "filing_cabinet": 3}
 const WALL_TINTS := [Color(1.0, 0.95, 0.86), Color(0.94, 0.96, 0.98), Color(0.98, 0.92, 0.84), Color(0.9, 0.95, 0.92), Color(1.0, 0.97, 0.93), Color(0.93, 0.9, 0.86)]
 const SHORT := {"cafe": "COFFEE", "bakery": "BAKERY", "bar": "BAR", "restaurant": "KITCHEN", "fast_food": "FOOD", "ice_cream": "ICE CREAM",
@@ -321,6 +321,8 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		var mx := (X0 + X1) * 0.5 + (0.6 if dx < (X0 + X1) * 0.5 else -0.6)
 		var zm := zc + cd * 0.5 + 1.6
 		_group([["office_desk", mx, zm, 180.0], ["office_chair", mx, zm - 0.75, 180.0], ["side_chair", mx - 0.4, zm + 0.8, 180.0], ["side_chair", mx + 0.4, zm + 0.8, 180.0]])
+	if kind == "recycling":     # the attendant sits behind the scale counter, facing the window where people bring their bags
+		_put("office_chair", cx, zc - cd * 0.5 - 0.35, 0.0, false)
 	# ---- the side walls: the shop's goods / seats along them (low things only under the side windows)
 	var sidewin := _side_windows(c)
 	var used := {}         # per ROOM (not per wall): one soda machine, at most two fridges in the whole room
