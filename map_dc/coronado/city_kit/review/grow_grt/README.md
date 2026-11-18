@@ -51,10 +51,14 @@ the sample to the south-east, 4th St (the arterial, bus stops both ways) and 5th
 
 ## Rooms (every open shop; `interiors/assignment_grt.json`, `tools/city/rooms/room_gen_grt.gd`)
 25 rooms. Shut on purpose (boarded / dead fronts, no room): the old filling stations, the dead bays of the brick and
-row buildings, the boarded pair beside the laundromat in g_v3_g4sw. The car wash and the contractor's / parts depots
+row buildings (ck_grt_row2 paints its windows boarded: only dead fronts go in it), the shut second bay of the
+laundromat building in g_v3_g4sw. The car wash and the contractor's / parts depots
 are work yards, not shops.
-Inside, from the customer's side: the counter in view from the door, the first 1.5 m clear, queue and staff space;
+Built with the NEW kit indoor set (assets branch dd8d53a, same files as `claude/kit-indoor-props` 9fce731: the shelves
+come stocked). Inside, from the customer's side: the counter in view from the door, the first 1.5 m clear, queue and staff space;
 gritty: steel bars over the counter where cash or bottles change hands, stock crammed on every shelf (with gaps where
 something sold out), chairs that never matched, fluorescent tubes (warm light only in the bar and the diners), walls
 that were white once, floors worn grey where people stand, notices on the walls (never over a window, never into the
-ceiling, never over each other), hand-painted plates outside in faded colours.
+ceiling, never over each other), hand-painted plates outside in faded colours; the pawn shop and the thrift store take
+in everything (pawned bikes, gym benches, surfboards), laundromats have folding tables down the middle, the owner's
+stool at the staff end of the counter.

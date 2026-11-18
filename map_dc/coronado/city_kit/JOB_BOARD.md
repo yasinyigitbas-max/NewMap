@@ -18,6 +18,9 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   OPEN QUESTIONS FOR YASIN: (1) approve / change the three variants before any wider growth; (2) the same "wall props on
   windows" fault is very likely in the LOCKED samples too (shared dress helper): fix needs his word to unlock;
   (3) the modular map rows (`@map:brk3_row3`, `shop_row4`, `svb_row*`, `stg_row*`) would suit the next gritty round: merge them?
+  NOTE for the PC / strip session (cloud could not message the PC): new indoor kit dd8d53a is on this branch (546f76f, file
+  for file the same as `claude/kit-indoor-props` 9fce731); after it the indoor checker reports 12 problems, ALL in the old
+  rooms (generated / hand-made), none in the gritty rooms. Polish pass done (Yasin: "run a polish pass ... lots of props").
 - 18 Nov ~21:50 (PC time): YASIN DECIDED THE DAY LOOK: "i go for gta4 look" (the sky session's current default palette
   stays; the half-haze and clear-day variants are not needed). He also asked whether merging must wait for the census
   ("do we have to wait for the cencus?"): no. MERGED into the working branch: the tier session's branch
