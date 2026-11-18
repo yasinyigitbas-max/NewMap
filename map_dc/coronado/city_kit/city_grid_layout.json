@@ -5015,6 +5015,46 @@
    "from": "grow_grt"
   },
   {
+   "piece": "g_v1_j4nw",
+   "pos": [
+    -800.0,
+    2.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v2_j4sw",
+   "pos": [
+    -800.0,
+    2.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v3_j5nw",
+   "pos": [
+    -800.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
+   "piece": "g_v3_j5sw",
+   "pos": [
+    -800.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_grt"
+  },
+  {
    "piece": "i_va_w800_n1600_sw",
    "pos": [
     -800.0,
