@@ -74,6 +74,24 @@ func _run() -> void:
 	b.add("plant_bougainvillea_wall", "normal", -56.0, -10.5, 0.0); b.add("plant_bougainvillea_wall", "normal", -30.0, -10.5, 0.0)   # on the street side of the wall
 	b.island(-12.0, -74.0, -9.0, -52.0, 1, ["palm_queen_a"])               # planting on Adela between the two entrances
 	b.add("prop_pylon_sign", "worn", -10.5, -66.0, 90.0)                     # ADELA PLAZA tenants, facing Adela
+	# ---------------------------------------------------------------- polish pass (lots of props, a neighbourhood centre's life)
+	var tries := func(base: String, cond: String, x: float, z: float, yaw: float) -> void:
+		if b.free_at(x, z, b.half(base)): b.add(base, cond, x, z, yaw)
+	b.door_life()
+	b.fire_lane(-72.0, -83.0, -40.0, -83.0, Vector2(0, 1)); b.fire_lane(-72.0, -99.0, -72.0, -69.0, Vector2(1, 0))
+	b.pole_line(-98.3, -54.0, -98.3, -22.0, 16.0)                             # power along the back fence, in the buffer strip
+	for m: Vector2 in [Vector2(-50.0, -55.0), Vector2(-30.0, -73.0), Vector2(-62.0, -45.0)]:
+		b.add("prop_manhole_cover", "dirty", m.x, m.y, 0.0, false, 0.002)
+	tries.call("prop_cart_corral", "worn", -44.0, -48.7, 0.0)               # a corral at the far rows: people park and walk
+	for c: Vector3 in [Vector3(-56.0, -61.5, 25.0), Vector3(-33.0, -55.0, -70.0), Vector3(-66.0, -49.0, 110.0)]:
+		tries.call("prop_shopping_cart", "dirty", c.x, c.y, c.z)            # the ones nobody brought back
+	tries.call("prop_park_bench", "worn", -42.0, -22.9, 0.0)               # by the walk-in path: grandparents wait for the laundry
+	tries.call("prop_bike_rack", "worn", -50.5, -22.9, 0.0)
+	tries.call("prop_newspaper_box_red", "worn", -21.8, -24.6, -90.0)
+	tries.call("prop_mailbox_post_metal", "worn", -37.4, -22.6, 0.0)
+	tries.call("prop_vending_soda", "worn", -73.4, -80.6, 90.0)            # outside the grocer, by the ice chest
+	tries.call("prop_trash_receptacle", "dirty", -73.2, -70.8, 90.0)
+	tries.call("prop_cone_28in", "dirty", -78.0, -58.0, 0.0)
 	# ---------------------------------------------------------------- polish, wear
 	for p2: Vector2 in [Vector2(-50.0, -73.0), Vector2(-30.0, -55.0), Vector2(-60.0, -45.0), Vector2(-80.0, -66.5)]:
 		b.add("prop_storm_drain_grate", "dirty", p2.x, p2.y, 0.0, false, 0.002)

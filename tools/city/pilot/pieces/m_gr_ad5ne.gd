@@ -150,6 +150,24 @@ func _run() -> void:
 	# more shade and light in the lot
 	for p3: Vector2 in [Vector2(118.0, -80.5), Vector2(96.0, -80.5), Vector2(36.0, -60.0)]:
 		b.add("prop_lot_light_pole", "worn", p3.x, p3.y, 0.0)
+	# ---------------------------------------------------------------- polish pass (Yasin 18 Nov: "lots of props", fitting the strip)
+	var tries := func(base: String, cond: String, x: float, z: float, yaw: float) -> void:
+		if b.free_at(x, z, b.half(base)): b.add(base, cond, x, z, yaw)
+	b.door_life()
+	b.fire_lane(46.0, -83.0, 66.0, -83.0, Vector2(0, 1)); b.fire_lane(106.0, -83.0, 118.0, -83.0, Vector2(0, 1))
+	b.pole_line(30.0, -99.4, 141.0, -99.4)                                    # the power comes along the back lot line
+	for m: Vector2 in [Vector2(60.0, -74.0), Vector2(95.0, -56.0), Vector2(30.0, -49.0), Vector2(122.0, -74.0)]:
+		b.add("prop_manhole_cover", "dirty", m.x, m.y, 0.0, false, 0.002)
+	tries.call("prop_park_bench", "worn", 134.6, -41.5, 90.0)                 # wash customers wait by the office, watching the bays
+	tries.call("prop_trash_receptacle", "dirty", 140.0, -78.6, 0.0)          # at the pay lanes: receipts, coffee cups
+	tries.call("prop_vending_soda", "worn", 69.0, -86.5, 90.0)               # the lube's waiting customers step out for a can
+	tries.call("prop_park_bench", "worn", 67.2, -80.6, 90.0)
+	tries.call("prop_cone_28in", "dirty", 89.5, -80.5, 0.0); tries.call("prop_cone_28in", "dirty", 89.9, -79.6, 30.0)   # a spare cone stack
+	tries.call("prop_newspaper_box_red", "worn", 34.6, -23.0, 0.0)
+	tries.call("prop_bike_rack", "worn", 23.0, -22.9, 0.0)                   # parallel to the chicken shack's front walk
+	for t: Array in [[45.0, -65.0, "tree_jacaranda_b"], [24.0, -55.0, "tree_coral_b"]]:
+		if b.free_at(float(t[0]), float(t[1]), 1.6):
+			b.paints.append(b.rect(float(t[0]) - 1.2, float(t[1]) - 1.2, float(t[0]) + 1.2, float(t[1]) + 1.2, "grass")); b.add(String(t[2]), "normal", float(t[0]), float(t[1]), 37.0)
 	# ---------------------------------------------------------------- wear
 	b.building_wear()
 	b.stall_wear(0.6)
