@@ -7,10 +7,14 @@
 // The plant atlases (and the two prop pages with cut-out panels) are layers of runtime_tex/arr_fol_*.png: one material
 // for every plant of a batch. Per plant: page, wind amount (0 = stiff: fences), normal map or not.
 //   RT_MERGED: CUSTOM0 (half floats) = xyz the foot, w = page * 16 + (wind + 2 * normal map) * 2;   MultiMesh: INSTANCE_CUSTOM = (page, wind, normal map, -)
+#include "res://map_dc/coronado/city_kit/shaders/rt/rt_tier.gdshaderinc"
 uniform sampler2DArray albedo_arr : source_color, filter_linear_mipmap, repeat_disable;
 uniform sampler2DArray normal_arr : hint_normal, filter_linear_mipmap, repeat_disable;
 varying flat float v_page;
 varying flat float v_hasn;
+#ifdef CK_TIERS
+varying vec2 v_tw;
+#endif
 uniform float roughness = 0.85;
 uniform float scissor = 0.5;
 uniform float range_begin = 0.0;
@@ -29,7 +33,13 @@ void vertex() {
 	v_page = INSTANCE_CUSTOM.x; float wind_amount = INSTANCE_CUSTOM.y; v_hasn = INSTANCE_CUSTOM.z;
 #endif
 	float d = distance(MAIN_CAM_INV_VIEW_MATRIX[3].xyz, pivot);
+#ifdef CK_TIERS
+	float ck_s = CK_FAR_M * ck_cell_ramp(pivot);      // see rt_tier.gdshaderinc
+	v_tw = ck_weights(d, min(range_begin, ck_s), min(range_end, ck_s));
+	if (v_tw.x <= 0.0 || v_tw.y <= 0.0) {
+#else
 	if (d < range_begin || d >= range_end) {
+#endif
 		VERTEX = pivot;
 	} else if (wind_amount > 0.0) {
 		float ws = ck_wind_strength * wind_amount;
@@ -46,6 +56,9 @@ void vertex() {
 }
 
 void fragment() {
+#ifdef CK_TIERS
+	CK_DITHER
+#endif
 	vec3 uvw = vec3(UV, floor(v_page + 0.5));
 	vec4 t = texture(albedo_arr, uvw);
 	ALBEDO = t.rgb;

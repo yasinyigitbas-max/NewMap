@@ -1,0 +1,24 @@
+# phone rig run 'night_nofg'  2026-11-18T18:13Z  args: --drive=day/z_centre/60/8/0 --drive=night/z_centre/60/15/1 --nofarground
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 316 -> 316 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit a0f2154 | meminfo at 60 s: 
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 plan=default lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=141 tiers=false band=8.0 arrive=0.50 far_ground=false tier_materials=19
+RIG own drives: 2
+RIG boot first_area_ms=694 warm_ms=572 (graphics memory reserve 192 MB: 45 ms) cells=10 static_mb=106 video_mb=258
+RIG drive day speed=60 km/h secs=8 frames=562 fps=70.2 | frame_ms med=16.1 p95=22.0 p99=25.3 worst=26 | over16.7=38.4% over33=0 over50=0 over100=0
+RIG   map day draws avg=95 max=124 | tris avg=747k max=1353k | cells most=14 in=4 out=0 dropped=0 cap_hits=0 | gpu_ms med=11.39 p95=15.70
+RIG   stream day start_ready_ms=0 (worst frame meanwhile 0 ms) | request_to_in ms mean=224 worst=298 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 0.62, body 0.64 (col_2 shapes=24 new=495), removal step 0.00 | bodies late=0
+RIG   slow day frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision day made=45364 units, a body waited at most 451 ms from its cell's arrival | physics thread wait a frame (probe): median -1.0 p99 -1.0 worst -1.0 ms
+RIG   objects day all=6572 nodes=1837 orphan_nodes=0 resources=1362 | streamer: cells in=14, bodies waiting=0, nodes leaving=0
+RIG   mem day static_mb=114 video_mb=314 tex_mb=115 buf_mb=172
+RIG slow night 51 ms at t=0.2 s pos=(-137, -600): cells in +0 out +0, bodies +0, loading [] | marks: rig 0.5 focus 0.3 | to_streamer 0.0 streamer 1.5 | to_draw 0.0 draw 47.6 | to_physics 0.2 physics 0.4 | at: physics_wait -1.0 render_wait -1.0 streamer 1.51 setup 0.0 draw_cpu 1.7 gpu 48.9 | then: physics_wait -1.0 render_wait -1.0 streamer 1.53 setup 0.0 draw_cpu 0.6 gpu 40.1
+RIG slow night 52 ms at t=0.3 s pos=(-137, -600): cells in +0 out +0, bodies +0, loading [] | marks: rig 0.7 focus 0.3 | to_streamer 0.0 streamer 1.5 | to_draw 0.0 draw 46.9 | to_physics 0.9 physics 2.1 | at: physics_wait -1.0 render_wait -1.0 streamer 1.53 setup 0.0 draw_cpu 0.6 gpu 40.1 | then: physics_wait -1.0 render_wait -1.0 streamer 1.53 setup 0.1 draw_cpu 0.7 gpu 13.9
+RIG drive night speed=60 km/h secs=15 frames=861 fps=57.4 | frame_ms med=17.0 p95=25.4 p99=27.4 worst=52 | over16.7=55.3% over33=2 over50=2 over100=0
+RIG   map night draws avg=101 max=140 | tris avg=748k max=1354k | cells most=14 in=3 out=5 dropped=0 cap_hits=0 | gpu_ms med=14.24 p95=18.14
+RIG   stream night start_ready_ms=1 (worst frame meanwhile 0 ms) | request_to_in ms mean=168 worst=368 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.58, body 1.66 (col_16 shapes=24 new=728), removal step 1.33 | bodies late=0
+RIG   slow night frames over 33 ms by what the streamer was doing: { "none": 2 } | over 45 ms: { "none": 2 }
+RIG   collision night made=18399 units, a body waited at most 329 ms from its cell's arrival | physics thread wait a frame (probe): median -1.0 p99 -1.0 worst -1.0 ms
+RIG   objects night all=6122 nodes=1708 orphan_nodes=0 resources=1191 | streamer: cells in=12, bodies waiting=0, nodes leaving=0
+RIG   mem night static_mb=113 video_mb=304 tex_mb=115 buf_mb=162
+RIG plan_done lap=1

@@ -1,0 +1,25 @@
+# phone rig run 'before'  2026-11-18T18:25Z  args: --plan=shots --nofarground
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 340 -> 340 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit be1e2db | meminfo at 60 s: 
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 plan=shots lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=141 tiers=false band=8.0 arrive=0.50 far_ground=false tier_materials=19
+RIG boot first_area_ms=528 warm_ms=516 (graphics memory reserve 192 MB: 37 ms) cells=12 static_mb=104 video_mb=237
+RIG shots building c_ne_18__twr_glass (urban/twr_glass) at (28, -636), 35.7 m off the street
+RIG shot bldg_040m pos=(10.0, 7.6, -600.0) draws=104 tris=1013k saved=OK
+RIG shot: no ground under (-15, -600)
+RIG shot bldg_056m pos=(-15.1, 7.6, -600.0) draws=116 tris=1065k saved=OK
+RIG shot bldg_060m pos=(-20.2, 7.6, -600.0) draws=115 tris=1129k saved=OK
+RIG shot bldg_064m pos=(-25.1, 7.6, -600.0) draws=117 tris=1271k saved=OK
+RIG shot bldg_080m pos=(-43.6, 7.6, -600.0) draws=113 tris=1200k saved=OK
+RIG shot bldg_150m pos=(-117.7, 7.6, -600.0) draws=79 tris=425k saved=OK
+RIG shot bldg_212m pos=(-181.0, 7.6, -600.0) draws=111 tris=668k saved=OK
+RIG shot bldg_218m pos=(-187.1, 7.6, -600.0) draws=105 tris=627k saved=OK
+RIG shot bldg_222m pos=(-191.1, 7.6, -600.0) draws=103 tris=622k saved=OK
+RIG shot bldg_228m pos=(-197.2, 7.6, -600.0) draws=100 tris=576k saved=OK
+RIG shot bldg_260m pos=(-229.5, 7.6, -600.0) draws=126 tris=788k saved=OK
+RIG shot street_eye pos=(-950.0, 5.7, -600.0) draws=36 tris=148k saved=OK
+RIG shot street_high pos=(-950.0, 34.1, -600.0) draws=36 tris=146k saved=OK
+RIG shot junction_north pos=(0.0, 7.8, -560.0) draws=79 tris=905k saved=OK
+RIG shot hill_view pos=(-600.0, 18.0, -1000.0) draws=95 tris=485k saved=OK
+RIG shot aerial pos=(-950.0, 124.1, -600.0) draws=30 tris=122k saved=OK
+RIG plan_done shots
