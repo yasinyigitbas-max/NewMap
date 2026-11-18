@@ -5,6 +5,13 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov (cloud, branch `claude/look-buildings`, NOT merged): THE PC QUEUE OF LOOK JOBS DONE (Yasin: "start and work
+  non stop to clear your queue"). 1 fake rooms: dropped (real rooms instead, above). 2 props read their ORM map again
+  (`ck_look_propmaps`; why they lost it, normal maps = bake patch). 3 close-up wall grain (`ck_look_detail`). 4 contact
+  shadows between models, prototype (`ck_look_between`, pavement at building feet, walls under awnings). 5 far
+  buildings' night windows (mask in the far atlas alpha, patch for rt_far). 6 shop signs glow at night, some flicker
+  (`ck_look_signs`). 7 the summary table: top of `docs/LOOK_BUILDINGS.md`. Bake / rt_far parts in `docs/look_patches/`
+  for the PC session. Lock test PASS. NOTHING measured on the phone. WAITING for Yasin / the PC session's phone run.
 - 18 Nov (cloud, branch `claude/look-buildings`, NOT merged): ROOMS ON ALL SHOPS (Yasin: "we had fake windows, i didnt
   like them"; "ideally, id like to have those store signs, real windows and see thru doors of those shops all over the
   map"; "i want them on all shops"). The PC queue's job 1 (fake rooms behind glass) DROPPED. Every shop of the map has a

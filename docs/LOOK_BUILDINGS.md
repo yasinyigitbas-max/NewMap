@@ -1,14 +1,33 @@
 # Look pack, buildings (18 Nov 2026)
 
 Yasin wants "a visible jump" in how the game looks. This is the buildings' half of a cheap look pack (the sky, haze and
-colour half is done by another session in `tools/city/rig/rig.gd`). Three changes, all in the buildings' runtime
-shader `map_dc/coronado/city_kit/shaders/rt/rt_bldg.gdshader`, each with its own switch. Nothing baked changes (no
-re-bake needed), no locked piece changes (lock test RESULT PASS), no extra draw, no extra texture read.
+colour half is another session's, in `tools/city/rig/rig.gd`), plus the PC session's queue of look jobs and the real
+rooms behind every shop. All on branch `claude/look-buildings`, nothing merged. Locked pieces unchanged: lock test
+RESULT PASS after every step. The rig and the bake / streamer were not touched; what needs them is a patch note in
+`docs/look_patches/`.
 
-Pictures: `map_dc/coronado/city_kit/review/look_18nov/buildings/` (1640x720 JPG, street level).
 **Cloud pictures are not phone pictures:** the cloud's software GPU draws the weathered buildings about 40 % too dark,
 draws no shadows, and the pictures run with sky reflections off (otherwise it draws the leaves black). The PC session
-should take the real ones on the Redmi.
+should take the real ones on the Redmi. NOTHING here has been measured on the phone.
+
+## Everything at a glance
+Switches are global shader values (`project.godot` `[shader_globals]`, 0 off / 1 on, all default 1), set from code with
+`RenderingServer.global_shader_parameter_set()`. Pictures under `map_dc/coronado/city_kit/review/`.
+| Change | Switch | Where | Pictures | Cost on the phone (estimate, not measured) | On by default on the phone? |
+|---|---|---|---|---|---|
+| Buildings sit on the street (kit AO in sunlight + a foot line) | `ck_look_contact` | `rt_bldg` | `look_18nov/buildings/*_contact`, `*_ao_*` | ~5 ops a building pixel, no read | Yes |
+| Night windows, each its own light | `ck_look_windows` | `rt_bldg` | `look_18nov/buildings/*_night_*` | ~20 ops, night only, no new read | Yes |
+| Glass reflects the sky by day | `ck_look_glass` | `rt_bldg` | `look_18nov/buildings/*_day_*`, `*_glass` | ~40 ops on glass pixels only, no read | Yes; measure |
+| Props read their ORM map (queue 2) | `ck_look_propmaps` | `rt_prop.gdshaderinc` | `look_18nov/props/` | +1 read on near page-A prop pixels | Yes (it fixes a fault) |
+| Props' normal maps (queue 2) | (bake) | patch `look_patches/prop_maps.md` | - | +1 read near, tangents in near batches | Yes, after the patch |
+| Close-up wall grain (queue 3) | `ck_look_detail` | `rt_bldg` + `city_kit/look/detail_wall.png` | `look_18nov/detail/` | +1 read on building pixels within 12 m | Try on; the first to switch off if a frame step is lost (it is the only one that costs a read on large areas) |
+| Contact shadows between models (queue 4) | `ck_look_between` | prototype `tools/city/look/contact_proto.gd`; patch `look_patches/contact_between.md` | `look_18nov/contact_between/` | +1 draw a cell, a blend on thin strips | Yes, after the patch |
+| Far buildings' night windows (queue 5) | (`ck_look_windows`) | patch `look_patches/far_windows.md` | `look_18nov/far_windows/` | no read (mask in the atlas alpha), ~20 ops at night; +2 MB | Yes, after the patch |
+| Shop signs glow at night (queue 6) | `ck_look_signs` | `rt_bldg` | `look_18nov/signs/` | ~12 ops on sign texels at night | Yes |
+| Fake rooms behind glass (queue 1) | - | DROPPED: Yasin keeps real rooms | `look_18nov/waterfront_rooms/` | - | - |
+| Real rooms behind every shop | (per room, visible to 62 m) | `interiors/rooms/` (162 rooms); patch `look_patches/rooms_bake.md` | `rooms_18nov/` | raw 26 draws a room, merged ~9; real lights 2-6 a room; glass is alpha-blended | Only after the merge and a light budget, and a run on the Redmi with and without |
+What I would do on the phone first: one zones run with everything on, one with all `ck_look_*` = 0, one with only
+`ck_look_detail` = 0; the rooms only once the bake carries them.
 
 ## The switches
 Global shader values in `project.godot` `[shader_globals]`, 0 = off (the look before), 1 = on. All default ON.
