@@ -356,3 +356,52 @@ How it is built (Stage 2):
 
 Measured on the phone as its own line (Stage 2d): 0 parked cars against a normal street's worth, with the same
 numbers as the traffic table (main thread ms, physics wait, GPU ms, draws).
+
+## 15. Stage 2a result: the streets as traffic and people use them (19 Nov, 01:45)
+`tools/city/traffic/make_streets.gd` (a few lines; all the work is the C++ class `StreetGraph`, `native/src/street_*`)
+reads the BAKED city and the locked skeleton and writes `map_dc/coronado/city_kit/traffic/streets.bin` (540 KB), the
+full report `traffic/streets_report.txt` and eleven check pictures in `review/traffic/`. Run it after every bake:
+`godot --path . --rendering-method mobile --resolution 320x180 -s res://tools/city/traffic/make_streets.gd`
+(71 s to read the 141 cells, 3 s to build).
+
+How it works, in short. The skeleton only says which street joins which junction. Everything else is MEASURED from
+the baked ground, whose triangles say what they are (asphalt, concrete, grass, white paint, yellow paint):
+- every street is cut across every 2 m: where its median ends, where its kerb is, where its pavement runs, to a
+  centimetre. The lanes are laid from those kerbs with the piece libraries' own lane widths; a block whose two halves
+  were built by different pieces changes its lanes on the way;
+- where the skeleton line lies beside the built street (the waterfront: up to 7 m, in a tight curve where four lanes
+  become two), the tool FOLLOWS the street itself from one junction to the next;
+- a stop bar is found as a white line right across an approach, signals from the signal heads the bake flags. So
+  which approach stops, and where, is what is painted and built: 27 junctions with signals on every approach, 40
+  all-way stops, 24 T-junctions where only the side street stops, the bridge ramp with no stop;
+- the path through a junction is the same curve the traffic will drive (one shared function). Each is checked as
+  wide as a car, and takes a wider curve when the plain one would touch a kerb corner (17 of 974 do);
+- pavements get a walk line down their middle, corners where two legs' lines meet (pushed onto the pavement at wide
+  kerb returns), a crossing just inside every stop bar;
+- parking stalls: 3,010 at the kerb, each tied to the lane beside it and its place along it; 1,514 in car parks.
+
+The numbers (all from the report; "must be 0" lines):
+| Check | Result |
+|---|---|
+| lanes | 449, 75.3 km, on 167 street pieces between 96 nodes |
+| lane points off the asphalt / over nothing / too near a kerb for a car's width | 0 / 0 / 0 of 41,619 |
+| paths through junctions touching a kerb (car width) | 0 of 974 |
+| steepest lane, largest height kink | 8.0 %, 1 cm |
+| approaches with no way on, streets of an unknown kind | 0, 0 |
+| pavements | 880 stretches, 61.0 km; points on the road 0 |
+| pavement points with no ground | 9: eight at the centre junction's missing corners (below), one at the waterfront junction's beach stub |
+| crossings | 276 (101 at signals); 4 have no paint (the truck junction paints stop bars only) |
+| kerb stalls off the asphalt | 0 |
+
+FOUND IN THE MAP (for Yasin; nothing was changed):
+- 1st St (bay front) has a HOLE of 54 m, from u 328 to 372 at v -1600: no street is built there (the place kept for
+  the ferry landing). The lanes and pavements are cut at both edges; no traffic passes until it is built.
+- The city-centre junction (Amber x 7th) has NO GROUND under its four pavement corners (about 6 x 6 m each, inside
+  the kerb returns; checked two ways, nothing in the baked cell covers them). People would walk over a hole there.
+- The truck junction (J Ave x 3rd) has stop bars but no painted crossings; people cross there on unmarked crossings.
+- The bridge's far end is where the map ends: cars will appear and leave there.
+- Driveways into car parks are not recorded (section 14): the 1,514 car-park stalls are for parked cars only.
+
+Not done in 2a, said plainly: the 3rd / 4th St left-turn pockets (the painted centre lane before a junction) are not
+lanes yet: a car turning left there waits in the inner through lane. Lanes are one per direction where a block is
+partly one lane wide. Both are on the list for after the traffic runs.

@@ -23,8 +23,12 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   GPU 13.5 ms. PARKED CARS ARE IN (Yasin 19 Nov: "tell it to bring parked cars to the game", "i think the traffic code
   needs to know about the parked cars locations right?"): doc section 14. The bake carries 4,524 stalls (3,008 at
   the kerb, 1,516 in car parks); parked and moving cars are one pool; driveways are NOT recorded by the pieces, so
-  only kerb stalls take part in traffic until they are (a note, nothing changed). NEXT: stage 2a, the lane graph of
-  the new streets (`StreetGraph`, with the stalls, checked against the baked ground).
+  only kerb stalls take part in traffic until they are (a note, nothing changed). STAGE 2a DONE (19 Nov 01:45): the streets tool
+  `tools/city/traffic/make_streets.gd` (C++ `StreetGraph`) -> `city_kit/traffic/streets.bin`, report and pictures in
+  `review/traffic/`; run it after every bake. 449 lanes (75.3 km), 974 junction paths, 61 km of pavement lines, 276
+  crossings, 3,010 kerb stalls: 0 lane points off the asphalt, 0 junction paths touching a kerb (checked as wide as a
+  car). FOUND IN THE MAP: a 54 m hole in 1st St (ferry landing), no ground under the four pavement corners of the
+  centre junction (Amber x 7th). Doc section 15. NEXT: stage 2b, the traffic core on these lanes.
 - 18 Nov (cloud, branch `claude/grow-industrial`): INDUSTRIAL GROWTH, stage 1 + 2 done, NOTHING LOCKED, WAITING for
   Yasin's word on the variants. Read `review/grow_ind/README.md`. Three variants (A port, B fleet, C cold chain),
   each dressed twice = six 100 m blocks round the sample. They form the pilot area u -900..-500, v -1600..-1400

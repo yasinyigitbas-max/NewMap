@@ -1,0 +1,300 @@
+# streets report, made by tools/city/traffic/make_streets.gd from the bake with layout_sha 55b2b1dcaaac (141 cells)
+RAMP block b164: its asphalt parts from b160 244 m along; it starts at (928.7, -1071.1), leaving b160 at (922.5, -1052.4)
+SPLIT block b160 at (922.5, -1052.4): b164 leaves it there
+HOLE in block b145 (1st St (bay front)): no street from (371.7, -1600.0) to (328.3, -1600.0), 54 m. The street is cut there
+EDGE b000    J Ave              ind      len  200.0 st  71 | right ok  71 m 0.00 kerb  6.70 walk  6.70- 8.70 | left ok  71 m 0.00 kerb  6.70 walk  6.70- 8.70 | off skeleton 0.00
+EDGE b001    J Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  6.70 walk  6.70- 8.70 | left ok  71 m 0.00 kerb  6.70 walk  6.70- 8.70 | off skeleton 0.00
+EDGE b002    J Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b003    J Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b004    J Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.13
+EDGE b005    J Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.13
+EDGE b006    J Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b007    J Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b008    J Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b009    J Ave              res      len   88.7 st  22 | right ok  22 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  22 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.08
+EDGE b010    G Ave              ind      len  200.0 st  71 | right ok  71 m 0.00 kerb  6.70 walk  6.70- 8.70 | left ok  71 m 0.00 kerb  6.70 walk  6.70- 8.70 | off skeleton 0.00
+EDGE b011    G Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b012    G Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b013    G Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b014    G Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b015    G Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b016    G Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b017    G Ave              res      len  102.0 st  22 | right ok  22 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  22 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.05
+EDGE b018    E Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b019    E Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b020    E Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b021    E Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b022    E Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.13
+EDGE b023    E Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.13
+EDGE b024    E Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.13
+EDGE b025    E Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b026    E Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b027    E Ave              res      len  115.3 st  27 | right ok  27 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  27 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.06
+EDGE b028    C Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b029    C Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b030    C Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b031    C Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b032    C Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b033    C Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b034    C Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b035    C Ave              res      len  128.0 st  35 | right ok  35 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  35 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.04
+EDGE b036    Amber Ave          res      len  200.0 st  71 | right ok  71 m 2.50 kerb 11.50 walk 13.50-16.00 | left ok  71 m 2.50 kerb 11.50 walk 13.50-16.00 | off skeleton 0.00
+EDGE b037    Amber Ave          res      len  200.0 st  71 | right ok  71 m 2.50 kerb 11.50 walk 13.50-16.00 | left ok  71 m 2.50 kerb 11.50 walk 13.50-16.00 | off skeleton 0.00
+EDGE b038    Amber Ave          res      len  200.0 st  71 | right ok  71 m 2.50 kerb 11.50 walk 13.50-16.00 | left ok  71 m 2.50 kerb 11.50 walk 13.50-16.00 | off skeleton 0.00
+EDGE b039    Amber Ave          res      len  200.0 st  71 | right ok  71 m 2.50 kerb 11.50 walk 13.50-16.00 | left ok  71 m 2.50 kerb 11.50 walk 13.50-16.00 | off skeleton 0.00
+EDGE b040    Amber Ave          cc       len  200.0 st  71 | right ok  71 m 2.50 kerb  9.10 walk  9.10-16.00 | left ok  71 m 2.50 kerb  9.10 walk  9.10-16.00 | off skeleton 0.00
+EDGE b041    Amber Ave          cc       len  200.0 st  71 | right ok  71 m 2.50 kerb  9.10 walk  9.10-16.00 | left ok  71 m 2.50 kerb  9.10 walk  9.10-16.00 | off skeleton 0.08
+EDGE b042    Amber Ave          res      len  200.0 st  71 | right ok  71 m 2.50 kerb 11.50 walk 13.50-16.00 | left ok  71 m 2.50 kerb 11.50 walk 13.50-16.00 | off skeleton 0.00
+EDGE b043    Amber Ave          hs       len  200.0 st  71 | right ok  71 m 2.50 kerb 11.50 walk 11.50-16.00 | left ok  71 m 2.50 kerb 11.50 walk 11.50-16.00 | off skeleton 0.00
+EDGE b044    Amber Ave          hs       len  200.0 st  71 | right ok  71 m 2.50 kerb 11.50 walk 11.50-16.00 | left ok  71 m 2.50 kerb 11.50 walk 11.50-16.00 | off skeleton 0.00
+EDGE b045    Amber Ave          hs       len  140.0 st  41 | right ok  41 m 2.50 kerb 11.50 walk 11.50-16.00 | left ok  41 m 2.50 kerb 11.50 walk 11.50-16.00 | off skeleton 0.07
+EDGE b046    B Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b047    B Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b048    B Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b049    B Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b050    B Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b051    B Ave              std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b052    B Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b053    B Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b054    B Ave              res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b055    B Ave              res      len  145.0 st  42 | right ok  42 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  42 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.02
+EDGE b056    Adela Ave          std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b057    Adela Ave          strip    len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  5.70- 8.70 | left ok  71 m 0.00 kerb  5.70 walk  5.70- 8.70 | off skeleton 0.00
+EDGE b058    Adela Ave          strip    len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  5.70- 8.70 | left ok  71 m 0.00 kerb  5.70 walk  5.70- 8.70 | off skeleton 0.17
+EDGE b059    Adela Ave          res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.17
+EDGE b060    Adela Ave          std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b061    Adela Ave          std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b062    Adela Ave          res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b063    Adela Ave          res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b064    3rd St             couplet  len  150.9 st  45 | right ok  45 m 0.00 kerb  6.70 walk  6.70- 8.70 | left ok  45 m 0.00 kerb  6.70 walk  6.70- 8.70 | off skeleton 0.02
+EDGE b065    3rd St             couplet  len  200.0 st  71 | right ok  71 m 0.00 kerb  6.70 walk  6.70- 8.70 | left ok  71 m 0.00 kerb  6.70 walk  6.70- 8.70 | off skeleton 0.00
+EDGE b066    3rd St             couplet  len  200.0 st  71 | right ok  71 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  71 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.02
+EDGE b067    3rd St             couplet  len  200.0 st  71 | right ok  71 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  71 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.00
+EDGE b068    3rd St             couplet  len  200.0 st  71 | right ok  71 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  71 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.00
+EDGE b069    3rd St             couplet  len  250.0 st  96 | right ok  96 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  96 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.00
+EDGE b070    3rd St             couplet  len  250.0 st  96 | right ok  96 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  96 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.00
+EDGE b071    3rd St             couplet  len  160.0 st  51 | right ok  51 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  51 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.00
+EDGE b072    4th St             couplet  len  151.8 st  45 | right ok  45 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  45 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.00
+EDGE b073    4th St             couplet  len  200.0 st  71 | right ok  71 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  71 m 0.00 kerb 10.30 walk 12.30-16.85 | off skeleton 0.00
+EDGE b074    4th St             couplet  len  200.0 st  71 | right ok  71 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  71 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.00
+EDGE b075    4th St             couplet  len  200.0 st  71 | right ok  71 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  71 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.00
+EDGE b076    4th St             couplet  len  200.0 st  71 | right ok  71 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  71 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.00
+EDGE b077    4th St             couplet  len  250.0 st  96 | right ok  96 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  96 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.00
+EDGE b078    4th St             couplet  len  250.0 st  96 | right ok  96 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  96 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.00
+EDGE b079    4th St             couplet  len  160.0 st  51 | right ok  51 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  51 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.00
+EDGE b080    5th St             std      len  193.8 st  66 | right ok  66 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  66 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.08
+EDGE b081    5th St             std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b082    5th St             std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b083    5th St             std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b084    5th St             res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b085    5th St             res      len  250.0 st  96 | right ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b086    5th St             res      len  250.0 st  96 | right ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b087    5th St             strip    len  160.0 st  51 | right ok  51 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  51 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.00
+EDGE b088    6th St             std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b089    6th St             std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.13
+EDGE b090    6th St             std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.13
+EDGE b091    6th St             std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b092    6th St             cc       len  200.0 st  71 | right ok  71 m 0.00 kerb  3.30 walk  3.30- 9.70 | left ok  71 m 0.00 kerb  3.30 walk  3.30- 9.70 | off skeleton 0.00
+EDGE b093    6th St             cc       len  250.0 st  96 | right ok  96 m 0.00 kerb  3.30 walk  3.30- 9.70 | left ok  96 m 0.00 kerb  3.30 walk  3.30- 9.70 | off skeleton 0.00
+EDGE b094    6th St             std      len  250.0 st  96 | right ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b095    6th St             res      len  157.3 st  48 | right ok  48 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  48 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.01
+EDGE b096    7th St             std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b097    7th St             std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b098    7th St             cc       len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  5.70- 9.70 | left ok  71 m 0.00 kerb  5.70 walk  5.70- 9.70 | off skeleton 0.00
+EDGE b099    7th St             cc       len  250.0 st  96 | right ok  96 m 0.00 kerb  3.30 walk  3.48- 9.70 | left ok  96 m 0.00 kerb  3.30 walk  3.30- 9.70 | off skeleton 0.00
+EDGE b100    7th St             std      len  250.0 st  96 | right ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b101    7th St             res      len  154.7 st  47 | right ok  47 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  47 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.01
+EDGE b102    8th St             std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b103    8th St             std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.13
+EDGE b104    8th St             std      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.13
+EDGE b105    8th St             cc       len  250.0 st  96 | right ok  96 m 0.00 kerb  3.30 walk  3.30- 9.70 | left ok  96 m 0.00 kerb  3.30 walk  3.30- 9.70 | off skeleton 0.00
+EDGE b106    8th St             std      len  250.0 st  96 | right ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b107    8th St             res      len  152.0 st  47 | right ok  47 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  47 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.01
+EDGE b108    9th St             res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b109    9th St             res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b110    9th St             res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b111    9th St             res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.13
+EDGE b112    9th St             hs       len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.13
+EDGE b113    9th St             hs       len  250.0 st  96 | right ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b114    9th St             res      len  250.0 st  96 | right ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b115    9th St             res      len  147.0 st  43 | right ok  43 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  43 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.02
+EDGE b116    10th St            res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b117    10th St            res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b118    10th St            res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b119    10th St            res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b120    10th St            hs       len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b121    10th St            hs       len  250.0 st  96 | right ok  96 m 0.00 kerb  5.70 walk  7.70- 9.20 | left ok  96 m 0.00 kerb  5.70 walk  7.70- 9.20 | off skeleton 0.00
+EDGE b122    10th St            res      len  250.0 st  96 | right ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.13
+EDGE b123    10th St            res      len  126.5 st  33 | right ok  33 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  33 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.15
+EDGE b124    11th St            res      len  192.5 st  66 | right ok  66 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  66 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.24
+EDGE b125    11th St            res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b126    11th St            res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b127    11th St            res      len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b128    11th St            hs       len  200.0 st  71 | right ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  71 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b129    11th St            hs       len  250.0 st  96 | right ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok  96 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b130    11th St            std      len  320.0 st 131 | right ok 131 m 0.00 kerb  5.70 walk  7.20- 9.20 | left ok 131 m 0.00 kerb  5.70 walk  7.20- 9.20 | off skeleton 0.00
+EDGE b131    Ocean Blvd         ring     len  200.4 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-16.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.20
+EDGE b132    Ocean Blvd         ring     len  200.4 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-16.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.21
+EDGE b133    Ocean Blvd         ring     len  200.4 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-16.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.20
+EDGE b134    Ocean Blvd         ring     len  200.4 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-16.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.22
+EDGE b135    Ocean Blvd         ring     len  250.1 st 115 | right ok 115 m 0.00 kerb 10.30 walk 12.30-16.30 | left ok 115 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.20
+FOLLOW block b136 (W leg): its line was drawn again along the built street, 218.2 m (the skeleton line: 214.6 m, up to 6.9 m beside the street)
+EDGE b136    W leg              ring     len  218.2 st  80 | right ok  80 m 0.00 kerb  5.85 walk  7.36- 9.94 | left ok  80 m 0.00 kerb  5.87 walk  7.39- 9.55 | off skeleton 6.91
+EDGE b137    Glorietta Blvd     ring     len  201.4 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.23
+EDGE b138    Glorietta Blvd     ring     len  200.1 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.20
+EDGE b139    Glorietta Blvd     ring     len  200.0 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.17
+EDGE b140    Glorietta Blvd     ring     len  200.0 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.17
+EDGE b141    Glorietta Blvd     ring     len  200.0 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.12
+EDGE b142    Glorietta Blvd     ring     len  100.0 st  22 | right ok  22 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  22 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.12
+EDGE b143    Glorietta Blvd     ring     len  100.0 st  22 | right ok  22 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  22 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.01
+EDGE b144    Glorietta Blvd     ring     len  200.0 st  80 | right ok  80 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  80 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.23
+EDGE b145    1st St (bay front) ring     len  126.7 st  40 | right ok  40 m 0.00 kerb 10.30 walk 12.30-16.30 | left ok  40 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.13
+EDGE b145    1st St (bay front) ring     len   76.7 st  23 | right ok  23 m 0.00 kerb 10.30 walk 12.30-16.30 | left ok  23 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.13
+EDGE b146    1st St (bay front) ring     len  250.0 st 115 | right ok 115 m 0.00 kerb 10.30 walk 12.30-16.30 | left ok 115 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.26
+EDGE b147    1st St (bay front) ring     len  200.0 st  80 | right ok  80 m 0.00 kerb 10.30 walk 12.30-16.30 | left ok  80 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.14
+EDGE b148    1st St (bay front) ring     len  200.0 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-16.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.13
+EDGE b149    1st St (bay front) ring     len  200.0 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-16.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.30
+EDGE b150    1st St (bay front) ring     len  200.0 st  80 | right ok  80 m 0.00 kerb 10.30 walk 12.30-16.30 | left ok  80 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.20
+EDGE b151    Alameda Blvd (base ring     len  200.0 st  84 | right ok  84 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  84 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.28
+EDGE b152    Alameda Blvd (base ring     len  205.7 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.28
+EDGE b153    Alameda Blvd (base ring     len  200.8 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.16
+EDGE b154    Alameda Blvd (base ring     len  200.0 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.13
+EDGE b155    Alameda Blvd (base ring     len  200.0 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.13
+EDGE b156    Alameda Blvd (base ring     len  200.0 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.13
+EDGE b157    Alameda Blvd (base ring     len  200.0 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.13
+EDGE b158    Alameda Blvd (base ring     len  200.6 st  85 | right ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | left ok  85 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.25
+EDGE b159    Ocean Blvd         ring     len  236.5 st 105 | right ok 105 m 0.00 kerb 10.30 walk 12.30-16.30 | left ok 105 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.22
+FOLLOW block b161 (Ocean Blvd): its line was drawn again along the built street, 443.2 m (the skeleton line: 417.6 m, up to 6.8 m beside the street)
+EDGE b161    Ocean Blvd         ring     len  443.2 st 192 | right ok 192 m 0.00 kerb 10.04 walk 11.70-16.30 | left ok 192 m 0.00 kerb 10.04 walk 12.01-14.01 | off skeleton 6.77
+EDGE b162    1st St (bay front) ring     len  331.0 st 160 | right ok 160 m 0.00 kerb 10.30 walk 12.30-16.30 | left ok 160 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.24
+EDGE b163    1st St (bay front) ring     len  300.9 st 141 | right ok 141 m 0.00 kerb 10.30 walk 12.30-16.30 | left ok 141 m 0.00 kerb 10.30 walk 12.30-14.30 | off skeleton 0.30
+EDGE b160_a  bridge approach    bridge   len  324.1 st 251 | right ok 251 m 2.00 kerb 10.20 walk 12.20-14.20 | left ok 251 m 2.00 kerb 10.20 walk 12.20-14.20 | off skeleton 0.14
+EDGE b164    bridge off-ramp    bridge   len  495.8 st 385 | right ok 330 m 0.00 kerb  2.80 walk  5.05- 7.04 | left ok 330 m 0.00 kerb  2.80 walk  6.96- 8.95 | off skeleton 2.35
+EDGE b160_b  bridge approach    bridge   len  318.8 st 248 | right ok 248 m 2.00 kerb 10.20 walk  0.00- 0.00 | left ok 248 m 2.00 kerb 10.20 walk  0.00- 0.00 | off skeleton 0.30
+NODE 62 moved 0.31 m onto its streets: (-600.0, -1600.0) -> (-600.0, -1599.7)
+NODE 74 moved 0.57 m onto its streets: (660.0, -1400.0) -> (659.7, -1400.5)
+NODE 77 moved 0.33 m onto its streets: (-993.8, -1000.0) -> (-993.5, -1000.1)
+NODE 88 moved 1.92 m onto its streets: (626.5, 0.0) -> (624.6, 0.0)
+NODE 89 moved 0.38 m onto its streets: (-992.5, 200.0) -> (-992.3, 200.3)
+NODE 93 moved 6.69 m onto its streets: (922.5, -1052.4) -> (924.8, -1058.7)
+NODE   0 ( -800.0, -1400.0) legs 4 signal heads 0: [b000 b returns end 17.5, lanes end 20.7, STOP] [b001 a returns end 17.5, lanes end 20.7, STOP] [b064 b returns end 17.5, lanes end 20.7, STOP] [b065 a returns end 17.5, lanes end 20.7, STOP]
+NODE   1 ( -800.0, -1200.0) legs 4 signal heads 6: [b001 b returns end 17.0, lanes end 23.7, SIGNAL] [b002 a returns end 17.0, lanes end 23.7, SIGNAL] [b072 b returns end 12.5, lanes end 19.1, SIGNAL] [b073 a returns end 12.5, lanes end 19.1, SIGNAL]
+NODE   2 ( -800.0, -1000.0) legs 4 signal heads 0: [b002 b returns end 11.0, lanes end 17.2, STOP] [b003 a returns end 11.0, lanes end 17.2, STOP] [b080 b returns end 11.0, lanes end 17.2, STOP] [b081 a returns end 11.0, lanes end 17.2, STOP]
+NODE   3 ( -800.0,  -800.0) legs 4 signal heads 0: [b003 b returns end 11.0, lanes end 17.2, STOP] [b004 a returns end 11.0, lanes end 17.2, STOP] [b088 b returns end 11.0, lanes end 17.2, STOP] [b089 a returns end 11.0, lanes end 17.2, STOP]
+NODE   4 ( -800.2,  -600.0) legs 3 signal heads 0: [b004 b returns end 10.5, lanes end 17.3, STOP] [b005 a returns end 10.5, lanes end 17.3, STOP] [b096 b returns end 11.0, lanes end 17.2, STOP]
+NODE   5 ( -800.0,  -400.0) legs 4 signal heads 0: [b005 b returns end 11.0, lanes end 17.2, STOP] [b006 a returns end 11.0, lanes end 17.2, STOP] [b102 b returns end 11.0, lanes end 17.2, STOP] [b103 a returns end 11.0, lanes end 17.2, STOP]
+NODE   6 ( -800.0,  -200.0) legs 4 signal heads 0: [b006 b returns end 11.0, lanes end 17.2, STOP] [b007 a returns end 11.0, lanes end 17.2, STOP] [b108 b returns end 11.0, lanes end 17.2, STOP] [b109 a returns end 11.0, lanes end 17.2, STOP]
+NODE   7 ( -800.0,     0.0) legs 4 signal heads 0: [b007 b returns end 11.0, lanes end 17.2, STOP] [b008 a returns end 11.0, lanes end 17.2, STOP] [b116 b returns end 11.0, lanes end 17.2, STOP] [b117 a returns end 11.0, lanes end 17.2, STOP]
+NODE   8 ( -800.0,   200.0) legs 4 signal heads 0: [b008 b returns end 11.0, lanes end 17.2, STOP] [b009 a returns end 11.0, lanes end 17.3, STOP] [b124 b returns end 11.0, lanes end 17.2, STOP] [b125 a returns end 11.0, lanes end 17.2, STOP]
+NODE   9 ( -600.0, -1400.0) legs 4 signal heads 6: [b010 b returns end 17.0, lanes end 23.7, SIGNAL] [b011 a returns end 17.0, lanes end 23.7, SIGNAL] [b065 b returns end 13.5, lanes end 19.9, SIGNAL] [b066 a returns end 13.5, lanes end 19.9, SIGNAL]
+NODE  10 ( -600.0, -1200.0) legs 4 signal heads 6: [b011 b returns end 17.0, lanes end 23.7, SIGNAL] [b012 a returns end 17.0, lanes end 23.7, SIGNAL] [b073 b returns end 12.5, lanes end 19.1, SIGNAL] [b074 a returns end 12.5, lanes end 19.1, SIGNAL]
+NODE  11 ( -600.0, -1000.0) legs 4 signal heads 0: [b012 b returns end 11.0, lanes end 17.2, STOP] [b013 a returns end 11.0, lanes end 17.2, STOP] [b081 b returns end 11.0, lanes end 17.2, STOP] [b082 a returns end 11.0, lanes end 17.2, STOP]
+NODE  12 ( -600.0,  -800.2) legs 3 signal heads 0: [b013 b returns end 11.0, lanes end 17.2, STOP] [b089 b returns end 10.5, lanes end 17.3, STOP] [b090 a returns end 10.5, lanes end 17.3, STOP]
+NODE  13 ( -600.0,  -399.8) legs 3 signal heads 0: [b014 a returns end 11.0, lanes end 17.2, STOP] [b103 b returns end 10.5, lanes end 17.3, STOP] [b104 a returns end 10.5, lanes end 17.3, STOP]
+NODE  14 ( -600.0,  -200.0) legs 4 signal heads 0: [b014 b returns end 11.0, lanes end 17.2, STOP] [b015 a returns end 11.0, lanes end 17.2, STOP] [b109 b returns end 11.0, lanes end 17.2, STOP] [b110 a returns end 11.0, lanes end 17.2, STOP]
+NODE  15 ( -600.0,     0.0) legs 4 signal heads 0: [b015 b returns end 11.0, lanes end 17.2, STOP] [b016 a returns end 11.0, lanes end 17.2, STOP] [b117 b returns end 11.0, lanes end 17.2, STOP] [b118 a returns end 11.0, lanes end 17.2, STOP]
+NODE  16 ( -600.0,   200.0) legs 4 signal heads 0: [b016 b returns end 11.0, lanes end 17.2, STOP] [b017 a returns end 11.0, lanes end 17.2, STOP] [b125 b returns end 11.0, lanes end 17.2, STOP] [b126 a returns end 11.0, lanes end 17.2, STOP]
+NODE  17 ( -400.0, -1400.0) legs 4 signal heads 6: [b018 b returns end 17.0, lanes end 23.7, SIGNAL] [b019 a returns end 17.0, lanes end 23.7, SIGNAL] [b066 b returns end 12.5, lanes end 19.1, SIGNAL] [b067 a returns end 12.5, lanes end 19.1, SIGNAL]
+NODE  18 ( -400.0, -1200.0) legs 4 signal heads 6: [b019 b returns end 17.0, lanes end 23.7, SIGNAL] [b020 a returns end 17.0, lanes end 23.7, SIGNAL] [b074 b returns end 12.5, lanes end 19.1, SIGNAL] [b075 a returns end 12.5, lanes end 19.1, SIGNAL]
+NODE  19 ( -400.0, -1000.0) legs 4 signal heads 0: [b020 b returns end 11.0, lanes end 17.2, STOP] [b021 a returns end 11.0, lanes end 17.2, STOP] [b082 b returns end 11.0, lanes end 17.2, STOP] [b083 a returns end 11.0, lanes end 17.2, STOP]
+NODE  20 ( -400.0,  -800.0) legs 4 signal heads 0: [b021 b returns end 11.0, lanes end 17.2, STOP] [b022 a returns end 11.0, lanes end 17.2, STOP] [b090 b returns end 11.0, lanes end 17.2, STOP] [b091 a returns end 11.0, lanes end 17.2, STOP]
+NODE  21 ( -399.8,  -600.0) legs 3 signal heads 0: [b022 b returns end 10.5, lanes end 17.3, STOP] [b023 a returns end 10.5, lanes end 17.3, STOP] [b097 a returns end 11.0, lanes end 17.2, STOP]
+NODE  22 ( -400.2,  -400.0) legs 3 signal heads 0: [b023 b returns end 10.5, lanes end 17.3, STOP] [b024 a returns end 10.5, lanes end 17.3, STOP] [b104 b returns end 11.0, lanes end 17.2, STOP]
+NODE  23 ( -400.0,  -200.0) legs 4 signal heads 0: [b024 b returns end 11.0, lanes end 17.2, STOP] [b025 a returns end 11.0, lanes end 17.2, STOP] [b110 b returns end 11.0, lanes end 17.2, STOP] [b111 a returns end 11.0, lanes end 17.2, STOP]
+NODE  24 ( -400.0,     0.0) legs 4 signal heads 0: [b025 b returns end 11.0, lanes end 17.2, STOP] [b026 a returns end 11.0, lanes end 17.2, STOP] [b118 b returns end 11.0, lanes end 17.2, STOP] [b119 a returns end 11.0, lanes end 17.2, STOP]
+NODE  25 ( -400.0,   200.0) legs 4 signal heads 0: [b026 b returns end 11.0, lanes end 17.2, STOP] [b027 a returns end 11.0, lanes end 17.2, STOP] [b126 b returns end 11.0, lanes end 17.2, STOP] [b127 a returns end 11.0, lanes end 17.2, STOP]
+NODE  26 ( -200.0, -1400.0) legs 4 signal heads 6: [b028 b returns end 17.0, lanes end 23.7, SIGNAL] [b029 a returns end 17.0, lanes end 23.7, SIGNAL] [b067 b returns end 12.5, lanes end 19.1, SIGNAL] [b068 a returns end 12.5, lanes end 19.1, SIGNAL]
+NODE  27 ( -200.0, -1200.0) legs 4 signal heads 6: [b029 b returns end 17.0, lanes end 23.7, SIGNAL] [b030 a returns end 17.0, lanes end 23.7, SIGNAL] [b075 b returns end 12.5, lanes end 19.1, SIGNAL] [b076 a returns end 12.5, lanes end 19.1, SIGNAL]
+NODE  28 ( -200.0, -1000.0) legs 4 signal heads 0: [b030 b returns end 11.0, lanes end 17.2, STOP] [b031 a returns end 11.0, lanes end 17.2, STOP] [b083 b returns end 11.0, lanes end 17.2, STOP] [b084 a returns end 11.0, lanes end 17.2, STOP]
+NODE  29 ( -200.0,  -800.0) legs 4 signal heads 0: [b031 b returns end 11.0, lanes end 17.2, STOP] [b032 a returns end 11.0, lanes end 17.2, STOP] [b091 b returns end 11.0, lanes end 17.2, STOP] [b092 a returns end 11.0, lanes end 17.2, STOP]
+NODE  30 ( -200.0,  -600.0) legs 3 signal heads 0: [b032 b returns end 11.0, lanes end 17.2, STOP] [b097 b returns end 11.0, lanes end 17.2, STOP] [b098 a returns end 11.0, lanes end 17.2, STOP]
+NODE  31 ( -200.0,  -199.8) legs 3 signal heads 0: [b033 a returns end 11.0, lanes end 17.2, STOP] [b111 b returns end 10.5, lanes end 17.3, STOP] [b112 a returns end 10.5, lanes end 17.3, STOP]
+NODE  32 ( -200.0,     0.0) legs 4 signal heads 0: [b033 b returns end 11.0, lanes end 17.2, STOP] [b034 a returns end 11.0, lanes end 17.2, STOP] [b119 b returns end 11.0, lanes end 17.2, STOP] [b120 a returns end 11.0, lanes end 17.2, STOP]
+NODE  33 ( -200.0,   200.0) legs 4 signal heads 0: [b034 b returns end 11.0, lanes end 17.2, STOP] [b035 a returns end 11.0, lanes end 17.2, STOP] [b127 b returns end 11.0, lanes end 17.2, STOP] [b128 a returns end 11.0, lanes end 17.2, STOP]
+NODE  34 (    0.0, -1400.0) legs 4 signal heads 8: [b036 b returns end 15.5, lanes end 22.0, SIGNAL] [b037 a returns end 15.5, lanes end 22.0, SIGNAL] [b068 b returns end 16.5, lanes end 23.2, SIGNAL] [b069 a returns end 16.5, lanes end 23.2, SIGNAL]
+NODE  35 (    0.0, -1200.0) legs 4 signal heads 8: [b037 b returns end 15.5, lanes end 22.0, SIGNAL] [b038 a returns end 15.5, lanes end 22.0, SIGNAL] [b076 b returns end 16.5, lanes end 23.2, SIGNAL] [b077 a returns end 16.5, lanes end 23.2, SIGNAL]
+NODE  36 (    0.0, -1000.0) legs 4 signal heads 6: [b038 b returns end 11.0, lanes end 17.4, SIGNAL] [b039 a returns end 11.0, lanes end 17.4, SIGNAL] [b084 b returns end 16.5, lanes end 23.2, SIGNAL] [b085 a returns end 16.5, lanes end 23.2, SIGNAL]
+NODE  37 (    0.0,  -800.0) legs 4 signal heads 6: [b039 b returns end 30.0, lanes end 17.4, SIGNAL] [b040 a returns end 8.5, lanes end 17.4, SIGNAL] [b092 b returns end 14.0, lanes end 23.2, SIGNAL] [b093 a returns end 14.0, lanes end 23.2, SIGNAL]
+NODE  38 (    0.0,  -600.0) legs 4 signal heads 6: [b040 b returns end 8.5, lanes end 17.4, SIGNAL] [b041 a returns end 8.5, lanes end 17.4, SIGNAL] [b098 b returns end 14.0, lanes end 23.2, SIGNAL] [b099 a returns end 14.0, lanes end 23.2, SIGNAL]
+NODE  39 (    0.0,  -400.0) legs 3 signal heads 5: [b041 b returns end 8.0, lanes end 17.5, SIGNAL] [b042 a returns end 30.0, lanes end 17.4, SIGNAL] [b105 a returns end 14.0, lanes end 23.2, SIGNAL]
+NODE  40 (    0.0,  -200.0) legs 4 signal heads 6: [b042 b returns end 11.0, lanes end 17.4, SIGNAL] [b043 a returns end 11.0, lanes end 17.4, SIGNAL] [b112 b returns end 16.5, lanes end 23.2, SIGNAL] [b113 a returns end 16.5, lanes end 23.2, SIGNAL]
+NODE  41 (    0.0,     0.0) legs 4 signal heads 6: [b043 b returns end 11.0, lanes end 17.4, SIGNAL] [b044 a returns end 11.0, lanes end 17.4, SIGNAL] [b120 b returns end 16.5, lanes end 23.2, SIGNAL] [b121 a returns end 16.5, lanes end 23.2, SIGNAL]
+NODE  42 (    0.0,   200.0) legs 4 signal heads 6: [b044 b returns end 11.0, lanes end 17.4, SIGNAL] [b045 a returns end 11.0, lanes end 17.4, SIGNAL] [b128 b returns end 16.5, lanes end 23.2, SIGNAL] [b129 a returns end 16.5, lanes end 23.2, SIGNAL]
+NODE  43 (  250.0, -1400.0) legs 4 signal heads 6: [b046 b returns end 17.0, lanes end 23.7, SIGNAL] [b047 a returns end 17.0, lanes end 23.7, SIGNAL] [b069 b returns end 12.5, lanes end 19.1, SIGNAL] [b070 a returns end 12.5, lanes end 19.1, SIGNAL]
+NODE  44 (  250.0, -1200.0) legs 4 signal heads 6: [b047 b returns end 17.0, lanes end 23.7, SIGNAL] [b048 a returns end 17.0, lanes end 23.7, SIGNAL] [b077 b returns end 12.5, lanes end 19.1, SIGNAL] [b078 a returns end 12.5, lanes end 19.1, SIGNAL]
+NODE  45 (  250.0, -1000.0) legs 4 signal heads 0: [b048 b returns end 11.0, lanes end 17.2, STOP] [b049 a returns end 11.0, lanes end 17.2, STOP] [b085 b returns end 11.0, lanes end 17.2, STOP] [b086 a returns end 11.0, lanes end 17.2, STOP]
+NODE  46 (  250.0,  -800.0) legs 4 signal heads 0: [b049 b returns end 11.0, lanes end 17.2, STOP] [b050 a returns end 11.0, lanes end 17.2, STOP] [b093 b returns end 11.0, lanes end 17.2, STOP] [b094 a returns end 11.0, lanes end 17.2, STOP]
+NODE  47 (  250.0,  -600.0) legs 4 signal heads 0: [b050 b returns end 11.0, lanes end 17.2, STOP] [b051 a returns end 11.0, lanes end 17.2, STOP] [b099 b returns end 11.0, lanes end 17.2, STOP] [b100 a returns end 11.0, lanes end 17.2, STOP]
+NODE  48 (  250.0,  -400.0) legs 4 signal heads 0: [b051 b returns end 11.0, lanes end 17.2, STOP] [b052 a returns end 11.0, lanes end 17.2, STOP] [b105 b returns end 11.0, lanes end 17.2, STOP] [b106 a returns end 11.0, lanes end 17.2, STOP]
+NODE  49 (  250.0,  -200.0) legs 4 signal heads 0: [b052 b returns end 11.0, lanes end 17.2, STOP] [b053 a returns end 11.0, lanes end 17.2, STOP] [b113 b returns end 11.0, lanes end 17.2, STOP] [b114 a returns end 11.0, lanes end 17.2, STOP]
+NODE  50 (  250.0,     0.0) legs 4 signal heads 0: [b053 b returns end 11.0, lanes end 17.2, STOP] [b054 a returns end 11.0, lanes end 17.2, STOP] [b121 b returns end 11.0, lanes end 17.2, STOP] [b122 a returns end 11.0, lanes end 17.2, STOP]
+NODE  51 (  250.0,   200.0) legs 4 signal heads 0: [b054 b returns end 11.0, lanes end 17.2, STOP] [b055 a returns end 11.0, lanes end 17.2, STOP] [b129 b returns end 11.0, lanes end 17.2, STOP] [b130 a returns end 11.0, lanes end 17.2, STOP]
+NODE  52 (  500.0, -1400.0) legs 4 signal heads 6: [b056 b returns end 17.0, lanes end 23.7, SIGNAL] [b057 a returns end 17.0, lanes end 23.7, SIGNAL] [b070 b returns end 12.5, lanes end 19.1, SIGNAL] [b071 a returns end 12.5, lanes end 19.1, SIGNAL]
+NODE  53 (  500.0, -1200.0) legs 4 signal heads 6: [b057 b returns end 17.0, lanes end 23.7, SIGNAL] [b058 a returns end 17.0, lanes end 23.7, SIGNAL] [b078 b returns end 12.5, lanes end 19.1, SIGNAL] [b079 a returns end 12.5, lanes end 19.1, SIGNAL]
+NODE  54 (  500.2, -1000.0) legs 4 signal heads 5: [b058 b returns end 16.5, lanes end 23.7, SIGNAL] [b059 a returns end 16.5, lanes end 23.8, SIGNAL] [b086 b returns end 12.5, lanes end 19.1, SIGNAL] [b087 a returns end 12.5, lanes end 19.1, SIGNAL]
+NODE  55 (  500.0,  -800.0) legs 4 signal heads 0: [b059 b returns end 11.0, lanes end 17.2, STOP] [b060 a returns end 11.0, lanes end 17.2, STOP] [b094 b returns end 11.0, lanes end 17.2, STOP] [b095 a returns end 11.0, lanes end 17.2, STOP]
+NODE  56 (  500.0,  -600.0) legs 4 signal heads 0: [b060 b returns end 11.0, lanes end 17.2, STOP] [b061 a returns end 11.0, lanes end 17.2, STOP] [b100 b returns end 11.0, lanes end 17.2, STOP] [b101 a returns end 11.0, lanes end 17.2, STOP]
+NODE  57 (  500.0,  -400.0) legs 4 signal heads 0: [b061 b returns end 11.0, lanes end 17.2, STOP] [b062 a returns end 11.0, lanes end 17.2, STOP] [b106 b returns end 11.0, lanes end 17.2, STOP] [b107 a returns end 11.0, lanes end 17.2, STOP]
+NODE  58 (  500.0,  -200.0) legs 4 signal heads 0: [b062 b returns end 11.0, lanes end 17.2, STOP] [b063 a returns end 11.0, lanes end 17.2, STOP] [b114 b returns end 11.0, lanes end 17.2, STOP] [b115 a returns end 11.0, lanes end 17.2, STOP]
+NODE  59 (  500.0,    -0.2) legs 3 signal heads 0: [b063 b returns end 11.0, lanes end 17.2, STOP] [b122 b returns end 10.5, lanes end 17.3, STOP] [b123 a returns end 10.0, lanes end 17.3, STOP]
+NODE  60 ( -800.0, -1599.8) legs 3 signal heads 0: [b000 a returns end 21.0, lanes end 28.0, STOP] [b150 b returns end 16.5, lanes end 17.5, free] [b162 a returns end 16.5, lanes end 17.5, free]
+NODE  61 ( -800.1,   288.5) legs 3 signal heads 0: [b009 b returns end 18.0, lanes end 25.1, STOP] [b131 a returns end 10.5, lanes end 11.5, free] [b159 b returns end 13.5, lanes end 14.5, free]
+NODE  62 ( -600.0, -1599.7) legs 3 signal heads 0: [b010 a returns end 21.0, lanes end 28.0, STOP] [b149 b returns end 17.0, lanes end 18.0, free] [b150 a returns end 16.5, lanes end 17.5, free]
+NODE  63 ( -600.1,   301.8) legs 3 signal heads 0: [b017 b returns end 18.0, lanes end 25.0, STOP] [b131 b returns end 13.5, lanes end 14.5, free] [b132 a returns end 10.5, lanes end 11.5, free]
+NODE  64 ( -400.0, -1599.8) legs 3 signal heads 0: [b018 a returns end 17.0, lanes end 24.0, STOP] [b148 b returns end 12.0, lanes end 13.0, free] [b149 a returns end 12.0, lanes end 13.0, free]
+NODE  65 ( -400.1,   315.2) legs 3 signal heads 0: [b027 b returns end 18.0, lanes end 25.0, STOP] [b132 b returns end 13.5, lanes end 14.5, free] [b133 a returns end 10.5, lanes end 11.5, free]
+NODE  66 ( -200.0, -1599.9) legs 3 signal heads 0: [b028 a returns end 17.0, lanes end 24.0, STOP] [b147 b returns end 12.0, lanes end 13.0, free] [b148 a returns end 12.0, lanes end 13.0, free]
+NODE  67 ( -200.0,   327.8) legs 3 signal heads 0: [b035 b returns end 18.0, lanes end 24.9, STOP] [b133 b returns end 13.5, lanes end 14.5, free] [b134 a returns end 11.0, lanes end 12.0, free]
+NODE  68 (    0.0, -1599.8) legs 3 signal heads 6: [b036 a returns end 17.0, lanes end 24.0, SIGNAL] [b146 b returns end 18.0, lanes end 25.2, SIGNAL] [b147 a returns end 18.0, lanes end 25.3, SIGNAL]
+NODE  69 (   -0.1,   339.8) legs 3 signal heads 6: [b045 b returns end 18.0, lanes end 25.2, SIGNAL] [b134 b returns end 19.0, lanes end 26.4, SIGNAL] [b135 a returns end 17.0, lanes end 24.9, SIGNAL]
+NODE  70 (  250.0, -1599.8) legs 3 signal heads 0: [b046 a returns end 17.0, lanes end 24.0, STOP] [b145 b returns end 12.0, lanes end 13.0, free] [b146 a returns end 12.0, lanes end 13.0, free]
+NODE  71 (  250.0,   344.8) legs 3 signal heads 0: [b055 b returns end 18.0, lanes end 24.7, STOP] [b135 b returns end 12.0, lanes end 13.0, free] [b161 a returns end 19.0, lanes end 20.0, free]
+NODE  72 (  500.0, -1599.8) legs 3 signal heads 0: [b056 a returns end 17.0, lanes end 24.0, STOP] [b145 a returns end 12.0, lanes end 13.0, free] [b163 b returns end 12.0, lanes end 13.0, free]
+NODE  73 ( -950.7, -1400.0) legs 3 signal heads 0: [b064 a returns end 21.0, lanes end 28.1, STOP] [b151 a returns end 17.0, lanes end 18.0, free] [b162 b returns end 17.0, lanes end 18.0, free]
+NODE  74 (  659.7, -1400.5) legs 4 signal heads 8: [b071 b returns end 17.0, lanes end 24.0, SIGNAL] [b144 b returns end 17.0, lanes end 24.0, SIGNAL] [b163 a returns end 17.0, lanes end 23.9, SIGNAL] [b164 b returns end 37.5, lanes end 24.1, SIGNAL]
+NODE  75 ( -951.6, -1200.0) legs 3 signal heads 6: [b072 a returns end 17.5, lanes end 24.2, SIGNAL] [b151 b returns end 17.0, lanes end 24.1, SIGNAL] [b152 a returns end 17.0, lanes end 24.0, SIGNAL]
+NODE  76 (  660.0, -1200.0) legs 4 signal heads 8: [b079 b returns end 17.0, lanes end 24.0, SIGNAL] [b143 b returns end 17.0, lanes end 24.0, SIGNAL] [b144 a returns end 17.0, lanes end 24.1, SIGNAL] [b160_a a returns end 17.0, lanes end 24.1, SIGNAL]
+NODE  77 ( -993.5, -1000.1) legs 3 signal heads 0: [b080 a returns end 22.0, lanes end 29.2, STOP] [b152 b returns end 19.0, lanes end 20.0, free] [b153 a returns end 7.0, lanes end 8.0, free]
+NODE  78 (  659.9, -1000.0) legs 3 signal heads 6: [b087 b returns end 17.5, lanes end 24.3, SIGNAL] [b141 b returns end 17.0, lanes end 24.3, SIGNAL] [b142 a returns end 16.5, lanes end 24.0, SIGNAL]
+NODE  79 ( -999.8,  -800.0) legs 3 signal heads 0: [b088 a returns end 17.0, lanes end 24.0, STOP] [b153 b returns end 12.0, lanes end 13.0, free] [b154 a returns end 12.0, lanes end 13.0, free]
+NODE  80 (  657.2,  -800.0) legs 3 signal heads 0: [b095 b returns end 17.5, lanes end 24.2, STOP] [b140 b returns end 12.0, lanes end 13.0, free] [b141 a returns end 12.0, lanes end 13.0, free]
+NODE  81 ( -999.8,  -600.0) legs 3 signal heads 0: [b096 a returns end 17.0, lanes end 24.0, STOP] [b154 b returns end 12.0, lanes end 13.0, free] [b155 a returns end 12.0, lanes end 13.0, free]
+NODE  82 (  654.5,  -600.0) legs 3 signal heads 0: [b101 b returns end 17.5, lanes end 24.3, STOP] [b139 b returns end 12.0, lanes end 13.0, free] [b140 a returns end 12.0, lanes end 13.0, free]
+NODE  83 ( -999.8,  -400.0) legs 3 signal heads 0: [b102 a returns end 17.0, lanes end 24.0, STOP] [b155 b returns end 12.0, lanes end 13.0, free] [b156 a returns end 12.0, lanes end 13.0, free]
+NODE  84 (  651.8,  -400.0) legs 3 signal heads 0: [b107 b returns end 17.5, lanes end 24.4, STOP] [b138 b returns end 12.5, lanes end 13.5, free] [b139 a returns end 12.0, lanes end 13.0, free]
+NODE  85 ( -999.8,  -200.0) legs 3 signal heads 0: [b108 a returns end 17.0, lanes end 24.0, STOP] [b156 b returns end 12.0, lanes end 13.0, free] [b157 a returns end 12.0, lanes end 13.0, free]
+NODE  86 (  646.8,  -200.0) legs 3 signal heads 0: [b115 b returns end 17.5, lanes end 24.4, STOP] [b137 b returns end 12.5, lanes end 13.5, free] [b138 a returns end 11.5, lanes end 12.5, free]
+NODE  87 ( -999.8,    -0.0) legs 3 signal heads 0: [b116 a returns end 17.0, lanes end 24.0, STOP] [b157 b returns end 12.0, lanes end 13.0, free] [b158 a returns end 12.0, lanes end 13.0, free]
+NODE  88 (  624.6,     0.0) legs 3 signal heads 0: [b123 b returns end 24.0, lanes end 31.0, STOP] [b136 b returns end 36.5, lanes end 24.0, free] [b137 a returns end 9.5, lanes end 10.5, free]
+NODE  89 ( -992.3,   200.3) legs 3 signal heads 0: [b124 a returns end 19.5, lanes end 26.3, STOP] [b158 b returns end 9.5, lanes end 10.5, free] [b159 a returns end 15.0, lanes end 16.0, free]
+NODE  90 (  570.0,   200.0) legs 3 signal heads 0: [b130 b returns end 11.0, lanes end 17.2, STOP] [b136 a returns end 11.0, lanes end 17.2, STOP] [b161 b returns end 10.5, lanes end 16.8, STOP]
+NODE  91 (  660.0, -1100.0) legs 2 signal heads 0: [b142 b returns end 2.0, lanes end 1.0, free] [b143 a returns end 2.0, lanes end 1.0, free]
+NODE  92 ( 1180.0,  -905.0) legs 1 signal heads 0: [b160_b b returns end 2.0, lanes end 2.0, free]
+NODE  93 (  922.5, -1052.4) legs 3 signal heads 0: [b160_a b returns end 21.5, lanes end 1.0, free] [b164 a returns end 7.0, lanes end 0.5, free] [b160_b a returns end 29.0, lanes end 1.0, free]
+NODE  94 (  373.3, -1600.0) legs 1 signal heads 0: [b145 b returns end 2.0, lanes end 2.0, free]
+NODE  95 (  326.7, -1600.0) legs 1 signal heads 0: [b145 a returns end 2.0, lanes end 2.0, free]
+WORST steepest stretch at (94.0, 1.6), largest kink at (146.0, 1.6)
+CORNER WITHOUT PAVEMENT at node 38 (0.0, -600.0): no pavement at (-12.5, -593.5) nor near it. The map has a hole there
+CORNER WITHOUT PAVEMENT at node 38 (0.0, -600.0): no pavement at (12.6, -593.5) nor near it. The map has a hole there
+CORNER WITHOUT PAVEMENT at node 38 (0.0, -600.0): no pavement at (12.6, -606.8) nor near it. The map has a hole there
+CORNER WITHOUT PAVEMENT at node 38 (0.0, -600.0): no pavement at (-12.5, -606.5) nor near it. The map has a hole there
+CROSSING WITHOUT PAINT block b000 end b at (-800.0, -1417.4)
+CROSSING WITHOUT PAINT block b001 end a at (-800.0, -1382.6)
+PAVEMENT LINE OFF ITS PAVEMENT block b040 (Amber Ave, cc): 2 points with no ground, 0 on the road (first at -12.5, -606.5)
+PAVEMENT LINE OFF ITS PAVEMENT block b041 (Amber Ave, cc): 2 points with no ground, 0 on the road (first at -12.5, -593.5)
+CROSSING WITHOUT PAINT block b064 end b at (-817.4, -1400.0)
+CROSSING WITHOUT PAINT block b065 end a at (-782.6, -1400.0)
+PAVEMENT LINE OFF ITS PAVEMENT block b098 (7th St, cc): 2 points with no ground, 0 on the road (first at -12.5, -593.5)
+PAVEMENT LINE OFF ITS PAVEMENT block b099 (7th St, cc): 2 points with no ground, 0 on the road (first at 12.6, -593.5)
+PAVEMENT LINE OFF ITS PAVEMENT block b161 (Ocean Blvd, ring): 1 points with no ground, 0 on the road (first at 579.5, 210.5)
+TOTAL edges 167, nodes 96, lanes 449 (75.3 km, 3970 points kept of 41619 checked), connections 974
+CHECK lane points off the asphalt 0, without ground 0 (both must be 0)
+CHECK paths through the junctions: 974 (17 take a wider curve to keep off a kerb), 20155 points checked as wide as a car: 0 touch a kerb, on 0 paths (must be 0)
+CHECK lane points where a car's side would be off the asphalt: 0 (must be 0)
+CHECK steepest lane 8.0 %, largest height kink at a lane point 0.010 m
+CHECK junctions (3 legs and more): 27 with signals, 64 with stop bars, 1 with neither | approaches 333: 103 signal, 175 stop, 55 free
+TOTAL pavements 880 stretches (61.0 km), 884 walk points, 276 crossings (101 at signals), parking stalls 3010 at the kerb, 1514 in car parks
+CHECK pavement points on the road 0, without ground 9 (both must be 0) of 32241 | driveways and alley mouths walked over 3 | crossings with no paint under them 4
+CHECK pavement corners with no ground under them (holes in the map, listed above): 4
+CHECK kerb stalls not on the asphalt 0, stalls without ground 0 (both must be 0)
+CHECK approaches with no way on 0, blocks too short for their junctions 0, points of an unknown street kind 0

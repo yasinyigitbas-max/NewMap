@@ -50,6 +50,7 @@ struct Edge {
 	double shift_max = 0;          // how far the built street lies off the skeleton line, at most (m)
 	int nl[2] = { 0, 0 };          // lanes per direction
 	std::vector<double> off[2][2]; // per direction, per lane (0 = innermost): metres from the centre line at every point
+	std::vector<double> wc[2], whw[2];   // per side: the middle of the pavement (metres from the centre line) and its half width at every point; empty or 0 = none
 	double lhw[2] = { 1.65, 1.65 };
 	double trim[2] = { 0, 0 };     // at a, at b: metres from the node where the lanes begin / end
 	double tan_pt[2] = { 0, 0 };   // at a, at b: where the kerb returns of the junction end (metres from the node)
@@ -70,6 +71,9 @@ struct Report {
 	int nodes_signal = 0, nodes_stop = 0, nodes_free = 0, short_edges = 0;
 	int path_pts = 0, path_pts_off_road = 0, paths_off_road = 0, paths_widened = 0;   // the paths through the junctions
 	int lane_pts_tight = 0;        // lane points where a car's side would be off the asphalt
+	int walks = 0, crossings = 0, crossings_signal = 0, crossings_unpainted = 0, walk_driveways = 0;
+	int stalls_kerb = 0, stalls_park = 0, stalls_no_ground = 0, stalls_kerb_off_road = 0;
+	int corners_no_ground = 0;
 };
 
 // what the game loads (streets.bin)
@@ -143,6 +147,8 @@ private:
 	void junctions();
 	void emit_lanes();
 	void check_paths();
+	void emit_walks();
+	void emit_stalls();
 	void say(const char *fmt, ...);
 };
 

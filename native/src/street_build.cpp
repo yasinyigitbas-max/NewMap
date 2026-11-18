@@ -944,6 +944,346 @@ void Builder::check_paths() {
 	}
 }
 
+// ---------------------------------------------------------------- pavements, corners, crossings
+// Every street side that has a pavement gets a walk line down its middle. At a junction the walk lines of two
+// neighbouring legs meet in a corner point (one node of the walk graph, shared), so people turn the corner on the
+// pavement. Where an approach has a stop bar there is a painted crossing just inside it: a crossing segment joins the
+// two pavements of that leg there. At signals the crossing knows which traffic it crosses (the clock phase of that
+// leg's lanes): people walk while that traffic has red. Elsewhere they take a gap and cars give way.
+void Builder::emit_walks() {
+	const int ne = (int)edges.size();
+	// 1. the walk line of every edge side, point by point: its distance from the centre line and its half width
+	for (Edge &e : edges) {
+		const int n = (int)e.x.size();
+		for (int sd = 0; sd < 2; sd++) {
+			e.wc[sd].assign(n, 0.0); e.whw[sd].assign(n, 0.0);
+			const Side &m = e.med[sd];
+			if (!m.ok || m.w1 - m.w0 < 0.8) continue;   // no pavement on this side (the bridge's deck)
+			// A point's own pavement counts when it is found there and about as far out as the block's typical one; the
+			// points between (a driveway, an alley's mouth, a junction) lie on the line from one found point to the next.
+			// The line is NOT averaged over a long stretch: where a street flares the pavement swings out within a few
+			// metres, and an averaged line would cut the corner over the road.
+			std::vector<double> raw(n, 0.0), hw(n, 0.0);
+			std::vector<char> own(n, 0);
+			int n_own = 0;
+			for (int i = 0; i < n; i++) {
+				const Side &s = e.at[sd][i];
+				if (!(s.ok && s.w1 - s.w0 >= 0.8 && std::fabs(s.w0 - m.w0) < 8.0)) continue;
+				const double w1 = std::min(s.w1, s.w0 + 7.0);
+				raw[i] = (s.w0 + w1) * 0.5; hw[i] = std::max(0.5, (w1 - s.w0) * 0.5 - 0.25);
+				own[i] = 1; n_own++;
+			}
+			if (n_own * 10 < n * 6) continue;   // most of this side has no pavement (the bridge, its ramp): none at all
+			int last = -1;
+			for (int i = 0; i < n; i++) {
+				if (!own[i]) continue;
+				if (last < 0) { for (int j = 0; j < i; j++) { raw[j] = raw[i]; hw[j] = hw[i]; } }
+				else {
+					for (int j = last + 1; j < i; j++) {
+						const double u = (double)(j - last) / (double)(i - last);
+						raw[j] = raw[last] + (raw[i] - raw[last]) * u; hw[j] = std::min(hw[last], hw[i]);
+					}
+				}
+				last = i;
+			}
+			for (int j = last + 1; j < n; j++) { raw[j] = raw[last]; hw[j] = hw[last]; }
+			for (int i = 0; i < n; i++) {
+				double a = 0.0, b = 1e9; int c = 0;
+				for (int k = std::max(0, i - 1); k <= std::min(n - 1, i + 1); k++) { a += raw[k]; b = std::min(b, hw[k]); c++; }
+				e.wc[sd][i] = a / c; e.whw[sd][i] = b;
+			}
+		}
+	}
+	auto walk_at = [&](const Edge &e, int sd, double s, double &hw) {
+		const int n = (int)e.x.size();
+		s = std::min(std::max(s, 0.0), e.len);
+		int i = (int)(std::upper_bound(e.s.begin(), e.s.end(), s) - e.s.begin()) - 1;
+		i = std::min(std::max(i, 0), n - 2);
+		const double l = e.s[i + 1] - e.s[i], u = l > 1e-9 ? (s - e.s[i]) / l : 0.0;
+		hw = std::min(e.whw[sd][i], e.whw[sd][i + 1]);
+		return e.wc[sd][i] + (e.wc[sd][i + 1] - e.wc[sd][i]) * u;
+	};
+	auto add_node = [&](double x, double z) {
+		out.walk_node.push_back((float)x); out.walk_node.push_back((float)z);
+		return (int)out.walk_node.size() / 2 - 1;
+	};
+	// 2. the corners: per edge, side, end -> walk graph node and how far from the edge's end the walk line ends
+	struct End { int node = -1; double d = 0.0; };
+	std::vector<End> ends((size_t)ne * 4);   // edge * 4 + side * 2 + end
+	auto end_of = [&](int e, int sd, int end) -> End & { return ends[(size_t)e * 4 + sd * 2 + end]; };
+	std::vector<int> mouth_nodes;   // walk graph nodes that stand on asphalt on purpose
+	for (size_t ni = 0; ni < legs.size(); ni++) {
+		std::vector<Leg> L = legs[ni];
+		if (L.empty()) continue;
+		std::sort(L.begin(), L.end(), [](const Leg &a, const Leg &b) { return std::atan2(a.hx, a.hz) < std::atan2(b.hx, b.hz); });
+		const int nlg = (int)L.size();
+		// the walk line of a leg's side near the junction: where it is 25 m out (clear of the kerb returns)
+		auto mouth = [&](const Leg &lg, int sd) {
+			const Edge &e = edges[lg.e];
+			double hw;
+			const double d = std::min(25.0, e.len * 0.5);
+			return walk_at(e, sd, lg.end == 0 ? d : e.len - d, hw);
+		};
+		if (nlg == 1) {   // the street ends: so do its pavements
+			for (int sd = 0; sd < 2; sd++) {
+				const Edge &e = edges[L[0].e];
+				if (e.wc[sd].empty() || mouth(L[0], sd) <= 0.0) continue;
+				double x, z, tx, tz; edge_at(e, L[0].end == 0 ? 2.0 : e.len - 2.0, x, z, tx, tz);
+				const double o = mouth(L[0], sd) * (sd == 0 ? -1.0 : 1.0);
+				End &en = end_of(L[0].e, sd, L[0].end);
+				en.node = add_node(x + tz * o, z - tx * o); en.d = 2.0;
+			}
+			continue;
+		}
+		for (int k = 0; k < nlg; k++) {
+			const Leg &A = L[k], &B = L[(k + 1) % nlg];   // B is the next leg to the LEFT of A (seen leaving the node)
+			const int sa = A.end == 0 ? 1 : 0, sb = B.end == 0 ? 0 : 1;   // A's side towards B, B's side towards A
+			const double wa = mouth(A, sa), wb = mouth(B, sb);
+			const double nax = A.hz, naz = -A.hx, nbx = -B.hz, nbz = B.hx;   // across each leg, towards the other
+			double t = 0.0, u = 0.0, px, pz;
+			bool mouth_node = false;
+			const double det = A.hx * (-B.hz) - (-B.hx) * A.hz;
+			const double rx = nbx * wb - nax * wa, rz = nbz * wb - naz * wa;
+			if (std::fabs(det) > 0.26 && wa > 0.0 && wb > 0.0) {
+				t = (rx * (-B.hz) - (-B.hx) * rz) / det; u = (A.hx * rz - A.hz * rx) / det;
+				t = std::min(std::max(t, 0.0), 40.0); u = std::min(std::max(u, 0.0), 40.0);
+				px = nodes[ni].x + A.hx * t + nax * wa; pz = nodes[ni].z + A.hz * t + naz * wa;
+			} else if (wa > 0.0 && wb > 0.0) {   // the two legs run on in one line: their pavements join across the node
+				px = nodes[ni].x + (nax * wa + nbx * wb) * 0.5; pz = nodes[ni].z + (naz * wa + nbz * wb) * 0.5;
+			} else if (wa > 0.0) { t = 12.0; px = nodes[ni].x + A.hx * t + nax * wa; pz = nodes[ni].z + A.hz * t + naz * wa; }
+			else if (wb > 0.0) { u = 12.0; px = nodes[ni].x + B.hx * u + nbx * wb; pz = nodes[ni].z + B.hz * u + nbz * wb; }
+			else continue;
+			// The corner must stand on a pavement.
+			//  - On the road: a wide kerb return (12 m at the truck junctions) cuts the corner off, the two lines cross
+			//    on the asphalt. The point is pushed out, away from the junction, until it is on the pavement.
+			//  - No ground: an unbuilt lot behind the pavement. It is pulled in, towards the junction.
+			auto on_walk = [&](double x, double z) {
+				float y; int l = G_NONE;
+				return ground->query((float)x, (float)z, y, l) && !is_road(l);
+			};
+			const bool joined = !(std::fabs(det) > 0.26) && wa > 0.0 && wb > 0.0;
+			if (joined && is_road(ground->layer_at((float)px, (float)pz))) {
+				// two pavements that run on in one line, and asphalt between them: the mouth of a side street or a car park
+				// that the skeleton does not list. People walk across it; the point stays where it is.
+				mouth_node = true; rep.walk_driveways++;
+			} else if (!on_walk(px, pz)) {
+				double dx = px - nodes[ni].x, dz = pz - nodes[ni].z;
+				const double dl = std::hypot(dx, dz);
+				dx /= dl; dz /= dl;
+				const bool road_here = is_road(ground->layer_at((float)px, (float)pz));
+				bool found = false;
+				for (double m = 0.25; m <= 12.0 && !found; m += 0.25) {
+					const double sgn = road_here ? 1.0 : -1.0;
+					if (m * (road_here ? 0.0 : 1.0) > dl) break;
+					if (on_walk(px + dx * m * sgn, pz + dz * m * sgn) && on_walk(px + dx * (m + 0.5) * sgn, pz + dz * (m + 0.5) * sgn)) {
+						px += dx * (m + 0.5) * sgn; pz += dz * (m + 0.5) * sgn; found = true;
+					}
+				}
+				if (!found) {
+					rep.corners_no_ground++;
+					say("CORNER WITHOUT PAVEMENT at node %d (%.1f, %.1f): no pavement at (%.1f, %.1f) nor near it. The map has a hole there", (int)ni, nodes[ni].x, nodes[ni].z, px, pz);
+				}
+			}
+			// each of the two walk lines ends where it is still on its pavement (beyond the kerb return), and goes
+			// straight to the corner point from there
+			auto line_end = [&](const Leg &lg, int sd, double from) {
+				const Edge &e = edges[lg.e];
+				int run = 0;
+				for (double d = from; d <= std::min(45.0, e.len * 0.5); d += 0.5) {
+					double x, z, tx, tz, hw; edge_at(e, lg.end == 0 ? d : e.len - d, x, z, tx, tz);
+					const double o = walk_at(e, sd, lg.end == 0 ? d : e.len - d, hw) * (sd == 0 ? -1.0 : 1.0);
+					run = on_walk(x + tz * o, z - tx * o) ? run + 1 : 0;
+					if (run >= 7) return d - 3.0;   // on its pavement from here on, for 3 m at least
+				}
+				return from;
+			};
+			if (wa > 0.0) t = line_end(A, sa, t);
+			if (wb > 0.0) u = line_end(B, sb, u);
+			const int wn = add_node(px, pz);
+			if (mouth_node) mouth_nodes.push_back(wn);
+			if (wa > 0.0) { End &en = end_of(A.e, sa, A.end); en.node = wn; en.d = t; }
+			if (wb > 0.0) { End &en = end_of(B.e, sb, B.end); en.node = wn; en.d = u; }
+		}
+	}
+	// 3. the walk lines between their corners, cut where a crossing starts; then the crossings
+	auto add_seg = [&](int a, int b, int kind, int zone, int junction, int phase, const std::vector<float> &pts, double hw) {
+		double len = 0.0;
+		for (size_t k = 3; k + 2 < pts.size(); k += 3) len += std::hypot(pts[k] - pts[k - 3], pts[k + 2] - pts[k - 1]);
+		const int32_t si[8] = { a, b, kind, zone, junction, phase, (int32_t)(out.walk_pts.size() / 3), (int32_t)(pts.size() / 3) };
+		out.walk_seg.insert(out.walk_seg.end(), si, si + 8);
+		out.walk_seg_f.push_back((float)len); out.walk_seg_f.push_back((float)hw);
+		out.walk_pts.insert(out.walk_pts.end(), pts.begin(), pts.end());
+	};
+	int said = 0;
+	for (int ei = 0; ei < ne; ei++) {
+		const Edge &e = edges[ei];
+		const SkBlock &b = blocks[e.block];
+		// where the crossings are, per end: just inside the stop bar (bar, a gap of 1.2 m, a 3 m crossing)
+		double xs[2] = { -1.0, -1.0 };
+		for (int end = 0; end < 2; end++) {
+			if (e.ctl[end] == CTL_NONE) continue;
+			const double dx = e.trim[end] - 0.25 - 3.1;
+			if (dx > 3.0) xs[end] = end == 0 ? dx : e.len - dx;
+		}
+		int xnode[2][2] = { { -1, -1 }, { -1, -1 } };   // [end][side]
+		int edge_none = 0, edge_road = 0;
+		float first_bad[2] = { 0, 0 };
+		for (int sd = 0; sd < 2; sd++) {
+			const End &ea = end_of(ei, sd, 0), &eb = end_of(ei, sd, 1);
+			if (ea.node < 0 || eb.node < 0) continue;
+			const double s0 = ea.d, s1 = e.len - eb.d;
+			if (s1 - s0 < 1.0) continue;
+			const bool busy = b.section == "hs" || b.section == "cc" || b.section == "strip";
+			const int zone = (e.med[sd].w1 - e.med[sd].w0 > 3.6 && b.section == "ring") ? 3 : (busy ? 2 : (e.cls >= 4 ? 4 : (e.cls == 2 ? 1 : 0)));
+			// the cuts along this walk line
+			std::vector<std::pair<double, int>> cut;
+			cut.push_back({ s0, ea.node });
+			for (int end = 0; end < 2; end++) {
+				if (xs[end] <= s0 + 0.5 || xs[end] >= s1 - 0.5) continue;
+				double x, z, tx, tz, hw; edge_at(e, xs[end], x, z, tx, tz);
+				const double o = walk_at(e, sd, xs[end], hw) * (sd == 0 ? -1.0 : 1.0);
+				xnode[end][sd] = add_node(x + tz * o, z - tx * o);
+				cut.push_back({ xs[end], xnode[end][sd] });
+			}
+			cut.push_back({ s1, eb.node });
+			std::sort(cut.begin(), cut.end());
+			for (size_t c = 0; c + 1 < cut.size(); c++) {
+				std::vector<float> pts;
+				std::vector<char> flag;
+				double hw_min = 9.0;
+				std::vector<double> ss;
+				ss.push_back(cut[c].first);
+				for (double s : e.s) if (s > cut[c].first + 0.5 && s < cut[c + 1].first - 0.5) ss.push_back(s);
+				ss.push_back(cut[c + 1].first);
+				float last_y = (float)nodes[e.na >= 0 ? e.na : 0].pad;
+				for (size_t k = 0; k < ss.size(); k++) {
+					double x, z, tx, tz, hw; edge_at(e, ss[k], x, z, tx, tz);
+					const double o = walk_at(e, sd, ss[k], hw) * (sd == 0 ? -1.0 : 1.0);
+					float px = (float)(x + tz * o), pz = (float)(z - tx * o);
+					// the ends are the graph's nodes themselves (a corner point is where two legs' lines cross)
+					if (k == 0) { px = out.walk_node[(size_t)cut[c].second * 2]; pz = out.walk_node[(size_t)cut[c].second * 2 + 1]; }
+					if (k + 1 == ss.size()) { px = out.walk_node[(size_t)cut[c + 1].second * 2]; pz = out.walk_node[(size_t)cut[c + 1].second * 2 + 1]; }
+					hw_min = std::min(hw_min, hw);
+					float y = last_y; int l = G_NONE;
+					rep.walk_pts++;
+					int state = 0;   // 1 = no ground, 2 = on asphalt
+					if (!ground->query(px, pz, y, l)) state = 1;
+					else if (is_road(l)) state = 2;
+					flag.push_back((char)state);
+					last_y = y;
+					pts.push_back(px); pts.push_back(y); pts.push_back(pz);
+				}
+				// asphalt across a pavement for a few metres is a driveway or an alley mouth: people walk over it. More than
+				// 12 m of it, or no ground at all, is the walk line off its pavement.
+				for (size_t k = 0; k < flag.size();) {
+					if (flag[k] == 0) { k++; continue; }
+					size_t j = k;
+					while (j < flag.size() && flag[j] == flag[k]) j++;
+					const double run = std::hypot(pts[(j - 1) * 3] - pts[k * 3], pts[(j - 1) * 3 + 2] - pts[k * 3 + 2]);
+					const bool at_mouth = (k == 0 && std::find(mouth_nodes.begin(), mouth_nodes.end(), cut[c].second) != mouth_nodes.end()) ||
+							(j == flag.size() && std::find(mouth_nodes.begin(), mouth_nodes.end(), cut[c + 1].second) != mouth_nodes.end());
+					if (flag[k] == 2 && run <= 12.0 && ((k > 0 && j < flag.size()) || at_mouth)) { if (!at_mouth) rep.walk_driveways++; }
+					else {
+						if (flag[k] == 1) { rep.walk_pts_no_ground += (int)(j - k); edge_none += (int)(j - k); }
+						else { rep.walk_pts_on_road += (int)(j - k); edge_road += (int)(j - k); }
+						if (edge_none + edge_road == (int)(j - k)) { first_bad[0] = pts[k * 3]; first_bad[1] = pts[k * 3 + 2]; }
+					}
+					k = j;
+				}
+				std::vector<float> simple;
+				simplify(pts, simple);
+				add_seg(cut[c].second, cut[c + 1].second, 0, zone, -1, -1, simple, hw_min);
+				rep.walks++;
+			}
+		}
+		if (edge_none + edge_road > 0) {
+			say("PAVEMENT LINE OFF ITS PAVEMENT block %s (%s, %s): %d points with no ground, %d on the road (first at %.1f, %.1f)", b.id.c_str(), b.name.c_str(), b.section.c_str(), edge_none, edge_road,
+					first_bad[0], first_bad[1]);
+		}
+		for (int end = 0; end < 2; end++) {
+			if (xnode[end][0] < 0 || xnode[end][1] < 0) continue;
+			const float ax = out.walk_node[(size_t)xnode[end][0] * 2], az = out.walk_node[(size_t)xnode[end][0] * 2 + 1];
+			const float bx = out.walk_node[(size_t)xnode[end][1] * 2], bz = out.walk_node[(size_t)xnode[end][1] * 2 + 1];
+			const double len = std::hypot(bx - ax, bz - az);
+			const int np = std::max(2, (int)std::ceil(len / 1.0) + 1);
+			std::vector<float> pts;
+			float last_y = 0.0f; int painted = 0, on_road = 0;
+			for (int k = 0; k < np; k++) {
+				const float u = (float)k / (np - 1), px = ax + (bx - ax) * u, pz = az + (bz - az) * u;
+				float y = last_y; int l = G_NONE;
+				ground->query(px, pz, y, l);
+				if (is_road(l)) on_road++;
+				// paint: stripes, or two border lines 3 m apart: anything white within 1.8 m of the line, along the street
+				const float cx = (bz - az) / (float)len, cz = -(bx - ax) / (float)len;
+				for (float t = -1.8f; t <= 1.8f && painted == 0; t += 0.2f) if (ground->layer_at(px + cx * t, pz + cz * t) == G_PAINT_WHITE) painted++;
+				last_y = y;
+				pts.push_back(px); pts.push_back(y); pts.push_back(pz);
+			}
+			// which traffic it crosses: this leg's lanes. Their clock phase, as the lanes carry it (heads facing along x
+			// run half a cycle late)
+			const int n = (int)e.x.size();
+			const double hx = end == 0 ? e.x[1] - e.x[0] : e.x[n - 1] - e.x[n - 2], hz = end == 0 ? e.z[1] - e.z[0] : e.z[n - 1] - e.z[n - 2];
+			const int phase = e.ctl[end] == CTL_SIGNAL ? (std::fabs(hx) > std::fabs(hz) ? 1 : 0) : -1;
+			add_seg(xnode[end][0], xnode[end][1], 1, 0, end == 0 ? e.na : e.nb, phase, pts, 1.4);
+			rep.crossings++;
+			if (e.ctl[end] == CTL_SIGNAL) rep.crossings_signal++;
+			if (painted == 0) { rep.crossings_unpainted++; if (said++ < 14) say("CROSSING WITHOUT PAINT block %s end %s at (%.1f, %.1f)", b.id.c_str(), end == 0 ? "a" : "b", (ax + bx) * 0.5f, (az + bz) * 0.5f); }
+		}
+	}
+}
+
+// ---------------------------------------------------------------- parking stalls
+// The stalls the pieces recorded (through the bake: [x, y, z, yaw, grade]). A stall beside a lane, in the parking
+// lane, turned along the street, is a KERB stall: it is tied to the lane it lies beside and to its place along it, so
+// the traffic knows it, and a car can pull into it and out of it. Every other stall is in a car park.
+void Builder::emit_stalls() {
+	const int ns = (int)stalls.size() / 6;
+	for (int k = 0; k < ns; k++) {
+		const float *st = &stalls[(size_t)k * 6];
+		const double x = st[0], z = st[2];
+		const double yaw = st[3] * 3.14159265358979 / 180.0;
+		// the nearest centre line point of any street
+		int be = -1, bi = -1; double bd = 30.0 * 30.0;
+		for (size_t ei = 0; ei < edges.size(); ei++) {
+			const Edge &e = edges[ei];
+			for (size_t i = 0; i < e.x.size(); i++) {
+				const double d = (e.x[i] - x) * (e.x[i] - x) + (e.z[i] - z) * (e.z[i] - z);
+				if (d < bd) { bd = d; be = (int)ei; bi = (int)i; }
+			}
+		}
+		int kind = 1, lane = -1; double s_lane = 0.0, out_yaw = yaw;
+		if (be >= 0) {
+			const Edge &e = edges[be];
+			const int n = (int)e.x.size(), i0 = std::max(bi - 1, 0), i1 = std::min(bi + 1, n - 1);
+			double tx = e.x[i1] - e.x[i0], tz = e.z[i1] - e.z[i0];
+			const double tl = std::hypot(tx, tz);
+			tx /= tl; tz /= tl;
+			const double along = (x - e.x[bi]) * tx + (z - e.z[bi]) * tz, across = (x - e.x[bi]) * tz - (z - e.z[bi]) * tx;   // + = left of a -> b
+			const int sd = across > 0.0 ? 1 : 0;
+			const double kerb = e.at[sd][bi].ok ? e.at[sd][bi].k : e.med[sd].k;
+			const double s = e.s[bi] + along;
+			// turned along the street? (either way round)
+			const double rel = std::fabs(std::remainder(yaw - std::atan2(tx, tz), 3.14159265358979));
+			const int d = sd == 0 ? 0 : 1;
+			if (e.nl[d] > 0 && std::fabs(across) < kerb - 0.1 && std::fabs(across) > kerb - 2.7 && rel < 0.35 && s > e.trim[0] + 1.0 && s < e.len - e.trim[1] - 1.0) {
+				kind = 0;
+				lane = e.first_lane[d] + e.nl[d] - 1;   // the outermost lane of the direction that drives on this side
+				s_lane = d == 0 ? s - e.trim[0] : (e.len - e.trim[1]) - s;
+				out_yaw = d == 0 ? std::atan2(tx, tz) : std::atan2(-tx, -tz);   // parked the way the traffic beside it drives
+			}
+		}
+		float y = st[1]; int l = G_NONE;
+		if (!ground->query((float)x, (float)z, y, l)) rep.stalls_no_ground++;
+		else if (kind == 0 && !is_road(l)) rep.stalls_kerb_off_road++;
+		if (kind == 0) rep.stalls_kerb++; else rep.stalls_park++;
+		const int cell = (int)st[5];
+		const float f[8] = { (float)x, y, (float)z, (float)out_yaw, st[4], 2.4f, 1.0f, (float)s_lane };
+		const int32_t ia[4] = { kind, lane, cell >= 0 && (size_t)cell * 2 + 1 < cell_xz.size() ? cell_xz[(size_t)cell * 2] : 0, cell >= 0 && (size_t)cell * 2 + 1 < cell_xz.size() ? cell_xz[(size_t)cell * 2 + 1] : 0 };
+		out.stall_f.insert(out.stall_f.end(), f, f + 8);
+		out.stall_i.insert(out.stall_i.end(), ia, ia + 4);
+	}
+}
+
 void Builder::build() {
 	rep = Report();
 	out = StreetData();
@@ -953,6 +1293,8 @@ void Builder::build() {
 	junctions();
 	emit_lanes();
 	check_paths();
+	emit_walks();
+	emit_stalls();
 	double lane_m = 0.0;
 	for (int i = 0; i < out.lanes(); i++) {
 		for (int k = out.lane_off[i]; k + 1 < out.lane_off[i + 1]; k++) {
@@ -968,6 +1310,14 @@ void Builder::build() {
 	say("CHECK steepest lane %.1f %%, largest height kink at a lane point %.3f m", rep.worst_grade * 100.0, rep.worst_kink);
 	say("CHECK junctions (3 legs and more): %d with signals, %d with stop bars, %d with neither | approaches %d: %d signal, %d stop, %d free", rep.nodes_signal, rep.nodes_stop, rep.nodes_free,
 			rep.approaches, rep.approaches_signal, rep.approaches_stop, rep.approaches - rep.approaches_signal - rep.approaches_stop);
+	double walk_m = 0.0;
+	for (size_t k = 0; k + 1 < out.walk_seg_f.size(); k += 2) if (out.walk_seg[k * 4 + 2] == 0) walk_m += out.walk_seg_f[k];
+	say("TOTAL pavements %d stretches (%.1f km), %d walk points, %d crossings (%d at signals), parking stalls %d at the kerb, %d in car parks", rep.walks, walk_m / 1000.0, (int)out.walk_node.size() / 2,
+			rep.crossings, rep.crossings_signal, rep.stalls_kerb, rep.stalls_park);
+	say("CHECK pavement points on the road %d, without ground %d (both must be 0) of %d | driveways and alley mouths walked over %d | crossings with no paint under them %d", rep.walk_pts_on_road,
+			rep.walk_pts_no_ground, rep.walk_pts, rep.walk_driveways, rep.crossings_unpainted);
+	say("CHECK pavement corners with no ground under them (holes in the map, listed above): %d", rep.corners_no_ground);
+	say("CHECK kerb stalls not on the asphalt %d, stalls without ground %d (both must be 0)", rep.stalls_kerb_off_road, rep.stalls_no_ground);
 	say("CHECK approaches with no way on %d, blocks too short for their junctions %d, points of an unknown street kind %d", rep.legs_unconnected, rep.short_edges, rep.generic_stations);
 }
 

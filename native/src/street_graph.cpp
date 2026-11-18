@@ -306,6 +306,17 @@ Ref<Image> StreetGraph::lanes_image(double p_x0, double p_z0, double p_x1, doubl
 		const Color col = turn == 0 ? Color(0.2, 1.0, 0.3) : (turn == 1 ? Color(1.0, 0.55, 0.1) : Color(0.3, 0.8, 1.0));
 		for (size_t q = 0; q + 5 < pp.size(); q += 3) line(img, X(pp[q]), Y(pp[q + 2]), X(pp[q + 3]), Y(pp[q + 5]), col);
 	}
+	// pavements yellow-green, crossings magenta
+	for (size_t sgi = 0; sgi + 7 < d.walk_seg.size(); sgi += 8) {
+		const int p0 = d.walk_seg[sgi + 6], np = d.walk_seg[sgi + 7];
+		const Color col = d.walk_seg[sgi + 2] == 1 ? Color(1.0, 0.1, 0.9) : Color(0.75, 1.0, 0.1);
+		for (int q = p0; q + 1 < p0 + np; q++) line(img, X(d.walk_pts[q * 3]), Y(d.walk_pts[q * 3 + 2]), X(d.walk_pts[q * 3 + 3]), Y(d.walk_pts[q * 3 + 5]), col);
+	}
+	for (size_t wn = 0; wn + 1 < d.walk_node.size(); wn += 2) dot(img, X(d.walk_node[wn]), Y(d.walk_node[wn + 1]), p_m_per_px < 0.5 ? 2 : 0, Color(0.75, 1.0, 0.1));
+	// stalls: at the kerb light blue, in car parks grey
+	for (size_t k = 0; k * 8 + 7 < d.stall_f.size(); k++) {
+		dot(img, X(d.stall_f[k * 8]), Y(d.stall_f[k * 8 + 2]), p_m_per_px < 0.5 ? 3 : 0, d.stall_i[k * 4] == 0 ? Color(0.3, 0.9, 1.0) : Color(0.55, 0.55, 0.6));
+	}
 	for (int i = 0; i < nl; i++) {
 		const Color col = d.lane_i[(size_t)i * 12 + 1] == 0 ? Color(1.0, 0.2, 0.2) : Color(0.25, 0.45, 1.0);
 		for (int q = d.lane_off[i]; q + 1 < d.lane_off[i + 1]; q++) {
