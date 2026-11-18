@@ -7,3 +7,7 @@ __pycache__/
 /terrain_grid.f32
 /terrain_grid.json
 /terrain_sea.u8
+
+# runtime bake output: derived from the locked pieces by tools/city/bake (make_arrays.py, bake_runtime.gd)
+/map_dc/coronado/city_kit/runtime/
+/map_dc/coronado/city_kit/runtime_tex/

@@ -284,3 +284,23 @@ reusing a street piece puts that bench in front of somebody else's door (the val
 - **Seawalls / promenades follow the shoreline** (Yasin on the ferry plan): offset the smoothed water line inland,
   never a straight quay across a curving coast.
 - **Godot writes .uid files on import:** commit them (the stop hook asks).
+
+## Lessons 18 Nov (audit, runtime bake): read docs/AUDIT_PERF_LIFE_18NOV.md and docs/RUNTIME_BAKE.md
+- **Measure, then change:** `tools/city/audit/` (census.gd per piece, probe.gd street views with each group hidden in
+  turn, load_times.gd) and `tools/city/bake/rt_shots.gd --probe --detail` for the baked city. Counts are valid on the
+  cloud GPU, times are not a phone's.
+- **Runtime bake** (`tools/city/bake/bake_runtime.gd`): derived data in `city_kit/runtime/` (not in git), pieces are
+  never written. First `make_arrays.py`, then `--import`, then the bake. `--check` lists stale cells.
+- **Yasin: draw calls as low as possible, triangles second.** Big batches (near per 64 m, mid and ground per cell, far
+  world in 1 km chunks). Merging the near tier per piece batch instead costs +45 draws.
+- **The cloud preview renders `bldg_wear` buildings about 40 % too dark** (Mobile renderer on lavapipe; OpenGL and
+  Forward+ agree with each other). Do not tune building colours from cloud shots; a shader with one more uniform
+  renders the brighter, matching result.
+- **Packed arrays through a Variant cast are copies:** `(x as PackedFloat32Array).append(..)` appends to nothing, and a
+  packed array stored in a Dictionary is copied on access. Use typed locals, or a SurfaceTool per bucket.
+- **Instance uniforms:** write every one on every instance; `texture_debug_usage` is not exposed to scripts.
+- **Kit textures are VRAM compressed with mipmaps since 18 Nov** (Yasin's yes). New kit atlases must get the same
+  import settings, or they load at 4x the memory and sparkle.
+- `prop_wear_mat` names materials by the colour atlas only, so most near props run without normal / ORM maps (the
+  first creator was a mid tier). Known, kept, Yasin's call.
+

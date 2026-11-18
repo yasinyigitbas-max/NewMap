@@ -13,3 +13,18 @@ textures/vram_compression/import_etc2_astc=true
 [display]
 window/size/viewport_width=1600
 window/size/viewport_height=900
+
+[shader_globals]
+; city kit runtime shaders (map_dc/coronado/city_kit/shaders/rt): the game drives these (day cycle, weather)
+ck_night={
+"type": "float",
+"value": 0.0
+}
+ck_wind_strength={
+"type": "float",
+"value": 1.0
+}
+ck_wind_dir={
+"type": "vec2",
+"value": Vector2(0.8, 0.6)
+}

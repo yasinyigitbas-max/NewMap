@@ -6,6 +6,10 @@ lively and varied ... it is supposed to be an open world game with zero loadings
 Nothing in the map was changed. The lock test says RESULT PASS (401 pieces, 19 plan files). The audit added four
 read-only measuring scripts in `tools/city/audit/` and this report.
 
+**Update, same day:** Yasin said to do the four things. What was built and measured since is in `RUNTIME_BAKE.md`
+(sample area: 65 draw calls a view with the whole skyline). Finding P8 changes: the engine's mobile light grid gives 32
+live lights for a fixed cost, so the rooms' light counts are fine as they are.
+
 ## The short version
 
 1. **The street-level detail is cheap. The far view is what breaks the budget.** Standing in the street with the whole

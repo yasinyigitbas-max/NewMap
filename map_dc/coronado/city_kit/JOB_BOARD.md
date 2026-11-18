@@ -5,6 +5,19 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov ~11:40: THE 4 THINGS (Yasin: "yes replace it and do the 4 things ... show me samples where its possible before
+  a map wide roll out"; "triangles are fine ... keep draw calls as low as possible"; the engine's light grid gives 32
+  live lights: "use that for the lights problem"). Read `docs/RUNTIME_BAKE.md`. DONE: plan picture replaced; kit atlases
+  compressed + mipmaps (whole kit, 143 -> 38 MB); runtime bake tool `tools/city/bake/` + shaders `city_kit/shaders/rt/`
+  (far world, texture arrays, merged batches, per-prop distance window, wind, signals, night glow + lamp anchors,
+  per-building tint slot); baked the SAMPLE AREA only (centre + apartments + civic + stadium): 65 draws median / 87
+  worst a view with the whole skyline (raw: 942; budget 150), triangles sent 329k (over the 300k gate, Yasin: fine);
+  tint + shop-name plates trial on the apartments sample (in memory). Samples: `review/samples_18nov/`. Lock test PASS.
+  Bake output (`runtime/`, `runtime_tex/`) is NOT in git (derived). WAITING for Yasin: the six decisions at the end of
+  RUNTIME_BAKE.md (roll out, data in git or not, merge limit, movement tuning, tint / plates, prop normal maps).
+  NOT rolled out map-wide. Known flaw: the green street-name board lights with the green signal lens.
+  FOUND: the cloud preview draws bldg_wear buildings ~40 % too dark (software GPU, Mobile renderer); OpenGL and
+  Forward+ agree with the brighter look. Tell Yasin's PC check.
 - 18 Nov: AUDIT (Yasin: "check the performance ... find inefficiencies, include how we can make it more lively and
   varied ... zero loadings"): `docs/AUDIT_PERF_LIFE_18NOV.md`, tools in `tools/city/audit/` (census.gd, probe.gd,
   probe_whatif.gd, load_times.gd: read-only, real renderer). NOTHING in the map changed, lock test PASS. Measured: whole
