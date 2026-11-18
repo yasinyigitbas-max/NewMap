@@ -72,6 +72,10 @@ ck_look_between={
 "type": "float",
 "value": 1.0
 }
+ck_look_signs={
+"type": "float",
+"value": 1.0
+}
 ck_cells_loaded={
 "type": "sampler2D",
 "value": ""

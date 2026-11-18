@@ -21,6 +21,7 @@ Global shader values in `project.godot` `[shader_globals]`, 0 = off (the look be
 | `ck_look_propmaps` | props' ORM maps (queue job 2) |
 | `ck_look_detail` | close-up wall grain (queue job 3) |
 | `ck_look_between` | contact shadows between models (queue job 4, prototype layer) |
+| `ck_look_signs` | shop signs glow at night (queue job 6) |
 | `ck_look_sky_top`, `ck_look_sky_horizon` | the day sky colours the glass reflects (set to the rig's sky; the sky session or the game's day cycle should set these to its own sky) |
 
 From code: `RenderingServer.global_shader_parameter_set(&"ck_look_glass", 0.0)`. Takes effect the next frame, no reload.
@@ -132,6 +133,17 @@ and the far shader lights it at night with the near windows' rule and palette: n
 `rt_far.gdshaderinc` and the bake is written out in `docs/look_patches/far_windows.md`; tried in memory
 (`tools/city/look/far_glow_shots.gd`): `review/look_18nov/far_windows/`.
 - Cost: no extra read; ~20 ops on far-building pixels at night only; +2 MB for the atlas's alpha.
+
+## Queue job 6, signs at night (`ck_look_signs`)
+The kit paints its shop names into the city atlas (sign boards, `city_layout.json` SG_*). At night, in `rt_bldg`, the
+texels of those boards glow: the letters (lighter than their board) strongly, the board a little, like a lit box sign;
+one sign in seven flickers slowly and irregularly (a time hash per sign and building). Only the city atlas has signs;
+which atlas a material uses is read from one fixed texel per VERTEX (no per-pixel cost). Pictures
+`review/look_18nov/signs/` (`*_night_no_signs` / `*_night_after`): 1-3 % of the pixels change in a street view.
+- Cost: no texture read (the albedo is already read); on sign texels at night ~12 ops; elsewhere a branch on a uniform
+  and one range test. Flicker can only be seen moving (not in a still).
+- Not covered: the kit's billboards and blade-sign PROPS (prop shader), and the generated rooms' own name plates
+  (`room_lib` sign mesh: they would need an emissive letter colour at night; for the room bake).
 
 ## Picture files
 `<view>_<day|night>_<set>.jpg`, views `centre_a/b` (city centre, 0,-600), `apartments_a/b` (250,-600), `pilot_a/b`

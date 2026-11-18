@@ -39,6 +39,8 @@ global uniform float ck_look_windows;
 global uniform float ck_look_glass;
 global uniform vec4 ck_look_sky_top : source_color;
 global uniform vec4 ck_look_sky_horizon : source_color;
+global uniform float ck_look_signs;          // look job 6: the kit's painted shop signs glow at night
+uniform float sign_glow = 1.1;
 global uniform float ck_look_detail;          // look job 3: fine grain on the walls near the camera
 global uniform sampler2D ck_look_detail_tex : filter_linear_mipmap, repeat_enable;
 uniform float detail_amount = 0.6;
@@ -49,6 +51,7 @@ varying vec3 v_wp;
 varying vec3 v_wn;
 varying float v_y;
 varying vec2 v_win;      // window cell (3 m): the same value over one window, another on the next
+varying flat float v_city;      // 1 = the material uses the city atlas (the one with the painted shop signs)
 void vertex() {
 	v_wp = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	v_wn = normalize((MODEL_MATRIX * vec4(NORMAL, 0.0)).xyz);
@@ -59,6 +62,18 @@ void vertex() {
 	// Glass bands as wide as a tower are cut into bays by it. Each wall face starts at another cell.
 	float along = VERTEX.x * NORMAL.z - VERTEX.z * NORMAL.x;
 	v_win = vec2(along - UV.x * 18.0, VERTEX.y + UV.y * 16.0) / 3.0 + vec2(floor(dot(NORMAL.xz, vec2(17.0, 43.0)) + 0.5), 0.0);
+	// which kit atlas: the city atlas has a lit shopfront where the building atlas has a white door (one fetch of a fixed
+	// texel per vertex, not per pixel)
+	v_city = has_emission ? step(0.2, texelFetch(emission_tex, ivec2(60, 790), 0).r) : 0.0;
+}
+// the city atlas' sign boards (assets/coronado_kit/textures/city_layout.json SG_*): the two name rows at the top, the
+// shop-name row and the landmark column over the doors, the small boards by the windows; -1 = not a sign, else its id
+float sign_id(vec2 px) {
+	if (px.y >= 536.0 && px.y <= 660.0) return floor(px.x / 256.0) + (px.y > 598.0 ? 8.0 : 0.0);
+	if (px.y >= 1707.0 && px.y <= 1759.0) return 16.0 + floor(px.x / 256.0);
+	if (px.x >= 1804.0 && px.y >= 1403.0 && px.y <= 1695.0) return 24.0 + floor((px.y - 1403.0) / 60.0);
+	if (px.x >= 1844.0 && px.y >= 1763.0 && px.y <= 1995.0) return 30.0 + floor((px.y - 1763.0) / 60.0);
+	return -1.0;
 }
 vec2 win_hash(vec2 c) {
 	return fract(sin(vec2(dot(c, vec2(12.9898, 78.233)), dot(c, vec2(39.3468, 11.135)))) * 43758.5453);
@@ -139,6 +154,17 @@ void fragment() {
 			float hsh = fract(sin(dot(bay + lit_seed, vec2(12.9898, 78.233))) * 43758.5453);
 			float on = step(0.34, hsh) * smoothstep(hsh * 0.6, hsh * 0.6 + 0.25, ck_night) * mix(0.35, 1.0, fract(hsh * 7.31));
 			emi += texture(emission_tex, UV).rgb * night_color * emission_energy * night_energy * on;
+		}
+	}
+	// night signs: the letters (lighter than their board) glow, the board a little; one sign in seven flickers
+	if (ck_look_signs > 0.5 && v_city > 0.5 && ck_night > 0.001) {
+		float sid = sign_id(UV * 2048.0);
+		if (sid >= 0.0) {
+			float hs = fract(sin(sid * 12.9898 + lit_seed * 78.233) * 43758.5453);
+			float letter = smoothstep(0.42, 0.68, lum);
+			float tick = floor(TIME * 7.0 + hs * 50.0);
+			float flick = hs > 0.86 ? mix(1.0, 0.2, step(0.86, fract(sin(tick * 91.7 + hs * 13.0) * 43758.5453))) : 1.0;
+			emi += alb.rgb * (letter * 1.0 + 0.1) * sign_glow * flick * smoothstep(0.2, 0.6, ck_night);
 		}
 	}
 	EMISSION = emi;
