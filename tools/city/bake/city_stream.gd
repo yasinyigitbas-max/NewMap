@@ -35,6 +35,9 @@ signal cell_out(key: String)
 @export var max_cells := 30           ## memory cap: cells in the scene
 @export var frame_budget_ms := 1.5    ## main-thread time a frame may spend removing (the old game's phone budget for streaming)
 @export var bodies_per_frame := 2     ## collision bodies attached a frame
+@export var attach_bodies := true    ## test switch: false = a cell's collision is never attached (to see what attaching costs)
+@export var show_cells := true       ## test switch: false = cells are added hidden (to see what their first drawing costs)
+@export var probe := false           ## test switch: time how long the physics and render servers take to digest what this frame gave them
 @export var urgent_m := 90.0          ## a body this near the player is attached even while a cell is loading
 
 enum {NONE, LOADING, BUILDING, READY, IN}
@@ -54,6 +57,7 @@ var _map_dirty := false
 var _prepared: Array = []      # extra focus points (prepare)
 ## counters for tests and the game's own overlay
 var stats := {"in": 0, "out": 0, "dropped": 0, "add_ms_worst": 0.0, "remove_ms_worst": 0.0, "ready_ms_worst": 0.0, "ready_ms_sum": 0.0, "capped": 0, "bodies": 0, "body_ms_worst": 0.0, "body_late": 0}
+var _probe_body: StaticBody3D
 var _pending: Array = []       # collision bodies waiting to be attached: [centre, parent, body, cell key]
 var add_ms: Array[float] = []
 var ready_ms: Array[float] = []
@@ -167,6 +171,21 @@ func update_focus(p: Vector3, now := false, velocity := Vector3.ZERO) -> void:
 
 func _process(_dt: float) -> void:
 	var t0 := Time.get_ticks_usec()
+	_process_stream(t0)
+	stats["proc_ms"] = (Time.get_ticks_usec() - t0) / 1000.0      # this frame's main-thread time in here, for the rig's breakdown
+	if probe:
+		# A question with an answer makes the caller wait until the server has worked off everything queued before it.
+		# So these two waits are the cost of what was just handed over: bodies to the physics thread (which builds
+		# their shapes), and meshes / textures the loader threads created to the render server.
+		if _probe_body == null:
+			_probe_body = StaticBody3D.new(); var cs := CollisionShape3D.new(); cs.shape = BoxShape3D.new(); _probe_body.add_child(cs); _probe_body.position.y = -2000.0; add_child(_probe_body)
+		var t1 := Time.get_ticks_usec()
+		PhysicsServer3D.body_get_state(_probe_body.get_rid(), PhysicsServer3D.BODY_STATE_TRANSFORM)
+		var t2 := Time.get_ticks_usec()
+		RenderingServer.force_sync()
+		stats["phys_wait_ms"] = (t2 - t1) / 1000.0; stats["rs_wait_ms"] = (Time.get_ticks_usec() - t2) / 1000.0
+
+func _process_stream(t0: int) -> void:
 	for k: String in cells:
 		var c: Dictionary = cells[k]
 		if c.state == LOADING:
@@ -244,8 +263,11 @@ func _build(c: Dictionary) -> void:
 
 func _add(k: String) -> void:
 	var c: Dictionary = cells[k]
+	if not show_cells: (c.node as Node3D).visible = false
 	add_child(c.node); _apply_night(c.node)
-	for b: Array in c.bodies: _pending.append([b[0], b[1], b[2], k])
+	for b: Array in c.bodies:
+		if attach_bodies: _pending.append([b[0], b[1], b[2], k])
+		else: _leaving.append(b[2])
 	c.bodies = []
 	c.state = IN; stats["in"] += 1; _mark(k, true); cell_in.emit(k)
 
