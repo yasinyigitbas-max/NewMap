@@ -1,0 +1,334 @@
+{
+ "_doc": "Which shop is behind every shop door of the commercial strip's GROWTH blocks (claude/grow-strip, 18 Nov; Yasin:",
+ "count": 8,
+ "rooms": [
+  {
+   "id": "m_gr_ad5ne__crown_car_care_row__0",
+   "piece": "m_gr_ad5ne",
+   "label": "crown_car_care_row",
+   "model": "commercial/com_orange_row",
+   "pos": [
+    556.0,
+    4.147,
+    -1092.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -4.08,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    3.0
+   ],
+   "kind": "auto_parts",
+   "name": "Strand Auto Parts",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 5.18
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5ne__crown_car_care_row__1",
+   "piece": "m_gr_ad5ne",
+   "label": "crown_car_care_row",
+   "model": "commercial/com_orange_row",
+   "pos": [
+    556.0,
+    4.147,
+    -1092.0
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 7.76,
+   "door_w": 1.6,
+   "bay": [
+    3.0,
+    8.7
+   ],
+   "kind": "phone",
+   "name": "Bridge Cell & Vape",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 5.18
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5ne__quick_lube__0",
+   "piece": "m_gr_ad5ne",
+   "label": "quick_lube",
+   "model": "industrial/ind_repair",
+   "pos": [
+    579.0,
+    4.146,
+    -1091.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -6.5,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -3.4
+   ],
+   "kind": "lube",
+   "name": "Ten Minute Lube",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "front",
+     "along": -5.0,
+     "w": 3.6
+    },
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5ne__taqueria_adela__0",
+   "piece": "m_gr_ad5ne",
+   "label": "taqueria_adela",
+   "model": "commercial/com_shallow_surf",
+   "pos": [
+    512.7,
+    4.149,
+    -1062.0
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 3.26,
+   "door_w": 1.0,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "taqueria",
+   "name": "Tacos El Puente",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5ne__tax_office__0",
+   "piece": "m_gr_ad5ne",
+   "label": "tax_office",
+   "model": "commercial/com_realty",
+   "pos": [
+    516.2,
+    4.15,
+    -1094.0
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "tax",
+   "name": "Island Tax & Insurance",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": -3.4,
+     "w": 2.6
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5ne__chicken_drive__0",
+   "piece": "m_gr_ad5ne",
+   "label": "chicken_drive",
+   "model": "ck/mod_fastfood",
+   "pos": [
+    526.0,
+    4.148,
+    -1030.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 1.2,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "drive_thru",
+   "name": "Coop & Go Chicken",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 4.0
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 4.0
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5ne__bayside_express_wash__0",
+   "piece": "m_gr_ad5ne",
+   "label": "bayside_express_wash",
+   "model": "services/svc_carwash",
+   "pos": [
+    624.0,
+    4.145,
+    -1052.0
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -10.5,
+   "door_w": 1.6,
+   "bay": [
+    -12.8,
+    -7.4
+   ],
+   "kind": "wash_office",
+   "name": "Bayside Express Wash",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 7.42,
+     "w": 1.25
+    },
+    {
+     "facade": "left",
+     "along": 7.42,
+     "w": 1.25
+    },
+    {
+     "facade": "front",
+     "along": -9.1,
+     "w": 3.4
+    },
+    {
+     "facade": "right",
+     "along": 7.42,
+     "w": 1.25
+    },
+    {
+     "facade": "left",
+     "along": 7.42,
+     "w": 1.25
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad5ne__route_75_diner__0",
+   "piece": "m_gr_ad5ne",
+   "label": "route_75_diner",
+   "model": "commercial/com_bistro",
+   "pos": [
+    580.0,
+    4.143,
+    -1036.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 4.76,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "diner",
+   "name": "Route 75 Diner",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 11.18
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  }
+ ]
+}

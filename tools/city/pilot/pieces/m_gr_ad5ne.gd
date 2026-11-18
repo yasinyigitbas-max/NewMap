@@ -47,12 +47,17 @@ func _run() -> void:
 	b.stalls_x(46.5, 7, -70.5, 1.0); b.stalls_x(46.5, 7, -59.5, -1.0)        # a double row ...
 	b.island(65.6, -70.4, 68.4, -59.6, 1, ["tree_torrey_pine_b"])            # ... broken by a torrey pine island
 	b.stalls_x(68.5, 13, -70.5, 1.0); b.stalls_x(68.5, 13, -59.5, -1.0)
-	b.island(103.7, -70.4, 106.5, -59.6, 0, PALMS)
+	b.island(103.7, -70.4, 106.5, -59.6, 1, ["palm_queen_b"])
+	b.island(43.6, -70.4, 46.4, -59.6, 1, ["tree_coral_a"])                  # planted row ends: shade, and the
+	b.island(43.6, -83.0, 46.4, -77.6, 0, PALMS)                              # turning cars keep off the end stalls
+	b.island(41.0, -52.4, 46.4, -47.0, 1, ["tree_jacaranda_a"])
+	b.island(70.4, -52.4, 72.4, -47.0, 0, PALMS); b.island(87.6, -52.4, 89.9, -47.0, 0, PALMS)
+	b.island(106.3, -52.4, 108.0, -47.0, 0, PALMS)
 	for p: Vector2 in [Vector2(67.0, -65.0), Vector2(105.1, -65.0), Vector2(30.0, -72.0), Vector2(60.0, -40.0), Vector2(100.0, -40.0)]:
 		b.add("prop_lot_light_pole", "worn", p.x, p.y, 0.0)
 	b.stalls_x(46.5, 9, -52.5, 1.0); b.stalls_x(90.0, 6, -52.5, 1.0)                                           # south side of aisle B: diner / chicken customers
 	# ---------------------------------------------------------------- the chicken drive-thru on the corner pad
-	var ck := b.bld("ck/mod_fastfood", 26.0, -30.0, 0.0, "pollo_loco_drive", 0.75)
+	var ck := b.bld("ck/mod_fastfood", 26.0, -30.0, 0.0, "chicken_drive", 0.75)
 	b.paints.append(b.rect(19.0, -24.0, 33.0, -22.4, "concrete"))
 	# drive-thru: in from the lot down the WEST side (window on the driver's left), across the front, back up the east side
 	b.paints.append(b.rect(12.0, -41.5, 12.15, -21.0, "white")); b.paints.append(b.rect(12.0, -21.15, 37.5, -21.0, "white"))

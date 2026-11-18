@@ -1,0 +1,144 @@
+{
+ "_doc": "room_contracts_strip.gd: every building of the m_gr_* pieces, grid frame (city_grid_layout.json)",
+ "buildings": [
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.08
+    ],
+    [
+     "shopdoor",
+     -1.92
+    ],
+    [
+     "shopdoor",
+     7.76
+    ]
+   ],
+   "label": "crown_car_care_row",
+   "model": "commercial/com_orange_row",
+   "piece": "m_gr_ad5ne",
+   "pos": [
+    556.0,
+    4.147,
+    -1092.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -6.5
+    ],
+    [
+     "rollup",
+     0.6
+    ],
+    [
+     "rollup",
+     6.0
+    ]
+   ],
+   "label": "quick_lube",
+   "model": "industrial/ind_repair",
+   "piece": "m_gr_ad5ne",
+   "pos": [
+    579.0,
+    4.146,
+    -1091.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     3.26
+    ]
+   ],
+   "label": "taqueria_adela",
+   "model": "commercial/com_shallow_surf",
+   "piece": "m_gr_ad5ne",
+   "pos": [
+    512.7,
+    4.149,
+    -1062.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     1.76
+    ]
+   ],
+   "label": "tax_office",
+   "model": "commercial/com_realty",
+   "piece": "m_gr_ad5ne",
+   "pos": [
+    516.2,
+    4.15,
+    -1094.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.8
+    ],
+    [
+     "shopdoor",
+     1.2
+    ]
+   ],
+   "label": "chicken_drive",
+   "model": "ck/mod_fastfood",
+   "piece": "m_gr_ad5ne",
+   "pos": [
+    526.0,
+    4.148,
+    -1030.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -10.5
+    ]
+   ],
+   "label": "bayside_express_wash",
+   "model": "services/svc_carwash",
+   "piece": "m_gr_ad5ne",
+   "pos": [
+    624.0,
+    4.145,
+    -1052.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     4.76
+    ]
+   ],
+   "label": "route_75_diner",
+   "model": "commercial/com_bistro",
+   "piece": "m_gr_ad5ne",
+   "pos": [
+    580.0,
+    4.143,
+    -1036.0
+   ],
+   "yaw": 0.0
+  }
+ ]
+}
