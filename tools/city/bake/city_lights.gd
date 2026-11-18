@@ -22,7 +22,7 @@ func update_lights(focus: Vector3, night: float) -> void:
 	if night > 0.05 and stream:
 		for k: String in stream.cells:
 			var c: Dictionary = stream.cells[k]
-			if c.state != 3 or not (c.node as Node).has_meta(&"lights"): continue
+			if c.state != stream.IN or not (c.node as Node).has_meta(&"lights"): continue
 			for L: Array in (c.node as Node).get_meta(&"lights"):
 				var p := Vector3(L[0], L[1], L[2]); var d := p.distance_to(focus)
 				if d < 140.0: cand.append([d + (25.0 if int(L[7]) == 1 else 0.0), p, L])     # street lamps before porch lights

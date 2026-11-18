@@ -20,7 +20,7 @@ const PIECES := "res://map_dc/coronado/city_kit/pieces/"
 const LAYOUT := "res://map_dc/coronado/city_kit/city_grid_layout.json"
 const SH := "res://map_dc/coronado/city_kit/shaders/rt/"
 const TEX := "res://map_dc/coronado/city_kit/runtime_tex/"      ## texture arrays (tools/city/bake/make_arrays.py)
-const VERSION := 3
+const VERSION := 4
 const CELL := 200.0
 const SUB_NEAR := 64.0
 const SUB_MID := 200.0
@@ -44,6 +44,8 @@ var mats := {}               # signature -> Material
 var atlas_img := {}          # texture path -> Image (linear lookups for the far props' flat colours)
 var stat := {"props_in": 0, "merged": 0, "instanced": 0, "pass": 0, "far": 0, "far_dropped": 0, "skipped_cell": 0, "buildings": 0, "shapes": 0}
 var manifest_cells := {}
+var warm := {}               # material path + kind -> a small node that draws it once (lib/warm.scn)
+var keep := {}               # every shared material a cell uses (the streamer holds them for its whole life)
 var layers := {}             # arrays.json: set name -> [texture path per layer]
 
 func _init() -> void: _run.call_deferred()
@@ -243,7 +245,7 @@ func _building(b: Node3D, piece: String, inst_name: String) -> void:
 		if ch is MeshInstance3D and (ch as MeshInstance3D).mesh:
 			var mi := ch as MeshInstance3D
 			var mt: Material = mi.get_surface_override_material(0) if mi.get_surface_override_material(0) else mi.mesh.surface_get_material(0)
-			if String(mi.name) == "mid": pivot = (mi.global_transform * mi.get_aabb()).get_center()
+			if String(mi.name) == "mid": pivot.y = (mi.global_transform * mi.get_aabb()).get_center().y      # (x, z stay the origin: the cell it was routed to)
 			if String(mi.name) == "far":
 				_far_add(pivot, _mat_far("solid"), mi.mesh, mi.global_transform, pivot, 1.0e9, false, false, null, 0.0)
 				continue
@@ -424,6 +426,8 @@ func _build_cell(c: Vector2i) -> Dictionary:
 		var gam := ArrayMesh.new(); gam.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, garr)
 		var gmi := MeshInstance3D.new(); gmi.name = "ground"; gmi.mesh = gam; gmi.position = gc; gmi.material_override = _mat_ground()
 		gmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF; gn.add_child(gmi); counts.draw_nodes += 1
+		if not warm.has("ground"):
+			var wg := MeshInstance3D.new(); wg.mesh = _lib_ground(rec.ground[0][0]) if _lib_ground(rec.ground[0][0]) else gam; wg.material_override = _mat_ground(); wg.scale = Vector3.ONE * 0.02; warm["ground"] = wg
 	# wear marks of every piece in the cell: one mesh (the shader fades each mark by its own distance)
 	if not rec.wear.is_empty():
 		var V := PackedVector3Array(); var N := PackedVector3Array(); var UV := PackedVector2Array(); var C := PackedColorArray(); var cc := Vector3((c.x + 0.5) * CELL, 0, (c.y + 0.5) * CELL); var wmat: Material = null
@@ -438,6 +442,11 @@ func _build_cell(c: Vector2i) -> Dictionary:
 		var am := ArrayMesh.new(); am.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr); am.surface_set_material(0, wmat)
 		var wm := MeshInstance3D.new(); wm.name = "wear"; wm.mesh = am; wm.position = cc; wm.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		wm.visibility_range_end = 100.0 + CELL * 0.75; root.add_child(wm); counts.draw_nodes += 1
+		if wmat and wmat.resource_path != "": keep[wmat.resource_path] = true
+		if not warm.has("wear") and V.size() >= 3:
+			var wa := []; wa.resize(Mesh.ARRAY_MAX); wa[Mesh.ARRAY_VERTEX] = V.slice(0, 3); wa[Mesh.ARRAY_NORMAL] = N.slice(0, 3); wa[Mesh.ARRAY_TEX_UV] = UV.slice(0, 3); wa[Mesh.ARRAY_COLOR] = C.slice(0, 3)
+			var wam := ArrayMesh.new(); wam.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, wa); wam.surface_set_material(0, wmat)
+			var wn := MeshInstance3D.new(); wn.mesh = wam; warm["wear"] = wn
 	# buildings: near and mid from lib/, the weathered material with a tint slot per building; far is in the far world
 	var bn := Node3D.new(); bn.name = "Buildings"; root.add_child(bn)
 	for b: Dictionary in rec.bld:
@@ -446,7 +455,11 @@ func _build_cell(c: Vector2i) -> Dictionary:
 		var seed_v := float(absi(hash(b.name)) % 1000) * 0.137
 		for t: Dictionary in b.tiers:
 			var mi2 := MeshInstance3D.new(); mi2.name = String(t.name); mi2.mesh = _lib_mesh(t.mesh); mi2.transform = t.lxf
-			mi2.set_surface_override_material(0, _mat_bldg(t.mat))
+			var bmat := _mat_bldg(t.mat)
+			mi2.set_surface_override_material(0, bmat)
+			var wk3 := "%s|bldg|%d" % [bmat.resource_path, mi2.mesh.surface_get_format(0)]
+			if not warm.has(wk3):
+				var wb := MeshInstance3D.new(); wb.mesh = mi2.mesh; wb.set_surface_override_material(0, bmat); wb.scale = Vector3.ONE * 0.05; wb.cast_shadow = t.shadow; warm[wk3] = wb
 			mi2.visibility_range_begin = t.vb; mi2.visibility_range_end = t.ve; mi2.visibility_range_begin_margin = t.vbm; mi2.visibility_range_end_margin = t.vem
 			mi2.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED; mi2.cast_shadow = t.shadow
 			# every per-building value is written (an unset one did not read as the shader's default in the first bake)
@@ -467,6 +480,9 @@ func _build_cell(c: Vector2i) -> Dictionary:
 		var cr := _centre_radius(pts)
 		var mi3 := MeshInstance3D.new(); mi3.name = "m%d_%s" % [k, key[1]]; k += 1
 		mi3.mesh = _merge(mb.items, cr[0], mb.tangents); mi3.position = cr[0]; mi3.material_override = mb.mat
+		var wk := "%s|merged|%s" % [(mb.mat as Material).resource_path, str(mb.tangents)]
+		if not warm.has(wk):
+			var wm2 := MeshInstance3D.new(); wm2.mesh = _merge([mb.items[0]], (mb.items[0][1] as Transform3D).origin, mb.tangents); wm2.material_override = mb.mat; wm2.cast_shadow = mb.shadow; warm[wk] = wm2
 		_range(mi3, String(key[1]), float(cr[1])); mi3.cast_shadow = mb.shadow
 		pn.add_child(mi3); counts.draw_nodes += 1
 	for key2: Array in rec.inst:
@@ -478,7 +494,14 @@ func _build_cell(c: Vector2i) -> Dictionary:
 			mm.set_instance_transform(i, ib.xfs[i]); pts2.append((ib.xfs[i] as Transform3D).origin)
 			if mm.use_custom_data: mm.set_instance_custom_data(i, ib.custom[i])
 		var mmi := MultiMeshInstance3D.new(); mmi.name = "i%d_%s" % [k, String(ib.name)]; k += 1; mmi.multimesh = mm
-		if ib.mat: mmi.material_override = ib.mat
+		if ib.mat:
+			mmi.material_override = ib.mat
+			if (ib.mat as Material).resource_path != "" and not (ib.mat as Material).resource_path.contains("::"): keep[(ib.mat as Material).resource_path] = true
+			var wk2 := "%s|inst|%d" % [(ib.mat as Material).resource_path, mm.mesh.surface_get_format(0)]
+			if not warm.has(wk2) and (ib.mat as Material).resource_path != "":
+				var wmm := MultiMesh.new(); wmm.transform_format = MultiMesh.TRANSFORM_3D; wmm.use_custom_data = mm.use_custom_data; wmm.mesh = mm.mesh; wmm.instance_count = 1; wmm.set_instance_transform(0, Transform3D.IDENTITY)
+				if wmm.use_custom_data: wmm.set_instance_custom_data(0, ib.custom[0])
+				var wmi := MultiMeshInstance3D.new(); wmi.multimesh = wmm; wmi.material_override = ib.mat; wmi.cast_shadow = ib.shadow; warm[wk2] = wmi
 		if ib.kind == "pass": mmi.visibility_range_begin = ib.vb; mmi.visibility_range_end = ib.ve; mmi.visibility_range_end_margin = 2.0
 		else: _range(mmi, String(key2[1]), float(_centre_radius(pts2)[1]))
 		mmi.cast_shadow = ib.shadow
@@ -494,7 +517,11 @@ func _build_cell(c: Vector2i) -> Dictionary:
 	# collision of ground and props: one static body per layer / mask pair
 	var bodies := {}
 	for cs2: Array in rec.col:
-		var bk := [cs2[2], cs2[3]]
+		var co: Vector3 = (cs2[1] as Transform3D).origin
+		# small bodies (a 32 m block, at most 24 shapes): each is quick to attach and to free (136 shapes in one body
+		# took 15-25 ms to attach in the cloud test)
+		var bk := [cs2[2], cs2[3], floori(co.x / 32.0), floori(co.z / 32.0), 0]
+		while bodies.has(bk) and (bodies[bk] as Node).get_child_count() >= 24: bk[4] += 1
 		if not bodies.has(bk):
 			var body2 := StaticBody3D.new(); body2.name = "col_%d" % bodies.size(); body2.collision_layer = int(cs2[2]); body2.collision_mask = int(cs2[3]); root.add_child(body2); bodies[bk] = body2
 		var s2 := CollisionShape3D.new(); s2.shape = _lib_shape(cs2[0]); s2.transform = cs2[1]; (bodies[bk] as Node).add_child(s2)
@@ -511,6 +538,9 @@ func _build_cell(c: Vector2i) -> Dictionary:
 			var gl := MultiMeshInstance3D.new(); gl.name = "glow_halo" if kind_i == 0 else "glow_pool"; gl.multimesh = gm2; gl.material_override = _mat_glow(kind_i == 0)
 			gl.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF; gl.visibility_range_end = 260.0 + CELL * 0.75
 			gl.visible = false      # shown by city_stream.set_night() only at night: no draw by day
+			if not warm.has(String(gl.name)):
+				var wq := MultiMesh.new(); wq.transform_format = MultiMesh.TRANSFORM_3D; wq.use_custom_data = true; wq.mesh = quad; wq.instance_count = 1; wq.set_instance_transform(0, Transform3D.IDENTITY); wq.set_instance_custom_data(0, Color(1, 1, 1, 1))
+				var wgl := MultiMeshInstance3D.new(); wgl.multimesh = wq; wgl.material_override = gl.material_override; warm[String(gl.name)] = wgl
 			root.add_child(gl); counts.draw_nodes += 1
 	root.set_meta(&"cell", [c.x, c.y]); root.set_meta(&"stalls", rec.stalls); root.set_meta(&"lights", rec.lights); root.set_meta(&"pieces", rec.pieces.values())
 	_own(root, root)
@@ -548,6 +578,7 @@ func _build_far() -> Dictionary:
 			var col: Variant = a[Mesh.ARRAY_COLOR]
 			var idx: PackedInt32Array = a[Mesh.ARRAY_INDEX] if a[Mesh.ARRAY_INDEX] != null else PackedInt32Array(range(v.size()))
 			var pv: Vector3 = (e[2] as Vector3) - cc
+			var hc := _cell_of(e[2]); var code := float((hc.x + 32) + (hc.y + 32) * 64)      # its cell, for rt_far's "is my cell in?"
 			var order: Array = [[0, 1, 2]] if not two else [[0, 1, 2], [0, 2, 1]]
 			for t in range(0, idx.size(), 3):
 				var fc := Color.WHITE
@@ -560,7 +591,7 @@ func _build_far() -> Dictionary:
 				for o: Array in order:
 					for j: int in o:
 						var ix := idx[t + j]
-						V.append(v[ix]); N.append(nn[ix] if o[1] == 1 else -nn[ix]); UV.append(uv[ix]); UV2.append(Vector2(1.0 if flat else 0.0, float(e[7]))); C.append(fc)
+						V.append(v[ix]); N.append(nn[ix] if o[1] == 1 else -nn[ix]); UV.append(uv[ix]); UV2.append(Vector2((1.0 if flat else 0.0) + 2.0 * float(e[7]), code)); C.append(fc)
 						CU.append(pv.x); CU.append(pv.y); CU.append(pv.z); CU.append(float(e[3]))
 		var arr := []; arr.resize(Mesh.ARRAY_MAX)
 		arr[Mesh.ARRAY_VERTEX] = V; arr[Mesh.ARRAY_NORMAL] = N; arr[Mesh.ARRAY_TEX_UV] = UV; arr[Mesh.ARRAY_TEX_UV2] = UV2; arr[Mesh.ARRAY_COLOR] = C; arr[Mesh.ARRAY_CUSTOM0] = CU
@@ -568,6 +599,11 @@ func _build_far() -> Dictionary:
 		var mi := MeshInstance3D.new(); mi.name = "far_%d_%d_%s" % [ch.x, ch.y, String(key[1]).trim_prefix("far_")]; mi.mesh = am; mi.position = cc
 		mi.material_override = mats[key[1]]; mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		root.add_child(mi); n += 1; tris += V.size() / 3
+		if not warm.has(String(key[1])) and V.size() >= 3:
+			var fa := []; fa.resize(Mesh.ARRAY_MAX); fa[Mesh.ARRAY_VERTEX] = PackedVector3Array([Vector3(0, 0, 0), Vector3(0.2, 0, 0), Vector3(0, 0.2, 0)]); fa[Mesh.ARRAY_NORMAL] = N.slice(0, 3); fa[Mesh.ARRAY_TEX_UV] = UV.slice(0, 3)
+			fa[Mesh.ARRAY_TEX_UV2] = PackedVector2Array([Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]); fa[Mesh.ARRAY_COLOR] = C.slice(0, 3); fa[Mesh.ARRAY_CUSTOM0] = PackedFloat32Array([0, 0, 0, 1e9, 0, 0, 0, 1e9, 0, 0, 0, 1e9])
+			var fam := ArrayMesh.new(); fam.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, fa, [], {}, Mesh.ARRAY_CUSTOM_RGBA_FLOAT << Mesh.ARRAY_FORMAT_CUSTOM0_SHIFT)
+			var fn := MeshInstance3D.new(); fn.mesh = fam; fn.material_override = mats[key[1]]; warm[String(key[1])] = fn
 	_own(root, root)
 	var ps := PackedScene.new(); ps.pack(root)
 	ResourceSaver.save(ps, out + "far/far_world.scn", ResourceSaver.FLAG_COMPRESS)
@@ -642,7 +678,15 @@ func _run() -> void:
 		print("BAKE cell %d_%d draw nodes=%d nodes=%d %s" % [c.x, c.y, cnt.draw_nodes, cnt.nodes, error_string(cnt.err)])
 	var fw := _build_far()
 	print("BAKE far world: %d meshes, %d triangles" % [fw.meshes, fw.tris])
-	var man := {"version": VERSION, "layout_sha": FileAccess.get_sha256(LAYOUT), "area": area, "tint": tint_on, "cells": manifest_cells, "far": fw, "stat": stat, "cell_m": CELL}
+	# lib/warm.scn: one small draw of every material and vertex format the bake made, for city_stream.warm_up()
+	var wroot := Node3D.new(); wroot.name = "Warm"; var wi := 0
+	for wk: String in warm:
+		var wnode: Node3D = warm[wk]; wnode.name = "w%d" % wi; wnode.position = Vector3((wi % 8) * 0.6 - 2.1, (wi / 8) * 0.6 - 1.2, 0); wi += 1
+		wroot.add_child(wnode)
+	_own(wroot, wroot)
+	var wps := PackedScene.new(); wps.pack(wroot); ResourceSaver.save(wps, out + "lib/warm.scn", ResourceSaver.FLAG_COMPRESS); wroot.free()
+	for mk: String in mats: keep[(mats[mk] as Material).resource_path] = true
+	var man := {"version": VERSION, "keep": keep.keys(), "warm": wi, "layout_sha": FileAccess.get_sha256(LAYOUT), "area": area, "tint": tint_on, "cells": manifest_cells, "far": fw, "stat": stat, "cell_m": CELL}
 	var f := FileAccess.open(out + "manifest.json", FileAccess.WRITE); f.store_string(JSON.stringify(man, " ")); f.close()
 	print("BAKE_DONE cells=%d draw nodes=%d nodes=%d lib meshes=%d shapes=%d materials=%d in %d ms" % [cells.size(), tot.draw_nodes, tot.nodes, lib_mesh.size(), lib_shape.size(), mats.size(), Time.get_ticks_msec() - t0])
 	quit()

@@ -1,49 +1,77 @@
 extends Node3D
-## Streams the baked city (city_kit/runtime) round a point with no loading stop:
-##  - far/far_world.scn is loaded once and stays (the skyline of the whole island);
-##  - a 200 m cell is requested on a loader thread when its rectangle comes within `load_dist` of the focus, built
-##    (instantiated) on a worker thread, and added to the scene at most one per frame; it is dropped past `unload_dist`.
-## The game may use this node as it is (call `update_focus(player position, false, player velocity)` every frame or
-## so) or point its own streamer at the same cell scenes. `update_focus(pos, true)` loads everything in range at once
-## (previews, checks).
-## FORWARD LEAD (18 Nov, Yasin's go): the loading range reaches ahead of a moving player by `lead_seconds` of travel
-## (at most `max_lead` m), so a fast car gets its cells earlier; standing still it is the same in every direction.
-## Nothing is trimmed behind: a player who looks back still needs the mid tier to 220 m.
+## Streams the baked city (city_kit/runtime) round a moving point with no loading stop. Written new for this map
+## (18 Nov; nothing taken from the old game's streamer).
+##
+## Three layers: far/far_world.scn (whole island, loaded once, stays) - 200 m cells round the player - the rooms
+## (theirs to wake; not in this node).
+##
+## What makes it hold up at speed (each point was measured, see docs/RUNTIME_BAKE.md):
+##  - FORWARD LEAD: the loading range is swept ahead of a moving player by `lead_seconds` of travel (at most `max_lead`).
+##  - A QUEUE: wanted cells are loaded nearest-first, at most `max_loading` at a time, on loader threads; a cell built
+##    (instantiated) on a worker thread; a request the player has left behind is dropped when it arrives.
+##  - NO HOLE: the far world shows the far version of everything in a cell until that cell is really in the scene
+##    (global shader texture ck_cells_loaded, read by rt_far), so a late cell looks like low detail, never like nothing.
+##  - SHARED THINGS STAY: every material of the bake (manifest "keep") is loaded at start and held. Measured: letting the
+##    last user of a material go costs ~250 ms on the main thread, and its shader is built again on the next use.
+##  - COLLISION IN STEPS: a cell's collision bodies (64 m blocks of ground and props, one per building) are held back
+##    when the cell is added and attached nearest-first, `bodies_per_frame` a frame. (The old game's phone laps:
+##    adding colliders in one go was its own class of hitch, 70-147 ms.)
+##  - REMOVAL IN PARTS: a cell leaves the scene piece by piece inside `frame_budget_ms` a frame.
+##  - A MEMORY CAP: never more than `max_cells` in; beyond it the farthest wanted cells simply stay far versions.
+##  - `prepare(pos)` / `is_ready(pos)`: get a place ready before the player is put there (respawn, mission start).
+##
+## Use: add the node, then every frame `update_focus(player position, false, player velocity)`.
+## `update_focus(pos, true)` loads everything in range at once (start of the game behind its one loading screen,
+## previews, checks). `warm_up()` draws one of everything once so shaders are built before the player moves.
+signal cell_in(key: String)
+signal cell_out(key: String)
+
 @export var runtime_dir := "res://map_dc/coronado/city_kit/runtime/"
-@export var load_dist := 240.0
+@export var load_dist := 240.0        ## a cell is wanted when its rectangle is within this of the swept focus (mid tier: 220 m)
 @export var unload_dist := 300.0
 @export var lead_seconds := 2.0
 @export var max_lead := 200.0
+@export var max_loading := 2          ## cells on the loader threads at once
+@export var max_cells := 30           ## memory cap: cells in the scene
+@export var frame_budget_ms := 1.5    ## main-thread time a frame may spend removing (the old game's phone budget for streaming)
+@export var bodies_per_frame := 2     ## collision bodies attached a frame
+
+enum {NONE, LOADING, BUILDING, READY, IN}
+const MAP := 64                       ## ck_cells_loaded is MAP x MAP texels, cell (0, 0) at its middle
+
 var manifest := {}
 var cell_m := 200.0
-var cells := {}          # "x_z" -> {"state": 0 none / 1 loading / 2 building / 3 in, "node": Node3D, "task": int, "ps": PackedScene}
+var cells := {}          # "x_z" -> {state, node, task, ps, t_req, cancel}
 var far_world: Node3D
-var add_ms: Array[float] = []      ## main-thread cost of each cell added (the hitch a player could feel)
-var ready_ms: Array[float] = []    ## from the request of a cell to the cell being in the scene
 var focus := Vector3.ZERO
 var night := 0.0
-
-## 0 day .. 1 night: drives the window glow (global ck_night) and shows the lamps' halos and pools only at night
-func set_night(v: float) -> void:
-	night = v
-	RenderingServer.global_shader_parameter_set(&"ck_night", v)
-	for k: String in cells:
-		if cells[k].state == 3: _apply_night(cells[k].node)
-
-func _apply_night(cell: Node) -> void:
-	for nm in ["glow_halo", "glow_pool"]:
-		var g := cell.get_node_or_null(nm)
-		if g: (g as Node3D).visible = night > 0.02
+var _keep: Array = []    # shared materials, held for the node's life
+var _leaving: Array = [] # nodes on their way out, freed in parts
+var _map_img: Image
+var _map_tex: ImageTexture
+var _map_dirty := false
+var _prepared: Array = []      # extra focus points (prepare)
+## counters for tests and the game's own overlay
+var stats := {"in": 0, "out": 0, "dropped": 0, "add_ms_worst": 0.0, "remove_ms_worst": 0.0, "ready_ms_worst": 0.0, "ready_ms_sum": 0.0, "capped": 0, "bodies": 0, "body_ms_worst": 0.0, "body_late": 0}
+var _pending: Array = []       # collision bodies waiting to be attached: [centre, parent, body, cell key]
+var add_ms: Array[float] = []
+var ready_ms: Array[float] = []
 
 func _ready() -> void:
 	var mp := runtime_dir + "manifest.json"
 	if FileAccess.file_exists(mp): manifest = JSON.parse_string(FileAccess.get_file_as_string(mp))
 	cell_m = float(manifest.get("cell_m", 200.0))
-	for k: String in manifest.get("cells", {}): cells[k] = {"state": 0, "node": null, "task": -1, "ps": null}
+	for k: String in manifest.get("cells", {}): cells[k] = {"state": NONE, "node": null, "task": -1, "ps": null, "t_req": 0, "cancel": false, "bodies": []}
+	for p: String in manifest.get("keep", []):
+		if ResourceLoader.exists(p): _keep.append(load(p))
+	_map_img = Image.create(MAP, MAP, false, Image.FORMAT_R8); _map_img.fill(Color(0, 0, 0))
+	_map_tex = ImageTexture.create_from_image(_map_img)
+	RenderingServer.global_shader_parameter_set(&"ck_cells_loaded", _map_tex)
 	var fp := runtime_dir + "far/far_world.scn"
 	if ResourceLoader.exists(fp):
 		far_world = (load(fp) as PackedScene).instantiate(); add_child(far_world)
 
+# ---------------------------------------------------------------- queries
 func _dist(k: String, p: Vector3) -> float:
 	var cx := float(k.get_slice("_", 0)) * cell_m; var cz := float(k.get_slice("_", 1)) * cell_m
 	var dx := maxf(maxf(cx - p.x, p.x - (cx + cell_m)), 0.0); var dz := maxf(maxf(cz - p.z, p.z - (cz + cell_m)), 0.0)
@@ -51,44 +79,183 @@ func _dist(k: String, p: Vector3) -> float:
 
 func _path(k: String) -> String: return runtime_dir + "cells/cell_%s.scn" % k
 
+func loaded_count() -> int:
+	var n := 0
+	for k: String in cells:
+		if cells[k].state == IN: n += 1
+	return n
+
+func loading_keys() -> Array:
+	var out: Array = []
+	for k: String in cells:
+		if cells[k].state in [LOADING, BUILDING, READY]: out.append("%s:%d" % [k, cells[k].state])
+	return out
+
+func busy() -> bool:
+	for k: String in cells:
+		if cells[k].state in [LOADING, BUILDING, READY]: return true
+	return not _leaving.is_empty() or not _pending.is_empty()
+
+## every cell within `load_dist` of `p` is in the scene
+func is_ready(p: Vector3) -> bool:
+	for k: String in cells:
+		if _dist(k, p) <= load_dist and cells[k].state != IN: return false
+	for b: Array in _pending:      # and the ground near it can be stood on
+		if (b[0] as Vector3).distance_to(p) < 120.0: return false
+	return true
+
+## start getting the place round `p` ready (it stays wanted until `release(p)` or the player arrives)
+func prepare(p: Vector3) -> void:
+	_prepared.append(p)
+
+func release_prepared() -> void:
+	_prepared.clear()
+
+## 0 day .. 1 night: drives the window glow (global ck_night) and shows the lamps' halos and pools only at night
+func set_night(v: float) -> void:
+	night = v
+	RenderingServer.global_shader_parameter_set(&"ck_night", v)
+	for k: String in cells:
+		if cells[k].state == IN: _apply_night(cells[k].node)
+
+func _apply_night(cell: Node) -> void:
+	for nm in ["glow_halo", "glow_pool"]:
+		var g := cell.get_node_or_null(nm)
+		if g: (g as Node3D).visible = night > 0.02
+
+func _mark(k: String, on: bool) -> void:
+	var x := int(k.get_slice("_", 0)) + MAP / 2; var z := int(k.get_slice("_", 1)) + MAP / 2
+	if x < 0 or z < 0 or x >= MAP or z >= MAP: return
+	_map_img.set_pixel(x, z, Color(1, 0, 0) if on else Color(0, 0, 0)); _map_dirty = true
+
+# ---------------------------------------------------------------- the loop
 func update_focus(p: Vector3, now := false, velocity := Vector3.ZERO) -> void:
 	focus = p
 	var lead := Vector3(velocity.x, 0, velocity.z) * lead_seconds
 	if lead.length() > max_lead: lead = lead.normalized() * max_lead
 	var steps := 1 + int(lead.length() / 60.0)      # the range is swept along the lead, a point every 60 m or less
+	var pts: Array = [p]
+	for i in range(1, steps + 1): pts.append(p + lead * (float(i) / steps))
+	for q: Vector3 in _prepared: pts.append(q)
+	var want: Array = []      # [priority distance, key]
 	for k: String in cells:
-		var c: Dictionary = cells[k]; var d := _dist(k, p)
-		for i in range(1, steps + 1): d = minf(d, _dist(k, p + lead * (float(i) / steps)))
-		if c.state == 0 and d <= load_dist:
-			if now:
-				c.node = (load(_path(k)) as PackedScene).instantiate(); add_child(c.node); c.state = 3; _apply_night(c.node)
-			else:
-				ResourceLoader.load_threaded_request(_path(k), "", true); c.state = 1; c["t_req"] = Time.get_ticks_usec()
-		elif c.state == 3 and d > unload_dist:
-			(c.node as Node).queue_free(); c.node = null; c.state = 0
+		var c: Dictionary = cells[k]; var d := 1.0e9
+		for q2: Vector3 in pts: d = minf(d, _dist(k, q2))
+		if d <= load_dist:
+			c.cancel = false
+			if c.state == NONE: want.append([d, k])
+		elif d > unload_dist:
+			if c.state == IN: _remove(k)
+			elif c.state != NONE: c.cancel = true      # asked for, no longer needed: dropped when it arrives
+	want.sort_custom(func(a: Array, b: Array) -> bool: return a[0] < b[0])
+	if now:
+		for w: Array in want:
+			var c2: Dictionary = cells[w[1]]
+			c2.node = (load(_path(w[1])) as PackedScene).instantiate(); _add(w[1])
+		_flush_map(); return
+	var loading := 0; var have := 0
+	for k2: String in cells:
+		if cells[k2].state in [LOADING, BUILDING]: loading += 1
+		if cells[k2].state != NONE: have += 1
+	for w2: Array in want:
+		if loading >= max_loading: break
+		if have >= max_cells: stats.capped += 1; break      # the cap: the rest stay far versions
+		var c3: Dictionary = cells[w2[1]]
+		ResourceLoader.load_threaded_request(_path(w2[1]), "", true)
+		c3.state = LOADING; c3.t_req = Time.get_ticks_usec(); loading += 1; have += 1
 
 func _process(_dt: float) -> void:
-	var added := false
+	var t0 := Time.get_ticks_usec()
 	for k: String in cells:
 		var c: Dictionary = cells[k]
-		if c.state == 1 and ResourceLoader.load_threaded_get_status(_path(k)) == ResourceLoader.THREAD_LOAD_LOADED:
-			c.ps = ResourceLoader.load_threaded_get(_path(k))
-			c.task = WorkerThreadPool.add_task(func() -> void: c.node = (c.ps as PackedScene).instantiate())
-			c.state = 2
-		elif c.state == 2 and not added and WorkerThreadPool.is_task_completed(c.task):
-			WorkerThreadPool.wait_for_task_completion(c.task)
-			var t0 := Time.get_ticks_usec()
-			add_child(c.node); _apply_night(c.node)
-			add_ms.append((Time.get_ticks_usec() - t0) / 1000.0); ready_ms.append((Time.get_ticks_usec() - int(c.get("t_req", t0))) / 1000.0)
-			c.state = 3; c.ps = null; added = true
+		if c.state == LOADING:
+			var st := ResourceLoader.load_threaded_get_status(_path(k))
+			if st == ResourceLoader.THREAD_LOAD_LOADED:
+				c.ps = ResourceLoader.load_threaded_get(_path(k))
+				if c.cancel: c.ps = null; c.state = NONE; stats.dropped += 1; continue
+				c.task = WorkerThreadPool.add_task(func() -> void: _build(c))
+				c.state = BUILDING
+			elif st != ResourceLoader.THREAD_LOAD_IN_PROGRESS: c.state = NONE      # failed: try again when wanted
+		elif c.state == BUILDING and WorkerThreadPool.is_task_completed(c.task):
+			WorkerThreadPool.wait_for_task_completion(c.task); c.ps = null; c.state = READY
+	# one arrival a frame, nearest first
+	var best := ""; var bd := 1.0e9
+	for k2: String in cells:
+		if cells[k2].state == READY:
+			if cells[k2].cancel:
+				for b0: Array in cells[k2].bodies: _leaving.append(b0[2])
+				_leaving.append(cells[k2].node); cells[k2].bodies = []; cells[k2].node = null; cells[k2].state = NONE; stats.dropped += 1; continue
+			var d := _dist(k2, focus)
+			if d < bd: bd = d; best = k2
+	if best != "":
+		var ta := Time.get_ticks_usec(); _add(best); var ms := (Time.get_ticks_usec() - ta) / 1000.0
+		add_ms.append(ms); stats.add_ms_worst = maxf(stats.add_ms_worst, ms)
+		var rm := (Time.get_ticks_usec() - int(cells[best].t_req)) / 1000.0
+		ready_ms.append(rm); stats.ready_ms_worst = maxf(stats.ready_ms_worst, rm); stats.ready_ms_sum += rm
+	# collision: the nearest waiting bodies first, a few a frame
+	if not _pending.is_empty():
+		for i in bodies_per_frame:
+			if _pending.is_empty(): break
+			var bi := 0; var bdist := 1.0e18
+			for j in _pending.size():
+				var dd := (_pending[j][0] as Vector3).distance_squared_to(focus)
+				if dd < bdist: bdist = dd; bi = j
+			var e: Array = _pending[bi]; _pending.remove_at(bi)
+			var tb := Time.get_ticks_usec(); (e[1] as Node).add_child(e[2])
+			var bms := (Time.get_ticks_usec() - tb) / 1000.0
+			if bms > float(stats.body_ms_worst): stats.body_ms_worst = bms; stats["body_worst_what"] = "%s shapes=%d" % [(e[2] as Node).name, (e[2] as Node).get_child_count()]
+			stats.bodies += 1
+		for e2: Array in _pending:      # a body still waiting with the player 40 m away would be a hole in the ground
+			if (e2[0] as Vector3).distance_to(focus) < 40.0: stats.body_late += 1; break
+	# cells on their way out: a part at a time inside the frame budget
+	while not _leaving.is_empty() and (Time.get_ticks_usec() - t0) / 1000.0 < frame_budget_ms:
+		var tr := Time.get_ticks_usec()
+		var n: Node = _leaving[_leaving.size() - 1]
+		if n.get_child_count() > 0 and not (n is CollisionObject3D):
+			var ch := n.get_child(n.get_child_count() - 1); n.remove_child(ch); _leaving.append(ch)
+		else:
+			_leaving.pop_back(); n.free()
+		stats.remove_ms_worst = maxf(stats.remove_ms_worst, (Time.get_ticks_usec() - tr) / 1000.0)
+	_flush_map()
 
-func loaded_count() -> int:
-	var n := 0
-	for k: String in cells:
-		if cells[k].state == 3: n += 1
-	return n
+func _flush_map() -> void:
+	if _map_dirty: _map_tex.update(_map_img); _map_dirty = false
 
-func busy() -> bool:
-	for k: String in cells:
-		if cells[k].state in [1, 2]: return true
-	return false
+## worker thread: build the cell and take its collision bodies off, to be attached in steps
+func _build(c: Dictionary) -> void:
+	var node: Node3D = (c.ps as PackedScene).instantiate()
+	var bodies: Array = []
+	for b: Node in node.find_children("*", "StaticBody3D", true, false):
+		var par := b.get_parent(); var centre := Vector3.ZERO
+		if par != node and par is Node3D: centre = (par as Node3D).position
+		elif b.get_child_count() > 0: centre = (b.get_child(0) as Node3D).position
+		par.remove_child(b); bodies.append([centre, par, b])
+	c.bodies = bodies; c.node = node
+
+func _add(k: String) -> void:
+	var c: Dictionary = cells[k]
+	add_child(c.node); _apply_night(c.node)
+	for b: Array in c.bodies: _pending.append([b[0], b[1], b[2], k])
+	c.bodies = []
+	c.state = IN; stats["in"] += 1; _mark(k, true); cell_in.emit(k)
+
+func _remove(k: String) -> void:
+	var c: Dictionary = cells[k]
+	_mark(k, false)      # the far world shows the cell's far versions from this frame on
+	for i in range(_pending.size() - 1, -1, -1):      # bodies it never got to attach
+		if String(_pending[i][3]) == k: _leaving.append(_pending[i][2]); _pending.remove_at(i)
+	remove_child(c.node); _leaving.append(c.node)
+	c.node = null; c.state = NONE; stats.out += 1; cell_out.emit(k)
+
+## Draw one of every baked material once (lib/warm.scn) so its shaders are built now and not at the first cell that
+## uses it. Call behind the game's loading screen with the camera that will be used; takes `frames` frames.
+func warm_up(cam: Camera3D, frames := 3) -> void:
+	var wp := runtime_dir + "lib/warm.scn"
+	if not ResourceLoader.exists(wp): return
+	var w: Node3D = (load(wp) as PackedScene).instantiate()
+	add_child(w); w.global_transform = Transform3D(Basis.IDENTITY, cam.global_position - cam.global_transform.basis.z * 6.0)
+	for g: Node in w.find_children("*", "GeometryInstance3D", true, false): (g as GeometryInstance3D).visible = true
+	var prev := night; RenderingServer.global_shader_parameter_set(&"ck_night", 1.0)      # night variants too
+	for i in frames: await get_tree().process_frame
+	RenderingServer.global_shader_parameter_set(&"ck_night", prev)
+	w.queue_free()

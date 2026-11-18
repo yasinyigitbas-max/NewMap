@@ -5,14 +5,22 @@ config_version=5
 
 [application]
 config/name="Coronado City Kit"
+run/main_scene="res://tools/city/rig/rig.tscn"
 
 [rendering]
 renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
+; the game engine's own light grid (docs/engine, patch e): 32 omni + 32 spot lights for a fixed cost. A stock engine ignores it.
+lights_and_shadows/mobile_light_grid=true
 
 [display]
 window/size/viewport_width=1600
 window/size/viewport_height=900
+
+[physics]
+; the phone test rig runs the game's physics setup (Jolt on its own thread); the PC tools keep the default engine
+3d/physics_engine.android="Jolt Physics"
+3d/run_on_separate_thread.android=true
 
 [shader_globals]
 ; city kit runtime shaders (map_dc/coronado/city_kit/shaders/rt): the game drives these (day cycle, weather)
@@ -27,4 +35,8 @@ ck_wind_strength={
 ck_wind_dir={
 "type": "vec2",
 "value": Vector2(0.8, 0.6)
+}
+ck_cells_loaded={
+"type": "sampler2D",
+"value": ""
 }

@@ -8,6 +8,8 @@ const Plates := preload("res://tools/city/bake/sign_plates.gd")
 ##   ... -- --probe            the audit's street spots x 4 directions: PROBE lines (draws, tris) like tools/city/audit/probe.gd
 ##   ... -- --drive=x0,z0,x1,z1,speed    move the focus along a line and report every cell added (ms on the main thread)
 ##                                        --lead=seconds of travel the loading range reaches ahead (default 2, 0 = none)
+##   ... -- --route=sample|amber|ring|diag|zigzag (or x,z;x,z;...) --speed=m/s   a path of straights; --blind draws
+##          nothing (the loader's own speed on the cloud), --warm draws lib/warm.scn first
 ##   options: --night=0..1   --wind=strength   --frames=N (N pictures per camera, run with --fixed-fps 20 for a clip)
 ##            --runtime=res://...   --hold=frames before each shot (default 40)
 ##            --lights=N  (with --night) the N lamps nearest the camera as real lights (city_lights.gd; stock engine: <= 8)
@@ -25,7 +27,7 @@ func _info() -> Array:
 	var R := RenderingServer
 	return [R.get_rendering_info(R.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME), R.get_rendering_info(R.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME)]
 func _run() -> void:
-	var out := "user://rt_shots"; var cams: Array = []; var probe := false; var night := 0.0; var wind := 1.0; var frames := 1; var rt := "res://map_dc/coronado/city_kit/runtime/"; var hold := 40; var drive := PackedFloat64Array(); var only := ""; var lead_s := 2.0; var detail := false; var tint := false; var plates := false; var nlights := 0; var prefix := ""
+	var out := "user://rt_shots"; var cams: Array = []; var probe := false; var night := 0.0; var wind := 1.0; var frames := 1; var rt := "res://map_dc/coronado/city_kit/runtime/"; var hold := 40; var drive := PackedFloat64Array(); var only := ""; var lead_s := 2.0; var route := ""; var speed := 30.0; var detail := false; var tint := false; var plates := false; var nlights := 0; var prefix := ""
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--out="): out = a.trim_prefix("--out=")
 		if a == "--probe": probe = true
@@ -42,6 +44,8 @@ func _run() -> void:
 		if a.begins_with("--runtime="): rt = a.trim_prefix("--runtime=")
 		if a.begins_with("--drive="): drive = a.trim_prefix("--drive=").split_floats(",")
 		if a.begins_with("--lead="): lead_s = float(a.trim_prefix("--lead="))
+		if a.begins_with("--route="): route = a.trim_prefix("--route=")
+		if a.begins_with("--speed="): speed = float(a.trim_prefix("--speed="))
 		if a.begins_with("--cams="):
 			for c in a.trim_prefix("--cams=").split(";", false):
 				var p := c.split(":"); cams.append([p[0], _v(p[1]), _v(p[2])])
@@ -129,32 +133,59 @@ func _run() -> void:
 		var R := RenderingServer
 		var f := FileAccess.open(out.path_join("probe_rt.json"), FileAccess.WRITE)
 		f.store_string(JSON.stringify({"views": res, "video_mb": R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0, "tex_mb": R.get_rendering_info(R.RENDERING_INFO_TEXTURE_MEM_USED) / 1048576.0, "buf_mb": R.get_rendering_info(R.RENDERING_INFO_BUFFER_MEM_USED) / 1048576.0})); f.close()
-	if drive.size() >= 5:
-		var a0 := Vector3(drive[0], 0, drive[1]); var a1 := Vector3(drive[2], 0, drive[3]); var sp := drive[4]
-		cam.fov = 70.0; var dist := a0.distance_to(a1); var t := 0.0; var worst := 0.0; var nframes := 0
-		st.update_focus(a0, true)
+	if drive.size() >= 5 or route != "":
+		# --drive=x0,z0,x1,z1,speed (one straight) or --route=NAME|x,z;x,z;... with --speed=m/s (a path of straights)
+		var pts: Array = []; var sp := speed
+		if route != "":
+			var named := {"sample": "-380,-600;460,-600", "amber": "0,-1580;0,180", "ring": "-950,-1550;600,-1550;600,150;-950,150;-950,-1550", "diag": "-900,-1500;550,250", "zigzag": "-900,-1400;500,-1400;500,-1000;-900,-1000;-900,-600;500,-600;500,-200;-900,-200"}
+			for q in String(named.get(route, route)).split(";", false):
+				var f := q.split_floats(","); pts.append(Vector3(f[0], 0, f[1]))
+		else:
+			pts = [Vector3(drive[0], 0, drive[1]), Vector3(drive[2], 0, drive[3])]; sp = drive[4]
+		cam.fov = 74.0; cam.far = 900.0
+		var total := 0.0
+		for i in pts.size() - 1: total += (pts[i] as Vector3).distance_to(pts[i + 1])
+		st.update_focus(pts[0], true)
+		if "--warm" in OS.get_cmdline_user_args():
+			cam.global_position = (pts[0] as Vector3) + Vector3(0, 7.7, 0); await st.warm_up(cam)
 		for i in 5: await process_frame
 		# --blind: draw nothing during the drive. On the cloud the software GPU takes every CPU core to draw, which
 		# starves the loader threads; blind, the timings are the loader's own (meshes are still uploaded).
 		if "--blind" in OS.get_cmdline_user_args(): st.visible = false; gp.visible = false
-		var t_prev := Time.get_ticks_usec(); var late60 := 0; var late220 := 0; var worst_gap := 0.0; var max_cells := 0
-		while t * sp < dist:
-			var p := a0.lerp(a1, t * sp / dist)
-			cam.global_position = p + Vector3(0, 7.7, 0); cam.look_at(cam.global_position + (a1 - a0).normalized() * 50.0)
-			st.update_focus(p, false, (a1 - a0).normalized() * sp)
+		var t_prev := Time.get_ticks_usec(); var late60 := 0; var late220 := 0; var worst_gap := 0.0; var max_cells := 0; var nframes := 0
+		var seg := 0; var along := 0.0; var dts: Array[float] = []; var travelled := 0.0; var spikes := 0; var prev_s := [st.stats["in"], st.stats.out, st.stats.bodies]
+		var spike_ms := 20.0 if "--blind" in OS.get_cmdline_user_args() else 1.0e9
+		while seg < pts.size() - 1:
+			var a0: Vector3 = pts[seg]; var a1: Vector3 = pts[seg + 1]; var sl := a0.distance_to(a1)
+			var p := a0.lerp(a1, along / sl); var dir := (a1 - a0).normalized()
+			cam.global_position = p + Vector3(0, 7.7, 0); cam.look_at(cam.global_position + dir * 50.0)
+			st.update_focus(p, false, dir * sp)
 			await process_frame
-			var now := Time.get_ticks_usec(); t += (now - t_prev) / 1000000.0; t_prev = now; nframes += 1
+			var now := Time.get_ticks_usec(); var dt := (now - t_prev) / 1000000.0; t_prev = now; nframes += 1; dts.append(dt * 1000.0)
+			if dt * 1000.0 > spike_ms and spikes < 12:      # what was going on in a slow frame
+				spikes += 1; var S0: Dictionary = st.stats
+				print("DRIVE   slow frame %.0f ms at %.0f m: cells in %d (+%d), out %d (+%d), bodies %d (+%d), body worst %.1f, add worst %.2f, loading %s" % [dt * 1000.0, travelled, S0["in"], int(S0["in"]) - int(prev_s[0]), S0.out, int(S0.out) - int(prev_s[1]), S0.bodies, int(S0.bodies) - int(prev_s[2]), S0.body_ms_worst, S0.add_ms_worst, str(st.loading_keys())])
+			prev_s = [st.stats["in"], st.stats.out, st.stats.bodies]
+			along += dt * sp; travelled += dt * sp
+			while seg < pts.size() - 1 and along >= (pts[seg] as Vector3).distance_to(pts[seg + 1]): along -= (pts[seg] as Vector3).distance_to(pts[seg + 1]); seg += 1
 			max_cells = maxi(max_cells, st.loaded_count())
 			# a cell is late when the player is nearer to it than a tier needs it and it is not in yet:
-			# 220 m = its mid tier should already show; 60 m = its near tier should
+			# 220 m = its mid tier should already show (until it is in, its far versions show: no hole); 60 m = near tier
 			for k: String in st.cells:
-				if st.cells[k].state != 3:
+				if st.cells[k].state != st.IN:
 					var dd: float = st._dist(k, p)
 					if dd < 60.0: late60 += 1
 					if dd < 220.0: late220 += 1; worst_gap = maxf(worst_gap, 220.0 - dd)
-		for ms: float in st.add_ms: worst = maxf(worst, ms)
 		while st.busy(): await process_frame
-		var rworst := 0.0; var rsum := 0.0
-		for ms2: float in st.ready_ms: rworst = maxf(rworst, ms2); rsum += ms2
-		print("DRIVE %.0f m at %.0f m/s (%.1f frames a second here): %d cells added | request to in-scene ms mean %.0f worst %.0f | main-thread add ms worst %.2f | frames with a cell missing inside 220 m: %d (deepest %.0f m), inside 60 m: %d, of %d frames | lead %.1f s, most cells loaded at once %d" % [dist, sp, nframes / maxf(t, 0.001), st.add_ms.size(), rsum / maxf(1.0, st.ready_ms.size()), rworst, worst, late220, worst_gap, late60, nframes, st.lead_seconds, max_cells])
+		dts.sort()
+		var over33 := 0; var over50 := 0
+		for d2: float in dts:
+			if d2 > 33.0: over33 += 1
+			if d2 > 50.0: over50 += 1
+		var S: Dictionary = st.stats
+		print("DRIVE %s %.0f m at %.0f m/s (%.0f km/h), %.1f frames a second here, lead %.1f s" % [route if route != "" else "line", total, sp, sp * 3.6, nframes / maxf(travelled / sp, 0.001), st.lead_seconds])
+		print("DRIVE   cells: in %d, out %d, dropped %d, most at once %d, cap hits %d | request to in-scene ms mean %.0f worst %.0f" % [S["in"], S.out, S.dropped, max_cells, S.capped, S.ready_ms_sum / maxf(1.0, st.ready_ms.size()), S.ready_ms_worst])
+		print("DRIVE   late (far versions shown meanwhile): inside 220 m in %d frames (deepest %.0f m), inside 60 m in %d frames, of %d" % [late220, worst_gap, late60, nframes])
+		print("DRIVE   main thread: cell add worst %.2f ms, body attach worst %.2f ms (%d bodies, late %d; slowest: %s), removal step worst %.2f ms" % [S.add_ms_worst, S.body_ms_worst, S.bodies, S.body_late, str(S.get("body_worst_what", "")), S.remove_ms_worst])
+		print("DRIVE   frame ms: median %.1f, 99%% %.1f, worst %.1f; over 33 ms: %d, over 50 ms: %d" % [dts[dts.size() / 2], dts[int(dts.size() * 0.99)], dts[dts.size() - 1], over33, over50])
 	quit()
