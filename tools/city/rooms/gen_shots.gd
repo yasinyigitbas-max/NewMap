@@ -4,6 +4,7 @@ extends SceneTree
 ## the game cuts at bake time, the piece files are never touched), places the rooms and shoots:
 ##   <id>_street.png   the shop front from across the pavement      <id>_in.png   inside, from the door
 ##   street_<n>.png    --streets=name:x,y,z:tx,ty,tz;...  wider street views with every room of the area open
+##   --merged          the merged rooms (runtime/rooms, tools/city/rooms/room_merge.gd) instead of the built ones
 ##   --night           evening light (sun down, the rooms' own lights on)
 ##   xvfb-run -a godot --path . --rendering-method mobile --rendering-driver vulkan --resolution 1640x720 \
 ##       -s res://tools/city/rooms/gen_shots.gd -- --out=DIR --pieces=b_nw,b_ne [--night] [--streets=...] [--noroom]
@@ -17,6 +18,7 @@ func _v(s: String) -> Vector3:
 	var f := s.split_floats(","); return Vector3(f[0], f[1], f[2])
 
 func _run() -> void:
+	var rdir := D + "rooms/"
 	var out := "user://gen_shots"; var pieces_only := PackedStringArray(); var night := false; var streets: Array = []; var noroom := false; var each := true
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--out="): out = a.trim_prefix("--out=")
@@ -24,6 +26,7 @@ func _run() -> void:
 		if a == "--night": night = true
 		if a == "--noroom": noroom = true
 		if a == "--streets-only": each = false
+		if a == "--merged": rdir = "res://map_dc/coronado/city_kit/runtime/rooms/"
 		if a.begins_with("--streets="):
 			for c in a.trim_prefix("--streets=").split(";", false):
 				var p := c.split(":"); streets.append([p[0], _v(p[1]), _v(p[2])])
@@ -54,7 +57,7 @@ func _run() -> void:
 	for e: Dictionary in asg.rooms:
 		if not pieces_only.is_empty() and not pieces_only.has(String(e.piece)): continue
 		var scn := String(e.built) if String(e.built) != "" else "g_" + String(e.id)
-		var path := D + "rooms/" + scn + ".scn"
+		var path := rdir + scn + ".scn"
 		if not ResourceLoader.exists(path): continue
 		var bld: Node3D = null
 		for n: Node3D in pieces:

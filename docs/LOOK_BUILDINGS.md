@@ -76,6 +76,23 @@ was taken out again before it was committed. Nothing of it is in the shader.
   the rooms into the cells (PLAN.md section 4), which is the streaming work the PC session is changing now. Phone
   cost: each room adds draws and lights while within 62 m; not measured on the phone.
 
+## Rooms on all shops (Yasin, 18 Nov: "i want them on all shops")
+Real rooms behind every shop front of the map, seen through real windows and glass doors, the shop's own name on its
+sign board. Instead of fake rooms (dropped, see above).
+| Step | State |
+|---|---|
+| Who is where: `tools/city/rooms/list_buildings.gd` -> `interiors/all_buildings.json` (242 buildings); `assign_all.py` -> `interiors/assignment_all.json` | 161 shops: the samples' 52 kept as they were, 109 new by district, what the building fits and its neighbours (no kind twice in one building, rare kinds not repeated nearby, the building's own name first, names made up). A supermarket's other doors stay its exits |
+| Rooms: `tools/city/rooms/room_gen.gd` (the interiors' `room_lib`, 23 shop kinds) -> `interiors/rooms/g_*.scn` | 150 generated + the 12 hand-made ones untouched. Fitted to each building's measured walls, door and windows; service point in view of the door, door swing and the walk to the counter free, queue and staff space, 1 m aisles, low display or seats in the window, back of house behind a partition, plants, bins, prints, wear. Indoor checker (`interiors/rooms/check_rooms.gd`): **0 problems over 162 rooms** |
+| Pictures: `tools/city/rooms/gen_shots.gd` | `review/rooms_18nov/` (high street day / night / closed, each shop outside and in, city centre) |
+| Phone cost: `tools/city/rooms/room_merge.gd` (prototype) | a room 26 -> 9 draws (4,249 -> 1,435 over all rooms): props in one mesh with the city's own prop material, the shell in one mesh over `runtime_tex/arr_room.png` (`make_room_array.py`). Looks the same; the walls lose their bump maps |
+| Into the streamed city | NOT done: the bake must cut the openings and pack the rooms (`docs/look_patches/rooms_bake.md`; the bake is the PC session's work now) |
+- Raw rooms add 57-122 draws to a high-street view (`amber_*` against `amber_*_closed`); the phone's budget is 150 a
+  view, so the merge (or something like it) is a must before they go on the phone. Lights: a room has 2-6 real lights;
+  the patch note proposes real lights for the nearest rooms only.
+- Generated, not hand-designed: the rooms follow the rules but are plainer than the hand-made ones (fewer one-off
+  touches). Yasin should look at the pictures and say which kinds need a hand pass.
+- Not checked: on the phone (draws, pixels, lights), and the generated rooms' signs at night.
+
 ## Picture files
 `<view>_<day|night>_<set>.jpg`, views `centre_a/b` (city centre, 0,-600), `apartments_a/b` (250,-600), `pilot_a/b`
 (high street, 0,0), eye 1.7 m above the road. Sets: `before` (all three off) and `after` (all on) for every view;
