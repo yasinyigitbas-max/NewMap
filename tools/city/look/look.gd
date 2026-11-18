@@ -93,9 +93,9 @@ static var PRESETS := {
 		"sun_halo": 0.6, "sun_disc": 7.0, "disc_cos": 0.9993, "stars": 0.0},
 	"golden": {       # late afternoon (queue 3: golden, not brown): a low strong orange sun along the streets, long
 		# shadows, warm walls against blue shade; the haze thinner and lighter so it does not turn into a brown fog
-		"elev": 9.0, "azim": -80.0, "lights": 0.0, "moon": 0.0, "grade": "half",
+		"elev": 12.0, "azim": -80.0, "lights": 0.0, "moon": 0.0, "grade": "half",
 		"zenith": Color(0.26, 0.42, 0.68), "middle": Color(0.74, 0.66, 0.58), "haze": Color(0.95, 0.78, 0.56),
-		"sun_color": Color(1.0, 0.64, 0.34), "sun_energy": 1.85, "ambient_color": Color(0.44, 0.52, 0.70), "ambient_energy": 0.6,
+		"sun_color": Color(1.0, 0.64, 0.34), "sun_energy": 1.85, "ambient_color": Color(0.46, 0.54, 0.72), "ambient_energy": 0.75,
 		"fog_density": 0.0011, "fog_sun_scatter": 0.5,
 		"cloud_lit": Color(1.0, 0.78, 0.52), "cloud_dark": Color(0.45, 0.42, 0.48), "cloud_cover": 0.44, "cloud_alpha": 0.9, "cloud_scale": 0.2, "cloud_low": 0.1, "cloud_soft": 0.2,
 		"sun_halo": 1.0, "sun_disc": 5.0, "disc_cos": 0.9992, "stars": 0.0},
