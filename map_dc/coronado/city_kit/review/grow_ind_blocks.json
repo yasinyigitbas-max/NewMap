@@ -1,7 +1,6 @@
 {
- "zone_growth": true,
  "zone": "industrial",
- "note": "Industrial growth (18 Nov, branch claude/grow-industrial): block pieces of the variants A/B/C, NOT locked. Each row: piece at its junction (grid frame, y = pad 2.0). Read by tools/city/pilot/zoning/integrate.py.",
+ "note": "Industrial growth (18 Nov, branch claude/grow-industrial): block pieces of the variants A/B/C, NOT locked. Each row: piece at its junction (grid frame, y = pad 2.0). Same shape as grow_grt_blocks.json; read by tools/city/pilot/zoning/integrate.py.",
  "rows": [
   {
    "piece": "i_va_w800_n1600_sw",
