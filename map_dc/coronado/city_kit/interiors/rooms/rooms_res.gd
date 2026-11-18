@@ -95,13 +95,12 @@ func _books() -> void:
 	var X0 := -2.95; var X1 := 2.95; var ZB := -2.7; var ZF := 2.55; var F := 0.02; var H := 3.5
 	r.flat("floor", X0, ZB, X1, ZF, F); r.flat("ceil", X0, ZB, X1, ZF, H, false)
 	r.walls4(c, X0, X1, ZB, ZF, F, H)
-	# the owner's counter along the right wall, facing the room; the chair and the till behind / on it
-	r.prop("shop_counter", 1.9, -0.45, -90.0)
-	r.prop("cash_register", 1.95, -0.15, 90.0, 0.964)
-	r.prop("office_chair", 2.62, -0.7, -90.0)
-	r.prop("filing_cabinet", 2.45, -2.32, 0.0)
-	# cases round the walls (the back door and the high back window kept clear)
-	for bx: float in [0.0, 1.0]: r.prop("bookcase", bx, ZB + 0.2, 0.0)
+	# the owner's counter across the back right, facing the room: the till on it, the stool and the files behind it
+	r.prop("shop_counter", 1.75, -1.2, 0.0)
+	r.prop("cash_register", 1.4, -1.25, 180.0, 0.964)
+	r.prop("bar_stool", 1.75, -1.95, 0.0)
+	# cases round the walls (the back door and the staff corner kept clear)
+	r.prop("bookcase", 0.0, ZB + 0.2, 0.0)
 	for bz: float in [-2.0, -1.0, 0.0]: r.prop("bookcase", X0 + 0.2, bz, 90.0)
 	# the island: two cases back to back
 	for iz: float in [-1.2, -0.2]:
@@ -110,11 +109,11 @@ func _books() -> void:
 	r.prop("display_table", 0.15, 1.85, 0.0); r.prop("display_table", 1.75, 1.85, 0.0)
 	# by the door: the neighbourhood's leaflets; a bin at the counter's end; a plant where the light is
 	r.prop("brochure_rack", X0 + 0.25, 0.76, 90.0)
-	r.prop("indoor_bin", 1.3, 0.75)
-	r.prop("potted_plant", 2.7, 1.0)
+	r.prop("indoor_bin", 2.8, -1.7)
+	r.prop("potted_plant", 2.7, 1.9)
 	# old maps and prints where nothing tall stands in front
 	r.prop("gallery_frame", X1 - 0.04, 1.0, -90.0, 1.55)
-	r.prop("gallery_frame", X1 - 0.04, -1.9, -90.0, 1.5)
+	r.prop("gallery_frame", X1 - 0.04, -0.2, -90.0, 1.5)
 	r.box("wains", Vector3(X1 - 0.015, F + 0.45, -0.4), Vector3(0.03, 0.9, 4.2))
 	r.pendant(-1.6, -0.6, H, 0.7, Color(1.0, 0.78, 0.5), 1.2, 4.5)
 	r.pendant(1.0, 0.6, H, 0.7, Color(1.0, 0.78, 0.5), 1.2, 4.5)
@@ -144,15 +143,16 @@ func _cafe() -> void:
 	r.prop("pastry_case", 0.5, -1.4, 0.0)
 	r.prop("cash_register", -0.5, -1.45, 180.0, 0.964)
 	r.prop("espresso_machine", -1.65, -1.5, 180.0, 0.964)
-	r.prop("bakery_shelf", 1.0, ZB + 0.2, 0.0)
+	r.prop("bakery_shelf", 1.35, ZB + 0.22, 0.0)
 	r.prop("menu_board", -0.4, ZB + 0.06, 0.0, 1.75)
 	r.prop("bar_stool", -1.1, -2.4, 0.0)
 	# the booth on the left wall
 	r.prop("restaurant_table", X0 + 0.66, -0.1, 0.0)
 	r.prop("booth_bench", X0 + 0.66, 0.63, 180.0); r.prop("booth_bench", X0 + 0.66, -0.83, 0.0)
 	# window tables and one in the middle
-	for tx: float in [-2.5, -0.5]:
-		r.prop("cafe_table", tx, 2.0); r.prop("cafe_chair", tx - 0.58, 2.0, 90.0); r.prop("cafe_chair", tx + 0.58, 2.0, -90.0)
+	# window tables: the chairs on the room side and toward the door, never wedged against the side wall
+	r.prop("cafe_table", -2.5, 2.0); r.prop("cafe_chair", -2.5, 1.38, 0.0); r.prop("cafe_chair", -1.92, 2.0, -90.0)
+	r.prop("cafe_table", -0.5, 2.0); r.prop("cafe_chair", -1.08, 2.0, 90.0); r.prop("cafe_chair", 0.08, 2.0, -90.0)
 	r.prop("cafe_table", 0.0, 0.6); r.prop("cafe_chair", -0.58, 0.6, 90.0); r.prop("cafe_chair", 0.58, 0.6, -90.0)
 	# self-serve fridge and the notice board on the right wall, a plant between them
 	r.prop("drinks_fridge", X1 - 0.4, -1.5, -90.0)
@@ -182,7 +182,7 @@ func _surf() -> void:
 	var c: Dictionary = rc[model]
 	_mats(r, "Concrete047A", 2.0, Color(0.86, 0.93, 0.95))
 	r.mat("kfloor", "Concrete034", 2.0)
-	var X0 := -4.2; var X1 := 4.2; var ZB := -6.7; var ZF := 6.55; var F := 0.02; var H := 3.9; var ZP := -3.4
+	var X0 := -4.2; var X1 := 4.2; var ZB := -6.7; var ZF := 6.3; var F := 0.02; var H := 3.9; var ZP := -3.4    # front wall 0.25 m inside the door plane (6.55)
 	r.flat("floor", X0, ZP, X1, ZF, F); r.flat("kfloor", X0, ZB, X1, ZP, F); r.flat("ceil", X0, ZB, X1, ZF, H, false)
 	r.walls4(c, X0, X1, ZB, ZF, F, H)
 	# partition with the staff door lined up with the back door (x -1.8)
@@ -210,18 +210,17 @@ func _surf() -> void:
 	r.prop("shoe_bench", 2.5, 0.9, 0.0)
 	r.prop("card_spinner", 2.4, -0.6)
 	# the window: a beach cruiser, a wetsuit on a mannequin, wax and fins on a low table
-	r.prop("bike_stand", 2.9, 5.85, 0.0)
-	r.prop("mannequin", -1.2, 5.95, 0.0)
-	r.prop("display_table", 0.75, 5.85, 0.0)
-	r.prop("potted_plant", X1 - 0.3, 4.6)
+	r.prop("bike_stand", 3.2, 5.45, 90.0)
+	r.prop("mannequin", -1.2, 5.8, 0.0)
+	r.prop("display_table", 0.75, 5.75, 0.0)
+	r.prop("potted_plant", X1 - 0.3, 4.2)
 	r.prop("gallery_frame", -3.0, ZP + 0.1, 0.0, 1.5); r.prop("gallery_frame", -3.7, ZP + 0.1, 0.0, 1.5)
-	r.prop("poster_case", 2.6, ZP + 0.11, 0.0, 1.0)
 	# back room: the ding-repair bench and its pegboard, stock, boards in for repair
 	r.prop("workbench", 1.4, ZB + 0.55, 0.0)
 	r.prop("pegboard_wall", 1.4, ZB + 0.16, 0.0)
 	r.prop("wall_shelf", -3.6, ZB + 0.16, 0.0); r.prop("wall_shelf", X0 + 0.16, -5.0, 90.0)
 	r.prop("surfboard_rack", X1 - 0.42, -4.6, -90.0)
-	r.prop("filing_cabinet", X1 - 0.3, -6.25, -90.0)
+	r.prop("filing_cabinet", X1 - 0.4, -6.25, -90.0)
 	for lz: float in [3.6, 0.4]:
 		for lx: float in [-1.6, 1.6]: r.pendant(lx, lz, H, 0.0, Color(1.0, 0.97, 0.9), 1.2, 5.5, true)
 	r.pendant(0.0, -5.0, H, 0.0, Color(0.95, 0.97, 1.0), 1.0, 4.5, true)

@@ -1,0 +1,117 @@
+{
+ "_doc": "the residential zone's walk-in shops (tools/city/rooms/assign_res.gd from review/grow_res_blocks.json; rooms: interiors/rooms/rooms_res.gd). Same shape as assignment_all.json.",
+ "count": 3,
+ "rooms": [
+  {
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "built": "g_res_surf",
+   "door_along": -3.26,
+   "door_index": 0,
+   "door_w": 1.6,
+   "id": "res_surf",
+   "kind": "sport",
+   "label": "r_shop_surf",
+   "model": "commercial/com_surf_shop",
+   "name": "Ocean Blvd Surf",
+   "piece": "r_q_m800_200_ne",
+   "pos": [
+    -784.900024414062,
+    2.15000009536743,
+    181.300003051758
+   ],
+   "signs": [
+    {
+     "along": 0.0,
+     "facade": "front",
+     "w": 8.18
+    },
+    {
+     "along": 7.55,
+     "facade": "right",
+     "w": 0.8
+    },
+    {
+     "along": 7.55,
+     "facade": "left",
+     "w": 0.8
+    },
+    {
+     "along": 2.4,
+     "facade": "right",
+     "w": 3.2
+    }
+   ],
+   "source": "res_grow",
+   "style": "teal",
+   "why": "surf shop and ding repair at 11th and J Ave, one block from Ocean Blvd and the beach: boards walk down to the water from here",
+   "yaw": 0.0
+  },
+  {
+   "bay": [
+    -3.45,
+    3.45
+   ],
+   "built": "g_res_cafe",
+   "door_along": 2.51,
+   "door_index": 0,
+   "door_w": 1.0,
+   "id": "res_cafe",
+   "kind": "cafe",
+   "label": "r_shop_cafe",
+   "model": "commercial/com_shallow_cafe",
+   "name": "Ridge Coffee",
+   "piece": "r_q_m600_m200_se",
+   "pos": [
+    -585.650024414062,
+    6.15000009536743,
+    -185.050003051758
+   ],
+   "signs": [
+    {
+     "along": 0.0,
+     "facade": "front",
+     "w": 6.68
+    }
+   ],
+   "source": "res_grow",
+   "style": "green",
+   "why": "the regulars' cafe at 9th and G Ave, at the top of Country Club Ridge: dog walkers and the morning commute down the hill stop here",
+   "yaw": -179.999991348578
+  },
+  {
+   "bay": [
+    -2.95,
+    2.95
+   ],
+   "built": "g_res_books",
+   "door_along": -2.01,
+   "door_index": 0,
+   "door_w": 1.0,
+   "id": "res_books",
+   "kind": "books",
+   "label": "r_shop_books",
+   "model": "commercial/com_shallow_books",
+   "name": "Hillside Books",
+   "piece": "r_q_m400_0_se",
+   "pos": [
+    -386.149993896484,
+    6.15000009536743,
+    14.6999998092651
+   ],
+   "signs": [
+    {
+     "along": 0.0,
+     "facade": "front",
+     "w": 5.68
+    }
+   ],
+   "source": "res_grow",
+   "style": "cream",
+   "why": "a used bookshop on the corner of 10th and E Ave: the walk from the houses up the hill passes it, and it has been there longer than most of the owners",
+   "yaw": -179.999991348578
+  }
+ ]
+}

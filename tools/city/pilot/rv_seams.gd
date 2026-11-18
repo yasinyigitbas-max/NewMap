@@ -5,7 +5,7 @@ extends SceneTree
 ##   mid     each alley at mid-block (u or v = 100): this quadrant's alley vs the neighbouring quadrant's
 ##   walk    the corner lots' side yards along the side street are retaining walls by design (not checked)
 ## Heights from raycasts on the pieces' ground collision only (props and buildings removed). Prints one line per step
-## over 3 cm, then "SEAMS n problems (m checked)". Real renderer not needed (collision only), run headless:
+## over 2 cm (points 10 cm apart), then "SEAMS n problems (m checked)". Real renderer not needed (collision only), run headless:
 ##   CITYKIT_LAYOUT_ONLY=1 CITYKIT_LAYOUT_EXTRA=res://map_dc/coronado/city_kit/city_grid_layout.json godot --headless --path . -s res://tools/city/pilot/rv_seams.gd
 const K := preload("res://tools/city/pilot/kit_lib.gd")
 func _init() -> void: _run.call_deferred()
@@ -30,17 +30,17 @@ func _run() -> void:
 		var P := func(u: float, v: float) -> Vector2: return Vector2(o.x + sx * u, o.z + sz * v)
 		var checks: Array = []
 		for c: float in [55.0, 57.0, 59.0]:
-			checks.append(["mouth u-alley", P.call(9.5, c), P.call(8.9, c)])      # the alley along u starts at the side street
-			checks.append(["mouth v-alley", P.call(c, 9.5), P.call(c, 8.9)])
-			checks.append(["mid u-alley", P.call(99.7, c), P.call(100.3, c)])
-			checks.append(["mid v-alley", P.call(c, 99.7), P.call(c, 100.3)])
+			checks.append(["mouth u-alley", P.call(9.25, c), P.call(9.15, c)])      # the alley along u starts at the side street
+			checks.append(["mouth v-alley", P.call(c, 9.25), P.call(c, 9.15)])
+			checks.append(["mid u-alley", P.call(99.95, c), P.call(100.05, c)])
+			checks.append(["mid v-alley", P.call(c, 99.95), P.call(c, 100.05)])
 		for ck: Array in checks:
 			var a: Vector2 = ck[1]; var b: Vector2 = ck[2]
 			var ya: float = hy.call(a.x, a.y); var yb: float = hy.call(b.x, b.y)
 			if ya == -INF or yb == -INF:
 				print("SEAM nohit %s %s at (%.1f, %.1f)" % [n.get_meta(&"piece"), ck[0], b.x, b.y]); bad += 1; continue
 			n_ck += 1
-			if absf(ya - yb) > 0.03:
+			if absf(ya - yb) > 0.02:
 				print("SEAM step %s %s at (%.1f, %.1f): %.3f vs %.3f (%.2f m)" % [n.get_meta(&"piece"), ck[0], b.x, b.y, ya, yb, ya - yb]); bad += 1
 	print("SEAMS %d problems (%d checked)" % [bad, n_ck])
 	quit()
