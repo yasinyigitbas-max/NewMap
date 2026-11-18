@@ -9,6 +9,8 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   to a local session on my pc?"). Read `docs/HANDOVER_PHONE_TEST.md`: the job is one clean run of
   `tools/city/rig/phone_rig.sh all run1` on the Redmi (the script has never run on Windows: debug it step by step),
   the result pushed to `review/phone/run1.txt`, and a plain report to Yasin.
+  ~14:10: the brief was SENT to Yasin's session "Hello" running on the PC (Remote Control); it started working. The
+  card's own session came up as a cloud session and cannot reach the phone: ignore it.
 - 18 Nov ~13:30: STREAMING (Yasin: "go for it"; "try not to copy anything at all" from the old game; "i hope we can go
   for speeds like 280km"; no fast travel; "triangles are fine ... keep draw calls as low as possible"). Streamer
   rewritten (`tools/city/bake/city_stream.gd`, read docs/RUNTIME_BAKE.md "The streamer"), whole city baked locally (140
