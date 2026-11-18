@@ -453,6 +453,7 @@ static func _mat_at(ctx: Dictionary, x: float, z: float, base: String) -> String
 ## then trees, then big things, then small clutter), a tree on paving goes. Mounted / lifted props are not touched.
 static func _prune(ctx: Dictionary, base_mat := "grass") -> void:
 	var props: K.Props = ctx.props
+	_off_openings(ctx)
 	var items: Array = []     # [rank, key, index, centre, half, ang, y]
 	for k: String in props.items:
 		var bname := k.get_slice("|", 0)
@@ -514,6 +515,62 @@ static func _prune(ctx: Dictionary, base_mat := "grass") -> void:
 		if live.has("%s|%s@%.2f,%.2f" % [ci[0], ci[1], tt.origin.x, tt.origin.z]): kc.append(ci)
 	props.col_items = kc
 	print("GRT_PRUNE %s: %d props dropped (validator rules)" % [ctx.name, nd])
+
+## wall-hung props (window AC units, lights, meters, mailboxes, buzzers, downspouts, house numbers) never over a door
+## or window of the building they hang on (Yasin 18 Nov: "some of them are on windows"): the openings of every floor
+## from the building's contract (interiors/room_contracts.json; models without one are left as they are)
+static var _rc := {}
+static func _off_openings(ctx: Dictionary) -> void:
+	if _rc.is_empty():
+		_rc = (JSON.parse_string(FileAccess.get_file_as_string("res://map_dc/coronado/city_kit/interiors/room_contracts.json")) as Dictionary).models
+	var props: K.Props = ctx.props
+	var nd := 0; var nm := 0; var by := {}
+	for k: String in props.items.keys():
+		var bname := k.get_slice("|", 0)
+		if bname.begins_with("prop_balcony") or bname.begins_with("prop_dingbat_stair"): continue     # they belong in front of the flats' doors / windows
+		var e := K.manifest(bname)
+		var mounted := String(e.get("mount", "ground")) != "ground"
+		var fw := float(e.get("footprint_w", 0.5)); var ht := float(e.get("height", 0.5))
+		var keep: Array = []
+		for t: Transform3D in props.items[k]:
+			var res := _wall_spot(ctx, t, mounted, fw, ht)
+			if res == 0: keep.append(t); continue
+			# slide it along its wall to the nearest free spot (up to 2.4 m either way), else drop it
+			var moved := false
+			for step in range(1, 9):
+				for sgn: float in [1.0, -1.0]:
+					var t2 := t
+					t2.origin += (_wall_dir as Vector3) * sgn * 0.3 * step
+					if _wall_spot(ctx, t2, mounted, fw, ht) == 0: keep.append(t2); moved = true; break
+				if moved: break
+			if moved: nm += 1
+			else: nd += 1; by[bname] = int(by.get(bname, 0)) + 1
+		props.items[k] = keep
+	print("GRT_WALLS %s: %d wall props slid off windows / doors, %d dropped (no free wall) %s" % [ctx.name, nm, nd, by])
+
+static var _wall_dir := Vector3.ZERO
+## 0 = free; 1 = over an opening (or off the end of its wall) of the building it hangs on (_wall_dir = that wall's
+## direction), 2 = not on a wall of a building with a contract
+static func _wall_spot(ctx: Dictionary, t: Transform3D, mounted: bool, fw: float, ht: float) -> int:
+	for b: Dictionary in ctx.blds:
+		if not _rc.has(String(b.folder)): continue
+		var n: Node3D = b.node
+		var lp: Vector3 = n.transform.affine_inverse() * t.origin
+		var hw := float(b.w) * 0.5; var hd := float(b.d) * 0.5
+		var fac := ""; var along := 0.0; var ext := 0.0
+		if absf(lp.z - hd) < 0.45 and absf(lp.x) < hw + 0.2: fac = "front"; along = lp.x; ext = hw; _wall_dir = n.transform.basis.x.normalized()
+		elif absf(lp.z + hd) < 0.45 and absf(lp.x) < hw + 0.2: fac = "back"; along = lp.x; ext = hw; _wall_dir = n.transform.basis.x.normalized()
+		elif absf(lp.x - hw) < 0.45 and absf(lp.z) < hd + 0.2: fac = "right"; along = lp.z; ext = hd; _wall_dir = n.transform.basis.z.normalized()
+		elif absf(lp.x + hw) < 0.45 and absf(lp.z) < hd + 0.2: fac = "left"; along = lp.z; ext = hd; _wall_dir = n.transform.basis.z.normalized()
+		if fac == "": continue
+		if not mounted and t.origin.y - 0.15 < 0.3: return 0
+		if absf(along) > ext - fw * 0.5 - 0.1: return 1
+		var y0 := t.origin.y - 0.15; var y1 := y0 + ht
+		for o: Dictionary in (_rc[String(b.folder)] as Dictionary).openings:
+			if String(o.facade) != fac: continue
+			if absf(along - float(o.along)) < fw * 0.5 + float(o.w) * 0.5 + 0.05 and y0 < float(o.y1) + 0.05 and y1 > float(o.y0) - 0.05: return 1
+		return 0
+	return 0
 
 static func _hit(ca: Vector2, ha: Vector2, aa: float, cb: Vector2, hb: Vector2, ab: float) -> bool:
 	var axes := [Vector2(cos(aa), -sin(aa)), Vector2(sin(aa), cos(aa)), Vector2(cos(ab), -sin(ab)), Vector2(sin(ab), cos(ab))]

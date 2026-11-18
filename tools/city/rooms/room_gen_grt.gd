@@ -47,6 +47,9 @@ var occ: Array = [] # [x0, z0, x1, z1, height]
 var keep: Array = [] # [x0, z0, x1, z1] floor that stays free
 var X0 := 0.0; var X1 := 0.0; var ZF := 0.0; var ZB := 0.0; var ZBp := 0.0; var F := 0.0
 var rr: R
+var HC := 0.0             # the room's ceiling height
+var CON := {}             # the building's contract
+var wall_items: Array = [] # [wall, s0, s1, y0, y1]: everything hung on a wall so far
 var report: Array = []
 
 func _init() -> void: _run.call_deferred()
@@ -157,14 +160,15 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		if int(o.floor) == 0 and String(o.facade) == "front" and (String(o.region) == "O_shopdoor" or String(o.region) == "O_civic_door") and absf(float(o.along) - float(e.door_along)) < 0.6:
 			ZF = minf(ZF, float(o.plane) - 0.25)
 	var zb_bld := float(fl.box_min[2])
-	ZB = maxf(zb_bld, ZF - 16.0)                         # very deep buildings: the shop takes the front 16 m
+	ZB = maxf(zb_bld, ZF - float(e.get("depth", 16.0)))   # very deep buildings: the shop takes the front 16 m (a tyre shop: its counter office only)
 	var H := F + minf(float(fl.clear_h), 4.0)
+	HC = H
 	var depth := ZF - ZB; var width := X1 - X0
 	var back := String(K.back)
 	var ZP := ZB
 	if depth >= 9.0 and back != "none": ZP = ZB + (2.9 if back == "kitchen" else 2.3)
 	ZBp = ZP
-	occ = []; keep = []
+	occ = []; keep = []; wall_items = []; CON = c
 	mix = bool(K.get("mix", false)); _mixn = hv % 3
 	seed(hv)     # the wear below is the same on every rebuild
 	rr = R.new(id, F)
@@ -250,7 +254,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		var free_board := true
 		for o: Array in occ:
 			if float(o[4]) > 1.7 and mx > float(o[0]) - 0.85 and mx < float(o[2]) + 0.85 and float(o[1]) < ZBp + 0.6: free_board = false
-		if free_board: rr.prop("menu_board", mx, ZBp + 0.06, 0.0, 1.75)
+		if free_board: _wall_put("menu_board", "back" if ZBp <= ZB + 0.01 else "", mx, mx, ZBp + 0.06, 0.0, 1.75, 0.93, 0.85, 1.3)
 	# ---- the side walls: the shop's goods / seats along them (low things only under the side windows)
 	var sidewin := _side_windows(c)
 	for side: Array in [[X0, 90.0, "left"], [X1, -90.0, "right"]]:
@@ -364,7 +368,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 			var blk := false
 			for o4: Array in occ:
 				if float(o4[4]) > 1.2 and zz4 > float(o4[1]) - 0.5 and zz4 < float(o4[3]) + 0.5 and absf((float(o4[0]) + float(o4[2])) * 0.5 - wx3) < 1.0: blk = true
-			if not blk: rr.prop("poster_case", wx3 + inn3 * 0.04, zz4, float(side3[1]), 1.15)
+			if not blk: _wall_put("poster_case", String(side3[2]), zz4, wx3 + inn3 * 0.04, zz4, float(side3[1]), 1.15, 1.2, 0.42, 0.85)
 	if cx + cw * 0.5 + 0.3 < X1 - 0.9: _put("indoor_bin", cx + cw * 0.5 + 0.3, zc + cd * 0.5 + 0.25)     # never in front of the wall goods
 	if kind in ["office", "pharmacy", "souvenir", "venue", "gallery"]: _put("brochure_rack", dx + (1.3 if dx < (X0 + X1) * 0.5 else -1.3), ZF - 1.9, 180.0)
 	if bool(K.frames) or String(K.walls[0]) in ["frames_only", "poster_wall"]:
@@ -376,7 +380,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 				var blocked := false
 				for o: Array in occ:
 					if float(o[4]) > 1.25 and zz > float(o[1]) - 0.4 and zz < float(o[3]) + 0.4 and absf((float(o[0]) + float(o[2])) * 0.5 - wx2) < 1.0: blocked = true
-				if not blocked: rr.prop(mount, wx2 + inn2 * 0.04, zz, float(side2[1]), 1.35)
+				if not blocked: _wall_put(mount, String(side2[2]), zz, wx2 + inn2 * 0.04, zz, float(side2[1]), 1.35, 1.2 if mount == "poster_case" else 0.9, 0.42 if mount == "poster_case" else 0.36, 1.0)
 	# ---- back of house
 	if ZP > ZB + 0.01:
 		var kx := X0 + 0.2
@@ -423,6 +427,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	for k3 in 6: rr.dec.add(14, Vector2(randf_range(X0 + 0.6, X1 - 0.6), randf_range(ZBp + 0.6, ZF - 0.6)), randf_range(0, 180), randf_range(0.8, 1.8), randf_range(0.8, 1.8), fy, Color(1, 1, 1, 0.45), 0.004)
 	for k4 in 4: rr.dec.add(0, Vector2(randf_range(X0 + 0.5, X1 - 0.5), randf_range(ZBp + 0.5, ZF - 0.5)), randf_range(0, 180), 0.9, 0.9, fy, Color(0.4, 0.4, 0.4, 0.5), 0.004)
 	rr.dec.add(14, Vector2(dx, ZF - 0.5), 0.0, dw + 0.6, 1.0, fy, Color(1, 1, 1, 0.6), 0.004)     # the doormat that wore through
+	_stock(hv)
 	# ---- the shop's own name on the building's boards
 	for sg: Dictionary in e.signs:
 		var txt := String(e.name).to_upper() if float(sg.w) >= 2.4 else String(SHORT.get(kind, "SHOP"))
@@ -460,3 +465,64 @@ func _under_window(sw: Array, side: String, z0: float, z1: float, height: float)
 	for w: Array in sw:
 		if String(w[0]) == side and z0 < float(w[2]) and z1 > float(w[1]) and height > float(w[3]) - 0.05: return true
 	return false
+
+## ------------------------------------------------------------------------------------------------ stock on the shelves
+## the kit's shelves come empty: boxes, bottles and books of the shop's goods on every level (levels measured from the
+## models: wall shelf 0.30 / 0.74 / 1.18 / 1.62, gondola 0.40 / 0.84 / 1.28 both faces, bookcase every 0.36 from 0.30),
+## crammed, uneven, with the odd gap where something sold out; three faded colours (3 draws a room)
+const SHELF_LEVELS := {"prop_wall_shelf": [[0.30, 0.74, 1.18, 1.62], [-0.12, 0.12]], "prop_gondola_aisle": [[0.40, 0.84, 1.28], [-0.25, -0.04, 0.04, 0.25]],
+	"prop_bookcase": [[0.30, 0.66, 1.02, 1.38, 1.74], [-0.12, 0.12]]}
+func _stock(hv: int) -> void:
+	rr.plain("stock_a", Color(0.55, 0.22, 0.18), 0.7)
+	rr.plain("stock_b", Color(0.78, 0.66, 0.42), 0.75)
+	rr.plain("stock_c", Color(0.26, 0.34, 0.46), 0.7)
+	var mats := ["stock_a", "stock_b", "stock_c", "stock_b"]
+	var rng := RandomNumberGenerator.new(); rng.seed = hv
+	var props: Dictionary = rr._props
+	for base: String in SHELF_LEVELS:
+		if not props.has(base): continue
+		var lv: Array = SHELF_LEVELS[base][0]; var zr: Array = SHELF_LEVELS[base][1]
+		var half := _fp(base.trim_prefix("prop_"), 0.0).x * 0.5 - 0.06
+		for t: Transform3D in props[base]:
+			var yaw_q := int(round(rad_to_deg(t.basis.get_euler().y) / 90.0)) % 2
+			for li in lv.size():
+				var y0 := float(lv[li]) + 0.005
+				var room_h := (float(lv[li + 1]) - float(lv[li]) - 0.08) if li + 1 < lv.size() else 0.32
+				for zi in range(0, zr.size(), 2):
+					var z0 := float(zr[zi]); var z1 := float(zr[zi + 1])
+					var x := -half
+					while x < half - 0.1:
+						var bw := rng.randf_range(0.1, 0.34)
+						if rng.randf() < 0.09: x += rng.randf_range(0.2, 0.45); continue      # sold out
+						bw = minf(bw, half - x)
+						var bh := rng.randf_range(0.45, 0.95) * room_h
+						var bd := rng.randf_range(0.6, 1.0) * (z1 - z0)
+						var lc := Vector3(x + bw * 0.5, y0 + bh * 0.5, (z0 + z1) * 0.5)
+						var wc := t * lc
+						var sz := Vector3(bw - 0.015, bh, bd) if yaw_q == 0 else Vector3(bd, bh, bw - 0.015)
+						rr.box(mats[rng.randi() % mats.size()], wc, sz)
+						x += bw + rng.randf_range(0.005, 0.04)
+
+## hang a wall prop (frame, notice, menu board) only where it really fits (Yasin 18 Nov: "many on the wall props overlap,
+## some of them are on windows, some of them are inside the ceiling"): its top 8 cm under the ceiling (lowered to fit,
+## never under min_lift), clear of every door and window of that wall (any height: the high side windows of the trade
+## rows too) and of everything already hung there. wall = "front" / "back" / "left" / "right" ("" = an inner
+## partition: no openings), s = position along the wall (x on front / back, z on the sides). false when it does not fit.
+func _wall_put(base: String, wall: String, s: float, x: float, z: float, yaw: float, lift: float, h: float, half: float, min_lift: float) -> bool:
+	var y0 := minf(lift, HC - F - 0.08 - h)
+	if y0 < min_lift: return false
+	var y1 := y0 + h
+	if wall != "":
+		for o: Dictionary in CON.get("openings", []):
+			if int(o.floor) != 0 or String(o.facade) != wall: continue
+			if absf(s - float(o.along)) < half + float(o.w) * 0.5 + 0.12 and F + y0 < float(o.y1) + 0.08 and F + y1 > float(o.y0) - 0.08: return false
+	for o2: Array in occ:      # nothing standing against that stretch of wall (a fridge, a freezer, a shelf)
+		var ox := (float(o2[0]) + float(o2[2])) * 0.5; var oz := (float(o2[1]) + float(o2[3])) * 0.5
+		if wall == "left" or wall == "right":
+			if absf(ox - x) < 0.95 and s - half < float(o2[3]) and s + half > float(o2[1]): return false
+		elif absf(oz - z) < 0.95 and s - half < float(o2[2]) and s + half > float(o2[0]): return false
+	for it: Array in wall_items:
+		if String(it[0]) == wall and wall != "" and s - half < float(it[2]) + 0.15 and s + half > float(it[1]) - 0.15 and y0 < float(it[4]) + 0.1 and y1 > float(it[3]) - 0.1: return false
+	wall_items.append([wall, s - half, s + half, y0, y1])
+	rr.prop(base, x, z, yaw, y0)
+	return true

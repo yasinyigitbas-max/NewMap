@@ -36,6 +36,9 @@ def main():
             if s["door_index"] >= len(bl):
                 print("NO DOOR", d["piece"], s["label"], s["door_index"]); continue
             i, e, a, b = bl[s["door_index"]]
+            extra = {}
+            if s["kind"] == "tyres":      # the repair building's counter office only; the bays stay a service yard
+                a, b = a, min(b, e["along"] + 4.3); extra = {"depth": 7.5}
             boards = []
             for sg in c.get("signs", []):
                 if sg["facade"] == "front" and a - 0.05 <= sg["along"] <= b + 0.05: boards.append(sg)
@@ -47,7 +50,7 @@ def main():
                         "door_index": i, "door_along": e["along"], "door_w": e["w"], "bay": [round(a, 3), round(b, 3)],
                         "kind": s["kind"], "name": s["name"], "style": st, "font": font, "built": "",
                         "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
-                        "signs": [{"facade": x["facade"], "along": x["along"], "w": x["w"]} for x in boards]})
+                        "signs": [{"facade": x["facade"], "along": x["along"], "w": x["w"]} for x in boards], **extra})
     json.dump({"_doc": __doc__.strip().split("\n")[0], "count": len(out), "rooms": out}, open(os.path.join(IN, "assignment_grt.json"), "w"), indent=1)
     print("assignment_grt.json: %d rooms" % len(out))
     for k in sorted({r["kind"] for r in out}):

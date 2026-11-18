@@ -82,7 +82,7 @@
    "door_w": 1.6,
    "bay": [
     -8.7,
-    8.7
+    -2.2
    ],
    "kind": "tyres",
    "name": "Big Al's Tires",
@@ -91,11 +91,6 @@
    "built": "",
    "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
    "signs": [
-    {
-     "facade": "right",
-     "along": 8.67,
-     "w": 1.35
-    },
     {
      "facade": "left",
      "along": 8.67,
@@ -107,27 +102,12 @@
      "w": 3.6
     },
     {
-     "facade": "right",
-     "along": 8.67,
-     "w": 1.35
-    },
-    {
      "facade": "left",
      "along": 8.67,
      "w": 1.35
     },
     {
-     "facade": "right",
-     "along": 8.87,
-     "w": 1.75
-    },
-    {
      "facade": "left",
-     "along": 8.87,
-     "w": 1.75
-    },
-    {
-     "facade": "right",
      "along": 8.87,
      "w": 1.75
     },
@@ -136,7 +116,8 @@
      "along": 8.87,
      "w": 1.75
     }
-   ]
+   ],
+   "depth": 7.5
   },
   {
    "id": "grt_v1_j4ne_trade_corner_0",
