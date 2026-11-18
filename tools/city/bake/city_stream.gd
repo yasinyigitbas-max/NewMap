@@ -13,8 +13,9 @@ extends Node3D
 ##    (global shader texture ck_cells_loaded, read by rt_far), so a late cell looks like low detail, never like nothing.
 ##  - SHARED THINGS STAY: every material of the bake (manifest "keep") is loaded at start and held. Measured: letting the
 ##    last user of a material go costs ~250 ms on the main thread, and its shader is built again on the next use.
-##  - COLLISION IN STEPS: a cell's collision bodies (64 m blocks of ground and props, one per building) are held back
-##    when the cell is added and attached nearest-first, `bodies_per_frame` a frame. (The old game's phone laps:
+##  - COLLISION IN STEPS: a cell's collision bodies (32 m blocks of ground and props, one per building; triangle
+##    collision in pieces of 400 triangles, 1,600 a body at most: see bake_runtime.gd COL_*) are held back when the
+##    cell is added and attached nearest-first, `bodies_per_frame` and `body_tris_per_frame` a frame. (The old game's phone laps:
 ##    adding colliders in one go was its own class of hitch, 70-147 ms.)
 ##  - REMOVAL IN PARTS: a cell leaves the scene piece by piece inside `frame_budget_ms` a frame.
 ##  - A MEMORY CAP: never more than `max_cells` in; beyond it the farthest wanted cells simply stay far versions.
@@ -34,7 +35,8 @@ signal cell_out(key: String)
 @export var max_loading := 2          ## cells on the loader threads at once
 @export var max_cells := 30           ## memory cap: cells in the scene
 @export var frame_budget_ms := 1.5    ## main-thread time a frame may spend removing (the old game's phone budget for streaming)
-@export var bodies_per_frame := 2     ## collision bodies attached a frame
+@export var bodies_per_frame := 2     ## collision bodies attached a frame, at most
+@export var body_tris_per_frame := 1600   ## and at most this many collision triangles a frame (the first body always goes)
 @export var attach_bodies := true    ## test switch: false = a cell's collision is never attached (to see what attaching costs)
 @export var show_cells := true       ## test switch: false = cells are added hidden (to see what their first drawing costs)
 @export var probe := false           ## test switch: time how long the physics and render servers take to digest what this frame gave them
@@ -221,6 +223,7 @@ func _process_stream(t0: int) -> void:
 		if cells[kq].state in [LOADING, BUILDING]: quiet = false; break
 	# collision: the nearest waiting bodies first, a few a frame
 	if not _pending.is_empty():
+		var spent := 0
 		for i in bodies_per_frame:
 			if _pending.is_empty(): break
 			var bi := 0; var bdist := 1.0e18
@@ -228,6 +231,9 @@ func _process_stream(t0: int) -> void:
 				var dd := (_pending[j][0] as Vector3).distance_squared_to(focus)
 				if dd < bdist: bdist = dd; bi = j
 			if not quiet and bdist > urgent_m * urgent_m: break
+			var cost := int((_pending[bi][2] as Node).get_meta(&"tris", 0))
+			if i > 0 and spent + cost > body_tris_per_frame: break
+			spent += cost
 			var e: Array = _pending[bi]; _pending.remove_at(bi)
 			(e[2] as Node).owner = null      # it was taken out of its cell at load: with the old owner kept, every add prints a warning (phone run 18 Nov: 302 of them)
 			var tb := Time.get_ticks_usec(); (e[1] as Node).add_child(e[2])
