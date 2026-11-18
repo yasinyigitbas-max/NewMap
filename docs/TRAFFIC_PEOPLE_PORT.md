@@ -345,6 +345,12 @@ How it is built (Stage 2):
    moves nothing is uploaded; a moving car re-sends only its own block of rows. Collision: small static bodies of
    boxes (a 32 m block each, as the streamer does its own), handed to the physics thread nearest first, a few a
    frame; a car that drives off switches its box off.
+   LOW DETAIL ONLY (Yasin, 19 Nov: "make sure the parked cars are low detail versions, high detailed ones break the
+   game"): a parked car is NEVER drawn with a detailed model. Up close it is the light model (`<id>_far.res`, about
+   8 % of the full car's triangles), far away the 40-triangle box. The full models are not in this repo; the
+   "quarter" model (30 %) is kept for the few MOVING cars nearest the camera. A car that pulls out of a stall changes
+   to the moving cars' models as it leaves; one that parks goes back to the light one. Stage 2c reports the
+   triangles per parked car and per street as measured.
 5. THE WALKERS go round parked cars: the crowd gets the parked boxes near each walker as standing obstacles, as it
    gets the moving ones.
 
