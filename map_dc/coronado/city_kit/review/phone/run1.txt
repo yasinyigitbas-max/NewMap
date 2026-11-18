@@ -1,0 +1,30 @@
+# phone rig run 'run1'  2026-11-18T13:45Z  args: 
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 269 -> 287 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit 49b2038 | meminfo at 60 s:          Native Heap:   171260                         172464;            Graphics:   330104                         330104;           TOTAL PSS:   606695            TOTAL RSS:   700820       TOTAL SWAP PSS:      256;
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.50 plan=default lead=2.0 maxcells=30 loading=2 bodies=2 lights=20 cells_baked=140
+RIG boot first_area_ms=481 warm_ms=9623 cells=9 static_mb=93 video_mb=177
+RIG slow town_50kmh 64 ms at t=0.3 s pos=(-896, -1400): cells in +0 out +0, bodies +0, loading []
+RIG drive town_50kmh speed=50 km/h secs=60 frames=5464 fps=91.1 | frame_ms med=8.9 p95=21.8 p99=26.6 worst=64 | over16.7=17.5% over33=2 over50=1 over100=0
+RIG   map town_50kmh draws avg=57 max=119 | tris avg=240k max=526k | cells most=14 in=18 out=13 dropped=0 cap_hits=0
+RIG   stream town_50kmh start_ready_ms=1 | request_to_in ms mean=128 worst=271 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 0.95, body 0.32, removal step 0.36 | bodies late=0
+RIG   mem town_50kmh static_mb=92 video_mb=190 tex_mb=90 buf_mb=83
+RIG drive ring_108kmh speed=108 km/h secs=45 frames=4702 fps=104.5 | frame_ms med=8.6 p95=17.4 p99=18.7 worst=31 | over16.7=8.3% over33=0 over50=0 over100=0
+RIG   map ring_108kmh draws avg=49 max=74 | tris avg=188k max=320k | cells most=12 in=21 out=30 dropped=0 cap_hits=0
+RIG   stream ring_108kmh start_ready_ms=1928 | request_to_in ms mean=70 worst=162 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 0.95, body 0.32, removal step 0.70 | bodies late=0
+RIG   mem ring_108kmh static_mb=93 video_mb=186 tex_mb=91 buf_mb=77
+RIG slow cross_210kmh 76 ms at t=11.3 s pos=(-248, -1400): cells in +0 out +0, bodies +0, loading ["0_-6:1", "0_-9:1"]
+RIG drive cross_210kmh speed=209 km/h secs=35 frames=2877 fps=82.2 | frame_ms med=10.1 p95=18.4 p99=20.4 worst=76 | over16.7=24.0% over33=2 over50=1 over100=0
+RIG   map cross_210kmh draws avg=60 max=118 | tris avg=285k max=611k | cells most=17 in=42 out=49 dropped=0 cap_hits=0
+RIG   stream cross_210kmh start_ready_ms=2034 | request_to_in ms mean=127 worst=288 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 0.95, body 0.99, removal step 1.31 | bodies late=0
+RIG   mem cross_210kmh static_mb=105 video_mb=240 tex_mb=90 buf_mb=132
+RIG drive ring_280kmh speed=281 km/h secs=35 frames=3295 fps=94.1 | frame_ms med=8.8 p95=18.1 p99=19.0 worst=24 | over16.7=15.4% over33=0 over50=0 over100=0
+RIG   map ring_280kmh draws avg=50 max=93 | tris avg=209k max=494k | cells most=18 in=45 out=53 dropped=0 cap_hits=0
+RIG   stream ring_280kmh start_ready_ms=1959 | request_to_in ms mean=109 worst=276 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 0.95, body 0.99, removal step 1.31 | bodies late=0
+RIG   mem ring_280kmh static_mb=98 video_mb=226 tex_mb=90 buf_mb=115
+RIG slow centre_night_50kmh 59 ms at t=1.6 s pos=(-359, -600): cells in +1 out +0, bodies +2, loading []
+RIG drive centre_night_50kmh speed=50 km/h secs=40 frames=2343 fps=58.6 | frame_ms med=16.8 p95=24.5 p99=26.3 worst=59 | over16.7=52.2% over33=7 over50=1 over100=0
+RIG   map centre_night_50kmh draws avg=121 max=205 | tris avg=628k max=1352k | cells most=14 in=12 out=21 dropped=0 cap_hits=0
+RIG   stream centre_night_50kmh start_ready_ms=3580 | request_to_in ms mean=210 worst=400 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.30, body 0.99, removal step 4.10 | bodies late=0
+RIG   mem centre_night_50kmh static_mb=118 video_mb=278 tex_mb=92 buf_mb=158
+RIG plan_done lap=1

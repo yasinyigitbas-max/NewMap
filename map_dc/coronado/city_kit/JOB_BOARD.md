@@ -10,6 +10,32 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   Clearly faster: cell packages, far areas, building streaming, walk-in rooms (waiting time), loading, road and sea
   shaders, parked cars drawn twice. Cannot improve: sky, simple shaders, HUD, physics, colliders, save, story, jobs.
   Also lists what breaks at 280 km/h. No work started from it.
+- 18 Nov ~17:30 (PC time): FULL-RESOLUTION zones run (Yasin: "i need a test run at full res too"; "check the results
+  of both runs and tell me what can be done"): `review/phone/zones_full.txt`, written up in RUNTIME_BAKE.md. The phone
+  is pixel-limited: medians 16-25 ms by day and 31 ms in the night centre at 2460x1080 (half res: 9-16 / 16.4); 15
+  frames over 50 ms, one of 181 ms with two cells loading; most hitches fall on frames that attach collision bodies
+  or take a cell in. Yasin also saw the tiers snap ("snaps from near to far directly"): hard cuts, far -> mid per
+  whole cell, no far roads (see RUNTIME_BAKE.md "THE TIERS"). TOLD Yasin the options (resolution + upscaler, the free
+  setting tests --loading=1 / --bodies=1 / --lights=8 / --scale=0.75, tier fades + far ground, cells in parts,
+  lighter centre / apartments, teleport behind a fade, the 0.9 GB memory). WAITING for his pick. Nothing started.
+- 18 Nov ~17:15 (PC time): ZONES RUN on the Redmi (Yasin: "the test was mostly in empty ground ... make it
+  teleport between gritty, city center, waterfront etc"; "can you inject this run to the apk instead of rebuilding").
+  New plan `--plan=zones` in rig.gd (9 zones by day at 60 km/h, 7th St at 210, centre + gritty at night) and
+  `--drive=NAME/ROUTE/KMH/SECONDS/NIGHT` (own drives, no rebuild). Result `review/phone/zones1.txt`, table in
+  docs/RUNTIME_BAKE.md. 22,841 frames: 5 over 33 ms, 1 over 50 (93 ms, night centre, two cells loading at once), none
+  late. Day zones clean (worst 36 ms). Teleport 2.0-3.9 s, frames stutter while it loads (up to 245 ms). Night zones
+  at 60 fps or under. Memory 873 MB at 60 s (583 graphics): not understood. NEXT, if Yasin wants: the same run with
+  `--loading=1`. WAITING for Yasin as below.
+- 18 Nov ~17:00 (PC time): PHONE TEST DONE on the Redmi by the session on Yasin's PC (Yasin: "go ahead"). Result
+  `review/phone/run1.txt`, full write-up in docs/RUNTIME_BAKE.md "The phone test". Clone is at C:\Users\yasin\NewMap.
+  Numbers: by day median 8.6-10.1 ms (the 120 Hz cap), 99 % 19-27 ms; night centre median 16.8 ms; 18,681 frames,
+  11 over 33 ms, 3 over 50 ms (64, 76, 59), none over 100; no cell late at 50-280 km/h; draws max 119 by day, 205 at
+  night (budget 150); 607 MB. Engine `coronado_all7` (light grid present). Open question answered: a loading cell
+  does hitch on the phone, rarely (2 frames of 59 / 76 ms in 215 s). WAITING for Yasin: cells in parts or not; the
+  night centre over the draw budget. Script fixed for Windows (gradle daemon hang, template copy, git push path, git
+  author); rig fixed (ground ray in the physics step: the first run had the camera sunk into the road, Yasin saw it,
+  that run was discarded); `.gitattributes` added (a Windows clone failed the lock test on line endings). Lock test
+  RESULT PASS. Not run yet: `--nowarm`, `--plan=speed`, `--loading=1`, a release build.
 - 18 Nov ~14:00: HANDOVER TO A SESSION ON YASIN'S PC (Yasin: "i did both but nothing happens, can you handover the work
   to a local session on my pc?"). Read `docs/HANDOVER_PHONE_TEST.md`: the job is one clean run of
   `tools/city/rig/phone_rig.sh all run1` on the Redmi (the script has never run on Windows: debug it step by step),

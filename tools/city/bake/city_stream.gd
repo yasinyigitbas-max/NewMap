@@ -210,6 +210,7 @@ func _process(_dt: float) -> void:
 				if dd < bdist: bdist = dd; bi = j
 			if not quiet and bdist > urgent_m * urgent_m: break
 			var e: Array = _pending[bi]; _pending.remove_at(bi)
+			(e[2] as Node).owner = null      # it was taken out of its cell at load: with the old owner kept, every add prints a warning (phone run 18 Nov: 302 of them)
 			var tb := Time.get_ticks_usec(); (e[1] as Node).add_child(e[2])
 			var bms := (Time.get_ticks_usec() - tb) / 1000.0
 			if bms > float(stats.body_ms_worst): stats.body_ms_worst = bms; stats["body_worst_what"] = "%s shapes=%d" % [(e[2] as Node).name, (e[2] as Node).get_child_count()]

@@ -89,7 +89,112 @@ first thing the phone run answers. If it is large the next step is cells that ar
 streamer was doing, late cells, draws, triangles, memory. On Yasin's PC, Git Bash, in the clone:
 `bash tools/city/rig/phone_rig.sh all run1` bakes, exports (preset "Rig", the game's Android template and engine),
 installs, runs and pushes `map_dc/coronado/city_kit/review/phone/run1.txt`. Remote Control showed the PC's folders
-but the PC does not offer them to a cloud session, so the script is the way. NOT RUN YET on Windows.
+but the PC does not offer them to a cloud session, so the script is the way.
+
+RUN ON THE REDMI, 18 Nov (a session on Yasin's PC; result `review/phone/run1.txt`, commit 49b2038, debug build).
+Phone 22041216UG, Mali-G610 MC6, Android 13, screen 2460x1080 at 3D scale 0.5. Engine line: `coronado_all7` (the
+game's current template; its build_info lists the light-grid patch, so the grid is present; the brief expected all3).
+Vsync could not be turned off on the phone ("V-Sync mode Disabled is not available"), so frame times step with the
+120 Hz screen: 8.3 ms is the floor, the next step is 16.7 ms.
+
+| Drive | median | 99 % | worst | over 33 / 50 / 100 ms | draws avg / max | triangles avg / max | late cells |
+|---|---|---|---|---|---|---|---|
+| town 50 km/h | 8.9 ms | 26.6 | 64 | 2 / 1 / 0 | 57 / 119 | 240k / 526k | 0 |
+| ring 108 km/h | 8.6 ms | 18.7 | 31 | 0 / 0 / 0 | 49 / 74 | 188k / 320k | 0 |
+| zigzag 210 km/h | 10.1 ms | 20.4 | 76 | 2 / 1 / 0 | 60 / 118 | 285k / 611k | 0 |
+| ring 280 km/h | 8.8 ms | 19.0 | 24 | 0 / 0 / 0 | 50 / 93 | 209k / 494k | 0 |
+| centre at night 50 km/h | 16.8 ms | 26.3 | 59 | 7 / 1 / 0 | 121 / 205 | 628k / 1,352k | 0 |
+
+- 18,681 frames in 215 s: 11 over 33 ms, 3 over 50 ms, none over 100 ms. No cell late (220 m or 60 m), none dropped,
+  no body late, at any speed.
+- The three frames over 50 ms (`RIG slow`): 64 ms at 0.3 s of the first drive with nothing loading (the first frames
+  after the warm-up); 76 ms at 210 km/h while two cells were loading (`0_-6`, `0_-9`); 59 ms at night in the frame a
+  cell came in with two collision bodies. The other 8 frames over 33 ms are not explained: the rig only describes
+  frames over 50 ms.
+- THE OPEN QUESTION, answered: cell loading does hitch on the real phone, but rarely: 2 frames (59 and 76 ms) in 215 s
+  of driving, against 20-46 ms in the cloud. Main-thread work itself is small (cell add 0.95-1.30 ms, body 0.99 ms,
+  removal step 4.10 ms worst, at night): the long frames are the wait on the loader thread, as in the cloud. Cells
+  that arrive in parts would be the fix; whether two such frames in 3.5 minutes justify it is Yasin's call.
+- Night in the centre is the heavy case: median 16.8 ms (about 60 fps, half the frames above 16.7 ms), draws 205 at
+  the worst view (budget 150), triangles 1.35 M at the worst (gate 300k; Yasin: triangles are fine). By day draws stay
+  inside the budget (max 119).
+- Memory: 607 MB in all at 60 s (graphics 330 MB, native heap 171 MB); the engine's own count 92-118 MB static,
+  186-278 MB video. Start: first area 481 ms, warm-up 9.6 s; a far start made ready in 1.9-2.0 s by day, 3.6 s at night.
+  Battery 26.9 -> 28.7 C. No `Shader cache miss`, no error in the log.
+
+SECOND RUN, THE POPULATED ZONES (`review/phone/zones1.txt`, commit ac5932a; Yasin: "the test was mostly in empty
+ground ... make it teleport between gritty, city center, waterfront etc"). Plan `zones` (`--plan=zones`): a teleport
+to each zone's sample junction, 25 s at 60 km/h on its own streets, far jumps on purpose; then 7th St through civic,
+centre and apartments at 210 km/h; then the centre and the gritty edge at night. Same phone, same settings.
+
+| Zone | median | 99 % | worst | over 33 / 50 ms | draws avg / max | triangles avg / max | teleport ready | worst frame while it loads |
+|---|---|---|---|---|---|---|---|---|
+| gritty edge | 8.9 ms | 19.2 | 21 | 0 / 0 | 98 / 129 | 490k / 721k | (start) | - |
+| city centre | 14.5 ms | 21.1 | 27 | 0 / 0 | 88 / 122 | 737k / 1,353k | 2.2 s | 245 ms |
+| waterfront | 10.4 ms | 19.3 | 36 | 1 / 0 | 89 / 123 | 601k / 820k | 2.7 s | 23 ms |
+| industrial | 10.3 ms | 19.2 | 22 | 0 / 0 | 87 / 119 | 394k / 530k | 2.0 s | 19 ms |
+| apartments | 15.8 ms | 22.0 | 29 | 0 / 0 | 121 / 189 | 815k / 1,220k | 3.9 s | 33 ms |
+| pilot (high street) | 12.3 ms | 20.0 | 32 | 0 / 0 | 89 / 120 | 517k / 775k | 2.8 s | 27 ms |
+| commercial strip | 10.6 ms | 19.4 | 32 | 0 / 0 | 75 / 103 | 446k / 672k | 2.3 s | 38 ms |
+| civic | 13.4 ms | 19.5 | 30 | 0 / 0 | 95 / 134 | 492k / 751k | 2.7 s | 19 ms |
+| stadium | 9.7 ms | 19.2 | 23 | 0 / 0 | 58 / 73 | 186k / 228k | 0.1 s (next door) | 18 ms |
+| 7th St at 210 km/h | 14.6 ms | 23.0 | 30 | 0 / 0 | 104 / 191 | 630k / 1,365k | 0.7 s | 60 ms |
+| centre at night | 16.4 ms | 25.8 | 93 | 3 / 1 | 103 / 138 | 742k / 1,355k | 0.8 s | 57 ms |
+| gritty edge at night | 16.8 ms | 26.1 | 39 | 1 / 0 | 113 / 141 | 496k / 721k | 3.1 s | 73 ms |
+
+- 22,841 frames in 295 s of driving: 5 over 33 ms, 1 over 50 ms, none over 100 ms. No cell late, none dropped.
+- By day, in the zones, nothing over 36 ms, the fast pass down 7th St included (21 cells in, 28 out).
+- The one real hitch: 93 ms at night in the centre while TWO cells were loading at once (`-1_-1`, `0_-1`). The 76 ms
+  frame of run1 was also with two cells loading. Worth one run with `--loading=1` (no rebuild) before building
+  cells in parts.
+- A teleport takes 2.0-3.9 s until the new zone is ready. The frames meanwhile (the player still looks at the old
+  place) stutter: 19-73 ms, once 245 ms. A fade or a held picture would hide it; nothing does so far.
+- Frame rate: the centre and the apartments run at about 65-70 fps by day (median 14.5-15.8 ms); at night the two
+  zones measured sit at 60 fps or under (median 16.4-16.8 ms, half the frames over 16.7 ms).
+- Draws stay inside 150 except the apartments (189 at the worst view) and the 7th St pass (191). Triangles are far
+  over the 300k gate in every zone but the stadium (Yasin: triangles are fine).
+- Memory at 60 s: 873 MB in all, 583 MB of it graphics (run1: 607 / 330). The engine's own count never passed 294 MB
+  video, so the rest is the driver's; taken once, right after the first teleport. Not understood yet: watch it.
+- Warm-up took 0.4 s (run1: 9.6 s): the phone kept the shaders from run1. Battery 26.8 -> 30.4 C.
+- The rig now takes drives of its own without a rebuild: `--drive=NAME/ROUTE/KMH/SECONDS/NIGHT` (Yasin: "inject
+  this run ... instead of rebuilding"). 3D is drawn at 1230x540 (scale 0.5); `--scale=1.0` for the full screen.
+
+THIRD RUN, THE SAME ZONES AT FULL RESOLUTION (`review/phone/zones_full.txt`, `--plan=zones --scale=1.0`: 3D at
+2460x1080 instead of 1230x540; Yasin: "i need a test run at full res too"). Median frame, half | full:
+gritty 8.9 | 16.9, centre 14.5 | 19.2, waterfront 10.4 | 16.4, industrial 10.3 | 16.3, apartments 15.8 | 24.4,
+pilot 12.3 | 17.0, strip 10.6 | 16.9, civic 13.4 | 20.2, stadium 9.7 | 24.9, 7th St at 210 km/h 14.6 | 24.7,
+centre at night 16.4 | 31.0, gritty at night 16.8 | 17.1 ms.
+- The phone is limited by PIXELS, not by the map's draws: the same draws and triangles cost 1.3-2.6 times the frame
+  time at four times the pixels. At full resolution no zone holds 60 fps (40-60 fps by day, 32 fps in the centre at
+  night). The stadium's jump (9.7 -> 24.9 ms with the fewest triangles of all) is not explained: late in the run,
+  battery 29.4 -> 32.1 C; heat or overdraw, not checked.
+- 15,193 frames: 362 over 33 ms (219 of them are the night centre simply running at 31 ms), 15 over 50, 1 over 100
+  (181 ms, gritty, two cells loading at once). No cell late, none dropped.
+- Of the 16 frames of 45 ms or more, 13 are frames in which collision bodies were attached ("bodies +2") or a cell
+  came in, though the attach itself is timed at 1.3 ms at most on the main thread. Two candidates, not told apart
+  yet: the physics thread taking the bodies, or the first drawing of the cell that just arrived. `--bodies=1` and
+  `--loading=1` (no rebuild) would tell.
+- Teleports take longer: 2.0-5.6 s (half resolution: 2.0-3.9 s).
+- Memory at 60 s: 901 MB, graphics 584 MB: the same graphics figure as at half resolution, so it is not the
+  picture buffers.
+
+THE TIERS (Yasin, watching the phone: "i think it snaps from near to far directly and everythings appereance
+change suddenly as we get near"). From the code, not yet from pictures: near 0-60 m, mid 60-220 m, far world beyond;
+every switch is a hard cut (`VISIBILITY_RANGE_FADE_DISABLED`); far -> mid happens for a whole 200 m cell in the
+frame the cell arrives; props under 2.5 m and a cell's roads and ground have no far version at all (the rig shows a
+flat green plane there). Not checked: how different the kit's mid meshes are from the near ones.
+
+What the first runs on Windows found (all fixed, in the script or the rig):
+- The export never returned: gradle's daemon outlives the build on Windows and holds the log open. Now run without it.
+- The template copy took the game's whole last build with it (1.6 GB): the editor scanned it and about 1,200 of the
+  game's file names went into the APK as empty files. Now only the template is copied and it gets a `.gdignore`.
+- Git on the PC had no author set, and `git add` got a `/c/...` path it rejects: the result was never pushed.
+- The first phone run was thrown away: the rig asked the physics for the ground height from a normal frame, which
+  fails when physics runs on its own thread (Jolt on Android): 5,256 errors and the camera sunk into the road (Yasin
+  saw it). The ray is now cast in the physics step. The streamer also printed a warning per collision body (302).
+- A Windows clone with `core.autocrlf=true` made the lock test fail on 5 plan files (line endings only): the repo
+  now has a `.gitattributes` that turns conversion off. RESULT PASS after it.
+- Times on this PC: first import 10 min (no hang with many threads), bake 140 s, export 3.5 min, run 4 min.
 
 ### Commands (repo root, real renderer)
 ```bash
@@ -138,7 +243,8 @@ Preview and measure: `tools/city/bake/rt_shots.gd` (`--cams`, `--probe --detail`
 - Whole-city bake and the game side (the game repo's streamer and global shader values).
 - Signals: the flaw above. Far buildings do not light their windows at night (the far atlas has no glow mask).
 - Far ground: beyond the loaded cells the game's terrain shows, not the roads.
-- No phone measurement. Times are from the cloud machine.
+- Phone: three runs (run1, zones1, zones_full; debug build, see "The phone test"). Not run: `--loading=1` (the next one to do),
+  `--nowarm`, `--plan=speed`, `--scale=1.0`, a release build, a repeat to see how much the numbers move.
 
 ## Decisions for Yasin
 1. Roll the bake out to the whole city? (`--all`; a few minutes by my estimate, the sample area took 45 s.)

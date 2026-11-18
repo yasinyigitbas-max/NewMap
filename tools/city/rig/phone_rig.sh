@@ -3,7 +3,9 @@
 #   bash tools/city/rig/phone_rig.sh all   [NAME] [rig args]   bake the city, export the rig app, install, run, collect
 #   bash tools/city/rig/phone_rig.sh run   [NAME] [rig args]   run again (app already on the phone), e.g. other settings
 #   bash tools/city/rig/phone_rig.sh bake | export | install | status
-# NAME labels the result (default: run1). Rig args: see tools/city/rig/rig.gd (--plan=default|quick|speed --lead=2 ...).
+# NAME labels the result (default: run1). Rig args: see tools/city/rig/rig.gd (--plan=default|quick|speed|zones --lead=2 ...).
+#   bash tools/city/rig/phone_rig.sh run zones1 --plan=zones        teleports between the populated zones (about 6 minutes)
+#   bash tools/city/rig/phone_rig.sh run mine --drive=NAME/ROUTE/KMH/SECONDS/NIGHT ...   drives of your own, no rebuild
 # The result (the app's RIG lines, phone model, temperature) is written to
 # map_dc/coronado/city_kit/review/phone/NAME.txt and pushed to the branch, so the cloud session can read it.
 # PUSH=0 keeps it local. DEV=<serial> picks the phone (default: the Redmi).
@@ -19,7 +21,10 @@ GODOT_EXPORT=${GODOT_EXPORT:-$([ -f "$ED_ALL3" ] && echo "$ED_ALL3" || echo "$GO
 ADB=${ADB:-/c/Users/yasin/AppData/Local/Android/Sdk/platform-tools/adb.exe}
 DEV=${DEV:-FEMFRK8PYDMBKBAQ}
 PKG=com.yasin.citykit.rig
-export JAVA_HOME="${JAVA_HOME:-/c/Program Files/Eclipse Adoptium/jdk-17.0.21.9-hotspot}"
+JAVA_HOME="${JAVA_HOME:-/c/Program Files/Eclipse Adoptium/jdk-17.0.21.9-hotspot}"
+# Windows programs (gradle) need C:\... here: with MSYS_NO_PATHCONV=1 Git Bash hands /c/... over unchanged
+command -v cygpath >/dev/null && JAVA_HOME=$(cygpath -w "$JAVA_HOME")
+export JAVA_HOME
 export MSYS_NO_PATHCONV=1
 OUT=$ROOT/OUT; mkdir -p "$OUT"
 A() { "$ADB" -s "$DEV" "$@"; }
@@ -46,10 +51,22 @@ do_export() {
   [ -f map_dc/coronado/city_kit/runtime/manifest.json ] || die "no baked city: run  phone_rig.sh bake"
   if [ ! -d android/build ]; then      # the Android build template with the game's own engine (all3: light grid) lives in the game project
     need "$GAME_P/android/build" "the game project's Android template; set GAME_P=<game project folder>"
-    echo "PHONE_RIG copying the Android template from the game project"; mkdir -p android; cp -r "$GAME_P/android/build" android/ || die "copy failed"
+    # Only the template itself: NOT the game's last build (build/, .gradle/, 1.2 GB) and NOT the game's exported files
+    # (src/*/assets). Left in, the editor scans them as part of this project and their names end up in the APK.
+    echo "PHONE_RIG copying the Android template from the game project"; mkdir -p android/build
+    for e in "$GAME_P/android/build"/* "$GAME_P/android/build"/.[!.]*; do
+      [ -e "$e" ] || continue
+      case $(basename "$e") in build|.gradle) continue ;; esac
+      cp -r "$e" android/build/ || die "copy failed"
+    done
+    rm -rf android/build/src/main/assets android/build/src/instrumented/assets
     [ -f "$GAME_P/android/.build_version" ] && cp "$GAME_P/android/.build_version" android/
   fi
+  touch android/build/.gdignore      # the editor must not read the template folder as project files (the stock template ships this file)
+  # No gradle daemon: on Windows it stays alive after the build, holds the log open, and the export never returns.
+  export GRADLE_OPTS="${GRADLE_OPTS:-} -Dorg.gradle.daemon=false"
   echo "PHONE_RIG export with $(basename "$GODOT_EXPORT") (several minutes)"
+  rm -f "$OUT/citykit_rig.apk"
   "$GODOT_EXPORT" --headless --path . --export-debug Rig "$(winpath "$OUT/citykit_rig.apk")" > "$OUT/export.log" 2>&1
   [ -f "$OUT/citykit_rig.apk" ] || { tail -15 "$OUT/export.log"; die "no APK: see OUT/export.log"; }
   ls -la "$OUT/citykit_rig.apk" | awk '{print "PHONE_RIG apk", $5/1048576, "MB"}'
@@ -90,7 +107,8 @@ do_run() {
   A shell am force-stop $PKG; A shell "run-as $PKG rm -f files/rig_args.txt"
   echo "PHONE_RIG result: map_dc/coronado/city_kit/review/phone/$NAME.txt"; grep -a "RIG drive\|RIG boot\|ERROR" "$RES/$NAME.txt" | cut -c1-230
   if [ "${PUSH:-1}" = "1" ]; then
-    git add "$RES" && git commit -q -m "Phone rig run '$NAME'" && git push -q origin HEAD && echo "PHONE_RIG pushed to $(git rev-parse --abbrev-ref HEAD)" || echo "PHONE_RIG could not push: send the file by hand"
+    # a path inside the repo, not $RES: with MSYS_NO_PATHCONV=1 git for Windows gets /c/... unchanged and says "Invalid path '/c'"
+    git add map_dc/coronado/city_kit/review/phone && git commit -q -m "Phone rig run '$NAME'" && git push -q origin HEAD && echo "PHONE_RIG pushed to $(git rev-parse --abbrev-ref HEAD)" || echo "PHONE_RIG could not push: send the file by hand"
   fi
 }
 

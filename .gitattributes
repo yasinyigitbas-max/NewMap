@@ -1,0 +1,4 @@
+# No line-ending conversion, on any machine. A Windows clone with core.autocrlf=true turned 1,855 text files to CRLF:
+# the lock test hashes plan files byte for byte and failed on 5 of them (18 Nov, first clone on the PC), and Godot
+# rewrote 3,384 .import files, which then showed as changed.
+* -text
