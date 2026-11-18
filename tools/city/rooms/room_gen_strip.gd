@@ -103,6 +103,7 @@ var keep: Array = [] # [x0, z0, x1, z1] floor that stays free
 var X0 := 0.0; var X1 := 0.0; var ZF := 0.0; var ZB := 0.0; var ZBp := 0.0; var F := 0.0
 var rr: R
 var report: Array = []
+var CLR := 3.0              # clear height of the current room (floor to ceiling)
 var wall_marks: Array = []   # [wall x, z] of every wall poster / frame already hung: the next keeps 1.6 m clear (Yasin 18 Nov: wall props overlapping)
 
 func _init() -> void: _run.call_deferred()
@@ -161,6 +162,7 @@ func _free(x0: float, z0: float, x1: float, z1: float, use_keep := true) -> bool
 func _put(base: String, x: float, z: float, yaw := 0.0, use_keep := true) -> bool:
 	var f := _fp(base, yaw)
 	var x0 := x - f.x * 0.5; var x1 := x + f.x * 0.5; var z0 := z - f.y * 0.5; var z1 := z + f.y * 0.5
+	if float(tall.get("prop_" + base, 1.0)) > CLR - 0.05: return false      # never into the ceiling (checker: "ceiling")
 	if not _free(x0, z0, x1, z1, use_keep): return false
 	rr.prop(base, x, z, yaw)
 	occ.append([x0, z0, x1, z1, float(tall.get("prop_" + base, 1.0))])
@@ -211,6 +213,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	var zb_bld := float(fl.box_min[2])
 	ZB = maxf(zb_bld, ZF - float(K.get("max_d", 16.0)))   # deep buildings: the shop takes the front (an office, a waiting room: 8 m)
 	var H := F + minf(float(fl.clear_h), 4.0)
+	CLR = H - F
 	var depth := ZF - ZB; var width := X1 - X0
 	var back := String(K.back)
 	var ZP := ZB
@@ -308,7 +311,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		var free_board := true
 		for o: Array in occ:
 			if float(o[4]) > 1.7 and mx > float(o[0]) - 0.85 and mx < float(o[2]) + 0.85 and float(o[1]) < ZBp + 0.6: free_board = false
-		if free_board: rr.prop("menu_board", mx, ZBp + 0.06, 0.0, 1.75)
+		if free_board and _hang("menu_board", 1.75) >= 0.0: rr.prop("menu_board", mx, ZBp + 0.06, 0.0, _hang("menu_board", 1.75))
 	# ---- the lube waiting room's own corner (Yasin 18 Nov: "do that"): what a customer finds while the car is done -
 	# free coffee on a side counter with a bin, the rack of oil, wipers and air filters next to the service desk (the
 	# upsell), the specials table in front of it, the promo board where people look up from their phones
@@ -319,7 +322,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		if _put("shop_counter", far_x + inn4 * 0.37, zcf, yw4):
 			rr.prop("espresso_machine", far_x + inn4 * 0.4, zcf - 0.45, yw4 + 180.0, 0.964)       # staff side +Z: turned to face the room
 			_put("indoor_bin", far_x + inn4 * 0.25, zcf + 1.25, yw4)
-			rr.prop("poster_case", far_x + inn4 * 0.05, zcf, yw4, 1.1)                           # the promo board over the coffee (same line as the posters)
+			if _hang("poster_case", 1.1) >= 0.0: rr.prop("poster_case", far_x + inn4 * 0.05, zcf, yw4, _hang("poster_case", 1.1))   # the promo board over the coffee
 			wall_marks.append([far_x, zcf])
 		var near_x := X0 if far_x == X1 else X1; var inn5 := -inn4
 		_put("display_table", cx + (1.6 if far_x == X1 else -1.6), zc + cd * 0.5 + 2.2, 0.0)   # this week's oil specials, beside the queue
@@ -484,7 +487,9 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 					if absf(float(wm2[0]) - wx2) < 0.5 and absf(float(wm2[1]) - zz) < 1.6: blocked = true
 				if blocked: continue
 				var piece := String(deco[di % deco.size()]); di += 1
-				rr.prop(piece, wx2 + inn2 * 0.04, zz, float(side2[1]), 1.35 if piece == "gallery_frame" else (1.6 if piece == "menu_board" else 1.1))
+				var hy := _hang(piece, 1.35 if piece == "gallery_frame" else (1.6 if piece == "menu_board" else 1.1))
+				if hy < 0.0: continue
+				rr.prop(piece, wx2 + inn2 * 0.04, zz, float(side2[1]), hy)
 				wall_marks.append([wx2, zz]); placed2 += 1
 	# ---- strip chains: promo posters on the bare side walls, extras (refill station, bins) by the queue
 	if bool(K.get("posters", false)):
@@ -498,7 +503,8 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 				for wm: Array in wall_marks:
 					if absf(float(wm[0]) - wx3) < 0.5 and absf(float(wm[1]) - zz) < 1.6: blk = true
 				if not blk:
-					rr.prop("poster_case", wx3 + inn3 * 0.05, zz, float(side3[1]), 1.1); wall_marks.append([wx3, zz])
+					var hy3 := _hang("poster_case", 1.1)
+					if hy3 >= 0.0: rr.prop("poster_case", wx3 + inn3 * 0.05, zz, float(side3[1]), hy3); wall_marks.append([wx3, zz])
 	for ex: String in K.get("extra", []):
 		var exs := _fp(ex, 180.0)
 		for zz2: float in _steps(zc + cd * 0.5 + 1.4, ZF - 2.0, 0.6):
@@ -560,6 +566,12 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	report.append({"id": id, "kind": kind, "name": e.name, "w": snappedf(width, 0.01), "d": snappedf(depth, 0.01), "props": props, "lights": root.get_node("Lights").get_child_count(), "file": path})
 	print("GEN %s %s '%s' %.1f x %.1f m, %d props" % [id, kind, e.name, width, depth, props])
 	root.free()
+
+## the height a wall item hangs at: its usual height, lowered to fit under the ceiling; -1 when it cannot fit at 0.8 m
+func _hang(piece: String, usual: float) -> float:
+	var h := float(tall.get("prop_" + piece, 1.0))
+	var y := minf(usual, CLR - 0.08 - h)
+	return y if y >= 0.8 else -1.0
 
 func _steps(a: float, b: float, pitch: float) -> Array:
 	var out: Array = []
