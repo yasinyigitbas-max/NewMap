@@ -14,8 +14,14 @@ extends Node3D
 ##   --lead=2  --maxcells=30  --loading=2  --bodies=2      streamer settings to compare
 ##   --lights=20   real lamp lights at night (the engine's light grid; 8 on a stock engine)
 ##   --nowarm      skip the warm-up (to see what it saves)
+##   --look=1|0    1 (default): the look pack's sky, distance haze, light colours and colour treatment
+##             (tools/city/look/look.gd, docs/LOOK_SKY.md); 0: the old plain sky and light, to compare
+##   --shots=FOLDER   no drive: save pictures from set viewpoints, by day and at night, and leave
+##             (tools/city/look/look_shots.gd; run with --look=1 and with --look=0 for before / after pairs)
 const Stream := preload("res://tools/city/bake/city_stream.gd")
 const Lights := preload("res://tools/city/bake/city_lights.gd")
+const Look := preload("res://tools/city/look/look.gd")
+const LookShots := preload("res://tools/city/look/look_shots.gd")
 const ROUTES := {"zigzag": "-900,-1400;500,-1400;500,-1000;-900,-1000;-900,-600;500,-600;500,-200;-900,-200",
 	"ring": "-950,-1550;600,-1550;600,150;-950,150;-950,-1550", "amber": "0,-1580;0,180", "seventh": "-950,-600;600,-600",
 	"centre": "-380,-600;460,-600;460,-640;-380,-640;-380,-600",
@@ -48,7 +54,8 @@ var cam: Camera3D
 var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
-var opt := {"plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 2, "lights": 20, "nowarm": false}
+var look: Node                  # the look pack (--look=1); null with --look=0
+var opt := {"look": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 2, "lights": 20, "nowarm": false}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -67,23 +74,26 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights"]:
+		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "look", "shots"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
-				opt[k] = v if k == "plan" else (float(v) if k in ["scale", "lead"] else int(v))
+				opt[k] = v if k in ["plan", "shots"] else (float(v) if k in ["scale", "lead"] else int(v))
 	if from_file and not ("--loop" in args): opt.quit = true
 	Engine.max_fps = 0
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	if float(opt.scale) <= 0.0:      # no --scale given: 720p (1640x720 on the Redmi's 2460x1080)
 		var ws := DisplayServer.window_get_size(); opt.scale = clampf(720.0 / maxf(1.0, float(mini(ws.x, ws.y))), 0.25, 1.0)
 	var vp := get_viewport(); vp.scaling_3d_scale = float(opt.scale); vp.screen_space_aa = Viewport.SCREEN_SPACE_AA_FXAA
-	env = Environment.new()
-	var sky := Sky.new(); sky.sky_material = ProceduralSkyMaterial.new(); env.background_mode = Environment.BG_SKY; env.sky = sky
-	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR; env.ambient_light_color = Color(0.62, 0.66, 0.72); env.ambient_light_energy = 0.75
-	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
-	var we := WorldEnvironment.new(); we.environment = env; add_child(we)
-	sun = DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-48, -35, 0); sun.light_energy = 1.25
-	sun.shadow_enabled = true; sun.directional_shadow_max_distance = 50.0; add_child(sun)      # the game's sun shadow distance
+	if int(opt.look) == 1:      # the look pack: sky, haze, light colours, colour treatment
+		look = Look.new(); add_child(look); env = look.env; sun = look.sun
+	else:                       # the old plain setup, kept to compare against
+		env = Environment.new()
+		var sky := Sky.new(); sky.sky_material = ProceduralSkyMaterial.new(); env.background_mode = Environment.BG_SKY; env.sky = sky
+		env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR; env.ambient_light_color = Color(0.62, 0.66, 0.72); env.ambient_light_energy = 0.75
+		env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
+		var we := WorldEnvironment.new(); we.environment = env; add_child(we)
+		sun = DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-48, -35, 0); sun.light_energy = 1.25
+		sun.shadow_enabled = true; sun.directional_shadow_max_distance = 50.0; add_child(sun)      # the game's sun shadow distance
 	var gp := MeshInstance3D.new(); var pm := PlaneMesh.new(); pm.size = Vector2(6000, 6000); gp.mesh = pm
 	var gm := StandardMaterial3D.new(); gm.albedo_color = Color(0.36, 0.42, 0.3); gm.roughness = 1.0; gp.material_override = gm; gp.position.y = -0.05; add_child(gp)
 	st = Stream.new(); st.name = "City"; st.lead_seconds = float(opt.lead); st.max_cells = int(opt.maxcells); st.max_loading = int(opt.loading); st.bodies_per_frame = int(opt.bodies); add_child(st)
@@ -117,17 +127,21 @@ func _ground(p: Vector3, last: float) -> float:
 
 func _night(v: float) -> void:
 	st.set_night(v)
+	if look: look.set_night(v); return
 	sun.light_energy = lerpf(1.25, 0.04, v); env.ambient_light_energy = lerpf(0.75, 0.22, v)
 	(env.sky.sky_material as ProceduralSkyMaterial).sky_top_color = Color(0.32, 0.52, 0.82).lerp(Color(0.01, 0.015, 0.04), v)
 	(env.sky.sky_material as ProceduralSkyMaterial).sky_horizon_color = Color(0.72, 0.8, 0.88).lerp(Color(0.05, 0.06, 0.1), v)
 
 func _run() -> void:
 	var R := RenderingServer
-	_say("start engine=%s device=%s gpu=%s screen=%s scale=%.2f plan=%s lead=%.1f maxcells=%d loading=%d bodies=%d lights=%d cells_baked=%d" % [Engine.get_version_info().string, OS.get_model_name(), R.get_video_adapter_name(), str(DisplayServer.window_get_size()), float(opt.scale), opt.plan, float(opt.lead), int(opt.maxcells), int(opt.loading), int(opt.bodies), int(opt.lights), st.cells.size()])
+	_say("start engine=%s device=%s gpu=%s screen=%s scale=%.2f look=%d plan=%s lead=%.1f maxcells=%d loading=%d bodies=%d lights=%d cells_baked=%d" % [Engine.get_version_info().string, OS.get_model_name(), R.get_video_adapter_name(), str(DisplayServer.window_get_size()), float(opt.scale), int(opt.look), opt.plan, float(opt.lead), int(opt.maxcells), int(opt.loading), int(opt.bodies), int(opt.lights), st.cells.size()])
 	if st.cells.is_empty():
 		_say("ERROR no baked city found (map_dc/coronado/city_kit/runtime). Run the bake before the export."); hud.text = "no baked city in this build"
 		if opt.quit: await get_tree().create_timer(3.0).timeout; get_tree().quit()
 		return
+	if String(opt.shots) != "":      # pictures instead of a drive
+		await LookShots.run(self, String(opt.shots), OS.get_cmdline_user_args())
+		get_tree().quit(); return
 	var plan: Array = PLANS.get(String(opt.plan), PLANS.default)
 	if not own_drives.is_empty(): plan = own_drives; _say("own drives: %d" % plan.size())
 	var first: Vector3 = _pts(plan[0][1])[0]
