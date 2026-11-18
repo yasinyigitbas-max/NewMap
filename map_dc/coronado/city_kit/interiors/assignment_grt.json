@@ -1,6 +1,6 @@
 {
  "_doc": "The gritty edge growth's shops (18 Nov, claude/grow-gritty): which business is behind which door of the new blocks.",
- "count": 25,
+ "count": 37,
  "rooms": [
   {
    "id": "grt_v1_g4ne_trade_corner_0",
@@ -171,6 +171,70 @@
    ],
    "kind": "parts",
    "name": "Rim & Tire",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "grt_v1_j4nw_trade_corner_0",
+   "piece": "g_v1_j4nw",
+   "label": "trade_corner",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    -816.5,
+    2.1499999910593,
+    -1222.79999923706
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "cash",
+   "name": "Envios Rapidos",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "grt_v1_j4nw_trade_corner_1",
+   "piece": "g_v1_j4nw",
+   "label": "trade_corner",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    -816.5,
+    2.1499999910593,
+    -1222.79999923706
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 3.0,
+   "door_w": 1.8,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "parts",
+   "name": "Junction Auto Glass",
    "style": "navy",
    "font": "Overpass",
    "built": "",
@@ -524,6 +588,228 @@
    ]
   },
   {
+   "id": "grt_v2_j4sw_corner_block_0",
+   "piece": "g_v2_j4sw",
+   "label": "corner_block",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    -816.200000762939,
+    2.15009045600891,
+    -1176.20000076294
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 0,
+   "door_along": -1.08,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "takeout",
+   "name": "Pupuseria Lupita",
+   "style": "red",
+   "font": "Nunito",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_j4sw_corner_block_1",
+   "piece": "g_v2_j4sw",
+   "label": "corner_block",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    -816.200000762939,
+    2.15009045600891,
+    -1176.20000076294
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 1,
+   "door_along": 1.08,
+   "door_w": 1.6,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "cash",
+   "name": "Envios y Cambio",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_j4sw_corner_next_0",
+   "piece": "g_v2_j4sw",
+   "label": "corner_next",
+   "model": "commercial/com_bakery",
+   "pos": [
+    -827.299999237061,
+    2.15033549070358,
+    -1176.20000076294
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 0,
+   "door_along": 3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "panaderia",
+   "name": "Panaderia La Esquina",
+   "style": "cream",
+   "font": "Nunito",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_j4sw_row3_0",
+   "piece": "g_v2_j4sw",
+   "label": "row3",
+   "model": "ck/ck_grt_row3",
+   "pos": [
+    -870.0,
+    2.15180404484272,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 0,
+   "door_along": -4.4,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    1.6
+   ],
+   "kind": "phones",
+   "name": "Cell Fix & Unlock",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 3.4
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.8
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_j4sw_row3_1",
+   "piece": "g_v2_j4sw",
+   "label": "row3",
+   "model": "ck/ck_grt_row3",
+   "pos": [
+    -870.0,
+    2.15180404484272,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 1,
+   "door_along": 7.6,
+   "door_w": 1.6,
+   "bay": [
+    1.6,
+    8.7
+   ],
+   "kind": "thrift",
+   "name": "Mercado de Pulgas",
+   "style": "cream",
+   "font": "Nunito",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "grt_v2_j4sw_laundry_b_0",
+   "piece": "g_v2_j4sw",
+   "label": "laundry_b",
+   "model": "ck/ck_svc_trade_1d",
+   "pos": [
+    -885.400001525879,
+    2.15225672721863,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "laundry",
+   "name": "Lavanderia Sol",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
    "id": "grt_v2_j5ne_corner_block_0",
    "piece": "g_v2_j5ne",
    "label": "corner_block",
@@ -790,6 +1076,75 @@
    ]
   },
   {
+   "id": "grt_v3_j5nw_corner_shop_0",
+   "piece": "g_v3_j5nw",
+   "label": "corner_shop",
+   "model": "commercial/com_realty",
+   "pos": [
+    -813.199999809265,
+    4.14983989298344,
+    -1018.70000076294
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "phones",
+   "name": "Phone Doctor",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": -3.4,
+     "w": 2.6
+    }
+   ]
+  },
+  {
+   "id": "grt_v3_j5nw_shop_two_0",
+   "piece": "g_v3_j5nw",
+   "label": "shop_two",
+   "model": "ck/ck_svc_trade_1d",
+   "pos": [
+    -822.799999237061,
+    4.14952218532562,
+    -1017.70000076294
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "laundry",
+   "name": "Lavanderia Luz",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
    "id": "grt_v3_j5se_corner_shop_0",
    "piece": "g_v3_j5se",
    "label": "corner_shop",
@@ -855,6 +1210,69 @@
      "facade": "front",
      "along": 6.0,
      "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "grt_v3_j5sw_corner_shop_0",
+   "piece": "g_v3_j5sw",
+   "label": "corner_shop",
+   "model": "ck/mod_fastfood",
+   "pos": [
+    -816.200000762939,
+    4.15091450512409,
+    -982.299999237061
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 0,
+   "door_along": -4.8,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    -3.06
+   ],
+   "kind": "takeout",
+   "name": "Late Night Noodles",
+   "style": "red",
+   "font": "Nunito",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": []
+  },
+  {
+   "id": "grt_v3_j5sw_corner_shop_1",
+   "piece": "g_v3_j5sw",
+   "label": "corner_shop",
+   "model": "ck/mod_fastfood",
+   "pos": [
+    -816.200000762939,
+    4.15091450512409,
+    -982.299999237061
+   ],
+   "yaw": 180.000005008956,
+   "door_index": 1,
+   "door_along": 1.2,
+   "door_w": 1.6,
+   "bay": [
+    -3.06,
+    5.7
+   ],
+   "kind": "pawn",
+   "name": "Textbook Pawn & Loan",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 4.0
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 4.0
     }
    ]
   }

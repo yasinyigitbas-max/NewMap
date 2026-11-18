@@ -1,0 +1,83 @@
+{
+ "piece": "g_v2_j4sw",
+ "shops": [
+  {
+   "door_index": 0,
+   "kind": "takeout",
+   "label": "corner_block",
+   "model": "commercial/com_orange_corner",
+   "name": "Pupuseria Lupita",
+   "pos": [
+    -816.200000762939,
+    2.15009045600891,
+    -1176.20000076294
+   ],
+   "yaw": 180.000005008956
+  },
+  {
+   "door_index": 1,
+   "kind": "cash",
+   "label": "corner_block",
+   "model": "commercial/com_orange_corner",
+   "name": "Envios y Cambio",
+   "pos": [
+    -816.200000762939,
+    2.15009045600891,
+    -1176.20000076294
+   ],
+   "yaw": 180.000005008956
+  },
+  {
+   "door_index": 0,
+   "kind": "panaderia",
+   "label": "corner_next",
+   "model": "commercial/com_bakery",
+   "name": "Panaderia La Esquina",
+   "pos": [
+    -827.299999237061,
+    2.15033549070358,
+    -1176.20000076294
+   ],
+   "yaw": 180.000005008956
+  },
+  {
+   "door_index": 0,
+   "kind": "phones",
+   "label": "row3",
+   "model": "ck/ck_grt_row3",
+   "name": "Cell Fix & Unlock",
+   "pos": [
+    -870.0,
+    2.15180404484272,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956
+  },
+  {
+   "door_index": 1,
+   "kind": "thrift",
+   "label": "row3",
+   "model": "ck/ck_grt_row3",
+   "name": "Mercado de Pulgas",
+   "pos": [
+    -870.0,
+    2.15180404484272,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956
+  },
+  {
+   "door_index": 0,
+   "kind": "laundry",
+   "label": "laundry_b",
+   "model": "ck/ck_svc_trade_1d",
+   "name": "Lavanderia Sol",
+   "pos": [
+    -885.400001525879,
+    2.15225672721863,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956
+  }
+ ]
+}
