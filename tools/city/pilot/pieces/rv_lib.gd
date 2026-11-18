@@ -278,10 +278,58 @@ func bq(b: Dictionary, lx: float, lz: float) -> Vector2:
 
 func byaw(b: Dictionary) -> float: return rad_to_deg((b.node as Node3D).rotation.y)
 
-## a prop on a building's wall: lx along the front, lz toward the front (d/2 = front face), height h over its floor
+## the buildings' measured openings (room_contracts.json + the residential models in room_contracts_res.json)
+static var _rc := {}
+static func contract(folder: String) -> Dictionary:
+	if _rc.is_empty():
+		for f: String in ["room_contracts.json", "room_contracts_res.json"]:
+			var pth := "res://map_dc/coronado/city_kit/interiors/" + f
+			if FileAccess.file_exists(pth): _rc.merge(JSON.parse_string(FileAccess.get_file_as_string(pth)).models)
+	return _rc.get(folder, {})
+
+## the wall a building-local point lies on ("front" / "back" / "right" / "left", "" if none) and its along coordinate
+static func facade_of(b: Dictionary, lx: float, lz: float) -> Array:
+	var w: float = b.w; var d: float = b.d
+	if absf(lz) >= d * 0.5 - 0.15: return ["front" if lz > 0.0 else "back", lx]
+	if absf(lx) >= w * 0.5 - 0.15: return ["right" if lx > 0.0 else "left", lz]
+	return ["", 0.0]
+
+## does a wall item [along a0..a1, height y0..y1] on that facade cover a window or a door?
+static func covers(b: Dictionary, fac: String, a0: float, a1: float, y0: float, y1: float) -> bool:
+	for o: Dictionary in contract(String(b.folder)).get("openings", []):
+		if String(o.facade) != fac: continue
+		var oa0 := float(o.along) - float(o.w) * 0.5 - 0.05; var oa1 := float(o.along) + float(o.w) * 0.5 + 0.05
+		if a0 < oa1 and a1 > oa0 and y0 < float(o.y1) + 0.05 and y1 > float(o.y0) - 0.05: return true
+	return false
+
+## a prop on a building's wall: lx along the front, lz toward the front (d/2 = front face), height h over its floor.
+## (19 Nov, Yasin: "prop in the glass") never over a window or a door: slid along the wall until clear, else left out
 func on_wall(b: Dictionary, base: String, cond: String, lx: float, lz: float, h: float, yaw: float) -> void:
+	var fa: Array = facade_of(b, lx, lz)
+	if String(fa[0]) != "" and not base.begins_with("prop_solar") and not base.begins_with("prop_vent"):
+		var e := K.manifest(base)
+		var hw2 := float(e.get("footprint_w", 0.4)) * 0.5; var ht := float(e.get("height", 0.4))
+		var span: float = (float(b.w) if String(fa[0]) in ["front", "back"] else float(b.d)) * 0.5 - hw2 - 0.1
+		var a := float(fa[1]); var found := false
+		for da: float in [0.0, 0.3, -0.3, 0.6, -0.6, 0.9, -0.9, 1.2, -1.2, 1.6, -1.6, 2.0, -2.0, 2.5, -2.5]:
+			var aa := a + da
+			if absf(aa) > span: continue
+			if not covers(b, String(fa[0]), aa - hw2, aa + hw2, h, h + ht):
+				if String(fa[0]) in ["front", "back"]: lx = aa
+				else: lz = aa
+				found = true; break
+		if not found: return
 	var p := bq(b, lx, lz)
 	props.add(base, cond, L(p.x, p.y, float(b.y) + h), yaw, false)
+
+## a window air conditioner sits IN a window: the lower sash of a real ground-floor window on that side wall
+func ac_in_window(b: Dictionary, side: float, yaw: float) -> void:
+	var fac := "right" if side > 0.0 else "left"
+	for o: Dictionary in contract(String(b.folder)).get("openings", []):
+		if String(o.facade) == fac and String(o.region).begins_with("O_win") and float(o.y0) < 2.5:
+			var p := bq(b, side * (float(b.w) * 0.5 + 0.12), float(o.along))
+			props.add("prop_ac_window", "worn", L(p.x, p.y, float(b.y) + float(o.y0) + 0.05), yaw, false)
+			return
 
 ## ------------------------------------------------------------------------------------------------ lots
 ## A row of lots in one sub-block. axis "v": lots side by side along u from s0 to s1, depth along v from f (front, the
@@ -486,7 +534,7 @@ func house_lot(lot: Dictionary) -> void:
 		if free_at(acb.x, acb.y, 0.55): add("prop_ac_condenser_compact", "worn", acb.x, acb.y, yaw + 180.0, 0.0, true, 1.0, 0.55)
 	on_wall(b, "prop_hose_reel_wall", "worn", lx, hd * 0.25, 0.0, wyaw)
 	if rr.randf() < 0.3: on_wall(b, "prop_satellite_dish_round" if rr.randf() < 0.5 else "prop_satellite_dish", "worn", -lx, -hd * 0.3, 2.7, yaw + (90.0 if -lx > 0 else -90.0))
-	if rr.randf() < 0.35: on_wall(b, "prop_ac_window", "worn", -lx, hd * 0.15, 1.3, yaw + (90.0 if -lx > 0 else -90.0))
+	if rr.randf() < 0.35: ac_in_window(b, signf(-lx), yaw + (90.0 if -lx > 0 else -90.0))
 	var wall_plants: bool = design.get("wall_plants", false)
 	if wall_plants and hw > 9.8:          # the 3.7 m vine clears the corner downspouts only on a wide front
 		on_wall(b, "plant_bougainvillea_wall", "normal", hw * 0.25, hd * 0.5 + 0.3, 0.0, yaw)
