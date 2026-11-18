@@ -431,9 +431,9 @@ const CENSUS_VIEWS := [["centre", 0.0, -600.0, 1.0, 0.0], ["apartments", 250.0, 
 	["waterfront", 570.0, 200.0, -1.0, 0.0], ["industrial", -800.0, -1400.0, 1.0, 0.0], ["pilot", 0.0, 0.0, 0.0, 1.0], ["civic", -200.0, -600.0, 1.0, 0.0]]
 const CENSUS_DAY := ["baseline", "hide_plants", "hide_props_near", "hide_props_mid", "hide_props_other", "hide_bldg_near", "hide_bldg_mid",
 	"hide_ground", "hide_wear", "hide_far", "hide_far_ground", "hide_misc", "shadows_off", "shadow_map_2048", "shadow_map_1024",
-	"fxaa_off", "sky_reflection_off", "scale_0.50", "scale_0.67", "scale_0.85", "scale_1.00", "cheap_bldg_mid", "cheap_bldg_all", "cheap_props_mid",
+	"fxaa_off", "scale_0.50", "scale_0.67", "scale_0.85", "scale_1.00", "cheap_bldg_mid", "cheap_bldg_all", "cheap_props_mid",
 	"cheap_plants_mid", "plants_opaque", "look_parts_off", "look_contact_off", "look_windows_off", "look_glass_off", "look_detail_off",
-	"look_signs_off", "look_propmaps_off", "look_between_off", "baseline"]
+	"look_signs_off", "look_propmaps_off", "look_between_off", "baseline", "sky_reflection_off", "baseline"]      # (the reflection last: switching it back on left the GPU slower until the next teleport, phone 19 Nov)
 const CENSUS_NIGHT := ["baseline", "lights_0", "lights_1", "window_glow_off", "look_windows_off", "look_signs_off", "hide_glow", "baseline"]
 ## the look pack's parts that have a global switch (docs/LOOK_OVERVIEW.md); 1 = on (the default), 0 = off
 const LOOK_PARTS := ["contact", "windows", "glass", "detail", "signs", "propmaps", "between"]
