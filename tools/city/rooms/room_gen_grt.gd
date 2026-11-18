@@ -4,8 +4,7 @@ extends SceneTree
 ## assign_grt.py). The tool part is the same: the room is fitted to the building's measured walls, its real door,
 ## windows and sign boards (room_lib.gd). The inside is this zone's own, designed from the customer's side:
 ## - the service point in view from the door, the first 1.5 m clear, queue space and staff space as everywhere;
-## - but it is the gritty edge: steel bars over the counter where cash or bottles change hands (pawn, check cashing,
-##   liquor, bodega), a wall of goods pressed to the ceiling, chairs that never matched, fluorescent tubes (warm
+## - but it is the gritty edge (no cages over the counters: Yasin 18 Nov, "they arent prison cells"): a wall of goods pressed to the ceiling, chairs that never matched, fluorescent tubes (warm
 ##   bulbs only in the bar and the diner), walls that were white once, floors worn grey where people stand, scuffs,
 ##   cracked tiles, hand-painted plates outside in faded colours;
 ## - two shops of one kind are never alike: the staff end, the order of the goods on the walls, the floor and the
@@ -19,10 +18,10 @@ const MAN := "res://assets/coronado_kit/props/"
 ## per kind: floor texture, light (pendant / panel), the counter row, what stands behind it, the side walls' items,
 ## the middle of the room, the window zone, back of house (kitchen / stock / none), extras
 const KINDS := {
-	"pawn": {"floor": "Tiles074", "light": "panel", "counter": ["glass_display_case", "glass_display_case"], "till": false, "behind": ["pegboard_wall", "wall_shelf", "wall_shelf"], "board": false, "walls": ["glass_display_case", "bike_stand", "wall_shelf", "weight_bench", "pegboard_wall", "surfboard_rack"], "centre": "cases", "window": "cases", "back": "stock", "frames": false, "bars": true},
-	"cash": {"floor": "Carpet012", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["filing_cabinet", "filing_cabinet", "office_desk"], "board": false, "walls": ["waiting_bench", "brochure_rack"], "centre": "none", "window": "waiting", "back": "office", "frames": false, "bars": true},
-	"liquor": {"floor": "Tiles074", "light": "panel", "counter": ["checkout_counter"], "till": false, "behind": ["cigarette_cabinet", "wall_shelf", "cigarette_cabinet"], "board": false, "walls": ["drinks_fridge", "drinks_fridge", "grocery_shelf"], "centre": "rows", "window": "none", "back": "stock", "frames": false, "bars": true},
-	"bodega": {"floor": "Tiles141", "light": "panel", "counter": ["checkout_counter"], "till": false, "behind": ["cigarette_cabinet", "wall_shelf"], "board": false, "walls": ["grocery_shelf", "drinks_fridge", "grocery_shelf", "chest_freezer"], "centre": "rows", "window": "produce", "back": "stock", "frames": false, "bars": true},
+	"pawn": {"floor": "Tiles074", "light": "panel", "counter": ["glass_display_case", "glass_display_case"], "till": false, "behind": ["pegboard_wall", "wall_shelf", "wall_shelf"], "board": false, "walls": ["glass_display_case", "bike_stand", "wall_shelf", "weight_bench", "pegboard_wall", "surfboard_rack"], "centre": "cases", "window": "cases", "back": "stock", "frames": false},
+	"cash": {"floor": "Carpet012", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["filing_cabinet", "filing_cabinet", "office_desk"], "board": false, "walls": ["waiting_bench", "brochure_rack"], "centre": "none", "window": "waiting", "back": "office", "frames": false},
+	"liquor": {"floor": "Tiles074", "light": "panel", "counter": ["checkout_counter"], "till": false, "behind": ["cigarette_cabinet", "wall_shelf", "cigarette_cabinet"], "board": false, "walls": ["drinks_fridge", "drinks_fridge", "grocery_shelf"], "centre": "rows", "window": "none", "back": "stock", "frames": false},
+	"bodega": {"floor": "Tiles141", "light": "panel", "counter": ["checkout_counter"], "till": false, "behind": ["cigarette_cabinet", "wall_shelf"], "board": false, "walls": ["grocery_shelf", "drinks_fridge", "grocery_shelf", "chest_freezer"], "centre": "rows", "window": "produce", "back": "stock", "frames": false},
 	"diner": {"floor": "Tiles143", "light": "pendant", "counter": ["bar_counter", "bar_counter"], "stools": true, "behind": ["soda_fountain", "espresso_machine", "bakery_shelf"], "board": true, "walls": ["booth"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": true, "mix": true},
 	"takeout": {"floor": "Tiles074", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["soda_fountain", "kitchen_line"], "board": true, "walls": ["drinks_fridge", "booth"], "centre": "none", "window": "table2", "back": "kitchen", "frames": false, "mix": true},
 	"bar": {"floor": "WoodFloor051", "light": "pendant", "counter": ["bar_counter", "bar_counter"], "stools": true, "behind": ["wine_backbar", "drinks_fridge"], "board": false, "walls": ["booth"], "centre": "table2", "window": "table2", "back": "stock", "frames": true, "mix": true},
@@ -422,29 +421,6 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	var steps := maxi(2, int((ZF - zc) / 1.3))
 	for k2 in steps: rr.dec.add(14, Vector2(lerpf(dx, cx, float(k2) / steps), ZF - 0.6 - k2 * 1.25), 0.0, 1.0, 1.4, fy, Color(1, 1, 1, 0.3), 0.004)
 	rr.dec.add(14, Vector2(cx, zc + cd * 0.5 + 0.6), 0.0, cw, 0.9, fy, Color(1, 1, 1, 0.4), 0.004)
-	# ---- gritty: steel bars over the counter (a pass-through slot left at the till), the wall above the counter run
-	if bool(K.get("bars", false)) and not placed_counter.is_empty():
-		# a cashier's cage on the counter that was really placed (Yasin 18 Nov: "whats that thing flying there?" - the
-		# bars were sized to the planned counter row and hung in the air): bars stand ON the counter top and run up to
-		# the ceiling, a post at each end from the floor, a rail under the ceiling, the pass-through slot at the till
-		rr.plain("bars", Color(0.2, 0.21, 0.22), 0.45)
-		var cx0 := INF; var cx1 := -INF; var ctop := F + 1.0
-		for pc2: Array in placed_counter:
-			var w2 := _fp(String(pc2[0]), 0.0).x
-			cx0 = minf(cx0, float(pc2[1]) - w2 * 0.5); cx1 = maxf(cx1, float(pc2[1]) + w2 * 0.5)
-			ctop = maxf(ctop, F + float(tall.get("prop_" + String(pc2[0]), 1.0)))
-		var ztop := zc + cd * 0.5 - 0.05
-		var top := H - 0.02
-		var mid := (cx0 + cx1) * 0.5; var span := cx1 - cx0
-		var slot := float(placed_counter[0][1])      # the till's spot: an open slot to pass the cash through
-		rr.box("bars", Vector3(mid, top - 0.03, ztop), Vector3(span, 0.06, 0.06))           # rail under the ceiling
-		rr.box("bars", Vector3(mid, ctop + 0.55, ztop), Vector3(span, 0.04, 0.04))         # cross bar over the slot
-		for ex: float in [cx0 + 0.025, cx1 - 0.025]: rr.box("bars", Vector3(ex, (F + top) * 0.5, ztop), Vector3(0.05, top - F, 0.05))   # end posts to the floor
-		var bx2 := cx0 + 0.13
-		while bx2 < cx1 - 0.1:
-			var y0b := ctop + (0.55 if absf(bx2 - slot) < 0.3 else 0.0)
-			rr.box("bars", Vector3(bx2, (y0b + top) * 0.5, ztop), Vector3(0.022, top - y0b, 0.022))
-			bx2 += 0.13
 	# ---- gritty wear: the floor worn grey where people stand and walk, scuffs along the walls, cracked tiles
 	for k3 in 6: rr.dec.add(14, Vector2(randf_range(X0 + 0.6, X1 - 0.6), randf_range(ZBp + 0.6, ZF - 0.6)), randf_range(0, 180), randf_range(0.8, 1.8), randf_range(0.8, 1.8), fy, Color(1, 1, 1, 0.45), 0.004)
 	for k4 in 4: rr.dec.add(0, Vector2(randf_range(X0 + 0.5, X1 - 0.5), randf_range(ZBp + 0.5, ZF - 0.5)), randf_range(0, 180), 0.9, 0.9, fy, Color(0.4, 0.4, 0.4, 0.5), 0.004)
