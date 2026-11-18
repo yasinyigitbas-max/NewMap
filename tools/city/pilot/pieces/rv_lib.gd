@@ -27,7 +27,15 @@ extends RefCounted
 const K := preload("res://tools/city/pilot/kit_lib.gd")
 const W := preload("res://tools/city/pilot/pieces/wear_lib.gd")
 
-const PROP := 9.2
+const PROP := 9.2         # the residential section's property line (the default)
+## the property lines of THIS quadrant's two streets, measured from the legs as built (zoning/legs_measured.json):
+## PU along the street that runs along v (the lots' first u), PV along the street that runs along u (their first v);
+## 9.2 on residential / standard streets, 14.3 on the arterials (3rd / 4th St), 16 on Amber's divided stretch.
+## APU / APV: does that street have an alley mouth at 54-60 (else the alley ends at its property line with bollards)
+var PU := 9.2
+var PV := 9.2
+var APU := true
+var APV := true
 const AL0 := 54.0
 const AL1 := 60.0
 ## quadrant depth along u / v (half the block: 100 m, or 125 m in the 250 m blocks east of Amber) and the block
@@ -110,6 +118,7 @@ func begin(piece: String, site: Dictionary, des: Dictionary) -> void:
 	sx = float(site.sx); sz = float(site.sz)
 	p0 = float(site.p0); pu = float(site.pu); pv = float(site.pv); puv = float(site.puv)
 	BU = float(site.get("Lu", 200.0)); BV = float(site.get("Lv", 200.0)); LU = BU * 0.5; LV = BV * 0.5
+	PU = float(site.get("pu_line", PROP)); PV = float(site.get("pv_line", PROP)); APU = bool(site.get("apron_u", true)); APV = bool(site.get("apron_v", true))
 	rr = W.rng_for(piece)
 	g = K.Ground.new(); props = K.Props.new(); dec = K.Decals.new()
 	root = Node3D.new(); root.name = piece
@@ -118,7 +127,7 @@ func begin(piece: String, site: Dictionary, des: Dictionary) -> void:
 
 ## ------------------------------------------------------------------------------------------------ props
 func free_at(u: float, v: float, r: float) -> bool:
-	if u - r < PROP or v - r < PROP or u + r > LU or v + r > LV: return false
+	if u - r < PU or v - r < PV or u + r > LU or v + r > LV: return false
 	for o: Array in occ:
 		if Vector2(u, v).distance_to(Vector2(float(o[0]), float(o[1]))) < r + float(o[2]): return false
 	for dp: Vector2 in doorpts:
@@ -727,12 +736,12 @@ func corner_shop(lot: Dictionary, folder: String, label: String, kind: String) -
 	var w: float = st.footprint_wd[0]; var d: float = st.footprint_wd[1]
 	var s0 := float(lot.s0); var s1 := float(lot.s1)
 	var su := s0 + 1.4 + w * 0.5
-	var tv := PROP + FORE + d * 0.5
+	var tv := PV + FORE + d * 0.5
 	var b := building(folder, su, tv, H, yaw_of(0.0, -1.0), false, label, 0.7)
 	lot.bld = b
 	used[folder] = int(used.get(folder, 0)) + 1
 	shops.append([label, folder, kind])
-	prect(s0, PROP, s1, PROP + FORE, "concrete")
+	prect(s0, PV, s1, PV + FORE, "concrete")
 	# the forecourt: what this shop puts out (never in front of the door), a bench facing the street, a bike rack along
 	# the front, a newspaper box; a sandwich-board style menu is the kit's menu board for cafes
 	var door_s := su
@@ -751,19 +760,19 @@ func corner_shop(lot: Dictionary, folder: String, label: String, kind: String) -
 		var t: Array = things[k]
 		var yy := yaw_of(0.0, -1.0) + (0.0 if String(t[0]) != "prop_bike_rack" else 0.0)
 		if String(t[0]).begins_with("prop_vending") or String(t[0]) == "prop_ice_chest": yy = yaw_of(0.0, -1.0)
-		if try_add(String(t[0]), "worn", sp, PROP + 1.2, yy, 0.5): k += 1
-	dec.add(14, L2(door_s, PROP + 1.4), 0.0, 2.0, 2.4, func(x: float, z: float) -> float: return gyl(x, z), Color(1, 1, 1, 0.55))
+		if try_add(String(t[0]), "worn", sp, PV + 1.2, yy, 0.5): k += 1
+	dec.add(14, L2(door_s, PV + 1.4), 0.0, 2.0, 2.4, func(x: float, z: float) -> float: return gyl(x, z), Color(1, 1, 1, 0.55))
 	# the corner: the neighbourhood's mailbox and a paper box where people pass; pots either side of the door; a lamp
-	try_add("prop_usps_collection_box", "worn", s1 - 0.8, PROP + 0.6, yaw_of(0.0, -1.0), 0.5)
+	try_add("prop_usps_collection_box", "worn", s1 - 0.8, PV + 0.6, yaw_of(0.0, -1.0), 0.5)
 	for sd2: float in [-1.0, 1.0]:
-		try_add("plant_potted_leafy" if kind == "cafe" else "plant_potted_succulent", "normal", door_s + sd2 * 1.1, PROP + FORE - 0.35, 0.0, 0.3)
+		try_add("plant_potted_leafy" if kind == "cafe" else "plant_potted_succulent", "normal", door_s + sd2 * 1.1, PV + FORE - 0.35, 0.0, 0.3)
 	on_wall(b, "prop_porch_light_coach_bronze", "worn", -w * 0.35, d * 0.5 + 0.05, 2.4, yaw_of(0.0, -1.0))
 	on_wall(b, "prop_porch_light_coach_bronze", "worn", w * 0.35, d * 0.5 + 0.05, 2.4, yaw_of(0.0, -1.0))
 	if kind == "sport":       # boards and kayaks out front in the morning (the shop rents them)
-		try_add("prop_kayak_rack", "worn", s0 + 2.0, PROP + 1.0, yaw_of(1.0, 0.0), 0.9)
-		try_add("prop_beach_umbrella_closed", "worn", s0 + 3.2, PROP + 0.8, 0.0, 0.3)
+		try_add("prop_kayak_rack", "worn", s0 + 2.0, PV + 1.0, yaw_of(1.0, 0.0), 0.9)
+		try_add("prop_beach_umbrella_closed", "worn", s0 + 3.2, PV + 0.8, 0.0, 0.3)
 	if kind == "cafe":        # two small tables outside on the forecourt, chairs pushed in
-		try_add("prop_patio_set_4", "worn", s1 - 2.6, PROP + 1.25, 0.0, 1.0)
+		try_add("prop_patio_set_4", "worn", s1 - 2.6, PV + 1.25, 0.0, 1.0)
 	# back of house: meters, AC, the bins in an enclosure off the alley, two staff stalls
 	on_wall(b, "prop_meter_electric", "worn", -w * 0.3, -d * 0.5 - 0.02, 1.05, yaw_of(0.0, 1.0))
 	on_wall(b, "prop_meter_gas", "rusty", -w * 0.3 + 0.9, -d * 0.5 - 0.02, 0.2, yaw_of(0.0, 1.0))
@@ -792,20 +801,25 @@ func corner_shop(lot: Dictionary, folder: String, label: String, kind: String) -
 func alleys() -> void:
 	var c := (AL0 + AL1) * 0.5
 	# gutter first (the first matching paint wins)
-	prect(PROP, c - 0.4, LU, c + 0.4, "concrete")
-	prect(PROP, AL0, LU, AL1, "asphalt")
-	prect(c - 0.4, PROP, c + 0.4, AL0, "concrete"); prect(c - 0.4, AL1, c + 0.4, LV, "concrete")
-	prect(AL0, PROP, AL1, AL0, "asphalt"); prect(AL0, AL1, AL1, LV, "asphalt")
-	surfs.append([PROP, AL0, LU, AL1, "field", 0.0])
-	surfs.append([AL0, PROP, AL1, AL0, "field", 0.0])
+	prect(PU, c - 0.4, LU, c + 0.4, "concrete")
+	prect(PU, AL0, LU, AL1, "asphalt")
+	prect(c - 0.4, PV, c + 0.4, AL0, "concrete"); prect(c - 0.4, AL1, c + 0.4, LV, "concrete")
+	prect(AL0, PV, AL1, AL0, "asphalt"); prect(AL0, AL1, AL1, LV, "asphalt")
+	surfs.append([PU, AL0, LU, AL1, "field", 0.0])
+	surfs.append([AL0, PV, AL1, AL0, "field", 0.0])
+	# a street with no alley mouth (the arterials, Amber): the alley ends at its property line behind bollards
+	if not APU:
+		for bv: float in [AL0 + 0.8, c, AL1 - 0.8]: props.add("prop_bollard_steel", "worn", L(PU + 0.5, bv, fh(PU + 0.5, bv)), 0.0)
+	if not APV:
+		for bu: float in [AL0 + 0.8, c, AL1 - 0.8]: props.add("prop_bollard_steel", "worn", L(bu, PV + 0.5, fh(bu, PV + 0.5)), 0.0)
 	surfs.append([AL0, AL1, AL1, LV, "field", 0.0])
 	var Hc := func(x: float, z: float) -> float: return gyl(x, z)
 	for along_u: bool in [true, false]:
-		var a := L2(PROP, AL0) if along_u else L2(AL0, PROP)
+		var a := L2(PU, AL0) if along_u else L2(AL0, PV)
 		var b := L2(LU, AL1) if along_u else L2(AL1, LV)
 		var LL := LU if along_u else LV
 		W.cracks(dec, rr, minf(a.x, b.x), minf(a.y, b.y), maxf(a.x, b.x), maxf(a.y, b.y), 18, Hc, 0.4)
-		var k := PROP + 3.0
+		var k := (PU if along_u else PV) + 3.0
 		while k < LL - 3.0:
 			var o := Vector2(k, c + rr.randf_range(-1.6, 1.6)) if along_u else Vector2(c + rr.randf_range(-1.6, 1.6), k)
 			W.oil(dec, rr, L2(o.x, o.y), 90.0 if along_u else 0.0, Hc, rr.randf_range(0.45, 0.8))
@@ -814,7 +828,7 @@ func alleys() -> void:
 				dec.add(14, L2(gp.x, gp.y), 90.0 if along_u else 0.0, 0.7, 3.0, Hc, Color(1, 1, 1, rr.randf_range(0.4, 0.65)))
 			k += rr.randf_range(6.0, 10.0)
 		for t in 2:
-			var tp := rr.randf_range(PROP + 6.0, LL - 6.0)
+			var tp := rr.randf_range((PU if along_u else PV) + 6.0, LL - 6.0)
 			var pv2 := Vector2(tp, c) if along_u else Vector2(c, tp)
 			dec.add(2 + t, L2(pv2.x, pv2.y), 90.0 if along_u else 0.0, 2.4, 6.0, Hc, Color(1, 1, 1, 0.9))
 		var ps := rr.randf_range(30.0, 90.0)
@@ -832,7 +846,7 @@ func alley_poles() -> void:
 			var placed := false
 			for dk: float in [0.0, 2.0, -2.0, 4.0, -4.0, 6.0, -6.0, 8.0, -8.0]:
 				var ss2 := s + dk
-				if absf(ss2 - c) < 5.0 or ss2 < PROP + 4.0 or ss2 > LL2 - 2.0: continue
+				if absf(ss2 - c) < 5.0 or ss2 < (PU if along_u else PV) + 4.0 or ss2 > LL2 - 2.0: continue
 				var pu2 := Vector2(ss2, AL0 - 0.45) if along_u else Vector2(AL0 - 0.45, ss2)      # in the rear easement, off the asphalt
 				var ok := true
 				for dp: Vector2 in doorpts:
@@ -1039,7 +1053,7 @@ func build(piece: String, site: Dictionary, des: Dictionary) -> void:
 	for sub: String in ["A", "B", "C"]:
 		var n: int = int(des.get(sub, 3))
 		var axis := "u" if sub == "C" else "v"
-		var s0 := PROP if sub != "B" else AL1
+		var s0 := PU if sub != "B" else AL1
 		var s1 := AL0 if sub == "A" else LU
 		if sub == "C": s0 = AL1; s1 = LV
 		if sub != "A": n = maxi(1, roundi(float(n) * (s1 - s0) / 40.0))      # the design's count is for a 40 m frontage
@@ -1049,7 +1063,7 @@ func build(piece: String, site: Dictionary, des: Dictionary) -> void:
 			specs.append(mk.call(lw, i, lw - 2.0))
 		if sub == "A" and not shop.is_empty():
 			specs[0] = {"w": lw, "house": "", "garage": "", "front": "", "back": "", "gs": 0.0, "i": 0, "shop": true}
-		var lots := row(axis, s0, PROP, AL0, specs)
+		var lots := row(axis, s0, PV if axis == "v" else PU, AL0, specs)
 		var prevH := -1000.0
 		for i in lots.size():
 			var lot: Dictionary = lots[i]

@@ -42,7 +42,7 @@ def quadrants():
     """every growable residential quadrant of the zone (res_zone.py); the pilot area's 24 come first"""
     import res_zone
     qs, _ = res_zone.quadrants()
-    out = [{"cell": q["cell"], "j": q["j"], "sx": q["sx"], "sz": q["sz"], "Lu": q["Lu"], "Lv": q["Lv"]} for q in qs]
+    out = [dict(q) for q in qs]
     return out
 
 
@@ -124,7 +124,8 @@ def main():
         name = "r_q_%s_%s_%s" % (tag(ju), tag(jv), corner)
         Lu, Lv = q["Lu"], q["Lv"]
         site = {"j": [ju, jv], "sx": sx, "sz": sz, "p0": P[(ju, jv)], "pu": P[(ju + Lu * sx, jv)],
-                "pv": P[(ju, jv + Lv * sz)], "puv": P[(ju + Lu * sx, jv + Lv * sz)], "Lu": Lu, "Lv": Lv}
+                "pv": P[(ju, jv + Lv * sz)], "puv": P[(ju + Lu * sx, jv + Lv * sz)], "Lu": Lu, "Lv": Lv,
+                "pu_line": q["pu_line"], "pv_line": q["pv_line"], "apron_u": q["apron_u"], "apron_v": q["apron_v"]}
         shop = SHOPS.get((ju, jv, sx, sz))
         if shop:
             site["shop"] = shop

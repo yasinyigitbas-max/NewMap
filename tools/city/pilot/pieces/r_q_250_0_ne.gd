@@ -4,7 +4,7 @@ extends SceneTree
 ## Built by rv_lib.gd (every rule and its reason is there). Run once; never when locked.
 const RV := preload("res://tools/city/pilot/pieces/rv_lib.gd")
 const D := preload("res://tools/city/pilot/pieces/rv_designs.gd")
-const SITE := {"j": [250.0, 0.0], "sx": 1.0, "sz": -1.0, "p0": 10.0, "pu": 4.0, "pv": 12.0, "puv": 8.0, "Lu": 250.0, "Lv": 200.0}
+const SITE := {"j": [250.0, 0.0], "sx": 1.0, "sz": -1.0, "p0": 10.0, "pu": 4.0, "pv": 12.0, "puv": 8.0, "Lu": 250.0, "Lv": 200.0, "pu_line": 9.2, "pv_line": 9.2, "apron_u": true, "apron_v": true}
 func _init() -> void: _run.call_deferred()
 func _run() -> void:
 	RV.new().build("r_q_250_0_ne", SITE, D.get_design("V4"))

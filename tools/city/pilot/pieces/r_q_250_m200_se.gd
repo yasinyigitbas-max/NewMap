@@ -5,7 +5,7 @@ extends SceneTree
 ## Corner shop: r_shop_wash (cleaners), its room is in interiors/assignment_res.json.
 const RV := preload("res://tools/city/pilot/pieces/rv_lib.gd")
 const D := preload("res://tools/city/pilot/pieces/rv_designs.gd")
-const SITE := {"j": [250.0, -200.0], "sx": 1.0, "sz": 1.0, "p0": 12.0, "pu": 8.0, "pv": 10.0, "puv": 4.0, "Lu": 250.0, "Lv": 200.0, "shop": ["commercial/com_realty", "r_shop_wash", "cleaners"]}
+const SITE := {"j": [250.0, -200.0], "sx": 1.0, "sz": 1.0, "p0": 12.0, "pu": 8.0, "pv": 10.0, "puv": 4.0, "Lu": 250.0, "Lv": 200.0, "pu_line": 9.2, "pv_line": 9.2, "apron_u": true, "apron_v": true, "shop": ["commercial/com_realty", "r_shop_wash", "cleaners"]}
 func _init() -> void: _run.call_deferred()
 func _run() -> void:
 	RV.new().build("r_q_250_m200_se", SITE, D.get_design("V1"))
