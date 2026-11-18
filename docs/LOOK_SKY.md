@@ -42,6 +42,16 @@ side sheets (`pair_*.jpg`). Taken in the cloud, which is NOT what the phone show
   phone has both (shadows to 50 m, as before). So there are no shadows in the pictures, and glass reflects no sky.
 The PC session takes the real ones on the phone.
 
+What the cloud pictures show:
+- Draw calls are the same with and without the look (day 77 / 99 / 70 / 60, night 91 / 111 / 86 / 70 for centre,
+  apartments, gritty, waterfront): the look adds no draws.
+- By day: pale smoggy sky with clouds, the far end of every street fades into a yellow-grey haze, walls warm, shade
+  grey; colours held back. By night: brown-orange glow low in the sky, orange windows and lamps, few stars.
+- At night the road away from the lamps is darker than before in the centre (the grade's S-curve darkens the darks).
+  If it is too dark on the phone: `NIGHT.ambient_energy` in `look.gd` (0.6 now) is the one number to raise.
+- Bloom is hardly visible in the cloud pictures (the software GPU's bright range is not the phone's, and it is kept
+  subtle on purpose). Judge it on the phone.
+
 ## What it should cost, and what could not be checked
 - Expected: the sky costs about what the old sky did; the haze and the grade a few arithmetic steps and one small
   table read per pixel. Next to the rest of a frame that is small, but at 720p the phone sits right at the 60 fps

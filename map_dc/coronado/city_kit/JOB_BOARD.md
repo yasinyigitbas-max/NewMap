@@ -14,6 +14,7 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   sky reflection - the software GPU draws near trees black with either on - and buildings ~40 % too dark).
   NEXT (PC session): `--plan=zones` with `--look=0`, `--look=1`, `--look=1 --bloom=1` on the Redmi, and the real
   pictures. Told Yasin the bloom answer: a blur chain + one read a pixel; the 720p runs sit at the 60 fps step.
+  Same draws with and without the look; lock test RESULT PASS.
 - 18 Nov ~18:10 (PC time): SETTING TESTS at 720p done (Yasin: "ok run the tests"; "make the games default resolution
   720p ... just inject it": rig default is now 720 lines, app not rebuilt, runs pass --scale=0.6667). Table in
   RUNTIME_BAKE.md "THE SETTING TESTS AT 720p". --loading=1 and --bodies=1 change nothing measurable (two identical

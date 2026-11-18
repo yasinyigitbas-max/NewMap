@@ -8,7 +8,7 @@ import sys
 from PIL import Image, ImageDraw, ImageFont
 
 NOTE = "cloud preview: no sun shadows, no sky reflection, buildings drawn ~40% too dark (software GPU)"
-LABELS = {"before": "BEFORE (--look=0)", "after": "AFTER (--look=1)", "after_bloom": "AFTER + BLOOM (--look=1 --bloom=1, off by default)"}
+LABELS = {"before": "BEFORE (--look=0)", "after": "AFTER (--look=1)", "after_bloom": "AFTER + BLOOM (--bloom=1)"}
 
 
 def main(folder):
