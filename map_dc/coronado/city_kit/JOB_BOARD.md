@@ -5,6 +5,11 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 18 Nov ~15:00: OLD GAME REVIEW (Yasin: "check old games systems one by one ... tell me which ones can be made faster
+  and honestly tell me if you cant"): `docs/OLD_GAME_SYSTEMS_REVIEW.md` (read-only in coronado-source, nothing run).
+  Clearly faster: cell packages, far areas, building streaming, walk-in rooms (waiting time), loading, road and sea
+  shaders, parked cars drawn twice. Cannot improve: sky, simple shaders, HUD, physics, colliders, save, story, jobs.
+  Also lists what breaks at 280 km/h. No work started from it.
 - 18 Nov ~14:00: HANDOVER TO A SESSION ON YASIN'S PC (Yasin: "i did both but nothing happens, can you handover the work
   to a local session on my pc?"). Read `docs/HANDOVER_PHONE_TEST.md`: the job is one clean run of
   `tools/city/rig/phone_rig.sh all run1` on the Redmi (the script has never run on Windows: debug it step by step),
