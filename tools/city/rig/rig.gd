@@ -14,6 +14,7 @@ extends Node3D
 ##   --lead=2  --maxcells=30  --loading=2  --bodies=6  --coltris=1200  --colms=2     streamer settings to compare
 ##   --lights=20   real lamp lights at night (the engine's light grid; 8 on a stock engine)
 ##   --nowarm      skip the warm-up (to see what it saves)
+##   --nowarmnight skip drawing the night once in the warm-up (on by default since 19 Nov: it removes the first dusk's hitch)
 ##   --look=1|0|NAME  1 (default): the look pack's sky, distance haze, light colours and colour treatment
 ##             (tools/city/look/look.gd, docs/LOOK_SKY.md); 0: the old plain sky and light, to compare;
 ##             NAME a time of day of the look: morning, noon, day, golden, dusk, night, overcast (overrides the drives' night)
@@ -50,7 +51,7 @@ extends Node3D
 ##   --tiers       the tier hand-over: fades at 60 m and 220 m, an arriving cell's objects take over nearest first
 ##   --band=8      with --tiers: metres of overlap at each switch (0 = hard cuts)     --arrive=0.5  seconds of the sweep
 ##   --nofarground hide the far world's ground (the streets beyond the loaded cells)
-##   --plan=census no drives: the drawing cost census (see _census below; --census=day|night|both --views=a,b --censussecs=2 --warmnight)
+##   --plan=census no drives: the drawing cost census (see _census below; --census=day|night|both --views=a,b --censussecs=2; the night is drawn once at start unless --nowarmnight)
 ##   --plan=shots  no drives: pictures of a building at set distances and of a street, saved as JPG in
 ##                 user://rig/shots/ (phone_rig.sh shots NAME ... pulls them to review/tiers/NAME/)
 const Stream := preload("res://tools/city/bake/city_stream.gd")
@@ -215,14 +216,19 @@ func _run() -> void:
 	st.update_focus(first, true)
 	var t1 := Time.get_ticks_msec()
 	if not opt.nowarm: await st.warm_up(cam, 4)
-	for i in 10: await get_tree().process_frame
-	_say("boot first_area_ms=%d warm_ms=%d (graphics memory reserve %d MB: %d ms) cells=%d static_mb=%.0f video_mb=%.0f" % [t1 - t0, Time.get_ticks_msec() - t1, int(opt.gpureserve), int(st.stats.get("reserve_ms", 0)), st.loaded_count(), Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0])
-	if opt.warmnight:      # draw the night once behind the loading screen. ON by default since the census (19 Nov): the first dusk of a session cost frames of 41 ms at 720p, with this 19 ms (census_warmnight). --nowarmnight to compare
+	# THE NIGHT ONCE, behind the loading screen (on by default since 19 Nov; --nowarmnight to compare). The first dusk of
+	# a session built the look's night shaders, loaded its night textures and the lights' shader versions in the middle
+	# of a drive: 33 ms of GPU and a 41 ms frame at 720p, up to 120 ms at 1.5 x; the second dusk had none of it. Drawn
+	# once here, the first dusk's worst frame was 19 ms (docs/DRAW_CENSUS.md "THE FIRST NIGHT", census_warmnight).
+	if opt.warmnight and not opt.nowarm:
+		var tw := Time.get_ticks_msec()
 		_night(1.0); lights.update_lights(cam.global_position, 1.0)
 		for i in 20: await get_tree().process_frame
 		_night(0.0); lights.update_lights(cam.global_position, 0.0)
 		for i in 10: await get_tree().process_frame
-		_say("warmnight done")
+		_say("warmnight %d ms" % (Time.get_ticks_msec() - tw))
+	for i in 10: await get_tree().process_frame
+	_say("boot first_area_ms=%d warm_ms=%d (graphics memory reserve %d MB: %d ms) cells=%d static_mb=%.0f video_mb=%.0f" % [t1 - t0, Time.get_ticks_msec() - t1, int(opt.gpureserve), int(st.stats.get("reserve_ms", 0)), st.loaded_count(), Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0])
 	if String(opt.plan) == "census":
 		await _census()
 		await get_tree().create_timer(0.5).timeout
@@ -426,7 +432,7 @@ func _shots() -> void:
 ## the baseline with ONE thing changed, a few seconds each, and prints per state the median and 95 % GPU time, the
 ## CPU draw time, draws and triangles. Baseline first and last at every viewpoint (heat drift). GPU time, not frame
 ## time: the frame sits on the vsync step. Nothing of this changes the defaults; every state is undone after it.
-##   --census=day|night|both   --views=centre,gritty,...   --censussecs=2.0   --warmnight (draw the night once at boot)
+##   --census=day|night|both   --views=centre,gritty,...   --censussecs=2.0   (the night is drawn once at boot unless --nowarmnight)
 ## Results: "RIG census VIEW STATE ..." lines; docs/DRAW_CENSUS.md.
 const CENSUS_VIEWS := [["centre", 0.0, -600.0, 1.0, 0.0], ["apartments", 250.0, -600.0, 1.0, 0.0], ["gritty", -600.0, -1000.0, 1.0, 0.0],
 	["waterfront", 570.0, 200.0, -1.0, 0.0], ["industrial", -800.0, -1400.0, 1.0, 0.0], ["pilot", 0.0, 0.0, 0.0, 1.0], ["civic", -200.0, -600.0, 1.0, 0.0]]
