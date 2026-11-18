@@ -153,7 +153,7 @@ Three changes, measured one at a time on the Redmi (zones gate, stream gate):
   `col150_stream` (150 m) 328 ms; the zones runs with it had one 75-96 ms frame during a teleport. Without a range
   (`col2_stream`) the same lap is clean. Why a smaller collision load makes the DRAW stall is not understood: the
   signature is that of cause 5 above (the driver fetching graphics memory inside the draw), whose timing the range
-  may shift. Searched on the phone (runs `dig_*`, not pushed as results): with NO collision at all (`--nocol`) the lap
+  may shift. Searched on the phone (runs `dig_*` in review/phone): with NO collision at all (`--nocol`) the lap
   is clean; with the range and ONE cell loading at a time (`--loading=1`) a 70 ms stall stays; with twice the graphics
   memory reserve (`--gpureserve=384`) a 63 ms stall stays. Every stall fell while the growth's heavy cell -3_-6 (or
   its neighbour) was loading. What the range had taken away was the background work: without it, far bodies are made
