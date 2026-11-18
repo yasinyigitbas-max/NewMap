@@ -1,4 +1,9 @@
 extends SceneTree
+## Strip room checks the shared tools do not make (Yasin 18 Nov: "how can neither checker nor validator catch these?"):
+##  WALL  wall-mounted props overlapping each other or a tall prop on the same wall
+##  WIN   a wall-mounted prop over a window or door of the room's building (room_contracts openings)
+##  SEAT  a seat (bench, chair, stool) with less than 0.45 m of free floor in front of it - the table / desk / counter
+##        it belongs to excepted - so nobody can sit on it
 ## Wall-mounted props that overlap each other (Yasin 18 Nov: "there are wall props overlapping each other"): in every
 ## strip room (interiors/rooms/g_strip_*.scn) and every strip growth piece (pieces/m_gr_*.scn), each prop that hangs on
 ## a wall (manifest mount "wall", or lifted more than 1.0 m) is tested against every other wall prop: same wall plane
@@ -18,12 +23,18 @@ func _run() -> void:
 	for f in DirAccess.get_files_at("res://map_dc/coronado/city_kit/interiors/rooms/"):
 		if f.begins_with("g_strip_") and f.ends_with(".scn"): files.append("res://map_dc/coronado/city_kit/interiors/rooms/" + f)
 	for f in DirAccess.get_files_at("res://map_dc/coronado/city_kit/pieces/"):
-		if f.begins_with("m_gr_") and f.ends_with(".scn"): files.append("res://map_dc/coronado/city_kit/pieces/" + f)
+		if f.begins_with("m_gr_") and f.ends_with(".scn") and OS.get_environment("ROOMS_ONLY") != "1": files.append("res://map_dc/coronado/city_kit/pieces/" + f)
 	var total := 0
+	var contracts: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://map_dc/coronado/city_kit/interiors/room_contracts.json")).models
+	contracts.merge(JSON.parse_string(FileAccess.get_file_as_string("res://map_dc/coronado/city_kit/interiors/room_contracts_strip.json")).models, true)
+	var model_of := {}
+	for e: Dictionary in JSON.parse_string(FileAccess.get_file_as_string("res://map_dc/coronado/city_kit/interiors/assignment_strip.json")).rooms:
+		model_of["g_strip_" + String(e.id)] = String(e.model)
 	for path: String in files:
 		var n: Node3D = (load(path) as PackedScene).instantiate(); root.add_child(n)
 		var items: Array = []     # [base, Transform3D (scene frame), w, h]
 		var grounds: Array = []   # tall ground props: [base, Transform3D, w, d, h]
+		var allp: Array = []      # every ground prop: [base, Transform3D, w, d]
 		for mmi: MultiMeshInstance3D in n.find_children("*", "MultiMeshInstance3D", true, false):
 			var nm := String(mmi.name)
 			var base := nm
@@ -39,6 +50,7 @@ func _run() -> void:
 				var lift := t.origin.y - _floor_y(n, path)
 				if String(e.get("mount", "ground")) != "wall" and not (lift > 1.0 and base in ["prop_poster_case", "prop_gallery_frame", "prop_menu_board", "prop_pegboard_wall"]):
 					if float(e.get("height", 0.0)) > 1.2: grounds.append([base, t, float(e.get("footprint_w", 0.5)), float(e.get("footprint_d", 0.5)), float(e.get("height", 1.0))])
+					allp.append([base, t, float(e.get("footprint_w", 0.5)), float(e.get("footprint_d", 0.5))])
 					continue
 				items.append([base, t, float(e.get("footprint_w", 0.5)), float(e.get("height", 0.5))])
 		var bad := 0
@@ -72,9 +84,42 @@ func _run() -> void:
 				if tg.origin.y + float(G2[4]) <= ta2.origin.y + 0.02: continue
 				print("WALL %s: %s at (%.2f, %.2f, %.2f) is covered by %s at (%.2f, %.2f)" % [path.get_file(), A2[0], ta2.origin.x, ta2.origin.y, ta2.origin.z, G2[0], tg.origin.x, tg.origin.z])
 				bad += 1
+		# WIN: wall props over the building's openings (the room is authored in its building model's frame)
+		var rname := path.get_file().get_basename()
+		if model_of.has(rname):
+			var fy := float(n.get_meta(&"floor_y", 0.0))
+			for A3: Array in items:
+				var t3: Transform3D = A3[1]
+				for o: Dictionary in (contracts[model_of[rname]] as Dictionary).get("openings", []):
+					if int(o.floor) != 0: continue
+					var fac := String(o.facade)
+					var along := t3.origin.x if fac == "front" or fac == "back" else t3.origin.z
+					var plane_d := absf((t3.origin.z if fac == "front" or fac == "back" else t3.origin.x) - float(o.plane))
+					if plane_d > 0.8: continue
+					if absf(along - float(o.along)) > (float(o.w) + float(A3[2])) * 0.5: continue
+					var yb := t3.origin.y; var yt := yb + float(A3[3])
+					if yb < float(o.y1) and yt > float(o.y0):
+						print("WIN  %s: %s at (%.2f, %.2f, %.2f) hangs over the %s opening at %.2f" % [rname, A3[0], t3.origin.x, t3.origin.y, t3.origin.z, fac, float(o.along)]); bad += 1
+		# SEAT: free floor in front of every seat
+		const SEATS := ["prop_waiting_bench", "prop_side_chair", "prop_office_chair", "prop_cafe_chair", "prop_booth_bench", "prop_bar_stool", "prop_barber_chair", "prop_park_bench"]
+		const SIT_AT := ["prop_cafe_table", "prop_restaurant_table", "prop_office_desk", "prop_nail_table", "prop_bar_counter", "prop_shop_counter", "prop_mirror_station", "prop_wash_basin", "prop_booth_bench", "prop_cash_register", "prop_espresso_machine", "prop_checkout_counter", "prop_laundry_counter"]
+		for S: Array in allp:
+			if not (String(S[0]) in SEATS): continue
+			var ts: Transform3D = S[1]
+			var fw := ts.basis.z.normalized(); var sd := Vector3(fw.z, 0, -fw.x)
+			var front := ts.origin + fw * (float(S[3]) * 0.5 + 0.25)       # centre of the 0.45 m strip in front
+			for P: Array in allp:
+				if P == S or String(P[0]) in SIT_AT or String(P[0]) in ["prop_potted_plant", "prop_indoor_bin"]: continue
+				var tp: Transform3D = P[1]
+				var d4 := tp.origin - front
+				var px := tp.basis.x.normalized()
+				var ex := absf(px.dot(sd)) * float(P[2]) * 0.5 + absf(px.dot(fw)) * float(P[3]) * 0.5
+				var ez := absf(px.dot(fw)) * float(P[2]) * 0.5 + absf(px.dot(sd)) * float(P[3]) * 0.5
+				if absf(d4.dot(sd)) < float(S[2]) * 0.5 * 0.8 + ex and absf(d4.dot(fw)) < 0.225 + ez:
+					print("SEAT %s: %s at (%.2f, %.2f) has %s in front of it at (%.2f, %.2f)" % [rname, S[0], ts.origin.x, ts.origin.z, P[0], tp.origin.x, tp.origin.z]); bad += 1; break
 		total += bad
 		n.queue_free()
-	print("WALL_DONE %d overlaps" % total)
+	print("ROOMCHK_DONE %d problems" % total)
 	quit()
 
 func _rel(nd: Node3D, top: Node3D) -> Transform3D:

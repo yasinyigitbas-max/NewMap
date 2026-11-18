@@ -46,7 +46,7 @@ const KINDS := {
 	"tyre": {"max_d": 10.0, "floor": "Concrete047A", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["pegboard_wall", "wall_shelf", "workbench"], "board": false, "walls": ["wall_shelf", "waiting_bench", "drinks_fridge", "waiting_bench", "wall_shelf"], "centre": "none", "window": "display", "back": "stock", "frames": false, "posters": true, "cap": {"wall_shelf": 2}, "tint": Color(0.98, 0.92, 0.66)},
 	# used-car sales office: one salesman's desk with the buyer's chair facing it, a coffee counter, key cabinet (a
 	# filing cabinet), brochures and the "finance today" posters; the window looks onto the lot
-	"car_sales": {"max_d": 10.0, "floor": "Tiles141", "light": "panel", "counter": [], "till": false, "behind": ["filing_cabinet", "filing_cabinet", "wall_shelf"], "board": false, "walls": ["brochure_rack", "drinks_fridge", "waiting_bench"], "centre": "none", "window": "waiting", "back": "none", "frames": false, "posters": true, "tint": Color(0.86, 0.9, 0.98)},
+	"car_sales": {"max_d": 10.0, "floor": "Tiles141", "light": "panel", "counter": [], "till": false, "behind": ["filing_cabinet", "filing_cabinet", "wall_shelf"], "board": false, "walls": ["drinks_fridge", "brochure_rack"], "centre": "none", "window": "none", "back": "none", "frames": false, "posters": true, "tint": Color(0.86, 0.9, 0.98)},
 	# discount grocer: checkouts by the door (you queue to leave), long gondolas, fridges and freezers along the walls,
 	# produce in the window, cheap bright signage
 	"discount": {"floor": "Tiles141", "light": "panel", "counter": ["checkout_counter", "checkout_counter"], "till": false, "behind": ["wall_shelf", "cigarette_cabinet"], "board": false, "walls": ["drinks_fridge", "chest_freezer", "drinks_fridge", "grocery_shelf"], "centre": "rows", "window": "produce", "back": "stock", "frames": false, "posters": true, "cap": {"drinks_fridge": 4, "chest_freezer": 3}, "tint": Color(1.0, 0.94, 0.78)},
@@ -79,7 +79,7 @@ const DRESS := {"drive_thru": ["indoor_bin", "potted_plant", "drinks_fridge", "i
 	 "phone": ["waiting_bench", "card_spinner", "potted_plant", "indoor_bin", "brochure_rack"],
 	 "tax": ["potted_plant", "indoor_bin", "waiting_bench"],
 	 "tyre": ["display_table", "potted_plant", "indoor_bin", "brochure_rack"],
-	 "car_sales": ["potted_plant", "indoor_bin", "waiting_bench"],
+	 "car_sales": ["potted_plant", "indoor_bin"],
 	 "discount": ["chest_freezer", "produce_stand", "indoor_bin", "potted_plant", "card_spinner"],
 	 "laundromat": ["dryer", "dryer", "vending_snack", "waiting_bench", "indoor_bin", "potted_plant"],
 	 "nails": ["potted_plant", "indoor_bin", "waiting_bench"],
@@ -167,7 +167,7 @@ func _put(base: String, x: float, z: float, yaw := 0.0, use_keep := true) -> boo
 	return true
 
 ## a group (table + chairs, booth) placed whole or not at all
-func _group(items: Array, use_keep := true) -> bool:
+func _group(items: Array, use_keep := true, reserve := -1.0) -> bool:
 	var rects: Array = []
 	for it: Array in items:
 		var f := _fp(String(it[0]), float(it[3]))
@@ -179,6 +179,14 @@ func _group(items: Array, use_keep := true) -> bool:
 	var ht := 0.0
 	for it: Array in items: ht = maxf(ht, float(tall.get("prop_" + String(it[0]), 1.0)))
 	occ.append([b[0], b[1], b[2], b[3], ht])
+	# a desk or a booth needs room round it for the people using it (legs, getting up, the salesman reaching his chair):
+	# nothing else placed later may come within `reserve` m (default: 0.6 m round any group with a desk)
+	var r := reserve
+	if r < 0.0:
+		r = 0.0
+		for it: Array in items:
+			if String(it[0]) == "office_desk": r = 0.6
+	if r > 0.0: keep.append([b[0] - r, b[1] - r, b[2] + r, b[3] + r])
 	return true
 
 func _table2(x: float, z: float) -> Array:
@@ -278,6 +286,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		if String(pc[0]) == "shop_counter" and bool(K.get("till", false)): rr.prop("cash_register", float(pc[1]) - 0.3, zc - 0.05, 180.0, 0.964); break
 	if bool(K.get("stools", false)):
 		for pc: Array in placed_counter:
+			if String(pc[0]) != "bar_counter": continue     # stools sit at the bar counter only (not facing the pie case)
 			for k in 3: _put("bar_stool", float(pc[1]) - 0.7 + k * 0.7, zc + cd * 0.5 + 0.35, 180.0, false)
 	# the queue in front of the counter, the staff walk behind it
 	keep.append([cx - cw * 0.5, zc + cd * 0.5, cx + cw * 0.5, zc + cd * 0.5 + 1.2])
@@ -330,7 +339,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	for side: Array in [[X0, 90.0, "left"], [X1, -90.0, "right"]]:
 		var wx := float(side[0]); var yaw := float(side[1]); var inn := 1.0 if yaw > 0.0 else -1.0
 		var items: Array = K.walls
-		var z := ZF - 0.45; var k := 0
+		var z := ZF - (1.8 if String(K.window) in ["waiting", "watch"] else 0.45); var k := 0     # clear of the window seats
 		var tries := 0; var run := 0; var stations := 0
 		while z > ZBp + 0.4 and tries < 60:
 			tries += 1
@@ -450,7 +459,9 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 				for xx: float in _steps(IX0 + 0.74, IX1 - 0.74, 2.6): _put("waiting_bench", xx, zz, 0.0)
 	# ---- dressing: plants in the front corners, a bin by the counter end, prints on the bare walls
 	_put("potted_plant", X0 + 0.3, ZF - 0.3); _put("potted_plant", X1 - 0.3, ZF - 0.3)
-	if cw > 0.1: _put("indoor_bin", cx + cw * 0.5 + 0.3, zc + cd * 0.5 + 0.25)     # by the counter end (a room without a counter has its bins by the walls)
+	if not placed_counter.is_empty():       # by the end of the counter ACTUALLY placed (a narrow room fits fewer pieces than listed)
+		var last: Array = placed_counter[placed_counter.size() - 1]
+		_put("indoor_bin", float(last[1]) + _fp(String(last[0]), 0.0).x * 0.5 + 0.3, zc + cd * 0.5 + 0.25)
 	if kind in ["office", "pharmacy", "souvenir", "venue", "gallery"]: _put("brochure_rack", dx + (1.3 if dx < (X0 + X1) * 0.5 else -1.3), ZF - 1.9, 180.0)
 	# ---- wall decoration (Yasin 18 Nov: "it looks as if you just filled every wall with paintings, its too repetitive"):
 	# only where art belongs (frames: true), at most TWO pieces per wall, never the same piece twice in a row, at a third
@@ -465,7 +476,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 			for t2: float in [0.33, 0.7]:
 				if placed2 >= 2 or span < 1.5: break
 				var zz := ZBp + 1.2 + span * t2
-				if _under_window(sidewin, String(side2[2]), zz - 0.5, zz + 0.5, 1.2): continue
+				if _on_window(sidewin, String(side2[2]), zz - 0.5, zz + 0.5, 1.1, 2.6): continue
 				var blocked := false
 				for o: Array in occ:
 					if float(o[4]) > 1.25 and zz > float(o[1]) - 0.4 and zz < float(o[3]) + 0.4 and absf((float(o[0]) + float(o[2])) * 0.5 - wx2) < 1.0: blocked = true
@@ -480,7 +491,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		for side3: Array in [[X0, 90.0, "left"], [X1, -90.0, "right"]]:
 			var wx3 := float(side3[0]); var inn3 := 1.0 if float(side3[1]) > 0.0 else -1.0
 			for zz: float in [(zc + cd * 0.5 + 1.0 + ZF - 1.2) * 0.5]:     # ONE promo poster per wall, at its middle
-				if _under_window(sidewin, String(side3[2]), zz - 0.5, zz + 0.5, 1.2): continue
+				if _on_window(sidewin, String(side3[2]), zz - 0.5, zz + 0.5, 1.1, 2.3): continue
 				var blk := false
 				for o: Array in occ:
 					if float(o[4]) > 1.1 and zz > float(o[1]) - 0.5 and zz < float(o[3]) + 0.5 and absf((float(o[0]) + float(o[2])) * 0.5 - wx3) < 1.2: blk = true
@@ -566,8 +577,16 @@ func _side_windows(c: Dictionary) -> Array:
 		if int(o.floor) != 0: continue
 		var fac := String(o.facade)
 		if fac != "left" and fac != "right": continue
-		out.append([fac, float(o.along) - float(o.w) * 0.5 - 0.1, float(o.along) + float(o.w) * 0.5 + 0.1, float(o.y0) - F])
+		out.append([fac, float(o.along) - float(o.w) * 0.5 - 0.1, float(o.along) + float(o.w) * 0.5 + 0.1, float(o.y0) - F, float(o.y1) - F])
 	return out
+
+## a wall-hung item (bottom ybot, top ytop above the floor) over a side wall's window or door (Yasin 18 Nov: "the wall
+## prop is overlapping a window"; before, posters were tested from the floor up, so one hung at 1.1 m passed over a
+## high window)
+func _on_window(sw: Array, side: String, z0: float, z1: float, ybot: float, ytop: float) -> bool:
+	for w: Array in sw:
+		if String(w[0]) == side and z0 < float(w[2]) + 0.15 and z1 > float(w[1]) - 0.15 and ybot < float(w[4]) + 0.1 and ytop > float(w[3]) - 0.1: return true
+	return false
 
 func _under_window(sw: Array, side: String, z0: float, z1: float, height: float) -> bool:
 	for w: Array in sw:
