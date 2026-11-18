@@ -16,6 +16,9 @@ extends SceneTree
 ##   window    it hangs over a window or a door of its wall (the room's glass panes and door leaves within 0.6 m of
 ##             its wall plane, and the entrances the room records)
 ##   wallover  it overlaps another wall item on the same wall
+##   behind    it hangs behind a piece of furniture standing against its wall (a mirror station, a shelf, a fridge):
+##             the furniture's width along the wall and its height cover part of the item (Yasin: "there is a painting
+##             behind the mirror")
 ## A LOCKED room (locked.json "files") is reported as NOTE, not counted: it changes only with Yasin's word.
 ## Output like the city validator (tools/city/pilot/validate.gd): "CHECK <kind> ..." per problem, then
 ## "CHECKS n problems"; exit code 1 if any. Run it after every room build, next to validate / audit_trees / the lock test.
@@ -65,7 +68,7 @@ func _man(p: String) -> void:
 		if String(e.get("mount", "")) == "wall": wallm[String(e.file_base)] = true
 
 func _report(room: String, kind: String, msg: String) -> void:
-	if cur_locked and kind in ["ceiling", "window", "wallover"]:
+	if cur_locked and kind in ["ceiling", "window", "wallover", "behind"]:
 		notes += 1; print("NOTE  %-8s %s (locked): %s" % [kind, room, msg]); return
 	problems += 1
 	print("CHECK %-8s %s: %s" % [kind, room, msg])
@@ -264,6 +267,25 @@ func _wall_items(name: String, root: Node3D, props: Array, miny: float) -> void:
 				var al2 := (p[1] as Vector2).x if String(d[0]) == "z" else (p[1] as Vector2).y
 				if al2 + fw * 0.5 > float(d[2]) and al2 - fw * 0.5 < float(d[3]) and y0 - miny < 2.3: hit_open = true; break
 		if hit_open: _report(name, "window", "%s at %s hangs over a window or door of its wall" % [bs, _v(p[1])])
+	# behind furniture: a floor prop within 0.8 m of the item's wall whose footprint overlaps the item along the wall
+	# and whose top is above the item's lower edge
+	for it: Array in items:
+		var fw2 := it[5] as Vector2; var sd2 := Vector2(fw2.y, -fw2.x)
+		for g: Array in props:
+			if base_mounted(String(g[0])) or float(g[4]) - miny > 0.3: continue
+			var gb := String(g[0])
+			var gh := float(tall.get(gb, 1.0))
+			if gh <= float(it[3]) - miny + 0.02: continue
+			if gb == "prop_workbench" and String(it[0]) == "prop_pegboard_wall": continue
+			var rel := (g[1] as Vector2) - (it[1] as Vector2)
+			var depth := rel.dot(fw2)
+			var ghalf := g[2] as Vector2
+			var ga := float(g[3])
+			var ext_along := absf(ghalf.x * Vector2(cos(ga), -sin(ga)).dot(sd2)) + absf(ghalf.y * Vector2(sin(ga), cos(ga)).dot(sd2))
+			var ext_out := absf(ghalf.x * Vector2(cos(ga), -sin(ga)).dot(fw2)) + absf(ghalf.y * Vector2(sin(ga), cos(ga)).dot(fw2))
+			if depth - ext_out > 0.8 or depth + ext_out < 0.0: continue
+			if absf(rel.dot(sd2)) < float(it[2]) + ext_along - 0.03:
+				_report(name, "behind", "%s at %s hangs behind %s at %s" % [it[0], _v(it[1]), gb, _v(g[1])])
 	# two wall items on one wall overlapping
 	for i in items.size():
 		for j in range(i + 1, items.size()):
