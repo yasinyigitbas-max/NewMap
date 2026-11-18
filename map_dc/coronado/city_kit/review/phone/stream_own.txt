@@ -1,0 +1,26 @@
+# phone rig run 'stream_own'  2026-11-18T16:18Z  args: --plan=stream --probe
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 275 -> 285 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit fa6d111 | meminfo at 60 s:          Native Heap:   189568                         190764;            Graphics:   584480                         584480;           TOTAL PSS:   877997            TOTAL RSS:   970580       TOTAL SWAP PSS:      282;
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 plan=stream lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=141
+RIG boot first_area_ms=415 warm_ms=370 cells=12 static_mb=95 video_mb=189
+RIG slow loop_108kmh 152 ms at t=3.7 s pos=(-495, -600): cells in +0 out +0, bodies +0, loading ["-1_-3:1", "-1_-4:1"] | at: physics_wait 0.1 render_wait 0.0 streamer 0.17 setup 0.0 draw_cpu 0.7 gpu 6.2 | then: physics_wait 0.2 render_wait 0.0 streamer 0.08 setup 0.0 draw_cpu 0.8 gpu 3.9
+RIG drive loop_108kmh speed=108 km/h secs=60 frames=3995 fps=66.6 | frame_ms med=16.2 p95=23.0 p99=25.4 worst=152 | over16.7=41.4% over33=1 over50=1 over100=1
+RIG   map loop_108kmh draws avg=75 max=189 | tris avg=408k max=1317k | cells most=16 in=34 out=32 dropped=0 cap_hits=0
+RIG   stream loop_108kmh start_ready_ms=0 (worst frame meanwhile 0 ms) | request_to_in ms mean=137 worst=361 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.16, body 3.38 (col_27 shapes=24 new=308), removal step 1.42 | bodies late=0
+RIG   slow loop_108kmh frames over 33 ms by what the streamer was doing: { "loading": 1 } | over 45 ms: { "loading": 1 }
+RIG   collision loop_108kmh made=409991 units, a body waited at most 792 ms from its cell's arrival | physics thread wait a frame (probe): median 0.5 p99 4.8 worst 9.1 ms
+RIG   mem loop_108kmh static_mb=113 video_mb=245 tex_mb=95 buf_mb=130
+RIG drive loop_210kmh speed=209 km/h secs=55 frames=3257 fps=59.2 | frame_ms med=16.8 p95=24.0 p99=26.5 worst=35 | over16.7=51.9% over33=1 over50=0 over100=0
+RIG   map loop_210kmh draws avg=70 max=191 | tris avg=350k max=1323k | cells most=16 in=64 out=74 dropped=0 cap_hits=0
+RIG   stream loop_210kmh start_ready_ms=812 (worst frame meanwhile 29 ms) | request_to_in ms mean=154 worst=456 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.15, body 3.53 (col_10 shapes=24 new=1606), removal step 1.42 | bodies late=0
+RIG   slow loop_210kmh frames over 33 ms by what the streamer was doing: { "loading": 1 } | over 45 ms: {  }
+RIG   collision loop_210kmh made=752343 units, a body waited at most 1569 ms from its cell's arrival | physics thread wait a frame (probe): median 0.6 p99 5.5 worst 7.8 ms
+RIG   mem loop_210kmh static_mb=121 video_mb=249 tex_mb=98 buf_mb=131
+RIG drive loop_280kmh speed=281 km/h secs=40 frames=2367 fps=59.2 | frame_ms med=16.7 p95=24.4 p99=26.3 worst=29 | over16.7=50.8% over33=0 over50=0 over100=0
+RIG   map loop_280kmh draws avg=71 max=188 | tris avg=360k max=1323k | cells most=18 in=58 out=62 dropped=0 cap_hits=0
+RIG   stream loop_280kmh start_ready_ms=154 (worst frame meanwhile 24 ms) | request_to_in ms mean=149 worst=520 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.15, body 3.53 (col_10 shapes=24 new=1606), removal step 1.42 | bodies late=0
+RIG   slow loop_280kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision loop_280kmh made=647495 units, a body waited at most 976 ms from its cell's arrival | physics thread wait a frame (probe): median 0.6 p99 5.2 worst 8.1 ms
+RIG   mem loop_280kmh static_mb=122 video_mb=273 tex_mb=98 buf_mb=150
+RIG plan_done lap=1
