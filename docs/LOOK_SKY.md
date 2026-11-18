@@ -250,8 +250,13 @@ meet; the shadow fades out from 30 to 50 m (`directional_shadow_fade_start` 0.6)
 (`shadow_blur` 1.8 at the horizon .. 1.0 above 45 deg), fainter when the sun is weak (`shadow_opacity` 0.3 + energy x 0.5:
 overcast and storm throw faint shadows). Pictures with shadows on: `shadow/pair_*.jpg` (the cloud GPU draws the trees
 near the camera black with shadows on: ignore them, look at the road).
-## Open questions (Yasin)
-- Which day: `day`, `day_half` or `day_clear`? (And should golden / morning follow the pick's table?)
+## Decided (Yasin, 18 Nov): "i go for gta4 look"
+The default day keeps the GTA 4 palette. `day_half` and `day_clear` stay as named presets, not the default. Inside the
+palette: the day's clouds now reach lower and have crisper, darker-bottomed shapes so they read from the street
+(`cloud_low` 0.1, `cloud_soft` 0.18), the sky colours unchanged; golden and morning use the GTA table again (their
+lighter haze and warm sun stay). Pictures with sun shadows on (2 splits: the cloud draws them now):
+`review/look_18nov/gta/<view>_<day|golden|morning>.jpg`. The bake now includes the tier work's far ground (ran fine
+on the cloud's GPU, 83 s; no `--nofarground` needed).
 
 ### Queue 3 results (cloud)
 | Day (4 views, mean) | bright | contrast | sat % | sky sat % |
