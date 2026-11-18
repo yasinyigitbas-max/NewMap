@@ -205,6 +205,7 @@ func fence_line(a: Vector2, b: Vector2, gaps: Array, panel: String, post: String
 		if g0 > cur + 0.3: fence_run(a + dir * cur, a + dir * g0, panel, post, pw, y)
 		if gate != "":
 			var m := a + dir * float(gp[0])
+			fences.append([m - dir * 0.6, m + dir * 0.6])
 			var la := L2(a.x, a.y); var lb := L2(b.x, b.y)
 			props.add(gate, "worn", L(m.x, m.y, gy(m.x, m.y) if y < -100.0 else y), rad_to_deg(atan2(lb.x - la.x, lb.y - la.y)) + 90.0)
 		cur = g1
@@ -518,7 +519,7 @@ func house_lot(lot: Dictionary) -> void:
 		if String(e[0]).begins_with("door"): dl_x = float(e[1]); break
 	on_wall(b, porch, "worn", dl_x - 0.85, hd * 0.5 + 0.05, 2.1, yaw)
 	on_wall(b, "prop_house_numbers_tile" if rr.randf() < 0.5 else "prop_house_numbers_wood", "worn", dl_x + 0.85, hd * 0.5 + 0.03, 1.75, yaw)
-	if not FENCE.has(front): on_wall(b, "prop_mailbox_wall_black" if rr.randf() < 0.5 else "prop_mailbox_wall_brass", "worn", dl_x + 1.25, hd * 0.5 + 0.05, 1.2, yaw)
+	if not FENCE.has(front): on_wall(b, "prop_mailbox_wall_black" if rr.randf() < 0.5 else "prop_mailbox_wall_brass", "worn", dl_x + 1.5, hd * 0.5 + 0.05, 1.2, yaw)     # clear of the house numbers
 	var pot: Vector2 = bq(b, dl_x - 1.3, hd * 0.5 + 0.4)
 	if free_at(pot.x, pot.y, 0.3): add("plant_potted_succulent", "normal", pot.x, pot.y, 0.0, 0.0, true, 1.0, 0.3)
 	var pot2: Vector2 = bq(b, dl_x + 1.35, hd * 0.5 + 0.45)
@@ -979,7 +980,7 @@ func clear_fences() -> void:
 		var keep: Array = []
 		for t: Transform3D in props.items[k]:
 			var q := Q2(t.origin)
-			var ok := not near_fence(q.x, q.y, r + 0.05)
+			var ok := not near_fence(q.x, q.y, r + 0.25)      # a masonry wall is 0.38 m thick
 			if ok:
 				for wq: Array in walls:
 					var wa: Vector2 = wq[0]; var wb: Vector2 = wq[1]
