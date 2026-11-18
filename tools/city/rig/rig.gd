@@ -291,13 +291,17 @@ const SHOT_TARGET := Vector3(60, 0, -625)                             # the buil
 const SHOT_DISTS := [40.0, 56.0, 60.0, 64.0, 80.0, 150.0, 212.0, 218.0, 222.0, 228.0, 260.0]
 ## [name, camera x, z, height above ground, look x, z, look height]
 const SHOT_VIEWS := [["street_eye", -950.0, -600.0, 1.6, 600.0, -600.0, 1.0], ["street_high", -950.0, -600.0, 30.0, 0.0, -600.0, 0.0],
-	["junction_north", 0.0, -560.0, 1.6, 0.0, 200.0, 1.0], ["hill_view", -600.0, -1000.0, 12.0, 400.0, -1000.0, 0.0]]
+	["junction_north", 0.0, -560.0, 1.6, 0.0, 200.0, 1.0], ["hill_view", -600.0, -1000.0, 12.0, 400.0, -1000.0, 0.0], ["aerial", -950.0, -600.0, 120.0, 200.0, -600.0, 0.0]]
 
+var _shot_last_y := 6.0
 func _shot_ground(p: Vector3) -> float:
 	_g_at = p; _g_hit = false
-	for i in 4: await get_tree().physics_frame
+	for i in 30:      # the ray is cast in the physics step; the collision there may still be attaching
+		await get_tree().physics_frame
+		if _g_hit and i >= 3: break
 	await get_tree().process_frame
-	return _g_y if _g_hit else 0.0
+	if not _g_hit: _say("shot: no ground under (%.0f, %.0f)" % [p.x, p.z])
+	return _g_y if _g_hit else _shot_last_y
 
 func _shot_ready(p: Vector3) -> void:
 	st.prepare(p)
@@ -343,7 +347,7 @@ func _shots() -> void:
 		var a := sqrt(maxf(d * d - lat * lat, 0.0))      # so the distance to the building's pivot is d
 		var p := s0 + dir * (along - a)
 		await _shot_ready(p)
-		var gy: float = await _shot_ground(p)
+		var gy: float = await _shot_ground(p); _shot_last_y = gy
 		cam.global_position = Vector3(p.x, gy + 1.6, p.z); cam.look_at(Vector3(bp.x, gy + 6.0, bp.z))
 		st.update_focus(p, false)
 		await _shot_save("bldg_%03dm" % int(d))

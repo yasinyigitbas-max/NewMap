@@ -842,7 +842,7 @@ func _build_far_ground() -> Dictionary:
 	var tex: Texture2D = null
 	var cimg := img.duplicate()
 	if cimg.compress(Image.COMPRESS_ETC2, Image.COMPRESS_SOURCE_SRGB) == OK:
-		var ctex := PortableCompressedTexture2D.new(); ctex.create_from_image(img, PortableCompressedTexture2D.COMPRESSION_MODE_ETC2); tex = ctex
+		tex = ImageTexture.create_from_image(cimg)      # the compressed image is what is stored (a PC without ETC2 converts it when it loads; the phone uses it as is)
 	else:
 		print("BAKE far ground: ETC2 compression not available here, the picture is stored uncompressed")
 		tex = ImageTexture.create_from_image(img)
@@ -882,7 +882,7 @@ func _build_far_ground() -> Dictionary:
 		wfa[Mesh.ARRAY_TEX_UV2] = PackedVector2Array([Vector2.ZERO, Vector2.ZERO, Vector2.ZERO])
 		var wfm := ArrayMesh.new(); wfm.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, wfa)
 		var wfn := MeshInstance3D.new(); wfn.mesh = wfm; wfn.material_override = mats["far_ground"]; warm["far_ground"] = wfn
-	return {"cells": used.size(), "tris": I.size() / 3, "verts": V.size(), "picture": "%dx%d" % [px_w, px_h], "compressed": tex is PortableCompressedTexture2D, "ground_tris_sampled": ntri, "ms": Time.get_ticks_msec() - t0}
+	return {"cells": used.size(), "tris": I.size() / 3, "verts": V.size(), "picture": "%dx%d" % [px_w, px_h], "compressed": cimg.is_compressed(), "tex_kb": FileAccess.get_file_as_bytes(out + "far/far_ground_top.res").size() / 1024, "ground_tris_sampled": ntri, "ms": Time.get_ticks_msec() - t0}
 
 # ---------------------------------------------------------------- main
 func _rows() -> Array: return (JSON.parse_string(FileAccess.get_file_as_string(LAYOUT)) as Dictionary).instances
