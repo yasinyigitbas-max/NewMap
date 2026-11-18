@@ -13,9 +13,12 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   (own threads, cars as batches, a spawn ring that moves with speed, one walker system). The new map must get its own
   lane graph, pavements, crossings and signal plan, made by a C++ tool from the locked skeleton and checked against
   the baked ground. The module's binaries and its `.gdextension` file stay OUT of git (built by `native/build.sh`), so
-  cloud sessions never load it. WAITING FOR YASIN: the talking (any walker can be talked to in the old game, with the
-  microphone and 2,658 recorded clips tied to the old place names): not now / as a stage 4 / drop. NEXT: stage 1, the
-  module on the PC and the phone.
+  cloud sessions never load it. YASIN ANSWERED the talking question (19 Nov): "does your work include every single
+  one of npc related systems right? npcs meeting, ractions, city life, speaking to them etc": ALL of it is in the
+  job, in C++ (reactions and city life = stage 3c, speaking = stage 4; the voice clips that name OLD places need new
+  recordings once the new map's place names are fixed). STAGE 1 on the PC DONE (9e5c111): `native/` builds the
+  Windows dll and the Android .so in under a minute (`bash native/build.sh`), the rig prints
+  `RIG native coronado_city ...`; lock test RESULT PASS.
 - 18 Nov (cloud, branch `claude/grow-industrial`): INDUSTRIAL GROWTH, stage 1 + 2 done, NOTHING LOCKED, WAITING for
   Yasin's word on the variants. Read `review/grow_ind/README.md`. Three variants (A port, B fleet, C cold chain),
   each dressed twice = six 100 m blocks round the sample. They form the pilot area u -900..-500, v -1600..-1400

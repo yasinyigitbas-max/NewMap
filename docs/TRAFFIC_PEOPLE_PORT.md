@@ -18,7 +18,7 @@ there was run or changed. Numbers marked "estimate" are not measured.
   over. It is written new, in C++, for this map: fed by the streamer, drawn as batches, no node per car.
 - The old data does not fit: its lane graph is the OLD streets. The new map needs its own lane graph, pavements,
   crossings and signal plan, made by a tool from the locked street skeleton and checked against the baked ground.
-- One thing only Yasin can decide: the TALKING characters (section 4). The walking crowd does not need them.
+- The TALKING, the reactions and the city life are in the job too (Yasin, 19 Nov, section 4): after the walking crowd.
 
 ## 2. The old C++ (`native/src`, 7,900 lines), file by file
 | File | Lines | What it is | Here |
@@ -50,8 +50,9 @@ there was run or changed. Numbers marked "estimate" are not measured.
 | `vehicles/car_models.gd` | 1,067 | live | the car catalogue, rigs, LODs, paint | its TABLE (sizes, weights, colours) goes into C++ data; the rigs go |
 | `crowd2/crowd2.gd` | 803 | live | per frame: feeds view, player, props, signals (0.25 s); steps; picks the near bodies; plays their clips; shows / grows the far batches; towels; 12 capsules round the player | C++ node `CityCrowd` |
 | `crowd2/crowd2_data.gd` | 312 | load + 0.25 s | reads the OLD walk graph (23,007 nodes, 153 km), homes, shops, benches, densities | replaced by the graph tool; densities by zone |
-| `crowd2/crowd2_life.gd` | 382 | live | reactions (danger, scream, film), beggars, night workers, umbrellas, murmur sound | later (3b): separable, the walking does not need it |
-| `crowd2/crowd2_social.gd`, `crowd2_person.gd` | 107 | live | the bridge to the TALKING feature | section 4 |
+| `crowd2/crowd2_life.gd` | 382 | live | reactions (danger, scream, film), beggars, night workers, umbrellas, murmur sound | C++, Stage 3c (separable: the walking does not need it) |
+| `crowd2/crowd2_social.gd`, `crowd2_person.gd` | 107 | live | the bridge to the TALKING feature | C++, Stage 4 |
+| `map_dc/coronado/npc/talk/*`, `voice/*`, `ui/npc/*` | 3,700 | live | the talking: logic, memory, voice, captions, the choice boxes | C++, Stage 4 (section 4) |
 | `map_dc/coronado/npc/people/npc_people.gd` | 807 | live | the body library: 41 bodies, looks, materials; skins every far body into 12 poses in SCRIPT at load | the pose bake becomes an offline tool; the library a C++ table |
 
 Per frame and per tick, the old game runs in SCRIPT (its own numbers: traffic 2.5-3.2 ms a frame on the Redmi before
@@ -68,7 +69,8 @@ IN this job: the walking street crowd. People walk the pavements, keep right, pa
 at crossings (on green at signals, in a gap elsewhere, cars yield), walk in pairs and families, stop for a phone
 call or a shop window, step aside for the player, run from danger.
 
-NOT in this job unless Yasin says so: the TALKING. What it is in the old game (read, not run):
+ALSO IN, after it: the reactions, the city life and the TALKING (Yasin's answer is below). What the talking is in
+the old game (read, not run):
 - There are no special talking characters. ANY walker of the street crowd within 2 m of the player on foot gets a
   "Talk" button. It is the English-practice small talk (A1-A2 level, with a Turkish helper line): a greeting, then
   three choices (the nearest named place, the active mission or a hint, one small-talk topic). The player taps a
@@ -86,16 +88,22 @@ NOT in this job unless Yasin says so: the TALKING. What it is in the old game (r
 - What it needs that this repo does not have: a player on foot, an interact button, the caption and choice
   interface, the microphone plugin in the Android build, the save file (memory), the mission and job lists it quotes.
 
-THE QUESTION FOR YASIN: what to do with the talking?
-- (a) NOT NOW (my advice): the crowd walks, crosses and lives; the crowd core keeps the hooks the talk needs (hold a
-  person in place, turn them to the player, parties, the "who is near" list). The talk comes when the new game has a
-  player on foot and its interface, and when the new map's place names are fixed (they decide which clips must be
-  recorded again).
-- (b) AS STAGE 4 of this job: the talk logic in C++ on the new crowd, the old clips reused where a line has no
-  place name, a new place table for the new map; the interface is engine controls whatever the language; the
-  microphone plugin goes into the test app's Android build. It could only be tried in a test scene with a stand-in
-  player.
-- (c) DROP it for the new game.
+THE QUESTION WAS: not now, as a stage 4, or drop? YASIN ANSWERED (19 Nov): "does your work include every single
+one of npc related systems right? npcs meeting, ractions, city life, speaking to them etc". So ALL of it is in this
+job, in C++:
+- meetings, parties, pauses, benches, bus stops, fleeing: inside the crowd core, Stage 3;
+- reactions and city life (the old `crowd2_life.gd`: scream / film / call at a danger, "look out" for fast cars,
+  beggars, night workers, umbrellas in rain, the murmur): written new in C++, Stage 3c;
+- speaking to them: Stage 4. The talk logic, the memory, the caption and choice boxes (engine controls, made and
+  driven from C++), the talk animation, the microphone plugin in the test app's Android build.
+What that needs, said plainly:
+- a player on foot: the test app gets a simple walking stand-in (a camera at eye height with a walk button), only
+  so the talk and the reactions can be tried. It is not the game's player;
+- the voice: the 2,658 clips come over (39 MB). Lines with no place name are used as they are. Lines that name a
+  place of the OLD town cannot be used: they need new recordings (the old game renders them with its own tool,
+  `tools/voice/render_kokoro.py`) once the new map's shop and street names are fixed. Until then those lines show
+  their caption without a voice. YASIN: the place names are the thing to settle;
+- the missions and jobs the old talk quotes do not exist here: those lines are left out until the game has them.
 
 ## 5. The DATA the new map must give (none of it exists yet)
 This repo only borrows `map_dc/roads/lane_graph.json`, which is the OLD streets (4,892 edges from the real town's
@@ -116,7 +124,8 @@ libraries: lane edges, kerbs, parkways, pavements, crossings, stop bars as const
 | CROSSINGS | the crosswalk positions of the junction libraries | at signals: walk on the crossing street's red; at stops and mid-block: gap acceptance |
 | PARKING STALLS | the baked cells' meta `stalls` ([x, y, z, yaw, grade], already there) | the tool reads all cells once and stores the stalls with the graph, so the sim knows where parked cars reach into a lane BEFORE a cell loads. Which stalls are taken is decided by a hash of the stall (the same answer in the sim and on screen, every session) |
 | DENSITY: how many cars and people where, by hour | zone of the block (`zoning`) | a small table by section and zone (centre and high street busy, residential quiet, industrial trucks by day). The old game had measured traffic counts of the real town; the new town has none, so this is a design table. YASIN may want to tune it |
-| PLACES people go: doors, benches, bus stops, park and beach spots | the pieces' props and the interiors' door list | NOT in the first crowd stage (people walk and cross first); added after it (3b) |
+| PLACES people go: doors, benches, bus stops, park and beach spots | the pieces' props and the interiors' door list | Stage 3b (people walk and cross first, in 3a) |
+| NAMED PLACES for the talk ("where is the ...?") | the shop assignment of the interiors, the street names of the skeleton | Stage 4; the names decide which voice clips must be recorded again |
 | BUS ROUTES and stops | - | does not exist for the new streets. Buses are left out until Yasin wants them |
 
 Output: `map_dc/coronado/city_kit/traffic/streets.bin` (small, in git, made by the tool) and a top-view picture of the
@@ -147,7 +156,7 @@ texture, 16.6 MB (512 x 512 x 41 layers). About 41 MB for all 41 bodies. Stage 3
 in view is a draw call; see section 9), about 15-18 MB, and says the size before it copies. The originals
 (`rb_male.glb`, `rb_female.glb`, 60 MB) are not needed.
 
-Sound (engine, horns, crowd murmur): not in this job.
+Sound: the crowd murmur and the talk voices come with stages 3c and 4. Engine sound and horns: not in this job.
 
 ## 7. The BUILD
 How the old game builds (checked on this PC, not from memory):
@@ -252,12 +261,14 @@ Every stage reports the real numbers from the rig's probe at 720p: main thread m
 | 2d | the phone | gate PASS with `--traffic=20`, `40`, `80`; a table: main thread ms, physics wait, GPU ms, draws, against the same run without traffic; runs in `review/phone/` |
 | 3a | the crowd core on the new pavements and crossings; far figures; 18 near bodies; `--people=N` | PC test: 0 walkers off a walk, 0 inside a car, crossings used; pictures |
 | 3b | the phone; then places (doors, benches, bus stops) | gate PASS with people on; the same cost table; the honest answer on the draw budget |
+| 3c | reactions and city life in C++ (danger, witnesses, beggars, night workers, umbrellas, murmur) | a PC test that triggers each; pictures; phone gate PASS |
+| 4 | speaking to them: talk logic, memory, captions and choices, talk animation, microphone plugin; a walking stand-in in the test app | a talk from greeting to goodbye on the PC (typed) and on the phone (spoken); which lines have a voice and which wait for new recordings, as a list |
 After every stage: lock test RESULT PASS, commit, push, a job board line.
 
 ## 11. Not in this job (listed so nothing is lost)
-The player's car (`car_core`), wrecks, honks and hits (they need a player), buses and their timetable, the taxi ride,
-cyclists, breakable props, engine and street sound, the talking characters (until Yasin answers), the crowd's
-reactions and beggars (3b or later). The core's hooks for them (events, scripted cars, routes) stay in the code.
+The player's car (`car_core`), wrecks, honks and hits (they need the player's car), buses and their timetable, the
+taxi ride, cyclists, breakable props, engine sound. The core's hooks for them (events, scripted cars, routes) stay
+in the code. (The talking, the reactions and the city life were on this list in the first draft; Yasin put them in.)
 
 ## 12. Risks, said now
 - The graph tool is the hard part: lanes must sit on streets that were built by hand, family by family. The check
