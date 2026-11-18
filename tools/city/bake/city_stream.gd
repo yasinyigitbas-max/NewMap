@@ -51,6 +51,7 @@ signal cell_out(key: String)
 ## follow lane graphs), so a cell's bodies are made only once they are within `col_range` of the player, of the lead
 ## swept ahead of the player, or of a place being prepared; farther ones wait as data and leave with their cell.
 @export var col_range := 0.0          ## 0 = every body of every loaded cell (the default). 100 m cut the collision made to a fifth, but every phone run with a range (100 or 150 m) had one frame of 86-414 ms stalled in the draw on 5th St at 210 km/h while two cells loaded (19 Nov: col23_stream, col23_stream_repeat, col3_stream, col150_stream); not understood, so OFF
+@export var col_background := true    ## with a col_range: bodies out of range are still made, after those in range, in frames when no cell loads (false = they wait as data until in range)
 @export var prepare_boost := 4.0      ## while a prepare() is pending (a teleport behind a fade: the player is not there), the collision budgets a frame are this many times larger
 ## THE TIERS (19 Nov, Yasin: "it snaps from near to far directly"; shaders/rt/rt_tier.gdshaderinc, docs/RUNTIME_BAKE.md
 ## "The tiers"). All off = the city draws exactly as the bake made it. Set before the node enters the tree, or call
@@ -374,13 +375,20 @@ func _process_stream(t0: int) -> void:
 		for i in int(bodies_per_frame * boost):
 			if _pending.is_empty(): break
 			if i > 0 and (Time.get_ticks_usec() - ta0) > int(col_ms_per_frame * boost * 1000.0): break
-			var bi := -1; var bdist := 1.0e18
+			var bi := -1; var bdist := 1.0e18; var far_i := -1; var far_d := 1.0e18
 			for j in _pending.size():
 				# nearest to the player, the lead OR a place being prepared (a teleport's destination: until 19 Nov only the
 				# player counted, so a destination's collision came in no useful order and is_ready() waited for it)
 				var dd := _col_d2(_pending[j][0])
-				if col_range > 0.0 and dd > r2: continue      # out of range: stays data
+				if col_range > 0.0 and dd > r2:      # out of range: only when nothing is in range, and only in a quiet frame (below)
+					if dd < far_d: far_d = dd; far_i = j
+					continue
 				if dd < bdist: bdist = dd; bi = j
+			# Out-of-range bodies are still made, in the background: in frames when no cell is loading, after everything in
+			# range. Leaving them as data for good (the first try) gave one draw stall of 63-414 ms per lap on the phone,
+			# always while the growth's heavy cell -3_-6 was loading (19 Nov, col23_stream*, col3_stream, col150_stream,
+			# dig_load1, dig_reserve384; not with --nocol, not without the range): not understood.
+			if bi < 0 and quiet and col_background: bi = far_i
 			if bi < 0: break
 			var mk := _pending[bi][2] as Node3D
 			var cost := 0      # only shapes not made yet cost: one that a neighbour cell already uses is there
