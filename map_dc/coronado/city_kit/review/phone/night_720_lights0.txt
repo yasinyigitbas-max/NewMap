@@ -1,0 +1,41 @@
+# phone rig run 'night_720_lights0'  2026-11-18T14:51Z  args: --scale=0.6667 --lights=0 --drive=centre_night_60kmh/z_centre/60/25/1 --drive=apartments_night_60kmh/z_apartments/60/25/1 --drive=gritty_night_60kmh/z_gritty/60/25/1 --drive=centre_day_60kmh/z_centre/60/25/0
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 344 -> 347 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit a774575 | meminfo at 60 s:          Native Heap:   187284                         188480;            Graphics:   588688                         588688;           TOTAL PSS:   877586            TOTAL RSS:   969216       TOTAL SWAP PSS:      300;
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 plan=default lead=2.0 maxcells=30 loading=2 bodies=2 lights=0 cells_baked=140
+RIG own drives: 4
+RIG boot first_area_ms=740 warm_ms=497 cells=10 static_mb=109 video_mb=232
+RIG slow centre_night_60kmh 43 ms at t=16.4 s pos=(0, -468): cells in +1 out +0, bodies +2, loading []
+RIG slow centre_night_60kmh 35 ms at t=21.3 s pos=(0, -534): cells in +0 out +0, bodies +2, loading []
+RIG drive centre_night_60kmh speed=60 km/h secs=25 frames=1629 fps=65.1 | frame_ms med=16.5 p95=22.4 p99=25.5 worst=43 | over16.7=44.1% over33=2 over50=0 over100=0
+RIG   map centre_night_60kmh draws avg=102 max=138 | tris avg=745k max=1352k | cells most=14 in=9 out=5 dropped=0 cap_hits=0
+RIG   stream centre_night_60kmh start_ready_ms=0 (worst frame meanwhile 0 ms) | request_to_in ms mean=194 worst=326 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.03, body 0.34, removal step 1.35 | bodies late=0
+RIG   mem centre_night_60kmh static_mb=119 video_mb=288 tex_mb=98 buf_mb=171
+RIG slow apartments_night_60kmh 37 ms at t=7.9 s pos=(241, -600): cells in +0 out +0, bodies +2, loading []
+RIG slow apartments_night_60kmh 42 ms at t=16.6 s pos=(250, -464): cells in +0 out +0, bodies +2, loading []
+RIG slow apartments_night_60kmh 36 ms at t=16.9 s pos=(250, -460): cells in +0 out +0, bodies +2, loading []
+RIG slow apartments_night_60kmh 36 ms at t=21.4 s pos=(250, -536): cells in +0 out +0, bodies +2, loading []
+RIG slow apartments_night_60kmh 35 ms at t=24.2 s pos=(250, -583): cells in +0 out +0, bodies +2, loading []
+RIG drive apartments_night_60kmh speed=60 km/h secs=25 frames=1460 fps=58.4 | frame_ms med=16.8 p95=25.0 p99=27.1 worst=42 | over16.7=51.4% over33=5 over50=0 over100=0
+RIG   map apartments_night_60kmh draws avg=136 max=205 | tris avg=827k max=1219k | cells most=14 in=9 out=10 dropped=0 cap_hits=0
+RIG   stream apartments_night_60kmh start_ready_ms=84 (worst frame meanwhile 24 ms) | request_to_in ms mean=118 worst=205 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.20, body 0.38, removal step 1.36 | bodies late=0
+RIG   mem apartments_night_60kmh static_mb=111 video_mb=270 tex_mb=98 buf_mb=153
+RIG slow gritty_night_60kmh 35 ms at t=1.6 s pos=(-714, -1000): cells in +0 out +0, bodies +2, loading []
+RIG slow gritty_night_60kmh 34 ms at t=4.2 s pos=(-670, -1000): cells in +1 out +0, bodies +2, loading []
+RIG slow gritty_night_60kmh 45 ms at t=21.6 s pos=(-600, -939): cells in +0 out +0, bodies +2, loading []
+RIG slow gritty_night_60kmh 38 ms at t=21.7 s pos=(-600, -941): cells in +0 out +0, bodies +2, loading []
+RIG drive gritty_night_60kmh speed=60 km/h secs=25 frames=1478 fps=59.1 | frame_ms med=16.8 p95=24.4 p99=26.7 worst=45 | over16.7=52.2% over33=4 over50=0 over100=0
+RIG   map gritty_night_60kmh draws avg=113 max=140 | tris avg=497k max=718k | cells most=14 in=9 out=19 dropped=0 cap_hits=0
+RIG   stream gritty_night_60kmh start_ready_ms=3340 (worst frame meanwhile 40 ms) | request_to_in ms mean=140 worst=195 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.20, body 0.39, removal step 1.36 | bodies late=0
+RIG   mem gritty_night_60kmh static_mb=110 video_mb=226 tex_mb=98 buf_mb=109
+RIG slow centre_day_60kmh 37 ms at t=0.1 s pos=(-140, -600): cells in +0 out +0, bodies +0, loading ["0_-2:1", "0_-5:1"]
+RIG slow centre_day_60kmh 49 ms at t=0.7 s pos=(-129, -600): cells in +0 out +0, bodies +2, loading []
+RIG slow centre_day_60kmh 38 ms at t=0.8 s pos=(-127, -600): cells in +0 out +0, bodies +2, loading []
+RIG slow centre_day_60kmh 41 ms at t=1.9 s pos=(-109, -600): cells in +0 out +0, bodies +2, loading []
+RIG slow centre_day_60kmh 36 ms at t=4.8 s pos=(-60, -600): cells in +0 out +0, bodies +2, loading []
+RIG slow centre_day_60kmh 43 ms at t=16.5 s pos=(0, -466): cells in +1 out +0, bodies +2, loading []
+RIG drive centre_day_60kmh speed=60 km/h secs=25 frames=1461 fps=58.4 | frame_ms med=16.8 p95=24.4 p99=27.6 worst=49 | over16.7=53.1% over33=6 over50=0 over100=0
+RIG   map centre_day_60kmh draws avg=89 max=122 | tris avg=754k max=1351k | cells most=14 in=9 out=17 dropped=0 cap_hits=0
+RIG   stream centre_day_60kmh start_ready_ms=3211 (worst frame meanwhile 48 ms) | request_to_in ms mean=265 worst=467 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.57, body 1.13, removal step 1.36 | bodies late=0
+RIG   mem centre_day_60kmh static_mb=122 video_mb=288 tex_mb=98 buf_mb=171
+RIG plan_done lap=1
