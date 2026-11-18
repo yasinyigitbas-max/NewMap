@@ -57,16 +57,23 @@ def clothes_rack(b, hi=False):
     # lower shelf / shoe bar
     b.box((0,0.0,0.26),(W-0.10,D-0.16,0.016),'steel')
     b.tube((-W/2+0.04,0.0,0.26),(W/2-0.04,0.0,0.26),0.008,0.008,sg(hi,6,10),'chrome',cap0=True,cap1=True,smooth=True)
-    # hangers + garments
-    n=5
-    bodies=('paint_navy','fabric','paint_cream','paint_black','oak')
+    # garments hung side-on along the rail (how a real rail is merchandised): shirt / jacket / dress
+    # silhouettes as 5 cm thick profiles, colour-blocked, with a hanger hook over the rail
+    bodies=('paint_navy','paint_white','fabric','paint_black','paint_green','card','paint_red','paint_navy','vinyl')
+    n=9; top=H-0.13
     for i in range(n):
-        x=-0.52+i*0.26
-        hanger(b,(x,0.0,H-0.22),hi,w=0.20)
-        if not hi:
-            b.box((x,0.02,0.70),(0.22,0.008,0.70),'goods')
-        if hi:
-            garment_card(b,(x,0.02-0.006,0.68),h=0.72,w=0.22,body=bodies[i%len(bodies)])
+        x=-0.56+i*0.14; k=bodies[i%len(bodies)]; L=(0.62,0.70,0.95,0.66,0.60,0.74,1.0,0.68,0.72)[i]
+        hw=0.21; sl=0.07
+        prof=[(-0.04,top-0.02),(0.04,top-0.02),(hw,top-0.08),(hw+sl,top-0.30),(hw-0.03,top-0.32),(hw-0.03 if L<0.9 else hw+0.04,top-L),(-(hw-0.03) if L<0.9 else -(hw+0.04),top-L),(-(hw-0.03),top-0.32),(-(hw+sl),top-0.30),(-hw,top-0.08)]
+        # profile in the YZ plane (garment faces +-X), extruded along X
+        from mathutils import Vector as _V
+        y0=0.0
+        if sum(prof[a][0]*prof[(a+1)%len(prof)][1]-prof[(a+1)%len(prof)][0]*prof[a][1] for a in range(len(prof)))<0: prof=prof[::-1]
+        P=[_V((x-0.025,y0+py,pz)) for py,pz in prof]; Q=[_V((x+0.025,y0+py,pz)) for py,pz in prof]
+        b.quad(P[::-1],k); b.quad(Q,k)
+        for a in range(len(prof)):
+            c_=(a+1)%len(prof); b.quad([P[a],P[c_],Q[c_],Q[a]],k)
+        b.tube((x,0.0,top-0.02),(x,0.0,H-0.085),0.004,0.004,4,'chrome',cap0=False,cap1=False)
     maker_plate(b,(0,D/2-0.08,0.30),hi,w=0.07,h=0.016,rz=180)
     b.cbox((0,0,0),(W+0.08,D+0.08,H+0.04))
 
@@ -167,40 +174,45 @@ def mannequin(b, hi=False):
     H=1.70
     seg=sg(hi,10,16)
     # base + column
-    b.tube((0,0,0.0),(0,0,0.04),0.22,0.22,sg(hi,12,18),'steel',cap0=True,cap1=True,smooth=True)
-    b.tube((0,0,0.04),(0,0,0.08),0.18,0.16,sg(hi,12,18),'steel',cap0=False,cap1=True,smooth=True)
+    b.tube((0,0,0.0),(0,0,0.03),0.22,0.22,sg(hi,12,18),'paint_black',cap0=True,cap1=False,smooth=True)
+    b.tube((0,0,0.03),(0,0,0.06),0.22,0.16,sg(hi,12,18),'chrome',cap0=False,cap1=True,smooth=True)
     b.tube((0,0,0.08),(0,0,0.78),0.016,0.016,sg(hi,8,12),'chrome',cap0=False,cap1=True,smooth=True)
     # hip block sitting on the pole
     b.tube((0,0,0.78),(0,0,0.86),0.05,0.05,seg,'plastic',cap0=False,cap1=True,smooth=True)
     # pelvis
-    b.tube((0,0,0.86),(0,0,1.02),0.13,0.11,seg,'paint_cream',cap0=True,cap1=False,smooth=True)
+    b.tube((0,0,0.86),(0,0,1.02),0.135,0.115,seg,'paint_grey',cap0=True,cap1=False,smooth=True)
     # waist / torso
-    b.tube((0,0,1.02),(0,0,1.22),0.11,0.13,seg,'paint_cream',cap0=False,cap1=False,smooth=True)
-    b.tube((0,0,1.22),(0,0,1.44),0.13,0.16,seg,'paint_cream',cap0=False,cap1=False,smooth=True)
+    b.tube((0,0,1.00),(0,0,1.22),0.125,0.14,seg,'paint_navy',cap0=False,cap1=False,smooth=True)
+    b.tube((0,0,1.22),(0,0,1.44),0.14,0.165,seg,'paint_navy',cap0=False,cap1=False,smooth=True)
+    b.tube((0,0,0.99),(0,0,1.03),0.13,0.13,seg,'paint_navy',cap0=False,cap1=False,smooth=True)   # ribbed hem
+    for sgn in (-1,1):
+        b.tube((sgn*0.219,0.058,1.13),(sgn*0.222,0.061,1.08),0.047,0.047,sg(hi,6,10),'paint_navy',cap0=True,cap1=True,smooth=True)  # cuff
     # chest cap / neck boss
-    b.tube((0,0,1.44),(0,0,1.50),0.16,0.08,seg,'paint_cream',cap0=False,cap1=True,smooth=True)
+    b.tube((0,0,1.44),(0,0,1.50),0.165,0.07,seg,'paint_navy',cap0=False,cap1=True,smooth=True)
     # neck ring + egg head
     b.tube((0,0,1.50),(0,0,1.57),0.04,0.045,sg(hi,8,12),'paint_cream',cap0=False,cap1=False,smooth=True)
     b.tube((0,0,1.56),(0,0,1.58),0.05,0.05,sg(hi,8,12),'paint_cream',cap0=False,cap1=True,smooth=True)
     b.tube((0,0,1.57),(0,0,1.64),0.07,0.085,seg,'paint_cream',cap0=False,cap1=False,smooth=True)
     b.tube((0,0,1.64),(0,0,1.74),0.085,0.055,seg,'paint_cream',cap0=False,cap1=True,smooth=True)
     # shoulders
-    b.tube((-0.16,0,1.42),(0.16,0,1.42),0.05,0.05,sg(hi,8,12),'paint_cream',cap0=True,cap1=True,smooth=True)
+    b.tube((-0.165,0,1.42),(0.165,0,1.42),0.055,0.055,sg(hi,8,12),'paint_navy',cap0=True,cap1=True,smooth=True)
     # arms (slightly forward, hanging)
     for sgn in (-1,1):
-        b.tube((sgn*0.18,0.02,1.40),(sgn*0.22,0.06,1.10),0.045,0.038,sg(hi,8,12),'paint_cream',cap0=True,cap1=False,smooth=True)
+        b.tube((sgn*0.18,0.02,1.40),(sgn*0.22,0.06,1.10),0.05,0.043,sg(hi,8,12),'paint_navy',cap0=True,cap1=False,smooth=True)
         b.tube((sgn*0.22,0.06,1.10),(sgn*0.20,0.08,0.86),0.036,0.030,sg(hi,8,12),'paint_cream',cap0=False,cap1=True,smooth=True)
         # wrist cap
         b.tube((sgn*0.20,0.08,0.86),(sgn*0.20,0.08,0.83),0.032,0.028,sg(hi,6,10),'paint_cream',cap0=False,cap1=True,smooth=True)
     # legs
     for sgn in (-1,1):
-        b.tube((sgn*0.07,0.02,0.88),(sgn*0.09,0.04,0.48),0.07,0.055,sg(hi,8,12),'paint_cream',cap0=True,cap1=False,smooth=True)
-        b.tube((sgn*0.09,0.04,0.48),(sgn*0.08,0.03,0.16),0.050,0.042,sg(hi,8,12),'paint_cream',cap0=False,cap1=True,smooth=True)
+        b.tube((sgn*0.07,0.02,0.88),(sgn*0.09,0.04,0.48),0.074,0.06,sg(hi,8,12),'paint_grey',cap0=True,cap1=False,smooth=True)
+        b.tube((sgn*0.09,0.04,0.48),(sgn*0.08,0.03,0.16),0.056,0.05,sg(hi,8,12),'paint_grey',cap0=False,cap1=True,smooth=True)
         # ankle cap
-        b.tube((sgn*0.08,0.03,0.16),(sgn*0.08,0.03,0.12),0.040,0.036,sg(hi,6,10),'paint_cream',cap0=False,cap1=True,smooth=True)
+        b.tube((sgn*0.08,0.03,0.17),(sgn*0.08,0.03,0.13),0.050,0.046,sg(hi,6,10),'paint_cream',cap0=False,cap1=True,smooth=True)
+        b.box((sgn*0.08,-0.02,0.08),(0.09,0.24,0.06),'paint_black',ch=0.02)            # derby shoe
+        b.box((sgn*0.08,-0.02,0.075),(0.095,0.25,0.012),'rubber')                      # sole
     # maker plate on the base
     maker_plate(b,(0,-0.16,0.05),hi,w=0.06,h=0.014)
-    b.ccyl((0,0,0),0.22,H)
+    b.cbox((0,0,0),(0.44,0.44,H))
 
 
 # ------------------------------------------------------------------ shoe_bench
@@ -263,10 +275,20 @@ def shoe_wall(b, hi=False):
     for r in range(rows):
         z=zw0+(r+0.0)*(zw1-zw0)/rows
         b.box((0,-(D/2)+0.02,z+0.01),(W-0.12,0.016,0.018),'oak')
-        if not hi:
-            # one goods card per row (shoes face -Y)
-            zc=z+(zw1-zw0)/rows*0.55
-            b.box((0,-(D/2)+0.08,zc),(W-0.16,0.008,min(0.28,(zw1-zw0)/rows-0.10)),'goods')
+        # one display shoe per cubby, profile to the customer (sole + upper as extruded profiles)
+        uppers=('paint_navy','paint_white','paint_black','walnut','paint_red','card','paint_green','vinyl')
+        for c in range(cols):
+            x=xw0+(c+0.5)*(xw1-xw0)/cols; key=uppers[(r*cols+c*3)%len(uppers)]; fl=1 if (r+c)%2 else -1
+            zs_=z+0.018; L=0.26
+            if (r+c)%3==2:   # heeled shoe
+                prof=[(-L/2,0.012),(L/2,0.012),(L/2+0.005,0.035),(L/2-0.07,0.06),(-L/2+0.04,0.07),(-L/2,0.075)]
+                b.box((x-fl*(L/2-0.025),-(D/2)+0.12,zs_),(0.02,0.04,0.075),'paint_black',skip=('bottom',))
+            elif (r+c)%3==1: # boot
+                prof=[(-L/2,0.025),(L/2,0.025),(L/2+0.005,0.06),(L/2-0.08,0.09),(-L/2+0.07,0.10),(-L/2+0.06,0.20),(-L/2,0.20)]
+            else:            # sneaker
+                prof=[(-L/2,0.025),(L/2,0.025),(L/2+0.008,0.05),(L/2-0.06,0.075),(-L/2+0.07,0.10),(-L/2,0.10)]
+            b.prism([(x+fl*px,zs_+pz) for px,pz in (prof if fl>0 else [(p_[0],p_[1]) for p_ in prof[::-1]])],-(D/2)+0.08,-(D/2)+0.17,key)
+            b.box((x,-(D/2)+0.125,zs_),(L+0.01,0.09,0.025),'paint_white' if (r+c)%3==0 else 'rubber',skip=('bottom','back'))
     if hi:
         y=-(D/2)+0.08-0.006
         bodies=('paint_navy','paint_cream','paint_black','oak','fabric','brass')
@@ -294,9 +316,11 @@ def _p(name,fn,cls,budget=None,**kw):
     if budget is not None: d['budget']=budget
     return d
 PROPS=[
-    _p('clothes_rack',clothes_rack,'medium',1000,side=96,cage=0.04,ray=0.12),
+    _p('clothes_rack',clothes_rack,'medium',1200,no_ch=True,side=96,cage=0.04,ray=0.12),
     _p('fitting_room',fitting_room,'large',2500),
     _p('mannequin',mannequin,'medium',900),
     _p('shoe_bench',shoe_bench,'small',550),
-    _p('shoe_wall',shoe_wall,'medium',1100,side=96,cage=0.04,ray=0.12),
+    _p('shoe_wall',shoe_wall,'medium',1200,side=96,cage=0.04,ray=0.12),
 ]
+
+INDOOR_LOOK=True   # run.py: chamfer edge highlight + per-part colour variation in COLOR_0

@@ -1,6 +1,6 @@
 # Coronado indoor props (page I)
 
-Shop interior furniture and fixtures, built from scratch to SPEC.md. **Near and collision tiers only** — these pieces are viewed at 0–25 m inside a shop and are not drawn at mid or far distances. All 62 pass `tools/indoor/i_check.py` (17 Nov 2026).
+Shop interior furniture and fixtures, built from scratch to SPEC.md. **Near and collision tiers only** — these pieces are viewed at 0–25 m inside a shop and are not drawn at mid or far distances. All 62 pass `tools/indoor/i_check.py` (18 Nov 2026).
 
 ```
 props/indoor/shared/      13 shared fixtures
@@ -62,12 +62,12 @@ Shared trim tiles (128 px/m): `ti_wood`, `ti_laminate`, `ti_metal`, `ti_paint`, 
 | food | espresso_machine | 0.74 x 0.94, 0.92 | 814 | 1100 | 12 |
 | food | pastry_case | 1.40 x 0.71, 1.20 | 608 | 1100 | 12 |
 | food | gelato_case | 1.62 x 0.79, 1.19 | 486 | 1100 | 12 |
-| food | soda_fountain | 0.70 x 0.67, 1.16 | 640 | 800 | 12 |
-| food | bakery_shelf | 1.20 x 0.42, 2.00 | 394 | 1100 | 12 |
-| food | wine_backbar | 1.60 x 0.41, 2.10 | 580 | 1200 | 12 |
-| food | kitchen_line | 2.22 x 0.84, 2.06 | 1504 | 2000 | 12 |
-| food | beer_taps | 0.62 x 0.28, 0.62 | 494 | 600 | 12 |
-| food | bar_counter | 2.20 x 0.77, 1.11 | 560 | 1200 | 12 |
+| food | soda_fountain | 0.72 x 0.67, 1.16 | 770 | 800 | 12 |
+| food | bakery_shelf | 1.20 x 0.42, 2.00 | 826 | 1100 | 12 |
+| food | wine_backbar | 1.60 x 0.41, 2.10 | 1096 | 1200 | 12 |
+| food | kitchen_line | 2.22 x 0.84, 2.06 | 1582 | 2000 | 12 |
+| food | beer_taps | 0.62 x 0.28, 0.62 | 526 | 600 | 12 |
+| food | bar_counter | 2.20 x 0.77, 1.11 | 720 | 1200 | 12 |
 | grocery | checkout_counter | 2.00 x 0.78, 1.40 | 822 | 1200 | 12 |
 | grocery | chest_freezer | 1.64 x 0.73, 0.94 | 606 | 1100 | 12 |
 | grocery | grocery_shelf | 1.20 x 0.46, 2.05 | 702 | 1200 | 12 |
@@ -78,10 +78,10 @@ Shared trim tiles (128 px/m): `ti_wood`, `ti_laminate`, `ti_metal`, `ti_paint`, 
 | clothing | mannequin | 0.52 x 0.44, 1.74 | 590 | 900 | 44 |
 | clothing | shoe_bench | 1.10 x 0.38, 0.59 | 508 | 550 | 12 |
 | clothing | shoe_wall | 1.20 x 0.36, 2.00 | 486 | 1100 | 12 |
-| salon | barber_chair | 0.67 x 0.80, 1.30 | 738 | 1100 | 12 |
-| salon | mirror_station | 1.20 x 0.44, 1.99 | 916 | 1200 | 12 |
+| salon | barber_chair | 0.67 x 0.80, 1.30 | 934 | 1100 | 12 |
+| salon | mirror_station | 1.20 x 0.44, 1.99 | 1024 | 1200 | 12 |
 | salon | nail_table | 1.10 x 0.62, 1.13 | 406 | 900 | 12 |
-| salon | salon_product_shelf | 1.02 x 0.39, 2.02 | 562 | 1200 | 12 |
+| salon | salon_product_shelf | 1.02 x 0.39, 2.02 | 1150 | 1200 | 12 |
 | salon | wash_basin | 0.69 x 1.10, 1.11 | 758 | 1000 | 12 |
 | gift | card_spinner | 0.61 x 0.56, 1.55 | 720 | 900 | 44 |
 | gift | gallery_frame | 0.70 x 0.07, 0.90 | 222 | 400 | 12 |
@@ -90,11 +90,11 @@ Shared trim tiles (128 px/m): `ti_wood`, `ti_laminate`, `ti_metal`, `ti_paint`, 
 | office | filing_cabinet | 0.50 x 0.67, 1.32 | 434 | 800 | 12 |
 | office | office_chair | 0.56 x 0.59, 1.05 | 608 | 800 | 12 |
 | office | office_desk | 1.50 x 0.75, 0.74 | 420 | 1000 | 12 |
-| services | washer | 0.68 x 0.74, 0.98 | 764 | 1100 | 12 |
-| services | dryer | 0.65 x 0.80, 0.99 | 840 | 1100 | 12 |
-| services | garment_rail | 1.54 x 0.41, 1.67 | 832 | 1100 | 12 |
+| services | washer | 0.68 x 0.74, 0.98 | 942 | 1100 | 12 |
+| services | dryer | 0.65 x 0.80, 0.99 | 936 | 1100 | 12 |
+| services | garment_rail | 1.54 x 0.41, 1.67 | 1084 | 1100 | 12 |
 | services | workbench | 1.60 x 0.89, 1.48 | 644 | 1100 | 12 |
-| services | laundry_counter | 1.80 x 0.72, 1.08 | 744 | 1200 | 12 |
+| services | laundry_counter | 1.80 x 0.72, 1.08 | 748 | 1200 | 12 |
 | services | pegboard_wall | 1.22 x 0.25, 2.00 | 714 | 1100 | 12 |
 | sport | bike_stand | 1.40 x 0.70, 0.96 | 332 | 800 | 12 |
 | sport | surfboard_rack | 0.62 x 0.84, 1.53 | 560 | 800 | 12 |
@@ -103,7 +103,7 @@ Shared trim tiles (128 px/m): `ti_wood`, `ti_laminate`, `ti_metal`, `ti_paint`, 
 | venue | ticket_booth | 1.26 x 1.14, 2.20 | 880 | 1800 | 12 |
 | venue | stanchion | 0.40 x 0.74, 0.99 | 180 | 500 | 12 |
 | venue | poster_case | 0.84 x 0.10, 1.20 | 224 | 700 | 12 |
-| **total** | **62** | | **34949** | | |
+| **total** | **62** | | **37719** | | |
 
 ## Build
 

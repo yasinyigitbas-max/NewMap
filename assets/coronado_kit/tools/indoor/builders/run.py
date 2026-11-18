@@ -69,7 +69,15 @@ def build(defn):
     os.makedirs(outdir,exist_ok=True)
     rec={'file_base':f'{cat}_{name}','batch':batch,'class':cls,'budget':defn.get('budget',BUDGET[cls]),'conds':conds,'mount':defn.get('mount','ground'),'tiers':{}}
     pg.TRIM={k:(v[0],tuple(v[1]))+tuple(v[2:]) for k,v in defn.get('trim',{}).items()}; pg.FOCAL=[tuple(map(tuple,fb)) for fb in defn.get('focal',[])]
-    import zlib; b=pg.B(seed=zlib.crc32(name.encode())%1000); b.trim_on=bool(pg.TRIM); defn['near'](b); _sh(b,defn)
+    import zlib
+    tgt=int(defn.get('budget',BUDGET[cls])*defn.get('ch_fill',0.97))
+    chs=[None] if defn.get('no_ch') else [0.12,0.18,0.25,0.35,0.5,0.7,1.0,1.5,None]
+    for chm in chs:
+        TK0=list(pg.TKEYS)
+        b=pg.B(seed=zlib.crc32(name.encode())%1000); b.trim_on=bool(pg.TRIM); b.ch_min=chm; defn['near'](b)
+        if b.tris()<=tgt or chm is None: break
+        pg.TKEYS[:]=TK0
+    _sh(b,defn); print('chamfer', name, 'ch_min', chm, 'tris', b.tris(), 'target', tgt, flush=True)
     ob=pg.to_object(b,f'{cat}_{name}_near'); snap_ground(ob,defn); pg.store_uv(ob)
     pg.bake_ao(ob,ground=defn.get('mount','ground')!='wall_high',wall_y=defn.get('wall_y'))
     dims=ob.dimensions; bb=[Vector(c) for c in ob.bound_box]
@@ -82,7 +90,10 @@ def build(defn):
         for p in ob.data.polygons:
             if _tr[p.index]: nm=pg.TKEYS[_tr[p.index]-1]; ta[nm]=ta.get(nm,0)+p.area
         def _tpx(nm): r=pg.REG[nm+'.clean']; return r.get('tile_px',r['px'][2]-8)
-        rec['trim']={nm:{'area_m2':round(a_,2),'px_per_m':round(_tpx(nm)/[v for v in pg.TRIM.values() if v[0]==nm][0][1][0],1)} for nm,a_ in ta.items()}
+        def _ppm(nm):
+            L_=[v for v in pg.TRIM.values() if v[0]==nm]
+            return round(_tpx(nm)/L_[0][1][0],1) if L_ else 128.0
+        rec['trim']={nm:{'area_m2':round(a_,2),'px_per_m':_ppm(nm)} for nm,a_ in ta.items()}
     pg.DZ=0.0
     if defn.get('mount','ground').startswith('wall'):
         mz=min(v.co.z for v in ob.data.vertices); pg.DZ=-mz; rec['mount_height']=round(mz,3)
@@ -223,6 +234,8 @@ def build(defn):
         if k: bpy.context.scene.collection.objects.link(o)
         o.rotation_euler.z=math.radians(ang); bpy.context.view_layer.update(); rows.append((o,f'{ang}'))
     for o,cond in prev[1:]: o.rotation_euler.z=math.radians(30); rows.append((o,cond))
+    if defn.get('page')=='i':
+        o=c0.copy(); bpy.context.scene.collection.objects.link(o); o.rotation_euler.z=math.radians(-35); rows.append((o,'3/4'))
     for o,t in tiers: rows.append((o,t))
     bpy.context.view_layer.update()
     pdir=f'{K}/previews/{defn.get("pdir","props_"+batch)}'; os.makedirs(pdir,exist_ok=True)
@@ -232,10 +245,12 @@ def build(defn):
     for me in list(bpy.data.meshes):
         if me.users==0: bpy.data.meshes.remove(me)
     rec['secs']=round(time.time()-t0,1)
+    if rec['tiers']['near']>rec['budget'] or rec['budget']>BUDGET[cls]: print('OVER_BUDGET',name,rec['tiers']['near'],rec['budget'],BUDGET[cls],flush=True)
     print('BUILT',name,rec['tiers'],'budget',rec['budget'],rec['secs'],'s',flush=True)
     return rec
 
 pg.clear_scene(); setup_render()
+if getattr(mod,'INDOOR_LOOK',False): pg.EDGE_GAIN=(1.18,0.035); pg.JIT=0.04; pg.AO_FLATTEN=(0.03,0.25)
 man_p=f'{K}/props/manifest_{batch}.json'
 man=json.load(open(man_p)) if os.path.exists(man_p) else {}
 man_old=dict(man)

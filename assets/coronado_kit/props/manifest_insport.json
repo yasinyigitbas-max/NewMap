@@ -3,32 +3,44 @@
   "file_base": "prop_bike_stand",
   "batch": "insport",
   "class": "medium",
-  "budget": 800,
+  "budget": 1100,
   "conds": [
    "clean"
   ],
   "mount": "ground",
   "tiers": {
-   "near": 332
+   "near": 904
   },
   "footprint_w": 1.4,
-  "footprint_d": 0.7,
+  "footprint_d": 1.676,
   "height": 0.964,
   "regions": [
    "baked:bike_stand"
   ],
   "trim": {
    "ti_metal": {
-    "area_m2": 2.03,
+    "area_m2": 2.09,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.37,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.36,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 0.06,
     "px_per_m": 128.0
    }
   },
   "atlas_page": "props_i_*",
-  "high_tris": 1196,
+  "high_tris": 3152,
   "bake_slot_px": 64,
   "bake_px_per_m": 963.0,
   "col": 1,
-  "secs": 14.7
+  "secs": 19.0
  },
  "surfboard_rack": {
   "file_base": "prop_surfboard_rack",
@@ -40,7 +52,7 @@
   ],
   "mount": "ground",
   "tiers": {
-   "near": 560
+   "near": 776
   },
   "footprint_w": 0.62,
   "footprint_d": 0.84,
@@ -54,20 +66,20 @@
     "px_per_m": 128.0
    },
    "ti_plastic": {
-    "area_m2": 0.17,
+    "area_m2": 0.16,
     "px_per_m": 128.0
    },
    "ti_paint": {
-    "area_m2": 0.74,
+    "area_m2": 0.81,
     "px_per_m": 128.0
    }
   },
   "atlas_page": "props_i_*",
-  "high_tris": 1800,
+  "high_tris": 2520,
   "bake_slot_px": 64,
   "bake_px_per_m": 1087.0,
   "col": 1,
-  "secs": 12.4
+  "secs": 11.9
  },
  "weight_bench": {
   "file_base": "prop_weight_bench",
@@ -79,33 +91,37 @@
   ],
   "mount": "ground",
   "tiers": {
-   "near": 460
+   "near": 852
   },
   "footprint_w": 1.16,
   "footprint_d": 0.84,
-  "height": 1.115,
+  "height": 1.13,
   "regions": [
    "baked:weight_bench"
   ],
   "trim": {
    "ti_paint": {
-    "area_m2": 1.15,
+    "area_m2": 0.76,
     "px_per_m": 128.0
    },
    "ti_fabric": {
-    "area_m2": 0.62,
+    "area_m2": 0.57,
     "px_per_m": 128.0
    },
    "ti_metal": {
-    "area_m2": 1.88,
+    "area_m2": 1.84,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.35,
     "px_per_m": 128.0
    }
   },
   "atlas_page": "props_i_*",
-  "high_tris": 2288,
+  "high_tris": 3064,
   "bake_slot_px": 64,
   "bake_px_per_m": 1087.0,
   "col": 1,
-  "secs": 14.6
+  "secs": 14.3
  }
 }

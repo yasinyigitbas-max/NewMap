@@ -38,6 +38,10 @@ class B:
         s.rk=s.bm.faces.layers.int.new('reg'); s.sy=s.bm.faces.layers.int.new('sym'); s.keys=[]; s.cur_sym=1; s.rnd=random.Random(seed)
         s.tr=s.bm.faces.layers.int.new('trim'); s.trim_on=False; s.trim_scale=1.0
         s.col=[]   # collision primitives
+        s.ed=s.bm.faces.layers.int.new('edge')   # 1 = chamfer strip (edge-highlight in COLOR_0)
+        s.ch_min=None   # near tier: boxes whose longest side >= ch_min get chamfered silhouette edges (run.py fits this to the budget)
+        s.ch_k=0.010    # chamfer width scale (metres per metre of longest side), clamped 4-12 mm
+        s.goods_rnd=random.Random(seed+11)
     def _k(s,key):
         if key not in s.keys: s.keys.append(key)
         return s.keys.index(key)
@@ -175,9 +179,13 @@ class B:
         return out
     def poly(s, pts, key, decal=False):
         return s.quad(pts,key,decal)
-    def box(s, c, size, key, skip=(), decal=None, rz=0.0, keys=None, rx=0.0):
+    def box(s, c, size, key, skip=(), decal=None, rz=0.0, keys=None, rx=0.0, ch=None):
         """c=(x,y,z0) bottom centre; size=(w,d,h). decal={'front':'sign_x'}; keys={'top':'k2'} per-face material"""
         x,y,z=c; w,d,h=size; decal=decal or {}; keys=keys or {}
+        if ch is None and s.ch_min is not None and not decal and max(w,d,h)>=s.ch_min:
+            cw=min(0.012,max(0.004,s.ch_k*max(w,d,h)))
+            if min(w,d,h)>=3.2*cw: ch=cw
+        if ch and not decal: return s._chbox(c,size,key,skip,rz,keys,rx,ch)
         R=Matrix.Rotation(rz,3,'Z')@Matrix.Rotation(rx,3,'X')
         def P(a,b,cz): return Vector((x,y,z))+R@Vector((a,b,cz))
         hw,hd=w/2,d/2
@@ -192,6 +200,95 @@ class B:
             if nm in skip: continue
             if nm in decal: out+=s.quad(pts,decal[nm],decal=True)
             else: out+=s.quad(pts,keys.get(nm,key))
+        return out
+    def _chbox(s, c, size, key, skip, rz, keys, rx, ch):
+        """box with 45-degree chamfers on every edge between two present faces (flat strips tagged edge=1,
+        corner triangles where three faces meet). Same footprint and height as box()."""
+        x,y,z=c; w,d,h=size; keys=keys or {}
+        R=Matrix.Rotation(rz,3,'Z')@Matrix.Rotation(rx,3,'X'); O=Vector((x,y,z+h/2))
+        H=(w/2,d/2,h/2); ch=min(ch,0.3*min(w,d,h))
+        # face id: (axis, sign) ; names as box()
+        NM={(0,-1):'left',(0,1):'right',(1,-1):'front',(1,1):'back',(2,-1):'bottom',(2,1):'top'}
+        pres={k:(NM[k] not in skip) for k in NM}
+        def P(v): return O+R@Vector(v)
+        def kk(ax,sg): return keys.get(NM[(ax,sg)],key)
+        out=[]
+        def put(pts,k,edge=False):
+            fs=s.quad([P(v) for v in pts],k)
+            if edge:
+                for f in fs: f[s.ed]=1
+            out.extend(fs)
+        for ax in range(3):
+            for sg in (-1,1):
+                if not pres[(ax,sg)]: continue
+                a1,a2=[i for i in range(3) if i!=ax]
+                lo1=-H[a1]+(ch if pres[(a1,-1)] else 0); hi1=H[a1]-(ch if pres[(a1,1)] else 0)
+                lo2=-H[a2]+(ch if pres[(a2,-1)] else 0); hi2=H[a2]-(ch if pres[(a2,1)] else 0)
+                def V(u,v):
+                    r=[0,0,0]; r[ax]=sg*H[ax]; r[a1]=u; r[a2]=v; return tuple(r)
+                q=[V(lo1,lo2),V(hi1,lo2),V(hi1,hi2),V(lo1,hi2)]
+                # outward winding: normal = e1 x e2 must point along +sg on ax
+                e1=Vector(q[1])-Vector(q[0]); e2=Vector(q[3])-Vector(q[0]); n=e1.cross(e2)
+                if n[ax]*sg<0: q=q[::-1]
+                put(q,kk(ax,sg))
+        # edge strips
+        for a in range(3):
+            for b_ in range(a+1,3):
+                t=3-a-b_
+                for sa in (-1,1):
+                    for sb in (-1,1):
+                        if not (pres[(a,sa)] and pres[(b_,sb)]): continue
+                        lo=-H[t]+(ch if pres[(t,-1)] else 0); hi=H[t]-(ch if pres[(t,1)] else 0)
+                        def V(pa,pb,pt):
+                            r=[0,0,0]; r[a]=pa; r[b_]=pb; r[t]=pt; return tuple(r)
+                        A=sa*H[a]; Bv=sb*H[b_]
+                        q=[V(A,Bv-sb*ch,lo),V(A-sa*ch,Bv,lo),V(A-sa*ch,Bv,hi),V(A,Bv-sb*ch,hi)]
+                        e1=Vector(q[1])-Vector(q[0]); e2=Vector(q[3])-Vector(q[0]); n=e1.cross(e2)
+                        if n[a]*sa+n[b_]*sb<0: q=q[::-1]
+                        k_=kk(2,1) if (a==2 or b_==2) and pres[(2,1)] and ((a==2 and sa>0) or (b_==2 and sb>0)) else kk(a,sa)
+                        put(q,k_,True)
+        # corners
+        for sx in (-1,1):
+            for sy_ in (-1,1):
+                for sz in (-1,1):
+                    if not (pres[(0,sx)] and pres[(1,sy_)] and pres[(2,sz)]): continue
+                    X,Y,Z=sx*H[0],sy_*H[1],sz*H[2]
+                    q=[(X,Y-sy_*ch,Z-sz*ch),(X-sx*ch,Y,Z-sz*ch),(X-sx*ch,Y-sy_*ch,Z)]
+                    e1=Vector(q[1])-Vector(q[0]); e2=Vector(q[2])-Vector(q[0]); n=e1.cross(e2)
+                    if n.dot(Vector((sx,sy_,sz)))<0: q=q[::-1]
+                    put(q,kk(2,sz) if sz>0 else kk(0,sx),True)
+        return out
+    def facing(s, p0, p1, z0, h, band, depth=0.0, side_key='pk_side', top_key='pk_top', off=None):
+        """shelf product run: a front face from p0 to p1 (x,y; viewer on the left of p0->p1, i.e. -Y for +X runs)
+        mapped onto a page-I goods band (tg_grocery / tg_bottles / tg_spines) at true horizontal scale; the band
+        height (0.25 m) is fitted to h. depth>0 adds a dark top and two side faces (block reads solid from above)."""
+        tname=band; R_=REG[tname+'.clean']; Pu=R_['m'][0]
+        if tname not in TKEYS: TKEYS.append(tname)
+        ti=TKEYS.index(tname)+1; ki=s._k('goods_'+band)
+        a=Vector((p0[0],p0[1],0)); b=Vector((p1[0],p1[1],0)); L=(b-a).length; dirv=(b-a).normalized()
+        nrm=Vector((dirv.y,-dirv.x,0))   # outward (viewer side)
+        u0=(off if off is not None else s.goods_rnd.uniform(0,Pu-L-0.01)) if L<Pu else 0.0
+        out=[]
+        cuts=[0.0]; 
+        while cuts[-1]+ (Pu-u0 if len(cuts)==1 else Pu) < L-1e-6: cuts.append(cuts[-1]+(Pu-u0 if len(cuts)==1 else Pu))
+        cuts.append(L)
+        for i in range(len(cuts)-1):
+            A=a+dirv*cuts[i]; Bp=a+dirv*cuts[i+1]
+            uA=((u0 if i==0 else 0.0))/Pu; uB=uA+(cuts[i+1]-cuts[i])/Pu
+            vs=[s.bm.verts.new((A.x,A.y,z0)),s.bm.verts.new((Bp.x,Bp.y,z0)),s.bm.verts.new((Bp.x,Bp.y,z0+h)),s.bm.verts.new((A.x,A.y,z0+h))]
+            try: f=s.bm.faces.new(vs)
+            except ValueError: continue
+            f.smooth=False; f[s.rk]=ki; f[s.sy]=1; f[s.tr]=ti
+            for loop,uv in zip(f.loops,[(uA,0.0),(uB,0.0),(uB,1.0),(uA,1.0)]): loop[s.uvl].uv=uv
+            out.append(f)
+        if depth>0:
+            back=-nrm*depth; A=a; Bp=b
+            top=[Vector((A.x,A.y,z0+h)),Vector((Bp.x,Bp.y,z0+h)),Vector((Bp.x,Bp.y,z0+h))+back,Vector((A.x,A.y,z0+h))+back]
+            out+=s.quad(top,top_key)
+            for P0,sgn in ((A,-1),(Bp,1)):
+                q=[P0+back+Vector((0,0,z0)),P0+Vector((0,0,z0)),P0+Vector((0,0,z0+h)),P0+back+Vector((0,0,z0+h))]
+                if sgn>0: q=[P0+Vector((0,0,z0)),P0+back+Vector((0,0,z0)),P0+back+Vector((0,0,z0+h)),P0+Vector((0,0,z0+h))]
+                out+=s.quad(q,side_key)
         return out
     def tube(s, p0, p1, r0, r1, seg, key, cap0=False, cap1=True, smooth=True, phase=0.0, decal_cap=None, sq=False):
         """cylinder / cone frustum between points; sq=True -> square section (seg ignored=4)"""
@@ -369,6 +466,21 @@ def bake_ao(ob, ground=True, wall_y=None, dist=None, rays=48, strength=0.85):
                 if h: occ+=1
             ao=1-strength*occ/rays
             vals[l.index]=ao
+    if AO_FLATTEN:   # big flat panels: compress the per-corner spread (2-tri quads showed a diagonal AO crease)
+        par={f.index:f.index for f in bm.faces}
+        def fd(i):
+            while par[i]!=i: par[i]=par[par[i]]; i=par[i]
+            return i
+        for e in bm.edges:
+            if len(e.link_faces)==2:
+                f1,f2=e.link_faces
+                if f1.normal.dot(f2.normal)>0.9995: par[fd(f1.index)]=fd(f2.index)
+        G={}
+        for f in bm.faces: G.setdefault(fd(f.index),[]).append(f)
+        for fs in G.values():
+            if sum(f.calc_area() for f in fs)<AO_FLATTEN[0]: continue
+            L_=[l.index for f in fs for l in f.loops]; m_=sum(vals[i] for i in L_)/len(L_)
+            for i in L_: vals[i]=m_+AO_FLATTEN[1]*(vals[i]-m_)
     bm.free()
     for i,v in enumerate(vals): ca.data[i].color=(v,v,v,1.0)
     me.color_attributes.active_color=ca
@@ -377,6 +489,9 @@ WX=None   # waterfront weathering (dict) for the clean colour bake
 AOS={}
 DIRT=(0.52,0.45,0.36)
 AO_ZONLY=False
+AO_FLATTEN=None  # (min face area m2, kept spread) indoor: (0.03, 0.25)
+EDGE_GAIN=None   # (mul, add) on chamfer strips; indoor sets (1.18, 0.035)
+JIT=0.0          # per-part value / hue jitter (indoor 0.04)
 def cond_colors(ob, ci, ground=True, tint=None, keys=None, gmask=None, ttint=None):
     """COLOR_0 = baked AO x condition grime (dirt splash / grime at the base for worn & dirty variants)"""
     me=ob.data; vals=AOS[ob.name]; ca=me.color_attributes['Col']
@@ -387,6 +502,28 @@ def cond_colors(ob, ci, ground=True, tint=None, keys=None, gmask=None, ttint=Non
         vals=[sum(grp[round(me.vertices[l.vertex_index].co.z,2)])/len(grp[round(me.vertices[l.vertex_index].co.z,2)]) for l in me.loops]
     amt={0:0.0,1:0.30,2:0.55}[ci]; fall={0:1,1:0.22,2:0.38}[ci]
     ltp={}; trf=is_trim(me)
+    ltp2=[0]*len(me.loops)
+    for p in me.polygons:
+        for li in p.loop_indices: ltp2[li]=p.index
+    edg=[d.value for d in me.attributes['edge'].data] if 'edge' in me.attributes else None
+    isl=None
+    if JIT:
+        par=list(range(len(me.vertices)))
+        def fd(i):
+            while par[i]!=i: par[i]=par[par[i]]; i=par[i]
+            return i
+        for p in me.polygons:
+            v0=fd(p.vertices[0])
+            for v in p.vertices[1:]:
+                r_=fd(v)
+                if r_!=v0: par[r_]=v0
+        isl=[fd(p.vertices[0]) for p in me.polygons]
+        JF={}
+        for p in me.polygons:
+            r_=isl[p.index]
+            if r_ in JF: continue
+            co=me.vertices[r_].co; rr=random.Random(hash((round(co.x,3),round(co.y,3),round(co.z,3)))%100003)
+            v_=1+rr.uniform(-JIT,JIT); JF[r_]=tuple(v_*(1+rr.uniform(-JIT*0.4,JIT*0.4)) for _ in range(3))
     if tint or ttint:
         for p in me.polygons:
             for li in p.loop_indices: ltp[li]=p.index
@@ -400,6 +537,11 @@ def cond_colors(ob, ci, ground=True, tint=None, keys=None, gmask=None, ttint=Non
         if ttint and trf[ltp[li]]:
             kk=keys[me.attributes['reg'].data[ltp[li]].value]
             if kk in ttint: col=[col[k]*ttint[kk][k] for k in range(3)]
+        if EDGE_GAIN and edg is not None and edg[ltp2[li]]:
+            col=[c*EDGE_GAIN[0]+EDGE_GAIN[1] for c in col]
+        if JIT and isl is not None:
+            jf=JF[isl[ltp2[li]]]
+            if not (trf[ltp2[li]] and TKEYS[trf[ltp2[li]]-1].startswith('tg_')): col=[col[k]*jf[k] for k in range(3)]
         ca.data[li].color=(min(col[0],1),min(col[1],1),min(col[2],1),1.0)
 
 def apply_uv(ob, keys, cond):
@@ -498,7 +640,7 @@ def col_object(b, name='col'):
             bmesh.ops.create_cube(bm,size=1.0,matrix=m)
         else:
             _,(x,y,z),r,h=c
-            bmesh.ops.create_cone(bm,cap_ends=True,segments=12,radius1=r,radius2=r,depth=h,matrix=Matrix.Translation((x,y,z+h/2)))
+            bmesh.ops.create_cone(bm,cap_ends=True,segments=8,radius1=r,radius2=r,depth=h,matrix=Matrix.Translation((x,y,z+h/2)))
     bmesh.ops.triangulate(bm,faces=bm.faces)
     if DZ: bmesh.ops.translate(bm,vec=(0,0,DZ),verts=bm.verts)
     me=bpy.data.meshes.new('col'); bm.to_mesh(me); bm.free()
@@ -839,6 +981,7 @@ def pg_apply_high(high, keys, cond):
     me=high.data; uv=me.uv_layers['UVMap'].data; rk=me.attributes['reg'].data
     for p in me.polygons:
         key=keys[rk[p.index].value]; rname=f'{key}.{cond}' if f'{key}.{cond}' in REG else f'{key}.clean'
+        if rname not in REG and key in TRIM: rname=TRIM[key][0]+'.clean'   # new trim-only keys (pk_*) bake from their tile
         u0,v0,u1,v1=REG[rname]['uv']
         for li in p.loop_indices:
             nu,nv=STORE[high.name][li]; uv[li].uv=(u0+nu*(u1-u0), 1-(v0+(1-nv)*(v1-v0)))
