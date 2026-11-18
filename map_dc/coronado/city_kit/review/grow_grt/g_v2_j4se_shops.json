@@ -1,0 +1,70 @@
+{
+ "piece": "g_v2_j4se",
+ "shops": [
+  {
+   "door_index": 1,
+   "kind": "liquor",
+   "label": "corner_block",
+   "model": "ck/ck_brk3_corner2",
+   "name": "Fourth St Liquor",
+   "pos": [
+    -783.799999237061,
+    2.14745877683163,
+    -1176.20000076294
+   ],
+   "yaw": 180.000005008956
+  },
+  {
+   "door_index": 0,
+   "kind": "pawn",
+   "label": "corner_next",
+   "model": "ck/ck_svc_trade",
+   "name": "Gold & Pawn",
+   "pos": [
+    -771.200000762939,
+    2.16072469949722,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956
+  },
+  {
+   "door_index": 1,
+   "kind": "barber",
+   "label": "corner_next",
+   "model": "ck/ck_svc_trade",
+   "name": "Fade Kings Barber",
+   "pos": [
+    -771.200000762939,
+    2.16072469949722,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956
+  },
+  {
+   "door_index": 1,
+   "kind": "takeout",
+   "label": "row_b",
+   "model": "ck/ck_svc_pawn_fast",
+   "name": "Taco Shack",
+   "pos": [
+    -733.0,
+    2.57087367773056,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956
+  },
+  {
+   "door_index": 0,
+   "kind": "laundry",
+   "label": "launder",
+   "model": "ck/ck_grt_row2",
+   "name": "Suds City Laundry",
+   "pos": [
+    -707.599998474121,
+    3.01873588562012,
+    -1177.20000076294
+   ],
+   "yaw": 180.000005008956
+  }
+ ]
+}

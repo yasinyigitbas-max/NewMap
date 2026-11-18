@@ -1,0 +1,31 @@
+{
+ "piece": "g_v1_j4ne",
+ "shops": [
+  {
+   "door_index": 0,
+   "kind": "cash",
+   "label": "trade_corner",
+   "model": "ck/ck_svc_trade",
+   "name": "Quik Check Cash",
+   "pos": [
+    -783.5,
+    2.15214402973652,
+    -1222.79999923706
+   ],
+   "yaw": 0.0
+  },
+  {
+   "door_index": 1,
+   "kind": "parts",
+   "label": "trade_corner",
+   "model": "ck/ck_svc_trade",
+   "name": "Rim & Tire",
+   "pos": [
+    -783.5,
+    2.15214402973652,
+    -1222.79999923706
+   ],
+   "yaw": 0.0
+  }
+ ]
+}
