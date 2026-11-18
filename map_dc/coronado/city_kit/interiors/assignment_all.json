@@ -1,0 +1,6256 @@
+{
+ "_doc": "Every shop door of the map with the shop behind it (tools/city/rooms/assign_all.py). source 'sample' = the samples' hand-made choice (assignment_samples.json), 'new' = chosen by district, fit and neighbours. bay = [x0, x1] of the room in the building's model frame. signs = the building's boards this shop claims.",
+ "built_not_listed": [
+  "wf_harbor_office"
+ ],
+ "count": 161,
+ "kinds": {
+  "office": 14,
+  "bar": 13,
+  "restaurant": 10,
+  "cafe": 10,
+  "salon": 10,
+  "cleaners": 9,
+  "fast_food": 9,
+  "store": 8,
+  "keys": 8,
+  "bakery": 7,
+  "pharmacy": 7,
+  "jewelry": 7,
+  "grocery": 6,
+  "clothes": 6,
+  "sport": 5,
+  "corner_shop": 5,
+  "books": 5,
+  "shoes": 5,
+  "gallery": 5,
+  "souvenir": 5,
+  "ice_cream": 4,
+  "venue": 2,
+  "gas": 1
+ },
+ "rooms": [
+  {
+   "id": "i_ne__truck_repair__0",
+   "piece": "i_ne",
+   "label": "truck_repair",
+   "model": "industrial/ind_repair",
+   "cell": "cell_-4_-8",
+   "pos": [
+    -782.799987792969,
+    2.15000009536743,
+    -1488.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -6.5,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "cleaners",
+   "name": "Base Autoport",
+   "style": "teal",
+   "why": "(sample) the repair shop's customer counter (the bays stay a non-enterable service yard)",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "front",
+     "along": -5.0,
+     "w": 3.6
+    },
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    }
+   ]
+  },
+  {
+   "id": "i_ne__harbor_steel_mill__0",
+   "piece": "i_ne",
+   "label": "harbor_steel_mill",
+   "model": "industrial/ind_factory",
+   "cell": "cell_-4_-8",
+   "pos": [
+    -714.5,
+    2.15000009536743,
+    -1458.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": 8.0,
+   "door_w": 1.6,
+   "bay": [
+    -17.7,
+    17.7
+   ],
+   "kind": "store",
+   "name": "Anchor Hardware",
+   "style": "red",
+   "why": "the trades and homes around need supplies (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 12.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 12.67,
+     "w": 1.35
+    },
+    {
+     "facade": "front",
+     "along": 10.0,
+     "w": 5.0
+    },
+    {
+     "facade": "right",
+     "along": 12.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 12.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 12.97,
+     "w": 1.95
+    },
+    {
+     "facade": "left",
+     "along": 12.97,
+     "w": 1.95
+    },
+    {
+     "facade": "right",
+     "along": 12.97,
+     "w": 1.95
+    },
+    {
+     "facade": "left",
+     "along": 12.97,
+     "w": 1.95
+    }
+   ]
+  },
+  {
+   "id": "i_nw__bayline_dispatch__1",
+   "piece": "i_nw",
+   "label": "bayline_dispatch",
+   "model": "ck/ck_svc_trade",
+   "cell": "cell_-5_-8",
+   "pos": [
+    -815.200012207031,
+    2.15000009536743,
+    -1429.5
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 1,
+   "door_along": 3.0,
+   "door_w": 1.8,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "restaurant",
+   "name": "Breakwater Grill",
+   "style": "black",
+   "why": "a sit-down meal for the district (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "i_ne__machine_shop__0",
+   "piece": "i_ne",
+   "label": "machine_shop",
+   "model": "ck/ck_svc_trade",
+   "cell": "cell_-4_-8",
+   "pos": [
+    -784.799987792969,
+    2.15000009536743,
+    -1429.5
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "fast_food",
+   "name": "Marina Subs",
+   "style": "red",
+   "why": "a quick bite, open late (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "i_nw__bayline_dispatch__0",
+   "piece": "i_nw",
+   "label": "bayline_dispatch",
+   "model": "ck/ck_svc_trade",
+   "cell": "cell_-5_-8",
+   "pos": [
+    -815.200012207031,
+    2.15000009536743,
+    -1429.5
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "bar",
+   "name": "Ocean Taproom",
+   "style": "black",
+   "why": "an evening place for the block (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "i_ne__machine_shop__1",
+   "piece": "i_ne",
+   "label": "machine_shop",
+   "model": "ck/ck_svc_trade",
+   "cell": "cell_-4_-8",
+   "pos": [
+    -784.799987792969,
+    2.15000009536743,
+    -1429.5
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 1,
+   "door_along": 3.0,
+   "door_w": 1.8,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "office",
+   "name": "June's Tax Office",
+   "style": "navy",
+   "why": "a service counter (bank, realty, travel) (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "i_nw__bayline_freight_office__0",
+   "piece": "i_nw",
+   "label": "bayline_freight_office",
+   "model": "modular/examples/mod_brk_row",
+   "cell": "cell_-5_-8",
+   "pos": [
+    -853.0,
+    2.15000009536743,
+    -1416.19995117188
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "keys",
+   "name": "Crown Lock & Key",
+   "style": "black",
+   "why": "keys cut and repairs (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "i_nw__bayline_freight_office__1",
+   "piece": "i_nw",
+   "label": "bayline_freight_office",
+   "model": "modular/examples/mod_brk_row",
+   "cell": "cell_-5_-8",
+   "pos": [
+    -853.0,
+    2.15000009536743,
+    -1416.19995117188
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "restaurant",
+   "name": "Ferry Kitchen",
+   "style": "black",
+   "why": "a sit-down meal for the district (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "i_nw__bayline_freight_office__2",
+   "piece": "i_nw",
+   "label": "bayline_freight_office",
+   "model": "modular/examples/mod_brk_row",
+   "cell": "cell_-5_-8",
+   "pos": [
+    -853.0,
+    2.15000009536743,
+    -1416.19995117188
+   ],
+   "yaw": 0.0,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "fast_food",
+   "name": "Pelican Fish & Chips",
+   "style": "sun",
+   "why": "a quick bite, open late (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "i_nw__drivers_cafe__0",
+   "piece": "i_nw",
+   "label": "drivers_cafe",
+   "model": "commercial/com_orange_corner",
+   "cell": "cell_-5_-8",
+   "pos": [
+    -828.5,
+    2.15000009536743,
+    -1416.19995117188
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -1.08,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "cafe",
+   "name": "Cove Coffee",
+   "style": "cream",
+   "why": "coffee where people walk past (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "i_nw__drivers_cafe__1",
+   "piece": "i_nw",
+   "label": "drivers_cafe",
+   "model": "commercial/com_orange_corner",
+   "cell": "cell_-5_-8",
+   "pos": [
+    -828.5,
+    2.15000009536743,
+    -1416.19995117188
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 1.08,
+   "door_w": 1.6,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "office",
+   "name": "Ocean Travel",
+   "style": "navy",
+   "why": "a service counter (bank, realty, travel) (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "i_ne__harbor_diner__0",
+   "piece": "i_ne",
+   "label": "harbor_diner",
+   "model": "commercial/com_bistro",
+   "cell": "cell_-4_-8",
+   "pos": [
+    -771.5,
+    2.15000009536743,
+    -1416.19995117188
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 4.76,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "restaurant",
+   "name": "Clay's Diner",
+   "style": "red",
+   "why": "(sample) the workers' diner on the corner (Clay's Diner): breakfast at 6, lunch for the whole district",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 11.18
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "i_ne__harbor_steel_office__0",
+   "piece": "i_ne",
+   "label": "harbor_steel_office",
+   "model": "modular/examples/mod_brk_row",
+   "cell": "cell_-4_-8",
+   "pos": [
+    -712.0,
+    2.15000009536743,
+    -1416.19995117188
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "bar",
+   "name": "Tern Taproom",
+   "style": "black",
+   "why": "an evening place for the block (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "i_ne__harbor_steel_office__1",
+   "piece": "i_ne",
+   "label": "harbor_steel_office",
+   "model": "modular/examples/mod_brk_row",
+   "cell": "cell_-4_-8",
+   "pos": [
+    -712.0,
+    2.15000009536743,
+    -1416.19995117188
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "cleaners",
+   "name": "Island Wash & Fold",
+   "style": "navy",
+   "why": "people in flats without machines (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "i_ne__harbor_steel_office__2",
+   "piece": "i_ne",
+   "label": "harbor_steel_office",
+   "model": "modular/examples/mod_brk_row",
+   "cell": "cell_-4_-8",
+   "pos": [
+    -712.0,
+    2.15000009536743,
+    -1416.19995117188
+   ],
+   "yaw": 0.0,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "keys",
+   "name": "Gull Lock & Key",
+   "style": "black",
+   "why": "keys cut and repairs (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "i_se__auto_repair__0",
+   "piece": "i_se",
+   "label": "auto_repair",
+   "model": "industrial/ind_repair",
+   "cell": "cell_-4_-7",
+   "pos": [
+    -746.5,
+    2.15000009536743,
+    -1382.80004882812
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -6.5,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "store",
+   "name": "Sandpiper Hardware",
+   "style": "navy",
+   "why": "the trades and homes around need supplies (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "front",
+     "along": -5.0,
+     "w": 3.6
+    },
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    }
+   ]
+  },
+  {
+   "id": "i_se__electrical_contractor__0",
+   "piece": "i_se",
+   "label": "electrical_contractor",
+   "model": "ck/ck_grt_row2",
+   "cell": "cell_-4_-7",
+   "pos": [
+    -708.0,
+    2.15000009536743,
+    -1384.80004882812
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -4.6,
+   "door_w": 1.2,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "keys",
+   "name": "Ferry Lock & Key",
+   "style": "black",
+   "why": "keys cut and repairs (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -2.0,
+     "w": 2.4
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 2.8
+    }
+   ]
+  },
+  {
+   "id": "i_sw__print_works__0",
+   "piece": "i_sw",
+   "label": "print_works",
+   "model": "modular/examples/mod_brk_row",
+   "cell": "cell_-5_-7",
+   "pos": [
+    -888.0,
+    2.15000009536743,
+    -1383.80004882812
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "store",
+   "name": "Halyard Home & Garden",
+   "style": "red",
+   "why": "the trades and homes around need supplies (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "i_sw__dive_bar__0",
+   "piece": "i_sw",
+   "label": "dive_bar",
+   "model": "commercial/com_bar_crown",
+   "cell": "cell_-5_-7",
+   "pos": [
+    -827.5,
+    2.15000009536743,
+    -1383.80004882812
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bar",
+   "name": "World Famous Eye Bar",
+   "style": "green",
+   "why": "(sample) the shift workers' dive bar on the corner",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 0.0,
+     "w": 3.6
+    }
+   ]
+  },
+  {
+   "id": "i_se__auto_parts__0",
+   "piece": "i_se",
+   "label": "auto_parts",
+   "model": "ck/ck_svc_trade",
+   "cell": "cell_-4_-7",
+   "pos": [
+    -771.5,
+    2.15000009536743,
+    -1384.80004882812
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "store",
+   "name": "Crownado Hardware",
+   "style": "red",
+   "why": "(sample) the trade counter sells parts and hardware to the trades around it",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "i_sw__print_works__1",
+   "piece": "i_sw",
+   "label": "print_works",
+   "model": "modular/examples/mod_brk_row",
+   "cell": "cell_-5_-7",
+   "pos": [
+    -888.0,
+    2.15000009536743,
+    -1383.80004882812
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "cleaners",
+   "name": "Juniper Wash & Fold",
+   "style": "navy",
+   "why": "people in flats without machines (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "i_se__auto_parts__1",
+   "piece": "i_se",
+   "label": "auto_parts",
+   "model": "ck/ck_svc_trade",
+   "cell": "cell_-4_-7",
+   "pos": [
+    -771.5,
+    2.15000009536743,
+    -1384.80004882812
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 1,
+   "door_along": 3.0,
+   "door_w": 1.8,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "office",
+   "name": "Vera's Tax Office",
+   "style": "green",
+   "why": "a service counter (bank, realty, travel) (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "i_sw__print_works__2",
+   "piece": "i_sw",
+   "label": "print_works",
+   "model": "modular/examples/mod_brk_row",
+   "cell": "cell_-5_-7",
+   "pos": [
+    -888.0,
+    2.15000009536743,
+    -1383.80004882812
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "keys",
+   "name": "Jetty Lock & Key",
+   "style": "sun",
+   "why": "keys cut and repairs (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "i_sw__cash_and_carry__1",
+   "piece": "i_sw",
+   "label": "cash_and_carry",
+   "model": "ck/ck_svc_trade",
+   "cell": "cell_-5_-7",
+   "pos": [
+    -815.200012207031,
+    2.15000009536743,
+    -1370.5
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 1,
+   "door_along": 3.0,
+   "door_w": 1.8,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "fast_food",
+   "name": "Saltwater Subs",
+   "style": "sun",
+   "why": "a quick bite, open late (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "i_se__wholesale_bakery__0",
+   "piece": "i_se",
+   "label": "wholesale_bakery",
+   "model": "commercial/com_bakery",
+   "cell": "cell_-4_-7",
+   "pos": [
+    -783.799987792969,
+    2.15000009536743,
+    -1371.5
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": 3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bakery",
+   "name": "Kelp Bread Co.",
+   "style": "cream",
+   "why": "bread for the street in the morning (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "i_sw__cash_and_carry__0",
+   "piece": "i_sw",
+   "label": "cash_and_carry",
+   "model": "ck/ck_svc_trade",
+   "cell": "cell_-5_-7",
+   "pos": [
+    -815.200012207031,
+    2.15000009536743,
+    -1370.5
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "restaurant",
+   "name": "Nguyen's Diner",
+   "style": "cream",
+   "why": "a sit-down meal for the district (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "i_sw__bus_repair__0",
+   "piece": "i_sw",
+   "label": "bus_repair",
+   "model": "industrial/ind_repair",
+   "cell": "cell_-5_-7",
+   "pos": [
+    -883.0,
+    2.15000009536743,
+    -1327.0
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -6.5,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "cleaners",
+   "name": "Gull Laundry",
+   "style": "teal",
+   "why": "people in flats without machines (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "front",
+     "along": -5.0,
+     "w": 3.6
+    },
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    }
+   ]
+  },
+  {
+   "id": "i_se__plumbing_supply__0",
+   "piece": "i_se",
+   "label": "plumbing_supply",
+   "model": "ck/ck_svc_trade_1d",
+   "cell": "cell_-4_-7",
+   "pos": [
+    -784.799987792969,
+    2.15000009536743,
+    -1315.5
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "office",
+   "name": "Gull Realty",
+   "style": "green",
+   "why": "a service counter (bank, realty, travel) (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "i_sw__locksmith__1",
+   "piece": "i_sw",
+   "label": "locksmith",
+   "model": "ck/ck_svc_pawn_fast",
+   "cell": "cell_-5_-7",
+   "pos": [
+    -815.200012207031,
+    2.15000009536743,
+    -1315.5
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 1,
+   "door_along": 1.2,
+   "door_w": 1.6,
+   "bay": [
+    -0.1,
+    5.7
+   ],
+   "kind": "bar",
+   "name": "Crown Bar",
+   "style": "black",
+   "why": "an evening place for the block (industrial)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 4.0
+    }
+   ]
+  },
+  {
+   "id": "i_sw__locksmith__0",
+   "piece": "i_sw",
+   "label": "locksmith",
+   "model": "ck/ck_svc_pawn_fast",
+   "cell": "cell_-5_-7",
+   "pos": [
+    -815.200012207031,
+    2.15000009536743,
+    -1315.5
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -1.4,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    -0.1
+   ],
+   "kind": "keys",
+   "name": "Crownado Lock & Key",
+   "style": "sun",
+   "why": "(sample) the locksmith keeps its plot (Crownado Lock & Key)",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "m_ne__insurance_office__0",
+   "piece": "m_ne",
+   "label": "insurance_office",
+   "model": "commercial/com_realty",
+   "cell": "cell_2_-7",
+   "pos": [
+    516.200012207031,
+    4.15000009536743,
+    -1289.5
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": 1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "office",
+   "name": "Anchor Credit Union",
+   "style": "green",
+   "why": "a service counter (bank, realty, travel) (strip)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": -3.4,
+     "w": 2.6
+    }
+   ]
+  },
+  {
+   "id": "m_ne__corner_bakery__0",
+   "piece": "m_ne",
+   "label": "corner_bakery",
+   "model": "commercial/com_bakery",
+   "cell": "cell_2_-7",
+   "pos": [
+    516.200012207031,
+    4.15000009536743,
+    -1270.5
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": 3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bakery",
+   "name": "Clay's Bakery",
+   "style": "cream",
+   "why": "(sample) the bakery that replaced the 5th Crown bar keeps its trade",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "m_ne__bank_pharmacy__0",
+   "piece": "m_ne",
+   "label": "bank_pharmacy",
+   "model": "ck/ck_svc_bank_pharm",
+   "cell": "cell_2_-7",
+   "pos": [
+    515.200012207031,
+    4.15000009536743,
+    -1258.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": 4.6,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "office",
+   "name": "Wagon Bank",
+   "style": "navy",
+   "why": "(sample) the bank half of the bank + pharmacy row, on the side street",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.48
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "m_nw__crown_plaza__0",
+   "piece": "m_nw",
+   "label": "crown_plaza",
+   "model": "commercial/com_strip_mall_l",
+   "cell": "cell_2_-7",
+   "pos": [
+    441.5,
+    4.15000009536743,
+    -1254.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -33.5,
+   "door_w": 2.4,
+   "bay": [
+    -39.2,
+    -26.855
+   ],
+   "kind": "sport",
+   "name": "Dot's Bikes",
+   "style": "sun",
+   "why": "surf, bikes and gym gear (strip)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -33.5,
+     "w": 7.0
+    }
+   ]
+  },
+  {
+   "id": "m_nw__crown_plaza__1",
+   "piece": "m_nw",
+   "label": "crown_plaza",
+   "model": "commercial/com_strip_mall_l",
+   "cell": "cell_2_-7",
+   "pos": [
+    441.5,
+    4.15000009536743,
+    -1254.0
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": -20.21,
+   "door_w": 1.6,
+   "bay": [
+    -26.855,
+    -19.13
+   ],
+   "kind": "salon",
+   "name": "Fashion Nail Bar",
+   "style": "teal",
+   "why": "(sample) a nail bar in the strip mall",
+   "source": "sample",
+   "built": "",
+   "signs": []
+  },
+  {
+   "id": "m_nw__crown_plaza__2",
+   "piece": "m_nw",
+   "label": "crown_plaza",
+   "model": "commercial/com_strip_mall_l",
+   "cell": "cell_2_-7",
+   "pos": [
+    441.5,
+    4.15000009536743,
+    -1254.0
+   ],
+   "yaw": 0.0,
+   "door_index": 2,
+   "door_along": -18.05,
+   "door_w": 1.6,
+   "bay": [
+    -19.13,
+    -10.755
+   ],
+   "kind": "pharmacy",
+   "name": "Dune Pharmacy",
+   "style": "green",
+   "why": "the neighbourhood's medicine (strip)",
+   "source": "new",
+   "built": "",
+   "signs": []
+  },
+  {
+   "id": "m_nw__crown_plaza__3",
+   "piece": "m_nw",
+   "label": "crown_plaza",
+   "model": "commercial/com_strip_mall_l",
+   "cell": "cell_2_-7",
+   "pos": [
+    441.5,
+    4.15000009536743,
+    -1254.0
+   ],
+   "yaw": 0.0,
+   "door_index": 3,
+   "door_along": -3.46,
+   "door_w": 1.6,
+   "bay": [
+    -10.755,
+    -2.38
+   ],
+   "kind": "grocery",
+   "name": "Ines' Market",
+   "style": "green",
+   "why": "the district's food shopping (strip)",
+   "source": "new",
+   "built": "",
+   "signs": []
+  },
+  {
+   "id": "m_nw__crown_plaza__4",
+   "piece": "m_nw",
+   "label": "crown_plaza",
+   "model": "commercial/com_strip_mall_l",
+   "cell": "cell_2_-7",
+   "pos": [
+    441.5,
+    4.15000009536743,
+    -1254.0
+   ],
+   "yaw": 0.0,
+   "door_index": 4,
+   "door_along": -1.3,
+   "door_w": 1.6,
+   "bay": [
+    -2.38,
+    5.995
+   ],
+   "kind": "cafe",
+   "name": "Starducks",
+   "style": "cream",
+   "why": "(sample) the chain coffee in the middle of the strip mall, by the benches where people wait for rides",
+   "source": "sample",
+   "built": "",
+   "signs": []
+  },
+  {
+   "id": "m_nw__crown_plaza__5",
+   "piece": "m_nw",
+   "label": "crown_plaza",
+   "model": "commercial/com_strip_mall_l",
+   "cell": "cell_2_-7",
+   "pos": [
+    441.5,
+    4.15000009536743,
+    -1254.0
+   ],
+   "yaw": 0.0,
+   "door_index": 5,
+   "door_along": 13.29,
+   "door_w": 1.6,
+   "bay": [
+    5.995,
+    14.37
+   ],
+   "kind": "fast_food",
+   "name": "Theo's Tacos",
+   "style": "sun",
+   "why": "a quick bite, open late (strip)",
+   "source": "new",
+   "built": "",
+   "signs": []
+  },
+  {
+   "id": "m_nw__crown_plaza__6",
+   "piece": "m_nw",
+   "label": "crown_plaza",
+   "model": "commercial/com_strip_mall_l",
+   "cell": "cell_2_-7",
+   "pos": [
+    441.5,
+    4.15000009536743,
+    -1254.0
+   ],
+   "yaw": 0.0,
+   "door_index": 6,
+   "door_along": 15.45,
+   "door_w": 1.6,
+   "bay": [
+    14.37,
+    22.745
+   ],
+   "kind": "store",
+   "name": "Rosa's Supply",
+   "style": "navy",
+   "why": "the trades and homes around need supplies (strip)",
+   "source": "new",
+   "built": "",
+   "signs": []
+  },
+  {
+   "id": "m_nw__crown_plaza__7",
+   "piece": "m_nw",
+   "label": "crown_plaza",
+   "model": "commercial/com_strip_mall_l",
+   "cell": "cell_2_-7",
+   "pos": [
+    441.5,
+    4.15000009536743,
+    -1254.0
+   ],
+   "yaw": 0.0,
+   "door_index": 7,
+   "door_along": 30.04,
+   "door_w": 1.6,
+   "bay": [
+    22.745,
+    31.12
+   ],
+   "kind": "cleaners",
+   "name": "Laundry Lounge Crownado",
+   "style": "teal",
+   "why": "(sample) the laundromat at the far end of the mall",
+   "source": "sample",
+   "built": "",
+   "signs": []
+  },
+  {
+   "id": "m_nw__crown_plaza__8",
+   "piece": "m_nw",
+   "label": "crown_plaza",
+   "model": "commercial/com_strip_mall_l",
+   "cell": "cell_2_-7",
+   "pos": [
+    441.5,
+    4.15000009536743,
+    -1254.0
+   ],
+   "yaw": 0.0,
+   "door_index": 8,
+   "door_along": 32.2,
+   "door_w": 1.6,
+   "bay": [
+    31.12,
+    39.2
+   ],
+   "kind": "restaurant",
+   "name": "Anchor Bistro",
+   "style": "cream",
+   "why": "a sit-down meal for the district (strip)",
+   "source": "new",
+   "built": "",
+   "signs": []
+  },
+  {
+   "id": "m_ne__tyre_lube__0",
+   "piece": "m_ne",
+   "label": "tyre_lube",
+   "model": "industrial/ind_repair",
+   "cell": "cell_2_-7",
+   "pos": [
+    583.0,
+    4.15000009536743,
+    -1244.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -6.5,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "salon",
+   "name": "Abe's Salon",
+   "style": "teal",
+   "why": "a regular trade, the same faces every week (strip)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "front",
+     "along": -5.0,
+     "w": 3.6
+    },
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    }
+   ]
+  },
+  {
+   "id": "m_ne__burger_barn__0",
+   "piece": "m_ne",
+   "label": "burger_barn",
+   "model": "ck/mod_fastfood",
+   "cell": "cell_2_-7",
+   "pos": [
+    554.0,
+    4.15000009536743,
+    -1238.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -4.8,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    -1.8
+   ],
+   "kind": "fast_food",
+   "name": "McDowell's",
+   "style": "sun",
+   "why": "(sample) the drive-thru burger place also lets you walk in",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 4.0
+    }
+   ]
+  },
+  {
+   "id": "m_ne__burger_barn__1",
+   "piece": "m_ne",
+   "label": "burger_barn",
+   "model": "ck/mod_fastfood",
+   "cell": "cell_2_-7",
+   "pos": [
+    554.0,
+    4.15000009536743,
+    -1238.0
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 1.2,
+   "door_w": 1.6,
+   "bay": [
+    -1.8,
+    5.7
+   ],
+   "kind": "grocery",
+   "name": "Jetty Foods",
+   "style": "green",
+   "why": "the district's food shopping (strip)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 4.0
+    }
+   ]
+  },
+  {
+   "id": "m_ne__crown_fuel__0",
+   "piece": "m_ne",
+   "label": "crown_fuel",
+   "model": "commercial/com_gas_station",
+   "cell": "cell_2_-7",
+   "pos": [
+    524.0,
+    4.15000009536743,
+    -1236.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 3.76,
+   "door_w": 1.6,
+   "bay": [
+    -4.7,
+    4.7
+   ],
+   "kind": "gas",
+   "name": "Shoal",
+   "style": "red",
+   "why": "(sample) the gas station kiosk on the corner pad",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 9.18
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 3.0
+    },
+    {
+     "facade": "left",
+     "along": 10.5,
+     "w": 3.0
+    },
+    {
+     "facade": "right",
+     "along": 10.5,
+     "w": 3.0
+    },
+    {
+     "facade": "right",
+     "along": 9.9,
+     "w": 0.84
+    },
+    {
+     "facade": "right",
+     "along": 11.1,
+     "w": 0.84
+    },
+    {
+     "facade": "left",
+     "along": 9.9,
+     "w": 0.84
+    },
+    {
+     "facade": "left",
+     "along": 11.1,
+     "w": 0.84
+    },
+    {
+     "facade": "right",
+     "along": 9.9,
+     "w": 0.84
+    },
+    {
+     "facade": "right",
+     "along": 11.1,
+     "w": 0.84
+    },
+    {
+     "facade": "left",
+     "along": 9.9,
+     "w": 0.84
+    },
+    {
+     "facade": "left",
+     "along": 11.1,
+     "w": 0.84
+    }
+   ]
+  },
+  {
+   "id": "m_sw__donut_shop__0",
+   "piece": "m_sw",
+   "label": "donut_shop",
+   "model": "commercial/com_bakery",
+   "cell": "cell_2_-6",
+   "pos": [
+    483.799987792969,
+    4.15000009536743,
+    -1175.5
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bakery",
+   "name": "Saltwater Bakery",
+   "style": "cream",
+   "why": "bread for the street in the morning (strip)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "m_se__corner_pharmacy__0",
+   "piece": "m_se",
+   "label": "corner_pharmacy",
+   "model": "modular/examples/mod_svc_row",
+   "cell": "cell_2_-6",
+   "pos": [
+    519.0,
+    4.15000009536743,
+    -1164.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -1.4,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    1.6
+   ],
+   "kind": "pharmacy",
+   "name": "Pelican Pharmacy",
+   "style": "teal",
+   "why": "the neighbourhood's medicine (strip)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "m_se__corner_pharmacy__1",
+   "piece": "m_se",
+   "label": "corner_pharmacy",
+   "model": "modular/examples/mod_svc_row",
+   "cell": "cell_2_-6",
+   "pos": [
+    519.0,
+    4.15000009536743,
+    -1164.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 1,
+   "door_along": 4.6,
+   "door_w": 1.6,
+   "bay": [
+    1.6,
+    5.7
+   ],
+   "kind": "cafe",
+   "name": "Abe's Coffee Bar",
+   "style": "green",
+   "why": "coffee where people walk past (strip)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "m_sw__check_cashing__0",
+   "piece": "m_sw",
+   "label": "check_cashing",
+   "model": "commercial/com_realty",
+   "cell": "cell_2_-6",
+   "pos": [
+    483.799987792969,
+    4.15000009536743,
+    -1166.0
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "office",
+   "name": "Palm Travel",
+   "style": "navy",
+   "why": "a service counter (bank, realty, travel) (strip)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": -3.4,
+     "w": 2.6
+    }
+   ]
+  },
+  {
+   "id": "m_se__crown_grocery__1",
+   "piece": "m_se",
+   "label": "crown_grocery",
+   "model": "commercial/com_grocery_bigbox",
+   "cell": "cell_2_-6",
+   "pos": [
+    566.0,
+    4.15000009536743,
+    -1134.5
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 1,
+   "door_along": -3.4,
+   "door_w": 2.4,
+   "bay": [
+    -14.95,
+    0.0
+   ],
+   "kind": "grocery",
+   "name": "Bonny Bay Market",
+   "style": "green",
+   "why": "(sample) the big-box grocery is the supermarket; one of its four doors is the entrance (the rest stay closed: exits)",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 9.0
+    }
+   ]
+  },
+  {
+   "id": "m_se__thrift_store__0",
+   "piece": "m_se",
+   "label": "thrift_store",
+   "model": "commercial/com_boutique_row",
+   "cell": "cell_2_-6",
+   "pos": [
+    516.200012207031,
+    4.15000009536743,
+    -1141.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -4.08,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -3.0
+   ],
+   "kind": "store",
+   "name": "Thrift Cabin",
+   "style": "navy",
+   "why": "(sample) the thrift store on the side street",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 5.18
+    }
+   ]
+  },
+  {
+   "id": "m_se__thrift_store__1",
+   "piece": "m_se",
+   "label": "thrift_store",
+   "model": "commercial/com_boutique_row",
+   "cell": "cell_2_-6",
+   "pos": [
+    516.200012207031,
+    4.15000009536743,
+    -1141.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 1,
+   "door_along": -1.92,
+   "door_w": 1.6,
+   "bay": [
+    -3.0,
+    2.92
+   ],
+   "kind": "sport",
+   "name": "Bougainvillea Surf & Sport",
+   "style": "sun",
+   "why": "surf, bikes and gym gear (strip)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    }
+   ]
+  },
+  {
+   "id": "m_sw__sea_breeze_west_wing__0",
+   "piece": "m_sw",
+   "label": "sea_breeze_west_wing",
+   "model": "extras/motel_inn_court",
+   "cell": "cell_2_-6",
+   "pos": [
+    455.0,
+    4.15000009536743,
+    -1152.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": 13.3,
+   "door_w": 1.4,
+   "bay": [
+    -17.7,
+    17.7
+   ],
+   "kind": "salon",
+   "name": "Tomas' Hair Studio",
+   "style": "teal",
+   "why": "a regular trade, the same faces every week (strip)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 15.0,
+     "w": 5.0
+    }
+   ]
+  },
+  {
+   "id": "m_sw__sea_breeze_motel__0",
+   "piece": "m_sw",
+   "label": "sea_breeze_motel",
+   "model": "extras/ext_motel_crown",
+   "cell": "cell_2_-6",
+   "pos": [
+    429.0,
+    4.15000009536743,
+    -1133.5
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 16.3,
+   "door_w": 1.4,
+   "bay": [
+    -20.7,
+    20.7
+   ],
+   "kind": "grocery",
+   "name": "Driftwood Grocers",
+   "style": "green",
+   "why": "the district's food shopping (strip)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 18.0,
+     "w": 5.0
+    },
+    {
+     "facade": "right",
+     "along": 2.32,
+     "w": 0.95
+    },
+    {
+     "facade": "left",
+     "along": 2.32,
+     "w": 0.95
+    },
+    {
+     "facade": "right",
+     "along": 8.0,
+     "w": 0.25
+    },
+    {
+     "facade": "left",
+     "along": 8.0,
+     "w": 0.25
+    }
+   ]
+  },
+  {
+   "id": "m_se__thrift_store__2",
+   "piece": "m_se",
+   "label": "thrift_store",
+   "model": "commercial/com_boutique_row",
+   "cell": "cell_2_-6",
+   "pos": [
+    516.200012207031,
+    4.15000009536743,
+    -1141.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 2,
+   "door_along": 7.76,
+   "door_w": 1.6,
+   "bay": [
+    2.92,
+    8.7
+   ],
+   "kind": "restaurant",
+   "name": "Coral Grill",
+   "style": "cream",
+   "why": "a sit-down meal for the district (strip)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 5.18
+    }
+   ]
+  },
+  {
+   "id": "m_se__pho_house__0",
+   "piece": "m_se",
+   "label": "pho_house",
+   "model": "commercial/com_bistro",
+   "cell": "cell_2_-6",
+   "pos": [
+    516.200012207031,
+    4.15000009536743,
+    -1108.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": 4.76,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "restaurant",
+   "name": "Swaddee Thai Kitchen",
+   "style": "black",
+   "why": "(sample) the pho house becomes the Thai kitchen: the strip's restaurant",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 11.18
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "g_ne__dive_bar__0",
+   "piece": "g_ne",
+   "label": "dive_bar",
+   "model": "commercial/com_bar_crown",
+   "cell": "cell_-3_-6",
+   "pos": [
+    -581.299987792969,
+    6.15000009536743,
+    -1046.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bar",
+   "name": "Orange Taproom",
+   "style": "green",
+   "why": "an evening place for the block (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 0.0,
+     "w": 3.6
+    }
+   ]
+  },
+  {
+   "id": "g_nw__boarded_pair__0",
+   "piece": "g_nw",
+   "label": "boarded_pair",
+   "model": "ck/ck_grt_row2",
+   "cell": "cell_-4_-6",
+   "pos": [
+    -617.700012207031,
+    6.15000009536743,
+    -1035.0
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -4.6,
+   "door_w": 1.2,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "jewelry",
+   "name": "Harbor Pawn & Gold",
+   "style": "black",
+   "why": "a small, secure front (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -2.0,
+     "w": 2.4
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 2.8
+    }
+   ]
+  },
+  {
+   "id": "g_nw__body_shop__0",
+   "piece": "g_nw",
+   "label": "body_shop",
+   "model": "industrial/ind_repair",
+   "cell": "cell_-4_-6",
+   "pos": [
+    -671.0,
+    6.15000009536743,
+    -1028.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -6.5,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "corner_shop",
+   "name": "Dune Market",
+   "style": "green",
+   "why": "milk, beer and the paper for the flats around (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "front",
+     "along": -5.0,
+     "w": 3.6
+    },
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    }
+   ]
+  },
+  {
+   "id": "g_nw__pawn_laundry_row__0",
+   "piece": "g_nw",
+   "label": "pawn_laundry_row",
+   "model": "ck/ck_grt_row3",
+   "cell": "cell_-4_-6",
+   "pos": [
+    -622.0,
+    6.15000009536743,
+    -1017.70001220703
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -4.4,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    1.6
+   ],
+   "kind": "jewelry",
+   "name": "Crownado Vintage",
+   "style": "black",
+   "why": "(sample) the pawn shop (jewelry set: cases, a counter behind bars) - Crownado Vintage",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 3.4
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.8
+    }
+   ]
+  },
+  {
+   "id": "g_nw__pawn_laundry_row__1",
+   "piece": "g_nw",
+   "label": "pawn_laundry_row",
+   "model": "ck/ck_grt_row3",
+   "cell": "cell_-4_-6",
+   "pos": [
+    -622.0,
+    6.15000009536743,
+    -1017.70001220703
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 7.6,
+   "door_w": 1.6,
+   "bay": [
+    1.6,
+    8.7
+   ],
+   "kind": "cleaners",
+   "name": "Island Laundry",
+   "style": "navy",
+   "why": "(sample) the edge's one laundromat",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "g_ne__corner_market__0",
+   "piece": "g_ne",
+   "label": "corner_market",
+   "model": "extras/ext_grocery_market",
+   "cell": "cell_-3_-6",
+   "pos": [
+    -575.0,
+    6.15000009536743,
+    -1023.70001220703
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 7.92,
+   "door_w": 1.6,
+   "bay": [
+    -14.7,
+    9.0
+   ],
+   "kind": "grocery",
+   "name": "Grove Market",
+   "style": "green",
+   "why": "(sample) the corner market building is big enough for the neighbourhood's grocer",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 23.18
+    }
+   ]
+  },
+  {
+   "id": "g_ne__corner_market__1",
+   "piece": "g_ne",
+   "label": "corner_market",
+   "model": "extras/ext_grocery_market",
+   "cell": "cell_-3_-6",
+   "pos": [
+    -575.0,
+    6.15000009536743,
+    -1023.70001220703
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 10.08,
+   "door_w": 1.6,
+   "bay": [
+    9.0,
+    14.7
+   ],
+   "kind": "salon",
+   "name": "Tern Nails",
+   "style": "teal",
+   "why": "a regular trade, the same faces every week (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 12.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "g_ne__deli_walkup__0",
+   "piece": "g_ne",
+   "label": "deli_walkup",
+   "model": "ck/ck_brk3_row2_fe",
+   "cell": "cell_-3_-6",
+   "pos": [
+    -533.0,
+    6.15000009536743,
+    -1018.70001220703
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "fast_food",
+   "name": "Dune Burgers",
+   "style": "red",
+   "why": "a quick bite, open late (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "g_ne__brick_shops__0",
+   "piece": "g_ne",
+   "label": "brick_shops",
+   "model": "urban/urb_brick_row",
+   "cell": "cell_-3_-6",
+   "pos": [
+    -514.0,
+    6.15000009536743,
+    -1018.70001220703
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "corner_shop",
+   "name": "Hank's Corner Store",
+   "style": "green",
+   "why": "milk, beer and the paper for the flats around (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "g_ne__brick_shops__1",
+   "piece": "g_ne",
+   "label": "brick_shops",
+   "model": "urban/urb_brick_row",
+   "cell": "cell_-3_-6",
+   "pos": [
+    -514.0,
+    6.15000009536743,
+    -1018.70001220703
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "salon",
+   "name": "Island Barber Shop",
+   "style": "navy",
+   "why": "(sample) a barber in the brick row, between the dead front and the bar",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "g_ne__brick_shops__2",
+   "piece": "g_ne",
+   "label": "brick_shops",
+   "model": "urban/urb_brick_row",
+   "cell": "cell_-3_-6",
+   "pos": [
+    -514.0,
+    6.15000009536743,
+    -1018.70001220703
+   ],
+   "yaw": 0.0,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "keys",
+   "name": "Dot's Keys & Repairs",
+   "style": "sun",
+   "why": "keys cut and repairs (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "g_sw__boarded_pair__0",
+   "piece": "g_sw",
+   "label": "boarded_pair",
+   "model": "ck/ck_grt_row2",
+   "cell": "cell_-4_-5",
+   "pos": [
+    -643.0,
+    6.15000009536743,
+    -982.299987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -4.6,
+   "door_w": 1.2,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "store",
+   "name": "Lantern Hardware",
+   "style": "navy",
+   "why": "the trades and homes around need supplies (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -2.0,
+     "w": 2.4
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 2.8
+    }
+   ]
+  },
+  {
+   "id": "g_se__pawn_chicken__0",
+   "piece": "g_se",
+   "label": "pawn_chicken",
+   "model": "ck/ck_svc_pawn_fast",
+   "cell": "cell_-3_-5",
+   "pos": [
+    -584.0,
+    6.15000009536743,
+    -982.299987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -1.4,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    -0.1
+   ],
+   "kind": "bar",
+   "name": "The Tern Tavern",
+   "style": "green",
+   "why": "an evening place for the block (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "g_sw__walkup_shops__0",
+   "piece": "g_sw",
+   "label": "walkup_shops",
+   "model": "ck/ck_brk3_row2_fe",
+   "cell": "cell_-4_-5",
+   "pos": [
+    -629.0,
+    6.15000009536743,
+    -981.299987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "cleaners",
+   "name": "Harbor Wash & Fold",
+   "style": "teal",
+   "why": "people in flats without machines (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "g_se__pawn_chicken__1",
+   "piece": "g_se",
+   "label": "pawn_chicken",
+   "model": "ck/ck_svc_pawn_fast",
+   "cell": "cell_-3_-5",
+   "pos": [
+    -584.0,
+    6.15000009536743,
+    -982.299987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 1,
+   "door_along": 1.2,
+   "door_w": 1.6,
+   "bay": [
+    -0.1,
+    5.7
+   ],
+   "kind": "fast_food",
+   "name": "Crunch Taco Shop",
+   "style": "sun",
+   "why": "(sample) the fast-food half of the row on the corner: open late",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 4.0
+    }
+   ]
+  },
+  {
+   "id": "g_sw__corner_liquor__0",
+   "piece": "g_sw",
+   "label": "corner_liquor",
+   "model": "ck/ck_brk3_corner2",
+   "cell": "cell_-4_-5",
+   "pos": [
+    -616.0,
+    6.15000009536743,
+    -981.299987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "corner_shop",
+   "name": "High Tide Bottles & Kitchen",
+   "style": "red",
+   "why": "(sample) the corner liquor store under the walk-up",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ]
+  },
+  {
+   "id": "g_se__motel__0",
+   "piece": "g_se",
+   "label": "motel",
+   "model": "extras/motel_inn_court",
+   "cell": "cell_-3_-5",
+   "pos": [
+    -520.0,
+    6.15000009536743,
+    -965.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 13.3,
+   "door_w": 1.4,
+   "bay": [
+    -17.7,
+    17.7
+   ],
+   "kind": "keys",
+   "name": "Sandpiper Lock & Key",
+   "style": "sun",
+   "why": "keys cut and repairs (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 15.0,
+     "w": 5.0
+    }
+   ]
+  },
+  {
+   "id": "g_sw__side_walkup__0",
+   "piece": "g_sw",
+   "label": "side_walkup",
+   "model": "ck/ck_brk3_row2_fe",
+   "cell": "cell_-4_-5",
+   "pos": [
+    -618.700012207031,
+    6.15000009536743,
+    -963.0
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "store",
+   "name": "Mariner Hardware",
+   "style": "navy",
+   "why": "the trades and homes around need supplies (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "g_sw__rear_walkup_b__0",
+   "piece": "g_sw",
+   "label": "rear_walkup_b",
+   "model": "ck/ck_brk3_row2",
+   "cell": "cell_-4_-5",
+   "pos": [
+    -668.0,
+    6.15000009536743,
+    -963.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "salon",
+   "name": "Bayview Barbers",
+   "style": "teal",
+   "why": "a regular trade, the same faces every week (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "g_se__brick_shops_c__0",
+   "piece": "g_se",
+   "label": "brick_shops_c",
+   "model": "urban/urb_brick_row",
+   "cell": "cell_-3_-5",
+   "pos": [
+    -581.299987792969,
+    6.15000009536743,
+    -930.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "jewelry",
+   "name": "Ocean Pawn & Gold",
+   "style": "black",
+   "why": "a small, secure front (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "g_sw__rear_walkup_c__0",
+   "piece": "g_sw",
+   "label": "rear_walkup_c",
+   "model": "ck/ck_brk3_row2",
+   "cell": "cell_-4_-5",
+   "pos": [
+    -643.0,
+    6.15000009536743,
+    -932.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "keys",
+   "name": "Gina's Keys & Repairs",
+   "style": "black",
+   "why": "keys cut and repairs (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "g_se__brick_shops_c__1",
+   "piece": "g_se",
+   "label": "brick_shops_c",
+   "model": "urban/urb_brick_row",
+   "cell": "cell_-3_-5",
+   "pos": [
+    -581.299987792969,
+    6.15000009536743,
+    -930.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "bar",
+   "name": "The Shoreline Tavern",
+   "style": "black",
+   "why": "an evening place for the block (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "g_se__brick_shops_c__2",
+   "piece": "g_se",
+   "label": "brick_shops_c",
+   "model": "urban/urb_brick_row",
+   "cell": "cell_-3_-5",
+   "pos": [
+    -581.299987792969,
+    6.15000009536743,
+    -930.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "cleaners",
+   "name": "Mei's Cleaners",
+   "style": "teal",
+   "why": "people in flats without machines (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "g_se__bar_walkup__0",
+   "piece": "g_se",
+   "label": "bar_walkup",
+   "model": "ck/ck_brk3_row2_fe",
+   "cell": "cell_-3_-5",
+   "pos": [
+    -581.299987792969,
+    6.15000009536743,
+    -911.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "bar",
+   "name": "Ferry Bar",
+   "style": "black",
+   "why": "an evening place for the block (gritty)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "a_ne__ck_brk3_row2__0",
+   "piece": "a_ne",
+   "label": "ck_brk3_row2",
+   "model": "ck/ck_brk3_row2",
+   "cell": "cell_1_-4",
+   "pos": [
+    269.200012207031,
+    6.15000009536743,
+    -691.86669921875
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "books",
+   "name": "Crown Pages",
+   "style": "green",
+   "why": "a quiet shop between the busy ones (apartments)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "c_nw__com_cafe_seaside__0",
+   "piece": "c_nw",
+   "label": "com_cafe_seaside",
+   "model": "commercial/com_cafe_seaside",
+   "cell": "cell_-1_-4",
+   "pos": [
+    -23.0,
+    6.15000009536743,
+    -690.700012207031
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "cafe",
+   "name": "Better Buzz Caf\u00e9",
+   "style": "sea",
+   "why": "(sample) the corner cafe of the centre, at the end of the Amber frontage",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 3.8,
+     "w": 3.0
+    }
+   ]
+  },
+  {
+   "id": "v_nw__skate_shed__0",
+   "piece": "v_nw",
+   "label": "skate_shed",
+   "model": "public/pub_skate_shed",
+   "cell": "cell_-2_-4",
+   "pos": [
+    -270.0,
+    6.15000009536743,
+    -691.5
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.6,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "bar",
+   "name": "Gus' Place",
+   "style": "green",
+   "why": "an evening place for the block (civic)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.6,
+     "w": 2.4
+    },
+    {
+     "facade": "front",
+     "along": 2.5,
+     "w": 4.4
+    }
+   ]
+  },
+  {
+   "id": "c_nw__urb_brick_row__2",
+   "piece": "c_nw",
+   "label": "urb_brick_row",
+   "model": "urban/urb_brick_row",
+   "cell": "cell_-1_-4",
+   "pos": [
+    -23.0,
+    6.15000009536743,
+    -678.700012207031
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "shoes",
+   "name": "June's Footwear",
+   "style": "navy",
+   "why": "next to the clothes trade (centre)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "c_nw__urb_brick_row__1",
+   "piece": "c_nw",
+   "label": "urb_brick_row",
+   "model": "urban/urb_brick_row",
+   "cell": "cell_-1_-4",
+   "pos": [
+    -23.0,
+    6.15000009536743,
+    -678.700012207031
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "gallery",
+   "name": "Jetty Prints",
+   "style": "cream",
+   "why": "local art for visitors (centre)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "v_ne__library__0",
+   "piece": "v_ne",
+   "label": "library",
+   "model": "civic/civ_library",
+   "cell": "cell_-1_-4",
+   "pos": [
+    -176.800003051758,
+    6.15000009536743,
+    -680.0
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "office",
+   "name": "Crownado Public Library",
+   "style": "green",
+   "why": "(sample) the library (needs a library room: the public-room system has one; office set until then)",
+   "source": "sample",
+   "built": "cv_library",
+   "signs": []
+  },
+  {
+   "id": "c_ne__urb_brick_corner__0",
+   "piece": "c_ne",
+   "label": "urb_brick_corner",
+   "model": "urban/urb_brick_corner",
+   "cell": "cell_0_-4",
+   "pos": [
+    24.0,
+    6.15000009536743,
+    -686.700012207031
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": 6.8,
+   "door_w": 1.8,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "restaurant",
+   "name": "Stake Chop House",
+   "style": "red",
+   "why": "(sample) the steakhouse on the plaza corner: business lunches, after-work dinners",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.48
+    }
+   ]
+  },
+  {
+   "id": "c_nw__urb_brick_row__0",
+   "piece": "c_nw",
+   "label": "urb_brick_row",
+   "model": "urban/urb_brick_row",
+   "cell": "cell_-1_-4",
+   "pos": [
+    -23.0,
+    6.15000009536743,
+    -678.700012207031
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "clothes",
+   "name": "Paris & Me Shop",
+   "style": "navy",
+   "why": "(sample) a boutique in the brick row: office workers shop at lunch",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "a_nw__apt_stucco3_cream__0",
+   "piece": "a_nw",
+   "label": "apt_stucco3_cream",
+   "model": "apartments/apt_stucco3_cream",
+   "cell": "cell_1_-4",
+   "pos": [
+    231.800003051758,
+    6.15000009536743,
+    -670.5
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -9.2,
+    9.2
+   ],
+   "kind": "pharmacy",
+   "name": "Rosa's Drugstore",
+   "style": "green",
+   "why": "the neighbourhood's medicine (apartments)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "c_nw__urb_dept_store__0",
+   "piece": "c_nw",
+   "label": "urb_dept_store",
+   "model": "urban/urb_dept_store",
+   "cell": "cell_-1_-4",
+   "pos": [
+    -28.0,
+    6.15000009536743,
+    -651.700012207031
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 15.4,
+   "door_w": 2.0,
+   "bay": [
+    -17.7,
+    17.7
+   ],
+   "kind": "books",
+   "name": "Tidewater Books",
+   "style": "green",
+   "why": "a quiet shop between the busy ones (centre)",
+   "source": "new",
+   "built": "",
+   "signs": []
+  },
+  {
+   "id": "c_ne__twr_hotel__0",
+   "piece": "c_ne",
+   "label": "twr_hotel",
+   "model": "urban/twr_hotel",
+   "cell": "cell_0_-4",
+   "pos": [
+    25.0,
+    6.15000009536743,
+    -662.700012207031
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -14.7,
+    14.7
+   ],
+   "kind": "pharmacy",
+   "name": "Palm Pharmacy",
+   "style": "teal",
+   "why": "the neighbourhood's medicine (centre)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 9.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 9.87,
+     "w": 1.75
+    },
+    {
+     "facade": "right",
+     "along": 9.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 9.87,
+     "w": 1.75
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "c_ne__twr_glass__0",
+   "piece": "c_ne",
+   "label": "twr_glass",
+   "model": "urban/twr_glass",
+   "cell": "cell_0_-4",
+   "pos": [
+    28.0,
+    6.15000009536743,
+    -635.700012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 2.0,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "jewelry",
+   "name": "Dune Jewelers",
+   "style": "black",
+   "why": "a small, secure front (centre)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 12.97,
+     "w": 1.95
+    },
+    {
+     "facade": "left",
+     "along": 12.97,
+     "w": 1.95
+    },
+    {
+     "facade": "right",
+     "along": 12.97,
+     "w": 1.95
+    },
+    {
+     "facade": "left",
+     "along": 12.97,
+     "w": 1.95
+    }
+   ]
+  },
+  {
+   "id": "c_nw__twr_office__0",
+   "piece": "c_nw",
+   "label": "twr_office",
+   "model": "urban/twr_office",
+   "cell": "cell_-1_-4",
+   "pos": [
+    -26.0,
+    6.15000009536743,
+    -621.700012207031
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "bakery",
+   "name": "Coral Bakery",
+   "style": "cream",
+   "why": "bread for the street in the morning (centre)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 10.97,
+     "w": 1.95
+    },
+    {
+     "facade": "left",
+     "along": 10.97,
+     "w": 1.95
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 4.0
+    },
+    {
+     "facade": "right",
+     "along": 10.97,
+     "w": 1.95
+    },
+    {
+     "facade": "left",
+     "along": 10.97,
+     "w": 1.95
+    }
+   ]
+  },
+  {
+   "id": "v_ne__city_hall__0",
+   "piece": "v_ne",
+   "label": "city_hall",
+   "model": "civic/civ_city_hall",
+   "cell": "cell_-1_-4",
+   "pos": [
+    -120.0,
+    6.15000009536743,
+    -626.700012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -12.7,
+    12.7
+   ],
+   "kind": "office",
+   "name": "City Hall Front Desk",
+   "style": "green",
+   "why": "(sample) city hall's front desk and waiting room; the offices upstairs are not enterable",
+   "source": "sample",
+   "built": "cv_city_hall",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 4.2
+    }
+   ]
+  },
+  {
+   "id": "v_nw__rec_center__0",
+   "piece": "v_nw",
+   "label": "rec_center",
+   "model": "civic/civ_rec_center",
+   "cell": "cell_-2_-4",
+   "pos": [
+    -280.0,
+    6.15000009536743,
+    -622.200012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "sport",
+   "name": "Sweat Circuit Crownado",
+   "style": "sea",
+   "why": "(sample) the rec centre is the gym",
+   "source": "sample",
+   "built": "cv_rec_center",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 7.72,
+     "w": 1.45
+    },
+    {
+     "facade": "left",
+     "along": 7.72,
+     "w": 1.45
+    },
+    {
+     "facade": "right",
+     "along": 7.72,
+     "w": 1.45
+    },
+    {
+     "facade": "left",
+     "along": 7.72,
+     "w": 1.45
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 3.0
+    }
+   ]
+  },
+  {
+   "id": "a_nw__apt_beach_condo__0",
+   "piece": "a_nw",
+   "label": "apt_beach_condo",
+   "model": "apartments/apt_beach_condo",
+   "cell": "cell_0_-4",
+   "pos": [
+    180.066665649414,
+    6.15000009536743,
+    -617.700012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "corner_shop",
+   "name": "Gus' Corner Store",
+   "style": "red",
+   "why": "milk, beer and the paper for the flats around (apartments)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "a_ne__apt_stucco3_peach__0",
+   "piece": "a_ne",
+   "label": "apt_stucco3_peach",
+   "model": "apartments/apt_stucco3_peach",
+   "cell": "cell_1_-4",
+   "pos": [
+    320.5,
+    6.15000009536743,
+    -618.200012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -9.2,
+    9.2
+   ],
+   "kind": "cafe",
+   "name": "The Mariner Bean",
+   "style": "sea",
+   "why": "coffee where people walk past (apartments)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "a_nw__laundromat__0",
+   "piece": "a_nw",
+   "label": "laundromat",
+   "model": "modular/examples/mod_svc_row",
+   "cell": "cell_1_-4",
+   "pos": [
+    234.800003051758,
+    6.15000009536743,
+    -617.700012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -1.4,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    1.6
+   ],
+   "kind": "bakery",
+   "name": "Lighthouse Bakery",
+   "style": "cream",
+   "why": "bread for the street in the morning (apartments)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "a_nw__laundromat__1",
+   "piece": "a_nw",
+   "label": "laundromat",
+   "model": "modular/examples/mod_svc_row",
+   "cell": "cell_1_-4",
+   "pos": [
+    234.800003051758,
+    6.15000009536743,
+    -617.700012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 4.6,
+   "door_w": 1.6,
+   "bay": [
+    1.6,
+    5.7
+   ],
+   "kind": "cleaners",
+   "name": "Fox Laundry and Alterations",
+   "style": "teal",
+   "why": "(sample) the laundromat on the corner: people in flats without machines",
+   "source": "sample",
+   "built": "ap_laundromat",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "a_ne__corner_market__0",
+   "piece": "a_ne",
+   "label": "corner_market",
+   "model": "commercial/com_orange_corner",
+   "cell": "cell_1_-4",
+   "pos": [
+    265.200012207031,
+    6.15000009536743,
+    -618.700012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -1.08,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "corner_shop",
+   "name": "Park Lane Liquor & Deli",
+   "style": "green",
+   "why": "(sample) the corner market (Park Lane Liquor & Deli): milk, beer, the paper",
+   "source": "sample",
+   "built": "ap_corner_market",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "a_ne__corner_market__1",
+   "piece": "a_ne",
+   "label": "corner_market",
+   "model": "commercial/com_orange_corner",
+   "cell": "cell_1_-4",
+   "pos": [
+    265.200012207031,
+    6.15000009536743,
+    -618.700012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 1.08,
+   "door_w": 1.6,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "grocery",
+   "name": "Orange Foods",
+   "style": "green",
+   "why": "the district's food shopping (apartments)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "c_sw__ck_svc_cinema_fast__0",
+   "piece": "c_sw",
+   "label": "ck_svc_cinema_fast",
+   "model": "ck/ck_svc_cinema_fast",
+   "cell": "cell_-1_-3",
+   "pos": [
+    -38.0,
+    6.15000009536743,
+    -584.299987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    -0.9
+   ],
+   "kind": "venue",
+   "name": "Lowrey Theater",
+   "style": "black",
+   "why": "(sample) the centre's small cinema faces 10th",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 3.6
+    }
+   ]
+  },
+  {
+   "id": "c_sw__ck_svc_cinema_fast__1",
+   "piece": "c_sw",
+   "label": "ck_svc_cinema_fast",
+   "model": "ck/ck_svc_cinema_fast",
+   "cell": "cell_-1_-3",
+   "pos": [
+    -38.0,
+    6.15000009536743,
+    -584.299987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 1,
+   "door_along": 1.2,
+   "door_w": 1.6,
+   "bay": [
+    -0.9,
+    5.7
+   ],
+   "kind": "fast_food",
+   "name": "Chilpote",
+   "style": "red",
+   "why": "(sample) fast food next to the cinema: the queue before the film",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 4.0
+    }
+   ]
+  },
+  {
+   "id": "c_sw__urb_brick_corner__0",
+   "piece": "c_sw",
+   "label": "urb_brick_corner",
+   "model": "urban/urb_brick_corner",
+   "cell": "cell_-1_-3",
+   "pos": [
+    -24.0,
+    6.15000009536743,
+    -581.299987792969
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 6.8,
+   "door_w": 1.8,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "salon",
+   "name": "Bayview Nails",
+   "style": "navy",
+   "why": "a regular trade, the same faces every week (centre)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.48
+    }
+   ]
+  },
+  {
+   "id": "a_se__corner_bar__0",
+   "piece": "a_se",
+   "label": "corner_bar",
+   "model": "commercial/com_bar_crown",
+   "cell": "cell_1_-3",
+   "pos": [
+    263.700012207031,
+    6.15000009536743,
+    -581.299987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bar",
+   "name": "Danni's Palm Bar and Grill",
+   "style": "green",
+   "why": "(sample) the neighbourhood bar on its corner",
+   "source": "sample",
+   "built": "ap_corner_bar",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 0.0,
+     "w": 3.6
+    }
+   ]
+  },
+  {
+   "id": "a_sw__corner_cafe__0",
+   "piece": "a_sw",
+   "label": "corner_cafe",
+   "model": "ck/ck_brk3_corner2",
+   "cell": "cell_1_-3",
+   "pos": [
+    234.800003051758,
+    6.15000009536743,
+    -581.299987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "cafe",
+   "name": "Heave Ho Caf\u00e9",
+   "style": "sea",
+   "why": "(sample) the corner cafe with its tables out front",
+   "source": "sample",
+   "built": "ap_corner_cafe",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ]
+  },
+  {
+   "id": "a_sw__apt_stucco3_peach__0",
+   "piece": "a_sw",
+   "label": "apt_stucco3_peach",
+   "model": "apartments/apt_stucco3_peach",
+   "cell": "cell_1_-3",
+   "pos": [
+    218.399993896484,
+    6.15000009536743,
+    -581.799987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -9.2,
+    9.2
+   ],
+   "kind": "salon",
+   "name": "Island Barbers",
+   "style": "teal",
+   "why": "a regular trade, the same faces every week (apartments)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "a_se__apt_stucco3_cream__0",
+   "piece": "a_se",
+   "label": "apt_stucco3_cream",
+   "model": "apartments/apt_stucco3_cream",
+   "cell": "cell_1_-3",
+   "pos": [
+    339.5,
+    6.15000009536743,
+    -581.799987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -9.2,
+    9.2
+   ],
+   "kind": "fast_food",
+   "name": "Sunset Burgers",
+   "style": "red",
+   "why": "a quick bite, open late (apartments)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "v_se__police__0",
+   "piece": "v_se",
+   "label": "police",
+   "model": "civic/civ_police",
+   "cell": "cell_-1_-3",
+   "pos": [
+    -168.399993896484,
+    6.15000009536743,
+    -577.799987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -10.7,
+    10.7
+   ],
+   "kind": "office",
+   "name": "Crownado Police Front Desk",
+   "style": "green",
+   "why": "(sample) the police front desk (the cells and offices behind are not enterable)",
+   "source": "sample",
+   "built": "cv_police",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 3.0
+    },
+    {
+     "facade": "front",
+     "along": -2.05,
+     "w": 0.5
+    }
+   ]
+  },
+  {
+   "id": "c_sw__urb_mall__0",
+   "piece": "c_sw",
+   "label": "urb_mall",
+   "model": "urban/urb_mall",
+   "cell": "cell_-1_-3",
+   "pos": [
+    -30.0,
+    6.15000009536743,
+    -548.299987792969
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 2.0,
+   "bay": [
+    -23.7,
+    23.7
+   ],
+   "kind": "bar",
+   "name": "Jetty Taproom",
+   "style": "black",
+   "why": "an evening place for the block (centre)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 11.0
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 6.0
+    }
+   ]
+  },
+  {
+   "id": "c_se__mod_twr_office__0",
+   "piece": "c_se",
+   "label": "mod_twr_office",
+   "model": "modular/examples/mod_twr_office",
+   "cell": "cell_0_-3",
+   "pos": [
+    26.0,
+    6.15000009536743,
+    -518.299987792969
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -4.0,
+   "door_w": 1.8,
+   "bay": [
+    -7.7,
+    0.0
+   ],
+   "kind": "pharmacy",
+   "name": "Walgrove",
+   "style": "green",
+   "why": "(sample) the pharmacy in the office tower's ground floor, where the people are",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "left",
+     "along": 10.77,
+     "w": 1.55
+    },
+    {
+     "facade": "left",
+     "along": 10.77,
+     "w": 1.55
+    },
+    {
+     "facade": "left",
+     "along": 10.77,
+     "w": 1.55
+    },
+    {
+     "facade": "left",
+     "along": 10.77,
+     "w": 1.55
+    }
+   ]
+  },
+  {
+   "id": "c_sw__mod_svc_row__0",
+   "piece": "c_sw",
+   "label": "mod_svc_row",
+   "model": "modular/examples/mod_svc_row",
+   "cell": "cell_-1_-3",
+   "pos": [
+    -38.0,
+    6.15000009536743,
+    -517.299987792969
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -1.4,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    1.6
+   ],
+   "kind": "clothes",
+   "name": "Hank's Boutique",
+   "style": "black",
+   "why": "window frontage for clothes (centre)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "c_sw__com_bank__0",
+   "piece": "c_sw",
+   "label": "com_bank",
+   "model": "commercial/com_bank",
+   "cell": "cell_-1_-3",
+   "pos": [
+    -23.0,
+    6.15000009536743,
+    -517.299987792969
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -6.7,
+    6.7
+   ],
+   "kind": "office",
+   "name": "Shore Bank",
+   "style": "navy",
+   "why": "(sample) the bank building is the bank (Shore Bank)",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 3.6
+    }
+   ]
+  },
+  {
+   "id": "c_se__mod_twr_office__1",
+   "piece": "c_se",
+   "label": "mod_twr_office",
+   "model": "modular/examples/mod_twr_office",
+   "cell": "cell_0_-3",
+   "pos": [
+    26.0,
+    6.15000009536743,
+    -518.299987792969
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 1,
+   "door_along": 4.0,
+   "door_w": 1.8,
+   "bay": [
+    0.0,
+    7.7
+   ],
+   "kind": "gallery",
+   "name": "Frank's Art House",
+   "style": "black",
+   "why": "local art for visitors (centre)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 10.77,
+     "w": 1.55
+    },
+    {
+     "facade": "right",
+     "along": 10.77,
+     "w": 1.55
+    },
+    {
+     "facade": "right",
+     "along": 10.77,
+     "w": 1.55
+    },
+    {
+     "facade": "right",
+     "along": 10.77,
+     "w": 1.55
+    }
+   ]
+  },
+  {
+   "id": "c_sw__mod_svc_row__1",
+   "piece": "c_sw",
+   "label": "mod_svc_row",
+   "model": "modular/examples/mod_svc_row",
+   "cell": "cell_-1_-3",
+   "pos": [
+    -38.0,
+    6.15000009536743,
+    -517.299987792969
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 1,
+   "door_along": 4.6,
+   "door_w": 1.6,
+   "bay": [
+    1.6,
+    5.7
+   ],
+   "kind": "shoes",
+   "name": "Breakwater Shoes",
+   "style": "navy",
+   "why": "next to the clothes trade (centre)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "a_se__ck_brk3_row2__0",
+   "piece": "a_se",
+   "label": "ck_brk3_row2",
+   "model": "ck/ck_brk3_row2",
+   "cell": "cell_1_-3",
+   "pos": [
+    269.200012207031,
+    6.15000009536743,
+    -509.333343505859
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "books",
+   "name": "Bougainvillea Books",
+   "style": "green",
+   "why": "a quiet shop between the busy ones (apartments)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "b_nw__com_realty__0",
+   "piece": "b_nw",
+   "label": "com_realty",
+   "model": "commercial/com_realty",
+   "cell": "cell_-1_-1",
+   "pos": [
+    -23.0,
+    4.15000009536743,
+    -93.6999969482422
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "office",
+   "name": "Kelp Travel",
+   "style": "navy",
+   "why": "a service counter (bank, realty, travel) (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": -3.4,
+     "w": 2.6
+    }
+   ]
+  },
+  {
+   "id": "b_ne__urb_brick_row__0",
+   "piece": "b_ne",
+   "label": "urb_brick_row",
+   "model": "urban/urb_brick_row",
+   "cell": "cell_0_-1",
+   "pos": [
+    23.0,
+    4.15000009536743,
+    -84.6999969482422
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "ice_cream",
+   "name": "Moo Hour Creamery",
+   "style": "teal",
+   "why": "(sample) ice cream across from the theatre: after the film, families walk over",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "b_nw__com_surf_shop__0",
+   "piece": "b_nw",
+   "label": "com_surf_shop",
+   "model": "commercial/com_surf_shop",
+   "cell": "cell_-1_-1",
+   "pos": [
+    -23.0,
+    4.15000009536743,
+    -86.1999969482422
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "sport",
+   "name": "Emerald Surf Shop",
+   "style": "sun",
+   "why": "(sample) the surf-shop building, the real Amber Ave surf shop",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "b_ne__urb_brick_row__1",
+   "piece": "b_ne",
+   "label": "urb_brick_row",
+   "model": "urban/urb_brick_row",
+   "cell": "cell_0_-1",
+   "pos": [
+    23.0,
+    4.15000009536743,
+    -84.6999969482422
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "souvenir",
+   "name": "Juniper Souvenirs",
+   "style": "sun",
+   "why": "visitors' gifts (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "b_nw__urb_brick_row__2",
+   "piece": "b_nw",
+   "label": "urb_brick_row",
+   "model": "urban/urb_brick_row",
+   "cell": "cell_-1_-1",
+   "pos": [
+    -23.0,
+    4.15000009536743,
+    -72.6999969482422
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "gallery",
+   "name": "Marina Gallery",
+   "style": "black",
+   "why": "local art for visitors (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "b_ne__urb_brick_row__2",
+   "piece": "b_ne",
+   "label": "urb_brick_row",
+   "model": "urban/urb_brick_row",
+   "cell": "cell_0_-1",
+   "pos": [
+    23.0,
+    4.15000009536743,
+    -84.6999969482422
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "clothes",
+   "name": "Lola's Boutique",
+   "style": "black",
+   "why": "window frontage for clothes (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "b_nw__urb_brick_row__1",
+   "piece": "b_nw",
+   "label": "urb_brick_row",
+   "model": "urban/urb_brick_row",
+   "cell": "cell_-1_-1",
+   "pos": [
+    -23.0,
+    4.15000009536743,
+    -72.6999969482422
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "shoes",
+   "name": "Mariner Shoes",
+   "style": "navy",
+   "why": "next to the clothes trade (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "b_ne__com_orange_arcade_block__0",
+   "piece": "b_ne",
+   "label": "com_orange_arcade_block",
+   "model": "commercial/com_orange_arcade_block",
+   "cell": "cell_0_-1",
+   "pos": [
+    24.5,
+    4.15000009536743,
+    -62.7000007629395
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -7.58,
+   "door_w": 1.6,
+   "bay": [
+    -12.7,
+    -6.5
+   ],
+   "kind": "books",
+   "name": "Lola's Bookshop",
+   "style": "cream",
+   "why": "a quiet shop between the busy ones (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -9.75,
+     "w": 5.68
+    }
+   ]
+  },
+  {
+   "id": "b_nw__urb_brick_row__0",
+   "piece": "b_nw",
+   "label": "urb_brick_row",
+   "model": "urban/urb_brick_row",
+   "cell": "cell_-1_-1",
+   "pos": [
+    -23.0,
+    4.15000009536743,
+    -72.6999969482422
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "jewelry",
+   "name": "Vera's Fine Jewelry",
+   "style": "black",
+   "why": "a small, secure front (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "b_ne__com_orange_arcade_block__1",
+   "piece": "b_ne",
+   "label": "com_orange_arcade_block",
+   "model": "commercial/com_orange_arcade_block",
+   "cell": "cell_0_-1",
+   "pos": [
+    24.5,
+    4.15000009536743,
+    -62.7000007629395
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 1,
+   "door_along": -5.42,
+   "door_w": 1.6,
+   "bay": [
+    -6.5,
+    0.0
+   ],
+   "kind": "jewelry",
+   "name": "LUMO Jewels",
+   "style": "black",
+   "why": "(sample) jewellery behind the arcade: shaded windows, near the theatre crowd",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.25,
+     "w": 5.68
+    }
+   ]
+  },
+  {
+   "id": "b_ne__com_orange_arcade_block__2",
+   "piece": "b_ne",
+   "label": "com_orange_arcade_block",
+   "model": "commercial/com_orange_arcade_block",
+   "cell": "cell_0_-1",
+   "pos": [
+    24.5,
+    4.15000009536743,
+    -62.7000007629395
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 2,
+   "door_along": 5.42,
+   "door_w": 1.6,
+   "bay": [
+    0.0,
+    6.5
+   ],
+   "kind": "pharmacy",
+   "name": "Cove Pharmacy",
+   "style": "green",
+   "why": "the neighbourhood's medicine (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.25,
+     "w": 5.68
+    }
+   ]
+  },
+  {
+   "id": "b_nw__com_bar_crown__0",
+   "piece": "b_nw",
+   "label": "com_bar_crown",
+   "model": "commercial/com_bar_crown",
+   "cell": "cell_-1_-1",
+   "pos": [
+    -23.0,
+    4.15000009536743,
+    -59.2000007629395
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bar",
+   "name": "Mac's Pub",
+   "style": "green",
+   "why": "(sample) the pub of the high street, mid-block, its back door on the alley for the deliveries",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 0.0,
+     "w": 3.6
+    }
+   ]
+  },
+  {
+   "id": "b_ne__com_orange_arcade_block__3",
+   "piece": "b_ne",
+   "label": "com_orange_arcade_block",
+   "model": "commercial/com_orange_arcade_block",
+   "cell": "cell_0_-1",
+   "pos": [
+    24.5,
+    4.15000009536743,
+    -62.7000007629395
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 3,
+   "door_along": 7.58,
+   "door_w": 1.6,
+   "bay": [
+    6.5,
+    12.7
+   ],
+   "kind": "bakery",
+   "name": "Dot's Bakery",
+   "style": "red",
+   "why": "bread for the street in the morning (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 9.75,
+     "w": 5.68
+    }
+   ]
+  },
+  {
+   "id": "b_nw__com_bakery__0",
+   "piece": "b_nw",
+   "label": "com_bakery",
+   "model": "commercial/com_bakery",
+   "cell": "cell_-1_-1",
+   "pos": [
+    -23.0,
+    4.15000009536743,
+    -50.2000007629395
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bakery",
+   "name": "Villa Nueva Bake Shop",
+   "style": "red",
+   "why": "(sample) a bakery building on the main street keeps its bakery, the Amber Ave bakery moves in",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "b_nw__com_orange_row__2",
+   "piece": "b_nw",
+   "label": "com_orange_row",
+   "model": "commercial/com_orange_row",
+   "cell": "cell_-1_-1",
+   "pos": [
+    -23.0,
+    4.15000009536743,
+    -36.7000007629395
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 2,
+   "door_along": 7.76,
+   "door_w": 1.6,
+   "bay": [
+    2.92,
+    8.7
+   ],
+   "kind": "cafe",
+   "name": "Breakwater Coffee",
+   "style": "cream",
+   "why": "coffee where people walk past (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "b_ne__lmk_village_theatre__0",
+   "piece": "b_ne",
+   "label": "lmk_village_theatre",
+   "model": "landmarks/lmk_village_theatre",
+   "cell": "cell_0_-1",
+   "pos": [
+    28.0,
+    4.15000009536743,
+    -41.7000007629395
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -1.75,
+   "door_w": 1.4,
+   "bay": [
+    -7.7,
+    0.0
+   ],
+   "kind": "venue",
+   "name": "Villager Theatre",
+   "style": "black",
+   "why": "(sample) the landmark theatre is the town cinema (Villager Theatre); its lobby is the room, the auditorium stays behind the auditorium door",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.7
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.7
+    },
+    {
+     "facade": "left",
+     "along": 13.8,
+     "w": 2.7
+    },
+    {
+     "facade": "left",
+     "along": 13.8,
+     "w": 2.7
+    },
+    {
+     "facade": "left",
+     "along": 12.85,
+     "w": 1.4
+    },
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 0.6
+    },
+    {
+     "facade": "left",
+     "along": 7.0,
+     "w": 0.6
+    },
+    {
+     "facade": "left",
+     "along": 2.65,
+     "w": 2.6
+    }
+   ]
+  },
+  {
+   "id": "b_nw__com_orange_row__1",
+   "piece": "b_nw",
+   "label": "com_orange_row",
+   "model": "commercial/com_orange_row",
+   "cell": "cell_-1_-1",
+   "pos": [
+    -23.0,
+    4.15000009536743,
+    -36.7000007629395
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 1,
+   "door_along": -1.92,
+   "door_w": 1.6,
+   "bay": [
+    -3.0,
+    2.92
+   ],
+   "kind": "clothes",
+   "name": "Crownado Beach Wear",
+   "style": "navy",
+   "why": "(sample) the middle bay of the row: clothes need the window frontage on the busiest walk",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    }
+   ]
+  },
+  {
+   "id": "b_nw__com_orange_row__0",
+   "piece": "b_nw",
+   "label": "com_orange_row",
+   "model": "commercial/com_orange_row",
+   "cell": "cell_-1_-1",
+   "pos": [
+    -23.0,
+    4.15000009536743,
+    -36.7000007629395
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -4.08,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -3.0
+   ],
+   "kind": "salon",
+   "name": "Dune Nails",
+   "style": "navy",
+   "why": "a regular trade, the same faces every week (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "b_ne__com_spanish_arcade_block__0",
+   "piece": "b_ne",
+   "label": "com_spanish_arcade_block",
+   "model": "commercial/com_spanish_arcade_block",
+   "cell": "cell_0_-1",
+   "pos": [
+    24.0,
+    4.15000009536743,
+    -21.7000007629395
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -5.08,
+   "door_w": 1.6,
+   "bay": [
+    -11.7,
+    -4.0
+   ],
+   "kind": "salon",
+   "name": "Crest Barber Shop",
+   "style": "teal",
+   "why": "(sample) a barber under the arcade, on the corner where men wait on the bench outside",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -8.0,
+     "w": 7.18
+    }
+   ]
+  },
+  {
+   "id": "b_nw__urb_brick_corner__0",
+   "piece": "b_nw",
+   "label": "urb_brick_corner",
+   "model": "urban/urb_brick_corner",
+   "cell": "cell_-1_-1",
+   "pos": [
+    -24.0,
+    4.15000009536743,
+    -18.7000007629395
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 6.8,
+   "door_w": 1.8,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "cafe",
+   "name": "Trident Caf\u00e9",
+   "style": "green",
+   "why": "(sample) the corner cafe at the main junction: first coffee on the way to work, people watch the crossing",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.48
+    }
+   ]
+  },
+  {
+   "id": "b_ne__com_spanish_arcade_block__1",
+   "piece": "b_ne",
+   "label": "com_spanish_arcade_block",
+   "model": "commercial/com_spanish_arcade_block",
+   "cell": "cell_0_-1",
+   "pos": [
+    24.0,
+    4.15000009536743,
+    -21.7000007629395
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 1,
+   "door_along": -2.92,
+   "door_w": 1.6,
+   "bay": [
+    -4.0,
+    1.08
+   ],
+   "kind": "restaurant",
+   "name": "Orange Bistro",
+   "style": "cream",
+   "why": "a sit-down meal for the district (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 7.18
+    }
+   ]
+  },
+  {
+   "id": "b_ne__com_spanish_arcade_block__2",
+   "piece": "b_ne",
+   "label": "com_spanish_arcade_block",
+   "model": "commercial/com_spanish_arcade_block",
+   "cell": "cell_0_-1",
+   "pos": [
+    24.0,
+    4.15000009536743,
+    -21.7000007629395
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 2,
+   "door_along": 5.08,
+   "door_w": 1.6,
+   "bay": [
+    1.08,
+    11.7
+   ],
+   "kind": "ice_cream",
+   "name": "Rudy's Gelato",
+   "style": "teal",
+   "why": "families on a warm walk (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 8.0,
+     "w": 7.18
+    }
+   ]
+  },
+  {
+   "id": "r_n__craftsman_cedar__0",
+   "piece": "r_n",
+   "label": "craftsman_cedar",
+   "model": "houses/craftsman_cedar",
+   "cell": "cell_0_-1",
+   "pos": [
+    61.5,
+    4.84278106689453,
+    -21.2000007629395
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -2.8,
+   "door_w": 1.0,
+   "bay": [
+    -4.7,
+    4.7
+   ],
+   "kind": "souvenir",
+   "name": "Kenji's Beach Shop",
+   "style": "sea",
+   "why": "visitors' gifts (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 8.12,
+     "w": 0.38
+    },
+    {
+     "facade": "left",
+     "along": 8.12,
+     "w": 0.38
+    },
+    {
+     "facade": "front",
+     "along": -4.75,
+     "w": 0.38
+    },
+    {
+     "facade": "right",
+     "along": 8.12,
+     "w": 0.38
+    },
+    {
+     "facade": "left",
+     "along": 8.12,
+     "w": 0.38
+    },
+    {
+     "facade": "front",
+     "along": -0.45,
+     "w": 0.38
+    }
+   ]
+  },
+  {
+   "id": "r_n__hipranch_grey__0",
+   "piece": "r_n",
+   "label": "hipranch_grey",
+   "model": "houses/hipranch_grey",
+   "cell": "cell_0_-1",
+   "pos": [
+    78.5,
+    5.81232500076294,
+    -19.4500007629395
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 4.0,
+   "door_w": 1.0,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "shoes",
+   "name": "Tern Soles",
+   "style": "navy",
+   "why": "next to the clothes trade (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": []
+  },
+  {
+   "id": "r_n__victorian_yellow__0",
+   "piece": "r_n",
+   "label": "victorian_yellow",
+   "model": "houses/victorian_yellow",
+   "cell": "cell_0_-1",
+   "pos": [
+    136.5,
+    9.87002658843994,
+    -21.3500003814697
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.57,
+   "door_w": 1.0,
+   "bay": [
+    -5.07,
+    5.07
+   ],
+   "kind": "gallery",
+   "name": "Nguyen's Art House",
+   "style": "cream",
+   "why": "local art for visitors (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": []
+  },
+  {
+   "id": "r_n__spanish_white__0",
+   "piece": "r_n",
+   "label": "spanish_white",
+   "model": "houses/spanish_white",
+   "cell": "cell_0_-1",
+   "pos": [
+    123.5,
+    9.18772506713867,
+    -20.25
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -1.4,
+   "door_w": 1.1,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "office",
+   "name": "Mariner Realty",
+   "style": "navy",
+   "why": "a service counter (bank, realty, travel) (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": []
+  },
+  {
+   "id": "r_s__tudor_stucco__0",
+   "piece": "r_s",
+   "label": "tudor_stucco",
+   "model": "houses/tudor_stucco",
+   "cell": "cell_0_0",
+   "pos": [
+    123.5,
+    9.18772506713867,
+    20.2999992370605
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 0.45,
+   "door_w": 1.0,
+   "bay": [
+    -5.95,
+    5.95
+   ],
+   "kind": "bar",
+   "name": "The Gull Tavern",
+   "style": "green",
+   "why": "an evening place for the block (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": -0.51,
+     "w": 9.42
+    },
+    {
+     "facade": "right",
+     "along": -0.6,
+     "w": 9.24
+    },
+    {
+     "facade": "right",
+     "along": -0.6,
+     "w": 6.6
+    },
+    {
+     "facade": "right",
+     "along": -0.35,
+     "w": 5.1
+    },
+    {
+     "facade": "left",
+     "along": -0.69,
+     "w": 9.42
+    },
+    {
+     "facade": "left",
+     "along": -0.6,
+     "w": 9.24
+    },
+    {
+     "facade": "left",
+     "along": -0.6,
+     "w": 6.6
+    },
+    {
+     "facade": "left",
+     "along": -0.85,
+     "w": 5.1
+    },
+    {
+     "facade": "front",
+     "along": 5.52,
+     "w": 0.45
+    },
+    {
+     "facade": "front",
+     "along": 3.55,
+     "w": 3.8
+    },
+    {
+     "facade": "front",
+     "along": 4.32,
+     "w": 1.04
+    },
+    {
+     "facade": "front",
+     "along": 3.48,
+     "w": 3.94
+    },
+    {
+     "facade": "front",
+     "along": 3.55,
+     "w": 3.49
+    },
+    {
+     "facade": "front",
+     "along": 3.5,
+     "w": 1.76
+    }
+   ]
+  },
+  {
+   "id": "r_s__hipranch_sand__0",
+   "piece": "r_s",
+   "label": "hipranch_sand",
+   "model": "houses/hipranch_sand",
+   "cell": "cell_0_0",
+   "pos": [
+    108.5,
+    8.1643238067627,
+    19.2000007629395
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -3.5,
+   "door_w": 1.0,
+   "bay": [
+    -5.2,
+    5.2
+   ],
+   "kind": "books",
+   "name": "Lantern Pages",
+   "style": "cream",
+   "why": "a quiet shop between the busy ones (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": []
+  },
+  {
+   "id": "r_s__craftsman_sage__0",
+   "piece": "r_s",
+   "label": "craftsman_sage",
+   "model": "houses/craftsman_sage",
+   "cell": "cell_0_0",
+   "pos": [
+    91.1999969482422,
+    6.97934818267822,
+    21.4500007629395
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 2.8,
+   "door_w": 1.0,
+   "bay": [
+    -4.7,
+    4.7
+   ],
+   "kind": "pharmacy",
+   "name": "Rudy's Drugstore",
+   "style": "green",
+   "why": "the neighbourhood's medicine (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 8.37,
+     "w": 0.38
+    },
+    {
+     "facade": "left",
+     "along": 8.37,
+     "w": 0.38
+    },
+    {
+     "facade": "front",
+     "along": -4.75,
+     "w": 0.38
+    },
+    {
+     "facade": "right",
+     "along": 8.37,
+     "w": 0.38
+    },
+    {
+     "facade": "left",
+     "along": 8.37,
+     "w": 0.38
+    },
+    {
+     "facade": "front",
+     "along": 4.75,
+     "w": 0.38
+    }
+   ]
+  },
+  {
+   "id": "b_se__civ_post_office__0",
+   "piece": "b_se",
+   "label": "civ_post_office",
+   "model": "civic/civ_post_office",
+   "cell": "cell_0_0",
+   "pos": [
+    27.5,
+    4.15000009536743,
+    24.7000007629395
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -10.7,
+    10.7
+   ],
+   "kind": "office",
+   "name": "Crownado Post Office",
+   "style": "green",
+   "why": "(sample) the town's post office keeps its building and its forecourt with the collection boxes",
+   "source": "sample",
+   "built": "",
+   "signs": []
+  },
+  {
+   "id": "b_sw__com_bistro__0",
+   "piece": "b_sw",
+   "label": "com_bistro",
+   "model": "commercial/com_bistro",
+   "cell": "cell_-1_0",
+   "pos": [
+    -26.0,
+    4.15000009536743,
+    42.2000007629395
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 4.76,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "restaurant",
+   "name": "Little Frenchy",
+   "style": "red",
+   "why": "(sample) the bistro with its terrace by the pocket park: the high street's one sit-down restaurant",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 11.18
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "b_se__com_boutique_row__0",
+   "piece": "b_se",
+   "label": "com_boutique_row",
+   "model": "commercial/com_boutique_row",
+   "cell": "cell_0_0",
+   "pos": [
+    23.0,
+    4.15000009536743,
+    44.7000007629395
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -4.08,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -3.0
+   ],
+   "kind": "ice_cream",
+   "name": "Compass Scoops",
+   "style": "cream",
+   "why": "families on a warm walk (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 5.18
+    }
+   ]
+  },
+  {
+   "id": "b_se__com_boutique_row__1",
+   "piece": "b_se",
+   "label": "com_boutique_row",
+   "model": "commercial/com_boutique_row",
+   "cell": "cell_0_0",
+   "pos": [
+    23.0,
+    4.15000009536743,
+    44.7000007629395
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 1,
+   "door_along": -1.92,
+   "door_w": 1.6,
+   "bay": [
+    -3.0,
+    2.92
+   ],
+   "kind": "shoes",
+   "name": "Sweet Soles Shoes",
+   "style": "black",
+   "why": "(sample) shoes in the middle of the boutique row, next to the clothes customers",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    }
+   ]
+  },
+  {
+   "id": "b_se__com_boutique_row__2",
+   "piece": "b_se",
+   "label": "com_boutique_row",
+   "model": "commercial/com_boutique_row",
+   "cell": "cell_0_0",
+   "pos": [
+    23.0,
+    4.15000009536743,
+    44.7000007629395
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 2,
+   "door_along": 7.76,
+   "door_w": 1.6,
+   "bay": [
+    2.92,
+    8.7
+   ],
+   "kind": "souvenir",
+   "name": "The Bay Shop",
+   "style": "sea",
+   "why": "(sample) the gift shop on the end bay, closest to the hotel and the visitors",
+   "source": "sample",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 5.18
+    }
+   ]
+  },
+  {
+   "id": "b_sw__apt_stucco3_cream__0",
+   "piece": "b_sw",
+   "label": "apt_stucco3_cream",
+   "model": "apartments/apt_stucco3_cream",
+   "cell": "cell_-1_0",
+   "pos": [
+    -22.0,
+    4.15000009536743,
+    57.7000007629395
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -9.2,
+    9.2
+   ],
+   "kind": "gallery",
+   "name": "Coral Prints",
+   "style": "black",
+   "why": "local art for visitors (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "b_sw__twr_hotel__0",
+   "piece": "b_sw",
+   "label": "twr_hotel",
+   "model": "urban/twr_hotel",
+   "cell": "cell_-1_0",
+   "pos": [
+    -25.0,
+    4.15000009536743,
+    82.1999969482422
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -14.7,
+    14.7
+   ],
+   "kind": "jewelry",
+   "name": "Isle Pawn & Gold",
+   "style": "black",
+   "why": "a small, secure front (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 9.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 9.87,
+     "w": 1.75
+    },
+    {
+     "facade": "right",
+     "along": 9.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 9.87,
+     "w": 1.75
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "b_se__urb_dept_store__0",
+   "piece": "b_se",
+   "label": "urb_dept_store",
+   "model": "urban/urb_dept_store",
+   "cell": "cell_0_0",
+   "pos": [
+    28.0,
+    4.15000009536743,
+    71.6999969482422
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": 15.4,
+   "door_w": 2.0,
+   "bay": [
+    -17.7,
+    17.7
+   ],
+   "kind": "clothes",
+   "name": "Jetty Apparel",
+   "style": "cream",
+   "why": "window frontage for clothes (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": []
+  },
+  {
+   "id": "b_se__com_cafe_seaside__0",
+   "piece": "b_se",
+   "label": "com_cafe_seaside",
+   "model": "commercial/com_cafe_seaside",
+   "cell": "cell_0_0",
+   "pos": [
+    23.0,
+    4.15000009536743,
+    92.6999969482422
+   ],
+   "yaw": -90.0000025044782,
+   "door_index": 0,
+   "door_along": -1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "cafe",
+   "name": "Ines' Coffee Bar",
+   "style": "sea",
+   "why": "coffee where people walk past (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 3.8,
+     "w": 3.0
+    }
+   ]
+  },
+  {
+   "id": "f_ne__@Node3D@6__0",
+   "piece": "f_ne",
+   "label": "@Node3D@6",
+   "model": "apartments/apt_beach_condo",
+   "cell": "cell_2_0",
+   "pos": [
+    552.299987792969,
+    1.5,
+    111.0
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "souvenir",
+   "name": "Ferry Souvenirs",
+   "style": "sea",
+   "why": "visitors' gifts (waterfront)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "f_ne__apt_beach_condo__0",
+   "piece": "f_ne",
+   "label": "apt_beach_condo",
+   "model": "apartments/apt_beach_condo",
+   "cell": "cell_2_0",
+   "pos": [
+    552.299987792969,
+    1.5,
+    165.399993896484
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "ice_cream",
+   "name": "Marta's Gelato",
+   "style": "teal",
+   "why": "families on a warm walk (waterfront)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "f_se__marina_office__0",
+   "piece": "f_se",
+   "label": "marina_office",
+   "model": "extras/ext_marina_office",
+   "cell": "cell_2_0",
+   "pos": [
+    586.700012207031,
+    1.5,
+    178.0
+   ],
+   "yaw": -89.999995674289,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -6.7,
+    6.7
+   ],
+   "kind": "sport",
+   "name": "The SUP & Saddlebag",
+   "style": "sun",
+   "why": "(sample) the marina office rents the paddle boards and bikes (The SUP & Saddlebag)",
+   "source": "sample",
+   "built": "wf_marina_office",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 5.72,
+     "w": 1.45
+    },
+    {
+     "facade": "left",
+     "along": 5.72,
+     "w": 1.45
+    },
+    {
+     "facade": "right",
+     "along": 5.72,
+     "w": 1.45
+    },
+    {
+     "facade": "left",
+     "along": 5.72,
+     "w": 1.45
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 3.0
+    }
+   ]
+  },
+  {
+   "id": "f_ne__seaside_cafe__0",
+   "piece": "f_ne",
+   "label": "seaside_cafe",
+   "model": "commercial/com_cafe_seaside",
+   "cell": "cell_2_0",
+   "pos": [
+    551.299987792969,
+    1.5,
+    187.800003051758
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "cafe",
+   "name": "Crownado Beach Coffee",
+   "style": "green",
+   "why": "(sample) the seaside cafe facing the marina",
+   "source": "sample",
+   "built": "wf_cafe",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 3.8,
+     "w": 3.0
+    }
+   ]
+  },
+  {
+   "id": "f_nw__apt_beach_condo__0",
+   "piece": "f_nw",
+   "label": "apt_beach_condo",
+   "model": "apartments/apt_beach_condo",
+   "cell": "cell_2_1",
+   "pos": [
+    529.75,
+    1.5,
+    217.699996948242
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "clothes",
+   "name": "Ines' Boutique",
+   "style": "black",
+   "why": "window frontage for clothes (waterfront)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "f_nw__surf_shop__0",
+   "piece": "f_nw",
+   "label": "surf_shop",
+   "model": "commercial/com_surf_shop",
+   "cell": "cell_2_1",
+   "pos": [
+    551.299987792969,
+    1.5,
+    213.699996948242
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "souvenir",
+   "name": "Little Sam's Beach Fun",
+   "style": "sea",
+   "why": "(sample) the beach shop on the corner across from the beach: buckets, towels, sunscreen",
+   "source": "sample",
+   "built": "wf_beach_shop",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  }
+ ]
+}
