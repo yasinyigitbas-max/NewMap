@@ -7,7 +7,7 @@ extends RefCounted
 ##   --hold=40                          frames to wait before a picture is taken
 ## [name, x, z, yaw, pitch]: street level, eye 1.6 m over the road.
 const VIEWS := [
-	["centre", 0.0, -560.0, 0.0, 4.0],            # Amber Ave, looking north through the junction with 7th St (0, -600)
+	["centre", -6.0, -560.0, 0.0, 4.0],           # Amber Ave (west lane; the median has palms), looking north through 7th St (0, -600)
 	["apartments", 215.0, -600.0, 90.0, 5.0],     # 7th St, looking east through the apartments junction (250, -600)
 	["gritty", -600.0, -960.0, 0.0, 3.0],         # the gritty edge, looking north through its junction (-600, -1000)
 	["waterfront", 535.0, 200.0, 75.0, 2.0]]      # the waterfront (570, 200)
@@ -26,7 +26,7 @@ static func run(rig: Node, folder: String, args: PackedStringArray) -> void:
 		if a.begins_with("--hold="): hold = int(a.trim_prefix("--hold="))
 	var dir := ProjectSettings.globalize_path(folder) if folder.begins_with("res://") or folder.begins_with("user://") else folder
 	DirAccess.make_dir_recursive_absolute(dir)
-	var tag := "after" if int(rig.opt.look) == 1 else "before"
+	var tag := ("after_bloom" if int(rig.opt.bloom) == 1 else "after") if int(rig.opt.look) == 1 else "before"
 	var tree := rig.get_tree(); var vp := rig.get_viewport()
 	rig.hud.visible = false
 	for night: float in times:

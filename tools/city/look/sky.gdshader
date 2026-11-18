@@ -21,8 +21,9 @@ uniform float sun_disc = 6.0;          // the disc itself
 uniform float disc_cos = 0.9994;       // cosine of the disc's radius
 uniform vec3 cloud_lit : source_color = vec3(1.0, 0.98, 0.95);
 uniform vec3 cloud_dark : source_color = vec3(0.62, 0.68, 0.78);
-uniform float cloud_cover = 0.42;      // 0 none .. 1 overcast
+uniform float cloud_cover = 0.5;      // 0 none .. 1 overcast
 uniform float cloud_alpha = 0.9;
+uniform float cloud_scale = 0.2;     // texture repeats per unit of the cloud layer: bigger = smaller clouds
 uniform float stars = 0.0;             // 0 by day
 global uniform vec2 ck_sky_drift;
 
@@ -38,8 +39,8 @@ void sky() {
 	if (EYEDIR.y > 0.0) {
 		// clouds on a flat layer; the 0.16 keeps the layer from running to infinity at the horizon
 		vec2 uv = EYEDIR.xz / (y + 0.16);
-		float shape = texture(noise_tex, uv * 0.085 + ck_sky_drift).r;
-		float detail = texture(noise_tex, uv * 0.37 + ck_sky_drift * 2.6 + vec2(0.37, 0.11)).g;
+		float shape = texture(noise_tex, uv * cloud_scale + ck_sky_drift).r;
+		float detail = texture(noise_tex, uv * cloud_scale * 4.1 + ck_sky_drift * 2.6 + vec2(0.37, 0.11)).g;
 		float d = shape * 0.74 + detail * 0.26;
 		float edge = 1.0 - cloud_cover;
 		float c = smoothstep(edge, edge + 0.24, d) * smoothstep(0.015, 0.2, y) * cloud_alpha;      // melts into the haze

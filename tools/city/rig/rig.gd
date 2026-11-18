@@ -16,6 +16,9 @@ extends Node3D
 ##   --nowarm      skip the warm-up (to see what it saves)
 ##   --look=1|0    1 (default): the look pack's sky, distance haze, light colours and colour treatment
 ##             (tools/city/look/look.gd, docs/LOOK_SKY.md); 0: the old plain sky and light, to compare
+##   --bloom=0|1   with --look=1: 1 adds a soft glow round bright things (GTA 4 style); costs pixels, off by default
+##   --reflect=1|0 1 (default): surfaces reflect the sky (as before); 0: no sky reflection (one cube-map read less a
+##             pixel; the cloud preview needs it: its software GPU draws the trees black with sky reflections on)
 ##   --shots=FOLDER   no drive: save pictures from set viewpoints, by day and at night, and leave
 ##             (tools/city/look/look_shots.gd; run with --look=1 and with --look=0 for before / after pairs)
 const Stream := preload("res://tools/city/bake/city_stream.gd")
@@ -55,7 +58,7 @@ var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
-var opt := {"look": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 2, "lights": 20, "nowarm": false}
+var opt := {"look": 1, "bloom": 0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 2, "lights": 20, "nowarm": false}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -74,7 +77,7 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "look", "shots"]:
+		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "look", "bloom", "reflect", "shots"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
 				opt[k] = v if k in ["plan", "shots"] else (float(v) if k in ["scale", "lead"] else int(v))
@@ -85,7 +88,7 @@ func _ready() -> void:
 		var ws := DisplayServer.window_get_size(); opt.scale = clampf(720.0 / maxf(1.0, float(mini(ws.x, ws.y))), 0.25, 1.0)
 	var vp := get_viewport(); vp.scaling_3d_scale = float(opt.scale); vp.screen_space_aa = Viewport.SCREEN_SPACE_AA_FXAA
 	if int(opt.look) == 1:      # the look pack: sky, haze, light colours, colour treatment
-		look = Look.new(); add_child(look); env = look.env; sun = look.sun
+		look = Look.new(); look.bloom = int(opt.bloom) == 1; add_child(look); env = look.env; sun = look.sun
 	else:                       # the old plain setup, kept to compare against
 		env = Environment.new()
 		var sky := Sky.new(); sky.sky_material = ProceduralSkyMaterial.new(); env.background_mode = Environment.BG_SKY; env.sky = sky
@@ -93,7 +96,8 @@ func _ready() -> void:
 		env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 		var we := WorldEnvironment.new(); we.environment = env; add_child(we)
 		sun = DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-48, -35, 0); sun.light_energy = 1.25
-		sun.shadow_enabled = true; sun.directional_shadow_max_distance = 50.0; add_child(sun)      # the game's sun shadow distance
+		sun.shadow_enabled = OS.get_environment("NOSHADOW") != "1"; sun.directional_shadow_max_distance = 50.0; add_child(sun)      # the game's sun shadow distance
+	if int(opt.reflect) == 0: env.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED
 	var gp := MeshInstance3D.new(); var pm := PlaneMesh.new(); pm.size = Vector2(6000, 6000); gp.mesh = pm
 	var gm := StandardMaterial3D.new(); gm.albedo_color = Color(0.36, 0.42, 0.3); gm.roughness = 1.0; gp.material_override = gm; gp.position.y = -0.05; add_child(gp)
 	st = Stream.new(); st.name = "City"; st.lead_seconds = float(opt.lead); st.max_cells = int(opt.maxcells); st.max_loading = int(opt.loading); st.bodies_per_frame = int(opt.bodies); add_child(st)
@@ -134,7 +138,7 @@ func _night(v: float) -> void:
 
 func _run() -> void:
 	var R := RenderingServer
-	_say("start engine=%s device=%s gpu=%s screen=%s scale=%.2f look=%d plan=%s lead=%.1f maxcells=%d loading=%d bodies=%d lights=%d cells_baked=%d" % [Engine.get_version_info().string, OS.get_model_name(), R.get_video_adapter_name(), str(DisplayServer.window_get_size()), float(opt.scale), int(opt.look), opt.plan, float(opt.lead), int(opt.maxcells), int(opt.loading), int(opt.bodies), int(opt.lights), st.cells.size()])
+	_say("start engine=%s device=%s gpu=%s screen=%s scale=%.2f look=%d bloom=%d reflect=%d plan=%s lead=%.1f maxcells=%d loading=%d bodies=%d lights=%d cells_baked=%d" % [Engine.get_version_info().string, OS.get_model_name(), R.get_video_adapter_name(), str(DisplayServer.window_get_size()), float(opt.scale), int(opt.look), int(opt.bloom), int(opt.reflect), opt.plan, float(opt.lead), int(opt.maxcells), int(opt.loading), int(opt.bodies), int(opt.lights), st.cells.size()])
 	if st.cells.is_empty():
 		_say("ERROR no baked city found (map_dc/coronado/city_kit/runtime). Run the bake before the export."); hud.text = "no baked city in this build"
 		if opt.quit: await get_tree().create_timer(3.0).timeout; get_tree().quit()
