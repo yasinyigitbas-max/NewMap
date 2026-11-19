@@ -1,0 +1,81 @@
+{
+ "area": "br_appr_4",
+ "piece": "s_br_appr_4",
+ "zone": "Bridge approach",
+ "rule": "docs/TREE_PLAN.md: waterfront, bridge approach - palms only, spaced, on the median; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    906.656,
+    5.276,
+    -1084.81
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "grass strip on the curve, nothing within 3 m: queen palm, about 32 m on from s_br_appr_3's last"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    920.98,
+    5.499,
+    -1056.223
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "grass strip, about 32 m on: same rhythm"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    934.377,
+    5.725,
+    -1027.186
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "grass strip, about 32 m on: same rhythm"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    951.546,
+    5.947,
+    -1000.211
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "grass strip, about 32 m on: same rhythm"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    972.231,
+    6.162,
+    -975.828
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "grass strip, about 32 m on: same rhythm"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    996.045,
+    6.365,
+    -954.49
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "grass strip, about 32 m on: same rhythm"
+  }
+ ]
+}
