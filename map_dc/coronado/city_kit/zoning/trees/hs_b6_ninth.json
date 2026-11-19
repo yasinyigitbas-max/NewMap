@@ -1,0 +1,10 @@
+{
+ "area": "hs_b6_ninth", "piece": "n_hs_b6_ninth", "zone": "high street",
+ "rule": "docs/TREE_PLAN.md: high street (pilot), Amber spine, arterials - trees in wells on the shop side, palms alternating on Amber (zone 406 -> about 360); this block's trees stand on grass round its car park",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's eight builder trees go (a row on the car park's grass island, two among the trash carts and a lot light, two by the front hedges); three come back on their own spots: the two ends of the car park's island (a coral and a palm, as the strip's island ends) and one in the front garden.",
+ "trees": [
+  {"base": "tree_coral_a", "cond": "normal", "at": [87.8, 6.821, -154.1], "yaw": 0.0, "scale": 0.85, "why": "the west end of the car park's grass island, by the wheel stops: shade for the cars"},
+  {"base": "palm_queen_a", "cond": "normal", "at": [110.8, 8.314, -154.1], "yaw": 90.0, "scale": 1.0, "why": "the east end of the same island, among the bird of paradise and the bougainvillea: a queen palm"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [99.2, 7.641, -187.4], "yaw": 180.0, "scale": 0.85, "why": "the front garden by the low box hedges, 5 m from the building"}
+ ]
+}
