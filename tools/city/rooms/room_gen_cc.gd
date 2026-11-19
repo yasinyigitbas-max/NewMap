@@ -45,10 +45,12 @@ const KINDS := {
 	"keys": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["workbench", "pegboard_wall"], "board": false, "walls": ["wall_shelf"], "centre": "none", "window": "display", "back": "none", "frames": false},
 	"sport": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["wall_shelf", "wall_shelf"], "board": false, "walls": ["surfboard_rack", "clothes_rack", "bike_stand"], "centre": "racks", "window": "display", "back": "stock", "frames": false},
 	"gas": {"floor": "Tiles074", "light": "panel", "counter": ["checkout_counter"], "till": false, "behind": ["cigarette_cabinet"], "board": false, "walls": ["drinks_fridge", "grocery_shelf"], "centre": "rows", "window": "none", "back": "none", "frames": false},
-	"lobby": {"floor": "Terrazzo005", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": false, "behind": ["potted_plant", "filing_cabinet", "potted_plant"], "board": false, "walls": ["waiting_bench", "potted_plant"], "centre": "lounge", "window": "none", "back": "none", "frames": true},
+	"lobby": {"floor": "Terrazzo005", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": false, "behind": ["potted_plant", "filing_cabinet", "potted_plant"], "board": false, "walls": ["waiting_bench", "potted_plant", "brochure_rack"], "centre": "lounge", "window": "brochures", "back": "none", "frames": true},
 	"bank": {"floor": "Terrazzo005", "light": "panel", "counter": ["shop_counter", "shop_counter", "shop_counter"], "till": true, "behind": ["filing_cabinet", "office_desk", "filing_cabinet", "filing_cabinet"], "board": false, "walls": ["waiting_bench", "brochure_rack", "potted_plant"], "centre": "desks", "window": "none", "back": "office", "frames": true},
 	"law": {"floor": "Carpet012", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet", "bookcase", "filing_cabinet"], "board": false, "walls": ["bookcase"], "centre": "desks", "window": "waiting", "back": "office", "frames": true},
-	"bail": {"floor": "Tiles074", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": false, "behind": ["filing_cabinet", "office_desk", "filing_cabinet"], "board": false, "walls": ["waiting_bench", "drinks_fridge"], "centre": "none", "window": "waiting", "back": "none", "frames": false},
+	"bail": {"floor": "Tiles074", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": false, "behind": ["filing_cabinet", "office_desk", "filing_cabinet"], "board": false, "walls": ["waiting_bench", "potted_plant"], "centre": "none", "window": "waiting", "back": "none", "frames": false},
+	"bike": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["workbench", "pegboard_wall", "workbench"], "board": false, "walls": ["bike_stand", "bike_stand", "wall_shelf"], "centre": "none", "window": "display", "back": "stock", "frames": false},
+	"print": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["workbench", "filing_cabinet", "workbench"], "board": false, "walls": ["filing_cabinet", "pegboard_wall"], "centre": "display", "window": "display", "back": "stock", "frames": true},
 	"church": {"floor": "WoodFloor051", "light": "pendant", "counter": ["display_table", "display_table"], "till": false, "behind": ["potted_plant", "bookcase", "potted_plant"], "board": false, "walls": ["frames_only"], "centre": "pews", "window": "none", "back": "none", "frames": true},
 	"court": {"floor": "Terrazzo005", "light": "panel", "counter": ["shop_counter", "shop_counter", "shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet", "office_desk", "filing_cabinet"], "board": false, "walls": ["waiting_bench", "potted_plant", "brochure_rack"], "centre": "benches", "window": "none", "back": "office", "frames": true},
 	"venue": {"floor": "Carpet012", "light": "pendant", "counter": ["shop_counter", "soda_fountain"], "till": true, "behind": ["drinks_fridge"], "board": true, "walls": ["poster_wall"], "centre": "benches", "window": "waiting", "back": "none", "frames": false},
@@ -58,7 +60,7 @@ const WALL_TINTS := [Color(1.0, 0.95, 0.86), Color(0.94, 0.96, 0.98), Color(0.98
 const SHORT := {"cafe": "COFFEE", "bakery": "BAKERY", "bar": "BAR", "restaurant": "KITCHEN", "fast_food": "FOOD", "ice_cream": "ICE CREAM",
 	"clothes": "CLOTHES", "shoes": "SHOES", "jewelry": "JEWELRY", "books": "BOOKS", "gallery": "GALLERY", "salon": "SALON", "pharmacy": "PHARMACY",
 	"souvenir": "GIFTS", "office": "OFFICE", "corner_shop": "MARKET", "grocery": "GROCERY", "cleaners": "LAUNDRY", "store": "SUPPLY", "keys": "KEYS",
-	"sport": "SPORT", "gas": "FUEL", "venue": "TICKETS", "church": "CHURCH", "court": "COURTHOUSE", "lobby": "OFFICES", "bank": "BANK", "law": "ATTORNEYS", "bail": "BAIL BONDS"}
+	"sport": "SPORT", "gas": "FUEL", "venue": "TICKETS", "church": "CHURCH", "court": "COURTHOUSE", "lobby": "OFFICES", "bank": "BANK", "law": "ATTORNEYS", "bail": "BAIL BONDS", "bike": "BIKES", "print": "PRINT"}
 
 var foot := {}      # base -> Vector2(w, d)
 var tall := {}      # base -> height
@@ -356,15 +358,19 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 				for xx: float in _steps(IX0 + 0.68, IX1 - 0.68, 2.2):
 					_put("display_table" if t % 2 == 0 else "card_spinner", xx, zz, 0.0); t += 1
 		"desks":
+			var nd := 0
 			for zz: float in _steps(mz0 + 0.9, mz1 - 0.9, 2.8):
 				for xx: float in _steps(IX0 + 0.8, IX1 - 0.8, 2.6):
-					_group([["office_desk", xx, zz, 180.0], ["office_chair", xx, zz - 0.72, 0.0], ["side_chair", xx, zz + 0.78, 180.0]])
+					if nd >= 4 or absf(xx - dx) < 1.6: continue
+					if _group([["office_desk", xx, zz, 180.0], ["office_chair", xx, zz - 0.72, 0.0], ["side_chair", xx, zz + 0.78, 180.0]]): nd += 1
 		"lounge":
-			for zz: float in _steps(mz0 + 1.0, mz1 - 1.0, 3.2):
-				for xx: float in _steps(IX0 + 1.4, IX1 - 1.4, 4.2):
-					if absf(xx - dx) < 1.4: continue
+			var ng := 0
+			for zz: float in _steps(mz0 + 1.0, mz1 - 1.0, 3.0):
+				for xx: float in _steps(IX0 + 1.4, IX1 - 1.4, 3.9):
+					if absf(xx - dx) < 1.6 or ng >= 8: continue
+					ng += 1
 					_group([["display_table", xx, zz, 0.0], ["waiting_bench", xx, zz - 0.95, 0.0], ["waiting_bench", xx, zz + 0.95, 180.0]])
-					_put("potted_plant", xx + 1.5, zz, 0.0)
+					_put("potted_plant", xx + 1.5, zz, 0.0); _put("potted_plant", xx - 1.5, zz, 0.0)
 		"pews":
 			# two columns either side of the centre aisle from the door to the altar, every pew facing the altar
 			for zz: float in _steps(mz0 + 0.3, mz1 - 0.3, 1.3):
@@ -379,7 +385,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	var bz := zc + cd * 0.5 + 0.7
 	if not _put("indoor_bin", X1 - 0.25, bz, 0.0, false): _put("indoor_bin", X0 + 0.25, bz, 0.0, false)
 	if kind in ["office", "pharmacy", "souvenir", "venue", "gallery"]: _put("brochure_rack", dx + (1.3 if dx < (X0 + X1) * 0.5 else -1.3), ZF - 1.9, 180.0)
-	if bool(K.frames) or String(K.walls[0]) in ["frames_only", "poster_wall"]:
+	if (bool(K.frames) or String(K.walls[0]) in ["frames_only", "poster_wall"]) and H - F >= 2.5:     # a frame reaches 2.25 m
 		var mount := "poster_case" if String(K.walls[0]) == "poster_wall" else "gallery_frame"
 		var n_room := 0
 		for side2: Array in [[X0, 90.0, "left"], [X1, -90.0, "right"]]:

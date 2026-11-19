@@ -6,63 +6,43 @@
    "id": "cc_b1_am__amber6_tower__0",
    "piece": "n_cc_b1_am",
    "label": "amber6_tower",
-   "model": "modular/examples/mod_twr_office",
+   "model": "urban/twr_glass",
    "pos": [
-    -26.0,
+    -28.0,
     6.15,
-    -782.1
+    -778.1
    ],
    "yaw": 90.0,
    "door_index": 0,
-   "door_along": -4.0,
-   "door_w": 1.8,
+   "door_along": 0.0,
+   "door_w": 2.0,
    "bay": [
-    -7.7,
-    7.7
+    -11.7,
+    11.7
    ],
    "kind": "lobby",
-   "name": "Sixth & Amber Building",
+   "name": "Sixth & Amber Tower",
    "style": "black",
    "signs": [
     {
      "facade": "right",
-     "along": 10.77,
-     "w": 1.55
+     "along": 12.97,
+     "w": 1.95
     },
     {
      "facade": "left",
-     "along": 10.77,
-     "w": 1.55
+     "along": 12.97,
+     "w": 1.95
     },
     {
      "facade": "right",
-     "along": 10.77,
-     "w": 1.55
+     "along": 12.97,
+     "w": 1.95
     },
     {
      "facade": "left",
-     "along": 10.77,
-     "w": 1.55
-    },
-    {
-     "facade": "right",
-     "along": 10.77,
-     "w": 1.55
-    },
-    {
-     "facade": "left",
-     "along": 10.77,
-     "w": 1.55
-    },
-    {
-     "facade": "right",
-     "along": 10.77,
-     "w": 1.55
-    },
-    {
-     "facade": "left",
-     "along": 10.77,
-     "w": 1.55
+     "along": 12.97,
+     "w": 1.95
     }
    ],
    "source": "city-centre fill (hand-made shop list)",
@@ -76,7 +56,7 @@
    "pos": [
     -24.0,
     6.15,
-    -763.73
+    -751.38
    ],
    "yaw": 90.0,
    "door_index": 0,
@@ -107,7 +87,7 @@
    "pos": [
     -23.0,
     6.15,
-    -745.25
+    -732.9
    ],
    "yaw": 90.0,
    "door_index": 0,
@@ -138,7 +118,7 @@
    "pos": [
     -23.0,
     6.15,
-    -745.25
+    -732.9
    ],
    "yaw": 90.0,
    "door_index": 1,
@@ -169,7 +149,7 @@
    "pos": [
     -23.0,
     6.15,
-    -745.25
+    -732.9
    ],
    "yaw": 90.0,
    "door_index": 2,
@@ -200,7 +180,7 @@
    "pos": [
     -23.0,
     6.15,
-    -729.83
+    -717.48
    ],
    "yaw": 90.0,
    "door_index": 0,
@@ -213,37 +193,6 @@
    "kind": "salon",
    "name": "Seventh Wave Barbers",
    "style": "red",
-   "signs": [
-    {
-     "facade": "front",
-     "along": -3.0,
-     "w": 2.4
-    }
-   ],
-   "source": "city-centre fill (hand-made shop list)",
-   "built": ""
-  },
-  {
-   "id": "cc_b1_am__amber_books__0",
-   "piece": "n_cc_b1_am",
-   "label": "amber_books",
-   "model": "ck/ck_brk3_row2",
-   "pos": [
-    -23.0,
-    6.15,
-    -717.45
-   ],
-   "yaw": 90.0,
-   "door_index": 0,
-   "door_along": -1.1,
-   "door_w": 1.6,
-   "bay": [
-    -5.7,
-    2.2
-   ],
-   "kind": "books",
-   "name": "Amber Books",
-   "style": "green",
    "signs": [
     {
      "facade": "front",
@@ -504,7 +453,7 @@
     -5.7,
     5.7
    ],
-   "kind": "keys",
+   "kind": "print",
    "name": "Alley Sign & Print",
    "style": "black",
    "signs": [
@@ -540,7 +489,7 @@
     -5.7,
     5.7
    ],
-   "kind": "sport",
+   "kind": "bike",
    "name": "Spokes Bike Repair",
    "style": "sea",
    "signs": [
@@ -717,6 +666,47 @@
     {
      "facade": "front",
      "along": -3.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b1_court__district_attorney__0",
+   "piece": "n_cc_b1_court",
+   "label": "district_attorney",
+   "model": "modular/examples/mod_brk_row",
+   "pos": [
+    -82.0,
+    6.15,
+    -691.827
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "law",
+   "name": "District Attorney",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    },
+    {
+     "facade": "front",
+     "along": 6.0,
      "w": 2.4
     }
    ],

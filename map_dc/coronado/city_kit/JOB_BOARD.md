@@ -5,6 +5,7 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov evening (claude/fill-city-centre): CITY-CENTRE FILL, BLOCK 1 BUILT, NOT SHOWN, NOT LOCKED. Four pieces n_cc_b1_* (Amber wall with the 59 m glass tower on Amber x 6th, 6th St row, C Ave corner + church, the COURTHOUSE on its square on 7th St beside city hall + the district garage), 22 rooms g_cc_b1_*, own table review/grow_cc_blocks.json, own tool copies (cc_fill_lib, room_gen_cc, split_props_cc ...). Flat block: ground 0 buried / 0 hanging / 0.0 cm seams; land NOT written (dry trial asks 43 nodes -6 cm). Validator 0 in these pieces, rooms 0, lock PASS. Read review/fill_cc/README.md. Waiting for Yasin's word before block 2. Yasin: "add one very tall building to every block you make, alternative in between them" (glass 59 m / condo 50 m alternating).
 - 19 Nov ~20:00 (PC session): A TRAFFIC CAR THAT IS HIT IS A REAL CAR, ALL C++ (Yasin after the compaction: "act like
   a developer working for rockstars next GTA and tackle the problems"). Read docs/TRAFFIC_PEOPLE_PORT.md section 23.
   Six physical cars (`CityCar`) are made at the start; a moving or parked car of the traffic that the player's car

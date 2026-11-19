@@ -18,13 +18,12 @@ IN = os.path.join(ROOT, "map_dc/coronado/city_kit/interiors")
 # None = the whole floor, kind of room_gen_strip.KINDS, shop name, sign style)
 SHOPS = {
     # Amber wall (n_cc_b1_am): the centre's main street, offices over shops
-    ("n_cc_b1_am", "amber6_tower"): [(-4.0, None, "lobby", "Sixth & Amber Building", "black")],
+    ("n_cc_b1_am", "amber6_tower"): [(0.0, None, "lobby", "Sixth & Amber Tower", "black")],
     ("n_cc_b1_am", "amber_bank"): [(6.8, None, "bank", "Amber Savings Bank", "navy")],
     ("n_cc_b1_am", "amber_deli_row"): [(-4.1, [-8.7, -1.1], "restaurant", "Marlowe's Deli", "red"),
                                        (1.9, [-1.1, 4.9], "clothes", "Ferris Tailors", "navy"),
                                        (7.9, [4.9, 8.7], "keys", "Fix-It Phone Repair", "black")],
     ("n_cc_b1_am", "amber_barber_fe"): [(-1.1, [-5.7, 2.2], "salon", "Seventh Wave Barbers", "red")],
-    ("n_cc_b1_am", "amber_books"): [(-1.1, [-5.7, 2.2], "books", "Amber Books", "green")],
     ("n_cc_b1_am", "amber_corner_cafe"): [(4.9, [-1.8, 5.7], "cafe", "Court Side Coffee", "teal")],
     # 6th St row (n_cc_b1_n): the neighbourhood's daily errands
     ("n_cc_b1_n", "sixth_corner_shop"): [(4.9, [-1.8, 5.7], "corner_shop", "Sixth St Market", "sun")],
@@ -33,8 +32,8 @@ SHOPS = {
                                        (7.9, [4.9, 8.7], "jewelry", "Watch & Jewel Repair", "black")],
     ("n_cc_b1_n", "sixth_diner_block"): [(0.0, [-5.4, 5.4], "restaurant", "Sixth Street Diner", "teal")],
     ("n_cc_b1_n", "sixth_pharmacy"): [(-1.1, [-5.7, 2.2], "pharmacy", "Downtown Pharmacy", "green")],
-    ("n_cc_b1_n", "alleyc_print_shop"): [(None, None, "keys", "Alley Sign & Print", "black")],
-    ("n_cc_b1_n", "alleyc_bike_repair"): [(None, None, "sport", "Spokes Bike Repair", "sea")],
+    ("n_cc_b1_n", "alleyc_print_shop"): [(None, None, "print", "Alley Sign & Print", "black")],
+    ("n_cc_b1_n", "alleyc_bike_repair"): [(None, None, "bike", "Spokes Bike Repair", "sea")],
     # C Ave (n_cc_b1_west)
     ("n_cc_b1_west", "cave_corner_flats"): [(0.0, [-5.4, 5.4], "bakery", "C Avenue Bakery", "sun")],
     ("n_cc_b1_west", "downtown_church"): [(0.0, None, "church", "Sacred Heart Church", "navy")],

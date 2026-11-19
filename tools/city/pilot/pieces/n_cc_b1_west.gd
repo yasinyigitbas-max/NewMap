@@ -24,6 +24,7 @@ func _run() -> void:
 	# ---- ground
 	c.pad(-190.8, -190.8, -140.0, -100.0)              # 6th St's walk ends at v -790.8 here (measured vertex by vertex)
 	c.paint("concrete", -190.8, -190.8, -146.0, -190.3)                # the 0.5 m to the flats' fronts reads as walk
+	c.paint("concrete", -190.8, -190.3, -190.0, -174.4)                # the sliver beside the corner block's side wall, paved like the walk
 	c.paint("concrete", -165.6, -147.4, -163.6, -146.0)            # court gate path from alley C
 	c.paint("mulch", -158.0, -158.0, -150.0, -150.0)               # play corner on bark
 	c.paint("grass", -179.2, -174.4, -146.4, -146.6)               # the flats' garden court
