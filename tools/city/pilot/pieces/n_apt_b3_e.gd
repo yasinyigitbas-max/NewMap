@@ -131,5 +131,15 @@ func _run() -> void:
 	F.put(props, "tree_jacaranda_a", "normal", sx, sz, 210.0, 72.0, 15.0)
 	F.put(props, "prop_clothesline", "worn", sx, sz, 214.0, 90.0, 90.0)
 
+	# ================================================================ POLISH PASS (Yasin 19 Nov: "run a polish pass in all your
+	# quarters ... plenty of props"): only ADDS, with its own random sequence, after everything above (which stays identical):
+	# every building's downspouts, house numbers, vine or dish, back-wall grime; and the spots chosen here, each a cluster
+	# whose items go in only where their own spot is free (apt_fill_lib.polish_*)
+	var prr := W.rng_for(NAME + "_polish")
+	var prect := Rect2(125.0, 9.2, 115.8, 90.8)
+	for pb: Dictionary in blds: F.polish_building(ctx, pb, prr, prect)
+	for psp: Array in [["sit", 160, 32, 0], ["garden", 180, 30, 0], ["tools", 186, 44, 90], ["garden", 140, 96, 0], ["lounge", 178, 92, 0], ["tools", 146, 78, 90], ["garden", 206, 26, 0], ["lounge", 218, 46, 0], ["sit", 213, 66, 0], ["garden", 208, 96, 0], ["play", 214, 84, 0]]:
+		F.polish_spot(ctx, String(psp[0]), float(psp[1]), float(psp[2]), float(psp[3]), prr, prect)
+
 	F.finish(ctx, 125.0, 9.2, 240.8, 100.0)
 	quit()

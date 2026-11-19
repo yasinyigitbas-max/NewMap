@@ -167,5 +167,15 @@ func _run() -> void:
 	paints.insert(0, F.rect(sx, sz, 205.5, 120.0, 208.5, 127.0, "mulch"))
 	for k in 3: F.put(props, ["plant_bird_of_paradise", "plant_agave_americana_small", "plant_potted_leafy"][k], "normal", sx, sz, 207.0, 121.2 + k * 2.3, k * 60.0)
 
+	# ================================================================ POLISH PASS (Yasin 19 Nov: "run a polish pass in all your
+	# quarters ... plenty of props"): only ADDS, with its own random sequence, after everything above (which stays identical):
+	# every building's downspouts, house numbers, vine or dish, back-wall grime; and the spots chosen here, each a cluster
+	# whose items go in only where their own spot is free (apt_fill_lib.polish_*)
+	var prr := W.rng_for(NAME + "_polish")
+	var prect := Rect2(100.0, 100.0, 140.8, 90.8)
+	for pb: Dictionary in blds: F.polish_building(ctx, pb, prr, prect)
+	for psp: Array in [["sit", 112, 165, 0], ["sit", 135, 165, 0], ["sit", 157, 165, 0], ["garden", 178, 166, 0], ["lounge", 126, 173, 0], ["tools", 155, 173, 0], ["sit", 220, 155, 0], ["garden", 205, 170, 0], ["sit", 212, 106, 0], ["tools", 222, 137, 0], ["garden", 142, 108, 90]]:
+		F.polish_spot(ctx, String(psp[0]), float(psp[1]), float(psp[2]), float(psp[3]), prr, prect)
+
 	F.finish(ctx, 100.0, 100.0, 240.8, 190.8)
 	quit()

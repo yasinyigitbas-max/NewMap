@@ -489,3 +489,129 @@ static func finish(ctx: Dictionary, u0: float, v0: float, u1: float, v1: float, 
 	props.build(root, K)
 	print("PIECE %s: ground tris %d, props %d, buildings %d, stalls %d, trees dropped by fences %d" % [ctx.name, g.tri_count(), props.count(), (ctx.bl as Node3D).get_child_count(), (ctx.stalls as Array).size(), dropped])
 	K.save_piece(root, String(ctx.name))
+
+## ================================================================ POLISH PASS (Yasin 19 Nov, after the lock: "run a polish
+## pass in all your quarters, both indoors and outdoors ... plenty of props"). Everything here only ADDS: it runs at the end
+## of a piece script with its own random sequence, so every prop, building and ground cell already there stays identical
+## (proved per piece with diff_piece.gd). Every added prop is tested on its own spot first and LEFT OUT if the spot is not
+## free: clear of buildings (0.3 m), of door steps (1.6 m), of every prop already there (half their diagonals), on grass /
+## bark / gravel (never a walk, a stall, an alley or a road), 0.6 m inside the piece.
+static var _rad := {}
+static func _radius(base: String) -> float:
+	if not _rad.has(base):
+		var e := K.manifest(base)
+		_rad[base] = clampf(Vector2(float(e.get("footprint_w", 0.6)), float(e.get("footprint_d", 0.6))).length() * 0.5, 0.25, 3.0)
+	return float(_rad[base])
+
+static func _surface(paints: Array, p: Vector2) -> String:
+	for pr: Array in paints:
+		if p.x >= float(pr[0]) and p.x <= float(pr[2]) and p.y >= float(pr[1]) and p.y <= float(pr[3]): return String(pr[4])
+	return "grass"
+
+static func free_at(ctx: Dictionary, p: Vector2, r: float, allowed: Array, rect: Rect2) -> bool:
+	if p.x < rect.position.x + 0.6 + r or p.x > rect.end.x - 0.6 - r or p.y < rect.position.y + 0.6 + r or p.y > rect.end.y - 0.6 - r: return false
+	if not (_surface(ctx.paints, p) in allowed): return false
+	for b: Dictionary in ctx.blds:
+		var lp: Vector3 = (b.node as Node3D).transform.affine_inverse() * Vector3(p.x, 0.0, p.y)
+		if absf(lp.x) < float(b.w) * 0.5 + r + 0.3 and absf(lp.z) < float(b.d) * 0.5 + r + 0.3: return false
+		for dx: float in doors_of(String(b.folder)):
+			if Vector2(lp.x - dx, lp.z - (float(b.d) * 0.5 + 0.9)).length() < 1.6 + r: return false
+	var props: K.Props = ctx.props
+	for k: String in props.items:
+		var base := k.get_slice("|", 0)
+		var mount := String(K.manifest(base).get("mount", "ground"))
+		if mount != "ground": continue
+		var rb := _radius(base) if not base.begins_with("fence") else 0.15
+		for t: Transform3D in props.items[k]:
+			if t.origin.y - gy(t.origin.x, t.origin.z) > 1.2: continue
+			if base.begins_with("fence") and not base.contains("post"):
+				# a panel is a line: test the distance to its segment
+				var ax := t.basis.x.normalized() * 1.0
+				var a2 := Vector2(t.origin.x - ax.x, t.origin.z - ax.z); var b2 := Vector2(t.origin.x + ax.x, t.origin.z + ax.z)
+				var tt := clampf((p - a2).dot(b2 - a2) / maxf((b2 - a2).length_squared(), 1e-6), 0.0, 1.0)
+				if p.distance_to(a2.lerp(b2, tt)) < r + 0.25: return false
+				continue
+			if Vector2(t.origin.x, t.origin.z).distance_to(p) < r + rb: return false
+	return true
+
+## one prop at (u, v) if its spot is free; true when placed
+static func polish_put(ctx: Dictionary, base: String, cond: String, u: float, v: float, yaw: float, rect: Rect2, allowed := ["grass", "mulch", "gravel"]) -> bool:
+	var sx: float = ctx.sx; var sz: float = ctx.sz
+	var p := Vector2(sx * u, sz * v)
+	if not free_at(ctx, p, _radius(base), allowed, rect): return false
+	I.add(ctx.props, base, cond, Vector3(p.x, gy(p.x, p.y), p.y), yaw)
+	return true
+
+## the things every lived-in building gains in the polish pass (the same kind of rule as dress()): downspouts at the
+## back corners of the taller ones, the house numbers by the first door, on homes a vine on a blank side wall or a
+## second dish, grime along the back wall's foot. Every wall item through wall(): clear of the measured windows and
+## doors or left out.
+static func polish_building(ctx: Dictionary, b: Dictionary, rr: RandomNumberGenerator, rect := Rect2()) -> void:
+	var props: K.Props = ctx.props
+	var w: float = b.w; var d: float = b.d
+	var fol := String(b.folder)
+	var h := float(K.building_stats(fol).get("height", 6.0))
+	var home := not (fol.begins_with("commercial/") or fol.begins_with("civic/") or fol.begins_with("garages/") or fol.begins_with("public/"))
+	if fol.begins_with("garages/"): return
+	if h > 4.5:
+		for sd: float in [-1.0, 1.0]: wall(props, b, "prop_downspout_3m", "worn", "back", sd * (w * 0.5 - 0.35), 0.0, 0.02)
+	var ds := doors_of(fol)
+	if home and not ds.is_empty(): wall(props, b, "prop_house_numbers_wood" if rr.randf() < 0.5 else "prop_house_numbers_tile", "worn", "front", float(ds[0]) + 1.25, 1.85, 0.02)
+	if home:
+		var side := "left" if rr.randf() < 0.5 else "right"
+		if rr.randf() < 0.55: wall(props, b, "plant_bougainvillea_wall", "normal", side, rr.randf_range(-d * 0.2, d * 0.2), 0.0, 0.05)
+		elif h > 5.0: wall(props, b, "prop_satellite_dish_round", "worn", side, rr.randf_range(-d * 0.3, d * 0.3), minf(h - 1.2, 5.6), 0.05)
+	var g0 := at(b, -w * 0.5, -d * 0.5 - 0.35); var g1 := at(b, w * 0.5, -d * 0.5 - 0.35)
+	grime(ctx.dec, Vector2(g0.x, g0.z), Vector2(g1.x, g1.z), rr)
+	if not home or rect.size == Vector2.ZERO: return
+	# the second layer (Yasin: "plenty of props"): what tenants add round a home, each only where its spot is free
+	var yaw := rad_to_deg((b.node as Node3D).rotation.y)
+	var sx: float = ctx.sx; var sz: float = ctx.sz
+	var put_local := func(base: String, lx: float, lz: float, ywo: float) -> void:
+		var p := at(b, lx, lz)
+		polish_put(ctx, base, "normal" if (base.begins_with("plant_") or base.begins_with("hedge_") or base.begins_with("tree_")) else ("dirty" if rr.randf() < 0.3 else "worn"), p.x * sx, p.z * sz, yaw + ywo, rect)
+	# plants at the front corners (people plant beside their windows), two kinds per home
+	var pl := ["plant_bird_of_paradise", "plant_agave_americana_small", "plant_bougainvillea_mound", "plant_potted_leafy"]
+	for sd: float in [-1.0, 1.0]: put_local.call(String(pl[rr.randi() % pl.size()]), sd * (w * 0.5 - 0.7), d * 0.5 + 1.0, rr.randf_range(0, 360))
+	# a privet hedge down one side yard: privacy from the next building's windows
+	var hs := -1.0 if rr.randf() < 0.5 else 1.0
+	put_local.call("hedge_privet_2m", hs * (w * 0.5 + 1.0), rr.randf_range(-d * 0.25, d * 0.25), 90.0)
+	# a residents' bike rack in a walk-up's front yard, along the facade (never across a walk: the spot test keeps it off)
+	if fol.contains("apt3") or fol.contains("stucco3") or fol.contains("garden_") or fol.contains("court_white"):
+		put_local.call("prop_bike_rack", w * 0.5 - 2.6, d * 0.5 + 1.9, 0.0)
+	# the back yard: one more thing a household leaves out
+	var bk := ["prop_adirondack_wood", "prop_bbq_gas_cart", "plant_potted_leafy", "prop_patio_set_4", "prop_hose_reel_cart", "prop_propane_cylinder_100lb"]
+	put_local.call(String(bk[rr.randi() % bk.size()]), rr.randf_range(-w * 0.35, w * 0.35), -d * 0.5 - rr.randf_range(4.5, 7.0), rr.randf_range(0, 360))
+	put_local.call(String(bk[rr.randi() % bk.size()]), rr.randf_range(-w * 0.35, w * 0.35), -d * 0.5 - rr.randf_range(1.6, 2.4), rr.randf_range(0, 360))
+
+## a hand-chosen yard spot gets a cluster of a kind, turned to `yaw` (each item tested on its own spot):
+##   sit (a family's patio corner), lounge (chairs under an arbor), garden (a bark bed with plants), tools (hose, gas,
+##   sprinkler), bins (the carts against a fence), play (a bark pad with a swing or slide and the parent's bench),
+##   shade (a tree with a bench under it), wash (a clothesline), cart (the Coronado golf cart parked by a back gate)
+static func polish_spot(ctx: Dictionary, kind: String, u: float, v: float, yaw: float, rr: RandomNumberGenerator, rect: Rect2) -> int:
+	var sx: float = ctx.sx; var sz: float = ctx.sz
+	var bs := Basis(Vector3.UP, deg_to_rad(yaw))
+	var items: Array = []
+	match kind:
+		"sit": items = [["prop_patio_set_4", 0.0, 0.0, 0.0], ["prop_bbq_kettle", 2.0, 0.6, 0.0], ["prop_adirondack_wood", -2.0, 0.4, 160.0], ["plant_potted_leafy", 1.8, -1.4, 0.0]]
+		"lounge": items = [["prop_garden_arbor", 0.0, -0.9, 0.0], ["prop_adirondack_white", -0.7, 0.4, 170.0], ["prop_adirondack_wood", 0.7, 0.4, 190.0], ["plant_potted_succulent", 1.6, -0.6, 0.0]]
+		"garden": items = [["plant_bird_of_paradise", -1.2, 0.0, 30.0], ["plant_agave_americana_small", 0.0, 0.0, 80.0], ["plant_bougainvillea_mound", 1.2, 0.0, 140.0]]
+		"tools": items = [["prop_hose_reel_cart", 0.0, 0.0, 0.0], ["prop_propane_cylinder_100lb", 0.8, 0.0, 0.0], ["prop_sprinkler_popup", -1.6, 1.0, 0.0]]
+		"bins": items = [["prop_trash_cart_black", 0.0, 0.0, 0.0], ["prop_trash_cart_blue", 0.8, 0.0, 0.0], ["prop_trash_cart_green", 1.6, 0.0, 0.0], ["prop_recycling_receptacle", 2.5, 0.0, 0.0]]
+		"play": items = [["prop_swing_set", 0.0, 0.0, 0.0], ["prop_park_bench", 0.0, 3.0, 180.0]]
+		"shade": items = [["tree_magnolia_a", 0.0, 0.0, 30.0], ["prop_park_bench", 0.0, 1.8, 180.0]]
+		"wash": items = [["prop_clothesline", 0.0, 0.0, 0.0]]
+		"cart": items = [["prop_golf_cart_white" if rr.randf() < 0.5 else "prop_golf_cart_blue", 0.0, 0.0, 0.0]]
+	if kind == "garden" or kind == "play":
+		var c := Vector2(sx * u, sz * v)
+		if not free_at(ctx, c, 2.0, ["grass"], rect): return 0
+		var hw := 2.0 if kind == "garden" else 3.0; var hd := 0.8 if kind == "garden" else 2.2
+		var corners := [bs * Vector3(-hw, 0, -hd), bs * Vector3(hw, 0, hd)]
+		(ctx.paints as Array).insert(0, [c.x + minf((corners[0] as Vector3).x, (corners[1] as Vector3).x), c.y + minf((corners[0] as Vector3).z, (corners[1] as Vector3).z), c.x + maxf((corners[0] as Vector3).x, (corners[1] as Vector3).x), c.y + maxf((corners[0] as Vector3).z, (corners[1] as Vector3).z), "mulch"])
+	var n := 0
+	for it: Array in items:
+		var o := bs * Vector3(float(it[1]), 0.0, float(it[2]))
+		var base := String(it[0])
+		var cond := "normal" if (base.begins_with("plant_") or base.begins_with("tree_")) else ("dirty" if rr.randf() < 0.3 else "worn")
+		if polish_put(ctx, base, cond, u + o.x * sx, v + o.z * sz, yaw + float(it[3]), rect, ["grass", "mulch", "gravel"]): n += 1
+	return n

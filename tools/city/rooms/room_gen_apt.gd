@@ -48,7 +48,7 @@ const KINDS := {
 	"car_sales": {"max_d": 10.0, "floor": "Tiles141", "light": "panel", "counter": [], "till": false, "behind": ["filing_cabinet", "filing_cabinet", "wall_shelf"], "board": false, "walls": ["drinks_fridge", "brochure_rack"], "centre": "none", "window": "none", "back": "none", "frames": false, "posters": true, "tint": Color(0.86, 0.9, 0.98)},
 	# discount grocer: checkouts by the door (you queue to leave), long gondolas, fridges and freezers along the walls,
 	# produce in the window, cheap bright signage
-	"discount": {"floor": "Tiles141", "light": "panel", "counter": ["checkout_counter", "checkout_counter"], "till": false, "behind": ["wall_shelf", "cigarette_cabinet"], "board": false, "walls": ["drinks_fridge", "chest_freezer", "drinks_fridge", "grocery_shelf"], "centre": "rows", "window": "produce", "back": "stock", "frames": false, "posters": true, "cap": {"drinks_fridge": 4, "chest_freezer": 3}, "tint": Color(1.0, 0.94, 0.78)},
+	"discount": {"floor": "Tiles141", "light": "panel", "counter": ["checkout_counter"], "till": false, "behind": ["cigarette_cabinet", "grocery_shelf"], "board": false, "walls": ["drinks_fridge", "grocery_shelf", "chest_freezer", "grocery_shelf"], "centre": "market", "window": "produce", "back": "stock", "frames": false, "posters": true, "cap": {"drinks_fridge": 4, "chest_freezer": 3, "grocery_shelf": 6}, "tint": Color(1.0, 0.94, 0.78)},   # (apt fill, polish) stocked shelves on the walls, produce and freezers in the middle: the kit's gondolas and wall shelves have no goods
 	# laundromat: washers along one wall, dryers along the other, the folding table in the middle, chairs in the window,
 	# the attendant's counter and the soap machine
 	"laundromat": {"floor": "Tiles143", "light": "panel", "counter": ["laundry_counter"], "till": false, "behind": ["vending_snack", "wall_shelf"], "board": false, "walls": ["washer", "washer", "dryer", "dryer"], "centre": "fold", "window": "waiting", "back": "none", "frames": false, "posters": true, "cap": {"washer": 8, "dryer": 8}, "tint": Color(0.84, 0.94, 0.98)},
@@ -59,7 +59,7 @@ const KINDS := {
 	# slice pizza: order counter with the pizza case, ovens behind, two-tops and a booth
 	"pizza": {"floor": "Tiles101", "light": "panel", "counter": ["pastry_case", "shop_counter"], "till": true, "behind": ["kitchen_line", "drinks_fridge"], "board": true, "walls": ["booth", "drinks_fridge"], "centre": "table2", "window": "table2", "back": "none", "frames": true, "tint": Color(0.98, 0.84, 0.7)},
 	# dry cleaner: the counter at the front half, the garment rails filling the back, a waiting chair
-	"dry_cleaner": {"floor": "Tiles143", "light": "panel", "counter": ["laundry_counter"], "till": true, "behind": ["garment_rail", "garment_rail", "garment_rail"], "board": false, "walls": ["garment_rail", "garment_rail"], "centre": "none", "window": "waiting", "back": "none", "frames": false, "cap": {"garment_rail": 6}, "tint": Color(0.94, 0.94, 0.98)},
+	"dry_cleaner": {"floor": "Tiles143", "light": "panel", "counter": ["laundry_counter"], "till": true, "behind": ["garment_rail", "garment_rail", "garment_rail"], "board": false, "walls": ["garment_rail", "garment_rail"], "centre": "racks", "window": "waiting", "back": "none", "frames": false, "cap": {"garment_rail": 6}, "tint": Color(0.94, 0.94, 0.98)},
 	# credit union: teller counter across the back, a desk for loans, a waiting bench, brochures
 	"bank": {"floor": "Terrazzo005", "light": "panel", "counter": ["shop_counter", "shop_counter", "shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet", "filing_cabinet"], "board": false, "walls": ["brochure_rack", "waiting_bench"], "centre": "desks", "window": "waiting", "back": "office", "frames": true, "tint": Color(0.93, 0.92, 0.86)},
 	# recycling booth: the attendant's scale counter, bins of sorted cans behind
@@ -97,7 +97,7 @@ const KINDS := {
 	"community": {"max_d": 12.0, "floor": "WoodFloor034", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet", "bookcase"], "board": false, "walls": ["bookcase", "waiting_bench"], "centre": "table4", "window": "waiting", "back": "office", "frames": true, "posters": true, "tint": Color(0.96, 0.94, 0.8)},
 	# the bike shop: the counter with the workbench and the pegboard behind it, bikes in stands along the walls, a display
 	# of helmets and locks on tables, a bike in the window
-	"bikes": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["workbench", "pegboard_wall"], "board": false, "walls": ["bike_stand", "wall_shelf", "bike_stand"], "centre": "display", "window": "display", "back": "stock", "frames": false, "posters": true, "cap": {"bike_stand": 6, "wall_shelf": 2}, "tint": Color(0.88, 0.94, 0.98)},
+	"bikes": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["workbench", "pegboard_wall"], "board": false, "walls": ["bike_stand", "pegboard_wall", "bike_stand", "wall_shelf"], "centre": "display", "window": "display", "back": "stock", "frames": false, "posters": true, "cap": {"bike_stand": 8, "wall_shelf": 1, "pegboard_wall": 2}, "tint": Color(0.88, 0.94, 0.98)},   # (apt fill, polish) bikes and pegboard on the walls: the kit's wall shelf is empty
 	# (apt fill, block 3) the corner bookshop, from the pilot's own "books" kind: bookcases on every wall and behind the
 	# till, a display table in the window, a reading seat
 	"books": {"floor": "WoodFloor051", "light": "pendant", "counter": ["shop_counter"], "till": true, "behind": ["bookcase", "bookcase"], "board": false, "walls": ["bookcase"], "centre": "display", "window": "display", "back": "none", "frames": false, "cap": {"bookcase": 8}, "tint": Color(0.96, 0.92, 0.84)},
@@ -128,6 +128,21 @@ const DRESS := {"drive_thru": ["indoor_bin", "potted_plant", "drinks_fridge", "i
 	 "bakery": ["indoor_bin", "potted_plant"], "donuts": ["indoor_bin", "potted_plant", "drinks_fridge"],
 	 "barber": ["potted_plant", "indoor_bin", "waiting_bench"],
 	 "chapel": ["potted_plant", "potted_plant", "brochure_rack"], "books": ["waiting_bench", "potted_plant", "indoor_bin"], "community": ["potted_plant", "indoor_bin", "brochure_rack"], "bikes": ["potted_plant", "indoor_bin"], "pharmacy": ["usps_collection_box", "brochure_rack", "indoor_bin", "potted_plant"]}
+## (apt fill, polish) the small things a kind breaks its wall runs with, and its extras for the fill pass
+const BREAK := {"bakery": ["potted_plant", "display_table"], "coffee": ["potted_plant", "card_spinner"], "donuts": ["potted_plant"],
+	"taqueria": ["potted_plant", "drinks_fridge"], "nails": ["potted_plant"], "barber": ["potted_plant", "waiting_bench"],
+	"pharmacy": ["card_spinner", "potted_plant", "brochure_rack"], "discount": ["chest_freezer", "produce_stand", "card_spinner"],
+	"laundromat": ["waiting_bench", "potted_plant"], "dry_cleaner": ["potted_plant", "waiting_bench"], "tax": ["potted_plant", "filing_cabinet"],
+	"chapel": ["potted_plant"], "community": ["potted_plant", "display_table"], "bikes": ["display_table", "potted_plant"], "books": ["display_table", "potted_plant", "card_spinner"]}
+const FILL := {"bakery": ["drinks_fridge", "potted_plant", "card_spinner", "indoor_bin"], "coffee": ["potted_plant", "drinks_fridge", "indoor_bin", "card_spinner"],
+	"donuts": ["drinks_fridge", "potted_plant", "card_spinner"], "taqueria": ["potted_plant", "drinks_fridge", "indoor_bin"],
+	"nails": ["salon_product_shelf", "potted_plant", "card_spinner"], "barber": ["salon_product_shelf", "potted_plant", "card_spinner"],
+	"pharmacy": ["pharmacy_shelf", "pharmacy_shelf", "card_spinner", "drinks_fridge"], "discount": ["grocery_shelf", "drinks_fridge", "chest_freezer", "produce_stand"],
+	"laundromat": ["washer", "dryer", "display_table", "vending_snack"], "dry_cleaner": ["garment_rail", "garment_rail", "waiting_bench", "display_table"],
+	"tax": ["filing_cabinet", "waiting_bench", "potted_plant", "brochure_rack"], "chapel": ["bookcase", "potted_plant", "display_table"],
+	"community": ["bookcase", "display_table", "potted_plant", "waiting_bench"], "bikes": ["bike_stand", "bike_stand", "pegboard_wall", "display_table"],
+	"books": ["bookcase", "bookcase", "card_spinner", "waiting_bench", "display_table"]}
+const FILL_ANY := ["potted_plant", "display_table", "indoor_bin"]
 const CAP := {"vending_soda": 1, "vending_snack": 1, "drinks_fridge": 1, "waiting_bench": 3, "card_spinner": 1, "brochure_rack": 1, "glass_display_case": 3, "filing_cabinet": 3}
 const WALL_TINTS := [Color(1.0, 0.95, 0.86), Color(0.94, 0.96, 0.98), Color(0.98, 0.92, 0.84), Color(0.9, 0.95, 0.92), Color(1.0, 0.97, 0.93), Color(0.93, 0.9, 0.86)]
 const SHORT := {"cafe": "COFFEE", "bakery": "BAKERY", "bar": "BAR", "restaurant": "KITCHEN", "fast_food": "FOOD", "ice_cream": "ICE CREAM",
@@ -142,6 +157,7 @@ var occ: Array = [] # [x0, z0, x1, z1, height]
 var keep: Array = [] # [x0, z0, x1, z1] floor that stays free
 var X0 := 0.0; var X1 := 0.0; var ZF := 0.0; var ZB := 0.0; var ZBp := 0.0; var F := 0.0
 var rr: R
+var vr := RandomNumberGenerator.new()   # (apt fill, polish 19 Nov) per-room variety, seeded by the room name
 var report: Array = []
 var CLR := 3.0              # clear height of the current room (floor to ceiling)
 var wall_marks: Array = []   # [wall x, z] of every wall poster / frame already hung: the next keeps 1.6 m clear (Yasin 18 Nov: wall props overlapping)
@@ -263,6 +279,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	rr = R.new(id, F)
 	rr.world_xf = Transform3D(Basis(Vector3.UP, deg_to_rad(float(e.yaw))), Vector3(float(e.pos[0]), float(e.pos[1]), float(e.pos[2])))
 	var hh := _h(id)
+	vr.seed = hh
 	var tint: Color = (K.get("tint", WALL_TINTS[hh % WALL_TINTS.size()]) as Color).lerp(WALL_TINTS[hh % WALL_TINTS.size()], 0.45)   # softer than the strip
 	rr.mat("wall", "PaintedPlaster017", 2.0, tint)
 	var warm := kind in WARM
@@ -402,12 +419,19 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		var items: Array = K.walls
 		var z := ZF - (1.8 if String(K.window) in ["waiting", "watch"] else 0.45); var k := 0     # clear of the window seats
 		var tries := 0; var run := 0; var stations := 0
+		k = vr.randi() % maxi(1, items.size())        # (apt fill, polish) each wall starts its list somewhere else
+		var run_max := vr.randi_range(2, 4)            # and breaks its runs at a different length
 		while z > ZBp + 0.4 and tries < 60:
 			tries += 1
-			# no endless runs of one thing: after three a break (a plant in the gap), and a barber has three chairs a side
-			if run >= 3:
-				run = 0
-				if _put("potted_plant", wx + inn * 0.3, z - 0.25, yaw): z -= 0.6
+			# no endless runs of one thing: a break with one of the kind's own small things (a plant, a display, a rack)
+			if run >= run_max:
+				run = 0; run_max = vr.randi_range(2, 4)
+				var brk: Array = BREAK.get(kind, ["potted_plant"])
+				var bi := String(brk[vr.randi() % brk.size()])
+				var bf := _fp(bi, yaw)
+				if int(used.get(bi, 0)) < int(CAP.get(bi, 99)) and _put(bi, wx + inn * (bf.x * 0.5 + 0.05), z - bf.y * 0.5 - 0.1, yaw):
+					used[bi] = int(used.get(bi, 0)) + 1; z -= bf.y + 0.3
+				elif _put("potted_plant", wx + inn * 0.3, z - 0.25, yaw): z -= 0.6
 				else: z -= 0.3
 				continue
 			var it := String(items[k % items.size()])
@@ -439,7 +463,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 			var ht := float(tall.get("prop_" + it, 1.0))
 			if _under_window(sidewin, String(side[2]), z - f.y, z, ht):
 				z -= 0.3; continue
-			if _put(it, wx + inn * (f.x * 0.5 + 0.02), z - f.y * 0.5, yaw): z -= f.y + 0.06; k += 1; run += 1; used[it] = int(used.get(it, 0)) + 1
+			if _put(it, wx + inn * (f.x * 0.5 + 0.02), z - f.y * 0.5, yaw): z -= f.y + vr.randf_range(0.06, 0.45); k += 1; run += 1; used[it] = int(used.get(it, 0)) + 1
 			else: z -= 0.3
 	# how far the side walls' goods reach into the room: the middle keeps a 1 m aisle clear of them
 	var sl := X0; var sr := X1
@@ -474,10 +498,10 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	match String(K.centre):
 		"table2":
 			for zz: float in _steps(mz0 + 0.5, mz1 - 0.5, 1.8):
-				for xx: float in _steps(IX0 + 0.95, IX1 - 0.95, 2.1): _group(_table2(xx, zz))
+				for xx: float in _steps(IX0 + 0.95, IX1 - 0.95, 2.1): if vr.randf() > 0.15: _group(_table2(_j(xx), _j(zz)))
 		"table4":
 			for zz: float in _steps(mz0 + 0.8, mz1 - 0.8, 2.5):
-				for xx: float in _steps(IX0 + 0.65, IX1 - 0.65, 2.3): _group(_table4(xx, zz))
+				for xx: float in _steps(IX0 + 0.65, IX1 - 0.65, 2.3): if vr.randf() > 0.12: _group(_table4(_j(xx), _j(zz)))
 		"rows":
 			for xx: float in _steps(IX0 + 0.27, IX1 - 0.27, 1.65):
 				var zz := mz1 - 0.65
@@ -486,10 +510,10 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 					zz -= 1.24
 		"racks":
 			for xx: float in _steps(IX0 + 0.24, IX1 - 0.24, 1.7):
-				for zz: float in _steps(mz0 + 0.8, mz1 - 0.8, 1.9): _put("clothes_rack", xx, zz, 90.0)
+				for zz: float in _steps(mz0 + 0.8, mz1 - 0.8, 1.9): _put("clothes_rack", _j(xx), _j(zz), 90.0 + vr.randf_range(-8.0, 8.0))
 		"display":
 			for zz: float in _steps(mz0 + 0.5, mz1 - 0.5, 2.0):
-				for xx: float in _steps(IX0 + 0.68, IX1 - 0.68, 2.5): _put("display_table", xx, zz, 0.0)
+				for xx: float in _steps(IX0 + 0.68, IX1 - 0.68, 2.5): _put("display_table", _j(xx), _j(zz), vr.randf_range(-6.0, 6.0))
 		"shoes":
 			for zz: float in _steps(mz0 + 0.4, mz1 - 0.4, 1.8):
 				for xx: float in _steps(IX0 + 0.55, IX1 - 0.55, 2.3): _put("shoe_bench", xx, zz, 0.0)
@@ -501,6 +525,14 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 				var t := 0
 				for xx: float in _steps(IX0 + 0.68, IX1 - 0.68, 2.2):
 					_put("display_table" if t % 2 == 0 else "card_spinner", xx, zz, 0.0); t += 1
+		"market":     # (apt fill, polish) the corner market's middle: produce stands, a freezer chest and a display table, mixed
+			var mk_items := ["produce_stand", "chest_freezer", "produce_stand", "display_table"]
+			var mi := vr.randi() % mk_items.size()
+			for zz: float in _steps(mz0 + 0.6, mz1 - 0.6, 1.9):
+				for xx: float in _steps(IX0 + 0.6, IX1 - 0.6, 1.8):
+					var it2 := String(mk_items[mi % mk_items.size()]); mi += 1
+					if int(used.get(it2, 0)) < int((K.get("cap", {}) as Dictionary).get(it2, CAP.get(it2, 99))):
+						if _put(it2, _j(xx), _j(zz), 90.0 if vr.randf() < 0.5 else 0.0): used[it2] = int(used.get(it2, 0)) + 1
 		"pews":       # (apt fill) rows of seats facing the altar (yaw 180: toward the back), a 1.5 m aisle down the middle
 			var mid := (IX0 + IX1) * 0.5
 			for zz: float in _steps(mz0 + 0.4, mz1 - 0.2, 1.15):      # rows 1.15 m apart, a side aisle along each wall
@@ -523,12 +555,12 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		"plants":     # the florist's display tables, buckets of plants on the floor round them
 			for zz: float in _steps(mz0 + 0.6, mz1 - 0.6, 2.2):
 				for xx: float in _steps(IX0 + 0.8, IX1 - 0.8, 2.6):
-					if _put("display_table", xx, zz, 0.0):
+					if _put("display_table", _j(xx), _j(zz), vr.randf_range(-6.0, 6.0)):
 						_put("potted_plant", xx - 0.95, zz, 0.0); _put("potted_plant", xx + 0.95, zz, 0.0)
 		"salsa":      # the salsa bar (a low display) in the middle, two-tops round it
 			_put("display_table", (IX0 + IX1) * 0.5, (mz0 + mz1) * 0.5, 90.0)
 			for zz: float in _steps(mz0 + 0.5, mz1 - 0.5, 1.8):
-				for xx: float in [IX0 + 0.6, IX1 - 0.6]: _group(_table2(xx, zz))
+				for xx: float in [IX0 + 0.6, IX1 - 0.6]: if vr.randf() > 0.15: _group(_table2(_j(xx), _j(zz)))
 		"desks":      # preparer desks: the preparer sits with the back to the side wall, the client faces them
 			for zz: float in _steps(mz0 + 0.8, mz1 - 0.8, 2.6):
 				for xx: float in _steps(IX0 + 0.8, IX1 - 0.8, 3.2):
@@ -536,6 +568,19 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		"benches":
 			for zz: float in _steps(mz0 + 0.4, mz1 - 0.4, 2.4):
 				for xx: float in _steps(IX0 + 0.74, IX1 - 0.74, 2.6): _put("waiting_bench", xx, zz, 0.0)
+	# (apt fill, polish 19 Nov: "fill in the empty stores a bit, plenty of props", "have variety") the kind's own extras,
+	# each tried at a few free stretches of the side walls (a wall behind it, the aisles and the door kept free by _put)
+	var fused := {}
+	for fi: String in FILL.get(kind, FILL_ANY) + FILL.get(kind, FILL_ANY):      # each extra tried twice: a second one where it fits
+		if int(fused.get(fi, 0)) >= mini(2, int(CAP.get(fi, 99))): continue
+		for tr in 10:
+			var lft := vr.randf() < 0.5
+			var wx2 := X0 if lft else X1; var yw := 90.0 if lft else -90.0; var inn2 := 1.0 if lft else -1.0
+			var ff := _fp(fi, yw)
+			var zz2 := vr.randf_range(ZBp + 0.6 + ff.y * 0.5, ZF - (1.7 if ZF - ZBp > 8.0 else 1.1) - ff.y * 0.5)
+			if _under_window(_side_windows(c), "left" if lft else "right", zz2 - ff.y * 0.5, zz2 + ff.y * 0.5, float(tall.get("prop_" + fi, 1.0))): continue
+			if _put(fi, wx2 + inn2 * (ff.x * 0.5 + 0.03), zz2, yw):
+				fused[fi] = int(fused.get(fi, 0)) + 1; break
 	# ---- dressing: plants in the front corners, a bin by the counter end, prints on the bare walls
 	_put("potted_plant", X0 + 0.3, ZF - 0.3); _put("potted_plant", X1 - 0.3, ZF - 0.3)
 	if not placed_counter.is_empty():       # by the end of the counter ACTUALLY placed (a narrow room fits fewer pieces than listed)
@@ -653,6 +698,9 @@ func _hang(piece: String, usual: float) -> float:
 	var h := float(tall.get("prop_" + piece, 1.0))
 	var y := minf(usual, CLR - 0.08 - h)
 	return y if y >= 0.8 else -1.0
+
+## (apt fill, polish) a little off the exact grid: people push tables and racks about
+func _j(x: float) -> float: return x + vr.randf_range(-0.15, 0.15)
 
 func _steps(a: float, b: float, pitch: float) -> Array:
 	var out: Array = []
