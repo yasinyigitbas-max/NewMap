@@ -9,7 +9,11 @@ extends SceneTree
 ##   remove        one prop: its instance in every tier and its collider are taken out
 ##   remove_decal  one wear mark (its six vertices) is taken out of the piece's "wear" mesh
 ##   add_collider  one prop that has no collision gets one: the kit's own collision shape for that prop (as kit_lib gives
-##                 every other prop), or a box of the prop's own size where the kit ships none
+##                 every other prop), or a box of the prop's own size where the kit ships none. The shape takes the
+##                 prop's own scale, as kit_lib's colliders do (19 Nov, cloud session: before, a shortened fence panel got
+##                 a full-length collider sticking out past its end)
+##   resize_collider  the collider this tool added to a scaled prop at full kit size is taken out and the right-sized
+##                 one put in its place (the same spot, the prop's own scale)
 ##   add_box       one column or post of a building gets a collision box, under that building's own collision body
 ##   fill_well     one tree well whose tree was taken out is paved level in its rim's own material (sc_wells.gd: the
 ##                 runtime bake's own well filler), and the ground's collision is lifted with it
@@ -108,6 +112,7 @@ func _apply(top: Node, f: Dictionary) -> String:
 	if op == "remove_decal": return _apply_decal(top, f)
 	if op == "fill_well": return _apply_well(top, f)
 	if op == "add_collider": return _apply_collider(top, f)
+	if op == "resize_collider": return _apply_collider(top, f, true)
 	if op == "add_box": return _apply_box(top, f)
 	if op != "move" and op != "remove": return "unknown kind of change"
 	var base := String(f.get("base", "")); var cond := String(f.get("cond", ""))
@@ -216,7 +221,7 @@ func _take_out(mmi: MultiMeshInstance3D, idx: int) -> void:
 var _col_shapes := {}      # prop type -> [shape, its own transform] (one shared shape a type, as kit_lib does)
 
 ## the collision of ONE prop that has none
-func _apply_collider(top: Node, f: Dictionary) -> String:
+func _apply_collider(top: Node, f: Dictionary, replace: bool = false) -> String:
 	var base := String(f.get("base", "")); var cond := String(f.get("cond", "")); var at := _v3(f["at"])
 	var props := top.get_node_or_null("Props")
 	if props == null: return "this scene has no Props"
@@ -230,9 +235,15 @@ func _apply_collider(top: Node, f: Dictionary) -> String:
 		if found: break
 	if not found: return "no %s at %s" % [base, str(at)]
 	var pc := props.get_node_or_null("PropCol") as StaticBody3D
+	var old_col: CollisionShape3D = null
 	if pc:
 		for cs: Node in pc.get_children():
-			if cs is CollisionShape3D and _rel(cs, top).origin.distance_to(at) <= 0.03: return "it already has a collision"
+			if cs is CollisionShape3D and _rel(cs, top).origin.distance_to(at) <= 0.03:
+				if not replace: return "it already has a collision"
+				if old_col != null: return "more than one collider at this spot: cannot tell which to resize"
+				old_col = cs as CollisionShape3D
+		if replace and old_col == null: return "no collider at %s to resize" % str(at)
+	elif replace: return "this scene has no prop colliders to resize"
 	else:
 		pc = StaticBody3D.new(); pc.name = "PropCol"; props.add_child(pc); pc.owner = top
 	if not _col_shapes.has(base):
@@ -254,12 +265,23 @@ func _apply_collider(top: Node, f: Dictionary) -> String:
 	if rec.size() == 3:
 		# the prop's own place without its size factor, as kit_lib sets colliders (physics dislikes scaled shapes)
 		var t0 := inst * (rec[2] as Transform3D).affine_inverse()
-		c.shape = rec[0]; c.transform = to_pc * Transform3D(t0.basis.orthonormalized(), t0.origin) * (rec[1] as Transform3D)
+		var s0 := t0.basis.get_scale()
+		if s0.distance_to(Vector3.ONE) <= 0.005:
+			c.shape = rec[0]; c.transform = to_pc * Transform3D(t0.basis.orthonormalized(), t0.origin) * (rec[1] as Transform3D)
+		else:
+			# the prop's own scale is put into the shape's points (physics dislikes scaled shapes): the collider then
+			# covers what kit_lib's scaled collider covers, no more
+			var bake := Transform3D(Basis.from_scale(s0), Vector3.ZERO) * (rec[1] as Transform3D)
+			var pts := PackedVector3Array()
+			for p: Vector3 in (rec[0] as ConvexPolygonShape3D).points: pts.append(bake * p)
+			var sh := ConvexPolygonShape3D.new(); sh.points = pts
+			c.shape = sh; c.transform = to_pc * Transform3D(t0.basis.orthonormalized(), t0.origin)
 	else:
 		if mesh == null: return "no mesh to size a box from"
 		var ab := mesh.get_aabb()
 		var bx := BoxShape3D.new(); bx.size = (ab.size * inst.basis.get_scale()).max(Vector3(0.05, 0.05, 0.05))
 		c.shape = bx; c.transform = to_pc * Transform3D(inst.basis.orthonormalized(), inst * ab.get_center())
+	if old_col != null: old_col.get_parent().remove_child(old_col); old_col.free()
 	pc.add_child(c, true); c.owner = top      # a readable, checked-unique name: a fast auto name can repeat a saved sibling's name and the save then drops one (19 Nov, cloud session: two hedge colliders lost)
 	return ""
 
@@ -527,6 +549,19 @@ func _prove(a: Node, b: Node, fixes: Array) -> bool:
 			if hc < 0: print("PROOF MISSING %s: no collision was added at %s" % [tag, str(at)]); ok = false; continue
 			come.remove_at(hc)
 			print("PROOF change %s: %s at (%.2f, %.2f, %.2f) got a collision shape  [%s]" % [tag, String(f.get("base", "")), at.x, at.y, at.z, String(f.get("reason", ""))])
+			continue
+		if op == "resize_collider":
+			# one collider gone from this spot and one come to it: nothing else
+			var hg := -1; var hn := -1
+			for i in gone.size():
+				var rg: Dictionary = ia.get(gone[i], {})
+				if rg.get("k", "") == "C" and (rg["t"] as Transform3D).origin.distance_to(at) <= 0.6: hg = i; break
+			for i in come.size():
+				var rn: Dictionary = ib.get(come[i], {})
+				if rn.get("k", "") == "C" and (rn["t"] as Transform3D).origin.distance_to(at) <= 0.6: hn = i; break
+			if hg < 0 or hn < 0: print("PROOF MISSING %s: no collider was swapped at %s" % [tag, str(at)]); ok = false; continue
+			gone.remove_at(hg); come.remove_at(hn)
+			print("PROOF change %s: %s at (%.2f, %.2f, %.2f): its collider replaced by one of the prop's own size  [%s]" % [tag, String(f.get("base", "")), at.x, at.y, at.z, String(f.get("reason", ""))])
 			continue
 		if op == "add_box":
 			var want_path := String(f.get("node", "")) + "/col/" + String(f.get("name", "sc_col"))
