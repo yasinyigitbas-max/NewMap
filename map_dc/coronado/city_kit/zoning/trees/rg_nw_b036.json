@@ -1,0 +1,81 @@
+{
+ "area": "rg_nw_b036",
+ "piece": "s_rg_nw_b036",
+ "zone": "ring boulevard (median)",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms, the palm boulevard round the island; spaced palms on the median (the boulevard's signature); within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    0.0,
+    8.093,
+    -1431.0
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "median grass, first queen palm of the boulevard's median row on this piece (old spot and species)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    0.0,
+    7.443,
+    -1455.0
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "median grass 24 m on, the next median queen palm (every other old spot: 24 m, not 12)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    0.0,
+    6.279,
+    -1479.0
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "median grass 24 m on, the next median queen palm"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    0.0,
+    4.884,
+    -1503.0
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "median grass 24 m on, the next median queen palm"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    0.0,
+    3.542,
+    -1527.0
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "median grass 24 m on, the next median queen palm"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    0.0,
+    2.536,
+    -1551.0
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "median grass 24 m on, the last median queen palm; the parkway palms go so the median row reads and the view stays under the limit"
+  }
+ ]
+}
