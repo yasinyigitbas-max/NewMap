@@ -1,0 +1,37 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -10.3,
+    0.15,
+    14.535
+   ],
+   "n": 1.0,
+   "op": "add_ground_col",
+   "poly": [
+    [
+     -11.59,
+     14.04,
+     0.15
+    ],
+    [
+     -9.01,
+     14.04,
+     0.15
+    ],
+    [
+     -9.01,
+     15.03,
+     0.15
+    ],
+    [
+     -11.59,
+     15.03,
+     0.15
+    ]
+   ],
+   "reason": "the crowd's walking band passes beyond the pavement here, onto ground nothing is built on (the land shows; at (-610.3, -1385.5); nearest built ground: i_vb_w600_n1400_sw asphalt 0.25 m; j_ar_g3 concrete 0.18 m). Collision only, at the pavement's own height (0.150), the band's misses + 0.35 m; nothing drawn (Yasin: \"fill those too with collisions, dont change the appereance\")"
+  }
+ ],
+ "scene": "j_ar_g3"
+}

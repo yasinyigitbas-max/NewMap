@@ -1,0 +1,81 @@
+{
+ "area": "res_up2_a",
+ "piece": "s_res_up2_a",
+ "zone": "Residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - runs of one species per block face; 3 a place: 4 put 13 trees in view (limit 12); Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    4.57,
+    -932.812
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, nothing within 3 m: Torrey pine, the face's species (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -193.55,
+    4.57,
+    -67.188
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass, nothing within 3 m: Torrey pine, the face's species (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    4.985,
+    -908.83
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway grass, 24 m on, 3 m off the sign: same run (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -193.55,
+    4.985,
+    -91.17
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "west parkway grass, 24 m on, 3 m off the sign: same run (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    4.291,
+    -954.06
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway grass, nothing within 3 m: queen palm, staggered against the west side (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -206.45,
+    4.291,
+    -45.94
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "east parkway grass, nothing within 3 m: queen palm, staggered against the west side (place 2 of 2 of this piece)"
+  }
+ ]
+}

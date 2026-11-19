@@ -1,0 +1,7 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 26 nodes (with every mesh of the buildings), 10324 ground and ground-collision triangles, 56 prop instances, 40 colliders, 375 wear marks are identical in both files
+PROOF differences found between the files: 0 lines only in the old one, 2 only in the new one
+PROOF change #1 add_ground_col: 2 collision triangles added (nothing drawn), a 4-corner polygon at height 0.000..0.000 round (90.61, 9.80)  [a ray straight down through a triangle corner of the road inside this piece misses (Godot's ray test is strict at an exact corner; at (-825.4, 285.8)). A 0.7 m collision square at the road's own height, nothing drawn (Yasin: "fill those too with collisions, dont change the appereance")]
+PROOF 1 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

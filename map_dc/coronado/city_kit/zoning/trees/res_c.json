@@ -1,0 +1,105 @@
+{
+ "area": "res_c",
+ "piece": "s_res_c",
+ "zone": "Residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - parkway trees, runs of one species per block face, palms on the hill streets; thinned to 4 a place by the in-view limit (6 put 14 trees within 60 m, limit 12); Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -406.45,
+    6.15,
+    -160.194
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, 2.7 m off the privacy fence (more than the 0.9 m rule): fan palm, the face's species (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -393.55,
+    6.15,
+    -39.806
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass, 2.7 m off the privacy fence (more than the 0.9 m rule): fan palm, the face's species (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -406.45,
+    6.15,
+    -134.875
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway grass, 25.3 m on: same run (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -393.55,
+    6.15,
+    -65.125
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "west parkway grass, 25.3 m on: same run (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -393.55,
+    6.15,
+    -128.431
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway grass, nothing within 3 m: queen palm, the face's species, staggered against the west side (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -406.45,
+    6.15,
+    -71.569
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "east parkway grass, nothing within 3 m: queen palm, the face's species, staggered against the west side (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -393.55,
+    6.15,
+    -102.033
+   ],
+   "yaw": 318,
+   "scale": 0.95,
+   "why": "east parkway grass, 26.4 m on: same run (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -406.45,
+    6.15,
+    -97.967
+   ],
+   "yaw": 71,
+   "scale": 0.85,
+   "why": "east parkway grass, 26.4 m on: same run (place 2 of 2 of this piece)"
+  }
+ ]
+}

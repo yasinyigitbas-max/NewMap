@@ -1,0 +1,69 @@
+{
+ "fixes": [
+  {
+   "at": [
+    14.605,
+    -0.637,
+    -44.35
+   ],
+   "n": 1.0,
+   "op": "add_ground_col",
+   "poly": [
+    [
+     14.15,
+     -45.43,
+     -0.651
+    ],
+    [
+     15.06,
+     -45.43,
+     -0.651
+    ],
+    [
+     15.06,
+     -43.27,
+     -0.623
+    ],
+    [
+     14.15,
+     -43.27,
+     -0.623
+    ]
+   ],
+   "reason": "the crowd's walking band passes beyond the pavement here, onto ground nothing is built on (the land shows; at (674.6, -1344.3); nearest built ground: s_rg_nw_b144_2 concrete 0.22 m; s_rg_nw_b144_2 grass 2.22 m). Collision only, at the pavement's own height (-0.651..-0.623), the band's misses + 0.35 m; nothing drawn (Yasin: \"fill those too with collisions, dont change the appereance\")"
+  },
+  {
+   "at": [
+    14.465,
+    -0.85,
+    -74.655
+   ],
+   "n": 2.0,
+   "op": "add_ground_col",
+   "poly": [
+    [
+     14.02,
+     -75.06,
+     -0.85
+    ],
+    [
+     14.91,
+     -75.06,
+     -0.85
+    ],
+    [
+     14.91,
+     -74.25,
+     -0.85
+    ],
+    [
+     14.02,
+     -74.25,
+     -0.85
+    ]
+   ],
+   "reason": "the crowd's walking band passes beyond the pavement here, onto ground nothing is built on (the land shows; at (674.5, -1374.7); nearest built ground: j_rg_nw_e660_n1400 concrete 0.26 m; s_rg_nw_b144_2 concrete 0.21 m). Collision only, at the pavement's own height (-0.850), the band's misses + 0.35 m; nothing drawn (Yasin: \"fill those too with collisions, dont change the appereance\")"
+  }
+ ],
+ "scene": "s_rg_nw_b144_2"
+}

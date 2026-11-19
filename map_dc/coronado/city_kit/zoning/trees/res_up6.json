@@ -1,0 +1,81 @@
+{
+ "area": "res_up6",
+ "piece": "s_res_up6",
+ "zone": "Residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - runs of one species per block face, 20-30 m apart, broadleaf on the flat; 3 a place for the in-view limit; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    2.433,
+    159.068
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, nothing within 3 m: magnolia, the face's species (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -606.45,
+    6.433,
+    -159.068
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass, nothing within 3 m: magnolia, the face's species (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    3.395,
+    133.1
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway grass, 26 m on: same run (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -606.45,
+    7.395,
+    -133.1
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "west parkway grass, 26 m on: same run (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    2.52,
+    155.866
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway grass, nothing within 3 m: fan palm, staggered against the west side (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    -593.55,
+    6.52,
+    -155.866
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "east parkway grass, nothing within 3 m: fan palm, staggered against the west side (place 2 of 2 of this piece)"
+  }
+ ]
+}

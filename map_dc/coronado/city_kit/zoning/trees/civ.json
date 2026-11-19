@@ -1,0 +1,249 @@
+{
+ "area": "civ",
+ "piece": "s_civ",
+ "zone": "Civic street",
+ "rule": "docs/TREE_PLAN.md: civic and parks - street trees thinner beside a park; residential street rule (one species per face, gaps at lamps), thinned to 2 a face by the in-view limit (the piece stands 5 times in a row); Yasin 19 Nov: no tree stays in a well, new trees by hand on grass only",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -206.45,
+    6.15,
+    -554.5
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, 2.3 m off the newspaper box: magnolia, the face's species (place 1 of 5 of this piece)"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -193.55,
+    6.15,
+    -645.5
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass, 2.3 m off the newspaper box: magnolia, the face's species (place 2 of 5 of this piece)"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -154.5,
+    6.15,
+    -593.55
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway grass, 2.3 m off the newspaper box: magnolia, the face's species (place 3 of 5 of this piece)"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -245.5,
+    6.15,
+    -606.45
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "west parkway grass, 2.3 m off the newspaper box: magnolia, the face's species (place 4 of 5 of this piece)"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -354.5,
+    6.15,
+    -593.55
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "west parkway grass, 2.3 m off the newspaper box: magnolia, the face's species (place 5 of 5 of this piece)"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -206.45,
+    6.15,
+    -518.0
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "west parkway grass, 36.5 m on: the lamp at 63 m stands in the gap (place 1 of 5 of this piece)"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -193.55,
+    6.15,
+    -682.0
+   ],
+   "yaw": 318,
+   "scale": 0.95,
+   "why": "west parkway grass, 36.5 m on: the lamp at 63 m stands in the gap (place 2 of 5 of this piece)"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -118.0,
+    6.15,
+    -593.55
+   ],
+   "yaw": 71,
+   "scale": 0.85,
+   "why": "west parkway grass, 36.5 m on: the lamp at 63 m stands in the gap (place 3 of 5 of this piece)"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -282.0,
+    6.15,
+    -606.45
+   ],
+   "yaw": 184,
+   "scale": 0.9,
+   "why": "west parkway grass, 36.5 m on: the lamp at 63 m stands in the gap (place 4 of 5 of this piece)"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -318.0,
+    6.15,
+    -593.55
+   ],
+   "yaw": 297,
+   "scale": 0.95,
+   "why": "west parkway grass, 36.5 m on: the lamp at 63 m stands in the gap (place 5 of 5 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -193.55,
+    6.15,
+    -566.5
+   ],
+   "yaw": 50,
+   "scale": 0.85,
+   "why": "east parkway grass, nothing within 3 m: queen palm (palms keep the broadleaf in view under its limit) (place 1 of 5 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -206.45,
+    6.15,
+    -633.5
+   ],
+   "yaw": 163,
+   "scale": 0.9,
+   "why": "east parkway grass, nothing within 3 m: queen palm (palms keep the broadleaf in view under its limit) (place 2 of 5 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -166.5,
+    6.15,
+    -606.45
+   ],
+   "yaw": 276,
+   "scale": 0.95,
+   "why": "east parkway grass, nothing within 3 m: queen palm (palms keep the broadleaf in view under its limit) (place 3 of 5 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -233.5,
+    6.15,
+    -593.55
+   ],
+   "yaw": 29,
+   "scale": 0.85,
+   "why": "east parkway grass, nothing within 3 m: queen palm (palms keep the broadleaf in view under its limit) (place 4 of 5 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -366.5,
+    6.15,
+    -606.45
+   ],
+   "yaw": 142,
+   "scale": 0.9,
+   "why": "east parkway grass, nothing within 3 m: queen palm (palms keep the broadleaf in view under its limit) (place 5 of 5 of this piece)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -193.55,
+    6.15,
+    -527.0
+   ],
+   "yaw": 255,
+   "scale": 0.95,
+   "why": "east parkway grass, 39.5 m on: the pay station and lamp at 63.5 m stand in the gap (place 1 of 5 of this piece)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -206.45,
+    6.15,
+    -673.0
+   ],
+   "yaw": 8,
+   "scale": 0.85,
+   "why": "east parkway grass, 39.5 m on: the pay station and lamp at 63.5 m stand in the gap (place 2 of 5 of this piece)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -127.0,
+    6.15,
+    -606.45
+   ],
+   "yaw": 121,
+   "scale": 0.9,
+   "why": "east parkway grass, 39.5 m on: the pay station and lamp at 63.5 m stand in the gap (place 3 of 5 of this piece)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -273.0,
+    6.15,
+    -593.55
+   ],
+   "yaw": 234,
+   "scale": 0.95,
+   "why": "east parkway grass, 39.5 m on: the pay station and lamp at 63.5 m stand in the gap (place 4 of 5 of this piece)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -327.0,
+    6.15,
+    -606.45
+   ],
+   "yaw": 347,
+   "scale": 0.85,
+   "why": "east parkway grass, 39.5 m on: the pay station and lamp at 63.5 m stand in the gap (place 5 of 5 of this piece)"
+  }
+ ]
+}

@@ -1,0 +1,93 @@
+{
+ "area": "rg_nw_b072",
+ "piece": "s_rg_nw_b072",
+ "zone": "ring boulevard",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms, the palm boulevard round the island (zone 1,165 -> about 1,000); within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -828.0,
+    2.15,
+    -1211.3
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "south parkway grass, a fan palm of the boulevard's south row (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    -848.988,
+    2.15,
+    -1211.3
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "south parkway grass 21 m on, the next fan palm"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -871.622,
+    2.15,
+    -1211.3
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "south parkway grass 22.6 m on, the next fan palm"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    -895.776,
+    2.15,
+    -1211.3
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "south parkway grass 24 m on, the next fan palm"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    -919.569,
+    2.15,
+    -1211.3
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "south parkway grass 24 m on, the last south fan palm"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -856.871,
+    2.15,
+    -1188.7
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "north parkway grass, a fan palm of the north row (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    -892.679,
+    2.15,
+    -1188.7
+   ],
+   "yaw": 318,
+   "scale": 0.95,
+   "why": "north parkway grass 36 m on, the second north fan palm; the 10-13 m doubles and the spot 0.8 m from the kerb inlet go"
+  }
+ ]
+}

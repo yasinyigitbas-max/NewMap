@@ -65,6 +65,11 @@ folder, same steps 1-4 above, with these differences:
   by ~0.0002, so the proof reports them UNEXPLAINED and says FAIL (s_rg_nw_b163_1: 22 marks). Workaround used: keep that
   piece's off-surface marks (`keep N`). Real fix: splice the surface without re-encoding, or let the proof compare normals
   within 1e-3. Pieces with only upward-facing marks are not affected.
+- (cloud session) `s_rg_nw_b071` NOT CHECKED, left as it is (claimed so nobody runs the checker on it blind): its six
+  ground surfaces lost their names ('' instead of asphalt / white / yellow / grass / curb / concrete) when commit ce6fff84
+  ("Emergency Drive off 3rd St") re-saved it. The checker then reads every surface as unknown: it wants to erase all 384
+  wear marks and cannot test a single tree spot. Fix: give the surfaces their names back (copy them from the twin
+  s_rg_nw_b072, same geometry), relock on Yasin's word, then run the superchecker on it.
 
 ## Never
 - run a piece's building script, rebuild a piece or room, change the land, delete roads or ground surfaces;

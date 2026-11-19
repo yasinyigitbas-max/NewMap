@@ -1,0 +1,81 @@
+{
+ "area": "res_dn4_a",
+ "piece": "s_res_dn4_a",
+ "zone": "Residential hill street",
+ "rule": "docs/TREE_PLAN.md: residential streets - parkway trees, runs of one species per block face; pines and palms on the hill streets (light crowns); 3 a place: 4 put 13 trees in view (limit 12); Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    7.965,
+    -40.71
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, 2.7 m off the board fence (more than 0.9 m): Torrey pine, the hill street's light crown (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -406.45,
+    5.965,
+    40.71
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass, 2.7 m off the board fence (more than 0.9 m): Torrey pine, the hill street's light crown (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    7.892,
+    -44.72
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east parkway grass, nothing within 3 m: Torrey pine, staggered against the west side (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -393.55,
+    5.892,
+    44.72
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway grass, nothing within 3 m: Torrey pine, staggered against the west side (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    6.941,
+    -78.356
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "west parkway grass, 37.7 m on: same run (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -406.45,
+    4.941,
+    78.356
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "west parkway grass, 37.7 m on: same run (place 2 of 2 of this piece)"
+  }
+ ]
+}

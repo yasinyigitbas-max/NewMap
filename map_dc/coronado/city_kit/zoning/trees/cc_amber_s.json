@@ -1,0 +1,33 @@
+{
+ "area": "cc_amber_s",
+ "piece": "s_cc_amber_s",
+ "zone": "City centre (Amber)",
+ "rule": "docs/TREE_PLAN.md: city centre - few trees, none in wells; Amber's palm rhythm on the median grass only (a queen palm about every 36 m). Yasin 19 Nov: every well emptied and filled, new trees by hand on grass only",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    0.0,
+    6.15,
+    -574.0
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "median grass: a queen palm about every 36 m down the middle, mirroring s_cc_amber_n across the junction"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    0.0,
+    6.15,
+    -538.0
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "median grass: the next queen palm 36 m on, same rhythm"
+  }
+ ]
+}

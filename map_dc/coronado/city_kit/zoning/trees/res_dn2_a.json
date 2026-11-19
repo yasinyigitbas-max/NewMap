@@ -1,0 +1,105 @@
+{
+ "area": "res_dn2_a",
+ "piece": "s_res_dn2_a",
+ "zone": "Residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - parkway trees, runs of one species per block face, 20-30 m apart; 4 a place to stay under the in-view limit; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    6.062,
+    -840.223
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, nothing within 3 m: jacaranda, the face's species (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -206.45,
+    6.062,
+    -159.777
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass, nothing within 3 m: jacaranda, the face's species (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    5.772,
+    -864.494
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway grass, 24.3 m on: same run (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -206.45,
+    5.772,
+    -135.506
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "west parkway grass, 24.3 m on: same run (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    5.98,
+    -848.72
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway grass, nothing within 3 m: fan palm, the face's species (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    -193.55,
+    5.98,
+    -151.28
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "east parkway grass, nothing within 3 m: fan palm, the face's species (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    5.643,
+    -872.661
+   ],
+   "yaw": 318,
+   "scale": 0.95,
+   "why": "east parkway grass, 24 m on: same run (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -193.55,
+    5.643,
+    -127.339
+   ],
+   "yaw": 71,
+   "scale": 0.85,
+   "why": "east parkway grass, 24 m on: same run (place 2 of 2 of this piece)"
+  }
+ ]
+}

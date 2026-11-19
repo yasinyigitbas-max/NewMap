@@ -1,0 +1,19 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -19.7390747070312,
+    0.0120000001043081,
+    -8.93298331896464
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "j_rg_w800_n1600"
+}

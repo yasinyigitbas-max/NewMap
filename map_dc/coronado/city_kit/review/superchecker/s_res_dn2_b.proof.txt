@@ -1,0 +1,31 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 12 nodes (with every mesh of the buildings), 1664 ground and ground-collision triangles, 6 prop instances, 4 colliders, 192 wear marks are identical in both files
+PROOF differences found between the files: 52 lines only in the old one, 0 only in the new one
+PROOF change #1 remove tree_torrey_pine_b at (-6.45, -0.01, 42.01) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_torrey_pine_b at (-6.45, -0.34, 67.95) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_torrey_pine_b at (-6.45, -0.54, 80.12) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_torrey_pine_b at (-6.45, -0.79, 93.42) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove tree_torrey_pine_a at (6.45, 0.06, 32.54) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove tree_torrey_pine_a at (6.45, -0.63, 84.91) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove tree_torrey_pine_a at (6.45, -0.87, 97.82) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove palm_queen_a at (6.45, -0.06, 46.48) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove palm_queen_a at (6.45, -0.44, 73.78) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove_decal: one wear mark at (-6.45, 0.14, 29.21) removed  [grime mark lies on grass]
+PROOF change #11 remove_decal: one wear mark at (-5.26, -0.57, 76.95) removed  [crack mark lies on grass]
+PROOF change #12 remove_decal: one wear mark at (-5.20, -0.41, 67.16) removed  [crack mark lies on grass]
+PROOF change #13 remove_decal: one wear mark at (-5.70, -0.41, 67.64) removed  [crack mark lies on grass]
+PROOF change #14 remove_decal: one wear mark at (-5.55, 0.01, 22.09) removed  [crack mark lies on grass]
+PROOF change #15 remove_decal: one wear mark at (4.40, -0.49, 72.60) removed  [crack mark lies on grass]
+PROOF change #16 remove_decal: one wear mark at (4.20, -0.48, 71.62) removed  [crack mark lies on grass]
+PROOF note: 'Props/palm_queen_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_near' held only listed items and is gone with them
+PROOF 16 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

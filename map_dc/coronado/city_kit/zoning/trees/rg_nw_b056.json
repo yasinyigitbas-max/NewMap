@@ -1,0 +1,153 @@
+{
+ "area": "rg_nw_b056",
+ "piece": "s_rg_nw_b056",
+ "zone": "ring boulevard (long)",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms, the palm boulevard round the island (zone 1,165 -> about 1,000); within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    506.45,
+    2.15,
+    -1434.582
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first fan palm of the boulevard's west row (the boulevard is palms: the magnolia here becomes a palm)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    506.45,
+    2.15,
+    -1464.251
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass 30 m on, the next fan palm (one species a face: the queen palm here becomes a fan palm)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    506.45,
+    2.15,
+    -1484.318
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway grass 20 m on, the next fan palm (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    506.45,
+    2.15,
+    -1510.469
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "west parkway grass 26 m on, the next fan palm (the coral tree here becomes a palm)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    506.45,
+    2.15,
+    -1535.538
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "west parkway grass 25 m on, the next fan palm"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    506.45,
+    2.15,
+    -1559.046
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "west parkway grass 23.5 m on, the last west fan palm"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    493.55,
+    2.15,
+    -1443.952
+   ],
+   "yaw": 318,
+   "scale": 0.95,
+   "why": "east parkway grass, first queen palm of the east row, staggered (the magnolia here becomes a palm)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    493.55,
+    2.15,
+    -1464.903
+   ],
+   "yaw": 71,
+   "scale": 0.85,
+   "why": "east parkway grass 21 m on, the next queen palm (old spot and species)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    493.55,
+    2.15,
+    -1487.214
+   ],
+   "yaw": 184,
+   "scale": 0.9,
+   "why": "east parkway grass 22 m on, the next queen palm (the pine here becomes a palm)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    493.55,
+    2.15,
+    -1512.294
+   ],
+   "yaw": 297,
+   "scale": 0.95,
+   "why": "east parkway grass 25 m on, the next queen palm (the coral tree here becomes a palm)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    493.55,
+    2.15,
+    -1538.216
+   ],
+   "yaw": 50,
+   "scale": 0.85,
+   "why": "east parkway grass 26 m on, the next queen palm"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    493.55,
+    2.15,
+    -1563.511
+   ],
+   "yaw": 163,
+   "scale": 0.9,
+   "why": "east parkway grass 25 m on, the last east queen palm; the 9-13 m doubles go"
+  }
+ ]
+}
