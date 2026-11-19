@@ -1,0 +1,93 @@
+{
+ "area": "rg_se_b107",
+ "piece": "s_rg_se_b107",
+ "zone": "ring boulevard",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms, the palm boulevard round the island; within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    528.959,
+    6.108,
+    -393.55
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first queen palm of the west row (the boulevard is palms: the pine here becomes a palm)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    567.815,
+    5.296,
+    -393.55
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass, the next queen palm; driveways in the 39 m between"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    592.244,
+    4.63,
+    -393.55
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway grass 24.4 m on, the next queen palm (old spot and species)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    615.053,
+    4.21,
+    -393.55
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "west parkway grass 23 m on, the last queen palm; the 11-13 m doubles go"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    544.684,
+    5.874,
+    -406.45
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway grass, first fan palm of the east row (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    569.065,
+    5.261,
+    -406.45
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "east parkway grass 24.4 m on, the next fan palm (the coral tree here becomes a palm)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    604.356,
+    4.367,
+    -406.45
+   ],
+   "yaw": 318,
+   "scale": 0.95,
+   "why": "east parkway grass 35 m on, the last fan palm (the pine here becomes a palm)"
+  }
+ ]
+}
