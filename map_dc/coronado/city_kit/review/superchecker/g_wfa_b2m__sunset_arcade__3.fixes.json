@@ -1,0 +1,20 @@
+{
+ "fixes": [
+  {
+   "at": [
+    7.80999994277954,
+    0.0,
+    -7.75099992752075
+   ],
+   "base": "prop_kitchen_line",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_kitchen_line stands in front of a 1.0 m wide door (a back or side door)]"
+  }
+ ],
+ "scene": "g_wfa_b2m__sunset_arcade__3"
+}

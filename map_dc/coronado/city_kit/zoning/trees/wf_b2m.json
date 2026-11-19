@@ -1,0 +1,10 @@
+{
+ "area": "wf_b2m", "piece": "n_wf_b2m", "zone": "waterfront",
+ "rule": "docs/TREE_PLAN.md: palms only - spaced palms on the promenade and the median (zone 105 -> about 95)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's nine builder trees go (three broadleaf: a coral, a jacaranda, a magnolia; six palms); three palms come back on their own spots, spaced 80 m and more apart.",
+ "trees": [
+  {"base": "palm_mexican_fan_b", "cond": "normal", "at": [378.0, 7.0, 18.0], "yaw": 30.0, "scale": 1.0, "why": "the grass in front of the lookout rental and the flats, by their mailbox post (2.8 m off): a tall fan palm, the street's first along the slope"},
+  {"base": "palm_queen_a", "cond": "normal", "at": [380.0, 5.2, 98.0], "yaw": 160.0, "scale": 1.0, "why": "the same side 80 m down, opposite the steps-end flats: the palms spaced along the street that runs down to the promenade"},
+  {"base": "palm_queen_b", "cond": "normal", "at": [338.0, 5.8, 162.0], "yaw": 250.0, "scale": 0.95, "why": "the grass by the pier street arcade at the bottom of the block, where the walk reaches the shops and the promenade: a queen palm marks the corner"}
+ ]
+}
