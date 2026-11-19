@@ -1,0 +1,57 @@
+{
+ "area": "ar_b074_b",
+ "piece": "s_ar_b074_b",
+ "zone": "Arterial",
+ "rule": "docs/TREE_PLAN.md: arterials - trees on the grass strips only, one species a face; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -434.406,
+    4.15,
+    -1211.234
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west grass strip, nothing within 3 m: queen palm"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -468.286,
+    4.15,
+    -1211.353
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west grass strip, 34 m on: same run"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -454.248,
+    4.15,
+    -1188.634
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east grass strip, nothing within 3 m: queen palm, staggered against the west side"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -482.168,
+    4.15,
+    -1188.792
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east grass strip, 28 m on, 2.5 m off the sign: same species as the face"
+  }
+ ]
+}

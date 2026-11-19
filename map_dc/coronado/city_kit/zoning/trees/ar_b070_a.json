@@ -1,0 +1,57 @@
+{
+ "area": "ar_b070_a",
+ "piece": "s_ar_b070_a",
+ "zone": "Arterial",
+ "rule": "docs/TREE_PLAN.md: arterials - trees on the grass strips only, one species a face; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    297.23,
+    2.15,
+    -1388.728
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west grass strip, nothing within 3 m: fan palm"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    354.473,
+    2.15,
+    -1388.612
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west grass strip, 57 m on (no tree stood between): same run"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    307.454,
+    2.15,
+    -1411.329
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east grass strip, nothing within 3 m: fan palm, staggered against the west side"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    347.801,
+    2.15,
+    -1411.287
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east grass strip, 40 m on, 2.6 m off the no-parking sign: same run"
+  }
+ ]
+}

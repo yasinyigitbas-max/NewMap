@@ -1,0 +1,57 @@
+{
+ "area": "ar_b075_a",
+ "piece": "s_ar_b075_a",
+ "zone": "Arterial",
+ "rule": "docs/TREE_PLAN.md: arterials - trees on the grass strips only, one species a face; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -365.404,
+    4.263,
+    -1188.721
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west grass strip, nothing within 3 m: Torrey pine"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -313.999,
+    6.352,
+    -1188.641
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west grass strip, 51 m on (no tree stood between): same run"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -357.04,
+    4.448,
+    -1211.386
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east grass strip, nothing within 3 m: jacaranda, the face's species"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -313.667,
+    6.37,
+    -1211.277
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east grass strip, 43 m on: the spot at 65 m (1.6 m off a storm inlet) skipped"
+  }
+ ]
+}

@@ -1,0 +1,141 @@
+{
+ "area": "rg_nw_b116",
+ "piece": "s_rg_nw_b116",
+ "zone": "ring boulevard (long, sloping)",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms, the palm boulevard round the island (zone 1,165 -> about 1,000); within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -840.71,
+    7.953,
+    -6.45
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first queen palm of the boulevard's west row on this piece (old spot and species)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -865.882,
+    7.301,
+    -6.45
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass 25 m on, the next queen palm (the boulevard is palms: the magnolia here becomes a palm)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -891.311,
+    6.38,
+    -6.45
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway grass 25 m on, the next queen palm (the jacaranda here becomes a palm)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -917.26,
+    5.391,
+    -6.45
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "west parkway grass 26 m on, the next queen palm"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -942.408,
+    4.597,
+    -6.45
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "west parkway grass 25 m on, the next queen palm (old spot and species)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -965.346,
+    4.192,
+    -6.45
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "west parkway grass 23 m on, the last west queen palm"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -845.392,
+    7.861,
+    6.45
+   ],
+   "yaw": 318,
+   "scale": 0.95,
+   "why": "east parkway grass, first fan palm of the east row (one species a face: the queen palm here becomes a fan palm)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    -882.649,
+    6.71,
+    6.45
+   ],
+   "yaw": 71,
+   "scale": 0.85,
+   "why": "east parkway grass, the next fan palm (the magnolia here becomes a palm); driveways in the 37 m between"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    -905.875,
+    5.817,
+    6.45
+   ],
+   "yaw": 184,
+   "scale": 0.9,
+   "why": "east parkway grass 23 m on, the next fan palm"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -930.528,
+    4.938,
+    6.45
+   ],
+   "yaw": 297,
+   "scale": 0.95,
+   "why": "east parkway grass 24.6 m on, the next fan palm"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    -956.876,
+    4.296,
+    6.45
+   ],
+   "yaw": 50,
+   "scale": 0.85,
+   "why": "east parkway grass 26 m on, the last east fan palm; the 11-15 m doubles go"
+  }
+ ]
+}

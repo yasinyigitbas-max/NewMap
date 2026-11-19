@@ -1,0 +1,57 @@
+{
+ "area": "ar_b077_b",
+ "piece": "s_ar_b077_b",
+ "zone": "Arterial",
+ "rule": "docs/TREE_PLAN.md: arterials - trees on the grass strips only, one species a face; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    202.486,
+    8.408,
+    -1211.312
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west grass strip, nothing within 3 m: Torrey pine, the face's species"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    167.555,
+    9.413,
+    -1211.286
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west grass strip, 35 m on: same run"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    207.552,
+    8.319,
+    -1188.676
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east grass strip, nothing within 3 m: coral tree, staggered against the west side"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    184.428,
+    8.852,
+    -1188.754
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east grass strip, 23 m on: same run"
+  }
+ ]
+}
