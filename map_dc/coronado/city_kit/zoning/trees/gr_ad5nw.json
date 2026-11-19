@@ -1,0 +1,9 @@
+{
+ "area": "gr_ad5nw", "piece": "m_gr_ad5nw", "zone": "commercial strip",
+ "rule": "docs/TREE_PLAN.md: few - the palm parkway; one tree per car-park island end (zone 106 -> about 80)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The credit union and recycling block's ten builder trees go (magnolias, a row of three eucalyptus against the CMU wall, two torrey pines, a queen palm 1.2 m from the pylon sign that would hide it); two come back on their own spots, the car park's island ends.",
+ "trees": [
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [476.6, 4.161, -1064.0], "yaw": 70.0, "scale": 0.85, "why": "the south island end of the credit union's car park, by the agaves: the island-end tree, shade over the parked cars"},
+  {"base": "tree_magnolia_b", "cond": "normal", "at": [463.1, 4.185, -1048.8], "yaw": 250.0, "scale": 0.8, "why": "the north island end of the same car park, by the lot light: the other island-end tree, the same species so the lot reads as one"}
+ ]
+}

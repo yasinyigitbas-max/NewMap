@@ -1,0 +1,194 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 98 nodes (with every mesh of the buildings), 12984 ground and ground-collision triangles, 554 prop instances, 148 colliders, 523 wear marks are identical in both files
+PROOF differences found between the files: 256 lines only in the old one, 41 only in the new one
+PROOF change #11 move prop_ac_condenser: (-98.75, 0.33, -74.00) -> (-98.75, 0.18, -74.00), in 1 tier(s) and its collider  [prop_ac_condenser hangs 0.15 m over what is under it]
+PROOF change #12 move prop_ac_condenser: (-98.75, 0.33, -75.30) -> (-98.75, 0.18, -75.30), in 1 tier(s) and its collider  [prop_ac_condenser hangs 0.15 m over what is under it]
+PROOF change #14 move prop_ac_condenser: (-29.70, 0.33, -38.75) -> (-29.70, 0.18, -38.75), in 1 tier(s) and its collider  [prop_ac_condenser hangs 0.15 m over what is under it]
+PROOF change #15 move prop_ac_condenser: (-83.75, 0.44, -47.00) -> (-83.75, 0.29, -47.00), in 1 tier(s) and its collider  [prop_ac_condenser hangs 0.15 m over what is under it]
+PROOF change #16 move prop_ac_condenser_compact: (-67.00, 0.31, -99.47) -> (-67.00, 0.16, -99.47), in 1 tier(s) and its collider  [prop_ac_condenser_compact hangs 0.15 m over what is under it]
+PROOF change #17 move prop_ac_condenser_compact: (-65.70, 0.31, -99.47) -> (-65.70, 0.16, -99.47), in 1 tier(s) and its collider  [prop_ac_condenser_compact hangs 0.15 m over what is under it]
+PROOF change #18 move prop_ac_condenser_compact: (-47.00, 0.31, -99.47) -> (-47.00, 0.16, -99.47), in 1 tier(s) and its collider  [prop_ac_condenser_compact hangs 0.15 m over what is under it]
+PROOF change #19 move prop_storm_drain_grate: (-50.00, 0.18, -73.00) -> (-50.00, 0.30, -73.00), in 1 tier(s), no collider  [prop_storm_drain_grate is 0.12 m into the ground]
+PROOF change #20 move prop_storm_drain_grate: (-30.00, 0.17, -55.00) -> (-30.00, 0.29, -55.00), in 1 tier(s), no collider  [prop_storm_drain_grate is 0.12 m into the ground]
+PROOF change #21 move prop_storm_drain_grate: (-60.00, 0.24, -45.00) -> (-60.00, 0.36, -45.00), in 1 tier(s), no collider  [prop_storm_drain_grate is 0.12 m into the ground]
+PROOF change #22 move prop_storm_drain_grate: (-80.00, 0.19, -66.50) -> (-80.00, 0.31, -66.50), in 1 tier(s), no collider  [prop_storm_drain_grate is 0.12 m into the ground]
+PROOF change #23 move prop_meter_electric: (-70.40, 1.36, -99.02) -> (-71.60, 1.36, -99.02), in 1 tier(s) and its collider  [moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 45 cm over a apt door of adela_plaza_row]]
+PROOF change #24 move prop_meter_electric: (-69.98, 1.36, -99.02) -> (-68.78, 1.36, -99.02), in 1 tier(s) and its collider  [moved slid -1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 43 cm over a apt door of adela_plaza_row]]
+PROOF change #25 move prop_meter_electric: (-50.40, 1.36, -99.02) -> (-51.60, 1.36, -99.02), in 1 tier(s) and its collider  [moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 45 cm over a apt door of adela_plaza_corner]]
+PROOF change #26 move prop_meter_electric: (-49.98, 1.36, -99.02) -> (-48.78, 1.36, -99.02), in 1 tier(s) and its collider  [moved slid -1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 43 cm over a apt door of adela_plaza_corner]]
+PROOF change #27 move prop_meter_electric: (-33.98, 1.38, -38.02) -> (-35.18, 1.38, -38.02), in 1 tier(s) and its collider  [moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 33 cm from a apt door of community_credit_union (services keep 35 cm off)]]
+PROOF change #28 move prop_meter_electric: (-33.56, 1.38, -38.02) -> (-34.76, 1.38, -38.02), in 1 tier(s) and its collider  [moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 9 cm over a apt door of community_credit_union]]
+PROOF change #1 remove tree_magnolia_a at (-23.40, 0.16, -64.00) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_magnolia_a at (-86.00, 0.49, -16.50) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_magnolia_b at (-36.90, 0.18, -48.75) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_magnolia_b at (-34.00, 0.17, -16.50) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove tree_eucalyptus_a at (-97.20, 0.28, -51.00) removed, in 3 tier(s) and its collider  [tree_eucalyptus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove tree_eucalyptus_a at (-97.20, 0.46, -25.00) removed, in 3 tier(s) and its collider  [tree_eucalyptus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove tree_eucalyptus_b at (-97.20, 0.35, -38.00) removed, in 3 tier(s) and its collider  [tree_eucalyptus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove tree_torrey_pine_b at (-66.00, 0.33, -16.50) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove tree_torrey_pine_a at (-18.00, 0.15, -16.50) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove palm_queen_a at (-10.50, 0.15, -63.00) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #13 remove prop_ac_condenser at (-31.00, 0.33, -38.75) removed, in 1 tier(s) and its collider  [erased (in doubt): its new place made a new fault: deleted instead [prop_ac_condenser hangs 0.15 m over what is under it]]
+PROOF change #29 remove prop_meter_gas at (-32.70, 0.53, -38.02) removed, in 1 tier(s) and its collider  [erased (in doubt): its new place made a new fault: deleted instead [moved slid -1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 37 cm over a apt door of community_credit_union]]]
+PROOF change #30 remove prop_cart_corral at (-73.00, 0.18, -72.50) removed, in 3 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_cart_corral stands in front of a shop window of dollar_plus_market]]
+PROOF change #31 remove prop_ice_chest at (-73.20, 0.18, -76.60) removed, in 3 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands in front of a shop window of dollar_plus_market]]
+PROOF change #32 remove prop_propane_cylinder_100lb at (-73.00, 0.18, -78.60) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_propane_cylinder_100lb stands in front of a shop window of dollar_plus_market]]
+PROOF change #33 remove prop_trash_receptacle at (-72.95, 0.18, -95.92) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in front of a shop window of dollar_plus_market]]
+PROOF change #34 remove plant_potted_leafy at (-57.20, 0.16, -84.30) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [plant_potted_leafy stands in front of a shop window of adela_plaza_row]]
+PROOF change #35 remove plant_potted_succulent at (-43.08, 0.16, -83.95) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent stands in front of a shop window of adela_plaza_corner]]
+PROOF change #37 remove prop_recycling_receptacle at (-72.95, 0.18, -96.86) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in front of a shop window of dollar_plus_market]]
+PROOF change #38 remove prop_newspaper_box_red at (-72.95, 0.18, -98.08) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red stands in front of a shop window of dollar_plus_market]]
+PROOF change #39 remove prop_newspaper_box_red at (-68.92, 0.16, -83.95) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red stands in front of a shop window of adela_plaza_row]]
+PROOF change #40 remove prop_vending_soda at (-73.40, 0.18, -80.60) removed, in 3 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_vending_soda stands in front of a shop window of dollar_plus_market]]
+PROOF change #41 remove prop_park_bench at (-42.00, 0.20, -22.90) removed, in 1 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_park_bench stands on asphalt where vehicles go]]
+PROOF change #42 remove prop_trash_receptacle at (-62.60, 0.16, -83.60) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (1.4 m from a wall, 16.6 m from a fence)]]
+PROOF change #43 remove prop_trash_receptacle at (-41.40, 0.16, -83.60) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (1.4 m from a wall, 16.6 m from a fence)]]
+PROOF change #44 remove prop_trash_receptacle at (-21.90, 0.18, -22.60) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (1.4 m from a wall, 14.3 m from a fence)]]
+PROOF change #45 remove prop_recycling_receptacle at (-76.00, 0.27, -49.50) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (3.6 m from a wall, 17.7 m from a fence)]]
+PROOF change #46 remove prop_recycling_receptacle at (-76.00, 0.28, -48.60) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (2.8 m from a wall, 18.2 m from a fence)]]
+PROOF change #47 remove prop_recycling_receptacle at (-76.00, 0.29, -47.70) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (2.0 m from a wall, 18.9 m from a fence)]]
+PROOF change #136 remove prop_shopping_cart at (-72.60, 0.18, -90.00) removed, in 3 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_shopping_cart leaves 0.9 m of a 1.8 m wide walk]]
+PROOF change #137 remove prop_shopping_cart at (-72.60, 0.18, -89.10) removed, in 3 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_shopping_cart leaves 0.9 m of a 1.8 m wide walk]]
+PROOF change #138 remove prop_shopping_cart at (-72.60, 0.18, -88.20) removed, in 3 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_shopping_cart leaves 0.9 m of a 1.8 m wide walk]]
+PROOF change #142 remove prop_bike_rack at (-25.00, 0.18, -22.95) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_bike_rack leaves 1.1 m of a 1.8 m wide walk]]
+PROOF change #144 remove plant_potted_succulent at (-35.20, 0.18, -22.70) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent leaves 1.2 m of a 1.8 m wide walk]]
+PROOF change #48 remove_decal: one wear mark at (-64.52, 0.17, -94.70) removed  [crack mark lies under the building adela_plaza_row]
+PROOF change #49 remove_decal: one wear mark at (-50.30, 0.17, -90.59) removed  [crack mark lies under the building adela_plaza_corner]
+PROOF change #50 remove_decal: one wear mark at (-84.24, 0.19, -76.31) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #51 remove_decal: one wear mark at (-25.91, 0.19, -32.90) removed  [crack mark lies under the building community_credit_union]
+PROOF change #52 remove_decal: one wear mark at (-68.47, 0.17, -88.21) removed  [crack mark lies under the building adela_plaza_row]
+PROOF change #53 remove_decal: one wear mark at (-89.40, 0.19, -96.43) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #54 remove_decal: one wear mark at (-79.40, 0.19, -96.16) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #55 remove_decal: one wear mark at (-84.75, 0.19, -92.03) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #56 remove_decal: one wear mark at (-92.49, 0.19, -91.87) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #57 remove_decal: one wear mark at (-93.88, 0.19, -91.46) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #58 remove_decal: one wear mark at (-42.99, 0.17, -92.11) removed  [crack mark lies under the building adela_plaza_corner]
+PROOF change #59 remove_decal: one wear mark at (-86.75, 0.19, -93.14) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #60 remove_decal: one wear mark at (-32.60, 0.19, -36.12) removed  [crack mark lies under the building community_credit_union]
+PROOF change #61 remove_decal: one wear mark at (-30.27, 0.19, -36.51) removed  [crack mark lies under the building community_credit_union]
+PROOF change #62 remove_decal: one wear mark at (-80.91, 0.19, -71.75) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #63 remove_decal: one wear mark at (-48.41, 0.17, -97.28) removed  [crack mark lies under the building adela_plaza_corner]
+PROOF change #64 remove_decal: one wear mark at (-32.59, 0.19, -31.61) removed  [crack mark lies under the building community_credit_union]
+PROOF change #65 remove_decal: one wear mark at (-96.51, 0.19, -94.54) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #66 remove_decal: one wear mark at (-90.22, 0.19, -72.63) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #67 remove_decal: one wear mark at (-77.64, 0.19, -80.39) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #68 remove_decal: one wear mark at (-84.39, 0.19, -88.88) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #69 remove_decal: one wear mark at (-25.43, 0.19, -25.80) removed  [crack mark lies under the building community_credit_union]
+PROOF change #70 remove_decal: one wear mark at (-86.35, 0.19, -82.51) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #71 remove_decal: one wear mark at (-59.57, 0.17, -89.83) removed  [crack mark lies under the building adela_plaza_row]
+PROOF change #72 remove_decal: one wear mark at (-80.33, 0.30, -42.92) removed  [crack mark lies under the building recycling_booth]
+PROOF change #73 remove_decal: one wear mark at (-28.57, 0.19, -31.55) removed  [crack mark lies under the building community_credit_union]
+PROOF change #74 remove_decal: one wear mark at (-95.40, 0.19, -97.33) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #75 remove_decal: one wear mark at (-83.12, 0.19, -96.76) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #76 remove_decal: one wear mark at (-85.62, 0.19, -87.49) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #77 remove_decal: one wear mark at (-88.73, 0.19, -78.67) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #78 remove_decal: one wear mark at (-69.98, 0.17, -87.45) removed  [crack mark lies under the building adela_plaza_row]
+PROOF change #79 remove_decal: one wear mark at (-30.47, 0.19, -25.71) removed  [crack mark lies under the building community_credit_union]
+PROOF change #80 remove_decal: one wear mark at (-33.25, 0.19, -36.68) removed  [crack mark lies under the building community_credit_union]
+PROOF change #81 remove_decal: one wear mark at (-45.53, 0.17, -91.40) removed  [crack mark lies under the building adela_plaza_corner]
+PROOF change #82 remove_decal: one wear mark at (-81.78, 0.19, -85.70) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #83 remove_decal: one wear mark at (-91.17, 0.19, -86.02) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #84 remove_decal: one wear mark at (-77.92, 0.19, -96.74) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #85 remove_decal: one wear mark at (-27.15, 0.19, -34.86) removed  [crack mark lies under the building community_credit_union]
+PROOF change #86 remove_decal: one wear mark at (-34.86, 0.19, -31.83) removed  [crack mark lies under the building community_credit_union]
+PROOF change #87 remove_decal: one wear mark at (-74.97, 0.19, -89.62) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #88 remove_decal: one wear mark at (-86.56, 0.19, -76.54) removed  [crack mark lies under the building dollar_plus_market]
+PROOF change #89 remove_decal: one wear mark at (-83.97, 0.19, -88.64) removed  [sealed patch mark lies under the building dollar_plus_market]
+PROOF change #90 remove_decal: one wear mark at (-44.31, 0.17, -83.11) removed  [sealed patch mark lies on concrete]
+PROOF change #91 remove_decal: one wear mark at (-89.23, 0.19, -82.97) removed  [sealed patch mark lies under the building dollar_plus_market]
+PROOF change #92 remove_decal: one wear mark at (-55.84, 0.17, -83.49) removed  [sealed patch mark lies on concrete]
+PROOF change #93 remove_decal: one wear mark at (-75.88, 0.19, -93.35) removed  [sealed patch mark lies on concrete]
+PROOF change #94 remove_decal: one wear mark at (-26.16, 0.19, -30.38) removed  [sealed patch mark lies under the building community_credit_union]
+PROOF change #95 remove_decal: one wear mark at (-24.97, 0.19, -26.41) removed  [sealed patch mark lies on concrete]
+PROOF change #96 remove_decal: one wear mark at (-55.72, 0.17, -89.91) removed  [sealed patch mark lies under the building adela_plaza_row]
+PROOF change #97 remove_decal: one wear mark at (-26.82, 0.19, -23.37) removed  [sealed patch mark lies on concrete]
+PROOF change #98 remove_decal: one wear mark at (-56.67, 0.17, -96.39) removed  [sealed patch mark lies under the building adela_plaza_row]
+PROOF change #99 remove_decal: one wear mark at (-73.51, 0.19, -75.61) removed  [sealed patch mark lies on concrete]
+PROOF change #100 remove_decal: one wear mark at (-90.29, 0.19, -77.90) removed  [pale patch mark lies under the building dollar_plus_market]
+PROOF change #101 remove_decal: one wear mark at (-47.49, 0.17, -93.01) removed  [pale patch mark lies under the building adela_plaza_corner]
+PROOF change #102 remove_decal: one wear mark at (-75.82, 0.19, -95.30) removed  [pale patch mark lies under the building dollar_plus_market]
+PROOF change #103 remove_decal: one wear mark at (-68.25, 0.17, -91.46) removed  [pale patch mark lies under the building adela_plaza_row]
+PROOF change #104 remove_decal: one wear mark at (-75.29, 0.19, -72.70) removed  [pale patch mark lies under the building dollar_plus_market]
+PROOF change #105 remove_decal: one wear mark at (-55.21, 0.17, -95.46) removed  [pale patch mark lies under the building adela_plaza_row]
+PROOF change #106 remove_decal: one wear mark at (-95.94, 0.19, -91.06) removed  [pale patch mark lies under the building dollar_plus_market]
+PROOF change #107 remove_decal: one wear mark at (-22.88, 0.19, -26.39) removed  [oil mark lies under the building community_credit_union]
+PROOF change #108 remove_decal: one wear mark at (-92.36, 0.19, -71.45) removed  [oil mark lies under the building dollar_plus_market]
+PROOF change #109 remove_decal: one wear mark at (-81.39, 0.19, -75.62) removed  [oil mark lies under the building dollar_plus_market]
+PROOF change #110 remove_decal: one wear mark at (-75.18, 0.19, -93.96) removed  [oil mark lies under the building dollar_plus_market]
+PROOF change #111 remove_decal: one wear mark at (-59.49, 0.17, -86.29) removed  [oil mark lies under the building adela_plaza_row]
+PROOF change #112 remove_decal: one wear mark at (-49.65, 0.17, -95.88) removed  [oil mark lies under the building adela_plaza_corner]
+PROOF change #113 remove_decal: one wear mark at (-30.43, 0.19, -37.04) removed  [oil mark lies under the building community_credit_union]
+PROOF change #114 remove_decal: one wear mark at (-85.99, 0.19, -95.75) removed  [oil mark lies under the building dollar_plus_market]
+PROOF change #115 remove_decal: one wear mark at (-86.63, 0.19, -97.35) removed  [oil mark lies under the building dollar_plus_market]
+PROOF change #116 remove_decal: one wear mark at (-62.45, 0.17, -88.75) removed  [oil mark lies under the building adela_plaza_row]
+PROOF change #117 remove_decal: one wear mark at (-87.78, 0.19, -79.94) removed  [oil mark lies under the building dollar_plus_market]
+PROOF change #118 remove_decal: one wear mark at (-82.25, 0.30, -42.72) removed  [oil mark lies under the building recycling_booth]
+PROOF change #119 remove_decal: one wear mark at (-57.06, 0.17, -98.03) removed  [oil mark lies under the building adela_plaza_row]
+PROOF change #120 remove_decal: one wear mark at (-67.71, 0.17, -90.41) removed  [oil mark lies under the building adela_plaza_row]
+PROOF change #121 remove_decal: one wear mark at (-25.04, 0.19, -33.07) removed  [oil mark lies under the building community_credit_union]
+PROOF change #122 remove_decal: one wear mark at (-25.69, 0.19, -25.71) removed  [oil mark lies under the building community_credit_union]
+PROOF change #123 remove_decal: one wear mark at (-77.05, 0.19, -78.14) removed  [oil mark lies under the building dollar_plus_market]
+PROOF change #124 remove_decal: one wear mark at (-25.05, 0.19, -32.77) removed  [oil mark lies under the building community_credit_union]
+PROOF change #125 remove_decal: one wear mark at (-77.14, 0.19, -91.46) removed  [oil mark lies under the building dollar_plus_market]
+PROOF change #126 remove_decal: one wear mark at (-65.93, 0.17, -97.41) removed  [oil mark lies under the building adela_plaza_row]
+PROOF change #127 remove_decal: one wear mark at (-79.73, 0.30, -45.35) removed  [grime mark lies under the building recycling_booth]
+PROOF change #128 remove_decal: one wear mark at (-59.34, 0.17, -90.14) removed  [grime mark lies under the building adela_plaza_row]
+PROOF change #129 remove_decal: one wear mark at (-87.36, 0.19, -85.48) removed  [grime mark lies under the building dollar_plus_market]
+PROOF change #130 remove_decal: one wear mark at (-61.00, 0.17, -87.78) removed  [grime mark lies under the building adela_plaza_row]
+PROOF change #131 remove_decal: one wear mark at (-94.41, 0.19, -78.40) removed  [grime mark lies under the building dollar_plus_market]
+PROOF change #132 remove_decal: one wear mark at (-67.63, 0.17, -94.75) removed  [grime mark lies under the building adela_plaza_row]
+PROOF change #133 remove_decal: one wear mark at (-80.04, 0.19, -86.62) removed  [grime mark lies under the building dollar_plus_market]
+PROOF change #134 remove_decal: one wear mark at (-75.32, 0.19, -94.62) removed  [grime mark lies under the building dollar_plus_market]
+PROOF change #150 remove_decal: one wear mark at (-73.97, 0.19, -81.28) removed  [an oil mark on concrete with no stall, garage or roll-up door near it]
+PROOF change #151 add_box: a collision box [11.1046209335327, 1.49998188018799, 11.7746543884277, 0.48981384277344, 2.99996376037598, 0.49001792907715] for a column of Buildings/dollar_plus_market  [dollar_plus_market: a 0.4 x 0.5 m column or post of the building has no collision]
+PROOF change #152 add_box: a collision box [6.89479923248291, 1.49998188018799, 11.7746543884277, 0.49028686523437, 2.99996376037598, 0.49001792907715] for a column of Buildings/dollar_plus_market  [dollar_plus_market: a 0.5 x 0.5 m column or post of the building has no collision]
+PROOF change #153 add_box: a collision box [2.80992603302002, 1.49998188018799, 11.8796319961548, 0.16, 2.99996376037598, 0.16] for a column of Buildings/dollar_plus_market  [dollar_plus_market: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #154 add_box: a collision box [12.944899559021, 1.49998188018799, 11.8796319961548, 0.16, 2.99996376037598, 0.16] for a column of Buildings/dollar_plus_market  [dollar_plus_market: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #155 add_box: a collision box [4.73979091644287, 1.49998188018799, 11.8796319961548, 0.16, 2.99996376037598, 0.16] for a column of Buildings/dollar_plus_market  [dollar_plus_market: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #156 add_box: a collision box [1.02481365203857, 1.49998188018799, 6.87996387481689, 0.16, 2.99996376037598, 0.16] for a column of Buildings/adela_plaza_row  [adela_plaza_row: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #157 add_box: a collision box [6.73489999771118, 1.49998188018799, 6.77483320236206, 0.49018482208252, 2.99996376037598, 0.49008373260498] for a column of Buildings/adela_plaza_row  [adela_plaza_row: a 0.5 x 0.5 m column or post of the building has no collision]
+PROOF change #158 add_box: a collision box [4.8947925567627, 1.49998188018799, 6.87996387481689, 0.16, 2.99996376037598, 0.16] for a column of Buildings/adela_plaza_row  [adela_plaza_row: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #159 add_box: a collision box [2.10492324829102, 1.49998259544373, 6.77483320236206, 0.48997978210449, 2.99996519088745, 0.49008373260498] for a column of Buildings/adela_plaza_corner  [adela_plaza_corner: a 0.4 x 0.5 m column or post of the building has no collision]
+PROOF change #160 add_box: a collision box [3.94499588012695, 1.49998259544373, 6.87996387481689, 0.16, 2.99996519088745, 0.16] for a column of Buildings/adela_plaza_corner  [adela_plaza_corner: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #161 add_box: a collision box [-1.88013076782227, 1.49998259544373, 6.77483320236206, 0.16, 2.99996519088745, 0.49008373260498] for a column of Buildings/adela_plaza_corner  [adela_plaza_corner: a 0.1 x 0.5 m column or post of the building has no collision]
+PROOF note: 'Props/prop_vending_soda_worn_far' held only listed items and is gone with them
+PROOF note: 'Props/prop_vending_soda_worn_mid' held only listed items and is gone with them
+PROOF note: 'Props/prop_vending_soda_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_newspaper_box_red_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_recycling_receptacle_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/plant_potted_leafy_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_receptacle_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_propane_cylinder_100lb_rusty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_ice_chest_worn_far' held only listed items and is gone with them
+PROOF note: 'Props/prop_ice_chest_worn_mid' held only listed items and is gone with them
+PROOF note: 'Props/prop_ice_chest_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_shopping_cart_worn_far' held only listed items and is gone with them
+PROOF note: 'Props/prop_shopping_cart_worn_mid' held only listed items and is gone with them
+PROOF note: 'Props/prop_shopping_cart_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_cart_corral_worn_far' held only listed items and is gone with them
+PROOF note: 'Props/prop_cart_corral_worn_mid' held only listed items and is gone with them
+PROOF note: 'Props/prop_cart_corral_worn_near' held only listed items and is gone with them
+PROOF 150 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

@@ -1,0 +1,2308 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -98.75,
+    0.329638689756393,
+    -74.0
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.15 m over what is under it",
+   "to": [
+    -98.75,
+    0.179660037769525,
+    -74.0
+   ]
+  },
+  {
+   "at": [
+    -98.75,
+    0.329638689756393,
+    -75.3000030517578
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.15 m over what is under it",
+   "to": [
+    -98.75,
+    0.179654387732639,
+    -75.3000030517578
+   ]
+  },
+  {
+   "at": [
+    -29.7000007629395,
+    0.32641664147377,
+    -38.75
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.15 m over what is under it",
+   "to": [
+    -29.7000007629395,
+    0.176504002656998,
+    -38.75
+   ]
+  },
+  {
+   "at": [
+    -83.75,
+    0.439742088317871,
+    -47.0
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.15 m over what is under it",
+   "to": [
+    -83.75,
+    0.288444792498629,
+    -47.0
+   ]
+  },
+  {
+   "at": [
+    -67.0,
+    0.310163289308548,
+    -99.4700012207031
+   ],
+   "base": "prop_ac_condenser_compact",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "move",
+   "reason": "prop_ac_condenser_compact hangs 0.15 m over what is under it",
+   "to": [
+    -67.0,
+    0.160163283348083,
+    -99.4700012207031
+   ]
+  },
+  {
+   "at": [
+    -65.6999969482422,
+    0.310163289308548,
+    -99.4700012207031
+   ],
+   "base": "prop_ac_condenser_compact",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "move",
+   "reason": "prop_ac_condenser_compact hangs 0.15 m over what is under it",
+   "to": [
+    -65.6999969482422,
+    0.160163283348083,
+    -99.4700012207031
+   ]
+  },
+  {
+   "at": [
+    -47.0,
+    0.306698024272919,
+    -99.4700012207031
+   ],
+   "base": "prop_ac_condenser_compact",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "move",
+   "reason": "prop_ac_condenser_compact hangs 0.15 m over what is under it",
+   "to": [
+    -47.0,
+    0.156698018312454,
+    -99.4700012207031
+   ]
+  },
+  {
+   "at": [
+    -50.0,
+    0.17867611348629,
+    -73.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 19.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    -50.0,
+    0.296394089490375,
+    -73.0
+   ]
+  },
+  {
+   "at": [
+    -30.0,
+    0.173562437295914,
+    -55.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    -30.0,
+    0.291556704638232,
+    -55.0
+   ]
+  },
+  {
+   "at": [
+    -60.0,
+    0.239322245121002,
+    -45.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    -60.0,
+    0.357397248069073,
+    -45.0
+   ]
+  },
+  {
+   "at": [
+    -80.0,
+    0.190166383981705,
+    -66.5
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 22.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    -80.0,
+    0.308332385978871,
+    -66.5
+   ]
+  },
+  {
+   "at": [
+    -70.4000015258789,
+    1.3601633310318,
+    -99.0199966430664
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 23.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 45 cm over a apt door of adela_plaza_row]",
+   "to": [
+    -71.6000015258789,
+    1.3601633310318,
+    -99.0199965381592
+   ]
+  },
+  {
+   "at": [
+    -69.9800033569336,
+    1.3601633310318,
+    -99.0199966430664
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 24.0,
+   "op": "move",
+   "reason": "moved slid -1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 43 cm over a apt door of adela_plaza_row]",
+   "to": [
+    -68.7800033569336,
+    1.3601633310318,
+    -99.0199967479737
+   ]
+  },
+  {
+   "at": [
+    -50.4000015258789,
+    1.35669803619385,
+    -99.0199966430664
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 25.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 45 cm over a apt door of adela_plaza_corner]",
+   "to": [
+    -51.6000015258789,
+    1.35669803619385,
+    -99.0199965381592
+   ]
+  },
+  {
+   "at": [
+    -49.9799995422363,
+    1.35669803619385,
+    -99.0199966430664
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 26.0,
+   "op": "move",
+   "reason": "moved slid -1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 43 cm over a apt door of adela_plaza_corner]",
+   "to": [
+    -48.7799995422363,
+    1.35669803619385,
+    -99.0199967479737
+   ]
+  },
+  {
+   "at": [
+    -33.9799995422363,
+    1.37641668319702,
+    -38.0200004577637
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 27.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 33 cm from a apt door of community_credit_union (services keep 35 cm off)]",
+   "to": [
+    -35.1799995422363,
+    1.37641668319702,
+    -38.0200003528564
+   ]
+  },
+  {
+   "at": [
+    -33.560001373291,
+    1.37641668319702,
+    -38.0200004577637
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 28.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 9 cm over a apt door of community_credit_union]",
+   "to": [
+    -34.760001373291,
+    1.37641668319702,
+    -38.0200003528564
+   ]
+  },
+  {
+   "at": [
+    -23.3999996185303,
+    0.161064445972443,
+    -64.0
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -86.0,
+    0.494296580553055,
+    -16.5
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -36.9000015258789,
+    0.184779092669487,
+    -48.75
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -34.0,
+    0.174620106816292,
+    -16.5
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -97.1999969482422,
+    0.279431730508804,
+    -51.0
+   ],
+   "base": "tree_eucalyptus_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_eucalyptus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -97.1999969482422,
+    0.457995712757111,
+    -25.0
+   ],
+   "base": "tree_eucalyptus_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "tree_eucalyptus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -97.1999969482422,
+    0.350110113620758,
+    -38.0
+   ],
+   "base": "tree_eucalyptus_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "tree_eucalyptus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -66.0,
+    0.333543092012405,
+    -16.5
+   ],
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -18.0,
+    0.154687389731407,
+    -16.5
+   ],
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -10.5,
+    0.150999993085861,
+    -63.0
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -31.0,
+    0.32641664147377,
+    -38.75
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "erased (in doubt): its new place made a new fault: deleted instead [prop_ac_condenser hangs 0.15 m over what is under it]"
+  },
+  {
+   "at": [
+    -32.7000007629395,
+    0.526416659355164,
+    -38.0200004577637
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 29.0,
+   "op": "remove",
+   "reason": "erased (in doubt): its new place made a new fault: deleted instead [moved slid -1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 37 cm over a apt door of community_credit_union]]"
+  },
+  {
+   "at": [
+    -73.0,
+    0.17963869869709,
+    -72.5
+   ],
+   "base": "prop_cart_corral",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 30.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_cart_corral stands in front of a shop window of dollar_plus_market]"
+  },
+  {
+   "at": [
+    -73.1999969482422,
+    0.17963869869709,
+    -76.5999984741211
+   ],
+   "base": "prop_ice_chest",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 31.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands in front of a shop window of dollar_plus_market]"
+  },
+  {
+   "at": [
+    -73.0,
+    0.17963869869709,
+    -78.5999984741211
+   ],
+   "base": "prop_propane_cylinder_100lb",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 32.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_propane_cylinder_100lb stands in front of a shop window of dollar_plus_market]"
+  },
+  {
+   "at": [
+    -72.9499969482422,
+    0.17963869869709,
+    -95.9199981689453
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 33.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in front of a shop window of dollar_plus_market]"
+  },
+  {
+   "at": [
+    -57.2000007629395,
+    0.160163283348083,
+    -84.3000030517578
+   ],
+   "base": "plant_potted_leafy",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 34.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [plant_potted_leafy stands in front of a shop window of adela_plaza_row]"
+  },
+  {
+   "at": [
+    -43.0800018310547,
+    0.156698018312454,
+    -83.9499969482422
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 35.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent stands in front of a shop window of adela_plaza_corner]"
+  },
+  {
+   "at": [
+    -72.9499969482422,
+    0.17963869869709,
+    -96.8550033569336
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 37.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in front of a shop window of dollar_plus_market]"
+  },
+  {
+   "at": [
+    -72.9499969482422,
+    0.17963869869709,
+    -98.0800018310547
+   ],
+   "base": "prop_newspaper_box_red",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 38.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red stands in front of a shop window of dollar_plus_market]"
+  },
+  {
+   "at": [
+    -68.9199981689453,
+    0.160163283348083,
+    -83.9499969482422
+   ],
+   "base": "prop_newspaper_box_red",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 39.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red stands in front of a shop window of adela_plaza_row]"
+  },
+  {
+   "at": [
+    -73.4000015258789,
+    0.17963869869709,
+    -80.5999984741211
+   ],
+   "base": "prop_vending_soda",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 40.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_vending_soda stands in front of a shop window of dollar_plus_market]"
+  },
+  {
+   "at": [
+    -42.0,
+    0.204545944929123,
+    -22.8999996185303
+   ],
+   "base": "prop_park_bench",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 41.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_park_bench stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -62.5999984741211,
+    0.160240039229393,
+    -83.5999984741211
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 42.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (1.4 m from a wall, 16.6 m from a fence)]"
+  },
+  {
+   "at": [
+    -41.4000015258789,
+    0.156732365489006,
+    -83.5999984741211
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 43.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (1.4 m from a wall, 16.6 m from a fence)]"
+  },
+  {
+   "at": [
+    -21.8999996185303,
+    0.176314309239388,
+    -22.6000003814697
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 44.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (1.4 m from a wall, 14.3 m from a fence)]"
+  },
+  {
+   "at": [
+    -76.0,
+    0.271834999322891,
+    -49.5
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 45.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (3.6 m from a wall, 17.7 m from a fence)]"
+  },
+  {
+   "at": [
+    -76.0,
+    0.282400459051132,
+    -48.5999984741211
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 46.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (2.8 m from a wall, 18.2 m from a fence)]"
+  },
+  {
+   "at": [
+    -76.0,
+    0.288759648799896,
+    -47.7000007629395
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 47.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (2.0 m from a wall, 18.9 m from a fence)]"
+  },
+  {
+   "at": [
+    -72.5999984741211,
+    0.179532736539841,
+    -90.0
+   ],
+   "base": "prop_shopping_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 136.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_shopping_cart leaves 0.9 m of a 1.8 m wide walk]"
+  },
+  {
+   "at": [
+    -72.5999984741211,
+    0.179539278149605,
+    -89.0999984741211
+   ],
+   "base": "prop_shopping_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 137.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_shopping_cart leaves 0.9 m of a 1.8 m wide walk]"
+  },
+  {
+   "at": [
+    -72.5999984741211,
+    0.179551810026169,
+    -88.1999969482422
+   ],
+   "base": "prop_shopping_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 138.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_shopping_cart leaves 0.9 m of a 1.8 m wide walk]"
+  },
+  {
+   "at": [
+    -25.0,
+    0.176416650414467,
+    -22.9500007629395
+   ],
+   "base": "prop_bike_rack",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 142.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_bike_rack leaves 1.1 m of a 1.8 m wide walk]"
+  },
+  {
+   "at": [
+    -35.2000007629395,
+    0.176432356238365,
+    -22.7000007629395
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 144.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent leaves 1.2 m of a 1.8 m wide walk]"
+  },
+  {
+   "at": [
+    -64.5249322255452,
+    0.172163292765617,
+    -94.7023696899414
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 48.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -50.2987327575684,
+    0.168698012828827,
+    -90.5858535766602
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 49.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building adela_plaza_corner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -84.2392730712891,
+    0.191638708114624,
+    -76.312629699707
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 50.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -25.9101715087891,
+    0.188416659832001,
+    -32.9047400156657
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 51.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -68.4662628173828,
+    0.172163292765617,
+    -88.2070846557617
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 52.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -89.404296875,
+    0.191638708114624,
+    -96.4262008666992
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 53.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -79.3982696533203,
+    0.191638708114624,
+    -96.163215637207
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 54.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -84.753547668457,
+    0.191638708114624,
+    -92.0250396728516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 55.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -92.4881286621094,
+    0.191638708114624,
+    -91.8695068359375
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 56.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -93.8761367797852,
+    0.191638708114624,
+    -91.4647064208984
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 57.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -42.9938125610351,
+    0.168698012828827,
+    -92.1107482910156
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 58.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building adela_plaza_corner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -86.7497863769531,
+    0.191638708114624,
+    -93.1354370117188
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 59.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -32.5953979492188,
+    0.188416659832001,
+    -36.1228141784668
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 60.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -30.2712707519531,
+    0.188416659832001,
+    -36.5134696960449
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 61.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -80.9109191894531,
+    0.191638708114624,
+    -71.7478179931641
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 62.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -48.4106407165527,
+    0.168698012828827,
+    -97.2793579101562
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 63.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building adela_plaza_corner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -32.5888446172078,
+    0.188416659832001,
+    -31.6078109741211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 64.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -96.506217956543,
+    0.191638708114624,
+    -94.5390167236328
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 65.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -90.2220306396484,
+    0.191638708114624,
+    -72.6309814453125
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 66.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -77.6365432739258,
+    0.191638708114624,
+    -80.3887786865234
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 67.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -84.3948440551758,
+    0.191638708114624,
+    -88.884147644043
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 68.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -25.4321517944336,
+    0.188416659832001,
+    -25.8019790649414
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 69.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -86.3481140136719,
+    0.191638708114624,
+    -82.5105285644531
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 70.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.5712966918945,
+    0.172163292765617,
+    -89.8337173461914
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 71.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -80.3316268920898,
+    0.301743005712827,
+    -42.916862487793
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 72.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building recycling_booth",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -28.5652160644531,
+    0.188416659832001,
+    -31.5510187149048
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 73.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -95.3950271606445,
+    0.191638708114624,
+    -97.3320922851562
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 74.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -83.1207275390625,
+    0.191638708114624,
+    -96.7637100219727
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 75.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -85.6212005615234,
+    0.191638708114624,
+    -87.4851226806641
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 76.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -88.7272720336914,
+    0.191638708114624,
+    -78.6710052490234
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 77.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -69.9761505126953,
+    0.172163292765617,
+    -87.4513931274414
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 78.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -30.4668655395508,
+    0.188416659832001,
+    -25.7066116333008
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 79.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -33.2469253540039,
+    0.188416659832001,
+    -36.6799697875977
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 80.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -45.5328636169434,
+    0.168698012828827,
+    -91.4044036865234
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 81.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building adela_plaza_corner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -81.7838973999023,
+    0.191638708114624,
+    -85.6958389282227
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 82.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -91.1695098876953,
+    0.191638708114624,
+    -86.0237197875977
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 83.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -77.9209136962891,
+    0.191638708114624,
+    -96.7416076660156
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 84.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -27.1542434692383,
+    0.188416659832001,
+    -34.8619766235352
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 85.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -34.8580169677734,
+    0.188416659832001,
+    -31.834846496582
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 86.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -74.9678726196289,
+    0.185146902998288,
+    -89.6207656860352
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 87.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -86.5563735961914,
+    0.191638708114624,
+    -76.5433349609375
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 88.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -83.96875,
+    0.191638708114624,
+    -88.6439437866211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 89.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -44.3118515014649,
+    0.171633583803972,
+    -83.1107788085938
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 90.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -89.2339706420898,
+    0.191638708114624,
+    -82.9695434570312
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 91.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -55.8427429199219,
+    0.172052214543025,
+    -83.4941940307617
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 92.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -75.8826217651367,
+    0.191638708114624,
+    -93.3489608764648
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 93.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -26.1582565307617,
+    0.188416659832001,
+    -30.3802483876546
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 94.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -24.9673233032227,
+    0.188416659832001,
+    -26.4052963256836
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 95.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -55.7232513427734,
+    0.172163292765617,
+    -89.909797668457
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 96.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -26.8198928833008,
+    0.187346778810024,
+    -23.3692092895508
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 97.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -56.6722526550293,
+    0.172163292765617,
+    -96.3904571533203
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 98.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -73.5135955810547,
+    0.192628634472688,
+    -75.6078338623047
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 99.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -90.2862243652344,
+    0.191638708114624,
+    -77.8965377807617
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 100.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -47.4920082092285,
+    0.168698012828827,
+    -93.0098571777344
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 101.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building adela_plaza_corner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -75.8174438476562,
+    0.191638708114624,
+    -95.2969360351562
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 102.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -68.2482070922852,
+    0.172163292765617,
+    -91.4572525024414
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 103.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -75.2920379638672,
+    0.191638708114624,
+    -72.7014541625977
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 104.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -55.2073783874512,
+    0.172163292765617,
+    -95.4567642211914
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 105.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -95.9352111816406,
+    0.191638708114624,
+    -91.0553512573242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 106.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -22.8800640106201,
+    0.188416659832001,
+    -26.3942070007324
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 107.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -92.3574295043945,
+    0.191638708114624,
+    -71.4481735229492
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 108.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -81.3883285522461,
+    0.191638708114624,
+    -75.6195983886719
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 109.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -75.1828308105469,
+    0.191638708114624,
+    -93.9559326171875
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 110.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.4873008728027,
+    0.172163292765617,
+    -86.285758972168
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 111.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -49.6521148681641,
+    0.168698012828827,
+    -95.8790893554688
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 112.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building adela_plaza_corner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -30.4288330078125,
+    0.188416659832001,
+    -37.0354804992676
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 113.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -85.9883804321289,
+    0.191638708114624,
+    -95.7534713745117
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 114.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -86.6310119628906,
+    0.191638708114624,
+    -97.3496398925781
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 115.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -62.4454231262207,
+    0.172163292765617,
+    -88.7518081665039
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 116.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -87.7753219604492,
+    0.191638708114624,
+    -79.9367294311523
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 117.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -82.2519989013672,
+    0.301742106676102,
+    -42.7214202880859
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 118.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building recycling_booth",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -57.0631256103516,
+    0.172163292765617,
+    -98.0342636108398
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 119.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -67.7115859985352,
+    0.172163292765617,
+    -90.4071426391602
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 120.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -25.0390090942383,
+    0.188416659832001,
+    -33.0679168701172
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 121.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -25.6927223205566,
+    0.188416659832001,
+    -25.7091159820557
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 122.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -77.0543975830078,
+    0.191638708114624,
+    -78.1424179077148
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 123.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -25.04541015625,
+    0.188416659832001,
+    -32.765453338623
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 124.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building community_credit_union",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -77.1442337036133,
+    0.191638708114624,
+    -91.4554901123047
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 125.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -65.9317398071289,
+    0.172163292765617,
+    -97.4051895141602
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 126.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -79.7323303222656,
+    0.301742106676102,
+    -45.3463172912598
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 127.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building recycling_booth",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.3351631164551,
+    0.172163292765617,
+    -90.1431732177734
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 128.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -87.3620529174805,
+    0.191638708114624,
+    -85.4826812744141
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 129.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -60.9970932006836,
+    0.172163292765617,
+    -87.7751159667969
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 130.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -94.4069671630859,
+    0.191638708114624,
+    -78.4000091552734
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 131.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -67.6311721801758,
+    0.172163292765617,
+    -94.7506637573242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 132.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building adela_plaza_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -80.0373229980469,
+    0.191638708114624,
+    -86.6173629760742
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 133.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -75.3222961425781,
+    0.188392805556456,
+    -94.6180648803711
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 134.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building dollar_plus_market",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -73.970573425293,
+    0.191638708114624,
+    -81.2849655151367
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 150.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -74.2253460969707,
+    1.67962057888508,
+    -95.1046214482192
+   ],
+   "box": [
+    11.1046209335327,
+    1.49998188018799,
+    11.7746543884277,
+    0.489813842773437,
+    2.99996376037598,
+    0.490017929077148
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 151.0,
+   "name": "sc_col_0",
+   "node": "Buildings/dollar_plus_market",
+   "op": "add_box",
+   "reason": "dollar_plus_market: a 0.4 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -74.2253459129535,
+    1.67962057888508,
+    -90.8947997471694
+   ],
+   "box": [
+    6.89479923248291,
+    1.49998188018799,
+    11.7746543884277,
+    0.490286865234375,
+    2.99996376037598,
+    0.490017929077148
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 152.0,
+   "name": "sc_col_1",
+   "node": "Buildings/dollar_plus_market",
+   "op": "add_box",
+   "reason": "dollar_plus_market: a 0.5 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -74.120368126671,
+    1.67962057888508,
+    -86.8099265522953
+   ],
+   "box": [
+    2.80992603302002,
+    1.49998188018799,
+    11.8796319961548,
+    0.16,
+    2.99996376037598,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 153.0,
+   "name": "sc_col_2",
+   "node": "Buildings/dollar_plus_market",
+   "op": "add_box",
+   "reason": "dollar_plus_market: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -74.1203685696847,
+    1.67962057888508,
+    -96.9449000782963
+   ],
+   "box": [
+    12.944899559021,
+    1.49998188018799,
+    11.8796319961548,
+    0.16,
+    2.99996376037598,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 154.0,
+   "name": "sc_col_3",
+   "node": "Buildings/dollar_plus_market",
+   "op": "add_box",
+   "reason": "dollar_plus_market: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -74.1203682110281,
+    1.67962057888508,
+    -88.7397914357182
+   ],
+   "box": [
+    4.73979091644287,
+    1.49998188018799,
+    11.8796319961548,
+    0.16,
+    2.99996376037598,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 155.0,
+   "name": "sc_col_4",
+   "node": "Buildings/dollar_plus_market",
+   "op": "add_box",
+   "reason": "dollar_plus_market: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -61.9751863479614,
+    1.66014516353607,
+    -85.1200361251831
+   ],
+   "box": [
+    1.02481365203857,
+    1.49998188018799,
+    6.87996387481689,
+    0.16,
+    2.99996376037598,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 156.0,
+   "name": "sc_col_0",
+   "node": "Buildings/adela_plaza_row",
+   "op": "add_box",
+   "reason": "adela_plaza_row: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -56.2651000022888,
+    1.66014516353607,
+    -85.2251667976379
+   ],
+   "box": [
+    6.73489999771118,
+    1.49998188018799,
+    6.77483320236206,
+    0.49018482208252,
+    2.99996376037598,
+    0.490083732604981
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 157.0,
+   "name": "sc_col_1",
+   "node": "Buildings/adela_plaza_row",
+   "op": "add_box",
+   "reason": "adela_plaza_row: a 0.5 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -58.1052074432373,
+    1.66014516353607,
+    -85.1200361251831
+   ],
+   "box": [
+    4.8947925567627,
+    1.49998188018799,
+    6.87996387481689,
+    0.16,
+    2.99996376037598,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 158.0,
+   "name": "sc_col_2",
+   "node": "Buildings/adela_plaza_row",
+   "op": "add_box",
+   "reason": "adela_plaza_row: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -43.895076751709,
+    1.65668061375618,
+    -85.2251667976379
+   ],
+   "box": [
+    2.10492324829102,
+    1.49998259544373,
+    6.77483320236206,
+    0.489979782104492,
+    2.99996519088745,
+    0.490083732604981
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 159.0,
+   "name": "sc_col_0",
+   "node": "Buildings/adela_plaza_corner",
+   "op": "add_box",
+   "reason": "adela_plaza_corner: a 0.4 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -42.055004119873,
+    1.65668061375618,
+    -85.1200361251831
+   ],
+   "box": [
+    3.94499588012695,
+    1.49998259544373,
+    6.87996387481689,
+    0.16,
+    2.99996519088745,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 160.0,
+   "name": "sc_col_1",
+   "node": "Buildings/adela_plaza_corner",
+   "op": "add_box",
+   "reason": "adela_plaza_corner: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -47.8801307678223,
+    1.65668061375618,
+    -85.2251667976379
+   ],
+   "box": [
+    -1.88013076782227,
+    1.49998259544373,
+    6.77483320236206,
+    0.16,
+    2.99996519088745,
+    0.490083732604981
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 161.0,
+   "name": "sc_col_2",
+   "node": "Buildings/adela_plaza_corner",
+   "op": "add_box",
+   "reason": "adela_plaza_corner: a 0.1 x 0.5 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "m_gr_ad5nw"
+}
