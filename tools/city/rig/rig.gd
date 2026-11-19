@@ -161,6 +161,9 @@ func _ready() -> void:
 	# the shell places the player, his bicycle and a car itself once it has them (CityGame.set_world / set_player)
 	game = get_tree().root.get_node_or_null(^"Game")
 	if game and game.get_class() == "CityGame":
+		# (Yasin, 20 Nov: "game just runs laps instead of showing the menu or releasing us into the world": a phone keeps the
+		# last measuring run's user://rig_args.txt; started by the game, none of a measuring run's choices may apply)
+		opt.plan = "default"; opt.shots = ""; opt.car = ""; own_drives.clear(); opt.census = "both"
 		opt.walk = "1"; opt.people = 200; opt.traffic = 40; opt.parked = 1; opt.quit = false
 		var ws: Vector3 = game.call(&"world_start")
 		opt.at = "%f,%f" % [ws.x, ws.z]
