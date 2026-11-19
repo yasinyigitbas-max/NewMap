@@ -241,3 +241,11 @@ the other agent suggested these
 - [2026-11-19] and make sure all land is under blocks but blocks dont float too
 
 - [2026-11-19] roll it city wide and measure again
+
+- [2026-11-19] show me birdseye views from all major zones now
+
+- [2026-11-19] (waterfront picture) can you erase the sand under the pier and that irregularity on the second shot, make it smooth
+
+- [2026-11-19] (two red lines drawn on the waterfront picture; asked whether the sand should reach them: yes) make them approach smoothly like this ... and make the foam follow that line
+
+- [2026-11-19] make the bubbles follow sand better and unifiy it, i can see patches on it

@@ -314,4 +314,5 @@ def main():
         print('dry run: nothing written')
 
 
-main()
+if __name__ == '__main__':
+    main()

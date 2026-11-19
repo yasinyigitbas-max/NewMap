@@ -70,9 +70,9 @@
  },
  "note_citykit": "city-kit terrain (tools/city/pilot/zoning/bake_game_terrain.py from zoning/terrain_grid.npz); read with --citykit",
  "class_counts_citykit": {
-  "sea": 4250611,
+  "sea": 4250675,
   "ground": 279424,
-  "sand": 61569,
+  "sand": 61505,
   "grass": 1009422,
   "golf": 7505,
   "military": 1067457,

@@ -5,6 +5,26 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~08:30 (PC session): THE SHORE AT THE WATERFRONT PIER AND BEACH (Yasin, on the bird's-eye view: "can you erase
+  the sand under the pier and that irregularity on the second shot, make it smooth"; then two red lines drawn on the
+  picture and "Yes, sand to the lines", "make them approach smoothly like this", "and make the foam follow that line";
+  then "make the bubbles follow sand better and unifiy it, i can see patches on it"). WHAT WAS WRONG: the smooth coast
+  (coast.json) ran across the beach block f_sw's own shallow water: a sand bar with a lagoon behind it, the pier and its
+  moored boats standing in sand. NOW (tool `tools/city/pilot/zoning/waterfront_shore.py`, dry run by default): the
+  water line is one smooth curve from the north beach's water line (z 190) into f_sw's OWN wavy water line (z 258),
+  along it, and from the block's south end (z 299) into the coast's water line (z 326); the pocket between the old bar
+  and the beach is filled with sand up to that curve; one even beach face through the water line (no 4 m teeth under
+  the foam). The foam strip follows it: `zoning/shore_foam.json` chunks 44 and 45 redrawn there, `x_shore_foam`
+  rebuilt (unlocked piece, a mesh only). At the south corner the new foam fades in exactly where f_sw's own foam fades
+  out. CHANGED: terrain_grid.npz (392 nodes), shore_foam.json, pieces/x_shore_foam.scn, the game land (460 height
+  samples inside 140 x 132 m; class / shore_dist / water_dist / ground_params follow). No locked piece (599 LOCKED ok).
+  MEASURE: `ground_check.py` "sample block buried" 308 -> 350 m2: that IS the sand the red lines ask for, lying over
+  f_sw's shallow water on purpose. Floating edges 187 -> 186 m2.
+  LEFT: (1) for about 20 m north of z 258 f_sw's own foam comes out from under the new sand next to the new foam:
+  taking it out there means opening the LOCKED f_sw (Yasin's word). (2) The larger moored boat's bow now touches the
+  water line. (3) Preview only: the land's sand is paler than f_sw's beach, so the filled pocket reads as a paler
+  wedge. (4) coast.json is NOT updated: terrain.py would bring the old bar back. (5) The six small boats north of the
+  pier (another piece) still lie on sand: not looked at. Pictures `review/waterfront_19nov/`.
 - 19 Nov ~07:15 (PC session): ONE SKILL FOR ALL BUILDING: `.claude/skills/coronado-super-builder/` (Yasin: "fetch the
   skill files from all 4 city extenders branches, combine it with your knowledge from this session, add the notes
   below and make a super builder skill"). It merges the four `coronado-zone-growth` skills (branches grow-residential,

@@ -63,3 +63,16 @@ within the same 4 m of land grid (the grid cannot follow a terrace edge closer t
 - Do NOT run `tools/city/run/terrain.sh` or `terrain.py`: they re-solve the island from `zoning/piece_ground.npz`,
   which has no growth blocks, and reshape approved ground under other zones.
 - `zoning/terrain.png` and `zoning/piece_ground.npz` are still the 18 Nov state.
+
+## The shore at the waterfront (19 Nov)
+`tools/city/pilot/zoning/waterfront_shore.py` (dry run by default) redrew the water line at the pier and the beach
+block f_sw to two lines Yasin drew on a picture, and the foam strip with it. What it taught:
+- A coast line drawn after a waterfront piece can cut across the piece's own water: look at every waterfront piece
+  from straight above with the land AND the foam strip (`x_shore_foam`) loaded.
+- The sand's edge under a foam strip must be ONE even slope through the water line. Where a node just seaward drops
+  to a piece's sea bed, the edge becomes a saw of 4 m teeth with water showing between sand and foam.
+- Foam joins: two strips add up to one only when they lie on the same line and one fades out over exactly the metres
+  the other fades in (the shader fades over UV.x 0..0.03 and 0.97..1). Read the piece's own water-line formula
+  (`f_sw.gd _shore_z`); do not assume a straight line.
+- Never let the land rise above a piece's dry ground along the piece's own water line: it shows as pale lobes.
+- `ground_check.py` now reports about 350 m2 of f_sw "under the land": that is the sand Yasin asked for, on purpose.

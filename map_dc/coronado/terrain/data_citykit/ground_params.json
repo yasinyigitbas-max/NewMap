@@ -1,7 +1,7 @@
 {
  "note": "terrain-cheap1 ground params (bake_ground_params.py); inputs sha256",
- "class_sha256": "91069bb192d969163181fe0c1fe5d96fc65955ebb2153b8204acacd45d2da6a1",
- "shore_sha256": "c82888b78316e1cad3a3ef00c3a0449814321df94a6958fe71529863734ba679",
+ "class_sha256": "fac0d73285ac7cb806c3107de88974699d74706f9774fff4e01c353546b6ccd5",
+ "shore_sha256": "542a3fb66e604b0dd7b08ec72ecc95258107185bfa1fd1f3730ff4e1223fdcca",
  "size": [
   3372,
   2212
