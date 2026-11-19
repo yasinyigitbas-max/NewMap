@@ -65,7 +65,7 @@ care court, the dorm courts, the union lawn and the South Green, benches, plante
 boxes on the wide paving. Each on a free spot found by a scratch tool (`OUT/py/freespots_hp.py`, not part of the build),
 chosen per kind of place and frozen as a literal POLISH list in each piece script. Kept clear: the helipad field, the
 Emergency Drive, the rec field and courts, the solar field, the quad lawn's middle, Founders Green's avenue, the
-volleyball court, the bandstand. Props now: hospital 841, campus 1,338. The rooms were not changed in this pass.
+volleyball court, the bandstand. Props now: hospital 841, campus 1,331. The rooms were not changed in this pass.
 
 ## Rooms (22, `room_gen_hp.gd` = room_gen_hs + kinds clinic / transit / lecture; `assign_hp.py`)
 Hospital: main lobby, Atrium Cafe, Emergency Department, Transit Center waiting hall, urgent care, pharmacy, bistro,
