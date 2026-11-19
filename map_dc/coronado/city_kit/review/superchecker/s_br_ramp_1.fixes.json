@@ -1,0 +1,33 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -10.1925048828125,
+    -0.124393885334333,
+    -67.100341796875
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -9.38867179552714,
+    -0.102967396378517,
+    -62.2441393534342
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "s_br_ramp_1"
+}
