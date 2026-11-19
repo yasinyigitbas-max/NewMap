@@ -62,6 +62,9 @@ extends Node3D
 ##   --nofarground hide the far world's ground (the streets beyond the loaded cells)
 ##   --plan=census no drives: the drawing cost census (see _census below; --census=day|night|both --views=a,b --censussecs=2; the night is drawn once at start unless --nowarmnight)
 ##   TRAFFIC (19 Nov, docs/TRAFFIC_PEOPLE_PORT.md; all C++, native/: needs  bash native/build.sh  and city_kit/traffic/streets.bin):
+##   --walk=1|BODY  WALK IT YOURSELF (20 Nov; C++ class CityPlayer): a person on foot at --at=x,z[,deg], the camera behind
+##             him; W A S D, Shift runs, the mouse turns, Esc leaves. BODY = a figure's name (M2 by default). With
+##             --people the crowd steps aside for him and he can run into people; with --quit he walks ahead for 12 s.
 ##   --people=N    the walking crowd, at most N people round the camera (C++ class CityCrowd; 0 = none, the default);
 ##                 --hour=H the hour of the day they live by (12.5)
 ##   --traffic=N   moving cars, at most N (0 = no traffic at all, the default). How many there really are follows the
@@ -115,7 +118,7 @@ var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
 var traffic: Node            # the C++ traffic (--traffic=N); null without it
 var people: Node             # the C++ crowd (--people=N); null without it
-var opt := {"car": "", "at": "", "people": 0, "hour": 12.5, "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0}
+var opt := {"car": "", "walk": "", "at": "", "people": 0, "hour": 12.5, "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -141,10 +144,10 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["car", "at", "people", "hour", "traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost"]:
+		for k: String in ["car", "walk", "at", "people", "hour", "traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
-				opt[k] = v if k in ["car", "at", "plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["density", "scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs", "colrange", "boost"] else int(v))
+				opt[k] = v if k in ["car", "walk", "at", "plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["density", "scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs", "colrange", "boost"] else int(v))
 	if from_file and not ("--loop" in args): opt.quit = true
 	Engine.max_fps = 0
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
@@ -271,7 +274,7 @@ func _run() -> void:
 		_say("warmnight %d ms" % (Time.get_ticks_msec() - tw))
 	for i in 10: await get_tree().process_frame
 	_say("boot first_area_ms=%d warm_ms=%d (graphics memory reserve %d MB: %d ms) cells=%d static_mb=%.0f video_mb=%.0f" % [t1 - t0, Time.get_ticks_msec() - t1, int(opt.gpureserve), int(st.stats.get("reserve_ms", 0)), st.loaded_count(), Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0])
-	if String(opt.car) != "":      # a car to drive yourself, instead of a plan
+	if String(opt.car) != "" or String(opt.walk) != "":      # a car to drive, or a walk on foot, instead of a plan
 		await _free_drive(first)
 		get_tree().quit()
 		return
@@ -300,8 +303,9 @@ func _run() -> void:
 ## DRIVE IT YOURSELF (--car). All the driving is C++ (CityCar): this makes the node, sets it on the ground, and each frame
 ## tells the streamer where the car is and writes the speed on the screen.
 func _free_drive(first: Vector3) -> void:
-	if not ClassDB.class_exists(&"CityCar"):
-		_say("ERROR --car needs the native module (bash native/build.sh)"); return
+	var on_foot := String(opt.walk) != ""
+	if not ClassDB.class_exists(&"CityPlayer" if on_foot else &"CityCar"):
+		_say("ERROR --car / --walk need the native module (bash native/build.sh)"); return
 	var names := ["stern_e", "volt_s", "stern_g", "volt_x", "sakura_t", "sakura", "van", "fiamma_r", "fiamma_gt", "taxi", "bus_city", "bus_mini"]
 	var q := String(opt.car).split("/")
 	var m := maxi(names.find(q[0]), 0) if names.has(q[0]) else 2
@@ -329,6 +333,8 @@ func _free_drive(first: Vector3) -> void:
 			nb += 1; layers[(c as StaticBody3D).collision_layer] = true
 			if (c as Node3D).global_position.distance_to(start) < 150.0: near += 1
 		_say("ERROR --car: no ground with collision under (%.0f, %.0f): choose another place with --at=x,z | collision bodies in the world %d, within 150 m %d, their layers %s, cells in %d, physics process %s" % [start.x, start.z, nb, near, str(layers.keys()), st.loaded_count(), str(is_physics_processing())]); return
+	if on_foot:
+		await _free_walk(start, yaw); return
 	if not (look and look.cars): RenderingServer.global_shader_parameter_add(&"refl_env", RenderingServer.GLOBAL_VAR_TYPE_VEC2, Vector2(1.0, 0.0))      # (the cars' paint shader needs it to exist)
 	var car: Node3D = ClassDB.instantiate(&"CityCar")
 	car.set(&"model", m); car.set(&"feel", 1 if (q.size() > 1 and q[1].to_upper() == "V") else 0)
@@ -353,6 +359,32 @@ func _free_drive(first: Vector3) -> void:
 	var s1: Dictionary = car.call(&"get_state")
 	_say("car: %.0f m driven, hardest knock %.0f g, at the end %d wheels on the ground, %.2f m over the place it started, %d km/h" % [float(s1.metres), float(s1.hardest_knock_g), int(s1.wheels_on_ground), car.global_position.y - y_start, int(s1.kmh)])
 	if traffic: _say("  traffic %s" % String(traffic.call(&"report")))
+	if people: _say("  people %s | %s" % [String(people.call(&"report")), str(people.call(&"stats"))])
+
+## WALK IT YOURSELF (--walk). All the walking is C++ (CityPlayer); this makes the node, sets it on the ground, and each
+## frame tells the streamer where he is.
+func _free_walk(start: Vector3, yaw: float) -> void:
+	var pl: Node3D = ClassDB.instantiate(&"CityPlayer")
+	if String(opt.walk).length() > 1: pl.set(&"body_id", String(opt.walk))
+	pl.set(&"capture_mouse", not opt.quit)
+	var y_start := _ground(start, 0.0) + 0.05
+	pl.position = Vector3(start.x, y_start, start.z); pl.rotation.y = yaw
+	add_child(pl)
+	if people: people.call(&"set_player", pl)
+	_say("on foot at (%.0f, %.0f): W A S D, Shift runs, the mouse turns, E speaks to somebody, Esc leaves" % [start.x, start.z])
+	if opt.quit: pl.call(&"set_move", Vector2(0, 1), false)      # (--quit: he walks ahead for 12 s and the run leaves by itself)
+	var last := pl.global_position; var metres := 0.0; var lowest := 0.0; var highest := 0.0
+	var t_start := Time.get_ticks_msec()
+	while not Input.is_key_pressed(KEY_ESCAPE):
+		await get_tree().process_frame
+		if opt.quit and Time.get_ticks_msec() - t_start > 12000: break
+		var p: Vector3 = pl.global_position
+		var dt := maxf(get_process_delta_time(), 0.001)
+		st.update_focus(p, false, (p - last) / dt)
+		metres += Vector2(p.x - last.x, p.z - last.z).length(); last = p
+		lowest = minf(lowest, p.y - y_start); highest = maxf(highest, p.y - y_start)
+		if Engine.get_process_frames() % 6 == 0: hud.text = "%.1f m/s" % float(pl.call(&"get_speed"))
+	_say("on foot: %.0f m walked, between %.2f m under and %.2f m over the height he started at, at the end at (%.1f, %.1f)" % [metres, -lowest, highest, last.x, last.z])
 	if people: _say("  people %s | %s" % [String(people.call(&"report")), str(people.call(&"stats"))])
 
 ## Where a frame's time went: with --probe the wait for the physics thread and for the render server to digest what the
