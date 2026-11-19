@@ -56,6 +56,9 @@ const KINDS := {
 	# campus kinds (claude/sharp-ride-16u9ik 19 Nov): a lecture hall (rows of seats facing the lecturer's desk and lectern at
 	# the back wall) and the university hall's foyer (groups of benches round tables, plants, pictures)
 	"lecture": {"floor": "WoodFloor051", "light": "panel", "counter": ["display_table", "office_desk"], "till": false, "behind": ["bookcase", "filing_cabinet", "bookcase"], "board": false, "walls": ["bookcase"], "centre": "pews", "window": "none", "back": "office", "frames": true},
+	# the campus rec centre (claude/sharp-ride-16u9ik 19 Nov): the front desk by the door, drinks behind it, rows of weight
+	# benches and bikes down the floor with the walk to the back kept clear, more equipment along the walls
+	"gym": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["drinks_fridge", "wall_shelf"], "board": false, "walls": ["weight_bench", "bike_stand", "weight_bench"], "centre": "gym", "window": "none", "back": "office", "frames": false},
 	"campus_hall": {"floor": "Terrazzo005", "light": "pendant", "counter": ["shop_counter", "shop_counter"], "till": false, "behind": ["potted_plant", "bookcase", "potted_plant"], "board": false, "walls": ["waiting_bench", "potted_plant", "bookcase"], "centre": "lounge", "window": "waiting", "back": "office", "frames": true},
 	"venue": {"floor": "Carpet012", "light": "pendant", "counter": ["shop_counter", "soda_fountain"], "till": true, "behind": ["drinks_fridge"], "board": true, "walls": ["poster_wall"], "centre": "benches", "window": "waiting", "back": "none", "frames": false},
 }
@@ -64,7 +67,7 @@ const WALL_TINTS := [Color(1.0, 0.95, 0.86), Color(0.94, 0.96, 0.98), Color(0.98
 const SHORT := {"cafe": "COFFEE", "bakery": "BAKERY", "bar": "BAR", "restaurant": "KITCHEN", "fast_food": "FOOD", "ice_cream": "ICE CREAM",
 	"clothes": "CLOTHES", "shoes": "SHOES", "jewelry": "JEWELRY", "books": "BOOKS", "gallery": "GALLERY", "salon": "SALON", "pharmacy": "PHARMACY",
 	"souvenir": "GIFTS", "office": "OFFICE", "corner_shop": "MARKET", "grocery": "GROCERY", "cleaners": "LAUNDRY", "store": "SUPPLY", "keys": "KEYS",
-	"sport": "SPORT", "gas": "FUEL", "venue": "TICKETS", "church": "CHURCH", "court": "COURTHOUSE", "lobby": "OFFICES", "bank": "BANK", "law": "ATTORNEYS", "bail": "BAIL BONDS", "bike": "BIKES", "print": "PRINT", "lecture": "LECTURE HALLS", "campus_hall": "UNIVERSITY"}
+	"sport": "SPORT", "gas": "FUEL", "venue": "TICKETS", "church": "CHURCH", "court": "COURTHOUSE", "lobby": "OFFICES", "bank": "BANK", "law": "ATTORNEYS", "bail": "BAIL BONDS", "bike": "BIKES", "print": "PRINT", "lecture": "LECTURE HALLS", "campus_hall": "UNIVERSITY", "gym": "REC CENTER"}
 
 var foot := {}      # base -> Vector2(w, d)
 var tall := {}      # base -> height
@@ -379,6 +382,13 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 					ng += 1
 					_group([["display_table", xx, zz, 0.0], ["waiting_bench", xx, zz - 0.95, 0.0], ["waiting_bench", xx, zz + 0.95, 180.0]])
 					_put("potted_plant", xx + 1.5, zz, 0.0); _put("potted_plant", xx - 1.5, zz, 0.0)
+		"gym":
+			# rows of weight benches and bikes down the floor, the walk from the door to the back left clear
+			var gi := 0
+			for zz: float in _steps(mz0 + 0.6, mz1 - 0.6, 2.0):
+				for xx: float in _steps(IX0 + 0.8, IX1 - 0.8, 2.4):
+					if absf(xx - dx) < 1.6: continue
+					_put("weight_bench" if gi % 3 != 2 else "bike_stand", xx, zz, 0.0); gi += 1
 		"pews":
 			# two columns either side of the centre aisle from the door to the altar, every pew facing the altar
 			for zz: float in _steps(mz0 + 0.3, mz1 - 0.3, 1.3):

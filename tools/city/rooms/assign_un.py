@@ -25,8 +25,26 @@ SHOPS = {
     ("n_un_ne", "uni_gate_cafe"): [(2.5, None, "cafe", "Gate Coffee", "teal")],
     ("n_un_ne", "uni_gate_books"): [(-2.0, None, "books", "Campus Books", "green")],
     ("n_un_ne", "uni_bus_kiosk"): [(None, None, "cafe", "Crown Cafe", "sun")],
+    # ---- campus NW quarter (n_un_nw): the students' side
+    ("n_un_nw", "uni_museum"): [(None, None, "gallery", "University Art Museum", "navy")],
+    ("n_un_nw", "uni_chapel"): [(None, None, "church", "University Chapel", "navy")],
+    ("n_un_nw", "uni_union"): [(None, None, "venue", "Student Union", "teal")],
+    ("n_un_nw", "uni_humanities"): [(0.0, None, "lecture", "Humanities", "navy")],
+    ("n_un_nw", "uni_arts"): [(0.0, None, "lecture", "Fine Arts", "green")],
+    # ---- campus SE quarter (n_un_se): sport, the garage, the stadium walk
+    ("n_un_se", "uni_rec"): [(None, None, "gym", "Rec Center", "teal")],
+    ("n_un_se", "uni_kinesiology"): [(0.0, None, "lecture", "Kinesiology", "navy")],
+    ("n_un_se", "uni_gameday_kiosk"): [(None, None, "cafe", "Crown Cafe", "sun")],
+    # ---- campus SW quarter (n_un_sw): the dorms (each hall's front desk and lounge on the ground floor) and the commons
+    ("n_un_sw", "uni_dining"): [(None, None, "fast_food", "Dining Commons", "green")],
+    ("n_un_sw", "uni_dorm_1"): [(None, None, "lobby", "Torrey Hall", "navy")],
+    ("n_un_sw", "uni_dorm_2"): [(None, None, "lobby", "Jacaranda Hall", "teal")],
+    ("n_un_sw", "uni_dorm_3"): [(None, None, "lobby", "Coral Hall", "navy")],
+    ("n_un_sw", "uni_dorm_4"): [(None, None, "lobby", "Magnolia Hall", "green")],
+    ("n_un_sw", "uni_dorm_5"): [(None, None, "lobby", "Palm Hall", "navy")],
+    ("n_un_sw", "uni_dorm_6"): [(None, None, "lobby", "Ficus Hall", "teal")],
 }
-# not walk-in (no room): the coffee kiosk (a walk-up window), the garage, every flat (homes are not entered in this pass)
+# not walk-in (no room): the campus garage (no rooms in the kit's garage), the dorm floors above the lobbies (homes are not entered in this pass)
 
 
 def main():
