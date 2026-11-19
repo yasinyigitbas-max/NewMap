@@ -1191,3 +1191,48 @@ One picture: `review/people_19nov/acts_pro.jpg` (a man sits, a woman sits on the
   (a sloping slab as a beach). Test app: `--walk=1 --water=Y`. NOT DONE: the height of this map's sea is not known
   to this code (give it with --water); nobody of the crowd swims (that needs places in the sea from the places tool).
   The lock test (`tests/city_kit/test_locked_pieces.gd`) RESULT PASS at the end of this round (no piece was touched).
+
+## 33. Clearing the queue (20 Nov, Yasin: "do everything in your queue ... mend everything")
+All C++; every test named here RESULT PASS on the last build.
+- THE BALANCING BODY CATCHES ITSELF (ped_body). Pushed in the chest out of a fighter's stance a body stepped backwards
+  at a steady 0.93 m/s for good: 28 steps in six seconds, none slower (traced: `test_acts -- --trace` prints its feet,
+  where it presses, its middle and how fast that goes). Each saving step landed only 5 cm beyond the point it was
+  falling toward: enough to keep up, never enough to get ahead. Now every step reaches 3.5 cm further than the last
+  (to 27 cm), and three seconds of stumbling with nothing pushing ends in a fall. The body's console test: all 26
+  cases as before. In the engine the loser of a fight staggers back 2.5 m and stops.
+- A KNOCKED PERSON'S GROUP WAITS (brain: `kept_mate`, `rejoin`): whoever leads the others stands up to 14 s turned
+  to him, the others gather round; back on the pavement he follows them again. `CityCrowd.to_body` is the game's
+  hook for it. test_acts: 2 of his people wait; then he is one of them again.
+- PEOPLE BOARD A REAL BUS: `tests/traffic/test_bus_people.gd` (real time): a bus stood at the watched stop, the crowd
+  was told its door, a waiting person got on. The traffic names a stop by its number in places.bin and the crowd
+  maps that to its own number (`place_from_file`): they differ as soon as one place is left out.
+- THE HIT-CARS TEST again after the bus changes: `tests/traffic/test_knock.gd` RESULT PASS.
+- THE SEA (`CityCrowd::load_sea / sea_depth`): the test app's own depth map (tools/city/look/sea_map.png + .json,
+  8 m a texel), surface at 0 m. Tool: `PeoplePlaces::add_swim` (make_places.gd at its end; `make_swim.gd` alone) gives
+  a place on the beach the nearest spot with 1.6 m of water within 90 m: a new kind of place, PL_SWIM (34 of the 118
+  beach places have one). Brain (`cfg.swim`): after his time on the beach half of the people walk in to their spot,
+  stay 25-70 s, and come back to the pavement. Drawing: ANYBODY in water wades (his feet on the bottom) while it is
+  under 1.15 m and swims at the surface where it is deeper; far figures lie at the surface. The player in the test
+  app uses the same numbers, and the real sea by default. `tests/people/test_swim_crowd.gd`: his body played Walk >
+  IdleToLay > LayToIdle > Walk > Swim_Fwd > Swim_Idle > Swim_Fwd > Walk.
+- THE CAR THE PLAYER DRIVES. The people did not know it at all (only the traffic's cars): `CityCrowd.set_player_car`
+  (the test app's --car tells them). And a body was told where the cars are only while it was animated: from the
+  take-over on the car's box stood still, and a car at 25 km/h moved a man 0.4 m and left him standing. Fed in both
+  states now. `tests/people/test_car_hits.gd`: a car down a pavement at 30 km/h: 11 people jump out of its way;
+  into somebody who cannot jump: knocked over (hips 0.12 m over the ground), lies, gets up, walks back.
+- WALK OR STAND is chosen by a pace smoothed over a moment: somebody held up for a step flicked to standing and back.
+- IN THE REAL CITY, two pictures (test app `--walk=1 --people=N --walkshot=KIND/FILE`): `review/people_19nov/
+  city_bench.jpg` (a man on a bench before a shop: on the seat, facing the street) and `city_swim.jpg` (two people
+  floating at their spot, heads over the water). Seen there too: a shopping cart of that piece stands in front of the
+  bench's other half (the piece's own; not touched).
+- THE SPEECH PLUGIN (the old game's GodotSpeech, addons/godot_speech) is in this repo's app and enabled for exports,
+  with the microphone and internet permissions; the people's data files are in the export's list (places.bin,
+  talk.json, far_poses.bin, the two tables of looks, sea_map.json).
+- THE PHONE (Redmi, the test app exported from this branch with the native module, the people's data and the speech plugin; the other session was told, its app was saved first and put back afterwards). No errors: the module loads, traffic and people run, buses are put on the road, the walk mode works (19 m walked, feet on the ground), and THE SPEECH PLUGIN IS THERE at run time. The same town drive at 50 km/h, median / 99th percentile of the frame: nothing 8.6 / 18.6 ms; people alone (cap 200, 22 round the camera) 8.7 / 18.7; traffic alone (40) 8.7 / 18.9; both 9.0 / 19.0. On the main thread the C++ takes 0.10-0.22 ms a frame for the traffic and 0.11-0.26 ms for the people. THE VERY FIRST RUN with both after installing ran at 22.2 ms for the whole drive (warm-up 5.2 s instead of 1.2-1.6 s); the repeat did not: not explained (first-time shader preparation is a guess). A WALK (the player on foot, 12 s): alone 15.0-15.2 ms median; among 10 animated bodies, with 200 people and 20 cars, 20.4-20.8 ms (99th percentile 24-27): about half a millisecond for every animated body near the camera. `near_max` (12) is the number to lower on a weak phone. NOT measured: more than 10 bodies, a fight or a fall on the phone, the talk's screen on the phone, speech into the microphone. Results: review/phone/people_*.txt, traffic_only.txt, walk_*.txt. The bake in that app is the one on disk (older than today's land changes).
+STILL OPEN: nobody has watched any of it move; people inside the shops wait for Yasin's go; the scream and "look out"
+sounds and the angry words wait for the voices; this map's shop names have no recordings; the 12 m bus was not tried;
+84 beach places have no water deep enough near them (people there do not swim); the depth map is coarse (8 m);
+somebody lying on his front is drawn on his back as a near body; children have no balancing body; the streamer is
+still a script (Yasin has not said to port it); the bake and streets.bin on this branch are older than today's land
+changes (the other session's commits 0bbb66c67, ec43493da): after the next bake run make_streets.gd, make_places.gd,
+the tests.

@@ -1,0 +1,11 @@
+# phone rig run 'walk_alone'  2026-11-19T14:31Z  args: --walk=1 --at=-600,-1000,90
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 286 -> 287 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit dba6161bc | meminfo at 60 s: 
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 look=1 bloom=0 upscale=0 sharp=0.20 reflect=1 plan=default lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=141 tiers=false band=8.0 arrive=0.50 far_ground=true tier_materials=31
+RIG native coronado_city 0.1 release android arm64, godot-cpp 4.5 | its own threads: ok (4 threads, 0.6 ms; the device reports 8)
+RIG warmnight 620 ms
+RIG boot first_area_ms=629 warm_ms=1937 (graphics memory reserve 192 MB: 539 ms) cells=10 static_mb=123 video_mb=427
+RIG on foot at (-598, -998): W A S D, Shift runs, the mouse turns, E speaks to somebody, Esc leaves
+RIG on foot frames=662 | frame_ms med=15.0 p95=16.7 p99=16.9 worst=21 | near bodies now 0 of 0
+RIG on foot: 19 m walked, between 0.05 m under and 0.00 m over the height he started at, at the end at (-579.0, -998.3)

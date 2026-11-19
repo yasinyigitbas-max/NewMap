@@ -93,6 +93,17 @@ The full record is `docs/TRAFFIC_PEOPLE_PORT.md` (sections 13-20 are results). T
   set down this instant has no animated body for a frame or two: tests wait a second before making him act.
   Pushes, falls, staggering stay the physical body: never play a clip that falls (Hit_Knockback lies down: not used).
 
+- The queue of 20 Nov (doc section 33), paid for: (1) a body's own test from a standing pose can pass while the same
+  shove out of another pose never ends: trace the body in the engine (`test_acts -- --trace`) before believing the
+  console. (2) Anything the game moves and people must mind (the player's car) has to be TOLD to the crowd; and a
+  body must be fed the cars' boxes while its physics has it, not only before. (3) The traffic and the crowd number
+  places differently (the crowd leaves some out): pass numbers of places.bin through `place_from_file`. (4) Any
+  change of who pauses when changes the brain's course and can surface a one-in-a-million fault in another check:
+  run three seeds, and keep a change of chances from changing how long anybody stands if you can. (5) The phone
+  app's export preset lists the raw files it packs (include_filter): a new data file the C++ reads with FileAccess
+  must be added there, and a sound must be loaded as the engine imported it (ResourceLoader) before the raw file.
+  (6) Pictures in the real city: test app `--walk=1 --people=N --at=x,z --walkshot=KIND/FILE`.
+
 ## Yasin's rules for this job (his words are in the doc)
 - Everything in C++: no script in any frame or tick, no script fallback. Tool-time scripts are fine.
 - Parked cars are LOW DETAIL only. Cars must never touch a pavement, a kerb or grass. Cars move naturally.

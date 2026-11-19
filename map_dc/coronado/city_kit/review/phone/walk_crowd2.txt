@@ -1,0 +1,13 @@
+# phone rig run 'walk_crowd2'  2026-11-19T14:33Z  args: --walk=1 --at=-600,-1000,90 --people=200 --traffic=20 --walkcrowd=12
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 296 -> 297 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit dba6161bc | meminfo at 60 s: 
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 look=1 bloom=0 upscale=0 sharp=0.20 reflect=1 plan=default lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=141 tiers=false band=8.0 arrive=0.50 far_ground=true tier_materials=31
+RIG native coronado_city 0.1 release android arm64, godot-cpp 4.5 | its own threads: ok (4 threads, 2.8 ms; the device reports 8)
+RIG warmnight 522 ms
+RIG boot first_area_ms=636 warm_ms=1484 (graphics memory reserve 192 MB: 23 ms) cells=10 static_mb=189 video_mb=489
+RIG talk: the phone's speech plugin is there (lines are said into the microphone)
+RIG on foot at (-598, -998): W A S D, Shift runs, the mouse turns, E speaks to somebody, Esc leaves
+RIG on foot frames=492 | frame_ms med=20.4 p95=21.2 p99=23.7 worst=26 | near bodies now 10 of 12
+RIG on foot: 19 m walked, between 0.05 m under and 0.00 m over the height he started at, at the end at (-579.1, -998.3)
+RIG   people people avg 31.8 most 53 (cap 200, 2136 places known), hour 12.5 | main thread a frame: avg 0.285 worst 1.121 ms (of it the crowd's step: avg 0.075 worst 0.459 ms a step, 282 steps) | drawn as one batch of far figures; near bodies avg 9.0 | { "people": 31, "places": 2136, "hour": 12.5, "weekday": 2, "inside_each_other": 0, "beside_pavement": 0, "standing_a_minute": 0, "bad_numbers": 0, "spawned": 91, "left": 60, "arrivals": 0, "went_in": 0, "came_out": 25, "sat": 0, "crossings": 2, "groups": 12, "meetings": 0, "dodges": 0, "fled": 0, "bumps": 0, "bodies": 41, "drawn": 31, "near_bodies": 10, "near_pool": 12, "in_physical_body": 0, "umbrellas": 0, "towels": 0, "ducked": 0, "stared": 0, "coins": 0, "lines_said": 0, "clip_seconds": [1.29999995231628, 1.03333330154419, 2.5, 2.16666674613953, 3.0, 1.53333330154419, 0.83333331346512, 0.83333331346512, 0.66666668653488, 0.66666668653488, 2.46666669845581], "shoved_by_player": 0, "told_him_off": 0, "hit_back": 0, "fights": 0, "fight_blows_landed": 0, "bus

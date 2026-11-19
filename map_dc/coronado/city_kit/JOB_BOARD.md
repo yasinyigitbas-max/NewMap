@@ -190,6 +190,17 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   counter, customers), with the counter clips.
   Then: the player swims (`CityPlayer.water_y`, `tests/people/test_swim.gd` RESULT PASS; `--walk=1 --water=Y`); the
   crowd does not swim yet (needs places in the sea). Lock test RESULT PASS at the end of the round.
+  20 Nov ~23:00: THE QUEUE CLEARED (doc section 33; Yasin: "do everything in your queue and dont stop until its
+  clear", "mend everything"). The balancing body catches itself after a blow from the front; a knocked person's
+  group waits and takes him back; people board a real bus; the beach people and the player swim in the real sea
+  (the crowd knows the sea's depth map; `make_swim.gd`); the people know the car the player drives, and a car
+  knocks a person over properly (it only nudged him); pictures in the real city (`--walkshot`); the speech plugin
+  is in the app. New tests, all RESULT PASS: test_bus_people, test_swim, test_swim_crowd, test_car_hits; with them
+  test_acts, test_crowd_game, test_talk, test_city_ped, test_knock, test_bus, the traffic core test, the console
+  crowd and body tests, the lock test.
+  THE PHONE (Redmi, the test app exported from this branch with the native module, the people's data and the speech plugin; the other session was told, its app was saved first and put back afterwards). No errors: the module loads, traffic and people run, buses are put on the road, the walk mode works (19 m walked, feet on the ground), and THE SPEECH PLUGIN IS THERE at run time. The same town drive at 50 km/h, median / 99th percentile of the frame: nothing 8.6 / 18.6 ms; people alone (cap 200, 22 round the camera) 8.7 / 18.7; traffic alone (40) 8.7 / 18.9; both 9.0 / 19.0. On the main thread the C++ takes 0.10-0.22 ms a frame for the traffic and 0.11-0.26 ms for the people. THE VERY FIRST RUN with both after installing ran at 22.2 ms for the whole drive (warm-up 5.2 s instead of 1.2-1.6 s); the repeat did not: not explained (first-time shader preparation is a guess). A WALK (the player on foot, 12 s): alone 15.0-15.2 ms median; among 10 animated bodies, with 200 people and 20 cars, 20.4-20.8 ms (99th percentile 24-27): about half a millisecond for every animated body near the camera. `near_max` (12) is the number to lower on a weak phone. NOT measured: more than 10 bodies, a fight or a fall on the phone, the talk's screen on the phone, speech into the microphone. Results: review/phone/people_*.txt, traffic_only.txt, walk_*.txt. The bake in that app is the one on disk (older than today's land changes).
+  WAITS FOR YASIN: watching it move; his go for people inside the shops; the voices; a fresh bake (the land and two
+  pieces changed today in another session) and then make_streets.gd, make_places.gd and the tests again.
   STILL TO DO FOR "DONE": the game's node (join to the traffic, draw far figures and the 18 near bodies with the
   acts' animations, the balancing body for a walker who is pushed or hit, capsules round the player, umbrellas,
   towels, murmur), a player on foot, the talking, a bus line, the real get-up. NO PICTURE OF THE CROWD EXISTS YET.

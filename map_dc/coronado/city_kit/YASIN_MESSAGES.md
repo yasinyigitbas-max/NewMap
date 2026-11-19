@@ -315,3 +315,11 @@ the other agent suggested these
 - [2026-11-20] and the logic? one side should win in the end randomly and die, while other thriumps ... actually if there is a wounded walk away animation use that, they shouldnt kill each other
 
 - [2026-11-20] figters take blows too far away, also how often fights happen? they should be really rare
+
+- [2026-11-20] do everything in your queue and dont stop until its clear
+
+- [2026-11-20] mend everything
+
+- [2026-11-20] Commit after you are done with this round
+
+- [2026-11-20] So what are the results?

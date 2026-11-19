@@ -1,0 +1,26 @@
+# phone rig run 'traffic_only'  2026-11-19T14:15Z  args: --plan=quick --traffic=40
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 287 -> 296 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit 8c11a4c5e | meminfo at 60 s: 
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 look=1 bloom=0 upscale=0 sharp=0.20 reflect=1 plan=quick lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=141 tiers=false band=8.0 arrive=0.50 far_ground=true tier_materials=24
+RIG native coronado_city 0.1 release android arm64, godot-cpp 4.5 | its own threads: ok (4 threads, 1.3 ms; the device reports 8)
+RIG warmnight 475 ms
+RIG boot first_area_ms=236 warm_ms=1203 (graphics memory reserve 192 MB: 51 ms) cells=10 static_mb=112 video_mb=270
+RIG drive town_50kmh speed=50 km/h secs=20 frames=1807 fps=90.3 | frame_ms med=8.7 p95=17.9 p99=18.9 worst=25 | over16.7=19.9% over33=0 over50=0 over100=0
+RIG   map town_50kmh draws avg=58 max=94 | tris avg=687k max=834k | cells most=14 in=6 out=4 dropped=0 cap_hits=0 | gpu_ms med=7.49 p95=10.37
+RIG   stream town_50kmh start_ready_ms=1 (worst frame meanwhile 0 ms) | request_to_in ms mean=204 worst=351 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.02, body 1.24 (col_34 shapes=24 new=569), removal step 0.42 | bodies late=0
+RIG   slow town_50kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision town_50kmh made=65089 units, a body waited at most 0 ms from coming into range | physics thread wait a frame (probe): median -1.0 p99 -1.0 worst -1.0 ms
+RIG   objects town_50kmh all=5462 nodes=1573 orphan_nodes=0 resources=1199 | streamer: cells in=12, bodies waiting=0, nodes leaving=0
+RIG   traffic town_50kmh cars moving avg 16.9 most 21 (the streets there carry 19, the cap is 40): near model 0.0, light model 1.1, far shape 15.8 | parked: 315 in the loaded cells, 4.8 drawn with the light model | batches drawn avg 5.7, uploads a frame 4.7 | main thread a frame: avg 0.112 worst 0.339 ms | the step (own thread): avg 0.182 worst 1.130 ms | pulled out of a stall 2, parked 1 (since the start) | bus lines 2: buses put on the road 0, stops served 0 | knocked loose: 0 moving, 0 parked; drove on 0, taken away 0, no free physical car 0
+RIG   mem town_50kmh static_mb=122 video_mb=337 tex_mb=116 buf_mb=195
+RIG slow cross_280kmh 59 ms at t=11.2 s pos=(-81, -600): cells in +0 out +0, bodies +0, loading ["1_-2:1", "1_-5:1"] | marks: rig 0.8 focus 0.6 | to_streamer 0.5 streamer 0.9 | to_draw 0.2 draw 54.9 | to_physics 0.6 physics 0.3 | at: physics_wait -1.0 render_wait -1.0 streamer 0.91 setup 0.1 draw_cpu 0.8 gpu 14.4 | then: physics_wait -1.0 render_wait -1.0 streamer 0.47 setup 0.0 draw_cpu 1.2 gpu 14.7
+RIG drive cross_280kmh speed=281 km/h secs=15 frames=1095 fps=73.0 | frame_ms med=14.8 p95=24.7 p99=27.6 worst=59 | over16.7=34.2% over33=1 over50=1 over100=0
+RIG   map cross_280kmh draws avg=91 max=214 | tris avg=836k max=1529k | cells most=18 in=22 out=20 dropped=0 cap_hits=0 | gpu_ms med=9.51 p95=17.19
+RIG   stream cross_280kmh start_ready_ms=89 (worst frame meanwhile 17 ms) | request_to_in ms mean=211 worst=597 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.54, body 2.13 (col_14 shapes=24 new=1356), removal step 0.67 | bodies late=0
+RIG   slow cross_280kmh frames over 33 ms by what the streamer was doing: { "loading": 1 } | over 45 ms: { "loading": 1 }
+RIG   collision cross_280kmh made=223359 units, a body waited at most 0 ms from coming into range | physics thread wait a frame (probe): median -1.0 p99 -1.0 worst -1.0 ms
+RIG   objects cross_280kmh all=10844 nodes=2600 orphan_nodes=1355 resources=2557 | streamer: cells in=18, bodies waiting=434, nodes leaving=8
+RIG   traffic cross_280kmh cars moving avg 21.4 most 33 (the streets there carry 22, the cap is 40): near model 0.4, light model 2.3, far shape 18.3 | parked: 556 in the loaded cells, 3.2 drawn with the light model | batches drawn avg 6.3, uploads a frame 5.4 | main thread a frame: avg 0.141 worst 0.700 ms | the step (own thread): avg 0.229 worst 1.003 ms | pulled out of a stall 2, parked 1 (since the start) | bus lines 2: buses put on the road 2, stops served 0 | knocked loose: 0 moving, 0 parked; drove on 0, taken away 0, no free physical car 0
+RIG   mem cross_280kmh static_mb=151 video_mb=539 tex_mb=116 buf_mb=392
+RIG plan_done lap=1

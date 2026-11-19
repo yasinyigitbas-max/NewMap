@@ -65,6 +65,8 @@ extends Node3D
 ##   --walk=1|BODY  WALK IT YOURSELF (20 Nov; C++ class CityPlayer): a person on foot at --at=x,z[,deg], the camera behind
 ##             him; W A S D, Shift runs, the mouse turns, Esc leaves. BODY = a figure's name (M2 by default). With
 ##             --people the crowd steps aside for him and he can run into people; with --quit he walks ahead for 12 s.
+##             --walkcrowd=N: N people are set down round him (a measure of the animated bodies' cost; the frame times
+##             of the walk are printed at its end).
 ##             --water=Y: the height of the sea's surface (0, the sea's own, if not given); where it is deeper than
 ##             his chest he swims.
 ##   --people=N    the walking crowd, at most N people round the camera (C++ class CityCrowd; 0 = none, the default);
@@ -122,7 +124,7 @@ var traffic: Node            # the C++ traffic (--traffic=N); null without it
 var _shot_place := -1          # --walkshot: the place the picture is of
 var _shot_cam: Camera3D
 var people: Node             # the C++ crowd (--people=N); null without it
-var opt := {"car": "", "walk": "", "walkshot": "", "water": 0.0, "at": "", "people": 0, "hour": 12.5, "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0}
+var opt := {"car": "", "walk": "", "walkshot": "", "walkcrowd": 0, "water": 0.0, "at": "", "people": 0, "hour": 12.5, "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -148,7 +150,7 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["car", "walk", "walkshot", "water", "at", "people", "hour", "traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost"]:
+		for k: String in ["car", "walk", "walkshot", "walkcrowd", "water", "at", "people", "hour", "traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
 				opt[k] = v if k in ["car", "walk", "walkshot", "at", "plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["water", "density", "scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs", "colrange", "boost"] else int(v))
@@ -397,13 +399,19 @@ func _free_walk(start: Vector3, yaw: float) -> void:
 		var talk: Node = ClassDB.instantiate(&"CityTalk")
 		add_child(talk)
 		talk.call(&"set_crowd", people); talk.call(&"set_player", pl)
+		_say("talk: the phone's speech plugin is %s" % ("there (lines are said into the microphone)" if bool(talk.call(&"stats").speech_plugin) else "not there (lines are typed or skipped)"))
+	# --walkcrowd=N (a measure): N people are set down within 6 m of him, so that the animated bodies are all in use
+	for k in int(opt.walkcrowd):
+		if people: people.call(&"place_walker", Vector3(start.x, y_start, start.z) + Vector3(cos(k * 2.4) * (2.0 + 0.35 * k), 0, sin(k * 2.4) * (2.0 + 0.35 * k)), 9000 + 53 * k)
 	_say("on foot at (%.0f, %.0f): W A S D, Shift runs, the mouse turns, E speaks to somebody, Esc leaves" % [start.x, start.z])
 	if opt.quit and _shot_place < 0: pl.call(&"set_move", Vector2(0, 1), false)      # (--quit: he walks ahead for 12 s and the run leaves by itself)
 	var last := pl.global_position; var metres := 0.0; var lowest := 0.0; var highest := 0.0
 	var t_start := Time.get_ticks_msec()
 	var shot_sent := false
+	var frame_ms := PackedFloat32Array()
 	while not Input.is_key_pressed(KEY_ESCAPE):
 		await get_tree().process_frame
+		if Time.get_ticks_msec() - t_start > 2000: frame_ms.append(get_process_delta_time() * 1000.0)      # (after two seconds of settling)
 		if _shot_place >= 0:      # (--walkshot: people are sent to the place once the crowd is there; the picture after 16 s)
 			pl.call(&"set_move", Vector2.ZERO, false)
 			var el := Time.get_ticks_msec() - t_start
@@ -435,6 +443,9 @@ func _free_walk(start: Vector3, yaw: float) -> void:
 		metres += Vector2(p.x - last.x, p.z - last.z).length(); last = p
 		lowest = minf(lowest, p.y - y_start); highest = maxf(highest, p.y - y_start)
 		if Engine.get_process_frames() % 6 == 0: hud.text = "%.1f m/s" % float(pl.call(&"get_speed"))
+	if frame_ms.size() > 20:
+		frame_ms.sort()
+		_say("on foot frames=%d | frame_ms med=%.1f p95=%.1f p99=%.1f worst=%.0f | near bodies now %d of %d" % [frame_ms.size(), frame_ms[frame_ms.size() / 2], frame_ms[int(frame_ms.size() * 0.95)], frame_ms[int(frame_ms.size() * 0.99)], frame_ms[frame_ms.size() - 1], int(people.call(&"stats").near_bodies) if people else 0, int(people.call(&"stats").near_pool) if people else 0])
 	_say("on foot: %.0f m walked, between %.2f m under and %.2f m over the height he started at, at the end at (%.1f, %.1f)" % [metres, -lowest, highest, last.x, last.z])
 	if people: _say("  people %s | %s" % [String(people.call(&"report")), str(people.call(&"stats"))])
 
