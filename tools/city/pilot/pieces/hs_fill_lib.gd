@@ -162,6 +162,23 @@ static func steps_z(g: K.Ground, x: float, w: float, z0: float, z1: float, y0: f
 			step_face(g, Vector2(ex, za), Vector2(ex, zb), func(_x: float, _z: float) -> float: return yb, func(_x: float, _z: float) -> float: return y1, "wall")
 	return z0 + dz * n
 
+## The same steps for a path that runs along x (from the low side at x0 toward x1), width w, centred at z.
+static func steps_x(g: K.Ground, z: float, w: float, x0: float, x1: float, y0: float, y1: float) -> float:
+	var dh := y1 - y0
+	var dx := signf(x1 - x0) * 0.3
+	if absf(dh) < 0.03:
+		g.quad("concrete", Vector3(x0, y1, z - w * 0.5), Vector3(x0 + dx, y1, z - w * 0.5), Vector3(x0 + dx, y1, z + w * 0.5), Vector3(x0, y1, z + w * 0.5))
+		return x0 + dx
+	var n := ceili(absf(dh) / 0.17)
+	for k in n:
+		var ya := y0 + dh * float(k) / n; var yb := y0 + dh * float(k + 1) / n
+		var xa := x0 + dx * k; var xb := x0 + dx * (k + 1)
+		g.quad("concrete", Vector3(xa, yb, z - w * 0.5), Vector3(xb, yb, z - w * 0.5), Vector3(xb, yb, z + w * 0.5), Vector3(xa, yb, z + w * 0.5))
+		step_face(g, Vector2(xa, z - w * 0.5), Vector2(xa, z + w * 0.5), func(_x: float, _z: float) -> float: return ya, func(_x: float, _z: float) -> float: return yb, "concrete")
+		for ez: float in [z - w * 0.5, z + w * 0.5]:
+			step_face(g, Vector2(xa, ez), Vector2(xb, ez), func(_x: float, _z: float) -> float: return yb, func(_x: float, _z: float) -> float: return y1, "wall")
+	return x0 + dx * n
+
 ## A level pad (a building's or a play area's) in a sloping field: the rect at height y, and a retaining face on each
 ## of its four edges down / up to the field around it (only where they differ by more than 1 cm). The caller leaves a
 ## "-" hole for the rect in its field paint. sides: which edges get a face (an edge against another pad or a ramp is

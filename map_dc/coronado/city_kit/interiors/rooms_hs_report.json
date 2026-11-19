@@ -2,33 +2,23 @@
  "rooms": [
   {
    "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b3_amber_corner_1.scn",
-   "id": "g_hs_b3_amber_corner_1",
-   "kind": "salon",
-   "lights": 4,
-   "name": "Shore Cuts",
-   "props": 17,
-   "w": 5.7
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b3_amber_realty_0.scn",
-   "id": "g_hs_b3_amber_realty_0",
-   "kind": "realty",
-   "lights": 5,
-   "name": "Ocean Realty",
-   "props": 18,
-   "w": 5.4
-  },
-  {
-   "d": 11.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b3_amber_burger_1.scn",
-   "id": "g_hs_b3_amber_burger_1",
-   "kind": "fast_food",
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b4_amber_bakery_0.scn",
+   "id": "g_hs_b4_amber_bakery_0",
+   "kind": "bakery",
    "lights": 6,
-   "name": "Ocean Burger",
-   "props": 22,
-   "w": 8.76
+   "name": "Sunrise Bakery",
+   "props": 30,
+   "w": 8.4
+  },
+  {
+   "d": 9.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b4_ocean_skate_0.scn",
+   "id": "g_hs_b4_ocean_skate_0",
+   "kind": "sport",
+   "lights": 6,
+   "name": "Ocean Park Skate",
+   "props": 15,
+   "w": 11.4
   }
  ]
 }

@@ -17,9 +17,10 @@ const MAN := "res://assets/coronado_kit/props/"
 
 ## per kind: floor texture, light (pendant / panel), the counter row, what stands behind it, the side walls' items,
 ## the middle of the room, the window zone, back of house (kitchen / stock / none), extras
+## (hs, 19 Nov: the bakery's shelves are stocked models: the kit's bakery_shelf ships empty, check_rooms "bare")
 const KINDS := {
 	"cafe": {"floor": "WoodFloor034", "light": "pendant", "counter": ["pastry_case", "shop_counter"], "till": true, "behind": ["bakery_shelf", "espresso_machine"], "board": true, "walls": ["booth", "drinks_fridge"], "centre": "table2", "window": "table2", "back": "kitchen", "frames": true},
-	"bakery": {"floor": "Tiles143", "light": "pendant", "counter": ["pastry_case", "shop_counter", "pastry_case"], "till": true, "behind": ["bakery_shelf", "bakery_shelf", "bakery_shelf"], "board": true, "walls": ["bakery_shelf", "drinks_fridge"], "centre": "table2", "window": "display", "back": "kitchen", "frames": true},
+	"bakery": {"floor": "Tiles143", "light": "pendant", "counter": ["pastry_case", "shop_counter", "pastry_case"], "till": true, "behind": ["wall_shelf", "wall_shelf", "wall_shelf"], "board": true, "walls": ["grocery_shelf", "drinks_fridge"], "centre": "table2", "window": "display", "back": "kitchen", "frames": true},
 	"bar": {"floor": "WoodFloor051", "light": "pendant", "counter": ["bar_counter", "bar_counter"], "stools": true, "behind": ["wine_backbar", "wine_backbar"], "board": false, "walls": ["booth"], "centre": "table4", "window": "table2", "back": "stock", "frames": true},
 	"restaurant": {"floor": "WoodFloor034", "light": "pendant", "counter": ["shop_counter"], "till": true, "behind": ["wine_backbar"], "board": false, "walls": ["booth"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": true},
 	"fast_food": {"floor": "Tiles074", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["soda_fountain", "kitchen_line"], "board": true, "walls": ["booth"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": false},
@@ -165,6 +166,9 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	for o: Dictionary in c.openings:
 		if int(o.floor) == 0 and String(o.facade) == "front" and (String(o.region) == "O_shopdoor" or String(o.region) == "O_civic_door") and absf(float(o.along) - float(e.door_along)) < 0.6:
 			ZF = minf(ZF, float(o.plane) - 0.25)
+			# (hs, 19 Nov) a shop door with a raised sill (pub_skate_shed: 0.2 m over the floor the contract derives from
+			# its roll-up): the room's floor at the sill, so nothing of the build stands in the passage
+			if String(o.region) == "O_shopdoor" and float(o.y0) - F > 0.05 and float(o.y0) - F <= 0.35: F = float(o.y0)
 	var zb_bld := float(fl.box_min[2])
 	ZB = maxf(zb_bld, ZF - 16.0)                         # very deep buildings: the shop takes the front 16 m
 	var H := F + minf(float(fl.clear_h), 4.0)
