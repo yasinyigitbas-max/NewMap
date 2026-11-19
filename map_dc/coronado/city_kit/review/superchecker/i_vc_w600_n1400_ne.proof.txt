@@ -1,0 +1,109 @@
+PROOF compared: 90 nodes (with every mesh of the buildings), 2636 ground and ground-collision triangles, 542 prop instances, 168 colliders, 364 wear marks are identical in both files
+PROOF differences found between the files: 155 lines only in the old one, 16 only in the new one
+PROOF change #78 add_collider: prop_shopping_cart at (57.00, 0.15, -40.60) got a collision shape  [prop_shopping_cart has no collision: you walk and drive through it]
+PROOF change #79 add_collider: prop_shopping_cart at (58.30, 0.15, -41.20) got a collision shape  [prop_shopping_cart has no collision: you walk and drive through it]
+PROOF change #80 add_collider: prop_shopping_cart at (59.60, 0.15, -41.80) got a collision shape  [prop_shopping_cart has no collision: you walk and drive through it]
+PROOF change #15 move prop_meter_electric: (67.60, 1.20, -42.33) -> (67.00, 1.20, -42.33), in 1 tier(s) and its collider  [moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 25 cm from a apt door of produce_hall (services keep 35 cm off)]]
+PROOF change #1 remove tree_torrey_pine_b at (96.60, 0.15, -28.00) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_torrey_pine_b at (95.96, 0.15, -75.87) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_eucalyptus_a at (95.66, 0.15, -40.46) removed, in 3 tier(s) and its collider  [tree_eucalyptus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_eucalyptus_a at (95.94, 0.15, -89.25) removed, in 3 tier(s) and its collider  [tree_eucalyptus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove tree_torrey_pine_a at (95.61, 0.15, -53.12) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove tree_eucalyptus_b at (96.54, 0.15, -64.20) removed, in 3 tier(s) and its collider  [tree_eucalyptus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #16 remove prop_trash_cart_green at (84.00, 0.15, -44.80) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in front of a roll-up door of produce_hall]]
+PROOF change #17 remove prop_trash_cart_green at (84.80, 0.15, -44.80) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in front of a roll-up door of produce_hall]]
+PROOF change #18 remove prop_trash_cart_green at (85.60, 0.15, -44.80) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in front of a roll-up door of produce_hall]]
+PROOF change #19 remove prop_cone_28in at (44.90, 0.15, -32.00) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_cone_28in stands in front of a roll-up door of island_restaurant_supply]]
+PROOF change #20 remove prop_ice_chest at (72.00, 0.15, -44.50) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #21 remove prop_ice_chest at (73.90, 0.15, -44.50) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #22 remove prop_ice_chest at (75.80, 0.15, -44.50) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #23 remove prop_ice_chest at (77.70, 0.15, -44.50) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #24 remove prop_ice_chest at (45.35, 0.15, -56.83) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #25 remove prop_ice_chest at (55.60, 0.15, -52.54) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #26 remove prop_ice_chest at (45.40, 0.15, -54.52) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #30 remove prop_trash_cart_green at (86.40, 0.15, -44.80) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.5 m from a wall, 5.6 m from a fence)]]
+PROOF change #31 remove prop_trash_cart_green at (50.81, 0.15, -30.90) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.9 m from a wall, 16.4 m from a fence)]]
+PROOF change #32 remove prop_trash_cart_blue at (25.90, 0.15, -31.60) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (1.6 m from a wall, 17.0 m from a fence)]]
+PROOF change #33 remove prop_trash_cart_black at (40.80, 0.15, -31.60) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (3.0 m from a wall, 19.0 m from a fence)]]
+PROOF change #34 remove prop_trash_cart_black at (55.19, 0.15, -30.08) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (6.4 m from a wall, 15.6 m from a fence)]]
+PROOF change #35 remove prop_vending_soda at (22.30, 0.15, -24.00) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_vending_soda stands on asphalt where vehicles go]]
+PROOF change #36 remove prop_vending_snack at (22.30, 0.15, -25.30) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_vending_snack stands on asphalt where vehicles go]]
+PROOF change #38 remove prop_trash_receptacle at (26.00, 0.15, -13.31) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (2.7 m from a wall, 23.0 m from a fence)]]
+PROOF change #39 remove prop_trash_receptacle at (47.00, 0.15, -13.31) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (3.3 m from a wall, 2.3 m from a fence)]]
+PROOF change #40 remove prop_trash_receptacle at (28.85, 0.15, -32.46) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (2.5 m from a wall, 20.0 m from a fence)]]
+PROOF change #41 remove prop_picnic_table at (26.61, 0.15, -39.71) removed, in 1 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]]
+PROOF change #42 remove prop_picnic_table at (22.85, 0.15, -33.35) removed, in 1 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]]
+PROOF change #43 remove prop_recycling_receptacle at (24.77, 0.15, -33.62) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (3.6 m from a wall, 15.9 m from a fence)]]
+PROOF change #72 remove prop_newspaper_box_blue at (33.50, 0.15, -13.31) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_blue leaves 1.0 m of a 1.8 m wide walk]]
+PROOF change #73 remove prop_newspaper_box_red at (34.40, 0.15, -13.31) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red leaves 1.0 m of a 1.8 m wide walk]]
+PROOF change #74 remove prop_bike_rack at (7.70, 0.15, -26.00) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_bike_rack leaves 1.1 m of a 1.8 m wide walk]]
+PROOF change #44 remove_decal: one wear mark at (83.00, 0.16, -13.31) removed  [tyre marks mark lies on the sidewalk]
+PROOF change #45 remove_decal: one wear mark at (85.00, 0.16, -13.31) removed  [tyre marks mark lies on the sidewalk]
+PROOF change #46 remove_decal: one wear mark at (61.00, 0.16, -17.00) removed  [tyre marks mark lies on the sidewalk]
+PROOF change #47 remove_decal: one wear mark at (63.00, 0.16, -17.00) removed  [tyre marks mark lies on the sidewalk]
+PROOF change #48 remove_decal: one wear mark at (86.76, 0.16, -31.69) removed  [crack mark lies under the building produce_hall]
+PROOF change #49 remove_decal: one wear mark at (80.41, 0.16, -41.15) removed  [crack mark lies under the building produce_hall]
+PROOF change #50 remove_decal: one wear mark at (85.24, 0.16, -34.82) removed  [crack mark lies under the building produce_hall]
+PROOF change #51 remove_decal: one wear mark at (72.19, 0.16, -39.39) removed  [crack mark lies under the building produce_hall]
+PROOF change #52 remove_decal: one wear mark at (89.98, 0.16, -37.42) removed  [crack mark lies on grass]
+PROOF change #53 remove_decal: one wear mark at (83.32, 0.16, -30.63) removed  [crack mark lies under the building produce_hall]
+PROOF change #54 remove_decal: one wear mark at (74.78, 0.16, -31.49) removed  [crack mark lies under the building produce_hall]
+PROOF change #55 remove_decal: one wear mark at (75.34, 0.16, -41.24) removed  [crack mark lies under the building produce_hall]
+PROOF change #56 remove_decal: one wear mark at (74.99, 0.16, -36.75) removed  [crack mark lies under the building produce_hall]
+PROOF change #57 remove_decal: one wear mark at (72.93, 0.16, -34.14) removed  [sealed patch mark lies under the building produce_hall]
+PROOF change #58 remove_decal: one wear mark at (80.86, 0.16, -32.99) removed  [sealed patch mark lies under the building produce_hall]
+PROOF change #59 remove_decal: one wear mark at (73.12, 0.16, -36.81) removed  [pale patch mark lies under the building produce_hall]
+PROOF change #60 remove_decal: one wear mark at (70.43, 0.16, -40.03) removed  [pale patch mark lies under the building produce_hall]
+PROOF change #61 remove_decal: one wear mark at (72.65, 0.16, -40.95) removed  [oil mark lies under the building produce_hall]
+PROOF change #62 remove_decal: one wear mark at (79.75, 0.16, -30.37) removed  [oil mark lies under the building produce_hall]
+PROOF change #63 remove_decal: one wear mark at (71.32, 0.16, -33.70) removed  [oil mark lies under the building produce_hall]
+PROOF change #64 remove_decal: one wear mark at (83.13, 0.16, -39.88) removed  [oil mark lies under the building produce_hall]
+PROOF change #65 remove_decal: one wear mark at (81.29, 0.16, -30.29) removed  [oil mark lies under the building produce_hall]
+PROOF change #66 remove_decal: one wear mark at (69.76, 0.16, -31.35) removed  [grime mark lies under the building produce_hall]
+PROOF change #67 remove_decal: one wear mark at (71.31, 0.16, -39.55) removed  [grime mark lies under the building produce_hall]
+PROOF change #68 remove_decal: one wear mark at (71.77, 0.16, -30.52) removed  [grime mark lies under the building produce_hall]
+PROOF change #69 remove_decal: one wear mark at (72.23, 0.16, -39.01) removed  [grime mark lies under the building produce_hall]
+PROOF change #81 add_box: a collision box [2.10492324829102, 1.49998259544373, 6.77483320236206, 0.48997978210449, 2.99996519088745, 0.49008373260498] for a column of Buildings/shift_canteen  [shift_canteen: a 0.4 x 0.5 m column or post of the building has no collision]
+PROOF change #82 add_box: a collision box [3.94499588012695, 1.49998259544373, 6.87996387481689, 0.16, 2.99996519088745, 0.16] for a column of Buildings/shift_canteen  [shift_canteen: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #83 add_box: a collision box [-1.88013076782227, 1.49998259544373, 6.77483320236206, 0.16, 2.99996519088745, 0.49008373260498] for a column of Buildings/shift_canteen  [shift_canteen: a 0.1 x 0.5 m column or post of the building has no collision]
+PROOF change #84 add_box: a collision box [-3.90002298355103, 1.49996709823608, 5.65000009536743, 0.16, 2.99993419647217, 0.16] for a column of Buildings/island_restaurant_supply  [island_restaurant_supply: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #85 add_box: a collision box [1.03996342420578, 1.51495468616486, 7.65999674797058, 0.200036444664, 3.02990937232971, 0.19999937057495] for a column of Buildings/island_restaurant_supply  [island_restaurant_supply: a 0.2 x 0.2 m column or post of the building has no collision]
+PROOF change #86 add_box: a collision box [-1.0400550365448, 1.51495468616486, 7.65999674797058, 0.20003656387329, 3.02990937232971, 0.19999937057495] for a column of Buildings/island_restaurant_supply  [island_restaurant_supply: a 0.2 x 0.2 m column or post of the building has no collision]
+PROOF change #87 add_box: a collision box [-4.96003651618958, 1.51495468616486, 7.65999674797058, 0.20003656387329, 3.02990937232971, 0.19999937057495] for a column of Buildings/island_restaurant_supply  [island_restaurant_supply: a 0.2 x 0.2 m column or post of the building has no collision]
+PROOF change #88 add_box: a collision box [-2.10006880760193, 1.49996709823608, 5.65000009536743, 0.16, 2.99993419647217, 0.16] for a column of Buildings/island_restaurant_supply  [island_restaurant_supply: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #89 add_box: a collision box [4.9599449634552, 1.51495468616486, 7.65999674797058, 0.20003656387329, 3.02990937232971, 0.19999937057495] for a column of Buildings/island_restaurant_supply  [island_restaurant_supply: a 0.2 x 0.2 m column or post of the building has no collision]
+PROOF change #90 add_box: a collision box [8.41983127593994, 1.49999475479126, 12.18470287323, 0.38016036987305, 2.99998950958252, 0.57013038635254] for a column of Buildings/produce_hall  [produce_hall: a 0.3 x 0.5 m column or post of the building has no collision]
+PROOF change #91 add_box: a collision box [-3.18768787384033, 1.34995639324188, -12.0850081443787, 0.41530517578125, 2.69991278648376, 0.37000659942627] for a column of Buildings/meat_packers  [meat_packers: a 0.4 x 0.3 m column or post of the building has no collision]
+PROOF note: 'Props/prop_recycling_receptacle_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_picnic_table_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_receptacle_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_bike_rack_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_newspaper_box_red_rusty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_newspaper_box_blue_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_receptacle_dirty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_vending_snack_clean_far' held only listed items and is gone with them
+PROOF note: 'Props/prop_vending_snack_clean_mid' held only listed items and is gone with them
+PROOF note: 'Props/prop_vending_snack_clean_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_vending_soda_clean_far' held only listed items and is gone with them
+PROOF note: 'Props/prop_vending_soda_clean_mid' held only listed items and is gone with them
+PROOF note: 'Props/prop_vending_soda_clean_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_black_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_blue_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_green_dirty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_ice_chest_clean_far' held only listed items and is gone with them
+PROOF note: 'Props/prop_ice_chest_clean_mid' held only listed items and is gone with them
+PROOF note: 'Props/prop_ice_chest_clean_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_near' held only listed items and is gone with them
+PROOF 74 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

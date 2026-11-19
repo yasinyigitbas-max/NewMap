@@ -1,0 +1,6 @@
+PROOF compared: 26 nodes (with every mesh of the buildings), 0 ground and ground-collision triangles, 21 prop instances, 0 colliders, 12 wear marks are identical in both files
+PROOF differences found between the files: 2 lines only in the old one, 0 only in the new one
+PROOF change #1 remove prop_grocery_shelf at (3.33, 0.00, -5.44) removed, in 1 tier(s), no collider  [erased: no plainly safe place (Yasin: delete when unsure) [prop_grocery_shelf stands in front of a 3.2 m wide door (a back or side door)]]
+PROOF change #2 remove prop_pharmacy_shelf at (2.07, 0.00, -5.47) removed, in 1 tier(s), no collider  [erased: no plainly safe place (Yasin: delete when unsure) [prop_pharmacy_shelf stands in front of a 3.2 m wide door (a back or side door)]]
+PROOF 2 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

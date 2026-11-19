@@ -1,0 +1,20 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -4.3899998664856,
+    0.0,
+    -6.25099992752075
+   ],
+   "base": "prop_kitchen_line",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_kitchen_line stands in front of a 1.0 m wide door (a back or side door)]"
+  }
+ ],
+ "scene": "g_ind_vc_w600_n1400_ne__shift_canteen__0"
+}
