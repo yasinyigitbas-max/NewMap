@@ -36,6 +36,42 @@
    "site": "waterfront fill block 1 east (u 404-560.8, with Beach Lane)",
    "variant": "Pier St bottom: Fish House, bait & tackle, surf shop, kayak hire; lot; playground; Beach Lane",
    "from": "grow_wf"
+  },
+  {
+   "piece": "n_wf_b2w",
+   "pos": [
+    297.0,
+    0.0,
+    100.0
+   ],
+   "yaw": 0.0,
+   "site": "waterfront fill block 2 west (u 259.2-335, the residential street to Pier St)",
+   "variant": "top shelf: the low Bayview Inn and its garden, Vista Park, Pier St pub / rentals / juice bar / bistro / deli",
+   "from": "grow_wf"
+  },
+  {
+   "piece": "n_wf_b2m",
+   "pos": [
+    367.0,
+    0.0,
+    100.0
+   ],
+   "yaw": 0.0,
+   "site": "waterfront fill block 2 middle (u 335-400)",
+   "variant": "the bank: holiday flats on terraces, the Steps; Pier St arcades and books",
+   "from": "grow_wf"
+  },
+  {
+   "piece": "n_wf_b2e",
+   "pos": [
+    470.0,
+    0.0,
+    60.0
+   ],
+   "yaw": 0.0,
+   "site": "waterfront fill block 2 east (u 400-605, with the corner by the marina)",
+   "variant": "the foot: marine supply, boatyard, townhouses, public lot; Pier St boat hire and tours",
+   "from": "grow_wf"
   }
  ]
 }

@@ -31,6 +31,26 @@ SHOPS = {
     ("n_wf_b1e", "pier_bait_tackle"): [(3.3, None, "bait", "Pier Bait & Tackle", "green")],
     ("n_wf_b1e", "salt_water_surf"): [(-3.26, None, "sport", "Salt Water Surf", "sea")],
     ("n_wf_b1e", "bay_paddle_hire"): [(1.15, None, "rental", "Bay Paddle", "teal")],
+    # block 2
+    ("n_wf_b2w", "bayview_inn"): [(13.3, [11.0, 17.7], "hotel", "Bayview Inn", "sea")],                    # the office at the east end; the rest are guest rooms
+    ("n_wf_b2w", "salty_dog_pub"): [(-3.26, None, "bar", "The Salty Dog", "black")],
+    ("n_wf_b2w", "shores_holiday_rentals"): [(1.76, None, "office", "Shores Holiday Rentals", "navy")],
+    ("n_wf_b2w", "sea_breeze_juice"): [(-1.8, None, "cafe", "Sea Breeze Juice", "teal")],
+    ("n_wf_b2w", "blue_pelican_bistro"): [(4.76, None, "restaurant", "Blue Pelican Bistro", "navy")],
+    ("n_wf_b2w", "cove_deli_and_wine"): [(-1.1, [-5.7, 0.0], "corner_shop", "Cove Deli", "green"),
+                                          (1.1, [0.0, 5.7], "wine", "Cove Wine & Cheese", "red")],
+    ("n_wf_b2m", "pier_street_arcade"): [(-5.08, [-11.7, -4.0], "cafe", "Surfside Cafe", "sun"),
+                                         (-2.92, [-4.0, 1.0], "clothes", "Tidewater Swim & Sandals", "sea"),
+                                         (5.08, [1.0, 11.7], "souvenir", "Harbour Light Gifts & Prints", "navy")],
+    ("n_wf_b2m", "tide_pool_books"): [(-2.0, None, "books", "Tide Pool Books", "green")],
+    ("n_wf_b2m", "sunset_arcade"): [(-7.6, [-12.7, -6.5], "souvenir", "Sunset Candy & Fudge", "red"),
+                                    (-5.4, [-6.5, 0.0], "sport", "Beach Outfitters", "teal"),
+                                    (5.4, [0.0, 6.5], "jewelry", "Shades & Sunglasses", "black"),
+                                    (7.6, [6.5, 12.7], "cafe", "Sunset Espresso", "sun")],
+    ("n_wf_b2e", "bay_boat_and_bike_hire"): [(3.3, None, "rental", "Bay Boat & Bike Hire", "teal")],
+    ("n_wf_b2e", "harbour_tours_kiosk"): [(1.15, None, "office", "Harbour Tours", "navy")],
+    ("n_wf_b2e", "glorietta_marine_supply"): [(-9.0, [-11.7, -2.0], "store", "Glorietta Marine Supply", "navy")],
+    ("n_wf_b2e", "harbour_boatworks"): [(-6.5, [-8.7, -3.5], "boatworks", "Harbour Boatworks", "sea")],
 }
 
 

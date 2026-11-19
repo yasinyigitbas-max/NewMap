@@ -352,6 +352,281 @@
     311.450012207031
    ],
    "yaw": 0.0
+  },
+  {
+   "label": "bayview_inn",
+   "model": "extras/motel_inn_court",
+   "piece": "n_wf_b2w",
+   "pos": [
+    285.0,
+    9.60000038146973,
+    46.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "salty_dog_pub",
+   "model": "commercial/com_bar_crown",
+   "piece": "n_wf_b2w",
+   "pos": [
+    267.5,
+    6.15000009536743,
+    179.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "shores_holiday_rentals",
+   "model": "commercial/com_realty",
+   "piece": "n_wf_b2w",
+   "pos": [
+    278.0,
+    6.11999988555908,
+    179.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "sea_breeze_juice",
+   "model": "commercial/com_cafe_seaside",
+   "piece": "n_wf_b2w",
+   "pos": [
+    287.0,
+    6.03999996185303,
+    179.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "blue_pelican_bistro",
+   "model": "commercial/com_bistro",
+   "piece": "n_wf_b2w",
+   "pos": [
+    298.5,
+    5.80000019073486,
+    179.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "cove_deli_and_wine",
+   "model": "commercial/com_orange_corner",
+   "piece": "n_wf_b2w",
+   "pos": [
+    325.5,
+    5.19999980926514,
+    179.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "crest_flats",
+   "model": "apartments/apt_beach_condo",
+   "piece": "n_wf_b2w",
+   "pos": [
+    326.0,
+    8.39999961853027,
+    35.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "seaview_terrace_flats",
+   "model": "apartments/apt_stucco3_peach",
+   "piece": "n_wf_b2w",
+   "pos": [
+    326.0,
+    6.80000019073486,
+    82.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "lower_terrace_flats",
+   "model": "apartments/apt_garden_cream",
+   "piece": "n_wf_b2w",
+   "pos": [
+    325.0,
+    5.80000019073486,
+    140.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "casa_del_sol_flats",
+   "model": "apartments/apt_spanish_white",
+   "piece": "n_wf_b2m",
+   "pos": [
+    359.5,
+    7.0,
+    32.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "bayside_heights_flats",
+   "model": "apartments/apt_stucco3_cream",
+   "piece": "n_wf_b2m",
+   "pos": [
+    360.0,
+    5.19999980926514,
+    80.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "pelican_court_flats",
+   "model": "apartments/apt_court_white",
+   "piece": "n_wf_b2m",
+   "pos": [
+    358.5,
+    4.19999980926514,
+    140.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "the_lookout_rental",
+   "model": "houses/beach_blue",
+   "piece": "n_wf_b2m",
+   "pos": [
+    392.0,
+    5.80000019073486,
+    30.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "steps_end_flats",
+   "model": "apartments/apt_beach_condo",
+   "piece": "n_wf_b2m",
+   "pos": [
+    392.5,
+    3.79999995231628,
+    78.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "cottage_sea_lavender",
+   "model": "houses/beach_teal",
+   "piece": "n_wf_b2m",
+   "pos": [
+    391.0,
+    3.0,
+    132.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "cottage_saltgrass",
+   "model": "houses/beach_white",
+   "piece": "n_wf_b2m",
+   "pos": [
+    391.0,
+    3.0,
+    152.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "pier_street_arcade",
+   "model": "commercial/com_spanish_arcade_block",
+   "piece": "n_wf_b2m",
+   "pos": [
+    349.5,
+    4.55000019073486,
+    178.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "tide_pool_books",
+   "model": "commercial/com_shallow_books",
+   "piece": "n_wf_b2m",
+   "pos": [
+    367.5,
+    4.0,
+    183.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "sunset_arcade",
+   "model": "commercial/com_orange_arcade_block",
+   "piece": "n_wf_b2m",
+   "pos": [
+    386.0,
+    3.20000004768372,
+    177.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "boatworks_row_west",
+   "model": "apartments/apt_townhouse_cays",
+   "piece": "n_wf_b2e",
+   "pos": [
+    425.0,
+    4.0,
+    22.4000015258789
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "boatworks_row_east",
+   "model": "apartments/apt_townhouse_cays",
+   "piece": "n_wf_b2e",
+   "pos": [
+    456.399993896484,
+    4.0,
+    22.4000015258789
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "bay_boat_and_bike_hire",
+   "model": "commercial/com_shallow_surf",
+   "piece": "n_wf_b2e",
+   "pos": [
+    420.0,
+    2.20000004768372,
+    182.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "harbour_tours_kiosk",
+   "model": "commercial/com_kiosk",
+   "piece": "n_wf_b2e",
+   "pos": [
+    436.0,
+    1.85000002384186,
+    183.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "glorietta_marine_supply",
+   "model": "industrial/ind_warehouse",
+   "piece": "n_wf_b2e",
+   "pos": [
+    484.0,
+    3.90000009536743,
+    26.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "harbour_boatworks",
+   "model": "industrial/ind_repair",
+   "piece": "n_wf_b2e",
+   "pos": [
+    480.0,
+    2.0,
+    70.0
+   ],
+   "yaw": 90.0000025044782
   }
  ]
 }

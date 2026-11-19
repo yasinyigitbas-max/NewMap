@@ -213,13 +213,13 @@ func back_of_house(node: Node3D, w: float, d: float, compact := false, residenti
 		var p: Vector3 = node.transform * Vector3(lx, 0.0, lz)
 		return Vector3(p.x, node.position.y + ly, p.z)
 	var lo := -w * 0.5 + 0.6; var hi := w * 0.5 - 0.6
-	var xm := free_x(ops, lo, hi, 2.0, 1.7)           # meter bank (3 x 0.42) and the gas meter 1.7 m along
+	var xm := free_x(ops, lo, hi, 2.0, 2.3)           # meter bank (tops at about 1.9 m; small high windows start at 1.8) (3 x 0.42) and the gas meter 1.7 m along
 	if is_nan(xm):
 		# no room on the back wall: the side walls, back half first (the meter reader comes round the side)
 		var placed := false
 		for side: float in [1.0, -1.0]:
 			var sops := openings(folder, "right" if side > 0 else "left")
-			var zm := free_x(sops, -d * 0.5 + 0.6, d * 0.5 - 0.6, 2.0, 1.7)
+			var zm := free_x(sops, -d * 0.5 + 0.6, d * 0.5 - 0.6, 2.0, 2.3)
 			if is_nan(zm): continue
 			var syaw := rad_to_deg(node.rotation.y) + 90.0 * side
 			for k in 3: props.add("prop_meter_electric", "worn", at.call(side * (w * 0.5 + 0.02), 1.05, zm + 0.2 + k * 0.42), syaw)
@@ -375,6 +375,20 @@ func fence(kind: String, au: float, av: float, bu: float, bv: float, cond := "wo
 		for i in n - 1: posts.append(((cs[i] as Vector2) + (cs[i + 1] as Vector2)) * 0.5)
 		for q: Vector2 in posts:
 			I.add(props, String(f[1]), cond, loc(q.x, q.y, at if not is_nan(at) else y(q.x, q.y) - 0.03), yaw)
+
+## an iron guard railing along a straight terrace edge a -> b, standing on the HIGHER side (to_high points to it, 0.3 m
+## in): the line is split wherever that side's height changes, each run on its own height, the runs meeting end to end
+func guard(au: float, av: float, bu: float, bv: float, to_high: Vector2, cond := "worn") -> void:
+	var a := Vector2(au, av); var b := Vector2(bu, bv)
+	var ln := a.distance_to(b); var n := maxi(1, int(ln / 0.5))
+	var start := a; var hs := y(a.x + to_high.x * 0.3, a.y + to_high.y * 0.3)
+	for i in range(1, n + 1):
+		var p := a.lerp(b, float(i) / n)
+		var h := y(p.x + to_high.x * 0.3, p.y + to_high.y * 0.3)
+		if absf(h - hs) > 0.02 or i == n:
+			var e := p if i == n else a.lerp(b, (float(i) - 0.5) / n)
+			if start.distance_to(e) > 0.5: fence("iron", start.x, start.y, e.x, e.y, cond, hs)
+			start = e; hs = h
 
 ## a dumpster enclosure (strip_lib.enclosure on this ground) with its two gate leaves; open toward yaw
 func enclosure(u: float, v: float, yaw: float, mess := true) -> void:
