@@ -5,6 +5,27 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~06:40 (PC session): BANKS EASED AND BLOCK EDGES FITTED, CITY WIDE (Yasin, on the picture of a block in a
+  notch of the hillside: "lower the land in the places that go above the blocks like in the last pic you sent"; "and
+  make sure all land is under blocks but blocks dont float too"; "roll it city wide and measure again"). ONLY THE
+  LAND AGAIN: no piece, layout row, lock entry or room (lock.py status 599 LOCKED ok). Two more steps in
+  `lower_land_to_pieces.py`, both dry-run by default: `--fit` raises every node a growth cell rests on back up toward
+  the piece ground right at the node, never past what every piece cell it carries allows (roads included): 30,476
+  nodes raised, usual 0.11 m; `--ease-from=<the 18 Nov grid>` moves the EMPTY land between the pieces by a harmonic
+  field that equals the change on the piece nodes (0 at roads, samples, sea): 8,061 nodes lowered (usual 0.09 m,
+  largest 3.21 m), 6,515 raised (usual 0.05 m, largest 1.62 m). No node a road or a sample alone rests on moved.
+  MEASURED AGAIN (`ground_check.py`, whole city; 18 Nov land -> first lowering -> now): piece ground under the land
+  311,101 -> 308 -> 308 m2 (f_sw, not touched); FLOATING block edges beside empty land (more than 30 cm over it)
+  784 -> 880 -> 187 m2 (growth 138, the approved samples r_n / r_s and others 49: not touched); road kit 0 / 0.
+  Banks from a piece node up to the empty land beside it: over 1 m 58 -> 3, over 2 m 27 -> 0, largest 3.91 -> 1.18 m.
+  Island lowest -0.99 m, highest 14.10 m. Pictures `review/land_19nov/land_3steps_*.jpg` (three stages).
+  STILL NOT MENDED: the jumps where two residential blocks meet (3,123 m, the pieces' own); 138 m2 of growth edge
+  still floats (worst r_q_250_m200_nw 30 m2: a lower terrace within the same 4 m of land grid); the 4 m land grid
+  cannot follow a terrace edge closer than that. NOT CHECKED: the running game, the phone, buildings and props
+  against their own ground.
+  To redo from the 18 Nov land:  git show bac444bc:map_dc/coronado/city_kit/zoning/terrain_grid.npz >
+  OUT/terrain_grid_before_lowering.npz; ground dump in parts; `lower_land_to_pieces.py OUT/ground --fit
+  --ease-from=OUT/terrain_grid_before_lowering.npz --write`; `bake_game_terrain.py`.
 - 19 Nov ~06:00 (PC session): THE LAND IS LOWERED TO THE GROWTH BLOCKS, MAP WIDE (Yasin, after a one-block and an
   eight-block test with before / after pictures: "go to repo apply the fix map wide"). ONLY THE LAND CHANGED: no
   piece, no layout row, no lock entry, no room (lock.py status: 599 LOCKED ok, as before; git shows two changed data

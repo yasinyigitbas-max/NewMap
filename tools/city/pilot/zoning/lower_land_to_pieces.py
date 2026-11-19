@@ -18,6 +18,10 @@ untouched land with nothing built on it.
   python -I tools/city/pilot/zoning/lower_land_to_pieces.py OUT/ground                 dry run: numbers only
   python -I tools/city/pilot/zoning/lower_land_to_pieces.py OUT/ground --out=<npz>     write the result somewhere else
   python -I tools/city/pilot/zoning/lower_land_to_pieces.py OUT/ground --write         write zoning/terrain_grid.npz
+  --fit       after the lowering, bring the land back up to the growth pieces as far as every piece allows (see
+              fit_up()): a block's edge does not stand over the land, the land does not cover a piece
+  --ease-from=<npz>   also ease the banks beside the lowered land (see ease()); <npz> is the land grid from BEFORE
+              the lowering:  git show bac444bc:map_dc/coronado/city_kit/zoning/terrain_grid.npz > OUT/terrain_grid_before_lowering.npz
   --ask=all   let every family's ground ask (default: only the growth zones, from 'grow_*' layout rows; the road kit
               and the approved samples keep the land terrain.py fitted to them)
 After --write: python -I tools/city/pilot/zoning/bake_game_terrain.py (the game-format land, data_citykit).
@@ -91,6 +95,108 @@ def raster(recs, V, I, U0, V0, NX, NY):
                 y = A[..., 1] * l1 + Bq[..., 1] * l2 + C[..., 1] * l3
                 put((cj * NX + ci)[ins], y[ins], k)
     return g.reshape(NY, NX), who.reshape(NY, NX)
+
+
+def fit_up(H, G, has, j0, i0, ax, az, g, may, SEA, n):
+    """Bring the land back UP to the pieces as far as they allow (Yasin: "make sure all land is under blocks but blocks
+    dont float too"). The lowering puts a node 5 cm under the LOWEST ground within its reach, which is safe but leaves
+    a block's edge standing over the land where a lower terrace lies within those 4 m, and some blocks stood over the
+    land before any of this. Here every node a GROWTH cell rests on is raised toward the piece ground right at the
+    node (the lowest of the four 1 m cells that touch it, else the nearest piece ground) minus 5 cm, but never past
+    what every piece cell it carries allows: land(cell) <= ground(cell) - 5 cm stays true for the cells of EVERY
+    family, roads included. Half steps, four colours of nodes in turn (two nodes of one colour share no cell), so the
+    land stays under the pieces at every moment. A node is never lowered here."""
+    from scipy.ndimage import distance_transform_edt
+    ny, nx = H.shape; H = H.copy(); NYc, NXc = G.shape
+    elig = np.zeros(H.shape, bool)
+    for dj, di in ((0, 0), (0, 1), (1, 0), (1, 1)): elig[j0[may] + dj, i0[may] + di] = True
+    elig &= ~SEA; elig[:2, :] = False; elig[-2:, :] = False; elig[:, :2] = False; elig[:, -2:] = False
+    Gp = np.pad(G, ((1, 1), (1, 1)), constant_values=np.inf)
+    Jn = np.arange(ny) * n; In = np.arange(nx) * n
+    t4 = np.minimum.reduce([Gp[np.ix_(Jn, In)], Gp[np.ix_(Jn + 1, In)], Gp[np.ix_(Jn, In + 1)], Gp[np.ix_(Jn + 1, In + 1)]])
+    _, (nj, ni) = distance_transform_edt(~has, return_indices=True)
+    cjn = np.clip(Jn, 0, NYc - 1); cin = np.clip(In, 0, NXc - 1)
+    near = G[nj[np.ix_(cjn, cin)], ni[np.ix_(cjn, cin)]]
+    target = np.where(np.isfinite(t4), t4, near) - UNDER
+    off = ((0, 0), (0, 1), (1, 0), (1, 1))
+    w = [(1 - ax) * (1 - az), ax * (1 - az), (1 - ax) * az, ax * az]
+    nf = [(j0 + dj) * nx + (i0 + di) for dj, di in off]
+    use = np.zeros(len(g), bool)
+    ef = elig.reshape(-1)
+    for c in range(4): use |= ef[nf[c]]
+    w = [x[use] for x in w]; nf = [x[use] for x in nf]; gg = g[use] - UNDER
+    par = [((j0[use] + dj) % 2) * 2 + ((i0[use] + di) % 2) for dj, di in off]
+    JJ, II = np.meshgrid(np.arange(ny), np.arange(nx), indexing='ij'); colour = (JJ % 2) * 2 + (II % 2)
+    H_in = H.copy(); rounds = 0
+    for rnd in range(80):
+        moved = 0.0
+        for col in range(4):
+            Hf = H.reshape(-1)
+            bil = w[0] * Hf[nf[0]] + w[1] * Hf[nf[1]] + w[2] * Hf[nf[2]] + w[3] * Hf[nf[3]]
+            allowed = np.full(ny * nx, np.inf)
+            for c in range(4):
+                m = par[c] == col
+                np.minimum.at(allowed, nf[c][m], (gg[m] - (bil[m] - w[c][m] * Hf[nf[c][m]])) / w[c][m])
+            new = np.minimum(target, allowed.reshape(ny, nx))
+            up = elig & (colour == col) & (new > H + 1e-4)
+            step = np.where(up, (new - H) * (0.5 if rnd < 70 else 1.0), 0.0)
+            H += step; moved = max(moved, float(step.max()))
+        rounds = rnd + 1
+        if moved < 0.002 and rnd >= 4: break
+    r = H - H_in
+    print('FIT-UP nodes a growth cell rests on: %d; raised %d, usual %.2f m, largest %.2f m; lowered %d; rounds %d' % (
+        int(elig.sum()), int((r > 0.005).sum()), float(np.median(r[r > 0.005])) if (r > 0.005).any() else 0.0, float(r.max()), int((r < -1e-9).sum()), rounds))
+    return H
+
+
+def ease(Hn, Hold, reach, SEA):
+    """Ease the banks the lowering left (Yasin, on the picture of a block in a notch of the hillside: "lower the land
+    in the places that go above the blocks"). The land nodes NO piece rests on are lowered so the drop the lowering
+    made spreads smoothly through the empty land beside it: on those nodes new = old + d, where d equals the lowering
+    on every node a piece rests on (0 where nothing was lowered: roads, samples, the sea, the box edge) and is harmonic
+    (Laplace) between them, as terrain.py's own correction is. So the land still meets every road and every piece
+    exactly as before (their nodes do not move), nothing is raised, and the empty land keeps its shape, only lower."""
+    import scipy.sparse as sp
+    import scipy.sparse.linalg as spla
+    ny, nx = Hn.shape
+    fixed = reach | SEA
+    fixed[:2, :] = True; fixed[-2:, :] = True; fixed[:, :2] = True; fixed[:, -2:] = True
+    free = ~fixed
+    delta = np.where(fixed, Hn - Hold, 0.0)
+    idx = np.full(Hn.shape, -1, np.int64); idx[free] = np.arange(int(free.sum()))
+    jj, ii = np.nonzero(free); k = idx[jj, ii]
+    rows = [k]; cols = [k]; vals = [np.full(len(k), 4.0)]; rhs = np.zeros(len(k))
+    for dj, di in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+        a = jj + dj; b = ii + di; f = free[a, b]
+        rows.append(k[f]); cols.append(idx[a[f], b[f]]); vals.append(np.full(int(f.sum()), -1.0))
+        np.add.at(rhs, k[~f], delta[a[~f], b[~f]])
+    A = sp.csc_matrix((np.concatenate(vals), (np.concatenate(rows), np.concatenate(cols))), shape=(len(k), len(k)))
+    d = spla.spsolve(A, rhs)
+    d[np.abs(d) < 0.005] = 0.0
+    H2 = Hn.copy(); H2[jj, ii] = Hold[jj, ii] + d
+    Hb = Hn.copy(); Hb[jj, ii] = Hold[jj, ii]              # the land with the banks, for the comparison
+
+    def rim(H):
+        st = []
+        pj, pi = np.nonzero(reach & ~SEA)
+        for dj, di in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            a = np.clip(pj + dj, 0, ny - 1); b = np.clip(pi + di, 0, nx - 1); m = free[a, b]
+            st.append(H[a[m], b[m]] - H[pj[m], pi[m]])
+        return np.concatenate(st)
+    r0 = rim(Hb); r1 = rim(H2)
+    print('EASE empty-land nodes %d, lowered %d (%.2f %% of the land): usual %.2f m, largest %.2f m; raised %d: usual %.2f m, largest %.2f m' % (
+        len(k), int((d < 0).sum()), 100.0 * (d < 0).sum() / max(1, int((~SEA).sum())), float(np.median(-d[d < 0])) if (d < 0).any() else 0.0, float(-d.min()) if len(d) else 0.0,
+        int((d > 0).sum()), float(np.median(d[d > 0])) if (d > 0).any() else 0.0, float(d.max()) if len(d) else 0.0))
+    print('step from a node a piece rests on up to the empty land beside it (4 m away): over 0.5 m %d -> %d, over 1 m %d -> %d, over 2 m %d -> %d, largest %.2f -> %.2f m' % (
+        int((r0 > 0.5).sum()), int((r1 > 0.5).sum()), int((r0 > 1.0).sum()), int((r1 > 1.0).sum()), int((r0 > 2.0).sum()), int((r1 > 2.0).sum()), float(r0.max()), float(r1.max())))
+    print('the same step DOWN to the empty land (a piece edge standing over the land): over 0.5 m %d -> %d, over 1 m %d -> %d, largest %.2f -> %.2f m' % (
+        int((r0 < -0.5).sum()), int((r1 < -0.5).sum()), int((r0 < -1.0).sum()), int((r1 < -1.0).sum()), float(-r0.min()), float(-r1.min())))
+    gx = np.abs(np.diff(H2, axis=1))[:, :][free[:, 1:] & free[:, :-1]]; gz = np.abs(np.diff(H2, axis=0))[free[1:, :] & free[:-1, :]]
+    g = np.concatenate([gx, gz]) / 4.0 * 100.0
+    gx0 = np.abs(np.diff(Hb, axis=1))[free[:, 1:] & free[:, :-1]]; gz0 = np.abs(np.diff(Hb, axis=0))[free[1:, :] & free[:-1, :]]
+    g0 = np.concatenate([gx0, gz0]) / 4.0 * 100.0
+    print('slope inside the empty land: steeper than 25 %% on %d -> %d node pairs, steepest %.0f -> %.0f %%' % (int((g0 > 25).sum()), int((g > 25).sum()), float(g0.max()), float(g.max())))
+    return H2
 
 
 def main():
@@ -179,6 +285,27 @@ def main():
     if len(bank):
         print('rim of the lowered land: %d spots, usual step to the untouched node %.2f m, largest %.2f m; over 0.5 m: %d, over 1 m: %d (beside a piece %d, beside empty land %d)' % (
             len(bank), float(np.median(bank)), float(bank.max()), int((bank > 0.5).sum()), int((bank > 1.0).sum()), int(((bank > 1.0) & onp).sum()), int(((bank > 1.0) & ~onp).sum())))
+    # a block edge beside empty land that stands over the land ("floats"): the measure of ground_check.py
+    hp = np.pad(has, 1, constant_values=True)
+    edge = (~hp[1:-1, :-2] | ~hp[1:-1, 2:] | ~hp[:-2, 1:-1] | ~hp[2:, 1:-1])[cj, ci]
+
+    def floats(H, txt):
+        dd = g - land_at(H)
+        print('%s: edge cells beside empty land standing over the land by more than 30 cm: growth %d, roads and samples %d; by more than 1 m: growth %d; largest %.2f m' % (
+            txt, int((edge & may & (dd > 0.30) & ~seacell).sum()), int((edge & ~may & (dd > 0.30) & ~seacell).sum()), int((edge & may & (dd > 1.0) & ~seacell).sum()),
+            float(dd[edge & may & ~seacell].max()) if (edge & may & ~seacell).any() else 0.0))
+    floats(H1, 'floating, before the fit')
+    if '--fit' in sys.argv:
+        H1 = fit_up(H1, G, has, j0, i0, ax, az, g, may, SEA, n)
+        floats(H1, 'floating, after the fit')
+        d2 = land_at(H1) - g
+        print('after the fit: cells with the land not 5 cm under: growth %d, roads and samples %d (before the fit %d)' % (
+            int(((d2 > -UNDER + 1e-3) & ~seacell & may).sum()), int(((d2 > -UNDER + 1e-3) & ~seacell & ~may).sum()), int(not_asked.sum())))
+    ease_from = next((a.split('=', 1)[1] for a in sys.argv[1:] if a.startswith('--ease-from=')), None)
+    if ease_from:
+        H1 = ease(H1, np.load(ease_from)['heights'].astype(np.float64), np.isfinite(lo), SEA)
+        d2 = land_at(H1) - g
+        print('after easing: piece cells with the land not 5 cm under, growth zones: %d; island lowest %.2f m highest %.2f m' % (int(((d2 > -UNDER + 1e-3) & ~seacell & may).sum()), H1[land].min(), H1[land].max()))
     if out or write:
         keep['heights'] = H1.astype(t['heights'].dtype)
         np.savez_compressed(GRID if write else out, **keep)

@@ -235,3 +235,9 @@ the other agent suggested these
 - [2026-11-19] cant we just add cement blocks under the buildings, make only the ground around them again to follow the terrain, and move the props on it?
 
 - [2026-11-19] go to repo apply the fix map wide
+
+- [2026-11-19] lower the land in the places that go above the blocks like in the last pic you sent
+
+- [2026-11-19] and make sure all land is under blocks but blocks dont float too
+
+- [2026-11-19] roll it city wide and measure again
