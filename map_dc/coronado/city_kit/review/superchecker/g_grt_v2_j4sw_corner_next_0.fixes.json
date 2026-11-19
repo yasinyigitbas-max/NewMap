@@ -1,0 +1,50 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -2.8899998664856,
+    0.0,
+    -6.25099992752075
+   ],
+   "base": "prop_kitchen_line",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_kitchen_line stands in front of a 1.0 m wide door (a back or side door)]"
+  },
+  {
+   "at": [
+    -1.17999994754791,
+    0.0,
+    -6.50500011444092
+   ],
+   "base": "prop_wall_shelf",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_wall_shelf stands in front of a 1.0 m wide door (a back or side door)]"
+  },
+  {
+   "at": [
+    -3.79900002479553,
+    0.0,
+    5.45749998092651
+   ],
+   "base": "prop_drinks_fridge",
+   "chosen": true,
+   "cond": "",
+   "kind": "window_blocked",
+   "mode": "choose",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_drinks_fridge (2.0 m tall) stands right behind a window]"
+  }
+ ],
+ "scene": "g_grt_v2_j4sw_corner_next_0"
+}
