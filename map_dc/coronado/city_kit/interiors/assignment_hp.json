@@ -1,0 +1,246 @@
+{
+ "_doc": "Hospital zone and university campus (claude/fill-high-street, 19 Nov): which business or service is behind which",
+ "count": 8,
+ "rooms": [
+  {
+   "id": "hp_main_hospital_0",
+   "piece": "n_hp_main",
+   "label": "hospital",
+   "model": "public/pub_hospital",
+   "pos": [
+    541.0,
+    2.15,
+    -1482.46
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -2.2,
+   "door_w": 2.0,
+   "bay": [
+    -17.7,
+    0.0
+   ],
+   "kind": "clinic",
+   "name": "Island Hospital Main Lobby",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "the hospital's front door on the drop-off forecourt: reception and admissions desks, waiting seats, the way to the wards",
+   "signs": []
+  },
+  {
+   "id": "hp_main_hospital_1",
+   "piece": "n_hp_main",
+   "label": "hospital",
+   "model": "public/pub_hospital",
+   "pos": [
+    541.0,
+    2.15,
+    -1482.46
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 2.2,
+   "door_w": 2.0,
+   "bay": [
+    0.0,
+    17.7
+   ],
+   "kind": "cafe",
+   "name": "Atrium Cafe",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "the hospital's second front door: coffee and sandwiches for visitors and the night shift, next to the lobby",
+   "signs": []
+  },
+  {
+   "id": "hp_main_er_wing_1",
+   "piece": "n_hp_main",
+   "label": "er_wing",
+   "model": "extras/ext_hospital",
+   "pos": [
+    590.0,
+    2.15,
+    -1483.57
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -1.0,
+    14.7
+   ],
+   "kind": "clinic",
+   "name": "Emergency Department",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "the ER's front door on the ambulance bay (EMERGENCY painted over it): triage desk, the waiting room",
+   "signs": []
+  },
+  {
+   "id": "hp_transit_transit_hall_0",
+   "piece": "n_hp_transit",
+   "label": "transit_hall",
+   "model": "civic/civ_post_office",
+   "pos": [
+    548.0,
+    2.15,
+    -1428.55
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -10.7,
+    10.7
+   ],
+   "kind": "transit",
+   "name": "Island Transit Center",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "Yasin: 'Place a bus station at hospital': the waiting hall on the bus platform: ticket windows, timetables, benches, vending",
+   "signs": []
+  },
+  {
+   "id": "hp_west_tower_0",
+   "piece": "n_hp_west",
+   "label": "tower",
+   "model": "urban/twr_office",
+   "pos": [
+    471.0,
+    2.15,
+    -1432.0
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "clinic",
+   "name": "Bay Medical Plaza Urgent Care",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "the medical office tower's door on Adela, facing the hospital: the walk-in clinic for what is not an emergency",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 10.97,
+     "w": 1.95
+    },
+    {
+     "facade": "left",
+     "along": 10.97,
+     "w": 1.95
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 4.0
+    },
+    {
+     "facade": "right",
+     "along": 10.97,
+     "w": 1.95
+    },
+    {
+     "facade": "left",
+     "along": 10.97,
+     "w": 1.95
+    }
+   ]
+  },
+  {
+   "id": "hp_west_pharmacy_0",
+   "piece": "n_hp_west",
+   "label": "pharmacy",
+   "model": "ck/ck_svc_trade_1d",
+   "pos": [
+    427.0,
+    2.15,
+    -1425.5
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "pharmacy",
+   "name": "Island Pharmacy",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "prescriptions for the people leaving the hospital and the clinic, on 3rd St between the tower and the bus station",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "hp_west_bistro_0",
+   "piece": "n_hp_west",
+   "label": "bistro",
+   "model": "commercial/com_bistro",
+   "pos": [
+    410.0,
+    2.15,
+    -1427.67
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 4.76,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "restaurant",
+   "name": "Isla Bistro",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "lunch for the hospital's staff and visitors (its ISLA BISTRO sign painted on); its tables on the 3rd St forecourt",
+   "signs": []
+  },
+  {
+   "id": "hp_west_wellness_0",
+   "piece": "n_hp_west",
+   "label": "wellness",
+   "model": "civic/civ_community_center",
+   "pos": [
+    476.05,
+    2.15,
+    -1535.0
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "hall",
+   "name": "Bayview Wellness Center",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "the care residences' day center (its COMMUNITY CENTER sign painted on): classes, meals, visitors; door on Adela for the bus riders",
+   "signs": []
+  }
+ ]
+}
