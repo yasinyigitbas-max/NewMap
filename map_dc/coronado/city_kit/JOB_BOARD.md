@@ -136,8 +136,35 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   GPU 13.5 ms. PARKED CARS ARE IN (Yasin 19 Nov: "tell it to bring parked cars to the game", "i think the traffic code
   needs to know about the parked cars locations right?"): doc section 14. The bake carries 4,524 stalls (3,008 at
   the kerb, 1,516 in car parks); parked and moving cars are one pool; driveways are NOT recorded by the pieces, so
-  only kerb stalls take part in traffic until they are (a note, nothing changed). NEXT: stage 2a, the lane graph of
-  the new streets (`StreetGraph`, with the stalls, checked against the baked ground).
+  only kerb stalls take part in traffic until they are (a note, nothing changed). STAGE 2a DONE (19 Nov 01:45): the streets tool
+  `tools/city/traffic/make_streets.gd` (C++ `StreetGraph`) -> `city_kit/traffic/streets.bin`, report and pictures in
+  `review/traffic/`; run it after every bake. 449 lanes (75.3 km), 974 junction paths, 61 km of pavement lines, 276
+  crossings, 3,010 kerb stalls: 0 lane points off the asphalt, 0 junction paths touching a kerb (checked as wide as a
+  car). FOUND IN THE MAP: a 54 m hole in 1st St (ferry landing), no ground under the four pavement corners of the
+  centre junction (Amber x 7th). Doc section 15. STAGE 2b DONE (19 Nov 03:40): the old traffic core drives on the
+  new streets (`native/src/traffic_*`, class `CityTraffic`). `tests/traffic/test_traffic_core.gd` RESULT PASS: nine
+  30-minute runs, no overlap, no crash, nobody stuck at the busiest hour with the stuck-car rule off, the same
+  result every time; a step for 190 cars 0.32 ms on the PC. The streets now have 761 lanes, 60 left-turn lanes found
+  from the paint, lanes that change where the street narrows. What had to change in the old core: doc section 16.
+  STAGE 2c DONE ON THE PC (19 Nov, doc section 17): the traffic is DRAWN in the test app: `--traffic=N --parked=1|0
+  --density=x`. Cars are rows of a few batches (near model for the 4 nearest, light model to 85 m, one 60-triangle
+  shape beyond), parked cars on the cells' stalls with the LOW models only (the same street every time), lamp glows,
+  a pool of 24 collision boxes, cars come and go with the streamed cells, the ring runs ahead with the speed (24 cars
+  round the camera at 281 km/h). The signal lamps run on the traffic's clock (two lines in `rt_prop.gdshaderinc`; a
+  lattice fault that put 9 signal heads on a wrong clock is fixed by the streets tool, check = 0). Two real faults
+  in the driving fixed (straight before left; a car on its line lets others through): the traffic test PASSES and
+  nobody stands over 2 min even at twice the busiest hour. Pictures `review/traffic/pc/`. Lock test PASS. PC cost:
+  0.1 ms a frame on the main thread, 5-6 draws. NOT YET: parked cars pulling out / in, wheels turning, indicators.
+  RUN `tools/city/traffic/make_streets.gd` AFTER EVERY BAKE (streets.bin).
+  STAGE 2d DONE (19 Nov, doc section 18): THE PHONE. Stream gate PASS with 20 and 40 cars (twice each on the final
+  app; the very first run after an install had one 59 ms frame) and with "80" (the streets hold 57 at most). A
+  street with traffic and parked cars costs about 12 draws, 125 k triangles, 0.26 ms of the main thread, under
+  0.1 ms of GPU median; parked cars alone 5 draws, 85 k triangles. PARKED CARS PULL OUT AND MOVING CARS PARK
+  (`native/src/traffic_parking.h`; test: no moving car ever touches a parked one). The zones plan fails on this branch
+  with AND without traffic (a collision body waits 5 s at one night teleport: the streamer, not the traffic).
+  STAGE 3a STARTED: the old crowd core walks the new pavements (`native/src/crowd_sim.*`, `city_crowd.*`,
+  `tests/crowd/test_crowd_core.gd`): routes, signals and queues work, nobody leaves a pavement in 4 of 6 places;
+  NOT PASSING YET (people still stand inside each other on the narrow pavements), nothing drawn yet.
 - 18 Nov (cloud, branch `claude/grow-industrial`): INDUSTRIAL GROWTH, stage 1 + 2 done, NOTHING LOCKED, WAITING for
   Yasin's word on the variants. Read `review/grow_ind/README.md`. Three variants (A port, B fleet, C cold chain),
   each dressed twice = six 100 m blocks round the sample. They form the pilot area u -900..-500, v -1600..-1400

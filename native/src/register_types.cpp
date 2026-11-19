@@ -2,6 +2,8 @@
 // There is no script fall-back: the test app checks ClassDB.class_exists("CityNative") and says so when the module
 // is missing.
 #include "city_native.h"
+#include "city_traffic.h"
+#include "street_graph.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/class_db.hpp>
@@ -15,6 +17,8 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 		return;
 	}
 	GDREGISTER_CLASS(CityNative);
+	GDREGISTER_CLASS(CityTraffic);   // the traffic: core, drawing, parked cars
+	GDREGISTER_CLASS(StreetGraph);   // tool time: the streets as traffic and people need them, from the baked city
 }
 
 void uninitialize_coronado_city(ModuleInitializationLevel p_level) {

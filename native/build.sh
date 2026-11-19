@@ -38,7 +38,7 @@ die() { echo "NATIVE_BUILD STOP: $*"; exit 2; }
 PY=$(command -v python || command -v python3 || command -v py) || PY=""
 
 INC="-I$GODOT_CPP/gdextension -I$GODOT_CPP/include -I$GODOT_CPP/gen/include -I$NATIVE/src"
-WARN="-Wall -Wno-unused-parameter -Wno-unused-variable"   # (unused-variable: godot-cpp's own GDCLASS macro trips it in every class)
+WARN="-Wall -Wno-unused-parameter -Wno-unused-variable -ftrivial-auto-var-init=zero"   # (unused-variable: godot-cpp's own GDCLASS macro trips it in every class)
 # target -> compiler, compile flags, link flags, godot-cpp library, output
 setup() {
   case $1 in

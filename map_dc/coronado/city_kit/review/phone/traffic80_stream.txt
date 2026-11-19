@@ -1,0 +1,33 @@
+# phone rig run 'traffic80_stream'  2026-11-19T00:53Z  args: --plan=stream --probe --traffic=80 --density=3.4
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 317 -> 325 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit a3aefa45 | meminfo at 60 s:          Native Heap:   230236                         231448;            Graphics:   593212                         593212;           TOTAL PSS:   945170            TOTAL RSS:  1031852       TOTAL SWAP PSS:      292;
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 look=1 bloom=0 upscale=0 sharp=0.20 reflect=1 plan=stream lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=141 tiers=false band=8.0 arrive=0.50 far_ground=true tier_materials=21
+RIG native coronado_city 0.1 release android arm64, godot-cpp 4.5 | its own threads: ok (4 threads, 0.4 ms; the device reports 8)
+RIG warmnight 306 ms
+RIG boot first_area_ms=463 warm_ms=888 (graphics memory reserve 192 MB: 43 ms) cells=12 static_mb=113 video_mb=240
+RIG drive loop_108kmh speed=108 km/h secs=60 frames=3802 fps=63.4 | frame_ms med=16.4 p95=24.4 p99=27.0 worst=30 | over16.7=44.6% over33=0 over50=0 over100=0
+RIG   map loop_108kmh draws avg=95 max=211 | tris avg=575k max=1287k | cells most=16 in=34 out=32 dropped=0 cap_hits=0 | gpu_ms med=13.70 p95=16.53
+RIG   stream loop_108kmh start_ready_ms=1 (worst frame meanwhile 0 ms) | request_to_in ms mean=135 worst=311 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.43, body 3.63 (col_8 shapes=18 new=1577), removal step 0.87 | bodies late=0
+RIG   slow loop_108kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision loop_108kmh made=424541 units, a body waited at most 1053 ms from its cell's arrival | physics thread wait a frame (probe): median 0.4 p99 5.5 worst 8.7 ms
+RIG   objects loop_108kmh all=5466 nodes=1362 orphan_nodes=0 resources=1038 | streamer: cells in=14, bodies waiting=0, nodes leaving=0
+RIG   traffic loop_108kmh cars moving avg 36.0 most 54 (the streets there carry 26, the cap is 80): near model 0.9, light model 4.3, far shape 30.9 | parked: 509 in the loaded cells, 5.4 drawn with the light model | batches drawn avg 8.1, uploads a frame 7.2 | main thread a frame: avg 0.261 worst 1.597 ms | the step (own thread): avg 0.256 worst 1.275 ms
+RIG   mem loop_108kmh static_mb=120 video_mb=297 tex_mb=116 buf_mb=154
+RIG drive loop_210kmh speed=209 km/h secs=55 frames=3239 fps=58.9 | frame_ms med=16.8 p95=24.3 p99=26.6 worst=34 | over16.7=51.7% over33=1 over50=0 over100=0
+RIG   map loop_210kmh draws avg=92 max=217 | tris avg=549k max=1299k | cells most=16 in=64 out=74 dropped=0 cap_hits=0 | gpu_ms med=13.61 p95=15.86
+RIG   stream loop_210kmh start_ready_ms=951 (worst frame meanwhile 25 ms) | request_to_in ms mean=159 worst=562 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.51, body 3.63 (col_8 shapes=18 new=1577), removal step 1.02 | bodies late=0
+RIG   slow loop_210kmh frames over 33 ms by what the streamer was doing: { "cell_in": 1 } | over 45 ms: {  }
+RIG   collision loop_210kmh made=928181 units, a body waited at most 2649 ms from its cell's arrival | physics thread wait a frame (probe): median 0.6 p99 6.3 worst 8.5 ms
+RIG   objects loop_210kmh all=6209 nodes=1692 orphan_nodes=0 resources=1285 | streamer: cells in=16, bodies waiting=0, nodes leaving=0
+RIG   traffic loop_210kmh cars moving avg 39.1 most 57 (the streets there carry 26, the cap is 80): near model 0.8, light model 3.5, far shape 34.6 | parked: 530 in the loaded cells, 5.8 drawn with the light model | batches drawn avg 8.1, uploads a frame 7.2 | main thread a frame: avg 0.278 worst 1.511 ms | the step (own thread): avg 0.286 worst 4.388 ms
+RIG   mem loop_210kmh static_mb=125 video_mb=303 tex_mb=116 buf_mb=156
+RIG drive loop_280kmh speed=281 km/h secs=40 frames=2356 fps=58.9 | frame_ms med=16.8 p95=24.7 p99=27.2 worst=32 | over16.7=51.1% over33=0 over50=0 over100=0
+RIG   map loop_280kmh draws avg=92 max=212 | tris avg=549k max=1251k | cells most=18 in=58 out=62 dropped=0 cap_hits=0 | gpu_ms med=13.62 p95=15.80
+RIG   stream loop_280kmh start_ready_ms=124 (worst frame meanwhile 24 ms) | request_to_in ms mean=158 worst=415 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.51, body 3.63 (col_8 shapes=18 new=1577), removal step 1.17 | bodies late=0
+RIG   slow loop_280kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision loop_280kmh made=813500 units, a body waited at most 2319 ms from its cell's arrival | physics thread wait a frame (probe): median 0.6 p99 6.1 worst 9.6 ms
+RIG   objects loop_280kmh all=6258 nodes=1500 orphan_nodes=145 resources=1489 | streamer: cells in=14, bodies waiting=0, nodes leaving=6
+RIG   traffic loop_280kmh cars moving avg 35.8 most 51 (the streets there carry 27, the cap is 80): near model 0.5, light model 2.7, far shape 31.8 | parked: 555 in the loaded cells, 5.9 drawn with the light model | batches drawn avg 7.6, uploads a frame 6.6 | main thread a frame: avg 0.266 worst 1.758 ms | the step (own thread): avg 0.271 worst 2.089 ms
+RIG   mem loop_280kmh static_mb=125 video_mb=307 tex_mb=116 buf_mb=160
+RIG plan_done lap=1
