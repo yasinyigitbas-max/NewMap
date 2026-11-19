@@ -220,7 +220,10 @@ def cmd_trees(area):
     for b, X in d.batches():
         if b['tier'] == 'near': got += [(b['base'], round(float(x[9]), 2), round(float(x[11]), 2)) for x in X]
     want = sorted((t['base'], round(float(t['at'][0]), 2), round(float(t['at'][2]), 2)) for t in j['trees'])
-    same = sorted(got) == want
+    # (cloud-top, 19 Nov) compare within 2 cm: the file keeps float32, so -473.925 in the list reads back as -473.93 and
+    # an exact compare of 2-decimal roundings called a right build WRONG (ar_b066_b)
+    gs = sorted(got)
+    same = len(gs) == len(want) and all(a[0] == b[0] and abs(a[1] - b[1]) <= 0.02 and abs(a[2] - b[2]) <= 0.02 for a, b in zip(gs, want))
     print('  the built piece read back: %d trees, %s' % (len(got), 'each one a line of the list, nothing else' if same else 'NOT the list: ' + str(sorted(got))[:200]))
     print('TREES %s: %s; the map is untouched (the piece is a copy at %s)' % (area, 'built' if same else 'WRONG', os.path.relpath(out, L.REPO)))
     return same

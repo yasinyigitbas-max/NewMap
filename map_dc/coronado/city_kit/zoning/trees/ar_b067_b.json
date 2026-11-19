@@ -1,0 +1,57 @@
+{
+ "area": "ar_b067_b",
+ "piece": "s_ar_b067_b",
+ "zone": "Arterial",
+ "rule": "docs/TREE_PLAN.md: arterials - trees on the grass strips only, one species a face; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -246.645,
+    4.015,
+    -1411.313
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west grass strip, nothing within 3 m: jacaranda, the face's species"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -278.415,
+    3.554,
+    -1411.371
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west grass strip, 32 m on: same run"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -230.265,
+    4.133,
+    -1388.655
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east grass strip, nothing within 3 m: magnolia, the face's species"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -274.898,
+    3.616,
+    -1388.658
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east grass strip, 44.6 m on (the strip between had no tree): same run"
+  }
+ ]
+}

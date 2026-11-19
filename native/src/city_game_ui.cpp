@@ -3,6 +3,7 @@
 #include "city_game.h"
 
 #include "ui_plate.h"
+#include "city_hud.h"
 
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/file_access.hpp>
@@ -49,6 +50,8 @@ void CityGame::_ready() {
 	load_text();
 	settings_defaults(); load_device(); apply_settings();
 	build_loading(); build_menu(); build_pause(); build_over();
+	hud = memnew(CityHud);   // (the HUD shows itself only in play: CityHud::_process asks is_playing)
+	add_child(hud);
 	// the shell outlives every scene: it moves to the root (the boot scene is freed when the world comes)
 	if (get_parent() && get_parent() != get_tree()->get_root()) { get_parent()->call_deferred("remove_child", this); get_tree()->get_root()->call_deferred("add_child", this); }
 	set_process(true); set_process_unhandled_input(true);
@@ -92,6 +95,8 @@ void CityGame::_notification(int p_what) {
 		if (pause_open) close_pause(); else if (world_on && !menu_open && !over_open && play_phase == 0) open_pause();
 	}
 }
+
+Object *CityGame::get_hud() const { return hud; }
 
 // ---------------------------------------------------------------- the loading screen
 void CityGame::build_loading() {

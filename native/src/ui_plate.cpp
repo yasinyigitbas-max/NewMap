@@ -233,8 +233,8 @@ Rect2 phone_rect(const Vector2 &sz) { return from_br(sz, 24, 24, 76, 76); }
 Rect2 gas_rect(const Vector2 &sz) { return from_br(sz, 24, 24 + 76 + 8, 104, 144); }
 Rect2 brake_rect(const Vector2 &sz) { return from_br(sz, 24 + 104 + 8, 24 + 76 + 8, 120, 96); }
 Rect2 speed_rect(const Vector2 &sz) { const float k = ui_k(sz); return Rect2(24 * k, sz.y - (24 + 112) * k, 208 * k, 112 * k); }
-Rect2 top_right_box(const Vector2 &sz) { const float k = ui_k(sz); return Rect2(sz.x - (24 + 176) * k, 24 * k, 176 * k, 176 * k); }
-Rect2 use_rect(const Vector2 &sz) { const float k = ui_k(sz); return Rect2(sz.x - (24 + 176) * k, (24 + 176 + 8) * k, 176 * k, 76 * k); }
+Rect2 top_right_box(const Vector2 &sz) { const float k = ui_k(sz); return Rect2(sz.x - (24 + 76) * k, 24 * k, 76 * k, 76 * k); }   // (Yasin: the arrow box, the phone button's size)
+Rect2 use_rect(const Vector2 &sz) { const float k = ui_k(sz); return Rect2(sz.x - (24 + 176) * k, (24 + 76 + 8) * k, 176 * k, 76 * k); }
 
 } // namespace plate
 } // namespace godot

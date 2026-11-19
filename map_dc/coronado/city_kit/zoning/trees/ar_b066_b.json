@@ -1,0 +1,57 @@
+{
+ "area": "ar_b066_b",
+ "piece": "s_ar_b066_b",
+ "zone": "Arterial",
+ "rule": "docs/TREE_PLAN.md: arterials - trees on the grass strips only; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -473.934,
+    2.15,
+    -1411.385
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west grass strip, 2.8 m off the speed sign (stays readable from the lane): fan palm"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    -495.881,
+    2.15,
+    -1411.373
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west grass strip, 22 m on: second fan palm of the side"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -431.177,
+    2.15,
+    -1388.727
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east grass strip, nothing within 3 m: fan palm, one species along the arterial"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    -453.833,
+    2.15,
+    -1388.787
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east grass strip, 22.6 m on: same run"
+  }
+ ]
+}

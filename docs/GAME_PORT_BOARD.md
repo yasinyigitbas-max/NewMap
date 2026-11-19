@@ -88,7 +88,7 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
       tap is detected from the GYRO, the ACCELEROMETER and the MICROPHONE together (Yasin): all three must agree.
 6e. [x] (19 Nov, tests/game/test_save_picture.gd in a real window; the main thread reads the frame in 6.7 ms on the PC, the shrink and jpg on a thread; NOT measured on the phone) THE SAVED GAME'S PICTURE: the menu and the loading screen show where the save left off (taken from the game),
       Continue fades from it into that place seamlessly; black when there is no save.
-7. [ ] HUD (Yasin's layout: top right a box the size of the phone icon with a "3D-looking" flat arrowhead: GREEN pointing
+7. [x] (20 Nov, tests/game/test_hud.gd in a window RESULT PASS; the phone shows a place for its map: item 8; NOT on the phone: the vibration, the touch) HUD (Yasin's layout: top right a box the size of the phone icon with a "3D-looking" flat arrowhead: GREEN pointing
       to the mission, GOLDEN YELLOW pointing north when there is none; tapping it opens the phone's full map; top left
       money and time in a box of the same size; HEALTH AND NEEDS integrated but INACTIVE for now)
       (Yasin, 19 Nov: "make sure the expansions happens animated along several frames for both the map and the phone, with

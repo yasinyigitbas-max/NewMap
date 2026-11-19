@@ -39,7 +39,7 @@ class CityPlayer : public CharacterBody3D {
 	bool crouch = false, jump_want = false, space_was = false, c_was = false, airborne = false;
 	float land_t = 0.0f;
 	double clock_s = 0.0;
-	Rect2 no_touch[4]; int n_no_touch = 0;   // screen rectangles that are buttons (the Use plate, the phone): not move / look
+	Rect2 no_touch[8]; int n_no_touch = 0;   // screen rectangles that are buttons (the Use plate, the phone): not move / look
 	// COMBAT (Yasin: "when phone is swung down in landscape, we should enter combat mode ... tapping the back [throws] a
 	// punch, alternating between right and left"; "gyro accelero and mic ... at the same time to detect those taps").
 	// The crowd (CityCrowd) locks the target and keeps the score; this holds the stance, faces the target, throws the
@@ -88,7 +88,7 @@ public:
 	bool get_crouch() const { return crouch; }
 	void jump() { jump_want = true; }
 	// a button's rectangle on the screen that move / look must not take (k 0..3)
-	void set_no_touch(int p_k, const Rect2 &p_r) { if (p_k >= 0 && p_k < 4) { no_touch[p_k] = p_r; n_no_touch = std::max(n_no_touch, p_k + 1); } }
+	void set_no_touch(int p_k, const Rect2 &p_r) { if (p_k >= 0 && p_k < 8) { no_touch[p_k] = p_r; n_no_touch = std::max(n_no_touch, p_k + 1); } }
 	Vector2 get_touch_move() const { return touch_mv; }
 	bool is_frozen() const { return frozen; }
 	// somebody hits him: he is knocked that way (m/s)
