@@ -1,0 +1,11 @@
+{
+ "area": "hs_b5_school", "piece": "n_hs_b5_school", "zone": "high street (school grounds)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - clumps of 3-5 at the edges and round the seating, open lawn in the middle (zone 154 -> about 100); the school stands in the high-street band",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The school grounds' fourteen builder trees go (scattered over the whole lawn: corals, jacarandas, magnolias, ficus, torrey pines, palms); four come back on their own spots: a clump of three at the lawn's west edge among the planting beds, and one by the school's chain-link fence, so the middle of the lawn stays open for play.",
+ "trees": [
+  {"base": "tree_coral_a", "cond": "normal", "at": [148.8, 7.529, 85.8], "yaw": 0.0, "scale": 0.9, "why": "the lawn's west edge by the bougainvillea and the bird of paradise: the clump's first tree"},
+  {"base": "tree_ficus_b", "cond": "normal", "at": [148.8, 6.673, 95.2], "yaw": 120.0, "scale": 0.9, "why": "the same edge 9 m on: the clump's second tree, an old ficus"},
+  {"base": "tree_torrey_pine_a", "cond": "normal", "at": [152.0, 7.003, 92.0], "yaw": 240.0, "scale": 0.85, "why": "the clump's third, among the agave and the bird of paradise: a torrey pine for a mixed clump"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [209.5, 8.883, 91.0], "yaw": 60.0, "scale": 0.85, "why": "the school's east side by the chain-link fence, 9 m from the building: shade at the fence"}
+ ]
+}
