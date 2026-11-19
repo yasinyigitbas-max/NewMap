@@ -292,6 +292,13 @@ void CityPed::launch(const Vector3 &p_velocity, const Vector3 &p_impulse, const 
 	if (p_impulse.length_squared() > 1e-6f) push(p_impulse, p_at);
 }
 
+void CityPed::knock_down(const Vector3 &p_velocity, const Vector3 &p_impulse, const Vector3 &p_at) {
+	if (!made || !skel || !can_body) return;
+	launch(p_velocity, p_impulse, p_at);
+	body.knock_down();
+	falls++;
+}
+
 void CityPed::set_box(int p_index, const Vector3 &p_centre, const Vector3 &p_half, double p_yaw, const Vector3 &p_velocity, int p_count) {
 	n_boxes = std::min(std::max(p_count, 0), (int)pb::MAX_BOXES);
 	if (p_index < 0 || p_index >= pb::MAX_BOXES) return;

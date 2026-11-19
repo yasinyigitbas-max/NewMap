@@ -899,6 +899,16 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 				if (nb.act != act_now) { nb.act = act_now; nb.act_t = 0.0f; } else nb.act_t += (float)p_delta;
 				nb.v_s += (crowd->v[i] - nb.v_s) * std::min((float)p_delta * 5.0f, 1.0f);
 				clip_of(i, nb.act_t, nb.v_s, clip, speed, hold, token);
+				if (pf.walker == nb.walker && pf.angry) {   // fighting the player: his guard, a blow, a dodge, a step in
+					static const StringName GUARD("ual/PunchKick_Enter"), JAB("ual/Punch_Jab"), CROSS("ual/Punch_Cross"), DL("ual/Dodge_Left"), DR("ual/Dodge_Right"), STEP("ual/Walk_Loop");
+					speed = 1.0; token = 0;
+					static const StringName HIT_H("ual/Hit_Head"), HIT_C("ual/Hit_Chest");
+					if (pf.st == 1) { clip = (pf.attacks & 1) ? CROSS : JAB; hold = -2.0; token = pf.attacks + 1; }
+					else if (pf.st == 4) { clip = (pf.landed & 1) ? HIT_H : HIT_C; hold = -2.0; token = 2000 + pf.landed; }
+					else if (pf.st == 2) { clip = pf.dodge_dir > 0 ? DL : DR; hold = -2.0; token = 1000 + pf.dodges; }
+					else if (pf.st == 3) { clip = STEP; hold = -1.0; }
+					else { clip = GUARD; hold = std::max(l_fight_in - 0.03, 0.0); }
+				}
 				// in the sea: wading while the water is under the chest (his feet on the bottom), then swimming at the
 				// surface (the same two numbers as the player's)
 				{
@@ -981,6 +991,7 @@ void CityCrowd::_process(double p_delta) {
 			}
 		}
 	}
+	player_fight(p_delta);
 	near_update(p_delta, acc / STEP_S);
 	draw(acc / STEP_S);
 	extras_update(acc / STEP_S);
@@ -1113,6 +1124,131 @@ Array CityCrowd::near_bodies() const {
 	return out;
 }
 
+void CityCrowd::end_fight(bool p_release) {
+	if (pf.walker >= 0 && p_release) {
+		const int i = crowd->find(pf.walker);
+		if (i >= 0 && crowd->mode[i] == pc::M_HELD) { crowd->to_body(pf.walker, true, crowd->x[i], crowd->z[i]); crowd->to_body(pf.walker, false, crowd->x[i], crowd->z[i]); }   // (he walks back to the pavement)
+	}
+	CityPlayer *pl = player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
+	if (pl) pl->set_combat(false, Vector3());
+	pf.walker = -1; pf.angry = false; pf.st = 0; pf.punch_in = -1.0f;
+}
+
+void CityCrowd::player_fight(double p_delta) {
+	CityPlayer *pl = player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
+	if (!pl || !pl->is_inside_tree()) { if (pf.walker >= 0) end_fight(true); return; }
+	const float dt = (float)p_delta;
+	CityPed *pfig = pl->figure();
+	if (pf.player_down) {   // beaten: he lies until his body has him up again
+		if (pfig && pfig->get_mode() == CityPed::MODE_ANIM) { pf.player_down = false; pl->set_frozen(false); }
+		pl->take_combat_request();
+		return;
+	}
+	const Vector3 pp = pl->get_global_position();
+	if (pl->take_combat_request()) {
+		if (pf.walker >= 0) { end_fight(true); return; }   // (asked again: he lets it go)
+		int best = -1; float bd = 10.0f * 10.0f;
+		for (int i = 0; i < crowd->hi; i++) {
+			if (!crowd->alive[i] || (crowd->flags[i] & pc::F_HIDDEN) || (crowd->mode[i] != pc::M_LINE && crowd->mode[i] != pc::M_STAY && crowd->mode[i] != pc::M_HELD) || crowd->act[i] == pc::A_FIGHT) continue;
+			if (crowd->pkind[i] == pc::PK_FAMILY && crowd->slot[i] >= 2) continue;   // (never a child)
+			const float dx = crowd->x[i] - pp.x, dz = crowd->z[i] - pp.z, d2 = dx * dx + dz * dz;
+			if (d2 < bd) { bd = d2; best = i; }
+		}
+		if (best < 0) return;
+		const int keep = pf.locks + 1;
+		pf = PFight(); pf.locks = keep;
+		pf.walker = crowd->id[best];
+		pl->set_combat(true, Vector3(crowd->x[best], crowd->y[best], crowd->z[best]));
+	}
+	if (pf.walker < 0) return;
+	const int i = crowd->find(pf.walker);
+	if (i < 0) { end_fight(false); return; }
+	Near *nb = nullptr;
+	for (Near &n : near_pool) if (n.walker == pf.walker) nb = &n;
+	Vector3 at(crowd->x[i], crowd->y[i], crowd->z[i]);
+	if (nb && nb->ped->get_mode() != CityPed::MODE_ANIM) at = nb->ped->body_at();
+	Vector3 to = at - pp; to.y = 0.0f;
+	const float dist = to.length();
+	if (dist > 25.0f) { end_fight(true); return; }
+	pl->set_combat(true, at);
+	const Vector3 dir = dist > 0.01f ? to / dist : Vector3(0, 0, 1);
+	// his punch lands a quarter of a second in, if the other is in reach before him and not getting out of the way
+	if (const int side = pl->take_punch()) {
+		pf.punch_in = 0.25f; (void)side;
+		// once he fights, he may see it coming and step aside (it misses)
+		if (pf.angry && pf.st == 0 && (!nb || nb->ped->get_mode() == CityPed::MODE_ANIM) && UtilityFunctions::randf() < 0.35) {
+			pf.st = 2; pf.st_t = 0.0f; pf.dodges++; pf.dodge_dir = UtilityFunctions::randf() < 0.5 ? 1 : -1;
+		}
+	}
+	if (pf.punch_in >= 0.0f) {
+		pf.punch_in -= dt;
+		if (pf.punch_in < 0.0f) {
+			const float fy = pl->get_global_rotation().y;
+			const Vector3 face(std::sin(fy), 0.0f, std::cos(fy));
+			const bool in_reach = dist < 1.35f && (pfig ? true : face.dot(dir) > 0.6f) && pf.st != 2;
+			if (in_reach) {
+				pf.landed++; pf.hp--;
+				if (!pf.angry) { pf.angry = true; pf.ai_t = 0.5f; pf.st = 0; }   // (from the first blow he fights)
+				// a blow staggers him (a push at the head, light); the last one drops him as a whole body with its weight: the
+				// body leaves backwards at 2.8 m/s and a small push at the head tips it over (Yasin: "let them fall to ground
+				// ragdolling, but not weightlessly"; one part pushed with the whole body's momentum flies like a kite)
+				// an ordinary blow: he takes it on his feet (the hit clips, as in the crowd's own fights) and stays in the fight;
+				// the last one drops him as a whole body with its weight (the balancing body, falling: it does not catch itself)
+				if (pf.hp <= 0) { if (nb) { nb->ped->knock_down(dir * 2.8f, dir * 45.0f, at + Vector3(0, 1.55f, 0)); nb->push_cd = 1.0f; nb->why = 4; } }
+				else { pf.st = 4; pf.st_t = 0.0f; pf.ai_t = 0.25f; }
+				if (pf.hp <= 0) { pf.npc_beaten++; crowd->hurt_t[i] = 40.0f; end_fight(false); return; }   // (down by his body; he gets up and walks off hurt)
+			} else pf.missed++;
+		}
+	}
+	if (!pf.angry) return;   // (until he is hit he goes on with his day)
+	if (crowd->mode[i] == pc::M_LINE || crowd->mode[i] == pc::M_STAY) crowd->hold(pf.walker, true, std::atan2(-dir.x, -dir.z));
+	else crowd->face_yaw[i] = std::atan2(-dir.x, -dir.z);
+	if (nb && nb->ped->get_mode() != CityPed::MODE_ANIM) { pf.ai_t = std::min(pf.ai_t, 0.3f); return; }   // (staggering from a blow: nothing else; then he answers at once)
+	pf.st_t += dt; pf.ai_t -= dt;
+	if (pf.st == 1) {   // his blow lands at 0.32 s if the player is in reach
+		if (!pf.hit_done && pf.st_t > 0.32f) {
+			pf.hit_done = true;
+			if (dist < 1.45f) {
+				pf.hits_on_player++; pf.php--;
+				if (pf.php <= 0) { if (pfig) pfig->knock_down(-dir * 2.8f, -dir * 45.0f, pp + Vector3(0, 1.55f, 0)); }
+				else pl->take_hit();   // (on his feet: the hit clip)
+				if (pf.php <= 0) {   // the player is beaten: down, still, until his body has him up; the other walks off
+					pf.player_beaten++; pf.player_down = true; pl->set_frozen(true);
+					end_fight(true);
+					return;
+				}
+			}
+		}
+		if (pf.st_t > 0.65f) { pf.st = 0; pf.st_t = 0.0f; }
+	} else if (pf.st == 4) {   // taking a blow
+		if (pf.st_t > 0.45f) { pf.st = 0; pf.st_t = 0.0f; }
+	} else if (pf.st == 2) {   // a step to the side, out of the way
+		if (crowd->mode[i] == pc::M_HELD) {
+			const Vector3 side(dir.z * (float)pf.dodge_dir, 0.0f, -dir.x * (float)pf.dodge_dir);
+			crowd->shift_held(i, crowd->x[i] + side.x * 1.8f * dt, crowd->z[i] + side.z * 1.8f * dt);
+		}
+		if (pf.st_t > 0.55f) { pf.st = 0; pf.st_t = 0.0f; }
+	} else if (pf.st == 3) {   // in to reach
+		if (crowd->mode[i] == pc::M_HELD) crowd->shift_held(i, crowd->x[i] - dir.x * 1.3f * dt, crowd->z[i] - dir.z * 1.3f * dt);
+		if (dist < 1.15f || pf.st_t > 2.0f) { pf.st = 0; pf.st_t = 0.0f; }
+	} else if (pf.ai_t <= 0.0f) {   // his guard: what next
+		const float r = (float)(UtilityFunctions::randf());
+		pf.st_t = 0.0f; pf.hit_done = false;
+		if (dist > 1.5f) pf.st = 3;
+		else if (r < 0.55f) { pf.st = 1; pf.attacks++; }
+		else if (r < 0.85f) { pf.st = 2; pf.dodges++; pf.dodge_dir = UtilityFunctions::randf() < 0.5 ? 1 : -1; }
+		pf.ai_t = 0.7f + (float)UtilityFunctions::randf() * 0.8f;
+	}
+}
+
+Dictionary CityCrowd::fight_stats() const {
+	Dictionary d;
+	d["walker"] = pf.walker; d["npc_health"] = pf.hp; d["player_health"] = pf.php; d["angry"] = pf.angry; d["state"] = pf.st;
+	d["landed"] = pf.landed; d["missed"] = pf.missed; d["attacks"] = pf.attacks; d["hits_on_player"] = pf.hits_on_player; d["dodges"] = pf.dodges;
+	d["npc_beaten"] = pf.npc_beaten; d["player_beaten"] = pf.player_beaten; d["locks"] = pf.locks; d["player_down"] = pf.player_down;
+	return d;
+}
+
 Dictionary CityCrowd::stats() const {
 	Dictionary d;
 	const pc::Stats &s = crowd->st;
@@ -1180,6 +1316,7 @@ void CityCrowd::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("place_walker", "at", "look"), &CityCrowd::place_walker);
 	ClassDB::bind_method(D_METHOD("pavement_near", "at", "max_d"), &CityCrowd::pavement_near);
 	ClassDB::bind_method(D_METHOD("walk_points", "step"), &CityCrowd::walk_points);
+	ClassDB::bind_method(D_METHOD("fight_stats"), &CityCrowd::fight_stats);
 	ClassDB::bind_method(D_METHOD("remove_walker", "id"), &CityCrowd::remove_walker);
 	ClassDB::bind_method(D_METHOD("set_goal", "id", "place", "stay_s", "enter"), &CityCrowd::set_goal);
 	ClassDB::bind_method(D_METHOD("set_goal_point", "id", "at", "stay_s"), &CityCrowd::set_goal_point);

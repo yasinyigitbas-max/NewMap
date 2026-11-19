@@ -359,3 +359,5 @@ the other agent suggested these
 - [2026-11-19] make npcs defend themselves attack back or try to dodge sideways once we hit them, they shouldnt get into combat mode unless we hit them
 
 - [2026-11-19] player will tap the back of the phone for hitsm gyro accelero and mic will be used at the same time to detect thoose taps
+
+- [2026-11-19] once they are defeated let them fall to ground ragdolling, but not weightlessly

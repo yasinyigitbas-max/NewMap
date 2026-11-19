@@ -43,6 +43,7 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 - "make npcs defend themselves attack back or try to dodge sideways once we hit them, they shouldnt get into combat mode
   unless we hit them"; "player will tap the back of the phone for hitsm gyro accelero and mic will be used at the same
   time to detect thoose taps"
+- "once they are defeated let them fall to ground ragdolling, but not weightlessly"
 - Standing rules: everything per frame or tick in C++ (memory: runtime code in C++); scripts only for tools and tests;
   one question, one run; the phone last; don't waste his usage or his PC; say what was not checked.
 
@@ -77,7 +78,7 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
       and right-half look, double taps (crouch / jump), the Use plate, the phone button; the car's GAS / BRAKE plates and
       speed plate; the bike the same (blank left steering, two pedals at the lower right, only while riding: done in a
       first form). Keys as the old game.
-6f. [ ] COMBAT MODE (Yasin): a hard downward swing of the phone (landscape; the accelerometer) enters it: the player takes
+6f. [x] (19 Nov, tests/people/test_player_fight.gd; the phone sensing is written but NOT tried on a phone) COMBAT MODE (Yasin): a hard downward swing of the phone (landscape; the accelerometer) enters it: the player takes
       his fighting stance (PunchKick_Enter / fight idle), locks onto the nearest person and stays locked until one of them
       is beaten; a tap on the BACK of the phone (a sharp spike on the accelerometer) throws a punch, right and left in
       turn (Punch_Jab / Punch_Cross); people have low health (a few jabs), blows and falls by the balancing body, the

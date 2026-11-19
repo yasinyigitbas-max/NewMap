@@ -3,6 +3,12 @@
 
 #include "city_ped.h"
 
+#include <godot_cpp/classes/audio_effect_capture.hpp>
+#include <godot_cpp/classes/audio_server.hpp>
+#include <godot_cpp/classes/audio_stream_microphone.hpp>
+#include <godot_cpp/classes/audio_stream_player.hpp>
+#include <godot_cpp/classes/os.hpp>
+
 #include <godot_cpp/classes/capsule_shape3d.hpp>
 #include <godot_cpp/classes/collision_shape3d.hpp>
 #include <godot_cpp/classes/engine.hpp>
@@ -43,6 +49,18 @@ void CityPlayer::_ready() {
 	cam->set_fov(62.0); cam->set_near(0.1); cam->set_far(1500.0);
 	add_child(cam);
 	cam->make_current();
+	if (OS::get_singleton()->has_feature("mobile")) {   // the microphone, for the back tap's knock (its sound must agree with the motion)
+		AudioServer *as = AudioServer::get_singleton();
+		int b = as->get_bus_index("TapMic");
+		if (b < 0) { as->add_bus(); b = as->get_bus_count() - 1; as->set_bus_name(b, "TapMic"); as->set_bus_volume_db(b, -80.0f); }
+		Ref<AudioEffectCapture> cap; cap.instantiate(); cap->set_buffer_length(0.25f);
+		as->add_bus_effect(b, cap);
+		mic_cap = cap.ptr(); cap->reference();
+		AudioStreamPlayer *mp = memnew(AudioStreamPlayer);
+		Ref<AudioStreamMicrophone> ms; ms.instantiate();
+		mp->set_stream(ms); mp->set_bus("TapMic");
+		add_child(mp); mp->play();
+	}
 	cam_yaw = get_rotation().y + 3.14159265f;
 	yaw = std::atan2(-std::sin(cam_yaw), -std::cos(cam_yaw));   // (he looks the way his camera looks)
 	if (capture_mouse) Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
@@ -98,9 +116,52 @@ void CityPlayer::_input(const Ref<InputEvent> &p_event) {
 
 void CityPlayer::set_move(const Vector2 &p_dir, bool p_run) { cmd = p_dir; cmd_run = p_run; scripted = true; }
 
+// The phone's motion and the microphone: a hard swing down (the gyro over 7 rad/s with 12 m/s2 more than gravity)
+// asks for combat; a tap on the back is a short sharp knock on the accelerometer (3.5 m/s2 over its own running level)
+// while the gyro stays quiet (it is not a swing), with a knock on the microphone within 0.1 s: all three must agree.
+void CityPlayer::sense(double p_dt) {
+	Input *in = Input::get_singleton();
+	swing_cd = std::max(0.0, swing_cd - p_dt); tap_cd = std::max(0.0, tap_cd - p_dt);
+	const Vector3 a = in->get_accelerometer(), g = in->get_gyroscope();
+	if (a.length_squared() < 1e-6f) return;   // (no sensors: a PC)
+	if (!acc_init) { acc_lp = a; acc_init = true; }
+	const Vector3 hp = a - acc_lp;
+	acc_lp += (a - acc_lp) * (float)std::min(1.0, p_dt * 4.0);
+	const float gyro = g.length();
+	if (gyro > 7.0f && std::fabs(a.length() - 9.81f) > 12.0f && swing_cd <= 0.0) { combat_req = true; swing_cd = 1.5; }
+	if (hp.length() > 3.5f && gyro < 3.0f) acc_spike_t = clock_s;
+	if (mic_cap) {
+		const int n = mic_cap->get_frames_available();
+		if (n > 0) {
+			const PackedVector2Array fr = mic_cap->get_buffer(n);
+			float peak = 0.0f;
+			for (int k = 0; k < fr.size(); k++) peak = std::max(peak, std::max(std::fabs(fr[k].x), std::fabs(fr[k].y)));
+			if (peak > 0.25f && peak > mic_avg * 5.0f) mic_spike_t = clock_s;
+			mic_avg += (peak - mic_avg) * 0.05f;
+		}
+	} else mic_spike_t = acc_spike_t;   // (no microphone: the motion alone)
+	if (combat && tap_cd <= 0.0 && acc_spike_t > clock_s - 0.12 && std::fabs(acc_spike_t - mic_spike_t) < 0.1) { punch_req = true; tap_cd = 0.25; acc_spike_t = -9.0; }
+}
+
+int CityPlayer::take_punch() {
+	if (!punch_req || !combat || punch_t < punch_len * 0.7) { punch_req = false; return 0; }
+	punch_req = false;
+	punch_t = 0.0; punch_side ^= 1; punches++;
+	return 1 + punch_side;
+}
+
 void CityPlayer::_physics_process(double p_delta) {
 	if (!fig) return;
 	const float dt = (float)p_delta;
+	sense(p_delta);
+	punch_t += p_delta; hit_t += p_delta;
+	{   // a PC: F fights, J or a left click punches
+		Input *ki = Input::get_singleton();
+		const bool f = ki->is_key_pressed(KEY_F), j = ki->is_key_pressed(KEY_J), m = ki->is_mouse_button_pressed(MOUSE_BUTTON_LEFT) && ki->get_mouse_mode() == Input::MOUSE_MODE_CAPTURED;
+		if (f && !f_was) combat_req = true;
+		if ((j && !j_was) || (m && !m_was)) punch();
+		f_was = f; j_was = j; m_was = m;
+	}
 	Input *in = Input::get_singleton();
 	Vector2 mv = cmd; bool run = cmd_run;
 	if (!scripted && !frozen) {   // W A S D or the left stick; Shift (or the right trigger) runs; the arrows or the right stick turn the view
@@ -137,6 +198,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	if (swimming) crouch = false;
 	float top = swimming ? (run ? 1.7f : 1.0f) : (run ? run_speed : walk_speed);
 	if (crouch && !swimming) top *= 0.45f;
+	if (combat) top = std::min(top, 1.4f);   // (in his stance he steps, he does not run)
 	const Vector3 want = (fwd * mv.y + right * mv.x) * top;
 	Vector3 v = get_velocity();
 	const Vector3 hv(v.x, 0, v.z);
@@ -151,7 +213,12 @@ void CityPlayer::_physics_process(double p_delta) {
 	move_and_slide();
 	const Vector3 got = get_velocity();
 	speed = Vector3(got.x, 0, got.z).length();
-	if (speed > 0.25f) {   // he faces the way he walks
+	if (combat) {   // in combat he faces his target whichever way he steps
+		const Vector3 to = combat_target - get_global_position();
+		const float want_yaw = std::atan2(to.x, to.z);
+		float d = std::fmod(want_yaw - yaw + 3.14159265f, 6.2831853f); if (d < 0.0f) d += 6.2831853f; d -= 3.14159265f;
+		yaw += std::min(std::max(d, -10.0f * dt), 10.0f * dt);
+	} else if (speed > 0.25f) {   // he faces the way he walks
 		const float want_yaw = std::atan2(got.x, got.z);
 		float d = std::fmod(want_yaw - yaw + 3.14159265f, 6.2831853f); if (d < 0.0f) d += 6.2831853f; d -= 3.14159265f;
 		yaw += std::min(std::max(d, -9.0f * dt), 9.0f * dt);
@@ -166,6 +233,13 @@ void CityPlayer::_physics_process(double p_delta) {
 	if (swimming) { clip = speed > 0.25f ? SWIM : FLOAT; cs = speed > 0.25f ? speed / 1.0 : 1.0; }
 	else if (airborne) { clip = get_velocity().y > 1.0f ? J_UP : J_AIR; hold = get_velocity().y > 1.0f ? -2.0 : -1.0; }
 	else if (land_t > 0.0f) { clip = J_LAND; hold = -2.0; }
+	else if (combat) {   // his guard (the way into a fight, held on its last frame); a punch, the jab and the cross in turn
+		static const StringName GUARD("ual/PunchKick_Enter"), JAB("ual/Punch_Jab"), CROSS("ual/Punch_Cross");
+		static const StringName HIT("ual/Hit_Chest");
+		if (hit_t < 0.45) { clip = HIT; hold = -2.0; }
+		else if (punch_t < punch_len) { clip = punch_side == 0 ? JAB : CROSS; hold = -2.0; }
+		else { clip = GUARD; hold = std::max(fig->clip_len(GUARD) - 0.03, 0.0); }
+	}
 	else if (crouch) { clip = speed > 0.2f ? CR_FWD : CR_IDLE; cs = speed > 0.2f ? speed / 0.8 : 1.0; }
 	else if (speed > 3.6f) { clip = SPRINT; cs = speed / 3.1; }
 	else if (speed > 2.0f) { clip = JOG; cs = speed / 2.4; }
@@ -215,6 +289,11 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_crouch", "on"), &CityPlayer::set_crouch);
 	ClassDB::bind_method(D_METHOD("get_crouch"), &CityPlayer::get_crouch);
 	ClassDB::bind_method(D_METHOD("jump"), &CityPlayer::jump);
+	ClassDB::bind_method(D_METHOD("request_combat"), &CityPlayer::request_combat);
+	ClassDB::bind_method(D_METHOD("punch"), &CityPlayer::punch);
+	ClassDB::bind_method(D_METHOD("get_combat"), &CityPlayer::get_combat);
+	ClassDB::bind_method(D_METHOD("get_punches"), &CityPlayer::get_punches);
+	ClassDB::bind_method(D_METHOD("get_hits_taken"), &CityPlayer::get_hits_taken);
 	ClassDB::bind_method(D_METHOD("set_no_touch", "index", "rect"), &CityPlayer::set_no_touch);
 	ClassDB::bind_method(D_METHOD("get_touch_move"), &CityPlayer::get_touch_move);
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "water_y"), "set_water_y", "get_water_y");

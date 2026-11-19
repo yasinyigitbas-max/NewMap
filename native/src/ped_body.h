@@ -116,6 +116,8 @@ public:
 	void start_pose(const V3 *px, const Q *pq, const V3 *pv, float yaw);
 	// A knock: an impulse (N s) on a part at a point of the world
 	void impulse(int body, V3 point, V3 imp);
+	// Beaten: it does not catch itself; the fall from here (the arms reach for the ground, the strength drains)
+	void knock_down() { if (state == ST_BALANCE) go_fall(); }
 	void step(float dt);
 	V3 com() const;
 	V3 pressing_at() const { return cop; }   // (for a trace)

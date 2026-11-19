@@ -123,6 +123,20 @@ private:
 	// counters
 	WayFloor way_floor;      // a collision floor 3 cm under every pavement and crossing (the city's collision has holes)
 	int riders_drawn = 0;   // the traffic's cyclists drawn as riders this frame
+	// THE PLAYER'S FIGHT (Yasin: "locking onto the nearest npc, and keep locked on until they are or we are defeated. give
+	// npcs some low health that takes a few jabs"; "make npcs defend themselves attack back or try to dodge sideways once we
+	// hit them, they shouldnt get into combat mode unless we hit them"). Locked on the nearest person; he goes on with his
+	// day until he is hit; from the first blow he faces the player and fights: steps in, hits back, or dodges sideways.
+	// Four jabs beat him, eight blows beat the player; the beaten one goes down by his balancing body (never killed).
+	struct PFight {
+		int walker = -1, hp = 4, php = 8, st = 0, dodge_dir = 1;   // st: 0 guard, 1 a blow, 2 a dodge, 3 stepping in
+		bool angry = false, hit_done = false, player_down = false;
+		float ai_t = 0.0f, st_t = 0.0f, punch_in = -1.0f;
+		int landed = 0, missed = 0, attacks = 0, hits_on_player = 0, dodges = 0, npc_beaten = 0, player_beaten = 0, locks = 0;
+	} pf;
+	void player_fight(double p_delta);
+	void end_fight(bool p_release);
+	Dictionary fight_stats() const;
 	// cyclists who came off (CityTraffic::bikes_down_now): each is a person on the road now, given a near body at once
 	// and thrown by the blow; if no body can be his within 1.5 s (far from the camera) he just walks to the pavement
 	struct Thrown { int walker; Vector3 vel, imp, at; float t; };

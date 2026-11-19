@@ -99,6 +99,8 @@ public:
 	// Thrown as a whole (off a bicycle, by a car): every part of the body leaves at p_velocity (m/s), and p_impulse (N s)
 	// on the part nearest p_at turns it over (a push on one part with the whole body's momentum flew it up like a kite)
 	void launch(const Vector3 &p_velocity, const Vector3 &p_impulse, const Vector3 &p_at);
+	// ... and beaten: thrown so, it falls (it does not catch itself) and lies; it gets up by itself later
+	void knock_down(const Vector3 &p_velocity, const Vector3 &p_impulse, const Vector3 &p_at);
 	// Something solid that moves (a car), for this step and until told again: box p_index at p_centre with half sizes,
 	// heading and speed. p_count = how many boxes there are now.
 	void set_box(int p_index, const Vector3 &p_centre, const Vector3 &p_half, double p_yaw, const Vector3 &p_velocity, int p_count);

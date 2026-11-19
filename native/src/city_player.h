@@ -40,6 +40,21 @@ class CityPlayer : public CharacterBody3D {
 	float land_t = 0.0f;
 	double clock_s = 0.0;
 	Rect2 no_touch[4]; int n_no_touch = 0;   // screen rectangles that are buttons (the Use plate, the phone): not move / look
+	// COMBAT (Yasin: "when phone is swung down in landscape, we should enter combat mode ... tapping the back [throws] a
+	// punch, alternating between right and left"; "gyro accelero and mic ... at the same time to detect those taps").
+	// The crowd (CityCrowd) locks the target and keeps the score; this holds the stance, faces the target, throws the
+	// punches. On a PC: F fights, a left click or J punches.
+	bool combat = false, combat_req = false, punch_req = false, f_was = false, j_was = false, m_was = false;
+	Vector3 combat_target;
+	int punch_side = 0;            // 0 the left (jab), 1 the right (cross): taken in turn
+	double punch_t = 9.0, punch_len = 0.6, swing_cd = 0.0, tap_cd = 0.0;
+	int punches = 0, hits_taken = 0;
+	double hit_t = 9.0;
+	Vector3 acc_lp; bool acc_init = false;
+	double acc_spike_t = -9.0, mic_spike_t = -9.0;
+	float mic_avg = 0.01f;
+	class AudioEffectCapture *mic_cap = nullptr;
+	void sense(double p_dt);
 	double water_y = -1000.0;   // the water's surface (-1000 = there is none): deeper than his chest he swims
 	bool swimming = false;
 
@@ -58,6 +73,16 @@ public:
 	// he stands and takes no keys (while a line is typed to somebody)
 	void set_frozen(bool p_on) { frozen = p_on; }
 	void set_crouch(bool p_on) { crouch = p_on; }
+	// combat: asked for (a swing / F) and punches (a back tap / J / click) are taken by the crowd
+	void request_combat() { combat_req = true; }
+	void punch() { if (combat) punch_req = true; }
+	bool take_combat_request() { const bool r = combat_req; combat_req = false; return r; }
+	int take_punch();   // 0 none, else 1 + the side of a punch that starts now
+	void set_combat(bool p_on, const Vector3 &p_target) { combat = p_on; combat_target = p_target; if (!p_on) punch_req = false; }
+	bool get_combat() const { return combat; }
+	int get_punches() const { return punches; }
+	void take_hit() { hit_t = 0.0; hits_taken++; }   // a blow taken on his feet (the hit clip)
+	int get_hits_taken() const { return hits_taken; }
 	bool get_crouch() const { return crouch; }
 	void jump() { jump_want = true; }
 	// a button's rectangle on the screen that move / look must not take (k 0..3)

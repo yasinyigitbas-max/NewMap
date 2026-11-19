@@ -231,6 +231,7 @@ public:
 	// ---- hooks for the rest of the game (each returns false / -1 when it cannot)
 	int place_walker(float p_x, float p_z, uint32_t p_look);       // a person on the pavement nearest that point; its id
 	int place_held_at(float p_x, float p_z, uint32_t p_look, float p_yaw);   // a person exactly there (off the pavement too), held facing p_yaw
+	void shift_held(int p_row, float p_x, float p_z) { if (p_row >= 0 && p_row < hi && mode[p_row] == M_HELD) move_row(p_row, p_x, p_z); }   // (a held person stepped somewhere: a fight's dodge)
 	bool remove_walker(int p_id);
 	bool set_goal(int p_id, int p_place, float p_stay_s, bool p_enter);   // go to a place; stay there so long, or go in
 	bool set_goal_point(int p_id, float p_x, float p_z, float p_stay_s);  // go to the pavement nearest a point and stay
