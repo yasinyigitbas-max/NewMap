@@ -160,6 +160,8 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   balancing, impacts, falls. OPEN: a body pushed from the front may never come to rest (taken back after 6 s);
   swimming not used yet. WAITS FOR YASIN'S GO, after all shops are in: people INSIDE the stores (keeper at the
   counter, customers), with the counter clips.
+  Then: the player swims (`CityPlayer.water_y`, `tests/people/test_swim.gd` RESULT PASS; `--walk=1 --water=Y`); the
+  crowd does not swim yet (needs places in the sea). Lock test RESULT PASS at the end of the round.
   STILL TO DO FOR "DONE": the game's node (join to the traffic, draw far figures and the 18 near bodies with the
   acts' animations, the balancing body for a walker who is pushed or hit, capsules round the player, umbrellas,
   towels, murmur), a player on foot, the talking, a bus line, the real get-up. NO PICTURE OF THE CROWD EXISTS YET.

@@ -29,6 +29,8 @@ class CityPlayer : public CharacterBody3D {
 	float cam_yaw = 0.0f, cam_pitch = -0.18f, cam_dist = 3.4f, yaw = 0.0f, speed = 0.0f;
 	float walk_speed = 1.6f, run_speed = 4.6f;
 	Vector3 cam_pos, knock_v;
+	double water_y = -1000.0;   // the water's surface (-1000 = there is none): deeper than his chest he swims
+	bool swimming = false;
 
 protected:
 	static void _bind_methods();
@@ -47,6 +49,12 @@ public:
 	bool is_frozen() const { return frozen; }
 	// somebody hits him: he is knocked that way (m/s)
 	void knock(const Vector3 &p_v) { knock_v += p_v; }
+	// water: he walks in; where it is deeper than 1.15 m he swims at the surface; where it gets shallower than 0.9 m he
+	// stands up and walks out
+	void set_water_y(double p_y) { water_y = p_y; }
+	double get_water_y() const { return water_y; }
+	bool is_swimming() const { return swimming; }
+	String get_clip() const;
 	double get_speed() const { return speed; }
 	CityPed *figure() { return fig; }
 	void set_body_id(const String &p_id) { body_id = p_id; }

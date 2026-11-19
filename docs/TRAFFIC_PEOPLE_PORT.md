@@ -1185,3 +1185,9 @@ One picture: `review/people_19nov/acts_pro.jpg` (a man sits, a woman sits on the
   words for anger: gestures only (Yasin: voices come later). (4) Swimming: the clips are fitted, nobody swims yet.
   (5) Counter clips (cashiers) wait for the people in the shops, which wait for Yasin's go. (6) Seen in still
   pictures only, never in motion.
+- SWIMMING (the player), added after the above: `CityPlayer.water_y` = the water's surface. He walks in; where his
+  feet are 1.15 m under it he swims at the surface (Swim_Fwd_Loop, 1.0 m/s, 1.7 with Shift; Swim_Idle_Loop when he
+  lets go); where the ground comes up to 0.9 m he stands up and walks out. `tests/people/test_swim.gd` RESULT PASS
+  (a sloping slab as a beach). Test app: `--walk=1 --water=Y`. NOT DONE: the height of this map's sea is not known
+  to this code (give it with --water); nobody of the crowd swims (that needs places in the sea from the places tool).
+  The lock test (`tests/city_kit/test_locked_pieces.gd`) RESULT PASS at the end of this round (no piece was touched).

@@ -8,6 +8,9 @@
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/input_event_mouse_motion.hpp>
+#include <godot_cpp/classes/physics_direct_space_state3d.hpp>
+#include <godot_cpp/classes/physics_ray_query_parameters3d.hpp>
+#include <godot_cpp/classes/world3d.hpp>
 #include <godot_cpp/core/class_db.hpp>
 
 #include <algorithm>
@@ -73,14 +76,25 @@ void CityPlayer::_physics_process(double p_delta) {
 	if (mv.length() > 1.0f) mv = mv.normalized();
 	// the way he goes: by the view (forward = away from the camera)
 	const Vector3 fwd(-std::sin(cam_yaw), 0, -std::cos(cam_yaw)), right(std::cos(cam_yaw), 0, -std::sin(cam_yaw));
-	const float top = run ? run_speed : walk_speed;
+	// water: swimming begins where his feet are 1.15 m under the surface, and ends where the ground comes up to 0.9 m
+	const Vector3 here = get_global_position();
+	if (water_y > -999.0) {
+		if (!swimming && here.y < water_y - 1.15) swimming = true;
+		else if (swimming) {
+			Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(here + Vector3(0, 0.6f, 0), here - Vector3(0, 3.0f, 0), 1);
+			const Dictionary hit = get_world_3d()->get_direct_space_state()->intersect_ray(q);
+			if (!hit.is_empty() && water_y - (double)Vector3(hit["position"]).y < 0.9) swimming = false;
+		}
+	} else swimming = false;
+	const float top = swimming ? (run ? 1.7f : 1.0f) : (run ? run_speed : walk_speed);
 	const Vector3 want = (fwd * mv.y + right * mv.x) * top;
 	Vector3 v = get_velocity();
 	const Vector3 hv(v.x, 0, v.z);
 	const Vector3 nh = hv.move_toward(want, (want.length() > hv.length() ? 9.0f : 14.0f) * dt);
 	v.x = nh.x + knock_v.x; v.z = nh.z + knock_v.z;
 	knock_v = Vector3();
-	v.y = is_on_floor() ? -0.5f : v.y - 9.81f * dt;
+	if (swimming) v.y = std::min(std::max(((float)water_y - 0.38f - (float)here.y) * 4.0f, -1.5f), 1.5f);   // he floats: his body lies at the surface
+	else v.y = is_on_floor() ? -0.5f : v.y - 9.81f * dt;
 	set_velocity(v);
 	move_and_slide();
 	const Vector3 got = get_velocity();
@@ -91,13 +105,16 @@ void CityPlayer::_physics_process(double p_delta) {
 		yaw += std::min(std::max(d, -9.0f * dt), 9.0f * dt);
 	}
 	// his figure: the Quaternius clips by his pace
-	static const StringName IDLE("ual/Idle_Loop"), WALK("ual/Walk_Loop"), JOG("ual/Jog_Fwd_Loop"), SPRINT("ual/Sprint_Loop");
+	static const StringName IDLE("ual/Idle_Loop"), WALK("ual/Walk_Loop"), JOG("ual/Jog_Fwd_Loop"), SPRINT("ual/Sprint_Loop"), SWIM("ual/Swim_Fwd_Loop"), FLOAT("ual/Swim_Idle_Loop");
 	StringName clip = IDLE; double cs = 1.0;
-	if (speed > 3.6f) { clip = SPRINT; cs = speed / 3.1; }
+	if (swimming) { clip = speed > 0.25f ? SWIM : FLOAT; cs = speed > 0.25f ? speed / 1.0 : 1.0; }
+	else if (speed > 3.6f) { clip = SPRINT; cs = speed / 3.1; }
 	else if (speed > 2.0f) { clip = JOG; cs = speed / 2.4; }
 	else if (speed > 0.2f) { clip = WALK; cs = speed / 0.92; }
 	fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), get_global_position()), clip, std::min(std::max(cs, 0.5), 2.0), -1.0);
 }
+
+String CityPlayer::get_clip() const { return fig ? String(fig->current_clip()) : String(); }
 
 void CityPlayer::_process(double p_delta) {
 	if (!cam) return;
@@ -116,6 +133,11 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_frozen", "on"), &CityPlayer::set_frozen);
 	ClassDB::bind_method(D_METHOD("is_frozen"), &CityPlayer::is_frozen);
 	ClassDB::bind_method(D_METHOD("knock", "velocity"), &CityPlayer::knock);
+	ClassDB::bind_method(D_METHOD("set_water_y", "y"), &CityPlayer::set_water_y);
+	ClassDB::bind_method(D_METHOD("get_water_y"), &CityPlayer::get_water_y);
+	ClassDB::bind_method(D_METHOD("is_swimming"), &CityPlayer::is_swimming);
+	ClassDB::bind_method(D_METHOD("get_clip"), &CityPlayer::get_clip);
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "water_y"), "set_water_y", "get_water_y");
 	ClassDB::bind_method(D_METHOD("set_body_id", "id"), &CityPlayer::set_body_id);
 	ClassDB::bind_method(D_METHOD("get_body_id"), &CityPlayer::get_body_id);
 	ClassDB::bind_method(D_METHOD("set_capture_mouse", "on"), &CityPlayer::set_capture_mouse);
