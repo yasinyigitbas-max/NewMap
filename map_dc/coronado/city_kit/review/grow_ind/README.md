@@ -1,4 +1,5 @@
-# Industrial growth: variants and pilot area (18 Nov, branch claude/grow-industrial). NOTHING LOCKED.
+# Industrial growth: variants and pilot area (18 Nov, branch claude/grow-industrial). LOCKED 19 Nov (Yasin: "lock them
+# for now, rest will be handmade adjustments"): the 11 pieces and the 16 rooms.
 
 Six new blocks around the locked industrial sample (`i_*`). Each one is one 100 x 100 m corner piece at a road-kit
 junction. There are three VARIANTS, each built twice (two dressings), so no two blocks are the same. Every walk-in

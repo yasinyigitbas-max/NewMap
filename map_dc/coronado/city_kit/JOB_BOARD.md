@@ -5,6 +5,10 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov: INDUSTRIAL ZONE LOCKED (Yasin: "lock them for now, rest will be handmade adjustments"): the 11 pieces
+  (i_va_*, i_vb_*, i_vc_*, i_green_w951_n1400_se, the sample's overlay i_life_w800_n1400) in locked.json
+  "pieces", and the 16 rooms (interiors/rooms/g_ind_*.scn) in "files". Lock test RESULT PASS. From now on a change is
+  a hand-made adjustment on Yasin's word: lock.py unlock / unlockfile --by=Yasin, rebuild, check, relock.
 - 19 Nov (cloud, `claude/grow-industrial`): THE WHOLE INDUSTRIAL ZONE IS BUILT, NOTHING LOCKED (Yasin: "roll out to your
   whole zone, then do a polish pass"). Four more pieces:
   - movers + storage and the brewery south of 3rd St, draped onto G Ave's slope
