@@ -1,0 +1,59 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 56 nodes (with every mesh of the buildings), 11072 ground and ground-collision triangles, 94 prop instances, 47 colliders, 14 wear marks are identical in both files
+PROOF differences found between the files: 58 lines only in the old one, 17 only in the new one
+PROOF change #34 add_collider: plant_potted_succulent at (41.80, -1.82, 323.40) got a collision shape  [plant_potted_succulent has no collision: you walk and drive through it]
+PROOF change #35 add_collider: plant_potted_succulent at (39.20, -1.83, 318.90) got a collision shape  [plant_potted_succulent has no collision: you walk and drive through it]
+PROOF change #36 add_collider: plant_potted_leafy at (25.80, -1.85, 323.40) got a collision shape  [plant_potted_leafy has no collision: you walk and drive through it]
+PROOF change #37 add_collider: plant_potted_leafy at (31.20, -1.85, 323.40) got a collision shape  [plant_potted_leafy has no collision: you walk and drive through it]
+PROOF change #38 add_collider: plant_potted_leafy at (28.80, -1.85, 318.90) got a collision shape  [plant_potted_leafy has no collision: you walk and drive through it]
+PROOF change #1 remove palm_canary_date_a at (21.00, -1.79, 304.00) removed, in 3 tier(s) and its collider  [palm_canary_date_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove palm_mexican_fan_b at (21.00, -1.85, 318.00) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove palm_canary_date_b at (40.00, -1.82, 312.00) removed, in 3 tier(s) and its collider  [palm_canary_date_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove palm_queen_a at (26.00, -1.63, 294.00) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove prop_newspaper_box_blue at (16.30, 0.15, 211.40) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_blue stands in front of a shop window of arcade]]
+PROOF change #6 remove prop_newspaper_box_red at (16.30, 0.15, 212.10) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red stands in front of a shop window of arcade]]
+PROOF change #7 remove prop_trash_receptacle at (30.00, -1.85, 314.20) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (25.8 m from a wall, 99.0 m from a fence)]]
+PROOF change #8 remove prop_trash_receptacle at (36.80, -1.84, 323.40) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (35.3 m from a wall, 99.0 m from a fence)]]
+PROOF change #9 remove prop_trash_receptacle at (33.80, -1.84, 318.90) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (30.6 m from a wall, 99.0 m from a fence)]]
+PROOF change #10 remove prop_recycling_receptacle at (30.80, -1.85, 314.20) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (25.8 m from a wall, 99.0 m from a fence)]]
+PROOF change #11 remove prop_recycling_receptacle at (34.00, 0.13, 225.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (1.4 m from a wall, 99.0 m from a fence)]]
+PROOF change #12 remove prop_trash_cart_black at (31.00, -0.11, 239.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (2.4 m from a wall, 99.0 m from a fence)]]
+PROOF change #13 remove prop_trash_cart_blue at (31.00, -0.12, 239.80) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.4 m from a wall, 99.0 m from a fence)]]
+PROOF change #14 remove prop_trash_cart_green at (31.00, -0.14, 240.60) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.4 m from a wall, 99.0 m from a fence)]]
+PROOF change #22 remove plant_potted_succulent at (16.25, -0.59, 256.93) removed, in 1 tier(s), no collider  [erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]]
+PROOF change #23 remove plant_potted_succulent at (16.25, -0.66, 259.23) removed, in 1 tier(s), no collider  [erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]]
+PROOF change #24 remove plant_potted_succulent at (16.25, -1.46, 285.97) removed, in 1 tier(s), no collider  [erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]]
+PROOF change #25 remove plant_potted_succulent at (16.25, -1.52, 288.37) removed, in 1 tier(s), no collider  [erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]]
+PROOF change #39 add_box: a collision box [0.12633323669434, 1.49998259544373, 7.87989139556885, 0.16, 2.99996519088745, 0.16] for a column of Buildings/arcade  [arcade: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #40 add_box: a collision box [8.07297992706299, 1.49998259544373, 7.87989139556885, 0.16, 2.99996519088745, 0.16] for a column of Buildings/arcade  [arcade: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #41 add_box: a collision box [1.92311573028564, 1.49998259544373, 7.87989139556885, 0.16, 2.99996519088745, 0.16] for a column of Buildings/arcade  [arcade: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #42 add_box: a collision box [-3.93532848358154, 1.55998694896698, 7.8299036026001, 0.72998908996582, 3.11997389793396, 0.59998992919922] for a column of Buildings/arcade  [arcade: a 0.7 x 0.6 m column or post of the building has no collision]
+PROOF change #43 add_box: a collision box [6.10484027862549, 1.49998259544373, 7.77485752105713, 0.48985961914062, 2.99996519088745, 0.48989776611328] for a column of Buildings/arcade  [arcade: a 0.4 x 0.4 m column or post of the building has no collision]
+PROOF change #44 add_box: a collision box [9.8165693283081, 1.49998259544373, 7.87989139556885, 0.16, 2.99996519088745, 0.16] for a column of Buildings/arcade  [arcade: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #45 add_box: a collision box [2.03665637969971, 1.49998259544373, 6.87985992431641, 0.16, 2.99996519088745, 0.16] for a column of Buildings/pub  [pub: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #46 add_box: a collision box [0.01315879821777, 1.49998259544373, 6.87985992431641, 0.16, 2.99996519088745, 0.16] for a column of Buildings/pub  [pub: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #47 add_box: a collision box [-3.80004572868347, 1.49999821186066, 5.65000009536743, 0.16, 2.99999642372131, 0.16] for a column of Buildings/cinema  [cinema: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #48 add_box: a collision box [-2.2000458240509, 1.49999821186066, 5.65000009536743, 0.16, 2.99999642372131, 0.16] for a column of Buildings/cinema  [cinema: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #49 add_box: a collision box [2.23492121696472, 1.49998259544373, 6.77483320236206, 0.48986963272095, 2.99996519088745, 0.49008373260498] for a column of Buildings/bakery  [bakery: a 0.4 x 0.5 m column or post of the building has no collision]
+PROOF change #50 add_box: a collision box [-0.01336908340454, 1.49998259544373, 6.87996387481689, 0.16, 2.99996519088745, 0.16] for a column of Buildings/bakery  [bakery: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF note: 'Props/prop_trash_cart_green_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_blue_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_black_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_receptacle_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_canary_date_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_canary_date_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_canary_date_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_canary_date_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_canary_date_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_canary_date_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_newspaper_box_red_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_newspaper_box_blue_worn_near' held only listed items and is gone with them
+PROOF 35 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

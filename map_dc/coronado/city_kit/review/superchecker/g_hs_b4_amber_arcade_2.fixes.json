@@ -1,0 +1,58 @@
+{
+ "fixes": [
+  {
+   "at": [
+    8.53593158721924,
+    0.0,
+    1.91069996356964
+   ],
+   "base": "prop_potted_plant",
+   "chosen": true,
+   "cond": "",
+   "kind": "queue_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_potted_plant stands in the queue space in front of prop_glass_display_case]"
+  },
+  {
+   "at": [
+    3.81500005722046,
+    1.35000002384186,
+    -3.29999995231628
+   ],
+   "base": "prop_gallery_frame",
+   "cond": "",
+   "kind": "shows_through",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "move",
+   "reason": "prop_gallery_frame reaches 0.7 cm into the wall to the next shop and shows in the next shop",
+   "to": [
+    3.84200001473274,
+    1.35000002384186,
+    -3.29999995231628
+   ]
+  },
+  {
+   "at": [
+    3.81500005722046,
+    1.35000002384186,
+    -1.70000004768372
+   ],
+   "base": "prop_gallery_frame",
+   "cond": "",
+   "kind": "shows_through",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "move",
+   "reason": "prop_gallery_frame reaches 0.7 cm into the wall to the next shop and shows in the next shop",
+   "to": [
+    3.84200001473274,
+    1.35000002384186,
+    -1.70000004768372
+   ]
+  }
+ ],
+ "scene": "g_hs_b4_amber_arcade_2"
+}

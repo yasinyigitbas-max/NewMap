@@ -1,0 +1,24 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -0.180000007152557,
+    1.35000002384186,
+    -2.84999990463257
+   ],
+   "base": "prop_poster_case",
+   "cond": "",
+   "kind": "shows_through",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "move",
+   "reason": "prop_poster_case reaches 1.5 cm into the wall to the next shop and shows in the next shop",
+   "to": [
+    -0.215000017565084,
+    1.35000002384186,
+    -2.84999990463257
+   ]
+  }
+ ],
+ "scene": "g_hs_b4_amber_cinema_0"
+}
