@@ -1,0 +1,60 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 23 nodes (with every mesh of the buildings), 3470 ground and ground-collision triangles, 53 prop instances, 41 colliders, 240 wear marks are identical in both files
+PROOF differences found between the files: 1825 lines only in the old one, 576 only in the new one
+PROOF change #1 remove palm_queen_a at (0.00, 0.15, -26.00) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove palm_queen_a at (0.00, 0.15, -50.00) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove palm_queen_a at (0.00, 0.15, -74.00) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove palm_queen_a at (-12.25, 0.09, -38.25) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove palm_queen_a at (12.25, 0.09, -38.25) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove palm_queen_b at (0.00, 0.15, -38.00) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove palm_queen_b at (0.00, 0.15, -62.00) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove palm_queen_b at (0.00, 0.15, -86.00) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #11 remove palm_queen_b at (-12.25, 0.09, -65.05) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #13 remove palm_queen_b at (-12.25, 0.09, -91.85) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #15 remove palm_queen_b at (12.25, 0.09, -65.05) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #17 remove palm_queen_b at (12.25, 0.09, -91.85) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #19 remove tree_jacaranda_a at (-12.25, 0.09, -24.85) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #21 remove tree_jacaranda_a at (-12.25, 0.09, -78.45) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #23 remove tree_jacaranda_a at (12.25, 0.09, -24.85) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #25 remove tree_jacaranda_a at (12.25, 0.09, -78.45) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #27 remove tree_jacaranda_b at (-12.25, 0.09, -51.65) removed, in 3 tier(s) and its collider  [tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #29 remove tree_jacaranda_b at (12.25, 0.09, -51.65) removed, in 3 tier(s) and its collider  [tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #31 remove prop_park_bench at (-15.65, 0.15, -48.00) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_park_bench stands in front of a shop window of com_bakery]]
+PROOF change #32 remove_decal: one wear mark at (-3.57, 0.01, -27.83) removed  [crack mark lies on grass]
+PROOF change #33 remove_decal: one wear mark at (-4.50, 0.01, -48.86) removed  [crack mark lies on grass]
+PROOF change #34 remove_decal: one wear mark at (-3.25, 0.01, -85.19) removed  [crack mark lies on grass]
+PROOF change #35 remove_decal: one wear mark at (-3.98, 0.01, -56.34) removed  [crack mark lies on grass]
+PROOF change #36 remove_decal: one wear mark at (-4.11, 0.01, -51.52) removed  [crack mark lies on grass]
+PROOF change #37 remove_decal: one wear mark at (-3.02, 0.01, -57.46) removed  [crack mark lies on grass]
+PROOF change #38 remove_decal: one wear mark at (-3.76, 0.01, -95.32) removed  [crack mark lies on grass]
+PROOF change #39 remove_decal: one wear mark at (3.76, 0.01, -39.13) removed  [crack mark lies on grass]
+PROOF change #40 remove_decal: one wear mark at (3.53, 0.01, -92.06) removed  [crack mark lies on grass]
+PROOF change #41 remove_decal: one wear mark at (3.28, 0.01, -91.58) removed  [crack mark lies on grass]
+PROOF change #5 fill_well: the tree well at (-12.25, 0.09, -38.25) paved over: 144 ground / collision triangles within 1.3 m replaced by 48  [the well of palm_queen_a: paved over once its tree is gone, unless it is no well (the fixer tests it)]
+PROOF change #7 fill_well: the tree well at (12.25, 0.09, -38.25) paved over: 144 ground / collision triangles within 1.3 m replaced by 48  [the well of palm_queen_a: paved over once its tree is gone, unless it is no well (the fixer tests it)]
+PROOF change #12 fill_well: the tree well at (-12.25, 0.09, -65.05) paved over: 144 ground / collision triangles within 1.3 m replaced by 48  [the well of palm_queen_b: paved over once its tree is gone, unless it is no well (the fixer tests it)]
+PROOF change #14 fill_well: the tree well at (-12.25, 0.09, -91.85) paved over: 144 ground / collision triangles within 1.3 m replaced by 48  [the well of palm_queen_b: paved over once its tree is gone, unless it is no well (the fixer tests it)]
+PROOF change #16 fill_well: the tree well at (12.25, 0.09, -65.05) paved over: 144 ground / collision triangles within 1.3 m replaced by 48  [the well of palm_queen_b: paved over once its tree is gone, unless it is no well (the fixer tests it)]
+PROOF change #18 fill_well: the tree well at (12.25, 0.09, -91.85) paved over: 144 ground / collision triangles within 1.3 m replaced by 48  [the well of palm_queen_b: paved over once its tree is gone, unless it is no well (the fixer tests it)]
+PROOF change #20 fill_well: the tree well at (-12.25, 0.09, -24.85) paved over: 144 ground / collision triangles within 1.3 m replaced by 48  [the well of tree_jacaranda_a: paved over once its tree is gone, unless it is no well (the fixer tests it)]
+PROOF change #22 fill_well: the tree well at (-12.25, 0.09, -78.45) paved over: 144 ground / collision triangles within 1.3 m replaced by 48  [the well of tree_jacaranda_a: paved over once its tree is gone, unless it is no well (the fixer tests it)]
+PROOF change #24 fill_well: the tree well at (12.25, 0.09, -24.85) paved over: 144 ground / collision triangles within 1.3 m replaced by 48  [the well of tree_jacaranda_a: paved over once its tree is gone, unless it is no well (the fixer tests it)]
+PROOF change #26 fill_well: the tree well at (12.25, 0.09, -78.45) paved over: 144 ground / collision triangles within 1.3 m replaced by 48  [the well of tree_jacaranda_a: paved over once its tree is gone, unless it is no well (the fixer tests it)]
+PROOF change #28 fill_well: the tree well at (-12.25, 0.09, -51.65) paved over: 144 ground / collision triangles within 1.3 m replaced by 48  [the well of tree_jacaranda_b: paved over once its tree is gone, unless it is no well (the fixer tests it)]
+PROOF change #30 fill_well: the tree well at (12.25, 0.09, -51.65) paved over: 144 ground / collision triangles within 1.3 m replaced by 48  [the well of tree_jacaranda_b: paved over once its tree is gone, unless it is no well (the fixer tests it)]
+PROOF note: 'Props/prop_park_bench_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_near' held only listed items and is gone with them
+PROOF 41 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
