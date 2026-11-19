@@ -1,0 +1,43 @@
+PROOF compared: 43 nodes (with every mesh of the buildings), 0 ground and ground-collision triangles, 42 prop instances, 42 colliders, 4 wear marks are identical in both files
+PROOF differences found between the files: 71 lines only in the old one, 0 only in the new one
+PROOF change #1 remove prop_trash_cart_blue at (22.24, 0.15, -25.43) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in front of a roll-up door of machine_shop]]
+PROOF change #2 remove prop_recycling_receptacle at (-23.32, 0.15, -33.79) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in front of a roll-up door of bayline_dispatch]]
+PROOF change #3 remove prop_trash_cart_black at (23.51, 0.15, -28.09) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (2.3 m from a wall, 15.3 m from a fence)]]
+PROOF change #4 remove prop_trash_cart_black at (-27.31, 0.15, -28.92) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (5.7 m from a wall, 19.2 m from a fence)]]
+PROOF change #5 remove prop_trash_cart_black at (34.20, 0.15, 25.59) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (4.4 m from a wall, 16.7 m from a fence)]]
+PROOF change #6 remove prop_trash_cart_black at (-28.84, 0.15, 26.64) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (3.4 m from a wall, 17.4 m from a fence)]]
+PROOF change #7 remove prop_trash_cart_blue at (-32.51, 0.15, -29.55) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (6.3 m from a wall, 20.8 m from a fence)]]
+PROOF change #8 remove prop_trash_cart_blue at (27.97, 0.15, 29.91) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (4.8 m from a wall, 19.4 m from a fence)]]
+PROOF change #9 remove prop_trash_cart_blue at (-23.47, 0.15, 33.34) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.3 m from a wall, 10.8 m from a fence)]]
+PROOF change #10 remove prop_trash_receptacle at (36.74, 0.15, 36.39) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (9.8 m from a wall, 23.7 m from a fence)]]
+PROOF change #11 remove prop_vending_soda at (27.38, 0.15, 28.10) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_vending_soda stands on asphalt where vehicles go]]
+PROOF change #12 remove prop_recycling_receptacle at (46.49, 0.15, 30.70) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (5.5 m from a wall, 21.9 m from a fence)]]
+PROOF change #13 remove prop_picnic_table at (26.75, 0.15, -32.25) removed, in 1 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]]
+PROOF change #14 remove prop_picnic_table at (-26.56, 0.15, -33.70) removed, in 1 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]]
+PROOF change #15 remove prop_picnic_table at (-31.26, 0.15, 29.80) removed, in 1 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]]
+PROOF change #16 remove prop_trash_receptacle at (-28.09, 0.15, -34.24) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (6.9 m from a wall, 19.3 m from a fence)]]
+PROOF change #17 remove prop_trash_receptacle at (-31.32, 0.15, 27.92) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (4.7 m from a wall, 16.1 m from a fence)]]
+PROOF change #18 remove prop_vending_soda at (-39.56, 0.15, -37.72) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_vending_soda stands on asphalt where vehicles go]]
+PROOF change #19 remove prop_recycling_receptacle at (25.13, 0.15, -30.81) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (3.9 m from a wall, 16.8 m from a fence)]]
+PROOF change #21 remove prop_recycling_receptacle at (-22.95, 0.15, 30.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (1.7 m from a wall, 14.1 m from a fence)]]
+PROOF change #22 remove prop_picnic_table at (31.93, 0.15, 30.81) removed, in 1 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]]
+PROOF change #23 remove prop_vending_soda at (-27.43, 0.15, 33.21) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_vending_soda stands on asphalt where vehicles go]]
+PROOF change #24 remove prop_trash_receptacle at (33.12, 0.15, -35.06) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (10.4 m from a wall, 24.3 m from a fence)]]
+PROOF change #25 remove prop_vending_soda at (34.55, 0.15, -31.56) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_vending_soda stands on asphalt where vehicles go]]
+PROOF note: 'Props/cell_near_1_0/prop_vending_soda_clean_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_1_0/prop_trash_receptacle_dirty_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_1/prop_vending_soda_clean_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_1/prop_picnic_table_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_0/prop_recycling_receptacle_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_0/prop_vending_soda_clean_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_0/prop_trash_receptacle_dirty_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_0/prop_picnic_table_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_1_1/prop_recycling_receptacle_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_1_1/prop_vending_soda_clean_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_1_1/prop_trash_receptacle_dirty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_blue_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_black_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_vending_soda_clean_far' held only listed items and is gone with them
+PROOF note: 'Props/prop_vending_soda_clean_mid' held only listed items and is gone with them
+PROOF 24 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

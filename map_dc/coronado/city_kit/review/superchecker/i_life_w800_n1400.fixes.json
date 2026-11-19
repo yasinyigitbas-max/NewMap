@@ -1,0 +1,365 @@
+{
+ "fixes": [
+  {
+   "at": [
+    22.2389354705811,
+    0.150000005960464,
+    -25.4335498809814
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in front of a roll-up door of machine_shop]"
+  },
+  {
+   "at": [
+    -23.3233680725098,
+    0.150000005960464,
+    -33.791748046875
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in front of a roll-up door of bayline_dispatch]"
+  },
+  {
+   "at": [
+    23.5074939727783,
+    0.150000005960464,
+    -28.0911178588867
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (2.3 m from a wall, 15.3 m from a fence)]"
+  },
+  {
+   "at": [
+    -27.3056030273438,
+    0.150000005960464,
+    -28.9233932495117
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (5.7 m from a wall, 19.2 m from a fence)]"
+  },
+  {
+   "at": [
+    34.2038650512695,
+    0.150000005960464,
+    25.5891189575195
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (4.4 m from a wall, 16.7 m from a fence)]"
+  },
+  {
+   "at": [
+    -28.8395309448242,
+    0.150000005960464,
+    26.6388912200928
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (3.4 m from a wall, 17.4 m from a fence)]"
+  },
+  {
+   "at": [
+    -32.5099449157715,
+    0.150000005960464,
+    -29.5474681854248
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (6.3 m from a wall, 20.8 m from a fence)]"
+  },
+  {
+   "at": [
+    27.9729175567627,
+    0.150000005960464,
+    29.9069805145264
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (4.8 m from a wall, 19.4 m from a fence)]"
+  },
+  {
+   "at": [
+    -23.4676513671875,
+    0.150000005960464,
+    33.3373947143555
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.3 m from a wall, 10.8 m from a fence)]"
+  },
+  {
+   "at": [
+    36.7385444641113,
+    0.150000005960464,
+    36.3937835693359
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (9.8 m from a wall, 23.7 m from a fence)]"
+  },
+  {
+   "at": [
+    27.3752994537354,
+    0.150000005960464,
+    28.1022052764893
+   ],
+   "base": "prop_vending_soda",
+   "chosen": true,
+   "cond": "clean",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_vending_soda stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    46.4868316650391,
+    0.150000005960464,
+    30.7044849395752
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 12.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (5.5 m from a wall, 21.9 m from a fence)]"
+  },
+  {
+   "at": [
+    26.7524814605713,
+    0.150000005960464,
+    -32.2476806640625
+   ],
+   "base": "prop_picnic_table",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -26.5569171905518,
+    0.150000005960464,
+    -33.6987953186035
+   ],
+   "base": "prop_picnic_table",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 14.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -31.2626094818115,
+    0.150000005960464,
+    29.8046493530273
+   ],
+   "base": "prop_picnic_table",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 15.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -28.0887050628662,
+    0.150000005960464,
+    -34.2426071166992
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 16.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (6.9 m from a wall, 19.3 m from a fence)]"
+  },
+  {
+   "at": [
+    -31.317626953125,
+    0.150000005960464,
+    27.9150733947754
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (4.7 m from a wall, 16.1 m from a fence)]"
+  },
+  {
+   "at": [
+    -39.5565795898438,
+    0.150000005960464,
+    -37.7168960571289
+   ],
+   "base": "prop_vending_soda",
+   "chosen": true,
+   "cond": "clean",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 18.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_vending_soda stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    25.1323699951172,
+    0.150000005960464,
+    -30.808500289917
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 19.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (3.9 m from a wall, 16.8 m from a fence)]"
+  },
+  {
+   "at": [
+    -22.9457931518555,
+    0.150000005960464,
+    29.9982719421387
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 21.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (1.7 m from a wall, 14.1 m from a fence)]"
+  },
+  {
+   "at": [
+    31.9333782196045,
+    0.150000005960464,
+    30.8094749450684
+   ],
+   "base": "prop_picnic_table",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 22.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -27.4310359954834,
+    0.150000005960464,
+    33.2094192504883
+   ],
+   "base": "prop_vending_soda",
+   "chosen": true,
+   "cond": "clean",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 23.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_vending_soda stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    33.1235847473145,
+    0.150000005960464,
+    -35.0598030090332
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 24.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (10.4 m from a wall, 24.3 m from a fence)]"
+  },
+  {
+   "at": [
+    34.548755645752,
+    0.150000005960464,
+    -31.5556106567383
+   ],
+   "base": "prop_vending_soda",
+   "chosen": true,
+   "cond": "clean",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 25.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_vending_soda stands on asphalt where vehicles go]"
+  }
+ ],
+ "scene": "i_life_w800_n1400"
+}
