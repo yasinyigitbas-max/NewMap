@@ -1,0 +1,81 @@
+{
+ "area": "rs_b103_a",
+ "piece": "s_rs_b103_a",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; broadleaf on the flat; within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -754.0,
+    4.291,
+    -393.55
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first of the west face's Torrey pines (old spot and species)"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -725.0,
+    4.697,
+    -393.55
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway 29 m on, the pine run continues, clear of the speed sign (2.8 m)"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -705.0,
+    5.056,
+    -393.55
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway 20 m on, the last pine; the 10-18 m doubles go"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -770.0,
+    4.173,
+    -406.45
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway grass, first of the east face's coral trees (flat street: broadleaf; a different species from the next street's jacarandas), clear of the pay station (2.9 m)"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    -736.0,
+    4.521,
+    -406.45
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway 34 m on (driveways between), the second coral tree"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -715.0,
+    4.872,
+    -406.45
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "east parkway 21 m on, the last coral tree"
+  }
+ ]
+}
