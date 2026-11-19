@@ -7,6 +7,18 @@
 #include <godot_cpp/classes/box_shape3d.hpp>
 #include <godot_cpp/classes/collision_shape3d.hpp>
 #include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/classes/audio_server.hpp>
+#include <godot_cpp/classes/audio_stream.hpp>
+#include <godot_cpp/classes/audio_stream_player3d.hpp>
+#include <godot_cpp/classes/cpu_particles3d.hpp>
+#include <godot_cpp/classes/curve.hpp>
+#include <godot_cpp/classes/file_access.hpp>
+#include <godot_cpp/classes/gradient.hpp>
+#include <godot_cpp/classes/gradient_texture2d.hpp>
+#include <godot_cpp/classes/quad_mesh.hpp>
+#include <godot_cpp/classes/standard_material3d.hpp>
+#include <godot_cpp/variant/packed_vector4_array.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/input_event.hpp>
 #include <godot_cpp/classes/input_event_screen_drag.hpp>
@@ -60,13 +72,18 @@ void CityCar::make() {
 	if (sh.is_valid()) {
 		// (the paint shader reads the global `refl_env`: whoever makes the car sees to it that it exists, as the rig does)
 		mat.instantiate(); mat->set_shader(sh); mat->set_shader_parameter("atlas", atlas);
+		// the damage's photo detail and the street reflected in the paint (the old game's car_models.gd)
+		mat->set_shader_parameter("damage_detail", rl->load("res://vehicles/tex/car_damage_detail.png"));
+		mat->set_shader_parameter("glass_cracks", rl->load("res://vehicles/tex/car_glass_cracks.png"));
+		mat->set_shader_parameter("env_pano", rl->load("res://vehicles/tex/car_env.jpg"));
+		mat_wheel = mat->duplicate();
 	}
 	mi_body = memnew(MeshInstance3D);
 	if (mat.is_valid()) mi_body->set_material_override(mat);
 	add_child(mi_body);
 	for (int i = 0; i < 4; i++) {
 		MeshInstance3D *wi = memnew(MeshInstance3D);
-		if (mat.is_valid()) wi->set_material_override(mat);
+		if (mat_wheel.is_valid()) wi->set_material_override(mat_wheel);
 		add_child(wi);
 		wheel_vis[i] = wi;
 	}
@@ -140,13 +157,161 @@ void CityCar::fit() {
 
 	// ---- what is drawn
 	if (mat.is_valid()) mat->set_shader_parameter("paint", paint);
+	if (mat_wheel.is_valid()) mat_wheel->set_shader_parameter("paint", paint);
 	mi_body->set_mesh(body_mesh);
+	set_car_maps();
+	// the hull the dents are placed on: the drawn body
+	if (body_mesh.is_valid()) { const AABB a = body_mesh->get_aabb(); if (a.size.length() > 1.0f) hull = a; }
+	base_torque = car.s.torque;
+	repair();
 	for (int i = 0; i < 4; i++) {
 		wheel_vis[i]->set_mesh(split ? wheel_mesh[i] : Ref<Mesh>());
 		wheel_vis[i]->set_visible(split);
 		wheel_vis[i]->set_position(hub_local[i]);
 	}
 	dir = 1; odo = 0.0; hardest_hit = 0.0f; last_v = Vector3();
+}
+
+// ---------------------------------------------------------------- the new car textures
+// car-tex r3 (the assets branch, 19 Nov): the near model's UV is ONE shared trim sheet (lamps, grille, plate, tyres,
+// wheels, trim), its UV2 the car's own unwrap with its normal map (panel gaps) and its AO / grime / cabin map:
+// car_paint.gdshader's map_mode 2. stern_g shares volt_x's maps. A model without them keeps the old atlas.
+static String cartex_id(const String &p_id) { return p_id == "stern_g" ? String("volt_x") : p_id; }
+
+void CityCar::set_car_maps() {
+	if (mat.is_null()) return;
+	const String base = "res://vehicles/models/cartex/";
+	const String t = cartex_id(cm::MODELS[std::min(std::max(model, 0), cm::N_MODELS - 1)].id);
+	ResourceLoader *rl = ResourceLoader::get_singleton();
+	const Ref<Mesh> bm = mi_body->get_mesh();
+	const bool ok = rl->exists(base + t + String("_car_normal.png")) && bm.is_valid() && bm->has_meta("cartex");
+	for (Ref<ShaderMaterial> m : { mat, mat_wheel }) {
+		if (m.is_null()) continue;
+		m->set_shader_parameter("map_mode", ok ? 2 : 0);
+		if (!ok) continue;
+		m->set_shader_parameter("trim_albedo", rl->load(base + String("trim_albedo.png")));
+		m->set_shader_parameter("trim_normal", rl->load(base + String("trim_normal.png")));
+		m->set_shader_parameter("trim_orm", rl->load(base + String("trim_orm.png")));
+		m->set_shader_parameter("car_normal", rl->load(base + t + String("_car_normal.png")));
+		m->set_shader_parameter("car_orm", rl->load(base + t + String("_car_orm.png")));
+	}
+}
+
+// ---------------------------------------------------------------- damage
+void CityCar::hit(const Vector3 &p_dv) {
+	if (!made) return;
+	const float sev = p_dv.length();
+	if (sev < 0.01f) return;
+	const Vector3 ld = (get_global_transform().basis.inverse().xform(p_dv)).normalized();   // the body's frame; the obstacle is on the -ld side
+	const Vector3 c = hull.get_center(), h = hull.size * 0.5f, d = -ld;
+	float t = 1e9f;
+	for (int k = 0; k < 3; k++) if (std::fabs(d[k]) > 1e-4f) t = std::min(t, h[k] / std::fabs(d[k]));
+	Vector3 pt = c + d * t;
+	pt.y = std::min(std::max(pt.y, hull.position.y + hull.size.y * 0.25f), hull.position.y + hull.size.y * 0.6f);
+	const float depth = std::min(std::max((sev - 2.0f) * 0.022f, 0.02f), 0.22f);
+	const float rad = std::min(std::max(0.35f + sev * 0.035f, 0.4f), 0.9f);
+	add_dent(pt, ld * depth, rad);
+	health = std::max(0.0f, health - sev * sev * 0.0012f);
+	hits++;
+	apply_health();
+	crash_sound(sev);
+	emit_signal("damaged", sev, health);
+}
+
+void CityCar::add_dent(const Vector3 &p_at, const Vector3 &p_push, float p_r) {
+	for (Dent &e : dents) {
+		if (e.at.distance_to(p_at) < e.r * 0.5f) {   // close to one: it deepens
+			e.push = (e.push + p_push * 0.7f).limit_length(0.3f); e.r = std::min(std::max(e.r, p_r) + 0.05f, 1.0f);
+			upload_dents(); return;
+		}
+	}
+	dents.push_back(Dent{ p_at, p_push, p_r });
+	if (dents.size() > 8) {   // the oldest folds into its nearest neighbour
+		const Dent o = dents.front(); dents.erase(dents.begin());
+		Dent *best = &dents[0];
+		for (Dent &e : dents) if (e.at.distance_to(o.at) < best->at.distance_to(o.at)) best = &e;
+		best->push = (best->push + o.push * 0.5f).limit_length(0.3f);
+	}
+	upload_dents();
+}
+
+void CityCar::upload_dents() {
+	if (mat.is_null()) return;
+	PackedVector4Array P, D;
+	for (const Dent &e : dents) { P.push_back(Vector4(e.at.x, e.at.y, e.at.z, e.r)); D.push_back(Vector4(e.push.x, e.push.y, e.push.z, 0.0f)); }
+	while (P.size() < 8) { P.push_back(Vector4()); D.push_back(Vector4()); }
+	mat->set_shader_parameter("dent_p", P); mat->set_shader_parameter("dent_d", D);
+	mat->set_shader_parameter("dent_n", (int)dents.size());
+}
+
+void CityCar::apply_health() {
+	if (base_torque > 0.0f) car.s.torque = base_torque * (0.45f + 0.55f * std::min(std::max(health / 0.6f, 0.0f), 1.0f));
+	if (health < 0.5f) {
+		if (!smoke) {
+			smoke = memnew(CPUParticles3D);
+			smoke->set_position(Vector3(hull.get_center().x, hull.get_end().y - 0.15f, hull.get_end().z - 0.6f));
+			smoke->set_lifetime(2.2); smoke->set_use_local_coordinates(false);
+			smoke->set_direction(Vector3(0, 1, 0)); smoke->set_spread(18.0f);
+			smoke->set_param_min(CPUParticles3D::PARAM_INITIAL_LINEAR_VELOCITY, 0.6f); smoke->set_param_max(CPUParticles3D::PARAM_INITIAL_LINEAR_VELOCITY, 1.4f);
+			smoke->set_gravity(Vector3(0, 0.6f, 0));
+			smoke->set_param_min(CPUParticles3D::PARAM_SCALE, 0.5f); smoke->set_param_max(CPUParticles3D::PARAM_SCALE, 1.1f);
+			Ref<Curve> cv; cv.instantiate(); cv->add_point(Vector2(0, 0.4f)); cv->add_point(Vector2(1, 2.2f)); smoke->set_param_curve(CPUParticles3D::PARAM_SCALE, cv);
+			Ref<Gradient> gr; gr.instantiate(); gr->set_color(0, Color(1, 1, 1, 0.9f)); gr->set_color(1, Color(1, 1, 1, 0.0f)); smoke->set_color_ramp(gr);
+			Ref<GradientTexture2D> puff; puff.instantiate();
+			puff->set_fill(GradientTexture2D::FILL_RADIAL); puff->set_fill_from(Vector2(0.5f, 0.5f)); puff->set_fill_to(Vector2(1.0f, 0.5f)); puff->set_width(64); puff->set_height(64);
+			Ref<Gradient> pg; pg.instantiate(); pg->set_color(0, Color(1, 1, 1, 1)); pg->set_color(1, Color(1, 1, 1, 0)); puff->set_gradient(pg);
+			Ref<StandardMaterial3D> m; m.instantiate();
+			m->set_shading_mode(BaseMaterial3D::SHADING_MODE_UNSHADED); m->set_transparency(BaseMaterial3D::TRANSPARENCY_ALPHA);
+			m->set_billboard_mode(BaseMaterial3D::BILLBOARD_PARTICLES); m->set_flag(BaseMaterial3D::FLAG_ALBEDO_FROM_VERTEX_COLOR, true);
+			m->set_texture(BaseMaterial3D::TEXTURE_ALBEDO, puff);
+			Ref<QuadMesh> q; q.instantiate(); q->set_size(Vector2(0.7f, 0.7f)); q->set_material(m);
+			smoke->set_mesh(q);
+			smoke->set_cast_shadows_setting(GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);
+			add_child(smoke);
+		}
+		const bool thick = health < 0.2f;
+		smoke->set_amount(thick ? 28 : 14);
+		smoke->set_color(thick ? Color(0.12f, 0.12f, 0.12f, 0.75f) : Color(0.75f, 0.75f, 0.75f, 0.45f));
+		smoke->set_emitting(true);
+	} else if (smoke) smoke->set_emitting(false);
+}
+
+void CityCar::crash_sound(float p_sev) {
+	if (clock_t - snd_t < 0.25 || !is_inside_tree()) return;
+	snd_t = clock_t;
+	const char *bank = p_sev >= 10.0f ? "car_crash_heavy_" : (p_sev >= 5.0f ? "car_crash_mid_" : "car_bump_");
+	const String nm = String(bank) + String::num_int64((int64_t)(UtilityFunctions::randi() % 3u));
+	const String path = String("res://audio/sfx/") + nm + String(".ogg");
+	Ref<AudioStream> st = ResourceLoader::get_singleton()->load(path);
+	last_sound = nm;
+	if (st.is_null()) return;
+	if (!snd) {
+		snd = memnew(AudioStreamPlayer3D);
+		snd->set_bus(AudioServer::get_singleton()->get_bus_index("SFX") >= 0 ? StringName("SFX") : StringName("Master"));
+		snd->set_unit_size(6.0f); snd->set_max_distance(90.0f);
+		add_child(snd);
+	}
+	snd->set_stream(st);
+	snd->set_volume_db(std::min(std::max(-10.0f + p_sev * 1.2f, -10.0f), 4.0f));
+	snd->set_pitch_scale((float)UtilityFunctions::randf_range(0.92, 1.06));
+	snd->play();
+}
+
+void CityCar::repair() {
+	dents.clear(); health = 1.0f; jolt_acc = Vector3(); hits_due.clear();
+	if (base_torque > 0.0f) car.s.torque = base_torque;
+	upload_dents();
+	if (smoke) smoke->set_emitting(false);
+}
+
+Dictionary CityCar::get_damage() const {
+	Dictionary d;
+	d["health"] = health; d["dents"] = (int)dents.size(); d["hits"] = hits; d["last_sound"] = last_sound;
+	d["torque"] = car.s.torque; d["base_torque"] = base_torque; d["smoke"] = smoke && smoke->is_emitting();
+	float deepest = 0.0f; for (const Dent &e : dents) deepest = std::max(deepest, e.push.length());
+	d["deepest"] = deepest;
+	d["map_mode"] = mat.is_valid() ? mat->get_shader_parameter("map_mode") : Variant(0);
+	return d;
 }
 
 void CityCar::become(int p_model, int p_feel, const Color &p_paint) {
@@ -281,6 +446,10 @@ void CityCar::_integrate_forces(PhysicsDirectBodyState3D *p_state) {
 	{
 		const float g = (lv - last_v).length() / dt / vd::G;
 		if (g > hardest_hit && g > 1.6f) hardest_hit = g;
+		// an impact: steps that change the flat speed by more than 1 m/s each, summed until a quiet step
+		Vector3 dv = lv - last_v; dv.y = 0.0f;
+		if (dv.length() > 1.0f) jolt_acc += dv;
+		else if (jolt_acc.length_squared() > 0.0f) { if (jolt_acc.length() >= 2.5f) hits_due.push_back(jolt_acc); jolt_acc = Vector3(); }
 	}
 	PhysicsDirectSpaceState3D *ss = p_state->get_space_state();
 	for (int i = 0; i < 4; i++) {
@@ -312,6 +481,8 @@ void CityCar::_integrate_forces(PhysicsDirectBodyState3D *p_state) {
 
 void CityCar::_process(double p_delta) {
 	if (!made) return;
+	clock_t += p_delta;
+	if (!hits_due.empty()) { const std::vector<Vector3> hd = hits_due; hits_due.clear(); for (const Vector3 &dv : hd) hit(dv); }
 	if (player) {   // the old pedals and the speed plate, while the player drives
 		if (!hud) make_hud();
 		Viewport *vp = get_viewport();
@@ -384,6 +555,10 @@ void CityCar::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("become", "model", "feel", "paint"), &CityCar::become);
 	ClassDB::bind_method(D_METHOD("launch", "at", "velocity"), &CityCar::launch);
 	ClassDB::bind_method(D_METHOD("put_away", "where"), &CityCar::put_away);
+	ClassDB::bind_method(D_METHOD("hit", "dv"), &CityCar::hit);
+	ClassDB::bind_method(D_METHOD("repair"), &CityCar::repair);
+	ClassDB::bind_method(D_METHOD("get_damage"), &CityCar::get_damage);
+	ADD_SIGNAL(MethodInfo("damaged", PropertyInfo(Variant::FLOAT, "severity"), PropertyInfo(Variant::FLOAT, "health")));
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "model"), "set_model", "get_model");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "feel"), "set_feel", "get_feel");
 	ADD_PROPERTY(PropertyInfo(Variant::COLOR, "paint"), "set_paint", "get_paint");

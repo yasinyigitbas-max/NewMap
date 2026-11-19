@@ -192,6 +192,7 @@ private:
 	std::vector<Ref<Mesh>> mesh_near, mesh_mid;
 	Ref<Mesh> mesh_box;
 	Ref<ShaderMaterial> mat_near, mat_mid, mat_box, mat_box_parked;
+	std::vector<Ref<ShaderMaterial>> mat_near_m, mat_mid_m;   // per model: the new car textures (car-tex r3) are the model's own
 	float box_size[3] = { 1.73f, 1.2f, 4.29f };   // the shared far shape's own size (x, y, z)
 	float box_y0 = 0.3f;
 	bool gfx = false;

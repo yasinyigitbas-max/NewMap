@@ -19,6 +19,7 @@ var fails := 0
 var target := {}
 var gy := 0.0
 var k0 := {}
+var hit_dented := 0
 var k_hit := {}   # the counts as the head-on knock begins: its driver may drive on during part 2 already
 var far_most := 0.0
 var speed_most := 0.0
@@ -152,7 +153,13 @@ func _physics_process(delta: float) -> bool:
 			_check(car.global_basis.y.y > 0.5, "the player's car is on its wheels (%.2f), hardest knock %.0f g" % [car.global_basis.y.y, float(cs.hardest_knock_g)])
 			print("KNOCK   afterwards: %d drove on as traffic, %d taken away, %d still lie there, %d times no physical car was free" % [int(s.rejoined) - int(k0.rejoined), int(s.taken_away) - int(k0.taken_away), (s.out as Array).size(), int(s.no_slot)])
 			for c: Dictionary in s.out:
-				print("KNOCK     lies at (%.1f, %.1f) %s, upright %.2f, still for %.1f s, %.1f m from where it was hit" % [(c.at as Vector3).x, (c.at as Vector3).z, "(was parked)" if bool(c.parked) else "(was moving)", float(c.up), float(c.still_s), Vector2((c.at as Vector3).x - spot.x, (c.at as Vector3).z - spot.z).length()])
+				var dm: Dictionary = c.damage
+				print("KNOCK     lies at (%.1f, %.1f) %s, upright %.2f, still for %.1f s, %.1f m from where it was hit; damage: %d dents (deepest %.2f m), health %.2f, sound %s" % [(c.at as Vector3).x, (c.at as Vector3).z, "(was parked)" if bool(c.parked) else "(was moving)", float(c.up), float(c.still_s), Vector2((c.at as Vector3).x - spot.x, (c.at as Vector3).z - spot.z).length(), int(dm.dents), float(dm.deepest), float(dm.health), String(dm.last_sound)])
+			var dented := 0
+			for c: Dictionary in s.out: if int((c.damage as Dictionary).dents) > 0: dented += 1
+			var pd: Dictionary = car.call(&"get_damage")
+			_check(dented >= 1 and int(pd.dents) >= 1, "both cars are damaged (Yasin: \"every other car should get damaged too once collided\"): %d knocked car(s) dented; the player's car %d dents, health %.2f" % [dented, int(pd.dents), float(pd.health)])
+			hit_dented = dented
 			# part 3: the player's car gets out of its way (30 m to the side); its driver should drive on
 			k0 = s
 			var side := car.global_basis.x
@@ -162,6 +169,9 @@ func _physics_process(delta: float) -> bool:
 		4:
 			var s: Dictionary = traffic.call(&"knock_stats")
 			if int(s.rejoined) == int(k_hit.rejoined) and t - t0 < 10.0: return false
+			if hit_dented > 0:   # a dented car stays a wreck (the traffic's rows have no dents): it must not drive on
+				_check(int(s.rejoined) == int(k_hit.rejoined), "the dented car stays where it came to rest with its dents, 10 s on (it does not become an undented row again)")
+				phase = 9; return false
 			var why := {-1: "no lane within 3.6 m of it", -2: "it stands at a lane's end", -3: "it stands across the lane", -4: "the traffic is full", -5: "something stands in its way"}
 			_check(int(s.rejoined) > int(k_hit.rejoined), "with the player's car out of the way (or before) the hit driver drives on, %.1f s later (%s)" % [t - t0, "it is a car of the traffic again" if int(s.rejoined) > int(k_hit.rejoined) else "refused: " + String(why.get(int(s.last_refusal), "never asked"))])
 			phase = 9

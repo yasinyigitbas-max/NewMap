@@ -535,6 +535,29 @@ void CityTraffic::_ready() {
 	mat_near.instantiate(); mat_near->set_shader(sh_car); mat_near->set_shader_parameter("atlas", atlas); mat_near->set_shader_parameter("parked_cut", (float)parked_mid_r);
 	mat_mid.instantiate(); mat_mid->set_shader(sh_car); mat_mid->set_shader_parameter("atlas", atlas_far); mat_mid->set_shader_parameter("parked_cut", (float)parked_mid_r);
 	mat_box.instantiate(); mat_box->set_shader(sh_box); mat_box->set_shader_parameter("atlas", atlas_far); mat_box->set_shader_parameter("parked_cut", (float)parked_mid_r);
+	{   // the new car textures (car-tex r3): each model its own near and light material; the far shape is volt_x's (stern_g_imp)
+		const String cx = "res://vehicles/models/cartex/";
+		mat_near_m.resize(cm::N_MODELS); mat_mid_m.resize(cm::N_MODELS);
+		for (int m = 0; m < cm::N_MODELS; m++) {
+			const String id = cm::MODELS[m].id, t = id == "stern_g" ? String("volt_x") : id;
+			const String base = String("res://vehicles/models/lod/") + id;
+			Ref<Mesh> qb = rl->exists(base + String("_q_body.res")) ? Ref<Mesh>(rl->load(base + String("_q_body.res"))) : Ref<Mesh>();
+			const bool ok = rl->exists(cx + t + String("_car_normal.png")) && rl->exists(cx + t + String("_far_albedo.png")) && qb.is_valid() && qb->has_meta("cartex");
+			if (!ok) { mat_near_m[m] = mat_near; mat_mid_m[m] = mat_mid; continue; }
+			Ref<ShaderMaterial> n = mat_near->duplicate(), f = mat_mid->duplicate();
+			n->set_shader_parameter("map_mode", 2);
+			n->set_shader_parameter("trim_albedo", rl->load(cx + String("trim_albedo.png")));
+			n->set_shader_parameter("trim_normal", rl->load(cx + String("trim_normal.png")));
+			n->set_shader_parameter("trim_orm", rl->load(cx + String("trim_orm.png")));
+			n->set_shader_parameter("car_normal", rl->load(cx + t + String("_car_normal.png")));
+			n->set_shader_parameter("car_orm", rl->load(cx + t + String("_car_orm.png")));
+			f->set_shader_parameter("map_mode", 1);
+			f->set_shader_parameter("albedo_map", rl->load(cx + t + String("_far_albedo.png")));
+			f->set_shader_parameter("orm_map", rl->load(cx + t + String("_far_orm.png")));
+			mat_near_m[m] = n; mat_mid_m[m] = f;
+		}
+		if (rl->exists(cx + String("volt_x_far_albedo.png"))) mat_box->set_shader_parameter("atlas", rl->load(cx + String("volt_x_far_albedo.png")));
+	}
 	near_b.resize(cm::N_MODELS); mid_b.resize(cm::N_MODELS); mid_parked.assign(cm::N_MODELS, std::vector<int32_t>());
 	wheel_b.resize(cm::N_MODELS); wheels.assign(cm::N_MODELS, WheelSet()); mesh_nbody.resize(cm::N_MODELS); mesh_wheel.resize(cm::N_MODELS);
 	for (int m = 0; m < cm::N_MODELS; m++) {
@@ -559,10 +582,10 @@ void CityTraffic::_ready() {
 				if (mesh_wheel[m].is_valid()) { wheels[m].on = true; wheels[m].r = rsum * 0.25f; mesh_nbody[m] = bm; }
 			}
 		}
-		make_batch(near_b[m], wheels[m].on ? mesh_nbody[m] : mesh_near[m], mat_near, 8, shadows);
-		if (wheels[m].on) make_batch(wheel_b[m], mesh_wheel[m], mat_near, 32, false);
+		make_batch(near_b[m], wheels[m].on ? mesh_nbody[m] : mesh_near[m], mat_near_m[m], 8, shadows);
+		if (wheels[m].on) make_batch(wheel_b[m], mesh_wheel[m], mat_near_m[m], 32, false);
 	}
-	for (int m = 0; m < cm::N_MODELS; m++) make_batch(mid_b[m], mesh_mid[m], mat_mid, 64, shadows);
+	for (int m = 0; m < cm::N_MODELS; m++) make_batch(mid_b[m], mesh_mid[m], mat_mid_m[m], 64, shadows);
 	make_batch(box_moving, mesh_box, mat_box, 256, false);
 	{   // the bicycles: a mesh and a small material of their own
 		mesh_bike = make_bike_mesh();
@@ -1022,7 +1045,9 @@ void CityTraffic::loose_update(double p_delta) {
 		if (t.origin.y < last_cam.y - 120.0f || d2 > 180.0f * 180.0f || (d2 > 120.0f * 120.0f && L.rest_t > 1.0f)) { loose_put_away(k); kc.taken_away++; continue; }
 		if (L.parked) continue;
 		if (L.age > 0.35f) L.car->set_controls(0.0, 0.7, 0.0, 0.0, false);
-		if (L.rest_t > 3.5f && L.ask_cd <= 0.0f && t.basis.get_column(1).y > 0.94f) {   // it stands on its wheels: may its driver drive on?
+		// (a dented car does not drive on as a row of the traffic, which has no dents: it stays a wreck where it came to rest,
+		// the traffic goes round it, until it is far enough away to be taken; Yasin: "every other car should get damaged too")
+		if (L.rest_t > 3.5f && L.ask_cd <= 0.0f && t.basis.get_column(1).y > 0.94f && !L.car->is_damaged()) {   // it stands on its wheels: may its driver drive on?
 			const Vector3 f = t.basis.get_column(2);
 			std::lock_guard<std::mutex> lock(mx);
 			input.adopt.push_back(Input::Adopt{ k, L.serial, L.model, L.colour, t.origin.x, t.origin.z, std::atan2(f.x, f.z) });
@@ -1132,7 +1157,7 @@ Dictionary CityTraffic::knock_stats() const {
 		const Transform3D t = loose[k].car->get_global_transform();
 		Dictionary c;
 		c["at"] = t.origin; c["speed"] = loose[k].car->get_linear_velocity().length(); c["spin"] = loose[k].car->get_angular_velocity().length();
-		c["up"] = t.basis.get_column(1).y; c["parked"] = loose[k].parked; c["model"] = loose[k].model; c["still_s"] = loose[k].rest_t;
+		c["up"] = t.basis.get_column(1).y; c["parked"] = loose[k].parked; c["model"] = loose[k].model; c["still_s"] = loose[k].rest_t; c["damage"] = loose[k].car->get_damage();
 		a.push_back(c);
 	}
 	d["out"] = a;

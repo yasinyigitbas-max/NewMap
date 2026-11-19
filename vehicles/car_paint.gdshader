@@ -4,9 +4,34 @@ render_mode diffuse_lambert;   // cloud-perf-lighting: Lambert diffuse (cheaper 
 //   ~1.0 = body paint (takes the per-instance tint: MultiMesh COLOR * paint), glossy clear coat
 //   ~0.5 = glass (dark, very smooth, strong reflections so windows read as glass from the side too)
 //   ~0.0 = lights, trim, tyres (own colours)
-// t172: UV2.x > 0.5 marks steering-rim verts merged into the body while the player is inside
+// t172: steering-rim verts merged into the body while the player is inside. car-tex r3: the rim is marked UV2.x = 2
+// (was 1: UV2 > 0.5 also hit real UV2 data, e.g. the baked wheels -> the white-tyre bug), the merged cabin UV2.x = -1
+// (cabin keeps the old atlas on UV); everything else keeps its real UV2 (the per-car maps in map_mode 2).
 //       (CUSTOM0 is NOT available in this Compatibility spatial path).
 uniform sampler2D atlas : source_color, filter_nearest_mipmap;
+// car-tex (Yasin 19 Nov: hand-made photo textures + normal map + AO): a car with its own baked cell sets use_maps = true
+// and gets albedo_map (RGB colour, A = the same paint / glass mask as the atlas alpha), normal_map (tangent space,
+// OpenGL +Y, baked from the high model) and orm_map (R = AO, G = roughness, B = metallic). Cars without them keep the
+// old atlas path unchanged (use_maps = false): same shader, same per-instance tint.
+uniform bool use_maps = false;
+// car-tex round 2 (hybrid): map_mode 2 = small parts (lamps, grille, trim, mouldings, plate, glass, tyres, wheels) sample
+// ONE shared trim / detail sheet on UV (trim_albedo: RGB + A area mask, 0.18 = lamp lens / gloss trim; trim_normal;
+// trim_orm R AO G rough B metal), and the painted body adds the car's own low-res maps on UV2: car_normal (panel gaps)
+// and car_orm (R = AO incl. gap cavities, G = grime, B = cabin brightness behind the glass). UV2 keeps its flags on
+// top: > 1.5 steering rim, < -0.5 merged cabin (car.gd _ensure_uv2_mark); the unwrap itself stays inside 0..1.
+uniform int map_mode = 0;
+uniform sampler2D trim_albedo : source_color, filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D trim_normal : hint_normal, filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D trim_orm : hint_default_white, filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D car_normal : hint_normal, filter_linear_mipmap;
+uniform sampler2D car_orm : hint_default_white, filter_linear_mipmap;
+uniform float grime_strength = 1.0;
+const float ENV_LENS = 0.35;     // lamp lenses / gloss black trim: clear, untinted reflection
+uniform sampler2D albedo_map : source_color, filter_linear_mipmap_anisotropic;
+uniform sampler2D normal_map : hint_normal, filter_linear_mipmap_anisotropic;
+uniform sampler2D orm_map : hint_default_white, filter_linear_mipmap_anisotropic;
+uniform float normal_strength = 1.0;
+uniform float ao_strength = 1.0;
 uniform vec4 paint : source_color = vec4(1.0);
 uniform float steer_angle = 0.0;
 uniform vec3 steer_center = vec3(0.0);
@@ -56,7 +81,7 @@ void vertex() {
 			VERTEX += dent_d[i].xyz * f * f * wob;
 		}
 	}
-	if (UV2.x > 0.5) {
+	if (UV2.x > 1.5) {
 		vec3 ax = normalize(steer_axis);
 		float c = cos(steer_angle);
 		float s = sin(steer_angle);
@@ -66,17 +91,51 @@ void vertex() {
 	}
 }
 void fragment() {
-	if (UV2.x > 0.5) {
+	float lm = 0.0;
+	if (UV2.x > 1.5) {
 		ALBEDO = COLOR.rgb;
 		ROUGHNESS = 0.75;
 		METALLIC = 0.0;
 		SPECULAR = 0.4;
 	} else {
-		vec4 t = texture(atlas, UV);
+		bool cab = UV2.x < -0.5;                 // merged cabin: old atlas on UV
+		bool m2 = map_mode == 2 && !cab;
+		bool m1 = (use_maps || map_mode == 1) && !cab;
+		vec4 t = m2 ? texture(trim_albedo, UV) : (m1 ? texture(albedo_map, UV) : texture(atlas, UV));
 		float pm = smoothstep(0.75, 0.95, t.a);
 		float gm = (1.0 - smoothstep(0.62, 0.75, t.a)) * smoothstep(0.3, 0.42, t.a);
 		ALBEDO = t.rgb * mix(vec3(1.0), COLOR.rgb * paint.rgb, pm);
 		ROUGHNESS = mix(mix(0.55, 0.32, pm), 0.04, gm);
+		vec3 orm = vec3(1.0, ROUGHNESS, 0.0);
+		lm = m2 ? smoothstep(0.08, 0.14, t.a) * (1.0 - smoothstep(0.24, 0.30, t.a)) : 0.0;
+		if (m2) {
+			orm = texture(trim_orm, UV).rgb;
+			vec3 co = texture(car_orm, UV2).rgb;
+			float g = co.g * grime_strength;
+			// road film: darker, warmer, duller; heavier on the paint than on the black trim
+			ALBEDO = mix(ALBEDO, ALBEDO * vec3(0.62, 0.58, 0.52) + vec3(0.075, 0.065, 0.05), clamp(g * 0.9, 0.0, 1.0));
+			ALBEDO += gm * co.b * vec3(0.26, 0.26, 0.27);                  // cabin behind the tinted glass (B on glass)
+			float aoc = co.r * orm.r;
+			ALBEDO *= mix(1.0, co.r, 0.2 * ao_strength);                     // gap cavities read as lines, not only in shade
+			ROUGHNESS = clamp(orm.g + g * 0.35 + (co.b - 0.5) * 0.22 * pm * (1.0 - gm), 0.03, 1.0);   // B on paint: clear-coat roughness variation
+			AO = mix(1.0, aoc, ao_strength);
+			AO_LIGHT_AFFECT = 0.55 * ao_strength;
+			// one tangent frame per triangle (convert2.gd): sheet-UV frame on lamp / grille / plate / wheel / tread
+			// triangles, UV2 frame on the flat-cell triangles (paint, glass, trim). At most one of the two maps has relief
+			// on any triangle, so both are added in the same frame (no screen-derivative frame: it stair-stepped on edges).
+			vec2 txy = texture(trim_normal, UV).rg * 2.0 - 1.0;
+			vec2 cxy = texture(car_normal, UV2).rg * 2.0 - 1.0;
+			vec2 nxy = (txy + cxy) * normal_strength;
+			NORMAL = normalize(TANGENT * nxy.x + BINORMAL * nxy.y + NORMAL * sqrt(max(1.0 - dot(nxy, nxy), 0.04)));
+		} else if (m1) {
+			orm = texture(orm_map, UV).rgb;
+			ROUGHNESS = orm.g;
+			AO = mix(1.0, orm.r, ao_strength);
+			AO_LIGHT_AFFECT = 0.55 * ao_strength;   // baked AO also darkens sun light a little (gaps, arches, under the sills)
+			vec2 nxy = texture(normal_map, UV).rg * 2.0 - 1.0;          // RG only: works with 2-channel (RGTC / ASTC) normal maps
+			vec3 nm = vec3(nxy * normal_strength, sqrt(max(1.0 - dot(nxy, nxy), 0.0)));
+			NORMAL = normalize(TANGENT * nm.x + BINORMAL * nm.y + NORMAL * nm.z);   // the reflections below see it too
+		}
 		float bare = 0.0;
 		if (dent_n > 0) {
 			// texture space: the body's dominant axis in mesh space, metres
@@ -119,16 +178,18 @@ void fragment() {
 				gm *= 1.0 - core * 0.6;
 			}
 		}
-		METALLIC = max(0.35 * gm, bare * 0.85);
+		METALLIC = max(max(0.35 * gm, bare * 0.85), (m1 || m2) ? orm.b : 0.0);
 		SPECULAR = mix(0.6, 1.0, gm);
 		// white-tyres fix: tyres / black trim are ~0.005 albedo; at roughness 0.55 + specular 0.6 the sky reflection
 		// is all you see and they read white. Near-black non-paint, non-glass texels = rubber: matte, low specular.
-		float rub = (1.0 - pm) * (1.0 - smoothstep(0.05, 0.12, gm)) * (1.0 - smoothstep(0.03, 0.10, max(t.r, max(t.g, t.b))));
-		ROUGHNESS = mix(ROUGHNESS, 0.92, rub);
+		float rub = (1.0 - pm) * (1.0 - lm) * (1.0 - smoothstep(0.05, 0.12, gm)) * (1.0 - smoothstep(0.03, 0.10, max(t.r, max(t.g, t.b))));
+		ROUGHNESS = mix(ROUGHNESS, m2 ? max(ROUGHNESS, 0.6) : 0.92, rub);
 		SPECULAR = mix(SPECULAR, 0.15, rub);
 		ALBEDO = mix(ALBEDO, max(ALBEDO, vec3(0.025)), rub);
 		// streetR: the street reflected in the clear coat and the glass (photo panorama; see env_at)
-		float refl = pm * (1.0 - rub) * ENV_PAINT + gm * ENV_GLASS;
+		float refl = pm * (1.0 - rub) * ENV_PAINT + gm * ENV_GLASS + lm * ENV_LENS;
+		float mref = (m1 || m2) ? orm.b * (1.0 - pm) : 0.0;   // chrome / rims / lamp reflectors mirror the street, tinted by their colour
+		refl = max(refl, mref);
 		if (refl > 0.01) {
 			float nv = clamp(dot(NORMAL, VIEW), 0.0, 1.0);
 			float fres = 0.04 + 0.96 * pow(1.0 - nv, 5.0);
@@ -137,7 +198,7 @@ void fragment() {
 			vec3 env = env_at(normalize(rw), ROUGHNESS * 7.0);
 			// paint: a clear coat over the colour (Fresnel, ~0.25 face-on); glass: dark, mostly the reflection
 			float k = mix(0.25, 1.0, fres) * gloss * gloss;
-			EMISSION = env * refl * k;
+			EMISSION = env * refl * k * mix(vec3(1.0), ALBEDO * 1.6, mref);
 			ALBEDO *= 1.0 - gm * 0.6 * k;   // what the glass reflects it does not show behind it
 		}
 	}

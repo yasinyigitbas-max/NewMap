@@ -90,7 +90,12 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
       Continue fades from it into that place seamlessly; black when there is no save.
 7. [ ] HUD (Yasin's layout: top right a box the size of the phone icon with a "3D-looking" flat arrowhead: GREEN pointing
       to the mission, GOLDEN YELLOW pointing north when there is none; tapping it opens the phone's full map; top left
-      money and time in a box of the same size; HEALTH AND NEEDS integrated but INACTIVE for now) (old: ui/hud/hud.gd, objectives.gd, ui/health_bar.gd, needs_hud.gd, caption_help.gd).
+      money and time in a box of the same size; HEALTH AND NEEDS integrated but INACTIVE for now)
+      (Yasin, 19 Nov: "make sure the expansions happens animated along several frames for both the map and the phone, with
+      sound effects and vibration when touched. also put an inventory on the left down corner stick to the ui standards
+      again, phone sized, when clicked displays weapons we have, none for now in the game"): the map and the phone open
+      and close animated over several frames, a sound and a short vibration on each touch; an INVENTORY box bottom left,
+      the phone's size and look, that opens the weapons we carry (none yet: an empty list). (old: ui/hud/hud.gd, objectives.gd, ui/health_bar.gd, needs_hud.gd, caption_help.gd).
 8. [ ] (the HUD arrow box replaces the minimap, Yasin) The phone's map (old: ui/phone/map_view.gd, ui/hud/coronado_route.gd: the way on the map from item 2).
 9. [ ] The phone UI and its apps (old: ui/phone/*: phone, apps, call, camera, CV, delivery, films, jobs, learn, transit, drone).
 10. [ ] Money and ATMs (old: economy/economy.gd, atm.gd, broke_watch.gd).
@@ -101,9 +106,26 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 15. [ ] What these need that is not listed: char creator / wardrobe (core/char_creator.gd, ui/wardrobe), story chapters
       (story/chapters, core/story.gd), i18n (core/i18n.gd, strings.csv): ask Yasin before porting these.
 
-6g. [ ] NEW CARS AND BIKES (Yasin, 19 Nov: "big news, we got new cars and bikes, replace the games cars, players car and
+6g. [~] (CARS done 19 Nov: car-tex r3 of the assets branch, 8e579333a: the 12 models' new meshes, trim sheet and per-car normal / AO maps, in the traffic's near and light models (traffic_car.gdshader map_mode 2 / 1), the far shape (volt_x's far colour) and the player's car (car_paint.gdshader); tests/traffic/test_car_damage.gd. BIKES: not on the branch yet, Yasin: "bike is coming wait for it i forgot to push") NEW CARS AND BIKES (Yasin, 19 Nov: "big news, we got new cars and bikes, replace the games cars, players car and
       npc bikes and player bikes with these here https://github.com/yasinyigitbas-max/coronado-source/tree/assets after
       save load"): the traffic's cars, the player's car, the cyclists' bikes and the player's bike from the assets branch.
+
+6h. [x] (19 Nov, tests/traffic/test_car_damage.gd and test_knock.gd RESULT PASS; NOT done: lamps breaking, sparks and glass bits, the player's car's damage in the save, the fuel-station repair) CAR DAMAGE ON EVERY CAR (Yasin: "apply the damage to the new cars too"; "every other car should get damaged too
+      once collided"): the old car_damage.gd in C++ (CityCar): dents, scratches, glass, engine power, smoke, crash sounds;
+      a knocked traffic or parked car is a CityCar, so it is damaged too; a dented car stays a wreck (no undented row again).
+6i. [ ] ROAD RAGE (Yasin, 19 Nov: "once collided, the driver should get out and attack us, unless its a parked car of
+      course, then no one gets out, but if a moving car is hit by us first they should get off, then yell and get angry,
+      then attack us, putting us in combat mode, also whenever there is an aggressor in the screen, we should get into the
+      combat mode"): a moving car the player hits: its driver gets out (a crowd person at the door), yells, attacks; the
+      player is put in combat locked on him; any aggressor on screen puts the player in combat. (Yasin: "if other cars hit each other, they should try to attack the aggressor
+      car instead": two traffic cars collide: the hit car's driver gets out and goes for the driver who hit him.)
+
+## Queue order from Yasin (19 Nov): after the HUD (7) ONLY the phone map (8). The other phone apps (9) and 10-14 stay
+## NOT DONE, kept here for later.
+
+## Found, to trace
+- tests/traffic/test_bike_hit.gd: one run in two (19 Nov) the hit cyclist's hips went 19 m up (the other run 1.06 m):
+  a rare launch of the thrown rider; not deterministic between runs. Trace the one rider when it happens.
 
 ## Still waiting on Yasin (from before)
 - His go for people inside the shops; the voices; a fresh bake, then make_streets.gd, make_places.gd and the tests.

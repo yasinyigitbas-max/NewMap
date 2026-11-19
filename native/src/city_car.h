@@ -29,6 +29,8 @@
 #include <godot_cpp/variant/dictionary.hpp>
 #include <godot_cpp/variant/vector3.hpp>
 
+#include <vector>
+
 namespace godot {
 
 class CityCar : public RigidBody3D {
@@ -64,6 +66,30 @@ class CityCar : public RigidBody3D {
 	bool cam_set = false;
 	Ref<PhysicsRayQueryParameters3D> rq;
 	uint32_t wheel_mask = 1;     // what the wheels stand on: the world
+	// DAMAGE (the old game's car_damage.gd in C++; Yasin, 19 Nov: "apply the damage to the new cars too"): an impact is
+	// a sudden change of the car's flat speed (steps over 1 m/s each, summed; 2.5 m/s and more counts). Each one: a dent
+	// in car_paint.gdshader where the blow came in (up to 8; one close by deepens), drawn per pixel with the photo
+	// detail (crumpled metal, scratches through the clear coat, bare steel, crazed glass); the health drops with the
+	// severity squared: the engine loses power (never below 45 %), the bonnet smokes below 50 %, thick and dark below
+	// 20 %; a crash sound by severity (bump / crash / heavy crash with glass), one at most every 0.25 s. repair() undoes it.
+	// The new car textures (car-tex r3, the assets branch 19 Nov) are the same shader: the dents show on them as well.
+	Ref<ShaderMaterial> mat_wheel;   // (the wheels: their own copy, never dented)
+	AABB hull = AABB(Vector3(-0.85f, 0.2f, -2.2f), Vector3(1.7f, 1.2f, 4.4f));
+	struct Dent { Vector3 at, push; float r; };
+	std::vector<Dent> dents;
+	float health = 1.0f, base_torque = -1.0f;
+	Vector3 jolt_acc;
+	std::vector<Vector3> hits_due;   // (found in the physics step, applied in _process)
+	int hits = 0;
+	double snd_t = -9.0, clock_t = 0.0;
+	String last_sound;
+	class AudioStreamPlayer3D *snd = nullptr;
+	class CPUParticles3D *smoke = nullptr;
+	void add_dent(const Vector3 &p_at, const Vector3 &p_push, float p_r);
+	void upload_dents();
+	void apply_health();
+	void crash_sound(float p_sev);
+	void set_car_maps();
 	// for the tests and a dashboard
 	double odo = 0.0;
 	float hardest_hit = 0.0f;
@@ -102,6 +128,11 @@ public:
 	void launch(const Transform3D &p_at, const Vector3 &p_velocity);
 	void put_away(const Vector3 &p_where);
 	bool is_split() const { return split; }
+	// an impact: dv = the car's change of speed from it (world frame); the tests call it as a crash would
+	void hit(const Vector3 &p_dv);
+	void repair();
+	Dictionary get_damage() const;
+	bool is_damaged() const { return !dents.empty() || health < 0.999f; }
 	// speed m/s, km/h, revs, gear, side and forward g, each wheel's load / slip / on the ground, metres driven, hardest knock (g)
 	Dictionary get_state() const;
 	// the car's half length, half width, speed along x and z: what the traffic needs to see it as a box
