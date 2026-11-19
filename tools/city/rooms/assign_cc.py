@@ -109,7 +109,6 @@ SHOPS = {
     ("n_cc_b3_main", "eighth_corner_bar"): [(4.9, [-1.8, 5.7], "bar", "The Uphill Tap", "black")],
     ("n_cc_b3_main", "eighth_bave_pharmacy"): [(6.8, None, "pharmacy", "Corner Pharmacy", "green")],
     # ---- blocks 4-6 (hand-made shop lists; residential walk-ups have no shop)
-    ("n_cc_b4_w", "cave6_condo_tower"): [(0.0, None, "lobby", "Sixth & C Residences", "black")],
     ("n_cc_b4_e", "amber6n_corner"): [(6.8, None, "pharmacy", "Northside Pharmacy", "green")],
     ("n_cc_b4_e", "sixth_n_corner_deli"): [(4.9, [-1.8, 5.7], "restaurant", "Alley Corner Deli", "red")],
     ("n_cc_b4_e", "sixth_n_brick_row"): [(-4.1, [-8.7, -1.1], "books", "Hillside Books", "green"), (1.9, [-1.1, 4.9], "salon", "Curl Up Salon", "red"), (7.9, [4.9, 8.7], "keys", "Key Point", "black")],
@@ -155,7 +154,6 @@ SHOPS = {
     ("n_cc_b5_w", "l5s_bakery_depot"): [(None, None, "print", "Hill Print Works", "black")],
     ("n_cc_b5_e", "bave6_glass_tower"): [(0.0, None, "lobby", "B Avenue Tower", "black")],
     ("n_cc_b5_e", "sixth_b5_corner_optician"): [(4.9, [-1.8, 5.7], "jewelry", "Clear Sight Optician", "navy")],
-    ("n_cc_b6", "amber8s_condo_tower"): [(0.0, None, "lobby", "Eighth & Amber Residences", "black")],
     ("n_cc_b6", "amber_s_bakery"): [(-1.1, [-5.7, 2.2], "bakery", "Amber Bread Co", "sun")],
     ("n_cc_b6", "amber_s_brick_row"): [(-4.1, [-8.7, -1.1], "clothes", "South Amber Outfitters", "navy"), (1.9, [-1.1, 4.9], "books", "Chapter Two Books", "green"), (7.9, [4.9, 8.7], "keys", "Amber Key & Heel", "black")],
     ("n_cc_b6", "amber_s_trattoria_block"): [(0.0, [-5.4, 5.4], "restaurant", "Trattoria del Sud", "red")],
