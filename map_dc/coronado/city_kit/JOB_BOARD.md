@@ -5,6 +5,25 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~04:15 (PC session): THE GROUND IS NOT CHECKED, AND PART OF THE GROWTH IS SUNK (Yasin, on the bird's-eye view:
+  "Many areas are sunk in too... I think these validators and checkers don't do what they are supposed to do"). He is
+  right. MEASURED with two new tools (`tools/city/audit/ground_dump.gd` + `ground_check.py`, 1 m grid, every piece's
+  ground against the terrain and against its neighbours; picture `review/top_19nov/city_ground_check.jpg`: red = more
+  than 30 cm under the land, orange 5-30 cm, yellow = a jump between two pieces):
+  RESIDENTIAL GROWTH (43 quadrants): 30 % of its ground (114,592 m2) lies more than 30 cm under the terrain, 38,800 m2
+  more than 1 m, deepest 3.5 m; 58 % of the edges where two quadrants meet mid-block JUMP (1,879 m of 3,248 m, usual
+  0.63 m, up to 2.86 m); against the streets 6-10 % of the edge jumps (usual 0.3 m, up to 0.85 m). GRITTY growth:
+  5,773 m2 more than 30 cm under (deepest 0.83 m). INDUSTRIAL growth: 14,480 m2 5-30 cm under, none deeper. STRIP: clean.
+  Road kit: clean against the terrain. Locked samples: 205 m2 at the beach block f_sw, 57 m of jumps to their streets.
+  WHY NO CHECK SAW IT: `sink_check.gd` only compares PROPS with their own piece's ground, and only in street pieces
+  (j_ / s_): a block is never looked at. The validator checks props, doors and building overlaps, not heights.
+  `terrain_check.gd` (piece against terrain) exists but is not in `checks.sh` and has not been run since 17 Nov; the
+  terrain itself was last fitted on 18 Nov 16:00, BEFORE the growth (the pipeline says: rerun whenever pieces are
+  added). Nothing compares a piece with its NEIGHBOUR. So "validator 0, sink 0" from the zone sessions said nothing
+  about this, and the PC session passed those lines on without saying so. Part of the red is the terrain not being
+  refitted (a refit lowers the land to the pieces); the jumps between pieces are the pieces' own and a refit cannot
+  mend them. NOT measured: buildings against their own ground. NOTHING changed, nothing told to the zone sessions
+  (Yasin: "do nothing for now").
 - 19 Nov ~04:00 (PC session): TREES-OUT SWITCH IN THE BAKE + BIRD'S-EYE VIEW (Yasin: "yes add it. then show me a
   birdseye view of the entire city"; "can that same bake fill every tree well once they are gone too? with the same
   material as around the well"). `bake_runtime.gd --notrees` (OFF by default; docs/RUNTIME_BAKE.md "Trees out"): all
