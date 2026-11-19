@@ -133,3 +133,6 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 ## The very end of the queue (Yasin: "add it to the very end of the queue")
 99. [ ] Drivers swerve out of the way and brake hard at the same time when something sudden is in front of them (the
     core now only brakes, then goes round); keep the core's no-overlap veto and the 12 runs passing.
+    (20 Nov, seen in the road rage runs: drivers already avoid the player's car, several head-ons missed because the
+    other driver slowed and steered round; that is the core's brake-then-go-round, not a hard brake AND a swerve at once.
+    Yasin: "keep it in mind for later".)
