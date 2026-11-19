@@ -26,6 +26,10 @@ uniform float signal_cycle = 30.0;
 // props always read it (roughness, cavities, metal) - without it the shader took them as fully metal and fully rough.
 // Their normal maps need tangents the bake does not write for them yet (docs/look_patches/prop_maps.md).
 global uniform float ck_look_propmaps;
+// The traffic's clock (19 Nov, docs/TRAFFIC_PEOPLE_PORT.md): seconds, set every frame by the C++ traffic (CityTraffic);
+// -1 = no traffic is running, the lamps run on TIME.
+global uniform float ck_signal_time;
+global uniform vec3 ck_signal_grid;
 varying vec3 v_world_pos;
 varying vec3 v_world_n;
 varying float v_local_y;
@@ -117,9 +121,9 @@ void fragment() {
 	NORMAL_MAP = nm; NORMAL_MAP_DEPTH = normal_depth;
 	if (is_signal) {
 		// Traffic signals cycle (18 Nov).
-		// A head facing along X runs half a cycle after a head facing along Z; every junction (200 m lattice) has
-		// its own start time. signal_cycle seconds: green 40 %, amber 10 %, red 50 %. (The traffic system can take
-		// over later through ck_signal_time; until then it is the clock.)
+		// A head facing along X runs half a cycle after a head facing along Z; every junction (its clock tile) has
+		// its own start time. signal_cycle seconds: green 40 %, amber 10 %, red 50 %. The traffic gives the clock
+		// through ck_signal_time (below).
 		// The lenses are the fully saturated red / amber / green texels of the signal model (linear values measured
 		// 18 Nov: red 0.4-0.6, amber 0.33, green about 0.15-0.26).
 		// KNOWN FLAW: the green street-name board on the mast arm has the same green as the green lens, so it lights
@@ -129,8 +133,10 @@ void fragment() {
 		float mx = max(alb.r, max(alb.g, alb.b)); float mn = min(alb.r, min(alb.g, alb.b));
 		if (mx - mn > 0.75 * mx && mx > 0.12) {
 			float kind = alb.g > alb.r * 1.05 ? 2.0 : (alb.g > alb.r * 0.22 ? 1.0 : 0.0);      // 0 red, 1 amber, 2 green
-			vec2 jn = floor((v_origin.xz + 100.0) / 200.0);
-			float t = TIME + fract(sin(dot(jn, vec2(12.9898, 78.233))) * 43758.5453) * signal_cycle;
+			vec2 jn = floor((v_origin.xz + ck_signal_grid.xy) / ck_signal_grid.z);      // (19 Nov: the tiles come with the streets, so that all heads of a junction stand in one tile; (100, 100, 200) = the 200 m lattice of before)
+			// (19 Nov: the junction's start is whole seconds from its tile, the same number the traffic uses:
+			// native/src/city_traffic.cpp load_streets; a car stops at the red the player sees.)
+			float t = (ck_signal_time < 0.0 ? TIME : ck_signal_time) + mod(jn.x * 7.0 + jn.y * 13.0, signal_cycle);
 			if (abs(v_world_n.x) > abs(v_world_n.z)) t += signal_cycle * 0.5;
 			float ph = fract(t / signal_cycle);
 			float now = ph < 0.4 ? 2.0 : (ph < 0.5 ? 1.0 : 0.0);

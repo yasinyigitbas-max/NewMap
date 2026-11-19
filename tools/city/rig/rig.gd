@@ -52,6 +52,11 @@ extends Node3D
 ##   --band=8      with --tiers: metres of overlap at each switch (0 = hard cuts)     --arrive=0.5  seconds of the sweep
 ##   --nofarground hide the far world's ground (the streets beyond the loaded cells)
 ##   --plan=census no drives: the drawing cost census (see _census below; --census=day|night|both --views=a,b --censussecs=2; the night is drawn once at start unless --nowarmnight)
+##   TRAFFIC (19 Nov, docs/TRAFFIC_PEOPLE_PORT.md; all C++, native/: needs  bash native/build.sh  and city_kit/traffic/streets.bin):
+##   --traffic=N   moving cars, at most N (0 = no traffic at all, the default). How many there really are follows the
+##                 streets: each kind of street carries so many cars a metre; --density=2 doubles that (1 = the busiest hour)
+##   --parked=1|0  with --traffic: the parked cars on the cells' stalls (1, default) or none
+##   --carshadows=1|0  the near cars cast sun shadows (1, default)      --carbodies=1|0  the pool of collision boxes
 ##   --plan=shots  no drives: pictures of a building at set distances and of a street, saved as JPG in
 ##                 user://rig/shots/ (phone_rig.sh shots NAME ... pulls them to review/tiers/NAME/)
 const Stream := preload("res://tools/city/bake/city_stream.gd")
@@ -97,7 +102,8 @@ var hud: Label
 var sun: DirectionalLight3D
 var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
-var opt := {"look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true}
+var traffic: Node            # the C++ traffic (--traffic=N); null without it
+var opt := {"traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -123,10 +129,10 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs"]:
+		for k: String in ["traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
-				opt[k] = v if k in ["plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs"] else int(v))
+				opt[k] = v if k in ["plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["density", "scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs"] else int(v))
 	if from_file and not ("--loop" in args): opt.quit = true
 	Engine.max_fps = 0
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
@@ -157,6 +163,13 @@ func _ready() -> void:
 	RenderingServer.frame_post_draw.connect(func() -> void: _t_post = Time.get_ticks_usec())
 	lights = Lights.new(); lights.budget = int(opt.lights); lights.stream = st; add_child(lights)
 	if look: look.attach_stream(st)      # look job 3: the look's lamp glow on every cell that comes in
+	if int(opt.traffic) > 0:      # the traffic: one C++ node; this script sets its numbers and asks for a line at the end of a drive
+		if ClassDB.class_exists(&"CityTraffic"):
+			traffic = ClassDB.instantiate(&"CityTraffic")
+			traffic.set(&"max_cars", int(opt.traffic)); traffic.set(&"parked", int(opt.parked) == 1); traffic.set(&"density", float(opt.density))
+			traffic.set(&"shadows", int(opt.carshadows) == 1); traffic.set(&"bodies", int(opt.carbodies) == 1)
+			traffic.call(&"attach", st); add_child(traffic)
+		else: push_error("RIG ERROR --traffic needs the native module (bash native/build.sh): no traffic in this run")
 	cam = Camera3D.new(); cam.fov = 74.0; cam.near = 0.08; cam.far = 900.0; add_child(cam); cam.current = true      # the game's driving camera
 	var layer := CanvasLayer.new(); add_child(layer)
 	hud = Label.new(); hud.position = Vector2(24, 24); hud.add_theme_font_size_override("font_size", 26); hud.add_theme_color_override("font_outline_color", Color.BLACK); hud.add_theme_constant_override("outline_size", 8); layer.add_child(hud)
@@ -181,7 +194,7 @@ var _g_hit := false
 
 func _physics_process(_dt: float) -> void:
 	if _t_phys_frame != Engine.get_process_frames(): _t_phys_frame = Engine.get_process_frames(); _t_phys = Time.get_ticks_usec()
-	var hit := get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(_g_at.x, 80, _g_at.z), Vector3(_g_at.x, -20, _g_at.z)))
+	var hit := get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(_g_at.x, 80, _g_at.z), Vector3(_g_at.x, -20, _g_at.z), 0xFFFFFFEF))      # (not the traffic's car bodies, layer 5: the camera drives THROUGH the cars, it must not climb over them)
 	_g_hit = hit.has("position")
 	if _g_hit: _g_y = float(hit.position.y)
 
@@ -191,6 +204,7 @@ func _ground(p: Vector3, last: float) -> float:
 
 func _night(v: float) -> void:
 	st.set_night(v)
+	if traffic: traffic.set(&"night", v)      # headlights and tail lights
 	if look:
 		look.set_night(v); st.set_night(look.lights())      # a preset or the running day decides the night itself
 		return
@@ -280,6 +294,7 @@ func _drive(seg: Array) -> void:
 	st.release_prepared()
 	var prep_ms := Time.get_ticks_msec() - tp
 	var S0: Dictionary = st.stats.duplicate()
+	if traffic: traffic.call(&"report")      # (start its counters with the drive)
 	var dts := PackedFloat32Array(); var draws_sum := 0.0; var draws_max := 0; var tris_sum := 0.0; var tris_max := 0
 	var late220 := 0; var late60 := 0; var deepest := 0.0; var max_cells := 0; var slow := 0; var gy := 8.0
 	var segi := 0; var along := 0.0; var t := 0.0; var t_prev := Time.get_ticks_usec(); var hud_t := 0.0; var prev := [S0["in"], S0.out, S0.bodies]
@@ -354,6 +369,7 @@ func _drive(seg: Array) -> void:
 	_say("  collision %s made=%d units, a body waited at most %d ms from its cell's arrival | physics thread wait a frame (probe): median %.1f p99 %.1f worst %.1f ms" % [name, int(st.stats.get("col_units", 0)) - units0, int(st.stats.get("body_wait_ms_worst", 0)), pw[pw.size() / 2] if pw.size() > 0 else -1.0, pw[int(pw.size() * 0.99)] if pw.size() > 0 else -1.0, pw[pw.size() - 1] if pw.size() > 0 else -1.0])
 	# for long runs: none of these may grow lap after lap (a leak, or work piling up)
 	_say("  objects %s all=%d nodes=%d orphan_nodes=%d resources=%d | streamer: cells in=%d, bodies waiting=%d, nodes leaving=%d" % [name, int(Performance.get_monitor(Performance.OBJECT_COUNT)), int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT)), int(Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT)), int(Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT)), st.loaded_count(), st._pending.size(), st._leaving.size()])
+	if traffic: _say("  traffic %s %s" % [name, String(traffic.call(&"report"))])
 	_say("  mem %s static_mb=%.0f video_mb=%.0f tex_mb=%.0f buf_mb=%.0f" % [name, Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_TEXTURE_MEM_USED) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_BUFFER_MEM_USED) / 1048576.0])
 
 ## --plan=shots (19 Nov, the tiers): pictures from the phone at set distances, to compare the tier settings. A building

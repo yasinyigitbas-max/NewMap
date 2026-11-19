@@ -456,3 +456,67 @@ Not solved, said plainly:
 - Left-turn lanes exist where they are painted (3rd / 4th St, the ring). Amber has none: a car turning left off
   Amber waits in the inner lane, and the lane behind it waits or changes lane.
 - Buses, the old taxi ride and scripted cars: the code came over with the core, nothing uses it yet.
+
+## 17. Stage 2c result: the traffic is DRAWN, with the parked cars (19 Nov, on the PC; the phone is Stage 2d)
+The C++ node `CityTraffic` now runs the traffic in the test app: `--traffic=N` (most moving cars; 0 = none, the
+default), `--parked=1|0`, `--density=x`, `--carshadows=1|0`, `--carbodies=1|0` (`tools/city/rig/rig.gd`; the script
+only sets these numbers and asks for one report line a drive). Pictures: `review/traffic/pc/` (day and night;
+`tools/city/traffic/traffic_shots.gd` takes them again).
+
+HOW IT RUNS (no script in any frame or tick):
+- THE DRIVING runs on its own thread, 20 steps a second. The main thread never waits for it: it copies the last two
+  poses of every car (a lock held for a copy) and draws each car between them, so cars move smoothly at any frame rate.
+  It never touches the engine's thread pool (the streamer's).
+- DRAWING: no node per car. Every car is a row in one of a few batches (the graphics card draws a batch in one call):
+  the near model (5-9 thousand triangles, the 4 nearest moving cars within 22 m), the light model (2.4-4.4 thousand,
+  to 85 m), and ONE 60-triangle shape for every car beyond that. On a street on the PC: 4 to 10 batches a frame.
+- PARKED CARS are the light model within 35 m and the 60-triangle shape beyond (Yasin: "low detail only": the near
+  model is never used for a parked car). Which stall is taken, by which car and colour, comes from the stall's own
+  number: the same street every time. 70 % of kerb stalls, 55 % of car-park stalls. The far batch of ALL parked cars
+  of the loaded cells is sent to the graphics card only when a cell comes or goes; the cut between the two versions
+  is done by the shader at the same distance in both, so there is never a gap or a double car.
+- CELLS: cars appear only on streets whose cell is loaded and leave with their cell (the streamer's `cell_in` /
+  `cell_out` signals; nothing in the streamer changed).
+- THE RING MOVES WITH THE SPEED: cars appear in a ring whose centre runs 2 s ahead of the camera (200 m at most),
+  and the faster the camera, the more tries a step. On the PC loop: 22.6 cars round the camera at 108 km/h, 23.9 at
+  281 km/h (the streets there carry 23-25). Before the fix it was 10 at 281 km/h.
+- LAMPS: head and tail lights are one more batch of small glows (tail lights brighter when braking, by day too
+  within 60 m); a lamp shows only to the side it faces. They do not light the road (a real light per car is too dear
+  on the phone). The car models do not mark their lamp texels, so my first way (the car's own shader) lit nothing.
+- COLLISION: a pool of 24 boxes, made once and only moved: the nearest moving cars within 70 m and parked cars
+  within 30 m get one, at most 2 newly placed a physics step. On its own layer (5): the test camera's ground ray does
+  not see it.
+- THE SIGNAL LAMPS AND THE TRAFFIC SHARE ONE CLOCK. Two additions to the bake's prop shader
+  (`shaders/rt/rt_prop.gdshaderinc`, the lines of the signal lamp only; said here because the brief says to):
+  the lamps read the traffic's clock (`ck_signal_time`; -1 = no traffic, their own clock as before) and take their
+  junction's start from the same whole-second number as the traffic. FOUND ON THE WAY: the lamps found their
+  junction by a fixed 200 m lattice, and the junctions at x = 500 lay ON a lattice line, so the heads of ONE junction
+  ran on two clocks (9 heads). The streets tool now searches the lattice so that every head stands at least 31 m
+  inside its junction's tile (`ck_signal_grid`, a new check that must be 0: it is 0 of 168 heads).
+
+THE TRAFFIC ITSELF GOT BETTER (the test of Stage 2b failed after the signal clock changed; both causes were real):
+- STRAIGHT BEFORE LEFT. A car going straight on at a green could be starved by oncoming cars turning left across
+  it, each cleared while still rolling up to the line (3rd St: one stood through four greens). It now asks, and
+  the left-turners that can still stop let it go.
+- A CAR STANDING WITH ITS NOSE ON THE LINE never let a long-waiting car through (the rule asked for half a metre to
+  spare). A standing car can always stay standing.
+- Test now: RESULT PASS, and at TWICE the busiest hour no car stands over 2 minutes anywhere (it was up to 3.5).
+
+MEASURED ON THE PC (a slow laptop, 960x540, loop at 108 / 210 / 281 km/h, most 80 cars, parked cars on):
+main thread for the traffic 0.09-0.10 ms a frame (worst 2.1), the driving step 0.03-0.04 ms on its own thread
+(worst 2.3), 5-6 batches drawn, 4-5 of them sent a frame, about 500-560 parked cars in the loaded cells of which 5
+stand within 35 m. The phone numbers are Stage 2d.
+
+ALSO: the cars' paint is a weighted pick (white 18 %, black, silver, grey 15 % each, blue, red, beige, green, light
+blue, maroon); the car models are now IN the phone build (`vehicles/*` was excluded from the export, `streets.bin`
+is included); the cars' credits came over (`vehicles/CAR_CREDITS.md`: Daniel Zhabotinsky and MaG80, CC BY 4.0).
+
+NOT DONE YET, said plainly:
+- A parked car does not pull out and a moving one does not park (section 14, point 2). Moving cars keep clear of
+  parked ones because the kerb stalls lie in the parking strip beside the lane (0.85 m between a lane's car and a
+  parked car on the 5.7 m streets); the narrow streets have no stalls.
+- Wheels do not turn; indicators do not blink (the lamp batch has no amber yet).
+- The far shape is one model's (a saloon) scaled to each car: a bus beyond 85 m is a long saloon.
+- One far picture showed coloured squares: that was the old `streets.bin` (no slope value for parked cars) giving
+  broken rows; rebuilt, and a row can no longer be broken. Run `make_streets.gd` after every bake.
+- Walkers and parked cars: Stage 3.

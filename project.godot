@@ -80,6 +80,14 @@ ck_cells_loaded={
 "type": "sampler2D",
 "value": ""
 }
+ck_signal_grid={
+"type": "vec3",
+"value": Vector3(100, 100, 200)
+}
+ck_signal_time={
+"type": "float",
+"value": -1.0
+}
 ck_tier_band={
 "type": "float",
 "value": 0.0

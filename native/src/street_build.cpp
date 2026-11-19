@@ -820,13 +820,53 @@ void Builder::junctions() {
 		}
 	}
 	std::vector<int> heads(nn, 0);
+	std::vector<int> head_node(signals.size() / 3, -1);
+	double sig_grid[3] = { 100.0, 100.0, 200.0 };
 	for (size_t k = 0; k + 2 < signals.size(); k += 3) {
 		int best = -1; double bd = 45.0;
 		for (int i = 0; i < nn; i++) {
 			const double d = std::hypot(nodes[i].x - signals[k], nodes[i].z - signals[k + 2]);
 			if (d < bd) { bd = d; best = i; }
 		}
-		if (best >= 0) heads[best]++;
+		head_node[k / 3] = best;
+		if (best >= 0) heads[best]++; else rep.heads_no_junction++;
+	}
+	// The signal clock's tiles. The lamps' shader finds a head's junction by the tile the head stands in, so every head
+	// of a junction with signals has to stand in its junction's tile, or the lamp and the traffic (and the lamps of one
+	// junction among themselves) would run on different clocks. The junctions are not on one lattice (x = 0, 250, 500,
+	// -951 ...): the tile size and where the tiles begin are searched for, the widest margin wins.
+	{
+		double best_m = -1.0;
+		for (double size = 200.0; size <= 400.0 && best_m < 3.0; size += 40.0) {
+			double o[2] = { 0, 0 }, m[2] = { -1, -1 };
+			for (int ax = 0; ax < 2; ax++) {
+				for (double off = 0.0; off < size; off += 2.5) {
+					double mn = 1.0e9;
+					for (size_t k = 0; k + 2 < signals.size() && mn >= 0.0; k += 3) {
+						const int n = head_node[k / 3];
+						if (n < 0 || heads[n] < 2) continue;
+						const double h = signals[k + ax * 2] + off, c = (ax == 0 ? nodes[n].x : nodes[n].z) + off;
+						if (std::floor(h / size) != std::floor(c / size)) { mn = -1.0; break; }
+						const double fh = h - std::floor(h / size) * size, fc = c - std::floor(c / size) * size;
+						mn = std::min(mn, std::min(std::min(fh, size - fh), std::min(fc, size - fc)));
+					}
+					if (mn > m[ax]) { m[ax] = mn; o[ax] = off; }
+				}
+			}
+			if (std::min(m[0], m[1]) > best_m) { best_m = std::min(m[0], m[1]); sig_grid[0] = o[0]; sig_grid[1] = o[1]; sig_grid[2] = size; }
+		}
+		rep.heads_other_tile = 0;
+		for (size_t k = 0; k + 2 < signals.size(); k += 3) {
+			const int n = head_node[k / 3];
+			if (n < 0 || heads[n] < 2) continue;
+			if (std::floor((signals[k] + sig_grid[0]) / sig_grid[2]) != std::floor((nodes[n].x + sig_grid[0]) / sig_grid[2]) ||
+					std::floor((signals[k + 2] + sig_grid[1]) / sig_grid[2]) != std::floor((nodes[n].z + sig_grid[1]) / sig_grid[2])) {
+				rep.heads_other_tile++;
+				say("SIGNAL HEAD at (%.1f, %.1f) lies in another clock tile than its junction at (%.1f, %.1f)", signals[k], signals[k + 2], nodes[n].x, nodes[n].z);
+			}
+		}
+		say("SIGNAL CLOCK tiles of %.0f m beginning at (%.1f, %.1f): every head is at least %.1f m inside its junction's tile", sig_grid[2], -sig_grid[0], -sig_grid[1], best_m);
+		out.sig_grid.assign(sig_grid, sig_grid + 3);
 	}
 	out.node_f.assign((size_t)nn * 4, 0.0f); out.node_i.assign((size_t)nn * 4, 0);
 	for (int ni = 0; ni < nn; ni++) {
@@ -906,7 +946,7 @@ void Builder::junctions() {
 		ground->query((float)nodes[ni].x, (float)nodes[ni].z, y, l);
 		out.node_f[(size_t)ni * 4] = (float)nodes[ni].x; out.node_f[(size_t)ni * 4 + 1] = y; out.node_f[(size_t)ni * 4 + 2] = (float)nodes[ni].z;
 		out.node_i[(size_t)ni * 4] = node_ctl; out.node_i[(size_t)ni * 4 + 1] = (int)legs[ni].size();
-		out.node_i[(size_t)ni * 4 + 2] = (int)std::floor((nodes[ni].x + 100.0) / 200.0); out.node_i[(size_t)ni * 4 + 3] = (int)std::floor((nodes[ni].z + 100.0) / 200.0);
+		out.node_i[(size_t)ni * 4 + 2] = (int)std::floor((nodes[ni].x + sig_grid[0]) / sig_grid[2]); out.node_i[(size_t)ni * 4 + 3] = (int)std::floor((nodes[ni].z + sig_grid[1]) / sig_grid[2]);
 		if (legs[ni].size() >= 3) {
 			if (node_ctl == CTL_SIGNAL) rep.nodes_signal++;
 			else if (node_ctl == CTL_STOP) rep.nodes_stop++;
@@ -1472,7 +1512,14 @@ void Builder::emit_stalls() {
 		else if (kind == 0 && !is_road(l)) rep.stalls_kerb_off_road++;
 		if (kind == 0) rep.stalls_kerb++; else rep.stalls_park++;
 		const int cell = (int)st[5];
-		const float f[8] = { (float)x, y, (float)z, (float)out_yaw, st[4], 2.4f, 1.0f, (float)s_lane };
+		// the car's pitch there: from the ground 1.8 m ahead of and behind its middle, along the way it stands
+		float pitch = 0.0f;
+		{
+			const float hx = (float)std::sin(out_yaw), hz = (float)std::cos(out_yaw);
+			float ya = y, yb = y; int la = G_NONE, lb = G_NONE;
+			if (ground->query((float)x + hx * 1.8f, (float)z + hz * 1.8f, ya, la) && ground->query((float)x - hx * 1.8f, (float)z - hz * 1.8f, yb, lb)) pitch = std::atan2(ya - yb, 3.6f);
+		}
+		const float f[8] = { (float)x, y, (float)z, (float)out_yaw, pitch, 2.4f, 1.0f, (float)s_lane };
 		const int32_t ia[4] = { kind, lane, cell >= 0 && (size_t)cell * 2 + 1 < cell_xz.size() ? cell_xz[(size_t)cell * 2] : 0, cell >= 0 && (size_t)cell * 2 + 1 < cell_xz.size() ? cell_xz[(size_t)cell * 2 + 1] : 0 };
 		out.stall_f.insert(out.stall_f.end(), f, f + 8);
 		out.stall_i.insert(out.stall_i.end(), ia, ia + 4);
@@ -1515,6 +1562,7 @@ void Builder::build() {
 			rep.walk_pts_no_ground, rep.walk_pts, rep.walk_driveways, rep.crossings_unpainted);
 	say("CHECK pavement corners with no ground under them (holes in the map, listed above): %d", rep.corners_no_ground);
 	say("CHECK kerb stalls not on the asphalt %d, stalls without ground %d (both must be 0)", rep.stalls_kerb_off_road, rep.stalls_no_ground);
+	say("CHECK signal heads in another clock tile than their junction %d (must be 0), heads with no junction within 45 m %d of %d", rep.heads_other_tile, rep.heads_no_junction, (int)signals.size() / 3);
 	say("TOTAL places where a street changes its lanes mid-block %d, left-turn lanes before signals %d", rep.lane_changes, rep.pockets);
 	say("CHECK approaches with no way on %d, blocks too short for their junctions %d, points of an unknown street kind %d", rep.legs_unconnected, rep.short_edges, rep.generic_stations);
 }
@@ -1552,6 +1600,7 @@ void StreetData::save(std::vector<uint8_t> &o) const {
 	put(o, node_f); put(o, node_i);
 	put(o, walk_node); put(o, walk_seg); put(o, walk_seg_f); put(o, walk_pts);
 	put(o, stall_f); put(o, stall_i);
+	put(o, sig_grid);
 }
 
 bool StreetData::load(const uint8_t *d, size_t size) {
@@ -1560,7 +1609,7 @@ bool StreetData::load(const uint8_t *d, size_t size) {
 	return get(d, size, at, lane_pts) && get(d, size, at, lane_off) && get(d, size, at, lane_f) && get(d, size, at, lane_i) && get(d, size, at, conns) &&
 			get(d, size, at, node_f) && get(d, size, at, node_i) &&
 			get(d, size, at, walk_node) && get(d, size, at, walk_seg) && get(d, size, at, walk_seg_f) && get(d, size, at, walk_pts) &&
-			get(d, size, at, stall_f) && get(d, size, at, stall_i);
+			get(d, size, at, stall_f) && get(d, size, at, stall_i) && get(d, size, at, sig_grid) && sig_grid.size() == 3;
 }
 
 } // namespace sg

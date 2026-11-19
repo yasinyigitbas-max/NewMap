@@ -33,8 +33,16 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   30-minute runs, no overlap, no crash, nobody stuck at the busiest hour with the stuck-car rule off, the same
   result every time; a step for 190 cars 0.32 ms on the PC. The streets now have 761 lanes, 60 left-turn lanes found
   from the paint, lanes that change where the street narrows. What had to change in the old core: doc section 16.
-  NEXT: stage 2c (cars drawn as batches, parked cars, signals on the lamps' clock, the streamer hooks), then the
-  phone (2d).
+  STAGE 2c DONE ON THE PC (19 Nov, doc section 17): the traffic is DRAWN in the test app: `--traffic=N --parked=1|0
+  --density=x`. Cars are rows of a few batches (near model for the 4 nearest, light model to 85 m, one 60-triangle
+  shape beyond), parked cars on the cells' stalls with the LOW models only (the same street every time), lamp glows,
+  a pool of 24 collision boxes, cars come and go with the streamed cells, the ring runs ahead with the speed (24 cars
+  round the camera at 281 km/h). The signal lamps run on the traffic's clock (two lines in `rt_prop.gdshaderinc`; a
+  lattice fault that put 9 signal heads on a wrong clock is fixed by the streets tool, check = 0). Two real faults
+  in the driving fixed (straight before left; a car on its line lets others through): the traffic test PASSES and
+  nobody stands over 2 min even at twice the busiest hour. Pictures `review/traffic/pc/`. Lock test PASS. PC cost:
+  0.1 ms a frame on the main thread, 5-6 draws. NOT YET: parked cars pulling out / in, wheels turning, indicators.
+  RUN `tools/city/traffic/make_streets.gd` AFTER EVERY BAKE (streets.bin). NEXT: the phone (2d), then the people.
 - 18 Nov (cloud, branch `claude/grow-industrial`): INDUSTRIAL GROWTH, stage 1 + 2 done, NOTHING LOCKED, WAITING for
   Yasin's word on the variants. Read `review/grow_ind/README.md`. Three variants (A port, B fleet, C cold chain),
   each dressed twice = six 100 m blocks round the sample. They form the pilot area u -900..-500, v -1600..-1400

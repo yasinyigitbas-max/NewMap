@@ -180,6 +180,23 @@ public:
 	int32_t d_kind[MAX_DYN], d_id[MAX_DYN];
 	uint8_t d_flag[MAX_DYN];   // DF_*
 
+	// ---- where cars may be (new for this map: the city streams in 200 m cells and the camera can do 280 km/h)
+	// The old ring sat round the camera: 70..340 m, never nearer than 160 m in view. At 280 km/h that is 2 s of road.
+	// Now the ring's centre runs AHEAD of the camera by its speed (set_ring), cars only appear on streets whose cell
+	// is loaded, and they leave with their cell.
+	float ring_x = 0, ring_z = 0;
+	bool cells_all = true;                // no streamer: every place counts as loaded
+	float cell_m = 200.0f;
+	int cg_x0 = -32, cg_z0 = -32, cg_w = 64, cg_h = 64;
+	std::vector<uint8_t> cell_ok;         // per cell of that grid: 1 = loaded
+	void set_ring(float lead_x, float lead_z) { ring_x = cam_x + lead_x; ring_z = cam_z + lead_z; }
+	inline bool loaded_at(float px_, float pz_) const {
+		if (cells_all) return true;
+		const int cx = (int)std::floor(px_ / cell_m) - cg_x0, cz = (int)std::floor(pz_ / cell_m) - cg_z0;
+		if (cx < 0 || cz < 0 || cx >= cg_w || cz >= cg_h || cell_ok.empty()) return false;
+		return cell_ok[(size_t)cz * cg_w + cx] != 0;
+	}
+
 	// ---- cars (structure of arrays)
 	int hi = 0;        // slots [0, hi) may be alive
 	int n_alive = 0;

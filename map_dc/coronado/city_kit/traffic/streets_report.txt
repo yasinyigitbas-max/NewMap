@@ -182,6 +182,7 @@ LANES CHANGE in block b136 (W leg) at (594.1, 53.5): 1 + 1 lanes before, 2 + 2 a
 LANES CHANGE in block b161 (Ocean Blvd) at (510.8, 336.2): 2 + 2 lanes before, 1 + 1 after
 POCKET NOT MADE in block b065: the block is 68 m, too short for its left-turn lane
 POCKET NOT MADE in block b145: the block is 77 m, too short for its left-turn lane
+SIGNAL CLOCK tiles of 200 m beginning at (-57.5, -125.0): every head is at least 31.5 m inside its junction's tile
 NODE   0 ( -800.0, -1400.0) legs 4 signal heads 0: [b000 b returns end 17.5, lanes end 20.7, STOP] [b001 a returns end 17.5, lanes end 20.7, STOP] [b064 b returns end 17.5, lanes end 20.7, STOP] [b065 a returns end 17.5, lanes end 20.7, STOP]
 NODE   1 ( -800.0, -1200.0) legs 4 signal heads 6: [b001 b returns end 17.0, lanes end 23.7, SIGNAL] [b002 a returns end 17.0, lanes end 23.7, SIGNAL] [b072 b returns end 12.5, lanes end 19.2, SIGNAL] [b073 a returns end 12.5, lanes end 19.1, SIGNAL]
 NODE   2 ( -800.0, -1000.0) legs 4 signal heads 0: [b002 b returns end 11.0, lanes end 17.2, STOP] [b003 a returns end 11.0, lanes end 17.2, STOP] [b080 b returns end 11.0, lanes end 17.2, STOP] [b081 a returns end 11.0, lanes end 17.2, STOP]
@@ -365,5 +366,6 @@ TOTAL pavements 1006 stretches (61.0 km), 1010 walk points, 276 crossings (101 a
 CHECK pavement points on the road 0, without ground 9 (both must be 0) of 32367 | driveways and alley mouths walked over 5 | crossings with no paint under them 4
 CHECK pavement corners with no ground under them (holes in the map, listed above): 4
 CHECK kerb stalls not on the asphalt 0, stalls without ground 0 (both must be 0)
+CHECK signal heads in another clock tile than their junction 0 (must be 0), heads with no junction within 45 m 0 of 168
 TOTAL places where a street changes its lanes mid-block 3, left-turn lanes before signals 60
 CHECK approaches with no way on 0, blocks too short for their junctions 0, points of an unknown street kind 0

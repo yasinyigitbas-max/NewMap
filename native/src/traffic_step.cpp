@@ -295,9 +295,16 @@ int Sim::try_reserve(int i, float de) {
 		if (l_ctl[L] == C_SIGNAL) {
 			const int sg = signal_state(L, clock);
 			may_ask = c_turn[c] == T_LEFT && (sg == SIG_YELLOW || (sg == SIG_RED && signal_red_age(L, clock) < 6.0f));
+			// ... and a car that goes straight on or turns right and still stands at its line on GREEN: the oncoming
+			// cars that turn left across it are to let it go (straight before left). Without this a steady stream of
+			// left-turners, each cleared while still rolling up to the line, kept the junction for the whole green
+			// (3rd St x a side street: a car stood through four greens).
+			if (c_turn[c] != T_LEFT && sg == SIG_GREEN) may_ask = true;
 		} else may_ask = wait_t[i] > cfg.ask_after_s;
 	}
-	if (v[i] * v[i] / (2.0f * cfg.t_b[tp]) < de - 0.5f) {
+	// (a car that stands at its line can always stay: before 19 Nov only one with half a metre to spare counted, and a
+	// car stopped with its nose ON the line never let anybody through: Amber x 6th, a left-turner stood four greens)
+	if (v[i] < 0.5f || v[i] * v[i] / (2.0f * cfg.t_b[tp]) < de - 0.5f) {
 		for (int k = cf_off[c]; k < cf_off[c] + cf_n[c]; k++) {
 			const int q = cf_idx[k];
 			if (c_ask[q] < 0 || c_ask[q] == id[i] || tick - c_ask_tick[q] > 12) continue;
@@ -1099,8 +1106,8 @@ bool Sim::remove_car(int car_id) {
 bool Sim::try_spawn() {
 	float ang = rnd() * 6.2831853f;
 	float ri = cfg.spawn_r_in, ro = std::max(cfg.spawn_r_out, ri + 1.0f);
-	float r = std::sqrt(ri * ri + rnd() * (ro * ro - ri * ri));
-	float qx = cam_x + std::sin(ang) * r, qz = cam_z + std::cos(ang) * r;
+	float r = std::sqrt(rnd()) * ro;   // anywhere in the ring's disc (its centre runs ahead of the camera), then the camera's own rules
+	float qx = ring_x + std::sin(ang) * r, qz = ring_z + std::cos(ang) * r;
 	int c = cell_of(qx, qz);
 	if (c < 0) return false;
 	int n = sg_off[c + 1] - sg_off[c];
@@ -1127,7 +1134,9 @@ bool Sim::try_spawn() {
 	float o[7];
 	pose_at(L, s_, 0.0f, 0.0f, 0.0f, 1.0f, hint, o);
 	float dx = o[0] - cam_x, dz = o[2] - cam_z, dd = std::sqrt(dx * dx + dz * dz);
-	if (dd < ri || dd > ro) return false;
+	if (dd < ri) return false;
+	{ float rx = o[0] - ring_x, rz = o[2] - ring_z; if (rx * rx + rz * rz > ro * ro) return false; }
+	if (!loaded_at(o[0], o[2])) return false;   // its street is not there yet (or no longer)
 	bool vis = in_cone(o[0], o[2]);
 	if ((vis && dd < cfg.view_safe_r) || (!vis && dd > cfg.behind_despawn_r - 20.0f)) return false;   // never where it would be despawned at once
 	for (int j = 0; j < hi; j++) {
@@ -1158,7 +1167,9 @@ void Sim::population() {
 		bool vis = in_cone(x[i], z[i]);
 		bool bus_done = kind[i] == K_BUS && goal_ri[i] < 0 && nconn[i] < 0 && lc_need[i] == 0 && conn[i] < 0 && p_len[lane[i]] - s[i] < 10.0f;
 		if (kind[i] == K_AMBIENT && conn[i] < 0 && (l_flags[lane[i]] & LF_EXIT) && p_len[lane[i]] - s[i] < hl[i] + 2.5f) despawn(i, 5);   // it has left the map
-		else if (d2 > cfg.despawn_r * cfg.despawn_r || (!vis && d2 > cfg.behind_despawn_r * cfg.behind_despawn_r)) despawn(i, 0);
+		else if ((d2 > cfg.despawn_r * cfg.despawn_r && (x[i] - ring_x) * (x[i] - ring_x) + (z[i] - ring_z) * (z[i] - ring_z) > cfg.despawn_r * cfg.despawn_r) ||
+				(!vis && d2 > cfg.behind_despawn_r * cfg.behind_despawn_r)) despawn(i, 0);
+		else if (!loaded_at(x[i], z[i]) && (!vis || d2 > 250.0f * 250.0f)) despawn(i, 6);   // its cell has gone: so has it
 		else if (kind[i] == K_AMBIENT && why[i] == W_DEADEND && wait_t[i] > 4.0f) despawn(i, 1);
 		else if (bus_done && (!vis || d2 > 80.0f * 80.0f)) despawn(i, 4);
 		else if (wait_t[i] > cfg.stuck_despawn_s && why[i] != W_SIGNAL && why[i] != W_CRASH && why[i] != W_GOAL && (!vis || tier[i] == TIER_FAR)) despawn(i, 2);
@@ -1180,8 +1191,9 @@ void Sim::population() {
 				const int parts = std::max(1, (int)(len / 20.0f));
 				for (int q = 0; q < parts; q++) {
 					const float u = ((float)q + 0.5f) / (float)parts;
-					const float mx = ptx[o + k] + (ptx[o + k + 1] - ptx[o + k]) * u - cam_x, mz = ptz[o + k] + (ptz[o + k + 1] - ptz[o + k]) * u - cam_z;
-					if (mx * mx + mz * mz < ro2) sum += (double)(len / (float)parts) * l_dens[L];
+					const float wx = ptx[o + k] + (ptx[o + k + 1] - ptx[o + k]) * u, wz = ptz[o + k] + (ptz[o + k + 1] - ptz[o + k]) * u;
+					const float mx = wx - ring_x, mz = wz - ring_z;
+					if (mx * mx + mz * mz < ro2 && loaded_at(wx, wz)) sum += (double)(len / (float)parts) * l_dens[L];
 				}
 			}
 		}
@@ -1189,11 +1201,16 @@ void Sim::population() {
 	}
 	const float want = std::min((float)cfg.max_cars, carry * cfg.dens_scale) * clampf(cfg.hour_factor, 0.0f, 1.0f);
 	int target = std::min(std::min(cfg.max_cars, MAX_CARS), (int)std::ceil(want));
-	for (int tries = 0; tries < 4 && n_alive < target; tries++) try_spawn();
+	// tries a step: 4 standing still (the old game's number), more the faster the camera goes (the ring's lead is 2 s of
+	// its travel): at 280 km/h a car lives 5 s before the camera has passed it, and 4 tries filled only half the street
+	const float lead = std::sqrt((ring_x - cam_x) * (ring_x - cam_x) + (ring_z - cam_z) * (ring_z - cam_z));
+	const int tries_n = 4 + (int)(lead / 8.0f);
+	for (int tries = 0; tries < tries_n && n_alive < target; tries++) try_spawn();
 }
 
 void Sim::set_view(float x_, float y_, float z_, float fx_, float fz_, float fov_deg) {
 	cam_x = x_; cam_y = y_; cam_z = z_;
+	ring_x = x_; ring_z = z_;   // (set_ring moves it ahead, after this)
 	float l = std::sqrt(fx_ * fx_ + fz_ * fz_);
 	if (l < 1e-5f || fov_deg <= 0.0f) { cam_fx = 0; cam_fz = 1; cam_cos = 2.0f; return; }
 	cam_fx = fx_ / l; cam_fz = fz_ / l;

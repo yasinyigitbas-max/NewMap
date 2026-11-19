@@ -71,6 +71,7 @@ struct Report {
 	double worst_grade = 0;        // the steepest lane stretch (rise / run)
 	int generic_stations = 0, legs_unconnected = 0, stalls_unclassed = 0, approaches = 0, approaches_stop = 0, approaches_signal = 0;
 	int nodes_signal = 0, nodes_stop = 0, nodes_free = 0, short_edges = 0;
+	int heads_other_tile = 0, heads_no_junction = 0;   // signal heads against the lamps' clock tiles
 	int path_pts = 0, path_pts_off_road = 0, paths_off_road = 0, paths_widened = 0;   // the paths through the junctions
 	int lane_pts_tight = 0;        // lane points where a car's side would be off the asphalt
 	int walks = 0, crossings = 0, crossings_signal = 0, crossings_unpainted = 0, walk_driveways = 0;
@@ -96,8 +97,9 @@ struct StreetData {
 	std::vector<float> walk_seg_f;    // 2 per segment: length, half width
 	std::vector<float> walk_pts;      // 3 per point
 	// parking stalls
-	std::vector<float> stall_f;       // 8 per stall: x, y, z, yaw (rad, 0 = +z), grade, half length, half width, place along its lane (m)
+	std::vector<float> stall_f;       // 8 per stall: x, y, z, yaw (rad, 0 = +z), pitch (rad, nose up +), half length, half width, place along its lane (m)
 	std::vector<int32_t> stall_i;     // 4 per stall: kind (0 kerb, 1 car park), lane (-1 = none), cell x, cell z
+	std::vector<float> sig_grid;      // 3: the signal clock's tiles: tile = floor((x + [0]) / [2]), floor((z + [1]) / [2]); the lamps' shader gets the same (ck_signal_grid)
 
 	enum { CONN = 5 };
 	int lanes() const { return (int)lane_off.size() - 1; }

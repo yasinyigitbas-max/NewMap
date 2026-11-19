@@ -1,5 +1,6 @@
 // CityTraffic: see city_traffic.h
 #include "city_traffic.h"
+#include <cstdlib>
 
 #include "car_models.h"
 #include "traffic_sim.h"
@@ -21,6 +22,10 @@ CityTraffic::CityTraffic() {
 }
 
 CityTraffic::~CityTraffic() {
+	if (threaded) {   // (the node was freed without leaving the tree first)
+		quit.store(true);
+		if (worker.joinable()) worker.join();
+	}
 	delete sim;
 }
 
@@ -37,7 +42,7 @@ bool CityTraffic::load_streets(const String &p_path) {
 	sim->set_models(cm::N_MODELS, models.data());
 	sim->set_lanes(nl, streets.lane_pts.data(), streets.lane_off.data(), streets.lane_f.data(), streets.lane_i.data());
 	sim->set_connections(streets.connections(), streets.conns.data());
-	// every junction's own start in the signal cycle: whole seconds from its 200 m tile, so the lamps' shader can be
+	// every junction's own start in the signal cycle: whole seconds from its clock tile (streets.sig_grid), so the lamps' shader can be
 	// given exactly the same number (stage 2c)
 	const int nn = (int)streets.node_i.size() / 4;
 	std::vector<float> off(nn, 0.0f);
@@ -192,6 +197,31 @@ Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, c
 
 void CityTraffic::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("load_streets", "path"), &CityTraffic::load_streets);
+	ClassDB::bind_method(D_METHOD("attach", "streamer"), &CityTraffic::attach);
+	ClassDB::bind_method(D_METHOD("_on_cell_in", "key"), &CityTraffic::_on_cell_in);
+	ClassDB::bind_method(D_METHOD("_on_cell_out", "key"), &CityTraffic::_on_cell_out);
+	ClassDB::bind_method(D_METHOD("report"), &CityTraffic::report);
+	ClassDB::bind_method(D_METHOD("set_max_cars", "n"), &CityTraffic::set_max_cars);
+	ClassDB::bind_method(D_METHOD("get_max_cars"), &CityTraffic::get_max_cars);
+	ClassDB::bind_method(D_METHOD("set_parked", "on"), &CityTraffic::set_parked);
+	ClassDB::bind_method(D_METHOD("get_parked"), &CityTraffic::get_parked);
+	ClassDB::bind_method(D_METHOD("set_density", "scale"), &CityTraffic::set_density);
+	ClassDB::bind_method(D_METHOD("get_density"), &CityTraffic::get_density);
+	ClassDB::bind_method(D_METHOD("set_shadows", "on"), &CityTraffic::set_shadows);
+	ClassDB::bind_method(D_METHOD("get_shadows"), &CityTraffic::get_shadows);
+	ClassDB::bind_method(D_METHOD("set_bodies", "on"), &CityTraffic::set_bodies);
+	ClassDB::bind_method(D_METHOD("get_bodies"), &CityTraffic::get_bodies);
+	ClassDB::bind_method(D_METHOD("set_night", "night"), &CityTraffic::set_night);
+	ClassDB::bind_method(D_METHOD("get_night"), &CityTraffic::get_night);
+	ClassDB::bind_method(D_METHOD("set_streets_path", "path"), &CityTraffic::set_streets_path);
+	ClassDB::bind_method(D_METHOD("get_streets_path"), &CityTraffic::get_streets_path);
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "max_cars"), "set_max_cars", "get_max_cars");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "parked"), "set_parked", "get_parked");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "density"), "set_density", "get_density");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "shadows"), "set_shadows", "get_shadows");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "bodies"), "set_bodies", "get_bodies");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "night"), "set_night", "get_night");
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, "streets_path"), "set_streets_path", "get_streets_path");
 	ClassDB::bind_method(D_METHOD("is_built"), &CityTraffic::is_built);
 	ClassDB::bind_method(D_METHOD("street_stats"), &CityTraffic::street_stats);
 	ClassDB::bind_method(D_METHOD("run_test", "cars", "minutes", "seed", "cam", "whole_city", "stuck_rule", "density"), &CityTraffic::run_test);
