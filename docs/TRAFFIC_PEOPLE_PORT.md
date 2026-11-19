@@ -759,6 +759,19 @@ body correctly (a real stride in the stagger, flat on the ground after the charg
 - Not on the phone. Its cost was not measured (it is 13 bodies, 12 joints, 8 small steps a frame for each person
   that is physical at that moment; a handful at once is the intent).
 
+### The get-up, looked into (19 Nov evening)
+FOUND IN THE CLIPS: the old game's set has NO rise from lying. `get_up`, `wake_up`, `stand_up` (and `sit_to_stand`)
+are one and the same clip, a rise from a SEAT (the hips start 42 cm lower, are up after 1.6 s); `die` is a copy of
+`idle`; `sleep` is the only lying pose. That is why the figure stood 1.3 s after it lay flat: the lying pose was
+blended straight into a clip that is already rising.
+INTERIM (in `CityPed::to_animation`): for the first second the clip barely runs (0.3 of its pace) while the pose the
+body lay in is blended into the clip's seated start: it gathers itself into a crouch; then it rises at the clip's own
+pace. Lying to standing now takes 3.2 s. Engine test RESULT PASS; four pictures `review/people_19nov/getup_sheet.jpg`
+(lies, crouches 0.8 s in, nearly up 1.9 s in, stands).
+THIS IS STILL A BLEND, NOT A GET-UP: nobody rolls over, props himself on his hands, or gets a knee under him. The real
+one is the body pushing itself up with its own muscles (to be done with the crowd), or two new clips (from the back,
+from the front). Never seen in motion.
+
 ## 23. A car that is hit is a real car (19 Nov evening, on the working branch)
 Yasin, after the compaction: "act like a developer working for rockstars next GTA and tackle the problems".
 The problem: a traffic car that was hit only stood still for a few seconds, and the player's car did not even touch

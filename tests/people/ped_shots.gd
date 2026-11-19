@@ -7,7 +7,7 @@ var ped: Node3D
 var cam: Camera3D
 var t := 0.0
 var out := "OUT/ped_shots"
-var shots := [[1.0, "1_stands"], [1.42, "2_staggers"], [6.55, "3_goes_down"], [8.6, "4_lies"], [10.9, "5_gets_up"]]
+var shots := [[1.0, "1_stands"], [1.42, "2_staggers"], [6.55, "3_goes_down"], [8.6, "4_lies"], [10.4, "5_gathers"], [11.5, "6_rises"], [13.2, "7_stands"]]
 var done := 0
 var pushed := 0
 

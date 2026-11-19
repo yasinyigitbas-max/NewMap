@@ -29,6 +29,9 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   Console test PASS (26 cases: holds up to 170 N s from front or back, 80 from the side; a frail person falls at 120;
   cars at 30 / 60 km/h throw it 12 / 27 m), engine test PASS (the real figure: shove, charge, car, gets up).
   One sheet of five pictures: `review/people_19nov/body_sheet.jpg`.
+  THE GET-UP (evening): the clip set has NO rise from lying (get_up = wake_up = stand_up = a rise from a seat; die =
+  idle). Interim: it gathers into the clip's seated start for a second, then rises (3.2 s; `getup_sheet.jpg`). The
+  real one (the body pushes itself up, or two new clips) is still to do.
   NOT DONE: never seen in motion (the get-up looks too quick in the one picture); plain colour, not the people's
   look; NO WALKING CROWD here (the body of one person only); nothing in the test app uses it; not on the phone.
 - 19 Nov ~14:00 (PC session): CARS THAT STEER + A CAR TO DRIVE, ALL C++ (Yasin: "a moving traffic system and good car

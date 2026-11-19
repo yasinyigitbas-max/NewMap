@@ -21,6 +21,9 @@
 
 namespace godot {
 
+static const double GETUP_GATHER = 1.0;   // s: from lying into the clip's seated start
+static const double GETUP_SLOW = 0.3;     // the clip's pace meanwhile
+
 namespace {
 const char *BONE_NAMES[pb::NB] = { "Bip01_Pelvis", "Bip01_Spine1", "Bip01_Head", "Bip01_L_UpperArm", "Bip01_L_Forearm", "Bip01_R_UpperArm", "Bip01_R_Forearm",
 	"Bip01_L_Thigh", "Bip01_L_Calf", "Bip01_L_Foot", "Bip01_R_Thigh", "Bip01_R_Calf", "Bip01_R_Foot" };
@@ -173,7 +176,13 @@ void CityPed::to_animation(const StringName &p_clip, double p_blend, bool p_from
 	// the same pose under the node's new place: the bones are written once more after the move
 	set_global_transform(Transform3D(Basis(Vector3(0, 1, 0), yaw), at));
 	write_bones();
-	if (anim && anim->has_animation(p_clip)) anim->play_with_capture(p_clip, p_blend);
+	if (anim && anim->has_animation(p_clip)) {
+		// From the ground: the clip set has no rise from lying (get_up is a rise from a seat). So for the first second the
+		// clip barely runs while the pose the body lay in is blended into the clip's seated start (it gathers itself, sits
+		// up), and only then does it rise at the clip's own pace.
+		anim->set_speed_scale(p_from_ground ? GETUP_SLOW : 1.0);
+		anim->play_with_capture(p_clip, p_from_ground ? GETUP_GATHER : p_blend);
+	}
 	mode = p_from_ground ? MODE_GETUP : MODE_ANIM;
 	t_mode = 0.0;
 }
@@ -209,7 +218,8 @@ void CityPed::_physics_process(double p_delta) {
 		return;
 	}
 	if (mode == MODE_GETUP) {
-		if (t_mode >= getup_len) { mode = MODE_ANIM; t_mode = 0.0; getups++; if (anim && anim->has_animation(clip)) anim->play(clip, 0.3); }
+		if (t_mode >= GETUP_GATHER && anim) anim->set_speed_scale(1.0);
+		if (t_mode >= GETUP_GATHER + getup_len - GETUP_GATHER * GETUP_SLOW) { mode = MODE_ANIM; t_mode = 0.0; getups++; if (anim && anim->has_animation(clip)) anim->play(clip, 0.3); }
 		return;
 	}
 	// ---- the body is the person now
