@@ -5,6 +5,10 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov (cloud, branch claude/fill-apartments): APARTMENT FILL, THE WHOLE ZONE (Yasin: "go on populate the entire
+  zone"): blocks 1-3 drafts, 8 pieces n_apt_*, 15 rooms g_apt_*, land first on measured street heights (blocks 2-3 on
+  slopes: level pads, retaining faces on the residential line). Draws 64-134, triangles over 500k. Not locked. Read
+  review/fill_apt/README.md.
 - 19 Nov (cloud, branch claude/fill-apartments): APARTMENT FILL BLOCK 1 (B Ave - Adela, 7th - 8th St, the L round
   a_ne) DRAFT, waiting for Yasin's word before blocks 2 and 3. Three pieces n_apt_b1_bw / _be / _7th + 10 shop rooms
   g_apt_*; land first (level at the walk, all seams 0.000 m, dry land trial only); own tables grow_apt_blocks.json,

@@ -1,134 +1,130 @@
-# Apartment band fill (branch claude/fill-apartments, 19 Nov) - BLOCK 1 of 3, a draft for Yasin
+# Apartment band fill (branch claude/fill-apartments, 19 Nov) - the whole zone: blocks 1, 2, 3 (drafts for Yasin)
 
-Block 1 = the block between B Ave and Adela Ave, 7th and 8th St (grid u 259-491, v -791..-609), the L-shaped land
-round the locked apartment sample quadrant `a_ne`. Blocks 2 and 3 are NOT started (waiting for Yasin's word on this one).
-Nothing is locked. Nothing shared was changed (see the end).
+Yasin, after block 1: "go on populate the entire zone". The apartment band east of the sample, three blocks, eight
+pieces, 25 hand-designed sub-blocks, 15 shop rooms. Nothing is locked. Nothing shared was changed (see the end).
+Each piece is its own script (`tools/city/pilot/pieces/n_apt_*.gd`, the reasons for everything in its header) with my
+copies of the libraries: `apt_fill_lib.gd` (copy of apt_lib + the land on slopes + wall items clear of openings +
+shortened fence panels), `apt_fill_b2_land.gd`, `apt_fill_b3_land.gd` (measured street heights, data only).
+Rows in `review/grow_apt_blocks.json` (my own table; `integrate.py` takes it later; NOT run into the shared layout).
 
-## What was built and why
-Three pieces, each its own script (`tools/city/pilot/pieces/n_apt_b1_*.gd`, the reasons are in each script's header),
-all at layout pos [250, 6, -600], yaw 0 (the sample's junction frame, so the seams with `a_ne` line up exactly). Rows in
-`review/grow_apt_blocks.json` (my own table; `integrate.py` picks it up later, NOT run into the shared layout).
+## The three blocks
+| block | where | pieces | land | what it is |
+|---|---|---|---|---|
+| 1 | B Ave - Adela, 7th - 8th St, the L round the sample's a_ne | n_apt_b1_bw / _be / _7th | flat, level with its streets at 6.15 m | the old courts with a bakery and a barber; 1960s dingbats, sand volleyball, tennis courts, taqueria and nail salon; 7th St's shops (dry cleaner, pharmacy & post, tax office, donuts, coffee window), a boarded walk-up being renovated, carports, a skate pad, the launderette |
+| 2 | B Ave - Adela, 7th - 6th St, round the sample's a_se | n_apt_b2_7th / _be / _bw | rises 2.00 m to the B Ave x 6th corner (measured: B Ave +2.00 m, 6th St -2.00 m) | the church with its plaza and lot, the corner market, a community garden behind a picket fence; garage townhouses stepping down the alley, a garden court, the play and picnic lawn, the bike shop; the community room and preschool on the top corner with its play yard on a level pad, walk-ups stepping up B Ave, lock-up garages, a barbecue terrace |
+| 3 | B Ave - Adela, 6th St - the residential quarters at z -300 | n_apt_b3_w / _e | the steep end: B Ave +2.00 m, Adela +1.00 m, 6th St -2.00 m, the houses' terraces behind 10.30-7.16 m | Hilltop Books, a Spanish court, a BUNGALOW COURT (six small cottages, each on its own terrace, round a garden walk off B Ave), 6th St walk-ups, the residents' garden; three garage townhouses stepping down against the retaining line, the corner court, Adela walk-ups |
 
-The block is not one lot: the streets round it have alley mouths at 54-60 m from every junction, so it is cut by four
-alleys: two continue the sample's own alleys (u 304-310, v -654..-660), two come off the Adela / 8th St aprons.
-
-| piece | where | what it is, and why there |
-|---|---|---|
-| `n_apt_b1_bw` | B Ave x 8th St, u 259-350, v -791..-700 | **the old courts**: the band's oldest corner (1920s-30s Spanish and white courts, 1950s walk-ups). The **bakery** on the corner (8th St is the walk into the centre), a **barber** under a flat beside it, the shared courtyard behind (picnic table under a jacaranda, clothesline, bed), the shops' bins in a CMU enclosure the truck reaches from the alley; a play corner (swings, slide, bark, the parent's bench) behind the B Ave walk-ups; the courts' citrus and herb garden; a row of 7 lock-up garages the courts rent (old buildings have no parking); a garden wing whose windows look over `a_ne`'s playground |
-| `n_apt_b1_be` | 8th St x Adela, u 350-491, v -791..-700 | **the 1960s end** toward the golf course: stucco blocks and a condo on 8th, three **dingbats over their carports** on the alley, the dingbat tenants' **sand volleyball** court (sailors, nurses), the complex's **two tennis courts** (kit park, fence rebuilt with posts, one gate) and their lawn (benches facing the courts, tables under sails, grill, fountain, arbor); the **taqueria** and a **nail salon** on the corner of 8th and Adela (tables on the forecourt), walk-ups on Adela |
-| `n_apt_b1_7th` | 7th St x Adela, u 350-491, v -700..-609 | **the working street**: 7th St is the bus street to the centre. A brick walk-up with a **dry cleaner**, a garden apartment, a **boarded walk-up** (roll-off and builder's screen: renovation starting), a stucco block; the corner of 7th and Adela: **pharmacy & post, tax office, donut shop** and a **coffee window**; carports for the 7th St flats, the block's **skate pad** for the teenagers (the small ones have `a_ne`'s playground next door), the old residents' shade benches facing it; the **launderette** under the flats on Adela |
-
-Counts (saved pieces): 2,421 props, 49 buildings, 152 parking stalls (recorded for the parked-car layer), ground 58,336
-triangles (cells unmerged, no T-joints).
+Totals (saved pieces): 6,444 props, 108 buildings, 409 parking stalls (recorded for the parked-car layer), ground
+188,712 triangles.
 
 ## Land first (Yasin: "CONSIDER THE ELEVATION")
-- Land under block 1 (`zoning/terrain_grid.npz`): 5.95-6.40 m, a 25 cm hump in the middle of the east half. The four
-  streets are built at pad 6.0, walk 6.15 m; `a_ne` is level at 6.15. So the block is ONE level floor at the walk
-  height (it meets every street and `a_ne` without a slope down to the kerb); the hump goes under it.
-- Built ground-only first (alleys + floor), checked, committed (e91b1d9a), only then buildings and props.
-- Seams, measured every 0.5 m along all 12 edges of the 3 pieces (`OUT/apt/seams.py`, scratch): every edge has a
-  neighbour along its whole length (8th St, Adela, 7th St, B Ave walks and their junctions, `a_ne`, each other);
-  largest step 0.000 m.
-- Dry land trial (`lower_land_to_pieces.py <dump> --fit --ease-from=<today's grid> --out=<scratch>`, NOT `--write`):
-  the land goes 5 cm under these pieces by lowering 1,882 land nodes (usual 0.10 m, largest 0.31 m), none raised by
-  them. Then `ground_check.py` against the trial land: these pieces 0 m2 under the land, 0 hanging edge cells, 0 m of
-  seam stepping over 20 cm. (The trial also moved land for the residential pieces in the same area file - their
-  floating edges, not mine; it is a scratch file and was not written.)
-- The land is NOT changed in the repo: when integrated, the land fit has to be run for real (Yasin's / the integration
-  session's step). Until then today's land covers up to 25 cm of this block's floor in the middle: the top view
-  `b1_top_todays_land.jpg` shows exactly that (the green blob); `b1_top_trial_land.jpg` is on the trial land.
+Order for every block: the street heights round it MEASURED on the built pieces (probe of a ground dump, 1-2 m apart),
+the ground alone built and checked and committed (b1 e91b1d9a, b2 and b3 their "GROUND ONLY" commits), only then
+buildings, props and rooms.
+- Block 1: one level floor at the walk height (the land's 25 cm hump goes under it).
+- Blocks 2 and 3: one smooth surface that equals every measured street edge exactly (block 2: the product of the B Ave
+  and 6th St profiles; block 3: the Coons patch of the four edges); every building on a level pad at the middle of its
+  front, eased into the slope over 5 m, never within 3 m of an edge (so the edges stay on the measured heights); the
+  play yards, the terrace on their own level pads. Rows step: the B Ave walk-ups, the 6th St row, the townhouses.
+- Block 3's back line with the residential quarters: their house terraces step 0.35-0.95 m between lots; this block's
+  edge follows them smoothed, exactly at their two alley mouths, and a retaining face stands on the shared line wherever
+  the two grounds differ (180 m: up to 0.65 m where their terrace is higher, 0.20 m where this block is), facing the
+  side that sees it; a fence on top.
 
-## Checks (area layout: the 118 rows within u 0-750, v -1050..-50 + these 3; real renderer)
-What each check sees and does not see is in the super-builder skill's table; in short:
-- `validate.gd`: 26 problems in the area, 7 of them in my pieces, all "fence_wood_privacy inside <building>": the
-  validator sizes every prop from the kit manifest and ignores its scale, so a fence panel I SHORTENED to fit a gap
-  (1.25-1.9 m, the skill's rule: never stretched, a short run gets shorter panels) is tested as 2 m long. The real
-  panels end 0.2 m clear of the walls. (Not fixed in the shared validator: not mine to change.) The other 19 are the
-  neighbours' (overlaps in the sample / residential pieces). Does NOT see heights, the land, yards, or sense.
-- `check_life.gd`: 7 lines in my pieces: 6 are the open mouths of the three CMU bin enclosures (open on purpose: the
-  truck reaches the bins), 1 is the tennis courts' gate, placed by the shared `civ_lib.park` as in the civic sample.
-  0 wall items over a window or door (my copy of the dressing slides every meter, light, mailbox, intercom and hose
-  reel clear of the measured openings, or leaves it out); for comparison the locked sample `a_ne`..`a_sw` has 46-62
-  such lines each from the shared rules. Does NOT see play items on asphalt, wear on the wrong surface, sense.
-- `audit_trees.gd`: 0 trees in hard ground (1,240 checked in the area).
-- `sink_check.gd`: 0 - it only checks STREET pieces, so it says nothing about these blocks.
-- `ground_check.py` + the trial land: above.
-- Lock test: RESULT PASS (see "Numbers").
+Measured on the finished pieces (all eight, `OUT/apt/seams.py`, every edge every 0.5 m): every street edge and every
+seam between my own pieces has its neighbour along its whole length, largest step 0.008 m (the meshes' own triangles on
+the slope; the rule is 2 cm). The only larger steps are block 3's retaining faces on the residential line (0.21 m and
+0.66 m: the planned faces). Dry land trial (`lower_land_to_pieces.py --fit --ease-from=<today's grid> --out=<scratch>`,
+NOT `--write`) with `ground_check.py` against it: 0 m2 of these pieces under the land, 0 hanging edges; the trial lowers
+4,669 land nodes (usual 0.13 m, largest 1.19 m where block 3 cuts into the hill), raises none for these pieces.
+NOT done: the land in the repo is not changed. Until the land fit is run for real (integration), today's land covers
+parts of these floors (block 1's hump up to 25 cm; block 3 more than 30 cm on 10,097 m2). The top views are on the
+TRIAL land; `b1_top_todays_land.jpg` shows what today's land does.
 
-## Walk-in places (rooms built WITH the block, Yasin relayed: "use the indoor generator in the pilot and do them both together")
-10 rooms, `interiors/rooms/g_apt_*.scn`, from my table `interiors/assignment_apt.json` (`tools/city/rooms/assign_apt.py`,
-the reason for every shop is in it) and my generator `tools/city/rooms/room_gen_apt.gd` - a copy of the strip
-session's copy of the pilot's `room_gen.gd` (the shared generators untouched), softer wall colours for the band, plus
-bakery / barber / pharmacy-and-post / donut kinds; three rule fixes in the copy (the nail technician's chair 0.25 m
-further from the wall, the menu board clear of a back door, the taqueria's fridge reachable).
-| room | shop | kind |
+## Checks (area layout: the rows within u 0-750, v -1050..-50 + these 8; real renderer)
+What each check sees and does not see: the super-builder skill's table. My pieces' lines only:
+- `validate.gd`: 21 lines, all "fence_wood_privacy inside <building>" in narrow gaps between buildings: the validator
+  sizes every prop from the kit manifest and ignores its scale, so a panel I SHORTENED to fit (the skill: never
+  stretched) is tested as 2 m long; the real panels end 0.2 m clear of the walls. Not fixed in the shared validator.
+- `check_life.gd`: 9 lines: 8 are the open mouths of the four CMU bin enclosures (open so the truck reaches the bins),
+  1 is the tennis courts' gate placed by the shared civ_lib.park. 0 wall items over a window or door (my copy slides
+  every meter, light, mailbox, intercom, hose reel clear of the measured openings, shops, flats and houses).
+- `audit_trees.gd`: 0 trees in hard ground (1,307 in the area).  `sink_check.gd`: 0 - street pieces only, it says
+  nothing about these blocks.
+- Lock test: RESULT PASS (496 locked pieces, 103 locked plan files) - only that no locked file changed.
+
+## Walk-in places: 15 rooms, built with their blocks (Yasin, relayed: "use the indoor generator in the pilot and do them both together")
+Table `interiors/assignment_apt.json` (`tools/city/rooms/assign_apt.py`, the reason for every shop in it), generator
+`tools/city/rooms/room_gen_apt.gd` (a copy of the strip session's copy of the pilot's room_gen.gd; softer colours for
+the band, new kinds: bakery, barber, pharmacy & post, donuts, church, community room, bike shop, books; small rule fixes
+noted in the file). `check_rooms.gd -- --only=g_apt_`: CHECKS 0 problems in 15 rooms (it cannot see whether a shop has
+everything its kind needs: by eye, from the pictures).
+| block | room (interiors/rooms/) | shop |
 |---|---|---|
-| `g_apt_b1_bw__bakery__0` | B Avenue Bakery | bakery (bread shelves, cases, kitchen behind a partition, two-tops) |
-| `g_apt_b1_bw__barber__0` | Eighth Street Barbers | barber (mirror stations both sides, waiting bench in the window) |
-| `g_apt_b1_be__taqueria__0` | Taqueria La Esquina | taqueria (booths, two-tops, salsa bar, counter) |
-| `g_apt_b1_be__nail_salon__0` | Polished Nail Studio | nails (nail tables with both chairs, product shelves) |
-| `g_apt_b1_7th__dry_cleaner__0` | Seventh Street Cleaners | dry cleaner (counter, garment rails) |
-| `g_apt_b1_7th__corner_shops_7th__0` | Adela Pharmacy & Post | pharmacy (stocked shelves, post box inside) |
-| `g_apt_b1_7th__corner_shops_7th__1` | Island Tax Service | tax office (desks, filing) |
-| `g_apt_b1_7th__corner_shops_7th__2` | Sunrise Donuts | donuts |
-| `g_apt_b1_7th__coffee_window__0` | The Coffee Window | coffee |
-| `g_apt_b1_7th__launderette__0` | Adela Wash & Fold | laundromat (washers / dryers on the walls, soap machine, waiting seats) |
-`check_rooms.gd -- --only=g_apt_`: CHECKS 0 problems (after three rounds: 19 -> 11 -> 2 -> 0). It does NOT see whether
-a shop has everything its kind needs: that is by eye, from the pictures. Rooms are not in the runtime bake yet (no room
-is), so they are not in the draw numbers below.
+| 1 | g_apt_b1_bw__bakery__0, __barber__0 | B Avenue Bakery, Eighth Street Barbers |
+| 1 | g_apt_b1_be__taqueria__0, __nail_salon__0 | Taqueria La Esquina, Polished Nail Studio |
+| 1 | g_apt_b1_7th__dry_cleaner__0, __corner_shops_7th__0/1/2, __coffee_window__0, __launderette__0 | Seventh Street Cleaners, Adela Pharmacy & Post, Island Tax Service, Sunrise Donuts, The Coffee Window, Adela Wash & Fold |
+| 2 | g_apt_b2_7th__church_7th__0, __corner_market__0 | Seventh Street Community Church, Adela Corner Market |
+| 2 | g_apt_b2_be__bike_shop__0 | Hill Street Bikes |
+| 2 | g_apt_b2_bw__community_room__0 | Glorietta Hill Community Room (and preschool) |
+| 3 | g_apt_b3_w__hilltop_books__0 | Hilltop Books (small: 5.9 x 5.2 m, 9 props) |
+Rooms are not in the runtime bake (no room is yet), so not in the draw numbers.
 
-## Pictures (all opened and looked at by me)
-- `b1_top_trial_land.jpg` - straight down, on the TRIAL land (preview contour lines; parked cars are the preview's).
-- `b1_top_todays_land.jpg` - the same on today's land: the hump drawn over the floor (what the land fit removes).
-- `b1_eye_8th_st_east.jpg`, `b1_eye_7th_st_west.jpg`, `b1_eye_adela_south.jpg` - eye height (1.7 m) along the streets,
-  rooms open. Flat preview plane, no land (the land does not show at street level here).
-- `b1_baked_above.jpg` - the baked block through the streamer (the draw numbers' view).
-- `b1_edge_alley_seam_a_ne.jpg` - the block has no slope; this is its seam with the locked `a_ne` along the alley, on
-  the trial land.
-- `b1_shops_sheet_0..3.jpg` - every shop: front from across the pavement and inside from the door. The dry cleaner's
-  front picture in sheet 1 is a tree trunk (the camera landed in a parkway tree): its retake is
-  `b1_shop_dry_cleaner_front.jpg`.
-- Only part of the city is loaded in every picture (the area file): the roads end where the loaded area ends.
-- No shadows in any picture (the cloud preview's renderer).
-
-## Numbers
-Measured in the cloud (lavapipe), NOT on the phone. A scratch runtime bake (a copy of `bake_runtime.gd` reading the
-shared layout + these 3 rows, out to `OUT/rt_apt`, not committed; 12 cells round the block, the far world whole), then
-`rt_shots.gd` through the streamer, 5 views. Rooms are NOT in the bake (no room is yet).
+## Numbers (cloud, lavapipe - NOT the phone)
+One scratch runtime bake of the area with all eight pieces (a copy of bake_runtime.gd reading the shared layout + my
+rows, out to OUT/rt_apt, not committed; 16 cells), then rt_shots.gd through the streamer:
 | view | draws | triangles |
 |---|---|---|
-| 8th St, eye height, east from B Ave | 64 | 583k |
-| 7th St, eye height, west from Adela | 107 | 1,028k |
-| Adela, eye height, south from 8th | 66 | 755k |
-| the alley seam with `a_ne`, eye height | 133 | 1,064k |
-| above the block, 54 m up | 93 | 883k |
-- Draws 64-133: under the ~150 a view (Yasin's first rule).
-- Triangles 0.58-1.06 M: OVER the ~500k mark in every view. Not split into what is mine and what is the far world /
-  the neighbours (the strip measured +270-460k a view from its own blocks). The known heavy parts of block 1: the ground
-  (58k triangles in the three pieces: unmerged cells, as required against cracks), 152 wheel stops, 4 dingbats, the
-  tennis courts. Cheap cuts if Yasin wants them: merge the ground cells (the block is flat, no cracks can open), wheel
-  stops only on the front rows. Not done without his word.
-- The trees draw black in `b1_baked_above.jpg`: the cloud preview's foliage lighting in rt_shots, not the trees.
-- Lock test (`tests/city_kit/test_locked_pieces.gd`): RESULT PASS (496 locked pieces, 103 locked plan files) - it
-  proves only that no locked file changed.
+| b1 8th St east, eye height | 64 | 666k |
+| b1 7th St west | 133 | 1,285k |
+| b1 alley seam with a_ne | 134 | 1,180k |
+| b2 7th St east | 103 | 873k |
+| b2 B Ave uphill | 74 | 905k |
+| b2 townhouse alley | 66 | 542k |
+| b3 6th St east | 88 | 731k |
+| b3 B Ave uphill | 107 | 796k |
+| b3 residents' garden | 97 | 1,136k |
+| above the zone, 84 m up | 84 | 945k |
+- Draws 64-134 a view: under the ~150 (Yasin's first rule).
+- Triangles 0.54-1.28 M: OVER the ~500k mark in every view; not split into mine / the far world / the neighbours.
+  Known heavy parts: the ground (189k in the eight pieces: unmerged cells against cracks; block 2's community garden
+  beds and block 3's walks cut many cells), wheel stops, the townhouses, the tennis courts. Cheap cuts if wanted: merge
+  the ground cells on block 1 (flat), fewer wheel stops. Not done without Yasin's word.
+
+## Pictures (all opened and looked at by me; only the area round the zone is loaded; no shadows in the cloud preview)
+- Block 1: `b1_top_trial_land.jpg`, `b1_top_todays_land.jpg`, `b1_eye_8th_st_east.jpg`, `b1_eye_7th_st_west.jpg`,
+  `b1_eye_adela_south.jpg`, `b1_edge_alley_seam_a_ne.jpg`, `b1_shops_sheet_0..3.jpg` (the dry cleaner's front in sheet 1
+  is a tree trunk: its retake is `b1_shop_dry_cleaner_front.jpg`), `b1_baked_above.jpg`.
+- Block 2: `b2_top_trial_land.jpg`, `b2_eye_bave_uphill_steepest_edge.jpg`, `b2_eye_6th_st_east.jpg`,
+  `b2_eye_townhouse_alley.jpg`, `b2_shops_sheet.jpg` (church, market, bike shop, community room: front and inside).
+- Block 3: `b3_top_trial_land.jpg`, `b3_eye_bave_uphill_steepest_edge.jpg`, `b3_eye_bungalow_court.jpg`,
+  `b3_eye_retaining_line.jpg` (from a townhouse yard: the back fence on the retaining line, no gap), `b3_eye_6th_st_east.jpg`,
+  `b3_eye_residents_garden.jpg`, `b3_sheet_streets_and_bookshop.jpg` (its first B Ave picture stands against the
+  bookshop's wall; the retake is the steepest-edge one).
+- `zone_baked_above.jpg`: the whole zone through the streamer (the trees draw black there: the preview's foliage light).
+- Every street view that starts at a junction corner shows the junction's kerb ramp with the grass edge over it (the
+  fault Yasin pointed at): the road kit's locked junctions, left alone on his word ("no dont touch it"); the dry run of
+  a patch tool for it is in `ramp_sides_dry_run.txt` (64 of 74 junction designs).
 
 ## NOT done / NOT checked
-- Blocks 2 and 3 (waiting for Yasin's word on block 1).
-- The land is not fitted in the repo (only the dry trial); `x_wall_feet` not rebuilt for these blocks (not needed on
-  a flat block whose edges are all flush, but not run).
-- Not checked: the phone; the game itself; the rooms from the street at night; the rooms' cost in draws (they are not
-  in the bake); the wires (no `w_` piece for these alleys: the poles stand and their places are recorded as the piece's
-  meta "poles", the wires are not drawn); the parked-car layer in the game (stalls recorded).
-- Eye-height pictures are with a flat plane, not the land; the top view with the land is the trial land.
-- The 7 validator lines on shortened fence panels were reasoned, not proven in a picture one by one.
-- KIT_USAGE.md not updated (shared file). Used here that were rare or unused before: kit tennis courts, skate pieces
-  (funbox, quarter pipes, rail, bowl), volleyball net away from the beach, builder's screen + roll-off, 18 in cones,
-  carports, the four single-garage types, the boarded walk-up, boutique row, coffee window, realty unit (nail salon).
+- The land fit for real (only the dry trial); `x_wall_feet` not rebuilt for these blocks (their edges are flush or
+  have their own retaining faces; not run).
+- Not checked: the phone; the game; the rooms at night and their draw cost; wires (poles stand on gravel pads, their
+  places are in each piece's meta "poles", no `w_` piece drawn); the parked-car layer in the game (stalls recorded).
+- The 21 validator lines on shortened panels were reasoned from the rule and a few measured, not each pictured.
+- By eye, open questions for Yasin: block 3's residents' garden reads open and plain at eye height; Hilltop Books'
+  room is small and light on props; block 3 cuts up to 1.19 m into today's land (the trial land fits it, the real fit
+  is an integration step).
+- Block 1's ten rooms were rewritten by a later generator run: same prop counts and sizes, file bytes differ; not
+  compared prop by prop.
+- KIT_USAGE.md not updated (shared). First or rare use here: kit tennis courts, skate pieces, volleyball net, builder's
+  screen + roll-off, carports, the single-garage types, the boarded walk-up, boutique row, coffee window, realty unit,
+  civ_church again, civ_community_center, com_surf_shop, com_shallow_books, white picket fence with its posts and gate
+  (unused before), prop_mailbox_post_metal, prop_house_numbers_tile, houses spanish_small / beach_white / ranch_porch /
+  narrow cottages (the bungalow court), prop_ac_condenser_compact.
 
 ## Shared files: NOT touched
 `zoning/terrain_grid.npz`, `terrain/data_citykit/`, `city_grid_layout.json`, `locked.json`, every existing `.scn`,
 `x_wall_feet`, `x_shore_foam`, `wall_feet.json`, `shore_foam.json`, the locked plan files, `assignment_all.json`, every
-existing room, the shared libraries and generators (`apt_lib`, `civ_lib`, `room_gen*.gd`, `validate.gd` ...).
-New files only: the three piece scripts + scenes, `apt_fill_lib.gd`, `review/grow_apt_blocks.json`, this folder,
-`interiors/apt_buildings.json`, `assignment_apt.json`, `rooms_apt_report.json`, `rooms/g_apt_*.scn`,
-`tools/city/rooms/{list_buildings_apt.gd, assign_apt.py, room_gen_apt.gd, gen_shots_apt.gd}`.
+existing room, the shared libraries and generators. One new shared-folder file: `materials/bw_city_color_95.tres` (the
+building wear level of the boarded walk-up, made by kit_lib; new, not a change).

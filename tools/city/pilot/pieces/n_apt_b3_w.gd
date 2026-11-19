@@ -16,8 +16,8 @@ extends SceneTree
 ## opposite the community room, HILLTOP BOOKS (a tiny old shop: second-hand books, the preschool parents' stop) beside a
 ## Spanish court; on B Ave the walk-up and a BUNGALOW COURT - six small cottages round a garden walk entered from the
 ## avenue under an arbor, their post boxes at the gate (retired people, a teacher, a nurse); on 6th St a garden apartment
-## and a walk-up; behind them, where the hill looks back over the band to the centre, the VIEW GARDEN: benches facing
-## north, a gravel walk, jacarandas, a lamp - and the residents' stalls on the alleys.
+## and a walk-up; behind them the residents' GARDEN on the slope: a gravel walk with benches facing into it, jacarandas
+## and a coral tree, a table under a sail, a lamp - and the residents' stalls on the alleys.
 ## Alleys: u-alley v 54-60 (B Ave's apron at z -346..-340), v-alley u 54-60 (6th St's apron at u 304-310; it runs on into
 ## the residential quarter's own alley at z -300).
 ## Walk-in places (rooms built with the block): Hilltop Books.
@@ -130,15 +130,15 @@ func _run() -> void:
 	F.put(props, "prop_park_bench", "worn", sx, sz, 90.0, 39.4, 180.0)
 	F.put(props, "tree_ficus_a", "normal", sx, sz, 120.0, 32.0, 10.0)
 
-	# ================================================================ E (west, u 60-125, v 60-100): the view garden
+	# ================================================================ E (west, u 60-125, v 60-100): the residents' garden
 	stops.append_array(F.pad(paints, stalls, dec, rr, sx, sz, false, 61.8, 76.0, 60.0, 1.0))
 	stops.append_array(F.pad(paints, stalls, dec, rr, sx, sz, false, 84.0, 99.0, 60.0, 1.0))
 	F.fence_gate(props, sx, sz, 66.6, 61.6, 66.6, 99.6, 18.4)
 	F.fence_gate(props, sx, sz, 66.6, 61.6, 124.6, 61.6, 30.0)
 	F.fence_uv(props, sx, sz, 124.6, 61.6, 124.6, 99.6)
-	F.fence_uv(props, sx, sz, 66.6, 99.6, 124.6, 99.6, "fence_wrought_iron", "fence_post_wrought_iron", 1.98)   # iron at the back: the garden looks over the hill's yards too
+	F.fence_uv(props, sx, sz, 66.6, 99.6, 124.6, 99.6, "fence_wrought_iron", "fence_post_wrought_iron", 1.98)   # iron at the back: the garden borders the hill's yards
 	paints.insert(0, F.rect(sx, sz, 70.0, 66.0, 121.0, 67.6, "gravel"))        # the walk along the garden's north side
-	for k in 4: F.put(props, "prop_park_bench", "worn", sx, sz, 76.0 + k * 13.0, 68.6, 180.0)   # benches facing north: the view down over the band to the centre
+	for k in 4: F.put(props, "prop_park_bench", "worn", sx, sz, 76.0 + k * 13.0, 68.6, 0.0)     # benches on the walk facing SOUTH into the garden: its lawn and trees (Yasin's rule: a bench faces a path, a green or a view; looked at from eye height on 19 Nov the north side is the alley fence, not a view)
 	F.put(props, "prop_trash_receptacle", "worn", sx, sz, 82.6, 68.6)
 	F.put(props, "prop_trash_receptacle", "worn", sx, sz, 108.6, 68.6)
 	for t: Array in [["tree_jacaranda_b", 72.0, 76.0], ["tree_jacaranda_a", 92.0, 80.0], ["tree_coral_a", 112.0, 76.0], ["tree_magnolia_b", 102.0, 92.0], ["tree_ficus_b", 80.0, 93.0]]:
