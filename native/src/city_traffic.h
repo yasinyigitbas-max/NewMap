@@ -310,6 +310,7 @@ public:
 	Dictionary bike_stats() const;
 	// (audits) every lane and junction path as points p_step metres apart, at the road's height
 	PackedVector3Array lane_points(double p_step) const;
+	PackedVector2Array map_lines() const;   // the phone's map: every driven lane and junction path as (x, z) pairs
 	void set_walkers(const float *p_dyn, int p_n);
 	double signal_clock() const { return now.clock; }
 	bool has_clock() const { return threaded; }

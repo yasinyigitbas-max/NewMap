@@ -388,6 +388,17 @@ Dictionary CityTraffic::route(const Vector3 &p_from, const Vector3 &p_to, bool p
 	return d;
 }
 
+PackedVector2Array CityTraffic::map_lines() const {
+	PackedVector2Array out;
+	if (!ready) return out;
+	for (int pc = 0; pc < sim->n_pieces; pc++) {
+		if (pc < sim->n_lanes && !(sim->l_flags[pc] & tc::LF_DRIVE)) continue;
+		const int o = sim->p_off[pc], n = sim->p_n[pc];
+		for (int k = 0; k + 1 < n; k++) { out.push_back(Vector2(sim->ptx[o + k], sim->ptz[o + k])); out.push_back(Vector2(sim->ptx[o + k + 1], sim->ptz[o + k + 1])); }
+	}
+	return out;
+}
+
 PackedVector3Array CityTraffic::lane_points(double p_step) const {
 	PackedVector3Array out;
 	if (!ready) return out;
@@ -466,6 +477,7 @@ void CityTraffic::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_cell_out", "key"), &CityTraffic::_on_cell_out);
 	ClassDB::bind_method(D_METHOD("report"), &CityTraffic::report);
 	ClassDB::bind_method(D_METHOD("set_player_car", "car", "half_len", "half_w"), &CityTraffic::set_player_car);
+	ClassDB::bind_method(D_METHOD("map_lines"), &CityTraffic::map_lines);
 	ClassDB::bind_method(D_METHOD("set_max_cars", "n"), &CityTraffic::set_max_cars);
 	ClassDB::bind_method(D_METHOD("get_max_cars"), &CityTraffic::get_max_cars);
 	ClassDB::bind_method(D_METHOD("set_parked", "on"), &CityTraffic::set_parked);

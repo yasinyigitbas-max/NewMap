@@ -135,6 +135,7 @@ public:
 
 	// ---- the places
 	std::vector<Place> places;
+	std::vector<std::string> place_names;   // the shops' names (PlaceData::names; a place's `name` is its number here)
 	std::vector<int32_t> place_from_file;       // the number a place has in places.bin -> its number here (-1: left out)
 	std::vector<int32_t> swim_of;               // a place on the beach -> its spot in the sea (-1: none)
 	std::vector<int32_t> occ;                   // per place: who is there or on his way (a walker's id), -1 = free

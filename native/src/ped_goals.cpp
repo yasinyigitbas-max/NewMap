@@ -9,6 +9,7 @@ namespace pc {
 
 void Crowd::set_places(const PlaceData &p) {
 	places.clear();
+	place_names = p.names;   // (the shops' names: the phone's map)
 	place_from_file.assign(p.places.size(), -1);
 	swim_of.clear();
 	for (size_t fi = 0; fi < p.places.size(); fi++) {

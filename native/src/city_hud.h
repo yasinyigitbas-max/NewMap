@@ -39,11 +39,55 @@ public:
 	void _draw() override;
 };
 
+// THE PHONE'S MAP (board item 8; Yasin: "once clicked, it should review the full phone map, both should be adapted to the
+// new layout of the map"): the new streets drawn, north up: the roads (every driven lane, as wide as a lane), the
+// pavements and crossings (CityTraffic / CityCrowd map_lines: read once, drawn in one call each), the player (an arrow
+// turned with his view), the objective (a green pin) and the way to it (CityTraffic.route, green). Drag pans, two fingers
+// or the wheel zoom, the pin button centres on the player again.
+class HudMap : public Control {
+	GDCLASS(HudMap, Control)
+	PackedVector2Array roads, walks, crossings, route;
+	PackedVector3Array rooms;      // the enterable rooms' doors: x, z, the shop's kind
+	Array targets_local;           // (no shell: the targets kept here)
+	PackedVector2Array troute[3]; Vector2 troute_for[3];
+	Vector2 press_at; bool press_moved = false;
+	bool have_lines = false;
+	Vector2 route_for = Vector2(1e9f, 1e9f);
+	int touches = 0; Vector2 tp[2]; float pinch0 = 0.0f, mpp0 = 1.0f;
+protected:
+	static void _bind_methods();
+public:
+	Vector2 centre;                // world x, z at the map's middle
+	float mpp = 0.6f;              // metres a pixel
+	bool follow = true;            // centred on the player until dragged
+	Vector2 player_xz; float player_yaw = 0.0f;   // (yaw: 0 = north, + = clockwise on the map)
+	bool has_obj = false; Vector2 obj_xz;
+	uint64_t traffic_id = 0, crowd_id = 0;
+	void load_lines();
+	void update_route();
+	void _draw() override;
+	void _gui_input(const Ref<InputEvent> &p_event) override;
+	int get_road_lines() const { return roads.size() / 2; }
+	int get_walk_lines() const { return walks.size() / 2; }
+	int get_route_points() const { return route.size(); }
+	// the player's targets (up to 3, kept in the save): a room tapped becomes one (again: it is dropped); a 4th the oldest goes
+	Array targets() const;
+	void set_targets(const Array &p_t);
+	bool toggle_target(const Vector2 &p_xz, const String &p_name);
+	int tap(const Vector2 &p_screen);   // a tap on the map: the room under it toggled as a target (its index, -1 none)
+	int get_rooms() const { return rooms.size(); }
+	Vector2 room_screen(int p_i) const;
+	int get_target_count() const { return targets().size(); }
+	int get_target_route_points(int p_k) const { return p_k >= 0 && p_k < 3 ? troute[p_k].size() : 0; }
+};
+
 class CityHud : public CanvasLayer {
 	GDCLASS(CityHud, CanvasLayer)
 
 	PanelContainer *b_money = nullptr, *b_arrow = nullptr, *b_inv = nullptr, *b_phone = nullptr;
 	HudArrow *arrow = nullptr;
+	HudMap *map = nullptr;
+	uint64_t crowd_id = 0, traffic_id = 0;
 	Label *l_money = nullptr, *l_time = nullptr;
 	Control *needs_box = nullptr;
 	// the two panels that open: 0 the phone (its map), 1 the inventory
@@ -60,6 +104,7 @@ class CityHud : public CanvasLayer {
 	void layout(const Vector2 &sz);
 	void touch(int p_what);        // 0 the arrow, 1 the phone, 2 the inventory, 3 a panel's close
 	void feedback();               // the tick and the vibration of a touch
+	void recentre();
 
 protected:
 	static void _bind_methods();
@@ -70,6 +115,8 @@ public:
 	void _input(const Ref<InputEvent> &p_event) override;
 
 	void set_player(Object *p_player) { player_id = p_player ? (uint64_t)p_player->get_instance_id() : 0; }
+	void set_world(Object *p_crowd, Object *p_traffic) { crowd_id = p_crowd ? (uint64_t)p_crowd->get_instance_id() : 0; traffic_id = p_traffic ? (uint64_t)p_traffic->get_instance_id() : 0; }
+	Object *get_map() const { return map; }
 	// the tests (and keys: M map, P phone, I inventory): press as a thumb would
 	void press(int p_what) { touch(p_what); }
 	int get_open() const { return anim_dir >= 0 && open >= 0 && anim > 0.0f ? open : -1; }

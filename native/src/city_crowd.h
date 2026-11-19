@@ -245,6 +245,10 @@ public:
 	Dictionary pavement_near(const Vector3 &p_at, double p_max_d) const;
 	// (audits) every pavement and crossing as points p_step metres apart, at their height
 	PackedVector3Array walk_points(double p_step) const;
+	PackedVector2Array map_lines(int p_kind) const;
+	// the phone's map: every enterable room's door (x, z, the shop's kind); its name
+	PackedVector3Array map_rooms() const;
+	String room_name(int p_i) const;   // the phone's map: pavements (0) or crossings (1) as (x, z) pairs
 	// the people round a point: id, at, yaw, speed, mode, act, state, party
 	Array people_near(const Vector3 &p_at, double p_radius) const;
 	// what happened since the last call: [type, id, aux, f] each (ped_crowd.h E_*); also sent as the signal "crowd_event"

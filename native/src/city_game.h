@@ -64,6 +64,8 @@ class CityGame : public Node {
 	int money = 50;
 	// the objective the HUD's arrow points to (none: it points north)
 	bool objective_on = false; Vector3 objective_at;
+	// the player's own targets on the phone's map (Yasin: "up to 3 targets should be routable and kept"): {x, z, name}, saved
+	Array map_targets;
 	// HEALTH AND NEEDS (Yasin: "integrate health and needs but keep them inactive for now"): kept and saved, never drained
 	// while needs_active is off; the HUD's bars are hidden then
 	float health = 1.0f, hunger = 1.0f, thirst = 1.0f, energy = 1.0f;
@@ -233,11 +235,15 @@ public:
 	void close_pause();
 	bool is_pause_open() const { return pause_open; }
 	uint64_t get_player_id() const { return player_id; }
+	uint64_t get_crowd_id() const { return crowd_id; }
+	uint64_t get_traffic_id() const { return traffic_id; }
 	void set_objective(const Vector3 &p_at) { objective_on = true; objective_at = p_at; }
 	void clear_objective() { objective_on = false; }
 	bool get_objective_on() const { return objective_on; }
 	Vector3 get_objective_at() const { return objective_at; }
 	bool get_needs_active() const { return needs_active; }
+	Array get_map_targets() const { return map_targets; }
+	void set_map_targets(const Array &p_t) { map_targets = p_t; }
 	void set_needs_active(bool p_on) { needs_active = p_on; }
 	Object *get_hud() const;
 	void game_over(const String &p_reason_en, const String &p_reason_tr, const String &p_title, const String &p_rewind);
