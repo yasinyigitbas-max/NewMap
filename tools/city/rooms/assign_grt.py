@@ -41,9 +41,14 @@ def main():
                 a, b = a, min(b, e["along"] + 4.3); extra = {"depth": 7.5}
             boards = []
             for sg in c.get("signs", []):
-                if sg["facade"] == "front" and a - 0.05 <= sg["along"] <= b + 0.05: boards.append(sg)
+                # only the board over the shop's own door (Yasin's review: a name on the boarded bay next door reads wrong)
+                if sg["facade"] == "front" and a - 0.05 <= sg["along"] <= b + 0.05 and abs(sg["along"] - e["along"]) <= max(2.6, sg["w"] * 0.5): boards.append(sg)
                 elif sg["facade"] == "left" and i == 0: boards.append(sg)
                 elif sg["facade"] == "right" and b >= float(c["floors"][0]["box_max"][0]) - 0.05: boards.append(sg)
+            if not any(x["facade"] == "front" for x in boards):     # no board over the door: the nearest one in the bay
+                doors_f = [en["along"] for en in c.get("entrances", []) if en["kind"] in ("shop", "civic") and en.get("floor", 0) == 0]
+                near = [x for x in c.get("signs", []) if x["facade"] == "front" and min(doors_f, key=lambda dz: abs(dz - x["along"])) == e["along"]]
+                if near: boards.append(min(near, key=lambda x: abs(x["along"] - e["along"])))
             rid = "grt_%s_%s_%d" % (d["piece"][2:], s["label"], i)
             st, font = STYLE.get(s["kind"], ("green", "Overpass"))
             out.append({"id": rid, "piece": d["piece"], "label": s["label"], "model": s["model"], "pos": s["pos"], "yaw": s["yaw"],

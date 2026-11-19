@@ -1,4 +1,4 @@
-# Gritty edge growth: variants + pilot area (18 Nov, branch `claude/grow-gritty`) - FOR YASIN, NOTHING LOCKED
+# Gritty edge growth: variants + the whole zone (branch `claude/grow-gritty`) - LOCKED 19 Nov (Yasin: "lock them for now. rest is piece by piece correction")
 
 The gritty sample (`g_ne g_nw g_se g_sw`, `s_grt`, `w_grt`) was locked by Yasin on 17 Nov, so this round grows FROM it.
 Pictures: `shots/` (cloud preview: no shadows; the weathered buildings render about 40 % too dark here; real phone
@@ -78,8 +78,35 @@ block from above, along its numbered street and along its Ave), before (samples 
 - **Rooms** (25): as built 26-36 draws each; MERGED (tools/city/rooms/room_merge.gd, runtime/rooms, not in git) 7-9
   draws each (706 -> 221 for all 25, a room 28.2 -> 8.8); 4-5 real lights each (3 fixtures, the back room, daylight at
   the window), 9k-41k triangles. Still not in the streamed city (the bake knows no rooms yet).
-- Yasin 18 Nov, "whats that thing flying there?": the counter bars were sized to the planned counter row and hung in
-  the air; now a cashier's cage on the counter really placed, counter top to ceiling, posts to the floor, a pass-through
-  slot at the till (shots/rooms_counter_cages.jpg).
+- Counter cages: REMOVED (Yasin 19 Nov: "remove all of the cages, they arent prison cells"; the first version also
+  floated: "whats that thing flying there?"). shots/rooms_counter_cages.jpg shows the removed version.
 - Validator CHECKS 0 problems (area 8,156 props; whole city 25,992+), trees 0 in hard ground, sink 0, indoor checker 0
   problems in the gritty rooms, lock test RESULT PASS. Nothing locked.
+
+## Zone rollout + polish pass 2 (19 Nov, Yasin: "find mistakes if you find them, if not, roll out to your whole zone,
+## then do a polish pass")
+- **The whole zone is filled**: 4 more blocks between J Ave and the ring road (Alameda Blvd, the base fence):
+  `g_v1_j4nw` (J x 4th NW: a third v1 - used-car lot on 4th St behind bollards with the salesman's kiosk, an auto
+  salvage behind it, a boarded pair where v1 elsewhere has the dead station; backs onto the industrial sample),
+  `g_v2_j4sw` (a new v2 set: Pupuseria Lupita + Envios y Cambio in a Spanish corner shop, Panaderia La Esquina,
+  Cell Fix & Unlock, Mercado de Pulgas, Lavanderia Sol), `g_v3_j5nw` (Phone Doctor, Lavanderia Luz, walk-ups),
+  `g_v3_j5sw` (toward the campus: Late Night Noodles + Textbook Pawn & Loan under student rentals). 12 blocks, 37 rooms.
+  Left to other zones on purpose: the E Ave side (u -500..-400, mostly Crown Hill apartments / residential), the
+  strip between the J Ave blocks and the ring (the ring's own frontage, no quadrant), v -900..-800 (campus).
+- **Mistakes found and fixed on the way**: a lane's utility pole in front of a garage door (2 blocks), a dumped cart
+  0.3 m over the edge into the industrial sample's wall, a waiting bench in front of another, the new kit's bakery shelf
+  that ships empty, pegboards over a back door; the combined indoor checker's deco / repeat / lone rules (19 -> 0).
+- **Polish pass 2**: tow-away signs at every way into a lot (lane mouths, aprons), the corner shop's newspaper boxes
+  and mailbox, a boat on its trailer in a cottage yard by the base fence, bike racks where a laundromat front has room
+  (most fronts are full with the bench, the soda machine and the cart: none fitted there, said plainly).
+- Checks: validator 0 (10,714 props in the zone's area), trees 0, sink 0, indoor checker 0 in all 37 gritty rooms
+  (incl. the new "unheld"), lock test RESULT PASS. Nothing locked.
+- **Numbers for the whole zone** (19 Nov, baked area `--area=-700,-1100,180 --nofarground`, 9 cells, 36 viewpoints:
+  each of the 12 blocks from above, along its numbered street and along its Ave; before = the same bake without the
+  gritty blocks; cloud counts, NOT the phone):
+  - draws per view **34-129** (before 21-68): every view under the phone's 150;
+  - triangles per view **485k-1,160k** (before 126k-453k): over the ~500k mark in 34 of 36 views. The blocks are no
+    heavier one by one than the samples; it is how much more is in view now. Yasin's rule: draws first, triangles are
+    fine - but the phone has not seen this zone filled yet: the PC session's phone run is the real test;
+  - download: the 9 cells grow from 22.1 to 42.8 MB (+20.6 MB, about 1.7 MB a block), shared models +2.1 MB;
+  - rooms not in the bake yet (merged: 7-9 draws, 4-5 lights each).

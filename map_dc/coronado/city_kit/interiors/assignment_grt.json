@@ -340,11 +340,6 @@
      "facade": "front",
      "along": -6.0,
      "w": 3.4
-    },
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 2.8
     }
    ]
   },
@@ -737,11 +732,6 @@
      "facade": "front",
      "along": -6.0,
      "w": 3.4
-    },
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 2.8
     }
    ]
   },
@@ -964,11 +954,6 @@
    "signs": [
     {
      "facade": "front",
-     "along": -3.0,
-     "w": 2.48
-    },
-    {
-     "facade": "front",
      "along": 3.0,
      "w": 3.4
     }
@@ -1173,11 +1158,6 @@
      "facade": "front",
      "along": -6.0,
      "w": 3.4
-    },
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 2.8
     }
    ]
   },
@@ -1237,7 +1217,13 @@
    "font": "Nunito",
    "built": "",
    "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
-   "signs": []
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 4.0
+    }
+   ]
   },
   {
    "id": "grt_v3_j5sw_corner_shop_1",
@@ -1264,11 +1250,6 @@
    "built": "",
    "why": "gritty growth: chosen in the recipe (grt_grow_recipes.gd)",
    "signs": [
-    {
-     "facade": "front",
-     "along": -3.0,
-     "w": 4.0
-    },
     {
      "facade": "front",
      "along": 3.0,
