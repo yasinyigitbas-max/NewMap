@@ -119,6 +119,8 @@ Marine Supply, Harbour Boatworks (service desk). Four room kinds added to room_g
 wine shop, and fill passes for the small office and bookshop).
 
 ## NOT done / NOT checked (block 2)
+- FOUND AFTER LOCKING: the stairs inside the terraces (block 1: the flats' steps to the Beach Walk; block 2: the inn garden stairs, the stairs between the flats' terraces, the street gates) have GRASS treads with concrete risers: their concrete paint comes after the terrace's grass paint and the first paint wins. The Steps' flights are on paving and are right. Fix = put those stair paints first in the scripts and rebuild: needs Yasin's word (locked).
+- b2_down_to_water, b2_steps and b2_boatyard were shot before the street railings replaced the walls (nothing in those views changed).
 - The outdoor pictures show the kit's old painted names on some buildings (e.g. "THE ANCHOR BAR" on the Salty
   Dog): the new signs live in the room scenes, which the outdoor preview does not load (the room pictures show them).
 - The kit's stucco / brick / CMU walls render near black on north faces in this preview, so the street boundaries
