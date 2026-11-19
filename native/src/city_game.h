@@ -29,11 +29,14 @@
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/option_button.hpp>
 #include <godot_cpp/classes/progress_bar.hpp>
+#include <godot_cpp/classes/texture2d.hpp>
+#include <godot_cpp/classes/texture_rect.hpp>
 #include <godot_cpp/classes/v_box_container.hpp>
 #include <godot_cpp/variant/array.hpp>
 #include <godot_cpp/variant/dictionary.hpp>
 #include <godot_cpp/variant/string.hpp>
 
+#include <atomic>
 #include <functional>
 #include <map>
 #include <string>
@@ -93,6 +96,20 @@ class CityGame : public Node {
 	// ---- screens
 	CanvasLayer *loading = nullptr, *menu = nullptr, *pause = nullptr, *over = nullptr;
 	ProgressBar *ld_bar = nullptr; Label *ld_status = nullptr;
+	// THE SAVED GAME'S PICTURE (Yasin: "if there is a saved game, in the main menu, game should take a screenshot from the
+	// game will load from, that screen should be shown on the loading menu and game should load into that scene directly,
+	// seamlessly"; "if there isnt a saved game yet, that screen should have a black background"). Every save that happens
+	// with nothing over the world (no menu, pause, game over or loading) also writes slot_N.jpg (640 wide) from the frame on
+	// screen, with the player's place and view in the same save; the menu and the loading screen show it; the loaded game
+	// stands the player there, looking the same way, and the loading screen fades off it into the live world.
+	Control *ld_root = nullptr; TextureRect *ld_pic = nullptr;
+	double ld_fade = -1.0;          // the loading screen fading out (seconds), -1 not fading
+	int ld_slot = -1;               // the slot whose picture the loading screen shows (-1: black)
+	double shot_ms = 0.0; int shots = 0;
+	std::atomic<int> shot_busy{0};   // the picture being made 640 wide and written, on its own thread
+	String shot_path(int s) const;
+	bool take_shot();
+	Ref<Texture2D> slot_picture(int s) const;
 	std::map<std::string, Control *> screens;       // the main menu's screens
 	VBoxContainer *menu_stack = nullptr;
 	Control *menu_sheet = nullptr, *menu_bg_art = nullptr;
@@ -132,7 +149,7 @@ class CityGame : public Node {
 	int play_quiet = 0;
 	std::function<int()> play_action;
 	bool world_on = false;
-	void enter_play(const std::function<int()> &action);
+	void enter_play(const std::function<int()> &action, int p_pic_slot = -1);
 	void step_play(double p_delta);
 
 protected:
@@ -215,6 +232,13 @@ public:
 	void set_loading(double p_p, const String &p_key);
 	void close_loading();
 	String current_screen() const;
+	bool has_picture(int p_slot) const;
+	bool menu_picture_shown() const { return menu_bg_art && menu_bg_art->is_visible() && menu_open; }
+	bool loading_picture_shown() const { return loading && loading->is_visible() && ld_pic && ld_pic->get_texture().is_valid(); }
+	bool is_loading_fading() const { return ld_fade >= 0.0; }
+	double get_shot_ms() const { return shot_ms; }
+	int get_shots() const { return shots; }
+	bool is_shot_busy() const { return shot_busy.load() != 0; }
 	// the tests press what a thumb would: a button by the text key it shows (on the screen that is open)
 	bool press(const String &p_key);
 	void set_world_scene(const String &p_s) { world_scene = p_s; }

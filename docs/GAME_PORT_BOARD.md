@@ -86,7 +86,7 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
       punch) to test.
       People never fight unless the player hits them; once hit they defend, hit back or dodge sideways (Yasin). The back
       tap is detected from the GYRO, the ACCELEROMETER and the MICROPHONE together (Yasin): all three must agree.
-6e. [ ] THE SAVED GAME'S PICTURE: the menu and the loading screen show where the save left off (taken from the game),
+6e. [x] (19 Nov, tests/game/test_save_picture.gd in a real window; the main thread reads the frame in 6.7 ms on the PC, the shrink and jpg on a thread; NOT measured on the phone) THE SAVED GAME'S PICTURE: the menu and the loading screen show where the save left off (taken from the game),
       Continue fades from it into that place seamlessly; black when there is no save.
 7. [ ] HUD (Yasin's layout: top right a box the size of the phone icon with a "3D-looking" flat arrowhead: GREEN pointing
       to the mission, GOLDEN YELLOW pointing north when there is none; tapping it opens the phone's full map; top left
@@ -100,6 +100,10 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 14. [ ] Minigames (old: minigames/*: minigame base, home problems, alien dreams; ui/pc).
 15. [ ] What these need that is not listed: char creator / wardrobe (core/char_creator.gd, ui/wardrobe), story chapters
       (story/chapters, core/story.gd), i18n (core/i18n.gd, strings.csv): ask Yasin before porting these.
+
+6g. [ ] NEW CARS AND BIKES (Yasin, 19 Nov: "big news, we got new cars and bikes, replace the games cars, players car and
+      npc bikes and player bikes with these here https://github.com/yasinyigitbas-max/coronado-source/tree/assets after
+      save load"): the traffic's cars, the player's car, the cyclists' bikes and the player's bike from the assets branch.
 
 ## Still waiting on Yasin (from before)
 - His go for people inside the shops; the voices; a fresh bake, then make_streets.gd, make_places.gd and the tests.

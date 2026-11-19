@@ -7,6 +7,10 @@
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/file_access.hpp>
 #include <godot_cpp/classes/grid_container.hpp>
+#include <godot_cpp/classes/image.hpp>
+#include <godot_cpp/classes/image_texture.hpp>
+#include <godot_cpp/classes/time.hpp>
+#include <godot_cpp/classes/viewport_texture.hpp>
 #include <godot_cpp/classes/h_box_container.hpp>
 #include <godot_cpp/classes/input_event_key.hpp>
 #include <godot_cpp/classes/margin_container.hpp>
@@ -22,6 +26,7 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 
 #include <cmath>
+#include <thread>
 
 namespace godot {
 
@@ -66,6 +71,12 @@ void CityGame::_process(double p_delta) {
 	}
 	if (play_phase) step_play(p_delta);
 	if (start_hold >= 0.0) hold_start(p_delta);
+	if (ld_fade >= 0.0 && ld_root) {   // the loading screen fades off the picture into the live world
+		ld_fade += p_delta;
+		const double a = 1.0 - ld_fade / 0.8;
+		if (a <= 0.0) { loading->set_visible(false); ld_root->set_modulate(Color(1, 1, 1, 1)); ld_root->set_mouse_filter(Control::MOUSE_FILTER_STOP); ld_fade = -1.0; }
+		else ld_root->set_modulate(Color(1, 1, 1, (float)a));
+	}
 }
 
 void CityGame::_unhandled_input(const Ref<InputEvent> &p_event) {
@@ -76,6 +87,7 @@ void CityGame::_unhandled_input(const Ref<InputEvent> &p_event) {
 }
 
 void CityGame::_notification(int p_what) {
+	if ((p_what == NOTIFICATION_WM_CLOSE_REQUEST || p_what == NOTIFICATION_APPLICATION_PAUSED) && active_slot >= 0 && world_on && play_phase == 0) save();
 	if (p_what == NOTIFICATION_WM_GO_BACK_REQUEST) {   // the Android back button: as Esc
 		if (pause_open) close_pause(); else if (world_on && !menu_open && !over_open && play_phase == 0) open_pause();
 	}
@@ -90,6 +102,16 @@ void CityGame::build_loading() {
 	ColorRect *bg = memnew(ColorRect);
 	bg->set_color(BLACK); bg->set_anchors_preset(Control::PRESET_FULL_RECT); bg->set_mouse_filter(Control::MOUSE_FILTER_STOP);
 	loading->add_child(bg);
+	ld_root = bg;
+	ld_pic = memnew(TextureRect);
+	ld_pic->set_expand_mode(TextureRect::EXPAND_IGNORE_SIZE); ld_pic->set_stretch_mode(TextureRect::STRETCH_KEEP_ASPECT_COVERED);
+	ld_pic->set_anchors_preset(Control::PRESET_FULL_RECT); ld_pic->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+	bg->add_child(ld_pic);
+	ColorRect *shade = memnew(ColorRect);   // (behind the words at the bottom, so they read over any picture)
+	shade->set_color(Color(0, 0, 0, 0.5f)); shade->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+	shade->set_anchor(SIDE_LEFT, 0); shade->set_anchor(SIDE_RIGHT, 1); shade->set_anchor(SIDE_TOP, 1); shade->set_anchor(SIDE_BOTTOM, 1);
+	shade->set_offset(SIDE_TOP, -250);
+	bg->add_child(shade);
 	VBoxContainer *v = memnew(VBoxContainer);
 	v->add_theme_constant_override("separation", 10);
 	v->set_anchor(SIDE_LEFT, 0); v->set_anchor(SIDE_RIGHT, 1); v->set_anchor(SIDE_TOP, 1); v->set_anchor(SIDE_BOTTOM, 1);
@@ -114,13 +136,55 @@ void CityGame::build_loading() {
 	loading->set_visible(false);
 }
 
-void CityGame::open_loading() { if (loading) { ld_bar->set_value(0); ld_status->set_text(dual("loading.text")); loading->set_visible(true); } }
+void CityGame::open_loading() {
+	if (!loading) return;
+	ld_bar->set_value(0); ld_status->set_text(dual("loading.text"));
+	ld_pic->set_texture(slot_picture(ld_slot));   // the save's picture, or black
+	ld_fade = -1.0; ld_root->set_modulate(Color(1, 1, 1, 1)); ld_root->set_mouse_filter(Control::MOUSE_FILTER_STOP);
+	loading->set_visible(true);
+}
 void CityGame::set_loading(double p_p, const String &p_key) {
 	if (!loading) return;
 	ld_bar->set_value(std::min(std::max(p_p, 0.0), 1.0) * 100.0);
 	if (!p_key.is_empty()) ld_status->set_text(dual(p_key));
 }
-void CityGame::close_loading() { if (loading) loading->set_visible(false); }
+void CityGame::close_loading() {
+	if (!loading || !loading->is_visible() || ld_fade >= 0.0) return;
+	if (!world_on) { loading->set_visible(false); return; }   // (back to the menu: at once)
+	ld_fade = 0.0; ld_root->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);   // into the world: a fade off the picture
+}
+
+String CityGame::shot_path(int s) const { return saves_dir + vformat("slot_%d.jpg", s); }
+bool CityGame::has_picture(int p_slot) const { return p_slot >= 0 && FileAccess::file_exists(shot_path(p_slot)); }
+
+Ref<Texture2D> CityGame::slot_picture(int s) const {
+	if (!has_picture(s)) return Ref<Texture2D>();
+	Ref<Image> im = Image::load_from_file(shot_path(s));
+	if (im.is_null() || im->is_empty()) return Ref<Texture2D>();
+	return ImageTexture::create_from_image(im);
+}
+
+// The frame on screen, made 640 wide, written as the slot's jpg. The main thread only reads the frame back from the GPU
+// (once per save, a minute at most; timed in shot_ms); shrinking and writing it run on a thread of their own. A headless
+// run has no frame: no picture.
+bool CityGame::take_shot() {
+	if (active_slot < 0 || !is_inside_tree() || shot_busy.load()) return false;
+	const uint64_t t0 = Time::get_singleton()->get_ticks_usec();
+	Viewport *vp = get_viewport();
+	Ref<ViewportTexture> vt = vp ? vp->get_texture() : Ref<ViewportTexture>();
+	Ref<Image> im = vt.is_valid() ? vt->get_image() : Ref<Image>();
+	if (im.is_null() || im->is_empty() || im->get_width() < 16) return false;
+	shot_ms = (double)(Time::get_singleton()->get_ticks_usec() - t0) / 1000.0;
+	const String path = shot_path(active_slot);
+	shot_busy.store(1); shots++;
+	std::thread([this, im, path]() {
+		const int w = 640, h = std::max(1, (int)std::lround(im->get_height() * 640.0 / im->get_width()));
+		im->resize(w, h, Image::INTERPOLATE_BILINEAR);
+		im->save_jpg(path, 0.85f);
+		shot_busy.store(0);
+	}).detach();
+	return true;
+}
 
 // ---------------------------------------------------------------- the main menu
 Button *CityGame::menu_row(const String &key, const String &icon_name, bool chevron, const std::function<void()> &f) {
@@ -140,7 +204,6 @@ void CityGame::build_menu() {
 	menu_bg->set_color(BLACK); menu_bg->set_anchors_preset(Control::PRESET_FULL_RECT);
 	menu->add_child(menu_bg);
 	TextureRect *art = memnew(TextureRect);
-	art->set_texture(ResourceLoader::get_singleton()->load("res://game/ui/menu_backdrop.jpg"));
 	art->set_expand_mode(TextureRect::EXPAND_IGNORE_SIZE); art->set_stretch_mode(TextureRect::STRETCH_KEEP_ASPECT_COVERED);
 	art->set_anchors_preset(Control::PRESET_FULL_RECT); art->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
 	menu_bg->add_child(art);
@@ -188,7 +251,7 @@ void CityGame::build_menu() {
 			if (is_full()) { picker_overwrite = true; show_screen("picker"); }
 			else enter_play([this]() { return new_game(); });
 		});
-		b_continue = menu_row("menu.continue", "", true, [this]() { const int s = most_recent_slot(); if (s >= 0) enter_play([this, s]() { return continue_game(s); }); });
+		b_continue = menu_row("menu.continue", "", true, [this]() { const int s = most_recent_slot(); if (s >= 0) enter_play([this, s]() { return continue_game(s); }, s); });
 		s->add_child(b_new); s->add_child(b_continue);
 		s->add_child(menu_row("menu.lessons", "", true, [this]() { show_screen("lessons"); }));
 		s->add_child(menu_row("menu.settings", "", true, [this]() { show_screen("settings"); }));
@@ -291,7 +354,7 @@ void CityGame::show_screen(const String &s) {
 String CityGame::current_screen() const {
 	if (over_open) return "game_over";
 	if (pause_open) return pause_settings && pause_settings->is_visible() ? "pause_settings" : "pause";
-	if (loading && loading->is_visible()) return "loading";
+	if (loading && loading->is_visible() && ld_fade < 0.0) return "loading";
 	if (menu_open) for (auto &kv : screens) if (kv.second->is_visible()) return String(kv.first.c_str());
 	return world_on ? "world" : "none";
 }
@@ -311,7 +374,7 @@ void CityGame::fill_picker() {
 		if (!picker_overwrite && !(bool)d["has_save"]) set_disabled(b, true);
 		on_any(b, [this, slot, name]() {
 			if (picker_overwrite) ask(en("menu.confirm_overwrite", one_arg(name)), [this, slot]() { enter_play([this, slot]() { return new_game_overwrite(slot); }); });
-			else enter_play([this, slot]() { return continue_game(slot); });
+			else enter_play([this, slot]() { return continue_game(slot); }, slot);
 		});
 		Button *del = button("", "raised"); del->set_custom_minimum_size(Vector2(72, 72));
 		del->set_button_icon(icon("trash")); del->add_theme_color_override("icon_normal_color", RED); del->set_tooltip_text(String::utf8("Delete / Sil"));
@@ -333,7 +396,11 @@ void CityGame::open_menu() {
 	menu_open = true;
 	get_tree()->set_pause(true);
 	menu_bg->set_color(world_on ? Color(0, 0, 0, 0) : BLACK);
-	menu_bg_art->set_visible(!world_on);
+	if (!world_on) {
+		const Ref<Texture2D> pic = slot_picture(most_recent_slot());
+		Object::cast_to<TextureRect>(menu_bg_art)->set_texture(pic);
+		menu_bg_art->set_visible(pic.is_valid());
+	} else menu_bg_art->set_visible(false);
 	if (menu_notice) menu_notice->set_text("");
 	menu->set_visible(true);
 	show_screen("menu");
@@ -556,9 +623,10 @@ void CityGame::retry() {
 // The loading screen; the world's scene loaded on the engine's loader threads (0 .. 40 %), made the current scene
 // (the boot scene goes), the slot started or loaded (50 %), then the world settles: 45 frames in a row under 40 ms, at
 // most 20 s (50 .. 100 %). The menu closes when the slot is in.
-void CityGame::enter_play(const std::function<int()> &action) {
+void CityGame::enter_play(const std::function<int()> &action, int p_pic_slot) {
 	if (play_phase) return;
 	play_action = action;
+	ld_slot = p_pic_slot;
 	if (menu) menu->set_visible(false);
 	open_loading();
 	if (world_on) { play_phase = 2; play_t = 0.0; play_quiet = 0; const int s = play_action(); if (s < 0) { close_loading(); open_menu(); play_phase = 0; return; } close_menu(); emit_signal("play_started", s); return; }

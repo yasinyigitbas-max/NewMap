@@ -19,6 +19,7 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 
 #include <cmath>
+#include <thread>
 
 namespace godot {
 
@@ -57,7 +58,7 @@ String fill(String t, const Array &args) {
 } // namespace
 
 CityGame::CityGame() { if (!one) one = this; settings_defaults(); }
-CityGame::~CityGame() { if (one == this) one = nullptr; }
+CityGame::~CityGame() { while (shot_busy.load()) std::this_thread::yield(); if (one == this) one = nullptr; }
 
 // ---------------------------------------------------------------- text
 void CityGame::load_text() {
@@ -229,6 +230,7 @@ Dictionary CityGame::snapshot() const {
 		const Vector3 at = pl->get_global_position();
 		Array pos; pos.push_back(at.x); pos.push_back(at.y); pos.push_back(at.z);
 		p["pos"] = pos; p["yaw"] = pl->get_global_rotation().y; p["place"] = "";
+		if (pl->has_method("get_view")) p["view"] = pl->call("get_view");   // (the picture's view: the loaded game looks the same way)
 		st["player"] = p;
 	}
 	return st;
@@ -244,6 +246,8 @@ void CityGame::apply_snapshot(const Dictionary &st) {
 	if (pl && p.has("pos")) {
 		const Array a = p["pos"];
 		if (a.size() == 3) pl->set_global_position(Vector3((float)(double)a[0], (float)(double)a[1], (float)(double)a[2]));
+		const Array v = p.get("view", Array());
+		if (v.size() == 3 && pl->has_method("set_view")) pl->call("set_view", v[0], v[1], v[2]);
 	}
 	emit_signal("time_changed", hour); emit_signal("money_changed", money);
 }
@@ -301,6 +305,7 @@ bool CityGame::delete_slot(int p_slot) {
 	if (read_slot(p_slot).is_empty()) return false;
 	Ref<DirAccess> da = DirAccess::open(saves_dir);
 	if (da.is_null() || da->remove(slot_path(p_slot)) != OK) return false;
+	if (FileAccess::file_exists(shot_path(p_slot))) da->remove(shot_path(p_slot));
 	if (active_slot == p_slot) active_slot = -1;
 	emit_signal("slots_changed");
 	return true;
@@ -324,6 +329,8 @@ bool CityGame::save() {
 	d["version"] = 3; d["profile"] = pr; d["state"] = snapshot(); d["sections"] = slot_sections;
 	const bool ok = write_slot(active_slot, d);
 	autosave_t = 0.0;
+	// the picture, from the frame on screen, only when nothing is over the world (else the last picture stays)
+	if (ok && world_on && !menu_open && !pause_open && !over_open && play_phase == 0 && !(loading && loading->is_visible())) take_shot();
 	if (ok) emit_signal("saved", active_slot);
 	return ok;
 }
@@ -553,6 +560,13 @@ void CityGame::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("open_loading"), &CityGame::open_loading);
 	ClassDB::bind_method(D_METHOD("set_loading", "progress", "key"), &CityGame::set_loading, DEFVAL(""));
 	ClassDB::bind_method(D_METHOD("close_loading"), &CityGame::close_loading);
+	ClassDB::bind_method(D_METHOD("has_picture", "slot"), &CityGame::has_picture);
+	ClassDB::bind_method(D_METHOD("menu_picture_shown"), &CityGame::menu_picture_shown);
+	ClassDB::bind_method(D_METHOD("loading_picture_shown"), &CityGame::loading_picture_shown);
+	ClassDB::bind_method(D_METHOD("is_loading_fading"), &CityGame::is_loading_fading);
+	ClassDB::bind_method(D_METHOD("get_shot_ms"), &CityGame::get_shot_ms);
+	ClassDB::bind_method(D_METHOD("get_shots"), &CityGame::get_shots);
+	ClassDB::bind_method(D_METHOD("is_shot_busy"), &CityGame::is_shot_busy);
 	ClassDB::bind_method(D_METHOD("current_screen"), &CityGame::current_screen);
 	ClassDB::bind_method(D_METHOD("press", "key"), &CityGame::press);
 	ClassDB::bind_method(D_METHOD("set_world_scene", "path"), &CityGame::set_world_scene);

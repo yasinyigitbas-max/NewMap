@@ -103,6 +103,8 @@ public:
 	// feet at a place facing a way, with his own view again
 	void set_riding(bool p_on);
 	void stand_at(const Vector3 &p_at, double p_yaw);
+	Array get_view() const { Array a; a.push_back(yaw); a.push_back(cam_yaw); a.push_back(cam_pitch); return a; }
+	void set_view(double p_yaw, double p_cam_yaw, double p_cam_pitch) { yaw = (float)p_yaw; cam_yaw = (float)p_cam_yaw; cam_pitch = (float)p_cam_pitch; }
 	void take_view() { if (cam) { cam->make_current(); cam_set = false; } }
 	void set_body_id(const String &p_id) { body_id = p_id; }
 	String get_body_id() const { return body_id; }
