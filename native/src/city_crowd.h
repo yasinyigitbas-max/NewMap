@@ -135,6 +135,15 @@ private:
 		int landed = 0, missed = 0, attacks = 0, hits_on_player = 0, dodges = 0, npc_beaten = 0, player_beaten = 0, locks = 0;
 	} pf;
 	void player_fight(double p_delta);
+	// ROAD RAGE: the drivers who got out of hit cars (CityTraffic::take_rage). Each gets out (Sitting_Exit), yells and
+	// waves his arms (Counter_Angry), then goes for whoever hit him: the player (put into combat, locked on him, the
+	// moment the player is on foot and sees him: Yasin "whenever there is an aggressor in the screen, we should get into
+	// the combat mode") or the other driver (the two come to blows). foe: -1 the player, a walker id, -3 nobody (the one
+	// who did the hitting: he only gets out)
+	struct Rager { int walker; float t; int foe; };
+	std::vector<Rager> ragers;
+	int rages = 0, rage_fights = 0, rage_npc_fights = 0;
+	void rage_update(double p_delta);
 	void end_fight(bool p_release);
 	Dictionary fight_stats() const;
 	// cyclists who came off (CityTraffic::bikes_down_now): each is a person on the road now, given a near body at once

@@ -290,6 +290,7 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_crouch"), &CityPlayer::get_crouch);
 	ClassDB::bind_method(D_METHOD("jump"), &CityPlayer::jump);
 	ClassDB::bind_method(D_METHOD("get_view"), &CityPlayer::get_view);
+	ClassDB::bind_method(D_METHOD("set_riding", "on"), &CityPlayer::set_riding);
 	ClassDB::bind_method(D_METHOD("set_view", "yaw", "cam_yaw", "cam_pitch"), &CityPlayer::set_view);
 	ClassDB::bind_method(D_METHOD("request_combat"), &CityPlayer::request_combat);
 	ClassDB::bind_method(D_METHOD("punch"), &CityPlayer::punch);

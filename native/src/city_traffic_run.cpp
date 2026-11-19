@@ -996,6 +996,18 @@ static bool boxes_touch(float ax, float az, float ayaw, float ahl, float ahw, fl
 	return true;
 }
 
+// A knocked car's driver gets out: a person at the driver's door (the car's left, +x), facing out; the crowd takes him
+void CityTraffic::driver_out(int k, int p_foe, uint32_t p_foe_serial) {
+	LooseCar &L = loose[k];
+	L.driver_out = true;
+	const Transform3D t = L.car->get_global_transform();
+	const cm::CarModel &lm = cm::MODELS[L.model];
+	const Vector3 side = t.basis.get_column(0).normalized(), fwd = t.basis.get_column(2).normalized();
+	const Vector3 door = t.origin + side * (lm.half_w + 0.45f) + fwd * (lm.half_len * 0.1f);
+	rage_out.push_back(RageOut{ door.x, door.y, door.z, std::atan2(side.x, side.z), L.serial, p_foe, p_foe_serial });
+	kc.drivers_out++;
+}
+
 void CityTraffic::loose_put_away(int k) {
 	LooseCar &L = loose[k];
 	if (!L.car) return;
@@ -1029,6 +1041,26 @@ bool CityTraffic::knock(BodyWant &w) {
 	// a parked car stands with its handbrake on; a driver who is hit holds his wheel for a moment, then brakes
 	L.car->set_controls(0.0, 0.0, L.parked ? 0.0 : std::min(std::max(w.steer / 0.61f, -1.0f), 1.0f), L.parked ? 1.0 : 0.0, false);
 	L.on = true; L.model = w.model; L.colour = w.colour; L.serial = ++loose_serial; L.rest_t = 0.0f; L.age = 0.0f; L.ask_cd = 0.0f;
+	// who hit it: the player's car (near it now), or another knocked car (the nearest within reach); a parked car has
+	// nobody in it
+	L.by_player = false; L.driver_out = false; L.hit_by = -1; L.hit_by_serial = 0;
+	if (!L.parked) {
+		const float reach = cm::MODELS[w.model].half_len + 3.0f;
+		Node3D *pc = player_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
+		if (pc && pc->is_inside_tree()) {
+			const Vector3 o = pc->get_global_position();
+			if (Vector2(o.x - w.x, o.z - w.z).length() < reach + player_hl) L.by_player = true;
+		}
+		if (!L.by_player) {
+			float best = 1e9f;
+			for (int k = 0; k < LOOSE; k++) {
+				if (k == slot || !loose[k].on || !loose[k].car) continue;
+				const Vector3 o = loose[k].car->get_global_transform().origin;
+				const float d = Vector2(o.x - w.x, o.z - w.z).length();
+				if (d < reach + cm::MODELS[loose[k].model].half_len && d < best) { best = d; L.hit_by = k; L.hit_by_serial = loose[k].serial; }
+			}
+		}
+	}
 	{
 		std::lock_guard<std::mutex> lock(mx);
 		if (w.id >= 0) input.kill_ids.push_back(w.id); else input.kill_stalls.push_back(w.stall);
@@ -1052,9 +1084,18 @@ void CityTraffic::loose_update(double p_delta) {
 		if (t.origin.y < last_cam.y - 120.0f || d2 > 180.0f * 180.0f || (d2 > 120.0f * 120.0f && L.rest_t > 1.0f)) { loose_put_away(k); kc.taken_away++; continue; }
 		if (L.parked) continue;
 		if (L.age > 0.35f) L.car->set_controls(0.0, 0.7, 0.0, 0.0, false);
+		// ROAD RAGE (Yasin: "once collided, the driver should get out and attack us, unless its a parked car"; "if other cars
+		// hit each other, they should try to attack the aggressor car instead"): once it stands, its driver gets out
+		if (!L.driver_out && L.rest_t > 1.0f && t.basis.get_column(1).y > 0.8f && (L.by_player || L.hit_by >= 0)) {
+			if (!L.by_player) {   // the one who hit it gets out too (to be gone for), if his car stands and he is in it
+				LooseCar &A = loose[L.hit_by];
+				if (A.on && A.car && A.serial == L.hit_by_serial && !A.parked && !A.driver_out && A.rest_t > 0.5f) driver_out(L.hit_by, -2, 0);
+			}
+			driver_out(k, L.by_player ? -1 : L.hit_by, L.hit_by_serial);
+		}
 		// (a dented car does not drive on as a row of the traffic, which has no dents: it stays a wreck where it came to rest,
 		// the traffic goes round it, until it is far enough away to be taken; Yasin: "every other car should get damaged too")
-		if (L.rest_t > 3.5f && L.ask_cd <= 0.0f && t.basis.get_column(1).y > 0.94f && !L.car->is_damaged()) {   // it stands on its wheels: may its driver drive on?
+		if (L.rest_t > 3.5f && L.ask_cd <= 0.0f && t.basis.get_column(1).y > 0.94f && !L.car->is_damaged() && !L.driver_out) {   // it stands on its wheels: may its driver drive on?
 			const Vector3 f = t.basis.get_column(2);
 			std::lock_guard<std::mutex> lock(mx);
 			input.adopt.push_back(Input::Adopt{ k, L.serial, L.model, L.colour, t.origin.x, t.origin.z, std::atan2(f.x, f.z) });
@@ -1157,7 +1198,7 @@ Array CityTraffic::stalls_near(const Vector3 &p_at, double p_r) const {
 
 Dictionary CityTraffic::knock_stats() const {
 	Dictionary d;
-	d["moving"] = kc.moving; d["parked"] = kc.parked; d["rejoined"] = kc.rejoined; d["taken_away"] = kc.taken_away; d["no_slot"] = kc.no_slot; d["last_refusal"] = kc.refused;
+	d["moving"] = kc.moving; d["parked"] = kc.parked; d["rejoined"] = kc.rejoined; d["drivers_out"] = kc.drivers_out; d["taken_away"] = kc.taken_away; d["no_slot"] = kc.no_slot; d["last_refusal"] = kc.refused;
 	Array a;
 	for (int k = 0; k < LOOSE; k++) {
 		if (!loose[k].on || !loose[k].car) continue;

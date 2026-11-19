@@ -909,6 +909,13 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 					else if (pf.st == 3) { clip = STEP; hold = -1.0; }
 					else { clip = GUARD; hold = std::max(l_fight_in - 0.03, 0.0); }
 				}
+				for (const Rager &r : ragers) {   // out of his car (getting up from the seat), then yelling, arms going
+					if (r.walker != nb.walker) continue;
+					static const StringName EXIT("ual/Sitting_Exit"), ANGRY("ual/Counter_Angry");
+					speed = 1.0;
+					if (r.t < 1.2f) { clip = EXIT; hold = -2.0; token = 7001; }
+					else { clip = ANGRY; hold = -1.0; token = 0; }
+				}
 				// in the sea: wading while the water is under the chest (his feet on the bottom), then swimming at the
 				// surface (the same two numbers as the player's)
 				{
@@ -989,8 +996,23 @@ void CityCrowd::_process(double p_delta) {
 				thrown.push_back(Thrown{ w, vel, imp, Vector3(dn[k], dn[k + 1], dn[k + 2]), 0.0f });
 				riders_thrown++;
 			}
+			// the drivers who got out of hit cars
+			std::vector<CityTraffic::RageOut> ro;
+			trf->take_rage(ro);
+			std::vector<std::pair<uint32_t, int>> by_serial;
+			for (const CityTraffic::RageOut &r : ro) {
+				const uint32_t h = r.serial * 2246822519u ^ 0x27d4eb2fu;
+				const int w = crowd->place_held_at(r.x, r.z, h & ~8u, r.yaw);
+				if (w < 0) continue;
+				by_serial.push_back({ r.serial, w });
+				rages++;
+				int foe = r.foe == -1 ? -1 : -3;
+				if (r.foe >= 0) for (const auto &b : by_serial) if (b.first == r.foe_serial) foe = b.second;
+				ragers.push_back(Rager{ w, 0.0f, foe });
+			}
 		}
 	}
+	rage_update(p_delta);
 	player_fight(p_delta);
 	near_update(p_delta, acc / STEP_S);
 	draw(acc / STEP_S);
@@ -1241,11 +1263,60 @@ void CityCrowd::player_fight(double p_delta) {
 	}
 }
 
+void CityCrowd::rage_update(double p_delta) {
+	if (ragers.empty()) return;
+	CityPlayer *pl = player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
+	Camera3D *cam = get_viewport() ? get_viewport()->get_camera_3d() : nullptr;
+	const float T_OUT = 1.2f, T_YELL = 3.4f;
+	for (size_t k = 0; k < ragers.size();) {
+		Rager &r = ragers[k];
+		r.t += (float)p_delta;
+		const int i = crowd->find(r.walker);
+		if (i < 0 || r.t > 60.0f) {   // gone, or a minute without the one he wants: he calms down and walks off
+			if (i >= 0) crowd->hold(r.walker, false, 0.0f);
+			ragers.erase(ragers.begin() + k); continue;
+		}
+		const Vector3 at(crowd->x[i], crowd->y[i], crowd->z[i]);
+		Vector3 to;
+		bool has = false;
+		if (r.foe == -1 && pl && pl->is_inside_tree()) { to = pl->get_global_position(); has = true; }
+		else if (r.foe >= 0) { const int j = crowd->find(r.foe); if (j >= 0) { to = Vector3(crowd->x[j], crowd->y[j], crowd->z[j]); has = true; } }
+		if (has && r.t > T_OUT * 0.8f) crowd->hold(r.walker, true, std::atan2(to.x - at.x, to.z - at.z));   // (he turns to the one who hit him)
+		if (r.t < T_YELL) { k++; continue; }
+		if (r.foe == -1) {
+			// the player on foot, and he sees him (on screen) or is near: combat, locked on him
+			const bool on_foot = pl && pl->is_visible_in_tree() && !pl->is_frozen();
+			const bool seen = cam && cam->is_position_in_frustum(at + Vector3(0, 1.0f, 0));
+			if (on_foot && pf.walker < 0 && (seen || at.distance_to(to) < 12.0f)) {
+				const int keep = pf.locks + 1;
+				pf = PFight(); pf.locks = keep;
+				pf.walker = r.walker; pf.angry = true; pf.ai_t = 0.3f;
+				pl->set_combat(true, at);
+				rage_fights++;
+				ragers.erase(ragers.begin() + k); continue;
+			}
+			k++; continue;
+		}
+		if (r.foe >= 0) {   // the other driver: the two come to blows
+			if (crowd->fight(r.walker, r.foe)) {
+				rage_npc_fights++;
+				for (size_t q = 0; q < ragers.size(); q++) if (ragers[q].walker == r.foe) { ragers.erase(ragers.begin() + q); if (q < k) k--; break; }
+				ragers.erase(ragers.begin() + k); continue;
+			}
+		}
+		if (r.foe == -3 && r.t > 8.0f) { ragers.erase(ragers.begin() + k); continue; }   // (the one who hit: his part is over)
+		k++;
+	}
+}
+
 Dictionary CityCrowd::fight_stats() const {
 	Dictionary d;
 	d["walker"] = pf.walker; d["npc_health"] = pf.hp; d["player_health"] = pf.php; d["angry"] = pf.angry; d["state"] = pf.st;
 	d["landed"] = pf.landed; d["missed"] = pf.missed; d["attacks"] = pf.attacks; d["hits_on_player"] = pf.hits_on_player; d["dodges"] = pf.dodges;
 	d["npc_beaten"] = pf.npc_beaten; d["player_beaten"] = pf.player_beaten; d["locks"] = pf.locks; d["player_down"] = pf.player_down;
+	d["rages"] = rages; d["rage_fights"] = rage_fights; d["rage_npc_fights"] = rage_npc_fights;
+	Array rg; for (const Rager &r : ragers) { Dictionary e; e["walker"] = r.walker; e["t"] = r.t; e["foe"] = r.foe; rg.push_back(e); }
+	d["ragers"] = rg;
 	return d;
 }
 

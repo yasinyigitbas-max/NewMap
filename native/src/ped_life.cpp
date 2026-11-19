@@ -349,7 +349,7 @@ bool Crowd::to_body(int p_id, bool p_on, float p_x, float p_z) {
 // (the game) Two people come to blows where they stand: they turn to each other and fight for cfg.fight_s seconds.
 bool Crowd::fight(int p_a, int p_b) {
 	const int i = find(p_a), j = find(p_b);
-	if (i < 0 || j < 0 || i == j || mode[i] != M_LINE || mode[j] != M_LINE) return false;
+	if (i < 0 || j < 0 || i == j || (mode[i] != M_LINE && mode[i] != M_HELD) || (mode[j] != M_LINE && mode[j] != M_HELD)) return false;
 	const float fa = std::atan2(x[j] - x[i], z[j] - z[i]);
 	for (int k = 0; k < 2; k++) {
 		const int w = k ? j : i;

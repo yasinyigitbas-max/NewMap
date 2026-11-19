@@ -113,7 +113,7 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 6h. [x] (19 Nov, tests/traffic/test_car_damage.gd and test_knock.gd RESULT PASS; NOT done: lamps breaking, sparks and glass bits, the player's car's damage in the save, the fuel-station repair) CAR DAMAGE ON EVERY CAR (Yasin: "apply the damage to the new cars too"; "every other car should get damaged too
       once collided"): the old car_damage.gd in C++ (CityCar): dents, scratches, glass, engine power, smoke, crash sounds;
       a knocked traffic or parked car is a CityCar, so it is damaged too; a dented car stays a wreck (no undented row again).
-6i. [ ] ROAD RAGE (Yasin, 19 Nov: "once collided, the driver should get out and attack us, unless its a parked car of
+6i. [x] (20 Nov, tests/traffic/test_road_rage.gd RESULT PASS in a window; the car-against-car fight between two drivers is written but NOT seen in a test yet) ROAD RAGE (Yasin, 19 Nov: "once collided, the driver should get out and attack us, unless its a parked car of
       course, then no one gets out, but if a moving car is hit by us first they should get off, then yell and get angry,
       then attack us, putting us in combat mode, also whenever there is an aggressor in the screen, we should get into the
       combat mode"): a moving car the player hits: its driver gets out (a crowd person at the door), yells, attacks; the

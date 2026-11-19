@@ -56,6 +56,9 @@ class RigidBody3D;
 
 class CityTraffic : public Node3D {
 	GDCLASS(CityTraffic, Node3D)
+public:
+	struct RageOut { float x, y, z, yaw; uint32_t serial; int foe; uint32_t foe_serial; };
+private:
 
 public:
 	enum { MAX_ROWS = 192, POOL = 24, N_COLOURS = cm::N_COLOURS };
@@ -236,15 +239,21 @@ private:
 		int model = 0, colour = 0;
 		uint32_t serial = 0;
 		float rest_t = 0, age = 0, ask_cd = 0;
+		// ROAD RAGE (Yasin, 19 Nov): hit by the player's car (by_player), or by another knocked car (hit_by: its slot and
+		// serial); once it stands, its driver gets out (driver_out: the car never drives on again)
+		bool by_player = false, driver_out = false;
+		int hit_by = -1; uint32_t hit_by_serial = 0;
 	};
 	LooseCar loose[LOOSE];
+	std::vector<RageOut> rage_out;
+	void driver_out(int k, int p_foe, uint32_t p_foe_serial);
 	bool knock_on = true;
 	int knock_feel = 0;
 	uint32_t loose_serial = 0;
 	std::vector<Ref<Resource>> keep_models;   // every model's body and wheels, held so that a knock loads nothing
 	struct Hidden { int32_t id; int frames; bool seen; };
 	std::vector<Hidden> hidden;      // rows that are a physical car now: not drawn, no box, until the step has dropped them
-	struct KnockCount { int moving = 0, parked = 0, rejoined = 0, taken_away = 0, no_slot = 0, refused = 0; } kc;
+	struct KnockCount { int moving = 0, parked = 0, rejoined = 0, drivers_out = 0, taken_away = 0, no_slot = 0, refused = 0; } kc;
 	bool knock(BodyWant &w);
 	void loose_update(double p_delta);
 	void loose_put_away(int k);
@@ -291,7 +300,10 @@ public:
 	// (DYN_STRIDE floats each). The traffic's own clock, which its signals run on.
 	void cars_for_people(std::vector<float> &r_cars) const;
 	const std::vector<float> &bikes_drawn() const { return bike_draw; }   // 7 a cyclist: x, y, z, yaw, lean, crank turns, id
-	const std::vector<float> &bikes_down_now() const { return downs_now; }   // 9 a cyclist who came off this frame
+	const std::vector<float> &bikes_down_now() const { return downs_now; }
+	// ROAD RAGE: the drivers who got out (the crowd takes them: a person at the door). foe: -1 the player (his car hit it),
+	// -2 the driver who did the hitting (he is gone for), else the slot of the car that hit it (foe_serial: that car's)
+	void take_rage(std::vector<RageOut> &p_out) { p_out.swap(rage_out); rage_out.clear(); }   // 9 a cyclist who came off this frame
 	// the bicycle (mesh and shader) for the player's own (CityBike): the same as the traffic's
 	static Ref<Mesh> bike_mesh() { return make_bike_mesh(); }
 	static String bike_shader_code();
