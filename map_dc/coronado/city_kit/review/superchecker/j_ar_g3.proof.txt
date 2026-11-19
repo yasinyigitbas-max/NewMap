@@ -1,8 +1,7 @@
    at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
      at: initialize (servers/audio/audio_server.cpp:258)
-PROOF compared: 18 nodes (with every mesh of the buildings), 7400 ground and ground-collision triangles, 20 prop instances, 10 colliders, 85 wear marks are identical in both files
-PROOF differences found between the files: 14 lines only in the old one, 0 only in the new one
-PROOF change #8 remove prop_signal_post at (9.75, 0.15, -13.35) removed, in 2 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_signal_post leaves 0.8 m of a 2.0 m wide walk]]
+PROOF compared: 18 nodes (with every mesh of the buildings), 7400 ground and ground-collision triangles, 22 prop instances, 11 colliders, 85 wear marks are identical in both files
+PROOF differences found between the files: 11 lines only in the old one, 0 only in the new one
 PROOF change #9 remove prop_shopping_cart at (8.75, 0.15, 24.80) removed, in 3 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_shopping_cart leaves 1.0 m of a 1.8 m wide walk]]
 PROOF change #1 remove_decal: one wear mark at (-10.74, 0.16, -14.34) removed  [crack mark hangs over the edge of the ground]
 PROOF change #2 remove_decal: one wear mark at (-9.74, 0.16, 14.34) removed  [crack mark hangs over the edge of the ground]
@@ -11,5 +10,5 @@ PROOF change #4 remove_decal: one wear mark at (9.74, 0.16, 14.34) removed  [cra
 PROOF note: 'Props/prop_shopping_cart_worn_far' held only listed items and is gone with them
 PROOF note: 'Props/prop_shopping_cart_worn_mid' held only listed items and is gone with them
 PROOF note: 'Props/prop_shopping_cart_worn_near' held only listed items and is gone with them
-PROOF 6 listed changes, every one found, nothing else differs
+PROOF 5 listed changes, every one found, nothing else differs
 PROOF RESULT PASS
