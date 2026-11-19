@@ -28,24 +28,22 @@ func _run() -> void:
 	c.neighbours([["s_am_b040_a", Vector3(0, 6, -800), 0.0], ["j_am_6th", Vector3(0, 6, -800), 0.0], ["s_rs_b092_b", Vector3(0, 6, -800), -90.0],
 		["c_nw", Vector3(0, 6, -600), 0.0], ["d_cc", Vector3(0, 6, -600), 0.0], ["s_am_fill_cc", Vector3(0, 6, -600), 180.0], ["s_cc_amber_n", Vector3(0, 6, -600), 0.0]], O)
 	# ---- buildings on Amber (face east), stats facade on the property line u -16 as c_nw stands
-	var T := c.bld("modular/examples/mod_twr_office", Vector2(-16.0, -182.1), "e", true)
-	c.add_door(T, 0.0, "lobby")
+	var T := c.bld("modular/examples/mod_twr_office", Vector2(-16.0, -182.1), "e", true, "amber6_tower")
 	# order checked against Amber's furniture: the street's bus shelter stands at v -764, so the bank (one door, at its
 	# north end) takes that stretch and no shop door opens behind the shelter
-	var R4 := c.bld("urban/urb_brick_corner", Vector2(-16.0, -163.73), "e", true)
-	var R1 := c.bld("urban/urb_brick_row", Vector2(-16.0, -145.25), "e", true)
-	var R2 := c.bld("ck/ck_brk3_row2_fe", Vector2(-16.0, -129.83), "e", true)
-	var R3 := c.bld("ck/ck_brk3_row2", Vector2(-16.0, -117.45), "e", true)
-	var R5 := c.bld("ck/ck_brk3_corner2", Vector2(-16.0, -105.06), "e", true)
+	var R4 := c.bld("urban/urb_brick_corner", Vector2(-16.0, -163.73), "e", true, "amber_bank")
+	var R1 := c.bld("urban/urb_brick_row", Vector2(-16.0, -145.25), "e", true, "amber_deli_row")
+	var R2 := c.bld("ck/ck_brk3_row2_fe", Vector2(-16.0, -129.83), "e", true, "amber_barber_fe")
+	var R3 := c.bld("ck/ck_brk3_row2", Vector2(-16.0, -117.45), "e", true, "amber_books")
+	var R5 := c.bld("ck/ck_brk3_corner2", Vector2(-16.0, -105.06), "e", true, "amber_corner_cafe")
 	var y := c.y0
 	# ---- the street side (on Amber's 4.5 m walk: only things that stand against the front, the walk stays clear)
-	for d: float in [-2.8, 2.2]:     # office lobby: two big planters either side of the doors (the corner's bin stands north)
+	for d: float in [0.0, -7.4]:     # office lobby (doors at +-4 m): a planter between the two doors and one beyond the south door
 		c.put("plant_potted_leafy", "normal", c.at(T, d, 10.6), 0.0, "tower lobby: planters at the doors")
 	c.put("prop_newspaper_box_red", "worn", c.at(T, -5.2, 10.4), 90.0, "tower: papers where office staff walk in")
 	c.put("prop_newspaper_box_blue", "worn", c.at(T, -6.0, 10.4), 90.0, "tower: papers where office staff walk in")
 	for r: Dictionary in [R1, R2, R3, R5]:
-		for dr: Array in r.doors:
-			if String(dr[0]) != "shopdoor": continue
+		for dr: Array in c.front_shops(r):
 			var dp: Vector3 = dr[1]
 			for s: float in [-1.2, 1.2]:
 				c.put("plant_potted_succulent", "normal", Vector3(dp.x + 0.4, y, dp.z + s * 1.08), 0.0, "shops: a pot either side of the door")
@@ -65,7 +63,7 @@ func _run() -> void:
 	# deli (R1): kitchen waste, its owner's car in the yard (a stall), propane for the grill
 	c.services(R1, 4.0, 2, false)
 	c.put("prop_dumpster_3yd_green", "rusty", Vector3(-42.6, y, -150.6), 90.0, "deli: food waste, collected from the alley")
-	c.put("prop_propane_cylinder_100lb", "worn", Vector3(-32.2, y, -139.0), 0.0, "deli: grill propane by the kitchen door")
+	c.put("prop_propane_cylinder_100lb", "worn", Vector3(-32.2, y, -142.3), 0.0, "deli: grill propane by the kitchen door")
 	c.stalls.append([-38.0, -144.5, 90.0])
 	c.oil(Vector2(-38.0, -144.5), 90.0)
 	# R2, R3: flats over the shops (apartment doors): bin carts, meters, condensers; a bike locked to the rail

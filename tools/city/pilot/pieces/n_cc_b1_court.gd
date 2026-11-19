@@ -43,12 +43,12 @@ func _run() -> void:
 	c.neighbours([["c_nw", Vector3(0, 6, -600), 0.0], ["d_cc", Vector3(0, 6, -600), 0.0], ["v_ne", Vector3(-200, 6, -600), 0.0], ["s_rs_b098_fill", Vector3(0, 6, -600), 90.0], ["s_cc_10th", Vector3(0, 6, -600), 0.0]], O)
 	var y := c.y0
 	# ---- buildings
-	var G := c.bld("extras/ext_parking_garage", Vector2(-120.45, -139.0), "n")
-	var L1 := c.bld("ck/ck_brk3_row2_fe", Vector2(-68.0, -133.35), "w")
-	var L2 := c.bld("ck/ck_brk3_row2", Vector2(-68.0, -120.97), "w")
-	var L3 := c.bld("ck/ck_apt3_row2", Vector2(-68.0, -108.4), "w")
-	var AN := c.bld("ck/ck_brk3_row2", Vector2(-59.0, -100.0), "n")
-	var CH := c.bld("urban/urb_courthouse", Vector2(-75.0, -28.0), "s", true)
+	var G := c.bld("extras/ext_parking_garage", Vector2(-120.45, -139.0), "n", false, "district_garage")
+	var L1 := c.bld("ck/ck_brk3_row2_fe", Vector2(-68.0, -133.35), "w", false, "law_office_n")
+	var L2 := c.bld("ck/ck_brk3_row2", Vector2(-68.0, -120.97), "w", false, "law_office_s")
+	var L3 := c.bld("ck/ck_apt3_row2", Vector2(-68.0, -108.4), "w", false, "law_flats")
+	var AN := c.bld("ck/ck_brk3_row2", Vector2(-59.0, -100.0), "n", false, "legal_aid")
+	var CH := c.bld("urban/urb_courthouse", Vector2(-75.0, -28.0), "s", true, "courthouse")
 	# ---- garage mouth on alley C: pay station by the pedestrian side, bollards guarding the corners, wear
 	c.put("prop_pay_station", "worn", Vector3(-112.6, y, -139.5), 180.0, "garage: pay station by the way out on foot")
 	for bx: float in [-125.2, -115.7]: c.put("prop_bollard_concrete", "worn", Vector3(bx, y, -139.5), 0.0, "garage: bollards guard the door frame from cars cutting in")
@@ -69,8 +69,7 @@ func _run() -> void:
 	c.put("prop_trash_receptacle", "worn", Vector3(-70.6, y, -104.6), 0.0, "court green: bin on the walk")
 	c.put("prop_lamp_globe", "worn", Vector3(-70.5, y, -136.6), 0.0, "court green: lamp at the walk's corner")
 	for r: Dictionary in [L1, L2]:
-		for dr: Array in r.doors:
-			if String(dr[0]) != "shopdoor": continue
+		for dr: Array in c.front_shops(r):
 			var dp: Vector3 = dr[1]
 			for s: float in [-1.2, 1.2]: c.put("plant_potted_succulent", "normal", Vector3(dp.x - 0.4, y, dp.z + s * 1.08), 0.0, "law offices: pots by the door")
 	# ---- law offices' service sides on alley A (their backs), the annex's on the east lawn

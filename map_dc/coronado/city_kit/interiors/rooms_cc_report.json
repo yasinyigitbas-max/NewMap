@@ -1,0 +1,204 @@
+{
+ "rooms": [
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_am__amber6_tower__0.scn",
+   "id": "g_cc_b1_am__amber6_tower__0",
+   "kind": "lobby",
+   "lights": 5,
+   "name": "Sixth & Amber Building",
+   "props": 32,
+   "w": 15.4
+  },
+  {
+   "d": 15.05,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_am__amber_bank__0.scn",
+   "id": "g_cc_b1_am__amber_bank__0",
+   "kind": "bank",
+   "lights": 6,
+   "name": "Amber Savings Bank",
+   "props": 66,
+   "w": 17.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_am__amber_deli_row__0.scn",
+   "id": "g_cc_b1_am__amber_deli_row__0",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "Marlowe's Deli",
+   "props": 28,
+   "w": 7.6
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_am__amber_deli_row__1.scn",
+   "id": "g_cc_b1_am__amber_deli_row__1",
+   "kind": "clothes",
+   "lights": 5,
+   "name": "Ferris Tailors",
+   "props": 22,
+   "w": 6.0
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_am__amber_deli_row__2.scn",
+   "id": "g_cc_b1_am__amber_deli_row__2",
+   "kind": "keys",
+   "lights": 4,
+   "name": "Fix-It Phone Repair",
+   "props": 11,
+   "w": 3.8
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_am__amber_barber_fe__0.scn",
+   "id": "g_cc_b1_am__amber_barber_fe__0",
+   "kind": "salon",
+   "lights": 5,
+   "name": "Seventh Wave Barbers",
+   "props": 22,
+   "w": 7.9
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_am__amber_books__0.scn",
+   "id": "g_cc_b1_am__amber_books__0",
+   "kind": "books",
+   "lights": 6,
+   "name": "Amber Books",
+   "props": 23,
+   "w": 7.9
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_am__amber_corner_cafe__0.scn",
+   "id": "g_cc_b1_am__amber_corner_cafe__0",
+   "kind": "cafe",
+   "lights": 6,
+   "name": "Court Side Coffee",
+   "props": 27,
+   "w": 7.5
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_n__sixth_corner_shop__0.scn",
+   "id": "g_cc_b1_n__sixth_corner_shop__0",
+   "kind": "corner_shop",
+   "lights": 6,
+   "name": "Sixth St Market",
+   "props": 23,
+   "w": 7.5
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_n__sixth_brick_row__0.scn",
+   "id": "g_cc_b1_n__sixth_brick_row__0",
+   "kind": "store",
+   "lights": 6,
+   "name": "Island Hardware",
+   "props": 24,
+   "w": 7.6
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_n__sixth_brick_row__1.scn",
+   "id": "g_cc_b1_n__sixth_brick_row__1",
+   "kind": "cleaners",
+   "lights": 4,
+   "name": "Sixth St Laundromat",
+   "props": 31,
+   "w": 6.0
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_n__sixth_brick_row__2.scn",
+   "id": "g_cc_b1_n__sixth_brick_row__2",
+   "kind": "jewelry",
+   "lights": 5,
+   "name": "Watch & Jewel Repair",
+   "props": 16,
+   "w": 3.8
+  },
+  {
+   "d": 11.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_n__sixth_diner_block__0.scn",
+   "id": "g_cc_b1_n__sixth_diner_block__0",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "Sixth Street Diner",
+   "props": 30,
+   "w": 10.8
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_n__sixth_pharmacy__0.scn",
+   "id": "g_cc_b1_n__sixth_pharmacy__0",
+   "kind": "pharmacy",
+   "lights": 6,
+   "name": "Downtown Pharmacy",
+   "props": 23,
+   "w": 7.9
+  },
+  {
+   "d": 11.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_west__cave_corner_flats__0.scn",
+   "id": "g_cc_b1_west__cave_corner_flats__0",
+   "kind": "bakery",
+   "lights": 6,
+   "name": "C Avenue Bakery",
+   "props": 17,
+   "w": 10.8
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_west__downtown_church__0.scn",
+   "id": "g_cc_b1_west__downtown_church__0",
+   "kind": "church",
+   "lights": 5,
+   "name": "Sacred Heart Church",
+   "props": 56,
+   "w": 13.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_court__law_office_n__0.scn",
+   "id": "g_cc_b1_court__law_office_n__0",
+   "kind": "law",
+   "lights": 6,
+   "name": "Hale & Ortiz Attorneys",
+   "props": 25,
+   "w": 7.9
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_court__law_office_s__0.scn",
+   "id": "g_cc_b1_court__law_office_s__0",
+   "kind": "bail",
+   "lights": 5,
+   "name": "Bayview Bail Bonds",
+   "props": 18,
+   "w": 7.9
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_court__legal_aid__0.scn",
+   "id": "g_cc_b1_court__legal_aid__0",
+   "kind": "office",
+   "lights": 6,
+   "name": "Island Legal Aid",
+   "props": 19,
+   "w": 7.9
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_court__courthouse__0.scn",
+   "id": "g_cc_b1_court__courthouse__0",
+   "kind": "court",
+   "lights": 6,
+   "name": "Coronado County Courthouse",
+   "props": 53,
+   "w": 27.4
+  }
+ ]
+}

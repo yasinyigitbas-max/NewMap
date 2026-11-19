@@ -1,0 +1,554 @@
+{
+ "_doc": "room_contracts_cc.gd: every building of the n_cc_* pieces, grid frame (review/grow_cc_blocks.json)",
+ "buildings": [
+  {
+   "doors_front": [],
+   "label": "amber6_tower",
+   "model": "modular/examples/mod_twr_office",
+   "piece": "n_cc_b1_am",
+   "pos": [
+    -26.0,
+    6.15,
+    -782.1
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     6.8
+    ]
+   ],
+   "label": "amber_bank",
+   "model": "urban/urb_brick_corner",
+   "piece": "n_cc_b1_am",
+   "pos": [
+    -24.0,
+    6.15,
+    -763.73
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.1
+    ],
+    [
+     "shopdoor",
+     1.9
+    ],
+    [
+     "shopdoor",
+     7.9
+    ]
+   ],
+   "label": "amber_deli_row",
+   "model": "urban/urb_brick_row",
+   "piece": "n_cc_b1_am",
+   "pos": [
+    -23.0,
+    6.15,
+    -745.25
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.1
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "amber_barber_fe",
+   "model": "ck/ck_brk3_row2_fe",
+   "piece": "n_cc_b1_am",
+   "pos": [
+    -23.0,
+    6.15,
+    -729.83
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.1
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "amber_books",
+   "model": "ck/ck_brk3_row2",
+   "piece": "n_cc_b1_am",
+   "pos": [
+    -23.0,
+    6.15,
+    -717.45
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "shopdoor",
+     4.9
+    ]
+   ],
+   "label": "amber_corner_cafe",
+   "model": "ck/ck_brk3_corner2",
+   "piece": "n_cc_b1_am",
+   "pos": [
+    -23.0,
+    6.15,
+    -705.06
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "shopdoor",
+     4.9
+    ]
+   ],
+   "label": "sixth_corner_shop",
+   "model": "ck/ck_brk3_corner2",
+   "piece": "n_cc_b1_n",
+   "pos": [
+    -133.8,
+    6.15,
+    -781.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     6.0
+    ]
+   ],
+   "label": "sixth_walkup",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_cc_b1_n",
+   "pos": [
+    -118.36,
+    6.15,
+    -782.8
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [],
+   "label": "sixth_brick_row",
+   "model": "modular/examples/mod_brk_row",
+   "piece": "n_cc_b1_n",
+   "pos": [
+    -99.93,
+    6.15,
+    -782.127
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "sixth_diner_block",
+   "model": "apartments/apt_stucco3_peach",
+   "piece": "n_cc_b1_n",
+   "pos": [
+    -80.37,
+    6.15,
+    -782.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.1
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "sixth_pharmacy",
+   "model": "ck/ck_brk3_row2",
+   "piece": "n_cc_b1_n",
+   "pos": [
+    -63.81,
+    6.15,
+    -781.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     1.15
+    ]
+   ],
+   "label": "sixth_kiosk",
+   "model": "commercial/com_kiosk",
+   "piece": "n_cc_b1_n",
+   "pos": [
+    -53.8,
+    6.15,
+    -780.577
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [],
+   "label": "alleyc_apt_row",
+   "model": "modular/examples/mod_apt_row",
+   "piece": "n_cc_b1_n",
+   "pos": [
+    -118.36,
+    6.15,
+    -753.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "alleyc_apt2",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_cc_b1_n",
+   "pos": [
+    -96.0,
+    6.15,
+    -753.6
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "cave_corner_flats",
+   "model": "apartments/apt_stucco3_cream",
+   "piece": "n_cc_b1_west",
+   "pos": [
+    -180.38,
+    6.15,
+    -782.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     6.0
+    ]
+   ],
+   "label": "cave_walkup",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_cc_b1_west",
+   "pos": [
+    -160.87,
+    6.15,
+    -782.8
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ],
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ]
+   ],
+   "label": "cave_garden_apts",
+   "model": "apartments/apt_garden_cream",
+   "piece": "n_cc_b1_west",
+   "pos": [
+    -184.7,
+    6.15,
+    -762.4
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "downtown_church",
+   "model": "civic/civ_church",
+   "piece": "n_cc_b1_west",
+   "pos": [
+    -170.9,
+    6.15,
+    -721.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "rollup",
+     0.0
+    ]
+   ],
+   "label": "district_garage",
+   "model": "extras/ext_parking_garage",
+   "piece": "n_cc_b1_court",
+   "pos": [
+    -120.45,
+    6.15,
+    -723.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.1
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "law_office_n",
+   "model": "ck/ck_brk3_row2_fe",
+   "piece": "n_cc_b1_court",
+   "pos": [
+    -59.4,
+    6.15,
+    -733.35
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.1
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "law_office_s",
+   "model": "ck/ck_brk3_row2",
+   "piece": "n_cc_b1_court",
+   "pos": [
+    -59.4,
+    6.15,
+    -720.97
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "law_flats",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_cc_b1_court",
+   "pos": [
+    -60.4,
+    6.15,
+    -708.4
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.1
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "legal_aid",
+   "model": "ck/ck_brk3_row2",
+   "piece": "n_cc_b1_court",
+   "pos": [
+    -59.0,
+    6.15,
+    -691.4
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "courthouse",
+   "model": "urban/urb_courthouse",
+   "piece": "n_cc_b1_court",
+   "pos": [
+    -75.0,
+    6.15,
+    -638.0
+   ],
+   "yaw": 0.0
+  }
+ ]
+}

@@ -37,14 +37,14 @@ func _run() -> void:
 		["s_civ", Vector3(-200, 6, -600), -180.0], ["v_ne", Vector3(-200, 6, -600), 0.0]], O)
 	var y := c.y0
 	# ---- flats on the corner
-	var Q1 := c.bld("apartments/apt_stucco3_cream", Vector2(-180.38, -190.3), "n")
-	var Q2 := c.bld("ck/ck_apt3_row3", Vector2(-160.87, -190.3), "n")
-	var Q3 := c.bld("apartments/apt_garden_cream", Vector2(-190.8, -162.4), "w")
+	var Q1 := c.bld("apartments/apt_stucco3_cream", Vector2(-180.38, -190.3), "n", false, "cave_corner_flats")
+	var Q2 := c.bld("ck/ck_apt3_row3", Vector2(-160.87, -190.3), "n", false, "cave_walkup")
+	var Q3 := c.bld("apartments/apt_garden_cream", Vector2(-190.8, -162.4), "w", false, "cave_garden_apts")
 	# ---- the church, set back behind its square
-	var CH := c.bld("civic/civ_church", Vector2(-186.8, -121.0), "w")
+	var CH := c.bld("civic/civ_church", Vector2(-186.8, -121.0), "w", false, "downtown_church")
 	# ---- street side: door pots at the corner shop; the flats' gaps closed with iron and a gate
-	for dr: Array in Q1.doors:
-		if String(dr[0]) == "shopdoor":
+	for dr: Array in c.front_shops(Q1):
+		if true:
 			var dp: Vector3 = dr[1]
 			for s: float in [-1.2, 1.2]: c.put("plant_potted_succulent", "normal", Vector3(dp.x + s * 1.08, y, dp.z - 0.4), 0.0, "corner shop: a pot either side of the door")
 	_iron(c, Vector2(-151.6, -190.0), Vector2(-146.4, -190.0), "flats: iron fence closes the gap to 6th St")

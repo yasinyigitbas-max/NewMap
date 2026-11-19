@@ -35,21 +35,18 @@ func _run() -> void:
 	c.neighbours([["s_rs_b092_a", Vector3(-200, 6, -800), 90.0], ["s_rs_b092_b", Vector3(0, 6, -800), -90.0]], O)
 	var y := c.y0
 	# ---- the 6th St wall (faces north), real fronts on the property line v -790.3 (z -190.3)
-	var A1 := c.bld("ck/ck_brk3_corner2", Vector2(-133.8, -190.3), "n")
-	var A2 := c.bld("ck/ck_apt3_row3", Vector2(-118.36, -190.3), "n")
-	var A3 := c.bld("modular/examples/mod_brk_row", Vector2(-99.93, -190.3), "n")
-	for lx: float in [-6.0, 0.0, 6.0]: c.add_door(A3, lx, "shopdoor")
-	var A4 := c.bld("apartments/apt_stucco3_peach", Vector2(-80.37, -190.3), "n")
-	var A5 := c.bld("ck/ck_brk3_row2", Vector2(-63.81, -190.3), "n")
-	var KI := c.bld("commercial/com_kiosk", Vector2(-53.8, -184.5), "n")
+	var A1 := c.bld("ck/ck_brk3_corner2", Vector2(-133.8, -190.3), "n", false, "sixth_corner_shop")
+	var A2 := c.bld("ck/ck_apt3_row3", Vector2(-118.36, -190.3), "n", false, "sixth_walkup")
+	var A3 := c.bld("modular/examples/mod_brk_row", Vector2(-99.93, -190.3), "n", false, "sixth_brick_row")
+	var A4 := c.bld("apartments/apt_stucco3_peach", Vector2(-80.37, -190.3), "n", false, "sixth_diner_block")
+	var A5 := c.bld("ck/ck_brk3_row2", Vector2(-63.81, -190.3), "n", false, "sixth_pharmacy")
+	var KI := c.bld("commercial/com_kiosk", Vector2(-53.8, -184.5), "n", false, "sixth_kiosk")
 	# ---- the back row on alley C (faces south onto the alley), real fronts at v -746 (z -146)
-	var B1 := c.bld("modular/examples/mod_apt_row", Vector2(-118.36, -146.0), "s")
-	c.add_door(B1, -4.5, "apt_door"); c.add_door(B1, 4.5, "apt_door")
-	var B2 := c.bld("ck/ck_apt3_row2", Vector2(-96.0, -146.0), "s")
+	var B1 := c.bld("modular/examples/mod_apt_row", Vector2(-118.36, -146.0), "s", false, "alleyc_apt_row")
+	var B2 := c.bld("ck/ck_apt3_row2", Vector2(-96.0, -146.0), "s", false, "alleyc_apt2")
 	# ---- street side of 6th (a 6.4 m walk, no parkway): door pots, the kiosk corner
 	for r: Dictionary in [A1, A3, A4, A5]:
-		for dr: Array in r.doors:
-			if String(dr[0]) != "shopdoor": continue
+		for dr: Array in c.front_shops(r):
 			var dp: Vector3 = dr[1]
 			for s: float in [-1.2, 1.2]:
 				c.put("plant_potted_succulent", "normal", Vector3(dp.x + s * 1.08, y, dp.z - 0.4), 0.0, "shops: a pot either side of the door")

@@ -110,13 +110,42 @@ func bld(folder: String, front: Vector2, face: String, nominal := false, label :
 		for lz: float in [ab.position.z, minf(ab.end.z, fz)]:     # the walls; an awning over the walk is not a wall
 			var p := c + b * Vector3(lx, 0, lz); xs.append(p.x); zs.append(p.z)
 	var st := K.building_stats(folder)
-	var d: float = st.footprint_wd[1]
+	var d: float = st.footprint_wd[1]; var w: float = st.footprint_wd[0]
 	var doors: Array = []
-	for e: Array in st.get("doors_front", []):
-		doors.append([String(e[0]), c + b * Vector3(float(e[1]), 0, d * 0.5), fdir])
+	# every ground-floor door of the model, all four sides, as MEASURED for the rooms (interiors/room_contracts.json):
+	# the kit stats list front doors only and the modular examples none; back doors need their space as much
+	var con: Dictionary = _contracts().get(folder, {})
+	if not con.is_empty():
+		for e: Dictionary in con.entrances:
+			if int(e.floor) != 0: continue
+			var a := float(e.along); var kind := "rollup" if String(e.kind) == "service_bay" else String(e.kind)
+			match String(e.facade):
+				"front": doors.append([kind, c + b * Vector3(a, 0, d * 0.5), fdir])
+				"back": doors.append([kind, c + b * Vector3(a, 0, -d * 0.5), -fdir])
+				"left": doors.append([kind, c + b * Vector3(-w * 0.5, 0, a), b * Vector3(-1, 0, 0)])
+				"right": doors.append([kind, c + b * Vector3(w * 0.5, 0, a), b * Vector3(1, 0, 0)])
+	else:
+		for e: Array in st.get("doors_front", []):
+			doors.append([String(e[0]), c + b * Vector3(float(e[1]), 0, d * 0.5), fdir])
 	var r := {"node": node, "folder": folder, "rect": [xs.min(), zs.min(), xs.max(), zs.max()], "doors": doors, "yaw": yaw, "c": c, "b": b, "ab": ab, "st": st}
 	blds.append(r)
 	return r
+
+static var _con := {}
+static func _contracts() -> Dictionary:
+	if _con.is_empty():
+		for f: String in ["room_contracts.json", "room_contracts_cc.json"]:
+			var p := "res://map_dc/coronado/city_kit/interiors/" + f
+			if FileAccess.file_exists(p): _con.merge((JSON.parse_string(FileAccess.get_file_as_string(p)) as Dictionary).models)
+	return _con
+
+## the shop doors on a building's FRONT (from the measured contract, or the stats for models without one)
+func front_shops(r: Dictionary) -> Array:
+	var out: Array = []
+	var f: Vector3 = (r.b as Basis) * Vector3(0, 0, 1)
+	for dr: Array in r.doors:
+		if String(dr[0]) in ["shop", "shopdoor", "civic", "civic_door"] and (dr[2] as Vector3).dot(f) > 0.9: out.append(dr)
+	return out
 
 ## piece point at a building's local offset (x across the front, z: + toward the front), on the pad
 func at(r: Dictionary, lx: float, lz: float, ly := 0.0) -> Vector3:
@@ -176,6 +205,10 @@ func wall(r: Dictionary, base: String, cond: String, side: String, along: float,
 		"left": lp = Vector3(ab.position.x - out, h, along); yaw -= 90.0
 		"right": lp = Vector3(ab.end.x + out, h, -along); yaw += 90.0
 	var p: Vector3 = r.c + (r.b as Basis) * Vector3(lp.x, 0, lp.z)
+	for dr: Array in r.doors:
+		var dp: Vector3 = dr[1]
+		if Vector2(dp.x - p.x, dp.z - p.z).length() < (3.4 if String(dr[0]) == "rollup" else 1.25):
+			refused.append("%s on the %s wall of %s at (%.1f, %.1f): over / beside its %s door" % [base, side, r.folder, p.x, p.z, dr[0]]); return
 	props.add(base, cond, Vector3(p.x, y0 + h, p.z), yaw, false)
 	why[reason] = int(why.get(reason, 0)) + 1
 
