@@ -165,6 +165,116 @@
    "yaw": 0.0,
    "site": "high street block 4, Ocean Blvd (u 50..190, v 254..Ocean Blvd)",
    "part": "the residents' alley; Ocean Park: skate shop and plaza, sand volleyball, picnic lawn, park parking, one gate on the boulevard"
+  },
+  {
+   "piece": "n_hs_b5_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 5, Amber east (u 16..50, v 97.5..11th St)",
+   "part": "post office, bistro, corner pair, paseo, orange arcade at the bus stop, cafe, corner plaza; rear lot"
+  },
+  {
+   "piece": "n_hs_b5_eleventh",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 5, 11th St (u 50..125, v 156..11th St)",
+   "part": "Fire Station 2, two apartment houses on terraces, stalls off the aisle"
+  },
+  {
+   "piece": "n_hs_b5_hill",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 5, the hillside (u 50..146, v 51.2..156, not r_q)",
+   "part": "Hillside Park: the residents' alley behind r_s, the lane, the lookout terrace, paths, tennis courts, the parking aisle"
+  },
+  {
+   "piece": "n_hs_b5_tenth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 5, 10th St east (u 146..240.8, v 9.2..54)",
+   "part": "six houses continuing the pilot's r_s row, garages on the alley, the service lane"
+  },
+  {
+   "piece": "n_hs_b5_school",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 5, B Ave (u 146..240.8, v 54..100)",
+   "part": "Hilltop Elementary on its platform, playground, school garden, staff parking, the alley's east part"
+  },
+  {
+   "piece": "n_hs_b6_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 6, Amber east (u 16..50, v 9th St..-97.5)",
+   "part": "brick pair, bank and pharmacy, shop row, corner pair by a paseo, hardware and cleaners, cafe, pocket plaza; rear lot"
+  },
+  {
+   "piece": "n_hs_b6_ninth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 6, 9th St (u 50..125, v 9th St..-146)",
+   "part": "Hill Rec Center, Hilltop Market with flats, an apartment row, stalls"
+  },
+  {
+   "piece": "n_hs_b6_hill",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 6, the hillside (u 50..146, v -146..-51.2, not r_q)",
+   "part": "Hillcrest Terraces: six apartment houses on three terraces, the stair walk, the residents' alley and stalls, the lane, the aisle"
+  },
+  {
+   "piece": "n_hs_b6_tenth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 6, 10th St east, north side (u 146..240.8, v -54..-9.2)",
+   "part": "six houses continuing the pilot's r_n row, garages on the alley, the service lane"
+  },
+  {
+   "piece": "n_hs_b6_garden",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 6, B Ave (u 146..240.8, v -100..-54)",
+   "part": "Hilltop Courts: townhouses on the alley and on a private drive, the residents' lot, the alley's east part"
   }
  ]
 }

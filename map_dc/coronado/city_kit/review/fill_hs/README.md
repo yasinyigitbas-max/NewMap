@@ -308,3 +308,98 @@ Preview numbers are not game numbers (whole-island terrain about 1.1 M triangles
 - The skate plaza's two bowl sections show their tall backs to the cross path and the boulevard.
 - The arcade model shows its own painted boards in street views without rooms (as the corner models in blocks 1-3).
 - The street views' bakery front is half hidden by the street piece's pole (`b4_rooms_2.jpg`).
+
+## Blocks 5 and 6: east of Amber on the hill (9th to 11th St, Amber to B Ave), round the pilot's b_se / b_ne, its hill rows r_s / r_n and the residential quarter
+Two U-shaped pockets, each about 24,000 m2, wrapped round the pilot's downtown block on Amber, its hill row of houses
+and a residential quarter piece. The land climbs 6 - 7 m from Amber's foot (4.15) to the hill top (10 - 11.3). The pilot's
+rows and the quarter meet them with STEPPED edges (one level lot per 15 m). Method, both blocks
+(`n_hs_b5_site.gd`, `n_hs_b6_site.gd`): every edge measured from the scratch ground dump at 0.25 m; the ground is one
+surface made region by region as Coons patches through the measured edge profiles (each region's edges are the same
+functions its neighbours use, so my pieces meet exactly); the neighbours' stepped lot lines are met by EDGE STRIPS at
+their exact heights (`hs_fill_lib.edge_strip`, new), the strips' faces 2 m inside my pieces. Alley mouths
+(`legs_measured.json`): 10th St at u 190..196 (both sides), B Ave at v +-54..60. The residents' alleys run behind the
+pilot rows from B Ave to a lane beside b_se / b_ne down to the Amber shops' rear lots.
+
+### Block 5 (south, 10th to 11th St)
+| piece | what and why |
+|---|---|
+| `n_hs_b5_amber` | Amber's shop fronts go on south of b_se: the **Coronado Post Office** behind its steps, **Hillside Bistro**, a corner pair (**Scoops**, **Bay Cleaners**) by a **paseo** to the rear lot, the orange **arcade** centred on Amber's bus stop (**Orange Grove**, **Island Gifts**, **Step Lively**, **Arcade Hair**), a small cafe and a corner plaza on 11th St. Amber is level here: one floor height. |
+| `n_hs_b5_eleventh` | **Fire Station 2** on 11th St (its apron straight onto the street, the crews' cars behind), a garden-apartment block and a Spanish court on terraces up the street, stalls off the aisle. |
+| `n_hs_b5_hill` | The steepest ground is not built on: **Hillside Park**. The **lookout** terrace at the alley (a ~1 m wall with a railing, benches facing down Amber to the ocean), a path across the slope from the shops' lane, a path down to the **tennis courts** (two courts on a pad) and the parking aisle; lawns with trees, benches, lamps. The residents' alley behind r_s, the lane beside b_se. |
+| `n_hs_b5_tenth` | 10th St goes on as the pilot's row: **six houses** on 15 m lots (colonial, contemporary, a narrow cottage, Spanish, Cape, ranch), lawns open to the walk, back yards closed by wood fences, garages on the alley reached by the service lane from 10th St's mouth. |
+| `n_hs_b5_school` | **Hilltop Elementary** on B Ave: two wings in an L on one level platform at the main door's walk height (walls 0.5 - 0.9 m with hedges or chain-link), the forecourt on B Ave, the playground between the wings, the school garden on the slope, staff parking off the alley. |
+
+### Block 6 (north, 9th to 10th St; the steepest, 7 m)
+| piece | what and why |
+|---|---|
+| `n_hs_b6_amber` | Amber climbs 2 m to 9th St: each shop on its own pad at its door's height: a brick pair (**Ninth Street Books**), **Hill Savings**, a row (**Silver Tide**, **Hill Shoes**, **Hillcrest Threads**), a corner pair (**Ninth Street Pharmacy**) by a paseo, the trades' building (**Coronado Hardware**, **Plaza Cleaners**), **Hillclimb Coffee**, and a **pocket plaza** where the street meets b_ne. |
+| `n_hs_b6_ninth` | The **Hill Rec Center** (its hall a walk-in room), the **Hilltop Market** under three storeys of flats, a modern apartment row; terraces up 9th St (a ~0.9 m wall between them), stalls off the aisle. |
+| `n_hs_b6_hill` | **Hillcrest Terraces**: six small apartment houses facing WEST (the view) on three level terraces stepping up the hill (walls 1 - 1.6 m with planted strips), a stair walk across all three, courts with tables, grills and washing; the residents' stalls off the alley behind r_n; the lane and the aisle. |
+| `n_hs_b6_tenth` | The north side of 10th St goes on as the pilot's r_n: **six houses** (Tudor, mid-century, a narrow two-storey, Spanish, a ranch, a craftsman), garages on the alley. |
+| `n_hs_b6_garden` | **Hilltop Courts**: townhouses with their own garages: the south row's on the residents' alley, the north row's on a private drive (**Hilltop Court**) leaving the alley through the residents' lot; small gardens; a footpath to B Ave. |
+
+### Land and seams (blocks 5 and 6)
+| | block 5 | block 6 |
+|---|---|---|
+| under the current land | 2,276 m2, 161 m2 over 30 cm, deepest 0.66 m (the park's lane edge, the school garden) | 6,701 m2, 1,439 m2 over 30 cm, 19 m2 over 1 m, deepest 1.05 m (the terraces cut into the hill) |
+| DRY trial fit (not written) | 538 nodes lowered, usual 0.16 m, largest 0.94 m: under 0, floating 0 | 1,291 nodes lowered, usual 0.18 m, largest 1.20 m: under 0, floating 0 |
+| seams with the streets and between my pieces | largest 1.6 cm (3.4 cm at the one corner where B Ave, r_q and the school meet) | largest 1.5 cm |
+| seams with the pilot rows and r_q | at their exact lot heights; left: their own steps at their corners (r_s / r_n vs 10th St 0.17 m, r_q vs B Ave 0.12 - 0.28 m, the r_s lot step at u 56 0.10 m) | the same |
+**The shared land was not changed.** The land lowering the dry fit needs on block 6 (up to 1.2 m, the terraces) is the
+largest of the zone: if the land is written later, those cuts are real.
+
+### Checks (each block's area: the pieces round it + mine)
+| check | block 5 | block 6 |
+|---|---|---|
+| `validate.gd` | 0 problems | 0 on my pieces (4 in the residential quarter: house numbers on mailboxes) |
+| `check_life.gd` | 0 on my pieces (68 elsewhere: the pilot's r_n / r_s fences, d_pilot glass, b_* poles) | 0 on my pieces (68 elsewhere, the same) |
+| `audit_trees.gd` | 288 trees, 0 in hard ground | 345 trees, 0 in hard ground |
+| `sink_check.gd` | 0 props off the ground | 0 |
+| `check_rooms.gd --only=g_hs_` | 0 problems, 53 rooms (all six blocks) | |
+| lock test | RESULT PASS | RESULT PASS |
+What they cannot see: as for block 1. Fixed on the way, found by the checks: Amber's locked street props in front of
+doors (a bus shelter at the block 5 arcade, a paper box and a bench at block 6's shops: both rows re-ordered, paseos
+added); 10th St yard fences that ended in the air (now from each house's own footprint, shared lot lines drawn once);
+garage aprons of 67 % (the lot pads moved to their back's height, aprons 2 m); lot faces next to the walks (bands 1.2 -
+2.2 m); r_q's profile at two places (measured again); a railing pair overlapping, a lamp in a hedge, a condenser on a
+washing line, mailboxes in a narrow path; a wall mailbox standing on the walk (removed, found by eye).
+
+### Walk-in places (built): 19
+Block 5 (8): Coronado Post Office (bank layout: the office layout left 303 m2 bare), Hillside Bistro, Scoops, Bay
+Cleaners, Orange Grove, Island Gifts, Step Lively, Arcade Hair. Block 6 (11): Ninth Street Books, Hill Savings, Silver
+Tide, Hill Shoes (a key shop's pegboard covered the back door), Hillcrest Threads, Ninth Street Pharmacy, Coronado
+Hardware, Plaza Cleaners (gift frames too tall for the trade building's 2.2 m ceiling; a key shop's pegboard covered its
+roll-up), Hillclimb Coffee, Hilltop Market, Hill Rec Center (hall layout).
+NOT built: the fire station, the school, the corner cafe on 11th St (no contract: shallow model), the homes.
+
+### Pictures (trial land, no shadows, only the block's area loaded, cars off except the tops; all opened by me)
+| file | view | preview draws / primitives |
+|---|---|---|
+| `b5_top.jpg` | straight down | 851 / 2.35 M |
+| `b5_amber_south.jpg` | Amber south from b_se past the post office | 87 / 1.16 M |
+| `b5_steepest_alley.jpg` | the steepest edge: the alley climbing behind r_s (its lot walls on the left) | 243 / 1.21 M |
+| `b5_lookout_view.jpg` | from the lookout west over the park | 155 / 1.19 M |
+| `b5_10th_east.jpg` | 10th St east past the new houses | 144 / 1.17 M |
+| `b5_b_ave_school.jpg` | B Ave south past the school | 138 / 1.19 M |
+| `b5_11th_fire.jpg` | 11th St east past the fire station | 246 / 1.21 M |
+| `b5_school_playground.jpg` | the playground and the classroom wing | 207 / 1.19 M |
+| `b6_top.jpg` | straight down | 1117 / 2.50 M |
+| `b6_amber_climb.jpg` | Amber north from b_ne past the pocket plaza | 156 / 1.19 M |
+| `b6_steepest_terraces.jpg` | the steepest: the stair walk up the three terraces | 363 / 1.26 M |
+| `b6_terrace_view.jpg` | from the middle terrace west | 165 / 1.19 M |
+| `b6_9th_rec.jpg` | 9th St east past the rec center and the market | 363 / 1.25 M |
+| `b6_10th_north.jpg` | 10th St east, north side | 221 / 1.20 M |
+| `b6_courts_drive.jpg` | Hilltop Court, the private drive | 213 / 1.22 M |
+| `b6_b_ave_north.jpg` | B Ave north past the courts | 334 / 1.29 M |
+| `b5_rooms_1..4.jpg`, `b6_rooms_1..6.jpg` | each shop: street front + inside | - |
+
+### NOT done / NOT checked (blocks 5 and 6)
+- Not shown to Yasin; nothing locked; not in the shared layout; no bake, no phone; the shared land not written (block
+  6's terraces need up to 1.2 m of cut if it is).
+- By eye: the post office's inside is desks with computers (bank layout), not a post counter; Silver Tide (jewellery)
+  shows bottle shelves; the fire station model keeps its painted "FIRE STATION 1" board and the cafe its "CROWN CAFE"
+  board in street views without rooms.
+- The school's platform shows a 0.5 - 0.7 m wall along B Ave's walk at its ends (2.2 m back from the walk).
+- No interiors for the fire station and the school (they would need hand-made rooms); the townhouses' garages are
+  closed doors (no garage interiors).
+- The cars in the pictures are preview cars (off in the street views).
