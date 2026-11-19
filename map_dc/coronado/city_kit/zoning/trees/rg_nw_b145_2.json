@@ -1,0 +1,57 @@
+{
+ "area": "rg_nw_b145_2",
+ "piece": "s_rg_nw_b145_2",
+ "zone": "ring boulevard",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms, the palm boulevard round the island (zone 1,165 -> about 1,000); within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    377.469,
+    2.15,
+    -1611.3
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "south parkway grass, a queen palm of the boulevard's south row (old spot and species)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    400.133,
+    2.15,
+    -1611.3
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "south parkway grass 22.7 m on, the next queen palm"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    421.197,
+    2.15,
+    -1611.3
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "south parkway grass 21 m on, the last south queen palm; the fan palms between and the plaza date palm spot go"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    409.824,
+    2.15,
+    -1588.7
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "north parkway grass, the north face's fan palm (the queen palm here becomes a fan palm); the spot 1.2 m from the kerb inlet is skipped"
+  }
+ ]
+}
