@@ -64,10 +64,10 @@
    "d": 5.25,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_bus_kiosk__0.scn",
    "id": "g_un_ne__uni_bus_kiosk__0",
-   "kind": "souvenir",
+   "kind": "cafe",
    "lights": 2,
-   "name": "Bus Tickets & Snacks",
-   "props": 9,
+   "name": "Crown Cafe",
+   "props": 5,
    "w": 3.4
   }
  ]

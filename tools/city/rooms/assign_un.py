@@ -24,7 +24,7 @@ SHOPS = {
     ("n_un_ne", "uni_science"): [(0.0, None, "lecture", "Science Building", "teal")],
     ("n_un_ne", "uni_gate_cafe"): [(2.5, None, "cafe", "Gate Coffee", "teal")],
     ("n_un_ne", "uni_gate_books"): [(-2.0, None, "books", "Campus Books", "green")],
-    ("n_un_ne", "uni_bus_kiosk"): [(None, None, "souvenir", "Bus Tickets & Snacks", "sun")],
+    ("n_un_ne", "uni_bus_kiosk"): [(None, None, "cafe", "Crown Cafe", "sun")],
 }
 # not walk-in (no room): the coffee kiosk (a walk-up window), the garage, every flat (homes are not entered in this pass)
 
