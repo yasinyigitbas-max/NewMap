@@ -1,0 +1,95 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 68 nodes (with every mesh of the buildings), 14108 ground and ground-collision triangles, 173 prop instances, 77 colliders, 23 wear marks are identical in both files
+PROOF differences found between the files: 126 lines only in the old one, 27 only in the new one
+PROOF change #43 add_collider: plant_bird_of_paradise at (-138.00, -1.40, 212.30) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #44 add_collider: plant_bird_of_paradise at (-122.60, -1.12, 212.30) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #45 add_collider: plant_bird_of_paradise at (-84.60, -0.41, 212.30) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #46 add_collider: plant_bird_of_paradise at (-68.60, -0.15, 212.30) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #47 add_collider: plant_bird_of_paradise at (-81.80, -0.77, 245.90) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #48 add_collider: plant_bird_of_paradise at (-65.20, -0.50, 243.40) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #49 add_collider: plant_bougainvillea_mound at (-105.80, -0.76, 212.60) got a collision shape  [plant_bougainvillea_mound has no collision: you walk and drive through it]
+PROOF change #50 add_collider: plant_bougainvillea_mound at (-75.20, -0.68, 245.90) got a collision shape  [plant_bougainvillea_mound has no collision: you walk and drive through it]
+PROOF change #51 add_collider: plant_bougainvillea_mound at (-95.80, -0.90, 240.90) got a collision shape  [plant_bougainvillea_mound has no collision: you walk and drive through it]
+PROOF change #52 add_collider: plant_potted_leafy at (-92.00, -0.76, 228.10) got a collision shape  [plant_potted_leafy has no collision: you walk and drive through it]
+PROOF change #53 add_collider: plant_potted_succulent at (-58.00, -0.15, 233.40) got a collision shape  [plant_potted_succulent has no collision: you walk and drive through it]
+PROOF change #54 add_collider: plant_agave_americana_small at (-91.80, -0.91, 245.90) got a collision shape  [plant_agave_americana_small has no collision: you walk and drive through it]
+PROOF change #55 add_collider: plant_agave_americana_small at (-113.20, -1.23, 245.90) got a collision shape  [plant_agave_americana_small has no collision: you walk and drive through it]
+PROOF change #15 move prop_mailbox_post_metal: (-102.35, -0.86, 209.95) -> (-102.35, -0.76, 209.95), in 1 tier(s) and its collider  [prop_mailbox_post_metal is 0.10 m into the ground]
+PROOF change #1 remove palm_mexican_fan_a at (-125.60, -1.40, 211.60) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove palm_mexican_fan_a at (-71.60, -0.41, 211.60) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_coral_b at (-136.40, -1.55, 245.00) removed, in 3 tier(s) and its collider  [tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_coral_b at (-123.80, -1.39, 245.90) removed, in 3 tier(s) and its collider  [tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove palm_mexican_fan_b at (-109.60, -1.12, 211.60) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove palm_mexican_fan_b at (-55.60, -0.15, 211.60) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove palm_mexican_fan_b at (-96.80, -0.99, 245.90) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove palm_mexican_fan_c at (-87.60, -0.76, 211.60) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove tree_jacaranda_a at (-105.00, -1.10, 245.00) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove tree_jacaranda_a at (-106.20, -1.13, 245.90) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #11 remove tree_magnolia_b at (-67.00, -0.55, 245.00) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #12 remove tree_torrey_pine_b at (-87.80, -0.85, 245.90) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #13 remove tree_magnolia_a at (-69.80, -0.61, 245.90) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #14 remove palm_queen_a at (-60.80, -0.50, 245.90) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #16 remove prop_trash_cart_black at (-124.70, -1.41, 247.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (17.1 m from a wall, 21.8 m from a fence)]]
+PROOF change #17 remove prop_trash_cart_black at (-108.70, -1.18, 247.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (17.1 m from a wall, 37.8 m from a fence)]]
+PROOF change #18 remove prop_trash_cart_black at (-86.70, -0.86, 247.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (17.3 m from a wall, 59.8 m from a fence)]]
+PROOF change #19 remove prop_trash_cart_black at (-70.70, -0.64, 247.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (17.1 m from a wall, 75.8 m from a fence)]]
+PROOF change #20 remove prop_trash_cart_black at (-54.70, -0.47, 247.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (17.1 m from a wall, 91.8 m from a fence)]]
+PROOF change #21 remove prop_trash_cart_blue at (-124.70, -1.40, 246.20) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (16.3 m from a wall, 21.8 m from a fence)]]
+PROOF change #22 remove prop_trash_cart_blue at (-108.70, -1.17, 246.20) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (16.3 m from a wall, 37.8 m from a fence)]]
+PROOF change #23 remove prop_trash_cart_blue at (-86.70, -0.84, 246.20) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (16.5 m from a wall, 59.8 m from a fence)]]
+PROOF change #24 remove prop_trash_cart_blue at (-70.70, -0.63, 246.20) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (16.3 m from a wall, 75.8 m from a fence)]]
+PROOF change #25 remove prop_trash_cart_blue at (-54.70, -0.45, 246.20) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (16.3 m from a wall, 91.8 m from a fence)]]
+PROOF change #26 remove prop_trash_cart_green at (-124.70, -1.39, 245.40) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (15.5 m from a wall, 21.8 m from a fence)]]
+PROOF change #27 remove prop_trash_cart_green at (-108.70, -1.16, 245.40) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (15.5 m from a wall, 37.8 m from a fence)]]
+PROOF change #28 remove prop_trash_cart_green at (-86.70, -0.83, 245.40) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (15.7 m from a wall, 59.8 m from a fence)]]
+PROOF change #29 remove prop_trash_cart_green at (-70.70, -0.61, 245.40) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (15.5 m from a wall, 75.8 m from a fence)]]
+PROOF change #30 remove prop_trash_cart_green at (-54.70, -0.43, 245.40) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (15.5 m from a wall, 91.8 m from a fence)]]
+PROOF change #34 remove prop_hose_reel_cart at (-124.60, -1.40, 229.20) removed, in 1 tier(s) and its collider  [erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart: a part of a building's own mesh passes through it]]
+PROOF change #35 remove prop_hose_reel_cart at (-108.60, -1.12, 229.20) removed, in 1 tier(s) and its collider  [erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart: a part of a building's own mesh passes through it]]
+PROOF change #36 remove prop_hose_reel_cart at (-70.60, -0.41, 229.20) removed, in 1 tier(s) and its collider  [erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart: a part of a building's own mesh passes through it]]
+PROOF change #37 remove prop_hose_reel_cart at (-54.60, -0.15, 229.20) removed, in 1 tier(s) and its collider  [erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart: a part of a building's own mesh passes through it]]
+PROOF change #56 add_box: a collision box [-7.17506265640259, 1.54996693134308, 7.87485694885254, 0.2899303817749, 3.09993386268616, 0.29001525878906] for a column of Buildings/d1  [d1: a 0.2 x 0.3 m column or post of the building has no collision]
+PROOF change #57 add_box: a collision box [-7.17506265640259, 1.54996693134308, -9.07518005371094, 0.2899303817749, 3.09993386268616, 0.29001525878906] for a column of Buildings/d1  [d1: a 0.2 x 0.3 m column or post of the building has no collision]
+PROOF change #58 add_box: a collision box [-5.37513136863708, 1.46666169166565, -9.10012769699097, 0.28993085861206, 2.9333233833313, 0.16] for a column of Buildings/d1  [d1: a 0.2 x 0.1 m column or post of the building has no collision]
+PROOF change #59 add_box: a collision box [-7.17506265640259, 1.54996693134308, 7.87485694885254, 0.2899303817749, 3.09993386268616, 0.29001525878906] for a column of Buildings/d2  [d2: a 0.2 x 0.3 m column or post of the building has no collision]
+PROOF change #60 add_box: a collision box [-7.17506265640259, 1.54996693134308, -9.07518005371094, 0.2899303817749, 3.09993386268616, 0.29001525878906] for a column of Buildings/d2  [d2: a 0.2 x 0.3 m column or post of the building has no collision]
+PROOF change #61 add_box: a collision box [-5.37513136863708, 1.46666169166565, -9.10012769699097, 0.28993085861206, 2.9333233833313, 0.16] for a column of Buildings/d2  [d2: a 0.2 x 0.1 m column or post of the building has no collision]
+PROOF change #62 add_box: a collision box [-7.17506265640259, 1.54996693134308, 7.87485694885254, 0.2899303817749, 3.09993386268616, 0.29001525878906] for a column of Buildings/d4  [d4: a 0.2 x 0.3 m column or post of the building has no collision]
+PROOF change #63 add_box: a collision box [-7.17506265640259, 1.54996693134308, -9.07518005371094, 0.2899303817749, 3.09993386268616, 0.29001525878906] for a column of Buildings/d4  [d4: a 0.2 x 0.3 m column or post of the building has no collision]
+PROOF change #64 add_box: a collision box [-5.37513136863708, 1.46666169166565, -9.10012769699097, 0.28993085861206, 2.9333233833313, 0.16] for a column of Buildings/d4  [d4: a 0.2 x 0.1 m column or post of the building has no collision]
+PROOF change #65 add_box: a collision box [-7.17506265640259, 1.54996693134308, 7.87485694885254, 0.2899303817749, 3.09993386268616, 0.29001525878906] for a column of Buildings/d5  [d5: a 0.2 x 0.3 m column or post of the building has no collision]
+PROOF change #66 add_box: a collision box [-7.17506265640259, 1.54996693134308, -9.07518005371094, 0.2899303817749, 3.09993386268616, 0.29001525878906] for a column of Buildings/d5  [d5: a 0.2 x 0.3 m column or post of the building has no collision]
+PROOF change #67 add_box: a collision box [-5.37513136863708, 1.46666169166565, -9.10012769699097, 0.28993085861206, 2.9333233833313, 0.16] for a column of Buildings/d5  [d5: a 0.2 x 0.1 m column or post of the building has no collision]
+PROOF note: 'Props/palm_queen_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_green_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_blue_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_black_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_near' held only listed items and is gone with them
+PROOF 59 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

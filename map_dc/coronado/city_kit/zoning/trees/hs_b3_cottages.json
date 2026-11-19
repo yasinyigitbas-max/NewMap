@@ -1,0 +1,11 @@
+{
+ "area": "hs_b3_cottages", "piece": "n_hs_b3_cottages", "zone": "high street band, cottage row (residential yards)",
+ "rule": "docs/TREE_PLAN.md: residential yards - one yard tree for every two or three houses, in back yards and at lot corners, never against a fence or a wall (zone 813 -> about 400)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The cottage row's ten builder trees go (a line down the back yards every 2-30 m, some 1.3-2 m from the fences); four come back on their own spots: by the grill, by the patio set, and two yards with room round them.",
+ "trees": [
+  {"base": "tree_jacaranda_b", "cond": "normal", "at": [-165.0, 2.184, 236.1], "yaw": 0.0, "scale": 0.85, "why": "the back yard with the kettle grill (2.2 m off): a jacaranda over the cook"},
+  {"base": "tree_jacaranda_b", "cond": "normal", "at": [-165.1, 2.151, 304.4], "yaw": 90.0, "scale": 0.85, "why": "the south back yard with the patio set (2.9 m off): a jacaranda over the table"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [-165.0, 2.186, 213.0], "yaw": 180.0, "scale": 0.85, "why": "the north back yard, 12 m from the cottage: the yard's tree"},
+  {"base": "tree_ficus_b", "cond": "normal", "at": [-165.0, 2.166, 275.2], "yaw": 270.0, "scale": 0.85, "why": "the middle back yard, 9.7 m from the cottage, 39 m from the grill tree"}
+ ]
+}

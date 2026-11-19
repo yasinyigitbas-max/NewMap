@@ -1,0 +1,11 @@
+{
+ "area": "hs_b6_garden", "piece": "n_hs_b6_garden", "zone": "high street",
+ "rule": "docs/TREE_PLAN.md: high street (pilot), Amber spine, arterials - trees in wells on the shop side, palms alternating on Amber (zone 406 -> about 360); this block's trees stand on grass round its buildings, not in street wells",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's eleven builder trees go (corals, jacarandas, magnolias, palms, a ficus against a dumpster, a torrey pine 0.4 m from a wall); four come back on their own spots on open grass: the car park's edge, two of the front row (every other one), and one clear corner.",
+ "trees": [
+  {"base": "palm_queen_a", "cond": "normal", "at": [170.8, 10.138, -65.8], "yaw": 0.0, "scale": 1.0, "why": "the car park's grass edge by the agave and the wheel stops: a queen palm where the cars come in"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [190.5, 10.393, -76.5], "yaw": 90.0, "scale": 0.85, "why": "the grass strip along the front row, 3.7 m from the wall: every other tree of the old row"},
+  {"base": "palm_queen_a", "cond": "normal", "at": [233.0, 10.725, -76.5], "yaw": 180.0, "scale": 1.0, "why": "the same strip's east end, 42 m on: a palm, alternating with the coral as on Amber"},
+  {"base": "tree_jacaranda_b", "cond": "normal", "at": [172.2, 10.597, -85.2], "yaw": 270.0, "scale": 0.85, "why": "the open grass at the block's west corner, 4.3 m from the wall, nothing round it"}
+ ]
+}

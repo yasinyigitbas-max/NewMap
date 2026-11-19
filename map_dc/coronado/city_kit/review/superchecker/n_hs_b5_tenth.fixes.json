@@ -1,0 +1,676 @@
+{
+ "fixes": [
+  {
+   "at": [
+    152.100006103516,
+    5.89812135696411,
+    14.0
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 39.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    171.100006103516,
+    5.9225926399231,
+    14.0
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 40.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    182.25,
+    5.93096590042114,
+    14.0
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 41.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    202.5,
+    5.91793775558472,
+    14.0
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 42.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    216.699996948242,
+    5.89181327819824,
+    14.0
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 43.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    233.399993896484,
+    5.8711371421814,
+    14.0
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 44.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    231.800003051758,
+    5.8711371421814,
+    32.9000015258789
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 45.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    215.800003051758,
+    5.89181327819824,
+    40.9000015258789
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 46.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    156.5,
+    5.89812135696411,
+    13.6000003814697
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 47.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    175.5,
+    5.9225926399231,
+    13.6000003814697
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 48.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    186.649993896484,
+    5.93096590042114,
+    13.6000003814697
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 49.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    206.899993896484,
+    5.91793775558472,
+    13.6000003814697
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 50.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    221.100006103516,
+    5.89181327819824,
+    13.6000003814697
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 51.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    237.800003051758,
+    5.8711371421814,
+    13.6000003814697
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 52.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    153.199996948242,
+    5.89812135696411,
+    33.9000015258789
+   ],
+   "base": "plant_bougainvillea_mound",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 53.0,
+   "op": "add_collider",
+   "reason": "plant_bougainvillea_mound has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    198.800003051758,
+    5.91793775558472,
+    38.9000015258789
+   ],
+   "base": "plant_bougainvillea_mound",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 54.0,
+   "op": "add_collider",
+   "reason": "plant_bougainvillea_mound has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    193.0,
+    5.85665321350098,
+    52.5
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "worn",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    193.0,
+    5.97565554827452,
+    52.5
+   ]
+  },
+  {
+   "at": [
+    159.399993896484,
+    5.89812135696411,
+    11.6000003814697
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    214.0,
+    5.89181327819824,
+    42.2000007629395
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    149.199996948242,
+    5.89812135696411,
+    37.7599983215332
+   ],
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    235.800003051758,
+    5.8711371421814,
+    35.9000015258789
+   ],
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    163.800003051758,
+    5.9225926399231,
+    11.6000003814697
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    236.0,
+    5.8711371421814,
+    37.5849990844727
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    174.0,
+    5.9225926399231,
+    38.5250015258789
+   ],
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    178.800003051758,
+    5.93096590042114,
+    11.6000003814697
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    179.199996948242,
+    5.93096590042114,
+    40.4900016784668
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    223.800003051758,
+    5.89181327819824,
+    11.6000003814697
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    198.800003051758,
+    5.91793775558472,
+    11.6000003814697
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    165.199996948242,
+    5.9225926399231,
+    37.4000015258789
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    208.800003051758,
+    5.91793775558472,
+    40.9199981689453
+   ],
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "tree_ficus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    228.199996948242,
+    5.8711371421814,
+    11.6000003814697
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    174.199996948242,
+    5.9225926399231,
+    37.4000015258789
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    148.800003051758,
+    5.89812135696411,
+    36.4000015258789
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    187.800003051758,
+    5.93096590042114,
+    38.4000015258789
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    156.866760253906,
+    5.91012144088745,
+    52.0677261352539
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    158.999932050705,
+    6.99811208248138,
+    51.7599565982818
+   ],
+   "box": [
+    2.39992594718933,
+    1.09999072551727,
+    2.95995736122131,
+    0.16,
+    2.19998145103455,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 55.0,
+   "name": "sc_col_0",
+   "node": "Buildings/t1_garage",
+   "op": "add_box",
+   "reason": "t1_garage: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    187.224981307984,
+    7.22501456737518,
+    51.9400010108947
+   ],
+   "box": [
+    1.62497520446777,
+    1.29404866695404,
+    3.05999994277954,
+    0.290049591064453,
+    2.58809733390808,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 56.0,
+   "name": "sc_col_0",
+   "node": "Buildings/t3_garage",
+   "op": "add_box",
+   "reason": "t3_garage: a 0.3 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    199.292126033804,
+    7.70886199176312,
+    17.4877323451691
+   ],
+   "box": [
+    4.70787334442139,
+    1.7909242361784,
+    7.11226844787598,
+    0.663964309692383,
+    2.58197084069252,
+    0.385038414001465
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 57.0,
+   "name": "sc_col_0",
+   "node": "Buildings/t4",
+   "op": "add_box",
+   "reason": "t4: a 0.6 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    199.675164307363,
+    7.84285220503807,
+    31.0226162876656
+   ],
+   "box": [
+    4.32483625411987,
+    1.92491444945335,
+    -6.42261552810669,
+    0.16,
+    1.85007363557816,
+    0.365016975402832
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 58.0,
+   "name": "sc_col_1",
+   "node": "Buildings/t4",
+   "op": "add_box",
+   "reason": "t4: a 0.1 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    206.282668178549,
+    7.74290542304516,
+    17.1601140887728
+   ],
+   "box": [
+    -2.28266882896423,
+    1.82496766746044,
+    7.43988609313965,
+    1.05530313491821,
+    2.65005770325661,
+    0.440160789489746
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 59.0,
+   "name": "sc_col_2",
+   "node": "Buildings/t4",
+   "op": "add_box",
+   "reason": "t4: a 1.0 x 0.4 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    213.720063287252,
+    7.21053457260132,
+    15.480235535152
+   ],
+   "box": [
+    4.97993278503418,
+    1.31872129440308,
+    10.0197649002075,
+    0.180100479125977,
+    2.63744258880615,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 60.0,
+   "name": "sc_col_0",
+   "node": "Buildings/t5",
+   "op": "add_box",
+   "reason": "t5: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    223.650072653197,
+    7.14949548244476,
+    15.4901042425435
+   ],
+   "box": [
+    -4.95007658004761,
+    1.25768220424652,
+    10.009895324707,
+    0.16,
+    2.51536440849304,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 61.0,
+   "name": "sc_col_1",
+   "node": "Buildings/t5",
+   "op": "add_box",
+   "reason": "t5: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    232.399925947189,
+    6.97112786769867,
+    51.7599565982818
+   ],
+   "box": [
+    2.39992594718933,
+    1.09999072551727,
+    2.95995736122131,
+    0.16,
+    2.19998145103455,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 62.0,
+   "name": "sc_col_0",
+   "node": "Buildings/t6_garage",
+   "op": "add_box",
+   "reason": "t6_garage: a 0.1 x 0.1 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "n_hs_b5_tenth"
+}

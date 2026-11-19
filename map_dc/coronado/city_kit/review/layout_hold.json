@@ -6,7 +6,11 @@
   "n_un_quad",
   "n_un_south",
   "n_un_west",
-  "t_un_*"
+  "t_un_east",
+  "t_un_north",
+  "t_un_quad",
+  "t_un_south",
+  "t_un_west"
  ],
- "why": "Yasin, 20 Nov: 'dont take the campus yet, it is being modified' (the hospital session's university campus)"
+ "why": "Yasin, 20 Nov: 'dont take the campus yet, it is being modified', then 'merge the campus now': the campus taken is claude/sharp-ride-16u9ik's (n_un_ne/nw/se/sw, t_un_campus). Held here: the hospital session's OTHER campus on the same site (n_un_east/north/quad/south/west and its trees), which would overlap it."
 }

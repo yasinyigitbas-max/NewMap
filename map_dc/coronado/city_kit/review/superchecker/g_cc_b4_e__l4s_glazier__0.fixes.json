@@ -1,0 +1,20 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -5.5149998664856,
+    0.0,
+    4.44999980926514
+   ],
+   "base": "prop_wall_shelf",
+   "chosen": true,
+   "cond": "",
+   "kind": "window_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_wall_shelf (2.0 m tall) stands right behind a window]"
+  }
+ ],
+ "scene": "g_cc_b4_e__l4s_glazier__0"
+}

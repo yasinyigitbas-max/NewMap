@@ -625,3 +625,48 @@ func front_row(fl: Dictionary, labels: Array, start: float, run: float, face: St
 		for i in plan.size():
 			if absf(float(plan[i][2]) - cx) < absf(float(plan[best][2]) - cx): best = i
 		return float(pads[best]))
+
+## ---------------------------------------------------------------- land-following ground with level building pads
+## where a building of `folder` stands when its real front is on `front` facing `face`: its outline [x0, z0, x1, z1]
+## (the same arithmetic as bld(), nothing placed), so the ground can be laid before the building
+static func bld_rect(folder: String, front: Vector2, face: String) -> Array:
+	var ab := _near_aabb(folder)
+	var b := Basis(Vector3.UP, deg_to_rad(float(FACE[face])))
+	var c := Vector3(front.x, 0.0, front.y) - (b * Vector3(0, 0, 1)) * ab.end.z
+	var xs: Array[float] = []; var zs: Array[float] = []
+	for lx: float in [ab.position.x, ab.end.x]:
+		for lz: float in [ab.position.z, ab.end.z]:
+			var p := c + b * Vector3(lx, 0, lz); xs.append(p.x); zs.append(p.z)
+	return [xs.min(), zs.min(), xs.max(), zs.max()]
+
+## the ground of an area as lots: level PADS (each [x0, z0, x1, z1] at the highest `base` height found over it, so no
+## corner of the building is below the ground round it) and everything else on `base`; the area is cut along every
+## pad edge into a grid of rectangles (no overlaps, no T-gaps). Returns {lots, pads: [[rect..., h]]}
+static func grid_lots(x0: float, z0: float, x1: float, z1: float, pads: Array, base: Callable) -> Dictionary:
+	var cx: Array[float] = [x0, x1]; var cz: Array[float] = [z0, z1]
+	var ph: Array = []
+	for p: Array in pads:
+		var hi := -1e9
+		for i in 7:
+			for j in 7: hi = maxf(hi, float(base.call(lerpf(float(p[0]), float(p[2]), i / 6.0), lerpf(float(p[1]), float(p[3]), j / 6.0))))
+		ph.append([float(p[0]), float(p[1]), float(p[2]), float(p[3]), hi])
+		for v: float in [float(p[0]), float(p[2])]:
+			if v > x0 and v < x1 and not cx.has(v): cx.append(v)
+		for v2: float in [float(p[1]), float(p[3])]:
+			if v2 > z0 and v2 < z1 and not cz.has(v2): cz.append(v2)
+	cx.sort(); cz.sort()
+	var out: Array = []
+	for i in cx.size() - 1:
+		for j in cz.size() - 1:
+			var mx := (cx[i] + cx[i + 1]) * 0.5; var mz := (cz[j] + cz[j + 1]) * 0.5
+			var fn := base
+			for q: Array in ph:
+				if mx > float(q[0]) and mx < float(q[2]) and mz > float(q[1]) and mz < float(q[3]):
+					var hh: float = q[4]
+					fn = func(_x: float, _z: float) -> float: return hh
+					break
+			out.append([cx[i], cz[j], cx[i + 1], cz[j + 1], fn])
+	return {"lots": out, "pads": ph}
+
+## a point on this piece's ground (x, ground height there, z)
+func gp(x: float, z: float) -> Vector3: return Vector3(x, yf(x, z), z)

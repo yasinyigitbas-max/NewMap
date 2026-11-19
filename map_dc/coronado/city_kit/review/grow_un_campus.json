@@ -1,0 +1,60 @@
+{
+ "_doc": "University campus pieces (claude/sharp-ride-16u9ik, 19 Nov): this session's own table; not integrated into city_grid_layout.json",
+ "rows": [
+  {
+   "piece": "n_un_ne",
+   "pos": [
+    -600.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "campus NE quarter (u -600..-409.2, v -790.8..-600)",
+   "variant": "bus station, university hall and plaza, main quad, library, lecture and science wings, gate caf\u00e9 and bookstore, faculty lot"
+  },
+  {
+   "piece": "n_un_nw",
+   "pos": [
+    -600.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "campus NW quarter (u -790.8..-600, v -790.8..-600)",
+   "variant": "student union at the gate, campus drive with drop-off, art museum and sculpture garden, chapel, west quad with bandstand, humanities and arts wings, visitors' lot"
+  },
+  {
+   "piece": "n_un_se",
+   "pos": [
+    -600.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "campus SE quarter (u -600..-409.2, v -600..-409.2)",
+   "variant": "rec centre and kinesiology wing, intramural field with lights and running loop, four tennis courts, campus garage, stadium walk with game-day kiosk and shuttle shelter"
+  },
+  {
+   "piece": "n_un_sw",
+   "pos": [
+    -600.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "campus SW quarter (u -790.8..-600, v -600..-409.2)",
+   "variant": "six residence halls round the dorm green on the slope, dining commons, residents' lot, move-in loop, dorm bus stop, rain garden"
+  },
+  {
+   "piece": "t_un_campus",
+   "pos": [
+    -600.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "the whole campus (u/v -790.8..-409.2)",
+   "variant": "hand-placed campus trees (docs/TREE_PLAN.md): 81, in clumps at the edges and round the seating"
+  }
+ ]
+}

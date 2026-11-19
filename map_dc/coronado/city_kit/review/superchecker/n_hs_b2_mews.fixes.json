@@ -1,0 +1,1364 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -52.7999992370605,
+    0.152592495083809,
+    -76.5
+   ],
+   "base": "plant_bougainvillea_mound",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 82.0,
+   "op": "add_collider",
+   "reason": "plant_bougainvillea_mound has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -65.8000030517578,
+    1.11682021617889,
+    -137.800003051758
+   ],
+   "base": "plant_bougainvillea_mound",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 83.0,
+   "op": "add_collider",
+   "reason": "plant_bougainvillea_mound has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -97.1999969482422,
+    0.439311593770981,
+    -77.1999969482422
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 84.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -91.8000030517578,
+    1.38716459274292,
+    -137.800003051758
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 85.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -93.8000030517578,
+    0.462880849838257,
+    -81.1999969482422
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 86.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -56.7999992370605,
+    0.175972580909729,
+    -100.199996948242
+   ],
+   "base": "prop_hose_reel_cart",
+   "cond": "worn",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "move",
+   "reason": "prop_hose_reel_cart is 0.12 m into the ground",
+   "to": [
+    -56.7999992370605,
+    0.298223704099655,
+    -100.199996948242
+   ]
+  },
+  {
+   "at": [
+    -55.0,
+    1.22302186489105,
+    -143.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "worn",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    -55.0,
+    1.34318136074665,
+    -143.0
+   ]
+  },
+  {
+   "at": [
+    -87.332145690918,
+    0.404783546924591,
+    -82.1999969482422
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "move",
+   "reason": "fence_wood_privacy: its low end hangs 0.13 m over the ground",
+   "to": [
+    -87.332145690918,
+    0.246549994945526,
+    -82.1999969482422
+   ]
+  },
+  {
+   "at": [
+    -89.1964263916016,
+    0.418985724449158,
+    -82.1999969482422
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "move",
+   "reason": "fence_wood_privacy: its low end hangs 0.14 m over the ground",
+   "to": [
+    -89.1964263916016,
+    0.246549994945526,
+    -82.1999969482422
+   ]
+  },
+  {
+   "at": [
+    -87.332145690918,
+    0.612493395805359,
+    -106.599998474121
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "move",
+   "reason": "fence_wood_privacy: its low end hangs 0.22 m over the ground",
+   "to": [
+    -87.332145690918,
+    0.358900011777878,
+    -106.599998474121
+   ]
+  },
+  {
+   "at": [
+    -89.1964263916016,
+    0.635433375835419,
+    -106.599998474121
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "move",
+   "reason": "fence_wood_privacy: its low end hangs 0.25 m over the ground",
+   "to": [
+    -89.1964263916016,
+    0.358900011777878,
+    -106.599998474121
+   ]
+  },
+  {
+   "at": [
+    -87.332145690918,
+    1.172891497612,
+    -132.199996948242
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "move",
+   "reason": "fence_wood_privacy: its low end hangs 0.39 m over the ground",
+   "to": [
+    -87.332145690918,
+    0.750025005340576,
+    -132.199996948242
+   ]
+  },
+  {
+   "at": [
+    -89.1964263916016,
+    1.19178199768066,
+    -132.199996948242
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "move",
+   "reason": "fence_wood_privacy: its low end hangs 0.41 m over the ground",
+   "to": [
+    -89.1964263916016,
+    0.750025005340576,
+    -132.199996948242
+   ]
+  },
+  {
+   "at": [
+    -56.71875,
+    0.249556943774223,
+    -111.0
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "fence_sunk",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "move",
+   "reason": "fence_wood_privacy stands 0.37 m into the ground along its whole length",
+   "to": [
+    -56.71875,
+    0.589793176651,
+    -111.0
+   ]
+  },
+  {
+   "at": [
+    -86.4000015258789,
+    0.404783546924591,
+    -82.1999969482422
+   ],
+   "base": "fence_post_privacy",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 19.0,
+   "op": "move",
+   "reason": "fence_post_privacy: its low end hangs 0.13 m over the ground",
+   "to": [
+    -86.4000015258789,
+    0.246549994945526,
+    -82.1999969482422
+   ]
+  },
+  {
+   "at": [
+    -88.264289855957,
+    0.418985724449158,
+    -82.1999969482422
+   ],
+   "base": "fence_post_privacy",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "move",
+   "reason": "fence_post_privacy: its low end hangs 0.14 m over the ground",
+   "to": [
+    -88.264289855957,
+    0.246549994945526,
+    -82.1999969482422
+   ]
+  },
+  {
+   "at": [
+    -86.4000015258789,
+    0.612493395805359,
+    -106.599998474121
+   ],
+   "base": "fence_post_privacy",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "move",
+   "reason": "fence_post_privacy: its low end hangs 0.22 m over the ground",
+   "to": [
+    -86.4000015258789,
+    0.358900011777878,
+    -106.599998474121
+   ]
+  },
+  {
+   "at": [
+    -88.264289855957,
+    0.635433375835419,
+    -106.599998474121
+   ],
+   "base": "fence_post_privacy",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 22.0,
+   "op": "move",
+   "reason": "fence_post_privacy: its low end hangs 0.25 m over the ground",
+   "to": [
+    -88.264289855957,
+    0.358900011777878,
+    -106.599998474121
+   ]
+  },
+  {
+   "at": [
+    -86.4000015258789,
+    1.172891497612,
+    -132.199996948242
+   ],
+   "base": "fence_post_privacy",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 23.0,
+   "op": "move",
+   "reason": "fence_post_privacy: its low end hangs 0.39 m over the ground",
+   "to": [
+    -86.4000015258789,
+    0.750025005340576,
+    -132.199996948242
+   ]
+  },
+  {
+   "at": [
+    -88.264289855957,
+    1.19178199768066,
+    -132.199996948242
+   ],
+   "base": "fence_post_privacy",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 24.0,
+   "op": "move",
+   "reason": "fence_post_privacy: its low end hangs 0.41 m over the ground",
+   "to": [
+    -88.264289855957,
+    0.750025005340576,
+    -132.199996948242
+   ]
+  },
+  {
+   "at": [
+    -57.5999984741211,
+    0.728947639465332,
+    -129.0
+   ],
+   "base": "fence_post_privacy",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 25.0,
+   "op": "move",
+   "reason": "fence_post_privacy: its low end hangs 0.11 m over the ground",
+   "to": [
+    -57.5999984741211,
+    0.589793176651002,
+    -129.0
+   ]
+  },
+  {
+   "at": [
+    -57.5999984741211,
+    0.263156950473785,
+    -111.0
+   ],
+   "base": "fence_post_privacy",
+   "cond": "worn",
+   "kind": "fence_sunk",
+   "mode": "auto",
+   "n": 26.0,
+   "op": "move",
+   "reason": "fence_post_privacy stands 0.36 m into the ground along its whole length",
+   "to": [
+    -57.5999984741211,
+    0.589793176651001,
+    -111.0
+   ]
+  },
+  {
+   "at": [
+    -55.8374977111816,
+    0.249556943774223,
+    -111.0
+   ],
+   "base": "fence_post_privacy",
+   "cond": "worn",
+   "kind": "fence_sunk",
+   "mode": "auto",
+   "n": 27.0,
+   "op": "move",
+   "reason": "fence_post_privacy stands 0.37 m into the ground along its whole length",
+   "to": [
+    -55.8374977111816,
+    0.589793176651001,
+    -111.0
+   ]
+  },
+  {
+   "at": [
+    -96.0,
+    0.426874369382858,
+    -76.0
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -96.3000030517578,
+    0.694227397441864,
+    -104.599998474121
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -96.3000030517578,
+    1.18156087398529,
+    -128.800003051758
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -97.1999969482422,
+    1.072634100914,
+    -124.199996948242
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -97.1999969482422,
+    1.41149246692657,
+    -137.800003051758
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -97.1999969482422,
+    0.776048362255096,
+    -109.800003051758
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -97.1999969482422,
+    0.509146273136139,
+    -85.1999969482422
+   ],
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -97.1999969482422,
+    0.643146812915802,
+    -99.8000030517578
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -97.1999969482422,
+    0.338086009025574,
+    -63.7999992370605
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -77.5999984741211,
+    0.354396909475327,
+    -84.1999969482422
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 28.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.0 m from a wall, 9.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -77.5999984741211,
+    0.529185712337494,
+    -108.599998474121
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 29.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.0 m from a wall, 9.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -77.5999984741211,
+    1.14353919029236,
+    -134.199996948242
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 30.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.0 m from a wall, 9.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -66.4000015258789,
+    0.234227076172829,
+    -82.0
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 31.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.0 m from a wall, 9.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -66.4000015258789,
+    0.330779671669006,
+    -107.099998474121
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 32.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.0 m from a wall, 9.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -66.4000015258789,
+    0.901918888092041,
+    -131.0
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 33.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.0 m from a wall, 9.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -77.5999984741211,
+    0.358556479215622,
+    -85.0
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 34.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.8 m from a wall, 9.2 m from a fence)]"
+  },
+  {
+   "at": [
+    -77.5999984741211,
+    0.542239964008331,
+    -109.400001525879
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 35.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.8 m from a wall, 9.2 m from a fence)]"
+  },
+  {
+   "at": [
+    -77.5999984741211,
+    1.16677963733673,
+    -135.0
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 36.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.8 m from a wall, 9.2 m from a fence)]"
+  },
+  {
+   "at": [
+    -66.4000015258789,
+    0.236042752861977,
+    -82.8000030517578
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 37.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.8 m from a wall, 9.2 m from a fence)]"
+  },
+  {
+   "at": [
+    -66.4000015258789,
+    0.339337944984436,
+    -107.900001525879
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 38.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.8 m from a wall, 9.2 m from a fence)]"
+  },
+  {
+   "at": [
+    -66.4000015258789,
+    0.927255272865295,
+    -131.800003051758
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 39.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.8 m from a wall, 9.2 m from a fence)]"
+  },
+  {
+   "at": [
+    -67.9000015258789,
+    0.247770681977272,
+    -82.0
+   ],
+   "base": "prop_hydrant_red",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "hydrant_nowhere",
+   "mode": "choose",
+   "n": 40.0,
+   "op": "remove",
+   "reason": "erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hydrant_red stands 2.0 m from any building wall and 3.0 m inside the block]"
+  },
+  {
+   "at": [
+    -94.8988037109375,
+    1.54670459032059,
+    -143.0
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 75.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -87.0165023803711,
+    1.50100670258204,
+    -143.0
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 76.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -80.5490341186523,
+    1.44596538941065,
+    -143.0
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 77.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -75.4083023071289,
+    1.39600423971812,
+    -143.0
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 78.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -68.3466033935547,
+    1.32840387026469,
+    -143.0
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 79.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -60.5805130004883,
+    1.26542504628499,
+    -143.0
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 80.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -52.576545715332,
+    1.23103113969167,
+    -143.0
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 81.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -86.7601172596118,
+    1.57651787996292,
+    -71.8497965377051
+   ],
+   "box": [
+    -0.75020170211792,
+    1.2999678850174,
+    -5.36011576652527,
+    0.939802207946777,
+    2.59993577003479,
+    0.760015048980713
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 87.0,
+   "name": "sc_col_0",
+   "node": "Buildings/th_w1",
+   "op": "add_box",
+   "reason": "th_w1: a 0.9 x 0.7 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -76.9700484271344,
+    1.81654566526413,
+    -72.5897633581597
+   ],
+   "box": [
+    -0.0102353096008301,
+    1.5399956703186,
+    4.42995309829712,
+    0.359985389709473,
+    3.07999134063721,
+    0.26008228302002
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 88.0,
+   "name": "sc_col_1",
+   "node": "Buildings/th_w1",
+   "op": "add_box",
+   "reason": "th_w1: a 0.3 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -77.0401111862027,
+    1.81654566526413,
+    -75.3748323438972
+   ],
+   "box": [
+    2.77483367919922,
+    1.5399956703186,
+    4.35989046096802,
+    0.16,
+    3.07999134063721,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 89.0,
+   "name": "sc_col_2",
+   "node": "Buildings/th_w1",
+   "op": "add_box",
+   "reason": "th_w1: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -76.4400313711053,
+    1.77654093503952,
+    -68.9998485825909
+   ],
+   "box": [
+    -3.6001501083374,
+    1.49999094009399,
+    4.95996999740601,
+    0.239991226196289,
+    2.99998188018799,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 90.0,
+   "name": "sc_col_3",
+   "node": "Buildings/th_w1",
+   "op": "add_box",
+   "reason": "th_w1: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -76.440031930613,
+    1.77654093503952,
+    -81.79989168867
+   ],
+   "box": [
+    9.1998929977417,
+    1.49999094009399,
+    4.95996999740601,
+    0.239991226196289,
+    2.99998188018799,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 91.0,
+   "name": "sc_col_4",
+   "node": "Buildings/th_w1",
+   "op": "add_box",
+   "reason": "th_w1: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -76.439031837484,
+    1.9288726747036,
+    -92.1024551175924
+   ],
+   "box": [
+    -5.49754357337952,
+    1.53997266292572,
+    4.9609694480896,
+    0.94503454208374,
+    3.07994532585144,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 92.0,
+   "name": "sc_col_0",
+   "node": "Buildings/th_w2",
+   "op": "add_box",
+   "reason": "th_w2: a 0.9 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -77.2391047385856,
+    1.9288726747036,
+    -97.3898326785216
+   ],
+   "box": [
+    -0.210165977478027,
+    1.53997266292572,
+    4.16089677810669,
+    0.359772720336914,
+    3.07994532585144,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 93.0,
+   "name": "sc_col_1",
+   "node": "Buildings/th_w2",
+   "op": "add_box",
+   "reason": "th_w2: a 0.3 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -76.4390323620116,
+    1.9288726747036,
+    -104.10224745501
+   ],
+   "box": [
+    6.50224876403809,
+    1.53997266292572,
+    4.9609694480896,
+    0.945035018920898,
+    3.07994532585144,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 94.0,
+   "name": "sc_col_2",
+   "node": "Buildings/th_w2",
+   "op": "add_box",
+   "reason": "th_w2: a 0.9 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -86.7601172596118,
+    2.07999289035797,
+    -121.849796537705
+   ],
+   "box": [
+    -0.75020170211792,
+    1.2999678850174,
+    -5.36011576652527,
+    0.939802207946777,
+    2.59993577003479,
+    0.760015048980713
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 95.0,
+   "name": "sc_col_0",
+   "node": "Buildings/th_w3",
+   "op": "add_box",
+   "reason": "th_w3: a 0.9 x 0.7 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -76.9700484271344,
+    2.32002067565918,
+    -122.58976335816
+   ],
+   "box": [
+    -0.0102353096008301,
+    1.5399956703186,
+    4.42995309829712,
+    0.359985389709473,
+    3.07999134063721,
+    0.26008228302002
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 96.0,
+   "name": "sc_col_1",
+   "node": "Buildings/th_w3",
+   "op": "add_box",
+   "reason": "th_w3: a 0.3 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -77.0401111862027,
+    2.32002067565918,
+    -125.374832343897
+   ],
+   "box": [
+    2.77483367919922,
+    1.5399956703186,
+    4.35989046096802,
+    0.16,
+    3.07999134063721,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 97.0,
+   "name": "sc_col_2",
+   "node": "Buildings/th_w3",
+   "op": "add_box",
+   "reason": "th_w3: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -76.4400313711053,
+    2.28001594543457,
+    -118.999848582591
+   ],
+   "box": [
+    -3.6001501083374,
+    1.49999094009399,
+    4.95996999740601,
+    0.239991226196289,
+    2.99998188018799,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 98.0,
+   "name": "sc_col_3",
+   "node": "Buildings/th_w3",
+   "op": "add_box",
+   "reason": "th_w3: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -76.440031930613,
+    2.28001594543457,
+    -131.79989168867
+   ],
+   "box": [
+    9.1998929977417,
+    1.49999094009399,
+    4.95996999740601,
+    0.239991226196289,
+    2.99998188018799,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 99.0,
+   "name": "sc_col_4",
+   "node": "Buildings/th_w3",
+   "op": "add_box",
+   "reason": "th_w3: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -67.5609676819054,
+    1.76760210096836,
+    -76.4975437902304
+   ],
+   "box": [
+    -5.49754357337952,
+    1.53997266292572,
+    4.9609694480896,
+    0.94503454208374,
+    3.07994532585144,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 100.0,
+   "name": "sc_col_0",
+   "node": "Buildings/th_e1",
+   "op": "add_box",
+   "reason": "th_e1: a 0.9 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -66.7608952430411,
+    1.76760210096836,
+    -71.2101661593566
+   ],
+   "box": [
+    -0.210165977478027,
+    1.53997266292572,
+    4.16089677810669,
+    0.359772720336914,
+    3.07994532585144,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 101.0,
+   "name": "sc_col_1",
+   "node": "Buildings/th_e1",
+   "op": "add_box",
+   "reason": "th_e1: a 0.3 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -67.560968206433,
+    1.76760210096836,
+    -64.4977514528128
+   ],
+   "box": [
+    6.50224876403809,
+    1.53997266292572,
+    4.9609694480896,
+    0.945035018920898,
+    3.07994532585144,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 102.0,
+   "name": "sc_col_2",
+   "node": "Buildings/th_e1",
+   "op": "add_box",
+   "reason": "th_e1: a 0.9 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -57.2398826748035,
+    1.59819158911705,
+    -96.2502014678198
+   ],
+   "box": [
+    -0.75020170211792,
+    1.2999678850174,
+    -5.36011576652527,
+    0.939802207946777,
+    2.59993577003479,
+    0.760015048980713
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 103.0,
+   "name": "sc_col_0",
+   "node": "Buildings/th_e2",
+   "op": "add_box",
+   "reason": "th_e2: a 0.9 x 0.7 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -67.0299515719708,
+    1.83821937441826,
+    -95.5102355032402
+   ],
+   "box": [
+    -0.0102353096008301,
+    1.5399956703186,
+    4.42995309829712,
+    0.359985389709473,
+    3.07999134063721,
+    0.26008228302002
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 104.0,
+   "name": "sc_col_1",
+   "node": "Buildings/th_e2",
+   "op": "add_box",
+   "reason": "th_e2: a 0.3 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -66.9598890563809,
+    1.83821937441826,
+    -92.7251665113776
+   ],
+   "box": [
+    2.77483367919922,
+    1.5399956703186,
+    4.35989046096802,
+    0.16,
+    3.07999134063721,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 105.0,
+   "name": "sc_col_2",
+   "node": "Buildings/th_e2",
+   "op": "add_box",
+   "reason": "th_e2: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -67.5599683141595,
+    1.79821464419365,
+    -99.1001503251446
+   ],
+   "box": [
+    -3.6001501083374,
+    1.49999094009399,
+    4.95996999740601,
+    0.239991226196289,
+    2.99998188018799,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 106.0,
+   "name": "sc_col_3",
+   "node": "Buildings/th_e2",
+   "op": "add_box",
+   "reason": "th_e2: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -67.5599688736672,
+    1.79821464419365,
+    -86.3001072190655
+   ],
+   "box": [
+    9.1998929977417,
+    1.49999094009399,
+    4.95996999740601,
+    0.239991226196289,
+    2.99998188018799,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 107.0,
+   "name": "sc_col_4",
+   "node": "Buildings/th_e2",
+   "op": "add_box",
+   "reason": "th_e2: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -67.5609676819054,
+    2.15976583957672,
+    -125.49754379023
+   ],
+   "box": [
+    -5.49754357337952,
+    1.53997266292572,
+    4.9609694480896,
+    0.94503454208374,
+    3.07994532585144,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 108.0,
+   "name": "sc_col_0",
+   "node": "Buildings/th_e3",
+   "op": "add_box",
+   "reason": "th_e3: a 0.9 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -66.7608952430411,
+    2.15976583957672,
+    -120.210166159357
+   ],
+   "box": [
+    -0.210165977478027,
+    1.53997266292572,
+    4.16089677810669,
+    0.359772720336914,
+    3.07994532585144,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 109.0,
+   "name": "sc_col_1",
+   "node": "Buildings/th_e3",
+   "op": "add_box",
+   "reason": "th_e3: a 0.3 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -67.560968206433,
+    2.15976583957672,
+    -113.497751452813
+   ],
+   "box": [
+    6.50224876403809,
+    1.53997266292572,
+    4.9609694480896,
+    0.945035018920898,
+    3.07994532585144,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 110.0,
+   "name": "sc_col_2",
+   "node": "Buildings/th_e3",
+   "op": "add_box",
+   "reason": "th_e3: a 0.9 x 0.1 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "n_hs_b2_mews"
+}

@@ -1,0 +1,12 @@
+{
+ "area": "hs_b6_tenth", "piece": "n_hs_b6_tenth", "zone": "high street",
+ "rule": "docs/TREE_PLAN.md: high street (pilot), Amber spine, arterials - trees in wells on the shop side, palms alternating on Amber (zone 406 -> about 360); this block's trees stand on grass, a front strip along Tenth and the back yards",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's eighteen builder trees go (a front row on the grass along Tenth every 5-15 m, a row along the back fences with torrey pines by the clotheslines); five come back on their own spots: three of the front row about every other one, and two in the back yards with room round them.",
+ "trees": [
+  {"base": "tree_jacaranda_b", "cond": "normal", "at": [163.8, 9.97, -12.0], "yaw": 0.0, "scale": 0.9, "why": "the front grass along Tenth, 4.7 m from the building: the street row's west tree"},
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [209.2, 10.126, -12.0], "yaw": 90.0, "scale": 0.9, "why": "the same front strip 45 m on: every other tree of the old row"},
+  {"base": "tree_coral_b", "cond": "normal", "at": [236.4, 10.258, -12.0], "yaw": 180.0, "scale": 0.9, "why": "the front strip's east end, 27 m on, nothing round it"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [200.8, 10.126, -36.2], "yaw": 270.0, "scale": 0.85, "why": "the back yards' open middle, 9.6 m from the walls, by the bougainvillea"},
+  {"base": "tree_magnolia_b", "cond": "normal", "at": [236.2, 10.258, -38.8], "yaw": 45.0, "scale": 0.85, "why": "the east back yard, 8.5 m from the house: the yard's tree"}
+ ]
+}

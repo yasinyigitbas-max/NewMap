@@ -1,0 +1,64 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 48 nodes (with every mesh of the buildings), 5492 ground and ground-collision triangles, 638 prop instances, 218 colliders, 19 wear marks are identical in both files
+PROOF differences found between the files: 69 lines only in the old one, 19 only in the new one
+PROOF change #46 add_collider: plant_bird_of_paradise at (-96.00, 0.15, -11.60) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #47 add_collider: plant_bird_of_paradise at (-86.00, 0.15, -11.60) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #48 add_collider: plant_bird_of_paradise at (-63.00, 0.15, -11.60) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #49 add_collider: plant_bird_of_paradise at (-53.50, 0.15, -11.60) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #50 add_collider: plant_bird_of_paradise at (-95.00, 0.26, -52.25) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #51 add_collider: plant_bird_of_paradise at (-85.00, 0.24, -52.25) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #52 add_collider: plant_bird_of_paradise at (-65.00, 0.18, -52.25) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #53 add_collider: plant_bird_of_paradise at (-55.00, 0.15, -52.25) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #54 add_collider: plant_bird_of_paradise at (-87.80, 0.17, -35.80) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #55 add_collider: plant_agave_americana_small at (-91.00, 0.15, -11.60) got a collision shape  [plant_agave_americana_small has no collision: you walk and drive through it]
+PROOF change #56 add_collider: plant_agave_americana_small at (-81.50, 0.15, -11.60) got a collision shape  [plant_agave_americana_small has no collision: you walk and drive through it]
+PROOF change #57 add_collider: plant_agave_americana_small at (-68.50, 0.15, -11.60) got a collision shape  [plant_agave_americana_small has no collision: you walk and drive through it]
+PROOF change #58 add_collider: plant_agave_americana_small at (-58.00, 0.15, -11.60) got a collision shape  [plant_agave_americana_small has no collision: you walk and drive through it]
+PROOF change #59 add_collider: plant_bougainvillea_mound at (-89.80, 0.15, -25.20) got a collision shape  [plant_bougainvillea_mound has no collision: you walk and drive through it]
+PROOF change #60 add_collider: plant_agave_americana at (-82.80, 0.17, -34.80) got a collision shape  [plant_agave_americana has no collision: you walk and drive through it]
+PROOF change #61 add_collider: plant_potted_succulent at (-72.80, 0.16, -32.80) got a collision shape  [plant_potted_succulent has no collision: you walk and drive through it]
+PROOF change #62 add_collider: plant_potted_leafy at (-72.80, 0.15, -27.80) got a collision shape  [plant_potted_leafy has no collision: you walk and drive through it]
+PROOF change #63 add_collider: plant_potted_leafy at (-63.80, 0.15, -42.80) got a collision shape  [plant_potted_leafy has no collision: you walk and drive through it]
+PROOF change #9 move prop_storm_drain_grate: (-55.00, 0.15, -57.00) -> (-55.00, 0.27, -57.00), in 1 tier(s), no collider  [prop_storm_drain_grate is 0.12 m into the ground]
+PROOF change #1 remove tree_coral_a at (-95.00, 0.15, -20.00) removed, in 3 tier(s) and its collider  [tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_jacaranda_a at (-60.00, 0.15, -20.00) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_magnolia_b at (-92.00, 0.16, -30.00) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_magnolia_b at (-82.80, 0.23, -49.20) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove tree_torrey_pine_a at (-56.00, 0.15, -29.00) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove palm_queen_a at (-66.50, 0.15, -17.00) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove tree_jacaranda_b at (-95.80, 0.15, -26.20) removed, in 3 tier(s) and its collider  [tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove tree_torrey_pine_b at (-82.20, 0.18, -39.80) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove prop_trash_receptacle at (-78.60, 0.15, -14.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (30.0 m from a wall, 3.6 m from a fence)]]
+PROOF change #11 remove prop_trash_receptacle at (-83.90, 0.23, -45.50) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (17.5 m from a wall, 8.1 m from a fence)]]
+PROOF change #12 remove prop_trash_receptacle at (-64.30, 0.15, -36.70) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (25.3 m from a wall, 13.8 m from a fence)]]
+PROOF change #13 remove prop_trash_receptacle at (-62.80, 0.15, -47.80) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (14.2 m from a wall, 5.8 m from a fence)]]
+PROOF change #14 remove prop_recycling_receptacle at (-71.40, 0.15, -14.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (29.9 m from a wall, 3.6 m from a fence)]]
+PROOF change #15 remove_decal: one wear mark at (-93.50, 0.22, -46.40) removed  [grime mark lies on mulch]
+PROOF change #16 remove_decal: one wear mark at (-83.00, 0.18, -36.50) removed  [grime mark lies on grass]
+PROOF change #45 remove_decal: one wear mark at (-94.73, 0.29, -57.00) removed  [an oil mark on concrete with no stall, garage or roll-up door near it]
+PROOF note: 'Props/tree_torrey_pine_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_recycling_receptacle_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_receptacle_worn_near' held only listed items and is gone with them
+PROOF 35 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

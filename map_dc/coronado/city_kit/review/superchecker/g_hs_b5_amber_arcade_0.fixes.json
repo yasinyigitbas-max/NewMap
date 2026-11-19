@@ -1,0 +1,80 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -12.0,
+    0.0,
+    -8.00500011444092
+   ],
+   "base": "prop_wall_shelf",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_wall_shelf stands in front of a 1.0 m wide door (a back or side door)]"
+  },
+  {
+   "at": [
+    -10.8999996185303,
+    0.0,
+    -8.00500011444092
+   ],
+   "base": "prop_wall_shelf",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_wall_shelf stands in front of a 1.0 m wide door (a back or side door)]"
+  },
+  {
+   "at": [
+    -12.3999996185303,
+    0.0,
+    6.63000011444092
+   ],
+   "base": "prop_clothes_rack",
+   "chosen": true,
+   "cond": "",
+   "kind": "window_blocked",
+   "mode": "choose",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_clothes_rack (1.7 m tall) stands right behind a window]"
+  },
+  {
+   "at": [
+    -11.1625289916992,
+    0.0,
+    7.05000019073486
+   ],
+   "base": "prop_mannequin",
+   "chosen": true,
+   "cond": "",
+   "kind": "window_blocked",
+   "mode": "choose",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_mannequin (1.7 m tall) stands right behind a window]"
+  },
+  {
+   "at": [
+    -9.65314292907715,
+    0.0,
+    7.05000019073486
+   ],
+   "base": "prop_mannequin",
+   "chosen": true,
+   "cond": "",
+   "kind": "window_blocked",
+   "mode": "choose",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_mannequin (1.7 m tall) stands right behind a window]"
+  }
+ ],
+ "scene": "g_hs_b5_amber_arcade_0"
+}

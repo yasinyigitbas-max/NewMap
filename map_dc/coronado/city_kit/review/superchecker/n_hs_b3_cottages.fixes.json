@@ -1,0 +1,673 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -188.0,
+    -1.81401944160461,
+    213.199996948242
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 47.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -188.0,
+    -1.81632196903229,
+    232.100006103516
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 48.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -188.0,
+    -1.82191908359528,
+    243.800003051758
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 49.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -188.0,
+    -1.83436620235443,
+    268.299987792969
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 50.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -188.0,
+    -1.84355056285858,
+    282.299987792969
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 51.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -188.0,
+    -1.84920299053192,
+    301.299987792969
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 52.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -165.100006103516,
+    -1.84920299053192,
+    308.399993896484
+   ],
+   "base": "plant_bougainvillea_mound",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 53.0,
+   "op": "add_collider",
+   "reason": "plant_bougainvillea_mound has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -142.600006103516,
+    -1.85000002384186,
+    314.399993896484
+   ],
+   "base": "plant_bougainvillea_mound",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 54.0,
+   "op": "add_collider",
+   "reason": "plant_bougainvillea_mound has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -187.600006103516,
+    -1.81632196903229,
+    236.899993896484
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 56.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -187.600006103516,
+    -1.82191908359528,
+    248.600006103516
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 57.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -187.600006103516,
+    -1.83436620235443,
+    273.100006103516
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 58.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -164.600006103516,
+    -1.81401944160461,
+    216.899993896484
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 59.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -163.100006103516,
+    -1.81632196903229,
+    234.399993896484
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 60.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -187.600006103516,
+    -1.84355056285858,
+    294.200012207031
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 61.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -187.600006103516,
+    -1.84920299053192,
+    306.100006103516
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 62.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -143.0,
+    -1.84539806842804,
+    306.5
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "worn",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    -143.0,
+    -1.72542444616556,
+    306.5
+   ]
+  },
+  {
+   "at": [
+    -165.0,
+    -1.81401944160461,
+    213.0
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -160.600006103516,
+    -1.83436620235443,
+    276.899993896484
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -165.0,
+    -1.81632196903229,
+    236.100006103516
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -165.100006103516,
+    -1.84920299053192,
+    304.399993896484
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -165.0,
+    -1.82191908359528,
+    242.5
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -165.0,
+    -1.83436620235443,
+    275.200012207031
+   ],
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -164.100006103516,
+    -1.81401944160461,
+    211.899993896484
+   ],
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -165.0,
+    -1.84355056285858,
+    281.600006103516
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -165.0,
+    -1.84920299053192,
+    310.462432861328
+   ],
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -165.100006103516,
+    -1.82191908359528,
+    251.899993896484
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -189.600006103516,
+    -1.81401944160461,
+    214.550003051758
+   ],
+   "base": "prop_mailbox_post_wood",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "overlap",
+   "mode": "choose",
+   "n": 12.0,
+   "op": "remove",
+   "reason": "erased (in doubt): overlap: no plainly safe place (Yasin: delete when unsure) [prop_mailbox_post_wood stands in the same space as fence_picket_white]"
+  },
+  {
+   "at": [
+    -189.600006103516,
+    -1.81632196903229,
+    233.449996948242
+   ],
+   "base": "prop_mailbox_post_wood",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "overlap",
+   "mode": "choose",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "erased (in doubt): overlap: no plainly safe place (Yasin: delete when unsure) [prop_mailbox_post_wood stands in the same space as fence_picket_white]"
+  },
+  {
+   "at": [
+    -189.600006103516,
+    -1.82191908359528,
+    245.149993896484
+   ],
+   "base": "prop_mailbox_post_wood",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "overlap",
+   "mode": "choose",
+   "n": 14.0,
+   "op": "remove",
+   "reason": "erased (in doubt): overlap: no plainly safe place (Yasin: delete when unsure) [prop_mailbox_post_wood stands in the same space as fence_picket_white]"
+  },
+  {
+   "at": [
+    -189.600006103516,
+    -1.83436620235443,
+    269.649993896484
+   ],
+   "base": "prop_mailbox_post_wood",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "overlap",
+   "mode": "choose",
+   "n": 15.0,
+   "op": "remove",
+   "reason": "erased (in doubt): overlap: no plainly safe place (Yasin: delete when unsure) [prop_mailbox_post_wood stands in the same space as fence_wrought_iron]"
+  },
+  {
+   "at": [
+    -189.600006103516,
+    -1.84355056285858,
+    283.649993896484
+   ],
+   "base": "prop_mailbox_post_wood",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "overlap",
+   "mode": "choose",
+   "n": 16.0,
+   "op": "remove",
+   "reason": "erased (in doubt): overlap: no plainly safe place (Yasin: delete when unsure) [prop_mailbox_post_wood stands in the same space as fence_picket_white]"
+  },
+  {
+   "at": [
+    -189.600006103516,
+    -1.84920299053192,
+    302.649993896484
+   ],
+   "base": "prop_mailbox_post_wood",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "overlap",
+   "mode": "choose",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "erased (in doubt): overlap: no plainly safe place (Yasin: delete when unsure) [prop_mailbox_post_wood stands in the same space as fence_picket_white]"
+  },
+  {
+   "at": [
+    -187.600006103516,
+    -1.81401944160461,
+    218.0
+   ],
+   "base": "plant_bird_of_paradise",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 34.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [plant_bird_of_paradise: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -148.193405151367,
+    -1.80201935768127,
+    219.519287109375
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building c1_garage",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -148.020141601562,
+    -1.80432200431824,
+    230.272430419922
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 19.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building c2_garage",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -148.070907592773,
+    -1.80991911888123,
+    247.556106567383
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building c3_garage",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -147.967834472656,
+    -1.82236623764038,
+    265.947143554688
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building c4_garage",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -147.842636108398,
+    -1.83155059814453,
+    289.727508544922
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 22.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building c5_garage",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -147.945587158203,
+    -1.83720302581787,
+    301.7294921875
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 23.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building c6_garage",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -188.594945592705,
+    -0.254042029380794,
+    220.904972733074
+   ],
+   "box": [
+    3.70497608184814,
+    1.55997741222382,
+    6.7949423789978,
+    0.229970016479492,
+    3.11995482444763,
+    0.189986267089844
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 63.0,
+   "name": "sc_col_0",
+   "node": "Buildings/c1",
+   "op": "add_box",
+   "reason": "c1: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -188.584958392453,
+    -0.255044579505916,
+    213.519925536168
+   ],
+   "box": [
+    -3.68007111549377,
+    1.55897486209869,
+    6.7849555015564,
+    0.179913082122803,
+    3.11794972419739,
+    0.170012512207031
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 64.0,
+   "name": "sc_col_1",
+   "node": "Buildings/c1",
+   "op": "add_box",
+   "reason": "c1: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -146.290006231766,
+    -0.52787041664124,
+    245.875024661775
+   ],
+   "box": [
+    1.62497520446777,
+    1.29404866695404,
+    3.05999994277954,
+    0.290049591064453,
+    2.58809733390808,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 65.0,
+   "name": "sc_col_0",
+   "node": "Buildings/c3_garage",
+   "op": "add_box",
+   "reason": "c3_garage: a 0.3 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -186.342401364982,
+    -0.0434342175722113,
+    266.307819859115
+   ],
+   "box": [
+    -3.19217991828919,
+    1.79093198478222,
+    5.0924015045166,
+    0.663976707458496,
+    2.58200493454933,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 66.0,
+   "name": "sc_col_0",
+   "node": "Buildings/c4",
+   "op": "add_box",
+   "reason": "c4: a 0.6 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -146.640048847199,
+    -0.743559837341307,
+    287.600073923427
+   ],
+   "box": [
+    2.39992594718933,
+    1.09999072551727,
+    2.95995736122131,
+    0.16,
+    2.19998145103455,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 67.0,
+   "name": "sc_col_0",
+   "node": "Buildings/c5_garage",
+   "op": "add_box",
+   "reason": "c5_garage: a 0.1 x 0.1 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "n_hs_b3_cottages"
+}
