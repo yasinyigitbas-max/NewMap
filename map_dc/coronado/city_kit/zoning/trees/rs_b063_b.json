@@ -1,0 +1,81 @@
+{
+ "area": "rs_b063_b",
+ "piece": "s_rs_b063_b",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    506.45,
+    4.372,
+    -42.827
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first of the west face's coral run (old spot and species)"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    506.45,
+    5.073,
+    -69.847
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway 27 m on, the coral run continues"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    506.45,
+    5.925,
+    -93.995
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway 24 m on, the last coral tree; the 12-13 m doubles and the jacaranda go"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    493.55,
+    4.451,
+    -46.864
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway grass, first of the east face's queen palms (old spot and species)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    493.55,
+    5.126,
+    -71.475
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway 24.6 m on, the palm run continues (one species a face: the magnolia here becomes a palm, keeping broadleaf in view under the limit)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    493.55,
+    6.016,
+    -96.42
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "east parkway 25 m on, the last queen palm"
+  }
+ ]
+}
