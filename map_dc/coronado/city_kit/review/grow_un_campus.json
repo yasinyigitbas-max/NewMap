@@ -44,6 +44,17 @@
    "yaw": 0.0,
    "site": "campus SW quarter (u -790.8..-600, v -600..-409.2)",
    "variant": "six residence halls round the dorm green on the slope, dining commons, residents' lot, move-in loop, dorm bus stop, rain garden"
+  },
+  {
+   "piece": "t_un_campus",
+   "pos": [
+    -600.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "the whole campus (u/v -790.8..-409.2)",
+   "variant": "hand-placed campus trees (docs/TREE_PLAN.md): 81, in clumps at the edges and round the seating"
   }
  ]
 }

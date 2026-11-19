@@ -13,6 +13,9 @@ extends SceneTree
 ## GROUND (elevation): the ground follows the land 8 cm over it and eases over 8 m to walk level 6.15 at both streets;
 ## every building on a level pad at the highest ground under it; shared edges with the other quarters (x = 0, z = 0) are
 ## land + 0.08 on both sides.
+## TREES (19 Nov late, Yasin: "remove every tree, fill their wells ... place new trees according to the tree plan"): this
+## piece has NO trees and no tree wells (each well paved over in the material round it); the campus trees are the
+## hand-placed layer t_un_campus (docs/TREE_PLAN.md).
 ## Run with CCF_STAGE=ground first. Draft: never when locked.
 const L := preload("res://tools/city/pilot/pieces/cc_fill_lib.gd")
 const O := Vector3(-600.0, 6.0, -600.0)
@@ -66,8 +69,6 @@ func _run() -> void:
 	c.paint("concrete", 6.0, 84.0, 10.0, 88.0)                  # the loop's link to the south mall
 	c.paint("concrete", 92.0, 150.0, 124.0, 176.0)              # the shaded terrace by the courts
 	c.paint("grass", 0.0, 0.0, 190.8, 190.8)                    # everything else is lawn
-	for wp: Array in [[3.0, 50.0], [3.0, 110.0], [3.0, 170.0], [40.0, 3.0], [100.0, 3.0], [160.0, 3.0], [100.0, 155.0], [116.0, 155.0], [100.0, 171.0], [116.0, 171.0], [154.0, 104.0], [154.0, 132.0]]:
-		c.well(float(wp[0]), float(wp[1]))
 	c.build_floor(L.rect_edges(0.0, 0.0, 190.8, 190.8))
 	if c.stage == "ground": c.finish(); quit(); return
 	c.neighbours([["s_rs_b023_a", Vector3(-400, 6, -600), 0.0], ["s_rs_b023_b", Vector3(-400, 6, -400), -180.0], ["s_rs_b104_a", Vector3(-600, 6, -400), 90.0], ["s_rs_b104_b", Vector3(-400, 6, -400), -90.0],
@@ -84,15 +85,12 @@ func _run() -> void:
 	for br: float in [38.0, 41.0, 44.0, 76.0, 79.0, 82.0]: c.put("prop_bike_rack", "worn", c.gp(br, 9.0), 90.0, "rec centre: bikes of people in for a workout")
 	c.put("prop_poster_case", "worn", c.gp(52.0, 13.0), 180.0, "rec centre: class times and intramural sign-ups by its doors")
 	c.put("prop_vending_soda", "worn", c.gp(70.0, 13.2), 180.0, "rec centre: drinks by the doors")
-	for tb: Array in [[48.0, 7.0, "prop_trash_receptacle"], [72.0, 7.0, "prop_recycling_receptacle"]]: c.put(String(tb[2]), "worn", c.gp(float(tb[0]), float(tb[1])), 0.0, "rec centre: bins by the forecourt")
 	for lp: float in [36.6, 83.4]: c.put("prop_lamp_victorian", "worn", c.gp(lp, 12.0), 0.0, "rec centre: forecourt lamps")
 	c.put("prop_drinking_fountain", "worn", c.gp(84.6, 10.0), 0.0, "rec centre: water for runners coming off the loop")
 	# ---- kinesiology: bikes and a bench
 	for kb: float in [110.0, 113.0]: c.put("prop_bike_rack", "worn", c.gp(kb, 9.0), 90.0, "kinesiology: bikes by its door")
 	c.put("prop_park_bench", "worn", c.gp(136.0, 8.0), 180.0, "kinesiology: a bench facing the mall")
 	# the lawn between them: shade trees and a table
-	for gt: Array in [[92.0, 24.0, "tree_coral_a"], [100.0, 32.0, "tree_jacaranda_b"], [152.0, 24.0, "tree_ficus_a"], [172.0, 30.0, "tree_magnolia_b"], [184.0, 16.0, "tree_coral_b"]]:
-		c.put(String(gt[2]), "normal", c.gp(float(gt[0]), float(gt[1])), c.rr.randf_range(0, 360), "lawns: shade trees in the grass", true, 0.85)
 	c.put("prop_picnic_table", "worn", c.gp(96.0, 18.0), 0.0, "lawn: a table between the gym and the wing")
 	c.put("prop_picnic_table", "worn", c.gp(166.0, 22.0), 0.0, "east lawn: a table in the shade")
 	# ---- the intramural field: lights, sideline benches facing the field, the loop's lamps and bins
@@ -102,14 +100,11 @@ func _run() -> void:
 	for sb: Array in [[40.0, 45.0], [56.0, 45.0], [82.0, 45.0], [98.0, 45.0], [40.0, 127.0], [98.0, 127.0]]:
 		c.put("prop_park_bench", "worn", c.gp(float(sb[0]), float(sb[1])), face(Vector2(float(sb[0]), float(sb[1])), Vector2(float(sb[0]), FC.y)), "field: a sideline bench facing the game")
 	for sp: Array in [[40.0, 70.0], [98.0, 70.0], [40.0, 102.0], [98.0, 102.0]]: c.put("prop_sprinkler_popup", "worn", c.gp(float(sp[0]), float(sp[1])), 0.0, "field: pop-up sprinklers")
-	for bn: Array in [[8.0, 60.0], [8.0, 110.0], [130.0, 86.0]]: c.put("prop_trash_receptacle", "worn", c.gp(float(bn[0]), float(bn[1])), 0.0, "running loop: a bin")
 	c.put("prop_drinking_fountain", "worn", c.gp(8.0, 92.0), 0.0, "running loop: water where it meets the mall")
 	c.put("prop_poster_case", "worn", c.gp(8.0, 80.0), 90.0, "field: the intramural league table")
 	# a few spectators' chairs on the grass outside the loop
 	for sc: Array in [[132.0, 70.0], [132.0, 100.0]]:
 		c.put("prop_park_bench", "worn", c.gp(float(sc[0]), float(sc[1])), -90.0, "field: a bench outside the loop facing the game")
-	for tl: Array in [[134.0, 50.0, "tree_eucalyptus_a"], [134.0, 120.0, "tree_eucalyptus_b"], [134.0, 160.0, "tree_eucalyptus_a"]]:
-		c.put(String(tl[2]), "normal", c.gp(float(tl[0]), float(tl[1])), c.rr.randf_range(0, 360), "lawn: eucalyptus screen the field from the campus drive", true, 0.85)
 	# ---- the tennis courts: four courts in a chain-link cage, gate on the north side, nets, benches
 	chain(c, Vector2(16.0, 146.0), Vector2(49.0, 146.0), "tennis: the cage keeps balls in")
 	chain(c, Vector2(51.0, 146.0), Vector2(88.0, 146.0), "tennis: the cage keeps balls in")
@@ -121,8 +116,6 @@ func _run() -> void:
 		c.put("prop_park_bench", "worn", c.gp(nx + 7.6, 164.0), -90.0, "tennis: players' bench beside the net post, facing the court", false)
 	c.put("prop_trash_receptacle", "worn", c.gp(53.0, 144.6), 0.0, "tennis: a bin by the gate")
 	# ---- the shaded terrace by the courts: trees in wells, tables, bikes
-	for tw: Array in [[100.0, 155.0], [116.0, 155.0], [100.0, 171.0], [116.0, 171.0]]:
-		c.put("tree_ficus_a", "normal", c.gp(float(tw[0]), float(tw[1])), c.rr.randf_range(0, 360), "terrace: ficus in wells shade the tables", true, 0.8)
 	for pt: Array in [[108.0, 158.0], [108.0, 168.0], [96.0, 163.0], [120.0, 163.0]]:
 		c.put("prop_picnic_table", "worn", c.gp(float(pt[0]), float(pt[1])), 90.0, "terrace: tables between games")
 	c.put("prop_bike_rack", "worn", c.gp(94.0, 174.6), 0.0, "terrace: bikes")
@@ -140,36 +133,26 @@ func _run() -> void:
 	# ---- the stadium walk: the game-day kiosk, the shuttle shelter on the street, trees in wells, benches, bins
 	c.put("prop_bus_shelter", "worn", c.gp(188.4, 108.0), 90.0, "stadium walk: the game-day shuttle shelter, facing the east street")
 	c.put("prop_bus_stop_sign", "worn", c.gp(189.4, 102.0), 90.0, "stadium walk: shuttle stop sign")
-	for tw2: Array in [[154.0, 104.0], [154.0, 132.0]]: c.put("tree_magnolia_a", "normal", c.gp(float(tw2[0]), float(tw2[1])), c.rr.randf_range(0, 360), "stadium walk: magnolias in wells", true, 0.85)
 	for sb2: Array in [[160.0, 112.0], [160.0, 128.0]]: c.put("prop_park_bench", "worn", c.gp(float(sb2[0]), float(sb2[1])), 90.0, "stadium walk: a bench facing the kiosk")
-	for tb2: Array in [[166.0, 104.0, "prop_trash_receptacle"], [166.0, 136.0, "prop_recycling_receptacle"], [182.0, 116.0, "prop_trash_receptacle"]]: c.put(String(tb2[2]), "worn", c.gp(float(tb2[0]), float(tb2[1])), 0.0, "stadium walk: bins for game-day crowds")
 	for sl: float in [100.0, 138.0]: c.put("prop_lamp_victorian", "worn", c.gp(186.0, sl), 0.0, "stadium walk: lamps")
 	c.put("prop_newspaper_box_blue", "worn", c.gp(189.6, 130.0), 90.0, "stadium walk: the game-day programme box")
 	for bo: float in [100.0, 104.0, 136.0]: c.put("prop_bollard_steel", "worn", c.gp(147.0, bo), 0.0, "stadium walk: bollards keep cars on the drive")
 	# ---- the corner lawn by the two streets: a grove, a table, the quarter's transformer
-	for ct: Array in [[160.0, 160.0, "tree_torrey_pine_a"], [178.0, 176.0, "tree_torrey_pine_b"], [184.0, 156.0, "tree_coral_a"], [156.0, 182.0, "tree_jacaranda_a"]]:
-		c.put(String(ct[2]), "normal", c.gp(float(ct[0]), float(ct[1])), c.rr.randf_range(0, 360), "corner lawn: a grove by the two streets", true, 0.85)
 	c.put("prop_picnic_table", "worn", c.gp(168.0, 168.0), 0.0, "corner lawn: tailgate picnics before the game")
 	c.put("prop_transformer_substation", "worn", c.gp(186.0, 186.0), 0.0, "the quarter's transformer, in the corner lawn")
 	# lawn west of the courts and the south mall: trees, a bench
-	for wt: Array in [[10.0, 150.0, "tree_magnolia_b"], [10.0, 176.0, "tree_coral_b"], [100.0, 186.0, "tree_jacaranda_b"], [130.0, 186.0, "tree_coral_a"]]:
-		c.put(String(wt[2]), "normal", c.gp(float(wt[0]), float(wt[1])), c.rr.randf_range(0, 360), "lawn: shade trees in the grass", true, 0.85)
 	# ---- the malls (half of each here): palms in wells, lamps
-	for mz: float in [50.0, 110.0, 170.0]: c.put("palm_canary_date_a", "normal", c.gp(3.0, mz), c.rr.randf_range(0, 360), "south mall: date palms in wells, the campus axis", true, 0.9)
-	for mx: float in [40.0, 100.0, 160.0]: c.put("palm_canary_date_b", "normal", c.gp(mx, 3.0), c.rr.randf_range(0, 360), "east mall: date palms in wells, the campus axis", true, 0.9)
 	for ml: float in [20.0, 80.0, 140.0]: c.put("prop_lamp_victorian", "worn", c.gp(4.6, ml), 0.0, "south mall: lamps")
 	for ml2: float in [70.0, 130.0, 186.0]: c.put("prop_lamp_victorian", "worn", c.gp(ml2, 4.6), 0.0, "east mall: lamps")
 	# ---- service sides, bins, roofs, doors
 	for r: Dictionary in [RC, KN]: c.services(r, 2.0, 1, false)
-	c.put("prop_dumpster_3yd_green", "worn", c.gp(138.0, 36.0), 0.0, "kinesiology and rec centre: waste, collected from the campus drive")
-	c.put("prop_dumpster_3yd_blue", "worn", c.gp(138.0, 39.6), 0.0, "recycling, collected from the campus drive")
+	c.put("prop_dumpster_3yd_blue", "worn", c.gp(137.6, 32.6), 0.0, "kinesiology and rec centre: waste and recycling against the wing's back wall")
 	c.roof_plant(RC, [[-6.0, -3.0, "prop_ac_condenser"], [6.0, -3.0, "prop_ac_condenser"], [0.0, 3.0, "prop_vent_box"]], "roof plant (rec centre: the gym's air)")
 	for r3: Dictionary in [RC, KN, KI]:
 		for dr: Array in r3.doors:
 			var q: Vector3 = dr[1]; var o: Vector3 = dr[2]
 			c.grime(Vector2(q.x + o.x * 0.9, q.z + o.z * 0.9), 0.0, 1.6, 1.4, 0.4)
 	# ---- POLISH (19 Nov, Yasin: "run a polish pass ... plenty of life and relevant props")
-	for hy: Array in [[186.0, 72.0], [138.6, 126.0], [90.0, 186.0], [86.0, 34.0]]: c.put("prop_hydrant_red", "worn", c.gp(float(hy[0]), float(hy[1])), 0.0, "fire hydrant within reach of every building")
 	for sd: Array in [[143.0, 100.0], [143.0, 160.0], [175.0, 57.0]]: c.put("prop_storm_drain_grate", "worn", c.gp(float(sd[0]), float(sd[1])), 0.0, "storm drain at the low edge of the drive")
 	c.put("prop_manhole_cover", "worn", c.gp(155.0, 57.0), 0.0, "sewer manhole in the garage drive")
 	for sb: Array in [[56.0, 127.0], [82.0, 127.0], [69.0, 127.0]]:
@@ -180,8 +163,6 @@ func _run() -> void:
 	for vm: Array in [[174.0, 128.0, "prop_vending_soda"], [174.0, 116.0, "prop_vending_snack"]]: c.put(String(vm[2]), "worn", c.gp(float(vm[0]), float(vm[1])), 90.0, "stadium walk: machines beside the kiosk for the queue")
 	c.put("prop_newspaper_box_red", "worn", c.gp(189.6, 133.0), 90.0, "stadium walk: the sports paper")
 	for bk: float in [114.0, 124.0]: c.put("prop_bike_rack", "worn", c.gp(152.0, bk), 0.0, "stadium walk: bikes left for the game")
-	c.put("prop_golf_cart_blue", "worn", c.gp(120.0, 35.5), 90.0, "athletics: the field crew's cart behind the kinesiology wing")
 	for sp: Array in [[160.0, 40.0], [60.0, 186.0]]: c.put("prop_sprinkler_impact", "worn", c.gp(float(sp[0]), float(sp[1])), 0.0, "lawn: sprinkler head")
-	c.put("prop_usps_collection_box", "worn", c.gp(88.0, 8.0), 0.0, "rec centre: a mailbox on the mall")
 	c.finish()
 	quit()
