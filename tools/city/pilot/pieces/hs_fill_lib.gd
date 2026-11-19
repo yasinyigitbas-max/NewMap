@@ -179,6 +179,40 @@ static func steps_x(g: K.Ground, z: float, w: float, x0: float, x1: float, y0: f
 			step_face(g, Vector2(xa, ez), Vector2(xb, ez), func(_x: float, _z: float) -> float: return yb, func(_x: float, _z: float) -> float: return y1, "wall")
 	return x0 + dx * n
 
+## A strip along a neighbour's STEPPED edge (a row of level lots), at the neighbour's exact heights, so the seam is
+## flush; its faces (to my field at `depth`, and between its own segments where the neighbour steps) stand inside my
+## piece. axis "u": the edge runs along u at v = at, the strip spans v at .. at + depth (depth signed); "v": along v at
+## u = at. segs: [[a0, a1, h0, h1], ...] (local heights, linear in a segment). end_faces: also close the strip's two
+## ends against the field. Returns the strip's rects for the caller's field paint holes ("-").
+static func edge_strip(g: K.Ground, axis: String, at: float, depth: float, segs: Array, field: Callable, mat := "grass", end_faces := true) -> Array:
+	var holes: Array = []
+	var lo := minf(at, at + depth); var hi := maxf(at, at + depth); var inner := at + depth
+	var fns: Array = []
+	for s: Array in segs:
+		var a0: float = s[0]; var a1: float = s[1]; var h0: float = s[2]; var h1: float = s[3]
+		var ys := func(x: float, z: float) -> float:
+			var a := x if axis == "u" else z
+			return lerpf(h0, h1, clampf((a - a0) / maxf(a1 - a0, 1e-6), 0.0, 1.0))
+		fns.append(ys)
+		if axis == "u":
+			paint(g, a0, lo, a1, hi, [], mat, ys, 1.0)
+			step_face(g, Vector2(a0, inner), Vector2(a1, inner), ys, field)
+			holes.append([a0, lo, a1, hi, "-"])
+		else:
+			paint(g, lo, a0, hi, a1, [], mat, ys, 1.0)
+			step_face(g, Vector2(inner, a0), Vector2(inner, a1), ys, field)
+			holes.append([lo, a0, hi, a1, "-"])
+	for i in segs.size():
+		var a1: float = segs[i][1]
+		var p := Vector2(a1, at) if axis == "u" else Vector2(at, a1)
+		var q := Vector2(a1, inner) if axis == "u" else Vector2(inner, a1)
+		if i + 1 < segs.size(): step_face(g, p, q, fns[i], fns[i + 1])
+		elif end_faces: step_face(g, p, q, fns[i], field)
+	if end_faces:
+		var a0f: float = segs[0][0]
+		step_face(g, Vector2(a0f, at) if axis == "u" else Vector2(at, a0f), Vector2(a0f, inner) if axis == "u" else Vector2(inner, a0f), fns[0], field)
+	return holes
+
 ## A level pad (a building's or a play area's) in a sloping field: the rect at height y, and a retaining face on each
 ## of its four edges down / up to the field around it (only where they differ by more than 1 cm). The caller leaves a
 ## "-" hole for the rect in its field paint. sides: which edges get a face (an edge against another pad or a ramp is

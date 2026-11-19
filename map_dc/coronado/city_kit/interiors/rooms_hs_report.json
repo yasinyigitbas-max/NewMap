@@ -1,24 +1,14 @@
 {
  "rooms": [
   {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b4_amber_bakery_0.scn",
-   "id": "g_hs_b4_amber_bakery_0",
-   "kind": "bakery",
+   "d": 14.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b5_amber_post_0.scn",
+   "id": "g_hs_b5_amber_post_0",
+   "kind": "bank",
    "lights": 6,
-   "name": "Sunrise Bakery",
-   "props": 30,
-   "w": 8.4
-  },
-  {
-   "d": 9.25,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b4_ocean_skate_0.scn",
-   "id": "g_hs_b4_ocean_skate_0",
-   "kind": "sport",
-   "lights": 6,
-   "name": "Ocean Park Skate",
-   "props": 15,
-   "w": 11.4
+   "name": "Coronado Post Office",
+   "props": 58,
+   "w": 21.4
   }
  ]
 }

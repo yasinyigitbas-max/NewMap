@@ -84,6 +84,22 @@ SHOPS = [
      "block 4: by the bus stop: coffee and pastries for those waiting and for the beach in the morning"),
     ("n_hs_b4_ocean", "skate", "public/pub_skate_shed", (128.0, -0.317, 273.5), 0.0, 0, "sport", "Ocean Park Skate", "teal",
      "block 4: the skate shop of Ocean Park: boards for sale and rent, on its own plaza; the roll-up side is its store"),
+    ("n_hs_b5_amber", "post", "civic/civ_post_office", (28.05, 0.15, 109.82), -90.0, 0, "bank", "Coronado Post Office", "navy",
+     "block 5: the town's post office on its main street, laid out as a counter hall (the bank layout: the counter, the queue, desks; the office layout left 303 m2 bare); its vans on the rear lot"),
+    ("n_hs_b5_amber", "bistro", "commercial/com_bistro", (24.77, 0.15, 128.19), -90.0, 0, "restaurant", "Hillside Bistro", "cream",
+     "block 5: dinner at the foot of the hill; its kitchen dumpster behind"),
+    ("n_hs_b5_amber", "corner", "commercial/com_orange_corner", (24.77, 0.15, 141.29), -90.0, 0, "ice_cream", "Scoops", "sun",
+     "block 5: ice cream by the paseo, on the families' way from the hill park down to Amber"),
+    ("n_hs_b5_amber", "corner", "commercial/com_orange_corner", (24.77, 0.15, 141.29), -90.0, 1, "cleaners", "Bay Cleaners", "teal",
+     "block 5: the dry cleaner the hill's households walk down to"),
+    ("n_hs_b5_amber", "arcade", "commercial/com_orange_arcade_block", (25.15, 0.15, 164.0), -90.0, 0, "clothes", "Orange Grove", "teal",
+     "block 5: a boutique under the arches, at the bus stop"),
+    ("n_hs_b5_amber", "arcade", "commercial/com_orange_arcade_block", (25.15, 0.15, 164.0), -90.0, 1, "souvenir", "Island Gifts", "sun",
+     "block 5: visitors waiting for the bus browse under the arches"),
+    ("n_hs_b5_amber", "arcade", "commercial/com_orange_arcade_block", (25.15, 0.15, 164.0), -90.0, 2, "shoes", "Step Lively", "navy",
+     "block 5: the arcade's shoe shop"),
+    ("n_hs_b5_amber", "arcade", "commercial/com_orange_arcade_block", (25.15, 0.15, 164.0), -90.0, 3, "salon", "Arcade Hair", "cream",
+     "block 5: a salon at the quiet end of the arcade toward 11th St"),
 ]
 
 

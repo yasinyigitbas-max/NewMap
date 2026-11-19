@@ -1,6 +1,6 @@
 {
  "_doc": "High street fill (claude/fill-high-street, 19 Nov): which business is behind which door of the new high street",
- "count": 34,
+ "count": 42,
  "rooms": [
   {
    "id": "hs_b1_amber_brick_row_0",
@@ -1249,6 +1249,276 @@
      "facade": "front",
      "along": 2.5,
      "w": 4.4
+    }
+   ]
+  },
+  {
+   "id": "hs_b5_amber_post_0",
+   "piece": "n_hs_b5_amber",
+   "label": "post",
+   "model": "civic/civ_post_office",
+   "pos": [
+    28.05,
+    4.15,
+    109.82
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -10.7,
+    10.7
+   ],
+   "kind": "bank",
+   "name": "Coronado Post Office",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: the town's post office on its main street, laid out as a counter hall (the bank layout: the counter, the queue, desks; the office layout left 303 m2 bare); its vans on the rear lot",
+   "signs": []
+  },
+  {
+   "id": "hs_b5_amber_bistro_0",
+   "piece": "n_hs_b5_amber",
+   "label": "bistro",
+   "model": "commercial/com_bistro",
+   "pos": [
+    24.77,
+    4.15,
+    128.19
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 4.76,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "restaurant",
+   "name": "Hillside Bistro",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: dinner at the foot of the hill; its kitchen dumpster behind",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 11.18
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b5_amber_corner_0",
+   "piece": "n_hs_b5_amber",
+   "label": "corner",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    24.77,
+    4.15,
+    141.29
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -1.08,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "ice_cream",
+   "name": "Scoops",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: ice cream by the paseo, on the families' way from the hill park down to Amber",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "hs_b5_amber_corner_1",
+   "piece": "n_hs_b5_amber",
+   "label": "corner",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    24.77,
+    4.15,
+    141.29
+   ],
+   "yaw": -90.0,
+   "door_index": 1,
+   "door_along": 1.08,
+   "door_w": 1.6,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "cleaners",
+   "name": "Bay Cleaners",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: the dry cleaner the hill's households walk down to",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b5_amber_arcade_0",
+   "piece": "n_hs_b5_amber",
+   "label": "arcade",
+   "model": "commercial/com_orange_arcade_block",
+   "pos": [
+    25.15,
+    4.15,
+    164.0
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -7.58,
+   "door_w": 1.6,
+   "bay": [
+    -12.7,
+    -6.5
+   ],
+   "kind": "clothes",
+   "name": "Orange Grove",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: a boutique under the arches, at the bus stop",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -9.75,
+     "w": 5.68
+    }
+   ]
+  },
+  {
+   "id": "hs_b5_amber_arcade_1",
+   "piece": "n_hs_b5_amber",
+   "label": "arcade",
+   "model": "commercial/com_orange_arcade_block",
+   "pos": [
+    25.15,
+    4.15,
+    164.0
+   ],
+   "yaw": -90.0,
+   "door_index": 1,
+   "door_along": -5.42,
+   "door_w": 1.6,
+   "bay": [
+    -6.5,
+    0.0
+   ],
+   "kind": "souvenir",
+   "name": "Island Gifts",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: visitors waiting for the bus browse under the arches",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.25,
+     "w": 5.68
+    }
+   ]
+  },
+  {
+   "id": "hs_b5_amber_arcade_2",
+   "piece": "n_hs_b5_amber",
+   "label": "arcade",
+   "model": "commercial/com_orange_arcade_block",
+   "pos": [
+    25.15,
+    4.15,
+    164.0
+   ],
+   "yaw": -90.0,
+   "door_index": 2,
+   "door_along": 5.42,
+   "door_w": 1.6,
+   "bay": [
+    0.0,
+    6.5
+   ],
+   "kind": "shoes",
+   "name": "Step Lively",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: the arcade's shoe shop",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.25,
+     "w": 5.68
+    }
+   ]
+  },
+  {
+   "id": "hs_b5_amber_arcade_3",
+   "piece": "n_hs_b5_amber",
+   "label": "arcade",
+   "model": "commercial/com_orange_arcade_block",
+   "pos": [
+    25.15,
+    4.15,
+    164.0
+   ],
+   "yaw": -90.0,
+   "door_index": 3,
+   "door_along": 7.58,
+   "door_w": 1.6,
+   "bay": [
+    6.5,
+    12.7
+   ],
+   "kind": "salon",
+   "name": "Arcade Hair",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: a salon at the quiet end of the arcade toward 11th St",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 9.75,
+     "w": 5.68
     }
    ]
   }
