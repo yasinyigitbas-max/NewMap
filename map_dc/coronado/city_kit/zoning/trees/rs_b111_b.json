@@ -1,0 +1,81 @@
+{
+ "area": "rs_b111_b",
+ "piece": "s_rs_b111_b",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -242.741,
+    6.15,
+    -206.45
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first of the west face's jacaranda run (old spot and species)"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -269.899,
+    6.15,
+    -206.45
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway 27 m on, the jacaranda run continues"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -294.767,
+    6.15,
+    -206.45
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway 25 m on, the last jacaranda (one species a face: the fan palm here becomes a jacaranda)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -245.014,
+    6.15,
+    -193.55
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway grass, first of the east face's fan palms (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -268.961,
+    6.15,
+    -193.55
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway 24 m on, the palm run continues, clear of the no-parking sign (2.9 m)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    -293.149,
+    6.15,
+    -193.55
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "east parkway 24 m on, the last fan palm (one species a face: the coral tree here becomes a palm)"
+  }
+ ]
+}

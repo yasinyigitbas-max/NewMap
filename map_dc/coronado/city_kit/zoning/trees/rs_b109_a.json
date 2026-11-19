@@ -1,0 +1,45 @@
+{
+ "area": "rs_b109_a",
+ "piece": "s_rs_b109_a",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; the in-view limit (8 broadleaf / 12 trees within 60 m) leaves room for 3 here, 1 broadleaf",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -734.852,
+    4.538,
+    -193.55
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass mid-street, the west face's one jacaranda (old spot and species; the only broadleaf room left in view)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    -756.478,
+    4.268,
+    -206.45
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "east parkway grass, first of the east face's fan palms (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -728.752,
+    4.634,
+    -206.45
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east parkway 28 m on, the second fan palm"
+  }
+ ]
+}

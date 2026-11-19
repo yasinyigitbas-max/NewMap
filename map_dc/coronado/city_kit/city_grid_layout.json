@@ -7993,6 +7993,296 @@
    ],
    "yaw": 0.0,
    "from": "trees"
+  },
+  {
+   "piece": "t_rs_b122_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b121_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b120_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b119_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b119_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b118_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b118_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b117_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b117_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b114_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b114_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b113_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b113_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b112_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b112_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b111_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b111_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b110_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b110_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b109_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b109_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b106_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b106_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b105_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b104_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b104_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b103_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b103_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b100_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
   }
  ],
  "coverage": {

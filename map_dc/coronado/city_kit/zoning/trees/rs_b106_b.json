@@ -1,0 +1,105 @@
+{
+ "area": "rs_b106_b",
+ "piece": "s_rs_b106_b",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    453.626,
+    6.237,
+    -406.45
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first of the west face's queen palms (old spot and species)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    433.651,
+    6.4,
+    -406.45
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway 20 m on, the palm run continues (one species a face: the coral tree here becomes a palm)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    407.341,
+    6.703,
+    -406.45
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway 26 m on, the third queen palm"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    382.571,
+    7.042,
+    -406.45
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "west parkway 25 m on, the last queen palm (the magnolia here becomes a palm)"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    455.381,
+    6.226,
+    -393.55
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway grass, first of the east face's coral run (one species a face: the jacaranda here becomes a coral)"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    429.168,
+    6.445,
+    -393.55
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "east parkway 26 m on, the coral run continues (old spot and species)"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    402.337,
+    6.768,
+    -393.55
+   ],
+   "yaw": 318,
+   "scale": 0.95,
+   "why": "east parkway 27 m on, the third coral tree, clear of the globe lamp (2.9 m)"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    380.368,
+    7.073,
+    -393.55
+   ],
+   "yaw": 71,
+   "scale": 0.85,
+   "why": "east parkway 22 m on, the last coral tree; the 9-14 m doubles go"
+  }
+ ]
+}

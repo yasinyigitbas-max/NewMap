@@ -1,0 +1,57 @@
+{
+ "area": "rs_b112_b",
+ "piece": "s_rs_b112_b",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; within the in-view limit (8 broadleaf / 12 trees within 60 m); no tree stays in a well",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -63.607,
+    6.15,
+    -206.45
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first of the west face's jacarandas (old spot and species; the spot before it is 0.9 m from a kerb inlet, the one before that a well, now paved)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -91.892,
+    6.15,
+    -206.45
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway 28 m on, the second jacaranda; the 13-15 m doubles go"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -65.059,
+    6.15,
+    -193.55
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east parkway grass, first of the east face's Torrey pines (old spot and species; the well spot before it is paved)"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -95.366,
+    6.15,
+    -193.55
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway 30 m on, the second pine"
+  }
+ ]
+}

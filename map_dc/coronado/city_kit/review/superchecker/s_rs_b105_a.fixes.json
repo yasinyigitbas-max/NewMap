@@ -1,0 +1,458 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -3.75,
+    0.207844272255898,
+    44.5
+   ],
+   "base": "prop_bus_stop_sign",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 27.0,
+   "op": "move",
+   "reason": "prop_bus_stop_sign hangs 0.08 m over what is under it",
+   "to": [
+    -3.75,
+    0.125346463886019,
+    44.5
+   ]
+  },
+  {
+   "at": [
+    -4.05000019073486,
+    0.205153256654739,
+    53.6083755493164
+   ],
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -4.05000019073486,
+    0.429985463619232,
+    77.6083755493164
+   ],
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -4.05000019073486,
+    0.73196542263031,
+    101.608375549316
+   ],
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -4.05000019073486,
+    0.324767529964447,
+    67.6083755493164
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -4.05000019073486,
+    0.599181473255157,
+    91.6083755493164
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -4.05000019073486,
+    0.928764462471008,
+    115.608375549316
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    4.05000019073486,
+    0.107150003314018,
+    34.7462387084961
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    4.05000019073486,
+    0.345999717712402,
+    69.7462387084961
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    4.05000019073486,
+    0.5754314661026,
+    89.7462387084961
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    4.05000019073486,
+    0.90208226442337,
+    113.746238708496
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 19.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    4.05000019073486,
+    0.253225892782211,
+    59.7462387084961
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    4.05000019073486,
+    0.454310089349747,
+    79.7462387084961
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 23.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    4.05000019073486,
+    0.761334538459778,
+    103.746238708496
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 25.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -5.36407327651978,
+    0.402036319176356,
+    68.1445388793945
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 28.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on mulch",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    1.81654127438863,
+    0.683719237645467,
+    103.770309448242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 29.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on mulch",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    1.66597270965576,
+    0.267144205669562,
+    69.6520767211914
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 30.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on mulch",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -2.40000009536743,
+    0.0576154080530008,
+    42.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 31.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    2.40000009536743,
+    0.0575719966242711,
+    42.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 32.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -4.05000019073486,
+    0.205153256654739,
+    53.6083755493164
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "fill_well",
+   "reason": "the well of palm_queen_b: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  },
+  {
+   "at": [
+    -4.05000019073486,
+    0.429985463619232,
+    77.6083755493164
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "fill_well",
+   "reason": "the well of palm_queen_b: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  },
+  {
+   "at": [
+    -4.05000019073486,
+    0.73196542263031,
+    101.608375549316
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "fill_well",
+   "reason": "the well of palm_queen_b: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  },
+  {
+   "at": [
+    -4.05000019073486,
+    0.324767529964447,
+    67.6083755493164
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "fill_well",
+   "reason": "the well of tree_jacaranda_b: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  },
+  {
+   "at": [
+    -4.05000019073486,
+    0.599181473255157,
+    91.6083755493164
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "fill_well",
+   "reason": "the well of tree_jacaranda_b: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  },
+  {
+   "at": [
+    -4.05000019073486,
+    0.928764462471008,
+    115.608375549316
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "fill_well",
+   "reason": "the well of tree_jacaranda_b: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  },
+  {
+   "at": [
+    4.05000019073486,
+    0.107150003314018,
+    34.7462387084961
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "fill_well",
+   "reason": "the well of tree_jacaranda_a: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  },
+  {
+   "at": [
+    4.05000019073486,
+    0.345999717712402,
+    69.7462387084961
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "fill_well",
+   "reason": "the well of tree_jacaranda_a: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  },
+  {
+   "at": [
+    4.05000019073486,
+    0.5754314661026,
+    89.7462387084961
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "fill_well",
+   "reason": "the well of tree_jacaranda_a: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  },
+  {
+   "at": [
+    4.05000019073486,
+    0.90208226442337,
+    113.746238708496
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "fill_well",
+   "reason": "the well of tree_jacaranda_a: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  },
+  {
+   "at": [
+    4.05000019073486,
+    0.253225892782211,
+    59.7462387084961
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 22.0,
+   "op": "fill_well",
+   "reason": "the well of palm_queen_a: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  },
+  {
+   "at": [
+    4.05000019073486,
+    0.454310089349747,
+    79.7462387084961
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 24.0,
+   "op": "fill_well",
+   "reason": "the well of palm_queen_a: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  },
+  {
+   "at": [
+    4.05000019073486,
+    0.761334538459778,
+    103.746238708496
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 26.0,
+   "op": "fill_well",
+   "reason": "the well of palm_queen_a: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  }
+ ],
+ "scene": "s_rs_b105_a"
+}
