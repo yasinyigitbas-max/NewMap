@@ -1272,7 +1272,7 @@ void CityCrowd::rage_update(double p_delta) {
 	if (ragers.empty()) return;
 	CityPlayer *pl = player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
 	Camera3D *cam = get_viewport() ? get_viewport()->get_camera_3d() : nullptr;
-	const float T_OUT = 1.2f, T_YELL = 3.4f;
+	const float T_YELL = 3.4f;
 	for (size_t k = 0; k < ragers.size();) {
 		Rager &r = ragers[k];
 		r.t += (float)p_delta;
@@ -1286,7 +1286,7 @@ void CityCrowd::rage_update(double p_delta) {
 		bool has = false;
 		if (r.foe == -1 && pl && pl->is_inside_tree()) { to = pl->get_global_position(); has = true; }
 		else if (r.foe >= 0) { const int j = crowd->find(r.foe); if (j >= 0) { to = Vector3(crowd->x[j], crowd->y[j], crowd->z[j]); has = true; } }
-		if (has && r.t > T_OUT * 0.8f) crowd->hold(r.walker, true, std::atan2(to.x - at.x, to.z - at.z));   // (he turns to the one who hit him)
+		if (has) crowd->hold(r.walker, true, std::atan2(to.x - at.x, to.z - at.z));   // (locked on the one who hit him from the first moment: Yasin, "they should lock into us or their aggressor as soon as the crash happens")
 		if (r.t < T_YELL) { k++; continue; }
 		if (r.foe == -1) {
 			const bool on_foot = pl && pl->is_visible_in_tree() && !pl->is_frozen();
