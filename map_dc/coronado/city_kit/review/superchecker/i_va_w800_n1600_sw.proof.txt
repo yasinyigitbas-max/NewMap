@@ -1,0 +1,48 @@
+PROOF compared: 133 nodes (with every mesh of the buildings), 2338 ground and ground-collision triangles, 570 prop instances, 215 colliders, 407 wear marks are identical in both files
+PROOF differences found between the files: 51 lines only in the old one, 12 only in the new one
+PROOF change #8 move prop_meter_electric: (-71.60, 1.20, 96.02) -> (-71.00, 1.20, 96.02), in 1 tier(s) and its collider  [moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 25 cm from a apt door of devanning_shed (services keep 35 cm off)]]
+PROOF change #9 remove prop_lot_light_pole at (-38.00, 0.15, 70.00) removed, in 3 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_lot_light_pole stands in front of a roll-up door of packing_shed]]
+PROOF change #11 remove prop_trash_cart_black at (-34.60, 0.15, 33.57) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (3.2 m from a wall, 25.2 m from a fence)]]
+PROOF change #12 remove prop_trash_cart_blue at (-31.90, 0.15, 36.50) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (4.8 m from a wall, 29.1 m from a fence)]]
+PROOF change #13 remove prop_trash_cart_blue at (-34.77, 0.15, 35.01) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (4.6 m from a wall, 26.2 m from a fence)]]
+PROOF change #14 remove prop_trash_receptacle at (-37.80, 0.15, 13.31) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (3.5 m from a wall, 13.2 m from a fence)]]
+PROOF change #15 remove prop_trash_receptacle at (-39.59, 0.15, 52.80) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (4.8 m from a wall, 37.2 m from a fence)]]
+PROOF change #16 remove prop_hydrant_red at (-68.31, 0.15, 69.54) removed, in 1 tier(s) and its collider  [erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hydrant_red stands 3.0 m from any building wall and 3.0 m inside the block]]
+PROOF change #17 remove prop_picnic_table at (-42.33, 0.15, 59.02) removed, in 1 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]]
+PROOF change #18 remove prop_vending_soda at (-39.48, 0.15, 58.39) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_vending_soda stands on asphalt where vehicles go]]
+PROOF change #30 remove prop_newspaper_box_blue at (-44.00, 0.15, 13.31) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_blue leaves 1.0 m of a 1.8 m wide walk]]
+PROOF change #32 remove prop_usps_collection_box at (-26.00, 0.15, 13.31) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_usps_collection_box leaves 0.9 m of a 1.8 m wide walk]]
+PROOF change #33 remove prop_bike_rack at (-7.70, 0.15, 45.50) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_bike_rack leaves 1.1 m of a 1.8 m wide walk]]
+PROOF change #19 remove_decal: one wear mark at (-8.08, 0.16, 40.00) removed  [oil mark lies on the sidewalk]
+PROOF change #20 remove_decal: one wear mark at (-7.80, 0.16, 34.25) removed  [oil mark lies on the sidewalk]
+PROOF change #21 remove_decal: one wear mark at (-65.81, 0.16, 94.32) removed  [crack mark lies on gravel]
+PROOF change #22 remove_decal: one wear mark at (-41.38, 0.16, 93.36) removed  [crack mark lies on gravel]
+PROOF change #23 remove_decal: one wear mark at (-49.40, 0.16, 96.86) removed  [crack mark lies on gravel]
+PROOF change #24 remove_decal: one wear mark at (-51.90, 0.16, 93.93) removed  [crack mark lies on gravel]
+PROOF change #25 remove_decal: one wear mark at (-60.93, 0.16, 95.31) removed  [crack mark lies on gravel]
+PROOF change #26 remove_decal: one wear mark at (-43.87, 0.16, 98.81) removed  [crack mark lies on gravel]
+PROOF change #27 remove_decal: one wear mark at (-42.57, 0.16, 91.87) removed  [crack mark lies on gravel]
+PROOF change #28 remove_decal: one wear mark at (-61.98, 0.16, 96.15) removed  [crack mark lies on gravel]
+PROOF change #29 remove_decal: one wear mark at (-49.82, 0.16, 90.74) removed  [sealed patch mark lies on gravel]
+PROOF change #34 remove_decal: one wear mark at (-46.93, 0.16, 93.82) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #36 add_box: a collision box [-3.81753265857697, 1.42064321041107, 8.04999685287476, 0.20498064994812, 2.84128642082214, 1.14000705718994] for a column of Buildings/hfs_office  [hfs_office: a 0.2 x 1.1 m column or post of the building has no collision]
+PROOF change #37 add_box: a collision box [-3.90002298355103, 1.49996709823608, 5.65000009536743, 0.16, 2.99993419647217, 0.16] for a column of Buildings/bayside_chandlery  [bayside_chandlery: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #38 add_box: a collision box [-1.0400550365448, 1.51495468616486, 7.65999674797058, 0.20003656387329, 3.02990937232971, 0.19999937057495] for a column of Buildings/bayside_chandlery  [bayside_chandlery: a 0.2 x 0.2 m column or post of the building has no collision]
+PROOF change #39 add_box: a collision box [-4.96003651618958, 1.51495468616486, 7.65999674797058, 0.20003656387329, 3.02990937232971, 0.19999937057495] for a column of Buildings/bayside_chandlery  [bayside_chandlery: a 0.2 x 0.2 m column or post of the building has no collision]
+PROOF change #40 add_box: a collision box [-2.10006880760193, 1.49996709823608, 5.65000009536743, 0.16, 2.99993419647217, 0.16] for a column of Buildings/bayside_chandlery  [bayside_chandlery: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #41 add_box: a collision box [3.29989767074585, 1.49999141693115, 8.18481826782227, 1.24003795623779, 2.9999828338623, 0.56980422973633] for a column of Buildings/reefer_repair  [reefer_repair: a 1.2 x 0.5 m column or post of the building has no collision]
+PROOF change #42 add_box: a collision box [8.24988269805908, 1.49999141693115, 8.03992462158203, 0.63988021850586, 2.9999828338623, 0.28001693725586] for a column of Buildings/reefer_repair  [reefer_repair: a 0.6 x 0.2 m column or post of the building has no collision]
+PROOF change #43 add_box: a collision box [-0.65014743804932, 1.09995424747467, -8.08507919311523, 0.34021667480469, 2.19990849494934, 0.37013343811035] for a column of Buildings/reefer_repair  [reefer_repair: a 0.3 x 0.3 m column or post of the building has no collision]
+PROOF change #44 add_box: a collision box [-3.18768787384033, 1.34995639324188, -12.0850081443787, 0.41530517578125, 2.69991278648376, 0.37000659942627] for a column of Buildings/packing_shed  [packing_shed: a 0.4 x 0.3 m column or post of the building has no collision]
+PROOF change #45 add_box: a collision box [8.41983127593994, 1.49999475479126, 12.18470287323, 0.38016036987305, 2.99998950958252, 0.57013038635254] for a column of Buildings/devanning_shed  [devanning_shed: a 0.3 x 0.5 m column or post of the building has no collision]
+PROOF note: 'Props/prop_vending_soda_clean_far' held only listed items and is gone with them
+PROOF note: 'Props/prop_vending_soda_clean_mid' held only listed items and is gone with them
+PROOF note: 'Props/prop_vending_soda_clean_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_picnic_table_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_hydrant_red_rusty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_usps_collection_box_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_receptacle_dirty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_newspaper_box_blue_rusty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_blue_worn_near' held only listed items and is gone with them
+PROOF 35 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

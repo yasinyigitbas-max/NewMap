@@ -1,0 +1,20 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -3.59999990463257,
+    0.0,
+    5.67999982833862
+   ],
+   "base": "prop_waiting_bench",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_waiting_bench stands in front of a 1.0 m wide door (a back or side door)]"
+  }
+ ],
+ "scene": "g_ind_va_w800_n1600_sw__hfs_office__0"
+}
