@@ -40,6 +40,16 @@ class CityPlayer : public CharacterBody3D {
 	float land_t = 0.0f;
 	bool crouch_prev = false; float crouch_t = 9.0f;   // (into and out of the crouch: Crouch_Enter / Crouch_Exit played through)
 	int steps_up = 0;   // (the tests) small heights stepped up
+	// CLIMBING (Yasin: "put climb animation on up to 50 cm, then above that should require a jump, but if our height allows
+	// it we should be able to clinch and pull ourselves up"; "maybe limit it around 2.5 m"): walking into a ledge 24-50 cm
+	// high he climbs onto it (ClimbUp_1m); one 0.5-2.5 m over the ground he jumped from he grabs in the jump and pulls
+	// himself up (ClimbUp_2m); higher, or no room to stand up there: nothing. He is moved up, then over, as the clip plays.
+	int climb = 0;                 // 0 none, 1 onto a low ledge, 2 up a high one (from the jump), 3 a step (8-24 cm: StepUp;
+	                               // Yasin: "make 24 cm step an obvious over step though, he just walked casually over 20 cm")
+	float climb_t = 0.0f, climb_len = 1.0f, jump_y = 0.0f;
+	Vector3 climb_from, climb_to;
+	int climbs_low = 0, climbs_high = 0;
+	bool try_climb(const Vector3 &p_dir);
 	double clock_s = 0.0;
 	Rect2 no_touch[8]; int n_no_touch = 0;   // screen rectangles that are buttons (the Use plate, the phone): not move / look
 	// COMBAT (Yasin: "when phone is swung down in landscape, we should enter combat mode ... tapping the back [throws] a
@@ -86,6 +96,9 @@ public:
 	bool get_combat() const { return combat; }
 	int get_punches() const { return punches; }
 	int get_steps_up() const { return steps_up; }
+	int get_climbs_low() const { return climbs_low; }
+	int get_climbs_high() const { return climbs_high; }
+	bool is_climbing() const { return climb != 0; }
 	void take_hit() { hit_t = 0.0; hits_taken++; }   // a blow taken on his feet (the hit clip)
 	int get_hits_taken() const { return hits_taken; }
 	bool get_crouch() const { return crouch; }
