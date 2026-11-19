@@ -1,4 +1,4 @@
-# Waterfront fill, blocks 1 and 2 (branch claude/fill-waterfront, 19 Nov 2026) - DRAFTS, not locked, waiting for Yasin
+# Waterfront fill, blocks 1 and 2 (branch claude/fill-waterfront, 19 Nov 2026) - LOCKED on Yasin's word ("just lock them if you are done with placements"): the six pieces n_wf_b1w/m/e, n_wf_b2w/m/e and the 35 rooms g_wfa_*; lock test RESULT PASS (502 pieces, 138 files)
 
 Yasin 19 Nov: "two blocks next to water front will be waterfront area, not residental"; on the proposal
 (`proposal_plan.png`): "hotel is good, there arent any landmarks there", "CONSIDER THE ELEVATION". Relayed by the
@@ -109,7 +109,7 @@ Drives: 10 % (foot yard -> lot), 10.6 % (marine yard -> boatyard), under the 12 
 - check_rooms.gd -- --only=g_wfa_: 0 problems in 35 rooms (16 block 1 + 19 block 2).
 - Ground triangles 14.6k / 9.5k / 23.1k (the public lot's stall lines again); props 848 / 720 / 877;
   buildings 9 / 10 / 6; stalls 35 / 0 / 151.
-- Draws: DRAWS_B2
+- Draws (raw cloud preview, not the bake, not the phone, preview cars off, measured before the street railings went in): views 280-516 draws in all, of which block 2 adds 40-175 at eye height (Pier St +174, north street +83, down to the water +92, steep edge +40, the Steps +68) and 231 straight down.
 
 ## Walk-in places, block 2 (19 rooms g_wfa_b2*)
 Bayview Inn (office), The Salty Dog, Shores Holiday Rentals, Sea Breeze Juice, Blue Pelican Bistro, Cove Deli, Cove

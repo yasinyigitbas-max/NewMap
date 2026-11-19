@@ -5,7 +5,7 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
-- 19 Nov (cloud, branch claude/fill-waterfront): WATERFRONT FILL BLOCK 1 built as a draft (n_wf_b1w/m/e + 16 rooms g_wfa_*), not locked, waiting for Yasin before block 2. Read review/fill_wf/README.md (numbers, what is NOT checked).
+- 19 Nov (cloud, branch claude/fill-waterfront): WATERFRONT FILL BLOCKS 1 + 2 built and LOCKED on Yasin's word (n_wf_b1w/m/e, n_wf_b2w/m/e + 35 rooms g_wfa_*). Not yet in city_grid_layout.json (table review/grow_wf_blocks.json for integrate.py); the land fit (lower_land_to_pieces --fit --ease-from) must run with them. Read review/fill_wf/README.md.
 - 19 Nov ~20:00 (PC session): A TRAFFIC CAR THAT IS HIT IS A REAL CAR, ALL C++ (Yasin after the compaction: "act like
   a developer working for rockstars next GTA and tackle the problems"). Read docs/TRAFFIC_PEOPLE_PORT.md section 23.
   Six physical cars (`CityCar`) are made at the start; a moving or parked car of the traffic that the player's car
