@@ -22,11 +22,11 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 MSG
 # pull and push, keeping both sessions' entries when they installed at the same time (resolve.py); up to 6 tries
 for t in 1 2 3 4 5 6; do
-  if ! git pull -q --rebase --autostash origin claude/festive-faraday-20ltx2 >/dev/null 2>&1; then
+  if ! git pull -q --rebase origin claude/festive-faraday-20ltx2 >/dev/null 2>&1; then
     $PY -I tools/city/super/run/resolve.py || { echo "CONFLICT NOT RESOLVED: stopped"; exit 1; }
     GIT_EDITOR=true git rebase --continue >/dev/null 2>&1 || { echo "REBASE NOT FINISHED: stopped"; exit 1; }
   fi
-  git push -q origin claude/festive-faraday-20ltx2 2>/dev/null && break
+  git push -q origin HEAD:claude/festive-faraday-20ltx2 2>/dev/null && break
   sleep 4
 done
 git status -sb | head -1 | grep -q ahead && echo "NOT PUSHED"
