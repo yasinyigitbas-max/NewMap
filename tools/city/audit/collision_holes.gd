@@ -162,7 +162,7 @@ func _finish() -> void:
 			elif int(holes[i][3]) == 2: cross += 1
 			else: walk += 1
 		var c := (lo + hi) * 0.5
-		list.append({"x": snappedf(c.x, 0.1), "z": snappedf(c.y, 0.1), "y": snappedf(sy / g.size(), 0.01), "size_m": [snappedf(hi.x - lo.x + step, 0.1), snappedf(hi.y - lo.y + step, 0.1)], "points": g.size(), "road_points": road, "pavement_points": walk, "crossing_points": cross, "cell": holes[g[0]][4]})
+		list.append({"x": snappedf(c.x, 0.1), "z": snappedf(c.y, 0.1), "y": snappedf(sy / g.size(), 0.01), "size_m": [snappedf(hi.x - lo.x + step, 0.1), snappedf(hi.y - lo.y + step, 0.1)], "points": g.size(), "road_points": road, "pavement_points": walk, "crossing_points": cross, "cell": holes[g[0]][4], "pts": g.map(func(i2): return [snappedf(holes[i2][0], 0.01), snappedf(holes[i2][1], 0.01), snappedf(holes[i2][2], 0.01)])})
 	list.sort_custom(func(a, b): return a.points > b.points)
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT))
 	var lines := PackedStringArray()

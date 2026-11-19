@@ -343,7 +343,7 @@ def cmd_install_room(room, by):
     print('INSTALLED ROOM %s: %d changes; the old file is kept at %s; relocked: %s' % (room, st['changes'], os.path.relpath(keep, L.REPO), locked))
 
 
-def cmd_install(piece, by):
+def cmd_install(piece, by, record=''):
     stamp_p = os.path.join(WORK, piece + '.stamp.json')
     if by != 'Yasin': sys.exit('install needs --by=Yasin: a locked piece changes only with his word, given in the chat')
     if not os.path.exists(stamp_p): sys.exit('no proven copy of %s: run fix first' % piece)
@@ -357,8 +357,11 @@ def cmd_install(piece, by):
     if locked: subprocess.run([sys.executable, '-I', lock, 'unlock', piece, '--by=Yasin'], cwd=L.REPO, check=True)
     shutil.copy2(new, src)
     if locked: subprocess.run([sys.executable, '-I', lock, 'lock', piece, '--by=Yasin'], cwd=L.REPO, check=True)
-    shutil.copy2(os.path.join(WORK, piece + '.applied.json'), os.path.join(REVIEW, piece + '.fixes.json'))
-    shutil.copy2(os.path.join(WORK, piece + '.proof.txt'), os.path.join(REVIEW, piece + '.proof.txt'))
+    # --record=collision (the collision-holes job, 19 Nov): the record goes beside the street sessions' own record as
+    # <piece>.collision.fixes.json / .proof.txt, which stay as they are
+    tag = ('.' + record) if record else ''
+    shutil.copy2(os.path.join(WORK, piece + '.applied.json'), os.path.join(REVIEW, piece + tag + '.fixes.json'))
+    shutil.copy2(os.path.join(WORK, piece + '.proof.txt'), os.path.join(REVIEW, piece + tag + '.proof.txt'))
     # the hand-placed trees of this piece: their built copy becomes the piece t_<area>, with its layout row
     import sc_trees as T
     for ar in T.lists_of_piece(piece):
@@ -388,6 +391,6 @@ if __name__ == '__main__':
         print('LAYOUT %d faults in %s' % (len(fl), os.path.relpath(L.LAYOUT, L.REPO)))
     elif a[0] == 'look': cmd_look(a[1], opt.get('cams', ''))
     elif a[0] == 'shots': cmd_shots(a[1], opt.get('cams', ''), opt.get('top'))
-    elif a[0] == 'install': cmd_install(a[1], opt.get('by', ''))
+    elif a[0] == 'install': cmd_install(a[1], opt.get('by', ''), opt.get('record', ''))
     elif a[0] == 'install-room': cmd_install_room(a[1], opt.get('by', ''))
     else: sys.exit(__doc__)
