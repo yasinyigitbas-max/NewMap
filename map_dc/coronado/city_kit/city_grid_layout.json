@@ -7953,6 +7953,16 @@
    ],
    "yaw": 0.0,
    "from": "trees"
+  },
+  {
+   "piece": "t_rs_b126_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
   }
  ],
  "coverage": {
