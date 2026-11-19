@@ -176,7 +176,7 @@ def main():
     frows = family_rows()
     rows = srows + frows + grow_rows()
     # whole-city pieces built in the grid frame itself (17 Nov): the shore foam along every beach (x_shore_foam.gd)
-    for piece in ("x_shore_foam",):
+    for piece in ("x_shore_foam", "x_wall_feet"):      # x_wall_feet (19 Nov): faces under the growth blocks' wall feet (wall_feet.py)
         if os.path.exists(os.path.join(KIT, "pieces", piece + ".scn")):
             rows.append({"piece": piece, "pos": [0.0, 0.0, 0.0], "yaw": 0.0, "from": "grid frame"})
     gaps = coverage(rows)

@@ -5893,6 +5893,16 @@
    ],
    "yaw": 0.0,
    "from": "grid frame"
+  },
+  {
+   "piece": "x_wall_feet",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grid frame"
   }
  ],
  "coverage": {

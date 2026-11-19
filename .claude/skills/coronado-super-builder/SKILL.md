@@ -68,7 +68,7 @@ check compared a block with the land. Yasin found it by eye. Do not repeat any p
 | `check_life.gd` | pole on asphalt, item on a narrow path, wall item over a door / window, fence end leading nowhere | everything else; with `--only` the neighbours' fences are not loaded |
 | `audit_trees.gd` | trees in hard ground | - |
 | `sink_check.gd` | props against their own ground in STREET pieces (`j_`, `s_`) only | every block; the land |
-| `tools/city/audit/ground_check.py` | piece ground under the land, floating edges beside empty land, jumps between pieces | buildings and props against their own ground; NOT in `checks.sh` |
+| `tools/city/audit/ground_check.py` | piece ground under the land, floating edges beside empty land, jumps between pieces | buildings and props against their own ground; NOT in `checks.sh`. Its "hanging" counts every yard that stands over the land, also the ones with a retaining wall under them: look before calling it a fault (19 Nov: 178 m2 counted, a real gap under 24-41 m of wall, closed by the overlay piece `x_wall_feet`) |
 | `check_rooms.gd` | the indoor kinds listed under "Indoor audit" | whether the shop has what that kind of shop needs; faults of newer kinds in LOCKED rooms print as NOTE and are not counted |
 | lock test | the file equals what was locked | whether what was locked is what Yasin saw |
 Nothing checks, as of 19 Nov: wear marks on the wrong surface in saved pieces, play equipment on asphalt, props and

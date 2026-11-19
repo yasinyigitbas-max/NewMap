@@ -5,6 +5,22 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~10:00 (PC session): THE "FLOATING" EDGES ARE WALLED TERRACES; A FACE UNDER THE WALL FEET (Yasin: "show them to
+  me first", then on the trial picture "Yes, add it"). WHAT ground_check.py "hanging" REALLY IS: a block's yard surface
+  more than 30 cm over the land beside empty land. Of 178 m2 counted, 104 have a wall face of the block down to the
+  land, 56 have their wall as a prop or are a quay / the approved rows r_n, r_s (fence to the land), and the rest a wall
+  that stops short. Measured at the wall FEET of the growth blocks (1,506 m of outer wall): foot more than 15 cm over
+  the land on 24-41 m (by how the 4 m land squares are split), at most 37 cm; the land cannot rise there (0 nodes: a
+  lower piece of ground lies within the same 4 m). NEW: overlay piece `x_wall_feet` (unlocked, like x_shore_foam): 272
+  stretches / 534 m of wall foot in 20 growth blocks get a face from the foot to 30 cm into the land, in the walls' own
+  material, as "ground" meshes (the bake merges them: no draw of their own); 1,088 triangles. Data
+  `zoning/wall_feet.json` from `tools/city/pilot/zoning/wall_feet.py` (measures, decides nothing), builder
+  `pieces/x_wall_feet.gd`, one new row in `city_grid_layout.json` (553 rows; `integrate.py` adds it when it
+  regenerates). No locked piece changed (599 LOCKED ok), the land not changed. Pictures `review/wall_feet_19nov/`.
+  NOT CHECKED: validator / check_life on the whole city (they need the cloud), the runtime bake and the phone with the
+  new piece. Rebuild `x_wall_feet` after any change of the land or of a growth block (wall_feet.py --write, then
+  x_wall_feet.gd). Preview trap met here: two cameras in ONE shots.gd run can leave distance tiers popped on the second
+  picture; take before / after pairs one camera a run.
 - 19 Nov ~08:30 (PC session): THE SHORE AT THE WATERFRONT PIER AND BEACH (Yasin, on the bird's-eye view: "can you erase
   the sand under the pier and that irregularity on the second shot, make it smooth"; then two red lines drawn on the
   picture and "Yes, sand to the lines", "make them approach smoothly like this", "and make the foam follow that line";

@@ -249,3 +249,9 @@ the other agent suggested these
 - [2026-11-19] (two red lines drawn on the waterfront picture; asked whether the sand should reach them: yes) make them approach smoothly like this ... and make the foam follow that line
 
 - [2026-11-19] make the bubbles follow sand better and unifiy it, i can see patches on it
+
+- [2026-11-19] (the two numbers: piece ground under the land, block edges floating) how do we fix these
+
+- [2026-11-19] show them to me first
+
+- [2026-11-19] (asked whether to close the gaps under the walls: yes; shown the trial face under a wall and asked whether to add it as an overlay piece) Yes, add it
