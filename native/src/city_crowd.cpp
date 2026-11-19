@@ -907,13 +907,18 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 					else if (pf.st == 4) { clip = (pf.landed & 1) ? HIT_H : HIT_C; hold = -2.0; token = 2000 + pf.landed; }
 					else if (pf.st == 2) { clip = pf.dodge_dir > 0 ? DL : DR; hold = -2.0; token = 1000 + pf.dodges; }
 					else if (pf.st == 3) { clip = STEP; hold = -1.0; }
+					else if (pf.in_t < (float)l_fight_in) { clip = GUARD; hold = -2.0; token = 6000; }   // (into his guard: played through)
 					else { clip = GUARD; hold = std::max(l_fight_in - 0.03, 0.0); }
 				}
 				for (const Rager &r : ragers) {   // out of his car (getting up from the seat), then yelling, arms going
 					if (r.walker != nb.walker) continue;
 					static const StringName EXIT("ual/Sitting_Exit"), ANGRY("ual/Counter_Angry");
 					speed = 1.0;
+					static const StringName RUN("ual/Sprint_Loop"), RUN_IN("ual/Sprint_Enter"), RUN_OUT("ual/Sprint_Exit");
 					if (r.t < 1.2f) { clip = EXIT; hold = -2.0; token = 7001; }
+					else if (r.chase && r.arrive_t >= 0.0f) { clip = RUN_OUT; hold = -2.0; token = 7003; }
+					else if (r.chase && r.chase_t < 0.5f) { clip = RUN_IN; hold = -2.0; token = 7002; }
+					else if (r.chase) { clip = RUN; hold = -1.0; token = 0; }
 					else { clip = ANGRY; hold = -1.0; token = 0; }
 				}
 				// in the sea: wading while the water is under the chest (his feet on the bottom), then swimming at the
@@ -1226,7 +1231,7 @@ void CityCrowd::player_fight(double p_delta) {
 	if (crowd->mode[i] == pc::M_LINE || crowd->mode[i] == pc::M_STAY) crowd->hold(pf.walker, true, std::atan2(-dir.x, -dir.z));
 	else crowd->face_yaw[i] = std::atan2(-dir.x, -dir.z);
 	if (nb && nb->ped->get_mode() != CityPed::MODE_ANIM) { pf.ai_t = std::min(pf.ai_t, 0.3f); return; }   // (staggering from a blow: nothing else; then he answers at once)
-	pf.st_t += dt; pf.ai_t -= dt;
+	pf.st_t += dt; pf.ai_t -= dt; pf.in_t += dt;
 	if (pf.st == 1) {   // his blow lands at 0.32 s if the player is in reach
 		if (!pf.hit_done && pf.st_t > 0.32f) {
 			pf.hit_done = true;
@@ -1284,10 +1289,28 @@ void CityCrowd::rage_update(double p_delta) {
 		if (has && r.t > T_OUT * 0.8f) crowd->hold(r.walker, true, std::atan2(to.x - at.x, to.z - at.z));   // (he turns to the one who hit him)
 		if (r.t < T_YELL) { k++; continue; }
 		if (r.foe == -1) {
-			// the player on foot, and he sees him (on screen) or is near: combat, locked on him
 			const bool on_foot = pl && pl->is_visible_in_tree() && !pl->is_frozen();
+			Vector3 d = to - at; d.y = 0.0f;
+			const float dist = d.length();
+			if (!on_foot) {   // in his car: he yells by it; a hit and run (driven 60 m off) and he gives up after a while
+				r.chase = false;
+				r.away_t = dist > 60.0f ? r.away_t + (float)p_delta : 0.0f;
+				if (r.away_t > 4.0f) { crowd->hold(r.walker, false, 0.0f); rage_given_up++; ragers.erase(ragers.begin() + k); continue; }
+				k++; continue;
+			}
+			// on foot: he runs after him (seen on screen or within 40 m); the fight starts when he reaches him
 			const bool seen = cam && cam->is_position_in_frustum(at + Vector3(0, 1.0f, 0));
-			if (on_foot && pf.walker < 0 && (seen || at.distance_to(to) < 12.0f)) {
+			if (!r.chase && (seen || dist < 40.0f)) { r.chase = true; r.chase_t = 0.0f; rage_chases++; }
+			if (r.chase) r.chase_t += (float)p_delta;
+			if (r.chase && r.arrive_t < 0.0f && dist < 2.2f) r.arrive_t = 0.0f;   // reached him: the run's end (Sprint_Exit)
+			if (r.arrive_t >= 0.0f) r.arrive_t += (float)p_delta;
+			if (r.chase && r.arrive_t < 0.0f && dist > 1.6f && crowd->mode[i] == pc::M_HELD) {
+				// (into the run: slower while Sprint_Enter plays)
+				const float sp = r.chase_t < 0.5f ? 1.5f + 6.0f * r.chase_t : 4.6f;
+				const float step = std::min(sp * (float)p_delta, dist - 1.4f);
+				crowd->shift_held(i, crowd->x[i] + d.x / dist * step, crowd->z[i] + d.z / dist * step);
+			}
+			if (r.arrive_t > 0.45f && pf.walker < 0) {   // (Yasin: "whenever there is an aggressor in the screen, we should get into the combat mode")
 				const int keep = pf.locks + 1;
 				pf = PFight(); pf.locks = keep;
 				pf.walker = r.walker; pf.angry = true; pf.ai_t = 0.3f;
@@ -1295,6 +1318,7 @@ void CityCrowd::rage_update(double p_delta) {
 				rage_fights++;
 				ragers.erase(ragers.begin() + k); continue;
 			}
+			if (r.chase && dist > 80.0f) { crowd->hold(r.walker, false, 0.0f); rage_given_up++; ragers.erase(ragers.begin() + k); continue; }   // (he got away)
 			k++; continue;
 		}
 		if (r.foe >= 0) {   // the other driver: the two come to blows
@@ -1314,8 +1338,8 @@ Dictionary CityCrowd::fight_stats() const {
 	d["walker"] = pf.walker; d["npc_health"] = pf.hp; d["player_health"] = pf.php; d["angry"] = pf.angry; d["state"] = pf.st;
 	d["landed"] = pf.landed; d["missed"] = pf.missed; d["attacks"] = pf.attacks; d["hits_on_player"] = pf.hits_on_player; d["dodges"] = pf.dodges;
 	d["npc_beaten"] = pf.npc_beaten; d["player_beaten"] = pf.player_beaten; d["locks"] = pf.locks; d["player_down"] = pf.player_down;
-	d["rages"] = rages; d["rage_fights"] = rage_fights; d["rage_npc_fights"] = rage_npc_fights;
-	Array rg; for (const Rager &r : ragers) { Dictionary e; e["walker"] = r.walker; e["t"] = r.t; e["foe"] = r.foe; rg.push_back(e); }
+	d["rages"] = rages; d["rage_fights"] = rage_fights; d["rage_npc_fights"] = rage_npc_fights; d["rage_chases"] = rage_chases; d["rage_given_up"] = rage_given_up;
+	Array rg; for (const Rager &r : ragers) { Dictionary e; e["walker"] = r.walker; e["t"] = r.t; e["foe"] = r.foe; e["chase"] = r.chase; rg.push_back(e); }
 	d["ragers"] = rg;
 	return d;
 }

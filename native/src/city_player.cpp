@@ -154,7 +154,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	if (!fig) return;
 	const float dt = (float)p_delta;
 	sense(p_delta);
-	punch_t += p_delta; hit_t += p_delta;
+	punch_t += p_delta; hit_t += p_delta; combat_t += p_delta; uncombat_t += p_delta;
 	{   // a PC: F fights, J or a left click punches
 		Input *ki = Input::get_singleton();
 		const bool f = ki->is_key_pressed(KEY_F), j = ki->is_key_pressed(KEY_J), m = ki->is_mouse_button_pressed(MOUSE_BUTTON_LEFT) && ki->get_mouse_mode() == Input::MOUSE_MODE_CAPTURED;
@@ -238,8 +238,10 @@ void CityPlayer::_physics_process(double p_delta) {
 		static const StringName HIT("ual/Hit_Chest");
 		if (hit_t < 0.45) { clip = HIT; hold = -2.0; }
 		else if (punch_t < punch_len) { clip = punch_side == 0 ? JAB : CROSS; hold = -2.0; }
+		else if (combat_t < fig->clip_len(GUARD)) { clip = GUARD; hold = -2.0; }   // (into the guard: played through)
 		else { clip = GUARD; hold = std::max(fig->clip_len(GUARD) - 0.03, 0.0); }
 	}
+	else if (uncombat_t < 0.9 && speed < 0.5f) { static const StringName GUARD_OUT("ual/PunchKick_Exit"); clip = GUARD_OUT; hold = -2.0; }   // (out of the guard)
 	else if (crouch) { clip = speed > 0.2f ? CR_FWD : CR_IDLE; cs = speed > 0.2f ? speed / 0.8 : 1.0; }
 	else if (speed > 3.6f) { clip = SPRINT; cs = speed / 3.1; }
 	else if (speed > 2.0f) { clip = JOG; cs = speed / 2.4; }

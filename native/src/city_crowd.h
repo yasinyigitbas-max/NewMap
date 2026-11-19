@@ -131,7 +131,7 @@ private:
 	struct PFight {
 		int walker = -1, hp = 4, php = 8, st = 0, dodge_dir = 1;   // st: 0 guard, 1 a blow, 2 a dodge, 3 stepping in
 		bool angry = false, hit_done = false, player_down = false;
-		float ai_t = 0.0f, st_t = 0.0f, punch_in = -1.0f;
+		float ai_t = 0.0f, st_t = 0.0f, punch_in = -1.0f, in_t = 0.0f;   // (in_t: since he went into his guard: PunchKick_Enter played through)
 		int landed = 0, missed = 0, attacks = 0, hits_on_player = 0, dodges = 0, npc_beaten = 0, player_beaten = 0, locks = 0;
 	} pf;
 	void player_fight(double p_delta);
@@ -140,9 +140,14 @@ private:
 	// moment the player is on foot and sees him: Yasin "whenever there is an aggressor in the screen, we should get into
 	// the combat mode") or the other driver (the two come to blows). foe: -1 the player, a walker id, -3 nobody (the one
 	// who did the hitting: he only gets out)
-	struct Rager { int walker; float t; int foe; };
+	// (Yasin, 20 Nov: "dont make us automatically go out, we should be able to hit and run too, just make them angry, and
+	// if we get out of the car, they chase us and we fight"): while the player stays in his car the driver only yells;
+	// the player driving off (60 m away) is a hit and run: he gives up and walks off; the player on foot: he runs after
+	// him and the fight starts when he reaches him
+	// the run: Sprint_Enter into it, Sprint_Loop, Sprint_Exit as he reaches the player (Yasin: "use enter exit run animations")
+	struct Rager { int walker; float t; int foe; bool chase = false; float away_t = 0.0f, chase_t = 0.0f, arrive_t = -1.0f; };
 	std::vector<Rager> ragers;
-	int rages = 0, rage_fights = 0, rage_npc_fights = 0;
+	int rages = 0, rage_fights = 0, rage_npc_fights = 0, rage_chases = 0, rage_given_up = 0;
 	void rage_update(double p_delta);
 	void end_fight(bool p_release);
 	Dictionary fight_stats() const;
