@@ -13,6 +13,9 @@ the faults"; "remove all of the trees in the area and fill the wells with the ma
                                                       side by side (preview renderer, only this area loaded)
   python -I tools/city/super/sc.py trees <area>       check a hand-written tree list (zoning/trees/<area>.json) and build
                                                       it into a COPY of its piece t_<area> (sc_trees.py, sc_trees.gd)
+  python -I tools/city/super/sc.py check-all [--only=<name start>]
+                                                      "check" on every growth block, one after another (about a minute
+                                                      each); changes nothing; the totals go to OUT/super/find/_all.txt
   python -I tools/city/super/sc.py layout             faults of the city layout file itself (rows without a file, doubles ...)
   python -I tools/city/super/sc.py look <piece> "--cams=name:x,y,z:tx,ty,tz;..."
                                                       plain views of the piece AS IT IS (only its area loaded)
@@ -54,6 +57,39 @@ def cmd_check(piece, say=True):
     import sc_rooms
     sc_rooms.check_piece(piece, ctx, out=FIND, say=say)
     return r
+
+
+def cmd_check_all(only=''):
+    """the check on every growth block of the layout; no piece is changed; needs nobody watching"""
+    import sc_rooms
+    rows = L.load_layout(); pieces = []
+    for r in rows:
+        if r.frm.startswith('grow_') and r.piece not in pieces and r.piece.startswith(only): pieces.append(r.piece)
+    os.makedirs(FIND, exist_ok=True); out = os.path.join(FIND, '_all.txt'); tot = {}; modes = {'auto': 0, 'choose': 0, 'report': 0}; lines = []; bad = []
+    t0 = time.time()
+    for k, p in enumerate(pieces):
+        try:
+            res, ctx = F.find(p, out=FIND, say=False)
+            rooms = sc_rooms.check_piece(p, ctx, out=FIND, say=False)
+        except Exception as e:
+            bad.append((p, str(e)[:160])); print('%3d/%d %-26s STOPPED: %s' % (k + 1, len(pieces), p, str(e)[:100]), flush=True); continue
+        c = dict(res['counts'])
+        for rr in rooms:
+            for kk, v in rr['counts'].items(): c['room:' + kk] = c.get('room:' + kk, 0) + v
+        m = {'auto': 0, 'choose': 0, 'report': 0}
+        for f in res['faults'] + [f for rr in rooms for f in rr['faults']]: m[f['mode']] = m.get(f['mode'], 0) + 1
+        for kk, v in c.items(): tot[kk] = tot.get(kk, 0) + v
+        for kk in modes: modes[kk] += m.get(kk, 0)
+        line = '%-26s %4d findings (%d one right answer, %d a place to choose, %d reported), %d rooms' % (p, sum(m.values()), m['auto'], m['choose'], m['report'], len(rooms))
+        lines.append(line); print('%3d/%d %s  [%.0f min]' % (k + 1, len(pieces), line, (time.time() - t0) / 60), flush=True)
+    with open(out, 'w', encoding='utf-8') as f:
+        f.write('Superchecker, every growth block, %s. Nothing was changed.\n' % time.strftime('%Y-%m-%d %H:%M'))
+        f.write('%d blocks checked, %d stopped with an error.\n' % (len(lines), len(bad)))
+        f.write('Findings: %d with one right answer, %d that need a place chosen by hand, %d reported only.\n\nBY KIND\n' % (modes['auto'], modes['choose'], modes['report']))
+        for kk, v in sorted(tot.items(), key=lambda kv: -kv[1]): f.write('  %-28s %6d\n' % (kk, v))
+        f.write('\nBY BLOCK\n' + '\n'.join(lines) + '\n')
+        if bad: f.write('\nSTOPPED\n' + '\n'.join('%s: %s' % b for b in bad) + '\n')
+    print('CHECK-ALL done: %d blocks in %.0f min; the totals are in %s' % (len(lines), (time.time() - t0) / 60, os.path.relpath(out, L.REPO)))
 
 
 def cmd_fix(piece, fixes_path=None):
@@ -317,8 +353,9 @@ def cmd_install(piece, by):
 if __name__ == '__main__':
     a = [x for x in sys.argv[1:] if not x.startswith('--')]
     opt = dict(x[2:].split('=', 1) for x in sys.argv[1:] if x.startswith('--') and '=' in x)
-    if len(a) < 2 and not (a and a[0] == 'layout'): sys.exit(__doc__)
-    if a[0] == 'layout': a.append('')
+    if len(a) < 2 and not (a and a[0] in ('layout', 'check-all')): sys.exit(__doc__)
+    if a[0] in ('layout', 'check-all'): a.append('')
+    if a[0] == 'check-all': cmd_check_all(opt.get('only', '')); sys.exit(0)
     if a[0] == 'check': cmd_check(a[1])
     elif a[0] == 'fix': sys.exit(0 if cmd_fix(a[1], opt.get('fixes')) else 1)
     elif a[0] == 'fix-room': sys.exit(0 if cmd_fix_room(a[1], opt.get('fixes')) else 1)
