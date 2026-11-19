@@ -1,0 +1,49 @@
+{
+ "_doc": "City-centre fill (claude/fill-city-centre): one row per new piece (n_cc_*), grid frame [u, pad, v]; the pieces are built in the city-centre sample's frame (origin Amber x 7th, pad 6.0). Read by tools/city/pilot/zoning/integrate.py (review/grow_*_blocks.json) into city_grid_layout.json later; NOT run into the shared layout by this session.",
+ "rows": [
+  {
+   "piece": "n_cc_b1_am",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 1 (u -50..-16, v -790.3..-697.5): Amber wall north of c_nw + alley A",
+   "variant": "Amber street wall, office tower on Amber x 6th"
+  },
+  {
+   "piece": "n_cc_b1_n",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 1 (u -140..-50, v -790.8..-740): 6th St row, residents' court, alley C east",
+   "variant": "shops with flats over them, back row on the alley"
+  },
+  {
+   "piece": "n_cc_b1_west",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 1 (u -190.8..-140, v -790.8..-700): C Ave x 6th flats, church, alley B, alley C west",
+   "variant": "corner flats and the downtown church"
+  },
+  {
+   "piece": "n_cc_b1_court",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 1 (u -140..-50, v -740..-700 and u -100..-50, v -700..-609.2): courthouse, garage, law offices",
+   "variant": "courthouse on its square (plan MUST site), district parking garage"
+  }
+ ]
+}
