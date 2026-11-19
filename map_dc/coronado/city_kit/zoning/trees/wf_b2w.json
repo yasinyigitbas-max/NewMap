@@ -1,0 +1,10 @@
+{
+ "area": "wf_b2w", "piece": "n_wf_b2w", "zone": "waterfront",
+ "rule": "docs/TREE_PLAN.md: palms only - spaced palms on the promenade and the median (zone 105 -> about 95)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's twelve builder trees go (six broadleaf: magnolias, jacarandas, corals; six palms); three palms come back on their own spots in the little garden behind the Bayview Inn.",
+ "trees": [
+  {"base": "palm_canary_date_a", "cond": "normal", "at": [300.0, 8.6, 62.0], "yaw": 40.0, "scale": 1.0, "why": "the inn's garden, by the arbor and the white adirondacks where the guests sit: one big canary date palm over the seating"},
+  {"base": "palm_queen_a", "cond": "normal", "at": [300.0, 7.0, 120.0], "yaw": 200.0, "scale": 1.0, "why": "the lower lawn with the park benches and the picnic table, 58 m down: a queen palm for some shade beside the benches"},
+  {"base": "palm_canary_date_b", "cond": "normal", "at": [288.0, 7.0, 136.0], "yaw": 310.0, "scale": 0.9, "why": "the garden's bottom end toward the shops on the promenade (bistro and juice bar 43 m south), by the picnic table and the shade sail: the last palm before the shopfronts"}
+ ]
+}

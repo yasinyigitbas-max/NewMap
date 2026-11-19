@@ -1,0 +1,35 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -0.658999979496002,
+    0.0,
+    -6.33599996566772
+   ],
+   "base": "prop_filing_cabinet",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_filing_cabinet stands in front of a 1.0 m wide door (a back or side door)]"
+  },
+  {
+   "at": [
+    -1.75,
+    0.0,
+    -6.29250001907349
+   ],
+   "base": "prop_office_desk",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_office_desk stands in front of a 1.0 m wide door (a back or side door)]"
+  }
+ ],
+ "scene": "g_wfa_b2w__shores_holiday_rentals__0"
+}
