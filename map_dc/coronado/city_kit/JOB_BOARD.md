@@ -5,8 +5,8 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
-- 19 Nov (cloud, branch `claude/grow-strip`): COMMERCIAL STRIP GROWTH, stage 1 + 2 done, NOTHING LOCKED, WAITING for
-  Yasin's word on the variants. Read `review/grow_strip/README.md`. Six blocks round the strip sample (`m_gr_*`, table
+- 19 Nov (cloud, branch `claude/grow-strip`): COMMERCIAL STRIP GROWTH, stage 1 + 2 done, LOCKED (Yasin 19 Nov: "lock your parts if you
+  are done with them": six m_gr_* pieces + 26 g_strip_* rooms; lock test PASS). Read `review/grow_strip/README.md`. Six blocks round the strip sample (`m_gr_*`, table
   `review/grow_strip_blocks.json`): A car care corner, B used-car lot at the bridge mouth, C neighbourhood centre by
   the houses, D hospital side (urgent care, visitor parking), E motel + 24-hour gym, F boat / RV storage. 26 shop rooms
   (`interiors/assignment_strip.json`, `tools/city/rooms/room_gen_strip.gd`). Ground `zoning/strip_grow_ground.py`

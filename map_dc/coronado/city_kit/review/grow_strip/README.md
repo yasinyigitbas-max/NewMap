@@ -1,4 +1,4 @@
-# Commercial strip growth (18-19 Nov, branch claude/grow-strip) - WAITING FOR YASIN, nothing locked
+# Commercial strip growth (18-19 Nov, branch claude/grow-strip) - LOCKED 19 Nov (Yasin: "lock your parts if you are done with them")
 
 Six new blocks round the locked strip sample (`m_*`, Adela Ave x 3rd / 4th / 5th St, up to Glorietta Blvd), each its
 own builder script (`tools/city/pilot/pieces/m_gr_*.gd`, shared library `strip_grow_lib.gd`), outdoors and indoors
@@ -50,4 +50,5 @@ Baked like the other zones (`bake_runtime.gd --area=522,-1200,200 --nofarground 
 
 ## Checks (19 Nov)
 Validator CHECKS 0 problems, check_life 0 (strip blocks), trees 0 in hard ground, sink 0, indoor checker 0 problems
-in the 26 strip rooms, lock test RESULT PASS. Nothing locked, nothing merged.
+in the 26 strip rooms, lock test RESULT PASS. LOCKED (Yasin 19 Nov): the six m_gr_* pieces (lock.py lock) and the 26
+g_strip_* rooms (lock.py lockfile); lock test RESULT PASS (407 pieces, 45 files). Not merged.
