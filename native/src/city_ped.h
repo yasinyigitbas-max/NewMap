@@ -89,6 +89,10 @@ public:
 	// held on its last frame. A new p_token starts the same clip again (the next blow of a fight).
 	void drive(const Transform3D &p_at, const StringName &p_clip, double p_speed, double p_hold, int p_token = 0);
 	double clip_len(const StringName &p_clip) const;
+	// a clip's hips at a moment of it, read from its own tracks (the figure's own frame, metres): how far the clip itself
+	// carries the body (a climb's rise and travel); and the moment the playing clip is at now
+	Vector3 clip_hips_at(const StringName &p_clip, double p_t) const;
+	double clip_pos() const;
 	StringName current_clip() const { return cur_clip; }
 	int get_mode() const { return mode; }
 	Skeleton3D *skeleton() const { return skel; }   // (the player's bicycle reaches its feet and hands to the pedals and grips)

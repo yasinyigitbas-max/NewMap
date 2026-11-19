@@ -129,7 +129,22 @@ void CityPed::make() {
 }
 
 // Where the get-up clip's figure lies at its start: read from the clip's own tracks, bone by bone (node frame).
+static bool clip_pose_at(Skeleton3D *skel, const Ref<Animation> &a, const Transform3D &skel_in_node, int b_hips, int b_head, double p_t, Vector3 &r_hips, Vector3 &r_head);
 static bool clip_start(Skeleton3D *skel, const Ref<Animation> &a, const Transform3D &skel_in_node, int b_hips, int b_head, Vector3 &r_hips, Vector3 &r_head) {
+	return clip_pose_at(skel, a, skel_in_node, b_hips, b_head, 0.0, r_hips, r_head);
+}
+
+Vector3 CityPed::clip_hips_at(const StringName &p_clip, double p_t) const {
+	if (!anim || !skel || !anim->has_animation(p_clip)) return Vector3();
+	Vector3 hips, head;
+	const int bh = skel->find_bone("Bip01_Pelvis"), bd = skel->find_bone("Bip01_Head");
+	if (!clip_pose_at(skel, anim->get_animation(p_clip), skel_in_node, bh, bd, p_t, hips, head)) return Vector3();
+	return hips;
+}
+
+double CityPed::clip_pos() const { return anim && anim->is_playing() ? anim->get_current_animation_position() : 0.0; }
+
+static bool clip_pose_at(Skeleton3D *skel, const Ref<Animation> &a, const Transform3D &skel_in_node, int b_hips, int b_head, double p_t, Vector3 &r_hips, Vector3 &r_head) {
 	if (a.is_null() || b_hips < 0 || b_head < 0) return false;
 	const int n = skel->get_bone_count();
 	std::vector<Transform3D> loc(n), glob(n);
@@ -139,8 +154,8 @@ static bool clip_start(Skeleton3D *skel, const Ref<Animation> &a, const Transfor
 		if (path.get_subname_count() < 1) continue;
 		const int b = skel->find_bone(path.get_subname(0));
 		if (b < 0) continue;
-		if (a->track_get_type(ti) == Animation::TYPE_POSITION_3D) loc[b].origin = a->position_track_interpolate(ti, 0.0);
-		else if (a->track_get_type(ti) == Animation::TYPE_ROTATION_3D) loc[b].basis = Basis(a->rotation_track_interpolate(ti, 0.0)).scaled_local(loc[b].basis.get_scale());
+		if (a->track_get_type(ti) == Animation::TYPE_POSITION_3D) loc[b].origin = a->position_track_interpolate(ti, p_t);
+		else if (a->track_get_type(ti) == Animation::TYPE_ROTATION_3D) loc[b].basis = Basis(a->rotation_track_interpolate(ti, p_t)).scaled_local(loc[b].basis.get_scale());
 	}
 	for (int b = 0; b < n; b++) { const int par = skel->get_bone_parent(b); glob[b] = (par >= 0 && par < b) ? glob[par] * loc[b] : loc[b]; }
 	r_hips = (skel_in_node * glob[b_hips]).origin; r_head = (skel_in_node * glob[b_head]).origin;

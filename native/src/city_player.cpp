@@ -210,7 +210,7 @@ void CityPlayer::_physics_process(double p_delta) {
 				const float in_off = (hands - pel).dot(-edge_out);   // (how far ahead of his hips the hands are)
 				// hips: under the edge by the hands' height, back from it by their reach; feet: the hips' rest below
 				Vector3 hang = edge_at + Vector3(0, 0.07f - up_off - pel_rest.y, 0) + edge_out * std::max(in_off, 0.2f);
-				climb_from = hang;
+				climb_hang = hang;   // (reached over the climb's first 15 %: walking up to the wall he rises into it, no jump of the body)
 			}
 			hang_set = true;
 		}
@@ -224,8 +224,9 @@ void CityPlayer::_physics_process(double p_delta) {
 			// (Yasin: "the hands rise with the body. They should stay pinned to the ledge's edge until he lets go"): up to
 			// the hips at the edge's height just behind it (the hands held, the arms pushing), then over it and up on top
 			const Vector3 mid = Vector3(edge_at.x, edge_at.y - pel_rest.y - 0.12f, edge_at.z) + edge_out * 0.26f;
-			const float a = ss(0.0f, 0.55f, u), b = ss(0.55f, 1.0f, u);
-			at = climb_from.lerp(mid, a).lerp(climb_to, b);
+			const Vector3 hang = hang_set ? climb_hang : climb_from;
+			const float h0 = ss(0.0f, 0.22f, u), a = ss(0.22f, 0.58f, u), b = ss(0.58f, 1.0f, u);
+			at = climb_from.lerp(hang, h0).lerp(mid, a).lerp(climb_to, b);
 		} else {
 			// (Yasin: "they shouldnt jump up the character so much on the approach, characters body should lift after the
 			// first leg is on the collision"): forward first, the first foot up onto the top (planted there by FootPlant),
@@ -246,31 +247,34 @@ void CityPlayer::_physics_process(double p_delta) {
 			grip_update();
 		}
 		const int climb_kind = climb;
-		if (u >= 1.0f) { climb = 0; airborne = false; apply_floor_snap(); grip_w = 0.0f; grip_update(); settle_t = 0.0f; settle_off = clip_off; }
+		if (u >= 1.0f) { climb = 0; airborne = false; grip_w = 0.0f; grip_update(); settle_t = 0.0f; }
 		speed = 0.0f;
 		// (the high climb: the pull-up, ClimbUp_2m; Yasin tried a leg over the top, ClimbLedge, and chose: "old pull over long
 		// climb was much better, revert to it")
 		static const StringName C_LOW("ual/ClimbUp_1m"), C_HIGH("ual/ClimbUp_2m"), C_STEP("ual/StepUp"), C_VAULT("ual/SafetyVault");
 		const StringName cc = climb_kind == 2 ? C_HIGH : (climb_kind == 3 ? C_STEP : (climb_kind == 4 ? C_VAULT : C_LOW));
 		const double len = fig->clip_len(cc);
-		// the figure placed so its hips are where the climb's path has them: the clip's own displacement (measured from the
-		// last frame's pose) taken off
-		if (u > 0.0f) {
-			Vector3 off = pelvis_world() - fig_drawn_at - pel_rest;
-			clip_off = off;
+		// the figure placed so its hips follow the climb's path: how far the clip itself has carried the hips by now (read
+		// from its tracks at the moment it is playing, not measured: the measured one came a frame late and the figure bobbed
+		// up and down chasing it; Yasin: "stepup jitter is still there, find whats causing it")
+		{
+			const double tc = cur_clip_is(cc) ? fig->clip_pos() : 0.0;
+			const Vector3 carried = fig->clip_hips_at(cc, tc) - fig->clip_hips_at(cc, 0.0);
+			clip_off = Basis(Vector3(0, 1, 0), yaw).xform(carried);
 		}
-		Vector3 fig_at = at - (climb_t > dt * 1.5f ? clip_off : Vector3());
+		Vector3 fig_at = at - clip_off;
 		fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), fig_at), cc, len > 0.0 ? std::min(std::max(len / (double)climb_len, 0.5), 3.0) : 1.0, -2.0);
 		fig_drawn_at = fig_at;
+		if (climb == 0) settle_off = at - fig_at;   // (the move just ended: the ease to Idle starts exactly where the figure stands)
 		if (plant) { const bool on = (climb != 2 && climb != 4) || u > 0.8f; plant->set_active(on); plant->set_influence(on ? 1.0f : 0.0f); plant->fwd = Vector3(std::sin(yaw), 0, std::cos(yaw)); }
 		return;
 	}
 	if (settle_t < 0.45f) {   // just up from a step or climb: he stands a moment (the clip's end fading into Idle), then walks
 		settle_t += dt;
-		const float f = 1.0f - std::min(settle_t / 0.45f, 1.0f);
+		const float s0 = std::min(settle_t / 0.45f, 1.0f), f = 1.0f - s0 * s0 * (3.0f - 2.0f * s0);   // (eased: no step at its start or end)
 		set_velocity(Vector3(0, -0.5f, 0)); move_and_slide(); speed = 0.0f;
 		static const StringName IDLE_S("ual/Idle_Loop");
-		const Vector3 fa = get_global_position() - settle_off * (f * f);
+		const Vector3 fa = get_global_position() - settle_off * f;
 		fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), fa), IDLE_S, 1.0, -1.0);
 		if (plant) { plant->set_active(true); plant->set_influence(1.0f); }
 		return;
@@ -370,7 +374,6 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 	// his stride carried into it
 	Vector3 face; bool has_face = false;
 	for (float hgt : { 0.12f, 0.6f }) {
-		if (hgt > 0.5f && !airborne) break;
 		Ref<PhysicsRayQueryParameters3D> qf = PhysicsRayQueryParameters3D::create(Vector3(p.x, p.y + hgt, p.z), Vector3(p.x, p.y + hgt, p.z) + p_dir * 0.45f, 1);   // (Yasin: "make sure they trigger from really up close": his front 15 cm from it)
 		qf->set_exclude(ex);
 		const Dictionary hf = ss->intersect_ray(qf);
@@ -395,7 +398,8 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 		qb->set_exclude(ex);
 		const Dictionary hb = ss->intersect_ray(qb);
 		const bool beyond_low = !hb.is_empty() && ((Vector3)hb["position"]).y < top.y - 0.25f;
-		const bool fence_h = (!airborne && rise > 0.24f && rise <= 0.5f) || (airborne && rise > 0.24f && rise <= 1.4f);
+		// (Yasin: "lose those jumps at high vault and high climb and trigger them much earlier"): walking or jumping alike
+		const bool fence_h = rise > 0.24f && rise <= 1.4f;
 		if (beyond_low && fence_h) {
 			const Vector3 land = (Vector3)hb["position"] + Vector3(0, 0.03f, 0);
 			Transform3D tl = get_global_transform(); tl.origin = land;
@@ -410,7 +414,7 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 				pel_rest.x = 0.0f; pel_rest.z = 0.0f; pel_rest_set = true;
 				clip_off = Vector3(); fig_drawn_at = p;
 				climb = 4; climb_t = 0.0f; hang_set = true;
-				climb_len = airborne ? 1.05f : 0.9f;
+				climb_len = rise > 0.6f ? 1.05f : 0.9f;
 				climb_from = p;
 				// over the rail: his hips 25 cm over its top, a little past it; then down onto the far side
 				vault_over = Vector3(edge_at.x, top.y + 0.25f - pel_rest.y, edge_at.z) + p_dir * 0.12f;
@@ -422,10 +426,10 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 	}
 	const bool step = !airborne && rise > 0.08f && rise <= 0.24f;
 	const bool low = !airborne && rise > 0.24f && rise <= 0.5f;
-	const bool high = airborne && rise > 0.5f && rise <= 2.5f;
+	const bool high = rise > 0.5f && rise <= 2.5f;   // (no jump needed: walking into it he climbs it)
 	if (!step && !low && !high) return false;
 	// (his place up there: far enough in from the edge that his whole body stands on the top, 45 cm past where its top was found)
-	const Vector3 dest = Vector3(p.x, top.y + 0.03f, p.z) + p_dir * (to_face + 0.45f);
+	const Vector3 dest = Vector3(p.x, top.y + 0.002f, p.z) + p_dir * (to_face + 0.45f);   // (on the top itself: no snap down after)
 	Transform3D td = get_global_transform(); td.origin = dest;
 	if (test_move(td, Vector3(0, 0.05f, 0))) return false;   // (no room to stand up there)
 	{   // the edge: a ray level with the top, from him toward the wall, meets its face; the hands hold there
@@ -438,9 +442,10 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 		edge_out = -p_dir;
 		edge_side = Vector3(0, 1, 0).cross(p_dir).normalized();
 	}
-	// the hips' place over his feet as he stands now, before the climb's clip moves them
+	// the hips' place over his feet as he stands now, before the climb's clip moves them (measured; a guess of 0.95 m
+	// only when the figure gives none: the first climb used to take the guess and jumped 10 cm)
 	pel_rest = pelvis_world() - p; clip_off = Vector3(); fig_drawn_at = p;
-	if (!pel_rest_set || pel_rest.y < 0.5f || pel_rest.y > 1.3f) pel_rest = Vector3(0, 0.95f, 0);
+	if (pel_rest.y < 0.5f || pel_rest.y > 1.3f) pel_rest = Vector3(0, 0.95f, 0);
 	pel_rest.x = 0.0f; pel_rest.z = 0.0f;
 	pel_rest_set = true;
 	climb = step ? 3 : (low ? 1 : 2); climb_t = 0.0f; hang_set = false;
@@ -450,11 +455,21 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 	return true;
 }
 
+bool CityPlayer::cur_clip_is(const StringName &p_clip) const { return fig && StringName(fig->current_clip()) == p_clip; }
+
 Vector3 CityPlayer::pelvis_world() const {
 	Skeleton3D *sk = fig ? fig->skeleton() : nullptr;
 	if (!sk) return get_global_position() + Vector3(0, 0.95f, 0);
 	const int b = sk->find_bone("Bip01_Pelvis");
 	return b >= 0 ? sk->get_global_transform().xform(sk->get_bone_global_pose(b).origin) : get_global_position() + Vector3(0, 0.95f, 0);
+}
+
+// (traces) this frame: the node, where the figure was placed, its pelvis, the clip and its time
+Dictionary CityPlayer::get_frame_log() const {
+	Dictionary d;
+	d["node"] = get_global_position(); d["fig_at"] = fig ? fig->get_global_position() : Vector3(); d["pelvis"] = pelvis_world();
+	d["clip"] = get_clip(); d["climb"] = climb; d["u"] = climb ? climb_t / climb_len : -1.0f; d["settle"] = settle_t; d["clip_off"] = clip_off;
+	return d;
 }
 
 Vector3 CityPlayer::get_grip_now() const { return Vector3(climb ? climb_t / climb_len : -1.0f, grip ? grip->miss[0] : 0.0f, grip ? grip->miss[1] : 0.0f); }
@@ -545,6 +560,7 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_climbs_high"), &CityPlayer::get_climbs_high);
 	ClassDB::bind_method(D_METHOD("get_vaults"), &CityPlayer::get_vaults);
 	ClassDB::bind_method(D_METHOD("get_grip_now"), &CityPlayer::get_grip_now);
+	ClassDB::bind_method(D_METHOD("get_frame_log"), &CityPlayer::get_frame_log);
 	ClassDB::bind_method(D_METHOD("is_climbing"), &CityPlayer::is_climbing);
 	ClassDB::bind_method(D_METHOD("get_grip_weight"), &CityPlayer::get_grip_weight);
 	ClassDB::bind_method(D_METHOD("get_hips_drop"), &CityPlayer::get_hips_drop);

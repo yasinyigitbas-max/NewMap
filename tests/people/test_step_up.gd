@@ -7,8 +7,8 @@ extends SceneTree
 ## in a window:
 ##   godot --path . --rendering-method mobile --resolution 1152x648 --fixed-fps 60 -s res://tests/people/test_step_up.gd [-- --trace]
 ## Lanes, each a thing across his way 3 m ahead: a 20 cm kerb (StepUp), a 45 cm box (ClimbUp_1m, hands on its edge),
-## a 40 cm fence (walking: over it, Vault, a hand on the rail), a 1.6 m wall (walking: stopped; a jump: he pulls himself up,
-## ClimbUp_2m, hands on its edge), a 1.1 m fence (walking: stopped; a jump: over it), a 3 m wall (a jump: too high). After
+## a 40 cm fence (walking: over it, Vault, a hand on the rail), a 1.6 m wall (walking or in a jump: he pulls himself up,
+## ClimbUp_2m, hands on its edge), a 1.1 m fence (walking or in a jump: over it), a 3 m wall (a jump: too high). After
 ## each, he stands a moment (Idle) before he walks on. A gripping hand within 5 cm of its place on the edge. Pictures:
 ## OUT/climb_ledge.png (the high climb), OUT/climb_vault.png (the fence).
 var player: CharacterBody3D
@@ -29,8 +29,8 @@ const LANES := [
 	[0.2, 3.0, "a 20 cm kerb", "step", ""],
 	[0.45, 3.0, "a 45 cm box", "climb", ""],
 	[0.4, 0.08, "a 40 cm fence", "vault", ""],
-	[1.6, 3.0, "a 1.6 m wall", "stop", "climb"],
-	[1.1, 0.08, "a 1.1 m fence", "stop", "vault"],
+	[1.6, 3.0, "a 1.6 m wall", "climb", "climb"],      # (Yasin: "lose those jumps at high vault and high climb")
+	[1.1, 0.08, "a 1.1 m fence", "vault", "vault"],
 	[3.0, 3.0, "a 3 m wall", "stop", "stop"],
 ]
 
@@ -103,7 +103,7 @@ func _judge(what: String, jump: bool) -> void:
 	match what:
 		"step": _check(on_top and clips.has("ual/StepUp") and _settled(), "%s, %s: an obvious step over it (StepUp), feet %.2f m up, then a moment standing (%s)" % [name, how, top_y, str(seq)])
 		"climb":
-			var c := "ual/ClimbUp_2m" if jump else "ual/ClimbUp_1m"
+			var c := "ual/ClimbUp_2m" if h > 0.5 else "ual/ClimbUp_1m"
 			_check(on_top and clips.has(c) and _settled(), "%s, %s: up on it (%s), feet %.2f m up, then a moment standing (%s)" % [name, how, c, top_y, str(seq)])
 		"vault": _check(over and clips.has("ual/SafetyVault") and _settled(), "%s, %s: over it (Vault) to the far side (at z %.2f), then a moment standing (%s)" % [name, how, z, str(seq)])
 		"stop": _check(not on_top and not over, "%s, %s: not up, not over (feet at most %.2f m, at z %.2f)" % [name, how, top_y, z])

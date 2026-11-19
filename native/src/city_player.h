@@ -47,7 +47,7 @@ class CityPlayer : public CharacterBody3D {
 	int climb = 0;                 // 0 none, 1 onto a low ledge, 2 up a high one (from the jump), 3 a step (8-24 cm: StepUp;
 	                               // Yasin: "make 24 cm step an obvious over step though, he just walked casually over 20 cm")
 	float climb_t = 0.0f, climb_len = 1.0f, jump_y = 0.0f;
-	Vector3 climb_from, climb_to;
+	Vector3 climb_from, climb_to, climb_hang;
 	// the hands on the edge (Yasin: "make sure the characters hands follow the edge and clinch to the edge of the surface on
 	// climbs"): the edge's middle (where the wall's face meets the top), the way off it toward him, his left
 	Vector3 edge_at, edge_out, edge_side;
@@ -58,6 +58,7 @@ class CityPlayer : public CharacterBody3D {
 	Vector3 pel_rest, fig_drawn_at, clip_off;
 	bool pel_rest_set = false;
 	Vector3 pelvis_world() const;
+	bool cur_clip_is(const StringName &p_clip) const;
 	float grip_w = 0.0f, grip_miss_most = 0.0f, grip_on_s = 0.0f, grip_tip_most = 0.0f;
 	bool hang_set = false;   // (a high climb: hung from the edge by the clip's own hands, on its first frame)
 	void grip_update();
@@ -125,7 +126,8 @@ public:
 	float get_grip_miss_most() const { return grip_miss_most; }   // the farthest a gripping wrist ended from its point (m)
 	float get_grip_seconds() const { return grip_on_s; }
 	float get_grip_tip_most() const { return grip_tip_most; }
-	Vector3 get_grip_now() const;   // (traces) the climb's progress, the two wrists' miss now   // the farthest a gripping fingertip was over or under the edge's top (m)
+	Vector3 get_grip_now() const;
+	Dictionary get_frame_log() const;   // (traces) the climb's progress, the two wrists' miss now   // the farthest a gripping fingertip was over or under the edge's top (m)
 	Vector3 get_edge_at() const { return edge_at; }
 	Array get_hand_points() const;
 	void take_hit() { hit_t = 0.0; hits_taken++; }   // a blow taken on his feet (the hit clip)
