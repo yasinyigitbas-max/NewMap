@@ -2480,6 +2480,31 @@
    "sha256": "40011566b83dab90e37a1cbc638830d9a03d61e579d49ad152597230427528f8",
    "by": "Yasin",
    "date": "2026-11-19"
+  },
+  "n_un_ne": {
+   "sha256": "09f94603763f891515b3502ca79a3c28b623390d568b812a200e662d27df93d8",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_un_nw": {
+   "sha256": "aad9f563ccfe50062177f2a1b2084343f3b0b7fee044ba0a5034c386140a5d82",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_un_se": {
+   "sha256": "d703825cc914017de0626254869cf64bdc3a469a0b9090cbdf1cd72dc511d654",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_un_sw": {
+   "sha256": "08001c61697ef0e5193381b1d02125b49c1e139fac067454a31fd70aebf593bb",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "t_un_campus": {
+   "sha256": "0a2afccb3f0467c8beb3551f2e56536be59d0e4a203b87ed52f611d3b3ba219d",
+   "by": "Yasin",
+   "date": "2026-11-19"
   }
  },
  "files": {

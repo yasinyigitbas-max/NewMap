@@ -10,6 +10,29 @@ every side has 6 m driveway aprons at the same four places. Built one quarter at
 North-east quarter 6.13..6.30 (a low crown); north-west and south-east flat (6.0..6.3); the SOUTH-WEST quarter falls to
 4.0 m at its corner, with the south and west streets' walks falling 6.15 -> 4.15 along it.
 
+## Land, audit, trees, relock (19 Nov night; Yasin: "write the land. then use super checker in your entire zone and weed
+## out the unnecessary parts, remove every tree, fill their wells ..., place new trees according to the tree plan ... then lock it")
+- LAND WRITTEN (zoning/terrain_grid.npz + game land baked), ONLY INSIDE THE CAMPUS (u/v -792..-408), twice (again after
+  the wells were filled). lower_land_to_pieces --fit also wanted to move 6,987 nodes elsewhere in the city: NOT written
+  (not this zone's call). After: no campus cell with the land less than 5 cm under the ground; ground check 0.
+- TREES: every tree, palm and tree well removed from the four quarters (each well paved in the material round it). New
+  layer t_un_campus (docs/TREE_PLAN.md: own piece, every tree a line with place, species, size, reason): 81 trees (61
+  broadleaf, 20 palms and pines; before: about 165) in clumps at the edges and round the seating, lawns open in the
+  middle; trunks on grass or mulch (1 m round them too), 4 m from walls, 1.5 m from the tennis cage, 6 m apart; at most
+  5 broadleaf / 11 trees within 60 m of any campus street or path point (cap 8 / 12). The malls have no palms now.
+- WEEDED (judgement calls, deleting rather than gambling): lawn chairs that faced nothing (quads, dorm green; the ones
+  facing the bandstand stay), patio sets on the dorm green, maintenance carts parked on lawns, the move-in bin carts,
+  two extra mailboxes, every hydrant (the rule: within 2 m of a wall; mine stood in the open), two benches whose shade
+  went, a storm drain on a walk, roof plant calls that could never place. Bins in the open: moved against a wall
+  (bus-station kiosk, hall, union, arts, kinesiology, dorm stop, dining) or deleted where no wall serves (running loop,
+  stadium walk, dorm green, grove, bandstand, terraces, forecourts); one dumpster deleted (it blocked a door).
+- Checks: ground 0 buried / 0 hanging / 0 steps; validator 0 lines naming n_un or t_un; life 0; trees 1,215 checked, 0
+  in hard ground; sink 0; rooms unchanged (buildings did not move; check 0 earlier); lock test PASS, 501 locked.
+- What these cannot see: tree crowns against walls, fences or each other (trunks only; hence the 4 m / 1.5 m margins);
+  props against walls test the prop's centre only in the builder (the validator uses real footprints prop to prop).
+- LOCKED again: n_un_ne, n_un_nw, n_un_se, n_un_sw, t_un_campus. Pictures: un_top2.jpg (south at the top), un_quad2.jpg,
+  un_green2.jpg (a dorm's back).
+
 ## Polish pass and lock (19 Nov late)
 Polish (Yasin: "plenty of life and relevant props"): hydrants within reach of every building, storm drains and manholes
 on the drives and lots, maintenance carts, more lawn chairs, tables, flower beds and sprinklers on the quads and the dorm
