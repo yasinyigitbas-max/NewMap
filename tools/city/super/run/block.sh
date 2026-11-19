@@ -9,7 +9,7 @@ $PY -I tools/city/super/sc_review.py apply $P $D | tail -1
 for round in 1 2 3 4 5; do
   OUTF=$($PY -I tools/city/super/sc.py fix $P 2>&1)
   # a prop standing twice on the same spot (a doubled fence post): the fixer cannot tell the two apart; leave it as it is
-  DUP=$(echo "$OUTF" | grep "at the same spot" | sed 's/.*REFUSED #\([0-9]*\).*//' | sort -u)
+  DUP=$(echo "$OUTF" | grep "at the same spot" | sed 's/.*REFUSED #\([0-9]*\).*/\1/' | sort -u)
   if [ -n "$DUP" ]; then
     $PY -I -c "
 import json,sys
