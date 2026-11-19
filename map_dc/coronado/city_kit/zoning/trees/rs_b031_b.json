@@ -1,0 +1,45 @@
+{
+ "area": "rs_b031_b",
+ "piece": "s_rs_b031_b",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart; the in-view limit (8 broadleaf / 12 trees within 60 m) is full at the start, so trees only from mid-street",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -193.55,
+    6.521,
+    -864.0
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass mid-street, first of the west face's magnolias (old spot and species; the start of the street is full in view)"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -193.55,
+    7.056,
+    -895.0
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway 31 m on, the second magnolia toward the junction"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -206.45,
+    6.697,
+    -875.0
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east parkway grass, the east face's one tree, a queen palm (light crown), staggered between the west magnolias"
+  }
+ ]
+}
