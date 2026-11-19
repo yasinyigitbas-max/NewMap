@@ -1,4 +1,4 @@
-# Gritty edge growth: variants + pilot area (18 Nov, branch `claude/grow-gritty`) - FOR YASIN, NOTHING LOCKED
+# Gritty edge growth: variants + the whole zone (branch `claude/grow-gritty`) - LOCKED 19 Nov (Yasin: "lock them for now. rest is piece by piece correction")
 
 The gritty sample (`g_ne g_nw g_se g_sw`, `s_grt`, `w_grt`) was locked by Yasin on 17 Nov, so this round grows FROM it.
 Pictures: `shots/` (cloud preview: no shadows; the weathered buildings render about 40 % too dark here; real phone
