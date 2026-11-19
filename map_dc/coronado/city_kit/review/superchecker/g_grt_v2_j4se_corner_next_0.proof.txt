@@ -1,0 +1,6 @@
+PROOF compared: 22 nodes (with every mesh of the buildings), 0 ground and ground-collision triangles, 14 prop instances, 0 colliders, 17 wear marks are identical in both files
+PROOF differences found between the files: 2 lines only in the old one, 2 only in the new one
+PROOF change #3 move prop_poster_case: (-0.04, 0.92, -1.95) -> (-0.08, 0.92, -1.95), in 1 tier(s), no collider  [prop_poster_case reaches 1.5 cm into the wall to the next shop and shows in the next shop]
+PROOF change #4 move prop_poster_case: (-0.04, 0.92, 1.05) -> (-0.08, 0.92, 1.05), in 1 tier(s), no collider  [prop_poster_case reaches 1.5 cm into the wall to the next shop and shows in the next shop]
+PROOF 2 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
