@@ -217,6 +217,12 @@ Stand in the door as a customer, then behind the counter as staff. `check_rooms.
   what it cannot see added to CANNOT_SEE. Tune a threshold on real pictures before trusting its count.
 - Its counts are findings by rule, not truth: the "sure" note of each says when a look is needed.
 - Do not run two Godot processes while one imports (`--import`): import files were reset to defaults that way.
+- Trees: the checker lists every builder tree of a piece to go and its well to be paved; trees come back ONLY from a
+  hand-written list, `zoning/trees/<area>.json`, one line per tree with its reason, after `docs/TREE_PLAN.md`'s rule
+  for that zone. `sc.py trees <area>` checks the list and builds `t_<area>`; `sc_trees.py where` reads a spot first.
+  Never fill a list by a rule or a loop: that is the generator again.
+- Wear marks at strength 0.4-0.55 (grime, tyre marks) hardly show from eye height in the preview: look from above
+  before saying a mark is or is not there.
 
 ## Reporting to Yasin
 - Short and plain. What changed, what is NOT done, what was NOT checked, what needs his word - in the same message as

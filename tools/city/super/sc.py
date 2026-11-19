@@ -11,6 +11,10 @@ the faults"; "remove all of the trees in the area and fill the wells with the ma
   python -I tools/city/super/sc.py shots <piece> "--cams=name:x,y,z:tx,ty,tz;..." [--top=<metres>]
                                                       the same views of the piece as it is and of the proven copy,
                                                       side by side (preview renderer, only this area loaded)
+  python -I tools/city/super/sc.py trees <area>       check a hand-written tree list (zoning/trees/<area>.json) and build
+                                                      it into a COPY of its piece t_<area> (sc_trees.py, sc_trees.gd)
+  python -I tools/city/super/sc.py look <piece> "--cams=name:x,y,z:tx,ty,tz;..."
+                                                      plain views of the piece AS IT IS (only its area loaded)
   python -I tools/city/super/sc.py install <piece> --by=Yasin
                                                       put the proven copy in the piece's place (the old file is kept),
                                                       open and close its lock, write the log. Only on Yasin's word.
@@ -19,6 +23,7 @@ What it is made of (none of them runs a piece's building script, none decides wh
   sc_dump.gd   reads a saved scene out into numbers            sc_find.py   measures and lists the faults (outdoors)
   sc_rooms.py  the same indoors (with check_rooms.gd)          sc_fix.gd    changes the listed items; proves the rest
   sc_wells.gd  the bake's own well filler, for one well        sc_lib.py    shared reading code
+  sc_trees.py  checks a hand-written tree list                 sc_trees.gd  builds that list into the piece t_<area>
 Every change is a line of <piece>.fixes.json: the item, where it is, where it goes, why. A line whose new place has
 to be chosen ("mode": "choose") is not carried out until a person fills in "to" and sets "chosen": true.
 """
@@ -140,6 +145,31 @@ def cmd_fix_room(room, fixes_path=None):
     return True
 
 
+def cmd_trees(area):
+    import sc_trees as T
+    j = T.load(area)
+    fixed = os.path.join(WORK, 'dump', j['piece'] + '.json')
+    ok = T.check(area, dump_dir=os.path.join(WORK, 'dump') if os.path.exists(fixed) else None)
+    if os.path.exists(fixed): print('  (checked against the FIXED copy of %s: its builder trees are out)' % j['piece'])
+    if not ok: print('TREES %s: the list is not clean: nothing built' % area); return False
+    os.makedirs(WORK, exist_ok=True); out = os.path.join(WORK, 't_' + area + '.scn')
+    lines = L.godot('sc_trees.gd', ['--list=' + res(os.path.join(T.TREES, area + '.json')), '--out=' + res(out)])
+    for l in lines:
+        if l.startswith('SC-TREES') or 'MISSING PROP' in l: print('  ' + l)
+    if not os.path.exists(out): print('TREES %s: NOT BUILT' % area); return False
+    # read the built piece back: it must hold exactly the list's trees, each at its line's place
+    dd = os.path.join(WORK, 'dump'); os.makedirs(dd, exist_ok=True)
+    L.godot('sc_dump.gd', ['--out=' + L.fwd(dd), '--models=' + L.fwd(L.MODELS), '--files=' + res(out)])
+    d = L.Dump('t_' + area, folder=dd); got = []
+    for b, X in d.batches():
+        if b['tier'] == 'near': got += [(b['base'], round(float(x[9]), 2), round(float(x[11]), 2)) for x in X]
+    want = sorted((t['base'], round(float(t['at'][0]), 2), round(float(t['at'][2]), 2)) for t in j['trees'])
+    same = sorted(got) == want
+    print('  the built piece read back: %d trees, %s' % (len(got), 'each one a line of the list, nothing else' if same else 'NOT the list: ' + str(sorted(got))[:200]))
+    print('TREES %s: %s; the map is untouched (the piece is a copy at %s)' % (area, 'built' if same else 'WRONG', os.path.relpath(out, L.REPO)))
+    return same
+
+
 def land_files():
     """the land for the preview tool: heights .f32 and sea .u8 beside a small json, from zoning/terrain_grid.npz"""
     import numpy as np
@@ -161,11 +191,20 @@ def cmd_shots(piece, cams, top=None, out=None):
     def area(name_for_me):
         return {'instances': [{'piece': name_for_me if r.id == me.id else r.piece, 'pos': [float(v) for v in r.pos], 'yaw': r.yaw} for r in [me] + ctx.neigh]}
     lb = os.path.join(WORK, piece + '.area_before.json'); la = os.path.join(WORK, piece + '.area_after.json')
-    json.dump(area(piece), open(lb, 'w')); json.dump(area(tmp_name), open(la, 'w'))
+    # the hand-placed trees of this piece (built copies of t_<area>) stand in the "after" view
+    import sc_trees as T
+    extra = []
+    for ar in T.lists_of_piece(piece):
+        tp = os.path.join(WORK, 't_' + ar + '.scn')
+        if os.path.exists(tp): extra.append(('zz_sc_t_' + ar, tp))
+    after = area(tmp_name)
+    for nm, _ in extra: after['instances'].append({'piece': nm, 'pos': [0, 0, 0], 'yaw': 0})
+    json.dump(area(piece), open(lb, 'w')); json.dump(after, open(la, 'w'))
     env = dict(os.environ, CITYKIT_LAYOUT_ONLY='1', TERRAIN=L.fwd(land_files()), CARS='0')
     views = [c for c in cams.split(';') if c.strip()] if cams else []
     if top: views.append('TOP')
     shutil.copy2(new, tmp)
+    for nm, tp in extra: shutil.copy2(tp, os.path.join(L.PIECES, nm + '.scn'))
     made = []
     try:
         for v in views:
@@ -193,9 +232,36 @@ def cmd_shots(piece, cams, top=None, out=None):
             print('  shot %s: %s (%d pixels differ between the two)' % (name, os.path.relpath(fo, L.REPO), diff))
     finally:
         if os.path.exists(tmp): os.remove(tmp)
-        for x in (tmp + '.import',):
-            if os.path.exists(x): os.remove(x)
+        for nm, tp in extra:
+            if os.path.exists(os.path.join(L.PIECES, nm + '.scn')): os.remove(os.path.join(L.PIECES, nm + '.scn'))
     return made
+
+
+def cmd_look(piece, cams, out=None):
+    rows = L.load_layout(); me = [r for r in rows if r.piece == piece][0]
+    ctx = F.Ctx(rows, me, reach=40.0)
+    out = out or os.path.join(WORK, 'look', piece); os.makedirs(out, exist_ok=True)
+    lay = os.path.join(WORK, piece + '.area_before.json')
+    json.dump({'instances': [{'piece': r.piece, 'pos': [float(v) for v in r.pos], 'yaw': r.yaw} for r in [me] + ctx.neigh]}, open(lay, 'w'))
+    env = dict(os.environ, CITYKIT_LAYOUT_ONLY='1', CITYKIT_LAYOUT_EXTRA=L.fwd(lay), TERRAIN=L.fwd(land_files()), CARS='0')
+    made = []
+    for v in [c for c in cams.split(';') if c.strip()]:
+        subprocess.run([L.GODOT, '--path', L.REPO, '--rendering-method', 'mobile', '--resolution', '1280x720', '-s', 'res://tools/city/pilot/preview/shots.gd', '--', '--out=' + L.fwd(out), '--cams=' + v],
+                       env=env, capture_output=True, timeout=600)
+        name = v.split(':')[0]
+        f = next((os.path.join(out, name + x) for x in ('.png', '.jpg') if os.path.exists(os.path.join(out, name + x))), None)
+        print('  view %s: %s' % (name, os.path.relpath(f, L.REPO) if f else 'MISSING')); made.append(f)
+    return made
+
+
+def add_layout_row(piece, path=None):
+    """one more row in the city layout for a whole-area piece built in the grid frame (as integrate.py writes them)"""
+    path = path or L.LAYOUT
+    lay = json.load(open(path, encoding='utf-8'))
+    if any(r['piece'] == piece for r in lay['instances']): return False
+    lay['instances'].append({'piece': piece, 'pos': [0.0, 0.0, 0.0], 'yaw': 0.0, 'from': 'trees'})
+    json.dump(lay, open(path, 'w'), indent=1)          # the same call integrate.py makes (CRLF on the PC, no last newline)
+    return True
 
 
 def cmd_install(piece, by):
@@ -214,6 +280,14 @@ def cmd_install(piece, by):
     if locked: subprocess.run([sys.executable, '-I', lock, 'lock', piece, '--by=Yasin'], cwd=L.REPO, check=True)
     shutil.copy2(os.path.join(WORK, piece + '.applied.json'), os.path.join(REVIEW, piece + '.fixes.json'))
     shutil.copy2(os.path.join(WORK, piece + '.proof.txt'), os.path.join(REVIEW, piece + '.proof.txt'))
+    # the hand-placed trees of this piece: their built copy becomes the piece t_<area>, with its layout row
+    import sc_trees as T
+    for ar in T.lists_of_piece(piece):
+        tp = os.path.join(WORK, 't_' + ar + '.scn')
+        if os.path.exists(tp):
+            shutil.copy2(tp, os.path.join(L.PIECES, 't_' + ar + '.scn')); new_row = add_layout_row('t_' + ar)
+            print('  trees: t_%s put in place (%d trees)%s' % (ar, len(T.load(ar)['trees']), ', one row added to the city layout' if new_row else ''))
+        else: print('  trees: the list %s is not built: run "trees %s" first' % (ar, ar))
     with open(os.path.join(REVIEW, 'log.jsonl'), 'a', encoding='utf-8', newline='\n') as f: f.write(json.dumps(st) + '\n')
     print('INSTALLED %s: %d changes; the old file is kept at %s; relocked: %s' % (piece, st['changes'], os.path.relpath(keep, L.REPO), locked))
 
@@ -225,6 +299,8 @@ if __name__ == '__main__':
     if a[0] == 'check': cmd_check(a[1])
     elif a[0] == 'fix': sys.exit(0 if cmd_fix(a[1], opt.get('fixes')) else 1)
     elif a[0] == 'fix-room': sys.exit(0 if cmd_fix_room(a[1], opt.get('fixes')) else 1)
+    elif a[0] == 'trees': sys.exit(0 if cmd_trees(a[1]) else 1)
+    elif a[0] == 'look': cmd_look(a[1], opt.get('cams', ''))
     elif a[0] == 'shots': cmd_shots(a[1], opt.get('cams', ''), opt.get('top'))
     elif a[0] == 'install': cmd_install(a[1], opt.get('by', ''))
     else: sys.exit(__doc__)

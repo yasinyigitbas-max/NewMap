@@ -179,6 +179,12 @@ def main():
     for piece in ("x_shore_foam", "x_wall_feet"):      # x_wall_feet (19 Nov): faces under the growth blocks' wall feet (wall_feet.py)
         if os.path.exists(os.path.join(KIT, "pieces", piece + ".scn")):
             rows.append({"piece": piece, "pos": [0.0, 0.0, 0.0], "yaw": 0.0, "from": "grid frame"})
+    # the hand-placed tree pieces (19 Nov, docs/TREE_PLAN.md): one per tree list in zoning/trees/, built in the grid frame
+    # by tools/city/super/sc_trees.gd from that list
+    tdir = os.path.join(KIT, "zoning", "trees")
+    for f in (sorted(os.listdir(tdir)) if os.path.isdir(tdir) else []):
+        if f.endswith(".json") and os.path.exists(os.path.join(KIT, "pieces", "t_" + f[:-5] + ".scn")):
+            rows.append({"piece": "t_" + f[:-5], "pos": [0.0, 0.0, 0.0], "yaw": 0.0, "from": "trees"})
     gaps = coverage(rows)
     out = {"note": __doc__.strip().split("\n")[0], "frame": "grid: x = u (ESE along 10th), z = v (SSW along Amber), y = datum m",
            "instances": rows, "coverage": {"sample_rows": len(srows), "family_rows": len(frows),

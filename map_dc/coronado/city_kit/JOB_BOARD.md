@@ -5,6 +5,29 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~17:00 (PC session): THE HAND-PLACED TREES, WRITTEN INTO THE SUPERCHECKER (Yasin: "removing existing trees
+  entirely from every area it inspects, and only places them by hand according to tree plantation plan we made";
+  then, asked what next, "Trees first"). STILL NOTHING OF THE MAP CHANGED: copies only.
+  A TREE LIST is a plain file written BY HAND, `zoning/trees/<area>.json`: its piece, its zone, the plan's rule for
+  that zone in the plan's words (docs/TREE_PLAN.md), and one line per tree: model, place, turn, size, WHY.
+  `python -I tools/city/super/sc.py trees <area>` checks every line (`sc_trees.py`: soft ground or an open well, the
+  line's height = the ground's, 0.9 m off fences, 1.2 m off walls, 2.5 m off doors and outdoor stairs, the trunk clear
+  of every prop, not on a stall, 3 m between trees, a reason given; and the plan's in-view limit from the streets
+  round it: 8 broadleaf, 12 of any kind within 60 m), then builds the list into a COPY of the piece `t_<area>`
+  (`sc_trees.gd`: kit_lib's own prop builder, 64 m squares) and reads the copy back: it must hold exactly the list's
+  trees. It chooses no tree and no place. `sc_trees.py where <piece> <x> <z>` says what the ground is at a spot.
+  `install` puts t_<area> in place and adds its layout row (tested on a copy of the layout: one row more, every other
+  row and the file's format unchanged); `integrate.py` keeps such rows when it regenerates. A well in which a list's
+  tree stands is not paved (0.7 m, as in the bake). The bake's `--notrees` already keeps t_* trees.
+  FIRST LIST: `zoning/trees/grt_j4ne.json` for the gritty block g_v1_j4ne (rule: almost none): its five builder trees
+  go, ONE comes back, a eucalyptus 2.2 m behind the bench that faces the swing. Check ok, built, picture taken
+  (as it is / the fixed copy). Counter-tests: a tree on asphalt, at a wall and in a bin, at a wrong height, with no
+  reason: each refused.
+  ALSO: "show me what worn grass look against tire marks": three views from straight above sent. Both are faint
+  (strength 0.4-0.55); from eye height neither shows in the preview. What reads strongly on grass are cracks, oil and
+  patch marks (0.9). The tool still removes every mark on grass; Yasin has not said whether worn-grass bands stay.
+  NOT DONE: no list for any other block or street; the new lighter tree models have not arrived (lists name today's
+  models; a model is one word of a line); nothing installed.
 - 19 Nov ~15:30 (PC session): THE SUPERCHECKER, FIRST WORKING STATE + THE KIT UPDATED (Yasin: "make a superchecker for
   both indoors and outdoors that changes irregularities that they find by hand and checks that nothing else other than
   the irregularity was changed? THIS TOOL MUSTNT CHANGE THE ENTIRE BLOCK WITH A GENERATOR"; "if it can prove that it is
