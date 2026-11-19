@@ -1,0 +1,756 @@
+{
+ "fixes": [
+  {
+   "at": [
+    121.25,
+    0.300000011920929,
+    48.25
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.15 m over what is under it",
+   "to": [
+    121.25,
+    0.150000005960464,
+    48.25
+   ]
+  },
+  {
+   "at": [
+    116.0,
+    0.299114465713501,
+    97.75
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.15 m over what is under it",
+   "to": [
+    116.0,
+    0.14910165015171,
+    97.75
+   ]
+  },
+  {
+   "at": [
+    114.699996948242,
+    0.299114465713501,
+    97.75
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.15 m over what is under it",
+   "to": [
+    114.699996948242,
+    0.14910165015171,
+    97.75
+   ]
+  },
+  {
+   "at": [
+    121.980003356934,
+    1.35000002384186,
+    51.6500015258789
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 14.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 30 cm over a apt door of bridge_motors_office]",
+   "to": [
+    121.980003371243,
+    1.35000002384186,
+    52.850001525879
+   ]
+  },
+  {
+   "at": [
+    121.980003356934,
+    1.35000002384186,
+    51.2299995422363
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 15.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 58 cm over a apt door of bridge_motors_office]",
+   "to": [
+    121.980003371243,
+    1.35000002384186,
+    52.4299995422364
+   ]
+  },
+  {
+   "at": [
+    121.980003356934,
+    1.35000002384186,
+    50.810001373291
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 16.0,
+   "op": "move",
+   "reason": "moved slid -0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 16 cm over a apt door of bridge_motors_office]",
+   "to": [
+    121.980003349779,
+    1.35000002384186,
+    50.2100013732911
+   ]
+  },
+  {
+   "at": [
+    109.75,
+    0.150000005960464,
+    45.0
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    109.480003356934,
+    0.150000005960464,
+    15.9499998092651
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    144.199996948242,
+    0.150000005960464,
+    29.4400005340576
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    144.199996948242,
+    0.150000005960464,
+    65.8600006103516
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    118.459999084473,
+    0.150000005960464,
+    15.9499998092651
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    144.199996948242,
+    0.150000005960464,
+    41.5800018310547
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    127.440002441406,
+    0.150000005960464,
+    15.9499998092651
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    136.419998168945,
+    0.150000005960464,
+    15.9499998092651
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    144.199996948242,
+    0.150000005960464,
+    53.7200012207031
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    139.5,
+    0.150000005960464,
+    51.0
+   ],
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    129.050003051758,
+    0.150000005960464,
+    49.4099998474121
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in front of a shop window of bridge_motors_office]"
+  },
+  {
+   "at": [
+    104.0,
+    0.150000005960464,
+    78.5
+   ],
+   "base": "prop_lot_light_pole",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 18.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_lot_light_pole stands in front of a roll-up door of bridge_motors_service]"
+  },
+  {
+   "at": [
+    129.050003051758,
+    0.150000005960464,
+    48.4749984741211
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 19.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in front of a shop window of bridge_motors_office]"
+  },
+  {
+   "at": [
+    115.900001525879,
+    0.149114474654198,
+    79.9499969482422
+   ],
+   "base": "prop_newspaper_box_red",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 20.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red stands in front of a shop window of bridge_motors_service]"
+  },
+  {
+   "at": [
+    115.099998474121,
+    0.149114474654198,
+    79.9499969482422
+   ],
+   "base": "prop_newspaper_box_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 21.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_blue stands in front of a shop window of bridge_motors_service]"
+  },
+  {
+   "at": [
+    129.899993896484,
+    0.150000005960464,
+    47.0
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 22.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (1.9 m from a wall, 50.4 m from a fence)]"
+  },
+  {
+   "at": [
+    122.5,
+    0.149101033806801,
+    79.0
+   ],
+   "base": "prop_hose_reel_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "hydrant_nowhere",
+   "mode": "choose",
+   "n": 23.0,
+   "op": "remove",
+   "reason": "erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart stands 2.5 m from any building wall and 3.0 m inside the block]"
+  },
+  {
+   "at": [
+    123.0,
+    0.150000005960464,
+    54.0
+   ],
+   "base": "prop_ice_chest",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 44.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest leaves 0.2 m of a 1.6 m wide walk]"
+  },
+  {
+   "at": [
+    112.400001525879,
+    0.162000000476837,
+    76.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 24.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    110.400001525879,
+    0.162000000476837,
+    76.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 25.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    107.0,
+    0.162000000476837,
+    76.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 26.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    105.0,
+    0.162000000476837,
+    76.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 27.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    119.800582885742,
+    0.16111446917057,
+    94.9030075073242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 28.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bridge_motors_service",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    127.197265625,
+    0.162000000476837,
+    50.5547866821289
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 29.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bridge_motors_office",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    109.409378051758,
+    0.16111446917057,
+    94.1589965820312
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 30.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bridge_motors_service",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    104.925498962402,
+    0.16111446917057,
+    84.4955139160156
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 31.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bridge_motors_service",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    107.928085327148,
+    0.16111446917057,
+    93.5139999389648
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 32.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bridge_motors_service",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    117.126876831055,
+    0.16111446917057,
+    91.1130065917969
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 33.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bridge_motors_service",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    113.672973632812,
+    0.16111446917057,
+    95.8315887451172
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 34.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bridge_motors_service",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    111.819580078125,
+    0.16111446917057,
+    92.7582931518555
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 35.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bridge_motors_service",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    124.455352783203,
+    0.162000000476837,
+    54.3645439147949
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 36.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    121.903144836426,
+    0.162000000476837,
+    54.8509368896484
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 37.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    105.890571594238,
+    0.16111446917057,
+    94.2381744384766
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 38.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies under the building bridge_motors_service",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    112.177734375,
+    0.16111446917057,
+    90.8322601318359
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 39.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building bridge_motors_service",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    116.808670043945,
+    0.16111446917057,
+    93.5389404296875
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 40.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building bridge_motors_service",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    116.187568664551,
+    0.16111446917057,
+    84.6093063354492
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 41.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building bridge_motors_service",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    105.899513244629,
+    0.16111446917057,
+    86.5841217041016
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 42.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building bridge_motors_service",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    118.312705993652,
+    0.16111446917057,
+    81.6608657836914
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 43.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building bridge_motors_service",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    125.867210388184,
+    0.162000000476837,
+    46.1566581726074
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 45.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    125.130142211914,
+    0.162000000476837,
+    45.7061958312988
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 46.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    108.700101613715,
+    1.64910589158535,
+    80.815182020664
+   ],
+   "box": [
+    3.29989767074585,
+    1.49999141693115,
+    8.18481826782227,
+    1.24003795623779,
+    2.9999828338623,
+    0.569804229736328
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 49.0,
+   "name": "sc_col_0",
+   "node": "Buildings/bridge_motors_service",
+   "op": "add_box",
+   "reason": "bridge_motors_service: a 1.2 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    103.750116599068,
+    1.64910589158535,
+    80.9600760996457
+   ],
+   "box": [
+    8.24988269805908,
+    1.49999141693115,
+    8.03992462158203,
+    0.639880218505859,
+    2.9999828338623,
+    0.280016937255859
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 50.0,
+   "name": "sc_col_1",
+   "node": "Buildings/bridge_motors_service",
+   "op": "add_box",
+   "reason": "bridge_motors_service: a 0.6 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    112.650148144869,
+    1.24906872212887,
+    97.0850791362775
+   ],
+   "box": [
+    -0.650147438049316,
+    1.09995424747467,
+    -8.08507919311523,
+    0.340216674804687,
+    2.19990849494934,
+    0.370133438110352
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 51.0,
+   "name": "sc_col_2",
+   "node": "Buildings/bridge_motors_service",
+   "op": "add_box",
+   "reason": "bridge_motors_service: a 0.3 x 0.3 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "m_gr_e4s"
+}
