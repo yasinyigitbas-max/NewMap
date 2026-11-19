@@ -56,6 +56,28 @@ static func band(g: K.Ground, mat: String, x0: float, x1: float, zlo: Callable, 
 			var p2 := Vector3(xb, yfn.call(xb, rows_b[r + 1]), rows_b[r + 1]); var p3 := Vector3(xa, yfn.call(xa, rows_a[r + 1]), rows_a[r + 1])
 			g.quad(mat, p0, p1, p2, p3)
 
+## paint() between two edge lines zlo(x) .. zhi(x) (Callables): columns and rows on the global grid, the first / last
+## row of each column a trapezoid to the edge; each cell takes the first paint containing its centre ("-" = hole).
+static func paint_band(g: K.Ground, x0: float, x1: float, zlo: Callable, zhi: Callable, paints: Array, base: String, yfn: Callable, step := STEP) -> void:
+	var ex: Array = []; var ez: Array = []
+	for p: Array in paints: ex.append_array([float(p[0]), float(p[2])]); ez.append_array([float(p[1]), float(p[3])])
+	var xs := _lines(x0, x1, step, ex)
+	for i in xs.size() - 1:
+		var xa: float = xs[i]; var xb: float = xs[i + 1]
+		var la: float = zlo.call(xa); var lb: float = zlo.call(xb); var ha: float = zhi.call(xa); var hb: float = zhi.call(xb)
+		var inner := _lines(maxf(la, lb), minf(ha, hb), step, ez)
+		inner.pop_front(); inner.pop_back()
+		var ra: Array = [la]; var rb: Array = [lb]
+		for z: float in inner: ra.append(z); rb.append(z)
+		ra.append(ha); rb.append(hb)
+		for r in ra.size() - 1:
+			var cx := (xa + xb) * 0.5; var cz := (float(ra[r]) + float(ra[r + 1]) + float(rb[r]) + float(rb[r + 1])) * 0.25
+			var m := base
+			for p: Array in paints:
+				if cx > float(p[0]) and cx < float(p[2]) and cz > float(p[1]) and cz < float(p[3]): m = String(p[4]); break
+			if m == "-": continue
+			g.quad(m, Vector3(xa, yfn.call(xa, ra[r]), ra[r]), Vector3(xb, yfn.call(xb, rb[r]), rb[r]), Vector3(xb, yfn.call(xb, rb[r + 1]), rb[r + 1]), Vector3(xa, yfn.call(xa, ra[r + 1]), ra[r + 1]))
+
 ## Faces along the line a-b between two surfaces (heights from ya and yb at each point), cut every `seg` metres, both
 ## sides drawn. Nothing where the two agree within 1 cm.
 static func step_face(g: K.Ground, a: Vector2, b: Vector2, ya: Callable, yb: Callable, mat := "wall", seg := 1.0) -> void:

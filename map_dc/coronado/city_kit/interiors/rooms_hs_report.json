@@ -1,14 +1,34 @@
 {
  "rooms": [
   {
-   "d": 11.25,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b2_amber_stucco_0.scn",
-   "id": "g_hs_b2_amber_stucco_0",
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b3_amber_corner_1.scn",
+   "id": "g_hs_b3_amber_corner_1",
+   "kind": "salon",
+   "lights": 4,
+   "name": "Shore Cuts",
+   "props": 17,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b3_amber_realty_0.scn",
+   "id": "g_hs_b3_amber_realty_0",
+   "kind": "realty",
+   "lights": 5,
+   "name": "Ocean Realty",
+   "props": 18,
+   "w": 5.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b3_amber_burger_1.scn",
+   "id": "g_hs_b3_amber_burger_1",
    "kind": "fast_food",
    "lights": 6,
-   "name": "Rosa's Taqueria",
-   "props": 59,
-   "w": 18.4
+   "name": "Ocean Burger",
+   "props": 22,
+   "w": 8.76
   }
  ]
 }

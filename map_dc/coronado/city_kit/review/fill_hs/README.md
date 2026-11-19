@@ -1,6 +1,6 @@
 # High street fill (branch `claude/fill-high-street`) - block 1
 
-Status 19 Nov: block 1 seen by Yasin ("its fine roll out to the entire zone"); **block 2 built**, nothing locked. Blocks 3-6 follow in this order: 3, 4, then the steep 5 and 6.
+Status 19 Nov: block 1 seen by Yasin ("its fine roll out to the entire zone"); **blocks 2 and 3 built**, nothing locked. Blocks 4-6 follow: 4, then the steep 5 and 6.
 
 ## Block 1: west of Amber, 10th to 11th St (around the pilot's pocket-park block `b_sw`)
 Its real outline, measured from the street pieces' ground (scratch dump, 0.25 m raster): an L round `b_sw` -
@@ -161,3 +161,68 @@ sheet 3 (the taqueria) after it. The same note on draw counts as block 1: previe
 - Not shown to Yasin yet; nothing locked; not in the shared layout; `x_wall_feet` not rebuilt; no bake, no phone.
 - The hardware's shelves are the kit's general shelves (bottles), the gallery is benches and frames: thin, by eye.
 - The church interior (above).
+
+---------------------------------------------------------------------------------------------------------------------
+
+## Block 3: south of 11th St to the ring's Ocean Blvd, C Ave to Amber
+A whole block (no pilot inside), 175 x 110 m, with four streets round it: 11th St (rising 2.15 -> 4.15 eastward), Amber
+(falling 4.15 -> 2.15 toward the beach), C Ave and Ocean Blvd (both flat at 2.15, the boulevard's edge on a slant). The
+ground is ONE surface through those four profiles (`n_hs_b3_site.gd` g = the 11th St rise times Amber's fall): it equals
+each street at its edge. Two alley mouths exist (11th St at u -146..-140, C Ave at v 254..260): a service alley runs
+south from 11th, the residents' alley east from C Ave to the high street's rear lot.
+| piece | what and why |
+|---|---|
+| `n_hs_b3_amber` | Amber down to the beach, each building on its own level pad: a corner pair on 11th (**Beach Market**, **Shore Cuts** barber), a beach condo with **Swim & Sun** below, **Coronado Surf Co.**, **Beach Break Cafe**, **Ocean Realty** (vacation rentals), **Ocean Burger**; then the block's landmark, **Amber Beach Plaza** with the old **lookout tower** and a beach kiosk: palms in wells, benches facing the ocean, a beach shower, bike racks, a fountain, bollards along Amber, the beach rules. Rear lot off the residents' alley. |
+| `n_hs_b3_dingbats` | Along 11th St (the walk to the beach): four 1950s dingbats and a Spanish apartment house, each on its own terrace at the walk height of its middle (11th rises 1.5 m along the row) with steps on the paths, front lawns with fan palms, hedges open at the paths, mailboxes; shared yards behind (washing, grills, benches), tenants' parking nose-in off the alley. |
+| `n_hs_b3_cottages` | Six beach cottages facing C Ave (continuing the beach-cottage houses across the street), each lot closed (picket front with the path open, privacy behind), garages on the service alley with ramps, outdoor showers, a kayak rack, deck chairs, washing, a grill. |
+| `n_hs_b3_motel` | The **Seabreeze Motel** facing the ocean across its lawn (loungers in pairs under umbrellas, palms, picnic tables, a beach shower, a hedge open at its path), guests parked behind off the alley; a beach condo with **Beach Rentals** below (kayaks, umbrellas, bikes on its forecourt); a public walk from the alley to the beach crossing. |
+
+### Land and seams (block 3)
+- With the land as it is now: 760 m2 under the land, none over 30 cm, floating 0. With the DRY trial fit (626 nodes
+  lowered, usual 0.05 m, largest 0.29 m; not written): under 0, floating 0. **The shared land was not changed.**
+- Seams: every edge against the four streets and between my four pieces: largest 0.8 cm, 0 m over 2 cm (one 15 cm
+  step between my own pieces was found and fixed: the first dingbat terrace now ends 0.6 m inside its piece).
+
+### Checks (block 3 area)
+| check | result |
+|---|---|
+| `validate.gd` | 0 on my pieces (11 elsewhere, in locked pieces) |
+| `check_life.gd` | 0 on my pieces |
+| `audit_trees.gd` | 355 trees, 0 in hard ground |
+| `check_rooms.gd --only=g_hs_` | 0 problems, 25 rooms (blocks 1-3) |
+| lock test | RESULT PASS |
+What they cannot see: as for block 1. Fixed on the way, found by the checks: loungers under the umbrellas, a plant in
+front of a French door, bins inside a double garage, the motel's ice chest and soda machine inside its wall, a lamp on
+a fence; the cottage fences rebuilt as closed lots (they ended in the open), the dingbat yards made open shared yards.
+
+### Walk-in places, block 3 (built)
+| room | kind | name |
+|---|---|---|
+| g_hs_b3_amber_corner_0 | corner_shop | Beach Market |
+| g_hs_b3_amber_corner_1 | salon | Shore Cuts (a key shop was tried first: its pegboard covered the back door) |
+| g_hs_b3_amber_condo_0 | clothes | Swim & Sun |
+| g_hs_b3_amber_surf_0 | sport | Coronado Surf Co. |
+| g_hs_b3_amber_cafe_0 | cafe | Beach Break Cafe |
+| g_hs_b3_amber_realty_0 | realty | Ocean Realty (new layout in room_gen_hs.gd: agents' desks, listings in the window) |
+| g_hs_b3_amber_burger_1 | fast_food | Ocean Burger (the model's second door: the first gave a 2.6 m room) |
+| g_hs_b3_motel_condo_0 | sport | Beach Rentals |
+NOT built: the motel (no shop door in its contract: the office would need a room by hand), the lookout tower and the
+kiosk (no contract), the homes.
+
+### Pictures (trial land, no shadows, only the block's area loaded; all opened by me)
+| file | view | preview draws / primitives |
+|---|---|---|
+| `b3_top.jpg` | straight down | 536 / 1.87 M |
+| `b3_amber_to_beach.jpg` | Amber from 11th down to the beach | 100 / 1.25 M |
+| `b3_11th_west.jpg` | 11th St west from Amber | 460 / 2.00 M |
+| `b3_steepest_11th_terraces.jpg` | the steepest edge: the dingbat terraces up 11th St | 240 / 1.63 M |
+| `b3_c_ave_cottages.jpg` | C Ave south past the cottages | 95 / 1.22 M |
+| `b3_ocean_motel.jpg` | Ocean Blvd west past the rentals and the motel | 405 / 1.81 M |
+| `b3_beach_plaza.jpg` | the beach plaza and the lookout from the corner | 577 / 2.14 M |
+| `b3_rooms_1..4.jpg` | each shop: street front + inside | - |
+
+### NOT done / NOT checked (block 3)
+- Not shown to Yasin; nothing locked; not in the shared layout; no bake, no phone.
+- The kit's corner model keeps its painted VILLAGE THEATRE / CROWN CAFE boards on its sides in street views that do not
+  load the rooms (the shop rooms carry their own signs over the boards they claim).
+- Beach Rentals' inside is clothes racks and a bike stand: thin for a rental shop (by eye).

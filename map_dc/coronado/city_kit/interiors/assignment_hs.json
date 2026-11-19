@@ -1,6 +1,6 @@
 {
  "_doc": "High street fill (claude/fill-high-street, 19 Nov): which business is behind which door of the new high street",
- "count": 17,
+ "count": 25,
  "rooms": [
   {
    "id": "hs_b1_amber_brick_row_0",
@@ -587,6 +587,337 @@
    "built": "",
    "why": "block 2: the church's hall on 9th St (office, meetings); its painted COMMUNITY CENTER sign stays",
    "signs": []
+  },
+  {
+   "id": "hs_b3_amber_corner_0",
+   "piece": "n_hs_b3_amber",
+   "label": "corner",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    -23.6,
+    4.1496,
+    216.45
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -1.08,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "corner_shop",
+   "name": "Beach Market",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: drinks, snacks and sun cream on the corner where 11th St meets Amber, the way to the beach",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "hs_b3_amber_corner_1",
+   "piece": "n_hs_b3_amber",
+   "label": "corner",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    -23.6,
+    4.1496,
+    216.45
+   ],
+   "yaw": 90.0,
+   "door_index": 1,
+   "door_along": 1.08,
+   "door_w": 1.6,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "salon",
+   "name": "Shore Cuts",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: a barber beside the corner market (a key shop was tried: its pegboard covered the back door)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b3_amber_condo_0",
+   "piece": "n_hs_b3_amber",
+   "label": "condo",
+   "model": "apartments/apt_beach_condo",
+   "pos": [
+    -22.1,
+    4.0021,
+    233.1
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "clothes",
+   "name": "Swim & Sun",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: swimwear and beach clothes under the condos",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "hs_b3_amber_surf_0",
+   "piece": "n_hs_b3_amber",
+   "label": "surf",
+   "model": "commercial/com_surf_shop",
+   "pos": [
+    -23.6,
+    3.5701,
+    248.25
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "sport",
+   "name": "Coronado Surf Co.",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: boards and wetsuits a block from the sand",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b3_amber_cafe_0",
+   "piece": "n_hs_b3_amber",
+   "label": "cafe",
+   "model": "commercial/com_cafe_seaside",
+   "pos": [
+    -23.6,
+    3.349,
+    257.12
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "cafe",
+   "name": "Beach Break Cafe",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: coffee on the way down to the beach; its pots by the door, its dumpster behind",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 3.8,
+     "w": 3.0
+    }
+   ]
+  },
+  {
+   "id": "hs_b3_amber_realty_0",
+   "piece": "n_hs_b3_amber",
+   "label": "realty",
+   "model": "commercial/com_realty",
+   "pos": [
+    -23.6,
+    3.2098,
+    265.14
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "realty",
+   "name": "Ocean Realty",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: vacation rentals and sales, listings in the window",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": -3.4,
+     "w": 2.6
+    }
+   ]
+  },
+  {
+   "id": "hs_b3_amber_burger_1",
+   "piece": "n_hs_b3_amber",
+   "label": "burger",
+   "model": "ck/mod_fastfood",
+   "pos": [
+    -22.6,
+    2.863,
+    274.54
+   ],
+   "yaw": 90.0,
+   "door_index": 1,
+   "door_along": 1.2,
+   "door_w": 1.6,
+   "bay": [
+    -3.06,
+    5.7
+   ],
+   "kind": "fast_food",
+   "name": "Ocean Burger",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: the burger stand at the beach end of the high street",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 4.0
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 4.0
+    }
+   ]
+  },
+  {
+   "id": "hs_b3_motel_condo_0",
+   "piece": "n_hs_b3_motel",
+   "label": "condo",
+   "model": "apartments/apt_beach_condo",
+   "pos": [
+    -74.0,
+    2.1865,
+    296.8
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "sport",
+   "name": "Beach Rentals",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: bikes, kayaks and umbrellas for hire on Ocean Blvd; its forecourt shows them",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    }
+   ]
   }
  ]
 }

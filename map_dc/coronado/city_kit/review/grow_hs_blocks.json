@@ -77,6 +77,50 @@
    "yaw": 0.0,
    "site": "high street block 2, 9th St west of the yard (u -100..-50, v -190.8..-146)",
    "part": "the church's community center, memorial garden, lot"
+  },
+  {
+   "piece": "n_hs_b3_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 3, Amber west from 11th to Ocean Blvd (u -50..-16, v 209.7..324.7)",
+   "part": "Amber down to the beach, Amber Beach Plaza with the lookout, rear lot"
+  },
+  {
+   "piece": "n_hs_b3_dingbats",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 3, 11th St (u -140..-50, v 209.2..254)",
+   "part": "five apartment houses (dingbats) on terraces, tenants' parking off the alley"
+  },
+  {
+   "piece": "n_hs_b3_cottages",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 3, C Ave (u -190.8..-140, v 209.2..Ocean Blvd)",
+   "part": "six beach cottages, garages on the service alley, the residents' alley"
+  },
+  {
+   "piece": "n_hs_b3_motel",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 3, Ocean Blvd (u -140..-50, v 254..Ocean Blvd)",
+   "part": "Seabreeze Motel, Beach Rentals condo, the walk to the beach, the residents' alley"
   }
  ]
 }

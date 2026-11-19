@@ -47,6 +47,8 @@ const KINDS := {
 	# community hall (reception desk, meeting tables, a kitchen behind)
 	"bank": {"floor": "Terrazzo005", "light": "panel", "counter": ["shop_counter", "shop_counter", "shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet"], "board": false, "walls": ["waiting_bench", "brochure_rack"], "centre": "desks", "window": "waiting", "back": "office", "frames": true},
 	"hall": {"floor": "WoodFloor051", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet"], "board": false, "walls": ["waiting_bench"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": true},
+	# high street copy: a realty office (agents' desks each with a client chair, listings displayed in the window)
+	"realty": {"floor": "Carpet012", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet"], "board": false, "walls": ["brochure_rack"], "centre": "desks", "window": "display", "back": "office", "frames": true},
 	"venue": {"floor": "Carpet012", "light": "pendant", "counter": ["shop_counter", "soda_fountain"], "till": true, "behind": ["drinks_fridge"], "board": true, "walls": ["poster_wall"], "centre": "benches", "window": "waiting", "back": "none", "frames": false},
 }
 const WARM := ["cafe", "bakery", "bar", "restaurant", "books", "venue", "library"]
@@ -54,7 +56,7 @@ const WALL_TINTS := [Color(1.0, 0.95, 0.86), Color(0.94, 0.96, 0.98), Color(0.98
 const SHORT := {"cafe": "COFFEE", "bakery": "BAKERY", "bar": "BAR", "restaurant": "KITCHEN", "fast_food": "FOOD", "ice_cream": "ICE CREAM",
 	"clothes": "CLOTHES", "shoes": "SHOES", "jewelry": "JEWELRY", "books": "BOOKS", "gallery": "GALLERY", "salon": "SALON", "pharmacy": "PHARMACY",
 	"souvenir": "GIFTS", "office": "OFFICE", "corner_shop": "MARKET", "grocery": "GROCERY", "cleaners": "LAUNDRY", "store": "SUPPLY", "keys": "KEYS",
-	"sport": "SPORT", "gas": "FUEL", "venue": "TICKETS", "library": "LIBRARY", "bank": "BANK", "hall": "HALL"}
+	"sport": "SPORT", "gas": "FUEL", "venue": "TICKETS", "library": "LIBRARY", "bank": "BANK", "hall": "HALL", "realty": "REALTY"}
 
 var foot := {}      # base -> Vector2(w, d)
 var tall := {}      # base -> height

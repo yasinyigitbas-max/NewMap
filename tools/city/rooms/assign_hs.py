@@ -50,6 +50,22 @@ SHOPS = [
      "block 2: the bookshop on the 9th St corner, papers at its door"),
     ("n_hs_b2_ninth", "hall", "civic/civ_community_center", (-75.0, 2.15, -179.55), 180.0, 0, "hall", "Christ Church Community Center", "",
      "block 2: the church's hall on 9th St (office, meetings); its painted COMMUNITY CENTER sign stays"),
+    ("n_hs_b3_amber", "corner", "commercial/com_orange_corner", (-23.60, 0.1496, 216.45), 90.0, 0, "corner_shop", "Beach Market", "green",
+     "block 3: drinks, snacks and sun cream on the corner where 11th St meets Amber, the way to the beach"),
+    ("n_hs_b3_amber", "corner", "commercial/com_orange_corner", (-23.60, 0.1496, 216.45), 90.0, 1, "salon", "Shore Cuts", "navy",
+     "block 3: a barber beside the corner market (a key shop was tried: its pegboard covered the back door)"),
+    ("n_hs_b3_amber", "condo", "apartments/apt_beach_condo", (-22.10, 0.0021, 233.10), 90.0, 0, "clothes", "Swim & Sun", "teal",
+     "block 3: swimwear and beach clothes under the condos"),
+    ("n_hs_b3_amber", "surf", "commercial/com_surf_shop", (-23.60, -0.4299, 248.25), 90.0, 0, "sport", "Coronado Surf Co.", "teal",
+     "block 3: boards and wetsuits a block from the sand"),
+    ("n_hs_b3_amber", "cafe", "commercial/com_cafe_seaside", (-23.60, -0.6510, 257.12), 90.0, 0, "cafe", "Beach Break Cafe", "cream",
+     "block 3: coffee on the way down to the beach; its pots by the door, its dumpster behind"),
+    ("n_hs_b3_amber", "realty", "commercial/com_realty", (-23.60, -0.7902, 265.14), 90.0, 0, "realty", "Ocean Realty", "navy",
+     "block 3: vacation rentals and sales, listings in the window"),
+    ("n_hs_b3_amber", "burger", "ck/mod_fastfood", (-22.60, -1.1370, 274.54), 90.0, 1, "fast_food", "Ocean Burger", "red",
+     "block 3: the burger stand at the beach end of the high street"),
+    ("n_hs_b3_motel", "condo", "apartments/apt_beach_condo", (-74.0, -1.8135, 296.8), 0.0, 0, "sport", "Beach Rentals", "sun",
+     "block 3: bikes, kayaks and umbrellas for hire on Ocean Blvd; its forecourt shows them"),
 ]
 
 
