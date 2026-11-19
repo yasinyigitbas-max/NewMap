@@ -238,6 +238,11 @@ void CityCrowd::_exit_tree() {
 
 // ---------------------------------------------------------------- who else there is
 void CityCrowd::set_traffic(Object *p_traffic) { traffic_id = p_traffic ? (uint64_t)p_traffic->get_instance_id() : 0; }
+void CityCrowd::set_player_car(Object *p_car, double p_half_length, double p_half_width) {
+	car_id = p_car ? (uint64_t)p_car->get_instance_id() : 0; has_car_last = false;
+	car_hl = (float)p_half_length; car_hw = (float)p_half_width;
+}
+
 void CityCrowd::set_player(Object *p_player) {
 	player_id = p_player ? (uint64_t)p_player->get_instance_id() : 0; has_last_player = false;
 	// the test app's stand-in player gets a body and clothes like the people's (his own, never dissolving)
@@ -324,9 +329,20 @@ void CityCrowd::step_brain(double p_delta) {
 		}
 		for (int place : bus_here) if (std::find(here.begin(), here.end(), place) == here.end()) crowd->bus_at(place, false, 0.0f, 0.0f, 0);
 		bus_here = here;
-		crowd->set_cars((int)cars.size() / 7, cars.data());
 		if (tr->has_clock()) clock = tr->signal_clock();
-	} else crowd->set_cars(0, nullptr);
+	} else cars.clear();
+	// the car the player drives is a car like the others to them
+	Node3D *pcar = car_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(car_id))) : nullptr;
+	if (pcar && pcar->is_inside_tree()) {
+		const Transform3D ct = pcar->get_global_transform();
+		const Vector3 f = ct.basis.get_column(2);
+		Vector3 cv;
+		if (has_car_last && p_delta > 1.0e-4) cv = (ct.origin - car_last) / (float)p_delta;
+		car_last = ct.origin; has_car_last = true;
+		const float q[7] = { (float)ct.origin.x, (float)ct.origin.z, (float)std::atan2(f.x, f.z), car_hl, car_hw, (float)cv.x, (float)cv.z };
+		cars.insert(cars.end(), q, q + 7);
+	} else { car_id = 0; has_car_last = false; }
+	crowd->set_cars((int)cars.size() / 7, cars.empty() ? nullptr : cars.data());
 	acc += p_delta;
 	int steps = 0;
 	while (acc >= STEP_S && steps < 3) {
@@ -696,6 +712,28 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 		nb.ped->become(bodies[body].id, bodies[body].near_mesh, nb.look, sc > 0.9f);
 		nb.ped->set_visible(true);
 	}
+	// the cars near a body: it knows them as boxes, takes over by itself when one reaches it, and is pushed and knocked
+	// over by them while its balancing body has it. (Fed in BOTH states: fed only while animated, the car's box stood
+	// still from the moment of the take-over, and a car at 25 km/h moved a man 0.4 m and left him standing: seen 20 Nov
+	// in tests/people/test_car_hits.gd.)
+	auto feed_boxes = [&](Near &nb, int i) {
+		int nbx = 0;
+		const int nc = (int)cars.size() / 7;
+		for (int c = 0; c < nc && nbx < pb::MAX_BOXES; c++) {
+			const float *q = &cars[(size_t)c * 7];
+			const float dx = q[0] - crowd->x[i], dz = q[1] - crowd->z[i];
+			if (dx * dx + dz * dz > 9.0f * 9.0f) continue;
+			nbx++;
+		}
+		int k = 0;
+		for (int c = 0; c < nc && k < nbx; c++) {
+			const float *q = &cars[(size_t)c * 7];
+			const float dx = q[0] - crowd->x[i], dz = q[1] - crowd->z[i];
+			if (dx * dx + dz * dz > 9.0f * 9.0f) continue;
+			nb.ped->set_box(k++, Vector3(q[0], crowd->y[i] + 0.75f, q[1]), Vector3(q[4], 0.75f, q[3]), q[2], Vector3(q[5], 0, q[6]), nbx);
+		}
+		if (nbx == 0) nb.ped->set_box(-1, Vector3(), Vector3(), 0.0, Vector3(), 0);
+	};
 	// what each one shows; a car near it; the player walking into it; its physical body
 	Node3D *pl = player_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
 	int n_near = 0;
@@ -801,23 +839,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 					}
 				}
 			}
-			// the cars near it: its body knows them as boxes, and takes over by itself when one reaches it
-			int nbx = 0;
-			const int nc = (int)cars.size() / 7;
-			for (int c = 0; c < nc && nbx < pb::MAX_BOXES; c++) {
-				const float *q = &cars[(size_t)c * 7];
-				const float dx = q[0] - crowd->x[i], dz = q[1] - crowd->z[i];
-				if (dx * dx + dz * dz > 9.0f * 9.0f) continue;
-				nbx++;
-			}
-			int k = 0;
-			for (int c = 0; c < nc && k < nbx; c++) {
-				const float *q = &cars[(size_t)c * 7];
-				const float dx = q[0] - crowd->x[i], dz = q[1] - crowd->z[i];
-				if (dx * dx + dz * dz > 9.0f * 9.0f) continue;
-				nb.ped->set_box(k++, Vector3(q[0], crowd->y[i] + 0.75f, q[1]), Vector3(q[4], 0.75f, q[3]), q[2], Vector3(q[5], 0, q[6]), nbx);
-			}
-			if (nbx == 0) nb.ped->set_box(-1, Vector3(), Vector3(), 0.0, Vector3(), 0);
+			feed_boxes(nb, i);
 			// the player walks into it: a shove as hard as he comes
 			if (pl && nb.push_cd <= 0.0f && sc > 0.9f) {
 				const Vector3 pp = pl->get_global_position();
@@ -830,6 +852,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 			}
 		}
 		if (nb.ped->get_mode() != CityPed::MODE_ANIM) {   // its body has it: the walker is where the body is
+			if (nb.ped->get_mode() == CityPed::MODE_BODY) feed_boxes(nb, i);
 			const Vector3 at = nb.ped->body_at();
 			crowd->to_body(nb.walker, true, at.x, at.z);
 			nb.in_body = true;
@@ -984,6 +1007,7 @@ void CityCrowd::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_cell_in", "key"), &CityCrowd::_on_cell_in);
 	ClassDB::bind_method(D_METHOD("_on_cell_out", "key"), &CityCrowd::_on_cell_out);
 	ClassDB::bind_method(D_METHOD("set_player", "player"), &CityCrowd::set_player);
+	ClassDB::bind_method(D_METHOD("set_player_car", "car", "half_length", "half_width"), &CityCrowd::set_player_car);
 	ClassDB::bind_method(D_METHOD("set_max_people", "n"), &CityCrowd::set_max_people);
 	ClassDB::bind_method(D_METHOD("get_max_people"), &CityCrowd::get_max_people);
 	ClassDB::bind_method(D_METHOD("set_density", "scale"), &CityCrowd::set_density);

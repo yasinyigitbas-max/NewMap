@@ -346,6 +346,7 @@ func _free_drive(first: Vector3) -> void:
 	add_child(car)
 	var s0: Dictionary = car.call(&"get_state")
 	if traffic: traffic.call(&"set_player_car", car, 2.3, 1.0)
+	if people: people.call(&"set_player_car", car, 2.3, 1.0)      # (people get out of its way, and are knocked over by it)
 	_say("car %s (%s feel): %d kg, wheelbase %.2f m; W A S D / arrows, Space = handbrake, Esc leaves" % [names[m], "GTA 5" if int(car.get(&"feel")) == 1 else "GTA 4", int(s0.mass), float(s0.wheelbase)])
 	var last := car.global_position
 	var t_start := Time.get_ticks_msec()

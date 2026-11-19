@@ -62,7 +62,9 @@ private:
 	bool draw_on = true;
 	// the step
 	double acc = 0.0, own_clock = 0.0;
-	uint64_t traffic_id = 0, player_id = 0, streamer_id = 0;
+	uint64_t traffic_id = 0, player_id = 0, streamer_id = 0, car_id = 0;
+	float car_hl = 2.3f, car_hw = 1.0f;     // the car the player drives: a box the people see, like the traffic's cars
+	Vector3 car_last; bool has_car_last = false;
 	std::vector<uint8_t> cells;
 	bool cells_all = true, cells_dirty = false;
 	std::vector<float> cars, dyn, bus_buf;
@@ -142,6 +144,8 @@ public:
 	// who else there is: the traffic (cars to see and to be seen by, the signals' clock), the streamer (its cells),
 	// the player on foot (any Node3D; people step aside for him and may be talked to)
 	void set_traffic(Object *p_traffic);
+	// the car the player drives (any Node3D that looks along its +z): people get out of its way, and are knocked over by it
+	void set_player_car(Object *p_car, double p_half_length, double p_half_width);
 	void attach(Object *p_streamer);
 	void _on_cell_in(const String &p_key);
 	void _on_cell_out(const String &p_key);
