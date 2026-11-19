@@ -173,7 +173,9 @@ their own wall. Colliders = boxes added to columns and props that had none. The 
 - **Lost colliders.** The fixer added new colliders with a fast auto name that can repeat a saved sibling's name; the
   save then dropped the old one. The proof caught it twice (two hedge colliders gone). Fixed: `add_child(c, true)`.
   Before the fix, in r_q_250_m1000_nw I left two fence panels' add_collider lines out to get a clean proof: those two
-  panels (local (-122.25|-124.47, 2.76, -25.85)) still have no collider.
+  panels (local (-122.25|-124.47, 2.76, -25.85)) were left without a collider. FIXED afterwards: the two lines carried out
+  alone (`r_q_250_m1000_nw.fence2.fixes.json`), PROOF RESULT PASS (all 935 old colliders identical, the hedges' included),
+  both new colliders within 0.04 m of their panels (colsize: 815 -> 817 fence colliders, 0 bigger), lock test RESULT PASS.
 - **Boxes for building columns/posts** (add_box) are sized from the measured column and were not affected.
 
 ## Other fixes to the shared run tools
