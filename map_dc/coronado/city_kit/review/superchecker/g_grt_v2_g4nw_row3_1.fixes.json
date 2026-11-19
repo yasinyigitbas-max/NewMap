@@ -1,0 +1,24 @@
+{
+ "fixes": [
+  {
+   "at": [
+    1.63999998569489,
+    1.14999997615814,
+    -1.95000004768372
+   ],
+   "base": "prop_poster_case",
+   "cond": "",
+   "kind": "shows_through",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "move",
+   "reason": "prop_poster_case reaches 1.5 cm into the wall to the next shop and shows in the next shop",
+   "to": [
+    1.67500001849787,
+    1.14999997615814,
+    -1.95000004768372
+   ]
+  }
+ ],
+ "scene": "g_grt_v2_g4nw_row3_1"
+}

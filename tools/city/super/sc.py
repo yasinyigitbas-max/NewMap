@@ -104,6 +104,12 @@ def cmd_fix(piece, fixes_path=None):
         todo.append(f)
     # removals last within their kind is not needed (items are found by place, not by number), but wells must come
     # after their trees: the well filler looks for the well of a trunk position, the tree itself may still stand
+    seen = set(); uniq = []
+    for f in todo:          # one item listed by two checks (a wear mark off its surface AND oil with no car): carry it out once
+        k = (f['op'], f.get('base', ''), f.get('wear', ''), f.get('surface', 0), tuple(round(float(v), 3) for v in f['at']))
+        if k in seen: continue
+        seen.add(k); uniq.append(f)
+    todo = uniq
     todo.sort(key=lambda f: {'add_collider': 0, 'move': 1, 'remove': 2, 'remove_decal': 3, 'fill_well': 4, 'add_box': 5}.get(f['op'], 9))
     lst = os.path.join(WORK, piece + '.todo.json'); json.dump({'scene': piece, 'fixes': todo}, open(lst, 'w'), indent=1)
     out = os.path.join(WORK, piece + '.scn'); applied = os.path.join(WORK, piece + '.applied.json')

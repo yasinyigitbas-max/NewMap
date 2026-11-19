@@ -1,0 +1,11 @@
+{
+ "area": "grt_g4nw",
+ "piece": "g_v2_g4nw",
+ "zone": "gritty edge",
+ "rule": "docs/TREE_PLAN.md: almost none - one scrappy tree in a vacant lot, weeds at fences; a street here lost its trees long ago (zone 109 -> about 30)",
+ "written": "by hand, 19 Nov 2026 (PC session, the city-wide superchecker run). The block's two builder coral trees go; one tree comes back.",
+ "trees": [
+  {"base": "tree_coral_b", "cond": "normal", "at": [-633.0, 3.49, -1272.0], "yaw": 250.0, "scale": 0.8,
+   "why": "the walk-ups' back lawn: the one green patch of the block, where the tenants sit (adirondack and patio set 5 m off) and hang washing; a smallish coral tree gives them shade, kept back 2.7 m from the clothesline"}
+ ]
+}
