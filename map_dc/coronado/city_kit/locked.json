@@ -2446,11 +2446,6 @@
    "by": "Yasin",
    "date": "2026-11-19"
   },
-  "n_wf_b1w": {
-   "sha256": "92d26c939057f5d08f22df2a948526e5dcbc40dd3b0f0955cab3516bbf8f2e9f",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
   "n_hs_b2_amber": {
    "sha256": "837299fe52cf565b23716f1d3961db74db1e6d143a523a84cc512e21bdcc19aa",
    "by": "Yasin",
@@ -2673,6 +2668,11 @@
   },
   "n_wf_b1m": {
    "sha256": "254c47f89f767ff5abccca8c767cb3ea7575d04326c42d9fbcebddc72e752624",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_wf_b1w": {
+   "sha256": "389c6a8917780e3521b9516959aa321b8088dc37bf4b4da5004c21cd3754ad3f",
    "by": "Yasin",
    "date": "2026-11-19"
   }
@@ -3123,18 +3123,8 @@
    "by": "Yasin",
    "date": "2026-11-19"
   },
-  "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1w__shoreline_grill__0.scn": {
-   "sha256": "69cf73b9ddbc544b1663dc29a4fefbf98b7a282b87140d1e43aabf703a376191",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
   "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2w__bayview_inn__0.scn": {
    "sha256": "5484c8d65fc3acf8f0d235e01da2d02f0987acadd9cc10dd6ac73124fcc3ec3f",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
-  "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1w__bay_bike_hire__0.scn": {
-   "sha256": "1631edd0dd4bbde224c7ac93179c624fbf57c2cad75967aec27fca53fcfe61d3",
    "by": "Yasin",
    "date": "2026-11-19"
   },
@@ -3155,11 +3145,6 @@
   },
   "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2e__harbour_boatworks__0.scn": {
    "sha256": "9c70d114a5d6f1c6be79cf28ac477e11bc91b674db35740e76e77e5eb00e893a",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
-  "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1w__harbour_bakery__0.scn": {
-   "sha256": "54dcf08aa5918fbc5c9cd2fb721fa554a686950aeeabe2df909bee2b69064593",
    "by": "Yasin",
    "date": "2026-11-19"
   },
@@ -3440,6 +3425,21 @@
   },
   "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1m__tide_bar__0.scn": {
    "sha256": "430af1dcd75801a7803fddcddfb6faba495bf8eca283d1033040c81a7edbc44f",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1w__bay_bike_hire__0.scn": {
+   "sha256": "9ff863497e1b395594123757ad500d5fc1c4ccfa2acc66405a166a0449e66135",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1w__harbour_bakery__0.scn": {
+   "sha256": "09a77cb3c75c6e8044e320ae4bc6e33022cda90e75142360299d43c01026311d",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1w__shoreline_grill__0.scn": {
+   "sha256": "63159951aa3a12b96f579cb3c2876e3f5c42a6110d9aca0fef28f0d57753714a",
    "by": "Yasin",
    "date": "2026-11-19"
   }
