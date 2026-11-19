@@ -225,6 +225,17 @@ int Crowd::place_walker(float p_x, float p_z, uint32_t p_look) {
 	return id[i];
 }
 
+// A person set down exactly at a point (a cyclist who came off on the road), held there facing p_yaw until the game
+// hands him to a body (to_body) and back; he then walks to the pavement as anybody does who was knocked over.
+int Crowd::place_held_at(float p_x, float p_z, uint32_t p_look, float p_yaw) {
+	const int pid = place_walker(p_x, p_z, p_look);
+	const int i = find(pid);
+	if (i < 0) return -1;
+	mode[i] = M_HELD; v[i] = 0.0f; pass[i] = 0; face_yaw[i] = p_yaw; yaw[i] = pyaw[i] = p_yaw;
+	move_row(i, p_x, p_z);
+	return pid;
+}
+
 bool Crowd::remove_walker(int p_id) {
 	const int i = find(p_id);
 	if (i < 0) return false;

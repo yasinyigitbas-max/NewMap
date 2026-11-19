@@ -333,3 +333,5 @@ the other agent suggested these
 - [2026-11-19] only you are working on the cars, no one else
 
 - [2026-11-19] also make the bikes able to crash to cars, make a rideable bike for the player, make sure its designed for touch controls, make sure it moves realistic like the cars, our view should wobble riding it. add damage to the bikes, we should be able to get ejected if we hit a car hard enough. use all relevant animations
+
+- [2026-11-19] (on the drivers only braking for something sudden) make them try to get out of the way and break hard at the same time. but add it to the very end of the queue

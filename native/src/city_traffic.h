@@ -51,6 +51,7 @@ struct RouteScratch;
 namespace godot {
 
 class CityCar;
+class RigidBody3D;
 
 class CityTraffic : public Node3D {
 	GDCLASS(CityTraffic, Node3D)
@@ -170,6 +171,17 @@ private:
 	Ref<ShaderMaterial> mat_bike;
 	std::vector<float> bike_draw;
 	int cyclists = 8;
+	// cyclists who came off (the step hands them over): the rider is the crowd's (bikes_down_now: 9 floats each: x, y,
+	// z, yaw, speed, the car's vx, vz, the bicycle's id, its paint), the bicycle is one of a pool of physical ones
+	std::vector<float> downs_shared;   // (under mx)
+	std::vector<float> downs_now;      // (main thread) this frame's
+	enum { FALLEN = 4 };
+	struct Fallen { RigidBody3D *body = nullptr; Ref<ShaderMaterial> mat; bool on = false; float t = 0.0f, slow = 0.0f; Vector3 rest_at; };
+	Fallen fallen[FALLEN];
+	int fallen_next = 0, bikes_down_n = 0;
+	void bike_fall(const float *d);
+	Vector3 pc_last;                   // the player's car where it was last frame (its speed when it is not a physical body)
+	bool pc_has_last = false;
 	static Ref<Mesh> make_bike_mesh();
 	Batch lamps_b;                 // the lamp glows of every car that shows a light (one draw)
 	Ref<Mesh> mesh_lamps;
@@ -276,6 +288,11 @@ public:
 	// (DYN_STRIDE floats each). The traffic's own clock, which its signals run on.
 	void cars_for_people(std::vector<float> &r_cars) const;
 	const std::vector<float> &bikes_drawn() const { return bike_draw; }   // 7 a cyclist: x, y, z, yaw, lean, crank turns, id
+	const std::vector<float> &bikes_down_now() const { return downs_now; }   // 9 a cyclist who came off this frame
+	// the bicycle (mesh and shader) for the player's own (CityBike): the same as the traffic's
+	static Ref<Mesh> bike_mesh() { return make_bike_mesh(); }
+	static String bike_shader_code();
+	Dictionary bike_stats() const;
 	void set_walkers(const float *p_dyn, int p_n);
 	double signal_clock() const { return now.clock; }
 	bool has_clock() const { return threaded; }

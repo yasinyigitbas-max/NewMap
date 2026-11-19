@@ -1275,3 +1275,22 @@ along a line and nobody saw them; the map's way was coronado_route.gd, AStar2D i
 - NOT DONE: cyclists do not come off when hit (a car or the player's car that touches one makes him stop, as a car
   would); the player cannot ride a bike yet; riders' crank turns in four steps; a rider is a far figure even close up.
   Both are Yasin's next items (docs/GAME_PORT_BOARD.md 2b, 2c). Not tried on the phone.
+
+## 35. A cyclist hit by a car comes off (19 Nov night; Yasin: "make the bikes able to crash to cars"; "for crashes and ejection use your ragdoll system")
+- The core: a cyclist whom a moving box reaches 2.5 m/s faster than he goes (the player's car, a knocked car, the
+  game's own car; never a walker) comes off: he leaves the road at the end of the step and the game is told where he
+  was, his speed and the car's (Sim::bike_downs).
+- His bicycle: one of four physical bicycles made at the start (CityTraffic: rigid bodies, the traffic's bicycle mesh,
+  his paint), thrown on as he went and pushed by the car, over away from the blow; at rest on its side it is put down
+  (a thin body on the road rocked 5 cm for ever and never slept), and taken away when far and old.
+- The rider: one of the crowd now (CityCrowd), set down on the road where he fell, the same body as the drawn rider
+  (his look from the bicycle's id), given a near body before anybody else, and thrown by the blow: his BALANCING BODY
+  flies, lands and lies (never a clip), gets up (LayToIdle) and he walks to the pavement as anybody knocked over does.
+  Far from the camera, with no body free, he simply walks to the pavement.
+- The traffic now reads the player's car's speed from where it was when it is not a physical body (a scene's car,
+  the tests' stand-in).
+- tests/traffic/test_bike_hit.gd RESULT PASS: a car at 43 km/h into a cyclist from behind: he comes off, his body
+  goes down (hips 0.16 m over the floor), gets up, walks to the pavement 11 s later; the bicycle lies on its side.
+  test_traffic_core, test_bikes, test_knock, test_route, test_car_hits, test_acts, test_crowd_game RESULT PASS.
+- NOT done: he does not go back for his bicycle (it lies there until it is taken away); a cyclist into a walker does
+  not fall.

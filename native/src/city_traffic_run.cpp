@@ -2,6 +2,10 @@
 // collision pool. See city_traffic.h for how it hangs together.
 #include "city_traffic.h"
 
+#include <godot_cpp/classes/box_shape3d.hpp>
+#include <godot_cpp/classes/collision_shape3d.hpp>
+#include <godot_cpp/classes/mesh_instance3d.hpp>
+#include <godot_cpp/classes/physics_material.hpp>
 #include <godot_cpp/classes/rigid_body3d.hpp>
 
 #include "car_models.h"
@@ -182,6 +186,12 @@ void CityTraffic::step_once(double p_clock) {
 		r.tu = sim->tu[i]; r.span = std::max(1, (int)sim->span[i]);
 		r.stop = sim->bus_stop_tag(i);
 	}
+	std::vector<float> downs;
+	for (const tc::Sim::BikeDown &b : sim->bike_downs) {
+		const float f[9] = { b.x, b.y, b.z, b.yaw, b.v, b.hvx, b.hvz, (float)b.id, (float)b.colour };
+		downs.insert(downs.end(), f, f + 9);
+	}
+	sim->bike_downs.clear();
 	s.tick = sim->tick; s.t_usec = usec_now(); s.clock = p_clock + STEP_S;
 	s.step_us = (float)sim->st.last_step_us; s.carry = sim->carry;
 	s.spawned = sim->st.spawned; s.despawned = sim->st.despawned; s.buses = sim->st.buses_spawned; s.bus_stops = sim->st.bus_stops_served;
@@ -191,6 +201,7 @@ void CityTraffic::step_once(double p_clock) {
 		adopt_done.insert(adopt_done.end(), done.begin(), done.end());
 		park_events.insert(park_events.end(), parking.events.begin(), parking.events.end());
 		park_out = parking.pulled_out; park_in = parking.parked;
+		downs_shared.insert(downs_shared.end(), downs.begin(), downs.end());
 	}
 	parking.events.clear();
 }
@@ -255,6 +266,57 @@ void CityTraffic::send(Batch &b) {
 }
 
 // One row: where the car is, how it stands (yaw 0 = facing +z, pitch + = nose up), its size against the mesh, paint, lamps
+// A cyclist came off (d: x, y, z, yaw, speed, the car's vx, vz, id, paint): his bicycle is thrown on in the way it
+// went and pushed by the car, tumbles and lies. The oldest of the four is taken when all are lying somewhere.
+void CityTraffic::bike_fall(const float *d) {
+	bikes_down_n++;
+	if (!bodies_on) return;
+	Fallen &fb = fallen[fallen_next];
+	fallen_next = (fallen_next + 1) % FALLEN;
+	if (!fb.body) return;
+	const float yaw = d[3], v = d[4];
+	const Vector3 f(std::sin(yaw), 0.0f, std::cos(yaw));
+	fb.body->set_freeze_enabled(false);
+	fb.body->set_global_transform(Transform3D(Basis(Vector3(0, 1, 0), yaw), Vector3(d[0], d[1] + 0.02f, d[2])));
+	const Vector3 hit(d[5], 0.0f, d[6]);
+	fb.body->set_linear_velocity(f * v * 0.8f + hit * 0.7f + Vector3(0, 1.2f, 0));
+	const float side = (hit.x * f.z - hit.z * f.x) >= 0.0f ? 1.0f : -1.0f;   // it goes over away from the blow
+	fb.body->set_angular_velocity(f * (3.5f * side) + Vector3(0, 1.0f * side, 0));
+	const float *col = BIKE_PAINT[((int)d[8]) % 8];
+	fb.mat->set_shader_parameter("paint_u", Vector3(col[0], col[1], col[2]));
+	fb.body->set_visible(true);
+	fb.on = true; fb.t = 0.0f; fb.slow = 0.0f;
+}
+
+Dictionary CityTraffic::bike_stats() const {
+	Dictionary d;
+	d["down"] = bikes_down_n;
+	Array lying;
+	for (const Fallen &fb : fallen) {
+		if (!fb.on || !fb.body) continue;
+		Dictionary b;
+		const Transform3D t = fb.body->get_global_transform();
+		b["at"] = t.origin; b["up"] = t.basis.get_column(1).y; b["speed"] = fb.body->get_linear_velocity().length(); b["age"] = fb.t; b["frozen"] = fb.body->is_freeze_enabled(); b["still_s"] = fb.slow; b["spin"] = fb.body->get_angular_velocity().length();
+		lying.push_back(b);
+	}
+	d["fallen"] = lying;
+	return d;
+}
+
+String CityTraffic::bike_shader_code() {
+	return String(
+				"shader_type spatial;\n"
+				"// the traffic's bicycles (CityTraffic::make_bike_mesh): UV.x 0 = the frame (the row's paint), 1 = rubber, 2 = metal, 3 = saddle and grips\n"
+				"uniform vec3 paint_u = vec3(-1.0);   // (a fallen bicycle: a body of its own, not a row)\n"
+				"varying vec3 paint;\n"
+				"varying float part;\n"
+				"void vertex() { paint = paint_u.x >= 0.0 ? paint_u : INSTANCE_CUSTOM.rgb; part = UV.x; }\n"
+				"void fragment() {\n"
+				"\tvec3 c = part < 0.5 ? paint : (part < 1.5 ? vec3(0.03) : (part < 2.5 ? vec3(0.55) : vec3(0.08, 0.06, 0.05)));\n"
+				"\tALBEDO = c; ROUGHNESS = part < 0.5 ? 0.45 : (part < 2.5 && part > 1.5 ? 0.3 : 0.85); METALLIC = part > 1.5 && part < 2.5 ? 0.8 : 0.0;\n"
+				"}\n");
+}
+
 // A bicycle, made here (no file): the rider's frame of the far figures' riding poses (people_bake.h): origin on the
 // ground under the crank's axle, +z forward, wheels of 0.34 m. Tubes are four-sided rods; UV.x says what each part is
 // (0 frame, 1 rubber, 2 metal, 3 saddle and grips). About 600 triangles.
@@ -505,18 +567,31 @@ void CityTraffic::_ready() {
 	{   // the bicycles: a mesh and a small material of their own
 		mesh_bike = make_bike_mesh();
 		Ref<Shader> sh; sh.instantiate();
-		sh->set_code(
-				"shader_type spatial;\n"
-				"// the traffic's bicycles (CityTraffic::make_bike_mesh): UV.x 0 = the frame (the row's paint), 1 = rubber, 2 = metal, 3 = saddle and grips\n"
-				"varying vec3 paint;\n"
-				"varying float part;\n"
-				"void vertex() { paint = INSTANCE_CUSTOM.rgb; part = UV.x; }\n"
-				"void fragment() {\n"
-				"\tvec3 c = part < 0.5 ? paint : (part < 1.5 ? vec3(0.03) : (part < 2.5 ? vec3(0.55) : vec3(0.08, 0.06, 0.05)));\n"
-				"\tALBEDO = c; ROUGHNESS = part < 0.5 ? 0.45 : (part < 2.5 && part > 1.5 ? 0.3 : 0.85); METALLIC = part > 1.5 && part < 2.5 ? 0.8 : 0.0;\n"
-				"}\n");
+		sh->set_code(bike_shader_code());
 		mat_bike.instantiate(); mat_bike->set_shader(sh);
 		make_batch(bike_b, mesh_bike, mat_bike, 32, shadows);
+		// the bicycles of cyclists who come off: four physical ones, made now and put away
+		if (bodies_on) {
+			for (int k = 0; k < FALLEN; k++) {
+				RigidBody3D *rb = memnew(RigidBody3D);
+				rb->set_mass(14.0);
+				rb->set_linear_damp(0.8f); rb->set_angular_damp(2.0f);   // (on its side it scrapes along the road and stops)
+				{ Ref<PhysicsMaterial> pm; pm.instantiate(); pm->set_friction(0.9f); pm->set_bounce(0.05f); rb->set_physics_material_override(pm); }
+				rb->set_collision_layer(16); rb->set_collision_mask(1);   // (the world only: the traffic's boxes are moved onto cars every frame and shoved it along)
+				CollisionShape3D *cs = memnew(CollisionShape3D);
+				Ref<BoxShape3D> bx; bx.instantiate(); bx->set_size(Vector3(0.14f, 0.95f, 1.70f));
+				cs->set_shape(bx); cs->set_position(Vector3(0, 0.55f, 0.09f));
+				rb->add_child(cs);
+				MeshInstance3D *mi = memnew(MeshInstance3D);
+				mi->set_mesh(mesh_bike);
+				fallen[k].mat = mat_bike->duplicate();
+				mi->set_material_override(fallen[k].mat);
+				rb->add_child(mi);
+				add_child(rb);
+				rb->set_visible(false); rb->set_freeze_enabled(true); rb->set_global_position(Vector3(0, -600.0f - (float)k * 3.0f, 0));
+				fallen[k].body = rb;
+			}
+		}
 	}
 	// the lamp glows: four squares at the corners of a unit car (x = left / right, z = front / back), made here
 	{
@@ -648,6 +723,8 @@ void CityTraffic::_process(double p_delta) {
 			pcp = pt.origin; pcyaw = std::atan2(pf.x, pf.z); pc = true;
 			RigidBody3D *rb = Object::cast_to<RigidBody3D>(pn);
 			if (rb) pcv = rb->get_linear_velocity();
+			else if (pc_has_last && p_delta > 1.0e-4) { pcv = (pcp - pc_last) / (float)p_delta; if (pcv.length_squared() > 90.0f * 90.0f) pcv = Vector3(); }   // (moved by a scene or a test: its speed from where it was)
+			pc_last = pcp; pc_has_last = true;
 		} else player_id = 0;
 	}
 	{
@@ -673,6 +750,7 @@ void CityTraffic::_process(double p_delta) {
 		adopt_done.clear();
 		now = shared;
 		park_now.swap(park_events); park_events.clear();
+		downs_now.swap(downs_shared); downs_shared.clear();
 		cnt.park_out = park_out; cnt.park_in = park_in;
 	}
 	// stalls that changed: a car pulled out (its stall is empty now) or one parked (the stall takes its model and colour)
@@ -812,6 +890,22 @@ void CityTraffic::_process(double p_delta) {
 			lamps_b.n++;
 		}
 		if (bodies_on && p[5] < 70.0f * 70.0f) body_want.push_back(BodyWant{ p[5], p[0], p[1], p[2], p[3], p[4], (int)r.model, r.id, -1, r.v, r.steer, r.colour });
+	}
+	// ---- cyclists who came off: their bicycles fall (the riders are the crowd's); the fallen ones lie a while
+	for (size_t k = 0; k + 8 < downs_now.size(); k += 9) bike_fall(&downs_now[k]);
+	for (Fallen &fb : fallen) {
+		if (!fb.on || !fb.body) continue;
+		fb.t += (float)p_delta;
+		const Vector3 bp = fb.body->get_global_position();
+		if (!fb.body->is_freeze_enabled()) {   // at rest on its side it is put down for good (a thin body on the road rocks for ever)
+			// (by how far it goes, not its speed: a thin body rocking in place reads 0.4 m/s and several rad/s for ever)
+			if ((bp.x - fb.rest_at.x) * (bp.x - fb.rest_at.x) + (bp.z - fb.rest_at.z) * (bp.z - fb.rest_at.z) > 0.08f * 0.08f) { fb.rest_at = bp; fb.slow = 0.0f; } else fb.slow += (float)p_delta;   // (along the ground: it rocks up and down by 5 cm)
+			if (fb.slow > 1.0f && fb.t > 1.5f) { fb.body->set_linear_velocity(Vector3()); fb.body->set_angular_velocity(Vector3()); fb.body->set_freeze_enabled(true); }
+		}
+		const float d2 = (bp.x - cp.x) * (bp.x - cp.x) + (bp.z - cp.z) * (bp.z - cp.z);
+		if ((fb.t > 40.0f && d2 > 60.0f * 60.0f) || fb.t > 150.0f || bp.y < cp.y - 150.0f) {
+			fb.on = false; fb.body->set_visible(false); fb.body->set_freeze_enabled(true); fb.body->set_global_position(Vector3(0, -600.0f, 0));
+		}
 	}
 	// ---- the first frames: one small row of everything in front of the camera, so every shader is built at the start
 	if (warm_frames > 0) {

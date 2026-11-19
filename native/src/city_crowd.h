@@ -120,6 +120,11 @@ private:
 	void onlookers(int p_row, int p_most, float p_seconds, bool p_film);
 	// counters
 	int riders_drawn = 0;   // the traffic's cyclists drawn as riders this frame
+	// cyclists who came off (CityTraffic::bikes_down_now): each is a person on the road now, given a near body at once
+	// and thrown by the blow; if no body can be his within 1.5 s (far from the camera) he just walks to the pavement
+	struct Thrown { int walker; Vector3 imp, at; float t; };
+	std::vector<Thrown> thrown;
+	int riders_thrown = 0, riders_bodied = 0;
 	struct Count { int frames = 0, steps = 0; double step_us = 0, step_us_worst = 0, main_us = 0, main_us_worst = 0, people = 0, near = 0, umbrellas = 0; int most = 0; } cnt;
 
 	bool load();

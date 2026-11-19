@@ -91,6 +91,7 @@ public:
 	double clip_len(const StringName &p_clip) const;
 	StringName current_clip() const { return cur_clip; }
 	int get_mode() const { return mode; }
+	Skeleton3D *skeleton() const { return skel; }   // (the player's bicycle reaches its feet and hands to the pedals and grips)
 	Vector3 body_at() const;
 	float body_yaw() const { return body.heading; }
 	// A shove or a blow: p_impulse in N s, spread over a fifth of a second, on the part nearest to p_at (world)

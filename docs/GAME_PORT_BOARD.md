@@ -14,6 +14,9 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 - "also make the bikes able to crash to cars, make a rideable bike for the player, make sure its designed for touch
   controls, make sure it moves realistic like the cars, our view should wobble riding it. add damage to the bikes, we
   should be able to get ejected if we hit a car hard enough. use all relevant animations"
+- "make them try to get out of the way and break hard at the same time. but add it to the very end of the queue"
+  (the traffic's drivers, faced with something sudden: swerve AND brake hard, not only brake)
+- "dont forget to add our pro animations whereever they apply, for crashes and ejection use your ragdoll system."
 - Standing rules: everything per frame or tick in C++ (memory: runtime code in C++); scripts only for tools and tests;
   one question, one run; the phone last; don't waste his usage or his PC; say what was not checked.
 
@@ -27,7 +30,7 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 ## The queue (in order)
 1. [x] (19 Nov, doc section 34) Cyclists inside the traffic core (K_BIKE, the riders in the crowd's one far draw, the bike batch). Test: tests/traffic/test_bikes.gd + test_traffic_core RESULT PASS.
 2. [x] (19 Nov, doc section 34) Route finding in the traffic core (A*, one finder for buses, taxis, scripted cars, the map's way; CityTraffic.route). Test: tests/traffic/test_route.gd.
-2b. [ ] Cyclists crash into cars (a car or the player's car hits a cyclist hard: he comes off: the balancing body / a
+2b. [x] (19 Nov, tests/traffic/test_bike_hit.gd) Cyclists crash into cars (a car or the player's car hits a cyclist hard: he comes off: the balancing body / a
       fall, the bike lies; gets up, picks it up, rides on, or walks it away hurt).
 2c. [ ] A bike the player rides (C++ node like CityCar): pedalling, gears-free speed, steering by leaning, brakes,
       skids; touch controls (left thumb steer, right thumb pedal / brake, a button to get on and off); the camera
@@ -51,3 +54,7 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 
 ## Still waiting on Yasin (from before)
 - His go for people inside the shops; the voices; a fresh bake, then make_streets.gd, make_places.gd and the tests.
+
+## The very end of the queue (Yasin: "add it to the very end of the queue")
+99. [ ] Drivers swerve out of the way and brake hard at the same time when something sudden is in front of them (the
+    core now only brakes, then goes round); keep the core's no-overlap veto and the 12 runs passing.

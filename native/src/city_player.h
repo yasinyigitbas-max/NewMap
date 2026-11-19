@@ -57,6 +57,11 @@ public:
 	String get_clip() const;
 	double get_speed() const { return speed; }
 	CityPed *figure() { return fig; }
+	// on a bicycle (CityBike): he is not there as a body while he rides (no collision, not drawn, no keys); back on his
+	// feet at a place facing a way, with his own view again
+	void set_riding(bool p_on);
+	void stand_at(const Vector3 &p_at, double p_yaw);
+	void take_view() { if (cam) { cam->make_current(); cam_set = false; } }
 	void set_body_id(const String &p_id) { body_id = p_id; }
 	String get_body_id() const { return body_id; }
 	void set_capture_mouse(bool p_on) { capture_mouse = p_on; }

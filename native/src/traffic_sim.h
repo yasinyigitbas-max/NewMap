@@ -57,7 +57,7 @@ enum {
 };
 enum { LF_DRIVE = 1, LF_ROUNDABOUT = 2, LF_BLOCKED = 4, LF_DEADEND = 8,
 	LF_EXIT = 16 };   // the lane runs out of the map (the far end of the bridge): cars drive on to its end and are gone
-enum { E_HONK = 1, E_CRASH = 2, E_HARDBRAKE = 3, E_SPAWN = 4, E_DESPAWN = 5, E_ARRIVE = 6, E_PED_SPAWN = 7, E_PED_DESPAWN = 8 };
+enum { E_HONK = 1, E_CRASH = 2, E_HARDBRAKE = 3, E_SPAWN = 4, E_DESPAWN = 5, E_ARRIVE = 6, E_PED_SPAWN = 7, E_PED_DESPAWN = 8, E_BIKE_DOWN = 9 };
 // car kinds: ambient traffic, timetable bus, scripted (CityRide: routed, stops at its goal, never despawned by the sim),
 // a cyclist (rides at the kerb side of the kerb lane, 4-6.5 m/s, keeps to the signals like a car; cars squeeze past
 // inside the lane where there is room, else follow or change lanes)
@@ -127,7 +127,7 @@ struct Stats {
 	int lane_changes = 0, passes = 0, reservations = 0, revoked = 0;
 	int asks = 0, let_through = 0;   // times a waiting car asked for a way through; times another car held back for one
 	int buses_spawned = 0, bus_stops_served = 0, arrivals = 0, reroutes = 0;
-	int bikes_spawned = 0, bike_squeezes = 0;   // cyclists put on the road; times a car went past one inside its lane
+	int bikes_spawned = 0, bike_squeezes = 0, bikes_down = 0;   // cyclists put on the road; times a car went past one inside its lane
 	// build
 	int n_intrusions = 0, n_blocked_lanes = 0, n_deadend_lanes = 0, n_conflict_pairs = 0, n_pass_lanes = 0;
 	double build_ms = 0.0, last_step_us = 0.0;
@@ -355,6 +355,11 @@ public:
 	float bike_line(int i, int piece) const;   // where in its lane (lat) a cyclist rides on this piece
 	bool try_spawn_bike();
 	int32_t bike_passed[MAX_CARS];   // the cyclist this car last went past (counted once)
+	// A cyclist hit by a car he cannot get away from (the player's car, a knocked car, the game's own: a moving box that
+	// reaches him 2.5 m/s faster than he goes) comes off: he leaves the core at the end of the step and the game is told
+	// where he was, how he went and how the car went (the rider goes to the crowd's balancing body, the bicycle falls).
+	struct BikeDown { int32_t id, slot; float x, y, z, yaw, v, hvx, hvz; uint8_t colour; };
+	std::vector<BikeDown> bike_downs;
 	void bike_pass_mark(int i, int j) { if (bike_passed[i] != id[j]) { bike_passed[i] = id[j]; st.bike_squeezes++; } }
 	int add_route(const int32_t *lanes, int n, const int32_t *stop_ri, const float *stop_s, int ns, const float *tph, int model);
 	int spawn_routed(int kind_, int model_, const std::vector<int32_t> &route, int ri, float s_, float speed);

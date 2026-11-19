@@ -239,6 +239,7 @@ Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, c
 	d["park_off_mean"] = parking.parked > 0 ? parking.park_off / parking.parked : 0.0; d["park_off_most"] = parking.park_off_max;
 	d["park_yaw_mean_deg"] = parking.parked > 0 ? parking.park_yaw / parking.parked * 57.2958 : 0.0; d["park_yaw_most_deg"] = parking.park_yaw_max * 57.2958;
 	d["bus_lines"] = (int)sim->routes.size(); d["buses_spawned"] = sim->st.buses_spawned; d["bus_stops_served"] = sim->st.bus_stops_served;
+	d["bikes_down"] = sim->st.bikes_down;
 	d["bikes_wanted"] = cyclists; d["bikes_most"] = bikes_most; d["bikes_spawned"] = sim->st.bikes_spawned; d["bike_squeezes"] = sim->st.bike_squeezes;
 	d["routes_found"] = sim->routes_ok.load(); d["routes_failed"] = sim->routes_no.load(); d["reroutes"] = sim->st.reroutes;
 	d["hash"] = (int64_t)(sim->state_hash() & 0x7fffffffffffffffULL);
@@ -501,6 +502,7 @@ void CityTraffic::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("pull_car_over", "car", "to", "side"), &CityTraffic::pull_car_over);
 	ClassDB::bind_method(D_METHOD("let_car_go", "car"), &CityTraffic::let_car_go);
 	ClassDB::bind_method(D_METHOD("order_result", "ticket"), &CityTraffic::order_result);
+	ClassDB::bind_method(D_METHOD("bike_stats"), &CityTraffic::bike_stats);
 	ClassDB::bind_method(D_METHOD("set_cyclists", "n"), &CityTraffic::set_cyclists);
 	ClassDB::bind_method(D_METHOD("get_cyclists"), &CityTraffic::get_cyclists);
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "cyclists"), "set_cyclists", "get_cyclists");

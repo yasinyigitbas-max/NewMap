@@ -115,6 +115,22 @@ void CityPlayer::_physics_process(double p_delta) {
 	fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), get_global_position()), clip, std::min(std::max(cs, 0.5), 2.0), -1.0);
 }
 
+void CityPlayer::set_riding(bool p_on) {
+	frozen = p_on;
+	set_visible(!p_on);
+	set_collision_layer(p_on ? 0 : 2);
+	set_collision_mask(p_on ? 0 : (1 | 16 | 32));
+	set_velocity(Vector3());
+}
+
+void CityPlayer::stand_at(const Vector3 &p_at, double p_yaw) {
+	set_global_position(p_at);
+	yaw = (float)p_yaw;
+	cam_yaw = (float)p_yaw + 3.14159265f;   // (his view behind him)
+	set_velocity(Vector3());
+	if (fig) fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), p_at), StringName("ual/Idle_Loop"), 1.0, -1.0);
+}
+
 String CityPlayer::get_clip() const { return fig ? String(fig->current_clip()) : String(); }
 
 void CityPlayer::_process(double p_delta) {

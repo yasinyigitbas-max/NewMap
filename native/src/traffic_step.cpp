@@ -643,6 +643,21 @@ void Sim::update_car(int i, float h) {
 		if (d_kind[d] == DYN_XWALK || (d_id[d] == -1 && kind[i] == K_SCRIPTED) || std::fabs(d_y[d] - y[i]) > 2.5f) continue;
 		if (obb_overlap(x[i], z[i], fx[i], fz[i], hl_ + 0.02f, hw_ + 0.02f, d_x[d], d_z[d], d_fx[d], d_fz[d], d_hl[d], d_hw[d])) { touch = d; break; }
 	}
+	if (touch >= 0 && kind[i] == K_BIKE && d_kind[touch] != DYN_PED && d_kind[touch] != DYN_PLAYER) {
+		const float hv2 = d_vx[touch] * d_vx[touch] + d_vz[touch] * d_vz[touch];
+		const float rvx = d_vx[touch] - v_ * fx[i], rvz = d_vz[touch] - v_ * fz[i];
+		if (hv2 > 1.5f * 1.5f && rvx * rvx + rvz * rvz > 2.5f * 2.5f) {   // a car came into him: he comes off
+			bool listed = false;
+			for (const BikeDown &b : bike_downs) if (b.id == id[i]) listed = true;
+			if (!listed) {
+				bike_downs.push_back(BikeDown{ id[i], i, x[i], y[i], z[i], yaw[i], v_, d_vx[touch], d_vz[touch], colour[i] });
+				st.bikes_down++;
+				event(E_BIKE_DOWN, i, std::sqrt(rvx * rvx + rvz * rvz));
+			}
+			v[i] = 0.0f; acc[i] = 0.0f; why[i] = W_CRASH;
+			return;
+		}
+	}
 	if (touch >= 0) {
 		if (!touching[i]) {
 			touching[i] = 1;
@@ -1411,6 +1426,10 @@ void Sim::step(float dt_, double clock_) {
 		if (!due) continue;
 		int n = std::min(std::max(tick - tu[i], 1), 8);
 		update_car(i, dt * (float)n);
+	}
+	for (BikeDown &b : bike_downs) {   // the cyclists who came off this step leave the road
+		if (b.slot >= 0 && b.slot < hi && alive[b.slot] && id[b.slot] == b.id) despawn(b.slot, 9);
+		b.slot = -1;
 	}
 	st.last_step_us = std::chrono::duration<double, std::micro>(std::chrono::steady_clock::now() - t0).count();
 }

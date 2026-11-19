@@ -713,6 +713,46 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 		}
 		if (std::sqrt(near_d) + 3.0f < std::sqrt(far_d)) { near_pool[far_k].walker = -1; near_pool[far_k].ped->set_visible(false); }
 	}
+	auto give = [&](Near &nb, int best) {
+		float pr[4]; int body; float sc;
+		person_of(best, pr, body, sc);
+		nb.walker = crowd->id[best]; nb.in_body = false;
+		nb.why = 0; nb.after_kind = 0; nb.after_t = 0.0f;
+		nb.v_s = crowd->v[best];
+		nb.act = crowd->act[best]; nb.act_t = 99.0f;
+		nb.look->set_shader_parameter("person", Vector4(pr[0], pr[1] - (float)(body * 64), pr[2], pr[3]));
+		nb.ped->become(bodies[body].id, bodies[body].near_mesh, nb.look, sc > 0.9f);
+		nb.ped->set_visible(true);
+	};
+	// a cyclist who came off gets a body before anybody: a free one of his kind, else the farthest that is only walking
+	for (size_t q = 0; q < thrown.size();) {
+		Thrown &th = thrown[q];
+		th.t += (float)p_delta;
+		const int i = crowd->find(th.walker);
+		bool has = false;
+		for (const Near &o : near_pool) if (o.walker == th.walker) has = true;
+		if (i < 0 || (!has && th.t > 1.5f)) {   // gone, or no body could be his: he walks to the pavement from there
+			if (i >= 0) { crowd->to_body(th.walker, true, crowd->x[i], crowd->z[i]); crowd->to_body(th.walker, false, crowd->x[i], crowd->z[i]); }
+			thrown.erase(thrown.begin() + (long)q); continue;
+		}
+		if (!has) {
+			float pq[4]; int bq; float sq; person_of(i, pq, bq, sq);
+			const int kind = bodies[bq].female;
+			int pick = -1; float far_d = -1.0f;
+			for (int k = 0; k < (int)near_pool.size(); k++) {
+				const Near &nb = near_pool[k];
+				if (nb.female != kind) continue;
+				if (nb.walker < 0) { pick = k; break; }
+				if (nb.in_body || nb.ped->get_mode() != CityPed::MODE_ANIM) continue;
+				const int j = crowd->find(nb.walker);
+				if (j < 0) { pick = k; break; }
+				const float dx = crowd->x[j] - cp.x, dz = crowd->z[j] - cp.z;
+				if (dx * dx + dz * dz > far_d) { far_d = dx * dx + dz * dz; pick = k; }
+			}
+			if (pick >= 0) { if (near_pool[pick].walker >= 0) near_pool[pick].ped->set_visible(false); give(near_pool[pick], i); riders_bodied++; }
+		}
+		q++;
+	}
 	// the nearest people without one take the free ones (of their own kind)
 	for (Near &nb : near_pool) {
 		if (nb.walker >= 0) continue;
@@ -869,6 +909,13 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 				}
 			}
 			feed_boxes(nb, i);
+			for (size_t q = 0; q < thrown.size(); q++) {   // a cyclist who came off: the blow throws him (his balancing body from here on)
+				if (thrown[q].walker != nb.walker) continue;
+				nb.ped->push(thrown[q].imp, thrown[q].at + Vector3(0, 1.05f, 0));
+				nb.push_cd = 2.5f; nb.why = 3; nb.after_kind = 0; nb.after_t = 0.0f;
+				thrown.erase(thrown.begin() + (long)q);
+				break;
+			}
 			// the player walks into it: a shove as hard as he comes
 			if (pl && nb.push_cd <= 0.0f && sc > 0.9f) {
 				const Vector3 pp = pl->get_global_position();
@@ -894,6 +941,25 @@ void CityCrowd::_process(double p_delta) {
 	if (!ready) return;
 	const int64_t t0 = usec_now();
 	step_brain(p_delta);
+	{   // the traffic's cyclists who came off this frame: the rider is one of ours now, on the road where he fell
+		CityTraffic *trf = traffic_id ? Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(traffic_id))) : nullptr;
+		if (trf && trf->is_inside_tree()) {
+			const std::vector<float> &dn = trf->bikes_down_now();
+			for (size_t k = 0; k + 8 < dn.size(); k += 9) {
+				const uint32_t h = (uint32_t)dn[k + 7] * 2654435761u ^ 0x5bd1e995u;   // (who rode it: as the rider was drawn)
+				const uint32_t female = (h >> 3) % 3u == 0u ? 1u : 0u;
+				const uint32_t look = (h & ~8u) | (female << 3);
+				const int w = crowd->place_held_at(dn[k], dn[k + 2], look, dn[k + 3]);
+				if (w < 0) continue;
+				const Vector3 f(std::sin(dn[k + 3]), 0.0f, std::cos(dn[k + 3]));
+				const Vector3 bv = f * dn[k + 4], cv(dn[k + 5], 0.0f, dn[k + 6]);
+				Vector3 imp = (bv + (cv - bv) * 0.75f) * 72.0f;
+				if (imp.length() > 650.0f) imp = imp.normalized() * 650.0f;
+				thrown.push_back(Thrown{ w, imp, Vector3(dn[k], dn[k + 1], dn[k + 2]), 0.0f });
+				riders_thrown++;
+			}
+		}
+	}
 	near_update(p_delta, acc / STEP_S);
 	draw(acc / STEP_S);
 	extras_update(acc / STEP_S);
@@ -1007,7 +1073,7 @@ Dictionary CityCrowd::stats() const {
 	int r[7];
 	crowd->audit(own_clock, r);
 	d["people"] = crowd->n_alive; d["places"] = (int)crowd->places.size(); d["hour"] = hour; d["weekday"] = weekday;
-	d["riders"] = riders_drawn;
+	d["riders"] = riders_drawn; d["riders_thrown"] = riders_thrown; d["riders_given_a_body"] = riders_bodied;
 	d["inside_each_other"] = r[0]; d["beside_pavement"] = r[1]; d["standing_a_minute"] = r[3]; d["bad_numbers"] = r[4];
 	d["spawned"] = s.spawned; d["left"] = s.despawned; d["arrivals"] = s.arrivals; d["went_in"] = s.went_in; d["came_out"] = s.came_out; d["sat"] = s.sat; d["crossings"] = s.crossings;
 	d["groups"] = s.parties; d["meetings"] = s.meetings; d["dodges"] = s.dodges; d["fled"] = s.fled; d["bumps"] = s.bumps;
