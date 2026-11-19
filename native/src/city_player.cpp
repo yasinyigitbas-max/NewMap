@@ -196,6 +196,8 @@ void CityPlayer::_physics_process(double p_delta) {
 	} else swimming = false;
 	clock_s += dt;
 	if (swimming) crouch = false;
+	if (crouch != crouch_prev) { crouch_prev = crouch; crouch_t = 0.0f; }
+	crouch_t += dt;
 	float top = swimming ? (run ? 1.7f : 1.0f) : (run ? run_speed : walk_speed);
 	if (crouch && !swimming) top *= 0.45f;
 	if (combat) top = std::min(top, 1.4f);   // (in his stance he steps, he does not run)
@@ -211,6 +213,20 @@ void CityPlayer::_physics_process(double p_delta) {
 	jump_want = false;
 	set_velocity(v);
 	move_and_slide();
+	// STEP UP (Yasin: "make the small heights like 20 cm walkable over"): walking into something no higher than 24 cm (a
+	// kerb, a step) he is lifted onto it: free to rise 24 cm, free 30 cm ahead up there, and something to stand on there
+	if (!swimming && !airborne && !frozen && is_on_wall() && Vector3(want.x, 0, want.z).length() > 0.3f) {
+		const Vector3 dir = Vector3(want.x, 0, want.z).normalized();
+		Transform3D t2 = get_global_transform();
+		const Vector3 up(0, 0.24f, 0), ahead = dir * 0.3f;
+		if (!test_move(t2, up)) {
+			t2.origin += up;
+			if (!test_move(t2, ahead)) {
+				t2.origin += ahead;
+				if (test_move(t2, Vector3(0, -0.3f, 0))) { set_global_position(t2.origin); apply_floor_snap(); steps_up++; }
+			}
+		}
+	}
 	const Vector3 got = get_velocity();
 	speed = Vector3(got.x, 0, got.z).length();
 	if (combat) {   // in combat he faces his target whichever way he steps
@@ -225,7 +241,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	}
 	// his figure: the Quaternius clips by his pace
 	static const StringName IDLE("ual/Idle_Loop"), WALK("ual/Walk_Loop"), JOG("ual/Jog_Fwd_Loop"), SPRINT("ual/Sprint_Loop"), SWIM("ual/Swim_Fwd_Loop"), FLOAT("ual/Swim_Idle_Loop");
-	static const StringName CR_IDLE("ual/Crouch_Idle_Loop"), CR_FWD("ual/Crouch_Fwd_Loop"), J_UP("ual/Jump_Start"), J_AIR("ual/Jump_Loop"), J_LAND("ual/Jump_Land");
+	static const StringName CR_IDLE("ual/Crouch_Idle_Loop"), CR_FWD("ual/Crouch_Fwd_Loop"), J_UP("ual/Jump_Start"), J_AIR("ual/Jump_Loop"), J_LAND("ual/Jump_Land"), CR_IN("ual/Crouch_Enter"), CR_OUT("ual/Crouch_Exit");
 	StringName clip = IDLE; double cs = 1.0, hold = -1.0;
 	const bool floor_now = is_on_floor();
 	if (airborne && floor_now && get_velocity().y <= 0.0f) { airborne = false; land_t = 0.35f; }
@@ -242,7 +258,9 @@ void CityPlayer::_physics_process(double p_delta) {
 		else { clip = GUARD; hold = std::max(fig->clip_len(GUARD) - 0.03, 0.0); }
 	}
 	else if (uncombat_t < 0.9 && speed < 0.5f) { static const StringName GUARD_OUT("ual/PunchKick_Exit"); clip = GUARD_OUT; hold = -2.0; }   // (out of the guard)
+	else if (crouch && speed < 0.5f && crouch_t < fig->clip_len(CR_IN)) { clip = CR_IN; hold = -2.0; }   // (down into the crouch)
 	else if (crouch) { clip = speed > 0.2f ? CR_FWD : CR_IDLE; cs = speed > 0.2f ? speed / 0.8 : 1.0; }
+	else if (!crouch && speed < 0.5f && crouch_t < fig->clip_len(CR_OUT) && !airborne) { clip = CR_OUT; hold = -2.0; }   // (up out of it)
 	else if (speed > 3.6f) { clip = SPRINT; cs = speed / 3.1; }
 	else if (speed > 2.0f) { clip = JOG; cs = speed / 2.4; }
 	else if (speed > 0.2f) { clip = WALK; cs = speed / 0.92; }
@@ -298,6 +316,7 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("punch"), &CityPlayer::punch);
 	ClassDB::bind_method(D_METHOD("get_combat"), &CityPlayer::get_combat);
 	ClassDB::bind_method(D_METHOD("get_punches"), &CityPlayer::get_punches);
+	ClassDB::bind_method(D_METHOD("get_steps_up"), &CityPlayer::get_steps_up);
 	ClassDB::bind_method(D_METHOD("get_hits_taken"), &CityPlayer::get_hits_taken);
 	ClassDB::bind_method(D_METHOD("set_no_touch", "index", "rect"), &CityPlayer::set_no_touch);
 	ClassDB::bind_method(D_METHOD("get_touch_move"), &CityPlayer::get_touch_move);

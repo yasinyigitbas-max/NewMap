@@ -38,6 +38,8 @@ class CityPlayer : public CharacterBody3D {
 	double tap_t[2] = { -9, -9 }; Vector2 tap_p[2];
 	bool crouch = false, jump_want = false, space_was = false, c_was = false, airborne = false;
 	float land_t = 0.0f;
+	bool crouch_prev = false; float crouch_t = 9.0f;   // (into and out of the crouch: Crouch_Enter / Crouch_Exit played through)
+	int steps_up = 0;   // (the tests) small heights stepped up
 	double clock_s = 0.0;
 	Rect2 no_touch[8]; int n_no_touch = 0;   // screen rectangles that are buttons (the Use plate, the phone): not move / look
 	// COMBAT (Yasin: "when phone is swung down in landscape, we should enter combat mode ... tapping the back [throws] a
@@ -83,6 +85,7 @@ public:
 	void set_combat(bool p_on, const Vector3 &p_target) { if (p_on && !combat) combat_t = 0.0; if (!p_on && combat) uncombat_t = 0.0; combat = p_on; combat_target = p_target; if (!p_on) punch_req = false; }
 	bool get_combat() const { return combat; }
 	int get_punches() const { return punches; }
+	int get_steps_up() const { return steps_up; }
 	void take_hit() { hit_t = 0.0; hits_taken++; }   // a blow taken on his feet (the hit clip)
 	int get_hits_taken() const { return hits_taken; }
 	bool get_crouch() const { return crouch; }
