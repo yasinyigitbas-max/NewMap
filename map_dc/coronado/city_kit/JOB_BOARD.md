@@ -5,6 +5,15 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~22:45 (PC session): THE LAND FITTED UNDER THE WATERFRONT FILL TOO (Yasin, shown the trial pictures:
+  "Show me first", then "Yes, fit it"). Only the land: `lower_land_to_pieces.py --only=grow_wf --fit --ease-from`
+  wrote exactly the trial he saw: 2,333 nodes lowered (usual 0.24 m, largest 1.64 m), 2,641 raised back to the blocks'
+  edges, no node of another family, no sea node, none pushed under the beach line. Game land baked; x_wall_feet
+  rebuilt (87 blocks, 7,423 faces). AFTER: the six n_wf_* pieces 0 m2 under the land (16,334 before); every growth
+  family 0; lock test RESULT PASS. Pictures OUT/super/work/wf_shots, wf_e_shots.
+  NOT CHECKED: 90 spots where the lowered land meets a node under a neighbouring piece with a step over 1 m (under or
+  between pieces, not seen in the pictures); a right-angled line in the empty land east of the north block in the
+  trial's top view (maybe the preview's height lines); the runtime bake and the phone.
 - 19 Nov ~22:00 (PC session): THE LAND FITTED UNDER THE APARTMENT FILL (Yasin: "apartmen block still built under the
   terrain fix it"; "they were supposed to be careful from th start"; "CONSIDER THE ELEVATION" - "i deliberately wrote
   this to all of them"). The apartment and waterfront fill branches had been merged into this branch that afternoon
