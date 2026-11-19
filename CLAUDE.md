@@ -9,6 +9,8 @@ ONLY the new map: hand-made, locked city-kit pieces, the kit assets they are bui
 2. `.claude/skills/coronado-city-kit/SKILL.md` - how pieces are built, locked, checked; the traps.
 3. `map_dc/coronado/city_kit/YASIN_MESSAGES.md` - Yasin's own words.
 4. Interiors: `.claude/skills/coronado-city-interiors/SKILL.md`.
+5. Before building, checking, fixing or reporting anything: `.claude/skills/coronado-super-builder/SKILL.md` (19 Nov:
+   no generators, one fix = one thing changed, what each check cannot see, the outdoor and indoor audits, the land).
 
 ## The rules that matter most (Yasin)
 - Act as architect, road / city planner and exterior designer at once; every prop has a reason. Lively, worn, varied.

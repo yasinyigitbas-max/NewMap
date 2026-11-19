@@ -5,6 +5,14 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~07:15 (PC session): ONE SKILL FOR ALL BUILDING: `.claude/skills/coronado-super-builder/` (Yasin: "fetch the
+  skill files from all 4 city extenders branches, combine it with your knowledge from this session, add the notes
+  below and make a super builder skill"). It merges the four `coronado-zone-growth` skills (branches grow-residential,
+  grow-gritty, grow-industrial, grow-strip), the 19 Nov land work and his two audit lists (outdoor: sunk areas, tyre
+  marks only on asphalt at lights / crossings / garages, overlapping and obstructive props moved to a free and more
+  logical place; indoor: chairs facing right, wall items, full floors, nothing in the air, props that fit the store,
+  everything reachable, windows and doors). It says which of those a check sees and which are by eye only. The zone
+  skills' generator METHOD is not carried over: hand placement only. Nothing in the map changed with this.
 - 19 Nov ~06:40 (PC session): BANKS EASED AND BLOCK EDGES FITTED, CITY WIDE (Yasin, on the picture of a block in a
   notch of the hillside: "lower the land in the places that go above the blocks like in the last pic you sent"; "and
   make sure all land is under blocks but blocks dont float too"; "roll it city wide and measure again"). ONLY THE
