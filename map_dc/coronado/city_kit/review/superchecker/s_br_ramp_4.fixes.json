@@ -1,0 +1,19 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -52.006103515625,
+    -0.612248301506042,
+    -39.8038330078125
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "s_br_ramp_4"
+}
