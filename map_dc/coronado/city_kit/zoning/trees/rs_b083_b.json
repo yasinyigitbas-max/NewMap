@@ -1,0 +1,81 @@
+{
+ "area": "rs_b083_b",
+ "piece": "s_rs_b083_b",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; broadleaf on the flat; within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -245.818,
+    8.01,
+    -1006.45
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first of the west face's magnolias (old spot and species)"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -265.616,
+    7.755,
+    -1006.45
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway 20 m on, the magnolia run continues"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -290.193,
+    7.333,
+    -1006.45
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway 24.6 m on, the last magnolia (one species a face: the pine here becomes a magnolia)"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -244.045,
+    8.028,
+    -993.55
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway grass, first of the east face's jacaranda run (old spot and species)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -270.9,
+    7.671,
+    -993.55
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway 27 m on, the run continues"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -296.004,
+    7.225,
+    -993.55
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "east parkway 25 m on, the last jacaranda; the 12-13 m doubles go"
+  }
+ ]
+}
