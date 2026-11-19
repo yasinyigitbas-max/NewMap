@@ -1,0 +1,10 @@
+{
+ "area": "hs_b2_ninth", "piece": "n_hs_b2_ninth", "zone": "high street",
+ "rule": "docs/TREE_PLAN.md: high street (pilot), Amber spine, arterials (zone 406 -> about 360); strip rule for the car park: one tree per car-park island end",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's nine builder trees go (a row along the car park's island, five crowded into the west corner against the privacy fence); three come back on their own spots: the island's east end, the tree by the park bench, and one on the west grass with room round it.",
+ "trees": [
+  {"base": "tree_torrey_pine_b", "cond": "normal", "at": [-54.8, 5.782, -159.6], "yaw": 0.0, "scale": 0.85, "why": "the east end of the car park's island, by the wheel stops: the island-end tree"},
+  {"base": "tree_coral_b", "cond": "normal", "at": [-72.2, 5.929, -159.6], "yaw": 120.0, "scale": 0.85, "why": "the island by the park bench (2.3 m off): shade for whoever waits there"},
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [-90.5, 6.13, -166.0], "yaw": 240.0, "scale": 0.85, "why": "the west grass by the bougainvillea, 7.4 m from the building"}
+ ]
+}
