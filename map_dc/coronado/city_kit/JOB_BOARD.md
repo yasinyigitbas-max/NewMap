@@ -31,7 +31,8 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   PHYSICAL car (`veh_dyn.*`: springs, tyres that slip, engine, gears, brakes; two feels, IV soft and sliding, V
   flatter and grippier, for all 12 models) and `CityCar`, a car to drive on the engine's physics (`--car=stern_g` in
   the rig); console test PASS for 24 car x feel pairs, engine test PASS. Lock test RESULT PASS.
-  NOT DONE: nobody has driven it (the feel is tuned to numbers only); `--car` was written, NOT run; no phone run; a
+  NOT DONE: nobody has driven it (the feel is tuned to numbers only); `--car` was tried unattended only (the car
+  stands on its wheels in the streamed city: `-- --car=stern_g --at=-600,-1000,90 --traffic=20`); no phone run; a
   hit traffic car is not yet handed to the physical car; traffic wheels do not turn on screen; PEOPLE not started.
   FOUND IN THE MAP: on today's bake the streets tool measures Amber Ave between z -1100 and -800 (b038 / b039) as a
   1 + 1 lane street with the kerb 4.5 m from the middle (it was 2 + 2 lanes, 11.5 m): 9 junction paths touch a kerb

@@ -31,7 +31,8 @@ The full record is `docs/TRAFFIC_PEOPLE_PORT.md` (sections 13-20 are results). T
   part of a path. (6) `make_streets.gd` on a newer bake silently gives other streets: compare the report's first line
   (layout_sha) and its CHECK lines with git's before keeping the file. (7) One car's history beats ten guesses:
   `--trace=ID --only=PART_OF_RUN_NAME` on the traffic test prints it. (8) A heredoc with an apostrophe in it broke
-  again: notes and patches go into a file made with the Write tool.
+  again: notes and patches go into a file made with the Write tool. (9) A thing set on the streamed city needs the
+  place made ready first (`st.prepare` / `is_ready`), and a ray exactly on a cell's edge (every 200 m) finds no ground.
 
 - People, step 1 (19 Nov ~17:00, doc section 22): `ped_body.*` = a body that balances, staggers, falls, lies (plain
   C++; test `bash native/tests/run_ped_test.sh`, `N` as argument traces case N frame by frame); `city_ped.*` = class

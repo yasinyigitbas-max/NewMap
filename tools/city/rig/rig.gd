@@ -297,28 +297,50 @@ func _free_drive(first: Vector3) -> void:
 	var start := first; var yaw := 0.0
 	if String(opt.at) != "":
 		var f := String(opt.at).split_floats(","); start = Vector3(f[0], 0, f[1]); yaw = deg_to_rad(f[2]) if f.size() > 2 else 0.0
-		st.update_focus(start, true)
-		for i in 30: st.update_focus(start, false); await get_tree().process_frame
-	_ground(start, 0.0)
-	for i in 4: await get_tree().physics_frame
+	# (a point exactly on a cell's edge, every 200 m, has no ground a ray can find: the seam between two collision pieces)
+	if absf(fposmod(start.x + 1.0, 200.0) - 1.0) < 1.0 or absf(fposmod(start.z + 1.0, 200.0) - 1.0) < 1.0: start += Vector3(1.7, 0, 1.7)
+	# the start made ready as a drive's start is (its cells in, their collision made), then the ground under it found:
+	# without that the car was set down before there was a street to stand on, and fell through the world
+	st.prepare(start)
+	while not st.is_ready(start):
+		st.update_focus(st.focus, false); hud.text = "getting the start ready"
+		await get_tree().process_frame
+	st.release_prepared(); st.update_focus(start, false)
+	cam.global_position = start + Vector3(0, 8, 0)
+	_g_hit = false; _ground(start, 0.0)
+	var tries := 0
+	while not _g_hit and tries < 240:
+		st.update_focus(start, false); _ground(start, 0.0); tries += 1
+		await get_tree().physics_frame
+	if not _g_hit:
+		var nb := 0; var near := 0; var layers := {}
+		for c: Node in st.find_children("*", "StaticBody3D", true, false):
+			nb += 1; layers[(c as StaticBody3D).collision_layer] = true
+			if (c as Node3D).global_position.distance_to(start) < 150.0: near += 1
+		_say("ERROR --car: no ground with collision under (%.0f, %.0f): choose another place with --at=x,z | collision bodies in the world %d, within 150 m %d, their layers %s, cells in %d, physics process %s" % [start.x, start.z, nb, near, str(layers.keys()), st.loaded_count(), str(is_physics_processing())]); return
+	if not (look and look.cars): RenderingServer.global_shader_parameter_add(&"refl_env", RenderingServer.GLOBAL_VAR_TYPE_VEC2, Vector2(1.0, 0.0))      # (the cars' paint shader needs it to exist)
 	var car: Node3D = ClassDB.instantiate(&"CityCar")
 	car.set(&"model", m); car.set(&"feel", 1 if (q.size() > 1 and q[1].to_upper() == "V") else 0)
 	car.set(&"player", true); car.set(&"chase_camera", true); car.set(&"wheel_mask", 0xFFFFFFEF)
-	car.position = Vector3(start.x, _ground(start, 0.0) + 0.15, start.z); car.rotation.y = yaw
+	var y_start := _ground(start, 0.0) + 0.15
+	car.position = Vector3(start.x, y_start, start.z); car.rotation.y = yaw
 	add_child(car)
 	var s0: Dictionary = car.call(&"get_state")
 	if traffic: traffic.call(&"set_player_car", car, 2.3, 1.0)
 	_say("car %s (%s feel): %d kg, wheelbase %.2f m; W A S D / arrows, Space = handbrake, Esc leaves" % [names[m], "GTA 5" if int(car.get(&"feel")) == 1 else "GTA 4", int(s0.mass), float(s0.wheelbase)])
 	var last := car.global_position
+	var t_start := Time.get_ticks_msec()
 	while not Input.is_key_pressed(KEY_ESCAPE):
 		await get_tree().process_frame
+		if opt.quit and Time.get_ticks_msec() - t_start > 12000: break      # (--quit: a 12 s try-out that leaves by itself)
 		var p: Vector3 = car.global_position
 		var dt := maxf(get_process_delta_time(), 0.001)
 		st.update_focus(p, false, (p - last) / dt); last = p
 		var s: Dictionary = car.call(&"get_state")
 		if Engine.get_process_frames() % 6 == 0:
 			hud.text = "%3d km/h   gear %s   %d rpm   side %.2f g   %s" % [absi(int(s.kmh)), "R" if int(s.gear) < 0 else str(int(s.gear)), int(s.rpm), absf(float(s.side_g)), "SLIDING" if float(s.slip_most) > 1.4 else ""]
-	_say("car: %.0f m driven, hardest knock %.0f g" % [float(s0.get("metres", 0.0)) if false else float((car.call(&"get_state") as Dictionary).metres), float((car.call(&"get_state") as Dictionary).hardest_knock_g)])
+	var s1: Dictionary = car.call(&"get_state")
+	_say("car: %.0f m driven, hardest knock %.0f g, at the end %d wheels on the ground, %.2f m over the place it started, %d km/h" % [float(s1.metres), float(s1.hardest_knock_g), int(s1.wheels_on_ground), car.global_position.y - y_start, int(s1.kmh)])
 	if traffic: _say("  traffic %s" % String(traffic.call(&"report")))
 
 ## Where a frame's time went: with --probe the wait for the physics thread and for the render server to digest what the

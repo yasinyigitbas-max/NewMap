@@ -107,9 +107,7 @@ void CityCar::make() {
 	Ref<Shader> sh = rl->load("res://vehicles/car_paint.gdshader");
 	Ref<Texture2D> atlas = rl->load("res://vehicles/models/Textures/car_atlas_1024.png");
 	if (sh.is_valid()) {
-		RenderingServer *rs = RenderingServer::get_singleton();
-		if (!rs->global_shader_parameter_get_list().has(StringName("refl_env")))   // (the look sets it; without the look the paint shader still needs it to exist)
-			rs->global_shader_parameter_add("refl_env", RenderingServer::GLOBAL_VAR_TYPE_VEC2, Vector2(0, 0));
+		// (the paint shader reads the global `refl_env`: whoever makes the car sees to it that it exists, as the rig does)
 		mat.instantiate(); mat->set_shader(sh); mat->set_shader_parameter("atlas", atlas); mat->set_shader_parameter("paint", paint);
 	}
 	if (body_mesh.is_valid()) {
@@ -156,6 +154,7 @@ void CityCar::read_player() {
 	c_throttle = dir == 1 ? up : down; c_brake = dir == 1 ? down : up;
 	c_steer = std::min(std::max(st, -1.0f), 1.0f);
 	c_handbrake = (in->is_key_pressed(KEY_SPACE) || in->is_joy_button_pressed(0, JOY_BUTTON_A)) ? 1.0f : 0.0f;
+	if (up < 0.05f && down < 0.05f && std::fabs(car.speed) < 0.6f) c_brake = 0.35f;   // left alone at a standstill it holds itself (also on a hill)
 }
 
 void CityCar::set_controls(double p_throttle, double p_brake, double p_steer, double p_handbrake, bool p_reverse) {

@@ -176,9 +176,8 @@ void Car::substep(Chassis &c, float dt, bool move) {
 	if (eng_w < w_idle) te += clampf((w_idle - eng_w) * 0.04f * s.torque, 0.0f, 0.7f * s.torque);   // the idle holds itself
 	float cap = 0.0f;
 	clutch = 0.0f;
-	if (gr != 0.0f) {   // the take-up: open at idle, closed well above it; a touch of creep with the brakes off
+	if (gr != 0.0f) {   // the take-up: open at idle, closed well above it (no creep: a car left alone stays where it is, as in GTA)
 		float e = clampf((eng_w - 1.05f * w_idle) / (0.9f * w_idle), 0.0f, 1.0f);
-		if (in.brake < 0.05f && in.handbrake < 0.05f) e = std::max(e, 0.05f);
 		if (shift_t > 0.0f) { const float u = shift_t / s.shift_s; e *= u > 0.45f ? 0.0f : 1.0f - u / 0.45f; }   // the cut in pull of a gear change
 		cap = e * 1.8f * s.torque; clutch = e;
 	}

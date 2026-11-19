@@ -688,7 +688,11 @@ Drive it: `--car=stern_g` (GTA 4 feel) or `--car=stern_g/V`, with `--at=x,z,yaw`
 - Nobody has DRIVEN it: the feel is tuned to numbers, not to a hand. Yasin drives, says what is wrong, it is tuned.
 - The engine test ran on the PC's default physics engine. The phone runs Jolt: not run there. No phone run of any of
   this (the Redmi comes last).
-- `--car` in the test app is written but was NOT run (no window was opened in this session).
+- `--car` in the test app was TRIED UNATTENDED (19 Nov evening, `-- --car=stern_g --at=-600,-1000,90 --traffic=20
+  --quit`, which leaves by itself after 12 s): the car is set on the street of the streamed city and stands on its
+  four wheels, the traffic runs beside it. Two faults found by that try and mended: the car was set down before the
+  street's collision was there (it fell through the world), and a start point exactly on a cell's edge (every 200 m)
+  has no ground a ray can find. Left alone it now holds itself (no creep). NOBODY HAS PRESSED A KEY IN IT YET.
 - A traffic car that is hit still stops as a box for a few seconds; it is not yet handed to the physical car to be
   shoved and spun. That hand-over is the next step.
 - Traffic cars' wheels are part of one mesh: they do not turn or steer on screen (the body's lean is drawn).
