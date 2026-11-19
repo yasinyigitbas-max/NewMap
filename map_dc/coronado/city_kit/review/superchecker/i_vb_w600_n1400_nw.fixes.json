@@ -1,0 +1,926 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -31.2000007629395,
+    0.349999994039536,
+    -28.5325012207031
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 15.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 23 cm from a apt door of truck_stop_diner (services keep 35 cm off)]",
+   "to": [
+    -31.8000007629395,
+    0.349999994039536,
+    -28.5325011301056
+   ]
+  },
+  {
+   "at": [
+    -65.9000015258789,
+    0.349999994039536,
+    -36.0325012207031
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 16.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 17 cm over a apt door of truck_wash]",
+   "to": [
+    -66.5000015258789,
+    0.349999994039536,
+    -36.0325011301056
+   ]
+  },
+  {
+   "at": [
+    -25.2999992370605,
+    0.150000005960464,
+    -36.2000007629395
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in front of a roll-up door of truck_parts]"
+  },
+  {
+   "at": [
+    -24.2000007629395,
+    0.150000005960464,
+    -13.3125
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 20.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (3.2 m from a wall, 17.1 m from a fence)]"
+  },
+  {
+   "at": [
+    -28.0906677246094,
+    0.150000005960464,
+    -38.3974494934082
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 21.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (5.1 m from a wall, 21.1 m from a fence)]"
+  },
+  {
+   "at": [
+    -29.5219898223877,
+    0.150000005960464,
+    -62.2307052612305
+   ],
+   "base": "prop_hydrant_red",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "hydrant_nowhere",
+   "mode": "choose",
+   "n": 22.0,
+   "op": "remove",
+   "reason": "erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hydrant_red stands 2.5 m from any building wall and 3.0 m inside the block]"
+  },
+  {
+   "at": [
+    -31.4789009094238,
+    0.150000005960464,
+    -36.9850807189941
+   ],
+   "base": "prop_picnic_table",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 23.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -31.3270149230957,
+    0.150000005960464,
+    -35.1807441711426
+   ],
+   "base": "prop_vending_soda",
+   "chosen": true,
+   "cond": "clean",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 24.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_vending_soda stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -7.703125,
+    0.150000005960464,
+    -32.5
+   ],
+   "base": "prop_bike_rack",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 52.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_bike_rack leaves 1.1 m of a 1.8 m wide walk]"
+  },
+  {
+   "at": [
+    -7.78464531898499,
+    0.162000000476837,
+    -59.541202545166
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 25.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -7.720862865448,
+    0.162000000476837,
+    -64.8215859731038
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 26.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -56.0,
+    0.162000000476837,
+    -33.5
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 27.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -48.0,
+    0.162000000476837,
+    -45.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 28.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -52.5,
+    0.162000000476837,
+    -45.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 29.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -62.9999993642171,
+    0.162000000476837,
+    -35.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 30.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -57.0,
+    0.162000000476837,
+    -35.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 31.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -51.0,
+    0.162000000476837,
+    -35.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 32.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -45.0,
+    0.162000000476837,
+    -35.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 33.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -62.7024084726969,
+    0.162000000476837,
+    -34.2227020263672
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 34.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -26.281364440918,
+    0.162000000476837,
+    -59.7498588562012
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 35.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building heavy_repair",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.3948135375977,
+    0.162000000476837,
+    -34.9590148925781
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 36.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -47.4089393615723,
+    0.162000000476837,
+    -34.3096885681152
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 37.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -61.8534507751465,
+    0.162000000476837,
+    -33.6789970397949
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 38.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -98.7612152099609,
+    0.162000000476837,
+    -85.0866775512695
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 39.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -55.823558807373,
+    0.162000000476837,
+    -35.0704078674316
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 40.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -52.9859580993652,
+    0.162000000476837,
+    -33.4150238037109
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 41.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -47.6065101623535,
+    0.162000000476837,
+    -34.8677215576172
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 42.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -60.9313087463379,
+    0.162000000476837,
+    -35.342903137207
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 43.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -24.8484325408936,
+    0.162000000476837,
+    -52.4292678833008
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 44.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building heavy_repair",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -52.2495460510254,
+    0.162000000476837,
+    -33.9483222961426
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 45.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -46.1729202270508,
+    0.162000000476837,
+    -33.0073738098145
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 46.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -48.4458923339844,
+    0.162000000476837,
+    -33.1308326721191
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 47.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building truck_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -25.2479400634766,
+    0.162000000476837,
+    -65.0077826182048
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 48.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building heavy_repair",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -22.9681167602539,
+    0.162000000476837,
+    -56.9236335754395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 49.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building heavy_repair",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -56.1178665161133,
+    0.162000000476837,
+    -45.7226028442383
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 54.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -51.1034736633301,
+    0.162000000476837,
+    -45.7121772766113
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 55.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.0786590576172,
+    0.162000000476837,
+    -46.9998512268066
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 56.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -50.6883773803711,
+    0.162000000476837,
+    -45.4673843383789
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 57.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -47.1708869934082,
+    0.162000000476837,
+    -48.7773246765137
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 58.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -60.9645805358887,
+    0.162000000476837,
+    -48.2391929626465
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 59.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -50.6202430725098,
+    0.162000000476837,
+    -45.8255500793457
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 60.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -58.4281921386719,
+    0.162000000476837,
+    -45.7988929748535
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 61.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -60.9160461425781,
+    0.162000000476837,
+    -45.1850090026855
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 62.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.077709197998,
+    0.162000000476837,
+    -45.1936912536621
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 63.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -32.5,
+    1.64999821782112,
+    -16.862500667572
+   ],
+   "box": [
+    -4.0,
+    1.49999821186066,
+    5.65000009536743,
+    0.16,
+    2.99999642372131,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 65.0,
+   "name": "sc_col_0",
+   "node": "Buildings/truck_stop_diner",
+   "op": "add_box",
+   "reason": "truck_stop_diner: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -53.4002070426941,
+    1.27496221661568,
+    -17.312668800354
+   ],
+   "box": [
+    2.699791431427,
+    1.12496221065521,
+    10.6998319625854,
+    0.539611854553223,
+    2.24992442131042,
+    0.540173568725586
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 66.0,
+   "name": "sc_col_0",
+   "node": "Buildings/truck_wash",
+   "op": "add_box",
+   "reason": "truck_wash: a 0.5 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -58.400194644928,
+    1.27496221661568,
+    -17.312668800354
+   ],
+   "box": [
+    -2.30019617080688,
+    1.12496221065521,
+    10.6998319625854,
+    0.540018119812012,
+    2.24992442131042,
+    0.540173568725586
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 67.0,
+   "name": "sc_col_1",
+   "node": "Buildings/truck_wash",
+   "op": "add_box",
+   "reason": "truck_wash: a 0.5 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -55.9000988006592,
+    1.27496221661568,
+    -17.312668800354
+   ],
+   "box": [
+    0.199899673461914,
+    1.12496221065521,
+    10.6998319625854,
+    0.540019073486328,
+    2.24992442131042,
+    0.540173568725586
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 68.0,
+   "name": "sc_col_2",
+   "node": "Buildings/truck_wash",
+   "op": "add_box",
+   "reason": "truck_wash: a 0.5 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -55.9003033638,
+    1.5499541759491,
+    -16.337610244751
+   ],
+   "box": [
+    0.199695110321045,
+    1.39995416998863,
+    11.6748905181885,
+    0.200006523132324,
+    1.69994050264359,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 69.0,
+   "name": "sc_col_3",
+   "node": "Buildings/truck_wash",
+   "op": "add_box",
+   "reason": "truck_wash: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -73.1999998092651,
+    1.74999943375587,
+    -11.7157526016235
+   ],
+   "box": [
+    7.80000019073486,
+    1.59999942779541,
+    5.95999813079834,
+    0.16,
+    3.19999885559082,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 70.0,
+   "name": "sc_col_0",
+   "node": "Buildings/tyre_store",
+   "op": "add_box",
+   "reason": "tyre_store: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -11.3531258785663,
+    1.64996710419655,
+    -30.5999772634184
+   ],
+   "box": [
+    -3.90002298355103,
+    1.49996709823608,
+    5.65000009536743,
+    0.16,
+    2.99993419647217,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 71.0,
+   "name": "sc_col_0",
+   "node": "Buildings/truck_parts",
+   "op": "add_box",
+   "reason": "truck_parts: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -9.34312935097637,
+    1.66495469212532,
+    -33.4599452982843
+   ],
+   "box": [
+    -1.0400550365448,
+    1.51495468616486,
+    7.65999674797058,
+    0.200036563873291,
+    3.02990937232971,
+    0.199999370574951
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 72.0,
+   "name": "sc_col_1",
+   "node": "Buildings/truck_parts",
+   "op": "add_box",
+   "reason": "truck_parts: a 0.2 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -9.34312917962848,
+    1.66495469212532,
+    -29.5399638186395
+   ],
+   "box": [
+    -4.96003651618958,
+    1.51495468616486,
+    7.65999674797058,
+    0.200036563873291,
+    3.02990937232971,
+    0.199999370574951
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 73.0,
+   "name": "sc_col_2",
+   "node": "Buildings/truck_parts",
+   "op": "add_box",
+   "reason": "truck_parts: a 0.2 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -11.3531259572449,
+    1.64996710419655,
+    -32.3999314393675
+   ],
+   "box": [
+    -2.10006880760193,
+    1.49996709823608,
+    5.65000009536743,
+    0.16,
+    2.99993419647217,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 74.0,
+   "name": "sc_col_3",
+   "node": "Buildings/truck_parts",
+   "op": "add_box",
+   "reason": "truck_parts: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -10.8183061134814,
+    1.64999142289162,
+    -62.2998980285156
+   ],
+   "box": [
+    3.29989767074585,
+    1.49999141693115,
+    8.18481826782227,
+    1.24003795623779,
+    2.9999828338623,
+    0.569804229736328
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 75.0,
+   "name": "sc_col_0",
+   "node": "Buildings/heavy_repair",
+   "op": "add_box",
+   "reason": "heavy_repair: a 1.2 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -10.9631999760924,
+    1.64999142289162,
+    -67.2498830494953
+   ],
+   "box": [
+    8.24988269805908,
+    1.49999141693115,
+    8.03992462158203,
+    0.639880218505859,
+    2.9999828338623,
+    0.280016937255859
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 76.0,
+   "name": "sc_col_1",
+   "node": "Buildings/heavy_repair",
+   "op": "add_box",
+   "reason": "heavy_repair: a 0.6 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -27.0882034017569,
+    1.24995425343513,
+    -58.3498522085406
+   ],
+   "box": [
+    -0.650147438049316,
+    1.09995424747467,
+    -8.08507919311523,
+    0.340216674804687,
+    2.19990849494934,
+    0.370133438110352
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 77.0,
+   "name": "sc_col_2",
+   "node": "Buildings/heavy_repair",
+   "op": "add_box",
+   "reason": "heavy_repair: a 0.3 x 0.3 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "i_vb_w600_n1400_nw"
+}
