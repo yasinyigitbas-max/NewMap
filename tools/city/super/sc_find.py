@@ -495,6 +495,21 @@ class Finder(sc_more.More):
         return 3.0
 
     # ------------------------------------------------------------------ wear marks
+    def kerb_paint(self, corners, ctr):
+        """a paint strip at most 25 cm wide whose long side runs against the road (asphalt within 25 cm across it): kerb
+        paint on the kerb top. Street pieces keep the kerb top in their grass or sidewalk surface (s_rs_b002_a, 19 Nov:
+        the red kerb by the hydrant and the bus stop read 'paint on grass')."""
+        P = corners[:, [0, 2]] - ctr[[0, 2]]
+        if len(P) < 3: return False
+        u, s, vt = np.linalg.svd(P, full_matrices=False)
+        w = float(np.ptp(P @ vt[1])); ln = float(np.ptp(P @ vt[0]))
+        if w > 0.25 or ln < 2 * w: return False
+        a = vt[1]
+        for d in (-0.25, -0.18, -0.12, 0.12, 0.18, 0.25):
+            g = self.c.ground_near(ctr[0] + a[0] * d, ctr[2] + a[1] * d, ctr[1])
+            if g is not None and g[1] in L.HARD and abs(g[0] - ctr[1]) < 0.25: return True
+        return False
+
     def check_wear(self):
         c = self.c
         for path, surf, V in c.dump.decals():
@@ -508,6 +523,7 @@ class Finder(sc_more.More):
                 uc = U[k].mean(0); tile = int(uc[0] * 4) + 4 * int(uc[1] * 4)
                 name = TILE_NAME.get(tile, 'mark'); okm = TILE_OK.get(tile, L.HARD + L.PAVED)
                 corners = np.unique(np.round(P, 4), axis=0)
+                if tile == 13 and self.kerb_paint(corners, ctr): continue                # red / yellow kerb paint on the kerb top
                 bad = None
                 for p in list(corners) + [ctr]:
                     q = ctr + (p - ctr) * 0.9
