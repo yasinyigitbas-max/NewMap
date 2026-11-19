@@ -132,6 +132,61 @@
    "yaw": 0.0,
    "site": "block 3 (u 50..240.8, v -500..-409.2): the slope to 8th St and B Ave, alleys B3 and C3",
    "variant": "8th St row stepping up the slope, B Ave flats, raised residents' garden"
+  },
+  {
+   "piece": "n_cc_b4_w",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 4 (u -190.8..-143, v -900..-809.2): C Ave x 6th, C Ave up the hill, alley A4 west half",
+   "variant": "50 m condo tower on the corner, C Ave flats on pads, residents' garden and parking off alley A4"
+  },
+  {
+   "piece": "n_cc_b4_e",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 4 (u -143..-16, v -900..-809.2): 6th St, Amber x 6th, Amber up the hill, lane L4, the court",
+   "variant": "6th St shop row, Amber shop-houses stepping up, flats on lane L4, parking court at the square's lane, the green"
+  },
+  {
+   "piece": "n_cc_b5_w",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 5 (u 16..193, v -900..-809.2): Amber x 6th, Amber up the hill, 6th St to alley B5, lane L5",
+   "variant": "Amber shop-houses stepping up, 6th St shop row with the arcade, flats on lane L5, court, the green and vegetable beds"
+  },
+  {
+   "piece": "n_cc_b5_e",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 5 (u 193..240.8, v -900..-809.2): B Ave x 6th, B Ave, alleys B5 and C5",
+   "variant": "59 m glass tower on the corner, brick corner shop, B Ave flats, gardens"
+  },
+  {
+   "piece": "n_cc_b6",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 6 (the L round r_q_250_m200_nw, u 16..240.8, v -393.3..-209.2): Amber, 8th, B Ave, 9th",
+   "variant": "50 m condo tower on Amber x 8th, Amber shops, 8th St row stepping up, B Ave and 9th St rows, two parking courts, the hillside park"
   }
  ]
 }

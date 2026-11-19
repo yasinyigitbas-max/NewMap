@@ -81,6 +81,21 @@ var bands: Array = []
 func edge_band(mat: String, pts: PackedVector2Array, base: float, fn: Callable, along_x := true) -> void:
 	bands.append([mat, pts, base, fn, along_x])
 
+## skirt edges round an outline given as a closed ring of points in the same winding as rect_edges (x0 z0, x1 z0, x1 z1,
+## x0 z1): a curved or chamfered street edge gets its skirt where the ground really ends
+static func ring_edges(pts: Array, mat := "wall") -> Array:
+	var out: Array = []
+	for i in pts.size():
+		var a: Vector2 = pts[i]; var b: Vector2 = pts[(i + 1) % pts.size()]
+		if a.distance_to(b) > 1e-3: out.append([a, b, 1.0, mat])
+	return out
+
+## the deepest of these buildings front to back (m), to know where the lots behind a row may start
+static func depth_of(folders: Array) -> float:
+	var d := 0.0
+	for f in folders: d = maxf(d, _near_aabb(String(f)).size.z)
+	return d
+
 ## the outline's four edges, each facing out (for build_floor's skirt)
 static func rect_edges(x0: float, z0: float, x1: float, z1: float, mat := "wall") -> Array:
 	return [[Vector2(x0, z0), Vector2(x1, z0), 1.0, mat], [Vector2(x1, z0), Vector2(x1, z1), 1.0, mat], [Vector2(x1, z1), Vector2(x0, z1), 1.0, mat], [Vector2(x0, z1), Vector2(x0, z0), 1.0, mat]]
@@ -495,7 +510,12 @@ func _lot_at(x: float, z: float) -> Array:
 	return []
 
 func terrain(ls: Array) -> void:
-	lots = ls
+	# every lot's height is taken INSIDE the lot (1 mm in): a function that steps exactly on the lot's edge (a seam
+	# segment, a lane end) would otherwise ramp the lot's last cell up to its neighbour's value
+	lots = []
+	for l0: Array in ls:
+		var f0: Callable = l0[4]; var ax := float(l0[0]) + 1e-3; var bx := float(l0[2]) - 1e-3; var az := float(l0[1]) + 1e-3; var bz := float(l0[3]) - 1e-3
+		lots.append([l0[0], l0[1], l0[2], l0[3], func(x: float, z: float) -> float: return float(f0.call(clampf(x, ax, maxf(ax, bx)), clampf(z, az, maxf(az, bz))))])
 	for l: Array in lots: pad(float(l[0]), float(l[1]), float(l[2]), float(l[3]), l[4])
 	hfn = func(x: float, z: float) -> float:
 		var l2 := _lot_at(x, z)
@@ -526,3 +546,78 @@ func terrain(ls: Array) -> void:
 					g.quad("wall", Vector3(pa.x, bot0, pa.y), Vector3(pb.x, bot1, pb.y), Vector3(pb.x, top1, pb.y), Vector3(pa.x, top0, pa.y), out, true)
 					faces += 1
 	print("%s: terrain %d lots, %d retaining face segments" % [name, lots.size(), faces])
+
+## ---------------------------------------------------------------- slope helpers (blocks 4-6, 19 Nov)
+## the land as read on 19 Nov (zoning/terrain_grid.npz, 4 m grid, piece frame, metres over the 6.0 datum), embedded in
+## the piece script as {x0, z0, step, nx, nz, h: [...] row-major by z}: bilinear, so open ground can follow it
+static func land_at(LD: Dictionary, x: float, z: float) -> float:
+	var s := float(LD.step); var nx := int(LD.nx); var nz := int(LD.nz)
+	var fx := clampf((x - float(LD.x0)) / s, 0.0, nx - 1.001); var fz := clampf((z - float(LD.z0)) / s, 0.0, nz - 1.001)
+	var i := int(fx); var j := int(fz); fx -= i; fz -= j
+	var h: Array = LD.h
+	return lerpf(lerpf(float(h[j * nx + i]), float(h[j * nx + i + 1]), fx), lerpf(float(h[(j + 1) * nx + i]), float(h[(j + 1) * nx + i + 1]), fx), fz)
+
+## open ground: `base` (x, z) eased to fixed heights near the given edges. edges: [[Vector2 a, Vector2 b, Callable
+## h(x, z) on the edge]]; within R m of the nearest edge the ground runs smoothly (smoothstep) from that edge's height
+## to the base, so an open lot meets a street walk, an alley or a neighbour flush and has no jump inside it
+static func eased(base: Callable, edges: Array, R := 8.0) -> Callable:
+	return func(x: float, z: float) -> float:
+		var p := Vector2(x, z); var best := 1e9; var hb := 0.0; var q := Vector2.ZERO
+		for e: Array in edges:
+			var a: Vector2 = e[0]; var b: Vector2 = e[1]
+			var c := Geometry2D.get_closest_point_to_segment(p, a, b)
+			var d := p.distance_to(c)
+			if d < best: best = d; q = c; hb = float((e[2] as Callable).call(c.x, c.y))
+		var t := smoothstep(0.0, R, best)
+		var b0 := float(base.call(x, z))
+		return lerpf(hb, b0, t) if best < R else b0
+
+## a row of buildings on a sloping street: per building a level pad at the walk's HIGHEST point along its lot (never under
+## the walk) and, in front of its wall line, a frontage strip that follows the walk exactly (flush; the plinth between
+## strip and pad is the retaining face). walk: along -> height. back: the across coordinate where the lots end behind.
+## limit: the along coordinate the row may not pass. Appends the lots; returns {plan, pads, folders, n, end}.
+func front_lots(lots: Array, folders: Array, start: float, run: float, face: String, line: float, walk: Callable, back: float, limit: float, min_pad := -1e9, kerb := 0.0) -> Dictionary:
+	var plan := row_plan(folders, start, run, face)
+	var n := 0
+	for p: Array in plan:
+		if (run > 0 and float(p[1]) > limit) or (run < 0 and float(p[0]) < limit): break
+		n += 1
+	plan = plan.slice(0, n)
+	var pads: Array[float] = []
+	var a := start
+	for i in n:
+		var b: float
+		if run > 0: b = (float(plan[i][1]) + float(plan[i + 1][0])) * 0.5 if i < n - 1 else float(plan[i][1]) + 0.05
+		else: b = (float(plan[i][0]) + float(plan[i + 1][1])) * 0.5 if i < n - 1 else float(plan[i][0]) - 0.05
+		var hi := -1e9
+		for k in 9: hi = maxf(hi, float(walk.call(lerpf(a, b, k / 8.0))))
+		hi = maxf(hi, min_pad)
+		pads.append(hi)
+		var sb := setback(String(folders[i]))
+		var lo_al := minf(a, b); var hi_al := maxf(a, b)
+		var fw := func(_x: float, _z: float) -> float: return 0.0
+		var hpad := hi
+		var wf := walk
+		# kerb: the buildings' fronts stand this far back from the street edge, so even a building whose wall is its
+		# front gets a strip flush with the walk in front and its plinth face at its own wall
+		if face in ["s", "n"]:
+			var zf := line - sb if face == "s" else line + sb
+			var ze := line + kerb if face == "s" else line - kerb
+			lots.append([lo_al, minf(back, zf), hi_al, maxf(back, zf), func(_x: float, _z: float) -> float: return hpad])
+			if sb + kerb > 0.02: lots.append([lo_al, minf(zf, ze), hi_al, maxf(zf, ze), func(x: float, _z: float) -> float: return float(wf.call(x))])
+		else:
+			var xf := line - sb if face == "e" else line + sb
+			var xe := line + kerb if face == "e" else line - kerb
+			lots.append([minf(back, xf), lo_al, maxf(back, xf), hi_al, func(_x: float, _z: float) -> float: return hpad])
+			if sb + kerb > 0.02: lots.append([minf(xf, xe), lo_al, maxf(xf, xe), hi_al, func(_x: float, z: float) -> float: return float(wf.call(z))])
+		a = b
+	return {"plan": plan, "pads": pads, "folders": folders.slice(0, n), "n": n, "end": a}
+
+## place the row front_lots laid out, each building at its pad
+func front_row(fl: Dictionary, labels: Array, start: float, run: float, face: String, line: float) -> Array:
+	var plan: Array = fl.plan; var pads: Array = fl.pads
+	return row(fl.folders, labels.slice(0, int(fl.n)), start, run, face, line, false, func(cx: float) -> float:
+		var best := 0
+		for i in plan.size():
+			if absf(float(plan[i][2]) - cx) < absf(float(plan[best][2]) - cx): best = i
+		return float(pads[best]))
