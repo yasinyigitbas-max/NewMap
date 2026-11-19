@@ -34,6 +34,22 @@ const LOOK := [-43.0, 292.2, -25.5, 306.2]   # the lookout's pad (its mesh: u -4
 const KIOSK := [-25.1, 288.2, -17.3, 293.8]  # the beach kiosk's pad
 const TREES := [[-20.0, 286.0], [-20.0, 300.0], [-30.0, 312.0], [-44.0, 286.0]]
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["prop_park_bench", "worn", -17.2, 321.9, 270.0],
+	["prop_bike_rack", "worn", -22.2, 321.9, 0.0],
+	["plant_potted_succulent", "normal", -49.8, 320.4, 90.0, false],
+	["prop_trash_receptacle", "worn", -28.2, 321.9, 180.0],
+	["plant_potted_leafy", "normal", -34.8, 321.4, 270.0, false],
+	["plant_potted_leafy", "normal", -44.8, 320.9, 0.0, false],
+	["prop_park_bench", "worn", -16.2, 316.9, 90.0],
+	["prop_bike_rack", "worn", -39.8, 320.4, 180.0],
+	["plant_potted_succulent", "normal", -21.2, 316.9, 270.0, false],
+	["prop_trash_receptacle", "worn", -30.8, 317.4, 0.0],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func pad_y(d: Array) -> float: return B3.amber(float(d[6]))
@@ -71,6 +87,7 @@ func _run() -> void:
 	H.skirt(g, Vector2(X0, 209.7), Vector2(X1, 209.7), yf, "concrete")
 	H.skirt(g, Vector2(X0, zs(X0)), Vector2(X1, zs(X1)), yf, "concrete")
 	if PASS >= 2: _build(bl, props, dec, rr, yf, look_y, kiosk_y)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b3_amber")
 	quit()
 

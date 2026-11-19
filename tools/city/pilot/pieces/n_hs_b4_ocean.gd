@@ -31,6 +31,32 @@ const PATH_U := [103.6, 106.6]                        # the main path, parking -
 const CROSS_V := [312.4, 314.8]                       # the cross path
 const EAST_WALK := [184.6, 188.6]                     # from 11th St's walk across the alley into the park
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["palm_queen_a", "normal", 52.8, 324.8, 301.0],
+	["prop_picnic_table", "worn", 52.8, 315.8, 80.0],
+	["tree_jacaranda_b", "normal", 62.2, 324.8, 47.0],
+	["prop_picnic_table", "worn", 52.8, 306.8, 154.0],
+	["tree_magnolia_b", "normal", 52.8, 297.8, 153.0],
+	["prop_picnic_table", "worn", 187.2, 326.2, 48.0],
+	["tree_torrey_pine_b", "normal", 52.8, 288.8, 259.0],
+	["prop_picnic_table", "worn", 52.8, 272.2, 122.0],
+	["plant_bird_of_paradise", "normal", 52.8, 319.8, 129.0, false],
+	["plant_bougainvillea_mound", "normal", 58.2, 324.8, 200.0, false],
+	["plant_iceplant_patch", "normal", 52.8, 309.8, 271.0, false],
+	["prop_sprinkler_popup", "worn", 58.2, 319.8, 342.0, false],
+	["plant_agave_americana", "normal", 63.2, 319.8, 53.0, false],
+	["plant_bird_of_paradise", "normal", 52.8, 294.8, 124.0, false],
+	["plant_bougainvillea_mound", "normal", 58.2, 310.2, 195.0, false],
+	["plant_iceplant_patch", "normal", 68.2, 324.8, 266.0, false],
+	["prop_sprinkler_popup", "worn", 52.8, 284.8, 337.0, false],
+	["plant_agave_americana", "normal", 52.8, 278.8, 48.0, false],
+	["prop_park_bench", "worn", 186.2, 312.8, 270.0],
+	["prop_bike_rack", "worn", 104.8, 314.2, 0.0],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func shed_y() -> float: return B4.g(SHED_C.x, SHED[3])
@@ -60,6 +86,7 @@ func _run() -> void:
 	H.level_pad(g, "concrete", SHED[0], SHED[1], SHED[2], SHED[3], shed_y() - B4.PAD_Y, yf)
 	H.skirt(g, Vector2(X0, B4.south(X0)), Vector2(X1, B4.south(X1)), yf, "concrete")
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b4_ocean")
 	quit()
 

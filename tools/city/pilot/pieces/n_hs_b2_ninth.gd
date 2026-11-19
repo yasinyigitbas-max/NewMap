@@ -19,6 +19,31 @@ const ZS := -146.0
 const HALL := [-88.0, -190.2, -62.0, -170.8]     # the hall's pad (its porch reaches the 9th St band)
 const HALL_Y := 6.15
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["palm_mexican_fan_b", "normal", -97.2, -159.6, 116.0],
+	["tree_torrey_pine_b", "normal", -54.8, -159.6, 169.0],
+	["tree_jacaranda_a", "normal", -87.8, -159.6, 222.0],
+	["tree_coral_b", "normal", -72.2, -159.6, 275.0],
+	["tree_magnolia_a", "normal", -97.8, -177.1, 328.0],
+	["palm_queen_a", "normal", -97.8, -187.1, 21.0],
+	["plant_agave_americana_small", "normal", -60.2, -159.6, 204.0, false],
+	["plant_iceplant_patch", "normal", -76.2, -159.6, 275.0, false],
+	["plant_bougainvillea_mound", "normal", -82.8, -159.6, 346.0, false],
+	["prop_sprinkler_impact", "worn", -65.8, -159.6, 57.0, false],
+	["plant_bird_of_paradise", "normal", -97.2, -165.1, 128.0, false],
+	["prop_sprinkler_popup", "worn", -97.2, -170.6, 199.0, false],
+	["plant_agave_americana_small", "normal", -54.8, -165.1, 270.0, false],
+	["plant_iceplant_patch", "normal", -54.8, -170.6, 341.0, false],
+	["plant_bougainvillea_mound", "normal", -86.8, -163.6, 52.0, false],
+	["prop_sprinkler_impact", "worn", -63.2, -164.1, 123.0, false],
+	["plant_bird_of_paradise", "normal", -79.8, -164.1, 194.0, false],
+	["prop_sprinkler_popup", "worn", -68.2, -164.1, 265.0, false],
+	["prop_bike_rack", "worn", -93.8, -183.6, 0.0],
+]
+
 func _init() -> void: _run.call_deferred()
 
 func _run() -> void:
@@ -50,6 +75,7 @@ func _run() -> void:
 	for s: Array in [[X0, -190.8, -54.77, -190.8], [-54.77, -190.8, -51.0, -190.3], [-51.0, -190.3, X1, -190.3]]:
 		H.skirt(g, Vector2(float(s[0]), float(s[1])), Vector2(float(s[2]), float(s[3])), yf, "concrete")
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b2_ninth")
 	quit()
 

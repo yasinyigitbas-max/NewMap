@@ -30,6 +30,33 @@ const WING_A := Vector2(224.85, 79.5)       # main wing, yaw 90 (faces B Ave; do
 const WING_B := Vector2(201.4, 70.0)        # classroom wing, yaw 0 (faces the playground, back to the alley)
 const STAFF := [150.0, 60.0, 182.0, 65.5]   # the staff parking shelf (nose-in off the alley)
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["tree_ficus_b", "normal", 148.8, 95.2, 138.0],
+	["tree_jacaranda_b", "normal", 148.2, 66.2, 191.0],
+	["tree_coral_a", "normal", 148.8, 85.8, 244.0],
+	["tree_magnolia_b", "normal", 148.8, 76.2, 297.0],
+	["palm_mexican_fan_b", "normal", 158.2, 95.2, 350.0],
+	["tree_torrey_pine_b", "normal", 156.2, 70.2, 43.0],
+	["plant_bird_of_paradise", "normal", 148.8, 89.8, 162.0, false],
+	["prop_sprinkler_popup", "worn", 148.8, 73.2, 233.0, false],
+	["plant_agave_americana_small", "normal", 153.8, 94.2, 304.0, false],
+	["plant_iceplant_patch", "normal", 152.2, 69.2, 15.0, false],
+	["plant_bougainvillea_mound", "normal", 153.2, 87.2, 86.0, false],
+	["prop_sprinkler_impact", "worn", 153.2, 81.8, 157.0, false],
+	["plant_bird_of_paradise", "normal", 153.2, 75.8, 228.0, false],
+	["prop_sprinkler_popup", "worn", 157.2, 90.2, 299.0, false],
+	["plant_agave_americana_small", "normal", 157.2, 78.8, 10.0, false],
+	["plant_iceplant_patch", "normal", 157.8, 84.8, 81.0, false],
+	["plant_bougainvillea_mound", "normal", 160.2, 68.2, 152.0, false],
+	["prop_sprinkler_impact", "worn", 161.2, 75.8, 223.0, false],
+	["plant_potted_succulent", "normal", 208.8, 85.8, 180.0, false],
+	["prop_park_bench", "worn", 213.8, 84.8, 270.0],
+	["plant_potted_succulent", "normal", 201.8, 92.2, 0.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func plat_y() -> float: return B5.bave(79.5)
@@ -73,6 +100,7 @@ func _run() -> void:
 	H.step_face(g, Vector2(STAFF[0], STAFF[1]), Vector2(STAFF[2], STAFF[1]), ysp, yf)
 	H.skirt(g, Vector2(X1, ZA), Vector2(X1, ZS), yf, "concrete")
 	if PASS >= 2: _build(bl, props, dec, rr, yf, yp, ysp)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b5_school")
 	quit()
 

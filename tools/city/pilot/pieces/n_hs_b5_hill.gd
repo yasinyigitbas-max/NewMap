@@ -33,6 +33,36 @@ const PATH_EW := [77.0, 79.4]        # across the slope, from the lane to the lo
 const PATH_NS := [104.0, 106.4]      # down the hill, from the alley to the parking aisle
 const STEPS_U := [128.0, 130.4]      # the lookout's steps (from the path up its wall)
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["tree_coral_b", "normal", 114.8, 98.0, 17.0],
+	["prop_picnic_table", "worn", 101.8, 98.0, 168.0],
+	["palm_queen_a", "normal", 89.8, 98.0, 123.0],
+	["prop_picnic_table", "worn", 74.2, 98.5, 62.0],
+	["tree_jacaranda_b", "normal", 61.8, 98.5, 229.0],
+	["prop_picnic_table", "worn", 123.8, 96.5, 136.0],
+	["tree_magnolia_b", "normal", 140.8, 92.5, 335.0],
+	["prop_picnic_table", "worn", 131.8, 92.0, 30.0],
+	["prop_sprinkler_popup", "worn", 108.8, 98.0, 213.0, false],
+	["plant_agave_americana", "normal", 120.2, 98.0, 284.0, false],
+	["plant_bird_of_paradise", "normal", 95.8, 98.0, 355.0, false],
+	["plant_bougainvillea_mound", "normal", 68.2, 98.5, 66.0, false],
+	["plant_iceplant_patch", "normal", 79.2, 98.5, 137.0, false],
+	["prop_sprinkler_popup", "worn", 84.2, 98.0, 208.0, false],
+	["plant_agave_americana", "normal", 58.2, 102.5, 279.0, false],
+	["plant_bird_of_paradise", "normal", 98.2, 102.5, 350.0, false],
+	["plant_bougainvillea_mound", "normal", 111.2, 102.5, 61.0, false],
+	["plant_iceplant_patch", "normal", 86.8, 102.5, 132.0, false],
+	["plant_potted_leafy", "normal", 136.8, 64.0, 270.0, false],
+	["plant_potted_leafy", "normal", 126.8, 64.5, 0.0, false],
+	["prop_park_bench", "worn", 131.8, 65.5, 90.0],
+	["prop_bike_rack", "worn", 135.8, 69.0, 180.0],
+	["plant_potted_succulent", "normal", 127.8, 69.5, 270.0, false],
+	["prop_trash_receptacle", "worn", 105.2, 78.0, 0.0],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func look_y() -> float: return B5.g(134.7, 60.0)
@@ -86,6 +116,7 @@ func _run() -> void:
 	for e2: Array in [[TENNIS[0], TENNIS[1], TENNIS[2], TENNIS[1]], [TENNIS[0], TENNIS[3], TENNIS[2], TENNIS[3]], [TENNIS[0], TENNIS[1], TENNIS[0], TENNIS[3]], [TENNIS[2], TENNIS[1], TENNIS[2], TENNIS[3]]]:
 		H.step_face(g, Vector2(e2[0], e2[1]), Vector2(e2[2], e2[3]), ytp, yf)
 	if PASS >= 2: _build(bl, props, dec, rr, yf, ylp, ytp)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b5_hill")
 	quit()
 

@@ -32,6 +32,22 @@ const FRONT := [
 const PLAZA_V := 289.1
 const TREES := [[21.0, 304.0], [21.0, 318.0], [40.0, 312.0], [26.0, 294.0]]
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["prop_bike_rack", "worn", 47.2, 323.4, 0.0],
+	["plant_potted_succulent", "normal", 41.8, 323.4, 90.0, false],
+	["prop_trash_receptacle", "worn", 36.8, 323.4, 180.0],
+	["plant_potted_leafy", "normal", 25.8, 323.4, 270.0, false],
+	["plant_potted_leafy", "normal", 31.2, 323.4, 0.0, false],
+	["prop_park_bench", "worn", 19.8, 323.4, 90.0],
+	["prop_bike_rack", "worn", 46.2, 318.4, 180.0],
+	["plant_potted_succulent", "normal", 39.2, 318.9, 270.0, false],
+	["prop_trash_receptacle", "worn", 33.8, 318.9, 0.0],
+	["plant_potted_leafy", "normal", 28.8, 318.9, 90.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func pad_y(d: Array) -> float: return float(d[8]) if d.size() > 8 else B4.amber(float(d[6]))
@@ -60,6 +76,7 @@ func _run() -> void:
 	H.skirt(g, Vector2(X0, 209.7), Vector2(X1, 209.7), yf, "concrete")
 	H.skirt(g, Vector2(X0, zs(X0)), Vector2(X1, zs(X1)), yf, "concrete")
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b4_amber")
 	quit()
 

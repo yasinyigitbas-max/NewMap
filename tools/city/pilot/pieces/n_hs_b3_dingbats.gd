@@ -30,6 +30,31 @@ const LOTS := [
 	["d5", "apartments/apt_dingbat_pink", -70.0, -54.0, -62.0, 221.95, 234.2, [-66.0, -58.0]],
 ]
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["palm_mexican_fan_b", "normal", -96.8, 245.9, 56.0],
+	["tree_torrey_pine_b", "normal", -87.8, 245.9, 109.0],
+	["tree_jacaranda_a", "normal", -106.2, 245.9, 162.0],
+	["tree_coral_b", "normal", -123.8, 245.9, 215.0],
+	["tree_magnolia_a", "normal", -69.8, 245.9, 268.0],
+	["palm_queen_a", "normal", -60.8, 245.9, 321.0],
+	["plant_agave_americana_small", "normal", -91.8, 245.9, 24.0, false],
+	["plant_iceplant_patch", "normal", -102.2, 245.9, 95.0, false],
+	["plant_bougainvillea_mound", "normal", -75.2, 245.9, 166.0, false],
+	["prop_sprinkler_impact", "worn", -118.8, 245.9, 237.0, false],
+	["plant_bird_of_paradise", "normal", -81.8, 245.9, 308.0, false],
+	["prop_sprinkler_popup", "worn", -130.2, 245.9, 19.0, false],
+	["plant_agave_americana_small", "normal", -113.2, 245.9, 90.0, false],
+	["plant_iceplant_patch", "normal", -135.2, 245.9, 161.0, false],
+	["plant_bougainvillea_mound", "normal", -95.8, 240.9, 232.0, false],
+	["prop_sprinkler_impact", "worn", -56.2, 243.4, 303.0, false],
+	["plant_bird_of_paradise", "normal", -65.2, 243.4, 14.0, false],
+	["prop_sprinkler_popup", "worn", -101.2, 240.9, 85.0, false],
+	["prop_bike_rack", "worn", -52.8, 233.4, 0.0],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func pad_y(l: Array) -> float: return B3.f11(float(l[4]))
@@ -73,6 +98,7 @@ func _run() -> void:
 			cur = dx + 0.7
 		H.step_face(g, Vector2(cur, ZF), Vector2(float(l[3]), ZF), yp, yf)
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b3_dingbats")
 	quit()
 

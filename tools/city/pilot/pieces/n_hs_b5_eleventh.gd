@@ -32,6 +32,16 @@ const LOTS := [
 	["a2", "apartments/apt_spanish_white", 100.6, 123.0, 111.9, 6.5, [-6.4, 0.0, 6.4], 1.4],
 ]
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["tree_jacaranda_b", "normal", 84.8, 187.2, 175.0],
+	["tree_coral_a", "normal", 108.2, 187.2, 228.0],
+	["prop_sprinkler_popup", "worn", 91.8, 187.2, 75.0, false],
+	["plant_agave_americana_small", "normal", 114.8, 187.2, 146.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func pad_y(l: Array) -> float: return B5.n11(float(l[4]))
@@ -93,6 +103,7 @@ func _run() -> void:
 			j += 1
 		H.step_face(g, Vector2(cur, ZF), Vector2(x1, ZF), yp, yf)
 	if PASS >= 2: _build(bl, props, dec, rr, yf, yfp)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b5_eleventh")
 	quit()
 

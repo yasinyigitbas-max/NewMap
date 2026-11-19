@@ -26,6 +26,36 @@ const Z_BED := -12.6         # the planted bed along 10th St (inside the fence a
 const PLAY := [-97.0, -50.0, -85.0, -38.0]       # level bark pad
 const PICNIC := [-65.0, -50.0, -53.0, -36.0]     # level paved pad
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["palm_queen_a", "normal", -99.8, -35.2, 31.0],
+	["prop_picnic_table", "worn", -99.2, -17.8, 170.0],
+	["tree_jacaranda_b", "normal", -95.8, -26.2, 137.0],
+	["prop_picnic_table", "worn", -90.8, -35.8, 64.0],
+	["tree_magnolia_b", "normal", -82.8, -49.2, 243.0],
+	["prop_picnic_table", "worn", -90.2, -18.8, 138.0],
+	["tree_torrey_pine_b", "normal", -82.2, -39.8, 349.0],
+	["prop_picnic_table", "worn", -86.8, -27.8, 32.0],
+	["plant_bird_of_paradise", "normal", -99.8, -23.2, 219.0, false],
+	["plant_bougainvillea_mound", "normal", -99.2, -40.2, 290.0, false],
+	["plant_iceplant_patch", "normal", -94.8, -22.8, 1.0, false],
+	["prop_sprinkler_popup", "worn", -94.8, -15.2, 72.0, false],
+	["plant_agave_americana", "normal", -90.8, -30.2, 143.0, false],
+	["plant_bird_of_paradise", "normal", -87.8, -35.8, 214.0, false],
+	["plant_bougainvillea_mound", "normal", -89.8, -25.2, 285.0, false],
+	["plant_iceplant_patch", "normal", -77.8, -49.2, 356.0, false],
+	["prop_sprinkler_popup", "worn", -88.8, -14.8, 67.0, false],
+	["plant_agave_americana", "normal", -82.8, -34.8, 138.0, false],
+	["prop_park_bench", "worn", -77.8, -32.8, 90.0],
+	["prop_bike_rack", "worn", -77.8, -27.8, 180.0],
+	["plant_potted_succulent", "normal", -72.8, -32.8, 270.0, false],
+	["prop_trash_receptacle", "worn", -62.8, -47.8, 0.0],
+	["plant_potted_leafy", "normal", -72.8, -27.8, 90.0, false],
+	["plant_potted_leafy", "normal", -63.8, -42.8, 180.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 func _run() -> void:
@@ -63,6 +93,7 @@ func _run() -> void:
 	for k in pts.size() - 1: H.skirt(g, pts[k], pts[k + 1], yf, "concrete")
 	H.skirt(g, Vector2(X1, ZN), Vector2(X1, B2.edge10(X1)), yf, "wall")
 	if PASS >= 2: _build(props, dec, rr, yf, py, qy)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b2_park")
 	quit()
 

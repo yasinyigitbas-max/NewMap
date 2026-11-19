@@ -35,6 +35,30 @@ const LOTS := [
 	["a6", "apartments/apt_garden_mint", 156.0, 184.0, 170.0, 6.1, [-7.2, 0.0, 7.2], 2.4],
 ]
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["tree_ficus_b", "normal", 182.2, 245.9, 168.0],
+	["tree_jacaranda_b", "normal", 116.8, 245.9, 221.0],
+	["tree_coral_a", "normal", 160.2, 245.9, 274.0],
+	["tree_magnolia_b", "normal", 169.2, 245.9, 327.0],
+	["palm_mexican_fan_b", "normal", 130.8, 245.9, 20.0],
+	["tree_torrey_pine_b", "normal", 52.8, 245.9, 73.0],
+	["plant_bird_of_paradise", "normal", 176.2, 245.9, 72.0, false],
+	["prop_sprinkler_popup", "worn", 123.2, 245.9, 143.0, false],
+	["plant_agave_americana_small", "normal", 135.2, 245.9, 214.0, false],
+	["plant_iceplant_patch", "normal", 62.2, 245.9, 285.0, false],
+	["plant_bougainvillea_mound", "normal", 153.8, 245.9, 356.0, false],
+	["prop_sprinkler_impact", "worn", 145.2, 245.9, 67.0, false],
+	["plant_bird_of_paradise", "normal", 109.8, 245.9, 138.0, false],
+	["prop_sprinkler_popup", "worn", 103.8, 245.9, 209.0, false],
+	["plant_agave_americana_small", "normal", 69.8, 245.9, 280.0, false],
+	["plant_iceplant_patch", "normal", 98.8, 245.9, 351.0, false],
+	["plant_bougainvillea_mound", "normal", 75.2, 245.9, 62.0, false],
+	["prop_sprinkler_impact", "worn", 81.2, 245.9, 133.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func pad_y(l: Array) -> float: return B4.n11(float(l[4]))
@@ -92,6 +116,7 @@ func _run() -> void:
 			j += 1
 		H.step_face(g, Vector2(cur, ZF), Vector2(x1, ZF), yp, yf)
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b4_eleventh")
 	quit()
 

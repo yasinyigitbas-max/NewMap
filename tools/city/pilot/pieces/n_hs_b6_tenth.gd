@@ -32,6 +32,30 @@ const LOTS := [
 	["n6", "houses/craftsman_cedar", "garages/single_siding_comp", 226.0, 238.6, 232.3, 229.6],
 ]
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["tree_ficus_b", "normal", 214.2, -37.2, 158.0],
+	["tree_jacaranda_b", "normal", 148.8, -36.8, 211.0],
+	["tree_coral_a", "normal", 200.8, -36.2, 264.0],
+	["tree_magnolia_b", "normal", 236.2, -38.8, 317.0],
+	["palm_mexican_fan_b", "normal", 223.2, -37.8, 10.0],
+	["tree_torrey_pine_b", "normal", 180.2, -39.2, 63.0],
+	["plant_agave_americana_small", "normal", 208.8, -36.8, 222.0, false],
+	["plant_iceplant_patch", "normal", 219.2, -36.8, 293.0, false],
+	["plant_bougainvillea_mound", "normal", 153.8, -35.8, 4.0, false],
+	["prop_sprinkler_impact", "worn", 230.2, -38.2, 75.0, false],
+	["plant_bird_of_paradise", "normal", 187.8, -38.2, 146.0, false],
+	["prop_sprinkler_popup", "worn", 214.2, -42.2, 217.0, false],
+	["plant_agave_americana_small", "normal", 165.2, -40.2, 288.0, false],
+	["plant_iceplant_patch", "normal", 158.2, -38.8, 359.0, false],
+	["plant_bougainvillea_mound", "normal", 204.8, -33.8, 70.0, false],
+	["prop_sprinkler_impact", "worn", 215.2, -32.2, 141.0, false],
+	["plant_bird_of_paradise", "normal", 204.2, -39.2, 212.0, false],
+	["prop_sprinkler_popup", "worn", 214.2, -47.2, 283.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func pad_y(l: Array) -> float: return B6.g((float(l[3]) + float(l[4])) * 0.5, -45.0)
@@ -95,6 +119,7 @@ func _run() -> void:
 	H.skirt(g, Vector2(X0, ZS), Vector2(X1, ZS), yf, "concrete")
 	H.skirt(g, Vector2(X1, B6.ALLEY[1]), Vector2(X1, ZS), yf, "concrete")
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b6_tenth")
 	quit()
 

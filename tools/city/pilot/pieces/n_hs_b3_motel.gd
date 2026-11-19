@@ -25,6 +25,36 @@ const LOT := [-132.0, 260.0, -86.0, 286.0]
 const CLOT := [-84.0, 260.0, -64.0, 287.6]
 const WALK := [-62.0, -58.0]
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["tree_torrey_pine_b", "normal", -52.8, 262.2, 123.0],
+	["prop_picnic_table", "worn", -137.2, 262.2, 106.0],
+	["tree_coral_b", "normal", -52.8, 271.2, 229.0],
+	["prop_picnic_table", "worn", -137.2, 271.2, 0.0],
+	["palm_queen_a", "normal", -139.8, 315.2, 335.0],
+	["prop_picnic_table", "worn", -52.2, 319.8, 74.0],
+	["tree_jacaranda_b", "normal", -94.8, 317.8, 81.0],
+	["prop_picnic_table", "worn", -113.2, 316.8, 148.0],
+	["plant_bougainvillea_mound", "normal", -52.8, 267.2, 207.0, false],
+	["plant_iceplant_patch", "normal", -137.2, 267.2, 278.0, false],
+	["prop_sprinkler_popup", "worn", -50.2, 314.8, 349.0, false],
+	["plant_agave_americana", "normal", -52.8, 277.2, 60.0, false],
+	["plant_bird_of_paradise", "normal", -134.8, 315.2, 131.0, false],
+	["plant_bougainvillea_mound", "normal", -100.2, 317.2, 202.0, false],
+	["plant_iceplant_patch", "normal", -139.8, 309.8, 273.0, false],
+	["prop_sprinkler_popup", "worn", -137.2, 277.2, 344.0, false],
+	["plant_agave_americana", "normal", -122.2, 316.2, 55.0, false],
+	["plant_bird_of_paradise", "normal", -116.2, 316.2, 126.0, false],
+	["plant_potted_succulent", "normal", -73.2, 319.2, 90.0, false],
+	["prop_trash_receptacle", "worn", -66.2, 319.2, 180.0],
+	["plant_potted_leafy", "normal", -78.8, 318.8, 270.0, false],
+	["plant_potted_leafy", "normal", -69.8, 315.2, 0.0, false],
+	["prop_park_bench", "worn", -82.2, 314.8, 90.0],
+	["prop_bike_rack", "worn", -75.8, 314.8, 180.0],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func motel_y() -> float: return B3.g(-107.0, 301.6)
@@ -58,6 +88,7 @@ func _run() -> void:
 	H.level_pad(g, "concrete", CONDO[0], CONDO[1], CONDO[2], CONDO[3], condo_y() - B3.PAD_Y, yf)
 	H.skirt(g, Vector2(X0, B3.south(X0)), Vector2(X1, B3.south(X1)), yf, "concrete")
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b3_motel")
 	quit()
 

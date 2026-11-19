@@ -245,3 +245,32 @@ static func finish(root: Node3D, g: K.Ground, props: K.Props, dec: K.Decals, nam
 	if props.count() > 0: props.build(root, K)
 	print("%s: ground tris %d, props %d, buildings %d" % [name, g.tri_count(), props.count(), root.get_node("Buildings").get_child_count() if root.has_node("Buildings") else 0])
 	K.save_piece(root, name)
+
+## (polish, 19 Nov) the top of the ground ALREADY BUILT at (x, z): the highest non-vertical triangle of `g` over the point
+## (pads, terraces, steps, the field), so a prop stands on what is really there. -INF where nothing is built.
+static func top_at(g: K.Ground, x: float, z: float) -> float:
+	var best := -INF
+	for m: String in g.surf:
+		var v: PackedVector3Array = g.surf[m][0]
+		for i in range(0, v.size() - 2, 3):
+			var a := v[i]; var b := v[i + 1]; var c := v[i + 2]
+			if x < minf(a.x, minf(b.x, c.x)) - 0.001 or x > maxf(a.x, maxf(b.x, c.x)) + 0.001: continue
+			if z < minf(a.z, minf(b.z, c.z)) - 0.001 or z > maxf(a.z, maxf(b.z, c.z)) + 0.001: continue
+			var d := (b.z - c.z) * (a.x - c.x) + (c.x - b.x) * (a.z - c.z)
+			if absf(d) < 1e-9: continue
+			var l1 := ((b.z - c.z) * (x - c.x) + (c.x - b.x) * (z - c.z)) / d
+			var l2 := ((c.z - a.z) * (x - c.x) + (a.x - c.x) * (z - c.z)) / d
+			var l3 := 1.0 - l1 - l2
+			if l1 < -0.001 or l2 < -0.001 or l3 < -0.001: continue
+			best = maxf(best, l1 * a.y + l2 * b.y + l3 * c.y)
+	return best
+
+## the polish props of a piece: [base, cond, x, z, yaw(, collide)] each on the built ground's top
+static func polish(props: K.Props, g: K.Ground, items: Array) -> int:
+	var n := 0
+	for it: Array in items:
+		var y := top_at(g, float(it[2]), float(it[3]))
+		if y == -INF: continue
+		props.add(String(it[0]), String(it[1]), Vector3(float(it[2]), y, float(it[3])), float(it[4]), bool(it[5]) if it.size() > 5 else true)
+		n += 1
+	return n

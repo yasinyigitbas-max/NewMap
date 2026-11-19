@@ -39,6 +39,13 @@ const FRONT := [
 	["corner", "ck/ck_brk3_corner2", -189.5, -177.5, -183.5, -23.6, -188.4, -30.9],
 ]
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["plant_potted_leafy", "normal", -47.8, -150.1, 180.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func pad_y(d: Array) -> float: return B2.amber(float(d[6]))
@@ -79,6 +86,7 @@ func _run() -> void:
 	H.skirt(g, Vector2(X0, ZN), Vector2(X1, ZN), yf, "concrete")
 	H.skirt(g, Vector2(X0, ZS), Vector2(X1, ZS), yf, "concrete")
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b2_amber")
 	quit()
 

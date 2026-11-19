@@ -31,6 +31,17 @@ const FRONT := [
 ]
 const PLAZA := [-111.0, ZS]
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["prop_trash_receptacle", "worn", 21.2, -100.6, 180.0],
+	["plant_potted_leafy", "normal", 31.8, -103.1, 270.0, false],
+	["plant_potted_leafy", "normal", 25.8, -103.6, 0.0, false],
+	["prop_park_bench", "worn", 18.8, -105.1, 90.0],
+	["prop_bike_rack", "worn", 29.2, -107.6, 180.0],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func pad_y(d: Array) -> float: return B6.amb(float(d[6]))
@@ -58,6 +69,7 @@ func _run() -> void:
 		H.level_pad(g, "concrete", XF, float(d[2]), float(d[7]) + 0.3, float(d[3]), pad_y(d) - B6.PAD_Y, yf)
 	H.skirt(g, Vector2(X0, B6.north9(X0)), Vector2(X0, ZS), yf, "concrete")
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b6_amber")
 	quit()
 

@@ -40,6 +40,33 @@ const HOUSES := [
 ]
 const FRONT_OFF := [6.0, 6.0, 4.6]   # a house's front this far inside its terrace's west edge (the narrow top terrace less)
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["tree_magnolia_a", "normal", 143.2, -62.2, 24.0],
+	["palm_queen_a", "normal", 143.2, -97.8, 77.0],
+	["tree_ficus_b", "normal", 143.2, -71.2, 130.0],
+	["tree_jacaranda_b", "normal", 143.2, -88.8, 183.0],
+	["tree_coral_a", "normal", 133.8, -62.2, 236.0],
+	["tree_magnolia_b", "normal", 140.2, -79.8, 289.0],
+	["plant_bird_of_paradise", "normal", 143.2, -67.2, 216.0, false],
+	["prop_sprinkler_popup", "worn", 143.2, -92.8, 287.0, false],
+	["plant_agave_americana_small", "normal", 143.2, -78.2, 358.0, false],
+	["plant_iceplant_patch", "normal", 137.8, -62.2, 69.0, false],
+	["plant_bougainvillea_mound", "normal", 140.8, -82.8, 140.0, false],
+	["prop_sprinkler_impact", "worn", 137.8, -97.8, 211.0, false],
+	["plant_bird_of_paradise", "normal", 137.8, -67.2, 282.0, false],
+	["prop_sprinkler_popup", "worn", 138.8, -90.2, 353.0, false],
+	["plant_agave_americana_small", "normal", 138.8, -74.8, 64.0, false],
+	["plant_iceplant_patch", "normal", 127.8, -62.2, 135.0, false],
+	["plant_bougainvillea_mound", "normal", 136.8, -79.8, 206.0, false],
+	["prop_sprinkler_impact", "worn", 132.8, -97.8, 277.0, false],
+	["plant_potted_leafy", "normal", 116.2, -101.2, 0.0, false],
+	["prop_park_bench", "worn", 120.2, -104.2, 90.0],
+	["prop_bike_rack", "worn", 90.2, -101.8, 180.0],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func ter_y(t: Array) -> float: return B6.g((float(t[0]) + float(t[2])) * 0.5, (float(t[1]) + float(t[3])) * 0.5)
@@ -98,6 +125,7 @@ func _run() -> void:
 		H.steps_x(g, -100.0, WALK[1] - WALK[0], u0, s0, yw0, y)
 		H.steps_x(g, -100.0, WALK[1] - WALK[0], u1, s1, yw1, y)
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b6_hill")
 	quit()
 

@@ -32,6 +32,18 @@ const UNITS := [
 ]
 const FRONT := {"S": -61.4, "N": -83.0}
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["tree_magnolia_a", "normal", 170.8, -75.2, 344.0],
+	["palm_queen_a", "normal", 170.8, -65.8, 37.0],
+	["tree_ficus_b", "normal", 172.2, -97.2, 90.0],
+	["tree_jacaranda_b", "normal", 172.2, -85.2, 143.0],
+	["plant_agave_americana_small", "normal", 170.8, -69.2, 96.0, false],
+	["plant_iceplant_patch", "normal", 172.2, -91.2, 167.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func bb(f: String) -> Array: return (K.building_stats(f).near as Dictionary).bbox
@@ -74,6 +86,7 @@ func _run() -> void:
 			H.step_face(g, Vector2(e[0], e[1]), Vector2(e[2], e[3]), yp, yf)
 	H.skirt(g, Vector2(X1, ZN), Vector2(X1, ZA), yf, "concrete")
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b6_garden")
 	quit()
 

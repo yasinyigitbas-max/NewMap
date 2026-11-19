@@ -35,6 +35,30 @@ const LOTS := [
 	["h7", "houses/narrow_2sty_siding", "garages/carport_clay", 311.0, 0.0, 320.0, 318.4],
 ]
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["palm_queen_a", "normal", 212.8, 263.4, 161.0],
+	["tree_ficus_b", "normal", 213.8, 249.4, 214.0],
+	["tree_jacaranda_b", "normal", 212.8, 300.4, 267.0],
+	["tree_coral_a", "normal", 208.8, 327.4, 320.0],
+	["tree_magnolia_b", "normal", 212.8, 272.4, 13.0],
+	["palm_mexican_fan_b", "normal", 210.2, 281.4, 66.0],
+	["prop_sprinkler_impact", "worn", 212.8, 245.4, 69.0, false],
+	["plant_bird_of_paradise", "normal", 213.2, 305.9, 140.0, false],
+	["prop_sprinkler_popup", "worn", 207.8, 263.4, 211.0, false],
+	["plant_agave_americana_small", "normal", 210.8, 236.4, 282.0, false],
+	["plant_iceplant_patch", "normal", 211.2, 230.9, 353.0, false],
+	["plant_bougainvillea_mound", "normal", 192.8, 327.4, 64.0, false],
+	["prop_sprinkler_impact", "worn", 208.8, 297.4, 135.0, false],
+	["plant_bird_of_paradise", "normal", 209.8, 313.9, 206.0, false],
+	["prop_sprinkler_popup", "worn", 210.8, 290.4, 277.0, false],
+	["plant_agave_americana_small", "normal", 210.8, 284.9, 348.0, false],
+	["plant_iceplant_patch", "normal", 209.8, 322.4, 59.0, false],
+	["plant_bougainvillea_mound", "normal", 208.8, 241.9, 130.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func lot_v1(l: Array) -> float: return B4.south(XG) - 0.6 if float(l[4]) == 0.0 else float(l[4])
@@ -90,6 +114,7 @@ func _run() -> void:
 	H.skirt(g, Vector2(X0, 209.2), Vector2(X1, 209.2), yf, "concrete")
 	H.skirt(g, Vector2(X0, B4.south(X0)), Vector2(X1, B4.south(X1)), yf, "concrete")
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b4_cottages")
 	quit()
 

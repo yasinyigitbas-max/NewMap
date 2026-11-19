@@ -36,6 +36,33 @@ const BAND := 0.6           # flush band along the 11th St walk
 static func h1() -> float: return B1.f11(-88.0)
 static func h2() -> float: return B1.f11(-63.2)
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["tree_coral_b", "normal", -55.8, 155.2, 147.0],
+	["tree_magnolia_a", "normal", -78.8, 154.8, 200.0],
+	["palm_queen_a", "normal", -97.2, 137.8, 253.0],
+	["tree_ficus_b", "normal", -97.2, 127.8, 306.0],
+	["tree_jacaranda_b", "normal", -97.2, 103.2, 359.0],
+	["tree_coral_a", "normal", -97.2, 116.8, 52.0],
+	["plant_iceplant_patch", "normal", -57.8, 159.8, 63.0, false],
+	["plant_bougainvillea_mound", "normal", -97.2, 121.8, 134.0, false],
+	["prop_sprinkler_impact", "worn", -97.2, 113.8, 205.0, false],
+	["plant_bird_of_paradise", "normal", -97.2, 132.2, 276.0, false],
+	["prop_sprinkler_popup", "worn", -97.2, 108.8, 347.0, false],
+	["plant_agave_americana_small", "normal", -78.8, 159.2, 58.0, false],
+	["plant_iceplant_patch", "normal", -73.2, 160.8, 129.0, false],
+	["plant_bougainvillea_mound", "normal", -96.8, 160.2, 200.0, false],
+	["prop_sprinkler_impact", "worn", -63.2, 162.2, 271.0, false],
+	["plant_bird_of_paradise", "normal", -68.2, 162.2, 342.0, false],
+	["prop_sprinkler_popup", "worn", -53.8, 162.8, 53.0, false],
+	["plant_agave_americana_small", "normal", -83.2, 161.8, 124.0, false],
+	["plant_potted_succulent", "normal", -69.2, 155.2, 90.0, false],
+	["prop_trash_receptacle", "worn", -62.2, 155.2, 180.0],
+	["plant_potted_leafy", "normal", -89.8, 154.2, 270.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 func _run() -> void:
@@ -195,6 +222,7 @@ func _run() -> void:
 	dec.add(14, Vector2(-88.4, 152.95), 0.0, 2.8, 1.3, y1, Color(1, 1, 1, 0.55))      # under the bin carts
 	dec.add(14, Vector2(-64.7, 152.95), 0.0, 2.8, 1.3, y2, Color(1, 1, 1, 0.55))
 	dec.add(14, Vector2(-60.0, 135.9), 0.0, 20.0, 1.2, yw, Color(1, 1, 1, 0.3))       # the walk out of the garage
+	H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b1_eleventh")
 	quit()
 

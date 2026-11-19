@@ -30,6 +30,20 @@ const FRONT := [
 ]
 const SHOP_Y := 4.15
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["tree_jacaranda_b", "normal", 47.2, 187.8, 315.0],
+	["tree_coral_a", "normal", 37.8, 187.8, 8.0],
+	["tree_magnolia_b", "normal", 42.8, 179.8, 61.0],
+	["plant_iceplant_patch", "normal", 47.2, 182.8, 135.0, false],
+	["plant_bougainvillea_mound", "normal", 41.8, 187.8, 206.0, false],
+	["prop_sprinkler_impact", "worn", 41.8, 182.8, 277.0, false],
+	["plant_bird_of_paradise", "normal", 32.2, 185.2, 348.0, false],
+	["prop_sprinkler_popup", "worn", 36.8, 182.8, 59.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 func _run() -> void:
@@ -57,6 +71,7 @@ func _run() -> void:
 		H.level_pad(g, "concrete", XF, float(d[2]), float(d[6]) + 0.3, float(d[3]), ys, yf)
 	H.skirt(g, Vector2(X0, ZN), Vector2(X0, B5.north11(X0)), yf, "concrete")
 	if PASS >= 2: _build(bl, props, dec, rr, yf, ysp)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b5_amber")
 	quit()
 

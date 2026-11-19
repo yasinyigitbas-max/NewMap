@@ -26,6 +26,29 @@ const Z_FRONT := 12.2       # building fronts / end of the front gardens and the
 const Z_AL0 := 54.0         # the alley carried through from the houses
 const Z_AL1 := 60.0
 
+## POLISH (19 Nov, Yasin: "run a polish pass ... plenty of props"): more planting, trees, lawn sprinklers, benches, planters
+## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
+## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["tree_torrey_pine_b", "normal", -85.2, 62.9, 123.0],
+	["tree_jacaranda_a", "normal", -97.2, 62.4, 176.0],
+	["tree_coral_b", "normal", -99.8, 32.4, 229.0],
+	["tree_magnolia_a", "normal", -77.8, 32.9, 282.0],
+	["palm_queen_a", "normal", -50.2, 34.4, 335.0],
+	["tree_ficus_b", "normal", -59.2, 34.4, 28.0],
+	["plant_iceplant_patch", "normal", -84.2, 32.9, 207.0, false],
+	["plant_bougainvillea_mound", "normal", -55.2, 35.4, 278.0, false],
+	["prop_sprinkler_impact", "worn", -99.8, 37.4, 349.0, false],
+	["plant_bird_of_paradise", "normal", -98.8, 27.4, 60.0, false],
+	["prop_sprinkler_popup", "worn", -80.8, 36.9, 131.0, false],
+	["plant_agave_americana_small", "normal", -98.8, 13.9, 202.0, false],
+	["plant_iceplant_patch", "normal", -98.8, 19.9, 273.0, false],
+	["plant_bougainvillea_mound", "normal", -53.8, 30.4, 344.0, false],
+	["plant_potted_succulent", "normal", -92.8, 32.9, 90.0, false],
+	["prop_trash_receptacle", "worn", -73.8, 11.4, 180.0],
+	["plant_potted_succulent", "normal", -76.2, 43.9, 270.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 func _run() -> void:
@@ -178,6 +201,7 @@ func _run() -> void:
 	dec.add(14, Vector2(-61.22, 11.0), 0.0, 2.4, 1.8, yc, Color(1, 1, 1, 0.45))        # in front of the market door
 	dec.add(14, Vector2(-74.7, 20.0), 0.0, 1.2, 14.0, yc, Color(1, 1, 1, 0.3))         # the passage's walking line
 	dec.add(14, Vector2(-67.0, 32.0), 0.0, 2.6, 1.6, yc, Color(0.78, 0.7, 0.48, 0.5))  # bark scuffed under the swings
+	H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hs_b1_tenth")
 	quit()
 
