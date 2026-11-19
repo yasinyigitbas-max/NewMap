@@ -1,0 +1,37 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -14.4,
+    0.15,
+    99.9
+   ],
+   "n": 1.0,
+   "op": "add_ground_col",
+   "poly": [
+    [
+     -14.75,
+     99.55,
+     0.15
+    ],
+    [
+     -14.05,
+     99.55,
+     0.15
+    ],
+    [
+     -14.05,
+     100.25,
+     0.15
+    ],
+    [
+     -14.75,
+     100.25,
+     0.15
+    ]
+   ],
+   "reason": "the crowd's walking band crosses a gap of 6-13 cm where three pieces meet (this pavement 0.06 m, g_v1_g4ne gravel 0.11 m, s_ar_b074_a pavement 0.125 m from the point (-499.9, -1214.4)); nothing is built in the gap. Collision only, a 0.7 m square at the pavement's own height (0.150), nothing drawn (Yasin: \"fill those too with collisions, dont change the appereance\")"
+  }
+ ],
+ "scene": "s_ar_b074_b"
+}

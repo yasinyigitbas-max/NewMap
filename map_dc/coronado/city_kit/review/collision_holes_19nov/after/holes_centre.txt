@@ -1,0 +1,6 @@
+Holes in the collision on roads and pavements (tools/city/audit/collision_holes.gd), 2026-11-19T22:25:42
+sweep: centre lines only
+points checked 161360 (a ray down every 1.0 m), hole points 0, holes 0; points in cells the bake has no file for (checked all the same): 58
+biggest first: centre x, z (height) | size m | points (road / pavement / crossing) | cell
+
+NOT HOLES, listed apart: 0 points that miss but lie ON the outer edge of a surface (ground within 0.05 m on one side only, none on the other; the sweep's row touches where a pavement ends and the land begins). x, z (height) | kind | which side the ground is | cell
