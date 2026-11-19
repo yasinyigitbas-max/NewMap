@@ -1,0 +1,131 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -6.44999980926514,
+    0.0726282075047493,
+    34.1132125854492
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -6.44999980926514,
+    -0.241342231631279,
+    64.2260055541992
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -6.44999980926514,
+    -0.385953992605209,
+    72.9410629272461
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -6.44999980926514,
+    -0.612769305706024,
+    85.1367416381836
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    0.054383285343647,
+    37.716194152832
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    -0.234417200088501,
+    63.7784652709961
+   ],
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    -0.454740285873413,
+    76.7782669067383
+   ],
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    -0.682586967945099,
+    88.6929626464844
+   ],
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -8.66492938995361,
+    0.161087602376938,
+    27.5234527587891
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "s_rs_b019_b"
+}

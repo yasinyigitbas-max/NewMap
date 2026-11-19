@@ -1,0 +1,21 @@
+{
+ "area": "rg_se_b135_1",
+ "piece": "s_rg_se_b135_1",
+ "zone": "ring boulevard",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms; the in-view limit (8 broadleaf / 12 trees within 60 m) is already reached here by the neighbouring boulevard pieces' palms, so one only",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    65.776,
+    2.337,
+    330.012
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "south parkway grass mid-piece, the one fan palm the in-view limit leaves room for (old spot and species), between the neighbouring pieces' palm rows"
+  }
+ ]
+}

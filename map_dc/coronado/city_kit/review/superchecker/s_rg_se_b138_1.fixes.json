@@ -1,0 +1,201 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -11.2301635742188,
+    0.0900000035762787,
+    -2.93223571777344
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -9.96783447265625,
+    0.0900000035762787,
+    -53.4123840332031
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -9.4376220703125,
+    0.0900000035762787,
+    -74.6130981445312
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    11.4918212890625,
+    0.0900000035762787,
+    -7.52859497070312
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    12.793212890625,
+    0.0900000035762787,
+    -59.5714721679688
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -10.89990234375,
+    0.0900000035762787,
+    -16.1385650634766
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -9.7052001953125,
+    0.0900000035762787,
+    -63.9136657714844
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    12.5086059570312,
+    0.0900000035762787,
+    -48.1901245117188
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    13.0777587890625,
+    0.0900000035762787,
+    -70.9492492675781
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -10.6168823242188,
+    0.0900000035762787,
+    -27.4557647705078
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -10.3230590820312,
+    0.162000000476837,
+    -39.2058410644531
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    9.37628173828125,
+    0.0120000001043081,
+    -20.2694854736328
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    9.734130859375,
+    0.0120000001043081,
+    -9.83064270019531
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    10.97021484375,
+    0.0120000001043081,
+    -66.9847106933594
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "s_rg_se_b138_1"
+}

@@ -1,0 +1,48 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -8.60000038146973,
+    0.150000005960464,
+    18.6000003814697
+   ],
+   "base": "prop_usps_collection_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_usps_collection_box leaves 1.1 m of a 1.8 m wide walk]"
+  },
+  {
+   "at": [
+    4.91490459442139,
+    0.0120000001043081,
+    -4.16517543792725
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    3.23804291089376,
+    0.0120000001043081,
+    -5.00226545333862
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "j_rs_t_rrr_a"
+}

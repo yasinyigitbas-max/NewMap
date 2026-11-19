@@ -1,0 +1,29 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 18 nodes (with every mesh of the buildings), 5980 ground and ground-collision triangles, 15 prop instances, 9 colliders, 309 wear marks are identical in both files
+PROOF differences found between the files: 53 lines only in the old one, 0 only in the new one
+PROOF change #1 remove palm_mexican_fan_c at (-11.23, 0.09, -2.93) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove palm_mexican_fan_c at (-9.97, 0.09, -53.41) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove palm_mexican_fan_c at (-9.44, 0.09, -74.61) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove palm_mexican_fan_c at (11.49, 0.09, -7.53) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove palm_mexican_fan_c at (12.79, 0.09, -59.57) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove palm_queen_a at (-10.90, 0.09, -16.14) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove palm_queen_a at (-9.71, 0.09, -63.91) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove palm_queen_a at (12.51, 0.09, -48.19) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove palm_queen_a at (13.08, 0.09, -70.95) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove palm_mexican_fan_a at (-10.62, 0.09, -27.46) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #11 remove_decal: one wear mark at (-10.32, 0.16, -39.21) removed  [grime mark lies on grass]
+PROOF change #12 remove_decal: one wear mark at (9.38, 0.01, -20.27) removed  [crack mark lies on grass]
+PROOF change #13 remove_decal: one wear mark at (9.73, 0.01, -9.83) removed  [crack mark lies on grass]
+PROOF change #14 remove_decal: one wear mark at (10.97, 0.01, -66.98) removed  [crack mark lies on grass]
+PROOF note: 'Props/palm_mexican_fan_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_near' held only listed items and is gone with them
+PROOF 14 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

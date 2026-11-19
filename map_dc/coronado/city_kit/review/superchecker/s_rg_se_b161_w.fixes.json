@@ -1,0 +1,299 @@
+{
+ "fixes": [
+  {
+   "at": [
+    5.58819580078125,
+    0.0900000035762787,
+    -11.5123901367188
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    21.453369140625,
+    0.0899999961256981,
+    10.39501953125
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    44.7697143554688,
+    0.0899999961256981,
+    9.69662475585938
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    83.2861938476562,
+    0.0899999812245369,
+    9.85205078125
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    23.1248779296875,
+    0.0899999961256981,
+    -11.5945129394531
+   ],
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    81.9027099609375,
+    0.0899999812245369,
+    -6.91925048828125
+   ],
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    109.886779785156,
+    0.0899999737739563,
+    0.86468505859375
+   ],
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    35.3563842773438,
+    0.0899999961256981,
+    -11.198974609375
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    47.6892700195312,
+    0.0899999961256981,
+    -10.4619445800781
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    10.3281555175781,
+    0.0899999961256981,
+    10.8513488769531
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    64.1704711914062,
+    0.0899999886751175,
+    -9.00497436523438
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    32.9647216796875,
+    0.0899999961256981,
+    9.99588012695312
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    55.6083068847656,
+    0.0899999886751175,
+    9.54888916015625
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    65.9703369140625,
+    0.0899999886751175,
+    9.54605102539062
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    90.29248046875,
+    0.0899999812245369,
+    -6.88104248046875
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    112.524169921875,
+    0.0899999737739563,
+    -23.0180969238281
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    96.993408203125,
+    0.0899999812245369,
+    7.5391845703125
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    99.7337036132812,
+    0.0899999812245369,
+    -9.91403198242188
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    106.976318359375,
+    0.0899999737739563,
+    -15.2471618652344
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 19.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    122.894409179688,
+    0.0899999737739563,
+    -14.0941467285156
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    127.288269042969,
+    0.0899999737739563,
+    -25.7227478027344
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  }
+ ],
+ "scene": "s_rg_se_b161_w"
+}

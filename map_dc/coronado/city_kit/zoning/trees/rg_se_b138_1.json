@@ -1,0 +1,93 @@
+{
+ "area": "rg_se_b138_1",
+ "piece": "s_rg_se_b138_1",
+ "zone": "ring boulevard",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms, the palm boulevard round the island (zone 1,165 -> about 1,000); within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    638.2,
+    4.15,
+    -300.105
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "south parkway grass, a fan palm of the boulevard's south row (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    637.669,
+    4.15,
+    -278.904
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "south parkway grass 21 m on, the next fan palm"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    637.02,
+    4.15,
+    -252.948
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "south parkway grass 26 m on, the next fan palm"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    636.407,
+    4.15,
+    -228.424
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "south parkway grass 24.6 m on, the last fan palm, clear of the kerb inlet (3 m); the queen palms between go (one species a face)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    660.715,
+    4.15,
+    -296.441
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "north parkway grass, a queen palm of the north row (old spot and species)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    660.146,
+    4.15,
+    -273.682
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "north parkway grass 22.7 m on, the next queen palm"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    659.129,
+    4.15,
+    -233.021
+   ],
+   "yaw": 318,
+   "scale": 0.95,
+   "why": "north parkway grass toward the junction, the last queen palm (one species a face: the fan palm here becomes a queen palm); driveways and a gap in the 41 m between"
+  }
+ ]
+}

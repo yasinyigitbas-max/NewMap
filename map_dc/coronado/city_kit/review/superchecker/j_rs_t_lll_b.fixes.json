@@ -1,0 +1,33 @@
+{
+ "fixes": [
+  {
+   "at": [
+    2.77745332320531,
+    0.0120000001043081,
+    -4.27793836593628
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    2.41453166802724,
+    0.0120000001043081,
+    -5.25923097133636
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "j_rs_t_lll_b"
+}

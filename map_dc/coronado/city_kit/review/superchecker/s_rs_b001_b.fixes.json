@@ -1,0 +1,187 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -6.44999980926514,
+    0.0900000035762787,
+    35.5297927856445
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -6.44999980926514,
+    0.0900000035762787,
+    49.3832321166992
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    0.0900000035762787,
+    39.3158111572266
+   ],
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -8.73134708404541,
+    0.162000000476837,
+    75.0741500854492
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -8.28164315223694,
+    0.162000000476837,
+    85.8720703125
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -8.33288598060608,
+    0.162000000476837,
+    90.4201431274414
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -8.77070999145508,
+    0.162000000476837,
+    95.5759887695312
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -8.5297794342041,
+    0.162000000476837,
+    90.9104309082031
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    8.3062756061554,
+    0.162000000476837,
+    75.0550231933594
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    8.75061225891113,
+    0.162000000476837,
+    81.6594390869141
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    8.2905056476593,
+    0.162000000476837,
+    85.8584136962891
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    8.60011672973633,
+    0.162000000476837,
+    91.2079467773438
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    8.22474598884583,
+    0.162000000476837,
+    96.4602661132812
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "s_rs_b001_b"
+}

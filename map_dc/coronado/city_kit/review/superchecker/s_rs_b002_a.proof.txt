@@ -1,0 +1,28 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 17 nodes (with every mesh of the buildings), 2152 ground and ground-collision triangles, 13 prop instances, 8 colliders, 219 wear marks are identical in both files
+PROOF differences found between the files: 32 lines only in the old one, 0 only in the new one
+PROOF change #1 remove palm_mexican_fan_c at (-6.45, 0.11, 34.21) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_coral_a at (6.45, 0.12, 37.07) removed, in 3 tier(s) and its collider  [tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_coral_a at (6.45, 0.40, 64.07) removed, in 3 tier(s) and its collider  [tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove prop_bench_bus_stop at (-8.75, 0.23, 44.50) removed, in 1 tier(s) and its collider  [erased (in doubt): door: no plainly safe place (Yasin: delete when unsure) [prop_bench_bus_stop stands in front of the shopdoor of walkup_a]]
+PROOF change #5 remove_decal: one wear mark at (-6.45, 0.46, 63.71) removed  [grime mark lies on grass]
+PROOF change #6 remove_decal: one wear mark at (-6.45, 0.61, 73.21) removed  [grime mark lies on grass]
+PROOF change #7 remove_decal: one wear mark at (-6.45, 0.78, 82.71) removed  [grime mark lies on grass]
+PROOF change #8 remove_decal: one wear mark at (-6.45, 1.03, 96.21) removed  [grime mark lies on grass]
+PROOF change #9 remove_decal: one wear mark at (6.45, 0.29, 49.57) removed  [grime mark lies on grass]
+PROOF change #10 remove_decal: one wear mark at (6.45, 0.67, 76.57) removed  [grime mark lies on grass]
+PROOF change #11 remove_decal: one wear mark at (6.45, 0.84, 86.07) removed  [grime mark lies on grass]
+PROOF change #12 remove_decal: one wear mark at (6.45, 1.02, 95.57) removed  [grime mark lies on grass]
+PROOF change #13 remove_decal: one wear mark at (-8.75, 0.26, 46.22) removed  [pale patch mark lies on grass]
+PROOF change #14 remove_decal: one wear mark at (-8.42, 0.45, 62.46) removed  [pale patch mark lies on grass]
+PROOF change #15 remove_decal: one wear mark at (8.67, 1.04, 96.95) removed  [pale patch mark lies on grass]
+PROOF note: 'Props/tree_coral_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_bench_bus_stop_dirty_near' held only listed items and is gone with them
+PROOF 15 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

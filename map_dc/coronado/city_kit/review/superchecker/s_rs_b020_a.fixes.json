@@ -1,0 +1,131 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -6.44999980926514,
+    0.112237833440304,
+    35.5760192871094
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -6.44999980926514,
+    0.389926016330719,
+    63.6328201293945
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -6.44999980926514,
+    0.751661717891693,
+    85.3213348388672
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    0.80135303735733,
+    87.9927673339844
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -6.44999980926514,
+    0.529933631420135,
+    72.6833953857422
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    0.124280951917171,
+    37.9539031982422
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    0.389991670846939,
+    63.6373863220215
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    0.569372832775116,
+    75.0464477539062
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    0.217449679970741,
+    49.6926193237305
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  }
+ ],
+ "scene": "s_rs_b020_a"
+}

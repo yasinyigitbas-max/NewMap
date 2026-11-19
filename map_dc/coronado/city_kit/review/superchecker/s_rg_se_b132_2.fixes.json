@@ -1,0 +1,426 @@
+{
+ "fixes": [
+  {
+   "at": [
+    1.76678466796875,
+    0.0548301301896572,
+    17.3217468261719
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    19.8071594238281,
+    -0.278150409460068,
+    18.4616088867188
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    26.0732421875,
+    -0.385906547307968,
+    18.8294372558594
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    56.7347717285156,
+    -0.792026579380035,
+    21.0049743652344
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    5.73318481445312,
+    -0.020670460537076,
+    18.0167541503906
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 19.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    9.5340576171875,
+    -0.0913525894284248,
+    17.8369445800781
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    22.9425354003906,
+    -0.33298459649086,
+    18.8198852539062
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    39.4134521484375,
+    -0.591979265213013,
+    19.7466430664062
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 22.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    42.4217834472656,
+    -0.632856488227844,
+    19.896484375
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 23.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    49.1360168457031,
+    -0.715641438961029,
+    20.7784423828125
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 24.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    74.1074523925781,
+    -0.886627078056335,
+    22.4275817871094
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 25.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    13.3266906738281,
+    -0.161610528826714,
+    18.1907043457031
+   ],
+   "base": "plant_agave_americana",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 26.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    16.7933654785156,
+    -0.224846497178078,
+    18.6131591796875
+   ],
+   "base": "plant_agave_americana",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 27.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    35.6270751953125,
+    -0.537487804889679,
+    19.6586608886719
+   ],
+   "base": "plant_agave_americana",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 28.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    45.7534484863281,
+    -0.67557156085968,
+    20.3545837402344
+   ],
+   "base": "plant_agave_americana",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 29.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    53.2466125488281,
+    -0.759302616119385,
+    20.8887329101562
+   ],
+   "base": "plant_agave_americana",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 30.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    60.6617126464844,
+    -0.823866546154022,
+    21.3567199707031
+   ],
+   "base": "plant_agave_americana",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 31.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    8.21063232421875,
+    -0.0511226989328861,
+    -10.7777099609375
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    19.9540710449219,
+    -0.267220020294189,
+    -9.99481201171875
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    38.2215576171875,
+    -0.567778050899506,
+    -8.7769775390625
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    62.3875427246094,
+    -0.842571437358856,
+    -7.16592407226562
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    51.8421325683594,
+    -0.760753631591797,
+    14.7811889648438
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    5.127197265625,
+    -0.0213520918041468,
+    11.6669006347656
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    17.0232543945312,
+    -0.241613879799843,
+    12.4599609375
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    29.2737731933594,
+    -0.452363848686218,
+    13.2766418457031
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    63.2906494140625,
+    -0.859373867511749,
+    15.5444030761719
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    29.2662048339844,
+    -0.398600488901138,
+    19.1892395019531
+   ],
+   "base": "prop_bike_rack",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "rack_across",
+   "mode": "choose",
+   "n": 14.0,
+   "op": "remove",
+   "reason": "erased (in doubt): rack_across: no plainly safe place (Yasin: delete when unsure) [the bike rack stands across the walk, not along it]"
+  },
+  {
+   "at": [
+    43.2791137695312,
+    -0.719338923692703,
+    -5.66931140422821
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    26.3921203613281,
+    -0.479552005728086,
+    10.2301025390625
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    9.2848813533783,
+    -0.0327103453067442,
+    16.2641905148824
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on mulch",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "s_rg_se_b132_2"
+}

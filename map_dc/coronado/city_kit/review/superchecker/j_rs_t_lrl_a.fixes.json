@@ -1,0 +1,61 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -1.29759784539541,
+    0.0120000001043081,
+    -4.76969536145528
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    4.89457893371582,
+    0.0120000001043081,
+    -4.50012401739756
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -4.47525691986084,
+    0.0120000001043081,
+    -4.79094076156616
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -0.919918040434519,
+    0.0120000001043081,
+    -5.46704109509786
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "j_rs_t_lrl_a"
+}

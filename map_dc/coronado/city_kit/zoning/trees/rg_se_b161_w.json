@@ -1,0 +1,81 @@
+{
+ "area": "rg_se_b161_w",
+ "piece": "s_rg_se_b161_w",
+ "zone": "ring boulevard",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms, the palm boulevard round the island; broadleaf only at the park edges; within the in-view limit (8 broadleaf / 12 trees within 60 m): room for 6 here",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    458.328,
+    1.5,
+    346.851
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "north parkway grass at the start, first fan palm of the boulevard's north row (old spot and species), clear of the no-parking sign (1.8 m)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    483.356,
+    1.5,
+    324.801
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "south parkway grass, a fan palm 25 m on, alternating sides down the boulevard (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    503.608,
+    1.5,
+    345.549
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "north parkway grass, the next fan palm, 20 m on (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    512.17,
+    1.5,
+    326.995
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "south parkway grass, the next fan palm on the curve (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    531.286,
+    1.5,
+    345.852
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "north parkway grass, the next fan palm (one species: the queen palm here becomes a fan palm)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    554.976,
+    1.5,
+    320.753
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "south parkway grass toward the junction, the last fan palm (old spot and species); the 10-12 m doubles go under the in-view limit"
+  }
+ ]
+}

@@ -1,0 +1,25 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 14 nodes (with every mesh of the buildings), 2096 ground and ground-collision triangles, 8 prop instances, 3 colliders, 158 wear marks are identical in both files
+PROOF differences found between the files: 28 lines only in the old one, 0 only in the new one
+PROOF change #1 remove tree_magnolia_a at (-6.45, 0.09, 35.53) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_magnolia_a at (-6.45, 0.09, 49.38) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_torrey_pine_a at (6.45, 0.09, 39.32) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove_decal: one wear mark at (-8.73, 0.16, 75.07) removed  [grime mark hangs over the edge of the ground]
+PROOF change #5 remove_decal: one wear mark at (-8.28, 0.16, 85.87) removed  [grime mark hangs over the edge of the ground]
+PROOF change #6 remove_decal: one wear mark at (-8.33, 0.16, 90.42) removed  [grime mark hangs over the edge of the ground]
+PROOF change #7 remove_decal: one wear mark at (-8.77, 0.16, 95.58) removed  [grime mark hangs over the edge of the ground]
+PROOF change #8 remove_decal: one wear mark at (-8.53, 0.16, 90.91) removed  [pale patch mark lies on gravel]
+PROOF change #9 remove_decal: one wear mark at (8.31, 0.16, 75.06) removed  [grime mark hangs over the edge of the ground]
+PROOF change #10 remove_decal: one wear mark at (8.75, 0.16, 81.66) removed  [grime mark hangs over the edge of the ground]
+PROOF change #11 remove_decal: one wear mark at (8.29, 0.16, 85.86) removed  [grime mark hangs over the edge of the ground]
+PROOF change #12 remove_decal: one wear mark at (8.60, 0.16, 91.21) removed  [grime mark hangs over the edge of the ground]
+PROOF change #13 remove_decal: one wear mark at (8.22, 0.16, 96.46) removed  [grime mark hangs over the edge of the ground]
+PROOF note: 'Props/tree_torrey_pine_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_near' held only listed items and is gone with them
+PROOF 13 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

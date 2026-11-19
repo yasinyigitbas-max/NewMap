@@ -1,0 +1,9 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 14 nodes (with every mesh of the buildings), 2092 ground and ground-collision triangles, 12 prop instances, 7 colliders, 38 wear marks are identical in both files
+PROOF differences found between the files: 4 lines only in the old one, 0 only in the new one
+PROOF change #3 remove prop_usps_collection_box at (-8.60, 0.15, 18.60) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_usps_collection_box leaves 1.1 m of a 1.8 m wide walk]]
+PROOF change #1 remove_decal: one wear mark at (-4.94, 0.01, -4.08) removed  [crack mark lies on grass]
+PROOF note: 'Props/prop_usps_collection_box_worn_near' held only listed items and is gone with them
+PROOF 2 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

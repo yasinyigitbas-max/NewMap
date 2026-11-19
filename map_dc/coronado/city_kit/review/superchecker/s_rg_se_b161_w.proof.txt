@@ -1,0 +1,41 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 20 nodes (with every mesh of the buildings), 5544 ground and ground-collision triangles, 38 prop instances, 16 colliders, 360 wear marks are identical in both files
+PROOF differences found between the files: 98 lines only in the old one, 0 only in the new one
+PROOF change #1 remove palm_queen_a at (5.59, 0.09, -11.51) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove palm_queen_a at (21.45, 0.09, 10.40) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove palm_queen_a at (44.77, 0.09, 9.70) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove palm_queen_a at (83.29, 0.09, 9.85) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove palm_queen_b at (23.12, 0.09, -11.59) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove palm_queen_b at (81.90, 0.09, -6.92) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove palm_queen_b at (109.89, 0.09, 0.86) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove palm_mexican_fan_a at (35.36, 0.09, -11.20) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove palm_mexican_fan_a at (47.69, 0.09, -10.46) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove palm_mexican_fan_a at (10.33, 0.09, 10.85) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #11 remove palm_mexican_fan_b at (64.17, 0.09, -9.00) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #12 remove palm_mexican_fan_b at (32.96, 0.09, 10.00) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #13 remove palm_mexican_fan_b at (55.61, 0.09, 9.55) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #14 remove palm_mexican_fan_b at (65.97, 0.09, 9.55) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #15 remove palm_mexican_fan_a at (90.29, 0.09, -6.88) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #16 remove palm_mexican_fan_a at (112.52, 0.09, -23.02) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #17 remove palm_mexican_fan_a at (96.99, 0.09, 7.54) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #18 remove palm_mexican_fan_b at (99.73, 0.09, -9.91) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #19 remove palm_mexican_fan_b at (106.98, 0.09, -15.25) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #20 remove palm_mexican_fan_b at (122.89, 0.09, -14.09) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #21 remove palm_mexican_fan_b at (127.29, 0.09, -25.72) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF note: 'Props/cell_near_1_0/palm_mexican_fan_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_1_0/palm_mexican_fan_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_0/palm_mexican_fan_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_0/palm_mexican_fan_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_near' held only listed items and is gone with them
+PROOF 21 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

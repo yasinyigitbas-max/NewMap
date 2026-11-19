@@ -1,0 +1,57 @@
+{
+ "area": "rg_se_b134_2",
+ "piece": "s_rg_se_b134_2",
+ "zone": "ring boulevard",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms; within the in-view limit (8 broadleaf / 12 trees within 60 m), full toward the far end",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    -101.287,
+    2.15,
+    345.242
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "north parkway grass at the start, a fan palm of the boulevard (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    -86.174,
+    2.15,
+    323.508
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "south parkway grass 15 m on, the next fan palm, alternating sides"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    -78.322,
+    2.15,
+    346.62
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "north parkway grass, the next fan palm (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    -63.715,
+    2.15,
+    324.855
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "south parkway grass, the last fan palm before the stretch where the in-view limit is full"
+  }
+ ]
+}

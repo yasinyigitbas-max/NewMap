@@ -1,0 +1,216 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -6.44999980926514,
+    0.106459259986877,
+    34.2131843566895
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    0.119506292045116,
+    37.06787109375
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    0.396210134029388,
+    64.06787109375
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -8.75,
+    0.229652643203735,
+    44.5
+   ],
+   "base": "prop_bench_bus_stop",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "door",
+   "mode": "choose",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "erased (in doubt): door: no plainly safe place (Yasin: delete when unsure) [prop_bench_bus_stop stands in front of the shopdoor of walkup_a]"
+  },
+  {
+   "at": [
+    -6.44999980926514,
+    0.463127930959066,
+    63.7131843566895
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -6.44999980926514,
+    0.610713253418604,
+    73.2131805419922
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -6.44999980926514,
+    0.775962720314662,
+    82.7131805419922
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -6.44999980926514,
+    1.03014216820399,
+    96.2131805419922
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    0.28823292752107,
+    49.56787109375
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    0.667344629764557,
+    76.56787109375
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    0.837485253810883,
+    86.06787109375
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    6.44999980926514,
+    1.01767857869466,
+    95.56787109375
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -8.7527961730957,
+    0.256476454436779,
+    46.2217712402344
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -8.41554641723633,
+    0.445264359315236,
+    62.4578285217285
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    8.67112827301025,
+    1.04436413447062,
+    96.948616027832
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "s_rs_b002_a"
+}
