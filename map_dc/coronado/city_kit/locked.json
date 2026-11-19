@@ -71,11 +71,6 @@
    "by": "Yasin",
    "date": "2026-11-17"
   },
-  "s_strip_side": {
-   "sha256": "539994b6ca0f803fabccdde839c9668f925e8bdd48dfdf345f6c6fe1af045118",
-   "by": "Yasin",
-   "date": "2026-11-17"
-  },
   "st_stadium": {
    "sha256": "6adf51586dccd3eee5322592cfe34c12c35331d93781524fabcfaef410a78b2f",
    "by": "Yasin",
@@ -2778,6 +2773,11 @@
   },
   "s_wf": {
    "sha256": "ac1db6ce9fc99875fa682ec1c51a674bd906447bf34a40f7cbc0818ddf1816f9",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "s_strip_side": {
+   "sha256": "48238ae61555abff7ecd3c78dd4eb020075bc675b80112a3653c6a41e242926a",
    "by": "Yasin",
    "date": "2026-11-19"
   }
