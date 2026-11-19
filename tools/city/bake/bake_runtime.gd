@@ -470,9 +470,15 @@ func _lift_wells(s: ConcavePolygonShape3D, xf: Transform3D) -> ConcavePolygonSha
 ## A concave shape as pieces of at most COL_CHUNK_TRIS triangles: [[shape, centre], ...]. Each piece's triangles are
 ## stored round its own centre, so the CollisionShape3D that carries it sits where the piece is (the streamer attaches
 ## the nearest collision first, and bodies are grouped by place).
-func _split_concave(s: ConcavePolygonShape3D) -> Array:
+## `snap` (the ground, given in WORLD space by _body): the centre is a whole metre. A shared corner of two neighbouring
+## pieces is then the same float in both (corner - centre and centre + that are exact for whole-metre centres), so the
+## seam between them is closed. Before (19 Nov, collision_holes.gd: 70 of the 89 holes) every piece was re-centred on
+## its own odd centre in the piece's frame and turned by the piece's yaw: the same corner came out a few hundredths of a
+## millimetre apart in two pieces, and a ray straight down onto the seam (a lane's centre line at x = 480.000, a cell
+## border) went through between them.
+func _split_concave(s: ConcavePolygonShape3D, snap := false) -> Array:
 	var id := s.get_instance_id()
-	if split_cache.has(id): return split_cache[id]
+	if not snap and split_cache.has(id): return split_cache[id]
 	var f := s.get_faces(); var n := f.size() / 3
 	var cen := PackedVector3Array(); cen.resize(n)
 	for t in n: cen[t] = (f[t * 3] + f[t * 3 + 1] + f[t * 3 + 2]) / 3.0
@@ -504,6 +510,7 @@ func _split_concave(s: ConcavePolygonShape3D) -> Array:
 		for t: int in g2:
 			for v in 3: lo2 = lo2.min(f[t * 3 + v]); hi2 = hi2.max(f[t * 3 + v])
 		var c := (lo2 + hi2) * 0.5
+		if snap: c = c.floor()
 		var pf := PackedVector3Array(); pf.resize(g2.size() * 3)
 		for j in g2.size():
 			for v in 3: pf[j * 3 + v] = f[int(g2[j]) * 3 + v] - c
@@ -511,7 +518,7 @@ func _split_concave(s: ConcavePolygonShape3D) -> Array:
 		res.append([ps, c]); stat.col_piece_max = maxi(int(stat.col_piece_max), g2.size())
 	if n > COL_CHUNK_TRIS: stat.col_split += 1
 	stat.col_pieces += res.size()
-	split_cache[id] = res
+	if not snap: split_cache[id] = res
 	return res
 
 ## A shape as plain data (col_data.gd says why it is not a Shape3D), kept INSIDE the cell's own file: one per cell
@@ -710,8 +717,10 @@ func _body(body: StaticBody3D) -> void:
 		if s.shape is ConcavePolygonShape3D:      # ground trimesh of a whole piece: in small pieces, each to the cell it lies in
 			var gsh: ConcavePolygonShape3D = s.shape
 			if not cur_wells.is_empty(): gsh = _lift_wells(gsh, s.global_transform)
-			for pc: Array in _split_concave(gsh):
-				var pxf := s.global_transform * Transform3D(Basis(), pc[1])
+			# in world space (see _split_concave, snap): the pieces' seams stay closed
+			var wsh := ConcavePolygonShape3D.new(); wsh.backface_collision = gsh.backface_collision; wsh.set_faces(s.global_transform * gsh.get_faces())
+			for pc: Array in _split_concave(wsh, true):
+				var pxf := Transform3D(Basis(), pc[1])
 				var c0 := _cell_of(pxf.origin)
 				if not _cell_wanted(c0): continue
 				_cell(c0).col.append([pc[0], pxf, body.collision_layer, body.collision_mask]); stat.shapes += 1
