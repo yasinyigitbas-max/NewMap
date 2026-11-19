@@ -1,0 +1,21 @@
+{
+ "area": "ar_b065_b",
+ "piece": "s_ar_b065_b",
+ "zone": "Arterial",
+ "rule": "docs/TREE_PLAN.md: arterials - trees on the grass strips only; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -629.435,
+    2.15,
+    -1388.637
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "grass strip by the arterial, nothing within 3 m: the one spot on grass, kept as a single fan palm"
+  }
+ ]
+}
