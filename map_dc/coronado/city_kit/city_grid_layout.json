@@ -4935,6 +4935,86 @@
    "site": "b045"
   },
   {
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
+   "piece": "n_apt_b1_be",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
+   "piece": "n_apt_b2_7th",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
+   "piece": "n_apt_b2_be",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
+   "piece": "n_apt_b3_w",
+   "pos": [
+    250.0,
+    8.0,
+    -400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
+   "piece": "n_apt_b3_e",
+   "pos": [
+    250.0,
+    8.0,
+    -400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
    "piece": "g_v1_j4ne",
    "pos": [
     -800.0,
