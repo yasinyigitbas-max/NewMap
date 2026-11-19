@@ -182,5 +182,22 @@ func _run() -> void:
 	for dr2: Array in DN.doors:
 		var q2: Vector3 = dr2[1]; var o2: Vector3 = dr2[2]
 		c.grime(Vector2(q2.x + o2.x * 0.9, q2.z + o2.z * 0.9), 0.0, 1.6, 1.4, 0.45)
+	# ---- POLISH (19 Nov, Yasin: "run a polish pass ... plenty of life and relevant props")
+	# the dorms' bikes in racks beside the paths between the halls (the spots by the doors are the patio sliders)
+	for rk: Array in [[-79.0, 46.0, 90.0], [-71.0, 46.0, 90.0], [-79.0, 134.0, 90.0], [-71.0, 134.0, 90.0], [-126.0, 77.5, 0.0], [-126.0, 102.5, 0.0], [-24.0, 77.5, 0.0], [-24.0, 102.5, 0.0]]:
+		c.put("prop_bike_rack", "worn", c.gp(float(rk[0]), float(rk[1])), float(rk[2]), "dorms: residents' bikes between the halls")
+	for ps: Array in [[-98.0, 60.0], [-52.0, 120.0]]: c.put("prop_patio_set_4", "worn", c.gp(float(ps[0]), float(ps[1])), 0.0, "dorm green: a table and chairs where people study outside")
+	c.put("prop_golf_cart_white", "worn", c.gp(-137.0, 120.0), 0.0, "facilities: the housing crew's cart on the lawn by the lot path")
+	for hy: Array in [[-140.5, 70.0], [-62.0, 150.0], [-14.0, 100.0], [-66.0, 16.0]]: c.put("prop_hydrant_red", "worn", c.gp(float(hy[0]), float(hy[1])), 0.0, "fire hydrant within reach of every hall")
+	for sd: Array in [[-161.5, 100.0], [-100.0, 163.0], [-143.0, 150.0]]: c.put("prop_storm_drain_grate", "worn", c.gp(float(sd[0]), float(sd[1])), 0.0, "storm drain at the low edge of the asphalt")
+	c.put("prop_manhole_cover", "worn", c.gp(-57.0, 175.0), 0.0, "sewer manhole in the loop")
+	for tc: Array in [[-112.0, 151.0, "prop_trash_cart_black"], [-111.0, 151.0, "prop_trash_cart_blue"], [-110.0, 151.0, "prop_trash_cart_green"]]:
+		c.put(String(tc[2]), "worn", c.gp(float(tc[0]), float(tc[1])), 180.0, "move-in loop: bin carts for move-in boxes")
+	for dt: Array in [[-48.0, 12.4], [-32.0, 12.4]]:
+		c.put("prop_cafe_table", "worn", c.gp(float(dt[0]), float(dt[1])), 0.0, "dining terrace: a second row of tables")
+		c.put("prop_cafe_chair", "worn", c.gp(float(dt[0]) - 0.8, float(dt[1])), 90.0, "dining terrace: a chair at its table", false)
+		c.put("prop_cafe_chair", "worn", c.gp(float(dt[0]) + 0.8, float(dt[1])), -90.0, "dining terrace: a chair at its table", false)
+	c.put("prop_bbq_kettle", "worn", c.gp(-164.0, 35.0), 0.0, "grove: a second kettle")
+	for sp: Array in [[-60.0, 80.0], [-100.0, 80.0]]: c.put("prop_sprinkler_popup", "worn", c.gp(float(sp[0]), float(sp[1])), 0.0, "dorm green: pop-up sprinklers")
 	c.finish()
 	quit()

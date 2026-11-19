@@ -168,5 +168,20 @@ func _run() -> void:
 		for dr: Array in r3.doors:
 			var q: Vector3 = dr[1]; var o: Vector3 = dr[2]
 			c.grime(Vector2(q.x + o.x * 0.9, q.z + o.z * 0.9), 0.0, 1.6, 1.4, 0.4)
+	# ---- POLISH (19 Nov, Yasin: "run a polish pass ... plenty of life and relevant props")
+	for hy: Array in [[186.0, 72.0], [138.6, 126.0], [90.0, 186.0], [86.0, 34.0]]: c.put("prop_hydrant_red", "worn", c.gp(float(hy[0]), float(hy[1])), 0.0, "fire hydrant within reach of every building")
+	for sd: Array in [[143.0, 100.0], [143.0, 160.0], [175.0, 57.0]]: c.put("prop_storm_drain_grate", "worn", c.gp(float(sd[0]), float(sd[1])), 0.0, "storm drain at the low edge of the drive")
+	c.put("prop_manhole_cover", "worn", c.gp(155.0, 57.0), 0.0, "sewer manhole in the garage drive")
+	for sb: Array in [[56.0, 127.0], [82.0, 127.0], [69.0, 127.0]]:
+		c.put("prop_park_bench", "worn", c.gp(float(sb[0]), float(sb[1])), 180.0, "field: a sideline bench facing the game")
+	for wb: Array in [[30.0, 185.0], [70.0, 185.0]]: c.put("prop_park_bench", "worn", c.gp(float(wb[0]), float(wb[1])), 180.0, "tennis: a bench outside the cage for players waiting for a court")
+	c.put("prop_drinking_fountain", "worn", c.gp(50.0, 186.0), 0.0, "tennis: water by the gate path")
+	c.put("prop_drinking_fountain", "worn", c.gp(130.0, 40.0), 0.0, "field: water at the loop's corner")
+	for vm: Array in [[174.0, 128.0, "prop_vending_soda"], [174.0, 116.0, "prop_vending_snack"]]: c.put(String(vm[2]), "worn", c.gp(float(vm[0]), float(vm[1])), 90.0, "stadium walk: machines beside the kiosk for the queue")
+	c.put("prop_newspaper_box_red", "worn", c.gp(189.6, 133.0), 90.0, "stadium walk: the sports paper")
+	for bk: float in [114.0, 124.0]: c.put("prop_bike_rack", "worn", c.gp(152.0, bk), 0.0, "stadium walk: bikes left for the game")
+	c.put("prop_golf_cart_blue", "worn", c.gp(120.0, 35.5), 90.0, "athletics: the field crew's cart behind the kinesiology wing")
+	for sp: Array in [[160.0, 40.0], [60.0, 186.0]]: c.put("prop_sprinkler_impact", "worn", c.gp(float(sp[0]), float(sp[1])), 0.0, "lawn: sprinkler head")
+	c.put("prop_usps_collection_box", "worn", c.gp(88.0, 8.0), 0.0, "rec centre: a mailbox on the mall")
 	c.finish()
 	quit()

@@ -34,7 +34,7 @@ func _run() -> void:
 	var base := L.eased(land, [[Vector2(0.0, -190.8), Vector2(190.8, -190.8), flat], [Vector2(190.8, -190.8), Vector2(190.8, 0.0), flat]], 8.0)
 	var SITES := [["public/pub_university", Vector2(100.0, -150.0), "n", "uni_hall"], ["civic/civ_school_wing", Vector2(30.0, -125.0), "s", "uni_lecture_west"],
 		["civic/civ_library", Vector2(120.0, -66.0), "w", "uni_library"], ["civic/civ_school_wing", Vector2(166.0, -6.4), "s", "uni_science"],
-		["commercial/com_shallow_cafe", Vector2(14.5, -190.5), "n", "uni_gate_cafe"], ["commercial/com_shallow_books", Vector2(23.0, -190.5), "n", "uni_gate_books"],
+		["commercial/com_shallow_cafe", Vector2(14.5, -189.5), "n", "uni_gate_cafe"], ["commercial/com_shallow_books", Vector2(23.0, -189.5), "n", "uni_gate_books"],
 		["commercial/com_kiosk", Vector2(100.0, -172.6), "s", "uni_bus_kiosk"]]
 	var pads: Array = []
 	for st: Array in SITES:
@@ -185,5 +185,21 @@ func _run() -> void:
 		for dr: Array in r3.doors:
 			var q: Vector3 = dr[1]; var o: Vector3 = dr[2]
 			c.grime(Vector2(q.x + o.x * 0.9, q.z + o.z * 0.9), 0.0, 1.6, 1.4, 0.4)
+	# ---- POLISH (19 Nov, Yasin: "run a polish pass ... plenty of life and relevant props")
+	for hy: Array in [[147.4, -150.0], [178.0, -100.0], [9.5, -100.0], [120.0, -6.8]]: c.put("prop_hydrant_red", "worn", c.gp(float(hy[0]), float(hy[1])), 0.0, "fire hydrant within reach of every building")
+	for sd: Array in [[57.0, -178.0], [143.0, -178.0], [161.5, -100.0], [100.0, -168.0]]: c.put("prop_storm_drain_grate", "worn", c.gp(float(sd[0]), float(sd[1])), 0.0, "storm drain at the low edge of the asphalt")
+	for mh: Array in [[120.0, -169.0], [165.0, -143.0]]: c.put("prop_manhole_cover", "worn", c.gp(float(mh[0]), float(mh[1])), 0.0, "sewer manhole in the lane")
+	for nb: Array in [[97.0, -189.5, "prop_newspaper_box_red"], [103.0, -189.5, "prop_newspaper_box_blue"]]: c.put(String(nb[2]), "worn", c.gp(float(nb[0]), float(nb[1])), 180.0, "bus station: papers for the ride")
+	for ac: Array in [[40.0, -88.0], [44.0, -91.0], [84.0, -88.0], [80.0, -91.0], [40.0, -42.0], [84.0, -42.0]]:
+		var acp := Vector2(float(ac[0]), float(ac[1]))
+		c.put("prop_adirondack_wood" if int(ac[0]) % 8 == 0 else "prop_adirondack_white", "worn", c.gp(acp.x, acp.y), rad_to_deg(atan2(62.0 - acp.x, -65.0 - acp.y)), "quad: lawn chairs facing the fountain at the crossing")
+	for fb2: Array in [[57.0, -60.0], [67.0, -60.0], [57.0, -70.0], [67.0, -70.0]]:
+		c.put("plant_bird_of_paradise", "normal", c.gp(float(fb2[0]), float(fb2[1])), c.rr.randf_range(0, 360), "quad: flowers round the crossing")
+	for pt2: Array in [[94.0, -100.0], [100.0, -20.0], [20.0, -110.0]]: c.put("prop_picnic_table", "worn", c.gp(float(pt2[0]), float(pt2[1])), 0.0, "quad: more tables for lunch on the lawn")
+	for sp: Array in [[40.0, -40.0], [90.0, -110.0], [100.0, -30.0]]: c.put("prop_sprinkler_popup", "worn", c.gp(float(sp[0]), float(sp[1])), 0.0, "quad: pop-up sprinklers")
+	c.put("prop_golf_cart_white", "worn", c.gp(150.0, -30.0), 90.0, "facilities: the maintenance cart parked on the lawn behind the science wing")
+	c.put("prop_bike_rack", "worn", c.gp(186.0, -12.0), 90.0, "science wing: bikes at its east end")
+	c.put("prop_bike_rack", "worn", c.gp(186.0, -16.0), 90.0, "science wing: bikes at its east end")
+	c.put("prop_usps_collection_box", "worn", c.gp(130.0, -151.0), 0.0, "hall: the campus mailbox by its steps")
 	c.finish()
 	quit()

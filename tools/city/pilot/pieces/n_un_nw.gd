@@ -194,5 +194,22 @@ func _run() -> void:
 		for dr: Array in r3.doors:
 			var q: Vector3 = dr[1]; var o: Vector3 = dr[2]
 			c.grime(Vector2(q.x + o.x * 0.9, q.z + o.z * 0.9), 0.0, 1.6, 1.4, 0.4)
+	# ---- POLISH (19 Nov, Yasin: "run a polish pass ... plenty of life and relevant props")
+	for hy: Array in [[-147.4, -176.0], [-62.0, -150.0], [-141.0, -40.0], [-9.5, -100.0]]: c.put("prop_hydrant_red", "worn", c.gp(float(hy[0]), float(hy[1])), 0.0, "fire hydrant within reach of every building")
+	for sd: Array in [[-100.0, -183.0], [-161.5, -100.0], [-30.0, -146.0]]: c.put("prop_storm_drain_grate", "worn", c.gp(float(sd[0]), float(sd[1])), 0.0, "storm drain at the low edge of the asphalt")
+	for mh: Array in [[-120.0, -183.0], [-57.0, -165.0]]: c.put("prop_manhole_cover", "worn", c.gp(float(mh[0]), float(mh[1])), 0.0, "sewer manhole in the drive")
+	for fb: Array in [[-109.0, -100.0], [-91.0, -100.0], [-109.0, -90.0], [-91.0, -90.0]]:
+		c.put("plant_bird_of_paradise", "normal", c.gp(float(fb[0]), float(fb[1])), c.rr.randf_range(0, 360), "bandstand: flower beds at its corners")
+	for pt: Array in [[-90.0, -40.0], [-40.0, -110.0], [-20.0, -40.0]]: c.put("prop_picnic_table", "worn", c.gp(float(pt[0]), float(pt[1])), 0.0, "west quad: more tables for lunch on the lawn")
+	for ac: Array in [[-30.0, -80.0], [-26.0, -83.0], [-34.0, -83.0]]:
+		var acp := Vector2(float(ac[0]), float(ac[1]))
+		c.put("prop_adirondack_white", "worn", c.gp(acp.x, acp.y), face(acp, Vector2(-62.0, -65.0)), "west quad: lawn chairs facing the crossing")
+	c.put("prop_sprinkler_popup", "worn", c.gp(-90.0, -20.0), 0.0, "west quad: pop-up sprinkler")
+	c.put("prop_sprinkler_popup", "worn", c.gp(-120.0, -80.0), 0.0, "west quad: pop-up sprinkler")
+	c.put("prop_golf_cart_white", "worn", c.gp(-20.0, -144.0), 90.0, "facilities: the maintenance cart in the union's yard")
+	c.put("prop_newspaper_box_blue", "worn", c.gp(-11.0, -189.8), 180.0, "gate: the city paper")
+	for br: float in [-186.0, -183.0]: c.put("prop_bike_rack", "worn", c.gp(br, -27.0), 0.0, "arts wing: bikes on the lawn by its west end")
+	for sb: Array in [[-80.0, -150.0], [-150.0, -30.0]]: c.put("prop_park_bench", "worn", c.gp(float(sb[0]), float(sb[1])), 180.0, "lawn: a bench in the shade facing the path")
+	c.put("prop_usps_collection_box", "worn", c.gp(-112.0, -124.0), 0.0, "humanities: the department mailbox")
 	c.finish()
 	quit()
