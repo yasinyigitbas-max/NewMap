@@ -97,3 +97,51 @@ whether block 1 keeps a view under ~150 draws is NOT known. Rooms add about 30-6
 ## Kit used here that the census lists as unused
 `urban/urb_courthouse` (first use anywhere), `prop_headstone_*` again (churchyard), `prop_switch_rack`, `prop_play_structure`
 in a flats' court; `ext_parking_garage` a second time. Courthouse: no court furniture exists in the kit (no bench / dock / bar).
+
+---
+
+# Block 2 (claude/fill-city-centre, 19 Nov 2026) - DRAFT, NOT SHOWN, NOT LOCKED
+
+Block 2 = 6th St (north), Amber (west), B Ave (east), 7th St (south), round the locked c_ne sample and the apartment
+sample a_nw. Real outline measured from the street pieces vertex by vertex, u 16..240.8, v -790.8..-609.2.
+
+## Land first
+- Land 5.95..6.11 m; every street edge and neighbour round it 6.15 m: FLAT, one pad at 6.15 for all five pieces.
+- Ground checked before any building or prop and again on the final state: ground_check grow_cc 0 buried / 0 hanging /
+  0 steps / 0 under; my 25 cm seam test 0 overlap, worst step 0.0 cm against all 16 neighbours; 3 single empty 25 cm
+  cells are at block 3's curved edges, not block 2. Dry land trial (never --write): 289 land nodes lowered by up to
+  6 cm, then 0 cells under. THE LAND WAS NOT WRITTEN.
+
+## What was built
+| Piece | Area | What |
+|---|---|---|
+| `n_cc_b2_am` | u 16..50 | Amber x 6th corner: the 50 m CONDO TOWER (blocks alternate glass 59 m / condo 50 m), a brick row (ice cream, jeweller, gallery), a wine bar block, a shoe shop with fire escapes; the condo's garden; alley A2 |
+| `n_cc_b2_n` | 6th St east of c_ne | eight shop-and-flat buildings on 6th (corner cafe, Thai restaurant, books / souvenirs / keys, clothes / salon / store, corner store, dentist, corner bar); a residents' play garden behind; back rows on alley C2 (upholstery) |
+| `n_cc_b2_e` | u 190..240.8 | the 6th x B Ave corner restaurant block and a beach condo with an ice cream window; walk-ups and Spanish garden flats along B Ave round two fenced gardens; alley B2 (a_nw's lane carried to 6th) |
+| `n_cc_b2_s` | alley C2 south side | the block's 4-level GARAGE on alley C2 (no lots: the cars go in it), a garage walk to 7th St, architects' office, flats, two lawn courts and a residents' yard |
+| `n_cc_b2_7th` | 7th St north side | the DEPARTMENT STORE facing 7th, an insurance office, a burger block, a brick row (sports, souvenirs, gallery); alley D2 with a tailor-cleaner, a pawn shop, a locksmith, workshops and flats |
+
+Fix on the last pass: the corner restaurant's two dumpsters stood inside the residents' garden by its new fence; now
+one dumpster at the restaurant's back corner on the alley B2 pocket.
+
+## Walk-in places: 29 rooms `g_cc_b2_*` (list in `interiors/assignment_cc.json`; sheets `b2_rooms_1..5.jpg`, one
+inside and one street picture per shop). The condo's ice cream window got a bakery-kind room (counter, cases) - close,
+not exact.
+
+## Checks on the final state (what each can and cannot see)
+- validate.gd on the block-2 area layout: 0 lines name n_cc (13 problems in the loaded area are other pieces'). Sees
+  props in buildings, before doors, on each other; cannot see whether a prop makes sense.
+- check_life: only "fence end leads nowhere" for my fences; each ends on a real wall - the check uses nominal
+  footprints, so it cannot see the real wall the fence meets.
+- audit_trees: 0 trees in hard ground (sees the ground under the trunk only).
+- sink_check: 0 props off the ground (street pieces only - it does not look inside fill pieces).
+- check_rooms --only=g_cc_: 0 problems in 51 rooms (cannot judge style).
+- lock test: RESULT PASS (496 locked pieces untouched).
+
+## Pictures (opened and looked at; preview on the cloud's software GPU, no shadows, unbaked)
+`b2_top.jpg` (draws 703, 1.54 M triangles), `b2_amber_condo.jpg` (517), `b2_6th_eye.jpg` (546), `b2_bave_eye.jpg`
+(621), `b2_7th_eye.jpg` (480), `b2_play_garden.jpg` (594), `b2_alleyD2_walk.jpg` (793). Draw counts are the preview's
+unbaked numbers with ~120 layout rows loaded; the bake (target ~150) and the phone were not run.
+
+## NOT done / NOT checked
+No bake, no phone run, no lock, land not written. Flat block, so no steepest-edge picture (no edge steeper than 0 cm).

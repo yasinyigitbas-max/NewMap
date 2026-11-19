@@ -32,11 +32,20 @@ func _init(piece: String, level := 0.15) -> void:
 	root = Node3D.new(); root.name = piece
 	bl = Node3D.new(); bl.name = "Buildings"; root.add_child(bl)
 
-func yf(_x: float, _z: float) -> float: return y0
+var hfn := Callable()          # the piece's floor height (x, z) -> y when it is not flat (set by the piece script)
+func yf(x: float, z: float) -> float: return float(hfn.call(x, z)) if hfn.is_valid() else y0
 
 ## ---------------------------------------------------------------- ground
-func pad(x0: float, z0: float, x1: float, z1: float) -> void:
-	floors.append([minf(x0, x1), minf(z0, z1), maxf(x0, x1), maxf(z0, z1)])
+func pad(x0: float, z0: float, x1: float, z1: float, fn := Callable()) -> void:
+	floors.append([minf(x0, x1), minf(z0, z1), maxf(x0, x1), maxf(z0, z1), fn])
+
+## a retaining face along a - b where two levels meet: from ybot(x, z) up to ytop(x, z), facing out_side (as wall_line);
+## 0.3 m deeper than the lower level so no gap shows at its foot
+func retain(a: Vector2, b: Vector2, ybot: Callable, ytop: Callable, out_side: float, mat := "wall") -> void:
+	var n := maxi(1, int(ceil(a.distance_to(b) / 2.0)))
+	var pts := PackedVector2Array()
+	for i in n + 1: pts.append(a.lerp(b, float(i) / n))
+	g.wall_line(mat, pts, func(x: float, z: float) -> float: return float(ybot.call(x, z)) - 0.3, ytop, out_side)
 
 func paint(mat: String, x0: float, z0: float, x1: float, z1: float) -> void:
 	paints.append([minf(x0, x1), minf(z0, z1), maxf(x0, x1), maxf(z0, z1), mat])
@@ -50,7 +59,7 @@ func well(x: float, z: float, a := 0.9, r := 0.75) -> void:
 
 func _draw_well(c: Vector2, a: float, r: float) -> void:
 	var n := 24
-	var wy := y0; var sy := y0 - 0.06
+	var wy := yf(c.x, c.y); var sy := wy - 0.06
 	for k in n:
 		var t0 := TAU * k / n; var t1 := TAU * (k + 1) / n
 		var d0 := Vector2(cos(t0), sin(t0)); var d1 := Vector2(cos(t1), sin(t1))
@@ -63,8 +72,8 @@ func _draw_well(c: Vector2, a: float, r: float) -> void:
 
 ## extra ground that follows a street's real edge where it is not straight (a polygon in x, z at the pad level)
 var polys: Array = []
-func edge_poly(mat: String, pts: PackedVector2Array) -> void:
-	polys.append([mat, pts])
+func edge_poly(mat: String, pts: PackedVector2Array, fn := Callable()) -> void:
+	polys.append([mat, pts, fn])
 
 ## the outline's four edges, each facing out (for build_floor's skirt)
 static func rect_edges(x0: float, z0: float, x1: float, z1: float, mat := "wall") -> Array:
@@ -74,11 +83,16 @@ static func rect_edges(x0: float, z0: float, x1: float, z1: float, mat := "wall"
 ## 0.3 m skirt in the edge's material down the outer edges given (so a residual gap shows a face, not grass)
 func build_floor(skirt_edges: Array) -> void:
 	for f: Array in floors:
-		K.painted_rect(g, f[0], f[1], f[2], f[3], paints, yf, "asphalt", false)
+		var fn: Callable = f[4] if (f[4] as Callable).is_valid() else yf
+		K.painted_rect(g, f[0], f[1], f[2], f[3], paints, fn, "asphalt", false)
 	for w: Array in wells: _draw_well(w[0], float(w[1]), float(w[2]))
-	for pg: Array in polys: g.poly(String(pg[0]), pg[1], yf)
+	for pg: Array in polys: g.poly(String(pg[0]), pg[1], pg[2] if (pg[2] as Callable).is_valid() else yf)
 	for e: Array in skirt_edges:     # [Vector2 a, Vector2 b, out_side, mat]
-		g.wall_line(String(e[3]), PackedVector2Array([e[0], e[1]]), func(_x: float, _z: float) -> float: return y0 - 0.3, yf, float(e[2]))
+		var a2: Vector2 = e[0]; var b2: Vector2 = e[1]
+		var n2 := maxi(1, int(ceil(a2.distance_to(b2) / 2.0)))
+		var pts2 := PackedVector2Array()
+		for i2 in n2 + 1: pts2.append(a2.lerp(b2, float(i2) / n2))
+		g.wall_line(String(e[3]), pts2, func(x: float, z: float) -> float: return yf(x, z) - 0.3, yf, float(e[2]))
 
 ## ---------------------------------------------------------------- buildings
 static func _near_aabb(folder: String) -> AABB:
@@ -127,7 +141,7 @@ func bld(folder: String, front: Vector2, face: String, nominal := false, label :
 	else:
 		for e: Array in st.get("doors_front", []):
 			doors.append([String(e[0]), c + b * Vector3(float(e[1]), 0, d * 0.5), fdir])
-	var r := {"node": node, "folder": folder, "rect": [xs.min(), zs.min(), xs.max(), zs.max()], "doors": doors, "yaw": yaw, "c": c, "b": b, "ab": ab, "st": st}
+	var r := {"node": node, "folder": folder, "rect": [xs.min(), zs.min(), xs.max(), zs.max()], "doors": doors, "yaw": yaw, "c": c, "b": b, "ab": ab, "st": st, "y": y0}
 	blds.append(r)
 	return r
 
@@ -150,7 +164,7 @@ func front_shops(r: Dictionary) -> Array:
 ## piece point at a building's local offset (x across the front, z: + toward the front), on the pad
 func at(r: Dictionary, lx: float, lz: float, ly := 0.0) -> Vector3:
 	var p: Vector3 = r.c + (r.b as Basis) * Vector3(lx, 0, lz)
-	return Vector3(p.x, y0 + ly, p.z)
+	return Vector3(p.x, float(r.y) + ly, p.z)
 
 ## ---------------------------------------------------------------- props
 static func _radius(base: String) -> float:
@@ -209,7 +223,7 @@ func wall(r: Dictionary, base: String, cond: String, side: String, along: float,
 		var dp: Vector3 = dr[1]
 		if Vector2(dp.x - p.x, dp.z - p.z).length() < (3.4 if String(dr[0]) == "rollup" else 1.25):
 			refused.append("%s on the %s wall of %s at (%.1f, %.1f): over / beside its %s door" % [base, side, r.folder, p.x, p.z, dr[0]]); return
-	props.add(base, cond, Vector3(p.x, y0 + h, p.z), yaw, false)
+	props.add(base, cond, Vector3(p.x, float(r.y) + h, p.z), yaw, false)
 	why[reason] = int(why.get(reason, 0)) + 1
 
 ## a ground prop standing just off a building face (condensers, bins, gas meters), same sides as wall()
@@ -222,7 +236,7 @@ func by_wall(r: Dictionary, base: String, cond: String, side: String, along: flo
 		"left": lp = Vector3(ab.position.x - off, 0, along); yaw -= 90.0
 		"right": lp = Vector3(ab.end.x + off, 0, -along); yaw += 90.0
 	var p: Vector3 = r.c + (r.b as Basis) * lp
-	return put(base, cond, Vector3(p.x, y0, p.z), yaw + yaw_add, reason)
+	return put(base, cond, Vector3(p.x, yf(p.x, p.z), p.z), yaw + yaw_add, reason)
 
 ## the service side every downtown building has: meter bank + gas meter on the back wall, condensers on the ground
 ## behind, bin carts where people live. along0: where along the back the bank starts (clear of the back door)
@@ -280,7 +294,7 @@ func roof(r: Dictionary, lx: float, lz: float) -> Vector3:
 	var lp: Vector3 = mt * (h.position as Vector3)
 	if lp.y < 3.0: return Vector3.INF
 	var p: Vector3 = r.c + (r.b as Basis) * Vector3(lx, 0, lz)
-	return Vector3(p.x, y0 + lp.y, p.z)
+	return Vector3(p.x, float(r.y) + lp.y, p.z)
 
 ## roof plant on a flat roof: each [lx, lz, base] goes to the nearest spot within 2.5 m that is level 0.6 m round it
 ## (bulkheads, parapets and pitched roofs refuse) and 1.6 m from the units already up there; refused spots printed
@@ -347,3 +361,146 @@ func finish() -> void:
 	print("%s WHY %s" % [name, why])
 	for s in refused: print("%s REFUSED %s" % [name, s])
 	K.save_piece(root, name)
+
+## ---------------------------------------------------------------- placement arithmetic (decides nothing)
+## a frontage row: the listed buildings side by side (0.1 m apart, by their REAL widths) along a line, starting at
+## `start` and running in direction `run` (+1 / -1 along the line's axis). face: which way the fronts look. line: the
+## property line (x for "e"/"w" faces, z for "n"/"s"). labels: one per folder. Returns the records, and where the row
+## ended in `row_end`.
+var row_end := 0.0
+## the same arithmetic without placing anything: per building [low end, high end, centre] along the line (to lay the
+## ground lots under a row before the row is built)
+func row_plan(folders: Array, start: float, run: float, face: String) -> Array:
+	var out: Array = []
+	var s := start
+	for i in folders.size():
+		var ab := _near_aabb(String(folders[i]))
+		var b := Basis(Vector3.UP, deg_to_rad(float(FACE[face])))
+		var along := Vector3(0, 0, 1) if face in ["e", "w"] else Vector3(1, 0, 0)
+		var sgn := signf((b * Vector3(1, 0, 0)).dot(along))
+		var lo := ab.position.x if sgn > 0 else -ab.end.x
+		var hi := ab.end.x if sgn > 0 else -ab.position.x
+		var c := (s - lo) if run > 0 else (s - hi)
+		out.append([c + lo, c + hi, c])
+		s = (c + hi + 0.1) if run > 0 else (c + lo - 0.1)
+	return out
+
+## ylev: optional (centre along the line) -> the level the building stands on (a row on a slope steps with it)
+func row(folders: Array, labels: Array, start: float, run: float, face: String, line: float, nominal := false, ylev := Callable()) -> Array:
+	var out: Array = []
+	var s := start
+	var y_keep := y0
+	for i in folders.size():
+		var f := String(folders[i])
+		var ab := _near_aabb(f)
+		var b := Basis(Vector3.UP, deg_to_rad(float(FACE[face])))
+		# the building's local x axis in the piece, and how far its real outline reaches each way along the line
+		var ax: Vector3 = b * Vector3(1, 0, 0)
+		var along := Vector3(0, 0, 1) if face in ["e", "w"] else Vector3(1, 0, 0)
+		var sgn := signf(ax.dot(along))      # +1: local +x runs with +along
+		var lo := ab.position.x if sgn > 0 else -ab.end.x       # extent toward -along
+		var hi := ab.end.x if sgn > 0 else -ab.position.x       # extent toward +along
+		var c := (s - lo) if run > 0 else (s - hi)
+		var front := Vector2(line, c) if face in ["e", "w"] else Vector2(c, line)
+		if ylev.is_valid(): y0 = float(ylev.call(c))
+		out.append(bld(f, front, face, nominal, String(labels[i])))
+		y0 = y_keep
+		s = (c + hi + 0.1) if run > 0 else (c + lo - 0.1)
+	row_end = s
+	return out
+
+## wrought iron run from a to b: whole 1.98 m panels (never stretched), the overlap shared, a post at both ends and at
+## every joint
+func iron(a: Vector2, b: Vector2, reason: String) -> void:
+	var L2 := a.distance_to(b); var n := maxi(1, int(ceil(L2 / 1.98)))
+	var dir := (b - a).normalized()
+	var yaw := rad_to_deg(atan2(dir.x, dir.y)) + 90.0
+	var cs: Array[Vector2] = []
+	for i in n:
+		cs.append(a + dir * (0.99 + (L2 - 1.98) * float(i) / float(n - 1)) if n > 1 else a.lerp(b, 0.5))
+	for m: Vector2 in cs: put("fence_wrought_iron", "worn", Vector3(m.x, _low(m, dir, 0.99), m.y), yaw, reason, false)
+	var posts: Array[Vector2] = [a, b]
+	for i in n - 1: posts.append((cs[i] + cs[i + 1]) * 0.5)
+	for pp: Vector2 in posts: put("fence_post_wrought_iron", "worn", Vector3(pp.x, yf(pp.x, pp.y), pp.y), yaw, "fence post at every joint", false)
+
+## CMU block wall from a to b: 2.03 m panels, the overlap shared; every fifth panel tagged
+func cmu(a: Vector2, b: Vector2, reason: String) -> void:
+	var L2 := a.distance_to(b); var n := maxi(1, int(ceil(L2 / 2.03)))
+	var dir := (b - a).normalized()
+	var yaw := rad_to_deg(atan2(dir.x, dir.y)) + 90.0
+	for i in n:
+		var m: Vector2 = a + dir * (1.015 + (L2 - 2.03) * float(i) / float(n - 1)) if n > 1 else a.lerp(b, 0.5)
+		put("fence_graffiti_cmu_panel" if i % 5 == 2 else "fence_cmu_wall", "worn", Vector3(m.x, _low(m, dir, 1.015), m.y), yaw, reason, false)
+
+## the lowest floor along a panel centred at m running along dir, half length hl (a panel on a slope stands at its
+## lowest ground, -3 cm on a slope, or its downhill end floats)
+func _low(m: Vector2, dir: Vector2, hl: float) -> float:
+	var a := yf(m.x - dir.x * hl, m.y - dir.y * hl); var b := yf(m.x + dir.x * hl, m.y + dir.y * hl); var c := yf(m.x, m.y)
+	var lo := minf(minf(a, b), c)
+	return lo - 0.03 if maxf(maxf(a, b), c) - lo > 0.01 else lo
+
+## alley wear along an alley (along z if along_z): cracks, the oil stripe down the middle, grime at the walls, a trench
+## patch; the caller adds tyre arcs where vehicles turn (mouths, crossings) and oil where they stand
+func alley_wear(x0: float, z0: float, x1: float, z1: float, along_z: bool) -> void:
+	cracks(x0 + 0.4, z0 + 0.4, x1 - 0.4, z1 - 0.4, int(maxf(absf(x1 - x0), absf(z1 - z0)) / 5.0), 0.5)
+	var c := (x0 + x1) * 0.5 if along_z else (z0 + z1) * 0.5
+	var a := z0 if along_z else x0; var e := z1 if along_z else x1
+	var s := a + 2.0
+	while s < e - 2.0:
+		var p := Vector2(c + rr.randf_range(-0.3, 0.3), s) if along_z else Vector2(s, c + rr.randf_range(-0.3, 0.3))
+		dec.add(6, p, 0.0 if along_z else 90.0, 0.9, rr.randf_range(4.0, 6.5), yf, Color(1, 1, 1, rr.randf_range(0.35, 0.55)))
+		s += rr.randf_range(7.0, 11.0)
+	var m := (a + e) * 0.5
+	dec.add(2, Vector2(c, m) if along_z else Vector2(m, c), 90.0 if along_z else 0.0, 1.4, 5.5, yf, Color(1, 1, 1, 0.85))
+
+## ---------------------------------------------------------------- terraces on a slope (geometry, decides nothing)
+## linear interpolation in a measured profile [[t, h], ...] (sorted by t)
+static func prof(tab: Array, t: float) -> float:
+	if t <= float(tab[0][0]): return float(tab[0][1])
+	for i in tab.size() - 1:
+		var a: Array = tab[i]; var b: Array = tab[i + 1]
+		if t <= float(b[0]): return lerpf(float(a[1]), float(b[1]), (t - float(a[0])) / (float(b[0]) - float(a[0])))
+	return float(tab[tab.size() - 1][1])
+
+## the piece's ground as lots: [x0, z0, x1, z1, fn] (fn(x, z) -> y: a level pad or a slope that follows a street),
+## tiling the piece without overlaps. Every lot becomes a floor with its own heights; the floor height field (hfn)
+## looks the lot up; and wherever two lots meet at heights more than 2 cm apart, a RETAINING face is built on their
+## shared edge, from 0.3 m under the lower side up to the higher side, facing the lower side.
+var lots: Array = []
+func _lot_at(x: float, z: float) -> Array:
+	for l: Array in lots:
+		if x >= float(l[0]) - 1e-4 and x <= float(l[2]) + 1e-4 and z >= float(l[1]) - 1e-4 and z <= float(l[3]) + 1e-4: return l
+	return []
+
+func terrain(ls: Array) -> void:
+	lots = ls
+	for l: Array in lots: pad(float(l[0]), float(l[1]), float(l[2]), float(l[3]), l[4])
+	hfn = func(x: float, z: float) -> float:
+		var l2 := _lot_at(x, z)
+		return float((l2[4] as Callable).call(x, z)) if not l2.is_empty() else y0
+	var faces := 0
+	for i in lots.size():
+		for j in lots.size():
+			if i == j: continue
+			var A: Array = lots[i]; var B: Array = lots[j]
+			# A's east edge against B's west edge, and A's south edge against B's north edge (each pair once)
+			for axis: int in [0, 1]:
+				var shared := absf(float(A[2 if axis == 0 else 3]) - float(B[0 if axis == 0 else 1])) < 1e-3
+				if not shared: continue
+				var e := float(A[2 if axis == 0 else 3])
+				var s0 := maxf(float(A[1 if axis == 0 else 0]), float(B[1 if axis == 0 else 0]))
+				var s1 := minf(float(A[3 if axis == 0 else 2]), float(B[3 if axis == 0 else 2]))
+				if s1 - s0 < 0.05: continue
+				var n := maxi(1, int(ceil((s1 - s0) / 0.5)))
+				for k in n:
+					var sa := lerpf(s0, s1, float(k) / n); var sb := lerpf(s0, s1, float(k + 1) / n)
+					var pa := Vector2(e, sa) if axis == 0 else Vector2(sa, e); var pb := Vector2(e, sb) if axis == 0 else Vector2(sb, e)
+					var ha := float((A[4] as Callable).call(pa.x, pa.y)); var hb := float((B[4] as Callable).call(pa.x, pa.y))
+					var ha2 := float((A[4] as Callable).call(pb.x, pb.y)); var hb2 := float((B[4] as Callable).call(pb.x, pb.y))
+					if absf(ha - hb) < 0.02 and absf(ha2 - hb2) < 0.02: continue
+					var a_hi := ha + ha2 > hb + hb2
+					var top0 := maxf(ha, hb); var top1 := maxf(ha2, hb2); var bot0 := minf(ha, hb) - 0.3; var bot1 := minf(ha2, hb2) - 0.3
+					var out := (Vector3(1, 0, 0) if axis == 0 else Vector3(0, 0, 1)) * (1.0 if a_hi else -1.0)
+					g.quad("wall", Vector3(pa.x, bot0, pa.y), Vector3(pb.x, bot1, pb.y), Vector3(pb.x, top1, pb.y), Vector3(pa.x, top0, pa.y), out, true)
+					faces += 1
+	print("%s: terrain %d lots, %d retaining face segments" % [name, lots.size(), faces])

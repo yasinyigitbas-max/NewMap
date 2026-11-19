@@ -583,6 +583,960 @@
     -638.0
    ],
    "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "patio",
+     -1.2
+    ],
+    [
+     "patio",
+     1.2
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ]
+   ],
+   "label": "amber6e_condo",
+   "model": "urban/twr_condo_shores",
+   "piece": "n_cc_b2_am",
+   "pos": [
+    24.0,
+    6.15,
+    -772.06
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.1
+    ],
+    [
+     "shopdoor",
+     1.9
+    ],
+    [
+     "shopdoor",
+     7.9
+    ]
+   ],
+   "label": "amber_e_brick_row",
+   "model": "urban/urb_brick_row",
+   "piece": "n_cc_b2_am",
+   "pos": [
+    23.0,
+    6.15,
+    -744.64
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "amber_e_wine_block",
+   "model": "apartments/apt_stucco3_peach",
+   "piece": "n_cc_b2_am",
+   "pos": [
+    22.0,
+    6.15,
+    -725.14
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.1
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "amber_e_shoes_fe",
+   "model": "ck/ck_brk3_row2_fe",
+   "piece": "n_cc_b2_am",
+   "pos": [
+    23.0,
+    6.15,
+    -708.68
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "shopdoor",
+     4.9
+    ]
+   ],
+   "label": "sixth_e_corner_cafe",
+   "model": "ck/ck_brk3_corner2",
+   "piece": "n_cc_b2_n",
+   "pos": [
+    56.25,
+    6.15,
+    -781.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "sixth_e_thai_block",
+   "model": "apartments/apt_stucco3_cream",
+   "piece": "n_cc_b2_n",
+   "pos": [
+    72.72,
+    6.15,
+    -782.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.1
+    ],
+    [
+     "shopdoor",
+     1.9
+    ],
+    [
+     "shopdoor",
+     7.9
+    ]
+   ],
+   "label": "sixth_e_brick_row",
+   "model": "urban/urb_brick_row",
+   "piece": "n_cc_b2_n",
+   "pos": [
+    92.22,
+    6.15,
+    -782.127
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     6.0
+    ]
+   ],
+   "label": "sixth_e_walkup",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_cc_b2_n",
+   "pos": [
+    110.585,
+    6.15,
+    -782.8
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [],
+   "label": "sixth_e_shop_row",
+   "model": "modular/examples/mod_brk_row",
+   "piece": "n_cc_b2_n",
+   "pos": [
+    128.91,
+    6.15,
+    -782.127
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "sixth_e_corner_store_block",
+   "model": "apartments/apt_stucco3_peach",
+   "piece": "n_cc_b2_n",
+   "pos": [
+    148.37,
+    6.15,
+    -782.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.1
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "sixth_e_dentist",
+   "model": "ck/ck_brk3_row2",
+   "piece": "n_cc_b2_n",
+   "pos": [
+    164.83,
+    6.15,
+    -781.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "shopdoor",
+     4.9
+    ]
+   ],
+   "label": "sixth_e_corner_bar",
+   "model": "ck/ck_brk3_corner2",
+   "piece": "n_cc_b2_n",
+   "pos": [
+    177.22,
+    6.15,
+    -781.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     6.0
+    ]
+   ],
+   "label": "alleyc2_walkup",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_cc_b2_n",
+   "pos": [
+    59.185,
+    6.15,
+    -753.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [],
+   "label": "alleyc2_apt_row",
+   "model": "modular/examples/mod_apt_row",
+   "piece": "n_cc_b2_n",
+   "pos": [
+    77.455,
+    6.15,
+    -753.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -3.0
+    ],
+    [
+     "shopdoor",
+     3.0
+    ]
+   ],
+   "label": "alleyc2_upholstery",
+   "model": "ck/ck_svc_trade",
+   "piece": "n_cc_b2_n",
+   "pos": [
+    141.24,
+    6.15,
+    -753.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [],
+   "label": "alleyc2_lockups",
+   "model": "ck/mod_stg_row_roofed",
+   "piece": "n_cc_b2_n",
+   "pos": [
+    156.53,
+    6.15,
+    -752.082
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     6.8
+    ]
+   ],
+   "label": "sixth_bave_corner",
+   "model": "urban/urb_brick_corner",
+   "piece": "n_cc_b2_e",
+   "pos": [
+    231.5,
+    6.15,
+    -781.577
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.22
+    ],
+    [
+     "patio",
+     -3.22
+    ],
+    [
+     "patio",
+     -7.08
+    ],
+    [
+     "patio",
+     -7.08
+    ],
+    [
+     "patio",
+     3.22
+    ],
+    [
+     "patio",
+     3.22
+    ],
+    [
+     "patio",
+     7.08
+    ],
+    [
+     "patio",
+     7.08
+    ]
+   ],
+   "label": "sixth_bave_condo",
+   "model": "apartments/apt_beach_condo",
+   "piece": "n_cc_b2_e",
+   "pos": [
+    211.177,
+    6.15,
+    -783.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     6.0
+    ]
+   ],
+   "label": "bave_walkup_n",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_cc_b2_e",
+   "pos": [
+    233.3,
+    6.15,
+    -762.715
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     -6.4
+    ],
+    [
+     "apt_door",
+     6.4
+    ],
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "bave_spanish_flats",
+   "model": "apartments/apt_spanish_revival",
+   "piece": "n_cc_b2_e",
+   "pos": [
+    234.3,
+    6.15,
+    -730.45
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "bave_walkup_s",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_cc_b2_e",
+   "pos": [
+    233.2,
+    6.15,
+    -714.545
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.1
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "alleyc2s_architects",
+   "model": "ck/ck_brk3_row2",
+   "piece": "n_cc_b2_s",
+   "pos": [
+    56.24,
+    6.15,
+    -731.4
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     6.0
+    ]
+   ],
+   "label": "alleyc2s_walkup",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_cc_b2_s",
+   "pos": [
+    71.565,
+    6.15,
+    -732.5
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "rollup",
+     0.0
+    ]
+   ],
+   "label": "block2_garage",
+   "model": "extras/ext_parking_garage",
+   "piece": "n_cc_b2_s",
+   "pos": [
+    100.5,
+    6.15,
+    -723.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [],
+   "label": "alleyc2s_apt_row",
+   "model": "modular/examples/mod_apt_row",
+   "piece": "n_cc_b2_s",
+   "pos": [
+    129.485,
+    6.15,
+    -732.5
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "alleyc2s_walkup_e",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_cc_b2_s",
+   "pos": [
+    144.755,
+    6.15,
+    -732.4
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     6.8
+    ]
+   ],
+   "label": "seventh_insurance",
+   "model": "urban/urb_brick_corner",
+   "piece": "n_cc_b2_7th",
+   "pos": [
+    59.3,
+    6.15,
+    -618.923
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "seventh_burger_block",
+   "model": "apartments/apt_stucco3_cream",
+   "piece": "n_cc_b2_7th",
+   "pos": [
+    79.843,
+    6.15,
+    -617.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [],
+   "label": "seventh_brick_row",
+   "model": "modular/examples/mod_brk_row",
+   "piece": "n_cc_b2_7th",
+   "pos": [
+    99.303,
+    6.15,
+    -617.873
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     15.4
+    ]
+   ],
+   "label": "seventh_dept_store",
+   "model": "urban/urb_dept_store",
+   "piece": "n_cc_b2_7th",
+   "pos": [
+    130.6,
+    6.15,
+    -624.2
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [],
+   "label": "alleyd2_tailor",
+   "model": "modular/examples/mod_svc_row",
+   "piece": "n_cc_b2_7th",
+   "pos": [
+    56.44,
+    6.15,
+    -646.877
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.4
+    ],
+    [
+     "shopdoor",
+     1.2
+    ]
+   ],
+   "label": "alleyd2_pawn",
+   "model": "ck/ck_svc_pawn_fast",
+   "piece": "n_cc_b2_7th",
+   "pos": [
+    69.22,
+    6.15,
+    -646.3
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -3.0
+    ]
+   ],
+   "label": "alleyd2_locksmith",
+   "model": "ck/ck_svc_trade_1d",
+   "piece": "n_cc_b2_7th",
+   "pos": [
+    81.8,
+    6.15,
+    -646.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     6.0
+    ]
+   ],
+   "label": "alleyd2_walkup_w",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_cc_b2_7th",
+   "pos": [
+    59.185,
+    6.15,
+    -667.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [],
+   "label": "alleyd2_apt_row",
+   "model": "modular/examples/mod_apt_row",
+   "piece": "n_cc_b2_7th",
+   "pos": [
+    77.455,
+    6.15,
+    -667.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     6.0
+    ]
+   ],
+   "label": "alleyd2_walkup_e",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_cc_b2_7th",
+   "pos": [
+    122.085,
+    6.15,
+    -667.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "alleyd2_walkup_e2",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_cc_b2_7th",
+   "pos": [
+    137.355,
+    6.15,
+    -667.6
+   ],
+   "yaw": 0.0
   }
  ]
 }

@@ -44,6 +44,94 @@
    "yaw": 0.0,
    "site": "block 1 (u -140..-50, v -740..-700 and u -100..-50, v -700..-609.2): courthouse, garage, law offices",
    "variant": "courthouse on its square (plan MUST site), district parking garage"
+  },
+  {
+   "piece": "n_cc_b2_am",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 2 (u 16..50, v -790.3..-697.5): Amber east wall north of c_ne + alley A2",
+   "variant": "condo tower (50 m) on Amber x 6th, Amber wall"
+  },
+  {
+   "piece": "n_cc_b2_n",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 2 (u 50..190, v -790.8..-740): 6th St row, play garden, back row, alley C2",
+   "variant": "shops with flats, the block's play garden"
+  },
+  {
+   "piece": "n_cc_b2_e",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 2 (u 190..240.8, v -790.8..-700): alley B2, 6th x B Ave corner, B Ave flats, alley C2 east",
+   "variant": "corner restaurant, garden flats"
+  },
+  {
+   "piece": "n_cc_b2_s",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 2 (u 50..190, v -740..-700): alley C2 south side",
+   "variant": "the block's parking garage, offices, flats"
+  },
+  {
+   "piece": "n_cc_b2_7th",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 2 (u 50..150, v -700..-609.2): 7th St arm with alley D2",
+   "variant": "department store, 7th St shops, alley workshops, flats"
+  },
+  {
+   "piece": "n_cc_b3_am",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 3 (u 16..50, v -502.5..-409.7): Amber east wall south of c_se + alley A3",
+   "variant": "glass tower (59 m) on Amber x 8th, Amber wall"
+  },
+  {
+   "piece": "n_cc_b3_arm",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 3 (u 50..150, v -590.3..-500): 7th St south side with alley D3",
+   "variant": "7th St shops, arcade, alley workshops, pergola garden"
+  },
+  {
+   "piece": "n_cc_b3_main",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 3 (u 50..240.8, v -500..-409.2): the slope to 8th St and B Ave, alleys B3 and C3",
+   "variant": "8th St row stepping up the slope, B Ave flats, raised residents' garden"
   }
  ]
 }

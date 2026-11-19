@@ -1,6 +1,6 @@
 {
  "_doc": "Which shop is behind every shop door of the CITY-CENTRE FILL (claude/fill-city-centre, 19 Nov; Yasin via the",
- "count": 22,
+ "count": 51,
  "rooms": [
   {
    "id": "cc_b1_am__amber6_tower__0",
@@ -735,6 +735,989 @@
    "name": "Coronado County Courthouse",
    "style": "navy",
    "signs": [],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_am__amber_e_brick_row__0",
+   "piece": "n_cc_b2_am",
+   "label": "amber_e_brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    23.0,
+    6.15,
+    -744.64
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "ice_cream",
+   "name": "Scoops on Amber",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_am__amber_e_brick_row__1",
+   "piece": "n_cc_b2_am",
+   "label": "amber_e_brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    23.0,
+    6.15,
+    -744.64
+   ],
+   "yaw": -90.0,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "jewelry",
+   "name": "Island Jewellers",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_am__amber_e_brick_row__2",
+   "piece": "n_cc_b2_am",
+   "label": "amber_e_brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    23.0,
+    6.15,
+    -744.64
+   ],
+   "yaw": -90.0,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "gallery",
+   "name": "Amber Gallery",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_am__amber_e_wine_block__0",
+   "piece": "n_cc_b2_am",
+   "label": "amber_e_wine_block",
+   "model": "apartments/apt_stucco3_peach",
+   "pos": [
+    22.0,
+    6.15,
+    -725.14
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -5.4,
+    5.4
+   ],
+   "kind": "bar",
+   "name": "Cork & Barrel Wine Bar",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_am__amber_e_shoes_fe__0",
+   "piece": "n_cc_b2_am",
+   "label": "amber_e_shoes_fe",
+   "model": "ck/ck_brk3_row2_fe",
+   "pos": [
+    23.0,
+    6.15,
+    -708.68
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    2.2
+   ],
+   "kind": "shoes",
+   "name": "Step Lively Shoes",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_n__sixth_e_corner_cafe__0",
+   "piece": "n_cc_b2_n",
+   "label": "sixth_e_corner_cafe",
+   "model": "ck/ck_brk3_corner2",
+   "pos": [
+    56.25,
+    6.15,
+    -781.7
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.8,
+    5.7
+   ],
+   "kind": "cafe",
+   "name": "Corner Grind",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_n__sixth_e_thai_block__0",
+   "piece": "n_cc_b2_n",
+   "label": "sixth_e_thai_block",
+   "model": "apartments/apt_stucco3_cream",
+   "pos": [
+    72.72,
+    6.15,
+    -782.2
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -5.4,
+    5.4
+   ],
+   "kind": "restaurant",
+   "name": "Thai Orchid",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_n__sixth_e_brick_row__0",
+   "piece": "n_cc_b2_n",
+   "label": "sixth_e_brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    92.22,
+    6.15,
+    -782.127
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "books",
+   "name": "Sixth Street Books",
+   "style": "green",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_n__sixth_e_brick_row__1",
+   "piece": "n_cc_b2_n",
+   "label": "sixth_e_brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    92.22,
+    6.15,
+    -782.127
+   ],
+   "yaw": -180.0,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "souvenir",
+   "name": "Paper & Gifts",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_n__sixth_e_brick_row__2",
+   "piece": "n_cc_b2_n",
+   "label": "sixth_e_brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    92.22,
+    6.15,
+    -782.127
+   ],
+   "yaw": -180.0,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "keys",
+   "name": "Shoe & Key Repair",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_n__sixth_e_shop_row__0",
+   "piece": "n_cc_b2_n",
+   "label": "sixth_e_shop_row",
+   "model": "modular/examples/mod_brk_row",
+   "pos": [
+    128.91,
+    6.15,
+    -782.127
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "clothes",
+   "name": "Thread Boutique",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_n__sixth_e_shop_row__1",
+   "piece": "n_cc_b2_n",
+   "label": "sixth_e_shop_row",
+   "model": "modular/examples/mod_brk_row",
+   "pos": [
+    128.91,
+    6.15,
+    -782.127
+   ],
+   "yaw": -180.0,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "salon",
+   "name": "Glow Hair Studio",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_n__sixth_e_shop_row__2",
+   "piece": "n_cc_b2_n",
+   "label": "sixth_e_shop_row",
+   "model": "modular/examples/mod_brk_row",
+   "pos": [
+    128.91,
+    6.15,
+    -782.127
+   ],
+   "yaw": -180.0,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "store",
+   "name": "Hobby Corner",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_n__sixth_e_corner_store_block__0",
+   "piece": "n_cc_b2_n",
+   "label": "sixth_e_corner_store_block",
+   "model": "apartments/apt_stucco3_peach",
+   "pos": [
+    148.37,
+    6.15,
+    -782.2
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -5.4,
+    5.4
+   ],
+   "kind": "corner_shop",
+   "name": "Bayside Grocery",
+   "style": "green",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_n__sixth_e_dentist__0",
+   "piece": "n_cc_b2_n",
+   "label": "sixth_e_dentist",
+   "model": "ck/ck_brk3_row2",
+   "pos": [
+    164.83,
+    6.15,
+    -781.7
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    2.2
+   ],
+   "kind": "office",
+   "name": "Sixth Street Dental",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_n__sixth_e_corner_bar__0",
+   "piece": "n_cc_b2_n",
+   "label": "sixth_e_corner_bar",
+   "model": "ck/ck_brk3_corner2",
+   "pos": [
+    177.22,
+    6.15,
+    -781.7
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.8,
+    5.7
+   ],
+   "kind": "bar",
+   "name": "The Alley Cat",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_n__alleyc2_upholstery__0",
+   "piece": "n_cc_b2_n",
+   "label": "alleyc2_upholstery",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    141.24,
+    6.15,
+    -753.8
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "keys",
+   "name": "Bay Upholstery",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.2
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_e__sixth_bave_corner__0",
+   "piece": "n_cc_b2_e",
+   "label": "sixth_bave_corner",
+   "model": "urban/urb_brick_corner",
+   "pos": [
+    231.5,
+    6.15,
+    -781.577
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": 6.8,
+   "door_w": 1.8,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "restaurant",
+   "name": "Casa Bonita",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.48
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_e__sixth_bave_condo__0",
+   "piece": "n_cc_b2_e",
+   "label": "sixth_bave_condo",
+   "model": "apartments/apt_beach_condo",
+   "pos": [
+    211.177,
+    6.15,
+    -783.2
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -5.0,
+    5.0
+   ],
+   "kind": "bakery",
+   "name": "Sunrise Bakery",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_s__alleyc2s_architects__0",
+   "piece": "n_cc_b2_s",
+   "label": "alleyc2s_architects",
+   "model": "ck/ck_brk3_row2",
+   "pos": [
+    56.24,
+    6.15,
+    -731.4
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    2.2
+   ],
+   "kind": "law",
+   "name": "Alcala Architects",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_7th__seventh_insurance__0",
+   "piece": "n_cc_b2_7th",
+   "label": "seventh_insurance",
+   "model": "urban/urb_brick_corner",
+   "pos": [
+    59.3,
+    6.15,
+    -618.923
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 6.8,
+   "door_w": 1.8,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "law",
+   "name": "Pacific Insurance",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.48
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_7th__seventh_burger_block__0",
+   "piece": "n_cc_b2_7th",
+   "label": "seventh_burger_block",
+   "model": "apartments/apt_stucco3_cream",
+   "pos": [
+    79.843,
+    6.15,
+    -617.8
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -5.4,
+    5.4
+   ],
+   "kind": "fast_food",
+   "name": "Seventh Street Burgers",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_7th__seventh_brick_row__0",
+   "piece": "n_cc_b2_7th",
+   "label": "seventh_brick_row",
+   "model": "modular/examples/mod_brk_row",
+   "pos": [
+    99.303,
+    6.15,
+    -617.873
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "sport",
+   "name": "Strand Sports",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_7th__seventh_brick_row__1",
+   "piece": "n_cc_b2_7th",
+   "label": "seventh_brick_row",
+   "model": "modular/examples/mod_brk_row",
+   "pos": [
+    99.303,
+    6.15,
+    -617.873
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "souvenir",
+   "name": "Toy Chest",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_7th__seventh_brick_row__2",
+   "piece": "n_cc_b2_7th",
+   "label": "seventh_brick_row",
+   "model": "modular/examples/mod_brk_row",
+   "pos": [
+    99.303,
+    6.15,
+    -617.873
+   ],
+   "yaw": 0.0,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "gallery",
+   "name": "Seventh Art Supply",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_7th__seventh_dept_store__0",
+   "piece": "n_cc_b2_7th",
+   "label": "seventh_dept_store",
+   "model": "urban/urb_dept_store",
+   "pos": [
+    130.6,
+    6.15,
+    -624.2
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 15.4,
+   "door_w": 2.0,
+   "bay": [
+    -17.7,
+    17.7
+   ],
+   "kind": "clothes",
+   "name": "Harbor & Main",
+   "style": "navy",
+   "signs": [],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_7th__alleyd2_tailor__0",
+   "piece": "n_cc_b2_7th",
+   "label": "alleyd2_tailor",
+   "model": "modular/examples/mod_svc_row",
+   "pos": [
+    56.44,
+    6.15,
+    -646.877
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -1.4,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "cleaners",
+   "name": "Pressed Dry Cleaners",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 3.4
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 3.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_7th__alleyd2_pawn__0",
+   "piece": "n_cc_b2_7th",
+   "label": "alleyd2_pawn",
+   "model": "ck/ck_svc_pawn_fast",
+   "pos": [
+    69.22,
+    6.15,
+    -646.3
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -1.4,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "store",
+   "name": "Island Pawn",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 3.4
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 4.0
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b2_7th__alleyd2_locksmith__0",
+   "piece": "n_cc_b2_7th",
+   "label": "alleyd2_locksmith",
+   "model": "ck/ck_svc_trade_1d",
+   "pos": [
+    81.8,
+    6.15,
+    -646.2
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "keys",
+   "name": "Ace Locksmith",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ],
    "source": "city-centre fill (hand-made shop list)",
    "built": ""
   }

@@ -1,6 +1,685 @@
 {
  "_doc": "room_contracts_cc.gd: contracts of every model in the city-centre fill pieces (same measurement as room_contracts.gd)",
  "models": {
+  "apartments/apt_beach_condo": {
+   "cat": "apartment",
+   "entrances": [
+    {
+     "along": 0.0,
+     "bay_d": 10.25,
+     "bay_w": 17.4,
+     "facade": "front",
+     "fits": [
+      "bakery",
+      "bar",
+      "books",
+      "cafe",
+      "cleaners",
+      "clothes",
+      "corner_shop",
+      "fast_food",
+      "gallery",
+      "gas",
+      "grocery",
+      "ice_cream",
+      "jewelry",
+      "keys",
+      "office",
+      "pharmacy",
+      "restaurant",
+      "salon",
+      "shoes",
+      "souvenir",
+      "sport",
+      "store",
+      "venue"
+     ],
+     "floor": 0,
+     "kind": "shop",
+     "w": 1.6
+    },
+    {
+     "along": -3.23,
+     "facade": "front",
+     "floor": 0,
+     "kind": "slider",
+     "w": 1.8
+    },
+    {
+     "along": -7.08,
+     "facade": "front",
+     "floor": 0,
+     "kind": "slider",
+     "w": 1.8
+    },
+    {
+     "along": 3.22,
+     "facade": "front",
+     "floor": 0,
+     "kind": "slider",
+     "w": 1.8
+    },
+    {
+     "along": 7.07,
+     "facade": "front",
+     "floor": 0,
+     "kind": "slider",
+     "w": 1.8
+    },
+    {
+     "along": -3.23,
+     "facade": "front",
+     "floor": 1,
+     "kind": "patio",
+     "w": 1.8
+    },
+    {
+     "along": -3.23,
+     "facade": "front",
+     "floor": 2,
+     "kind": "patio",
+     "w": 1.8
+    },
+    {
+     "along": -7.08,
+     "facade": "front",
+     "floor": 1,
+     "kind": "patio",
+     "w": 1.8
+    },
+    {
+     "along": -7.08,
+     "facade": "front",
+     "floor": 2,
+     "kind": "patio",
+     "w": 1.8
+    },
+    {
+     "along": 3.22,
+     "facade": "front",
+     "floor": 1,
+     "kind": "patio",
+     "w": 1.8
+    },
+    {
+     "along": 3.22,
+     "facade": "front",
+     "floor": 2,
+     "kind": "patio",
+     "w": 1.8
+    },
+    {
+     "along": 7.07,
+     "facade": "front",
+     "floor": 1,
+     "kind": "patio",
+     "w": 1.8
+    },
+    {
+     "along": 7.07,
+     "facade": "front",
+     "floor": 2,
+     "kind": "patio",
+     "w": 1.8
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    }
+   ],
+   "floors": [
+    {
+     "box_max": [
+      8.7,
+      3.2,
+      5.05
+     ],
+     "box_min": [
+      -8.7,
+      0.3,
+      -5.2
+     ],
+     "clear_h": 2.9,
+     "floor": 0,
+     "inner_wd": [
+      17.4,
+      10.25
+     ],
+     "y": 0.3
+    },
+    {
+     "box_max": [
+      8.7,
+      6.2,
+      5.05
+     ],
+     "box_min": [
+      -8.7,
+      3.5,
+      -5.2
+     ],
+     "clear_h": 2.7,
+     "floor": 1,
+     "inner_wd": [
+      17.4,
+      10.25
+     ],
+     "y": 3.5
+    },
+    {
+     "box_max": [
+      8.7,
+      10.07,
+      5.05
+     ],
+     "box_min": [
+      -8.7,
+      6.5,
+      -5.2
+     ],
+     "clear_h": 3.57,
+     "floor": 2,
+     "inner_wd": [
+      17.4,
+      10.25
+     ],
+     "y": 6.5
+    }
+   ],
+   "floors_note": "derived: ground = lowest door sill; upper floors from window sills (-0.9 m) and upper apartment doors / sliders; walls assumed 0.30 m (front 0.45 m)",
+   "footprint_wd": [
+    18.0,
+    11.0
+   ],
+   "height": 10.67,
+   "model": "apartments/apt_beach_condo",
+   "openings": [
+    {
+     "along": 2.9,
+     "facade": "right",
+     "floor": 0,
+     "plane": 8.9,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 1.2,
+     "y1": 2.6
+    },
+    {
+     "along": -2.9,
+     "facade": "right",
+     "floor": 0,
+     "plane": 8.9,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 1.2,
+     "y1": 2.6
+    },
+    {
+     "along": 2.9,
+     "facade": "right",
+     "floor": 1,
+     "plane": 8.9,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.2,
+     "y1": 5.6
+    },
+    {
+     "along": -2.9,
+     "facade": "right",
+     "floor": 1,
+     "plane": 8.9,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.2,
+     "y1": 5.6
+    },
+    {
+     "along": 2.9,
+     "facade": "right",
+     "floor": 2,
+     "plane": 8.9,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 7.2,
+     "y1": 8.6
+    },
+    {
+     "along": -2.9,
+     "facade": "right",
+     "floor": 2,
+     "plane": 8.9,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 7.2,
+     "y1": 8.6
+    },
+    {
+     "along": 2.9,
+     "facade": "left",
+     "floor": 0,
+     "plane": -8.9,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 1.2,
+     "y1": 2.6
+    },
+    {
+     "along": -2.9,
+     "facade": "left",
+     "floor": 0,
+     "plane": -8.9,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 1.2,
+     "y1": 2.6
+    },
+    {
+     "along": 2.9,
+     "facade": "left",
+     "floor": 1,
+     "plane": -8.9,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.2,
+     "y1": 5.6
+    },
+    {
+     "along": -2.9,
+     "facade": "left",
+     "floor": 1,
+     "plane": -8.9,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.2,
+     "y1": 5.6
+    },
+    {
+     "along": 2.9,
+     "facade": "left",
+     "floor": 2,
+     "plane": -8.9,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 7.2,
+     "y1": 8.6
+    },
+    {
+     "along": -2.9,
+     "facade": "left",
+     "floor": 2,
+     "plane": -8.9,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 7.2,
+     "y1": 8.6
+    },
+    {
+     "along": 0.0,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.42,
+     "region": "O_shopdoor",
+     "w": 1.6,
+     "y0": 0.3,
+     "y1": 3.3
+    },
+    {
+     "along": 0.0,
+     "facade": "front",
+     "floor": 1,
+     "plane": 5.4,
+     "region": "O_win_casement",
+     "w": 1.0,
+     "y0": 4.2,
+     "y1": 5.6
+    },
+    {
+     "along": 0.0,
+     "facade": "front",
+     "floor": 2,
+     "plane": 5.4,
+     "region": "O_win_casement",
+     "w": 1.0,
+     "y0": 7.2,
+     "y1": 8.6
+    },
+    {
+     "along": -3.23,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.4,
+     "region": "O_apt_slider",
+     "w": 1.8,
+     "y0": 1.15,
+     "y1": 2.45
+    },
+    {
+     "along": -7.08,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.4,
+     "region": "O_apt_slider",
+     "w": 1.8,
+     "y0": 1.15,
+     "y1": 2.45
+    },
+    {
+     "along": 3.22,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.4,
+     "region": "O_apt_slider",
+     "w": 1.8,
+     "y0": 1.15,
+     "y1": 2.45
+    },
+    {
+     "along": 7.07,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.4,
+     "region": "O_apt_slider",
+     "w": 1.8,
+     "y0": 1.15,
+     "y1": 2.45
+    },
+    {
+     "along": -3.23,
+     "facade": "front",
+     "floor": 1,
+     "plane": 5.42,
+     "region": "O_patio",
+     "w": 1.8,
+     "y0": 3.3,
+     "y1": 5.5
+    },
+    {
+     "along": -3.23,
+     "facade": "front",
+     "floor": 2,
+     "plane": 5.42,
+     "region": "O_patio",
+     "w": 1.8,
+     "y0": 6.3,
+     "y1": 8.5
+    },
+    {
+     "along": -7.08,
+     "facade": "front",
+     "floor": 1,
+     "plane": 5.42,
+     "region": "O_patio",
+     "w": 1.8,
+     "y0": 3.3,
+     "y1": 5.5
+    },
+    {
+     "along": -7.08,
+     "facade": "front",
+     "floor": 2,
+     "plane": 5.42,
+     "region": "O_patio",
+     "w": 1.8,
+     "y0": 6.3,
+     "y1": 8.5
+    },
+    {
+     "along": 3.22,
+     "facade": "front",
+     "floor": 1,
+     "plane": 5.42,
+     "region": "O_patio",
+     "w": 1.8,
+     "y0": 3.3,
+     "y1": 5.5
+    },
+    {
+     "along": 3.22,
+     "facade": "front",
+     "floor": 2,
+     "plane": 5.42,
+     "region": "O_patio",
+     "w": 1.8,
+     "y0": 6.3,
+     "y1": 8.5
+    },
+    {
+     "along": 7.07,
+     "facade": "front",
+     "floor": 1,
+     "plane": 5.42,
+     "region": "O_patio",
+     "w": 1.8,
+     "y0": 3.3,
+     "y1": 5.5
+    },
+    {
+     "along": 7.07,
+     "facade": "front",
+     "floor": 2,
+     "plane": 5.42,
+     "region": "O_patio",
+     "w": 1.8,
+     "y0": 6.3,
+     "y1": 8.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.42,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.3,
+     "y1": 2.5
+    },
+    {
+     "along": -3.23,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.4,
+     "region": "O_win_dh_white",
+     "w": 1.2,
+     "y0": 1.2,
+     "y1": 2.6
+    },
+    {
+     "along": -3.23,
+     "facade": "back",
+     "floor": 1,
+     "plane": -5.4,
+     "region": "O_win_dh_white",
+     "w": 1.2,
+     "y0": 4.2,
+     "y1": 5.6
+    },
+    {
+     "along": -3.23,
+     "facade": "back",
+     "floor": 2,
+     "plane": -5.4,
+     "region": "O_win_dh_white",
+     "w": 1.2,
+     "y0": 7.2,
+     "y1": 8.6
+    },
+    {
+     "along": -7.08,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.4,
+     "region": "O_win_dh_white",
+     "w": 1.2,
+     "y0": 1.2,
+     "y1": 2.6
+    },
+    {
+     "along": -7.08,
+     "facade": "back",
+     "floor": 1,
+     "plane": -5.4,
+     "region": "O_win_dh_white",
+     "w": 1.2,
+     "y0": 4.2,
+     "y1": 5.6
+    },
+    {
+     "along": -7.08,
+     "facade": "back",
+     "floor": 2,
+     "plane": -5.4,
+     "region": "O_win_dh_white",
+     "w": 1.2,
+     "y0": 7.2,
+     "y1": 8.6
+    },
+    {
+     "along": 3.22,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.4,
+     "region": "O_win_dh_white",
+     "w": 1.2,
+     "y0": 1.2,
+     "y1": 2.6
+    },
+    {
+     "along": 3.22,
+     "facade": "back",
+     "floor": 1,
+     "plane": -5.4,
+     "region": "O_win_dh_white",
+     "w": 1.2,
+     "y0": 4.2,
+     "y1": 5.6
+    },
+    {
+     "along": 3.22,
+     "facade": "back",
+     "floor": 2,
+     "plane": -5.4,
+     "region": "O_win_dh_white",
+     "w": 1.2,
+     "y0": 7.2,
+     "y1": 8.6
+    },
+    {
+     "along": 7.07,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.4,
+     "region": "O_win_dh_white",
+     "w": 1.2,
+     "y0": 1.2,
+     "y1": 2.6
+    },
+    {
+     "along": 7.07,
+     "facade": "back",
+     "floor": 1,
+     "plane": -5.4,
+     "region": "O_win_dh_white",
+     "w": 1.2,
+     "y0": 4.2,
+     "y1": 5.6
+    },
+    {
+     "along": 7.07,
+     "facade": "back",
+     "floor": 2,
+     "plane": -5.4,
+     "region": "O_win_dh_white",
+     "w": 1.2,
+     "y0": 7.2,
+     "y1": 8.6
+    }
+   ],
+   "signs": [
+    {
+     "along": 6.17,
+     "facade": "right",
+     "plane": -0.98,
+     "region": "blank",
+     "text": "",
+     "w": 1.35,
+     "y0": 3.1,
+     "y1": 3.55
+    },
+    {
+     "along": 6.17,
+     "facade": "left",
+     "plane": -1.08,
+     "region": "blank",
+     "text": "",
+     "w": 1.35,
+     "y0": 3.1,
+     "y1": 3.55
+    },
+    {
+     "along": 6.17,
+     "facade": "right",
+     "plane": 1.08,
+     "region": "blank",
+     "text": "",
+     "w": 1.35,
+     "y0": 3.1,
+     "y1": 3.55
+    },
+    {
+     "along": 6.17,
+     "facade": "left",
+     "plane": 0.98,
+     "region": "blank",
+     "text": "",
+     "w": 1.35,
+     "y0": 3.1,
+     "y1": 3.55
+    }
+   ],
+   "stats_doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.22
+    ],
+    [
+     "patio",
+     -3.22
+    ],
+    [
+     "patio",
+     -7.08
+    ],
+    [
+     "patio",
+     -7.08
+    ],
+    [
+     "patio",
+     3.22
+    ],
+    [
+     "patio",
+     3.22
+    ],
+    [
+     "patio",
+     7.08
+    ],
+    [
+     "patio",
+     7.08
+    ]
+   ],
+   "storeys": 3
+  },
   "apartments/apt_garden_cream": {
    "cat": "apartment",
    "entrances": [
@@ -711,6 +1390,456 @@
     [
      "apt_door",
      7.95
+    ]
+   ],
+   "storeys": 2
+  },
+  "apartments/apt_spanish_revival": {
+   "cat": "apartment",
+   "entrances": [
+    {
+     "along": 0.0,
+     "bay_d": 9.25,
+     "bay_w": 17.4,
+     "facade": "front",
+     "fits": [
+      "bakery",
+      "bar",
+      "books",
+      "cafe",
+      "cleaners",
+      "clothes",
+      "corner_shop",
+      "fast_food",
+      "gallery",
+      "gas",
+      "grocery",
+      "ice_cream",
+      "jewelry",
+      "keys",
+      "office",
+      "pharmacy",
+      "restaurant",
+      "salon",
+      "shoes",
+      "souvenir",
+      "sport",
+      "store",
+      "venue"
+     ],
+     "floor": 0,
+     "kind": "civic",
+     "w": 1.8
+    },
+    {
+     "along": -6.4,
+     "facade": "front",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": 6.4,
+     "facade": "front",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": 0.0,
+     "bay_d": 9.25,
+     "bay_w": 17.4,
+     "facade": "front",
+     "fits": [
+      "bakery",
+      "bar",
+      "books",
+      "cafe",
+      "cleaners",
+      "clothes",
+      "corner_shop",
+      "fast_food",
+      "gallery",
+      "gas",
+      "grocery",
+      "ice_cream",
+      "jewelry",
+      "keys",
+      "office",
+      "pharmacy",
+      "restaurant",
+      "salon",
+      "shoes",
+      "souvenir",
+      "sport",
+      "store",
+      "venue"
+     ],
+     "floor": 1,
+     "kind": "civic",
+     "w": 1.8
+    },
+    {
+     "along": -3.8,
+     "facade": "back",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": 3.8,
+     "facade": "back",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    }
+   ],
+   "floors": [
+    {
+     "box_max": [
+      8.7,
+      2.7,
+      4.55
+     ],
+     "box_min": [
+      -8.7,
+      0.3,
+      -4.7
+     ],
+     "clear_h": 2.4,
+     "floor": 0,
+     "inner_wd": [
+      17.4,
+      9.25
+     ],
+     "y": 0.3
+    },
+    {
+     "box_max": [
+      8.7,
+      7.1,
+      4.55
+     ],
+     "box_min": [
+      -8.7,
+      3.0,
+      -4.7
+     ],
+     "clear_h": 4.1,
+     "floor": 1,
+     "inner_wd": [
+      17.4,
+      9.25
+     ],
+     "y": 3.0
+    }
+   ],
+   "floors_note": "derived: ground = lowest door sill; upper floors from window sills (-0.9 m) and upper apartment doors / sliders; walls assumed 0.30 m (front 0.45 m)",
+   "footprint_wd": [
+    18.0,
+    10.0
+   ],
+   "height": 7.7,
+   "model": "apartments/apt_spanish_revival",
+   "openings": [
+    {
+     "along": 2.6,
+     "facade": "right",
+     "floor": 0,
+     "plane": 8.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 1.1,
+     "y1": 2.6
+    },
+    {
+     "along": -2.6,
+     "facade": "right",
+     "floor": 0,
+     "plane": 8.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 1.1,
+     "y1": 2.6
+    },
+    {
+     "along": 2.6,
+     "facade": "right",
+     "floor": 1,
+     "plane": 8.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.1,
+     "y1": 5.6
+    },
+    {
+     "along": -2.6,
+     "facade": "right",
+     "floor": 1,
+     "plane": 8.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.1,
+     "y1": 5.6
+    },
+    {
+     "along": 2.6,
+     "facade": "left",
+     "floor": 0,
+     "plane": -8.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 1.1,
+     "y1": 2.6
+    },
+    {
+     "along": -2.6,
+     "facade": "left",
+     "floor": 0,
+     "plane": -8.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 1.1,
+     "y1": 2.6
+    },
+    {
+     "along": 2.6,
+     "facade": "left",
+     "floor": 1,
+     "plane": -8.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.1,
+     "y1": 5.6
+    },
+    {
+     "along": -2.6,
+     "facade": "left",
+     "floor": 1,
+     "plane": -8.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.1,
+     "y1": 5.6
+    },
+    {
+     "along": 0.0,
+     "facade": "front",
+     "floor": 0,
+     "plane": 4.7,
+     "region": "O_civic_door",
+     "w": 1.8,
+     "y0": 0.3,
+     "y1": 2.9
+    },
+    {
+     "along": -6.4,
+     "facade": "front",
+     "floor": 0,
+     "plane": 4.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.3,
+     "y1": 2.5
+    },
+    {
+     "along": 6.4,
+     "facade": "front",
+     "floor": 0,
+     "plane": 4.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.3,
+     "y1": 2.5
+    },
+    {
+     "along": -4.4,
+     "facade": "front",
+     "floor": 0,
+     "plane": 4.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 1.1,
+     "y1": 2.6
+    },
+    {
+     "along": 4.4,
+     "facade": "front",
+     "floor": 0,
+     "plane": 4.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 1.1,
+     "y1": 2.6
+    },
+    {
+     "along": -6.4,
+     "facade": "front",
+     "floor": 1,
+     "plane": 4.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.1,
+     "y1": 5.6
+    },
+    {
+     "along": 6.4,
+     "facade": "front",
+     "floor": 1,
+     "plane": 4.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.1,
+     "y1": 5.6
+    },
+    {
+     "along": -3.6,
+     "facade": "front",
+     "floor": 1,
+     "plane": 4.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.1,
+     "y1": 5.6
+    },
+    {
+     "along": 3.6,
+     "facade": "front",
+     "floor": 1,
+     "plane": 4.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.1,
+     "y1": 5.6
+    },
+    {
+     "along": 0.0,
+     "facade": "front",
+     "floor": 1,
+     "plane": 4.8,
+     "region": "O_civic_door",
+     "w": 1.8,
+     "y0": 3.3,
+     "y1": 5.9
+    },
+    {
+     "along": -6.5,
+     "facade": "back",
+     "floor": 0,
+     "plane": -4.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 1.1,
+     "y1": 2.6
+    },
+    {
+     "along": 6.5,
+     "facade": "back",
+     "floor": 0,
+     "plane": -4.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 1.1,
+     "y1": 2.6
+    },
+    {
+     "along": -6.5,
+     "facade": "back",
+     "floor": 1,
+     "plane": -4.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.1,
+     "y1": 5.6
+    },
+    {
+     "along": 6.5,
+     "facade": "back",
+     "floor": 1,
+     "plane": -4.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.1,
+     "y1": 5.6
+    },
+    {
+     "along": -3.8,
+     "facade": "back",
+     "floor": 1,
+     "plane": -4.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.1,
+     "y1": 5.6
+    },
+    {
+     "along": 3.8,
+     "facade": "back",
+     "floor": 1,
+     "plane": -4.8,
+     "region": "O_win_casement",
+     "w": 1.2,
+     "y0": 4.1,
+     "y1": 5.6
+    },
+    {
+     "along": -3.8,
+     "facade": "back",
+     "floor": 0,
+     "plane": -4.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.3,
+     "y1": 2.5
+    },
+    {
+     "along": 3.8,
+     "facade": "back",
+     "floor": 0,
+     "plane": -4.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.3,
+     "y1": 2.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 0,
+     "plane": -4.9,
+     "region": "O_small_dark",
+     "w": 0.6,
+     "y0": 1.9,
+     "y1": 2.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 1,
+     "plane": -4.9,
+     "region": "O_small_dark",
+     "w": 0.6,
+     "y0": 4.9,
+     "y1": 5.5
+    }
+   ],
+   "signs": [],
+   "stats_doors_front": [
+    [
+     "civic_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     -6.4
+    ],
+    [
+     "apt_door",
+     6.4
+    ],
+    [
+     "civic_door",
+     0.0
     ]
    ],
    "storeys": 2
@@ -4825,6 +5954,310 @@
    ],
    "storeys": 0
   },
+  "ck/ck_svc_pawn_fast": {
+   "cat": "mod",
+   "entrances": [
+    {
+     "along": -1.4,
+     "bay_d": 11.25,
+     "bay_w": 5.6,
+     "facade": "front",
+     "fits": [
+      "bakery",
+      "bar",
+      "books",
+      "cafe",
+      "cleaners",
+      "clothes",
+      "corner_shop",
+      "fast_food",
+      "gallery",
+      "gas",
+      "grocery",
+      "ice_cream",
+      "jewelry",
+      "keys",
+      "office",
+      "pharmacy",
+      "restaurant",
+      "salon",
+      "shoes",
+      "souvenir",
+      "sport",
+      "store",
+      "venue"
+     ],
+     "floor": 0,
+     "kind": "shop",
+     "w": 1.6
+    },
+    {
+     "along": 1.2,
+     "bay_d": 11.25,
+     "bay_w": 5.8,
+     "facade": "front",
+     "fits": [
+      "bakery",
+      "bar",
+      "books",
+      "cafe",
+      "cleaners",
+      "clothes",
+      "corner_shop",
+      "fast_food",
+      "gallery",
+      "gas",
+      "grocery",
+      "ice_cream",
+      "jewelry",
+      "keys",
+      "office",
+      "pharmacy",
+      "restaurant",
+      "salon",
+      "shoes",
+      "souvenir",
+      "sport",
+      "store",
+      "venue"
+     ],
+     "floor": 0,
+     "kind": "shop",
+     "w": 1.6
+    },
+    {
+     "along": 4.2,
+     "facade": "back",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": -1.8,
+     "facade": "back",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": -4.6,
+     "facade": "right",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": -4.6,
+     "facade": "left",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    }
+   ],
+   "floors": [
+    {
+     "box_max": [
+      5.7,
+      4.5,
+      5.55
+     ],
+     "box_min": [
+      -5.7,
+      0.0,
+      -5.7
+     ],
+     "clear_h": 4.5,
+     "floor": 0,
+     "inner_wd": [
+      11.4,
+      11.25
+     ],
+     "y": 0.0
+    }
+   ],
+   "floors_note": "derived: ground = lowest door sill; upper floors from window sills (-0.9 m) and upper apartment doors / sliders; walls assumed 0.30 m (front 0.45 m)",
+   "footprint_wd": [
+    12.0,
+    12.0
+   ],
+   "height": 5.1,
+   "model": "ck/ck_svc_pawn_fast",
+   "openings": [
+    {
+     "along": -1.4,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.65,
+     "region": "O_shopdoor",
+     "w": 1.6,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": 1.2,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.65,
+     "region": "O_shopdoor",
+     "w": 1.6,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": -4.2,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.88,
+     "region": "O_storefront",
+     "w": 3.2,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": 4.4,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.9,
+     "region": "O_storefront",
+     "w": 2.8,
+     "y0": 0.8,
+     "y1": 2.4
+    },
+    {
+     "along": 4.2,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.0,
+     "y1": 2.2
+    },
+    {
+     "along": -1.8,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.0,
+     "y1": 2.2
+    },
+    {
+     "along": 0.8,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 1.9,
+     "y1": 2.6
+    },
+    {
+     "along": -5.2,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 1.9,
+     "y1": 2.6
+    },
+    {
+     "along": 4.0,
+     "facade": "right",
+     "floor": 0,
+     "plane": 5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": -0.6,
+     "facade": "right",
+     "floor": 0,
+     "plane": 5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": -4.6,
+     "facade": "right",
+     "floor": 0,
+     "plane": 5.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.0,
+     "y1": 2.2
+    },
+    {
+     "along": 4.0,
+     "facade": "left",
+     "floor": 0,
+     "plane": -5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": -0.6,
+     "facade": "left",
+     "floor": 0,
+     "plane": -5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": -4.6,
+     "facade": "left",
+     "floor": 0,
+     "plane": -5.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.0,
+     "y1": 2.2
+    }
+   ],
+   "signs": [
+    {
+     "along": -3.0,
+     "facade": "front",
+     "plane": 6.08,
+     "region": "blank",
+     "text": "",
+     "w": 3.4,
+     "y0": 3.15,
+     "y1": 3.67
+    },
+    {
+     "along": 3.0,
+     "facade": "front",
+     "plane": 6.08,
+     "region": "blank",
+     "text": "",
+     "w": 4.0,
+     "y0": 3.2,
+     "y1": 3.75
+    }
+   ],
+   "stats_doors_front": [
+    [
+     "shopdoor",
+     -1.4
+    ],
+    [
+     "shopdoor",
+     1.2
+    ]
+   ],
+   "storeys": 0
+  },
   "ck/ck_svc_trade": {
    "cat": "mod",
    "entrances": [
@@ -5249,6 +6682,126 @@
      -3.0
     ]
    ],
+   "storeys": 0
+  },
+  "ck/mod_stg_row_roofed": {
+   "cat": "mod",
+   "entrances": [
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 0,
+     "kind": "service_bay",
+     "w": 3.6
+    },
+    {
+     "along": 0.0,
+     "facade": "front",
+     "floor": 0,
+     "kind": "service_bay",
+     "w": 3.6
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 0,
+     "kind": "service_bay",
+     "w": 3.6
+    }
+   ],
+   "floors": [
+    {
+     "box_max": [
+      8.7,
+      4.2,
+      5.55
+     ],
+     "box_min": [
+      -8.7,
+      0.0,
+      -5.7
+     ],
+     "clear_h": 4.2,
+     "floor": 0,
+     "inner_wd": [
+      17.4,
+      11.25
+     ],
+     "y": 0.0
+    }
+   ],
+   "floors_note": "derived: ground = lowest door sill; upper floors from window sills (-0.9 m) and upper apartment doors / sliders; walls assumed 0.30 m (front 0.45 m)",
+   "footprint_wd": [
+    18.0,
+    12.0
+   ],
+   "height": 4.8,
+   "model": "ck/mod_stg_row_roofed",
+   "openings": [
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.92,
+     "region": "O_rollup",
+     "w": 3.6,
+     "y0": 0.0,
+     "y1": 3.2
+    },
+    {
+     "along": 0.0,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.92,
+     "region": "O_rollup",
+     "w": 3.6,
+     "y0": 0.0,
+     "y1": 3.2
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.92,
+     "region": "O_rollup",
+     "w": 3.6,
+     "y0": 0.0,
+     "y1": 3.2
+    }
+   ],
+   "signs": [
+    {
+     "along": -6.0,
+     "facade": "front",
+     "plane": 6.08,
+     "region": "blank",
+     "text": "",
+     "w": 2.4,
+     "y0": 3.5,
+     "y1": 3.85
+    },
+    {
+     "along": 0.0,
+     "facade": "front",
+     "plane": 6.08,
+     "region": "blank",
+     "text": "",
+     "w": 2.4,
+     "y0": 3.5,
+     "y1": 3.85
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "plane": 6.08,
+     "region": "blank",
+     "text": "",
+     "w": 2.4,
+     "y0": 3.5,
+     "y1": 3.85
+    }
+   ],
+   "stats_doors_front": [],
    "storeys": 0
   },
   "commercial/com_kiosk": {
@@ -6940,6 +8493,1433 @@
    ],
    "stats_doors_front": [],
    "storeys": 3
+  },
+  "modular/examples/mod_svc_row": {
+   "cat": "",
+   "entrances": [
+    {
+     "along": -1.4,
+     "bay_d": 11.25,
+     "bay_w": 7.3,
+     "facade": "front",
+     "fits": [
+      "bakery",
+      "bar",
+      "books",
+      "cafe",
+      "cleaners",
+      "clothes",
+      "corner_shop",
+      "fast_food",
+      "gallery",
+      "gas",
+      "grocery",
+      "ice_cream",
+      "jewelry",
+      "keys",
+      "office",
+      "pharmacy",
+      "restaurant",
+      "salon",
+      "shoes",
+      "souvenir",
+      "sport",
+      "store",
+      "venue"
+     ],
+     "floor": 0,
+     "kind": "shop",
+     "w": 1.6
+    },
+    {
+     "along": 4.6,
+     "bay_d": 11.25,
+     "bay_w": 4.1,
+     "facade": "front",
+     "fits": [
+      "bakery",
+      "bar",
+      "books",
+      "cafe",
+      "cleaners",
+      "clothes",
+      "corner_shop",
+      "fast_food",
+      "gallery",
+      "gas",
+      "grocery",
+      "ice_cream",
+      "jewelry",
+      "keys",
+      "office",
+      "pharmacy",
+      "restaurant",
+      "salon",
+      "shoes",
+      "souvenir",
+      "sport",
+      "store",
+      "venue"
+     ],
+     "floor": 0,
+     "kind": "shop",
+     "w": 1.6
+    },
+    {
+     "along": 4.2,
+     "facade": "back",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": -1.8,
+     "facade": "back",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": -4.6,
+     "facade": "right",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": -4.6,
+     "facade": "left",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    }
+   ],
+   "floors": [
+    {
+     "box_max": [
+      5.7,
+      2.4,
+      5.55
+     ],
+     "box_min": [
+      -5.7,
+      0.0,
+      -5.7
+     ],
+     "clear_h": 2.4,
+     "floor": 0,
+     "inner_wd": [
+      11.4,
+      11.25
+     ],
+     "y": 0.0
+    }
+   ],
+   "floors_note": "derived: ground = lowest door sill; upper floors from window sills (-0.9 m) and upper apartment doors / sliders; walls assumed 0.30 m (front 0.45 m)",
+   "footprint_wd": [
+    12.0,
+    12.0
+   ],
+   "height": 0.0,
+   "model": "modular/examples/mod_svc_row",
+   "openings": [
+    {
+     "along": -1.4,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.65,
+     "region": "O_shopdoor",
+     "w": 1.6,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": 4.6,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.65,
+     "region": "O_shopdoor",
+     "w": 1.6,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": -4.2,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.88,
+     "region": "O_storefront",
+     "w": 3.2,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": 1.8,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.88,
+     "region": "O_storefront",
+     "w": 3.2,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": 4.2,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.0,
+     "y1": 2.2
+    },
+    {
+     "along": -1.8,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.0,
+     "y1": 2.2
+    },
+    {
+     "along": 0.8,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 1.9,
+     "y1": 2.6
+    },
+    {
+     "along": -5.2,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 1.9,
+     "y1": 2.6
+    },
+    {
+     "along": 4.0,
+     "facade": "right",
+     "floor": 0,
+     "plane": 5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": -0.6,
+     "facade": "right",
+     "floor": 0,
+     "plane": 5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": -4.6,
+     "facade": "right",
+     "floor": 0,
+     "plane": 5.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.0,
+     "y1": 2.2
+    },
+    {
+     "along": 4.0,
+     "facade": "left",
+     "floor": 0,
+     "plane": -5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": -0.6,
+     "facade": "left",
+     "floor": 0,
+     "plane": -5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": -4.6,
+     "facade": "left",
+     "floor": 0,
+     "plane": -5.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.0,
+     "y1": 2.2
+    }
+   ],
+   "signs": [
+    {
+     "along": -3.0,
+     "facade": "front",
+     "plane": 6.08,
+     "region": "blank",
+     "text": "",
+     "w": 3.4,
+     "y0": 3.15,
+     "y1": 3.67
+    },
+    {
+     "along": 3.0,
+     "facade": "front",
+     "plane": 6.08,
+     "region": "blank",
+     "text": "",
+     "w": 3.4,
+     "y0": 3.15,
+     "y1": 3.67
+    }
+   ],
+   "stats_doors_front": [],
+   "storeys": 1
+  },
+  "urban/twr_condo_shores": {
+   "cat": "tower",
+   "entrances": [
+    {
+     "along": -1.2,
+     "facade": "front",
+     "floor": 0,
+     "kind": "patio",
+     "w": 1.6
+    },
+    {
+     "along": 1.2,
+     "facade": "front",
+     "floor": 0,
+     "kind": "patio",
+     "w": 1.6
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 1,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 1,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 2,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 2,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 3,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 3,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 4,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 4,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 5,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 5,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 6,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 6,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 7,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 7,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 8,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 8,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 9,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 9,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 10,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 10,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 11,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 11,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 12,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 12,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 13,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 13,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 14,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 14,
+     "kind": "patio",
+     "w": 2.0
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    }
+   ],
+   "floors": [
+    {
+     "box_max": [
+      17.7,
+      2.7,
+      7.55
+     ],
+     "box_min": [
+      -17.7,
+      0.3,
+      -7.7
+     ],
+     "clear_h": 2.4,
+     "floor": 0,
+     "inner_wd": [
+      35.4,
+      15.25
+     ],
+     "y": 0.3
+    },
+    {
+     "box_max": [
+      17.7,
+      5.7,
+      7.55
+     ],
+     "box_min": [
+      -17.7,
+      3.0,
+      -7.7
+     ],
+     "clear_h": 2.7,
+     "floor": 1,
+     "inner_wd": [
+      35.4,
+      15.25
+     ],
+     "y": 3.0
+    },
+    {
+     "box_max": [
+      17.7,
+      8.7,
+      7.55
+     ],
+     "box_min": [
+      -17.7,
+      6.0,
+      -7.7
+     ],
+     "clear_h": 2.7,
+     "floor": 2,
+     "inner_wd": [
+      35.4,
+      15.25
+     ],
+     "y": 6.0
+    },
+    {
+     "box_max": [
+      17.7,
+      11.7,
+      7.55
+     ],
+     "box_min": [
+      -17.7,
+      9.0,
+      -7.7
+     ],
+     "clear_h": 2.7,
+     "floor": 3,
+     "inner_wd": [
+      35.4,
+      15.25
+     ],
+     "y": 9.0
+    },
+    {
+     "box_max": [
+      17.7,
+      14.7,
+      7.55
+     ],
+     "box_min": [
+      -17.7,
+      12.0,
+      -7.7
+     ],
+     "clear_h": 2.7,
+     "floor": 4,
+     "inner_wd": [
+      35.4,
+      15.25
+     ],
+     "y": 12.0
+    },
+    {
+     "box_max": [
+      17.7,
+      17.7,
+      7.55
+     ],
+     "box_min": [
+      -17.7,
+      15.0,
+      -7.7
+     ],
+     "clear_h": 2.7,
+     "floor": 5,
+     "inner_wd": [
+      35.4,
+      15.25
+     ],
+     "y": 15.0
+    },
+    {
+     "box_max": [
+      17.7,
+      20.7,
+      7.55
+     ],
+     "box_min": [
+      -17.7,
+      18.0,
+      -7.7
+     ],
+     "clear_h": 2.7,
+     "floor": 6,
+     "inner_wd": [
+      35.4,
+      15.25
+     ],
+     "y": 18.0
+    },
+    {
+     "box_max": [
+      17.7,
+      23.7,
+      7.55
+     ],
+     "box_min": [
+      -17.7,
+      21.0,
+      -7.7
+     ],
+     "clear_h": 2.7,
+     "floor": 7,
+     "inner_wd": [
+      35.4,
+      15.25
+     ],
+     "y": 21.0
+    },
+    {
+     "box_max": [
+      17.7,
+      26.7,
+      7.55
+     ],
+     "box_min": [
+      -17.7,
+      24.0,
+      -7.7
+     ],
+     "clear_h": 2.7,
+     "floor": 8,
+     "inner_wd": [
+      35.4,
+      15.25
+     ],
+     "y": 24.0
+    },
+    {
+     "box_max": [
+      17.7,
+      29.7,
+      7.55
+     ],
+     "box_min": [
+      -17.7,
+      27.0,
+      -7.7
+     ],
+     "clear_h": 2.7,
+     "floor": 9,
+     "inner_wd": [
+      35.4,
+      15.25
+     ],
+     "y": 27.0
+    },
+    {
+     "box_max": [
+      17.7,
+      32.7,
+      7.55
+     ],
+     "box_min": [
+      -17.7,
+      30.0,
+      -7.7
+     ],
+     "clear_h": 2.7,
+     "floor": 10,
+     "inner_wd": [
+      35.4,
+      15.25
+     ],
+     "y": 30.0
+    },
+    {
+     "box_max": [
+      17.7,
+      35.7,
+      7.55
+     ],
+     "box_min": [
+      -17.7,
+      33.0,
+      -7.7
+     ],
+     "clear_h": 2.7,
+     "floor": 11,
+     "inner_wd": [
+      35.4,
+      15.25
+     ],
+     "y": 33.0
+    },
+    {
+     "box_max": [
+      17.7,
+      38.7,
+      7.55
+     ],
+     "box_min": [
+      -17.7,
+      36.0,
+      -7.7
+     ],
+     "clear_h": 2.7,
+     "floor": 12,
+     "inner_wd": [
+      35.4,
+      15.25
+     ],
+     "y": 36.0
+    },
+    {
+     "box_max": [
+      17.7,
+      41.7,
+      7.55
+     ],
+     "box_min": [
+      -17.7,
+      39.0,
+      -7.7
+     ],
+     "clear_h": 2.7,
+     "floor": 13,
+     "inner_wd": [
+      35.4,
+      15.25
+     ],
+     "y": 39.0
+    },
+    {
+     "box_max": [
+      17.7,
+      49.07,
+      7.55
+     ],
+     "box_min": [
+      -17.7,
+      42.0,
+      -7.7
+     ],
+     "clear_h": 7.07,
+     "floor": 14,
+     "inner_wd": [
+      35.4,
+      15.25
+     ],
+     "y": 42.0
+    }
+   ],
+   "floors_note": "derived: ground = lowest door sill; upper floors from window sills (-0.9 m) and upper apartment doors / sliders; walls assumed 0.30 m (front 0.45 m)",
+   "footprint_wd": [
+    36.0,
+    16.0
+   ],
+   "height": 49.67,
+   "model": "urban/twr_condo_shores",
+   "openings": [
+    {
+     "along": -1.2,
+     "facade": "front",
+     "floor": 0,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 1.6,
+     "y0": 0.3,
+     "y1": 2.5
+    },
+    {
+     "along": 1.2,
+     "facade": "front",
+     "floor": 0,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 1.6,
+     "y0": 0.3,
+     "y1": 2.5
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 1,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 3.3,
+     "y1": 5.5
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 1,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 3.3,
+     "y1": 5.5
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 2,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 6.3,
+     "y1": 8.5
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 2,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 6.3,
+     "y1": 8.5
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 3,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 9.3,
+     "y1": 11.5
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 3,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 9.3,
+     "y1": 11.5
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 4,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 12.3,
+     "y1": 14.5
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 4,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 12.3,
+     "y1": 14.5
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 5,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 15.3,
+     "y1": 17.5
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 5,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 15.3,
+     "y1": 17.5
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 6,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 18.3,
+     "y1": 20.5
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 6,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 18.3,
+     "y1": 20.5
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 7,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 21.3,
+     "y1": 23.5
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 7,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 21.3,
+     "y1": 23.5
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 8,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 24.3,
+     "y1": 26.5
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 8,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 24.3,
+     "y1": 26.5
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 9,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 27.3,
+     "y1": 29.5
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 9,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 27.3,
+     "y1": 29.5
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 10,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 30.3,
+     "y1": 32.5
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 10,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 30.3,
+     "y1": 32.5
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 11,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 33.3,
+     "y1": 35.5
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 11,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 33.3,
+     "y1": 35.5
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 12,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 36.3,
+     "y1": 38.5
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 12,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 36.3,
+     "y1": 38.5
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 13,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 39.3,
+     "y1": 41.5
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 13,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 39.3,
+     "y1": 41.5
+    },
+    {
+     "along": -6.0,
+     "facade": "front",
+     "floor": 14,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 42.3,
+     "y1": 44.5
+    },
+    {
+     "along": 6.0,
+     "facade": "front",
+     "floor": 14,
+     "plane": 7.92,
+     "region": "O_patio",
+     "w": 2.0,
+     "y0": 42.3,
+     "y1": 44.5
+    },
+    {
+     "along": -10.0,
+     "facade": "front",
+     "floor": 0,
+     "plane": 7.9,
+     "region": "O_storefront",
+     "w": 4.0,
+     "y0": 0.6,
+     "y1": 3.0
+    },
+    {
+     "along": 10.0,
+     "facade": "front",
+     "floor": 0,
+     "plane": 7.9,
+     "region": "O_storefront",
+     "w": 4.0,
+     "y0": 0.6,
+     "y1": 3.0
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 1,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 24.0,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 2,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 24.0,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 3,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 24.0,
+     "y0": 10.0,
+     "y1": 11.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 4,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 24.0,
+     "y0": 13.0,
+     "y1": 14.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 5,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 24.0,
+     "y0": 16.0,
+     "y1": 17.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 6,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 24.0,
+     "y0": 19.0,
+     "y1": 20.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 7,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 24.0,
+     "y0": 22.0,
+     "y1": 23.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 8,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 24.0,
+     "y0": 25.0,
+     "y1": 26.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 9,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 24.0,
+     "y0": 28.0,
+     "y1": 29.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 10,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 24.0,
+     "y0": 31.0,
+     "y1": 32.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 11,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 24.0,
+     "y0": 34.0,
+     "y1": 35.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 12,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 24.0,
+     "y0": 37.0,
+     "y1": 38.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 13,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 24.0,
+     "y0": 40.0,
+     "y1": 41.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 14,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 24.0,
+     "y0": 43.0,
+     "y1": 44.5
+    },
+    {
+     "along": -10.0,
+     "facade": "back",
+     "floor": 0,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 10.0,
+     "y0": 1.0,
+     "y1": 2.8
+    },
+    {
+     "along": 10.0,
+     "facade": "back",
+     "floor": 0,
+     "plane": -7.9,
+     "region": "O_ribbon",
+     "w": 10.0,
+     "y0": 1.0,
+     "y1": 2.8
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 0,
+     "plane": -7.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.3,
+     "y1": 2.5
+    }
+   ],
+   "signs": [],
+   "stats_doors_front": [
+    [
+     "patio",
+     -1.2
+    ],
+    [
+     "patio",
+     1.2
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ],
+    [
+     "patio",
+     -6.0
+    ],
+    [
+     "patio",
+     6.0
+    ]
+   ],
+   "storeys": 15
   },
   "urban/twr_glass": {
    "cat": "tower",
@@ -9862,6 +12842,635 @@
     ]
    ],
    "storeys": 2
+  },
+  "urban/urb_dept_store": {
+   "cat": "urban",
+   "entrances": [
+    {
+     "along": 15.4,
+     "bay_d": 23.25,
+     "bay_w": 35.4,
+     "facade": "front",
+     "fits": [
+      "bakery",
+      "bar",
+      "books",
+      "cafe",
+      "cleaners",
+      "clothes",
+      "corner_shop",
+      "fast_food",
+      "gallery",
+      "gas",
+      "grocery",
+      "ice_cream",
+      "jewelry",
+      "keys",
+      "office",
+      "pharmacy",
+      "restaurant",
+      "salon",
+      "shoes",
+      "souvenir",
+      "sport",
+      "store",
+      "venue"
+     ],
+     "floor": 0,
+     "kind": "shop",
+     "w": 2.0
+    },
+    {
+     "along": 6.0,
+     "facade": "back",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": -6.0,
+     "facade": "back",
+     "floor": 0,
+     "kind": "service_bay",
+     "w": 3.0
+    }
+   ],
+   "floors": [
+    {
+     "box_max": [
+      17.7,
+      2.7,
+      11.55
+     ],
+     "box_min": [
+      -17.7,
+      0.0,
+      -11.7
+     ],
+     "clear_h": 2.7,
+     "floor": 0,
+     "inner_wd": [
+      35.4,
+      23.25
+     ],
+     "y": 0.0
+    },
+    {
+     "box_max": [
+      17.7,
+      5.7,
+      11.55
+     ],
+     "box_min": [
+      -17.7,
+      3.0,
+      -11.7
+     ],
+     "clear_h": 2.7,
+     "floor": 1,
+     "inner_wd": [
+      35.4,
+      23.25
+     ],
+     "y": 3.0
+    },
+    {
+     "box_max": [
+      17.7,
+      9.87,
+      11.55
+     ],
+     "box_min": [
+      -17.7,
+      6.0,
+      -11.7
+     ],
+     "clear_h": 3.87,
+     "floor": 2,
+     "inner_wd": [
+      35.4,
+      23.25
+     ],
+     "y": 6.0
+    }
+   ],
+   "floors_note": "derived: ground = lowest door sill; upper floors from window sills (-0.9 m) and upper apartment doors / sliders; walls assumed 0.30 m (front 0.45 m)",
+   "footprint_wd": [
+    36.0,
+    24.0
+   ],
+   "height": 10.47,
+   "model": "urban/urb_dept_store",
+   "openings": [
+    {
+     "along": 7.0,
+     "facade": "right",
+     "floor": 0,
+     "plane": 17.88,
+     "region": "O_storefront",
+     "w": 7.0,
+     "y0": 0.0,
+     "y1": 3.2
+    },
+    {
+     "along": -8.0,
+     "facade": "right",
+     "floor": 1,
+     "plane": 17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": -2.5,
+     "facade": "right",
+     "floor": 1,
+     "plane": 17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": 2.5,
+     "facade": "right",
+     "floor": 1,
+     "plane": 17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": 8.0,
+     "facade": "right",
+     "floor": 1,
+     "plane": 17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": -8.0,
+     "facade": "right",
+     "floor": 2,
+     "plane": 17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": -2.5,
+     "facade": "right",
+     "floor": 2,
+     "plane": 17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": 2.5,
+     "facade": "right",
+     "floor": 2,
+     "plane": 17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": 8.0,
+     "facade": "right",
+     "floor": 2,
+     "plane": 17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": -8.0,
+     "facade": "right",
+     "floor": 0,
+     "plane": 17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 1.0,
+     "y1": 2.8
+    },
+    {
+     "along": -2.5,
+     "facade": "right",
+     "floor": 0,
+     "plane": 17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 1.0,
+     "y1": 2.8
+    },
+    {
+     "along": -8.0,
+     "facade": "left",
+     "floor": 1,
+     "plane": -17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": -2.5,
+     "facade": "left",
+     "floor": 1,
+     "plane": -17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": 2.5,
+     "facade": "left",
+     "floor": 1,
+     "plane": -17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": 8.0,
+     "facade": "left",
+     "floor": 1,
+     "plane": -17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": -8.0,
+     "facade": "left",
+     "floor": 2,
+     "plane": -17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": -2.5,
+     "facade": "left",
+     "floor": 2,
+     "plane": -17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": 2.5,
+     "facade": "left",
+     "floor": 2,
+     "plane": -17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": 8.0,
+     "facade": "left",
+     "floor": 2,
+     "plane": -17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": -8.0,
+     "facade": "left",
+     "floor": 0,
+     "plane": -17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 1.0,
+     "y1": 2.8
+    },
+    {
+     "along": -2.5,
+     "facade": "left",
+     "floor": 0,
+     "plane": -17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 1.0,
+     "y1": 2.8
+    },
+    {
+     "along": 2.5,
+     "facade": "left",
+     "floor": 0,
+     "plane": -17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 1.0,
+     "y1": 2.8
+    },
+    {
+     "along": 8.0,
+     "facade": "left",
+     "floor": 0,
+     "plane": -17.9,
+     "region": "O_ribbon",
+     "w": 4.2,
+     "y0": 1.0,
+     "y1": 2.8
+    },
+    {
+     "along": 15.4,
+     "facade": "front",
+     "floor": 0,
+     "plane": 11.6,
+     "region": "O_shopdoor",
+     "w": 2.0,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": -13.35,
+     "facade": "front",
+     "floor": 0,
+     "plane": 11.88,
+     "region": "O_storefront",
+     "w": 7.5,
+     "y0": 0.0,
+     "y1": 3.2
+    },
+    {
+     "along": -4.5,
+     "facade": "front",
+     "floor": 0,
+     "plane": 11.88,
+     "region": "O_storefront",
+     "w": 7.8,
+     "y0": 0.0,
+     "y1": 3.2
+    },
+    {
+     "along": 4.5,
+     "facade": "front",
+     "floor": 0,
+     "plane": 11.88,
+     "region": "O_storefront",
+     "w": 7.8,
+     "y0": 0.0,
+     "y1": 3.2
+    },
+    {
+     "along": 11.2,
+     "facade": "front",
+     "floor": 0,
+     "plane": 11.88,
+     "region": "O_storefront",
+     "w": 3.2,
+     "y0": 0.0,
+     "y1": 3.2
+    },
+    {
+     "along": -13.35,
+     "facade": "front",
+     "floor": 1,
+     "plane": 11.9,
+     "region": "O_ribbon",
+     "w": 7.5,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": -4.5,
+     "facade": "front",
+     "floor": 1,
+     "plane": 11.9,
+     "region": "O_ribbon",
+     "w": 7.8,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": 4.5,
+     "facade": "front",
+     "floor": 1,
+     "plane": 11.9,
+     "region": "O_ribbon",
+     "w": 7.8,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": 11.2,
+     "facade": "front",
+     "floor": 1,
+     "plane": 11.9,
+     "region": "O_ribbon",
+     "w": 3.2,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": 15.4,
+     "facade": "front",
+     "floor": 1,
+     "plane": 11.9,
+     "region": "O_ribbon",
+     "w": 2.6,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": -13.35,
+     "facade": "front",
+     "floor": 2,
+     "plane": 11.9,
+     "region": "O_ribbon",
+     "w": 7.5,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": -4.5,
+     "facade": "front",
+     "floor": 2,
+     "plane": 11.9,
+     "region": "O_ribbon",
+     "w": 7.8,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": 4.5,
+     "facade": "front",
+     "floor": 2,
+     "plane": 11.9,
+     "region": "O_ribbon",
+     "w": 7.8,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": 11.2,
+     "facade": "front",
+     "floor": 2,
+     "plane": 11.9,
+     "region": "O_ribbon",
+     "w": 3.2,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": 15.4,
+     "facade": "front",
+     "floor": 2,
+     "plane": 11.9,
+     "region": "O_ribbon",
+     "w": 2.6,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": 6.0,
+     "facade": "back",
+     "floor": 0,
+     "plane": -11.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.3,
+     "y1": 2.5
+    },
+    {
+     "along": -6.0,
+     "facade": "back",
+     "floor": 0,
+     "plane": -11.92,
+     "region": "O_rollup",
+     "w": 3.0,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": -14.0,
+     "facade": "back",
+     "floor": 1,
+     "plane": -11.9,
+     "region": "O_ribbon",
+     "w": 5.0,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": -7.0,
+     "facade": "back",
+     "floor": 1,
+     "plane": -11.9,
+     "region": "O_ribbon",
+     "w": 5.0,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 1,
+     "plane": -11.9,
+     "region": "O_ribbon",
+     "w": 5.0,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": 7.0,
+     "facade": "back",
+     "floor": 1,
+     "plane": -11.9,
+     "region": "O_ribbon",
+     "w": 5.0,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": 14.0,
+     "facade": "back",
+     "floor": 1,
+     "plane": -11.9,
+     "region": "O_ribbon",
+     "w": 5.0,
+     "y0": 4.0,
+     "y1": 5.5
+    },
+    {
+     "along": -14.0,
+     "facade": "back",
+     "floor": 2,
+     "plane": -11.9,
+     "region": "O_ribbon",
+     "w": 5.0,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": -7.0,
+     "facade": "back",
+     "floor": 2,
+     "plane": -11.9,
+     "region": "O_ribbon",
+     "w": 5.0,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": 0.0,
+     "facade": "back",
+     "floor": 2,
+     "plane": -11.9,
+     "region": "O_ribbon",
+     "w": 5.0,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": 7.0,
+     "facade": "back",
+     "floor": 2,
+     "plane": -11.9,
+     "region": "O_ribbon",
+     "w": 5.0,
+     "y0": 7.0,
+     "y1": 8.5
+    },
+    {
+     "along": 14.0,
+     "facade": "back",
+     "floor": 2,
+     "plane": -11.9,
+     "region": "O_ribbon",
+     "w": 5.0,
+     "y0": 7.0,
+     "y1": 8.5
+    }
+   ],
+   "signs": [],
+   "stats_doors_front": [
+    [
+     "shopdoor",
+     15.4
+    ]
+   ],
+   "storeys": 3
   }
  }
 }

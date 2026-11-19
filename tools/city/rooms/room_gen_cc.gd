@@ -123,7 +123,7 @@ func _free(x0: float, z0: float, x1: float, z1: float, use_keep := true) -> bool
 	return true
 
 ## put a prop centred at (x, z) facing yaw if its footprint is free; true when placed
-const CAP := {"brochure_rack": 2, "drinks_fridge": 4, "vending_snack": 1, "vending_soda": 1}
+const CAP := {"brochure_rack": 2, "drinks_fridge": 4, "vending_snack": 1, "vending_soda": 1, "card_spinner": 2}
 var used := {}
 func _put(base: String, x: float, z: float, yaw := 0.0, use_keep := true) -> bool:
 	if CAP.has(base) and int(used.get(base, 0)) >= int(CAP[base]): return false
@@ -266,6 +266,10 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		var free_board := true
 		for o: Array in occ:
 			if float(o[4]) > 1.7 and mx > float(o[0]) - 0.85 and mx < float(o[2]) + 0.85 and float(o[1]) < ZBp + 0.6: free_board = false
+		# never over an opening of the back wall (a window or door at any height)
+		if ZBp <= ZB + 0.01:
+			for o: Dictionary in c.openings:
+				if int(o.floor) == 0 and String(o.facade) == "back" and absf(float(o.along) - mx) < float(o.w) * 0.5 + 0.8: free_board = false
 		if free_board: rr.prop("menu_board", mx, ZBp + 0.06, 0.0, 1.75)
 	# ---- the side walls: the shop's goods / seats along them (low things only under the side windows)
 	var sidewin := _side_windows(c)

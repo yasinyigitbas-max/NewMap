@@ -1,14 +1,44 @@
 {
  "rooms": [
   {
-   "d": 16.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_am__amber6_tower__0.scn",
-   "id": "g_cc_b1_am__amber6_tower__0",
-   "kind": "lobby",
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b2_am__amber_e_brick_row__0.scn",
+   "id": "g_cc_b2_am__amber_e_brick_row__0",
+   "kind": "ice_cream",
    "lights": 5,
-   "name": "Sixth & Amber Tower",
-   "props": 50,
-   "w": 23.4
+   "name": "Scoops on Amber",
+   "props": 25,
+   "w": 7.6
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b2_n__sixth_e_brick_row__1.scn",
+   "id": "g_cc_b2_n__sixth_e_brick_row__1",
+   "kind": "souvenir",
+   "lights": 4,
+   "name": "Paper & Gifts",
+   "props": 15,
+   "w": 6.0
+  },
+  {
+   "d": 15.05,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b2_7th__seventh_insurance__0.scn",
+   "id": "g_cc_b2_7th__seventh_insurance__0",
+   "kind": "law",
+   "lights": 6,
+   "name": "Pacific Insurance",
+   "props": 33,
+   "w": 17.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b2_7th__seventh_brick_row__1.scn",
+   "id": "g_cc_b2_7th__seventh_brick_row__1",
+   "kind": "souvenir",
+   "lights": 4,
+   "name": "Toy Chest",
+   "props": 15,
+   "w": 6.0
   }
  ]
 }
