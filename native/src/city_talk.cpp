@@ -540,7 +540,7 @@ String CityTalk::doing(int p_row, Dictionary &r_sub) const {
 	const pc::Crowd *b = c->brain();
 	if (b->party[p_row] != 0 && b->pkind[p_row] == pc::PK_SAILORS) return "navy";
 	const int a = b->act[p_row];
-	if (b->mode[p_row] == pc::M_STAY && (a == pc::A_SIT || a == pc::A_LIE_BACK || a == pc::A_LIE_FRONT || a == pc::A_DRINK)) return "sitting";
+	if (b->mode[p_row] == pc::M_STAY && (a == pc::A_SIT || a == pc::A_GSIT || a == pc::A_LIE_BACK || a == pc::A_LIE_FRONT || a == pc::A_DRINK)) return "sitting";
 	const int g = b->goal[p_row];
 	if (g >= 0 && g < (int)b->places.size()) {
 		switch (b->places[g].kind) {
@@ -674,6 +674,13 @@ void CityTalk::_input(const Ref<InputEvent> &p_event) {
 
 // ---------------------------------------------------------------- the groups' own talk (the crowd's event E_SAY)
 void CityTalk::_on_crowd_event(int p_type, int p_id, int p_aux, double p_f) {
+	if (p_type == 16) {   // the player shoved him: a grudge; a talk with him is over
+		CityCrowd *cc = crowd_node();
+		const int r = cc && cc->brain() ? cc->brain()->find(p_id) : -1;
+		if (r >= 0) mem_of(r).busy_until = now_h + GRUDGE_H;
+		if (active == p_id) end("cut");
+		return;
+	}
 	if (p_type != pc::E_SAY || !loaded) return;
 	CityCrowd *c = crowd_node();
 	if (!c) return;

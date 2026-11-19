@@ -28,7 +28,7 @@ class CityPlayer : public CharacterBody3D {
 	Vector2 cmd;
 	float cam_yaw = 0.0f, cam_pitch = -0.18f, cam_dist = 3.4f, yaw = 0.0f, speed = 0.0f;
 	float walk_speed = 1.6f, run_speed = 4.6f;
-	Vector3 cam_pos;
+	Vector3 cam_pos, knock_v;
 
 protected:
 	static void _bind_methods();
@@ -45,6 +45,8 @@ public:
 	// he stands and takes no keys (while a line is typed to somebody)
 	void set_frozen(bool p_on) { frozen = p_on; }
 	bool is_frozen() const { return frozen; }
+	// somebody hits him: he is knocked that way (m/s)
+	void knock(const Vector3 &p_v) { knock_v += p_v; }
 	double get_speed() const { return speed; }
 	CityPed *figure() { return fig; }
 	void set_body_id(const String &p_id) { body_id = p_id; }

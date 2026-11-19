@@ -294,7 +294,7 @@ int main(int argc, char **argv) {
 		double v_dry = 0, n_dry = 0, v_wet = 0, n_wet = 0;
 		for (int t = 0; t < 12 * 60 * 20; t++) {
 			if (t == 8 * 60 * 20) {
-				for (int i = 0; i < c->hi; i++) if (c->alive[i] && c->mode[i] == M_STAY && (c->act[i] == A_SIT || c->act[i] == A_LIE_BACK || c->act[i] == A_LIE_FRONT || c->act[i] == A_DRINK)) sitting_before++;
+				for (int i = 0; i < c->hi; i++) if (c->alive[i] && c->mode[i] == M_STAY && (c->act[i] == A_SIT || c->act[i] == A_GSIT || c->act[i] == A_LIE_BACK || c->act[i] == A_LIE_FRONT || c->act[i] == A_DRINK)) sitting_before++;
 				c->set_rain(1.0f);
 			}
 			c->step(DT, clock); clock += DT; c->events.clear();
@@ -302,7 +302,7 @@ int main(int argc, char **argv) {
 				if (t < 8 * 60 * 20) { v_dry += c->v[i] / c->v0[i]; n_dry++; } else if (t > 9 * 60 * 20) { v_wet += c->v[i] / c->v0[i]; n_wet++; }
 			}
 		}
-		for (int i = 0; i < c->hi; i++) if (c->alive[i] && c->mode[i] == M_STAY && (c->act[i] == A_SIT || c->act[i] == A_LIE_BACK || c->act[i] == A_LIE_FRONT || c->act[i] == A_DRINK)) sitting_after++;
+		for (int i = 0; i < c->hi; i++) if (c->alive[i] && c->mode[i] == M_STAY && (c->act[i] == A_SIT || c->act[i] == A_GSIT || c->act[i] == A_LIE_BACK || c->act[i] == A_LIE_FRONT || c->act[i] == A_DRINK)) sitting_after++;
 		int sheltering = 0;
 		for (int i = 0; i < c->hi; i++) if (c->alive[i] && c->mode[i] == M_STAY && c->act[i] == A_SHELTER) sheltering++;
 		std::snprintf(line, sizeof(line), "F. rain: %d people sat or lay before it, %d four minutes into it; %d went for shelter, %d stand at a shop's front; pace %.2f of their own before, %.2f in the rain",

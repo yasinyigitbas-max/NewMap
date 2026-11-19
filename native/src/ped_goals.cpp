@@ -224,13 +224,15 @@ void Crowd::arrive(int i) {
 	float s = 30.0f;
 	switch (P.kind) {
 		case PL_BENCH: act[i] = A_SIT; s = 30.0f + rnd_of(i) * 90.0f; st.sat++; if (wet) s = 0.0f; break;
-		case PL_PARK: act[i] = P.pose == POSE_SIT ? A_SIT : A_NONE; s = 25.0f + rnd_of(i) * 65.0f; if (P.pose == POSE_SIT) st.sat++; if (wet) s = 0.0f; break;
-		case PL_BEACH: act[i] = (look[i] >> 9) & 1u ? A_LIE_FRONT : ((look[i] >> 10) & 1u ? A_SIT : A_LIE_BACK); s = 25.0f + rnd_of(i) * 65.0f; st.lay++; if (wet) s = 0.0f; break;
+		case PL_PARK: act[i] = P.pose == POSE_SIT ? A_GSIT : A_NONE; s = 25.0f + rnd_of(i) * 65.0f; if (P.pose == POSE_SIT) st.sat++; if (wet) s = 0.0f; break;
+		case PL_BEACH: act[i] = (look[i] >> 9) & 1u ? A_LIE_FRONT : ((look[i] >> 10) & 1u ? A_GSIT : A_LIE_BACK); s = 25.0f + rnd_of(i) * 65.0f; st.lay++; if (wet) s = 0.0f; break;
 		case PL_CAFE: act[i] = A_DRINK; s = 60.0f + rnd_of(i) * 140.0f; st.drank++; if (wet) s = 0.0f; break;
 		case PL_BUS: act[i] = A_WAIT; s = 240.0f; st.bus_waits++; break;
 		case PL_SHOP: act[i] = A_SHELTER; s = 900.0f; break;   // (at a shop's front without going in: out of the rain)
 		default: act[i] = A_NONE; s = 5.0f + rnd_of(i) * 20.0f; break;
 	}
+	// (in the rain nobody sits or lies down even for a moment: he comes, sees the wet seat, and turns back)
+	if (wet && (act[i] == A_SIT || act[i] == A_GSIT || act[i] == A_LIE_BACK || act[i] == A_LIE_FRONT || act[i] == A_DRINK)) act[i] = A_NONE;
 	if (!told) stay_t[i] = s;
 }
 
@@ -265,10 +267,11 @@ void Crowd::stay_step(int i, float h) {
 			return;
 		}
 	}
-	if (rain > 0.5f && (act[i] == A_SIT || act[i] == A_LIE_BACK || act[i] == A_LIE_FRONT || act[i] == A_DRINK)) stay_t[i] = 0.0f;   // nobody sits in the rain
+	if (rain > 0.5f && (act[i] == A_SIT || act[i] == A_GSIT || act[i] == A_LIE_BACK || act[i] == A_LIE_FRONT || act[i] == A_DRINK)) stay_t[i] = 0.0f;   // nobody sits in the rain
 	if (act[i] == A_SHELTER && rain < 0.3f) stay_t[i] = 0.0f;
 	if (place_off[g] || flee_t[i] > 0.0f) stay_t[i] = 0.0f;
 	if (stay_t[i] > 0.0f) return;
+	if (rising(i, h)) return;   // (getting up takes a moment)
 	// up, and back to the pavement where it left it
 	act[i] = A_NONE; mode[i] = M_BACK; tx[i] = bx[i]; tz[i] = bz[i];
 	int hh = hint[i]; float ax, ay, az, sx, sz;

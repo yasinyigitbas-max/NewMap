@@ -78,7 +78,8 @@ void CityPlayer::_physics_process(double p_delta) {
 	Vector3 v = get_velocity();
 	const Vector3 hv(v.x, 0, v.z);
 	const Vector3 nh = hv.move_toward(want, (want.length() > hv.length() ? 9.0f : 14.0f) * dt);
-	v.x = nh.x; v.z = nh.z;
+	v.x = nh.x + knock_v.x; v.z = nh.z + knock_v.z;
+	knock_v = Vector3();
 	v.y = is_on_floor() ? -0.5f : v.y - 9.81f * dt;
 	set_velocity(v);
 	move_and_slide();
@@ -114,6 +115,7 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_speed"), &CityPlayer::get_speed);
 	ClassDB::bind_method(D_METHOD("set_frozen", "on"), &CityPlayer::set_frozen);
 	ClassDB::bind_method(D_METHOD("is_frozen"), &CityPlayer::is_frozen);
+	ClassDB::bind_method(D_METHOD("knock", "velocity"), &CityPlayer::knock);
 	ClassDB::bind_method(D_METHOD("set_body_id", "id"), &CityPlayer::set_body_id);
 	ClassDB::bind_method(D_METHOD("get_body_id"), &CityPlayer::get_body_id);
 	ClassDB::bind_method(D_METHOD("set_capture_mouse", "on"), &CityPlayer::set_capture_mouse);

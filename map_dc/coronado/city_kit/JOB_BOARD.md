@@ -149,6 +149,17 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   `tests/traffic/test_bus.gd` RESULT PASS, the traffic core test RESULT PASS with them. Mended on the way: a parked
   car pulling out into a car parked in another row stood for good (traffic_parking.h). NOT tried: people boarding a
   real bus in the engine; nobody has seen a bus.
+  20 Nov ~19:00: THE PRO QUATERNIUS PACKS (doc section 32; Yasin bought both Source packs: "replace them ... use
+  enter and exit animations ... use them for crowd fights too", "use everything we can", "one side should win ...
+  they shouldnt kill each other", "voices will come later, dont hold back on using animations based on voices").
+  159 clips a figure + 9 mixed ones (walk + talk / phone, sit + phone / drink, a beggar asking, a hurt walk); every
+  act has its way in and out (the brain's A_RISE: he gets up where he is, then walks); fights with turns, hits and
+  dodges, a winner who celebrates and a loser who walks away hurt (the last blow a real shove); after the player's
+  shove he tells the player off or hits back, people look, and he goes on to where he was going.
+  `tests/people/test_acts.gd` + the other four people tests RESULT PASS. KEPT AS MY OWN, NOT CLIPS: ragdoll, pushes,
+  balancing, impacts, falls. OPEN: a body pushed from the front may never come to rest (taken back after 6 s);
+  swimming not used yet. WAITS FOR YASIN'S GO, after all shops are in: people INSIDE the stores (keeper at the
+  counter, customers), with the counter clips.
   STILL TO DO FOR "DONE": the game's node (join to the traffic, draw far figures and the 18 near bodies with the
   acts' animations, the balancing body for a walker who is pushed or hit, capsules round the player, umbrellas,
   towels, murmur), a player on foot, the talking, a bus line, the real get-up. NO PICTURE OF THE CROWD EXISTS YET.

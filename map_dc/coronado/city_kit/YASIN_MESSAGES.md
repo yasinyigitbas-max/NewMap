@@ -295,3 +295,23 @@ the other agent suggested these
 - [2026-11-20] (Universal Animation Library[Source].zip on the Desktop) i got the pro quaternius pack, replace them with the free pack we have, use enter and exit animations to movements where applies before and after the main animation, like sit enter, sit, sit exit, use them for crowd fights too
 
 - [2026-11-20] wait i got the second pack too (Universal Animation Library 2[Source].zip on the Desktop)
+
+- [2026-11-20] did you finish all the npcs actions and logic? will there be npcs in the stores?
+
+- [2026-11-20] (people inside the stores) after all the shops are in, yes, wait for my go on it.
+
+- [2026-11-20] use all the relevant animations including swimming standing up, keep your own ragdolls, pushes, balancing, impacts, falls as your own animations.
+
+- [2026-11-20] use everything we can, walking while speaking, speaking on the phone, using phone and standing, everything, use animations on beggars sitting, and asking for things once they are in, use cashier counter enter, exit, giving money, everything that applies to our npcs
+
+- [2026-11-20] also will our shoves cancel their animation and make them angry? and how will they go back to their routine? did you plan for that?
+
+- [2026-11-20] voices will come later, dont hold back on using animations based on voices
+
+- [2026-11-20] also shoves and falls are procedural right? not recorded animations?
+
+- [2026-11-20] and how are the fights gonna resolve? are you adding taking hits and alternating between attacks and dodging? i mean the animations
+
+- [2026-11-20] and the logic? one side should win in the end randomly and die, while other thriumps ... actually if there is a wounded walk away animation use that, they shouldnt kill each other
+
+- [2026-11-20] figters take blows too far away, also how often fights happen? they should be really rare

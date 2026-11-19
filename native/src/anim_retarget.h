@@ -11,6 +11,10 @@ namespace godot {
 class AnimRetarget : public RefCounted {
 	GDCLASS(AnimRetarget, RefCounted)
 
+	PackedStringArray skip;
+	int n_skipped = 0, n_layered = 0;
+	Array layers;
+
 	int n_clips = 0;
 
 protected:
@@ -21,6 +25,14 @@ public:
 	// (characters/rocketbox/) and saves clips_ual_male.res / clips_ual_female.res there. Returns the report's lines.
 	PackedStringArray retarget(Node *p_parent, const PackedStringArray &p_sources, const String &p_dir);
 	int count() const { return n_clips; }
+	// clips whose name holds one of these are not fitted (swords, bows, spells ...: nothing a street needs)
+	void set_skip(const PackedStringArray &p_skip) { skip = p_skip; }
+	PackedStringArray get_skip() const { return skip; }
+	int skipped() const { return n_skipped; }
+	// mixed clips, each [name, base, top]: the base clip with the arms, neck and head of the top one laid over it
+	// (walking while talking, sitting with a phone ...); made after the fitting, saved with the others
+	void set_layers(const Array &p_layers) { layers = p_layers; }
+	int layered() const { return n_layered; }
 };
 
 } // namespace godot

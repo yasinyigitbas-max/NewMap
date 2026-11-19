@@ -1136,3 +1136,52 @@ buses and the new rule below in it.
 NOT YET / NOT CHECKED: nobody has seen a bus; people getting on and off a real bus in the engine was not run (the
 brain's side is the console test's check J; the join is written, not tried); the 12 m bus was not tried on this map's
 corners; 49 stops with a lane are on no line (a line takes 14), 70 stops have no lane at all.
+
+## 32. The pro Quaternius packs: every act with its way in and out, fights, the shove's aftermath (20 Nov)
+Yasin bought the Source (pro) packs of both libraries (CC0): `characters/quaternius_ual/UAL1.glb` (120 clips) and
+`UAL2.glb` (134); the free Standard packs are gone. All C++. Tests on the final build, all RESULT PASS:
+`tests/people/test_acts.gd` (new), `test_crowd_game.gd`, `test_talk.gd`, `test_city_ped.gd`, the console crowd test.
+One picture: `review/people_19nov/acts_pro.jpg` (a man sits, a woman sits on the ground, two fight, people look on).
+- THE TOOL (`make_anims.gd`, class AnimRetarget): 159 clips fitted to each figure; 93 left out by a list in the
+  launcher (swords, bows, spells, zombies, shields, wall runs ...: take a word out of `SKIP` and run it again to have
+  them). NEW: MIXED CLIPS (`LAYERS`): the legs and trunk of one clip with the arms, neck and head of another, over a
+  whole number of rounds of the base. The libraries have no walking while talking and no sitting with a phone: these
+  are made so: Walk_Talk, Walk_Phone, Walk_Text, Sitting_Phone, Sitting_Text, Sitting_Drink, GroundSit_Ask,
+  GroundSit_Thanks, Walk_Hurt. 6.7 MB a figure. The far figures got a 13th pose (sitting on the ground).
+- INTO AND OUT OF AN ACT. The brain has a new act A_RISE: leaving a seat, the ground, a crouch or a fight takes the
+  exit clip's length (`cfg.rise_s`, set by CityCrowd from the clips), and the walker stays WHERE HE IS for it, then
+  walks. The body plays: Sitting_Enter > a sitting loop (six kinds, two with a phone) > Sitting_Exit;
+  GroundSit_Enter > GroundSit_Idle > GroundSit_Exit on the sand and the grass (new act A_GSIT); IdleToLay > lying >
+  LayToIdle; Crouch_Enter > Crouch_Idle > Crouch_Exit; Surprise, then looking. In the test: 1.03 s out of a seat,
+  0.83 s out of a crouch, 0.00 m moved in either.
+- WHAT ELSE IS USED: a phone at the ear or in the hand, standing or walking on (half of the calls are now made
+  walking); in a group the one whose turn it is talks as they walk; a look round at shop windows and kerbs; a jogger
+  at a red light gets his breath; a beggar sits on the ground, holds his hand out to whoever passes, nods to the one
+  who gives; the giver hands it over (Counter_Give); at a cafe a word, a sip, a word; a quarrel points and shakes
+  its head; filming holds the phone out; the jump out of a car's way is Dodge left or right.
+- FIGHTS (Yasin: taking hits, attacks and dodges in turn; one wins by chance; nobody dies; the loser walks away
+  hurt, the winner triumphs). Both square up; a blow every 0.95 s, the two taking turns: jab, cross, kick, hook,
+  uppercut, knee; the other takes it on the head, chest or belly a moment later, or dodges (one in four). Who wins
+  is chance fixed by who the two are (the brain's `fwin`); beats are counted from the end so the last blow is the
+  winner's, and THAT one is a real shove on the loser's balancing body (never a clip).   The two bodies step in to arm's reach (0.8 m) for it (Yasin: "fighters take blows too far away"). Fights are
+  REALLY RARE (his word): of the quarrels a quarter are long ones and of those one in five comes to blows = one
+  meeting in eighty (6 fights in 30 minutes among 846 people in the whole city; it was 24). The winner raises his arms
+  (Celebration, new act A_CHEER); the loser gets up and walks away at half his pace for 45 s, his hands at his face
+  (Walk_Hurt). Passers-by stop and look, one films it. `CityCrowd.fight(a, b)` starts one (the game's hook).
+- THE PLAYER SHOVES SOMEBODY (Yasin: will it cancel their animation, make them angry, how do they go back to their
+  routine?). It does cancel it: he staggers or falls on his own body and gets up (procedural, no clip but the
+  get-up). NEW: back on his feet he turns to the player and tells him off (one in four only stares); shoved again
+  within two minutes half of them square up and hit back (the player is knocked: `CityPlayer.knock`), the rest tell
+  him off longer; passers-by stop and look; he will not talk to the player for a game day (signal crowd_event 16 =
+  shoved, 17 = he hits the player). Then he GOES ON TO WHERE HE WAS GOING: the brain keeps his goal while his body
+  is knocked about (`kept_goal`).
+- FOUND BY THE PICTURE AND MENDED: (1) with every animated body taken, somebody who appears beside the camera stayed
+  a far figure while bodies were held 30 m away: a body now goes to whoever is clearly nearer; (2) a person the
+  figure cannot be (the other kind of body) took a free body's choice every frame and was refused every frame.
+  `CityCrowd.near_bodies()` says which clip every body plays: the tests check clips by name now, not by eye.
+- OPEN: (1) after a blow from the FRONT a body sometimes keeps stepping backwards at a steady 1.1 m/s and never
+  comes to rest (traced in test_acts `-- --trace`); CityPed now takes a body that is on its feet but not quiet after
+  6 s back to animation. The balancing itself (ped_body) is not mended. (2) Somebody shoved loses his group. (3) No
+  words for anger: gestures only (Yasin: voices come later). (4) Swimming: the clips are fitted, nobody swims yet.
+  (5) Counter clips (cashiers) wait for the people in the shops, which wait for Yasin's go. (6) Seen in still
+  pictures only, never in motion.

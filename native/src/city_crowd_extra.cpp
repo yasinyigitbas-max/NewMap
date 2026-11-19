@@ -163,7 +163,7 @@ void CityCrowd::extras_update(double p_alpha) {
 		const float a = std::min(std::max(((float)(crowd->tick - crowd->tu[i]) + alpha) / (float)std::max((int)crowd->span[i], 1), 0.0f), 1.0f);
 		const float x = crowd->px[i] + (crowd->x[i] - crowd->px[i]) * a, y = crowd->py[i] + (crowd->y[i] - crowd->py[i]) * a, z = crowd->pz[i] + (crowd->z[i] - crowd->pz[i]) * a;
 		const int act = crowd->act[i];
-		const bool down = crowd->mode[i] == pc::M_STAY && (act == pc::A_SIT || act == pc::A_LIE_BACK || act == pc::A_LIE_FRONT || act == pc::A_DRINK || act == pc::A_BEG);
+		const bool down = crowd->mode[i] == pc::M_STAY && (act == pc::A_SIT || act == pc::A_GSIT || act == pc::A_LIE_BACK || act == pc::A_LIE_FRONT || act == pc::A_DRINK || act == pc::A_BEG);
 		// two people in five have an umbrella with them when it rains (always the same ones); children walk under their parents'
 		if (wet && !down && nu < 512 && (crowd->look[i] >> 24) % 5u < 2u && !(crowd->pkind[i] == pc::PK_FAMILY && crowd->slot[i] >= 2) && crowd->flee_t[i] <= 0.0f)
 			put(wu + (size_t)(nu++) * XROW, x, y, z, crowd->yaw[i], 1.0f, UMB[(crowd->look[i] >> 14) % 8u]);

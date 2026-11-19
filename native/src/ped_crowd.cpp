@@ -318,7 +318,7 @@ int Crowd::new_row(int k, float su, int d, float sl, uint32_t p_look) {
 	int h = 0; float sx, sy, sz, tx_, tz_;
 	at(S, su, sl, h, sx, sy, sz, tx_, tz_);
 	alive[i] = 1; id[i] = next_id++; seg[i] = k; dir[i] = (int8_t)d; u[i] = su; ls[i] = sl; hint[i] = h; nxt[i] = -1;
-	state[i] = ST_WALK; why[i] = WHY_NONE; pass[i] = 0; looked[i] = 0; thin[i] = 0; thin_t[i] = 0.0f; mode[i] = M_LINE; act[i] = A_NONE; tier[i] = TIER_FULL; flags[i] = 0;
+	state[i] = ST_WALK; why[i] = WHY_NONE; pass[i] = 0; looked[i] = 0; thin[i] = 0; thin_t[i] = 0.0f; mode[i] = M_LINE; act[i] = A_NONE; rise_t[i] = 0.0f; rise_from[i] = 0; mate[i] = 0; kept_goal[i] = -1; kept_stay[i] = 0.0f; kept_enter[i] = 0; hurt_t[i] = 0.0f; hurt_v0[i] = 0.0f; fwin[i] = 0; tier[i] = TIER_FULL; flags[i] = 0;
 	x[i] = px[i] = sx; y[i] = py[i] = sy; z[i] = pz[i] = sz; hx[i] = tx_ * d; hz[i] = tz_ * d; yaw[i] = pyaw[i] = std::atan2(hx[i], hz[i]);
 	tu[i] = tick; span[i] = 1;
 	rs[i] = rng ^ ((uint64_t)id[i] * 0x9E3779B97F4A7C15ull); if (rs[i] == 0) rs[i] = 1;
@@ -496,6 +496,11 @@ void Crowd::update(int i, float h, double clock) {
 				at(S, u[i], 0.0f, hh, ax, ay, az, tx_, tz_);
 				ls[i] = clampf((x[i] - ax) * tz_ - (z[i] - az) * tx_, -edge_off(S), edge_off(S));
 				y[i] = ay; mode[i] = (leader[i] >= 0 && leader[i] != i) ? M_FOLLOW : M_LINE; state[i] = ST_WALK; act[i] = A_NONE; blocked_t[i] = 0.0f;
+				if (mode[i] == M_LINE && kept_goal[i] >= 0) {   // (it was knocked about on its way somewhere: it goes on there)
+					const int g = kept_goal[i];
+					kept_goal[i] = -1;
+					set_goal(id[i], g, kept_stay[i], kept_enter[i] != 0);
+				}
 			}
 			break;
 		case M_STAY: stay_step(i, h); break;
@@ -509,6 +514,31 @@ void Crowd::update(int i, float h, double clock) {
 	if (thin[i]) flags[i] |= F_THIN; else flags[i] &= (uint8_t)~F_THIN;
 }
 
+// Blows begin: who wins is chance, fixed by who the two are (both work it out alike). The loser will walk away hurt:
+// slowly, for cfg.hurt_s seconds. Nobody is killed.
+void Crowd::fight_begins(int i) {
+	const int o = mate[i];
+	if (o == 0) { fwin[i] = 1; return; }
+	const uint32_t hh = hash32((uint32_t)(std::min(id[i], o) * 7919 + std::max(id[i], o)) * 2654435761u + 77u);
+	fwin[i] = ((id[i] < o) == ((hh & 1u) != 0u)) ? 1 : 0;
+	if (!fwin[i] && hurt_t[i] <= 0.0f && cfg.hurt_s > 0.0f) { hurt_v0[i] = v0[i]; v0[i] *= 0.5f; hurt_t[i] = cfg.hurt_s; }
+}
+
+// Leaving an act that takes a moment to leave: up from a seat or the ground, out of a crouch, out of a fight
+// (cfg.rise_s, set by the game to its animations' lengths). True while that moment lasts; the walker stays where it
+// is and shows A_RISE (rise_from says out of what).
+bool Crowd::rising(int i, float h) {
+	const int a = act[i];
+	if (a == A_RISE) {
+		rise_t[i] -= h;
+		if (rise_t[i] > 0.0f) return true;
+		act[i] = A_NONE;
+		return false;
+	}
+	if (a > A_NONE && a < A_COUNT && cfg.rise_s[a] > 0.0f) { rise_from[i] = (uint8_t)a; rise_t[i] = cfg.rise_s[a]; act[i] = A_RISE; return true; }
+	return false;
+}
+
 void Crowd::walk_line(int i, float h, double clock) {
 	const Seg &S = segs[seg[i]];
 	if (act_t[i] > 0.0f) {
@@ -516,14 +546,19 @@ void Crowd::walk_line(int i, float h, double clock) {
 		if (act_t[i] <= 0.0f) {
 			if (state[i] != ST_PAUSE) act[i] = A_NONE;                                  // a wave in passing is over
 			else if (act[i] == A_HUG) act[i] = A_CHAT;                                  // after the hug they talk
-			else if (act[i] == A_ARGUE && pause_t[i] > 1.0f) { act[i] = A_FIGHT; st.fights++; event(E_FIGHT, id[i], 0, 0.0f); }   // the quarrel comes to blows
+			else if (act[i] == A_ARGUE && pause_t[i] > 1.0f) { act[i] = A_FIGHT; st.fights++; event(E_FIGHT, id[i], 0, 0.0f); fight_begins(i); }   // the quarrel comes to blows
 		}
 	}
 	if (flee_t[i] > 0.0f) { flee_t[i] -= h; if (flee_t[i] <= 0.0f) flags[i] &= (uint8_t)~F_FLEE; }
+	if (hurt_t[i] > 0.0f && state[i] != ST_PAUSE) { hurt_t[i] -= h; if (hurt_t[i] <= 0.0f && hurt_v0[i] > 0.0f) v0[i] = hurt_v0[i]; }   // (hurt: he walks slowly for a while, then as before)
 	if (state[i] == ST_PAUSE) {   // stands a while where it is: a phone, a shop window, somebody it knows, a look at something
 		pause_t[i] -= h; v[i] = 0.0f; why[i] = WHY_PAUSE; still_t[i] += h;
 		if (flags[i] & F_FACE) yaw[i] += clampf(wrap_pi(face_yaw[i] - yaw[i]), -5.0f * h, 5.0f * h);
-		if (pause_t[i] <= 0.0f || flee_t[i] > 0.0f) { state[i] = ST_WALK; act[i] = A_NONE; act_t[i] = 0.0f; flags[i] &= (uint8_t)~F_FACE; still_t[i] = 0.0f; }
+		if (pause_t[i] <= 0.0f || flee_t[i] > 0.0f) {
+			if (act[i] == A_FIGHT && fwin[i] && cfg.cheer_s > 0.0f && flee_t[i] <= 0.0f) { act[i] = A_CHEER; pause_t[i] = cfg.cheer_s; return; }   // he has won
+			if (rising(i, h)) return;   // (out of a crouch, out of a fight: that takes a moment)
+			state[i] = ST_WALK; act[i] = A_NONE; act_t[i] = 0.0f; mate[i] = 0; flags[i] &= (uint8_t)~F_FACE; still_t[i] = 0.0f;
+		}
 		return;
 	}
 	const int d = dir[i];

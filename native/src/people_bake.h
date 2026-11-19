@@ -17,7 +17,7 @@ protected:
 	static void _bind_methods();
 
 public:
-	enum { POSES = 12 };   // 0-7 the walk, 8 standing, 9 sitting, 10 lying on the back, 11 lying on the front
+	enum { POSES = 13 };   // 0-7 the walk, 8 standing, 9 sitting on a seat, 10 lying on the back, 11 lying on the front, 12 sitting on the ground
 	// Poses every body of p_dir (characters/rocketbox/) under p_parent (a node in the tree) and writes the table
 	PackedStringArray bake(Node *p_parent, const String &p_dir, const String &p_out);
 	int count() const { return n_bodies; }

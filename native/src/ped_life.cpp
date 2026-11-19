@@ -51,7 +51,8 @@ void Crowd::life_roll(int i, float h) {
 	const float rem = dir[i] > 0 ? S.len - u[i] : u[i];
 	if (rem < 6.0f || S.len - rem < 6.0f || tier[i] == TIER_FAR) return;
 	const float r = rnd_of(i);
-	if (r < 0.30f) { state[i] = ST_PAUSE; pause_t[i] = 6.0f + 12.0f * rnd_of(i); act[i] = A_PHONE; v[i] = 0.0f; st.pauses++; return; }
+	if (r < 0.15f) { state[i] = ST_PAUSE; pause_t[i] = 6.0f + 12.0f * rnd_of(i); act[i] = A_PHONE; v[i] = 0.0f; st.pauses++; return; }
+	if (r < 0.30f) { act[i] = A_PHONE; act_t[i] = 12.0f + 24.0f * rnd_of(i); return; }   // ... or as he walks on (act_t ends it)
 	if (r < 0.55f) {
 		for (int p : seg_places[seg[i]]) {
 			if (places[p].kind != PL_SHOP || std::fabs(places[p].u - u[i]) > 10.0f) continue;
@@ -62,8 +63,9 @@ void Crowd::life_roll(int i, float h) {
 	}
 }
 
-// Two lone walkers who know each other meet as they pass: a wave, a chat, a hug, or a quarrel (a quarter of the
-// quarrels come to blows). Which pairs know each other, and what they do, is fixed by who they are.
+// Two lone walkers who know each other meet as they pass: a wave, a chat, a hug, or a quarrel. A quarter of the
+// quarrels are long ones, and of the long ones one in cfg.fight_one_in comes to blows: one meeting in eighty (Yasin,
+// 20 Nov: fights "should be really rare"). How long anybody stands is the same either way, so nothing else changes. Which pairs know each other, and what they do, is fixed by who they are.
 void Crowd::meet(int i, int j) {
 	const uint32_t hsh = hash32((look[i] ^ look[j]) + 0x51ED270Bu);
 	const int kind = (int)(hsh % 4u);
@@ -75,11 +77,12 @@ void Crowd::meet(int i, int j) {
 	float t = 8.0f + (float)((hsh >> 8) % 12u);
 	uint8_t a = A_CHAT; float at_ = 0.0f;
 	if (kind == 2) { a = A_HUG; at_ = 3.0f; t = 8.0f; }
-	if (kind == 3) { a = A_ARGUE; t = 6.0f + (float)((hsh >> 8) % 6u); at_ = t + 10.0f; if ((hsh >> 16) % 4u == 0u) { at_ = t; t += 4.0f; } }   // (act_t runs out inside the pause: blows)
+	if (kind == 3) { a = A_ARGUE; t = 6.0f + (float)((hsh >> 8) % 6u); at_ = t + 10.0f; if ((hsh >> 16) % 4u == 0u) { t += cfg.fight_s; if ((hsh >> 20) % (uint32_t)std::max(cfg.fight_one_in, 1) == 0u) at_ = t - cfg.fight_s; } }   // (act_t runs out inside the pause: blows)
 	for (int k = 0; k < 2; k++) {
 		const int w = k ? j : i;
 		state[w] = ST_PAUSE; pause_t[w] = t; act[w] = a; act_t[w] = at_; v[w] = 0.0f; pass[w] = 0;
 		flags[w] |= F_FACE; face_yaw[w] = k ? fa + 3.14159265f : fa;
+		mate[w] = id[k ? i : j];
 	}
 }
 
@@ -299,6 +302,7 @@ bool Crowd::to_body(int p_id, bool p_on, float p_x, float p_z) {
 	if (p_on) {
 		if (mode[i] != M_BODY) {
 			if (party[i]) leave_party(i);
+			kept_goal[i] = (flags[i] & F_RESIDENT) ? -1 : goal[i]; kept_stay[i] = stay_t[i]; kept_enter[i] = enter_goal[i];
 			free_place(i); goal[i] = -1; route_n[i] = 0; pass[i] = 0; act[i] = A_NONE; state[i] = ST_WALK; boarding[i] = 0;
 			flags[i] &= (uint8_t)~(F_FACE | F_FLEE); flee_t[i] = 0.0f;
 			mode[i] = M_BODY; v[i] = 0.0f;
@@ -314,6 +318,23 @@ bool Crowd::to_body(int p_id, bool p_on, float p_x, float p_z) {
 	move_row(i, p_x, p_z);
 	bx[i] = ax; bz[i] = az; tx[i] = ax; tz[i] = az; ty[i] = ay;
 	mode[i] = M_BACK; v[i] = 0.0f; blocked_t[i] = 0.0f; still_t[i] = 0.0f; thin[i] = 0;
+	return true;
+}
+
+// (the game) Two people come to blows where they stand: they turn to each other and fight for cfg.fight_s seconds.
+bool Crowd::fight(int p_a, int p_b) {
+	const int i = find(p_a), j = find(p_b);
+	if (i < 0 || j < 0 || i == j || mode[i] != M_LINE || mode[j] != M_LINE) return false;
+	const float fa = std::atan2(x[j] - x[i], z[j] - z[i]);
+	for (int k = 0; k < 2; k++) {
+		const int w = k ? j : i;
+		state[w] = ST_PAUSE; pause_t[w] = cfg.fight_s; act[w] = A_FIGHT; act_t[w] = 0.0f; v[w] = 0.0f; pass[w] = 0;
+		flags[w] |= F_FACE; face_yaw[w] = k ? fa + 3.14159265f : fa;
+		mate[w] = id[k ? i : j];
+	}
+	st.fights++;
+	event(E_FIGHT, id[i], id[j], 0.0f);
+	fight_begins(i); fight_begins(j);
 	return true;
 }
 

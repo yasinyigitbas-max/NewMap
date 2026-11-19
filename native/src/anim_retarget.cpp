@@ -169,6 +169,7 @@ PackedStringArray AnimRetarget::retarget(Node *p_parent, const PackedStringArray
 			for (int ci = 0; ci < list.size(); ci++) {
 				const String name = list[ci];
 				if (name == "A_TPose" || name == "RESET" || lib->has_animation(name)) continue;
+				{ bool out_ = false; for (int q = 0; q < skip.size(); q++) if (name.contains(skip[q])) out_ = true; if (out_) { n_skipped++; continue; } }
 				Ref<Animation> a = S.ap->get_animation(name);
 				if (a.is_null()) continue;
 				const float len = (float)a->get_length();
@@ -207,6 +208,44 @@ PackedStringArray AnimRetarget::retarget(Node *p_parent, const PackedStringArray
 				made++;
 			}
 		}
+		// the mixed clips: every track of the base, but the arms', the neck's and the head's from the top clip, stretched
+		// over a whole number of rounds of the base (three rounds of the walk under one phone call)
+		for (int li = 0; li < layers.size(); li++) {
+			const Array L = layers[li];
+			if (L.size() < 3) continue;
+			const StringName nm = String(L[0]), bn = String(L[1]), tn = String(L[2]);
+			if (lib->has_animation(nm) || !lib->has_animation(bn) || !lib->has_animation(tn)) continue;
+			const Ref<Animation> base = lib->get_animation(bn), top = lib->get_animation(tn);
+			const float bl = std::max((float)base->get_length(), 0.05f), tl = std::max((float)top->get_length(), 0.05f);
+			const int rounds = std::max(1, (int)std::lround(tl / bl));
+			const float len = bl * (float)rounds;
+			const int frames = std::max((int)std::ceil(len * 30.0f), 1);
+			Ref<Animation> o; o.instantiate();
+			o->set_length(len); o->set_loop_mode(Animation::LOOP_LINEAR);
+			static const char *const UPPER[] = { "Neck", "Head", "Clavicle", "UpperArm", "Forearm", "Hand", "Finger" };
+			for (int ti = 0; ti < base->get_track_count(); ti++) {
+				const NodePath path = base->track_get_path(ti);
+				const Animation::TrackType ty = base->track_get_type(ti);
+				int from_top = -1;
+				if (ty == Animation::TYPE_ROTATION_3D) {
+					const String ps = String(path);
+					bool upper = false;
+					for (const char *u : UPPER) if (ps.contains(u)) upper = true;
+					if (upper) from_top = top->find_track(path, ty);
+				}
+				const int nt_ = o->add_track(ty);
+				o->track_set_path(nt_, path);
+				for (int f = 0; f <= frames; f++) {
+					const float t = std::min(len, (float)f / 30.0f);
+					const float tb = f == frames ? 0.0f : std::fmod(t, bl);
+					if (ty == Animation::TYPE_ROTATION_3D) o->rotation_track_insert_key(nt_, t, from_top >= 0 ? top->rotation_track_interpolate(from_top, std::min(t * tl / len, tl)) : base->rotation_track_interpolate(ti, tb));
+					else if (ty == Animation::TYPE_POSITION_3D) o->position_track_insert_key(nt_, t, base->position_track_interpolate(ti, tb));
+				}
+			}
+			lib->add_animation(nm, o);
+			if (g == 0) names += String(nm) + String(" ");
+			n_layered++;
+		}
 		const String out = p_dir + String("clips_ual_") + gn + String(".res");
 		const Error err = ResourceSaver::get_singleton()->save(lib, out, ResourceSaver::FLAG_COMPRESS);
 		rep.push_back(vformat("ANIMS %s figure: %d clips fitted and saved to %s (%s)", gn, made, out, err == OK ? "ok" : "NOT SAVED"));
@@ -221,6 +260,11 @@ PackedStringArray AnimRetarget::retarget(Node *p_parent, const PackedStringArray
 void AnimRetarget::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("retarget", "parent", "sources", "rocketbox_dir"), &AnimRetarget::retarget);
 	ClassDB::bind_method(D_METHOD("count"), &AnimRetarget::count);
+	ClassDB::bind_method(D_METHOD("set_skip", "names"), &AnimRetarget::set_skip);
+	ClassDB::bind_method(D_METHOD("get_skip"), &AnimRetarget::get_skip);
+	ClassDB::bind_method(D_METHOD("skipped"), &AnimRetarget::skipped);
+	ClassDB::bind_method(D_METHOD("set_layers", "layers"), &AnimRetarget::set_layers);
+	ClassDB::bind_method(D_METHOD("layered"), &AnimRetarget::layered);
 }
 
 } // namespace godot

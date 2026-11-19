@@ -151,22 +151,29 @@ void CityPed::become(const String &p_body, const Ref<Mesh> &p_mesh, const Ref<Sh
 	if (p_look.is_valid()) mi->set_material_override(p_look);
 	if (mode != MODE_ANIM) { mode = MODE_ANIM; t_mode = 0.0; }
 	n_shove = 0; n_boxes = 0;
-	cur_clip = StringName(); cur_hold = -1.0;
+	cur_clip = StringName(); cur_hold = -1.0; cur_token = 0;
 	if (anim) anim->set_speed_scale(1.0);
 }
 
 // While it is animated: where it stands, which clip, how fast the clip runs (a walk follows the walker's pace), or
 // the moment of the clip it is held at (lying).
-void CityPed::drive(const Transform3D &p_at, const StringName &p_clip, double p_speed, double p_hold) {
+void CityPed::drive(const Transform3D &p_at, const StringName &p_clip, double p_speed, double p_hold, int p_token) {
 	if (!made || mode != MODE_ANIM) return;
 	set_global_transform(p_at);
 	if (!anim || !anim->has_animation(p_clip)) return;
-	if (p_clip != cur_clip || p_hold != cur_hold) {
-		cur_clip = p_clip; cur_hold = p_hold;
+	if (p_clip != cur_clip || p_hold != cur_hold || p_token != cur_token) {
+		const bool again = p_clip == cur_clip;
+		cur_clip = p_clip; cur_hold = p_hold; cur_token = p_token;
 		if (p_hold >= 0.0) { anim->play(p_clip, 0.0); anim->seek(p_hold, true); anim->pause(); }
-		else anim->play(p_clip, 0.3);
-	} else if (p_hold < 0.0 && !anim->is_playing()) anim->play(p_clip, 0.1);   // (a clip that ends, a punch, starts again while the act lasts)
+		else { anim->play(p_clip, p_hold < -1.5 ? 0.18 : 0.3); if (again || p_hold < -1.5) anim->seek(0.0, true); }
+	} else if (p_hold < 0.0 && p_hold > -1.5 && !anim->is_playing()) anim->play(p_clip, 0.1);   // (a clip that ends starts again while the act lasts)
 	if (p_hold < 0.0) anim->set_speed_scale((float)p_speed);
+}
+
+double CityPed::clip_len(const StringName &p_clip) const {
+	if (!anim || !anim->has_animation(p_clip)) return 0.0;
+	const Ref<Animation> a = anim->get_animation(p_clip);
+	return a.is_valid() ? a->get_length() : 0.0;
 }
 
 Vector3 CityPed::body_at() const {
@@ -263,7 +270,7 @@ void CityPed::to_animation(const StringName &p_clip, double p_blend, bool p_from
 		anim->set_speed_scale((p_from_ground && !has_getup) ? GETUP_SLOW : 1.0);
 		anim->play_with_capture(play, blend);
 	}
-	cur_clip = StringName(); cur_hold = -1.0;
+	cur_clip = StringName(); cur_hold = -1.0; cur_token = 0;
 	mode = p_from_ground ? MODE_GETUP : MODE_ANIM;
 	t_mode = 0.0;
 }
@@ -329,7 +336,9 @@ void CityPed::_physics_process(double p_delta) {
 	body.step((float)p_delta);
 	if (was == pb::ST_BALANCE && body.state != pb::ST_BALANCE) falls++;
 	write_bones();
-	if (body.state == pb::ST_BALANCE && body.settled && n_shove == 0 && t_mode > 0.8) to_animation(clip, 0.35, false);
+	// (on its feet but never quiet for six seconds: it is taken back anyway. Seen 20 Nov: after a blow in a fight a body
+	// kept stepping backwards at a steady 1.1 m/s for as long as it was watched.)
+	if (body.state == pb::ST_BALANCE && n_shove == 0 && ((body.settled && t_mode > 0.8) || t_mode > 6.0)) to_animation(clip, body.settled ? 0.35 : 0.6, false);
 	else if (body.state == pb::ST_REST && body.t_state > 1.2f) to_animation("get_up", 0.5, true);
 }
 

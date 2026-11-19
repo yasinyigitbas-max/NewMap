@@ -59,7 +59,11 @@ enum { M_LINE = 0, M_OFF = 1, M_STAY = 2, M_BACK = 3, M_FOLLOW = 4, M_DODGE = 5,
 enum { WHY_NONE = 0, WHY_SIGNAL = 1, WHY_GAP = 2, WHY_FOLLOW = 3, WHY_BLOCKED = 4, WHY_PAUSE = 5, WHY_ONCOMING = 6, WHY_LOOK = 7, WHY_PLAYER = 8, WHY_CAR = 9 };
 // what its body shows (the drawing picks the animation by this)
 enum { A_NONE = 0, A_SIT = 1, A_LIE_BACK = 2, A_LIE_FRONT = 3, A_PHONE = 4, A_WINDOW = 5, A_FILM = 6, A_DUCK = 7, A_BEG = 8, A_WAVE = 9, A_CHAT = 10, A_ARGUE = 11,
-	A_HUG = 12, A_FIGHT = 13, A_GIVE = 14, A_DRINK = 15, A_DOOR = 16, A_TALK = 17, A_STARE = 18, A_CALL = 19, A_WAIT = 20, A_SHELTER = 21, A_COUNT = 22 };
+	A_HUG = 12, A_FIGHT = 13, A_GIVE = 14, A_DRINK = 15, A_DOOR = 16, A_TALK = 17, A_STARE = 18, A_CALL = 19, A_WAIT = 20, A_SHELTER = 21,
+	A_RISE = 22,     // leaving an act that takes a moment to leave (up from a seat, out of a crouch): rise_from, rise_t
+	A_GSIT = 23,     // sitting on the ground (the sand, the grass)
+	A_CHEER = 24,    // he has won a fight: his arms go up
+	A_COUNT = 25 };
 enum { PK_NONE = 0, PK_COUPLE = 1, PK_FRIENDS = 2, PK_FAMILY = 3, PK_SAILORS = 4, PK_JOGGER = 5, PK_COUNT = 6 };
 enum { TIER_FULL = 0, TIER_MID = 1, TIER_FAR = 2 };
 enum { E_SPAWN = 1, E_DESPAWN = 2, E_ARRIVE = 3, E_NEED_GOAL = 4, E_WAIT_CROSS = 5, E_LOOK_CROSS = 6, E_BUMP = 7,
@@ -86,6 +90,11 @@ struct Seg {
 
 struct Config {
 	int max_peds = 200;
+	float rise_s[A_COUNT] = {};   // per act: seconds it takes to leave it (0 = at once); the game sets them by its animations
+	float fight_s = 4.0f;         // how long blows last
+	int fight_one_in = 5;         // of the long quarrels (a quarter of all) one in so many comes to blows
+	float cheer_s = 0.0f;         // how long the winner of a fight celebrates (0 = he just goes)
+	float hurt_s = 0.0f;          // how long the loser of a fight walks slowly afterwards, hurt (the game sets 45)
 	float density = 1.0f;
 	bool whole = false;         // tests: people anywhere on the map, no ring
 	float ring_in = 40.0f, ring_out = 130.0f, despawn_r = 156.0f, view_r = 80.0f;
@@ -155,6 +164,13 @@ public:
 	int16_t route[MAX_PEDS][ROUTE_N];
 	int8_t route_n[MAX_PEDS], route_i[MAX_PEDS];
 	float tx[MAX_PEDS], tz[MAX_PEDS], ty[MAX_PEDS], tyaw[MAX_PEDS];   // off the line: where to, and how to face there
+	float rise_t[MAX_PEDS], kept_stay[MAX_PEDS];
+	float hurt_t[MAX_PEDS], hurt_v0[MAX_PEDS];  // hurt (he lost a fight): seconds of slow walking left, and his own pace to go back to
+	uint8_t fwin[MAX_PEDS];                     // in a fight: 1 = he will win it
+	int32_t kept_goal[MAX_PEDS];                // where it was going when its body was knocked about (-1 = nowhere): it goes on there afterwards
+	uint8_t kept_enter[MAX_PEDS];
+	uint8_t rise_from[MAX_PEDS];
+	int32_t mate[MAX_PEDS];                     // whom it met (the other's id) while the meeting lasts, else 0
 	float act_t[MAX_PEDS], stay_t[MAX_PEDS], roll_t[MAX_PEDS], meet_cd[MAX_PEDS], flee_t[MAX_PEDS], say_cd[MAX_PEDS], bump_cd[MAX_PEDS], lookout_cd[MAX_PEDS];
 	float face_yaw[MAX_PEDS];
 	float bx[MAX_PEDS], bz[MAX_PEDS];           // off the line: the place on the line it left and goes back to
@@ -219,6 +235,7 @@ public:
 	bool to_body(int p_id, bool p_on, float p_x, float p_z);       // a physical body has it (on), or gives it back at that place (off)
 	void scare(float p_x, float p_z, float p_radius, float p_seconds);
 	void bus_at(int p_place, bool p_on, float p_door_x, float p_door_z, int p_get_off);
+	bool fight(int p_a, int p_b);                                   // (the game) two people come to blows where they stand
 	void conv_end() { conv_line = 99; }                            // the game: this conversation has no more lines
 	void bench_off(int p_place, bool p_off);                       // a knocked-over bench: whoever sits there gets up, nobody sits down
 
@@ -282,6 +299,8 @@ private:
 	void leave_line(int i);
 	void arrive(int i);
 	void stay_step(int i, float h);
+	bool rising(int i, float h);
+	void fight_begins(int i);
 	void come_out(int place, bool from_bus, float dx, float dz);
 	void free_place(int i);
 	void doors_step(float h);

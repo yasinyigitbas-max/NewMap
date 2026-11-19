@@ -85,6 +85,14 @@ The full record is `docs/TRAFFIC_PEOPLE_PORT.md` (sections 13-20 are results). T
   between a kerb stop and a turn stands at the end of its lane for good; the whole city WITH parked cars had never
   been run and hid a parked car pulling out into another row's parked car.
 
+- Acts and clips (20 Nov, doc section 32): `make_anims.gd` has three lists: SRC (the pro packs), SKIP (families not
+  fitted), LAYERS (mixed clips: base + another clip's arms and head). What a walker does picks the clip in
+  `CityCrowd::clip_of`; the way INTO an act is played once by the body, the way OUT is the brain's A_RISE (the walker
+  waits for it). `tests/people/test_acts.gd` reads `near_bodies()` and checks clips BY NAME: use it, a still picture
+  hid two faults (bodies never handed to nearer people; a body's choice blocked by somebody it cannot be). Somebody
+  set down this instant has no animated body for a frame or two: tests wait a second before making him act.
+  Pushes, falls, staggering stay the physical body: never play a clip that falls (Hit_Knockback lies down: not used).
+
 ## Yasin's rules for this job (his words are in the doc)
 - Everything in C++: no script in any frame or tick, no script fallback. Tool-time scripts are fine.
 - Parked cars are LOW DETAIL only. Cars must never touch a pavement, a kerb or grass. Cars move naturally.

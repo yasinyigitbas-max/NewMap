@@ -39,7 +39,7 @@ class CityCrowd : public Node3D {
 	GDCLASS(CityCrowd, Node3D)
 
 public:
-	enum { ROW = 16, POSES = 12, NEAR_MAX = 18 };
+	enum { ROW = 16, POSES = 13, NEAR_MAX = 18 };
 
 private:
 	pc::Crowd *crowd = nullptr;
@@ -79,7 +79,15 @@ private:
 	PackedFloat32Array buf;
 	int shown = -1;
 	// the near bodies
-	struct Near { CityPed *ped = nullptr; int walker = -1; int female = 0; bool in_body = false; float push_cd = 0; Ref<ShaderMaterial> look; };
+	struct Near { CityPed *ped = nullptr; int walker = -1; int female = 0; bool in_body = false; float push_cd = 0; Ref<ShaderMaterial> look; int act = -1; float act_t = 99.0f; int why = 0, after_kind = 0; float after_t = 0.0f, after_len = 0.0f; bool after_hit = false; };   // act, act_t: what it shows and for how long (the way INTO an act is played once)
+	// how long the clips into and out of an act are (read from the figure once it is made)
+	bool lens_ok = false;
+	int fight_falls = 0;
+	// who the player has shoved lately (by who the person is), so that a second shove is answered differently
+	struct Shove { uint32_t look = 0; double t = -1e9; int n = 0; };
+	std::vector<Shove> shoves;
+	int n_shoved = 0, n_told_off = 0, n_hit_back = 0;
+	double l_sit_in = 0, l_sit_out = 0, l_gsit_in = 0, l_gsit_out = 0, l_lie_in = 0, l_lie_out = 0, l_duck_in = 0, l_duck_out = 0, l_fight_in = 0, l_fight_out = 0, l_surprise = 0, l_cheer = 0;
 	std::vector<Near> near_pool;
 	// the smaller things (city_crowd_extra.cpp): capsules round the player, umbrellas, towels, the murmur
 	enum { CAPSULES = 12 };
@@ -99,7 +107,9 @@ private:
 	void extras_update(double p_alpha);
 	void make_near();
 	void near_update(double p_delta, double p_alpha);
-	void clip_of(int i, StringName &r_clip, double &r_speed, double &r_hold) const;
+	void clip_of(int i, float p_t, StringName &r_clip, double &r_speed, double &r_hold, int &r_token) const;
+	void clip_lengths();
+	void onlookers(int p_row, int p_most, float p_seconds, bool p_film);
 	// counters
 	struct Count { int frames = 0, steps = 0; double step_us = 0, step_us_worst = 0, main_us = 0, main_us_worst = 0, people = 0, near = 0, umbrellas = 0; int most = 0; } cnt;
 
@@ -164,6 +174,8 @@ public:
 	bool set_act(int p_id, int p_act, double p_seconds);
 	bool hold(int p_id, bool p_on, double p_yaw);
 	bool hide(int p_id, bool p_on);
+	Array near_bodies() const;     // (tests) every animated body: whose it is and which clip it plays
+	bool fight(int p_a, int p_b) { return crowd && crowd->fight(p_a, p_b); }
 	void scare(const Vector3 &p_at, double p_radius, double p_seconds);
 	void bus_at(int p_place, bool p_on, const Vector3 &p_door, int p_get_off);
 	void bench_off(int p_place, bool p_off);

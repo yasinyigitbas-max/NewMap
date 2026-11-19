@@ -42,6 +42,7 @@ private:
 	MeshInstance3D *mi = nullptr;
 	StringName cur_clip;             // (driven by the crowd) the clip that runs, and the moment it is held at (-1 = it runs)
 	double cur_hold = -1.0;
+	int cur_token = 0;
 	// getting up: the Quaternius clip "LayToIdle" (lying on the back to standing). Where its figure lies at its start, in
 	// this node's frame: the way from its hips to its head, and where its hips are
 	bool has_getup = false;
@@ -84,7 +85,11 @@ public:
 	// ---- for the crowd (C++ only): this figure becomes another person; while it is animated the crowd says where it
 	// stands and what it does; what the crowd needs to know of its body
 	void become(const String &p_body, const Ref<Mesh> &p_mesh, const Ref<ShaderMaterial> &p_look, bool p_can_body);
-	void drive(const Transform3D &p_at, const StringName &p_clip, double p_speed, double p_hold);
+	// p_hold: >= 0 held at that moment of the clip; -1 it runs (and starts again when it ends); -2 played once and
+	// held on its last frame. A new p_token starts the same clip again (the next blow of a fight).
+	void drive(const Transform3D &p_at, const StringName &p_clip, double p_speed, double p_hold, int p_token = 0);
+	double clip_len(const StringName &p_clip) const;
+	StringName current_clip() const { return cur_clip; }
 	int get_mode() const { return mode; }
 	Vector3 body_at() const;
 	float body_yaw() const { return body.heading; }

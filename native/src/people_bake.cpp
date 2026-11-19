@@ -61,8 +61,8 @@ PackedStringArray PeopleBake::bake(Node *p_parent, const String &p_dir, const St
 	const Array ids = donors.keys();
 	std::vector<Donor> out;
 	// the Quaternius library's clips, fitted to this figure (make_anims.gd); the figure's old ones if those are not there
-	static const char *const POSE_CLIP[POSES] = { "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Idle_Loop", "Sitting_Idle_Loop", "LayToIdle", "LayToIdle" };
-	static const char *const POSE_OLD[POSES] = { "walk", "walk", "walk", "walk", "walk", "walk", "walk", "walk", "idle", "sit_idle", "sleep", "sleep" };
+	static const char *const POSE_CLIP[POSES] = { "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Idle_Loop", "Sitting_Idle_Loop", "LayToIdle", "LayToIdle", "GroundSit_Idle_Loop" };
+	static const char *const POSE_OLD[POSES] = { "walk", "walk", "walk", "walk", "walk", "walk", "walk", "walk", "idle", "sit_idle", "sleep", "sleep", "sit_idle" };
 	// per kind of figure: how far it gets in one round of its walk, jog and sprint clips, and how long each round is
 	float gait[2][6] = { { 1.4f, 1.3f, 2.4f, 0.9f, 3.6f, 0.7f }, { 1.3f, 1.3f, 2.2f, 0.9f, 3.3f, 0.7f } };
 	bool used_ual = false;
@@ -142,7 +142,7 @@ PackedStringArray PeopleBake::bake(Node *p_parent, const String &p_dir, const St
 			{
 				Ref<Animation> a = clip_of(clip);
 				const float len = a.is_valid() ? (float)a->get_length() : 1.0f;
-				t = p < 8 ? len * (float)p / 8.0f : (p == 8 ? std::min(0.5f, len) : (p == 9 ? std::min(1.0f, len * 0.5f) : 0.0f));
+				t = p < 8 ? len * (float)p / 8.0f : (p == 8 ? std::min(0.5f, len) : ((p == 9 || p == 12) ? std::min(1.0f, len * 0.5f) : 0.0f));
 			}
 			pose_at(clip, t);
 			for (int b = 0; b < nb; b++) {

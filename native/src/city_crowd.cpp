@@ -354,6 +354,7 @@ void CityCrowd::step_brain(double p_delta) {
 		}
 		tr->set_walkers(dyn.data(), (int)dyn.size() / tc::DYN_STRIDE);
 	}
+	for (const pc::Event &e : crowd->events) if (e.type == pc::E_FIGHT) onlookers(crowd->find(e.id), 4, crowd->cfg.fight_s, true);   // a fight: people stop and look, one films it
 	for (const pc::Event &e : crowd->events) { emit_signal("crowd_event", (int)e.type, e.id, e.aux, e.f); if (ev_keep.size() < 512) ev_keep.push_back(e); }
 	crowd->events.clear();
 }
@@ -388,7 +389,8 @@ int CityCrowd::pose_of(int i) const {
 	if (crowd->mode[i] == pc::M_STAY || crowd->state[i] == pc::ST_PAUSE) {
 		if (a == pc::A_LIE_BACK) return 10;
 		if (a == pc::A_LIE_FRONT) return 11;
-		if (crowd->mode[i] == pc::M_STAY && (a == pc::A_SIT || a == pc::A_DRINK || a == pc::A_BEG)) return 9;
+		if (crowd->mode[i] == pc::M_STAY && (a == pc::A_SIT || a == pc::A_DRINK)) return 9;
+		if (crowd->mode[i] == pc::M_STAY && (a == pc::A_GSIT || a == pc::A_BEG)) return 12;
 		return 8;
 	}
 	if (crowd->v[i] < 0.15f) return 8;
@@ -448,44 +450,167 @@ void CityCrowd::make_near() {
 }
 
 // What a near body shows for what its walker does: the clip, how fast it runs, or the moment it is held at.
-void CityCrowd::clip_of(int i, StringName &r_clip, double &r_speed, double &r_hold) const {
+// The nearest passers-by stop and look at what happens where walker `p_row` is; with `p_film` the first of them holds
+// his phone up at it.
+void CityCrowd::onlookers(int p_row, int p_most, float p_seconds, bool p_film) {
+	if (p_row < 0) return;
+	int n = 0;
+	for (int j = 0; j < crowd->hi && n < p_most; j++) {
+		if (j == p_row || !crowd->alive[j] || crowd->mode[j] != pc::M_LINE || crowd->state[j] != pc::ST_WALK || crowd->act[j] != pc::A_NONE || crowd->party[j] != 0) continue;
+		const float dx = crowd->x[p_row] - crowd->x[j], dz = crowd->z[p_row] - crowd->z[j], d2 = dx * dx + dz * dz;
+		if (d2 > 81.0f || d2 < 2.25f) continue;
+		if (!crowd->set_act(crowd->id[j], (p_film && n == 0) ? pc::A_FILM : pc::A_STARE, p_seconds)) continue;
+		crowd->flags[j] |= pc::F_FACE; crowd->face_yaw[j] = std::atan2(dx, dz);
+		n++;
+	}
+}
+
+// The clips' lengths, once the first figure is made: how long the way into and out of an act is. The brain is told
+// how long getting up takes (so a walker stands up where he sat, and walks only then), and how long blows last.
+void CityCrowd::clip_lengths() {
+	if (lens_ok || near_pool.empty() || !near_pool[0].ped) return;
+	const CityPed *p = near_pool[0].ped;
+	if (p->clip_len("ual/Idle_Loop") <= 0.0) return;   // (not made yet)
+	lens_ok = true;
+	l_sit_in = p->clip_len("ual/Sitting_Enter"); l_sit_out = p->clip_len("ual/Sitting_Exit");
+	l_gsit_in = p->clip_len("ual/GroundSit_Enter"); l_gsit_out = p->clip_len("ual/GroundSit_Exit");
+	l_lie_in = p->clip_len("ual/IdleToLay"); l_lie_out = p->clip_len("ual/LayToIdle");
+	l_duck_in = p->clip_len("ual/Crouch_Enter"); l_duck_out = p->clip_len("ual/Crouch_Exit");
+	l_fight_in = p->clip_len("ual/PunchKick_Enter"); l_fight_out = p->clip_len("ual/PunchKick_Exit");
+	l_surprise = p->clip_len("ual/Surprise");
+	l_cheer = std::min(p->clip_len("ual/Celebration"), 2.6);
+	pc::Config &c = crowd->cfg;
+	c.rise_s[pc::A_SIT] = c.rise_s[pc::A_DRINK] = (float)l_sit_out;
+	c.rise_s[pc::A_GSIT] = (float)l_gsit_out;
+	c.rise_s[pc::A_LIE_BACK] = c.rise_s[pc::A_LIE_FRONT] = (float)l_lie_out;
+	c.rise_s[pc::A_DUCK] = (float)l_duck_out;
+	c.rise_s[pc::A_FIGHT] = (float)l_fight_out;
+	if (l_fight_in > 0.0) c.fight_s = 6.5f;
+	c.cheer_s = (float)l_cheer;
+	c.hurt_s = 45.0f;
+}
+
+// What a near body shows: the clip of what its walker does. `p_t`: how long it has shown this act (the way INTO an
+// act, sitting down, crouching, squaring up, is played once, then the act's own clip). r_hold: -1 it runs, -2 once
+// and held on its last frame, >= 0 held at that moment. r_token: a new number starts the same clip again.
+void CityCrowd::clip_of(int i, float p_t, StringName &r_clip, double &r_speed, double &r_hold, int &r_token) const {
 	static const StringName WALK("ual/Walk_Loop"), WALK2("ual/Walk_Formal_Loop"), JOG("ual/Jog_Fwd_Loop"), SPRINT("ual/Sprint_Loop"), IDLE("ual/Idle_Loop"), ARMS("ual/Idle_FoldArms_Loop"),
-			SIT("ual/Sitting_Idle_Loop"), SIT_TALK("ual/Sitting_Talking_Loop"), LIE("ual/LayToIdle"), PHONE("ual/Idle_TalkingPhone_Loop"), FILM("ual/Idle_Lantern_Loop"), DUCK("ual/Crouch_Idle_Loop"),
-			TALK("ual/Idle_Talking_Loop"), NO("ual/Idle_No_Loop"), PUNCH("ual/Punch_Jab"), PUNCH2("ual/Punch_Cross"), GIVE("ual/Interact"), WAVE("wave"), HUG("hug");
-	const int g = (crowd->look[i] >> 3) & 1u, a = crowd->act[i];
+			LOOK("ual/Idle_LookAround_Loop"), SIT_TALK("ual/Sitting_Talking_Loop"), LIE("ual/LayToIdle"), LIE_IN("ual/IdleToLay"), PHONE("ual/Idle_TalkingPhone_Loop"), FILM("ual/Idle_Lantern_Loop"),
+			DUCK("ual/Crouch_Idle_Loop"), DUCK_IN("ual/Crouch_Enter"), DUCK_OUT("ual/Crouch_Exit"), TALK("ual/Idle_Talking_Loop"), NO("ual/Idle_No_Loop"), GIVE("ual/Interact"), WAVE("wave"), HUG("hug"),
+			SIT_IN("ual/Sitting_Enter"), SIT_OUT("ual/Sitting_Exit"), GSIT("ual/GroundSit_Idle_Loop"), GSIT_IN("ual/GroundSit_Enter"), GSIT_OUT("ual/GroundSit_Exit"), SURPRISE("ual/Surprise"),
+			FIGHT_IN("ual/PunchKick_Enter"), FIGHT_OUT("ual/PunchKick_Exit"), DODGE_L("ual/Dodge_Left"), DODGE_R("ual/Dodge_Right"), HIT_HEAD("ual/Hit_Head"), HIT_CHEST("ual/Hit_Chest"),
+			HIT_BELLY("ual/Hit_Stomach"), TEXT("ual/Idle_Lantern_Loop"), FILM2("ual/Idle_Torch_Loop"), ANGRY("ual/Counter_Angry"), GIVE_COIN("ual/Counter_Give"), TIRED("ual/Idle_Tired_Loop"),
+			WALK_TALK("ual/Walk_Talk_Loop"), WALK_PHONE("ual/Walk_Phone_Loop"), WALK_TEXT("ual/Walk_Text_Loop"), SIT_PHONE("ual/Sitting_Phone_Loop"), SIT_TEXT("ual/Sitting_Text_Loop"),
+			SIT_DRINK("ual/Sitting_Drink_Loop"), GSIT_ASK("ual/GroundSit_Ask_Loop"), GSIT_THANKS("ual/GroundSit_Thanks_Loop"), WALK_HURT("ual/Walk_Hurt_Loop"), CHEER("ual/Celebration");
+	static const StringName SITS[6] = { StringName("ual/Sitting_Idle_Loop"), StringName("ual/Sitting_Idle02_Loop"), StringName("ual/Sitting_Idle03_Loop"), StringName("ual/Sitting_Nodding_Loop"), SIT_PHONE, SIT_TEXT };
+	static const StringName BLOWS[6] = { StringName("ual/Punch_Jab"), StringName("ual/Punch_Cross"), StringName("ual/Kick"), StringName("ual/Melee_Hook"), StringName("ual/Melee_Uppercut"), StringName("ual/Melee_Knee") };
+	const uint32_t lk = crowd->look[i];
+	const int g = (lk >> 3) & 1u, a = crowd->act[i];
 	const float v = crowd->v[i];
-	r_speed = 1.0; r_hold = -1.0;
+	r_speed = 1.0; r_hold = -1.0; r_token = 0;
+	if (crowd->mode[i] == pc::M_DODGE) {   // the jump out of a car's way: to the side it goes
+		const float hx = std::sin(crowd->yaw[i]), hz = std::cos(crowd->yaw[i]);
+		r_clip = ((crowd->x[i] - crowd->px[i]) * hz - (crowd->z[i] - crowd->pz[i]) * hx) > 0.0f ? DODGE_L : DODGE_R;
+		r_hold = -2.0;
+		return;
+	}
 	const bool stays = crowd->mode[i] == pc::M_STAY || crowd->mode[i] == pc::M_HELD || crowd->state[i] == pc::ST_PAUSE;
 	if (!stays && v > 0.15f) {   // on its way: the walk at the walker's own pace, a jog, a run
 		if (v > 2.8f) { r_clip = SPRINT; r_speed = v / (gait[g][4] / gait[g][5]); }
 		else if (v > 1.9f) { r_clip = JOG; r_speed = v / (gait[g][2] / gait[g][3]); }
-		else { r_clip = ((crowd->look[i] >> 6) & 3u) == 0u ? WALK2 : WALK; r_speed = v / (gait[g][0] / gait[g][1]); }
+		else { r_clip = ((lk >> 6) & 3u) == 0u ? WALK2 : WALK; r_speed = v / (gait[g][0] / gait[g][1]); }
+		// at a walk the hands are free: a phone at the ear or in the hand, a word to the one beside him (in a group
+		// one of them talks for four seconds, then the next, then nobody for a while)
+		if (v <= 1.9f) {
+			bool talks = a == pc::A_TALK;
+			if (!talks && crowd->party[i] != 0 && crowd->pkind[i] != pc::PK_JOGGER && crowd->psize[i] > 1)
+				talks = ((int)(own_clock * 0.25) + crowd->party[i]) % ((int)crowd->psize[i] + 1) == (int)crowd->slot[i];
+			if (a == pc::A_PHONE || a == pc::A_CALL) r_clip = ((lk >> 13) & 1u) ? WALK_TEXT : WALK_PHONE;
+			else if (talks) r_clip = WALK_TALK;
+			if (crowd->hurt_t[i] > 0.0f) r_clip = WALK_HURT;   // he lost a fight: slowly away, his hands at his face
+		}
 		r_speed = std::min(std::max(r_speed, 0.4), 2.2);
 		if (a == pc::A_WAVE) { r_clip = WAVE; r_speed = 1.0; }
 		return;
 	}
+	// first the way into the act, once; then the act
+	auto seq = [&](const StringName &p_in, double p_in_len, const StringName &p_loop) {
+		if (p_t < (float)p_in_len) { r_clip = p_in; r_hold = -2.0; } else r_clip = p_loop;
+	};
 	switch (a) {
-		case pc::A_SIT: case pc::A_BEG: r_clip = SIT; break;
-		case pc::A_DRINK: r_clip = SIT_TALK; break;
-		case pc::A_LIE_BACK: case pc::A_LIE_FRONT: r_clip = LIE; r_hold = 0.0; break;
-		case pc::A_PHONE: case pc::A_CALL: r_clip = PHONE; break;
-		case pc::A_FILM: r_clip = FILM; break;
-		case pc::A_WINDOW: case pc::A_STARE: case pc::A_SHELTER: r_clip = ARMS; break;
-		case pc::A_DUCK: r_clip = DUCK; break;
+		case pc::A_SIT: seq(SIT_IN, l_sit_in, SITS[(lk >> 12) % 6u]); break;
+		case pc::A_DRINK: seq(SIT_IN, l_sit_in, ((int)(p_t / 5.0f) % 3 == 1) ? SIT_DRINK : SIT_TALK); break;   // a word, a sip, a word
+		case pc::A_GSIT: seq(GSIT_IN, l_gsit_in, GSIT); break;
+		case pc::A_BEG: {   // a beggar: his hand out to whoever comes by, a nod to the one who gives
+			r_clip = GSIT;
+			for (int j = 0; j < crowd->hi; j++) {
+				if (j == i || !crowd->alive[j]) continue;
+				const float dx = crowd->x[j] - crowd->x[i], dz = crowd->z[j] - crowd->z[i], d2 = dx * dx + dz * dz;
+				if (d2 > 25.0f) continue;
+				if (crowd->act[j] == pc::A_GIVE && d2 < 9.0f) { r_clip = GSIT_THANKS; break; }
+				r_clip = GSIT_ASK;
+			}
+			if (r_clip == GSIT && has_last_player) { const float dx = last_player.x - crowd->x[i], dz = last_player.z - crowd->z[i]; if (dx * dx + dz * dz < 25.0f) r_clip = GSIT_ASK; }
+		} break;
+		case pc::A_LIE_BACK: case pc::A_LIE_FRONT:
+			if (p_t < (float)l_lie_in) { r_clip = LIE_IN; r_hold = -2.0; } else { r_clip = LIE; r_hold = 0.0; }
+			break;
+		case pc::A_PHONE: r_clip = ((lk >> 13) & 1u) ? TEXT : PHONE; break;   // in the hand, or at the ear
+		case pc::A_CALL: r_clip = PHONE; break;
+		case pc::A_FILM: r_clip = FILM2; break;
+		case pc::A_WINDOW: r_clip = LOOK; break;
+		case pc::A_SHELTER: r_clip = ARMS; break;
+		case pc::A_STARE: seq(SURPRISE, l_surprise, ((lk >> 9) & 1u) ? ARMS : LOOK); break;
+		case pc::A_DUCK: seq(DUCK_IN, l_duck_in, DUCK); break;
 		case pc::A_CHAT: case pc::A_TALK: r_clip = TALK; break;
-		case pc::A_ARGUE: r_clip = NO; break;
+		case pc::A_ARGUE: r_clip = ((lk >> 5) & 1u) ? NO : ANGRY; break;
 		case pc::A_HUG: r_clip = HUG; break;
-		case pc::A_FIGHT: r_clip = (crowd->id[i] & 1) ? PUNCH : PUNCH2; break;
-		case pc::A_GIVE: case pc::A_DOOR: r_clip = GIVE; break;
+		case pc::A_GIVE: r_clip = GIVE_COIN; r_hold = -2.0; break;
+		case pc::A_DOOR: r_clip = GIVE; break;
 		case pc::A_WAVE: r_clip = WAVE; break;
-		case pc::A_WAIT: r_clip = ((crowd->look[i] >> 9) & 1u) ? ARMS : IDLE; break;
-		default: r_clip = IDLE; break;
+		case pc::A_WAIT: { const uint32_t w = (lk >> 9) % 3u; r_clip = w == 0u ? IDLE : (w == 1u ? ARMS : LOOK); } break;
+		case pc::A_RISE:   // the way out of what it did, once
+			switch (crowd->rise_from[i]) {
+				case pc::A_SIT: case pc::A_DRINK: r_clip = SIT_OUT; break;
+				case pc::A_GSIT: r_clip = GSIT_OUT; break;
+				case pc::A_LIE_BACK: case pc::A_LIE_FRONT: r_clip = LIE; break;
+				case pc::A_DUCK: r_clip = DUCK_OUT; break;
+				case pc::A_FIGHT: r_clip = FIGHT_OUT; break;
+				default: r_clip = IDLE; break;
+			}
+			if (r_clip != IDLE) r_hold = -2.0;
+			break;
+		case pc::A_CHEER: r_clip = CHEER; r_hold = -2.0; break;
+		case pc::A_FIGHT: {
+			// Blows: both square up; then a blow every 0.95 s, the two taking turns; the other takes it on the head, the
+			// chest or the belly a moment later, or gets out of its way. The beats are counted from the END, so that the
+			// last blow is always the winner's (the brain's fwin): that one is a real shove (near_update). Both bodies
+			// work it out from the same numbers (the time the fight has left, the two ids), so they agree without a word.
+			const float left = std::max(crowd->pause_t[i], 0.0f);
+			if (crowd->cfg.fight_s - left < (float)l_fight_in) { r_clip = FIGHT_IN; r_hold = -2.0; break; }
+			const float beat = 0.95f;
+			const int k = (int)(left / beat), me = crowd->id[i], other = crowd->mate[i];
+			const float into = beat - (left - (float)k * beat);
+			const bool mine = ((k & 1) == 0) == (crowd->fwin[i] != 0);
+			const uint32_t h = pc::hash32((uint32_t)(std::min(me, other) * 7919 + std::max(me, other)) * 31u + (uint32_t)k);
+			const int blow = (int)(h % 6u);
+			if (mine) { r_clip = BLOWS[blow]; r_hold = -2.0; r_token = k + 1; break; }
+			if (into < 0.22f) { r_clip = FIGHT_IN; r_hold = std::max(l_fight_in - 0.03, 0.0); break; }   // his guard, until the blow lands
+			if (k > 0 && ((h >> 8) & 3u) == 0u) r_clip = ((h >> 10) & 1u) ? DODGE_L : DODGE_R;
+			else r_clip = (blow == 2 || blow == 5) ? HIT_BELLY : (((h >> 11) & 1u) ? HIT_HEAD : HIT_CHEST);
+			r_hold = -2.0; r_token = k + 1001;
+		} break;
+		default:   // standing: at a kerb for the lights a look round, folded arms; a jogger gets his breath
+			if (crowd->state[i] == pc::ST_WAIT) { const uint32_t w = (lk >> 9) % 3u; r_clip = (crowd->party[i] != 0 && crowd->pkind[i] == pc::PK_JOGGER) ? TIRED : (w == 0u ? IDLE : (w == 1u ? ARMS : LOOK)); }
+			else r_clip = IDLE;
+			break;
 	}
 }
 
 // Who has a near body this frame, what it shows, and the hand-over to its physical body and back.
 void CityCrowd::near_update(double p_delta, double p_alpha) {
 	if (near_pool.empty()) return;
+	clip_lengths();
 	Viewport *vp = get_viewport();
 	Camera3D *cam = vp ? vp->get_camera_3d() : nullptr;
 	if (!cam) return;
@@ -504,6 +629,35 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 		}
 		if (drop) { if (i >= 0 && nb.in_body) crowd->to_body(nb.walker, false, crowd->x[i], crowd->z[i]); nb.walker = -1; nb.in_body = false; nb.ped->set_visible(false); }
 	}
+	// A body goes to whoever is nearer. With every body taken, somebody who comes out of a door beside the camera would
+	// stay a far figure while a body is held 30 m away (seen 20 Nov: five people set down beside the player stood as far
+	// figures). So: when somebody without a body is clearly nearer than the farthest who has one, that one gives his up.
+	for (int kind = 0; kind < 2; kind++) {
+		int far_k = -1; float far_d = -1.0f; bool free_one = false;
+		for (int k = 0; k < (int)near_pool.size(); k++) {
+			const Near &nb = near_pool[k];
+			if (nb.female != kind) continue;
+			if (nb.walker < 0) { free_one = true; continue; }
+			if (nb.in_body || nb.ped->get_mode() != CityPed::MODE_ANIM) continue;
+			const int i = crowd->find(nb.walker);
+			if (i < 0) continue;
+			const float dx = crowd->x[i] - cp.x, dz = crowd->z[i] - cp.z, d2 = dx * dx + dz * dz;
+			if (d2 > far_d) { far_d = d2; far_k = k; }
+		}
+		if (free_one || far_k < 0) continue;
+		float near_d = far_d;
+		for (int i = 0; i < crowd->hi; i++) {
+			if (!crowd->alive[i] || (crowd->flags[i] & pc::F_HIDDEN) || (int)((crowd->look[i] >> 3) & 1u) != kind || crowd->mode[i] == pc::M_BODY) continue;
+			const float dx = crowd->x[i] - cp.x, dz = crowd->z[i] - cp.z, d2 = dx * dx + dz * dz;
+			if (d2 >= near_d) continue;
+			bool has = false;
+			for (const Near &o : near_pool) if (o.walker == crowd->id[i]) has = true;
+			if (has) continue;
+			{ float pq[4]; int bq; float sq; person_of(i, pq, bq, sq); if (bodies[bq].female != kind) continue; }
+			near_d = d2;
+		}
+		if (std::sqrt(near_d) + 3.0f < std::sqrt(far_d)) { near_pool[far_k].walker = -1; near_pool[far_k].ped->set_visible(false); }
+	}
 	// the nearest people without one take the free ones (of their own kind)
 	for (Near &nb : near_pool) {
 		if (nb.walker >= 0) continue;
@@ -514,14 +668,19 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 			if (d2 >= bd) continue;
 			bool has = false;
 			for (const Near &o : near_pool) if (o.walker == crowd->id[i]) has = true;
-			if (!has) { bd = d2; best = i; }
+			if (has) continue;
+			// (the near figure must be of the walker's kind: a walker whose body is of the other kind keeps its far figure.
+			// Asked HERE, not after the nearest is chosen: such a walker beside the camera took the free body's choice every
+			// frame and was refused every frame, and nobody farther off ever got it.)
+			{ float pq[4]; int bq; float sq; person_of(i, pq, bq, sq); if (bodies[bq].female != nb.female) continue; }
+			bd = d2; best = i;
 		}
 		if (best < 0) continue;
 		float pr[4]; int body; float sc;
 		person_of(best, pr, body, sc);
-		// (the near figure must be of the walker's kind: a walker whose body is of the other kind keeps its far figure)
-		if (bodies[body].female != nb.female) continue;
 		nb.walker = crowd->id[best]; nb.in_body = false;
+		nb.why = 0; nb.after_kind = 0; nb.after_t = 0.0f;
+		nb.act = crowd->act[best]; nb.act_t = 99.0f;   // (whatever it is doing, it is doing it already)
 		nb.look->set_shader_parameter("person", Vector4(pr[0], pr[1] - (float)(body * 64), pr[2], pr[3]));
 		nb.ped->become(bodies[body].id, bodies[body].near_mesh, nb.look, sc > 0.9f);
 		nb.ped->set_visible(true);
@@ -537,13 +696,88 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 		float pr[4]; int body; float sc;
 		person_of(i, pr, body, sc);
 		if (nb.ped->get_mode() == CityPed::MODE_ANIM) {
-			if (nb.in_body) { const Vector3 at = nb.ped->get_global_transform().origin; crowd->to_body(nb.walker, false, at.x, at.z); nb.in_body = false; }   // it is up again: its walker goes on from where it stands
+			if (nb.in_body) {   // it is up again
+				const Vector3 at = nb.ped->get_global_transform().origin;
+				// THE PLAYER SHOVED HIM: before he goes his way he turns to the player. The first time he tells him off (one
+				// in four only stares at him); shoved again within two minutes, half of them square up and hit back, the rest
+				// tell him off for longer. People near by stop and look. (The signal crowd_event says so: 16 = shoved, aux = how
+				// often; 17 = he hits the player. The talk makes him refuse to speak for a day.)
+				if (nb.why == 1 && pl && nb.after_t <= 0.0f && nb.after_kind == 0) {
+					const uint32_t lk = crowd->look[i];
+					int cnt = 1; bool known = false;
+					for (Shove &sh : shoves) if (sh.look == lk) { known = true; sh.n = own_clock - sh.t < 120.0 ? sh.n + 1 : 1; sh.t = own_clock; cnt = sh.n; }
+					if (!known) { Shove sh; sh.look = lk; sh.t = own_clock; sh.n = 1; if (shoves.size() >= 32) shoves.erase(shoves.begin()); shoves.push_back(sh); }
+					nb.after_kind = cnt >= 2 ? (((lk >> 17) & 1u) ? 2 : 1) : (((lk >> 18) & 3u) == 0u ? 3 : 1);
+					nb.after_len = nb.after_kind == 2 ? (float)(l_fight_in + 0.9 + l_fight_out) : (nb.after_kind == 3 ? 2.0f : (cnt >= 2 ? 4.2f : 2.8f));
+					nb.after_t = nb.after_len; nb.after_hit = false;
+					n_shoved++;
+					if (nb.after_kind == 2) n_hit_back++; else if (nb.after_kind == 1) n_told_off++;
+					emit_signal("crowd_event", 16, nb.walker, cnt, 0.0);
+					onlookers(i, 3, 2.5f, false);
+				}
+				if (nb.after_t > 0.0f) {
+					static const StringName ANGRY("ual/Counter_Angry"), NO("ual/Idle_No_Loop"), ARMS("ual/Idle_FoldArms_Loop"), F_IN("ual/PunchKick_Enter"), F_OUT("ual/PunchKick_Exit"), CROSS("ual/Punch_Cross");
+					nb.after_t -= (float)p_delta;
+					const Vector3 pp = pl ? pl->get_global_position() : at;
+					const float e = nb.after_len - nb.after_t;
+					StringName clip = ((crowd->look[i] >> 5) & 1u) ? NO : ANGRY; double hold = -1.0; int token = 0;
+					if (nb.after_kind == 3) clip = ARMS;
+					else if (nb.after_kind == 2) {
+						hold = -2.0;
+						if (e < (float)l_fight_in) clip = F_IN;
+						else if (e < (float)l_fight_in + 0.9f) {
+							clip = CROSS; token = 7;
+							if (!nb.after_hit && e > (float)l_fight_in + 0.3f) {   // the blow lands, if the player is still there
+								nb.after_hit = true;
+								Vector3 d(pp.x - at.x, 0, pp.z - at.z);
+								if (pl && d.length() < 1.7f && d.length() > 0.05f) {
+									if (pl->has_method("knock")) pl->call("knock", d.normalized() * 4.5f);
+									emit_signal("crowd_event", 17, nb.walker, 0, 0.0);
+								}
+							}
+						} else clip = F_OUT;
+					}
+					const float yaw_to = std::atan2(pp.x - at.x, pp.z - at.z);
+					const float yaw_now = nb.ped->get_global_transform().basis.get_euler().y;
+					const float turn = std::min(std::max((float)Math::wrapf(yaw_to - yaw_now, -Math_PI, Math_PI), -6.0f * (float)p_delta), 6.0f * (float)p_delta);
+					nb.ped->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw_now + turn).scaled(Vector3(sc, sc, sc)), at), clip, 1.0, hold, token);
+				}
+				if (nb.after_t <= 0.0f) { crowd->to_body(nb.walker, false, at.x, at.z); nb.in_body = false; nb.why = 0; nb.after_kind = 0; }   // its walker goes on from where it stands
+			}
 			if (crowd->mode[i] != pc::M_BODY) {
 				const float a = std::min(std::max(((float)(crowd->tick - crowd->tu[i]) + (float)p_alpha) / (float)std::max((int)crowd->span[i], 1), 0.0f), 1.0f);
-				const Vector3 at(crowd->px[i] + (crowd->x[i] - crowd->px[i]) * a, crowd->py[i] + (crowd->y[i] - crowd->py[i]) * a, crowd->pz[i] + (crowd->z[i] - crowd->pz[i]) * a);
-				StringName clip; double speed, hold;
-				clip_of(i, clip, speed, hold);
-				nb.ped->drive(Transform3D(Basis(Vector3(0, 1, 0), lerp_angle(crowd->pyaw[i], crowd->yaw[i], a)).scaled(Vector3(sc, sc, sc)), at), clip, speed, hold);
+				Vector3 at(crowd->px[i] + (crowd->x[i] - crowd->px[i]) * a, crowd->py[i] + (crowd->y[i] - crowd->py[i]) * a, crowd->pz[i] + (crowd->z[i] - crowd->pz[i]) * a);
+				// two who fight close in to arm's reach (0.8 m): people who meet stand a pavement's width apart, and blows
+				// thrown from there hit the air (Yasin, 20 Nov: "fighters take blows too far away"). Only the bodies step in,
+				// over half a second, and step back as it ends.
+				{
+					const int ac = crowd->act[i];
+					const bool fighting = ac == pc::A_FIGHT, after = ac == pc::A_CHEER || (ac == pc::A_RISE && crowd->rise_from[i] == pc::A_FIGHT);
+					const int j = (fighting || after) && crowd->mate[i] != 0 ? crowd->find(crowd->mate[i]) : -1;
+					if (j >= 0) {
+						Vector3 d(crowd->x[j] - crowd->x[i], 0, crowd->z[j] - crowd->z[i]);
+						const float dist = d.length();
+						float w = 1.0f;
+						if (fighting) w = std::min((crowd->cfg.fight_s - crowd->pause_t[i]) / 0.5f, 1.0f);
+						else if (ac == pc::A_CHEER) w = std::min(crowd->pause_t[i] / 0.5f, 1.0f);
+						else w = crowd->cfg.rise_s[pc::A_FIGHT] > 0.0f ? crowd->rise_t[i] / crowd->cfg.rise_s[pc::A_FIGHT] : 0.0f;
+						if (dist > 0.8f && dist < 4.0f) at += d / dist * (std::min((dist - 0.8f) * 0.5f, 1.2f) * std::min(std::max(w, 0.0f), 1.0f));
+					}
+				}
+				StringName clip; double speed, hold; int token;
+				const int act_now = crowd->act[i] | (crowd->mode[i] == pc::M_DODGE ? 256 : 0);
+				if (nb.act != act_now) { nb.act = act_now; nb.act_t = 0.0f; } else nb.act_t += (float)p_delta;
+				clip_of(i, nb.act_t, clip, speed, hold, token);
+				nb.ped->drive(Transform3D(Basis(Vector3(0, 1, 0), lerp_angle(crowd->pyaw[i], crowd->yaw[i], a)).scaled(Vector3(sc, sc, sc)), at), clip, speed, hold, token);
+				// the last blow of a fight is a real one: the one who takes it is handed to his balancing body, which
+				// staggers back or goes down, and gets up by itself (pushes and falls are never a clip)
+				if (crowd->act[i] == pc::A_FIGHT && sc > 0.9f && nb.push_cd <= 0.0f && crowd->fwin[i] == 0 && crowd->pause_t[i] < 0.70f && crowd->pause_t[i] > 0.2f && l_fight_in > 0.0) {
+					const int j = crowd->find(crowd->mate[i]);
+					if (j >= 0) {
+						Vector3 d(crowd->x[i] - crowd->x[j], 0, crowd->z[i] - crowd->z[j]);
+						if (d.length() > 0.05f && d.length() < 2.5f) { nb.ped->push(d.normalized() * 80.0f, Vector3(crowd->x[i], crowd->y[i] + 1.25f, crowd->z[i])); nb.push_cd = 4.0f; nb.why = 2; fight_falls++; }
+					}
+				}
 			}
 			// the cars near it: its body knows them as boxes, and takes over by itself when one reaches it
 			int nbx = 0;
@@ -569,7 +803,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 				const float vx = crowd->pl_vx, vz = crowd->pl_vz, sp = std::sqrt(vx * vx + vz * vz);
 				if (d2 < 0.62f * 0.62f && sp > 1.2f && dx * vx + dz * vz > 0.0f) {
 					nb.ped->push(Vector3(vx, 0, vz) * (35.0f + 18.0f * sp) / sp, Vector3(crowd->x[i], crowd->y[i] + 1.25f, crowd->z[i]));
-					nb.push_cd = 1.5f;
+					nb.push_cd = 1.5f; nb.why = 1; nb.after_kind = 0; nb.after_t = 0.0f;
 				}
 			}
 		}
@@ -648,6 +882,17 @@ Array CityCrowd::take_events() {
 	return out;
 }
 
+Array CityCrowd::near_bodies() const {
+	Array out;
+	for (const Near &nb : near_pool) {
+		if (nb.walker < 0) continue;
+		Dictionary d;
+		d["walker"] = nb.walker; d["woman"] = nb.female != 0; d["clip"] = String(nb.ped->current_clip()); d["in_physical_body"] = nb.in_body; d["shown_s"] = nb.act_t; d["figure_mode"] = (int)nb.ped->get_mode(); d["at"] = nb.ped->body_at();
+		out.push_back(d);
+	}
+	return out;
+}
+
 Dictionary CityCrowd::stats() const {
 	Dictionary d;
 	const pc::Stats &s = crowd->st;
@@ -662,6 +907,9 @@ Dictionary CityCrowd::stats() const {
 	for (const Near &nb : near_pool) { if (nb.walker >= 0) nn++; if (nb.in_body) nbdy++; }
 	d["near_bodies"] = nn; d["near_pool"] = (int)near_pool.size(); d["in_physical_body"] = nbdy; d["umbrellas"] = prop_shown[0]; d["towels"] = prop_shown[1];
 	d["ducked"] = s.ducks; d["stared"] = s.stared; d["coins"] = s.coins; d["lines_said"] = s.lines_said;
+	{ PackedFloat32Array cl; const double ls[11] = { l_sit_in, l_sit_out, l_gsit_in, l_gsit_out, l_lie_in, l_lie_out, l_duck_in, l_duck_out, l_fight_in, l_fight_out, l_surprise }; for (double l : ls) cl.push_back((float)l); d["clip_seconds"] = cl; }   // into and out of: a seat, the ground, lying, a crouch, a fight; the start
+	d["shoved_by_player"] = n_shoved; d["told_him_off"] = n_told_off; d["hit_back"] = n_hit_back;
+	d["fights"] = s.fights; d["fight_blows_landed"] = fight_falls;
 	d["bus_waits"] = s.bus_waits; d["boarded"] = s.boarded; d["alighted"] = s.alighted; d["buses_served"] = buses_served;
 	return d;
 }
@@ -720,6 +968,8 @@ void CityCrowd::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("bench_off", "place", "off"), &CityCrowd::bench_off);
 	ClassDB::bind_method(D_METHOD("place_near", "at", "kind", "radius"), &CityCrowd::place_near);
 	ClassDB::bind_method(D_METHOD("place_info", "place"), &CityCrowd::place_info);
+	ClassDB::bind_method(D_METHOD("fight", "a", "b"), &CityCrowd::fight);
+	ClassDB::bind_method(D_METHOD("near_bodies"), &CityCrowd::near_bodies);
 	ClassDB::bind_method(D_METHOD("people_near", "at", "radius"), &CityCrowd::people_near);
 	ClassDB::bind_method(D_METHOD("take_events"), &CityCrowd::take_events);
 	ClassDB::bind_method(D_METHOD("stats"), &CityCrowd::stats);

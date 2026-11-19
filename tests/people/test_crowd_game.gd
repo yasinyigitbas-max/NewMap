@@ -16,6 +16,7 @@ var dir := Vector3.FORWARD
 var target := -1
 var was_body := false
 var back := false
+var t_back := -1.0
 var events := 0
 var stander := -1
 var gap_least := 99.0
@@ -76,10 +77,13 @@ func _physics_process(delta: float) -> bool:
 			if int(p.mode) == 7:
 				if not was_body: print("GAME   (walker %d is in his physical body %.1f s after the player set off, the player at %.1f m/s)" % [target, t - t0, float(player.call(&"get_speed"))])
 				was_body = true; player.call(&"set_move", Vector2.ZERO, false)
-			elif was_body and (int(p.mode) == 0 or int(p.mode) == 3): back = true
+			elif was_body and int(p.mode) == 0 and t_back < 0.0: t_back = t      # (on the pavement again)
+			back = t_back >= 0.0 and t - t_back > 1.0
 			if back or t - t0 > 25.0:
 				_check(was_body, "a person the player runs into is handed to his physical body")
 				_check(back, "and walks on afterwards (%.1f s after the player set off)" % (t - t0))
+				var sv: Dictionary = crowd.call(&"stats")
+				_check(int(sv.shoved_by_player) >= 1 and int(p.goal) != -1, "back on his feet he turned to the player first (shoved %d: told him off %d, hit back %d), and goes on to where he was going (goal %d)" % [int(sv.shoved_by_player), int(sv.told_him_off), int(sv.hit_back), int(p.goal)])
 				phase = 3; t0 = t
 		3:      # a person who stands: the player cannot walk through him
 			if stander < 0:
