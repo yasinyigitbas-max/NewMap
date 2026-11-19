@@ -68,6 +68,7 @@ var cnt := {}
 var keep: Array = [] # [x0, z0, x1, z1] floor that stays free
 var X0 := 0.0; var X1 := 0.0; var ZF := 0.0; var ZB := 0.0; var ZBp := 0.0; var F := 0.0
 var rr: R
+var rng := RandomNumberGenerator.new()   # (hs polish, 19 Nov) one per room, seeded by its id: every shop laid out differently
 var report: Array = []
 
 func _init() -> void: _run.call_deferred()
@@ -128,7 +129,7 @@ func _put(base: String, x: float, z: float, yaw := 0.0, use_keep := true) -> boo
 	var x0 := x - f.x * 0.5; var x1 := x + f.x * 0.5; var z0 := z - f.y * 0.5; var z1 := z + f.y * 0.5
 	if not _free(x0, z0, x1, z1, use_keep): return false
 	rr.prop(base, x, z, yaw)
-	occ.append([x0, z0, x1, z1, float(tall.get("prop_" + base, 1.0))])
+	occ.append([x0, z0, x1, z1, float(tall.get("prop_" + base, 1.0)), base])
 	cnt[base] = int(cnt.get(base, 0)) + 1
 	return true
 
@@ -144,13 +145,108 @@ func _group(items: Array, use_keep := true) -> bool:
 	for it: Array in items: rr.prop(String(it[0]), float(it[1]), float(it[2]), float(it[3]))
 	var ht := 0.0
 	for it: Array in items: ht = maxf(ht, float(tall.get("prop_" + String(it[0]), 1.0)))
-	occ.append([b[0], b[1], b[2], b[3], ht])
+	occ.append([b[0], b[1], b[2], b[3], ht, String(items[0][0])])
 	return true
 
 func _table2(x: float, z: float) -> Array:
 	return [["cafe_table", x, z, 0.0], ["cafe_chair", x - 0.58, z, 90.0], ["cafe_chair", x + 0.58, z, -90.0]]
 func _table4(x: float, z: float) -> Array:
 	return [["restaurant_table", x, z, 0.0], ["side_chair", x - 0.3, z - 0.62, 0.0], ["side_chair", x + 0.3, z - 0.62, 0.0], ["side_chair", x - 0.3, z + 0.62, 180.0], ["side_chair", x + 0.3, z + 0.62, 180.0]]
+
+## ------------------------------------------------------------------------------------------------ mixed shop floors
+## (hs polish, 19 Nov; Yasin: "most shops look like copy pasted lines of props, have variety") the middle of a shop as
+## a mix of units, chosen per room from its kind's list (never the same unit twice in a row), on staggered rows with
+## uneven spacing and turned differently; a unit that does not fit gives way to a plant or to nothing.
+const MIX := {
+	"clothes": [["rack", "rail", "mann", "dtable", "rack", "plant"], 2.1, 2.2],
+	"sport": [["rack", "bike", "surf", "weights", "dtable", "rail"], 2.3, 2.3],
+	"shoes": [["shoebench", "dtable", "shoebench", "case", "plant"], 2.2, 2.0],
+	"books": [["books", "dtable", "reading", "books", "plant"], 2.3, 2.4],
+	"souvenir": [["dtable", "spinner", "case", "dtable", "plant"], 2.2, 2.1],
+	"gallery": [["bench", "plant", "case", "bench"], 2.8, 2.6],
+	"jewelry": [["case", "case2", "plant", "mann"], 2.2, 2.2],
+	"pharmacy": [["gondola2", "case", "gondola2", "spinner"], 1.8, 2.8],
+	"corner_shop": [["gondola2", "produce", "gondola2", "freezer"], 1.9, 2.8],
+	"grocery": [["gondola2", "produce", "freezer", "gondola2"], 1.9, 2.8],
+	"store": [["gondola2", "dtable", "gondola2", "workbench"], 1.9, 2.8],
+	"cafe": [["t2", "t2", "t4", "plant"], 2.1, 2.0],
+	"bakery": [["t2", "t2", "plant"], 2.1, 2.0],
+	"ice_cream": [["t2", "t2", "plant", "t2"], 2.0, 1.9],
+	"restaurant": [["t4", "t2", "t4", "plant"], 2.4, 2.5],
+	"bar": [["t4", "t2", "t2", "plant"], 2.4, 2.4],
+	"fast_food": [["t4", "t2", "t4"], 2.3, 2.4],
+	"bank": [["desk", "bench", "desk", "plant"], 2.9, 2.7],
+	"realty": [["desk", "desk", "plant", "bench"], 2.9, 2.7],
+	"venue": [["bench", "stanchion", "bench", "plant"], 2.6, 2.4],
+	"salon": [["basin", "nail", "plant"], 2.2, 2.2],
+}
+const FILL := {
+	"clothes": ["mannequin", "potted_plant", "display_table", "garment_rail"], "shoes": ["display_table", "potted_plant", "shoe_bench"],
+	"books": ["display_table", "potted_plant", "card_spinner"], "souvenir": ["card_spinner", "display_table", "potted_plant", "glass_display_case"],
+	"jewelry": ["glass_display_case", "potted_plant", "mannequin"], "pharmacy": ["card_spinner", "potted_plant", "glass_display_case"],
+	"corner_shop": ["produce_stand", "chest_freezer", "potted_plant"], "grocery": ["produce_stand", "chest_freezer", "potted_plant"],
+	"store": ["display_table", "potted_plant", "workbench", "gondola_aisle"], "sport": ["surfboard_rack", "bike_stand", "weight_bench", "mannequin", "clothes_rack"],
+	"gallery": ["glass_display_case", "potted_plant", "stanchion"], "bank": ["potted_plant", "brochure_rack"],
+	"realty": ["potted_plant", "brochure_rack"], "venue": ["stanchion", "potted_plant", "brochure_rack"], "salon": ["potted_plant", "wash_basin"],
+	"cleaners": ["garment_rail", "potted_plant"], "cafe": ["potted_plant"], "bakery": ["potted_plant"], "ice_cream": ["potted_plant"],
+	"restaurant": ["potted_plant"], "bar": ["potted_plant"], "fast_food": ["potted_plant"],
+}
+func _unit(u: String, x: float, z: float) -> Array:
+	var alt := rng.randf() < 0.5
+	match u:
+		"rack": return [["clothes_rack", x, z, 90.0 if alt else 0.0]]
+		"rail": return [["garment_rail", x, z, 0.0 if alt else 90.0]]
+		"mann": return [["mannequin", x - 0.35, z, rng.randf_range(-35.0, 35.0)], ["mannequin", x + 0.35, z + 0.2, rng.randf_range(-35.0, 35.0)]]
+		"dtable": return [["display_table", x, z, 90.0 if alt else 0.0]]
+		"case": return [["glass_display_case", x, z, 180.0 if alt else 0.0]]
+		"case2": return [["glass_display_case", x - 0.62, z, 90.0], ["glass_display_case", x + 0.62, z, -90.0]]
+		"spinner": return [["card_spinner", x, z, rng.randf_range(0.0, 90.0)]]
+		"gondola2": return [["gondola_aisle", x, z - 0.62, 90.0], ["gondola_aisle", x, z + 0.62, 90.0]]
+		"freezer": return [["chest_freezer", x, z, 90.0]]
+		"produce": return [["produce_stand", x, z, 90.0 if alt else 0.0]]
+		"workbench": return [["workbench", x, z, 90.0]]
+		"shoebench": return [["shoe_bench", x, z - 0.25, 180.0], ["shoe_bench", x, z + 0.25, 0.0]]
+		"plant": return [["potted_plant", x + rng.randf_range(-0.3, 0.3), z, rng.randf_range(0.0, 360.0)]]
+		"t2": return _table2(x, z)
+		"t4": return _table4(x, z)
+		"bench": return [["waiting_bench", x, z, 180.0 if alt else 0.0]]
+		"bike": return [["bike_stand", x, z, 90.0 if alt else 0.0]]
+		"surf": return [["surfboard_rack", x - 0.4, z, 0.0], ["surfboard_rack", x + 0.4, z, 0.0]]
+		"weights": return [["weight_bench", x, z, 90.0 if alt else 0.0]]
+		"books": return [["bookcase", x - 0.52, z - 0.2, 180.0], ["bookcase", x + 0.52, z - 0.2, 180.0], ["bookcase", x - 0.52, z + 0.2, 0.0], ["bookcase", x + 0.52, z + 0.2, 0.0]]
+		"reading": return [["display_table", x, z, 0.0], ["side_chair", x - 0.3, z - 0.65, 0.0], ["side_chair", x + 0.3, z + 0.65, 180.0]]
+		"desk": return [["office_desk", x, z, 180.0], ["office_chair", x, z - 0.66, 0.0], ["side_chair", x - 0.3, z + 0.7, 180.0], ["side_chair", x + 0.3, z + 0.7, 180.0]]
+		"stanchion": return [["stanchion", x - 0.6, z, 0.0], ["stanchion", x + 0.6, z, 0.0]]
+		"basin": return [["wash_basin", x, z, 180.0 if alt else 0.0]]
+		"nail": return [["nail_table", x, z, 0.0], ["side_chair", x, z - 0.6, 0.0], ["side_chair", x, z + 0.6, 180.0]]
+	return []
+
+func _mix_centre(kind: String, ix0: float, ix1: float, mz0: float, mz1: float) -> bool:
+	if not MIX.has(kind): return false
+	var spec: Array = MIX[kind]
+	var units: Array = spec[0]; var cw: float = spec[1]; var cd: float = spec[2]
+	if ix1 - ix0 < cw * 0.9 or mz1 - mz0 < cd * 0.8: return true          # too small a middle: leave it open
+	var prev := ""
+	var spinners := 0
+	var z := mz1 - cd * 0.5
+	var row := 0
+	while z > mz0 + cd * 0.4:
+		var off := cw * 0.5 if row % 2 == 1 and ix1 - ix0 > cw * 1.6 else 0.0
+		var xs: Array = _steps(ix0 + cw * 0.5 + off * 0.5, ix1 - cw * 0.5 + off * 0.5, cw * rng.randf_range(0.95, 1.15))
+		for xx: float in xs:
+			var u := String(units[rng.randi() % units.size()])
+			var tries := 0
+			while (u == prev or (u == "spinner" and spinners >= 2)) and tries < 6:
+				u = String(units[rng.randi() % units.size()]); tries += 1
+			var jx := rng.randf_range(-0.15, 0.15); var jz := rng.randf_range(-0.15, 0.15)
+			if _group(_unit(u, xx + jx, z + jz)):
+				prev = u
+				if u == "spinner": spinners += 1
+			elif u != "plant" and rng.randf() < 0.5:
+				_group(_unit("plant", xx, z))
+		z -= cd * rng.randf_range(0.95, 1.12)
+		row += 1
+	return true
 
 ## ------------------------------------------------------------------------------------------------ one room
 func _room(e: Dictionary, c: Dictionary) -> void:
@@ -179,6 +275,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	ZBp = ZP
 	occ = []; keep = []; cnt = {}
 	rr = R.new(id, F)
+	rng.seed = _h(id + "_mix")
 	rr.world_xf = Transform3D(Basis(Vector3.UP, deg_to_rad(float(e.yaw))), Vector3(float(e.pos[0]), float(e.pos[1]), float(e.pos[2])))
 	var hh := _h(id)
 	var tint: Color = WALL_TINTS[hh % WALL_TINTS.size()]
@@ -266,14 +363,17 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	for side: Array in [[X0, 90.0, "left"], [X1, -90.0, "right"]]:
 		var wx := float(side[0]); var yaw := float(side[1]); var inn := 1.0 if yaw > 0.0 else -1.0
 		var items: Array = K.walls
-		var z := ZF - 0.45; var k := 0
+		var z := ZF - 0.45; var k := rng.randi() % maxi(1, (K.walls as Array).size())
+		var brk := 2 + rng.randi() % 3
 		var tries := 0; var run := 0; var stations := 0
 		while z > ZBp + 0.4 and tries < 60:
 			tries += 1
 			# no endless runs of one thing: after three a break (a plant in the gap), and a barber has three chairs a side
-			if run >= 3:
+			if run >= brk:
+				brk = 2 + rng.randi() % 3
 				run = 0
-				if _put("potted_plant", wx + inn * 0.3, z - 0.25, yaw): z -= 0.6
+				var acc := "side_chair" if rng.randf() < 0.35 and not kind in ["library", "hall", "venue"] else "potted_plant"
+				if _put(acc, wx + inn * 0.32, z - 0.28, yaw): z -= 0.65
 				else: z -= 0.3
 				continue
 			var it := String(items[k % items.size()])
@@ -308,9 +408,17 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		"table2":
 			for xx: float in _steps(X0 + 1.0, X1 - 1.0, 2.7): _group(_table2(xx, wz - 0.45))
 		"display":
-			for xx: float in _steps(X0 + 0.9, X1 - 0.9, 2.2): _put("display_table", xx, wz - 0.45, 0.0)
+			var wi := rng.randi() % 3
+			for xx: float in _steps(X0 + 1.9, X1 - 1.9, 2.0 + rng.randf() * 0.5):      # (clear of the side walls' goods)
+				var wu: String = (["display_table", "potted_plant", "glass_display_case"][wi % 3] if kind != "books" else ["display_table", "potted_plant"][wi % 2])
+				if not _put(wu, xx, wz - 0.45, 0.0 if wu != "glass_display_case" else 180.0): _put("potted_plant", xx, wz - 0.3, 0.0)
+				wi += 1 + rng.randi() % 2
 		"mannequins":
-			for xx: float in _steps(X0 + 0.7, X1 - 0.7, 1.3): _put("mannequin", xx, wz - 0.35, 0.0)
+			var mi := 0
+			for xx: float in _steps(X0 + 0.7, X1 - 0.7, 1.35 + rng.randf() * 0.4):
+				if mi % 3 == 2: _put("display_table", xx, wz - 0.45, 90.0)
+				else: _put("mannequin", xx + rng.randf_range(-0.12, 0.12), wz - 0.35, rng.randf_range(-30.0, 30.0))
+				mi += 1
 		"cases":
 			for xx: float in _steps(X0 + 0.9, X1 - 0.9, 2.0): _put("glass_display_case", xx, wz - 0.35, 180.0)
 		"waiting":
@@ -321,7 +429,8 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 			for xx: float in _steps(X0 + 0.6, X1 - 0.6, 2.0): _put("brochure_rack", xx, wz - 0.3, 180.0)
 	# ---- the middle of the shop
 	var mz0 := zc + cd * 0.5 + 1.3; var mz1 := ZF - (1.6 if String(K.window) == "none" else 2.4)      # a walkway between the middle and the window display
-	match String(K.centre):
+	var mixed := _mix_centre(kind, IX0, IX1, mz0, mz1)
+	match ("_mixed" if mixed else String(K.centre)):
 		"table2":
 			for zz: float in _steps(mz0 + 0.5, mz1 - 0.5, 1.8):
 				for xx: float in _steps(IX0 + 0.95, IX1 - 0.95, 2.1): _group(_table2(xx, zz))
@@ -367,6 +476,29 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		"benches":
 			for zz: float in _steps(mz0 + 0.4, mz1 - 0.4, 2.4):
 				for xx: float in _steps(IX0 + 0.74, IX1 - 0.74, 2.6): _put("waiting_bench", xx, zz, 0.0)
+	# ---- (hs polish) fill: the shop's own small things in the free floor left, scattered (never the door path, the
+	# queue or the aisles the layouts keep), so no shop stands half empty
+	if FILL.has(kind):
+		var fl_items: Array = FILL[kind]
+		var nsp := 0; var nbr := 0
+		for o: Array in occ:
+			if String(o[5]) == "card_spinner": nsp += 1
+			if String(o[5]) == "brochure_rack": nbr += 1
+		var fz := mz1 - 0.5
+		while fz > zc + cd * 0.5 + 1.0:
+			for fx: float in _steps(X0 + 0.7 + rng.randf() * 0.3, X1 - 0.7, 1.25):
+				if rng.randf() > 0.8: continue
+				var fi := String(fl_items[rng.randi() % fl_items.size()])
+				if (fi == "card_spinner" and nsp >= 2) or (fi == "brochure_rack" and nbr >= 2): fi = "potted_plant"
+				var fyaw := float(rng.randi() % 4) * 90.0                      # bulky things square to the room
+				if fi in ["potted_plant", "card_spinner", "mannequin"]: fyaw = rng.randf_range(0.0, 360.0)
+				var fxx := fx + rng.randf_range(-0.2, 0.2)
+				var ff := _fp(fi, fyaw)
+				if fxx - ff.x * 0.5 < sl + 0.7 or fxx + ff.x * 0.5 > sr - 0.7: continue     # the walk along the wall goods stays open
+				if _put(fi, fxx, fz + rng.randf_range(-0.2, 0.2), fyaw):
+					if fi == "card_spinner": nsp += 1
+					if fi == "brochure_rack": nbr += 1
+			fz -= 1.2 + rng.randf() * 0.3
 	# ---- dressing: plants in the front corners, a bin by the counter end, prints on the bare walls
 	_put("potted_plant", X0 + 0.3, ZF - 0.3); _put("potted_plant", X1 - 0.3, ZF - 0.3)
 	if not kind in ["library", "bank", "hall"] and X1 - (cx + cw * 0.5 + 0.3) < 1.2: _put("indoor_bin", cx + cw * 0.5 + 0.3, zc + cd * 0.5 + 0.25)      # (high street copy: only where the counter end meets a wall; check_rooms "lone")      # (high street copy: the library desk stands free of walls: no bin beside it)
