@@ -1,0 +1,9 @@
+{
+ "area": "hs_b6_amber", "piece": "n_hs_b6_amber", "zone": "high street",
+ "rule": "docs/TREE_PLAN.md: high street (pilot), Amber spine, arterials - trees in wells on the shop side, palms alternating on Amber: the avenue's signature (zone 406 -> about 360)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's two builder palms both come back on their own spots: they stand on the little green by the benches and the drinking fountain on the Amber side, the avenue's palms.",
+ "trees": [
+  {"base": "palm_mexican_fan_a", "cond": "normal", "at": [21.5, 4.208, -108.0], "yaw": 0.0, "scale": 1.0, "why": "the small green on Amber by the two park benches: a fan palm, the avenue's signature"},
+  {"base": "palm_canary_date_b", "cond": "normal", "at": [28.5, 4.156, -101.5], "yaw": 90.0, "scale": 1.0, "why": "the same green by the potted plants and the drinking fountain: a canary date palm beside the fan palm, alternating as on Amber"}
+ ]
+}

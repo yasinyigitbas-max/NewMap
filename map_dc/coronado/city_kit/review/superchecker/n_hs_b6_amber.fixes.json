@@ -1,0 +1,373 @@
+{
+ "fixes": [
+  {
+   "at": [
+    31.7999992370605,
+    0.160727798938751,
+    -103.099998474121
+   ],
+   "base": "plant_potted_leafy",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 28.0,
+   "op": "add_collider",
+   "reason": "plant_potted_leafy has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    25.7999992370605,
+    0.161216288805008,
+    -103.599998474121
+   ],
+   "base": "plant_potted_leafy",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 29.0,
+   "op": "add_collider",
+   "reason": "plant_potted_leafy has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    21.5,
+    0.208219215273857,
+    -108.0
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    28.5,
+    0.155528992414474,
+    -101.5
+   ],
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "palm_canary_date_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    16.2999992370605,
+    2.14943170547485,
+    -188.5
+   ],
+   "base": "prop_newspaper_box_red",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red stands in front of a shop window of brick]"
+  },
+  {
+   "at": [
+    17.2000007629395,
+    0.151265352964401,
+    -98.5999984741211
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (4.9 m from a wall, 99.0 m from a fence)]"
+  },
+  {
+   "at": [
+    21.2000007629395,
+    0.154386848211288,
+    -100.599998474121
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (6.9 m from a wall, 99.0 m from a fence)]"
+  },
+  {
+   "at": [
+    18.0,
+    0.151242256164551,
+    -98.5999984741211
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (4.9 m from a wall, 99.0 m from a fence)]"
+  },
+  {
+   "at": [
+    33.4000015258789,
+    1.16898095607758,
+    -150.0
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (1.6 m from a wall, 99.0 m from a fence)]"
+  },
+  {
+   "at": [
+    33.4000015258789,
+    1.19136464595795,
+    -150.800003051758
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (1.6 m from a wall, 99.0 m from a fence)]"
+  },
+  {
+   "at": [
+    33.4000015258789,
+    1.21374845504761,
+    -151.600006103516
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (1.6 m from a wall, 99.0 m from a fence)]"
+  },
+  {
+   "at": [
+    16.25,
+    2.10729885101318,
+    -176.0
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "over_edge",
+   "mode": "choose",
+   "n": 19.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]"
+  },
+  {
+   "at": [
+    16.25,
+    1.82244420051575,
+    -161.800003051758
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "over_edge",
+   "mode": "choose",
+   "n": 20.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]"
+  },
+  {
+   "at": [
+    16.25,
+    0.848579466342926,
+    -133.0
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "over_edge",
+   "mode": "choose",
+   "n": 21.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]"
+  },
+  {
+   "at": [
+    16.25,
+    0.287790983915329,
+    -113.0
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "over_edge",
+   "mode": "choose",
+   "n": 22.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]"
+  },
+  {
+   "at": [
+    31.6000003814697,
+    0.834651589393616,
+    -137.600006103516
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 23.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    16.7750070991161,
+    3.64893209934234,
+    -185.750031650373
+   ],
+   "box": [
+    -2.05003440380096,
+    1.49999868869781,
+    6.8249933719635,
+    0.340022840499878,
+    2.99999737739563,
+    0.389986553192139
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 30.0,
+   "name": "sc_col_0",
+   "node": "Buildings/brick",
+   "op": "add_box",
+   "reason": "brick: a 0.3 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    17.8900365381508,
+    3.21354520320893,
+    -154.82519275221
+   ],
+   "box": [
+    1.02481365203857,
+    1.49998188018799,
+    6.87996387481689,
+    0.16,
+    2.99996376037598,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 31.0,
+   "name": "sc_col_0",
+   "node": "Buildings/row",
+   "op": "add_box",
+   "reason": "row: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    17.9951669610098,
+    3.21354520320893,
+    -149.115106401942
+   ],
+   "box": [
+    6.73489999771118,
+    1.49998188018799,
+    6.77483320236206,
+    0.49018482208252,
+    2.99996376037598,
+    0.490083732604981
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 32.0,
+   "name": "sc_col_1",
+   "node": "Buildings/row",
+   "op": "add_box",
+   "reason": "row: a 0.5 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    17.8900363689886,
+    3.21354520320893,
+    -150.955213847486
+   ],
+   "box": [
+    4.8947925567627,
+    1.49998188018799,
+    6.87996387481689,
+    0.16,
+    2.99996376037598,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 33.0,
+   "name": "sc_col_2",
+   "node": "Buildings/row",
+   "op": "add_box",
+   "reason": "row: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    15.5500036954646,
+    2.6363765001297,
+    -144.017529958695
+   ],
+   "box": [
+    -3.81753265857697,
+    1.42064321041107,
+    8.04999685287476,
+    0.20498064994812,
+    2.84128642082214,
+    1.14000705718994
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 34.0,
+   "name": "sc_col_0",
+   "node": "Buildings/corner",
+   "op": "add_box",
+   "reason": "corner: a 0.2 x 1.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    17.8900365381464,
+    1.86361521482468,
+    -113.975086989728
+   ],
+   "box": [
+    1.02491331100464,
+    1.49998188018799,
+    6.87996387481689,
+    0.16,
+    2.99996376037598,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 35.0,
+   "name": "sc_col_0",
+   "node": "Buildings/cafe",
+   "op": "add_box",
+   "reason": "cafe: a 0.1 x 0.1 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "n_hs_b6_amber"
+}
