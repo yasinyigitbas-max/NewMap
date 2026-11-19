@@ -65,9 +65,8 @@ func _build(bl: Node3D, props: K.Props, dec: K.Decals, rr: RandomNumberGenerator
 		K.building(bl, String(d[1]), Vector3(float(d[5]), float(ysp.call(0.0, 0.0)), float(d[4])), -90.0, String(d[0]))
 	var P := func(base: String, cond: String, x: float, z: float, yaw := 0.0, collide := true) -> void: H.put(props, base, cond, x, z, yf, yaw, collide)
 	# ---- the walk's edge of the shops (never before a door: post office 109.82, bistro 132.95, corner 140.21 / 142.37,
-	# arcade 156.42 / 158.58 / 169.42 / 171.58, cafe 184.36; Amber's bus shelter at v 164): pots, papers, a bike rack,
-	# the post box
-	P.call("prop_mailbox_wall_black", "worn", 16.3, 104.0, -90.0)
+	# arcade 156.42 / 158.58 / 169.42 / 171.58, cafe 184.36; Amber's bus shelter at v 164): pots, papers, a bike rack
+
 	P.call("prop_newspaper_box_blue", "worn", 16.3, 117.4, -90.0)
 	P.call("prop_newspaper_box_red", "worn", 16.3, 118.1, -90.0)
 	for z: float in [125.0, 136.4, 145.6, 179.6]: P.call("plant_potted_succulent", "normal", 16.25, z, 0.0, false)
