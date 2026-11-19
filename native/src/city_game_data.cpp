@@ -222,7 +222,8 @@ Dictionary CityGame::snapshot() const {
 	g["day"] = day; g["hour"] = hour; g["money"] = money; g["flags"] = flags; g["voice"] = voice;
 	Dictionary sd; sd["y"] = 2026; sd["m"] = 10; sd["d"] = 24; g["start_date"] = sd;
 	st["game"] = g;
-	st["economy"] = Dictionary(); st["needs"] = Dictionary(); st["health"] = Dictionary(); st["lessons"] = Dictionary(); st["npc_memory"] = Dictionary();
+	st["economy"] = Dictionary(); st["lessons"] = Dictionary(); st["npc_memory"] = Dictionary();
+	{ Dictionary h; h["value"] = health; st["health"] = h; Dictionary n; n["hunger"] = hunger; n["thirst"] = thirst; n["energy"] = energy; n["active"] = needs_active; st["needs"] = n; }
 	Dictionary story; story["path"] = ""; story["id"] = ""; story["step"] = 0; st["story"] = story;
 	Node3D *pl = player_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
 	if (pl && pl->is_inside_tree()) {
@@ -240,6 +241,8 @@ void CityGame::apply_snapshot(const Dictionary &st) {
 	const Dictionary g = st.get("game", Dictionary());
 	day = (int)g.get("day", 1); hour = (double)g.get("hour", 9.0); money = (int)g.get("money", 50);
 	flags = g.get("flags", Dictionary()); voice = g.get("voice", "f");
+	{ const Dictionary h = st.get("health", Dictionary()); health = (float)(double)h.get("value", 1.0);
+	  const Dictionary n = st.get("needs", Dictionary()); hunger = (float)(double)n.get("hunger", 1.0); thirst = (float)(double)n.get("thirst", 1.0); energy = (float)(double)n.get("energy", 1.0); needs_active = (bool)n.get("active", false); }
 	Node3D *pl = player_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
 	const Dictionary p = st.get("player", Dictionary());
 	if (!pl && p.has("pos")) pending_player = p;   // (the world gives the player later)
@@ -561,6 +564,12 @@ void CityGame::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_loading", "progress", "key"), &CityGame::set_loading, DEFVAL(""));
 	ClassDB::bind_method(D_METHOD("close_loading"), &CityGame::close_loading);
 	ClassDB::bind_method(D_METHOD("has_picture", "slot"), &CityGame::has_picture);
+	ClassDB::bind_method(D_METHOD("set_objective", "at"), &CityGame::set_objective);
+	ClassDB::bind_method(D_METHOD("clear_objective"), &CityGame::clear_objective);
+	ClassDB::bind_method(D_METHOD("get_objective_on"), &CityGame::get_objective_on);
+	ClassDB::bind_method(D_METHOD("get_needs_active"), &CityGame::get_needs_active);
+	ClassDB::bind_method(D_METHOD("set_needs_active", "on"), &CityGame::set_needs_active);
+	ClassDB::bind_method(D_METHOD("get_hud"), &CityGame::get_hud);
 	ClassDB::bind_method(D_METHOD("menu_picture_shown"), &CityGame::menu_picture_shown);
 	ClassDB::bind_method(D_METHOD("loading_picture_shown"), &CityGame::loading_picture_shown);
 	ClassDB::bind_method(D_METHOD("is_loading_fading"), &CityGame::is_loading_fading);
