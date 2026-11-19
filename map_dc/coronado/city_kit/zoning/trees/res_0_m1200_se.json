@@ -1,0 +1,14 @@
+{
+ "area": "res_0_m1200_se", "piece": "r_q_0_m1200_se", "zone": "residential yards",
+ "rule": "docs/TREE_PLAN.md: one yard tree for every two or three houses, in back yards and at lot corners, never against a fence or a wall (zone 813 -> about 400)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The quadrant's thirty builder trees go (a row of queen palms, torrey pines and corals every 6 m along the back fences, two fan palms 3 m from the house fronts, magnolias, jacarandas and others by the yards); seven come back on their own spots, about one for every two or three houses: by the picnic table, the chairs, the grills and the beach umbrellas, and on the open lot corner.",
+ "trees": [
+  {"base": "tree_magnolia_b", "cond": "normal", "at": [70.0, 13.003, -1134.0], "yaw": 10.0, "scale": 0.9, "why": "the shared back lawn with the picnic table and the shade sail: a magnolia beside them"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [93.0, 12.191, -1134.0], "yaw": 100.0, "scale": 0.9, "why": "the same lawn 23 m east, 13 m from any wall: the lawn's second tree"},
+  {"base": "tree_norfolk_pine_c", "cond": "normal", "at": [88.0, 12.019, -1112.0], "yaw": 190.0, "scale": 0.85, "why": "the big open lot corner, 35 m from the walls: one norfolk pine, a landmark seen from the street"},
+  {"base": "tree_coral_b", "cond": "normal", "at": [28.5, 14.13, -1164.5], "yaw": 280.0, "scale": 0.85, "why": "the west back yard with the adirondack chair and the beach umbrella: a coral tree over them"},
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [71.1, 13.29, -1159.8], "yaw": 30.0, "scale": 0.85, "why": "the back yard with the adirondack chair and the gas grill: a magnolia over both"},
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [113.9, 11.72, -1161.4], "yaw": 120.0, "scale": 0.85, "why": "the east back yard by the closed beach umbrella, 43 m on: the same"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [42.6, 13.27, -1104.8], "yaw": 210.0, "scale": 0.85, "why": "the north yard with the adirondack chair and the gas grill: a coral tree over them"}
+ ]
+}
