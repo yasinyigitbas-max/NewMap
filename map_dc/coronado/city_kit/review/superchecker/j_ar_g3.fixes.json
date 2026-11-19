@@ -1,0 +1,91 @@
+{
+ "fixes": [
+  {
+   "at": [
+    9.75025177001953,
+    0.150000005960464,
+    -13.3502521514893
+   ],
+   "base": "prop_signal_post",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_signal_post leaves 0.8 m of a 2.0 m wide walk]"
+  },
+  {
+   "at": [
+    8.75,
+    0.150000005960464,
+    24.7999992370605
+   ],
+   "base": "prop_shopping_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_shopping_cart leaves 1.0 m of a 1.8 m wide walk]"
+  },
+  {
+   "at": [
+    -10.7402019500732,
+    0.162000000476837,
+    -14.3402013778687
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove_decal",
+   "reason": "crack mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -9.74020195007324,
+    0.162000000476837,
+    14.3402013778687
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove_decal",
+   "reason": "crack mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    10.7402019500732,
+    0.162000000476837,
+    -14.3402013778687
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove_decal",
+   "reason": "crack mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    9.74020195007324,
+    0.162000000476837,
+    14.3402013778687
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove_decal",
+   "reason": "crack mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "j_ar_g3"
+}

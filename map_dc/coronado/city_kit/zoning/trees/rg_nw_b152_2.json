@@ -1,0 +1,69 @@
+{
+ "area": "rg_nw_b152_2",
+ "piece": "s_rg_nw_b152_2",
+ "zone": "ring boulevard (curve)",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms, the palm boulevard round the island (zone 1,165 -> about 1,000); within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -956.729,
+    3.319,
+    -1085.856
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "outer parkway grass at the start of the curve, a queen palm (old spot and species)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -983.78,
+    3.689,
+    -1071.283
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "inner parkway grass about 30 m away, the next queen palm"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -963.807,
+    3.809,
+    -1058.162
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "outer parkway grass about 24-28 m on, the next queen palm"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -989.772,
+    3.994,
+    -1050.62
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "inner parkway grass about 22-27 m on, the next queen palm (one species on the curve: the fan palm here becomes a queen palm)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -970.871,
+    4.077,
+    -1035.334
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "outer parkway grass about 24 m on, the last queen palm; spots closer than 20 m go"
+  }
+ ]
+}
