@@ -5,7 +5,7 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
-- 19 Nov (cloud, `claude/fill-high-street`): HIGH STREET FILL: block 1 seen ("its fine roll out to the entire zone"); block 2 built (church landmark, park, mews, community center, 7 rooms); block 3 built (beach plaza + lookout, dingbats, cottages, motel, 8 rooms). Blocks 4-6 in progress. Nothing locked; read `review/fill_hs/README.md`.
+- 19 Nov (cloud, `claude/fill-high-street`): HIGH STREET FILL: block 1 seen ("its fine roll out to the entire zone"); block 2 built (church landmark, park, mews, community center, 7 rooms); block 3 built (beach plaza + lookout, dingbats, cottages, motel, 8 rooms). block 4 built (Amber arcade + cinema + corner plaza kept for the hero hotel, 11th St apartments, B Ave houses, Ocean Park skate plaza, 9 rooms). Blocks 5-6 (steep) in progress. Nothing locked; read `review/fill_hs/README.md`.
 - 19 Nov ~20:00 (PC session): A TRAFFIC CAR THAT IS HIT IS A REAL CAR, ALL C++ (Yasin after the compaction: "act like
   a developer working for rockstars next GTA and tackle the problems"). Read docs/TRAFFIC_PEOPLE_PORT.md section 23.
   Six physical cars (`CityCar`) are made at the start; a moving or parked car of the traffic that the player's car

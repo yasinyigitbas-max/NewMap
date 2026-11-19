@@ -121,6 +121,50 @@
    "yaw": 0.0,
    "site": "high street block 3, Ocean Blvd (u -140..-50, v 254..Ocean Blvd)",
    "part": "Seabreeze Motel, Beach Rentals condo, the walk to the beach, the residents' alley"
+  },
+  {
+   "piece": "n_hs_b4_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 4, Amber east (u 16..50, v 209.7..Ocean Blvd)",
+   "part": "Spanish arcade (books, coffee, gallery), stucco block (pharmacy), pub, beach cinema and snack bar, bakery by the bus stop; the corner palm plaza (the hero hotel's site, kept); rear lot"
+  },
+  {
+   "piece": "n_hs_b4_eleventh",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 4, 11th St (u 50..190, v 209.2..254)",
+   "part": "six apartment houses on terraces up 11th St, shared yards, tenants' parking off the residents' alley, the east walk"
+  },
+  {
+   "piece": "n_hs_b4_cottages",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 4, B Ave (u 190..240.8, v 209.2..Ocean Blvd)",
+   "part": "seven houses facing B Ave on stepped lots, garages on the service alley, the residents' alley's east end"
+  },
+  {
+   "piece": "n_hs_b4_ocean",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 4, Ocean Blvd (u 50..190, v 254..Ocean Blvd)",
+   "part": "the residents' alley; Ocean Park: skate shop and plaza, sand volleyball, picnic lawn, park parking, one gate on the boulevard"
   }
  ]
 }

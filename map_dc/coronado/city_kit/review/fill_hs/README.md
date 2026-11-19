@@ -226,3 +226,85 @@ kiosk (no contract), the homes.
 - The kit's corner model keeps its painted VILLAGE THEATRE / CROWN CAFE boards on its sides in street views that do not
   load the rooms (the shop rooms carry their own signs over the boards they claim).
 - Beach Rentals' inside is clothes racks and a bike stand: thin for a rental shop (by eye).
+
+## Block 4: east of Amber, 11th St to the ring's Ocean Blvd, Amber to B Ave
+A whole block (no pilot inside), 225 x 120 m, four streets round it: 11th St (rising 4.15 -> 6.15 eastward), Amber
+(falling 4.15 -> 2.15 to the beach), B Ave (falling 6.15 -> 4.15) and Ocean Blvd (rising 2.15 -> 4.15 eastward, its edge
+on a slant). The ground is ONE surface through those four measured profiles (`n_hs_b4_site.gd`): the ring's and 11th
+St's profiles blended by Amber's fall on the west and B Ave's on the east, equal to each street at its edge. Alley
+mouths: 11th St at u 190..196 (a service alley south to a turning stub) and B Ave at v 254..260 (the residents' alley
+west to the Amber shops' rear lot).
+| piece | what and why |
+|---|---|
+| `n_hs_b4_amber` | The east side of Amber's beach end, facing block 3's shops, each building on its own level pad: a **Spanish arcade** on the 11th St corner (its arches over the walk; **Arcade Books**, **Arches Coffee**, **Shoreline Gallery**), a stucco block with **Ocean Pharmacy** and flats, **The Crown & Anchor** pub, the **Beach Cinema** with its **Cinema Snacks** door, **Sunrise Bakery** by Amber's bus stop. From the bus stop to Ocean Blvd a **corner palm plaza** (palms in beds, benches facing the ocean, a fountain, bike racks, bollards, lamps): the corner where the real town has its great beach hotel, a hero site - this plaza stands there until Yasin decides. Rear lot behind off the residents' alley (back doors kept clear, dumpsters by the food shops). |
+| `n_hs_b4_eleventh` | Up 11th St from the shops toward the B Ave houses: two three-storey modern rows, a Spanish revival court, a small row, a white courtyard block and a long garden-apartment block, each on its own terrace at the walk height of its middle (11th rises 1.7 m along the row) with steps on every path, lawns, a palm or flowering tree each, hedges open at the paths, mailboxes; patios behind on the terrace, shared yards (washing, benches, trees), the tenants' parking (51 stalls) nose-in off the alley, bins at its edge; a walk at the east end from 11th St to the alley and the park. |
+| `n_hs_b4_cottages` | Seven houses facing B Ave (the residential growth faces them from across the street), each different (craftsman, Victorian, Cape, Spanish, craftsman, beach cottage, a narrow two-storey on the Ocean Blvd corner), each lot a level pad (B Ave falls 2 m: faces up to ~0.25 m at the lot lines, steps where the face crosses the front path), closed all round (picket on the street open at the path, iron for the Spanish house, privacy behind, privacy on the alley meeting the garage), garages on the service alley with ramps, a back-yard life each (showers, surfboards, a kayak rack, a swing set, washing, grills). |
+| `n_hs_b4_ocean` | The residents' alley, and **Ocean Park** on the beach side: the **Ocean Park Skate** shop (on a level pad at its front, cut into the slope behind) and its **skate plaza** (quarter pipes facing across the run, a funbox, rails, two bowl sections, benches round it, bike racks, a fountain), a **sand volleyball** court with a beach shower, a **picnic lawn** with palms, tables and grills; park parking off the alley; one main path from the parking to the park's one gate in the boulevard hedge, a cross path linking the three. The plaza, the court and the lawns follow the 1.5 % slope: no wall where a skater or a ball runs. |
+
+### Land and seams (block 4)
+- With the land as it is now: 658 m2 under the land, none over 30 cm, floating 0. With the DRY trial fit (560 nodes
+  lowered, usual 0.08 m, largest 0.34 m; not written): under 0, floating 0. **The shared land was not changed.**
+- Seams: all 19 shared edges (the four streets' walks and junctions, the ring, my four pieces with each other):
+  largest 1.1 cm, 0 m over 2 cm. Found and fixed on the way: a 9 cm face 10 cm from the 11th St walk (the band there
+  is now 0.7 m+), a 2.0 cm step where the arcade's pad met the rising 11th St walk (its pad now at the mean of its
+  two walks, 4.161), a 0.23 m plinth under the 20 m beach condo's facade on Amber's steepest stretch (gone with the
+  condo, see below).
+
+### Checks (block 4 area: the 34 pieces round it + mine)
+| check | result |
+|---|---|
+| `validate.gd` | 0 problems on the whole area |
+| `check_life.gd` | 0 on my pieces (69 elsewhere, all in the pilot's own pieces: r_n, r_s fences, d_pilot glass, b_* poles) |
+| `audit_trees.gd` | 277 trees, 0 in hard ground |
+| `sink_check.gd` | 0 props off the ground |
+| `check_rooms.gd --only=g_hs_` | 0 problems, 34 rooms (blocks 1-4) |
+| lock test | RESULT PASS |
+What they cannot see: as for block 1 (no check sees whether a prop makes sense where it is, a face's look, or the
+room's taste; validate knows only front doors). Fixed on the way, found by the checks: a bougainvillea in a bird of
+paradise, a bike stand and a shower in the hose reels, a condenser inside the arcade, privacy fences into two garages
+and then ending in the air (now ending at each garage model's own side, its stats footprint is narrower than the
+model). Two door problems were street props of the locked Amber piece (a bin before an arcade shop door, the bus
+shelter before the condo's patios): I could not move them, so the arcade moved 0.25 m north and the beach condo gave
+way to a smaller bakery; the corner plaza grew to start at the bus stop.
+
+### Walk-in places, block 4 (built)
+| room | kind | name |
+|---|---|---|
+| g_hs_b4_amber_arcade_0 | books | Arcade Books |
+| g_hs_b4_amber_arcade_1 | cafe | Arches Coffee |
+| g_hs_b4_amber_arcade_2 | gallery | Shoreline Gallery |
+| g_hs_b4_amber_stucco_0 | pharmacy | Ocean Pharmacy |
+| g_hs_b4_amber_pub_0 | bar | The Crown & Anchor |
+| g_hs_b4_amber_cinema_0 | venue | Beach Cinema (its ticket hall) |
+| g_hs_b4_amber_cinema_1 | fast_food | Cinema Snacks |
+| g_hs_b4_amber_bakery_0 | bakery | Sunrise Bakery |
+| g_hs_b4_ocean_skate_0 | sport | Ocean Park Skate |
+Two changes in my generator copy `room_gen_hs.gd` (found by `check_rooms`): a shop door with a raised sill (the skate
+shed's, 0.2 m) gets the room's floor at the sill (the pilot's own skate-shed room has the same "doorway" report);
+the bakery's shelves are stocked models (the kit's bakery shelf ships empty). The rooms of blocks 1-3 were not rebuilt.
+NOT built: the homes; no bar or bakery back-of-house beyond what the generator gives.
+
+### Pictures (trial land, no shadows, only the block's area loaded; all opened by me)
+| file | view | preview draws / primitives |
+|---|---|---|
+| `b4_top.jpg` | straight down | 602 / 2.05 M |
+| `b4_amber_to_beach.jpg` | Amber from the 11th St corner under the arcade to the beach (cars off) | 74 / 1.17 M |
+| `b4_11th_east.jpg` | 11th St east past the apartment terraces (cars off) | 196 / 1.21 M |
+| `b4_steepest_b_ave.jpg` | the steepest edge: B Ave falling 2 m past the stepped house lots | 120 / 1.29 M |
+| `b4_ocean_park.jpg` | Ocean Blvd west past the park hedge, the skate plaza beyond (cars off) | 267 / 1.23 M |
+| `b4_skate_plaza.jpg` | the skate plaza and the shop | 360 / 1.65 M |
+| `b4_corner_plaza.jpg` | the corner plaza (the hero hotel's site) from Amber x Ocean Blvd | 449 / 1.94 M |
+| `b4_residents_alley.jpg` | the residents' alley west from B Ave | 296 / 1.68 M |
+| `b4_rooms_1..5.jpg` | each shop: street front + inside | - |
+Preview numbers are not game numbers (whole-island terrain about 1.1 M triangles, unmerged batches, preview cars where on).
+
+### NOT done / NOT checked (block 4)
+- Not shown to Yasin; nothing locked; not in the shared layout; no bake, no phone.
+- **Ask Yasin:** the hero hotel at Amber x Ocean Blvd. The palm plaza holds the corner (v 289..ring); a hand-made hotel
+  would replace it and the bakery.
+- By eye, thin: the skate shop's inside (a counter, one shelf, a bike stand in an 11 x 9 m room), the cinema's ticket
+  hall (a counter and posters), and the bakery's shelves show grocery goods, not bread (the kit has no stocked bread
+  shelf). The gallery's middle is rows of benches. The checker passes all four; it does not judge taste.
+- The skate plaza's two bowl sections show their tall backs to the cross path and the boulevard.
+- The arcade model shows its own painted boards in street views without rooms (as the corner models in blocks 1-3).
+- The street views' bakery front is half hidden by the street piece's pole (`b4_rooms_2.jpg`).
