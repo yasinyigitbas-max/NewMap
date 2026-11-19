@@ -1,0 +1,33 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -122.25,
+    2.75999999046326,
+    -25.8500003814697
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 58.0,
+   "op": "add_collider",
+   "reason": "fence_wood_privacy has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -124.466667175293,
+    2.75999999046326,
+    -25.8500003814697
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 59.0,
+   "op": "add_collider",
+   "reason": "fence_wood_privacy has no collision: you walk and drive through it"
+  }
+ ],
+ "scene": "r_q_250_m1000_nw"
+}

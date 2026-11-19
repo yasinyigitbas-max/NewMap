@@ -32,6 +32,27 @@ claimed by the other session. Always work on branch `claude/festive-faraday-20lt
    If the pull hits a conflict in `locked.json`, `city_grid_layout.json` or `review/superchecker/log.jsonl`: keep BOTH
    sides' entries (they are different pieces), `git add`, `git rebase --continue`, run the lock test again, push.
 
+## The streets and junctions (second list, 19 Nov evening)
+Yasin: "start the streets with the cloud session, again you start from top, they start from bottom, you meet in between".
+The list is `review/superchecker/ORDER_STREETS.txt` (357 `s_*` / `j_*` pieces in the layout, by family). Same claims
+folder, same steps 1-4 above, with these differences:
+- The checker was first tried on `s_rs_b002_a`: its red kerb paint (15 cm strips on the kerb top, by a hydrant and a
+  bus stop) read "paint on grass" because street pieces keep the kerb top in their grass / sidewalk surface. Fixed in
+  `sc_find.py` (`kerb_paint`): a paint strip at most 25 cm wide running against the asphalt is kerb paint. Grime and
+  pale patches on the parkway grass are still erased (road wear, Yasin: deleting it is fine). No road, kerb, sidewalk
+  or ground surface is ever deleted.
+- 36 street pieces stand in the layout more than once: a change to the piece shows at every place it stands. The
+  tree list is in WORLD coordinates (grid frame, like every `t_*`), so it holds the trees of every place it stands.
+- Trees, from docs/TREE_PLAN.md section 2 (one list per street piece, area = the piece name without `s_` / `j_`):
+  residential streets (`rs`, `res`): parkway trees, runs of ONE species per block face, 20-30 m apart, gaps at
+  driveways and lamps; pines and palms on hill streets, broadleaf on the flat. Ring boulevard (`rg`): palms; broadleaf
+  only at park edges. Amber spine (`am`, `amber`) and arterials (`ar`): trees in wells on the shop side, palms
+  alternating on Amber. Bridge (`br`), waterfront (`wf`, `wfd`): palms only, spaced. City centre (`cc`): wells on the
+  wide pavements only. Strip: the palm parkway. Gritty (`grt`), industrial (`ind`): none. Junctions: usually none
+  (sight lines at the corners). Keeping a builder tree's old spot is fine when the plan's spacing puts one there
+  (Yasin: "if the plan puts new trees in old spots it is fine, stick to the plan"). A tree that stays in a WELL: write
+  the list BEFORE `block.sh`, so its well is not paved. Every line has its why.
+
 ## Never
 - run a piece's building script, rebuild a piece or room, change the land, delete roads or ground surfaces;
 - write code that chooses places or trees for many items: the decide step only deletes or slides along a wall;

@@ -77,18 +77,30 @@ def where(piece, x, z):
 
 def check(area, dump_dir=None, say=True):
     j = load(area); piece = j['piece']
-    c = context(piece, dump_dir=dump_dir)
-    fence = [(o.ctr - o.along() * o.half[0], o.ctr + o.along() * o.half[0]) for o in c.all_items if o.kind in ('fence', 'gate')]
-    stalls = []
-    for r in [c.me] + c.neigh:
-        for s in c.dumps[r.id].meta.get('stalls', []) or []:
-            p = r.pts([[float(s[0]), 0.0, float(s[1])]])[0]
-            stalls.append(L.rect_quad(p[[0, 2]], (1.15, 2.4), math.radians(float(s[2]) + r.yaw)))
+    # a street piece may stand in the layout more than once (its tree list, in city numbers, holds the trees of every
+    # place it stands): each tree is checked in the area of the place it is in
+    places = [r for r in L.load_layout() if r.piece == piece]
+    if not places: sys.exit('no layout row places %s' % piece)
+    ctxs = [F.Ctx(L.load_layout(), r, dump_dir=dump_dir, reach=45.0) for r in places]
+    keep = {}
+    def area_of(cc):
+        if id(cc) not in keep:
+            fence = [(o.ctr - o.along() * o.half[0], o.ctr + o.along() * o.half[0]) for o in cc.all_items if o.kind in ('fence', 'gate')]
+            stalls = []
+            for r in [cc.me] + cc.neigh:
+                for s in cc.dumps[r.id].meta.get('stalls', []) or []:
+                    p = r.pts([[float(s[0]), 0.0, float(s[1])]])[0]
+                    stalls.append(L.rect_quad(p[[0, 2]], (1.15, 2.4), math.radians(float(s[2]) + r.yaw)))
+            keep[id(cc)] = (fence, stalls)
+        return keep[id(cc)]
     bad = 0; rows = []
     T = j['trees']
     for k, t in enumerate(T):
         x, y, z = [float(v) for v in t['at']]; probs = []
-        if not (c.lo[0] - 45 <= x <= c.hi[0] + 45 and c.lo[1] - 45 <= z <= c.hi[1] + 45): probs.append('outside the area round %s' % piece)
+        inside = [cc for cc in ctxs if cc.lo[0] - 45 <= x <= cc.hi[0] + 45 and cc.lo[1] - 45 <= z <= cc.hi[1] + 45]
+        c = inside[0] if inside else ctxs[0]
+        fence, stalls = area_of(c)
+        if not inside: probs.append('outside the area round %s' % piece)
         if not L.Kit.man(t['base']): probs.append('no kit model "%s"' % t['base'])
         g = c.S.ground(x, z)
         if g is None: probs.append('no ground under it')
@@ -125,12 +137,13 @@ def check(area, dump_dir=None, say=True):
     if area not in all_lists():
         for t in T: every.append((t['base'], float(t['at'][0]), float(t['at'][2])))
     pts = {}
-    S = c.S
-    for k in range(len(S.T)):
-        if S.kind[k] != 'ground' or S.mat[k] != 'asphalt': continue
-        p = next((r.piece for r in c.neigh if r.id == S.own[k]), '')
-        if not p.startswith(('s_', 'j_')): continue
-        m = S.T[k].mean(0); pts[(round(m[0] / 10), round(m[2] / 10))] = (m[0], m[2])
+    for c in ctxs:
+        S = c.S
+        for k in range(len(S.T)):
+            if S.kind[k] != 'ground' or S.mat[k] != 'asphalt': continue
+            p = next((r.piece for r in [c.me] + c.neigh if r.id == S.own[k]), '')
+            if not p.startswith(('s_', 'j_')): continue
+            m = S.T[k].mean(0); pts[(round(m[0] / 10), round(m[2] / 10))] = (m[0], m[2])
     worst_b = 0; worst_a = 0
     for (px, pz) in pts.values():
         nb = sum(1 for b, x, z in every if np.hypot(x - px, z - pz) <= 60 and F.has(b, BROADLEAF))

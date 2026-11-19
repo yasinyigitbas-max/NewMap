@@ -469,7 +469,13 @@ class Props:
 				if ResourceLoader.exists(colf):
 					var inst3: Node = (load(colf) as PackedScene).instantiate()
 					var cm: MeshInstance3D = kit._first_mesh(inst3)
-					if cm and cm.mesh: shapes[base2] = [cm.mesh.create_convex_shape(true, true), cm.transform]
+					# TRUE SHAPE (19 Nov night, Yasin: "check whether your collisions are actually true to size" / "fix all of
+					# them"): the kit's collision mesh as it is, solid from both sides. A convex hull filled every open
+					# prop: a bus shelter or a bandstand was a solid block, a swing set, an arbor or a billboard a wall.
+					if cm and cm.mesh:
+						var tsh: ConcavePolygonShape3D = cm.mesh.create_trimesh_shape()
+						tsh.backface_collision = true
+						shapes[base2] = [tsh, cm.transform]
 					inst3.free()
 			if shapes[base2] == null: continue
 			var cs := CollisionShape3D.new(); cs.shape = shapes[base2][0]; cs.transform = (c[2] as Transform3D) * (shapes[base2][1] as Transform3D)
