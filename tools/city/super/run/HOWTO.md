@@ -60,6 +60,11 @@ folder, same steps 1-4 above, with these differences:
   (the deck is a prop, not a ground surface).
 - Yasin's newest word (from the PC session): NO tree stays in a well; every well is emptied and paved in its rim's
   material; new trees only on grass or mulch beds, by hand per the street family's rule.
+- (cloud session) FIXER FAULT, not fixed: `remove_decal` rebuilds the whole wear surface with add_surface_from_arrays, and
+  Godot re-encodes every mark's normal (octahedral): marks facing sideways (kerb faces, normal about (-0.99, 0, 0.16)) move
+  by ~0.0002, so the proof reports them UNEXPLAINED and says FAIL (s_rg_nw_b163_1: 22 marks). Workaround used: keep that
+  piece's off-surface marks (`keep N`). Real fix: splice the surface without re-encoding, or let the proof compare normals
+  within 1e-3. Pieces with only upward-facing marks are not affected.
 
 ## Never
 - run a piece's building script, rebuild a piece or room, change the land, delete roads or ground surfaces;

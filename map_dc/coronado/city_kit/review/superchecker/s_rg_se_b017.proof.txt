@@ -1,0 +1,32 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 13 nodes (with every mesh of the buildings), 1448 ground and ground-collision triangles, 6 prop instances, 3 colliders, 124 wear marks are identical in both files
+PROOF differences found between the files: 43 lines only in the old one, 3 only in the new one
+PROOF change #6 move prop_lamp_cobra: (6.30, 0.15, 53.75) -> (6.30, 0.08, 53.75), in 2 tier(s) and its collider  [prop_lamp_cobra hangs 0.07 m over what is under it]
+PROOF change #1 remove tree_coral_a at (-6.45, 0.09, 29.17) removed, in 3 tier(s) and its collider  [tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_coral_b at (-6.45, 0.09, 65.50) removed, in 3 tier(s) and its collider  [tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_magnolia_b at (6.45, 0.09, 37.45) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_torrey_pine_b at (6.45, 0.09, 45.40) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove palm_queen_b at (6.45, 0.09, 70.95) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove_decal: one wear mark at (-5.08, 0.01, 30.50) removed  [crack mark lies on grass]
+PROOF change #8 remove_decal: one wear mark at (5.12, 0.01, 54.25) removed  [crack mark lies on grass]
+PROOF change #9 remove_decal: one wear mark at (5.16, 0.01, 30.72) removed  [crack mark lies on grass]
+PROOF change #10 remove_decal: one wear mark at (4.96, 0.01, 65.13) removed  [crack mark lies on grass]
+PROOF change #11 remove_decal: one wear mark at (4.99, 0.01, 65.11) removed  [crack mark lies on grass]
+PROOF note: 'Props/palm_queen_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_near' held only listed items and is gone with them
+PROOF 11 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

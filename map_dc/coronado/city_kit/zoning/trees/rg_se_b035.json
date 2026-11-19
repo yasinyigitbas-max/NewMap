@@ -1,0 +1,69 @@
+{
+ "area": "rg_se_b035",
+ "piece": "s_rg_se_b035",
+ "zone": "ring boulevard",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms, the palm boulevard round the island; within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -206.45,
+    2.15,
+    228.143
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first queen palm of the west row (old spot and species)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -206.45,
+    2.15,
+    267.766
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass, the next queen palm (old spot and species), clear of the kerb inlet (2.7 m); driveways in the 40 m between"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -206.45,
+    2.15,
+    290.757
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway grass 23 m on, the last queen palm (one species a face: the fan palm here becomes a queen palm)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -193.55,
+    2.15,
+    245.681
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway grass, first fan palm of the east row (the boulevard is palms: the coral tree here becomes a palm)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    -193.55,
+    2.15,
+    281.81
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway grass 36 m on, the second fan palm"
+  }
+ ]
+}
