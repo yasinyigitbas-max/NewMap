@@ -1,0 +1,63 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 72 nodes (with every mesh of the buildings), 2496 ground and ground-collision triangles, 1140 prop instances, 327 colliders, 41 wear marks are identical in both files
+PROOF differences found between the files: 81 lines only in the old one, 0 only in the new one
+PROOF change #1 remove palm_mexican_fan_c at (110.95, 0.15, -15.95) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove palm_mexican_fan_c at (121.50, 0.15, -15.95) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove palm_mexican_fan_c at (132.05, 0.15, -15.95) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove palm_mexican_fan_a at (144.20, -0.54, -85.27) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove palm_mexican_fan_a at (144.20, -0.07, -57.00) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove palm_mexican_fan_b at (144.20, -0.28, -71.13) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove palm_mexican_fan_b at (144.20, 0.08, -42.87) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove palm_queen_a at (144.20, 0.14, -28.73) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove_decal: one wear mark at (127.07, 0.09, -39.92) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #11 remove_decal: one wear mark at (108.21, 0.12, -45.29) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #12 remove_decal: one wear mark at (133.41, 0.04, -47.16) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #13 remove_decal: one wear mark at (128.94, -0.24, -77.64) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #14 remove_decal: one wear mark at (133.51, -0.18, -69.47) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #15 remove_decal: one wear mark at (113.61, -0.17, -90.51) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #16 remove_decal: one wear mark at (131.06, 0.00, -53.06) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #17 remove_decal: one wear mark at (129.35, -0.14, -68.99) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #18 remove_decal: one wear mark at (113.67, 0.06, -56.13) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #19 remove_decal: one wear mark at (130.40, -0.33, -82.86) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #20 remove_decal: one wear mark at (136.54, -0.00, -52.46) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #21 remove_decal: one wear mark at (124.07, -0.34, -89.45) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #22 remove_decal: one wear mark at (133.24, -0.22, -73.12) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #23 remove_decal: one wear mark at (135.34, -0.27, -75.47) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #24 remove_decal: one wear mark at (110.60, -0.18, -96.56) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #25 remove_decal: one wear mark at (140.56, 0.03, -48.92) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #26 remove_decal: one wear mark at (111.17, 0.09, -52.08) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #27 remove_decal: one wear mark at (140.46, 0.05, -46.36) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #28 remove_decal: one wear mark at (139.16, -0.28, -73.83) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #29 remove_decal: one wear mark at (113.47, 0.16, -18.64) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #30 remove_decal: one wear mark at (103.94, 0.10, -74.62) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #31 remove_decal: one wear mark at (108.60, 0.13, -41.33) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #32 remove_decal: one wear mark at (127.07, 0.00, -54.49) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #33 remove_decal: one wear mark at (124.33, -0.45, -96.64) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #34 remove_decal: one wear mark at (118.89, -0.09, -73.91) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #35 remove_decal: one wear mark at (114.41, 0.13, -35.20) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #36 remove_decal: one wear mark at (140.59, 0.00, -51.27) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #37 remove_decal: one wear mark at (103.95, 0.13, -54.45) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #38 remove_decal: one wear mark at (138.53, -0.33, -77.02) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #39 remove_decal: one wear mark at (119.48, -0.02, -64.65) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #40 remove_decal: one wear mark at (114.54, -0.12, -84.73) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #41 remove_decal: one wear mark at (112.51, 0.15, -21.75) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #42 remove_decal: one wear mark at (132.18, -0.13, -65.75) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #43 remove_decal: one wear mark at (138.12, -0.02, -53.87) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #44 remove_decal: one wear mark at (118.87, -0.22, -86.82) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #45 remove_decal: one wear mark at (137.53, 0.01, -50.61) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF change #46 remove_decal: one wear mark at (115.10, -0.04, -72.98) removed  [an oil mark on gravel with no stall, garage or roll-up door near it]
+PROOF note: 'Props/palm_queen_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_near' held only listed items and is gone with them
+PROOF 45 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

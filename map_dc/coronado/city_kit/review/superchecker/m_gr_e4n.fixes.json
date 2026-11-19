@@ -1,0 +1,635 @@
+{
+ "fixes": [
+  {
+   "at": [
+    110.949996948242,
+    0.148680925369263,
+    -15.9499998092651
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    121.5,
+    0.147688448429108,
+    -15.9499998092651
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    132.050003051758,
+    0.147688448429108,
+    -15.9499998092651
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    144.199996948242,
+    -0.541919827461243,
+    -85.2666702270508
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    144.199996948242,
+    -0.0727743655443192,
+    -57.0
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    144.199996948242,
+    -0.27850878238678,
+    -71.1333312988281
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    144.199996948242,
+    0.0769671723246574,
+    -42.8666648864746
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    144.199996948242,
+    0.144992887973785,
+    -28.7333335876465
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    127.067489624023,
+    0.090848529090484,
+    -39.9150886535645
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    108.211952209473,
+    0.124746881425381,
+    -45.2863693237305
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    133.412872314453,
+    0.0425205733627081,
+    -47.1638793945312
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    128.938568115234,
+    -0.242235032220682,
+    -77.6448593139648
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    133.505172729492,
+    -0.179378601411978,
+    -69.4735107421875
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    113.605804443359,
+    -0.166572483877341,
+    -90.5099105834961
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    131.0615234375,
+    0.00110957181702057,
+    -53.0620155334473
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    129.353286743164,
+    -0.14303661386172,
+    -68.9882965087891
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    113.67204284668,
+    0.0646047182381153,
+    -56.1265830993652
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    130.395797729492,
+    -0.330192074179649,
+    -82.8578338623047
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 19.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    136.540252685547,
+    -0.00474943401604832,
+    -52.4583168029785
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    124.073425292969,
+    -0.335234994689624,
+    -89.4500503540039
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    133.240417480469,
+    -0.224261579414209,
+    -73.1233291625977
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 22.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    135.337783813477,
+    -0.274877672394117,
+    -75.4650650024414
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 23.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    110.600883483887,
+    -0.17816399782896,
+    -96.5596313476562
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 24.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    140.558334350586,
+    0.0276698575665553,
+    -48.9184989929199
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 25.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    111.173377990723,
+    0.0940066600839297,
+    -52.0754852294922
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 26.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    140.457092285156,
+    0.0503586443761984,
+    -46.362133026123
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 27.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    139.159576416016,
+    -0.280236984292666,
+    -73.8281936645508
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 28.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    113.466102600098,
+    0.156693900624911,
+    -18.6414260864258
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 29.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    103.937919616699,
+    0.10041460270683,
+    -74.6224212646484
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 30.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    108.597160339355,
+    0.130327694118023,
+    -41.3346824645996
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 31.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    127.066235860189,
+    0.00373141188174486,
+    -54.4945068359375
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 32.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    124.332168579102,
+    -0.447840561469396,
+    -96.6407928466797
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 33.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    118.892539978027,
+    -0.0900595349570115,
+    -73.9053573608398
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 34.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    114.406776428223,
+    0.127072972555955,
+    -35.1991195678711
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 35.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    140.587387084961,
+    0.00485750730149447,
+    -51.267448425293
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 36.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    103.945068359375,
+    0.133303004006545,
+    -54.4490165710449
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 37.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    138.530914306641,
+    -0.325990791122119,
+    -77.0217514038086
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 38.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    119.477340698242,
+    -0.0245293748254577,
+    -64.6548004150391
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 39.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    114.539085388184,
+    -0.123930864036083,
+    -84.7347564697266
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 40.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    112.513549804688,
+    0.152754450837771,
+    -21.74831199646
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 41.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    132.182922363281,
+    -0.126346375793219,
+    -65.7545547485352
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 42.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    138.122055053711,
+    -0.0203974489122629,
+    -53.8723182678223
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 43.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    118.866455078125,
+    -0.218045291801294,
+    -86.8221893310547
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 44.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    137.529098510742,
+    0.0115188513106356,
+    -50.6145858764649
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 45.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    115.096244812012,
+    -0.0384812696526448,
+    -72.9758605957031
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 46.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "m_gr_e4n"
+}
