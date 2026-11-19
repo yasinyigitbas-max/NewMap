@@ -4,7 +4,7 @@ Yasin: "Start working on hospital zone ... act like an exterior designer and cit
 ... take elevation into consideration ... Place a bus station at hospital ... No overlapping props in ground or the
 walls, make both indoors and outdoors, university itself included."
 
-Status: **built, checked on area layouts, NOT locked, NOT in the shared layout** (`city_grid_layout.json` untouched), the
+Status (19 Nov, end): **through the superchecker, hand trees placed, LOCKED** (Yasin: "then lock it"); NOT in the shared layout (`city_grid_layout.json` untouched), the
 land not written, no pictures taken (none looked at). Nobody has seen it.
 
 ## Hospital zone (ZONING.md MUST site: u 400..660, v -1600..-1400, 3rd St / Adela / the bay-front ring)
@@ -90,3 +90,27 @@ blocking a seat. Not walk-in: garages, the chapel (no contract), the coffee kios
 - Nobody has looked at it: no pictures (Yasin: none needed last time; say if wanted).
 - Not in `city_grid_layout.json`, not baked, no phone run; not locked.
 - The kit has no hospital props (beds, wheelchairs, ambulances): the rooms use waiting benches, desks, counters.
+
+## Superchecker pass and lock (Yasin: "use super checker in your entire zone and weed out the unnecessary parts, remove every
+## tree, fill their wells ... place new trees according to the tree plan ... be very prone to delete ... then lock it")
+The superchecker (`tools/city/super/`, brought in unchanged from `claude/festive-faraday-20ltx2`; `sc_lib.LAYOUT` may be an
+area layout, `SC_LAYOUT`) checked all 8 pieces and their 22 rooms. The pieces were unlocked drafts, so the fixes were made
+at the source, in each script, as a literal list with the checker's reason per line (`const SC`, `hs_fill_lib.sc_apply`):
+- every builder tree and palm out (353); the 7 mulch wells closed (the paving round them runs over)
+- deleted, as Yasin's rule says when no plainly safe place exists: 165 seats / tables with no reason, 54 bins in the
+  open, 37 things over the piece's edge, 22 on a path, 4 narrowing a walk, a rack across a walk, 2 stray benches, a
+  sail over nothing, 2 wall items with no wall (285); 21 oil marks where no car stands
+- 13 lamps turned back over their road; 33 collision boxes on building columns (the checker's measured sizes)
+- the 106 plants given collision (Yasin: "all of them should have collision"; the kit's own collision meshes)
+- steps rebuilt closed down to the ground (0.35 m treads, riser, sides, back), empty prop batches dropped
+- rooms: 5 items blocking a door or a shop window erased on proven copies (PROOF RESULT PASS), installed
+Re-check: only report-only findings left: `wide_batch` (a draw-cost note) and `empty_area` (the open lawns, kept open).
+
+Trees came back only by hand (`zoning/trees/hp_*.json`, `un_*.json`, each line with its why; the plan's "civic and parks"
+rule for the hospital and campus grounds, "one tree per court" for the dorm and care courts): 46 trees in 8 tree pieces
+`t_<area>`, every list `sc.py trees` ok (ground, walls, doors, fences, props, stalls, spacing, at most 3 broadleaf and 6
+trees in view from any street point against the plan's 8 / 12).
+
+Final checks (area layouts with the tree pieces): validate 0 / 0; check_life 0 on these pieces; trees 0 in hard ground;
+check_rooms 0 (22 rooms). Locked: the 8 pieces, the 8 tree pieces, the 22 room files; lock test RESULT PASS (537 pieces,
+125 files).

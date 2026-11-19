@@ -1,0 +1,45 @@
+{
+ "area": "un_west",
+ "piece": "n_un_west",
+ "zone": "civic (campus)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle (the plan has no hospital row: the hospital campus and the university are read as civic grounds)",
+ "written": "by hand, 19 Nov 2026 (claude/fill-high-street, superchecker over the hospital zone and campus): every builder tree out, these placed after the plan",
+ "trees": [
+  {
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "at": [
+    -742.0,
+    6.181,
+    -690.0
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "the labs' yard: shade over the lunch lawn by the engineering building"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -738.0,
+    5.949,
+    -575.0
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "the labs' yard: its second tree, by the lab wing"
+  },
+  {
+   "base": "tree_eucalyptus_a",
+   "cond": "normal",
+   "at": [
+    -788.0,
+    6.15,
+    -630.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "the J Ave edge: the campus edge streets' eucalyptus"
+  }
+ ]
+}

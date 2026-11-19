@@ -1,0 +1,57 @@
+{
+ "area": "hp_west",
+ "piece": "n_hp_west",
+ "zone": "civic (hospital) / apartments (care court)",
+ "rule": "docs/TREE_PLAN.md: apartments - one tree per court, placed for the seating",
+ "written": "by hand, 19 Nov 2026 (claude/fill-high-street, superchecker over the hospital zone and campus): every builder tree out, these placed after the plan",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    418.0,
+    2.115,
+    -1545.0
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "the care court: the residents' shade over the loop path's west side"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    452.0,
+    2.144,
+    -1552.0
+   ],
+   "yaw": 50,
+   "scale": 0.9,
+   "why": "the care court: its second tree, by the beds on the east side"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    403.0,
+    2.146,
+    -1581.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "1st St front garden: a palm at the residences' west end"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    449.5,
+    2.142,
+    -1580.5
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "1st St front garden: a palm between the two residences"
+  }
+ ]
+}

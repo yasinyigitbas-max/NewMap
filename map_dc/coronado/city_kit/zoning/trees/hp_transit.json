@@ -1,0 +1,33 @@
+{
+ "area": "hp_transit",
+ "piece": "n_hp_transit",
+ "zone": "civic (hospital)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle (the plan has no hospital row: the hospital campus and the university are read as civic grounds)",
+ "written": "by hand, 19 Nov 2026 (claude/fill-high-street, superchecker over the hospital zone and campus): every builder tree out, these placed after the plan",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    568.5,
+    2.035,
+    -1433.0
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "the drivers' break corner: a palm over the grass beside their table"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    580.0,
+    2.15,
+    -1416.0
+   ],
+   "yaw": 60,
+   "scale": 1.0,
+   "why": "the 3rd St grass strip east of the hall: one palm, low planting beside the helipad stays"
+  }
+ ]
+}
