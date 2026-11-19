@@ -151,11 +151,6 @@
    "by": "Yasin",
    "date": "2026-11-17"
   },
-  "s_ind": {
-   "sha256": "a6cc7de7ba1189b8f333d984ce60b52c804f22e50a44ca4bbafb8ad9b6b5f0ae",
-   "by": "Yasin",
-   "date": "2026-11-17"
-  },
   "s_apt": {
    "sha256": "43c88887202e1dcb48e997d44581257d48533a30b4539841de9cce14c76b1c47",
    "by": "Yasin",
@@ -2778,6 +2773,11 @@
   },
   "j_ind": {
    "sha256": "3f86bb2e6c366dcbca45d4fa48aeb35b9826f3f016fdc469307f4fdf9db57c35",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "s_ind": {
+   "sha256": "7bbd28cc9297196d5ad452f36a1f4381bddf7db9dc46c962e701d535341a5b8f",
    "by": "Yasin",
    "date": "2026-11-19"
   }

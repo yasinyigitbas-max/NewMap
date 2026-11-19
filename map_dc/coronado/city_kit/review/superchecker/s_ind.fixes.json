@@ -1,0 +1,20 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -7.19999980926514,
+    0.150000005960464,
+    65.5999984741211
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle leaves 1.1 m of a 1.6 m wide walk]"
+  }
+ ],
+ "scene": "s_ind"
+}
