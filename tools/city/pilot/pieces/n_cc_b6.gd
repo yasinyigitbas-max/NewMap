@@ -164,7 +164,7 @@ func _run() -> void:
 	c.put("prop_trash_receptacle", "worn", Vector3(35.2, c.yf(35.2, 215.0), 215.0), 0.0, "forecourt: a bin")
 	c.put("prop_bollard_steel", "worn", Vector3(18.4, 0.15, 211.0), 0.0, "forecourt: keeps cars off the corner")
 	# ---- services
-	c.services(T, -10.0, 2, false, "left")
+	c.services(T, -10.0, 0, false, "left")     # meters only: its AC stands on the roof (an AC here stood inside the tower)
 	for r2: Dictionary in A + E + N + [K]: c.services(r2, 3.0, 1, String(r2.folder).contains("apt") or String(r2.folder).contains("stucco") or String(r2.folder).contains("brk3") or String(r2.folder).contains("beach"))
 	for r3: Dictionary in B: c.services(r3, 2.0, 1, true)
 	c.put("prop_dumpster_3yd_green", "worn", Vector3(xw + 2.0, c.yf(xw + 2.0, 236.0), 236.0), 90.0, "tower: waste, wheeled out to Amber on collection day")
@@ -199,7 +199,6 @@ func _run() -> void:
 	c.put("prop_trash_receptacle", "worn", Vector3(176.0, c.yf(176.0, 261.4), 261.4), 0.0, "park: a bin where the path meets the court")
 	for lp: Array in [[50.0, 261.0], [90.0, 261.0], [140.0, 261.0], [61.0, 300.0], [61.0, 340.0]]:
 		c.put("prop_lamp_globe", "worn", Vector3(float(lp[0]), c.yf(float(lp[0]), float(lp[1])), float(lp[1])), 0.0, "park: the paths lit at night")
-	c.iron(Vector2(130.0, 265.4), Vector2(152.0, 265.4), "sports court: a fence on the path side to keep the ball in")
 	# ---- roofs and doors
 	c.roof_plant(T, [[-12.0, -4.0, "prop_ac_condenser"], [0.0, -4.0, "prop_vent_box"], [12.0, -4.0, "prop_ac_condenser"], [-6.0, 3.0, "prop_vent_plumbing"], [6.0, 3.0, "prop_vent_turbine"]], "roof plant (tower)")
 	c.roof_plant(K, [[-5.0, -4.0, "prop_ac_condenser"], [0.0, -4.0, "prop_vent_box"], [5.0, -4.0, "prop_ac_condenser"]], "roof plant (corner block)")

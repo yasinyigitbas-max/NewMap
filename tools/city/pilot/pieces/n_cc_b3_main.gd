@@ -58,7 +58,9 @@ func _run() -> void:
 	for bl: Array in [[101.5, 119.85, "ck/ck_apt3_row3"], [119.85, 132.15, "ck/ck_apt3_row2"], [146.0, 158.35, "ck/ck_apt3_row2"], [158.35, 170.65, "ck/ck_apt3_row2"]]:
 		var z0: float = bl[0]; var z1: float = bl[1]; var xf := 240.8 - L.setback(String(bl[2]))
 		lots.append([196.0 if z1 < 140.0 else 225.0, z0, xf, z1, lvl(hb(z1))])
-		if xf < 240.78: lots.append([xf, z0, 240.8, z1, func(_x: float, z: float) -> float: return hb(z)])
+		if xf < 240.78:
+			lots.append([xf, z0, 240.8, z1, func(_x: float, z: float) -> float: return hb(z)])
+			c.paint("concrete", xf, z0, 240.8, z1)
 	lots.append([196.0, 132.15, 240.8, 140.0, c3])                                                 # alley C3's mouth widening: follows B Ave's walk at its end
 	lots.append([51.0, 140.0, 240.8, 146.0, c3])                                                   # alley C3
 	var sp := c.row_plan(SOUTH, 51.1, 1.0, "s")
@@ -70,7 +72,9 @@ func _run() -> void:
 		spad.append(pad)
 		var zf := 190.3 - L.setback(String(SOUTH[i]))
 		lots.append([xa, 171.5, xb2, zf, lvl(pad)])
-		if zf < 190.28: lots.append([xa, zf, xb2, 190.3, func(x: float, _z: float) -> float: return h8(x)])   # frontage strip, flush with the walk
+		if zf < 190.28:
+			lots.append([xa, zf, xb2, 190.3, func(x: float, _z: float) -> float: return h8(x)])   # frontage strip, flush with the walk
+			c.paint("concrete", xa, zf, xb2, 190.3)
 		var p2 := pad
 		lots.append([xa, 146.0, xb2, 171.5, func(x: float, z: float) -> float: return lerpf(c3(x, 146.0), p2, (z - 146.0) / 25.5)])
 		xa = xb2
@@ -85,6 +89,10 @@ func _run() -> void:
 	for e: Vector2 in [Vector2(178.000, 190.3098), Vector2(178.500, 190.3215), Vector2(179.000, 190.3370), Vector2(179.500, 190.3561), Vector2(180.000, 190.3781), Vector2(180.500, 190.4028), Vector2(181.000, 190.4296), Vector2(181.500, 190.4582), Vector2(182.000, 190.4881), Vector2(182.500, 190.5188), Vector2(183.000, 190.5500), Vector2(183.500, 190.5812), Vector2(184.000, 190.6119), Vector2(184.500, 190.6418), Vector2(185.000, 190.6704), Vector2(185.500, 190.6972), Vector2(186.000, 190.7219), Vector2(186.500, 190.7439), Vector2(187.000, 190.7630), Vector2(187.500, 190.7785), Vector2(188.000, 190.7902), Vector2(188.500, 190.7975), Vector2(189.000, 190.8000), Vector2(192.727, 190.8000), Vector2(196.455, 190.8000), Vector2(200.182, 190.8000), Vector2(203.909, 190.8000), Vector2(207.636, 190.8000), Vector2(211.364, 190.8000), Vector2(215.091, 190.8000), Vector2(218.818, 190.8000), Vector2(222.545, 190.8000), Vector2(226.273, 190.8000), Vector2(230.000, 190.8000), Vector2(240.800, 190.8000)]: tp.append(e)
 	c.edge_band("concrete", tp, 190.3, func(x: float, _z: float) -> float: return h8(x))
 	c.paint("grass", float(np[np.size() - 1][1]) + 0.6, 102.0, 189.4, 139.4)                     # the raised garden
+	# the yards: paved where vans stop and bins stand (a 4 m apron on alley C3, two parking pads), gardens behind
+	c.paint("asphalt", 86.0, 146.0, 94.0, 160.0); c.paint("asphalt", 166.0, 146.0, 174.0, 160.0)
+	c.paint("grass", 51.6, 150.0, 214.8, 171.0)                                                   # the 8th St row's back gardens
+	c.paint("grass", 51.6, 102.0, float(np[np.size() - 1][1]), 127.0)                              # the north rows' back gardens
 	c.paint("mulch", 168.0, 112.0, 180.0, 122.0)                                                  # its play corner on bark
 	c.paint("plaza", 215.4, 146.0, 221.25, 190.3)                                                 # the passage
 	c.build_floor(L.rect_edges(50.0, 100.0, 240.8, 190.3))

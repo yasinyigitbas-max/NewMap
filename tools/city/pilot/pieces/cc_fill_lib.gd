@@ -604,12 +604,16 @@ func front_lots(lots: Array, folders: Array, start: float, run: float, face: Str
 			var zf := line - sb if face == "s" else line + sb
 			var ze := line + kerb if face == "s" else line - kerb
 			lots.append([lo_al, minf(back, zf), hi_al, maxf(back, zf), func(_x: float, _z: float) -> float: return hpad])
-			if sb + kerb > 0.02: lots.append([lo_al, minf(zf, ze), hi_al, maxf(zf, ze), func(x: float, _z: float) -> float: return float(wf.call(x))])
+			if sb + kerb > 0.02:
+				lots.append([lo_al, minf(zf, ze), hi_al, maxf(zf, ze), func(x: float, _z: float) -> float: return float(wf.call(x))])
+				paint("concrete", lo_al, minf(zf, ze), hi_al, maxf(zf, ze))     # the strip is pavement, one with the walk
 		else:
 			var xf := line - sb if face == "e" else line + sb
 			var xe := line + kerb if face == "e" else line - kerb
 			lots.append([minf(back, xf), lo_al, maxf(back, xf), hi_al, func(_x: float, _z: float) -> float: return hpad])
-			if sb + kerb > 0.02: lots.append([minf(xf, xe), lo_al, maxf(xf, xe), hi_al, func(_x: float, z: float) -> float: return float(wf.call(z))])
+			if sb + kerb > 0.02:
+				lots.append([minf(xf, xe), lo_al, maxf(xf, xe), hi_al, func(_x: float, z: float) -> float: return float(wf.call(z))])
+				paint("concrete", minf(xf, xe), lo_al, maxf(xf, xe), hi_al)     # the strip is pavement, one with the walk
 		a = b
 	return {"plan": plan, "pads": pads, "folders": folders.slice(0, n), "n": n, "end": a}
 

@@ -85,7 +85,6 @@ func _run() -> void:
 	c.put("tree_ficus_a", "normal", Vector3((pk + tw0) * 0.5, 0.15, -219.0), 0.0, "pocket: a shade tree", true, 0.8)
 	c.well((pk + tw0) * 0.5, -219.0)
 	# ---- services: the tower's service apron off alley B5, the flats' backs
-	c.services(T, -8.0, 3, false, "left")
 	c.put("prop_dumpster_3yd_green", "worn", Vector3(200.0, 0.15, tb - 2.0), 0.0, "tower: office waste, collected from alley B5")
 	c.put("prop_dumpster_3yd_blue", "worn", Vector3(203.0, 0.15, tb - 2.0), 0.0, "tower: paper recycling")
 	c.put("prop_dumpster_3yd_green", "rusty", Vector3(197.6, 0.15, -213.0), 90.0, "corner shop: waste by alley B5")

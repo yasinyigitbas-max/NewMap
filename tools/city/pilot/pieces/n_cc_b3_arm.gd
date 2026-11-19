@@ -47,7 +47,7 @@ func _run() -> void:
 	# ---- service sides, yards
 	for r2: Dictionary in S + DS: c.services(r2, 4.0, 1, String(r2.folder).contains("brk3") or String(r2.folder).contains("stucco") or String(r2.folder).contains("apt"))
 	c.services(DN[0], -4.0, 1, false)     # the print shop's meters clear of its back windows
-	c.services(DN[1], 0.6, 1, false)
+	c.services(DN[1], 3.0, 1, false)     # the pharmacy depot's meters clear of its back window
 	c.put("prop_dumpster_3yd_green", "worn", Vector3(51.6, y, 33.0), 90.0, "pizzeria / newsagent: waste, collected from c_se's alley")
 	c.put("prop_dumpster_3yd_blue", "worn", Vector3(51.6, y, 36.0), 90.0, "shops: cardboard")
 	c.put("prop_dumpster_3yd_green", "rusty", Vector3(130.0, y, 52.4), 0.0, "arcade and row shops: waste by alley D3")
