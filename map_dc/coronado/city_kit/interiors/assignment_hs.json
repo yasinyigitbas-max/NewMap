@@ -1,0 +1,350 @@
+{
+ "_doc": "High street fill (claude/fill-high-street, 19 Nov): which business is behind which door of the new high street",
+ "count": 10,
+ "rooms": [
+  {
+   "id": "hs_b1_amber_brick_row_0",
+   "piece": "n_hs_b1_amber",
+   "label": "brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    -23.0,
+    4.15,
+    106.88
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -2.46
+   ],
+   "kind": "pharmacy",
+   "name": "Amber Drug",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: a high street needs its chemist; next to the hotel, where visitors ask for one",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_amber_brick_row_1",
+   "piece": "n_hs_b1_amber",
+   "label": "brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    -23.0,
+    4.15,
+    106.88
+   ],
+   "yaw": 90.0,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -2.46,
+    3.54
+   ],
+   "kind": "restaurant",
+   "name": "Amber Deli",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: lunch for the shops' staff and the library's readers; its green dumpster is behind it on the rear lot",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_amber_brick_row_2",
+   "piece": "n_hs_b1_amber",
+   "label": "brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    -23.0,
+    4.15,
+    106.88
+   ],
+   "yaw": 90.0,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    3.54,
+    8.7
+   ],
+   "kind": "shoes",
+   "name": "Sole Coronado",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: the paseo from the garage passes its door",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_amber_library_0",
+   "piece": "n_hs_b1_amber",
+   "label": "library",
+   "model": "civic/civ_library",
+   "pos": [
+    -30.0,
+    4.15,
+    131.31
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "library",
+   "name": "Coronado Public Library",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1's landmark: the town library on its main street; the painted PUBLIC LIBRARY sign stays",
+   "signs": []
+  },
+  {
+   "id": "hs_b1_amber_orange_row_0",
+   "piece": "n_hs_b1_amber",
+   "label": "orange_row",
+   "model": "commercial/com_orange_row",
+   "pos": [
+    -23.0,
+    4.15,
+    153.48
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -4.08,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -3.0
+   ],
+   "kind": "souvenir",
+   "name": "Ferry Landing Gifts",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: visitors walking from the hotel to the beach road",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_amber_orange_row_1",
+   "piece": "n_hs_b1_amber",
+   "label": "orange_row",
+   "model": "commercial/com_orange_row",
+   "pos": [
+    -23.0,
+    4.15,
+    153.48
+   ],
+   "yaw": 90.0,
+   "door_index": 1,
+   "door_along": -1.92,
+   "door_w": 1.6,
+   "bay": [
+    -3.0,
+    2.92
+   ],
+   "kind": "clothes",
+   "name": "Tide Threads",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: a boutique in the shop row (its blue dumpster for boxes behind)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_amber_orange_row_2",
+   "piece": "n_hs_b1_amber",
+   "label": "orange_row",
+   "model": "commercial/com_orange_row",
+   "pos": [
+    -23.0,
+    4.15,
+    153.48
+   ],
+   "yaw": 90.0,
+   "door_index": 2,
+   "door_along": 7.76,
+   "door_w": 1.6,
+   "bay": [
+    2.92,
+    8.7
+   ],
+   "kind": "jewelry",
+   "name": "Coral & Pearl",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: the shop row's jeweller, next to the coffee house",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_amber_cafe_0",
+   "piece": "n_hs_b1_amber",
+   "label": "cafe",
+   "model": "commercial/com_cafe_seaside",
+   "pos": [
+    -23.0,
+    4.15,
+    166.7
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "cafe",
+   "name": "Library Grounds Coffee",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: coffee next to the library; newspaper boxes and pots at its door, its dumpster behind",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 3.8,
+     "w": 3.0
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_amber_corner_0",
+   "piece": "n_hs_b1_amber",
+   "label": "corner",
+   "model": "urban/urb_brick_corner",
+   "pos": [
+    -24.0,
+    4.15,
+    181.07
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 6.8,
+   "door_w": 1.8,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "sport",
+   "name": "South Beach Surf",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: the corner on 11th St, the road down to the beach: boards, wetsuits, bikes",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.48
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_tenth_market_0",
+   "piece": "n_hs_b1_tenth",
+   "label": "market",
+   "model": "apartments/apt_stucco3_peach",
+   "pos": [
+    -61.22,
+    4.15,
+    20.3
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -9.2,
+    9.2
+   ],
+   "kind": "corner_shop",
+   "name": "Tenth Street Market",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: the neighbourhood's market for the court's flats and the houses west; ice chest and papers on its forecourt",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ]
+  }
+ ]
+}

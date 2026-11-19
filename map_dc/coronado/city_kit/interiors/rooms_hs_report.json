@@ -1,0 +1,14 @@
+{
+ "rooms": [
+  {
+   "d": 15.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b1_amber_library_0.scn",
+   "id": "g_hs_b1_amber_library_0",
+   "kind": "library",
+   "lights": 6,
+   "name": "Coronado Public Library",
+   "props": 142,
+   "w": 23.4
+  }
+ ]
+}
