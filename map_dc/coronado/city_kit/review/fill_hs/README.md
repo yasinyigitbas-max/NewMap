@@ -403,3 +403,9 @@ NOT built: the fire station, the school, the corner cafe on 11th St (no contract
 - No interiors for the fire station and the school (they would need hand-made rooms); the townhouses' garages are
   closed doors (no garage interiors).
 - The cars in the pictures are preview cars (off in the street views).
+
+## Locked (19 Nov, Yasin: "lock them")
+All 25 high street pieces (`n_hs_b1_*` .. `n_hs_b6_*`) are locked in `locked.json` (`lock.py lock ... --by=Yasin`); the
+lock test says RESULT PASS. A change now needs Yasin's word, `lock.py unlock`, a rebuild, the checks and a relock. The
+walk-in rooms (`g_hs_*`) and the room assignment are not part of the piece lock. Still NOT done: the shared layout
+(`integrate.py`), the land (only the dry trial), the bake, the phone.
