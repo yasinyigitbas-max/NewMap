@@ -1,0 +1,2672 @@
+{
+ "fixes": [
+  {
+   "at": [
+    52.0,
+    0.297920495271683,
+    -99.4700012207031
+   ],
+   "base": "prop_ac_condenser_compact",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 22.0,
+   "op": "move",
+   "reason": "prop_ac_condenser_compact hangs 0.15 m over what is under it",
+   "to": [
+    52.0,
+    0.147920504212379,
+    -99.4700012207031
+   ]
+  },
+  {
+   "at": [
+    53.2999992370605,
+    0.297920495271683,
+    -99.4700012207031
+   ],
+   "base": "prop_ac_condenser_compact",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 23.0,
+   "op": "move",
+   "reason": "prop_ac_condenser_compact hangs 0.15 m over what is under it",
+   "to": [
+    53.2999992370605,
+    0.147920504212379,
+    -99.4700012207031
+   ]
+  },
+  {
+   "at": [
+    75.0,
+    0.297274738550186,
+    -99.4700012207031
+   ],
+   "base": "prop_ac_condenser_compact",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 24.0,
+   "op": "move",
+   "reason": "prop_ac_condenser_compact hangs 0.15 m over what is under it",
+   "to": [
+    75.0,
+    0.147274732589722,
+    -99.4700012207031
+   ]
+  },
+  {
+   "at": [
+    76.3000030517578,
+    0.297274738550186,
+    -99.4700012207031
+   ],
+   "base": "prop_ac_condenser_compact",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 25.0,
+   "op": "move",
+   "reason": "prop_ac_condenser_compact hangs 0.15 m over what is under it",
+   "to": [
+    76.3000030517578,
+    0.147274732589722,
+    -99.4700012207031
+   ]
+  },
+  {
+   "at": [
+    16.9500007629395,
+    0.299205541610718,
+    -61.5
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 26.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.15 m over what is under it",
+   "to": [
+    16.9500007629395,
+    0.149201387218942,
+    -61.5
+   ]
+  },
+  {
+   "at": [
+    23.9500007629395,
+    0.299729496240616,
+    -92.0
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 27.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.15 m over what is under it",
+   "to": [
+    23.9500007629395,
+    0.149722933078754,
+    -92.0
+   ]
+  },
+  {
+   "at": [
+    25.0,
+    0.29833459854126,
+    -36.75
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 28.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.15 m over what is under it",
+   "to": [
+    25.0,
+    0.148334036666341,
+    -36.75
+   ]
+  },
+  {
+   "at": [
+    79.0,
+    0.294119447469711,
+    -43.75
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 29.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.15 m over what is under it",
+   "to": [
+    79.0,
+    0.144093498328127,
+    -43.75
+   ]
+  },
+  {
+   "at": [
+    80.0,
+    0.145000010728836,
+    -74.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 30.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    80.0,
+    0.263000003993511,
+    -74.0
+   ]
+  },
+  {
+   "at": [
+    55.0,
+    0.145000010728836,
+    -56.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 31.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    55.0,
+    0.262878260819626,
+    -56.0
+   ]
+  },
+  {
+   "at": [
+    90.0,
+    0.144000008702278,
+    -49.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 32.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    90.0,
+    0.262000001966953,
+    -49.0
+   ]
+  },
+  {
+   "at": [
+    30.0,
+    0.148102924227715,
+    -46.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 33.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    30.0,
+    0.266216651320867,
+    -46.0
+   ]
+  },
+  {
+   "at": [
+    115.25,
+    0.296173125505447,
+    -43.9000015258789
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 34.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.15 m over what is under it",
+   "to": [
+    115.25,
+    0.146173119544983,
+    -43.9000015258789
+   ]
+  },
+  {
+   "at": [
+    115.25,
+    0.296173125505447,
+    -45.2000007629395
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 35.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.15 m over what is under it",
+   "to": [
+    115.25,
+    0.146173119544983,
+    -45.2000007629395
+   ]
+  },
+  {
+   "at": [
+    111.0,
+    0.296804636716843,
+    -97.75
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 36.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.15 m over what is under it",
+   "to": [
+    111.0,
+    0.146804630756378,
+    -97.75
+   ]
+  },
+  {
+   "at": [
+    125.0,
+    0.150000005960464,
+    -27.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 37.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    125.0,
+    0.26799999922514,
+    -27.0
+   ]
+  },
+  {
+   "at": [
+    48.5999984741211,
+    1.34792053699493,
+    -99.0199966430664
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 46.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 45 cm over a apt door of crown_car_care_row]",
+   "to": [
+    47.399998474121,
+    1.34792053699493,
+    -99.0199965381592
+   ]
+  },
+  {
+   "at": [
+    49.0200004577637,
+    1.34792053699493,
+    -99.0199966430664
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 47.0,
+   "op": "move",
+   "reason": "moved slid -1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 43 cm over a apt door of crown_car_care_row]",
+   "to": [
+    50.2200004577637,
+    1.34792053699493,
+    -99.0199967479737
+   ]
+  },
+  {
+   "at": [
+    16.2199993133545,
+    1.349205493927,
+    -64.4800033569336
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 48.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 3 cm from a apt door of taqueria_adela (services keep 35 cm off)]",
+   "to": [
+    16.219999403952,
+    1.349205493927,
+    -65.6800033569336
+   ]
+  },
+  {
+   "at": [
+    16.2199993133545,
+    1.349205493927,
+    -64.0599975585938
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 49.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 39 cm over a apt door of taqueria_adela]",
+   "to": [
+    16.219999403952,
+    1.349205493927,
+    -65.2599975585938
+   ]
+  },
+  {
+   "at": [
+    23.2200012207031,
+    1.34972953796387,
+    -95.4000015258789
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 50.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 45 cm over a apt door of tax_office]",
+   "to": [
+    23.2200013113006,
+    1.34972953796387,
+    -96.600001525879
+   ]
+  },
+  {
+   "at": [
+    23.2200012207031,
+    1.34972953796387,
+    -94.9800033569336
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 51.0,
+   "op": "move",
+   "reason": "moved slid -1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 43 cm over a apt door of tax_office]",
+   "to": [
+    23.2200011301056,
+    1.34972953796387,
+    -93.7800033569336
+   ]
+  },
+  {
+   "at": [
+    16.2199993133545,
+    0.499205559492111,
+    -63.2000007629395
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 52.0,
+   "op": "move",
+   "reason": "moved slid -0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 7 cm over a apt door of taqueria_adela]",
+   "to": [
+    16.2199992680557,
+    0.499205559492111,
+    -62.6000007629395
+   ]
+  },
+  {
+   "at": [
+    23.2999992370605,
+    0.498334586620331,
+    -36.0200004577637
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 53.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 23 cm from a apt door of chicken_drive (services keep 35 cm off)]",
+   "to": [
+    22.6999992370605,
+    0.498334586620331,
+    -36.0200004053099
+   ]
+  },
+  {
+   "at": [
+    77.3000030517578,
+    0.494119435548782,
+    -43.0200004577637
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 54.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 37 cm over a apt door of route_75_diner]",
+   "to": [
+    76.1000030517578,
+    0.494119435548782,
+    -43.0200003528564
+   ]
+  },
+  {
+   "at": [
+    115.979995727539,
+    0.496173113584518,
+    -42.2000007629395
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 59.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 17 cm over a apt door of bayside_express_wash]",
+   "to": [
+    115.979995734694,
+    0.496173113584518,
+    -41.6000007629395
+   ]
+  },
+  {
+   "at": [
+    105.099998474121,
+    0.14300000667572,
+    -65.0
+   ],
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    45.0,
+    0.143999993801117,
+    -65.0
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    45.0,
+    0.148424372076988,
+    -21.2999992370605
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    43.7000007629395,
+    0.143999993801117,
+    -49.7000007629395
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    67.5999984741211,
+    0.150000005960464,
+    -15.9499998092651
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    24.0,
+    0.146999999880791,
+    -55.0
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    67.0,
+    0.142000004649162,
+    -65.0
+   ],
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    86.8000030517578,
+    0.149344235658646,
+    -15.9499998092651
+   ],
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    29.2000007629395,
+    0.150000005960464,
+    -15.9499998092651
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    48.4000015258789,
+    0.150000005960464,
+    -15.9499998092651
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    58.0,
+    0.150000005960464,
+    -15.9499998092651
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    77.1999969482422,
+    0.149344235658646,
+    -15.9499998092651
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    26.1000003814697,
+    0.146999999880791,
+    -65.0
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    144.199996948242,
+    0.150000005960464,
+    -72.0
+   ],
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    144.199996948242,
+    0.150000005960464,
+    -91.3333358764648
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    144.199996948242,
+    0.150000005960464,
+    -21.0666675567627
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    144.199996948242,
+    0.150000005960464,
+    -84.6666641235352
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    144.199996948242,
+    0.150000005960464,
+    -27.533332824707
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    19.6000003814697,
+    0.150000005960464,
+    -15.9499998092651
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 19.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    38.7999992370605,
+    0.150000005960464,
+    -15.9499998092651
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    96.4000015258789,
+    0.150000005960464,
+    -15.9499998092651
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    75.9000015258789,
+    0.147274732589722,
+    -81.9499969482422
+   ],
+   "base": "prop_newspaper_box_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 38.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_blue stands in front of a shop window of quick_lube]"
+  },
+  {
+   "at": [
+    24.6674995422363,
+    0.148334592580795,
+    -22.9500007629395
+   ],
+   "base": "prop_newspaper_box_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 39.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_blue stands in front of a shop window of chicken_drive]"
+  },
+  {
+   "at": [
+    50.2999992370605,
+    0.147920504212379,
+    -84.4000015258789
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 40.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent stands in front of a shop window of crown_car_care_row]"
+  },
+  {
+   "at": [
+    106.599998474121,
+    0.146804630756378,
+    -84.4000015258789
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 41.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent stands in front of a shop window of bridge_tire_pros]"
+  },
+  {
+   "at": [
+    117.400001525879,
+    0.146804630756378,
+    -84.4000015258789
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 42.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent stands in front of a shop window of bridge_tire_pros]"
+  },
+  {
+   "at": [
+    111.599998474121,
+    0.146804630756378,
+    -83.9499969482422
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 43.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent stands in front of a shop window of bridge_tire_pros]"
+  },
+  {
+   "at": [
+    85.5,
+    0.145882144570351,
+    -80.0
+   ],
+   "base": "prop_cone_18in",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 44.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_cone_18in stands in front of a roll-up door of quick_lube]"
+  },
+  {
+   "at": [
+    30.0,
+    0.148334592580795,
+    -22.8999996185303
+   ],
+   "base": "prop_bench_bus_stop",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 45.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_bench_bus_stop stands in front of a shop window of chicken_drive]"
+  },
+  {
+   "at": [
+    49.3199996948242,
+    0.147920504212379,
+    -83.9499969482422
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 55.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in front of a shop window of crown_car_care_row]"
+  },
+  {
+   "at": [
+    23.7999992370605,
+    0.148334592580795,
+    -22.9500007629395
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 56.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in front of a shop window of chicken_drive]"
+  },
+  {
+   "at": [
+    59.7599983215332,
+    0.147920504212379,
+    -83.9499969482422
+   ],
+   "base": "prop_newspaper_box_red",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 57.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red stands in front of a shop window of crown_car_care_row]"
+  },
+  {
+   "at": [
+    75.0999984741211,
+    0.147274732589722,
+    -81.9499969482422
+   ],
+   "base": "prop_newspaper_box_red",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 58.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red stands in front of a shop window of quick_lube]"
+  },
+  {
+   "at": [
+    133.600006103516,
+    0.146236523985863,
+    -37.5
+   ],
+   "base": "prop_vending_soda",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 60.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_vending_soda stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    69.0,
+    0.147274732589722,
+    -86.5
+   ],
+   "base": "prop_vending_soda",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 61.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_vending_soda stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    133.800003051758,
+    0.147350162267685,
+    -35.4000015258789
+   ],
+   "base": "prop_ice_chest",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 62.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    67.1999969482422,
+    0.146022170782089,
+    -80.5999984741211
+   ],
+   "base": "prop_park_bench",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 63.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_park_bench stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    87.5999984741211,
+    0.144200250506401,
+    -27.5
+   ],
+   "base": "plant_potted_leafy",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 64.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [plant_potted_leafy stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    48.2000007629395,
+    0.147906586527824,
+    -83.5999984741211
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 65.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (1.4 m from a wall, 10.8 m from a fence)]"
+  },
+  {
+   "at": [
+    33.5999984741211,
+    0.148353219032288,
+    -22.8999996185303
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 66.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (1.9 m from a wall, 17.6 m from a fence)]"
+  },
+  {
+   "at": [
+    109.699996948242,
+    0.148000001907349,
+    -24.2000007629395
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 67.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (16.0 m from a wall, 34.4 m from a fence)]"
+  },
+  {
+   "at": [
+    113.099998474121,
+    0.148000001907349,
+    -24.2000007629395
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 68.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (15.0 m from a wall, 37.1 m from a fence)]"
+  },
+  {
+   "at": [
+    116.5,
+    0.148000001907349,
+    -24.2000007629395
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 69.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (14.7 m from a wall, 39.9 m from a fence)]"
+  },
+  {
+   "at": [
+    119.900001525879,
+    0.14800076186657,
+    -24.2000007629395
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 70.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (14.7 m from a wall, 42.8 m from a fence)]"
+  },
+  {
+   "at": [
+    123.300003051758,
+    0.149000003933907,
+    -24.2000007629395
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 71.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (14.7 m from a wall, 45.7 m from a fence)]"
+  },
+  {
+   "at": [
+    126.699996948242,
+    0.149000003933907,
+    -24.2000007629395
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 72.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (14.7 m from a wall, 48.7 m from a fence)]"
+  },
+  {
+   "at": [
+    105.0,
+    0.14679154753685,
+    -83.5999984741211
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 73.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (1.7 m from a wall, 15.9 m from a fence)]"
+  },
+  {
+   "at": [
+    140.0,
+    0.149000003933907,
+    -78.5999984741211
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 74.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (15.7 m from a wall, 5.4 m from a fence)]"
+  },
+  {
+   "at": [
+    9.60000038146973,
+    0.149787932634354,
+    -88.5999984741211
+   ],
+   "base": "prop_mailbox_post_metal",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "lane_mouth",
+   "mode": "choose",
+   "n": 158.0,
+   "op": "remove",
+   "reason": "erased (in doubt): lane_mouth: no plainly safe place (Yasin: delete when unsure) [prop_mailbox_post_metal stands in the mouth of a drive or lane]"
+  },
+  {
+   "at": [
+    18.5,
+    0.148449540138245,
+    -38.4000015258789
+   ],
+   "base": "prop_drive_thru_menu",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 159.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_drive_thru_menu leaves 0.7 m of a 1.6 m wide walk]"
+  },
+  {
+   "at": [
+    78.5999984741211,
+    0.162000000476837,
+    -78.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 75.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    80.5999984741211,
+    0.162000000476837,
+    -78.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 76.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    84.0,
+    0.162000000476837,
+    -78.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 77.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    86.0,
+    0.162000000476837,
+    -78.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 78.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    13.3226661682129,
+    0.161729499697685,
+    -92.945182800293
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 79.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building tax_office",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    73.3784484863281,
+    0.159274727106094,
+    -86.6156311035156
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 80.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building quick_lube",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    54.6710739135742,
+    0.159920498728752,
+    -96.8733901977539
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 81.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    82.5311508178711,
+    0.159274727106094,
+    -92.0900039672852
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 82.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building quick_lube",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    75.517936706543,
+    0.15611943602562,
+    -33.8579781850179
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 83.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building route_75_diner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    11.9275684356689,
+    0.161729499697685,
+    -92.4753494262695
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 84.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building tax_office",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    77.7496490478516,
+    0.15611943602562,
+    -37.958869934082
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 85.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building route_75_diner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    72.3871765136719,
+    0.159274727106094,
+    -87.2535247802734
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 86.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building quick_lube",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    22.3102397918701,
+    0.16172993928194,
+    -96.6109924316406
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 87.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building tax_office",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    77.9399032592773,
+    0.159274727106094,
+    -84.147590637207
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 88.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building quick_lube",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    76.8491058349609,
+    0.159274727106094,
+    -96.7031936645508
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 89.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building quick_lube",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    57.9740180969238,
+    0.159920498728752,
+    -93.4552383422852
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 90.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    85.5322799682617,
+    0.159274727106094,
+    -90.9239501953125
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 91.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building quick_lube",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    27.8209362030029,
+    0.160334587097168,
+    -32.0423123041789
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 92.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building chicken_drive",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    54.201904296875,
+    0.159920498728752,
+    -89.7066116333008
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 93.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    56.8126220703125,
+    0.159920498728752,
+    -89.9289703369141
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 94.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    61.2643432617188,
+    0.159920498728752,
+    -91.4698867797852
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 95.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    86.6138763427734,
+    0.159274727106094,
+    -98.1076278686523
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 96.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building quick_lube",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    107.552536010742,
+    0.158804625272751,
+    -86.8459701538086
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 97.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bridge_tire_pros",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    80.5671844482422,
+    0.15611943602562,
+    -37.8146095275879
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 98.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building route_75_diner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    71.3625793457031,
+    0.159274727106094,
+    -93.1570816040039
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 99.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building quick_lube",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    78.0654907226562,
+    0.15611943602562,
+    -38.1316528320312
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 100.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building route_75_diner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    26.3143672943115,
+    0.160334587097168,
+    -33.1223675409953
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 101.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building chicken_drive",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    61.8281211853027,
+    0.159920498728752,
+    -92.824104309082
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 102.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    63.6291306813558,
+    0.159920498728752,
+    -87.7721939086914
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 103.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    57.089412689209,
+    0.159920498728752,
+    -88.1868667602539
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 104.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    81.1394271850586,
+    0.15611943602562,
+    -34.2645492553711
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 105.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building route_75_diner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    14.4244674046834,
+    0.161205559968948,
+    -60.5384864807129
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 106.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building taqueria_adela",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    21.3458290100098,
+    0.159764622648557,
+    -61.9273223876953
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 107.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    47.5722808837891,
+    0.159723271926244,
+    -84.308837890625
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 108.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    82.8200531005859,
+    0.155718406041463,
+    -76.9679107666016
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 109.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    70.9229278564453,
+    0.155312230189641,
+    -75.4051895141602
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 110.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    16.7800787289937,
+    0.160952823857466,
+    -56.1297302246094
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 111.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    85.2528228759766,
+    0.15611943602562,
+    -37.5857086181641
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 112.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies under the building route_75_diner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    59.7996978759766,
+    0.159920498728752,
+    -88.0241394042969
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 113.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    49.672534942627,
+    0.159920498728752,
+    -96.6954650878906
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 114.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.1906452178955,
+    0.160334587097168,
+    -32.8428726196289
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 115.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building chicken_drive",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    63.2497113545736,
+    0.159920498728752,
+    -93.5349578857422
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 116.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    13.9758062362671,
+    0.161205559968948,
+    -64.9616394042969
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 117.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building taqueria_adela",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    85.0023193359375,
+    0.159274727106094,
+    -97.4302368164062
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 118.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building quick_lube",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    76.4211807250977,
+    0.15611943602562,
+    -40.5520095825195
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 119.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building route_75_diner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    21.1990051269531,
+    0.160334587097168,
+    -28.2673416137695
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 120.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building chicken_drive",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    48.4075813293457,
+    0.159920498728752,
+    -93.298210144043
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 121.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    78.6798629760742,
+    0.159274727106094,
+    -96.0411758422852
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 122.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building quick_lube",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    85.9255905151367,
+    0.159274727106094,
+    -87.8433227539062
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 123.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building quick_lube",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    107.835037231445,
+    0.158804625272751,
+    -93.4553298950195
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 124.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building bridge_tire_pros",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    82.0427703857422,
+    0.159274727106094,
+    -91.3929138183594
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 125.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building quick_lube",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    53.0149230957031,
+    0.159920498728752,
+    -98.0874176025391
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 126.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    108.130065917969,
+    0.158804625272751,
+    -88.5233993530273
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 127.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building bridge_tire_pros",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    61.3952827453613,
+    0.159920498728752,
+    -87.7034530639648
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 128.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    48.6125564575195,
+    0.159920498728752,
+    -86.1684265136719
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 129.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    24.2174415588379,
+    0.160334798196952,
+    -24.7698287963867
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 130.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building chicken_drive",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    50.1825218200684,
+    0.159920498728752,
+    -85.9833602905273
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 131.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building crown_car_care_row",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    83.4018707275391,
+    0.15611943602562,
+    -38.7115783691406
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 132.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building route_75_diner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    116.542129516602,
+    0.158804625272751,
+    -95.8240966796875
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 133.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bridge_tire_pros",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    118.660995483398,
+    0.158173114061356,
+    -61.4564018249512
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 134.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    122.073341369629,
+    0.158173114061356,
+    -57.8643112182617
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 135.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    124.559799194336,
+    0.158173114061356,
+    -58.8246269226074
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 136.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    119.80859375,
+    0.158173114061356,
+    -53.016242980957
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 137.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    119.223922729492,
+    0.158173114061356,
+    -56.8245239257812
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 138.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    117.295318603516,
+    0.158173114061356,
+    -40.4731750488281
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 139.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    129.40745417277,
+    0.158173114061356,
+    -41.7349052429199
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 140.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    120.950462341309,
+    0.158173114061356,
+    -50.396297454834
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 141.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    117.519989013672,
+    0.158173114061356,
+    -44.118106842041
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 142.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    111.46036529541,
+    0.158804625272751,
+    -88.3794555664062
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 143.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building bridge_tire_pros",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    118.451286315918,
+    0.158498133222262,
+    -82.4206237792969
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 144.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    125.300857543945,
+    0.158173114061356,
+    -60.4228057861328
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 145.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    118.620704650879,
+    0.158173114061356,
+    -46.3911972045898
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 146.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    110.667663574219,
+    0.158804625272751,
+    -88.1571578979492
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 147.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building bridge_tire_pros",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    118.946235656738,
+    0.158173114061356,
+    -58.7337875366211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 148.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    120.005813598633,
+    0.158173114061356,
+    -52.9723358154297
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 149.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    108.082885742188,
+    0.158804625272751,
+    -90.4131393432617
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 150.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building bridge_tire_pros",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    115.158317565918,
+    0.158804625272751,
+    -90.5876770019531
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 151.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building bridge_tire_pros",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    131.054183959961,
+    0.158173114061356,
+    -41.4373550415039
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 152.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    120.323684692383,
+    0.158173114061356,
+    -57.0245323181152
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 153.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    117.028259277344,
+    0.158173114061356,
+    -53.003604888916
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 154.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    121.118515014648,
+    0.158173114061356,
+    -59.1464653015137
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 155.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building bayside_express_wash",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    17.3305053710938,
+    0.161160543560982,
+    -61.0432090759277
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 164.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    55.104820728302,
+    1.64790309965611,
+    -85.2251667976379
+   ],
+   "box": [
+    -0.895179271697998,
+    1.49998259544373,
+    6.77483320236206,
+    0.49018482208252,
+    2.99996519088745,
+    0.490083732604981
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 165.0,
+   "name": "sc_col_0",
+   "node": "Buildings/crown_car_care_row",
+   "op": "add_box",
+   "reason": "crown_car_care_row: a 0.5 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    53.057356595993,
+    1.70790745317936,
+    -85.1702175140381
+   ],
+   "box": [
+    -2.94264340400696,
+    1.55998694896698,
+    6.82978248596191,
+    0.744838275909424,
+    3.11997389793396,
+    0.599982299804688
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 166.0,
+   "name": "sc_col_1",
+   "node": "Buildings/crown_car_care_row",
+   "op": "add_box",
+   "reason": "crown_car_care_row: a 0.7 x 0.6 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    57.0248136520386,
+    1.64790309965611,
+    -85.1200361251831
+   ],
+   "box": [
+    1.02481365203857,
+    1.49998259544373,
+    6.87996387481689,
+    0.16,
+    2.99996519088745,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 167.0,
+   "name": "sc_col_2",
+   "node": "Buildings/crown_car_care_row",
+   "op": "add_box",
+   "reason": "crown_car_care_row: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    62.7348999977112,
+    1.64790309965611,
+    -85.2251667976379
+   ],
+   "box": [
+    6.73489999771118,
+    1.49998259544373,
+    6.77483320236206,
+    0.49018482208252,
+    2.99996519088745,
+    0.490083732604981
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 168.0,
+   "name": "sc_col_3",
+   "node": "Buildings/crown_car_care_row",
+   "op": "add_box",
+   "reason": "crown_car_care_row: a 0.5 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    60.8947925567627,
+    1.64790309965611,
+    -85.1200361251831
+   ],
+   "box": [
+    4.8947925567627,
+    1.49998259544373,
+    6.87996387481689,
+    0.16,
+    2.99996519088745,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 169.0,
+   "name": "sc_col_4",
+   "node": "Buildings/crown_car_care_row",
+   "op": "add_box",
+   "reason": "crown_car_care_row: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    82.2998976707458,
+    1.64726614952087,
+    -82.8151817321777
+   ],
+   "box": [
+    3.29989767074585,
+    1.49999141693115,
+    8.18481826782227,
+    1.24003795623779,
+    2.9999828338623,
+    0.569804229736328
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 170.0,
+   "name": "sc_col_0",
+   "node": "Buildings/quick_lube",
+   "op": "add_box",
+   "reason": "quick_lube: a 1.2 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    87.2498826980591,
+    1.64726614952087,
+    -82.960075378418
+   ],
+   "box": [
+    8.24988269805908,
+    1.49999141693115,
+    8.03992462158203,
+    0.639880218505859,
+    2.9999828338623,
+    0.280016937255859
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 171.0,
+   "name": "sc_col_1",
+   "node": "Buildings/quick_lube",
+   "op": "add_box",
+   "reason": "quick_lube: a 0.6 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    78.3498525619507,
+    1.24722898006439,
+    -99.0850791931152
+   ],
+   "box": [
+    -0.650147438049316,
+    1.09995424747467,
+    -8.08507919311523,
+    0.340216674804687,
+    2.19990849494934,
+    0.370133438110352
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 172.0,
+   "name": "sc_col_2",
+   "node": "Buildings/quick_lube",
+   "op": "add_box",
+   "reason": "quick_lube: a 0.3 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    9.26005901402237,
+    1.6491874307394,
+    -59.6150724007307
+   ],
+   "box": [
+    2.38492774963379,
+    1.49998188018799,
+    3.43994069099426,
+    0.789882698059082,
+    2.99996376037598,
+    0.160052337646484
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 173.0,
+   "name": "sc_col_0",
+   "node": "Buildings/taqueria_adela",
+   "op": "add_box",
+   "reason": "taqueria_adela: a 0.7 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    9.26005895391978,
+    1.2492029517889,
+    -58.2400847984968
+   ],
+   "box": [
+    3.75991535186768,
+    1.09999740123749,
+    3.43994069099426,
+    0.16,
+    2.19999480247498,
+    0.160052337646484
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 174.0,
+   "name": "sc_col_1",
+   "node": "Buildings/taqueria_adela",
+   "op": "add_box",
+   "reason": "taqueria_adela: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    9.42520615226175,
+    1.6497113853693,
+    -93.2650557141501
+   ],
+   "box": [
+    0.734944581985474,
+    1.49998188018799,
+    6.77479457855225,
+    0.490035095214844,
+    2.99996376037598,
+    0.489954986572266
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 175.0,
+   "name": "sc_col_0",
+   "node": "Buildings/tax_office",
+   "op": "add_box",
+   "reason": "tax_office: a 0.5 x 0.4 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    83.7349672317505,
+    1.64410132169724,
+    -29.2251667976379
+   ],
+   "box": [
+    3.73496723175049,
+    1.49998188018799,
+    6.77483320236206,
+    0.489979782104492,
+    2.99996376037598,
+    0.490083732604981
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 176.0,
+   "name": "sc_col_0",
+   "node": "Buildings/route_75_diner",
+   "op": "add_box",
+   "reason": "route_75_diner: a 0.4 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    81.6958875656128,
+    1.64410132169724,
+    -29.1200361251831
+   ],
+   "box": [
+    1.69588756561279,
+    1.49998188018799,
+    6.87996387481689,
+    0.16,
+    2.99996376037598,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 177.0,
+   "name": "sc_col_1",
+   "node": "Buildings/route_75_diner",
+   "op": "add_box",
+   "reason": "route_75_diner: a 0.1 x 0.1 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "m_gr_ad5ne"
+}
