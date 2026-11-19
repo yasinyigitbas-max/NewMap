@@ -1,0 +1,24 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -2.83999991416931,
+    1.60000002384186,
+    1.61500000953674
+   ],
+   "base": "prop_menu_board",
+   "cond": "",
+   "kind": "shows_through",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "move",
+   "reason": "prop_menu_board reaches 0.5 cm into the wall to the next shop",
+   "to": [
+    -2.81499996105718,
+    1.60000002384186,
+    1.61500000953674
+   ]
+  }
+ ],
+ "scene": "g_apt_b1_7th__corner_shops_7th__1"
+}

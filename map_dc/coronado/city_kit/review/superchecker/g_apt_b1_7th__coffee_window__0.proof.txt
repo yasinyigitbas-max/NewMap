@@ -1,0 +1,8 @@
+PROOF compared: 21 nodes (with every mesh of the buildings), 0 ground and ground-collision triangles, 20 prop instances, 0 colliders, 9 wear marks are identical in both files
+PROOF differences found between the files: 4 lines only in the old one, 0 only in the new one
+PROOF change #1 remove prop_pastry_case at (-1.05, 0.00, -4.95) removed, in 1 tier(s), no collider  [erased: no plainly safe place (Yasin: delete when unsure) [prop_pastry_case stands in front of a 1.0 m wide door (a back or side door)]]
+PROOF change #2 remove prop_potted_plant at (-2.49, 0.00, -4.47) removed, in 1 tier(s), no collider  [erased: no plainly safe place (Yasin: delete when unsure) [prop_potted_plant stands in front of a 1.0 m wide door (a back or side door)]]
+PROOF change #3 remove prop_indoor_bin at (-2.49, 0.00, -4.90) removed, in 1 tier(s), no collider  [erased: no plainly safe place (Yasin: delete when unsure) [prop_indoor_bin stands in front of a 1.0 m wide door (a back or side door)]]
+PROOF note: 'Props/prop_pastry_case' held only listed items and is gone with them
+PROOF 3 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

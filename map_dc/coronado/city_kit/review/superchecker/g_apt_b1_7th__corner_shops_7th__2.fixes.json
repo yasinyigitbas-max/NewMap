@@ -1,0 +1,24 @@
+{
+ "fixes": [
+  {
+   "at": [
+    3.16000008583069,
+    1.10000002384186,
+    2.05999994277954
+   ],
+   "base": "prop_poster_case",
+   "cond": "",
+   "kind": "shows_through",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "move",
+   "reason": "prop_poster_case reaches 1.5 cm into the wall to the next shop",
+   "to": [
+    3.19500001849787,
+    1.10000002384186,
+    2.05999994277954
+   ]
+  }
+ ],
+ "scene": "g_apt_b1_7th__corner_shops_7th__2"
+}
