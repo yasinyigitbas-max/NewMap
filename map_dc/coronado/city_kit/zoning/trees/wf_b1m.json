@@ -1,0 +1,10 @@
+{
+ "area": "wf_b1m", "piece": "n_wf_b1m", "zone": "waterfront",
+ "rule": "docs/TREE_PLAN.md: palms only - spaced palms on the promenade and the median (zone 105 -> about 95)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's ten builder trees go (five broadleaf: magnolias, corals, a jacaranda; five palms); three palms come back on their own spots. The palm 1.5 m from a wall by the picket fence stays out.",
+ "trees": [
+  {"base": "palm_queen_a", "cond": "normal", "at": [340.0, 4.9, 263.6], "yaw": 20.0, "scale": 1.0, "why": "the grass in front of the shop row (scoops, tide bar, dive and surf) on the car park side, by the iceplant: the row's west palm"},
+  {"base": "palm_mexican_fan_a", "cond": "normal", "at": [384.0, 3.6, 263.6], "yaw": 110.0, "scale": 1.0, "why": "the same grass line 44 m east: two spaced palms frame the shop row seen from the car park"},
+  {"base": "palm_mexican_fan_b", "cond": "normal", "at": [363.0, 2.92, 303.0], "yaw": 200.0, "scale": 0.95, "why": "the back lawn behind the shops where the staff sit (ice chest 2.7 m off): one tall fan palm, light shade, seen over the roofs"}
+ ]
+}
