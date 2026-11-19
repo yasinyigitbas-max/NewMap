@@ -1,0 +1,54 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 19 nodes (with every mesh of the buildings), 2284 ground and ground-collision triangles, 25 prop instances, 13 colliders, 194 wear marks are identical in both files
+PROOF differences found between the files: 87 lines only in the old one, 0 only in the new one
+PROOF change #1 remove tree_magnolia_a at (-6.45, 0.15, 24.00) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_magnolia_a at (6.45, 0.15, 82.50) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove palm_queen_a at (-6.45, 0.15, 45.50) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove palm_queen_a at (6.45, 0.15, 24.00) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove palm_queen_a at (6.45, 0.15, 92.00) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove tree_ficus_a at (-6.45, 0.15, 63.00) removed, in 3 tier(s) and its collider  [tree_ficus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove tree_ficus_a at (6.45, 0.15, 33.50) removed, in 3 tier(s) and its collider  [tree_ficus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove palm_queen_b at (-6.45, 0.15, 72.50) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove palm_queen_b at (6.45, 0.15, 43.00) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove tree_magnolia_b at (-6.45, 0.15, 82.00) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #11 remove tree_magnolia_b at (6.45, 0.15, 63.50) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #12 remove tree_ficus_b at (-6.45, 0.15, 91.50) removed, in 3 tier(s) and its collider  [tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #13 remove tree_ficus_b at (6.45, 0.15, 73.00) removed, in 3 tier(s) and its collider  [tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #14 remove_decal: one wear mark at (-5.63, 0.01, 35.90) removed  [crack mark lies on grass]
+PROOF change #15 remove_decal: one wear mark at (-4.38, 0.01, 68.54) removed  [crack mark lies on grass]
+PROOF change #16 remove_decal: one wear mark at (-3.91, 0.01, 98.98) removed  [crack mark lies on grass]
+PROOF change #17 remove_decal: one wear mark at (-4.29, 0.01, 70.90) removed  [crack mark lies on grass]
+PROOF change #18 remove_decal: one wear mark at (-4.65, 0.01, 90.67) removed  [crack mark lies on grass]
+PROOF change #19 remove_decal: one wear mark at (-5.34, 0.01, 84.71) removed  [crack mark lies on grass]
+PROOF change #20 remove_decal: one wear mark at (5.13, 0.01, 85.98) removed  [crack mark lies on grass]
+PROOF change #21 remove_decal: one wear mark at (4.74, 0.01, 89.20) removed  [crack mark lies on grass]
+PROOF change #22 remove_decal: one wear mark at (5.56, 0.01, 76.45) removed  [crack mark lies on grass]
+PROOF change #23 remove_decal: one wear mark at (4.56, 0.01, 34.68) removed  [crack mark lies on grass]
+PROOF change #24 remove_decal: one wear mark at (-7.90, 0.16, 24.37) removed  [crack mark lies on grass]
+PROOF change #25 remove_decal: one wear mark at (-7.71, 0.16, 22.23) removed  [grime mark lies on grass]
+PROOF change #26 remove_decal: one wear mark at (-7.77, 0.16, 28.02) removed  [grime mark lies on grass]
+PROOF change #27 remove_decal: one wear mark at (-8.66, 0.16, 34.16) removed  [grime mark lies on grass]
+PROOF change #28 remove_decal: one wear mark at (7.73, 0.16, 39.29) removed  [grime mark lies on grass]
+PROOF change #29 remove_decal: one wear mark at (8.66, 0.16, 61.35) removed  [grime mark lies on grass]
+PROOF change #30 remove_decal: one wear mark at (7.78, 0.16, 66.05) removed  [grime mark lies on grass]
+PROOF note: 'Props/tree_ficus_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_ficus_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_ficus_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_ficus_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_ficus_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_ficus_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_near' held only listed items and is gone with them
+PROOF 30 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
