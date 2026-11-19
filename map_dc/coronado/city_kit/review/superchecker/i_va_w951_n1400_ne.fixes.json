@@ -1,0 +1,3003 @@
+{
+ "fixes": [
+  {
+   "at": [
+    39.3472557067871,
+    0.150000005960464,
+    -129.802536010742
+   ],
+   "base": "prop_hydrant_red",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "hydrant_nowhere",
+   "mode": "choose",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hydrant_red stands 2.7 m from any building wall and 3.0 m inside the block]"
+  },
+  {
+   "at": [
+    47.4662132263184,
+    0.150000005960464,
+    -128.163345336914
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (3.3 m from a wall, 3.6 m from a fence)]"
+  },
+  {
+   "at": [
+    45.0,
+    0.162000000476837,
+    -133.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies under the building depot_check_in",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    47.0,
+    0.162000000476837,
+    -133.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies under the building depot_check_in",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    19.6783199310303,
+    0.162000000476837,
+    -72.9640655517578
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    42.318733215332,
+    0.162000000476837,
+    -96.0974273681641
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    27.2698211669922,
+    0.162000000476837,
+    -34.9589691162109
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    31.248545328776,
+    0.162000000476837,
+    -115.253829956055
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    27.8642406463623,
+    0.162000000476837,
+    -146.395843505859
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    27.7100868225098,
+    0.162000000476837,
+    -51.0802154541016
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    32.110985438029,
+    0.162000000476837,
+    -92.8886413574219
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    31.1564356486003,
+    0.162000000476837,
+    -36.7224426269531
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    23.337890625,
+    0.162000000476837,
+    -34.2146911621094
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    40.6220397949219,
+    0.162000000476837,
+    -157.071258544922
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    39.5821838378906,
+    0.162000000476837,
+    -25.35107421875
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    26.0838222503662,
+    0.162000000476837,
+    -164.029861450195
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 19.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    28.9501953125,
+    0.162000000476837,
+    -48.7571105957031
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    22.8444709777832,
+    0.162000000476837,
+    -90.2407379150391
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    24.5964126586914,
+    0.162000000476837,
+    -100.305976867676
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 22.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    37.8068580627441,
+    0.162000000476837,
+    -133.065124511719
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 23.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    30.3915710449219,
+    0.162000000476837,
+    -76.0250549316406
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 24.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    21.0281257629395,
+    0.162000000476837,
+    -56.950813293457
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 25.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    42.7267074584961,
+    0.162000000476837,
+    -159.497695922852
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 26.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    26.6280002593994,
+    0.162000000476837,
+    -33.5448913574219
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 27.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    38.0367546081543,
+    0.162000000476837,
+    -154.010284423828
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 28.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    33.5096969604492,
+    0.162000000476837,
+    -55.1105651855469
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 29.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    28.4975738525391,
+    0.162000000476837,
+    -73.0894393920898
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 30.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    24.3171043395996,
+    0.162000000476837,
+    -67.717887878418
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 31.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    39.7050094604492,
+    0.162000000476837,
+    -168.207504272461
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 32.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    41.7657928466797,
+    0.162000000476837,
+    -23.6596069335938
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 33.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.9779491424561,
+    0.162000000476837,
+    -20.5879364013672
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 34.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    27.9569320678711,
+    0.162000000476837,
+    -145.063690185547
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 35.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    20.7859153747559,
+    0.162000000476837,
+    -163.113784790039
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 36.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.3225040435791,
+    0.162000000476837,
+    -96.0974426269531
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 37.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    27.9592247009277,
+    0.162000000476837,
+    -149.506942749023
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 38.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    40.7650604248047,
+    0.162000000476837,
+    -162.974456787109
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 39.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    42.862190246582,
+    0.162000000476837,
+    -116.863922119141
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 40.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    36.7455177307129,
+    0.162000000476837,
+    -36.8516082763672
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 41.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    42.7533073425293,
+    0.162000000476837,
+    -97.4789733886719
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 42.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    41.4067420959473,
+    0.162000000476837,
+    -78.9212875366211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 43.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    33.5915673573812,
+    0.162000000476837,
+    -65.6831512451172
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 44.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    16.106693426768,
+    0.162000000476837,
+    -110.119590759277
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 45.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    17.1083202362061,
+    0.162000000476837,
+    -27.9595642089844
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 46.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    21.0882377624512,
+    0.162000000476837,
+    -39.1238250732422
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 47.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    37.0379104614258,
+    0.162000000476837,
+    -33.8115386962891
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 48.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    23.3190784454346,
+    0.162000000476837,
+    -128.753674825033
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 49.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    16.6263179779053,
+    0.162000000476837,
+    -86.0393829345703
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 50.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    39.2997131347656,
+    0.162000000476837,
+    -44.8198089599609
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 51.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.7220420837402,
+    0.162000000476837,
+    -111.036468505859
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 52.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    21.6843280792236,
+    0.162000000476837,
+    -42.1254577636719
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 53.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    34.9201736450195,
+    0.162000000476837,
+    -162.283096313477
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 54.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    30.3505210876465,
+    0.162000000476837,
+    -119.96076965332
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 55.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    32.1769793828328,
+    0.162000000476837,
+    -77.2311172485352
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 56.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    34.7765121459961,
+    0.162000000476837,
+    -77.3072814941406
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 57.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    22.4563179016113,
+    0.162000000476837,
+    -22.4725646972656
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 58.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    37.8757743835449,
+    0.162000000476837,
+    -118.022888183594
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 59.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.3376216888428,
+    0.162000000476837,
+    -62.8765188852946
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 60.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    32.8648719787598,
+    0.162000000476837,
+    -32.3914031982422
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 61.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    33.7748184204102,
+    0.162000000476837,
+    -118.723693847656
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 62.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    37.8441200256348,
+    0.162000000476837,
+    -105.292419433594
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 63.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    39.734619140625,
+    0.162000000476837,
+    -89.3633193969727
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 64.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    43.317253112793,
+    0.162000000476837,
+    -29.7926330566406
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 65.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    41.527946472168,
+    0.162000000476837,
+    -87.5156784057617
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 66.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    39.2544136047363,
+    0.162000000476837,
+    -115.835113525391
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 67.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    23.091516494751,
+    0.162000000476837,
+    -105.095176696777
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 68.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.6958885192871,
+    0.162000000476837,
+    -145.392349243164
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 69.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    16.947582244873,
+    0.162000000476837,
+    -66.1509170532227
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 70.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    30.9796803792318,
+    0.162000000476837,
+    -139.03694152832
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 71.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.3902950286865,
+    0.162000000476837,
+    -174.365295410156
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 72.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    39.5467910766602,
+    0.162000000476837,
+    -95.4596633911133
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 73.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    19.1934642791748,
+    0.162000000476837,
+    -123.57674407959
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 74.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    24.7386913299561,
+    0.162000000476837,
+    -107.540267944336
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 75.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    26.7197494506836,
+    0.162000000476837,
+    -165.870971679688
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 76.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    35.1338195800781,
+    0.162000000476837,
+    -135.632995605469
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 77.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    40.2826995849609,
+    0.162000000476837,
+    -20.9501800537109
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 78.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    33.505973815918,
+    0.162000000476837,
+    -140.70458984375
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 79.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    41.8019485473633,
+    0.162000000476837,
+    -146.240692138672
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 80.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    41.0697250366211,
+    0.162000000476837,
+    -74.1523590087891
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 81.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    30.2503935496012,
+    0.162000000476837,
+    -138.489105224609
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 82.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    22.449161529541,
+    0.162000000476837,
+    -54.6700439453125
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 83.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    21.0982036590576,
+    0.162000000476837,
+    -74.6906204223633
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 84.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    16.9650211334229,
+    0.162000000476837,
+    -131.251327514648
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 85.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    34.4495468139648,
+    0.162000000476837,
+    -135.418792724609
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 86.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    17.6370220184326,
+    0.162000000476837,
+    -98.4065704345703
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 87.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    31.5381701787313,
+    0.162000000476837,
+    -55.1472778320313
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 88.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    30.4621925354004,
+    0.162000000476837,
+    -161.548248291016
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 89.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    23.0874290466309,
+    0.162000000476837,
+    -140.443420410156
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 90.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    22.9268417358398,
+    0.162000000476837,
+    -25.2344512939453
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 91.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    18.536828994751,
+    0.162000000476837,
+    -130.658920288086
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 92.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    40.3418502807617,
+    0.162000000476837,
+    -128.050703684489
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 93.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    22.876049041748,
+    0.162000000476837,
+    -33.640625
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 94.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    38.6159248352051,
+    0.162000000476837,
+    -54.2645034790039
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 95.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    27.9167709350586,
+    0.162000000476837,
+    -106.335693359375
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 96.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    36.4357528686523,
+    0.162000000476837,
+    -172.090637207031
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 97.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    17.3070715268453,
+    0.162000000476837,
+    -93.0765075683594
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 98.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    31.3430322011312,
+    0.162000000476837,
+    -30.91650390625
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 99.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    16.7532766660055,
+    0.162000000476837,
+    -34.3137054443359
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 100.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    19.5551834106445,
+    0.162000000476837,
+    -174.606002807617
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 101.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    39.6125183105469,
+    0.162000000476837,
+    -34.3322143554688
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 102.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    39.5083618164063,
+    0.162000000476837,
+    -87.8745880126953
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 103.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    29.3643569946289,
+    0.162000000476837,
+    -68.1388702392578
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 104.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    22.7800178527832,
+    0.162000000476837,
+    -107.337776184082
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 105.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    31.6837174097697,
+    0.162000000476837,
+    -42.8783111572266
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 106.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    32.6580657958984,
+    0.162000000476837,
+    -49.4494247436523
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 107.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    43.4653778076172,
+    0.162000000476837,
+    -40.9035034179688
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 108.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    24.9314384460449,
+    0.162000000476837,
+    -153.885437011719
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 109.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    37.2604827880859,
+    0.162000000476837,
+    -23.3912353515625
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 110.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    24.24880027771,
+    0.162000000476837,
+    -125.770782470703
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 111.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    23.48122215271,
+    0.162000000476837,
+    -71.2847900390625
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 112.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    26.959831237793,
+    0.162000000476837,
+    -29.6723327636719
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 113.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    18.7803287506104,
+    0.162000000476837,
+    -77.876838684082
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 114.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    20.1538639068604,
+    0.162000000476837,
+    -158.727828979492
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 115.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    39.5778121948242,
+    0.162000000476837,
+    -88.9175796508789
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 116.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    28.7988357543945,
+    0.162000000476837,
+    -121.020980834961
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 117.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    37.635627746582,
+    0.162000000476837,
+    -167.858551025391
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 118.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    35.495002746582,
+    0.162000000476837,
+    -149.562423706055
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 119.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    32.6968456904093,
+    0.162000000476837,
+    -173.320404052734
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 120.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    28.3022651672363,
+    0.162000000476837,
+    -96.092529296875
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 121.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    29.4687957763672,
+    0.162000000476837,
+    -24.0896606445313
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 122.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    24.4096641540527,
+    0.162000000476837,
+    -160.266784667969
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 123.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    35.5774154663086,
+    0.162000000476837,
+    -149.619613647461
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 124.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    37.822509765625,
+    0.162000000476837,
+    -22.2632141113281
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 125.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    32.847931543986,
+    0.162000000476837,
+    -168.872894287109
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 126.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    40.2774887084961,
+    0.162000000476837,
+    -105.782203674316
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 127.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    29.1611156463623,
+    0.162000000476837,
+    -136.976226806641
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 128.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    36.6447525024414,
+    0.162000000476837,
+    -108.780960083008
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 129.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    24.4207572937012,
+    0.162000000476837,
+    -140.158264160156
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 130.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    18.9435424804688,
+    0.162000000476837,
+    -118.005493164063
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 131.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    18.3393387794495,
+    0.162000000476837,
+    -110.086082458496
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 132.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    35.3700790405273,
+    0.162000000476837,
+    -75.3284149169922
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 133.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.0412139892578,
+    0.162000000476837,
+    -93.2821655273438
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 134.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    44.0887145996094,
+    0.162000000476837,
+    -66.406494140625
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 135.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    40.5200271606445,
+    0.162000000476837,
+    -138.755783081055
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 136.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    33.9773559570313,
+    0.162000000476837,
+    -75.4407806396484
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 137.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    29.678524017334,
+    0.162000000476837,
+    -163.991806030273
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 138.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    31.2749938964844,
+    0.162000000476837,
+    -22.7870788574219
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 139.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    24.6204605102539,
+    0.162000000476837,
+    -98.6293258666992
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 140.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    22.1389236450195,
+    0.162000000476837,
+    -123.145286560059
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 141.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.4899635314941,
+    0.162000000476837,
+    -159.685501098633
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 142.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    32.9748153686523,
+    0.162000000476837,
+    -49.0267486572266
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 143.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.7057647705078,
+    0.162000000476837,
+    -37.2819976806641
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 144.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    31.7796436945597,
+    0.162000000476837,
+    -167.631195068359
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 145.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    19.6848812103271,
+    0.162000000476837,
+    -41.5061492919922
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 146.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    39.7181091308594,
+    0.162000000476837,
+    -40.7257537841797
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 147.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    38.8714370727539,
+    0.162000000476837,
+    -83.6933441162109
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 148.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    22.9174041748047,
+    0.162000000476837,
+    -54.8926391601563
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 149.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    34.1707649230957,
+    0.162000000476837,
+    -168.683547973633
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 150.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    38.0667343139649,
+    0.162000000476837,
+    -43.3529205322266
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 151.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    33.1361465454102,
+    0.162000000476837,
+    -129.012512207031
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 152.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    36.2631797790527,
+    0.162000000476837,
+    -150.939437866211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 153.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    21.3650913238525,
+    0.162000000476837,
+    -157.718597412109
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 154.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    27.0391654968262,
+    0.162000000476837,
+    -116.067314147949
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 155.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    38.2710456848145,
+    0.162000000476837,
+    -68.3840484619141
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 156.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    40.1677131652832,
+    0.162000000476837,
+    -143.623031616211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 157.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    22.8128147125244,
+    0.162000000476837,
+    -38.0962371826172
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 158.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    42.7928619384766,
+    0.162000000476837,
+    -67.2074584960938
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 159.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    18.2576847076416,
+    0.162000000476837,
+    -172.067687988281
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 160.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    16.4820518493652,
+    0.162000000476837,
+    -168.918319702148
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 161.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    19.552921295166,
+    0.162000000476837,
+    -174.677703857422
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 162.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    16.958101272583,
+    0.162000000476837,
+    -61.1660766601563
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 163.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    16.878511428833,
+    0.162000000476837,
+    -100.838287353516
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 164.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    16.7792224884033,
+    0.162000000476837,
+    -145.184692382813
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 165.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.9022674560547,
+    0.162000000476837,
+    -69.6836166381836
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 166.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    29.2666168212891,
+    0.162000000476837,
+    -154.875946044922
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 167.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    23.7815132141113,
+    0.162000000476837,
+    -154.648513793945
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 168.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    17.4821681976318,
+    0.162000000476837,
+    -109.280250549316
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 169.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    37.6286544799805,
+    0.162000000476837,
+    -111.660438537598
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 170.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    37.0494537353516,
+    0.162000000476837,
+    -36.454216003418
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 171.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    17.6368618011475,
+    0.162000000476837,
+    -124.21070098877
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 172.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    30.5399169921875,
+    0.162000000476837,
+    -122.308197021484
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 173.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    30.2832908630371,
+    0.162000000476837,
+    -62.3677253723145
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 174.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    17.9852981567383,
+    0.162000000476837,
+    -39.6332244873047
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 175.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    31.7154626846313,
+    0.162000000476837,
+    -99.4941024780273
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 176.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    18.3651332855225,
+    0.162000000476837,
+    -75.1982269287109
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 177.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    16.6448723475138,
+    0.162000000476837,
+    -135.268997192383
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 178.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    38.966194152832,
+    0.162000000476837,
+    -104.344848632813
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 179.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    41.1079902648926,
+    0.162000000476837,
+    -124.164199829102
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 180.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    37.2565155029297,
+    0.162000000476837,
+    -61.0583305358887
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 181.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    33.6928176879883,
+    0.162000000476837,
+    -114.237503051758
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 182.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    28.4254188537598,
+    0.162000000476837,
+    -105.181297302246
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 183.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    41.4711875915527,
+    0.162000000476837,
+    -27.9038352966309
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 184.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    22.4727401733398,
+    0.162000000476837,
+    -158.978073120117
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 185.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    37.2254028320313,
+    0.162000000476837,
+    -157.134674072266
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 186.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    35.4337425231934,
+    0.162000000476837,
+    -109.934265136719
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 187.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    18.8881320953369,
+    0.162000000476837,
+    -153.060043334961
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 188.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    26.7487010955811,
+    0.162000000476837,
+    -76.8819427490234
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 189.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    21.0072803497314,
+    0.162000000476837,
+    -116.354537963867
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 190.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.8726654052734,
+    0.162000000476837,
+    -143.044387817383
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 191.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    19.1867752075195,
+    0.162000000476837,
+    -121.763549804688
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 192.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    24.743257522583,
+    0.162000000476837,
+    -167.96696472168
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 193.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.9467391967773,
+    0.162000000476837,
+    -94.7874908447266
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 194.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    20.5996494293213,
+    0.162000000476837,
+    -161.683120727539
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 195.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.4252147674561,
+    0.162000000476837,
+    -146.403228759766
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 196.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    36.3443489074707,
+    0.162000000476837,
+    -164.497482299805
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 197.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    19.7528839111328,
+    0.162000000476837,
+    -136.119827270508
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 198.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    20.2587623596191,
+    0.162000000476837,
+    -145.971633911133
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 199.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    37.5493698120117,
+    0.162000000476837,
+    -59.0357856750488
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 200.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    24.3683891296387,
+    0.162000000476837,
+    -119.620048522949
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 201.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    32.870059967041,
+    0.162000000476837,
+    -146.018615722656
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 202.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    41.2396049499512,
+    0.162000000476837,
+    -23.417407989502
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 203.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    37.1011772155762,
+    0.162000000476837,
+    -131.410140991211
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 204.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    39.4293746948242,
+    0.162000000476837,
+    -90.0894012451172
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 205.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    17.7683792114258,
+    0.162000000476837,
+    -113.224426269531
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 206.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    36.258731842041,
+    0.162000000476837,
+    -167.438858032227
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 207.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.6782512664795,
+    0.162000000476837,
+    -104.205345153809
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 208.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    33.1730651855469,
+    0.162000000476837,
+    -128.164141337077
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 209.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    28.9061660766602,
+    0.162000000476837,
+    -92.0901641845703
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 210.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    41.2976570129395,
+    0.162000000476837,
+    -110.370712280273
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 211.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    25.7328071594238,
+    0.162000000476837,
+    -106.92073059082
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 212.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    21.1707000732422,
+    0.162000000476837,
+    -157.905456542969
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 213.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    34.5701446533203,
+    0.162000000476837,
+    -147.568603515625
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 214.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    35.9407386779785,
+    0.162000000476837,
+    -91.0771636962891
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 215.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    18.0189609527588,
+    0.162000000476837,
+    -72.2663803100586
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 216.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    32.021279335022,
+    0.162000000476837,
+    -160.295806884766
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 217.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "i_va_w951_n1400_ne"
+}
