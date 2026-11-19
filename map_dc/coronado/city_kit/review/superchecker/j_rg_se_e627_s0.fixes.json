@@ -1,0 +1,19 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -12.8915405273438,
+    0.162000000476837,
+    -9.60158737500509
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "j_rg_se_e627_s0"
+}
