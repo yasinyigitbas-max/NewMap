@@ -20,6 +20,7 @@ OUT = os.path.join(REPO, 'OUT/super')
 DUMP = os.path.join(OUT, 'dump')
 RDUMP = os.path.join(OUT, 'dump_rooms')
 MODELS = os.path.join(OUT, 'models')
+DUMP_V = 3           # the read-out's format: an older read-out is read again
 GODOT = os.environ.get('SC_GODOT', 'C:/Users/yasin/Godot_v4.7.2-stable_win64.exe')
 
 HARD = ('asphalt', 'white', 'yellow')            # where vehicles go
@@ -61,7 +62,8 @@ def ensure_dumps(names, folder=PIECES, out=DUMP, chunk=40, say=True):
         if not os.path.exists(src): continue
         ok = False
         if os.path.exists(dj) and os.path.exists(dj[:-5] + '.bin'):
-            try: ok = json.load(open(dj, encoding='utf-8')).get('sha256') == sha_file(src)
+            try:
+                jj = json.load(open(dj, encoding='utf-8')); ok = jj.get('sha256') == sha_file(src) and jj.get('v') == DUMP_V
             except Exception: ok = False
         if not ok: stale.append(n)
     res_dir = 'res://' + fwd(os.path.relpath(folder, REPO)) + '/'
@@ -144,6 +146,15 @@ class Kit:
                     except Exception: pass
         return cls._open.get(folder)
 
+    _cols = {}
+    @classmethod
+    def model_col(cls, key):
+        """a building model's own collision: triangles [n, 3, 3] in the model's frame, or None if never read out"""
+        if key not in cls._cols:
+            pj = os.path.join(MODELS, key + '.col.json')
+            cls._cols[key] = np.fromfile(pj[:-5] + '.bin', '<f4').reshape(-1, 3, 3).astype(np.float64) if os.path.exists(pj) else None
+        return cls._cols[key]
+
     @classmethod
     def model(cls, key):
         """a building model's near mesh: triangles [n, 3, 3] in the model's frame (from sc_dump.gd), or None"""
@@ -190,6 +201,11 @@ class Dump:
                 return self.f[m['off']:m['off'] + m['dumped'] * 9].reshape(-1, 3, 3).astype(np.float64)
         return np.zeros((0, 3, 3))
 
+    def wires(self):
+        """every triangle of a wire piece's meshes [n, 3, 3] (pieces named w_*)"""
+        out = [self.f[m['off']:m['off'] + m['dumped'] * 9].reshape(-1, 3, 3).astype(np.float64) for m in self.j['meshes'] if m.get('dumped') and m.get('name') != 'shell']
+        return np.concatenate(out) if out else np.zeros((0, 3, 3))
+
     def bbox(self):
         """xz box of the ground (or of the props where there is no ground), in the scene's frame"""
         lo = np.array([np.inf, np.inf]); hi = -lo
@@ -198,6 +214,9 @@ class Dump:
         if not np.isfinite(lo).all():
             for _, X in self.batches():
                 if len(X): lo = np.minimum(lo, X[:, [9, 11]].min(0)); hi = np.maximum(hi, X[:, [9, 11]].max(0))
+        if not np.isfinite(lo).all():
+            W = self.wires()
+            if len(W): P = W.reshape(-1, 3)[:, [0, 2]]; lo = P.min(0); hi = P.max(0)
         return lo, hi
 
 

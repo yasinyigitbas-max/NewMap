@@ -21,6 +21,7 @@ const PIECES := "res://map_dc/coronado/city_kit/pieces/"
 func _init() -> void: _run.call_deferred()
 
 var buf := PackedFloat32Array()
+var _tri_cache := {}
 
 func _xf(t: Transform3D) -> Array:
 	return [t.basis.x.x, t.basis.x.y, t.basis.x.z, t.basis.y.x, t.basis.y.y, t.basis.y.z, t.basis.z.x, t.basis.z.y, t.basis.z.z, t.origin.x, t.origin.y, t.origin.z]
@@ -102,7 +103,7 @@ func _run() -> void:
 func _dump(top: Node, path: String, out: String, models: String) -> void:
 	buf = PackedFloat32Array()
 	var name := path.get_file().get_basename()
-	var rec := {"name": name, "path": path, "sha256": FileAccess.get_sha256(path), "meta": {}, "ground": [], "wear": [], "buildings": [], "props": [], "cols": {}, "meshes": [], "lights": []}
+	var rec := {"v": 3, "name": name, "path": path, "sha256": FileAccess.get_sha256(path), "meta": {}, "ground": [], "wear": [], "buildings": [], "props": [], "cols": {}, "meshes": [], "lights": []}
 	for m in top.get_meta_list(): rec["meta"][String(m)] = _j(top.get_meta(m))
 	var bn := top.get_node_or_null("Buildings")
 	var in_bld := {}
@@ -117,7 +118,15 @@ func _dump(top: Node, path: String, out: String, models: String) -> void:
 					var ab := near.mesh.get_aabb()
 					key = "shape_%d_%d_%d_%d" % [near.mesh.surface_get_array_len(0), roundi(ab.size.x * 10.0), roundi(ab.size.y * 10.0), roundi(ab.size.z * 10.0)]
 				if not FileAccess.file_exists(models.path_join(key + ".json")): _model(near, key, kit, models)
-			rec["buildings"].append({"path": String(top.get_path_to(b)), "name": String(b.name), "kit": kit, "model": key, "xf": _xf(_rel(b, top)), "meta": _j(_metas(b))})
+				if not FileAccess.file_exists(models.path_join(key + ".col.json")): _model_col(b, key, models)
+			var boxes: Array = []      # collision boxes added to this one building (columns), in the building's frame
+			var cb := b.get_node_or_null("col")
+			if cb:
+				for cs: Node in cb.get_children():
+					if cs is CollisionShape3D and (cs as CollisionShape3D).shape is BoxShape3D:
+						var o := ((cb as Node3D).transform * (cs as CollisionShape3D).transform).origin; var sz := ((cs as CollisionShape3D).shape as BoxShape3D).size
+						boxes.append([o.x, o.y, o.z, sz.x, sz.y, sz.z])
+			rec["buildings"].append({"path": String(top.get_path_to(b)), "name": String(b.name), "kit": kit, "model": key, "xf": _xf(_rel(b, top)), "meta": _j(_metas(b)), "boxes": boxes})
 			for c in b.find_children("*", "MeshInstance3D", true, false): in_bld[c] = true
 	for mi: MeshInstance3D in top.find_children("*", "MeshInstance3D", true, false):
 		if in_bld.has(mi) or mi.mesh == null: continue
@@ -155,7 +164,7 @@ func _dump(top: Node, path: String, out: String, models: String) -> void:
 				tn += (il if il > 0 else (am.surface_get_array_len(si) if am else 0)) / 3
 			var ab2 := mi.mesh.get_aabb()
 			var e := {"path": String(top.get_path_to(mi)), "name": nm, "tris": tn, "xf": _xf(xf), "aabb": [ab2.position.x, ab2.position.y, ab2.position.z, ab2.size.x, ab2.size.y, ab2.size.z]}
-			if nm == "shell":      # a room's built walls, floor, ceiling: the checks need its faces
+			if nm == "shell" or name.begins_with("w_"):      # a room's built walls, floor, ceiling; a wire piece's wires: the checks need the faces
 				e["off"] = buf.size(); var n2 := 0
 				for si in mi.mesh.get_surface_count(): n2 += _tris(mi.mesh, si, xf)
 				e["dumped"] = n2
@@ -171,11 +180,16 @@ func _dump(top: Node, path: String, out: String, models: String) -> void:
 			tier = parts[parts.size() - 1]; cond = parts[parts.size() - 2]
 			base = "_".join(parts.slice(0, parts.size() - 2))
 		var ab3 := mm.mesh.get_aabb() if mm.mesh else AABB()
+		var mt := 0
+		if mm.mesh:
+			var mid := mm.mesh.get_instance_id()
+			if not _tri_cache.has(mid): _tri_cache[mid] = mm.mesh.get_faces().size() / 3
+			mt = int(_tri_cache[mid])
 		var off3 := buf.size()
 		for i in mm.instance_count: _push_xf(xf2 * mm.get_instance_transform(i))
 		rec["props"].append({"path": String(top.get_path_to(mmi)), "name": nm2, "base": base, "cond": cond, "tier": tier, "count": mm.instance_count, "off": off3,
 			"aabb": [ab3.position.x, ab3.position.y, ab3.position.z, ab3.size.x, ab3.size.y, ab3.size.z], "colors": mm.use_colors, "custom": mm.use_custom_data,
-			"range": [mmi.visibility_range_begin, mmi.visibility_range_end]})
+			"range": [mmi.visibility_range_begin, mmi.visibility_range_end], "tris": mt})
 	var pc := top.get_node_or_null("Props/PropCol")
 	if pc:
 		var groups := {}; var gid: Array = []; var off4 := buf.size(); var n3 := 0
@@ -199,6 +213,25 @@ func _metas(n: Node) -> Dictionary:
 	var d := {}
 	for m in n.get_meta_list(): d[String(m)] = n.get_meta(m)
 	return d
+
+## a building model's own collision (the "col" body kit_lib gives it), as triangles in the model's frame
+func _model_col(b: Node, key: String, models: String) -> void:
+	var out := PackedFloat32Array(); var n := 0
+	for body: Node in b.get_children():
+		if not (body is StaticBody3D): continue
+		for cs: Node in body.get_children():
+			if not (cs is CollisionShape3D) or (cs as CollisionShape3D).shape == null: continue
+			var xf := (body as Node3D).transform * (cs as CollisionShape3D).transform
+			var sh := (cs as CollisionShape3D).shape
+			var faces := PackedVector3Array()
+			if sh is ConcavePolygonShape3D: faces = (sh as ConcavePolygonShape3D).get_faces()
+			elif sh.get_debug_mesh() != null: faces = sh.get_debug_mesh().get_faces()
+			for v: Vector3 in faces:
+				var p := xf * v
+				out.append(p.x); out.append(p.y); out.append(p.z)
+			n += faces.size() / 3
+	var fb := FileAccess.open(models.path_join(key + ".col.bin"), FileAccess.WRITE); fb.store_buffer(out.to_byte_array()); fb.close()
+	var fj := FileAccess.open(models.path_join(key + ".col.json"), FileAccess.WRITE); fj.store_string(JSON.stringify({"key": key, "tris": n})); fj.close()
 
 func _model(near: MeshInstance3D, key: String, kit: String, models: String) -> void:
 	var keep := buf; buf = PackedFloat32Array()

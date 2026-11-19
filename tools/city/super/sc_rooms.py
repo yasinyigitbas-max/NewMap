@@ -32,6 +32,7 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import sc_lib as L
+import sc_more
 
 CUSTOMER_FRONT = ('prop_shop_counter', 'prop_bar_counter', 'prop_pastry_case', 'prop_gelato_case', 'prop_glass_display_case')     # customer side = +Z
 STAFF_FRONT = ('prop_checkout_counter', 'prop_laundry_counter')                                                                   # staff side = +Z
@@ -167,7 +168,7 @@ def seg_hits_quad(a, b, q):
     return any(cross(np.asarray(a, float), np.asarray(b, float), q[k], q[(k + 1) % 4]) for k in range(4))
 
 
-class RoomFinder:
+class RoomFinder(sc_more.RoomMore):
     def __init__(self, room):
         self.r = room; self.faults = []; self.counts = {}
 
@@ -287,7 +288,7 @@ class RoomFinder:
         if len(lights) > 6: self.add('many_lights', '%d lights (the budget is 4-6 a room)' % len(lights), (r.cx, 2.5, r.cz), amount=len(lights))
         for l in lights:
             p = np.array(l['xf'][9:12])
-            if p[1] < 1.9 and r.inside(p[0], p[2]) and not any(L.in_quad(o.quad, p[[0, 2]]) for o in r.items):
+            if p[1] < 1.85 and r.inside(p[0], p[2]) and not any(L.in_quad(o.quad, p[[0, 2]]) for o in r.items):
                 self.add('low_light', 'a light hangs %.2f m over walkable floor' % p[1], p, amount=p[1], sure='look: the light itself has no model, its fitting may be higher')
             for o in r.items:
                 if o.y0 < p[1] < o.y1 - 0.02 and L.in_quad(o.quad, p[[0, 2]]) and o.mount != 'wall':
@@ -302,6 +303,9 @@ class RoomFinder:
                     over = max(-fw[0] / 2 - f[0], f[2] - fw[0] / 2, -fw[1] / 2 - f[1], f[3] - fw[1] / 2)
                     if over > 0.05: self.add('room_outside', 'the room\'s floor reaches %.2f m outside its building\'s footprint' % over, (r.cx, 0, r.cz), amount=over); break
         self.party_walls()
+        try: self.more_rooms()
+        except Exception as e:
+            self.add('check_error', 'the newer indoor checks stopped with an error and are NOT in this result: %s' % str(e)[:140], (r.cx, 0, r.cz), sure='a fault of the tool')
         return self.faults
 
     def wall_face(self, room, axis, plane, toward):
@@ -442,9 +446,43 @@ def check_room(name, out, dump_dir=None, old=None, say=True):
     return res
 
 
+def piece_rooms_faults(piece, ctx):
+    """buildings with a shop door and no room; rooms with no building; rooms listed but not built: [(kind, text, at)]"""
+    out = []; A = [r for r in all_assigned() if r.get('piece') == piece]
+    for b in ctx.my_blds:
+        con = b.open
+        if not con or b.kit.startswith(('houses/', 'garages/')): continue      # a house's front door is no shop door
+        shops = [e for e in con.get('entrances', []) if e.get('kind') == 'shop' and int(e.get('floor', 0)) == 0]
+        if shops and not any(str(a.get('label')) == b.name for a in A):
+            out.append(('no_room', '%s has %d shop door(s) and no room behind any of them' % (b.name, len(shops)), b.pos))
+    for a in A:
+        if not any(b.name == str(a.get('label')) and np.hypot(b.pos[0] - a['pos'][0], b.pos[2] - a['pos'][2]) < 1.5 for b in ctx.my_blds):
+            out.append(('room_no_building', 'the room %s is listed for the building "%s", which does not stand where the list says' % (a.get('id'), a.get('label')), a['pos']))
+        if not any(os.path.exists(os.path.join(L.ROOMS, c + '.scn')) for c in (a.get('built') or '', 'g_' + str(a['id']), str(a['id'])) if c):
+            out.append(('room_not_built', 'the room %s ("%s") is listed and has no file' % (a.get('id'), a.get('name', '')), a['pos']))
+    return out
+
+
+def all_assigned():
+    out = []
+    d = os.path.join(L.CK, 'interiors')
+    for f in sorted(os.listdir(d)):
+        if f.startswith('assignment_') and f.endswith('.json'):
+            try: j = json.load(open(os.path.join(d, f), encoding='utf-8'))
+            except Exception: continue
+            rooms = j.get('rooms') if isinstance(j, dict) else None
+            if isinstance(rooms, list): out += [r for r in rooms if isinstance(r, dict) and 'piece' in r and 'id' in r and 'pos' in r]
+    return out
+
+
 def check_piece(piece, ctx=None, out=None, say=True):
     names = rooms_of_piece(piece)
     out = out or os.path.join(L.OUT, 'find')
+    if ctx is not None:
+        pf = piece_rooms_faults(piece, ctx)
+        if say:
+            for kind, text, at in pf: print('  %-18s %s' % (kind, text))
+        json.dump([{'kind': k, 'text': t, 'at': [float(v) for v in a]} for k, t, a in pf], open(os.path.join(out, piece + '.rooms_of_piece.json'), 'w'), indent=1)
     if not names:
         if say: print('  no rooms belong to %s' % piece)
         return []

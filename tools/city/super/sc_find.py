@@ -20,6 +20,7 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import sc_lib as L
+import sc_more
 
 TOL_AIR = 0.06          # a prop this far over what it stands on is "in the air"
 TOL_SUNK = 0.10
@@ -55,7 +56,7 @@ def buildings_of(dump, inst):
         o.st = L.Kit.stats(o.kit) if o.kit else {}
         fw = o.st.get('footprint_wd', [0, 0]); o.w = float(fw[0]); o.d = float(fw[1]); o.h = float(o.st.get('height', 3.0))
         o.quad = L.rect_quad(o.pos[[0, 2]], (o.w * 0.5, o.d * 0.5), o.yaw) if o.w > 0 else None
-        o.open = L.Kit.openings(o.kit)
+        o.open = L.Kit.openings(o.kit); o.boxes = b.get('boxes') or []
         o.doors = [(str(d[0]), o.world([float(d[1]), 0.0, o.d * 0.5])) for d in o.st.get('doors_front', [])]
         out.append(o)
     return out
@@ -101,6 +102,17 @@ class Ctx:
         for k, it in enumerate(self.all_items):
             self.grid.setdefault((int(it.ctr[0] // 4), int(it.ctr[1] // 4)), []).append(k)
         self.my_blds = [b for b in self.blds if b.inst.id == row.id]
+        # the wires of every wire piece that reaches this piece (points in city numbers)
+        ws = []
+        for r in rows:
+            if not r.piece.startswith('w_'): continue
+            b = boxes.get(r.id)
+            if b is None or b[0] > self.hi[0] + 5 or b[2] < self.lo[0] - 5 or b[1] > self.hi[1] + 5 or b[3] < self.lo[1] - 5: continue
+            W = L.Dump(r.piece).wires()
+            if len(W):
+                P = r.pts(W.reshape(-1, 3)); m = (P[:, 0] > self.lo[0] - 5) & (P[:, 0] < self.hi[0] + 5) & (P[:, 2] > self.lo[1] - 5) & (P[:, 2] < self.hi[1] + 5)
+                ws.append(P[m])
+        self.wires = np.concatenate(ws) if ws else np.zeros((0, 3))
 
     _boxes = None
     @staticmethod
@@ -147,7 +159,7 @@ class Ctx:
         return best
 
 
-class Finder:
+class Finder(sc_more.More):
     def __init__(self, ctx):
         self.c = ctx; self.faults = []; self.notes = []; self.counts = {}
 
@@ -392,6 +404,13 @@ class Finder:
                     if not inwin: self.add('ac_no_window', 'window air conditioner not in a window of %s' % b.name, it.pos, it, mode='choose', fix=self.fix_move(it))
                     continue
                 hw = float(it.man.get('footprint_w', 0.4)) * 0.5; y0 = lp[1]; y1 = lp[1] + float(it.man.get('height', 0.4))
+                # services keep 0.35 m off a door or a roll-up ("props overlap on the gate")
+                if has(it.base, ('prop_meter_', 'prop_hose_reel', 'prop_ac_', 'prop_downspout')):
+                    for o in b.open.get('openings', []):
+                        if o['facade'] != fac or not ('door' in o['region'] or o['region'] == 'O_rollup'): continue
+                        gap = max((float(o['along']) - float(o['w']) * 0.5) - (al + hw), (al - hw) - (float(o['along']) + float(o['w']) * 0.5))
+                        if 0.0 <= gap < 0.35 and y0 < float(o['y1']) and y1 > float(o['y0']):
+                            self.add('near_door', '%s hangs %.0f cm from a %s of %s (services keep 35 cm off)' % (it.base, gap * 100, o['region'].replace('O_', '').replace('_', ' '), b.name), it.pos, it, amount=gap, mode='choose', fix=self.fix_move(it)); break
                 for o in b.open.get('openings', []):
                     if o['facade'] != fac: continue
                     if al - hw < float(o['along']) + float(o['w']) * 0.5 - 0.03 and al + hw > float(o['along']) - float(o['w']) * 0.5 + 0.03 and y0 < float(o['y1']) - 0.03 and y1 > float(o['y0']) + 0.03:
@@ -645,6 +664,7 @@ class Finder:
         self.check_wear()
         self.check_ground()
         self.check_files()
+        self.run_more()
         return self.faults
 
 
@@ -659,13 +679,22 @@ WHAT_IT_CHECKS = [
     ('wear', 'each wear mark\'s corners and middle against the ground under it, the piece\'s edge and the buildings'),
     ('ground_buried / ground_sea / building_sunk / building_floats / door_step / edge_step / edge_gap', 'the piece\'s ground against the land, its buildings and its neighbours (reported only)'),
     ('empty_batch / wide_batch / tier_count / no_kit_note', 'faults of the file itself'),
+    ('ground_step / drive_no_apron / ground_low / building_slope / garage_step / building_overlap / building_off_block', 'more of the ground and the buildings (reported only)'),
+    ('in_model / stair_foot / gate_blocked / lane_mouth / on_path / walk_narrow / rack_across / vending_on_walk / over_edge / no_reason / stray_bench / sail_over_nothing / arm_away', 'where props stand: the building\'s real mesh, stairs, gates, lane mouths, paths, the width left on a walk, block edges'),
+    ('park_empty / empty_area', 'play areas with fewer than three items; open ground with nothing within 12 m'),
+    ('chainlink_street / double_fence / yard_open', 'chain-link along a street, one fence behind another, a house\'s back yard that is not closed'),
+    ('oil_no_car / patch_alone / pale_white', 'oil with no car place near, a dark patch alone on a road, a pale patch left white'),
+    ('stall_in_building / wire_in_building / pole_no_wire', 'parking stalls and wires against the buildings and poles'),
+    ('no_collision / column_no_collision', 'every thing standing on the ground has a collision shape; so has every column and post of a building'),
+    ('lock / cost / layout', 'whether the file is what was locked; draw batches and triangles of the near tier; faults of the city layout file'),
 ]
 CANNOT_SEE = [
     'whether a prop makes sense where it stands, or a yard reads as lived in: by eye',
     'tyre marks with no cause beside them (a braking mark with no stop line): only the surface is checked',
     'props on roofs and decks of models the check has no mesh for; over 1.2 m it asks instead of acting',
-    'walk widths, parks that are too empty, repeated trees: not written yet',
-    'the rooms: the indoor checker is a separate step',
+    'utility-pole cross-arms and street signs facing the right way; a tyre mark\'s cause; whether a shop is OPEN behind real glass beyond the door type',
+    'other things narrowing a walk beside the one measured; a stair\'s foot from its head (it asks within 1.5 m of the whole stair)',
+    'the new kinds of 19 Nov evening were tuned on two blocks only: their "sure" notes say where a look is needed',
 ]
 
 
@@ -731,7 +760,8 @@ def find(piece, row=None, dump_dir=None, out=None, say=True):
         if 'fix' not in f: continue
         line = dict(f['fix']); line['n'] = f['n']; line['kind'] = f['kind']; line['mode'] = f['mode']; line['reason'] = f['text']
         fixes.append(line)
-    res = {'piece': piece, 'row': r.id, 'pos': [float(v) for v in r.pos], 'yaw': r.yaw, 'sha256': ctx.dump.j.get('sha256'), 'placed': len(mine),
+    draws, tris = sc_more.cost(ctx.dump); lock = sc_more.lock_state(piece)
+    res = {'lock': lock, 'cost': {'near_draw_batches': draws, 'near_triangles': tris}, 'piece': piece, 'row': r.id, 'pos': [float(v) for v in r.pos], 'yaw': r.yaw, 'sha256': ctx.dump.j.get('sha256'), 'placed': len(mine),
            'props': len(ctx.items), 'buildings': len(ctx.my_blds), 'neighbours': [x.piece for x in ctx.neigh], 'counts': F.counts,
            'checks': WHAT_IT_CHECKS, 'cannot_see': CANNOT_SEE, 'notes': sorted(set(F.notes)), 'faults': F.faults}
     json.dump(res, open(os.path.join(out, piece + '.faults.json'), 'w', encoding='utf-8'), indent=1)
@@ -744,6 +774,7 @@ def find(piece, row=None, dump_dir=None, out=None, say=True):
         for f in F.faults: modes[f['mode']] = modes.get(f['mode'], 0) + 1
         print('  one right answer: %d; a place to be chosen by hand: %d; reported only: %d' % (modes.get('auto', 0), modes.get('choose', 0), modes.get('report', 0)))
         for n in sorted(set(F.notes))[:6]: print('  note: ' + n)
+        print('  lock: %s; cost standing in it: %d draw batches, %d triangles in the near tier%s' % (lock, draws, tris, ' (OVER 150 draws)' if draws > 150 else ''))
     return res, ctx
 
 

@@ -114,6 +114,9 @@ def check(area, dump_dir=None, say=True):
         for k2, t2 in enumerate(T):
             if k2 != k and np.hypot(float(t2['at'][0]) - x, float(t2['at'][2]) - z) < 3.0: probs.append('under 3 m from tree %d of this list' % (k2 + 1)); break
         if not str(t.get('why', '')).strip(): probs.append('no reason given')
+        twins = [k2 + 1 for k2, t2 in enumerate(T) if k2 != k and t2['base'] == t['base'] and abs(float(t2.get('scale', 1.0)) - float(t.get('scale', 1.0))) < 0.03 and abs(float(t2.get('yaw', 0.0)) - float(t.get('yaw', 0.0))) < 5.0
+                 and np.hypot(float(t2['at'][0]) - x, float(t2['at'][2]) - z) < 30.0]
+        if len(twins) >= 2: probs.append('the same model, size and turn as trees %s within 30 m ("trees look like copy pasted")' % ', '.join(str(v) for v in twins[:4]))
         rows.append((k + 1, t['base'], (x, y, z), probs)); bad += len(probs) > 0
     # the plan's limit on trees in view, from the streets round the piece
     every = []

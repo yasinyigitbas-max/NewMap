@@ -13,6 +13,7 @@ the faults"; "remove all of the trees in the area and fill the wells with the ma
                                                       side by side (preview renderer, only this area loaded)
   python -I tools/city/super/sc.py trees <area>       check a hand-written tree list (zoning/trees/<area>.json) and build
                                                       it into a COPY of its piece t_<area> (sc_trees.py, sc_trees.gd)
+  python -I tools/city/super/sc.py layout             faults of the city layout file itself (rows without a file, doubles ...)
   python -I tools/city/super/sc.py look <piece> "--cams=name:x,y,z:tx,ty,tz;..."
                                                       plain views of the piece AS IT IS (only its area loaded)
   python -I tools/city/super/sc.py install <piece> --by=Yasin
@@ -66,7 +67,7 @@ def cmd_fix(piece, fixes_path=None):
         todo.append(f)
     # removals last within their kind is not needed (items are found by place, not by number), but wells must come
     # after their trees: the well filler looks for the well of a trunk position, the tree itself may still stand
-    todo.sort(key=lambda f: {'move': 0, 'remove': 1, 'remove_decal': 2, 'fill_well': 3}.get(f['op'], 9))
+    todo.sort(key=lambda f: {'add_collider': 0, 'move': 1, 'remove': 2, 'remove_decal': 3, 'fill_well': 4, 'add_box': 5}.get(f['op'], 9))
     lst = os.path.join(WORK, piece + '.todo.json'); json.dump({'scene': piece, 'fixes': todo}, open(lst, 'w'), indent=1)
     out = os.path.join(WORK, piece + '.scn'); applied = os.path.join(WORK, piece + '.applied.json')
     for p in (out, applied):
@@ -295,11 +296,17 @@ def cmd_install(piece, by):
 if __name__ == '__main__':
     a = [x for x in sys.argv[1:] if not x.startswith('--')]
     opt = dict(x[2:].split('=', 1) for x in sys.argv[1:] if x.startswith('--') and '=' in x)
-    if len(a) < 2: sys.exit(__doc__)
+    if len(a) < 2 and not (a and a[0] == 'layout'): sys.exit(__doc__)
+    if a[0] == 'layout': a.append('')
     if a[0] == 'check': cmd_check(a[1])
     elif a[0] == 'fix': sys.exit(0 if cmd_fix(a[1], opt.get('fixes')) else 1)
     elif a[0] == 'fix-room': sys.exit(0 if cmd_fix_room(a[1], opt.get('fixes')) else 1)
     elif a[0] == 'trees': sys.exit(0 if cmd_trees(a[1]) else 1)
+    elif a[0] == 'layout':
+        import sc_more
+        fl = sc_more.layout_faults()
+        for k, t in fl: print('  %-16s %s' % (k, t))
+        print('LAYOUT %d faults in %s' % (len(fl), os.path.relpath(L.LAYOUT, L.REPO)))
     elif a[0] == 'look': cmd_look(a[1], opt.get('cams', ''))
     elif a[0] == 'shots': cmd_shots(a[1], opt.get('cams', ''), opt.get('top'))
     elif a[0] == 'install': cmd_install(a[1], opt.get('by', ''))

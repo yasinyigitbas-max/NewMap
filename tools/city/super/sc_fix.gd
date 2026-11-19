@@ -8,6 +8,9 @@ extends SceneTree
 ##   move          one prop: its instance in every detail tier and its collider go to a new place / turn
 ##   remove        one prop: its instance in every tier and its collider are taken out
 ##   remove_decal  one wear mark (its six vertices) is taken out of the piece's "wear" mesh
+##   add_collider  one prop that has no collision gets one: the kit's own collision shape for that prop (as kit_lib gives
+##                 every other prop), or a box of the prop's own size where the kit ships none
+##   add_box       one column or post of a building gets a collision box, under that building's own collision body
 ##   fill_well     one tree well whose tree was taken out is paved level in its rim's own material (sc_wells.gd: the
 ##                 runtime bake's own well filler), and the ground's collision is lifted with it
 ## The fix list is a plain file, one line per item, each with the item's own position, its new position and a reason.
@@ -21,6 +24,7 @@ extends SceneTree
 ## Real renderer (MultiMesh and mesh data are empty under --headless).
 const EPS := 0.002
 const Wells := preload("res://tools/city/super/sc_wells.gd")
+const K := preload("res://tools/city/pilot/kit_lib.gd")
 
 func _init() -> void: _run.call_deferred()
 
@@ -103,6 +107,8 @@ func _apply(top: Node, f: Dictionary) -> String:
 	var op := String(f.get("op", ""))
 	if op == "remove_decal": return _apply_decal(top, f)
 	if op == "fill_well": return _apply_well(top, f)
+	if op == "add_collider": return _apply_collider(top, f)
+	if op == "add_box": return _apply_box(top, f)
 	if op != "move" and op != "remove": return "unknown kind of change"
 	var base := String(f.get("base", "")); var cond := String(f.get("cond", ""))
 	var at := _v3(f["at"])
@@ -206,6 +212,73 @@ func _take_out(mmi: MultiMeshInstance3D, idx: int) -> void:
 		mm.set_instance_transform(i, ts[i])
 		if mm.use_colors: mm.set_instance_color(i, cs[i])
 		if mm.use_custom_data: mm.set_instance_custom_data(i, ds[i])
+
+var _col_shapes := {}      # prop type -> [shape, its own transform] (one shared shape a type, as kit_lib does)
+
+## the collision of ONE prop that has none
+func _apply_collider(top: Node, f: Dictionary) -> String:
+	var base := String(f.get("base", "")); var cond := String(f.get("cond", "")); var at := _v3(f["at"])
+	var props := top.get_node_or_null("Props")
+	if props == null: return "this scene has no Props"
+	var inst := Transform3D.IDENTITY; var mesh: Mesh = null; var found := false
+	for mmi: MultiMeshInstance3D in _batches_of(top, base, cond):
+		if String(_parse(String(mmi.name))[2]) != "near": continue
+		var rel := _rel(mmi, top)
+		for i in mmi.multimesh.instance_count:
+			var t := rel * mmi.multimesh.get_instance_transform(i)
+			if t.origin.distance_to(at) <= EPS: inst = t; mesh = mmi.multimesh.mesh; found = true; break
+		if found: break
+	if not found: return "no %s at %s" % [base, str(at)]
+	var pc := props.get_node_or_null("PropCol") as StaticBody3D
+	if pc:
+		for cs: Node in pc.get_children():
+			if cs is CollisionShape3D and _rel(cs, top).origin.distance_to(at) <= 0.03: return "it already has a collision"
+	else:
+		pc = StaticBody3D.new(); pc.name = "PropCol"; props.add_child(pc); pc.owner = top
+	if not _col_shapes.has(base):
+		_col_shapes[base] = []
+		var nf: String = K.prop_file(base, cond if cond != "" else "clean", "near")
+		var colf := nf.get_base_dir().path_join(base + "_col.glb")
+		if nf != "" and ResourceLoader.exists(colf):
+			var sc: Node = (load(colf) as PackedScene).instantiate()
+			var cm: MeshInstance3D = K._first_mesh(sc)
+			var src_t := Transform3D.IDENTITY
+			var ns: Node = (load(nf) as PackedScene).instantiate()
+			var nm: MeshInstance3D = K._first_mesh(ns)
+			if nm: src_t = nm.transform
+			if cm and cm.mesh: _col_shapes[base] = [cm.mesh.create_convex_shape(true, true), cm.transform, src_t]
+			sc.free(); ns.free()
+	var c := CollisionShape3D.new()
+	var rec: Array = _col_shapes[base]
+	var to_pc := _rel(pc, top).affine_inverse()
+	if rec.size() == 3:
+		# the prop's own place without its size factor, as kit_lib sets colliders (physics dislikes scaled shapes)
+		var t0 := inst * (rec[2] as Transform3D).affine_inverse()
+		c.shape = rec[0]; c.transform = to_pc * Transform3D(t0.basis.orthonormalized(), t0.origin) * (rec[1] as Transform3D)
+	else:
+		if mesh == null: return "no mesh to size a box from"
+		var ab := mesh.get_aabb()
+		var bx := BoxShape3D.new(); bx.size = (ab.size * inst.basis.get_scale()).max(Vector3(0.05, 0.05, 0.05))
+		c.shape = bx; c.transform = to_pc * Transform3D(inst.basis.orthonormalized(), inst * ab.get_center())
+	pc.add_child(c); c.owner = top
+	return ""
+
+## a collision box for ONE column or post of a building, under that building's own collision body
+func _apply_box(top: Node, f: Dictionary) -> String:
+	var b := top.get_node_or_null(String(f.get("node", ""))) as Node3D
+	if b == null: return "no building at '%s'" % String(f.get("node", ""))
+	var bx: Array = f.get("box", [])
+	if bx.size() != 6: return "the box needs six numbers"
+	var body := b.get_node_or_null("col") as StaticBody3D
+	if body == null:
+		body = StaticBody3D.new(); body.name = "col"; b.add_child(body); body.owner = top
+	var nm := String(f.get("name", "sc_col"))
+	if body.get_node_or_null(nm) != null: return "a box of that name is already there"
+	var sh := BoxShape3D.new(); sh.size = Vector3(float(bx[3]), float(bx[4]), float(bx[5]))
+	var c := CollisionShape3D.new(); c.name = nm; c.shape = sh
+	c.transform = body.transform.affine_inverse() * Transform3D(Basis.IDENTITY, Vector3(float(bx[0]), float(bx[1]), float(bx[2])))
+	body.add_child(c); c.owner = top
+	return ""
 
 func _apply_well(top: Node, f: Dictionary) -> String:
 	var mi := top.get_node_or_null(String(f.get("ground", "ground"))) as MeshInstance3D
@@ -446,6 +519,28 @@ func _prove(a: Node, b: Node, fixes: Array) -> bool:
 	for f: Dictionary in fixes:
 		var op := String(f.get("op", "")); var at := _v3(f["at"])
 		var tag := "#%d %s" % [int(f.get("n", 0)), op]
+		if op == "add_collider":
+			var hc := -1
+			for i in come.size():
+				var rc: Dictionary = ib.get(come[i], {})
+				if rc.get("k", "") == "C" and (rc["t"] as Transform3D).origin.distance_to(at) <= 0.6: hc = i; break
+			if hc < 0: print("PROOF MISSING %s: no collision was added at %s" % [tag, str(at)]); ok = false; continue
+			come.remove_at(hc)
+			print("PROOF change %s: %s at (%.2f, %.2f, %.2f) got a collision shape  [%s]" % [tag, String(f.get("base", "")), at.x, at.y, at.z, String(f.get("reason", ""))])
+			continue
+		if op == "add_box":
+			var want_path := String(f.get("node", "")) + "/col/" + String(f.get("name", "sc_col"))
+			var hb := -1
+			for i in come.size():
+				if String(come[i]).begins_with("N|" + want_path + "|CollisionShape3D|") and String(come[i]).contains("box:"): hb = i; break
+			if hb < 0: print("PROOF MISSING %s: no collision box named %s" % [tag, want_path]); ok = false; continue
+			come.remove_at(hb)
+			var hbody := -1      # the building had no collision body at all: the new body is part of this line
+			for i in come.size():
+				if String(come[i]).begins_with("N|" + String(f.get("node", "")) + "/col|StaticBody3D|"): hbody = i; break
+			if hbody >= 0: come.remove_at(hbody)
+			print("PROOF change %s: a collision box %s for a column of %s  [%s]" % [tag, str(f.get("box", [])), String(f.get("node", "")), String(f.get("reason", ""))])
+			continue
 		if op == "fill_well":
 			var g_old := 0; var g_new := 0
 			for pass_i in 2:
@@ -540,6 +635,10 @@ func _prove(a: Node, b: Node, fixes: Array) -> bool:
 				print("PROOF note: '%s' held only listed items and is gone with them" % String(r5["path"]))
 				gone.remove_at(i3); continue
 		i3 += 1
+	var qn := 0
+	while qn < come.size():      # a PropCol body that did not exist before: allowed only when a listed line added a collider
+		if String(come[qn]).begins_with("N|Props/PropCol|StaticBody3D|") and fixes.any(func(x: Dictionary) -> bool: return String(x.get("op", "")) == "add_collider"): come.remove_at(qn)
+		else: qn += 1
 	if not gone.is_empty() or not come.is_empty():
 		ok = false
 		print("PROOF UNEXPLAINED: %d lines changed that no line of the fix list accounts for" % (gone.size() + come.size()))
