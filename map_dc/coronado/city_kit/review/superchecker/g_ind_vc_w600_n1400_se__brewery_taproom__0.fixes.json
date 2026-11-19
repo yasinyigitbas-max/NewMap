@@ -1,0 +1,50 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -2.36999988555908,
+    0.0,
+    -6.43599987030029
+   ],
+   "base": "prop_grocery_shelf",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_grocery_shelf stands in front of a 1.0 m wide door (a back or side door)]"
+  },
+  {
+   "at": [
+    -3.63499999046326,
+    0.0,
+    -6.4685001373291
+   ],
+   "base": "prop_pharmacy_shelf",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_pharmacy_shelf stands in front of a 1.0 m wide door (a back or side door)]"
+  },
+  {
+   "at": [
+    -3.19000005722046,
+    0.0,
+    -4.17000007629395
+   ],
+   "base": "prop_beer_taps",
+   "chosen": true,
+   "cond": "",
+   "kind": "till_alone",
+   "mode": "choose",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_beer_taps stands on no counter]"
+  }
+ ],
+ "scene": "g_ind_vc_w600_n1400_se__brewery_taproom__0"
+}
