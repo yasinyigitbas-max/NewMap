@@ -1,0 +1,9 @@
+{
+ "area": "wf_b2e", "piece": "n_wf_b2e", "zone": "waterfront",
+ "rule": "docs/TREE_PLAN.md: palms only - spaced palms on the promenade and the median (zone 105 -> about 95)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's four builder trees on the car park's north grass edge: the two palms stay on their own spots; the coral tree and the magnolia go (broadleaf, not the waterfront's rule).",
+ "trees": [
+  {"base": "palm_queen_a", "cond": "normal", "at": [420.0, 2.0, 150.0], "yaw": 0.0, "scale": 1.0, "why": "the car park's north grass edge, beside the bench and the beach shower: a queen palm marks the way from the cars to the promenade"},
+  {"base": "palm_mexican_fan_a", "cond": "normal", "at": [460.0, 2.0, 150.0], "yaw": 90.0, "scale": 1.0, "why": "the same grass edge 40 m east, by the lot's east end: spaced palms along the promenade side, the waterfront's signature"}
+ ]
+}

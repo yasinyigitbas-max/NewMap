@@ -1,0 +1,1883 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -40.0,
+    4.0019998550415,
+    -19.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    -40.0,
+    4.11999999731779,
+    -19.0
+   ]
+  },
+  {
+   "at": [
+    -12.0,
+    4.0019998550415,
+    -19.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    -12.0,
+    4.11999999731779,
+    -19.0
+   ]
+  },
+  {
+   "at": [
+    -40.0,
+    2.00200009346008,
+    41.5
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    -40.0,
+    2.11999999731779,
+    41.5
+   ]
+  },
+  {
+   "at": [
+    -14.0,
+    2.00200009346008,
+    41.5
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    -14.0,
+    2.11999999731779,
+    41.5
+   ]
+  },
+  {
+   "at": [
+    -40.0,
+    2.00200009346008,
+    63.5
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    -40.0,
+    2.11999999731779,
+    63.5
+   ]
+  },
+  {
+   "at": [
+    -14.0,
+    2.00200009346008,
+    63.5
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    -14.0,
+    2.11999999731779,
+    63.5
+   ]
+  },
+  {
+   "at": [
+    70.0,
+    3.90199995040894,
+    -34.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    70.0,
+    4.02000009268522,
+    -34.0
+   ]
+  },
+  {
+   "at": [
+    -67.0459899902344,
+    3.0,
+    107.600006103516
+   ],
+   "base": "fence_wrought_iron",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "move",
+   "reason": "fence_wrought_iron: its low end hangs 0.30 m over the ground",
+   "to": [
+    -67.0459899902344,
+    2.67000004768372,
+    107.600006103516
+   ]
+  },
+  {
+   "at": [
+    -65.0820007324219,
+    3.0,
+    107.600006103516
+   ],
+   "base": "fence_wrought_iron",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "move",
+   "reason": "fence_wrought_iron: its low end hangs 0.30 m over the ground",
+   "to": [
+    -65.0820007324219,
+    2.67000004768372,
+    107.600006103516
+   ]
+  },
+  {
+   "at": [
+    -63.1180114746094,
+    3.0,
+    107.600006103516
+   ],
+   "base": "fence_wrought_iron",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "move",
+   "reason": "fence_wrought_iron: its low end hangs 0.30 m over the ground",
+   "to": [
+    -63.1180114746094,
+    2.67000004768372,
+    107.600006103516
+   ]
+  },
+  {
+   "at": [
+    -61.1540222167969,
+    3.0,
+    107.600006103516
+   ],
+   "base": "fence_wrought_iron",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "move",
+   "reason": "fence_wrought_iron: its low end hangs 0.30 m over the ground",
+   "to": [
+    -61.1540222167969,
+    2.67000004768372,
+    107.600006103516
+   ]
+  },
+  {
+   "at": [
+    -66.0639953613281,
+    3.0,
+    107.600006103516
+   ],
+   "base": "fence_post_wrought_iron",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "move",
+   "reason": "fence_post_wrought_iron: its low end hangs 0.30 m over the ground",
+   "to": [
+    -66.0639953613281,
+    2.67000004768372,
+    107.600006103516
+   ]
+  },
+  {
+   "at": [
+    -64.1000061035156,
+    3.0,
+    107.600006103516
+   ],
+   "base": "fence_post_wrought_iron",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "move",
+   "reason": "fence_post_wrought_iron: its low end hangs 0.30 m over the ground",
+   "to": [
+    -64.1000061035156,
+    2.67000004768372,
+    107.600006103516
+   ]
+  },
+  {
+   "at": [
+    -62.1360168457031,
+    3.0,
+    107.600006103516
+   ],
+   "base": "fence_post_wrought_iron",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "move",
+   "reason": "fence_post_wrought_iron: its low end hangs 0.30 m over the ground",
+   "to": [
+    -62.1360168457031,
+    2.67000004768372,
+    107.600006103516
+   ]
+  },
+  {
+   "at": [
+    -1.96029663085938,
+    4.0,
+    -0.200000762939453
+   ],
+   "base": "fence_post_wrought_iron",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 19.0,
+   "op": "move",
+   "reason": "fence_post_wrought_iron: its low end hangs 2.00 m over the ground",
+   "to": [
+    -1.96029663085938,
+    1.97,
+    -0.200000762939453
+   ]
+  },
+  {
+   "at": [
+    -0.20001220703125,
+    2.0,
+    -20.0
+   ],
+   "base": "fence_post_wrought_iron",
+   "cond": "worn",
+   "kind": "fence_sunk",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "move",
+   "reason": "fence_post_wrought_iron stands 1.90 m into the ground along its whole length",
+   "to": [
+    -0.20001220703125,
+    3.87000009536743,
+    -20.0
+   ]
+  },
+  {
+   "at": [
+    115.64599609375,
+    3.90000009536743,
+    -20.2000007629395
+   ],
+   "base": "fence_wrought_iron",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "move",
+   "reason": "fence_wrought_iron: its low end hangs 0.26 m over the ground",
+   "to": [
+    115.64599609375,
+    3.60730701517687,
+    -20.2000007629395
+   ]
+  },
+  {
+   "at": [
+    116.635986328125,
+    3.90000009536743,
+    -20.2000007629395
+   ],
+   "base": "fence_post_wrought_iron",
+   "cond": "worn",
+   "kind": "fence_air",
+   "mode": "auto",
+   "n": 22.0,
+   "op": "move",
+   "reason": "fence_post_wrought_iron: its low end hangs 0.27 m over the ground",
+   "to": [
+    116.635986328125,
+    3.60149452864045,
+    -20.2000007629395
+   ]
+  },
+  {
+   "at": [
+    1.97999954223633,
+    4.95000028610229,
+    -25.3999977111816
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 25.0,
+   "op": "move",
+   "reason": "moved slid -1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 25 cm from a apt door of glorietta_marine_supply (services keep 35 cm off)]",
+   "to": [
+    1.97999952792645,
+    4.95000028610229,
+    -26.5999977111816
+   ]
+  },
+  {
+   "at": [
+    -52.0999984741211,
+    2.40000009536743,
+    118.980003356934
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 26.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 37 cm over a apt door of bay_boat_and_bike_hire]",
+   "to": [
+    -53.2999984741211,
+    2.40000009536743,
+    118.980003461841
+   ]
+  },
+  {
+   "at": [
+    -50.0,
+    2.0,
+    90.0
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -38.0,
+    2.0,
+    92.0
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -10.0,
+    2.0,
+    90.0
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -30.0,
+    2.0,
+    100.0
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    27.0,
+    3.90000009536743,
+    -25.3999996185303
+   ],
+   "base": "prop_propane_cylinder_100lb",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "door",
+   "mode": "choose",
+   "n": 23.0,
+   "op": "remove",
+   "reason": "erased (in doubt): door: no plainly safe place (Yasin: delete when unsure) [prop_propane_cylinder_100lb stands in front of the apt door of glorietta_marine_supply]"
+  },
+  {
+   "at": [
+    27.6000003814697,
+    3.90000009536743,
+    -24.7999992370605
+   ],
+   "base": "prop_propane_cylinder_100lb",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "door",
+   "mode": "choose",
+   "n": 24.0,
+   "op": "remove",
+   "reason": "erased (in doubt): door: no plainly safe place (Yasin: delete when unsure) [prop_propane_cylinder_100lb stands in front of the apt door of glorietta_marine_supply]"
+  },
+  {
+   "at": [
+    -34.4000015258789,
+    4.0,
+    -31.2000007629395
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 27.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (1.7 m from a wall, 17.2 m from a fence)]"
+  },
+  {
+   "at": [
+    -3.20000004768372,
+    4.0,
+    -31.2000007629395
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 28.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (1.6 m from a wall, 11.5 m from a fence)]"
+  },
+  {
+   "at": [
+    -34.4000015258789,
+    4.0,
+    -30.3999996185303
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 29.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.4 m from a wall, 18.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -3.20000004768372,
+    4.0,
+    -30.3999996185303
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 30.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.3 m from a wall, 10.7 m from a fence)]"
+  },
+  {
+   "at": [
+    -32.0,
+    4.0,
+    -32.0
+   ],
+   "base": "prop_hose_reel_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "hydrant_nowhere",
+   "mode": "choose",
+   "n": 31.0,
+   "op": "remove",
+   "reason": "erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart stands 3.5 m from any building wall and 3.0 m inside the block]"
+  },
+  {
+   "at": [
+    -1.60000610351562,
+    4.0,
+    -26.0
+   ],
+   "base": "prop_hose_reel_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "hydrant_nowhere",
+   "mode": "choose",
+   "n": 32.0,
+   "op": "remove",
+   "reason": "erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart stands 3.6 m from any building wall and 3.0 m inside the block]"
+  },
+  {
+   "at": [
+    20.0,
+    2.0,
+    22.0
+   ],
+   "base": "prop_hose_reel_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "hydrant_nowhere",
+   "mode": "choose",
+   "n": 33.0,
+   "op": "remove",
+   "reason": "erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart stands 3.6 m from any building wall and 3.0 m inside the block]"
+  },
+  {
+   "at": [
+    -24.6000003814697,
+    2.0,
+    81.5999984741211
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 34.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (39.1 m from a wall, 25.7 m from a fence)]"
+  },
+  {
+   "at": [
+    -55.3999938964844,
+    2.0,
+    43.0
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 35.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (23.1 m from a wall, 2.8 m from a fence)]"
+  },
+  {
+   "at": [
+    -38.0,
+    1.85000002384186,
+    117.400001525879
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 36.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (3.3 m from a wall, 22.5 m from a fence)]"
+  },
+  {
+   "at": [
+    -44.0,
+    2.20000004768372,
+    117.600006103516
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 37.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (2.1 m from a wall, 17.4 m from a fence)]"
+  },
+  {
+   "at": [
+    -23.3999938964844,
+    1.55999994277954,
+    127.600006103516
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 38.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (8.7 m from a wall, 40.1 m from a fence)]"
+  },
+  {
+   "at": [
+    27.0,
+    3.90000009536743,
+    -44.0
+   ],
+   "base": "prop_propane_cylinder_100lb",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 43.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_propane_cylinder_100lb: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    27.6000061035156,
+    3.90000009536743,
+    -43.5999984741211
+   ],
+   "base": "prop_propane_cylinder_100lb",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 44.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_propane_cylinder_100lb: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -50.9500007629395,
+    4.0,
+    -43.3499984741211
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 48.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -19.5499992370605,
+    4.0,
+    -43.3499984741211
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 49.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    13.2983570098877,
+    2.01200008392334,
+    10.5905952453613
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 39.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building harbour_boatworks",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    8.5111939907074,
+    2.01200008392334,
+    17.1804180145264
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 40.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building harbour_boatworks",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    16.438903649648,
+    2.01200008392334,
+    14.3111267089844
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 41.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building harbour_boatworks",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    88.6201324462891,
+    2.01200008392334,
+    -8.8653191725413
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 51.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    56.4504623413086,
+    2.01200008392334,
+    19.3412456512451
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 52.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    65.0122222900391,
+    2.01200008392334,
+    16.4665314356486
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 53.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    73.9410247802734,
+    2.01200008392334,
+    -14.1488819122314
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 54.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    73.640510559082,
+    2.01200008392334,
+    14.6971244812012
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 55.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    60.9248275756836,
+    2.01200008392334,
+    35.6105880737305
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 56.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    63.0729522705078,
+    2.01200008392334,
+    6.92130756378174
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 57.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    46.1294403076172,
+    2.01200008392334,
+    36.0696640014649
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 58.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    36.654167175293,
+    2.01200008392334,
+    32.8177947998047
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 59.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    47.7836456298828,
+    2.01200008392334,
+    22.5802345275879
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 60.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    18.5734119415283,
+    2.01200008392334,
+    -12.701343536377
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 61.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    38.0213165283203,
+    2.01200008392334,
+    16.151350180308
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 62.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    82.74755859375,
+    2.01200008392334,
+    17.7016143798828
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 63.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    62.7729110717773,
+    2.01200008392334,
+    16.6919554074605
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 64.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    45.9093475341797,
+    2.01200008392334,
+    25.5311698913574
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 65.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    23.0806522369385,
+    2.01200008392334,
+    32.9443092346191
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 66.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    14.5931386947632,
+    2.01200008392334,
+    -13.1352090835571
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 67.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    15.1956329345703,
+    2.01200008392334,
+    -10.3082609176636
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 68.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    32.7499965031942,
+    2.01200008392334,
+    31.8259973526001
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 69.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    43.4004821777344,
+    2.01200008392334,
+    -15.5746615727743
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 70.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    77.4744491577148,
+    2.01200008392334,
+    11.5950155258179
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 71.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    36.7245826721191,
+    2.01200008392334,
+    34.3550682067871
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 72.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    39.3080139160156,
+    2.01200008392334,
+    11.2413473129272
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 73.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    38.2594413757324,
+    2.01200008392334,
+    -18.2449340820312
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 74.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    69.7116775512695,
+    2.01200008392334,
+    8.1032649676005
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 75.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    64.0198205312093,
+    2.01200008392334,
+    1.45397539933523
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 76.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    61.7860870361328,
+    2.01200008392334,
+    19.9198055267334
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 77.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    89.2330093383789,
+    2.01200008392334,
+    2.24037865797679
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 78.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    29.4791412353516,
+    2.01200008392334,
+    -7.51281261444092
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 79.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    26.5971012115479,
+    2.01200008392334,
+    4.76649475097656
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 80.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    44.4850234985351,
+    2.01200008392334,
+    18.2642440795898
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 81.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    27.8168907165527,
+    2.01200008392334,
+    19.0255489349365
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 82.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    80.2243041992188,
+    2.01200008392334,
+    17.9038467407227
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 83.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    73.8717651367188,
+    2.01200008392334,
+    33.978588104248
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 84.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    49.4403038024902,
+    2.01200008392334,
+    -10.859203338623
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 85.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    55.4245948791504,
+    2.01200008392334,
+    23.0382442474365
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 86.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    57.9374465942383,
+    2.01200008392334,
+    12.2370452880859
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 87.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    31.4241600036621,
+    2.01200008392334,
+    -3.65177118778229
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 88.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    68.9139404296875,
+    2.01200008392334,
+    31.7049980163574
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 89.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    37.1229667663574,
+    2.01200008392334,
+    23.0124664306641
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 90.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    41.922966003418,
+    2.01200008392334,
+    10.036078453064
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 91.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    39.1450233459473,
+    2.01200008392334,
+    9.04246616363525
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 92.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    35.1644744873047,
+    2.01200008392334,
+    -14.6285009384155
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 93.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    72.4433898925781,
+    2.01200008392334,
+    -14.8314170837402
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 94.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    57.2739410400391,
+    2.01200008392334,
+    -9.95112323760986
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 95.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    44.6928405761719,
+    2.01200008392334,
+    29.0006217956543
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 96.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    63.8669478098551,
+    2.01200008392334,
+    33.5551986694336
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 97.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    44.2128486633301,
+    2.01200008392334,
+    28.3198833465576
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 98.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    45.4009094238281,
+    2.01200008392334,
+    22.0647258758545
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 99.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    35.2017440795898,
+    2.01200008392334,
+    35.4907035827637
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 100.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    79.8046951293945,
+    2.01200008392334,
+    -6.00174999237061
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 101.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    80.5701904296875,
+    2.01200008392334,
+    -10.5609760284424
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 102.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    84.811393737793,
+    2.01200008392334,
+    33.8182640075684
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 103.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    80.1981353759766,
+    2.01200008392334,
+    -8.42331123352051
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 104.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    42.7649040222168,
+    2.01200008392334,
+    31.2889728546143
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 105.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    58.4269676208496,
+    2.01200008392334,
+    27.8923397064209
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 106.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    75.7363433837891,
+    2.01200008392334,
+    21.4649963378906
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 107.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -45.7502017021179,
+    5.2999678850174,
+    -42.9601142406464
+   ],
+   "box": [
+    -0.75020170211792,
+    1.2999678850174,
+    -5.36011576652527,
+    0.939802207946777,
+    2.59993577003479,
+    0.760015048980713
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 108.0,
+   "name": "sc_col_0",
+   "node": "Buildings/boatworks_row_west",
+   "op": "add_box",
+   "reason": "boatworks_row_west: a 0.9 x 0.7 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -45.0102353096008,
+    5.5399956703186,
+    -33.170045375824
+   ],
+   "box": [
+    -0.0102353096008301,
+    1.5399956703186,
+    4.42995309829712,
+    0.359985389709473,
+    3.07999134063721,
+    0.26008228302002
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 109.0,
+   "name": "sc_col_1",
+   "node": "Buildings/boatworks_row_west",
+   "op": "add_box",
+   "reason": "boatworks_row_west: a 0.3 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -42.2251663208008,
+    5.5399956703186,
+    -33.2401080131531
+   ],
+   "box": [
+    2.77483367919922,
+    1.5399956703186,
+    4.35989046096802,
+    0.16,
+    3.07999134063721,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 110.0,
+   "name": "sc_col_2",
+   "node": "Buildings/boatworks_row_west",
+   "op": "add_box",
+   "reason": "boatworks_row_west: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -48.6001501083374,
+    5.49999094009399,
+    -32.6400284767151
+   ],
+   "box": [
+    -3.6001501083374,
+    1.49999094009399,
+    4.95996999740601,
+    0.239991226196289,
+    2.99998188018799,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 111.0,
+   "name": "sc_col_3",
+   "node": "Buildings/boatworks_row_west",
+   "op": "add_box",
+   "reason": "boatworks_row_west: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -35.8001070022583,
+    5.49999094009399,
+    -32.6400284767151
+   ],
+   "box": [
+    9.1998929977417,
+    1.49999094009399,
+    4.95996999740601,
+    0.239991226196289,
+    2.99998188018799,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 112.0,
+   "name": "sc_col_4",
+   "node": "Buildings/boatworks_row_west",
+   "op": "add_box",
+   "reason": "boatworks_row_west: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -14.3502020835876,
+    5.2999678850174,
+    -42.9601142406464
+   ],
+   "box": [
+    -0.75020170211792,
+    1.2999678850174,
+    -5.36011576652527,
+    0.939802207946777,
+    2.59993577003479,
+    0.760015048980713
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 113.0,
+   "name": "sc_col_0",
+   "node": "Buildings/boatworks_row_east",
+   "op": "add_box",
+   "reason": "boatworks_row_east: a 0.9 x 0.7 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -13.6102356910706,
+    5.5399956703186,
+    -33.170045375824
+   ],
+   "box": [
+    -0.0102353096008301,
+    1.5399956703186,
+    4.42995309829712,
+    0.359985389709473,
+    3.07999134063721,
+    0.26008228302002
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 114.0,
+   "name": "sc_col_1",
+   "node": "Buildings/boatworks_row_east",
+   "op": "add_box",
+   "reason": "boatworks_row_east: a 0.3 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -10.8251667022705,
+    5.5399956703186,
+    -33.2401080131531
+   ],
+   "box": [
+    2.77483367919922,
+    1.5399956703186,
+    4.35989046096802,
+    0.16,
+    3.07999134063721,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 115.0,
+   "name": "sc_col_2",
+   "node": "Buildings/boatworks_row_east",
+   "op": "add_box",
+   "reason": "boatworks_row_east: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -17.2001504898071,
+    5.49999094009399,
+    -32.6400284767151
+   ],
+   "box": [
+    -3.6001501083374,
+    1.49999094009399,
+    4.95996999740601,
+    0.239991226196289,
+    2.99998188018799,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 116.0,
+   "name": "sc_col_3",
+   "node": "Buildings/boatworks_row_east",
+   "op": "add_box",
+   "reason": "boatworks_row_east: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -4.40010738372803,
+    5.49999094009399,
+    -32.6400284767151
+   ],
+   "box": [
+    9.1998929977417,
+    1.49999094009399,
+    4.95996999740601,
+    0.239991226196289,
+    2.99998188018799,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 117.0,
+   "name": "sc_col_4",
+   "node": "Buildings/boatworks_row_east",
+   "op": "add_box",
+   "reason": "boatworks_row_east: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -47.6150722503662,
+    3.69998192787171,
+    125.939940690994
+   ],
+   "box": [
+    2.38492774963379,
+    1.49998188018799,
+    3.43994069099426,
+    0.789882698059082,
+    2.99996376037598,
+    0.160052337646484
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 118.0,
+   "name": "sc_col_0",
+   "node": "Buildings/bay_boat_and_bike_hire",
+   "op": "add_box",
+   "reason": "bay_boat_and_bike_hire: a 0.7 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -46.2400846481323,
+    3.29999744892121,
+    125.939940690994
+   ],
+   "box": [
+    3.75991535186768,
+    1.09999740123749,
+    3.43994069099426,
+    0.16,
+    2.19999480247498,
+    0.160052337646484
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 119.0,
+   "name": "sc_col_1",
+   "node": "Buildings/bay_boat_and_bike_hire",
+   "op": "add_box",
+   "reason": "bay_boat_and_bike_hire: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    18.1848181235791,
+    3.49999141693115,
+    6.70010197148439
+   ],
+   "box": [
+    3.29989767074585,
+    1.49999141693115,
+    8.18481826782227,
+    1.24003795623779,
+    2.9999828338623,
+    0.569804229736328
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 120.0,
+   "name": "sc_col_0",
+   "node": "Buildings/harbour_boatworks",
+   "op": "add_box",
+   "reason": "harbour_boatworks: a 1.2 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    18.0399242609682,
+    3.49999141693115,
+    1.75011695050465
+   ],
+   "box": [
+    8.24988269805908,
+    1.49999141693115,
+    8.03992462158203,
+    0.639880218505859,
+    2.9999828338623,
+    0.280016937255859
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 121.0,
+   "name": "sc_col_1",
+   "node": "Buildings/harbour_boatworks",
+   "op": "add_box",
+   "reason": "harbour_boatworks: a 0.6 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    1.91492083530363,
+    3.09995424747467,
+    10.6501477914593
+   ],
+   "box": [
+    -0.650147438049316,
+    1.09995424747467,
+    -8.08507919311523,
+    0.340216674804687,
+    2.19990849494934,
+    0.370133438110352
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 122.0,
+   "name": "sc_col_2",
+   "node": "Buildings/harbour_boatworks",
+   "op": "add_box",
+   "reason": "harbour_boatworks: a 0.3 x 0.3 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "n_wf_b2e"
+}
