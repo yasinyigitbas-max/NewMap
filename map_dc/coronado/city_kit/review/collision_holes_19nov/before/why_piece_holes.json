@@ -1,0 +1,660 @@
+[
+	{
+		"border_m": 6.8,
+		"cell": "0_-4",
+		"ground_near": [
+			{
+				"gap_m": 1.5,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(15.1, 6.15, -609.7), (17.7, 6.15, -606.5), (15.1, 6.15, -606.5)]",
+				"y": 6.15
+			},
+			{
+				"gap_m": 3.764,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_ne/ground_col/@CollisionShape3D@6",
+				"piece": "c_ne",
+				"tri": "[(16.0, 6.15, -613.2), (20.0, 6.15, -609.7), (16.0, 6.15, -609.7)]",
+				"y": 6.15
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"c_ne",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": 13.6,
+		"y": 6.03,
+		"z": -606.8
+	},
+	{
+		"border_m": 6.8,
+		"cell": "0_-4",
+		"ground_near": [
+			{
+				"gap_m": 2.459,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(9.099999, 6.0, -603.3), (10.3399, 6.0, -605.6474), (10.8574, 6.0, -605.0574)]",
+				"y": 6.0
+			},
+			{
+				"gap_m": 4.469,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_ne/ground_col/@CollisionShape3D@6",
+				"piece": "c_ne",
+				"tri": "[(16.0, 6.15, -613.2), (20.0, 6.15, -609.7), (16.0, 6.15, -609.7)]",
+				"y": 6.15
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"c_ne",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": 12.6,
+		"y": 6.0,
+		"z": -606.8
+	},
+	{
+		"border_m": 6.8,
+		"cell": "0_-4",
+		"ground_near": [
+			{
+				"gap_m": 2.459,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(9.099999, 6.0, -603.3), (10.3399, 6.0, -605.6474), (10.8574, 6.0, -605.0574)]",
+				"y": 6.0
+			},
+			{
+				"gap_m": 4.469,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_ne/ground_col/@CollisionShape3D@6",
+				"piece": "c_ne",
+				"tri": "[(16.0, 6.15, -613.2), (20.0, 6.15, -609.7), (16.0, 6.15, -609.7)]",
+				"y": 6.15
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"c_ne",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": 12.6,
+		"y": 6.15,
+		"z": -606.8
+	},
+	{
+		"border_m": 8.9,
+		"cell": "0_-4",
+		"ground_near": [
+			{
+				"gap_m": 0.4,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(12.55, 6.15, -611.9), (16.0, 6.15, -609.3), (12.55, 6.15, -609.3)]",
+				"y": 6.15
+			},
+			{
+				"gap_m": 3.493,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_ne/ground_col/@CollisionShape3D@6",
+				"piece": "c_ne",
+				"tri": "[(16.0, 6.15, -613.2), (20.0, 6.15, -609.7), (16.0, 6.15, -609.7)]",
+				"y": 6.15
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"c_ne",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": 12.6,
+		"y": 6.15,
+		"z": -608.9
+	},
+	{
+		"border_m": 6.5,
+		"cell": "0_-3",
+		"ground_near": [
+			{
+				"gap_m": 1.5,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(15.1, 6.15, -596.7), (17.7, 6.15, -593.5), (15.1, 6.15, -593.5)]",
+				"y": 6.15
+			},
+			{
+				"gap_m": 4.0,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_se/ground_col/@CollisionShape3D@5",
+				"piece": "c_se",
+				"tri": "[(16.0, 6.15, -590.3), (20.0, 6.15, -590.3), (20.0, 6.15, -586.8)]",
+				"y": 6.15
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"c_se",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": 13.6,
+		"y": 6.03,
+		"z": -593.5
+	},
+	{
+		"border_m": 6.5,
+		"cell": "0_-3",
+		"ground_near": [
+			{
+				"gap_m": 2.234,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(9.099999, 6.0, -596.7), (11.4474, 6.0, -595.4601), (10.8574, 6.0, -594.9426)]",
+				"y": 6.0
+			},
+			{
+				"gap_m": 4.669,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_se/ground_col/@CollisionShape3D@5",
+				"piece": "c_se",
+				"tri": "[(16.0, 6.15, -590.3), (20.0, 6.15, -590.3), (20.0, 6.15, -586.8)]",
+				"y": 6.15
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"c_se",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": 12.6,
+		"y": 6.0,
+		"z": -593.5
+	},
+	{
+		"border_m": 7.6,
+		"cell": "0_-3",
+		"ground_near": [
+			{
+				"gap_m": 1.7,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(12.55, 6.15, -590.7), (16.0, 6.15, -590.7), (16.0, 6.15, -588.1)]",
+				"y": 6.15
+			},
+			{
+				"gap_m": 3.996,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_se/ground_col/@CollisionShape3D@5",
+				"piece": "c_se",
+				"tri": "[(16.0, 6.15, -590.3), (20.0, 6.15, -590.3), (20.0, 6.15, -586.8)]",
+				"y": 6.15
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"c_se",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": 12.6,
+		"y": 6.03,
+		"z": -592.4
+	},
+	{
+		"border_m": 6.5,
+		"cell": "0_-3",
+		"ground_near": [
+			{
+				"gap_m": 2.234,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(9.099999, 6.0, -596.7), (11.4474, 6.0, -595.4601), (10.8574, 6.0, -594.9426)]",
+				"y": 6.0
+			},
+			{
+				"gap_m": 4.669,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_se/ground_col/@CollisionShape3D@5",
+				"piece": "c_se",
+				"tri": "[(16.0, 6.15, -590.3), (20.0, 6.15, -590.3), (20.0, 6.15, -586.8)]",
+				"y": 6.15
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"c_se",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": 12.6,
+		"y": 6.0,
+		"z": -593.5
+	},
+	{
+		"border_m": 10.1,
+		"cell": "2_1",
+		"ground_near": [
+			{
+				"gap_m": 0.2,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_apt/ground_col/@CollisionShape3D@2",
+				"piece": "j_apt",
+				"tri": "[(579.2, 1.5, 209.2), (579.2, 1.5, 211.7), (575.7, 1.5, 211.7)]",
+				"y": 1.5
+			},
+			{
+				"gap_m": 0.9,
+				"layer": 1,
+				"node": "/root/@Node3D@2/f_sw/ground_col/@CollisionShape3D@3",
+				"piece": "f_sw",
+				"tri": "[(579.2, 1.5, 214.8696), (579.2, 1.5, 211.0), (583.1333, 1.5, 211.0)]",
+				"y": 1.5
+			}
+		],
+		"pieces": [
+			"j_apt",
+			"f_sw",
+			"t_wfd"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": 579.4,
+		"y": 1.5,
+		"z": 210.1
+	},
+	{
+		"border_m": 6.5,
+		"cell": "-1_-4",
+		"ground_near": [
+			{
+				"gap_m": 2.168,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(-9.099999, 6.0, -603.3), (-11.4474, 6.0, -604.5399), (-10.8574, 6.0, -605.0574)]",
+				"y": 6.0
+			},
+			{
+				"gap_m": 4.742,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_nw/ground_col/@CollisionShape3D@8",
+				"piece": "c_nw",
+				"tri": "[(-20.0, 6.15, -613.6909), (-16.0, 6.15, -613.6909), (-16.0, 6.15, -609.7)]",
+				"y": 6.15
+			},
+			{
+				"gap_m": 4.744,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_nw/Buildings/twr_office/col/@CollisionShape3D@2",
+				"piece": "c_nw",
+				"tri": "[(-35.999, 42.449, -609.701), (-16.001, 42.449, -633.699), (-16.001, 42.449, -609.701)]",
+				"y": 42.45
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"c_nw",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": -12.5,
+		"y": 6.15,
+		"z": -606.5
+	},
+	{
+		"border_m": 6.5,
+		"cell": "-1_-4",
+		"ground_near": [
+			{
+				"gap_m": 1.5,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(-17.7, 6.15, -609.7), (-15.1, 6.15, -609.7), (-15.1, 6.15, -606.5)]",
+				"y": 6.15
+			},
+			{
+				"gap_m": 4.0,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_nw/ground_col/@CollisionShape3D@8",
+				"piece": "c_nw",
+				"tri": "[(-20.0, 6.15, -613.6909), (-16.0, 6.15, -613.6909), (-16.0, 6.15, -609.7)]",
+				"y": 6.15
+			},
+			{
+				"gap_m": 4.001,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_nw/Buildings/twr_office/col/@CollisionShape3D@2",
+				"piece": "c_nw",
+				"tri": "[(-35.999, 42.449, -609.701), (-16.001, 42.449, -633.699), (-16.001, 42.449, -609.701)]",
+				"y": 42.45
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"c_nw",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": -13.6,
+		"y": 6.15,
+		"z": -606.5
+	},
+	{
+		"border_m": 6.5,
+		"cell": "-1_-4",
+		"ground_near": [
+			{
+				"gap_m": 0.5,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(-17.7, 6.15, -609.7), (-15.1, 6.15, -609.7), (-15.1, 6.15, -606.5)]",
+				"y": 6.15
+			},
+			{
+				"gap_m": 3.493,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_nw/ground_col/@CollisionShape3D@8",
+				"piece": "c_nw",
+				"tri": "[(-20.0, 6.15, -613.6909), (-16.0, 6.15, -613.6909), (-16.0, 6.15, -609.7)]",
+				"y": 6.15
+			},
+			{
+				"gap_m": 3.494,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_nw/Buildings/twr_office/col/@CollisionShape3D@2",
+				"piece": "c_nw",
+				"tri": "[(-35.999, 42.449, -609.701), (-16.001, 42.449, -633.699), (-16.001, 42.449, -609.701)]",
+				"y": 42.45
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"c_nw",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": -14.6,
+		"y": 6.15,
+		"z": -606.5
+	},
+	{
+		"border_m": 6.5,
+		"cell": "-1_-4",
+		"ground_near": [
+			{
+				"gap_m": 2.168,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(-9.099999, 6.0, -603.3), (-11.4474, 6.0, -604.5399), (-10.8574, 6.0, -605.0574)]",
+				"y": 6.0
+			},
+			{
+				"gap_m": 4.742,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_nw/ground_col/@CollisionShape3D@8",
+				"piece": "c_nw",
+				"tri": "[(-20.0, 6.15, -613.6909), (-16.0, 6.15, -613.6909), (-16.0, 6.15, -609.7)]",
+				"y": 6.15
+			},
+			{
+				"gap_m": 4.744,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_nw/Buildings/twr_office/col/@CollisionShape3D@2",
+				"piece": "c_nw",
+				"tri": "[(-35.999, 42.449, -609.701), (-16.001, 42.449, -633.699), (-16.001, 42.449, -609.701)]",
+				"y": 42.45
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"c_nw",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": -12.5,
+		"y": 6.15,
+		"z": -606.5
+	},
+	{
+		"border_m": 8.7,
+		"cell": "-1_-4",
+		"ground_near": [
+			{
+				"gap_m": 0.6,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(-12.55, 6.15, -611.9), (-9.099999, 6.15, -609.3), (-12.55, 6.15, -609.3)]",
+				"y": 6.15
+			},
+			{
+				"gap_m": 3.64,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_nw/ground_col/@CollisionShape3D@8",
+				"piece": "c_nw",
+				"tri": "[(-20.0, 6.15, -613.6909), (-16.0, 6.15, -613.6909), (-16.0, 6.15, -609.7)]",
+				"y": 6.15
+			},
+			{
+				"gap_m": 3.641,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_nw/Buildings/twr_office/col/@CollisionShape3D@2",
+				"piece": "c_nw",
+				"tri": "[(-35.999, 42.449, -609.701), (-16.001, 42.449, -633.699), (-16.001, 42.449, -609.701)]",
+				"y": 42.45
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"c_nw",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": -12.5,
+		"y": 6.15,
+		"z": -608.7
+	},
+	{
+		"border_m": 6.5,
+		"cell": "-1_-3",
+		"ground_near": [
+			{
+				"gap_m": 2.168,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(-10.8574, 6.0, -594.9426), (-11.4474, 6.0, -595.4601), (-9.099999, 6.0, -596.7)]",
+				"y": 6.0
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": -12.5,
+		"y": 6.15,
+		"z": -593.5
+	},
+	{
+		"border_m": 6.5,
+		"cell": "-1_-3",
+		"ground_near": [
+			{
+				"gap_m": 1.5,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(-17.7, 6.15, -596.7), (-15.1, 6.15, -596.7), (-15.1, 6.15, -593.5)]",
+				"y": 6.15
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": -13.6,
+		"y": 6.15,
+		"z": -593.5
+	},
+	{
+		"border_m": 6.5,
+		"cell": "-1_-3",
+		"ground_near": [
+			{
+				"gap_m": 0.5,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(-17.7, 6.15, -596.7), (-15.1, 6.15, -596.7), (-15.1, 6.15, -593.5)]",
+				"y": 6.15
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": -14.6,
+		"y": 6.15,
+		"z": -593.5
+	},
+	{
+		"border_m": 7.6,
+		"cell": "-1_-3",
+		"ground_near": [
+			{
+				"gap_m": 1.7,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(-12.55, 6.15, -590.7), (-9.099999, 6.15, -590.7), (-9.099999, 6.15, -588.1)]",
+				"y": 6.15
+			},
+			{
+				"gap_m": 4.082,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_sw/ground_col/@CollisionShape3D@8",
+				"piece": "c_sw",
+				"tri": "[(-20.0, 6.15, -590.3), (-16.0, 6.15, -590.3), (-16.0, 6.15, -586.3091)]",
+				"y": 6.15
+			},
+			{
+				"gap_m": 4.083,
+				"layer": 1,
+				"node": "/root/@Node3D@2/c_sw/Buildings/urb_brick_corner/col/@CollisionShape3D@2",
+				"piece": "c_sw",
+				"tri": "[(-31.999, 18.449, -572.301), (-31.999, 18.449, -590.299), (-16.001, 18.449, -590.299)]",
+				"y": 18.45
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"c_sw",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": -12.5,
+		"y": 6.03,
+		"z": -592.4
+	},
+	{
+		"border_m": 6.5,
+		"cell": "-1_-3",
+		"ground_near": [
+			{
+				"gap_m": 2.168,
+				"layer": 1,
+				"node": "/root/@Node3D@2/j_cc/ground_col/@CollisionShape3D@2",
+				"piece": "j_cc",
+				"tri": "[(-10.8574, 6.0, -594.9426), (-11.4474, 6.0, -595.4601), (-9.099999, 6.0, -596.7)]",
+				"y": 6.0
+			}
+		],
+		"pieces": [
+			"j_cc",
+			"d_cc"
+		],
+		"raw_hit_piece": "",
+		"raw_hit_y": null,
+		"road": false,
+		"verdict": "piece",
+		"x": -12.5,
+		"y": 6.0,
+		"z": -593.5
+	}
+]

@@ -1,0 +1,81 @@
+{
+ "area": "rg_nw_b147_2",
+ "piece": "s_rg_nw_b147_2",
+ "zone": "ring boulevard",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms, the palm boulevard round the island (zone 1,165 -> about 1,000); within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -168.697,
+    2.15,
+    -1611.3
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "south parkway grass, a fan palm of the boulevard's south row (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -132.539,
+    2.15,
+    -1611.3
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "south parkway grass, the next fan palm; driveways in the 36 m between"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    -110.669,
+    2.15,
+    -1611.3
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "south parkway grass 22 m on, the last south fan palm of the piece"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    -156.242,
+    2.15,
+    -1588.7
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "north parkway grass, a fan palm of the north row (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    -134.035,
+    2.15,
+    -1588.7
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "north parkway grass 22 m on, the next fan palm"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    -112.911,
+    2.15,
+    -1588.7
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "north parkway grass 21 m on, the last north fan palm; the 11-12 m doubles go"
+  }
+ ]
+}

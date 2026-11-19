@@ -571,31 +571,6 @@
    "by": "Yasin",
    "date": "2026-11-17"
   },
-  "s_ar_b057_a": {
-   "sha256": "f0b3c84c2aaf2a1b64308f696fea803a4ed7ee7139c97991cad9668161a4c331",
-   "by": "Yasin",
-   "date": "2026-11-17"
-  },
-  "s_ar_b058_b": {
-   "sha256": "6aede21c89d38c29346d8c6f95efd5662c34dcbe8993e07defaada337b018330",
-   "by": "Yasin",
-   "date": "2026-11-17"
-  },
-  "s_ar_b065_b": {
-   "sha256": "2763283bb6730da93c7878416eedce1fa34c58aefef284af845c8af2f8e4962f",
-   "by": "Yasin",
-   "date": "2026-11-17"
-  },
-  "s_ar_b066_a": {
-   "sha256": "ebbfd399337ac6d54050ba68d0cc3e01a6b6b24cc8e990fb62579312172c738c",
-   "by": "Yasin",
-   "date": "2026-11-17"
-  },
-  "s_ar_b066_b": {
-   "sha256": "6f80bf2386dbeca8ca50eda21a8c9ca3cfb8da58aa2465ca7bd69fb9569210cc",
-   "by": "Yasin",
-   "date": "2026-11-17"
-  },
   "s_ar_b067_a": {
    "sha256": "bd0f6e2a1210e98072014a50bf8f1842f5011c542708ecc3ad676c6f66156e06",
    "by": "Yasin",
@@ -798,11 +773,6 @@
   },
   "s_rg_nw_b144_2": {
    "sha256": "245bd5560a1f653adda85cfce9dd5639e5113ce77d4bea23a8fcd8a93e6ab710",
-   "by": "Yasin",
-   "date": "2026-11-17"
-  },
-  "s_rg_nw_b151_1": {
-   "sha256": "63503f4a2a8e94adb8483d7dd9275eaba6bb3576b7d1f20e9150f0317320aa58",
    "by": "Yasin",
    "date": "2026-11-17"
   },
@@ -1017,39 +987,34 @@
    "date": "2026-11-17"
   },
   "s_rg_nw_b147_2": {
-   "sha256": "fe90f3ca5b685542b8fbecf5994cab42aad78cf8ac729bc8b56ef9a1e2cccfb8",
+   "sha256": "fd3e46de6f1be6971d8918c71bc4e9699c844a2bdab5701df74ccc4de217ae70",
    "by": "Yasin",
-   "date": "2026-11-17"
+   "date": "2026-11-19"
   },
   "s_rg_nw_b148_1": {
-   "sha256": "0eb7bcf0d170913f1c714052ba838b0179be97827714fb7f6a3262b6c256be86",
+   "sha256": "916653476c0231e93f9d156f54b8b1e4c28a3c3f82d6d3e218e877f67085aca3",
    "by": "Yasin",
-   "date": "2026-11-17"
+   "date": "2026-11-19"
   },
   "s_rg_nw_b148_2": {
-   "sha256": "ec3fcceef0862cf55cd1fefd068792e4d7e14b8b60578aa93b494c82c39e5a85",
+   "sha256": "65407ce267189da36a9654a531f65731bef02c3750fbcd0fed14a7f590a27b37",
    "by": "Yasin",
-   "date": "2026-11-17"
+   "date": "2026-11-19"
   },
   "s_rg_nw_b149_1": {
-   "sha256": "5a033509cb8fe8f95f9d6737e646517e78587f44bc90c4f57f6d2f8d205b8b7a",
+   "sha256": "9809340a83b191213f89d6509b7bc90de3d547c724e3a83569a070b65060488f",
    "by": "Yasin",
-   "date": "2026-11-17"
+   "date": "2026-11-19"
   },
   "s_rg_nw_b149_2": {
-   "sha256": "d07f19cc9cd6d0e69189cb5325a55c6a7d31bc1159113a6bae0689466a9d37d1",
+   "sha256": "77d7b10542819c53345a971f015f72a2246223018f6cb2fe147732e3453eebec",
    "by": "Yasin",
-   "date": "2026-11-17"
-  },
-  "s_rg_nw_b150_1": {
-   "sha256": "ea1da23f0c19d85e66e1d635ae137a526bcfa28c383bf9a6db1c246d69b144f7",
-   "by": "Yasin",
-   "date": "2026-11-17"
+   "date": "2026-11-19"
   },
   "s_rg_nw_b150_2": {
-   "sha256": "d80ed4ed6261e75083bbb75a9670c3563ea502e69412b15c345232aec9a17f8a",
+   "sha256": "e543324919a7cdf7cd36b4d1db18c59ca8aca725cace7acc0be9c713b2c3e36b",
    "by": "Yasin",
-   "date": "2026-11-17"
+   "date": "2026-11-19"
   },
   "j_rg_nw_e660_n1200": {
    "sha256": "708ff53b14f2340c543f3b20168524fcfb390446b9116d7cc6b9c9684bc1b168",
@@ -2727,12 +2692,12 @@
    "date": "2026-11-19"
   },
   "j_ar_ad3": {
-   "sha256": "0a1ddb9bd5d9e92150f2b38dd40d352d02422b4f864564df2237c1698a968905",
+   "sha256": "62d7787e61f669fbe184562b9a9e862d0ef7dcece42aec8bd031910b87c2d679",
    "by": "Yasin",
    "date": "2026-11-19"
   },
   "j_ar_ad5": {
-   "sha256": "ef1f5c9b1368618aa88ba15818f660d91c81b57d93813db46c9ebdc41a52c6c9",
+   "sha256": "b09e3f77faf5a6a9e664a7ed316ab3ecff6aaf8e5db98e8a222cdcebd46aedce",
    "by": "Yasin",
    "date": "2026-11-19"
   },
@@ -2767,7 +2732,7 @@
    "date": "2026-11-19"
   },
   "j_ar_g3": {
-   "sha256": "d0f11dc053818c9ff52dbbb44b5f7fd7b50d5b79902c609b293d585f09e98123",
+   "sha256": "e3a0e7657997cd18a54faa56f64adc88c0a7095f48404eed97ce94eb247d007a",
    "by": "Yasin",
    "date": "2026-11-19"
   },
@@ -2778,6 +2743,41 @@
   },
   "j_ar_j4": {
    "sha256": "9b5c431f45d4a1173ed87e2967df85b8525a37397698ce16c39d19c378ad020f",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "s_rg_nw_b151_1": {
+   "sha256": "9223e383612d3130e60d386b1d01b9ff45a09939ba29e8fec1d458d54144f181",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "s_rg_nw_b150_1": {
+   "sha256": "3271e2098cc8324fe486c99b309e2defcc2502513d2317338fe4c21e42468378",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "s_ar_b057_a": {
+   "sha256": "45eff159fc3dfbddb21a9685fbbea971d5747f0cf0bc8eb6714462ef18186777",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "s_ar_b058_b": {
+   "sha256": "8e9c88e2868f34798fe05f1a8e9e1500e7cede0a96e38f90362ba794e282f350",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "s_ar_b065_b": {
+   "sha256": "77e95018340283cf40db18788d5ea8581cf4df0b068726ae516d92ee109e1374",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "s_ar_b066_a": {
+   "sha256": "cfb220d88427d16aa02eeef1d7a3caab367ea36f3d67bb41c449961c56e0b695",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "s_ar_b066_b": {
+   "sha256": "d62a1e9710f96860c884b4a9dedde955c5c26a7308df1841ec045f6e0737bf7c",
    "by": "Yasin",
    "date": "2026-11-19"
   }

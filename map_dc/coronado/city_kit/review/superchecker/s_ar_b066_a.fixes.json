@@ -1,0 +1,243 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -11.2787132263184,
+    0.0900000035762787,
+    34.6392936706543
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -11.2408809661865,
+    0.0900000035762787,
+    57.0511169433594
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -11.2185478210449,
+    0.0900000035762787,
+    95.079833984375
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    11.2305841445923,
+    0.0900000035762787,
+    41.6583786010742
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    11.3688182830811,
+    0.0900000035762787,
+    85.3812789916992
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    11.2857341766357,
+    0.0900000035762787,
+    94.4547576904297
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    11.3601169586182,
+    0.0900000035762787,
+    51.7325553894043
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    11.3000001907349,
+    0.162000000476837,
+    30.5299892425537
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    12.7568855285645,
+    0.162000000476837,
+    25.7841739654541
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -9.561936378479,
+    0.0120000001043081,
+    62.182746887207
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -9.88240814208984,
+    0.0120000001043081,
+    33.6147384643555
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -11.4807033538818,
+    0.162000000476837,
+    45.0123901367188
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -11.4292726516724,
+    0.162000000476837,
+    80.0827255249023
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -13.7931547164917,
+    0.162000000476837,
+    43.8857040405273
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    9.59815120697022,
+    0.0120000001043081,
+    91.1210632324219
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    9.4753942489624,
+    0.0120000001043081,
+    33.6960601806641
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    11.1764650344849,
+    0.162000000476837,
+    62.2932052612305
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "s_ar_b066_a"
+}
