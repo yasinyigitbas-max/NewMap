@@ -1,0 +1,14 @@
+{
+ "area": "res_500_0_nw", "piece": "r_q_500_0_nw", "zone": "residential yards",
+ "rule": "docs/TREE_PLAN.md: one yard tree for every two or three houses, in back yards and at lot corners, never against a fence or a wall (zone 813 -> about 400)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The quadrant's eighteen builder trees go (eleven corals, ficus, jacarandas, a magnolia, canary date and queen palms); seven come back on their own spots, one for about every two houses, spread over the back yards, each 3 m or more from the nearest fence and 5 m or more from a wall. The palms 1.2 and 4.7 m from walls stay out.",
+ "trees": [
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [472.9, 4.2, -31.8], "yaw": 20.0, "scale": 0.9, "why": "the back yard of the Spanish house on the north row: shade over the kettle grill where the family cooks"},
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [415.3, 5.8, -34.0], "yaw": 110.0, "scale": 0.9, "why": "the tudor's back yard, behind the adirondack chair: a magnolia to sit under"},
+  {"base": "tree_coral_b", "cond": "normal", "at": [436.8, 5.03, -42.6], "yaw": 200.0, "scale": 0.85, "why": "the back lot line between the two north-row yards, 3 m off the stucco wall: a coral tree that shades both yards"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [457.4, 5.08, -63.2], "yaw": 290.0, "scale": 0.85, "why": "the back yard of a south-row house, 12 m from its wall: the yard's one tree"},
+  {"base": "tree_coral_b", "cond": "normal", "at": [378.0, 7.18, -79.9], "yaw": 40.0, "scale": 0.85, "why": "the west corner lot's yard by the adirondack chair: shade for whoever sits there"},
+  {"base": "tree_coral_b", "cond": "normal", "at": [399.9, 6.34, -96.6], "yaw": 130.0, "scale": 0.9, "why": "the open back lawn of the southern row, far from the walls (24 m): a full-sized coral tree in the middle of the lot corner"},
+  {"base": "tree_ficus_a", "cond": "normal", "at": [457.4, 5.78, -96.8], "yaw": 220.0, "scale": 0.85, "why": "the back yard on the east of the southern row: an old ficus, 7.5 m from the house"}
+ ]
+}
