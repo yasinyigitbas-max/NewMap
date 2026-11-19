@@ -1,0 +1,69 @@
+{
+ "area": "rs_b030_b",
+ "piece": "s_rs_b030_b",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; within the in-view limit (8 broadleaf / 12 trees within 60 m): no broadleaf room near the start",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    -193.55,
+    8.173,
+    -1029.636
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass at the start, first of the west face's fan palms (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -193.55,
+    8.597,
+    -1067.097
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway, the second fan palm; driveways in the 37.5 m between; the magnolia after it goes"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -206.45,
+    8.3,
+    -1045.833
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east parkway grass, first of the east face's Torrey pines (no broadleaf room in view here: the magnolia becomes a pine)"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -206.45,
+    8.672,
+    -1071.534
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway 25.7 m on, the pine run continues (old spot and species)"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -206.45,
+    9.11,
+    -1094.936
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway 23.4 m on, the last pine; the 12 m double goes"
+  }
+ ]
+}
