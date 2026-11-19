@@ -1,0 +1,43 @@
+PROOF compared: 18 nodes (with every mesh of the buildings), 7612 ground and ground-collision triangles, 15 prop instances, 11 colliders, 224 wear marks are identical in both files
+PROOF differences found between the files: 366 lines only in the old one, 100 only in the new one
+PROOF change #17 move prop_manhole_cover: (72.00, 1.36, -1.70) -> (72.00, 1.21, -1.70), in 1 tier(s) and its collider  [prop_manhole_cover hangs 0.15 m over what is under it]
+PROOF change #18 move prop_manhole_cover: (128.00, 5.44, 1.70) -> (128.00, 5.28, 1.70), in 1 tier(s) and its collider  [prop_manhole_cover hangs 0.15 m over what is under it]
+PROOF change #1 remove tree_jacaranda_a at (29.00, 0.09, -6.45) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_jacaranda_b at (30.00, 0.09, 6.45) removed, in 3 tier(s) and its collider  [tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove tree_magnolia_a at (61.50, 0.68, -6.70) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove tree_magnolia_a at (123.50, 5.13, -6.70) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove tree_magnolia_a at (91.20, 2.73, 6.70) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove tree_coral_a at (78.50, 1.75, -6.70) removed, in 3 tier(s) and its collider  [tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove tree_coral_a at (136.50, 5.75, -6.70) removed, in 3 tier(s) and its collider  [tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove tree_coral_a at (108.70, 4.12, 6.70) removed, in 3 tier(s) and its collider  [tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #11 remove tree_magnolia_b at (91.50, 2.76, -6.70) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #12 remove tree_magnolia_b at (61.80, 0.69, 6.70) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #13 remove tree_magnolia_b at (123.50, 5.13, 6.70) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #14 remove tree_coral_b at (108.50, 4.10, -6.70) removed, in 3 tier(s) and its collider  [tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #15 remove tree_coral_b at (78.50, 1.75, 6.70) removed, in 3 tier(s) and its collider  [tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #16 remove tree_coral_b at (136.00, 5.73, 6.70) removed, in 3 tier(s) and its collider  [tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 fill_well: the tree well at (29.00, 0.09, -6.45) paved over: 144 ground / collision triangles within 1.3 m replaced by 48  [the well of tree_jacaranda_a: paved over once its tree is gone, unless it is no well (the fixer tests it)]
+PROOF change #4 fill_well: the tree well at (30.00, 0.09, 6.45) paved over: 144 ground / collision triangles within 1.3 m replaced by 48  [the well of tree_jacaranda_b: paved over once its tree is gone, unless it is no well (the fixer tests it)]
+PROOF note: 'Props/tree_coral_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_near' held only listed items and is gone with them
+PROOF 18 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
+   at: parse_gdextension_file (core/extension/gdextension_library_loader.cpp:282)
+   at: open_library (core/extension/gdextension.cpp:810)
+   at: load_extensions (core/extension/gdextension_manager.cpp:333)

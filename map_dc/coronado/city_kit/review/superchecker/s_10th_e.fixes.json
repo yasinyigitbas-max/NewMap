@@ -1,0 +1,267 @@
+{
+ "fixes": [
+  {
+   "at": [
+    72.0,
+    1.35741221904755,
+    -1.70000004768372
+   ],
+   "base": "prop_manhole_cover",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "move",
+   "reason": "prop_manhole_cover hangs 0.15 m over what is under it",
+   "to": [
+    72.0,
+    1.20749181479496,
+    -1.70000004768372
+   ]
+  },
+  {
+   "at": [
+    128.0,
+    5.43639993667603,
+    1.70000004768372
+   ],
+   "base": "prop_manhole_cover",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "move",
+   "reason": "prop_manhole_cover hangs 0.15 m over what is under it",
+   "to": [
+    128.0,
+    5.28328198352019,
+    1.70000004768372
+   ]
+  },
+  {
+   "at": [
+    29.0,
+    0.0900000035762787,
+    -6.44999980926514
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    30.0,
+    0.0900000035762787,
+    6.44999980926514
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    61.5,
+    0.678075075149536,
+    -6.69999980926514
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    123.5,
+    5.12772560119629,
+    -6.69999980926514
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    91.1999969482422,
+    2.73475909233093,
+    6.69999980926514
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    78.5,
+    1.7523250579834,
+    -6.69999980926514
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    136.5,
+    5.74521541595459,
+    -6.69999980926514
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    108.699996948242,
+    4.11943101882935,
+    6.69999980926514
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    91.5,
+    2.75878930091858,
+    -6.69999980926514
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    61.7999992370605,
+    0.693337023258209,
+    6.69999980926514
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    123.5,
+    5.12772560119629,
+    6.69999980926514
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    108.5,
+    4.10432386398315,
+    -6.69999980926514
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    78.5,
+    1.7523250579834,
+    6.69999980926514
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    136.0,
+    5.72761631011963,
+    6.69999980926514
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    29.0,
+    0.0900000035762787,
+    -6.44999980926514
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "fill_well",
+   "reason": "the well of tree_jacaranda_a: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  },
+  {
+   "at": [
+    30.0,
+    0.0900000035762787,
+    6.44999980926514
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "fill_well",
+   "reason": "the well of tree_jacaranda_b: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  }
+ ],
+ "scene": "s_10th_e"
+}

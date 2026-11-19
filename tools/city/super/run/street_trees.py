@@ -42,12 +42,14 @@ def show(P):
 
 
 def write(P, zone, rule, picks):
-    ts = old_trees(P); rows = [r for r in L.load_layout() if r.piece == P]; out = []
+    ts = old_trees(P); rows = [r for r in L.load_layout() if r.piece == P]; out = []; c = T.context(P)
     for pk in picks:
         head, why = pk.split(':', 1)
         n, base = (head.split('=') + [None])[:2]; f = ts[int(n)]
         for k, r in enumerate(rows):
             w = r.pts(np.array([f['item']['local']]))[0]
+            g = c.S.ground(float(w[0]), float(w[2]))          # the builder sank its trunks a few cm: stand on the ground
+            if g: w[1] = g[0]
             out.append({'base': base or f['item']['base'], 'cond': 'normal', 'at': [round(float(v), 3) for v in w],
                         'yaw': (len(out) * 113) % 360, 'scale': [0.95, 0.85, 0.9][len(out) % 3],
                         'why': why + ('' if len(rows) == 1 else ' (place %d of %d of this piece)' % (k + 1, len(rows)))})
