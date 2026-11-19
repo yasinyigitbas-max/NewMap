@@ -1051,6 +1051,39 @@ int CityCrowd::place_near(const Vector3 &p_at, int p_kind, double p_radius) cons
 	return best;
 }
 
+PackedVector2Array CityCrowd::map_lines(int p_kind) const {
+	PackedVector2Array out;
+	for (size_t k = 0; k < crowd->segs.size(); k++) {
+		const pc::Seg &S = crowd->segs[k];
+		if (S.kind != p_kind) continue;
+		const int m = std::max(1, (int)(S.len / 6.0f));
+		int h = 0; float x, y, z, tx, tz, px = 0, pz = 0;
+		for (int q = 0; q <= m; q++) {
+			crowd->at(S, S.len * (float)q / (float)m, 0.0f, h, x, y, z, tx, tz);
+			if (q > 0) { out.push_back(Vector2(px, pz)); out.push_back(Vector2(x, z)); }
+			px = x; pz = z;
+		}
+	}
+	return out;
+}
+
+PackedVector3Array CityCrowd::map_rooms() const {
+	PackedVector3Array out;
+	for (const pc::Place &pl : crowd->places) if (pl.kind == pc::PL_SHOP) out.push_back(Vector3(pl.x, pl.z, (float)pl.sub));
+	return out;
+}
+
+String CityCrowd::room_name(int p_i) const {
+	int k = 0;
+	for (const pc::Place &pl : crowd->places) {
+		if (pl.kind != pc::PL_SHOP) continue;
+		if (k++ != p_i) continue;
+		if (pl.name >= 0 && pl.name < (int)crowd->place_names.size()) return String::utf8(crowd->place_names[pl.name].c_str());
+		return String(pl.sub < pc::N_SHOP_KINDS ? pc::SHOP_KINDS[pl.sub] : "shop").capitalize();
+	}
+	return String();
+}
+
 PackedVector3Array CityCrowd::walk_points(double p_step) const {
 	PackedVector3Array out;
 	const float step = std::max((float)p_step, 0.25f);
@@ -1431,6 +1464,9 @@ void CityCrowd::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("walk_points", "step"), &CityCrowd::walk_points);
 	ClassDB::bind_method(D_METHOD("walk_points_across", "step", "across", "margin"), &CityCrowd::walk_points_across);
 	ClassDB::bind_method(D_METHOD("fight_stats"), &CityCrowd::fight_stats);
+	ClassDB::bind_method(D_METHOD("map_lines", "kind"), &CityCrowd::map_lines);
+	ClassDB::bind_method(D_METHOD("map_rooms"), &CityCrowd::map_rooms);
+	ClassDB::bind_method(D_METHOD("room_name", "i"), &CityCrowd::room_name);
 	ClassDB::bind_method(D_METHOD("remove_walker", "id"), &CityCrowd::remove_walker);
 	ClassDB::bind_method(D_METHOD("set_goal", "id", "place", "stay_s", "enter"), &CityCrowd::set_goal);
 	ClassDB::bind_method(D_METHOD("set_goal_point", "id", "at", "stay_s"), &CityCrowd::set_goal_point);

@@ -85,6 +85,12 @@ func _process(delta: float) -> bool:
 		8:
 			if float(hud.get_anim()) < 1.0 and t - t0 < 2.0: return false
 			_check(int(hud.get_open()) == 0, "the phone button opens the phone")
+			# the player's map targets are kept in the save
+			var tg := []
+			for k in 3: tg.append({"x": 10.0 * k, "z": -5.0 * k, "name": "Room %d" % k})
+			game.set_map_targets(tg)
+			game.save(); game.set_map_targets([]); game.load_slot(int(game.get_active_slot()))
+			_check((game.get_map_targets() as Array).size() == 3 and String((game.get_map_targets() as Array)[2].name) == "Room 2", "the three map targets are kept in the save (saved, cleared, loaded: %d)" % (game.get_map_targets() as Array).size())
 			var im := root.get_texture().get_image(); im.save_png("res://OUT/hud_phone.png")
 			print("RESULT %s" % ("PASS" if fails == 0 else "FAIL (%d)" % fails))
 			quit(1 if fails else 0)

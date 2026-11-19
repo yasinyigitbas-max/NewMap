@@ -223,6 +223,7 @@ Dictionary CityGame::snapshot() const {
 	Dictionary sd; sd["y"] = 2026; sd["m"] = 10; sd["d"] = 24; g["start_date"] = sd;
 	st["game"] = g;
 	st["economy"] = Dictionary(); st["lessons"] = Dictionary(); st["npc_memory"] = Dictionary();
+	st["map_targets"] = map_targets;
 	{ Dictionary h; h["value"] = health; st["health"] = h; Dictionary n; n["hunger"] = hunger; n["thirst"] = thirst; n["energy"] = energy; n["active"] = needs_active; st["needs"] = n; }
 	Dictionary story; story["path"] = ""; story["id"] = ""; story["step"] = 0; st["story"] = story;
 	Node3D *pl = player_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
@@ -241,6 +242,7 @@ void CityGame::apply_snapshot(const Dictionary &st) {
 	const Dictionary g = st.get("game", Dictionary());
 	day = (int)g.get("day", 1); hour = (double)g.get("hour", 9.0); money = (int)g.get("money", 50);
 	flags = g.get("flags", Dictionary()); voice = g.get("voice", "f");
+	map_targets = st.get("map_targets", Array());
 	{ const Dictionary h = st.get("health", Dictionary()); health = (float)(double)h.get("value", 1.0);
 	  const Dictionary n = st.get("needs", Dictionary()); hunger = (float)(double)n.get("hunger", 1.0); thirst = (float)(double)n.get("thirst", 1.0); energy = (float)(double)n.get("energy", 1.0); needs_active = (bool)n.get("active", false); }
 	Node3D *pl = player_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
@@ -570,6 +572,8 @@ void CityGame::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_needs_active"), &CityGame::get_needs_active);
 	ClassDB::bind_method(D_METHOD("set_needs_active", "on"), &CityGame::set_needs_active);
 	ClassDB::bind_method(D_METHOD("get_hud"), &CityGame::get_hud);
+	ClassDB::bind_method(D_METHOD("get_map_targets"), &CityGame::get_map_targets);
+	ClassDB::bind_method(D_METHOD("set_map_targets", "targets"), &CityGame::set_map_targets);
 	ClassDB::bind_method(D_METHOD("menu_picture_shown"), &CityGame::menu_picture_shown);
 	ClassDB::bind_method(D_METHOD("loading_picture_shown"), &CityGame::loading_picture_shown);
 	ClassDB::bind_method(D_METHOD("is_loading_fading"), &CityGame::is_loading_fading);

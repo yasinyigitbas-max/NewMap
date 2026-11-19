@@ -3,6 +3,11 @@
 
 #include "city_game.h"
 #include "city_player.h"
+#include "city_crowd.h"
+#include "city_traffic.h"
+
+#include <godot_cpp/classes/input_event_mouse_motion.hpp>
+#include <godot_cpp/classes/input_event_screen_drag.hpp>
 #include "ui_plate.h"
 
 #include <godot_cpp/classes/audio_server.hpp>
@@ -62,6 +67,185 @@ void HudArrow::_draw() {
 		const Vector2 np = P(0, -r * 1.32f, Vector2());
 		draw_string(f, np + Vector2(-fs * 0.32f, fs * 0.36f), "N", HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color(1, 1, 1, 0.9f));
 	}
+}
+
+// ---------------------------------------------------------------- the phone's map
+void HudMap::load_lines() {
+	CityTraffic *tr = traffic_id ? Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(traffic_id))) : nullptr;
+	CityCrowd *cr = crowd_id ? Object::cast_to<CityCrowd>(ObjectDB::get_instance(ObjectID(crowd_id))) : nullptr;
+	if (tr && roads.is_empty()) roads = tr->map_lines();
+	if (cr && walks.is_empty()) { walks = cr->map_lines(0); crossings = cr->map_lines(1); rooms = cr->map_rooms(); }
+	have_lines = !roads.is_empty() || !walks.is_empty();
+}
+
+Array HudMap::targets() const { CityGame *g = CityGame::get(); return g ? g->get_map_targets() : targets_local; }
+void HudMap::set_targets(const Array &p_t) { CityGame *g = CityGame::get(); if (g) g->set_map_targets(p_t); else targets_local = p_t; }
+
+bool HudMap::toggle_target(const Vector2 &p_xz, const String &p_name) {
+	Array t = targets().duplicate();
+	for (int k = 0; k < t.size(); k++) {
+		const Dictionary d = t[k];
+		if (Vector2((float)(double)d["x"], (float)(double)d["z"]).distance_to(p_xz) < 1.0f) { t.remove_at(k); set_targets(t); return false; }
+	}
+	Dictionary d; d["x"] = p_xz.x; d["z"] = p_xz.y; d["name"] = p_name;
+	t.push_back(d);
+	while (t.size() > 3) t.remove_at(0);
+	set_targets(t);
+	return true;
+}
+
+Vector2 HudMap::room_screen(int p_i) const {
+	if (p_i < 0 || p_i >= rooms.size()) return Vector2();
+	const float k = 1.0f / std::max(mpp, 0.02f);
+	return get_size() * 0.5f + (Vector2(rooms[p_i].x, rooms[p_i].y) - centre) * k;
+}
+
+int HudMap::tap(const Vector2 &p_screen) {
+	int best = -1; float bd = 26.0f;
+	for (int i = 0; i < rooms.size(); i++) { const float d = room_screen(i).distance_to(p_screen); if (d < bd) { bd = d; best = i; } }
+	if (best < 0) return -1;
+	CityCrowd *cr = crowd_id ? Object::cast_to<CityCrowd>(ObjectDB::get_instance(ObjectID(crowd_id))) : nullptr;
+	toggle_target(Vector2(rooms[best].x, rooms[best].y), cr ? cr->room_name(best) : String("Room"));
+	queue_redraw();
+	return best;
+}
+
+void HudMap::update_route() {
+	{   // the player's targets: each its way (asked again when a target changes or the player has gone 40 m)
+		CityTraffic *tr = traffic_id ? Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(traffic_id))) : nullptr;
+		const Array t = targets();
+		for (int k = 0; k < 3; k++) {
+			if (k >= t.size()) { troute[k].clear(); troute_for[k] = Vector2(1e9f, 1e9f); continue; }
+			const Dictionary d = t[k];
+			const Vector2 to((float)(double)d["x"], (float)(double)d["z"]);
+			if (troute_for[k].distance_to(to) < 1.0f && !troute[k].is_empty() && troute[k][0].distance_to(player_xz) < 40.0f) continue;
+			troute[k].clear(); troute_for[k] = to;
+			if (!tr) continue;
+			const Dictionary r = tr->route(Vector3(player_xz.x, 0, player_xz.y), Vector3(to.x, 0, to.y), false);
+			if (!(bool)r.get("ok", false)) continue;
+			const PackedVector3Array pts = r.get("points", PackedVector3Array());
+			troute[k].push_back(player_xz);
+			for (int q = 0; q < pts.size(); q++) troute[k].push_back(Vector2(pts[q].x, pts[q].z));
+			troute[k].push_back(to);
+		}
+	}
+	if (!has_obj) { route.clear(); route_for = Vector2(1e9f, 1e9f); return; }
+	if (route_for.distance_to(obj_xz) < 1.0f && !route.is_empty()) return;
+	CityTraffic *tr = traffic_id ? Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(traffic_id))) : nullptr;
+	route.clear(); route_for = obj_xz;
+	if (!tr) return;
+	const Dictionary r = tr->route(Vector3(player_xz.x, 0, player_xz.y), Vector3(obj_xz.x, 0, obj_xz.y), false);
+	if (!(bool)r.get("ok", false)) return;
+	const PackedVector3Array pts = r.get("points", PackedVector3Array());
+	route.push_back(player_xz);
+	for (int k = 0; k < pts.size(); k++) route.push_back(Vector2(pts[k].x, pts[k].z));
+	route.push_back(obj_xz);
+}
+
+void HudMap::_draw() {
+	const Vector2 s = get_size(), mid = s * 0.5f;
+	draw_rect(Rect2(Vector2(), s), Color(0.075f, 0.085f, 0.095f));   // (the land; the streets drawn over it)
+	const float k = 1.0f / std::max(mpp, 0.02f);
+	auto W = [&](const Vector2 &w) { return mid + (w - centre) * k; };
+	draw_set_transform(mid - centre * k, 0.0f, Vector2(k, k));   // world x, z straight to the screen: north up
+	if (!walks.is_empty()) draw_multiline(walks, Color(0.36f, 0.37f, 0.38f), 2.4f);
+	if (!crossings.is_empty()) draw_multiline(crossings, Color(0.62f, 0.62f, 0.6f), 2.0f);
+	if (!roads.is_empty()) draw_multiline(roads, Color(0.24f, 0.25f, 0.27f), 3.4f);
+	draw_set_transform(Vector2(), 0.0f, Vector2(1, 1));
+	// the enterable rooms: a small plate each, coloured and lettered by the shop's kind
+	{
+		static const char *const L = "BOFCRSCSBPBCKJSGSGCISVG";   // (a letter per SHOP_KINDS)
+		const Color cols[6] = { Color(1.0f, 0.55f, 0.3f), Color(0.4f, 0.75f, 0.9f), Color(0.85f, 0.6f, 0.95f), Color(0.95f, 0.85f, 0.35f), Color(0.55f, 0.9f, 0.6f), Color(0.9f, 0.9f, 0.9f) };
+		const float side = mpp < 1.2f ? 14.0f : 8.0f;
+		Ref<Font> f = plate::font(800);
+		for (int i = 0; i < rooms.size(); i++) {
+			const Vector2 q = W(Vector2(rooms[i].x, rooms[i].y));
+			if (q.x < -20 || q.y < -20 || q.x > s.x + 20 || q.y > s.y + 20) continue;
+			const int sub = (int)rooms[i].z;
+			const Color c = cols[sub % 6];
+			draw_rect(Rect2(q - Vector2(side, side) * 0.5f, Vector2(side, side)), c);
+			if (side > 10.0f && sub < 23) draw_string(f, q + Vector2(-4, 5), String::chr(L[sub]), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(0.05f, 0.05f, 0.06f));
+		}
+	}
+	// the player's targets: their ways (white, as the old phone's own routes) and a numbered ring on each
+	{
+		const Array t = targets();
+		for (int k = 0; k < 3; k++) if (troute[k].size() >= 2) { PackedVector2Array sp; for (int i = 0; i < troute[k].size(); i++) sp.push_back(W(troute[k][i])); draw_polyline(sp, Color(0.95f, 0.95f, 0.92f, 0.85f), 4.0f, true); }
+		for (int k = 0; k < t.size(); k++) {
+			const Dictionary d = t[k];
+			const Vector2 q = W(Vector2((float)(double)d["x"], (float)(double)d["z"]));
+			draw_arc(q, 13.0f, 0.0f, 6.2831853f, 24, Color(0.97f, 0.97f, 0.95f), 3.0f, true);
+			draw_string(plate::font(800), q + Vector2(-5, -18), String::num_int64(k + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color(0.97f, 0.97f, 0.95f));
+		}
+	}
+	if (route.size() >= 2) {
+		PackedVector2Array sp; for (int i = 0; i < route.size(); i++) sp.push_back(W(route[i]));
+		draw_polyline(sp, Color(0.2f, 0.8f, 0.4f), 5.0f, true);
+	}
+	if (has_obj) {   // the objective: a green pin
+		const Vector2 o = W(obj_xz);
+		draw_circle(o + Vector2(0, -16), 11.0f, Color(0.2f, 0.8f, 0.4f));
+		PackedVector2Array tri; tri.push_back(o); tri.push_back(o + Vector2(-8, -12)); tri.push_back(o + Vector2(8, -12));
+		draw_colored_polygon(tri, Color(0.2f, 0.8f, 0.4f));
+		draw_circle(o + Vector2(0, -16), 4.0f, Color(0.05f, 0.2f, 0.1f));
+	}
+	{   // the player: a white arrow with a dark rim, turned his way
+		const Vector2 p = W(player_xz);
+		const float cs = std::cos(player_yaw), sn = std::sin(player_yaw);
+		auto R = [&](float x, float y) { return p + Vector2(x * cs - y * sn, x * sn + y * cs); };
+		PackedVector2Array a; a.push_back(R(0, -14)); a.push_back(R(10, 10)); a.push_back(R(0, 5)); a.push_back(R(-10, 10));
+		draw_circle(p, 18.0f, Color(1, 1, 1, 0.12f));
+		draw_colored_polygon(a, Color(0.97f, 0.97f, 0.95f));
+		a.push_back(a[0]); draw_polyline(a, Color(0.05f, 0.05f, 0.06f), 2.0f, true);
+	}
+	// the scale: 100 m
+	const float bar = 100.0f * k;
+	draw_line(Vector2(24, s.y - 28), Vector2(24 + bar, s.y - 28), Color(1, 1, 1, 0.8f), 3.0f);
+	draw_string(plate::font(700), Vector2(24, s.y - 36), "100 m", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color(1, 1, 1, 0.8f));
+	if (!have_lines) draw_string(plate::font(600), mid + Vector2(-90, 0), "no streets loaded", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color(1, 1, 1, 0.5f));
+}
+
+void HudMap::_gui_input(const Ref<InputEvent> &p_event) {
+	if (const InputEventScreenTouch *t = Object::cast_to<InputEventScreenTouch>(p_event.ptr())) {
+		const int i = t->get_index();
+		if (i < 2) { tp[i] = t->get_position(); }
+		if (i == 0 && t->is_pressed()) { press_at = t->get_position(); press_moved = false; }
+		if (i == 0 && !t->is_pressed() && !press_moved && touches <= 1) tap(t->get_position());
+		touches = std::max(0, touches + (t->is_pressed() ? 1 : -1));
+		if (touches == 2) { pinch0 = tp[0].distance_to(tp[1]); mpp0 = mpp; }
+		accept_event(); return;
+	}
+	if (const InputEventScreenDrag *d = Object::cast_to<InputEventScreenDrag>(p_event.ptr())) {
+		const int i = d->get_index();
+		if (i < 2) tp[i] = d->get_position();
+		if (touches >= 2 && pinch0 > 10.0f) mpp = std::min(std::max(mpp0 * pinch0 / std::max(tp[0].distance_to(tp[1]), 1.0f), 0.08f), 8.0f);
+		else if (i == 0) { centre -= d->get_relative() * mpp; follow = false; }
+		if (d->get_position().distance_to(press_at) > 12.0f) press_moved = true;
+		queue_redraw(); accept_event(); return;
+	}
+	if (const InputEventMouseMotion *mm = Object::cast_to<InputEventMouseMotion>(p_event.ptr())) {
+		if (mm->get_button_mask().has_flag(MOUSE_BUTTON_MASK_LEFT) && touches == 0) { centre -= mm->get_relative() * mpp; follow = false; if (mm->get_position().distance_to(press_at) > 12.0f) press_moved = true; queue_redraw(); accept_event(); }
+		return;
+	}
+	if (const InputEventMouseButton *mb = Object::cast_to<InputEventMouseButton>(p_event.ptr())) {
+		if (mb->get_button_index() == MOUSE_BUTTON_LEFT && touches == 0) {
+			if (mb->is_pressed()) { press_at = mb->get_position(); press_moved = false; }
+			else if (!press_moved) tap(mb->get_position());
+		}
+		if (mb->is_pressed() && mb->get_button_index() == MOUSE_BUTTON_WHEEL_UP) { mpp = std::max(mpp / 1.2f, 0.08f); queue_redraw(); accept_event(); }
+		else if (mb->is_pressed() && mb->get_button_index() == MOUSE_BUTTON_WHEEL_DOWN) { mpp = std::min(mpp * 1.2f, 8.0f); queue_redraw(); accept_event(); }
+	}
+}
+
+void HudMap::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("get_road_lines"), &HudMap::get_road_lines);
+	ClassDB::bind_method(D_METHOD("get_walk_lines"), &HudMap::get_walk_lines);
+	ClassDB::bind_method(D_METHOD("get_route_points"), &HudMap::get_route_points);
+	ClassDB::bind_method(D_METHOD("tap", "screen"), &HudMap::tap);
+	ClassDB::bind_method(D_METHOD("get_rooms"), &HudMap::get_rooms);
+	ClassDB::bind_method(D_METHOD("room_screen", "i"), &HudMap::room_screen);
+	ClassDB::bind_method(D_METHOD("get_target_count"), &HudMap::get_target_count);
+	ClassDB::bind_method(D_METHOD("get_target_route_points", "k"), &HudMap::get_target_route_points);
 }
 
 // ---------------------------------------------------------------- the HUD
@@ -126,7 +310,7 @@ void CityHud::build() {
 		HBoxContainer *top = memnew(HBoxContainer);
 		VBoxContainer *tt = memnew(VBoxContainer); tt->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 		tt->add_child(plate::label(p == 0 ? "MAP" : "WEAPONS", plate::FS_TITLE, plate::TEXT, 800));
-		tt->add_child(plate::caps(p == 0 ? "HARİTA" : String::utf8("SİLAHLAR")));
+		tt->add_child(plate::caps(p == 0 ? String::utf8("HARİTA") : String::utf8("SİLAHLAR")));
 		top->add_child(tt);
 		Button *close = plate::button(String::utf8("✕"), "raised");
 		close->set_custom_minimum_size(Vector2(56, 56));
@@ -134,9 +318,14 @@ void CityHud::build() {
 		top->add_child(close);
 		v->add_child(top);
 		if (p == 0) {
-			Label *l = plate::label("The phone's map comes here (next on the board).", plate::FS_HELP, plate::DIM);
-			l->set_autowrap_mode(TextServer::AUTOWRAP_WORD_SMART); l->set_name("MapHolder");
-			v->add_child(l);
+			map = memnew(HudMap);
+			map->set_v_size_flags(Control::SIZE_EXPAND_FILL); map->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+			map->set_clip_contents(true); map->set_mouse_filter(Control::MOUSE_FILTER_STOP);
+			v->add_child(map);
+			Button *me = plate::button("", "raised", "pin");   // centre on the player again
+			me->set_custom_minimum_size(Vector2(56, 56));
+			me->connect("pressed", callable_mp(this, &CityHud::recentre));
+			top->add_child(me); top->move_child(me, 1);
 		} else {
 			v->add_child(plate::label("None yet", plate::FS_BODY, plate::TEXT, 700));
 			v->add_child(plate::caps(String::utf8("HENÜZ YOK")));
@@ -181,6 +370,8 @@ void CityHud::touch(int p_what) {
 	pan[open]->set_visible(true);
 }
 
+void CityHud::recentre() { feedback(); if (map) { map->follow = true; map->queue_redraw(); } }
+
 String CityHud::get_money_text() const { return l_money ? l_money->get_text() : String(); }
 String CityHud::get_time_text() const { return l_time ? l_time->get_text() : String(); }
 
@@ -216,6 +407,20 @@ void CityHud::_process(double p_delta) {
 		}
 		arrow->objective = obj;
 		arrow->queue_redraw();
+	}
+	// the map, while it shows: the player, the view's heading, the objective and its way
+	if (map && open == 0 && pl) {
+		if (!traffic_id && g) { traffic_id = g->get_traffic_id(); crowd_id = g->get_crowd_id(); }
+		map->traffic_id = traffic_id; map->crowd_id = crowd_id;
+		if (!map->get_road_lines()) map->load_lines();
+		const Vector3 pp = pl->is_visible_in_tree() ? pl->get_global_position() : (vp->get_camera_3d() ? vp->get_camera_3d()->get_global_position() : pl->get_global_position());
+		map->player_xz = Vector2(pp.x, pp.z);
+		if (Camera3D *c = vp->get_camera_3d()) { const Vector3 f = -c->get_global_transform().basis.get_column(2); map->player_yaw = std::atan2(f.x, -f.z); }
+		map->has_obj = g && g->get_objective_on();
+		if (map->has_obj) { const Vector3 o = g->get_objective_at(); map->obj_xz = Vector2(o.x, o.z); }
+		if (map->follow) map->centre = map->player_xz;
+		map->update_route();
+		map->queue_redraw();
 	}
 	// a panel growing out of its box / shrinking back (0.28 s, eased: several frames)
 	if (open >= 0 && anim_dir != 0) {
@@ -268,6 +473,8 @@ void CityHud::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_money_text"), &CityHud::get_money_text);
 	ClassDB::bind_method(D_METHOD("get_time_text"), &CityHud::get_time_text);
 	ClassDB::bind_method(D_METHOD("box_rect", "what"), &CityHud::box_rect);
+	ClassDB::bind_method(D_METHOD("set_world", "crowd", "traffic"), &CityHud::set_world);
+	ClassDB::bind_method(D_METHOD("get_map"), &CityHud::get_map);
 }
 
 } // namespace godot

@@ -96,7 +96,7 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
       again, phone sized, when clicked displays weapons we have, none for now in the game"): the map and the phone open
       and close animated over several frames, a sound and a short vibration on each touch; an INVENTORY box bottom left,
       the phone's size and look, that opens the weapons we carry (none yet: an empty list). (old: ui/hud/hud.gd, objectives.gd, ui/health_bar.gd, needs_hud.gd, caption_help.gd).
-8. [ ] (the HUD arrow box replaces the minimap, Yasin) The phone's map (old: ui/phone/map_view.gd, ui/hud/coronado_route.gd: the way on the map from item 2).
+8. [x] (20 Nov, tests/game/test_phone_map.gd in the real city and test_hud.gd, both RESULT PASS in a window; the enterable rooms = the shops' doors of places.bin; up to 3 player targets routed and saved (Yasin); NOT on the phone: pinch and drag) (the HUD arrow box replaces the minimap, Yasin) The phone's map (old: ui/phone/map_view.gd, ui/hud/coronado_route.gd: the way on the map from item 2).
 9. [ ] The phone UI and its apps (old: ui/phone/*: phone, apps, call, camera, CV, delivery, films, jobs, learn, transit, drone).
 10. [ ] Money and ATMs (old: economy/economy.gd, atm.gd, broke_watch.gd).
 11. [ ] Jobs and deliveries (old: jobs/jobs.gd, delivery/*, ui/jobs/*, minigames/jobs/*, cityride/city_ride.gd: the taxi).
