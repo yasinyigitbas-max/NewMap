@@ -5335,56 +5335,6 @@
    "from": "grow_hp"
   },
   {
-   "piece": "n_un_east",
-   "pos": [
-    0.0,
-    4.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "grow_hp"
-  },
-  {
-   "piece": "n_un_north",
-   "pos": [
-    0.0,
-    4.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "grow_hp"
-  },
-  {
-   "piece": "n_un_quad",
-   "pos": [
-    0.0,
-    4.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "grow_hp"
-  },
-  {
-   "piece": "n_un_south",
-   "pos": [
-    0.0,
-    4.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "grow_hp"
-  },
-  {
-   "piece": "n_un_west",
-   "pos": [
-    0.0,
-    4.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "grow_hp"
-  },
-  {
    "piece": "n_hs_b1_amber",
    "pos": [
     0.0,
@@ -7156,56 +7106,6 @@
   },
   {
    "piece": "t_res_500_m200_sw",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_un_east",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_un_north",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_un_quad",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_un_south",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_un_west",
    "pos": [
     0.0,
     0.0,
