@@ -14,6 +14,8 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   round it. Before this the player's car drove THROUGH the traffic (its mask lacked their layer). Test
   `tests/traffic/test_knock.gd` RESULT PASS (parked car shoved 7 m; head-on with a moving car; the driver drives on
   0.3 s after the way is clear); car engine test PASS again.
+  ALSO (doc section 24): the four nearest traffic cars have their wheels apart: the front ones turn with the
+  driver's hands, all four roll (one more draw a model; one picture, `review/traffic_19nov/wheels_sheet.jpg`).
   NOT DONE: nobody has seen it (no window opened); not in the streamed city, not on the phone; a car across the
   road or on its roof stays for good; no damage, no sound; the 12-run traffic test was not rerun (core untouched).
 - 19 Nov ~17:00 (PC session): PEOPLE, STEP 1: A BODY THAT KEEPS ITS OWN BALANCE, ALL C++ (Yasin: "gta 5 level npcs

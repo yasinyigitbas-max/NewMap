@@ -808,3 +808,16 @@ The car's own engine test (tests/car) RESULT PASS again with the same numbers (i
 A KINEMATIC body that is moved from one car to another, or put away 500 m below, counts that jump as its speed for a
 step and hands it to whatever it touches: the first knocked car left at 28,000 m/s. The pool's boxes were kinematic
 since stage 2c and are reassigned to the nearest cars every frame; nothing could touch them until now.
+
+## 24. The traffic's wheels turn (19 Nov evening)
+The cars right by the camera (the four nearest within 22 m, the "near model") are drawn as a body and four wheels
+now: per model ONE more batch, four rows a car, the one wheel mesh turned about for the right-hand side
+(`CityTraffic::put_wheels`). The front wheels show the angle the driver's hands hold (the steered body's own number),
+all four roll by the metres the car has gone, and they stay on the road while the body leans and dips over them.
+Beyond 22 m nothing changed (one mesh a car, wheels and all). Cost: at most 4 more draws (one for each model among
+the four nearest cars), 16 rows a frame.
+SEEN ONCE: `review/traffic_19nov/wheels_sheet.jpg` (a van in a bend, front wheels 9 degrees to the left, from its
+front corner and from above): the wheels sit in their arches, the front one is turned, the rim faces out.
+NOT CHECKED: the right-hand wheels (the same mesh turned about) were not in the picture; never seen in motion (do
+they roll the right way); buses; the phone. Around (-600, -1000) no car turned its front wheels more than 12 degrees
+in 75 s: the bends there are wide.

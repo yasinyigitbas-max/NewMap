@@ -141,14 +141,23 @@ void CityTraffic::step_once(double p_clock) {
 	sim->events.clear();
 	static thread_local Snap s;
 	s.n = 0;
+	if (odo_id.empty()) { odo_id.assign(tc::MAX_CARS, -1); odo_now.assign(tc::MAX_CARS, 0.0f); odo_prev = odo_now; steer_now = odo_now; steer_prev = odo_now; }
 	for (int i = 0; i < sim->hi && s.n < MAX_ROWS; i++) {
 		if (!sim->alive[i]) continue;
+		if (odo_id[i] != sim->id[i]) { odo_id[i] = sim->id[i]; odo_now[i] = odo_prev[i] = 0.0f; steer_now[i] = steer_prev[i] = sim->steer[i]; }
+		else if (sim->tu[i] == sim->tick) {   // it moved this step
+			const float mx_ = sim->x[i] - sim->px[i], mz_ = sim->z[i] - sim->pz[i];
+			odo_prev[i] = odo_now[i]; odo_now[i] += std::sqrt(mx_ * mx_ + mz_ * mz_) * (sim->v[i] < 0.0f ? -1.0f : 1.0f);
+			if (odo_now[i] > 4000.0f) { odo_now[i] -= 4000.0f; odo_prev[i] -= 4000.0f; }
+			steer_prev[i] = steer_now[i]; steer_now[i] = sim->steer[i];
+		}
 		Row &r = s.rows[s.n++];
+		r.odo = odo_now[i]; r.podo = odo_prev[i]; r.psteer = steer_prev[i];
 		r.id = sim->id[i]; r.model = sim->model[i]; r.colour = tp::Parking::car_colour(*sim, i); r.kind = sim->kind[i];
 		r.flags = (uint8_t)(((sim->flags[i] & tc::F_BRAKE) ? 1 : 0) | ((sim->flags[i] & tc::F_IND_L) ? 2 : 0) | ((sim->flags[i] & tc::F_IND_R) ? 4 : 0));
 		r.x = sim->x[i]; r.y = sim->y[i]; r.z = sim->z[i]; r.yaw = sim->yaw[i]; r.pitch = sim->pitch[i];
 		r.px = sim->px[i]; r.py = sim->py[i]; r.pz = sim->pz[i]; r.pyaw = sim->pyaw[i]; r.ppitch = sim->ppitch[i];
-		r.v = sim->v[i]; r.hl = sim->hl[i]; r.hw = sim->hw[i]; r.roll = sim->roll[i]; r.proll = sim->proll[i]; r.steer = sim->steer[i];
+		r.v = sim->v[i]; r.hl = sim->hl[i]; r.hw = sim->hw[i]; r.roll = sim->roll[i]; r.proll = sim->proll[i]; r.steer = steer_now[i];
 		r.tu = sim->tu[i]; r.span = std::max(1, (int)sim->span[i]);
 	}
 	s.tick = sim->tick; s.t_usec = usec_now(); s.clock = p_clock + STEP_S;
@@ -237,6 +246,26 @@ void CityTraffic::put_row(float *r, float x, float y, float z, float yaw, float 
 	r[8] = lz * sx; r[9] = uz * sy; r[10] = fz * sz; r[11] = z;
 	r[12] = col[0]; r[13] = col[1]; r[14] = col[2]; r[15] = 1.0f;
 	r[16] = c0; r[17] = c1; r[18] = c2; r[19] = c3;
+}
+
+// The four wheels of a car whose row (not yet leaned) is car_row: each at its hub, the front ones turned by `steer`
+// (rad, + = left), all rolled by the metres the car has gone. The right-hand wheels are the same mesh turned about.
+void CityTraffic::put_wheels(float *w, const float *car_row, const WheelSet &ws, float steer, float odo) {
+	const float L[3] = { car_row[0], car_row[4], car_row[8] }, U[3] = { car_row[1], car_row[5], car_row[9] }, F[3] = { car_row[2], car_row[6], car_row[10] };
+	const float roll = std::fmod(odo / std::max(ws.r, 0.1f), 6.2831853f);
+	for (int k = 0; k < 4; k++) {
+		const bool front = k < 2, left = (k & 1) == 0;
+		const float a = (front ? steer : 0.0f) + (left ? 0.0f : 3.14159265f), b = left ? roll : -roll;
+		const float ca = std::cos(a), sa = std::sin(a), cb = std::cos(b), sb = std::sin(b);
+		// the wheel's own axes in the car's (left, up, forward): a turn about up, then a roll about its axle
+		const float m[3][3] = { { ca, 0.0f, -sa }, { sa * sb, cb, ca * sb }, { sa * cb, -sb, ca * cb } };
+		float *r = w + (size_t)k * ROW;
+		for (int e = 0; e < 3; e++) {
+			for (int c = 0; c < 3; c++) r[e * 4 + c] = L[e] * m[c][0] + U[e] * m[c][1] + F[e] * m[c][2];
+			r[e * 4 + 3] = car_row[e * 4 + 3] + L[e] * ws.h[k][0] + U[e] * ws.h[k][1] + F[e] * ws.h[k][2];
+		}
+		for (int c = 12; c < 20; c++) r[c] = car_row[c];
+	}
 }
 
 void CityTraffic::lean_row(float *r, float roll) {
@@ -365,10 +394,33 @@ void CityTraffic::_ready() {
 	mat_mid.instantiate(); mat_mid->set_shader(sh_car); mat_mid->set_shader_parameter("atlas", atlas_far); mat_mid->set_shader_parameter("parked_cut", (float)parked_mid_r);
 	mat_box.instantiate(); mat_box->set_shader(sh_box); mat_box->set_shader_parameter("atlas", atlas_far); mat_box->set_shader_parameter("parked_cut", (float)parked_mid_r);
 	near_b.resize(cm::N_MODELS); mid_b.resize(cm::N_MODELS); mid_parked.assign(cm::N_MODELS, std::vector<int32_t>());
+	wheel_b.resize(cm::N_MODELS); wheels.assign(cm::N_MODELS, WheelSet()); mesh_nbody.resize(cm::N_MODELS); mesh_wheel.resize(cm::N_MODELS);
 	for (int m = 0; m < cm::N_MODELS; m++) {
-		make_batch(near_b[m], mesh_near[m], mat_near, 8, shadows);
-		make_batch(mid_b[m], mesh_mid[m], mat_mid, 64, shadows);
+		// the body without its wheels and one wheel, when the model has them (the body mesh notes where its wheels are)
+		const String base = String("res://vehicles/models/lod/") + cm::MODELS[m].id;
+		if (rl->exists(base + String("_q_body.res"))) {
+			Ref<Mesh> bm = rl->load(base + String("_q_body.res"));
+			if (bm.is_valid() && bm->has_meta("wheels")) {
+				const Array wl = bm->get_meta("wheels");
+				int got = 0, fl = -1;
+				float rsum = 0.0f;
+				for (int k = 0; k < (int)wl.size() && wl.size() == 4; k++) {
+					const Dictionary w = wl[k];
+					const Vector3 c = w.get("center", Vector3());
+					const int slot = (c.z > 0.0f ? 0 : 2) + (c.x > 0.0f ? 0 : 1);
+					wheels[m].h[slot][0] = c.x; wheels[m].h[slot][1] = c.y; wheels[m].h[slot][2] = c.z;
+					rsum += (float)(double)w.get("radius", 0.33);
+					got |= 1 << slot;
+					if (slot == 0) fl = k;
+				}
+				if (got == 15 && fl >= 0) mesh_wheel[m] = rl->load(base + String("_q_w") + String::num_int64(fl) + String(".res"));
+				if (mesh_wheel[m].is_valid()) { wheels[m].on = true; wheels[m].r = rsum * 0.25f; mesh_nbody[m] = bm; }
+			}
+		}
+		make_batch(near_b[m], wheels[m].on ? mesh_nbody[m] : mesh_near[m], mat_near, 8, shadows);
+		if (wheels[m].on) make_batch(wheel_b[m], mesh_wheel[m], mat_near, 32, false);
 	}
+	for (int m = 0; m < cm::N_MODELS; m++) make_batch(mid_b[m], mesh_mid[m], mat_mid, 64, shadows);
 	make_batch(box_moving, mesh_box, mat_box, 256, false);
 	// the lamp glows: four squares at the corners of a unit car (x = left / right, z = front / back), made here
 	{
@@ -464,6 +516,7 @@ void CityTraffic::_exit_tree() {
 	if (gfx) {
 		for (Batch &b : near_b) drop(b);
 		for (Batch &b : mid_b) drop(b);
+		for (Batch &b : wheel_b) drop(b);
 		drop(box_moving); drop(box_parked); drop(lamps_b);
 		gfx = false;
 	}
@@ -542,6 +595,7 @@ void CityTraffic::_process(double p_delta) {
 
 	for (Batch &b : near_b) b.n = 0;
 	for (Batch &b : mid_b) b.n = 0;
+	for (Batch &b : wheel_b) b.n = 0;
 	box_moving.n = 0; lamps_b.n = 0;
 	body_want.clear();
 
@@ -584,7 +638,7 @@ void CityTraffic::_process(double p_delta) {
 	struct Near { float d2; int i; };
 	Near nearest[16];
 	int n_near = 0;
-	static thread_local float pose[MAX_ROWS][7];   // x, y, z, yaw, pitch, d2, roll
+	static thread_local float pose[MAX_ROWS][8];   // x, y, z, yaw, pitch, d2, roll, how far between its last two poses
 	for (int i = 0; i < now.n; i++) {
 		const Row &r = now.rows[i];
 		const float a = std::min(std::max(((float)(now.tick - r.tu) + alpha) / (float)r.span, 0.0f), 1.0f);
@@ -593,7 +647,7 @@ void CityTraffic::_process(double p_delta) {
 		p[3] = lerp_angle(r.pyaw, r.yaw, a); p[4] = r.ppitch + (r.pitch - r.ppitch) * a;
 		const float dx = p[0] - cp.x, dy = p[1] - cp.y, dz = p[2] - cp.z;
 		p[5] = dx * dx + dy * dy + dz * dz;
-		p[6] = r.proll + (r.roll - r.proll) * a;
+		p[6] = r.proll + (r.roll - r.proll) * a; p[7] = a;
 		bool hide = false;
 		for (Hidden &h : hidden) if (h.id == r.id) { h.seen = true; hide = true; }
 		if (hide) { p[5] = 1.0e12f; continue; }   // it is a physical car now: no row, no lamps, no box
@@ -619,7 +673,16 @@ void CityTraffic::_process(double p_delta) {
 		for (int q = 0; q < n_near; q++) if (nearest[q].i == i) is_near = true;
 		if (is_near) {
 			Batch &b = near_b[r.model];
-			if (b.n < b.cap) { put_row(b.buf.ptrw() + (size_t)b.n * ROW, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, col, brake, ind, lamps, 0.0f); lean_row(b.buf.ptrw() + (size_t)b.n * ROW, p[6]); b.n++; c_near++; }
+			if (b.n < b.cap) {
+				float *row = b.buf.ptrw() + (size_t)b.n * ROW;
+				put_row(row, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, col, brake, ind, lamps, 0.0f);
+				Batch &wb = wheel_b[r.model];
+				if (wheels[r.model].on && wb.n + 4 <= wb.cap) {   // its wheels stay on the road while the body leans over them
+					put_wheels(wb.buf.ptrw() + (size_t)wb.n * ROW, row, wheels[r.model], r.psteer + (r.steer - r.psteer) * p[7], r.podo + (r.odo - r.podo) * p[7]);
+					wb.n += 4;
+				}
+				lean_row(row, p[6]); b.n++; c_near++;
+			}
 		} else if (p[5] < (float)(mid_r * mid_r)) {
 			Batch &b = mid_b[r.model];
 			grow(b, b.n + 1);
@@ -646,6 +709,7 @@ void CityTraffic::_process(double p_delta) {
 		const Vector3 wp = cp + cf * 8.0f;
 		for (int m = 0; m < cm::N_MODELS; m++) {
 			if (near_b[m].n == 0) { put_row(near_b[m].buf.ptrw(), wp.x, wp.y - 1.0f, wp.z, 0, 0, 0.02f, 0.02f, 0.02f, PAINT[0], 0, 0, 1, 0); near_b[m].n = 1; }
+			if (wheels[m].on && wheel_b[m].n == 0) { put_row(wheel_b[m].buf.ptrw(), wp.x, wp.y - 1.0f, wp.z, 0, 0, 0.02f, 0.02f, 0.02f, PAINT[0], 0, 0, 1, 0); wheel_b[m].n = 1; }
 			if (mid_b[m].n == 0) { put_row(mid_b[m].buf.ptrw(), wp.x, wp.y - 1.0f, wp.z, 0, 0, 0.02f, 0.02f, 0.02f, PAINT[0], 0, 0, 1, 0); mid_b[m].n = 1; }
 		}
 		if (box_moving.n == 0) { put_row(box_moving.buf.ptrw(), wp.x, wp.y - 1.0f, wp.z, 0, 0, 0.02f, 0.02f, 0.02f, PAINT[0], 0, 0, 1, 0); box_moving.n = 1; }
@@ -656,6 +720,7 @@ void CityTraffic::_process(double p_delta) {
 	for (int m = 0; m < cm::N_MODELS; m++) {
 		if (near_b[m].n > 0) { near_b[m].dirty = true; batches++; }
 		if (mid_b[m].n > 0) { mid_b[m].dirty = true; batches++; }
+		if (wheels[m].on) { if (wheel_b[m].n > 0) { wheel_b[m].dirty = true; batches++; } send(wheel_b[m]); }
 		send(near_b[m]); send(mid_b[m]);
 	}
 	if (box_moving.n > 0) { box_moving.dirty = true; batches++; }
@@ -824,7 +889,7 @@ Array CityTraffic::cars_near(const Vector3 &p_at, double p_r) const {
 		const float dx = r.x - p_at.x, dz = r.z - p_at.z;
 		if (dx * dx + dz * dz > (float)(p_r * p_r)) continue;
 		Dictionary d;
-		d["id"] = r.id; d["at"] = Vector3(r.x, r.y, r.z); d["yaw"] = r.yaw; d["speed"] = r.v; d["model"] = (int)r.model;
+		d["id"] = r.id; d["at"] = Vector3(r.x, r.y, r.z); d["yaw"] = r.yaw; d["speed"] = r.v; d["model"] = (int)r.model; d["steer"] = r.steer;
 		out.push_back(d);
 	}
 	return out;

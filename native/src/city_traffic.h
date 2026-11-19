@@ -91,6 +91,7 @@ private:
 	struct Row {     // one moving car as the step left it: its pose now and before its last move
 		int32_t id; uint8_t model, colour, flags, kind;
 		float x, y, z, yaw, pitch, px, py, pz, pyaw, ppitch, v, hl, hw, roll, proll, steer;
+		float psteer, odo, podo;   // the front wheels' angle before its last move; metres rolled, now and before (the wheels' spin)
 		int32_t tu, span;
 	};
 	struct Snap {
@@ -130,6 +131,15 @@ private:
 		bool dirty = false;
 	};
 	std::vector<Batch> near_b, mid_b;      // per model
+	// The cars right by the camera have their wheels apart: ONE more batch a model, four rows a car (the one wheel mesh,
+	// turned about for the right side). The front wheels turn with the driver's hands, all four roll with the road.
+	std::vector<Batch> wheel_b;
+	struct WheelSet { bool on = false; float h[4][3]; float r = 0.33f; };   // hubs: front left, front right, rear left, rear right (left, up, forward)
+	std::vector<WheelSet> wheels;
+	std::vector<Ref<Mesh>> mesh_nbody, mesh_wheel;
+	std::vector<float> odo_now, odo_prev, steer_now, steer_prev;   // (the step's thread) per place in the core
+	std::vector<int32_t> odo_id;
+	static void put_wheels(float *w, const float *car_row, const WheelSet &ws, float steer, float odo);
 	Batch box_moving, box_parked;
 	Batch lamps_b;                 // the lamp glows of every car that shows a light (one draw)
 	Ref<Mesh> mesh_lamps;
