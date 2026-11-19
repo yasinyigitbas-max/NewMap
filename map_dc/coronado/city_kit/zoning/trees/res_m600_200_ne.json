@@ -1,0 +1,14 @@
+{
+ "area": "res_m600_200_ne", "piece": "r_q_m600_200_ne", "zone": "residential yards",
+ "rule": "docs/TREE_PLAN.md: one yard tree for every two or three houses, in back yards and at lot corners, never against a fence or a wall (zone 813 -> about 400)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The quadrant's twenty-seven builder trees go (a row of queen palms, corals and torrey pines every 6 m along the back fences, fan and queen palms 3 m from the house fronts, others in the yards); seven come back on their own spots, about one for every two houses: by the picnic table, the grill and the chair, on the open lot corner, in two back yards, and one on the old back fence row.",
+ "trees": [
+  {"base": "tree_magnolia_b", "cond": "normal", "at": [-530.0, 5.106, 134.0], "yaw": 10.0, "scale": 0.9, "why": "the shared back lawn with the picnic table and the shade sail: a magnolia beside them"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [-507.0, 4.538, 134.0], "yaw": 100.0, "scale": 0.9, "why": "the same lawn 23 m east, 13 m from any wall: the lawn's second tree"},
+  {"base": "tree_norfolk_pine_c", "cond": "normal", "at": [-512.0, 5.877, 112.0], "yaw": 190.0, "scale": 0.85, "why": "the big open lot corner, 35 m from the walls: one norfolk pine, a landmark seen from the street"},
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [-566.9, 7.26, 113.0], "yaw": 280.0, "scale": 0.85, "why": "the back yard with the adirondack chair and the gas grill: a magnolia over both"},
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [-582.6, 4.15, 164.1], "yaw": 30.0, "scale": 0.85, "why": "the north-west back yard, 8.7 m from the house: the yard's tree"},
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [-529.0, 3.65, 162.6], "yaw": 120.0, "scale": 0.85, "why": "the north back yard, 8 m from the house, 54 m from the next"},
+  {"base": "tree_torrey_pine_a", "cond": "normal", "at": [-557.4, 5.63, 136.8], "yaw": 210.0, "scale": 0.85, "why": "the west back fence row: the row's one tree (it had one every 6-10 m)"}
+ ]
+}
