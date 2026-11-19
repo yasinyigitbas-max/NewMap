@@ -1,0 +1,81 @@
+{
+ "area": "rg_se_b161_1",
+ "piece": "s_rg_se_b161_1",
+ "zone": "ring boulevard",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms, the palm boulevard round the island; within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    302.306,
+    3.987,
+    331.311
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "south parkway grass, first fan palm of the boulevard's south row (one species a face: the queen palm here becomes a fan palm)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    327.978,
+    3.573,
+    330.144
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "south parkway grass 26 m on, the next fan palm (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    350.414,
+    3.092,
+    329.124
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "south parkway grass 22 m on, the last fan palm of the piece"
+  },
+  {
+   "base": "palm_canary_date_a",
+   "cond": "normal",
+   "at": [
+    290.746,
+    4.066,
+    360.466
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "north planting bed (mulch) by the plaza, a Canary date palm marking the plaza edge (old spot and species)"
+  },
+  {
+   "base": "palm_canary_date_a",
+   "cond": "normal",
+   "at": [
+    325.757,
+    3.636,
+    352.868
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "north parkway grass 35 m on, the next Canary date palm (one species a face: the fan palm here becomes a date palm)"
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "at": [
+    349.317,
+    3.14,
+    351.797
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "north parkway grass 23.5 m on, the last date palm; the spot 0.5 m from an agave is skipped"
+  }
+ ]
+}
