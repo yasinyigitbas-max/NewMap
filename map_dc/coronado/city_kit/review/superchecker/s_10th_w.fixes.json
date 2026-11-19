@@ -1,0 +1,61 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -37.75,
+    0.0900000035762787,
+    -6.44999980926514
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -33.0,
+    0.0900000035762787,
+    6.44999980926514
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -37.75,
+    0.0900000035762787,
+    -6.44999980926514
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "fill_well",
+   "reason": "the well of tree_jacaranda_a: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  },
+  {
+   "at": [
+    -33.0,
+    0.0900000035762787,
+    6.44999980926514
+   ],
+   "ground": "ground",
+   "if_well": true,
+   "kind": "well",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "fill_well",
+   "reason": "the well of tree_jacaranda_b: paved over once its tree is gone, unless it is no well (the fixer tests it)"
+  }
+ ],
+ "scene": "s_10th_w"
+}

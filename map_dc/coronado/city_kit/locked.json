@@ -56,11 +56,6 @@
    "by": "Yasin",
    "date": "2026-11-19"
   },
-  "s_10th_w": {
-   "sha256": "efe7c09387c90b274f7f547557bdaff8947f565f24c9d7ad437b7af01caaf0ce",
-   "by": "Yasin",
-   "date": "2026-11-17"
-  },
   "s_cc_10th": {
    "sha256": "5d27b39258d29d237995046d015e77f51722104aa29d1e00703ec61e24f43175",
    "by": "Yasin",
@@ -2778,6 +2773,11 @@
   },
   "s_strip_side": {
    "sha256": "48238ae61555abff7ecd3c78dd4eb020075bc675b80112a3653c6a41e242926a",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "s_10th_w": {
+   "sha256": "01b8d9cfbba7ff92b48dd63cb489bb812ddfe8286d7b909fd5700144e4550ffc",
    "by": "Yasin",
    "date": "2026-11-19"
   }
