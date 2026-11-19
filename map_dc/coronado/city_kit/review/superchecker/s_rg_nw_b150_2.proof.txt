@@ -1,0 +1,46 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 26 nodes (with every mesh of the buildings), 8748 ground and ground-collision triangles, 46 prop instances, 16 colliders, 293 wear marks are identical in both files
+PROOF differences found between the files: 58 lines only in the old one, 16 only in the new one
+PROOF change #16 add_collider: plant_agave_americana_small at (-3.38, 0.11, -17.34) got a collision shape  [plant_agave_americana_small has no collision: you walk and drive through it]
+PROOF change #17 add_collider: plant_agave_americana_small at (-10.66, 0.11, -17.26) got a collision shape  [plant_agave_americana_small has no collision: you walk and drive through it]
+PROOF change #18 add_collider: plant_agave_americana_small at (-16.72, 0.11, -17.57) got a collision shape  [plant_agave_americana_small has no collision: you walk and drive through it]
+PROOF change #19 add_collider: plant_agave_americana_small at (-20.82, 0.11, -17.06) got a collision shape  [plant_agave_americana_small has no collision: you walk and drive through it]
+PROOF change #20 add_collider: plant_agave_americana_small at (-24.38, 0.11, -17.49) got a collision shape  [plant_agave_americana_small has no collision: you walk and drive through it]
+PROOF change #21 add_collider: plant_bird_of_paradise at (-7.08, 0.11, -17.43) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #22 add_collider: plant_bird_of_paradise at (-30.54, 0.11, -17.52) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #23 add_collider: plant_bird_of_paradise at (-44.34, 0.11, -17.05) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #24 add_collider: plant_bird_of_paradise at (-48.35, 0.11, -17.18) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #25 add_collider: plant_bird_of_paradise at (-56.41, 0.11, -17.54) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #26 add_collider: plant_bird_of_paradise at (-63.80, 0.11, -17.12) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #27 add_collider: plant_agave_americana at (-13.74, 0.11, -17.24) got a collision shape  [plant_agave_americana has no collision: you walk and drive through it]
+PROOF change #28 add_collider: plant_agave_americana at (-27.62, 0.11, -17.13) got a collision shape  [plant_agave_americana has no collision: you walk and drive through it]
+PROOF change #29 add_collider: plant_agave_americana at (-41.39, 0.11, -17.41) got a collision shape  [plant_agave_americana has no collision: you walk and drive through it]
+PROOF change #30 add_collider: plant_agave_americana at (-60.02, 0.11, -17.48) got a collision shape  [plant_agave_americana has no collision: you walk and drive through it]
+PROOF change #31 add_collider: plant_agave_americana at (-67.96, 0.11, -17.10) got a collision shape  [plant_agave_americana has no collision: you walk and drive through it]
+PROOF change #1 remove palm_mexican_fan_a at (-0.35, 0.09, 11.30) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove palm_mexican_fan_a at (-37.89, 0.09, 11.30) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove palm_mexican_fan_a at (-12.67, 0.09, -11.30) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove palm_mexican_fan_a at (-67.55, 0.09, -11.30) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove palm_mexican_fan_b at (-11.42, 0.09, 11.30) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove palm_mexican_fan_b at (-23.72, 0.09, 11.30) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove palm_mexican_fan_b at (-1.82, 0.09, -11.30) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove palm_mexican_fan_b at (-24.29, 0.09, -11.30) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove palm_mexican_fan_b at (-35.36, 0.09, -11.30) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove palm_mexican_fan_b at (-56.35, 0.09, -11.30) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #11 remove palm_mexican_fan_c at (-61.36, 0.09, 11.30) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #15 remove prop_bike_rack at (-34.70, 0.15, -17.20) removed, in 1 tier(s) and its collider  [erased (in doubt): rack_across: no plainly safe place (Yasin: delete when unsure) [the bike rack stands across the walk, not along it]]
+PROOF change #12 remove_decal: one wear mark at (-77.40, 0.01, 8.89) removed  [crack mark lies on grass]
+PROOF change #13 remove_decal: one wear mark at (-18.47, 0.16, -12.95) removed  [grime mark lies on grass]
+PROOF note: 'Props/palm_mexican_fan_c_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_bike_rack_worn_near' held only listed items and is gone with them
+PROOF 30 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
