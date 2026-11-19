@@ -39,6 +39,7 @@ void CityPlayer::_ready() {
 	add_child(cam);
 	cam->make_current();
 	cam_yaw = get_rotation().y + 3.14159265f;
+	yaw = std::atan2(-std::sin(cam_yaw), -std::cos(cam_yaw));   // (he looks the way his camera looks)
 	if (capture_mouse) Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
 	set_physics_process(true); set_process(true); set_process_input(true);
 }

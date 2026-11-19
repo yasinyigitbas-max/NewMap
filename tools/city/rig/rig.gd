@@ -119,8 +119,10 @@ var sun: DirectionalLight3D
 var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
 var traffic: Node            # the C++ traffic (--traffic=N); null without it
+var _shot_place := -1          # --walkshot: the place the picture is of
+var _shot_cam: Camera3D
 var people: Node             # the C++ crowd (--people=N); null without it
-var opt := {"car": "", "walk": "", "water": 0.0, "at": "", "people": 0, "hour": 12.5, "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0}
+var opt := {"car": "", "walk": "", "walkshot": "", "water": 0.0, "at": "", "people": 0, "hour": 12.5, "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -146,10 +148,10 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["car", "walk", "water", "at", "people", "hour", "traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost"]:
+		for k: String in ["car", "walk", "walkshot", "water", "at", "people", "hour", "traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
-				opt[k] = v if k in ["car", "walk", "at", "plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["water", "density", "scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs", "colrange", "boost"] else int(v))
+				opt[k] = v if k in ["car", "walk", "walkshot", "at", "plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["water", "density", "scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs", "colrange", "boost"] else int(v))
 	if from_file and not ("--loop" in args): opt.quit = true
 	Engine.max_fps = 0
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
@@ -314,6 +316,22 @@ func _free_drive(first: Vector3) -> void:
 	var start := first; var yaw := 0.0
 	if String(opt.at) != "":
 		var f := String(opt.at).split_floats(","); start = Vector3(f[0], 0, f[1]); yaw = deg_to_rad(f[2]) if f.size() > 2 else 0.0
+	# --walkshot=KIND/FILE (with --walk and --people): he is set down in front of the nearest place of that kind (6 a bench,
+	# 2 the beach, 5 a bus stop, 10 a spot in the sea ...) near --at, two people are sent there, and after 16 s (the sea: 75 s)
+	# one picture is saved
+	if on_foot and String(opt.walkshot) != "" and people:
+		var kind := int(String(opt.walkshot).get_slice("/", 0))
+		_shot_place = int(people.call(&"place_near", start, kind, 4000.0 if kind in [2, 10] else 200.0))      # (the beach and the sea: the nearest, wherever)
+		if _shot_place >= 0:
+			var info: Dictionary = people.call(&"place_info", _shot_place)
+			var pave: Vector3 = info.pavement; var at: Vector3 = info.at
+			var d := Vector3(pave.x - at.x, 0, pave.z - at.z)
+			d = d.normalized() if d.length() > 0.3 else Vector3(sin(float(info.yaw)), 0, cos(float(info.yaw)))
+			start = Vector3(at.x, 0, at.z) + d * 4.5 + Vector3(-d.z, 0, d.x) * 1.5
+			if kind == 10: start = Vector3(pave.x, 0, pave.z)      # (a spot in the sea: he stands on the pavement its beach is reached from)
+			var look := (Vector3(at.x, 0, at.z) - start).normalized()
+			yaw = atan2(-look.x, -look.z) - PI      # (his camera, behind him, looks at the place)
+		else: _say("walkshot: no place of kind %d within 200 m" % kind)
 	# (a point exactly on a cell's edge, every 200 m, has no ground a ray can find: the seam between two collision pieces)
 	if absf(fposmod(start.x + 1.0, 200.0) - 1.0) < 1.0 or absf(fposmod(start.z + 1.0, 200.0) - 1.0) < 1.0: start += Vector3(1.7, 0, 1.7)
 	# the start made ready as a drive's start is (its cells in, their collision made), then the ground under it found:
@@ -380,12 +398,37 @@ func _free_walk(start: Vector3, yaw: float) -> void:
 		add_child(talk)
 		talk.call(&"set_crowd", people); talk.call(&"set_player", pl)
 	_say("on foot at (%.0f, %.0f): W A S D, Shift runs, the mouse turns, E speaks to somebody, Esc leaves" % [start.x, start.z])
-	if opt.quit: pl.call(&"set_move", Vector2(0, 1), false)      # (--quit: he walks ahead for 12 s and the run leaves by itself)
+	if opt.quit and _shot_place < 0: pl.call(&"set_move", Vector2(0, 1), false)      # (--quit: he walks ahead for 12 s and the run leaves by itself)
 	var last := pl.global_position; var metres := 0.0; var lowest := 0.0; var highest := 0.0
 	var t_start := Time.get_ticks_msec()
+	var shot_sent := false
 	while not Input.is_key_pressed(KEY_ESCAPE):
 		await get_tree().process_frame
-		if opt.quit and Time.get_ticks_msec() - t_start > 12000: break
+		if _shot_place >= 0:      # (--walkshot: people are sent to the place once the crowd is there; the picture after 16 s)
+			pl.call(&"set_move", Vector2.ZERO, false)
+			var el := Time.get_ticks_msec() - t_start
+			if not shot_sent and el > 3000:
+				shot_sent = true
+				var info: Dictionary = people.call(&"place_info", _shot_place)
+				for k in 2:
+					var w := int(people.call(&"place_walker", (info.pavement as Vector3) + Vector3(1.2 * k - 0.6, 0, 0.4 * k), 6100 + 41 * k))
+					var pk := _shot_place if k == 0 else int(people.call(&"place_near", (info.at as Vector3) + Vector3(0.3, 0, 0.3), int(info.kind), 3.0))
+					_say("walkshot: walker %d sent to place %d: %s" % [w, pk, str(people.call(&"set_goal", w, pk, 120.0, false))])
+			var shot_ms := 75000 if int(String(opt.walkshot).get_slice("/", 0)) == 10 else 16000      # (to a spot in the sea it is a long walk)
+			if el > shot_ms - 500 and _shot_cam == null:      # (the picture's own camera: beside him, so that he is not in the way)
+				var info2: Dictionary = people.call(&"place_info", _shot_place)
+				var at2: Vector3 = info2.at; var pv: Vector3 = info2.pavement
+				var d2 := Vector3(pv.x - at2.x, 0, pv.z - at2.z)
+				d2 = d2.normalized() if d2.length() > 0.3 else Vector3(sin(float(info2.yaw)), 0, cos(float(info2.yaw)))
+				_shot_cam = Camera3D.new(); _shot_cam.fov = 55.0; add_child(_shot_cam)
+				_shot_cam.look_at_from_position(at2 + d2 * 4.2 + Vector3(-d2.z, 0, d2.x) * -2.2 + Vector3(0, 1.9, 0), at2 + Vector3(0, 0.7, 0), Vector3.UP)
+				_shot_cam.current = true
+			if el > shot_ms:
+				var file := String(opt.walkshot).get_slice("/", 1) if String(opt.walkshot).contains("/") else "walkshot.jpg"
+				get_viewport().get_texture().get_image().save_jpg("res://OUT/" + file, 0.9)
+				_say("walkshot saved to OUT/%s: %s" % [file, str(people.call(&"place_info", _shot_place))])
+				break
+		elif opt.quit and Time.get_ticks_msec() - t_start > 12000: break
 		var p: Vector3 = pl.global_position
 		var dt := maxf(get_process_delta_time(), 0.001)
 		st.update_focus(p, false, (p - last) / dt)
