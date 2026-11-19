@@ -11,7 +11,7 @@ For a piece that stands in the layout more than once, each pick is written once 
 import json, os, sys
 sys.path.insert(0, 'tools/city/super')
 import numpy as np
-import sc_lib as L, sc_trees as T
+import sc_lib as L, sc_trees as T, sc_find as F
 
 TREES = 'map_dc/coronado/city_kit/zoning/trees'
 
@@ -42,13 +42,16 @@ def show(P):
 
 
 def write(P, zone, rule, picks):
-    ts = old_trees(P); rows = [r for r in L.load_layout() if r.piece == P]; out = []; c = T.context(P)
+    ts = old_trees(P); rows = [r for r in L.load_layout() if r.piece == P]; out = []; c = T.context(P); ctxs = {}
     for pk in picks:
         head, why = pk.split(':', 1)
         n, base = (head.split('=') + [None])[:2]; f = ts[int(n)]
         for k, r in enumerate(rows):
             w = r.pts(np.array([f['item']['local']]))[0]
-            g = c.S.ground(float(w[0]), float(w[2]))          # the builder sank its trunks a few cm: stand on the ground
+            # (cloud-top, 19 Nov) read the ground in the context of THIS place, as the check does: the first place's
+            # context saw a later place only as a neighbour and gave heights 6 cm off on a slope (s_res_dn2_a)
+            if k not in ctxs: ctxs[k] = F.Ctx(L.load_layout(), r, reach=45.0)
+            g = ctxs[k].S.ground(float(w[0]), float(w[2]))    # the builder sank its trunks a few cm: stand on the ground
             if g: w[1] = g[0]
             out.append({'base': base or f['item']['base'], 'cond': 'normal', 'at': [round(float(v), 3) for v in w],
                         'yaw': (len(out) * 113) % 360, 'scale': [0.95, 0.85, 0.9][len(out) % 3],
