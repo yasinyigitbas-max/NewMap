@@ -50,11 +50,8 @@ const POLISH := [
 	["prop_sprinkler_popup", "worn", 157.2, 90.2, 299.0, false],
 	["plant_agave_americana_small", "normal", 157.2, 78.8, 10.0, false],
 	["plant_iceplant_patch", "normal", 157.8, 84.8, 81.0, false],
-	["plant_bougainvillea_mound", "normal", 160.2, 68.2, 152.0, false],
 	["prop_sprinkler_impact", "worn", 161.2, 75.8, 223.0, false],
 	["plant_potted_succulent", "normal", 208.8, 85.8, 180.0, false],
-	["prop_park_bench", "worn", 213.8, 84.8, 270.0],
-	["plant_potted_succulent", "normal", 201.8, 92.2, 0.0, false],
 ]
 
 func _init() -> void: _run.call_deferred()

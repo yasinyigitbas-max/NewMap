@@ -56,7 +56,6 @@ const POLISH := [
 	["plant_bougainvillea_mound", "normal", 111.2, 102.5, 61.0, false],
 	["plant_iceplant_patch", "normal", 86.8, 102.5, 132.0, false],
 	["plant_potted_leafy", "normal", 136.8, 64.0, 270.0, false],
-	["plant_potted_leafy", "normal", 126.8, 64.5, 0.0, false],
 	["prop_park_bench", "worn", 131.8, 65.5, 90.0],
 	["prop_bike_rack", "worn", 135.8, 69.0, 180.0],
 	["plant_potted_succulent", "normal", 127.8, 69.5, 270.0, false],

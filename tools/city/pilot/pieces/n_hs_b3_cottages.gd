@@ -36,23 +36,18 @@ const LOTS := [
 ## and racks, each on a free spot of open lawn or paving this piece already had (found by a scratch tool, OUT/py/freespots.py,
 ## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
 const POLISH := [
-	["tree_magnolia_a", "normal", -163.6, 313.4, 154.0],
 	["palm_queen_a", "normal", -165.1, 251.9, 207.0],
 	["tree_ficus_b", "normal", -164.1, 211.9, 260.0],
 	["tree_jacaranda_b", "normal", -165.1, 304.4, 313.0],
 	["tree_coral_a", "normal", -160.6, 276.9, 6.0],
-	["tree_magnolia_b", "normal", -162.1, 239.4, 59.0],
 	["plant_bougainvillea_mound", "normal", -165.1, 308.4, 66.0, false],
-	["prop_sprinkler_impact", "worn", -165.1, 246.4, 137.0, false],
 	["plant_bird_of_paradise", "normal", -164.6, 216.9, 208.0, false],
 	["prop_sprinkler_popup", "worn", -164.1, 271.9, 279.0, false],
-	["plant_agave_americana_small", "normal", -158.6, 313.9, 350.0, false],
 	["plant_iceplant_patch", "normal", -164.1, 262.4, 61.0, false],
 	["plant_bougainvillea_mound", "normal", -142.6, 314.4, 132.0, false],
 	["prop_sprinkler_impact", "worn", -163.6, 222.9, 203.0, false],
 	["plant_bird_of_paradise", "normal", -163.1, 234.4, 274.0, false],
 	["prop_sprinkler_popup", "worn", -153.6, 314.4, 345.0, false],
-	["plant_agave_americana_small", "normal", -148.6, 314.4, 56.0, false],
 	["plant_iceplant_patch", "normal", -163.6, 227.9, 127.0, false],
 ]
 

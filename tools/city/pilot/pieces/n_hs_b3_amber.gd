@@ -44,7 +44,6 @@ const POLISH := [
 	["prop_trash_receptacle", "worn", -28.2, 321.9, 180.0],
 	["plant_potted_leafy", "normal", -34.8, 321.4, 270.0, false],
 	["plant_potted_leafy", "normal", -44.8, 320.9, 0.0, false],
-	["prop_park_bench", "worn", -16.2, 316.9, 90.0],
 	["prop_bike_rack", "worn", -39.8, 320.4, 180.0],
 	["plant_potted_succulent", "normal", -21.2, 316.9, 270.0, false],
 	["prop_trash_receptacle", "worn", -30.8, 317.4, 0.0],

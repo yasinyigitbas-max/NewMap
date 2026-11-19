@@ -44,7 +44,6 @@ const POLISH := [
 	["tree_torrey_pine_b", "normal", 52.8, 288.8, 259.0],
 	["prop_picnic_table", "worn", 52.8, 272.2, 122.0],
 	["plant_bird_of_paradise", "normal", 52.8, 319.8, 129.0, false],
-	["plant_bougainvillea_mound", "normal", 58.2, 324.8, 200.0, false],
 	["plant_iceplant_patch", "normal", 52.8, 309.8, 271.0, false],
 	["prop_sprinkler_popup", "worn", 58.2, 319.8, 342.0, false],
 	["plant_agave_americana", "normal", 63.2, 319.8, 53.0, false],

@@ -31,8 +31,6 @@ const Z_AL1 := 60.0
 ## chosen per kind of place by hand and frozen here); each stands on the ground as built (hs_fill_lib.polish).
 const POLISH := [
 	["tree_torrey_pine_b", "normal", -85.2, 62.9, 123.0],
-	["tree_jacaranda_a", "normal", -97.2, 62.4, 176.0],
-	["tree_coral_b", "normal", -99.8, 32.4, 229.0],
 	["tree_magnolia_a", "normal", -77.8, 32.9, 282.0],
 	["palm_queen_a", "normal", -50.2, 34.4, 335.0],
 	["tree_ficus_b", "normal", -59.2, 34.4, 28.0],
@@ -41,10 +39,8 @@ const POLISH := [
 	["prop_sprinkler_impact", "worn", -99.8, 37.4, 349.0, false],
 	["plant_bird_of_paradise", "normal", -98.8, 27.4, 60.0, false],
 	["prop_sprinkler_popup", "worn", -80.8, 36.9, 131.0, false],
-	["plant_agave_americana_small", "normal", -98.8, 13.9, 202.0, false],
 	["plant_iceplant_patch", "normal", -98.8, 19.9, 273.0, false],
 	["plant_bougainvillea_mound", "normal", -53.8, 30.4, 344.0, false],
-	["plant_potted_succulent", "normal", -92.8, 32.9, 90.0, false],
 	["prop_trash_receptacle", "worn", -73.8, 11.4, 180.0],
 	["plant_potted_succulent", "normal", -76.2, 43.9, 270.0, false],
 ]

@@ -31,7 +31,6 @@ const POLISH := [
 	["palm_queen_a", "normal", -97.8, -187.1, 21.0],
 	["plant_agave_americana_small", "normal", -60.2, -159.6, 204.0, false],
 	["plant_iceplant_patch", "normal", -76.2, -159.6, 275.0, false],
-	["plant_bougainvillea_mound", "normal", -82.8, -159.6, 346.0, false],
 	["prop_sprinkler_impact", "worn", -65.8, -159.6, 57.0, false],
 	["plant_bird_of_paradise", "normal", -97.2, -165.1, 128.0, false],
 	["prop_sprinkler_popup", "worn", -97.2, -170.6, 199.0, false],
@@ -39,7 +38,6 @@ const POLISH := [
 	["plant_iceplant_patch", "normal", -54.8, -170.6, 341.0, false],
 	["plant_bougainvillea_mound", "normal", -86.8, -163.6, 52.0, false],
 	["prop_sprinkler_impact", "worn", -63.2, -164.1, 123.0, false],
-	["plant_bird_of_paradise", "normal", -79.8, -164.1, 194.0, false],
 	["prop_sprinkler_popup", "worn", -68.2, -164.1, 265.0, false],
 	["prop_bike_rack", "worn", -93.8, -183.6, 0.0],
 ]

@@ -54,7 +54,6 @@ const POLISH := [
 	["prop_sprinkler_impact", "worn", 208.8, 297.4, 135.0, false],
 	["plant_bird_of_paradise", "normal", 209.8, 313.9, 206.0, false],
 	["prop_sprinkler_popup", "worn", 210.8, 290.4, 277.0, false],
-	["plant_agave_americana_small", "normal", 210.8, 284.9, 348.0, false],
 	["plant_iceplant_patch", "normal", 209.8, 322.4, 59.0, false],
 	["plant_bougainvillea_mound", "normal", 208.8, 241.9, 130.0, false],
 ]
