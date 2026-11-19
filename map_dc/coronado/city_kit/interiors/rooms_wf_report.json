@@ -1,0 +1,354 @@
+{
+ "rooms": [
+  {
+   "d": 9.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1w__casa_del_mar_inn__0.scn",
+   "id": "g_wfa_b1w__casa_del_mar_inn__0",
+   "kind": "hotel",
+   "lights": 6,
+   "name": "Casa del Mar Inn",
+   "props": 17,
+   "w": 9.2
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1w__harbour_bakery__0.scn",
+   "id": "g_wfa_b1w__harbour_bakery__0",
+   "kind": "bakery",
+   "lights": 6,
+   "name": "Harbour Bakery & Coffee",
+   "props": 43,
+   "w": 8.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1w__bay_bike_hire__0.scn",
+   "id": "g_wfa_b1w__bay_bike_hire__0",
+   "kind": "rental",
+   "lights": 5,
+   "name": "Bay Bikes",
+   "props": 20,
+   "w": 5.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1w__shoreline_grill__0.scn",
+   "id": "g_wfa_b1w__shoreline_grill__0",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "Shoreline Grill",
+   "props": 49,
+   "w": 11.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1m__scoops_row__0.scn",
+   "id": "g_wfa_b1m__scoops_row__0",
+   "kind": "ice_cream",
+   "lights": 4,
+   "name": "Scoops Ice Cream",
+   "props": 19,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1m__scoops_row__1.scn",
+   "id": "g_wfa_b1m__scoops_row__1",
+   "kind": "clothes",
+   "lights": 5,
+   "name": "Sandbar Swimwear",
+   "props": 21,
+   "w": 6.0
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1m__scoops_row__2.scn",
+   "id": "g_wfa_b1m__scoops_row__2",
+   "kind": "souvenir",
+   "lights": 4,
+   "name": "Seashell Gifts",
+   "props": 22,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1m__tide_bar__0.scn",
+   "id": "g_wfa_b1m__tide_bar__0",
+   "kind": "bar",
+   "lights": 6,
+   "name": "The Tide Bar",
+   "props": 43,
+   "w": 8.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1m__dive_surf_row__0.scn",
+   "id": "g_wfa_b1m__dive_surf_row__0",
+   "kind": "dive",
+   "lights": 5,
+   "name": "Deep Blue Dive",
+   "props": 26,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1m__dive_surf_row__1.scn",
+   "id": "g_wfa_b1m__dive_surf_row__1",
+   "kind": "shoes",
+   "lights": 5,
+   "name": "Sun & Sand Sandals",
+   "props": 29,
+   "w": 6.0
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1m__dive_surf_row__2.scn",
+   "id": "g_wfa_b1m__dive_surf_row__2",
+   "kind": "rental",
+   "lights": 5,
+   "name": "Board Room Surf Rentals",
+   "props": 20,
+   "w": 5.7
+  },
+  {
+   "d": 15.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1e__the_fish_house__0.scn",
+   "id": "g_wfa_b1e__the_fish_house__0",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "The Fish House",
+   "props": 58,
+   "w": 12.7
+  },
+  {
+   "d": 15.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1e__the_fish_house__1.scn",
+   "id": "g_wfa_b1e__the_fish_house__1",
+   "kind": "fast_food",
+   "lights": 6,
+   "name": "Pier Poke & Tacos",
+   "props": 46,
+   "w": 10.7
+  },
+  {
+   "d": 6.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1e__pier_bait_tackle__0.scn",
+   "id": "g_wfa_b1e__pier_bait_tackle__0",
+   "kind": "bait",
+   "lights": 5,
+   "name": "Pier Bait & Tackle",
+   "props": 13,
+   "w": 8.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1e__salt_water_surf__0.scn",
+   "id": "g_wfa_b1e__salt_water_surf__0",
+   "kind": "sport",
+   "lights": 6,
+   "name": "Salt Water Surf",
+   "props": 23,
+   "w": 8.4
+  },
+  {
+   "d": 5.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1e__bay_paddle_hire__0.scn",
+   "id": "g_wfa_b1e__bay_paddle_hire__0",
+   "kind": "rental",
+   "lights": 2,
+   "name": "Bay Paddle",
+   "props": 9,
+   "w": 3.4
+  },
+  {
+   "d": 9.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2w__bayview_inn__0.scn",
+   "id": "g_wfa_b2w__bayview_inn__0",
+   "kind": "hotel",
+   "lights": 6,
+   "name": "Bayview Inn",
+   "props": 21,
+   "w": 6.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2w__salty_dog_pub__0.scn",
+   "id": "g_wfa_b2w__salty_dog_pub__0",
+   "kind": "bar",
+   "lights": 6,
+   "name": "The Salty Dog",
+   "props": 45,
+   "w": 8.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2w__shores_holiday_rentals__0.scn",
+   "id": "g_wfa_b2w__shores_holiday_rentals__0",
+   "kind": "office",
+   "lights": 5,
+   "name": "Shores Holiday Rentals",
+   "props": 25,
+   "w": 5.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2w__sea_breeze_juice__0.scn",
+   "id": "g_wfa_b2w__sea_breeze_juice__0",
+   "kind": "cafe",
+   "lights": 5,
+   "name": "Sea Breeze Juice",
+   "props": 18,
+   "w": 5.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2w__blue_pelican_bistro__0.scn",
+   "id": "g_wfa_b2w__blue_pelican_bistro__0",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "Blue Pelican Bistro",
+   "props": 49,
+   "w": 11.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2w__cove_deli_and_wine__0.scn",
+   "id": "g_wfa_b2w__cove_deli_and_wine__0",
+   "kind": "corner_shop",
+   "lights": 5,
+   "name": "Cove Deli",
+   "props": 17,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2w__cove_deli_and_wine__1.scn",
+   "id": "g_wfa_b2w__cove_deli_and_wine__1",
+   "kind": "wine",
+   "lights": 5,
+   "name": "Cove Wine & Cheese",
+   "props": 21,
+   "w": 5.7
+  },
+  {
+   "d": 15.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2m__pier_street_arcade__0.scn",
+   "id": "g_wfa_b2m__pier_street_arcade__0",
+   "kind": "cafe",
+   "lights": 6,
+   "name": "Surfside Cafe",
+   "props": 34,
+   "w": 7.7
+  },
+  {
+   "d": 15.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2m__pier_street_arcade__1.scn",
+   "id": "g_wfa_b2m__pier_street_arcade__1",
+   "kind": "clothes",
+   "lights": 5,
+   "name": "Tidewater Swim & Sandals",
+   "props": 24,
+   "w": 5.0
+  },
+  {
+   "d": 15.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2m__pier_street_arcade__2.scn",
+   "id": "g_wfa_b2m__pier_street_arcade__2",
+   "kind": "souvenir",
+   "lights": 5,
+   "name": "Harbour Light Gifts & Prints",
+   "props": 43,
+   "w": 10.7
+  },
+  {
+   "d": 5.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2m__tide_pool_books__0.scn",
+   "id": "g_wfa_b2m__tide_pool_books__0",
+   "kind": "books",
+   "lights": 2,
+   "name": "Tide Pool Books",
+   "props": 12,
+   "w": 5.9
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2m__sunset_arcade__0.scn",
+   "id": "g_wfa_b2m__sunset_arcade__0",
+   "kind": "souvenir",
+   "lights": 5,
+   "name": "Sunset Candy & Fudge",
+   "props": 29,
+   "w": 6.2
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2m__sunset_arcade__1.scn",
+   "id": "g_wfa_b2m__sunset_arcade__1",
+   "kind": "sport",
+   "lights": 6,
+   "name": "Beach Outfitters",
+   "props": 20,
+   "w": 6.5
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2m__sunset_arcade__2.scn",
+   "id": "g_wfa_b2m__sunset_arcade__2",
+   "kind": "jewelry",
+   "lights": 6,
+   "name": "Shades & Sunglasses",
+   "props": 21,
+   "w": 6.5
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2m__sunset_arcade__3.scn",
+   "id": "g_wfa_b2m__sunset_arcade__3",
+   "kind": "cafe",
+   "lights": 6,
+   "name": "Sunset Espresso",
+   "props": 40,
+   "w": 6.2
+  },
+  {
+   "d": 6.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2e__bay_boat_and_bike_hire__0.scn",
+   "id": "g_wfa_b2e__bay_boat_and_bike_hire__0",
+   "kind": "rental",
+   "lights": 5,
+   "name": "Bay Boat & Bike Hire",
+   "props": 14,
+   "w": 8.4
+  },
+  {
+   "d": 5.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2e__harbour_tours_kiosk__0.scn",
+   "id": "g_wfa_b2e__harbour_tours_kiosk__0",
+   "kind": "office",
+   "lights": 2,
+   "name": "Harbour Tours",
+   "props": 11,
+   "w": 3.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2e__glorietta_marine_supply__0.scn",
+   "id": "g_wfa_b2e__glorietta_marine_supply__0",
+   "kind": "store",
+   "lights": 6,
+   "name": "Glorietta Marine Supply",
+   "props": 42,
+   "w": 9.7
+  },
+  {
+   "d": 15.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2e__harbour_boatworks__0.scn",
+   "id": "g_wfa_b2e__harbour_boatworks__0",
+   "kind": "boatworks",
+   "lights": 5,
+   "name": "Harbour Boatworks",
+   "props": 25,
+   "w": 5.2
+  }
+ ]
+}
