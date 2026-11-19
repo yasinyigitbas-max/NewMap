@@ -1,0 +1,93 @@
+{
+ "area": "rs_b085_b",
+ "piece": "s_rs_b085_b",
+ "zone": "residential street (rising)",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; pines on the rising stretch; within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    207.513,
+    6.348,
+    -1006.45
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first of the west face's coral trees (old spot and species)"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    181.676,
+    6.982,
+    -1006.45
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway 26 m on, the coral run continues"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    156.117,
+    7.905,
+    -1006.45
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway 25.6 m on, the last coral tree (one species a face: the magnolia here becomes a coral)"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    205.464,
+    6.385,
+    -993.55
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway grass, first of the east face's Torrey pines (old spot and species; pines suit the rising street)"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    179.646,
+    7.047,
+    -993.55
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway 26 m on, the pine run continues"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    154.78,
+    7.959,
+    -993.55
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "east parkway 25 m on, the third pine"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    130.976,
+    8.966,
+    -993.55
+   ],
+   "yaw": 318,
+   "scale": 0.95,
+   "why": "east parkway 24 m on, the last pine; the 11-13 m doubles go"
+  }
+ ]
+}
