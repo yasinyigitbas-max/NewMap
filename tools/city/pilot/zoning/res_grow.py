@@ -125,7 +125,7 @@ def main():
         Lu, Lv = q["Lu"], q["Lv"]
         site = {"j": [ju, jv], "sx": sx, "sz": sz, "p0": P[(ju, jv)], "pu": P[(ju + Lu * sx, jv)],
                 "pv": P[(ju, jv + Lv * sz)], "puv": P[(ju + Lu * sx, jv + Lv * sz)], "Lu": Lu, "Lv": Lv,
-                "pu_line": q["pu_line"], "pv_line": q["pv_line"], "apron_u": q["apron_u"], "apron_v": q["apron_v"]}
+                "pu_line": q["pu_line"], "pv_line": q["pv_line"], "apron_u": q["apron_u"], "apron_v": q["apron_v"], "prof": q["prof"]}
         shop = SHOPS.get((ju, jv, sx, sz))
         if shop:
             site["shop"] = shop

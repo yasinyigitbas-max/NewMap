@@ -47,9 +47,63 @@ def leg_side(leg, off):
     return (leg["prop_right"], leg["apron_right"]) if right else (leg["prop_left"], leg["apron_left"])
 
 
+PIECES = os.path.normpath(os.path.join(HERE, "../pieces"))
+
+def leg_profiles():
+    """the height profile each street block was BUILT with (the leg scripts' SPEC "prof": [[z0, z1, H], ...] from the
+    leg's own junction), as seen from the block's end a; blocks served by the shared s_res_* legs keep the standard
+    [20, L - 20, rise]"""
+    import re
+    out = {}
+    for f in os.listdir(PIECES):
+        m = re.match(r"s_[a-z]+_(b\d+)_([ab])\.gd$", f)
+        if not m:
+            continue
+        src = open(os.path.join(PIECES, f)).read()
+        mm = re.search(r'"prof": (\[\[.*?\]\])', src)
+        if not mm:
+            continue
+        out.setdefault(m.group(1), {})[m.group(2)] = json.loads(mm.group(1))
+    return out
+
+
+def _ss(x):
+    x = min(max(x, 0.0), 1.0)
+    return x * x * (3.0 - 2.0 * x)
+
+
+def _eval(prof, z):
+    return sum(q[2] * _ss((z - q[0]) / (q[1] - q[0])) for q in prof)
+
+
+def edge_samples(block, from_a, LP):
+    """the street's height along a block, from one end, every 1 m (relative to that end's pad): each half as its own
+    leg piece builds it (the leg from end a carries t <= L/2, the leg from end b the rest), so the quadrant's ground meets
+    the walk exactly; a block whose legs are the shared s_res_* pieces has the standard profile on both halves"""
+    L = block["length"]; rise = block["rise_a_to_b"]
+    p = LP.get(block["id"], {})
+    std = [[20.0, L - 20.0, rise]]
+    pa = p.get("a"); pb = p.get("b")
+    if pa is None and pb is None: pa = std
+    if pa is None: pa = [[L - q[1], L - q[0], -q[2]] for q in pb]
+    if pb is None: pb = [[L - q[1], L - q[0], -q[2]] for q in pa]
+    n = int(round(L))
+    ha = []
+    for i in range(n + 1):
+        t = L * i / n
+        ha.append(_eval(pa, t) if t <= L * 0.5 else rise + _eval(pb, L - t))
+    if from_a:
+        return [round(h, 4) for h in ha]
+    return [round(h - rise, 4) for h in reversed(ha)]
+
+
 def quadrants():
     d = json.load(open(os.path.join(KIT, "review/sites.json")))
     ML = measured_legs()
+    LP = leg_profiles()
+    blocks = {}
+    for b in d["blocks"]:
+        blocks[(tuple(b["a"]), tuple(b["b"]))] = (b, True); blocks[(tuple(b["b"]), tuple(b["a"]))] = (b, False)
     nodes = {(n["u"], n["v"]): n for n in d["nodes"]}
     us = sorted({n["u"] for n in d["nodes"] if n["kind"] == "lattice"})
     out = []; skipped = {}
@@ -93,7 +147,12 @@ def quadrants():
                 if why:
                     if z == "res": skipped[why] = skipped.get(why, 0) + 1
                     continue
-                out.append({"j": (u, v), "sx": sx, "sz": sz, "Lu": Lu, "Lv": Lv, "cell": (min(u, u2), min(v, v2)),
+                # the four streets round the block, each with its built profile from the quadrant's side
+                prof = {}
+                for key, a_, b_ in (("A", (u, v), (u2, v)), ("C", (u, v2), (u2, v2)), ("B", (u, v), (u, v2)), ("D", (u2, v), (u2, v2))):
+                    bk = blocks.get((a_, b_))
+                    prof[key] = edge_samples(bk[0], bk[1], LP) if bk else None
+                out.append({"j": (u, v), "sx": sx, "sz": sz, "Lu": Lu, "Lv": Lv, "cell": (min(u, u2), min(v, v2)), "prof": prof,
                             "pu_line": pu_line, "pv_line": pv_line, "apron_u": apron_u, "apron_v": apron_v})
     return out, skipped
 

@@ -82,10 +82,28 @@ static func ss(t: float) -> float:
 func Su(t: float) -> float: return ss((t - 20.0) / (BU - 40.0))
 func Sv(t: float) -> float: return ss((t - 20.0) / (BV - 40.0))
 
-## walking height (street surface + kerb) of the block surface at quadrant (u, v), relative to this junction's pad
+## the four streets round the block as BUILT (res_zone.py: each street's height every 1 m from the quadrant's side,
+## relative to its own start pad): A along u at v = 0, C along u at v = Lv, B along v at u = 0, D along v at u = Lu.
+## Empty: the standard smoothstep on every street.
+var EA: PackedFloat32Array
+var EB: PackedFloat32Array
+var EC: PackedFloat32Array
+var ED: PackedFloat32Array
+var edges := false
+
+static func _samp(e: PackedFloat32Array, t: float) -> float:
+	var i := clampi(int(floor(t)), 0, e.size() - 2); var f := clampf(t - float(i), 0.0, 1.0)
+	return lerpf(e[i], e[i + 1], f)
+
+## walking height (street surface + kerb) of the block surface at quadrant (u, v), relative to this junction's pad:
+## a Coons patch between the four streets (each edge exactly as its leg pieces build it), blended by the smoothstep
+## between the junction tiles. With the standard profiles this is (pu - p0) S(u) + (pv - p0) S(v) + twist S(u) S(v).
 func fh(u: float, v: float) -> float:
 	var a := Su(u); var b := Sv(v)
-	return (pu - p0) * a + (pv - p0) * b + (puv - pu - pv + p0) * a * b + KERB_H
+	if not edges:
+		return (pu - p0) * a + (pv - p0) * b + (puv - pu - pv + p0) * a * b + KERB_H
+	var A := _samp(EA, u); var C := (pv - p0) + _samp(EC, u); var B := _samp(EB, v); var D := (pu - p0) + _samp(ED, v)
+	return (1.0 - b) * A + b * C + (1.0 - a) * B + a * D - (a * (1.0 - b) * (pu - p0) + (1.0 - a) * b * (pv - p0) + a * b * (puv - p0)) + KERB_H
 
 ## ground height under quadrant (u, v): the last surface that holds the point, else the block surface
 func gy(u: float, v: float) -> float:
@@ -118,6 +136,9 @@ func begin(piece: String, site: Dictionary, des: Dictionary) -> void:
 	sx = float(site.sx); sz = float(site.sz)
 	p0 = float(site.p0); pu = float(site.pu); pv = float(site.pv); puv = float(site.puv)
 	BU = float(site.get("Lu", 200.0)); BV = float(site.get("Lv", 200.0)); LU = BU * 0.5; LV = BV * 0.5
+	var pr: Dictionary = site.get("prof", {})
+	if pr.get("A") != null and pr.get("B") != null and pr.get("C") != null and pr.get("D") != null:
+		EA = PackedFloat32Array(pr.A); EB = PackedFloat32Array(pr.B); EC = PackedFloat32Array(pr.C); ED = PackedFloat32Array(pr.D); edges = true
 	PU = float(site.get("pu_line", PROP)); PV = float(site.get("pv_line", PROP)); APU = bool(site.get("apron_u", true)); APV = bool(site.get("apron_v", true))
 	rr = W.rng_for(piece)
 	g = K.Ground.new(); props = K.Props.new(); dec = K.Decals.new()
