@@ -5,6 +5,19 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~17:00 (PC session): PEOPLE, STEP 1: A BODY THAT KEEPS ITS OWN BALANCE, ALL C++ (Yasin: "gta 5 level npcs
+  ... balance themselves, be able to pushed around and resist falls, just like in the euphoria engine"). Read
+  docs/TRAFFIC_PEOPLE_PORT.md section 22. `native/src/ped_body.*` (plain C++): thirteen jointed bodies with muscles
+  and their own small physics; it holds small pushes without a step, STEPS to where it will be falling, staggers
+  3-7 steps under hard shoves and stands again, goes down as a rag doll that braces when it cannot be caught, lies
+  still. `native/src/city_ped.*` (class `CityPed`): the old game's 50-bone figure; the body takes over from the pose
+  the animation had (no jump), the bones follow it, the animation or the "get_up" clip is blended back in.
+  `characters/rocketbox/` brought from the old game (41 bodies, skeleton, clips, textures, 36 MB, MIT).
+  Console test PASS (26 cases: holds up to 170 N s from front or back, 80 from the side; a frail person falls at 120;
+  cars at 30 / 60 km/h throw it 12 / 27 m), engine test PASS (the real figure: shove, charge, car, gets up).
+  One sheet of five pictures: `review/people_19nov/body_sheet.jpg`.
+  NOT DONE: never seen in motion (the get-up looks too quick in the one picture); plain colour, not the people's
+  look; NO WALKING CROWD here (the body of one person only); nothing in the test app uses it; not on the phone.
 - 19 Nov ~14:00 (PC session): CARS THAT STEER + A CAR TO DRIVE, ALL C++ (Yasin: "a moving traffic system and good car
   physics ... ride exactly like gta 4 if not gta 5 ... cars just slide into turns instead of steering into turns, take
   abrupt u turns, lock the traffic up ... ALL MUST BE WRITTEN 100% IN C PLUS PLUS"; second: "gta 5 level npcs ...

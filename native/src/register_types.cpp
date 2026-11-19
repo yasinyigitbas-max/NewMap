@@ -3,6 +3,7 @@
 // is missing.
 #include "city_car.h"
 #include "city_native.h"
+#include "city_ped.h"
 #include "city_traffic.h"
 #include "street_graph.h"
 
@@ -20,6 +21,7 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(CityNative);
 	GDREGISTER_CLASS(CityTraffic);   // the traffic: core, drawing, parked cars
 	GDREGISTER_CLASS(CityCar);       // a car to drive: the physical car (veh_dyn) on the engine's body
+	GDREGISTER_CLASS(CityPed);       // one person with a real body: animation, and a body that balances, falls and gets up
 	GDREGISTER_CLASS(StreetGraph);   // tool time: the streets as traffic and people need them, from the baked city
 }
 

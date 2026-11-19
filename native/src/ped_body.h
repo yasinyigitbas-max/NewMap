@@ -91,6 +91,7 @@ public:
 	Body b[NB];
 	Joint j[NJ];
 	Foot foot[2];
+	V3 c_rest[NB];               // each part's centre as it stands (the frame of Rest)
 	int state = ST_BALANCE;
 	// the caller's numbers
 	float skill = 1.0f;          // how good its balance is: 1 = an able adult, 0.6 = old or drunk, 1.3 = an athlete
@@ -110,6 +111,9 @@ public:
 	void build(const Rest &p_rest);
 	// Stand it at a place, facing a way, with a speed (what the animation had), in BALANCE
 	void start(V3 at, float yaw, V3 vel);
+	// Take over from an animation in the middle of whatever it was doing: every part where the animation has it now
+	// (its centre, its turn from the standing pose, its speed), the feet where they stand, facing yaw. In BALANCE.
+	void start_pose(const V3 *px, const Q *pq, const V3 *pv, float yaw);
 	// A knock: an impulse (N s) on a part at a point of the world
 	void impulse(int body, V3 point, V3 imp);
 	void step(float dt);

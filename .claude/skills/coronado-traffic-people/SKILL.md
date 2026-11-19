@@ -33,6 +33,14 @@ The full record is `docs/TRAFFIC_PEOPLE_PORT.md` (sections 13-20 are results). T
   `--trace=ID --only=PART_OF_RUN_NAME` on the traffic test prints it. (8) A heredoc with an apostrophe in it broke
   again: notes and patches go into a file made with the Write tool.
 
+- People, step 1 (19 Nov ~17:00, doc section 22): `ped_body.*` = a body that balances, staggers, falls, lies (plain
+  C++; test `bash native/tests/run_ped_test.sh`, `N` as argument traces case N frame by frame); `city_ped.*` = class
+  `CityPed`, the old game's 50-bone figure driven by animation or by that body (tests/people). Paid for: two passive
+  spring legs never come to rest after a saving step (the rear leg keeps pushing): the body must choose WHERE ON ITS
+  FEET IT PRESSES and step to where it WILL be falling when the foot lands; a foot must not step twice in a row
+  because of a sideways drift; a test shove must last (a fifth of a second), a hammer blow folds the body at the
+  waist. The walking crowd is still NOT on this branch.
+
 ## Yasin's rules for this job (his words are in the doc)
 - Everything in C++: no script in any frame or tick, no script fallback. Tool-time scripts are fine.
 - Parked cars are LOW DETAIL only. Cars must never touch a pavement, a kerb or grass. Cars move naturally.

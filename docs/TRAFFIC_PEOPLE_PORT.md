@@ -693,3 +693,64 @@ Drive it: `--car=stern_g` (GTA 4 feel) or `--car=stern_g/V`, with `--at=x,z,yaw`
   shoved and spun. That hand-over is the next step.
 - Traffic cars' wheels are part of one mesh: they do not turn or steer on screen (the body's lean is drawn).
 - No engine sound, no tyre marks, no damage.
+
+## 22. People, step 1: a body that keeps its own balance (19 Nov, on the working branch)
+Yasin: "i want my gta 5 level npcs ... they need to balance themselves, be able to pushed around and resist falls,
+just like in the euphoria engine GTA4 minimum"; "you can get the old npcs from the game BUT FULLY WRITTEN IN C PLUS
+PLUS, not a single script if you can help it"; "i have about 40 animated bodies standard with 50 bones".
+
+### What it is
+- `native/src/ped_body.h/.cpp` (plain C++, class `pb::Person`): thirteen jointed bodies (pelvis, chest, head, upper
+  arms, forearms, thighs, calves, feet) with muscles and a small physics of their own, 8 small steps a frame. No
+  engine joints: the same on the PC and on the phone.
+  BALANCE: the upper body is real, the legs carry it. It watches the point on the ground it is falling toward
+  (where it is + its speed x a third of a second). While that point is under its feet it only moves where it presses
+  on them: small pushes are held without a step. When the point leaves its feet it steps, quickly, to where the
+  point WILL be when the foot lands, again and again if it must (to the side with cross-over steps); then it shifts
+  its weight onto one foot and brings the other home. `skill` makes a person steadier or frailer.
+  FALL: when it cannot be caught the legs become bodies too: a rag doll whose arms reach for the ground on the side
+  it falls to, whose knees fold and whose neck holds, and whose strength drains away in about a second.
+  REST: it lies still. Cars are moving boxes it is pushed and thrown by.
+- `native/src/city_ped.*` (class `CityPed`): the old game's 50-bone figure. Animated while nothing touches it; at a
+  `push` (or a car's box reaching it) the body takes over FROM THE POSE THE BONES HAD, the bones follow the body, and
+  afterwards the animation is blended back in (standing), or the "get_up" clip from how it lies.
+- Brought from the old game: `characters/rocketbox/` (41 bodies in three detail levels, the two skeleton scenes, 49
+  clips each for men and women, the two texture arrays, the person shaders), 36 MB. Microsoft Rocketbox, MIT licence
+  (LICENSE.txt is with them).
+
+### What was measured
+Console test `bash native/tests/run_ped_test.sh` (26 cases, a shove = a push lasting a fifth of a second): RESULT PASS.
+| what is done to it | what it does |
+|---|---|
+| nothing; nothing on a 14 % slope | stands, 0 steps |
+| 15 N s (a nudge) | no step, leans 5 degrees |
+| 30 / 50 N s from behind | 1 / 2 steps, 0.2 / 0.3 m, quiet again after 1.9 / 1.4 s |
+| 80 / 120 / 170 N s from behind | 3 / 3 / 5 steps, 0.7 / 1.1 / 2.3 m, leans 11-18 degrees, quiet after 1.9-2.4 s |
+| 240 N s and more from behind | goes down (after 5 steps), lies still |
+| 80 / 170 N s in the chest | 3 / 7 steps backward, 0.7 / 3.3 m, stays up |
+| 30 / 80 N s from the side | no step / 5 steps, stays up; 170 from the side: goes down after 8 steps |
+| 60 N s at one shoulder; a kick of 90 N s at a leg | 2 / 6 steps, stays up |
+| a frail person (skill 0.55) | holds 50 N s, goes down at 120 |
+| an athlete (skill 1.3) | holds 170 N s in 3 steps |
+| a car at walking pace | is pushed along on its feet, 7 m |
+| a car at 30 / 60 km/h | thrown 12 / 27 m, lies still |
+In every case: no part faster than 28 m/s, nothing under the ground, nothing left inside the car.
+Engine test `tests/people/test_city_ped.gd` (headless, the real figure M1): RESULT PASS. It stands in its animation
+(50 bones, head joint 1.59 m up); the body takes over with no jump (0.000 m); 60 N s: 2 steps, no fall, the animation
+takes over again at the same height; 420 N s: down, still, up again; a car at 30 km/h: down, still, up again.
+ONE look by eye (`review/people_19nov/body_sheet.jpg`, five pictures from the side): the figure's limbs follow the
+body correctly (a real stride in the stagger, flat on the ground after the charge, nothing twisted).
+
+### NOT done / NOT checked
+- It was looked at in FIVE still pictures, never in motion. How the stagger, the fall and the get-up LOOK is not
+  judged. In the picture taken 1.3 s into the get-up the figure already stands: the rise from the ground is probably
+  too quick or the clip does not start lying. To be looked at in motion.
+- The person wears one plain colour: the people's real look (texture arrays, outfit colours) is the crowd's drawing.
+- THE WALKING CROWD IS NOT HERE: who walks where, crossings, groups, places, reactions, talking (sections 4 and 10,
+  stages 3a-4). The crowd core on the other branch does not pass its test. This step is only the body of one person.
+- Nothing calls `CityPed` yet but the two tests: no player on foot, the traffic's cars are not handed to it as boxes.
+- While it balances its legs are drawn from hip to foot (not bodies): they can pass through each other in a
+  cross-over step. Its parts do not collide with each other, nor with walls and props (only the ground and cars).
+- The muscles pull toward the standing pose with the arms down, not toward the animation's pose.
+- Not on the phone. Its cost was not measured (it is 13 bodies, 12 joints, 8 small steps a frame for each person
+  that is physical at that moment; a handful at once is the intent).

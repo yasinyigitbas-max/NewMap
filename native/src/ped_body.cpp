@@ -65,6 +65,7 @@ void Person::build(const Rest &p_rest) {
 		const float l = len(p1 - p0);
 		B = Body();
 		B.x = c; B.a = p0 - c; B.b = p1 - c; B.r = r; B.m = m * ms; B.inv_m = 1.0f / B.m;
+		c_rest[i] = c;
 		B.inv_i = 1.0f / (B.m * (l * l / 12.0f + 0.4f * r * r));   // one number for every axis: a limb twists a little too slowly, and nothing can blow up
 	};
 	const V3 up{ 0, 1, 0 };
@@ -139,6 +140,27 @@ void Person::start(V3 at, float yaw, V3 vel) {
 	}
 	state = ST_BALANCE; steps = 0; tilt = 0; quiet = 0; t_state = 0; strength = 1.0f; settled = false; max_speed = 0; heading = yaw; lean_on = false; last_step = -1;
 	cop = flat(at); h_want = rest.pelvis.y + 0.03f;
+	pose_legs();
+}
+
+void Person::start_pose(const V3 *px, const Q *pq, const V3 *pv, float yaw) {
+	for (int i = 0; i < NB; i++) {
+		Body &B = b[i];
+		B.x = px[i]; B.q = pq[i]; B.v = pv[i]; B.w = V3{}; B.on = i < B_THIGH_L; B.inv_m = 1.0f / B.m;
+	}
+	b[B_PELVIS].inv_m = 1.0f / (b[B_PELVIS].m + m_legs);
+	for (int s = 0; s < 2; s++) {
+		const Joint &aj = j[s == 0 ? J_ANKLE_L : J_ANKLE_R];
+		foot[s] = Foot();
+		foot[s].p = flat(b[aj.p].x + rot(b[aj.p].q, aj.ap));   // the ankle as the animation has it, set on the ground
+		foot[s].p.y = ground_y(foot[s].p.x, foot[s].p.z);
+		foot[s].planted = true;
+		j[s == 0 ? J_SHOULDER_L : J_SHOULDER_R].want = arm_down[s];
+		j[s == 0 ? J_HIP_L : J_HIP_R].want = Q(); j[s == 0 ? J_KNEE_L : J_KNEE_R].want = Q();
+	}
+	state = ST_BALANCE; steps = 0; tilt = 0; quiet = 0; t_state = 0; strength = 1.0f; settled = false; max_speed = 0; heading = yaw; lean_on = false; last_step = -1;
+	cop = support(flat(com()), -1);
+	h_want = b[B_PELVIS].x.y - ground_y(b[B_PELVIS].x.x, b[B_PELVIS].x.z);
 	pose_legs();
 }
 
