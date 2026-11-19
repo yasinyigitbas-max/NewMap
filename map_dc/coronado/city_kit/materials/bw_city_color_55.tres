@@ -1,0 +1,26 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://map_dc/coronado/city_kit/shaders/bldg_wear.gdshader" id="1_ioho4"]
+[ext_resource type="Texture2D" path="res://assets/coronado_kit/textures/city_color.png" id="2_1i7du"]
+[ext_resource type="Texture2D" path="res://assets/coronado_kit/textures/city_emissive.png" id="3_8o7i5"]
+[ext_resource type="Texture2D" path="res://assets/coronado_kit/atlases/props_grime.png" id="4_hyn65"]
+[ext_resource type="Texture2D" path="res://assets/coronado_kit/textures/city_normal.png" id="5_xlr2o"]
+[ext_resource type="Texture2D" path="res://assets/coronado_kit/textures/city_orm.png" id="6_rrwoj"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ioho4")
+shader_parameter/albedo_tex = ExtResource("2_1i7du")
+shader_parameter/normal_tex = ExtResource("5_xlr2o")
+shader_parameter/orm_tex = ExtResource("6_rrwoj")
+shader_parameter/emission_tex = ExtResource("3_8o7i5")
+shader_parameter/grime_tex = ExtResource("4_hyn65")
+shader_parameter/has_normal = true
+shader_parameter/has_orm = true
+shader_parameter/has_emission = true
+shader_parameter/emission_energy = 1.0
+shader_parameter/wear = 0.55
+shader_parameter/foot_m = 1.4
+shader_parameter/grime_meters = 2.2
+shader_parameter/streaks = 0.55
+shader_parameter/night_k = 0.0

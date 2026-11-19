@@ -161,7 +161,7 @@ func add_at(base: String, cond: String, u: float, v: float, h: float, yaw := 0.0
 
 ## a kit building centred at (u, v), front (+Z) turned by yaw, at the ground height there. Its four corners and centre
 ## must lie on one level (a terrace): a building is never left on a slope (printed as a WARNING).
-func bld(folder: String, u: float, v: float, yaw: float, label: String, wear := 0.75, services := true, shop := true) -> Array:
+func bld(folder: String, u: float, v: float, yaw: float, label: String, wear := 0.75, services := true, shop := true, compact := false) -> Array:
 	var st := K.building_stats(folder)
 	var w: float = st.footprint_wd[0]; var d: float = st.footprint_wd[1]
 	var b := Basis(Vector3.UP, deg_to_rad(yaw))
@@ -171,25 +171,75 @@ func bld(folder: String, u: float, v: float, yaw: float, label: String, wear := 
 		if absf(y(p.x, p.z) - h) > 0.02: print("WARNING %s: building %s corner off its terrace by %.2f m" % [name, label, y(p.x, p.z) - h])
 	var n := K.building(bl, folder, loc(u, v, h), yaw, label, wear)
 	n.set_meta(&"label", label)
-	if services: back_of_house(n, w, d)
+	if services: back_of_house(n, w, d, compact)
 	B.append([n, w, d, folder])
 	if shop and not (st.get("doors_front", []) as Array).is_empty(): shops.append([label, folder])
 	return [n, w, d, folder]
 
-## meters, gas meter, AC condensers on the rear wall at the building's own floor (cc_lib.back_of_house on this ground)
+## meters, gas meter, AC condensers on the rear wall at the building's own floor (cc_lib.back_of_house on this ground).
+## Unlike the sample's helper they are slid along the back wall to a stretch with NO opening (the measured openings of
+## interiors/room_contracts.json, the same list check_life reads): a meter never hangs over a back window or door, an AC
+## unit never stands in front of a back door. Where the wall has no free stretch, that item is left out (printed).
+static var _rc := {}
+func openings(folder: String, facade: String) -> Array:
+	if _rc.is_empty():
+		for f: String in ["room_contracts.json", "room_contracts_res.json"]:     # the same two lists check_life reads
+			var pth := "res://map_dc/coronado/city_kit/interiors/" + f
+			if FileAccess.file_exists(pth): _rc.merge(JSON.parse_string(FileAccess.get_file_as_string(pth)).models)
+	var out: Array = []
+	for o: Dictionary in (_rc.get(folder, {}) as Dictionary).get("openings", []):
+		if String(o.facade) == facade: out.append([float(o.along) - float(o.w) * 0.5, float(o.along) + float(o.w) * 0.5, float(o.y0), float(o.y1)])
+	for e: Dictionary in (_rc.get(folder, {}) as Dictionary).get("entrances", []):
+		if String(e.facade) == facade: out.append([float(e.along) - float(e.w) * 0.5, float(e.along) + float(e.w) * 0.5, 0.0, 2.3])
+	return out
+
+## first x (from x_from toward x_to) where [x, x + span] on that wall is clear of every opening below y_top (+15 cm)
+func free_x(ops: Array, x_from: float, x_to: float, span: float, y_top: float) -> float:
+	var x := x_from
+	while x + span <= x_to:
+		var ok := true
+		for o: Array in ops:
+			if float(o[2]) < y_top and x < float(o[1]) + 0.15 and x + span > float(o[0]) - 0.15: ok = false; break
+		if ok: return x
+		x += 0.1
+	return NAN
+
 func back_of_house(node: Node3D, w: float, d: float, compact := false, residential := false) -> void:
 	var yaw := rad_to_deg(node.rotation.y) + 180.0
+	var folder := String(node.get_meta(&"kit", ""))
+	var ops := openings(folder, "back")
+	# the back facade seen from behind runs the other way: openings' "along" is the building's local x
 	var at := func(lx: float, ly: float, lz: float) -> Vector3:
 		var p: Vector3 = node.transform * Vector3(lx, 0.0, lz)
 		return Vector3(p.x, node.position.y + ly, p.z)
-	var xa := -w * 0.5 + 1.6
-	for k in 3: props.add("prop_meter_electric", "worn", at.call(xa + k * 0.42, 1.05, -d * 0.5 - 0.02), yaw)
-	props.add("prop_meter_gas", "rusty", at.call(xa + 1.7, 0.2, -d * 0.5 - 0.02), yaw)
+	var lo := -w * 0.5 + 0.6; var hi := w * 0.5 - 0.6
+	var xm := free_x(ops, lo, hi, 2.0, 1.7)           # meter bank (3 x 0.42) and the gas meter 1.7 m along
+	if is_nan(xm):
+		# no room on the back wall: the side walls, back half first (the meter reader comes round the side)
+		var placed := false
+		for side: float in [1.0, -1.0]:
+			var sops := openings(folder, "right" if side > 0 else "left")
+			var zm := free_x(sops, -d * 0.5 + 0.6, d * 0.5 - 0.6, 2.0, 1.7)
+			if is_nan(zm): continue
+			var syaw := rad_to_deg(node.rotation.y) + 90.0 * side
+			for k in 3: props.add("prop_meter_electric", "worn", at.call(side * (w * 0.5 + 0.02), 1.05, zm + 0.2 + k * 0.42), syaw)
+			props.add("prop_meter_gas", "rusty", at.call(side * (w * 0.5 + 0.02), 0.2, zm + 1.8), syaw)
+			placed = true; break
+		if not placed: print("%s: no free stretch for meters on %s (left out)" % [name, node.name])
+	else:
+		for k in 3: props.add("prop_meter_electric", "worn", at.call(xm + 0.2 + k * 0.42, 1.05, -d * 0.5 - 0.02), yaw)
+		props.add("prop_meter_gas", "rusty", at.call(xm + 1.8, 0.2, -d * 0.5 - 0.02), yaw)
 	var n_ac := 1 if w < 14.0 else 2
+	var ops2 := ops.duplicate()
+	if not is_nan(xm): ops2.append([xm, xm + 2.0, 0.0, 9.0])
+	var xa := lo
 	for k in n_ac:
-		props.add("prop_ac_condenser_compact" if compact else "prop_ac_condenser", "worn", at.call(xa + 3.4 + k * 1.3, 0.0, -d * 0.5 - (0.47 if compact else 0.75)), yaw)
+		var xs := free_x(ops2, xa, hi, 1.1, 0.4)       # in front of no door (sills over 0.4 m are windows: an AC may stand under one)
+		if is_nan(xs): break
+		props.add("prop_ac_condenser_compact" if compact else "prop_ac_condenser", "worn", at.call(xs + 0.55, 0.0, -d * 0.5 - (0.47 if compact else 0.75)), yaw)
+		ops2.append([xs, xs + 1.1, 0.0, 9.0]); xa = xs + 1.2
 	if residential:
-		for k in 3: props.add(["prop_trash_cart_black", "prop_trash_cart_blue", "prop_trash_cart_green"][k], "worn", at.call(w * 0.5 - 1.5 - k * 0.8, 0.0, -d * 0.5 - 0.75), yaw)
+		for k in 3: props.add(["prop_trash_cart_black", "prop_trash_cart_blue", "prop_trash_cart_green"][k], "worn", at.call(w * 0.5 - 0.6 - k * 0.8, 0.0, -d * 0.5 - 2.2), yaw)   # in the back garden, clear of the AC units
 
 ## a GRID point on a building: local (lx, lz) of its footprint (front = +lz)
 func on_bld(b: Array, lx: float, lz: float) -> Vector2:
@@ -305,8 +355,15 @@ func fence(kind: String, au: float, av: float, bu: float, bv: float, cond := "wo
 	if e.has("footprint_w"): pl = float(e.footprint_w)
 	var n := maxi(1, int(ceil(ln / pl - 0.02)))
 	var yaw := rad_to_deg(atan2(b.x - a.x, b.y - a.y)) + 90.0
+	# panels are never stretched: the end panels sit flush with the run's ends, the overlap is shared in the middle;
+	# a post at the run's ends and at every joint (the midpoint between two panels' centres)
+	var dir := (b - a) / ln
+	var cs: Array = []
+	if n == 1: cs.append((a + b) * 0.5)
+	else:
+		for i in n: cs.append(a + dir * (pl * 0.5 + float(i) * (ln - pl) / (n - 1)))
 	for i in n:
-		var p0 := a.lerp(b, float(i) / n); var p1 := a.lerp(b, float(i + 1) / n); var m := (p0 + p1) * 0.5
+		var m: Vector2 = cs[i]; var p0 := m - dir * pl * 0.5; var p1 := m + dir * pl * 0.5
 		var h := at
 		if is_nan(h):
 			h = INF
@@ -314,8 +371,9 @@ func fence(kind: String, au: float, av: float, bu: float, bv: float, cond := "wo
 			h -= 0.03
 		I.add(props, String(f[0]), cond, loc(m.x, m.y, h), yaw)
 	if String(f[1]) != "":
-		for i in n + 1:
-			var q := a.lerp(b, float(i) / n)
+		var posts: Array = [a, b]
+		for i in n - 1: posts.append(((cs[i] as Vector2) + (cs[i + 1] as Vector2)) * 0.5)
+		for q: Vector2 in posts:
 			I.add(props, String(f[1]), cond, loc(q.x, q.y, at if not is_nan(at) else y(q.x, q.y) - 0.03), yaw)
 
 ## a dumpster enclosure (strip_lib.enclosure on this ground) with its two gate leaves; open toward yaw

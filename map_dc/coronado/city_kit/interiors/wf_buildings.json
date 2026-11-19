@@ -1,0 +1,357 @@
+{
+ "_doc": "kit buildings of the waterfront fill pieces (tools/city/rooms/list_buildings_wf.gd)",
+ "buildings": [
+  {
+   "label": "casa_del_mar_inn",
+   "model": "apartments/apt_spanish_revival",
+   "piece": "n_wf_b1w",
+   "pos": [
+    272.0,
+    6.15000009536743,
+    219.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "harbour_bakery",
+   "model": "commercial/com_bakery",
+   "piece": "n_wf_b1w",
+   "pos": [
+    289.5,
+    6.01999998092651,
+    221.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "bay_bike_hire",
+   "model": "commercial/com_realty",
+   "piece": "n_wf_b1w",
+   "pos": [
+    299.5,
+    5.8600001335144,
+    221.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "shoreline_grill",
+   "model": "commercial/com_bistro",
+   "piece": "n_wf_b1w",
+   "pos": [
+    318.0,
+    5.46999979019165,
+    221.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "seabreeze_court",
+   "model": "apartments/apt_court_white",
+   "piece": "n_wf_b1w",
+   "pos": [
+    272.0,
+    4.59999990463257,
+    285.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "dune_garden_flats",
+   "model": "apartments/apt_garden_cream",
+   "piece": "n_wf_b1w",
+   "pos": [
+    300.0,
+    4.59999990463257,
+    285.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "the_bayhouse_rental",
+   "model": "houses/beach_large",
+   "piece": "n_wf_b1w",
+   "pos": [
+    320.5,
+    4.59999990463257,
+    283.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "cottage_sandpiper",
+   "model": "houses/beach_white",
+   "piece": "n_wf_b1w",
+   "pos": [
+    267.100006103516,
+    4.15000009536743,
+    319.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "cottage_driftwood",
+   "model": "houses/beach_blue",
+   "piece": "n_wf_b1w",
+   "pos": [
+    279.0,
+    4.15000009536743,
+    319.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "cottage_pelican",
+   "model": "houses/beach_large",
+   "piece": "n_wf_b1w",
+   "pos": [
+    292.0,
+    4.07999992370605,
+    316.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "cottage_seaglass",
+   "model": "houses/beach_teal",
+   "piece": "n_wf_b1w",
+   "pos": [
+    305.0,
+    3.95000004768372,
+    319.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "cottage_tidepool",
+   "model": "houses/beach_white",
+   "piece": "n_wf_b1w",
+   "pos": [
+    317.0,
+    3.77999997138977,
+    318.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "scoops_row",
+   "model": "commercial/com_orange_row",
+   "piece": "n_wf_b1m",
+   "pos": [
+    344.5,
+    4.67000007629395,
+    221.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "tide_bar",
+   "model": "commercial/com_bar_crown",
+   "piece": "n_wf_b1m",
+   "pos": [
+    366.5,
+    3.88000011444092,
+    221.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "dive_surf_row",
+   "model": "commercial/com_boutique_row",
+   "piece": "n_wf_b1m",
+   "pos": [
+    389.5,
+    3.17000007629395,
+    221.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "harbour_view_flats",
+   "model": "apartments/apt_stucco3_cream",
+   "piece": "n_wf_b1m",
+   "pos": [
+    344.0,
+    3.45000004768372,
+    284.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "seagrass_flats",
+   "model": "apartments/apt_garden_mint",
+   "piece": "n_wf_b1m",
+   "pos": [
+    368.0,
+    3.45000004768372,
+    285.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "casa_azul_flats",
+   "model": "apartments/apt_spanish_white",
+   "piece": "n_wf_b1m",
+   "pos": [
+    390.5,
+    3.45000004768372,
+    285.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "ringside_holiday_flats",
+   "model": "apartments/apt_beach_condo",
+   "piece": "n_wf_b1m",
+   "pos": [
+    344.0,
+    3.34999990463257,
+    314.399993896484
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "cottage_sand_dollar",
+   "model": "houses/beach_teal",
+   "piece": "n_wf_b1m",
+   "pos": [
+    360.5,
+    2.92000007629395,
+    315.399993896484
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "cottage_starfish",
+   "model": "houses/beach_blue",
+   "piece": "n_wf_b1m",
+   "pos": [
+    372.0,
+    2.65000009536743,
+    314.299987792969
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "cottage_osprey",
+   "model": "houses/beach_large",
+   "piece": "n_wf_b1m",
+   "pos": [
+    385.0,
+    2.38000011444092,
+    310.899993896484
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "cottage_conch",
+   "model": "houses/beach_white",
+   "piece": "n_wf_b1m",
+   "pos": [
+    396.5,
+    2.09999990463257,
+    313.200012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "the_fish_house",
+   "model": "commercial/com_spanish_arcade_block",
+   "piece": "n_wf_b1e",
+   "pos": [
+    419.0,
+    2.25,
+    221.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "pier_bait_tackle",
+   "model": "commercial/com_shallow_surf",
+   "piece": "n_wf_b1e",
+   "pos": [
+    447.5,
+    1.66999995708466,
+    217.5
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "salt_water_surf",
+   "model": "commercial/com_surf_shop",
+   "piece": "n_wf_b1e",
+   "pos": [
+    459.25,
+    1.53999996185303,
+    221.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "bay_paddle_hire",
+   "model": "commercial/com_kiosk",
+   "piece": "n_wf_b1e",
+   "pos": [
+    466.0,
+    1.5,
+    218.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "pier_court_flats",
+   "model": "apartments/apt_court_white",
+   "piece": "n_wf_b1e",
+   "pos": [
+    414.5,
+    2.25,
+    285.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "the_little_blue_rental",
+   "model": "houses/beach_blue",
+   "piece": "n_wf_b1e",
+   "pos": [
+    431.0,
+    2.25,
+    286.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "cottage_tern",
+   "model": "houses/beach_blue",
+   "piece": "n_wf_b1e",
+   "pos": [
+    411.25,
+    1.85000002384186,
+    312.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "cottage_heron",
+   "model": "houses/beach_teal",
+   "piece": "n_wf_b1e",
+   "pos": [
+    423.0,
+    1.67999994754791,
+    312.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "cottage_plover",
+   "model": "houses/beach_white",
+   "piece": "n_wf_b1e",
+   "pos": [
+    435.0,
+    1.54999995231628,
+    311.450012207031
+   ],
+   "yaw": 0.0
+  }
+ ]
+}

@@ -1,0 +1,551 @@
+{
+ "_doc": "Which shop is behind every shop door of the waterfront FILL pieces (n_wf_*, branch claude/fill-waterfront, 19 Nov;",
+ "count": 16,
+ "rooms": [
+  {
+   "id": "wfa_b1w__casa_del_mar_inn__0",
+   "piece": "n_wf_b1w",
+   "label": "casa_del_mar_inn",
+   "model": "apartments/apt_spanish_revival",
+   "pos": [
+    272.0,
+    6.15000009536743,
+    219.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -4.6,
+    4.6
+   ],
+   "kind": "hotel",
+   "name": "Casa del Mar Inn",
+   "style": "sea",
+   "signs": [],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "wfa_b1w__harbour_bakery__0",
+   "piece": "n_wf_b1w",
+   "label": "harbour_bakery",
+   "model": "commercial/com_bakery",
+   "pos": [
+    289.5,
+    6.01999998092651,
+    221.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bakery",
+   "name": "Harbour Bakery & Coffee",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "wfa_b1w__bay_bike_hire__0",
+   "piece": "n_wf_b1w",
+   "label": "bay_bike_hire",
+   "model": "commercial/com_realty",
+   "pos": [
+    299.5,
+    5.8600001335144,
+    221.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "rental",
+   "name": "Bay Bikes",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": -3.4,
+     "w": 2.6
+    }
+   ],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "wfa_b1w__shoreline_grill__0",
+   "piece": "n_wf_b1w",
+   "label": "shoreline_grill",
+   "model": "commercial/com_bistro",
+   "pos": [
+    318.0,
+    5.46999979019165,
+    221.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 4.76,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "restaurant",
+   "name": "Shoreline Grill",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 11.18
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "wfa_b1m__scoops_row__0",
+   "piece": "n_wf_b1m",
+   "label": "scoops_row",
+   "model": "commercial/com_orange_row",
+   "pos": [
+    344.5,
+    4.67000007629395,
+    221.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -4.08,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -3.0
+   ],
+   "kind": "ice_cream",
+   "name": "Scoops Ice Cream",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 5.18
+    }
+   ],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "wfa_b1m__scoops_row__1",
+   "piece": "n_wf_b1m",
+   "label": "scoops_row",
+   "model": "commercial/com_orange_row",
+   "pos": [
+    344.5,
+    4.67000007629395,
+    221.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 1,
+   "door_along": -1.92,
+   "door_w": 1.6,
+   "bay": [
+    -3.0,
+    3.0
+   ],
+   "kind": "clothes",
+   "name": "Sandbar Swimwear",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    }
+   ],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "wfa_b1m__scoops_row__2",
+   "piece": "n_wf_b1m",
+   "label": "scoops_row",
+   "model": "commercial/com_orange_row",
+   "pos": [
+    344.5,
+    4.67000007629395,
+    221.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 2,
+   "door_along": 7.76,
+   "door_w": 1.6,
+   "bay": [
+    3.0,
+    8.7
+   ],
+   "kind": "souvenir",
+   "name": "Seashell Gifts",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 5.18
+    }
+   ],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "wfa_b1m__tide_bar__0",
+   "piece": "n_wf_b1m",
+   "label": "tide_bar",
+   "model": "commercial/com_bar_crown",
+   "pos": [
+    366.5,
+    3.88000011444092,
+    221.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bar",
+   "name": "The Tide Bar",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 0.0,
+     "w": 3.6
+    }
+   ],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "wfa_b1m__dive_surf_row__0",
+   "piece": "n_wf_b1m",
+   "label": "dive_surf_row",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    389.5,
+    3.17000007629395,
+    221.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -4.08,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -3.0
+   ],
+   "kind": "dive",
+   "name": "Deep Blue Dive",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 5.18
+    }
+   ],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "wfa_b1m__dive_surf_row__1",
+   "piece": "n_wf_b1m",
+   "label": "dive_surf_row",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    389.5,
+    3.17000007629395,
+    221.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 1,
+   "door_along": -1.92,
+   "door_w": 1.6,
+   "bay": [
+    -3.0,
+    3.0
+   ],
+   "kind": "shoes",
+   "name": "Sun & Sand Sandals",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    }
+   ],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "wfa_b1m__dive_surf_row__2",
+   "piece": "n_wf_b1m",
+   "label": "dive_surf_row",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    389.5,
+    3.17000007629395,
+    221.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 2,
+   "door_along": 7.76,
+   "door_w": 1.6,
+   "bay": [
+    3.0,
+    8.7
+   ],
+   "kind": "rental",
+   "name": "Board Room Surf Rentals",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 5.18
+    }
+   ],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "wfa_b1e__the_fish_house__0",
+   "piece": "n_wf_b1e",
+   "label": "the_fish_house",
+   "model": "commercial/com_spanish_arcade_block",
+   "pos": [
+    419.0,
+    2.25,
+    221.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -2.92,
+   "door_w": 1.6,
+   "bay": [
+    -11.7,
+    1.0
+   ],
+   "kind": "restaurant",
+   "name": "The Fish House",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -8.0,
+     "w": 7.18
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 7.18
+    }
+   ],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "wfa_b1e__the_fish_house__1",
+   "piece": "n_wf_b1e",
+   "label": "the_fish_house",
+   "model": "commercial/com_spanish_arcade_block",
+   "pos": [
+    419.0,
+    2.25,
+    221.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 1,
+   "door_along": 5.08,
+   "door_w": 1.6,
+   "bay": [
+    1.0,
+    11.7
+   ],
+   "kind": "fast_food",
+   "name": "Pier Poke & Tacos",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 8.0,
+     "w": 7.18
+    }
+   ],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "wfa_b1e__pier_bait_tackle__0",
+   "piece": "n_wf_b1e",
+   "label": "pier_bait_tackle",
+   "model": "commercial/com_shallow_surf",
+   "pos": [
+    447.5,
+    1.66999995708466,
+    217.5
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 3.26,
+   "door_w": 1.0,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bait",
+   "name": "Pier Bait & Tackle",
+   "style": "green",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    }
+   ],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "wfa_b1e__salt_water_surf__0",
+   "piece": "n_wf_b1e",
+   "label": "salt_water_surf",
+   "model": "commercial/com_surf_shop",
+   "pos": [
+    459.25,
+    1.53999996185303,
+    221.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "sport",
+   "name": "Salt Water Surf",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "wfa_b1e__bay_paddle_hire__0",
+   "piece": "n_wf_b1e",
+   "label": "bay_paddle_hire",
+   "model": "commercial/com_kiosk",
+   "pos": [
+    466.0,
+    1.5,
+    218.0
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 1.15,
+   "door_w": 0.9,
+   "bay": [
+    -1.7,
+    1.7
+   ],
+   "kind": "rental",
+   "name": "Bay Paddle",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "left",
+     "along": 0.9,
+     "w": 1.2
+    }
+   ],
+   "source": "waterfront fill (hand-made shop list)",
+   "built": ""
+  }
+ ]
+}
