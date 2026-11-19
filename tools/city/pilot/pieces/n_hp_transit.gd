@@ -4,8 +4,8 @@ extends SceneTree
 ## (3rd St's north walk). Placed at grid [0, 2.0, 0], yaw 0. Run once; never when locked.
 ##
 ## WHY (planner; Yasin: "Place a bus station at hospital"): the island's buses meet at the hospital, the place more
-## people go to without a car than anywhere (visitors, outpatients, the night shift). The buses come in the same way as
-## everybody, at Adela's apron, and pull into a LAY-BY along the south side of Hospital Drive: four bays along one
+## people go to without a car than anywhere (visitors, outpatients, the night shift). The buses come in at Adela's
+## apron (ambulances have their own way in off 3rd St: EMERGENCY DRIVE, east of the platform), and pull into a LAY-BY along the south side of Hospital Drive: four bays along one
 ## platform, each with its shelter, its stop sign and a bench; behind the platform the WAITING HALL (civ_post_office
 ## re-used: one civic door on the platform; tickets, timetables, benches, vending inside). West of the hall a small
 ## plaza meets the people walking in from the Adela / 3rd St junction's crosswalks: a coffee kiosk with tables, trees in
@@ -21,8 +21,12 @@ const S := preload("res://tools/city/pilot/pieces/n_hp_site.gd")
 const X0 := 509.2
 const X1 := 645.7
 const ZN := -1453.0
-const LAYBY := [518.0, -1453.0, 594.0, -1446.5]
-const PLATFORM := [516.0, -1446.5, 596.0, -1440.0]
+const LAYBY := [518.0, -1453.0, 584.0, -1446.5]
+const PLATFORM := [516.0, -1446.5, 586.0, -1440.0]
+## EMERGENCY DRIVE (19 Nov, Yasin: "make the drive way"): from 3rd St's new curb cut (s_rg_nw_b071, patched in place by
+## tools/city/pilot/patch_driveway.gd: u 588.60 .. 596.43, the parkway lowered to the road) straight north across
+## Hospital Drive into the ER's ambulance bay (n_hp_main), so ambulances come in off the bridge route (ZONING.md)
+const EDRIVE := [588.5957, 596.4305]
 const HALL := ["civic/civ_post_office", 548.0, -1428.55]    # yaw 180: front (door, u 548) on the platform at v -1440
 const KIOSK := ["commercial/com_kiosk", 522.0, -1430.0]      # yaw 90: its window on the plaza (east)
 const BAYS := [524.0, 536.0, 560.0, 572.0]                   # bay centres (shelters); the hall door at 548 stays clear
@@ -35,10 +39,10 @@ const GREEN := [
 	["tree_jacaranda_a", "normal", 530.0, -1418.0, 30.0, false],
 	# 3rd St frontage east of the hall: queen palms in the grass strip (low planting only along the helipad)
 	["palm_queen_a", "normal", 567.0, -1416.0, 0.0, false], ["palm_queen_b", "normal", 580.0, -1416.0, 60.0, false],
-	["palm_queen_a", "normal", 592.0, -1416.0, 120.0, false],
+	["palm_queen_a", "normal", 584.5, -1416.0, 120.0, false],
 	["plant_iceplant_patch", "normal", 606.0, -1415.8, 0.0, false], ["plant_iceplant_patch", "normal", 620.0, -1415.8, 90.0, false],
 	["plant_iceplant_patch", "normal", 634.0, -1415.8, 0.0, false],
-	["plant_bird_of_paradise", "normal", 594.0, -1432.0, 0.0, false], ["plant_agave_americana_small", "normal", 590.0, -1437.0, 0.0, false],
+	["plant_bird_of_paradise", "normal", 570.0, -1432.0, 0.0, false], ["plant_agave_americana_small", "normal", 576.0, -1436.0, 0.0, false],
 	["prop_sprinkler_popup", "normal", 575.0, -1428.0, 0.0, false], ["prop_sprinkler_popup", "normal", 619.0, -1447.0, 0.0, false],
 ]
 
@@ -76,11 +80,13 @@ func _run() -> void:
 	# bay stop bars (white) at each bay's front end, the lay-by's edge line, the tactile strip on the platform edge
 	for b: float in BAYS: paints.append([b + 5.8, LAYBY[1] + 0.3, b + 6.1, LAYBY[3], "white"])
 	paints.append([LAYBY[0], -1453.1, LAYBY[2], -1452.9, "white"])
+	paints.append([EDRIVE[0], -1452.2, EDRIVE[1], -1451.8, "white"])        # Emergency Drive's stop bar
 	paints.append([PLATFORM[0], -1446.5, PLATFORM[2], -1446.0, "tactile"])
 	# tree wells in the plaza
 	for t: Array in [[514.0, -1437.0], [514.0, -1420.0], [530.0, -1418.0]]:
 		paints.append([float(t[0]) - 0.8, float(t[1]) - 0.8, float(t[0]) + 0.8, float(t[1]) + 0.8, "mulch"])
 	paints.append_array([
+		[EDRIVE[0], ZN, EDRIVE[1], S.THIRD, "asphalt"],         # Emergency Drive
 		[LAYBY[0], LAYBY[1], LAYBY[2], LAYBY[3], "asphalt"],
 		[PLATFORM[0], PLATFORM[1], PLATFORM[2], PLATFORM[3], "plaza"],
 		[509.2, -1446.5, 516.0, -1440.0, "plaza"],               # the platform's west end to Adela's walk
@@ -117,8 +123,13 @@ func _build(bl: Node3D, props: K.Props, dec: K.Decals, rr: RandomNumberGenerator
 	for x: float in [518.0, 542.0, 554.0, 584.0]: P.call("prop_lamp_globe", "worn", x, -1442.4)
 	P.call("prop_newspaper_box_red", "worn", 556.4, -1441.0, 180.0)
 	P.call("prop_newspaper_box_blue", "worn", 557.2, -1441.0, 180.0)
-	P.call("prop_vending_soda", "worn", 588.5, -1441.2, 180.0)       # at the far end, where the long waits are
-	P.call("prop_bench_bus_stop", "worn", 591.5, -1444.2, 180.0)
+	P.call("prop_vending_soda", "worn", 582.5, -1441.2, 180.0)       # at the far end, where the long waits are
+	P.call("prop_bench_bus_stop", "worn", 580.0, -1444.2, 180.0)
+	# ---- Emergency Drive: emergency-only signs at its mouth on 3rd St, a stop bar before Hospital Drive, a lamp
+	P.call("prop_sign_no_parking", "worn", 587.6, -1416.2, 0.0)
+	P.call("prop_sign_no_parking", "worn", 597.4, -1416.2, 0.0)
+	P.call("prop_lamp_cobra", "worn", 587.2, -1430.0, -90.0)
+	W.lane_wear(dec, rr, (EDRIVE[0] + EDRIVE[1]) * 0.5, -1450.0, -1418.0, true, yf)
 	# ---- the plaza from the junction: the coffee kiosk's tables on its window side, bike racks, a paper box, a mailbox
 	P.call("prop_patio_set_4", "worn", 529.5, -1433.5, 0.0)
 	P.call("prop_patio_set_4", "worn", 529.5, -1426.5, 30.0)
