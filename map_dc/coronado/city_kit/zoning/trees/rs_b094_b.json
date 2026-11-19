@@ -1,0 +1,93 @@
+{
+ "area": "rs_b094_b",
+ "piece": "s_rs_b094_b",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; broadleaf on the flat; within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    471.943,
+    6.15,
+    -806.45
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass at the start, first of the west face's jacaranda run (one species a face: the magnolia here becomes a jacaranda)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    434.167,
+    6.15,
+    -806.45
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway, the run continues; driveways in the 38 m between"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    408.873,
+    6.15,
+    -806.45
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway 25 m on, the third jacaranda (the pine here becomes a jacaranda)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    382.986,
+    6.15,
+    -806.45
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "west parkway 26 m on, the last jacaranda, clear of the globe lamp (2.8 m)"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    456.121,
+    6.15,
+    -793.55
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway grass, first of the east face's coral run (old spot and species)"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    430.738,
+    6.15,
+    -793.55
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "east parkway 25 m on, the coral run continues, clear of the no-parking sign (2.9 m)"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    401.907,
+    6.15,
+    -793.55
+   ],
+   "yaw": 318,
+   "scale": 0.95,
+   "why": "east parkway 29 m on, the last coral tree (the pine here becomes a coral); a fourth would pass the broadleaf limit in view"
+  }
+ ]
+}
