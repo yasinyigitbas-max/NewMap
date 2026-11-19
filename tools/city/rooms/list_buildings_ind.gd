@@ -9,7 +9,9 @@ func _init() -> void:
 		var p: Array = r.pos
 		var base := Transform3D(Basis(Vector3.UP, deg_to_rad(float(r.yaw))), Vector3(float(p[0]), float(p[1]), float(p[2])))
 		var sc: Node = (load("res://map_dc/coronado/city_kit/pieces/%s.scn" % r.piece) as PackedScene).instantiate()
-		for b: Node in sc.get_node("Buildings").get_children():
+		var bn: Node = sc.get_node_or_null("Buildings")
+		if bn == null: sc.free(); continue      # overlays (i_life_*) hold no buildings
+		for b: Node in bn.get_children():
 			if not b.has_meta(&"kit"): continue
 			var xf: Transform3D = base * (b as Node3D).transform
 			out.append({"piece": String(r.piece), "label": String(b.name), "kit": String(b.get_meta(&"kit")), "pos": [xf.origin.x, xf.origin.y, xf.origin.z], "yaw": rad_to_deg(xf.basis.get_euler().y)})

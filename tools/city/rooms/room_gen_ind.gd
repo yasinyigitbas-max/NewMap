@@ -25,12 +25,13 @@ const KINDS := {
 	"broker": {"floor": "WoodFloor051", "light": "strip", "counter": ["shop_counter"], "till": false, "behind": ["office_desk", "filing_cabinet", "filing_cabinet"], "board": true, "walls": ["brochure_rack", "waiting_bench", "filing_cabinet"], "centre": "none", "window": "display", "back": "office", "frames": true, "stock": [], "extras": ["display_table", "lifering_stand", "potted_plant", "indoor_bin", "brochure_rack", "waiting_bench"]},
 	"diner": {"floor": "Tiles074", "light": "strip", "counter": ["bar_counter", "bar_counter"], "stools": true, "till": false, "behind": ["kitchen_line", "soda_fountain"], "board": true, "walls": ["booth"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": true, "stock": ["vending_soda"], "extras": ["vending_soda", "indoor_bin", "potted_plant", "drinks_fridge"]},
 	"canteen": {"floor": "Tiles141", "light": "strip", "counter": ["shop_counter", "soda_fountain"], "till": true, "behind": ["kitchen_line", "drinks_fridge"], "board": true, "walls": ["drinks_fridge", "booth"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": true, "stock": ["vending_snack"], "extras": ["vending_soda", "indoor_bin", "drinks_fridge", "potted_plant"]},
+	"taproom": {"floor": "Concrete047A", "light": "strip", "counter": ["bar_counter", "bar_counter"], "stools": true, "till": false, "behind": ["beer_taps", "drinks_fridge"], "board": true, "walls": ["booth"], "centre": "table4", "window": "table2", "back": "stock", "frames": true, "stock": [], "extras": ["indoor_bin", "potted_plant", "drinks_fridge"]},
 	"uniform": {"floor": "Tiles143", "light": "strip", "counter": ["laundry_counter"], "till": false, "behind": ["garment_rail", "garment_rail"], "board": false, "walls": ["washer", "dryer"], "centre": "none", "window": "waiting", "back": "none", "frames": true, "stock": ["indoor_bin"], "extras": ["garment_rail", "waiting_bench", "indoor_bin", "potted_plant", "garment_rail"]},
 }
 const WARM := []     # nothing warm and plastered in the industrial zone: drop-in ceilings everywhere
 const WALL_TINTS := [Color(0.80, 0.83, 0.78), Color(0.84, 0.84, 0.82), Color(0.86, 0.84, 0.76), Color(0.76, 0.8, 0.82), Color(0.82, 0.8, 0.76)]   # institutional greens, greys, nicotine cream
 const SHORT := {"freight_office": "FREIGHT", "trade_counter": "SUPPLY", "parts_counter": "PARTS", "permits": "PERMITS", "workwear": "WORKWEAR",
-	"fish_counter": "FISH", "sales_office": "SEAFOOD", "broker": "BOATS", "diner": "DINER", "canteen": "CANTEEN", "uniform": "LINEN"}
+	"fish_counter": "FISH", "sales_office": "SEAFOOD", "broker": "BOATS", "diner": "DINER", "canteen": "CANTEEN", "uniform": "LINEN", "taproom": "TAPROOM"}
 
 var foot := {}      # base -> Vector2(w, d)
 var tall := {}      # base -> height

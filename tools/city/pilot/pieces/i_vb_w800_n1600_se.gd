@@ -93,13 +93,13 @@ func _run() -> void:
 	dec.add(14, Vector2(sx * 75.0, sz * 78.0), 0.0, 14.0, 6.0, S.walk_y, Color(1, 1, 1, 0.6))
 	I.truck_path(dec, rr, Vector2(sx * 9.0, sz * 82.0), Vector2(sx * 75.0, sz * 76.0))
 	I.truck_path(dec, rr, Vector2(sx * 40.0, sz * 76.0), Vector2(sx * 35.0, sz * 64.5))
-	I.yard_wear(dec, rr, sx, sz, 22.0, 36.0, 92.0, 99.0, 1.4)
-	I.yard_wear(dec, rr, sx, sz, 56.0, 22.0, 92.0, 36.0, 1.0)
+	G.yard_wear(dec, rr, sx, sz, 22.0, 36.0, 92.0, 99.0, 1.4)
+	G.yard_wear(dec, rr, sx, sz, 56.0, 22.0, 92.0, 36.0, 1.0)
 	# ---- POLISH (Yasin 18 Nov: "lots of props"; each with its reason; placed only where free, G.place)
 	var obs := G.obstacles(bl, props, stl); var kp := [[8.0, 74.0, 76.0, 86.5], [28.0, 61.0, 42.0, 68.0]]
 	G.place(props, obs, rr, sx, sz, "prop_sign_stop", "worn", 10.0, 73.0, 14.0, 77.5, 90.0 * sx, kp, 3.0)          # trucks leaving onto J Ave
 	G.place(props, obs, rr, sx, sz, "prop_hydrant_red", "rusty", 56.0, 70.0, 61.0, 74.0, 0.0, kp)                 # fire hydrant by the wash hall
-	G.spot(props, obs, rr, sx, sz, [["prop_picnic_table", "worn"], ["prop_park_bench", "worn", 180.0], ["prop_trash_receptacle", "worn"], ["prop_vending_snack", "clean"]], 23.0, 41.0, 31.0, 52.0, 90.0 * sx, kp)   # the crews' break spot by the salt store
+	G.spot(props, obs, rr, sx, sz, [["prop_picnic_table", "worn"], ["prop_trash_receptacle", "worn"], ["prop_vending_snack", "clean"]], 23.0, 41.0, 31.0, 52.0, 90.0 * sx, kp)   # the crews' break spot by the salt store
 	for k10 in 4: G.place(props, obs, rr, sx, sz, ["prop_trash_cart_blue", "prop_trash_cart_green", "prop_trash_cart_black", "prop_recycling_receptacle"][k10], "clean", 62.0, 60.0, 82.0, 72.0, 180.0, kp, 4.0)   # the city's stock of new bins for the households
 	for k11 in 3: G.place(props, obs, rr, sx, sz, ["prop_trash_cart_blue", "prop_trash_cart_green", "prop_trash_cart_black"][k11], "clean", 62.0, 60.0, 82.0, 72.0, 180.0, kp, 4.0)
 	G.spot(props, obs, rr, sx, sz, [["prop_sign_no_parking", "worn"], ["prop_sign_school", "worn"], ["prop_sign_speed25", "dirty"], ["prop_sign_ped_crossing", "worn"]], 82.0, 68.0, 91.0, 79.0, -90.0, kp)   # the signs crew's stock, leaning by the lock-ups

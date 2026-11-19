@@ -52,10 +52,15 @@ ROOMS = [
      "cash and carry for the island's kitchens: pans, gloves, boxes, dry goods"),
     ("i_vc_w600_n1400_ne", "island_restaurant_supply", -3.0, "uniform", "Shift Linen & Uniforms", "teal",
      "aprons, chef whites and shop towels washed and handed back over the counter"),
+    ("i_vb_w600_n1400_sw", "island_movers_office", 4.6, "sales_office", "Island Movers", "orange",
+     "book a move or rent a storage unit: the movers' counter on 3rd St (the flats' door beside it stays theirs)"),
+    ("i_vc_w600_n1400_se", "brewery_taproom", -1.1, "taproom", "Coronado Brewing Taproom", "black",
+     "the brewery's own bar on 3rd St: the beer from the tanks behind it, a beer garden out back"),
 ]
 FULL = {("i_vc_w600_n1400_ne", "shift_canteen"), ("i_vb_w800_n1600_se", "workwear_store"), ("i_vb_w600_n1400_nw", "truck_stop_diner")}      # one place behind both of the building's shop doors
 # the repair shops' counters take the office end only; the rollup bays stay a service yard behind a partition
-BAY = {("i_va_w800_n1600_sw", "reefer_repair"): [-8.7, -2.6], ("i_va_w600_n1600_se", "marine_engines"): [-8.7, -2.6]}
+BAY = {("i_vb_w600_n1400_sw", "island_movers_office"): [-2.0, 5.7], ("i_vc_w600_n1400_se", "brewery_taproom"): [-5.7, 2.2],
+       ("i_va_w800_n1600_sw", "reefer_repair"): [-8.7, -2.6], ("i_va_w600_n1600_se", "marine_engines"): [-8.7, -2.6]}
 
 
 def main():

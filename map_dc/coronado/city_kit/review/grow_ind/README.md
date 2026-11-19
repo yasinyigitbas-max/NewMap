@@ -1,4 +1,5 @@
-# Industrial growth: variants and pilot area (18 Nov, branch claude/grow-industrial). NOTHING LOCKED.
+# Industrial growth: variants and pilot area (18 Nov, branch claude/grow-industrial). LOCKED 19 Nov (Yasin: "lock them
+# for now, rest will be handmade adjustments"): the 11 pieces and the 16 rooms.
 
 Six new blocks around the locked industrial sample (`i_*`). Each one is one 100 x 100 m corner piece at a road-kit
 junction. There are three VARIANTS, each built twice (two dressings), so no two blocks are the same. Every walk-in
@@ -143,3 +144,37 @@ session's work); none of them are in these blocks.
   - the canteen's outdoor tables, carts left at the cash-and-carry
   - wash-down hoses at the fish and ice doors
   Pictures: `polish_*.jpg`. Area checks: validator 0, trees 0, sink 0.
+
+## The whole zone (19 Nov, Yasin: "find mistakes ... fix them ... roll out to your whole zone, then do a polish pass on
+## the whole zone")
+The industrial zone is now built everywhere the city kit reaches it (west of it the naval air station stays as it is):
+| Piece | Where (world u, v) | What |
+|---|---|---|
+| `i_vb_w600_n1400_sw` | -700..-600, -1400..-1300 | Island Movers + self storage (B fleet, 3rd dressing): office on 3rd St (walk-in), storage sheds and lock-ups, van park; on G Ave's slope |
+| `i_vc_w600_n1400_se` | -600..-500, -1400..-1300 | Coronado Brewing Co. (C cold chain, 3rd dressing): taproom (walk-in) with a beer garden, four fermenters, brewhouse, keg store; house buffer; on the slope |
+| `i_va_w951_n1400_ne` | -951..-900, -1590..-1414 | the freight station's empties depot (A port, 3rd dressing): long container stacks, reached by a new gate in the freight station's wall; wall follows the ring's corner |
+| `i_green_w951_n1400_se` | -951..-900, -1386..-1300 | Alameda Green: the district's fenced lunch green (one gate, trees, tables, benches, fountain) |
+| `i_life_w800_n1400` | the locked sample | a life overlay (the sample stays untouched): stop signs at the yard exits, hydrants, break spots, bins, bike racks, work clutter, placed only where free |
+New library parts: row-measured floors for odd shapes, a Coons-patch drape onto sloping streets with level pads under
+the buildings, and a careful placer for polish props.
+
+**Mistakes found and fixed on the way:**
+- Back-of-house meters, boxes and AC units on doors and in front of rollups (Yasin's pictures). Services now keep
+  off every back door, rollup and window.
+- A building on the slope sunk at the back ("shop is sunk"). It now stands on a level pad that eases into the slope.
+- Benches standing beside picnic tables ("stray bench"). Gone from every break spot; benches only face a path or green.
+- A wall floating off the ground on the slope ("wall bulges off the ground"). Each wall or fence panel now stands
+  at the lowest ground along its length.
+- Meters on a window ("prop sitting on a window"). Wall items keep 0.9 m off every window, because the painted
+  window is wider than its recorded opening.
+- A hydrant in the middle of a yard ("fire hydrant in the middle of nowhere"). Hydrants now stand only within 2 m
+  of a building wall.
+- Dark patch decals reading as shadows of nothing in the yards. Now narrow trench repairs.
+- The green's fence clipping the kerb return, walls tight against the gritty block's props, a skip against a wall,
+  two overlapping tanks.
+- **Seen in the LOCKED sample and NOT changed** (needs Yasin's word to unlock): the same shadow-like dark patches in
+  its yards, and possibly the same back-of-house items in front of doors and rollups.
+
+Checks over the whole zone (all neighbours loaded): validator 0 problems (about 8,300 props, 200 buildings), trees 0
+in hard ground, sink 0, indoor checker 0 for the 16 industrial rooms, lock test RESULT PASS.
+Not re-measured: the baked draws / triangles / download for the new pieces (only the pilot six were baked and measured).

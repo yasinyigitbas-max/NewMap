@@ -30,7 +30,6 @@ func _run() -> void:
 	var bl := Node3D.new(); bl.name = "Buildings"; root.add_child(bl)
 	var g := K.Ground.new(); var props := K.Props.new(); var dec := K.Decals.new(); var rr := W.rng_for(NAME)
 	var stl: Array = []
-	G.floor_rows(g, mr, sx, sz, [[9.0, 22.0, 16.0, 100.0, "grass"], [17.0, 64.0, 43.0, 99.0, "gravel"]])
 	var B: Array = []
 	var fx := G.front_x(m, 22.0, 36.0)
 	B.append([G.put(bl, props, sx, sz, "x", 23.0, fx, "ck/ck_svc_bank_pharm", "island_movers_office"), "ck/ck_svc_bank_pharm"])
@@ -85,7 +84,10 @@ func _run() -> void:
 	for r: Array in stl: W.oil(dec, rr, Vector2(float(r[0]), float(r[1])), float(r[2]), S.walk_y, 0.8)
 	I.truck_path(dec, rr, Vector2(sx * 38.0, sz * 14.0), Vector2(sx * 38.0, sz * 80.0))
 	I.truck_path(dec, rr, Vector2(sx * 16.0, sz * 57.0), Vector2(sx * 98.0, sz * 57.0))
-	I.yard_wear(dec, rr, sx, sz, 17.0, 20.0, 99.0, 99.0, 1.0)
+	G.yard_wear(dec, rr, sx, sz, 17.0, 20.0, 99.0, 99.0, 1.0)
+	# level pads under the buildings (Yasin 19 Nov: "shop is sunk"), then the floor, then everything onto the ground
+	for b: Array in B: G.pad(mr, sx, sz, b[0][0], b[1])
+	G.floor_rows(g, mr, sx, sz, [[9.0, 22.0, 16.0, 100.0, "grass"], [17.0, 64.0, 43.0, 99.0, "gravel"]])
 	G.drape(mr, sx, sz, props, dec, bl)
 	root.set_meta("stalls", _draped_stalls(stl, mr, sx, sz))
 	I.finish(root, g, props, dec, NAME)

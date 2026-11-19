@@ -462,6 +462,468 @@
     -1460.0
    ],
    "yaw": -90.0000025044782
+  },
+  {
+   "kit": "ck/ck_svc_bank_pharm",
+   "label": "island_movers_office",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -629.0,
+    2.17559909820557,
+    -1377.38745117188
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "ck/mod_stg_row_roofed",
+   "label": "storage_n0",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -654.0,
+    2.13801527023315,
+    -1369.91796875
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "ck/mod_stg_row_roofed",
+   "label": "storage_s0",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -654.0,
+    2.16099238395691,
+    -1357.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "ck/mod_stg_row_roofed",
+   "label": "storage_n1",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -672.200012207031,
+    2.13165497779846,
+    -1369.91796875
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "ck/mod_stg_row_roofed",
+   "label": "storage_s1",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -672.200012207031,
+    2.13165497779846,
+    -1357.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "ck/mod_stg_row_roofed",
+   "label": "storage_n2",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -690.400024414062,
+    2.13165497779846,
+    -1369.91796875
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "ck/mod_stg_row_roofed",
+   "label": "storage_s2",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -690.400024414062,
+    2.13165497779846,
+    -1357.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_n0",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -646.75,
+    2.35048079490662,
+    -1333.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_s0",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -646.75,
+    2.4238121509552,
+    -1327.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_n1",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -650.349975585938,
+    2.32381820678711,
+    -1333.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_s1",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -650.349975585938,
+    2.3894510269165,
+    -1327.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "garages/single_stucco_clay",
+   "label": "lockup_n2",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -653.950012207031,
+    2.29754614830017,
+    -1333.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_clay",
+   "label": "lockup_s2",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -653.950012207031,
+    2.35480833053589,
+    -1327.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_n3",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -657.549987792969,
+    2.27139782905579,
+    -1333.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_s3",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -657.549987792969,
+    2.32126045227051,
+    -1327.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_n4",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -661.150024414062,
+    2.24640941619873,
+    -1333.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_s4",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -661.150024414062,
+    2.28930830955505,
+    -1327.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_n5",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -664.75,
+    2.22289323806763,
+    -1333.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_s5",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -664.75,
+    2.25948190689087,
+    -1327.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_n6",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -668.349975585938,
+    2.20146584510803,
+    -1333.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_s6",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -668.349975585938,
+    2.23161792755127,
+    -1327.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "garages/single_stucco_clay",
+   "label": "lockup_n7",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -671.950012207031,
+    2.18255496025085,
+    -1333.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_clay",
+   "label": "lockup_s7",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -671.950012207031,
+    2.20653367042542,
+    -1327.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_n8",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -675.549987792969,
+    2.16676473617554,
+    -1333.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_s8",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -675.549987792969,
+    2.18559837341309,
+    -1327.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_n9",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -679.150024414062,
+    2.15441966056824,
+    -1333.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_s9",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -679.150024414062,
+    2.16848802566528,
+    -1327.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_n10",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -682.75,
+    2.14534854888916,
+    -1333.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_s10",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -682.75,
+    2.15530228614807,
+    -1327.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_n11",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -686.349975585938,
+    2.14113903045654,
+    -1333.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_s11",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -686.349975585938,
+    2.14834213256836,
+    -1327.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "garages/single_stucco_clay",
+   "label": "lockup_n12",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -689.950012207031,
+    2.1410071849823,
+    -1333.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_clay",
+   "label": "lockup_s12",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -689.950012207031,
+    2.14723896980286,
+    -1327.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_n13",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -693.549987792969,
+    2.14269423484802,
+    -1333.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_s13",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -693.549987792969,
+    2.14721703529358,
+    -1327.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_n14",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -697.150024414062,
+    2.14479088783264,
+    -1333.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "garages/single_stucco_flat",
+   "label": "lockup_s14",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -697.150024414062,
+    2.14786410331726,
+    -1327.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "kit": "modular/examples/mod_wh_shed",
+   "label": "moving_warehouse",
+   "piece": "i_vb_w600_n1400_sw",
+   "pos": [
+    -630.0,
+    2.57541251182556,
+    -1316.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "ck/ck_brk3_row2",
+   "label": "brewery_taproom",
+   "piece": "i_vc_w600_n1400_se",
+   "pos": [
+    -571.0,
+    2.19359827041626,
+    -1376.58752441406
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "industrial/ind_factory",
+   "label": "brewhouse",
+   "piece": "i_vc_w600_n1400_se",
+   "pos": [
+    -532.0,
+    2.74282050132751,
+    -1316.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "kit": "ck/mod_stg_row_roofed",
+   "label": "keg_store",
+   "piece": "i_vc_w600_n1400_se",
+   "pos": [
+    -574.0,
+    2.74127602577209,
+    -1325.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "kit": "commercial/com_kiosk",
+   "label": "depot_check_in",
+   "piece": "i_va_w951_n1400_ne",
+   "pos": [
+    -906.388977050781,
+    2.15000009536743,
+    -1533.5
+   ],
+   "yaw": 90.0000025044782
   }
  ]
 }

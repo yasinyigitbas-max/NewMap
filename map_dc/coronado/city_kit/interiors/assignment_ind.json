@@ -528,6 +528,70 @@
      "w": 5.2
     }
    ]
+  },
+  {
+   "id": "ind_vb_w600_n1400_sw__island_movers_office__0",
+   "piece": "i_vb_w600_n1400_sw",
+   "label": "island_movers_office",
+   "model": "ck/ck_svc_bank_pharm",
+   "pos": [
+    -629.0,
+    2.17559909820557,
+    -1377.38745117188
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 4.6,
+   "door_w": 1.6,
+   "bay": [
+    -2.0,
+    5.7
+   ],
+   "kind": "sales_office",
+   "name": "Island Movers",
+   "style": "orange",
+   "why": "book a move or rent a storage unit: the movers' counter on 3rd St (the flats' door beside it stays theirs)",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "ind_vc_w600_n1400_se__brewery_taproom__0",
+   "piece": "i_vc_w600_n1400_se",
+   "label": "brewery_taproom",
+   "model": "ck/ck_brk3_row2",
+   "pos": [
+    -571.0,
+    2.19359827041626,
+    -1376.58752441406
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    2.2
+   ],
+   "kind": "taproom",
+   "name": "Coronado Brewing Taproom",
+   "style": "black",
+   "why": "the brewery's own bar on 3rd St: the beer from the tanks behind it, a beer garden out back",
+   "source": "industrial growth",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ]
   }
  ]
 }

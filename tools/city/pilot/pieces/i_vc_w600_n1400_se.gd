@@ -30,7 +30,6 @@ func _run() -> void:
 	var bl := Node3D.new(); bl.name = "Buildings"; root.add_child(bl)
 	var g := K.Ground.new(); var props := K.Props.new(); var dec := K.Decals.new(); var rr := W.rng_for(NAME)
 	var stl: Array = []
-	G.floor_rows(g, mr, sx, sz, [[9.0, 22.0, 16.0, 100.0, "grass"], [92.2, 24.0, 100.0, 100.0, "grass"], [21.0, 33.0, 37.0, 47.0, "gravel"]])
 	var B: Array = []
 	var fx := G.front_x(m, 22.0, 36.0)
 	B.append([G.put(bl, props, sx, sz, "x", 23.0, fx, "ck/ck_brk3_row2", "brewery_taproom"), "ck/ck_brk3_row2"])
@@ -72,7 +71,7 @@ func _run() -> void:
 	var obs := G.obstacles(bl, props, stl); var kp := [[41.0, 13.0, 49.0, 70.0], [76.0, 13.0, 84.0, 70.0], [16.0, 54.0, 50.0, 61.0], [49.0, 47.5, 92.0, 68.0]]
 	G.place(props, obs, rr, sx, sz, "prop_sign_stop", "worn", 49.0, 15.5, 51.0, 18.0, 180.0, kp, 3.0)                 # trucks leaving onto 3rd St
 	G.place(props, obs, rr, sx, sz, "prop_hydrant_red", "rusty", 46.0, 72.0, 49.0, 82.0, 0.0, kp)
-	G.spot(props, obs, rr, sx, sz, [["prop_trash_receptacle", "worn"], ["prop_recycling_receptacle", "worn"], ["prop_park_bench", "worn", 180.0]], 21.0, 33.0, 37.0, 47.0, 0.0, kp)   # the beer garden's bins and a bench facing the tables
+	G.spot(props, obs, rr, sx, sz, [["prop_trash_receptacle", "worn"], ["prop_recycling_receptacle", "worn"]], 21.0, 33.0, 37.0, 47.0, 0.0, kp)   # the beer garden's bins and a bench facing the tables
 	G.spot(props, obs, rr, sx, sz, [["prop_hose_reel_cart", "worn"], ["prop_channelizer_drum", "dirty"], ["prop_channelizer_drum", "dirty"]], 76.0, 36.0, 90.0, 47.0, 0.0, kp)   # cleaning chemicals and the wash-down hose by the tanks
 	G.spot(props, obs, rr, sx, sz, [["prop_trash_cart_black", "worn"], ["prop_trash_cart_green", "worn"]], 36.0, 18.0, 40.0, 30.0, 90.0, kp)   # the taproom's bins
 	# ---- wear
@@ -80,7 +79,10 @@ func _run() -> void:
 	I.truck_path(dec, rr, Vector2(sx * 45.0, sz * 14.0), Vector2(sx * 45.0, sz * 60.0))
 	I.truck_path(dec, rr, Vector2(sx * 80.0, sz * 14.0), Vector2(sx * 80.0, sz * 60.0))
 	I.truck_path(dec, rr, Vector2(sx * 16.0, sz * 57.0), Vector2(sx * 33.0, sz * 64.0))
-	I.yard_wear(dec, rr, sx, sz, 40.0, 20.0, 91.0, 70.0, 1.2)
+	G.yard_wear(dec, rr, sx, sz, 40.0, 20.0, 91.0, 70.0, 1.2)
+	# level pads under the buildings (Yasin 19 Nov: "shop is sunk"), then the floor, then everything onto the ground
+	for b: Array in B: G.pad(mr, sx, sz, b[0][0], b[1])
+	G.floor_rows(g, mr, sx, sz, [[9.0, 22.0, 16.0, 100.0, "grass"], [92.2, 24.0, 100.0, 100.0, "grass"], [21.0, 33.0, 37.0, 47.0, "gravel"]])
 	G.drape(mr, sx, sz, props, dec, bl)
 	var st2: Array = []
 	for r: Array in stl: st2.append([r[0], r[1], r[2], G.h_at(mr, sx * float(r[0]), sz * float(r[1])), 0.0])

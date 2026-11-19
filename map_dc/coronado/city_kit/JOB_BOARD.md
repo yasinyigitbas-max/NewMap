@@ -49,6 +49,19 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   ALSO (Yasin, 19 Nov, on the zone sessions fixing by generator: every fix rewrote ALL of a zone's rooms or blocks):
   "damage is done... we need to let them build all, lock all, then chck them one by one, lock and move onto the other
   one..."; then "do nothing for now". NOTHING was told to the extenders about it.
+- 19 Nov: INDUSTRIAL ZONE LOCKED (Yasin: "lock them for now, rest will be handmade adjustments"): the 11 pieces
+  (i_va_*, i_vb_*, i_vc_*, i_green_w951_n1400_se, the sample's overlay i_life_w800_n1400) in locked.json
+  "pieces", and the 16 rooms (interiors/rooms/g_ind_*.scn) in "files". Lock test RESULT PASS. From now on a change is
+  a hand-made adjustment on Yasin's word: lock.py unlock / unlockfile --by=Yasin, rebuild, check, relock.
+- 19 Nov (cloud, `claude/grow-industrial`): THE WHOLE INDUSTRIAL ZONE IS BUILT, NOTHING LOCKED (Yasin: "roll out to your
+  whole zone, then do a polish pass"). Four more pieces:
+  - movers + storage and the brewery south of 3rd St, draped onto G Ave's slope
+  - the freight station's empties depot and Alameda Green on the Alameda strips
+  - a life overlay `i_life_w800_n1400` for the locked sample
+  16 rooms (two new: movers' office, brewery taproom). Fixed from Yasin's pictures: services on doors and rollups,
+  the sunk shop on the slope, the stray benches, the shadow-like patches. Zone checks: validator 0, trees 0, sink 0,
+  rooms 0, lock PASS. The LOCKED sample still has the shadow-like patches (and maybe services by its doors): needs
+  Yasin's word. List: review/grow_ind/README.md. Baked numbers for the four new pieces not measured.
 - 19 Nov ~01:30 (PC session, after a context compaction; Yasin: "read all the rules performance budgets and my words
   from the chat"): everything pushed is MERGED again into `claude/festive-faraday-20ltx2` (df0c2dc): the whole
   residential zone (19 new quadrants, 5 rooms), gritty (4 more blocks, rooms rebuilt with boxes recorded), strip
