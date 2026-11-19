@@ -66,6 +66,28 @@
    "yaw": 0.0,
    "site": "block 2 west part: B Ave x 6th St, the high corner (u 259.2-350, v -500..-409.2)",
    "variant": "community room and preschool, walk-ups stepping up B Ave"
+  },
+  {
+   "piece": "n_apt_b3_w",
+   "pos": [
+    250.0,
+    8.0,
+    -400.0
+   ],
+   "yaw": 0.0,
+   "site": "block 3 (B Ave - Adela, 6th St - the residential quarters at z -300) west part (u 259.2-375, v -390.8..-300)",
+   "variant": "Hilltop Books, bungalow court, view garden"
+  },
+  {
+   "piece": "n_apt_b3_e",
+   "pos": [
+    250.0,
+    8.0,
+    -400.0
+   ],
+   "yaw": 0.0,
+   "site": "block 3 east part (u 375-490.8, v -390.8..-300)",
+   "variant": "garage townhouses stepping down, corner court"
   }
  ]
 }

@@ -126,7 +126,7 @@ static func atg(b: Dictionary, lx: float, lz: float, y := 0.0) -> Vector3:
 	return Vector3(p.x, gy(p.x, p.z) + y, p.z)
 
 ## the door x positions (building-local) of a building's front, de-duplicated
-static func doors_of(folder: String, kinds := ["apt_door", "shopdoor", "civic_door"]) -> Array:
+static func doors_of(folder: String, kinds := ["apt_door", "shopdoor", "civic_door", "door", "door_spanish", "door_craftsman", "door_modern"]) -> Array:
 	var out: Array = []
 	for e: Array in K.building_stats(folder).get("doors_front", []):
 		if String(e[0]) in kinds:
