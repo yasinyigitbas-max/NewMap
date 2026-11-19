@@ -1,0 +1,12 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 17 nodes (with every mesh of the buildings), 11970 ground and ground-collision triangles, 27 prop instances, 16 colliders, 69 wear marks are identical in both files
+PROOF differences found between the files: 6 lines only in the old one, 0 only in the new one
+PROOF change #1 remove_decal: one wear mark at (-26.90, 0.01, 4.35) removed  [tyre marks mark lies on ]
+PROOF change #2 remove_decal: one wear mark at (-26.90, 0.01, 2.75) removed  [tyre marks mark lies on ]
+PROOF change #3 remove_decal: one wear mark at (-26.48, 0.01, 3.47) removed  [oil mark lies on ]
+PROOF change #4 remove_decal: one wear mark at (-14.48, 0.16, -14.48) removed  [grime mark lies on grass]
+PROOF change #5 remove_decal: one wear mark at (14.48, 0.16, 8.70) removed  [grime mark hangs over the edge of the ground]
+PROOF change #6 remove_decal: one wear mark at (14.48, 0.16, -8.67) removed  [grime mark hangs over the edge of the ground]
+PROOF 6 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
