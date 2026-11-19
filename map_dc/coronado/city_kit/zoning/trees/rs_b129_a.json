@@ -1,0 +1,21 @@
+{
+ "area": "rs_b129_a",
+ "piece": "s_rs_b129_a",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart; the in-view limit (8 broadleaf / 12 trees within 60 m) is already reached from the streets round its middle and east end, so only its start has room",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    54.17,
+    4.269,
+    206.45
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass near the street's start, its old queen palm: the only stretch with room under the in-view limit (the well spot before it is paved, no tree stays in a well)"
+  }
+ ]
+}
