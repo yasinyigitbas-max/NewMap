@@ -200,7 +200,12 @@ class More:
                 if cross is not None:
                     ax, n_, p_, w = cross; hw = float(np.abs((it.quad - it.ctr) @ ax).max())
                     clear = max(n_ - hw, p_ - hw) + 0.2
-                    if w >= 1.4 and clear < 1.2:
+                    if w >= 1.4 and clear < 1.2 and has(it.base, ('prop_signal',)):
+                        # (cloud-top, 19 Nov) a traffic signal post stands at the corner where its heads must be seen from
+                        # the stop line: there is no other right place, and erasing it leaves an approach with no signal.
+                        # The first street junctions lost three posts this way (j_ar_ad3, j_ar_ad5, j_ar_g3; put back).
+                        self.add('walk_narrow', '%s leaves %.1f m of a %.1f m wide walk (a signal post: reported, not moved)' % (it.base, max(clear, 0.0), w), it.pos, it, amount=clear, mode='report', sure='a signal post belongs at its corner; look before calling it a fault')
+                    elif w >= 1.4 and clear < 1.2:
                         self.add('walk_narrow', '%s leaves %.1f m of a %.1f m wide walk' % (it.base, max(clear, 0.0), w), it.pos, it, amount=clear, mode='choose', fix=self.fix_move(it), sure='measured across the paving it stands on; other things beside it are not counted')
                     if it.base.startswith('prop_bike_rack') and abs(float(it.along() @ ax)) > 0.7:
                         self.add('rack_across', 'the bike rack stands across the walk, not along it', it.pos, it, mode='choose', fix=self.fix_move(it, turn=90.0))

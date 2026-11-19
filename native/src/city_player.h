@@ -49,6 +49,7 @@ class CityPlayer : public CharacterBody3D {
 	int punch_side = 0;            // 0 the left (jab), 1 the right (cross): taken in turn
 	double punch_t = 9.0, punch_len = 0.6, swing_cd = 0.0, tap_cd = 0.0;
 	int punches = 0, hits_taken = 0;
+	double combat_t = 9.0, uncombat_t = 9.0;
 	double hit_t = 9.0;
 	Vector3 acc_lp; bool acc_init = false;
 	double acc_spike_t = -9.0, mic_spike_t = -9.0;
@@ -78,7 +79,8 @@ public:
 	void punch() { if (combat) punch_req = true; }
 	bool take_combat_request() { const bool r = combat_req; combat_req = false; return r; }
 	int take_punch();   // 0 none, else 1 + the side of a punch that starts now
-	void set_combat(bool p_on, const Vector3 &p_target) { combat = p_on; combat_target = p_target; if (!p_on) punch_req = false; }
+	// (Yasin: "use punch kick enter exit animations too"): into the guard with PunchKick_Enter played through, out of it with PunchKick_Exit
+	void set_combat(bool p_on, const Vector3 &p_target) { if (p_on && !combat) combat_t = 0.0; if (!p_on && combat) uncombat_t = 0.0; combat = p_on; combat_target = p_target; if (!p_on) punch_req = false; }
 	bool get_combat() const { return combat; }
 	int get_punches() const { return punches; }
 	void take_hit() { hit_t = 0.0; hits_taken++; }   // a blow taken on his feet (the hit clip)

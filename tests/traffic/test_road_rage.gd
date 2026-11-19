@@ -24,6 +24,8 @@ var spot := Vector3.ZERO
 var k0 := {}
 var rager := -1
 var tries := 0
+var part := 2
+var dist0 := 0.0
 
 func _initialize() -> void:
 	for a: String in OS.get_cmdline_user_args():
@@ -156,19 +158,31 @@ func _physics_process(delta: float) -> bool:
 			for r: Dictionary in fs.ragers: if int(r.foe) == -1: rager = int(r.walker)
 			_check(rager >= 0, "he is going for the player (the one who hit him)")
 			phase = 4; t0 = t
-		4:      # he yells; nothing more while the player sits in his car
+		4:      # he yells; the player stays in his car
 			if t - t0 < 4.0: return false
 			var fs: Dictionary = crowd.call(&"fight_stats")
-			_check(int(fs.rage_fights) == 0 and not bool(player.call(&"get_combat")), "while the player sits in his car: no fight yet (he stands by and yells)")
-			# the player gets out beside his car
-			var cb := (car as Node3D).global_basis
+			_check(int(fs.rage_fights) == 0 and not bool(player.call(&"get_combat")), "the player stays in his car: no fight, he is not taken out (the driver stands by and yells)")
+			if part == 2:   # part 2: a hit and run: the player drives 80 m off
+				var cb := (car as Node3D).global_basis
+				_set_car((car as Node3D).global_position + cb.z * 80.0, atan2(cb.z.x, cb.z.z), 0.0)
+				car.call(&"set_controls", 0.0, 1.0, 0.0, 0.0, false)
+				phase = 41; t0 = t; return false
+			# part 3: the player gets out 15 m from the angry driver
+			var ra := _rager_at()
+			var away := ((car as Node3D).global_position - ra); away.y = 0.0
 			player.call(&"set_riding", false)
-			player.global_position = (car as Node3D).global_position + cb.x * 1.6 + Vector3(0, 0.1, 0)
-			phase = 5; t0 = t
-		5:
+			player.global_position = ra + away.normalized() * 15.0 + Vector3(0, 0.3, 0)
+			phase = 5; t0 = t; dist0 = 15.0
+		41:
 			var fs: Dictionary = crowd.call(&"fight_stats")
-			if not bool(player.call(&"get_combat")) and t - t0 < 4.0: return false
-			_check(bool(player.call(&"get_combat")) and int(fs.walker) == rager, "on foot, the player is put in combat, locked on the angry driver (%.1f s)" % (t - t0))
+			if int(fs.rage_given_up) == 0 and t - t0 < 12.0: return false
+			_check(int(fs.rage_given_up) >= 1 and int(fs.rage_fights) == 0, "a hit and run: the player drove off, the driver gave up (%.1f s)" % (t - t0))
+			part = 3; phase = 2; t0 = t; rager = -1
+		5:      # he runs after the player and the fight starts when he reaches him
+			var fs: Dictionary = crowd.call(&"fight_stats")
+			if not bool(player.call(&"get_combat")) and t - t0 < 10.0: return false
+			_check(int(fs.rage_chases) >= 1, "the player on foot: the angry driver ran after him (15 m)")
+			_check(bool(player.call(&"get_combat")) and int(fs.walker) == rager, "he reached him: the player is in combat, locked on him (%.1f s after getting out)" % (t - t0))
 			phase = 6; t0 = t
 		6:      # he attacks
 			var fs: Dictionary = crowd.call(&"fight_stats")
