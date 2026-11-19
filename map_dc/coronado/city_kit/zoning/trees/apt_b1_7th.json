@@ -1,0 +1,45 @@
+{
+ "area": "apt_b1_7th",
+ "piece": "n_apt_b1_7th",
+ "zone": "apartments",
+ "rule": "docs/TREE_PLAN.md: some - one tree per court, placed for the seating; a street row; hedges only where they close a yard (zone 117 -> about 60)",
+ "written": "by hand, 19 Nov 2026 (PC session, city-wide superchecker run): the builder trees out, one per court kept on its own spot",
+ "trees": [
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    458.0,
+    6.15,
+    -640.0
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "kept on its spot: the east court's tree"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    426.5,
+    6.15,
+    -688.0
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "kept on its spot: the middle court's tree"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    361.0,
+    6.15,
+    -674.0
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "kept on its spot: the west court's tree"
+  }
+ ]
+}
