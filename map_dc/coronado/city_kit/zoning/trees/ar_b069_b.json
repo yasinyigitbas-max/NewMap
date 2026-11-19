@@ -1,0 +1,57 @@
+{
+ "area": "ar_b069_b",
+ "piece": "s_ar_b069_b",
+ "zone": "Arterial",
+ "rule": "docs/TREE_PLAN.md: arterials - trees on the grass strips only, one species a face; east face palms because 4 jacarandas put 9 broadleaf in view (limit 8); Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    202.694,
+    2.403,
+    -1411.255
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west grass strip, nothing within 3 m: jacaranda, the face's species"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    156.444,
+    3.84,
+    -1411.25
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west grass strip, 46 m on: the spot at 81.5 m (2.3 m off the speed sign) skipped so the sign reads"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    219.773,
+    2.179,
+    -1388.634
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east grass strip, nothing within 3 m: queen palm (the broadleaf in view was over its limit)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    184.303,
+    2.856,
+    -1388.793
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east grass strip, 35.5 m on: same run"
+  }
+ ]
+}
