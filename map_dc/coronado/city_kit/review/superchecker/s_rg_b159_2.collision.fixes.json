@@ -1,0 +1,37 @@
+{
+ "fixes": [
+  {
+   "at": [
+    90.61,
+    0.0,
+    9.8
+   ],
+   "n": 1.0,
+   "op": "add_ground_col",
+   "poly": [
+    [
+     90.26,
+     9.45,
+     0.0
+    ],
+    [
+     90.96,
+     9.45,
+     0.0
+    ],
+    [
+     90.96,
+     10.15,
+     0.0
+    ],
+    [
+     90.26,
+     10.15,
+     0.0
+    ]
+   ],
+   "reason": "a ray straight down through a triangle corner of the road inside this piece misses (Godot's ray test is strict at an exact corner; at (-825.4, 285.8)). A 0.7 m collision square at the road's own height, nothing drawn (Yasin: \"fill those too with collisions, dont change the appereance\")"
+  }
+ ],
+ "scene": "s_rg_b159_2"
+}

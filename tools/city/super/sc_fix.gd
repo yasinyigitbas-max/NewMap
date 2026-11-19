@@ -21,7 +21,8 @@ extends SceneTree
 ##                 ground COLLISION only: nothing drawn changes (19 Nov, the collision-holes job; Yasin: "fill those too
 ##                 with collisions, dont change the appereance"). For a place the people's ways cross where no ground
 ##                 collision is (the pavement ends a little short of where the crowd walks, a corner left open).
-##                 The proof: exactly (corners - 2) new collision triangles, all inside that polygon at that height.
+##                 A corner may carry its own height ([x, z, y]: on a slope, the ground's own plane there).
+##                 The proof: exactly (corners - 2) new collision triangles, each made of the listed corners.
 ## The fix list is a plain file, one line per item, each with the item's own position, its new position and a reason.
 ##
 ##   --apply --in=<scn> --fixes=<json> --out=<scn>     writes a NEW file; <in> is never written
@@ -331,7 +332,7 @@ func _apply_well(top: Node, f: Dictionary) -> String:
 ## the listed polygon as [Vector3 corners at its height] in the piece's frame; [] when it is not a plain convex polygon
 func _gc_poly(f: Dictionary) -> Array:
 	var y := float(f.get("y", 0.0)); var out: Array = []
-	for c: Array in f.get("poly", []): out.append(Vector3(float(c[0]), y, float(c[1])))
+	for c: Array in f.get("poly", []): out.append(Vector3(float(c[0]), float(c[2]) if c.size() > 2 else y, float(c[1])))      # [x, z] at "y", or [x, z, y]
 	if out.size() < 3: return []
 	var sg := 0.0
 	for i in out.size():
@@ -641,27 +642,21 @@ func _prove(a: Node, b: Node, fixes: Array) -> bool:
 			print("PROOF change %s: the tree well at (%.2f, %.2f, %.2f) paved over: %d ground / collision triangles within 1.3 m replaced by %d  [%s]" % [tag, at.x, at.y, at.z, g_old, g_new, String(f.get("reason", ""))])
 			continue
 		if op == "add_ground_col":
-			var poly := _gc_poly(f); var y := float(f.get("y", 0.0)); var got := 0
-			var p2: Array = []
-			for c: Vector3 in poly: p2.append(Vector2(c.x, c.z))
+			var poly := _gc_poly(f); var got := 0
 			var q3 := 0
-			while q3 < come.size():
+			while q3 < come.size():      # a new collision triangle whose three corners are all listed corners of this polygon
 				var rr2: Dictionary = ib.get(come[q3], {})
 				var mine := String(rr2.get("k", "")) == "GC" and not poly.is_empty()
 				if mine:
-					var cen := Vector2.ZERO
 					for vv: Vector3 in rr2["v"]:
-						cen += Vector2(vv.x, vv.z) / 3.0
-						if absf(vv.y - y) > 0.002: mine = false
-						var on := false      # a corner of the polygon or inside it
-						for pc: Vector2 in p2:
-							if pc.distance_to(Vector2(vv.x, vv.z)) < 0.002: on = true
-						if not on and not Geometry2D.is_point_in_polygon(Vector2(vv.x, vv.z), PackedVector2Array(p2)): mine = false
-					if mine and not Geometry2D.is_point_in_polygon(cen, PackedVector2Array(p2)): mine = false
+						var on := false
+						for pc: Vector3 in poly:
+							if pc.distance_to(vv) < 0.002: on = true
+						if not on: mine = false
 				if mine and got < poly.size() - 2: come.remove_at(q3); got += 1
 				else: q3 += 1
 			if got != poly.size() - 2: print("PROOF MISSING %s: %d of %d collision triangles found in the polygon at %s" % [tag, got, poly.size() - 2, str(at)]); ok = false; continue
-			print("PROOF change %s: %d collision triangles added (nothing drawn), a %d-corner polygon at height %.3f round (%.2f, %.2f)  [%s]" % [tag, got, poly.size(), y, at.x, at.z, String(f.get("reason", ""))])
+			print("PROOF change %s: %d collision triangles added (nothing drawn), a %d-corner polygon at height %.3f..%.3f round (%.2f, %.2f)  [%s]" % [tag, got, poly.size(), poly.map(func(c): return c.y).min(), poly.map(func(c): return c.y).max(), at.x, at.z, String(f.get("reason", ""))])
 			continue
 		if op == "remove_decal":
 			var hit := -1

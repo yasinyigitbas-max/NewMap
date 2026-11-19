@@ -1,0 +1,37 @@
+{
+ "fixes": [
+  {
+   "at": [
+    0.0,
+    0.0,
+    125.0
+   ],
+   "n": 1.0,
+   "op": "add_ground_col",
+   "poly": [
+    [
+     -2.9,
+     124.85,
+     0.0
+    ],
+    [
+     2.9,
+     124.85,
+     0.0
+    ],
+    [
+     2.9,
+     125.15,
+     0.0
+    ],
+    [
+     -2.9,
+     125.15,
+     0.0
+    ]
+   ],
+   "reason": "the lane centre runs exactly along the seam between this piece and s_rs_b094_b (world x = 375.000); a ray straight down onto the seam misses at points (the shared edge rounds apart; the scan, 0.5 m along: misses at (375.0, -800.0)). A 0.3 m collision strip over the seam at the road's own height, nothing drawn (Yasin: \"fill those too with collisions, dont change the appereance\")"
+  }
+ ],
+ "scene": "s_rs_b094_a"
+}

@@ -1,0 +1,8 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 14 nodes (with every mesh of the buildings), 2430 ground and ground-collision triangles, 8 prop instances, 4 colliders, 38 wear marks are identical in both files
+PROOF differences found between the files: 0 lines only in the old one, 4 only in the new one
+PROOF change #1 add_ground_col: 2 collision triangles added (nothing drawn), a 4-corner polygon at height 0.150..0.150 round (18.37, -9.76)  [the crowd's walking band passes beyond the pavement here, onto ground nothing is built on (the land shows; at (-975.4, -1009.8); nearest built ground: j_rg_nw_w994_n1000 asphalt 1.50 m; j_rg_nw_w994_n1000 concrete 0.30 m). Collision only, at the pavement's own height (0.150), the band's misses + 0.35 m; nothing drawn (Yasin: "fill those too with collisions, dont change the appereance")]
+PROOF change #2 add_ground_col: 2 collision triangles added (nothing drawn), a 4-corner polygon at height 0.150..0.150 round (12.27, 9.36)  [the crowd's walking band passes beyond the pavement here, onto ground nothing is built on (the land shows; at (-981.5, -990.6); nearest built ground: j_rg_nw_w994_n1000 asphalt 2.92 m; j_rg_nw_w994_n1000 concrete 0.16 m). Collision only, at the pavement's own height (0.150), the band's misses + 0.35 m; nothing drawn (Yasin: "fill those too with collisions, dont change the appereance")]
+PROOF 2 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
