@@ -1,0 +1,551 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -19.2000007629395,
+    1.13143074512482,
+    -137.399993896484
+   ],
+   "base": "plant_potted_leafy",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 29.0,
+   "op": "add_collider",
+   "reason": "plant_potted_leafy has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -19.2000007629395,
+    1.13143074512482,
+    -144.100006103516
+   ],
+   "base": "plant_potted_leafy",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 30.0,
+   "op": "add_collider",
+   "reason": "plant_potted_leafy has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -47.7999992370605,
+    1.46572029590607,
+    -150.100006103516
+   ],
+   "base": "plant_potted_leafy",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 31.0,
+   "op": "add_collider",
+   "reason": "plant_potted_leafy has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -16.25,
+    1.65915381908417,
+    -155.899993896484
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent stands in front of a shop window of shops]"
+  },
+  {
+   "at": [
+    -16.2999992370605,
+    1.94523072242737,
+    -166.199996948242
+   ],
+   "base": "prop_propane_cylinder_100lb",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_propane_cylinder_100lb stands in front of a shop window of hardware]"
+  },
+  {
+   "at": [
+    -16.2999992370605,
+    1.95630764961243,
+    -166.649993896484
+   ],
+   "base": "prop_propane_cylinder_100lb",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_propane_cylinder_100lb stands in front of a shop window of hardware]"
+  },
+  {
+   "at": [
+    -16.2999992370605,
+    1.9660769701004,
+    -167.100006103516
+   ],
+   "base": "prop_propane_cylinder_100lb",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_propane_cylinder_100lb stands in front of a shop window of hardware]"
+  },
+  {
+   "at": [
+    -30.1200008392334,
+    1.21000003814697,
+    -103.0
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -30.1200008392334,
+    1.21140003204346,
+    -103.419998168945
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -30.1200008392334,
+    1.21280002593994,
+    -103.839996337891
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -30.1200008392334,
+    0.370599985122681,
+    -104.699996948242
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_gas is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -30.1200008392334,
+    0.150000005960464,
+    -98.0
+   ],
+   "base": "prop_downspout_3m",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_downspout_3m is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -30.1200008392334,
+    0.394153833389282,
+    -117.900001525879
+   ],
+   "base": "prop_downspout_3m",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_downspout_3m is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -30.75,
+    0.234846159815788,
+    -110.099998474121
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (2.1 m from a wall, 19.8 m from a fence)]"
+  },
+  {
+   "at": [
+    -30.75,
+    0.247153848409653,
+    -110.900001525879
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 12.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.1 m from a wall, 19.8 m from a fence)]"
+  },
+  {
+   "at": [
+    -30.75,
+    0.259461551904678,
+    -111.699996948242
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.1 m from a wall, 19.8 m from a fence)]"
+  },
+  {
+   "at": [
+    -16.25,
+    0.190264999866486,
+    -106.769996643066
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 23.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -16.25,
+    0.218999996781349,
+    -109.069999694824
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 25.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -16.25,
+    1.68167686462402,
+    -156.619995117188
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "over_edge",
+   "mode": "choose",
+   "n": 27.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]"
+  },
+  {
+   "at": [
+    -39.750239084431,
+    2.63207376003266,
+    -134.15539659955
+   ],
+   "box": [
+    -6.58460855484009,
+    1.50064301490784,
+    -7.75023937225342,
+    0.57099536895752,
+    3.00128602981567,
+    0.740166702270508
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 36.0,
+   "name": "sc_col_0",
+   "node": "Buildings/church",
+   "op": "add_box",
+   "reason": "church: a 0.5 x 0.7 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -39.7502396600712,
+    2.63207376003266,
+    -147.324508328218
+   ],
+   "box": [
+    6.58450317382812,
+    1.50064301490784,
+    -7.75023937225342,
+    0.570994415283203,
+    3.00128602981567,
+    0.740166702270508
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 37.0,
+   "name": "sc_col_1",
+   "node": "Buildings/church",
+   "op": "add_box",
+   "reason": "church: a 0.5 x 0.7 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -21.298250178688,
+    2.83132761716843,
+    -140.2898664384
+   ],
+   "box": [
+    -0.45013952255249,
+    1.69989687204361,
+    10.7017498016357,
+    0.939954795837402,
+    2.80001962184906,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 38.0,
+   "name": "sc_col_2",
+   "node": "Buildings/church",
+   "op": "add_box",
+   "reason": "church: a 0.9 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -21.2982502350633,
+    2.83132761716843,
+    -141.579582205307
+   ],
+   "box": [
+    0.839576244354248,
+    1.69989687204361,
+    10.7017498016357,
+    0.160430946350098,
+    2.80001962184906,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 39.0,
+   "name": "sc_col_3",
+   "node": "Buildings/church",
+   "op": "add_box",
+   "reason": "church: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -36.2501880628551,
+    2.63207376003266,
+    -134.155396752542
+   ],
+   "box": [
+    -6.58460855484009,
+    1.50064301490784,
+    -4.25018835067749,
+    0.57099536895752,
+    3.00128602981567,
+    0.740166702270508
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 40.0,
+   "name": "sc_col_4",
+   "node": "Buildings/church",
+   "op": "add_box",
+   "reason": "church: a 0.5 x 0.7 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -36.2501886384953,
+    2.63207376003266,
+    -147.324508481211
+   ],
+   "box": [
+    6.58450317382812,
+    1.50064301490784,
+    -4.25018835067749,
+    0.570994415283203,
+    3.00128602981567,
+    0.740166702270508
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 41.0,
+   "name": "sc_col_5",
+   "node": "Buildings/church",
+   "op": "add_box",
+   "reason": "church: a 0.5 x 0.7 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -16.8251672711168,
+    3.25141847133637,
+    -160.954929647944
+   ],
+   "box": [
+    2.10492324829102,
+    1.49998259544373,
+    6.77483320236206,
+    0.489979782104492,
+    2.99996519088745,
+    0.490083732604981
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 42.0,
+   "name": "sc_col_0",
+   "node": "Buildings/shops",
+   "op": "add_box",
+   "reason": "shops: a 0.4 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -16.7200366790941,
+    3.25141847133637,
+    -162.795002284376
+   ],
+   "box": [
+    3.94499588012695,
+    1.49998259544373,
+    6.87996387481689,
+    0.16,
+    2.99996519088745,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 43.0,
+   "name": "sc_col_1",
+   "node": "Buildings/shops",
+   "op": "add_box",
+   "reason": "shops: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -16.8251670969245,
+    3.25141847133637,
+    -156.969875631831
+   ],
+   "box": [
+    -1.88013076782227,
+    1.49998259544373,
+    6.77483320236206,
+    0.16,
+    2.99996519088745,
+    0.490083732604981
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 44.0,
+   "name": "sc_col_2",
+   "node": "Buildings/shops",
+   "op": "add_box",
+   "reason": "shops: a 0.1 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -31.2249872103408,
+    3.62089049816132,
+    -175.52503969718
+   ],
+   "box": [
+    4.12504613399506,
+    1.58999311923981,
+    -7.62498664855957,
+    0.690000810623169,
+    3.17998623847961,
+    0.289996185302734
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 45.0,
+   "name": "sc_col_0",
+   "node": "Buildings/hardware",
+   "op": "add_box",
+   "reason": "hardware: a 0.7 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -16.7750069198963,
+    3.53089606761933,
+    -169.349959791013
+   ],
+   "box": [
+    -2.05003440380096,
+    1.49999868869781,
+    6.8249933719635,
+    0.340022840499878,
+    2.99999737739563,
+    0.389986553192139
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 46.0,
+   "name": "sc_col_1",
+   "node": "Buildings/hardware",
+   "op": "add_box",
+   "reason": "hardware: a 0.3 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -15.5500033617253,
+    3.5706433057785,
+    -179.6824676933
+   ],
+   "box": [
+    -3.81753265857697,
+    1.42064321041107,
+    8.04999685287476,
+    0.20498064994812,
+    2.84128642082214,
+    1.14000705718994
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 47.0,
+   "name": "sc_col_0",
+   "node": "Buildings/corner",
+   "op": "add_box",
+   "reason": "corner: a 0.2 x 1.1 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "n_hs_b2_amber"
+}

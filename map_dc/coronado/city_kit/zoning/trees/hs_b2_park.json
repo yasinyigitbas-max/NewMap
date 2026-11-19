@@ -3,20 +3,8 @@
  "piece": "n_hs_b2_park",
  "zone": "park (in the high-street band)",
  "rule": "docs/TREE_PLAN.md: civic and parks - a park is where trees are the point: clumps of 3-5 at the edges and round the seating, open lawn in the middle (zone 154 -> about 100)",
- "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The park's eight builder trees go; five come back on their own spots at the edges: two by the picnic table at the west edge, one over the bench, two at the east edge by the bike rack (seven were over the in-view limit with the blocks round it). The middle of the lawn stays open.",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The park's eight builder trees go; four come back on their own spots at the edges: one at the west edge by the bougainvillea, one over the bench, two at the east edge by the bike rack (more were over the in-view limit with the blocks round it). The middle of the lawn stays open.",
  "trees": [
-  {
-   "base": "tree_coral_a",
-   "cond": "normal",
-   "at": [
-    -95.0,
-    4.15,
-    -20.0
-   ],
-   "yaw": 0.0,
-   "scale": 0.9,
-   "why": "the west clump, by the picnic table (3.8 m off): shade over the table"
-  },
   {
    "base": "tree_magnolia_b",
    "cond": "normal",
@@ -27,7 +15,7 @@
    ],
    "yaw": 200.0,
    "scale": 0.9,
-   "why": "the west clump's second, by the bougainvillea"
+   "why": "the west edge by the bougainvillea, near the picnic table"
   },
   {
    "base": "tree_magnolia_b",

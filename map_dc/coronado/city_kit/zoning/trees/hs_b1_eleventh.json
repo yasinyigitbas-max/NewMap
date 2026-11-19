@@ -1,0 +1,11 @@
+{
+ "area": "hs_b1_eleventh", "piece": "n_hs_b1_eleventh", "zone": "high street band (yards and lawn)",
+ "rule": "docs/TREE_PLAN.md: high street (pilot), Amber spine, arterials (zone 406 -> about 360); behind the buildings the residential yards rule - one tree for every two or three houses, never against a fence or a wall",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's twelve builder trees go (four eucalyptus in a line 11 m apart, a line of corals, ficus, a jacaranda and a queen palm 1.5-2.2 m from the west fence, broadleaf on the lawn); four come back on their own spots: two on the open lawn 20 m from the walls, two of the eucalyptus line 32 m apart.",
+ "trees": [
+  {"base": "tree_coral_a", "cond": "normal", "at": [-54.0, 3.83, 156.0], "yaw": 0.0, "scale": 0.9, "why": "the open lawn at the east, 20 m from the walls: a full coral tree"},
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [-78.8, 3.413, 154.8], "yaw": 90.0, "scale": 0.9, "why": "the same lawn 25 m west, 20 m from the walls: the lawn's second tree"},
+  {"base": "tree_eucalyptus_a", "cond": "normal", "at": [-91.5, 3.895, 103.0], "yaw": 180.0, "scale": 0.9, "why": "the north end of the old eucalyptus line, 10 m from the building"},
+  {"base": "tree_eucalyptus_b", "cond": "normal", "at": [-89.5, 3.894, 135.0], "yaw": 270.0, "scale": 0.9, "why": "the same line 32 m south: every other eucalyptus kept"}
+ ]
+}

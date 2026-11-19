@@ -721,6 +721,19 @@
    "node": "Buildings/cave_walkup_m",
    "op": "add_box",
    "reason": "cave_walkup_m: a 0.2 x 1.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -147.6,
+    0.0899999999999999,
+    -213.0
+   ],
+   "ground": "ground",
+   "kind": "well",
+   "mode": "auto",
+   "n": 10001.0,
+   "op": "fill_well",
+   "reason": "the well of a removed tree whose twin 2.4 m off stays: paved in its rim's own material"
   }
  ],
  "scene": "n_cc_b4_w"

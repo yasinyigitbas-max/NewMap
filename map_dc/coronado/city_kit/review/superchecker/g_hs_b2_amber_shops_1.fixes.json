@@ -1,0 +1,35 @@
+{
+ "fixes": [
+  {
+   "at": [
+    2.38000011444092,
+    0.0,
+    4.40000009536743
+   ],
+   "base": "prop_brochure_rack",
+   "chosen": true,
+   "cond": "",
+   "kind": "queue_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_brochure_rack stands in the queue space in front of prop_glass_display_case]"
+  },
+  {
+   "at": [
+    2.43534708023071,
+    0.0,
+    -0.789389133453369
+   ],
+   "base": "prop_potted_plant",
+   "chosen": true,
+   "cond": "",
+   "kind": "queue_blocked",
+   "mode": "choose",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_potted_plant stands in the queue space in front of prop_glass_display_case]"
+  }
+ ],
+ "scene": "g_hs_b2_amber_shops_1"
+}

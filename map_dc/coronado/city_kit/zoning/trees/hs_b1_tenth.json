@@ -1,0 +1,33 @@
+{
+ "area": "hs_b1_tenth",
+ "piece": "n_hs_b1_tenth",
+ "zone": "high street",
+ "rule": "docs/TREE_PLAN.md: high street (pilot), Amber spine, arterials (zone 406 -> about 360); strip rule for the car park: one tree per car-park island end; yards behind: one tree for two or three houses",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's ten builder trees go (a palm on an iceplant bed 2.7 m from a wall, a queen palm 0.9 m from a fence, trees crowded by the bougainvillea, two by the car park, two behind picket fences); two come back on their own spots: the two along the car park's edge, 30 m apart (a third, in a back yard, was over the in-view limit with the blocks round it).",
+ "trees": [
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -69.8,
+    4.15,
+    60.8
+   ],
+   "yaw": 0.0,
+   "scale": 0.85,
+   "why": "the car park's edge by the wheel stops and the lot light: shade for the cars at one end"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -63.2,
+    4.15,
+    90.2
+   ],
+   "yaw": 120.0,
+   "scale": 0.85,
+   "why": "the car park's other end, 30 m on: the same"
+  }
+ ]
+}

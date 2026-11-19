@@ -78,3 +78,5 @@ PROOF RESULT PASS
    at: parse_gdextension_file (core/extension/gdextension_library_loader.cpp:282)
    at: open_library (core/extension/gdextension.cpp:810)
    at: load_extensions (core/extension/gdextension_manager.cpp:333)
+
+--- second install (the twin well paved) ---

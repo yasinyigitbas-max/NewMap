@@ -16,18 +16,6 @@
    "yaw": 0,
    "scale": 0.95,
    "why": "kept on its spot: a tree in a well in the paving, as the plan wants for the city centre"
-  },
-  {
-   "base": "tree_ficus_a",
-   "cond": "normal",
-   "at": [
-    -147.6,
-    6.09,
-    -813.0
-   ],
-   "yaw": 113,
-   "scale": 0.85,
-   "why": "kept on its spot: a tree in a well in the paving, as the plan wants for the city centre"
   }
  ]
 }
