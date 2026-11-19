@@ -1,0 +1,1558 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -53.0,
+    1.91663575172424,
+    91.25
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.13 m over what is under it",
+   "to": [
+    -53.0,
+    1.78437133247532,
+    91.25
+   ]
+  },
+  {
+   "at": [
+    -54.2999992370605,
+    1.91663575172424,
+    91.25
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.13 m over what is under it",
+   "to": [
+    -54.2999992370605,
+    1.78438314701209,
+    91.25
+   ]
+  },
+  {
+   "at": [
+    -23.0,
+    0.513674914836884,
+    34.75
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.15 m over what is under it",
+   "to": [
+    -23.0,
+    0.363674908876419,
+    34.75
+   ]
+  },
+  {
+   "at": [
+    -69.0,
+    0.53626537322998,
+    24.75
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.14 m over what is under it",
+   "to": [
+    -69.0,
+    0.395227079474517,
+    24.75
+   ]
+  },
+  {
+   "at": [
+    -43.9000015258789,
+    2.03861498832703,
+    92.4000015258789
+   ],
+   "base": "prop_trash_cart_black",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "move",
+   "reason": "prop_trash_cart_black hangs 0.12 m over what is under it",
+   "to": [
+    -43.9000015258789,
+    1.91929820169239,
+    92.4000015258789
+   ]
+  },
+  {
+   "at": [
+    -36.0999984741211,
+    2.03861498832703,
+    92.1999969482422
+   ],
+   "base": "prop_cone_28in",
+   "cond": "dirty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 19.0,
+   "op": "move",
+   "reason": "prop_cone_28in hangs 0.06 m over what is under it",
+   "to": [
+    -36.0999984741211,
+    1.97676104556054,
+    92.1999969482422
+   ]
+  },
+  {
+   "at": [
+    -45.5,
+    0.548407673835754,
+    30.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    -45.5,
+    0.666493820376218,
+    30.0
+   ]
+  },
+  {
+   "at": [
+    -80.5,
+    0.844519674777985,
+    40.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    -80.5,
+    0.962482780879381,
+    40.0
+   ]
+  },
+  {
+   "at": [
+    -60.0,
+    1.33253717422485,
+    63.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 22.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    -60.0,
+    1.4505807413268,
+    63.0
+   ]
+  },
+  {
+   "at": [
+    -19.5999984741211,
+    1.56367492675781,
+    34.0200004577637
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 26.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 45 cm over a apt door of visitors_corner]",
+   "to": [
+    -18.3999984741211,
+    1.56367492675781,
+    34.0200002479489
+   ]
+  },
+  {
+   "at": [
+    -20.019998550415,
+    1.56367492675781,
+    34.0200004577637
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 27.0,
+   "op": "move",
+   "reason": "moved slid -1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 43 cm over a apt door of visitors_corner]",
+   "to": [
+    -21.219998550415,
+    1.56367492675781,
+    34.0200006675784
+   ]
+  },
+  {
+   "at": [
+    -51.2999992370605,
+    2.11663579940796,
+    90.5199966430664
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 28.0,
+   "op": "move",
+   "reason": "moved slid -0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 23 cm from a apt door of harbor_medical_plaza (services keep 35 cm off)]",
+   "to": [
+    -51.8999992370605,
+    2.11663579940796,
+    90.5199967479737
+   ]
+  },
+  {
+   "at": [
+    -45.5,
+    1.08261168003082,
+    54.0
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -90.8000030517578,
+    0.963353335857391,
+    45.0
+   ],
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -96.1999969482422,
+    0.481006383895874,
+    24.0
+   ],
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -96.1999969482422,
+    1.36715054512024,
+    63.0
+   ],
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -94.466667175293,
+    0.223922699689865,
+    15.9499998092651
+   ],
+   "base": "tree_norfolk_pine_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_norfolk_pine_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -89.533332824707,
+    0.222180217504501,
+    15.9499998092651
+   ],
+   "base": "tree_norfolk_pine_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "tree_norfolk_pine_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -96.1999969482422,
+    1.07814931869507,
+    50.0
+   ],
+   "base": "tree_norfolk_pine_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "tree_norfolk_pine_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -96.1999969482422,
+    1.92119145393372,
+    89.0
+   ],
+   "base": "tree_norfolk_pine_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "tree_norfolk_pine_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -66.8000030517578,
+    0.366636395454407,
+    15.9499998092651
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -58.2000007629395,
+    0.216863319277763,
+    15.9499998092651
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -36.5,
+    0.199651032686234,
+    15.9499998092651
+   ],
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -96.1999969482422,
+    0.781965315341949,
+    37.0
+   ],
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -96.1999969482422,
+    1.64723575115204,
+    76.0
+   ],
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -49.5999984741211,
+    2.96663570404053,
+    90.5199966430664
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 23.0,
+   "op": "remove",
+   "reason": "erased (in doubt): its new place made a new fault: deleted instead [moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 15 cm from a apt door of harbor_medical_plaza (services keep 35 cm off)]]"
+  },
+  {
+   "at": [
+    -50.0200004577637,
+    2.96663570404053,
+    90.5199966430664
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 24.0,
+   "op": "remove",
+   "reason": "erased (in doubt): its new place made a new fault: deleted instead [moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 27 cm over a apt door of harbor_medical_plaza]]"
+  },
+  {
+   "at": [
+    -50.439998626709,
+    2.96663570404053,
+    90.5199966430664
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 25.0,
+   "op": "remove",
+   "reason": "erased (in doubt): its new place made a new fault: deleted instead [moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 61 cm over a apt door of harbor_medical_plaza]]"
+  },
+  {
+   "at": [
+    -52.3199996948242,
+    1.7666357755661,
+    73.4499969482422
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 29.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in front of a shop window of harbor_medical_plaza]"
+  },
+  {
+   "at": [
+    -51.3850021362305,
+    1.7666357755661,
+    73.4499969482422
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 30.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in front of a shop window of harbor_medical_plaza]"
+  },
+  {
+   "at": [
+    -59.6800003051758,
+    1.7666357755661,
+    73.4499969482422
+   ],
+   "base": "prop_newspaper_box_red",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 31.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red stands in front of a shop window of harbor_medical_plaza]"
+  },
+  {
+   "at": [
+    -20.3199996948242,
+    0.363674908876419,
+    18.9500007629395
+   ],
+   "base": "prop_newspaper_box_red",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 32.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red stands in front of a shop window of visitors_corner]"
+  },
+  {
+   "at": [
+    -60.4799995422363,
+    1.7666357755661,
+    73.4499969482422
+   ],
+   "base": "prop_newspaper_box_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 33.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_blue stands in front of a shop window of harbor_medical_plaza]"
+  },
+  {
+   "at": [
+    -19.5200004577637,
+    0.363674908876419,
+    18.9500007629395
+   ],
+   "base": "prop_newspaper_box_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 34.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_blue stands in front of a shop window of visitors_corner]"
+  },
+  {
+   "at": [
+    -67.6800003051758,
+    1.7666357755661,
+    73.4499969482422
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 35.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent stands in front of a shop window of harbor_medical_plaza]"
+  },
+  {
+   "at": [
+    -27.6800003051758,
+    0.363674908876419,
+    18.9500007629395
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 36.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent stands in front of a shop window of visitors_corner]"
+  },
+  {
+   "at": [
+    -68.9449996948242,
+    1.7666357755661,
+    73.4499969482422
+   ],
+   "base": "plant_potted_leafy",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 37.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [plant_potted_leafy stands in front of a shop window of harbor_medical_plaza]"
+  },
+  {
+   "at": [
+    -28.9449996948242,
+    0.363674908876419,
+    18.9500007629395
+   ],
+   "base": "plant_potted_leafy",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 38.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [plant_potted_leafy stands in front of a shop window of visitors_corner]"
+  },
+  {
+   "at": [
+    -62.0,
+    1.7666357755661,
+    74.0
+   ],
+   "base": "prop_drinking_fountain",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 39.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_drinking_fountain stands in front of a shop window of harbor_medical_plaza]"
+  },
+  {
+   "at": [
+    -44.7999992370605,
+    1.67861592769623,
+    75.4000015258789
+   ],
+   "base": "prop_hydrant_red",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "hydrant_nowhere",
+   "mode": "choose",
+   "n": 40.0,
+   "op": "remove",
+   "reason": "erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hydrant_red stands 3.2 m from any building wall and 3.0 m inside the block]"
+  },
+  {
+   "at": [
+    -16.0,
+    0.201214775443077,
+    15.9499998092651
+   ],
+   "base": "prop_pylon_sign",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "lane_mouth",
+   "mode": "choose",
+   "n": 89.0,
+   "op": "remove",
+   "reason": "erased (in doubt): lane_mouth: no plainly safe place (Yasin: delete when unsure) [prop_pylon_sign stands in the mouth of a drive or lane]"
+  },
+  {
+   "at": [
+    -46.5999984741211,
+    1.76502120494843,
+    73.3000030517578
+   ],
+   "base": "prop_park_bench",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 100.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_park_bench leaves 0.9 m of a 1.8 m wide walk]"
+  },
+  {
+   "at": [
+    -17.6000003814697,
+    0.363674908876419,
+    19.0
+   ],
+   "base": "prop_park_bench",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 101.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_park_bench leaves 0.7 m of a 1.6 m wide walk]"
+  },
+  {
+   "at": [
+    -74.0,
+    0.156000003218651,
+    72.5750007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 41.0,
+   "op": "remove_decal",
+   "reason": "paint mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -72.0,
+    0.156000003218651,
+    72.5750007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 42.0,
+   "op": "remove_decal",
+   "reason": "paint mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -70.0,
+    0.156000003218651,
+    72.5750007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 43.0,
+   "op": "remove_decal",
+   "reason": "paint mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -68.0,
+    0.156000003218651,
+    72.5750007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 44.0,
+   "op": "remove_decal",
+   "reason": "paint mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -66.0,
+    0.156000003218651,
+    72.5750007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 45.0,
+   "op": "remove_decal",
+   "reason": "paint mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -64.0,
+    0.156000003218651,
+    72.5750007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 46.0,
+   "op": "remove_decal",
+   "reason": "paint mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -62.0,
+    0.156000003218651,
+    72.5750007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 47.0,
+   "op": "remove_decal",
+   "reason": "paint mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -60.0,
+    0.156000003218651,
+    72.5750007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 48.0,
+   "op": "remove_decal",
+   "reason": "paint mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -58.0,
+    0.156000003218651,
+    72.5750007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 49.0,
+   "op": "remove_decal",
+   "reason": "paint mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -56.0,
+    0.156000003218651,
+    72.5750007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 50.0,
+   "op": "remove_decal",
+   "reason": "paint mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.0,
+    0.156000003218651,
+    72.5750007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 51.0,
+   "op": "remove_decal",
+   "reason": "paint mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -52.0,
+    0.156000003218651,
+    72.5750007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 52.0,
+   "op": "remove_decal",
+   "reason": "paint mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -50.0,
+    0.156000003218651,
+    72.5750007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 53.0,
+   "op": "remove_decal",
+   "reason": "paint mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -48.0,
+    0.156000003218651,
+    72.5750007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 54.0,
+   "op": "remove_decal",
+   "reason": "paint mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -46.0,
+    0.156000003218651,
+    72.5750007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 55.0,
+   "op": "remove_decal",
+   "reason": "paint mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -51.3623733520508,
+    0.162000000476837,
+    74.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 56.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -57.8598937988281,
+    0.162000000476837,
+    74.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 57.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -63.6837882995605,
+    0.162000000476837,
+    74.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 58.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -68.4915161132812,
+    0.162000000476837,
+    74.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 59.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -51.900318145752,
+    0.162000000476837,
+    91.0999984741211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 60.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -56.9402694702149,
+    0.162000000476837,
+    91.0999984741211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 61.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -62.4886646270752,
+    0.162000000476837,
+    91.0999984741211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 62.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -69.7424163818359,
+    0.162000000476837,
+    91.0999984741211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 63.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -65.1912097930908,
+    1.77863574028015,
+    79.0388031005859
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 64.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -65.4056396484375,
+    1.77863574028015,
+    79.1252059936523
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 65.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -58.6435241699219,
+    1.77863574028015,
+    88.5277557373047
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 66.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -62.1347821553548,
+    1.77863574028015,
+    84.4915466308594
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 67.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -53.1180152893066,
+    1.77863574028015,
+    81.305793762207
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 68.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -64.1855773925781,
+    1.77863574028015,
+    77.6257476806641
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 69.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -67.859260559082,
+    1.77863574028015,
+    88.4713973999023
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 70.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -58.1963081359863,
+    1.77863574028015,
+    83.2725296020508
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 71.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -20.3699340820312,
+    0.375674903392792,
+    27.3312339782715
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 72.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building visitors_corner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -25.9919815063477,
+    0.375674903392792,
+    28.226188659668
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 73.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building visitors_corner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -51.0982322692871,
+    1.77863574028015,
+    88.9083404541016
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 74.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -60.7424049377441,
+    1.77863574028015,
+    84.7233428955078
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 75.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -67.2599563598633,
+    1.77863574028015,
+    78.3373107910156
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 76.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -63.3377221425374,
+    1.77863574028015,
+    84.0276184082031
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 77.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -21.2972640991211,
+    0.368873119354248,
+    20.6949844360352
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 78.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -66.9230270385742,
+    1.77863574028015,
+    82.9365921020508
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 79.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -65.9490648905436,
+    1.77863574028015,
+    88.3191299438477
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 80.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -55.8608551025391,
+    1.77863574028015,
+    81.2844772338867
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 81.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -53.1596565246582,
+    1.77863574028015,
+    87.6537780761719
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 82.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -53.7395935058594,
+    1.77863574028015,
+    79.87890625
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 83.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -51.9593925476074,
+    1.77863574028015,
+    79.4919815063477
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 84.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -29.0233249664307,
+    0.375674903392792,
+    21.6764869689941
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 85.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building visitors_corner",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -66.5851364135742,
+    1.77863574028015,
+    77.4409027099609
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 86.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -50.8953971862793,
+    1.77863574028015,
+    75.6671829223633
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 87.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building harbor_medical_plaza",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.3707847595215,
+    1.7617754538854,
+    72.8394241333008
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 102.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -60.1263339255763,
+    3.26661837100983,
+    74.6201086154756
+   ],
+   "box": [
+    0.126333236694336,
+    1.49998259544373,
+    7.87989139556885,
+    0.16,
+    2.99996519088745,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 104.0,
+   "name": "sc_col_0",
+   "node": "Buildings/harbor_medical_plaza",
+   "op": "add_box",
+   "reason": "harbor_medical_plaza: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -68.072980615945,
+    3.26661837100983,
+    74.6201093101936
+   ],
+   "box": [
+    8.07297992706299,
+    1.49998259544373,
+    7.87989139556885,
+    0.16,
+    2.99996519088745,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 105.0,
+   "name": "sc_col_1",
+   "node": "Buildings/harbor_medical_plaza",
+   "op": "add_box",
+   "reason": "harbor_medical_plaza: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -61.9231164191676,
+    3.26661837100983,
+    74.6201087725553
+   ],
+   "box": [
+    1.92311573028564,
+    1.49998259544373,
+    7.87989139556885,
+    0.16,
+    2.99996519088745,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 106.0,
+   "name": "sc_col_2",
+   "node": "Buildings/harbor_medical_plaza",
+   "op": "add_box",
+   "reason": "harbor_medical_plaza: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -56.0646722009304,
+    3.32662272453308,
+    74.6700960533626
+   ],
+   "box": [
+    -3.93532848358154,
+    1.55998694896698,
+    7.8299036026001,
+    0.72998908996582,
+    3.11997389793396,
+    0.599989929199219
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 107.0,
+   "name": "sc_col_3",
+   "node": "Buildings/harbor_medical_plaza",
+   "op": "add_box",
+   "reason": "harbor_medical_plaza: a 0.7 x 0.6 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -66.1048409583251,
+    3.26661837100983,
+    74.725143012645
+   ],
+   "box": [
+    6.10484027862549,
+    1.49998259544373,
+    7.77485752105713,
+    0.489859619140625,
+    2.99996519088745,
+    0.489897766113281
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 108.0,
+   "name": "sc_col_4",
+   "node": "Buildings/harbor_medical_plaza",
+   "op": "add_box",
+   "reason": "harbor_medical_plaza: a 0.4 x 0.4 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -69.8165700171901,
+    3.26661837100983,
+    74.6201094626228
+   ],
+   "box": [
+    9.8165693283081,
+    1.49998259544373,
+    7.87989139556885,
+    0.16,
+    2.99996519088745,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 109.0,
+   "name": "sc_col_5",
+   "node": "Buildings/harbor_medical_plaza",
+   "op": "add_box",
+   "reason": "harbor_medical_plaza: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -26.1049238405657,
+    1.86365750432014,
+    20.2251669816562
+   ],
+   "box": [
+    2.10492324829102,
+    1.49998259544373,
+    6.77483320236206,
+    0.489979782104492,
+    2.99996519088745,
+    0.490083732604981
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 110.0,
+   "name": "sc_col_0",
+   "node": "Buildings/visitors_corner",
+   "op": "add_box",
+   "reason": "visitors_corner: a 0.4 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -27.9449964815925,
+    1.86365750432014,
+    20.1200364700655
+   ],
+   "box": [
+    3.94499588012695,
+    1.49998259544373,
+    6.87996387481689,
+    0.16,
+    2.99996519088745,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 111.0,
+   "name": "sc_col_1",
+   "node": "Buildings/visitors_corner",
+   "op": "add_box",
+   "reason": "visitors_corner: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -22.1198698244525,
+    1.86365750432014,
+    20.2251666332718
+   ],
+   "box": [
+    -1.88013076782227,
+    1.49998259544373,
+    6.77483320236206,
+    0.16,
+    2.99996519088745,
+    0.490083732604981
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 112.0,
+   "name": "sc_col_2",
+   "node": "Buildings/visitors_corner",
+   "op": "add_box",
+   "reason": "visitors_corner: a 0.1 x 0.5 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "m_gr_ad3sw"
+}
