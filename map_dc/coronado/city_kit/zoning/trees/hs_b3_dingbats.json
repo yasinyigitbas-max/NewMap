@@ -1,0 +1,12 @@
+{
+ "area": "hs_b3_dingbats", "piece": "n_hs_b3_dingbats", "zone": "high street",
+ "rule": "docs/TREE_PLAN.md: high street (pilot), Amber spine, arterials - trees in wells on the shop side, palms alternating (zone 406 -> about 360); strip rule for the car park: one tree per car-park island end",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The dingbats' fourteen builder trees go (a row of fan palms every 16-18 m on the front grass, a row along the car park's island, most of it among the trash carts); five come back on their own spots: every other front palm, and the two ends of the car park's island.",
+ "trees": [
+  {"base": "palm_mexican_fan_a", "cond": "normal", "at": [-125.6, 2.602, 211.6], "yaw": 0.0, "scale": 1.0, "why": "the front grass by the bird of paradise and the box hedge: the row's west palm"},
+  {"base": "palm_mexican_fan_c", "cond": "normal", "at": [-87.6, 3.243, 211.6], "yaw": 72.0, "scale": 1.0, "why": "the same front row 38 m on: every other palm of the old row"},
+  {"base": "palm_mexican_fan_b", "cond": "normal", "at": [-55.6, 3.848, 211.6], "yaw": 144.0, "scale": 1.0, "why": "the front row's east end, 32 m on"},
+  {"base": "tree_coral_b", "cond": "normal", "at": [-136.4, 2.455, 245.0], "yaw": 216.0, "scale": 0.85, "why": "the west end of the car park's island, by the wheel stops: the island-end tree"},
+  {"base": "palm_queen_a", "cond": "normal", "at": [-60.8, 3.498, 245.9], "yaw": 288.0, "scale": 1.0, "why": "the east end of the island by the park bench: a queen palm, the other island end"}
+ ]
+}
