@@ -12,6 +12,12 @@ means no check exists and it must be looked at.
 | "they break much faster than i can catch and always give false positive all pass reports" | Say what a check cannot see. Never present zeros as proof. |
 | "half of your work is sunk and you kept sending zero failure reports" | Check ground against the land before anything else. |
 | "i didnt tell you to do anything yet" | A complaint or a question is not a go-ahead. |
+| "pilot and handmade areas were actually made by generators too" | True (checked): never call a piece hand-made without opening its script. |
+| "this time by considering terrain too" | Land first: read it, shape the ground to it, check, then build. |
+| "show them to me first" | Pictures of the fault before any fix is proposed or made. |
+| "your old measurements were much smaller, waht changed?" | Every number comes with what it counts; a changed number comes with why. |
+| "there are still big gaps, fill them" | Measure along the whole edge; a fix that covers only what the first measure saw is half a fix. |
+| "push it, none of the checkers check anything anyway" | The old checks carry no weight with him: show direct measurements and pictures you opened. |
 | "lock them for now. rest is piece by piece correction" / "rest will be handmade adjustments" | After a lock: one piece at a time, each with his word. |
 | "act as architect, road / city planner and exterior designer" outdoors; "look from the perspective of interior designer and the customers" indoors | Every prop has a reason where it stands. |
 | "do out and indoors together ... i want the shops to look different" | Each shop's room with its building; each zone its own character. |

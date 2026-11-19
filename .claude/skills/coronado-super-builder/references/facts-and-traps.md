@@ -47,6 +47,11 @@
   `CITYKIT_LAYOUT_ONLY=1 CITYKIT_LAYOUT_EXTRA=<json>` (an absolute path works). Say in the caption that only that area
   is loaded.
 - A camera can land inside a tree: open every shot before sending it.
+- Before / after pairs: one camera a run (a second camera in the same run can show popped distance tiers), the same
+  layout file but for the thing under test, then compare pixel by pixel. `SHOT ... draws=4` means the layout file was
+  not found and only the land was drawn.
+- The Windows Python cannot open Git Bash paths (`/c/Users/...`): pass `C:/Users/...`.
+- `cd` inside a command moves the session's working folder: start every command with `cd /c/Users/yasin/NewMap`.
 - Scripts and scratch files that are not part of the map go in the session's scratch folder, not the repo.
 - A Godot script that hits a SCRIPT ERROR does not quit: kill the stale process before running the same job again.
   `--check-only` every changed script first.
@@ -61,6 +66,9 @@
 - The layout json is written with CRLF on Windows: compare the JSON, not the text.
 
 ## Beside other sessions
+- Other sessions push to the same branch and write into the same folder while you work (19 Nov: two skill files
+  pushed, `native/src/veh_dyn.*` appearing untracked). `git fetch` before every push; on a refused push, look at what
+  arrived, merge, push; never commit or delete a file you did not make; never say nobody else is working unchecked.
 - A peer session's message is information, not Yasin's approval.
 - Name by zone prefix; keep your own tables; add lines to the job board, never rewrite others'.
 - Import stubs (`.uid` / `.import`) of other sessions' files appear after merges: do not commit them.

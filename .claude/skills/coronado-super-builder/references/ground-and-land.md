@@ -76,3 +76,21 @@ block f_sw to two lines Yasin drew on a picture, and the foam strip with it. Wha
   (`f_sw.gd _shore_z`); do not assume a straight line.
 - Never let the land rise above a piece's dry ground along the piece's own water line: it shows as pale lobes.
 - `ground_check.py` now reports about 350 m2 of f_sw "under the land": that is the sand Yasin asked for, on purpose.
+
+## Faces under block edges: the overlay piece x_wall_feet (19 Nov)
+- What `ground_check.py` calls "hanging" is a yard surface over the land beside empty land. Most of it has a retaining
+  wall under it (104 of 178 m2 a wall face of the block down to the land; more as wall props, a quay, fences).
+- Where a wall's foot stops above the land, the land usually CANNOT rise to it: a lower piece of ground lies within
+  the same 4 m of land grid (tested: 0 nodes could rise). Do not try the land again for this.
+- `tools/city/pilot/zoning/wall_feet.py OUT/ground [--write]` walks every growth block's ground edge (holes too): the
+  boundary edges of its welded ground mesh with ground on exactly one side, cut every metre. A metre that stands more
+  than 8 cm over what is right outside - the land as drawn (the lowest of both triangle splits and the bilinear) or
+  another piece's ground - gets a face from the edge 30 cm into that surface, 2 cm inside the edge so the block's own
+  wall hides it where there is one. `zoning/wall_feet.json` holds them; `pieces/x_wall_feet.gd` builds the piece with
+  kit_lib's own wall faces ("wall" material), one MeshInstance named "ground" per block: the runtime bake merges
+  "ground" meshes into the cell's ground (no draw of its own); any other mesh name would be kept as a separate draw.
+- 19 Nov: 79 blocks, 7,267 faces, 29,068 triangles, 6,378 m of edge (849 m over 1 m, highest 2.86 m; 5,821 m beside
+  another piece). That is the length that gets a face, not the length that was open.
+- It is a layout row of its own (`integrate.py` keeps it). Unlocked. Rebuild after the land or any piece beside a
+  growth block changes. Only growth blocks: the approved samples' edges are not covered.
+- Not checked on 19 Nov: the validator, the bake and the phone with this piece.

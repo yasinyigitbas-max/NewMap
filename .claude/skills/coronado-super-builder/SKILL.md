@@ -20,12 +20,24 @@ residential zone was rebuilt whole at least five times in one evening; each "fix
 65 blocks. Every session reported "validator 0, sink 0" while 188,000 m2 of block ground lay under the land, because no
 check compared a block with the land. Yasin found it by eye. Do not repeat any part of that.
 
+**The pilots were NOT hand-made either** (Yasin, 19 Nov: "pilot and handmade areas were actually made by generators
+too"; checked the same day). Every sample piece is a script in `tools/city/pilot/pieces/` that calls shared libraries
+with rules, loops and randomness (`block_lib`, `res_block`, `apt_lib`, `civ_lib`, `ind_lib`, `strip_lib`, `grt_lib`,
+`wf_lib`, `road_lib`, `wear_lib`): 36-118 loops and 5-37 random calls per sample. The pilot's downtown blocks list
+their buildings and some props by hand with reasons; its house rows `r_n` / `r_s` are one call into a lot builder; and
+the "life" overlays `d_pilot` / `d_cc` (`life_lib.gd`) are generators that raised the pilot and the city centre to
+about 1,500 props by rule on 17 Nov. All of those scripts and libraries are still in the repo. So nothing here was ever
+placed purely by hand. What made the samples good was not "no code": it was ONE script per piece, each piece looked
+at and approved on its own, and never re-run after approval. What broke the growth was one recipe run over a whole zone
+and re-run for every fix. Never tell Yasin a piece is "hand-made" without having opened its script.
+
 ## The five laws
 1. **Hand placement. No generators.** A generator is any code that DECIDES what goes where for more than one piece: a
    recipe, a variant, a seed, a rule like "a bench every 20 m", a loop that fills an area. Hand placement is one piece
    at a time, every prop its own line with its own position, facing and reason, looked at in a picture before the next.
    The libraries `*_grow_lib.gd`, `rv_lib.gd`, `room_gen*.gd`, `res_grow.py` are generators: do not run them, do not
-   extend them, do not write a new one. Their output stays as plain piece files.
+   extend them, do not write a new one. Their output stays as plain piece files. The sample pieces' own scripts and
+   libraries (above) are rule-based too: they are approved and locked as they stand, and are never re-run either.
    NOT a generator: a tool that only measures, or that changes heights to follow a surface without moving anything
    sideways or deciding anything (`lower_land_to_pieces.py`), or that re-packs a file and proves nothing moved
    (`split_props.gd`). Say which kind a tool is before you run it.
@@ -169,6 +181,28 @@ Stand in the door as a customer, then behind the counter as staff. `check_rooms.
   need retaining walls or a piece fix, by hand, on Yasin's word.
 - TRAP: `tools/city/run/terrain.sh` / `terrain.py` re-solve the whole island from `piece_ground.npz`, which lacks the
   growth blocks. Running them buries the growth again.
+
+## Lessons of the second half of 19 Nov (each cost Yasin a round)
+- **Land first** ("this time by considering terrain too"): before any design, read the block's land (heights, rise,
+  the four streets' heights); shape the ground to it; check the ground against the land and the neighbours; only then
+  buildings and props. 56 blocks are empty (143 ha): 15 flat, 23 gentle, 18 rising more than 3 m; 13 have no zone.
+- **Say what a number counts, every time.** "Floating edges" was given as 186 m2, then 24 m, then 6,378 m: three
+  different things (edges beside empty land over 30 cm; wall feet over the land; every edge over anything beside it).
+  Yasin: "your old measurements were much smaller, what changed?" Give the definition with the number, and when a new
+  number replaces an old one, say in the same breath why they differ.
+- **Look before you prescribe.** The "floating" edges were walled terraces; the first fix proposed (open every block
+  for a skirt) was wrong and the second (raise the land) impossible. Take the close picture first, then propose.
+- **Measure along the whole thing, not at its ends.** A face under a wall "where the foot is above the land at its two
+  ends" left slivers in between and missed edges with no wall ("there are still big gaps, fill them"). Walk the edge
+  metre by metre.
+- **A block's ground is a thin sheet.** Any edge higher than what lies beside it (land, street, a lower block) shows
+  the underside unless a face stands there. `x_wall_feet` adds those faces as an overlay (`references/ground-and-land.md`).
+- **Two opposite readings: ask once.** Two red lines on a picture could mean "cut the sand back to here" or "bring
+  the sand out to here". One question with the consequence of each answer settled it; guessing would have undone work.
+- **Other sessions are real.** One pushed to this branch and wrote files into this folder while this work ran. Never
+  say "nobody else is working" without checking; `git fetch` before a push; never touch files you did not make.
+- **One camera a run for before / after pairs**, and compare the two pictures pixel by pixel: a second camera in the
+  same run can show popped distance tiers, and a missing layout file gives an empty picture (watch `draws=`).
 
 ## Reporting to Yasin
 - Short and plain. What changed, what is NOT done, what was NOT checked, what needs his word - in the same message as
