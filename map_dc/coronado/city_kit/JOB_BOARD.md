@@ -5,6 +5,54 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~15:30 (PC session): THE SUPERCHECKER, FIRST WORKING STATE + THE KIT UPDATED (Yasin: "make a superchecker for
+  both indoors and outdoors that changes irregularities that they find by hand and checks that nothing else other than
+  the irregularity was changed? THIS TOOL MUSTNT CHANGE THE ENTIRE BLOCK WITH A GENERATOR"; "if it can prove that it is
+  fixing things by hand, it can do all of the block at once after finding all the faults"; "remove all of the trees in
+  the area and fill the wells with the material surrounding it"; "many walls indoors are very thin and the next shops
+  props can show on the other side, add that check, also i want no tire marks on the sidewalks too").
+  NO PIECE AND NO ROOM OF THE MAP HAS BEEN CHANGED: everything below ran on COPIES in OUT/super/work.
+  `tools/city/super/` (read `sc.py`'s header): ONE command, `python -I tools/city/super/sc.py check <piece>` (finds,
+  outdoors and that piece's rooms, changes nothing), `fix <piece>` / `fix-room <room>` (carries the fix list out on a
+  COPY, proves it, checks the copy again), `shots <piece> --cams=...` (the same view as it is / the fixed copy, side by
+  side), `install <piece> --by=Yasin` (puts the proven copy in place, keeps the old file, opens and closes the lock,
+  writes review/superchecker/: ONLY on his word, never run yet).
+  HOW IT FIXES: `sc_fix.gd` loads the SAVED scene and changes single items from a list (move / remove one prop in all
+  its detail tiers with its collider; remove one wear mark; pave one tree well with the bake's own well filler). No
+  piece script runs, nothing is placed by a rule. A fix whose new place must be chosen is written without one and is
+  NOT carried out until a person fills it in ("chosen": true). THE PROOF loads both files and compares everything in
+  them (every node, every mesh, the ground triangle by triangle, every prop instance of every tier, every collider,
+  every wear mark, lights, a room's built-in sign picture by its pixels): what differs must be exactly the listed
+  items by exactly the listed amounts, else PROOF RESULT FAIL. It starts from the raw differences, not from the
+  fixer's own search. Counter-test: two changes left off the list -> FAIL. It caught a real fault of the fixer itself:
+  a re-saved room lost its sign picture (Godot drops a built-in compressed picture unless told to keep it; fixed).
+  WHAT IT CHECKS: outdoors, 40 kinds (`sc_find.py` WHAT_IT_CHECKS and CANNOT_SEE): trees and wells; props in the air /
+  sunk; fences; overlaps; props in buildings, at doors, shop fronts, roll-ups, garages; wall items against walls,
+  roofs, doors and windows; surface rules (play on bark, poles, bins, hydrants, seats facing walls, stalls, roads);
+  wear marks against their surface (NO tyre marks, oil or asphalt patches on a sidewalk); the piece's ground against
+  the land, its buildings and its neighbours (reported only); faults of the file. Indoors (`sc_rooms.py`): the old
+  indoor checker's 25 kinds taken over (its notes for locked rooms COUNTED) + new: doors and windows blocked, counter
+  in view, queue space, tills turned wrong, things turned to a wall, tables without seats, what a shop needs (a
+  DRAFT list, not approved), lights, same layout as another room, THIN WALLS between two shops and props showing
+  through them.
+  TRIED: gritty block g_v1_j4ne: 142 outdoor findings (69 with one right answer, 58 needing a place chosen by hand, 27
+  reported only); on the copy 69 changes, proof PASS, no new fault; its two rooms: the wall between them has NO
+  thickness (one sheet), a poster of each shows in the other; shelves stand across the back roll-up door and a
+  window; the old indoor checker says 0 problems for both. Residential r_q_m800_m200_ne: 106 wear marks on grass or
+  mulch, 14 trees, 2 overlaps. Amber street piece: 18 trees out, 12 wells paved, proof PASS.
+  OPEN FOR YASIN: (1) 72 of the 106 marks on the residential lawns are "grime" (16 Nov: "worn grass where people cut
+  corners"; 19 Nov: "asphalt wear on the grass"): the tool removes them as it stands; say if worn-grass marks stay.
+  (2) The hand-placed trees are NOT written: the tree lists (zoning/trees/<area>.json, each tree a line) and their
+  piece builder come next; docs/TREE_PLAN.md is the rule per zone. (3) Nothing is installed.
+  NOT DONE / NOT CHECKED: walk widths, empty parks, repeated trees, room openings against the building, unnamed sign
+  boards (rows 18, 48, 49, 68, 79 of the list given to Yasin); no city-wide run; the checks' thresholds were tuned on
+  two blocks only; pictures were opened for two views.
+  THE KIT (Yasin: "find the assets branch on the main repo and copy over its contents"): assets/coronado_kit now equals
+  the game repo's assets branch at e3d085dc (19 Nov 11:15): +244 files (the house interior set: 36 decor, 8 rugs, 26
+  furniture, page H) and 548 changed (545 prop / fence near models gained an occlusion link; mesh data identical).
+  THERE ARE NO NEW TREE MODELS on that branch (foliage unchanged; the three other asset branches there are from 13-14
+  Nov and hold no kit). Lock test RESULT PASS after it. TRAP: do not run a second Godot while `--import` runs: two
+  import files were reset to defaults that way (restored).
 - 20 Nov ~03:00 (PC session): PEOPLE, STEP 3: THE WHOLE BRAIN AND THE PLACES, C++ (Yasin: "build all of the missing
   parts of npcs and crowds, dont call it done unless its 100 percent native code and all features implemented").
   Read docs/TRAFFIC_PEOPLE_PORT.md section 26: it has THE LEDGER of his list, line by line (BRAIN / GAME / NOT).

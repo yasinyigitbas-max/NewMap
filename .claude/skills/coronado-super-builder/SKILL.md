@@ -204,6 +204,20 @@ Stand in the door as a customer, then behind the counter as staff. `check_rooms.
 - **One camera a run for before / after pairs**, and compare the two pictures pixel by pixel: a second camera in the
   same run can show popped distance tiers, and a missing layout file gives an empty picture (watch `draws=`).
 
+## The superchecker (19 Nov, `tools/city/super/`): find, fix one item at a time, prove
+- `python -I tools/city/super/sc.py check <piece>` finds (outdoors and the piece's rooms) and changes nothing;
+  `fix <piece>` / `fix-room <room>` carries the fix list out on a COPY and proves it; `shots` shows as it is / fixed;
+  `install <piece> --by=Yasin` only on his word. Read `sc.py`'s header and the job board entry of 19 Nov ~15:30.
+- It is NOT a generator: it never runs a piece script and never picks a place. A fix with one right answer (a prop in
+  the air goes down, a mark off its surface goes, a poster through a wall is drawn back) is written out; a fix that
+  needs a place is left open until a person chooses it for that one item.
+- The proof compares the whole of both files and must say PROOF RESULT PASS. A FAIL means the copy is thrown away.
+  It has caught the fixer itself (a re-saved room lost its sign picture): trust it over your own reading of the code.
+- A new class of fault Yasin finds goes into `sc_find.py` / `sc_rooms.py` as a check, proved on the faulty case, with
+  what it cannot see added to CANNOT_SEE. Tune a threshold on real pictures before trusting its count.
+- Its counts are findings by rule, not truth: the "sure" note of each says when a look is needed.
+- Do not run two Godot processes while one imports (`--import`): import files were reset to defaults that way.
+
 ## Reporting to Yasin
 - Short and plain. What changed, what is NOT done, what was NOT checked, what needs his word - in the same message as
   any good number.

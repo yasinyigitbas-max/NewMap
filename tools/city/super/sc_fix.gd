@@ -34,6 +34,9 @@ func _load(path: String) -> Node:
 	return ps.instantiate() if ps else null
 
 func _run() -> void:
+	# a room's sign plate is a compressed picture stored INSIDE the room's file. Godot drops such a picture's data after
+	# loading unless told to keep it, and a re-saved room then has a blank sign (the proof caught this on 19 Nov).
+	PortableCompressedTexture2D.set_keep_all_compressed_buffers(true)
 	var args := OS.get_cmdline_user_args()
 	var fx: Variant = JSON.parse_string(FileAccess.get_file_as_string(_arg("fixes")))
 	if not (fx is Dictionary) or not (fx as Dictionary).has("fixes"): print("SC-FIX cannot read the fix list"); quit(2); return
@@ -283,20 +286,28 @@ func _mesh_key(m: Mesh) -> String:
 	_mesh_cache[id] = k
 	return k
 
+## a texture by its file, or - when it is stored inside the scene (a room's sign plate) - by its own pixels
+func _tex_key(t: Texture2D) -> String:
+	if t == null: return ""
+	if t.resource_path != "" and not t.resource_path.contains("::"): return t.resource_path
+	var img := t.get_image()
+	if img == null: return "inside:%dx%d" % [t.get_width(), t.get_height()]
+	return "inside:%dx%d:%d:%s" % [img.get_width(), img.get_height(), img.get_format(), _sha(img.get_data())]
+
 func _mat_key(m: Material) -> String:
 	if m == null: return "nomat"
 	if m.resource_path != "" and not m.resource_path.contains("::"): return m.resource_path
 	var s := m.get_class()
 	if m is BaseMaterial3D:
 		var b := m as BaseMaterial3D
-		s += "/%s/%s/%s/%s/%d/%d" % [str(b.albedo_color), b.albedo_texture.resource_path if b.albedo_texture else "", _f(b.roughness), _f(b.metallic), b.transparency, b.cull_mode]
+		s += "/%s/%s/%s/%s/%d/%d" % [str(b.albedo_color), _tex_key(b.albedo_texture), _f(b.roughness), _f(b.metallic), b.transparency, b.cull_mode]
 	elif m is ShaderMaterial:
 		var sm := m as ShaderMaterial
 		s += "/" + (sm.shader.resource_path if sm.shader else "")
 		if sm.shader:
 			for u: Dictionary in sm.shader.get_shader_uniform_list():
 				var v: Variant = sm.get_shader_parameter(u["name"])
-				s += "/%s=%s" % [u["name"], (v as Resource).resource_path if v is Resource else str(v)]
+				s += "/%s=%s" % [u["name"], (_tex_key(v as Texture2D) if v is Texture2D else (v as Resource).resource_path) if v is Resource else str(v)]
 	return s
 
 func _shape_key(sh: Shape3D) -> String:
@@ -532,8 +543,8 @@ func _prove(a: Node, b: Node, fixes: Array) -> bool:
 	if not gone.is_empty() or not come.is_empty():
 		ok = false
 		print("PROOF UNEXPLAINED: %d lines changed that no line of the fix list accounts for" % (gone.size() + come.size()))
-		for k7: String in gone.slice(0, 12): print("   old only: " + k7.substr(0, 200))
-		for k8: String in come.slice(0, 12): print("   new only: " + k8.substr(0, 200))
+		for k7: String in gone.slice(0, 12): print("   old only: " + k7.substr(0, 900))
+		for k8: String in come.slice(0, 12): print("   new only: " + k8.substr(0, 900))
 	print("PROOF %d listed changes, %s" % [fixes.size(), "every one found, nothing else differs" if ok else "NOT clean"])
 	print("PROOF RESULT %s" % ("PASS" if ok else "FAIL"))
 	return ok

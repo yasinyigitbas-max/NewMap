@@ -450,6 +450,22 @@ class Finder:
                     self.add('seat_faces_wall', '%s faces a wall or a fence at arm\'s length' % b, it.pos, it, mode='auto' if not blocked(-f) else 'choose',
                              fix=self.fix_move(it, turn=180.0) if not blocked(-f) else self.fix_move(it), sure='look: turned round it faces the other way; is there something to look at?')
 
+    def piece_of(self, row_id):
+        if row_id == self.c.me.id: return self.c.me.piece
+        return next((r.piece for r in self.c.neigh if r.id == row_id), '')
+
+    def is_drive(self, q):
+        """a point on a drive: within 8 m in front of a garage, or on a parking stall of this piece"""
+        c = self.c
+        for b in c.blds:
+            if b.kit.startswith('garages/') or 'garage' in b.kit:
+                lp = b.local(q)
+                if abs(lp[0]) <= b.w * 0.5 + 0.5 and -0.5 <= lp[2] - b.d * 0.5 <= 8.0: return True
+        for s in c.dump.meta.get('stalls', []) or []:
+            p = c.me.pts([[float(s[0]), 0.0, float(s[1])]])[0]
+            if np.hypot(p[0] - q[0], p[2] - q[2]) < 3.0: return True
+        return False
+
     _edge = None
     def edge_dist(self, x, z):
         """how far inside its own piece's ground a point lies (0 at the edge), by probing outward"""
@@ -478,7 +494,14 @@ class Finder:
                     q = ctr + (p - ctr) * 0.9
                     g = c.ground_near(q[0], q[2], q[1])
                     if g is None or abs(g[0] - q[1]) > 0.25: bad = 'hangs over the edge of the ground'; break
-                    if g[1] not in okm: bad = 'lies on %s' % g[1]; break
+                    # a street piece's paved ground is the SIDEWALK (Yasin 19 Nov: "i want no tire marks on the sidewalks
+                    # too"): no tyre marks, no oil, no asphalt patches there. Inside a block, concrete carries tyre marks
+                    # only as a drive: within 8 m of a garage or on a parking stall.
+                    walk = g[1] in L.PAVED and self.piece_of(g[2]).startswith(('s_', 'j_'))
+                    if walk and tile in (2, 3, 6, 7, 8, 15): bad = 'lies on the sidewalk'; break
+                    if g[1] not in okm:
+                        if tile in (8, 15) and g[1] in ('concrete', 'paving', 'plaza') and not walk and self.is_drive(q): continue
+                        bad = 'lies on %s' % g[1]; break
                 if bad is None:
                     for b in c.blds:
                         if b.quad is not None and L.in_quad(b.pos[[0, 2]] + (b.quad - b.pos[[0, 2]]) * 0.92, ctr[[0, 2]]) and ctr[1] < b.pos[1] + 0.5: bad = 'lies under the building %s' % b.name; break
