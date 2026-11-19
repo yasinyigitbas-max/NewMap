@@ -1,0 +1,13 @@
+{
+ "area": "gr_ad3se", "piece": "m_gr_ad3se", "zone": "commercial strip",
+ "rule": "docs/TREE_PLAN.md: few - the palm parkway; one tree per car-park island end (zone 106 -> about 80)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The motel and gym block's twenty-one builder trees go (a row of corals, jacarandas and palms along the motel's parking front, a row of pines and eucalyptus at the back, eight parkway palms); six come back on their own spots: four palms on the strip's parkway, about 24 m apart, and one tree at each end of the car park's island.",
+ "trees": [
+  {"base": "palm_mexican_fan_a", "cond": "normal", "at": [644.2, 2.931, -1312.3], "yaw": 0.0, "scale": 1.0, "why": "the strip's parkway in front of the 24-hour gym: the palm parkway, every other palm of the old row"},
+  {"base": "palm_mexican_fan_a", "cond": "normal", "at": [644.2, 2.515, -1335.8], "yaw": 90.0, "scale": 1.0, "why": "the parkway by the bus stop and the cobra lamp, 23.5 m on"},
+  {"base": "palm_mexican_fan_b", "cond": "normal", "at": [644.2, 2.228, -1359.2], "yaw": 180.0, "scale": 1.0, "why": "the parkway, 23.5 m on, opposite the motel's east wing"},
+  {"base": "palm_queen_a", "cond": "normal", "at": [626.2, 2.176, -1384.0], "yaw": 270.0, "scale": 1.0, "why": "the parkway as it turns the corner past the motel: the corner palm"},
+  {"base": "tree_coral_b", "cond": "normal", "at": [549.0, 3.053, -1346.0], "yaw": 30.0, "scale": 0.85, "why": "the south end of the motel car park's island, among the bird of paradise: the island-end tree, shade for the cars"},
+  {"base": "tree_jacaranda_b", "cond": "normal", "at": [549.0, 3.48, -1328.0], "yaw": 210.0, "scale": 0.85, "why": "the north end of the same island, 18 m on: the other island-end tree"}
+ ]
+}
