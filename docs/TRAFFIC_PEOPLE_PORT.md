@@ -986,3 +986,28 @@ Hooks: place, remove, goal (to a place: stay or go in; to a point), stay, act, h
 - 45 % of people walk with others, 40 of 288 meetings came to blows: both look high; not tuned.
 - Its own people may brush shoulders (28 cm) and a leader walks through its own people when it must turn round.
 - The test's cars never brake and some drive over pavements: people hit THERE are not counted.
+
+## 27. People, step 4: the crowd in the game, drawn (20 Nov, on the working branch)
+- `native/src/city_crowd.*` (class `CityCrowd`, a node): owns the brain, steps it 20 times a second on the main thread
+  (0.035 ms a step for 30-50 people), follows the streamer's cells, the camera, the hour (`hour`, `clock_rate`,
+  `weekday`, `rain`), and is JOINED TO THE TRAFFIC: the walkers see the cars (the traffic's rows, the knocked cars,
+  the player's car), the drivers get the walkers who are on a road or wait at a crossing without signals, and both
+  run on the traffic's signal clock. The game's hooks and events of the ledger are bound on it (`place_walker`,
+  `set_goal`, `hold`, `scare`, `bus_at`, ... ; signal `crowd_event`).
+- THE FAR FIGURES: tool `tools/city/traffic/make_people.gd` (C++ class `PeopleBake`) poses each of the 41 bodies
+  (their 500-triangle mesh) in 12 poses (8 steps of the walk, standing, sitting, lying on back and front) and
+  writes ONE table, `characters/rocketbox/far_poses.bin` (3.9 MB; 12 MB on the graphics card). The whole crowd is
+  ONE draw, with the old game's own person shader and colour tables (skin, hair, eyes, tops, bottoms, suits: 24 x 16
+  outfits a body; beggars dirty, night workers, sailors, children smaller). Run the tool when a body, the skeleton
+  or a clip changes; not after a bake of the map.
+- The test app: `--people=N` (`--hour=H`).
+SEEN: `review/people_19nov/crowd_first.jpg` (plain floor, the real streets): people walk in stride, arms down, in
+their clothes; a group abreast, another in file. TRIED ONCE in the streamed city with traffic (unattended, 12 s):
+32 people round the car on average (most 53), nobody inside anybody, 0.11 ms of main thread a frame.
+Paid for: an animation player does not run in a tool that draws nothing, and a skeleton outside a drawn tree hands
+back its rest pose (the first table had everybody with their arms out): the tool reads the clips' tracks and works
+out the bones itself.
+NOT YET: the 18 near animated bodies (everybody is a far figure now, so close up they are 500 triangles and the walk
+is 8 frames), acts' animations, the balancing body for a walker, capsules round the player, umbrellas, towels, the
+murmur, a player on foot, talking, buses. Nobody has watched it in the city; whether cars brake for walkers on a
+road was not looked at. Not on the phone.

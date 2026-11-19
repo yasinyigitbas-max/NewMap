@@ -106,6 +106,9 @@ void CityTraffic::step_once(double p_clock) {
 			const float b[tc::DYN_STRIDE] = { q.x, q.y, q.z, q.yaw, q.hl, q.hw, q.vx, q.vz, (float)tc::DYN_OTHER, (float)(200000 + k), 0.0f };
 			dyn_all.insert(dyn_all.end(), b, b + tc::DYN_STRIDE);
 		}
+		// the crowd's people on a road or waiting to cross (as many as the core's list still takes)
+		const size_t room = (size_t)tc::MAX_DYN * tc::DYN_STRIDE;
+		if (!in.walkers.empty() && dyn_all.size() < room) dyn_all.insert(dyn_all.end(), in.walkers.begin(), in.walkers.begin() + std::min(in.walkers.size(), ((room - dyn_all.size()) / tc::DYN_STRIDE) * tc::DYN_STRIDE));
 		sim->set_dynamic((int)dyn_all.size() / tc::DYN_STRIDE, dyn_all.data());
 	};
 	// a knocked car whose driver wants to drive on: it must stand along a lane, near it, with nothing in its place
@@ -922,6 +925,39 @@ Dictionary CityTraffic::knock_stats() const {
 	}
 	d["out"] = a;
 	return d;
+}
+
+void CityTraffic::cars_for_people(std::vector<float> &r_cars) const {
+	r_cars.clear();
+	for (int i = 0; i < now.n; i++) {
+		const Row &r = now.rows[i];
+		bool gone = false;
+		for (const Hidden &h : hidden) if (h.id == r.id) gone = true;
+		if (gone) continue;
+		const float q[7] = { r.x, r.z, r.yaw, r.hl, r.hw, std::sin(r.yaw) * r.v, std::cos(r.yaw) * r.v };
+		r_cars.insert(r_cars.end(), q, q + 7);
+	}
+	for (int k = 0; k < LOOSE; k++) {
+		if (!loose[k].on || !loose[k].car) continue;
+		const Transform3D t = loose[k].car->get_global_transform();
+		const Vector3 f = t.basis.get_column(2), v = loose[k].car->get_linear_velocity();
+		const float q[7] = { (float)t.origin.x, (float)t.origin.z, (float)std::atan2(f.x, f.z), cm::MODELS[loose[k].model].half_len, cm::MODELS[loose[k].model].half_w, (float)v.x, (float)v.z };
+		r_cars.insert(r_cars.end(), q, q + 7);
+	}
+	if (player_id != 0) {
+		RigidBody3D *rb = Object::cast_to<RigidBody3D>(ObjectDB::get_instance(ObjectID(player_id)));
+		if (rb && rb->is_inside_tree()) {
+			const Transform3D t = rb->get_global_transform();
+			const Vector3 f = t.basis.get_column(2), v = rb->get_linear_velocity();
+			const float q[7] = { (float)t.origin.x, (float)t.origin.z, (float)std::atan2(f.x, f.z), player_hl, player_hw, (float)v.x, (float)v.z };
+			r_cars.insert(r_cars.end(), q, q + 7);
+		}
+	}
+}
+
+void CityTraffic::set_walkers(const float *p_dyn, int p_n) {
+	std::lock_guard<std::mutex> lock(mx);
+	input.walkers.assign(p_dyn, p_dyn + (size_t)std::max(p_n, 0) * tc::DYN_STRIDE);
 }
 
 void CityTraffic::set_player_car(Object *p_car, double p_half_len, double p_half_w) {

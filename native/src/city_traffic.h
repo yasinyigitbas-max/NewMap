@@ -81,6 +81,7 @@ private:
 		struct Adopt { int slot; uint32_t serial; int model, colour; float x, z, yaw; };
 		std::vector<int32_t> kill_ids, kill_stalls;
 		std::vector<Adopt> adopt;
+		std::vector<float> walkers;   // the crowd's people the drivers must see (DYN_STRIDE floats each): on a road, or waiting to cross
 	} input;
 	struct AdoptDone { int slot; uint32_t serial; int32_t id; };
 	std::vector<AdoptDone> adopt_done;      // (under mx) the step's answers: the row's id, or -1 = it cannot drive on from there
@@ -241,6 +242,13 @@ public:
 	// The car the player drives (any Node3D; a RigidBody3D gives its speed too): the traffic sees it as a moving box.
 	// null = none.
 	void set_player_car(Object *p_car, double p_half_len, double p_half_w);
+	// For the crowd (CityCrowd, C++ only, main thread). The cars as boxes, 7 floats each (x, z, yaw, half length, half
+	// width, vx, vz): the traffic's rows, the knocked cars, the player's car. The people the drivers must see
+	// (DYN_STRIDE floats each). The traffic's own clock, which its signals run on.
+	void cars_for_people(std::vector<float> &r_cars) const;
+	void set_walkers(const float *p_dyn, int p_n);
+	double signal_clock() const { return now.clock; }
+	bool has_clock() const { return threaded; }
 	// One line for the test app's log: what was drawn and what it cost since the last call
 	String report();
 

@@ -5,6 +5,8 @@
 #include "city_native.h"
 #include "city_ped.h"
 #include "city_traffic.h"
+#include "city_crowd.h"
+#include "people_bake.h"
 #include "people_places.h"
 #include "street_graph.h"
 
@@ -24,6 +26,8 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(CityCar);       // a car to drive: the physical car (veh_dyn) on the engine's body
 	GDREGISTER_CLASS(CityPed);       // one person with a real body: animation, and a body that balances, falls and gets up
 	GDREGISTER_CLASS(StreetGraph);   // tool time: the streets as traffic and people need them, from the baked city
+	GDREGISTER_CLASS(CityCrowd);     // the people of the map: who walks where and what they do, and how they are drawn
+	GDREGISTER_CLASS(PeopleBake);    // tool time: the far figures of the crowd, every body posed once
 	GDREGISTER_CLASS(PeoplePlaces);  // tool time: the places people go (doors, benches, bus stops ...), from the pieces and the shop list
 }
 

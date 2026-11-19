@@ -63,6 +63,9 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   phone calls, shop windows, meetings, beggars, night workers, rain, fright, jumping out of a car's way, the player,
   the hooks and events. `bash native/tests/run_crowd_test.sh` RESULT PASS with three seeds (846 people, 30 minutes: 0
   inside each other, 0 beside the pavement, 0 standing a minute; 0.57 ms a step).
+  20 Nov ~06:00: THE CROWD IS IN THE GAME AND DRAWN (doc section 27): class `CityCrowd` (joined to the traffic,
+  the streamer's cells, the hour), the far figures as ONE draw (tool `make_people.gd` -> `far_poses.bin`, the old
+  game's person shader), test app `--people=N`. One picture `review/people_19nov/crowd_first.jpg`.
   STILL TO DO FOR "DONE": the game's node (join to the traffic, draw far figures and the 18 near bodies with the
   acts' animations, the balancing body for a walker who is pushed or hit, capsules round the player, umbrellas,
   towels, murmur), a player on foot, the talking, a bus line, the real get-up. NO PICTURE OF THE CROWD EXISTS YET.

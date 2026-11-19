@@ -62,6 +62,8 @@ extends Node3D
 ##   --nofarground hide the far world's ground (the streets beyond the loaded cells)
 ##   --plan=census no drives: the drawing cost census (see _census below; --census=day|night|both --views=a,b --censussecs=2; the night is drawn once at start unless --nowarmnight)
 ##   TRAFFIC (19 Nov, docs/TRAFFIC_PEOPLE_PORT.md; all C++, native/: needs  bash native/build.sh  and city_kit/traffic/streets.bin):
+##   --people=N    the walking crowd, at most N people round the camera (C++ class CityCrowd; 0 = none, the default);
+##                 --hour=H the hour of the day they live by (12.5)
 ##   --traffic=N   moving cars, at most N (0 = no traffic at all, the default). How many there really are follows the
 ##                 streets: each kind of street carries so many cars a metre; --density=2 doubles that (1 = the busiest hour)
 ##   --parked=1|0  with --traffic: the parked cars on the cells' stalls (1, default) or none
@@ -112,7 +114,8 @@ var sun: DirectionalLight3D
 var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
 var traffic: Node            # the C++ traffic (--traffic=N); null without it
-var opt := {"car": "", "at": "", "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0}
+var people: Node             # the C++ crowd (--people=N); null without it
+var opt := {"car": "", "at": "", "people": 0, "hour": 12.5, "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -138,7 +141,7 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["car", "at", "traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost"]:
+		for k: String in ["car", "at", "people", "hour", "traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
 				opt[k] = v if k in ["car", "at", "plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["density", "scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs", "colrange", "boost"] else int(v))
@@ -180,6 +183,14 @@ func _ready() -> void:
 			traffic.set(&"shadows", int(opt.carshadows) == 1); traffic.set(&"bodies", int(opt.carbodies) == 1)
 			traffic.call(&"attach", st); add_child(traffic)
 		else: push_error("RIG ERROR --traffic needs the native module (bash native/build.sh): no traffic in this run")
+	if int(opt.people) > 0:       # the people: one C++ node (CityCrowd); it follows the streamer's cells and is joined to the traffic
+		if ClassDB.class_exists(&"CityCrowd"):
+			people = ClassDB.instantiate(&"CityCrowd")
+			people.set(&"max_people", int(opt.people)); people.set(&"hour", float(opt.hour))
+			people.call(&"attach", st)
+			if traffic: people.call(&"set_traffic", traffic)
+			add_child(people)
+		else: push_error("RIG ERROR --people needs the native module (bash native/build.sh): no people in this run")
 	cam = Camera3D.new(); cam.fov = 74.0; cam.near = 0.08; cam.far = 900.0; add_child(cam); cam.current = true      # the game's driving camera
 	var layer := CanvasLayer.new(); add_child(layer)
 	hud = Label.new(); hud.position = Vector2(24, 24); hud.add_theme_font_size_override("font_size", 26); hud.add_theme_color_override("font_outline_color", Color.BLACK); hud.add_theme_constant_override("outline_size", 8); layer.add_child(hud)
@@ -342,6 +353,7 @@ func _free_drive(first: Vector3) -> void:
 	var s1: Dictionary = car.call(&"get_state")
 	_say("car: %.0f m driven, hardest knock %.0f g, at the end %d wheels on the ground, %.2f m over the place it started, %d km/h" % [float(s1.metres), float(s1.hardest_knock_g), int(s1.wheels_on_ground), car.global_position.y - y_start, int(s1.kmh)])
 	if traffic: _say("  traffic %s" % String(traffic.call(&"report")))
+	if people: _say("  people %s | %s" % [String(people.call(&"report")), str(people.call(&"stats"))])
 
 ## Where a frame's time went: with --probe the wait for the physics thread and for the render server to digest what the
 ## streamer handed over (-1 without it), the streamer's own main-thread part, draw preparation, drawing on the CPU and
