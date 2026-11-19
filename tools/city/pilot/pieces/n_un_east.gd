@@ -69,6 +69,68 @@ const ITEMS := [
 
 var PY: Array = []     # pad heights (local), one per row of B: the ground at the middle of each front
 
+## POLISH (19 Nov, Yasin: "run a polish pass on the whole zone, plenty of relevant props, lots of life"): trees on open
+## lawn away from the buildings, shrubs and sprinklers nearer them, benches / picnic tables / garden chairs where people
+## sit (gardens, courts, lawns), benches, planters, bins, racks, fountains and paper boxes on the wide paving; each on a
+## free spot this piece already had (found by a scratch tool, OUT/py/freespots_hp.py, chosen per kind of place, frozen
+## here), standing on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["prop_picnic_table", "worn", -509.8, -699.8, -176.8],
+	["prop_park_bench", "worn", -488.2, -693.2, 175.7],
+	["prop_adirondack_wood", "worn", -469.8, -699.8, 173.1],
+	["prop_adirondack_white", "worn", -451.8, -690.2, 168.5],
+	["tree_torrey_pine_a", "normal", -431.2, -699.8, 47.0, false],
+	["tree_jacaranda_a", "normal", -417.2, -692.8, 94.0, false],
+	["prop_park_bench", "worn", -505.8, -670.2, -181.0],
+	["prop_picnic_table", "worn", -493.8, -688.8, -192.4],
+	["prop_park_bench", "worn", -484.2, -686.8, 169.7],
+	["prop_adirondack_wood", "worn", -472.8, -680.2, 166.6],
+	["prop_adirondack_white", "worn", -449.8, -680.2, 159.9],
+	["tree_ficus_b", "normal", -438.2, -671.2, 141.0, false],
+	["tree_magnolia_a", "normal", -424.2, -678.8, 188.0, false],
+	["tree_eucalyptus_a", "normal", -409.8, -685.8, 235.0, false],
+	["prop_park_bench", "worn", -509.8, -658.2, -90.0],
+	["prop_park_bench", "worn", -493.2, -662.8, -205.6],
+	["tree_coral_a", "normal", -475.8, -655.8, 282.0, false],
+	["tree_torrey_pine_b", "normal", -461.8, -656.8, 329.0, false],
+	["prop_picnic_table", "worn", -448.2, -661.8, 96.1],
+	["tree_jacaranda_b", "normal", -424.2, -664.8, 16.0, false],
+	["prop_trash_receptacle", "worn", -493.2, -637.2, 0.0],
+	["plant_bird_of_paradise", "normal", -465.2, -639.2, 61.0, false],
+	["plant_agave_americana", "normal", -442.8, -633.2, 122.0, false],
+	["tree_magnolia_b", "normal", -416.2, -647.2, 63.0, false],
+	["prop_bike_rack", "worn", -509.8, -612.2, -90.0],
+	["prop_park_bench", "worn", -492.2, -617.8, -180.0],
+	["plant_potted_succulent", "normal", -473.2, -629.2, 0.0, false],
+	["tree_eucalyptus_b", "normal", -456.2, -629.2, 110.0, false],
+	["tree_torrey_pine_a", "normal", -422.2, -615.2, 157.0, false],
+	["tree_jacaranda_a", "normal", -409.8, -622.8, 204.0, false],
+	["prop_drinking_fountain", "worn", -503.8, -596.2, -90.0],
+	["plant_bougainvillea_mound", "normal", -459.8, -603.2, 183.0, false],
+	["prop_sprinkler_impact", "normal", -442.8, -591.8, 244.0, false],
+	["tree_ficus_b", "normal", -414.8, -603.2, 251.0, false],
+	["prop_newspaper_box_blue", "worn", -509.8, -570.8, -90.0],
+	["prop_recycling_receptacle", "worn", -494.8, -577.8, 0.0],
+	["prop_park_bench", "worn", -481.8, -580.8, 0.0],
+	["plant_agave_americana_small", "normal", -466.8, -572.8, 305.0, false],
+	["tree_magnolia_a", "normal", -454.8, -580.8, 298.0, false],
+	["plant_bird_of_paradise", "normal", -442.8, -583.8, 6.0, false],
+	["tree_eucalyptus_a", "normal", -416.2, -580.2, 345.0, false],
+	["plant_potted_leafy", "normal", -509.8, -560.8, 0.0, false],
+	["plant_agave_americana", "normal", -468.8, -563.8, 67.0, false],
+	["prop_sprinkler_impact", "normal", -442.8, -563.8, 128.0, false],
+	["tree_coral_a", "normal", -416.2, -566.2, 32.0, false],
+	["prop_trash_receptacle", "worn", -509.8, -538.2, 0.0],
+	["plant_iceplant_patch", "normal", -496.8, -549.2, 189.0, false],
+	["tree_torrey_pine_b", "normal", -486.8, -538.2, 79.0, false],
+	["tree_jacaranda_b", "normal", -468.2, -544.2, 126.0, false],
+	["tree_magnolia_b", "normal", -450.8, -545.8, 173.0, false],
+	["tree_eucalyptus_b", "normal", -438.2, -531.2, 220.0, false],
+	["plant_agave_americana_small", "normal", -409.8, -548.8, 250.0, false],
+	["prop_park_bench", "worn", -502.8, -517.2, 0.0],
+	["tree_torrey_pine_a", "normal", -486.8, -517.2, 267.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func bbox(f: String) -> Array:
@@ -121,6 +183,7 @@ func _run() -> void:
 			H.steps_x(g, float(b[3]), 4.0, f[0] - ceilf((top - gy) / 0.17) * 0.3, f[0], gy, top)
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
 	if PASS >= 2: H.polish(props, g, ITEMS)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_un_east")
 	quit()
 

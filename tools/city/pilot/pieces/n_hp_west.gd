@@ -64,6 +64,87 @@ const GREEN := [
 
 var PY: Array = []     # pad heights (local), one per row of B
 
+## POLISH (19 Nov, Yasin: "run a polish pass on the whole zone, plenty of relevant props, lots of life"): trees on open
+## lawn away from the buildings, shrubs and sprinklers nearer them, benches / picnic tables / garden chairs where people
+## sit (gardens, courts, lawns), benches, planters, bins, racks, fountains and paper boxes on the wide paving; each on a
+## free spot this piece already had (found by a scratch tool, OUT/py/freespots_hp.py, chosen per kind of place, frozen
+## here), standing on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["tree_jacaranda_a", "normal", 400.2, -1576.9, 47.0, false],
+	["plant_bird_of_paradise", "normal", 406.2, -1580.4, 61.0, false],
+	["prop_park_bench", "worn", 407.2, -1585.4, -90.0],
+	["plant_potted_leafy", "normal", 414.2, -1585.4, 0.0, false],
+	["prop_trash_receptacle", "worn", 434.8, -1585.4, 0.0],
+	["tree_coral_a", "normal", 447.2, -1573.9, 94.0, false],
+	["prop_park_bench", "worn", 447.8, -1585.4, -90.0],
+	["prop_park_bench", "worn", 458.8, -1585.4, -180.0],
+	["plant_potted_succulent", "normal", 473.2, -1585.4, 0.0, false],
+	["prop_drinking_fountain", "worn", 482.8, -1585.4, 90.0],
+	["prop_newspaper_box_blue", "worn", 490.2, -1585.4, 90.0],
+	["tree_magnolia_b", "normal", 400.2, -1555.9, 141.0, false],
+	["prop_picnic_table", "worn", 407.8, -1565.9, -88.5],
+	["prop_park_bench", "worn", 414.8, -1552.4, -34.1],
+	["prop_adirondack_wood", "worn", 421.8, -1561.9, -16.8],
+	["prop_adirondack_white", "worn", 433.2, -1552.4, 44.9],
+	["prop_park_bench", "worn", 443.8, -1552.9, 9.7],
+	["prop_picnic_table", "worn", 453.2, -1561.9, -67.0],
+	["prop_park_bench", "worn", 461.2, -1561.9, -25.6],
+	["plant_bougainvillea_mound", "normal", 468.8, -1556.9, 183.0, false],
+	["palm_queen_a", "normal", 475.8, -1556.9, 188.0, false],
+	["tree_ficus_a", "normal", 482.8, -1557.4, 235.0, false],
+	["tree_jacaranda_b", "normal", 489.2, -1553.4, 282.0, false],
+	["tree_coral_b", "normal", 490.2, -1567.4, 329.0, false],
+	["tree_magnolia_a", "normal", 400.2, -1541.9, 16.0, false],
+	["prop_adirondack_wood", "worn", 413.8, -1531.4, -4.3],
+	["prop_adirondack_white", "worn", 415.2, -1545.4, 4.2],
+	["prop_park_bench", "worn", 422.2, -1544.4, -41.9],
+	["prop_picnic_table", "worn", 428.8, -1546.9, -13.2],
+	["prop_park_bench", "worn", 434.2, -1541.9, 11.7],
+	["prop_adirondack_wood", "worn", 438.8, -1547.9, 39.2],
+	["prop_adirondack_white", "worn", 443.8, -1542.9, 58.6],
+	["prop_park_bench", "worn", 448.8, -1547.9, -65.6],
+	["prop_picnic_table", "worn", 454.8, -1533.9, -102.0],
+	["prop_sprinkler_impact", "normal", 490.2, -1544.4, 244.0, false],
+	["tree_jacaranda_a", "normal", 400.2, -1520.9, 63.0, false],
+	["tree_coral_a", "normal", 400.2, -1513.4, 110.0, false],
+	["prop_park_bench", "worn", 414.2, -1519.9, -14.9],
+	["prop_adirondack_wood", "worn", 426.8, -1524.4, 13.6],
+	["prop_adirondack_white", "worn", 432.2, -1519.9, -41.0],
+	["prop_park_bench", "worn", 437.8, -1515.4, -177.7],
+	["prop_picnic_table", "worn", 450.8, -1518.9, -72.5],
+	["tree_magnolia_b", "normal", 467.8, -1515.4, 157.0, false],
+	["palm_queen_a", "normal", 480.2, -1515.4, 204.0, false],
+	["prop_recycling_receptacle", "worn", 490.2, -1521.9, 0.0],
+	["tree_ficus_a", "normal", 400.2, -1498.4, 251.0, false],
+	["tree_jacaranda_b", "normal", 459.8, -1503.9, 298.0, false],
+	["tree_coral_b", "normal", 467.2, -1502.9, 345.0, false],
+	["prop_park_bench", "worn", 481.2, -1491.9, 90.0],
+	["tree_magnolia_a", "normal", 483.2, -1508.9, 32.0, false],
+	["tree_jacaranda_a", "normal", 490.2, -1498.9, 79.0, false],
+	["tree_coral_a", "normal", 400.2, -1472.9, 126.0, false],
+	["plant_agave_americana_small", "normal", 413.8, -1489.9, 305.0, false],
+	["tree_magnolia_b", "normal", 419.2, -1475.4, 173.0, false],
+	["palm_queen_a", "normal", 424.2, -1480.9, 220.0, false],
+	["tree_ficus_a", "normal", 426.8, -1489.4, 267.0, false],
+	["tree_jacaranda_b", "normal", 432.8, -1476.4, 314.0, false],
+	["plant_bird_of_paradise", "normal", 437.8, -1481.9, 6.0, false],
+	["plant_potted_leafy", "normal", 481.8, -1481.4, 0.0, false],
+	["tree_coral_b", "normal", 490.2, -1489.4, 1.0, false],
+	["tree_magnolia_a", "normal", 400.2, -1465.4, 48.0, false],
+	["plant_agave_americana", "normal", 401.2, -1450.9, 67.0, false],
+	["tree_jacaranda_a", "normal", 420.2, -1467.9, 95.0, false],
+	["tree_coral_a", "normal", 433.8, -1469.4, 142.0, false],
+	["prop_sprinkler_impact", "normal", 449.8, -1450.4, 128.0, false],
+	["plant_iceplant_patch", "normal", 480.8, -1450.4, 189.0, false],
+	["prop_trash_receptacle", "worn", 485.8, -1451.9, 0.0],
+	["tree_magnolia_b", "normal", 400.2, -1439.9, 189.0, false],
+	["plant_agave_americana_small", "normal", 417.8, -1440.4, 250.0, false],
+	["plant_bird_of_paradise", "normal", 424.8, -1442.4, 311.0, false],
+	["prop_sprinkler_impact", "normal", 437.2, -1442.9, 12.0, false],
+	["palm_queen_a", "normal", 451.8, -1435.4, 236.0, false],
+	["plant_bougainvillea_mound", "normal", 472.8, -1449.4, 73.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func bbox(f: String) -> Array:
@@ -137,6 +218,7 @@ func _run() -> void:
 	for i in B.size(): H.pad_at(g, fp(B[i]), float(PY[i]), yf)
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
 	if PASS >= 2: H.polish(props, g, GREEN)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hp_west")
 	quit()
 

@@ -44,6 +44,29 @@ stood 14 - 17 cm over the walk before the grading). On the campus the aprons eas
 of a walk, and the south row grades to the library's pad across the piece line. Raised door sills (the museum's 0.8 m
 plinth, Founders Hall 0.6 m, the civic buildings 0.3 m) get steps.
 
+## Emergency Drive off 3rd St (Yasin: "make the drive way ... make triple sure your changes dont effect any other road")
+The locked 3rd St piece `s_rg_nw_b071` was unlocked on his word, patched IN PLACE (not rebuilt from its script) by
+`tools/city/pilot/patch_driveway.gd` and relocked: between u 588.60 and 596.43 (two whole parkway panels, so no
+triangle was split) the parkway's 4 grass triangles and the kerb face's 4 triangles were taken out, and a concrete
+apron sloping from the walk (2.150) to the road (2.000) plus two curb returns were added. Proof, three ways:
+1. sha256 of all 555 piece files before / after: only `s_rg_nw_b071.scn` differs.
+2. The patch tool refuses to save unless every old vertex, normal, tangent and uv is unchanged, every old triangle outside
+   the cut is still there and every other node equals the saved file.
+3. An independent before / after reader: 56 / 56 nodes identical except the ground; ground triangles 2466 -> 2462
+   (8 gone, 4 added, 0 of their vertices outside the cut); no wear decal over the cut. Lock test RESULT PASS (521 pieces);
+   `locked.json` changed only in that piece's entry.
+On my side (`n_hp_transit`): EMERGENCY DRIVE from the cut straight north across Hospital Drive into the ER's ambulance bay
+(the bus lay-by and platform shortened by 10 m; the vending, a bench, two plants and a palm moved). Seam 0.0 cm.
+
+## Polish pass (Yasin: "run a polish pass on the whole zone, plenty of relevant props, lots of life")
+516 more props over the 8 pieces (after 9 the validator found on other props were taken out again): trees on open lawn
+away from buildings, shrubs and sprinklers near them, benches / picnic tables / garden chairs in the healing garden, the
+care court, the dorm courts, the union lawn and the South Green, benches, planters, bins, racks, fountains and paper
+boxes on the wide paving. Each on a free spot found by a scratch tool (`OUT/py/freespots_hp.py`, not part of the build),
+chosen per kind of place and frozen as a literal POLISH list in each piece script. Kept clear: the helipad field, the
+Emergency Drive, the rec field and courts, the solar field, the quad lawn's middle, Founders Green's avenue, the
+volleyball court, the bandstand. Props now: hospital 841, campus 1,338. The rooms were not changed in this pass.
+
 ## Rooms (22, `room_gen_hp.gd` = room_gen_hs + kinds clinic / transit / lecture; `assign_hp.py`)
 Hospital: main lobby, Atrium Cafe, Emergency Department, Transit Center waiting hall, urgent care, pharmacy, bistro,
 wellness center. Campus: admissions, library, 3 lecture halls, faculty commons, rec center desk, art museum, science
@@ -66,5 +89,4 @@ blocking a seat. Not walk-in: garages, the chapel (no contract), the coffee kios
 ## Not done
 - Nobody has looked at it: no pictures (Yasin: none needed last time; say if wanted).
 - Not in `city_grid_layout.json`, not baked, no phone run; not locked.
-- ZONING.md's ER-off-3rd-St needs a driveway in the locked 3rd St piece.
 - The kit has no hospital props (beds, wheelchairs, ambulances): the rooms use waiting benches, desks, counters.

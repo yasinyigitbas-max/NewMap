@@ -92,6 +92,104 @@ const ITEMS := [
 
 var PY: Array = []     # pad heights (local), one per row of B: the ground at the middle of each front
 
+## POLISH (19 Nov, Yasin: "run a polish pass on the whole zone, plenty of relevant props, lots of life"): trees on open
+## lawn away from the buildings, shrubs and sprinklers nearer them, benches / picnic tables / garden chairs where people
+## sit (gardens, courts, lawns), benches, planters, bins, racks, fountains and paper boxes on the wide paving; each on a
+## free spot this piece already had (found by a scratch tool, OUT/py/freespots_hp.py, chosen per kind of place, frozen
+## here), standing on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["tree_torrey_pine_a", "normal", -790.5, -790.5, 47.0, false],
+	["tree_jacaranda_a", "normal", -768.0, -790.5, 94.0, false],
+	["tree_ficus_b", "normal", -745.5, -790.5, 141.0, false],
+	["prop_park_bench", "worn", -724.0, -790.5, -180.0],
+	["tree_magnolia_a", "normal", -693.0, -790.5, 188.0, false],
+	["tree_eucalyptus_a", "normal", -669.0, -790.5, 235.0, false],
+	["tree_coral_a", "normal", -521.0, -790.5, 282.0, false],
+	["tree_torrey_pine_b", "normal", -497.0, -790.5, 329.0, false],
+	["tree_jacaranda_b", "normal", -474.5, -790.5, 16.0, false],
+	["tree_magnolia_b", "normal", -438.0, -790.5, 63.0, false],
+	["tree_eucalyptus_b", "normal", -409.5, -790.5, 110.0, false],
+	["tree_torrey_pine_a", "normal", -785.0, -778.0, 157.0, false],
+	["plant_potted_leafy", "normal", -738.0, -780.5, 0.0, false],
+	["prop_trash_receptacle", "worn", -708.5, -789.5, 0.0],
+	["tree_jacaranda_a", "normal", -697.0, -784.5, 204.0, false],
+	["tree_ficus_b", "normal", -688.5, -785.0, 251.0, false],
+	["tree_magnolia_a", "normal", -679.0, -775.5, 298.0, false],
+	["plant_bird_of_paradise", "normal", -663.5, -786.0, 61.0, false],
+	["tree_eucalyptus_a", "normal", -526.0, -777.0, 345.0, false],
+	["tree_coral_a", "normal", -517.0, -784.0, 32.0, false],
+	["tree_torrey_pine_b", "normal", -509.0, -785.5, 79.0, false],
+	["tree_jacaranda_b", "normal", -495.5, -783.5, 126.0, false],
+	["tree_magnolia_b", "normal", -483.5, -778.0, 173.0, false],
+	["tree_eucalyptus_b", "normal", -471.5, -784.0, 220.0, false],
+	["tree_torrey_pine_a", "normal", -448.5, -784.0, 267.0, false],
+	["tree_jacaranda_a", "normal", -438.0, -777.5, 314.0, false],
+	["tree_ficus_b", "normal", -426.5, -784.0, 1.0, false],
+	["tree_magnolia_a", "normal", -416.5, -789.5, 48.0, false],
+	["tree_eucalyptus_a", "normal", -409.5, -776.5, 95.0, false],
+	["tree_coral_a", "normal", -787.5, -766.5, 142.0, false],
+	["plant_agave_americana", "normal", -736.5, -767.5, 122.0, false],
+	["tree_torrey_pine_b", "normal", -728.0, -755.5, 189.0, false],
+	["tree_jacaranda_b", "normal", -708.5, -752.0, 236.0, false],
+	["tree_magnolia_b", "normal", -696.0, -761.0, 283.0, false],
+	["tree_eucalyptus_b", "normal", -689.0, -764.5, 330.0, false],
+	["tree_torrey_pine_a", "normal", -683.5, -769.0, 17.0, false],
+	["tree_jacaranda_a", "normal", -676.5, -758.5, 64.0, false],
+	["tree_ficus_b", "normal", -671.0, -763.0, 111.0, false],
+	["plant_bougainvillea_mound", "normal", -663.5, -762.5, 183.0, false],
+	["tree_magnolia_a", "normal", -530.5, -756.0, 158.0, false],
+	["tree_eucalyptus_a", "normal", -523.5, -756.0, 205.0, false],
+	["tree_coral_a", "normal", -518.5, -751.0, 252.0, false],
+	["tree_torrey_pine_b", "normal", -508.0, -754.0, 299.0, false],
+	["tree_jacaranda_b", "normal", -409.5, -769.0, 346.0, false],
+	["prop_sprinkler_impact", "normal", -790.5, -735.5, 244.0, false],
+	["tree_magnolia_b", "normal", -735.0, -743.0, 33.0, false],
+	["tree_eucalyptus_b", "normal", -719.5, -743.0, 80.0, false],
+	["tree_torrey_pine_a", "normal", -706.0, -745.5, 127.0, false],
+	["tree_jacaranda_a", "normal", -694.0, -746.0, 174.0, false],
+	["prop_bike_rack", "worn", -670.0, -732.0, 180.0],
+	["prop_park_bench", "worn", -529.0, -732.5, 180.0],
+	["tree_ficus_b", "normal", -508.0, -734.0, 221.0, false],
+	["tree_magnolia_a", "normal", -500.5, -734.0, 268.0, false],
+	["tree_eucalyptus_a", "normal", -494.0, -731.0, 315.0, false],
+	["tree_coral_a", "normal", -482.0, -739.5, 2.0, false],
+	["tree_torrey_pine_b", "normal", -468.5, -732.5, 49.0, false],
+	["tree_jacaranda_b", "normal", -790.5, -714.5, 96.0, false],
+	["plant_agave_americana_small", "normal", -749.0, -716.0, 305.0, false],
+	["plant_bird_of_paradise", "normal", -650.5, -725.5, 6.0, false],
+	["tree_magnolia_b", "normal", -643.0, -716.0, 143.0, false],
+	["tree_eucalyptus_b", "normal", -630.5, -721.5, 190.0, false],
+	["tree_torrey_pine_a", "normal", -621.5, -716.0, 237.0, false],
+	["tree_jacaranda_a", "normal", -614.5, -718.5, 284.0, false],
+	["plant_potted_succulent", "normal", -602.5, -728.5, 0.0, false],
+	["prop_drinking_fountain", "worn", -595.5, -729.0, -90.0],
+	["tree_ficus_b", "normal", -584.0, -724.5, 331.0, false],
+	["tree_magnolia_a", "normal", -577.0, -720.5, 18.0, false],
+	["tree_eucalyptus_a", "normal", -563.0, -720.0, 65.0, false],
+	["tree_coral_a", "normal", -556.0, -718.0, 112.0, false],
+	["tree_torrey_pine_b", "normal", -549.5, -715.0, 159.0, false],
+	["tree_jacaranda_b", "normal", -541.5, -716.5, 206.0, false],
+	["tree_magnolia_b", "normal", -514.0, -715.5, 253.0, false],
+	["tree_eucalyptus_b", "normal", -507.5, -718.5, 300.0, false],
+	["tree_torrey_pine_a", "normal", -501.0, -721.5, 347.0, false],
+	["tree_jacaranda_a", "normal", -494.0, -724.0, 34.0, false],
+	["tree_ficus_b", "normal", -487.5, -728.5, 81.0, false],
+	["tree_magnolia_a", "normal", -481.0, -724.5, 128.0, false],
+	["tree_eucalyptus_a", "normal", -474.5, -721.5, 175.0, false],
+	["tree_coral_a", "normal", -468.0, -710.5, 222.0, false],
+	["tree_torrey_pine_b", "normal", -461.5, -714.5, 269.0, false],
+	["plant_agave_americana", "normal", -455.0, -710.5, 67.0, false],
+	["tree_jacaranda_b", "normal", -790.5, -700.5, 316.0, false],
+	["prop_sprinkler_impact", "normal", -689.5, -703.5, 128.0, false],
+	["tree_magnolia_b", "normal", -645.0, -700.5, 3.0, false],
+	["tree_eucalyptus_b", "normal", -634.0, -706.5, 50.0, false],
+	["tree_torrey_pine_a", "normal", -623.0, -700.5, 97.0, false],
+	["prop_newspaper_box_blue", "worn", -603.0, -706.5, 90.0],
+	["plant_iceplant_patch", "normal", -591.0, -705.5, 189.0, false],
+	["tree_jacaranda_a", "normal", -579.0, -700.5, 144.0, false],
+	["tree_ficus_b", "normal", -567.5, -708.0, 191.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func bbox(f: String) -> Array: return (K.building_stats(f).near as Dictionary).bbox
@@ -186,6 +284,7 @@ func _run() -> void:
 			H.steps_z(g, float(b[2]), 4.0, f[1] - ceilf((top - gy) / 0.17) * 0.3, f[1], gy, top)
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
 	if PASS >= 2: H.polish(props, g, ITEMS)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_un_north")
 	quit()
 

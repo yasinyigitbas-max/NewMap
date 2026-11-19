@@ -49,6 +49,42 @@ const GREEN := [
 var HY := 0.0          # pad heights (local)
 var KY := 0.0
 
+## POLISH (19 Nov, Yasin: "run a polish pass on the whole zone, plenty of relevant props, lots of life"): trees on open
+## lawn away from the buildings, shrubs and sprinklers nearer them, benches / picnic tables / garden chairs where people
+## sit (gardens, courts, lawns), benches, planters, bins, racks, fountains and paper boxes on the wide paving; each on a
+## free spot this piece already had (found by a scratch tool, OUT/py/freespots_hp.py, chosen per kind of place, frozen
+## here), standing on the ground as built (hs_fill_lib.polish).
+const POLISH := [
+	["plant_bird_of_paradise", "normal", 509.5, -1452.8, 61.0, false],
+	["plant_agave_americana", "normal", 603.5, -1452.8, 122.0, false],
+	["plant_bougainvillea_mound", "normal", 610.5, -1452.8, 183.0, false],
+	["prop_sprinkler_impact", "normal", 618.0, -1452.8, 244.0, false],
+	["plant_agave_americana_small", "normal", 625.0, -1452.8, 305.0, false],
+	["plant_bird_of_paradise", "normal", 632.0, -1452.8, 6.0, false],
+	["prop_park_bench", "worn", 509.5, -1441.8, -90.0],
+	["plant_potted_leafy", "normal", 512.5, -1434.8, 0.0, false],
+	["prop_trash_receptacle", "worn", 516.0, -1444.8, 0.0],
+	["prop_bike_rack", "worn", 519.5, -1438.2, -180.0],
+	["plant_potted_succulent", "normal", 529.0, -1439.2, 0.0, false],
+	["prop_drinking_fountain", "worn", 531.0, -1431.2, 90.0],
+	["prop_newspaper_box_blue", "worn", 533.5, -1444.8, 180.0],
+	["prop_recycling_receptacle", "worn", 540.5, -1443.2, 0.0],
+	["prop_park_bench", "worn", 554.0, -1443.8, 180.0],
+	["plant_agave_americana", "normal", 564.0, -1432.2, 67.0, false],
+	["plant_potted_leafy", "normal", 564.0, -1442.8, 0.0, false],
+	["prop_sprinkler_impact", "normal", 569.0, -1437.2, 128.0, false],
+	["plant_iceplant_patch", "normal", 572.5, -1431.2, 189.0, false],
+	["prop_park_bench", "worn", 578.0, -1443.2, 90.0],
+	["plant_agave_americana_small", "normal", 580.0, -1437.2, 250.0, false],
+	["prop_park_bench", "worn", 585.0, -1444.8, 90.0],
+	["plant_potted_succulent", "normal", 509.5, -1414.8, 0.0, false],
+	["prop_drinking_fountain", "worn", 509.5, -1428.2, -90.0],
+	["prop_newspaper_box_blue", "worn", 516.0, -1419.2, 0.0],
+	["prop_recycling_receptacle", "worn", 521.5, -1414.8, 0.0],
+	["prop_park_bench", "worn", 524.5, -1421.2, 0.0],
+	["plant_potted_leafy", "normal", 529.0, -1414.8, 0.0, false],
+]
+
 func _init() -> void: _run.call_deferred()
 
 static func bb(f: String) -> Array: return (K.building_stats(f).near as Dictionary).bbox
@@ -104,6 +140,7 @@ func _run() -> void:
 	H.pad_at(g, hall, HY, yf); H.pad_at(g, kio, KY, yf)
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
 	if PASS >= 2: H.polish(props, g, GREEN)
+	if PASS >= 2: H.polish(props, g, POLISH)
 	H.finish(root, g, props, dec, "n_hp_transit")
 	quit()
 
