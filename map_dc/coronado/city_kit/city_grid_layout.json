@@ -5015,6 +5015,176 @@
    "from": "grow_apt"
   },
   {
+   "piece": "n_cc_b1_am",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b1_n",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b1_west",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b1_court",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b2_am",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b2_n",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b2_e",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b2_s",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b2_7th",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b3_am",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b3_arm",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b3_main",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b4_w",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b4_e",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b5_w",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b5_e",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b6",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
    "piece": "g_v1_j4ne",
    "pos": [
     -800.0,
