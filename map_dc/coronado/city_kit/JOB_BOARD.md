@@ -13,8 +13,10 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   block as BUILT (leg profiles + property lines measured: zoning/legs_measured.json, leg_measure.gd); lots on level
   terraces with retaining walls. Five corner shops with hand-made rooms (interiors/rooms/rooms_res.gd, g_res_books /
   cafe / surf / wash / market; table interiors/assignment_res.json). LOCKED by Yasin's word: the 66 pieces and the 5
-  rooms (lock test RESULT PASS). Checked on the final build: check_life 0, seams 0 (702); the validator and the tree
-  audit were NOT re-run on the final rebuild (Yasin: "skip them"); the previous full run had trees 0, rooms 0.
+  rooms (lock test RESULT PASS). DEFECT, found by Yasin's top views after the lock: 45 of the 65 quadrants lie UNDER
+  the approved terrain (up to 2.85 m, most of each quadrant covered): their ground was fitted to the four streets only,
+  never to the terrain's hills inside the blocks, and no check compared the two (check_life 0 and seams 0 only cover
+  piece against piece). Yasin: "leave it alone" (the part will be remade). Do not trust this zone's check results.
   New checkers from Yasin's corrections: tools/city/pilot/check_life.gd (pole on asphalt, item in a path, fence end
   that leads nowhere, wall item over glass), check_rooms "cover" (merged into the combined checker); room_lib records
   "openings". NOT DONE: the 12 ring-road residential blocks (curved / irregular), the bake numbers for the zone (draws,
