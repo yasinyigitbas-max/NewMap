@@ -2176,11 +2176,6 @@
    "by": "Yasin",
    "date": "2026-11-19"
   },
-  "n_hs_b6_tenth": {
-   "sha256": "a3ea43a3b98774978d21a320d2ae70eb9d3e587733fc81ff74e35afe7c9053c4",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
   "n_hs_b4_cottages": {
    "sha256": "27c86d8483765a365c560861215d79918562794b7dd5f07cdf4952acbf3d6993",
    "by": "Yasin",
@@ -2753,6 +2748,11 @@
   },
   "n_hs_b6_garden": {
    "sha256": "dba57c7bc8cfe922e40078d7bcad50bed16409ffa12be93b8a654a37a4651844",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_hs_b6_tenth": {
+   "sha256": "a6fbf436aa2e50f4d76e4947c9cc693f45fcd7e85be9d8a4c93acc7dd6861ecf",
    "by": "Yasin",
    "date": "2026-11-19"
   }
