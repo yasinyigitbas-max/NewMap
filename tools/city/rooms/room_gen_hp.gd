@@ -194,7 +194,7 @@ const MIX := {
 	"salon": [["basin", "nail", "plant"], 2.2, 2.2],
 	"clinic": [["bench", "bench2", "plant", "bench", "bench2", "desk"], 2.6, 2.4],
 	"transit": [["bench2", "bench", "plant", "bench2", "stanchion"], 2.6, 2.4],
-	"lecture": [["seats", "seats", "seats"], 2.1, 1.25],
+	"lecture": [["seats", "seats", "seats"], 2.5, 1.5],     # groups of three with gaps between them (aisles to every seat)
 }
 const FILL := {
 	"clothes": ["mannequin", "potted_plant", "display_table", "garment_rail"], "shoes": ["display_table", "potted_plant", "shoe_bench"],
@@ -283,10 +283,10 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 			ZF = minf(ZF, float(o.plane) - 0.25)
 			# (hs, 19 Nov) a shop door with a raised sill (pub_skate_shed: 0.2 m over the floor the contract derives from
 			# its roll-up): the room's floor at the sill, so nothing of the build stands in the passage
-			if String(o.region) == "O_shopdoor" and float(o.y0) - F > 0.05 and float(o.y0) - F <= 0.35: F = float(o.y0)
+			if String(o.region) == "O_shopdoor" and float(o.y0) - F > 0.05 and float(o.y0) - F <= 0.85: F = float(o.y0)      # (hp: pub_museum's plinth, 0.8 m)
 	var zb_bld := float(fl.box_min[2])
 	ZB = maxf(zb_bld, ZF - 16.0)                         # very deep buildings: the shop takes the front 16 m
-	var H := F + minf(float(fl.clear_h), 4.0)
+	var H := minf(F + minf(float(fl.clear_h), 4.0), float(fl.y) + float(fl.clear_h))     # (hp) a raised floor keeps under the real ceiling
 	var depth := ZF - ZB; var width := X1 - X0
 	var back := String(K.back)
 	var ZP := ZB

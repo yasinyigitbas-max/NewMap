@@ -12,7 +12,7 @@ extends SceneTree
 ##    neighbourhood uses it too), its car park off J Ave's apron (v -746), two tennis courts and the rec field beside it.
 ##  - PARKING (north-east): the CAMPUS GARAGE (ext_parking_garage), its ramp on a short road from the east street's
 ##    apron (v -746), and the surface lot north of that road, reached also from the north street's apron (u -460).
-## LAND: flat (6.150 = local 2.15). Raised doors (museum 0, chapel 0, rec center 0.3) get steps.
+## LAND: flat (6.150 = local 2.15). Raised doors (the museum on its 0.8 m plinth, the rec center 0.3) get steps.
 const PASS := 2
 const K := preload("res://tools/city/pilot/kit_lib.gd")
 const Wr := preload("res://tools/city/pilot/pieces/wear_lib.gd")
@@ -26,7 +26,7 @@ const Z1 := -700.0
 ## [label, folder, centre u, centre v, yaw, door sill]
 const B := [
 	["rec", "civic/civ_rec_center", -720.0, -771.05, 180.0, 0.3],          # front (door u -720) on the north street at v -782
-	["museum", "public/pub_museum", -670.0, -712.6, 180.0, 0.0],           # front (door u -670) on the circle at v -727
+	["museum", "public/pub_museum", -670.0, -712.6, 180.0, 0.8],           # front (door u -670, on a 0.8 m plinth) on the circle at v -727
 	["chapel", "public/pub_chapel", -530.0, -716.9, 180.0, 0.0],           # front on the circle at v -727
 	["garage", "extras/ext_parking_garage", -432.0, -723.7, 180.0, 0.0],   # front (ramp u -432) on the garage road at v -739
 ]

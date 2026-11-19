@@ -30,6 +30,35 @@ SHOPS = [
      "lunch for the hospital's staff and visitors (its ISLA BISTRO sign painted on); its tables on the 3rd St forecourt"),
     ("n_hp_west", "wellness", "civic/civ_community_center", (476.05, 0.15, -1535.0), 90.0, 0, "hall", "Bayview Wellness Center", "", 2.0,
      "the care residences' day center (its COMMUNITY CENTER sign painted on): classes, meals, visitors; door on Adela for the bus riders"),
+    # ---- the university campus (pieces n_un_*, layout row 4.0)
+    ("n_un_quad", "founders", "public/pub_university", (-600.0, 2.15, -681.3), 0.0, 0, "bank", "Founders Hall Admissions", "", 4.0,
+     "the main hall's door on the Quad: admissions and student services counters, advisers' desks, waiting benches"),
+    ("n_un_quad", "library", "civic/civ_library", (-600.0, 2.15, -520.05), 180.0, 0, "library", "University Library", "", 4.0,
+     "the Quad's south head: circulation desk, stacks and reading tables"),
+    ("n_un_quad", "wing_nw", "civic/civ_school_wing", (-677.95, 2.15, -632.0), 90.0, 0, "lecture", "Humanities Lecture Hall", "", 4.0,
+     "a lecture-hall wing on the Quad's west walk: rows of seats facing the lectern"),
+    ("n_un_quad", "wing_sw", "civic/civ_school_wing", (-677.95, 2.15, -572.0), 90.0, 0, "lecture", "Social Sciences Hall", "", 4.0,
+     "the second west wing: another lecture room"),
+    ("n_un_quad", "wing_ne", "civic/civ_school_wing", (-522.05, 2.15, -632.0), -90.0, 0, "lecture", "Mathematics Lecture Hall", "", 4.0,
+     "a lecture-hall wing on the Quad's east walk"),
+    ("n_un_quad", "wing_se", "civic/civ_school_wing", (-522.05, 2.15, -572.0), -90.0, 0, "hall", "Faculty Commons", "", 4.0,
+     "the east wing by the union: the faculty's commons (a desk, meeting tables, a kitchen behind)"),
+    ("n_un_north", "rec", "civic/civ_rec_center", (-720.0, 2.15, -771.05), 180.0, 0, "sport", "Campus Rec Center", "teal", 4.0,
+     "the rec center's door on the north street: the equipment desk (bikes, boards, kit for the courts and the field)"),
+    ("n_un_north", "museum", "public/pub_museum", (-670.0, 2.15, -712.6), 180.0, 0, "gallery", "University Art Museum", "", 4.0,
+     "the art museum facing University Circle: the students' and the collection's work"),
+    ("n_un_west", "science", "urban/twr_office", (-712.5, 2.15, -602.0), 90.0, 0, "realty", "Science Tower", "navy", 4.0,
+     "the science tower's door on the Quad's west paseo: the departments' advisers (desks with a chair for the student)"),
+    ("n_un_west", "eng_labs", "civic/civ_school_wing", (-709.95, 2.15, -660.0), 90.0, 0, "lecture", "Engineering Lecture Hall", "", 4.0,
+     "the engineering building's lecture room"),
+    ("n_un_west", "lab_wing", "civic/civ_school_wing", (-709.95, 2.15, -545.0), 90.0, 0, "library", "Science Reading Room", "", 4.0,
+     "the lab wing's ground floor: the sciences' reading room (journals, tables)"),
+    ("n_un_east", "union", "civic/civ_community_center", (-489.05, 2.15, -602.0), -90.0, 0, "fast_food", "Student Union Food Court", "", 4.0,
+     "the student union at the end of the Quad's east paseo: the food court"),
+    ("n_un_east", "cafe", "commercial/com_cafe_seaside", (-491.83, 2.15, -645.0), -90.0, 0, "cafe", "Campus Cafe", "", 4.0,
+     "coffee on Union Plaza (its CROWN CAFE sign painted on)"),
+    ("n_un_east", "bookstore", "ck/ck_svc_trade_1d", (-494.0, 2.15, -560.0), -90.0, 0, "books", "University Bookstore", "navy", 4.0,
+     "textbooks and university wear on Union Plaza"),
 ]
 
 
@@ -46,7 +75,7 @@ def main():
                 if sg["facade"] == "front" and a - 0.05 <= sg["along"] <= b + 0.05: boards.append(sg)
                 elif sg["facade"] == "left" and i == 0: boards.append(sg)
                 elif sg["facade"] == "right" and b >= float(c["floors"][0]["box_max"][0]) - 0.05: boards.append(sg)
-        rid = "hp_%s_%s_%d" % (piece[5:], label, i)
+        rid = "%s_%s_%s_%d" % (piece[2:4], piece[5:], label, i)
         out.append({"id": rid, "piece": piece, "label": label, "model": model, "pos": [pos[0], pos[1] + pad, pos[2]], "yaw": yaw,
                     "door_index": i, "door_along": e["along"], "door_w": e["w"], "bay": [round(a, 3), round(b, 3)],
                     "kind": kind, "name": name, "style": style or "green", "font": "Overpass", "built": "", "why": why,

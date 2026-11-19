@@ -112,7 +112,7 @@ func _run() -> void:
 	var u := 619.0
 	while u <= 645.6: paints.append([u, -1500.0, u, -1500.0, "-"]); u += 0.5
 	for p: Array in S.RING: paints.append([float(p[0]), -1500.0, float(p[0]), -1500.0, "-"])
-	var zlo := func(x: float) -> float: return S.ring_v(x)
+	var zlo := func(x: float) -> float: return minf(S.ring_v(x), ZS)     # (past u 641 the ring is south of the drive: nothing of this piece there)
 	var zhi := func(_x: float) -> float: return ZS
 	H.paint_band(g, X0, X1, zlo, zhi, paints, "grass", yf)
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
