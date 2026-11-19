@@ -1,0 +1,57 @@
+{
+ "area": "rs_b089_b",
+ "piece": "s_rs_b089_b",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; broadleaf on the flat; within the in-view limit (8 broadleaf / 12 trees within 60 m), tight at the street's start",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -664.0,
+    6.15,
+    -806.45
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass mid-street, first of the west face's jacarandas (old spot and species; the start of the street is full under the in-view limit)"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -695.0,
+    6.15,
+    -806.45
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway 31 m on, the second jacaranda (the spot between is 1.7 m from a kerb inlet)"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -646.0,
+    6.15,
+    -793.55
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east parkway grass, first of the east face's coral trees (a different species from the west face), staggered"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    -685.0,
+    6.15,
+    -793.55
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway, the second coral tree; driveways in the 39 m between"
+  }
+ ]
+}
