@@ -301,11 +301,6 @@
    "by": "Yasin",
    "date": "2026-11-19"
   },
-  "j_rg_nw_w1000_n200": {
-   "sha256": "a3c1f5a3129a99c23d67ca7dfd1b8d3f040db70a6df4cc9e48ac40329022cd82",
-   "by": "Yasin",
-   "date": "2026-11-17"
-  },
   "j_rg_nw_w1000_n400": {
    "sha256": "b70a23252963fcbd0fa13733b7d4aee6ca960624ab8b3131764edaff9bab2cce",
    "by": "Yasin",
@@ -2778,6 +2773,11 @@
   },
   "j_rg_nw_e660_n1400": {
    "sha256": "17346c143698433f584d9fd5f9a328e174c1c256feef8a30ccab5e5a56789e73",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "j_rg_nw_w1000_n200": {
+   "sha256": "5d852e80025951f5e95f104c8862aff44f611a105804b6fb053a2c6437b149a2",
    "by": "Yasin",
    "date": "2026-11-19"
   }
