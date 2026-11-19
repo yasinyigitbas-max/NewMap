@@ -38,14 +38,16 @@ void HudArrow::_draw() {
 	const Color base = objective ? Color(0.20f, 0.80f, 0.40f) : Color(0.97f, 0.76f, 0.16f);
 	const Color lit = base.lightened(0.38f), shade = base.darkened(0.30f), edge = base.darkened(0.62f);
 	const float cs = std::cos(angle), sn = std::sin(angle);
-	auto P = [&](float x, float y, const Vector2 &off) { return c + off + Vector2(x * cs - y * sn, x * sn + y * cs); };
+	// (Yasin: "put the arrow into the dead center of the box": the wedge's own middle, between its tip and its back, on the
+	// box's middle, whichever way it turns)
+	auto P = [&](float x, float y, const Vector2 &off) { y += r * 0.11f; return c + off + Vector2(x * cs - y * sn, x * sn + y * cs); };
 	// the wedge: tip, back corners, the notch in its back
 	const float tip = -r, back = r * 0.78f, notch = r * 0.30f, wide = r * 0.80f;
 	auto shape = [&](const Vector2 &off) {
 		PackedVector2Array a; a.push_back(P(0, tip, off)); a.push_back(P(wide, back, off)); a.push_back(P(0, notch, off)); a.push_back(P(-wide, back, off)); return a;
 	};
-	draw_colored_polygon(shape(Vector2(r * 0.06f, r * 0.14f)), Color(0, 0, 0, 0.35f));    // its shadow on the plate
-	draw_colored_polygon(shape(Vector2(0, r * 0.10f)), edge);                              // its thickness (seen from a little above)
+	draw_colored_polygon(shape(Vector2(r * 0.04f, r * 0.08f)), Color(0, 0, 0, 0.35f));    // its shadow on the plate
+	draw_colored_polygon(shape(Vector2(0, r * 0.06f)), edge);                              // its thickness (seen from a little above)
 	PackedVector2Array L, R;
 	L.push_back(P(0, tip, Vector2())); L.push_back(P(-wide, back, Vector2())); L.push_back(P(0, notch, Vector2()));
 	R.push_back(P(0, tip, Vector2())); R.push_back(P(0, notch, Vector2())); R.push_back(P(wide, back, Vector2()));
@@ -109,7 +111,7 @@ void CityHud::build() {
 		needs_box = v; add_child(v); v->set_visible(false);
 	}
 	b_arrow = box("plate");
-	arrow = memnew(HudArrow); arrow->set_mouse_filter(Control::MOUSE_FILTER_IGNORE); b_arrow->add_child(arrow);
+	arrow = memnew(HudArrow); arrow->set_mouse_filter(Control::MOUSE_FILTER_IGNORE); add_child(arrow);   // (over the box, exactly its rectangle)
 	b_inv = box("plate");
 	{ TextureRect *ic = plate::icon_rect("buy", 36); ic->set_mouse_filter(Control::MOUSE_FILTER_IGNORE); ic->set_stretch_mode(TextureRect::STRETCH_KEEP_ASPECT_CENTERED); b_inv->add_child(ic); }
 	b_phone = box("plate");
@@ -154,12 +156,13 @@ void CityHud::layout(const Vector2 &sz) {
 	last_sz = sz;
 	const float k = ui_k_of(sz);
 	auto put = [](Control *c, const Rect2 &r) { c->set_position(r.position); c->set_size(r.size); };
-	put(b_arrow, box_rect(0)); put(b_phone, box_rect(1)); put(b_inv, box_rect(2)); put(b_money, box_rect(3));
+	put(b_arrow, box_rect(0)); put(arrow, box_rect(0)); put(b_phone, box_rect(1)); put(b_inv, box_rect(2)); put(b_money, box_rect(3));
 	{ const Rect2 m = box_rect(3); put(needs_box, Rect2(m.position.x, m.get_end().y + 6.0f * k, m.size.x, 32.0f * k)); }
 	// the phone grows out of its button to a phone held up at the right; the inventory out of its box, up the left
-	const float ph = sz.y - 48.0f * k, pw = std::min(ph * 0.56f, sz.x * 0.5f);
-	from_rect[0] = box_rect(1); to_rect[0] = Rect2(sz.x - 24.0f * k - pw, 24.0f * k, pw, ph);
-	from_rect[1] = box_rect(2); to_rect[1] = Rect2(24.0f * k, sz.y - 24.0f * k - 300.0f * k, 360.0f * k, 300.0f * k);
+	// (Yasin: "all revealed screens should be full screen")
+	from_rect[0] = box_rect(1); to_rect[0] = Rect2(Vector2(), sz);
+	from_rect[1] = box_rect(2); to_rect[1] = Rect2(Vector2(), sz);
+	(void)k;
 }
 
 void CityHud::feedback() {
@@ -174,6 +177,7 @@ void CityHud::touch(int p_what) {
 	if (want < 0 || (open == want && anim_dir >= 0)) { if (open >= 0) anim_dir = -1; return; }
 	if (open >= 0 && open != want) { pan[open]->set_visible(false); anim = 0.0f; }
 	open = want; anim_dir = 1;
+	if (want == 0) from_rect[0] = box_rect(p_what == 0 ? 0 : 1);   // (the map out of the arrow box, the phone out of its button)
 	pan[open]->set_visible(true);
 }
 
@@ -211,7 +215,7 @@ void CityHud::_process(double p_delta) {
 			arrow->angle = std::atan2(d.dot(rt), d.dot(f));
 		}
 		arrow->objective = obj;
-		arrow->set_size(b_arrow->get_size() - Vector2(8, 8)); arrow->queue_redraw();
+		arrow->queue_redraw();
 	}
 	// a panel growing out of its box / shrinking back (0.28 s, eased: several frames)
 	if (open >= 0 && anim_dir != 0) {
