@@ -1,0 +1,415 @@
+{
+ "layers": {
+  "F1": {
+   "bottom_lum": 0.3044,
+   "face": 2,
+   "hair_lm": 0.3409,
+   "layer": 5,
+   "packed": true,
+   "skin_body": 0.6409,
+   "skin_head": 0.5573,
+   "top_lum": 0.5296
+  },
+  "F10": {
+   "bottom_lum": 0.1847,
+   "face": 2,
+   "hair_lm": 0.1292,
+   "layer": 31,
+   "packed": true,
+   "skin_body": 0.5476,
+   "skin_head": 0.5246,
+   "top_lum": 0.1141
+  },
+  "F11": {
+   "bottom_lum": 0.1311,
+   "face": 2,
+   "hair_lm": 0.1639,
+   "layer": 32,
+   "packed": true,
+   "skin_body": 0.6047,
+   "skin_head": 0.5224,
+   "top_lum": 0.4641
+  },
+  "F12": {
+   "bottom_lum": 0.0685,
+   "face": 2,
+   "hair_lm": 0.1839,
+   "layer": 33,
+   "packed": true,
+   "skin_body": 0.4924,
+   "skin_head": 0.4999,
+   "top_lum": 0.3105
+  },
+  "F13": {
+   "bottom_lum": 0.5632,
+   "face": 2,
+   "hair_lm": 0.4179,
+   "layer": 34,
+   "packed": true,
+   "skin_body": 0.6327,
+   "skin_head": 0.5843,
+   "top_lum": 0.4867
+  },
+  "F14": {
+   "bottom_lum": 0.6504,
+   "face": 2,
+   "hair_lm": 0.6338,
+   "layer": 35,
+   "packed": true,
+   "skin_body": 0.6178,
+   "skin_head": 0.5442,
+   "top_lum": 0.7133
+  },
+  "F15": {
+   "bottom_lum": 0.0653,
+   "face": 2,
+   "hair_lm": 0.08,
+   "layer": 36,
+   "packed": true,
+   "skin_body": 0.5121,
+   "skin_head": 0.5272,
+   "top_lum": 0.196
+  },
+  "F16": {
+   "bottom_lum": 0.4358,
+   "face": 2,
+   "hair_lm": 0.4197,
+   "layer": 37,
+   "packed": true,
+   "skin_body": 0.6014,
+   "skin_head": 0.5037,
+   "top_lum": 0.3983
+  },
+  "F17": {
+   "bottom_lum": 0.7121,
+   "face": 2,
+   "hair_lm": 0.2402,
+   "layer": 38,
+   "packed": true,
+   "skin_body": 0.5415,
+   "skin_head": 0.5233,
+   "top_lum": 0.7962
+  },
+  "F18": {
+   "bottom_lum": 0.5,
+   "face": 0,
+   "hair_lm": 0.1195,
+   "layer": 39,
+   "packed": false,
+   "skin_body": 0.5604,
+   "skin_head": 0.5604,
+   "top_lum": 0.5
+  },
+  "F19": {
+   "bottom_lum": 0.2548,
+   "face": 2,
+   "hair_lm": 0.0953,
+   "layer": 40,
+   "packed": true,
+   "skin_body": 0.5338,
+   "skin_head": 0.5003,
+   "top_lum": 0.3268
+  },
+  "F2": {
+   "bottom_lum": 0.0888,
+   "face": 2,
+   "hair_lm": 0.0788,
+   "layer": 6,
+   "packed": true,
+   "skin_body": 0.426,
+   "skin_head": 0.4022,
+   "top_lum": 0.1755
+  },
+  "F3": {
+   "bottom_lum": 0.1048,
+   "face": 2,
+   "hair_lm": 0.075,
+   "layer": 7,
+   "packed": true,
+   "skin_body": 0.5658,
+   "skin_head": 0.5013,
+   "top_lum": 0.3713
+  },
+  "F4": {
+   "bottom_lum": 0.5,
+   "face": 0,
+   "hair_lm": 0.09,
+   "layer": 8,
+   "packed": false,
+   "skin_body": 0.3579,
+   "skin_head": 0.3579,
+   "top_lum": 0.5
+  },
+  "F5": {
+   "bottom_lum": 0.2582,
+   "face": 2,
+   "hair_lm": 0.1494,
+   "layer": 9,
+   "packed": true,
+   "skin_body": 0.6201,
+   "skin_head": 0.5373,
+   "top_lum": 0.4798
+  },
+  "F6": {
+   "bottom_lum": 0.1841,
+   "face": 2,
+   "hair_lm": 0.1026,
+   "layer": 27,
+   "packed": true,
+   "skin_body": 0.5646,
+   "skin_head": 0.5434,
+   "top_lum": 0.6982
+  },
+  "F7": {
+   "bottom_lum": 0.2487,
+   "face": 2,
+   "hair_lm": 0.4124,
+   "layer": 28,
+   "packed": true,
+   "skin_body": 0.642,
+   "skin_head": 0.5697,
+   "top_lum": 0.1698
+  },
+  "F8": {
+   "bottom_lum": 0.2883,
+   "face": 2,
+   "hair_lm": 0.1218,
+   "layer": 29,
+   "packed": true,
+   "skin_body": 0.5472,
+   "skin_head": 0.4943,
+   "top_lum": 0.689
+  },
+  "F9": {
+   "bottom_lum": 0.17,
+   "face": 2,
+   "hair_lm": 0.0881,
+   "layer": 30,
+   "packed": true,
+   "skin_body": 0.5127,
+   "skin_head": 0.5205,
+   "top_lum": 0.1176
+  },
+  "M1": {
+   "bottom_lum": 0.4881,
+   "face": 1,
+   "hair_lm": 0.1637,
+   "layer": 0,
+   "packed": true,
+   "skin_body": 0.5233,
+   "skin_head": 0.5402,
+   "top_lum": 0.661
+  },
+  "M10": {
+   "bottom_lum": 0.3988,
+   "face": 1,
+   "hair_lm": 0.1786,
+   "layer": 14,
+   "packed": true,
+   "skin_body": 0.6269,
+   "skin_head": 0.5639,
+   "top_lum": 0.1469
+  },
+  "M11": {
+   "bottom_lum": 0.1549,
+   "face": 1,
+   "hair_lm": 0.0858,
+   "layer": 15,
+   "packed": true,
+   "skin_body": 0.5915,
+   "skin_head": 0.5086,
+   "top_lum": 0.2431
+  },
+  "M12": {
+   "bottom_lum": 0.4235,
+   "face": 1,
+   "hair_lm": 0.414,
+   "layer": 16,
+   "packed": true,
+   "skin_body": 0.3523,
+   "skin_head": 0.245,
+   "top_lum": 0.2616
+  },
+  "M13": {
+   "bottom_lum": 0.2352,
+   "face": 1,
+   "hair_lm": 0.2354,
+   "layer": 17,
+   "packed": true,
+   "skin_body": 0.4833,
+   "skin_head": 0.4589,
+   "top_lum": 0.3317
+  },
+  "M14": {
+   "bottom_lum": 0.4757,
+   "face": 1,
+   "hair_lm": 0.4742,
+   "layer": 18,
+   "packed": true,
+   "skin_body": 0.5501,
+   "skin_head": 0.5099,
+   "top_lum": 0.4101
+  },
+  "M15": {
+   "bottom_lum": 0.1155,
+   "face": 0,
+   "hair_lm": 0.1329,
+   "layer": 19,
+   "packed": true,
+   "skin_body": 0.3399,
+   "skin_head": 0.2294,
+   "top_lum": 0.4265
+  },
+  "M16": {
+   "bottom_lum": 0.2362,
+   "face": 0,
+   "hair_lm": 0.2284,
+   "layer": 20,
+   "packed": true,
+   "skin_body": 0.5532,
+   "skin_head": 0.5402,
+   "top_lum": 0.3273
+  },
+  "M17": {
+   "bottom_lum": 0.2473,
+   "face": 0,
+   "hair_lm": 0.2455,
+   "layer": 21,
+   "packed": true,
+   "skin_body": 0.5507,
+   "skin_head": 0.5366,
+   "top_lum": 0.3869
+  },
+  "M18": {
+   "bottom_lum": 0.2872,
+   "face": 1,
+   "hair_lm": 0.2794,
+   "layer": 22,
+   "packed": true,
+   "skin_body": 0.5917,
+   "skin_head": 0.4509,
+   "top_lum": 0.4649
+  },
+  "M19": {
+   "bottom_lum": 0.1808,
+   "face": 1,
+   "hair_lm": 0.1776,
+   "layer": 23,
+   "packed": true,
+   "skin_body": 0.5964,
+   "skin_head": 0.5335,
+   "top_lum": 0.7282
+  },
+  "M2": {
+   "bottom_lum": 0.0305,
+   "face": 1,
+   "hair_lm": 0.0827,
+   "layer": 1,
+   "packed": true,
+   "skin_body": 0.543,
+   "skin_head": 0.525,
+   "top_lum": 0.0832
+  },
+  "M20": {
+   "bottom_lum": 0.6449,
+   "face": 1,
+   "hair_lm": 0.5573,
+   "layer": 24,
+   "packed": true,
+   "skin_body": 0.5484,
+   "skin_head": 0.5267,
+   "top_lum": 0.2392
+  },
+  "M21": {
+   "bottom_lum": 0.1,
+   "face": 1,
+   "hair_lm": 0.1049,
+   "layer": 25,
+   "packed": true,
+   "skin_body": 0.4871,
+   "skin_head": 0.4572,
+   "top_lum": 0.846
+  },
+  "M22": {
+   "bottom_lum": 0.3273,
+   "face": 0,
+   "hair_lm": 0.3182,
+   "layer": 26,
+   "packed": true,
+   "skin_body": 0.5526,
+   "skin_head": 0.4442,
+   "top_lum": 0.2389
+  },
+  "M3": {
+   "bottom_lum": 0.5,
+   "face": 0,
+   "hair_lm": 0.1316,
+   "layer": 2,
+   "packed": true,
+   "skin_body": 0.5793,
+   "skin_head": 0.5378,
+   "top_lum": 0.5
+  },
+  "M4": {
+   "bottom_lum": 0.5,
+   "face": 0,
+   "hair_lm": 0.09,
+   "layer": 3,
+   "packed": false,
+   "skin_body": 0.3775,
+   "skin_head": 0.3775,
+   "top_lum": 0.5
+  },
+  "M5": {
+   "bottom_lum": 0.1579,
+   "face": 1,
+   "hair_lm": 0.1333,
+   "layer": 4,
+   "packed": true,
+   "skin_body": 0.5559,
+   "skin_head": 0.4822,
+   "top_lum": 0.6205
+  },
+  "M6": {
+   "bottom_lum": 0.1243,
+   "face": 1,
+   "hair_lm": 0.1058,
+   "layer": 10,
+   "packed": true,
+   "skin_body": 0.6177,
+   "skin_head": 0.5618,
+   "top_lum": 0.5718
+  },
+  "M7": {
+   "bottom_lum": 0.0911,
+   "face": 1,
+   "hair_lm": 0.2804,
+   "layer": 11,
+   "packed": true,
+   "skin_body": 0.5711,
+   "skin_head": 0.5034,
+   "top_lum": 0.2682
+  },
+  "M8": {
+   "bottom_lum": 0.1901,
+   "face": 1,
+   "hair_lm": 0.121,
+   "layer": 12,
+   "packed": true,
+   "skin_body": 0.4228,
+   "skin_head": 0.3799,
+   "top_lum": 0.1554
+  },
+  "M9": {
+   "bottom_lum": 0.1597,
+   "face": 1,
+   "hair_lm": 0.1525,
+   "layer": 13,
+   "packed": true,
+   "skin_body": 0.5367,
+   "skin_head": 0.5363,
+   "top_lum": 0.3215
+  }
+ },
+ "size": 512
+}

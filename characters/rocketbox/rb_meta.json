@@ -1,0 +1,1091 @@
+{
+ "clips": {
+  "female/bus_enter": {
+   "length": 1.20000004768372,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/car_enter": {
+   "length": 4.90000009536743,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/car_exit": {
+   "length": 3.33333325386047,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/climb_ladder": {
+   "length": 1.5,
+   "loop": true,
+   "speed_mps": 0.88725890715917
+  },
+  "female/crouch_idle": {
+   "length": 9.93333339691162,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/crouch_walk": {
+   "length": 1.5,
+   "loop": true,
+   "speed_mps": 0.88725890715917
+  },
+  "female/dance": {
+   "length": 24.966667175293,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/die": {
+   "length": 15.5333337783813,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/drink": {
+   "length": 11.8999996185303,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/drive_seated": {
+   "length": 34.7333335876465,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/eat": {
+   "length": 11.8999996185303,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/fall": {
+   "length": 46.1666679382324,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/get_up": {
+   "length": 3.33333325386047,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/hug": {
+   "length": 11.2333335876465,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/idle": {
+   "length": 15.5333337783813,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/idle_a": {
+   "length": 15.5333337783813,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/idle_b": {
+   "length": 11.2333335876465,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/idle_c": {
+   "length": 16.6666660308838,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/jog": {
+   "length": 0.833333313465118,
+   "loop": true,
+   "speed_mps": 2.26941978335381
+  },
+  "female/jump": {
+   "length": 1.66666662693024,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/look_around": {
+   "length": 4.46666669845581,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/open_door": {
+   "length": 7.53333330154419,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/phone_answer": {
+   "length": 31.8999996185303,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/phone_call": {
+   "length": 31.8999996185303,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/phone_dial": {
+   "length": 20.533332824707,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/pick_up": {
+   "length": 4.5,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/punch": {
+   "length": 3.16666674613953,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/run": {
+   "length": 0.766666650772095,
+   "loop": true,
+   "speed_mps": 2.76526734880779
+  },
+  "female/sit_down": {
+   "length": 4.90000009536743,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/sit_idle": {
+   "length": 33.2333335876465,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/sit_to_stand": {
+   "length": 3.33333325386047,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/sleep": {
+   "length": 2.66666674613953,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/sprint": {
+   "length": 0.699999988079071,
+   "loop": true,
+   "speed_mps": 5.37864177354745
+  },
+  "female/stand_to_sit": {
+   "length": 4.90000009536743,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/stand_up": {
+   "length": 3.33333325386047,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/swim_fwd": {
+   "length": 1.33333337306976,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/swim_idle": {
+   "length": 3.33333325386047,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/talk": {
+   "length": 27.3333339691162,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/talk_gesture": {
+   "length": 27.3333339691162,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/turn_left": {
+   "length": 2.33333325386047,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/turn_left_inplace": {
+   "length": 2.33333325386047,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/turn_right": {
+   "length": 2.33333325386047,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/turn_right_inplace": {
+   "length": 2.33333325386047,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/typing": {
+   "length": 20.533332824707,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "female/wake_up": {
+   "length": 3.33333325386047,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "female/walk": {
+   "length": 1.20000004768372,
+   "loop": true,
+   "speed_mps": 1.21376741677523
+  },
+  "female/walk_fast": {
+   "length": 1.03333330154419,
+   "loop": true,
+   "speed_mps": 1.53049230094879
+  },
+  "female/walk_slow": {
+   "length": 1.5,
+   "loop": true,
+   "speed_mps": 0.88725890715917
+  },
+  "female/wave": {
+   "length": 5.53333330154419,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/bus_enter": {
+   "length": 1.20000004768372,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/car_enter": {
+   "length": 2.90000009536743,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/car_exit": {
+   "length": 2.5,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/climb_ladder": {
+   "length": 1.46666669845581,
+   "loop": true,
+   "speed_mps": 0.820951754735276
+  },
+  "male/crouch_idle": {
+   "length": 6.86666679382324,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/crouch_walk": {
+   "length": 1.46666669845581,
+   "loop": true,
+   "speed_mps": 0.820951754735276
+  },
+  "male/dance": {
+   "length": 21.5,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/die": {
+   "length": 11.6666669845581,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/drink": {
+   "length": 35.0,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/drive_seated": {
+   "length": 39.2666664123535,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/eat": {
+   "length": 35.0,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/fall": {
+   "length": 30.8999996185303,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/get_up": {
+   "length": 2.5,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/hug": {
+   "length": 15.5,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/idle": {
+   "length": 11.6666669845581,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/idle_a": {
+   "length": 11.6666669845581,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/idle_b": {
+   "length": 15.5,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/idle_c": {
+   "length": 33.3333320617676,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/jog": {
+   "length": 0.766666650772095,
+   "loop": true,
+   "speed_mps": 2.41062555624093
+  },
+  "male/jump": {
+   "length": 1.26666665077209,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/look_around": {
+   "length": 4.63333320617676,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/open_door": {
+   "length": 6.19999980926514,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/phone_answer": {
+   "length": 31.8999996185303,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/phone_call": {
+   "length": 31.8999996185303,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/phone_dial": {
+   "length": 34.466667175293,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/pick_up": {
+   "length": 4.5,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/punch": {
+   "length": 3.0,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/run": {
+   "length": 0.733333349227905,
+   "loop": true,
+   "speed_mps": 2.87972410294143
+  },
+  "male/sit_down": {
+   "length": 2.90000009536743,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/sit_idle": {
+   "length": 36.0999984741211,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/sit_to_stand": {
+   "length": 2.5,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/sleep": {
+   "length": 2.73333334922791,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/sprint": {
+   "length": 0.600000023841858,
+   "loop": true,
+   "speed_mps": 5.83948602279027
+  },
+  "male/stand_to_sit": {
+   "length": 2.90000009536743,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/stand_up": {
+   "length": 2.5,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/swim_fwd": {
+   "length": 1.33333337306976,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/swim_idle": {
+   "length": 3.33333325386047,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/talk": {
+   "length": 35.5666656494141,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/talk_gesture": {
+   "length": 35.5666656494141,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/turn_left": {
+   "length": 2.33333325386047,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/turn_left_inplace": {
+   "length": 2.33333325386047,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/turn_right": {
+   "length": 2.16666674613953,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/turn_right_inplace": {
+   "length": 2.16666674613953,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/typing": {
+   "length": 34.466667175293,
+   "loop": true,
+   "speed_mps": 0.0
+  },
+  "male/wake_up": {
+   "length": 2.5,
+   "loop": false,
+   "speed_mps": 0.0
+  },
+  "male/walk": {
+   "length": 1.20000004768372,
+   "loop": true,
+   "speed_mps": 1.01170035079123
+  },
+  "male/walk_fast": {
+   "length": 1.06666672229767,
+   "loop": true,
+   "speed_mps": 1.49539713340347
+  },
+  "male/walk_slow": {
+   "length": 1.46666669845581,
+   "loop": true,
+   "speed_mps": 0.820951754735276
+  },
+  "male/wave": {
+   "length": 2.83333325386047,
+   "loop": false,
+   "speed_mps": 0.0
+  }
+ },
+ "donors": {
+  "F1": {
+   "donor": "Female_Adult_01",
+   "g": "women",
+   "layer": 5.0,
+   "lm": 0.520436871230384,
+   "police": false,
+   "tris": {
+    "full": 4000.0,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "F10": {
+   "donor": "Female_Adult_12",
+   "extra": true,
+   "g": "women",
+   "layer": 31.0,
+   "lm": 0.468314931824678,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 3999,
+    "l1": 1499.0,
+    "l2": 500.0,
+    "med": 2499.0
+   }
+  },
+  "F11": {
+   "donor": "Female_Adult_14",
+   "extra": true,
+   "g": "women",
+   "layer": 32.0,
+   "lm": 0.432017936147612,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 4000,
+    "l1": 1499.0,
+    "l2": 500.0,
+    "med": 2498.0
+   }
+  },
+  "F12": {
+   "donor": "Female_Adult_15",
+   "extra": true,
+   "g": "women",
+   "layer": 33.0,
+   "lm": 0.418475626686505,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 3998,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "F13": {
+   "donor": "Female_Adult_17",
+   "extra": true,
+   "g": "women",
+   "layer": 34.0,
+   "lm": 0.528213956164755,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 4000,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "F14": {
+   "donor": "Female_Party_01",
+   "extra": true,
+   "g": "women",
+   "layer": 35.0,
+   "lm": 0.571139951181485,
+   "police": false,
+   "tag": "night",
+   "tris": {
+    "full": 3999,
+    "l1": 1500.0,
+    "l2": 499.0,
+    "med": 2499.0
+   }
+  },
+  "F15": {
+   "donor": "Female_Party_02",
+   "extra": true,
+   "g": "women",
+   "layer": 36.0,
+   "lm": 0.458879422338285,
+   "police": false,
+   "tag": "night",
+   "tris": {
+    "full": 4000,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "F16": {
+   "donor": "Sports_Female_01",
+   "extra": true,
+   "g": "women",
+   "layer": 37.0,
+   "lm": 0.540323847841038,
+   "police": false,
+   "tag": "swim",
+   "tris": {
+    "full": 4000,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "F17": {
+   "donor": "Medical_Female_01",
+   "extra": true,
+   "g": "women",
+   "layer": 38.0,
+   "lm": 0.51025618870938,
+   "police": false,
+   "tag": "medical",
+   "tris": {
+    "full": 4000,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "F18": {
+   "donor": "Medical_Female_02",
+   "extra": true,
+   "g": "women",
+   "layer": 39.0,
+   "lm": 0.470994376191522,
+   "police": false,
+   "tag": "medical",
+   "tris": {
+    "full": 4000,
+    "l1": 1499.0,
+    "l2": 500.0,
+    "med": 2499.0
+   }
+  },
+  "F19": {
+   "donor": "Business_Female_03",
+   "extra": true,
+   "g": "women",
+   "layer": 40.0,
+   "lm": 0.39471694826095,
+   "police": false,
+   "tag": "office",
+   "tris": {
+    "full": 3999,
+    "l1": 1499.0,
+    "l2": 499.0,
+    "med": 2500.0
+   }
+  },
+  "F2": {
+   "donor": "Business_Female_01",
+   "g": "women",
+   "layer": 6.0,
+   "lm": 0.398959708284363,
+   "police": false,
+   "tris": {
+    "full": 3998.0,
+    "l1": 1499.0,
+    "l2": 500.0,
+    "med": 2497.0
+   }
+  },
+  "F3": {
+   "donor": "Female_Adult_03",
+   "g": "women",
+   "layer": 7.0,
+   "lm": 0.52921588284543,
+   "police": false,
+   "tris": {
+    "full": 4000.0,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2499.0
+   }
+  },
+  "F4": {
+   "donor": "Police_Female_01",
+   "g": "women",
+   "layer": 8.0,
+   "lm": 0.350093856006328,
+   "police": true,
+   "tris": {
+    "full": 3999.0,
+    "l1": 1499.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "F5": {
+   "donor": "Female_Adult_08",
+   "g": "women",
+   "layer": 9.0,
+   "lm": 0.528929136397528,
+   "police": false,
+   "tris": {
+    "full": 4000.0,
+    "l1": 1499.0,
+    "l2": 499.0,
+    "med": 2500.0
+   }
+  },
+  "F6": {
+   "donor": "Female_Adult_02",
+   "extra": true,
+   "g": "women",
+   "layer": 27.0,
+   "lm": 0.504273751461402,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 4000,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "F7": {
+   "donor": "Female_Adult_04",
+   "extra": true,
+   "g": "women",
+   "layer": 28.0,
+   "lm": 0.45068036790115,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 3999,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "F8": {
+   "donor": "Female_Adult_05",
+   "extra": true,
+   "g": "women",
+   "layer": 29.0,
+   "lm": 0.55616781990487,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 3999,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "F9": {
+   "donor": "Female_Adult_11",
+   "extra": true,
+   "g": "women",
+   "layer": 30.0,
+   "lm": 0.393076905952268,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 4000,
+    "l1": 1500.0,
+    "l2": 499.0,
+    "med": 2500.0
+   }
+  },
+  "M1": {
+   "donor": "Male_Adult_01",
+   "g": "men",
+   "layer": 0.0,
+   "lm": 0.512783982382508,
+   "police": false,
+   "tris": {
+    "full": 3998.0,
+    "l1": 1500.0,
+    "l2": 499.0,
+    "med": 2500.0
+   }
+  },
+  "M10": {
+   "donor": "Male_Adult_09",
+   "extra": true,
+   "g": "men",
+   "layer": 14.0,
+   "lm": 0.544702820582796,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 3999,
+    "l1": 1499.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "M11": {
+   "donor": "Male_Adult_10",
+   "extra": true,
+   "g": "men",
+   "layer": 15.0,
+   "lm": 0.503098031609369,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 4000,
+    "l1": 1500.0,
+    "l2": 499.0,
+    "med": 2500.0
+   }
+  },
+  "M12": {
+   "donor": "Male_Adult_12",
+   "extra": true,
+   "g": "men",
+   "layer": 16.0,
+   "lm": 0.262019827977938,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 4000,
+    "l1": 1499.0,
+    "l2": 499.0,
+    "med": 2499.0
+   }
+  },
+  "M13": {
+   "donor": "Male_Adult_13",
+   "extra": true,
+   "g": "men",
+   "layer": 17.0,
+   "lm": 0.393445275589958,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 4000,
+    "l1": 1499.0,
+    "l2": 500.0,
+    "med": 2499.0
+   }
+  },
+  "M14": {
+   "donor": "Male_Adult_14",
+   "extra": true,
+   "g": "men",
+   "layer": 18.0,
+   "lm": 0.456305965741489,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 3998,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "M15": {
+   "donor": "Male_Adult_18",
+   "extra": true,
+   "g": "men",
+   "layer": 19.0,
+   "lm": 0.343996584726317,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 4000,
+    "l1": 1499.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "M16": {
+   "donor": "Medical_Male_04",
+   "extra": true,
+   "g": "men",
+   "layer": 20.0,
+   "lm": 0.495150268436977,
+   "police": false,
+   "tag": "medical",
+   "tris": {
+    "full": 3999,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2499.0
+   }
+  },
+  "M17": {
+   "donor": "Medical_Male_05",
+   "extra": true,
+   "g": "men",
+   "layer": 21.0,
+   "lm": 0.499126715021876,
+   "police": false,
+   "tag": "medical",
+   "tris": {
+    "full": 3999,
+    "l1": 1499.0,
+    "l2": 500.0,
+    "med": 2499.0
+   }
+  },
+  "M18": {
+   "donor": "Construction_Male_07",
+   "extra": true,
+   "g": "men",
+   "layer": 22.0,
+   "lm": 0.438893435206704,
+   "police": false,
+   "tag": "trade",
+   "tris": {
+    "full": 3999,
+    "l1": 1499.0,
+    "l2": 499.0,
+    "med": 2499.0
+   }
+  },
+  "M19": {
+   "donor": "Sports_Male_01",
+   "extra": true,
+   "g": "men",
+   "layer": 23.0,
+   "lm": 0.541181519775804,
+   "police": false,
+   "tag": "swim",
+   "tris": {
+    "full": 4000,
+    "l1": 1500.0,
+    "l2": 499.0,
+    "med": 2500.0
+   }
+  },
+  "M2": {
+   "donor": "Business_Male_01",
+   "g": "men",
+   "layer": 1.0,
+   "lm": 0.510048286647211,
+   "police": false,
+   "tris": {
+    "full": 4000.0,
+    "l1": 1499.0,
+    "l2": 499.0,
+    "med": 2500.0
+   }
+  },
+  "M20": {
+   "donor": "Sports_Male_04",
+   "extra": true,
+   "g": "men",
+   "layer": 24.0,
+   "lm": 0.487971888603773,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 4000,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "M21": {
+   "donor": "Pilot_Male_03",
+   "extra": true,
+   "g": "men",
+   "layer": 25.0,
+   "lm": 0.43375493729659,
+   "police": false,
+   "tag": "navy",
+   "tris": {
+    "full": 4000,
+    "l1": 1500.0,
+    "l2": 499.0,
+    "med": 2500.0
+   }
+  },
+  "M22": {
+   "donor": "Delivery_Male_01",
+   "extra": true,
+   "g": "men",
+   "layer": 26.0,
+   "lm": 0.415401655702706,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 4000,
+    "l1": 1500.0,
+    "l2": 499.0,
+    "med": 2499.0
+   }
+  },
+  "M3": {
+   "donor": "Male_Adult_05",
+   "g": "men",
+   "layer": 2.0,
+   "lm": 0.5098,
+   "police": false,
+   "tris": {
+    "full": 4000.0,
+    "l1": 1499.0,
+    "l2": 499.0,
+    "med": 2497.0
+   }
+  },
+  "M4": {
+   "donor": "Police_Male_01",
+   "g": "men",
+   "layer": 3.0,
+   "lm": 0.357316121770388,
+   "police": true,
+   "tris": {
+    "full": 3999.0,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "M5": {
+   "donor": "Male_Adult_08",
+   "g": "men",
+   "layer": 4.0,
+   "lm": 0.458246754570538,
+   "police": false,
+   "tris": {
+    "full": 3998.0,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "M6": {
+   "donor": "Male_Adult_02",
+   "extra": true,
+   "g": "men",
+   "layer": 10.0,
+   "lm": 0.501707266341066,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 4000,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "M7": {
+   "donor": "Male_Adult_03",
+   "extra": true,
+   "g": "men",
+   "layer": 11.0,
+   "lm": 0.392226997407756,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 4000,
+    "l1": 1499.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "M8": {
+   "donor": "Male_Adult_04",
+   "extra": true,
+   "g": "men",
+   "layer": 12.0,
+   "lm": 0.32234531849995,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 4000,
+    "l1": 1500.0,
+    "l2": 500.0,
+    "med": 2500.0
+   }
+  },
+  "M9": {
+   "donor": "Male_Adult_06",
+   "extra": true,
+   "g": "men",
+   "layer": 13.0,
+   "lm": 0.419676709448503,
+   "police": false,
+   "tag": "casual",
+   "tris": {
+    "full": 3998,
+    "l1": 1500.0,
+    "l2": 499.0,
+    "med": 2499.0
+   }
+  }
+ }
+}
