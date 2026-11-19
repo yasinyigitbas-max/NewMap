@@ -68,9 +68,8 @@ func _run() -> void:
 	paints.append(F.rect(sx, sz, 9.2, 9.2, 15.7, 11.7, "concrete"))            # the shop's step-out on the corner
 	F.back_of_house(props, bk, false)
 	F.wall(props, bk, "prop_porch_light_coach", "worn", "front", -2.0 - 0.8, 2.2, 0.05)
-	F.put(props, "prop_park_bench", "worn", sx, sz, 13.2, 10.4, 180.0)            # a reader's bench under the window, facing 6th
-	F.put(props, "prop_newspaper_box_red", "worn", sx, sz, 9.8, 10.2, 180.0)
-	F.put(props, "plant_potted_leafy", "normal", sx, sz, 15.2, 11.4, 0.0)
+	F.put(props, "prop_park_bench", "worn", sx, sz, 11.0, 10.4, 180.0)            # a reader's bench under the window, facing 6th, clear of the door (u 14.45)
+	F.put(props, "prop_newspaper_box_red", "worn", sx, sz, 16.9, 10.2, 180.0)     # in the gap beside the shop, off the walk
 	F.dress(bd.spanish_court_hill, paints, props, dec, rr, sx, sz, 9.2, true, true, [1.0])
 	F.dress(bd.walkup_bave_hill, paints, props, dec, rr, sx, sz, 9.2, true, true)
 	stops.append_array(F.pad(paints, stalls, dec, rr, sx, sz, false, 10.0, 52.0, 54.0, -1.0))
@@ -78,7 +77,7 @@ func _run() -> void:
 	F.fence_uv(props, sx, sz, 37.2, 22.4, 47.4, 22.4)
 	F.fence_uv(props, sx, sz, 24.4, 52.2, 47.4, 52.2)
 	F.fence_uv(props, sx, sz, 24.4, 44.2, 24.4, 52.2)
-	F.fence_gate(props, sx, sz, 22.0, 22.4, 22.0, 31.8, 4.7)
+	F.fence_gate(props, sx, sz, 19.4, 22.4, 19.4, 31.8, 4.7)                      # across the gap between the court and the walk-up, clear of the court's bins
 	F.put(props, "tree_jacaranda_a", "normal", sx, sz, 42.0, 30.0, 50.0)
 	F.put(props, "prop_clothesline", "worn", sx, sz, 36.0, 44.0, 0.0)
 
@@ -107,7 +106,7 @@ func _run() -> void:
 	F.put(props, "palm_queen_b", "normal", sx, sz, 35.6, 82.6, 30.0)
 	F.put(props, "palm_queen_a", "normal", sx, sz, 23.8, 82.6, 150.0)
 	F.put(props, "prop_park_bench", "worn", sx, sz, 46.0, 80.0, -90.0)            # at the walk's end, looking back along the court
-	F.put(props, "prop_drinking_fountain", "worn", sx, sz, 47.2, 82.6, -90.0)
+	F.put(props, "prop_drinking_fountain", "worn", sx, sz, 44.6, 82.8, -90.0)
 	F.put(props, "prop_lamp_globe", "worn", sx, sz, 22.6, 81.6)
 	F.put(props, "prop_lamp_globe", "worn", sx, sz, 37.0, 78.4)
 	stops.append_array(F.pad(paints, stalls, dec, rr, sx, sz, false, 61.0, 99.0, 54.0, -1.0))

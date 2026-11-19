@@ -31,6 +31,7 @@ SHOPS = {
     ("n_apt_b2_7th", "corner_market"): [(4.9, [-1.2, 5.7], "discount", "Adela Corner Market", "red", "everyday shopping at 7th and Adela, facing the pharmacy corner; the flat above is the shopkeeper's")],
     ("n_apt_b2_be", "bike_shop"): [(-3.3, None, "bikes", "Hill Street Bikes", "teal", "the hill's families and the beach riders: repairs and kids' bikes on the corner of 6th and Adela")],
     ("n_apt_b2_bw", "community_room"): [(0.0, None, "community", "Glorietta Hill Community Room", "green", "the apartments' association hall: meetings at night, the preschool in the day, its play yard behind")],
+    ("n_apt_b3_w", "hilltop_books"): [(-2.0, None, "books", "Hilltop Books", "navy", "a tiny second-hand bookshop at the top of B Ave, opposite the community room: the preschool parents' stop")],
     ("n_apt_b1_7th", "launderette"): [(-1.1, [-5.7, 2.2], "laundromat", "Adela Wash & Fold", "sea", "the walk-ups have no machines: the launderette under the flats on Adela")],
 }
 

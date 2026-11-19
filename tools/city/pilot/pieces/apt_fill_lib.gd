@@ -144,8 +144,10 @@ static func doors_of(folder: String, kinds := ["apt_door", "shopdoor", "civic_do
 ## left / right of the building; x: along that wall in the model frame (front / back: model x, sides: model z).
 static var _rc := {}
 static func openings(folder: String) -> Array:
-	if _rc.is_empty():
-		_rc = (JSON.parse_string(FileAccess.get_file_as_string("res://map_dc/coronado/city_kit/interiors/room_contracts.json")) as Dictionary).get("models", {})
+	if _rc.is_empty():        # the same measured openings check_life.gd reads (shops, apartments, and the houses)
+		for f: String in ["room_contracts.json", "room_contracts_res.json"]:
+			var pth := "res://map_dc/coronado/city_kit/interiors/" + f
+			if FileAccess.file_exists(pth): _rc.merge((JSON.parse_string(FileAccess.get_file_as_string(pth)) as Dictionary).get("models", {}))
 	return (_rc.get(folder, {}) as Dictionary).get("openings", [])
 
 static func wall_x(b: Dictionary, facade: String, x: float, y: float, hw: float, h: float) -> float:
@@ -199,7 +201,10 @@ static func back_of_house(props: K.Props, b: Dictionary, residential := false) -
 		for k in 3: props.add("prop_meter_electric", "worn", at(b, mx - 0.42 + k * 0.42, -d * 0.5 - 0.02, 1.05), yaw)
 		wall(props, b, "prop_meter_gas", "rusty", "back", mx + 1.3, 0.2, 0.02)
 	var n_ac := 1 if w < 14.0 else 2
-	for k in n_ac: props.add("prop_ac_condenser", "worn", at(b, x0 + 3.4 + k * 1.3, -d * 0.5 - 0.75), yaw)
+	if w < 10.0:     # a small house: the condenser goes beside its side wall, the back wall is the bins' and the meters'
+		props.add("prop_ac_condenser_compact", "worn", at(b, -w * 0.5 - 0.7, -d * 0.5 + 1.4), yaw - 90.0)
+	else:
+		for k in n_ac: props.add("prop_ac_condenser", "worn", at(b, x0 + 3.4 + k * 1.3, -d * 0.5 - 0.75), yaw)
 	if residential:
 		for k in 3: props.add(["prop_trash_cart_black", "prop_trash_cart_blue", "prop_trash_cart_green"][k], "worn", at(b, w * 0.5 - 1.5 - k * 0.8, -d * 0.5 - 0.75), yaw)
 

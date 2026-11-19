@@ -98,9 +98,12 @@ const KINDS := {
 	# the bike shop: the counter with the workbench and the pegboard behind it, bikes in stands along the walls, a display
 	# of helmets and locks on tables, a bike in the window
 	"bikes": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["workbench", "pegboard_wall"], "board": false, "walls": ["bike_stand", "wall_shelf", "bike_stand"], "centre": "display", "window": "display", "back": "stock", "frames": false, "posters": true, "cap": {"bike_stand": 6, "wall_shelf": 2}, "tint": Color(0.88, 0.94, 0.98)},
+	# (apt fill, block 3) the corner bookshop, from the pilot's own "books" kind: bookcases on every wall and behind the
+	# till, a display table in the window, a reading seat
+	"books": {"floor": "WoodFloor051", "light": "pendant", "counter": ["shop_counter"], "till": true, "behind": ["bookcase", "bookcase"], "board": false, "walls": ["bookcase"], "centre": "display", "window": "display", "back": "none", "frames": false, "cap": {"bookcase": 8}, "tint": Color(0.96, 0.92, 0.84)},
 	"tax": {"max_d": 10.0, "floor": "Carpet012", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet"], "board": false, "walls": ["filing_cabinet", "brochure_rack"], "centre": "desks", "window": "waiting", "back": "office", "frames": true, "tint": Color(0.93, 0.95, 0.9)},
 }
-const WARM := ["diner", "taqueria", "bakery", "coffee"]
+const WARM := ["diner", "taqueria", "bakery", "coffee", "books"]
 const DRESS := {"drive_thru": ["indoor_bin", "potted_plant", "drinks_fridge", "indoor_bin", "brochure_rack"],
 	 "taqueria": ["drinks_fridge", "potted_plant", "indoor_bin"],
 	 "diner": ["potted_plant", "indoor_bin", "drinks_fridge"],
@@ -124,14 +127,14 @@ const DRESS := {"drive_thru": ["indoor_bin", "potted_plant", "drinks_fridge", "i
 	 "recycling": ["potted_plant"],
 	 "bakery": ["indoor_bin", "potted_plant"], "donuts": ["indoor_bin", "potted_plant", "drinks_fridge"],
 	 "barber": ["potted_plant", "indoor_bin", "waiting_bench"],
-	 "chapel": ["potted_plant", "potted_plant", "brochure_rack"], "community": ["potted_plant", "indoor_bin", "brochure_rack"], "bikes": ["potted_plant", "indoor_bin"], "pharmacy": ["usps_collection_box", "brochure_rack", "indoor_bin", "potted_plant"]}
+	 "chapel": ["potted_plant", "potted_plant", "brochure_rack"], "books": ["waiting_bench", "potted_plant", "indoor_bin"], "community": ["potted_plant", "indoor_bin", "brochure_rack"], "bikes": ["potted_plant", "indoor_bin"], "pharmacy": ["usps_collection_box", "brochure_rack", "indoor_bin", "potted_plant"]}
 const CAP := {"vending_soda": 1, "vending_snack": 1, "drinks_fridge": 1, "waiting_bench": 3, "card_spinner": 1, "brochure_rack": 1, "glass_display_case": 3, "filing_cabinet": 3}
 const WALL_TINTS := [Color(1.0, 0.95, 0.86), Color(0.94, 0.96, 0.98), Color(0.98, 0.92, 0.84), Color(0.9, 0.95, 0.92), Color(1.0, 0.97, 0.93), Color(0.93, 0.9, 0.86)]
 const SHORT := {"cafe": "COFFEE", "bakery": "BAKERY", "bar": "BAR", "restaurant": "KITCHEN", "fast_food": "FOOD", "ice_cream": "ICE CREAM",
 	"clothes": "CLOTHES", "shoes": "SHOES", "jewelry": "JEWELRY", "books": "BOOKS", "gallery": "GALLERY", "salon": "SALON", "pharmacy": "PHARMACY",
 	"souvenir": "GIFTS", "office": "OFFICE", "corner_shop": "MARKET", "grocery": "GROCERY", "cleaners": "LAUNDRY", "store": "SUPPLY", "keys": "KEYS",
 	"sport": "SPORT", "gas": "FUEL", "venue": "TICKETS", "drive_thru": "CHICKEN", "taqueria": "TACOS", "diner": "DINER",
-	"wash_office": "CAR WASH", "lube": "OIL CHANGE", "auto_parts": "AUTO PARTS", "phone": "PHONES", "tax": "TAX", "tyre": "TIRES", "car_sales": "USED CARS", "clinic": "URGENT CARE", "physio": "PHYSIO", "coffee": "COFFEE", "florist": "FLOWERS", "motel_office": "OFFICE", "gym": "GYM 24H", "discount": "MARKET", "laundromat": "LAUNDRY", "nails": "NAILS", "dentist": "DENTIST", "pizza": "PIZZA", "dry_cleaner": "CLEANERS", "bank": "CREDIT UNION", "recycling": "RECYCLING", "donuts": "DONUTS", "barber": "BARBER", "chapel": "CHURCH", "community": "COMMUNITY", "bikes": "BIKES"}
+	"wash_office": "CAR WASH", "lube": "OIL CHANGE", "auto_parts": "AUTO PARTS", "phone": "PHONES", "tax": "TAX", "tyre": "TIRES", "car_sales": "USED CARS", "clinic": "URGENT CARE", "physio": "PHYSIO", "coffee": "COFFEE", "florist": "FLOWERS", "motel_office": "OFFICE", "gym": "GYM 24H", "discount": "MARKET", "laundromat": "LAUNDRY", "nails": "NAILS", "dentist": "DENTIST", "pizza": "PIZZA", "dry_cleaner": "CLEANERS", "bank": "CREDIT UNION", "recycling": "RECYCLING", "donuts": "DONUTS", "barber": "BARBER", "chapel": "CHURCH", "books": "BOOKS", "community": "COMMUNITY", "bikes": "BIKES"}
 
 var foot := {}      # base -> Vector2(w, d)
 var tall := {}      # base -> height
