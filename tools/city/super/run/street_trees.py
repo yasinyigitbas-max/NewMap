@@ -25,11 +25,15 @@ def show(P):
     c = T.context(P); ts = old_trees(P); last = {}
     rows = [r for r in L.load_layout() if r.piece == P]
     print('TREES of %s: %d (the piece stands %d time(s) in the layout)' % (P, len(ts), len(rows)))
-    order = sorted(range(len(ts)), key=lambda i: (np.sign(ts[i]['item']['local'][0]), ts[i]['item']['local'][2]))
+    lo, hi = L.Dump(P).bbox(); ax = 0 if (hi[0] - lo[0]) > (hi[1] - lo[1]) else 2     # the street runs along its long side
+    sx = 2 - ax; mid = (lo[sx // 2] + hi[sx // 2]) * 0.5
+    print('  the street runs along local %s; side = local %s %s %.1f' % ('xz'[ax // 2], 'xz'[sx // 2], 'from', mid))
+    order = sorted(range(len(ts)), key=lambda i: (ts[i]['item']['local'][sx] > mid, ts[i]['item']['local'][ax]))
     for i in order:
-        f = ts[i]; lx, ly, lz = f['item']['local']; x, y, z = f['at']; g = c.S.ground(x, z)
+        f = ts[i]; loc = f['item']['local']; x, y, z = f['at']; g = c.S.ground(x, z)
+        lz = loc[ax]
         paved = sum(1 for dx, dz in ((1.3, 0), (-1.3, 0), (0, 1.3), (0, -1.3)) if (c.S.ground(x + dx, z + dz) or [0, ''])[1] in L.PAVED)
-        side = 'E/+x' if lx > 0 else 'W/-x'
+        side = ('+' if loc[sx] > mid else '-') + '%.1f' % (loc[sx] - mid)
         gap = '' if side not in last else '%.1f' % abs(lz - last[side]); last[side] = lz
         near = sorted([(round(float(L.quad_dist(it.quad, (x, z))), 1), it.base.replace('prop_', '')) for it in c.near((x, z), 5.0)
                        if it.kind != 'tree' and L.quad_dist(it.quad, (x, z)) < 3])[:3]
