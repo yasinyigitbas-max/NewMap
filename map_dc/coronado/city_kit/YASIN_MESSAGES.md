@@ -259,3 +259,15 @@ the other agent suggested these
 - [2026-11-19] there are still big gaps, fill them
 
 - [2026-11-19] your old measurements were much smaller, waht changed?
+
+- [2026-11-19] (traffic and people, the first message of that session) i need two things, ALL MUST BE WRITTEN FROM HEAD TO TOE, 100% IN C PLUS PLUS! THIS IS A MUST! SCRIPTS SLOW DOWN MY GAME TOO MUCH! YOU CAN KEEP THE C PLUS PLUS PARTS IF THEY ARE SALVAGEABLE! READ ALL THE SKILLS RELATED! THINK LIKE A DEVELOPER WORKING FOR ROCKSTAR ON THE NEXT GTA game - firstly a moving traffic system and good car physics, i need my cars in the game to ride exactly like gta 4 if not gta 5, in the current traffic cars just slide into turns instead of steering into turns, take abrupt u turns, lock the traffic up. salvage the old traffic system as much as you can but make the cars and their physics gta 5 level, if not minimum gta 4. current system is terrible, if its unsalvagable, just build it from scratch.
+
+- [2026-11-19] second, i want my gta 5 level npcs, they already do all of these but they do them terribly, needs a rewrite. they need to balance themselves, be able to pushed around and resist falls, just like in the euphoria engine GTA4 minimum, or better RAGE of GTA5
+
+- [2026-11-19] are they even doable?
+
+- [2026-11-19] you can get the old npcs from the game BUT FULLY WRITTEN IN C PLUS PLUS, not a single script if you can help it
+
+- [2026-11-19] i have about 40 animated bodies standard with 50 bones
+
+- [2026-11-19] you just had a context compression, remind yourself the rules, and the task in the first message. act like a developer working for rockstars next GTA and tackle the problems. how far along are you in your queue

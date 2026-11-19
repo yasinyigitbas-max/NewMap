@@ -42,6 +42,12 @@ The full record is `docs/TRAFFIC_PEOPLE_PORT.md` (sections 13-20 are results). T
   because of a sideways drift; a test shove must last (a fifth of a second), a hammer blow folds the body at the
   waist. The walking crowd is still NOT on this branch.
 
+- Knocked cars (19 Nov ~20:00, doc section 23): `CityTraffic::knock` hands a row or a parked car to one of six
+  pooled `CityCar`s a moment before the player's car touches it; `tests/traffic/test_knock.gd` (real time, no
+  `--fixed-fps`: the traffic steps by the clock on its own thread, and car boxes exist only near the CAMERA, so the
+  test's camera must stay over the car). Paid for: a KINEMATIC body that is teleported hands the jump on as speed
+  (28,000 m/s): the traffic's boxes are static.
+
 ## Yasin's rules for this job (his words are in the doc)
 - Everything in C++: no script in any frame or tick, no script fallback. Tool-time scripts are fine.
 - Parked cars are LOW DETAIL only. Cars must never touch a pavement, a kerb or grass. Cars move naturally.

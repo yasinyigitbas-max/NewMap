@@ -16,6 +16,11 @@
 //  - CARS APPEAR in a ring whose centre runs ahead of the camera by its speed, only on streets whose cell is loaded.
 //  - COLLISION: a small pool of box bodies made once at start and only MOVED afterwards, onto the cars nearest the
 //    camera's way. Nothing is created or attached while driving.
+//  - A CAR THAT IS ABOUT TO BE HIT (by the player's car, or by a car already knocked loose) stops being a row and a box:
+//    one of six physical cars made at the start (CityCar, the same springs and tyres the player drives) takes its
+//    model, colour, place and speed a moment before the touch, so the knock itself is the engine's: it is shoved, spun,
+//    rolled. Its driver brakes; once it stands on its wheels along a lane he drives on (the car is a row again), else
+//    it stays where it lies, the traffic goes round it, and it is taken away when the camera is far.
 #pragma once
 
 #include "street_build.h"
@@ -24,6 +29,8 @@
 
 #include <godot_cpp/classes/mesh.hpp>
 #include <godot_cpp/classes/node3d.hpp>
+#include <godot_cpp/classes/resource.hpp>
+#include <godot_cpp/variant/array.hpp>
 #include <godot_cpp/classes/shader_material.hpp>
 #include <godot_cpp/variant/dictionary.hpp>
 #include <godot_cpp/variant/packed_float32_array.hpp>
@@ -41,6 +48,8 @@ class Sim;
 }
 
 namespace godot {
+
+class CityCar;
 
 class CityTraffic : public Node3D {
 	GDCLASS(CityTraffic, Node3D)
@@ -67,7 +76,15 @@ private:
 		bool parked = true;
 		bool pc = false;            // the player's car (set_player_car): a box the drivers see, brake for and go round
 		float pcx = 0, pcy = 0, pcz = 0, pcyaw = 0, pcvx = 0, pcvz = 0, pchl = 2.2f, pchw = 0.95f;
+		// knocked cars: where each one is (a box the drivers see), which cars and stalls became one, which ask to drive on
+		struct LooseBox { uint8_t on = 0; uint32_t serial = 0; float x = 0, y = 0, z = 0, yaw = 0, hl = 2.2f, hw = 0.95f, vx = 0, vz = 0; } lb[6];
+		struct Adopt { int slot; uint32_t serial; int model, colour; float x, z, yaw; };
+		std::vector<int32_t> kill_ids, kill_stalls;
+		std::vector<Adopt> adopt;
 	} input;
+	struct AdoptDone { int slot; uint32_t serial; int32_t id; };
+	std::vector<AdoptDone> adopt_done;      // (under mx) the step's answers: the row's id, or -1 = it cannot drive on from there
+	uint32_t adopted_serial[6] = { 0, 0, 0, 0, 0, 0 };   // (the step's thread) the knock whose car is a row again: its box no longer counts
 	uint64_t player_id = 0;
 	float player_hl = 2.2f, player_hw = 0.95f;
 	std::vector<float> dyn_all;   // (the step's thread) the boxes handed to the core this step
@@ -153,8 +170,29 @@ private:
 	RID pool_body[POOL], pool_shape[POOL];
 	int pool_model[POOL];
 	bool pool_made = false;
-	struct BodyWant { float d2, x, y, z, yaw, pitch; int model; };
+	struct BodyWant { float d2, x, y, z, yaw, pitch; int model; int32_t id, stall; float v, steer; uint8_t colour; };
 	std::vector<BodyWant> body_want;   // filled in _process, used in _physics_process
+
+	// ---- knocked cars (see the top of this file)
+	enum { LOOSE = 6 };
+	struct LooseCar {
+		CityCar *car = nullptr;
+		bool on = false, parked = false;
+		int model = 0, colour = 0;
+		uint32_t serial = 0;
+		float rest_t = 0, age = 0, ask_cd = 0;
+	};
+	LooseCar loose[LOOSE];
+	bool knock_on = true;
+	int knock_feel = 0;
+	uint32_t loose_serial = 0;
+	std::vector<Ref<Resource>> keep_models;   // every model's body and wheels, held so that a knock loads nothing
+	struct Hidden { int32_t id; int frames; bool seen; };
+	std::vector<Hidden> hidden;      // rows that are a physical car now: not drawn, no box, until the step has dropped them
+	struct KnockCount { int moving = 0, parked = 0, rejoined = 0, taken_away = 0, no_slot = 0, refused = 0; } kc;
+	bool knock(BodyWant &w);
+	void loose_update(double p_delta);
+	void loose_put_away(int k);
 
 	// ---- counters for the report
 	struct Count {
@@ -208,6 +246,14 @@ public:
 	bool get_bodies() const { return bodies_on; }
 	void set_night(double p_n) { night = p_n; }
 	double get_night() const { return night; }
+	void set_knock(bool p_on) { knock_on = p_on; }
+	bool get_knock() const { return knock_on; }
+	void set_knock_feel(int p_f) { knock_feel = p_f; }
+	int get_knock_feel() const { return knock_feel; }
+	// for the tests: the moving cars and the parked ones round a point, and what became of the knocked ones
+	Array cars_near(const Vector3 &p_at, double p_r) const;
+	Array stalls_near(const Vector3 &p_at, double p_r) const;
+	Dictionary knock_stats() const;
 	void set_debug_car(int p_id) { debug_car = p_id; }
 	int get_debug_car() const { return debug_car; }
 	void set_streets_path(const String &p_path) { streets_path = p_path; }

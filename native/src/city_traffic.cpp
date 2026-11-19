@@ -262,6 +262,15 @@ void CityTraffic::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_debug_car", "id"), &CityTraffic::set_debug_car);
 	ClassDB::bind_method(D_METHOD("get_debug_car"), &CityTraffic::get_debug_car);
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "debug_car"), "set_debug_car", "get_debug_car");
+	ClassDB::bind_method(D_METHOD("set_knock", "on"), &CityTraffic::set_knock);
+	ClassDB::bind_method(D_METHOD("get_knock"), &CityTraffic::get_knock);
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "knock"), "set_knock", "get_knock");
+	ClassDB::bind_method(D_METHOD("set_knock_feel", "feel"), &CityTraffic::set_knock_feel);
+	ClassDB::bind_method(D_METHOD("get_knock_feel"), &CityTraffic::get_knock_feel);
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "knock_feel"), "set_knock_feel", "get_knock_feel");
+	ClassDB::bind_method(D_METHOD("cars_near", "at", "radius"), &CityTraffic::cars_near);
+	ClassDB::bind_method(D_METHOD("stalls_near", "at", "radius"), &CityTraffic::stalls_near);
+	ClassDB::bind_method(D_METHOD("knock_stats"), &CityTraffic::knock_stats);
 	ClassDB::bind_method(D_METHOD("is_built"), &CityTraffic::is_built);
 	ClassDB::bind_method(D_METHOD("street_stats"), &CityTraffic::street_stats);
 	ClassDB::bind_method(D_METHOD("run_test", "cars", "minutes", "seed", "cam", "whole_city", "stuck_rule", "density", "parking"), &CityTraffic::run_test, DEFVAL(false));

@@ -11,6 +11,7 @@
 #include <godot_cpp/classes/mesh_instance3d.hpp>
 #include <godot_cpp/classes/physics_direct_space_state3d.hpp>
 #include <godot_cpp/classes/physics_material.hpp>
+#include <godot_cpp/classes/physics_server3d.hpp>
 #include <godot_cpp/classes/rendering_server.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/shader.hpp>
@@ -25,9 +26,54 @@
 
 namespace godot {
 
+// Made once: the nodes, the engine body's settings, the wheel ray, the camera. What depends on the model is in fit().
 void CityCar::make() {
 	if (made) return;
 	made = true;
+	set_center_of_mass_mode(CENTER_OF_MASS_MODE_CUSTOM);
+	set_use_custom_integrator(true);
+	set_can_sleep(false);
+	set_use_continuous_collision_detection(true);
+	set_linear_damp_mode(DAMP_MODE_REPLACE); set_linear_damp(0.0); set_angular_damp_mode(DAMP_MODE_REPLACE); set_angular_damp(0.0);
+	Ref<PhysicsMaterial> pm; pm.instantiate(); pm->set_friction(0.35); pm->set_bounce(0.05);
+	set_physics_material_override(pm);
+	// two boxes: the body from sill to waist, the cabin above it
+	sh_body.instantiate(); sh_top.instantiate();
+	cs_body = memnew(CollisionShape3D); cs_body->set_shape(sh_body); add_child(cs_body);
+	cs_top = memnew(CollisionShape3D); cs_top->set_shape(sh_top); add_child(cs_top);
+	rq.instantiate();
+	rq->set_collision_mask(wheel_mask);
+	TypedArray<RID> ex; ex.push_back(get_rid());
+	rq->set_exclude(ex);
+	ResourceLoader *rl = ResourceLoader::get_singleton();
+	Ref<Shader> sh = rl->load("res://vehicles/car_paint.gdshader");
+	Ref<Texture2D> atlas = rl->load("res://vehicles/models/Textures/car_atlas_1024.png");
+	if (sh.is_valid()) {
+		// (the paint shader reads the global `refl_env`: whoever makes the car sees to it that it exists, as the rig does)
+		mat.instantiate(); mat->set_shader(sh); mat->set_shader_parameter("atlas", atlas);
+	}
+	mi_body = memnew(MeshInstance3D);
+	if (mat.is_valid()) mi_body->set_material_override(mat);
+	add_child(mi_body);
+	for (int i = 0; i < 4; i++) {
+		MeshInstance3D *wi = memnew(MeshInstance3D);
+		if (mat.is_valid()) wi->set_material_override(mat);
+		add_child(wi);
+		wheel_vis[i] = wi;
+	}
+	if (chase_camera) {
+		cam = memnew(Camera3D);
+		cam->set_as_top_level(true);
+		cam->set_fov(62.0); cam->set_near(0.2); cam->set_far(1500.0);
+		add_child(cam);
+		cam->make_current();
+	}
+	fit();
+}
+
+// What depends on the model, the feel and the paint: the physical car, the engine body's weight and boxes, the meshes.
+// (Called again by become(): a car of the traffic's pool takes the model of the car that was hit.)
+void CityCar::fit() {
 	const int m = std::min(std::max(model, 0), cm::N_MODELS - 1);
 	const cm::CarModel &cmod = cm::MODELS[m];
 	vd::Spec sp = vd::make_spec(m, feel);
@@ -39,7 +85,7 @@ void CityCar::make() {
 	Ref<Mesh> wheel_mesh[4];
 	Vector3 wc[4];
 	float wr[4] = { 0, 0, 0, 0 };
-	bool split = false;
+	split = false;
 	if (rl->exists(base + String("_q_body.res"))) {
 		body_mesh = rl->load(base + String("_q_body.res"));
 		if (body_mesh.is_valid() && body_mesh->has_meta("wheels")) {
@@ -67,6 +113,7 @@ void CityCar::make() {
 		sp.wheel_r = 0.25f * (wr[0] + wr[1] + wr[2] + wr[3]);
 		axle_z = 0.25f * (wc[0].z + wc[1].z + wc[2].z + wc[3].z);
 	}
+	car = vd::Car();
 	car.init(sp);
 	const vd::Spec &s = car.s;
 	com = Vector3(0.0f, s.cg_h, axle_z + s.wheelbase * (s.front_share - 0.5f));
@@ -74,65 +121,54 @@ void CityCar::make() {
 
 	// ---- the engine's body: weight, where it balances, how it resists turning; no forces of the engine's own
 	set_mass(s.mass);
-	set_center_of_mass_mode(CENTER_OF_MASS_MODE_CUSTOM);
 	set_center_of_mass(com);
 	set_inertia(Vector3(car.inertia[0], car.inertia[1], car.inertia[2]));
-	set_use_custom_integrator(true);
-	set_can_sleep(false);
-	set_use_continuous_collision_detection(true);
-	set_linear_damp_mode(DAMP_MODE_REPLACE); set_linear_damp(0.0); set_angular_damp_mode(DAMP_MODE_REPLACE); set_angular_damp(0.0);
-	Ref<PhysicsMaterial> pm; pm.instantiate(); pm->set_friction(0.35); pm->set_bounce(0.05);
-	set_physics_material_override(pm);
-	// two boxes: the body from sill to waist, the cabin above it
 	const float clear = std::min(0.24f, s.wheel_r * 0.7f), waist = cmod.height * 0.58f;
-	{
-		Ref<BoxShape3D> b; b.instantiate();
-		b->set_size(Vector3(cmod.half_w * 2.0f - 0.16f, waist - clear, cmod.half_len * 2.0f - 0.06f));
-		CollisionShape3D *cs = memnew(CollisionShape3D);
-		cs->set_shape(b); cs->set_position(Vector3(0.0f, 0.5f * (waist + clear), 0.0f));
-		add_child(cs);
-		Ref<BoxShape3D> t; t.instantiate();
-		t->set_size(Vector3(cmod.half_w * 2.0f - 0.36f, cmod.height - waist, cmod.half_len * 1.15f));
-		CollisionShape3D *ct = memnew(CollisionShape3D);
-		ct->set_shape(t); ct->set_position(Vector3(0.0f, 0.5f * (cmod.height + waist), -0.08f * cmod.half_len));
-		add_child(ct);
-	}
-	rq.instantiate();
-	rq->set_collision_mask(wheel_mask);
-	TypedArray<RID> ex; ex.push_back(get_rid());
-	rq->set_exclude(ex);
+	sh_body->set_size(Vector3(cmod.half_w * 2.0f - 0.16f, waist - clear, cmod.half_len * 2.0f - 0.06f));
+	cs_body->set_position(Vector3(0.0f, 0.5f * (waist + clear), 0.0f));
+	sh_top->set_size(Vector3(cmod.half_w * 2.0f - 0.36f, cmod.height - waist, cmod.half_len * 1.15f));
+	cs_top->set_position(Vector3(0.0f, 0.5f * (cmod.height + waist), -0.08f * cmod.half_len));
 
 	// ---- what is drawn
-	Ref<ShaderMaterial> mat;
-	Ref<Shader> sh = rl->load("res://vehicles/car_paint.gdshader");
-	Ref<Texture2D> atlas = rl->load("res://vehicles/models/Textures/car_atlas_1024.png");
-	if (sh.is_valid()) {
-		// (the paint shader reads the global `refl_env`: whoever makes the car sees to it that it exists, as the rig does)
-		mat.instantiate(); mat->set_shader(sh); mat->set_shader_parameter("atlas", atlas); mat->set_shader_parameter("paint", paint);
+	if (mat.is_valid()) mat->set_shader_parameter("paint", paint);
+	mi_body->set_mesh(body_mesh);
+	for (int i = 0; i < 4; i++) {
+		wheel_vis[i]->set_mesh(split ? wheel_mesh[i] : Ref<Mesh>());
+		wheel_vis[i]->set_visible(split);
+		wheel_vis[i]->set_position(hub_local[i]);
 	}
-	if (body_mesh.is_valid()) {
-		MeshInstance3D *mi = memnew(MeshInstance3D);
-		mi->set_mesh(body_mesh);
-		if (mat.is_valid()) mi->set_material_override(mat);
-		add_child(mi);
-	}
-	if (split) {
-		for (int i = 0; i < 4; i++) {
-			MeshInstance3D *wi = memnew(MeshInstance3D);
-			wi->set_mesh(wheel_mesh[i]);
-			if (mat.is_valid()) wi->set_material_override(mat);
-			wi->set_position(hub_local[i]);
-			add_child(wi);
-			wheel_vis[i] = wi;
-		}
-	}
-	if (chase_camera) {
-		cam = memnew(Camera3D);
-		cam->set_as_top_level(true);
-		cam->set_fov(62.0); cam->set_near(0.2); cam->set_far(1500.0);
-		add_child(cam);
-		cam->make_current();
-	}
+	dir = 1; odo = 0.0; hardest_hit = 0.0f; last_v = Vector3();
+}
+
+void CityCar::become(int p_model, int p_feel, const Color &p_paint) {
+	model = p_model; feel = p_feel; paint = p_paint;
+	if (made) fit();
+}
+
+// Set down at a place with a speed, wheels already rolling at that speed (a traffic car that is hit goes on as it went).
+void CityCar::launch(const Transform3D &p_at, const Vector3 &p_velocity) {
+	if (!made) return;
+	set_freeze_enabled(false);
+	set_visible(true);
+	set_global_transform(p_at);
+	PhysicsServer3D *ps = PhysicsServer3D::get_singleton();
+	ps->body_set_state(get_rid(), PhysicsServer3D::BODY_STATE_TRANSFORM, p_at);
+	ps->body_set_state(get_rid(), PhysicsServer3D::BODY_STATE_LINEAR_VELOCITY, p_velocity);
+	ps->body_set_state(get_rid(), PhysicsServer3D::BODY_STATE_ANGULAR_VELOCITY, Vector3());
+	const float along = p_velocity.dot(p_at.basis.get_column(2));
+	for (int i = 0; i < 4; i++) car.wh[i].omega = along / std::max(car.s.wheel_r, 0.1f);
+	car.speed = along;
+	last_v = p_velocity;
+}
+
+// Taken out of the world until it is needed again: no collision, not drawn, not stepped.
+void CityCar::put_away(const Vector3 &p_where) {
+	if (!made) return;
+	set_freeze_enabled(true);
+	set_visible(false);
+	const Transform3D t(Basis(), p_where);
+	set_global_transform(t);
+	PhysicsServer3D::get_singleton()->body_set_state(get_rid(), PhysicsServer3D::BODY_STATE_TRANSFORM, t);
 }
 
 void CityCar::_ready() {
@@ -208,7 +244,7 @@ void CityCar::_integrate_forces(PhysicsDirectBodyState3D *p_state) {
 void CityCar::_process(double p_delta) {
 	if (!made) return;
 	for (int i = 0; i < 4; i++) {   // the wheels: on their springs, turned, spun
-		if (!wheel_vis[i]) continue;
+		if (!wheel_vis[i] || !split) continue;
 		const vd::Wheel &w = car.wh[i];
 		const Basis b = Basis(Vector3(0, 1, 0), w.front ? w.steer : 0.0f) * Basis(Vector3(1, 0, 0), w.angle);
 		wheel_vis[i]->set_transform(Transform3D(b, hub_local[i] + Vector3(0, std::min(w.comp, car.s.travel_up), 0)));
@@ -259,6 +295,9 @@ void CityCar::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_wheel_mask"), &CityCar::get_wheel_mask);
 	ClassDB::bind_method(D_METHOD("set_controls", "throttle", "brake", "steer", "handbrake", "reverse"), &CityCar::set_controls);
 	ClassDB::bind_method(D_METHOD("get_state"), &CityCar::get_state);
+	ClassDB::bind_method(D_METHOD("become", "model", "feel", "paint"), &CityCar::become);
+	ClassDB::bind_method(D_METHOD("launch", "at", "velocity"), &CityCar::launch);
+	ClassDB::bind_method(D_METHOD("put_away", "where"), &CityCar::put_away);
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "model"), "set_model", "get_model");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "feel"), "set_feel", "get_feel");
 	ADD_PROPERTY(PropertyInfo(Variant::COLOR, "paint"), "set_paint", "get_paint");

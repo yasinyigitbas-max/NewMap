@@ -16,7 +16,11 @@
 
 #include "veh_dyn.h"
 
+#include <godot_cpp/classes/box_shape3d.hpp>
 #include <godot_cpp/classes/camera3d.hpp>
+#include <godot_cpp/classes/collision_shape3d.hpp>
+#include <godot_cpp/classes/mesh_instance3d.hpp>
+#include <godot_cpp/classes/shader_material.hpp>
 #include <godot_cpp/classes/physics_direct_body_state3d.hpp>
 #include <godot_cpp/classes/physics_ray_query_parameters3d.hpp>
 #include <godot_cpp/classes/rigid_body3d.hpp>
@@ -37,7 +41,12 @@ class CityCar : public RigidBody3D {
 	float c_throttle = 0, c_brake = 0, c_steer = 0, c_handbrake = 0;
 	int dir = 1;
 	Vector3 com;                 // the centre of mass in the node's own frame (the node's origin is on the ground under the car)
-	Node3D *wheel_vis[4] = { nullptr, nullptr, nullptr, nullptr };
+	MeshInstance3D *wheel_vis[4] = { nullptr, nullptr, nullptr, nullptr };
+	MeshInstance3D *mi_body = nullptr;
+	CollisionShape3D *cs_body = nullptr, *cs_top = nullptr;
+	Ref<BoxShape3D> sh_body, sh_top;
+	Ref<ShaderMaterial> mat;
+	bool split = false;          // the model has its wheels apart: they spin, steer and ride their springs
 	Vector3 hub_local[4];        // the hubs at rest, node frame
 	Camera3D *cam = nullptr;
 	Vector3 cam_pos, cam_look;
@@ -51,6 +60,7 @@ class CityCar : public RigidBody3D {
 	Vector3 last_v;
 
 	void make();
+	void fit();
 	void read_player();
 
 protected:
@@ -76,6 +86,11 @@ public:
 
 	// Pedals and wheel when no player drives: 0..1, 0..1, -1 (right) .. 1 (left), 0..1; reverse = the reverse gear
 	void set_controls(double p_throttle, double p_brake, double p_steer, double p_handbrake, bool p_reverse);
+	// A car of a pool takes another model, feel and paint (no node is made or freed), is set down with a speed, is taken away
+	void become(int p_model, int p_feel, const Color &p_paint);
+	void launch(const Transform3D &p_at, const Vector3 &p_velocity);
+	void put_away(const Vector3 &p_where);
+	bool is_split() const { return split; }
 	// speed m/s, km/h, revs, gear, side and forward g, each wheel's load / slip / on the ground, metres driven, hardest knock (g)
 	Dictionary get_state() const;
 	// the car's half length, half width, speed along x and z: what the traffic needs to see it as a box

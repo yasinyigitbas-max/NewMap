@@ -153,6 +153,12 @@ struct Parking {
 		}
 	}
 	inline bool taken(int k) const { return k >= 0 && st[k].model < RESERVED; }
+	// the car standing in a stall was knocked out of it (it is a physical car now): the stall is empty
+	void knock_out(int k) {
+		if (k < 0 || k >= (int)st.size() || !taken(k)) return;
+		st[k].model = EMPTY;
+		events.push_back(Event{ k, (uint8_t)EMPTY, 0 });
+	}
 
 	// One step of the core's time. Before sim.step(): it may place a car, give one a goal, take one out.
 	void tick(tc::Sim &sim, float h) {

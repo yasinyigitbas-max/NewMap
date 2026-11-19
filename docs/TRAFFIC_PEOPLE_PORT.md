@@ -758,3 +758,53 @@ body correctly (a real stride in the stagger, flat on the ground after the charg
 - The muscles pull toward the standing pose with the arms down, not toward the animation's pose.
 - Not on the phone. Its cost was not measured (it is 13 bodies, 12 joints, 8 small steps a frame for each person
   that is physical at that moment; a handful at once is the intent).
+
+## 23. A car that is hit is a real car (19 Nov evening, on the working branch)
+Yasin, after the compaction: "act like a developer working for rockstars next GTA and tackle the problems".
+The problem: a traffic car that was hit only stood still for a few seconds, and the player's car did not even touch
+the traffic's boxes (its collision mask did not include their layer): it drove through them.
+
+### What it is (all in `CityTraffic`, `native/src/city_traffic_run.cpp`: `knock`, `loose_update`, `_physics_process`)
+- SIX PHYSICAL CARS are made at the start and put away (class `CityCar`: the same springs, tyres and weight the
+  player drives). Every model's body and wheel meshes are held from the start, so a knock makes and loads nothing.
+- Every physics step each car near the camera (a moving row or a parked car) is tested against the player's car and
+  against every car already knocked loose: will the two boxes touch within a sixth of a second at the speed they
+  come at each other (over 1.2 m/s)? If so the traffic car STOPS BEING A ROW AND A BOX: a physical car takes its
+  model, colour, place, speed and wheel angle a moment BEFORE the touch. The knock itself is the engine's: weight
+  against weight, shoved, spun, rolled. A knocked car knocks the next one the same way (a pile-up).
+- A parked car that is knocked stands with its handbrake on. A driver who is hit holds his wheel for a third of a
+  second, then brakes.
+- AFTERWARDS: a driver whose car stands on its wheels, along a lane (within 23 degrees), within 3.6 m of it, with
+  nothing in its way, DRIVES ON after 3.5 s: the car is a car of the traffic again from that very place and steers
+  back to its lane (the same steered pull-out as from a kerb). Otherwise it stays where it lies; the traffic sees it
+  as a box, brakes for it and goes round it. It is taken away when the camera is 120 m off (180 m if still moving).
+  A knocked parked car never drives on.
+- The traffic's collision boxes are STATIC now, not kinematic (see the trap below).
+- `set_player_car` gives the player's car the traffic's layer in its mask, and the knocked cars take its feel (IV / V).
+
+### What was measured
+`godot --headless --path . -s res://tests/traffic/test_knock.gd` (real streets, real traffic, a flat test ground; in
+real time, about a minute): RESULT PASS.
+- into a parked car at about 40 km/h, 45 degrees onto its flank: it became a physical car, its stall is empty, it was
+  shoved 7.0 m, fastest 6.5 m/s, 0.03 m from the ground's height; the player's car felt 16 g and is on its wheels;
+- head-on into a moving car (31 km/h against 43 km/h): it became a physical car, pushed back 3.8 m, both on their
+  wheels;
+- with the player's car against its bumper its driver stays (refused: something stands in its way); 0.3 s after the
+  player's car is out of the way he drives on as a car of the traffic.
+The car's own engine test (tests/car) RESULT PASS again with the same numbers (its setup code was split in two).
+
+### NOT done / NOT checked
+- NOBODY HAS SEEN IT: no window was opened. How a knock LOOKS is not judged.
+- Not tried in the streamed city (the test lays its own flat ground), not on the phone / Jolt.
+- The 12-run traffic test was NOT rerun: the core and its test path were not touched (the knock lives in the game's
+  step, not in `run_test`).
+- A driver whose car lies across the road or on its roof stays for good: no reversing, no three-point turn, nobody
+  gets out. No damage, no dents, no smoke, no sound.
+- A stall that is knocked in the very frame its car pulls out could give two cars for one (not seen, not excluded).
+- Each knocked car is 5 draws (body and four wheels) while it is out: up to 30 with all six out.
+- Buses can be knocked like cars; never tried.
+
+### The trap (paid for with one run)
+A KINEMATIC body that is moved from one car to another, or put away 500 m below, counts that jump as its speed for a
+step and hands it to whatever it touches: the first knocked car left at 28,000 m/s. The pool's boxes were kinematic
+since stage 2c and are reassigned to the nearest cars every frame; nothing could touch them until now.

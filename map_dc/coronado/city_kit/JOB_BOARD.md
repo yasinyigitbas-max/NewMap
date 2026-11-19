@@ -5,6 +5,17 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~20:00 (PC session): A TRAFFIC CAR THAT IS HIT IS A REAL CAR, ALL C++ (Yasin after the compaction: "act like
+  a developer working for rockstars next GTA and tackle the problems"). Read docs/TRAFFIC_PEOPLE_PORT.md section 23.
+  Six physical cars (`CityCar`) are made at the start; a moving or parked car of the traffic that the player's car
+  (or an already knocked car) is about to touch becomes one of them a moment before the touch, with its model,
+  colour, place and speed: it is shoved, spun, rolled by the engine. A hit driver brakes; when his car stands on its
+  wheels along a lane with nothing in its way he drives on as traffic, else the car stays and the traffic goes
+  round it. Before this the player's car drove THROUGH the traffic (its mask lacked their layer). Test
+  `tests/traffic/test_knock.gd` RESULT PASS (parked car shoved 7 m; head-on with a moving car; the driver drives on
+  0.3 s after the way is clear); car engine test PASS again.
+  NOT DONE: nobody has seen it (no window opened); not in the streamed city, not on the phone; a car across the
+  road or on its roof stays for good; no damage, no sound; the 12-run traffic test was not rerun (core untouched).
 - 19 Nov ~17:00 (PC session): PEOPLE, STEP 1: A BODY THAT KEEPS ITS OWN BALANCE, ALL C++ (Yasin: "gta 5 level npcs
   ... balance themselves, be able to pushed around and resist falls, just like in the euphoria engine"). Read
   docs/TRAFFIC_PEOPLE_PORT.md section 22. `native/src/ped_body.*` (plain C++): thirteen jointed bodies with muscles

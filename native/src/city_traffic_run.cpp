@@ -5,6 +5,7 @@
 #include <godot_cpp/classes/rigid_body3d.hpp>
 
 #include "car_models.h"
+#include "city_car.h"
 #include "traffic_sim.h"
 
 #include <godot_cpp/classes/array_mesh.hpp>
@@ -70,6 +71,7 @@ void CityTraffic::step_once(double p_clock) {
 		std::lock_guard<std::mutex> lock(mx);
 		in = input;
 		input.cells_dirty = false;
+		input.kill_ids.clear(); input.kill_stalls.clear(); input.adopt.clear();
 	}
 	sim->cfg.max_cars = std::min(in.max_cars, (int)MAX_ROWS - 2);
 	sim->cfg.dens_scale = in.density;
@@ -86,13 +88,55 @@ void CityTraffic::step_once(double p_clock) {
 		const float lead = std::min(speed * 2.0f, 200.0f);
 		sim->set_ring(in.vx / speed * lead, in.vz / speed * lead);
 	}
+	// cars and parked cars that became physical cars since the last step: out of the core's books
+	for (int32_t kid : in.kill_ids) { const int ki = sim->find_car(kid); if (ki >= 0) sim->despawn(ki, 8); }
+	for (int32_t ks : in.kill_stalls) parking.knock_out(ks);
 	parking.tick(*sim, STEP_S);
-	dyn_all = parking.dyn;
-	if (in.pc) {
-		const float b[tc::DYN_STRIDE] = { in.pcx, in.pcy, in.pcz, in.pcyaw, in.pchl, in.pchw, in.pcvx, in.pcvz, (float)tc::DYN_PLAYER_CAR, -2.0f, 0.0f };
-		dyn_all.insert(dyn_all.end(), b, b + tc::DYN_STRIDE);
+	// the boxes the drivers see beside each other: parked cars near a car that pulls in or out, the player's car, the
+	// knocked cars (all but `skip`, and not one that is a row again)
+	auto boxes = [&](int skip) {
+		dyn_all = parking.dyn;
+		if (in.pc) {
+			const float b[tc::DYN_STRIDE] = { in.pcx, in.pcy, in.pcz, in.pcyaw, in.pchl, in.pchw, in.pcvx, in.pcvz, (float)tc::DYN_PLAYER_CAR, -2.0f, 0.0f };
+			dyn_all.insert(dyn_all.end(), b, b + tc::DYN_STRIDE);
+		}
+		for (int k = 0; k < LOOSE; k++) {
+			const Input::LooseBox &q = in.lb[k];
+			if (!q.on || k == skip || q.serial == adopted_serial[k]) continue;
+			const float b[tc::DYN_STRIDE] = { q.x, q.y, q.z, q.yaw, q.hl, q.hw, q.vx, q.vz, (float)tc::DYN_OTHER, (float)(200000 + k), 0.0f };
+			dyn_all.insert(dyn_all.end(), b, b + tc::DYN_STRIDE);
+		}
+		sim->set_dynamic((int)dyn_all.size() / tc::DYN_STRIDE, dyn_all.data());
+	};
+	// a knocked car whose driver wants to drive on: it must stand along a lane, near it, with nothing in its place
+	std::vector<AdoptDone> done;
+	for (const Input::Adopt &a : in.adopt) {
+		if (a.slot < 0 || a.slot >= LOOSE || a.serial == adopted_serial[a.slot]) continue;
+		boxes(a.slot);
+		int nid = -1;   // (or why not: -1 no lane within 3.6 m, -2 at a lane's end, -3 it stands across the lane, -4 the core is full, -5 something stands in its way)
+		float as = 0.0f;
+		const int L = sim->nearest_lane(a.x, a.z, 3.6f, &as);
+		if (L >= 0 && !(as > 3.0f && as < sim->p_len[L] - 6.0f)) nid = -2;
+		if (L >= 0 && as > 3.0f && as < sim->p_len[L] - 6.0f) {
+			float o[7]; int hint = 0;
+			sim->pose_at(L, as, 0.0f, 0.0f, 0.0f, 1.0f, hint, o);
+			float dy = std::fmod(a.yaw - o[6] + 3.14159265f, 6.2831853f); if (dy < 0.0f) dy += 6.2831853f; dy -= 3.14159265f;
+			nid = -3;
+			if (std::fabs(dy) < 0.40f) {
+				const float lat = (a.x - o[0]) * o[4] - (a.z - o[2]) * o[3];   // + = left of travel
+				const int i = sim->unpark(L, as, lat, a.model, 1);
+				nid = -4;
+				if (i >= 0) {   // where it really stands: its body steers back to the lane's middle from there
+					sim->x[i] = sim->px[i] = a.x; sim->z[i] = sim->pz[i] = a.z; sim->yaw[i] = sim->pyaw[i] = a.yaw;
+					sim->fx[i] = std::sin(a.yaw); sim->fz[i] = std::cos(a.yaw);
+					if (sim->blocked_by(i, sim->x[i], sim->y[i], sim->z[i], sim->fx[i], sim->fz[i], 0.06f)) { sim->alive[i] = 0; sim->n_alive--; nid = -5; }
+					else { sim->colour[i] = (uint8_t)(100 + a.colour); nid = sim->id[i]; adopted_serial[a.slot] = a.serial; }
+				}
+			}
+		}
+		done.push_back(AdoptDone{ a.slot, a.serial, nid });
 	}
-	sim->set_dynamic((int)dyn_all.size() / tc::DYN_STRIDE, dyn_all.data());
+	boxes(-1);
 	sim->step(STEP_S, p_clock);
 	sim->events.clear();
 	static thread_local Snap s;
@@ -113,6 +157,7 @@ void CityTraffic::step_once(double p_clock) {
 	{
 		std::lock_guard<std::mutex> lock(mx);
 		shared = s;
+		adopt_done.insert(adopt_done.end(), done.begin(), done.end());
 		park_events.insert(park_events.end(), parking.events.begin(), parking.events.end());
 		park_out = parking.pulled_out; park_in = parking.parked;
 	}
@@ -356,7 +401,10 @@ void CityTraffic::_ready() {
 			pool_shape[k] = ps->box_shape_create();
 			ps->shape_set_data(pool_shape[k], Vector3(0.95f, 0.7f, 2.2f));
 			pool_body[k] = ps->body_create();
-			ps->body_set_mode(pool_body[k], PhysicsServer3D::BODY_MODE_KINEMATIC);
+			// (static, not kinematic: a kinematic body that is moved from one car to another, or put away, counts that jump
+			// as its speed for a step and hands it to whatever it touches: a knocked car left at 28,000 m/s. A real
+			// hit is always a physical car's by then: see knock().)
+			ps->body_set_mode(pool_body[k], PhysicsServer3D::BODY_MODE_STATIC);
 			ps->body_add_shape(pool_body[k], pool_shape[k]);
 			ps->body_set_collision_layer(pool_body[k], 16);   // layer 5: traffic (the rig's ground ray does not look at it)
 			ps->body_set_collision_mask(pool_body[k], 0);
@@ -365,6 +413,25 @@ void CityTraffic::_ready() {
 			pool_model[k] = -1;
 		}
 		pool_made = true;
+	}
+	// the six physical cars a hit car becomes: made now, put away, and every model's meshes held, so a knock makes and
+	// loads nothing
+	if (bodies_on && knock_on) {
+		for (int m = 0; m < cm::N_MODELS; m++) {
+			const String base = String("res://vehicles/models/lod/") + cm::MODELS[m].id;
+			if (!rl->exists(base + String("_q_body.res"))) continue;
+			keep_models.push_back(rl->load(base + String("_q_body.res")));
+			for (int k = 0; k < 4; k++) if (rl->exists(base + String("_q_w") + String::num_int64(k) + String(".res"))) keep_models.push_back(rl->load(base + String("_q_w") + String::num_int64(k) + String(".res")));
+		}
+		for (int k = 0; k < LOOSE; k++) {
+			CityCar *c = memnew(CityCar);
+			c->set_wheel_mask((int)0xFFFFFFEF);   // its wheels stand on the world, not on the traffic's boxes
+			c->set_collision_layer(0); c->set_collision_mask(0);
+			add_child(c);
+			loose[k] = LooseCar();
+			loose[k].car = c;
+			loose_put_away(k);
+		}
 	}
 	{
 		std::lock_guard<std::mutex> lock(mx);
@@ -385,6 +452,8 @@ void CityTraffic::_exit_tree() {
 		if (worker.joinable()) worker.join();
 		threaded = false;
 	}
+	for (int k = 0; k < LOOSE; k++) loose[k] = LooseCar();   // (the cars themselves are this node's children: they go with it)
+	keep_models.clear(); hidden.clear();
 	RenderingServer *rs = RenderingServer::get_singleton();
 	if (gfx) rs->global_shader_parameter_set(StringName("ck_signal_time"), -1.0f);   // the lamps go back to their own clock
 	auto drop = [&](Batch &b) {
@@ -438,6 +507,21 @@ void CityTraffic::_process(double p_delta) {
 		input.cx = cp.x; input.cy = cp.y; input.cz = cp.z; input.fx = cf.x; input.fz = cf.z; input.fov = (float)cam->get_fov() * 1.6f;   // (the screen is wide: the cone is the horizontal view)
 		input.vx = vel_x; input.vz = vel_z;
 		input.max_cars = max_cars; input.density = (float)density; input.parked = parked_on;
+		for (int k = 0; k < LOOSE; k++) {
+			Input::LooseBox &q = input.lb[k];
+			q.on = loose[k].on ? 1 : 0; q.serial = loose[k].serial;
+			if (!loose[k].on || !loose[k].car) continue;
+			const Transform3D lt = loose[k].car->get_global_transform();
+			const Vector3 lf = lt.basis.get_column(2), lv = loose[k].car->get_linear_velocity();
+			const cm::CarModel &lm = cm::MODELS[loose[k].model];
+			q.x = lt.origin.x; q.y = lt.origin.y; q.z = lt.origin.z; q.yaw = std::atan2(lf.x, lf.z); q.hl = lm.half_len; q.hw = lm.half_w; q.vx = lv.x; q.vz = lv.z;
+		}
+		for (const AdoptDone &a : adopt_done) {   // a knocked car is a row again from this very state on: the physical one goes
+			if (a.slot < 0 || a.slot >= LOOSE || !loose[a.slot].on || loose[a.slot].serial != a.serial) continue;
+			if (a.id >= 0) { loose_put_away(a.slot); kc.rejoined++; }
+			else kc.refused = a.id;
+		}
+		adopt_done.clear();
 		now = shared;
 		park_now.swap(park_events); park_events.clear();
 		cnt.park_out = park_out; cnt.park_in = park_in;
@@ -492,7 +576,7 @@ void CityTraffic::_process(double p_delta) {
 			put_row(w + (size_t)mid_b[m].n * ROW, f[0], f[1] + 0.02f, f[2], f[3], f[4], 1.0f, 1.0f, 1.0f, PAINT[stall_car[k].colour], 0.0f, 0.0f, 0.0f, 1.0f);
 			mid_b[m].n++; parked_mid_n++;
 			const float dx = f[0] - cp.x, dz = f[2] - cp.z;
-			if (bodies_on && dx * dx + dz * dz < 30.0f * 30.0f) body_want.push_back(BodyWant{ dx * dx + dz * dz, f[0], f[1], f[2], f[3], f[4], m });
+			if (bodies_on && dx * dx + dz * dz < 30.0f * 30.0f) body_want.push_back(BodyWant{ dx * dx + dz * dz, f[0], f[1], f[2], f[3], f[4], m, -1, k, 0.0f, 0.0f, stall_car[k].colour });
 		}
 	}
 
@@ -510,11 +594,19 @@ void CityTraffic::_process(double p_delta) {
 		const float dx = p[0] - cp.x, dy = p[1] - cp.y, dz = p[2] - cp.z;
 		p[5] = dx * dx + dy * dy + dz * dz;
 		p[6] = r.proll + (r.roll - r.proll) * a;
+		bool hide = false;
+		for (Hidden &h : hidden) if (h.id == r.id) { h.seen = true; hide = true; }
+		if (hide) { p[5] = 1.0e12f; continue; }   // it is a physical car now: no row, no lamps, no box
 		if (p[5] < (float)(near_r * near_r) && near_max > 0) {   // the few nearest get the near model
 			int at = n_near < near_max ? n_near++ : -1;
 			if (at < 0) { int worst = 0; for (int q = 1; q < n_near; q++) if (nearest[q].d2 > nearest[worst].d2) worst = q; if (nearest[worst].d2 > p[5]) at = worst; }
 			if (at >= 0) nearest[at] = Near{ p[5], i };
 		}
+	}
+	for (size_t h = 0; h < hidden.size();) {   // the step has dropped it: forget it
+		hidden[h].frames++;
+		if (!hidden[h].seen && hidden[h].frames > 30) { hidden[h] = hidden.back(); hidden.pop_back(); continue; }
+		hidden[h].seen = false; h++;
 	}
 	int c_near = 0, c_mid = 0, c_box = 0;
 	for (int i = 0; i < now.n; i++) {
@@ -546,7 +638,7 @@ void CityTraffic::_process(double p_delta) {
 			put_row(lamps_b.buf.ptrw() + (size_t)lamps_b.n * ROW, p[0], p[1], p[2], p[3], p[4], m.half_w, m.height, m.half_len, PAINT[0], brake, 0.0f, lamps, 0.0f);
 			lamps_b.n++;
 		}
-		if (bodies_on && p[5] < 70.0f * 70.0f) body_want.push_back(BodyWant{ p[5], p[0], p[1], p[2], p[3], p[4], (int)r.model });
+		if (bodies_on && p[5] < 70.0f * 70.0f) body_want.push_back(BodyWant{ p[5], p[0], p[1], p[2], p[3], p[4], (int)r.model, r.id, -1, r.v, r.steer, r.colour });
 	}
 	// ---- the first frames: one small row of everything in front of the camera, so every shader is built at the start
 	if (warm_frames > 0) {
@@ -580,31 +672,201 @@ void CityTraffic::_process(double p_delta) {
 	cnt.near += c_near; cnt.mid += c_mid; cnt.box += c_box; cnt.parked_mid += parked_mid_n; cnt.parked_all += (double)active.size(); cnt.batches += batches; cnt.carry += now.carry;
 }
 
+// Two cars' boxes seen from above: do they overlap? (a = one car, b = the other; yaw, half length, half width)
+static bool boxes_touch(float ax, float az, float ayaw, float ahl, float ahw, float bx, float bz, float byaw, float bhl, float bhw) {
+	const float afx = std::sin(ayaw), afz = std::cos(ayaw), bfx = std::sin(byaw), bfz = std::cos(byaw);
+	const float dx = bx - ax, dz = bz - az;
+	const float ax4[4][2] = { { afx, afz }, { afz, -afx }, { bfx, bfz }, { bfz, -bfx } };
+	for (int k = 0; k < 4; k++) {
+		const float ux = ax4[k][0], uz = ax4[k][1];
+		const float d = std::fabs(dx * ux + dz * uz);
+		const float ra = ahl * std::fabs(afx * ux + afz * uz) + ahw * std::fabs(afz * ux - afx * uz);
+		const float rb = bhl * std::fabs(bfx * ux + bfz * uz) + bhw * std::fabs(bfz * ux - bfx * uz);
+		if (d > ra + rb) return false;
+	}
+	return true;
+}
+
+void CityTraffic::loose_put_away(int k) {
+	LooseCar &L = loose[k];
+	if (!L.car) return;
+	L.car->set_collision_layer(0); L.car->set_collision_mask(0);
+	L.car->put_away(Vector3(0.0f, -700.0f - 8.0f * (float)k, 0.0f));
+	L.on = false; L.rest_t = 0.0f;
+}
+
+// A car of the traffic (a row, or a parked one) becomes a physical car where it is, with the speed it has.
+bool CityTraffic::knock(BodyWant &w) {
+	int slot = -1;
+	for (int k = 0; k < LOOSE; k++) if (loose[k].car && !loose[k].on) { slot = k; break; }
+	if (slot < 0) {   // all six are out: the one that lies still farthest from the camera gives its place
+		float far2 = 40.0f * 40.0f;
+		for (int k = 0; k < LOOSE; k++) {
+			if (!loose[k].car || loose[k].rest_t < 2.0f) continue;
+			const Vector3 o = loose[k].car->get_global_transform().origin;
+			const float d2 = (o.x - last_cam.x) * (o.x - last_cam.x) + (o.z - last_cam.z) * (o.z - last_cam.z);
+			if (d2 > far2) { far2 = d2; slot = k; }
+		}
+		if (slot < 0) { kc.no_slot++; return false; }
+		loose_put_away(slot); kc.taken_away++;
+	}
+	LooseCar &L = loose[slot];
+	const float *c = PAINT[w.colour % N_COLOURS];
+	L.car->become(w.model, knock_feel, Color(c[0], c[1], c[2]));
+	const Basis bs = Basis(Vector3(0, 1, 0), w.yaw) * Basis(Vector3(1, 0, 0), -w.pitch);
+	L.car->set_collision_layer(16); L.car->set_collision_mask(1 | 16);
+	L.car->launch(Transform3D(bs, Vector3(w.x, w.y + 0.03f, w.z)), bs.get_column(2) * w.v);
+	L.parked = w.stall >= 0;
+	// a parked car stands with its handbrake on; a driver who is hit holds his wheel for a moment, then brakes
+	L.car->set_controls(0.0, 0.0, L.parked ? 0.0 : std::min(std::max(w.steer / 0.61f, -1.0f), 1.0f), L.parked ? 1.0 : 0.0, false);
+	L.on = true; L.model = w.model; L.colour = w.colour; L.serial = ++loose_serial; L.rest_t = 0.0f; L.age = 0.0f; L.ask_cd = 0.0f;
+	{
+		std::lock_guard<std::mutex> lock(mx);
+		if (w.id >= 0) input.kill_ids.push_back(w.id); else input.kill_stalls.push_back(w.stall);
+	}
+	if (w.id >= 0) { hidden.push_back(Hidden{ w.id, 0, true }); kc.moving++; }
+	else { stall_car[w.stall].model = 255; active_dirty = true; kc.parked++; }
+	return true;
+}
+
+// The knocked cars, every physics step: the driver's foot, who may drive on, who is taken away.
+void CityTraffic::loose_update(double p_delta) {
+	const float dt = (float)p_delta;
+	for (int k = 0; k < LOOSE; k++) {
+		LooseCar &L = loose[k];
+		if (!L.on || !L.car) continue;
+		const Transform3D t = L.car->get_global_transform();
+		const Vector3 v = L.car->get_linear_velocity(), av = L.car->get_angular_velocity();
+		L.age += dt; L.ask_cd -= dt;
+		L.rest_t = (v.length_squared() < 0.12f && av.length_squared() < 0.09f) ? L.rest_t + dt : 0.0f;
+		const float dx = t.origin.x - last_cam.x, dz = t.origin.z - last_cam.z, d2 = dx * dx + dz * dz;
+		if (t.origin.y < last_cam.y - 120.0f || d2 > 180.0f * 180.0f || (d2 > 120.0f * 120.0f && L.rest_t > 1.0f)) { loose_put_away(k); kc.taken_away++; continue; }
+		if (L.parked) continue;
+		if (L.age > 0.35f) L.car->set_controls(0.0, 0.7, 0.0, 0.0, false);
+		if (L.rest_t > 3.5f && L.ask_cd <= 0.0f && t.basis.get_column(1).y > 0.94f) {   // it stands on its wheels: may its driver drive on?
+			const Vector3 f = t.basis.get_column(2);
+			std::lock_guard<std::mutex> lock(mx);
+			input.adopt.push_back(Input::Adopt{ k, L.serial, L.model, L.colour, t.origin.x, t.origin.z, std::atan2(f.x, f.z) });
+			L.ask_cd = 2.5f;
+		}
+	}
+}
+
 // The pool's bodies go onto the cars nearest the camera (moving cars to 70 m, parked ones to 30 m). Only transforms
-// are sent; a body changes its box only when it gets a car of another model.
+// are sent; a body changes its box only when it gets a car of another model. A car that the player's car, or a car
+// already knocked loose, will touch within a sixth of a second becomes a physical car instead of a box.
 void CityTraffic::_physics_process(double p_delta) {
 	if (!pool_made || !bodies_on) return;
+	loose_update(p_delta);
 	PhysicsServer3D *ps = PhysicsServer3D::get_singleton();
 	const int n = (int)body_want.size();
 	const int use = std::min(n, (int)POOL);
 	if (n > POOL) std::partial_sort(body_want.begin(), body_want.begin() + POOL, body_want.end(), [](const BodyWant &a, const BodyWant &b) { return a.d2 < b.d2; });
+	struct Striker { Vector3 p, v; float yaw, hl, hw; };
+	Striker hit[LOOSE + 1];
+	int nh = 0;
+	if (knock_on && loose[0].car) {
+		if (player_id != 0) {
+			RigidBody3D *rb = Object::cast_to<RigidBody3D>(ObjectDB::get_instance(ObjectID(player_id)));
+			if (rb && rb->is_inside_tree()) {
+				const Transform3D pt = rb->get_global_transform();
+				const Vector3 pf = pt.basis.get_column(2);
+				hit[nh++] = Striker{ pt.origin, rb->get_linear_velocity(), std::atan2(pf.x, pf.z), player_hl, player_hw };
+			}
+		}
+		for (int k = 0; k < LOOSE; k++) {
+			if (!loose[k].on) continue;
+			const Transform3D pt = loose[k].car->get_global_transform();
+			const Vector3 pf = pt.basis.get_column(2);
+			hit[nh++] = Striker{ pt.origin, loose[k].car->get_linear_velocity(), std::atan2(pf.x, pf.z), cm::MODELS[loose[k].model].half_len, cm::MODELS[loose[k].model].half_w };
+		}
+	}
 	for (int k = 0; k < POOL; k++) {
-		if (k < use) {
-			const BodyWant &w = body_want[k];
+		bool put = false;
+		if (k < use && body_want[k].model >= 0) {
+			BodyWant &w = body_want[k];
 			const cm::CarModel &m = cm::MODELS[w.model];
-			if (pool_model[k] != w.model) { ps->shape_set_data(pool_shape[k], Vector3(m.half_w, m.height * 0.5f, m.half_len)); pool_model[k] = w.model; }
-			Basis bs = Basis(Vector3(0, 1, 0), w.yaw) * Basis(Vector3(1, 0, 0), -w.pitch);
-			ps->body_set_state(pool_body[k], PhysicsServer3D::BODY_STATE_TRANSFORM, Transform3D(bs, Vector3(w.x, w.y + m.height * 0.5f, w.z)));
-		} else if (pool_model[k] != -2) {
+			bool gone = false;
+			for (int h = 0; h < nh && !gone; h++) {
+				const Striker &q = hit[h];
+				if (std::fabs(q.p.y - w.y) > 2.5f) continue;
+				const float rvx = q.v.x - std::sin(w.yaw) * w.v, rvz = q.v.z - std::cos(w.yaw) * w.v;   // how the striker comes at it
+				const float rv2 = rvx * rvx + rvz * rvz;
+				if (rv2 < 1.2f * 1.2f) continue;
+				const float dx = w.x - q.p.x, dz = w.z - q.p.z;
+				if (dx * rvx + dz * rvz <= 0.0f) continue;   // (going apart)
+				const float reach = q.hl + m.half_len + std::sqrt(rv2) * 0.17f + 0.6f;
+				if (dx * dx + dz * dz > reach * reach) continue;
+				for (int e = 1; e <= 3 && !gone; e++) {
+					const float te = 0.055f * (float)e;
+					if (boxes_touch(q.p.x + rvx * te, q.p.z + rvz * te, q.yaw, q.hl + 0.08f, q.hw + 0.08f, w.x, w.z, w.yaw, m.half_len, m.half_w)) gone = knock(w);
+				}
+			}
+			if (gone) w.model = -1;   // (this list lives until the next frame: not twice)
+			else {
+				if (pool_model[k] != w.model) { ps->shape_set_data(pool_shape[k], Vector3(m.half_w, m.height * 0.5f, m.half_len)); pool_model[k] = w.model; }
+				Basis bs = Basis(Vector3(0, 1, 0), w.yaw) * Basis(Vector3(1, 0, 0), -w.pitch);
+				ps->body_set_state(pool_body[k], PhysicsServer3D::BODY_STATE_TRANSFORM, Transform3D(bs, Vector3(w.x, w.y + m.height * 0.5f, w.z)));
+				put = true;
+			}
+		}
+		if (!put && pool_model[k] != -2) {
 			ps->body_set_state(pool_body[k], PhysicsServer3D::BODY_STATE_TRANSFORM, Transform3D(Basis(), Vector3(0, -500.0f - k * 4.0f, 0)));
 			pool_model[k] = -2;   // put away
 		}
 	}
 }
 
+Array CityTraffic::cars_near(const Vector3 &p_at, double p_r) const {
+	Array out;
+	for (int i = 0; i < now.n; i++) {
+		const Row &r = now.rows[i];
+		const float dx = r.x - p_at.x, dz = r.z - p_at.z;
+		if (dx * dx + dz * dz > (float)(p_r * p_r)) continue;
+		Dictionary d;
+		d["id"] = r.id; d["at"] = Vector3(r.x, r.y, r.z); d["yaw"] = r.yaw; d["speed"] = r.v; d["model"] = (int)r.model;
+		out.push_back(d);
+	}
+	return out;
+}
+
+Array CityTraffic::stalls_near(const Vector3 &p_at, double p_r) const {
+	Array out;
+	for (int32_t k : active) {
+		const float *f = &streets.stall_f[(size_t)k * 8];
+		const float dx = f[0] - p_at.x, dz = f[2] - p_at.z;
+		if (dx * dx + dz * dz > (float)(p_r * p_r) || stall_car[k].model == 255) continue;
+		Dictionary d;
+		d["stall"] = k; d["at"] = Vector3(f[0], f[1], f[2]); d["yaw"] = f[3]; d["model"] = (int)stall_car[k].model; d["kerb"] = streets.stall_i[(size_t)k * 4] == 0;
+		out.push_back(d);
+	}
+	return out;
+}
+
+Dictionary CityTraffic::knock_stats() const {
+	Dictionary d;
+	d["moving"] = kc.moving; d["parked"] = kc.parked; d["rejoined"] = kc.rejoined; d["taken_away"] = kc.taken_away; d["no_slot"] = kc.no_slot; d["last_refusal"] = kc.refused;
+	Array a;
+	for (int k = 0; k < LOOSE; k++) {
+		if (!loose[k].on || !loose[k].car) continue;
+		const Transform3D t = loose[k].car->get_global_transform();
+		Dictionary c;
+		c["at"] = t.origin; c["speed"] = loose[k].car->get_linear_velocity().length(); c["spin"] = loose[k].car->get_angular_velocity().length();
+		c["up"] = t.basis.get_column(1).y; c["parked"] = loose[k].parked; c["model"] = loose[k].model; c["still_s"] = loose[k].rest_t;
+		a.push_back(c);
+	}
+	d["out"] = a;
+	return d;
+}
+
 void CityTraffic::set_player_car(Object *p_car, double p_half_len, double p_half_w) {
 	player_id = p_car ? (uint64_t)p_car->get_instance_id() : 0;
 	player_hl = (float)p_half_len; player_hw = (float)p_half_w;
+	// it meets the traffic's cars (their layer is 5), and the cars it knocks loose take its feel
+	CollisionObject3D *co = Object::cast_to<CollisionObject3D>(p_car);
+	if (co) co->set_collision_mask(co->get_collision_mask() | 16);
+	CityCar *cc = Object::cast_to<CityCar>(p_car);
+	if (cc) knock_feel = cc->get_feel();
 }
 
 String CityTraffic::report() {
@@ -613,6 +875,7 @@ String CityTraffic::report() {
 			cnt.moving / f, cnt.moving_most, cnt.carry / f, max_cars, cnt.near / f, cnt.mid / f, cnt.box / f, cnt.parked_all / f, cnt.parked_mid / f, cnt.batches / f, (double)cnt.uploads / f,
 			cnt.main_us / f / 1000.0, cnt.main_us_worst / 1000.0, cnt.step_us / std::max(cnt.steps, 1) / 1000.0, cnt.step_us_worst / 1000.0);
 	s += vformat(" | pulled out of a stall %d, parked %d (since the start)", cnt.park_out, cnt.park_in);
+	s += vformat(" | knocked loose: %d moving, %d parked; drove on %d, taken away %d, no free physical car %d", kc.moving, kc.parked, kc.rejoined, kc.taken_away, kc.no_slot);
 	cnt = Count();
 	return s;
 }
