@@ -1,0 +1,100 @@
+{
+ "fixes": [
+  {
+   "at": [
+    80.0,
+    0.263000003993511,
+    -74.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #30, \"prop_storm_drain_grate is 0.12 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    80.0,
+    0.145000010728836,
+    -74.0
+   ]
+  },
+  {
+   "at": [
+    55.0,
+    0.262878260819626,
+    -56.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #31, \"prop_storm_drain_grate is 0.12 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    55.0,
+    0.145000010728836,
+    -56.0
+   ]
+  },
+  {
+   "at": [
+    90.0,
+    0.262000001966953,
+    -49.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #32, \"prop_storm_drain_grate is 0.12 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    90.0,
+    0.144000008702278,
+    -49.0
+   ]
+  },
+  {
+   "at": [
+    30.0,
+    0.266216651320867,
+    -46.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #33, \"prop_storm_drain_grate is 0.12 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    30.0,
+    0.148102924227715,
+    -46.0
+   ]
+  },
+  {
+   "at": [
+    125.0,
+    0.26799999922514,
+    -27.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #37, \"prop_storm_drain_grate is 0.12 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    125.0,
+    0.150000005960464,
+    -27.0
+   ]
+  }
+ ],
+ "scene": "m_gr_ad5ne"
+}

@@ -1,0 +1,81 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -13.9644660949707,
+    0.0,
+    8.16446590423584
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it down (fix #1, \"prop_signal_mast_arm hangs 0.15 m over what is under it\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    -13.9644660949707,
+    0.150000005960464,
+    8.16446590423584
+   ]
+  },
+  {
+   "at": [
+    13.9644660949707,
+    0.0,
+    -8.16446590423584
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it down (fix #2, \"prop_signal_mast_arm hangs 0.15 m over what is under it\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    13.9644660949707,
+    0.150000005960464,
+    -8.16446590423584
+   ]
+  },
+  {
+   "at": [
+    -11.5,
+    0.100000001490116,
+    -16.6000003814697
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #3, \"prop_storm_drain_curb_inlet is 0.10 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    -11.5,
+    0.0,
+    -16.6000003814697
+   ]
+  },
+  {
+   "at": [
+    11.5,
+    0.100000001490116,
+    -16.6000003814697
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #4, \"prop_storm_drain_curb_inlet is 0.10 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    11.5,
+    0.0,
+    -16.6000003814697
+   ]
+  }
+ ],
+ "scene": "j_am_5th"
+}

@@ -1,0 +1,81 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -50.0,
+    0.296394089490375,
+    -73.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #19, \"prop_storm_drain_grate is 0.12 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    -50.0,
+    0.17867611348629,
+    -73.0
+   ]
+  },
+  {
+   "at": [
+    -30.0,
+    0.291556704638232,
+    -55.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #20, \"prop_storm_drain_grate is 0.12 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    -30.0,
+    0.173562437295914,
+    -55.0
+   ]
+  },
+  {
+   "at": [
+    -60.0,
+    0.357397248069073,
+    -45.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #21, \"prop_storm_drain_grate is 0.12 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    -60.0,
+    0.239322245121002,
+    -45.0
+   ]
+  },
+  {
+   "at": [
+    -80.0,
+    0.308332385978871,
+    -66.5
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #22, \"prop_storm_drain_grate is 0.12 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    -80.0,
+    0.190166383981705,
+    -66.5
+   ]
+  }
+ ],
+ "scene": "m_gr_ad5nw"
+}

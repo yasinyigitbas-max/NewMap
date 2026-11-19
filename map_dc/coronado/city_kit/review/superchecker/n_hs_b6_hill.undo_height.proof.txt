@@ -1,0 +1,8 @@
+PROOF compared: 75 nodes (with every mesh of the buildings), 25000 ground and ground-collision triangles, 137 prop instances, 70 colliders, 89 wear marks are identical in both files
+PROOF differences found between the files: 1 lines only in the old one, 1 only in the new one
+PROOF change #1 move prop_storm_drain_grate: (53.00, 0.50, -98.00) -> (53.00, 0.38, -98.00), in 1 tier(s), no collider  [put back where it stood: the first run moved it up (fix #17, "prop_storm_drain_grate is 0.12 m into the ground") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)]
+PROOF 1 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
+   at: parse_gdextension_file (core/extension/gdextension_library_loader.cpp:282)
+   at: open_library (core/extension/gdextension.cpp:810)
+   at: load_extensions (core/extension/gdextension_manager.cpp:333)
