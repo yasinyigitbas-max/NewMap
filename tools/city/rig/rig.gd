@@ -364,6 +364,7 @@ func _free_drive(first: Vector3) -> void:
 	var y_start := _ground(start, 0.0) + 0.15
 	car.position = Vector3(start.x, y_start, start.z); car.rotation.y = yaw
 	add_child(car)
+	if DisplayServer.is_touchscreen_available(): _touch_guide()      # (the touch driving itself is CityCar's, C++)
 	var s0: Dictionary = car.call(&"get_state")
 	if traffic: traffic.call(&"set_player_car", car, 2.3, 1.0)
 	if people: people.call(&"set_player_car", car, 2.3, 1.0)      # (people get out of its way, and are knocked over by it)
@@ -383,6 +384,23 @@ func _free_drive(first: Vector3) -> void:
 	_say("car: %.0f m driven, hardest knock %.0f g, at the end %d wheels on the ground, %.2f m over the place it started, %d km/h" % [float(s1.metres), float(s1.hardest_knock_g), int(s1.wheels_on_ground), car.global_position.y - y_start, int(s1.kmh)])
 	if traffic: _say("  traffic %s" % String(traffic.call(&"report")))
 	if people: _say("  people %s | %s" % [String(people.call(&"report")), str(people.call(&"stats"))])
+
+## Where to put the thumbs (20 Nov, Yasin: "Make the car drivable on touchscreen"): faint zones over the picture, the
+## same split CityCar reads (native/src/city_car.cpp _input). Draws nothing that catches a touch.
+func _touch_guide() -> void:
+	var layer := CanvasLayer.new(); layer.layer = 5; add_child(layer)
+	var zones := [["STEER  - slide left / right", Rect2(0.0, 0.62, 0.5, 0.38)], ["BRAKE / REVERSE", Rect2(0.5, 0.62, 0.25, 0.38)],
+		["GAS", Rect2(0.75, 0.62, 0.25, 0.38)], ["HANDBRAKE", Rect2(0.8, 0.0, 0.2, 0.28)]]
+	for z: Array in zones:
+		var r: Rect2 = z[1]
+		var box := ColorRect.new(); box.color = Color(1, 1, 1, 0.07); box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		box.anchor_left = r.position.x; box.anchor_top = r.position.y; box.anchor_right = r.end.x; box.anchor_bottom = r.end.y
+		box.offset_left = 6; box.offset_top = 6; box.offset_right = -6; box.offset_bottom = -6
+		var lb := Label.new(); lb.text = String(z[0]); lb.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		lb.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER; lb.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		lb.set_anchors_preset(Control.PRESET_FULL_RECT); lb.add_theme_font_size_override(&"font_size", 30)
+		lb.add_theme_color_override(&"font_color", Color(1, 1, 1, 0.55))
+		box.add_child(lb); layer.add_child(box)
 
 ## WALK IT YOURSELF (--walk). All the walking is C++ (CityPlayer); this makes the node, sets it on the ground, and each
 ## frame tells the streamer where he is.

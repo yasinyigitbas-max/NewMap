@@ -7,6 +7,10 @@
 #include <godot_cpp/classes/collision_shape3d.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/input.hpp>
+#include <godot_cpp/classes/input_event.hpp>
+#include <godot_cpp/classes/input_event_screen_drag.hpp>
+#include <godot_cpp/classes/input_event_screen_touch.hpp>
+#include <godot_cpp/classes/viewport.hpp>
 #include <godot_cpp/classes/mesh.hpp>
 #include <godot_cpp/classes/mesh_instance3d.hpp>
 #include <godot_cpp/classes/physics_direct_space_state3d.hpp>
@@ -177,19 +181,55 @@ void CityCar::_ready() {
 	set_process(true);
 }
 
+// Touch driving (20 Nov): left half of the screen = steering by sliding a thumb sideways from where it landed;
+// right half = brake (inner quarter) and gas (outer quarter); the top right corner = handbrake. Many fingers at once.
+void CityCar::_input(const Ref<InputEvent> &p_event) {
+	if (!player) return;
+	Viewport *vp = get_viewport();
+	if (!vp) return;
+	const Vector2 sz = vp->get_visible_rect().size;
+	if (sz.x < 1.0f || sz.y < 1.0f) return;
+	if (const InputEventScreenTouch *t = Object::cast_to<InputEventScreenTouch>(p_event.ptr())) {
+		const int id = t->get_index();
+		const Vector2 p = t->get_position();
+		if (t->is_pressed()) {
+			if (p.x < sz.x * 0.5f) {
+				if (t_steer_id < 0) { t_steer_id = id; t_steer_x0 = p.x; t_steer = 0.0f; }
+			} else if (id >= 0 && id < 16) {
+				t_zone[id] = (p.x > sz.x * 0.8f && p.y < sz.y * 0.28f) ? 3 : (p.x < sz.x * 0.75f ? 1 : 2);
+			}
+		} else {
+			if (id == t_steer_id) { t_steer_id = -1; t_steer = 0.0f; }
+			if (id >= 0 && id < 16) t_zone[id] = 0;
+		}
+		return;
+	}
+	if (const InputEventScreenDrag *d = Object::cast_to<InputEventScreenDrag>(p_event.ptr())) {
+		const int id = d->get_index();
+		const Vector2 p = d->get_position();
+		if (id == t_steer_id) {
+			t_steer = std::min(std::max(-(p.x - t_steer_x0) / (sz.x * 0.15f), -1.0f), 1.0f);   // + = left, as the keys
+		} else if (id >= 0 && id < 16 && t_zone[id] != 0 && p.x >= sz.x * 0.5f) {
+			t_zone[id] = (p.x > sz.x * 0.8f && p.y < sz.y * 0.28f) ? 3 : (p.x < sz.x * 0.75f ? 1 : 2);   // a thumb may slide between pedals
+		}
+	}
+}
+
 // The keys and the pad. S (or the left trigger) brakes; once the car stands it becomes the reverse gear's pedal.
 void CityCar::read_player() {
 	Input *in = Input::get_singleton();
-	const float up = std::max(in->is_key_pressed(KEY_W) || in->is_key_pressed(KEY_UP) ? 1.0f : 0.0f, std::max(0.0f, (float)in->get_joy_axis(0, JOY_AXIS_TRIGGER_RIGHT)));
-	const float down = std::max(in->is_key_pressed(KEY_S) || in->is_key_pressed(KEY_DOWN) ? 1.0f : 0.0f, std::max(0.0f, (float)in->get_joy_axis(0, JOY_AXIS_TRIGGER_LEFT)));
-	float st = (in->is_key_pressed(KEY_A) || in->is_key_pressed(KEY_LEFT) ? 1.0f : 0.0f) - (in->is_key_pressed(KEY_D) || in->is_key_pressed(KEY_RIGHT) ? 1.0f : 0.0f);
+	bool tg = false, tb = false, th = false;
+	for (int i = 0; i < 16; i++) { tb = tb || t_zone[i] == 1; tg = tg || t_zone[i] == 2; th = th || t_zone[i] == 3; }
+	const float up = std::max(in->is_key_pressed(KEY_W) || in->is_key_pressed(KEY_UP) || tg ? 1.0f : 0.0f, std::max(0.0f, (float)in->get_joy_axis(0, JOY_AXIS_TRIGGER_RIGHT)));
+	const float down = std::max(in->is_key_pressed(KEY_S) || in->is_key_pressed(KEY_DOWN) || tb ? 1.0f : 0.0f, std::max(0.0f, (float)in->get_joy_axis(0, JOY_AXIS_TRIGGER_LEFT)));
+	float st = (in->is_key_pressed(KEY_A) || in->is_key_pressed(KEY_LEFT) ? 1.0f : 0.0f) - (in->is_key_pressed(KEY_D) || in->is_key_pressed(KEY_RIGHT) ? 1.0f : 0.0f) + t_steer;
 	const float jx = (float)in->get_joy_axis(0, JOY_AXIS_LEFT_X);
 	if (std::fabs(jx) > 0.12f) st -= jx;
 	if (dir == 1 && down > 0.1f && up < 0.1f && car.speed < 0.8f) dir = -1;
 	else if (dir == -1 && up > 0.1f && car.speed > -0.8f) dir = 1;
 	c_throttle = dir == 1 ? up : down; c_brake = dir == 1 ? down : up;
 	c_steer = std::min(std::max(st, -1.0f), 1.0f);
-	c_handbrake = (in->is_key_pressed(KEY_SPACE) || in->is_joy_button_pressed(0, JOY_BUTTON_A)) ? 1.0f : 0.0f;
+	c_handbrake = (in->is_key_pressed(KEY_SPACE) || in->is_joy_button_pressed(0, JOY_BUTTON_A) || th) ? 1.0f : 0.0f;
 	if (up < 0.05f && down < 0.05f && std::fabs(car.speed) < 0.6f) c_brake = 0.35f;   // left alone at a standstill it holds itself (also on a hill)
 }
 

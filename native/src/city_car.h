@@ -19,6 +19,7 @@
 #include <godot_cpp/classes/box_shape3d.hpp>
 #include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/collision_shape3d.hpp>
+#include <godot_cpp/classes/input_event.hpp>
 #include <godot_cpp/classes/mesh_instance3d.hpp>
 #include <godot_cpp/classes/shader_material.hpp>
 #include <godot_cpp/classes/physics_direct_body_state3d.hpp>
@@ -40,6 +41,10 @@ class CityCar : public RigidBody3D {
 	bool player = false, chase_camera = false;
 	float c_throttle = 0, c_brake = 0, c_steer = 0, c_handbrake = 0;
 	int dir = 1;
+	// touch driving (20 Nov): one finger steers (left half), others press brake / gas / handbrake (right half)
+	int t_steer_id = -1;
+	float t_steer_x0 = 0, t_steer = 0;
+	int t_zone[16] = { 0 };      // per finger index: 0 none, 1 brake, 2 gas, 3 handbrake
 	Vector3 com;                 // the centre of mass in the node's own frame (the node's origin is on the ground under the car)
 	MeshInstance3D *wheel_vis[4] = { nullptr, nullptr, nullptr, nullptr };
 	MeshInstance3D *mi_body = nullptr;
@@ -68,6 +73,7 @@ protected:
 
 public:
 	void _ready() override;
+	void _input(const Ref<InputEvent> &p_event) override;
 	void _integrate_forces(PhysicsDirectBodyState3D *p_state) override;
 	void _process(double p_delta) override;
 
