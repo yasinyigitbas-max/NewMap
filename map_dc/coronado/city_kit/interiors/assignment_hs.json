@@ -1,6 +1,6 @@
 {
  "_doc": "High street fill (claude/fill-high-street, 19 Nov): which business is behind which door of the new high street",
- "count": 10,
+ "count": 17,
  "rooms": [
   {
    "id": "hs_b1_amber_brick_row_0",
@@ -345,6 +345,248 @@
      "w": 1.35
     }
    ]
+  },
+  {
+   "id": "hs_b2_amber_stucco_0",
+   "piece": "n_hs_b2_amber",
+   "label": "stucco",
+   "model": "apartments/apt_stucco3_cream",
+   "pos": [
+    -22.6,
+    4.2013,
+    -107.92
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -9.2,
+    9.2
+   ],
+   "kind": "fast_food",
+   "name": "Rosa's Taqueria",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 2: tacos at the foot of the rise for the shops' staff and the park's families, flats above it (a salon was tried: the wide, shallow room stayed bare)",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "hs_b2_amber_bank_0",
+   "piece": "n_hs_b2_amber",
+   "label": "bank",
+   "model": "commercial/com_bank",
+   "pos": [
+    -23.6,
+    4.6124,
+    -125.69
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -6.7,
+    6.7
+   ],
+   "kind": "bank",
+   "name": "Crownado Savings",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 2: the town's savings bank (its painted CROWNADO SAVINGS sign stays)",
+   "signs": []
+  },
+  {
+   "id": "hs_b2_amber_shops_0",
+   "piece": "n_hs_b2_amber",
+   "label": "shops",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    -23.6,
+    5.7514,
+    -158.85
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -1.08,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "ice_cream",
+   "name": "Hilltop Scoops",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 2: ice cream after church and for the park's families",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "hs_b2_amber_shops_1",
+   "piece": "n_hs_b2_amber",
+   "label": "shops",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    -23.6,
+    5.7514,
+    -158.85
+   ],
+   "yaw": 90.0,
+   "door_index": 1,
+   "door_along": 1.08,
+   "door_w": 1.6,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "gallery",
+   "name": "Amber Art Co",
+   "style": "black",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 2: a small gallery by the church walk",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b2_amber_hardware_0",
+   "piece": "n_hs_b2_amber",
+   "label": "hardware",
+   "model": "ck/ck_brk3_row2_fe",
+   "pos": [
+    -23.6,
+    6.0309,
+    -171.4
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "store",
+   "name": "Amber Hardware",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 2: every main street keeps its hardware store; the propane exchange by its door",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "hs_b2_amber_corner_0",
+   "piece": "n_hs_b2_amber",
+   "label": "corner",
+   "model": "ck/ck_brk3_corner2",
+   "pos": [
+    -23.6,
+    6.15,
+    -183.5
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "books",
+   "name": "Ninth Street Books",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 2: the bookshop on the 9th St corner, papers at its door",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b2_ninth_hall_0",
+   "piece": "n_hs_b2_ninth",
+   "label": "hall",
+   "model": "civic/civ_community_center",
+   "pos": [
+    -75.0,
+    6.15,
+    -179.55
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "hall",
+   "name": "Christ Church Community Center",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 2: the church's hall on 9th St (office, meetings); its painted COMMUNITY CENTER sign stays",
+   "signs": []
   }
  ]
 }

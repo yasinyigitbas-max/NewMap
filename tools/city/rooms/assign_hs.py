@@ -36,6 +36,20 @@ SHOPS = [
      "block 1: the corner on 11th St, the road down to the beach: boards, wetsuits, bikes"),
     ("n_hs_b1_tenth", "market", "apartments/apt_stucco3_peach", (-61.22, 0.15, 20.3), 180.0, 0, "corner_shop", "Tenth Street Market", "red",
      "block 1: the neighbourhood's market for the court's flats and the houses west; ice chest and papers on its forecourt"),
+    ("n_hs_b2_amber", "stucco", "apartments/apt_stucco3_cream", (-22.6, 0.2013, -107.92), 90.0, 0, "fast_food", "Rosa's Taqueria", "red",
+     "block 2: tacos at the foot of the rise for the shops' staff and the park's families, flats above it (a salon was tried: the wide, shallow room stayed bare)"),
+    ("n_hs_b2_amber", "bank", "commercial/com_bank", (-23.6, 0.6124, -125.69), 90.0, 0, "bank", "Crownado Savings", "",
+     "block 2: the town's savings bank (its painted CROWNADO SAVINGS sign stays)"),
+    ("n_hs_b2_amber", "shops", "commercial/com_orange_corner", (-23.6, 1.7514, -158.85), 90.0, 0, "ice_cream", "Hilltop Scoops", "cream",
+     "block 2: ice cream after church and for the park's families"),
+    ("n_hs_b2_amber", "shops", "commercial/com_orange_corner", (-23.6, 1.7514, -158.85), 90.0, 1, "gallery", "Amber Art Co", "black",
+     "block 2: a small gallery by the church walk"),
+    ("n_hs_b2_amber", "hardware", "ck/ck_brk3_row2_fe", (-23.6, 2.0309, -171.4), 90.0, 0, "store", "Amber Hardware", "red",
+     "block 2: every main street keeps its hardware store; the propane exchange by its door"),
+    ("n_hs_b2_amber", "corner", "ck/ck_brk3_corner2", (-23.6, 2.1500, -183.5), 90.0, 0, "books", "Ninth Street Books", "green",
+     "block 2: the bookshop on the 9th St corner, papers at its door"),
+    ("n_hs_b2_ninth", "hall", "civic/civ_community_center", (-75.0, 2.15, -179.55), 180.0, 0, "hall", "Christ Church Community Center", "",
+     "block 2: the church's hall on 9th St (office, meetings); its painted COMMUNITY CENTER sign stays"),
 ]
 
 

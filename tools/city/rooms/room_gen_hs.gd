@@ -43,6 +43,10 @@ const KINDS := {
 	# high street copy: the town library (a circulation desk, wall bookcases, book stacks back to back with reading
 	# tables between them, reading tables in the windows, carpet, warm pendants)
 	"library": {"floor": "Carpet012", "light": "pendant", "counter": ["shop_counter", "shop_counter"], "till": false, "behind": ["bookcase", "filing_cabinet"], "board": false, "walls": ["bookcase"], "centre": "stacks", "window": "table2", "back": "office", "frames": true},
+	# high street copy: a bank hall (teller counter, officers' desks with a customer chair each, waiting benches) and a
+	# community hall (reception desk, meeting tables, a kitchen behind)
+	"bank": {"floor": "Terrazzo005", "light": "panel", "counter": ["shop_counter", "shop_counter", "shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet"], "board": false, "walls": ["waiting_bench", "brochure_rack"], "centre": "desks", "window": "waiting", "back": "office", "frames": true},
+	"hall": {"floor": "WoodFloor051", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet"], "board": false, "walls": ["waiting_bench"], "centre": "table4", "window": "table2", "back": "kitchen", "frames": true},
 	"venue": {"floor": "Carpet012", "light": "pendant", "counter": ["shop_counter", "soda_fountain"], "till": true, "behind": ["drinks_fridge"], "board": true, "walls": ["poster_wall"], "centre": "benches", "window": "waiting", "back": "none", "frames": false},
 }
 const WARM := ["cafe", "bakery", "bar", "restaurant", "books", "venue", "library"]
@@ -50,7 +54,7 @@ const WALL_TINTS := [Color(1.0, 0.95, 0.86), Color(0.94, 0.96, 0.98), Color(0.98
 const SHORT := {"cafe": "COFFEE", "bakery": "BAKERY", "bar": "BAR", "restaurant": "KITCHEN", "fast_food": "FOOD", "ice_cream": "ICE CREAM",
 	"clothes": "CLOTHES", "shoes": "SHOES", "jewelry": "JEWELRY", "books": "BOOKS", "gallery": "GALLERY", "salon": "SALON", "pharmacy": "PHARMACY",
 	"souvenir": "GIFTS", "office": "OFFICE", "corner_shop": "MARKET", "grocery": "GROCERY", "cleaners": "LAUNDRY", "store": "SUPPLY", "keys": "KEYS",
-	"sport": "SPORT", "gas": "FUEL", "venue": "TICKETS", "library": "LIBRARY"}
+	"sport": "SPORT", "gas": "FUEL", "venue": "TICKETS", "library": "LIBRARY", "bank": "BANK", "hall": "HALL"}
 
 var foot := {}      # base -> Vector2(w, d)
 var tall := {}      # base -> height
@@ -318,6 +322,10 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		"table4":
 			for zz: float in _steps(mz0 + 0.8, mz1 - 0.8, 2.5):
 				for xx: float in _steps(IX0 + 0.65, IX1 - 0.65, 2.3): _group(_table4(xx, zz))
+		"desks":
+			for zz: float in _steps(mz0 + 1.0, mz1 - 1.0, 2.6):
+				for xx: float in _steps(IX0 + 1.0, IX1 - 1.0, 2.8):
+					_group([["office_desk", xx, zz, 180.0], ["office_chair", xx, zz - 0.66, 0.0], ["side_chair", xx, zz + 0.7, 180.0]])
 		"stacks":
 			var ri := 0
 			for zz: float in _steps(mz0 + 0.8, mz1 - 0.8, 2.6):
@@ -355,7 +363,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 				for xx: float in _steps(IX0 + 0.74, IX1 - 0.74, 2.6): _put("waiting_bench", xx, zz, 0.0)
 	# ---- dressing: plants in the front corners, a bin by the counter end, prints on the bare walls
 	_put("potted_plant", X0 + 0.3, ZF - 0.3); _put("potted_plant", X1 - 0.3, ZF - 0.3)
-	if kind != "library": _put("indoor_bin", cx + cw * 0.5 + 0.3, zc + cd * 0.5 + 0.25)      # (high street copy: the library desk stands free of walls: no bin beside it)
+	if not kind in ["library", "bank", "hall"] and X1 - (cx + cw * 0.5 + 0.3) < 1.2: _put("indoor_bin", cx + cw * 0.5 + 0.3, zc + cd * 0.5 + 0.25)      # (high street copy: only where the counter end meets a wall; check_rooms "lone")      # (high street copy: the library desk stands free of walls: no bin beside it)
 	if kind in ["office", "pharmacy", "souvenir", "venue", "gallery"]: _put("brochure_rack", dx + (1.3 if dx < (X0 + X1) * 0.5 else -1.3), ZF - 1.9, 180.0)
 	if bool(K.frames) or String(K.walls[0]) in ["frames_only", "poster_wall"]:
 		var mount := "poster_case" if String(K.walls[0]) == "poster_wall" else "gallery_frame"

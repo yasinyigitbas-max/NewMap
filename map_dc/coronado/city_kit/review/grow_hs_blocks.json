@@ -33,6 +33,50 @@
    "yaw": 0.0,
    "site": "high street block 1, 11th St west of the alley (u -100..-50, v 97.5..190.8)",
    "part": "parking garage, cross alley, two 11th St apartment houses"
+  },
+  {
+   "piece": "n_hs_b2_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 2, Amber west 9th-10th, north half (u -50..-16, v -190.3..-97.5)",
+   "part": "Amber frontage up the rise, church landmark, rear lot, yard, alley"
+  },
+  {
+   "piece": "n_hs_b2_park",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 2, 10th St west of the pilot alley (u -100..-50, v -60..-9.2)",
+   "part": "Tenth Street Park, the residents' alley"
+  },
+  {
+   "piece": "n_hs_b2_mews",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 2, the middle (u -100..-50, v -146..-60)",
+   "part": "Amber Mews townhouses on a private lane, the cross alley"
+  },
+  {
+   "piece": "n_hs_b2_ninth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 2, 9th St west of the yard (u -100..-50, v -190.8..-146)",
+   "part": "the church's community center, memorial garden, lot"
   }
  ]
 }

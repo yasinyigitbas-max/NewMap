@@ -1,14 +1,14 @@
 {
  "rooms": [
   {
-   "d": 15.15,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b1_amber_library_0.scn",
-   "id": "g_hs_b1_amber_library_0",
-   "kind": "library",
+   "d": 11.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b2_amber_stucco_0.scn",
+   "id": "g_hs_b2_amber_stucco_0",
+   "kind": "fast_food",
    "lights": 6,
-   "name": "Coronado Public Library",
-   "props": 142,
-   "w": 23.4
+   "name": "Rosa's Taqueria",
+   "props": 59,
+   "w": 18.4
   }
  ]
 }

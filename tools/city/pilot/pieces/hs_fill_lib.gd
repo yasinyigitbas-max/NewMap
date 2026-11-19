@@ -140,6 +140,26 @@ static func steps_z(g: K.Ground, x: float, w: float, z0: float, z1: float, y0: f
 			step_face(g, Vector2(ex, za), Vector2(ex, zb), func(_x: float, _z: float) -> float: return yb, func(_x: float, _z: float) -> float: return y1, "wall")
 	return z0 + dz * n
 
+## A level pad (a building's or a play area's) in a sloping field: the rect at height y, and a retaining face on each
+## of its four edges down / up to the field around it (only where they differ by more than 1 cm). The caller leaves a
+## "-" hole for the rect in its field paint. sides: which edges get a face (an edge against another pad or a ramp is
+## drawn by that one).
+static func level_pad(g: K.Ground, mat: String, x0: float, z0: float, x1: float, z1: float, y: float, field: Callable, sides := "nesw", step := STEP) -> void:
+	var yl := func(_x: float, _z: float) -> float: return y
+	paint(g, x0, z0, x1, z1, [], mat, yl, step)
+	if sides.contains("n"): step_face(g, Vector2(x0, z0), Vector2(x1, z0), yl, field)
+	if sides.contains("s"): step_face(g, Vector2(x0, z1), Vector2(x1, z1), yl, field)
+	if sides.contains("w"): step_face(g, Vector2(x0, z0), Vector2(x0, z1), yl, field)
+	if sides.contains("e"): step_face(g, Vector2(x1, z0), Vector2(x1, z1), yl, field)
+
+## A driveway ramp across [x0, x1] (x = the direction cars drive) from the field at x0 to height y at x1, over the
+## rows z0..z1; side faces where it stands proud of or sinks into the field.
+static func ramp_x(g: K.Ground, mat: String, x0: float, x1: float, z0: float, z1: float, y: float, field: Callable) -> void:
+	var yr := func(x: float, z: float) -> float: return lerpf(float(field.call(x0, z)), y, (x - x0) / (x1 - x0))
+	paint(g, minf(x0, x1), z0, maxf(x0, x1), z1, [], mat, yr, 1.0)
+	step_face(g, Vector2(minf(x0, x1), z0), Vector2(maxf(x0, x1), z0), yr, field)
+	step_face(g, Vector2(minf(x0, x1), z1), Vector2(maxf(x0, x1), z1), yr, field)
+
 ## save: ground mesh + its collision, decals, props (same as block_lib.finish, with this piece's own ground)
 static func finish(root: Node3D, g: K.Ground, props: K.Props, dec: K.Decals, name: String) -> void:
 	if dec:

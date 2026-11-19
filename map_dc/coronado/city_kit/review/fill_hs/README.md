@@ -1,6 +1,6 @@
 # High street fill (branch `claude/fill-high-street`) - block 1
 
-Status 19 Nov: **block 1 built, NOT shown to Yasin, NOT locked.** Blocks 2-6 not started (waiting for Yasin's word).
+Status 19 Nov: block 1 seen by Yasin ("its fine roll out to the entire zone"); **block 2 built**, nothing locked. Blocks 3-6 follow in this order: 3, 4, then the steep 5 and 6.
 
 ## Block 1: west of Amber, 10th to 11th St (around the pilot's pocket-park block `b_sw`)
 Its real outline, measured from the street pieces' ground (scratch dump, 0.25 m raster): an L round `b_sw` -
@@ -95,3 +95,69 @@ the game's draws for this block are NOT measured (target about 150 a view).
   of bottles; the coffee house model has a side door facing the corner building's wall (the kit model, 5 cm gap);
   dark boxes on two building walls in the court passage are in the kit models, not props.
 - check_life's 2 fence ends (above).
+
+---------------------------------------------------------------------------------------------------------------------
+
+## Block 2: west of Amber, 9th to 10th St (around the pilot's block `b_nw`)
+The mirror of block 1, but on the rise: Amber and the residential edge climb 2 m from 10th (4.15) to 9th (6.15);
+Amber's steepest stretch is 3.5 % (v -155..-143). Outline: u -100..-16, v -190.8..-9.2, less `b_nw` and its alley.
+The houses' two rear alleys (v -60..-54, -146..-140) again dead-ended here: both carried through to the pilot's alley.
+Four pieces (`n_hs_b2_site.gd` holds the shared heights):
+| piece | what and why |
+|---|---|
+| `n_hs_b2_amber` | Amber from `b_nw` up to 9th, each building on its own level pad at its door's walk height (a 0.6 m band follows the walk, low retaining plinths behind): a stucco block with **Rosa's Taqueria**, the **Crownado Savings** bank, the block's landmark **St. Anne's church** (red spire) set back behind a level forecourt so the spire closes the view up Amber, the **church walk** from Amber to its hall, an Orange-style pair (ice cream, gallery), a brick row with fire escapes (**hardware**, propane exchange by its door), a brick corner on 9th (**bookshop**). Rear lot off the alley; a staff / delivery yard north of the church walk. |
+| `n_hs_b2_park` | **Tenth Street Park**: iron fence with ONE gate on 10th, privacy fence to the gardens next door, a level bark play pad (swings, slide, climbing frame) with benches watching it, two picnic tables each under its own sail with a grill, a plaza with benches and a fountain, beds, five trees, lamps; the residents' alley on through. |
+| `n_hs_b2_mews` | **Amber Mews**: six townhouse rows (two kit models alternating) facing a private lane, a garage per unit with a short ramp from the lane, each row on its own level pad at the lane's height (the mews rises 1.2 m north), gardens behind with side fences and gates, bins beside the end garages, lamps, a hydrant, no parking in the lane; the cross alley. |
+| `n_hs_b2_ninth` | The church's **community center** on 9th St (pad at the walk), a memorial garden toward the houses (obelisk, benches facing it, trees), its lot off the cross alley, its service side (bins, condensers) on the east, a path from the church walk to 9th. |
+
+### Land and seams (block 2)
+- With the land as it is now: 2,131 m2 of block 2 under the land, 84 m2 of it more than 30 cm (deepest 0.41 m, the
+  mews), floating 0. With the DRY trial land fit (not written; it would lower 444 nodes, usual 0.12 m, largest
+  0.58 m): under 0, floating 0. **The shared land was not changed.**
+- Seams (0.25 m probe): streets, `b_nw` and my own pieces: largest 0.9 cm. Against the residential quadrants:
+  `r_q_m200_0_ne` up to 0.31 m (mews, 28 m) and 0.11 m (park), `r_q_m200_m200_se` up to 0.50 m at v -154 (6.5 m):
+  their own faces at their edge, my edge on their top line.
+
+### Checks (block 2 area: the 38 pieces round it + mine)
+| check | result | what it cannot see |
+|---|---|---|
+| `validate.gd` | 0 on my pieces (10 in the locked residential quadrants) | as for block 1 |
+| `check_life.gd` | 4 on my pieces: the park gate's two leaves stand open (they read as fence ends); the hall's lot-line fence ends at the 9th St hedge and at the alley | it measures against kit footprints |
+| `audit_trees.gd` | 313 trees, 0 in hard ground | - |
+| `check_rooms.gd --only=g_hs_` | 0 problems, 17 rooms (blocks 1 + 2) | whether a shop has what it needs (by eye) |
+| lock test | RESULT PASS | - |
+Generator copy changed for block 2 (`room_gen_hs.gd`): a bank layout (teller counter, officers' desks each with a
+customer chair) and a hall layout (meeting tables, kitchen behind); the bin at a counter end only where it meets a
+wall. Block 1's rooms were NOT rebuilt with it.
+
+### Walk-in places, block 2 (built)
+| room | kind | name |
+|---|---|---|
+| g_hs_b2_amber_stucco_0 | fast_food | Rosa's Taqueria (a salon was tried first: the wide shallow room stayed bare) |
+| g_hs_b2_amber_bank_0 | bank | Crownado Savings (painted sign kept) |
+| g_hs_b2_amber_shops_0 | ice_cream | Hilltop Scoops |
+| g_hs_b2_amber_shops_1 | gallery | Amber Art Co |
+| g_hs_b2_amber_hardware_0 | store | Amber Hardware |
+| g_hs_b2_amber_corner_0 | books | Ninth Street Books |
+| g_hs_b2_ninth_hall_0 | hall | Christ Church Community Center (painted sign kept) |
+NOT built: the church's interior (no church layout in the generator; it is walk-in in reality), the townhouses
+(homes).
+
+### Pictures (trial land, no shadows, only the block's area loaded; all opened by me)
+| file | view | preview draws / primitives |
+|---|---|---|
+| `b2_top.jpg` | straight down, 200 m | 853 / 2.01 M |
+| `b2_amber_north.jpg` | up Amber from `b_nw` | 192 / 1.54 M |
+| `b2_9th_west.jpg` | 9th St west from Amber | 421 / 1.77 M |
+| `b2_10th_park_gate.jpg` | into the park through its gate | 366 / 1.79 M |
+| `b2_steepest_mews_lane.jpg` | the mews lane, up the rise | 241 / 1.55 M |
+| `b2_church.jpg` | the church and its forecourt from Amber | 454 / 1.81 M |
+| `b2_hall_9th.jpg` | the community center from 9th | 482 / 1.87 M |
+| `b2_rooms_1..4.jpg` | each shop: street front + inside | - |
+Sheets 1, 2 and 4 were re-rendered after the taqueria change with the same rooms; I opened them before that run, and
+sheet 3 (the taqueria) after it. The same note on draw counts as block 1: preview numbers, not the game's.
+
+### NOT done / NOT checked (block 2)
+- Not shown to Yasin yet; nothing locked; not in the shared layout; `x_wall_feet` not rebuilt; no bake, no phone.
+- The hardware's shelves are the kit's general shelves (bottles), the gallery is benches and frames: thin, by eye.
+- The church interior (above).
