@@ -1,0 +1,31 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 21 nodes (with every mesh of the buildings), 4884 ground and ground-collision triangles, 22 prop instances, 13 colliders, 289 wear marks are identical in both files
+PROOF differences found between the files: 41 lines only in the old one, 2 only in the new one
+PROOF change #6 move prop_hydrant_red: (-11.00, 0.15, 15.00) -> (-11.00, 0.06, 15.00), in 1 tier(s) and its collider  [prop_hydrant_red hangs 0.09 m over what is under it]
+PROOF change #1 remove palm_queen_a at (-11.31, 0.39, 47.86) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove palm_mexican_fan_c at (-11.33, 1.30, 78.26) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove palm_mexican_fan_a at (-11.33, 1.71, 89.29) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_jacaranda_a at (11.24, 0.14, 32.11) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove tree_jacaranda_a at (11.21, 0.86, 65.42) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove_decal: one wear mark at (-9.67, 0.08, 33.77) removed  [oil mark lies on grass]
+PROOF change #8 remove_decal: one wear mark at (-9.64, 0.12, 37.22) removed  [oil mark lies on the sidewalk]
+PROOF change #9 remove_decal: one wear mark at (11.30, 1.63, 85.32) removed  [grime mark lies on grass]
+PROOF change #10 remove_decal: one wear mark at (-11.05, 0.96, 66.16) removed  [oil mark lies on the sidewalk]
+PROOF change #11 remove_decal: one wear mark at (9.51, 1.22, 78.40) removed  [pale patch mark lies on grass]
+PROOF change #12 remove_decal: one wear mark at (9.81, 1.46, 84.98) removed  [pale patch mark lies on grass]
+PROOF change #13 remove_decal: one wear mark at (11.28, 0.71, 57.97) removed  [oil mark lies on the sidewalk]
+PROOF note: 'Props/tree_jacaranda_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_near' held only listed items and is gone with them
+PROOF 13 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
