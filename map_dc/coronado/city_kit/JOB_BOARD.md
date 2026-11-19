@@ -5,6 +5,19 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~10:45 (PC session): x_wall_feet REDONE FROM THE BLOCKS' EDGES (Yasin on the first version: "there are still big
+  gaps, fill them"). The first version (entry below) only put a face under a wall foot measured above the land at its
+  two ends: stretches in between and edges with no wall stayed open. Now `wall_feet.py` walks every growth block's
+  ground edge (holes too) and gives a face to every metre that stands more than 8 cm over what is right outside - the
+  land OR another piece's lower ground (a street, a neighbouring block) - from the edge 30 cm into that surface, 2 cm
+  inside the edge (hidden behind the block's own wall where it has one). 79 blocks, 7,267 faces, 29,068 triangles
+  (both sides), 6,378 m of edge: over 15 cm 4,967 m, over 50 cm 2,258 m, over 1 m 849 m, highest 2.86 m; 5,821 m of
+  it beside another piece, 557 m beside empty land. THAT IS THE LENGTH THAT GETS A FACE, NOT THE LENGTH THAT WAS OPEN:
+  how much was visibly open is not measured. Seen in pictures (one camera a run, pixel-compared): the wall bases
+  beside empty land are closed without a sliver; three views of lines where two blocks meet show NO visible change
+  (walls and fences already stood there). Piece 375 KB; in the bake the faces merge into the cells' ground. No locked
+  piece, no land changed (599 LOCKED ok). NOT CHECKED: validator / check_life (cloud), the bake, the phone, how the
+  29 k triangles weigh there. Pictures `review/wall_feet_19nov/`.
 - 19 Nov ~10:00 (PC session): THE "FLOATING" EDGES ARE WALLED TERRACES; A FACE UNDER THE WALL FEET (Yasin: "show them to
   me first", then on the trial picture "Yes, add it"). WHAT ground_check.py "hanging" REALLY IS: a block's yard surface
   more than 30 cm over the land beside empty land. Of 178 m2 counted, 104 have a wall face of the block down to the

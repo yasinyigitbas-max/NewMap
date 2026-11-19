@@ -255,3 +255,7 @@ the other agent suggested these
 - [2026-11-19] show them to me first
 
 - [2026-11-19] (asked whether to close the gaps under the walls: yes; shown the trial face under a wall and asked whether to add it as an overlay piece) Yes, add it
+
+- [2026-11-19] there are still big gaps, fill them
+
+- [2026-11-19] your old measurements were much smaller, waht changed?
