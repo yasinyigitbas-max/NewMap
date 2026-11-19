@@ -1,0 +1,45 @@
+{
+ "area": "am_b037_b",
+ "piece": "s_am_b037_b",
+ "zone": "Amber spine",
+ "rule": "docs/TREE_PLAN.md: high street (pilot), Amber spine, arterials - palms alternating on Amber, the avenue's signature. Yasin 19 Nov: every well emptied and filled, new trees by hand on grass only. The in-view limit (12 trees, 8 broadleaf within 60 m) allows about three a piece here",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    0.0,
+    14.002,
+    -1237.0
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "median grass: a queen palm about every 36 m down the middle, Amber's palm rhythm thinned to the in-view limit"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    0.0,
+    12.654,
+    -1273.0
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "median grass: a queen palm about every 36 m down the middle, Amber's palm rhythm thinned to the in-view limit"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -12.5,
+    12.645,
+    -1273.17
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east parkway grass, the one tree of this side (sides alternate piece by piece)"
+  }
+ ]
+}
