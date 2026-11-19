@@ -1,0 +1,1923 @@
+{
+ "_doc": "High street fill (claude/fill-high-street, 19 Nov): which business is behind which door of the new high street",
+ "count": 53,
+ "rooms": [
+  {
+   "id": "hs_b1_amber_brick_row_0",
+   "piece": "n_hs_b1_amber",
+   "label": "brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    -23.0,
+    4.15,
+    106.88
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -2.46
+   ],
+   "kind": "pharmacy",
+   "name": "Amber Drug",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: a high street needs its chemist; next to the hotel, where visitors ask for one",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_amber_brick_row_1",
+   "piece": "n_hs_b1_amber",
+   "label": "brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    -23.0,
+    4.15,
+    106.88
+   ],
+   "yaw": 90.0,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -2.46,
+    3.54
+   ],
+   "kind": "restaurant",
+   "name": "Amber Deli",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: lunch for the shops' staff and the library's readers; its green dumpster is behind it on the rear lot",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_amber_brick_row_2",
+   "piece": "n_hs_b1_amber",
+   "label": "brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    -23.0,
+    4.15,
+    106.88
+   ],
+   "yaw": 90.0,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    3.54,
+    8.7
+   ],
+   "kind": "shoes",
+   "name": "Sole Coronado",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: the paseo from the garage passes its door",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_amber_library_0",
+   "piece": "n_hs_b1_amber",
+   "label": "library",
+   "model": "civic/civ_library",
+   "pos": [
+    -30.0,
+    4.15,
+    131.31
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "library",
+   "name": "Coronado Public Library",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1's landmark: the town library on its main street; the painted PUBLIC LIBRARY sign stays",
+   "signs": []
+  },
+  {
+   "id": "hs_b1_amber_orange_row_0",
+   "piece": "n_hs_b1_amber",
+   "label": "orange_row",
+   "model": "commercial/com_orange_row",
+   "pos": [
+    -23.0,
+    4.15,
+    153.48
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -4.08,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -3.0
+   ],
+   "kind": "souvenir",
+   "name": "Ferry Landing Gifts",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: visitors walking from the hotel to the beach road",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_amber_orange_row_1",
+   "piece": "n_hs_b1_amber",
+   "label": "orange_row",
+   "model": "commercial/com_orange_row",
+   "pos": [
+    -23.0,
+    4.15,
+    153.48
+   ],
+   "yaw": 90.0,
+   "door_index": 1,
+   "door_along": -1.92,
+   "door_w": 1.6,
+   "bay": [
+    -3.0,
+    2.92
+   ],
+   "kind": "clothes",
+   "name": "Tide Threads",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: a boutique in the shop row (its blue dumpster for boxes behind)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_amber_orange_row_2",
+   "piece": "n_hs_b1_amber",
+   "label": "orange_row",
+   "model": "commercial/com_orange_row",
+   "pos": [
+    -23.0,
+    4.15,
+    153.48
+   ],
+   "yaw": 90.0,
+   "door_index": 2,
+   "door_along": 7.76,
+   "door_w": 1.6,
+   "bay": [
+    2.92,
+    8.7
+   ],
+   "kind": "jewelry",
+   "name": "Coral & Pearl",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: the shop row's jeweller, next to the coffee house",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_amber_cafe_0",
+   "piece": "n_hs_b1_amber",
+   "label": "cafe",
+   "model": "commercial/com_cafe_seaside",
+   "pos": [
+    -23.0,
+    4.15,
+    166.7
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "cafe",
+   "name": "Library Grounds Coffee",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: coffee next to the library; newspaper boxes and pots at its door, its dumpster behind",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 3.8,
+     "w": 3.0
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_amber_corner_0",
+   "piece": "n_hs_b1_amber",
+   "label": "corner",
+   "model": "urban/urb_brick_corner",
+   "pos": [
+    -24.0,
+    4.15,
+    181.07
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 6.8,
+   "door_w": 1.8,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "sport",
+   "name": "South Beach Surf",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: the corner on 11th St, the road down to the beach: boards, wetsuits, bikes",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.48
+    }
+   ]
+  },
+  {
+   "id": "hs_b1_tenth_market_0",
+   "piece": "n_hs_b1_tenth",
+   "label": "market",
+   "model": "apartments/apt_stucco3_peach",
+   "pos": [
+    -61.22,
+    4.15,
+    20.3
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -9.2,
+    9.2
+   ],
+   "kind": "corner_shop",
+   "name": "Tenth Street Market",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 1: the neighbourhood's market for the court's flats and the houses west; ice chest and papers on its forecourt",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "hs_b2_amber_stucco_0",
+   "piece": "n_hs_b2_amber",
+   "label": "stucco",
+   "model": "apartments/apt_stucco3_cream",
+   "pos": [
+    -22.6,
+    4.2013,
+    -107.92
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -9.2,
+    9.2
+   ],
+   "kind": "fast_food",
+   "name": "Rosa's Taqueria",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 2: tacos at the foot of the rise for the shops' staff and the park's families, flats above it (a salon was tried: the wide, shallow room stayed bare)",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "hs_b2_amber_bank_0",
+   "piece": "n_hs_b2_amber",
+   "label": "bank",
+   "model": "commercial/com_bank",
+   "pos": [
+    -23.6,
+    4.6124,
+    -125.69
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -6.7,
+    6.7
+   ],
+   "kind": "bank",
+   "name": "Crownado Savings",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 2: the town's savings bank (its painted CROWNADO SAVINGS sign stays)",
+   "signs": []
+  },
+  {
+   "id": "hs_b2_amber_shops_0",
+   "piece": "n_hs_b2_amber",
+   "label": "shops",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    -23.6,
+    5.7514,
+    -158.85
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -1.08,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "ice_cream",
+   "name": "Hilltop Scoops",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 2: ice cream after church and for the park's families",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "hs_b2_amber_shops_1",
+   "piece": "n_hs_b2_amber",
+   "label": "shops",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    -23.6,
+    5.7514,
+    -158.85
+   ],
+   "yaw": 90.0,
+   "door_index": 1,
+   "door_along": 1.08,
+   "door_w": 1.6,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "gallery",
+   "name": "Amber Art Co",
+   "style": "black",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 2: a small gallery by the church walk",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b2_amber_hardware_0",
+   "piece": "n_hs_b2_amber",
+   "label": "hardware",
+   "model": "ck/ck_brk3_row2_fe",
+   "pos": [
+    -23.6,
+    6.0309,
+    -171.4
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "store",
+   "name": "Amber Hardware",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 2: every main street keeps its hardware store; the propane exchange by its door",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "hs_b2_amber_corner_0",
+   "piece": "n_hs_b2_amber",
+   "label": "corner",
+   "model": "ck/ck_brk3_corner2",
+   "pos": [
+    -23.6,
+    6.15,
+    -183.5
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "books",
+   "name": "Ninth Street Books",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 2: the bookshop on the 9th St corner, papers at its door",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b2_ninth_hall_0",
+   "piece": "n_hs_b2_ninth",
+   "label": "hall",
+   "model": "civic/civ_community_center",
+   "pos": [
+    -75.0,
+    6.15,
+    -179.55
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "hall",
+   "name": "Christ Church Community Center",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 2: the church's hall on 9th St (office, meetings); its painted COMMUNITY CENTER sign stays",
+   "signs": []
+  },
+  {
+   "id": "hs_b3_amber_corner_0",
+   "piece": "n_hs_b3_amber",
+   "label": "corner",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    -23.6,
+    4.1496,
+    216.45
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -1.08,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "corner_shop",
+   "name": "Beach Market",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: drinks, snacks and sun cream on the corner where 11th St meets Amber, the way to the beach",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "hs_b3_amber_corner_1",
+   "piece": "n_hs_b3_amber",
+   "label": "corner",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    -23.6,
+    4.1496,
+    216.45
+   ],
+   "yaw": 90.0,
+   "door_index": 1,
+   "door_along": 1.08,
+   "door_w": 1.6,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "salon",
+   "name": "Shore Cuts",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: a barber beside the corner market (a key shop was tried: its pegboard covered the back door)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b3_amber_condo_0",
+   "piece": "n_hs_b3_amber",
+   "label": "condo",
+   "model": "apartments/apt_beach_condo",
+   "pos": [
+    -22.1,
+    4.0021,
+    233.1
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "clothes",
+   "name": "Swim & Sun",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: swimwear and beach clothes under the condos",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "hs_b3_amber_surf_0",
+   "piece": "n_hs_b3_amber",
+   "label": "surf",
+   "model": "commercial/com_surf_shop",
+   "pos": [
+    -23.6,
+    3.5701,
+    248.25
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "sport",
+   "name": "Coronado Surf Co.",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: boards and wetsuits a block from the sand",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b3_amber_cafe_0",
+   "piece": "n_hs_b3_amber",
+   "label": "cafe",
+   "model": "commercial/com_cafe_seaside",
+   "pos": [
+    -23.6,
+    3.349,
+    257.12
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "cafe",
+   "name": "Beach Break Cafe",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: coffee on the way down to the beach; its pots by the door, its dumpster behind",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 3.8,
+     "w": 3.0
+    }
+   ]
+  },
+  {
+   "id": "hs_b3_amber_realty_0",
+   "piece": "n_hs_b3_amber",
+   "label": "realty",
+   "model": "commercial/com_realty",
+   "pos": [
+    -23.6,
+    3.2098,
+    265.14
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "realty",
+   "name": "Ocean Realty",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: vacation rentals and sales, listings in the window",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": -3.4,
+     "w": 2.6
+    }
+   ]
+  },
+  {
+   "id": "hs_b3_amber_burger_1",
+   "piece": "n_hs_b3_amber",
+   "label": "burger",
+   "model": "ck/mod_fastfood",
+   "pos": [
+    -22.6,
+    2.863,
+    274.54
+   ],
+   "yaw": 90.0,
+   "door_index": 1,
+   "door_along": 1.2,
+   "door_w": 1.6,
+   "bay": [
+    -3.06,
+    5.7
+   ],
+   "kind": "fast_food",
+   "name": "Ocean Burger",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: the burger stand at the beach end of the high street",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 4.0
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 4.0
+    }
+   ]
+  },
+  {
+   "id": "hs_b3_motel_condo_0",
+   "piece": "n_hs_b3_motel",
+   "label": "condo",
+   "model": "apartments/apt_beach_condo",
+   "pos": [
+    -74.0,
+    2.1865,
+    296.8
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "sport",
+   "name": "Beach Rentals",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 3: bikes, kayaks and umbrellas for hire on Ocean Blvd; its forecourt shows them",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "hs_b4_amber_arcade_0",
+   "piece": "n_hs_b4_amber",
+   "label": "arcade",
+   "model": "commercial/com_spanish_arcade_block",
+   "pos": [
+    24.6,
+    4.161,
+    222.2
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -5.08,
+   "door_w": 1.6,
+   "bay": [
+    -11.7,
+    -4.0
+   ],
+   "kind": "books",
+   "name": "Arcade Books",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 4: the 11th St corner under the arches, across from the library side of the street; readers sit in the shade",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -8.0,
+     "w": 7.18
+    }
+   ]
+  },
+  {
+   "id": "hs_b4_amber_arcade_1",
+   "piece": "n_hs_b4_amber",
+   "label": "arcade",
+   "model": "commercial/com_spanish_arcade_block",
+   "pos": [
+    24.6,
+    4.161,
+    222.2
+   ],
+   "yaw": -90.0,
+   "door_index": 1,
+   "door_along": -2.92,
+   "door_w": 1.6,
+   "bay": [
+    -4.0,
+    3.775
+   ],
+   "kind": "cafe",
+   "name": "Arches Coffee",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 4: the arcade's middle shop, tables in the shade of the arches; its green dumpster behind on the rear lot",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 7.18
+    }
+   ]
+  },
+  {
+   "id": "hs_b4_amber_arcade_2",
+   "piece": "n_hs_b4_amber",
+   "label": "arcade",
+   "model": "commercial/com_spanish_arcade_block",
+   "pos": [
+    24.6,
+    4.161,
+    222.2
+   ],
+   "yaw": -90.0,
+   "door_index": 2,
+   "door_along": 5.08,
+   "door_w": 1.6,
+   "bay": [
+    3.775,
+    11.7
+   ],
+   "kind": "gallery",
+   "name": "Shoreline Gallery",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 4: beach painters' work in the arcade, between the books and the flats",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 8.0,
+     "w": 7.18
+    }
+   ]
+  },
+  {
+   "id": "hs_b4_amber_stucco_0",
+   "piece": "n_hs_b4_amber",
+   "label": "stucco",
+   "model": "apartments/apt_stucco3_peach",
+   "pos": [
+    22.6,
+    3.7399,
+    245.32
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -9.2,
+    9.2
+   ],
+   "kind": "pharmacy",
+   "name": "Ocean Pharmacy",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 4: sun cream and plasters on the beach end of the high street (Amber Drug is up by the hotel); flats above",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "hs_b4_amber_pub_0",
+   "piece": "n_hs_b4_amber",
+   "label": "pub",
+   "model": "commercial/com_bar_crown",
+   "pos": [
+    23.6,
+    3.3716,
+    261.34
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bar",
+   "name": "The Crown & Anchor",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 4: the evening after the beach; its kitchen dumpster behind on the rear lot",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 0.0,
+     "w": 3.6
+    }
+   ]
+  },
+  {
+   "id": "hs_b4_amber_cinema_0",
+   "piece": "n_hs_b4_amber",
+   "label": "cinema",
+   "model": "ck/ck_svc_cinema_fast",
+   "pos": [
+    22.6,
+    2.9439,
+    272.76
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    -0.14
+   ],
+   "kind": "venue",
+   "name": "Beach Cinema",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 4: the small two-screen cinema of a beach town, its ticket hall",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 3.6
+    }
+   ]
+  },
+  {
+   "id": "hs_b4_amber_cinema_1",
+   "piece": "n_hs_b4_amber",
+   "label": "cinema",
+   "model": "ck/ck_svc_cinema_fast",
+   "pos": [
+    22.6,
+    2.9439,
+    272.76
+   ],
+   "yaw": -90.0,
+   "door_index": 1,
+   "door_along": 1.2,
+   "door_w": 1.6,
+   "bay": [
+    -0.14,
+    5.7
+   ],
+   "kind": "fast_food",
+   "name": "Cinema Snacks",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 4: the cinema's snack bar (popcorn, sodas) with its own door on Amber; its recycling behind",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 4.0
+    }
+   ]
+  },
+  {
+   "id": "hs_b4_amber_bakery_0",
+   "piece": "n_hs_b4_amber",
+   "label": "bakery",
+   "model": "commercial/com_bakery",
+   "pos": [
+    24.77,
+    2.5113000000000003,
+    283.91
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bakery",
+   "name": "Sunrise Bakery",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 4: by the bus stop: coffee and pastries for those waiting and for the beach in the morning",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "hs_b4_ocean_skate_0",
+   "piece": "n_hs_b4_ocean",
+   "label": "skate",
+   "model": "public/pub_skate_shed",
+   "pos": [
+    128.0,
+    3.683,
+    273.5
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.6,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "sport",
+   "name": "Ocean Park Skate",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 4: the skate shop of Ocean Park: boards for sale and rent, on its own plaza; the roll-up side is its store",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.6,
+     "w": 2.4
+    },
+    {
+     "facade": "front",
+     "along": 2.5,
+     "w": 4.4
+    }
+   ]
+  },
+  {
+   "id": "hs_b5_amber_post_0",
+   "piece": "n_hs_b5_amber",
+   "label": "post",
+   "model": "civic/civ_post_office",
+   "pos": [
+    28.05,
+    4.15,
+    109.82
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -10.7,
+    10.7
+   ],
+   "kind": "bank",
+   "name": "Coronado Post Office",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: the town's post office on its main street, laid out as a counter hall (the bank layout: the counter, the queue, desks; the office layout left 303 m2 bare); its vans on the rear lot",
+   "signs": []
+  },
+  {
+   "id": "hs_b5_amber_bistro_0",
+   "piece": "n_hs_b5_amber",
+   "label": "bistro",
+   "model": "commercial/com_bistro",
+   "pos": [
+    24.77,
+    4.15,
+    128.19
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 4.76,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "restaurant",
+   "name": "Hillside Bistro",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: dinner at the foot of the hill; its kitchen dumpster behind",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 11.18
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b5_amber_corner_0",
+   "piece": "n_hs_b5_amber",
+   "label": "corner",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    24.77,
+    4.15,
+    141.29
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -1.08,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "ice_cream",
+   "name": "Scoops",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: ice cream by the paseo, on the families' way from the hill park down to Amber",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "hs_b5_amber_corner_1",
+   "piece": "n_hs_b5_amber",
+   "label": "corner",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    24.77,
+    4.15,
+    141.29
+   ],
+   "yaw": -90.0,
+   "door_index": 1,
+   "door_along": 1.08,
+   "door_w": 1.6,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "cleaners",
+   "name": "Bay Cleaners",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: the dry cleaner the hill's households walk down to",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b5_amber_arcade_0",
+   "piece": "n_hs_b5_amber",
+   "label": "arcade",
+   "model": "commercial/com_orange_arcade_block",
+   "pos": [
+    25.15,
+    4.15,
+    164.0
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -7.58,
+   "door_w": 1.6,
+   "bay": [
+    -12.7,
+    -6.5
+   ],
+   "kind": "clothes",
+   "name": "Orange Grove",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: a boutique under the arches, at the bus stop",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -9.75,
+     "w": 5.68
+    }
+   ]
+  },
+  {
+   "id": "hs_b5_amber_arcade_1",
+   "piece": "n_hs_b5_amber",
+   "label": "arcade",
+   "model": "commercial/com_orange_arcade_block",
+   "pos": [
+    25.15,
+    4.15,
+    164.0
+   ],
+   "yaw": -90.0,
+   "door_index": 1,
+   "door_along": -5.42,
+   "door_w": 1.6,
+   "bay": [
+    -6.5,
+    0.0
+   ],
+   "kind": "souvenir",
+   "name": "Island Gifts",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: visitors waiting for the bus browse under the arches",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.25,
+     "w": 5.68
+    }
+   ]
+  },
+  {
+   "id": "hs_b5_amber_arcade_2",
+   "piece": "n_hs_b5_amber",
+   "label": "arcade",
+   "model": "commercial/com_orange_arcade_block",
+   "pos": [
+    25.15,
+    4.15,
+    164.0
+   ],
+   "yaw": -90.0,
+   "door_index": 2,
+   "door_along": 5.42,
+   "door_w": 1.6,
+   "bay": [
+    0.0,
+    6.5
+   ],
+   "kind": "shoes",
+   "name": "Step Lively",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: the arcade's shoe shop",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.25,
+     "w": 5.68
+    }
+   ]
+  },
+  {
+   "id": "hs_b5_amber_arcade_3",
+   "piece": "n_hs_b5_amber",
+   "label": "arcade",
+   "model": "commercial/com_orange_arcade_block",
+   "pos": [
+    25.15,
+    4.15,
+    164.0
+   ],
+   "yaw": -90.0,
+   "door_index": 3,
+   "door_along": 7.58,
+   "door_w": 1.6,
+   "bay": [
+    6.5,
+    12.7
+   ],
+   "kind": "salon",
+   "name": "Arcade Hair",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 5: a salon at the quiet end of the arcade toward 11th St",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 9.75,
+     "w": 5.68
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_brick_0",
+   "piece": "n_hs_b6_amber",
+   "label": "brick",
+   "model": "ck/ck_brk3_row2",
+   "pos": [
+    23.6,
+    6.148899999999999,
+    -183.7
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "books",
+   "name": "Ninth Street Books",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: a bookshop at the top of the climb, by 9th St",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_bankph_0",
+   "piece": "n_hs_b6_amber",
+   "label": "bankph",
+   "model": "ck/ck_svc_bank_pharm",
+   "pos": [
+    22.6,
+    6.0888,
+    -171.5
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 4.6,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "bank",
+   "name": "Hill Savings",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: the hill's savings bank on its main street",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.48
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_row_0",
+   "piece": "n_hs_b6_amber",
+   "label": "row",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    24.77,
+    5.7136,
+    -155.85
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -4.08,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -3.0
+   ],
+   "kind": "jewelry",
+   "name": "Silver Tide",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: a jeweller in the small shop row",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 5.18
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_row_1",
+   "piece": "n_hs_b6_amber",
+   "label": "row",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    24.77,
+    5.7136,
+    -155.85
+   ],
+   "yaw": -90.0,
+   "door_index": 1,
+   "door_along": -1.92,
+   "door_w": 1.6,
+   "bay": [
+    -3.0,
+    2.92
+   ],
+   "kind": "shoes",
+   "name": "Hill Shoes",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: shoes for the hill's families (a key shop was tried first: its pegboard covered the back door)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_row_2",
+   "piece": "n_hs_b6_amber",
+   "label": "row",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    24.77,
+    5.7136,
+    -155.85
+   ],
+   "yaw": -90.0,
+   "door_index": 2,
+   "door_along": 7.76,
+   "door_w": 1.6,
+   "bay": [
+    2.92,
+    8.7
+   ],
+   "kind": "clothes",
+   "name": "Hillcrest Threads",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: a clothes shop, the row's corner to the bike rack",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 5.18
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_corner_0",
+   "piece": "n_hs_b6_amber",
+   "label": "corner",
+   "model": "ck/ck_brk3_corner2",
+   "pos": [
+    23.6,
+    5.2157,
+    -140.2
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "pharmacy",
+   "name": "Ninth Street Pharmacy",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: the chemist by the paseo, nearest the rec center and the hill",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_trade_0",
+   "piece": "n_hs_b6_amber",
+   "label": "trade",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    22.6,
+    4.6912,
+    -125.3
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "store",
+   "name": "Coronado Hardware",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: the hardware counter (paint, hinges, garden tools) the hill's houses need",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_trade_1",
+   "piece": "n_hs_b6_amber",
+   "label": "trade",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    22.6,
+    4.6912,
+    -125.3
+   ],
+   "yaw": -90.0,
+   "door_index": 1,
+   "door_along": 3.0,
+   "door_w": 1.8,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "cleaners",
+   "name": "Plaza Cleaners",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: a dry cleaner by the pocket plaza (a gift shop's frames were too tall for the trade building's 2.2 m ceiling; a key shop's pegboard covered its roll-up)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_cafe_0",
+   "piece": "n_hs_b6_amber",
+   "label": "cafe",
+   "model": "commercial/com_cafe_seaside",
+   "pos": [
+    24.77,
+    4.3636,
+    -115.0
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "cafe",
+   "name": "Hillclimb Coffee",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: coffee at the pocket plaza, the rest on the climb up Amber",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 3.8,
+     "w": 3.0
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_ninth_a1_0",
+   "piece": "n_hs_b6_ninth",
+   "label": "a1",
+   "model": "apartments/apt_stucco3_cream",
+   "pos": [
+    90.5,
+    7.641,
+    -175.9
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -9.2,
+    9.2
+   ],
+   "kind": "corner_shop",
+   "name": "Hilltop Market",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: the corner shop the hill walks to, under three storeys of flats on 9th St; newspapers and the ice chest at its door",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_ninth_rec_center_0",
+   "piece": "n_hs_b6_ninth",
+   "label": "rec_center",
+   "model": "civic/civ_rec_center",
+   "pos": [
+    65.0,
+    6.7894000000000005,
+    -173.05
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "hall",
+   "name": "Hill Rec Center",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: the hill's rec center hall (classes, the after-school club), the community-hall layout",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 7.72,
+     "w": 1.45
+    },
+    {
+     "facade": "left",
+     "along": 7.72,
+     "w": 1.45
+    },
+    {
+     "facade": "right",
+     "along": 7.72,
+     "w": 1.45
+    },
+    {
+     "facade": "left",
+     "along": 7.72,
+     "w": 1.45
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 3.0
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,280 @@
+{
+ "_doc": "High street fill (claude/fill-high-street): one row per new high street piece (n_hs_*), grid frame [u, pad, v], yaw 0, the pilot's frame. Read by tools/city/pilot/zoning/integrate.py (review/grow_*_blocks.json) into city_grid_layout.json - NOT run into the shared layout by this session.",
+ "rows": [
+  {
+   "piece": "n_hs_b1_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 1, Amber west 10th-11th, south half (u -50..-16, v 97.5..190.3)",
+   "part": "Amber frontage, library, rear lot, alley"
+  },
+  {
+   "piece": "n_hs_b1_tenth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 1, 10th St west of the pilot alley (u -100..-50, v 9.2..97.5)",
+   "part": "Tenth Street Court: apartments, court, alley, car park, community garden"
+  },
+  {
+   "piece": "n_hs_b1_eleventh",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 1, 11th St west of the alley (u -100..-50, v 97.5..190.8)",
+   "part": "parking garage, cross alley, two 11th St apartment houses"
+  },
+  {
+   "piece": "n_hs_b2_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 2, Amber west 9th-10th, north half (u -50..-16, v -190.3..-97.5)",
+   "part": "Amber frontage up the rise, church landmark, rear lot, yard, alley"
+  },
+  {
+   "piece": "n_hs_b2_park",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 2, 10th St west of the pilot alley (u -100..-50, v -60..-9.2)",
+   "part": "Tenth Street Park, the residents' alley"
+  },
+  {
+   "piece": "n_hs_b2_mews",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 2, the middle (u -100..-50, v -146..-60)",
+   "part": "Amber Mews townhouses on a private lane, the cross alley"
+  },
+  {
+   "piece": "n_hs_b2_ninth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 2, 9th St west of the yard (u -100..-50, v -190.8..-146)",
+   "part": "the church's community center, memorial garden, lot"
+  },
+  {
+   "piece": "n_hs_b3_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 3, Amber west from 11th to Ocean Blvd (u -50..-16, v 209.7..324.7)",
+   "part": "Amber down to the beach, Amber Beach Plaza with the lookout, rear lot"
+  },
+  {
+   "piece": "n_hs_b3_dingbats",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 3, 11th St (u -140..-50, v 209.2..254)",
+   "part": "five apartment houses (dingbats) on terraces, tenants' parking off the alley"
+  },
+  {
+   "piece": "n_hs_b3_cottages",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 3, C Ave (u -190.8..-140, v 209.2..Ocean Blvd)",
+   "part": "six beach cottages, garages on the service alley, the residents' alley"
+  },
+  {
+   "piece": "n_hs_b3_motel",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 3, Ocean Blvd (u -140..-50, v 254..Ocean Blvd)",
+   "part": "Seabreeze Motel, Beach Rentals condo, the walk to the beach, the residents' alley"
+  },
+  {
+   "piece": "n_hs_b4_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 4, Amber east (u 16..50, v 209.7..Ocean Blvd)",
+   "part": "Spanish arcade (books, coffee, gallery), stucco block (pharmacy), pub, beach cinema and snack bar, bakery by the bus stop; the corner palm plaza (the hero hotel's site, kept); rear lot"
+  },
+  {
+   "piece": "n_hs_b4_eleventh",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 4, 11th St (u 50..190, v 209.2..254)",
+   "part": "six apartment houses on terraces up 11th St, shared yards, tenants' parking off the residents' alley, the east walk"
+  },
+  {
+   "piece": "n_hs_b4_cottages",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 4, B Ave (u 190..240.8, v 209.2..Ocean Blvd)",
+   "part": "seven houses facing B Ave on stepped lots, garages on the service alley, the residents' alley's east end"
+  },
+  {
+   "piece": "n_hs_b4_ocean",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 4, Ocean Blvd (u 50..190, v 254..Ocean Blvd)",
+   "part": "the residents' alley; Ocean Park: skate shop and plaza, sand volleyball, picnic lawn, park parking, one gate on the boulevard"
+  },
+  {
+   "piece": "n_hs_b5_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 5, Amber east (u 16..50, v 97.5..11th St)",
+   "part": "post office, bistro, corner pair, paseo, orange arcade at the bus stop, cafe, corner plaza; rear lot"
+  },
+  {
+   "piece": "n_hs_b5_eleventh",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 5, 11th St (u 50..125, v 156..11th St)",
+   "part": "Fire Station 2, two apartment houses on terraces, stalls off the aisle"
+  },
+  {
+   "piece": "n_hs_b5_hill",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 5, the hillside (u 50..146, v 51.2..156, not r_q)",
+   "part": "Hillside Park: the residents' alley behind r_s, the lane, the lookout terrace, paths, tennis courts, the parking aisle"
+  },
+  {
+   "piece": "n_hs_b5_tenth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 5, 10th St east (u 146..240.8, v 9.2..54)",
+   "part": "six houses continuing the pilot's r_s row, garages on the alley, the service lane"
+  },
+  {
+   "piece": "n_hs_b5_school",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 5, B Ave (u 146..240.8, v 54..100)",
+   "part": "Hilltop Elementary on its platform, playground, school garden, staff parking, the alley's east part"
+  },
+  {
+   "piece": "n_hs_b6_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 6, Amber east (u 16..50, v 9th St..-97.5)",
+   "part": "brick pair, bank and pharmacy, shop row, corner pair by a paseo, hardware and cleaners, cafe, pocket plaza; rear lot"
+  },
+  {
+   "piece": "n_hs_b6_ninth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 6, 9th St (u 50..125, v 9th St..-146)",
+   "part": "Hill Rec Center, Hilltop Market with flats, an apartment row, stalls"
+  },
+  {
+   "piece": "n_hs_b6_hill",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 6, the hillside (u 50..146, v -146..-51.2, not r_q)",
+   "part": "Hillcrest Terraces: six apartment houses on three terraces, the stair walk, the residents' alley and stalls, the lane, the aisle"
+  },
+  {
+   "piece": "n_hs_b6_tenth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 6, 10th St east, north side (u 146..240.8, v -54..-9.2)",
+   "part": "six houses continuing the pilot's r_n row, garages on the alley, the service lane"
+  },
+  {
+   "piece": "n_hs_b6_garden",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "high street block 6, B Ave (u 146..240.8, v -100..-54)",
+   "part": "Hilltop Courts: townhouses on the alley and on a private drive, the residents' lot, the alley's east part"
+  }
+ ]
+}
