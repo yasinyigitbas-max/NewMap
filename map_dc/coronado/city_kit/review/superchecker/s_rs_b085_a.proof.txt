@@ -1,0 +1,40 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 12 nodes (with every mesh of the buildings), 1864 ground and ground-collision triangles, 9 prop instances, 5 colliders, 246 wear marks are identical in both files
+PROOF differences found between the files: 70 lines only in the old one, 0 only in the new one
+PROOF change #1 remove tree_magnolia_a at (-6.45, 0.06, 31.97) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_magnolia_b at (-6.45, -0.38, 58.76) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_magnolia_b at (-6.45, -0.70, 70.39) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_magnolia_b at (-6.45, -1.28, 87.34) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove tree_torrey_pine_a at (-6.45, -1.65, 97.03) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove tree_torrey_pine_a at (-6.45, -2.70, 121.85) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove tree_torrey_pine_b at (-6.45, -2.18, 109.82) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove tree_torrey_pine_b at (6.45, -0.40, 59.85) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove tree_torrey_pine_b at (6.45, -0.84, 74.82) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove tree_jacaranda_a at (6.45, -1.20, 85.37) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #11 remove tree_jacaranda_a at (6.45, -2.25, 111.41) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #12 remove tree_jacaranda_b at (6.45, -1.69, 98.06) removed, in 3 tier(s) and its collider  [tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #13 remove_decal: one wear mark at (-8.66, -2.63, 121.97) removed  [grime mark lies on grass]
+PROOF change #14 remove_decal: one wear mark at (7.72, -0.59, 69.31) removed  [grime mark lies on grass]
+PROOF change #15 remove_decal: one wear mark at (8.69, -0.86, 77.71) removed  [grime mark lies on grass]
+PROOF change #16 remove_decal: one wear mark at (8.70, -1.29, 89.65) removed  [grime mark lies on grass]
+PROOF note: 'Props/tree_jacaranda_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_near' held only listed items and is gone with them
+PROOF 16 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
