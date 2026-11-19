@@ -1,0 +1,11 @@
+{
+ "area": "hs_b6_hill", "piece": "n_hs_b6_hill", "zone": "high street",
+ "rule": "docs/TREE_PLAN.md: high street (pilot), Amber spine, arterials - trees in wells on the shop side, palms alternating on Amber (zone 406 -> about 360); this block's trees stand on grass round its buildings and on an open lawn",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's sixteen builder trees go (a grid of corals, jacarandas, magnolias and palms 1.4-5 m from the houses, others on the east lawn); four come back on their own spots with room round them: two on the open lawn, two by the west houses.",
+ "trees": [
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [143.2, 9.837, -62.2], "yaw": 0.0, "scale": 0.9, "why": "the open lawn on the east side, 15 m from the walls, by the bird of paradise: a full magnolia"},
+  {"base": "tree_jacaranda_b", "cond": "normal", "at": [143.2, 9.438, -88.8], "yaw": 90.0, "scale": 0.9, "why": "the same lawn 27 m south, 21 m from any wall: the lawn's second tree"},
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [61.0, 5.164, -89.0], "yaw": 180.0, "scale": 0.85, "why": "the grass by the west houses, 4.5 m from the wall, nothing round it"},
+  {"base": "tree_ficus_b", "cond": "normal", "at": [57.1, 4.802, -124.0], "yaw": 270.0, "scale": 0.85, "why": "the south-west corner of the block, 8.4 m from the walls: an old ficus at the corner"}
+ ]
+}
