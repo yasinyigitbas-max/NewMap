@@ -2006,11 +2006,6 @@
    "by": "Yasin",
    "date": "2026-11-18"
   },
-  "g_v3_g4sw": {
-   "sha256": "beca074dcd10414cd63fe46bfb05aad197faff8c93e399d60f0b6ad306f2b7a1",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
   "g_v3_g4se": {
    "sha256": "6f15e485c71b079471596e098c8c22a23bd958ec9723d28600012faf9c2fd2e3",
    "by": "Yasin",
@@ -2675,6 +2670,11 @@
    "sha256": "8239145b511087b616f05138b5499c9e9e8841ae9dab85d8b11b4e7dfad5087a",
    "by": "Yasin",
    "date": "2026-11-19"
+  },
+  "g_v3_g4sw": {
+   "sha256": "ef34cf55e326bc3234c52056df36fc523726b6fb5e16f26a8f46770950268dbf",
+   "by": "Yasin",
+   "date": "2026-11-19"
   }
  },
  "files": {
@@ -2845,11 +2845,6 @@
   },
   "map_dc/coronado/city_kit/interiors/rooms/g_grt_v3_g4se_shop_two_0.scn": {
    "sha256": "85e18ab0b5f21604d53b9db5a8d28c235ded90b13fdd79a52995a370af596178",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
-  "map_dc/coronado/city_kit/interiors/rooms/g_grt_v3_g4sw_corner_shop_0.scn": {
-   "sha256": "8ae62529c8e9633192742f9ef6f684208e1bdd378b5ed1c87a6bd10677010c9c",
    "by": "Yasin",
    "date": "2026-11-19"
   },
@@ -3440,6 +3435,11 @@
   },
   "map_dc/coronado/city_kit/interiors/rooms/g_grt_v2_j4se_corner_next_1.scn": {
    "sha256": "68ef6a3dcc19075a286a32658667e1433d480fce1b34d04f52aac505ac07de0b",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_grt_v3_g4sw_corner_shop_0.scn": {
+   "sha256": "24c824c710b5a9e292f4ed86f5bf95922008bb2e173341da8bce9f16fbcf332c",
    "by": "Yasin",
    "date": "2026-11-19"
   }

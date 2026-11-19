@@ -1,0 +1,20 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -5.44600009918213,
+    0.0,
+    4.34999990463257
+   ],
+   "base": "prop_grocery_shelf",
+   "chosen": true,
+   "cond": "",
+   "kind": "window_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: a 2 m grocery shelf right behind the shop window [prop_grocery_shelf (2.0 m tall) stands right behind a window]"
+  }
+ ],
+ "scene": "g_grt_v3_g4sw_corner_shop_0"
+}
