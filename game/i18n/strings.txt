@@ -1,0 +1,1819 @@
+keys,en,tr
+ui.helper_button,TR,TR
+ui.continue,Continue ▶,Devam ▶
+ui.close,Close,Kapat
+packs.download_btn,Download,İndir
+packs.lessons,Lessons,Dersler
+packs.progress,%s  %d%%,%s  %%%d
+packs.size_ask,Download %s MB?,%s MB indirilsin mi?
+packs.checking,Checking for lessons…,Dersler kontrol ediliyor…
+packs.metered,You are on mobile data. Download %.0f MB now?,Mobil veridesin. %.0f MB şimdi indirilsin mi?
+packs.downloading,Downloading %s (%.0f MB)…,%s indiriliyor (%.0f MB)…
+packs.retry,Connection problem (%s). Retrying in %d s…,Bağlantı sorunu (%s). %d sn sonra tekrar denenecek…
+packs.ready,Lessons ready.,Dersler hazır.
+packs.failed,Could not open the lesson files.,Ders dosyaları açılamadı.
+voice.say,"Say: ""%s""","Söyle: ""%s"""
+voice.asking_mic,Asking for the microphone…,Mikrofon izni isteniyor…
+voice.mic_denied,Microphone not allowed. Type the sentence or skip.,Mikrofon izni yok. Cümleyi yaz ya da geç.
+voice.no_speech,No speech recognition here. Type the sentence or skip.,Burada konuşma tanıma yok. Cümleyi yaz ya da geç.
+voice.listening,Listening… (try %d/%d),Dinliyorum… (deneme %d/%d)
+voice.heard,"I heard: ""%s"". Try again.","Şunu duydum: ""%s"". Tekrar dene."
+voice.need_net,Speech needs internet (%s). Type the sentence or skip.,Konuşma için internet gerekli (%s). Cümleyi yaz ya da geç.
+voice.not_caught,I didn't catch that. Try again.,Anlayamadım. Tekrar dene.
+voice.type_or_skip,%s. Type the sentence or skip.,%s. Cümleyi yaz ya da geç.
+voice.tap_mic,%s  (tap the mic),%s  (mikrofona dokun)
+voice.type_prompt,Type the sentence:,Cümleyi yaz:
+voice.not_quite,"Not quite. Type: ""%s""","Tam değil. Şunu yaz: ""%s"""
+voice.speak,Speak,Konuş
+voice.type,Type,Yaz
+voice.ok,OK,Tamam
+voice.skip,Skip,Geç
+perf.fps,FPS,FPS
+menu.title,Crownado English,Crownado'da İngilizce
+menu.continue,Continue,Devam et
+menu.new_game,New game,Yeni oyun
+app.grammar,Grammar,Dilbilgisi
+app.words,Words,Kelimeler
+app.settings,Settings,Ayarlar
+menu.quit,Quit,Çıkış
+menu.choose_player,Choose a player,Oyuncu seç
+ui.yes,Yes,Evet
+ui.no,No,Hayır
+menu.pick_continue,Continue: choose a player,Devam: oyuncu seç
+menu.pick_overwrite,All slots are full. Overwrite which one?,Tüm yuvalar dolu. Hangisinin üzerine yazılsın?
+menu.no_saves,No saved players yet.,Henüz kayıtlı oyuncu yok.
+menu.confirm_overwrite,"Overwrite ""%s""? Its progress will be lost.","""%s"" silinsin mi? İlerleme kaybolur."
+menu.confirm_delete,"Delete ""%s""?","""%s"" silinsin mi?"
+settings.helper_captions,Turkish captions,Türkçe altyazı
+settings.master,Master volume,Ana ses
+settings.music,Music,Müzik
+settings.voice,Voice,Konuşma
+settings.sfx,Sound effects,Efektler
+settings.graphics,Graphics,Grafik
+settings.low,Low,Düşük
+settings.med,Medium,Orta
+settings.high,High,Yüksek
+settings.language,Language,Dil
+settings.cam_sens,Camera sensitivity,Kamera hassasiyeti
+settings.invert_y,Invert camera Y,Kamerayı dikey ters çevir
+settings.battery_saver,Battery saver,Pil tasarrufu
+settings.pixel_look,"Pixel look (1/4 resolution)","Piksel görünüm (1/4 çözünürlük)"
+settings.pscale,"Render scale","Çözünürlük"
+settings.pcolors,"Colours","Renkler"
+settings.pcolors_all,"All","Hepsi"
+settings.msaa,"Edge smoothing (MSAA)","Kenar yumuşatma (MSAA)"
+settings.msaa_auto,"Auto","Otomatik"
+settings.msaa_on,"2x","2x"
+settings.msaa_off,"Off","Kapalı"
+settings.touch_scale,Touch control size,Kontrol boyutu
+ui.prev,◀ Prev,◀ Önceki
+ui.next,Next ▶,Sonraki ▶
+ui.retry,Retry,Tekrar dene
+ui.give_coin,Give $1,1 $ ver
+ui.close_dual,Close,Kapat
+app.menu,Main menu,Ana menü
+ui.cancel,Cancel,İptal
+gameover.title,GAME OVER,OYUN BİTTİ
+voice.mic_ready,Getting the microphone ready…,Mikrofon hazırlanıyor…
+menu.load_game,Load game,Oyun yükle
+menu.films,Films,Filmler
+menu.vocabulary,Vocabulary,Kelime bankası
+menu.credits,Credits,Emeği geçenler
+menu.pick_load,Load: choose a player,Yükle: oyuncu seç
+menu.soon,Coming soon,Yakında
+menu.back,Back,Geri
+pause.title,Paused,Duraklatıldı
+pause.resume,Resume,Devam et
+pause.save,Save,Kaydet
+pause.saved,Saved.,Kaydedildi.
+pause.no_slot,No player slot yet.,Henüz oyuncu yuvası yok.
+pause.main_menu,Main menu,Ana menü
+pause.quit,Quit,Çıkış
+pause.mic_test,Mic test,Mikrofon testi
+gameover.rewind,Go back to your choice,Seçimine geri dön
+cap.welcome,Welcome to Coronado!,Coronado'ya hoş geldin!
+story.intro.welcome,Welcome to Coronado! This is Amber Avenue.,Coronado'ya hoş geldin! Burası Amber Avenue.
+story.intro.go_park,Walk to Spreckels Park.,Spreckels Park'a yürü.
+story.intro.say_park,Say where you are.,Nerede olduğunu söyle.
+story.intro.done,[gold]Well done[/gold]! Spreckels Park is on Amber Avenue.,"Aferin! Spreckels Park, Amber Avenue üzerinde."
+obj.spreckels_park,Spreckels Park,Spreckels Park
+place.hotel_del,Hotel Bel,Hotel Bel
+place.ferry_landing,Crownado Ferry Landing,Crownado Feribot İskelesi
+place.library,Crownado Public Library,Crownado Halk Kütüphanesi
+place.spreckels_park,Spreckels Park,Spreckels Park
+place.centennial_park,Centennial Park,Centennial Park
+place.star_park,Star Park,Star Park
+place.glorietta_bay_park,Gloria Bay Park,Gloria Bay Park
+place.city_hall,Crownado City Hall,Crownado Belediye Binası
+place.orange_ave,Amber Avenue,Amber Avenue
+place.rotary_plaza,Rotary Plaza (Jim Vernetti Fountain),Rotary Meydanı (Jim Vernetti Çeşmesi)
+menu.settings,Settings,Ayarlar
+menu.grammar,Grammar,Dilbilgisi
+menu.credits_text,"Map data © OpenStreetMap contributors (ODbL). Elevation: USGS 3DEP (public domain). Textures: ambientCG and Poly Haven (CC0). Font: Nunito (SIL OFL). Cars: Ace '11, Kiri '10, Illinois '90, Illinois '90 Taxi #1, Urban '10, Tozzo '98, Thunderbolt '96, Conquer '89 Pickup and Shvan '92 by Daniel Zhabotinsky; City bus by MaG80 (Sketchfab, https://sketchfab.com/3d-models/d1b260bf1af646d5a1f81921c7eae6f3), CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/), modified. People: Microsoft Rocketbox Avatar Library (MIT licence). Voices: Kokoro TTS (hexgrad/Kokoro-82M, Apache-2.0, https://huggingface.co/hexgrad/Kokoro-82M).","Harita verisi © OpenStreetMap katkıcıları (ODbL). Yükseklik: USGS 3DEP (kamu malı). Dokular: ambientCG ve Poly Haven (CC0). Yazı tipi: Nunito (SIL OFL). Arabalar: Ace '11, Kiri '10, Illinois '90, Illinois '90 Taxi #1, Urban '10, Tozzo '98, Thunderbolt '96, Conquer '89 Pickup ve Shvan '92, Daniel Zhabotinsky; City bus, MaG80 (Sketchfab, https://sketchfab.com/3d-models/d1b260bf1af646d5a1f81921c7eae6f3), CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/), değiştirildi. İnsanlar: Microsoft Rocketbox Avatar Library (MIT lisansı). Sesler: Kokoro TTS (hexgrad/Kokoro-82M, Apache-2.0, https://huggingface.co/hexgrad/Kokoro-82M)."
+needs.hunger.short,FOOD,YEMEK
+needs.energy.short,ENRG,ENRJ
+needs.bladder.short,WC,WC
+needs.hunger.warn,You are hungry. Get something to eat.,Acıktın. Bir şeyler ye.
+needs.energy.warn,You are tired. Rest on a bench or sleep in a bed.,Yorgunsun. Bir bankta dinlen ya da yatakta uyu.
+needs.bladder.warn,You need the toilet.,Tuvalete gitmen gerekiyor.
+health.low,You are hurt. Rest for a while.,Yaralısın. Biraz dinlen.
+health.out,You passed out.,Bayıldın.
+ui.use,Use,Kullan
+ui.sit,Sit down,Otur
+ui.lie,Lie down,Uzan
+ui.stand,Stand up,Kalk
+ui.open,Open,Aç
+ui.knock,Knock,Çal
+ui.knock_answer,No answer.,Kimse yok.
+ui.talk,Talk,Konuş
+ui.buy,Buy,Satın al
+ui.drive,Get in,Bin
+ui.get_out,Get out,İn
+voice.three_misses,%s  You can also type the sentence or skip.,%s  Cümleyi yazabilir ya da geçebilirsin.
+narr.walk,I am walking.,Yürüyorum.
+narr.run,I am running.,Koşuyorum.
+narr.stop,I stop.,Duruyorum.
+narr.car_in,I get in the car.,Arabaya biniyorum.
+narr.car_out,I get out of the car.,Arabadan iniyorum.
+narr.drive_off,I drive off.,Arabayla yola çıkıyorum.
+narr.door_open,I am opening the door.,Kapıyı açıyorum.
+narr.door_close,I am closing the door.,Kapıyı kapatıyorum.
+narr.sit,I sit down.,Oturuyorum.
+narr.lie,I lie down.,Uzanıyorum.
+narr.phone,I use my phone.,Telefonumu kullanıyorum.
+narr.atm,I use the cash machine.,ATM'yi kullanıyorum.
+narr.talk,I say hello.,Merhaba diyorum.
+narr.pay,I pay.,Ödüyorum.
+narr.swim,I am swimming.,Yüzüyorum.
+narr.this_is,This is %s.,Burası %s.
+npc.barista,Barista,Barista
+npc.passer_by,Passer-by,Yoldan geçen
+npc.cash_machine,Cash machine,ATM
+dlg.barista_order.greet,Hi! Welcome to Better Buzz Café. What would you like?,Merhaba! Better Buzz Café'ye hoş geldiniz. Ne istersiniz?
+dlg.barista_order.greet.c0,I'd like a coffee.,Bir kahve istiyorum.
+dlg.barista_order.greet.c1,"Nothing, thanks.","Hiçbir şey, teşekkürler."
+dlg.barista_order.coffee,"One coffee, [gold]coming right up[/gold]! That is four dollars.","Bir kahve, hemen geliyor! Dört dolar."
+dlg.barista_order.coffee_skipped,"[gold]No problem[/gold], here is a coffee. That is four dollars.","Sorun değil, işte bir kahve. Dört dolar."
+dlg.barista_order.repeat,"Can you repeat your order, please?","Siparişinizi tekrar eder misiniz, lütfen?"
+dlg.barista_order.repeat.c0,I'd like a coffee.,Bir kahve istiyorum.
+dlg.barista_order.thanks,Thank you! Enjoy.,Teşekkürler! Afiyet olsun.
+dlg.barista_order.no_money,"Sorry, you don't have enough money. There is an ATM at Shore Bank, on Amber Avenue.","Üzgünüm, yeterli paranız yok. Amber Avenue'daki Shore Bank'de bir ATM var."
+dlg.barista_order.bye,"Okay, [gold]have a nice day[/gold]!","Tamam, iyi günler!"
+dlg.passerby_hello.hi,"Hello! Nice evening, isn't it?","Merhaba! Güzel bir akşam, değil mi?"
+dlg.passerby_hello.hi.c0,"Yes, it is.","Evet, öyle."
+dlg.passerby_hello.hi.c1,Where is Better Buzz Café?,Better Buzz Café nerede?
+dlg.passerby_hello.cafe,"It is on Amber Avenue, next to Stake Chop House.","Amber Avenue'da, Stake Chop House'un yanında."
+dlg.passerby_hello.hi.c2,Where is the beach?,Plaj nerede?
+dlg.passerby_hello.beach,Walk down Amber Avenue to the Hotel Bel. The beach is behind it.,Amber Avenue boyunca Hotel Bel'e kadar yürü. Plaj onun arkasında.
+dlg.passerby_hello.bye,[gold]Have a good one[/gold]!,İyi günler!
+ui.learn,Learn,Öğren
+ui.atm,Use ATM,ATM'yi kullan
+atm.balance,Bank account: $%d    Cash: $%d,Banka hesabı: $%d    Nakit: $%d
+atm.say20,"Twenty dollars, please.","Yirmi dolar, lütfen."
+atm.say40,"Forty dollars, please.","Kırk dolar, lütfen."
+atm.say100,"One hundred dollars, please.","Yüz dolar, lütfen."
+atm.no_funds,There is not enough money in your bank account.,Banka hesabında yeterli para yok.
+atm.take_cash,Please take your cash.,Lütfen paranı al.
+place.home,Home (732 D Avenue),Ev (732 D Avenue)
+minigame.flawless,Flawless!,Kusursuz!
+minigame.pass,Passed,Geçtin
+minigame.fail,Failed,Olmadı
+minigame.score_payout,Score %d  ·  +%d,Puan %d  ·  +%d
+minigame.info,Score %d   Mistakes %d,Puan %d   Hata %d
+minigame.pause,Pause,Duraklat
+minigame.resume,Resume,Devam et
+minigame.quit,Quit,Çık
+minigame.paused,Paused,Duraklatıldı
+minigame.result_detail,Mistakes %d  ·  %d s,Hata %d  ·  %d sn
+wardrobe.try_on,Try on clothes,Kıyafet dene
+wardrobe.open,Wardrobe,Gardırop
+wardrobe.title,Wardrobe,Gardırop
+wardrobe.outfit,Outfit,Kıyafet
+wardrobe.wear,Wear,Giy
+wardrobe.buy_wear,Buy and wear · $%d,Satın al ve giy · %d $
+wardrobe.close,Close,Kapat
+wardrobe.yours,yours,senin
+wardrobe.no_money,You don't have enough money for this. It costs $%d.,Bunun için yeterli paran yok. Fiyatı %d $.
+wardrobe.bought,You bought it! It costs $%d.,Satın aldın! Fiyatı %d $.
+wardrobe.nice,Nice outfit!,Güzel kıyafet!
+wardrobe.none_home,You only have these clothes. Buy more in a clothes shop.,Sadece bu kıyafetlerin var. Bir giyim mağazasından daha fazlasını al.
+app.map,Map,Harita
+app.pay,QR Pay,Ödeme
+app.radio,Radio,Radyo
+app.social,Social,Sosyal
+grammar.day,Day %d,%d. gün
+grammar.locked,Locked,Kilitli
+grammar.say_it,Say it,Söyle
+pay.qr_placeholder,QR placeholder (not a real code),QR örneği (gerçek kod değil)
+phone.back,◀ Back,◀ Geri
+phone.close,Close,Kapat
+phone.home,Home,Ana ekran
+phone.title,Phone,Telefon
+post.ali,I am at the park.,Parktayım.
+post.ali.author,Ali,Ali
+post.cafe,Fresh coffee all day!,Bütün gün taze kahve!
+post.cafe.author,Amber Avenue Coffee,Amber Avenue Kahvecisi
+quiz.correct,Correct!,Doğru!
+quiz.try_again,Try again.,Tekrar dene.
+radio.only_in_car,The radio plays in a car or a taxi.,Radyo arabada ya da takside çalar.
+ui.example_data,[EXAMPLE DATA],örnek veri
+ui.pay,Pay,Öde
+vocab.all,All,Hepsi
+vocab.count,%d words,%d kelime
+vocab.learned_so_far,learned so far,şimdiye kadar öğrenilen
+vocab.search,Search,Ara
+app.bank,Bank,Banka
+app.contacts,Contacts,Kişiler
+app.messages,Messages,Mesajlar
+bank.cash,Cash,Nakit
+bank.bank,Bank account,Banka hesabı
+bank.history,Recent payments,Son işlemler
+bank.nearest_atm,Nearest ATM,En yakın ATM
+bank.no_tx,No payments yet.,Henüz işlem yok.
+bank.show_atm,Show ATM on map,ATM'yi haritada göster
+map.centre,Me,Ben
+map.clear,Clear pin,İşareti kaldır
+map.home,Home,Ev
+map.clear_route,Clear route,Rotayı sil
+map.route_there,Route there,Oraya rota
+map.add_marker,Add marker,İşaret ekle
+map.near,Near %s,%s yakınında
+map.pin,Map pin,Harita iğnesi
+map.kind.food,Food,Yemek
+map.kind.cafe,Café,Kafe
+map.kind.shop,Shop,Dükkan
+map.kind.bank,Bank,Banka
+map.kind.atm,ATM,ATM
+map.kind.home,Home,Ev
+map.kind.place,Place,Yer
+map.kind.fuel,Gas station,Benzin istasyonu
+map.kind.health,Health,Sağlık
+map.kind.fun,Leisure,Eğlence
+map.kind.landmark,Landmark,Simge yapı
+map.kind.job,Job,İş
+msg.none,No messages yet.,Henüz mesaj yok.
+radio.no_radio,No radio here,Burada radyo yok
+radio.on,On,Açık
+app.camera,Camera,Kamera
+camera.take,Take photo,Fotoğraf çek
+camera.none,No photos yet.,Henüz fotoğraf yok.
+camera.count,%d photos,%d fotoğraf
+camera.failed,Could not take a photo here.,Burada fotoğraf çekilemedi.
+mg.work.start,Time to work. Let's do this task.,Çalışma zamanı. Bu işi yapalım.
+mg.work.success,Well done! Good work.,Aferin! İyi iş.
+mg.work.fail,Not this time. Try again.,Bu sefer olmadı. Tekrar dene.
+jobmg.say,Say:,Söyle:
+jobmg.listening,Listening…,Dinleniyor…
+jobmg.no_speech,This game needs the microphone (speech).,Bu oyun mikrofon (konuşma) gerektirir.
+jobmg.no_net,No internet: speech needs a connection.,İnternet yok: konuşma için bağlantı gerekir.
+jobmg.try_again,Not quite. Say it again.,Tam olmadı. Tekrar söyle.
+jobmg.perfect,Perfect,Mükemmel
+jobmg.good,Good,İyi
+jobmg.miss,Miss,Kaçtı
+jobmg.too_slow,Too slow,Çok yavaş
+jobmg.day,Day %d,Gün %d
+jobmg.combo,combo x%d,kombo x%d
+jobmg.shift_done,Work day done!,İş günü bitti!
+jobmg.triage.problems,%d problems,%d sorun
+jobmg.triage.order,Tap the problems: most urgent first.,Sorunlara dokun: en acil olan önce.
+jobmg.triage.tap_first,Put the problems in order.,Sorunları sıraya koy.
+jobmg.triage.say_plan,Now say your plan.,Şimdi planını söyle.
+jobmg.triage.sentence,"First I will %s, then I will %s, and finally I will %s.","Önce %s, sonra %s, en son da %s."
+jobmg.triage.good_order,Good order!,Doğru sıra!
+jobmg.triage.wrong_order,Wrong order,Yanlış sıra
+jobmg.beat.say_line,Say each word on the line:,Çizgideki her kelimeyi söyle:
+jobmg.beat.wait,Get ready…,Hazır ol…
+jobmg.conveyor.wait,Next item…,Sıradaki ürün…
+jobmg.spot.find,Find the problem: tap it.,Sorunu bul: ona dokun.
+jobmg.spot.found,Found it! Now say it.,Buldun! Şimdi söyle.
+jobmg.stack.keep,Keep,Tut
+jobmg.stack.clear,Clear,Sil
+jobmg.stack.prompt,About your job? Say it or Keep. If not: Clear.,İşinle mi ilgili? Söyle ya da Tut. Değilse: Sil.
+jobmg.stack.line,Line clear!,Sıra tamam!
+jobmg.stack.full,Stack full,Yığın doldu
+jobmg.stack.was_job,That was about your job,O işinle ilgiliydi
+jobs.cv.title,My CV,Özgeçmişim
+jobs.cv.save,Save CV,Özgeçmişi kaydet
+jobs.cv.close,Close,Kapat
+jobs.cv.saved,Your CV is saved.,Özgeçmişin kaydedildi.
+jobs.cv.default_name,Alex,Alex
+jobs.cv.worked_none_opt,(no job before),(daha önce iş yok)
+jobs.cv.pick_skill,Choose one or more skills.,Bir veya daha fazla beceri seç.
+jobs.need_cv,Please write your CV first.,Lütfen önce özgeçmişini yaz.
+jobs.say_answer,Choose an answer and say it.,Bir cevap seç ve söyle.
+jobs.offers_title,Your job offers,İş teklifleriniz
+jobs.offer_line,"%s: %d:00 to %d:00, %d lira a day","%s: %d:00 - %d:00, günde %d lira"
+jobs.offer_later,Not now,Şimdi değil
+jobs.accepted,Your new job: %s!,Yeni işin: %s!
+jobs.staff_office,Staff Office,Personel Ofisi
+jobs.cv.say_it,Say it,Söyle
+jobs.cv.spoken,Said,Söylendi
+jobmg.day_pay,Day pay: $%d  ·  games passed: %d / %d,Günlük ücret: $%d  ·  geçilen oyun: %d / %d
+jobmg.flawless_day,Flawless day! +50% pay.,Kusursuz gün! Ücrete +%50.
+jobs.hired,You got the job! You are a %s at %s. Work time: %d:00 to %d:00.,İşi aldın! Artık %s olarak %s yerinde çalışıyorsun. Çalışma saati: %d:00 - %d:00.
+jobs.apply,Apply for this job,Bu işe başvur
+jobs.offer_contact,Coronado Jobs,Coronado İş İlanları
+jobs.offer_msg,Hello! %s needs %s. Come to %s and apply. Tap Show on map.,Merhaba! %s bir %s arıyor. %s adresine gel ve başvur. Haritada göster'e dokun.
+msg.show_on_map,Show on map,Haritada göster
+jobs.start_work,Start work,İşe başla
+jobs.not_work_time,It is not work time. Come at %d:00 (until %d:00).,Şu an çalışma saati değil. %d:00'de gel (%d:00'e kadar).
+jobs.already_worked,You worked today. Come back tomorrow.,Bugün çalıştın. Yarın tekrar gel.
+jobs.day_paid,You got $%d for today.,Bugün için $%d aldın.
+jobs.no_job,You do not have a job yet.,Henüz bir işin yok.
+jobs.cv.want,I want to work as {a_want}.,{want_tr} olarak çalışmak istiyorum.
+jobs.cv.for_job,"CV for: %s  ·  %s, %s","Başvuru: %s  ·  %s, %s"
+npc.mic_off,The microphone is off. Turn it on to speak.,Mikrofon kapalı. Konuşmak için aç.
+ui.roadside,Taxi / Thumb up,Taksi / Otostop
+ui.hitchhike,Hitchhike,Otostop çek
+ride.hail_taxi,Hail a taxi,Taksi çağır
+ride.thumb_up,Thumb up,Otostop çek
+ride.cancel,Cancel,Vazgeç
+ride.pick_dest,Where do you want to go?,Nereye gitmek istiyorsun?
+ride.map_pin,Map pin: %s,Harita iğnesi: %s
+ride.map_pin_plain,The pin on my map,Haritamdaki iğne
+ride.fare_quote,About $%d to %s.,"Yaklaşık $%d, varış: %s."
+gate.driver_welcome,"Welcome to Coronado, my friend. You will like it here. Sun, sea, and good people.","Coronado'ya hoş geldin dostum. Burayı seveceksin. Güneş, deniz ve iyi insanlar."
+gate.driver_age_reply,"%d? Nice! [gold]Age is just a number[/gold], my friend.","%d mı? Güzel! Yaş sadece bir sayı, dostum."
+gate.driver_my_age,Me? I am fifty. I drive this taxi every day. I love it!,Ben mi? Elli yaşındayım. Her gün bu taksiyi sürüyorum. Bayılıyorum!
+gate.driver_age_skip,"[gold]No problem[/gold], let's talk about something else.","Sorun değil, başka bir şeyden konuşalım."
+gate.driver_nice2,Very nice! It was great to talk to you. [gold]Good luck[/gold] here!,Çok güzel! Seninle konuşmak çok hoştu. Burada bol şans!
+ride.chat_1,"Nice day, huh? Are you new in town?","Güzel bir gün, değil mi? Şehre yeni mi geldin?"
+ride.chat_age,Can I ask? How old are you?,Sorabilir miyim? Kaç yaşındasın?
+ride.say_age,I am %s years old.,%s yaşındayım.
+ride.chat_age_reply,"%d! Oh, nice. My son is about the same age.",%d mı? Ne güzel. Oğlum da aşağı yukarı o yaşta.
+ride.chat_age_skip,"Ha, OK, it's a secret! No problem.","Ha, tamam, sır! Sorun değil."
+ride.chat_2,Sit back and relax. I know a good way.,Arkana yaslan ve rahatla. İyi bir yol biliyorum.
+ride.no_money,"Sorry, it is $%d. You don't have enough money.","Üzgünüm, $%d tutuyor. Yeterli paran yok."
+ride.paid,You paid $%d.,$%d ödedin.
+ride.no_road,"Sorry, I can't drive there.","Üzgünüm, oraya gidemem."
+ride.waiting_taxi,You wave at the road. A taxi is coming.,Yola el sallıyorsun. Bir taksi geliyor.
+ride.thumbing,You hold your thumb up at the roadside.,Yol kenarında başparmağını kaldırıyorsun.
+ride.no_lift,Nobody stopped. Try again later.,Kimse durmadı. Sonra tekrar dene.
+ride.car_stops,A car slows down and stops next to you.,Bir araba yavaşlayıp yanında duruyor.
+ride.arrived,You arrive at %s.,%s varış noktasına geldin.
+npc.taxi_driver,Taxi driver,Taksi şoförü
+npc.driver,Driver,Şoför
+dlg.taxi_hello.hi,Hello! Coronado Cab. [gold]Where to?[/gold],Merhaba! Coronado Cab. Nereye?
+dlg.taxi_hello.hi.c0,"Hello! Can you take me there, please?","Merhaba! Beni oraya götürebilir misiniz, lütfen?"
+dlg.taxi_hello.ok,Sure. Please put on your seat belt.,Tabii. Lütfen emniyet kemerini tak.
+dlg.taxi_pay.here,[gold]Here we are[/gold]. That's the fare on the meter.,Geldik. Taksimetredeki ücret bu.
+dlg.taxi_pay.here.c0,[gold]Here you go[/gold]. Thank you!,Buyurun. Teşekkürler!
+dlg.taxi_pay.bye,Thank you. [gold]Have a nice day[/gold]!,Teşekkürler. İyi günler!
+dlg.hitch_hello.hi,Hi! Do you need a ride?,Merhaba! Arabaya binmek ister misin?
+dlg.hitch_hello.hi.c0,"Yes, please. Can you take me there?","Evet, lütfen. Beni oraya götürebilir misin?"
+dlg.hitch_hello.ok,"Sure, get in.","Tabii, bin."
+dlg.hitch_chat.q,Do you live in Coronado?,Coronado'da mı yaşıyorsun?
+dlg.hitch_chat.q.c0,"No, I am new here.","Hayır, buraya yeni geldim."
+dlg.hitch_chat.a,Welcome! It is a nice town. The beach is great.,Hoş geldin! Güzel bir kasaba. Plajı harika.
+dlg.hitch_bye.here,[gold]Here we are[/gold].,Geldik.
+dlg.hitch_bye.here.c0,Thank you for the ride!,Yolculuk için teşekkürler!
+dlg.hitch_bye.bye,[gold]You're welcome[/gold]. Bye!,Rica ederim. Hoşça kal!
+fuel.pump,Pump fuel,Yakıt al
+fuel.counter,Pay at the counter,Kasada öde
+radio.off,Radio off,Radyo kapalı
+radio.talk_host,City Talk host,Şehir Sohbeti sunucusu
+radio.credits,Music credits,Müzik künyesi
+fuel.door_open,Open the door,Kapıyı aç
+fuel.door_close,Close the door,Kapıyı kapat
+app.films,Films,Filmler
+media.cinema_title,Films: choose a film,Filmler: bir film seç
+media.empty,Nothing here yet.,Burada henüz bir şey yok.
+media.close,Close,Kapat
+media.next,Next,Sonraki
+media.films,Films,Filmler
+media.pause,Pause,Duraklat
+media.play,Play,Oynat
+media.back,Back,Geri
+media.minutes,about %d min,yaklaşık %d dk
+grammar.topics,Topics,Konular
+grammar.lessons,Lessons,Dersler
+vocab.cards,Word cards,Kelime kartları
+vocab.bank,Word bank,Kelime bankası
+ui.watch,Watch a film,Film izle
+ui.stop_film,Stop the film,Filmi durdur
+cinema.choose,Villager Theatre: choose a film,Villager Theatre: bir film seç
+cinema.screen_main,Main Theatre,Büyük Salon
+cinema.screen_expo,Exhibit Room,Exposition Salonu
+cinema.screen_balboa,Bay Room,Balboa Salonu
+cinema.now_showing,Now showing,Şimdi gösterimde
+cinema.box_office,Box Office,Bilet Gişesi
+cinema.concessions,Concessions,Büfe
+cinema.no_shop,The counter is closed right now.,Gişe şu an kapalı.
+app.jobs,Jobs,İşler
+jobsapp.for_voc,Jobs for you: %s,Sana uygun işler: %s
+jobsapp.for_none,Jobs you can start: %s,Başlayabileceğin işler: %s
+jobsapp.rule_direct,You are %s. These jobs are for you.,Sen %s. Bu işler senin için.
+jobsapp.rule_near,You are %s. These jobs are good for you.,Sen %s. Bu işler sana uygun.
+jobsapp.no_voc,Choose a vocation first.,Önce bir meslek seç.
+jobsapp.no_jobs,"Sorry, there are no openings for your vocation right now. Check again later!","Üzgünüz, şu an mesleğine uygun açık iş yok. Daha sonra tekrar bak!"
+jobsapp.hours,"%d:00 to %d:00, $%d a day","%d:00 - %d:00, günde $%d"
+jobsapp.apply,Apply,Başvur
+jobsapp.go_apply,"Go to %s, %s and apply there.","%s, %s adresine git ve orada başvur."
+jobsapp.have_job,You have a job: %s.,Bir işin var: %s.
+jobsapp.your_job,Your job,Senin işin
+intro.p1,"I was cornered. I had no other way out, so I had to do it.","Köşeye sıkışmıştım. Başka çıkış yolum yoktu, bunu yapmak zorundaydım."
+intro.hold_skip,Hold to skip,Geçmek için basılı tut
+intro.skip_interro,Skip to the interrogation,Sorguya geç
+intro.skipping,Skipping,Geçiliyor
+intro.p2,"I tried legal ways, but I was rejected.",Yasal yolları denedim ama reddedildim.
+intro.p3,"I had to take my chance, so I ran for it.","Şansımı denemek zorundaydım, bu yüzden kaçtım."
+intro.p4,The journey was long and hard.,Yolculuk uzun ve zorluydu.
+intro.p5,They caught us.,Bizi yakaladılar.
+intro.p6,"Then I waited, and waited. They gave us books. I needed to learn.","Sonra bekledim, bekledim. Bize kitaplar verdiler. Öğrenmem gerekiyordu."
+intro.p7,"Ahh, another one... Who... are... you?","Ahh, bir tane daha... Sen... kimsin?"
+intro.p9,"Okay, now you wait.","Tamam, şimdi bekle."
+intro.p10,Now my new story starts.,Şimdi yeni hikayem başlıyor.
+intro.narrator_q,Who tells your story?,Hikayeni kim anlatsın?
+intro.narrator_f,Female narrator,Kadın anlatıcı
+intro.narrator_m,Male narrator,Erkek anlatıcı
+npc.gate_officer,Officer,Memur
+npc.you,You,Sen
+npc.narrator,Narrator,Anlatıcı
+gate.day10,"Day 10. McCain Boulevard Gate, North Island Base.","10. gün. McCain Bulvarı Kapısı, North Island Deniz Hava Üssü."
+gate.officer_line_1,We put the grammar and vocabulary apps on your phone.,Telefonuna dil bilgisi ve kelime uygulamalarını yükledik.
+gate.officer_line_2,"Study them, and find a job [gold]as soon as possible[/gold].",Onlara çalış ve en kısa sürede bir iş bul.
+gate.officer_line_3,We will test you regularly.,Seni düzenli olarak sınayacağız.
+gate.officer_line_4,You have to learn the language if you want to live in the US.,ABD'de yaşamak istiyorsan dili öğrenmek zorundasın.
+gate.officer_line_5,[gold]Good luck[/gold]. I really hope you [gold]make it[/gold].,[gold]Bol şans[/gold]. Gerçekten [gold]başarmanı[/gold] umuyorum.
+gate.apps_installed,"New apps on your phone: Grammar, Vocabulary.","Telefonunda yeni uygulamalar: Dil bilgisi, Kelimeler."
+gate.get_in,Get in the taxi.,Taksiye bin.
+gate.driver_fast,"Hey, [gold]welcome back[/gold], buddy! Long deployment, huh? Where to, what's the address?","Hey, hoş geldin dostum! Uzun görevdi, ha? Nereye, adres ne? (çok hızlı)"
+gate.driver_fast_vo,"Heywelcomebackbuddy! Longdeploymenthuh? Whereto, whatstheaddress?",
+gate.say_slow,"Sorry, I am new here. Please speak slowly.","Pardon, ben burada yeniyim. Lütfen yavaş konuş."
+gate.driver_oh,Oh! You are new here. Not a sailor. [gold]No problem[/gold].,Ah! Sen burada yenisin. Denizci değilsin. [gold]Sorun değil[/gold].
+gate.driver_address,ADDRESSSSS?,ADRESSS?
+gate.say_address,To %s.,%s adresine.
+gate.driver_ok_address,%s. O-K. Good.,%s. Tamam. Güzel.
+gate.driver_name,Your... NAME?,Senin... ADIN?
+gate.driver_age,So... can I ask? How old are you?,Peki... sorabilir miyim? Kaç yaşındasın?
+gate.say_age,I am %s years old.,%s yaşındayım.
+gate.driver_job,And what do you do? What is your job?,Peki sen ne iş yaparsın? Mesleğin ne?
+gate.say_study,I better study on the way.,Yolda çalışsam iyi olur.
+gate.driver_study,Good idea. Study. [gold]Take it easy[/gold].,İyi fikir. Çalış. [gold]Rahat ol[/gold].
+gate.driver_test_done,[gold]Good job[/gold]! %d of %d.,Aferin! %d / %d.
+gate.uncle_sam,"It's [gold]on Uncle Sam[/gold] this time, but next time you pay.","Bu sefer [gold]Sam Amca ödüyor[/gold], ama bir dahaki sefere sen ödersin."
+gate.go_home,Go home: %s.,Eve git: %s.
+ui.read,Read,Oku
+ui.borrow,Borrow a book,Kitap ödünç al
+ui.workout,Work out,Antrenman yap
+ui.check_in,Check in,Kayıt yaptır
+ui.look,Look,Bak
+media.library_title,Library: choose a book,Kütüphane: bir kitap seç
+media.books,Books,Kitaplar
+media.chapter,Chapter,Bölüm
+media.prev,Previous,Önceki
+pub.checkin,"Reception: ""Thanks, please take a seat. A nurse will call you shortly.""","Resepsiyon: ""Teşekkürler, lütfen oturun. Hemşire birazdan sizi çağıracak."""
+pub.workout_done,Workout done: %d reps.,Antrenman bitti: %d tekrar.
+loading.text,Loading Crownado...,Crownado yükleniyor...
+loading.building,Building the town...,Kasaba kuruluyor...
+loading.tip1,Tip: Tap TR to see the Turkish help line.,İpucu: Türkçe yardım satırını görmek için TR'ye dokun.
+loading.tip2,Tip: Check the Jobs app on your phone to find work.,İpucu: İş bulmak için telefonundaki İşler uygulamasına bak.
+loading.tip3,Tip: Talk to people. Every answer helps you learn.,İpucu: İnsanlarla konuş. Her cevap öğrenmene yardım eder.
+loading.tip4,"Tip: Eat and rest, or your energy runs out.","İpucu: Ye ve dinlen, yoksa enerjin biter."
+loading.tip5,Tip: The library has books you can read for free.,İpucu: Kütüphanede ücretsiz okuyabileceğin kitaplar var.
+npc.flatmate,Flatmate,Ev arkadaşı
+flat.fm_hi,"Hi! You must be my new flatmate. [gold]Welcome home[/gold]! Come in, come in! I'm %s.","Merhaba! Yeni ev arkadaşım sen olmalısın. [gold]Evine hoş geldin[/gold]! Gel, gel! Ben %s."
+flat.say_iam,"Hi, I am %s.","Merhaba, ben %s."
+flat.fm_nice,Nice to meet you! [gold]Make yourself at home[/gold].,Tanıştığımıza memnun oldum! [gold]Kendi evindeymiş gibi rahat ol[/gold].
+flat.this_is_hall,This is the hall.,Burası hol.
+flat.this_is_living,This is the living room.,Burası oturma odası.
+flat.this_is_kitchen,This is the kitchen.,Burası mutfak.
+flat.this_is_bathroom,This is the bathroom.,Burası banyo.
+flat.there_is_a,There is a %s.,Bir %s var.
+flat.there_is_an,There is an %s.,Bir %s var.
+flat.there_are_n,There are %s %s.,%s %s var.
+flat.there_are_some,There are some %s.,Biraz %s var.
+flat.say_thanks,Thanks!,Teşekkürler!
+flat.your_room,And this is your room.,Ve burası senin odan.
+flat.my_room_locked,That door is my room. It's locked.,O kapı benim odam. Kilitli.
+flat.fm_pc,"There is a computer on the desk. Study a bit, then look for a job!","Masada bir bilgisayar var. Biraz çalış, sonra iş ara!"
+flat.hint_pc,Sit at the PC (Use).,Bilgisayarın başına otur (Kullan).
+flat.pc_jobs,Now let's find a job.,Şimdi bir iş bulalım.
+num.two,two,iki
+num.three,three,üç
+num.four,four,dört
+home.item.bath,bath,küvet
+home.item.shower,shower,duş
+home.item.toilet,toilet,tuvalet
+home.item.sink,sink,lavabo
+home.item.mirror,mirror,ayna
+home.item.towel,towel,havlu
+home.item.bed,bed,yatak
+home.item.bedside_table,bedside table,komodin
+home.item.wardrobe,wardrobe,gardırop
+home.item.desk,desk,masa
+home.item.computer,computer,bilgisayar
+home.item.keyboard,keyboard,klavye
+home.item.mouse,mouse,fare
+home.item.chair,chair,sandalye
+home.item.picture,picture,tablo
+home.item.rug,rug,halı
+home.item.coat_rack,coat rack,portmanto
+home.item.shoe_rack,shoe rack,ayakkabılık
+home.item.counter,counter,tezgah
+home.item.cooker,cooker,ocak
+home.item.cooker_hood,cooker hood,davlumbaz
+home.item.fridge,fridge,buzdolabı
+home.item.washing_machine,washing machine,çamaşır makinesi
+home.item.cupboard,cupboard,dolap
+home.item.table,table,masa
+home.item.sofa,sofa,kanepe
+home.item.coffee_table,coffee table,sehpa
+home.item.tv,TV,televizyon
+home.item.armchair,armchair,koltuk
+home.item.plant,plant,bitki
+home.item.clock,clock,saat
+home.item.doormat,doormat,paspas
+act.l.pee,Pee,Çiş yap
+act.s.i_need_to_pee,I need to pee.,Çişim geldi.
+act.s.i_am_peeing,I am peeing.,Çiş yapıyorum.
+act.s.i_am_flushing_the_toilet,I am flushing the toilet.,Sifonu çekiyorum.
+act.s.wash_your_hands,Wash your hands.,Ellerini yıka.
+act.l.poop,Poop,Kaka yap
+act.s.i_need_to_poop,I need to poop.,Kakam geldi.
+act.s.i_am_sitting_on_the_toilet,I am sitting on the toilet.,Klozete oturuyorum.
+act.s.i_am_pooping,I am pooping.,Kaka yapıyorum.
+act.s.i_am_using_toilet_paper,I am using toilet paper.,Tuvalet kâğıdı kullanıyorum.
+act.s.i_am_standing_up,I am standing up.,Ayağa kalkıyorum.
+act.l.shower,Take a shower,Duş al
+act.s.i_am_taking_off_my_clothes,I am taking off my clothes.,Kıyafetlerimi çıkarıyorum.
+act.s.i_am_turning_on_the_shower,I am turning on the shower.,Duşu açıyorum.
+act.s.i_am_taking_a_shower,I am taking a shower.,Duş alıyorum.
+act.s.i_am_washing_my_hair,I am washing my hair.,Saçımı yıkıyorum.
+act.s.i_am_washing_my_body,I am washing my body.,Vücudumu yıkıyorum.
+act.s.i_am_rinsing,I am rinsing.,Durulanıyorum.
+act.s.i_am_turning_off_the_shower,I am turning off the shower.,Duşu kapatıyorum.
+act.s.i_am_drying_myself_with_a_towel,I am drying myself with a towel.,Havluyla kuruluyorum.
+act.s.i_am_putting_on_my_clothes,I am putting on my clothes.,Kıyafetlerimi giyiyorum.
+act.s.i_am_clean_now,I am clean now.,Artık temizim.
+act.l.bath,Have a bath,Banyo yap
+act.s.i_am_getting_in_the_bathtub,I am getting in the bathtub.,Küvete giriyorum.
+act.s.i_am_getting_out_of_the_bathtub,I am getting out of the bathtub.,Küvetten çıkıyorum.
+act.l.wash_face,Wash your face,Yüzünü yıka
+act.s.i_am_turning_on_the_tap,I am turning on the tap.,Musluğu açıyorum.
+act.s.i_am_washing_my_face,I am washing my face.,Yüzümü yıkıyorum.
+act.s.i_am_turning_off_the_tap,I am turning off the tap.,Musluğu kapatıyorum.
+act.s.i_am_drying_my_face_with_the_towel,I am drying my face with the towel.,Yüzümü havluyla kuruluyorum.
+act.s.my_face_is_clean,My face is clean.,Yüzüm temiz.
+act.l.brush_teeth,Brush your teeth,Dişlerini fırçala
+act.s.i_am_taking_my_toothbrush,I am taking my toothbrush.,Diş fırçamı alıyorum.
+act.s.i_am_putting_toothpaste_on_my_toothbrush,I am putting toothpaste on my toothbrush.,Diş fırçama diş macunu sürüyorum.
+act.s.i_am_brushing_my_teeth,I am brushing my teeth.,Dişlerimi fırçalıyorum.
+act.s.i_am_rinsing_my_mouth,I am rinsing my mouth.,Ağzımı çalkalıyorum.
+act.s.i_am_putting_my_toothbrush_back,I am putting my toothbrush back.,Diş fırçamı geri koyuyorum.
+act.s.my_teeth_are_clean,My teeth are clean.,Dişlerim temiz.
+act.l.wash_hands,Wash your hands,Ellerini yıka
+act.s.i_am_washing_my_hands,I am washing my hands.,Ellerimi yıkıyorum.
+act.s.my_hands_are_clean,My hands are clean.,Ellerim temiz.
+act.l.look,Look in the mirror,Aynaya bak
+act.s.i_am_looking_in_the_mirror,I am looking in the mirror.,Aynaya bakıyorum.
+act.s.i_am_smiling,I am smiling.,Gülümsüyorum.
+act.l.fold,Fold the towel,Havluyu katla
+act.s.i_am_folding_the_towel,I am folding the towel.,Havluyu katlıyorum.
+act.l.sleep,Sleep,Uyu
+act.s.i_am_tired,I am tired.,Yorgunum.
+act.s.i_am_going_to_bed,I am going to bed.,Yatağa gidiyorum.
+act.s.good_night,Good night!,İyi geceler!
+act.l.make_bed,Make the bed,Yatağı topla
+act.s.i_am_making_the_bed,I am making the bed.,Yatağı topluyorum.
+act.s.the_bed_is_tidy_now,The bed is tidy now.,Yatak artık düzgün.
+act.l.water,Water the plant,Bitkiyi sula
+act.s.i_am_watering_the_plant,I am watering the plant.,Bitkiyi suluyorum.
+act.s.the_plant_is_happy,The plant is happy.,Bitki mutlu.
+act.l.tv_on,Turn on the TV,Televizyonu aç
+act.s.i_am_turning_on_the_tv,I am turning on the TV.,Televizyonu açıyorum.
+act.l.tv_off,Turn off the TV,Televizyonu kapat
+act.s.i_am_turning_off_the_tv,I am turning off the TV.,Televizyonu kapatıyorum.
+act.l.watch,Watch TV,Televizyon izle
+act.s.i_am_watching_tv,I am watching TV.,Televizyon izliyorum.
+act.l.relax,Relax,Dinlen
+act.s.i_am_sitting_on_the_sofa,I am sitting on the sofa.,Kanepede oturuyorum.
+act.s.i_am_relaxing,I am relaxing.,Dinleniyorum.
+act.l.open_fridge,Open the fridge,Buzdolabını aç
+act.s.i_am_opening_the_fridge,I am opening the fridge.,Buzdolabını açıyorum.
+act.s.i_am_taking_some_milk,I am taking some milk.,Biraz süt alıyorum.
+act.s.i_am_drinking_some_milk,I am drinking some milk.,Biraz süt içiyorum.
+act.s.i_am_closing_the_fridge,I am closing the fridge.,Buzdolabını kapatıyorum.
+act.l.cook,Cook,Yemek pişir
+act.s.i_am_turning_on_the_cooker,I am turning on the cooker.,Ocağı açıyorum.
+act.s.i_am_cooking_some_eggs,I am cooking some eggs.,Biraz yumurta pişiriyorum.
+act.s.i_am_eating,I am eating.,Yemek yiyorum.
+act.s.i_am_turning_off_the_cooker,I am turning off the cooker.,Ocağı kapatıyorum.
+act.l.hood,Turn on the cooker hood,Davlumbazı aç
+act.s.i_am_turning_on_the_cooker_hood,I am turning on the cooker hood.,Davlumbazı açıyorum.
+act.l.wash,Wash your clothes,Çamaşır yıka
+act.s.i_am_putting_my_clothes_in_the_washing_m,I am putting my clothes in the washing machine.,Kıyafetlerimi çamaşır makinesine koyuyorum.
+act.s.i_am_turning_on_the_washing_machine,I am turning on the washing machine.,Çamaşır makinesini çalıştırıyorum.
+act.l.cupboard,Open the cupboard,Dolabı aç
+act.s.i_am_opening_the_cupboard,I am opening the cupboard.,Dolabı açıyorum.
+act.s.there_are_some_plates_and_some_cups,There are some plates and some cups.,Biraz tabak ve biraz bardak var.
+act.s.i_am_closing_the_cupboard,I am closing the cupboard.,Dolabı kapatıyorum.
+act.l.snack,Make a sandwich,Sandviç yap
+act.s.i_am_making_a_sandwich,I am making a sandwich.,Sandviç yapıyorum.
+act.s.i_am_eating_a_sandwich,I am eating a sandwich.,Sandviç yiyorum.
+act.l.eat,Have breakfast,Kahvaltı yap
+act.s.i_am_sitting_at_the_table,I am sitting at the table.,Masaya oturuyorum.
+act.s.i_am_having_breakfast,I am having breakfast.,Kahvaltı yapıyorum.
+act.l.time,Look at the clock,Saate bak
+act.s.i_am_looking_at_the_clock,I am looking at the clock.,Saate bakıyorum.
+act.l.picture,Look at the picture,Resme bak
+act.s.i_am_looking_at_the_picture,I am looking at the picture.,Resme bakıyorum.
+act.s.it_is_a_nice_picture,It is a nice picture.,Güzel bir resim.
+act.l.coat,Take your coat,Montunu al
+act.s.i_am_taking_my_coat,I am taking my coat.,Montumu alıyorum.
+act.l.shoes,Put on your shoes,Ayakkabılarını giy
+act.s.i_am_putting_on_my_shoes,I am putting on my shoes.,Ayakkabılarımı giyiyorum.
+act.l.sit_arm,Sit down,Otur
+act.s.i_am_sitting_in_the_armchair,I am sitting in the armchair.,Koltukta oturuyorum.
+act.l.vacuum,Clean the rug,Halıyı temizle
+act.s.i_am_cleaning_the_rug,I am cleaning the rug.,Halıyı temizliyorum.
+act.l.wipe,Wipe your feet,Ayaklarını sil
+act.s.i_am_wiping_my_feet,I am wiping my feet.,Ayaklarımı siliyorum.
+act.l.lamp,Switch the lamp,Lambayı aç/kapat
+act.s.i_am_turning_on_the_light,I am turning on the light.,Işığı açıyorum.
+act.l.tidy,Tidy the table,Masayı topla
+act.s.i_am_tidying_the_coffee_table,I am tidying the coffee table.,Sehpayı topluyorum.
+act.l.sit_chair,Sit down,Otur
+act.s.i_am_sitting_on_the_chair,I am sitting on the chair.,Sandalyeye oturuyorum.
+act.l.tidy_desk,Tidy the desk,Masayı topla
+act.s.i_am_tidying_my_desk,I am tidying my desk.,Masamı topluyorum.
+act.l.cancel,Cancel,Vazgeç
+day2.hope,What a day! I hope something comes up. [gold]Fingers crossed[/gold]! Time for bed.,Ne gündü! Umarım bir şey çıkar. [gold]Şans dile bana[/gold]! Yatma vakti.
+day2.hint_bed,Go to your bed and sleep (Use).,Yatağına git ve uyu (Kullan).
+day2.morning,Good morning! Let's check my applications.,Günaydın! Başvurularıma bakalım.
+obj.home_pc,Check your applications on the PC,Başvurularını bilgisayarda kontrol et
+day2.hint_pc,Check your applications on the PC (Use).,Başvurularını bilgisayarda kontrol et (Kullan).
+day2.results,You have one new message: an interview invitation!,Bir yeni mesajın var: bir mülakat daveti!
+day2.invite,"Job: %s. %s, %s. Today at 10 a.m.","İş: %s. %s, %s. Bugün sabah saat 10'da."
+day2.fm_name_again,"Oh, hi! Sorry, what was your name again? I'm %s, remember?","Ah, merhaba! Pardon, adın neydi? Ben %s, hatırladın mı?"
+day2.say_name,My name is %s.,Benim adım %s.
+day2.fm_age,And how old are you?,Peki kaç yaşındasın?
+day2.say_age,I am %d years old.,%d yaşındayım.
+day2.fm_job,What do you do? What is your job?,Ne iş yapıyorsun? Mesleğin ne?
+day2.say_job,I am %s %s.,Ben bir %s %s.
+day2.fm_where,"OK, quick test! Where is everything in this flat? Tell me!","Tamam, küçük bir test! Bu evde her şey nerede? Söyle bakalım!"
+day2.w_rooms,There are two bedrooms: your room and my room.,İki yatak odası var: senin odan ve benim odam.
+day2.w_my_room,This is my room. It is next to the hall.,Bu benim odam. Holün yanında.
+day2.w_your_room,That is your room. It is locked.,Şu senin odan. Kilitli.
+day2.w_there_is,There is %s %s in the %s.,Bir %s %s %s var.
+day2.tr_there_is,%s bir %s var.,%s bir %s var.
+day2.w_there_are,There are %s %s in the %s.,%s %s %s var.
+day2.tr_there_are,%s %s %s var.,%s %s %s var.
+flat.room.living,living room,oturma odasında
+flat.room.kitchen,kitchen,mutfakta
+flat.room.bathroom,bathroom,banyoda
+vocab.play_word,Play the word,Kelimeyi dinle
+vocab.play_hint,Tap the speaker to hear the word.,Kelimeyi dinlemek için hoparlöre dokun.
+npc.bus_driver,Bus driver,Otobüs şoförü
+npc.interviewer,Interviewer,Görüşmeci
+day2.say_interview,I have a job interview today! I am [gold]in a hurry[/gold].,Bugün bir iş mülakatım var! Acelem var.
+day2.fm_hurry,"Oh, great! Take the bus. It is fast.","Aa, harika! Otobüse bin. Hızlıdır."
+day2.fm_dir_walk,Go out of the building. Walk to %s.,Binadan çık. %s'ne yürü.
+day2.fm_dir_stop,The bus stop is on %s. It is at the corner of %s.,Otobüs durağı %s üzerinde. %s köşesinde.
+day2.fm_dir_far,It is not far. It is about %s metres.,Uzak değil. Yaklaşık %s metre.
+day2.fm_dir_bus,Take bus %s to %s. Get off at %s.,%s numaralı %s otobüsüne bin. %s durağında in.
+day2.fm_dir_map,Look at your map. The bus stop is on it. [gold]Break a leg[/gold]!,Haritana bak. Otobüs durağı orada. [gold]Bol şans[/gold] (kelimesi kelimesine: bacağını kır)!
+day2.say_bye,Thank you! [gold]See you later[/gold]!,Teşekkürler! Sonra görüşürüz!
+obj.bus_board,Get on the %s bus through the front door,%s otobüsüne ön kapıdan bin
+bus.board_use,Get on the bus,Otobüse bin
+bus.hint_board,The %s bus is here. Climb the step through the front door and tap your phone on the reader.,%s otobüsü geldi. Ön kapıdan basamağı çık ve telefonunu okuyucuya dokundur.
+bus.study_again,I'd better study again.,En iyisi yine çalışayım.
+bus.review_title,Review: everything so far + 10-question quiz,Tekrar: şimdiye kadar her şey + 10 soruluk test
+obj.bus_stop,Go to the bus stop: %s,Otobüs durağına git: %s
+obj.interview,Go to %s for your interview,Mülakat için şuraya git: %s
+obj.front_door,Walk to the front door and go in.,Ön kapıya yürü ve içeri gir.
+obj.flatmate,Talk to %s in the living room,Oturma odasında %s ile konuş
+bus.coming,Here is the bus: %s to %s.,İşte otobüs: %s - %s.
+bus.driver_hi,"Hello! Yes, this bus goes to %s. Get on, please.","Merhaba! Evet, bu otobüs şuraya gider: %s. Binin lütfen."
+bus.next_stop,Your stop: %s.,Senin durağın: %s.
+bus.your_stop,This is %s. This is your stop!,Burası %s. Senin durağın burası!
+iv.pick,"Choose an answer, then say it.","Bir cevap seç, sonra söyle."
+iv.absurd,Ha! Very funny. Now please give me a real answer.,Ha! Çok komik. Şimdi lütfen gerçek bir cevap ver.
+iv.off_topic,"Hmm, that is not about this job. This job is %s. Try again.","Hmm, bu cevap bu işle ilgili değil. Bu iş: %s. Tekrar dene."
+iv.offer,Very good! You are our new %s. You start tomorrow at %s o'clock. The pay is %s dollars a day.,Çok iyi! Yeni %s sensin. Yarın saat %s'da başlıyorsun. Ücret günde %s dolar.
+iv.say_thanks,Thank you very much! [gold]See you tomorrow[/gold].,Çok teşekkürler! Yarın görüşürüz.
+learn.play_line,Play it,Dinle
+jobs.pick.title,Choose a job type,Bir iş türü seç
+jobs.pick.back,< Back,< Geri
+jobs.pick.count,%s jobs,%s iş
+jobs.pick.choose,Choose...,Seç...
+jobs.cat.food,Food & Drink,Yiyecek ve İçecek
+jobs.cat.shops,Shops & Retail,Mağaza ve Satış
+jobs.cat.driving,Delivery & Driving,Teslimat ve Sürücülük
+jobs.cat.hotel,Hotel & Tourism,Otel ve Turizm
+jobs.cat.beach,Beach & Outdoors,Plaj ve Açık Hava
+jobs.cat.sports,Sports & Fitness,Spor ve Fitness
+jobs.cat.health,Health & Care,Sağlık ve Bakım
+jobs.cat.education,Schools & Books,Okul ve Kitap
+jobs.cat.safety,Safety & Security,Güvenlik
+jobs.cat.office,Office & Services,Ofis ve Hizmetler
+jobs.cat.tech,Tech & Science,Teknoloji ve Bilim
+jobs.cat.arts,Arts & Media,Sanat ve Medya
+jobs.cat.building,Building & Repair,İnşaat ve Tamir
+menu.lessons,Lessons and materials,Dersler ve materyaller
+voice.reason_no_mic,No microphone access (allow the microphone for the game and the Google app). Type the sentence or skip.,Mikrofona erişim yok (oyuna ve Google uygulamasına mikrofon izni ver). Cümleyi yaz ya da geç.
+voice.reason_no_net,No internet: speech recognition needs a connection. Type the sentence or skip.,İnternet yok: konuşma tanıma için bağlantı gerekli. Cümleyi yaz ya da geç.
+voice.reason_not_understood,Not understood after 3 tries. Type the sentence or skip.,3 denemede anlaşılamadı. Cümleyi yaz ya da geç.
+voice.mic_level,Mic level,Mikrofon seviyesi
+voice.reason_no_lang,English speech recognition is not available on this phone (add English in Google voice typing). Type the sentence or skip.,Bu telefonda İngilizce konuşma tanıma yok (Google sesle yazmaya İngilizce ekle). Cümleyi yaz ya da geç.
+act.l.open_window,Open the window,Pencereyi aç
+act.l.close_window,Close the window,Pencereyi kapat
+act.l.open_curtain,Open the curtains,Perdeleri aç
+act.l.close_curtain,Close the curtains,Perdeleri kapat
+act.s.i_am_opening_the_window,I am opening the window.,Pencereyi açıyorum.
+act.s.i_am_closing_the_window,I am closing the window.,Pencereyi kapatıyorum.
+act.s.i_am_opening_the_curtains,I am opening the curtains.,Perdeleri açıyorum.
+act.s.i_am_closing_the_curtains,I am closing the curtains.,Perdeleri kapatıyorum.
+home.item.window,window,pencere
+home.item.curtain,curtain,perde
+gate.officer_hey,"Hey, you! Wait a moment, please.","Hey, sen! Bir dakika bekle, lütfen."
+gate.phone_lesson,"Your phone: Grammar, Lessons. Study ""To be"" on the way.","Telefonun: Dil bilgisi, Dersler. Yolda ""To be"" dersine çalış."
+home.item.pc,PC,bilgisayar
+home.item.pillow,pillow,yastık
+gate.think_study,I'd better study on the way.,Yolda çalışsam iyi olur.
+gate.thought_who,You (thinking),Sen (içinden)
+home.light,Light switch,Işık düğmesi
+home.lights_on,Lights on,Işıkları aç
+home.lights_off,Lights off,Işıkları kapat
+pc.no_mail,No new emails.,Yeni e-posta yok.
+pc.interview,"Email from %s: Thank you for applying to be %s. Please come for an interview at %s, %s.","%s gönderdi: %s olarak başvurduğun için teşekkürler. Lütfen iş görüşmesi için %s, %s adresine gel."
+CC_NAME_Q,What is your name? How do you spell it?,Adın ne? Nasıl yazılır?
+CC_NAME_TITLE,What is your name?,Adın ne? Harfleri yaz.
+CC_NAME_HINT,Type your name,Adını yaz
+CC_MY_NAME_IS,My name is %s.,Benim adım %s.
+CC_SAY_NAME,"Say: ""My name is %s.""","Söyle: ""My name is %s."" (Benim adım %s.)"
+CC_LOOK,Now I am choosing my look.,Şimdi görünüşümü seçiyorum.
+CC_SAY,"Say: ""%s""","Söyle: ""%s"""
+CC_THIS_IS_ME,This is me!,Bu benim!
+CC_READY,I am ready.,Hazırım.
+CC_OK,OK,Tamam
+CC_DELETE,Delete,Sil
+CC_NEXT,Next,İleri
+CC_BACK,Back,Geri
+CC_DONE,Done,Bitti
+CC_gender,Body,Vücut
+CC_build,Build,Yapı
+CC_height,Height,Boy
+CC_hair,Hair,Saç
+CC_hair_col,Hair colour,Saç rengi
+CC_skin,Skin,Ten
+CC_eyes,Eyes,Gözler
+CC_vocation,What do you do?,Mesleğin ne?
+CC_VOC_HINT,Tell us about yourself. Say: I am a ... (your job).,Kendini anlat. Söyle: I am a ... (mesleğin).
+CC_VOC_SAY,Say what you do: I am a ...,Ne iş yaptığını söyle: I am a ...
+CC_SAY_IT,Say it,Söyle
+home.pc,Use the computer,Bilgisayarı kullan
+home.check_mail,Check email,E-postaya bak
+home.find_job,Find a job,İş bul
+home.play_games,Play games,Oyun oyna
+home.games_soon,I want to play a game. (Games are coming soon.),Oyun oynamak istiyorum. (Oyunlar yakında geliyor.)
+home.bed,Sleep,Uyu
+home.not_tired,I'm not tired yet.,Henüz yorgun değilim.
+home.sink,Use the sink,Lavaboyu kullan
+home.wash_hands,Wash hands,Ellerini yıka
+home.wash_face,Wash face,Yüzünü yıka
+home.brush_teeth,Brush teeth,Dişlerini fırçala
+home.say_hands,I wash my hands.,Ellerimi yıkıyorum.
+home.say_face,I wash my face.,Yüzümü yıkıyorum.
+home.say_teeth,I brush my teeth.,Dişlerimi fırçalıyorum.
+home.shower,Take a shower,Duş al
+home.say_shower,I take a shower.,Duş alıyorum.
+home.tv,TV,Televizyon
+home.tv_on,Turn on,Aç
+home.tv_off,Turn off,Kapat
+home.say_tv_on,I turn on the TV.,Televizyonu açıyorum.
+home.say_tv_off,I turn off the TV.,Televizyonu kapatıyorum.
+home.cancel,Cancel,İptal
+home.wardrobe,Change clothes,Kıyafet değiştir
+app.delivery,Delivery,Sipariş
+app.delivery_long,Food & shopping delivery,Yemek ve alışveriş siparişi
+delivery.places,◀ Places,◀ Yerler
+delivery.choose,Order from a Coronado place,Coronado'dan bir yer seç
+delivery.open_until,Delivers until %s,%s saatine kadar getiriyor
+delivery.closed,"Closed now, no delivery","Şu an kapalı, sipariş yok"
+delivery.cart,Cart,Sepet
+delivery.total,Total,Toplam
+delivery.pay,Pay and order,Öde ve sipariş ver
+delivery.cart_empty,Your cart is empty.,Sepetin boş.
+delivery.no_money,Not enough cash.,Yeterli nakit yok.
+delivery.ordered,Ordered! It will be at your door in about %d minutes.,Sipariş verildi! Yaklaşık %d dakika içinde kapında.
+delivery.eta,%d min,%d dk
+delivery.status.preparing,Preparing,Hazırlanıyor
+delivery.status.on_way,On the way,Yolda
+delivery.status.arriving,Arriving,Geliyor
+delivery.status.door,At your door,Kapında
+delivery.status.left,Left at your door,Kapına bırakıldı
+delivery.knock,Knock knock! Your order from %s is at the door.,Tak tak! %s siparişin kapıda.
+delivery.left,The courier left your order at the door.,Kurye siparişini kapına bıraktı.
+delivery.done,Your order is here. Enjoy!,Siparişin geldi. Afiyet olsun!
+delivery.get,Get delivery,Siparişi al
+delivery.pickup,Pick up order,Siparişi al
+delivery.map_courier,Courier,Kurye
+delivery.map_pin,Your order,Siparişin
+delivery.type.fast_food,fast food,fast food
+delivery.type.restaurant,restaurant,restoran
+delivery.type.supermarket,groceries,market
+delivery.type.chemist,pharmacy,eczane ürünleri
+delivery.item.2_liter_soda,2-liter soda,2 litre gazoz
+delivery.item.bag_of_chips,Bag of chips,Paket cips
+delivery.item.bagel,Bagel,Simit tipi bagel
+delivery.item.baked_ziti,Baked ziti,Fırında ziti makarna
+delivery.item.bananas_1_lb,Bananas (1 lb),Muz (yaklaşık 450 g)
+delivery.item.bandages,Bandages,Yara bandı
+delivery.item.bottled_water,Bottled water,Şişe su
+delivery.item.bread_twists,Bread twists,Burgu ekmek
+delivery.item.broccoli_cheddar_soup_in_a_bread_bowl,Broccoli cheddar soup in a bread bowl,Ekmek kasede brokoli çedar çorbası
+delivery.item.burrito_bowl,Burrito bowl,Burrito kasesi
+delivery.item.california_burrito,California burrito,California burrito
+delivery.item.carne_asada_taco,Carne asada taco,Izgara etli taco
+delivery.item.chicken_burrito,Chicken burrito,Tavuklu burrito
+delivery.item.chips_and_guacamole,Chips and guacamole,Cips ve guacamole
+delivery.item.coffee,Coffee,Kahve
+delivery.item.deli_sandwich,Deli sandwich,Şarküteri sandviçi
+delivery.item.gallon_of_milk,Gallon of milk,"Bir galon süt (3,8 L)"
+delivery.item.garden_salad,Garden salad,Bahçe salatası
+delivery.item.green_curry,Green curry,Yeşil köri
+delivery.item.italian_hoagie,Italian hoagie,İtalyan sandviçi
+delivery.item.large_pepperoni_pizza,Large pepperoni pizza,Büyük pepperoni pizza
+delivery.item.loaf_of_bread,Loaf of bread,Somun ekmek
+delivery.item.medium_hand_tossed_pizza,Medium hand-tossed pizza,Orta boy el açması pizza
+delivery.item.ny_cheese_slice,NY cheese slice,New York usulü peynirli dilim
+delivery.item.pad_thai,Pad thai,Pad thai
+delivery.item.pain_reliever,Pain reliever,Ağrı kesici
+delivery.item.quesadilla,Quesadilla,Quesadilla
+delivery.item.sicilian_square,Sicilian square,Sicilya usulü kare dilim
+delivery.item.sunscreen,Sunscreen,Güneş kremi
+delivery.item.thai_iced_tea,Thai iced tea,Tay usulü buzlu çay
+delivery.item.toothpaste,Toothpaste,Diş macunu
+delivery.item.turkey_sandwich,Turkey sandwich,Hindili sandviç
+car.gas,GAS,GAZ
+car.brake,BRAKE,FREN
+app.drone,Drone,Dron
+drone.exit,Exit,Çıkış
+drone.forward,Forward,İleri
+drone.back,Back,Geri
+drone.left,Left,Sol
+drone.right,Right,Sağ
+drone.up,Up,Yukarı
+drone.down,Down,Aşağı
+drone.tilt,Tilt,Eğim
+drone.readout,X %.0f   Z %.0f   Height %.0f m,X %.0f   Z %.0f   Yükseklik %.0f m
+cvskill.help_sick,help sick people,hasta insanlara yardım etmek
+cvskill.help_sick.can,I can help sick people.,Hasta insanlara yardım edebilirim.
+cvskill.help_sick.cant,I can't help sick people.,Hasta insanlara yardım edemem.
+cvskill.first_aid,give first aid,ilk yardım yapmak
+cvskill.first_aid.can,I can give first aid.,İlk yardım yapabilirim.
+cvskill.first_aid.cant,I can't give first aid.,İlk yardım yapamam.
+cvskill.work_nights,work at night,gece çalışmak
+cvskill.work_nights.can,I can work at night.,Gece çalışabilirim.
+cvskill.work_nights.cant,I can't work at night.,Gece çalışamam.
+cvskill.stay_calm,stay calm,sakin kalmak
+cvskill.stay_calm.can,I can stay calm.,Sakin kalabilirim.
+cvskill.stay_calm.cant,I can't stay calm.,Sakin kalamam.
+cvskill.explain,explain things clearly,konuları açıkça anlatmak
+cvskill.explain.can,I can explain things clearly.,Konuları açıkça anlatabilirim.
+cvskill.explain.cant,I can't explain things clearly.,Konuları açıkça anlatamam.
+cvskill.children,work with children,çocuklarla çalışmak
+cvskill.children.can,I can work with children.,Çocuklarla çalışabilirim.
+cvskill.children.cant,I can't work with children.,Çocuklarla çalışamam.
+cvskill.read_write,read and write well,iyi okuyup yazmak
+cvskill.read_write.can,I can read and write well.,İyi okuyup yazabilirim.
+cvskill.read_write.cant,I can't read and write well.,İyi okuyup yazamam.
+cvskill.use_computer,use a computer,bilgisayar kullanmak
+cvskill.use_computer.can,I can use a computer.,Bilgisayar kullanabilirim.
+cvskill.use_computer.cant,I can't use a computer.,Bilgisayar kullanamam.
+cvskill.make_coffee,make coffee,kahve yapmak
+cvskill.make_coffee.can,I can make coffee.,Kahve yapabilirim.
+cvskill.make_coffee.cant,I can't make coffee.,Kahve yapamam.
+cvskill.cook,cook,yemek yapmak
+cvskill.cook.can,I can cook.,Yemek yapabilirim.
+cvskill.cook.cant,I can't cook.,Yemek yapamam.
+cvskill.carry_plates,carry many plates,çok tabak taşımak
+cvskill.carry_plates.can,I can carry many plates.,Çok tabak taşıyabilirim.
+cvskill.carry_plates.cant,I can't carry many plates.,Çok tabak taşıyamam.
+cvskill.work_fast,work fast,hızlı çalışmak
+cvskill.work_fast.can,I can work fast.,Hızlı çalışabilirim.
+cvskill.work_fast.cant,I can't work fast.,Hızlı çalışamam.
+cvskill.read_maps,read a map,harita okumak
+cvskill.read_maps.can,I can read a map.,Harita okuyabilirim.
+cvskill.read_maps.cant,I can't read a map.,Harita okuyamam.
+cvskill.work_early,work early in the morning,sabah erken çalışmak
+cvskill.work_early.can,I can work early in the morning.,Sabah erken çalışabilirim.
+cvskill.work_early.cant,I can't work early in the morning.,Sabah erken çalışamam.
+cvskill.fix_cars,fix a car,araba tamir etmek
+cvskill.fix_cars.can,I can fix a car.,Araba tamir edebilirim.
+cvskill.fix_cars.cant,I can't fix a car.,Araba tamir edemem.
+cvskill.talk_customers,talk to customers,müşterilerle konuşmak
+cvskill.talk_customers.can,I can talk to customers.,Müşterilerle konuşabilirim.
+cvskill.talk_customers.cant,I can't talk to customers.,Müşterilerle konuşamam.
+cvskill.swim,swim,yüzmek
+cvskill.swim.can,I can swim.,Yüzebilirim.
+cvskill.swim.cant,I can't swim.,Yüzemem.
+cvskill.run_fast,run fast,hızlı koşmak
+cvskill.run_fast.can,I can run fast.,Hızlı koşabilirim.
+cvskill.run_fast.cant,I can't run fast.,Hızlı koşamam.
+cvskill.count_money,count money,para saymak
+cvskill.count_money.can,I can count money.,Para sayabilirim.
+cvskill.count_money.cant,I can't count money.,Para sayamam.
+cvskill.carry_boxes,carry heavy boxes,ağır kutular taşımak
+cvskill.carry_boxes.can,I can carry heavy boxes.,Ağır kutular taşıyabilirim.
+cvskill.carry_boxes.cant,I can't carry heavy boxes.,Ağır kutular taşıyamam.
+cvskill.write_emails,write emails,e-posta yazmak
+cvskill.write_emails.can,I can write emails.,E-posta yazabilirim.
+cvskill.write_emails.cant,I can't write emails.,E-posta yazamam.
+cvskill.answer_phone,answer the phone,telefona cevap vermek
+cvskill.answer_phone.can,I can answer the phone.,Telefona cevap verebilirim.
+cvskill.answer_phone.cant,I can't answer the phone.,Telefona cevap veremem.
+cvskill.code,write code,kod yazmak
+cvskill.code.can,I can write code.,Kod yazabilirim.
+cvskill.code.cant,I can't write code.,Kod yazamam.
+cvskill.fix_computers,fix computers,bilgisayar tamir etmek
+cvskill.fix_computers.can,I can fix computers.,Bilgisayar tamir edebilirim.
+cvskill.fix_computers.cant,I can't fix computers.,Bilgisayar tamir edemem.
+cvskill.learn_fast,learn fast,hızlı öğrenmek
+cvskill.learn_fast.can,I can learn fast.,Hızlı öğrenebilirim.
+cvskill.learn_fast.cant,I can't learn fast.,Hızlı öğrenemem.
+cvskill.draw,draw,resim çizmek
+cvskill.draw.can,I can draw.,Resim çizebilirim.
+cvskill.draw.cant,I can't draw.,Resim çizemem.
+cvskill.sing,sing,şarkı söylemek
+cvskill.sing.can,I can sing.,Şarkı söyleyebilirim.
+cvskill.sing.cant,I can't sing.,Şarkı söyleyemem.
+cvskill.play_music,play music,müzik çalmak
+cvskill.play_music.can,I can play music.,Müzik çalabilirim.
+cvskill.play_music.cant,I can't play music.,Müzik çalamam.
+cvskill.take_photos,take good photos,iyi fotoğraf çekmek
+cvskill.take_photos.can,I can take good photos.,İyi fotoğraf çekebilirim.
+cvskill.take_photos.cant,I can't take good photos.,İyi fotoğraf çekemem.
+cvskill.fix_things,fix things,bir şeyleri tamir etmek
+cvskill.fix_things.can,I can fix things.,Bir şeyleri tamir edebilirim.
+cvskill.fix_things.cant,I can't fix things.,Bir şeyleri tamir edemem.
+cvskill.use_tools,use tools,alet kullanmak
+cvskill.use_tools.can,I can use tools.,Alet kullanabilirim.
+cvskill.use_tools.cant,I can't use tools.,Alet kullanamam.
+cvskill.work_outside,work outside,dışarıda çalışmak
+cvskill.work_outside.can,I can work outside.,Dışarıda çalışabilirim.
+cvskill.work_outside.cant,I can't work outside.,Dışarıda çalışamam.
+cvskill.grow_plants,grow plants,bitki yetiştirmek
+cvskill.grow_plants.can,I can grow plants.,Bitki yetiştirebilirim.
+cvskill.grow_plants.cant,I can't grow plants.,Bitki yetiştiremem.
+cvskill.animals,look after animals,hayvanlara bakmak
+cvskill.animals.can,I can look after animals.,Hayvanlara bakabilirim.
+cvskill.animals.cant,I can't look after animals.,Hayvanlara bakamam.
+cvskill.clean,clean,temizlik yapmak
+cvskill.clean.can,I can clean.,Temizlik yapabilirim.
+cvskill.clean.cant,I can't clean.,Temizlik yapamam.
+cvskill.teach_sport,teach sport,spor öğretmek
+cvskill.teach_sport.can,I can teach sport.,Spor öğretebilirim.
+cvskill.teach_sport.cant,I can't teach sport.,Spor öğretemem.
+cvskill.drive,drive,araba kullanmak
+cvskill.drive.can,I can drive.,Araba kullanabilirim.
+cvskill.drive.cant,I can't drive.,Araba kullanamam.
+cvapp.title,My CV,Özgeçmişim
+cvapp.for_job,CV for: %s · %s,Başvuru: %s · %s
+cvapp.step,Step %d of %d,Adım %d / %d
+cvapp.f_name,Name,Adın
+cvapp.f_age,Age,Yaşın
+cvapp.f_voc,Vocation,Mesleğin
+cvapp.f_exp,Experience (years),Deneyim (yıl)
+cvapp.s_name,My name is %s.,Benim adım %s.
+cvapp.s_age,I am %s years old.,%s yaşındayım.
+cvapp.s_voc,I am %s.,Mesleğim: %s.
+cvapp.s_exp0,I have no experience.,Deneyimim yok.
+cvapp.s_exp1,I have one year of experience.,Bir yıllık deneyimim var.
+cvapp.s_exp,I have %s years of experience.,%s yıllık deneyimim var.
+cvapp.type_here,Type here,Buraya yaz
+cvapp.say,Say it,Söyle
+cvapp.said,Said,Söylendi
+cvapp.next,Next,İleri
+cvapp.back,Back,Geri
+cvapp.fill_all,Fill every line and say it.,Her satırı doldur ve söyle.
+cvapp.age_bad,Age: a number from 16 to 70.,Yaş: 16 ile 70 arası bir sayı.
+cvapp.exp_bad,Experience: a number from 0 to 50.,Deneyim: 0 ile 50 arası bir sayı.
+cvapp.skills_head,Skills: can / can't,Beceriler: can / can't
+cvapp.can_intro,In a CV you say what you can do and what you can't do.,Özgeçmişte neler yapabildiğini ve yapamadığını yazarsın.
+cvapp.can_rule,I can + verb: I can swim.  I can't + verb: I can't drive.,I can + fiil = …ebilirim: I can swim (Yüzebilirim).  I can't + fiil = …emem: I can't drive (Araba kullanamam).
+cvapp.learn,Learn can / can't,can / can't öğren
+cvapp.learn_done,Lesson done,Ders bitti
+cvapp.skills_hint,"Skills for this job: tap I can or I can't, then say the sentence.","Bu iş için beceriler: I can ya da I can't'e dokun, sonra cümleyi söyle."
+cvapp.btn_can,I can,Yapabilirim
+cvapp.btn_cant,I can't,Yapamam
+cvapp.own,Your own skill,Kendi becerin
+cvapp.own_hint,"Write a verb, e.g. speak Spanish","Bir fiil yaz, örn. speak Spanish"
+cvapp.own_tr,Your own sentence,Kendi cümlen
+cvapp.drive_q,Can you drive?,Araba kullanabilir misin?
+cvapp.drive_yes,"Yes, I can.","Evet, kullanabilirim."
+cvapp.drive_no,"No, I can't.","Hayır, kullanamam."
+cvapp.drive_yes_s,"Yes, I can drive.","Evet, araba kullanabilirim."
+cvapp.drive_no_s,"No, I can't drive.","Hayır, araba kullanamam."
+cvapp.need_skill,"Choose one or more skills, answer Can you drive? and say every sentence.","Bir veya daha fazla beceri seç, Can you drive? sorusunu cevapla ve her cümleyi söyle."
+cvapp.submit,Send CV,Özgeçmişi gönder
+cvapp.booked,Interview booked,Mülakat randevusu
+cvapp.thanks,Thank you for your CV! Please come to an interview.,Özgeçmişin için teşekkürler! Lütfen mülakata gel.
+cvapp.appt_job,Job: %s,İş: %s
+cvapp.appt_where,"Place: %s, %s","Yer: %s, %s"
+cvapp.appt_when,"Time: day %d, %s","Zaman: %d. gün, saat %s"
+cvapp.appt_walk,It is about %d minutes on foot from here. You have time.,Buradan yürüyerek yaklaşık %d dakika. Vaktin var.
+cvapp.appt_next_day,"Interviews are only in the day (10:00 to 16:00), so it is tomorrow.","Mülakatlar sadece gündüz (10:00 - 16:00), bu yüzden yarın."
+cvapp.show_map,Show on map,Haritada göster
+cvapp.sent_head,CV sent,Özgeçmiş gönderildi
+cvapp.mail_later,Thank you! The employer will email you.,Teşekkürler! İşveren sana e-posta gönderecek.
+cvapp.close,Close,Kapat
+cvapp.objective,"Interview at %s, %s","Mülakat: %s, saat %s"
+jobs.mail_subject,Email: Interview invitation – %s,E-posta: Mülakat daveti – %s
+cvapp.msg,"Hello! Thank you for your CV. Your interview for the %s job is on day %d at %s at %s, %s.","Merhaba! Özgeçmişin için teşekkürler. %s mülakatın %d. gün saat %s'de, %s, %s adresinde."
+jobsapp.appt_line,"Interview: day %d at %s, %s","Mülakat: %d. gün saat %s, %s"
+jobs.interview_go,Go to the interview,Mülakata gir
+jobs.interview_early,You are early. Your interview is on day %d at %s.,Erkencisin. Mülakatın %d. gün saat %s'de.
+jobs.interview_stub,The interviewer reads your CV: you got the job!,Mülakatçı özgeçmişini okuyor: işi aldın!
+pc.interview_at,"%s: your interview for %s is on day %d at %s at %s, %s.","%s: %s mülakatın %d. gün saat %s'de, %s, %s adresinde."
+obj.desk_pc,Sit at the PC in your room,Odandaki bilgisayarın başına otur
+obj.apply_job,Apply for a job (Jobs app on the PC),Bir işe başvur (bilgisayardaki İşler uygulaması)
+obj.sleep,Go to bed and sleep,Yatağına git ve uyu
+flat.think_job,I should look for a job.,Bir iş aramalıyım.
+day2.think_sleep,Time to sleep.,Uyku vakti.
+gate.officer_line,"We put the grammar and vocabulary apps on your phone. Study them, and find a job as soon as possible. We will test you regularly. You have to learn the language if you want to live in the US. [gold]Good luck[/gold], I really hope you [gold]make it[/gold].","Telefonuna dil bilgisi ve kelime uygulamalarını yükledik. Onlara çalış ve en kısa sürede bir iş bul. Seni düzenli olarak sınayacağız. ABD'de yaşamak istiyorsan dili öğrenmek zorundasın. Bol şans, gerçekten başarmanı umuyorum."
+gate.driver_tip,"Listen. %s, on %s. They need a cashier. Go and ask them. Say: I want a job.","Dinle. %s, %s. Kasiyer arıyorlar. Git ve sor. De ki: I want a job."
+npc.topic.T1,How are you?,Nasılsın?
+npc.topic.T2,My name,Adım
+npc.topic.T3,Directions,Yol sor
+npc.topic.T4,Café,Kafe
+npc.topic.T5,The time,Saat
+npc.topic.T5D,The day,Gün
+npc.topic.T6,Your day,Günün
+npc.topic.T7,Goodbye,Hoşça kal
+npc.topic.more,More,Daha fazla
+npc.topic.back,Back,Geri
+npc.tap_again,Tap the mic again.,Mikrofona tekrar dokun.
+gate.not_now,"Not now, the officer is talking to you.","Şimdi olmaz, memur seninle konuşuyor."
+iv.silly_retry,"Ha! Very funny. Now a real answer, please.",Ha! Çok komik. Şimdi gerçek bir cevap lütfen.
+cvapp.voc_locked,(the job you told the taxi driver),(taksi şoförüne söylediğin iş)
+gate.ten_days,Ten days later...,On gün sonra...
+gate.say_thanks_sir,"Thank you, sir.","Teşekkür ederim, efendim."
+gate.officer_bye,You're welcome. [gold]Take care[/gold].,Rica ederim. [gold]Kendine iyi bak[/gold].
+gate.driver_first,Is this your first time in America?,Amerika'ya ilk gelişin mi?
+gate.say_first,"Yes, it is.","Evet, öyle."
+gate.driver_have_fun,Don't worry. People here are friendly. [gold]Have fun[/gold]!,Merak etme. Buradaki insanlar cana yakın. [gold]İyi eğlenceler[/gold]!
+gate.say_nice_day,Thank you! [gold]Have a nice day[/gold]!,Teşekkürler! [gold]İyi günler[/gold]!
+gate.driver_bye,"You too, buddy! [gold]See you around[/gold]!",Sana da dostum! [gold]Görüşürüz[/gold]!
+flat.think_new_home,So this is my new home!,Demek yeni evim burası!
+flat.say_nice_too,Nice to meet you too!,Ben de memnun oldum!
+flat.fm_q_tv,Quick question! Is there a TV in the living room?,Küçük bir soru! Oturma odasında televizyon var mı?
+flat.say_yes_there_is,"Yes, there is.","Evet, var."
+flat.fm_good,Good! You learn fast.,Güzel! Çabuk öğreniyorsun.
+flat.fm_dont_go_in,"Please don't go in, OK?","Lütfen içeri girme, tamam mı?"
+flat.say_no_problem,OK. [gold]No problem[/gold].,Tamam. [gold]Sorun değil[/gold].
+flat.fm_hungry,"Oh, it's dinner time. I'm hungry! Are you hungry?","Aa, akşam yemeği vakti. Acıktım! Sen aç mısın?"
+flat.say_hungry_too,Yes! [gold]Me too[/gold].,Evet! [gold]Ben de[/gold].
+flat.fm_like_pizza,Do you like pizza?,Pizza sever misin?
+flat.say_like_yes,"Yes, I do. I like pizza.","Evet, severim. Pizza severim."
+flat.say_like_no,"No, I don't. I don't like pizza.","Hayır, sevmem. Pizza sevmem."
+flat.say_do_you_like_tacos,Do you like tacos?,Tako sever misin?
+flat.fm_love_tacos,"Yes, I do! I love tacos. But I don't like fish.","Evet, severim! Takoya bayılırım. Ama balık sevmem."
+flat.think_like_lesson,"I like, I don't like... Let me check my phone.","Severim, sevmem... Telefonuma bir bakayım."
+flat.fm_choose,"So, what do you want? Pizza or tacos?","Peki, ne istersin? Pizza mı tako mu?"
+flat.say_order_pizza,"Pizza, please!","Pizza, lütfen!"
+flat.say_order_tacos,"Tacos, please!","Tako, lütfen!"
+flat.fm_call,"Great! Here, call %s. You order. Good practice!","Harika! Al, %s'u ara. Sen sipariş ver. İyi pratik olur!"
+npc.restaurant,Restaurant,Restoran
+npc.courier,Courier,Kurye
+flat.rest_hello,"Hello, %s! What can I get you?","Merhaba, %s! Ne alırsınız?"
+flat.say_order_pizza_full,"Can I have a large pepperoni pizza, please?","Büyük bir pepperoni pizza alabilir miyim, lütfen?"
+flat.say_order_tacos_full,"Can I have four tacos and a quesadilla, please?","Dört tako ve bir quesadilla alabilir miyim, lütfen?"
+flat.rest_drink,Sure. [gold]Anything to drink?[/gold],Tabii. İçecek bir şey?
+flat.say_drink,"Yes, a soda, please.","Evet, bir gazoz, lütfen."
+flat.say_address_order,My address is %s.,Adresim %s.
+flat.rest_total,OK! That's %d dollars. It's on the way.,Tamam! %d dolar. Yolda.
+flat.think_cash,Hmm. I only have twenty dollars...,Hmm. Sadece yirmi dolarım var...
+flat.say_i_can_pay,I can pay!,Ben ödeyebilirim!
+flat.fm_on_me,"No, no. [gold]It's on me[/gold] tonight! You pay next time.","Yok, yok. Bu akşam [gold]benden[/gold]! Bir dahaki sefere sen ödersin."
+flat.say_thank_you_so_much,[gold]Thank you so much[/gold]!,Çok teşekkür ederim!
+flat.fm_wait_like,Quick test! What food do I like?,Küçük bir test! Ben hangi yemeği severim?
+flat.say_you_like_tacos,You like tacos!,Sen tako seversin!
+flat.fm_yes_tacos,Yes! I like tacos. I don't like fish.,Evet! Tako severim. Balık sevmem.
+flat.fm_door,The food is here! It's at the door. Can you get it?,Yemek geldi! Kapıda. Alabilir misin?
+flat.fm_food_here,The food is here!,Yemek geldi!
+obj.get_food,Get the food from the courier at the front door (Use).,Kuryeden yemeği ön kapıda al (Kullan).
+flat.courier_enjoy,Here you go! [gold]Enjoy your meal[/gold]!,Buyurun! [gold]Afiyet olsun[/gold]!
+flat.say_thanks_bye,Thanks! Bye!,Teşekkürler! Hoşça kal!
+flat.fm_enjoy,"Mmm, it smells good! Let's eat.","Mmm, güzel kokuyor! Hadi yiyelim."
+flat.think_delicious,(Ten minutes later...),(On dakika sonra...)
+flat.say_delicious,This is delicious!,Bu çok lezzetli!
+flat.fm_goodnight_room,"I'm full! OK, I go to my room now.","Doydum! Tamam, şimdi odama gidiyorum."
+flat.strange_noise,*A strange noise from her room...*,*Odasından garip bir ses...*
+flat.strange_noise_m,*A strange noise from his room...*,*Odasından garip bir ses...*
+flat.think_strange,Hmm. Strange...,Hmm. Garip...
+day2.fm_morning,Good morning! [gold]Rise and shine[/gold]! How are you?,Günaydın! [gold]Hadi kalk bakalım[/gold]! Nasılsın?
+day2.say_fine,"I'm fine, thanks.","İyiyim, teşekkürler."
+day2.fm_job_react,"Oh, nice! [gold]Good for you[/gold]!","Aa, güzel! [gold]Aferin sana[/gold]!"
+day2.say_what_mean,Break a leg? What does that mean?,Break a leg mi? Bu ne demek?
+day2.fm_break_leg,"It means good luck! Go, go, go!","Bol şans demek! Hadi, hadi!"
+bus.think_at_stop,"OK, this is the bus stop. Now I wait.","Tamam, otobüs durağı burası. Şimdi bekliyorum."
+bus.say_ticket,"One ticket, please.","Bir bilet, lütfen."
+bus.driver_fare,That's %d dollars. [gold]Hop on[/gold]!,%d dolar. [gold]Atla bakalım[/gold]!
+iv.think_nervous,I'm a bit nervous... OK. [gold]I can do this[/gold]!,Biraz gerginim... Tamam. [gold]Bunu yapabilirim[/gold]!
+iv.welcome_aboard,[gold]Welcome aboard[/gold]!,[gold]Aramıza hoş geldin[/gold]!
+iv.think_got_job,Yes! I have a job!,Evet! Bir işim var!
+iv.react_silly1,"Hmm... that is a strange answer. I'll write that down.","Hmm... bu garip bir cevap. Bunu not alacağım."
+iv.react_silly2,"Ha! Very funny. But this is a job interview.","Ha! Çok komik. Ama bu bir iş mülakatı."
+iv.react_silly3,"Oh. OK... I see. Next question.","Ah. Tamam... Anlıyorum. Sonraki soru."
+iv.fail,"I'm sorry, I can't give you the job today. Come back tomorrow at ten and try again.","Üzgünüm, bugün sana işi veremem. Yarın saat onda tekrar gel ve yeniden dene."
+iv.say_ok_tomorrow,"Okay. [gold]See you tomorrow[/gold].","Tamam. Yarın görüşürüz."
+iv.think_fail,"Oh no... too many silly answers. Tomorrow I'll give real answers.","Eyvah... çok fazla saçma cevap. Yarın gerçek cevaplar vereceğim."
+iv.think_again,"A new day. Back to the interview. Real answers this time!","Yeni bir gün. Mülakata geri dönüyorum. Bu sefer gerçek cevaplar!"
+day2.call_ring,%s is calling...,%s arıyor...
+day2.call_fm_hi,Hi! How was the interview? Tell me!,Selam! Mülakat nasıldı? Anlat bana!
+day2.say_got_job,I have a job!,Bir işim var!
+day2.say_call_bye,Great! [gold]See you soon[/gold]. Bye!,Harika! [gold]Yakında görüşürüz[/gold]. Hoşça kal!
+day2.call_fm_bye,Bye! [gold]See you there[/gold]!,Hoşça kal! [gold]Orada görüşürüz[/gold]!
+call.incoming,Incoming call,Gelen arama
+call.on_call,On call,Görüşmede
+call.answer,Answer,Cevapla
+call.hang_up,Hang up,Kapat
+day2.call_fm_celebrate,"Wow, [gold]well done[/gold]! Let's celebrate. Meet me at %s!","Vay, [gold]aferin[/gold]! Hadi kutlayalım. %s'da buluşalım!"
+day2.say_no_job,"I didn't get the job. I can try again tomorrow.","İşi alamadım. Yarın tekrar deneyebilirim."
+day2.call_fm_cheer_up,"Oh no! [gold]Never mind[/gold]. Let's have a coffee anyway. Meet me at %s!","Eyvah! [gold]Boş ver[/gold]. Yine de bir kahve içelim. %s'da buluşalım!"
+day2.say_call_bye_ok,"OK. [gold]See you soon[/gold]. Bye!","Tamam. [gold]Yakında görüşürüz[/gold]. Hoşça kal!"
+day2.call_fm_hi_again,"So? How was the interview this time?","Eee? Bu sefer mülakat nasıldı?"
+day2.say_failed_again,"I didn't get the job again...","Yine işi alamadım..."
+day2.call_fm_angry,"Again?! [gold]Are you serious[/gold]? You need a job. The rent is in two weeks! Take it seriously!","Yine mi?! [gold]Ciddi misin[/gold]? Bir işe ihtiyacın var. Kira iki hafta sonra! Bunu ciddiye al!"
+day2.say_sorry,"I'm sorry. I'll try harder tomorrow.","Özür dilerim. Yarın daha çok çabalayacağım."
+day2.call_fm_angry_bye,"OK. Tomorrow, real answers! Bye.","Tamam. Yarın gerçek cevaplar! Görüşürüz."
+day2.call_fm_hi_today,So? How was it today?,Eee? Bugün nasıldı?
+day2.call_fm_well_done,"Yes! [gold]Well done[/gold]! I knew you could do it. See you at home!","Evet! [gold]Aferin[/gold]! Yapabileceğini biliyordum. Evde görüşürüz!"
+day2.call_fm_finally,"[gold]Finally[/gold]! Well done! I'm sorry I was angry. See you at home!","[gold]Sonunda[/gold]! Aferin! Kızdığım için özür dilerim. Evde görüşürüz!"
+day2.say_call_bye_home,"Thanks! [gold]See you at home[/gold]. Bye!","Teşekkürler! [gold]Evde görüşürüz[/gold]. Hoşça kal!"
+cafe.fm_cheer_up,"There you are! [gold]Don't worry[/gold]. You can try again tomorrow.","İşte geldin! [gold]Merak etme[/gold]. Yarın tekrar deneyebilirsin."
+cafe.fm_cheers_luck,"To tomorrow! [gold]Good luck[/gold]! Cheers!","Yarına! [gold]Bol şans[/gold]! Şerefe!"
+cafe.fm_tease_friend,"No job yet, but a new friend! [gold]Not bad[/gold]!","Henüz iş yok ama yeni bir arkadaş var! [gold]Fena değil[/gold]!"
+cafe.think_long_day,"[gold]What a day[/gold]! No job yet... but tomorrow is a new day.","Ne gündü! Henüz iş yok... ama yarın yeni bir gün."
+cafe.st_good_luck,"Oh, [gold]good luck[/gold]!","Aa, [gold]bol şans[/gold]!"
+cafe.say_job_look,"I'm looking for a job. I have an interview tomorrow.","İş arıyorum. Yarın bir mülakatım var."
+gameover.broke,"You're broke! You have no money left in your wallet or your bank.","Beş parasız kaldın! Cüzdanında da bankada da hiç paran kalmadı."
+obj.cafe,Meet your flatmate at %s,Ev arkadaşınla %s'da buluş
+cafe.fm_congrats,There you are! [gold]Congrats[/gold]!,İşte geldin! [gold]Tebrikler[/gold]!
+cafe.say_my_treat,Thanks! Let's have a coffee. [gold]Coffee's on me[/gold]!,Teşekkürler! Hadi kahve içelim. [gold]Kahveler benden[/gold]!
+cafe.fm_id_like,"Really? Thank you! I'd like a latte, please.","Gerçekten mi? Teşekkürler! Bir latte isterim, lütfen."
+cafe.think_lesson,"Café English... Can I have, I'd like... Let me check my phone.","Kafe İngilizcesi... Can I have, I'd like... Telefonuma bir bakayım."
+cafe.barista_hi,Hi there! What can I get you?,Merhaba! Ne alırsınız?
+cafe.say_two_lattes,"Can I have two lattes, please?","İki latte alabilir miyim, lütfen?"
+cafe.barista_size,Sure. Small or large?,Tabii. Küçük mü büyük mü?
+cafe.say_large,"Large, please.","Büyük, lütfen."
+cafe.barista_else,[gold]Anything else?[/gold],Başka bir şey?
+cafe.say_cookies,"Yes. I'd like two cookies, please.","Evet. İki kurabiye istiyorum, lütfen."
+cafe.say_two_cappuccinos,"Can I have two cappuccinos, please?","İki kapuçino alabilir miyim, lütfen?"
+cafe.say_two_juices,"Can I have two orange juices, please?","İki portakal suyu alabilir miyim, lütfen?"
+cafe.say_croissants,"Yes. I'd like two croissants, please.","Evet. İki kruvasan istiyorum, lütfen."
+cafe.say_no_food,"No, thank you. That's all.","Hayır, teşekkürler. Hepsi bu."
+cafe.pick_drink,What would you like to drink?,Ne içmek istersin?
+cafe.fm_over_here,Hey! [gold]Over here[/gold]! Come and sit down.,Hey! [gold]Buradayım[/gold]! Gel otur.
+cafe.think_counter,OK. I'll go to the counter and order.,Tamam. Tezgaha gidip sipariş vereceğim.
+obj.cafe_sit,Sit down with %s,%s ile otur
+obj.cafe_order,Order at the counter,Tezgahta sipariş ver
+cafe.barista_total,"That's %d dollars, please.","%d dolar, lütfen."
+cafe.think_no_cash,Oh no! I only have %d dollars in cash.,Eyvah! Sadece %d dolar nakdim var.
+cafe.barista_qr,[gold]No worries[/gold]. You can pay by QR code.,[gold]Dert etme[/gold]. QR kodla ödeyebilirsin.
+cafe.order_note,Coffee,Kahve
+cafe.hint_qr,Pay with your phone: confirm the QR payment (from your bank account).,Telefonunla öde: QR ödemeyi onayla (banka hesabından).
+cafe.barista_try_again,"Hmm, it didn't work. Try again, please.","Hmm, olmadı. Tekrar dene, lütfen."
+cafe.barista_here,Thank you! [gold]Here you go[/gold].,Teşekkürler! [gold]Buyurun[/gold].
+cafe.fm_cheers,To your new job! [gold]Cheers[/gold]!,Yeni işine! [gold]Şerefe[/gold]!
+cafe.say_cheers,[gold]Cheers[/gold]!,[gold]Şerefe[/gold]!
+npc.mia,Mia,Mia
+npc.leo,Leo,Leo
+cafe.st_hello,Hello!,Merhaba!
+cafe.say_hello,Hi! Hello.,Selam! Merhaba.
+cafe.st_name,I'm %s. What's your name?,Ben %s. Senin adın ne?
+cafe.say_my_name,My name is %s.,Benim adım %s.
+cafe.st_nice_meet,[gold]Nice to meet you[/gold]!,Tanıştığımıza memnun oldum!
+cafe.say_nice_meet,Nice to meet you too!,Ben de memnun oldum!
+cafe.st_where,Are you new here? Where do you live?,Burada yeni misin? Nerede yaşıyorsun?
+cafe.say_live,"Yes, I am. I live in Coronado.",Evet. Coronado'da yaşıyorum.
+cafe.st_what_do,Cool! What do you do?,Harika! Ne iş yaparsın?
+cafe.say_job_start,I am %s %s. I start tomorrow!,Ben bir %s %s. Yarın başlıyorum!
+cafe.st_nice_one,[gold]Nice one[/gold]!,[gold]Helal olsun[/gold]!
+cafe.st_i_work,I work at the library. I read a lot.,Kütüphanede çalışırım. Çok okurum.
+cafe.say_do_you_like_job,Do you like your job?,İşini seviyor musun?
+cafe.st_love_it,"Yes, I do. I love it! And I surf every weekend.","Evet, seviyorum. Bayılıyorum! Ve her hafta sonu sörf yaparım."
+cafe.st_can_surf,Can you surf?,Sörf yapabilir misin?
+cafe.say_can,"Yes, I can.","Evet, yapabilirim."
+cafe.say_cant,"No, I can't.","Hayır, yapamam."
+cafe.st_can_reply,Great! We can surf together one day.,Harika! Bir gün birlikte sörf yapabiliriz.
+cafe.st_cant_reply,[gold]No problem[/gold]. I can teach you!,Sorun değil. Ben sana öğretebilirim!
+cafe.say_would_you_like,Would you like a coffee?,Bir kahve ister misin?
+cafe.st_i_can_pay,"Oh, thanks! But I can pay.","Aa, teşekkürler! Ama ben ödeyebilirim."
+cafe.say_on_me,"No, no. [gold]It's on me[/gold].","Yok, yok. [gold]Benden[/gold]."
+cafe.st_thanks,That's so nice! Thank you.,Çok naziksin! Teşekkürler.
+cafe.say_youre_welcome,[gold]You're welcome[/gold]!,Rica ederim!
+cafe.st_bye,I have to go. [gold]See you soon[/gold]!,Gitmem lazım. [gold]Yakında görüşürüz[/gold]!
+cafe.fm_tease,A new job AND a new friend! [gold]Not bad[/gold]!,Yeni bir iş VE yeni bir arkadaş! [gold]Fena değil[/gold]!
+cafe.think_what_a_day,"[gold]What a day[/gold]! A job, a flatmate and a new friend.","Ne gündü! Bir iş, bir ev arkadaşı ve yeni bir arkadaş."
+cafe.fm_bye,"OK, I'm going home now. [gold]See you tonight[/gold]!","Tamam, şimdi eve gidiyorum. [gold]Bu akşam görüşürüz[/gold]!"
+cafe.say_see_you_home,See you at home!,Evde görüşürüz!
+sofa.fm_lesson,"Wait, a quick lesson first! Let's learn how to talk about the things we like.","Dur, önce kısa bir ders! Sevdiğimiz şeyleri anlatmayı öğrenelim."
+sofa.fm_invite,"Come, sit on the sofa with me. Let's chat!","Gel, benimle kanepeye otur. Biraz sohbet edelim!"
+sofa.fm_music_q,So... [gf]Do you like[/gf] music?,Eee... Müziği sever misin?
+sofa.say_music_yes,"[gf]Yes, I do[/gf]. [gf]I love[/gf] music!","Evet, severim. Müziğe bayılırım!"
+sofa.say_music_no,"[gf]No, I don't[/gf].","Hayır, sevmem."
+sofa.fm_music_what,Cool! What music [gf]do you like[/gf]?,Harika! Ne tür müzik seversin?
+sofa.say_pop,[gf]I like[/gf] pop music.,Pop müziği severim.
+sofa.say_rock,[gf]I like[/gf] rock music.,Rock müziği severim.
+sofa.say_jazz,[gf]I like[/gf] jazz.,Cazı severim.
+sofa.fm_music_she,[gf]I love[/gf] music. I [gf]listen[/gf] to music every day.,Müziğe bayılırım. Her gün müzik dinlerim.
+sofa.fm_free_q,What [gf]do you do[/gf] in your free time? [gf]Do you watch[/gf] movies?,Boş zamanında ne yaparsın? Film izler misin?
+sofa.say_movies,"[gf]Yes, I do[/gf]. I [gf]watch[/gf] movies at home.","Evet, izlerim. Evde film izlerim."
+sofa.say_football,I [gf]play[/gf] football.,Futbol oynarım.
+sofa.say_books,I [gf]read[/gf] books.,Kitap okurum.
+sofa.fm_free_she,Nice! I [gf]watch[/gf] movies on Fridays. My brother [gf]likes[/gf] football.,Güzel! Cuma günleri film izlerim. Kardeşim futbolu sever.
+sofa.fm_your_turn,Now you ask me!,Şimdi sen bana sor!
+sofa.say_what_you_like,[gf]What do you like[/gf]?,Sen neleri seversin?
+sofa.say_do_you_like_sports,[gf]Do you like[/gf] sports?,Spor sever misin?
+sofa.fm_i_like,[gf]I like[/gf] dancing and [gf]I love[/gf] cooking. But [gf]I don't like[/gf] sports!,"Dans etmeyi severim, yemek yapmaya da bayılırım. Ama spor sevmem!"
+sofa.think_she_likes,She [gf]likes[/gf] cooking. She [gf]doesn't like[/gf] sports.,O yemek yapmayı sever. Sporu sevmez.
+sofa.fm_food_q,And food? What food [gf]do you like[/gf]?,Peki ya yemek? Hangi yemekleri seversin?
+sofa.say_pizza,[gf]I love[/gf] pizza!,Pizzaya bayılırım!
+sofa.say_tacos,[gf]I like[/gf] tacos.,Tako severim.
+sofa.say_burgers,[gf]I like[/gf] burgers. [gf]I don't like[/gf] fish.,Hamburger severim. Balık sevmem.
+sofa.fm_hungry,Mmm! You look hungry. Let's order something!,Mmm! Aç görünüyorsun. Hadi bir şey sipariş edelim!
+sofa.say_no_cash,Good idea! But I don't have much cash.,İyi fikir! Ama pek nakit param yok.
+sofa.fm_on_me,[gold]Don't worry[/gold]. [gold]It's on me[/gold]!,[gold]Merak etme[/gold]. [gold]Benden[/gold]!
+sofa.say_thank_you,Really? [gold]Thank you so much[/gold]!,Gerçekten mi? [gold]Çok teşekkür ederim[/gold]!
+sofa.fm_app,"Here, take my phone. Open the Delivery app and choose something.","Al, telefonumu al. Yemek siparişi uygulamasını aç ve bir şey seç."
+sofa.hint_app,Order food in the Delivery app. %s pays!,Yemek uygulamasından sipariş ver. %s ödüyor!
+sofa.fm_ordered,Great choice! It comes in a few minutes.,Harika seçim! Birkaç dakikaya gelir.
+delivery.treat,%s pays for this order.,Bu siparişi %s ödüyor.
+delivery.paid_by,Paid by %s. Your cash is not used.,%s ödedi. Senin nakit paran kullanılmadı.
+expr.age_is_just_a_number,Age is just a number,"Yaş sadece bir sayı: yaşın önemli olmadığını, insanın kendini nasıl hissettiğinin önemli olduğunu söylemek için."
+expr.anything_else,Anything else?,"Başka bir şey? Kafede, dükkânda satıcının siparişe bir şey eklemek isteyip istemediğini sorduğu kalıp."
+expr.anything_to_drink,Anything to drink?,İçecek bir şey? Restoranda garsonun ya da telefonda siparişi alanın içecek isteyip istemediğini sorması.
+expr.as_soon_as_possible,as soon as possible,"Mümkün olduğunca çabuk, en kısa zamanda. Yazıda kısaca ASAP."
+expr.break_a_leg,Break a leg,"Bol şans! Kelimesi kelimesine 'bacağını kır' ama sınav, mülakat ya da sahne öncesi şans dilemek için söylenir."
+expr.cheers,Cheers,Şerefe! Kadeh ya da bardak tokuştururken söylenir. İngiltere'de 'teşekkürler' anlamında da kullanılır.
+expr.coffees_on_me,Coffee's on me,"Kahveler benden: kahveyi ben ısmarlıyorum, hesabı ben ödüyorum."
+expr.coming_right_up,coming right up,Hemen geliyor! Garsonun ya da baristanın siparişi hemen hazırlayacağını söylemesi.
+expr.congrats,Congrats,"Tebrikler! 'Congratulations' kelimesinin kısa, samimi hâli."
+expr.dont_worry,Don't worry,"Merak etme, dert etme: birini rahatlatmak için söylenir."
+expr.enjoy_your_meal,Enjoy your meal,Afiyet olsun! Yemek veren ya da getiren kişi söyler.
+expr.fingers_crossed,Fingers crossed,"Şans dile! Parmak çaprazlamak, bir şeyin iyi gitmesini umduğumuzu gösterir. 'İnşallah olur' gibi."
+expr.good_for_you,Good for you,"Aferin sana, sevindim! Birinin başarısına içtenlikle sevindiğini söylemek için."
+expr.good_job,Good job,"Aferin, iyi iş çıkardın! Bir işi iyi yapan birini övmek için."
+expr.good_luck,Good luck,Bol şans! Birine başarı dilerken söylenir.
+expr.have_a_good_one,Have a good one,İyi günler / iyi akşamlar! Vedalaşırken kullanılan samimi Amerikan kalıbı.
+expr.have_a_nice_day,have a nice day,"İyi günler! Dükkânda, taksiden inerken, vedalaşırken çok sık söylenir."
+expr.have_fun,Have fun,İyi eğlenceler! Bir yere giden ya da bir şey yapacak birine söylenir.
+expr.here_we_are,Here we are,"İşte geldik! Bir yere vardığımızda söylenir (taksi şoförü, yol arkadaşı)."
+expr.here_you_go,Here you go,"Buyurun, al bakalım: birine bir şey uzatırken söylenir."
+expr.hop_on,Hop on,"Atla bakalım, bin! Otobüse, arabaya ya da bisiklete binmesi için birine samimi davet."
+expr.i_can_do_this,I can do this,Bunu yapabilirim! Kendine cesaret verirken söylenir.
+expr.in_a_hurry,in a hurry,"Aceleyle, acelem var: 'I am in a hurry' = Acelem var."
+expr.its_on_me,It's on me,"Benden, ben ödüyorum: bir şeyi ısmarlarken, hesabı üstlenirken söylenir. 'Bu akşam yemek benden' gibi."
+expr.make_it,make it,"Başarmak, hedefe ulaşmak. 'I hope you make it' = Umarım başarırsın. Bir yere zamanında yetişmek anlamı da var."
+expr.make_yourself_at_home,Make yourself at home,Kendi evindeymiş gibi rahat ol: misafiri rahatlatmak için söylenir.
+expr.me_too,Me too,Ben de! Karşındakiyle aynı durumda ya da aynı fikirde olduğunu söylemek için.
+expr.nice_one,Nice one,"Helal olsun, süper! Birinin güzel bir şey yaptığını ya da söylediğini övmek için samimi kalıp."
+expr.nice_to_meet_you,Nice to meet you,Tanıştığımıza memnun oldum: ilk kez tanışınca söylenir. Cevabı: 'Nice to meet you too!'
+expr.no_problem,No problem,"Sorun değil, önemli değil: bir teşekküre ya da özüre rahat bir cevap."
+expr.no_worries,No worries,"Dert etme, sorun yok: 'No problem' gibi, daha samimi."
+expr.not_bad,Not bad,Fena değil! Aslında çoğu zaman 'gayet iyi' demektir.
+expr.on_uncle_sam,on Uncle Sam,Devletin cebinden: Uncle Sam (Sam Amca) ABD devletini temsil eder. 'It's on Uncle Sam' = Parasını devlet ödüyor.
+expr.rise_and_shine,Rise and shine,"Hadi kalk bakalım, günaydın! Birini sabah neşeyle uyandırırken söylenir."
+expr.see_you_around,See you around,"Görüşürüz, yine karşılaşırız: belli bir zaman vermeden vedalaşmak."
+expr.see_you_later,See you later,Sonra görüşürüz: aynı gün ya da yakında tekrar görüşecekken vedalaşmak.
+expr.see_you_soon,See you soon,Yakında görüşürüz.
+expr.see_you_tomorrow,See you tomorrow,Yarın görüşürüz.
+expr.see_you_tonight,See you tonight,Bu akşam görüşürüz.
+expr.take_care,Take care,Kendine iyi bak: vedalaşırken içten bir dilek.
+expr.take_it_easy,Take it easy,"Rahat ol, kafana takma: birini sakinleştirmek ya da vedalaşmak için."
+expr.thank_you_so_much,Thank you so much,"Çok teşekkür ederim: 'Thank you' demenin daha güçlü, içten hâli."
+expr.welcome_aboard,Welcome aboard,Aramıza hoş geldin! Yeni bir işe ya da ekibe katılan birine söylenir (aslında 'gemiye hoş geldin').
+expr.welcome_back,welcome back,Tekrar hoş geldin: bir yerden dönen birini karşılarken söylenir.
+expr.welcome_home,Welcome home,Evine hoş geldin: eve gelen ya da yeni taşınan birine söylenir.
+expr.well_done,Well done,"Aferin, tebrikler! Bir şeyi iyi yapan birini övmek için."
+expr.what_a_day,What a day,"Ne gündü ama! Çok yoğun, heyecanlı ya da yorucu bir günün sonunda söylenir."
+expr.where_to,Where to?,Nereye? Taksi şoförünün 'Nereye gidiyoruz?' demesinin kısa hâli.
+expr.youre_welcome,You're welcome,Rica ederim: 'Thank you' sözüne verilen cevap.
+expr.see_you_there,See you there,"Orada görüşürüz — bir yerde buluşmak için sözleşince söylenir."
+obj.go_home,Go home,Eve git
+home.bus_or_ride,"Bus home from %s: $%d. A taxi costs about $%d, more than the bus.","Eve otobüs: %s, $%d. Taksi yaklaşık $%d, otobüsten pahalı."
+home.take_bus,Take the bus ($%d),Otobüse bin ($%d)
+home.call_taxi,"Call a taxi (about $%d, more than the bus)","Taksi çağır (yaklaşık $%d, otobüsten pahalı)"
+app.torch,Flashlight,El feneri
+help.translate,Translate,Çevir
+help.explain,Explain,Açıkla
+help.close,Close,Kapat
+help.no_word,no meaning yet,henüz anlamı yok
+help.pos.verb,verb,fiil
+help.pos.noun,noun,isim
+help.pos.adj,adjective,sıfat
+help.pos.adv,adverb,zarf
+help.pos.pron,pronoun,zamir
+help.pos.aux,helper verb,yardımcı fiil
+help.pos.prep,preposition,edat
+help.pos.qword,question word,soru kelimesi
+help.pos.det,determiner,belirleyici
+help.pos.conj,conjunction,bağlaç
+help.pos.interj,exclamation,ünlem
+help.pos.num,number,sayı
+help.role.q,question word,soru kelimesi
+help.role.aux,helper verb,yardımcı fiil
+help.role.subj,subject,özne
+help.role.verb,verb,fiil
+help.role.obj,object,nesne
+help.role.time,time,zaman
+help.role.place,place,yer
+help.role.neg,not,olumsuzluk
+help.role.adj,describing word,sıfat
+help.role.expr,expression,kalıp ifade
+help.role.rest,other,diğer
+app.transit,Transit,Ulaşım
+transit.agency,Island Transit: Coronado buses 901 and 904,Island Transit: Coronado otobüsleri 901 ve 904
+transit.route,Bus %s to %s,"%s otobüsü, %s yönü"
+transit.from_to,From %s to %s,%s durağından %s durağına
+transit.buy,Buy a ticket ($%d),Bilet al ($%d)
+transit.how,Buy it before you get on. Tap your phone on the reader by the driver.,Binmeden önce al. Telefonunu şoförün yanındaki okuyucuya dokundur.
+transit.active,Ticket active,Bilet aktif
+transit.valid,"Valid for %d more minutes, one ride.","%d dakika daha geçerli, tek biniş."
+transit.tap,Show this at the reader by the driver.,Bunu şoförün yanındaki okuyucuya göster.
+transit.have,You already have a ticket.,Zaten biletin var.
+transit.no_money,Not enough money: a ticket costs $%d.,Yeterli para yok: bilet $%d.
+transit.bought,Ticket bought. Have a nice ride!,Bilet alındı. İyi yolculuklar!
+obj.bus_ticket,Buy a ticket for the %s bus on your phone (Transit app),Telefonundan %s otobüsü için bilet al (Ulaşım uygulaması)
+bus.hint_ticket,Open your phone and buy a ticket for the %s bus in the Transit app.,Telefonunu aç ve Ulaşım uygulamasından %s otobüsü için bilet al.
+bus.ticket_ok,Beep! Ticket OK.,Bip! Bilet geçerli.
+bus.need_ticket,"You need a ticket. Please buy one online, on your phone.",Bilet lazım. Lütfen telefonundan internetten al.
+bus.sit_use,Sit down,Otur
+obj.bus_seat,Find a seat and sit down,Bir koltuk bul ve otur
+obj.bus_off,Get off the bus through the front door,Ön kapıdan otobüsten in
+pc.icon_mail,Email,E-posta
+pc.icon_jobs,Jobs,İşler
+pc.icon_lessons,Lessons,Dersler
+pc.icon_games,Games,Oyunlar
+pc.icon_desktop,Desktop,Masaüstü
+pc.power,Turn off the computer,Bilgisayarı kapat
+pc.title_mail,Email,E-posta
+pc.title_jobs,Find a job,İş bul
+pc.title_cv,My CV,Özgeçmişim
+pc.title_lessons,Lessons,Dersler
+pc.title_games,Games,Oyunlar
+pc.title_runner,Jump!,Zıpla!
+pc.title_racer,Road Racer,Yol Yarışçısı
+pc.back,Back,Geri
+pc.listening,Listening… say it now,Dinliyor… şimdi söyle
+pc.mail_inbox,Inbox,Gelen kutusu
+pc.mail_from,From: %s,Kimden: %s
+pc.mail_welcome_from,Coronado Rentals,Coronado Kiralık
+pc.mail_welcome_subj,Welcome to your new home!,Yeni evine hoş geldin!
+pc.mail_welcome_body,"Welcome to 732 D Avenue! Your room has a bed, a desk and this computer. You can study English and look for a job on it. Good luck!","732 D Avenue'ya hoş geldin! Odanda bir yatak, bir masa ve bu bilgisayar var. Bilgisayarda İngilizce çalışabilir ve iş arayabilirsin. Bol şans!"
+pc.mail_invite_subj,Interview invitation,Mülakat daveti
+pc.mail_invite_body,"Hello! Thank you for your CV for the %s job. Please come to an interview at %s, %s, on day %s at %s.","Merhaba! %s işi için özgeçmişin için teşekkürler. Lütfen %s, %s adresine, %s. gün saat %s'te mülakata gel."
+pc.jobs_head,Job openings,Açık işler
+pc.jobs_hint,Choose a job and tap Apply. Then fill in your CV.,Bir iş seç ve Başvur'a dokun. Sonra özgeçmişini doldur.
+pc.jobs_apply,Apply,Başvur
+pc.jobs_have,You have a job: %s.,Bir işin var: %s.
+pc.jobs_applied,You applied: %s at %s. Wait for an email.,"Başvurdun: %s, %s. Bir e-posta bekle."
+pc.lessons_head,Grammar lessons,Dilbilgisi dersleri
+pc.lessons_none,No lessons yet.,Henüz ders yok.
+pc.lesson_open,Open,Aç
+pc.lesson_step,Step %s of %s,Adım %s / %s
+pc.lesson_finish,Finish,Bitir
+pc.lesson_done,Lesson done! Score: %s / %s,Ders bitti! Puan: %s / %s
+pc.games_head,Games,Oyunlar
+pc.game_runner,Jump!,Zıpla!
+pc.game_runner_line,Run and jump over the boxes.,Koş ve kutuların üstünden zıpla.
+pc.game_racer,Road Racer,Yol Yarışçısı
+pc.game_racer_line,Drive fast and do not hit the other cars.,Hızlı sür ve diğer arabalara çarpma.
+pc.play,Play,Oyna
+pc.runner_help,"You are the little blue runner. Tap anywhere on the screen to jump. Jump over the wooden boxes. If you touch a box, the game ends. The game gets faster and faster.",Sen küçük mavi koşucusun. Zıplamak için ekranda herhangi bir yere dokun. Tahta kutuların üstünden zıpla. Bir kutuya dokunursan oyun biter. Oyun gittikçe hızlanır.
+pc.racer_help,"You drive the red car. Tilt your phone left or right to steer, like a steering wheel. You can also hold one finger on the left or right side of the screen. Do not hit the other cars. The game gets faster and faster.","Kırmızı arabayı sen sürüyorsun. Direksiyon gibi, telefonunu sola veya sağa eğerek yön ver. Bir parmağını ekranın sol veya sağ tarafında da tutabilirsin. Diğer arabalara çarpma. Oyun gittikçe hızlanır."
+pc.tap_start,Tap to start,Başlamak için dokun
+pc.game_over,Game over!,Oyun bitti!
+pc.your_score,Your score: %s. Best: %s.,Puanın: %s. En iyi: %s.
+pc.tap_again,Tap to play again,Tekrar oynamak için dokun
+pc.score,Score: %s,Puan: %s
+pc.best,Best: %s,En iyi: %s
+_phase4_shared,"Phase 4 shared keys below (speakers, chapter titles). Each chapter adds its keys right under its own _chN marker.",
+npc.boss,Boss,Patron
+npc.coworker,Co-worker,İş arkadaşı
+npc.bartender,Bartender,Barmen
+npc.alien,Alien,Uzaylı
+npc.goo_teacher,Teacher,Öğretmen
+npc.new_boss,New boss,Yeni patron
+npc.doctor,Doctor,Doktor
+npc.instructor,Driving instructor,Sürüş eğitmeni
+_ch1,ch1_drinks keys below (cloud story),
+ch1.fm_hi,"Hey, you're home! So... how was your day?","Hey, eve gelmişsin! Eee... günün nasıldı?"
+ch1.say_great_day,"It was great! [gold]I got the job[/gold]!","Harikaydı! [gold]İşi aldım[/gold]!"
+ch1.fm_what_did_you_do,"Wow! Tell me everything. What did you do?","Vay! Her şeyi anlat. Ne yaptın?"
+ch1.say_took_bus,"I took the bus and I went to the interview.","Otobüse bindim ve mülakata gittim."
+ch1.say_met_manager,"I met the manager. He asked a lot of questions.","Müdürle tanıştım. Bir sürü soru sordu."
+ch1.say_answered,"I answered all the questions. And I got the job!","Bütün soruları cevapladım. Ve işi aldım!"
+ch1.fm_past_simple,"Listen to you! [gold]Took, went, met[/gold]... that's the past simple!","Şuna bak! [gold]Took, went, met[/gold]... bu geçmiş zaman!"
+ch1.think_lesson,The past simple... Let me check my phone.,Geçmiş zaman... Telefonuma bir bakayım.
+ch1.fm_lets_celebrate,"We should celebrate! [gold]Let's go for a drink[/gold]!","Kutlamalıyız! [gold]Hadi bir şeyler içmeye gidelim[/gold]!"
+ch1.say_lets_go,"Good idea! [gold]Let's go[/gold]!","İyi fikir! [gold]Hadi gidelim[/gold]!"
+ch1.fm_at_seven,"Great! Let's go tonight at seven. There's a nice bar near here: %s.","Harika! Bu akşam yedide gidelim. Yakında güzel bir bar var: %s."
+ch1.think_get_ready,"OK. Time to get ready.","Tamam. Hazırlanma zamanı."
+ch1.fm_go_ahead,"I'll go first and get a table. See you at %s!","Ben önden gidip bir masa ayarlayayım. %s'da görüşürüz!"
+ch1.fm_over_here,Hey! [gold]Over here[/gold]!,Hey! [gold]Buradayım[/gold]!
+ch1.fm_my_round,"This is a nice place, right?","Güzel bir yer, değil mi?"
+ch1.say_my_round,"Yes, it is! The first round is on me.","Evet, öyle! İlk içkiler benden."
+ch1.fm_lets_order,"Thanks! Let's order at the bar.","Teşekkürler! Hadi bardan sipariş verelim."
+ch1.bt_hi,Good evening! What can I get you?,İyi akşamlar! Ne alırsınız?
+ch1.say_two_lemonades,"Two lemonades, please.","İki limonata, lütfen."
+ch1.say_two_iced_teas,"Two iced teas, please.","İki buzlu çay, lütfen."
+ch1.say_two_beers,"Two beers, please.","İki bira, lütfen."
+ch1.bt_id,"Can I see your ID, please?","Kimliğinizi görebilir miyim, lütfen?"
+ch1.think_only,Oh no... I'm only %d.,Eyvah... Daha %d yaşındayım.
+ch1.bt_under_21,"Sorry, you're under 21. [gold]No beer[/gold] for you. Something else?","Üzgünüm, 21 yaşından küçüksünüz. Size bira yok. Başka bir şey?"
+ch1.bt_soft,What would you like?,Ne istersiniz?
+ch1.say_here_id,"Sure. [gold]Here you are[/gold].","Tabii. [gold]Buyurun[/gold]."
+ch1.bt_thanks_id,"Thank you. Two beers, coming up!","Teşekkürler. İki bira geliyor!"
+ch1.bt_food,"Anything to eat?","Yiyecek bir şey?"
+ch1.say_fries,"Yes. Two portions of fries, please.","Evet. İki porsiyon patates kızartması, lütfen."
+ch1.say_nachos,"Yes. Two portions of nachos, please.","Evet. İki porsiyon nachos, lütfen."
+ch1.say_no_food,"No, thanks. Just the drinks.","Hayır, teşekkürler. Sadece içecekler."
+ch1.fm_my_treat,"Hey, no! It's my treat tonight. You can pay next time!","Hey, hayır! Bu akşam benden. Sen bir dahaki sefere ödersin!"
+ch1.order_note,Drinks,İçecekler
+ch1.fm_cheers,To your new job! [gold]Cheers[/gold]!,Yeni işine! [gold]Şerefe[/gold]!
+ch1.fr_hi,"Hey! What a surprise! Hello again!","Hey! Ne sürpriz! Tekrar merhaba!"
+ch1.say_fr_hi,"Hi, %s! Nice to see you again.","Selam %s! Seni tekrar görmek güzel."
+ch1.fr_when_start,So... when do you start your new job?,Eee... yeni işine ne zaman başlıyorsun?
+ch1.say_start_tomorrow,I start tomorrow at %d o'clock.,Yarın saat %d'de başlıyorum.
+ch1.fr_good_luck,"Tomorrow! [gold]Good luck[/gold]! I have to go. Have fun!","Yarın! [gold]Bol şans[/gold]! Gitmem lazım. İyi eğlenceler!"
+ch1.card_later,Two hours later...,İki saat sonra...
+ch1.fm_late,"Wow, it's late! You start work tomorrow. Let's go home. I'll go first.","Vay, geç oldu! Yarın işe başlıyorsun. Hadi eve gidelim. Ben önden gidiyorum."
+ch1.say_good_night,"OK. [gold]Good night[/gold]! See you at home.","Tamam. [gold]İyi geceler[/gold]! Evde görüşürüz."
+obj.ch1_bar,Meet %s at %s,%s ile %s'da buluş
+obj.ch1_order,Order drinks at the bar,Bardan içki sipariş et
+_ch2,ch2_work keys below (cloud story),
+ch2.think_bed,"What a night! Tomorrow is my first day at work. Time for bed.","Ne geceydi! Yarın işteki ilk günüm. Yatma zamanı."
+ch2.alarm,Beep! Beep! Beep! (the alarm),Bip! Bip! Bip! (alarm)
+ch2.think_what_time,Oh! What time is it?,Aa! Saat kaç?
+ch2.say_seven,It's seven o'clock! Time to get up.,Saat yedi! Kalkma zamanı.
+ch2.fm_morning,"Good morning! How do you feel today?","Günaydın! Bugün nasıl hissediyorsun?"
+ch2.say_tired,"A bit tired, but I'm OK!","Biraz yorgunum ama iyiyim!"
+ch2.fm_what_time,What time do you start work?,İşe saat kaçta başlıyorsun?
+ch2.say_start_at,I start at %d o'clock.,Saat %d'de başlıyorum.
+ch2.fm_how_get,How do you get there?,Oraya nasıl gidiyorsun?
+ch2.say_usually_bus,I usually take the bus.,Genellikle otobüse binerim.
+ch2.say_usually_walk,I usually walk. It's good exercise!,Genellikle yürürüm. İyi bir egzersiz!
+ch2.say_sometimes_taxi,I sometimes take a taxi.,Bazen taksiye binerim.
+ch2.fm_frequency,"[gold]Usually, sometimes, always[/gold]... You use them a lot in English!","[gold]Usually, sometimes, always[/gold]... İngilizcede bunları çok kullanırsın!"
+ch2.think_lessons,Telling the time and 'usually'... Let me check my phone.,Saati söylemek ve 'usually'... Telefonuma bir bakayım.
+ch2.fm_good_luck,"Have a great first day! [gold]Good luck[/gold]!","İlk günün harika geçsin! [gold]Bol şans[/gold]!"
+ch2.say_thanks_bye,"Thanks! See you later!","Teşekkürler! Sonra görüşürüz!"
+obj.ch2_work,Go to work at %s,%s'daki işine git
+ch2.boss_welcome,"Good morning! Welcome to your first day!","Günaydın! İlk gününe hoş geldin!"
+ch2.say_ready,"Good morning! I'm ready.","Günaydın! Hazırım."
+ch2.boss_early,You're early! [gold]Very good[/gold].,Erken geldin! [gold]Çok iyi[/gold].
+ch2.boss_late,"You're late! We start at %d o'clock.","Geç kaldın! Saat %d'de başlıyoruz."
+ch2.say_sorry_late,I'm sorry! It won't happen again.,Özür dilerim! Bir daha olmayacak.
+ch2.boss_meet_sam,This is %s. %s works here too.,Bu %s. %s da burada çalışıyor.
+ch2.sam_hi,"Hi! I'm %s. [gold]Nice to meet you[/gold]!","Selam! Ben %s. [gold]Tanıştığımıza memnun oldum[/gold]!"
+ch2.boss_rules,"OK, listen. [gold]Wash your hands[/gold]. Put on your name badge. Smile at the customers. And [gold]don't use your phone[/gold] at work!","Tamam, dinle. [gold]Ellerini yıka[/gold]. İsim kartını tak. Müşterilere gülümse. Ve işte [gold]telefonunu kullanma[/gold]!"
+ch2.think_imperatives,"Wash, put on, smile, don't use... Instructions! Let me check my phone.","Yıka, tak, gülümse, kullanma... Talimatlar! Telefonuma bir bakayım."
+ch2.boss_quiz,"So, can you use your phone at work?","Peki, işte telefonunu kullanabilir misin?"
+ch2.say_no_phone,"No, I can't. I don't use my phone at work.","Hayır, kullanamam. İşte telefonumu kullanmam."
+ch2.say_yes_phone,"Yes, of course!","Evet, tabii ki!"
+ch2.boss_no_phone,No! [gold]Don't use your phone[/gold] at work. Try again.,Hayır! İşte [gold]telefonunu kullanma[/gold]. Tekrar dene.
+ch2.boss_start,Good. Let's start!,Güzel. Hadi başlayalım!
+ch2.boss_good_job,"[gold]Good job[/gold] today! You earned %d dollars. See you tomorrow at %d!","Bugün [gold]iyi iş çıkardın[/gold]! %d dolar kazandın. Yarın %d'de görüşürüz!"
+ch2.say_see_you,"Thank you! [gold]See you tomorrow[/gold]!","Teşekkürler! [gold]Yarın görüşürüz[/gold]!"
+ch2.sam_bye,Bye! See you tomorrow!,Hoşça kal! Yarın görüşürüz!
+_ch3,ch3_aliens keys below (cloud ui/systems),
+ch3.think_tired,What a long day! I'm so tired. I'm going to bed.,Ne uzun bir gün! Çok yorgunum. Yatmaya gidiyorum.
+ch3.think_light,What's that light? ...Who's there?,Bu ışık ne? ...Kim var orada?
+ch3.think_cant_move,I can't move!,Kıpırdayamıyorum!
+ch3.orla_hello,"Hello, human. Don't be afraid. My name is Orla. This is Zib.","Merhaba, insan. Korkma. Benim adım Orla. Bu Zib."
+ch3.say_where,Where am I?,Neredeyim?
+ch3.orla_ship,You are on our ship. We are above the ocean.,Gemimizdesin. Okyanusun üzerindeyiz.
+ch3.orla_learn,We want to learn about your world. And you want to learn English. Let's learn together!,Senin dünyanı öğrenmek istiyoruz. Sen de İngilizce öğrenmek istiyorsun. Birlikte öğrenelim!
+ch3.orla_look,"Look around. There is a table, and there are three chairs.",Etrafına bak. Bir masa var ve üç sandalye var.
+ch3.orla_q_plant,What is there by the window?,Pencerenin yanında ne var?
+ch3.a_plant,There is a plant.,Bir bitki var.
+ch3.a_plant_x1,There are a plant.,Bir bitki var.
+ch3.a_plant_x2,There is plants.,Bir bitki var.
+ch3.orla_q_chairs,How many chairs are there?,Kaç sandalye var?
+ch3.a_chairs,There are three chairs.,Üç sandalye var.
+ch3.a_chairs_x1,There is three chairs.,Üç sandalye var.
+ch3.a_chairs_x2,There are three chair.,Üç sandalye var.
+ch3.orla_q_bed,Is there a bed in this room?,Bu odada bir yatak var mı?
+ch3.a_bed,"No, there isn't.","Hayır, yok."
+ch3.a_bed_x1,"No, there aren't.","Hayır, yok."
+ch3.a_bed_x2,"Yes, there is.","Evet, var."
+ch3.orla_rule_is,Not quite. One thing: there is. Two or more things: there are.,Tam değil. Tek bir şey: there is. İki ya da daha fazla şey: there are.
+ch3.orla_rule_isnt,Look again: there is no bed here. One thing: there isn't.,Tekrar bak: burada yatak yok. Tek bir şey: there isn't.
+ch3.orla_good,Yes! Very good.,Evet! Çok iyi.
+ch3.think_lesson,There's a lesson about this on my phone. Let's look.,Telefonumda bununla ilgili bir ders var. Bakalım.
+ch3.orla_this,"This is a map of your planet. It's here, near me.","Bu, gezegeninin bir haritası. Burada, yanımda."
+ch3.orla_that,"And that is the ocean. It's down there, far away.","Ve şu okyanus. Aşağıda, uzakta."
+ch3.orla_near_far,Near: this. Far: that. Now you!,Yakın: this. Uzak: that. Şimdi sen!
+ch3.orla_q_far,"What's that, over there?","Şu ne, orada?"
+ch3.a_far,That is a table.,Şu bir masa.
+ch3.a_far_x1,This is a table.,Bu bir masa.
+ch3.orla_q_near,"And what's this, here?","Ya bu ne, burada?"
+ch3.a_near,This is a map.,Bu bir harita.
+ch3.a_near_x1,That is a map.,Şu bir harita.
+ch3.orla_rule_this,"No: this is here, near you. That is there, far away.","Hayır: this burada, yakınında. That orada, uzakta."
+ch3.orla_fast,"You learn fast, human! Now go back and sleep.","Hızlı öğreniyorsun, insan! Şimdi geri dön ve uyu."
+ch3.orla_goo,We leave you a teacher. Its name is Goo. Learn well!,Sana bir öğretmen bırakıyoruz. Adı Goo. İyi öğren!
+ch3.say_bye,Goodbye!,Hoşça kalın!
+ch3.think_dream,Huh? It's morning... Was it a dream?,Ha? Sabah olmuş... Rüya mıydı?
+ch3.think_learned,"There is, there are... this, that... I remember everything!","There is, there are... this, that... Her şeyi hatırlıyorum!"
+ch3.muffled,Mmmf. Mmm mmmf mmm.,Mmmf. Mmm mmmf mmm.
+ch3.think_ears,I can't hear them. There is goo in my ears!,Onları duyamıyorum. Kulaklarımda yapışkan bir şey var!
+ch3.tap_help,Hit the side of your phone with your hand to shake the goo out of your ears!,Kulaklarındaki yapışkanı atmak için telefonunun yan tarafına elinle vur!
+ch3.tap_count,%d of %d,%d / %d
+ch3.tap_btn,Tap here instead,Bunun yerine buraya dokun
+ch3.think_hear,Ah! Now I can hear.,Ah! Şimdi duyabiliyorum.
+ch3.orla_hello2,Good. Now you can hear us. I am Orla. This is Zib.,Güzel. Artık bizi duyabiliyorsun. Ben Orla. Bu Zib.
+ch3.orla_abduct,This is an abduction. We took you from your bed.,Bu bir kaçırma. Seni yatağından aldık.
+ch3.orla_hollywood,"Forget your films. Hollywood is wrong about us. No lasers, no tests.","Filmlerini unut. Hollywood bizim hakkımızda yanılıyor. Lazer yok, deney yok."
+ch3.orla_lightyears,We travelled forty light years to take you. Only you.,Seni almak için kırk ışık yılı yol geldik. Sadece seni.
+ch3.orla_kill,We can kill you very easily. But we don't want to.,Seni çok kolay öldürebiliriz. Ama istemiyoruz.
+ch3.orla_relax,"So relax, and do what we want.",Yani rahatla ve istediğimizi yap.
+ch3.orla_know,You don't believe us? We know everything about you.,Bize inanmıyor musun? Senin hakkında her şeyi biliyoruz.
+ch3.orla_date,"Today is %s, %s %d.","Bugün %s, %d %s."
+ch3.orla_where,You are in %s.,Şu an buradasın: %s.
+ch3.orla_where_none,You are somewhere on Earth. We don't care where.,Dünya'da bir yerdesin. Neresi olduğu umurumuzda değil.
+ch3.orla_phone,Your phone is a %s.,Telefonun bir %s.
+ch3.orla_phone_generic,Your phone is very cheap.,Telefonun çok ucuz.
+ch3.orla_table,Put your phone on the table. Watch our power.,Telefonunu masaya koy. Gücümüzü izle.
+ch3.put_table,Put your phone on a table and watch it.,Telefonunu bir masaya koy ve izle.
+ch3.orla_power,Did you see it move? That was us. Now pick it up.,Hareket ettiğini gördün mü? O bizdik. Şimdi onu al.
+ch3.orla_teach,Now you teach us about your world. We ask. You answer.,Şimdi bize dünyanı öğret. Biz sorarız. Sen cevap verirsin.
+ch3.orla_q_planet,What is your planet called?,Gezegeninin adı ne?
+ch3.a_planet,It is called Earth.,Adı Dünya.
+ch3.a_planet_x1,It is called Mars.,Adı Mars.
+ch3.a_planet_x2,It is called Hollywood.,Adı Hollywood.
+ch3.orla_no_planet,No. We passed that one on the way. Try again.,Hayır. Yolda onun yanından geçtik. Tekrar dene.
+ch3.orla_no,Wrong. Zib counted from the window. Try again.,Yanlış. Zib pencereden saydı. Tekrar dene.
+ch3.orla_q_continents,How many continents are there?,Kaç kıta var?
+ch3.a_cont,There are seven continents.,Yedi kıta var.
+ch3.a_cont_x1,There are three continents.,Üç kıta var.
+ch3.a_cont_x2,There are seventy continents.,Yetmiş kıta var.
+ch3.orla_names,Tell us their names.,Bize adlarını söyle.
+ch3.cont_1,"Asia, Africa and Europe.","Asya, Afrika ve Avrupa."
+ch3.cont_2,North America and South America.,Kuzey Amerika ve Güney Amerika.
+ch3.cont_3,Australia and Antarctica.,Avustralya ve Antarktika.
+ch3.orla_seven,Seven! We have only one. It is very boring.,Yedi! Bizde sadece bir tane var. Çok sıkıcı.
+ch3.orla_q_countries,Now countries. Tell us the big ones.,Şimdi ülkeler. Bize büyük olanları söyle.
+ch3.country_1,"China, India and the United States.","Çin, Hindistan ve Amerika Birleşik Devletleri."
+ch3.country_2,"Russia, Brazil and Japan.","Rusya, Brezilya ve Japonya."
+ch3.country_3,"Germany, France and Turkey.","Almanya, Fransa ve Türkiye."
+ch3.orla_like,So many countries! Do they all like each other?,Ne çok ülke! Hepsi birbirini seviyor mu?
+ch3.say_next,"Next question, please.","Sonraki soru, lütfen."
+ch3.orla_q_time,How does time pass on your planet? How long is a day?,Gezegeninde zaman nasıl geçer? Bir gün ne kadar sürer?
+ch3.a_day,A day is twenty-four hours.,Bir gün yirmi dört saattir.
+ch3.a_day_x1,A day is ten hours.,Bir gün on saattir.
+ch3.a_day_x2,A day is twenty-four years.,Bir gün yirmi dört yıldır.
+ch3.time_week,A week is seven days.,Bir hafta yedi gündür.
+ch3.time_year,A year is twelve months.,Bir yıl on iki aydır.
+ch3.orla_tired,Our day is four hundred hours. We are always tired.,Bizim günümüz dört yüz saat. Hep yorgunuz.
+ch3.orla_q_seasons,What are your seasons?,Mevsimleriniz neler?
+ch3.season_1,There are four seasons.,Dört mevsim var.
+ch3.season_2,"Spring, summer, autumn and winter.","İlkbahar, yaz, sonbahar ve kış."
+ch3.orla_winter,Winter? What is winter?,Kış mı? Kış nedir?
+ch3.season_3,It is cold in winter.,Kışın hava soğuktur.
+ch3.orla_jacket,Cold! Terrible. Zib needs a jacket.,Soğuk! Korkunç. Zib'e bir mont lazım.
+ch3.orla_q_months,Now the months. All twelve.,Şimdi aylar. On ikisi de.
+ch3.month_1,"January, February, March, April.","Ocak, Şubat, Mart, Nisan."
+ch3.month_2,"May, June, July, August.","Mayıs, Haziran, Temmuz, Ağustos."
+ch3.month_3,"September, October, November, December.","Eylül, Ekim, Kasım, Aralık."
+ch3.orla_q_days,And the days of the week.,Ve haftanın günleri.
+ch3.day_1,"Monday, Tuesday, Wednesday, Thursday, Friday.","Pazartesi, Salı, Çarşamba, Perşembe, Cuma."
+ch3.day_2,Saturday and Sunday.,Cumartesi ve Pazar.
+ch3.orla_wrote,Good. Zib wrote everything down.,Güzel. Zib her şeyi yazdı.
+ch3.orla_go,You can go home now. But first we have a deal for you.,Şimdi evine gidebilirsin. Ama önce sana bir teklifimiz var.
+ch3.orla_deal,Every night you tell us about your day. What you did. Where you went. What you ate.,Her gece bize gününü anlatacaksın. Ne yaptın. Nereye gittin. Ne yedin.
+ch3.deal_q,Do you accept the deal?,Teklifi kabul ediyor musun?
+ch3.a_yes,Yes.,Evet.
+ch3.a_rebel,"God damn you aliens, I'm not going to do it!","Lanet olsun size uzaylılar, bunu yapmayacağım!"
+ch3.rebel_hint,Put the words in order. Then say it.,Kelimeleri sıraya koy. Sonra söyle.
+ch3.orla_wrong_answer,Wrong answer.,Yanlış cevap.
+ch3.think_goo,What was I thinking? Of course they can obliterate me in a second.,Ne düşünüyordum ki? Tabii ki beni bir saniyede yok edebilirler.
+ch3.over_rebel_title,GAME OVER. REBEL!,OYUN BİTTİ. ASİ!
+ch3.over_rebel,"I chose this. Nobody made me do it. Now I am a puddle on an alien floor, and they will mop me up.","Bunu ben seçtim. Kimse zorlamadı. Şimdi bir uzaylı zemininde su birikintisiyim ve beni paspasla silecekler."
+ch3.orla_again,We put you back together. It took a long time. Let's try again.,Seni tekrar birleştirdik. Çok uzun sürdü. Tekrar deneyelim.
+ch3.orla_deal_ok,Good human. We come back every three days. Sleep well!,Aferin insan. Üç günde bir geri geleceğiz. İyi uykular!
+ch3.think_remember,"Days, months, countries... I remember everything. And I have a deal with aliens.","Günler, aylar, ülkeler... Her şeyi hatırlıyorum. Ve uzaylılarla bir anlaşmam var."
+_ch4,ch4_goo keys below (cloud ui/systems),
+npc.goo,Goo,Goo
+ch4.think_what,What... what is THAT?! A green... jelly?,Bu... bu NE?! Yeşil bir... jöle mi?
+ch4.say_who,Hello? Who are you?,Merhaba? Sen kimsin?
+ch4.goo_hello,"Hello, student! I am Goo, your teacher. The aliens say your English needs more practice. Today: [gold]school[/gold]!","Merhaba öğrenci! Ben Goo, öğretmeninim. Uzaylılar İngilizcenin daha çok pratiğe ihtiyacı olduğunu söylüyor. Bugün: [gold]okul[/gold]!"
+ch4.say_work,But I have to go to work at %d o'clock!,Ama saat %d'de işe gitmem lazım!
+ch4.goo_no_work,"No work today. School first! Let's start. Answer my questions!","Bugün iş yok. Önce okul! Hadi başlayalım. Sorularıma cevap ver!"
+ch4.goo_pp_q1,[gold]Have you ever[/gold] seen an alien before?,Daha önce hiç bir uzaylı [gold]gördün mü[/gold]?
+ch4.say_pp_yes1,"Yes, I have. I've seen you!","Evet, gördüm. Seni gördüm!"
+ch4.say_pp_no1,"No, I haven't. You're the first!","Hayır, görmedim. Sen ilksin!"
+ch4.goo_pp_q2,Have you ever eaten a taco?,Hiç tako yedin mi?
+ch4.say_pp_yes2,"Yes, I have. I love tacos!","Evet, yedim. Takoya bayılırım!"
+ch4.say_pp_no2,"No, I haven't. But I want to!","Hayır, yemedim. Ama istiyorum!"
+ch4.goo_pp_q3,Have you ever been to the beach in Coronado?,Hiç Coronado'da plaja gittin mi?
+ch4.say_pp_yes3,"Yes, I have. It's beautiful!","Evet, gittim. Çok güzel!"
+ch4.say_pp_no3,"No, I haven't. Not yet!","Hayır, gitmedim. Henüz değil!"
+ch4.goo_pp_good,"Very good! [gold]Have you ever...? Yes, I have. No, I haven't.[/gold] That's the present perfect!","Çok iyi! [gold]Have you ever...? Yes, I have. No, I haven't.[/gold] Bu present perfect!"
+ch4.think_lesson_pp,The present perfect... Let me check my phone.,Present perfect... Telefonuma bir bakayım.
+ch4.say_must_go,"OK, I really have to go now. Bye!","Tamam, gerçekten gitmem lazım. Hoşça kal!"
+ch4.goo_catch_me,No no no! Class is not over! [gold]Catch me[/gold] first! Blub blub!,Hayır hayır! Ders bitmedi! Önce [gold]beni yakala[/gold]! Blub blub!
+obj.ch4_catch,Catch Goo,Goo'yu yakala
+ch4.goo_caught,"Oh! You caught me! OK, a question:","Aa! Beni yakaladın! Tamam, bir soru:"
+ch4.goo_cmp_q1,Which is [gold]bigger[/gold]: the Earth or the Moon?,Hangisi daha [gold]büyük[/gold]: Dünya mı Ay mı?
+ch4.say_cmp_a1,The Earth is bigger than the Moon.,Dünya Ay'dan daha büyük.
+ch4.say_cmp_b1,The Moon is bigger than the Earth.,Ay Dünya'dan daha büyük.
+ch4.goo_cmp_q2,Which is [gold]faster[/gold]: a car or a bike?,Hangisi daha [gold]hızlı[/gold]: araba mı bisiklet mi?
+ch4.say_cmp_a2,A car is faster than a bike.,Araba bisikletten daha hızlı.
+ch4.say_cmp_b2,A bike is faster than a car.,Bisiklet arabadan daha hızlı.
+ch4.goo_cmp_q3,Which is [gold]colder[/gold]: ice cream or coffee?,Hangisi daha [gold]soğuk[/gold]: dondurma mı kahve mi?
+ch4.say_cmp_a3,Ice cream is colder than coffee.,Dondurma kahveden daha soğuk.
+ch4.say_cmp_b3,Coffee is colder than ice cream.,Kahve dondurmadan daha soğuk.
+ch4.goo_cmp_q4,"Which is [gold]smaller[/gold]: me or you?","Hangisi daha [gold]küçük[/gold]: ben mi sen mi?"
+ch4.say_cmp_a4,You are smaller than me.,Sen benden daha küçüksün.
+ch4.say_cmp_b4,I am smaller than you.,Ben senden daha küçüğüm.
+ch4.goo_cmp_q5,Which is [gold]more expensive[/gold]: a taxi or a bus?,Hangisi daha [gold]pahalı[/gold]: taksi mi otobüs mü?
+ch4.say_cmp_a5,A taxi is more expensive than a bus.,Taksi otobüsten daha pahalı.
+ch4.say_cmp_b5,A bus is more expensive than a taxi.,Otobüs taksiden daha pahalı.
+ch4.goo_wrong,"Hmm, no! Think again.","Hmm, hayır! Tekrar düşün."
+ch4.goo_right,[gold]Correct[/gold]! Blub!,[gold]Doğru[/gold]! Blub!
+ch4.card_later,Three hours later...,Üç saat sonra...
+ch4.boss_where,"Where are you?! We start at %d o'clock. It's twelve now! You didn't come to work!","Neredesin?! Saat %d'de başlıyoruz. Şimdi saat on iki! İşe gelmedin!"
+ch4.say_sorry_sick,"I'm so sorry. I... I can't come today. I'm sick.","Çok özür dilerim. Ben... bugün gelemiyorum. Hastayım."
+ch4.say_sorry_goo,"I'm so sorry. An alien jelly kept me at home!","Çok özür dilerim. Uzaylı bir jöle beni evde tuttu!"
+ch4.boss_office,"Sick? You didn't call! Come to my office tomorrow at nine.","Hasta mı? Aramadın bile! Yarın saat dokuzda ofisime gel."
+ch4.boss_goo,"An alien jelly?! Is this a joke? Come to my office tomorrow at nine.","Uzaylı jöle mi?! Bu bir şaka mı? Yarın saat dokuzda ofisime gel."
+ch4.say_ok_sorry,"OK. I'll be there. Sorry again.","Tamam. Orada olacağım. Tekrar özür dilerim."
+ch4.goo_sofa,"Oh dear. Your boss is angry. But school is not over! Sit on the sofa, student.","Eyvah. Patronun kızgın. Ama okul bitmedi! Kanepeye otur öğrenci."
+obj.ch4_sofa,Sit on the sofa,Kanepeye otur
+ch4.think_lesson_cmp,"Bigger, faster, more expensive... Let me check my phone.","Daha büyük, daha hızlı, daha pahalı... Telefonuma bir bakayım."
+ch4.card_evening,That evening...,O akşam...
+ch4.goo_someone,"Shh! Someone is at the door! I must go!","Şşş! Kapıda biri var! Gitmem lazım!"
+ch4.goo_certificate,"You are a good student. Here is your certificate! Goodbye! Blub blub!","Sen iyi bir öğrencisin. İşte sertifikan! Hoşça kal! Blub blub!"
+ch4.certificate,CERTIFICATE: English school with Goo. Present perfect and comparatives. Very good!,SERTİFİKA: Goo ile İngilizce okulu. Present perfect ve karşılaştırmalar. Çok iyi!
+ch4.say_thanks_goo,"Thank you, Goo! Goodbye!","Teşekkürler Goo! Hoşça kal!"
+ch4.think_key,A key in the door... My flatmate is home.,Kapıda bir anahtar... Ev arkadaşım geldi.
+ch4.fm_home,"Hi! I'm home! So, how was work today?","Selam! Ben geldim! Eee, bugün iş nasıldı?"
+ch4.say_didnt_go,I didn't go to work today.,Bugün işe gitmedim.
+ch4.say_strange_day,It was a very strange day.,Çok garip bir gündü.
+ch4.fm_why,What? Why? What happened?,Ne? Neden? Ne oldu?
+ch4.say_goo_teacher,"A green jelly from space was my English teacher all day!","Uzaydan gelen yeşil bir jöle bütün gün İngilizce öğretmenimdi!"
+ch4.fm_funny,"A jelly teacher? Ha ha ha! [gold]Very funny[/gold]. You need some sleep!","Jöle öğretmen mi? Ha ha ha! [gold]Çok komik[/gold]. Biraz uykuya ihtiyacın var!"
+ch4.fm_cook,"I'm making dinner. Come to the kitchen later!","Akşam yemeği yapıyorum. Sonra mutfağa gel!"
+_ch5,ch5_fired keys below (cloud props),
+ch5.think_worried,"Tomorrow I have to see my boss at nine... I'm worried. Time for bed.","Yarın saat dokuzda patronumu görmem lazım... Endişeliyim. Yatma zamanı."
+ch5.think_morning,"OK. I'm going to see my boss. I'm going to say sorry.","Tamam. Patronumu görmeye gideceğim. Özür dileyeceğim."
+obj.ch5_boss,Go to your boss at %s,%s'daki patronuna git
+ch5.boss_sit,Come in. Sit down.,Gel. Otur.
+ch5.boss_why,So. [gold]Why didn't you come[/gold] to work yesterday?,Evet. Dün işe [gold]neden gelmedin[/gold]?
+ch5.say_was_sick,I was sick. I stayed at home.,Hastaydım. Evde kaldım.
+ch5.say_goo,An alien jelly came to my flat. It taught me English all day!,Daireme uzaylı bir jöle geldi. Bütün gün bana İngilizce öğretti!
+ch5.say_overslept,I'm sorry. I had a very strange day.,Özür dilerim. Çok garip bir gün geçirdim.
+ch5.boss_didnt_call,You didn't call me. You didn't send a message. Nothing!,Beni aramadın. Mesaj atmadın. Hiçbir şey!
+ch5.boss_late_too,And you were late on your first day too.,Üstelik ilk gününde de geç kaldın.
+ch5.boss_fired,"I'm sorry, but this is not OK. [gold]You're fired[/gold].","Üzgünüm ama bu kabul edilemez. [gold]Kovuldun[/gold]."
+ch5.say_another_chance,"Please, give me another chance!","Lütfen, bana bir şans daha verin!"
+ch5.boss_no,No. I'm sorry. Goodbye.,Hayır. Üzgünüm. Hoşça kal.
+ch5.say_ok_goodbye,OK... Goodbye.,Tamam... Hoşça kalın.
+ch5.think_lost_job,"I lost my job... What am I going to do now?","İşimi kaybettim... Şimdi ne yapacağım?"
+ch5.fr_hi,"Hi! It's me! How's your new job?","Selam! Benim! Yeni işin nasıl?"
+ch5.say_fired,I don't have a job now. I was fired this morning.,Artık işim yok. Bu sabah kovuldum.
+ch5.fr_job,"Oh no! But wait... We need a new assistant at %s! Are you going to come? Come now!","Eyvah! Ama dur... %s'da yeni bir yardımcıya ihtiyacımız var! Gelecek misin? Hemen gel!"
+ch5.say_going_to_come,"Really? Yes! I'm going to come right now!","Gerçekten mi? Evet! Hemen geleceğim!"
+ch5.fr_bye,Great! Ask for my boss. See you!,Harika! Patronumu sor. Görüşürüz!
+obj.ch5_new,Go to %s,%s'a git
+ch5.nb_hi,"Hello! Are you %s's friend?","Merhaba! %s'ın arkadaşı mısın?"
+ch5.say_yes_hi,"Yes, I am. Hello! Nice to meet you.","Evet, öyleyim. Merhaba! Tanıştığımıza memnun oldum."
+ch5.nb_going_to,"So, you want to be our new %s. What [gold]are you going to do[/gold] here?","Demek yeni %s olmak istiyorsun. Burada ne [gold]yapacaksın[/gold]?"
+ch5.say_going_help,I'm going to help the people here.,Buradaki insanlara yardım edeceğim.
+ch5.say_going_learn,I'm going to learn fast and work hard.,Hızlı öğreneceğim ve çok çalışacağım.
+ch5.say_going_hard,I'm going to be on time every day!,Her gün zamanında geleceğim!
+ch5.nb_lesson_hint,"Good! [gold]I'm going to[/gold]... That's how we talk about plans.","Güzel! [gold]I'm going to[/gold]... Planlardan böyle bahsederiz."
+ch5.think_lesson,"Going to... for plans. Let me check my phone.","Going to... planlar için. Telefonuma bir bakayım."
+ch5.nb_hired,"OK. You can be our new %s. [gold]You're hired[/gold]!","Tamam. Yeni %s olabilirsin. [gold]İşe alındın[/gold]!"
+ch5.say_thank_you_so_much,Thank you so much! I'm not going to be late. I promise!,Çok teşekkür ederim! Geç kalmayacağım. Söz veriyorum!
+ch5.nb_start,Start tomorrow at %d o'clock. See you then!,Yarın saat %d'de başla. O zaman görüşürüz!
+ch5.card_later,A few hours later...,Birkaç saat sonra...
+_ch6,ch6_argument keys below (cloud props),
+ch6.fm_late,"Oh, you're home. I'm having a drink. A glass of wine. Do you want one?","Aa, gelmişsin. Bir şeyler içiyorum. Bir kadeh şarap. İster misin?"
+ch6.say_new_job,"No, thanks. Listen... I lost my job this morning. But I have a new one!","Hayır, teşekkürler. Dinle... Bu sabah işimi kaybettim. Ama yeni bir işim var!"
+ch6.fm_new_job,"You lost your job? After two days? Are you joking?!","İşini mi kaybettin? İki gün sonra mı? Şaka mı yapıyorsun?!"
+ch6.fm_dishes,"And look at the kitchen! [gold]You're always leaving[/gold] your dishes in the sink!","Bir de mutfağa bak! Bulaşıklarını [gold]hep lavaboda bırakıyorsun[/gold]!"
+ch6.say_trying,I'm trying! I'm learning a lot of new things!,Deniyorum! Bir sürü yeni şey öğreniyorum!
+ch6.say_sorry_dishes,"OK, I'm sorry. I'm going to wash them.","Tamam, özür dilerim. Onları yıkayacağım."
+ch6.fm_jobs,"And now [gold]you're losing[/gold] jobs! The rent is in two weeks!","Ve şimdi de işleri [gold]kaybediyorsun[/gold]! Kira iki hafta sonra!"
+ch6.say_working_hard,"I'm working hard! I'm starting the new job tomorrow!","Çok çalışıyorum! Yarın yeni işe başlıyorum!"
+ch6.say_shouting,You're shouting at me! Please stop.,Bana bağırıyorsun! Lütfen dur.
+ch6.fm_what_doing,What... [hic] What [gold]are you doing[/gold] with your life?!,Ne... [hık] Hayatınla ne [gold]yapıyorsun[/gold]?!
+ch6.say_drinking_too_much,"What are YOU doing? You're drinking too much!","Asıl sen ne yapıyorsun? Çok fazla içiyorsun!"
+ch6.say_calm_down,"Please calm down. You're getting angry.","Lütfen sakin ol. Sinirleniyorsun."
+ch6.think_lesson,"You're always leaving, I'm trying... Things happening now. Let me check my phone.","Hep bırakıyorsun, deniyorum... Şu an olan şeyler. Telefonuma bir bakayım."
+ch6.fm_not_drinking,I'm NOT drinking too much! I'm... [hic] I'm FINE!,Çok fazla İÇMİYORUM! Ben... [hık] Ben İYİYİM!
+ch6.fm_ow,Ow! Ow! My hand! The glass...,Ay! Ay! Elim! Bardak...
+ch6.cut_hand,(The glass breaks. Your flatmate cut their hand. It's bleeding.),(Bardak kırılıyor. Ev arkadaşın elini kesti. Kanıyor.)
+ch6.say_bleeding,"Your hand is bleeding! Don't move. Sit down.","Elin kanıyor! Kıpırdama. Otur."
+ch6.fm_sorry,"I'm sorry... I'm shouting, I'm drinking... I'm so stupid.","Özür dilerim... Bağırıyorum, içiyorum... Çok aptalım."
+ch6.say_its_ok,"It's OK. Let me see your hand.","Sorun değil. Elini göreyim."
+ch6.fm_cant_drive,"It really hurts... We need to go to the hospital. But I can't drive like this...","Çok acıyor... Hastaneye gitmemiz lazım. Ama bu halde araba kullanamam..."
+_ch7,ch7_hospital keys below (cloud paint),
+npc.receptionist,Receptionist,Resepsiyonist
+ch7.fm_hurt,Ow... my hand... I'm bleeding.,Ah... elim... kanıyor.
+ch7.fm_drunk,I drank too much... I'm sorry. I'm so stupid.,Çok içtim... Özür dilerim. Çok aptalım.
+ch7.fm_hospital,I need a doctor. Can you drive me to the hospital?,Doktora ihtiyacım var. Beni hastaneye götürebilir misin?
+ch7.say_yes,"Yes, of course. Let's go.","Evet, tabii ki. Hadi gidelim."
+ch7.fm_licence_yes,"You can drive, right? You wrote it in your CV.","Araba kullanabiliyorsun, değil mi? CV'ne yazmıştın."
+ch7.fm_licence_no,"You can't drive, I know... but it's an emergency. I'll help you.","Araba kullanamıyorsun, biliyorum... ama bu acil bir durum. Sana yardım edeceğim."
+ch7.fm_keys,Here are the keys. My car is outside.,İşte anahtarlar. Arabam dışarıda.
+obj.ch7_car,Get in the driver's seat of the car,Arabanın sürücü koltuğuna otur
+ch7.do_belt,Put on your seat belt.,Emniyet kemerini tak.
+ch7.do_mirror,Look in the mirror.,Aynaya bak.
+ch7.do_engine,Start the engine.,Motoru çalıştır.
+ch7.do_brake,Put your foot on the brake.,Ayağını frene koy.
+ch7.do_indicate,Indicate left.,Sola sinyal ver.
+ch7.do_pull_out,Now pull out slowly.,Şimdi yavaşça çık.
+ch7.good,Good.,Güzel.
+ch7.great,Well done! You're driving!,Aferin! Araba kullanıyorsun!
+ch7.btn_belt,Seat belt,Emniyet kemeri
+ch7.btn_engine,Start engine,Motoru çalıştır
+ch7.btn_left,◀ Indicator,◀ Sinyal
+ch7.btn_right,Indicator ▶,Sinyal ▶
+obj.ch7_drive,Drive to Shore Hospital (Lookout Place),Shore Hastanesi'ne sür (Lookout Place)
+ch7.c_fast,You're going too fast! Slow down.,Çok hızlı gidiyorsun! Yavaşla.
+ch7.c_red,Stop! The light is red.,Dur! Işık kırmızı.
+ch7.c_ran_red,You're going through a red light!,Kırmızı ışıkta geçiyorsun!
+ch7.c_stop,Stop at the stop sign.,Dur tabelasında dur.
+ch7.c_bike,Watch out! A cyclist is coming.,Dikkat et! Bir bisikletli geliyor.
+ch7.c_crash,Be careful! I'm hurt already!,Dikkatli ol! Zaten yaralıyım!
+ch7.c_pain,My hand is really hurting. Are we going the right way?,Elim çok acıyor. Doğru yoldan mı gidiyoruz?
+ch7.say_right_way,"Yes, we are. We're nearly there.","Evet, öyle. Neredeyse geldik."
+ch7.c_park,Here's the hospital. Stop here and park.,İşte hastane. Burada dur ve park et.
+ch7.c_engine_off,Turn off the engine. Let's go in.,Motoru kapat. Hadi içeri girelim.
+obj.ch7_desk,Go to the reception desk,Danışma masasına git
+ch7.rc_hello,Good evening. What happened?,İyi akşamlar. Ne oldu?
+ch7.a_drank_f,She drank too much. She hit a glass and cut her hand.,Çok içti. Bir bardağa vurdu ve elini kesti.
+ch7.a_cut_f,She was cooking. She cut her hand with a knife.,Yemek yapıyordu. Bıçakla elini kesti.
+ch7.a_bad_now_f,She is cutting her hand.,Elini kesiyor.
+ch7.a_bad_every_f,She cuts her hand every day.,Her gün elini keser.
+ch7.rc_name_f,OK. What's her name?,Tamam. Adı ne?
+ch7.say_name_f,Her name is %s.,Adı %s.
+ch7.a_drank_m,He drank too much. He hit a glass and cut his hand.,Çok içti. Bir bardağa vurdu ve elini kesti.
+ch7.a_cut_m,He was cooking. He cut his hand with a knife.,Yemek yapıyordu. Bıçakla elini kesti.
+ch7.a_bad_now_m,He is cutting his hand.,Elini kesiyor.
+ch7.a_bad_every_m,He cuts his hand every day.,Her gün elini keser.
+ch7.rc_name_m,OK. What's his name?,Tamam. Adı ne?
+ch7.say_name_m,His name is %s.,Adı %s.
+ch7.rc_again,Sorry? What happened tonight?,Pardon? Bu akşam ne oldu?
+ch7.rc_sit,Thank you. Please sit down and wait. The doctor is coming.,Teşekkürler. Lütfen oturun ve bekleyin. Doktor geliyor.
+obj.ch7_sit,Sit down and wait,Otur ve bekle
+ch7.fm_thanks,Thank you for driving me. You're a good friend.,Beni getirdiğin için teşekkürler. İyi bir arkadaşsın.
+ch7.rc_doctor,The doctor can see you now.,Doktor sizi şimdi görebilir.
+_ch8,ch8_should keys below (cloud paint),
+ch8.doc_cut_f,She has a deep cut. I closed it with five stitches.,Derin bir kesik var. Beş dikişle kapattım.
+ch8.doc_rest_f,She should rest for two days.,İki gün dinlenmeli.
+ch8.doc_hand_f,She shouldn't use her right hand this week.,Bu hafta sağ elini kullanmamalı.
+ch8.doc_drink_f,And she shouldn't drink so much.,Ve bu kadar çok içmemeli.
+ch8.doc_water_f,She should drink a lot of water tonight.,Bu gece bol su içmeli.
+ch8.doc_medicine_f,She should take this medicine twice a day.,Bu ilacı günde iki kez almalı.
+ch8.q_drive_f,Should she drive tonight?,Bu gece araba kullanmalı mı?
+ch8.q_rest_f,Should she rest?,Dinlenmeli mi?
+ch8.q_alcohol_f,Should she drink alcohol this week?,Bu hafta alkol içmeli mi?
+ch8.a_no_f,"No, she shouldn't.","Hayır, yapmamalı."
+ch8.a_yes_f,"Yes, she should.","Evet, yapmalı."
+ch8.doc_cut_m,He has a deep cut. I closed it with five stitches.,Derin bir kesik var. Beş dikişle kapattım.
+ch8.doc_rest_m,He should rest for two days.,İki gün dinlenmeli.
+ch8.doc_hand_m,He shouldn't use his right hand this week.,Bu hafta sağ elini kullanmamalı.
+ch8.doc_drink_m,And he shouldn't drink so much.,Ve bu kadar çok içmemeli.
+ch8.doc_water_m,He should drink a lot of water tonight.,Bu gece bol su içmeli.
+ch8.doc_medicine_m,He should take this medicine twice a day.,Bu ilacı günde iki kez almalı.
+ch8.q_drive_m,Should he drive tonight?,Bu gece araba kullanmalı mı?
+ch8.q_rest_m,Should he rest?,Dinlenmeli mi?
+ch8.q_alcohol_m,Should he drink alcohol this week?,Bu hafta alkol içmeli mi?
+ch8.a_no_m,"No, he shouldn't.","Hayır, yapmamalı."
+ch8.a_yes_m,"Yes, he should.","Evet, yapmalı."
+ch8.doc_lesson,"Do you understand ""should""? Let's check.","""Should"" kelimesini anlıyor musun? Bir bakalım."
+ch8.doc_think,Hmm. Think again.,Hmm. Tekrar düşün.
+ch8.doc_right,That's right.,Doğru.
+ch8.say_medicine,"Can I have the medicine, please?","İlacı alabilir miyim, lütfen?"
+ch8.doc_price,Here you are. That's %d dollars.,Buyurun. %d dolar.
+ch8.doc_free,Here you are. It's free tonight.,Buyurun. Bu gece ücretsiz.
+ch8.doc_food,You should give it with food.,Yemekle birlikte vermelisin.
+ch8.doc_licence,Did you drive here without a licence? You should get a licence.,Buraya ehliyetsiz mi geldin? Ehliyet almalısın.
+ch8.say_licence,"Yes, I should.","Evet, almalıyım."
+ch8.fm_go_home,"Can you drive me home, please? I'm so tired.","Beni eve götürebilir misin, lütfen? Çok yorgunum."
+obj.ch8_car,Go to the car,Arabaya git
+obj.ch8_home,Drive home (D Avenue),Eve sür (D Avenue)
+ch8.c_slow,You should slow down. The doctor said be careful!,Yavaşlamalısın. Doktor dikkatli ol dedi!
+ch8.c_red,You should stop. The light is red.,Durmalısın. Işık kırmızı.
+ch8.fm_park,We're home. You should park here.,Evdeyiz. Buraya park etmelisin.
+obj.ch8_flat,Go into the flat,Daireye gir
+ch8.fm_thanks,Thank you for tonight. I'm sorry about the argument.,Bu gece için teşekkürler. Tartışma için özür dilerim.
+ch8.fm_advice_q,What should I do now?,Şimdi ne yapmalıyım?
+ch8.adv_rest,You should rest.,Dinlenmelisin.
+ch8.adv_drink,You shouldn't drink so much.,Bu kadar çok içmemelisin.
+ch8.adv_water,You should drink some water.,Biraz su içmelisin.
+ch8.adv_bad_to,You should to rest.,Dinlenmelisin.
+ch8.adv_bad_ing,You shouldn't drinking so much.,Bu kadar çok içmemelisin.
+ch8.fm_what,Sorry? Say it again.,Pardon? Tekrar söyle.
+ch8.fm_ok_rest,You're right. I should rest.,Haklısın. Dinlenmeliyim.
+ch8.fm_ok_drink,You're right. I shouldn't drink so much. Never again.,Haklısın. Bu kadar çok içmemeliyim. Bir daha asla.
+ch8.fm_ok_water,OK. I should drink some water.,Tamam. Biraz su içmeliyim.
+ch8.fm_night,Good night. You should go to bed too.,İyi geceler. Sen de yatmalısın.

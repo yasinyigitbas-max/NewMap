@@ -1327,3 +1327,28 @@ CityBike (native/src/city_bike.*), all C++, on one of the engine's rigid bodies 
 - Tests RESULT PASS: test_bike_ride (new), test_bike_hit, test_car_hits, test_acts, test_crowd_game, test_city_ped,
   test_knock. NOT done: into a moving traffic car (only a wall and a parked car tried); the player's figure is the
   test app's plain one; nothing tried on the phone.
+
+## 37. The game's shell in C++: loading screen, menus, settings, saves (19 Nov night; Yasin: "HUD, minimap, the phone UI, menus, settings, loading screen, bring these over from the old game ... rewrite in c plus plus"; "saving and profiles")
+- ui_plate.h/.cpp: the old game's look (ui/kit/plate.gd) number for number: colours, the Overpass font in three
+  weights, the plates and keylines, 72 px touch targets, the dual button (English over the helper language), the icon
+  atlas (game/ui/icons.png).
+- CityGame (city_game.h, city_game_data.cpp, city_game_ui.cpp): ONE node on the root for the whole run (game/boot.tscn
+  starts it), in place of the old autoloads I18n, GameState, GameSettings, SaveGame, Profiles, LoadingScreen, MainMenu,
+  PauseMenu, GameOver:
+  - text: game/i18n/strings.txt (the old strings.csv, 1,818 rows, read raw: a .txt so the engine does not import it);
+  - the clock (one game hour = ten real minutes), money, flags, the player's voice;
+  - settings with the old keys and defaults (sound buses made and set, language, graphics preset, camera); the
+    per-phone ones in user://device_settings.json; the rest in the slot, written AT ONCE when changed (the old game kept
+    them until the next save);
+  - four slots user://saves/slot_N.json in the old version-3 format, written to .tmp and renamed; autosave every 60 s;
+  - screens: the loading screen (title, status, bar, a tip), the main menu (new game, continue, lessons, settings with
+    load / credits / quit, the slot picker with delete and overwrite and its Yes / No), pause (Esc and Android back),
+    game over (retry, or rewind to a checkpoint), the settings panel in two columns.
+  - into the world: the world's scene (world_scene, the test app by default) loaded on the engine's threads behind the
+    loading screen, made the current scene; the slot started or loaded; then the world settles (45 calm frames).
+- tests/game/test_shell.gd RESULT PASS (26 checks: the text, menu, new game into a world, the clock, money, saving and
+  its file, pause, the settings and the phone's file, continue with the slot's settings, game over and retry, the
+  picker, delete, four full slots and overwrite). Pictures review/game_19nov/menu.jpg, settings.jpg, loading.jpg.
+- NOT done: the graphics preset and render scale are stored but not yet applied to the city (the streamer and the
+  pixel look will read them); story, economy, needs, lessons have empty sections in the save until they come; the
+  lessons buttons say "soon" until the phone comes; no download screen (this repo has no content packs).

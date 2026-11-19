@@ -20,6 +20,13 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 - (on the first crash film) "we flew up too much"; "body should have weight, i didnt mean propel when i said eject";
   "they should still end up somersaulting to the other side of the car"; the hands: "turn the left hand 90 degree right
   and right hand 90 degree right"
+- "when you come to those items, start the player next to a bike and car in the city center, make sure they land on a
+  way rather than in or on a building once the new game button is clicked"
+- "we need some updates ffor the hud. upper right mini map should be a phone icon sized box, displaying a 3d looking 2d
+  arrow head like shape showing the mission direction in green color, if there is no objective, golden yellow colored
+  arrow head showing north. once clicked, it should review the full phone map, both should be adapted to the new layout
+  of the map"; "and left corner money and time should fit into same sized box as phone and map"
+- "integrate health and needs but keep them inactive for now"
 - Standing rules: everything per frame or tick in C++ (memory: runtime code in C++); scripts only for tools and tests;
   one question, one run; the phone last; don't waste his usage or his PC; say what was not checked.
 
@@ -40,12 +47,16 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
       wobbles with the pedalling and the bumps; damage (bent wheel, chain off, wobbling bar); a hard hit throws the
       player off (his balancing body, falls, gets up); the Quaternius clips that fit (getting on / off, falls, get up).
       Test + one picture.
-3. [ ] Loading screen (old: core/boot/loading_screen.gd, boot.gd, pack_progress.gd).
-4. [ ] Menus: main menu, pause menu, game over (old: core/main_menu.gd, pause_menu.gd, game_over.gd, ui/kit, ui/theme).
-5. [ ] Settings (old: core/game_settings.gd, settings_panel.gd, view_distance.gd; per-phone device settings).
-6. [ ] Saving and profiles (old: core/save_game.gd slots, profiles.gd, game_state.gd: hour, day, clock).
-7. [ ] HUD (old: ui/hud/hud.gd, objectives.gd, ui/health_bar.gd, needs_hud.gd, caption_help.gd).
-8. [ ] Minimap and the phone's map (old: ui/phone/map_view.gd, ui/hud/coronado_route.gd: the way on the map from item 2).
+3. [x] (19 Nov, tests/game/test_shell.gd) Loading screen (old: core/boot/loading_screen.gd, boot.gd, pack_progress.gd).
+4. [x] (19 Nov, test_shell) Menus: main menu, pause menu, game over (old: core/main_menu.gd, pause_menu.gd, game_over.gd, ui/kit, ui/theme).
+5. [x] (19 Nov, test_shell; the graphics preset and render scale are stored for the city to read, not yet applied to it) Settings (old: core/game_settings.gd, settings_panel.gd, view_distance.gd; per-phone device settings).
+6. [x] (19 Nov, test_shell) Saving and profiles (old: core/save_game.gd slots, profiles.gd, game_state.gd: hour, day, clock).
+6b. [ ] NEW GAME START (Yasin): the player set down in the city centre beside a bicycle and a car, on a way (pavement or
+      road), never in or on a building.
+7. [ ] HUD (Yasin's layout: top right a box the size of the phone icon with a "3D-looking" flat arrowhead: GREEN pointing
+      to the mission, GOLDEN YELLOW pointing north when there is none; tapping it opens the phone's full map; top left
+      money and time in a box of the same size; HEALTH AND NEEDS integrated but INACTIVE for now) (old: ui/hud/hud.gd, objectives.gd, ui/health_bar.gd, needs_hud.gd, caption_help.gd).
+8. [ ] (the HUD arrow box replaces the minimap, Yasin) The phone's map (old: ui/phone/map_view.gd, ui/hud/coronado_route.gd: the way on the map from item 2).
 9. [ ] The phone UI and its apps (old: ui/phone/*: phone, apps, call, camera, CV, delivery, films, jobs, learn, transit, drone).
 10. [ ] Money and ATMs (old: economy/economy.gd, atm.gd, broke_watch.gd).
 11. [ ] Jobs and deliveries (old: jobs/jobs.gd, delivery/*, ui/jobs/*, minigames/jobs/*, cityride/city_ride.gd: the taxi).

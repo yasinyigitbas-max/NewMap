@@ -335,3 +335,13 @@ the other agent suggested these
 - [2026-11-19] also make the bikes able to crash to cars, make a rideable bike for the player, make sure its designed for touch controls, make sure it moves realistic like the cars, our view should wobble riding it. add damage to the bikes, we should be able to get ejected if we hit a car hard enough. use all relevant animations
 
 - [2026-11-19] (on the drivers only braking for something sudden) make them try to get out of the way and break hard at the same time. but add it to the very end of the queue
+
+- [2026-11-19] did we make these changes apply to every bike rider? if yes then go on qith your queue nonstops / do the menus include hud?
+
+- [2026-11-19] apply those changes to every bike rider
+
+- [2026-11-19] when you come to those items, start the player next to a bike and car in the city center, make sure they land on a way rather than in or on a building once the new game button is clicked
+
+- [2026-11-19] we need some updates ffor the hud. upper right mini map should be a phone icon sized box, displaying a 3d looking 2d arrow head like shape showing the mission direction in green color, if there is no objective, golden yellow colored arrow head showing north. once clicked, it should review the full phone map, both should be adapted to the new layout of the map / and left corner money and time should fit into same sized box as phone and map
+
+- [2026-11-19] and again when you come to them, integrate health and needs but keep them inactive for now

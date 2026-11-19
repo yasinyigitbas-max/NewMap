@@ -1,0 +1,665 @@
+{
+ "_doc": "Tier 1 caption help: word -> meaning per player language (tr, ex_tr; add es/ex_es etc. for new languages). Keys are lower-case base forms; likes/watched/movies find like/watch/movie by themselves. 'see': 'do' fills missing fields from another word. Loaded by ui/caption_help.gd.",
+ "words": {
+  "a": {
+   "pos": "det",
+   "tr": "bir",
+   "ex": "a sofa",
+   "ex_tr": "bir kanepe"
+  },
+  "about": {
+   "pos": "prep",
+   "tr": "hakkında",
+   "ex": "Let's talk about music.",
+   "ex_tr": "Müzik hakkında konuşalım."
+  },
+  "am": {
+   "pos": "aux",
+   "tr": "-im (olmak: ben)",
+   "ex": "I am hungry.",
+   "ex_tr": "Açım."
+  },
+  "and": {
+   "pos": "conj",
+   "tr": "ve",
+   "ex": "tea and coffee",
+   "ex_tr": "çay ve kahve"
+  },
+  "app": {
+   "pos": "noun",
+   "tr": "uygulama",
+   "ex": "Open the app.",
+   "ex_tr": "Uygulamayı aç."
+  },
+  "are": {
+   "pos": "aux",
+   "tr": "-sin, -siniz (olmak)",
+   "ex": "You are kind.",
+   "ex_tr": "Naziksin."
+  },
+  "ask": {
+   "pos": "verb",
+   "tr": "sormak",
+   "ex": "Now you ask me!",
+   "ex_tr": "Şimdi sen bana sor!"
+  },
+  "at": {
+   "pos": "prep",
+   "tr": "-de, -da",
+   "ex": "at home",
+   "ex_tr": "evde"
+  },
+  "book": {
+   "pos": "noun",
+   "tr": "kitap",
+   "ex": "I read books.",
+   "ex_tr": "Kitap okurum."
+  },
+  "brother": {
+   "pos": "noun",
+   "tr": "erkek kardeş, abi",
+   "ex": "My brother likes football.",
+   "ex_tr": "Kardeşim futbolu sever."
+  },
+  "burger": {
+   "pos": "noun",
+   "tr": "hamburger",
+   "ex": "I like burgers.",
+   "ex_tr": "Hamburger severim."
+  },
+  "but": {
+   "pos": "conj",
+   "tr": "ama",
+   "ex": "I like tea, but I don't like coffee.",
+   "ex_tr": "Çayı severim ama kahveyi sevmem."
+  },
+  "can": {
+   "pos": "aux",
+   "tr": "-ebilmek",
+   "ex": "Can I help you?",
+   "ex_tr": "Yardım edebilir miyim?"
+  },
+  "cash": {
+   "pos": "noun",
+   "tr": "nakit para",
+   "ex": "I don't have much cash.",
+   "ex_tr": "Pek nakit param yok."
+  },
+  "chat": {
+   "pos": "verb",
+   "tr": "sohbet etmek",
+   "ex": "Let's chat!",
+   "ex_tr": "Sohbet edelim!"
+  },
+  "choice": {
+   "pos": "noun",
+   "tr": "seçim",
+   "ex": "Great choice!",
+   "ex_tr": "Harika seçim!"
+  },
+  "choose": {
+   "pos": "verb",
+   "tr": "seçmek",
+   "ex": "Choose something.",
+   "ex_tr": "Bir şey seç."
+  },
+  "coffee": {
+   "pos": "noun",
+   "tr": "kahve",
+   "ex": "A coffee, please.",
+   "ex_tr": "Bir kahve lütfen."
+  },
+  "come": {
+   "pos": "verb",
+   "tr": "gelmek",
+   "ex": "Come here!",
+   "ex_tr": "Buraya gel!"
+  },
+  "cooking": {
+   "pos": "noun",
+   "tr": "yemek yapmak",
+   "ex": "I love cooking.",
+   "ex_tr": "Yemek yapmaya bayılırım."
+  },
+  "cool": {
+   "pos": "interj",
+   "tr": "harika, süper",
+   "ex": "Cool! Me too.",
+   "ex_tr": "Harika! Ben de."
+  },
+  "dancing": {
+   "pos": "noun",
+   "tr": "dans etmek",
+   "ex": "I like dancing.",
+   "ex_tr": "Dans etmeyi severim."
+  },
+  "day": {
+   "pos": "noun",
+   "tr": "gün",
+   "ex": "every day",
+   "ex_tr": "her gün"
+  },
+  "did": {
+   "pos": "aux",
+   "tr": "(geçmiş zaman sorusu ve olumsuzu yapar)",
+   "ex": "Did you eat?",
+   "ex_tr": "Yemek yedin mi?"
+  },
+  "do": {
+   "pos": "aux",
+   "tr": "(soru ve olumsuz cümle yapar); yapmak",
+   "ex": "Do you like tea?",
+   "ex_tr": "Çay sever misin?"
+  },
+  "does": {
+   "pos": "aux",
+   "tr": "(he/she/it ile soru yapar)",
+   "ex": "Does she like tea?",
+   "ex_tr": "O çay sever mi?"
+  },
+  "doesn't": {
+   "pos": "aux",
+   "tr": "(olumsuz yapar: does not)",
+   "ex": "He doesn't like fish.",
+   "ex_tr": "O balık sevmez."
+  },
+  "don't": {
+   "pos": "aux",
+   "tr": "(olumsuz yapar: do not)",
+   "ex": "I don't like fish.",
+   "ex_tr": "Balık sevmem."
+  },
+  "every": {
+   "pos": "det",
+   "tr": "her",
+   "ex": "every morning",
+   "ex_tr": "her sabah"
+  },
+  "few": {
+   "pos": "det",
+   "tr": "birkaç",
+   "ex": "a few minutes",
+   "ex_tr": "birkaç dakika"
+  },
+  "first": {
+   "pos": "adv",
+   "tr": "önce, ilk",
+   "ex": "A quick lesson first!",
+   "ex_tr": "Önce kısa bir ders!"
+  },
+  "fish": {
+   "pos": "noun",
+   "tr": "balık",
+   "ex": "I don't like fish.",
+   "ex_tr": "Balık sevmem."
+  },
+  "food": {
+   "pos": "noun",
+   "tr": "yemek",
+   "ex": "What food do you like?",
+   "ex_tr": "Hangi yemekleri seversin?"
+  },
+  "football": {
+   "pos": "noun",
+   "tr": "futbol",
+   "ex": "I play football.",
+   "ex_tr": "Futbol oynarım."
+  },
+  "free": {
+   "pos": "adj",
+   "tr": "boş, serbest; bedava",
+   "ex": "free time",
+   "ex_tr": "boş zaman"
+  },
+  "friday": {
+   "pos": "noun",
+   "tr": "cuma",
+   "ex": "on Fridays",
+   "ex_tr": "cuma günleri"
+  },
+  "good": {
+   "pos": "adj",
+   "tr": "iyi",
+   "ex": "Good idea!",
+   "ex_tr": "İyi fikir!"
+  },
+  "great": {
+   "pos": "adj",
+   "tr": "harika, büyük",
+   "ex": "Great choice!",
+   "ex_tr": "Harika seçim!"
+  },
+  "have": {
+   "pos": "verb",
+   "tr": "sahip olmak, -si olmak",
+   "ex": "I have a phone.",
+   "ex_tr": "Bir telefonum var."
+  },
+  "he": {
+   "pos": "pron",
+   "tr": "o (erkek)",
+   "ex": "He is my brother.",
+   "ex_tr": "O benim kardeşim."
+  },
+  "hello": {
+   "pos": "interj",
+   "tr": "merhaba",
+   "ex": "Hello! How are you?",
+   "ex_tr": "Merhaba! Nasılsın?"
+  },
+  "here": {
+   "pos": "adv",
+   "tr": "burada, buraya; al (verirken)",
+   "ex": "Here, take my phone.",
+   "ex_tr": "Al, telefonumu al."
+  },
+  "home": {
+   "pos": "noun",
+   "tr": "ev",
+   "ex": "at home",
+   "ex_tr": "evde"
+  },
+  "how": {
+   "pos": "qword",
+   "tr": "nasıl",
+   "ex": "How are you?",
+   "ex_tr": "Nasılsın?"
+  },
+  "hungry": {
+   "pos": "adj",
+   "tr": "aç",
+   "ex": "You look hungry.",
+   "ex_tr": "Aç görünüyorsun."
+  },
+  "i": {
+   "pos": "pron",
+   "tr": "ben",
+   "ex": "I like music.",
+   "ex_tr": "Müzik severim."
+  },
+  "idea": {
+   "pos": "noun",
+   "tr": "fikir",
+   "ex": "Good idea!",
+   "ex_tr": "İyi fikir!"
+  },
+  "in": {
+   "pos": "prep",
+   "tr": "içinde, -de",
+   "ex": "in the living room",
+   "ex_tr": "oturma odasında"
+  },
+  "is": {
+   "pos": "aux",
+   "tr": "-dir (olmak: o)",
+   "ex": "She is nice.",
+   "ex_tr": "O iyi biri."
+  },
+  "it": {
+   "pos": "pron",
+   "tr": "o (şey)",
+   "ex": "It's on me!",
+   "ex_tr": "Benden!"
+  },
+  "it's": {
+   "pos": "pron",
+   "tr": "o ... -dir (it is)",
+   "ex": "It's on me!",
+   "ex_tr": "Benden!"
+  },
+  "jazz": {
+   "pos": "noun",
+   "tr": "caz",
+   "ex": "I like jazz.",
+   "ex_tr": "Cazı severim."
+  },
+  "learn": {
+   "pos": "verb",
+   "tr": "öğrenmek",
+   "ex": "Let's learn!",
+   "ex_tr": "Öğrenelim!"
+  },
+  "lesson": {
+   "pos": "noun",
+   "tr": "ders",
+   "ex": "a quick lesson",
+   "ex_tr": "kısa bir ders"
+  },
+  "let's": {
+   "pos": "verb",
+   "tr": "hadi ... -elim (let us)",
+   "ex": "Let's order something!",
+   "ex_tr": "Hadi bir şey sipariş edelim!"
+  },
+  "like": {
+   "pos": "verb",
+   "tr": "sevmek, hoşlanmak",
+   "ex": "I like pizza.",
+   "ex_tr": "Pizzayı severim."
+  },
+  "listen": {
+   "pos": "verb",
+   "tr": "dinlemek",
+   "ex": "I listen to music.",
+   "ex_tr": "Müzik dinlerim."
+  },
+  "living": {
+   "pos": "adj",
+   "tr": "oturma (living room = oturma odası)",
+   "ex": "the living room",
+   "ex_tr": "oturma odası"
+  },
+  "look": {
+   "pos": "verb",
+   "tr": "görünmek; bakmak",
+   "ex": "You look hungry.",
+   "ex_tr": "Aç görünüyorsun."
+  },
+  "love": {
+   "pos": "verb",
+   "tr": "çok sevmek, bayılmak",
+   "ex": "I love pizza!",
+   "ex_tr": "Pizzaya bayılırım!"
+  },
+  "me": {
+   "pos": "pron",
+   "tr": "beni, bana",
+   "ex": "Now you ask me!",
+   "ex_tr": "Şimdi sen bana sor!"
+  },
+  "minute": {
+   "pos": "noun",
+   "tr": "dakika",
+   "ex": "in a few minutes",
+   "ex_tr": "birkaç dakika içinde"
+  },
+  "movie": {
+   "pos": "noun",
+   "tr": "film",
+   "ex": "I watch movies.",
+   "ex_tr": "Film izlerim."
+  },
+  "much": {
+   "pos": "det",
+   "tr": "çok (sayılamayan şeyler için)",
+   "ex": "not much cash",
+   "ex_tr": "pek nakit yok"
+  },
+  "music": {
+   "pos": "noun",
+   "tr": "müzik",
+   "ex": "I listen to music.",
+   "ex_tr": "Müzik dinlerim."
+  },
+  "my": {
+   "pos": "det",
+   "tr": "benim",
+   "ex": "my phone",
+   "ex_tr": "benim telefonum"
+  },
+  "nice": {
+   "pos": "adj",
+   "tr": "güzel, hoş",
+   "ex": "Nice to meet you!",
+   "ex_tr": "Tanıştığıma memnun oldum!"
+  },
+  "no": {
+   "pos": "interj",
+   "tr": "hayır",
+   "ex": "No, I don't.",
+   "ex_tr": "Hayır, sevmem."
+  },
+  "now": {
+   "pos": "adv",
+   "tr": "şimdi",
+   "ex": "Now you ask me!",
+   "ex_tr": "Şimdi sen bana sor!"
+  },
+  "on": {
+   "pos": "prep",
+   "tr": "üzerinde; -de (günler için)",
+   "ex": "on Fridays",
+   "ex_tr": "cuma günleri"
+  },
+  "open": {
+   "pos": "verb",
+   "tr": "açmak",
+   "ex": "Open the app.",
+   "ex_tr": "Uygulamayı aç."
+  },
+  "order": {
+   "pos": "verb",
+   "tr": "sipariş etmek",
+   "ex": "Let's order something!",
+   "ex_tr": "Hadi bir şey sipariş edelim!"
+  },
+  "phone": {
+   "pos": "noun",
+   "tr": "telefon",
+   "ex": "Take my phone.",
+   "ex_tr": "Telefonumu al."
+  },
+  "pizza": {
+   "pos": "noun",
+   "tr": "pizza",
+   "ex": "I love pizza!",
+   "ex_tr": "Pizzaya bayılırım!"
+  },
+  "play": {
+   "pos": "verb",
+   "tr": "oynamak; çalmak",
+   "ex": "I play football.",
+   "ex_tr": "Futbol oynarım."
+  },
+  "please": {
+   "pos": "interj",
+   "tr": "lütfen",
+   "ex": "A coffee, please.",
+   "ex_tr": "Bir kahve lütfen."
+  },
+  "pop": {
+   "pos": "noun",
+   "tr": "pop (müzik)",
+   "ex": "I like pop music.",
+   "ex_tr": "Pop müziği severim."
+  },
+  "question": {
+   "pos": "noun",
+   "tr": "soru",
+   "ex": "Quick question!",
+   "ex_tr": "Küçük bir soru!"
+  },
+  "quick": {
+   "pos": "adj",
+   "tr": "hızlı, kısa",
+   "ex": "a quick lesson",
+   "ex_tr": "kısa bir ders"
+  },
+  "read": {
+   "pos": "verb",
+   "tr": "okumak",
+   "ex": "I read books.",
+   "ex_tr": "Kitap okurum."
+  },
+  "really": {
+   "pos": "adv",
+   "tr": "gerçekten",
+   "ex": "Really? Thank you!",
+   "ex_tr": "Gerçekten mi? Teşekkürler!"
+  },
+  "rock": {
+   "pos": "noun",
+   "tr": "rock (müzik)",
+   "ex": "I like rock music.",
+   "ex_tr": "Rock müziği severim."
+  },
+  "room": {
+   "pos": "noun",
+   "tr": "oda",
+   "ex": "the living room",
+   "ex_tr": "oturma odası"
+  },
+  "she": {
+   "pos": "pron",
+   "tr": "o (kadın)",
+   "ex": "She likes music.",
+   "ex_tr": "O müzik sever."
+  },
+  "sit": {
+   "pos": "verb",
+   "tr": "oturmak",
+   "ex": "Sit on the sofa.",
+   "ex_tr": "Kanepeye otur."
+  },
+  "so": {
+   "pos": "adv",
+   "tr": "yani, eee; çok",
+   "ex": "So... do you like music?",
+   "ex_tr": "Eee... müzik sever misin?"
+  },
+  "sofa": {
+   "pos": "noun",
+   "tr": "kanepe",
+   "ex": "Sit on the sofa.",
+   "ex_tr": "Kanepeye otur."
+  },
+  "something": {
+   "pos": "pron",
+   "tr": "bir şey",
+   "ex": "Let's order something.",
+   "ex_tr": "Bir şey sipariş edelim."
+  },
+  "sport": {
+   "pos": "noun",
+   "tr": "spor",
+   "ex": "Do you like sports?",
+   "ex_tr": "Spor sever misin?"
+  },
+  "taco": {
+   "pos": "noun",
+   "tr": "tako",
+   "ex": "I like tacos.",
+   "ex_tr": "Tako severim."
+  },
+  "take": {
+   "pos": "verb",
+   "tr": "almak",
+   "ex": "Take my phone.",
+   "ex_tr": "Telefonumu al."
+  },
+  "talk": {
+   "pos": "verb",
+   "tr": "konuşmak",
+   "ex": "Let's talk.",
+   "ex_tr": "Konuşalım."
+  },
+  "thank": {
+   "pos": "verb",
+   "tr": "teşekkür etmek",
+   "ex": "Thank you so much!",
+   "ex_tr": "Çok teşekkür ederim!"
+  },
+  "the": {
+   "pos": "det",
+   "tr": "(belirli şey: bu, o; çoğu zaman çevrilmez)",
+   "ex": "the living room",
+   "ex_tr": "oturma odası"
+  },
+  "there": {
+   "pos": "adv",
+   "tr": "orada (there is / there are = var)",
+   "ex": "Is there a TV?",
+   "ex_tr": "Televizyon var mı?"
+  },
+  "thing": {
+   "pos": "noun",
+   "tr": "şey",
+   "ex": "the things we like",
+   "ex_tr": "sevdiğimiz şeyler"
+  },
+  "time": {
+   "pos": "noun",
+   "tr": "zaman, vakit",
+   "ex": "free time",
+   "ex_tr": "boş zaman"
+  },
+  "to": {
+   "pos": "prep",
+   "tr": "-e, -a; (fiilden önce: -mek)",
+   "ex": "listen to music",
+   "ex_tr": "müzik dinlemek"
+  },
+  "tv": {
+   "pos": "noun",
+   "tr": "televizyon",
+   "ex": "Is there a TV?",
+   "ex_tr": "Televizyon var mı?"
+  },
+  "wait": {
+   "pos": "verb",
+   "tr": "beklemek",
+   "ex": "Wait, a quick lesson first!",
+   "ex_tr": "Dur, önce kısa bir ders!"
+  },
+  "watch": {
+   "pos": "verb",
+   "tr": "izlemek",
+   "ex": "I watch movies.",
+   "ex_tr": "Film izlerim."
+  },
+  "we": {
+   "pos": "pron",
+   "tr": "biz",
+   "ex": "the things we like",
+   "ex_tr": "sevdiğimiz şeyler"
+  },
+  "what": {
+   "pos": "qword",
+   "tr": "ne, hangi",
+   "ex": "What do you like?",
+   "ex_tr": "Neleri seversin?"
+  },
+  "where": {
+   "pos": "qword",
+   "tr": "nerede, nereye",
+   "ex": "Where is the bank?",
+   "ex_tr": "Banka nerede?"
+  },
+  "with": {
+   "pos": "prep",
+   "tr": "ile, birlikte",
+   "ex": "Sit with me.",
+   "ex_tr": "Benimle otur."
+  },
+  "work": {
+   "pos": "verb",
+   "tr": "çalışmak",
+   "ex": "I work at a café.",
+   "ex_tr": "Bir kafede çalışırım."
+  },
+  "worry": {
+   "pos": "verb",
+   "tr": "endişelenmek, merak etmek",
+   "ex": "Don't worry.",
+   "ex_tr": "Merak etme."
+  },
+  "yes": {
+   "pos": "interj",
+   "tr": "evet",
+   "ex": "Yes, I do.",
+   "ex_tr": "Evet, severim."
+  },
+  "you": {
+   "pos": "pron",
+   "tr": "sen, siz",
+   "ex": "Do you like music?",
+   "ex_tr": "Müzik sever misin?"
+  },
+  "your": {
+   "pos": "det",
+   "tr": "senin, sizin",
+   "ex": "your free time",
+   "ex_tr": "boş zamanın"
+  }
+ }
+}

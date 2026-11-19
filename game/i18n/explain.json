@@ -1,0 +1,202 @@
+{
+ "_doc": "Tier 3 caption help: one entry per caption line (key = the English line; case, punctuation and gold tags are ignored). grammar / grammar_<lang>, parts = [[words, role]] in order (roles: q aux subj verb obj time place neg adj expr rest), <lang> = the note for this sentence. Loaded by ui/caption_help.gd.",
+ "lines": {
+  "So... Do you like music?": {
+   "grammar": "Present simple question",
+   "grammar_tr": "Geniş zaman soru cümlesi",
+   "parts": [
+    [
+     "Do",
+     "aux"
+    ],
+    [
+     "you",
+     "subj"
+    ],
+    [
+     "like",
+     "verb"
+    ],
+    [
+     "music",
+     "obj"
+    ]
+   ],
+   "tr": "Soru Do ile başlar, sonra özne (you), sonra fiilin yalın hali (like), en sonda nesne (music). \"So...\" sadece konuşmayı başlatır, \"Eee...\" gibi. Kısa cevap: Yes, I do. / No, I don't."
+  },
+  "Cool! What music do you like?": {
+   "grammar": "Present simple wh- question",
+   "grammar_tr": "Geniş zaman, soru kelimeli soru",
+   "parts": [
+    [
+     "What music",
+     "q"
+    ],
+    [
+     "do",
+     "aux"
+    ],
+    [
+     "you",
+     "subj"
+    ],
+    [
+     "like",
+     "verb"
+    ]
+   ],
+   "tr": "Soru kelimesi (What music = hangi müzik) en başa gelir, sonra do + özne + fiil. Bu soruya Yes/No ile cevap verilmez: I like pop music. gibi cevap verilir."
+  },
+  "What do you do in your free time? Do you watch movies?": {
+   "grammar": "Present simple questions",
+   "grammar_tr": "Geniş zaman soruları",
+   "parts": [
+    [
+     "What",
+     "q"
+    ],
+    [
+     "do",
+     "aux"
+    ],
+    [
+     "you",
+     "subj"
+    ],
+    [
+     "do",
+     "verb"
+    ],
+    [
+     "in your free time",
+     "time"
+    ],
+    [
+     "Do",
+     "aux"
+    ],
+    [
+     "you",
+     "subj"
+    ],
+    [
+     "watch",
+     "verb"
+    ],
+    [
+     "movies",
+     "obj"
+    ]
+   ],
+   "tr": "İlk soruda iki tane do var: birincisi soruyu yapan yardımcı fiil, ikincisi \"yapmak\" anlamındaki asıl fiil. Ne yaparsın? = What do you do? İkinci soru Do ile başlayan evet/hayır sorusu."
+  },
+  "Nice! I watch movies on Fridays. My brother likes football.": {
+   "grammar": "Present simple: I / he / she",
+   "grammar_tr": "Geniş zaman: ben / o",
+   "parts": [
+    [
+     "I",
+     "subj"
+    ],
+    [
+     "watch",
+     "verb"
+    ],
+    [
+     "movies",
+     "obj"
+    ],
+    [
+     "on Fridays",
+     "time"
+    ],
+    [
+     "My brother",
+     "subj"
+    ],
+    [
+     "likes",
+     "verb"
+    ],
+    [
+     "football",
+     "obj"
+    ]
+   ],
+   "tr": "Alışkanlıkları geniş zamanla anlatırız. I ile fiil yalın kalır (I watch), he/she ile fiile -s eklenir: My brother likes. Günlerden önce on gelir: on Fridays = cuma günleri."
+  },
+  "Mmm! You look hungry. Let's order something!": {
+   "grammar": "look + adjective, Let's",
+   "grammar_tr": "görünmek + sıfat, Hadi ...elim",
+   "parts": [
+    [
+     "You",
+     "subj"
+    ],
+    [
+     "look",
+     "verb"
+    ],
+    [
+     "hungry",
+     "adj"
+    ],
+    [
+     "Let's",
+     "expr"
+    ],
+    [
+     "order",
+     "verb"
+    ],
+    [
+     "something",
+     "obj"
+    ]
+   ],
+   "tr": "look + sıfat = ... görünmek: You look hungry = Aç görünüyorsun. Let's + fiil bir öneri yapar: Let's order = Hadi sipariş edelim."
+  },
+  "Don't worry. It's on me!": {
+   "grammar": "Imperative, fixed expression",
+   "grammar_tr": "Emir cümlesi, kalıp ifade",
+   "parts": [
+    [
+     "Don't",
+     "neg"
+    ],
+    [
+     "worry",
+     "verb"
+    ],
+    [
+     "It's on me",
+     "expr"
+    ]
+   ],
+   "tr": "Don't + fiil olumsuz emir yapar: Don't worry = Merak etme. It's on me kalıp bir ifadedir: hesabı ben ödüyorum, benden."
+  },
+  "Quick question! Is there a TV in the living room?": {
+   "grammar": "There is: question",
+   "grammar_tr": "There is (var): soru",
+   "parts": [
+    [
+     "Is",
+     "aux"
+    ],
+    [
+     "there",
+     "subj"
+    ],
+    [
+     "a TV",
+     "obj"
+    ],
+    [
+     "in the living room",
+     "place"
+    ]
+   ],
+   "tr": "There is = var. Soru yaparken is başa gelir: Is there ...? = ... var mı? Çoğul için are: Are there chairs? Cevap: Yes, there is. / No, there isn't."
+  }
+ }
+}

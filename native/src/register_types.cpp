@@ -3,6 +3,7 @@
 // is missing.
 #include "city_bike.h"
 #include "city_car.h"
+#include "city_game.h"
 #include "city_native.h"
 #include "city_ped.h"
 #include "city_traffic.h"
@@ -29,7 +30,8 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(CityTraffic);   // the traffic: core, drawing, parked cars
 	GDREGISTER_CLASS(BikeReach);     // the player's bicycle: the rider's feet and hands to the pedals and grips
 	GDREGISTER_CLASS(CityBike);      // a bicycle the player rides (touch controls, the view wobbles, crashes throw him)
-	GDREGISTER_CLASS(CityCar);       // a car to drive: the physical car (veh_dyn) on the engine's body
+	GDREGISTER_CLASS(CityCar);
+	GDREGISTER_CLASS(CityGame);      // the game's shell: text, clock, settings, saves, loading screen, menus, pause, game over       // a car to drive: the physical car (veh_dyn) on the engine's body
 	GDREGISTER_CLASS(CityPed);       // one person with a real body: animation, and a body that balances, falls and gets up
 	GDREGISTER_CLASS(StreetGraph);   // tool time: the streets as traffic and people need them, from the baked city
 	GDREGISTER_CLASS(CityCrowd);     // the people of the map: who walks where and what they do, and how they are drawn
