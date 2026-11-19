@@ -1,0 +1,28 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 19 nodes (with every mesh of the buildings), 5768 ground and ground-collision triangles, 19 prop instances, 10 colliders, 325 wear marks are identical in both files
+PROOF differences found between the files: 32 lines only in the old one, 2 only in the new one
+PROOF change #4 move prop_hydrant_red: (-11.00, 0.15, 15.00) -> (-11.00, 0.06, 15.00), in 1 tier(s) and its collider  [prop_hydrant_red hangs 0.09 m over what is under it]
+PROOF change #1 remove palm_mexican_fan_b at (11.21, 0.09, 31.94) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove palm_mexican_fan_b at (11.36, 0.09, 85.75) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove palm_mexican_fan_a at (11.26, 0.09, 51.13) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove_decal: one wear mark at (-9.64, 0.01, 35.67) removed  [oil mark lies on the sidewalk]
+PROOF change #6 remove_decal: one wear mark at (-11.30, 0.16, 74.00) removed  [grime mark lies on grass]
+PROOF change #7 remove_decal: one wear mark at (-13.88, 0.16, 38.23) removed  [pale patch mark lies on grass]
+PROOF change #8 remove_decal: one wear mark at (-9.77, 0.01, 91.27) removed  [pale patch mark lies on grass]
+PROOF change #9 remove_decal: one wear mark at (-9.76, 0.01, 25.91) removed  [pale patch mark lies on grass]
+PROOF change #10 remove_decal: one wear mark at (-9.65, 0.01, 77.92) removed  [pale patch mark lies on grass]
+PROOF change #11 remove_decal: one wear mark at (-11.37, 0.16, 55.83) removed  [oil mark lies on the sidewalk]
+PROOF change #12 remove_decal: one wear mark at (-11.02, 0.16, 84.82) removed  [oil mark lies on the sidewalk]
+PROOF change #13 remove_decal: one wear mark at (9.56, 0.01, 49.75) removed  [pale patch mark lies on grass]
+PROOF change #14 remove_decal: one wear mark at (9.75, 0.01, 35.35) removed  [pale patch mark lies on grass]
+PROOF change #15 remove_decal: one wear mark at (9.66, 0.01, 50.73) removed  [pale patch mark lies on grass]
+PROOF change #16 remove_decal: one wear mark at (11.02, 0.16, 61.93) removed  [oil mark lies on the sidewalk]
+PROOF note: 'Props/palm_mexican_fan_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_near' held only listed items and is gone with them
+PROOF 16 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
