@@ -42,7 +42,16 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   in the driving fixed (straight before left; a car on its line lets others through): the traffic test PASSES and
   nobody stands over 2 min even at twice the busiest hour. Pictures `review/traffic/pc/`. Lock test PASS. PC cost:
   0.1 ms a frame on the main thread, 5-6 draws. NOT YET: parked cars pulling out / in, wheels turning, indicators.
-  RUN `tools/city/traffic/make_streets.gd` AFTER EVERY BAKE (streets.bin). NEXT: the phone (2d), then the people.
+  RUN `tools/city/traffic/make_streets.gd` AFTER EVERY BAKE (streets.bin).
+  STAGE 2d DONE (19 Nov, doc section 18): THE PHONE. Stream gate PASS with 20 and 40 cars (twice each on the final
+  app; the very first run after an install had one 59 ms frame) and with "80" (the streets hold 57 at most). A
+  street with traffic and parked cars costs about 12 draws, 125 k triangles, 0.26 ms of the main thread, under
+  0.1 ms of GPU median; parked cars alone 5 draws, 85 k triangles. PARKED CARS PULL OUT AND MOVING CARS PARK
+  (`native/src/traffic_parking.h`; test: no moving car ever touches a parked one). The zones plan fails on this branch
+  with AND without traffic (a collision body waits 5 s at one night teleport: the streamer, not the traffic).
+  STAGE 3a STARTED: the old crowd core walks the new pavements (`native/src/crowd_sim.*`, `city_crowd.*`,
+  `tests/crowd/test_crowd_core.gd`): routes, signals and queues work, nobody leaves a pavement in 4 of 6 places;
+  NOT PASSING YET (people still stand inside each other on the narrow pavements), nothing drawn yet.
 - 18 Nov (cloud, branch `claude/grow-industrial`): INDUSTRIAL GROWTH, stage 1 + 2 done, NOTHING LOCKED, WAITING for
   Yasin's word on the variants. Read `review/grow_ind/README.md`. Three variants (A port, B fleet, C cold chain),
   each dressed twice = six 100 m blocks round the sample. They form the pilot area u -900..-500, v -1600..-1400

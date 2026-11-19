@@ -1,0 +1,105 @@
+# phone rig run 'traffic40_zones'  2026-11-19T01:15Z  args: --plan=zones --probe --traffic=40
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 329 -> 352 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit ab80e322 | meminfo at 60 s:          Native Heap:   228752                         229976;            Graphics:   613668                         613668;           TOTAL PSS:   955330            TOTAL RSS:  1040884       TOTAL SWAP PSS:      304;
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 look=1 bloom=0 upscale=0 sharp=0.20 reflect=1 plan=zones lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=141 tiers=false band=8.0 arrive=0.50 far_ground=true tier_materials=21
+RIG native coronado_city 0.1 release android arm64, godot-cpp 4.5 | its own threads: ok (4 threads, 1.0 ms; the device reports 8)
+RIG warmnight 736 ms
+RIG boot first_area_ms=825 warm_ms=1491 (graphics memory reserve 192 MB: 57 ms) cells=10 static_mb=124 video_mb=278
+RIG drive gritty_60kmh speed=60 km/h secs=25 frames=1498 fps=59.9 | frame_ms med=16.7 p95=23.5 p99=26.3 worst=32 | over16.7=49.1% over33=0 over50=0 over100=0
+RIG   map gritty_60kmh draws avg=134 max=180 | tris avg=754k max=1043k | cells most=14 in=9 out=5 dropped=0 cap_hits=0 | gpu_ms med=14.07 p95=15.23
+RIG   stream gritty_60kmh start_ready_ms=1 (worst frame meanwhile 0 ms) | request_to_in ms mean=138 worst=379 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 0.97, body 2.20 (col_30 shapes=11 new=896), removal step 0.76 | bodies late=0
+RIG   slow gritty_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision gritty_60kmh made=144589 units, a body waited at most 1428 ms from its cell's arrival | physics thread wait a frame (probe): median 0.4 p99 5.6 worst 9.0 ms
+RIG   objects gritty_60kmh all=7127 nodes=1915 orphan_nodes=0 resources=1574 | streamer: cells in=14, bodies waiting=0, nodes leaving=0
+RIG   traffic gritty_60kmh cars moving avg 20.2 most 26 (the streets there carry 24, the cap is 40): near model 0.2, light model 1.5, far shape 18.5 | parked: 519 in the loaded cells, 8.8 drawn with the light model | batches drawn avg 7.7, uploads a frame 6.7 | main thread a frame: avg 0.253 worst 1.249 ms | the step (own thread): avg 0.178 worst 1.052 ms | pulled out of a stall 5, parked 4 (since the start)
+RIG   mem gritty_60kmh static_mb=129 video_mb=302 tex_mb=116 buf_mb=161
+RIG drive centre_60kmh speed=60 km/h secs=25 frames=1447 fps=57.8 | frame_ms med=16.9 p95=24.9 p99=27.8 worst=31 | over16.7=54.5% over33=0 over50=0 over100=0
+RIG   map centre_60kmh draws avg=106 max=139 | tris avg=777k max=1194k | cells most=14 in=9 out=17 dropped=0 cap_hits=0 | gpu_ms med=14.19 p95=16.98
+RIG   stream centre_60kmh start_ready_ms=1630 (worst frame meanwhile 30 ms) | request_to_in ms mean=186 worst=356 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.34, body 2.20 (col_30 shapes=11 new=896), removal step 0.90 | bodies late=0
+RIG   slow centre_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision centre_60kmh made=147976 units, a body waited at most 2105 ms from its cell's arrival | physics thread wait a frame (probe): median 0.5 p99 5.0 worst 8.0 ms
+RIG   objects centre_60kmh all=6474 nodes=1836 orphan_nodes=0 resources=1234 | streamer: cells in=14, bodies waiting=0, nodes leaving=0
+RIG   traffic centre_60kmh cars moving avg 25.7 most 32 (the streets there carry 30, the cap is 40): near model 0.5, light model 4.4, far shape 20.8 | parked: 562 in the loaded cells, 1.0 drawn with the light model | batches drawn avg 6.4, uploads a frame 5.5 | main thread a frame: avg 0.245 worst 1.107 ms | the step (own thread): avg 0.206 worst 1.568 ms | pulled out of a stall 9, parked 4 (since the start)
+RIG   mem centre_60kmh static_mb=127 video_mb=336 tex_mb=116 buf_mb=189
+RIG drive waterfront_60kmh speed=60 km/h secs=25 frames=1480 fps=59.2 | frame_ms med=16.8 p95=23.1 p99=25.9 worst=30 | over16.7=51.0% over33=0 over50=0 over100=0
+RIG   map waterfront_60kmh draws avg=111 max=145 | tris avg=717k max=981k | cells most=13 in=6 out=20 dropped=0 cap_hits=0 | gpu_ms med=13.93 p95=14.60
+RIG   stream waterfront_60kmh start_ready_ms=1831 (worst frame meanwhile 30 ms) | request_to_in ms mean=50 worst=70 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.34, body 2.20 (col_30 shapes=11 new=896), removal step 1.05 | bodies late=0
+RIG   slow waterfront_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision waterfront_60kmh made=35123 units, a body waited at most 1522 ms from its cell's arrival | physics thread wait a frame (probe): median 0.4 p99 3.9 worst 7.3 ms
+RIG   objects waterfront_60kmh all=3544 nodes=719 orphan_nodes=0 resources=567 | streamer: cells in=12, bodies waiting=0, nodes leaving=0
+RIG   traffic waterfront_60kmh cars moving avg 13.3 most 32 (the streets there carry 15, the cap is 40): near model 0.0, light model 0.6, far shape 12.7 | parked: 311 in the loaded cells, 14.3 drawn with the light model | batches drawn avg 7.9, uploads a frame 6.9 | main thread a frame: avg 0.266 worst 1.078 ms | the step (own thread): avg 0.152 worst 0.980 ms | pulled out of a stall 13, parked 7 (since the start)
+RIG   mem waterfront_60kmh static_mb=114 video_mb=248 tex_mb=117 buf_mb=100
+RIG drive industrial_60kmh speed=60 km/h secs=25 frames=1491 fps=59.6 | frame_ms med=16.7 p95=23.0 p99=25.7 worst=31 | over16.7=49.6% over33=0 over50=0 over100=0
+RIG   map industrial_60kmh draws avg=128 max=158 | tris avg=659k max=753k | cells most=12 in=9 out=17 dropped=0 cap_hits=0 | gpu_ms med=13.97 p95=14.70
+RIG   stream industrial_60kmh start_ready_ms=2704 (worst frame meanwhile 28 ms) | request_to_in ms mean=180 worst=310 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.18, body 2.20 (col_30 shapes=11 new=896), removal step 1.05 | bodies late=0
+RIG   slow industrial_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision industrial_60kmh made=205191 units, a body waited at most 2330 ms from its cell's arrival | physics thread wait a frame (probe): median 0.5 p99 5.7 worst 10.8 ms
+RIG   objects industrial_60kmh all=6514 nodes=1825 orphan_nodes=0 resources=968 | streamer: cells in=12, bodies waiting=0, nodes leaving=0
+RIG   traffic industrial_60kmh cars moving avg 20.1 most 31 (the streets there carry 29, the cap is 40): near model 0.3, light model 1.9, far shape 17.9 | parked: 307 in the loaded cells, 0.4 drawn with the light model | batches drawn avg 4.7, uploads a frame 3.7 | main thread a frame: avg 0.214 worst 0.872 ms | the step (own thread): avg 0.165 worst 1.307 ms | pulled out of a stall 15, parked 7 (since the start)
+RIG   mem industrial_60kmh static_mb=130 video_mb=314 tex_mb=116 buf_mb=167
+RIG drive apartments_60kmh speed=60 km/h secs=25 frames=1384 fps=55.4 | frame_ms med=16.9 p95=25.8 p99=27.4 worst=30 | over16.7=56.5% over33=0 over50=0 over100=0
+RIG   map apartments_60kmh draws avg=144 max=208 | tris avg=859k max=1156k | cells most=14 in=9 out=19 dropped=0 cap_hits=0 | gpu_ms med=15.65 p95=18.05
+RIG   stream apartments_60kmh start_ready_ms=2873 (worst frame meanwhile 29 ms) | request_to_in ms mean=103 worst=195 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.18, body 2.20 (col_30 shapes=11 new=896), removal step 1.05 | bodies late=0
+RIG   slow apartments_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision apartments_60kmh made=89239 units, a body waited at most 2652 ms from its cell's arrival | physics thread wait a frame (probe): median 0.4 p99 3.9 worst 6.2 ms
+RIG   objects apartments_60kmh all=5617 nodes=1519 orphan_nodes=0 resources=1075 | streamer: cells in=14, bodies waiting=0, nodes leaving=0
+RIG   traffic apartments_60kmh cars moving avg 21.3 most 30 (the streets there carry 29, the cap is 40): near model 0.1, light model 1.6, far shape 19.6 | parked: 514 in the loaded cells, 6.8 drawn with the light model | batches drawn avg 7.1, uploads a frame 6.1 | main thread a frame: avg 0.218 worst 1.328 ms | the step (own thread): avg 0.186 worst 1.280 ms | pulled out of a stall 21, parked 9 (since the start)
+RIG   mem apartments_60kmh static_mb=123 video_mb=318 tex_mb=116 buf_mb=171
+RIG drive pilot_60kmh speed=60 km/h secs=25 frames=1487 fps=59.5 | frame_ms med=16.7 p95=23.0 p99=25.4 worst=31 | over16.7=51.1% over33=0 over50=0 over100=0
+RIG   map pilot_60kmh draws avg=110 max=141 | tris avg=610k max=805k | cells most=14 in=8 out=18 dropped=0 cap_hits=0 | gpu_ms med=13.97 p95=14.75
+RIG   stream pilot_60kmh start_ready_ms=1658 (worst frame meanwhile 28 ms) | request_to_in ms mean=99 worst=127 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.18, body 2.20 (col_30 shapes=11 new=896), removal step 1.05 | bodies late=0
+RIG   slow pilot_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision pilot_60kmh made=104011 units, a body waited at most 1870 ms from its cell's arrival | physics thread wait a frame (probe): median 0.5 p99 5.2 worst 6.4 ms
+RIG   objects pilot_60kmh all=5124 nodes=1180 orphan_nodes=0 resources=1027 | streamer: cells in=14, bodies waiting=0, nodes leaving=0
+RIG   traffic pilot_60kmh cars moving avg 28.2 most 37 (the streets there carry 34, the cap is 40): near model 0.4, light model 3.1, far shape 24.6 | parked: 446 in the loaded cells, 5.1 drawn with the light model | batches drawn avg 7.5, uploads a frame 6.5 | main thread a frame: avg 0.269 worst 1.079 ms | the step (own thread): avg 0.248 worst 1.408 ms | pulled out of a stall 24, parked 13 (since the start)
+RIG   mem pilot_60kmh static_mb=121 video_mb=282 tex_mb=116 buf_mb=135
+RIG drive strip_60kmh speed=60 km/h secs=25 frames=1480 fps=59.2 | frame_ms med=16.8 p95=23.2 p99=26.1 worst=31 | over16.7=52.3% over33=0 over50=0 over100=0
+RIG   map strip_60kmh draws avg=105 max=133 | tris avg=660k max=805k | cells most=14 in=6 out=19 dropped=0 cap_hits=0 | gpu_ms med=14.00 p95=14.77
+RIG   stream strip_60kmh start_ready_ms=2407 (worst frame meanwhile 28 ms) | request_to_in ms mean=119 worst=231 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.18, body 2.20 (col_30 shapes=11 new=896), removal step 1.05 | bodies late=0
+RIG   slow strip_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision strip_60kmh made=119405 units, a body waited at most 2671 ms from its cell's arrival | physics thread wait a frame (probe): median 0.5 p99 5.6 worst 8.4 ms
+RIG   objects strip_60kmh all=4860 nodes=1086 orphan_nodes=0 resources=843 | streamer: cells in=13, bodies waiting=0, nodes leaving=0
+RIG   traffic strip_60kmh cars moving avg 19.2 most 35 (the streets there carry 35, the cap is 40): near model 0.1, light model 1.5, far shape 17.7 | parked: 414 in the loaded cells, 7.9 drawn with the light model | batches drawn avg 7.0, uploads a frame 6.1 | main thread a frame: avg 0.262 worst 0.847 ms | the step (own thread): avg 0.193 worst 1.280 ms | pulled out of a stall 29, parked 13 (since the start)
+RIG   mem strip_60kmh static_mb=121 video_mb=276 tex_mb=116 buf_mb=129
+RIG drive civic_60kmh speed=60 km/h secs=25 frames=1452 fps=58.0 | frame_ms med=16.8 p95=24.7 p99=27.4 worst=30 | over16.7=54.5% over33=0 over50=0 over100=0
+RIG   map civic_60kmh draws avg=115 max=149 | tris avg=613k max=794k | cells most=14 in=9 out=18 dropped=0 cap_hits=0 | gpu_ms med=14.36 p95=16.31
+RIG   stream civic_60kmh start_ready_ms=1966 (worst frame meanwhile 28 ms) | request_to_in ms mean=129 worst=248 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.18, body 2.20 (col_30 shapes=11 new=896), removal step 1.05 | bodies late=0
+RIG   slow civic_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision civic_60kmh made=124130 units, a body waited at most 1753 ms from its cell's arrival | physics thread wait a frame (probe): median 0.4 p99 5.1 worst 8.0 ms
+RIG   objects civic_60kmh all=6065 nodes=1571 orphan_nodes=0 resources=1283 | streamer: cells in=14, bodies waiting=0, nodes leaving=0
+RIG   traffic civic_60kmh cars moving avg 23.5 most 35 (the streets there carry 26, the cap is 40): near model 0.1, light model 0.8, far shape 22.6 | parked: 510 in the loaded cells, 7.9 drawn with the light model | batches drawn avg 6.5, uploads a frame 5.5 | main thread a frame: avg 0.233 worst 1.161 ms | the step (own thread): avg 0.187 worst 1.169 ms | pulled out of a stall 32, parked 16 (since the start)
+RIG   mem civic_60kmh static_mb=125 video_mb=308 tex_mb=116 buf_mb=161
+RIG drive stadium_60kmh speed=60 km/h secs=25 frames=1483 fps=59.3 | frame_ms med=16.9 p95=23.0 p99=26.0 worst=29 | over16.7=53.1% over33=0 over50=0 over100=0
+RIG   map stadium_60kmh draws avg=77 max=89 | tris avg=370k max=427k | cells most=14 in=8 out=11 dropped=0 cap_hits=0 | gpu_ms med=13.53 p95=14.37
+RIG   stream stadium_60kmh start_ready_ms=142 (worst frame meanwhile 24 ms) | request_to_in ms mean=100 worst=166 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.18, body 2.20 (col_30 shapes=11 new=896), removal step 1.05 | bodies late=0
+RIG   slow stadium_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision stadium_60kmh made=51618 units, a body waited at most 289 ms from its cell's arrival | physics thread wait a frame (probe): median 0.5 p99 4.7 worst 7.2 ms
+RIG   objects stadium_60kmh all=5034 nodes=1257 orphan_nodes=0 resources=992 | streamer: cells in=14, bodies waiting=0, nodes leaving=0
+RIG   traffic stadium_60kmh cars moving avg 13.8 most 26 (the streets there carry 13, the cap is 40): near model 0.5, light model 2.1, far shape 11.3 | parked: 563 in the loaded cells, 7.6 drawn with the light model | batches drawn avg 7.9, uploads a frame 6.9 | main thread a frame: avg 0.296 worst 1.168 ms | the step (own thread): avg 0.155 worst 4.181 ms | pulled out of a stall 35, parked 17 (since the start)
+RIG   mem stadium_60kmh static_mb=120 video_mb=272 tex_mb=116 buf_mb=126
+RIG drive seventh_210kmh speed=209 km/h secs=20 frames=1152 fps=57.5 | frame_ms med=16.7 p95=25.7 p99=27.4 worst=30 | over16.7=50.7% over33=0 over50=0 over100=0
+RIG   map seventh_210kmh draws avg=126 max=211 | tris avg=733k max=1320k | cells most=16 in=22 out=28 dropped=0 cap_hits=0 | gpu_ms med=14.36 p95=17.67
+RIG   stream seventh_210kmh start_ready_ms=516 (worst frame meanwhile 27 ms) | request_to_in ms mean=141 worst=332 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.18, body 2.20 (col_30 shapes=11 new=896), removal step 1.05 | bodies late=0
+RIG   slow seventh_210kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision seventh_210kmh made=248602 units, a body waited at most 823 ms from its cell's arrival | physics thread wait a frame (probe): median 0.4 p99 5.2 worst 7.9 ms
+RIG   objects seventh_210kmh all=5997 nodes=1562 orphan_nodes=149 resources=1261 | streamer: cells in=15, bodies waiting=26, nodes leaving=0
+RIG   traffic seventh_210kmh cars moving avg 26.4 most 33 (the streets there carry 28, the cap is 40): near model 0.5, light model 2.8, far shape 23.0 | parked: 541 in the loaded cells, 5.4 drawn with the light model | batches drawn avg 8.1, uploads a frame 7.2 | main thread a frame: avg 0.243 worst 1.203 ms | the step (own thread): avg 0.200 worst 0.899 ms | pulled out of a stall 38, parked 17 (since the start)
+RIG   mem seventh_210kmh static_mb=125 video_mb=332 tex_mb=116 buf_mb=185
+RIG drive centre_night_60kmh speed=60 km/h secs=25 frames=1376 fps=55.0 | frame_ms med=17.1 p95=26.5 p99=28.4 worst=33 | over16.7=58.0% over33=1 over50=0 over100=0
+RIG   map centre_night_60kmh draws avg=124 max=164 | tris avg=803k max=1265k | cells most=14 in=7 out=13 dropped=0 cap_hits=0 | gpu_ms med=15.05 p95=19.92
+RIG   stream centre_night_60kmh start_ready_ms=567 (worst frame meanwhile 26 ms) | request_to_in ms mean=203 worst=430 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.18, body 2.20 (col_30 shapes=11 new=896), removal step 1.69 | bodies late=0
+RIG   slow centre_night_60kmh frames over 33 ms by what the streamer was doing: { "none": 1 } | over 45 ms: {  }
+RIG   collision centre_night_60kmh made=104529 units, a body waited at most 1253 ms from its cell's arrival | physics thread wait a frame (probe): median 0.4 p99 4.4 worst 6.3 ms
+RIG   objects centre_night_60kmh all=6476 nodes=1836 orphan_nodes=0 resources=1234 | streamer: cells in=14, bodies waiting=0, nodes leaving=0
+RIG   traffic centre_night_60kmh cars moving avg 29.8 most 32 (the streets there carry 30, the cap is 40): near model 1.1, light model 6.3, far shape 22.4 | parked: 562 in the loaded cells, 1.1 drawn with the light model | batches drawn avg 8.9, uploads a frame 7.9 | main thread a frame: avg 0.257 worst 1.836 ms | the step (own thread): avg 0.267 worst 1.543 ms | pulled out of a stall 41, parked 18 (since the start)
+RIG   mem centre_night_60kmh static_mb=128 video_mb=336 tex_mb=116 buf_mb=189
+RIG drive gritty_night_60kmh speed=60 km/h secs=25 frames=1498 fps=59.9 | frame_ms med=16.7 p95=24.9 p99=28.0 worst=30 | over16.7=50.2% over33=0 over50=0 over100=0
+RIG   map gritty_night_60kmh draws avg=146 max=193 | tris avg=742k max=1052k | cells most=14 in=9 out=19 dropped=0 cap_hits=0 | gpu_ms med=14.16 p95=16.40
+RIG   stream gritty_night_60kmh start_ready_ms=3611 (worst frame meanwhile 29 ms) | request_to_in ms mean=121 worst=336 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 2.18, body 2.20 (col_30 shapes=11 new=896), removal step 1.69 | bodies late=0
+RIG   slow gritty_night_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+RIG   collision gritty_night_60kmh made=232996 units, a body waited at most 5068 ms from its cell's arrival | physics thread wait a frame (probe): median 0.4 p99 5.2 worst 6.6 ms
+RIG   objects gritty_night_60kmh all=7129 nodes=1915 orphan_nodes=0 resources=1574 | streamer: cells in=14, bodies waiting=0, nodes leaving=0
+RIG   traffic gritty_night_60kmh cars moving avg 21.8 most 33 (the streets there carry 24, the cap is 40): near model 0.1, light model 1.7, far shape 20.0 | parked: 518 in the loaded cells, 9.0 drawn with the light model | batches drawn avg 8.4, uploads a frame 7.4 | main thread a frame: avg 0.239 worst 1.120 ms | the step (own thread): avg 0.178 worst 1.052 ms | pulled out of a stall 48, parked 21 (since the start)
+RIG   mem gritty_night_60kmh static_mb=133 video_mb=311 tex_mb=116 buf_mb=165
+RIG plan_done lap=1

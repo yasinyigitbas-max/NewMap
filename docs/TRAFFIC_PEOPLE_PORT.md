@@ -520,3 +520,76 @@ NOT DONE YET, said plainly:
 - One far picture showed coloured squares: that was the old `streets.bin` (no slope value for parked cars) giving
   broken rows; rebuilt, and a row can no longer be broken. Run `make_streets.gd` after every bake.
 - Walkers and parked cars: Stage 3.
+
+## 18. Stage 2d result: the traffic on the phone, and parked cars that pull out and park (19 Nov)
+
+### What a street with traffic costs (Redmi, Mali-G610, 3D at 720p, the stream loop at 108 / 210 / 281 km/h)
+Runs in `review/phone/`: `traffic0_stream` (the same app, no traffic), `traffic20_stream` / `traffic20b_stream`,
+`traffic40_stream` / `traffic40b_stream`, `traffic80_stream`, `traffic40_noparked_stream`, `traffic40_zones`.
+Every number is the range over the three drives of a run.
+
+| run | moving cars (average / most) | parked cars in the loaded cells | draws (average) | triangles (average) | GPU ms (median / p95) | frame ms (median) | traffic on the main thread | physics wait (median) | the stream gate |
+|---|---|---|---|---|---|---|---|---|---|
+| no traffic | 0 | 0 | 79-82 | 410-436 k | 13.6-13.7 / 15.2-15.4 | 16.4-16.8 | 0 | 0.5 | PASS |
+| `--traffic=20` | 18-19 / 20 | 500-550 | 89-93 | 515-543 k | 13.5-13.7 / 15.7-16.1 | 16.3-16.8 | 0.22-0.25 ms | 0.4 | first run FAIL (one frame of 59 ms), repeat PASS |
+| `--traffic=40 --density=1.7` | 31-33 / 40 | 510-550 | 91-94 | 535-562 k | 13.6-13.7 / 15.7-16.4 | 16.4-16.8 | 0.26 ms | 0.5-0.6 | PASS, twice |
+| `--traffic=80 --density=3.4` | 36-39 / 57 | 510-555 | 92-95 | 549-575 k | 13.6-13.7 / 15.8-16.5 | 16.4-16.8 | 0.26-0.28 ms | 0.4-0.6 | PASS |
+| `--traffic=40`, parked cars OFF | 31-33 / 40 | 0 | 85-90 | 447-488 k | 13.6 / 15.3-15.8 | 16.4-16.7 | 0.20 ms | 0.5-0.6 | PASS |
+
+SAID PLAINLY:
+- A STREET WITH TRAFFIC AND PARKED CARS COSTS about 12 more draws, about 125,000 more triangles, 0.26 ms of the main
+  thread, and nothing I can measure in the frame time: the median frame is 16.4-16.8 ms with and without traffic
+  (the phone is held by its screen rate), the GPU's median moves by less than 0.1 ms and its 95th percentile by
+  0.5 to 1 ms. The driving itself runs on its own thread: 0.16 ms a step for 20 cars, 0.27 ms for 40 (worst 2.3 ms), 20 times a
+  second.
+  The physics thread's wait does not change (the cars' 24 boxes are only moved). Memory: about 11-15 MB more
+  graphics memory, 2-3 MB more of the app's own.
+- THE PARKED CARS ALONE (the line with them off against the line with them on): 5 more draws, about 85,000 more
+  triangles, 0.06 ms on the main thread, no measurable GPU time. About 500 stand in the loaded cells at any time,
+  6 of them near enough for the light model.
+- "80 cars" WAS NOT REACHED. The streets round the camera carry about 26 at the busiest hour; asking for 3.4 times
+  that gave 36-39 on average and 57 at most, because a car needs a free gap to appear in. The cost above did not
+  grow between 31 and 39 cars. More than about 57 moving cars within 340 m does not happen on these streets.
+- THE ONE FAILED RUN: the first run with traffic after installing the app had one frame of 59 ms in its first drive
+  (the run without traffic had 49 ms at the same moment; the limit is 50). The traffic's own work in that frame was
+  1.3 ms; the time was the engine preparing the car shaders for the first time (`draw_cpu 16 ms`). Every later run
+  passed, also after a new install of the final app. The warm-up draws every car batch behind the loading screen, but
+  it does not catch everything on the very first start after an install: NOT SOLVED, said so.
+- At 281 km/h the cars are there: 18.7 of 20, 32.5 of 40 round the camera (the ring runs ahead with the speed).
+
+### Parked cars are part of the traffic now (section 14, point 2)
+`native/src/traffic_parking.h`, on the old core's own "drive to a goal and pull over" (the buses' and the taxi's).
+A parked car and a moving car are the same car in two states:
+- A PARKED CAR PULLS OUT: about every few seconds one of the parked cars at a kerb within 300 m starts, when its lane
+  is free for 45 m behind and the stall ahead is empty; it keeps its model and colour, its stall is empty from then.
+- A MOVING CAR PARKS: a car picks a free kerb stall 35-120 m ahead on its own lane (the stall before it must be
+  free: it swings in nose first), slows, steers in over the last 14 m and stops; the stall takes its model and
+  colour and the moving car is gone. Buses do not park.
+- While a car goes in or out, the parked cars round it are boxes to the driving core: it never moves into them.
+  Otherwise the lanes themselves keep 0.85 m off the parked cars.
+- A cell that leaves puts its stalls back to what they hold at first: the same street every time you come back.
+- THE TEST (`tests/traffic/test_traffic_core.gd`, 12 runs now) has three runs with parking: in 30 traffic minutes
+  72 / 38 / 59 cars pulled out and 52 / 16 / 37 parked, and NO moving car ever touched a parked one (checked once a
+  second with a check of its own). RESULT PASS. On the phone loop: 22-28 pulled out and 5-8 parked in 2.5 minutes.
+- WHAT THE CORE NEEDED: a car pulling in steers as hard as one changing lane (at the gentle rate it stopped with the
+  sideways move unfinished), and it does not "drive round" the car standing in the next stall.
+
+NOT DONE in the traffic, said plainly: wheels do not turn, indicators do not blink; a car does not reverse into a
+stall (it needs the stall before it free); car parks take no part (the pieces do not record their driveways); the
+far shape of a bus is a stretched saloon; the very first start after an install can show one slow frame (above).
+
+THE ZONES PLAN (teleports between the zones, day and night, `traffic40_zones` against `traffic0_zones`): with 40 cars
+no drive has a frame over 33 ms except one of 33 ms (the night drives too: the lamp glows cost nothing measurable).
+Both runs FAIL the gate at the same place for the same reason, with and without traffic: at the `gritty_night`
+teleport a collision body waits 5.0 s (limit 3 s) and the teleport is ready after 3.6 s. That is this branch's
+streamer (the collision work of the streaming session is not merged here), not the traffic.
+
+THE TERRAIN (Yasin, 19 Nov: "did you check the terrain while you were writing the code?"). What was checked: every
+lane, pavement and stall takes its height from the BAKED GROUND of the cells (the graded pieces), and the tool checks
+it: lanes run from 1.4 m to 14.0 m, the steepest stretch is 7.8 % (153 of 3,093 stretches are steeper than 4 %), no
+lane point and no stall is without ground, the largest height kink at a lane point is 1.6 cm; a parked car's slope
+is read from the ground under it (steepest 7.4 %); moving cars pitch with their lane. What was NOT checked: the
+separate terrain files (`map_dc/coronado/terrain/data_citykit`, the land between and round the pieces): this code
+never reads them. Cars and people are only on the pieces' streets and pavements, so they do not need them, but where
+the terrain and a piece's ground disagree, this job would not see it. Also: a car does not lean sideways (no roll:
+on a street with a cross slope it stands level across); 9 pavement points have no ground (the holes of section 15).
