@@ -1,0 +1,57 @@
+{
+ "area": "ar_b076_b",
+ "piece": "s_ar_b076_b",
+ "zone": "Arterial",
+ "rule": "docs/TREE_PLAN.md: arterials - trees on the grass strips only, one species a face; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    -49.313,
+    13.852,
+    -1211.391
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west grass strip, nothing within 3 m: coral tree, the face's species"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    -85.857,
+    12.721,
+    -1211.231
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west grass strip, 36.6 m on, 2.5 m off the sign: same run"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -32.139,
+    14.112,
+    -1188.757
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east grass strip, nothing within 3 m: queen palm, staggered against the west side"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -75.705,
+    13.088,
+    -1188.776
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east grass strip, 43.6 m on: the spot at 65.7 m (1.9 m off a storm inlet) skipped"
+  }
+ ]
+}

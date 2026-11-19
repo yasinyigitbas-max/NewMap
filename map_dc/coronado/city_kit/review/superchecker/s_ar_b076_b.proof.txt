@@ -1,0 +1,37 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 16 nodes (with every mesh of the buildings), 4772 ground and ground-collision triangles, 17 prop instances, 10 colliders, 270 wear marks are identical in both files
+PROOF differences found between the files: 52 lines only in the old one, 0 only in the new one
+PROOF change #1 remove tree_torrey_pine_b at (-11.21, 0.01, 36.46) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_coral_b at (-11.39, -0.21, 49.31) removed, in 3 tier(s) and its collider  [tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_coral_b at (-11.23, -1.34, 85.86) removed, in 3 tier(s) and its collider  [tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_coral_b at (11.24, -1.39, 87.35) removed, in 3 tier(s) and its collider  [tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove tree_magnolia_b at (11.24, 0.05, 32.14) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove palm_queen_a at (11.33, -0.64, 65.66) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove palm_mexican_fan_c at (11.22, -0.97, 75.70) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove_decal: one wear mark at (12.90, -1.32, 87.14) removed  [crack mark lies on grass]
+PROOF change #9 remove_decal: one wear mark at (-9.54, -1.09, 76.89) removed  [pale patch mark lies on grass]
+PROOF change #10 remove_decal: one wear mark at (-9.61, -0.25, 47.61) removed  [pale patch mark lies on grass]
+PROOF change #11 remove_decal: one wear mark at (-11.18, -0.59, 66.27) removed  [oil mark lies on the sidewalk]
+PROOF change #12 remove_decal: one wear mark at (-12.82, -0.94, 76.73) removed  [grime mark lies on grass]
+PROOF change #13 remove_decal: one wear mark at (9.78, -0.04, 34.28) removed  [pale patch mark lies on grass]
+PROOF change #14 remove_decal: one wear mark at (11.03, -0.35, 57.94) removed  [oil mark lies on the sidewalk]
+PROOF change #15 remove_decal: one wear mark at (12.83, 0.16, 25.50) removed  [grime mark lies on grass]
+PROOF change #16 remove_decal: one wear mark at (12.82, 0.05, 38.95) removed  [grime mark lies on grass]
+PROOF note: 'Props/palm_mexican_fan_c_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_near' held only listed items and is gone with them
+PROOF 16 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
