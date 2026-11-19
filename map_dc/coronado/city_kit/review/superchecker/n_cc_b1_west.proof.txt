@@ -1,0 +1,102 @@
+PROOF compared: 95 nodes (with every mesh of the buildings), 3332 ground and ground-collision triangles, 859 prop instances, 306 colliders, 62 wear marks are identical in both files
+PROOF differences found between the files: 126 lines only in the old one, 10 only in the new one
+PROOF change #9 move prop_storm_drain_grate: (-143.00, 0.16, -125.00) -> (-143.00, 0.27, -125.00), in 1 tier(s) and its collider  [prop_storm_drain_grate is 0.12 m into the ground]
+PROOF change #1 remove tree_jacaranda_a at (-169.50, 0.15, -167.50) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_ficus_b at (-150.00, 0.15, -171.00) removed, in 3 tier(s) and its collider  [tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_magnolia_a at (-180.00, 0.09, -136.00) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_jacaranda_b at (-166.00, 0.09, -136.00) removed, in 3 tier(s) and its collider  [tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove tree_torrey_pine_a at (-189.00, 0.15, -102.50) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove tree_torrey_pine_b at (-160.00, 0.15, -102.00) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove tree_magnolia_b at (-150.00, 0.15, -110.00) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove tree_magnolia_b at (-176.50, 0.15, -150.00) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #14 remove prop_meter_electric at (-157.15, 1.20, -115.00) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]]
+PROOF change #15 remove prop_meter_electric at (-157.15, 1.20, -115.42) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]]
+PROOF change #16 remove prop_meter_electric at (-157.15, 1.20, -115.84) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]]
+PROOF change #17 remove prop_meter_gas at (-157.15, 0.35, -116.70) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_gas is a wall item with no wall behind it]]
+PROOF change #18 remove prop_meter_electric at (-175.38, 1.20, -174.67) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]]
+PROOF change #19 remove prop_meter_electric at (-174.96, 1.20, -174.67) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]]
+PROOF change #20 remove prop_meter_electric at (-174.54, 1.20, -174.67) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]]
+PROOF change #21 remove prop_meter_electric at (-156.87, 1.20, -175.27) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]]
+PROOF change #22 remove prop_meter_electric at (-156.45, 1.20, -175.27) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]]
+PROOF change #23 remove prop_meter_electric at (-156.03, 1.20, -175.27) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]]
+PROOF change #24 remove prop_meter_electric at (-179.45, 1.20, -158.40) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]]
+PROOF change #25 remove prop_meter_electric at (-179.45, 1.20, -158.82) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]]
+PROOF change #26 remove prop_meter_electric at (-179.45, 1.20, -159.24) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]]
+PROOF change #27 remove prop_meter_gas at (-173.68, 0.35, -174.67) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_gas is a wall item with no wall behind it]]
+PROOF change #28 remove prop_meter_gas at (-155.17, 0.35, -175.27) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_gas is a wall item with no wall behind it]]
+PROOF change #29 remove prop_meter_gas at (-179.45, 0.35, -160.10) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_gas is a wall item with no wall behind it]]
+PROOF change #30 remove plant_potted_succulent at (-181.68, 0.15, -188.60) removed, in 1 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent stands on asphalt where vehicles go]]
+PROOF change #31 remove plant_potted_succulent at (-179.08, 0.15, -188.60) removed, in 1 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent stands on asphalt where vehicles go]]
+PROOF change #32 remove prop_trash_cart_black at (-176.98, 0.15, -174.10) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (2.1 m from a wall, 26.9 m from a fence)]]
+PROOF change #33 remove prop_trash_cart_black at (-158.47, 0.15, -174.70) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (2.1 m from a wall, 12.1 m from a fence)]]
+PROOF change #34 remove prop_trash_cart_black at (-178.88, 0.15, -156.80) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (1.3 m from a wall, 10.2 m from a fence)]]
+PROOF change #35 remove prop_trash_cart_black at (-162.90, 0.15, -148.30) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (17.6 m from a wall, 1.7 m from a fence)]]
+PROOF change #36 remove prop_trash_cart_blue at (-177.93, 0.15, -174.10) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.1 m from a wall, 26.5 m from a fence)]]
+PROOF change #37 remove prop_trash_cart_blue at (-159.42, 0.15, -174.70) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.1 m from a wall, 13.0 m from a fence)]]
+PROOF change #38 remove prop_trash_cart_blue at (-178.88, 0.15, -155.85) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (1.3 m from a wall, 9.2 m from a fence)]]
+PROOF change #39 remove prop_trash_cart_blue at (-161.95, 0.15, -148.30) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (18.5 m from a wall, 1.7 m from a fence)]]
+PROOF change #40 remove prop_trash_cart_green at (-178.88, 0.15, -174.10) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (1.6 m from a wall, 26.0 m from a fence)]]
+PROOF change #41 remove prop_trash_cart_green at (-178.88, 0.15, -154.90) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (1.3 m from a wall, 8.3 m from a fence)]]
+PROOF change #42 remove prop_trash_cart_green at (-161.00, 0.15, -148.30) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (19.5 m from a wall, 1.7 m from a fence)]]
+PROOF change #43 remove prop_trash_receptacle at (-186.00, 0.15, -139.20) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (11.4 m from a wall, 7.4 m from a fence)]]
+PROOF change #44 remove_decal: one wear mark at (-145.39, 0.16, -154.61) removed  [crack mark lies on grass]
+PROOF change #45 remove_decal: one wear mark at (-144.87, 0.16, -158.02) removed  [crack mark lies on grass]
+PROOF change #46 remove_decal: one wear mark at (-145.57, 0.16, -120.01) removed  [crack mark lies on grass]
+PROOF change #47 remove_decal: one wear mark at (-144.77, 0.16, -170.26) removed  [crack mark lies on grass]
+PROOF change #48 remove_decal: one wear mark at (-144.75, 0.16, -117.75) removed  [crack mark lies on grass]
+PROOF change #49 remove_decal: one wear mark at (-145.20, 0.16, -116.94) removed  [crack mark lies on grass]
+PROOF change #50 remove_decal: one wear mark at (-176.98, 0.16, -174.10) removed  [grime mark lies on grass]
+PROOF change #51 remove_decal: one wear mark at (-158.47, 0.16, -174.70) removed  [grime mark lies on grass]
+PROOF change #52 remove_decal: one wear mark at (-178.88, 0.16, -156.80) removed  [grime mark lies on grass]
+PROOF change #53 remove_decal: one wear mark at (-162.90, 0.16, -148.30) removed  [grime mark lies on grass]
+PROOF change #54 remove_decal: one wear mark at (-177.93, 0.16, -174.10) removed  [grime mark lies on grass]
+PROOF change #55 remove_decal: one wear mark at (-159.42, 0.16, -174.70) removed  [grime mark lies on grass]
+PROOF change #56 remove_decal: one wear mark at (-178.88, 0.16, -155.85) removed  [grime mark lies on grass]
+PROOF change #57 remove_decal: one wear mark at (-161.95, 0.16, -148.30) removed  [grime mark lies on grass]
+PROOF change #58 remove_decal: one wear mark at (-178.88, 0.16, -174.10) removed  [grime mark lies on grass]
+PROOF change #59 remove_decal: one wear mark at (-178.88, 0.16, -154.90) removed  [grime mark lies on grass]
+PROOF change #60 remove_decal: one wear mark at (-161.00, 0.16, -148.30) removed  [grime mark lies on grass]
+PROOF change #68 add_box: a collision box [-11.8703022003174, 1.54997599124908, 5.8649115562439, 0.29992012023926, 3.09995198249817, 0.3101530456543] for a column of Buildings/cave_garden_apts  [cave_garden_apts: a 0.3 x 0.3 m column or post of the building has no collision]
+PROOF change #69 add_box: a collision box [-3.60017728805542, 1.69994653761387, 5.62489986419678, 0.25976757049561, 2.8000108897686, 0.28994373321533] for a column of Buildings/cave_garden_apts  [cave_garden_apts: a 0.2 x 0.2 m column or post of the building has no collision]
+PROOF change #70 add_box: a collision box [7.61922693252563, 1.50054216384888, -5.7501482963562, 0.50154689788818, 3.00108432769775, 0.74010471343994] for a column of Buildings/downtown_church  [downtown_church: a 0.5 x 0.7 m column or post of the building has no collision]
+PROOF change #71 add_box: a collision box [7.61922693252563, 1.50054216384888, -10.2502093315125, 0.50154689788818, 3.00108432769775, 0.73965267181396] for a column of Buildings/downtown_church  [downtown_church: a 0.5 x 0.7 m column or post of the building has no collision]
+PROOF change #72 add_box: a collision box [-7.61944270133972, 1.50054216384888, -5.7501482963562, 0.50129751205444, 3.00108432769775, 0.74010471343994] for a column of Buildings/downtown_church  [downtown_church: a 0.5 x 0.7 m column or post of the building has no collision]
+PROOF change #73 add_box: a collision box [-7.61944270133972, 1.50054216384888, -10.2502093315125, 0.50129751205444, 3.00108432769775, 0.73965267181396] for a column of Buildings/downtown_church  [downtown_church: a 0.5 x 0.7 m column or post of the building has no collision]
+PROOF change #74 add_box: a collision box [-0.4501166343689, 1.69980147480965, 12.7016162872314, 0.94014171600342, 2.8001269698143, 0.16] for a column of Buildings/downtown_church  [downtown_church: a 0.9 x 0.1 m column or post of the building has no collision]
+PROOF change #75 add_box: a collision box [0.83959627151489, 1.69980147480965, 12.7016162872314, 0.16050151824951, 2.8001269698143, 0.16] for a column of Buildings/downtown_church  [downtown_church: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF note: 'Props/cell_near_0_0/tree_magnolia_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_0/prop_meter_gas_rusty_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_0/prop_meter_electric_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_1/tree_magnolia_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_1/prop_meter_gas_rusty_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_1/prop_meter_electric_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_receptacle_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_ficus_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_ficus_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_ficus_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_green_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_blue_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_black_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/plant_potted_succulent_normal_near' held only listed items and is gone with them
+PROOF 64 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
+   at: parse_gdextension_file (core/extension/gdextension_library_loader.cpp:282)
+   at: open_library (core/extension/gdextension.cpp:810)
+   at: load_extensions (core/extension/gdextension_manager.cpp:333)
