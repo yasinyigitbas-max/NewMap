@@ -1,0 +1,1386 @@
+{
+ "frame_print_small": {
+  "file_base": "prop_frame_print_small",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 250,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 218
+  },
+  "footprint_w": 0.28,
+  "footprint_d": 0.054,
+  "height": 0.36,
+  "regions": [
+   "baked:frame_print_small"
+  ],
+  "trim": {
+   "th_wash": {
+    "area_m2": 0.14,
+    "px_per_m": 128.0
+   },
+   "th_walnut": {
+    "area_m2": 0.07,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.23,
+    "px_per_m": 128.0
+   },
+   "art_surf": {
+    "area_m2": 0.06,
+    "px_per_m": 142.9
+   },
+   "th_metal": {
+    "area_m2": 0.0,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.0,
+  "atlas_page": "props_h_*",
+  "high_tris": 853,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1527.7,
+  "col": 1,
+  "secs": 7.4
+ },
+ "frame_print_medium": {
+  "file_base": "prop_frame_print_medium",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 400,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 218
+  },
+  "footprint_w": 0.5,
+  "footprint_d": 0.058,
+  "height": 0.65,
+  "regions": [
+   "baked:frame_print_medium"
+  ],
+  "trim": {
+   "th_walnut": {
+    "area_m2": 0.44,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.77,
+    "px_per_m": 128.0
+   },
+   "art_botanical": {
+    "area_m2": 0.21,
+    "px_per_m": 192.0
+   },
+   "th_metal": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.0,
+  "atlas_page": "props_h_*",
+  "high_tris": 858,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1527.7,
+  "col": 1,
+  "secs": 8.4
+ },
+ "frame_print_large": {
+  "file_base": "prop_frame_print_large",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 218
+  },
+  "footprint_w": 0.9,
+  "footprint_d": 0.064,
+  "height": 0.7,
+  "regions": [
+   "baked:frame_print_large"
+  ],
+  "trim": {
+   "th_walnut": {
+    "area_m2": 0.48,
+    "px_per_m": 128.0
+   },
+   "th_brass": {
+    "area_m2": 0.21,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 1.55,
+    "px_per_m": 128.0
+   },
+   "art_hotel": {
+    "area_m2": 0.45,
+    "px_per_m": 217.1
+   },
+   "th_metal": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.0,
+  "atlas_page": "props_h_*",
+  "high_tris": 857,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1527.7,
+  "col": 1,
+  "secs": 10.2
+ },
+ "frame_print_tall": {
+  "file_base": "prop_frame_print_tall",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 400,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 218
+  },
+  "footprint_w": 0.4,
+  "footprint_d": 0.058,
+  "height": 0.9,
+  "regions": [
+   "baked:frame_print_tall"
+  ],
+  "trim": {
+   "th_wash": {
+    "area_m2": 0.34,
+    "px_per_m": 128.0
+   },
+   "th_walnut": {
+    "area_m2": 0.15,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.86,
+    "px_per_m": 128.0
+   },
+   "art_palms": {
+    "area_m2": 0.24,
+    "px_per_m": 108.6
+   },
+   "th_metal": {
+    "area_m2": 0.0,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.0,
+  "atlas_page": "props_h_*",
+  "high_tris": 855,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1527.7,
+  "col": 1,
+  "secs": 7.8
+ },
+ "frame_ocean": {
+  "file_base": "prop_frame_ocean",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 450,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 282
+  },
+  "footprint_w": 0.7,
+  "footprint_d": 0.058,
+  "height": 0.5,
+  "regions": [
+   "baked:frame_ocean"
+  ],
+  "trim": {
+   "th_wash": {
+    "area_m2": 0.47,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.81,
+    "px_per_m": 128.0
+   },
+   "art_seascape": {
+    "area_m2": 0.22,
+    "px_per_m": 186.3
+   },
+   "th_metal": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.0,
+  "atlas_page": "props_h_*",
+  "high_tris": 854,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1527.7,
+  "col": 1,
+  "secs": 9.0
+ },
+ "frame_mcm_abstract": {
+  "file_base": "prop_frame_mcm_abstract",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 450,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 218
+  },
+  "footprint_w": 0.6,
+  "footprint_d": 0.058,
+  "height": 0.6,
+  "regions": [
+   "baked:frame_mcm_abstract"
+  ],
+  "trim": {
+   "th_walnut": {
+    "area_m2": 0.33,
+    "px_per_m": 128.0
+   },
+   "th_brass": {
+    "area_m2": 0.14,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.85,
+    "px_per_m": 128.0
+   },
+   "art_mcm": {
+    "area_m2": 0.24,
+    "px_per_m": 274.3
+   },
+   "th_metal": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.0,
+  "atlas_page": "props_h_*",
+  "high_tris": 855,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1527.7,
+  "col": 1,
+  "secs": 8.8
+ },
+ "frame_motel_floral": {
+  "file_base": "prop_frame_motel_floral",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 450,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 246
+  },
+  "footprint_w": 0.456,
+  "footprint_d": 0.064,
+  "height": 0.57,
+  "regions": [
+   "baked:frame_motel_floral"
+  ],
+  "trim": {
+   "th_brass": {
+    "area_m2": 0.51,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.53,
+    "px_per_m": 128.0
+   },
+   "art_floral": {
+    "area_m2": 0.14,
+    "px_per_m": 181.7
+   },
+   "th_metal": {
+    "area_m2": 0.0,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.0,
+  "atlas_page": "props_h_*",
+  "high_tris": 1334,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1527.7,
+  "col": 1,
+  "secs": 8.2
+ },
+ "frame_stand_photo": {
+  "file_base": "prop_frame_stand_photo",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 220,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 206
+  },
+  "footprint_w": 0.16,
+  "footprint_d": 0.197,
+  "height": 0.2,
+  "regions": [
+   "baked:frame_stand_photo"
+  ],
+  "trim": {
+   "th_brass": {
+    "area_m2": 0.09,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.07,
+    "px_per_m": 128.0
+   },
+   "art_portrait": {
+    "area_m2": 0.01,
+    "px_per_m": 105.1
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 764,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1878.3,
+  "col": 1,
+  "secs": 7.1
+ },
+ "mirror_round": {
+  "file_base": "prop_mirror_round",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 550,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 526
+  },
+  "footprint_w": 0.634,
+  "footprint_d": 0.047,
+  "height": 0.657,
+  "regions": [
+   "baked:mirror_round"
+  ],
+  "trim": {
+   "th_glass": {
+    "area_m2": 0.23,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.23,
+    "px_per_m": 128.0
+   },
+   "th_rattan": {
+    "area_m2": 0.33,
+    "px_per_m": 128.0
+   },
+   "th_brass": {
+    "area_m2": 0.08,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.0,
+  "atlas_page": "props_h_*",
+  "high_tris": 3004,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1527.7,
+  "col": 1,
+  "secs": 9.1
+ },
+ "mirror_rect": {
+  "file_base": "prop_mirror_rect",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 288
+  },
+  "footprint_w": 0.5,
+  "footprint_d": 0.068,
+  "height": 0.8,
+  "regions": [
+   "baked:mirror_rect"
+  ],
+  "trim": {
+   "th_walnut": {
+    "area_m2": 0.43,
+    "px_per_m": 128.0
+   },
+   "th_brass": {
+    "area_m2": 0.2,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.63,
+    "px_per_m": 128.0
+   },
+   "th_glass": {
+    "area_m2": 0.28,
+    "px_per_m": 128.0
+   },
+   "th_metal": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.0,
+  "atlas_page": "props_h_*",
+  "high_tris": 861,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1291.2,
+  "col": 1,
+  "secs": 8.5
+ },
+ "clock_wall_sunburst": {
+  "file_base": "prop_clock_wall_sunburst",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 550,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 504
+  },
+  "footprint_w": 0.52,
+  "footprint_d": 0.048,
+  "height": 0.54,
+  "regions": [
+   "baked:clock_wall_sunburst"
+  ],
+  "trim": {
+   "th_brass": {
+    "area_m2": 0.09,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.07,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.03,
+  "atlas_page": "props_h_*",
+  "high_tris": 2933,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1291.2,
+  "col": 1,
+  "secs": 8.1
+ },
+ "clock_mantel": {
+  "file_base": "prop_clock_mantel",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 520,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 502
+  },
+  "footprint_w": 0.28,
+  "footprint_d": 0.129,
+  "height": 0.32,
+  "regions": [
+   "baked:clock_mantel"
+  ],
+  "trim": {
+   "th_walnut": {
+    "area_m2": 0.38,
+    "px_per_m": 128.0
+   },
+   "th_brass": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   },
+   "th_glass": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 2479,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1291.2,
+  "col": 1,
+  "secs": 7.2
+ },
+ "vase_tall": {
+  "file_base": "prop_vase_tall",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 350,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 224
+  },
+  "footprint_w": 0.182,
+  "footprint_d": 0.182,
+  "height": 0.426,
+  "regions": [
+   "baked:vase_tall"
+  ],
+  "trim": {
+   "th_ceramic": {
+    "area_m2": 0.23,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 570,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1878.3,
+  "col": 1,
+  "secs": 6.9
+ },
+ "vase_bud": {
+  "file_base": "prop_vase_bud",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 180,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 176
+  },
+  "footprint_w": 0.076,
+  "footprint_d": 0.076,
+  "height": 0.166,
+  "regions": [
+   "baked:vase_bud"
+  ],
+  "trim": {
+   "th_ceramic": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 506,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 2463.4,
+  "col": 1,
+  "secs": 6.0
+ },
+ "vase_ginger": {
+  "file_base": "prop_vase_ginger",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 400,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 232
+  },
+  "footprint_w": 0.22,
+  "footprint_d": 0.22,
+  "height": 0.28,
+  "regions": [
+   "baked:vase_ginger"
+  ],
+  "trim": {
+   "th_ceramic": {
+    "area_m2": 0.19,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 674,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1878.3,
+  "col": 1,
+  "secs": 7.1
+ },
+ "vase_lava": {
+  "file_base": "prop_vase_lava",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 260,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 256
+  },
+  "footprint_w": 0.185,
+  "footprint_d": 0.193,
+  "height": 0.266,
+  "regions": [
+   "baked:vase_lava"
+  ],
+  "trim": {
+   "th_ceramic": {
+    "area_m2": 0.15,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 886,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 2167.2,
+  "col": 1,
+  "secs": 6.8
+ },
+ "bowl_ceramic": {
+  "file_base": "prop_bowl_ceramic",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 250,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 176
+  },
+  "footprint_w": 0.273,
+  "footprint_d": 0.28,
+  "height": 0.1,
+  "regions": [
+   "baked:bowl_ceramic"
+  ],
+  "trim": {
+   "th_ceramic": {
+    "area_m2": 0.14,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 542,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1878.3,
+  "col": 1,
+  "secs": 8.3
+ },
+ "bowl_wood": {
+  "file_base": "prop_bowl_wood",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 250,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 210
+  },
+  "footprint_w": 0.322,
+  "footprint_d": 0.322,
+  "height": 0.096,
+  "regions": [
+   "baked:bowl_wood"
+  ],
+  "trim": {
+   "th_walnut": {
+    "area_m2": 0.27,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 616,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1878.3,
+  "col": 1,
+  "secs": 8.0
+ },
+ "bowl_shell": {
+  "file_base": "prop_bowl_shell",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 260,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 172
+  },
+  "footprint_w": 0.27,
+  "footprint_d": 0.193,
+  "height": 0.058,
+  "regions": [
+   "baked:bowl_shell"
+  ],
+  "trim": {
+   "th_ceramic": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.04,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 519,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 2167.2,
+  "col": 1,
+  "secs": 8.2
+ },
+ "decorative_tray": {
+  "file_base": "prop_decorative_tray",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 220,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 216
+  },
+  "footprint_w": 0.392,
+  "footprint_d": 0.24,
+  "height": 0.034,
+  "regions": [
+   "baked:decorative_tray"
+  ],
+  "trim": {
+   "th_walnut": {
+    "area_m2": 0.26,
+    "px_per_m": 128.0
+   },
+   "th_brass": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 1202,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1645.9,
+  "col": 1,
+  "secs": 8.3
+ },
+ "candle_pair_brass": {
+  "file_base": "prop_candle_pair_brass",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 280,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 212
+  },
+  "footprint_w": 0.195,
+  "footprint_d": 0.065,
+  "height": 0.26,
+  "regions": [
+   "baked:candle_pair_brass"
+  ],
+  "trim": {
+   "th_brass": {
+    "area_m2": 0.04,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 1025,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1878.3,
+  "col": 1,
+  "secs": 6.5
+ },
+ "candle_pillar": {
+  "file_base": "prop_candle_pillar",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 180,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 108
+  },
+  "footprint_w": 0.105,
+  "footprint_d": 0.11,
+  "height": 0.165,
+  "regions": [
+   "baked:candle_pillar"
+  ],
+  "trim": {
+   "th_brass": {
+    "area_m2": 0.02,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 518,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 2271.6,
+  "col": 1,
+  "secs": 6.3
+ },
+ "hurricane_lamp": {
+  "file_base": "prop_hurricane_lamp",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 400,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 282
+  },
+  "footprint_w": 0.161,
+  "footprint_d": 0.14,
+  "height": 0.3,
+  "regions": [
+   "baked:hurricane_lamp"
+  ],
+  "trim": {
+   "th_brass": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   },
+   "th_glass": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 1442,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1878.3,
+  "col": 1,
+  "secs": 6.8
+ },
+ "figurine_bird": {
+  "file_base": "prop_figurine_bird",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 260,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 248
+  },
+  "footprint_w": 0.104,
+  "footprint_d": 0.096,
+  "height": 0.145,
+  "regions": [
+   "baked:figurine_bird"
+  ],
+  "trim": {
+   "th_ceramic": {
+    "area_m2": 0.04,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.0,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 938,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 2271.6,
+  "col": 1,
+  "secs": 6.8
+ },
+ "figurine_cat": {
+  "file_base": "prop_figurine_cat",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 280,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 272
+  },
+  "footprint_w": 0.103,
+  "footprint_d": 0.108,
+  "height": 0.186,
+  "regions": [
+   "baked:figurine_cat"
+  ],
+  "trim": {
+   "th_walnut": {
+    "area_m2": 0.02,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   },
+   "th_brass": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 1006,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 2271.6,
+  "col": 1,
+  "secs": 7.1
+ },
+ "figurine_horse": {
+  "file_base": "prop_figurine_horse",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 290,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 290
+  },
+  "footprint_w": 0.153,
+  "footprint_d": 0.13,
+  "height": 0.137,
+  "regions": [
+   "baked:figurine_horse"
+  ],
+  "trim": {
+   "th_brass": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   },
+   "th_ceramic": {
+    "area_m2": 0.04,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.0,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 1038,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 2271.6,
+  "col": 1,
+  "secs": 6.7
+ },
+ "statue_bust": {
+  "file_base": "prop_statue_bust",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 450,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 412
+  },
+  "footprint_w": 0.176,
+  "footprint_d": 0.155,
+  "height": 0.266,
+  "regions": [
+   "baked:statue_bust"
+  ],
+  "trim": {
+   "th_walnut": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   },
+   "th_brass": {
+    "area_m2": 0.0,
+    "px_per_m": 128.0
+   },
+   "th_stone": {
+    "area_m2": 0.08,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 1230,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1527.7,
+  "col": 1,
+  "secs": 7.4
+ },
+ "sculpture_organic": {
+  "file_base": "prop_sculpture_organic",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 450,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 144
+  },
+  "footprint_w": 0.171,
+  "footprint_d": 0.14,
+  "height": 0.271,
+  "regions": [
+   "baked:sculpture_organic"
+  ],
+  "trim": {
+   "th_walnut": {
+    "area_m2": 0.04,
+    "px_per_m": 128.0
+   },
+   "th_stone": {
+    "area_m2": 0.08,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 494,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1878.3,
+  "col": 1,
+  "secs": 6.7
+ },
+ "sculpture_coral": {
+  "file_base": "prop_sculpture_coral",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 280,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 222
+  },
+  "footprint_w": 0.137,
+  "footprint_d": 0.13,
+  "height": 0.22,
+  "regions": [
+   "baked:sculpture_coral"
+  ],
+  "trim": {
+   "th_paint": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   },
+   "th_ceramic": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 1229,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 2271.6,
+  "col": 1,
+  "secs": 7.1
+ },
+ "wall_plate_fish": {
+  "file_base": "prop_wall_plate_fish",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 250,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 214
+  },
+  "footprint_w": 0.294,
+  "footprint_d": 0.026,
+  "height": 0.299,
+  "regions": [
+   "baked:wall_plate_fish"
+  ],
+  "trim": {
+   "th_ceramic": {
+    "area_m2": 0.16,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   },
+   "th_metal": {
+    "area_m2": 0.0,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": -0.004,
+  "atlas_page": "props_h_*",
+  "high_tris": 1258,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 2271.6,
+  "col": 1,
+  "secs": 7.5
+ },
+ "wall_plate_floral": {
+  "file_base": "prop_wall_plate_floral",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 250,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 246
+  },
+  "footprint_w": 0.254,
+  "footprint_d": 0.026,
+  "height": 0.26,
+  "regions": [
+   "baked:wall_plate_floral"
+  ],
+  "trim": {
+   "th_paint": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   },
+   "th_ceramic": {
+    "area_m2": 0.04,
+    "px_per_m": 128.0
+   },
+   "th_brass": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   },
+   "th_metal": {
+    "area_m2": 0.0,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": -0.005,
+  "atlas_page": "props_h_*",
+  "high_tris": 1320,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 2271.6,
+  "col": 1,
+  "secs": 6.7
+ },
+ "bookends": {
+  "file_base": "prop_bookends",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 450,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 416
+  },
+  "footprint_w": 0.351,
+  "footprint_d": 0.162,
+  "height": 0.34,
+  "regions": [
+   "baked:bookends"
+  ],
+  "trim": {
+   "th_brass": {
+    "area_m2": 0.21,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.28,
+    "px_per_m": 128.0
+   },
+   "th_linen": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 1330,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1878.3,
+  "col": 1,
+  "secs": 7.5
+ },
+ "globe_desktop": {
+  "file_base": "prop_globe_desktop",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 550,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 500
+  },
+  "footprint_w": 0.247,
+  "footprint_d": 0.232,
+  "height": 0.33,
+  "regions": [
+   "baked:globe_desktop"
+  ],
+  "trim": {
+   "th_brass": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   },
+   "th_paint": {
+    "area_m2": 0.15,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 2383,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1878.3,
+  "col": 1,
+  "secs": 7.9
+ },
+ "books_stack": {
+  "file_base": "prop_books_stack",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 250,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 228
+  },
+  "footprint_w": 0.261,
+  "footprint_d": 0.308,
+  "height": 0.155,
+  "regions": [
+   "baked:books_stack"
+  ],
+  "trim": {
+   "th_paint": {
+    "area_m2": 0.34,
+    "px_per_m": 128.0
+   },
+   "th_linen": {
+    "area_m2": 0.2,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 822,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 2271.6,
+  "col": 1,
+  "secs": 7.7
+ },
+ "decanter": {
+  "file_base": "prop_decanter",
+  "batch": "hdecor",
+  "class": "tiny",
+  "budget": 280,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 154
+  },
+  "footprint_w": 0.11,
+  "footprint_d": 0.11,
+  "height": 0.28,
+  "regions": [
+   "baked:decanter"
+  ],
+  "trim": {
+   "th_glass": {
+    "area_m2": 0.07,
+    "px_per_m": 128.0
+   },
+   "th_brass": {
+    "area_m2": 0.0,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 502,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 2167.2,
+  "col": 1,
+  "secs": 6.2
+ },
+ "woven_basket": {
+  "file_base": "prop_woven_basket",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 400,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 238
+  },
+  "footprint_w": 0.276,
+  "footprint_d": 0.276,
+  "height": 0.268,
+  "regions": [
+   "baked:woven_basket"
+  ],
+  "trim": {
+   "th_rattan": {
+    "area_m2": 0.38,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 858,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1878.3,
+  "col": 1,
+  "secs": 7.7
+ }
+}

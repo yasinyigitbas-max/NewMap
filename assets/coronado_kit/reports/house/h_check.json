@@ -1,0 +1,2028 @@
+[
+ {
+  "name": "frame_print_small",
+  "class": "tiny",
+  "budget": 250,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 218,
+  "near_info": {
+   "errors": [],
+   "tris": 218,
+   "verts": 493,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.36,
+   "ymin": 0.0,
+   "foot": 0.014980000172257424,
+   "top_area_up": 0.02044817991554737,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.6515083312988281,
+   "top_ao_dark": 0.3111111111111111
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "frame_print_medium",
+  "class": "small",
+  "budget": 400,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 218,
+  "near_info": {
+   "errors": [],
+   "tris": 218,
+   "verts": 496,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.65,
+   "ymin": 0.0,
+   "foot": 0.02925000060349703,
+   "top_area_up": 0.027095329016447067,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.9964507818222046,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "frame_print_large",
+  "class": "small",
+  "budget": 500,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 218,
+  "near_info": {
+   "errors": [],
+   "tris": 218,
+   "verts": 503,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.7,
+   "ymin": 0.0,
+   "foot": 0.057150000309944105,
+   "top_area_up": 0.05602792650461197,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.9964507222175598,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "frame_print_tall",
+  "class": "small",
+  "budget": 400,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 218,
+  "near_info": {
+   "errors": [],
+   "tris": 218,
+   "verts": 494,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.9,
+   "ymin": 0.0,
+   "foot": 0.023400000831484802,
+   "top_area_up": 0.021374154835939407,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "frame_ocean",
+  "class": "small",
+  "budget": 450,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 282,
+  "near_info": {
+   "errors": [],
+   "tris": 282,
+   "verts": 661,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.5,
+   "ymin": 0.0,
+   "foot": 0.04095000014752148,
+   "top_area_up": 0.038990870118141174,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.9982208013534546,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "frame_mcm_abstract",
+  "class": "small",
+  "budget": 450,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 218,
+  "near_info": {
+   "errors": [],
+   "tris": 218,
+   "verts": 506,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.6,
+   "ymin": 0.0,
+   "foot": 0.03510000211894515,
+   "top_area_up": 0.03296761214733124,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "frame_motel_floral",
+  "class": "small",
+  "budget": 450,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 246,
+  "near_info": {
+   "errors": [],
+   "tris": 246,
+   "verts": 542,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.57,
+   "ymin": 0.0,
+   "foot": 0.028956000939249993,
+   "top_area_up": 0.027835501357913017,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.9352034330368042,
+   "top_ao_dark": 0.05555555555555555
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "frame_stand_photo",
+  "class": "tiny",
+  "budget": 220,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 206,
+  "near_info": {
+   "errors": [],
+   "tris": 206,
+   "verts": 487,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.2,
+   "ymin": 0.0,
+   "foot": 0.031487888586046786,
+   "top_area_up": 0.007066191639751196,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.7023637890815735,
+   "top_ao_dark": 0.3076923076923077
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "mirror_round",
+  "class": "small",
+  "budget": 550,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 526,
+  "near_info": {
+   "errors": [],
+   "tris": 526,
+   "verts": 1199,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.657,
+   "ymin": 0.0,
+   "foot": 0.029782526462990733,
+   "top_area_up": 0.0005357579211704433,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "mirror_rect",
+  "class": "small",
+  "budget": 500,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 288,
+  "near_info": {
+   "errors": [],
+   "tris": 288,
+   "verts": 690,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.8,
+   "ymin": 0.0,
+   "foot": 0.034249999560415745,
+   "top_area_up": 0.03213674947619438,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "clock_wall_sunburst",
+  "class": "small",
+  "budget": 550,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 504,
+  "near_info": {
+   "errors": [],
+   "tris": 504,
+   "verts": 1198,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.54,
+   "ymin": 0.0,
+   "foot": 0.02474069735556572,
+   "top_area_up": 9.353073983220384e-05,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "clock_mantel",
+  "class": "small",
+  "budget": 520,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 502,
+  "near_info": {
+   "errors": [],
+   "tris": 502,
+   "verts": 975,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.32,
+   "ymin": 0.0,
+   "foot": 0.0361583304454528,
+   "top_area_up": 0.02970000170171261,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.955977737903595,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "vase_tall",
+  "class": "small",
+  "budget": 350,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 224,
+  "near_info": {
+   "errors": [],
+   "tris": 224,
+   "verts": 292,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.426,
+   "ymin": 0.0,
+   "foot": 0.03312399865484239,
+   "top_area_up": 0.007293123286217451,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "vase_bud",
+  "class": "tiny",
+  "budget": 180,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 176,
+  "near_info": {
+   "errors": [],
+   "tris": 176,
+   "verts": 234,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.166,
+   "ymin": 0.0,
+   "foot": 0.00577599962854386,
+   "top_area_up": 0.0015971893444657326,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.35640498995780945,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "vase_ginger",
+  "class": "small",
+  "budget": 400,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 232,
+  "near_info": {
+   "errors": [],
+   "tris": 232,
+   "verts": 431,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.28,
+   "ymin": 0.0,
+   "foot": 0.04839999947547913,
+   "top_area_up": 0.004729900974780321,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.8347522616386414,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "vase_lava",
+  "class": "tiny",
+  "budget": 260,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 256,
+  "near_info": {
+   "errors": [],
+   "tris": 256,
+   "verts": 459,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.266,
+   "ymin": 0.0,
+   "foot": 0.03560541770130199,
+   "top_area_up": 0.007899272255599499,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.2195315659046173,
+   "top_ao_dark": 1.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "bowl_ceramic",
+  "class": "tiny",
+  "budget": 250,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 176,
+  "near_info": {
+   "errors": [],
+   "tris": 176,
+   "verts": 233,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.1,
+   "ymin": 0.0,
+   "foot": 0.07643435153124312,
+   "top_area_up": 0.0,
+   "flip_area": 0.0,
+   "flip_frac": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "bowl_wood",
+  "class": "tiny",
+  "budget": 250,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 210,
+  "near_info": {
+   "errors": [],
+   "tris": 210,
+   "verts": 335,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.096,
+   "ymin": 0.0,
+   "foot": 0.10368399800395967,
+   "top_area_up": 0.07342707365751266,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "bowl_shell",
+  "class": "tiny",
+  "budget": 260,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 172,
+  "near_info": {
+   "errors": [],
+   "tris": 172,
+   "verts": 504,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.058,
+   "ymin": 0.0,
+   "foot": 0.052176215442055085,
+   "top_area_up": 0.01620403677225113,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.3850135803222656,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "decorative_tray",
+  "class": "tiny",
+  "budget": 220,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 216,
+  "near_info": {
+   "errors": [],
+   "tris": 216,
+   "verts": 447,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.034,
+   "ymin": 0.0,
+   "foot": 0.09407999543666845,
+   "top_area_up": 0.08909669518470764,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.7954439520835876,
+   "top_ao_dark": 0.16666666666666666
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "candle_pair_brass",
+  "class": "tiny",
+  "budget": 280,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 212,
+  "near_info": {
+   "errors": [],
+   "tris": 212,
+   "verts": 510,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.26,
+   "ymin": 0.0,
+   "foot": 0.012604953174283562,
+   "top_area_up": 0.0002643076586537063,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.6467903256416321,
+   "top_ao_dark": 0.4
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "candle_pillar",
+  "class": "tiny",
+  "budget": 180,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 108,
+  "near_info": {
+   "errors": [],
+   "tris": 108,
+   "verts": 174,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.165,
+   "ymin": 0.0,
+   "foot": 0.011507783842315544,
+   "top_area_up": 0.0073553165420889854,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.7469836473464966,
+   "top_ao_dark": 0.2857142857142857
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "hurricane_lamp",
+  "class": "small",
+  "budget": 400,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 282,
+  "near_info": {
+   "errors": [],
+   "tris": 282,
+   "verts": 567,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.3,
+   "ymin": 0.0,
+   "foot": 0.022526572293582015,
+   "top_area_up": 0.0070021385326981544,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "figurine_bird",
+  "class": "tiny",
+  "budget": 260,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 248,
+  "near_info": {
+   "errors": [],
+   "tris": 248,
+   "verts": 505,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.145,
+   "ymin": 0.0,
+   "foot": 0.010026100961097462,
+   "top_area_up": 0.00039892178028821945,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.8364385366439819,
+   "top_ao_dark": 0.16
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "figurine_cat",
+  "class": "tiny",
+  "budget": 280,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 272,
+  "near_info": {
+   "errors": [],
+   "tris": 272,
+   "verts": 535,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.186,
+   "ymin": 0.0,
+   "foot": 0.011113241969968254,
+   "top_area_up": 0.0012587090022861958,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.10572730004787445,
+   "top_ao_dark": 1.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "figurine_horse",
+  "class": "tiny",
+  "budget": 290,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 290,
+  "near_info": {
+   "errors": [],
+   "tris": 290,
+   "verts": 583,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.137,
+   "ymin": 0.0,
+   "foot": 0.019826779979402076,
+   "top_area_up": 0.00041411578422412276,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.8297012448310852,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "statue_bust",
+  "class": "small",
+  "budget": 450,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 412,
+  "near_info": {
+   "errors": [],
+   "tris": 412,
+   "verts": 774,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.266,
+   "ymin": 0.0,
+   "foot": 0.027292814519097597,
+   "top_area_up": 0.0032194172963500023,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.4928321838378906,
+   "top_ao_dark": 0.6578947368421053
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "sculpture_organic",
+  "class": "small",
+  "budget": 450,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 144,
+  "near_info": {
+   "errors": [],
+   "tris": 144,
+   "verts": 273,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.271,
+   "ymin": 0.0,
+   "foot": 0.02395801360674421,
+   "top_area_up": 0.0,
+   "flip_area": 0.0,
+   "flip_frac": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "sculpture_coral",
+  "class": "tiny",
+  "budget": 280,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 222,
+  "near_info": {
+   "errors": [],
+   "tris": 222,
+   "verts": 506,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.22,
+   "ymin": 0.0,
+   "foot": 0.017796853127961754,
+   "top_area_up": 3.117691449006088e-05,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.8334785103797913,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "wall_plate_fish",
+  "class": "tiny",
+  "budget": 250,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 214,
+  "near_info": {
+   "errors": [],
+   "tris": 214,
+   "verts": 454,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.299,
+   "ymin": 0.0,
+   "foot": 0.007650580266015394,
+   "top_area_up": 0.0017492221668362617,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "wall_plate_floral",
+  "class": "tiny",
+  "budget": 250,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 246,
+  "near_info": {
+   "errors": [],
+   "tris": 246,
+   "verts": 608,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.26,
+   "ymin": 0.0,
+   "foot": 0.006610579686658236,
+   "top_area_up": 0.0014980973210185766,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "bookends",
+  "class": "small",
+  "budget": 450,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 416,
+  "near_info": {
+   "errors": [],
+   "tris": 416,
+   "verts": 982,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.35,
+   "ymin": 0.01,
+   "foot": 0.05700446158172667,
+   "top_area_up": 0.006259449757635593,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.22409459948539734,
+   "top_ao_dark": 1.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "globe_desktop",
+  "class": "small",
+  "budget": 550,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 500,
+  "near_info": {
+   "errors": [],
+   "tris": 500,
+   "verts": 1004,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.33,
+   "ymin": 0.0,
+   "foot": 0.05740090205009096,
+   "top_area_up": 0.0005438200896605849,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.9849225878715515,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "books_stack",
+  "class": "tiny",
+  "budget": 250,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 228,
+  "near_info": {
+   "errors": [],
+   "tris": 228,
+   "verts": 542,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.175,
+   "ymin": 0.02,
+   "foot": 0.08019663640286367,
+   "top_area_up": 0.034866493195295334,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.405428022146225,
+   "top_ao_dark": 0.7586206896551724
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "decanter",
+  "class": "tiny",
+  "budget": 280,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 154,
+  "near_info": {
+   "errors": [],
+   "tris": 154,
+   "verts": 319,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.28,
+   "ymin": 0.0,
+   "foot": 0.012099999868869782,
+   "top_area_up": 0.000181019349838607,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.964690625667572,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "woven_basket",
+  "class": "small",
+  "budget": 400,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 238,
+  "near_info": {
+   "errors": [],
+   "tris": 238,
+   "verts": 397,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.268,
+   "ymin": 0.0,
+   "foot": 0.07617599618339543,
+   "top_area_up": 0.0023399998899549246,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "sofa_3seat",
+  "class": "medium",
+  "budget": 1100,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 784,
+  "near_info": {
+   "errors": [],
+   "tris": 784,
+   "verts": 1760,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.86,
+   "ymin": 0.0,
+   "foot": 1.8359201002883907,
+   "top_area_up": 0.3152148127555847,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "lounge_chair",
+  "class": "medium",
+  "budget": 900,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 548,
+  "near_info": {
+   "errors": [],
+   "tris": 548,
+   "verts": 1200,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.901,
+   "ymin": 0.0,
+   "foot": 0.506201534740871,
+   "top_area_up": 0.05694445222616196,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.8709645867347717,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "ottoman",
+  "class": "small",
+  "budget": 500,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 304,
+  "near_info": {
+   "errors": [],
+   "tris": 304,
+   "verts": 651,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.4,
+   "ymin": 0.0,
+   "foot": 0.3850000017881392,
+   "top_area_up": 0.3426785171031952,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "coffee_table",
+  "class": "small",
+  "budget": 550,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 460,
+  "near_info": {
+   "errors": [],
+   "tris": 460,
+   "verts": 1023,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.401,
+   "ymin": 0.0,
+   "foot": 0.7200000572204601,
+   "top_area_up": 0.7560409903526306,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.9760515093803406,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "side_table",
+  "class": "small",
+  "budget": 500,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 268,
+  "near_info": {
+   "errors": [],
+   "tris": 268,
+   "verts": 576,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.55,
+   "ymin": 0.0,
+   "foot": 0.25,
+   "top_area_up": 0.1875,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.9822537899017334,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "credenza",
+  "class": "medium",
+  "budget": 1100,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 480,
+  "near_info": {
+   "errors": [],
+   "tris": 480,
+   "verts": 865,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.75,
+   "ymin": 0.0,
+   "foot": 0.8974079980773926,
+   "top_area_up": 0.8645760416984558,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.9734492897987366,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "floor_lamp",
+  "class": "small",
+  "budget": 550,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 160,
+  "near_info": {
+   "errors": [],
+   "tris": 160,
+   "verts": 285,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 1.55,
+   "ymin": 0.0,
+   "foot": 0.18874604242093973,
+   "top_area_up": 0.026551391929388046,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.7100528478622437,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "tv_console",
+  "class": "medium",
+  "budget": 900,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 522,
+  "near_info": {
+   "errors": [],
+   "tris": 522,
+   "verts": 1093,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.55,
+   "ymin": 0.0,
+   "foot": 0.5319200178551675,
+   "top_area_up": 0.5123999714851379,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.991104006767273,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "fridge_home",
+  "class": "medium",
+  "budget": 1100,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 926,
+  "near_info": {
+   "errors": [],
+   "tris": 926,
+   "verts": 1875,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 1.7,
+   "ymin": 0.0,
+   "foot": 0.6782240299949649,
+   "top_area_up": 0.6434911489486694,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "range_gas",
+  "class": "medium",
+  "budget": 1100,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 588,
+  "near_info": {
+   "errors": [],
+   "tris": 588,
+   "verts": 1235,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.92,
+   "ymin": 0.0,
+   "foot": 0.5205999952793121,
+   "top_area_up": 0.06566617637872696,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "sink_base",
+  "class": "medium",
+  "budget": 1100,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 672,
+  "near_info": {
+   "errors": [],
+   "tris": 672,
+   "verts": 1523,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 1.061,
+   "ymin": 0.0,
+   "foot": 0.8487000468850141,
+   "top_area_up": 0.0037043828051537275,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "upper_cabinet",
+  "class": "medium",
+  "budget": 800,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 310,
+  "near_info": {
+   "errors": [],
+   "tris": 310,
+   "verts": 689,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.7,
+   "ymin": 0.0,
+   "foot": 0.30616001042366037,
+   "top_area_up": 0.31428244709968567,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "dining_table",
+  "class": "medium",
+  "budget": 900,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 472,
+  "near_info": {
+   "errors": [],
+   "tris": 472,
+   "verts": 1050,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.75,
+   "ymin": 0.0,
+   "foot": 1.3500000536441803,
+   "top_area_up": 1.3728053569793701,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "dining_chair",
+  "class": "small",
+  "budget": 550,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 412,
+  "near_info": {
+   "errors": [],
+   "tris": 412,
+   "verts": 911,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.861,
+   "ymin": 0.0,
+   "foot": 0.1730348002530766,
+   "top_area_up": 0.006019073538482189,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.98018479347229,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "sideboard",
+  "class": "medium",
+  "budget": 1100,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 788,
+  "near_info": {
+   "errors": [],
+   "tris": 788,
+   "verts": 1483,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.85,
+   "ymin": 0.0,
+   "foot": 0.795759968390465,
+   "top_area_up": 0.7697759866714478,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "bed_queen",
+  "class": "medium",
+  "budget": 1100,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 696,
+  "near_info": {
+   "errors": [],
+   "tris": 696,
+   "verts": 1500,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.96,
+   "ymin": 0.0,
+   "foot": 3.678399829006196,
+   "top_area_up": 0.10653915256261826,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.9911040663719177,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "nightstand",
+  "class": "small",
+  "budget": 500,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 418,
+  "near_info": {
+   "errors": [],
+   "tris": 418,
+   "verts": 824,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.58,
+   "ymin": 0.0,
+   "foot": 0.22497599042558658,
+   "top_area_up": 0.21844524145126343,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.9946898221969604,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "dresser",
+  "class": "medium",
+  "budget": 1100,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 902,
+  "near_info": {
+   "errors": [],
+   "tris": 902,
+   "verts": 1589,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.8,
+   "ymin": 0.0,
+   "foot": 0.7149599894666672,
+   "top_area_up": 0.69377601146698,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.991104006767273,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "toilet",
+  "class": "medium",
+  "budget": 900,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 750,
+  "near_info": {
+   "errors": [],
+   "tris": 750,
+   "verts": 1911,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.76,
+   "ymin": 0.0,
+   "foot": 0.3519000024855137,
+   "top_area_up": 0.10363656282424927,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "vanity_sink",
+  "class": "medium",
+  "budget": 1000,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 528,
+  "near_info": {
+   "errors": [],
+   "tris": 528,
+   "verts": 1074,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.969,
+   "ymin": 0.0,
+   "foot": 0.4931199938106534,
+   "top_area_up": 0.0019287217874079943,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "bathtub",
+  "class": "medium",
+  "budget": 1100,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 956,
+  "near_info": {
+   "errors": [],
+   "tris": 956,
+   "verts": 2051,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.598,
+   "ymin": 0.0,
+   "foot": 1.1739686491426085,
+   "top_area_up": 0.0012340338435024023,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "washer_home",
+  "class": "medium",
+  "budget": 1000,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 282,
+  "near_info": {
+   "errors": [],
+   "tris": 282,
+   "verts": 571,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.95,
+   "ymin": 0.0,
+   "foot": 0.4936800126504899,
+   "top_area_up": 0.4857978820800781,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "dryer_home",
+  "class": "medium",
+  "budget": 1000,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 324,
+  "near_info": {
+   "errors": [],
+   "tris": 324,
+   "verts": 679,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.95,
+   "ymin": 0.0,
+   "foot": 0.5188399929738043,
+   "top_area_up": 0.4857978820800781,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "laundry_hamper",
+  "class": "small",
+  "budget": 400,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 220,
+  "near_info": {
+   "errors": [],
+   "tris": 220,
+   "verts": 387,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.587,
+   "ymin": 0.0,
+   "foot": 0.1680999970674515,
+   "top_area_up": 0.05959999933838844,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "storage_cabinet",
+  "class": "medium",
+  "budget": 1000,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 428,
+  "near_info": {
+   "errors": [],
+   "tris": 428,
+   "verts": 858,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 1.8,
+   "ymin": 0.0,
+   "foot": 0.441407997838974,
+   "top_area_up": 0.42134401202201843,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.4125429093837738,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "workbench_garage",
+  "class": "medium",
+  "budget": 1000,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 392,
+  "near_info": {
+   "errors": [],
+   "tris": 392,
+   "verts": 915,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.996,
+   "ymin": 0.0,
+   "foot": 0.9180000193119042,
+   "top_area_up": 0.042465128004550934,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.9899064302444458,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "rug_living_mcm",
+  "class": "small",
+  "budget": 480,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 370,
+  "near_info": {
+   "errors": [],
+   "tris": 370,
+   "verts": 760,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.029,
+   "ymin": 0.0,
+   "foot": 4.311672191288949,
+   "top_area_up": 4.241740703582764,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.44876664876937866,
+   "top_ao_dark": 0.625
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "rug_living_jute",
+  "class": "small",
+  "budget": 400,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 154,
+  "near_info": {
+   "errors": [],
+   "tris": 154,
+   "verts": 330,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.024,
+   "ymin": 0.0,
+   "foot": 2.8000001907348633,
+   "top_area_up": 2.96774959564209,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.7724372148513794,
+   "top_ao_dark": 0.2909090909090909
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "rug_motel_floral",
+  "class": "small",
+  "budget": 400,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 124,
+  "near_info": {
+   "errors": [],
+   "tris": 124,
+   "verts": 250,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.024,
+   "ymin": 0.0,
+   "foot": 2.1599998140335117,
+   "top_area_up": 2.1602494716644287,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.9981416463851929,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "rug_runner",
+  "class": "small",
+  "budget": 350,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 312,
+  "near_info": {
+   "errors": [],
+   "tris": 312,
+   "verts": 650,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.022,
+   "ymin": 0.0,
+   "foot": 1.7432239474020008,
+   "top_area_up": 1.8558402061462402,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.551596999168396,
+   "top_ao_dark": 0.49230769230769234
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "rug_accent",
+  "class": "tiny",
+  "budget": 250,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 70,
+  "near_info": {
+   "errors": [],
+   "tris": 70,
+   "verts": 136,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.022,
+   "ymin": 0.0,
+   "foot": 0.960000052452088,
+   "top_area_up": 1.0765999555587769,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.5164517760276794,
+   "top_ao_dark": 0.6666666666666666
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "rug_round",
+  "class": "small",
+  "budget": 450,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 112,
+  "near_info": {
+   "errors": [],
+   "tris": 112,
+   "verts": 245,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.023,
+   "ymin": 0.0,
+   "foot": 2.3225761482467675,
+   "top_area_up": 2.061479091644287,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.32094627618789673,
+   "top_ao_dark": 0.8
+  },
+  "col_tris": 28
+ },
+ {
+  "name": "bath_mat",
+  "class": "tiny",
+  "budget": 200,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 92,
+  "near_info": {
+   "errors": [],
+   "tris": 92,
+   "verts": 187,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.029,
+   "ymin": 0.0,
+   "foot": 0.4000000059604645,
+   "top_area_up": 0.4050390124320984,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 0.9648985266685486,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ },
+ {
+  "name": "rug_shag_oval",
+  "class": "small",
+  "budget": 450,
+  "pass": true,
+  "errors": [],
+  "notes": [],
+  "near_tris": 132,
+  "near_info": {
+   "errors": [],
+   "tris": 132,
+   "verts": 294,
+   "mats": 1,
+   "tex": [
+    "../../../atlases/props_h_color_clean.png",
+    "../../../atlases/props_h_normal.png",
+    "../../../atlases/props_h_orm.png"
+   ],
+   "h": 0.04,
+   "ymin": 0.0,
+   "foot": 1.9219640788302428,
+   "top_area_up": 1.3665645122528076,
+   "flip_area": 0.0,
+   "flip_frac": 0.0,
+   "top_ao_mean": 1.0,
+   "top_ao_dark": 0.0
+  },
+  "col_tris": 12
+ }
+]

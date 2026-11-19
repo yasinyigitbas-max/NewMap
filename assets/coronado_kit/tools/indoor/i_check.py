@@ -7,7 +7,7 @@ tools/validate.py (buildings, four tiers) on these files.
 
 Checks: naming, near+col present, no mid/far required, one mesh / one primitive /
 one material / one node on near, triangulated, triangle cap, <=65k verts, normals and tangents on near (collision is position-only, no normals), UV0 present, UV1 absent, opaque, textures are page I only
-(props_i_*), no texture >1024, origin at footprint centre, ground at y=0 with
+(props_i_*), near materials must have occlusionTexture pointing at the ORM, no texture >1024, origin at footprint centre, ground at y=0 with
 nothing below -1.5 cm, collision named col with one box or one cylinder (a few
 merged boxes allowed up to 2 if documented), budget class cap.
 
@@ -69,6 +69,14 @@ def mesh_info(path):
         am=getattr(mat,'alphaMode',None) or 'OPAQUE'
         if am not in ('OPAQUE',None) and not path.endswith('_col.glb'):
             E.append(f'alphaMode {am} (need OPAQUE)')
+        if not path.endswith('_col.glb'):
+            pbr=getattr(mat,'pbrMetallicRoughness',None)
+            mr=getattr(pbr,'metallicRoughnessTexture',None) if pbr else None
+            occ=getattr(mat,'occlusionTexture',None)
+            if not occ:
+                E.append('near without occlusionTexture')
+            elif mr is not None and getattr(occ,'index',None)!=getattr(mr,'index',None):
+                E.append('occlusionTexture index does not match ORM (metallicRoughnessTexture)')
     # bounds in glTF Y-up: x,y,z = Blender x,z,-y after export_yup
     # After Y-up: X right, Y up, Z backward (front +Z in SPEC is +Z glTF = -Y blender)
     P=pos

@@ -15,11 +15,12 @@ The finished, validated assets for the Coronado city, built to `SPEC.md` (model 
 | props/waterfront | waterfront set: quay / seawall edge (straight, bollards, stair, inside and outside corner, pier root), timber pier (straight, T-head, railed end, lamp, gangway), marina (float, finger, pile, dock box, pedestal), moored boats (sloop, express cruiser, troller, skiff), promenade (rail, rail to wall, boardwalk) and small props (life-ring stand, mooring buoy, nun and can markers, fuel pump, boat on trailer, kayak rack, beach shower, volleyball net, open and closed umbrellas) on the 0.5 m snap grid, page W atlas; see `props/waterfront/README.md` | 34 |
 | props/streetside | streetside / lot / motel / residential props (pylon and bus-stop signs, drive-thru menu, vending machines, ice chest, wheel stops, shopping cart and corral, balcony clutter, dingbat stair, buzzer panel, clothesline) on page W; see `props/streetside/README.md` | 14 |
 | props/indoor | indoor shop fixtures (shared, food, grocery, clothing, salon, gift, office, services, sport, venue) on page I, near+col only; see `props/indoor/README.md` | 62 |
+| props/house/{decor,furn,rugs} | interior house set: 36 decorative objects, 8 rugs and 26 furniture pieces on page H, near+col only; see `props/house/README.md` | 70 |
 | fences | fence and wall panels (2 m) + posts, manifest in props/manifest_fences.json | 22 |
 | foliage | trees, palms, shrubs, hedges (manifest_foliage.json) | 33 |
 | parks | park layouts (`park_*.json`: kit prop/foliage instances) + their ground meshes | 11 |
 | textures | shared building atlases (house `bld_*`, city `city_*`, far `far_color.png`, park ground `ground_*`) + layout JSONs | |
-| atlases | shared props (`props_color_clean`, `props_b_color_clean`, `props_c_*`, waterfront `props_w_*`, indoor `props_i_*`, halved normals and ORM, `props_grime`) and tree atlases | |
+| atlases | shared props (`props_color_clean`, `props_b_color_clean`, `props_c_*`, waterfront `props_w_*`, indoor `props_i_*`, house `props_h_*`, halved normals and ORM, `props_grime`) and tree atlases | |
 | shaders | `prop_wear.gdshader`: procedural worn/dirty overlay on the clean prop pages (wear 0 / 0.5 / 1) | |
 | modular | snap-in starter set: house and shop pieces, 5 merged example assemblies, `godot/export_layout.gd`, tools, validation report. Loose pieces are editor-only; finished assemblies are one mesh per tier. Snap-in houses use the 1650 / 500 / 40 cap and include a chimney and step railing. | |
 | previews | one near hero picture (JPEG) per building, park, prop and plant | |
@@ -32,7 +33,7 @@ The finished, validated assets for the Coronado city, built to `SPEC.md` (model 
 | far | 220-1500 m | closed box hull with baked facade (far atlas) | colour only |
 | col | - | collision, at most 12 main boxes + 16 post/rail boxes | none |
 
-Small props are near only. Indoor shop props (`props/indoor/`) ship near and collision only — they are not drawn at mid or far. Trees use a 2-tri camera-facing card as far. Files are named `<category>_<name>_<tier>.glb`; props use `<name>_<clean|worn|dirty|rusty|lush|dry|normal>_<tier>.glb`.
+Small props are near only. Indoor shop props (`props/indoor/`) and the house interior set (`props/house/decor`, `furn`, `rugs`) ship near and collision only — they are not drawn at mid or far. Trees use a 2-tri camera-facing card as far. Files are named `<category>_<name>_<tier>.glb`; props use `<name>_<clean|worn|dirty|rusty|lush|dry|normal>_<tier>.glb`.
 
 ## Budgets (maximum triangles near / mid / far, SPEC.md section 4)
 | category | near | mid | far |
@@ -54,7 +55,7 @@ Small props are near only. Indoor shop props (`props/indoor/`) ship near and col
 Every asset's `stats.json` (buildings) or manifest entry (props, foliage) lists its tris per tier, budget, atlas regions, footprint and height. Nothing in this folder exceeds its budget. The red dry-barrel hydrant (590 tris) is an approved exception: it stays in the small-prop class (600 cap) instead of the tiny class.
 
 ## How to import (Godot 4)
-1. Keep the folder layout. The `.glb` files reference the shared PNGs by relative path (`../../../textures/...` for buildings, `../../atlases/...` for props (`../../../atlases/...` for `props/waterfront/*`, `props/streetside/*` and `props/indoor/*`), `../atlases/...` for fences and foliage, `../../textures/ground_*` for park grounds), so moving one folder breaks its textures.
+1. Keep the folder layout. The `.glb` files reference the shared PNGs by relative path (`../../../textures/...` for buildings, `../../atlases/...` for props (`../../../atlases/...` for `props/waterfront/*`, `props/streetside/*`, `props/indoor/*` and `props/house/{decor,furn,rugs}/*`), `../atlases/...` for fences and foliage, `../../textures/ground_*` for park grounds), so moving one folder breaks its textures.
 2. Godot imports the glbs and PNGs on first open. Set the PNG imports to VRAM compressed (ASTC 4x4 with mipmaps; Godot 4.7 Vulkan Mobile has no ASTC 8x8 option). The sources are uncompressed PNGs on purpose.
 3. Set up the near/mid/far switch with `visibility_range_begin/end` on the three tier instances: near 0-60 m, mid 60-220 m, far 220-1500 m. Turn off shadow casting on mid and far.
 4. Collision: use the `*_col.glb` boxes as StaticBody3D shapes (or create the shapes from the mesh).
@@ -66,6 +67,7 @@ Every asset's `stats.json` (buildings) or manifest entry (props, foliage) lists 
 - Worn and dirty prop colour pages are not shipped. Assign `shaders/prop_wear.gdshader` and read `extras.coronado_wear` from the worn/dirty/rusty glTFs (0.5 worn, 1.0 dirty or rusty). See `shaders/README.md`.
 - 17 Nov 2026: waterfront page W (colour 1024, normal 512, ORM 256) adds 1.75 MB; props total 7.58 MB of the 8 MB cap (approved by Yasin). The marina (5), streetside batch (14), boats (4), promenade (3) and waterfront small props (11) share that page, so they add 0 MB.
 - 17 Nov 2026: indoor page I (colour 1024, normal 512, ORM 256 = 1.75 MB) is streamed only with interiors and is not counted in the 8 MB street-resident cap. Street pages A + B + C + grime + W stay at 7.583 MB of 8 MB. Indoor props ship near and collision tiers only (no mid or far).
+- 19 Nov 2026: house page H (colour 1024, normal 512, ORM 256 = 1.75 MB) is streamed only with interiors and is not counted in the 8 MB street-resident cap. Street pages A + B + C + grime + W stay at 7.583 MB of 8 MB. The 70-piece house interior set (36 decor, 8 rugs, 26 furniture) ships near and collision tiers only (no mid or far).
 - 29 buildings were re-exported so every rail end meets a wall (flange or return) or a grounded post. Mid and far tiers were unchanged.
 
 Licences and sources: `CREDITS.md` (building and ground atlases) and `CREDITS_props.md` (props and foliage). All texture sources are CC0, and all geometry and bakes were made from scratch.

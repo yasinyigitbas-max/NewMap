@@ -1,0 +1,294 @@
+{
+ "rug_living_mcm": {
+  "file_base": "prop_rug_living_mcm",
+  "batch": "hrugs",
+  "class": "small",
+  "budget": 480,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 370
+  },
+  "walkable": true,
+  "footprint_w": 2.4,
+  "footprint_d": 1.797,
+  "height": 0.029,
+  "regions": [
+   "baked:rug_living_mcm"
+  ],
+  "trim": {
+   "th_walnut": {
+    "area_m2": 1.32,
+    "px_per_m": 128.0
+   },
+   "tr_rug_mcm": {
+    "area_m2": 3.76,
+    "px_per_m": 27.6
+   },
+   "th_linen": {
+    "area_m2": 0.43,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 1742,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1185.2,
+  "col": 1,
+  "secs": 23.9
+ },
+ "rug_living_jute": {
+  "file_base": "prop_rug_living_jute",
+  "batch": "hrugs",
+  "class": "small",
+  "budget": 400,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 154
+  },
+  "walkable": true,
+  "footprint_w": 2.0,
+  "footprint_d": 1.4,
+  "height": 0.024,
+  "regions": [
+   "baked:rug_living_jute"
+  ],
+  "trim": {
+   "tr_rug_jute": {
+    "area_m2": 2.94,
+    "px_per_m": 160.0
+   },
+   "th_walnut": {
+    "area_m2": 0.66,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 302,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1377.1,
+  "col": 1,
+  "secs": 19.8
+ },
+ "rug_motel_floral": {
+  "file_base": "prop_rug_motel_floral",
+  "batch": "hrugs",
+  "class": "small",
+  "budget": 400,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 124
+  },
+  "walkable": true,
+  "footprint_w": 1.8,
+  "footprint_d": 1.2,
+  "height": 0.024,
+  "regions": [
+   "baked:rug_motel_floral"
+  ],
+  "trim": {
+   "tr_rug_floral": {
+    "area_m2": 2.04,
+    "px_per_m": 142.2
+   },
+   "th_walnut": {
+    "area_m2": 0.76,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 302,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1377.1,
+  "col": 1,
+  "secs": 17.8
+ },
+ "rug_runner": {
+  "file_base": "prop_rug_runner",
+  "batch": "hrugs",
+  "class": "small",
+  "budget": 350,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 312
+  },
+  "walkable": true,
+  "footprint_w": 2.49,
+  "footprint_d": 0.7,
+  "height": 0.022,
+  "regions": [
+   "baked:rug_runner"
+  ],
+  "trim": {
+   "tr_rug_runner": {
+    "area_m2": 1.78,
+    "px_per_m": 91.4
+   },
+   "th_walnut": {
+    "area_m2": 0.54,
+    "px_per_m": 128.0
+   },
+   "th_linen": {
+    "area_m2": 0.15,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 1502,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1527.7,
+  "col": 1,
+  "secs": 20.0
+ },
+ "rug_accent": {
+  "file_base": "prop_rug_accent",
+  "batch": "hrugs",
+  "class": "tiny",
+  "budget": 250,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 70
+  },
+  "walkable": true,
+  "footprint_w": 1.2,
+  "footprint_d": 0.8,
+  "height": 0.022,
+  "regions": [
+   "baked:rug_accent"
+  ],
+  "trim": {
+   "th_walnut": {
+    "area_m2": 0.48,
+    "px_per_m": 128.0
+   },
+   "tr_rug_accent": {
+    "area_m2": 0.96,
+    "px_per_m": 53.3
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 302,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1527.7,
+  "col": 1,
+  "secs": 14.0
+ },
+ "rug_round": {
+  "file_base": "prop_rug_round",
+  "batch": "hrugs",
+  "class": "small",
+  "budget": 450,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 112
+  },
+  "walkable": true,
+  "footprint_w": 1.524,
+  "footprint_d": 1.524,
+  "height": 0.023,
+  "regions": [
+   "baked:rug_round"
+  ],
+  "trim": {
+   "tr_rug_round": {
+    "area_m2": 1.83,
+    "px_per_m": 42.7
+   },
+   "th_walnut": {
+    "area_m2": 0.32,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 256,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1527.7,
+  "col": 1,
+  "secs": 18.0
+ },
+ "bath_mat": {
+  "file_base": "prop_bath_mat",
+  "batch": "hrugs",
+  "class": "tiny",
+  "budget": 200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 92
+  },
+  "walkable": true,
+  "footprint_w": 0.8,
+  "footprint_d": 0.5,
+  "height": 0.029,
+  "regions": [
+   "baked:bath_mat"
+  ],
+  "trim": {
+   "tr_rug_terry": {
+    "area_m2": 0.41,
+    "px_per_m": 256.0
+   },
+   "th_linen": {
+    "area_m2": 0.26,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 314,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1750.6,
+  "col": 1,
+  "secs": 10.8
+ },
+ "rug_shag_oval": {
+  "file_base": "prop_rug_shag_oval",
+  "batch": "hrugs",
+  "class": "small",
+  "budget": 450,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 132
+  },
+  "walkable": true,
+  "footprint_w": 1.672,
+  "footprint_d": 1.15,
+  "height": 0.04,
+  "regions": [
+   "baked:rug_shag_oval"
+  ],
+  "trim": {
+   "tr_rug_shag": {
+    "area_m2": 1.6,
+    "px_per_m": 160.0
+   }
+  },
+  "atlas_page": "props_h_*",
+  "high_tris": 348,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 1527.7,
+  "col": 1,
+  "secs": 17.1
+ }
+}
