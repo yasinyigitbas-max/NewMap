@@ -33,6 +33,39 @@
    "yaw": 0.0,
    "site": "block 1 south part on 7th St: 7th St x Adela Ave (u 350-490.8, v -700..-609.2)",
    "variant": "7th St shops, skate pad, launderette"
+  },
+  {
+   "piece": "n_apt_b2_7th",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 2 (B Ave - Adela, 7th - 6th St) north part on 7th St: 7th St x Adela (u 350-490.8, v -590.8..-500)",
+   "variant": "church, corner market, community garden"
+  },
+  {
+   "piece": "n_apt_b2_be",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 2 east part on 6th St: 6th St x Adela (u 350-490.8, v -500..-409.2)",
+   "variant": "garage townhouses, garden court, bike shop"
+  },
+  {
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 2 west part: B Ave x 6th St, the high corner (u 259.2-350, v -500..-409.2)",
+   "variant": "community room and preschool, walk-ups stepping up B Ave"
   }
  ]
 }

@@ -28,6 +28,63 @@ const STALL_D := 5.5
 ## ground height of the piece at piece-local (x, z); flat walk height unless a piece sets its terraces
 static var GY: Callable = S.walk_y
 
+## ---------------------------------------------------------------- land on a slope (blocks 2 and 3)
+## SURF: the block's base surface (x, z) -> local y, made by the piece from MEASURED street heights so it equals every
+## street walk along the block's edges (and the locked neighbours' level ground). PADS: a level pad under every building
+## [x0, z0, x1, z1, h], h = the surface at the middle of the building's front (Yasin's rule: nothing stands on a slope;
+## the skill: a pad at the height of the middle of the front, eased into the slope over about 5 m). PRECT: the piece's
+## outline; the ease fades out within 3 m of it, so every edge stays exactly on SURF (flush with the street and with the
+## neighbouring piece, which computes the same SURF). Between two pads the heights are blended by inverse distance, so
+## the ground never jumps; inside a pad it is exactly level.
+static var SURF: Callable = S.walk_y
+static var PADS: Array = []
+static var PRECT := Rect2()
+const EASE := 5.0
+const EDGE_KEEP := 3.0
+
+static func terrain(x: float, z: float) -> float:
+	var s := float(SURF.call(x, z))
+	if PADS.is_empty(): return s
+	var wmax := 0.0; var num := 0.0; var den := 0.0
+	for p: Array in PADS:
+		var dx := maxf(maxf(float(p[0]) - x, x - float(p[2])), 0.0); var dz := maxf(maxf(float(p[1]) - z, z - float(p[3])), 0.0)
+		var d := sqrt(dx * dx + dz * dz)
+		if d >= EASE: continue
+		var w := 1.0 - smoothstep(0.0, EASE, d)
+		wmax = maxf(wmax, w)
+		var iw := 1.0 / (d * d + 1e-6)
+		num += float(p[4]) * iw; den += iw
+	if wmax <= 0.0: return s
+	var de := minf(minf(x - PRECT.position.x, PRECT.end.x - x), minf(z - PRECT.position.y, PRECT.end.y - z))
+	var bf := smoothstep(0.0, EDGE_KEEP, de)
+	return s + (num / den - s) * wmax * bf
+
+## the piece outline (quadrant u / v) for the edge fade; call before any pad
+static func outline(sx: float, sz: float, u0: float, v0: float, u1: float, v1: float) -> void:
+	var a := Vector2(sx * u0, sz * v0); var b := Vector2(sx * u1, sz * v1)
+	PRECT = Rect2(Vector2(minf(a.x, b.x), minf(a.y, b.y)), (b - a).abs())
+
+## register a level pad for a building that will stand centred at (u, v) facing `face`; returns its height. The pad's
+## footprint is painted as a concrete plinth (cut lines at its edges, so the floor is exactly level under the walls).
+static func pad_for(paints: Array, sx: float, sz: float, folder: String, u: float, v: float, face: String, at_h := NAN) -> float:
+	var st := K.building_stats(folder)
+	var w: float = st.footprint_wd[0]; var d: float = st.footprint_wd[1]
+	var along_v := face.ends_with("v")
+	var hu := (w if along_v else d) * 0.5; var hv := (d if along_v else w) * 0.5
+	var toward := -1.0 if face.begins_with("-") else 1.0
+	var fu := u + (0.0 if along_v else toward * hu); var fv := v + (toward * hv if along_v else 0.0)
+	var h := float(SURF.call(sx * fu, sz * fv)) if is_nan(at_h) else at_h
+	var r := rect(sx, sz, u - hu, v - hv, u + hu, v + hv, "concrete")
+	PADS.append([r[0], r[1], r[2], r[3], h])
+	paints.insert(0, r)
+	return h
+
+## a level pad with no building on it (a play yard, a court): same rules
+static func pad_rect(paints: Array, sx: float, sz: float, u0: float, v0: float, u1: float, v1: float, h: float, mat := "") -> void:
+	var r := rect(sx, sz, u0, v0, u1, v1, mat)
+	PADS.append([r[0], r[1], r[2], r[3], h])
+	if mat != "": paints.insert(0, r)
+
 static func gy(x: float, z: float) -> float:
 	return float(GY.call(x, z))
 
@@ -367,6 +424,7 @@ static func wheel_stops(props: K.Props, rr: RandomNumberGenerator, stalls: Array
 static func begin(name: String, sx: float, sz: float) -> Dictionary:
 	S.hill_on = false
 	GY = S.walk_y
+	SURF = S.walk_y; PADS = []; PRECT = Rect2()
 	var root := Node3D.new(); root.name = name
 	var bl := Node3D.new(); bl.name = "Buildings"; root.add_child(bl)
 	var pk := Node3D.new(); pk.name = "Parks"; root.add_child(pk)
