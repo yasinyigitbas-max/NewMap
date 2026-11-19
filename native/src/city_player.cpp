@@ -217,10 +217,13 @@ void CityPlayer::_physics_process(double p_delta) {
 		const float u = std::min(climb_t / climb_len, 1.0f);
 		auto ss = [](float a, float b, float x) { const float t = std::min(std::max((x - a) / (b - a), 0.0f), 1.0f); return t * t * (3.0f - 2.0f * t); };
 		Vector3 at = climb_from;
-		if (climb == 2) {
+		if (climb == 4) {   // a fence: up and over the rail, down on the far side
+			const float a = ss(0.0f, 0.5f, u), b = ss(0.5f, 1.0f, u);
+			at = climb_from.lerp(vault_over, a).lerp(climb_to, b);
+		} else if (climb == 2) {
 			// (Yasin: "the hands rise with the body. They should stay pinned to the ledge's edge until he lets go"): up to
 			// the hips at the edge's height just behind it (the hands held, the arms pushing), then over it and up on top
-			const Vector3 mid = Vector3(edge_at.x, edge_at.y - pel_rest.y + 0.05f, edge_at.z) + edge_out * 0.32f;
+			const Vector3 mid = Vector3(edge_at.x, edge_at.y - pel_rest.y - 0.12f, edge_at.z) + edge_out * 0.26f;
 			const float a = ss(0.0f, 0.55f, u), b = ss(0.55f, 1.0f, u);
 			at = climb_from.lerp(mid, a).lerp(climb_to, b);
 		} else {
@@ -238,14 +241,17 @@ void CityPlayer::_physics_process(double p_delta) {
 			float w = 0.0f;
 			if (climb == 2) w = ss(0.0f, 0.06f, u) * (1.0f - ss(0.58f, 0.72f, u));   // (held till his hips are at the edge, let go as he goes over)
 			else if (climb == 1) w = ss(0.12f, 0.3f, u) * (1.0f - ss(0.55f, 0.75f, u));
+			else if (climb == 4) w = ss(0.05f, 0.2f, u) * (1.0f - ss(0.55f, 0.72f, u));   // (the hand on the rail as he goes over it)
 			grip_w = w;
 			grip_update();
 		}
 		const int climb_kind = climb;
-		if (u >= 1.0f) { climb = 0; airborne = false; apply_floor_snap(); grip_w = 0.0f; grip_update(); }
+		if (u >= 1.0f) { climb = 0; airborne = false; apply_floor_snap(); grip_w = 0.0f; grip_update(); settle_t = 0.0f; settle_off = clip_off; }
 		speed = 0.0f;
-		static const StringName C_LOW("ual/ClimbUp_1m"), C_HIGH("ual/ClimbUp_2m"), C_STEP("ual/StepUp");
-		const StringName cc = climb_kind == 2 ? C_HIGH : (climb_kind == 3 ? C_STEP : C_LOW);
+		// (the high climb: the pull-up, ClimbUp_2m; Yasin tried a leg over the top, ClimbLedge, and chose: "old pull over long
+		// climb was much better, revert to it")
+		static const StringName C_LOW("ual/ClimbUp_1m"), C_HIGH("ual/ClimbUp_2m"), C_STEP("ual/StepUp"), C_VAULT("ual/SafetyVault");
+		const StringName cc = climb_kind == 2 ? C_HIGH : (climb_kind == 3 ? C_STEP : (climb_kind == 4 ? C_VAULT : C_LOW));
 		const double len = fig->clip_len(cc);
 		// the figure placed so its hips are where the climb's path has them: the clip's own displacement (measured from the
 		// last frame's pose) taken off
@@ -256,7 +262,17 @@ void CityPlayer::_physics_process(double p_delta) {
 		Vector3 fig_at = at - (climb_t > dt * 1.5f ? clip_off : Vector3());
 		fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), fig_at), cc, len > 0.0 ? std::min(std::max(len / (double)climb_len, 0.5), 3.0) : 1.0, -2.0);
 		fig_drawn_at = fig_at;
-		if (plant) { const bool on = climb != 2 || u > 0.8f; plant->set_active(on); plant->set_influence(on ? 1.0f : 0.0f); plant->fwd = Vector3(std::sin(yaw), 0, std::cos(yaw)); }
+		if (plant) { const bool on = (climb != 2 && climb != 4) || u > 0.8f; plant->set_active(on); plant->set_influence(on ? 1.0f : 0.0f); plant->fwd = Vector3(std::sin(yaw), 0, std::cos(yaw)); }
+		return;
+	}
+	if (settle_t < 0.45f) {   // just up from a step or climb: he stands a moment (the clip's end fading into Idle), then walks
+		settle_t += dt;
+		const float f = 1.0f - std::min(settle_t / 0.45f, 1.0f);
+		set_velocity(Vector3(0, -0.5f, 0)); move_and_slide(); speed = 0.0f;
+		static const StringName IDLE_S("ual/Idle_Loop");
+		const Vector3 fa = get_global_position() - settle_off * (f * f);
+		fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), fa), IDLE_S, 1.0, -1.0);
+		if (plant) { plant->set_active(true); plant->set_influence(1.0f); }
 		return;
 	}
 	if (swimming) crouch = false;
@@ -265,6 +281,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	float top = swimming ? (run ? 1.7f : 1.0f) : (run ? run_speed : walk_speed);
 	if (crouch && !swimming) top *= 0.45f;
 	if (combat) top = std::min(top, 1.4f);   // (in his stance he steps, he does not run)
+	if (settle_t < 1.1f) { settle_t += dt; top = std::min(top, walk_speed); }   // (Yasin: "ease it into idle after the climb then walk again": walking first, not running off)
 	const Vector3 want = (fwd * mv.y + right * mv.x) * top;
 	Vector3 v = get_velocity();
 	const Vector3 hv(v.x, 0, v.z);
@@ -279,7 +296,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	move_and_slide();
 	// STEP UP (Yasin: "make the small heights like 20 cm walkable over"): walking into something no higher than 24 cm (a
 	// kerb, a step) he is lifted onto it: free to rise 24 cm, free 30 cm ahead up there, and something to stand on there
-	if (!swimming && !frozen && !combat && !crouch && is_on_wall() && Vector3(want.x, 0, want.z).length() > 0.3f && try_climb(Vector3(want.x, 0, want.z).normalized())) {}
+	if (!swimming && !frozen && !combat && !crouch && Vector3(want.x, 0, want.z).length() > 0.3f && try_climb(Vector3(want.x, 0, want.z).normalized())) {}
 	else if (!swimming && !airborne && !frozen && is_on_wall() && Vector3(want.x, 0, want.z).length() > 0.3f) {
 		const Vector3 dir = Vector3(want.x, 0, want.z).normalized();
 		Transform3D t2 = get_global_transform();
@@ -346,19 +363,69 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 	if (!ss) return false;
 	const Vector3 p = get_global_position();
 	const float base = airborne ? jump_y : p.y;
-	const Vector3 probe = p + p_dir * 0.5f;
-	Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(probe + Vector3(0, (base - p.y) + 2.7f, 0), probe + Vector3(0, (base - p.y) + 0.05f, 0), 1);
-	TypedArray<RID> ex; ex.push_back(get_rid()); q->set_exclude(ex);
-	const Dictionary h = ss->intersect_ray(q);
+	TypedArray<RID> ex; ex.push_back(get_rid());
+	// ON THE APPROACH (Yasin: "he shouldnt wait that long to climb at the edge, when player approaches and is on the
+	// trajectory to climb, it should automatically queue"; "it applies to every locomotion animation"): the face of what is
+	// ahead, found by a ray at shin height (and, in a jump, at chest height) up to 45 cm from him (his front 15 cm from it); the move starts there,
+	// his stride carried into it
+	Vector3 face; bool has_face = false;
+	for (float hgt : { 0.12f, 0.6f }) {
+		if (hgt > 0.5f && !airborne) break;
+		Ref<PhysicsRayQueryParameters3D> qf = PhysicsRayQueryParameters3D::create(Vector3(p.x, p.y + hgt, p.z), Vector3(p.x, p.y + hgt, p.z) + p_dir * 0.45f, 1);   // (Yasin: "make sure they trigger from really up close": his front 15 cm from it)
+		qf->set_exclude(ex);
+		const Dictionary hf = ss->intersect_ray(qf);
+		if (!hf.is_empty() && ((Vector3)hf["normal"]).dot(p_dir) < -0.5f) { face = hf["position"]; has_face = true; break; }
+	}
+	if (!has_face) return false;
+	const float to_face = Vector2(face.x - p.x, face.z - p.z).length();
+	Vector3 probe; Dictionary h;
+	for (float ahead : { 0.04f, 0.12f, 0.2f }) {   // (just past the face, nearest first: a fence's rail is a few cm thick)
+		probe = p + p_dir * (to_face + ahead);
+		Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(probe + Vector3(0, (base - p.y) + 2.7f, 0), probe + Vector3(0, (base - p.y) + 0.05f, 0), 1);
+		q->set_exclude(ex);
+		h = ss->intersect_ray(q);
+		if (!h.is_empty()) break;
+	}
 	if (h.is_empty()) return false;
 	const Vector3 top = h["position"], n = h["normal"];
 	if (n.y < 0.7f) return false;   // (not a top one can stand on)
 	const float rise = top.y - base;
+	{   // a fence: ground beyond it lower than its top (a ray down just past it), the top thin enough to go over
+		Ref<PhysicsRayQueryParameters3D> qb = PhysicsRayQueryParameters3D::create(Vector3(p.x, top.y + 0.25f, p.z) + p_dir * (to_face + 0.75f), Vector3(p.x, base - 0.6f, p.z) + p_dir * (to_face + 0.75f), 1);
+		qb->set_exclude(ex);
+		const Dictionary hb = ss->intersect_ray(qb);
+		const bool beyond_low = !hb.is_empty() && ((Vector3)hb["position"]).y < top.y - 0.25f;
+		const bool fence_h = (!airborne && rise > 0.24f && rise <= 0.5f) || (airborne && rise > 0.24f && rise <= 1.4f);
+		if (beyond_low && fence_h) {
+			const Vector3 land = (Vector3)hb["position"] + Vector3(0, 0.03f, 0);
+			Transform3D tl = get_global_transform(); tl.origin = land;
+			if (!test_move(tl, Vector3(0, 0.05f, 0))) {   // (room to land)
+				const float ey = top.y - 0.03f;
+				Ref<PhysicsRayQueryParameters3D> q2 = PhysicsRayQueryParameters3D::create(Vector3(p.x, ey, p.z) - p_dir * 0.3f, Vector3(p.x, ey, p.z) + p_dir * 1.2f, 1);
+				q2->set_exclude(ex);
+				const Dictionary hw = ss->intersect_ray(q2);
+				const Vector3 face = hw.is_empty() ? Vector3(probe.x - p_dir.x * 0.2f, ey, probe.z - p_dir.z * 0.2f) : (Vector3)hw["position"];
+				edge_at = Vector3(face.x, top.y, face.z); edge_out = -p_dir; edge_side = Vector3(0, 1, 0).cross(p_dir).normalized();
+				pel_rest = pelvis_world() - p; if (pel_rest.y < 0.5f || pel_rest.y > 1.3f) pel_rest = Vector3(0, 0.95f, 0);
+				pel_rest.x = 0.0f; pel_rest.z = 0.0f; pel_rest_set = true;
+				clip_off = Vector3(); fig_drawn_at = p;
+				climb = 4; climb_t = 0.0f; hang_set = true;
+				climb_len = airborne ? 1.05f : 0.9f;
+				climb_from = p;
+				// over the rail: his hips 25 cm over its top, a little past it; then down onto the far side
+				vault_over = Vector3(edge_at.x, top.y + 0.25f - pel_rest.y, edge_at.z) + p_dir * 0.12f;
+				climb_to = land;
+				vaults++;
+				return true;
+			}
+		}
+	}
 	const bool step = !airborne && rise > 0.08f && rise <= 0.24f;
 	const bool low = !airborne && rise > 0.24f && rise <= 0.5f;
 	const bool high = airborne && rise > 0.5f && rise <= 2.5f;
 	if (!step && !low && !high) return false;
-	const Vector3 dest(probe.x + p_dir.x * 0.1f, top.y + 0.03f, probe.z + p_dir.z * 0.1f);
+	// (his place up there: far enough in from the edge that his whole body stands on the top, 45 cm past where its top was found)
+	const Vector3 dest = Vector3(p.x, top.y + 0.03f, p.z) + p_dir * (to_face + 0.45f);
 	Transform3D td = get_global_transform(); td.origin = dest;
 	if (test_move(td, Vector3(0, 0.05f, 0))) return false;   // (no room to stand up there)
 	{   // the edge: a ray level with the top, from him toward the wall, meets its face; the hands hold there
@@ -390,6 +457,8 @@ Vector3 CityPlayer::pelvis_world() const {
 	return b >= 0 ? sk->get_global_transform().xform(sk->get_bone_global_pose(b).origin) : get_global_position() + Vector3(0, 0.95f, 0);
 }
 
+Vector3 CityPlayer::get_grip_now() const { return Vector3(climb ? climb_t / climb_len : -1.0f, grip ? grip->miss[0] : 0.0f, grip ? grip->miss[1] : 0.0f); }
+
 float CityPlayer::get_hips_drop() const { return plant ? plant->hips_drop : 0.0f; }
 
 void CityPlayer::grip_update() {
@@ -400,10 +469,11 @@ void CityPlayer::grip_update() {
 	grip->set_influence(grip_w);
 	if (grip_w <= 0.001f) return;
 	// the hands 22 cm either side of the middle of the edge, on the edge itself
-	grip->grip[0] = edge_at + edge_side * 0.22f;
+	grip->one_hand = climb == 4;
+	grip->grip[0] = edge_at + edge_side * (climb == 4 ? 0.12f : 0.22f);
 	grip->grip[1] = edge_at - edge_side * 0.22f;
 	grip->out = edge_out; grip->side = edge_side;
-	if (grip_w > 0.95f) {
+	if (grip_w > 0.95f && (grip->held[0] || grip->held[1])) {
 		grip_on_s += (float)get_physics_process_delta_time();
 		grip_miss_most = std::max(grip_miss_most, std::max(grip->miss[0], grip->miss[1]));
 		grip_tip_most = std::max(grip_tip_most, std::max(std::fabs(grip->tip_dy[0]), std::fabs(grip->tip_dy[1])));
@@ -473,6 +543,8 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_steps_up"), &CityPlayer::get_steps_up);
 	ClassDB::bind_method(D_METHOD("get_climbs_low"), &CityPlayer::get_climbs_low);
 	ClassDB::bind_method(D_METHOD("get_climbs_high"), &CityPlayer::get_climbs_high);
+	ClassDB::bind_method(D_METHOD("get_vaults"), &CityPlayer::get_vaults);
+	ClassDB::bind_method(D_METHOD("get_grip_now"), &CityPlayer::get_grip_now);
 	ClassDB::bind_method(D_METHOD("is_climbing"), &CityPlayer::is_climbing);
 	ClassDB::bind_method(D_METHOD("get_grip_weight"), &CityPlayer::get_grip_weight);
 	ClassDB::bind_method(D_METHOD("get_hips_drop"), &CityPlayer::get_hips_drop);

@@ -65,9 +65,19 @@ void HandGrip::_process_modification_with_delta(double p_delta) {
 	const float k = to_sk.basis.get_column(0).length();   // (skeleton units a metre)
 	for (int s = 0; s < 2; s++) {
 		if (b_ua[s] < 0 || b_fa[s] < 0 || b_hd[s] < 0) continue;
+		if (one_hand && s == 1) { miss[1] = 0.0f; tip_dy[1] = 0.0f; continue; }
 		const float sgn = s == 0 ? 1.0f : -1.0f;
 		// the wrist a little back from the edge and up off the top (the palm lies on the top, the fingers over the edge)
-		const Vector3 target = to_sk.xform(grip[s]) + out_s * (0.07f * k) + up_s * (0.035f * k);
+		Vector3 target = to_sk.xform(grip[s]) + out_s * (0.07f * k) + up_s * (0.035f * k);
+		// a hand holds only while its arm reaches: near the end of its reach it eases off toward where the clip has it and
+		// lets go (never dragged up or stretched)
+		{
+			const Vector3 sh = sk->get_bone_global_pose(b_ua[s]).origin, el = sk->get_bone_global_pose(b_fa[s]).origin, wr0 = sk->get_bone_global_pose(b_hd[s]).origin;
+			const float arm = (el - sh).length() + (wr0 - el).length();
+			const float fit = std::min(std::max((arm * 0.985f - (target - sh).length()) / (0.06f * k), 0.0f), 1.0f);
+			held[s] = fit > 0.99f;
+			if (fit < 1.0f) target = wr0.lerp(target, fit);
+		}
 		reach(sk, b_ua[s], b_fa[s], b_hd[s], target, side_s * sgn * 1.4f - up_s * 0.6f + out_s * 0.4f);
 		// the hand: its length along the way onto the top (away from the climber), its palm down
 		const Transform3D Gh = sk->get_bone_global_pose(b_hd[s]);
@@ -84,10 +94,10 @@ void HandGrip::_process_modification_with_delta(double p_delta) {
 			const float bend = (j % 3 == 0) ? curl * 0.6f : curl * 0.5f;
 			sk->set_bone_global_pose(b, Transform3D(Basis(side_s, bend) * Gf.basis, Gf.origin));
 		}
-		miss[s] = sk->get_bone_global_pose(b_hd[s]).origin.distance_to(target) / std::max(k, 1e-4f);
+		miss[s] = held[s] ? sk->get_bone_global_pose(b_hd[s]).origin.distance_to(target) / std::max(k, 1e-4f) : 0.0f;
 		{   // the middle finger's last joint against the top of the edge
 			const int tip = sk->find_bone(s == 0 ? "Bip01_L_Finger22" : "Bip01_R_Finger22");
-			if (tip >= 0) tip_dy[s] = sk->get_global_transform().xform(sk->get_bone_global_pose(tip).origin).y - grip[s].y;
+			if (tip >= 0) tip_dy[s] = held[s] ? sk->get_global_transform().xform(sk->get_bone_global_pose(tip).origin).y - grip[s].y : 0.0f;
 		}
 	}
 }

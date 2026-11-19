@@ -27,6 +27,8 @@ public:
 	Vector3 out;         // world: the way off the edge, out over the drop (toward the climber), level
 	Vector3 side;        // world: the climber's left
 	float curl = 1.25f;  // rad: how far each finger joint bends over the edge
+	bool one_hand = false;   // a fence's rail: the left hand only
+	bool held[2] = { false, false };   // each hand on its point now (within its reach); else it is letting go
 	float miss[2] = { 0, 0 };   // (the tests) how far each wrist ended from its point, metres
 	float tip_dy[2] = { 0, 0 }; // (the tests) the middle finger's tip over (+) or under (-) the edge's top, metres
 	void _process_modification_with_delta(double p_delta) override;

@@ -61,7 +61,13 @@ class CityPlayer : public CharacterBody3D {
 	float grip_w = 0.0f, grip_miss_most = 0.0f, grip_on_s = 0.0f, grip_tip_most = 0.0f;
 	bool hang_set = false;   // (a high climb: hung from the edge by the clip's own hands, on its first frame)
 	void grip_update();
-	int climbs_low = 0, climbs_high = 0;
+	int climbs_low = 0, climbs_high = 0, vaults = 0;
+	// a FENCE (Yasin: "we should be able to jump over fences, same rules apply, hand on the rail"): a thin top with lower
+	// ground beyond: up to 50 cm walking, 0.5-1.4 m from a jump: over it (Vault), the left hand on the rail; climb 4
+	Vector3 vault_over;
+	// out of a step or climb (Yasin: "character looks to be not playing exit step up or exit climb to idle and immediately
+	// gets into walking which looks jittery"): 0.3 s standing (Idle), the clip's last offset fading out, then he goes on
+	float settle_t = 9.0f; Vector3 settle_off;
 	bool try_climb(const Vector3 &p_dir);
 	double clock_s = 0.0;
 	Rect2 no_touch[8]; int n_no_touch = 0;   // screen rectangles that are buttons (the Use plate, the phone): not move / look
@@ -111,13 +117,15 @@ public:
 	int get_steps_up() const { return steps_up; }
 	int get_climbs_low() const { return climbs_low; }
 	int get_climbs_high() const { return climbs_high; }
+	int get_vaults() const { return vaults; }
 	bool is_climbing() const { return climb != 0; }
 	float get_grip_weight() const { return grip_w; }
 	float get_hips_drop() const;
 	Vector3 get_pelvis() const { return pelvis_world(); }
 	float get_grip_miss_most() const { return grip_miss_most; }   // the farthest a gripping wrist ended from its point (m)
 	float get_grip_seconds() const { return grip_on_s; }
-	float get_grip_tip_most() const { return grip_tip_most; }   // the farthest a gripping fingertip was over or under the edge's top (m)
+	float get_grip_tip_most() const { return grip_tip_most; }
+	Vector3 get_grip_now() const;   // (traces) the climb's progress, the two wrists' miss now   // the farthest a gripping fingertip was over or under the edge's top (m)
 	Vector3 get_edge_at() const { return edge_at; }
 	Array get_hand_points() const;
 	void take_hit() { hit_t = 0.0; hits_taken++; }   // a blow taken on his feet (the hit clip)
