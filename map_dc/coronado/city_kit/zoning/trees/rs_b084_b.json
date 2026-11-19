@@ -1,0 +1,57 @@
+{
+ "area": "rs_b084_b",
+ "piece": "s_rs_b084_b",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; within the in-view limit (8 broadleaf / 12 trees within 60 m): room for 2 broadleaf",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -58.254,
+    11.646,
+    -1006.45
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first of the west face's Torrey pines (one species a face: the jacaranda here becomes a pine; the broadleaf room is used by the east face)"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -93.127,
+    10.479,
+    -1006.45
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway, the second pine (old spot and species); driveways in the 35 m between"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -62.232,
+    11.536,
+    -993.55
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east parkway grass, first of the east face's magnolias (old spot and species)"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -87.017,
+    10.708,
+    -993.55
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway 25 m on, the second magnolia; the 12 m double between goes"
+  }
+ ]
+}
