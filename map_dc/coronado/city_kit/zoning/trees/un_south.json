@@ -1,0 +1,69 @@
+{
+ "area": "un_south",
+ "piece": "n_un_south",
+ "zone": "apartments (dorm courts) / civic (South Green)",
+ "rule": "docs/TREE_PLAN.md: apartments - one tree per court, placed for the seating",
+ "written": "by hand, 19 Nov 2026 (claude/fill-high-street, superchecker over the hospital zone and campus): every builder tree out, these placed after the plan",
+ "trees": [
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    -750.0,
+    4.701,
+    -442.0
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "the west dorms' court: the one tree of the court, by the tables"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -640.0,
+    5.859,
+    -465.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "the South Green: west of the walk"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -560.0,
+    6.086,
+    -465.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "the South Green: east of the walk"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -470.0,
+    6.095,
+    -440.0
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "the east dorms' court: its one tree"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -786.5,
+    4.15,
+    -411.5
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "the south street front of the west dorms: a palm at the corner"
+  }
+ ]
+}

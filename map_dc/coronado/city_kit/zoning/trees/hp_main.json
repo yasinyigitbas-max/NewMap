@@ -1,0 +1,81 @@
+{
+ "area": "hp_main",
+ "piece": "n_hp_main",
+ "zone": "civic (hospital)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle (the plan has no hospital row: the hospital campus and the university are read as civic grounds)",
+ "written": "by hand, 19 Nov 2026 (claude/fill-high-street, superchecker over the hospital zone and campus): every builder tree out, these placed after the plan",
+ "trees": [
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    585.0,
+    2.15,
+    -1560.0
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "healing garden clump: shade over the garden's lawn by the path"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    595.0,
+    2.15,
+    -1557.0
+   ],
+   "yaw": 110,
+   "scale": 0.9,
+   "why": "healing garden clump: the second crown, toward the bay"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    576.5,
+    2.152,
+    -1566.0
+   ],
+   "yaw": 220,
+   "scale": 0.9,
+   "why": "healing garden clump: the clump's west end, colour seen from the wards"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    606.0,
+    2.15,
+    -1548.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "healing garden clump: a palm where the garden path turns to the car park"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    628.0,
+    2.15,
+    -1500.0
+   ],
+   "yaw": 60,
+   "scale": 1.0,
+   "why": "the bay-curve strip east of the service drive: a palm by the staff's picnic spot"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    631.5,
+    2.147,
+    -1478.0
+   ],
+   "yaw": 120,
+   "scale": 0.95,
+   "why": "the bay-curve strip: its second palm, seen from the ring"
+  }
+ ]
+}

@@ -927,9 +927,9 @@
    "date": "2026-11-17"
   },
   "s_rg_nw_b071": {
-   "sha256": "5ebe948bbe3cf2e2b0949e3dd4c265b1cb31fa0a12ff07886236a5534b0f2c1e",
+   "sha256": "0af1541283b76189096491afa40676e2bd30c59196715d71b02b783c8605be4a",
    "by": "Yasin",
-   "date": "2026-11-17"
+   "date": "2026-11-19"
   },
   "s_rg_nw_b072": {
    "sha256": "b43e75dfa6f161aa406e596e340fe09d131fc3ae4ae5bc0aff87a53e94c28911",
@@ -2675,6 +2675,86 @@
    "sha256": "f3add2527712dc0be00cbb7c5a9bc017cb4ad16189d894c4f1e67c7326b3f53d",
    "by": "Yasin",
    "date": "2026-11-19"
+  },
+  "t_hp_main": {
+   "sha256": "909181663c250b64bb59a2127f87331806dca445b1af1e38a9b599b07ed1df2e",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "t_un_quad": {
+   "sha256": "ad5e3b2e778a26152ec141618fea10b4411ff3a539fdc82de3bf3f857129e77d",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_un_east": {
+   "sha256": "1db51b5716f290e9a7be6ca0505d2c37069a625dc5e6e1013484dd791094796f",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "t_un_north": {
+   "sha256": "4c684775b70273a274880c71264a6968fb7f60f719da8d723b4cb97221051bef",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_un_west": {
+   "sha256": "f53ab829766912859b4b819bb794e8abf42144a079a104ea6fc857667db11860",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "t_un_east": {
+   "sha256": "96174655a21e597ce4a2c12d4799fc7ee6182f282c3d4326cbc033dba613b4fc",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "t_hp_transit": {
+   "sha256": "161e3bfcc5e78348d007146e9d23aa737eb06a8802614211dfce586c0d749e27",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_un_south": {
+   "sha256": "f914305540cdd0a5ebb0cf15a7386dbc72e75ac7b870725a867557a91cc72c69",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "t_un_west": {
+   "sha256": "36b6ef2b24b41969c0b65b08d4b8cbf9434dbae0c0aae20f023322a179879d43",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "t_hp_west": {
+   "sha256": "99e84a1a9c61d5e004ac69677a8da9143e5297d7730b8505d2a9b39325f66b3e",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_hp_main": {
+   "sha256": "3c5b74174790a38366a74efb11c125a1e229af31d2f9a294f0064130ea5fb48c",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_hp_west": {
+   "sha256": "db3e96113b3a0bff1f985cc9ff6013be20fe451786973c9262782610af9ad5d3",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_un_quad": {
+   "sha256": "945ec8873bec37e0fc658086c82610c5966cad4503919693171463c5374be0a4",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_hp_transit": {
+   "sha256": "1c2b57e902be5295f8345f5498bf7b20d96fc7de1c78140ff2ef9ae47b433641",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_un_north": {
+   "sha256": "3fd423f1807048f39b5ff3cd3d72766377ae2e6c624683dcd8a61bed685cd6af",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "t_un_south": {
+   "sha256": "fcd5be4588e0548ffdcec082f9868a4e9e2ffbb79719144ae0d6d3380da6ba80",
+   "by": "Yasin",
+   "date": "2026-11-19"
   }
  },
  "files": {
@@ -3440,6 +3520,116 @@
   },
   "map_dc/coronado/city_kit/interiors/rooms/g_apt_b3_w__hilltop_books__0.scn": {
    "sha256": "d28e7530a46e7dabff5a7f4f5e807b6590b6f8ce443e236d4455edaefb67cf95",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_un_quad_founders_0.scn": {
+   "sha256": "052fbb9d5aabbbc22daf2d3423abdb561e0abcf45b1dd53d009b3502f90d4b5b",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_un_quad_wing_se_0.scn": {
+   "sha256": "82e42c6f19c5e1142be12ec3a4833b7c8dad721cbc12eb7745765eeb24f97319",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_un_west_lab_wing_0.scn": {
+   "sha256": "c4640bf47fd6cb69bbffdb91d24be782ad03a04d4a4d75f63449498a9ef9d1bb",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_un_north_rec_0.scn": {
+   "sha256": "e6d1ca32d9e2598e73524d3724d9af66dccab5fa98e40e36387f7037b17459ce",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_hp_main_hospital_1.scn": {
+   "sha256": "9ea9b1779ca7ff48752c2c54674c34d814fb0145bc09ae900edac0c13884ab4c",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_un_quad_library_0.scn": {
+   "sha256": "f449953429dbd8374b6426fbdef11a1aeee529a42a7e04f4b31c8ba18f0ecd7d",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_hp_west_bistro_0.scn": {
+   "sha256": "beb0d807630938b671552d6100cbd4aea59855bafdceaddc6f2042140d7bd0f9",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_hp_west_wellness_0.scn": {
+   "sha256": "21c611eac42dd368c49d825d9a48f3fb26e50dae3f578f2779bc884493aab6d2",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_hp_main_er_wing_1.scn": {
+   "sha256": "fe73d7a1d2e2f16f03102836be1585112d9f77339e6723745f027d5344f047a5",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_un_quad_wing_ne_0.scn": {
+   "sha256": "a55389a891c3beae0fac8a380a45f86d4675e0532e1359c96d22d3315f5d4767",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_hp_west_pharmacy_0.scn": {
+   "sha256": "cbd6368cd28f361bf4bac5fc6579e8a3de1c844394a3a26bbeae037924485dea",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_hp_west_tower_0.scn": {
+   "sha256": "608a2d2975bbb8e56ad1c2c2915f5b811d603e57ed794b2aa6958ddfa90d13b0",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_un_east_bookstore_0.scn": {
+   "sha256": "b4d5d462727998bfe0ac8d30b9ad3808c6c2990f173c41c5a93add0e0d1c5ab3",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_un_east_union_0.scn": {
+   "sha256": "d8adf77d64dac8c5cb4e049603c1a60f10bee129bcc68d467b7f3f7d29298883",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_un_quad_wing_nw_0.scn": {
+   "sha256": "8e1dc05070dc46892feb96742ecf3a055d7cf3723319bc5a15f8745a1def5fb9",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_un_west_eng_labs_0.scn": {
+   "sha256": "cadffa497a1f5f470348b72b75209b695bef39b176211b1e73d915e1e652dc25",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_un_quad_wing_sw_0.scn": {
+   "sha256": "93ff0c6400989db5830775b469d646898733f3eb143b82c19d84bf03f9ad07da",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_un_north_museum_0.scn": {
+   "sha256": "526c3e2175bada00d6ed0fa1b0ad44ae861d4594d272bab74a05d3afed5d3112",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_un_east_cafe_0.scn": {
+   "sha256": "5315a3299e51b68bd46c2be6600358fef6afe2f1fd8ff37c3cec092862147918",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_hp_main_hospital_0.scn": {
+   "sha256": "6df8a3aca015306529c5d5c16ce78fce9182608257bc404f02c2895887b0ac0c",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_hp_transit_transit_hall_0.scn": {
+   "sha256": "46ad02439065de3801235847be3cff1c69f6781f0a11184f410362f1dda6f8fe",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_un_west_science_0.scn": {
+   "sha256": "3fc5ac2a68daf560c4d676f84fbf4e6f811d8a24f9074bc3254e1e42dd304b05",
    "by": "Yasin",
    "date": "2026-11-19"
   }
