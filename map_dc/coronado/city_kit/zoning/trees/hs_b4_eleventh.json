@@ -1,0 +1,13 @@
+{
+ "area": "hs_b4_eleventh", "piece": "n_hs_b4_eleventh", "zone": "high street",
+ "rule": "docs/TREE_PLAN.md: high street (pilot), Amber spine, arterials - trees in wells on the shop side, palms alternating (zone 406 -> about 360); strip rule for the car park: one tree per car-park island end",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's fifteen builder trees go (a front row along Eleventh alternating palms and broadleaf every 22 m, a row along the car park's island, some among the trash carts); six come back on their own spots: four of the front row (palm, palm, jacaranda, palm) and the two ends of the car park's island.",
+ "trees": [
+  {"base": "palm_mexican_fan_a", "cond": "normal", "at": [72.2, 4.336, 211.8], "yaw": 0.0, "scale": 1.0, "why": "the front grass along Eleventh by the agave and the box hedge: the row's west palm"},
+  {"base": "palm_queen_b", "cond": "normal", "at": [110.2, 4.825, 211.8], "yaw": 60.0, "scale": 1.0, "why": "the same front strip 38 m on: a queen palm"},
+  {"base": "tree_jacaranda_b", "cond": "normal", "at": [132.2, 5.096, 211.8], "yaw": 120.0, "scale": 0.9, "why": "the front strip 22 m on: a jacaranda between the palms, the row alternating"},
+  {"base": "palm_mexican_fan_c", "cond": "normal", "at": [154.2, 5.413, 211.8], "yaw": 180.0, "scale": 1.0, "why": "the front strip 22 m on: a fan palm"},
+  {"base": "tree_torrey_pine_b", "cond": "normal", "at": [52.8, 3.843, 245.9], "yaw": 240.0, "scale": 0.85, "why": "the west end of the car park's island, by the wheel stops: the island-end tree"},
+  {"base": "tree_magnolia_b", "cond": "normal", "at": [169.2, 5.355, 245.9], "yaw": 300.0, "scale": 0.85, "why": "the east end of the same island: the other island-end tree"}
+ ]
+}
