@@ -53,7 +53,7 @@ What each check sees and does not see is in the super-builder skill's table; in 
 - `audit_trees.gd`: 0 trees in hard ground (1,240 checked in the area).
 - `sink_check.gd`: 0 - it only checks STREET pieces, so it says nothing about these blocks.
 - `ground_check.py` + the trial land: above.
-- Lock test: see "Numbers" below.
+- Lock test: RESULT PASS (see "Numbers").
 
 ## Walk-in places (rooms built WITH the block, Yasin relayed: "use the indoor generator in the pilot and do them both together")
 10 rooms, `interiors/rooms/g_apt_*.scn`, from my table `interiors/assignment_apt.json` (`tools/city/rooms/assign_apt.py`,
@@ -82,6 +82,7 @@ is), so they are not in the draw numbers below.
 - `b1_top_todays_land.jpg` - the same on today's land: the hump drawn over the floor (what the land fit removes).
 - `b1_eye_8th_st_east.jpg`, `b1_eye_7th_st_west.jpg`, `b1_eye_adela_south.jpg` - eye height (1.7 m) along the streets,
   rooms open. Flat preview plane, no land (the land does not show at street level here).
+- `b1_baked_above.jpg` - the baked block through the streamer (the draw numbers' view).
 - `b1_edge_alley_seam_a_ne.jpg` - the block has no slope; this is its seam with the locked `a_ne` along the alley, on
   the trial land.
 - `b1_shops_sheet_0..3.jpg` - every shop: front from across the pavement and inside from the door. The dry cleaner's
@@ -91,7 +92,25 @@ is), so they are not in the draw numbers below.
 - No shadows in any picture (the cloud preview's renderer).
 
 ## Numbers
-DRAWS_PLACEHOLDER
+Measured in the cloud (lavapipe), NOT on the phone. A scratch runtime bake (a copy of `bake_runtime.gd` reading the
+shared layout + these 3 rows, out to `OUT/rt_apt`, not committed; 12 cells round the block, the far world whole), then
+`rt_shots.gd` through the streamer, 5 views. Rooms are NOT in the bake (no room is yet).
+| view | draws | triangles |
+|---|---|---|
+| 8th St, eye height, east from B Ave | 64 | 583k |
+| 7th St, eye height, west from Adela | 107 | 1,028k |
+| Adela, eye height, south from 8th | 66 | 755k |
+| the alley seam with `a_ne`, eye height | 133 | 1,064k |
+| above the block, 54 m up | 93 | 883k |
+- Draws 64-133: under the ~150 a view (Yasin's first rule).
+- Triangles 0.58-1.06 M: OVER the ~500k mark in every view. Not split into what is mine and what is the far world /
+  the neighbours (the strip measured +270-460k a view from its own blocks). The known heavy parts of block 1: the ground
+  (58k triangles in the three pieces: unmerged cells, as required against cracks), 152 wheel stops, 4 dingbats, the
+  tennis courts. Cheap cuts if Yasin wants them: merge the ground cells (the block is flat, no cracks can open), wheel
+  stops only on the front rows. Not done without his word.
+- The trees draw black in `b1_baked_above.jpg`: the cloud preview's foliage lighting in rt_shots, not the trees.
+- Lock test (`tests/city_kit/test_locked_pieces.gd`): RESULT PASS (496 locked pieces, 103 locked plan files) - it
+  proves only that no locked file changed.
 
 ## NOT done / NOT checked
 - Blocks 2 and 3 (waiting for Yasin's word on block 1).
