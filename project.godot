@@ -17,6 +17,10 @@ lights_and_shadows/mobile_light_grid=true
 window/size/viewport_width=1600
 window/size/viewport_height=900
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_speech/plugin.cfg")
+
 [physics]
 ; the phone test rig runs the game's physics setup (Jolt on its own thread); the PC tools keep the default engine
 3d/physics_engine.android="Jolt Physics"
