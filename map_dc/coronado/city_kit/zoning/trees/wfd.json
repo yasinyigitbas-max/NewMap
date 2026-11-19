@@ -1,0 +1,153 @@
+{
+ "area": "wfd",
+ "piece": "s_wfd",
+ "zone": "waterfront drive (street)",
+ "rule": "docs/TREE_PLAN.md: waterfront, palms only - spaced palms on the promenade and the median; in-view limit 12 trees within 60 m",
+ "written": "by hand, 19 Nov 2026 (cloud session, streets list from the bottom). s_wfd stands three times round the cross at (570, 200) (rows 73-75, turned -90/180/0); its 13 builder palms per arm stood about 10 m apart on both parkways. Four of each arm's old spots are kept, about 20 m apart alternating sides, away from the lamps; the other nine go so the cross (with s_wf's arm) stays under the in-view limit.",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    546.0,
+    1.5,
+    193.6
+   ],
+   "yaw": 35.0,
+   "scale": 1.0,
+   "why": "west arm (row 73): the first palm of this arm, on the parkway grass where the drive leaves the cross: it frames the turn toward the water"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    527.0,
+    1.5,
+    206.4
+   ],
+   "yaw": 110.0,
+   "scale": 1.0,
+   "why": "west arm (row 73): the opposite parkway about 20 m on, so the palms alternate sides down the drive (a waterfront palm row, not a wall)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    507.0,
+    1.5,
+    193.6
+   ],
+   "yaw": 200.0,
+   "scale": 1.0,
+   "why": "west arm (row 73): the third palm of the arm, back on the first side, off the parking meter's reach and clear of the pier lamp"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    487.5,
+    1.5,
+    206.4
+   ],
+   "yaw": 290.0,
+   "scale": 1.0,
+   "why": "west arm (row 73): the last palm of the arm before the next piece, on the far parkway; the old spots closer than 20 m stay empty for the in-view limit"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    576.4,
+    1.5,
+    176.0
+   ],
+   "yaw": 70.0,
+   "scale": 1.0,
+   "why": "south arm (row 74): the first palm of this arm, on the parkway grass where the drive leaves the cross: it frames the turn toward the water"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    563.5,
+    1.5,
+    157.0
+   ],
+   "yaw": 160.0,
+   "scale": 1.0,
+   "why": "south arm (row 74): the opposite parkway about 20 m on, so the palms alternate sides down the drive (a waterfront palm row, not a wall)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    576.4,
+    1.5,
+    137.0
+   ],
+   "yaw": 250.0,
+   "scale": 1.0,
+   "why": "south arm (row 74): the third palm of the arm, back on the first side, off the parking meter's reach and clear of the pier lamp"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    563.5,
+    1.5,
+    117.5
+   ],
+   "yaw": 340.0,
+   "scale": 1.0,
+   "why": "south arm (row 74): the last palm of the arm before the next piece, on the far parkway; the old spots closer than 20 m stay empty for the in-view limit"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    563.5,
+    1.5,
+    224.0
+   ],
+   "yaw": 15.0,
+   "scale": 1.0,
+   "why": "north arm (row 75): the first palm of this arm, on the parkway grass where the drive leaves the cross: it frames the turn toward the water"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    576.4,
+    1.5,
+    243.0
+   ],
+   "yaw": 95.0,
+   "scale": 1.0,
+   "why": "north arm (row 75): the opposite parkway about 20 m on, so the palms alternate sides down the drive (a waterfront palm row, not a wall)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    563.5,
+    1.5,
+    263.0
+   ],
+   "yaw": 185.0,
+   "scale": 1.0,
+   "why": "north arm (row 75): the third palm of the arm, back on the first side, off the parking meter's reach and clear of the pier lamp"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    576.4,
+    1.5,
+    282.5
+   ],
+   "yaw": 275.0,
+   "scale": 1.0,
+   "why": "north arm (row 75): the last palm of the arm before the next piece, on the far parkway; the old spots closer than 20 m stay empty for the in-view limit"
+  }
+ ]
+}
