@@ -1,0 +1,45 @@
+{
+ "area": "hs_b5_tenth",
+ "piece": "n_hs_b5_tenth",
+ "zone": "high street",
+ "rule": "docs/TREE_PLAN.md: high street (pilot), Amber spine, arterials - trees in wells on the shop side, palms alternating on Amber (zone 406 -> about 360); this block's trees stand on grass, a front strip along Tenth and the back yards",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's seventeen builder trees go (a front row on the grass along Tenth every 5-20 m, a row along the back fences, some 0.3-0.5 m from clotheslines); three come back on their own spots: the two ends of the front row and the back yard by the patio set (five were over the in-view limit with the block across Tenth and the school next door).",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    159.4,
+    9.898,
+    11.6
+   ],
+   "yaw": 0.0,
+   "scale": 0.9,
+   "why": "the front grass along Tenth, 5.8 m from the building: the street row's west tree"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    228.2,
+    9.871,
+    11.6
+   ],
+   "yaw": 180.0,
+   "scale": 0.9,
+   "why": "the front strip's east end, 69 m from the west tree, nothing round it"
+  },
+  {
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "at": [
+    208.8,
+    9.918,
+    40.9
+   ],
+   "yaw": 270.0,
+   "scale": 0.85,
+   "why": "the back yard with the patio set (1.3 m off): a ficus over the table"
+  }
+ ]
+}
