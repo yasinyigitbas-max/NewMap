@@ -593,26 +593,3 @@ separate terrain files (`map_dc/coronado/terrain/data_citykit`, the land between
 never reads them. Cars and people are only on the pieces' streets and pavements, so they do not need them, but where
 the terrain and a piece's ground disagree, this job would not see it. Also: a car does not lean sideways (no roll:
 on a street with a cross slope it stands level across); 9 pavement points have no ground (the holes of section 15).
-
-## 19. How the parked cars are drawn, and what was wrong with it (19 Nov; Yasin: "are they all being drawn at the same time? ... the PC is choking")
-THE ANSWER AS IT WAS: yes, nearly. Every parked car of the LOADED cells (about 500, out to 400-500 m) was sent to the
-graphics card every frame in one batch as the 60-triangle shape, whatever its distance and whether it was in view
-or not; the ones within 35 m were drawn as the light model (2.4-4.4 thousand triangles), and each of THOSE was drawn
-again, whole, in every sun-shadow pass. Measured on the PC (1280x720, a residential street): parked cars cost 136,000
-triangles and 8 draws. Most of it was the shadow passes.
-
-WHAT IT IS NOW:
-- BY DISTANCE: the far batch holds only the parked cars within 280 m of the camera (beyond that a car is a few
-  pixels). It is built again when the camera has moved 40 m or a stall changed; nothing is sent in between.
-- BY VIEW: not per car. One batch is one draw; the graphics card itself throws away what is off screen. Testing
-  every car against the view on the CPU every frame would cost more than it saves, and would mean an upload a frame.
-- SHADOWS: no car model casts a shadow any more. One batch of the 60-triangle shape, drawn in the shadow passes only,
-  stands in for every car (moving or parked) within 55 m. A car's shadow is a little boxier; it costs 60 triangles
-  a car instead of thousands.
-- Result on the same PC drive: parked cars cost 40,000 triangles and 3 draws (was 136,000 and 8); the street with
-  traffic and parked cars: 712,000 triangles, 130 draws, 13.1 ms a frame (was 808,000, 135, 13.3; no traffic at all:
-  639,000, 120, 12.6).
-- NOT measured on the phone again yet (the phone numbers of section 18 are from before this change; they can only
-  get better).
-ALSO TRUE: some of the choking was this job itself. Its tests, builds and the phone app's export ran on this PC (4
-threads) for hours. Nothing of it runs while Yasin works unless asked.

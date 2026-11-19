@@ -108,18 +108,6 @@ private:
 	};
 	std::vector<Batch> near_b, mid_b;      // per model
 	Batch box_moving, box_parked;
-	// THE SUN SHADOWS of the cars (19 Nov; Yasin: "the PC is choking"): the car models themselves cast none. One batch of
-	// the 60-triangle shape, drawn in the shadow passes only, stands in for every car within shadow_r. Before, every
-	// near car's whole model (2.4-9 thousand triangles) was drawn again in each shadow pass: most of the parked
-	// cars' cost.
-	Batch shadow_b;
-	double shadow_r = 55.0;
-	// the far batch of the parked cars holds the ones within parked_far_r of where it was last built (far_at); it is
-	// built again when the camera has moved 40 m from there, or a stall changed
-	double parked_far_r = 280.0;
-	Vector3 far_at;
-	bool far_dirty = true;
-	void rebuild_far(const Vector3 &p_cam);
 	Batch lamps_b;                 // the lamp glows of every car that shows a light (one draw)
 	Ref<Mesh> mesh_lamps;
 	Ref<ShaderMaterial> mat_lamps;
@@ -130,9 +118,8 @@ private:
 	float box_size[3] = { 1.73f, 1.2f, 4.29f };   // the shared far shape's own size (x, y, z)
 	float box_y0 = 0.3f;
 	bool gfx = false;
-	void make_batch(Batch &b, const Ref<Mesh> &p_mesh, const Ref<ShaderMaterial> &p_mat, int p_cap, int p_shadow);   // p_shadow: 0 casts none, 1 casts, 2 is a shadow only
+	void make_batch(Batch &b, const Ref<Mesh> &p_mesh, const Ref<ShaderMaterial> &p_mat, int p_cap, bool p_shadow);
 	void grow(Batch &b, int p_need);
-	void shadow_row(float x, float y, float z, float yaw, float pitch, int p_model);
 	void send(Batch &b);
 	static void put_row(float *r, float x, float y, float z, float yaw, float pitch, float sx, float sy, float sz, const float *col, float c0, float c1, float c2, float c3);
 	int warm_frames = 40;        // the first frames: one row of every batch in front of the camera, so its shaders are built behind the loading screen
@@ -170,7 +157,6 @@ private:
 		int moving_most = 0, steps = 0;
 		int uploads = 0;
 		int park_out = 0, park_in = 0;
-		double parked_far = 0, shadow_n = 0;
 	} cnt;
 	Vector3 last_cam;
 	bool has_last_cam = false;
