@@ -269,6 +269,21 @@ Ref<Image> StreetGraph::layer_image(double p_x0, double p_z0, double p_x1, doubl
 	return img;
 }
 
+PackedFloat32Array StreetGraph::height_grid(double p_x0, double p_z0, double p_x1, double p_z1, double p_step) const {
+	const int w = (int)std::floor((p_x1 - p_x0) / p_step) + 1, h = (int)std::floor((p_z1 - p_z0) / p_step) + 1;
+	PackedFloat32Array out;
+	if (w < 1 || h < 1) return out;
+	out.resize((int64_t)w * h * 2);
+	float *o = out.ptrw();
+	for (int j = 0; j < h; j++) for (int i = 0; i < w; i++) {
+		float y = 0.0f; int l = -1;
+		const bool hit = ground.query((float)(p_x0 + i * p_step), (float)(p_z0 + j * p_step), y, l);
+		o[((size_t)j * w + i) * 2] = hit ? y : NAN;
+		o[((size_t)j * w + i) * 2 + 1] = hit ? (float)l : -1.0f;
+	}
+	return out;
+}
+
 namespace {
 void line(Ref<Image> img, double ax, double ay, double bx, double by, const Color &c) {
 	const int w = img->get_width(), h = img->get_height();
@@ -361,6 +376,7 @@ void StreetGraph::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("build", "sites_json"), &StreetGraph::build);
 	ClassDB::bind_method(D_METHOD("profile", "from", "to", "step"), &StreetGraph::profile);
 	ClassDB::bind_method(D_METHOD("layer_image", "x0", "z0", "x1", "z1", "m_per_px"), &StreetGraph::layer_image);
+	ClassDB::bind_method(D_METHOD("height_grid", "x0", "z0", "x1", "z1", "step"), &StreetGraph::height_grid);
 	ClassDB::bind_method(D_METHOD("lanes_image", "x0", "z0", "x1", "z1", "m_per_px"), &StreetGraph::lanes_image);
 	ClassDB::bind_method(D_METHOD("save", "path"), &StreetGraph::save);
 	ClassDB::bind_method(D_METHOD("get_stalls"), &StreetGraph::get_stalls);

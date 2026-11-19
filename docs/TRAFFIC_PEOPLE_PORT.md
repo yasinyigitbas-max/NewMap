@@ -616,3 +616,32 @@ WHAT IT IS NOW:
   get better).
 ALSO TRUE: some of the choking was this job itself. Its tests, builds and the phone app's export ran on this PC (4
 threads) for hours. Nothing of it runs while Yasin works unless asked.
+
+## 20. The terrain against the built ground (19 Nov; Yasin: "other sessions managed to overlook the terrain entirely and all of their work is sunk in elevation, im not sure if its healthy to build people on a sunk city")
+A CHECK THAT DID NOT EXIST: `tools/city/traffic/ground_vs_terrain.gd` writes the baked ground of the whole city on the
+terrain grid's own 4 m points; `ground_vs_terrain.py` compares it with `zoning/terrain_grid.npz` and writes
+`review/traffic/ground_vs_terrain.png` (red = the terrain lies OVER the built ground: buried; blue = the built ground
+floats over the terrain; grey = fits). Run both after every bake, like `make_streets.gd`.
+
+WHAT IT SAYS ON THIS BRANCH (the bake of 18 Nov 23:50):
+- THE STREETS FIT. Every lane lies 5 to 11 cm over the terrain, every pavement 4 cm to 1.2 m over it (15 points more
+  than 0.5 m). No lane and no pavement is buried.
+- Of the built ground as a whole (1.16 km2): 97.0 % fits, 2.2 % is buried (25,700 m2; 1,700 m2 by more than 0.5 m;
+  the deepest 1.9 m, sand at the waterfront), 0.7 % floats (8,500 m2). Worst: the block at x -800..-600,
+  z -1300..-1100 (23 % buried up to 0.8 m AND 14 % floating), the two blocks on 1st St at x -1000..-600 (13-28 %
+  buried, under 0.25 m), the steps at x 0..200, z -100..100 (float up to 1.2 m). 106 car-park stalls lie under the
+  terrain, 9 of them by more than 0.5 m.
+- BUT THIS BRANCH DOES NOT HAVE THE WORK YASIN MEANS. It has 443 pieces; the working branch has 521 (the zone
+  sessions' growth, merged there at 04:20). The terrain files were not touched by any of that work (last change:
+  18 Nov 07:51), and the working branch's job board already records "45 of 65 residential quadrants under the
+  approved terrain". This check has NOT been run on that city yet.
+
+WHAT IT MEANS FOR THE PEOPLE AND THE TRAFFIC:
+- No height is written in the C++ or in a test. Every lane, pavement, stall, car and walker takes its height from
+  the bake through ONE tool (`make_streets.gd`). When the elevation is put right and the city is baked again, that
+  tool is run again and everything stands on the new ground. Raising or lowering a block does not undo this work.
+- What an elevation fix CAN break, and the tool reports: a street steeper than before, a step where a raised block
+  meets a street, a pavement that no longer meets its crossing. The checks "steepest lane", "height kink" and
+  "pavement points without ground" are there for that.
+- What should WAIT for the elevation: the PLACES people use (doors, benches, bus stops: Stage 3b). They belong to
+  the blocks, and the blocks are what will move. The walking itself (Stage 3a) is on the streets' own pavements.

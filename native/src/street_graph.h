@@ -47,6 +47,9 @@ public:
 	PackedFloat32Array profile(const Vector3 &p_from, const Vector3 &p_to, double p_step) const;
 	// A top view of the surface kinds (tool check pictures)
 	Ref<Image> layer_image(double p_x0, double p_z0, double p_x1, double p_z1, double p_m_per_px) const;
+	// the baked ground's height and surface on a grid (2 floats a point: height or NaN, surface layer or -1), rows along z:
+	// for checks against the terrain
+	PackedFloat32Array height_grid(double p_x0, double p_z0, double p_x1, double p_z1, double p_step) const;
 	// the same with the lanes, their ends and the connections through the junctions drawn over it
 	Ref<Image> lanes_image(double p_x0, double p_z0, double p_x1, double p_z1, double p_m_per_px) const;
 	// writes streets.bin; false = could not write
