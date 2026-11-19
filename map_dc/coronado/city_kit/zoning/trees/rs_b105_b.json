@@ -1,0 +1,33 @@
+{
+ "area": "rs_b105_b",
+ "piece": "s_rs_b105_b",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, one species per block face, 20-30 m apart; no tree stays in a well (Yasin): the narrow second half has only wells, all paved, so its trees go",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    221.499,
+    8.14,
+    -406.45
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass on the wide first stretch, its old jacaranda (the narrow stretch past it has only wells, now paved)"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    204.625,
+    8.067,
+    -393.55
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "east parkway grass on the wide first stretch, its old coral tree, staggered 17 m from the west jacaranda"
+  }
+ ]
+}
