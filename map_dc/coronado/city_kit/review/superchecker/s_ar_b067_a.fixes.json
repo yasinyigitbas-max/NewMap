@@ -1,0 +1,206 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -11.0,
+    0.150000005960464,
+    15.0
+   ],
+   "base": "prop_hydrant_red",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "move",
+   "reason": "prop_hydrant_red hangs 0.09 m over what is under it",
+   "to": [
+    -11.0,
+    0.0579866638939812,
+    15.0
+   ]
+  },
+  {
+   "at": [
+    -11.216682434082,
+    0.234523877501488,
+    47.6589775085449
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -11.3274440765381,
+    0.885294079780579,
+    89.2879486083984
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    11.3083724975586,
+    0.620966672897339,
+    74.7257080078125
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -11.2789974212646,
+    0.673328220844269,
+    77.7277526855469
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    11.3613157272339,
+    0.115266025066376,
+    32.3548927307129
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    11.2529897689819,
+    0.854639291763306,
+    87.6582489013672
+   ],
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -9.65925598144531,
+    0.0704945102334023,
+    37.949836730957
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -9.64755630493164,
+    0.0977349430322647,
+    41.4689025878906
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -11.4191246032715,
+    0.54929256439209,
+    65.9805145263672
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    9.79741859436035,
+    0.62956111629804,
+    79.6508178710938
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    9.89235019683838,
+    0.933199177185694,
+    95.8983917236328
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    9.84535026550293,
+    0.899434705575307,
+    94.1352996826172
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    11.5123147964478,
+    0.436210071047147,
+    58.2784576416016
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "s_ar_b067_a"
+}
