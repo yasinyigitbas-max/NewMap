@@ -1,0 +1,4669 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -77.4000015258789,
+    -0.288711547851563,
+    -45.5999984741211
+   ],
+   "base": "prop_dingbat_stair",
+   "cond": "worn",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 352.0,
+   "op": "add_collider",
+   "reason": "prop_dingbat_stair has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -14.4292659759521,
+    5.36983966827393,
+    -22.5846424102783
+   ],
+   "base": "prop_ac_condenser_compact",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "move",
+   "reason": "prop_ac_condenser_compact hangs 1.02 m over what is under it",
+   "to": [
+    -14.4292659759521,
+    4.34983731806278,
+    -22.5846424102783
+   ]
+  },
+  {
+   "at": [
+    -14.0276660919189,
+    5.36983966827393,
+    -17.3779640197754
+   ],
+   "base": "prop_vent_box",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "move",
+   "reason": "prop_vent_box hangs 1.02 m over what is under it",
+   "to": [
+    -14.0276660919189,
+    4.34983731806278,
+    -17.3779640197754
+   ]
+  },
+  {
+   "at": [
+    -21.3527526855469,
+    6.59952211380005,
+    -18.8056182861328
+   ],
+   "base": "prop_vent_plumbing",
+   "cond": "dirty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "move",
+   "reason": "prop_vent_plumbing hangs 0.91 m over what is under it",
+   "to": [
+    -21.3527526855469,
+    5.68952119350433,
+    -18.8056182861328
+   ]
+  },
+  {
+   "at": [
+    -22.1317558288574,
+    6.59952211380005,
+    -20.1222724914551
+   ],
+   "base": "prop_ac_condenser_compact",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "move",
+   "reason": "prop_ac_condenser_compact hangs 0.91 m over what is under it",
+   "to": [
+    -22.1317558288574,
+    5.68952119350433,
+    -20.1222724914551
+   ]
+  },
+  {
+   "at": [
+    -70.7500457763672,
+    10.1980829238892,
+    -23.4000015258789
+   ],
+   "base": "prop_tv_antenna",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "move",
+   "reason": "prop_tv_antenna hangs 0.61 m over what is under it",
+   "to": [
+    -70.7500457763672,
+    9.58808276057243,
+    -23.4000015258789
+   ]
+  },
+  {
+   "at": [
+    -23.4000015258789,
+    4.91784191131592,
+    -65.1435089111328
+   ],
+   "base": "prop_tv_antenna",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "move",
+   "reason": "prop_tv_antenna hangs 0.95 m over what is under it",
+   "to": [
+    -23.4000015258789,
+    3.96612164197268,
+    -65.1435089111328
+   ]
+  },
+  {
+   "at": [
+    -22.9000015258789,
+    9.49868488311768,
+    -82.6021347045898
+   ],
+   "base": "prop_tv_antenna",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "move",
+   "reason": "prop_tv_antenna hangs 0.61 m over what is under it",
+   "to": [
+    -22.9000015258789,
+    8.88868433237076,
+    -82.6021347045898
+   ]
+  },
+  {
+   "at": [
+    -12.1500005722046,
+    2.34964871406555,
+    -32.7999992370605
+   ],
+   "base": "prop_porch_light_barn",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 42.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_porch_light_barn hangs 24 cm over a win casement of house_a0]",
+   "to": [
+    -12.1500005984315,
+    2.34964871406555,
+    -33.3999992370605
+   ]
+  },
+  {
+   "at": [
+    -86.8600006103516,
+    0.622558891773224,
+    -75.0199966430664
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 47.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 21 cm from a apt door of court_home (services keep 35 cm off)]",
+   "to": [
+    -88.0600006103516,
+    0.622558891773224,
+    -75.0199965381591
+   ]
+  },
+  {
+   "at": [
+    -12.1600008010864,
+    2.04100179672241,
+    -43.2000007629395
+   ],
+   "base": "prop_house_numbers_tile",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 52.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_house_numbers_tile hangs 49 cm over a win casement of house_a1]",
+   "to": [
+    -12.1600008273133,
+    2.04100179672241,
+    -43.8000007629394
+   ]
+  },
+  {
+   "at": [
+    -12.1600008010864,
+    1.25736880302429,
+    -93.4000015258789
+   ],
+   "base": "prop_house_numbers_wood",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 55.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_house_numbers_wood hangs 47 cm over a win casement of house_c2]",
+   "to": [
+    -12.1600008273133,
+    1.25736880302429,
+    -94.0000015258788
+   ]
+  },
+  {
+   "at": [
+    -70.9800033569336,
+    1.19808328151703,
+    -24.2200012207031
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 56.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 33 cm from a apt door of apts_b0 (services keep 35 cm off)]",
+   "to": [
+    -72.1800033569336,
+    1.19808328151703,
+    -24.2200011157959
+   ]
+  },
+  {
+   "at": [
+    -15.1999998092651,
+    1.19983994960785,
+    -25.7200012207031
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 66.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 15 cm from a apt door of corner_shop (services keep 35 cm off)]",
+   "to": [
+    -15.7999998092652,
+    1.19983994960785,
+    -25.7200011682494
+   ]
+  },
+  {
+   "at": [
+    -13.460000038147,
+    1.19983994960785,
+    -25.7200012207031
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 67.0,
+   "op": "move",
+   "reason": "moved slid -0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 29 cm from a apt door of corner_shop (services keep 35 cm off)]",
+   "to": [
+    -12.860000038147,
+    1.19983994960785,
+    -25.7200012731569
+   ]
+  },
+  {
+   "at": [
+    -24.2200012207031,
+    1.0910017490387,
+    -39.8999977111816
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 70.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 50 cm over a win dh white of house_a1]",
+   "to": [
+    -24.2200012063932,
+    1.0910017490387,
+    -38.6999977111816
+   ]
+  },
+  {
+   "at": [
+    -24.2200012207031,
+    1.0910017490387,
+    -40.3199996948242
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 71.0,
+   "op": "move",
+   "reason": "moved slid -1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 8 cm over a win dh white of house_a1]",
+   "to": [
+    -24.220001235013,
+    1.0910017490387,
+    -41.5199996948243
+   ]
+  },
+  {
+   "at": [
+    -24.2200012207031,
+    0.797841966152191,
+    -62.5999984741211
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 72.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 50 cm over a storefront of house_c0]",
+   "to": [
+    -24.2200012063932,
+    0.797841966152191,
+    -61.399998474121
+   ]
+  },
+  {
+   "at": [
+    -24.2200012207031,
+    0.797841966152191,
+    -63.0200004577637
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 73.0,
+   "op": "move",
+   "reason": "moved slid -1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 8 cm over a storefront of house_c0]",
+   "to": [
+    -24.220001235013,
+    0.797841966152191,
+    -64.2200004577637
+   ]
+  },
+  {
+   "at": [
+    -26.2200012207031,
+    0.681058585643768,
+    -69.5
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 74.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 65 cm over a win dh white of house_c1]",
+   "to": [
+    -26.2200012063932,
+    0.681058585643768,
+    -68.3
+   ]
+  },
+  {
+   "at": [
+    -26.2200012207031,
+    0.681058585643768,
+    -69.9200057983398
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 75.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 23 cm over a win dh white of house_c1]",
+   "to": [
+    -26.2200012063932,
+    0.681058585643768,
+    -68.7200057983398
+   ]
+  },
+  {
+   "at": [
+    -23.7200012207031,
+    0.498684823513031,
+    -77.2399978637695
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 76.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 21 cm from a apt door of walkup_c (services keep 35 cm off)]",
+   "to": [
+    -23.7200012063932,
+    0.498684823513031,
+    -76.0399978637695
+   ]
+  },
+  {
+   "at": [
+    -24.2200012207031,
+    0.307368814945221,
+    -90.0999984741211
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 77.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 50 cm over a win dh white of house_c2]",
+   "to": [
+    -24.2200012063932,
+    0.307368814945221,
+    -88.899998474121
+   ]
+  },
+  {
+   "at": [
+    -24.2200012207031,
+    0.307368814945221,
+    -90.5199966430664
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 78.0,
+   "op": "move",
+   "reason": "moved slid -1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 8 cm over a win dh white of house_c2]",
+   "to": [
+    -24.220001235013,
+    0.307368814945221,
+    -91.7199966430664
+   ]
+  },
+  {
+   "at": [
+    -12.1900005340576,
+    1.24964869022369,
+    -34.5
+   ],
+   "base": "prop_buzzer_panel",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 82.0,
+   "op": "move",
+   "reason": "moved slid -0.6 m along its wall: a short slide along its own wall clears the opening [prop_buzzer_panel hangs 14 cm over a rollup of house_a0]",
+   "to": [
+    -12.1900005078307,
+    1.24964869022369,
+    -33.9000000000001
+   ]
+  },
+  {
+   "at": [
+    -12.1900005340576,
+    0.89784187078476,
+    -64.5500030517578
+   ],
+   "base": "prop_buzzer_panel",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 83.0,
+   "op": "move",
+   "reason": "moved slid -0.6 m along its wall: a short slide along its own wall clears the opening [prop_buzzer_panel hangs 19 cm over a rollup of house_c0]",
+   "to": [
+    -12.1900005078307,
+    0.89784187078476,
+    -63.9500030517579
+   ]
+  },
+  {
+   "at": [
+    -12.1900005340576,
+    0.781058490276337,
+    -71.6000061035156
+   ],
+   "base": "prop_buzzer_panel",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 84.0,
+   "op": "move",
+   "reason": "moved slid -0.6 m along its wall: a short slide along its own wall clears the opening [prop_buzzer_panel hangs 14 cm over a win dh div of house_c1]",
+   "to": [
+    -12.1900005078307,
+    0.781058490276337,
+    -71.0000061035157
+   ]
+  },
+  {
+   "at": [
+    -12.1500005722046,
+    1.39964878559113,
+    -32.1000022888184
+   ],
+   "base": "prop_mailbox_wall_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 85.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_mailbox_wall_black hangs 45 cm over a win casement of house_a0]",
+   "to": [
+    -12.1500006246582,
+    1.39964878559113,
+    -33.3000022888184
+   ]
+  },
+  {
+   "at": [
+    -12.1500005722046,
+    0.931058585643768,
+    -69.2000045776367
+   ],
+   "base": "prop_mailbox_wall_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 86.0,
+   "op": "move",
+   "reason": "moved slid -0.6 m along its wall: a short slide along its own wall clears the opening [prop_mailbox_wall_black hangs 42 cm over a shopdoor of house_c1]",
+   "to": [
+    -12.1500005459777,
+    0.931058585643768,
+    -68.6000045776368
+   ]
+  },
+  {
+   "at": [
+    -12.1500005722046,
+    2.29100179672241,
+    -40.1499977111816
+   ],
+   "base": "prop_porch_light_coach",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 95.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_porch_light_coach hangs 25 cm over a shopdoor of house_a1]",
+   "to": [
+    -12.1500005984315,
+    2.29100179672241,
+    -40.7499977111816
+   ]
+  },
+  {
+   "at": [
+    -12.1500005722046,
+    1.88105857372284,
+    -69.9000015258789
+   ],
+   "base": "prop_porch_light_coach",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 96.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_porch_light_coach hangs 20 cm over a shopdoor of house_c1]",
+   "to": [
+    -12.1500005984315,
+    1.88105857372284,
+    -70.5000015258788
+   ]
+  },
+  {
+   "at": [
+    -12.1500005722046,
+    1.3410017490387,
+    -39.4500007629395
+   ],
+   "base": "prop_mailbox_wall_brass",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 97.0,
+   "op": "move",
+   "reason": "moved slid -0.6 m along its wall: a short slide along its own wall clears the opening [prop_mailbox_wall_brass hangs 37 cm over a shopdoor of house_a1]",
+   "to": [
+    -12.1500005459777,
+    1.3410017490387,
+    -38.8500007629395
+   ]
+  },
+  {
+   "at": [
+    -12.1500005722046,
+    1.04784190654755,
+    -62.1500015258789
+   ],
+   "base": "prop_mailbox_wall_brass",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 98.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_mailbox_wall_brass hangs 45 cm over a win casement of house_c0]",
+   "to": [
+    -12.1500005984315,
+    1.04784190654755,
+    -62.7500015258788
+   ]
+  },
+  {
+   "at": [
+    -12.1500005722046,
+    0.557368814945221,
+    -89.6500015258789
+   ],
+   "base": "prop_mailbox_wall_brass",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 99.0,
+   "op": "move",
+   "reason": "moved slid -0.6 m along its wall: a short slide along its own wall clears the opening [prop_mailbox_wall_brass hangs 37 cm over a shopdoor of house_c2]",
+   "to": [
+    -12.1500005459777,
+    0.557368814945221,
+    -89.050001525879
+   ]
+  },
+  {
+   "at": [
+    -12.1500005722046,
+    1.50736880302429,
+    -90.3499984741211
+   ],
+   "base": "prop_porch_light_coach_bronze",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 102.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_porch_light_coach_bronze hangs 25 cm over a shopdoor of house_c2]",
+   "to": [
+    -12.1500005984315,
+    1.50736880302429,
+    -90.949998474121
+   ]
+  },
+  {
+   "at": [
+    -31.7000007629395,
+    0.0628147274255753,
+    -34.7000007629395
+   ],
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_ficus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -29.7000007629395,
+    0.0216753408312798,
+    -40.2999992370605
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -29.7000007629395,
+    -0.750152826309204,
+    -90.5
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -71.0,
+    0.0576787441968918,
+    -29.7000007629395
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -31.7000007629395,
+    -0.408461809158325,
+    -69.9000015258789
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -76.1999969482422,
+    0.0805017575621605,
+    -27.7000007629395
+   ],
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -29.7000007629395,
+    -0.291073709726334,
+    -63.0
+   ],
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -39.7000007629395,
+    -0.43398055434227,
+    -70.0999984741211
+   ],
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -29.2000007629395,
+    -0.656613349914551,
+    -85.0999984741211
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -63.5,
+    -0.826501846313477,
+    -95.0
+   ],
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -85.4000015258789,
+    0.0435479059815407,
+    -29.2000007629395
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -25.4000015258789,
+    8.2596492767334,
+    -31.8747863769531
+   ],
+   "base": "prop_tv_antenna",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "remove",
+   "reason": "erased (in doubt): its new place made a new fault: deleted instead [prop_tv_antenna hangs 1.11 m over what is under it]"
+  },
+  {
+   "at": [
+    -25.4000015258789,
+    9.26105785369873,
+    -69.1994171142578
+   ],
+   "base": "prop_tv_antenna",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 19.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_tv_antenna hangs 1.73 m over what is under it]"
+  },
+  {
+   "at": [
+    -19.7999992370605,
+    0.144525185227394,
+    -26.3000011444092
+   ],
+   "base": "prop_dumpster_3yd_green",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 41.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_dumpster_3yd_green stands in front of a roll-up door of shop_two]"
+  },
+  {
+   "at": [
+    -16.2272891998291,
+    2.44100165367126,
+    -43.9199981689453
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 43.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of house_a1]"
+  },
+  {
+   "at": [
+    -16.5435600280762,
+    1.84868466854095,
+    -74.9799957275391
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 44.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of walkup_c]"
+  },
+  {
+   "at": [
+    -18.7130432128906,
+    1.65736865997314,
+    -94.120002746582
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 45.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of house_c2]"
+  },
+  {
+   "at": [
+    -70.879997253418,
+    1.97255873680115,
+    -70.2147445678711
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 46.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of court_home]"
+  },
+  {
+   "at": [
+    -85.0999984741211,
+    -0.227441191673279,
+    -75.0199966430664
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 48.0,
+   "op": "remove",
+   "reason": "erased (in doubt): its new place made a new fault: deleted instead [moved slid -0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 23 cm from a apt door of court_home (services keep 35 cm off)]]"
+  },
+  {
+   "at": [
+    -87.5999984741211,
+    0.874236166477203,
+    -60.8500022888184
+   ],
+   "base": "prop_mailbox_wall_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 49.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_mailbox_wall_black is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -89.120002746582,
+    1.97255873680115,
+    -71.9457550048828
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 50.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of court_home]"
+  },
+  {
+   "at": [
+    -70.879997253418,
+    4.97255897521973,
+    -66.1938247680664
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 51.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of court_home]"
+  },
+  {
+   "at": [
+    -12.5600004196167,
+    1.4486848115921,
+    -86.5
+   ],
+   "base": "prop_house_numbers_tile",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 53.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_house_numbers_tile is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -69.0999984741211,
+    0.348083168268204,
+    -24.2200012207031
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 57.0,
+   "op": "remove",
+   "reason": "erased (in doubt): its new place made a new fault: deleted instead [moved slid -0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 23 cm from a apt door of apts_b0 (services keep 35 cm off)]]"
+  },
+  {
+   "at": [
+    -73.120002746582,
+    5.54808330535889,
+    -20.2016277313232
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 58.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of apts_b0]"
+  },
+  {
+   "at": [
+    -60.8800010681152,
+    2.54808306694031,
+    -16.8838939666748
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 59.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of apts_b0]"
+  },
+  {
+   "at": [
+    -92.3199996948242,
+    2.54757308959961,
+    -17.5431632995605
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 60.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of apts_b1]"
+  },
+  {
+   "at": [
+    -74.0799942016602,
+    2.54757308959961,
+    -13.4877014160156
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 61.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of apts_b1]"
+  },
+  {
+   "at": [
+    -74.0799942016602,
+    5.54757308959961,
+    -17.0815048217773
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 62.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of apts_b1]"
+  },
+  {
+   "at": [
+    -71.5999984741211,
+    1.44926571846008,
+    -10.0500001907349
+   ],
+   "base": "prop_mailbox_wall_brass",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 63.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_mailbox_wall_brass is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -61.5999984741211,
+    2.14808320999146,
+    -13.0600004196167
+   ],
+   "base": "prop_house_numbers_wood",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 65.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_house_numbers_wood is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -26.2200012207031,
+    1.14964878559113,
+    -32.2999992370605
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 68.0,
+   "op": "remove",
+   "reason": "erased (in doubt): its new place made a new fault: deleted instead [moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 27 cm over a win casement of house_a0]]"
+  },
+  {
+   "at": [
+    -26.2200012207031,
+    1.14964878559113,
+    -32.7200012207031
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_opening",
+   "mode": "choose",
+   "n": 69.0,
+   "op": "remove",
+   "reason": "erased (in doubt): its new place made a new fault: deleted instead [moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 13 cm over a win casement of house_a0]]"
+  },
+  {
+   "at": [
+    -23.7200012207031,
+    -0.351315230131149,
+    -79.0
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 79.0,
+   "op": "remove",
+   "reason": "erased (in doubt): its new place made a new fault: deleted instead [moved slid -0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 23 cm from a apt door of walkup_c (services keep 35 cm off)]]"
+  },
+  {
+   "at": [
+    -24.9500007629395,
+    0.0410017594695091,
+    -42.2999992370605
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 80.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in front of a shop window of house_a1]"
+  },
+  {
+   "at": [
+    -24.9500007629395,
+    -0.742631256580353,
+    -92.5
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 81.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in front of a shop window of house_c2]"
+  },
+  {
+   "at": [
+    -9.55000019073486,
+    0.832409918308258,
+    -76.5
+   ],
+   "base": "prop_mailbox_wall_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 87.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_mailbox_wall_black is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -23.0889568328857,
+    2.4996485710144,
+    -36.8199996948242
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 88.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of house_a0]"
+  },
+  {
+   "at": [
+    -16.9223194122314,
+    2.1478419303894,
+    -60.8800010681152
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 89.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of house_c0]"
+  },
+  {
+   "at": [
+    -19.0914173126221,
+    2.1478419303894,
+    -66.620002746582
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 90.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of house_c0]"
+  },
+  {
+   "at": [
+    -19.6270904541016,
+    2.03105854988098,
+    -67.7800064086914
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 91.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of house_c1]"
+  },
+  {
+   "at": [
+    -16.2288455963135,
+    4.84868478775024,
+    -74.9799957275391
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 92.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of walkup_c]"
+  },
+  {
+   "at": [
+    -16.2534294128418,
+    4.84868478775024,
+    -87.2200012207031
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 93.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of walkup_c]"
+  },
+  {
+   "at": [
+    -20.2407455444336,
+    1.65736865997314,
+    -88.379997253418
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 94.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of house_c2]"
+  },
+  {
+   "at": [
+    -82.0,
+    -0.666426301002502,
+    -80.1999969482422
+   ],
+   "base": "prop_hose_reel_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "hydrant_nowhere",
+   "mode": "choose",
+   "n": 105.0,
+   "op": "remove",
+   "reason": "erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart stands 5.2 m from any building wall and 3.0 m inside the block]"
+  },
+  {
+   "at": [
+    -94.8000030517578,
+    -0.029276255518198,
+    -34.2999992370605
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 111.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (5.8 m from a wall, 13.7 m from a fence)]"
+  },
+  {
+   "at": [
+    -33.5,
+    -0.617398500442505,
+    -82.0999984741211
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 112.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (9.8 m from a wall, 14.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -72.1513671875,
+    -0.248689323663712,
+    -53.0
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 117.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (5.8 m from a wall, 26.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -94.8578567504883,
+    -0.306155234575272,
+    -53.0
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 118.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (4.9 m from a wall, 26.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -37.7070579528809,
+    -0.282839685678482,
+    -61.0
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 119.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (12.7 m from a wall, 11.4 m from a fence)]"
+  },
+  {
+   "at": [
+    -63.8777313232422,
+    -0.351999938488007,
+    -61.0
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 120.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (7.4 m from a wall, 18.5 m from a fence)]"
+  },
+  {
+   "at": [
+    -96.9723205566406,
+    -0.445525527000427,
+    -61.0
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 121.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (8.2 m from a wall, 18.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -53.0,
+    -0.0152124213054776,
+    -38.9643287658691
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 122.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (16.8 m from a wall, 19.7 m from a fence)]"
+  },
+  {
+   "at": [
+    -53.0,
+    -0.365052789449692,
+    -63.5618515014649
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 123.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (5.7 m from a wall, 21.6 m from a fence)]"
+  },
+  {
+   "at": [
+    -53.0,
+    -0.796062290668488,
+    -92.9856719970703
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 124.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (5.2 m from a wall, 12.7 m from a fence)]"
+  },
+  {
+   "at": [
+    -61.0,
+    -0.0192443933337927,
+    -38.1138305664063
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 125.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (13.9 m from a wall, 17.4 m from a fence)]"
+  },
+  {
+   "at": [
+    -61.0,
+    -0.52843564748764,
+    -72.702507019043
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 126.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (7.6 m from a wall, 9.4 m from a fence)]"
+  },
+  {
+   "at": [
+    -61.0,
+    -0.680170059204102,
+    -83.0064849853516
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 127.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (7.7 m from a wall, 7.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -61.0,
+    -0.813958823680878,
+    -93.8194961547852
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 128.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (9.7 m from a wall, 7.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -72.9013671875,
+    -0.253756433725357,
+    -53.0
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 129.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (5.1 m from a wall, 26.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -95.6078567504883,
+    -0.310556024312973,
+    -53.0
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 130.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (5.6 m from a wall, 26.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -38.4570579528809,
+    -0.284862011671066,
+    -61.0
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 131.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (12.2 m from a wall, 12.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -64.6277313232422,
+    -0.353986263275146,
+    -61.0
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 132.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (6.7 m from a wall, 18.3 m from a fence)]"
+  },
+  {
+   "at": [
+    -97.7223205566406,
+    -0.447859168052673,
+    -61.0
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 133.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (8.9 m from a wall, 18.1 m from a fence)]"
+  },
+  {
+   "at": [
+    -53.0,
+    -0.0236332807689905,
+    -39.7143287658691
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 134.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (17.5 m from a wall, 20.4 m from a fence)]"
+  },
+  {
+   "at": [
+    -53.0,
+    -0.3880715072155,
+    -64.3118515014648
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 135.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (4.9 m from a wall, 21.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -53.0,
+    -0.811014592647552,
+    -93.7356719970703
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 136.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (6.0 m from a wall, 12.2 m from a fence)]"
+  },
+  {
+   "at": [
+    -61.0,
+    -0.0279908180236816,
+    -38.8638305664063
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 137.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (14.7 m from a wall, 18.2 m from a fence)]"
+  },
+  {
+   "at": [
+    -61.0,
+    -0.540034174919128,
+    -73.452507019043
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 138.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (7.6 m from a wall, 9.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -61.0,
+    -0.690420806407928,
+    -83.7564849853516
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 139.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (7.6 m from a wall, 7.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -61.0,
+    -0.821899652481079,
+    -94.5694961547852
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 140.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (10.2 m from a wall, 7.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -73.6513671875,
+    -0.261649072170258,
+    -53.0
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 141.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (4.3 m from a wall, 26.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -96.3578567504883,
+    -0.313075929880142,
+    -53.0
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 142.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (6.4 m from a wall, 26.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -39.2070579528809,
+    -0.286879450082779,
+    -61.0
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 143.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (11.6 m from a wall, 12.6 m from a fence)]"
+  },
+  {
+   "at": [
+    -65.3777313232422,
+    -0.355984687805176,
+    -61.0
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 144.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (6.0 m from a wall, 18.2 m from a fence)]"
+  },
+  {
+   "at": [
+    -98.4723205566406,
+    -0.450205743312836,
+    -61.0
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 145.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (9.7 m from a wall, 18.2 m from a fence)]"
+  },
+  {
+   "at": [
+    -53.0,
+    -0.0324854142963886,
+    -40.4643287658691
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 146.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (18.1 m from a wall, 21.1 m from a fence)]"
+  },
+  {
+   "at": [
+    -53.0,
+    -0.416135966777802,
+    -65.0618515014648
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 147.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (4.2 m from a wall, 20.5 m from a fence)]"
+  },
+  {
+   "at": [
+    -53.0,
+    -0.820021986961365,
+    -94.4856719970703
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 148.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (6.7 m from a wall, 11.7 m from a fence)]"
+  },
+  {
+   "at": [
+    -61.0,
+    -0.0368181839585304,
+    -39.6138305664063
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 149.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (15.4 m from a wall, 18.9 m from a fence)]"
+  },
+  {
+   "at": [
+    -61.0,
+    -0.551535725593567,
+    -74.202507019043
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 150.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (7.6 m from a wall, 8.5 m from a fence)]"
+  },
+  {
+   "at": [
+    -61.0,
+    -0.700592339038849,
+    -84.5064849853516
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 151.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (7.6 m from a wall, 7.0 m from a fence)]"
+  },
+  {
+   "at": [
+    -61.0,
+    -0.82963490486145,
+    -95.3194961547852
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 152.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (10.7 m from a wall, 6.8 m from a fence)]"
+  },
+  {
+   "at": [
+    -53.0,
+    0.103787414729595,
+    -25.6197452545166
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 154.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (8.1 m from a wall, 8.8 m from a fence)]"
+  },
+  {
+   "at": [
+    -61.0,
+    0.145734533667564,
+    -25.8403835296631
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 155.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (1.6 m from a wall, 5.2 m from a fence)]"
+  },
+  {
+   "at": [
+    -53.0,
+    0.0990535244345665,
+    -26.3697452545166
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 156.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (8.3 m from a wall, 9.2 m from a fence)]"
+  },
+  {
+   "at": [
+    -61.0,
+    0.13723523914814,
+    -26.5903835296631
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 157.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.4 m from a wall, 5.9 m from a fence)]"
+  },
+  {
+   "at": [
+    -53.0,
+    0.0941968560218811,
+    -27.1197452545166
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 158.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (8.5 m from a wall, 9.7 m from a fence)]"
+  },
+  {
+   "at": [
+    -61.0,
+    0.123422987759113,
+    -27.3403835296631
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 159.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (3.1 m from a wall, 6.7 m from a fence)]"
+  },
+  {
+   "at": [
+    -13.8999996185303,
+    0.103531658649445,
+    -28.5
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 160.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (2.2 m from a wall, 1.5 m from a fence)]"
+  },
+  {
+   "at": [
+    -22.0,
+    0.142561718821526,
+    -26.5
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 161.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (2.8 m from a wall, 3.7 m from a fence)]"
+  },
+  {
+   "at": [
+    -28.5469150543213,
+    -0.256255447864532,
+    -61.0
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 162.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (4.3 m from a wall, 7.5 m from a fence)]"
+  },
+  {
+   "at": [
+    -29.2969150543213,
+    -0.259107798337936,
+    -61.0
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 163.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (5.1 m from a wall, 7.5 m from a fence)]"
+  },
+  {
+   "at": [
+    -30.0469150543213,
+    -0.261827796697617,
+    -61.0
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 164.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (5.8 m from a wall, 7.6 m from a fence)]"
+  },
+  {
+   "at": [
+    -9.80000114440918,
+    0.0465187914669514,
+    -40.8999977111816
+   ],
+   "base": "prop_mailbox_post_metal",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "on_path",
+   "mode": "choose",
+   "n": 314.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_path: no plainly safe place (Yasin: delete when unsure) [prop_mailbox_post_metal stands in a narrow path]"
+  },
+  {
+   "at": [
+    -9.80000114440918,
+    -0.359980791807175,
+    -70.6000061035156
+   ],
+   "base": "prop_mailbox_post_metal",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "on_path",
+   "mode": "choose",
+   "n": 315.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_path: no plainly safe place (Yasin: delete when unsure) [prop_mailbox_post_metal stands in a narrow path]"
+  },
+  {
+   "at": [
+    -10.9000005722046,
+    -0.37072291970253,
+    -72.5
+   ],
+   "base": "prop_adirondack_wood",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 317.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_adirondack_wood: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -73.3000030517578,
+    -0.42744117975235,
+    -75.75
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 318.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -74.0999984741211,
+    -0.42744117975235,
+    -75.75
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 319.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -87.1999969482422,
+    0.147573128342628,
+    -22.9500007629395
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 320.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -63.2999992370605,
+    0.148083180189133,
+    -24.9500007629395
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 321.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -64.0999984741211,
+    0.148083180189133,
+    -24.9500007629395
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 322.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -24.4500007629395,
+    -0.551315248012543,
+    -84.7999954223633
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 325.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -24.4500007629395,
+    -0.551315248012543,
+    -84.0
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 326.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -82.3544845581055,
+    -0.363108485937119,
+    -58.9781684875488
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 165.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -22.8086547851563,
+    -0.209509087105592,
+    -58.6861763000488
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 166.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -98.466423034668,
+    -0.358766103784243,
+    -56.1775703430176
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 167.0,
+   "op": "remove_decal",
+   "reason": "crack mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -61.5000991821289,
+    -0.2497939641277,
+    -55.6023712158203
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 168.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -18.5413131713867,
+    -0.208534916241964,
+    -58.9973831176758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 169.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -28.9797439575195,
+    -0.224246044953664,
+    -59.4675407409668
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 170.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -66.6510848999023,
+    -0.334232077002525,
+    -59.2947616577149
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 171.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -12.6999998092651,
+    -0.102273818105459,
+    -54.2999992370605
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 172.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -12.6999998092651,
+    -0.237810554603736,
+    -59.7000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 173.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -19.2282810211182,
+    -0.120834904412429,
+    -54.2999992370605
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 174.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -19.2282810211182,
+    -0.239115680257479,
+    -59.7000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 175.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -25.6516361236572,
+    -0.138412783543269,
+    -54.2999992370605
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 176.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -25.6516361236572,
+    -0.235382579267025,
+    -59.7000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 177.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -31.3694906234741,
+    -0.233345213035742,
+    -59.7000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 178.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -37.8224983215332,
+    -0.250872793296973,
+    -59.7000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 179.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -43.1423149108887,
+    -0.265056550502777,
+    -59.7000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 180.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -49.5773773193359,
+    -0.281995415687561,
+    -59.7000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 181.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -63.8529644012451,
+    -0.235676549375057,
+    -54.2999992370605
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 182.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -63.8529644012451,
+    -0.319387053449949,
+    -59.7000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 183.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -70.8392181396484,
+    -0.253498127063115,
+    -54.2999992370605
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 184.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -70.8392181396484,
+    -0.376034215092659,
+    -59.7000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 185.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -78.1618270874023,
+    -0.276622985800107,
+    -54.2999992370605
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 186.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -78.1618270874023,
+    -0.38959564268589,
+    -59.7000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 187.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -86.4188003540039,
+    -0.276714821656545,
+    -54.2999992370605
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 188.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -86.4188003540039,
+    -0.399852216243744,
+    -59.7000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 189.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -92.9747009277344,
+    -0.292881180842717,
+    -54.2999992370605
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 190.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -92.9747009277344,
+    -0.403182039658229,
+    -59.7000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 191.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -43.2853813171387,
+    -0.224301700790723,
+    -57.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 192.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.071907043457,
+    -0.252104096114635,
+    -57.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 193.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -55.0352821350098,
+    -0.0365373380482197,
+    -41.4577522277832
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 194.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.110294342041,
+    -0.0982260244588057,
+    -45.5930595397949
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 195.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -58.1150207519531,
+    0.161034832398097,
+    -9.99460983276367
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 196.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.7273788452149,
+    -0.0305594903960203,
+    -40.9549865722656
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 197.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -58.556079864502,
+    0.0492809377610683,
+    -33.1849365234375
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 198.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -58.6427116394043,
+    -0.0913417115807533,
+    -45.1550331115723
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 199.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.8434600830078,
+    -0.198641546070576,
+    -52.4928817749023
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 200.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.2999992370605,
+    0.159459782143434,
+    -12.6999998092651
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 201.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.7000007629395,
+    0.160099456707637,
+    -12.6999998092651
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 202.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.2999992370605,
+    0.146987696488698,
+    -18.5317363739014
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 203.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.7000007629395,
+    0.159784016509851,
+    -18.5317363739014
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 204.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.2999992370605,
+    0.102947534372409,
+    -27.3330783843994
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 205.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.7000007629395,
+    0.12520270422101,
+    -27.3330783843994
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 206.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.2999992370605,
+    0.0428884771342079,
+    -34.4202003479004
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 207.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.7000007629395,
+    0.0351078718279799,
+    -34.4202003479004
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 208.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.2999992370605,
+    -0.024294619448483,
+    -40.5388298034668
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 209.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.7000007629395,
+    -0.0342357608800133,
+    -40.5388298034668
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 210.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.2999992370605,
+    -0.089584128310283,
+    -45.7090835571289
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 211.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.7000007629395,
+    -0.101138915866613,
+    -45.7090835571289
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 212.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -57.0,
+    0.100045437614123,
+    -27.9722747802734
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 213.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -57.0,
+    0.148318228622278,
+    -20.2097835540771
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 214.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -58.7876167297363,
+    -0.794742782910665,
+    -93.281494140625
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 215.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -55.5541000366211,
+    -0.41533965865771,
+    -65.9699249267578
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 216.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -56.1854553222656,
+    -0.796490758657455,
+    -93.4370498657227
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 217.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.750373840332,
+    -0.469372962911924,
+    -69.3755416870117
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 218.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.5049438476563,
+    -0.593234906593959,
+    -78.2184982299805
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 219.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.4260215759277,
+    -0.731105009714762,
+    -88.4822540283203
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 220.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.1039733886719,
+    -0.645888268947601,
+    -81.6595993041992
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 221.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.2999992370605,
+    -0.365755791465441,
+    -63.5
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 222.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.7000007629395,
+    -0.368494878212611,
+    -63.5
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 223.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.2999992370605,
+    -0.471119011441867,
+    -70.7679138183594
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 224.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.7000007629395,
+    -0.483063519001007,
+    -70.7679138183594
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 225.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.2999992370605,
+    -0.549677034219106,
+    -76.7545166015625
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 226.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.7000007629395,
+    -0.575032959381739,
+    -76.7545166015625
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 227.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.2999992370605,
+    -0.697000761826833,
+    -84.3358993530273
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 228.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.7000007629395,
+    -0.684012641509374,
+    -84.3358993530273
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 229.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.2999992370605,
+    -0.742666115363439,
+    -91.2512817382812
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 230.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.7000007629395,
+    -0.772074361642202,
+    -91.2512817382812
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 231.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.2999992370605,
+    -0.841756105422974,
+    -97.5282974243164
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 232.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -59.7000007629395,
+    -0.839301039775213,
+    -97.5282974243164
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 233.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -57.0,
+    -0.599421888589859,
+    -78.4229965209961
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 234.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -57.0,
+    -0.739023228486379,
+    -89.0582046508789
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 235.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -13.5517692565918,
+    0.161852700014909,
+    -11.2000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 236.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -12.7711868286133,
+    0.159339728454749,
+    -26.3000011444092
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 237.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -26.2733612060547,
+    0.16156214227279,
+    -11.2000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 238.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -20.8640213012695,
+    0.161568430562814,
+    -11.2000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 239.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -25.8323802947998,
+    0.161417042215665,
+    -24.3000011444092
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 240.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -20.069019317627,
+    0.161442073682944,
+    -24.3000011444092
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 241.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -11.2000007629395,
+    0.111809970190128,
+    -33.7000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 242.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -32.9500007629395,
+    0.0941080028812091,
+    -33.2999992370605
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 243.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -29.6000003814697,
+    0.0997905557354291,
+    -33.7000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 244.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -11.8000011444092,
+    0.111662469804287,
+    -34.2000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 245.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -26.9500007629395,
+    0.111218602706989,
+    -34.4000015258789
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 246.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -11.2000007629395,
+    0.0531836145867904,
+    -41.0499992370605
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 247.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -30.9500007629395,
+    0.0271574479993433,
+    -41.3499984741211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 248.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -27.6000003814697,
+    0.0478598297728846,
+    -41.0499992370605
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 249.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -11.8000011444092,
+    0.0530222691595554,
+    -41.4318618774414
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 250.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -24.9500007629395,
+    0.0525349546223879,
+    -41.5
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 251.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -70.0,
+    0.160334830482801,
+    -11.2000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 252.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -64.0000019073486,
+    0.160337820649147,
+    -11.2000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 253.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -65.4000015258789,
+    0.0834868075326085,
+    -30.9500007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 254.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -67.0,
+    0.120870374143124,
+    -27.6000003814697
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 255.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -69.7919464111328,
+    0.160087957978249,
+    -11.8000011444092
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 256.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -63.8632678985596,
+    0.160088193913301,
+    -11.8000011444092
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 257.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -63.3000011444092,
+    0.15917773793141,
+    -24.9500007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 258.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -83.1999969482422,
+    0.159895054996014,
+    -11.2000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 259.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -89.5999984741211,
+    0.159886047244072,
+    -11.2000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 260.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -76.7999954223633,
+    0.159901574254036,
+    -11.2000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 261.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -86.0,
+    0.0155421756207943,
+    -28.9500007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 262.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -83.1999969482422,
+    0.12126828233401,
+    -25.6000003814697
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 263.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -89.3893661499023,
+    0.159578884641329,
+    -11.8000011444092
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 264.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -83.1292724609375,
+    0.159579324225585,
+    -11.8000011444092
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 265.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -77.8590393066406,
+    0.1595796768864,
+    -11.8000011444092
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 266.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -76.5,
+    0.158748517433802,
+    -22.9500007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 267.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -80.1379852294922,
+    -0.27671155333519,
+    -45.7961807250977
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 268.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -82.4582366943359,
+    -0.27671155333519,
+    -45.460147857666
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 269.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -85.3478927612305,
+    -0.27671155333519,
+    -45.5634651184082
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 270.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -88.1446762084961,
+    -0.27671155333519,
+    -45.3932800292969
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 271.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -11.2000007629395,
+    -0.240009553730488,
+    -63.7500019073486
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 272.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -30.9500007629395,
+    -0.277130459745725,
+    -64.0500049591064
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 273.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -27.6000003814697,
+    -0.264660646518071,
+    -63.7500019073486
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 274.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -11.8000011444092,
+    -0.240130171179771,
+    -64.25
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 275.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -24.9500007629395,
+    -0.240833327174187,
+    -64.1999969482422
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 276.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -11.2000007629395,
+    -0.356827452778816,
+    -70.8000030517578
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 277.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -32.9500007629395,
+    -0.395981416106224,
+    -71.1600036621094
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 278.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -29.6000003814697,
+    -0.378613725304604,
+    -70.8000030517578
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 279.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -11.8000011444092,
+    -0.356891254583995,
+    -70.9792098999023
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 280.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -26.9500007629395,
+    -0.357725804050763,
+    -71.4000015258789
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 281.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -10.7000007629395,
+    -0.521075079838435,
+    -78.0999984741211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 282.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -10.7000007629395,
+    -0.55825874209404,
+    -84.0999984741211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 283.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -30.4500007629395,
+    -0.551516791184743,
+    -79.5
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 284.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -27.1000003814697,
+    -0.553862472375234,
+    -81.0999984741211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 285.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -11.3000001907349,
+    -0.532977918783824,
+    -79.0318984985352
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 286.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -11.3000011444092,
+    -0.545359422763189,
+    -84.9449310302734
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 287.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -24.4500007629395,
+    -0.54078663388888,
+    -84.7999954223633
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 288.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -11.2000007629395,
+    -0.731054296096166,
+    -91.25
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 289.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -30.9500007629395,
+    -0.744936535755793,
+    -91.5500030517578
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 290.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -27.6000003814697,
+    -0.735906233390172,
+    -91.25
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 291.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -11.8000011444092,
+    -0.730571419000626,
+    -91.1286392211914
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 292.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -24.9500007629395,
+    -0.730888724327087,
+    -91.6999969482422
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 293.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.3186225891113,
+    -0.471319441994031,
+    -71.143310546875
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 294.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -53.9389877319336,
+    -0.549549341201782,
+    -76.07763671875
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 295.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -54.0039443969727,
+    -0.698057522376378,
+    -85.7224044799805
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 296.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -86.0,
+    -0.415156468749046,
+    -62.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 297.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -80.0,
+    -0.414702499906222,
+    -62.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 298.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -74.0,
+    -0.414261485139529,
+    -62.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 299.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -85.7910079956055,
+    -0.415441910425822,
+    -62.5999984741211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 300.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -80.3568420410156,
+    -0.415432418386141,
+    -62.5999984741211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 301.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -75.9097213745117,
+    -0.415425077080727,
+    -62.5999984741211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 302.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -71.93701171875,
+    -0.415418232480685,
+    -62.5999984741211
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 303.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -73.3000030517578,
+    -0.418616016705831,
+    -75.75
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 304.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -30.7000007629395,
+    0.131039533764124,
+    -27.7000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 305.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -96.5,
+    0.0246024509736647,
+    -30.6999998092651
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 306.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -84.5,
+    -0.0299220041682323,
+    -32.2000007629395
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 307.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -35.2000007629395,
+    -0.549031943082809,
+    -78.5
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 308.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -42.7000007629395,
+    -0.45377309123675,
+    -71.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 309.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -47.9540481567383,
+    -0.239254591365655,
+    -57.1886520385742
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 335.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -55.066837310791,
+    -0.260470633705457,
+    -57.3771362304688
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 336.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -69.5295486450195,
+    -0.29826953013738,
+    -57.2558631896973
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 337.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -85.181396484375,
+    -0.309513712922732,
+    -57.1421356201172
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 338.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -57.3059921264649,
+    0.160976476967335,
+    -10.9602251052856
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 339.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -56.7906951904297,
+    0.053243155280749,
+    -33.0287742614746
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 340.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -57.2207984924316,
+    -0.739047308762868,
+    -89.8592071533203
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 341.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -56.836856842041,
+    -0.827025711536407,
+    -96.1906509399414
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 342.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -12.4650552272797,
+    1.64982177317142,
+    -11.9252061843872
+   ],
+   "box": [
+    0.734944581985474,
+    1.49998188018799,
+    6.77479457855225,
+    0.490035095214844,
+    2.99996376037598,
+    0.489954986572266
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 353.0,
+   "name": "sc_col_0",
+   "node": "Buildings/corner_shop",
+   "op": "add_box",
+   "reason": "corner_shop: a 0.5 x 0.4 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -26.7000222206116,
+    1.64948928356171,
+    -12.050000667572
+   ],
+   "box": [
+    -3.90002298355103,
+    1.49996709823608,
+    5.65000009536743,
+    0.16,
+    2.99993419647217,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 354.0,
+   "name": "sc_col_0",
+   "node": "Buildings/shop_two",
+   "op": "add_box",
+   "reason": "shop_two: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -23.8400542736053,
+    1.66447687149048,
+    -10.0400040149689
+   ],
+   "box": [
+    -1.0400550365448,
+    1.51495468616486,
+    7.65999674797058,
+    0.200036563873291,
+    3.02990937232971,
+    0.199999370574951
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 355.0,
+   "name": "sc_col_1",
+   "node": "Buildings/shop_two",
+   "op": "add_box",
+   "reason": "shop_two: a 0.2 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -27.7600357532501,
+    1.66447687149048,
+    -10.0400040149689
+   ],
+   "box": [
+    -4.96003651618958,
+    1.51495468616486,
+    7.65999674797058,
+    0.200036563873291,
+    3.02990937232971,
+    0.199999370574951
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 356.0,
+   "name": "sc_col_2",
+   "node": "Buildings/shop_two",
+   "op": "add_box",
+   "reason": "shop_two: a 0.2 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -24.9000680446625,
+    1.64948928356171,
+    -12.050000667572
+   ],
+   "box": [
+    -2.10006880760193,
+    1.49996709823608,
+    5.65000009536743,
+    0.16,
+    2.99993419647217,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 357.0,
+   "name": "sc_col_3",
+   "node": "Buildings/shop_two",
+   "op": "add_box",
+   "reason": "shop_two: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -12.1301499035967,
+    1.5909594334662,
+    -42.4749853880023
+   ],
+   "box": [
+    1.42498588562012,
+    1.54995767772198,
+    6.06985092163086,
+    0.16,
+    2.09996572136879,
+    0.380151786804199
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 358.0,
+   "name": "sc_col_0",
+   "node": "Buildings/house_a1",
+   "op": "add_box",
+   "reason": "house_a1: a 0.1 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -70.817532658577,
+    0.748025506734848,
+    -11.1500039100647
+   ],
+   "box": [
+    -3.81753265857697,
+    0.599942326545715,
+    7.04999685287476,
+    0.20498064994812,
+    1.19988465309143,
+    1.14000705718994
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 359.0,
+   "name": "sc_col_0",
+   "node": "Buildings/apts_b0",
+   "op": "add_box",
+   "reason": "apts_b0: a 0.2 x 1.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -76.8249380320393,
+    1.26125538349152,
+    -53.4748560502376
+   ],
+   "box": [
+    -7.17506265640259,
+    1.54996693134308,
+    7.87485694885254,
+    0.289930381774902,
+    3.09993386268616,
+    0.290015258789062
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 360.0,
+   "name": "sc_col_0",
+   "node": "Buildings/lane_dingbat",
+   "op": "add_box",
+   "reason": "lane_dingbat: a 0.2 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -76.8249365502199,
+    1.26125538349152,
+    -36.5248190476741
+   ],
+   "box": [
+    -7.17506265640259,
+    1.54996693134308,
+    -9.07518005371094,
+    0.289930381774902,
+    3.09993386268616,
+    0.290015258789062
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 361.0,
+   "name": "sc_col_1",
+   "node": "Buildings/lane_dingbat",
+   "op": "add_box",
+   "reason": "lane_dingbat: a 0.2 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -78.6248678358045,
+    1.17795014381409,
+    -36.499871247039
+   ],
+   "box": [
+    -5.37513136863709,
+    1.46666169166565,
+    -9.10012769699097,
+    0.289930858612061,
+    2.9333233833313,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 362.0,
+   "name": "sc_col_2",
+   "node": "Buildings/lane_dingbat",
+   "op": "add_box",
+   "reason": "lane_dingbat: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -24.1225322090598,
+    1.64778313040733,
+    -65.5749726090837
+   ],
+   "box": [
+    1.8249728679657,
+    1.89994120597839,
+    -5.92253136634827,
+    0.16,
+    1.79997777938843,
+    0.364989795684814
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 363.0,
+   "name": "sc_col_0",
+   "node": "Buildings/house_c0",
+   "op": "add_box",
+   "reason": "house_c0: a 0.1 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -10.650003743195,
+    0.0486270785331726,
+    -77.2824661237094
+   ],
+   "box": [
+    -3.81753265857697,
+    0.599942326545715,
+    7.04999685287476,
+    0.20498064994812,
+    1.19988465309143,
+    1.14000705718994
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 364.0,
+   "name": "sc_col_0",
+   "node": "Buildings/walkup_c",
+   "op": "add_box",
+   "reason": "walkup_c: a 0.2 x 1.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -12.1301499035967,
+    0.807326421141624,
+    -92.6749861509418
+   ],
+   "box": [
+    1.42498588562012,
+    1.54995767772198,
+    6.06985092163086,
+    0.16,
+    2.09996572136879,
+    0.380151786804199
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 365.0,
+   "name": "sc_col_0",
+   "node": "Buildings/house_c2",
+   "op": "add_box",
+   "reason": "house_c2: a 0.1 x 0.3 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "g_v3_j5nw"
+}
