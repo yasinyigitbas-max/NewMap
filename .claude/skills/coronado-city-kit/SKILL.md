@@ -13,6 +13,10 @@ Why: whole-city generators failed several times. Every fix to one kerb changed e
 while others were fixed (about 20% of a month's usage lost). The rule now: **a fix in one place can never change
 another place.**
 
+**Growing a whole zone? Read `.claude/skills/coronado-zone-growth/SKILL.md` first** (19 Nov): the residential growth
+was locked and then found 45 of 65 quadrants under the approved terrain, while every check said 0. Fit grown ground to
+the TERRAIN and the streets as built, check it against the terrain, and look at a top view before reporting.
+
 ## How it works
 - **One piece = one frozen scene:** `map_dc/coronado/city_kit/pieces/<name>.scn`.
   - Kinds: junction `j_`, street `s_`, downtown block `b_`, residential row `r_`, wires `w_`.
