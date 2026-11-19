@@ -17,6 +17,9 @@ extends RefCounted
 ## all come in at Adela's apron, 57 m north of 3rd St.
 
 const PAD_Y := 2.0
+const LAND := preload("res://tools/city/pilot/pieces/n_hp_land.gd")
+const LIFT := 0.05
+const EASE := 12.0
 const WALK := 0.15          # local height of every walk round the zone (world 2.150)
 const ADELA_E := 509.2
 const ADELA_W := 490.8
@@ -52,3 +55,27 @@ static func ring_u(v: float) -> float:
 	return (lo + hi) * 0.5
 
 static func flat(_x: float, _z: float) -> float: return WALK
+
+## distance from (u, v) to the ring's walk edge (the polyline RING)
+static func ring_d(u: float, v: float) -> float:
+	var best := INF; var p := Vector2(u, v)
+	for i in RING.size() - 1:
+		var a := Vector2(RING[i][0], RING[i][1]); var b := Vector2(RING[i + 1][0], RING[i + 1][1])
+		var t := clampf((p - a).dot(b - a) / maxf((b - a).length_squared(), 1e-9), 0.0, 1.0)
+		best = minf(best, p.distance_to(a + (b - a) * t))
+	return best
+
+## (19 Nov, Yasin: "Don't forget about the elevation, build according to it") the zone's ground FOLLOWS THE LAND: 5 cm
+## over the land's own surface (n_hp_land.gd: terrain_grid.npz's 4 m nodes, bilinear), eased within 12 m of every
+## street onto the walks' 2.150 (smoothstep of the distance to the nearest walk edge). World height.
+static func g(u: float, v: float) -> float:
+	var d := INF
+	d = minf(d, absf(u - 500.0) - 9.2)                              # Adela's two walks
+	d = minf(d, THIRD - v)                                          # 3rd St
+	if u < 546.0: d = minf(d, v - FIRST)                            # 1st St
+	if u > 509.0: d = minf(d, ring_d(u, v))                         # the ring round block A
+	if v > -1426.0: d = minf(d, EAST - u)                           # the 3rd St / ring junction's west side
+	d = maxf(d, 0.0)
+	return lerpf(PAD_Y + WALK, LAND.at(u, v) + LIFT, smoothstep(0.0, EASE, d))
+## local height (piece frame)
+static func y(u: float, v: float) -> float: return g(u, v) - PAD_Y

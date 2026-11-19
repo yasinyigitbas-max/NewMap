@@ -13,8 +13,8 @@ extends SceneTree
 ## the main hospital's service door, the plant yard behind the ER (oxygen tank, generator fuel, transformer, chillers),
 ## the visitors' and staff car park, reached by the service drive on the east side. The bay curve of the ring holds the
 ## healing garden (benches facing the water, an arbor, picnic tables for staff breaks).
-## LAND: flat (walks 2.150 all round, land 1.80 .. 2.13): one surface at the walk's height; no faces needed against the
-## streets (same height); the buildings stand on it.
+## LAND (Yasin: "build according to it"): the ground follows the land (n_hp_site.g: 5 cm over it, eased onto the walks'
+## 2.150 within 12 m of every street); each building on a level pad at its front's height, faces round the pad.
 const PASS := 2
 const K := preload("res://tools/city/pilot/kit_lib.gd")
 const W := preload("res://tools/city/pilot/pieces/wear_lib.gd")
@@ -59,6 +59,9 @@ const GARDEN := [
 	["plant_agave_americana_small", "normal", 539.0, -1582.0, 0.0, false],
 ]
 
+var MY := 0.0          # the buildings' pad heights (local): the ground at the middle of each front
+var EY := 0.0
+
 func _init() -> void: _run.call_deferred()
 
 static func bb(f: String) -> Array: return (K.building_stats(f).near as Dictionary).bbox
@@ -72,9 +75,11 @@ func _run() -> void:
 	var bl := Node3D.new(); bl.name = "Buildings"; root.add_child(bl)
 	var g := K.Ground.new(); var props := K.Props.new(); var dec := K.Decals.new()
 	var rr := W.rng_for("n_hp_main")
-	var yf := func(x: float, z: float) -> float: return S.flat(x, z)
-	# ================================================================ ground (one flat surface at the walk's height)
+	var yb := func(x: float, z: float) -> float: return S.y(x, z)
+	# ================================================================ ground (the land, graded up to the two pads)
 	var m := fp(MAIN); var e := fp(ER)
+	MY = H.pad_height(m, 0.0, yb); EY = H.pad_height(e, 0.0, yb)
+	var yf := H.graded(yb, [H.pad_entry(m, MY), H.pad_entry(e, EY)])
 	var paints: Array = []
 	# stall lines (white, 0.1 m) across every row, wheel-stop side to aisle side
 	for r: Array in ROWS:
@@ -87,8 +92,7 @@ func _run() -> void:
 	paints.append([512.0, -1461.0, 512.4, -1457.08, "white"])
 	for k in 6: paints.append([604.0, DRIVE[0] + 0.6 + 1.2 * k, 607.0, DRIVE[0] + 1.2 + 1.2 * k, "white"])
 	paints.append_array([
-		[m[0], m[1], m[2], m[3], "concrete"],                 # under the main hospital
-		[e[0], e[1], e[2], e[3], "concrete"],                 # under the ER wing
+		H.pad_rect(m), H.pad_rect(e),                         # the two buildings' level pads (drawn below)
 		[509.2, -1461.0, 512.0, -1460.0, "concrete"],         # the drive's flare to the 6 m apron
 		[509.2, -1454.0, 512.0, -1453.0, "concrete"],
 		[509.2, DRIVE[0], 620.0, DRIVE[1], "asphalt"],        # Hospital Drive
@@ -115,6 +119,7 @@ func _run() -> void:
 	var zlo := func(x: float) -> float: return minf(S.ring_v(x), ZS)     # (past u 641 the ring is south of the drive: nothing of this piece there)
 	var zhi := func(_x: float) -> float: return ZS
 	H.paint_band(g, X0, X1, zlo, zhi, paints, "grass", yf)
+	H.pad_at(g, m, MY, yf); H.pad_at(g, e, EY, yf)
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
 	if PASS >= 2: H.polish(props, g, GARDEN)
 	H.finish(root, g, props, dec, "n_hp_main")
@@ -122,8 +127,8 @@ func _run() -> void:
 
 func _build(bl: Node3D, props: K.Props, dec: K.Decals, rr: RandomNumberGenerator, yf: Callable) -> void:
 	var P := func(base: String, cond: String, x: float, z: float, yaw := 0.0, collide := true) -> void: H.put(props, base, cond, x, z, yf, yaw, collide)
-	K.building(bl, String(MAIN[0]), Vector3(MAIN[1], S.WALK, MAIN[2]), 0.0, "hospital")
-	K.building(bl, String(ER[0]), Vector3(ER[1], S.WALK, ER[2]), 0.0, "er_wing")
+	K.building(bl, String(MAIN[0]), Vector3(MAIN[1], MY, MAIN[2]), 0.0, "hospital")
+	K.building(bl, String(ER[0]), Vector3(ER[1], EY, ER[2]), 0.0, "er_wing")
 	# ---- the forecourt: benches either side of the doors (u 538.8 / 543.2) facing the drive, planters, bike racks at
 	#      the west end, bollards on the drop-off kerb so nobody drives onto the forecourt, a bin and a paper box
 	for x: float in [525.5, 529.5, 552.5, 556.5]: P.call("prop_park_bench", "worn", x, -1467.0, 0.0)
@@ -164,8 +169,9 @@ func _build(bl: Node3D, props: K.Props, dec: K.Decals, rr: RandomNumberGenerator
 	W.oil(dec, rr, Vector2(537.0, -1508.0), 90.0, yf, 0.5)
 	# ---- the plant yard behind the ER (fenced, gate on the car park aisle): liquid oxygen tank, generator fuel tank,
 	#      transformer, the chillers' condensers in a row against the ER's back wall
-	H.fence(props, "fence_chainlink_lot", "fence_chainlink_lot_post", Vector2(569.0, -1510.0), Vector2(569.0, -1492.4), yf, 2.0)
-	H.fence(props, "fence_chainlink_lot", "fence_chainlink_lot_post", Vector2(605.0, -1510.0), Vector2(605.0, -1492.4), yf, 2.0)
+	H.fence(props, "fence_chainlink_lot", "fence_chainlink_lot_post", Vector2(569.0, -1510.0), Vector2(569.0, -1492.0), yf, 2.0)
+	H.fence(props, "fence_chainlink_lot", "fence_chainlink_lot_post", Vector2(569.0, -1492.0), Vector2(575.2, -1492.0), yf, 2.0)   # into the ER's back wall
+	H.fence(props, "fence_chainlink_lot", "fence_chainlink_lot_post", Vector2(605.0, -1510.0), Vector2(605.0, -1491.9), yf, 2.0)
 	H.fence(props, "fence_chainlink_lot", "fence_chainlink_lot_post", Vector2(569.0, -1510.0), Vector2(581.1, -1510.0), yf, 2.0)
 	H.fence(props, "fence_chainlink_lot", "fence_chainlink_lot_post", Vector2(586.9, -1510.0), Vector2(605.0, -1510.0), yf, 2.0)
 	P.call("fence_gate_rolling_chainlink", "worn", 584.0, -1510.0, 0.0)

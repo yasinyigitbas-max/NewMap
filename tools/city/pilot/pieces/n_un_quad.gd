@@ -9,8 +9,8 @@ extends SceneTree
 ## wings lead out to the science side (west) and the student union (east). Students sit on the lawn (adirondack chairs,
 ## picnic tables at the corners), on benches along the walks facing the grass, cycle in and park at the racks by every
 ## door. Lamps along the frame walk, bins and recycling at the crossings, fountains, the student paper's boxes.
-## LAND: flat (6.150 = local 2.15, the north and east walks' height; the SW fall does not reach this piece). The
-## buildings' doors sit 0.3 m (wings, library) and 0.6 m (Founders Hall) over the walk: steps up to each.
+## LAND (Yasin: "build according to it"): the ground follows the land (n_un_site.g, 6.0 - 6.3 here); each building on a
+## level pad at its front's height; the doors sit 0.3 m (wings, library) and 0.6 m (Founders Hall) over it: steps.
 const PASS := 2
 const K := preload("res://tools/city/pilot/kit_lib.gd")
 const Wr := preload("res://tools/city/pilot/pieces/wear_lib.gd")
@@ -93,6 +93,8 @@ const ITEMS := [
 	["prop_sprinkler_impact", "normal", -630.0, -555.0, 0.0, false], ["prop_sprinkler_impact", "normal", -570.0, -555.0, 0.0, false],
 ]
 
+var PY: Array = []     # pad heights (local), one per row of B: the ground at the middle of each front
+
 func _init() -> void: _run.call_deferred()
 
 static func bbox(f: String) -> Array: return (K.building_stats(f).near as Dictionary).bbox
@@ -108,10 +110,13 @@ func _run() -> void:
 	var bl := Node3D.new(); bl.name = "Buildings"; root.add_child(bl)
 	var g := K.Ground.new(); var props := K.Props.new(); var dec := K.Decals.new()
 	var rr := Wr.rng_for("n_un_quad")
-	var yf := func(x: float, z: float) -> float: return U.y(x, z)
-	var paints: Array = []
+	var yb := func(x: float, z: float) -> float: return U.y(x, z)
+	var pe: Array = []
 	for b: Array in B:
-		var f := fp(b); paints.append([f[0], f[1], f[2], f[3], "concrete"])
+		PY.append(H.pad_height(fp(b), float(b[4]), yb)); pe.append(H.pad_entry(fp(b), float(PY[PY.size() - 1])))
+	var yf := H.graded(yb, pe)
+	var paints: Array = []
+	for b: Array in B: paints.append(H.pad_rect(fp(b)))
 	paints.append_array([
 		[-607.0, -607.0, -593.0, -593.0, "plaza"],               # the memorial's square
 		[-603.0, LAWN[1], -597.0, LAWN[3], "plaza"],             # the cross walks
@@ -125,17 +130,21 @@ func _run() -> void:
 		[X0, -692.0, -616.62, -688.0, "plaza"], [-583.38, -692.0, X1, -688.0, "plaza"],    # the walk along the north side
 	])
 	H.paint(g, X0, Z0, X1, Z1, paints, "grass", yf)
-	# steps up to each front door (the building's door sill over the walk)
-	for b: Array in B:
-		var sill := float(b[5]); var gy := U.y(float(b[2]), float(b[3]))
-		var f := fp(b)
+	for i in B.size(): H.pad_at(g, fp(B[i]), float(PY[i]), yf)
+	# steps up to each front door (the building's door sill over its pad)
+	for i in B.size():
+		var b: Array = B[i]
+		var f := fp(b); var fm := H.front_mid(f, float(b[4]))
+		var gy: float = yf.call(fm.x, fm.y); var top := float(PY[i]) + float(b[5]); var n := ceilf((top - gy) / 0.17) * 0.3
 		match int(b[4]):
-			0: H.steps_z(g, float(b[2]), 4.0, f[3] + ceilf(sill / 0.17) * 0.3, f[3], gy, gy + sill)
-			180: H.steps_z(g, float(b[2]), 4.0, f[1] - ceilf(sill / 0.17) * 0.3, f[1], gy, gy + sill)
-			90: H.steps_x(g, float(b[3]), 4.0, f[2] + ceilf(sill / 0.17) * 0.3, f[2], gy, gy + sill)
-			-90: H.steps_x(g, float(b[3]), 4.0, f[0] - ceilf(sill / 0.17) * 0.3, f[0], gy, gy + sill)
+			0: H.steps_z(g, float(b[2]), 4.0, f[3] + n, f[3], gy, top)
+			180: H.steps_z(g, float(b[2]), 4.0, f[1] - n, f[1], gy, top)
+			90: H.steps_x(g, float(b[3]), 4.0, f[2] + n, f[2], gy, top)
+			-90: H.steps_x(g, float(b[3]), 4.0, f[0] - n, f[0], gy, top)
 	if PASS >= 2:
-		for b: Array in B: K.building(bl, String(b[1]), Vector3(b[2], U.y(float(b[2]), float(b[3])), b[3]), float(b[4]), String(b[0]))
+		for i in B.size():
+			var b: Array = B[i]
+			K.building(bl, String(b[1]), Vector3(b[2], float(PY[i]), b[3]), float(b[4]), String(b[0]))
 		H.polish(props, g, ITEMS)
 		# wear: the cross walks' paving patched where the service carts run
 		Wr.pale_patch(dec, rr, Vector2(-600.0, -630.0), 0.0, 2.0, 3.0, yf, 0.5)

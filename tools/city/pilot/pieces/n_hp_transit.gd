@@ -11,7 +11,7 @@ extends SceneTree
 ## plaza meets the people walking in from the Adela / 3rd St junction's crosswalks: a coffee kiosk with tables, trees in
 ## wells, bike racks. East of the hall a break corner for the drivers. Further east, across the drive from the ER's
 ## ambulance bay, the HELIPAD in its fenced field (gate opposite the zebra to the bay; edge lights; nothing tall near it).
-## LAND: flat (walks 2.150 all round): one surface at the walk's height.
+## LAND (Yasin: "build according to it"): the ground follows the land (n_hp_site.g); the hall and the kiosk on level pads.
 const PASS := 2
 const K := preload("res://tools/city/pilot/kit_lib.gd")
 const W := preload("res://tools/city/pilot/pieces/wear_lib.gd")
@@ -42,6 +42,9 @@ const GREEN := [
 	["prop_sprinkler_popup", "normal", 575.0, -1428.0, 0.0, false], ["prop_sprinkler_popup", "normal", 619.0, -1447.0, 0.0, false],
 ]
 
+var HY := 0.0          # pad heights (local)
+var KY := 0.0
+
 func _init() -> void: _run.call_deferred()
 
 static func bb(f: String) -> Array: return (K.building_stats(f).near as Dictionary).bbox
@@ -51,13 +54,15 @@ func _run() -> void:
 	var bl := Node3D.new(); bl.name = "Buildings"; root.add_child(bl)
 	var g := K.Ground.new(); var props := K.Props.new(); var dec := K.Decals.new()
 	var rr := W.rng_for("n_hp_transit")
-	var yf := func(x: float, z: float) -> float: return S.flat(x, z)
+	var yb := func(x: float, z: float) -> float: return S.y(x, z)
 	var hb := bb(String(HALL[0])); var kb := bb(String(KIOSK[0]))
 	# yaw 180: model x -> -u, model z -> -v
 	var hall := [float(HALL[1]) - float(hb[1][0]), float(HALL[2]) - float(hb[1][2]), float(HALL[1]) - float(hb[0][0]), float(HALL[2]) - float(hb[0][2])]
 	# yaw 90: model x -> -v, model z -> +u
 	var kio := [float(KIOSK[1]) + float(kb[0][2]), float(KIOSK[2]) - float(kb[1][0]), float(KIOSK[1]) + float(kb[1][2]), float(KIOSK[2]) - float(kb[0][0])]
-	var paints: Array = []
+	HY = H.pad_height(hall, 180.0, yb); KY = H.pad_height(kio, 90.0, yb)
+	var yf := H.graded(yb, [H.pad_entry(hall, HY), H.pad_entry(kio, KY)])
+	var paints: Array = [H.pad_rect(hall), H.pad_rect(kio)]
 	# helipad markings: white edge band, the H
 	var c := Vector2((PAD[0] + PAD[2]) * 0.5, (PAD[1] + PAD[3]) * 0.5)
 	paints.append_array([
@@ -76,8 +81,6 @@ func _run() -> void:
 	for t: Array in [[514.0, -1437.0], [514.0, -1420.0], [530.0, -1418.0]]:
 		paints.append([float(t[0]) - 0.8, float(t[1]) - 0.8, float(t[0]) + 0.8, float(t[1]) + 0.8, "mulch"])
 	paints.append_array([
-		[hall[0], hall[1], hall[2], hall[3], "concrete"],
-		[kio[0], kio[1], kio[2], kio[3], "concrete"],
 		[LAYBY[0], LAYBY[1], LAYBY[2], LAYBY[3], "asphalt"],
 		[PLATFORM[0], PLATFORM[1], PLATFORM[2], PLATFORM[3], "plaza"],
 		[509.2, -1446.5, 516.0, -1440.0, "plaza"],               # the platform's west end to Adela's walk
@@ -92,6 +95,7 @@ func _run() -> void:
 	var u := 640.0
 	while u <= 645.6: paints.append([u, -1440.0, u, -1440.0, "-"]); u += 0.5
 	H.paint_band(g, X0, X1, zlo, zhi, paints, "grass", yf)
+	H.pad_at(g, hall, HY, yf); H.pad_at(g, kio, KY, yf)
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
 	if PASS >= 2: H.polish(props, g, GREEN)
 	H.finish(root, g, props, dec, "n_hp_transit")
@@ -99,8 +103,8 @@ func _run() -> void:
 
 func _build(bl: Node3D, props: K.Props, dec: K.Decals, rr: RandomNumberGenerator, yf: Callable) -> void:
 	var P := func(base: String, cond: String, x: float, z: float, yaw := 0.0, collide := true) -> void: H.put(props, base, cond, x, z, yf, yaw, collide)
-	K.building(bl, String(HALL[0]), Vector3(HALL[1], S.WALK, HALL[2]), 180.0, "transit_hall")
-	K.building(bl, String(KIOSK[0]), Vector3(KIOSK[1], S.WALK, KIOSK[2]), 90.0, "kiosk")
+	K.building(bl, String(HALL[0]), Vector3(HALL[1], HY, HALL[2]), 180.0, "transit_hall")
+	K.building(bl, String(KIOSK[0]), Vector3(KIOSK[1], KY, KIOSK[2]), 90.0, "kiosk")
 	# ---- the platform: a shelter at every bay facing the lay-by, its stop sign at the bay's front end on the kerb,
 	#      a bench between the shelters, timetable cases either side of the hall door, bins, lamps between the shelters
 	for b: float in BAYS:

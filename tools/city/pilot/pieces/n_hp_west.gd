@@ -13,8 +13,8 @@ extends SceneTree
 ## On the bay (1st St): two CARE RESIDENCES (apt_garden_cream) for the elderly and the long-stay families, a garden
 ## court behind them, and their WELLNESS CENTER (civ_community_center, its COMMUNITY CENTER sign painted on) facing
 ## Adela so the bus riders walk straight in.
-## LAND: flat (walks 2.150 all round, land 1.86 .. 2.13): one surface at the walk's height; on the west line (u 400)
-## the land beside is lower by 2 .. 30 cm: a skirt face down to it.
+## LAND (Yasin: "build according to it"): the ground follows the land (n_hp_site.g; at the west line it is the land
+## itself plus 5 cm, a skirt below); every building on a level pad at its front's height.
 const PASS := 2
 const K := preload("res://tools/city/pilot/kit_lib.gd")
 const W := preload("res://tools/city/pilot/pieces/wear_lib.gd")
@@ -62,6 +62,8 @@ const GREEN := [
 	["tree_ficus_a", "normal", 436.0, -1416.0, 0.0, false], ["tree_ficus_b", "normal", 452.0, -1416.0, 0.0, false],
 ]
 
+var PY: Array = []     # pad heights (local), one per row of B
+
 func _init() -> void: _run.call_deferred()
 
 static func bbox(f: String) -> Array:
@@ -81,8 +83,13 @@ func _run() -> void:
 	var bl := Node3D.new(); bl.name = "Buildings"; root.add_child(bl)
 	var g := K.Ground.new(); var props := K.Props.new(); var dec := K.Decals.new()
 	var rr := W.rng_for("n_hp_west")
-	var yf := func(x: float, z: float) -> float: return S.flat(x, z)
+	var yb := func(x: float, z: float) -> float: return S.y(x, z)
+	var pe: Array = []
+	for b: Array in B:
+		PY.append(H.pad_height(fp(b), float(b[4]), yb)); pe.append(H.pad_entry(fp(b), float(PY[PY.size() - 1])))
+	var yf := H.graded(yb, pe)
 	var paints: Array = []
+	for b: Array in B: paints.append(H.pad_rect(fp(b)))
 	# stall lines: the residents' lot (two rows) and the delivery stalls on the drive's south side
 	for k in 11:
 		var x := 411.0 + 2.7 * k
@@ -92,8 +99,6 @@ func _run() -> void:
 		paints.append([x - 0.05, -1453.0, x + 0.05, -1447.5, "white"])
 	paints.append([447.0, -1457.08, 488.0, -1456.92, "yellow"])
 	paints.append([488.4, -1461.0, 488.8, -1457.08, "white"])           # stop bar at the apron
-	for b: Array in B:
-		var f := fp(b); paints.append([f[0], f[1], f[2], f[3], "concrete"])
 	for t: Array in [[436.0, -1416.0], [452.0, -1416.0]]:
 		paints.append([float(t[0]) - 0.8, float(t[1]) - 0.8, float(t[0]) + 0.8, float(t[1]) + 0.8, "mulch"])
 	paints.append_array([
@@ -129,6 +134,7 @@ func _run() -> void:
 	H.paint(g, X0, -1585.7, X1, S.THIRD, paints, "grass", yf)
 	# the west line: the land beside is lower (2 .. 30 cm): a face down from the edge
 	H.skirt(g, Vector2(X0, -1585.7), Vector2(X0, S.THIRD), yf, "wall")
+	for i in B.size(): H.pad_at(g, fp(B[i]), float(PY[i]), yf)
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
 	if PASS >= 2: H.polish(props, g, GREEN)
 	H.finish(root, g, props, dec, "n_hp_west")
@@ -136,7 +142,9 @@ func _run() -> void:
 
 func _build(bl: Node3D, props: K.Props, dec: K.Decals, rr: RandomNumberGenerator, yf: Callable) -> void:
 	var P := func(base: String, cond: String, x: float, z: float, yaw := 0.0, collide := true) -> void: H.put(props, base, cond, x, z, yf, yaw, collide)
-	for b: Array in B: K.building(bl, String(b[1]), Vector3(b[2], S.WALK, b[3]), float(b[4]), String(b[0]))
+	for i in B.size():
+		var b: Array = B[i]
+		K.building(bl, String(b[1]), Vector3(b[2], float(PY[i]), b[3]), float(b[4]), String(b[0]))
 	# ---- the drive: lamps on its north side, the stop sign at the apron, the garage's pay station by the ramp
 	for x: float in [415.0, 438.0, 482.0]: P.call("prop_lamp_cobra", "worn", x, -1463.0, 180.0)
 	P.call("prop_sign_stop", "worn", 488.8, -1452.4, 90.0)

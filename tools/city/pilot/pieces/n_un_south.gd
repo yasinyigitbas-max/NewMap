@@ -11,7 +11,8 @@ extends SceneTree
 ##    Green; two more halls (apt_spanish_revival) face the loop's legs.
 ##  - EAST DORMS (south-east): two student apartment blocks (apt_stucco3) on the south street, their car park on a drive
 ##    from the east street's apron (v -457) and the south street's (u -457).
-## LAND: the campus's SW corner: the ground falls from 6.15 to 4.15 at (-790.8, -409.2) (n_un_site.g, at most 1.65 %);
+## LAND (Yasin: "build according to it"): the campus's SW corner: the ground follows the land (n_un_site.g), falling to
+## 4.15 at (-790.8, -409.2);
 ## the drives, stalls and lawns follow it; every building stands on a level pad at its front's height with a retaining
 ## face round the pad where the field is higher or lower.
 const PASS := 2
@@ -87,17 +88,13 @@ static func fp(b: Array) -> Array:
 	return [cu - float(x[1][2]), cv + float(x[0][0]), cu - float(x[0][2]), cv + float(x[1][0])]
 ## a building's pad height (local): the ground at the middle of its front
 static func pad_y(b: Array) -> float:
-	var f := fp(b); var yaw: float = b[4]
-	if absf(yaw) < 1.0: return U.y(float(b[2]), f[3])
-	if absf(yaw - 90.0) < 1.0: return U.y(f[2], float(b[3]))
-	return U.y(f[0], float(b[3]))
+	return H.pad_height(fp(b), float(b[4]), func(x: float, z: float) -> float: return U.y(x, z), 0.5)
 
 func _run() -> void:
 	var root := Node3D.new(); root.name = "n_un_south"
 	var bl := Node3D.new(); bl.name = "Buildings"; root.add_child(bl)
 	var g := K.Ground.new(); var props := K.Props.new(); var dec := K.Decals.new()
 	var rr := Wr.rng_for("n_un_south")
-	var yf := func(x: float, z: float) -> float: return U.y(x, z)
 	# patches with their stall lines: the west dorms' drive, the east dorms' drive
 	var wl: Array = []; var el: Array = []
 	var x := -785.0
@@ -109,6 +106,13 @@ func _run() -> void:
 	var pads: Array = []
 	for b: Array in B:
 		var f := fp(b); pads.append([f[0] - 0.5, f[1] - 0.5, f[2] + 0.5, f[3] + 0.5, pad_y(b)])
+	# the graded aprons also rise to the Quad's library pad (across the piece line, so both pieces agree there) and fall
+	# back onto the plain ground within 4 m of the south and side walks (so the walks' seam stays exact)
+	var yb := func(x: float, z: float) -> float: return U.y(x, z)
+	var lib := [-612.45, -532.0, -587.28, -510.55]
+	var gp: Array = pads.duplicate(); gp.append(H.pad_entry(lib, H.pad_height(lib, 180.0, yb)))
+	var gr := H.graded(yb, gp)
+	var yf := func(x: float, z: float) -> float: return lerpf(float(yb.call(x, z)), float(gr.call(x, z)), smoothstep(0.0, 4.0, U.edge_d(x, z)))
 	var main: Array = []
 	for r: Array in regions: main.append([r[0], r[1], r[2], r[3], "-"])
 	for p: Array in pads: main.append([p[0], p[1], p[2], p[3], "-"])

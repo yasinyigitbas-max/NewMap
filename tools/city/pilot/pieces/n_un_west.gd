@@ -7,8 +7,8 @@ extends SceneTree
 ## it and the LAB WING (civ_school_wing) south of it face the same east walk. Behind them, off J Ave's two aprons
 ## (v -657 in, v -543 out), the FACULTY ROAD with the faculty's stalls along it and the labs' service aprons; between
 ## the road and the buildings the engineering students' SOLAR TEST FIELD (panels on gravel, fenced) and a grass yard.
-## LAND: flat at 6.150 except the south-west corner, which falls with J Ave to 5.33 at (-790.8, -510): the road and the
-## stalls follow the surface (at most 1.65 %); the buildings stand where it is flat.
+## LAND (Yasin: "build according to it"): the ground follows the land (n_un_site.g), falling with J Ave toward the
+## south-west; the road and the stalls follow it; each building on a level pad at its front's height.
 const PASS := 2
 const K := preload("res://tools/city/pilot/kit_lib.gd")
 const Wr := preload("res://tools/city/pilot/pieces/wear_lib.gd")
@@ -55,6 +55,8 @@ const ITEMS := [
 	["plant_agave_americana", "normal", -726.0, -625.0, 0.0, false], ["plant_bird_of_paradise", "normal", -726.0, -578.0, 0.0, false],
 ]
 
+var PY: Array = []     # pad heights (local), one per row of B: the ground at the middle of each front
+
 func _init() -> void: _run.call_deferred()
 
 static func bbox(f: String) -> Array: return (K.building_stats(f).near as Dictionary).bbox
@@ -67,7 +69,11 @@ func _run() -> void:
 	var bl := Node3D.new(); bl.name = "Buildings"; root.add_child(bl)
 	var g := K.Ground.new(); var props := K.Props.new(); var dec := K.Decals.new()
 	var rr := Wr.rng_for("n_un_west")
-	var yf := func(x: float, z: float) -> float: return U.y(x, z)
+	var yb := func(x: float, z: float) -> float: return U.y(x, z)
+	var pe: Array = []
+	for b: Array in B:
+		PY.append(H.pad_height(fp(b), float(b[4]), yb)); pe.append(H.pad_entry(fp(b), float(PY[PY.size() - 1])))
+	var yf := H.graded(yb, pe)
 	var lot: Array = []
 	for s: Array in STALLS:
 		var z := -652.0
@@ -76,8 +82,7 @@ func _run() -> void:
 	for r in 4:
 		sol.append([SOLAR[0] + 1.0, SOLAR[1] + 1.5 + 4.2 * r, SOLAR[2] - 1.0, SOLAR[1] + 3.5 + 4.2 * r, "concrete"])   # the panel rows' footings
 	var paints: Array = []
-	for b: Array in B:
-		var f := fp(b); paints.append([f[0], f[1], f[2], f[3], "concrete"])
+	for b: Array in B: paints.append(H.pad_rect(fp(b)))
 	paints.append_array([
 		[X0, IN[0] - 1.0, ROAD[1], IN[1] + 1.0, "asphalt"],           # in from J Ave
 		[X0, OUT[0] - 1.0, ROAD[1], OUT[1] + 1.0, "asphalt"],         # out to J Ave
@@ -94,11 +99,13 @@ func _run() -> void:
 	main.append_array(paints)
 	for r: Array in regions: H.paint(g, r[0], r[1], r[2], r[3], r[5], String(r[4]), yf)
 	H.paint(g, X0, Z0, X1, Z1, main, "grass", yf)
-	for b: Array in B:
+	for i in B.size(): H.pad_at(g, fp(B[i]), float(PY[i]), yf)
+	for i in B.size():
+		var b: Array = B[i]
 		var sill := float(b[5])
-		if sill > 0.03:
-			var f := fp(b); var gy := U.y(float(b[2]), float(b[3]))
-			H.steps_x(g, float(b[3]), 4.0, f[2] + ceilf(sill / 0.17) * 0.3, f[2], gy, gy + sill)
+		var f := fp(b); var gy: float = yf.call(f[2], float(b[3])); var top := float(PY[i]) + sill
+		if top - gy > 0.03:
+			H.steps_x(g, float(b[3]), 4.0, f[2] + ceilf((top - gy) / 0.17) * 0.3, f[2], gy, top)
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
 	if PASS >= 2: H.polish(props, g, ITEMS)
 	H.finish(root, g, props, dec, "n_un_west")
@@ -106,7 +113,9 @@ func _run() -> void:
 
 func _build(bl: Node3D, props: K.Props, dec: K.Decals, rr: RandomNumberGenerator, yf: Callable) -> void:
 	var P := func(base: String, cond: String, x: float, z: float, yaw := 0.0, collide := true) -> void: H.put(props, base, cond, x, z, yf, yaw, collide)
-	for b: Array in B: K.building(bl, String(b[1]), Vector3(b[2], U.y(float(b[2]), float(b[3])), b[3]), float(b[4]), String(b[0]))
+	for i in B.size():
+		var b: Array = B[i]
+		K.building(bl, String(b[1]), Vector3(b[2], float(PY[i]), b[3]), float(b[4]), String(b[0]))
 	# ---- the faculty road: wheel stops at the stalls' heads, two lot lights, the exit's stop sign, a no-entry at the exit
 	var z := -652.0 + 1.35
 	while z < -548.0:

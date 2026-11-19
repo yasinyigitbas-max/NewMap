@@ -13,11 +13,12 @@ extends RefCounted
 ##  - aprons (legs_measured.json, 54-60 m from every node, both sides of every leg): on each side of the campus at
 ##    54-60 m from the corner nodes and from the middle T's: -746 .. -740, -660 .. -654, -546 .. -540, -460 .. -454.
 ##  - the land under the campus: 3.95 .. 6.31; 6.0 - 6.3 over most of it, falling into the SW corner with the streets.
-## The ground: flat at the walks' 6.150 except the SW, where it falls to the two low walks at 1.65 % (a soft minimum of
-## the flat, a plane rising inward from J Ave's walk and one rising inward from the south walk). It meets every walk
-## exactly and stays over the land everywhere (checked on a 40 m grid: 0 - 0.4 m over it).
+## The ground follows the land (see g below); every building stands on a level pad at its front's height.
 
 const PAD_Y := 4.0
+const LAND := preload("res://tools/city/pilot/pieces/n_un_land.gd")
+const LIFT := 0.05
+const EASE := 12.0
 const TOP := 6.15
 const E_W := -790.8
 const E_E := -409.2
@@ -43,16 +44,19 @@ static func smin(a: float, b: float, k := 0.6) -> float:
 	var h := clampf(0.5 + 0.5 * (b - a) / k, 0.0, 1.0)
 	return lerpf(b, a, h) - k * h * (1.0 - h)
 
-## the campus ground (world height)
+## the campus ground (world height). (19 Nov, Yasin: "Don't forget about the elevation, build according to it") it
+## FOLLOWS THE LAND: 5 cm over the land's own surface (n_un_land.gd, the 4 m nodes of terrain_grid.npz, bilinear), and
+## within 12 m of each walk eased onto that walk's height (smoothstep), one side after the other (the corners agree).
 static func g(u: float, v: float) -> float:
-	var wt := tab(W, v) + K_IN * maxf(u - E_W, 0.0)
-	var st := tab(S, u) + K_IN * maxf(E_S - v, 0.0)
-	var y := minf(smin(wt, st, 0.2), TOP)
-	# within 3 m of the two low walks: eased onto them exactly (the soft minimum is up to 5 cm under them at the corner)
-	var dw := u - E_W; var ds := E_S - v
-	if dw < 3.0: y = lerpf(tab(W, v), y, clampf(dw / 3.0, 0.0, 1.0))
-	if ds < 3.0: y = lerpf(tab(S, u), y, clampf(ds / 3.0, 0.0, 1.0))
+	var y := LAND.at(u, v) + LIFT
+	y = lerpf(tab(W, v), y, smoothstep(0.0, EASE, u - E_W))
+	y = lerpf(TOP, y, smoothstep(0.0, EASE, E_E - u))
+	y = lerpf(TOP, y, smoothstep(0.0, EASE, v - E_N))
+	y = lerpf(tab(S, u), y, smoothstep(0.0, EASE, E_S - v))
 	return y
+
+## distance to the nearest of the campus's four walks (graded aprons ease back onto the ground before it)
+static func edge_d(u: float, v: float) -> float: return minf(minf(u - E_W, E_E - u), minf(v - E_N, E_S - v))
 
 ## local height (piece frame)
 static func y(u: float, v: float) -> float: return g(u, v) - PAD_Y

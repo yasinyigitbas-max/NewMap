@@ -274,3 +274,43 @@ static func polish(props: K.Props, g: K.Ground, items: Array) -> int:
 		props.add(String(it[0]), String(it[1]), Vector3(float(it[2]), y, float(it[3])), float(it[4]), bool(it[5]) if it.size() > 5 else true)
 		n += 1
 	return n
+
+## (hospital / campus, 19 Nov) a building's level pad: the middle of its front (footprint f = [u0, v0, u1, v1] and its
+## yaw: the side it faces) gives the height; the pad is the footprint plus a margin, with faces to the field round it.
+## Returns the pad height (local). The caller leaves the pad rect as a "-" hole in its field paint (pad_rect).
+static func front_mid(f: Array, yaw: float) -> Vector2:
+	var cx := (float(f[0]) + float(f[2])) * 0.5; var cz := (float(f[1]) + float(f[3])) * 0.5
+	if absf(yaw) < 1.0: return Vector2(cx, f[3])
+	if absf(absf(yaw) - 180.0) < 1.0: return Vector2(cx, f[1])
+	if absf(yaw - 90.0) < 1.0: return Vector2(f[2], cz)
+	return Vector2(f[0], cz)
+static func pad_rect(f: Array, m := 0.3) -> Array: return [float(f[0]) - m, float(f[1]) - m, float(f[2]) + m, float(f[3]) + m, "-"]
+static func pad_building(g: K.Ground, f: Array, yaw: float, field: Callable, m := 0.3) -> float:
+	var y := pad_height(f, yaw, field, m)
+	level_pad(g, "concrete", float(f[0]) - m, float(f[1]) - m, float(f[2]) + m, float(f[3]) + m, y, field)
+	return y
+## the pad's height: the ground at the middle of its front, raised where the ground anywhere under the pad is higher
+## (the ground follows the land, so the land never shows through a pad cut into a slope; the front then needs steps)
+static func pad_height(f: Array, yaw: float, field: Callable, m := 0.3) -> float:
+	var fm := front_mid(f, yaw)
+	var y: float = field.call(fm.x, fm.y)
+	var x := float(f[0]) - m
+	while x <= float(f[2]) + m + 0.01:
+		var z := float(f[1]) - m
+		while z <= float(f[3]) + m + 0.01:
+			y = maxf(y, float(field.call(x, z))); z += 1.0
+		x += 1.0
+	return y
+## the field graded up to raised pads: within reach of a pad the ground rises toward it at `slope` (6 %), so a door on a
+## pad raised over the walk meets a graded apron, not a kerb. pads: [[u0, v0, u1, v1, y], ...] (the pad rects).
+static func graded(field: Callable, pads: Array, slope := 0.06) -> Callable:
+	return func(x: float, z: float) -> float:
+		var y: float = field.call(x, z)
+		for p: Array in pads:
+			var dx := maxf(maxf(float(p[0]) - x, x - float(p[2])), 0.0); var dz := maxf(maxf(float(p[1]) - z, z - float(p[3])), 0.0)
+			y = maxf(y, float(p[4]) - slope * sqrt(dx * dx + dz * dz))
+		return y
+## a pad rect with its height for graded(): footprint f plus margin m
+static func pad_entry(f: Array, y: float, m := 0.3) -> Array: return [float(f[0]) - m, float(f[1]) - m, float(f[2]) + m, float(f[3]) + m, y]
+static func pad_at(g: K.Ground, f: Array, y: float, field: Callable, m := 0.3) -> void:
+	level_pad(g, "concrete", float(f[0]) - m, float(f[1]) - m, float(f[2]) + m, float(f[3]) + m, y, field)
