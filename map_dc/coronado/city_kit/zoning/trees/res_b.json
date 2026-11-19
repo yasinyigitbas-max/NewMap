@@ -1,0 +1,105 @@
+{
+ "area": "res_b",
+ "piece": "s_res_b",
+ "zone": "Residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - parkway trees, runs of one species per block face, 20-30 m apart; thinned to 4 a place by the in-view limit (5 put 9 broadleaf in view, limit 8); Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -606.45,
+    6.15,
+    -356.418
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, nothing within 3 m: jacaranda, the face's species (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -593.55,
+    6.15,
+    -243.582
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass, nothing within 3 m: jacaranda, the face's species (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -606.45,
+    6.15,
+    -331.874
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway grass, 24.5 m on: same run (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -593.55,
+    6.15,
+    -268.126
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "west parkway grass, 24.5 m on: same run (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -593.55,
+    6.15,
+    -354.278
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway grass, nothing within 3 m: queen palm, the face's species (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -606.45,
+    6.15,
+    -245.722
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "east parkway grass, nothing within 3 m: queen palm, the face's species (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -593.55,
+    6.15,
+    -327.113
+   ],
+   "yaw": 318,
+   "scale": 0.95,
+   "why": "east parkway grass, 27.2 m on: same run (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -606.45,
+    6.15,
+    -272.887
+   ],
+   "yaw": 71,
+   "scale": 0.85,
+   "why": "east parkway grass, 27.2 m on: same run (place 2 of 2 of this piece)"
+  }
+ ]
+}
