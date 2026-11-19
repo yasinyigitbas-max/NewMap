@@ -67,8 +67,11 @@ void CityPed::make() {
 	Ref<AnimationLibrary> lib = rl->load(dir + String("clips_") + g + String(".res"));
 	if (lib.is_valid()) {
 		anim->add_animation_library(StringName(), lib);
+		// the Quaternius library's clips, fitted to this figure (tool make_anims.gd): "ual/Walk_Loop" and so on
+		Ref<AnimationLibrary> ual = rl->load(dir + String("clips_ual_") + g + String(".res"));
+		if (ual.is_valid()) anim->add_animation_library(StringName("ual"), ual);
 		if (lib->has_animation("get_up")) { Ref<Animation> a = lib->get_animation("get_up"); getup_len = a->get_length(); }
-		if (lib->has_animation(clip)) anim->play(clip);
+		if (anim->has_animation(clip)) { anim->play(clip); if (clip_at >= 0.0) { anim->seek(clip_at, true); anim->pause(); } }
 	}
 	// the standing figure in this node's own frame: where each driven bone is, and from them the body's own measures.
 	// The body's frame is: facing +z, +x to its left. A figure that faces the other way is turned round first.
@@ -119,6 +122,13 @@ void CityPed::_ready() {
 void CityPed::set_clip(const String &p_clip) {
 	clip = p_clip;
 	if (made && anim && mode == MODE_ANIM && anim->has_animation(clip)) anim->play(clip, 0.25);
+}
+
+// For pictures and checks: the clip held still at a moment of it (seconds); below 0 = it runs
+void CityPed::set_clip_at(double p_t) {
+	clip_at = p_t;
+	if (!made || !anim || mode != MODE_ANIM || !anim->has_animation(clip)) return;
+	if (clip_at >= 0.0) { anim->play(clip, 0.0); anim->seek(clip_at, true); anim->pause(); } else anim->play(clip, 0.25);
 }
 
 // The body takes over from the animation: every part where its bone is at this moment
@@ -270,6 +280,8 @@ void CityPed::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_body_id", "id"), &CityPed::set_body_id);
 	ClassDB::bind_method(D_METHOD("get_body_id"), &CityPed::get_body_id);
 	ClassDB::bind_method(D_METHOD("set_clip", "clip"), &CityPed::set_clip);
+	ClassDB::bind_method(D_METHOD("set_clip_at", "seconds"), &CityPed::set_clip_at);
+	ClassDB::bind_method(D_METHOD("get_clip_at"), &CityPed::get_clip_at);
 	ClassDB::bind_method(D_METHOD("get_clip"), &CityPed::get_clip);
 	ClassDB::bind_method(D_METHOD("set_skill", "skill"), &CityPed::set_skill);
 	ClassDB::bind_method(D_METHOD("get_skill"), &CityPed::get_skill);
@@ -278,6 +290,7 @@ void CityPed::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_state"), &CityPed::get_state);
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "body_id"), "set_body_id", "get_body_id");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "clip"), "set_clip", "get_clip");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "clip_at"), "set_clip_at", "get_clip_at");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "skill"), "set_skill", "get_skill");
 }
 

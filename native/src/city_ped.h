@@ -31,7 +31,7 @@ private:
 	pb::Person body;
 	int mode = MODE_ANIM;
 	String body_id = "M1", clip = "idle";
-	double skill = 1.0;
+	double skill = 1.0, clip_at = -1.0;
 	bool made = false;
 	Node3D *model = nullptr;
 	Skeleton3D *skel = nullptr;
@@ -64,6 +64,8 @@ public:
 	String get_body_id() const { return body_id; }
 	void set_clip(const String &p_clip);
 	String get_clip() const { return clip; }
+	void set_clip_at(double p_t);
+	double get_clip_at() const { return clip_at; }
 	void set_skill(double p_s) { skill = p_s; }
 	double get_skill() const { return skill; }
 
