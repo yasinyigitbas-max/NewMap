@@ -1,0 +1,566 @@
+{
+ "fixes": [
+  {
+   "at": [
+    160.0,
+    0.150000005960464,
+    -132.0
+   ],
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_ficus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    128.0,
+    0.150000005960464,
+    -106.0
+   ],
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_ficus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    178.0,
+    0.150000005960464,
+    -112.0
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    184.0,
+    0.150000005960464,
+    -133.0
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    58.0,
+    0.150000005960464,
+    -106.0
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    74.0,
+    0.150000005960464,
+    -110.0
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    144.0,
+    0.150000005960464,
+    -112.0
+   ],
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    118.980003356934,
+    1.20000004768372,
+    -111.699996948242
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    118.980003356934,
+    1.20000004768372,
+    -112.119995117188
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    118.980003356934,
+    1.20000004768372,
+    -112.540000915527
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 12.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    118.980003356934,
+    0.349999994039536,
+    -113.400001525879
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_gas is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    60.2400016784668,
+    1.20000004768372,
+    -122.869995117188
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 14.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    60.6600036621094,
+    1.20000004768372,
+    -122.869995117188
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 15.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    61.0800018310547,
+    1.20000004768372,
+    -122.869995117188
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 16.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    75.5650024414063,
+    1.20000004768372,
+    -124.970001220703
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    75.9850006103516,
+    1.20000004768372,
+    -124.970001220703
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 18.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    76.4050064086914,
+    1.20000004768372,
+    -124.970001220703
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 19.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    61.9400024414063,
+    0.349999994039536,
+    -122.869995117188
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 20.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_gas is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    77.2649993896484,
+    0.349999994039536,
+    -124.970001220703
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 21.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_gas is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    133.485000610352,
+    1.20000004768372,
+    -124.970001220703
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 22.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    133.904998779297,
+    1.20000004768372,
+    -124.970001220703
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 23.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    134.324996948242,
+    1.20000004768372,
+    -124.970001220703
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 24.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    148.755004882813,
+    1.20000004768372,
+    -124.869995117188
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 25.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    149.175003051758,
+    1.20000004768372,
+    -124.869995117188
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 26.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    149.595001220703,
+    1.20000004768372,
+    -124.869995117188
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 27.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    135.184997558594,
+    0.349999994039536,
+    -124.970001220703
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 28.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_gas is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    150.455001831055,
+    0.349999994039536,
+    -124.869995117188
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 29.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_gas is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    119.0,
+    0.150000005960464,
+    -101.0
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 30.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (7.7 m from a wall, 32.1 m from a fence)]"
+  },
+  {
+   "at": [
+    145.255004882813,
+    0.150000005960464,
+    -124.299995422363
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 31.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.1 m from a wall, 5.8 m from a fence)]"
+  },
+  {
+   "at": [
+    131.884994506836,
+    0.150000005960464,
+    -124.400001525879
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 32.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (2.1 m from a wall, 19.2 m from a fence)]"
+  },
+  {
+   "at": [
+    130.934997558594,
+    0.150000005960464,
+    -124.400001525879
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 33.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.1 m from a wall, 20.2 m from a fence)]"
+  },
+  {
+   "at": [
+    73.9650039672852,
+    0.150000005960464,
+    -124.400001525879
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 34.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (2.1 m from a wall, 25.6 m from a fence)]"
+  },
+  {
+   "at": [
+    73.0149993896484,
+    0.150000005960464,
+    -124.400001525879
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 35.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.1 m from a wall, 26.1 m from a fence)]"
+  },
+  {
+   "at": [
+    146.205001831055,
+    0.150000005960464,
+    -124.299995422363
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 36.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.1 m from a wall, 4.9 m from a fence)]"
+  },
+  {
+   "at": [
+    51.5999984741211,
+    0.162000000476837,
+    -112.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 37.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    58.2900354856079,
+    1.64999869465828,
+    -138.224987447667
+   ],
+   "box": [
+    -2.05003440380096,
+    1.49999868869781,
+    6.8249933719635,
+    0.340022840499878,
+    2.99999737739563,
+    0.389986553192139
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 42.0,
+   "name": "sc_col_0",
+   "node": "Buildings/alleyc2s_architects",
+   "op": "add_box",
+   "reason": "alleyc2s_architects: a 0.3 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    148.57253692506,
+    0.749942332506179,
+    -139.449991083098
+   ],
+   "box": [
+    -3.81753265857697,
+    0.599942326545715,
+    7.04999685287476,
+    0.20498064994812,
+    1.19988465309143,
+    1.14000705718994
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 43.0,
+   "name": "sc_col_0",
+   "node": "Buildings/alleyc2s_walkup_e",
+   "op": "add_box",
+   "reason": "alleyc2s_walkup_e: a 0.2 x 1.1 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "n_cc_b2_s"
+}

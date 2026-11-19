@@ -1,0 +1,33 @@
+{
+ "area": "cc_b4_w",
+ "piece": "n_cc_b4_w",
+ "zone": "city centre",
+ "rule": "docs/TREE_PLAN.md: city centre few - wells on the wide pavements only, none in courts or alleys (zone 48 -> about 40)",
+ "written": "19 Nov 2026 (PC session, city-wide superchecker run): the trees standing in wells in the paving kept on their spots, the trees of lawns, courts and yards out",
+ "trees": [
+  {
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "at": [
+    -149.97,
+    6.09,
+    -813.0
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "kept on its spot: a tree in a well in the paving, as the plan wants for the city centre"
+  },
+  {
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "at": [
+    -147.6,
+    6.09,
+    -813.0
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "kept on its spot: a tree in a well in the paving, as the plan wants for the city centre"
+  }
+ ]
+}
