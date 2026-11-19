@@ -1,0 +1,57 @@
+{
+ "area": "ar_b068_b",
+ "piece": "s_ar_b068_b",
+ "zone": "Arterial",
+ "rule": "docs/TREE_PLAN.md: arterials - trees on the grass strips only, one species a face; palms here because the broadleaf in view reached the limit (8 within 60 m) at s_ar_b068_a; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -46.443,
+    7.911,
+    -1411.37
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west grass strip, nothing within 3 m: queen palm"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -86.02,
+    6.715,
+    -1411.356
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west grass strip, 39.6 m on, 2.7 m off the sign: same run"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -33.49,
+    8.101,
+    -1388.667
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east grass strip, nothing within 3 m: queen palm (palms, not broadleaf: the in-view limit)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -78.094,
+    7.004,
+    -1388.618
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east grass strip, 44.6 m on, past the storm inlet at 65 m"
+  }
+ ]
+}
