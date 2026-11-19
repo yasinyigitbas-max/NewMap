@@ -1,0 +1,61 @@
+{
+ "fixes": [
+  {
+   "at": [
+    15.6489864985148,
+    0.162000000476837,
+    -12.0858154296875
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -14.6149593989054,
+    0.0120000001043081,
+    7.85040291150411
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -10.0108642578125,
+    0.162000000476837,
+    -15.3105772336324
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    9.75668334960938,
+    0.162000000476837,
+    -13.7380981445312
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "j_rg_se_w400_s315"
+}
