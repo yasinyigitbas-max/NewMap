@@ -1228,6 +1228,11 @@ void Sim::population() {
 		else if (!loaded_at(x[i], z[i]) && (!vis || d2 > 250.0f * 250.0f)) despawn(i, 6);   // its cell has gone: so has it
 		else if (kind[i] == K_AMBIENT && why[i] == W_DEADEND && wait_t[i] > 4.0f) despawn(i, 1);
 		else if (bus_done && (!vis || d2 > 80.0f * 80.0f)) despawn(i, 4);
+		else if (bus_done && route_of[i] >= 0 && routes[route_of[i]].loop && lane[i] == routes[route_of[i]].lanes.front()) {   // a loop, and somebody watches: round again
+			rt[i] = routes[route_of[i]].lanes; rt_i[i] = 0; next_stop[i] = 0;
+			nconn[i] = pick_routed(i, lane[i]);
+			route_advance(i);
+		}
 		else if (wait_t[i] > cfg.stuck_despawn_s && why[i] != W_SIGNAL && why[i] != W_CRASH && why[i] != W_GOAL && (!vis || tier[i] == TIER_FAR)) despawn(i, 2);
 	}
 	buses_population();

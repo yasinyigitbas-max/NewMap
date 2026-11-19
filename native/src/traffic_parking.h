@@ -248,6 +248,30 @@ struct Parking {
 		return false;
 	}
 
+	// A parked car of ANY row of stalls (another lane's, a car park's) in the way of the S out of stall k. The kerb ahead
+	// on the stall's own lane is not all there is: found 20 Nov by tests/traffic/test_bus.gd (whole city with parked cars),
+	// a car pulled half out at lane 398 and stood for good, its nose turned in, before a car parked in another row.
+	bool car_in_the_way_out(const tc::Sim &sim, int k) const {
+		const Stall &q = st[k];
+		float a[5], b[5];
+		sim.piece_pose(q.lane, q.s, 0.0f, a);
+		sim.piece_pose(q.lane, std::min(q.s + 2.0f, sim.p_len[q.lane]), 0.0f, b);
+		float fx = b[0] - a[0], fz = b[2] - a[2];
+		const float fl = std::sqrt(fx * fx + fz * fz);
+		float tx = a[0] - q.x, tz = a[2] - q.z;                 // from the stall to the lane's middle
+		const float tl = std::sqrt(tx * tx + tz * tz);
+		if (fl < 0.01f || tl < 0.01f) return true;
+		fx /= fl; fz /= fl; tx /= tl; tz /= tl;
+		for (int j = 0; j < (int)st.size(); j++) {
+			if (j == k || st[j].model == EMPTY) continue;
+			const float dx = st[j].x - q.x, dz = st[j].z - q.z;
+			if (dx * dx + dz * dz > 22.0f * 22.0f) continue;
+			const float along = dx * fx + dz * fz, toward = dx * tx + dz * tz;
+			if (along > 0.5f && along < tc::OUT_M + 7.0f && toward > -1.2f && toward < tl + 1.2f) return true;
+		}
+		return false;
+	}
+
 	void try_pull_out(tc::Sim &sim) {
 		if (cand.empty() || sim.n_alive >= sim.cfg.max_cars + 4 || sim.n_alive >= tc::MAX_CARS - 4) return;
 		for (int tries = 0; tries < 10; tries++) {
@@ -257,6 +281,7 @@ struct Parking {
 			const int L = q.lane;
 			if (taken_between(L, q.s, q.s + tc::OUT_M + 4.5f, k)) continue;   // free kerb ahead for the S out into the lane
 			if (q.s < 45.0f || q.s > sim.p_len[L] - 30.0f) continue;       // not at a junction
+			if (car_in_the_way_out(sim, k)) continue;
 			const float dx = q.x - sim.cam_x, dz = q.z - sim.cam_z, d2 = dx * dx + dz * dz;
 			if (d2 < 14.0f * 14.0f || d2 > 300.0f * 300.0f) continue;      // not on top of the camera, not where nobody sees it
 			bool clear = true;

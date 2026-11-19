@@ -74,6 +74,8 @@ private:
 		std::vector<uint8_t> cells;
 		bool cells_dirty = false;
 		bool parked = true;
+		float hour = 12.0f;         // the game's hour: how often the buses run
+		float bus_tph = 0.0f;       // > 0: so many buses an hour on every line whatever the hour (tests)
 		bool pc = false;            // the player's car (set_player_car): a box the drivers see, brake for and go round
 		float pcx = 0, pcy = 0, pcz = 0, pcyaw = 0, pcvx = 0, pcvz = 0, pchl = 2.2f, pchw = 0.95f;
 		// knocked cars: where each one is (a box the drivers see), which cars and stalls became one, which ask to drive on
@@ -94,13 +96,14 @@ private:
 		float x, y, z, yaw, pitch, px, py, pz, pyaw, ppitch, v, hl, hw, roll, proll, steer;
 		float psteer, odo, podo;   // the front wheels' angle before its last move; metres rolled, now and before (the wheels' spin)
 		int32_t tu, span;
+		int32_t stop;      // a bus standing at a stop with its doors open: the stop's place (places.bin), else -1
 	};
 	struct Snap {
 		int tick = 0, n = 0;
 		int64_t t_usec = 0;      // when the step finished
 		double clock = 0.0;      // the traffic's own time (the signals run on it)
 		float step_us = 0.0f, carry = 0.0f;
-		int spawned = 0, despawned = 0;
+		int spawned = 0, despawned = 0, buses = 0, bus_stops = 0;
 		Row rows[MAX_ROWS];
 	};
 	Snap shared, now;           // shared: under mx; now: the main thread's copy
@@ -120,6 +123,13 @@ private:
 	double night = 0.0;
 	int debug_car = -1;          // tests: the history of this car is kept and handed back by run_test ("trace")
 	String streets_path = "res://map_dc/coronado/city_kit/traffic/streets.bin";
+	// the buses: lines made from the map's own bus stops (make_bus_lines)
+	String places_path = "res://map_dc/coronado/city_kit/traffic/places.bin";
+	bool buses_on = true;
+	int bus_model = 11;         // car_models.h: 11 the small bus (7.4 m), 10 the city bus (12.2 m)
+	double hour = 12.0, bus_tph = 0.0;
+	struct LineInfo { int stops = 0; float metres = 0.0f; bool loop = false; std::vector<int32_t> places; };
+	std::vector<LineInfo> lines_info;
 	int near_max = 4;            // moving cars drawn with the near model, at most
 	double near_r = 22.0, mid_r = 85.0, far_r = 420.0, parked_mid_r = 35.0;
 
@@ -256,6 +266,20 @@ public:
 	int get_max_cars() const { return max_cars; }
 	void set_parked(bool p_on) { parked_on = p_on; active_dirty = true; }
 	bool get_parked() const { return parked_on; }
+	// the buses
+	void make_bus_lines();
+	Array bus_lines() const;
+	void buses_at_stops(std::vector<float> &r_buses) const;   // 7 a bus: its stop's place, x, z, yaw, half length, half width, id
+	void set_hour(double p_hour);
+	double get_hour() const { return hour; }
+	void set_bus_tph(double p_tph);
+	double get_bus_tph() const { return bus_tph; }
+	void set_buses(bool p_on) { buses_on = p_on; }
+	bool get_buses() const { return buses_on; }
+	void set_places_path(const String &p_p) { places_path = p_p; }
+	String get_places_path() const { return places_path; }
+	void set_bus_model(int p_m) { bus_model = p_m; }
+	int get_bus_model() const { return bus_model; }
 	void set_density(double p_d) { density = p_d; }
 	double get_density() const { return density; }
 	void set_shadows(bool p_on) { shadows = p_on; }

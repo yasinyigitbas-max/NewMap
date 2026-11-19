@@ -258,6 +258,8 @@ public:
 		float tph[24] = { 0 };             // trips per hour
 		int model = 0;
 		float length = 0.0f;
+		std::vector<int32_t> stop_tag;     // per stop: whose stop it is (the game's own number: a place of places.bin)
+		uint8_t loop = 0;                  // the last lane is the first: a bus at the end goes round again
 	};
 	std::vector<Route> routes;
 	std::unordered_set<int64_t> trips_out;   // trips already spawned (route << 32 | departure second of the day)
@@ -297,6 +299,12 @@ public:
 	void set_dynamic(int n, const float *boxes);
 	void step(float dt, double clock);
 	void set_time_of_day(double s) { tod = s; }
+	// a bus that stands at a stop with its doors open: that stop's tag, else -1
+	int bus_stop_tag(int i) const {
+		if (!alive[i] || kind[i] != K_BUS || !arrived[i] || dwell[i] <= 0.0f || route_of[i] < 0 || route_of[i] >= (int)routes.size()) return -1;
+		const Route &R = routes[route_of[i]];
+		return next_stop[i] >= 0 && next_stop[i] < (int)R.stop_tag.size() ? R.stop_tag[next_stop[i]] : -1;
+	}
 
 	// ---- routes, buses, scripted cars (traffic_route.cpp)
 	bool find_route(int from_lane, int to_lane, std::vector<int32_t> &out) const;

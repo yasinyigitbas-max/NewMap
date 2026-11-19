@@ -74,6 +74,12 @@ void CityTraffic::step_once(double p_clock) {
 		input.kill_ids.clear(); input.kill_stalls.clear(); input.adopt.clear();
 	}
 	sim->cfg.max_cars = std::min(in.max_cars, (int)MAX_ROWS - 2);
+	// the buses: a timetable in real seconds; every 5 minutes by day, every 15 in the evening, every half hour at night
+	{
+		const float tph = in.bus_tph > 0.0f ? in.bus_tph : ((in.hour >= 6.0f && in.hour < 21.0f) ? 12.0f : (in.hour >= 5.0f ? 4.0f : 2.0f));
+		for (tc::Sim::Route &R : sim->routes) for (int k = 0; k < 24; k++) R.tph[k] = tph;
+		sim->set_time_of_day(std::fmod(p_clock, 86400.0));
+	}
 	sim->cfg.dens_scale = in.density;
 	sim->cfg.hour_factor = 1.0f;
 	if (in.cells_dirty) parking.set_cells(in.cells, in.cells_all);
@@ -162,10 +168,11 @@ void CityTraffic::step_once(double p_clock) {
 		r.px = sim->px[i]; r.py = sim->py[i]; r.pz = sim->pz[i]; r.pyaw = sim->pyaw[i]; r.ppitch = sim->ppitch[i];
 		r.v = sim->v[i]; r.hl = sim->hl[i]; r.hw = sim->hw[i]; r.roll = sim->roll[i]; r.proll = sim->proll[i]; r.steer = steer_now[i];
 		r.tu = sim->tu[i]; r.span = std::max(1, (int)sim->span[i]);
+		r.stop = sim->bus_stop_tag(i);
 	}
 	s.tick = sim->tick; s.t_usec = usec_now(); s.clock = p_clock + STEP_S;
 	s.step_us = (float)sim->st.last_step_us; s.carry = sim->carry;
-	s.spawned = sim->st.spawned; s.despawned = sim->st.despawned;
+	s.spawned = sim->st.spawned; s.despawned = sim->st.despawned; s.buses = sim->st.buses_spawned; s.bus_stops = sim->st.bus_stops_served;
 	{
 		std::lock_guard<std::mutex> lock(mx);
 		shared = s;
@@ -927,6 +934,16 @@ Dictionary CityTraffic::knock_stats() const {
 	return d;
 }
 
+void CityTraffic::buses_at_stops(std::vector<float> &r_buses) const {
+	r_buses.clear();
+	for (int i = 0; i < now.n; i++) {
+		const Row &r = now.rows[i];
+		if (r.stop < 0) continue;
+		const float q[7] = { (float)r.stop, r.x, r.z, r.yaw, r.hl, r.hw, (float)r.id };
+		r_buses.insert(r_buses.end(), q, q + 7);
+	}
+}
+
 void CityTraffic::cars_for_people(std::vector<float> &r_cars) const {
 	r_cars.clear();
 	for (int i = 0; i < now.n; i++) {
@@ -976,6 +993,7 @@ String CityTraffic::report() {
 			cnt.moving / f, cnt.moving_most, cnt.carry / f, max_cars, cnt.near / f, cnt.mid / f, cnt.box / f, cnt.parked_all / f, cnt.parked_mid / f, cnt.batches / f, (double)cnt.uploads / f,
 			cnt.main_us / f / 1000.0, cnt.main_us_worst / 1000.0, cnt.step_us / std::max(cnt.steps, 1) / 1000.0, cnt.step_us_worst / 1000.0);
 	s += vformat(" | pulled out of a stall %d, parked %d (since the start)", cnt.park_out, cnt.park_in);
+	s += vformat(" | bus lines %d: buses put on the road %d, stops served %d", (int)lines_info.size(), now.buses, now.bus_stops);
 	s += vformat(" | knocked loose: %d moving, %d parked; drove on %d, taken away %d, no free physical car %d", kc.moving, kc.parked, kc.rejoined, kc.taken_away, kc.no_slot);
 	cnt = Count();
 	return s;

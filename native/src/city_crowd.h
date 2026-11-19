@@ -59,7 +59,9 @@ private:
 	uint64_t traffic_id = 0, player_id = 0, streamer_id = 0;
 	std::vector<uint8_t> cells;
 	bool cells_all = true, cells_dirty = false;
-	std::vector<float> cars, dyn;
+	std::vector<float> cars, dyn, bus_buf;
+	std::vector<int> bus_here;          // the stops (places) a bus stands at now
+	int buses_served = 0;
 	std::vector<String> place_names;   // the shops' names (places.bin)
 	std::vector<pc::Event> ev_keep;   // what happened, until the game takes it (take_events)
 	Vector3 last_player; bool has_last_player = false;

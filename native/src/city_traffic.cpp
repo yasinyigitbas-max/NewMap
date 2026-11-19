@@ -3,6 +3,7 @@
 #include <cstdlib>
 
 #include "car_models.h"
+#include "ped_places.h"
 #include "traffic_sim.h"
 
 #include <godot_cpp/classes/file_access.hpp>
@@ -11,6 +12,8 @@
 #include <godot_cpp/variant/packed_byte_array.hpp>
 
 #include <algorithm>
+#include <functional>
+#include <queue>
 #include <chrono>
 #include <cmath>
 #include <vector>
@@ -53,6 +56,7 @@ bool CityTraffic::load_streets(const String &p_path) {
 	sim->set_signal_offsets(nn, off.data());
 	ready = sim->build();
 	parking.init(streets);
+	if (ready) make_bus_lines();
 	return ready;
 }
 
@@ -164,6 +168,7 @@ Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, c
 		parking.tick(*sim, dt);
 		parking.events.clear();
 		sim->set_dynamic((int)parking.dyn.size() / tc::DYN_STRIDE, parking.dyn.data());
+		sim->set_time_of_day(std::fmod(clock, 86400.0));
 		sim->step(dt, clock);
 		clock += dt;
 		sim->events.clear();
@@ -226,9 +231,150 @@ Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, c
 	d["moves_at_full_lock"] = sim->st.steer_sat; d["body_moves"] = sim->st.trk_n; d["crept_round"] = sim->st.crawl_round;
 	d["park_off_mean"] = parking.parked > 0 ? parking.park_off / parking.parked : 0.0; d["park_off_most"] = parking.park_off_max;
 	d["park_yaw_mean_deg"] = parking.parked > 0 ? parking.park_yaw / parking.parked * 57.2958 : 0.0; d["park_yaw_most_deg"] = parking.park_yaw_max * 57.2958;
+	d["bus_lines"] = (int)sim->routes.size(); d["buses_spawned"] = sim->st.buses_spawned; d["bus_stops_served"] = sim->st.bus_stops_served;
 	d["hash"] = (int64_t)(sim->state_hash() & 0x7fffffffffffffffULL);
 	sim->cfg = keep;
 	return d;
+}
+
+// The bus lines: made here from the map's own bus stops (places.bin), not written down anywhere, so a new bake's stops
+// are served without anybody's hand. A line starts at a stop and goes on to the stop not yet served that the lanes
+// reach soonest (of the six nearest), up to 14 stops or 5 km, and comes back to where it started: a loop. Up to three
+// lines: the first from the stop in the middle of the map, the others from the stop farthest from every served one.
+// The two sides of a street are two stops, so a line serves both directions on its way round.
+void CityTraffic::make_bus_lines() {
+	sim->routes.clear(); lines_info.clear();
+	if (!buses_on || !ready) return;
+	const PackedByteArray pb = FileAccess::get_file_as_bytes(places_path);
+	pc::PlaceData pd;
+	if (pb.size() < 12 || !pd.load(pb.ptr(), (size_t)pb.size())) return;
+	struct Stop { int place, lane; float s, x, z; bool used; };
+	std::vector<Stop> stops;
+	for (int p = 0; p < (int)pd.places.size(); p++) {
+		const pc::Place &P = pd.places[p];
+		if (P.kind != pc::PL_BUS || P.lane < 0 || P.lane >= sim->n_lanes) continue;
+		const int f = sim->l_flags[P.lane];
+		if (!(f & tc::LF_DRIVE) || (f & (tc::LF_BLOCKED | tc::LF_DEADEND | tc::LF_EXIT | tc::LF_ROUNDABOUT)) || sim->p_len[P.lane] < 30.0f) continue;
+		stops.push_back(Stop{ p, P.lane, std::min(std::max(P.lane_s, 12.0f), sim->p_len[P.lane] - 8.0f), P.ax, P.az, false });
+	}
+	if (stops.size() < 4) return;
+	auto d2 = [&](int a, int b) { const float dx = stops[a].x - stops[b].x, dz = stops[a].z - stops[b].z; return dx * dx + dz * dz; };
+	// the shortest way from one lane to another THROUGH JUNCTIONS ONLY, never by changing lanes: a bus that has to
+	// change lanes between a stop at the kerb and a turn a few metres on does not always get across, and then stands
+	// at the end of its lane for good (seen in the first run of tests/traffic/test_bus.gd)
+	const int nl = sim->n_lanes;
+	std::vector<float> dist(nl);
+	std::vector<int32_t> prev(nl);
+	auto conn_route = [&](int from, int to, std::vector<int32_t> &out) -> bool {
+		out.clear();
+		std::fill(dist.begin(), dist.end(), 1e18f); std::fill(prev.begin(), prev.end(), -1);
+		typedef std::pair<float, int32_t> QE;
+		std::priority_queue<QE, std::vector<QE>, std::greater<QE>> q;
+		dist[from] = 0.0f; q.push({ 0.0f, from });
+		while (!q.empty()) {
+			const QE e = q.top(); q.pop();
+			if (e.first > dist[e.second]) continue;
+			if (e.second == to) break;
+			for (int k = sim->l_out_off[e.second]; k < sim->l_out_off[e.second] + sim->l_out_n[e.second]; k++) {
+				const int c = sim->out_conn[k], t = sim->c_to[c];
+				if (sim->p_blocked[nl + c] || t < 0 || t >= nl) continue;
+				const int f = sim->l_flags[t];
+				if (!(f & tc::LF_DRIVE) || (f & (tc::LF_BLOCKED | tc::LF_DEADEND | tc::LF_EXIT))) continue;
+				const float nd = e.first + sim->p_len[nl + c] + sim->p_len[t];
+				if (nd < dist[t]) { dist[t] = nd; prev[t] = e.second; q.push({ nd, t }); }
+			}
+		}
+		if (prev[to] < 0) return false;
+		for (int l = to; l >= 0; l = prev[l]) { out.push_back(l); if (l == from) break; }
+		if (out.back() != from) { out.clear(); return false; }
+		std::reverse(out.begin(), out.end());
+		return true;
+	};
+	// metres along the lanes from one stop to another (-1: no way, or it is behind on the same lane)
+	auto way = [&](int a, int b, std::vector<int32_t> &out) -> float {
+		const int la = stops[a].lane, lb = stops[b].lane;
+		if (la == lb) { out.assign(1, la); return stops[b].s - stops[a].s > 25.0f ? stops[b].s - stops[a].s : -1.0f; }
+		if (!conn_route(la, lb, out) || out.size() < 2) return -1.0f;
+		float m = sim->p_len[la] - stops[a].s + stops[b].s;
+		for (size_t k = 1; k + 1 < out.size(); k++) m += sim->p_len[out[k]];
+		return m;
+	};
+	float cx = 0.0f, cz = 0.0f;
+	for (const Stop &st : stops) { cx += st.x; cz += st.z; }
+	cx /= (float)stops.size(); cz /= (float)stops.size();
+	float tph[24];
+	for (int h = 0; h < 24; h++) tph[h] = 12.0f;
+	for (int line = 0; line < 3; line++) {
+		int start = -1, left = 0; float best = line == 0 ? 1e18f : -1.0f;
+		for (int j = 0; j < (int)stops.size(); j++) {
+			if (stops[j].used) continue;
+			left++;
+			float d = 1e18f;
+			if (line == 0) d = (stops[j].x - cx) * (stops[j].x - cx) + (stops[j].z - cz) * (stops[j].z - cz);
+			else for (int k = 0; k < (int)stops.size(); k++) if (stops[k].used) d = std::min(d, d2(j, k));
+			if (line == 0 ? d < best : d > best) { best = d; start = j; }
+		}
+		if (start < 0 || left < 4) break;
+		std::vector<int32_t> lanes{ stops[start].lane }, ri{ 0 }, tags{ stops[start].place };
+		std::vector<float> ss{ stops[start].s };
+		stops[start].used = true;
+		int cur = start, members = 1; float total = 0.0f;
+		std::vector<int32_t> path, bpath;
+		while (members < 14 && total < 5000.0f) {
+			std::vector<std::pair<float, int>> near_;
+			for (int j = 0; j < (int)stops.size(); j++) if (!stops[j].used) near_.push_back({ d2(cur, j), j });
+			std::sort(near_.begin(), near_.end());
+			int pick = -1; float pm = 1500.0f;
+			for (int k = 0; k < std::min(6, (int)near_.size()); k++) {
+				const float m = way(cur, near_[k].second, path);
+				if (m > 60.0f && m < pm) { pm = m; pick = near_[k].second; bpath = path; }
+			}
+			if (pick < 0) break;
+			for (size_t k = 1; k < bpath.size(); k++) lanes.push_back(bpath[k]);
+			ri.push_back((int32_t)lanes.size() - 1); ss.push_back(stops[pick].s); tags.push_back(stops[pick].place);
+			stops[pick].used = true; members++; cur = pick; total += pm;
+		}
+		bool loop = false;
+		if (cur != start) {   // back to where it started
+			const float m = way(cur, start, path);
+			if (m > 0.0f && path.size() >= 2) {
+				for (size_t k = 1; k < path.size(); k++) lanes.push_back(path[k]);
+				ri.push_back((int32_t)lanes.size() - 1); ss.push_back(stops[start].s); tags.push_back(stops[start].place);
+				total += m; loop = true;
+			}
+		}
+		if (members < 3) continue;
+		const int r = sim->add_route(lanes.data(), (int)lanes.size(), ri.data(), ss.data(), (int)ri.size(), tph, bus_model);
+		if (r < 0) continue;
+		tc::Sim::Route &R = sim->routes[r];
+		if (R.stop_ri.size() != tags.size()) { sim->routes.pop_back(); continue; }
+		R.stop_tag = tags; R.loop = (loop && R.lanes.front() == R.lanes.back()) ? 1 : 0;
+		LineInfo li; li.stops = members; li.metres = R.length; li.loop = R.loop != 0; li.places = tags;
+		lines_info.push_back(li);
+	}
+}
+
+Array CityTraffic::bus_lines() const {
+	Array out;
+	for (const LineInfo &li : lines_info) {
+		Dictionary d; d["stops"] = li.stops; d["metres"] = li.metres; d["loop"] = li.loop;
+		PackedInt32Array pl; for (int32_t p : li.places) pl.push_back(p);
+		d["places"] = pl;
+		out.push_back(d);
+	}
+	return out;
+}
+
+void CityTraffic::set_bus_tph(double p_tph) {
+	bus_tph = p_tph;
+	std::lock_guard<std::mutex> lock(mx);
+	input.bus_tph = (float)p_tph;
+}
+
+void CityTraffic::set_hour(double p_hour) {
+	hour = p_hour;
+	std::lock_guard<std::mutex> lock(mx);
+	input.hour = (float)p_hour;
 }
 
 void CityTraffic::_bind_methods() {
@@ -254,6 +400,23 @@ void CityTraffic::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_streets_path"), &CityTraffic::get_streets_path);
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "max_cars"), "set_max_cars", "get_max_cars");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "parked"), "set_parked", "get_parked");
+	ClassDB::bind_method(D_METHOD("set_buses", "on"), &CityTraffic::set_buses);
+	ClassDB::bind_method(D_METHOD("get_buses"), &CityTraffic::get_buses);
+	ClassDB::bind_method(D_METHOD("set_places_path", "path"), &CityTraffic::set_places_path);
+	ClassDB::bind_method(D_METHOD("get_places_path"), &CityTraffic::get_places_path);
+	ClassDB::bind_method(D_METHOD("set_bus_model", "model"), &CityTraffic::set_bus_model);
+	ClassDB::bind_method(D_METHOD("get_bus_model"), &CityTraffic::get_bus_model);
+	ClassDB::bind_method(D_METHOD("set_hour", "hour"), &CityTraffic::set_hour);
+	ClassDB::bind_method(D_METHOD("get_hour"), &CityTraffic::get_hour);
+	ClassDB::bind_method(D_METHOD("make_bus_lines"), &CityTraffic::make_bus_lines);
+	ClassDB::bind_method(D_METHOD("bus_lines"), &CityTraffic::bus_lines);
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "buses"), "set_buses", "get_buses");
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, "places_path"), "set_places_path", "get_places_path");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "bus_model"), "set_bus_model", "get_bus_model");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "hour"), "set_hour", "get_hour");
+	ClassDB::bind_method(D_METHOD("set_bus_tph", "buses_an_hour"), &CityTraffic::set_bus_tph);
+	ClassDB::bind_method(D_METHOD("get_bus_tph"), &CityTraffic::get_bus_tph);
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "bus_tph"), "set_bus_tph", "get_bus_tph");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "density"), "set_density", "get_density");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "shadows"), "set_shadows", "get_shadows");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "bodies"), "set_bodies", "get_bodies");

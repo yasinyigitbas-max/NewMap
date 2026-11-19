@@ -1110,3 +1110,29 @@ NOT YET / NOT CHECKED: nobody has talked to anybody by hand; no sound was HEARD 
 play); the speech plugin is NOT in this repo's phone app (the old game's Android plugin must be added to the export:
 until then it is typing or Skip on the phone too); this map's shop names have no recordings (voice rendering is a
 cloud job); the old data says "About 1 minutes on foot" (its own recorded wording, left as it is).
+
+## 31. The buses (20 Nov, on the working branch)
+All C++. `tests/traffic/test_bus.gd` RESULT PASS; the traffic core test (12 runs of 30 minutes) RESULT PASS with the
+buses and the new rule below in it.
+- THE LINES are made when the streets load (`CityTraffic::make_bus_lines`), from the map's own bus stops in
+  places.bin: nothing is written down, so a new bake's stops are served by themselves. A line starts at a stop, goes
+  on to the unserved stop the lanes reach soonest (of the six nearest), up to 14 stops, and comes back to its first
+  stop: a loop. THROUGH JUNCTIONS ONLY, never by changing lanes: in the first run a bus that had to change lanes
+  between a kerb stop and a turn stood at the end of its lane for good. Today: 2 lines, 6.4 and 7.2 km round, 14
+  stops each (28 of the 77 stops that have a lane; the two sides of a street are two stops).
+- THE BUSES are the old core's timetable buses (`K_BUS`): the small bus (7.4 m; `bus_model` 10 = the 12 m city bus),
+  every 5 minutes by day, 15 in the evening, 30 at night (real minutes; `bus_tph` fixes it for tests), six on the
+  road at most. A bus appears where its timetable puts it, out of view, as the old game's did. At a stop it stays
+  INSIDE its lane, a hand's width from its edge (the old core pulled 0.35 m over the edge: there is the kerb), for
+  about 18 s. At the end of a loop it goes round again if somebody watches, else it is taken away.
+- THE PEOPLE: a bus standing at a stop is told to the crowd (`CityTraffic::buses_at_stops` -> `pc::Crowd::bus_at`):
+  the front door, on the kerb's side; the people waiting there walk to it and are gone, none to three get off.
+- 20 minutes of the whole city with parked cars: 12 buses put on the road, 75 stops served, no two cars overlapping,
+  nobody standing over 2 minutes, no moving car touching a parked one.
+- FOUND BY THIS TEST AND MENDED, NOT A BUS FAULT (traffic_parking.h `car_in_the_way_out`): a parked car pulled half
+  out of a kerb stall at lane 398 and stood for good with its nose turned in, before a car parked in ANOTHER row of
+  stalls; the queue behind it reached 12 cars. The rule looked only at the stalls of the car's own lane. It happens
+  without buses too; the old runs never had parked cars and the whole city together.
+NOT YET / NOT CHECKED: nobody has seen a bus; people getting on and off a real bus in the engine was not run (the
+brain's side is the console test's check J; the join is written, not tried); the 12 m bus was not tried on this map's
+corners; 49 stops with a lane are on no line (a line takes 14), 70 stops have no lane at all.

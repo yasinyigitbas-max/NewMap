@@ -304,6 +304,21 @@ void CityCrowd::step_brain(double p_delta) {
 	double clock = own_clock;
 	if (tr && tr->is_inside_tree()) {
 		tr->cars_for_people(cars);
+		// the buses that stand at a stop: the front door, on the kerb's side, opens to the people who wait; a few get off
+		tr->set_hour(hour);
+		tr->buses_at_stops(bus_buf);
+		std::vector<int> here;
+		for (size_t k = 0; k + 6 < bus_buf.size(); k += 7) {
+			const int place = (int)bus_buf[k];
+			here.push_back(place);
+			if (std::find(bus_here.begin(), bus_here.end(), place) != bus_here.end()) continue;
+			const float bx = bus_buf[k + 1], bz = bus_buf[k + 2], hx = std::sin(bus_buf[k + 3]), hz = std::cos(bus_buf[k + 3]), hl = bus_buf[k + 4], hw = bus_buf[k + 5];
+			const uint32_t hsh = ((uint32_t)bus_buf[k + 6] * 2654435761u) ^ ((uint32_t)place * 40503u);
+			crowd->bus_at(place, true, bx + hx * (hl - 1.3f) - hz * (hw + 0.45f), bz + hz * (hl - 1.3f) + hx * (hw + 0.45f), (int)((hsh >> 9) % 4u));
+			buses_served++;
+		}
+		for (int place : bus_here) if (std::find(here.begin(), here.end(), place) == here.end()) crowd->bus_at(place, false, 0.0f, 0.0f, 0);
+		bus_here = here;
 		crowd->set_cars((int)cars.size() / 7, cars.data());
 		if (tr->has_clock()) clock = tr->signal_clock();
 	} else crowd->set_cars(0, nullptr);
@@ -647,6 +662,7 @@ Dictionary CityCrowd::stats() const {
 	for (const Near &nb : near_pool) { if (nb.walker >= 0) nn++; if (nb.in_body) nbdy++; }
 	d["near_bodies"] = nn; d["near_pool"] = (int)near_pool.size(); d["in_physical_body"] = nbdy; d["umbrellas"] = prop_shown[0]; d["towels"] = prop_shown[1];
 	d["ducked"] = s.ducks; d["stared"] = s.stared; d["coins"] = s.coins; d["lines_said"] = s.lines_said;
+	d["bus_waits"] = s.bus_waits; d["boarded"] = s.boarded; d["alighted"] = s.alighted; d["buses_served"] = buses_served;
 	return d;
 }
 

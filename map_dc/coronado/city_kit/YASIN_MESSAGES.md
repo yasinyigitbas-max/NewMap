@@ -291,3 +291,7 @@ the other agent suggested these
 - [2026-11-20] you just went thru a context compression, remind yourself of the rules
 
 - [2026-11-20] act like the developer working on the next gta in rockstar studios
+
+- [2026-11-20] (Universal Animation Library[Source].zip on the Desktop) i got the pro quaternius pack, replace them with the free pack we have, use enter and exit animations to movements where applies before and after the main animation, like sit enter, sit, sit exit, use them for crowd fights too
+
+- [2026-11-20] wait i got the second pack too (Universal Animation Library 2[Source].zip on the Desktop)

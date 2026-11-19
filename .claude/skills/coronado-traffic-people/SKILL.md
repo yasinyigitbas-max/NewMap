@@ -79,6 +79,12 @@ The full record is `docs/TRAFFIC_PEOPLE_PORT.md` (sections 13-20 are results). T
   line in small letters and digits with underscores; a templated line is cut into sentences and round a place's
   name; if one part has no clip the whole line is a caption only.
 
+- Buses (20 Nov, doc section 31): lines are made at load from places.bin's bus stops (`make_bus_lines`), through
+  junctions only. Test `tests/traffic/test_bus.gd` (`-- --trace=ID` one car's history, `-- --nobus` the same run
+  without buses: ALWAYS compare with it before blaming the buses). Paid for: a routed car that must change lanes
+  between a kerb stop and a turn stands at the end of its lane for good; the whole city WITH parked cars had never
+  been run and hid a parked car pulling out into another row's parked car.
+
 ## Yasin's rules for this job (his words are in the doc)
 - Everything in C++: no script in any frame or tick, no script fallback. Tool-time scripts are fine.
 - Parked cars are LOW DETAIL only. Cars must never touch a pavement, a kerb or grass. Cars move naturally.

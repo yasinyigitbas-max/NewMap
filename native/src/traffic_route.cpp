@@ -328,7 +328,8 @@ void Sim::route_advance(int i) {
 	}
 	if (goal_ri[i] < 0) return;
 	goal_s[i] = R.stop_s[next_stop[i]];
-	float off = std::max(p_hw[rt[i][goal_ri[i]]] - hw[i], 0.0f) + 0.35f;
+	// (the new map: a bus stays INSIDE its lane at a stop, a hand's width from its edge: beyond the edge is the kerb)
+	float off = std::max(p_hw[rt[i][goal_ri[i]]] - hw[i] - 0.15f, 0.0f);
 	goal_lat[i] = -off; pull[i] = 1;
 }
 

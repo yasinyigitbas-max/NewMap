@@ -143,6 +143,12 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   code; the recorded voices). Words and 842 clips a voice carried over by `tools/city/traffic/make_talk.py`.
   `tests/people/test_talk.gd` RESULT PASS. Test app: `--walk=1 --people=N`, E speaks to somebody. The phone's speech
   plugin is not in this repo's app yet; this map's shop names have no recordings (captions only).
+  20 Nov ~16:00: THE BUSES (doc section 31), C++: `CityTraffic::make_bus_lines` makes loop lines from the map's own
+  bus stops when the streets load (today 2 lines, 14 stops each), the old core's timetable buses drive them (every
+  5 minutes by day), a bus at a stop opens its door to the people waiting (`buses_at_stops` -> the crowd's `bus_at`).
+  `tests/traffic/test_bus.gd` RESULT PASS, the traffic core test RESULT PASS with them. Mended on the way: a parked
+  car pulling out into a car parked in another row stood for good (traffic_parking.h). NOT tried: people boarding a
+  real bus in the engine; nobody has seen a bus.
   STILL TO DO FOR "DONE": the game's node (join to the traffic, draw far figures and the 18 near bodies with the
   acts' animations, the balancing body for a walker who is pushed or hit, capsules round the player, umbrellas,
   towels, murmur), a player on foot, the talking, a bus line, the real get-up. NO PICTURE OF THE CROWD EXISTS YET.
