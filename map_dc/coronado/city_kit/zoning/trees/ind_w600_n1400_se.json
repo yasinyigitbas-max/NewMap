@@ -1,0 +1,69 @@
+{
+ "area": "ind_w600_n1400_se",
+ "piece": "i_vc_w600_n1400_se",
+ "zone": "industrial",
+ "rule": "docs/TREE_PLAN.md: none - only the screen of eucalyptus where a yard faces homes (zone 51 -> about 30)",
+ "written": "by hand, 19 Nov 2026 (PC session, city-wide superchecker run): the builder eucalyptus kept on their spots as the screen, the torrey pines removed",
+ "trees": [
+  {
+   "base": "tree_eucalyptus_b",
+   "cond": "normal",
+   "at": [
+    -504.478,
+    2.8,
+    -1333.719
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "kept on its spot: the eucalyptus screen along the yard wall toward the homes"
+  },
+  {
+   "base": "tree_eucalyptus_b",
+   "cond": "normal",
+   "at": [
+    -587.773,
+    2.768,
+    -1320.661
+   ],
+   "yaw": 97,
+   "scale": 0.9,
+   "why": "kept on its spot: the eucalyptus screen along the yard wall toward the homes"
+  },
+  {
+   "base": "tree_eucalyptus_a",
+   "cond": "normal",
+   "at": [
+    -504.551,
+    2.531,
+    -1360.303
+   ],
+   "yaw": 194,
+   "scale": 0.95,
+   "why": "kept on its spot: the eucalyptus screen along the yard wall toward the homes"
+  },
+  {
+   "base": "tree_eucalyptus_a",
+   "cond": "normal",
+   "at": [
+    -503.939,
+    3.053,
+    -1309.386
+   ],
+   "yaw": 291,
+   "scale": 0.85,
+   "why": "kept on its spot: the eucalyptus screen along the yard wall toward the homes"
+  },
+  {
+   "base": "tree_eucalyptus_a",
+   "cond": "normal",
+   "at": [
+    -587.076,
+    2.263,
+    -1358.487
+   ],
+   "yaw": 28,
+   "scale": 1.0,
+   "why": "kept on its spot: the eucalyptus screen along the yard wall toward the homes"
+  }
+ ]
+}
