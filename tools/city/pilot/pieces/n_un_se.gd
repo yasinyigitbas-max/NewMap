@@ -16,6 +16,8 @@ extends SceneTree
 ## TREES (19 Nov late, Yasin: "remove every tree, fill their wells ... place new trees according to the tree plan"): this
 ## piece has NO trees and no tree wells (each well paved over in the material round it); the campus trees are the
 ## hand-placed layer t_un_campus (docs/TREE_PLAN.md).
+## GAME-DAY CAFE (19 Nov night, Yasin: "if there is room and it won't change anything else, add their indoors too"): the
+## stadium walk's kiosk is now com_cafe_seaside (a real shop door, walk-in), same place and front; nothing round it moved.
 ## Run with CCF_STAGE=ground first. Draft: never when locked.
 const L := preload("res://tools/city/pilot/pieces/cc_fill_lib.gd")
 const O := Vector3(-600.0, 6.0, -600.0)
@@ -44,7 +46,7 @@ func _run() -> void:
 	var flat := func(_x: float, _z: float) -> float: return 0.15
 	var base := L.eased(land, [[Vector2(190.8, 0.0), Vector2(190.8, 190.8), flat], [Vector2(0.0, 190.8), Vector2(190.8, 190.8), flat]], 8.0)
 	var SITES := [["civic/civ_rec_center", Vector2(60.0, 14.0), "n", "uni_rec"], ["civic/civ_school_wing", Vector2(128.0, 14.0), "n", "uni_kinesiology"],
-		["extras/ext_parking_garage", Vector2(165.0, 66.0), "n", "uni_garage"], ["commercial/com_kiosk", Vector2(176.0, 122.0), "e", "uni_gameday_kiosk"]]
+		["extras/ext_parking_garage", Vector2(165.0, 66.0), "n", "uni_garage"], ["commercial/com_cafe_seaside", Vector2(176.0, 122.0), "e", "uni_gameday_kiosk"]]
 	var pads: Array = []
 	for st: Array in SITES:
 		var r0: Array = L.bld_rect(String(st[0]), st[1], String(st[2]))

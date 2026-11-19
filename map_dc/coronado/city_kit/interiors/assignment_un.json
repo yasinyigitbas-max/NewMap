@@ -448,28 +448,33 @@
    "id": "un_se__uni_gameday_kiosk__0",
    "piece": "n_un_se",
    "label": "uni_gameday_kiosk",
-   "model": "commercial/com_kiosk",
+   "model": "commercial/com_cafe_seaside",
    "pos": [
-    -427.923,
-    6.17,
+    -432.173,
+    6.169,
     -478.0
    ],
    "yaw": 90.0,
    "door_index": 0,
-   "door_along": 1.15,
-   "door_w": 0.9,
+   "door_along": -1.76,
+   "door_w": 1.6,
    "bay": [
-    -1.7,
-    1.7
+    -2.7,
+    2.7
    ],
    "kind": "cafe",
    "name": "Crown Cafe",
    "style": "sun",
    "signs": [
     {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
      "facade": "left",
-     "along": 0.9,
-     "w": 1.2
+     "along": 3.8,
+     "w": 3.0
     }
    ],
    "source": "university campus (hand-made room list)",

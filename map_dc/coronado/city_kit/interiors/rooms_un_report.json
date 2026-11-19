@@ -141,14 +141,14 @@
    "w": 29.4
   },
   {
-   "d": 5.25,
+   "d": 13.0,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_se__uni_gameday_kiosk__0.scn",
    "id": "g_un_se__uni_gameday_kiosk__0",
    "kind": "cafe",
-   "lights": 2,
+   "lights": 5,
    "name": "Crown Cafe",
-   "props": 5,
-   "w": 3.4
+   "props": 18,
+   "w": 5.4
   },
   {
    "d": 15.0,

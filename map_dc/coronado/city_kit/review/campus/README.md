@@ -15,8 +15,11 @@ The gate café and bookstore were com_shallow_cafe / com_shallow_books, whose fr
 does not open (skill trap list). Now com_cafe_seaside (Gate Coffee) and com_realty (Campus Books): 1.6 m shop doors,
 rooms 5.4 x 13 m each; the terrace moved beside them on the gate plaza, the bikes along its east edge. Rooms 0 problems
 (22), validator 0, life 0, trees 0 in hard ground, sink 0, ground 0, campus land refitted (302 nodes, campus only), lock
-test PASS. NOT CHANGED, same question: the two coffee kiosks (com_kiosk, bus station and stadium walk) also have a
-"residential" door, so their rooms may not open either - not verified, waiting for Yasin.
+test PASS. The two coffee kiosks (com_kiosk) also had a "residential" door (Yasin: "if there is room and it won't change anything
+else, add their indoors too"): the STADIUM WALK's is now com_cafe_seaside (shop door, room 5.4 x 13 m, same place and
+front, nothing round it moved, 331 props before and after); the BUS STATION's stays a walk-up kiosk: the only
+explorable models (7.8 x 15.6 m and up) would swallow the platform lamp and the bins on the kiosk's walls. Rooms 0
+(22), all outdoor checks 0, campus land refitted (175 nodes, under 1 cm), SE relocked, lock test PASS (501).
 
 ## Land, audit, trees, relock (19 Nov night; Yasin: "write the land. then use super checker in your entire zone and weed
 ## out the unnecessary parts, remove every tree, fill their wells ..., place new trees according to the tree plan ... then lock it")

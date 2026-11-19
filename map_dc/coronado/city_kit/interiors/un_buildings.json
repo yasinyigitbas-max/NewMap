@@ -259,16 +259,16 @@
   {
    "doors_front": [
     [
-     "apt_door",
-     1.15
+     "shopdoor",
+     -1.76
     ]
    ],
    "label": "uni_gameday_kiosk",
-   "model": "commercial/com_kiosk",
+   "model": "commercial/com_cafe_seaside",
    "piece": "n_un_se",
    "pos": [
-    -427.923,
-    6.17,
+    -432.173,
+    6.169,
     -478.0
    ],
    "yaw": 90.0
