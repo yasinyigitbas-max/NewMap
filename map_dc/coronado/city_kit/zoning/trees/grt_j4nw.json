@@ -1,0 +1,11 @@
+{
+ "area": "grt_j4nw",
+ "piece": "g_v1_j4nw",
+ "zone": "gritty edge",
+ "rule": "docs/TREE_PLAN.md: almost none - one scrappy tree in a vacant lot, weeds at fences; a street here lost its trees long ago (zone 109 -> about 30)",
+ "written": "by hand, 19 Nov 2026 (PC session, the city-wide superchecker run). The block's five builder trees (coral, two magnolias, two ficus among the cottages) go; one tree comes back.",
+ "trees": [
+  {"base": "tree_ficus_b", "cond": "normal", "at": [-846.0, 2.15, -1267.0], "yaw": 110.0, "scale": 0.75,
+   "why": "the cottages' shared yard: a young volunteer ficus 3.5 m west of the picnic table and the kettle grill, so the table gets afternoon shade; small and unkempt, nobody planted it"}
+ ]
+}

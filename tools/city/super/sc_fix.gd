@@ -175,7 +175,7 @@ func _apply(top: Node, f: Dictionary) -> String:
 				if share > best: best = share; col = c3
 			if best < 0.8:
 				if here.size() > 1: return "cannot tell which of %d colliders at this spot is this prop's" % here.size()
-				col = here[0] if best >= 0.5 else null
+				col = here[0]      # a lone collider exactly at the prop's own origin is the prop's (19 Nov: left behind before)
 	if op == "move":
 		if f.has("turn") and absf(float(f["turn"])) > 360.0: return "turn out of range"
 		for tier: String in tiers:
@@ -610,6 +610,10 @@ func _prove(a: Node, b: Node, fixes: Array) -> bool:
 			else: i2 += 1
 		if tiers == 0:
 			print("PROOF MISSING %s %s: nothing of it changed at %s" % [tag, base, str(at)]); ok = false; continue
+		if cols == 0:      # the prop moved or went: a collider still standing at its old spot would be an invisible obstacle
+			for kc: String in ba:
+				if kc.begins_with("C|") and bb.has(kc) and ((ia[kc] as Dictionary)["t"] as Transform3D).origin.distance_to(at) <= EPS:
+					print("PROOF LEFT BEHIND %s %s: its collider still stands at its old place %s" % [tag, base, str(at)]); ok = false; break
 		var to := _v3(f.get("to", f["at"]))
 		if op == "move":
 			print("PROOF change %s %s: (%.2f, %.2f, %.2f) -> (%.2f, %.2f, %.2f)%s, in %d tier(s)%s  [%s]" % [tag, base, at.x, at.y, at.z, to.x, to.y, to.z, (", turned %.0f deg" % float(f.get("turn", 0.0))) if absf(float(f.get("turn", 0.0))) > 0.001 else "", tiers, " and its collider" if cols > 0 else ", no collider", String(f.get("reason", ""))])

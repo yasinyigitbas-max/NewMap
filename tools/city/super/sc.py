@@ -154,8 +154,10 @@ def cmd_fix_room(room, fixes_path=None):
     src = os.path.join(L.ROOMS, room + '.scn')
     L.ensure_dumps([room], folder=L.ROOMS, out=L.RDUMP, say=False)
     old = (R.old_checker([room]) or {}).get(room)
-    before = R.check_room(room, FIND, old=old, say=False)
-    fx = json.load(open(fixes_path or os.path.join(FIND, room + '.fixes.json'), encoding='utf-8'))
+    fpath = fixes_path or os.path.join(FIND, room + '.fixes.json')
+    keep_dec = os.path.exists(fpath)          # a fix list already there carries the decisions made on it: never overwrite it
+    before = R.check_room(room, os.path.join(WORK, 'find_before') if keep_dec else FIND, old=old, say=False)
+    fx = json.load(open(fpath, encoding='utf-8'))
     todo = [f for f in fx['fixes'] if not (f.get('mode') == 'choose' and not f.get('chosen'))]; held = len(fx['fixes']) - len(todo)
     lst = os.path.join(WORK, room + '.todo.json'); json.dump({'scene': room, 'fixes': todo}, open(lst, 'w'), indent=1)
     out = os.path.join(WORK, room + '.scn'); applied = os.path.join(WORK, room + '.applied.json')
