@@ -5954,6 +5954,293 @@
    ],
    "storeys": 0
   },
+  "ck/ck_svc_bank_pharm": {
+   "cat": "mod",
+   "entrances": [
+    {
+     "along": -3.0,
+     "facade": "front",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": 4.6,
+     "bay_d": 11.25,
+     "bay_w": 11.4,
+     "facade": "front",
+     "fits": [
+      "bakery",
+      "bar",
+      "books",
+      "cafe",
+      "cleaners",
+      "clothes",
+      "corner_shop",
+      "fast_food",
+      "gallery",
+      "gas",
+      "grocery",
+      "ice_cream",
+      "jewelry",
+      "keys",
+      "office",
+      "pharmacy",
+      "restaurant",
+      "salon",
+      "shoes",
+      "souvenir",
+      "sport",
+      "store",
+      "venue"
+     ],
+     "floor": 0,
+     "kind": "shop",
+     "w": 1.6
+    },
+    {
+     "along": 4.2,
+     "facade": "back",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": -1.8,
+     "facade": "back",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": -4.6,
+     "facade": "right",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": -4.6,
+     "facade": "left",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    }
+   ],
+   "floors": [
+    {
+     "box_max": [
+      5.7,
+      4.5,
+      5.55
+     ],
+     "box_min": [
+      -5.7,
+      0.0,
+      -5.7
+     ],
+     "clear_h": 4.5,
+     "floor": 0,
+     "inner_wd": [
+      11.4,
+      11.25
+     ],
+     "y": 0.0
+    }
+   ],
+   "floors_note": "derived: ground = lowest door sill; upper floors from window sills (-0.9 m) and upper apartment doors / sliders; walls assumed 0.30 m (front 0.45 m)",
+   "footprint_wd": [
+    12.0,
+    12.0
+   ],
+   "height": 5.1,
+   "model": "ck/ck_svc_bank_pharm",
+   "openings": [
+    {
+     "along": -3.0,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.75,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.15,
+     "y1": 2.35
+    },
+    {
+     "along": -5.05,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.88,
+     "region": "O_glass_plain",
+     "w": 1.0,
+     "y0": 0.55,
+     "y1": 2.45
+    },
+    {
+     "along": -0.95,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.88,
+     "region": "O_glass_plain",
+     "w": 1.0,
+     "y0": 1.55,
+     "y1": 2.45
+    },
+    {
+     "along": 4.6,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.65,
+     "region": "O_shopdoor",
+     "w": 1.6,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": 1.8,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.88,
+     "region": "O_storefront",
+     "w": 3.2,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": 4.2,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.0,
+     "y1": 2.2
+    },
+    {
+     "along": -1.8,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.0,
+     "y1": 2.2
+    },
+    {
+     "along": 0.8,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 1.9,
+     "y1": 2.6
+    },
+    {
+     "along": -5.2,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 1.9,
+     "y1": 2.6
+    },
+    {
+     "along": 4.0,
+     "facade": "right",
+     "floor": 0,
+     "plane": 5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": -0.6,
+     "facade": "right",
+     "floor": 0,
+     "plane": 5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": -4.6,
+     "facade": "right",
+     "floor": 0,
+     "plane": 5.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.0,
+     "y1": 2.2
+    },
+    {
+     "along": 4.0,
+     "facade": "left",
+     "floor": 0,
+     "plane": -5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": -0.6,
+     "facade": "left",
+     "floor": 0,
+     "plane": -5.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": -4.6,
+     "facade": "left",
+     "floor": 0,
+     "plane": -5.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.0,
+     "y1": 2.2
+    }
+   ],
+   "signs": [
+    {
+     "along": -3.0,
+     "facade": "front",
+     "plane": 6.08,
+     "region": "SG_bank",
+     "text": "CROWNADO SAVINGS",
+     "w": 2.48,
+     "y0": 4.02,
+     "y1": 4.54
+    },
+    {
+     "along": 3.0,
+     "facade": "front",
+     "plane": 6.08,
+     "region": "blank",
+     "text": "",
+     "w": 3.4,
+     "y0": 3.15,
+     "y1": 3.67
+    }
+   ],
+   "stats_doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "shopdoor",
+     4.6
+    ]
+   ],
+   "storeys": 0
+  },
   "ck/ck_svc_pawn_fast": {
    "cat": "mod",
    "entrances": [
@@ -6904,6 +7191,540 @@
     ]
    ],
    "storeys": 1
+  },
+  "commercial/com_spanish_arcade_block": {
+   "cat": "shop",
+   "entrances": [
+    {
+     "along": -5.08,
+     "bay_d": 15.25,
+     "bay_w": 7.7,
+     "facade": "front",
+     "fits": [
+      "bakery",
+      "bar",
+      "books",
+      "cafe",
+      "cleaners",
+      "clothes",
+      "corner_shop",
+      "fast_food",
+      "gallery",
+      "gas",
+      "grocery",
+      "ice_cream",
+      "jewelry",
+      "keys",
+      "office",
+      "pharmacy",
+      "restaurant",
+      "salon",
+      "shoes",
+      "souvenir",
+      "sport",
+      "store",
+      "venue"
+     ],
+     "floor": 0,
+     "kind": "shop",
+     "w": 1.6
+    },
+    {
+     "along": -2.92,
+     "bay_d": 15.25,
+     "bay_w": 5.08,
+     "facade": "front",
+     "fits": [
+      "bakery",
+      "bar",
+      "books",
+      "cafe",
+      "cleaners",
+      "clothes",
+      "corner_shop",
+      "fast_food",
+      "gallery",
+      "gas",
+      "grocery",
+      "ice_cream",
+      "jewelry",
+      "keys",
+      "office",
+      "pharmacy",
+      "restaurant",
+      "salon",
+      "shoes",
+      "souvenir",
+      "sport",
+      "store",
+      "venue"
+     ],
+     "floor": 0,
+     "kind": "shop",
+     "w": 1.6
+    },
+    {
+     "along": 5.08,
+     "bay_d": 15.25,
+     "bay_w": 10.62,
+     "facade": "front",
+     "fits": [
+      "bakery",
+      "bar",
+      "books",
+      "cafe",
+      "cleaners",
+      "clothes",
+      "corner_shop",
+      "fast_food",
+      "gallery",
+      "gas",
+      "grocery",
+      "ice_cream",
+      "jewelry",
+      "keys",
+      "office",
+      "pharmacy",
+      "restaurant",
+      "salon",
+      "shoes",
+      "souvenir",
+      "sport",
+      "store",
+      "venue"
+     ],
+     "floor": 0,
+     "kind": "shop",
+     "w": 1.6
+    },
+    {
+     "along": -9.6,
+     "facade": "back",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": -1.6,
+     "facade": "back",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    },
+    {
+     "along": 6.4,
+     "facade": "back",
+     "floor": 0,
+     "kind": "residential",
+     "w": 1.0
+    }
+   ],
+   "floors": [
+    {
+     "box_max": [
+      11.7,
+      3.7,
+      7.55
+     ],
+     "box_min": [
+      -11.7,
+      0.0,
+      -7.7
+     ],
+     "clear_h": 3.7,
+     "floor": 0,
+     "inner_wd": [
+      23.4,
+      15.25
+     ],
+     "y": 0.0
+    },
+    {
+     "box_max": [
+      11.7,
+      7.67,
+      7.55
+     ],
+     "box_min": [
+      -11.7,
+      4.0,
+      -7.7
+     ],
+     "clear_h": 3.67,
+     "floor": 1,
+     "inner_wd": [
+      23.4,
+      15.25
+     ],
+     "y": 4.0
+    }
+   ],
+   "floors_note": "derived: ground = lowest door sill; upper floors from window sills (-0.9 m) and upper apartment doors / sliders; walls assumed 0.30 m (front 0.45 m)",
+   "footprint_wd": [
+    24.0,
+    16.0
+   ],
+   "height": 8.27,
+   "model": "commercial/com_spanish_arcade_block",
+   "openings": [
+    {
+     "along": -5.8,
+     "facade": "right",
+     "floor": 0,
+     "plane": 11.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": 5.4,
+     "facade": "right",
+     "floor": 0,
+     "plane": 11.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": 5.6,
+     "facade": "right",
+     "floor": 1,
+     "plane": 11.9,
+     "region": "O_win_casement",
+     "w": 1.0,
+     "y0": 4.7,
+     "y1": 6.1
+    },
+    {
+     "along": 0.0,
+     "facade": "right",
+     "floor": 1,
+     "plane": 11.9,
+     "region": "O_win_casement",
+     "w": 1.0,
+     "y0": 4.7,
+     "y1": 6.1
+    },
+    {
+     "along": -5.6,
+     "facade": "right",
+     "floor": 1,
+     "plane": 11.9,
+     "region": "O_win_casement",
+     "w": 1.0,
+     "y0": 4.7,
+     "y1": 6.1
+    },
+    {
+     "along": -5.8,
+     "facade": "left",
+     "floor": 0,
+     "plane": -11.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": 5.4,
+     "facade": "left",
+     "floor": 0,
+     "plane": -11.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 2.0,
+     "y1": 2.7
+    },
+    {
+     "along": 5.6,
+     "facade": "left",
+     "floor": 1,
+     "plane": -11.9,
+     "region": "O_win_casement",
+     "w": 1.0,
+     "y0": 4.7,
+     "y1": 6.1
+    },
+    {
+     "along": 0.0,
+     "facade": "left",
+     "floor": 1,
+     "plane": -11.9,
+     "region": "O_win_casement",
+     "w": 1.0,
+     "y0": 4.7,
+     "y1": 6.1
+    },
+    {
+     "along": -5.6,
+     "facade": "left",
+     "floor": 1,
+     "plane": -11.9,
+     "region": "O_win_casement",
+     "w": 1.0,
+     "y0": 4.7,
+     "y1": 6.1
+    },
+    {
+     "along": -5.08,
+     "facade": "front",
+     "floor": 0,
+     "plane": 7.55,
+     "region": "O_shopdoor",
+     "w": 1.6,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": -2.92,
+     "facade": "front",
+     "floor": 0,
+     "plane": 7.55,
+     "region": "O_shopdoor",
+     "w": 1.6,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": 5.08,
+     "facade": "front",
+     "floor": 0,
+     "plane": 7.55,
+     "region": "O_shopdoor",
+     "w": 1.6,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": -8.95,
+     "facade": "front",
+     "floor": 0,
+     "plane": 7.88,
+     "region": "O_storefront",
+     "w": 5.23,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": 1.02,
+     "facade": "front",
+     "floor": 0,
+     "plane": 7.88,
+     "region": "O_storefront",
+     "w": 5.39,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": 8.94,
+     "facade": "front",
+     "floor": 0,
+     "plane": 7.88,
+     "region": "O_storefront",
+     "w": 5.23,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": -9.84,
+     "facade": "front",
+     "floor": 1,
+     "plane": 7.9,
+     "region": "O_win_casement",
+     "w": 1.1,
+     "y0": 4.7,
+     "y1": 6.2
+    },
+    {
+     "along": -6.16,
+     "facade": "front",
+     "floor": 1,
+     "plane": 7.9,
+     "region": "O_win_casement",
+     "w": 1.1,
+     "y0": 4.7,
+     "y1": 6.2
+    },
+    {
+     "along": -1.84,
+     "facade": "front",
+     "floor": 1,
+     "plane": 7.9,
+     "region": "O_win_casement",
+     "w": 1.1,
+     "y0": 4.7,
+     "y1": 6.2
+    },
+    {
+     "along": 1.84,
+     "facade": "front",
+     "floor": 1,
+     "plane": 7.9,
+     "region": "O_win_casement",
+     "w": 1.1,
+     "y0": 4.7,
+     "y1": 6.2
+    },
+    {
+     "along": 6.16,
+     "facade": "front",
+     "floor": 1,
+     "plane": 7.9,
+     "region": "O_win_casement",
+     "w": 1.1,
+     "y0": 4.7,
+     "y1": 6.2
+    },
+    {
+     "along": 9.84,
+     "facade": "front",
+     "floor": 1,
+     "plane": 7.9,
+     "region": "O_win_casement",
+     "w": 1.1,
+     "y0": 4.7,
+     "y1": 6.2
+    },
+    {
+     "along": -9.6,
+     "facade": "back",
+     "floor": 0,
+     "plane": -7.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.0,
+     "y1": 2.2
+    },
+    {
+     "along": -1.6,
+     "facade": "back",
+     "floor": 0,
+     "plane": -7.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.0,
+     "y1": 2.2
+    },
+    {
+     "along": 6.4,
+     "facade": "back",
+     "floor": 0,
+     "plane": -7.92,
+     "region": "O_apt_door",
+     "w": 1.0,
+     "y0": 0.0,
+     "y1": 2.2
+    },
+    {
+     "along": -5.28,
+     "facade": "back",
+     "floor": 0,
+     "plane": -7.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 1.9,
+     "y1": 2.6
+    },
+    {
+     "along": 2.72,
+     "facade": "back",
+     "floor": 0,
+     "plane": -7.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 1.9,
+     "y1": 2.6
+    },
+    {
+     "along": 10.72,
+     "facade": "back",
+     "floor": 0,
+     "plane": -7.9,
+     "region": "O_small_white",
+     "w": 0.7,
+     "y0": 1.9,
+     "y1": 2.6
+    },
+    {
+     "along": -7.2,
+     "facade": "back",
+     "floor": 1,
+     "plane": -7.9,
+     "region": "O_win_dh_white",
+     "w": 1.0,
+     "y0": 4.7,
+     "y1": 6.1
+    },
+    {
+     "along": 0.8,
+     "facade": "back",
+     "floor": 1,
+     "plane": -7.9,
+     "region": "O_win_dh_white",
+     "w": 1.0,
+     "y0": 4.7,
+     "y1": 6.1
+    },
+    {
+     "along": 8.8,
+     "facade": "back",
+     "floor": 1,
+     "plane": -7.9,
+     "region": "O_win_dh_white",
+     "w": 1.0,
+     "y0": 4.7,
+     "y1": 6.1
+    }
+   ],
+   "signs": [
+    {
+     "along": -8.0,
+     "facade": "front",
+     "plane": 8.08,
+     "region": "SG_bistro",
+     "text": "ISLA BISTRO",
+     "w": 7.18,
+     "y0": 3.12,
+     "y1": 3.39
+    },
+    {
+     "along": 0.0,
+     "facade": "front",
+     "plane": 8.08,
+     "region": "SG_boutique",
+     "text": "PALM & PEARL",
+     "w": 7.18,
+     "y0": 3.12,
+     "y1": 3.39
+    },
+    {
+     "along": 8.0,
+     "facade": "front",
+     "plane": 8.08,
+     "region": "SG_realty",
+     "text": "SEASIDE REALTY",
+     "w": 7.18,
+     "y0": 3.12,
+     "y1": 3.39
+    }
+   ],
+   "stats_doors_front": [
+    [
+     "shopdoor",
+     -5.08
+    ],
+    [
+     "shopdoor",
+     -2.92
+    ],
+    [
+     "shopdoor",
+     5.08
+    ]
+   ],
+   "storeys": 2
   },
   "extras/ext_parking_garage": {
    "cat": "warehouse",

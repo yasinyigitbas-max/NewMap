@@ -1,44 +1,344 @@
 {
  "rooms": [
   {
-   "d": 13.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b2_am__amber_e_brick_row__0.scn",
-   "id": "g_cc_b2_am__amber_e_brick_row__0",
-   "kind": "ice_cream",
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_am__amber8_glass_tower__0.scn",
+   "id": "g_cc_b3_am__amber8_glass_tower__0",
+   "kind": "lobby",
    "lights": 5,
-   "name": "Scoops on Amber",
+   "name": "Eighth & Amber Tower",
+   "props": 50,
+   "w": 23.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_am__amber_se_florist__0.scn",
+   "id": "g_cc_b3_am__amber_se_florist__0",
+   "kind": "souvenir",
+   "lights": 5,
+   "name": "Bloom & Twig Flowers",
+   "props": 20,
+   "w": 7.9
+  },
+  {
+   "d": 11.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_am__amber_se_taverna_block__0.scn",
+   "id": "g_cc_b3_am__amber_se_taverna_block__0",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "Kalimera Taverna",
+   "props": 30,
+   "w": 10.8
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_am__amber_se_brick_row__0.scn",
+   "id": "g_cc_b3_am__amber_se_brick_row__0",
+   "kind": "jewelry",
+   "lights": 6,
+   "name": "Clear View Opticians",
    "props": 25,
    "w": 7.6
   },
   {
    "d": 13.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b2_n__sixth_e_brick_row__1.scn",
-   "id": "g_cc_b2_n__sixth_e_brick_row__1",
-   "kind": "souvenir",
-   "lights": 4,
-   "name": "Paper & Gifts",
-   "props": 15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_am__amber_se_brick_row__1.scn",
+   "id": "g_cc_b3_am__amber_se_brick_row__1",
+   "kind": "books",
+   "lights": 5,
+   "name": "Pen & Ink Stationers",
+   "props": 19,
    "w": 6.0
-  },
-  {
-   "d": 15.05,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b2_7th__seventh_insurance__0.scn",
-   "id": "g_cc_b2_7th__seventh_insurance__0",
-   "kind": "law",
-   "lights": 6,
-   "name": "Pacific Insurance",
-   "props": 33,
-   "w": 17.4
   },
   {
    "d": 13.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b2_7th__seventh_brick_row__1.scn",
-   "id": "g_cc_b2_7th__seventh_brick_row__1",
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_am__amber_se_brick_row__2.scn",
+   "id": "g_cc_b3_am__amber_se_brick_row__2",
+   "kind": "clothes",
+   "lights": 5,
+   "name": "Quick Alterations",
+   "props": 15,
+   "w": 3.8
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_am__amber_se_corner_cafe__0.scn",
+   "id": "g_cc_b3_am__amber_se_corner_cafe__0",
+   "kind": "cafe",
+   "lights": 6,
+   "name": "Roastery on Amber",
+   "props": 27,
+   "w": 7.5
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_arm__seventh_s_newsagent__0.scn",
+   "id": "g_cc_b3_arm__seventh_s_newsagent__0",
+   "kind": "corner_shop",
+   "lights": 6,
+   "name": "Seventh Street News",
+   "props": 23,
+   "w": 7.5
+  },
+  {
+   "d": 11.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_arm__seventh_s_pizza_block__0.scn",
+   "id": "g_cc_b3_arm__seventh_s_pizza_block__0",
+   "kind": "fast_food",
+   "lights": 6,
+   "name": "Slice House Pizza",
+   "props": 29,
+   "w": 10.8
+  },
+  {
+   "d": 15.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_arm__seventh_s_arcade__0.scn",
+   "id": "g_cc_b3_arm__seventh_s_arcade__0",
+   "kind": "clothes",
+   "lights": 6,
+   "name": "Arcade Outfitters",
+   "props": 43,
+   "w": 12.7
+  },
+  {
+   "d": 15.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_arm__seventh_s_arcade__1.scn",
+   "id": "g_cc_b3_arm__seventh_s_arcade__1",
+   "kind": "office",
+   "lights": 6,
+   "name": "Bay Travel",
+   "props": 21,
+   "w": 10.7
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_arm__seventh_s_brick_row__0.scn",
+   "id": "g_cc_b3_arm__seventh_s_brick_row__0",
+   "kind": "sport",
+   "lights": 6,
+   "name": "Coast Surf & Skate",
+   "props": 21,
+   "w": 7.6
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_arm__seventh_s_brick_row__1.scn",
+   "id": "g_cc_b3_arm__seventh_s_brick_row__1",
+   "kind": "store",
+   "lights": 5,
+   "name": "Seventh Music",
+   "props": 21,
+   "w": 6.0
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_arm__seventh_s_brick_row__2.scn",
+   "id": "g_cc_b3_arm__seventh_s_brick_row__2",
+   "kind": "jewelry",
+   "lights": 5,
+   "name": "Time Works",
+   "props": 16,
+   "w": 3.8
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_arm__seventh_s_laundry_fe__0.scn",
+   "id": "g_cc_b3_arm__seventh_s_laundry_fe__0",
+   "kind": "cleaners",
+   "lights": 5,
+   "name": "Bubbles Laundromat",
+   "props": 32,
+   "w": 7.9
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_arm__alleyd3_print__0.scn",
+   "id": "g_cc_b3_arm__alleyd3_print__0",
+   "kind": "print",
+   "lights": 6,
+   "name": "Copy Corner",
+   "props": 21,
+   "w": 11.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_arm__alleyd3_pharm_depot__0.scn",
+   "id": "g_cc_b3_arm__alleyd3_pharm_depot__0",
+   "kind": "pharmacy",
+   "lights": 6,
+   "name": "Bayside Pharmacy",
+   "props": 18,
+   "w": 6.7
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_arm__alleyd3_bike_works__0.scn",
+   "id": "g_cc_b3_arm__alleyd3_bike_works__0",
+   "kind": "bike",
+   "lights": 6,
+   "name": "Gear Bike Works",
+   "props": 18,
+   "w": 11.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_arm__alleyd3_sign_shop__0.scn",
+   "id": "g_cc_b3_arm__alleyd3_sign_shop__0",
+   "kind": "keys",
+   "lights": 5,
+   "name": "Neon Sign Co",
+   "props": 18,
+   "w": 11.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_main__c3n_framer__0.scn",
+   "id": "g_cc_b3_main__c3n_framer__0",
+   "kind": "gallery",
+   "lights": 5,
+   "name": "Frame & Hang",
+   "props": 16,
+   "w": 11.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_main__eighth_corner_cafe__0.scn",
+   "id": "g_cc_b3_main__eighth_corner_cafe__0",
+   "kind": "cafe",
+   "lights": 6,
+   "name": "Eighth Street Coffee",
+   "props": 27,
+   "w": 7.5
+  },
+  {
+   "d": 11.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_main__eighth_trattoria_block__0.scn",
+   "id": "g_cc_b3_main__eighth_trattoria_block__0",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "Trattoria Uphill",
+   "props": 30,
+   "w": 10.8
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_main__eighth_brick_row__0.scn",
+   "id": "g_cc_b3_main__eighth_brick_row__0",
+   "kind": "ice_cream",
+   "lights": 5,
+   "name": "Sundae Best",
+   "props": 25,
+   "w": 7.6
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_main__eighth_brick_row__1.scn",
+   "id": "g_cc_b3_main__eighth_brick_row__1",
+   "kind": "shoes",
+   "lights": 5,
+   "name": "Sole Mates",
+   "props": 18,
+   "w": 6.0
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_main__eighth_brick_row__2.scn",
+   "id": "g_cc_b3_main__eighth_brick_row__2",
+   "kind": "keys",
+   "lights": 4,
+   "name": "Key & Lock",
+   "props": 11,
+   "w": 3.8
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_main__eighth_records_fe__0.scn",
+   "id": "g_cc_b3_main__eighth_records_fe__0",
+   "kind": "store",
+   "lights": 6,
+   "name": "Groove Records",
+   "props": 22,
+   "w": 7.9
+  },
+  {
+   "d": 11.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_main__eighth_stucco_block__0.scn",
+   "id": "g_cc_b3_main__eighth_stucco_block__0",
+   "kind": "corner_shop",
+   "lights": 6,
+   "name": "Uphill Market",
+   "props": 20,
+   "w": 10.8
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_main__eighth_hardware_row__0.scn",
+   "id": "g_cc_b3_main__eighth_hardware_row__0",
+   "kind": "store",
+   "lights": 6,
+   "name": "Eighth St Hardware",
+   "props": 24,
+   "w": 7.6
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_main__eighth_hardware_row__1.scn",
+   "id": "g_cc_b3_main__eighth_hardware_row__1",
+   "kind": "salon",
+   "lights": 4,
+   "name": "Snip Barbers",
+   "props": 21,
+   "w": 6.0
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_main__eighth_hardware_row__2.scn",
+   "id": "g_cc_b3_main__eighth_hardware_row__2",
    "kind": "souvenir",
    "lights": 4,
-   "name": "Toy Chest",
-   "props": 15,
-   "w": 6.0
+   "name": "Gift Box",
+   "props": 13,
+   "w": 3.8
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_main__eighth_optician__0.scn",
+   "id": "g_cc_b3_main__eighth_optician__0",
+   "kind": "office",
+   "lights": 6,
+   "name": "Uphill Dental",
+   "props": 19,
+   "w": 7.9
+  },
+  {
+   "d": 10.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_main__eighth_bakery_condo__0.scn",
+   "id": "g_cc_b3_main__eighth_bakery_condo__0",
+   "kind": "bakery",
+   "lights": 6,
+   "name": "Crumbs Bakery",
+   "props": 17,
+   "w": 10.0
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_main__eighth_corner_bar__0.scn",
+   "id": "g_cc_b3_main__eighth_corner_bar__0",
+   "kind": "bar",
+   "lights": 6,
+   "name": "The Uphill Tap",
+   "props": 45,
+   "w": 7.5
+  },
+  {
+   "d": 15.05,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b3_main__eighth_bave_pharmacy__0.scn",
+   "id": "g_cc_b3_main__eighth_bave_pharmacy__0",
+   "kind": "pharmacy",
+   "lights": 6,
+   "name": "Corner Pharmacy",
+   "props": 40,
+   "w": 17.4
   }
  ]
 }

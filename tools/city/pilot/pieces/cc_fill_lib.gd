@@ -75,24 +75,38 @@ var polys: Array = []
 func edge_poly(mat: String, pts: PackedVector2Array, fn := Callable()) -> void:
 	polys.append([mat, pts, fn])
 
+## the same as a band of quads: from each street edge vertex straight across to a base line (z = base, or x = base when
+## along_x is false), so a SLOPING edge gets a height at every vertex (a polygon's long triangles would sag between them)
+var bands: Array = []
+func edge_band(mat: String, pts: PackedVector2Array, base: float, fn: Callable, along_x := true) -> void:
+	bands.append([mat, pts, base, fn, along_x])
+
 ## the outline's four edges, each facing out (for build_floor's skirt)
 static func rect_edges(x0: float, z0: float, x1: float, z1: float, mat := "wall") -> Array:
 	return [[Vector2(x0, z0), Vector2(x1, z0), 1.0, mat], [Vector2(x1, z0), Vector2(x1, z1), 1.0, mat], [Vector2(x1, z1), Vector2(x0, z1), 1.0, mat], [Vector2(x0, z1), Vector2(x0, z0), 1.0, mat]]
 
 ## the floor: every pad cut with the paints (first matching paint wins), cells never merged (no T-joints), then a
 ## 0.3 m skirt in the edge's material down the outer edges given (so a residual gap shows a face, not grass)
+var skirt_depth := 0.3         # a slope piece sets it deeper so a plinth face at an edge reaches under the street
 func build_floor(skirt_edges: Array) -> void:
 	for f: Array in floors:
 		var fn: Callable = f[4] if (f[4] as Callable).is_valid() else yf
 		K.painted_rect(g, f[0], f[1], f[2], f[3], paints, fn, "asphalt", false)
 	for w: Array in wells: _draw_well(w[0], float(w[1]), float(w[2]))
 	for pg: Array in polys: g.poly(String(pg[0]), pg[1], pg[2] if (pg[2] as Callable).is_valid() else yf)
+	for bd: Array in bands:
+		var bp: PackedVector2Array = bd[1]; var bf: Callable = bd[3]; var bb: float = bd[2]
+		for k in bp.size() - 1:
+			var p0 := bp[k]; var p1 := bp[k + 1]
+			var q0 := Vector2(p0.x, bb) if bd[4] else Vector2(bb, p0.y); var q1 := Vector2(p1.x, bb) if bd[4] else Vector2(bb, p1.y)
+			if p0.distance_to(q0) < 1e-4 and p1.distance_to(q1) < 1e-4: continue
+			g.quad(String(bd[0]), Vector3(q0.x, bf.call(q0.x, q0.y), q0.y), Vector3(q1.x, bf.call(q1.x, q1.y), q1.y), Vector3(p1.x, bf.call(p1.x, p1.y), p1.y), Vector3(p0.x, bf.call(p0.x, p0.y), p0.y))
 	for e: Array in skirt_edges:     # [Vector2 a, Vector2 b, out_side, mat]
 		var a2: Vector2 = e[0]; var b2: Vector2 = e[1]
 		var n2 := maxi(1, int(ceil(a2.distance_to(b2) / 2.0)))
 		var pts2 := PackedVector2Array()
 		for i2 in n2 + 1: pts2.append(a2.lerp(b2, float(i2) / n2))
-		g.wall_line(String(e[3]), pts2, func(x: float, z: float) -> float: return yf(x, z) - 0.3, yf, float(e[2]))
+		g.wall_line(String(e[3]), pts2, func(x: float, z: float) -> float: return yf(x, z) - skirt_depth, yf, float(e[2]))
 
 ## ---------------------------------------------------------------- buildings
 static func _near_aabb(folder: String) -> AABB:
@@ -104,6 +118,14 @@ static func _near_aabb(folder: String) -> AABB:
 	return ab
 
 const FACE := {"s": 0.0, "n": 180.0, "e": 90.0, "w": -90.0}
+
+## how far a building's wall line stands behind its real front (awning, steps): the depth of the frontage strip that
+## can follow a sloping walk in front of it without the facade floating over it
+static func setback(folder: String) -> float:
+	var ab := _near_aabb(folder)
+	var st := K.building_stats(folder)
+	var fz: float = minf(ab.end.z, float(st.footprint_wd[1]) * 0.5) if st.has("footprint_wd") else ab.end.z
+	return maxf(0.0, ab.end.z - fz)
 
 ## a building whose REAL front (near mesh, awnings and steps included) lies on the point `front` (x, z), facing `face`
 ## (s = +z, n = -z, e = +x, w = -x). along: shift along the frontage. Returns the record.

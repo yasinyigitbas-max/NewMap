@@ -1537,6 +1537,864 @@
     -667.6
    ],
    "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ]
+   ],
+   "label": "amber8_glass_tower",
+   "model": "urban/twr_glass",
+   "piece": "n_cc_b3_am",
+   "pos": [
+    28.0,
+    6.15,
+    -421.92
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.1
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "amber_se_florist",
+   "model": "ck/ck_brk3_row2",
+   "piece": "n_cc_b3_am",
+   "pos": [
+    23.0,
+    6.15,
+    -440.28
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "amber_se_taverna_block",
+   "model": "apartments/apt_stucco3_cream",
+   "piece": "n_cc_b3_am",
+   "pos": [
+    22.0,
+    6.15,
+    -456.74
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [],
+   "label": "amber_se_brick_row",
+   "model": "modular/examples/mod_brk_row",
+   "piece": "n_cc_b3_am",
+   "pos": [
+    23.0,
+    6.15,
+    -476.2
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "shopdoor",
+     4.9
+    ]
+   ],
+   "label": "amber_se_corner_cafe",
+   "model": "ck/ck_brk3_corner2",
+   "piece": "n_cc_b3_am",
+   "pos": [
+    23.0,
+    6.15,
+    -491.59
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "shopdoor",
+     4.9
+    ]
+   ],
+   "label": "seventh_s_newsagent",
+   "model": "ck/ck_brk3_corner2",
+   "piece": "n_cc_b3_arm",
+   "pos": [
+    56.25,
+    6.15,
+    -581.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "seventh_s_pizza_block",
+   "model": "apartments/apt_stucco3_peach",
+   "piece": "n_cc_b3_arm",
+   "pos": [
+    72.72,
+    6.15,
+    -582.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -5.08
+    ],
+    [
+     "shopdoor",
+     -2.92
+    ],
+    [
+     "shopdoor",
+     5.08
+    ]
+   ],
+   "label": "seventh_s_arcade",
+   "model": "commercial/com_spanish_arcade_block",
+   "piece": "n_cc_b3_arm",
+   "pos": [
+    95.49,
+    6.15,
+    -579.25
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.1
+    ],
+    [
+     "shopdoor",
+     1.9
+    ],
+    [
+     "shopdoor",
+     7.9
+    ]
+   ],
+   "label": "seventh_s_brick_row",
+   "model": "urban/urb_brick_row",
+   "piece": "n_cc_b3_arm",
+   "pos": [
+    117.22,
+    6.15,
+    -582.127
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.1
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "seventh_s_laundry_fe",
+   "model": "ck/ck_brk3_row2_fe",
+   "piece": "n_cc_b3_arm",
+   "pos": [
+    132.64,
+    6.15,
+    -581.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [],
+   "label": "alleyd3_print",
+   "model": "modular/examples/mod_svc_row",
+   "piece": "n_cc_b3_arm",
+   "pos": [
+    64.34,
+    6.15,
+    -553.123
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "shopdoor",
+     4.6
+    ]
+   ],
+   "label": "alleyd3_pharm_depot",
+   "model": "ck/ck_svc_bank_pharm",
+   "piece": "n_cc_b3_arm",
+   "pos": [
+    77.12,
+    6.15,
+    -553.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -3.0
+    ]
+   ],
+   "label": "alleyd3_bike_works",
+   "model": "ck/ck_svc_trade_1d",
+   "piece": "n_cc_b3_arm",
+   "pos": [
+    56.24,
+    6.15,
+    -532.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [],
+   "label": "alleyd3_sign_shop",
+   "model": "modular/examples/mod_svc_row",
+   "piece": "n_cc_b3_arm",
+   "pos": [
+    68.82,
+    6.15,
+    -532.877
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     6.0
+    ]
+   ],
+   "label": "alleyd3_walkup",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_cc_b3_arm",
+   "pos": [
+    84.345,
+    6.15,
+    -532.5
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     6.0
+    ]
+   ],
+   "label": "c3n_walkup_w",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    60.185,
+    6.252,
+    -467.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ],
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ]
+   ],
+   "label": "c3n_garden_apts",
+   "model": "apartments/apt_garden_cream",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    81.395,
+    6.376,
+    -466.1
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -3.0
+    ],
+    [
+     "shopdoor",
+     3.0
+    ]
+   ],
+   "label": "c3n_framer",
+   "model": "ck/ck_svc_trade",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    99.105,
+    6.441,
+    -467.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [],
+   "label": "c3n_apt_row",
+   "model": "modular/examples/mod_apt_row",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    114.43,
+    6.537,
+    -467.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     6.0
+    ]
+   ],
+   "label": "c3n_walkup_e",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    132.7,
+    6.634,
+    -467.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "shopdoor",
+     4.9
+    ]
+   ],
+   "label": "eighth_corner_cafe",
+   "model": "ck/ck_brk3_corner2",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    57.25,
+    6.348,
+    -418.3
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "eighth_trattoria_block",
+   "model": "apartments/apt_stucco3_peach",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    73.72,
+    6.566,
+    -417.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.1
+    ],
+    [
+     "shopdoor",
+     1.9
+    ],
+    [
+     "shopdoor",
+     7.9
+    ]
+   ],
+   "label": "eighth_brick_row",
+   "model": "urban/urb_brick_row",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    93.22,
+    6.806,
+    -417.873
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.1
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "eighth_records_fe",
+   "model": "ck/ck_brk3_row2_fe",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    108.64,
+    6.979,
+    -418.3
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "eighth_stucco_block",
+   "model": "apartments/apt_stucco3_cream",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    125.1,
+    7.276,
+    -417.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [],
+   "label": "eighth_hardware_row",
+   "model": "modular/examples/mod_brk_row",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    144.56,
+    7.534,
+    -417.873
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.1
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "eighth_optician",
+   "model": "ck/ck_brk3_row2",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    159.94,
+    7.695,
+    -418.3
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.22
+    ],
+    [
+     "patio",
+     -3.22
+    ],
+    [
+     "patio",
+     -7.08
+    ],
+    [
+     "patio",
+     -7.08
+    ],
+    [
+     "patio",
+     3.22
+    ],
+    [
+     "patio",
+     3.22
+    ],
+    [
+     "patio",
+     7.08
+    ],
+    [
+     "patio",
+     7.08
+    ]
+   ],
+   "label": "eighth_bakery_condo",
+   "model": "apartments/apt_beach_condo",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    176.18,
+    7.919,
+    -417.3
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     6.0
+    ]
+   ],
+   "label": "eighth_walkup",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    195.365,
+    8.067,
+    -417.2
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "shopdoor",
+     4.9
+    ]
+   ],
+   "label": "eighth_corner_bar",
+   "model": "ck/ck_brk3_corner2",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    210.7,
+    8.125,
+    -418.3
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     6.8
+    ]
+   ],
+   "label": "eighth_bave_pharmacy",
+   "model": "urban/urb_brick_corner",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    230.477,
+    8.15,
+    -418.923
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     6.0
+    ]
+   ],
+   "label": "bave_n_walkup",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    233.3,
+    6.462,
+    -489.315
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "bave_n_walkup2",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    233.2,
+    6.864,
+    -474.015
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "bave_s_walkup",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    233.2,
+    7.792,
+    -447.815
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -3.0
+    ],
+    [
+     "apt_door",
+     3.0
+    ]
+   ],
+   "label": "bave_s_walkup2",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_cc_b3_main",
+   "pos": [
+    233.2,
+    8.073,
+    -435.515
+   ],
+   "yaw": 90.0
   }
  ]
 }

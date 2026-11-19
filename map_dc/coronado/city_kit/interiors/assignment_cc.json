@@ -1,6 +1,6 @@
 {
  "_doc": "Which shop is behind every shop door of the CITY-CENTRE FILL (claude/fill-city-centre, 19 Nov; Yasin via the",
- "count": 51,
+ "count": 85,
  "rooms": [
   {
    "id": "cc_b1_am__amber6_tower__0",
@@ -1716,6 +1716,1175 @@
      "facade": "front",
      "along": -3.0,
      "w": 5.2
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_am__amber8_glass_tower__0",
+   "piece": "n_cc_b3_am",
+   "label": "amber8_glass_tower",
+   "model": "urban/twr_glass",
+   "pos": [
+    28.0,
+    6.15,
+    -421.92
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 2.0,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "lobby",
+   "name": "Eighth & Amber Tower",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 12.97,
+     "w": 1.95
+    },
+    {
+     "facade": "left",
+     "along": 12.97,
+     "w": 1.95
+    },
+    {
+     "facade": "right",
+     "along": 12.97,
+     "w": 1.95
+    },
+    {
+     "facade": "left",
+     "along": 12.97,
+     "w": 1.95
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_am__amber_se_florist__0",
+   "piece": "n_cc_b3_am",
+   "label": "amber_se_florist",
+   "model": "ck/ck_brk3_row2",
+   "pos": [
+    23.0,
+    6.15,
+    -440.28
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    2.2
+   ],
+   "kind": "souvenir",
+   "name": "Bloom & Twig Flowers",
+   "style": "green",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_am__amber_se_taverna_block__0",
+   "piece": "n_cc_b3_am",
+   "label": "amber_se_taverna_block",
+   "model": "apartments/apt_stucco3_cream",
+   "pos": [
+    22.0,
+    6.15,
+    -456.74
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -5.4,
+    5.4
+   ],
+   "kind": "restaurant",
+   "name": "Kalimera Taverna",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_am__amber_se_brick_row__0",
+   "piece": "n_cc_b3_am",
+   "label": "amber_se_brick_row",
+   "model": "modular/examples/mod_brk_row",
+   "pos": [
+    23.0,
+    6.15,
+    -476.2
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "jewelry",
+   "name": "Clear View Opticians",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_am__amber_se_brick_row__1",
+   "piece": "n_cc_b3_am",
+   "label": "amber_se_brick_row",
+   "model": "modular/examples/mod_brk_row",
+   "pos": [
+    23.0,
+    6.15,
+    -476.2
+   ],
+   "yaw": -90.0,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "books",
+   "name": "Pen & Ink Stationers",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_am__amber_se_brick_row__2",
+   "piece": "n_cc_b3_am",
+   "label": "amber_se_brick_row",
+   "model": "modular/examples/mod_brk_row",
+   "pos": [
+    23.0,
+    6.15,
+    -476.2
+   ],
+   "yaw": -90.0,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "clothes",
+   "name": "Quick Alterations",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_am__amber_se_corner_cafe__0",
+   "piece": "n_cc_b3_am",
+   "label": "amber_se_corner_cafe",
+   "model": "ck/ck_brk3_corner2",
+   "pos": [
+    23.0,
+    6.15,
+    -491.59
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.8,
+    5.7
+   ],
+   "kind": "cafe",
+   "name": "Roastery on Amber",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_arm__seventh_s_newsagent__0",
+   "piece": "n_cc_b3_arm",
+   "label": "seventh_s_newsagent",
+   "model": "ck/ck_brk3_corner2",
+   "pos": [
+    56.25,
+    6.15,
+    -581.7
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.8,
+    5.7
+   ],
+   "kind": "corner_shop",
+   "name": "Seventh Street News",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_arm__seventh_s_pizza_block__0",
+   "piece": "n_cc_b3_arm",
+   "label": "seventh_s_pizza_block",
+   "model": "apartments/apt_stucco3_peach",
+   "pos": [
+    72.72,
+    6.15,
+    -582.2
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -5.4,
+    5.4
+   ],
+   "kind": "fast_food",
+   "name": "Slice House Pizza",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_arm__seventh_s_arcade__0",
+   "piece": "n_cc_b3_arm",
+   "label": "seventh_s_arcade",
+   "model": "commercial/com_spanish_arcade_block",
+   "pos": [
+    95.49,
+    6.15,
+    -579.25
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -5.08,
+   "door_w": 1.6,
+   "bay": [
+    -11.7,
+    1.0
+   ],
+   "kind": "clothes",
+   "name": "Arcade Outfitters",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -8.0,
+     "w": 7.18
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 7.18
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_arm__seventh_s_arcade__1",
+   "piece": "n_cc_b3_arm",
+   "label": "seventh_s_arcade",
+   "model": "commercial/com_spanish_arcade_block",
+   "pos": [
+    95.49,
+    6.15,
+    -579.25
+   ],
+   "yaw": -180.0,
+   "door_index": 1,
+   "door_along": 5.08,
+   "door_w": 1.6,
+   "bay": [
+    1.0,
+    11.7
+   ],
+   "kind": "office",
+   "name": "Bay Travel",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 8.0,
+     "w": 7.18
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_arm__seventh_s_brick_row__0",
+   "piece": "n_cc_b3_arm",
+   "label": "seventh_s_brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    117.22,
+    6.15,
+    -582.127
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "sport",
+   "name": "Coast Surf & Skate",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_arm__seventh_s_brick_row__1",
+   "piece": "n_cc_b3_arm",
+   "label": "seventh_s_brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    117.22,
+    6.15,
+    -582.127
+   ],
+   "yaw": -180.0,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "store",
+   "name": "Seventh Music",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_arm__seventh_s_brick_row__2",
+   "piece": "n_cc_b3_arm",
+   "label": "seventh_s_brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    117.22,
+    6.15,
+    -582.127
+   ],
+   "yaw": -180.0,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "jewelry",
+   "name": "Time Works",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_arm__seventh_s_laundry_fe__0",
+   "piece": "n_cc_b3_arm",
+   "label": "seventh_s_laundry_fe",
+   "model": "ck/ck_brk3_row2_fe",
+   "pos": [
+    132.64,
+    6.15,
+    -581.7
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    2.2
+   ],
+   "kind": "cleaners",
+   "name": "Bubbles Laundromat",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_arm__alleyd3_print__0",
+   "piece": "n_cc_b3_arm",
+   "label": "alleyd3_print",
+   "model": "modular/examples/mod_svc_row",
+   "pos": [
+    64.34,
+    6.15,
+    -553.123
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -1.4,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "print",
+   "name": "Copy Corner",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 3.4
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 3.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_arm__alleyd3_pharm_depot__0",
+   "piece": "n_cc_b3_arm",
+   "label": "alleyd3_pharm_depot",
+   "model": "ck/ck_svc_bank_pharm",
+   "pos": [
+    77.12,
+    6.15,
+    -553.8
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 4.6,
+   "door_w": 1.6,
+   "bay": [
+    -1.0,
+    5.7
+   ],
+   "kind": "pharmacy",
+   "name": "Bayside Pharmacy",
+   "style": "green",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.48
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 3.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_arm__alleyd3_bike_works__0",
+   "piece": "n_cc_b3_arm",
+   "label": "alleyd3_bike_works",
+   "model": "ck/ck_svc_trade_1d",
+   "pos": [
+    56.24,
+    6.15,
+    -532.2
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "bike",
+   "name": "Gear Bike Works",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_arm__alleyd3_sign_shop__0",
+   "piece": "n_cc_b3_arm",
+   "label": "alleyd3_sign_shop",
+   "model": "modular/examples/mod_svc_row",
+   "pos": [
+    68.82,
+    6.15,
+    -532.877
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -1.4,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "keys",
+   "name": "Neon Sign Co",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 3.4
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 3.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_main__c3n_framer__0",
+   "piece": "n_cc_b3_main",
+   "label": "c3n_framer",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    99.105,
+    6.441,
+    -467.8
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "gallery",
+   "name": "Frame & Hang",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.2
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_main__eighth_corner_cafe__0",
+   "piece": "n_cc_b3_main",
+   "label": "eighth_corner_cafe",
+   "model": "ck/ck_brk3_corner2",
+   "pos": [
+    57.25,
+    6.348,
+    -418.3
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.8,
+    5.7
+   ],
+   "kind": "cafe",
+   "name": "Eighth Street Coffee",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_main__eighth_trattoria_block__0",
+   "piece": "n_cc_b3_main",
+   "label": "eighth_trattoria_block",
+   "model": "apartments/apt_stucco3_peach",
+   "pos": [
+    73.72,
+    6.566,
+    -417.8
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -5.4,
+    5.4
+   ],
+   "kind": "restaurant",
+   "name": "Trattoria Uphill",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_main__eighth_brick_row__0",
+   "piece": "n_cc_b3_main",
+   "label": "eighth_brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    93.22,
+    6.806,
+    -417.873
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "ice_cream",
+   "name": "Sundae Best",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_main__eighth_brick_row__1",
+   "piece": "n_cc_b3_main",
+   "label": "eighth_brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    93.22,
+    6.806,
+    -417.873
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "shoes",
+   "name": "Sole Mates",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_main__eighth_brick_row__2",
+   "piece": "n_cc_b3_main",
+   "label": "eighth_brick_row",
+   "model": "urban/urb_brick_row",
+   "pos": [
+    93.22,
+    6.806,
+    -417.873
+   ],
+   "yaw": 0.0,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "keys",
+   "name": "Key & Lock",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_main__eighth_records_fe__0",
+   "piece": "n_cc_b3_main",
+   "label": "eighth_records_fe",
+   "model": "ck/ck_brk3_row2_fe",
+   "pos": [
+    108.64,
+    6.979,
+    -418.3
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    2.2
+   ],
+   "kind": "store",
+   "name": "Groove Records",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_main__eighth_stucco_block__0",
+   "piece": "n_cc_b3_main",
+   "label": "eighth_stucco_block",
+   "model": "apartments/apt_stucco3_cream",
+   "pos": [
+    125.1,
+    7.276,
+    -417.8
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -5.4,
+    5.4
+   ],
+   "kind": "corner_shop",
+   "name": "Uphill Market",
+   "style": "green",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_main__eighth_hardware_row__0",
+   "piece": "n_cc_b3_main",
+   "label": "eighth_hardware_row",
+   "model": "modular/examples/mod_brk_row",
+   "pos": [
+    144.56,
+    7.534,
+    -417.873
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -4.1,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -1.1
+   ],
+   "kind": "store",
+   "name": "Eighth St Hardware",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_main__eighth_hardware_row__1",
+   "piece": "n_cc_b3_main",
+   "label": "eighth_hardware_row",
+   "model": "modular/examples/mod_brk_row",
+   "pos": [
+    144.56,
+    7.534,
+    -417.873
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": 1.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.1,
+    4.9
+   ],
+   "kind": "salon",
+   "name": "Snip Barbers",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_main__eighth_hardware_row__2",
+   "piece": "n_cc_b3_main",
+   "label": "eighth_hardware_row",
+   "model": "modular/examples/mod_brk_row",
+   "pos": [
+    144.56,
+    7.534,
+    -417.873
+   ],
+   "yaw": 0.0,
+   "door_index": 2,
+   "door_along": 7.9,
+   "door_w": 1.6,
+   "bay": [
+    4.9,
+    8.7
+   ],
+   "kind": "souvenir",
+   "name": "Gift Box",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_main__eighth_optician__0",
+   "piece": "n_cc_b3_main",
+   "label": "eighth_optician",
+   "model": "ck/ck_brk3_row2",
+   "pos": [
+    159.94,
+    7.695,
+    -418.3
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    2.2
+   ],
+   "kind": "office",
+   "name": "Uphill Dental",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_main__eighth_bakery_condo__0",
+   "piece": "n_cc_b3_main",
+   "label": "eighth_bakery_condo",
+   "model": "apartments/apt_beach_condo",
+   "pos": [
+    176.18,
+    7.919,
+    -417.3
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -5.0,
+    5.0
+   ],
+   "kind": "bakery",
+   "name": "Crumbs Bakery",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.17,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.17,
+     "w": 1.35
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_main__eighth_corner_bar__0",
+   "piece": "n_cc_b3_main",
+   "label": "eighth_corner_bar",
+   "model": "ck/ck_brk3_corner2",
+   "pos": [
+    210.7,
+    8.125,
+    -418.3
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.8,
+    5.7
+   ],
+   "kind": "bar",
+   "name": "The Uphill Tap",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b3_main__eighth_bave_pharmacy__0",
+   "piece": "n_cc_b3_main",
+   "label": "eighth_bave_pharmacy",
+   "model": "urban/urb_brick_corner",
+   "pos": [
+    230.477,
+    8.15,
+    -418.923
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 6.8,
+   "door_w": 1.8,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "pharmacy",
+   "name": "Corner Pharmacy",
+   "style": "green",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 2.48
     }
    ],
    "source": "city-centre fill (hand-made shop list)",
