@@ -1,0 +1,81 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -13.9644660949707,
+    0.150000005960464,
+    12.7644653320313
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "move",
+   "reason": "prop_signal_mast_arm hangs 0.15 m over what is under it",
+   "to": [
+    -13.9644660949707,
+    -0.00000000000000177635683940025,
+    12.7644653320313
+   ]
+  },
+  {
+   "at": [
+    13.9644660949707,
+    0.150000005960464,
+    -12.7644653320313
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "move",
+   "reason": "prop_signal_mast_arm hangs 0.15 m over what is under it",
+   "to": [
+    13.9644660949707,
+    0.00000000000000177635683940025,
+    -12.7644653320313
+   ]
+  },
+  {
+   "at": [
+    -13.9644660949707,
+    0.150000005960464,
+    -12.7644653320313
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "move",
+   "reason": "prop_signal_mast_arm hangs 0.15 m over what is under it",
+   "to": [
+    -13.9644660949707,
+    0.0,
+    -12.7644653320313
+   ]
+  },
+  {
+   "at": [
+    13.9644660949707,
+    0.150000005960464,
+    12.7644653320313
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "move",
+   "reason": "prop_signal_mast_arm hangs 0.15 m over what is under it",
+   "to": [
+    13.9644660949707,
+    0.0,
+    12.7644653320313
+   ]
+  }
+ ],
+ "scene": "j_am_4th"
+}

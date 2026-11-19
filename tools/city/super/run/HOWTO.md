@@ -52,6 +52,14 @@ folder, same steps 1-4 above, with these differences:
   (sight lines at the corners). Keeping a builder tree's old spot is fine when the plan's spacing puts one there
   (Yasin: "if the plan puts new trees in old spots it is fine, stick to the plan"). A tree that stays in a WELL: write
   the list BEFORE `block.sh`, so its well is not paved. Every line has its why.
+- (cloud session, 19 Nov) `sc_trees.py check` reads every place a piece stands (it read only the first row's area, so
+  a multi-place list from `street_trees.py write` failed as "outside the area round <piece>"); pull before such a piece.
+- False alarms seen on streets, kept with `keep N <why>` (sc_review.py apply): `prop_storm_drain_curb_inlet` "sunk 0.10 m"
+  (its origin is just behind the kerb face at road level, grate in the gutter; the check reads the parkway grass behind
+  the kerb - lifting it floats the grate); props on a pier deck (`prop_pier_thead` / `pier_straight`) "over no ground"
+  (the deck is a prop, not a ground surface).
+- Yasin's newest word (from the PC session): NO tree stays in a well; every well is emptied and paved in its rim's
+  material; new trees only on grass or mulch beds, by hand per the street family's rule.
 
 ## Never
 - run a piece's building script, rebuild a piece or room, change the land, delete roads or ground surfaces;

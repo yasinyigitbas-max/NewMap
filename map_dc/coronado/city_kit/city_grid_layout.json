@@ -7863,6 +7863,136 @@
    ],
    "yaw": 0.0,
    "from": "trees"
+  },
+  {
+   "piece": "t_10th_e",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_strip_art",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b129_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b129_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b128_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b128_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b127_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b127_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b126_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b126_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b125_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b125_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b122_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
   }
  ],
  "coverage": {

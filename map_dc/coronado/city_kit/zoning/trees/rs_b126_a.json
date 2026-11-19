@@ -1,0 +1,81 @@
+{
+ "area": "rs_b126_a",
+ "piece": "s_rs_b126_a",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -556.301,
+    4.031,
+    206.45
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first of the west face's coral trees (old spot and species)"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -531.324,
+    3.707,
+    206.45
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway 25 m on, the coral run continues"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    -506.608,
+    3.274,
+    206.45
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway 25 m on, the last coral tree of the face"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -553.046,
+    3.998,
+    193.55
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway grass, first of the east face's Torrey pines (the face is one species: the odd queen palm becomes a pine)"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -527.907,
+    3.652,
+    193.55
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway 25 m on, the pine run continues (old spot)"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -503.418,
+    3.214,
+    193.55
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "east parkway 24.5 m on, the last pine; the 13.5 m double between goes"
+  }
+ ]
+}

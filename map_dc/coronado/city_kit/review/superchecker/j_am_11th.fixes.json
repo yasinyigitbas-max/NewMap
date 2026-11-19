@@ -1,0 +1,149 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -13.9644660949707,
+    0.150000005960464,
+    8.16446590423584
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "move",
+   "reason": "prop_signal_mast_arm hangs 0.15 m over what is under it",
+   "to": [
+    -13.9644660949707,
+    0.0,
+    8.16446590423584
+   ]
+  },
+  {
+   "at": [
+    13.9644660949707,
+    0.150000005960464,
+    -8.16446590423584
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "move",
+   "reason": "prop_signal_mast_arm hangs 0.15 m over what is under it",
+   "to": [
+    13.9644660949707,
+    0.0,
+    -8.16446590423584
+   ]
+  },
+  {
+   "at": [
+    -11.5,
+    0.0,
+    -16.6000003814697
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "move",
+   "reason": "prop_storm_drain_curb_inlet is 0.10 m into the ground",
+   "to": [
+    -11.5,
+    0.100000001490116,
+    -16.6000003814697
+   ]
+  },
+  {
+   "at": [
+    11.5,
+    0.0,
+    -16.6000003814697
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "move",
+   "reason": "prop_storm_drain_curb_inlet is 0.10 m into the ground",
+   "to": [
+    11.5,
+    0.100000001490116,
+    -16.6000003814697
+   ]
+  },
+  {
+   "at": [
+    22.7999992370605,
+    0.0,
+    -5.69999980926514
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "move",
+   "reason": "prop_storm_drain_curb_inlet is 0.10 m into the ground",
+   "to": [
+    22.7999992370605,
+    0.100000001490116,
+    -5.69999980926514
+   ]
+  },
+  {
+   "at": [
+    22.7999992370605,
+    0.0,
+    5.69999980926514
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "move",
+   "reason": "prop_storm_drain_curb_inlet is 0.10 m into the ground",
+   "to": [
+    22.7999992370605,
+    0.100000001490116,
+    5.69999980926514
+   ]
+  },
+  {
+   "at": [
+    -15.5,
+    0.150000005960464,
+    16.5
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "door",
+   "mode": "choose",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "erased (in doubt): door: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in front of the shopdoor of corner]"
+  },
+  {
+   "at": [
+    -15.5,
+    0.150000005960464,
+    15.6999998092651
+   ],
+   "base": "prop_newspaper_box_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "door",
+   "mode": "choose",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "erased (in doubt): door: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_blue stands in front of the shopdoor of corner]"
+  }
+ ],
+ "scene": "j_am_11th"
+}

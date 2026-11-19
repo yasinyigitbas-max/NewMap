@@ -1,0 +1,57 @@
+{
+ "area": "10th_e",
+ "piece": "s_10th_e",
+ "zone": "residential streets",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps where a driveway or a lamp is; broadleaf on the flat. Yasin 19 Nov: every well emptied and filled, new trees by hand",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    78.5,
+    5.814,
+    -6.7
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "south parkway grass, first of a coral run on this face, clear of the corner wells"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    108.5,
+    8.163,
+    -6.7
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "south parkway grass, 30 m on in the coral run (the spot at 136 m left out: the high street's yard trees already fill the view there, limit 8 broadleaf)"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    91.2,
+    6.795,
+    6.7
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "north parkway grass, first of a magnolia run on this face (the spot at 62 m left out: the in-view limit of 8 broadleaf)"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    123.5,
+    9.185,
+    6.7
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "north parkway grass, end of the magnolia run, 32 m on, beside the mailbox not in the drive"
+  }
+ ]
+}
