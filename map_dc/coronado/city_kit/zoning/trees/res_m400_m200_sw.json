@@ -1,0 +1,12 @@
+{
+ "area": "res_m400_m200_sw", "piece": "r_q_m400_m200_sw", "zone": "residential yards",
+ "rule": "docs/TREE_PLAN.md: one yard tree for every two or three houses, in back yards and at lot corners, never against a fence or a wall (zone 813 -> about 400)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The quadrant's eighteen builder trees go (jacarandas, ficus, corals and magnolias along the back fences, a magnolia and a jacaranda 3 m from the house fronts, a few in the yards inside the wrought-iron fence); five come back on their own spots, about one for every two houses: by the patio set, the grill, the swing set, on the open lot corner and in a yard inside the iron fence.",
+ "trees": [
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [-427.1, 6.15, -171.5], "yaw": 15.0, "scale": 0.85, "why": "the back yard with the adirondack chair and the patio set: a jacaranda over the table"},
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [-476.3, 6.15, -166.2], "yaw": 105.0, "scale": 0.85, "why": "the west back yard with the kettle grill (1.3 m off): a jacaranda over the cook"},
+  {"base": "tree_ficus_a", "cond": "normal", "at": [-442.6, 6.15, -136.8], "yaw": 195.0, "scale": 0.85, "why": "the yard with the swing set (2.8 m off): shade over the swings"},
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [-496.0, 7.434, -104.0], "yaw": 285.0, "scale": 0.9, "why": "the open lot corner inside the wrought-iron fence, 25 m from the walls: a full magnolia"},
+  {"base": "tree_jacaranda_b", "cond": "normal", "at": [-464.5, 6.57, -114.0], "yaw": 45.0, "scale": 0.85, "why": "the yard inside the same fence, 13.5 m from the house"}
+ ]
+}
