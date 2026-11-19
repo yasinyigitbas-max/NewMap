@@ -174,6 +174,16 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   beside the pavement, 0 on the road at green, 0 standing a minute; same seed same crowd; 0.22 ms a step.
   NOT DONE: it is the BRAIN ONLY, nothing is drawn or in the game; not joined to the traffic (cars do not know of
   walkers yet); no groups, places, reactions, speaking; a second seed leaves one near miss with a test car open.
+- 19 Nov (cloud, branch claude/fill-apartments): APARTMENT FILL, THE WHOLE ZONE (Yasin: "go on populate the entire
+  zone"): blocks 1-3 drafts, 8 pieces n_apt_*, 15 rooms g_apt_*, land first on measured street heights (blocks 2-3 on
+  slopes: level pads, retaining faces on the residential line). Draws 64-134, triangles over 500k. LOCKED on Yasin's
+  word ("just lock them if you are done with placements"): 8 pieces + 15 rooms, lock test PASS (504 / 118). POLISHED and
+  relocked ("run a polish pass ... plenty of props", "have variety"): +510 props outdoors, rooms refilled with variety. Read
+  review/fill_apt/README.md.
+- 19 Nov (cloud, branch claude/fill-apartments): APARTMENT FILL BLOCK 1 (B Ave - Adela, 7th - 8th St, the L round
+  a_ne) DRAFT, waiting for Yasin's word before blocks 2 and 3. Three pieces n_apt_b1_bw / _be / _7th + 10 shop rooms
+  g_apt_*; land first (level at the walk, all seams 0.000 m, dry land trial only); own tables grow_apt_blocks.json,
+  assignment_apt.json. Draws 64-133 a view, triangles over 500k. Read review/fill_apt/README.md. Nothing locked.
 - 19 Nov ~20:00 (PC session): A TRAFFIC CAR THAT IS HIT IS A REAL CAR, ALL C++ (Yasin after the compaction: "act like
   a developer working for rockstars next GTA and tackle the problems"). Read docs/TRAFFIC_PEOPLE_PORT.md section 23.
   Six physical cars (`CityCar`) are made at the start; a moving or parked car of the traffic that the player's car

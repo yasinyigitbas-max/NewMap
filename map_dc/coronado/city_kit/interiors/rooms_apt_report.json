@@ -1,0 +1,154 @@
+{
+ "rooms": [
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_bw__bakery__0.scn",
+   "id": "g_apt_b1_bw__bakery__0",
+   "kind": "bakery",
+   "lights": 4,
+   "name": "B Avenue Bakery",
+   "props": 37,
+   "w": 8.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_bw__barber__0.scn",
+   "id": "g_apt_b1_bw__barber__0",
+   "kind": "barber",
+   "lights": 3,
+   "name": "Eighth Street Barbers",
+   "props": 27,
+   "w": 7.9
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_be__taqueria__0.scn",
+   "id": "g_apt_b1_be__taqueria__0",
+   "kind": "taqueria",
+   "lights": 3,
+   "name": "Taqueria La Esquina",
+   "props": 44,
+   "w": 11.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_be__nail_salon__0.scn",
+   "id": "g_apt_b1_be__nail_salon__0",
+   "kind": "nails",
+   "lights": 3,
+   "name": "Polished Nail Studio",
+   "props": 32,
+   "w": 5.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_7th__dry_cleaner__0.scn",
+   "id": "g_apt_b1_7th__dry_cleaner__0",
+   "kind": "dry_cleaner",
+   "lights": 3,
+   "name": "Seventh Street Cleaners",
+   "props": 27,
+   "w": 7.9
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_7th__corner_shops_7th__0.scn",
+   "id": "g_apt_b1_7th__corner_shops_7th__0",
+   "kind": "pharmacy",
+   "lights": 4,
+   "name": "Adela Pharmacy & Post",
+   "props": 23,
+   "w": 5.7
+  },
+  {
+   "d": 10.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_7th__corner_shops_7th__1.scn",
+   "id": "g_apt_b1_7th__corner_shops_7th__1",
+   "kind": "tax",
+   "lights": 4,
+   "name": "Island Tax Service",
+   "props": 23,
+   "w": 6.0
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_7th__corner_shops_7th__2.scn",
+   "id": "g_apt_b1_7th__corner_shops_7th__2",
+   "kind": "donuts",
+   "lights": 3,
+   "name": "Sunrise Donuts",
+   "props": 24,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_7th__coffee_window__0.scn",
+   "id": "g_apt_b1_7th__coffee_window__0",
+   "kind": "coffee",
+   "lights": 3,
+   "name": "The Coffee Window",
+   "props": 23,
+   "w": 5.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_7th__launderette__0.scn",
+   "id": "g_apt_b1_7th__launderette__0",
+   "kind": "laundromat",
+   "lights": 3,
+   "name": "Adela Wash & Fold",
+   "props": 30,
+   "w": 7.9
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b2_7th__church_7th__0.scn",
+   "id": "g_apt_b2_7th__church_7th__0",
+   "kind": "chapel",
+   "lights": 4,
+   "name": "Seventh Street Community Church",
+   "props": 81,
+   "w": 13.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b2_7th__corner_market__0.scn",
+   "id": "g_apt_b2_7th__corner_market__0",
+   "kind": "discount",
+   "lights": 4,
+   "name": "Adela Corner Market",
+   "props": 19,
+   "w": 6.9
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b2_be__bike_shop__0.scn",
+   "id": "g_apt_b2_be__bike_shop__0",
+   "kind": "bikes",
+   "lights": 4,
+   "name": "Hill Street Bikes",
+   "props": 25,
+   "w": 8.4
+  },
+  {
+   "d": 12.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b2_bw__community_room__0.scn",
+   "id": "g_apt_b2_bw__community_room__0",
+   "kind": "community",
+   "lights": 4,
+   "name": "Glorietta Hill Community Room",
+   "props": 62,
+   "w": 23.4
+  },
+  {
+   "d": 5.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b3_w__hilltop_books__0.scn",
+   "id": "g_apt_b3_w__hilltop_books__0",
+   "kind": "books",
+   "lights": 2,
+   "name": "Hilltop Books",
+   "props": 9,
+   "w": 5.9
+  }
+ ]
+}

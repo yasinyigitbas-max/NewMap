@@ -1,0 +1,93 @@
+{
+ "_doc": "Apartment band fill (claude/fill-apartments): one row per new apartment block piece (n_apt_*), grid frame [u, pad, v], yaw 0, all in the apartment sample's junction frame (250, 6, -600). Read by tools/city/pilot/zoning/integrate.py (review/grow_*_blocks.json) into city_grid_layout.json later; NOT run into the shared layout by this branch.",
+ "rows": [
+  {
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 1 (B Ave - Adela, 7th - 8th St) west part: B Ave x 8th St (u 259.2-350, v -790.8..-700)",
+   "variant": "old courts: bakery, barber, lock-up garages"
+  },
+  {
+   "piece": "n_apt_b1_be",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 1 east part on 8th St: 8th St x Adela Ave (u 350-490.8, v -790.8..-700)",
+   "variant": "1960s dingbats, tennis courts, taqueria"
+  },
+  {
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 1 south part on 7th St: 7th St x Adela Ave (u 350-490.8, v -700..-609.2)",
+   "variant": "7th St shops, skate pad, launderette"
+  },
+  {
+   "piece": "n_apt_b2_7th",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 2 (B Ave - Adela, 7th - 6th St) north part on 7th St: 7th St x Adela (u 350-490.8, v -590.8..-500)",
+   "variant": "church, corner market, community garden"
+  },
+  {
+   "piece": "n_apt_b2_be",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 2 east part on 6th St: 6th St x Adela (u 350-490.8, v -500..-409.2)",
+   "variant": "garage townhouses, garden court, bike shop"
+  },
+  {
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "block 2 west part: B Ave x 6th St, the high corner (u 259.2-350, v -500..-409.2)",
+   "variant": "community room and preschool, walk-ups stepping up B Ave"
+  },
+  {
+   "piece": "n_apt_b3_w",
+   "pos": [
+    250.0,
+    8.0,
+    -400.0
+   ],
+   "yaw": 0.0,
+   "site": "block 3 (B Ave - Adela, 6th St - the residential quarters at z -300) west part (u 259.2-375, v -390.8..-300)",
+   "variant": "Hilltop Books, bungalow court, view garden"
+  },
+  {
+   "piece": "n_apt_b3_e",
+   "pos": [
+    250.0,
+    8.0,
+    -400.0
+   ],
+   "yaw": 0.0,
+   "site": "block 3 east part (u 375-490.8, v -390.8..-300)",
+   "variant": "garage townhouses stepping down, corner court"
+  }
+ ]
+}
