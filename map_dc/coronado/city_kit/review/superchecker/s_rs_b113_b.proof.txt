@@ -1,0 +1,37 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 12 nodes (with every mesh of the buildings), 2332 ground and ground-collision triangles, 9 prop instances, 5 colliders, 261 wear marks are identical in both files
+PROOF differences found between the files: 67 lines only in the old one, 0 only in the new one
+PROOF change #1 remove tree_jacaranda_a at (-6.45, 0.06, 28.66) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_jacaranda_a at (-6.45, -0.07, 40.27) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_jacaranda_a at (-6.45, -0.70, 66.87) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_jacaranda_a at (-6.45, -1.27, 83.63) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove palm_queen_a at (-6.45, -2.05, 103.36) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove palm_queen_a at (-6.45, -2.59, 115.89) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove palm_queen_a at (6.45, -0.82, 70.63) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove palm_queen_a at (6.45, -1.73, 95.62) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove palm_queen_b at (6.45, -0.15, 44.96) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove palm_queen_b at (6.45, -1.23, 82.62) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #11 remove tree_torrey_pine_b at (6.45, -2.22, 107.21) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #12 remove tree_torrey_pine_b at (6.45, -2.73, 119.05) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #13 remove_decal: one wear mark at (-6.45, -1.50, 91.52) removed  [grime mark lies on grass]
+PROOF change #14 remove_decal: one wear mark at (-7.73, 0.16, 21.86) removed  [grime mark lies on grass]
+PROOF change #15 remove_decal: one wear mark at (-7.72, -0.08, 44.82) removed  [grime mark lies on grass]
+PROOF change #16 remove_decal: one wear mark at (-8.67, -1.65, 95.18) removed  [grime mark lies on grass]
+PROOF change #17 remove_decal: one wear mark at (-8.68, -2.59, 117.55) removed  [grime mark lies on grass]
+PROOF change #18 remove_decal: one wear mark at (7.73, -1.48, 91.05) removed  [grime mark lies on grass]
+PROOF change #19 remove_decal: one wear mark at (7.73, -2.91, 124.99) removed  [grime mark lies on grass]
+PROOF note: 'Props/tree_torrey_pine_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_near' held only listed items and is gone with them
+PROOF 19 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
