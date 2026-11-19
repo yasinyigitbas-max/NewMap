@@ -1,0 +1,8 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 37 nodes (with every mesh of the buildings), 0 ground and ground-collision triangles, 37 prop instances, 0 colliders, 13 wear marks are identical in both files
+PROOF differences found between the files: 2 lines only in the old one, 0 only in the new one
+PROOF change #1 remove prop_mannequin at (-1.20, 0.02, 5.80) removed, in 1 tier(s), no collider  [erased: no plainly safe place (Yasin: delete when unsure) [prop_mannequin (1.7 m tall) stands right behind a window]]
+PROOF note: 'Props/prop_mannequin' held only listed items and is gone with them
+PROOF 1 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
