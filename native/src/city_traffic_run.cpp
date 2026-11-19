@@ -127,7 +127,7 @@ void CityTraffic::thread_main() {
 }
 
 // ---------------------------------------------------------------- batches
-void CityTraffic::make_batch(Batch &b, const Ref<Mesh> &p_mesh, const Ref<ShaderMaterial> &p_mat, int p_cap, int p_shadow) {
+void CityTraffic::make_batch(Batch &b, const Ref<Mesh> &p_mesh, const Ref<ShaderMaterial> &p_mat, int p_cap, bool p_shadow) {
 	RenderingServer *rs = RenderingServer::get_singleton();
 	b.mm = rs->multimesh_create();
 	b.cap = p_cap;
@@ -138,7 +138,7 @@ void CityTraffic::make_batch(Batch &b, const Ref<Mesh> &p_mesh, const Ref<Shader
 	// one box for the whole city: a batch is never culled as a whole (its rows are everywhere), and it is hidden when empty
 	rs->instance_set_custom_aabb(b.inst, AABB(Vector3(-4000, -200, -4000), Vector3(8000, 600, 8000)));
 	if (p_mat.is_valid()) rs->instance_geometry_set_material_override(b.inst, p_mat->get_rid());
-	rs->instance_geometry_set_cast_shadows_setting(b.inst, p_shadow == 2 ? RenderingServer::SHADOW_CASTING_SETTING_SHADOWS_ONLY : (p_shadow == 1 ? RenderingServer::SHADOW_CASTING_SETTING_ON : RenderingServer::SHADOW_CASTING_SETTING_OFF));
+	rs->instance_geometry_set_cast_shadows_setting(b.inst, p_shadow ? RenderingServer::SHADOW_CASTING_SETTING_ON : RenderingServer::SHADOW_CASTING_SETTING_OFF);
 	rs->instance_set_visible(b.inst, false);
 	b.buf.resize((int64_t)p_cap * ROW);
 	b.buf.fill(0.0f);
@@ -154,15 +154,6 @@ void CityTraffic::grow(Batch &b, int p_need) {
 	b.cap = cap;
 	b.buf.resize((int64_t)cap * ROW);
 	b.dirty = true;
-}
-
-// a car's shadow: the simple shape at the car's place and size (a row of the shadow batch)
-void CityTraffic::shadow_row(float x, float y, float z, float yaw, float pitch, int p_model) {
-	if (!shadows || p_model < 0 || p_model >= cm::N_MODELS) return;
-	const cm::CarModel &m = cm::MODELS[p_model];
-	grow(shadow_b, shadow_b.n + 1);
-	put_row(shadow_b.buf.ptrw() + (size_t)shadow_b.n * ROW, x, y, z, yaw, pitch, m.half_w * 2.0f / box_size[0], m.height / (box_size[1] + box_y0), m.half_len * 2.0f / box_size[2], PAINT[0], 0.0f, 0.0f, 0.0f, 0.0f);
-	shadow_b.n++;
 }
 
 void CityTraffic::send(Batch &b) {
@@ -225,31 +216,18 @@ void CityTraffic::rebuild_active() {
 			for (int32_t k : cell_stalls[ci]) if (stall_car[k].model != 255) active.push_back(k);
 		}
 	}
-	far_dirty = true;
-	active_dirty = false;
-}
-
-// The far batch of the parked cars: the ones within parked_far_r (+ 40 m, so it holds while the camera moves 40 m) of
-// the camera. Beyond that a car is a few pixels. Built when a stall changes or the camera has moved 40 m: not a frame's
-// work, and nothing is sent to the graphics card in between.
-void CityTraffic::rebuild_far(const Vector3 &p_cam) {
-	const float r = (float)parked_far_r + 40.0f, r2 = r * r;
 	grow(box_parked, (int)active.size());
 	float *w = box_parked.buf.ptrw();
-	int n = 0;
 	for (size_t a = 0; a < active.size(); a++) {
 		const int k = active[a];
 		const float *f = &streets.stall_f[(size_t)k * 8];
-		const float dx = f[0] - (float)p_cam.x, dz = f[2] - (float)p_cam.z;
-		if (dx * dx + dz * dz > r2) continue;
 		const cm::CarModel &m = cm::MODELS[stall_car[k].model];
-		put_row(w + (size_t)n * ROW, f[0], f[1] + 0.02f, f[2], f[3], f[4],
+		put_row(w + a * ROW, f[0], f[1] + 0.02f, f[2], f[3], f[4],
 				m.half_w * 2.0f / box_size[0], m.height / (box_size[1] + box_y0), m.half_len * 2.0f / box_size[2], PAINT[stall_car[k].colour], 0.0f, 0.0f, 0.0f, 1.0f);
-		n++;
 	}
-	box_parked.n = n;
+	box_parked.n = (int)active.size();
 	box_parked.dirty = true;
-	far_at = p_cam; far_dirty = false;
+	active_dirty = false;
 }
 
 // ---------------------------------------------------------------- the streamer's cells
@@ -327,11 +305,10 @@ void CityTraffic::_ready() {
 	mat_box.instantiate(); mat_box->set_shader(sh_box); mat_box->set_shader_parameter("atlas", atlas_far); mat_box->set_shader_parameter("parked_cut", (float)parked_mid_r);
 	near_b.resize(cm::N_MODELS); mid_b.resize(cm::N_MODELS); mid_parked.assign(cm::N_MODELS, std::vector<int32_t>());
 	for (int m = 0; m < cm::N_MODELS; m++) {
-		make_batch(near_b[m], mesh_near[m], mat_near, 8, 0);
-		make_batch(mid_b[m], mesh_mid[m], mat_mid, 64, 0);
+		make_batch(near_b[m], mesh_near[m], mat_near, 8, shadows);
+		make_batch(mid_b[m], mesh_mid[m], mat_mid, 64, shadows);
 	}
-	make_batch(box_moving, mesh_box, mat_box, 256, 0);
-	make_batch(shadow_b, mesh_box, mat_box, 64, shadows ? 2 : 0);   // the cars' shadows: the simple shape, in the shadow passes only
+	make_batch(box_moving, mesh_box, mat_box, 256, false);
 	// the lamp glows: four squares at the corners of a unit car (x = left / right, z = front / back), made here
 	{
 		PackedVector3Array v; PackedVector2Array uv, uv2; PackedInt32Array ix;
@@ -351,9 +328,9 @@ void CityTraffic::_ready() {
 		mesh_lamps = am;
 		Ref<Shader> sh_lamps = rl->load("res://map_dc/coronado/city_kit/traffic/shaders/traffic_lamps.gdshader");
 		mat_lamps.instantiate(); mat_lamps->set_shader(sh_lamps);
-		make_batch(lamps_b, mesh_lamps, mat_lamps, 128, 0);
+		make_batch(lamps_b, mesh_lamps, mat_lamps, 128, false);
 	}
-	make_batch(box_parked, mesh_box, mat_box, 1024, 0);
+	make_batch(box_parked, mesh_box, mat_box, 1024, false);
 	gfx = true;
 	// the collision pool: made once, moved afterwards
 	if (bodies_on) {
@@ -402,7 +379,7 @@ void CityTraffic::_exit_tree() {
 	if (gfx) {
 		for (Batch &b : near_b) drop(b);
 		for (Batch &b : mid_b) drop(b);
-		drop(box_moving); drop(box_parked); drop(lamps_b); drop(shadow_b);
+		drop(box_moving); drop(box_parked); drop(lamps_b);
 		gfx = false;
 	}
 	if (pool_made) {
@@ -452,12 +429,11 @@ void CityTraffic::_process(double p_delta) {
 
 	for (Batch &b : near_b) b.n = 0;
 	for (Batch &b : mid_b) b.n = 0;
-	box_moving.n = 0; lamps_b.n = 0; shadow_b.n = 0;
+	box_moving.n = 0; lamps_b.n = 0;
 	body_want.clear();
 
 	// ---- parked cars
 	if (active_dirty) rebuild_active();
-	if (far_dirty || (cp.x - far_at.x) * (cp.x - far_at.x) + (cp.z - far_at.z) * (cp.z - far_at.z) > 40.0f * 40.0f) rebuild_far(cp);
 	const float pm_in = (float)parked_mid_r + 2.0f, pm_out = (float)parked_mid_r + 6.0f;
 	if (!active.empty()) {
 		// which of them are near enough for the light model: a slice of the list a frame (they do not move; the camera does)
@@ -486,7 +462,6 @@ void CityTraffic::_process(double p_delta) {
 			const float *f = &streets.stall_f[(size_t)k * 8];
 			put_row(w + (size_t)mid_b[m].n * ROW, f[0], f[1] + 0.02f, f[2], f[3], f[4], 1.0f, 1.0f, 1.0f, PAINT[stall_car[k].colour], 0.0f, 0.0f, 0.0f, 1.0f);
 			mid_b[m].n++; parked_mid_n++;
-			shadow_row(f[0], f[1] + 0.02f, f[2], f[3], f[4], m);
 			const float dx = f[0] - cp.x, dz = f[2] - cp.z;
 			if (bodies_on && dx * dx + dz * dz < 30.0f * 30.0f) body_want.push_back(BodyWant{ dx * dx + dz * dz, f[0], f[1], f[2], f[3], f[4], m });
 		}
@@ -534,7 +509,6 @@ void CityTraffic::_process(double p_delta) {
 					col, brake, 0.0f, lamps, 0.0f);
 			box_moving.n++; c_box++;
 		}
-		if (p[5] < (float)(shadow_r * shadow_r)) shadow_row(p[0], p[1], p[2], p[3], p[4], (int)r.model);
 		// its lamps: at night every car to lamps_r, by day a braking car's tail lights to 60 m
 		if ((lamps > 0.01f && p[5] < (float)(lamps_r * lamps_r)) || (brake > 0.5f && p[5] < 60.0f * 60.0f)) {
 			const cm::CarModel &m = cm::MODELS[r.model];
@@ -554,7 +528,6 @@ void CityTraffic::_process(double p_delta) {
 		}
 		if (box_moving.n == 0) { put_row(box_moving.buf.ptrw(), wp.x, wp.y - 1.0f, wp.z, 0, 0, 0.02f, 0.02f, 0.02f, PAINT[0], 0, 0, 1, 0); box_moving.n = 1; }
 		if (lamps_b.n == 0) { put_row(lamps_b.buf.ptrw(), wp.x, wp.y - 1.0f, wp.z, 0, 0, 0.02f, 0.02f, 0.02f, PAINT[0], 1, 0, 1, 0); lamps_b.n = 1; }
-		if (shadow_b.n == 0 && shadows) { put_row(shadow_b.buf.ptrw(), wp.x, wp.y - 1.0f, wp.z, 0, 0, 0.02f, 0.02f, 0.02f, PAINT[0], 0, 0, 0, 0); shadow_b.n = 1; }
 	}
 	// ---- to the graphics card: a batch with rows this frame, or that had rows last frame; the parked far batch only when it changed
 	int batches = 0;
@@ -567,8 +540,6 @@ void CityTraffic::_process(double p_delta) {
 	send(box_moving);
 	if (lamps_b.n > 0) { lamps_b.dirty = true; batches++; }
 	send(lamps_b);
-	if (shadow_b.n > 0) shadow_b.dirty = true;
-	send(shadow_b);
 	if (box_parked.n > 0) batches++;
 	send(box_parked);
 
@@ -576,7 +547,7 @@ void CityTraffic::_process(double p_delta) {
 	cnt.frames++; cnt.main_us += us; cnt.main_us_worst = std::max(cnt.main_us_worst, us);
 	cnt.step_us += now.step_us; cnt.step_us_worst = std::max(cnt.step_us_worst, (double)now.step_us); cnt.steps++;
 	cnt.moving += now.n; cnt.moving_most = std::max(cnt.moving_most, now.n);
-	cnt.near += c_near; cnt.mid += c_mid; cnt.box += c_box; cnt.parked_mid += parked_mid_n; cnt.parked_far += box_parked.n; cnt.shadow_n += shadow_b.n; cnt.parked_all += (double)active.size(); cnt.batches += batches; cnt.carry += now.carry;
+	cnt.near += c_near; cnt.mid += c_mid; cnt.box += c_box; cnt.parked_mid += parked_mid_n; cnt.parked_all += (double)active.size(); cnt.batches += batches; cnt.carry += now.carry;
 }
 
 // The pool's bodies go onto the cars nearest the camera (moving cars to 70 m, parked ones to 30 m). Only transforms
@@ -603,8 +574,8 @@ void CityTraffic::_physics_process(double p_delta) {
 
 String CityTraffic::report() {
 	const double f = std::max(cnt.frames, 1);
-	String s = vformat("cars moving avg %.1f most %d (the streets there carry %.0f, the cap is %d): near model %.1f, light model %.1f, far shape %.1f | parked: %.0f in the loaded cells, %.0f of them within reach of the far batch, %.1f drawn with the light model | shadows %.1f | batches drawn avg %.1f, uploads a frame %.1f | main thread a frame: avg %.3f worst %.3f ms | the step (own thread): avg %.3f worst %.3f ms",
-			cnt.moving / f, cnt.moving_most, cnt.carry / f, max_cars, cnt.near / f, cnt.mid / f, cnt.box / f, cnt.parked_all / f, cnt.parked_far / f, cnt.parked_mid / f, cnt.shadow_n / f, cnt.batches / f, (double)cnt.uploads / f,
+	String s = vformat("cars moving avg %.1f most %d (the streets there carry %.0f, the cap is %d): near model %.1f, light model %.1f, far shape %.1f | parked: %.0f in the loaded cells, %.1f drawn with the light model | batches drawn avg %.1f, uploads a frame %.1f | main thread a frame: avg %.3f worst %.3f ms | the step (own thread): avg %.3f worst %.3f ms",
+			cnt.moving / f, cnt.moving_most, cnt.carry / f, max_cars, cnt.near / f, cnt.mid / f, cnt.box / f, cnt.parked_all / f, cnt.parked_mid / f, cnt.batches / f, (double)cnt.uploads / f,
 			cnt.main_us / f / 1000.0, cnt.main_us_worst / 1000.0, cnt.step_us / std::max(cnt.steps, 1) / 1000.0, cnt.step_us_worst / 1000.0);
 	s += vformat(" | pulled out of a stall %d, parked %d (since the start)", cnt.park_out, cnt.park_in);
 	cnt = Count();

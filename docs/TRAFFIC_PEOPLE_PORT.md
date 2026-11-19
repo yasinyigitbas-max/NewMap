@@ -645,3 +645,9 @@ WHAT IT MEANS FOR THE PEOPLE AND THE TRAFFIC:
   "pavement points without ground" are there for that.
 - What should WAIT for the elevation: the PLACES people use (doors, benches, bus stops: Stage 3b). They belong to
   the blocks, and the blocks are what will move. The walking itself (Stage 3a) is on the streets' own pavements.
+
+NOTE (19 Nov, later): the change of section 19 (parked cars by distance, the shadow batch) was TAKEN OUT again at
+Yasin's word, here and on the working branch. Yasin on the far shapes: "terrible match boxes". The code is as it was
+at Stage 2d. Yasin also said the old game's traffic and crowd code should never have been brought over (he did not
+like how the old traffic drove: cars sliding sideways to change lane, wrong-way turns, U-turns, lockups): nothing more
+is to be built on it without his word.
