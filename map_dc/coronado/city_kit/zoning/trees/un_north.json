@@ -1,0 +1,141 @@
+{
+ "area": "un_north",
+ "piece": "n_un_north",
+ "zone": "civic (campus)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle (the plan has no hospital row: the hospital campus and the university are read as civic grounds)",
+ "written": "by hand, 19 Nov 2026 (claude/fill-high-street, superchecker over the hospital zone and campus): every builder tree out, these placed after the plan",
+ "trees": [
+  {
+   "base": "palm_canary_date_a",
+   "cond": "normal",
+   "at": [
+    -630.0,
+    6.155,
+    -785.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "Founders Green: the entrance avenue's palms (west row)"
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "at": [
+    -570.0,
+    6.158,
+    -785.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "Founders Green: the avenue (east row)"
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "at": [
+    -630.0,
+    6.218,
+    -770.0
+   ],
+   "yaw": 40,
+   "scale": 1.0,
+   "why": "Founders Green: the avenue (west row)"
+  },
+  {
+   "base": "palm_canary_date_a",
+   "cond": "normal",
+   "at": [
+    -570.0,
+    6.235,
+    -770.0
+   ],
+   "yaw": 40,
+   "scale": 1.0,
+   "why": "Founders Green: the avenue (east row)"
+  },
+  {
+   "base": "palm_canary_date_a",
+   "cond": "normal",
+   "at": [
+    -630.0,
+    6.266,
+    -755.0
+   ],
+   "yaw": 80,
+   "scale": 1.0,
+   "why": "Founders Green: the avenue (west row)"
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "at": [
+    -570.0,
+    6.299,
+    -755.0
+   ],
+   "yaw": 80,
+   "scale": 1.0,
+   "why": "Founders Green: the avenue (east row)"
+  },
+  {
+   "base": "tree_eucalyptus_a",
+   "cond": "normal",
+   "at": [
+    -788.6,
+    6.15,
+    -775.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "the rec car park's screen toward the houses across J Ave"
+  },
+  {
+   "base": "tree_eucalyptus_b",
+   "cond": "normal",
+   "at": [
+    -788.6,
+    6.15,
+    -757.0
+   ],
+   "yaw": 60,
+   "scale": 1.0,
+   "why": "the rec car park's screen, its second tree"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -640.0,
+    6.286,
+    -712.0
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "the strip behind the visitors' stalls: shade beside the walk to Founders Hall"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -560.0,
+    6.323,
+    -712.0
+   ],
+   "yaw": 60,
+   "scale": 0.9,
+   "why": "the same strip, east of the walk"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -475.0,
+    6.154,
+    -785.0
+   ],
+   "yaw": 50,
+   "scale": 0.9,
+   "why": "the lot's north buffer: one tree screening the lot from the north street"
+  }
+ ]
+}

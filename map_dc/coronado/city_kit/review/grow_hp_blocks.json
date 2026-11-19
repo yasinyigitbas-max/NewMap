@@ -1,0 +1,77 @@
+{
+ "note": "Hospital zone and its university campus (branch claude/fill-high-street, 19 Nov; README review/fill_hp). Pieces are built in the grid frame: placed at [0, 2, 0] (hospital) and [0, 4, 0] (campus), yaw 0, as each piece script says. Table written by the PC session at the merge (Yasin: 'merge and push hospital sessions work'); the hand-tree pieces t_hp_* / t_un_* come in through zoning/trees.",
+ "rows": [
+  {
+   "piece": "n_hp_main",
+   "pos": [
+    0.0,
+    2.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_hp_transit",
+   "pos": [
+    0.0,
+    2.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_hp_west",
+   "pos": [
+    0.0,
+    2.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_un_east",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_un_north",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_un_quad",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_un_south",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_un_west",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0
+  }
+ ]
+}

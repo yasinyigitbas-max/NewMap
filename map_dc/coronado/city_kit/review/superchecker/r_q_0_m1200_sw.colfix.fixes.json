@@ -1,0 +1,327 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -16.6916656494141,
+    0.150000005960464,
+    28.8500003814697
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.69: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -27.9749984741211,
+    0.150000005960464,
+    28.8500003814697
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.69: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -16.7000007629395,
+    0.150000005960464,
+    45.75
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.70: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -29.3583335876465,
+    0.0900000035762787,
+    28.8500003814697
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.69: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -30.5499992370605,
+    -0.219999998807907,
+    72.6083374023438
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.72: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -30.5499992370605,
+    -0.439999997615814,
+    74.0583343505859
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.72: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -40.6416664123535,
+    0.0900000035762787,
+    28.8500003814697
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.69: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -40.6333312988281,
+    0.0900000035762787,
+    45.75
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.70: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -42.0250015258789,
+    -0.109999999403954,
+    28.8500003814697
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.69: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -53.3083343505859,
+    -0.109999999403954,
+    28.8500003814697
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.69: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -42.033332824707,
+    -0.109999999403954,
+    45.75
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.70: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -60.6083335876465,
+    -0.610000014305115,
+    28.8500003814697
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.61: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -72.7250061035156,
+    -0.610000014305115,
+    28.8500003814697
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.61: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -60.7000007629395,
+    -0.610000014305115,
+    45.75
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.70: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -73.9416656494141,
+    -1.05999994277954,
+    28.8500003814697
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.61: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -86.0583343505859,
+    -1.05999994277954,
+    28.8500003814697
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.61: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -85.966667175293,
+    -1.05999994277954,
+    45.75
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.70: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -99.2750015258789,
+    -1.55999994277954,
+    28.3500003814697
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.72: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -87.3666687011719,
+    -1.55999994277954,
+    45.75
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 19.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.70: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -45.75,
+    -0.219999998807907,
+    60.7000007629395
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.70: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -45.75,
+    -0.439999997615814,
+    85.966667175293
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.70: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -45.75,
+    -0.680000007152557,
+    87.3666687011719
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 22.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.70: it stuck out past the panel; replaced by one of the panel's own size"
+  },
+  {
+   "at": [
+    -30.5499992370605,
+    -0.680000007152557,
+    99.2750015258789
+   ],
+   "base": "fence_wood_privacy",
+   "cond": "worn",
+   "kind": "collider_oversize",
+   "mode": "auto",
+   "n": 23.0,
+   "op": "resize_collider",
+   "reason": "the collider added on 19 Nov was the full kit size on this panel scaled 0.72: it stuck out past the panel; replaced by one of the panel's own size"
+  }
+ ],
+ "scene": "r_q_0_m1200_sw"
+}

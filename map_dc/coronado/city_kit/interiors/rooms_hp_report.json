@@ -1,0 +1,224 @@
+{
+ "rooms": [
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hp_main_hospital_0.scn",
+   "id": "g_hp_main_hospital_0",
+   "kind": "clinic",
+   "lights": 6,
+   "name": "Island Hospital Main Lobby",
+   "props": 73,
+   "w": 17.7
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hp_main_hospital_1.scn",
+   "id": "g_hp_main_hospital_1",
+   "kind": "cafe",
+   "lights": 6,
+   "name": "Atrium Cafe",
+   "props": 116,
+   "w": 17.7
+  },
+  {
+   "d": 15.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hp_main_er_wing_1.scn",
+   "id": "g_hp_main_er_wing_1",
+   "kind": "clinic",
+   "lights": 6,
+   "name": "Emergency Department",
+   "props": 58,
+   "w": 15.7
+  },
+  {
+   "d": 14.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hp_transit_transit_hall_0.scn",
+   "id": "g_hp_transit_transit_hall_0",
+   "kind": "transit",
+   "lights": 6,
+   "name": "Island Transit Center",
+   "props": 67,
+   "w": 21.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hp_west_tower_0.scn",
+   "id": "g_hp_west_tower_0",
+   "kind": "clinic",
+   "lights": 6,
+   "name": "Bay Medical Plaza Urgent Care",
+   "props": 90,
+   "w": 23.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hp_west_pharmacy_0.scn",
+   "id": "g_hp_west_pharmacy_0",
+   "kind": "pharmacy",
+   "lights": 6,
+   "name": "Island Pharmacy",
+   "props": 27,
+   "w": 11.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hp_west_bistro_0.scn",
+   "id": "g_hp_west_bistro_0",
+   "kind": "restaurant",
+   "lights": 6,
+   "name": "Isla Bistro",
+   "props": 50,
+   "w": 11.4
+  },
+  {
+   "d": 13.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hp_west_wellness_0.scn",
+   "id": "g_hp_west_wellness_0",
+   "kind": "hall",
+   "lights": 6,
+   "name": "Bayview Wellness Center",
+   "props": 117,
+   "w": 23.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_quad_founders_0.scn",
+   "id": "g_un_quad_founders_0",
+   "kind": "bank",
+   "lights": 6,
+   "name": "Founders Hall Admissions",
+   "props": 155,
+   "w": 31.4
+  },
+  {
+   "d": 15.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_quad_library_0.scn",
+   "id": "g_un_quad_library_0",
+   "kind": "library",
+   "lights": 6,
+   "name": "University Library",
+   "props": 141,
+   "w": 23.4
+  },
+  {
+   "d": 11.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_quad_wing_nw_0.scn",
+   "id": "g_un_quad_wing_nw_0",
+   "kind": "lecture",
+   "lights": 5,
+   "name": "Humanities Lecture Hall",
+   "props": 136,
+   "w": 29.4
+  },
+  {
+   "d": 11.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_quad_wing_sw_0.scn",
+   "id": "g_un_quad_wing_sw_0",
+   "kind": "lecture",
+   "lights": 5,
+   "name": "Social Sciences Hall",
+   "props": 141,
+   "w": 29.4
+  },
+  {
+   "d": 11.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_quad_wing_ne_0.scn",
+   "id": "g_un_quad_wing_ne_0",
+   "kind": "lecture",
+   "lights": 5,
+   "name": "Mathematics Lecture Hall",
+   "props": 147,
+   "w": 29.4
+  },
+  {
+   "d": 11.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_quad_wing_se_0.scn",
+   "id": "g_un_quad_wing_se_0",
+   "kind": "hall",
+   "lights": 6,
+   "name": "Faculty Commons",
+   "props": 89,
+   "w": 29.4
+  },
+  {
+   "d": 13.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_north_rec_0.scn",
+   "id": "g_un_north_rec_0",
+   "kind": "sport",
+   "lights": 6,
+   "name": "Campus Rec Center",
+   "props": 50,
+   "w": 23.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_north_museum_0.scn",
+   "id": "g_un_north_museum_0",
+   "kind": "gallery",
+   "lights": 5,
+   "name": "University Art Museum",
+   "props": 125,
+   "w": 27.4
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_west_science_0.scn",
+   "id": "g_un_west_science_0",
+   "kind": "realty",
+   "lights": 6,
+   "name": "Science Tower",
+   "props": 96,
+   "w": 23.4
+  },
+  {
+   "d": 11.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_west_eng_labs_0.scn",
+   "id": "g_un_west_eng_labs_0",
+   "kind": "lecture",
+   "lights": 5,
+   "name": "Engineering Lecture Hall",
+   "props": 150,
+   "w": 29.4
+  },
+  {
+   "d": 11.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_west_lab_wing_0.scn",
+   "id": "g_un_west_lab_wing_0",
+   "kind": "library",
+   "lights": 6,
+   "name": "Science Reading Room",
+   "props": 82,
+   "w": 29.4
+  },
+  {
+   "d": 13.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_east_union_0.scn",
+   "id": "g_un_east_union_0",
+   "kind": "fast_food",
+   "lights": 6,
+   "name": "Student Union Food Court",
+   "props": 98,
+   "w": 23.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_east_cafe_0.scn",
+   "id": "g_un_east_cafe_0",
+   "kind": "cafe",
+   "lights": 5,
+   "name": "Campus Cafe",
+   "props": 21,
+   "w": 5.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_east_bookstore_0.scn",
+   "id": "g_un_east_bookstore_0",
+   "kind": "books",
+   "lights": 6,
+   "name": "University Bookstore",
+   "props": 31,
+   "w": 11.4
+  }
+ ]
+}

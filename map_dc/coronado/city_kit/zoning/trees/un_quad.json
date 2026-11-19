@@ -1,0 +1,153 @@
+{
+ "area": "un_quad",
+ "piece": "n_un_quad",
+ "zone": "civic (campus)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle (the plan has no hospital row: the hospital campus and the university are read as civic grounds)",
+ "written": "by hand, 19 Nov 2026 (claude/fill-high-street, superchecker over the hospital zone and campus): every builder tree out, these placed after the plan",
+ "trees": [
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -655.0,
+    6.185,
+    -655.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "the quad's NW corner clump (the lawn's middle stays open)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -649.0,
+    6.195,
+    -657.0
+   ],
+   "yaw": 40,
+   "scale": 0.9,
+   "why": "NW corner clump"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -656.5,
+    6.172,
+    -649.0
+   ],
+   "yaw": 80,
+   "scale": 0.9,
+   "why": "NW corner clump"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -545.0,
+    6.232,
+    -655.0
+   ],
+   "yaw": 90,
+   "scale": 1.0,
+   "why": "the quad's NE corner clump"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -551.0,
+    6.234,
+    -657.0
+   ],
+   "yaw": 130,
+   "scale": 0.9,
+   "why": "NE corner clump"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -543.5,
+    6.22,
+    -649.0
+   ],
+   "yaw": 170,
+   "scale": 0.9,
+   "why": "NE corner clump"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -655.0,
+    5.931,
+    -545.0
+   ],
+   "yaw": 180,
+   "scale": 1.0,
+   "why": "the quad's SW corner clump"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -649.0,
+    5.941,
+    -543.0
+   ],
+   "yaw": 220,
+   "scale": 0.9,
+   "why": "SW corner clump"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -656.5,
+    5.944,
+    -551.0
+   ],
+   "yaw": 260,
+   "scale": 0.9,
+   "why": "SW corner clump"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -545.0,
+    6.098,
+    -545.0
+   ],
+   "yaw": 270,
+   "scale": 1.0,
+   "why": "the quad's SE corner clump"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -551.0,
+    6.099,
+    -543.0
+   ],
+   "yaw": 310,
+   "scale": 0.9,
+   "why": "SE corner clump"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -543.5,
+    6.105,
+    -551.0
+   ],
+   "yaw": 350,
+   "scale": 0.9,
+   "why": "SE corner clump"
+  }
+ ]
+}

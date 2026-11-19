@@ -1,0 +1,81 @@
+{
+ "area": "cc_b1_court",
+ "piece": "n_cc_b1_court",
+ "zone": "city centre",
+ "rule": "docs/TREE_PLAN.md: city centre few - wells on the wide pavements only, none in courts or alleys (zone 48 -> about 40)",
+ "written": "by hand, 19 Nov 2026 (PC session, city-wide superchecker run): the trees of the public square and the forecourt beds kept on their spots; the trees in the courts and back yards out",
+ "trees": [
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -65.0,
+    6.09,
+    -615.0
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "kept on its spot: the courthouse square: over the bench in its planting bed"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -55.0,
+    6.09,
+    -614.0
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "kept on its spot: the courthouse square bed by the bike racks"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -85.0,
+    6.09,
+    -615.0
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "kept on its spot: the courthouse square: over the second bench"
+  },
+  {
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "at": [
+    -55.0,
+    6.09,
+    -624.0
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "kept on its spot: the square's inner bed"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -95.0,
+    6.09,
+    -624.0
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "kept on its spot: the square's inner bed"
+  },
+  {
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "at": [
+    -95.0,
+    6.09,
+    -614.0
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "kept on its spot: the square bed by the bollards"
+  }
+ ]
+}

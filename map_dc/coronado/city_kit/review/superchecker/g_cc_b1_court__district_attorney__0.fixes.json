@@ -1,0 +1,35 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -6.65899991989136,
+    0.0,
+    -6.33599996566772
+   ],
+   "base": "prop_filing_cabinet",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_filing_cabinet stands in front of a 1.0 m wide door (a back or side door)]"
+  },
+  {
+   "at": [
+    -6.0770001411438,
+    0.0,
+    -6.33599996566772
+   ],
+   "base": "prop_filing_cabinet",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_filing_cabinet stands in front of a 1.0 m wide door (a back or side door)]"
+  }
+ ],
+ "scene": "g_cc_b1_court__district_attorney__0"
+}

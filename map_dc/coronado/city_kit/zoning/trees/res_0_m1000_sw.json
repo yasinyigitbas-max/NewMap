@@ -1,0 +1,14 @@
+{
+ "area": "res_0_m1000_sw", "piece": "r_q_0_m1000_sw", "zone": "residential yards",
+ "rule": "docs/TREE_PLAN.md: one yard tree for every two or three houses, in back yards and at lot corners, never against a fence or a wall (zone 813 -> about 400)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The quadrant's twenty-four builder trees go (a row of corals, torrey pines and queen palms every 6-16 m along the back fences, a fan palm 3 m from a house front, magnolias and others in the yards); seven come back on their own spots, about one for every two houses: by the picnic table, the adirondack chairs, the beach umbrella, on the open lot corner, and two in back yards 7.5-8 m from the houses.",
+ "trees": [
+  {"base": "tree_magnolia_b", "cond": "normal", "at": [-70.0, 10.229, -934.0], "yaw": 10.0, "scale": 0.9, "why": "the shared back lawn with the picnic table and the shade sail: a magnolia beside them"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [-93.0, 9.587, -934.0], "yaw": 100.0, "scale": 0.9, "why": "the same lawn 23 m west, 12 m from any wall: the lawn's second tree"},
+  {"base": "tree_norfolk_pine_c", "cond": "normal", "at": [-88.0, 8.903, -912.0], "yaw": 190.0, "scale": 0.85, "why": "the open lot corner to the north, 16.5 m from the walls: one norfolk pine, a landmark seen from the street"},
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [-28.5, 12.13, -964.2], "yaw": 280.0, "scale": 0.85, "why": "the east back yard with the two white adirondack chairs: shade for them"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [-42.6, 10.62, -927.2], "yaw": 30.0, "scale": 0.85, "why": "the yard by the closed beach umbrella: a coral tree over the lounging spot"},
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [-65.0, 11.48, -965.3], "yaw": 120.0, "scale": 0.85, "why": "the south back yard, 7.5 m from the house: the yard's tree"},
+  {"base": "tree_coral_b", "cond": "normal", "at": [-97.0, 10.37, -964.6], "yaw": 210.0, "scale": 0.85, "why": "the south-west back yard, 8 m from the house, 32 m from the next"}
+ ]
+}

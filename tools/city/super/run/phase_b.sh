@@ -3,7 +3,8 @@
 # tree piece and every proven room copy, lock test, commit, push. $2 = the commit message's first line.
 PY=${SC_PY:-/c/Users/yasin/AppData/Local/Programs/Python/Python312/python}
 P=$1
-$PY -I tools/city/super/sc.py install $P --by=Yasin 2>&1 | grep -E "INSTALLED|trees:|needs|changed|no proven" || exit 1
+IO=$($PY -I tools/city/super/sc.py install $P --by=Yasin 2>&1); echo "$IO" | grep -E "INSTALLED|trees:|needs|changed|no proven"
+echo "$IO" | grep -q "^INSTALLED $P" || { echo "NOT INSTALLED: nothing committed"; exit 1; }
 for r in $($PY -I -c "import json,os; p='OUT/super/find/$P.rooms.json'; print(' '.join(json.load(open(p))['rooms']) if os.path.exists(p) else '')"); do
   [ -f OUT/super/work/$r.stamp.json ] && $PY -I tools/city/super/sc.py install-room $r --by=Yasin 2>&1 | grep -E "INSTALLED|changed"
 done
@@ -22,11 +23,11 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 MSG
 # pull and push, keeping both sessions' entries when they installed at the same time (resolve.py); up to 6 tries
 for t in 1 2 3 4 5 6; do
-  if ! git pull -q --rebase --autostash origin claude/festive-faraday-20ltx2 >/dev/null 2>&1; then
+  if ! git pull -q --rebase origin claude/festive-faraday-20ltx2 >/dev/null 2>&1; then
     $PY -I tools/city/super/run/resolve.py || { echo "CONFLICT NOT RESOLVED: stopped"; exit 1; }
     GIT_EDITOR=true git rebase --continue >/dev/null 2>&1 || { echo "REBASE NOT FINISHED: stopped"; exit 1; }
   fi
-  git push -q origin claude/festive-faraday-20ltx2 2>/dev/null && break
+  git push -q origin HEAD:claude/festive-faraday-20ltx2 2>/dev/null && break
   sleep 4
 done
 git status -sb | head -1 | grep -q ahead && echo "NOT PUSHED"

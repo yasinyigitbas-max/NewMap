@@ -1,0 +1,12 @@
+{
+ "_doc": "Pieces held out of city_grid_layout.json (tools/city/pilot/zoning/integrate.py). Their files stay in the repo; only their layout rows are left out until the hold is lifted.",
+ "hold": [
+  "n_un_east",
+  "n_un_north",
+  "n_un_quad",
+  "n_un_south",
+  "n_un_west",
+  "t_un_*"
+ ],
+ "why": "Yasin, 20 Nov: 'dont take the campus yet, it is being modified' (the hospital session's university campus)"
+}

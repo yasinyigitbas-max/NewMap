@@ -1,0 +1,13 @@
+{
+ "area": "res_250_m1200_se", "piece": "r_q_250_m1200_se", "zone": "residential yards",
+ "rule": "docs/TREE_PLAN.md: one yard tree for every two or three houses, in back yards and at lot corners, never against a fence or a wall (zone 813 -> about 400)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The quadrant's twenty builder trees go (canary date palms, corals and ficus along the back fences, fan palms 1.1-6.6 m from the houses, jacarandas and a magnolia by the seating); six come back on their own spots, about one for every two or three houses: by the grill, the adirondack chairs, the two patio sets, and the open lot corner.",
+ "trees": [
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [301.0, 7.77, -1163.7], "yaw": 15.0, "scale": 0.85, "why": "the back yard with the adirondack chair and the potted plants: a magnolia to sit under"},
+  {"base": "tree_coral_b", "cond": "normal", "at": [277.1, 8.09, -1163.1], "yaw": 105.0, "scale": 0.85, "why": "the west back yard with the kettle grill (1.2 m off): a coral tree over the cook"},
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [328.7, 6.85, -1162.9], "yaw": 195.0, "scale": 0.85, "why": "the back yard with the patio set (1.7 m off): a jacaranda over the table"},
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [328.7, 6.74, -1120.5], "yaw": 285.0, "scale": 0.85, "why": "the north yard's patio set (1.8 m off), across the back line: the same for the neighbours"},
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [278.3, 7.4, -1117.0], "yaw": 45.0, "scale": 0.85, "why": "the north-west yard with the two adirondack chairs: shade for them"},
+  {"base": "tree_ficus_a", "cond": "normal", "at": [356.5, 5.01, -1103.4], "yaw": 135.0, "scale": 0.9, "why": "the open lot corner at the north-east, 20 m from the walls: an old ficus"}
+ ]
+}

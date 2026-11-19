@@ -185,6 +185,15 @@ def main():
     for f in (sorted(os.listdir(tdir)) if os.path.isdir(tdir) else []):
         if f.endswith(".json") and os.path.exists(os.path.join(KIT, "pieces", "t_" + f[:-5] + ".scn")):
             rows.append({"piece": "t_" + f[:-5], "pos": [0.0, 0.0, 0.0], "yaw": 0.0, "from": "trees"})
+    # pieces held out of the layout for now (20 Nov, Yasin: "dont take the campus yet, it is being modified"):
+    # review/layout_hold.json {"hold": ["piece name or prefix*", ...]}; their files stay, only the rows are left out
+    hf = os.path.join(KIT, "review", "layout_hold.json")
+    if os.path.exists(hf):
+        hold = json.load(open(hf, encoding="utf-8")).get("hold", [])
+        def held(n):
+            return any(n.startswith(h[:-1]) if h.endswith("*") else n == h for h in hold)
+        before = len(rows); rows = [r for r in rows if not held(r["piece"])]
+        print("held out of the layout: %d rows (%s)" % (before - len(rows), ", ".join(hold)))
     gaps = coverage(rows)
     out = {"note": __doc__.strip().split("\n")[0], "frame": "grid: x = u (ESE along 10th), z = v (SSW along Amber), y = datum m",
            "instances": rows, "coverage": {"sample_rows": len(srows), "family_rows": len(frows),

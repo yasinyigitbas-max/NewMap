@@ -1,0 +1,4500 @@
+{
+ "fixes": [
+  {
+   "at": [
+    134.745681762695,
+    8.71063327789307,
+    161.199996948242
+   ],
+   "base": "prop_tv_antenna",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 19.0,
+   "op": "move",
+   "reason": "prop_tv_antenna hangs 1.01 m over what is under it",
+   "to": [
+    134.745681762695,
+    7.69639757506863,
+    161.199996948242
+   ]
+  },
+  {
+   "at": [
+    115.090621948242,
+    7.44573879241943,
+    104.800003051758
+   ],
+   "base": "prop_tv_antenna",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "move",
+   "reason": "prop_tv_antenna hangs 0.92 m over what is under it",
+   "to": [
+    115.090621948242,
+    6.52562879025936,
+    104.800003051758
+   ]
+  },
+  {
+   "at": [
+    226.600006103516,
+    10.1999998092651,
+    154.390930175781
+   ],
+   "base": "prop_tv_antenna",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "move",
+   "reason": "prop_tv_antenna hangs 0.61 m over what is under it",
+   "to": [
+    226.600006103516,
+    9.58999958634376,
+    154.390930175781
+   ]
+  },
+  {
+   "at": [
+    226.600006103516,
+    10.1999998092651,
+    129.538040161133
+   ],
+   "base": "prop_tv_antenna",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 22.0,
+   "op": "move",
+   "reason": "prop_tv_antenna hangs 0.61 m over what is under it",
+   "to": [
+    226.600006103516,
+    9.58999958634376,
+    129.538040161133
+   ]
+  },
+  {
+   "at": [
+    117.156890869141,
+    11.9549999237061,
+    177.600006103516
+   ],
+   "base": "prop_tv_antenna",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 23.0,
+   "op": "move",
+   "reason": "prop_tv_antenna hangs 1.02 m over what is under it",
+   "to": [
+    117.156890869141,
+    10.9349880218506,
+    177.600006103516
+   ]
+  },
+  {
+   "at": [
+    225.779998779297,
+    1.20000004768372,
+    166.960006713867
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 45.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 31 cm from a apt door of walkup_adela_6th (services keep 35 cm off)]",
+   "to": [
+    225.779998793607,
+    1.20000004768372,
+    168.160006713867
+   ]
+  },
+  {
+   "at": [
+    225.779998779297,
+    1.20000004768372,
+    134.960006713867
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 46.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 31 cm from a apt door of walkup_adela_n2 (services keep 35 cm off)]",
+   "to": [
+    225.779998793607,
+    1.20000004768372,
+    136.160006713867
+   ]
+  },
+  {
+   "at": [
+    225.779998779297,
+    0.349999994039536,
+    166.880004882813
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 47.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 21 cm from a apt door of walkup_adela_6th (services keep 35 cm off)]",
+   "to": [
+    225.779998786452,
+    0.349999994039536,
+    167.480004882813
+   ]
+  },
+  {
+   "at": [
+    225.779998779297,
+    0.349999994039536,
+    134.880004882813
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 48.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 21 cm from a apt door of walkup_adela_n2 (services keep 35 cm off)]",
+   "to": [
+    225.779998786452,
+    0.349999994039536,
+    135.480004882813
+   ]
+  },
+  {
+   "at": [
+    150.039993286133,
+    1.75999999046326,
+    175.779998779297
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 57.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 31 cm from a apt door of walkup_6th (services keep 35 cm off)]",
+   "to": [
+    148.839993286133,
+    1.75999999046326,
+    175.779998884204
+   ]
+  },
+  {
+   "at": [
+    150.119995117188,
+    0.910000026226044,
+    175.779998779297
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 58.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 21 cm from a apt door of walkup_6th (services keep 35 cm off)]",
+   "to": [
+    149.519995117187,
+    0.910000026226044,
+    175.779998831751
+   ]
+  },
+  {
+   "at": [
+    233.639999389648,
+    1.20000004768372,
+    174.279998779297
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 61.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 21 cm from a apt door of bike_shop (services keep 35 cm off)]",
+   "to": [
+    232.439999389648,
+    1.20000004768372,
+    174.279998884204
+   ]
+  },
+  {
+   "at": [
+    210.039993286133,
+    1.23500001430511,
+    175.779998779297
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 62.0,
+   "op": "move",
+   "reason": "moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 31 cm from a apt door of walkup_6th_adela (services keep 35 cm off)]",
+   "to": [
+    208.839993286133,
+    1.23500001430511,
+    175.779998884204
+   ]
+  },
+  {
+   "at": [
+    235.320007324219,
+    0.349999994039536,
+    174.279998779297
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 63.0,
+   "op": "move",
+   "reason": "moved slid -0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 15 cm from a apt door of bike_shop (services keep 35 cm off)]",
+   "to": [
+    235.920007324219,
+    0.349999994039536,
+    174.279998726843
+   ]
+  },
+  {
+   "at": [
+    210.119995117188,
+    0.384999990463257,
+    175.779998779297
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 64.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 21 cm from a apt door of walkup_6th_adela (services keep 35 cm off)]",
+   "to": [
+    209.519995117187,
+    0.384999990463257,
+    175.779998831751
+   ]
+  },
+  {
+   "at": [
+    231.779998779297,
+    0.150000005960464,
+    187.900009155273
+   ],
+   "base": "prop_downspout_3m",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 69.0,
+   "op": "move",
+   "reason": "moved slid -0.6 m along its wall: a short slide along its own wall clears the opening [prop_downspout_3m hangs 32 cm from a shopdoor of bike_shop (services keep 35 cm off)]",
+   "to": [
+    231.779998805524,
+    0.150000005960464,
+    187.300009155273
+   ]
+  },
+  {
+   "at": [
+    117.380004882813,
+    1.28708970546722,
+    189.300003051758
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    140.25,
+    0.965060174465179,
+    189.300003051758
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    164.699996948242,
+    0.641663193702698,
+    189.300003051758
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    184.049987792969,
+    0.425568163394928,
+    189.300003051758
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    166.0,
+    0.29017499089241,
+    130.0
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    145.600006103516,
+    0.849245965480804,
+    172.5
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    110.0,
+    1.33665776252747,
+    173.0
+   ],
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    129.600006103516,
+    0.23940198123455,
+    116.0
+   ],
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    129.600006103516,
+    0.372248619794846,
+    123.199996948242
+   ],
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    146.0,
+    0.372074991464615,
+    130.0
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    181.0,
+    0.151399999856949,
+    104.0
+   ],
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "tree_ficus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    146.0,
+    0.154619857668877,
+    102.5
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    208.5,
+    0.194791659712791,
+    152.0
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    209.0,
+    0.153555005788803,
+    112.0
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    112.0,
+    0.256519556045532,
+    116.0
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    112.0,
+    0.40294748544693,
+    123.199996948242
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    239.300003051758,
+    0.150000005960464,
+    167.699996948242
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    239.300003051758,
+    0.150000005960464,
+    120.099998474121
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    128.077713012695,
+    12.8275003433228,
+    176.600006103516
+   ],
+   "base": "prop_tv_antenna",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 24.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_tv_antenna hangs 1.88 m over what is under it]"
+  },
+  {
+   "at": [
+    171.702972412109,
+    8.89599990844727,
+    179.600006103516
+   ],
+   "base": "prop_tv_antenna",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 25.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_tv_antenna hangs 1.49 m over what is under it]"
+  },
+  {
+   "at": [
+    139.279998779297,
+    0.970633327960968,
+    162.020004272461
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "overlap",
+   "mode": "choose",
+   "n": 26.0,
+   "op": "remove",
+   "reason": "erased (in doubt): overlap: no plainly safe place (Yasin: delete when unsure) [prop_meter_gas stands in the same space as prop_ac_condenser]"
+  },
+  {
+   "at": [
+    183.279998779297,
+    0.567866683006287,
+    162.020004272461
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "overlap",
+   "mode": "choose",
+   "n": 27.0,
+   "op": "remove",
+   "reason": "erased (in doubt): overlap: no plainly safe place (Yasin: delete when unsure) [prop_meter_gas stands in the same space as prop_ac_condenser]"
+  },
+  {
+   "at": [
+    107.519996643066,
+    1.5349999666214,
+    176.779998779297
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "overlap",
+   "mode": "choose",
+   "n": 28.0,
+   "op": "remove",
+   "reason": "erased (in doubt): overlap: no plainly safe place (Yasin: delete when unsure) [prop_meter_gas stands in the same space as prop_ac_condenser]"
+  },
+  {
+   "at": [
+    129.720001220703,
+    1.21749997138977,
+    175.779998779297
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "overlap",
+   "mode": "choose",
+   "n": 29.0,
+   "op": "remove",
+   "reason": "erased (in doubt): overlap: no plainly safe place (Yasin: delete when unsure) [prop_meter_gas stands in the same space as prop_ac_condenser]"
+  },
+  {
+   "at": [
+    233.0,
+    0.150000005960464,
+    189.899993896484
+   ],
+   "base": "prop_bike_rack",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "door",
+   "mode": "choose",
+   "n": 30.0,
+   "op": "remove",
+   "reason": "erased (in doubt): door: no plainly safe place (Yasin: delete when unsure) [prop_bike_rack stands in front of the shopdoor of bike_shop]"
+  },
+  {
+   "at": [
+    131.720001220703,
+    2.62573885917664,
+    109.292221069336
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 31.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of court_wing_s]"
+  },
+  {
+   "at": [
+    131.720001220703,
+    5.81734466552734,
+    132.170257568359
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 32.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of court_wing_n]"
+  },
+  {
+   "at": [
+    109.880004882813,
+    2.81734442710876,
+    128.950866699219
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 33.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of court_wing_n]"
+  },
+  {
+   "at": [
+    109.880004882813,
+    5.81734466552734,
+    129.092727661133
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 34.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of court_wing_n]"
+  },
+  {
+   "at": [
+    166.119995117188,
+    3.10999989509583,
+    181.169845581055
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 35.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of walkup_6th]"
+  },
+  {
+   "at": [
+    168.879989624023,
+    2.8659999370575,
+    184.840255737305
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 36.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of white_court_6th]"
+  },
+  {
+   "at": [
+    131.720001220703,
+    2.81734442710876,
+    127.838958740234
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 37.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of court_wing_n]"
+  },
+  {
+   "at": [
+    121.020004272461,
+    0.999249994754791,
+    152.399993896484
+   ],
+   "base": "prop_downspout_3m",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 41.0,
+   "op": "remove",
+   "reason": "erased (in doubt): its new place made a new fault: deleted instead [moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_downspout_3m hangs 33 cm from a rollup of townhouses_1 (services keep 35 cm off)]]"
+  },
+  {
+   "at": [
+    144.220001220703,
+    0.770633339881897,
+    152.399993896484
+   ],
+   "base": "prop_downspout_3m",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 42.0,
+   "op": "remove",
+   "reason": "erased (in doubt): its new place made a new fault: deleted instead [moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_downspout_3m hangs 33 cm from a rollup of townhouses_2 (services keep 35 cm off)]]"
+  },
+  {
+   "at": [
+    166.020004272461,
+    0.55133330821991,
+    152.399993896484
+   ],
+   "base": "prop_downspout_3m",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 43.0,
+   "op": "remove",
+   "reason": "erased (in doubt): its new place made a new fault: deleted instead [moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_downspout_3m hangs 33 cm from a rollup of townhouses_3 (services keep 35 cm off)]]"
+  },
+  {
+   "at": [
+    228.369659423828,
+    2.54999995231628,
+    124.879997253418
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 44.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of walkup_adela_n2]"
+  },
+  {
+   "at": [
+    228.249771118164,
+    2.54999995231628,
+    150.880004882813
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 49.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of walkup_adela_6th]"
+  },
+  {
+   "at": [
+    188.220001220703,
+    0.367866665124893,
+    152.399993896484
+   ],
+   "base": "prop_downspout_3m",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 52.0,
+   "op": "remove",
+   "reason": "erased (in doubt): its new place made a new fault: deleted instead [moved slid +1.2 m along its wall: a short slide along its own wall clears the opening [prop_downspout_3m hangs 33 cm from a rollup of townhouses_4 (services keep 35 cm off)]]"
+  },
+  {
+   "at": [
+    102.879997253418,
+    3.73499989509583,
+    182.025390625
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 53.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of condo_6th]"
+  },
+  {
+   "at": [
+    102.879997253418,
+    6.7350001335144,
+    182.798355102539
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 54.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of condo_6th]"
+  },
+  {
+   "at": [
+    124.879997253418,
+    3.41750001907349,
+    178.868133544922
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 55.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of stucco_6th]"
+  },
+  {
+   "at": [
+    144.119995117188,
+    6.41750001907349,
+    178.662399291992
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 56.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of stucco_6th]"
+  },
+  {
+   "at": [
+    185.919998168945,
+    2.8659999370575,
+    183.905288696289
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 60.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of white_court_6th]"
+  },
+  {
+   "at": [
+    235.337783813477,
+    5.55000019073486,
+    169.119995117188
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 66.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of walkup_adela_6th]"
+  },
+  {
+   "at": [
+    233.66178894043,
+    5.55000019073486,
+    150.880004882813
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 67.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of walkup_adela_6th]"
+  },
+  {
+   "at": [
+    231.890625,
+    5.55000019073486,
+    121.120002746582
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "ac_no_window",
+   "mode": "choose",
+   "n": 68.0,
+   "op": "remove",
+   "reason": "erased (in doubt): ac_no_window: no plainly safe place (Yasin: delete when unsure) [window air conditioner not in a window of spanish_court_adela]"
+  },
+  {
+   "at": [
+    176.600006103516,
+    0.203784003853798,
+    120.599998474121
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 70.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (25.8 m from a wall, 22.6 m from a fence)]"
+  },
+  {
+   "at": [
+    229.0,
+    0.150000005960464,
+    172.600006103516
+   ],
+   "base": "prop_hose_reel_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "hydrant_nowhere",
+   "mode": "choose",
+   "n": 71.0,
+   "op": "remove",
+   "reason": "erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart stands 3.3 m from any building wall and 3.0 m inside the block]"
+  },
+  {
+   "at": [
+    222.812072753906,
+    0.150283843278885,
+    107.776962280273
+   ],
+   "base": "prop_hose_reel_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "hydrant_nowhere",
+   "mode": "choose",
+   "n": 72.0,
+   "op": "remove",
+   "reason": "erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart stands 5.0 m from any building wall and 3.0 m inside the block]"
+  },
+  {
+   "at": [
+    160.0,
+    0.195287540555,
+    118.400001525879
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 73.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (28.9 m from a wall, 20.4 m from a fence)]"
+  },
+  {
+   "at": [
+    222.0,
+    0.153795525431633,
+    137.0
+   ],
+   "base": "prop_hose_reel_cart",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "hydrant_nowhere",
+   "mode": "choose",
+   "n": 74.0,
+   "op": "remove",
+   "reason": "erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart stands 3.8 m from any building wall and 3.0 m inside the block]"
+  },
+  {
+   "at": [
+    236.399993896484,
+    0.150000005960464,
+    190.199996948242
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 75.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (1.9 m from a wall, 13.1 m from a fence)]"
+  },
+  {
+   "at": [
+    115.700004577637,
+    0.225738748908043,
+    113.349998474121
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 262.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    122.900001525879,
+    0.225738748908043,
+    113.349998474121
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 263.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    130.100006103516,
+    0.225738748908043,
+    113.349998474121
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 264.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    125.900001525879,
+    0.417344510555267,
+    125.650001525879
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 265.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    118.700004577637,
+    0.417344510555267,
+    125.650001525879
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 266.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    111.5,
+    0.417344510555267,
+    125.650001525879
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 267.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    106.099998474121,
+    0.999249994754791,
+    162.75
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 268.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    151.100006103516,
+    0.55133330821991,
+    162.75
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 269.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    227.050003051758,
+    0.150000005960464,
+    116.0
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 272.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    225.050003051758,
+    0.150000005960464,
+    153.300003051758
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 273.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    225.050003051758,
+    0.150000005960464,
+    127.300003051758
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 274.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    225.050003051758,
+    0.150000005960464,
+    154.100006103516
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 275.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    225.050003051758,
+    0.150000005960464,
+    128.100006103516
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 276.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    201.75,
+    0.165017813444138,
+    118.550003051758
+   ],
+   "base": "prop_wheel_stop_concrete",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "gate_blocked",
+   "mode": "choose",
+   "n": 278.0,
+   "op": "remove",
+   "reason": "erased (in doubt): gate_blocked: no plainly safe place (Yasin: delete when unsure) [prop_wheel_stop_concrete stands in the way through a gate]"
+  },
+  {
+   "at": [
+    163.699996948242,
+    0.709999978542328,
+    175.050003051758
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 279.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    162.899993896484,
+    0.709999978542328,
+    175.050003051758
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 280.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    175.299987792969,
+    0.465999990701675,
+    188.150009155273
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 281.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    183.699996948242,
+    0.465999990701675,
+    188.150009155273
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 282.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    217.699996948242,
+    0.185000002384186,
+    175.050003051758
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 283.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    216.899993896484,
+    0.185000002384186,
+    175.050003051758
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 284.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    198.21696472168,
+    0.235895087321599,
+    145.21630859375
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 76.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    123.698631286621,
+    0.692316174507141,
+    141.231369018555
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 77.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    225.982482910156,
+    0.162450497349103,
+    145.370254516602
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 78.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    235.835159301758,
+    0.162000000476837,
+    140.59782409668
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 79.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    235.632095336914,
+    0.162000000476837,
+    141.610336303711
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 80.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    232.609039306641,
+    0.162000000476837,
+    140.465286254883
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 81.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    225.172882080078,
+    0.164975600938002,
+    145.474044799805
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 82.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    102.597091674805,
+    0.875093390544256,
+    142.315948486328
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 83.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    202.671691894531,
+    0.21620171268781,
+    144.452529907227
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 84.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    223.085510253906,
+    0.165380152563254,
+    144.273147583008
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 85.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    228.954971313477,
+    0.162000000476837,
+    141.355804443359
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 86.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    103.5,
+    0.818181316057841,
+    140.300003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 87.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    108.717895507813,
+    0.781504154205322,
+    140.300003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 88.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    117.40731048584,
+    0.720481882492701,
+    140.300003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 89.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    122.43928527832,
+    0.685109754403432,
+    140.300003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 90.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    130.178329467773,
+    0.627491195996602,
+    140.300003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 91.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    136.006774902344,
+    0.587664465109507,
+    140.300003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 92.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    198.247375488281,
+    0.223743436237176,
+    140.300003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 93.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    198.247375488281,
+    0.236274229983489,
+    145.699996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 94.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    206.755554199219,
+    0.197893833120664,
+    140.300003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 95.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    206.755554199219,
+    0.205178166429202,
+    145.699996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 96.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    214.275100708008,
+    0.178953967988491,
+    140.300003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 97.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    214.275100708008,
+    0.182393940786521,
+    145.699996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 98.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    221.490310668945,
+    0.168149756888549,
+    140.300003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 99.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    221.490310668945,
+    0.169595569372177,
+    145.699996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 100.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    229.98225402832,
+    0.162000000476837,
+    140.300003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 101.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    229.98225402832,
+    0.162000000476837,
+    145.699996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 102.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    236.543518066406,
+    0.162000000476837,
+    140.300003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 103.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    236.543518066406,
+    0.162000000476837,
+    145.699996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 104.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    139.598129272461,
+    0.603336503108343,
+    143.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 105.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    169.9111328125,
+    0.382119491696358,
+    143.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 106.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    191.109786987305,
+    0.213561418155829,
+    128.259124755859
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 107.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    195.890319824219,
+    0.302836944659551,
+    184.955505371094
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 108.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    190.116760253906,
+    0.347148070732753,
+    173.762619018555
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 109.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    190.300003051758,
+    0.200662215550741,
+    123.278137207031
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 110.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    190.300003051758,
+    0.221384331583977,
+    130.130111694336
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 111.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    190.300003051758,
+    0.239209393660227,
+    135.32780456543
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 112.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    190.300003051758,
+    0.34331668416659,
+    152.245452880859
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 113.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    190.300003051758,
+    0.355221723516782,
+    158.73583984375
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 114.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    190.300003051758,
+    0.339931140343348,
+    166.164505004883
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 115.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    190.300003051758,
+    0.346264898777008,
+    174.715591430664
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 116.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    195.699996948242,
+    0.30288290977478,
+    174.715591430664
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 117.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    190.300003051758,
+    0.353999108076096,
+    181.818664550781
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 118.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    195.699996948242,
+    0.305000022053719,
+    181.818664550781
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 119.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    190.300003051758,
+    0.353714456160863,
+    186.82731628418
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 120.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    195.699996948242,
+    0.305000022053719,
+    186.82731628418
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 121.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    193.0,
+    0.321705544988314,
+    174.141693115234
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 122.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    193.0,
+    0.177229809264342,
+    115.06510925293
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 123.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    112.0,
+    1.34566247463226,
+    188.800003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 124.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    108.168449401855,
+    1.36257761716843,
+    173.400009155273
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 125.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    105.854499816895,
+    1.36510505278905,
+    188.199996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 126.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    110.625617980957,
+    1.35285111268361,
+    188.199996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 127.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    116.097732543945,
+    1.33739542961121,
+    188.199996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 128.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    120.491638183594,
+    1.32243963082631,
+    188.199996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 129.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    118.699996948242,
+    1.33147795995076,
+    176.050003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 130.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    134.5,
+    1.02816247940063,
+    188.800003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 131.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    130.080093383789,
+    1.05056202411652,
+    172.400009155273
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 132.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    128.028732299805,
+    1.04849938551585,
+    188.199996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 133.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    133.944244384766,
+    1.0323410431544,
+    188.199996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 134.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    139.656234741211,
+    1.01755199829737,
+    188.199996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 135.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    141.699996948242,
+    1.01687793930372,
+    175.050003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 136.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    151.0,
+    0.749937305847804,
+    188.800003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 137.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    157.0,
+    0.720140486955643,
+    188.800003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 138.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    163.0,
+    0.691833466291428,
+    188.800003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 139.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    153.023818969727,
+    0.744369477033615,
+    172.400009155273
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 140.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    150.819351196289,
+    0.738639851411184,
+    188.199996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 141.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    156.200531005859,
+    0.725974857807159,
+    188.199996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 142.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    162.700012207031,
+    0.708126763502757,
+    188.199996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 143.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    163.699996948242,
+    0.711947749058406,
+    175.050003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 144.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    172.449996948242,
+    0.496425986289978,
+    188.800003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 145.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    173.949996948242,
+    0.489958211779594,
+    188.800003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 146.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    180.849990844727,
+    0.464258462190628,
+    188.800003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 147.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    182.349990844727,
+    0.458671554923058,
+    188.800003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 148.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    173.734710693359,
+    0.502663135528564,
+    175.400009155273
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 149.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    171.863510131836,
+    0.494591876864433,
+    188.199996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 150.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    177.729782104492,
+    0.479213307301203,
+    188.199996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 151.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    183.713760375977,
+    0.467019408941269,
+    188.199996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 152.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    183.5,
+    0.471488103270531,
+    178.050003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 153.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    113.707778930664,
+    1.15133672952652,
+    165.399993896484
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 154.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    105.300003051758,
+    1.04273388783137,
+    162.75
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 155.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    136.359161376953,
+    0.879577140013377,
+    165.399993896484
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 156.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    127.300003051758,
+    0.808820734421412,
+    162.75
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 157.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    159.26823425293,
+    0.61827207605044,
+    165.399993896484
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 158.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    150.300003051758,
+    0.584922015666962,
+    162.75
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 159.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    180.319808959961,
+    0.408169423540433,
+    165.399993896484
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 160.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    171.300003051758,
+    0.396030555168788,
+    162.75
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 161.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    112.850006103516,
+    0.241903024415175,
+    114.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 162.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    114.350006103516,
+    0.241619716087977,
+    114.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 163.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    120.050003051758,
+    0.240669059256713,
+    114.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 164.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    121.550003051758,
+    0.240385750929515,
+    114.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 165.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    127.25,
+    0.239309171835581,
+    114.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 166.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    128.75,
+    0.239025863508383,
+    114.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 167.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    113.382141113281,
+    0.239240246514479,
+    113.400001525879
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 168.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    120.815887451172,
+    0.238699572781722,
+    113.400001525879
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 169.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    127.617679595947,
+    0.238169486323992,
+    113.400001525879
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 170.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    129.300003051758,
+    0.227192300061385,
+    103.25
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 171.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    128.75,
+    0.421490490436554,
+    125.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 172.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    127.25,
+    0.422188282012939,
+    125.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 173.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    121.550003051758,
+    0.424839839339256,
+    125.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 174.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    120.050003051758,
+    0.425537601113319,
+    125.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 175.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    114.350006103516,
+    0.42787903547287,
+    125.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 176.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    112.850006103516,
+    0.428576827049255,
+    125.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 177.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    129.083206176758,
+    0.426179935534795,
+    125.599998474121
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 178.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    123.52303314209,
+    0.427282154560089,
+    125.599998474121
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 179.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    116.186019897461,
+    0.428814883033435,
+    125.599998474121
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 180.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    112.300003051758,
+    0.457123508056005,
+    135.75
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 181.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    152.800003051758,
+    0.186116248369217,
+    106.400001525879
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 182.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on mulch",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    225.435821533203,
+    0.169517114758492,
+    188.600006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 183.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    232.390289306641,
+    0.162000000476837,
+    188.600006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 184.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    211.0,
+    0.202141063908736,
+    188.800003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 185.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    217.0,
+    0.19193509221077,
+    188.800003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 186.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    212.206680297852,
+    0.202931111057599,
+    172.400009155273
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 187.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    211.825546264648,
+    0.200045272707939,
+    188.199996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 188.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    218.172912597656,
+    0.194168818493684,
+    188.199996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 189.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    217.699996948242,
+    0.195507667958736,
+    175.050003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 190.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.800003051758,
+    0.162000000476837,
+    166.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 191.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.800003051758,
+    0.162000000476837,
+    160.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 192.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.800003051758,
+    0.162000000476837,
+    154.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 193.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    222.400009155273,
+    0.167223031322161,
+    160.396697998047
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 194.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.199996948242,
+    0.162000000476837,
+    165.571914672852
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 195.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.199996948242,
+    0.162000000476837,
+    158.341125488281
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 196.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.199996948242,
+    0.162000000476837,
+    152.14924621582
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 197.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    225.050003051758,
+    0.162320534388224,
+    153.300003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 198.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.800003051758,
+    0.162000000476837,
+    112.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 199.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.800003051758,
+    0.162000000476837,
+    118.400001525879
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 200.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.800003051758,
+    0.162000000476837,
+    105.599998474121
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 201.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    224.400009155273,
+    0.162371317545573,
+    112.483734130859
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 202.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.199996948242,
+    0.162000000476837,
+    117.886672973633
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 203.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.199996948242,
+    0.162000000476837,
+    111.923278808594
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 204.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.199996948242,
+    0.162000000476837,
+    105.527267456055
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 205.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    227.050003051758,
+    0.162000000476837,
+    105.300003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 206.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.800003051758,
+    0.162000000476837,
+    134.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 207.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.800003051758,
+    0.162000000476837,
+    128.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 208.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    222.400009155273,
+    0.164264641702175,
+    132.511123657227
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 209.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.199996948242,
+    0.162000000476837,
+    133.12580871582
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 210.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    238.199996948242,
+    0.162000000476837,
+    126.618881225586
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 211.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    225.050003051758,
+    0.162119790911675,
+    127.300003051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 212.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    105.641502380371,
+    1.35074321428935,
+    176.449996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 213.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    111.825019836426,
+    1.34585597117742,
+    176.449996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 214.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    117.932632446289,
+    1.33569717407227,
+    176.449996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 215.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    128.742294311523,
+    1.03237440188726,
+    175.449996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 216.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    134.567596435547,
+    1.02795501550039,
+    175.449996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 217.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    140.89501953125,
+    1.01907956600189,
+    175.449996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 218.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    150.806549072266,
+    0.725483645995458,
+    175.449996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 219.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    155.468276977539,
+    0.722096105416616,
+    175.449996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 220.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    161.305923461914,
+    0.717857301235199,
+    175.449996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 221.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    165.102203369141,
+    0.71551317969958,
+    175.449996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 222.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    172.030471801758,
+    0.483133107423782,
+    178.449996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 223.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    176.728485107422,
+    0.478044773141543,
+    178.449996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 224.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    181.88313293457,
+    0.475040545066198,
+    178.449996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 225.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    117.204940795898,
+    1.01925885677338,
+    162.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 226.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    109.929931640625,
+    1.02419261137644,
+    162.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 227.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    105.032432556152,
+    1.02742501099904,
+    162.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 228.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    140.722930908203,
+    0.785482585430145,
+    162.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 229.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    135.001586914063,
+    0.790915201107661,
+    162.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 230.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    129.718112945557,
+    0.794663687547048,
+    162.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 231.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    162.078903198242,
+    0.564190993706385,
+    162.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 232.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    155.250686645508,
+    0.569936712582906,
+    162.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 233.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    149.734237670898,
+    0.577907244364421,
+    162.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 234.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    184.787475585938,
+    0.380005285143852,
+    162.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 235.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    178.789733886719,
+    0.382857998212179,
+    162.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 236.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    175.069427490234,
+    0.384735817710559,
+    162.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 237.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    170.776824951172,
+    0.39262222747008,
+    162.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 238.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    113.952377319336,
+    0.233729022244612,
+    103.650001525879
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 239.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    121.861267089844,
+    0.233697973191738,
+    103.650001525879
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 240.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    127.244480133057,
+    0.233676495651404,
+    103.650001525879
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 241.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    128.085571289063,
+    0.43753274778525,
+    135.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 242.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    121.37712097168,
+    0.439973915616671,
+    135.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 243.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    114.866226196289,
+    0.442047134041786,
+    135.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 244.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    111.071388244629,
+    0.443295533458392,
+    135.350006103516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 245.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    235.492614746094,
+    0.162000000476837,
+    173.949996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 246.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    211.488510131836,
+    0.197442012528578,
+    175.449996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 247.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    218.049072265625,
+    0.196027286350727,
+    175.449996948242
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 248.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    225.449996948242,
+    0.162063663204511,
+    165.230651855469
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 249.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    225.449996948242,
+    0.162058643996716,
+    159.641235351563
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 250.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    225.449996948242,
+    0.162053341666857,
+    154.758239746094
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 251.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    227.449996948242,
+    0.162000000476837,
+    117.136917114258
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 252.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    227.449996948242,
+    0.162000000476837,
+    110.803901672363
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 253.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    227.449996948242,
+    0.162000000476837,
+    104.521415710449
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 254.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    225.449996948242,
+    0.162025034427643,
+    133.018859863281
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 255.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    225.449996948242,
+    0.162018569807212,
+    127.185619354248
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 256.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    182.943084716797,
+    0.306250274181366,
+    142.916839599609
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 297.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    219.803634643555,
+    0.170842138429483,
+    142.836669921875
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 298.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    228.198425292969,
+    0.162000000476837,
+    142.913711547852
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 299.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    192.917999267578,
+    0.324894314010938,
+    180.536880493164
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 300.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    186.869809150695,
+    2.01597598195076,
+    189.164914608002
+   ],
+   "box": [
+    9.46981525421143,
+    1.54997599124908,
+    5.8649115562439,
+    0.300164260864258,
+    3.09995198249817,
+    0.310153045654297
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 302.0,
+   "name": "sc_col_0",
+   "node": "Buildings/white_court_6th",
+   "op": "add_box",
+   "reason": "white_court_6th: a 0.3 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    117.497543139678,
+    2.53922265768051,
+    152.0390300713
+   ],
+   "box": [
+    -5.49754357337952,
+    1.53997266292572,
+    4.9609694480896,
+    0.94503454208374,
+    3.07994532585144,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 303.0,
+   "name": "sc_col_0",
+   "node": "Buildings/townhouses_1",
+   "op": "add_box",
+   "reason": "townhouses_1: a 0.9 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    112.210165613721,
+    2.53922265768051,
+    152.83910320352
+   ],
+   "box": [
+    -0.210165977478027,
+    1.53997266292572,
+    4.16089677810669,
+    0.359772720336914,
+    3.07994532585144,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 304.0,
+   "name": "sc_col_1",
+   "node": "Buildings/townhouses_1",
+   "op": "add_box",
+   "reason": "townhouses_1: a 0.3 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    105.49775080226,
+    2.53922265768051,
+    152.039031120355
+   ],
+   "box": [
+    6.50224876403809,
+    1.53997266292572,
+    4.9609694480896,
+    0.945035018920898,
+    3.07994532585144,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 305.0,
+   "name": "sc_col_2",
+   "node": "Buildings/townhouses_1",
+   "op": "add_box",
+   "reason": "townhouses_1: a 0.9 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    135.35020827423,
+    2.07060122489929,
+    162.360115700941
+   ],
+   "box": [
+    -0.75020170211792,
+    1.2999678850174,
+    -5.36011576652527,
+    0.939802207946777,
+    2.59993577003479,
+    0.760015048980713
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 306.0,
+   "name": "sc_col_0",
+   "node": "Buildings/townhouses_2",
+   "op": "add_box",
+   "reason": "townhouses_2: a 0.9 x 0.7 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    134.610241025838,
+    2.3106290102005,
+    152.570046900808
+   ],
+   "box": [
+    -0.0102353096008301,
+    1.5399956703186,
+    4.42995309829712,
+    0.359985389709473,
+    3.07999134063721,
+    0.26008228302002
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 307.0,
+   "name": "sc_col_1",
+   "node": "Buildings/townhouses_2",
+   "op": "add_box",
+   "reason": "townhouses_2: a 0.3 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    131.825172043163,
+    2.3106290102005,
+    152.640109781616
+   ],
+   "box": [
+    2.77483367919922,
+    1.5399956703186,
+    4.35989046096802,
+    0.16,
+    3.07999134063721,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 308.0,
+   "name": "sc_col_2",
+   "node": "Buildings/townhouses_2",
+   "op": "add_box",
+   "reason": "townhouses_2: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    138.200155778239,
+    2.27062427997589,
+    152.040029687859
+   ],
+   "box": [
+    -3.6001501083374,
+    1.49999094009399,
+    4.95996999740601,
+    0.239991226196289,
+    2.99998188018799,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 309.0,
+   "name": "sc_col_3",
+   "node": "Buildings/townhouses_2",
+   "op": "add_box",
+   "reason": "townhouses_2: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    125.40011267216,
+    2.27062427997589,
+    152.040030806874
+   ],
+   "box": [
+    9.1998929977417,
+    1.49999094009399,
+    4.95996999740601,
+    0.239991226196289,
+    2.99998188018799,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 310.0,
+   "name": "sc_col_4",
+   "node": "Buildings/townhouses_2",
+   "op": "add_box",
+   "reason": "townhouses_2: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    162.497543139678,
+    2.09130597114563,
+    152.0390300713
+   ],
+   "box": [
+    -5.49754357337952,
+    1.53997266292572,
+    4.9609694480896,
+    0.94503454208374,
+    3.07994532585144,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 311.0,
+   "name": "sc_col_0",
+   "node": "Buildings/townhouses_3",
+   "op": "add_box",
+   "reason": "townhouses_3: a 0.9 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    157.210165613721,
+    2.09130597114563,
+    152.83910320352
+   ],
+   "box": [
+    -0.210165977478027,
+    1.53997266292572,
+    4.16089677810669,
+    0.359772720336914,
+    3.07994532585144,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 312.0,
+   "name": "sc_col_1",
+   "node": "Buildings/townhouses_3",
+   "op": "add_box",
+   "reason": "townhouses_3: a 0.3 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    150.49775080226,
+    2.09130597114563,
+    152.039031120355
+   ],
+   "box": [
+    6.50224876403809,
+    1.53997266292572,
+    4.9609694480896,
+    0.945035018920898,
+    3.07994532585144,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 313.0,
+   "name": "sc_col_2",
+   "node": "Buildings/townhouses_3",
+   "op": "add_box",
+   "reason": "townhouses_3: a 0.9 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    179.35020827423,
+    1.66783455014229,
+    162.360115700941
+   ],
+   "box": [
+    -0.75020170211792,
+    1.2999678850174,
+    -5.36011576652527,
+    0.939802207946777,
+    2.59993577003479,
+    0.760015048980713
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 314.0,
+   "name": "sc_col_0",
+   "node": "Buildings/townhouses_4",
+   "op": "add_box",
+   "reason": "townhouses_4: a 0.9 x 0.7 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    178.610241025838,
+    1.9078623354435,
+    152.570046900808
+   ],
+   "box": [
+    -0.0102353096008301,
+    1.5399956703186,
+    4.42995309829712,
+    0.359985389709473,
+    3.07999134063721,
+    0.26008228302002
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 315.0,
+   "name": "sc_col_1",
+   "node": "Buildings/townhouses_4",
+   "op": "add_box",
+   "reason": "townhouses_4: a 0.3 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    175.825172043163,
+    1.9078623354435,
+    152.640109781616
+   ],
+   "box": [
+    2.77483367919922,
+    1.5399956703186,
+    4.35989046096802,
+    0.16,
+    3.07999134063721,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 316.0,
+   "name": "sc_col_2",
+   "node": "Buildings/townhouses_4",
+   "op": "add_box",
+   "reason": "townhouses_4: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    182.200155778239,
+    1.86785760521889,
+    152.040029687859
+   ],
+   "box": [
+    -3.6001501083374,
+    1.49999094009399,
+    4.95996999740601,
+    0.239991226196289,
+    2.99998188018799,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 317.0,
+   "name": "sc_col_3",
+   "node": "Buildings/townhouses_4",
+   "op": "add_box",
+   "reason": "townhouses_4: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    169.40011267216,
+    1.86785760521889,
+    152.040030806874
+   ],
+   "box": [
+    9.1998929977417,
+    1.49999094009399,
+    4.95996999740601,
+    0.239991226196289,
+    2.99998188018799,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 318.0,
+   "name": "sc_col_4",
+   "node": "Buildings/townhouses_4",
+   "op": "add_box",
+   "reason": "townhouses_4: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    108.929850101471,
+    1.77569578588009,
+    114.364911556244
+   ],
+   "box": [
+    -11.8701529502869,
+    1.54995703697205,
+    5.8649115562439,
+    0.29997257232666,
+    3.09991407394409,
+    0.310153045654297
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 319.0,
+   "name": "sc_col_0",
+   "node": "Buildings/court_wing_s",
+   "op": "add_box",
+   "reason": "court_wing_s: a 0.3 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    117.199782848358,
+    1.92567732930183,
+    114.124899864197
+   ],
+   "box": [
+    -3.60022020339966,
+    1.69993858039379,
+    5.62489986419678,
+    0.259840049743652,
+    2.7999509871006,
+    0.289943733215332
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 320.0,
+   "name": "sc_col_1",
+   "node": "Buildings/court_wing_s",
+   "op": "add_box",
+   "reason": "court_wing_s: a 0.2 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    132.670304739349,
+    1.96732050180435,
+    124.635087406021
+   ],
+   "box": [
+    -11.8703022003174,
+    1.54997599124908,
+    5.8649115562439,
+    0.299920120239258,
+    3.09995198249817,
+    0.310153045654297
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 321.0,
+   "name": "sc_col_0",
+   "node": "Buildings/court_wing_n",
+   "op": "add_box",
+   "reason": "court_wing_n: a 0.3 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    124.400179848069,
+    2.11729104816914,
+    124.875099821066
+   ],
+   "box": [
+    -3.60017728805542,
+    1.69994653761387,
+    5.62489986419678,
+    0.259767570495605,
+    2.8000108897686,
+    0.289943733215332
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 322.0,
+   "name": "sc_col_1",
+   "node": "Buildings/court_wing_n",
+   "op": "add_box",
+   "reason": "court_wing_n: a 0.2 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    238.336576938629,
+    1.64998188614845,
+    188.179862976074
+   ],
+   "box": [
+    2.03657388687134,
+    1.49998188018799,
+    6.87985992431641,
+    0.16,
+    2.99996376037598,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 323.0,
+   "name": "sc_col_0",
+   "node": "Buildings/bike_shop",
+   "op": "add_box",
+   "reason": "bike_shop: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    210.182467341423,
+    0.784942328929901,
+    188.849999904633
+   ],
+   "box": [
+    -3.81753265857697,
+    0.599942326545715,
+    7.04999685287476,
+    0.20498064994812,
+    1.19988465309143,
+    1.14000705718994
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 324.0,
+   "name": "sc_col_0",
+   "node": "Buildings/walkup_6th_adela",
+   "op": "add_box",
+   "reason": "walkup_6th_adela: a 0.2 x 1.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    238.850000071502,
+    0.749942332506179,
+    134.817532350412
+   ],
+   "box": [
+    -3.81753265857697,
+    0.599942326545715,
+    7.04999685287476,
+    0.20498064994812,
+    1.19988465309143,
+    1.14000705718994
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 325.0,
+   "name": "sc_col_0",
+   "node": "Buildings/walkup_adela_n2",
+   "op": "add_box",
+   "reason": "walkup_adela_n2: a 0.2 x 1.1 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "n_apt_b2_be"
+}

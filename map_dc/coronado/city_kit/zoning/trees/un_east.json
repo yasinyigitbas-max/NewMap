@@ -1,0 +1,45 @@
+{
+ "area": "un_east",
+ "piece": "n_un_east",
+ "zone": "civic (campus)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle (the plan has no hospital row: the hospital campus and the university are read as civic grounds)",
+ "written": "by hand, 19 Nov 2026 (claude/fill-high-street, superchecker over the hospital zone and campus): every builder tree out, these placed after the plan",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -505.0,
+    6.273,
+    -695.0
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "the union lawn's west corner, shading the concert lawn's edge"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -505.0,
+    6.225,
+    -665.0
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "the union lawn: its second tree, by the plaza"
+  },
+  {
+   "base": "tree_eucalyptus_a",
+   "cond": "normal",
+   "at": [
+    -436.0,
+    6.191,
+    -690.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "the service road's north end: screening it from the lawn"
+  }
+ ]
+}
