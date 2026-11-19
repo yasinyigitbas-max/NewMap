@@ -89,6 +89,15 @@ const KINDS := {
 	# pharmacy with the post counter: dispensing counter at the back, stocked pharmacy shelves on the walls and in two
 	# short aisles, a brochure rack by the door, the post box inside the door
 	"pharmacy": {"floor": "Tiles012", "light": "panel", "counter": ["shop_counter", "shop_counter"], "till": true, "behind": ["pharmacy_shelf", "pharmacy_shelf", "filing_cabinet"], "board": false, "walls": ["pharmacy_shelf"], "centre": "display", "window": "display", "back": "stock", "frames": false, "posters": true, "cap": {"pharmacy_shelf": 8}, "tint": Color(0.9, 0.97, 0.94)},
+	# (apt fill, block 2) the band's church: the altar table across the back (the service point), the vestry behind a
+	# partition, rows of seats facing the altar with an aisle down the middle, frames on the walls, nothing in the windows
+	"chapel": {"max_d": 16.0, "floor": "WoodFloor051", "light": "pendant", "counter": ["shop_counter"], "till": false, "behind": ["bookcase", "bookcase"], "board": false, "walls": ["frames_only"], "centre": "pews", "window": "none", "back": "office", "frames": true, "tint": Color(0.97, 0.94, 0.88)},
+	# the apartments' community room and preschool: a reception desk, filing and bookcases behind, tables with chairs for
+	# meetings and the little ones' crafts, bookcases and benches on the walls, a bench in the window for the parents
+	"community": {"max_d": 12.0, "floor": "WoodFloor034", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet", "bookcase"], "board": false, "walls": ["bookcase", "waiting_bench"], "centre": "table4", "window": "waiting", "back": "office", "frames": true, "posters": true, "tint": Color(0.96, 0.94, 0.8)},
+	# the bike shop: the counter with the workbench and the pegboard behind it, bikes in stands along the walls, a display
+	# of helmets and locks on tables, a bike in the window
+	"bikes": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["workbench", "pegboard_wall"], "board": false, "walls": ["bike_stand", "wall_shelf", "bike_stand"], "centre": "display", "window": "display", "back": "stock", "frames": false, "posters": true, "cap": {"bike_stand": 6, "wall_shelf": 2}, "tint": Color(0.88, 0.94, 0.98)},
 	"tax": {"max_d": 10.0, "floor": "Carpet012", "light": "panel", "counter": ["shop_counter"], "till": false, "behind": ["filing_cabinet", "filing_cabinet"], "board": false, "walls": ["filing_cabinet", "brochure_rack"], "centre": "desks", "window": "waiting", "back": "office", "frames": true, "tint": Color(0.93, 0.95, 0.9)},
 }
 const WARM := ["diner", "taqueria", "bakery", "coffee"]
@@ -114,14 +123,15 @@ const DRESS := {"drive_thru": ["indoor_bin", "potted_plant", "drinks_fridge", "i
 	 "bank": ["potted_plant", "potted_plant", "indoor_bin", "waiting_bench"],
 	 "recycling": ["potted_plant"],
 	 "bakery": ["indoor_bin", "potted_plant"], "donuts": ["indoor_bin", "potted_plant", "drinks_fridge"],
-	 "barber": ["potted_plant", "indoor_bin", "waiting_bench"], "pharmacy": ["usps_collection_box", "brochure_rack", "indoor_bin", "potted_plant"]}
+	 "barber": ["potted_plant", "indoor_bin", "waiting_bench"],
+	 "chapel": ["potted_plant", "potted_plant", "brochure_rack"], "community": ["potted_plant", "indoor_bin", "brochure_rack"], "bikes": ["potted_plant", "indoor_bin"], "pharmacy": ["usps_collection_box", "brochure_rack", "indoor_bin", "potted_plant"]}
 const CAP := {"vending_soda": 1, "vending_snack": 1, "drinks_fridge": 1, "waiting_bench": 3, "card_spinner": 1, "brochure_rack": 1, "glass_display_case": 3, "filing_cabinet": 3}
 const WALL_TINTS := [Color(1.0, 0.95, 0.86), Color(0.94, 0.96, 0.98), Color(0.98, 0.92, 0.84), Color(0.9, 0.95, 0.92), Color(1.0, 0.97, 0.93), Color(0.93, 0.9, 0.86)]
 const SHORT := {"cafe": "COFFEE", "bakery": "BAKERY", "bar": "BAR", "restaurant": "KITCHEN", "fast_food": "FOOD", "ice_cream": "ICE CREAM",
 	"clothes": "CLOTHES", "shoes": "SHOES", "jewelry": "JEWELRY", "books": "BOOKS", "gallery": "GALLERY", "salon": "SALON", "pharmacy": "PHARMACY",
 	"souvenir": "GIFTS", "office": "OFFICE", "corner_shop": "MARKET", "grocery": "GROCERY", "cleaners": "LAUNDRY", "store": "SUPPLY", "keys": "KEYS",
 	"sport": "SPORT", "gas": "FUEL", "venue": "TICKETS", "drive_thru": "CHICKEN", "taqueria": "TACOS", "diner": "DINER",
-	"wash_office": "CAR WASH", "lube": "OIL CHANGE", "auto_parts": "AUTO PARTS", "phone": "PHONES", "tax": "TAX", "tyre": "TIRES", "car_sales": "USED CARS", "clinic": "URGENT CARE", "physio": "PHYSIO", "coffee": "COFFEE", "florist": "FLOWERS", "motel_office": "OFFICE", "gym": "GYM 24H", "discount": "MARKET", "laundromat": "LAUNDRY", "nails": "NAILS", "dentist": "DENTIST", "pizza": "PIZZA", "dry_cleaner": "CLEANERS", "bank": "CREDIT UNION", "recycling": "RECYCLING", "donuts": "DONUTS", "barber": "BARBER"}
+	"wash_office": "CAR WASH", "lube": "OIL CHANGE", "auto_parts": "AUTO PARTS", "phone": "PHONES", "tax": "TAX", "tyre": "TIRES", "car_sales": "USED CARS", "clinic": "URGENT CARE", "physio": "PHYSIO", "coffee": "COFFEE", "florist": "FLOWERS", "motel_office": "OFFICE", "gym": "GYM 24H", "discount": "MARKET", "laundromat": "LAUNDRY", "nails": "NAILS", "dentist": "DENTIST", "pizza": "PIZZA", "dry_cleaner": "CLEANERS", "bank": "CREDIT UNION", "recycling": "RECYCLING", "donuts": "DONUTS", "barber": "BARBER", "chapel": "CHURCH", "community": "COMMUNITY", "bikes": "BIKES"}
 
 var foot := {}      # base -> Vector2(w, d)
 var tall := {}      # base -> height
@@ -488,6 +498,11 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 				var t := 0
 				for xx: float in _steps(IX0 + 0.68, IX1 - 0.68, 2.2):
 					_put("display_table" if t % 2 == 0 else "card_spinner", xx, zz, 0.0); t += 1
+		"pews":       # (apt fill) rows of seats facing the altar (yaw 180: toward the back), a 1.5 m aisle down the middle
+			var mid := (IX0 + IX1) * 0.5
+			for zz: float in _steps(mz0 + 0.4, mz1 - 0.2, 1.15):      # rows 1.15 m apart, a side aisle along each wall
+				for xx: float in _steps(IX0 + 0.9, mid - 0.8, 0.62): _put("theatre_seat", xx, zz, 180.0)
+				for xx: float in _steps(mid + 0.8, IX1 - 0.9, 0.62): _put("theatre_seat", xx, zz, 180.0)
 		"pharm":      # two short aisles of stocked pharmacy shelves, a 1 m walk round them
 			for xx: float in _steps(IX0 + 0.35, IX1 - 0.35, 1.9):
 				for zz: float in _steps(mz0 + 0.6, mz1 - 0.6, 1.3): _put("pharmacy_shelf", xx, zz, 90.0)

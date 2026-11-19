@@ -1,6 +1,6 @@
 {
  "_doc": "Which shop is behind every shop door of the apartment band FILL blocks (claude/fill-apartments, 19 Nov; Yasin, relayed:",
- "count": 10,
+ "count": 14,
  "rooms": [
   {
    "id": "apt_b1_bw__bakery__0",
@@ -344,6 +344,154 @@
     }
    ],
    "why": "the walk-ups have no machines: the launderette under the flats on Adela",
+   "source": "apartment fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "apt_b2_7th__church_7th__0",
+   "piece": "n_apt_b2_7th",
+   "label": "church_7th",
+   "model": "civic/civ_church",
+   "pos": [
+    365.0,
+    6.15000009536743,
+    -572.799987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -6.7,
+    6.7
+   ],
+   "kind": "chapel",
+   "name": "Seventh Street Community Church",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -4.5,
+     "w": 1.6
+    }
+   ],
+   "why": "the band's church on the bus street; its lot doubles as the flats' overflow parking",
+   "source": "apartment fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "apt_b2_7th__corner_market__0",
+   "piece": "n_apt_b2_7th",
+   "label": "corner_market",
+   "model": "ck/ck_brk3_corner2",
+   "pos": [
+    484.799987792969,
+    6.15000009536743,
+    -581.299987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -1.2,
+    5.7
+   ],
+   "kind": "discount",
+   "name": "Adela Corner Market",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ],
+   "why": "everyday shopping at 7th and Adela, facing the pharmacy corner; the flat above is the shopkeeper's",
+   "source": "apartment fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "apt_b2_be__bike_shop__0",
+   "piece": "n_apt_b2_be",
+   "label": "bike_shop",
+   "model": "commercial/com_surf_shop",
+   "pos": [
+    486.299987792969,
+    6.15000009536743,
+    -418.700012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bikes",
+   "name": "Hill Street Bikes",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ],
+   "why": "the hill's families and the beach riders: repairs and kids' bikes on the corner of 6th and Adela",
+   "source": "apartment fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "apt_b2_bw__community_room__0",
+   "piece": "n_apt_b2_bw",
+   "label": "community_room",
+   "model": "civic/civ_community_center",
+   "pos": [
+    275.0,
+    8.14999961853027,
+    -420.200012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "community",
+   "name": "Glorietta Hill Community Room",
+   "style": "green",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 1.81,
+     "w": 0.58
+    },
+    {
+     "facade": "front",
+     "along": -1.81,
+     "w": 0.58
+    }
+   ],
+   "why": "the apartments' association hall: meetings at night, the preschool in the day, its play yard behind",
    "source": "apartment fill (hand-made shop list)",
    "built": ""
   }

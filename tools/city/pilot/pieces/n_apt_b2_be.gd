@@ -78,11 +78,16 @@ func _run() -> void:
 			stalls.append([p.x, p.z, 0.0, F.gy(p.x, p.z)])                         # nose to the roll-up
 			W.oil(dec, rr, Vector2(p.x, p.z), 0.0, F.GY, rr.randf_range(0.5, 0.85))
 			dec.add(8, Vector2(p.x, p.z - 1.0), rr.randf_range(-15, 15), 0.5, 3.5, F.GY, Color(1, 1, 1, 0.35))   # tyres turning in from the alley
-		F.put(props, "prop_trash_cart_black", "worn", sx, sz, float(tb.u) + 9.2, 152.6, 180.0)
-		F.put(props, "prop_trash_cart_blue", "worn", sx, sz, float(tb.u) + 8.4, 152.6, 180.0)
 	# the townhouses' back yards (v 162-169), fenced lot by lot, the street row's shared yard behind (v 169-176)
 	F.fence_uv(props, sx, sz, 101.0, 169.0, 189.0, 169.0)
-	for gu: float in [101.0, 123.0, 146.2, 167.6, 189.0]: F.fence_uv(props, sx, sz, gu, 162.2, gu, 169.0)
+	# side yards between the townhouses: closed at the front by a gate, divided down to the back fence
+	for g3: Array in [[121.2, 124.8, 123.0], [144.4, 147.8, 146.2], [166.2, 168.8, 167.6]]:
+		F.fence_gate(props, sx, sz, float(g3[0]), 153.0, float(g3[1]), 153.0, (float(g3[1]) - float(g3[0])) * 0.5)
+		F.fence_uv(props, sx, sz, float(g3[2]), 153.0, float(g3[2]), 169.0)
+	F.fence_uv(props, sx, sz, 102.8, 153.0, 101.0, 153.0)
+	F.fence_uv(props, sx, sz, 101.0, 153.0, 101.0, 169.0)
+	F.fence_uv(props, sx, sz, 188.4, 153.0, 189.0, 153.0)
+	F.fence_uv(props, sx, sz, 189.0, 153.0, 189.0, 169.0)
 	for g2: Array in [[121.2, 124.8], [144.4, 147.8], [166.2, 168.8]]:      # between the street row buildings, mid-depth
 		F.fence_gate(props, sx, sz, float(g2[0]), 182.0, float(g2[1]), 182.0, (float(g2[1]) - float(g2[0])) * 0.5)
 	F.fence_uv(props, sx, sz, 101.0, 169.0, 101.0, 182.0)                          # the west end, to the condo's side
@@ -90,7 +95,6 @@ func _run() -> void:
 	F.put(props, "tree_jacaranda_a", "normal", sx, sz, 145.6, 172.5, 20.0)
 	F.put(props, "tree_ficus_b", "normal", sx, sz, 110.0, 173.0, 200.0)
 	F.put(props, "prop_clothesline", "worn", sx, sz, 166.0, 172.5, 0.0)
-	stops.append_array(F.pad(paints, stalls, dec, rr, sx, sz, false, 175.0, 189.0, 190.0, -1.0))
 
 	# ================================================================ S4e (u 100-190, v 100-140): the garden court and the lawn
 	for key3: String in ["court_wing_s", "court_wing_n"]: F.dress(bd[key3], paints, props, dec, rr, sx, sz, 119.6 if key3 == "court_wing_s" else 119.6, false, false)
@@ -121,10 +125,7 @@ func _run() -> void:
 		F.put(props, String(t2[0]), "normal", sx, sz, float(t2[1]), float(t2[2]), float(t2[1]) * 5.0)
 	stops.append_array(F.pad(paints, stalls, dec, rr, sx, sz, true, 136.0, 188.0, 140.0, -1.0))
 	stops.append_array(F.pad(paints, stalls, dec, rr, sx, sz, false, 101.0, 124.0, 190.0, -1.0))
-	F.fence_gate(props, sx, sz, 135.6, 133.4, 189.0, 133.4, 26.0)                 # behind the alley stalls, a gate to the lawn
-	F.fence_uv(props, sx, sz, 183.4, 100.6, 183.4, 124.4)                          # behind the v-alley stalls
-	F.fence_uv(props, sx, sz, 183.4, 124.4, 189.0, 124.4)
-	F.fence_uv(props, sx, sz, 189.0, 124.4, 189.0, 133.4)
+	# (the lawn is open to the stalls round it, as a small park: no fence ends in the open)
 
 	# ================================================================ S6 corner (u 196-240.8, v 146-190.8)
 	var bs: Dictionary = bd.bike_shop

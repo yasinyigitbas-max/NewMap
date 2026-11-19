@@ -113,7 +113,9 @@ func _run() -> void:
 	F.put(props, "prop_hose_reel_cart", "worn", sx, sz, 28.6, 102.0, 0.0)
 
 	# ================================================================ S3w (u 60-100, v 146-190.8): 6th St
-	F.dress(bd.spanish_court_6th, paints, props, dec, rr, sx, sz, 190.8, true, true, [-1.0])
+	F.dress(bd.spanish_court_6th, paints, props, dec, rr, sx, sz, 190.8, true, false, [-1.0])     # its patio by hand: the yard fence runs behind its west end
+	F.put(props, "prop_patio_set_4", "worn", sx, sz, 73.0, 174.0, 10.0)
+	F.put(props, "prop_bbq_kettle", "worn", sx, sz, 76.4, 175.4, 0.0)
 	F.dress(bd.walkup_6th_w, paints, props, dec, rr, sx, sz, 190.8, true, true, [1.0])
 	stops.append_array(F.pad(paints, stalls, dec, rr, sx, sz, false, 147.0, 170.0, 60.0, 1.0))
 	F.fence_uv(props, sx, sz, 66.6, 146.6, 66.6, 177.6)

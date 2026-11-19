@@ -539,6 +539,424 @@
     -690.5
    ],
    "yaw": 90.0000025044782
+  },
+  {
+   "label": "church_7th",
+   "model": "civic/civ_church",
+   "piece": "n_apt_b2_7th",
+   "pos": [
+    365.0,
+    6.15000009536743,
+    -572.799987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "walkup_7th_s",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_apt_b2_7th",
+   "pos": [
+    384.0,
+    6.15000009536743,
+    -581.799987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "garden_7th_s",
+   "model": "apartments/apt_garden_mint",
+   "piece": "n_apt_b2_7th",
+   "pos": [
+    403.799987792969,
+    6.15000009536743,
+    -583.299987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "stucco_7th_s",
+   "model": "apartments/apt_stucco3_peach",
+   "piece": "n_apt_b2_7th",
+   "pos": [
+    427.5,
+    6.15000009536743,
+    -581.799987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "corner_market",
+   "model": "ck/ck_brk3_corner2",
+   "piece": "n_apt_b2_7th",
+   "pos": [
+    484.799987792969,
+    6.15000009536743,
+    -581.299987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "white_court_7th_s",
+   "model": "apartments/apt_court_white",
+   "piece": "n_apt_b2_7th",
+   "pos": [
+    463.399993896484,
+    6.15000009536743,
+    -583.299987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "walkup_adela_7th",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_apt_b2_7th",
+   "pos": [
+    481.799987792969,
+    6.15000009536743,
+    -557.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "spanish_adela",
+   "model": "apartments/apt_spanish_white",
+   "piece": "n_apt_b2_7th",
+   "pos": [
+    482.799987792969,
+    6.15000009536743,
+    -529.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "walkup_adela_mid",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_apt_b2_7th",
+   "pos": [
+    481.799987792969,
+    6.15000009536743,
+    -510.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "garden_shed",
+   "model": "garages/single_siding_comp",
+   "piece": "n_apt_b2_7th",
+   "pos": [
+    434.5,
+    6.15000009536743,
+    -506.5
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "condo_6th",
+   "model": "apartments/apt_beach_condo",
+   "piece": "n_apt_b2_be",
+   "pos": [
+    362.0,
+    7.33500003814697,
+    -417.700012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "stucco_6th",
+   "model": "apartments/apt_stucco3_peach",
+   "piece": "n_apt_b2_be",
+   "pos": [
+    384.5,
+    7.01749992370605,
+    -418.200012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "walkup_6th",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_apt_b2_be",
+   "pos": [
+    407.0,
+    6.71000003814697,
+    -418.200012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "white_court_6th",
+   "model": "apartments/apt_court_white",
+   "piece": "n_apt_b2_be",
+   "pos": [
+    427.399993896484,
+    6.46600008010864,
+    -416.700012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "townhouses_1",
+   "model": "apartments/apt_townhouse_modern",
+   "piece": "n_apt_b2_be",
+   "pos": [
+    362.0,
+    6.99924993515015,
+    -443.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "townhouses_2",
+   "model": "apartments/apt_townhouse_cays",
+   "piece": "n_apt_b2_be",
+   "pos": [
+    384.600006103516,
+    6.77063322067261,
+    -443.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "townhouses_3",
+   "model": "apartments/apt_townhouse_modern",
+   "piece": "n_apt_b2_be",
+   "pos": [
+    407.0,
+    6.5513334274292,
+    -443.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "townhouses_4",
+   "model": "apartments/apt_townhouse_cays",
+   "piece": "n_apt_b2_be",
+   "pos": [
+    428.600006103516,
+    6.36786651611328,
+    -443.0
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "court_wing_s",
+   "model": "apartments/apt_garden_mint",
+   "piece": "n_apt_b2_be",
+   "pos": [
+    370.799987792969,
+    6.22573852539062,
+    -491.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "court_wing_n",
+   "model": "apartments/apt_garden_cream",
+   "piece": "n_apt_b2_be",
+   "pos": [
+    370.799987792969,
+    6.41734457015991,
+    -469.5
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "bike_shop",
+   "model": "commercial/com_surf_shop",
+   "piece": "n_apt_b2_be",
+   "pos": [
+    486.299987792969,
+    6.15000009536743,
+    -418.700012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "walkup_6th_adela",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_apt_b2_be",
+   "pos": [
+    464.0,
+    6.18499994277954,
+    -418.200012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "walkup_adela_6th",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_apt_b2_be",
+   "pos": [
+    481.799987792969,
+    6.15000009536743,
+    -440.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "spanish_court_adela",
+   "model": "apartments/apt_spanish_revival",
+   "piece": "n_apt_b2_be",
+   "pos": [
+    482.799987792969,
+    6.15000009536743,
+    -488.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "walkup_adela_n2",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_apt_b2_be",
+   "pos": [
+    481.799987792969,
+    6.15000009536743,
+    -469.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "community_room",
+   "model": "civic/civ_community_center",
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    275.0,
+    8.14999961853027,
+    -420.200012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "walkup_b_hill_n",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    268.200012207031,
+    6.25349998474121,
+    -489.0
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "walkup_b_hill_s",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    268.200012207031,
+    6.8144998550415,
+    -469.0
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "spanish_court_6th",
+   "model": "apartments/apt_spanish_white",
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    320.0,
+    7.8600001335144,
+    -417.200012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "walkup_6th_w",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    341.0,
+    7.61999988555908,
+    -418.200012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "lockup_0",
+   "model": "garages/single_stucco_clay",
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    313.600006103516,
+    6.16417407989502,
+    -495.600006103516
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "lockup_1",
+   "model": "garages/single_siding_comp",
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    313.600006103516,
+    6.20412015914917,
+    -491.899993896484
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "lockup_2",
+   "model": "garages/single_stucco_comp",
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    313.600006103516,
+    6.25418090820312,
+    -488.200012207031
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "lockup_3",
+   "model": "garages/single_stucco_flat",
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    313.600006103516,
+    6.3285961151123,
+    -484.5
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "lockup_4",
+   "model": "garages/single_stucco_clay",
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    313.600006103516,
+    6.41158008575439,
+    -480.799987792969
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "lockup_5",
+   "model": "garages/single_stucco_comp",
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    313.600006103516,
+    6.51170206069946,
+    -477.100006103516
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "lockup_6",
+   "model": "garages/single_siding_comp",
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    313.600006103516,
+    6.6208438873291,
+    -473.399993896484
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "lockup_7",
+   "model": "garages/single_stucco_flat",
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    313.600006103516,
+    6.7272801399231,
+    -469.700012207031
+   ],
+   "yaw": -90.0000025044782
   }
  ]
 }

@@ -27,6 +27,10 @@ SHOPS = {
                                            (-1.92, [-3.0, 3.0], "tax", "Island Tax Service", "navy", "the tax office every neighbourhood has, in the middle unit"),
                                            (7.76, [3.0, 8.7], "donuts", "Sunrise Donuts", "red", "the donut shop on the corner, for the bus riders and the night shift")],
     ("n_apt_b1_7th", "coffee_window"): [(-1.76, None, "coffee", "The Coffee Window", "black", "a narrow coffee bar beside the corner shops: the queue outside in the morning")],
+    ("n_apt_b2_7th", "church_7th"): [(0.0, None, "chapel", "Seventh Street Community Church", "navy", "the band's church on the bus street; its lot doubles as the flats' overflow parking")],
+    ("n_apt_b2_7th", "corner_market"): [(4.9, [-1.2, 5.7], "discount", "Adela Corner Market", "red", "everyday shopping at 7th and Adela, facing the pharmacy corner; the flat above is the shopkeeper's")],
+    ("n_apt_b2_be", "bike_shop"): [(-3.3, None, "bikes", "Hill Street Bikes", "teal", "the hill's families and the beach riders: repairs and kids' bikes on the corner of 6th and Adela")],
+    ("n_apt_b2_bw", "community_room"): [(0.0, None, "community", "Glorietta Hill Community Room", "green", "the apartments' association hall: meetings at night, the preschool in the day, its play yard behind")],
     ("n_apt_b1_7th", "launderette"): [(-1.1, [-5.7, 2.2], "laundromat", "Adela Wash & Fold", "sea", "the walk-ups have no machines: the launderette under the flats on Adela")],
 }
 

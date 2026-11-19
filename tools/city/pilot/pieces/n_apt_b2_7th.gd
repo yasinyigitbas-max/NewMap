@@ -99,6 +99,7 @@ func _run() -> void:
 	F.fence_uv(props, sx, sz, 167.8, 47.4, 167.8, 24.4)
 	F.fence_uv(props, sx, sz, 167.8, 47.4, 188.0, 47.4)
 	F.fence_uv(props, sx, sz, 188.0, 47.4, 188.0, 24.4)
+	F.fence_uv(props, sx, sz, 188.0, 24.4, 187.2, 24.4)                              # to the stucco block's back corner
 	F.put(props, "prop_clothesline", "worn", sx, sz, 134.0, 36.0, 0.0)
 	F.put(props, "tree_ficus_a", "normal", sx, sz, 160.0, 42.0, 140.0)
 	paints.insert(0, F.rect(sx, sz, 146.0, 33.0, 154.0, 40.0, "mulch"))         # the garden apartment's children: a swing on bark
@@ -112,8 +113,8 @@ func _run() -> void:
 	F.back_of_house(props, mk, true)
 	F.wall(props, mk, "prop_porch_light_barn", "worn", "front", 4.9 - 0.9, 2.3, 0.05)
 	# shop door at u 229.9, the flat's door at u 237.8: the ice chest and the propane cage under the window between them
-	F.put(props, "prop_ice_chest", "worn", sx, sz, 232.3, 11.2, 180.0)
-	for k in 4: F.put(props, "prop_propane_cylinder_100lb", "rusty", sx, sz, 233.6 + k * 0.45, 11.3)
+	F.put(props, "prop_ice_chest", "worn", sx, sz, 232.3, 10.6, 180.0)
+	for k in 4: F.put(props, "prop_propane_cylinder_100lb", "rusty", sx, sz, 233.6 + k * 0.45, 10.9)
 	F.put(props, "prop_newspaper_box_red", "worn", sx, sz, 222.8, 10.6, 180.0)
 	F.put(props, "prop_newspaper_box_blue", "worn", sx, sz, 223.5, 10.6, 180.0)
 	F.put(props, "prop_trash_receptacle", "dirty", sx, sz, 227.4, 10.5)

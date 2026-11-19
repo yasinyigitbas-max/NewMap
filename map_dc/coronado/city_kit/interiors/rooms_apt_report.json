@@ -99,6 +99,46 @@
    "name": "Adela Wash & Fold",
    "props": 33,
    "w": 7.9
+  },
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b2_7th__church_7th__0.scn",
+   "id": "g_apt_b2_7th__church_7th__0",
+   "kind": "chapel",
+   "lights": 4,
+   "name": "Seventh Street Community Church",
+   "props": 76,
+   "w": 13.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b2_7th__corner_market__0.scn",
+   "id": "g_apt_b2_7th__corner_market__0",
+   "kind": "discount",
+   "lights": 4,
+   "name": "Adela Corner Market",
+   "props": 21,
+   "w": 6.9
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b2_be__bike_shop__0.scn",
+   "id": "g_apt_b2_be__bike_shop__0",
+   "kind": "bikes",
+   "lights": 4,
+   "name": "Hill Street Bikes",
+   "props": 21,
+   "w": 8.4
+  },
+  {
+   "d": 12.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b2_bw__community_room__0.scn",
+   "id": "g_apt_b2_bw__community_room__0",
+   "kind": "community",
+   "lights": 4,
+   "name": "Glorietta Hill Community Room",
+   "props": 62,
+   "w": 23.4
   }
  ]
 }
