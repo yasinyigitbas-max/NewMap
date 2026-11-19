@@ -1,0 +1,56 @@
+PROOF compared: 74 nodes (with every mesh of the buildings), 13776 ground and ground-collision triangles, 182 prop instances, 71 colliders, 70 wear marks are identical in both files
+PROOF differences found between the files: 54 lines only in the old one, 18 only in the new one
+PROOF change #20 add_collider: plant_potted_leafy at (-17.20, 0.15, 128.30) got a collision shape  [plant_potted_leafy has no collision: you walk and drive through it]
+PROOF change #21 add_collider: plant_potted_leafy at (-17.20, 0.15, 134.30) got a collision shape  [plant_potted_leafy has no collision: you walk and drive through it]
+PROOF change #22 add_collider: plant_potted_succulent at (-15.65, 0.15, 167.31) got a collision shape  [plant_potted_succulent has no collision: you walk and drive through it]
+PROOF change #23 add_collider: plant_potted_succulent at (-15.65, 0.15, 169.61) got a collision shape  [plant_potted_succulent has no collision: you walk and drive through it]
+PROOF change #1 remove tree_jacaranda_a at (-19.50, 0.15, 123.30) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_jacaranda_b at (-19.50, 0.15, 139.60) removed, in 3 tier(s) and its collider  [tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_coral_a at (-45.00, 0.05, 189.60) removed, in 3 tier(s) and its collider  [tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_coral_b at (-37.00, 0.11, 189.60) removed, in 3 tier(s) and its collider  [tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove prop_newspaper_box_red at (-15.75, 0.15, 164.30) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red stands in front of a shop window of cafe]]
+PROOF change #8 remove prop_downspout_3m at (-30.00, 0.15, 170.60) removed, in 1 tier(s), no collider  [erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_downspout_3m is a wall item with no wall behind it]]
+PROOF change #10 remove prop_park_bench at (-20.90, 0.15, 126.60) removed, in 1 tier(s) and its collider  [erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_park_bench: a part of a building's own mesh passes through it]]
+PROOF change #11 remove prop_park_bench at (-20.90, 0.15, 136.20) removed, in 1 tier(s) and its collider  [erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_park_bench: a part of a building's own mesh passes through it]]
+PROOF change #12 remove prop_trash_receptacle at (-20.90, 0.15, 124.60) removed, in 1 tier(s) and its collider  [erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle: a part of a building's own mesh passes through it]]
+PROOF change #13 remove prop_recycling_receptacle at (-20.90, 0.15, 138.20) removed, in 1 tier(s) and its collider  [erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle: a part of a building's own mesh passes through it]]
+PROOF change #14 remove prop_recycling_receptacle at (-30.60, 0.15, 102.60) removed, in 1 tier(s) and its collider  [erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle: a part of a building's own mesh passes through it]]
+PROOF change #15 remove prop_dumpster_3yd_green at (-30.95, 0.15, 98.90) removed, in 1 tier(s) and its collider  [erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_dumpster_3yd_green: a part of a building's own mesh passes through it]]
+PROOF change #16 remove prop_ac_condenser at (-30.75, 0.15, 114.60) removed, in 1 tier(s) and its collider  [erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser: a part of a building's own mesh passes through it]]
+PROOF change #17 remove prop_trash_cart_black at (-30.55, 0.15, 103.60) removed, in 1 tier(s) and its collider  [erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black: a part of a building's own mesh passes through it]]
+PROOF change #18 remove prop_trash_cart_blue at (-30.55, 0.15, 104.40) removed, in 1 tier(s) and its collider  [erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue: a part of a building's own mesh passes through it]]
+PROOF change #19 remove prop_trash_cart_green at (-30.55, 0.15, 105.20) removed, in 1 tier(s) and its collider  [erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green: a part of a building's own mesh passes through it]]
+PROOF change #24 add_box: a collision box [0.94986724853516, 1.49999868869781, 6.8248553276062, 0.33976654052734, 2.99999737739563, 0.38999752044678] for a column of Buildings/brick_row  [brick_row: a 0.3 x 0.3 m column or post of the building has no collision]
+PROOF change #25 add_box: a collision box [3.10230350494385, 1.58196496963501, 6.82953357696533, 1.03511337280273, 3.16392993927002, 0.39935401916504] for a column of Buildings/brick_row  [brick_row: a 1.0 x 0.4 m column or post of the building has no collision]
+PROOF change #26 add_box: a collision box [-2.89765000343323, 1.58196496963501, 6.82953357696533, 1.03483251571655, 3.16392993927002, 0.39935401916504] for a column of Buildings/brick_row  [brick_row: a 1.0 x 0.4 m column or post of the building has no collision]
+PROOF change #27 add_box: a collision box [6.94982099533081, 1.49999868869781, 6.8248553276062, 0.34004596710205, 2.99999737739563, 0.38999752044678] for a column of Buildings/brick_row  [brick_row: a 0.3 x 0.3 m column or post of the building has no collision]
+PROOF change #28 add_box: a collision box [-0.90025901794434, 1.69995418190956, 7.69993209838867, 0.16, 2.80004566907883, 0.16] for a column of Buildings/library  [library: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #29 add_box: a collision box [0.89987564086914, 1.69995418190956, 7.69993209838867, 0.16, 2.80004566907883, 0.16] for a column of Buildings/library  [library: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #30 add_box: a collision box [-0.895179271698, 1.49998259544373, 6.77483320236206, 0.49018482208252, 2.99996519088745, 0.49008373260498] for a column of Buildings/orange_row  [orange_row: a 0.5 x 0.5 m column or post of the building has no collision]
+PROOF change #31 add_box: a collision box [-2.94264340400696, 1.55998694896698, 6.82978248596191, 0.74483827590942, 3.11997389793396, 0.59998229980469] for a column of Buildings/orange_row  [orange_row: a 0.7 x 0.6 m column or post of the building has no collision]
+PROOF change #32 add_box: a collision box [1.02481365203857, 1.49998259544373, 6.87996387481689, 0.16, 2.99996519088745, 0.16] for a column of Buildings/orange_row  [orange_row: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #33 add_box: a collision box [6.73489999771118, 1.49998259544373, 6.77483320236206, 0.49018482208252, 2.99996519088745, 0.49008373260498] for a column of Buildings/orange_row  [orange_row: a 0.5 x 0.5 m column or post of the building has no collision]
+PROOF change #34 add_box: a collision box [4.8947925567627, 1.49998259544373, 6.87996387481689, 0.16, 2.99996519088745, 0.16] for a column of Buildings/orange_row  [orange_row: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #35 add_box: a collision box [1.02491331100464, 1.49998188018799, 6.87996387481689, 0.16, 2.99996376037598, 0.16] for a column of Buildings/cafe  [cafe: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #36 add_box: a collision box [8.11739730834961, 1.49992108345032, 7.80452537536621, 0.87489036560059, 2.99984216690063, 0.44911483764648] for a column of Buildings/corner  [corner: a 0.8 x 0.4 m column or post of the building has no collision]
+PROOF change #37 add_box: a collision box [8.94443416595459, 1.49992108345032, 7.26727676391602, 0.16921905517578, 2.99984216690063, 0.57510665893555] for a column of Buildings/corner  [corner: a 0.1 x 0.5 m column or post of the building has no collision]
+PROOF note: 'Props/tree_coral_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_newspaper_box_red_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_receptacle_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_park_bench_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_near' held only listed items and is gone with them
+PROOF 34 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
+   at: parse_gdextension_file (core/extension/gdextension_library_loader.cpp:282)
+   at: open_library (core/extension/gdextension.cpp:810)
+   at: load_extensions (core/extension/gdextension_manager.cpp:333)

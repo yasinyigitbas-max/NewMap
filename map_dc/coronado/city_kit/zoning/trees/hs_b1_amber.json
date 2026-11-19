@@ -1,0 +1,45 @@
+{
+ "area": "hs_b1_amber",
+ "piece": "n_hs_b1_amber",
+ "zone": "high street",
+ "rule": "docs/TREE_PLAN.md: high street - trees in wells on the shop side; residential yards: one yard tree for every two or three houses, never against a fence or a wall",
+ "written": "19 Nov 2026 (PC session, city-wide superchecker run): the plan's share of the builder trees kept on their spots, the rest out",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -19.5,
+    4.09,
+    123.3
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "kept on its spot: a tree in a pavement well"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -19.5,
+    4.09,
+    139.6
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "kept on its spot: a tree in a pavement well"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -45.0,
+    4.05,
+    189.6
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "kept on its spot: a yard tree standing free, 9 m from the nearest wall"
+  }
+ ]
+}

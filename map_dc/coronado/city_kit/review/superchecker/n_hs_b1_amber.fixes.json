@@ -1,0 +1,605 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -17.2000007629395,
+    0.150000005960464,
+    128.300003051758
+   ],
+   "base": "plant_potted_leafy",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "add_collider",
+   "reason": "plant_potted_leafy has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -17.2000007629395,
+    0.150000005960464,
+    134.300003051758
+   ],
+   "base": "plant_potted_leafy",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "add_collider",
+   "reason": "plant_potted_leafy has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -15.6499996185303,
+    0.150000005960464,
+    167.309997558594
+   ],
+   "base": "plant_potted_succulent",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 22.0,
+   "op": "add_collider",
+   "reason": "plant_potted_succulent has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -15.6499996185303,
+    0.150000005960464,
+    169.610000610352
+   ],
+   "base": "plant_potted_succulent",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 23.0,
+   "op": "add_collider",
+   "reason": "plant_potted_succulent has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    -19.5,
+    0.150000005960464,
+    123.300003051758
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -19.5,
+    0.150000005960464,
+    139.600006103516
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -45.0,
+    0.0489575713872909,
+    189.600006103516
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -37.0,
+    0.108292065560818,
+    189.600006103516
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    -15.75,
+    0.150000005960464,
+    164.300003051758
+   ],
+   "base": "prop_newspaper_box_red",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "opening",
+   "mode": "choose",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red stands in front of a shop window of cafe]"
+  },
+  {
+   "at": [
+    -30.0,
+    0.150000005960464,
+    170.600006103516
+   ],
+   "base": "prop_downspout_3m",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_downspout_3m is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -20.8999996185303,
+    0.150000005960464,
+    126.599998474121
+   ],
+   "base": "prop_park_bench",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_park_bench: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -20.8999996185303,
+    0.150000005960464,
+    136.199996948242
+   ],
+   "base": "prop_park_bench",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_park_bench: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -20.8999996185303,
+    0.150000005960464,
+    124.599998474121
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 12.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -20.8999996185303,
+    0.150000005960464,
+    138.199996948242
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -30.6000003814697,
+    0.150000005960464,
+    102.599998474121
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 14.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -30.9500007629395,
+    0.150000005960464,
+    98.9000015258789
+   ],
+   "base": "prop_dumpster_3yd_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 15.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_dumpster_3yd_green: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -30.75,
+    0.150000005960464,
+    114.599998474121
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 16.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -30.5499992370605,
+    0.150000005960464,
+    103.599998474121
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -30.5499992370605,
+    0.150000005960464,
+    104.400001525879
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 18.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -30.5499992370605,
+    0.150000005960464,
+    105.199996948242
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_model",
+   "mode": "choose",
+   "n": 19.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green: a part of a building's own mesh passes through it]"
+  },
+  {
+   "at": [
+    -16.1751447139138,
+    1.64999869465828,
+    105.930129706559
+   ],
+   "box": [
+    0.949867248535156,
+    1.49999868869781,
+    6.8248553276062,
+    0.339766540527344,
+    2.99999737739563,
+    0.389997520446777
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 24.0,
+   "name": "sc_col_0",
+   "node": "Buildings/brick_row",
+   "op": "add_box",
+   "reason": "brick_row: a 0.3 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -16.1704665586407,
+    1.73196497559547,
+    103.777693449946
+   ],
+   "box": [
+    3.10230350494385,
+    1.58196496963501,
+    6.82953357696533,
+    1.03511337280273,
+    3.16392993927002,
+    0.399354019165039
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 25.0,
+   "name": "sc_col_1",
+   "node": "Buildings/brick_row",
+   "op": "add_box",
+   "reason": "brick_row: a 1.0 x 0.4 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -16.1704662963744,
+    1.73196497559547,
+    109.777646958323
+   ],
+   "box": [
+    -2.89765000343323,
+    1.58196496963501,
+    6.82953357696533,
+    1.03483251571655,
+    3.16392993927002,
+    0.399354019165039
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 26.0,
+   "name": "sc_col_2",
+   "node": "Buildings/brick_row",
+   "op": "add_box",
+   "reason": "brick_row: a 1.0 x 0.4 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -16.1751449761801,
+    1.64999869465828,
+    99.9301759597633
+   ],
+   "box": [
+    6.94982099533081,
+    1.49999868869781,
+    6.8248553276062,
+    0.340045967102051,
+    2.99999737739563,
+    0.389997520446777
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 27.0,
+   "name": "sc_col_3",
+   "node": "Buildings/brick_row",
+   "op": "add_box",
+   "reason": "brick_row: a 0.3 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -22.3000678622598,
+    1.84995418787002,
+    132.210256239964
+   ],
+   "box": [
+    -0.900259017944336,
+    1.69995418190956,
+    7.69993209838867,
+    0.16,
+    2.80004566907883,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 28.0,
+   "name": "sc_col_0",
+   "node": "Buildings/library",
+   "op": "add_box",
+   "reason": "library: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -22.3000679409461,
+    1.84995418787002,
+    130.41012158115
+   ],
+   "box": [
+    0.899875640869141,
+    1.69995418190956,
+    7.69993209838867,
+    0.16,
+    2.80004566907883,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 29.0,
+   "name": "sc_col_1",
+   "node": "Buildings/library",
+   "op": "add_box",
+   "reason": "library: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -16.2251667585084,
+    1.64998260140419,
+    154.3751747031
+   ],
+   "box": [
+    -0.895179271697998,
+    1.49998259544373,
+    6.77483320236206,
+    0.49018482208252,
+    2.99996519088745,
+    0.490083732604981
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 30.0,
+   "name": "sc_col_0",
+   "node": "Buildings/orange_row",
+   "op": "add_box",
+   "reason": "orange_row: a 0.5 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -16.1702173854111,
+    1.70998695492744,
+    156.422638833007
+   ],
+   "box": [
+    -2.94264340400696,
+    1.55998694896698,
+    6.82978248596191,
+    0.744838275909424,
+    3.11997389793396,
+    0.599982299804688
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 31.0,
+   "name": "sc_col_1",
+   "node": "Buildings/orange_row",
+   "op": "add_box",
+   "reason": "orange_row: a 0.7 x 0.6 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -16.1200361699791,
+    1.64998260140419,
+    152.455181774768
+   ],
+   "box": [
+    1.02481365203857,
+    1.49998259544373,
+    6.87996387481689,
+    0.16,
+    2.99996519088745,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 32.0,
+   "name": "sc_col_2",
+   "node": "Buildings/orange_row",
+   "op": "add_box",
+   "reason": "orange_row: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -16.2251670920298,
+    1.64998260140419,
+    146.74509543369
+   ],
+   "box": [
+    6.73489999771118,
+    1.49998259544373,
+    6.77483320236206,
+    0.49018482208252,
+    2.99996519088745,
+    0.490083732604981
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 33.0,
+   "name": "sc_col_3",
+   "node": "Buildings/orange_row",
+   "op": "add_box",
+   "reason": "orange_row: a 0.5 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -16.1200363391413,
+    1.64998260140419,
+    148.585202870044
+   ],
+   "box": [
+    4.8947925567627,
+    1.49998259544373,
+    6.87996387481689,
+    0.16,
+    2.99996519088745,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 34.0,
+   "name": "sc_col_4",
+   "node": "Buildings/orange_row",
+   "op": "add_box",
+   "reason": "orange_row: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -16.1200361699835,
+    1.64998188614845,
+    165.675083336505
+   ],
+   "box": [
+    1.02491331100464,
+    1.49998188018799,
+    6.87996387481689,
+    0.16,
+    2.99996376037598,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 35.0,
+   "name": "sc_col_0",
+   "node": "Buildings/cafe",
+   "op": "add_box",
+   "reason": "cafe: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -16.1954749794565,
+    1.64992108941078,
+    172.952609674723
+   ],
+   "box": [
+    8.11739730834961,
+    1.49992108345032,
+    7.80452537536621,
+    0.874890365600586,
+    2.99984216690063,
+    0.449114837646484
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 36.0,
+   "name": "sc_col_0",
+   "node": "Buildings/corner",
+   "op": "add_box",
+   "reason": "corner: a 0.8 x 0.4 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -16.7327236270576,
+    1.64992108941078,
+    172.125572840602
+   ],
+   "box": [
+    8.94443416595459,
+    1.49992108345032,
+    7.26727676391602,
+    0.169219055175781,
+    2.99984216690063,
+    0.575106658935547
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 37.0,
+   "name": "sc_col_1",
+   "node": "Buildings/corner",
+   "op": "add_box",
+   "reason": "corner: a 0.1 x 0.5 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "n_hs_b1_amber"
+}
