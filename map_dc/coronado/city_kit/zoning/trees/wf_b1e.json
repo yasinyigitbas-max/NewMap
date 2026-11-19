@@ -1,0 +1,81 @@
+{
+ "area": "wf_b1e",
+ "piece": "n_wf_b1e",
+ "zone": "waterfront",
+ "rule": "docs/TREE_PLAN.md: palms only - spaced palms on the promenade and the median (zone 105 -> about 95)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's nineteen builder trees go (a coral and a magnolia by the car park, seventeen palms); the six palms of the grass strip between the promenade and the beach road come back on their own spots. The promenade row stood on the plaza with no well (the tree check refuses it) and stays out, as do the palms among the cottages and the flats' yards.",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    448.0,
+    1.564,
+    315.0
+   ],
+   "yaw": 0.0,
+   "scale": 1.0,
+   "why": "the grass strip between the promenade and the beach road, its west end by the cottages: the strip's palms carry the waterfront's line now the plaza row is out"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    464.0,
+    1.519,
+    315.0
+   ],
+   "yaw": 50.0,
+   "scale": 1.0,
+   "why": "the grass strip, by the bird of paradise, 16 m on"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    480.0,
+    1.503,
+    315.0
+   ],
+   "yaw": 100.0,
+   "scale": 1.0,
+   "why": "the grass strip, 16 m on, among the iceplant"
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "at": [
+    496.0,
+    1.5,
+    315.0
+   ],
+   "yaw": 140.0,
+   "scale": 1.0,
+   "why": "the grass strip by the park bench and the bougainvillea: a canary date palm for a broader crown over the bench"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    512.0,
+    1.5,
+    315.0
+   ],
+   "yaw": 190.0,
+   "scale": 1.0,
+   "why": "the grass strip, 16 m on, among the iceplant"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    528.0,
+    1.5,
+    315.0
+   ],
+   "yaw": 230.0,
+   "scale": 1.0,
+   "why": "the grass strip's east end by the agaves, 16 m on"
+  }
+ ]
+}

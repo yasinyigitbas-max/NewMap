@@ -2451,11 +2451,6 @@
    "by": "Yasin",
    "date": "2026-11-19"
   },
-  "n_wf_b1e": {
-   "sha256": "a9587b904b1425c888da306d4f1b6b18fe8dc636372399b1ad3143f29c0ef679",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
   "n_wf_b1w": {
    "sha256": "92d26c939057f5d08f22df2a948526e5dcbc40dd3b0f0955cab3516bbf8f2e9f",
    "by": "Yasin",
@@ -2673,6 +2668,11 @@
   },
   "n_wf_b2w": {
    "sha256": "979eaf4e11eeb81252fd1afae85959ef4b2bd4fdbbc56d0f2775565e0ee4cd8d",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_wf_b1e": {
+   "sha256": "f9a5e127fdd2912ba912637536d96a573ec34f1a528cf78bbe349991ee94b0ce",
    "by": "Yasin",
    "date": "2026-11-19"
   }
@@ -3153,11 +3153,6 @@
    "by": "Yasin",
    "date": "2026-11-19"
   },
-  "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1e__the_fish_house__0.scn": {
-   "sha256": "f790e4e60c5945c847e484151615618b31c1ca4a1d39af8c2d6a70b04f9da0b8",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
   "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1w__bay_bike_hire__0.scn": {
    "sha256": "1631edd0dd4bbde224c7ac93179c624fbf57c2cad75967aec27fca53fcfe61d3",
    "by": "Yasin",
@@ -3183,11 +3178,6 @@
    "by": "Yasin",
    "date": "2026-11-19"
   },
-  "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1e__pier_bait_tackle__0.scn": {
-   "sha256": "b08bbca0cc71352edb5607409a8d8411f8700b29379abdb584393f4bee9df4b0",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
   "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1w__harbour_bakery__0.scn": {
    "sha256": "54dcf08aa5918fbc5c9cd2fb721fa554a686950aeeabe2df909bee2b69064593",
    "by": "Yasin",
@@ -3210,11 +3200,6 @@
   },
   "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1m__dive_surf_row__1.scn": {
    "sha256": "f610da228cc430af2d93c61bb616a6349ea8b3abe605b490149ab7344ae91d8e",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
-  "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1e__salt_water_surf__0.scn": {
-   "sha256": "97d1c4146a886a103c84ce048f66d6a2704df8e805e46b7a250cf9a0f4d4f7a7",
    "by": "Yasin",
    "date": "2026-11-19"
   },
@@ -3440,6 +3425,21 @@
   },
   "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b2w__shores_holiday_rentals__0.scn": {
    "sha256": "06f070f454e22b4f3492ffa113a2e5cd206e365bdccf932f85e96ad7d3134cdb",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1e__pier_bait_tackle__0.scn": {
+   "sha256": "d73ce24b7ccb5f1c8330c5a44b982d32b63d14e99a6c9261acb0dc13b9ec5241",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1e__salt_water_surf__0.scn": {
+   "sha256": "1e2b32fb9a544b635d32f0593e4f56a30fcd36a778efdb0648d1e8c6259fbdd2",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_wfa_b1e__the_fish_house__0.scn": {
+   "sha256": "b3c66d13884016666addd68feb34bee11863574f94c429f29e3a36865d39275c",
    "by": "Yasin",
    "date": "2026-11-19"
   }
