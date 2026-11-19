@@ -1,0 +1,569 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -36.7856254577637,
+    1.20000004768372,
+    78.4000015258789
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 12.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 25 cm from a apt door of cold_store (services keep 35 cm off)]",
+   "to": [
+    -36.7856254839905,
+    1.20000004768372,
+    79.0000015258788
+   ]
+  },
+  {
+   "at": [
+    -25.0,
+    0.150000005960464,
+    32.5999984741211
+   ],
+   "base": "prop_ice_chest",
+   "chosen": true,
+   "cond": "clean",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -26.8999996185303,
+    0.150000005960464,
+    32.5999984741211
+   ],
+   "base": "prop_ice_chest",
+   "chosen": true,
+   "cond": "clean",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 14.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -28.7999992370605,
+    0.150000005960464,
+    32.5999984741211
+   ],
+   "base": "prop_ice_chest",
+   "chosen": true,
+   "cond": "clean",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 15.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -72.5,
+    0.150000005960464,
+    45.0
+   ],
+   "base": "prop_ice_chest",
+   "chosen": true,
+   "cond": "clean",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 16.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -72.5,
+    0.150000005960464,
+    46.7999992370605
+   ],
+   "base": "prop_ice_chest",
+   "chosen": true,
+   "cond": "clean",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -72.5,
+    0.150000005960464,
+    48.5999984741211
+   ],
+   "base": "prop_ice_chest",
+   "chosen": true,
+   "cond": "clean",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 18.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -72.5,
+    0.150000005960464,
+    50.4000015258789
+   ],
+   "base": "prop_ice_chest",
+   "chosen": true,
+   "cond": "clean",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 19.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -81.0656051635742,
+    0.150000005960464,
+    67.7213973999023
+   ],
+   "base": "prop_ice_chest",
+   "chosen": true,
+   "cond": "clean",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 20.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -72.1626281738281,
+    0.150000005960464,
+    66.3809432983398
+   ],
+   "base": "prop_ice_chest",
+   "chosen": true,
+   "cond": "clean",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 21.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -31.5,
+    0.150000005960464,
+    32.4000015258789
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 22.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.4 m from a wall, 22.7 m from a fence)]"
+  },
+  {
+   "at": [
+    -32.2999992370605,
+    0.150000005960464,
+    32.4000015258789
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 23.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.4 m from a wall, 23.5 m from a fence)]"
+  },
+  {
+   "at": [
+    -33.0999984741211,
+    0.150000005960464,
+    32.4000015258789
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 24.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.4 m from a wall, 24.3 m from a fence)]"
+  },
+  {
+   "at": [
+    -43.5569343566895,
+    0.150000005960464,
+    32.8253707885742
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 25.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.4 m from a wall, 32.2 m from a fence)]"
+  },
+  {
+   "at": [
+    -43.6982269287109,
+    0.150000005960464,
+    37.9530563354492
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 26.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.3 m from a wall, 35.3 m from a fence)]"
+  },
+  {
+   "at": [
+    -33.0,
+    0.150000005960464,
+    13.3125
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 28.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (2.7 m from a wall, 28.8 m from a fence)]"
+  },
+  {
+   "at": [
+    -79.7404022216797,
+    0.150000005960464,
+    29.2399387359619
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 29.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (9.7 m from a wall, 14.8 m from a fence)]"
+  },
+  {
+   "at": [
+    -79.8106307983398,
+    0.150000005960464,
+    37.6865043640137
+   ],
+   "base": "prop_picnic_table",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 30.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    -39.9109840393066,
+    0.150000005960464,
+    66.0774993896484
+   ],
+   "base": "prop_hose_reel_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "hydrant_nowhere",
+   "mode": "choose",
+   "n": 31.0,
+   "op": "remove",
+   "reason": "erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart stands 3.1 m from any building wall and 3.0 m inside the block]"
+  },
+  {
+   "at": [
+    -24.5,
+    0.150000005960464,
+    13.3125
+   ],
+   "base": "prop_newspaper_box_blue",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 41.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_blue leaves 1.0 m of a 1.8 m wide walk]"
+  },
+  {
+   "at": [
+    -7.703125,
+    0.150000005960464,
+    26.0
+   ],
+   "base": "prop_bike_rack",
+   "chosen": true,
+   "cond": "dirty",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 42.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_bike_rack leaves 1.1 m of a 1.8 m wide walk]"
+  },
+  {
+   "at": [
+    -7.765625,
+    0.162000000476837,
+    63.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 32.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -7.76562523841858,
+    0.162000000476837,
+    61.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 33.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -88.9065933227539,
+    0.162000000476837,
+    70.7782516479492
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 34.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -50.5606155395508,
+    0.162000000476837,
+    39.2848052978516
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 35.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies under the building fish_packing_hall",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -90.0669021606445,
+    0.162000000476837,
+    71.2188873291016
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 36.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -92.2417297363281,
+    0.162000000476837,
+    71.528564453125
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 37.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -92.3885345458984,
+    0.162000000476837,
+    70.8851470947266
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 38.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -35.5609016418457,
+    0.162000000476837,
+    57.4628448486328
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 39.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building cold_store",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -32.7349678240253,
+    1.64998188614845,
+    16.2106674598524
+   ],
+   "box": [
+    3.73496723175049,
+    1.49998188018799,
+    6.77483320236206,
+    0.489979782104492,
+    2.99996376037598,
+    0.490083732604981
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 45.0,
+   "name": "sc_col_0",
+   "node": "Buildings/dockside_fish_market",
+   "op": "add_box",
+   "reason": "dockside_fish_market: a 0.4 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -30.6958881670784,
+    1.64998188614845,
+    16.1055366091357
+   ],
+   "box": [
+    1.69588756561279,
+    1.49998188018799,
+    6.87996387481689,
+    0.16,
+    2.99996376037598,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 46.0,
+   "name": "sc_col_1",
+   "node": "Buildings/dockside_fish_market",
+   "op": "add_box",
+   "reason": "dockside_fish_market: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -40.7349451742568,
+    1.64998188614845,
+    16.2107058213919
+   ],
+   "box": [
+    0.734944581985474,
+    1.49998188018799,
+    6.77479457855225,
+    0.490035095214844,
+    2.99996376037598,
+    0.489954986572266
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 47.0,
+   "name": "sc_col_0",
+   "node": "Buildings/pacific_seafood_sales",
+   "op": "add_box",
+   "reason": "pacific_seafood_sales: a 0.5 x 0.4 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -54.8123110696547,
+    1.49995639920235,
+    40.3975078657022
+   ],
+   "box": [
+    -3.18768787384033,
+    1.34995639324188,
+    -12.0850081443787,
+    0.41530517578125,
+    2.69991278648376,
+    0.37000659942627
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 48.0,
+   "name": "sc_col_0",
+   "node": "Buildings/fish_packing_hall",
+   "op": "add_box",
+   "reason": "fish_packing_hall: a 0.4 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -9.38762698889809,
+    1.74999943375587,
+    32.1999995487454
+   ],
+   "box": [
+    7.80000019073486,
+    1.59999942779541,
+    5.95999813079834,
+    0.16,
+    3.19999885559082,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 49.0,
+   "name": "sc_col_0",
+   "node": "Buildings/dry_store",
+   "op": "add_box",
+   "reason": "dry_store: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    -12.5809224948125,
+    1.64999476075172,
+    59.5801681914497
+   ],
+   "box": [
+    8.41983127593994,
+    1.49999475479126,
+    12.18470287323,
+    0.380160369873047,
+    2.99998950958252,
+    0.570130386352539
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 50.0,
+   "name": "sc_col_0",
+   "node": "Buildings/cold_store",
+   "op": "add_box",
+   "reason": "cold_store: a 0.3 x 0.5 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "i_vc_w600_n1600_sw"
+}

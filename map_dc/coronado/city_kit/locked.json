@@ -2011,11 +2011,6 @@
    "by": "Yasin",
    "date": "2026-11-19"
   },
-  "i_vc_w600_n1600_sw": {
-   "sha256": "e703a73c53838e043d23426c16fd7fd1d9e9989980067307f9aa5e4c6ba6f8da",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
   "i_vb_w600_n1400_nw": {
    "sha256": "c684b76776c404bdd5aa378e51142e9acad7e0a18e9920d5906f8d3944692146",
    "by": "Yasin",
@@ -2675,6 +2670,11 @@
    "sha256": "a88223e57f30bb918d3e92fe79a1c5500108570371a4caa76a9b033508f7ad13",
    "by": "Yasin",
    "date": "2026-11-19"
+  },
+  "i_vc_w600_n1600_sw": {
+   "sha256": "4a6df054278dd57c1d0b25d17b976969e2aa9544f859127ac2e830279364bc77",
+   "by": "Yasin",
+   "date": "2026-11-19"
   }
  },
  "files": {
@@ -2850,11 +2850,6 @@
   },
   "map_dc/coronado/city_kit/interiors/rooms/g_ind_vc_w600_n1400_se__brewery_taproom__0.scn": {
    "sha256": "d34d634280df31bbf1d74be4f7dff39f56899f77bb0b1a039f9027080b08305d",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
-  "map_dc/coronado/city_kit/interiors/rooms/g_ind_vc_w600_n1600_sw__dockside_fish_market__0.scn": {
-   "sha256": "1c00de9a7337bb03c285ef34e7dcc1280353f7e6d9199bf0c2e6c75a11b3e3ab",
    "by": "Yasin",
    "date": "2026-11-19"
   },
@@ -3440,6 +3435,11 @@
   },
   "map_dc/coronado/city_kit/interiors/rooms/g_ind_vb_w800_n1600_se__workwear_store__1.scn": {
    "sha256": "0dc082a7026ed5d65fd3acfc664915bc3ac0615840c9a7817435c1931526b86e",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_ind_vc_w600_n1600_sw__dockside_fish_market__0.scn": {
+   "sha256": "b55602801498911945a2d1cdec33aa7b908c9c4eb2b2aac18f33b6383501ea06",
    "by": "Yasin",
    "date": "2026-11-19"
   }

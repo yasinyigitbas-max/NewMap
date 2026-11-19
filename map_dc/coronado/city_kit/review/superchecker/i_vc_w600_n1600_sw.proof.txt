@@ -1,0 +1,48 @@
+PROOF compared: 114 nodes (with every mesh of the buildings), 2746 ground and ground-collision triangles, 444 prop instances, 135 colliders, 298 wear marks are identical in both files
+PROOF differences found between the files: 77 lines only in the old one, 8 only in the new one
+PROOF change #12 move prop_meter_electric: (-36.79, 1.20, 78.40) -> (-36.79, 1.20, 79.00), in 1 tier(s) and its collider  [moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 25 cm from a apt door of cold_store (services keep 35 cm off)]]
+PROOF change #13 remove prop_ice_chest at (-25.00, 0.15, 32.60) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #14 remove prop_ice_chest at (-26.90, 0.15, 32.60) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #15 remove prop_ice_chest at (-28.80, 0.15, 32.60) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #16 remove prop_ice_chest at (-72.50, 0.15, 45.00) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #17 remove prop_ice_chest at (-72.50, 0.15, 46.80) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #18 remove prop_ice_chest at (-72.50, 0.15, 48.60) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #19 remove prop_ice_chest at (-72.50, 0.15, 50.40) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #20 remove prop_ice_chest at (-81.07, 0.15, 67.72) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #21 remove prop_ice_chest at (-72.16, 0.15, 66.38) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_ice_chest stands on asphalt where vehicles go]]
+PROOF change #22 remove prop_trash_cart_green at (-31.50, 0.15, 32.40) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.4 m from a wall, 22.7 m from a fence)]]
+PROOF change #23 remove prop_trash_cart_green at (-32.30, 0.15, 32.40) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.4 m from a wall, 23.5 m from a fence)]]
+PROOF change #24 remove prop_trash_cart_green at (-33.10, 0.15, 32.40) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.4 m from a wall, 24.3 m from a fence)]]
+PROOF change #25 remove prop_trash_cart_green at (-43.56, 0.15, 32.83) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.4 m from a wall, 32.2 m from a fence)]]
+PROOF change #26 remove prop_trash_cart_green at (-43.70, 0.15, 37.95) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (2.3 m from a wall, 35.3 m from a fence)]]
+PROOF change #28 remove prop_trash_receptacle at (-33.00, 0.15, 13.31) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (2.7 m from a wall, 28.8 m from a fence)]]
+PROOF change #29 remove prop_trash_receptacle at (-79.74, 0.15, 29.24) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (9.7 m from a wall, 14.8 m from a fence)]]
+PROOF change #30 remove prop_picnic_table at (-79.81, 0.15, 37.69) removed, in 1 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]]
+PROOF change #31 remove prop_hose_reel_cart at (-39.91, 0.15, 66.08) removed, in 1 tier(s) and its collider  [erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart stands 3.1 m from any building wall and 3.0 m inside the block]]
+PROOF change #41 remove prop_newspaper_box_blue at (-24.50, 0.15, 13.31) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_blue leaves 1.0 m of a 1.8 m wide walk]]
+PROOF change #42 remove prop_bike_rack at (-7.70, 0.15, 26.00) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_bike_rack leaves 1.1 m of a 1.8 m wide walk]]
+PROOF change #32 remove_decal: one wear mark at (-7.77, 0.16, 63.00) removed  [tyre marks mark lies on the sidewalk]
+PROOF change #33 remove_decal: one wear mark at (-7.77, 0.16, 61.00) removed  [tyre marks mark lies on the sidewalk]
+PROOF change #34 remove_decal: one wear mark at (-88.91, 0.16, 70.78) removed  [crack mark lies on gravel]
+PROOF change #35 remove_decal: one wear mark at (-50.56, 0.16, 39.28) removed  [crack mark lies under the building fish_packing_hall]
+PROOF change #36 remove_decal: one wear mark at (-90.07, 0.16, 71.22) removed  [crack mark lies on gravel]
+PROOF change #37 remove_decal: one wear mark at (-92.24, 0.16, 71.53) removed  [crack mark lies on gravel]
+PROOF change #38 remove_decal: one wear mark at (-92.39, 0.16, 70.89) removed  [sealed patch mark lies on gravel]
+PROOF change #39 remove_decal: one wear mark at (-35.56, 0.16, 57.46) removed  [oil mark lies under the building cold_store]
+PROOF change #45 add_box: a collision box [3.73496723175049, 1.49998188018799, 6.77483320236206, 0.48997978210449, 2.99996376037598, 0.49008373260498] for a column of Buildings/dockside_fish_market  [dockside_fish_market: a 0.4 x 0.5 m column or post of the building has no collision]
+PROOF change #46 add_box: a collision box [1.69588756561279, 1.49998188018799, 6.87996387481689, 0.16, 2.99996376037598, 0.16] for a column of Buildings/dockside_fish_market  [dockside_fish_market: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #47 add_box: a collision box [0.73494458198547, 1.49998188018799, 6.77479457855225, 0.49003509521484, 2.99996376037598, 0.48995498657227] for a column of Buildings/pacific_seafood_sales  [pacific_seafood_sales: a 0.5 x 0.4 m column or post of the building has no collision]
+PROOF change #48 add_box: a collision box [-3.18768787384033, 1.34995639324188, -12.0850081443787, 0.41530517578125, 2.69991278648376, 0.37000659942627] for a column of Buildings/fish_packing_hall  [fish_packing_hall: a 0.4 x 0.3 m column or post of the building has no collision]
+PROOF change #49 add_box: a collision box [7.80000019073486, 1.59999942779541, 5.95999813079834, 0.16, 3.19999885559082, 0.16] for a column of Buildings/dry_store  [dry_store: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #50 add_box: a collision box [8.41983127593994, 1.49999475479126, 12.18470287323, 0.38016036987305, 2.99998950958252, 0.57013038635254] for a column of Buildings/cold_store  [cold_store: a 0.3 x 0.5 m column or post of the building has no collision]
+PROOF note: 'Props/prop_hose_reel_cart_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_picnic_table_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_bike_rack_dirty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_newspaper_box_blue_rusty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_receptacle_dirty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_green_dirty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_ice_chest_clean_far' held only listed items and is gone with them
+PROOF note: 'Props/prop_ice_chest_clean_mid' held only listed items and is gone with them
+PROOF note: 'Props/prop_ice_chest_clean_near' held only listed items and is gone with them
+PROOF 35 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
