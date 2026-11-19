@@ -58,7 +58,7 @@ const KINDS := {
 	"lecture": {"floor": "WoodFloor051", "light": "panel", "counter": ["display_table", "office_desk"], "till": false, "behind": ["bookcase", "filing_cabinet", "bookcase"], "board": false, "walls": ["bookcase"], "centre": "pews", "window": "none", "back": "office", "frames": true},
 	# the campus rec centre (claude/sharp-ride-16u9ik 19 Nov): the front desk by the door, drinks behind it, rows of weight
 	# benches and bikes down the floor with the walk to the back kept clear, more equipment along the walls
-	"gym": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["drinks_fridge", "wall_shelf"], "board": false, "walls": ["weight_bench", "bike_stand", "weight_bench"], "centre": "gym", "window": "none", "back": "office", "frames": false},
+	"gym": {"floor": "Concrete047A", "light": "panel", "counter": ["shop_counter"], "till": true, "behind": ["drinks_fridge", "wall_shelf"], "board": false, "walls": ["mirror_station", "weight_bench", "bike_stand", "mirror_station", "weight_bench"], "centre": "gym", "window": "none", "back": "office", "frames": false},
 	"campus_hall": {"floor": "Terrazzo005", "light": "pendant", "counter": ["shop_counter", "shop_counter"], "till": false, "behind": ["potted_plant", "bookcase", "potted_plant"], "board": false, "walls": ["waiting_bench", "potted_plant", "bookcase"], "centre": "lounge", "window": "waiting", "back": "office", "frames": true},
 	"venue": {"floor": "Carpet012", "light": "pendant", "counter": ["shop_counter", "soda_fountain"], "till": true, "behind": ["drinks_fridge"], "board": true, "walls": ["poster_wall"], "centre": "benches", "window": "waiting", "back": "none", "frames": false},
 }
@@ -385,10 +385,13 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 		"gym":
 			# rows of weight benches and bikes down the floor, the walk from the door to the back left clear
 			var gi := 0
-			for zz: float in _steps(mz0 + 0.6, mz1 - 0.6, 2.0):
-				for xx: float in _steps(IX0 + 0.8, IX1 - 0.8, 2.4):
+			for zz: float in _steps(mz0 + 0.5, mz1 - 0.5, 1.8):
+				for xx: float in _steps(IX0 + 0.75, IX1 - 0.75, 1.9):
 					if absf(xx - dx) < 1.6: continue
 					_put("weight_bench" if gi % 3 != 2 else "bike_stand", xx, zz, 0.0); gi += 1
+			# by the door: the bench where people change shoes
+			for ex: Array in [["waiting_bench", IX0 + 1.2, mz0 - 0.9, 180.0], ["potted_plant", IX0 + 0.3, mz1 + 0.4, 0.0]]:
+				_put(String(ex[0]), float(ex[1]), float(ex[2]), float(ex[3]))
 		"pews":
 			# two columns either side of the centre aisle from the door to the altar, every pew facing the altar
 			for zz: float in _steps(mz0 + 0.3, mz1 - 0.3, 1.3):

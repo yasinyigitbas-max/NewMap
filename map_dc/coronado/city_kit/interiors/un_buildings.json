@@ -119,6 +119,446 @@
     -776.523
    ],
    "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "uni_museum",
+   "model": "civic/civ_museum",
+   "piece": "n_un_nw",
+   "pos": [
+    -750.0,
+    6.238,
+    -760.55
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "uni_chapel",
+   "model": "public/pub_chapel",
+   "piece": "n_un_nw",
+   "pos": [
+    -695.0,
+    6.26,
+    -761.9
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "uni_union",
+   "model": "civic/civ_community_center",
+   "piece": "n_un_nw",
+   "pos": [
+    -630.0,
+    6.309,
+    -761.05
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "uni_humanities",
+   "model": "civic/civ_school_wing",
+   "piece": "n_un_nw",
+   "pos": [
+    -690.0,
+    6.3,
+    -734.95
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "uni_arts",
+   "model": "civic/civ_school_wing",
+   "piece": "n_un_nw",
+   "pos": [
+    -766.0,
+    6.175,
+    -616.35
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "uni_rec",
+   "model": "civic/civ_rec_center",
+   "piece": "n_un_se",
+   "pos": [
+    -540.0,
+    6.17,
+    -575.05
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "uni_kinesiology",
+   "model": "civic/civ_school_wing",
+   "piece": "n_un_se",
+   "pos": [
+    -472.0,
+    6.15,
+    -576.05
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "rollup",
+     0.0
+    ]
+   ],
+   "label": "uni_garage",
+   "model": "extras/ext_parking_garage",
+   "piece": "n_un_se",
+   "pos": [
+    -435.0,
+    6.178,
+    -518.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     1.15
+    ]
+   ],
+   "label": "uni_gameday_kiosk",
+   "model": "commercial/com_kiosk",
+   "piece": "n_un_se",
+   "pos": [
+    -427.923,
+    6.17,
+    -478.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -5.08
+    ],
+    [
+     "shopdoor",
+     -2.92
+    ],
+    [
+     "shopdoor",
+     5.08
+    ]
+   ],
+   "label": "uni_dining",
+   "model": "commercial/com_spanish_arcade_block",
+   "piece": "n_un_sw",
+   "pos": [
+    -640.0,
+    6.102,
+    -574.95
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ],
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ]
+   ],
+   "label": "uni_dorm_1",
+   "model": "apartments/apt_garden_cream",
+   "piece": "n_un_sw",
+   "pos": [
+    -695.0,
+    5.95,
+    -554.1
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ],
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ]
+   ],
+   "label": "uni_dorm_2",
+   "model": "apartments/apt_garden_mint",
+   "piece": "n_un_sw",
+   "pos": [
+    -655.0,
+    6.028,
+    -554.1
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "uni_dorm_3",
+   "model": "apartments/apt_stucco3_peach",
+   "piece": "n_un_sw",
+   "pos": [
+    -695.0,
+    5.597,
+    -463.9
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "uni_dorm_4",
+   "model": "apartments/apt_stucco3_cream",
+   "piece": "n_un_sw",
+   "pos": [
+    -655.0,
+    5.868,
+    -463.9
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     -6.4
+    ],
+    [
+     "apt_door",
+     6.4
+    ],
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "uni_dorm_5",
+   "model": "apartments/apt_spanish_revival",
+   "piece": "n_un_sw",
+   "pos": [
+    -726.5,
+    5.659,
+    -510.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     -6.4
+    ],
+    [
+     "apt_door",
+     6.4
+    ],
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "uni_dorm_6",
+   "model": "apartments/apt_spanish_white",
+   "piece": "n_un_sw",
+   "pos": [
+    -623.5,
+    6.018,
+    -510.0
+   ],
+   "yaw": -90.0
   }
  ]
 }

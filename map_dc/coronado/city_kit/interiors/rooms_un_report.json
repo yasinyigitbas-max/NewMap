@@ -1,74 +1,14 @@
 {
  "rooms": [
   {
-   "d": 16.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_hall__0.scn",
-   "id": "g_un_ne__uni_hall__0",
-   "kind": "campus_hall",
+   "d": 13.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_se__uni_rec__0.scn",
+   "id": "g_un_se__uni_rec__0",
+   "kind": "gym",
    "lights": 6,
-   "name": "Coronado University - Founders Hall",
-   "props": 72,
-   "w": 31.4
-  },
-  {
-   "d": 11.15,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_lecture_west__0.scn",
-   "id": "g_un_ne__uni_lecture_west__0",
-   "kind": "lecture",
-   "lights": 6,
-   "name": "Lecture Halls West",
-   "props": 62,
-   "w": 29.4
-  },
-  {
-   "d": 15.15,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_library__0.scn",
-   "id": "g_un_ne__uni_library__0",
-   "kind": "books",
-   "lights": 6,
-   "name": "University Library",
-   "props": 59,
+   "name": "Rec Center",
+   "props": 41,
    "w": 23.4
-  },
-  {
-   "d": 11.15,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_science__0.scn",
-   "id": "g_un_ne__uni_science__0",
-   "kind": "lecture",
-   "lights": 6,
-   "name": "Science Building",
-   "props": 62,
-   "w": 29.4
-  },
-  {
-   "d": 5.75,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_gate_cafe__0.scn",
-   "id": "g_un_ne__uni_gate_cafe__0",
-   "kind": "cafe",
-   "lights": 3,
-   "name": "Gate Coffee",
-   "props": 10,
-   "w": 6.9
-  },
-  {
-   "d": 5.25,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_gate_books__0.scn",
-   "id": "g_un_ne__uni_gate_books__0",
-   "kind": "books",
-   "lights": 2,
-   "name": "Campus Books",
-   "props": 6,
-   "w": 5.9
-  },
-  {
-   "d": 5.25,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_bus_kiosk__0.scn",
-   "id": "g_un_ne__uni_bus_kiosk__0",
-   "kind": "cafe",
-   "lights": 2,
-   "name": "Crown Cafe",
-   "props": 5,
-   "w": 3.4
   }
  ]
 }
