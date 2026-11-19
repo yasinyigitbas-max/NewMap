@@ -1,0 +1,45 @@
+{
+ "area": "rg_se_b009",
+ "piece": "s_rg_se_b009",
+ "zone": "ring boulevard",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms, the palm boulevard round the island; within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    2.15,
+    229.808
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first queen palm of the west row (the boulevard is palms: the jacaranda here becomes a palm)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    2.15,
+    254.259
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass 24.5 m on, the second queen palm"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    2.15,
+    237.598
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east parkway grass, the east face's queen palm, staggered between the west ones; the 8-13 m doubles go"
+  }
+ ]
+}
