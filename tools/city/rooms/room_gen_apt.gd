@@ -134,7 +134,7 @@ const SHORT := {"cafe": "COFFEE", "bakery": "BAKERY", "bar": "BAR", "restaurant"
 	"clothes": "CLOTHES", "shoes": "SHOES", "jewelry": "JEWELRY", "books": "BOOKS", "gallery": "GALLERY", "salon": "SALON", "pharmacy": "PHARMACY",
 	"souvenir": "GIFTS", "office": "OFFICE", "corner_shop": "MARKET", "grocery": "GROCERY", "cleaners": "LAUNDRY", "store": "SUPPLY", "keys": "KEYS",
 	"sport": "SPORT", "gas": "FUEL", "venue": "TICKETS", "drive_thru": "CHICKEN", "taqueria": "TACOS", "diner": "DINER",
-	"wash_office": "CAR WASH", "lube": "OIL CHANGE", "auto_parts": "AUTO PARTS", "phone": "PHONES", "tax": "TAX", "tyre": "TIRES", "car_sales": "USED CARS", "clinic": "URGENT CARE", "physio": "PHYSIO", "coffee": "COFFEE", "florist": "FLOWERS", "motel_office": "OFFICE", "gym": "GYM 24H", "discount": "MARKET", "laundromat": "LAUNDRY", "nails": "NAILS", "dentist": "DENTIST", "pizza": "PIZZA", "dry_cleaner": "CLEANERS", "bank": "CREDIT UNION", "recycling": "RECYCLING", "donuts": "DONUTS", "barber": "BARBER", "chapel": "CHURCH", "books": "BOOKS", "community": "COMMUNITY", "bikes": "BIKES"}
+	"wash_office": "CAR WASH", "lube": "OIL CHANGE", "auto_parts": "AUTO PARTS", "phone": "PHONES", "tax": "TAX", "tyre": "TIRES", "car_sales": "USED CARS", "clinic": "URGENT CARE", "physio": "PHYSIO", "coffee": "COFFEE", "florist": "FLOWERS", "motel_office": "OFFICE", "gym": "GYM 24H", "discount": "MARKET", "laundromat": "LAUNDRY", "nails": "NAILS", "dentist": "DENTIST", "pizza": "PIZZA", "dry_cleaner": "CLEANERS", "bank": "CREDIT UNION", "recycling": "RECYCLING", "donuts": "DONUTS", "barber": "BARBER", "chapel": "CHURCH", "community": "COMMUNITY", "bikes": "BIKES"}
 
 var foot := {}      # base -> Vector2(w, d)
 var tall := {}      # base -> height

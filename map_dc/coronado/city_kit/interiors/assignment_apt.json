@@ -1,6 +1,6 @@
 {
  "_doc": "Which shop is behind every shop door of the apartment band FILL blocks (claude/fill-apartments, 19 Nov; Yasin, relayed:",
- "count": 14,
+ "count": 15,
  "rooms": [
   {
    "id": "apt_b1_bw__bakery__0",
@@ -492,6 +492,38 @@
     }
    ],
    "why": "the apartments' association hall: meetings at night, the preschool in the day, its play yard behind",
+   "source": "apartment fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "apt_b3_w__hilltop_books__0",
+   "piece": "n_apt_b3_w",
+   "label": "hilltop_books",
+   "model": "commercial/com_shallow_books",
+   "pos": [
+    262.450012207031,
+    8.15121459960938,
+    -385.299987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -2.01,
+   "door_w": 1.0,
+   "bay": [
+    -2.95,
+    2.95
+   ],
+   "kind": "books",
+   "name": "Hilltop Books",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.68
+    }
+   ],
+   "why": "a tiny second-hand bookshop at the top of B Ave, opposite the community room: the preschool parents' stop",
    "source": "apartment fill (hand-made shop list)",
    "built": ""
   }

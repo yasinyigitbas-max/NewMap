@@ -139,6 +139,16 @@
    "name": "Glorietta Hill Community Room",
    "props": 62,
    "w": 23.4
+  },
+  {
+   "d": 5.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b3_w__hilltop_books__0.scn",
+   "id": "g_apt_b3_w__hilltop_books__0",
+   "kind": "books",
+   "lights": 2,
+   "name": "Hilltop Books",
+   "props": 9,
+   "w": 5.9
   }
  ]
 }
