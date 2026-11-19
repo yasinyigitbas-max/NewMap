@@ -957,7 +957,12 @@ void CityCrowd::_process(double p_delta) {
 				// turns him over the bonnet's way (no kick upward: one part pushed with the whole body's momentum flew up)
 				Vector3 vel = bv + (cv - bv) * 0.75f; vel.y = 0.0f;
 				if (vel.length() > 9.0f) vel = vel.normalized() * 9.0f;
-				const Vector3 imp = (cv - bv).length_squared() > 0.01f ? (cv - bv).normalized() * 40.0f : Vector3();
+				// a car that comes into him fast scoops him up: his legs are taken, he goes onto the bonnet and over (the
+				// same as the player thrown off his bicycle into a car: Yasin, "somersaulting to the other side of the car");
+				// the car itself is a box to his body, so a slow knock only pushes him over
+				const float rel = (cv - bv).length();
+				if (rel > 4.0f) vel.y = std::min(0.35f * rel, 3.5f);
+				const Vector3 imp = rel > 0.1f ? (cv - bv) / rel * (rel > 4.0f ? 70.0f : 40.0f) : Vector3();
 				thrown.push_back(Thrown{ w, vel, imp, Vector3(dn[k], dn[k + 1], dn[k + 2]), 0.0f });
 				riders_thrown++;
 			}

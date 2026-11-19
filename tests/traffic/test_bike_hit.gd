@@ -19,6 +19,7 @@ var floor_y := 0.0
 var downs0 := 0
 var rider := -1
 var lowest := 9.0
+var highest := -9.0
 var was_body := false
 var got_up := false
 var hit_at := Vector3.ZERO
@@ -86,6 +87,7 @@ func _process(delta: float) -> bool:
 				if int(nb.figure_mode) == 1 and (rider < 0 or int(nb.walker) == rider):
 					rider = int(nb.walker); was_body = true
 					lowest = minf(lowest, (nb.at as Vector3).y - floor_y)
+					highest = maxf(highest, (nb.at as Vector3).y - floor_y)
 				if int(nb.walker) == rider and was_body and int(nb.figure_mode) == 2: got_up = true
 			var back := false
 			if rider >= 0:
@@ -95,6 +97,7 @@ func _process(delta: float) -> bool:
 			var st: Dictionary = crowd.call(&"stats")
 			_check(int(st.riders_thrown) >= 1 and int(st.riders_given_a_body) >= 1, "the rider is one of the crowd now, given a near body at once (%d thrown, %d given a body)" % [int(st.riders_thrown), int(st.riders_given_a_body)])
 			_check(was_body and lowest < 0.5, "the blow threw his balancing body down (his hips %.2f m over the floor at the lowest)" % lowest)
+			_check(highest < 2.5, "he is scooped over the car, not propelled: his hips at most %.2f m over the floor" % highest)
 			_check(got_up or back, "he got up (the get-up clip after his balancing body)")
 			_check(back, "and walks to the pavement (%.0f s after the hit)" % (t - t0))
 			var bs: Dictionary = traffic.call(&"bike_stats")
