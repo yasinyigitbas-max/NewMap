@@ -2531,11 +2531,6 @@
    "by": "Yasin",
    "date": "2026-11-19"
   },
-  "r_q_500_m200_nw": {
-   "sha256": "c6a02a078a922845cab19121cfab52c313bcb7d98b7424a4f30cb9349a08f477",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
   "r_q_250_200_nw": {
    "sha256": "0be72635049e2c4fa85a25582b503621d18b3f519727b871fbed0e975e2faa61",
    "by": "Yasin",
@@ -2673,6 +2668,11 @@
   },
   "r_q_500_m200_sw": {
    "sha256": "8a24bc8ad3dba23c538426c733b0ee06102e517d10d8a8ac1c25e37b2cd48fed",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "r_q_500_m200_nw": {
+   "sha256": "787cd70322df5520ae68b198a2a3eab1ddaa91532f5672d197a1c648e3abbe3a",
    "by": "Yasin",
    "date": "2026-11-19"
   }
