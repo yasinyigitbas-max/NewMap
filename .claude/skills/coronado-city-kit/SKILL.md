@@ -304,3 +304,13 @@ reusing a street piece puts that bench in front of somebody else's door (the val
 - `prop_wear_mat` names materials by the colour atlas only, so most near props run without normal / ORM maps (the
   first creator was a mid tier). Known, kept, Yasin's call.
 
+
+## Lessons 18-19 Nov (zone growth): read .claude/skills/coronado-zone-growth/SKILL.md
+- Growing a zone from its sample (variants, pilot area, whole zone, polish, rooms, numbers, lock) has its own skill,
+  with the full table of mistakes and Yasin's corrections. The short version:
+  - Measure the streets around a block; never assume a property line.
+  - Place buildings by their real mesh, not the stats footprint (a marina office's jetty lay on 1st St).
+  - Keep services off doors, rollups and windows.
+  - Put level pads under buildings on slopes; wall panels at the lowest ground.
+  - Hydrants by walls; no bench beside a picnic table.
+  - Polish locked samples only through an overlay piece.
