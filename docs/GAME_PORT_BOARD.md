@@ -17,6 +17,9 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 - "make them try to get out of the way and break hard at the same time. but add it to the very end of the queue"
   (the traffic's drivers, faced with something sudden: swerve AND brake hard, not only brake)
 - "dont forget to add our pro animations whereever they apply, for crashes and ejection use your ragdoll system."
+- (on the first crash film) "we flew up too much"; "body should have weight, i didnt mean propel when i said eject";
+  "they should still end up somersaulting to the other side of the car"; the hands: "turn the left hand 90 degree right
+  and right hand 90 degree right"
 - Standing rules: everything per frame or tick in C++ (memory: runtime code in C++); scripts only for tools and tests;
   one question, one run; the phone last; don't waste his usage or his PC; say what was not checked.
 
@@ -32,7 +35,7 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 2. [x] (19 Nov, doc section 34) Route finding in the traffic core (A*, one finder for buses, taxis, scripted cars, the map's way; CityTraffic.route). Test: tests/traffic/test_route.gd.
 2b. [x] (19 Nov, tests/traffic/test_bike_hit.gd) Cyclists crash into cars (a car or the player's car hits a cyclist hard: he comes off: the balancing body / a
       fall, the bike lies; gets up, picks it up, rides on, or walks it away hurt).
-2c. [ ] A bike the player rides (C++ node like CityCar): pedalling, gears-free speed, steering by leaning, brakes,
+2c. [x] (19 Nov, doc section 36, tests/people/test_bike_ride.gd) A bike the player rides (C++ node like CityCar): pedalling, gears-free speed, steering by leaning, brakes,
       skids; touch controls (left thumb steer, right thumb pedal / brake, a button to get on and off); the camera
       wobbles with the pedalling and the bumps; damage (bent wheel, chain off, wobbling bar); a hard hit throws the
       player off (his balancing body, falls, gets up); the Quaternius clips that fit (getting on / off, falls, get up).

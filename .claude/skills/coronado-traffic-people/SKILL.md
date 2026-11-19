@@ -193,3 +193,7 @@ Measure with a no-traffic run of the SAME app in the SAME session. Numbers of 19
   changes who waits where: it brought out a left-turner starved for five greens and a parked car the core was never
   shown; run all 12 core runs, with and without (`--bikes=0`), and trace the one id the failure names. (3) A car may
   not overtake anything inside its lane up to a stop line: side by side at the line, its nose sits in a turning path.
+- Throwing a body (doc section 36), paid for: never push ONE part with the whole body's momentum (it flies like a kite):
+  CityPed::launch starts every part at one speed. The body's ground is the world's only: a ray that can hit a car or a
+  bicycle puts the ground above the legs and the solver shoots the body 20 m up. Film it (`--write-movie`) before
+  saying a crash looks right: the numbers said "thrown, got up" while he flew.

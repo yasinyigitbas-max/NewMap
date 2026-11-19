@@ -1,6 +1,7 @@
 // coronado_city: the new map's native module (GDExtension). Traffic and people in C++ (docs/TRAFFIC_PEOPLE_PORT.md).
 // There is no script fall-back: the test app checks ClassDB.class_exists("CityNative") and says so when the module
 // is missing.
+#include "city_bike.h"
 #include "city_car.h"
 #include "city_native.h"
 #include "city_ped.h"
@@ -26,6 +27,8 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	}
 	GDREGISTER_CLASS(CityNative);
 	GDREGISTER_CLASS(CityTraffic);   // the traffic: core, drawing, parked cars
+	GDREGISTER_CLASS(BikeReach);     // the player's bicycle: the rider's feet and hands to the pedals and grips
+	GDREGISTER_CLASS(CityBike);      // a bicycle the player rides (touch controls, the view wobbles, crashes throw him)
 	GDREGISTER_CLASS(CityCar);       // a car to drive: the physical car (veh_dyn) on the engine's body
 	GDREGISTER_CLASS(CityPed);       // one person with a real body: animation, and a body that balances, falls and gets up
 	GDREGISTER_CLASS(StreetGraph);   // tool time: the streets as traffic and people need them, from the baked city

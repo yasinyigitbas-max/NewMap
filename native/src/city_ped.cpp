@@ -1,6 +1,9 @@
 // CityPed: see city_ped.h.
 #include "city_ped.h"
 
+#include <godot_cpp/classes/character_body3d.hpp>
+#include <godot_cpp/classes/rigid_body3d.hpp>
+
 #include <godot_cpp/classes/animation.hpp>
 #include <godot_cpp/classes/animation_library.hpp>
 #include <godot_cpp/classes/engine.hpp>
@@ -283,6 +286,12 @@ void CityPed::push(const Vector3 &p_impulse, const Vector3 &p_at) {
 	if (n_shove < 4) shove[n_shove++] = Shove{ part, p_impulse / 12.0, 12 };
 }
 
+void CityPed::launch(const Vector3 &p_velocity, const Vector3 &p_impulse, const Vector3 &p_at) {
+	if (!made || !skel || !can_body) return;
+	take_over(p_velocity);
+	if (p_impulse.length_squared() > 1e-6f) push(p_impulse, p_at);
+}
+
 void CityPed::set_box(int p_index, const Vector3 &p_centre, const Vector3 &p_half, double p_yaw, const Vector3 &p_velocity, int p_count) {
 	n_boxes = std::min(std::max(p_count, 0), (int)pb::MAX_BOXES);
 	if (p_index < 0 || p_index >= pb::MAX_BOXES) return;
@@ -319,10 +328,24 @@ void CityPed::_physics_process(double p_delta) {
 		Ref<World3D> w = get_world_3d();
 		PhysicsDirectSpaceState3D *ss = w.is_valid() ? w->get_direct_space_state() : nullptr;
 		if (ss) {
+			// (from just over the hips, and only ground that is under them: from 0.6 m up, a body thrown beside a parked car
+			// took the car's roof for the ground, found itself under it and was shot 25 m into the air)
 			const Vector3 p = gv(body.b[pb::B_PELVIS].x);
-			Ref<PhysicsRayQueryParameters3D> rq = PhysicsRayQueryParameters3D::create(p + Vector3(0, 0.6, 0), p - Vector3(0, 3.0, 0), 0xFFFFFFEF);
-			const Dictionary h = ss->intersect_ray(rq);
-			if (!h.is_empty()) body.gd = (float)((Vector3)h["position"]).y;
+			Ref<PhysicsRayQueryParameters3D> rq = PhysicsRayQueryParameters3D::create(p + Vector3(0, 0.12, 0), p - Vector3(0, 3.0, 0), 0xFFFFFFEF);
+			// the ground is the world's: a car or a bicycle (a body that moves) is never the floor (thrown into a parked car,
+			// the body took its bonnet for the ground with its legs under it, and was shot into the air): the ray looks past
+			// them to the road. Cars he meets are boxes to him (set_box), not ground.
+			TypedArray<RID> skip;
+			for (int k = 0; k < 4; k++) {
+				rq->set_exclude(skip);
+				const Dictionary h = ss->intersect_ray(rq);
+				if (h.is_empty()) break;
+				Object *col = h.get("collider", Variant());
+				if (Object::cast_to<RigidBody3D>(col) || Object::cast_to<CharacterBody3D>(col)) { skip.push_back(h["rid"]); continue; }
+				const float gy = (float)((Vector3)h["position"]).y;
+				if (gy <= (float)p.y + 0.05f) body.gd = gy;
+				break;
+			}
 		}
 	}
 	for (int k = 0; k < n_shove;) {

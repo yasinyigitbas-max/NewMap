@@ -911,7 +911,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 			feed_boxes(nb, i);
 			for (size_t q = 0; q < thrown.size(); q++) {   // a cyclist who came off: the blow throws him (his balancing body from here on)
 				if (thrown[q].walker != nb.walker) continue;
-				nb.ped->push(thrown[q].imp, thrown[q].at + Vector3(0, 1.05f, 0));
+				nb.ped->launch(thrown[q].vel, thrown[q].imp, thrown[q].at + Vector3(0, 0.95f, 0));
 				nb.push_cd = 2.5f; nb.why = 3; nb.after_kind = 0; nb.after_t = 0.0f;
 				thrown.erase(thrown.begin() + (long)q);
 				break;
@@ -953,9 +953,12 @@ void CityCrowd::_process(double p_delta) {
 				if (w < 0) continue;
 				const Vector3 f(std::sin(dn[k + 3]), 0.0f, std::cos(dn[k + 3]));
 				const Vector3 bv = f * dn[k + 4], cv(dn[k + 5], 0.0f, dn[k + 6]);
-				Vector3 imp = (bv + (cv - bv) * 0.75f) * 72.0f;
-				if (imp.length() > 650.0f) imp = imp.normalized() * 650.0f;
-				thrown.push_back(Thrown{ w, imp, Vector3(dn[k], dn[k + 1], dn[k + 2]), 0.0f });
+				// the whole body leaves at the speed the blow gives it (his own and most of the car's), a small push at the hips
+				// turns him over the bonnet's way (no kick upward: one part pushed with the whole body's momentum flew up)
+				Vector3 vel = bv + (cv - bv) * 0.75f; vel.y = 0.0f;
+				if (vel.length() > 9.0f) vel = vel.normalized() * 9.0f;
+				const Vector3 imp = (cv - bv).length_squared() > 0.01f ? (cv - bv).normalized() * 40.0f : Vector3();
+				thrown.push_back(Thrown{ w, vel, imp, Vector3(dn[k], dn[k + 1], dn[k + 2]), 0.0f });
 				riders_thrown++;
 			}
 		}

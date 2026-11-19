@@ -1294,3 +1294,36 @@ along a line and nobody saw them; the map's way was coronado_route.gd, AStar2D i
   test_traffic_core, test_bikes, test_knock, test_route, test_car_hits, test_acts, test_crowd_game RESULT PASS.
 - NOT done: he does not go back for his bicycle (it lies there until it is taken away); a cyclist into a walker does
   not fall.
+
+## 36. A bicycle the player rides (19 Nov night; Yasin: "make a rideable bike for the player, make sure its designed for touch controls, make sure it moves realistic like the cars, our view should wobble riding it. add damage to the bikes, we should be able to get ejected if we hit a car hard enough. use all relevant animations"; "for crashes and ejection use your ragdoll system")
+CityBike (native/src/city_bike.*), all C++, on one of the engine's rigid bodies as CityCar is:
+- HOW IT GOES: two wheel rays; the turn from the front wheel's angle and the wheelbase (the angle allowed falls with
+  the speed); the lean a rider takes into the turn (second order: a little lag and overshoot); pedalling by power
+  (300 W, sprinting 650 W, at most 320 N), brakes front and rear (the rear locks and skids under a full brake), rolling
+  resistance, the air, the slope; the tyres hold 0.85 g, past that it slides. Measured (tests/people/test_bike_ride.gd):
+  17 km/h pedalling, 24 km/h sprinting, a left turn of 106 degrees in 3 s leaning 0.42 rad into it, a full stop from
+  18 km/h in 1.6 m.
+- THE RIDER: a near figure (CityPed) with the Quaternius clips: Sitting_Enter to get on, Driving_Loop riding,
+  Sitting_Exit to get off; BikeReach (a skeleton modifier in C++, the far figures' two-bone reach) puts his feet on the
+  pedals as the crank turns and his hands on the grips (turned 90 degrees over the bar), his back leant as far as his
+  arms need (measured: feet exact, hands within 1 cm). The player (CityPlayer) is not there while he rides and stands
+  beside the bicycle when he gets off. Pictures review/people_19nov/bike_ride.jpg, bike_hands.jpg.
+- THE VIEW: behind and above, swinging round as it turns, it rolls with the lean, sways and bobs with the pedalling
+  (more when sprinting), shakes over bumps.
+- TOUCH: the left half steers (a thumb slid sideways); the right half brakes (inner) and pedals (outer, slide up to
+  sprint); the top right corner gets on and off; an overlay shows the zones (touch_hud). Keys and a pad too.
+- DAMAGE from every knock: over 30 the front wheel is bent (the bar wobbles), over 70 the chain is off, 100 wrecked.
+- CRASHES: a knock of 4.5 m/s in a step (a car, a wall) or a fall past 60 degrees throws the rider: his BALANCING BODY
+  (never a clip) leaves at the speed he rode as a whole body; into something he can go over (a car: its top found by
+  rays ahead) his legs are caught and he goes over head first, rising only to clear its top, and lands beyond it; a
+  wall stops him. He gets up by himself (LayToIdle) and is the player again. The cars round a thrown body are solid
+  boxes to it. Film (OUT/bike_crash.avi, not in git: 26 MB; tests/people/bike_crash_film.gd makes it): 11 s of riding,
+  into a parked car at 25 km/h, over it, lies 3.1 m past its middle, up 5.3 s later.
+- THE BALANCING BODY ITSELF, mended (it showed in the first film: he flew 25 m up): its ground ray started 0.6 m over
+  the hips and took a car's bonnet for the ground with the legs under it; and a throw pushed one light part with the
+  whole body's momentum. Now the ground is the world's only (cars and bicycles are boxes to it, never ground, never
+  over the hips), and CityPed::launch starts every part at one speed. The crowd's cyclists hit by cars are thrown the
+  same way.
+- Tests RESULT PASS: test_bike_ride (new), test_bike_hit, test_car_hits, test_acts, test_crowd_game, test_city_ped,
+  test_knock. NOT done: into a moving traffic car (only a wall and a parked car tried); the player's figure is the
+  test app's plain one; nothing tried on the phone.
