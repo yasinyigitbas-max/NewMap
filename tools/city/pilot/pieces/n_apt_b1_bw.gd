@@ -58,23 +58,21 @@ func _run() -> void:
 	paints.append(F.rect(sx, sz, 9.2, 188.3, 31.6, 190.8, "concrete"))           # the shops' forecourt
 	for b: Dictionary in [bakery, barber]:
 		F.back_of_house(props, b, false); blds.append(b)
-	F.balconies(barber, props)                                                     # the flat over the barber
 	# bakery door at u 10.4 (corner end): the bench under the window east of it, the rack along the front, papers at the
 	# corner end of the forecourt where the walkers come round, a bin by the door for cups
 	F.put(props, "prop_park_bench", "worn", sx, sz, 16.2, 189.0, 180.0)            # faces 8th St, back to the window
 	F.put(props, "prop_trash_receptacle", "dirty", sx, sz, 12.4, 189.6)
-	F.put(props, "prop_newspaper_box_red", "worn", sx, sz, 9.7, 187.6, 90.0)       # on the B Ave side of the door, off the walk
+	F.put(props, "prop_newspaper_box_red", "worn", sx, sz, 18.6, 189.7, 0.0)       # between the two shops, clear of both doors
 	F.put(props, "prop_bike_rack", "rusty", sx, sz, 20.6, 189.9, 0.0)              # parallel to the front, between the shops
-	I.add(props, "plant_potted_leafy", "normal", F.at(bakery, -4.0, 7.45), 180.0)  # the baker's pot at the far end of the window
 	# barber: shop door at local -1.1 (u 26.5), flat door at local 3.0 (u 22.4): the waiting bench outside under the
 	# window at the shop's east end, a pot between the two doors is too tight: none
 	F.put(props, "prop_park_bench", "worn", sx, sz, 29.7, 189.0, 180.0)
-	I.add(props, "prop_porch_light_coach_bronze", "worn", F.at(barber, -1.1 - 0.9, 7.05, 2.25), 180.0, false)
-	I.add(props, "prop_mailbox_wall_black", "worn", F.at(barber, 3.0 + 1.1, 7.05, 1.3), 180.0, false)
+	F.wall(props, barber, "prop_porch_light_coach_bronze", "worn", "front", -1.1 - 0.9, 2.25, 0.05)
+	F.wall(props, barber, "prop_mailbox_wall_black", "worn", "front", 3.0 + 1.1, 1.3, 0.05)
 	F.grime(dec, Vector2(9.2, -188.0), Vector2(31.6, -188.0), rr)
 	dec.add(14, Vector2(10.4, -189.5), 0.0, 2.0, 1.6, F.GY, Color(1, 1, 1, 0.55))  # worn in front of the bakery door
 	# the white court on 8th St, 3 m front yard (walks, hedge, a tree): the street row goes on east of the shops
-	var court := F.place(bl, sx, sz, "apartments/apt_court_white", 42.9, 183.3, "+v", "white_court_8th")
+	var court := F.place(bl, sx, sz, "apartments/apt_court_white", 44.4, 183.3, "+v", "white_court_8th")
 	F.dress(court, paints, props, dec, rr, sx, sz, 190.8, true, false, [1.0])        # west wall 3 m from the barber: no AC there
 	blds.append(court)
 	# the Spanish court on B Ave behind the bakery (front 3 m back from the walk)
@@ -94,8 +92,9 @@ func _run() -> void:
 	F.fence_gate(props, sx, sz, 22.2, 146.6, 47.0, 146.6, 12.0)
 	F.fence_gate(props, sx, sz, 47.0, 146.6, 47.0, 166.9, 10.0)
 	F.fence_uv(props, sx, sz, 47.0, 166.9, 48.3, 166.9)
-	F.fence_uv(props, sx, sz, 48.3, 173.2, 48.3, 178.6)
-	F.fence_gate(props, sx, sz, 31.6, 179.0, 34.3, 179.0, 1.35)                    # the gap between barber and court
+	F.fence_uv(props, sx, sz, 48.3, 173.2, 52.6, 173.2)                              # off the enclosure's corner, clear of the court's meters and AC
+	F.fence_uv(props, sx, sz, 52.6, 173.2, 52.6, 178.6)
+	F.fence_gate(props, sx, sz, 31.6, 179.0, 35.8, 179.0, 2.1)                     # the gap between barber and court
 	F.fence_uv(props, sx, sz, 12.2, 166.2, 12.2, 174.1)                             # the gap between the Spanish court and the bakery
 	# life in the court (each has its reason)
 	F.put(props, "prop_picnic_table", "worn", sx, sz, 36.0, 160.0, 15.0)         # Sunday lunch in the shade
@@ -122,8 +121,8 @@ func _run() -> void:
 	F.fence_uv(props, sx, sz, 24.4, 100.2, 47.6, 100.2)                             # lot line with a_ne
 	F.fence_uv(props, sx, sz, 47.6, 139.4, 24.4, 139.4)                             # along the alley
 	F.fence_uv(props, sx, sz, 24.4, 139.4, 24.4, 135.4)                             # to the north walk-up's back corner
-	F.fence_uv(props, sx, sz, 24.4, 100.2, 24.4, 102.8)                             # to the south walk-up's back corner
-	F.fence_gate(props, sx, sz, 24.4, 120.4, 24.4, 123.8, 1.7)                      # the gap between the two walk-ups, a gate
+	F.fence_uv(props, sx, sz, 24.4, 100.2, 24.4, 102.5)                             # to the south walk-up's back corner
+	F.fence_gate(props, sx, sz, 22.0, 120.75, 22.0, 123.45, 1.35)                   # across the gap between the two walk-ups, a gate
 	# the play corner between the two backs: bark pad, swings and a slide, the parent's bench facing it, a bin
 	paints.insert(0, F.rect(sx, sz, 31.0, 113.0, 43.0, 124.0, "mulch"))
 	F.put(props, "prop_swing_set", "worn", sx, sz, 35.0, 120.5, 0.0)

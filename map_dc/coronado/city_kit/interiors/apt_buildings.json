@@ -1,0 +1,544 @@
+{
+ "_doc": "the apartment fill's kit buildings (tools/city/rooms/list_buildings_apt.gd): piece, label, model, grid-frame position, yaw",
+ "buildings": [
+  {
+   "label": "bakery",
+   "model": "commercial/com_bakery",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    263.700012207031,
+    6.15000009536743,
+    -781.299987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "barber",
+   "model": "ck/ck_brk3_row2",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    275.399993896484,
+    6.15000009536743,
+    -781.299987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "white_court_8th",
+   "model": "apartments/apt_court_white",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    294.399993896484,
+    6.15000009536743,
+    -783.299987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "spanish_court_b",
+   "model": "apartments/apt_spanish_white",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    267.200012207031,
+    6.15000009536743,
+    -757.0
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "walkup_b_s",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    268.200012207031,
+    6.15000009536743,
+    -711.599975585938
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "walkup_b_n",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    268.200012207031,
+    6.15000009536743,
+    -729.599975585938
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "spanish_court_8th",
+   "model": "apartments/apt_spanish_revival",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    321.0,
+    6.15000009536743,
+    -782.799987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "walkup_8th_w",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    341.600006103516,
+    6.15000009536743,
+    -781.799987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "lockup_0",
+   "model": "garages/single_stucco_comp",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    313.600006103516,
+    6.15000009536743,
+    -706.349975585938
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "lockup_1",
+   "model": "garages/single_stucco_clay",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    313.600006103516,
+    6.15000009536743,
+    -710.049987792969
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "lockup_2",
+   "model": "garages/single_siding_comp",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    313.600006103516,
+    6.15000009536743,
+    -713.75
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "lockup_3",
+   "model": "garages/single_stucco_flat",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    313.600006103516,
+    6.15000009536743,
+    -717.450012207031
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "lockup_4",
+   "model": "garages/single_stucco_comp",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    313.600006103516,
+    6.15000009536743,
+    -721.150024414062
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "lockup_5",
+   "model": "garages/single_stucco_clay",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    313.600006103516,
+    6.15000009536743,
+    -724.849975585938
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "lockup_6",
+   "model": "garages/single_siding_comp",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    313.600006103516,
+    6.15000009536743,
+    -728.549987792969
+   ],
+   "yaw": -90.0000025044782
+  },
+  {
+   "label": "garden_wing_b1",
+   "model": "apartments/apt_garden_mint",
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    334.0,
+    6.15000009536743,
+    -712.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "stucco_8th_w",
+   "model": "apartments/apt_stucco3_cream",
+   "piece": "n_apt_b1_be",
+   "pos": [
+    363.899993896484,
+    6.15000009536743,
+    -781.799987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "walkup_8th_e",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_apt_b1_be",
+   "pos": [
+    383.799987792969,
+    6.15000009536743,
+    -781.799987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "condo_8th",
+   "model": "apartments/apt_beach_condo",
+   "piece": "n_apt_b1_be",
+   "pos": [
+    403.200012207031,
+    6.15000009536743,
+    -782.299987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "stucco_8th_e",
+   "model": "apartments/apt_stucco3_peach",
+   "piece": "n_apt_b1_be",
+   "pos": [
+    426.100006103516,
+    6.15000009536743,
+    -781.799987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "dingbat_110",
+   "model": "apartments/apt_dingbat_teal",
+   "piece": "n_apt_b1_be",
+   "pos": [
+    360.0,
+    6.15000009536743,
+    -754.400024414062
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "dingbat_131",
+   "model": "apartments/apt_dingbat_pink",
+   "piece": "n_apt_b1_be",
+   "pos": [
+    381.0,
+    6.15000009536743,
+    -754.400024414062
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "dingbat_168",
+   "model": "apartments/apt_dingbat_teal",
+   "piece": "n_apt_b1_be",
+   "pos": [
+    418.0,
+    6.15000009536743,
+    -754.400024414062
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "taqueria",
+   "model": "commercial/com_bistro",
+   "piece": "n_apt_b1_be",
+   "pos": [
+    484.799987792969,
+    6.15000009536743,
+    -781.299987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "nail_salon",
+   "model": "commercial/com_realty",
+   "piece": "n_apt_b1_be",
+   "pos": [
+    475.299987792969,
+    6.15000009536743,
+    -781.299987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "walkup_8th_adela",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_apt_b1_be",
+   "pos": [
+    458.0,
+    6.15000009536743,
+    -781.799987792969
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "garden_adela_n",
+   "model": "apartments/apt_garden_cream",
+   "piece": "n_apt_b1_be",
+   "pos": [
+    483.299987792969,
+    6.15000009536743,
+    -759.299987792969
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "white_court_adela",
+   "model": "apartments/apt_court_white",
+   "piece": "n_apt_b1_be",
+   "pos": [
+    483.299987792969,
+    6.15000009536743,
+    -710.400024414062
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "walkup_adela_n",
+   "model": "ck/ck_apt3_row3",
+   "piece": "n_apt_b1_be",
+   "pos": [
+    481.799987792969,
+    6.15000009536743,
+    -729.599975585938
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "dry_cleaner",
+   "model": "ck/ck_brk3_row2_fe",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    360.299987792969,
+    6.15000009536743,
+    -618.700012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "garden_7th",
+   "model": "apartments/apt_garden_cream",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    381.200012207031,
+    6.15000009536743,
+    -616.700012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "boarded_7th",
+   "model": "ck/ck_apt3_row3_boarded",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    405.799987792969,
+    6.15000009536743,
+    -618.200012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "stucco_7th",
+   "model": "apartments/apt_stucco3_cream",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    428.5,
+    6.15000009536743,
+    -618.200012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "garage_7th_0",
+   "model": "garages/double_stucco_comp",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    402.0,
+    6.15000009536743,
+    -650.599975585938
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "garage_7th_1",
+   "model": "garages/double_siding_comp",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    408.299987792969,
+    6.15000009536743,
+    -650.599975585938
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "garage_7th_2",
+   "model": "garages/double_stucco_clay",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    414.600006103516,
+    6.15000009536743,
+    -650.599975585938
+   ],
+   "yaw": -179.999991348578
+  },
+  {
+   "label": "corner_shops_7th",
+   "model": "commercial/com_boutique_row",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    481.799987792969,
+    6.15000009536743,
+    -618.700012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "coffee_window",
+   "model": "commercial/com_cafe_seaside",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    468.799987792969,
+    6.15000009536743,
+    -618.700012207031
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "walkup_adela_s",
+   "model": "ck/ck_apt3_row2",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    481.799987792969,
+    6.15000009536743,
+    -642.0
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "carport_0",
+   "model": "garages/carport_clay",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    351.899993896484,
+    6.15000009536743,
+    -663.150024414062
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "carport_1",
+   "model": "garages/carport_comp",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    354.950012207031,
+    6.15000009536743,
+    -663.150024414062
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "carport_2",
+   "model": "garages/carport_clay",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    358.0,
+    6.15000009536743,
+    -663.150024414062
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "carport_3",
+   "model": "garages/carport_clay",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    361.049987792969,
+    6.15000009536743,
+    -663.150024414062
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "carport_4",
+   "model": "garages/carport_comp",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    364.100006103516,
+    6.15000009536743,
+    -663.150024414062
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "carport_5",
+   "model": "garages/carport_clay",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    367.149993896484,
+    6.15000009536743,
+    -663.150024414062
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "carport_6",
+   "model": "garages/carport_clay",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    370.200012207031,
+    6.15000009536743,
+    -663.150024414062
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "carport_7",
+   "model": "garages/carport_comp",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    373.25,
+    6.15000009536743,
+    -663.150024414062
+   ],
+   "yaw": 0.0
+  },
+  {
+   "label": "stucco_adela",
+   "model": "apartments/apt_stucco3_peach",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    481.799987792969,
+    6.15000009536743,
+    -671.5
+   ],
+   "yaw": 90.0000025044782
+  },
+  {
+   "label": "launderette",
+   "model": "ck/ck_brk3_row2",
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    481.299987792969,
+    6.15000009536743,
+    -690.5
+   ],
+   "yaw": 90.0000025044782
+  }
+ ]
+}

@@ -79,6 +79,46 @@ static func doors_of(folder: String, kinds := ["apt_door", "shopdoor", "civic_do
 			if not dup: out.append(float(e[1]))
 	return out
 
+## ---------------------------------------------------------------- wall items (Yasin: "prop in the glass", "prop
+## sitting on a window", "prop overlaps on the wall"): every meter, light, mailbox, intercom, hose reel goes through
+## here. The openings are the measured ones check_life.gd uses (interiors/room_contracts.json): the item slides along
+## its wall to the nearest place where it is clear of every window and door (15 cm margin, at its own height), and
+## inside the wall's ends; if no place within 3 m serves, it is LEFT OUT (returns false). facade: front / back /
+## left / right of the building; x: along that wall in the model frame (front / back: model x, sides: model z).
+static var _rc := {}
+static func openings(folder: String) -> Array:
+	if _rc.is_empty():
+		_rc = (JSON.parse_string(FileAccess.get_file_as_string("res://map_dc/coronado/city_kit/interiors/room_contracts.json")) as Dictionary).get("models", {})
+	return (_rc.get(folder, {}) as Dictionary).get("openings", [])
+
+static func wall_x(b: Dictionary, facade: String, x: float, y: float, hw: float, h: float) -> float:
+	var ops := openings(String(b.folder))
+	var half: float = (float(b.w) if facade in ["front", "back"] else float(b.d)) * 0.5
+	for k in 31:
+		var c := x + (0.2 * ((k + 1) / 2) * (1.0 if k % 2 == 1 else -1.0) if k > 0 else 0.0)
+		if absf(c) > half - hw - 0.12: continue
+		var ok := true
+		for o: Dictionary in ops:
+			if String(o.facade) != facade: continue
+			if c - hw < float(o.along) + float(o.w) * 0.5 + 0.15 and c + hw > float(o.along) - float(o.w) * 0.5 - 0.15 and y < float(o.y1) + 0.1 and y + h > float(o.y0) - 0.1:
+				ok = false; break
+		if ok: return c
+	return NAN
+
+static func wall(props: K.Props, b: Dictionary, base: String, cond: String, facade: String, x: float, y: float, off := 0.04, hw := -1.0) -> bool:
+	var e := K.manifest(base)
+	var half_w := float(e.get("footprint_w", 0.4)) * 0.5 if hw < 0.0 else hw
+	var c := wall_x(b, facade, x, y, half_w, float(e.get("height", 0.4)))
+	if is_nan(c): return false
+	var w: float = b.w; var d: float = b.d
+	var yaw := rad_to_deg((b.node as Node3D).rotation.y)
+	match facade:
+		"front": I.add(props, base, cond, at(b, c, d * 0.5 + off, y), yaw, false)
+		"back": I.add(props, base, cond, at(b, c, -d * 0.5 - off, y), yaw + 180.0, false)
+		"right": I.add(props, base, cond, at(b, w * 0.5 + off, c, y), yaw + 90.0, false)
+		_: I.add(props, base, cond, at(b, -w * 0.5 - off, c, y), yaw - 90.0, false)
+	return true
+
 ## black iron balconies on the brick walk-ups' entry bay (apt_lib.balconies, unchanged)
 static func balconies(b: Dictionary, props: K.Props) -> void:
 	var fol := String(b.folder)
@@ -96,8 +136,11 @@ static func back_of_house(props: K.Props, b: Dictionary, residential := false) -
 	var w: float = b.w; var d: float = b.d
 	var yaw := rad_to_deg((b.node as Node3D).rotation.y) + 180.0
 	var x0 := -w * 0.5 + 1.6
-	for k in 3: props.add("prop_meter_electric", "worn", at(b, x0 + k * 0.42, -d * 0.5 - 0.02, 1.05), yaw)
-	props.add("prop_meter_gas", "rusty", at(b, x0 + 1.7, -d * 0.5 - 0.02, 0.2), yaw)
+	# the meter bank as one 1.1 m item (three meters side by side), then the gas meter beside it
+	var mx := wall_x(b, "back", x0 + 0.42, 1.05, 0.55, float(K.manifest("prop_meter_electric").get("height", 0.6)))
+	if not is_nan(mx):
+		for k in 3: props.add("prop_meter_electric", "worn", at(b, mx - 0.42 + k * 0.42, -d * 0.5 - 0.02, 1.05), yaw)
+		wall(props, b, "prop_meter_gas", "rusty", "back", mx + 1.3, 0.2, 0.02)
 	var n_ac := 1 if w < 14.0 else 2
 	for k in n_ac: props.add("prop_ac_condenser", "worn", at(b, x0 + 3.4 + k * 1.3, -d * 0.5 - 0.75), yaw)
 	if residential:
@@ -134,10 +177,10 @@ static func dress(b: Dictionary, paints: Array, props: K.Props, dec: K.Decals, r
 		for e2: Array in st.get("doors_front", []):
 			if absf(pot_x - float(e2[1])) < 1.15: pot_ok = false
 		if pot_ok: I.add(props, "plant_potted_succulent", "normal", at(b, pot_x, d * 0.5 + 0.35), yaw)
-		I.add(props, ["prop_porch_light_coach", "prop_porch_light_coach_bronze", "prop_porch_light_barn"][rr.randi() % 3], "worn", at(b, lx - 0.9, d * 0.5 + 0.05, 2.25), yaw, false)
+		wall(props, b, ["prop_porch_light_coach", "prop_porch_light_coach_bronze", "prop_porch_light_barn"][rr.randi() % 3], "worn", "front", lx - 0.9, 2.25, 0.05)
 		dec.add(14, Vector2(p.x, p.z) + face_dir(sx, sz, String(b.face)) * 1.0, yaw, 1.6, 1.4, GY, Color(1, 1, 1, 0.45))
-		I.add(props, "prop_buzzer_panel", "worn", at(b, lx + 0.8, d * 0.5 + 0.01, 1.15), yaw, false)
-	if not String(b.folder).begins_with("civic/"): I.add(props, "prop_mailbox_wall_brass" if rr.randf() < 0.5 else "prop_mailbox_wall_black", "worn", at(b, float(doors[0]) - 1.6, d * 0.5 + 0.05, 1.3), yaw, false)
+		wall(props, b, "prop_buzzer_panel", "worn", "front", lx + 0.8, 1.15, 0.01)
+	if not String(b.folder).begins_with("civic/"): wall(props, b, "prop_mailbox_wall_brass" if rr.randf() < 0.5 else "prop_mailbox_wall_black", "worn", "front", float(doors[0]) - 1.6, 1.3, 0.05)
 	var along_c: float = b.u if along_v else b.v
 	if hedge:
 		var hv := walk_to - toward * 0.45
@@ -169,7 +212,6 @@ static func dress(b: Dictionary, paints: Array, props: K.Props, dec: K.Decals, r
 		if h > 7.5 and rr.randf() < 0.6:
 			I.add(props, "prop_ac_window", "worn", at(b, side * (w * 0.5 + 0.12), rr.randf_range(-d * 0.3, d * 0.3), 5.4), yaw + side * 90.0, false)
 	if not public: I.add(props, "prop_satellite_dish" if rr.randf() < 0.6 else "prop_tv_antenna", "worn", at(b, rr.randf_range(-w * 0.35, w * 0.35), -d * 0.5 + 0.8, h - 0.05), yaw + 180.0, false)
-	balconies(b, props)
 	if String(b.folder).contains("dingbat"):
 		I.add(props, "prop_dingbat_stair", "worn", at(b, -w * 0.5 - 0.6, 0.0), yaw - 90.0, false)
 	back_of_house(props, b, not public)
@@ -177,7 +219,7 @@ static func dress(b: Dictionary, paints: Array, props: K.Props, dec: K.Decals, r
 		var px := rr.randf_range(-w * 0.25, w * 0.25)
 		I.add(props, "prop_patio_set_4", "worn", atg(b, px, -d * 0.5 - 3.4), yaw + rr.randf_range(-20, 20))
 		I.add(props, "prop_bbq_kettle" if rr.randf() < 0.5 else "prop_bbq_gas_cart", "worn", atg(b, px + 2.6, -d * 0.5 - 2.4), yaw + 180.0)
-		I.add(props, "prop_hose_reel_wall", "worn", at(b, -w * 0.5 + 0.8, -d * 0.5 - 0.1), yaw + 180.0, false)
+		wall(props, b, "prop_hose_reel_wall", "worn", "back", -w * 0.5 + 0.9, 0.0, 0.1)
 		var under := atg(b, px, -d * 0.5 - 3.4)
 		dec.add(14, Vector2(under.x, under.z), yaw, 3.6, 3.0, GY, Color(1, 1, 1, 0.5))
 	var g0 := at(b, -w * 0.5, d * 0.5 + 0.4); var g1 := at(b, w * 0.5, d * 0.5 + 0.4)
@@ -258,17 +300,32 @@ static func alley(paints: Array, props: K.Props, dec: K.Decals, rr: RandomNumber
 ## panels are spread evenly with the ends flush), a post at EVERY joint, each panel at the lowest ground along it.
 static func fence(props: K.Props, a: Vector2, b: Vector2, kind := "fence_wood_privacy", post := "fence_post_privacy", panel := 2.0, cond := "worn") -> void:
 	var L := a.distance_to(b)
-	if L < 0.6: return
+	if L < 0.3: return
 	var n := maxi(1, int(ceil(L / panel - 0.02)))
 	var yaw := rad_to_deg(atan2(b.x - a.x, b.y - a.y)) + 90.0
+	var shrink := minf(1.0, (L / n) / panel)      # never stretched: a run that is not whole panels gets shorter panels
 	for i in n:
 		var e0 := a.lerp(b, float(i) / n); var e1 := a.lerp(b, float(i + 1) / n)
 		var m := (e0 + e1) * 0.5
 		var y := minf(gy(e0.x, e0.y), gy(e1.x, e1.y)) - (0.03 if absf(gy(e0.x, e0.y) - gy(e1.x, e1.y)) > 0.01 else 0.0)
-		I.add(props, kind, cond, Vector3(m.x, y, m.y), yaw)
+		add_scaled(props, kind, cond, Vector3(m.x, y, m.y), yaw, shrink)
 	for i in n + 1:
 		var e := a.lerp(b, float(i) / n)
 		I.add(props, post, cond, Vector3(e.x, gy(e.x, e.y), e.y), yaw)
+
+## one prop shortened along its own x (a fence panel cut to fit); the collider stays full size
+static func add_scaled(props: K.Props, base: String, cond: String, pos: Vector3, yaw: float, sxl: float) -> void:
+	if sxl >= 0.999:
+		I.add(props, base, cond, pos, yaw); return
+	var conds: Array = K.manifest(base).get("conds", [])
+	var c := cond
+	if not conds.is_empty() and not (c in conds): c = String(conds[0])
+	if conds == ["clean"]: c = cond
+	var k := base + "|" + c
+	if not props.items.has(k): props.items[k] = []
+	var bs := Basis(Vector3.UP, deg_to_rad(yaw)) * Basis.from_scale(Vector3(sxl, 1.0, 1.0))
+	props.items[k].append(Transform3D(bs, pos))
+	props.col_items.append([base, c, Transform3D(Basis(Vector3.UP, deg_to_rad(yaw)), pos)])   # unscaled: a collider poking into the wall it meets is harmless, a scaled one is not supported
 
 ## the same in quadrant coordinates (u, v)
 static func fence_uv(props: K.Props, sx: float, sz: float, u0: float, v0: float, u1: float, v1: float, kind := "fence_wood_privacy", post := "fence_post_privacy", panel := 2.0) -> void:

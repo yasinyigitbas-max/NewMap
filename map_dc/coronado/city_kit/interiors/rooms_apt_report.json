@@ -1,0 +1,104 @@
+{
+ "rooms": [
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_bw__bakery__0.scn",
+   "id": "g_apt_b1_bw__bakery__0",
+   "kind": "bakery",
+   "lights": 4,
+   "name": "B Avenue Bakery",
+   "props": 33,
+   "w": 8.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_bw__barber__0.scn",
+   "id": "g_apt_b1_bw__barber__0",
+   "kind": "barber",
+   "lights": 3,
+   "name": "Eighth Street Barbers",
+   "props": 25,
+   "w": 7.9
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_be__taqueria__0.scn",
+   "id": "g_apt_b1_be__taqueria__0",
+   "kind": "taqueria",
+   "lights": 3,
+   "name": "Taqueria La Esquina",
+   "props": 43,
+   "w": 11.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_be__nail_salon__0.scn",
+   "id": "g_apt_b1_be__nail_salon__0",
+   "kind": "nails",
+   "lights": 3,
+   "name": "Polished Nail Studio",
+   "props": 27,
+   "w": 5.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_7th__dry_cleaner__0.scn",
+   "id": "g_apt_b1_7th__dry_cleaner__0",
+   "kind": "dry_cleaner",
+   "lights": 3,
+   "name": "Seventh Street Cleaners",
+   "props": 18,
+   "w": 7.9
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_7th__corner_shops_7th__0.scn",
+   "id": "g_apt_b1_7th__corner_shops_7th__0",
+   "kind": "pharmacy",
+   "lights": 4,
+   "name": "Adela Pharmacy & Post",
+   "props": 22,
+   "w": 5.7
+  },
+  {
+   "d": 10.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_7th__corner_shops_7th__1.scn",
+   "id": "g_apt_b1_7th__corner_shops_7th__1",
+   "kind": "tax",
+   "lights": 4,
+   "name": "Island Tax Service",
+   "props": 20,
+   "w": 6.0
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_7th__corner_shops_7th__2.scn",
+   "id": "g_apt_b1_7th__corner_shops_7th__2",
+   "kind": "donuts",
+   "lights": 3,
+   "name": "Sunrise Donuts",
+   "props": 21,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_7th__coffee_window__0.scn",
+   "id": "g_apt_b1_7th__coffee_window__0",
+   "kind": "coffee",
+   "lights": 3,
+   "name": "The Coffee Window",
+   "props": 18,
+   "w": 5.4
+  },
+  {
+   "d": 13.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_7th__launderette__0.scn",
+   "id": "g_apt_b1_7th__launderette__0",
+   "kind": "laundromat",
+   "lights": 3,
+   "name": "Adela Wash & Fold",
+   "props": 33,
+   "w": 7.9
+  }
+ ]
+}

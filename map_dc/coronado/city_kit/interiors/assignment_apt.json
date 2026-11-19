@@ -1,0 +1,351 @@
+{
+ "_doc": "Which shop is behind every shop door of the apartment band FILL blocks (claude/fill-apartments, 19 Nov; Yasin, relayed:",
+ "count": 10,
+ "rooms": [
+  {
+   "id": "apt_b1_bw__bakery__0",
+   "piece": "n_apt_b1_bw",
+   "label": "bakery",
+   "model": "commercial/com_bakery",
+   "pos": [
+    263.700012207031,
+    6.15000009536743,
+    -781.299987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bakery",
+   "name": "B Avenue Bakery",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ],
+   "why": "8th St is the walk into the centre: bread and coffee on the way to work",
+   "source": "apartment fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "apt_b1_bw__barber__0",
+   "piece": "n_apt_b1_bw",
+   "label": "barber",
+   "model": "ck/ck_brk3_row2",
+   "pos": [
+    275.399993896484,
+    6.15000009536743,
+    -781.299987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    2.2
+   ],
+   "kind": "barber",
+   "name": "Eighth Street Barbers",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ],
+   "why": "a two-chair barber under a flat, next to the bakery the same walkers pass",
+   "source": "apartment fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "apt_b1_be__taqueria__0",
+   "piece": "n_apt_b1_be",
+   "label": "taqueria",
+   "model": "commercial/com_bistro",
+   "pos": [
+    484.799987792969,
+    6.15000009536743,
+    -781.299987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 4.76,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "taqueria",
+   "name": "Taqueria La Esquina",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 11.18
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ],
+   "why": "the corner of 8th and Adela: golfers and the ring road's traffic stop for lunch",
+   "source": "apartment fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "apt_b1_be__nail_salon__0",
+   "piece": "n_apt_b1_be",
+   "label": "nail_salon",
+   "model": "commercial/com_realty",
+   "pos": [
+    475.299987792969,
+    6.15000009536743,
+    -781.299987792969
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "nails",
+   "name": "Polished Nail Studio",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": -3.4,
+     "w": 2.6
+    }
+   ],
+   "why": "a small nail salon beside the taqueria: nurses and sailors off shift",
+   "source": "apartment fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "apt_b1_7th__dry_cleaner__0",
+   "piece": "n_apt_b1_7th",
+   "label": "dry_cleaner",
+   "model": "ck/ck_brk3_row2_fe",
+   "pos": [
+    360.299987792969,
+    6.15000009536743,
+    -618.700012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    2.2
+   ],
+   "kind": "dry_cleaner",
+   "name": "Seventh Street Cleaners",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ],
+   "why": "7th St is the bus street to the centre: shirts dropped on the way",
+   "source": "apartment fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "apt_b1_7th__corner_shops_7th__0",
+   "piece": "n_apt_b1_7th",
+   "label": "corner_shops_7th",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    481.799987792969,
+    6.15000009536743,
+    -618.700012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -4.08,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -3.0
+   ],
+   "kind": "pharmacy",
+   "name": "Adela Pharmacy & Post",
+   "style": "green",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 5.18
+    }
+   ],
+   "why": "the band's chemist with the post counter, at the bus stop corner",
+   "source": "apartment fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "apt_b1_7th__corner_shops_7th__1",
+   "piece": "n_apt_b1_7th",
+   "label": "corner_shops_7th",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    481.799987792969,
+    6.15000009536743,
+    -618.700012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 1,
+   "door_along": -1.92,
+   "door_w": 1.6,
+   "bay": [
+    -3.0,
+    3.0
+   ],
+   "kind": "tax",
+   "name": "Island Tax Service",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    }
+   ],
+   "why": "the tax office every neighbourhood has, in the middle unit",
+   "source": "apartment fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "apt_b1_7th__corner_shops_7th__2",
+   "piece": "n_apt_b1_7th",
+   "label": "corner_shops_7th",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    481.799987792969,
+    6.15000009536743,
+    -618.700012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 2,
+   "door_along": 7.76,
+   "door_w": 1.6,
+   "bay": [
+    3.0,
+    8.7
+   ],
+   "kind": "donuts",
+   "name": "Sunrise Donuts",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 5.18
+    }
+   ],
+   "why": "the donut shop on the corner, for the bus riders and the night shift",
+   "source": "apartment fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "apt_b1_7th__coffee_window__0",
+   "piece": "n_apt_b1_7th",
+   "label": "coffee_window",
+   "model": "commercial/com_cafe_seaside",
+   "pos": [
+    468.799987792969,
+    6.15000009536743,
+    -618.700012207031
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "coffee",
+   "name": "The Coffee Window",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 3.8,
+     "w": 3.0
+    }
+   ],
+   "why": "a narrow coffee bar beside the corner shops: the queue outside in the morning",
+   "source": "apartment fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "apt_b1_7th__launderette__0",
+   "piece": "n_apt_b1_7th",
+   "label": "launderette",
+   "model": "ck/ck_brk3_row2",
+   "pos": [
+    481.299987792969,
+    6.15000009536743,
+    -690.5
+   ],
+   "yaw": 90.0000025044782,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    2.2
+   ],
+   "kind": "laundromat",
+   "name": "Adela Wash & Fold",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ],
+   "why": "the walk-ups have no machines: the launderette under the flats on Adela",
+   "source": "apartment fill (hand-made shop list)",
+   "built": ""
+  }
+ ]
+}

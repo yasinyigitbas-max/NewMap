@@ -68,6 +68,7 @@ func _run() -> void:
 	# the tenants' yard between the second and third dingbat: fence on the alley with a gate, the sand court, a table
 	# under a sail, the bins enclosure open to the alley
 	F.enclosure(props, F.q(sx, sz, 140.5, 150.4), 0.0)                           # open toward the alley (-v): the truck backs in
+	F.fence_uv(props, sx, sz, 143.8, 147.8, 143.8, 146.6)                          # from the enclosure's side wall
 	F.fence_gate(props, sx, sz, 143.8, 146.6, 161.8, 146.6, 12.0)                 # the rest of the yard's alley side, a gate
 	F.fence_uv(props, sx, sz, 116.2, 146.6, 124.8, 146.6)                          # gap between the first two dingbats
 	F.fence_uv(props, sx, sz, 99.8, 146.6, 103.8, 146.6)                           # to n_apt_b1_bw's lot-line fence
@@ -86,10 +87,10 @@ func _run() -> void:
 	stops.append_array(s3)
 	F.fence_gate(props, sx, sz, 183.4, 146.6, 183.4, 175.6, 15.0)
 	F.fence_uv(props, sx, sz, 174.2, 146.6, 183.4, 146.6)
-	F.fence_uv(props, sx, sz, 183.4, 175.6, 185.4, 175.6)
 	# the gaps between the street-row buildings, each with a gate (tenants cut through to the alley)
-	for g: Array in [[99.8, 104.2], [123.6, 127.6], [140.0, 144.0], [162.4, 166.4]]:
-		F.fence_gate(props, sx, sz, float(g[0]), 177.0, float(g[1]), 177.0, (float(g[1]) - float(g[0])) * 0.5)
+	F.fence_uv(props, sx, sz, 99.8, 175.6, 104.2, 175.6)                            # from n_apt_b1_bw's corner post to the stucco's back corner
+	for g: Array in [[123.6, 127.6], [140.0, 144.0], [162.4, 166.4]]:
+		F.fence_gate(props, sx, sz, float(g[0]), 178.5, float(g[1]), 178.5, (float(g[1]) - float(g[0])) * 0.5)
 	F.put(props, "tree_ficus_a", "normal", sx, sz, 121.0, 166.0, 140.0)
 	F.put(props, "prop_clothesline", "worn", sx, sz, 176.0, 166.5, 0.0)
 
@@ -106,7 +107,7 @@ func _run() -> void:
 	F.put(props, "prop_trash_receptacle", "dirty", sx, sz, 232.0, 190.1)
 	F.put(props, "prop_bike_rack", "rusty", sx, sz, 226.4, 190.2, 0.0)
 	I.add(props, "plant_potted_succulent", "normal", F.at(nails, 0.4, 7.35), 180.0)
-	I.add(props, "prop_porch_light_barn", "worn", F.at(taq, 4.8 - 0.9, 7.05, 2.4), 180.0, false)
+	F.wall(props, taq, "prop_porch_light_barn", "worn", "front", 4.8 - 0.9, 2.4, 0.05)
 	dec.add(14, Vector2(230.0, -189.4), 0.0, 2.4, 1.8, F.GY, Color(1, 1, 1, 0.6))
 	F.grime(dec, Vector2(222.3, -188.0), Vector2(240.8, -188.0), rr)
 	var wk := F.place(bl, sx, sz, "ck/ck_apt3_row2", 208.0, 181.8, "+v", "walkup_8th_adela")
@@ -123,13 +124,13 @@ func _run() -> void:
 	F.fence_gate(props, sx, sz, 202.6, 146.6, 202.6, 175.6, 6.0)
 	F.fence_uv(props, sx, sz, 202.6, 146.6, 228.6, 146.6)
 	F.fence_uv(props, sx, sz, 228.6, 146.6, 228.6, 148.3)
-	F.fence_gate(props, sx, sz, 236.0, 170.3, 236.0, 174.1, 1.9)                  # staff out to Adela between garden wing and taqueria
-	F.fence_uv(props, sx, sz, 228.6, 170.3, 236.0, 170.3)
+	F.fence_uv(props, sx, sz, 237.6, 170.3, 239.6, 170.3)                            # from the garden wing's front corner
+	F.fence_gate(props, sx, sz, 239.6, 170.3, 239.6, 174.1, 1.9)                  # staff out to Adela between garden wing and taqueria
 	F.fence_gate(props, sx, sz, 214.2, 177.0, 222.1, 177.0, 4.0)
 	# the restaurant's back: the cooks' smoke bench by the back door, a bucket-bin, the gas bottles
 	F.put(props, "prop_park_bench", "worn", sx, sz, 231.0, 172.0, 180.0)
 	F.put(props, "prop_trash_receptacle", "dirty", sx, sz, 228.0, 172.4)
-	for k in 2: F.put(props, "prop_propane_cylinder_100lb", "rusty", sx, sz, 239.8 - k * 0.5, 172.6)
+	for k in 2: F.put(props, "prop_propane_cylinder_100lb", "rusty", sx, sz, 237.9 - k * 0.5, 172.9)
 	F.put(props, "tree_coral_b", "normal", sx, sz, 212.0, 155.0, 15.0)
 	F.put(props, "prop_patio_set_4", "worn", sx, sz, 218.0, 160.0, 25.0)
 	F.put(props, "prop_bbq_gas_cart", "worn", sx, sz, 221.5, 157.5, 90.0)
@@ -150,11 +151,19 @@ func _run() -> void:
 	for t2: Array in [["tree_magnolia_a", 172.0, 106.0], ["tree_ficus_b", 172.0, 133.0], ["tree_coral_a", 179.0, 119.0]]:
 		F.put(props, String(t2[0]), "normal", sx, sz, float(t2[1]), float(t2[2]), float(t2[1]) * 7.0)
 	dec.add(14, Vector2(150.0, -119.0), 90.0, 1.2, 12.0, F.GY, Color(1, 1, 1, 0.5))    # the path worn from the gate to the tables
+	F.put(props, "tree_jacaranda_b", "normal", sx, sz, 165.0, 104.0, 30.0)
+	F.put(props, "tree_magnolia_b", "normal", sx, sz, 165.0, 135.0, 140.0)
+	F.put(props, "prop_garden_arbor", "worn", sx, sz, 178.0, 112.0, -90.0)       # the old clubhouse corner, two chairs under it
+	F.put(props, "prop_adirondack_white", "worn", sx, sz, 176.4, 111.0, -60.0)
+	F.put(props, "prop_adirondack_white", "worn", sx, sz, 176.4, 113.4, -120.0)
+	F.put(props, "prop_hose_reel_cart", "worn", sx, sz, 182.0, 126.0, -90.0)    # the lawn is watered by hand
 	var s4 := F.pad(paints, stalls, dec, rr, sx, sz, false, 101.0, 139.0, 190.0, -1.0)
 	stops.append_array(s4)
 	F.fence_gate(props, sx, sz, 183.4, 100.4, 183.4, 139.6, 19.0)
-	F.fence_gate(props, sx, sz, 143.4, 139.6, 183.4, 139.6, 6.0)
-	F.fence_uv(props, sx, sz, 143.4, 100.4, 183.4, 100.4)
+	F.fence_uv(props, sx, sz, 142.0, 135.4, 142.0, 139.6)                            # on from the courts' fence corner
+	F.fence_gate(props, sx, sz, 142.0, 139.6, 183.4, 139.6, 7.4)
+	F.fence_uv(props, sx, sz, 142.0, 101.0, 142.0, 100.4)
+	F.fence_uv(props, sx, sz, 142.0, 100.4, 183.4, 100.4)
 
 	# ================================================================ S7n (u 196-240.8, v 100-140)
 	var wc := F.place(bl, sx, sz, "apartments/apt_court_white", 233.3, 110.4, "+u", "white_court_adela")
@@ -166,6 +175,7 @@ func _run() -> void:
 	stops.append_array(s7)
 	F.fence_gate(props, sx, sz, 202.6, 100.4, 202.6, 139.6, 19.0)
 	F.fence_uv(props, sx, sz, 202.6, 139.6, 225.6, 139.6)
+	F.fence_uv(props, sx, sz, 225.6, 139.6, 225.6, 138.8)                            # to the walk-up's back corner
 	F.fence_uv(props, sx, sz, 202.6, 100.4, 228.6, 100.4)
 	F.fence_uv(props, sx, sz, 228.6, 100.4, 228.6, 101.8)
 	F.fence_uv(props, sx, sz, 228.6, 118.9, 228.6, 120.5)
