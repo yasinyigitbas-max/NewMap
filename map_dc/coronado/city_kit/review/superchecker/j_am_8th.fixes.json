@@ -1,0 +1,171 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -10.1000003814697,
+    0.150000005960464,
+    8.0
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "move",
+   "reason": "prop_signal_mast_arm hangs 0.15 m over what is under it",
+   "to": [
+    -10.1000003814697,
+    0.0,
+    8.0
+   ]
+  },
+  {
+   "at": [
+    11.5644664764404,
+    0.150000005960464,
+    -5.76446628570557
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "move",
+   "reason": "prop_signal_mast_arm hangs 0.15 m over what is under it",
+   "to": [
+    11.5644664764404,
+    0.0,
+    -5.76446628570557
+   ]
+  },
+  {
+   "at": [
+    -9.10000038146973,
+    0.0,
+    -16.6000003814697
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "move",
+   "reason": "prop_storm_drain_curb_inlet is 0.10 m into the ground",
+   "to": [
+    -9.10000038146973,
+    0.100000001490116,
+    -16.6000003814697
+   ]
+  },
+  {
+   "at": [
+    9.10000038146973,
+    0.0,
+    -16.6000003814697
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "move",
+   "reason": "prop_storm_drain_curb_inlet is 0.10 m into the ground",
+   "to": [
+    9.10000038146973,
+    0.100000001490116,
+    -16.6000003814697
+   ]
+  },
+  {
+   "at": [
+    -9.10000038146973,
+    0.0,
+    16.6000003814697
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "move",
+   "reason": "prop_storm_drain_curb_inlet is 0.10 m into the ground",
+   "to": [
+    -9.10000038146973,
+    0.100000001490116,
+    16.6000003814697
+   ]
+  },
+  {
+   "at": [
+    9.10000038146973,
+    0.0,
+    16.6000003814697
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "move",
+   "reason": "prop_storm_drain_curb_inlet is 0.10 m into the ground",
+   "to": [
+    9.10000038146973,
+    0.100000001490116,
+    16.6000003814697
+   ]
+  },
+  {
+   "at": [
+    22.7999992370605,
+    0.0,
+    -3.29999995231628
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "move",
+   "reason": "prop_storm_drain_curb_inlet is 0.10 m into the ground",
+   "to": [
+    22.7999992370605,
+    0.100000001490116,
+    -3.29999995231628
+   ]
+  },
+  {
+   "at": [
+    22.7999992370605,
+    0.0,
+    3.29999995231628
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "move",
+   "reason": "prop_storm_drain_curb_inlet is 0.10 m into the ground",
+   "to": [
+    22.7999992370605,
+    0.100000001490116,
+    3.29999995231628
+   ]
+  },
+  {
+   "at": [
+    -1.58008289337158,
+    0.0120000001043081,
+    0.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "j_am_8th"
+}
