@@ -4825,6 +4825,432 @@
    ],
    "storeys": 0
   },
+  "ck/ck_svc_trade": {
+   "cat": "mod",
+   "entrances": [
+    {
+     "along": -3.0,
+     "bay_d": 11.25,
+     "bay_w": 5.7,
+     "facade": "front",
+     "fits": [
+      "bakery",
+      "bar",
+      "books",
+      "cafe",
+      "cleaners",
+      "clothes",
+      "corner_shop",
+      "fast_food",
+      "gallery",
+      "gas",
+      "grocery",
+      "ice_cream",
+      "jewelry",
+      "keys",
+      "office",
+      "pharmacy",
+      "restaurant",
+      "salon",
+      "shoes",
+      "souvenir",
+      "sport",
+      "store",
+      "venue"
+     ],
+     "floor": 0,
+     "kind": "shop",
+     "w": 1.8
+    },
+    {
+     "along": 3.0,
+     "bay_d": 11.25,
+     "bay_w": 5.7,
+     "facade": "front",
+     "fits": [
+      "bakery",
+      "bar",
+      "books",
+      "cafe",
+      "cleaners",
+      "clothes",
+      "corner_shop",
+      "fast_food",
+      "gallery",
+      "gas",
+      "grocery",
+      "ice_cream",
+      "jewelry",
+      "keys",
+      "office",
+      "pharmacy",
+      "restaurant",
+      "salon",
+      "shoes",
+      "souvenir",
+      "sport",
+      "store",
+      "venue"
+     ],
+     "floor": 0,
+     "kind": "shop",
+     "w": 1.8
+    },
+    {
+     "along": 3.0,
+     "facade": "back",
+     "floor": 0,
+     "kind": "service_bay",
+     "w": 3.2
+    }
+   ],
+   "floors": [
+    {
+     "box_max": [
+      5.7,
+      2.2,
+      5.55
+     ],
+     "box_min": [
+      -5.7,
+      0.0,
+      -5.7
+     ],
+     "clear_h": 2.2,
+     "floor": 0,
+     "inner_wd": [
+      11.4,
+      11.25
+     ],
+     "y": 0.0
+    },
+    {
+     "box_max": [
+      5.7,
+      5.9,
+      5.55
+     ],
+     "box_min": [
+      -5.7,
+      2.5,
+      -5.7
+     ],
+     "clear_h": 3.4,
+     "floor": 1,
+     "inner_wd": [
+      11.4,
+      11.25
+     ],
+     "y": 2.5
+    }
+   ],
+   "floors_note": "derived: ground = lowest door sill; upper floors from window sills (-0.9 m) and upper apartment doors / sliders; walls assumed 0.30 m (front 0.45 m)",
+   "footprint_wd": [
+    12.0,
+    12.0
+   ],
+   "height": 6.5,
+   "model": "ck/ck_svc_trade",
+   "openings": [
+    {
+     "along": -3.0,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.65,
+     "region": "O_shopdoor",
+     "w": 1.8,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": 3.0,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.65,
+     "region": "O_shopdoor",
+     "w": 1.8,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": -4.9,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.9,
+     "region": "O_storefront",
+     "w": 1.5,
+     "y0": 0.8,
+     "y1": 3.0
+    },
+    {
+     "along": -1.1,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.9,
+     "region": "O_storefront",
+     "w": 1.5,
+     "y0": 0.8,
+     "y1": 3.0
+    },
+    {
+     "along": 1.1,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.9,
+     "region": "O_storefront",
+     "w": 1.5,
+     "y0": 0.8,
+     "y1": 3.0
+    },
+    {
+     "along": 4.9,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.9,
+     "region": "O_storefront",
+     "w": 1.5,
+     "y0": 0.8,
+     "y1": 3.0
+    },
+    {
+     "along": 3.0,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.92,
+     "region": "O_rollup",
+     "w": 3.2,
+     "y0": 0.0,
+     "y1": 3.6
+    },
+    {
+     "along": 0.0,
+     "facade": "right",
+     "floor": 1,
+     "plane": 5.9,
+     "region": "O_small_white",
+     "w": 0.8,
+     "y0": 3.2,
+     "y1": 4.0
+    },
+    {
+     "along": 0.0,
+     "facade": "left",
+     "floor": 1,
+     "plane": -5.9,
+     "region": "O_small_white",
+     "w": 0.8,
+     "y0": 3.2,
+     "y1": 4.0
+    }
+   ],
+   "signs": [
+    {
+     "along": -3.0,
+     "facade": "front",
+     "plane": 6.08,
+     "region": "blank",
+     "text": "",
+     "w": 5.2,
+     "y0": 3.4,
+     "y1": 4.2
+    },
+    {
+     "along": 3.0,
+     "facade": "front",
+     "plane": 6.08,
+     "region": "blank",
+     "text": "",
+     "w": 5.2,
+     "y0": 3.4,
+     "y1": 4.2
+    }
+   ],
+   "stats_doors_front": [
+    [
+     "shopdoor",
+     -3.0
+    ],
+    [
+     "shopdoor",
+     3.0
+    ]
+   ],
+   "storeys": 0
+  },
+  "ck/ck_svc_trade_1d": {
+   "cat": "mod",
+   "entrances": [
+    {
+     "along": -3.0,
+     "bay_d": 11.25,
+     "bay_w": 11.4,
+     "facade": "front",
+     "fits": [
+      "bakery",
+      "bar",
+      "books",
+      "cafe",
+      "cleaners",
+      "clothes",
+      "corner_shop",
+      "fast_food",
+      "gallery",
+      "gas",
+      "grocery",
+      "ice_cream",
+      "jewelry",
+      "keys",
+      "office",
+      "pharmacy",
+      "restaurant",
+      "salon",
+      "shoes",
+      "souvenir",
+      "sport",
+      "store",
+      "venue"
+     ],
+     "floor": 0,
+     "kind": "shop",
+     "w": 1.8
+    },
+    {
+     "along": 3.0,
+     "facade": "back",
+     "floor": 0,
+     "kind": "service_bay",
+     "w": 3.2
+    }
+   ],
+   "floors": [
+    {
+     "box_max": [
+      5.7,
+      2.2,
+      5.55
+     ],
+     "box_min": [
+      -5.7,
+      0.0,
+      -5.7
+     ],
+     "clear_h": 2.2,
+     "floor": 0,
+     "inner_wd": [
+      11.4,
+      11.25
+     ],
+     "y": 0.0
+    },
+    {
+     "box_max": [
+      5.7,
+      5.9,
+      5.55
+     ],
+     "box_min": [
+      -5.7,
+      2.5,
+      -5.7
+     ],
+     "clear_h": 3.4,
+     "floor": 1,
+     "inner_wd": [
+      11.4,
+      11.25
+     ],
+     "y": 2.5
+    }
+   ],
+   "floors_note": "derived: ground = lowest door sill; upper floors from window sills (-0.9 m) and upper apartment doors / sliders; walls assumed 0.30 m (front 0.45 m)",
+   "footprint_wd": [
+    12.0,
+    12.0
+   ],
+   "height": 6.5,
+   "model": "ck/ck_svc_trade_1d",
+   "openings": [
+    {
+     "along": -3.0,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.65,
+     "region": "O_shopdoor",
+     "w": 1.8,
+     "y0": 0.0,
+     "y1": 3.0
+    },
+    {
+     "along": -4.9,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.9,
+     "region": "O_storefront",
+     "w": 1.5,
+     "y0": 0.8,
+     "y1": 3.0
+    },
+    {
+     "along": -1.1,
+     "facade": "front",
+     "floor": 0,
+     "plane": 5.9,
+     "region": "O_storefront",
+     "w": 1.5,
+     "y0": 0.8,
+     "y1": 3.0
+    },
+    {
+     "along": 3.0,
+     "facade": "back",
+     "floor": 0,
+     "plane": -5.92,
+     "region": "O_rollup",
+     "w": 3.2,
+     "y0": 0.0,
+     "y1": 3.6
+    },
+    {
+     "along": 0.0,
+     "facade": "right",
+     "floor": 1,
+     "plane": 5.9,
+     "region": "O_small_white",
+     "w": 0.8,
+     "y0": 3.2,
+     "y1": 4.0
+    },
+    {
+     "along": 0.0,
+     "facade": "left",
+     "floor": 1,
+     "plane": -5.9,
+     "region": "O_small_white",
+     "w": 0.8,
+     "y0": 3.2,
+     "y1": 4.0
+    }
+   ],
+   "signs": [
+    {
+     "along": -3.0,
+     "facade": "front",
+     "plane": 6.08,
+     "region": "blank",
+     "text": "",
+     "w": 5.2,
+     "y0": 3.4,
+     "y1": 4.2
+    }
+   ],
+   "stats_doors_front": [
+    [
+     "shopdoor",
+     -3.0
+    ]
+   ],
+   "storeys": 0
+  },
   "commercial/com_kiosk": {
    "cat": "shop",
    "entrances": [

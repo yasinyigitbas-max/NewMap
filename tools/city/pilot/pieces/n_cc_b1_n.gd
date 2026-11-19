@@ -10,7 +10,9 @@ extends SceneTree
 ## east-west service lane: it links the C Ave apron (u -190.8) through alley B to alley A, so trucks never reverse.
 ## ARCHITECT: corner shop-and-flats at the alley B mouth (its shop door on the corner), a 3-storey walk-up, a 3-storey
 ## brick row (hardware, laundromat), a stucco 4-storey with a diner under balconies, a brick shop-and-flat, and a
-## newsstand kiosk on the little paved corner by alley A's mouth. Back row: a 3-storey apartment row and a 2-unit one.
+## walk-up coffee kiosk (its painted sign says CROWN CAFE) on the little paved corner by alley A's mouth, papers beside it.
+## Alley side: two workshops face alley C east of the court (a print and sign shop that serves the law offices and shops,
+## a bike repair): the service strip is built up, not left as an open lot. Back row: a 3-storey apartment row and a 2-unit one.
 ## EXTERIOR: door pots, a bench and bike rack at the kiosk corner, the court with lawn, trees in the grass, benches
 ## facing the lawn, a clothesline, a barbecue and table; bins where the residents put them out (the alley side).
 ## Run with CCF_STAGE=ground first. Draft: never when locked.
@@ -44,14 +46,16 @@ func _run() -> void:
 	# ---- the back row on alley C (faces south onto the alley), real fronts at v -746 (z -146)
 	var B1 := c.bld("modular/examples/mod_apt_row", Vector2(-118.36, -146.0), "s", false, "alleyc_apt_row")
 	var B2 := c.bld("ck/ck_apt3_row2", Vector2(-96.0, -146.0), "s", false, "alleyc_apt2")
+	var W1 := c.bld("ck/ck_svc_trade", Vector2(-82.0, -146.0), "s", false, "alleyc_print_shop")
+	var W2 := c.bld("ck/ck_svc_trade_1d", Vector2(-68.5, -146.0), "s", false, "alleyc_bike_repair")
 	# ---- street side of 6th (a 6.4 m walk, no parkway): door pots, the kiosk corner
 	for r: Dictionary in [A1, A3, A4, A5]:
 		for dr: Array in c.front_shops(r):
 			var dp: Vector3 = dr[1]
 			for s: float in [-1.2, 1.2]:
 				c.put("plant_potted_succulent", "normal", Vector3(dp.x + s * 1.08, y, dp.z - 0.4), 0.0, "shops: a pot either side of the door")
-	c.put("prop_newspaper_box_red", "worn", Vector3(-56.4, y, -189.6), 180.0, "kiosk corner: papers")
-	c.put("prop_newspaper_box_blue", "worn", Vector3(-55.6, y, -189.6), 180.0, "kiosk corner: papers")
+	c.put("prop_newspaper_box_red", "worn", Vector3(-56.4, y, -189.6), 180.0, "kiosk corner: papers beside the coffee window")
+	c.put("prop_newspaper_box_blue", "worn", Vector3(-55.6, y, -189.6), 180.0, "kiosk corner: papers beside the coffee window")
 	c.put("prop_trash_receptacle", "worn", Vector3(-56.6, y, -187.4), 0.0, "kiosk corner: a bin for wrappers, beside the queue")
 	c.put("prop_bike_rack", "worn", Vector3(-52.2, y, -189.5), 0.0, "kiosk corner: bikes parallel to 6th St, beside the kiosk's queue")
 	c.grime(Vector2(-53.8, -187.2), 0.0, 3.0, 2.0, 0.5)
@@ -64,14 +68,17 @@ func _run() -> void:
 	c.services(B1, 5.0, 1, true)
 	c.services(B2, 3.0, 1, true)
 	# diner (A3 east door) and laundromat: their waste goes out to the alley C side, east of the court (service strip)
-	c.put("prop_dumpster_3yd_green", "worn", Vector3(-85.0, y, -149.0), 0.0, "diner (the stucco building's shop): food waste by alley C")
-	c.put("prop_dumpster_3yd_blue", "worn", Vector3(-81.6, y, -149.0), 0.0, "shops: cardboard recycling by alley C")
-	c.put("prop_dumpster_3yd_green", "rusty", Vector3(-62.0, y, -149.0), 0.0, "brick row shops: waste by alley C")
-	c.put("prop_transformer_substation", "worn", Vector3(-74.0, y, -150.0), 0.0, "the block's transformer (underground wires)")
-	c.put("prop_hose_reel_cart", "worn", Vector3(-68.5, y, -150.0), 0.0, "staff hose the service strip")
+	c.put("prop_dumpster_3yd_green", "worn", Vector3(-58.6, y, -147.8), 0.0, "diner (the stucco building's shop): food waste by alley C")
+	c.put("prop_dumpster_3yd_blue", "worn", Vector3(-55.6, y, -147.8), 0.0, "shops: cardboard recycling by alley C")
+	c.put("prop_dumpster_3yd_green", "rusty", Vector3(-52.6, y, -147.8), 0.0, "brick row shops: waste by alley C")
+	c.put("prop_transformer_substation", "worn", Vector3(-53.4, y, -153.6), 90.0, "the block's transformer (underground wires)")
+	c.put("prop_hose_reel_cart", "worn", Vector3(-60.6, y, -158.6), 0.0, "staff hose the service yard")
+	c.services(W1, 3.0, 1, false); c.services(W2, 2.5, 1, false)
+	c.put("prop_bike_rack", "worn", Vector3(-62.4, y, -146.6), 0.0, "bike repair: customers' bikes wait along the alley edge, off the lane")
+	c.put("prop_propane_cylinder_100lb", "worn", Vector3(-88.6, y, -159.8), 0.0, "print shop: forklift gas by its back door")
 	c.put("prop_ice_chest", "worn", Vector3(-88.4, y, -163.6), 180.0, "diner: ice chest by its back door")
-	c.stalls.append([-70.0, -162.0, 90.0])    # the diner's delivery van, parked in the service strip off alley C
-	c.oil(Vector2(-70.0, -162.0), 90.0)
+	c.stalls.append([-66.0, -166.6, 90.0])    # the diner's delivery van, parked in the yard behind the workshops
+	c.oil(Vector2(-66.0, -166.6), 90.0)
 	# ---- the residents' court (lawn x -127..-91, z -172.8..-162): who: the flats on both rows
 	for t: Array in [[-123.0, -170.4, "tree_magnolia_a", 0.95], [-98.0, -170.6, "tree_coral_a", 1.0], [-112.5, -163.6, "tree_jacaranda_b", 0.85]]:
 		c.put(String(t[2]), "normal", Vector3(float(t[0]), y, float(t[1])), c.rr.randf_range(0, 360), "court: shade trees in the lawn", true, float(t[3]))
@@ -105,7 +112,10 @@ func _run() -> void:
 	# (A4, the stucco block, and B1, the apartment row, have pitched tile roofs: no roof plant; their units stand behind)
 	c.roof_plant(A5, [[-3.0, -3.0, "prop_vent_plumbing"], [2.5, 2.0, "prop_tv_antenna"]], "roof plant (flats)")
 	c.roof_plant(B2, [[-2.0, 0.0, "prop_tv_antenna"], [2.5, 0.0, "prop_vent_plumbing"]], "roof plant (flats)")
-	for r2: Dictionary in [A1, A2, A3, A4, A5, B1, B2, KI]:
+	c.roof_plant(W1, [[-3.0, -2.0, "prop_vent_box"], [3.0, -2.0, "prop_ac_condenser"]], "roof plant (workshops)")
+	c.roof_plant(W2, [[0.0, -2.0, "prop_ac_condenser_compact"]], "roof plant (workshops)")
+	c.cracks(-89.0, -172.0, -51.0, -160.5, 10, 0.5)
+	for r2: Dictionary in [A1, A2, A3, A4, A5, B1, B2, KI, W1, W2]:
 		for dr2: Array in r2.doors:
 			var q: Vector3 = dr2[1]; var o: Vector3 = dr2[2]
 			c.grime(Vector2(q.x + o.x * 0.9, q.z + o.z * 0.9), 0.0, 1.6, 1.4, 0.4)

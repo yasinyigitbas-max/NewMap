@@ -1,6 +1,6 @@
 {
  "_doc": "Which shop is behind every shop door of the CITY-CENTRE FILL (claude/fill-city-centre, 19 Nov; Yasin via the",
- "count": 20,
+ "count": 22,
  "rooms": [
   {
    "id": "cc_b1_am__amber6_tower__0",
@@ -481,6 +481,73 @@
      "facade": "front",
      "along": -3.0,
      "w": 2.4
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b1_n__alleyc_print_shop__0",
+   "piece": "n_cc_b1_n",
+   "label": "alleyc_print_shop",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    -82.0,
+    6.15,
+    -753.8
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "keys",
+   "name": "Alley Sign & Print",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.2
+    }
+   ],
+   "source": "city-centre fill (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "cc_b1_n__alleyc_bike_repair__0",
+   "piece": "n_cc_b1_n",
+   "label": "alleyc_bike_repair",
+   "model": "ck/ck_svc_trade_1d",
+   "pos": [
+    -68.5,
+    6.15,
+    -753.8
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "sport",
+   "name": "Spokes Bike Repair",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
     }
    ],
    "source": "city-centre fill (hand-made shop list)",

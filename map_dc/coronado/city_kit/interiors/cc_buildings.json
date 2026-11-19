@@ -300,6 +300,44 @@
    "doors_front": [
     [
      "shopdoor",
+     -3.0
+    ],
+    [
+     "shopdoor",
+     3.0
+    ]
+   ],
+   "label": "alleyc_print_shop",
+   "model": "ck/ck_svc_trade",
+   "piece": "n_cc_b1_n",
+   "pos": [
+    -82.0,
+    6.15,
+    -753.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -3.0
+    ]
+   ],
+   "label": "alleyc_bike_repair",
+   "model": "ck/ck_svc_trade_1d",
+   "piece": "n_cc_b1_n",
+   "pos": [
+    -68.5,
+    6.15,
+    -753.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
      0.0
     ],
     [

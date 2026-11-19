@@ -141,6 +141,26 @@
    "w": 7.9
   },
   {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_n__alleyc_print_shop__0.scn",
+   "id": "g_cc_b1_n__alleyc_print_shop__0",
+   "kind": "keys",
+   "lights": 5,
+   "name": "Alley Sign & Print",
+   "props": 22,
+   "w": 11.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_n__alleyc_bike_repair__0.scn",
+   "id": "g_cc_b1_n__alleyc_bike_repair__0",
+   "kind": "sport",
+   "lights": 6,
+   "name": "Spokes Bike Repair",
+   "props": 23,
+   "w": 11.4
+  },
+  {
    "d": 11.25,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_cc_b1_west__cave_corner_flats__0.scn",
    "id": "g_cc_b1_west__cave_corner_flats__0",

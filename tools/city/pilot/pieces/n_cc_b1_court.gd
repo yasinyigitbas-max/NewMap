@@ -11,7 +11,7 @@ extends SceneTree
 ## from 6th St or C Ave down the alleys, never across Amber's walks): it serves the courthouse, city hall, the library
 ## and the Amber shops (the centre has no parking lanes). A pedestrian walk runs behind the garage to the court green,
 ## a small lawn between the garage and the law offices (lawyers' offices always cluster opposite a court), which face
-## the green; their service backs are on alley A. A secure lane from alley C leads down the civic block's edge to the
+## the green; their service backs are on alley A. The District Attorney's offices close the green's south side. A secure lane from alley C leads down the civic block's edge to the
 ## courthouse's walled sally port (prisoner transport and judges' cars), never through the public square.
 ## ARCHITECT: courthouse 12 m, 2 tall storeys, its steps on the square; garage 14 m; brick 3-storey law offices.
 ## EXTERIOR: the square: trees in wells, benches facing across the square, planters flanking the steps, globe lamps,
@@ -25,7 +25,7 @@ func _run() -> void:
 	# ---- ground: two pads (the block part and the arm) at the same level
 	c.pad(-140.0, -140.0, -50.0, -100.0)
 	c.pad(-100.0, -100.0, -50.0, -9.7)
-	for w: Vector2 in [Vector2(-95.0, -24.0), Vector2(-95.0, -14.0), Vector2(-55.0, -24.0), Vector2(-55.0, -14.0)]: c.well(w.x, w.y)
+	for w: Vector2 in [Vector2(-95.0, -24.0), Vector2(-95.0, -14.0), Vector2(-55.0, -24.0), Vector2(-55.0, -14.0), Vector2(-85.0, -15.0), Vector2(-65.0, -15.0)]: c.well(w.x, w.y)
 	c.paint("plaza", -140.0, -108.0, -100.0, -100.0)                 # the garage walk to the court green
 	c.paint("plaza", -94.0, -140.0, -68.0, -136.0)                   # green: walk along alley C
 	c.paint("plaza", -94.0, -104.0, -68.0, -100.0)                   # green: walk from the garage walk
@@ -48,6 +48,8 @@ func _run() -> void:
 	var L2 := c.bld("ck/ck_brk3_row2", Vector2(-68.0, -120.97), "w", false, "law_office_s")
 	var L3 := c.bld("ck/ck_apt3_row2", Vector2(-68.0, -108.4), "w", false, "law_flats")
 	var AN := c.bld("ck/ck_brk3_row2", Vector2(-59.0, -100.0), "n", false, "legal_aid")
+	# the District Attorney's offices face the court green's south walk (the asphalt there was an open lot)
+	var DA := c.bld("modular/examples/mod_brk_row", Vector2(-82.0, -100.0), "n", false, "district_attorney")
 	var CH := c.bld("urban/urb_courthouse", Vector2(-75.0, -28.0), "s", true, "courthouse")
 	# ---- garage mouth on alley C: pay station by the pedestrian side, bollards guarding the corners, wear
 	c.put("prop_pay_station", "worn", Vector3(-112.6, y, -139.5), 180.0, "garage: pay station by the way out on foot")
@@ -72,10 +74,15 @@ func _run() -> void:
 		for dr: Array in c.front_shops(r):
 			var dp: Vector3 = dr[1]
 			for s: float in [-1.2, 1.2]: c.put("plant_potted_succulent", "normal", Vector3(dp.x - 0.4, y, dp.z + s * 1.08), 0.0, "law offices: pots by the door")
+	for dr2: Array in c.front_shops(DA):
+		var dq: Vector3 = dr2[1]
+		for s3: float in [-1.2, 1.2]: c.put("plant_potted_succulent", "normal", Vector3(dq.x + s3 * 1.08, y, dq.z - 0.4), 0.0, "DA offices: pots by the doors")
 	# ---- law offices' service sides on alley A (their backs), the annex's on the east lawn
 	c.services(L1, 3.0, 1, false); c.services(L2, 3.0, 1, false); c.services(L3, -2.0, 1, true)
 	# (no dumpster: the offices' backs stand on alley A with no yard; their bins are the carts inside)
 	c.services(AN, 3.0, 1, false)
+	c.services(DA, 3.0, 2, false)
+	c.put("prop_dumpster_3yd_blue", "worn", Vector3(-89.0, y, -79.6), 0.0, "DA offices: paper, collected from the secure lane")
 	# ---- the secure lane and the sally port (walled, one rolling gate on the lane)
 	_cmu(c, Vector2(-94.0, -72.0), Vector2(-68.2, -72.0), "sally port: block wall")
 	_cmu(c, Vector2(-68.2, -72.0), Vector2(-68.2, -51.4), "sally port: block wall")
@@ -101,12 +108,17 @@ func _run() -> void:
 	for i in 4:
 		var w2: Vector2 = [Vector2(-95.0, -24.0), Vector2(-95.0, -14.0), Vector2(-55.0, -24.0), Vector2(-55.0, -14.0)][i]
 		c.put(["tree_jacaranda_a", "tree_ficus_a", "tree_ficus_b", "tree_jacaranda_b"][i], "normal", Vector3(w2.x, y - 0.06, w2.y), w2.x * 3.0 + w2.y, "square: shade trees in wells", false)
+	for i2 in 2:     # two more trees frame the way in from 7th St; benches under them face the steps
+		var w3: Vector2 = [Vector2(-85.0, -15.0), Vector2(-65.0, -15.0)][i2]
+		c.put(["tree_magnolia_a", "tree_magnolia_b"][i2], "normal", Vector3(w3.x, y - 0.06, w3.y), 30.0 + i2 * 140.0, "square: trees framing the way in", false, 0.9)
+		c.put("prop_park_bench", "worn", Vector3(w3.x, y, w3.y - 1.6), 180.0, "square: bench under the tree, facing the courthouse steps")
+	for px2: float in [-79.4, -70.6]: c.put("plant_potted_leafy", "normal", Vector3(px2, y, -10.8), 0.0, "square: planters mark the way in between the bollards")
 	c.put("prop_park_bench", "worn", Vector3(-95.4, y, -19.0), 90.0, "square: bench between the trees, facing across the square")
 	c.put("prop_park_bench", "worn", Vector3(-54.6, y, -19.0), -90.0, "square: bench between the trees, facing across the square")
 	c.put("prop_park_bench", "worn", Vector3(-89.0, y, -25.8), 0.0, "square: families wait for a hearing, facing the street")
 	c.put("prop_park_bench", "worn", Vector3(-61.0, y, -25.8), 0.0, "square: families wait for a hearing, facing the street")
 	for px: float in [-84.5, -65.5]: c.put("plant_potted_leafy", "normal", Vector3(px, y, -23.0), 0.0, "square: planters flanking the steps")
-	for lp: Vector2 in [Vector2(-88.0, -15.0), Vector2(-62.0, -15.0), Vector2(-98.5, -30.5), Vector2(-51.5, -30.5)]:
+	for lp: Vector2 in [Vector2(-89.5, -12.0), Vector2(-60.5, -12.0), Vector2(-98.5, -30.5), Vector2(-51.5, -30.5)]:
 		c.put("prop_lamp_globe", "worn", Vector3(lp.x, y, lp.y), 0.0, "square: globe lamps")
 	var bxx := -99.0
 	while bxx < -50.5:
@@ -123,7 +135,7 @@ func _run() -> void:
 	# ---- roofs
 	# (the courthouse has a hipped roof: its HVAC stands on the ground in the sally port, see services above)
 	c.roof_plant(G, [[-14.0, -12.0, "prop_vent_box"], [14.0, -12.0, "prop_vent_box"]], "garage: stair-tower exhaust")
-	for r2: Dictionary in [L1, L2, L3, AN]:
+	for r2: Dictionary in [L1, L2, L3, AN, DA]:
 		c.roof_plant(r2, [[-3.0, -3.0, "prop_ac_condenser_compact"], [3.0, -3.0, "prop_vent_plumbing"], [0.0, 2.0, "prop_vent_turbine"]], "roof plant (old brick offices)")
 	c.finish()
 	quit()

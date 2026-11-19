@@ -33,6 +33,8 @@ SHOPS = {
                                        (7.9, [4.9, 8.7], "jewelry", "Watch & Jewel Repair", "black")],
     ("n_cc_b1_n", "sixth_diner_block"): [(0.0, [-5.4, 5.4], "restaurant", "Sixth Street Diner", "teal")],
     ("n_cc_b1_n", "sixth_pharmacy"): [(-1.1, [-5.7, 2.2], "pharmacy", "Downtown Pharmacy", "green")],
+    ("n_cc_b1_n", "alleyc_print_shop"): [(None, None, "keys", "Alley Sign & Print", "black")],
+    ("n_cc_b1_n", "alleyc_bike_repair"): [(None, None, "sport", "Spokes Bike Repair", "sea")],
     # C Ave (n_cc_b1_west)
     ("n_cc_b1_west", "cave_corner_flats"): [(0.0, [-5.4, 5.4], "bakery", "C Avenue Bakery", "sun")],
     ("n_cc_b1_west", "downtown_church"): [(0.0, None, "church", "Sacred Heart Church", "navy")],
@@ -40,9 +42,10 @@ SHOPS = {
     ("n_cc_b1_court", "courthouse"): [(0.0, None, "court", "Coronado County Courthouse", "navy")],
     ("n_cc_b1_court", "law_office_n"): [(-1.1, [-5.7, 2.2], "law", "Hale & Ortiz Attorneys", "navy")],
     ("n_cc_b1_court", "law_office_s"): [(-1.1, [-5.7, 2.2], "bail", "Bayview Bail Bonds", "red")],
+    ("n_cc_b1_court", "district_attorney"): [(1.9, None, "law", "District Attorney", "navy")],
     ("n_cc_b1_court", "legal_aid"): [(-1.1, [-5.7, 2.2], "office", "Island Legal Aid", "teal")],
 }
-# not walk-in (no room): the kiosk (a walk-up window), the garage, every flat (homes are not entered in this pass)
+# not walk-in (no room): the coffee kiosk (a walk-up window), the garage, every flat (homes are not entered in this pass)
 
 
 def main():
@@ -57,7 +60,8 @@ def main():
         fl = c["floors"][0]
         for k, (along, bay, kind, name, style) in enumerate(SHOPS[key]):
             if kind is None: continue        # a second door of the shop before it
-            ent = min([e for e in c["entrances"] if e["facade"] == "front" and e["floor"] == 0], key=lambda e: abs(e["along"] - along))
+            fronts = [e for e in c["entrances"] if e["facade"] == "front" and e["floor"] == 0 and e["kind"] in ("shop", "civic", "residential")]
+            ent = fronts[0] if along is None else min(fronts, key=lambda e: abs(e["along"] - along))
             bx = bay if bay is not None else [fl["box_min"][0], fl["box_max"][0]]
             # the shop's boards: every front board over its bay; a building with one shop also takes its side boards
             signs = [{"facade": s["facade"], "along": s["along"], "w": s["w"]} for s in c.get("signs", [])
