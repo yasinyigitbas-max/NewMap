@@ -1,0 +1,124 @@
+{
+ "_doc": "room_contracts_cc.gd: every building of the n_un_* pieces, grid frame (review/grow_un_campus.json)",
+ "buildings": [
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "uni_hall",
+   "model": "public/pub_university",
+   "piece": "n_un_ne",
+   "pos": [
+    -500.0,
+    6.15,
+    -736.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "uni_lecture_west",
+   "model": "civic/civ_school_wing",
+   "piece": "n_un_ne",
+   "pos": [
+    -570.0,
+    6.15,
+    -734.95
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "uni_library",
+   "model": "civic/civ_library",
+   "piece": "n_un_ne",
+   "pos": [
+    -468.05,
+    6.15,
+    -666.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "uni_science",
+   "model": "civic/civ_school_wing",
+   "piece": "n_un_ne",
+   "pos": [
+    -434.0,
+    6.15,
+    -616.35
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     2.51
+    ]
+   ],
+   "label": "uni_gate_cafe",
+   "model": "commercial/com_shallow_cafe",
+   "piece": "n_un_ne",
+   "pos": [
+    -585.5,
+    6.15,
+    -786.077
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -2.01
+    ]
+   ],
+   "label": "uni_gate_books",
+   "model": "commercial/com_shallow_books",
+   "piece": "n_un_ne",
+   "pos": [
+    -577.0,
+    6.15,
+    -786.327
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     1.15
+    ]
+   ],
+   "label": "uni_bus_kiosk",
+   "model": "commercial/com_kiosk",
+   "piece": "n_un_ne",
+   "pos": [
+    -500.0,
+    6.15,
+    -776.523
+   ],
+   "yaw": 0.0
+  }
+ ]
+}

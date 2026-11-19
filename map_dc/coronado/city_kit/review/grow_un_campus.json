@@ -1,0 +1,16 @@
+{
+ "_doc": "University campus pieces (claude/sharp-ride-16u9ik, 19 Nov): this session's own table; not integrated into city_grid_layout.json",
+ "rows": [
+  {
+   "piece": "n_un_ne",
+   "pos": [
+    -600.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "site": "campus NE quarter (u -600..-409.2, v -790.8..-600)",
+   "variant": "bus station, university hall and plaza, main quad, library, lecture and science wings, gate caf\u00e9 and bookstore, faculty lot"
+  }
+ ]
+}

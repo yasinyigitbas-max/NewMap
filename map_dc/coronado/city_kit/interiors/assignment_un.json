@@ -1,0 +1,199 @@
+{
+ "_doc": "Which shop is behind every shop door of the CITY-CENTRE FILL (claude/fill-city-centre, 19 Nov; Yasin via the",
+ "count": 7,
+ "rooms": [
+  {
+   "id": "un_ne__uni_hall__0",
+   "piece": "n_un_ne",
+   "label": "uni_hall",
+   "model": "public/pub_university",
+   "pos": [
+    -500.0,
+    6.15,
+    -736.7
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -15.7,
+    15.7
+   ],
+   "kind": "campus_hall",
+   "name": "Coronado University - Founders Hall",
+   "style": "navy",
+   "signs": [],
+   "source": "university campus (hand-made room list)",
+   "built": ""
+  },
+  {
+   "id": "un_ne__uni_lecture_west__0",
+   "piece": "n_un_ne",
+   "label": "uni_lecture_west",
+   "model": "civic/civ_school_wing",
+   "pos": [
+    -570.0,
+    6.15,
+    -734.95
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -14.7,
+    14.7
+   ],
+   "kind": "lecture",
+   "name": "Lecture Halls West",
+   "style": "navy",
+   "signs": [],
+   "source": "university campus (hand-made room list)",
+   "built": ""
+  },
+  {
+   "id": "un_ne__uni_library__0",
+   "piece": "n_un_ne",
+   "label": "uni_library",
+   "model": "civic/civ_library",
+   "pos": [
+    -468.05,
+    6.15,
+    -666.0
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "books",
+   "name": "University Library",
+   "style": "navy",
+   "signs": [],
+   "source": "university campus (hand-made room list)",
+   "built": ""
+  },
+  {
+   "id": "un_ne__uni_science__0",
+   "piece": "n_un_ne",
+   "label": "uni_science",
+   "model": "civic/civ_school_wing",
+   "pos": [
+    -434.0,
+    6.15,
+    -616.35
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -14.7,
+    14.7
+   ],
+   "kind": "lecture",
+   "name": "Science Building",
+   "style": "teal",
+   "signs": [],
+   "source": "university campus (hand-made room list)",
+   "built": ""
+  },
+  {
+   "id": "un_ne__uni_gate_cafe__0",
+   "piece": "n_un_ne",
+   "label": "uni_gate_cafe",
+   "model": "commercial/com_shallow_cafe",
+   "pos": [
+    -585.5,
+    6.15,
+    -786.077
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": 2.51,
+   "door_w": 1.0,
+   "bay": [
+    -3.45,
+    3.45
+   ],
+   "kind": "cafe",
+   "name": "Gate Coffee",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 6.68
+    }
+   ],
+   "source": "university campus (hand-made room list)",
+   "built": ""
+  },
+  {
+   "id": "un_ne__uni_gate_books__0",
+   "piece": "n_un_ne",
+   "label": "uni_gate_books",
+   "model": "commercial/com_shallow_books",
+   "pos": [
+    -577.0,
+    6.15,
+    -786.327
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -2.01,
+   "door_w": 1.0,
+   "bay": [
+    -2.95,
+    2.95
+   ],
+   "kind": "books",
+   "name": "Campus Books",
+   "style": "green",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.68
+    }
+   ],
+   "source": "university campus (hand-made room list)",
+   "built": ""
+  },
+  {
+   "id": "un_ne__uni_bus_kiosk__0",
+   "piece": "n_un_ne",
+   "label": "uni_bus_kiosk",
+   "model": "commercial/com_kiosk",
+   "pos": [
+    -500.0,
+    6.15,
+    -776.523
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 1.15,
+   "door_w": 0.9,
+   "bay": [
+    -1.7,
+    1.7
+   ],
+   "kind": "souvenir",
+   "name": "Bus Tickets & Snacks",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "left",
+     "along": 0.9,
+     "w": 1.2
+    }
+   ],
+   "source": "university campus (hand-made room list)",
+   "built": ""
+  }
+ ]
+}
