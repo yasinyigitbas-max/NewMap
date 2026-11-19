@@ -165,6 +165,12 @@ def cmd_fix_room(room, fixes_path=None):
     before = R.check_room(room, os.path.join(WORK, 'find_before') if keep_dec else FIND, old=old, say=False)
     fx = json.load(open(fpath, encoding='utf-8'))
     todo = [f for f in fx['fixes'] if not (f.get('mode') == 'choose' and not f.get('chosen'))]; held = len(fx['fixes']) - len(todo)
+    seen = set(); uniq = []
+    for f in todo:          # one item named by two checks: carry it out once (a remove wins over a move)
+        k = (f.get('base', ''), f.get('wear', ''), tuple(round(float(v), 3) for v in f['at']))
+        if k in seen: continue
+        seen.add(k); uniq.append(f)
+    todo = sorted(uniq, key=lambda f: 0 if f['op'] == 'remove' else 1)
     lst = os.path.join(WORK, room + '.todo.json'); json.dump({'scene': room, 'fixes': todo}, open(lst, 'w'), indent=1)
     out = os.path.join(WORK, room + '.scn'); applied = os.path.join(WORK, room + '.applied.json')
     for p in (out, applied):

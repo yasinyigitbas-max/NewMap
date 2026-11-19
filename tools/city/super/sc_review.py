@@ -155,6 +155,38 @@ def spots(ctx, it, kind):
     return res
 
 
+SLIDE_KINDS = ('over_opening', 'near_door')
+WALL_SLIDE = ('prop_meter_', 'prop_porch_light', 'prop_mailbox_wall', 'prop_buzzer', 'prop_house_numbers', 'prop_hose_reel_wall', 'prop_downspout')
+
+
+def decide(piece, out_path):
+    """Yasin, 19 Nov: "be prone to deleting rather than making a risky replacement decision about props ... just delete
+    them if you are unsure". Writes a decisions file: a short slide (<= 1.2 m) along the item's own wall when it clears the
+    opening; the dish on a roof and the things on a balcony are kept (the check only knows walls); a play item on grass or
+    gravel is kept (the rule is against asphalt); EVERYTHING ELSE that needs a new place is erased. The file is read and
+    may be edited before `apply`."""
+    show(piece, quiet=True)
+    fx = json.load(open(os.path.join(FIND, piece + '.fixes.json'), encoding='utf-8'))
+    sp = json.load(open(os.path.join(FIND, piece + '.spots.json'), encoding='utf-8'))
+    lines = []; seen = set()
+    for f in fx['fixes']:
+        if f.get('mode') != 'choose' or f.get('chosen'): continue
+        n = str(f['n']); b = f['base']; k = f['kind']; key = (b, tuple(round(v, 3) for v in f['at']))
+        if key in seen: lines.append('keep %s the same item as an earlier line' % n); continue
+        seen.add(key)
+        if b.startswith('prop_satellite_dish') and k == 'no_wall': lines.append('keep %s a dish on a roof: the check only knows walls' % n); continue
+        if b.startswith('prop_balcony_clutter'): lines.append('keep %s balcony things stand on the balcony, before its door and window' % n); continue
+        if k == 'play_surface': lines.append('keep %s a play item on grass or gravel: the rule is against asphalt and paving' % n); continue
+        if k in SLIDE_KINDS and any(b.startswith(w) for w in WALL_SLIDE) and n in sp:
+            ok = [x for x in sp[n] if not x[4] and x[3].startswith('slid ') and abs(float(x[3].split()[1])) <= 1.2]
+            if ok:
+                ok.sort(key=lambda x: abs(float(x[3].split()[1]))); lines.append('pick %s %s a short slide along its own wall clears the opening' % (n, ok[0][0])); continue
+        lines.append('erase %s %s: no plainly safe place (Yasin: delete when unsure)' % (n, k))
+    open(out_path, 'w', encoding='utf-8').write(chr(10).join(lines) + chr(10))
+    c = {w: sum(1 for l in lines if l.startswith(w)) for w in ('pick', 'erase', 'keep')}
+    print('DECIDED %s: slide %d, erase %d, keep %d -> %s' % (piece, c['pick'], c['erase'], c['keep'], out_path))
+
+
 def brief(piece):
     """one line per open item: what it is, why, and only the spots that are clear"""
     show(piece, quiet=True)
@@ -220,5 +252,6 @@ if __name__ == '__main__':
     a = sys.argv[1:]
     if len(a) >= 2 and a[0] == 'show': show(a[1])
     elif len(a) >= 2 and a[0] == 'brief': brief(a[1])
+    elif len(a) >= 3 and a[0] == 'decide': decide(a[1], a[2])
     elif len(a) >= 3 and a[0] == 'apply': apply(a[1], a[2])
     else: sys.exit(__doc__)

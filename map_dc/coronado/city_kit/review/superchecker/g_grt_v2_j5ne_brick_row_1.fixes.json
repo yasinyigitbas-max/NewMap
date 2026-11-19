@@ -1,0 +1,39 @@
+{
+ "fixes": [
+  {
+   "at": [
+    0.390000015497208,
+    0.0,
+    -5.65000009536743
+   ],
+   "base": "prop_office_chair",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_office_chair stands in front of a 1.0 m wide door (a back or side door)]"
+  },
+  {
+   "at": [
+    3.5,
+    1.14999997615814,
+    -5.34999990463257
+   ],
+   "base": "prop_poster_case",
+   "cond": "",
+   "kind": "shows_through",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "move",
+   "reason": "prop_poster_case reaches 1.5 cm into the wall to the next shop and shows in the next shop",
+   "to": [
+    3.46499998243492,
+    1.14999997615814,
+    -5.34999990463257
+   ]
+  }
+ ],
+ "scene": "g_grt_v2_j5ne_brick_row_1"
+}

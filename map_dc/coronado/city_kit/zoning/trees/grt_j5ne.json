@@ -1,0 +1,9 @@
+{
+ "area": "grt_j5ne", "piece": "g_v2_j5ne", "zone": "gritty edge",
+ "rule": "docs/TREE_PLAN.md: almost none - one scrappy tree in a vacant lot, weeds at fences; a street here lost its trees long ago (zone 109 -> about 30)",
+ "written": "by hand, 19 Nov 2026 (PC session, city-wide superchecker run). Three builder trees go; one comes back, on one of their own spots.",
+ "trees": [
+  {"base": "tree_coral_a", "cond": "normal", "at": [-770.8, 3.616, -1088.6], "yaw": 160.0, "scale": 0.8,
+   "why": "the walk-ups' lawn: kept where a builder coral stood, over the patio set and kettle grill 2-3 m off; the other two stood by a washing line and a stray cart"}
+ ]
+}
