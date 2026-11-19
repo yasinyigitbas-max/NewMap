@@ -25,12 +25,28 @@ together: 26 shop rooms (`interiors/assignment_strip.json`, `tools/city/rooms/ro
 - Indoors: the strip's room rules (`check_rooms.gd --only=g_strip_`: 0 problems in the 26 rooms).
 
 ## Kit used
-STRIP_KIT
+1,803 props of 97 types and 22 buildings of 17 types outdoors (KIT_USAGE.md, "Commercial strip growth"). First use of
+the car wash, the tyre shop (ck_svc_trade), com_shallow_surf, the stucco wall and garden gate, privet, iron bollards,
+rubber wheel stops, the roof vents / solar / compact AC, torrey and Norfolk pines. Every shop, service and industrial
+building of the kit is now placed somewhere in the map; nothing left unused in the kit fits a commercial strip.
 Known: the motel model carries its own painted sign "BREEZE MOTEL" (the shop is called Harbor View Motel in the room
 table and on the pylon): a kit texture, not changed here.
 
 ## Numbers (STRIP_NUMBERS; cloud measurements, NOT the phone)
-STRIP_NUMBERS_BODY
+Baked like the other zones (`bake_runtime.gd --area=522,-1200,200 --nofarground --out=res://OUT/rt_*`: the eight
+200 m cells round the strip; BEFORE = the same layout without the six `m_gr_*` rows), measured with `rt_shots.gd` from
+12 viewpoints (each block from above and along its street at eye height). Rooms are not in the bake yet.
+- **Draws per view: 44-70 after (20-56 before).** Inside the phone's ~150 everywhere.
+- **Triangles per view: 443k-822k after (192k-497k before); over the ~500k mark in 9 of 12 views**, worst along Adela
+  between C and the sample (753k) and between D/E (822k). Without the far world: +270k to +460k a view from the new
+  blocks. Per block (near tier): A 133k, F 103k, E 87k, C 71k, D 67k, B 49k; a sample block is 52-76k. The heavy
+  items: the 31 boats on trailers in F (69k, 2.2k each), concrete / rubber wheel stops (68k over the zone, one per
+  stall), the ground (68k: its cells are no longer merged into long runs, which removed the hairline cracks). Yasin's rule:
+  draws first, triangles are fine, but said here. Cheap cuts if wanted: half the boats as the mid-tier model, wheel
+  stops only on the front rows, a coarser ground grid in A.
+- **Download: the four cells of the zone grow from 11.6 to 21.3 MB, shared models (lib) +2.0 MB: +11.7 MB in all,
+  about 1.6 MB of cells a block** (gritty: 1.6 MB a block).
+- **Rooms** (26): built as the other zones' rooms; not in the streamed city (the bake knows no rooms yet).
 
 ## Checks (19 Nov)
 Validator CHECKS 0 problems, check_life 0 (strip blocks), trees 0 in hard ground, sink 0, indoor checker 0 problems
