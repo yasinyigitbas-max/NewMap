@@ -59,7 +59,7 @@ var split_cache := {}        # concave shape instance id -> Array of [piece of i
 var arr_cache := {}          # instance id -> surface arrays
 var mats := {}               # signature -> Material
 var atlas_img := {}          # texture path -> Image (linear lookups for the far props' flat colours)
-var stat := {"props_in": 0, "merged": 0, "instanced": 0, "pass": 0, "far": 0, "far_dropped": 0, "skipped_cell": 0, "buildings": 0, "shapes": 0, "col_split": 0, "col_pieces": 0, "col_piece_max": 0}
+var stat := {"props_in": 0, "merged": 0, "instanced": 0, "pass": 0, "far": 0, "far_dropped": 0, "skipped_cell": 0, "buildings": 0, "shapes": 0, "col_split": 0, "col_pieces": 0, "col_piece_max": 0, "trees_out": 0, "tree_cols_out": 0, "wells_filled": 0, "wells_left": 0}
 var manifest_cells := {}
 var warm := {}               # material path + kind -> a small node that draws it once (lib/warm.scn)
 var keep := {}               # every shared material a cell uses (the streamer holds them for its whole life)
@@ -67,6 +67,20 @@ var layers := {}             # arrays.json: set name -> [texture path per layer]
 var fg_src: Array = []       # every piece ground of the island (whatever --area says): [mesh, world transform, cell]
 var fg_node: Node3D = null   # the far ground, made before the far world (it goes into far_world.scn)
 var fg_on := true            # --nofarground: bake without it
+## TREES OUT (19 Nov, Yasin: "we can turn off the trees entirely from the current builders and place your hand placed
+## trees instead"; "can that same bake fill every tree well once they are gone too? with the same material as around
+## the well"). --notrees: every tree_* / palm_* batch of every piece is left out of the bake (all tiers, and the trunk's
+## collision), except in the hand-placed tree pieces (t_*). The pieces are not touched. A tree well whose tree went is
+## paved over: its soil is raised to the rim and drawn in the rim's material, the rim's inner face goes, and the ground
+## collision is lifted with it (--keepwells: wells stay open). A well in which a t_* tree stands is not filled.
+var no_trees := false
+var well_fill := true
+var cur_strip := false       # the piece being routed loses its trees
+var cur_trees := {}          # its trees, world: Vector2i (0.5 m bucket) -> Array of Vector2 (x, z)
+var cur_ground := {}         # its ground meshes with the wells filled: source mesh instance id -> Mesh
+var cur_wells: Array = []    # the wells filled in it, world: [centre on the rim plane, radius, slope x, slope z]
+var kept_trees := {}         # the hand-placed trees (t_* pieces), world: Vector2i (2 m bucket) -> Array of Vector2
+var fill_cache := {}         # ground mesh key + its trees -> [Mesh, wells in the mesh's own frame]
 
 func _init() -> void: _run.call_deferred()
 
@@ -137,6 +151,321 @@ func _lib_ground(gm: Mesh) -> Mesh:
 		ResourceSaver.save(gam, path, ResourceSaver.FLAG_COMPRESS)
 	lib_mesh[k] = load(path)
 	return lib_mesh[k]
+
+# ---------------------------------------------------------------- trees out, wells filled (--notrees)
+## the trees of a piece instance that the bake leaves out, and its ground with their wells paved over
+func _scan_trees(inst: Node3D) -> void:
+	cur_trees.clear(); cur_ground.clear(); cur_wells.clear()
+	var pts: Array = []
+	for mmi: MultiMeshInstance3D in inst.find_children("*_near", "MultiMeshInstance3D", true, false):
+		var nm := String(mmi.name)
+		if mmi.multimesh == null or not (nm.begins_with("tree_") or nm.begins_with("palm_")): continue
+		for i in mmi.multimesh.instance_count:
+			var p: Vector3 = (mmi.global_transform * mmi.multimesh.get_instance_transform(i)).origin
+			pts.append(p)
+			var k := Vector2i(floori(p.x * 2.0), floori(p.z * 2.0))
+			if not cur_trees.has(k): cur_trees[k] = []
+			(cur_trees[k] as Array).append(Vector2(p.x, p.z))
+	stat.trees_out += pts.size()
+	if pts.is_empty() or not well_fill: return
+	for g: MeshInstance3D in inst.find_children("ground", "MeshInstance3D", true, false):
+		if g.mesh == null: continue
+		var inv := g.global_transform.affine_inverse()
+		var loc: Array = []
+		for p2: Vector3 in pts:
+			if _kept_tree_at(p2): continue      # a hand-placed tree stands here: its well stays open
+			loc.append(inv * p2)
+		if loc.is_empty(): continue
+		var res: Array = _fill_wells(g.mesh, loc)
+		cur_ground[g.mesh.get_instance_id()] = res[0]
+		for w: Array in res[1]:
+			var gr: Vector3 = g.global_transform.basis * Vector3(float(w[2]), 0.0, float(w[3]))
+			cur_wells.append([g.global_transform * (w[0] as Vector3), float(w[1]), gr.x, gr.z])
+
+func _tree_at(p: Vector3) -> bool:
+	var k := Vector2i(floori(p.x * 2.0), floori(p.z * 2.0))
+	for dx in range(-1, 2):
+		for dz in range(-1, 2):
+			var kk := k + Vector2i(dx, dz)
+			if not cur_trees.has(kk): continue
+			for q: Vector2 in cur_trees[kk]:
+				if q.distance_squared_to(Vector2(p.x, p.z)) < 0.09: return true
+	return false
+
+func _kept_tree_at(p: Vector3) -> bool:
+	var k := Vector2i(floori(p.x / 2.0), floori(p.z / 2.0))
+	for dx in range(-1, 2):
+		for dz in range(-1, 2):
+			var kk := k + Vector2i(dx, dz)
+			if not kept_trees.has(kk): continue
+			for q: Vector2 in kept_trees[kk]:
+				if q.distance_squared_to(Vector2(p.x, p.z)) < 0.49: return true
+	return false
+
+func _keep_trees(inst: Node3D) -> void:
+	for mmi: MultiMeshInstance3D in inst.find_children("*_near", "MultiMeshInstance3D", true, false):
+		var nm := String(mmi.name)
+		if mmi.multimesh == null or not (nm.begins_with("tree_") or nm.begins_with("palm_")): continue
+		for i in mmi.multimesh.instance_count:
+			var p: Vector3 = (mmi.global_transform * mmi.multimesh.get_instance_transform(i)).origin
+			var k := Vector2i(floori(p.x / 2.0), floori(p.z / 2.0))
+			if not kept_trees.has(k): kept_trees[k] = []
+			(kept_trees[k] as Array).append(Vector2(p.x, p.z))
+
+func _k3(p: Vector3) -> Vector3i: return Vector3i(roundi(p.x * 1000.0), roundi(p.y * 1000.0), roundi(p.z * 1000.0))
+
+## A piece's ground with the wells of the given trees (the mesh's own frame) paved over. A well = soil ("mulch")
+## triangles that all lie within 1 m of a trunk, with the trunk near their middle, whose edge vertices have a hard,
+## up-facing vertex right above them (the rim, 2-15 cm up). A trunk in a bed or on grass matches none of that and
+## nothing changes there. Returns [mesh, [[centre on the rim plane, radius, slope x, slope z], ...]].
+func _fill_wells(gm: Mesh, trees: Array) -> Array:
+	if not (gm is ArrayMesh): return [gm, []]
+	var hk := PackedInt32Array()
+	for t: Vector3 in trees: hk.append(roundi(t.x * 100.0)); hk.append(roundi(t.z * 100.0))
+	var key := _mesh_key(gm) + ":" + str(hash(hk))
+	if fill_cache.has(key): return fill_cache[key]
+	var ns := gm.get_surface_count(); var soil := -1
+	for si in ns:
+		var sm := gm.surface_get_material(si) as BaseMaterial3D
+		if gm.surface_get_name(si) == "mulch" or (sm and sm.albedo_texture and sm.albedo_texture.resource_path.contains("ground037")): soil = si
+	if soil < 0: fill_cache[key] = [gm, []]; return fill_cache[key]
+	var arrs: Array = []; var idx: Array = []
+	for si in ns:
+		var a: Array = gm.surface_get_arrays(si); arrs.append(a)
+		var ix := PackedInt32Array()
+		if a[Mesh.ARRAY_INDEX] != null: ix = a[Mesh.ARRAY_INDEX]
+		if ix.is_empty():
+			ix.resize((a[Mesh.ARRAY_VERTEX] as PackedVector3Array).size())
+			for q in ix.size(): ix[q] = q
+		idx.append(ix)
+	# the 2 m squares round the trunks: everything else of the mesh is skipped with one lookup
+	var near := {}
+	for t2: Vector3 in trees:
+		for dx in range(-1, 2):
+			for dz in range(-1, 2): near[Vector2i(floori(t2.x / 2.0) + dx, floori(t2.z / 2.0) + dz)] = true
+	# soil triangles near a trunk, by 2 m square
+	var SV: PackedVector3Array = arrs[soil][Mesh.ARRAY_VERTEX]; var SI: PackedInt32Array = idx[soil]
+	var sgrid := {}
+	for t3 in SI.size() / 3:
+		var c3: Vector3 = (SV[SI[t3 * 3]] + SV[SI[t3 * 3 + 1]] + SV[SI[t3 * 3 + 2]]) / 3.0
+		var k3 := Vector2i(floori(c3.x / 2.0), floori(c3.z / 2.0))
+		if not near.has(k3): continue
+		if not sgrid.has(k3): sgrid[k3] = []
+		(sgrid[k3] as Array).append(t3)
+	if sgrid.is_empty(): fill_cache[key] = [gm, []]; return fill_cache[key]
+	# hard, up-facing vertices near a trunk: 2 mm buckets of x, z -> [surface, vertex]
+	var hard := {}
+	for si in ns:
+		if si == soil: continue
+		var HV: PackedVector3Array = arrs[si][Mesh.ARRAY_VERTEX]; var HN: PackedVector3Array = arrs[si][Mesh.ARRAY_NORMAL]
+		for v in HV.size():
+			var hp: Vector3 = HV[v]
+			if not near.has(Vector2i(floori(hp.x / 2.0), floori(hp.z / 2.0))) or HN[v].y < 0.7: continue
+			var kh := Vector2i(roundi(hp.x * 500.0), roundi(hp.z * 500.0))
+			if not hard.has(kh): hard[kh] = []
+			(hard[kh] as Array).append([si, v])
+	var gone := {}                # soil triangles that become paving
+	var add: Array = []           # [dst surface, twin vertex (attributes to copy), [3 positions], [3 uvs], normal]
+	var wells: Array = []
+	for t4: Vector3 in trees:
+		var cand: Array = []; var bed := false
+		var kt := Vector2i(floori(t4.x / 2.0), floori(t4.z / 2.0))
+		for dx in range(-1, 2):
+			for dz in range(-1, 2):
+				var kk := kt + Vector2i(dx, dz)
+				if not sgrid.has(kk): continue
+				for ti: int in sgrid[kk]:
+					if gone.has(ti): continue
+					var inside := 0
+					for e in 3:
+						var pv: Vector3 = SV[SI[ti * 3 + e]]
+						if Vector2(pv.x - t4.x, pv.z - t4.z).length_squared() <= 1.0: inside += 1
+					if inside == 3: cand.append(ti)
+					elif inside > 0: bed = true
+		if cand.is_empty(): continue                       # the trunk stands in grass, gravel or a big bed
+		if bed: stat.wells_left += 1; continue
+		# every soil vertex of the patch and the rim vertex above it
+		var tw: Array = []; var free: Array = []          # [soil position, surface, vertex] / soil positions without one
+		var seen := {}
+		for ti2: int in cand:
+			for e2 in 3:
+				var sp: Vector3 = SV[SI[ti2 * 3 + e2]]
+				var ks := _k3(sp)
+				if seen.has(ks): continue
+				seen[ks] = true
+				var best: Array = []; var by := 1.0e9
+				var kb := Vector2i(roundi(sp.x * 500.0), roundi(sp.z * 500.0))
+				for bx in range(-1, 2):
+					for bz in range(-1, 2):
+						var kq := kb + Vector2i(bx, bz)
+						if not hard.has(kq): continue
+						for hv: Array in hard[kq]:
+							var q3: Vector3 = (arrs[int(hv[0])][Mesh.ARRAY_VERTEX] as PackedVector3Array)[int(hv[1])]
+							if absf(q3.x - sp.x) > 0.002 or absf(q3.z - sp.z) > 0.002: continue
+							var up := q3.y - sp.y
+							if up > 0.02 and up < 0.15 and up < by: by = up; best = hv
+				if best.is_empty(): free.append(sp)
+				else: tw.append([sp, int(best[0]), int(best[1])])
+		if tw.size() < 3: stat.wells_left += 1; continue
+		# the rim plane (least squares over the rim vertices) and the well's centre and radius
+		var cen := Vector3.ZERO; var votes := {}
+		for w: Array in tw:
+			cen += (arrs[int(w[1])][Mesh.ARRAY_VERTEX] as PackedVector3Array)[int(w[2])]
+			votes[int(w[1])] = int(votes.get(int(w[1]), 0)) + 1
+		cen /= float(tw.size())
+		var dst := -1; var dn := 0
+		for vs: int in votes:
+			if int(votes[vs]) > dn: dn = int(votes[vs]); dst = vs
+		var sxx := 0.0; var sxz := 0.0; var szz := 0.0; var sxy := 0.0; var szy := 0.0; var rad := 0.0
+		for w2: Array in tw:
+			var rp: Vector3 = (arrs[int(w2[1])][Mesh.ARRAY_VERTEX] as PackedVector3Array)[int(w2[2])] - cen
+			sxx += rp.x * rp.x; sxz += rp.x * rp.z; szz += rp.z * rp.z; sxy += rp.x * rp.y; szy += rp.z * rp.y
+			rad = maxf(rad, Vector2(rp.x, rp.z).length())
+		var det := sxx * szz - sxz * sxz
+		var gx := 0.0; var gz := 0.0
+		if absf(det) > 1.0e-6: gx = (sxy * szz - szy * sxz) / det; gz = (szy * sxx - sxy * sxz) / det
+		var ok := Vector2(t4.x - cen.x, t4.z - cen.z).length() < 0.5 and rad < 1.2
+		for fp: Vector3 in free:
+			if Vector2(fp.x - cen.x, fp.z - cen.z).length() > rad * 0.6: ok = false      # an edge vertex with no rim over it
+		# the rim surface's texture mapping over the well (u and v are planes over x, z)
+		var DV: PackedVector3Array = arrs[dst][Mesh.ARRAY_VERTEX]
+		var DU := PackedVector2Array()
+		if arrs[dst][Mesh.ARRAY_TEX_UV] != null: DU = arrs[dst][Mesh.ARRAY_TEX_UV]
+		var ucen := Vector2.ZERO; var dcen := Vector3.ZERO; var un := 0; var twin_v := -1
+		if not DU.is_empty():
+			for w3: Array in tw:
+				if int(w3[1]) != dst: continue
+				ucen += DU[int(w3[2])]; dcen += DV[int(w3[2])]; un += 1; twin_v = int(w3[2])
+		if un < 3: ok = false
+		if not ok: stat.wells_left += 1; continue
+		ucen /= float(un); dcen /= float(un)
+		var uxx := 0.0; var uxz := 0.0; var uzz := 0.0; var uxu := 0.0; var uzu := 0.0; var uxv := 0.0; var uzv := 0.0
+		for w5: Array in tw:
+			if int(w5[1]) != dst: continue
+			var dp: Vector3 = DV[int(w5[2])] - dcen; var du: Vector2 = DU[int(w5[2])] - ucen
+			uxx += dp.x * dp.x; uxz += dp.x * dp.z; uzz += dp.z * dp.z
+			uxu += dp.x * du.x; uzu += dp.z * du.x; uxv += dp.x * du.y; uzv += dp.z * du.y
+		var udet := uxx * uzz - uxz * uxz
+		if absf(udet) < 1.0e-6: stat.wells_left += 1; continue
+		var ua := Vector2((uxu * uzz - uzu * uxz) / udet, (uzu * uxx - uxu * uxz) / udet)      # d u / d x, d u / d z
+		var va := Vector2((uxv * uzz - uzv * uxz) / udet, (uzv * uxx - uxv * uxz) / udet)
+		var top := {}                 # soil position -> its rim position
+		for w6: Array in tw:
+			top[_k3(w6[0] as Vector3)] = (arrs[int(w6[1])][Mesh.ARRAY_VERTEX] as PackedVector3Array)[int(w6[2])]
+		var nrm := Vector3(-gx, 1.0, -gz).normalized()
+		for ti3: int in cand:
+			gone[ti3] = true
+			var ps: Array = []; var us: Array = []
+			for e3 in 3:
+				var s7: Vector3 = SV[SI[ti3 * 3 + e3]]
+				var k7 := _k3(s7)
+				var np := Vector3(s7.x, cen.y + gx * (s7.x - cen.x) + gz * (s7.z - cen.z), s7.z)
+				if top.has(k7): np = top[k7]
+				ps.append(np)
+				us.append(ucen + Vector2(ua.x * (np.x - dcen.x) + ua.y * (np.z - dcen.z), va.x * (np.x - dcen.x) + va.y * (np.z - dcen.z)))
+			add.append([dst, twin_v, ps, us, nrm])
+		wells.append([cen, rad, gx, gz])
+	if wells.is_empty(): fill_cache[key] = [gm, []]; return fill_cache[key]
+	# the soil loses the wells' triangles
+	var keep_i := PackedInt32Array()
+	for t5 in SI.size() / 3:
+		if gone.has(t5): continue
+		keep_i.append(SI[t5 * 3]); keep_i.append(SI[t5 * 3 + 1]); keep_i.append(SI[t5 * 3 + 2])
+	idx[soil] = keep_i
+	# the rim's inner face goes: upright triangles wholly inside a filled well
+	var wgrid := {}
+	for wi in wells.size():
+		var wc: Vector3 = wells[wi][0]
+		for dx in range(-1, 2):
+			for dz in range(-1, 2):
+				var kw := Vector2i(floori(wc.x / 2.0) + dx, floori(wc.z / 2.0) + dz)
+				if not wgrid.has(kw): wgrid[kw] = []
+				(wgrid[kw] as Array).append(wi)
+	for si in ns:
+		if si == soil: continue
+		var RV: PackedVector3Array = arrs[si][Mesh.ARRAY_VERTEX]; var RI: PackedInt32Array = idx[si]
+		var out_i := PackedInt32Array(); var cut := 0
+		for t6 in RI.size() / 3:
+			var a6: Vector3 = RV[RI[t6 * 3]]; var b6: Vector3 = RV[RI[t6 * 3 + 1]]; var c6: Vector3 = RV[RI[t6 * 3 + 2]]
+			var drop := false
+			var k6 := Vector2i(floori(a6.x / 2.0), floori(a6.z / 2.0))
+			if wgrid.has(k6):
+				var n6 := (b6 - a6).cross(c6 - a6)
+				if n6.length_squared() > 1.0e-12 and absf(n6.normalized().y) < 0.3:
+					for wi2: int in wgrid[k6]:
+						var wc2: Vector3 = wells[wi2][0]; var wr := float(wells[wi2][1]) + 0.004
+						var all_in := true
+						for q6: Vector3 in [a6, b6, c6]:
+							if Vector2(q6.x - wc2.x, q6.z - wc2.z).length() > wr or q6.y > wc2.y + 0.1 or q6.y < wc2.y - 0.25: all_in = false
+						if all_in: drop = true
+			if drop: cut += 1; continue
+			out_i.append(RI[t6 * 3]); out_i.append(RI[t6 * 3 + 1]); out_i.append(RI[t6 * 3 + 2])
+		if cut > 0: idx[si] = out_i
+	# the new paving: added to the rim's surface, every other attribute copied from a rim vertex
+	for ad: Array in add:
+		var d := int(ad[0]); var tv := int(ad[1]); var da: Array = arrs[d]
+		var base := (da[Mesh.ARRAY_VERTEX] as PackedVector3Array).size()
+		for e4 in 3:
+			for at in Mesh.ARRAY_MAX:
+				if da[at] == null or at == Mesh.ARRAY_INDEX: continue
+				if at == Mesh.ARRAY_VERTEX:
+					var av: PackedVector3Array = da[at]; av.append((ad[2] as Array)[e4]); da[at] = av
+				elif at == Mesh.ARRAY_NORMAL:
+					var an: PackedVector3Array = da[at]; an.append(ad[4]); da[at] = an
+				elif at == Mesh.ARRAY_TEX_UV:
+					var au: PackedVector2Array = da[at]; au.append((ad[3] as Array)[e4]); da[at] = au
+				elif at == Mesh.ARRAY_TANGENT:
+					var atn: PackedFloat32Array = da[at]
+					for q7 in 4: atn.append(atn[tv * 4 + q7])
+					da[at] = atn
+				elif at == Mesh.ARRAY_COLOR:
+					var ac: PackedColorArray = da[at]; ac.append(ac[tv]); da[at] = ac
+				elif at == Mesh.ARRAY_TEX_UV2:
+					var a2: PackedVector2Array = da[at]; a2.append(a2[tv]); da[at] = a2
+		var di: PackedInt32Array = idx[d]; di.append(base); di.append(base + 1); di.append(base + 2); idx[d] = di
+	var nm := ArrayMesh.new()
+	for si in ns:
+		if (idx[si] as PackedInt32Array).is_empty(): continue
+		var oa: Array = arrs[si]; oa[Mesh.ARRAY_INDEX] = idx[si]
+		nm.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, oa)
+		nm.surface_set_material(nm.get_surface_count() - 1, gm.surface_get_material(si))
+		nm.surface_set_name(nm.get_surface_count() - 1, gm.surface_get_name(si))
+	stat.wells_filled += wells.size()
+	fill_cache[key] = [nm, wells]
+	return fill_cache[key]
+
+## the ground collision under the filled wells of this piece: the soil lifted to the rim plane, the rim's face gone
+func _lift_wells(s: ConcavePolygonShape3D, xf: Transform3D) -> ConcavePolygonShape3D:
+	var inv := xf.affine_inverse(); var wl: Array = []; var grid := {}
+	for w: Array in cur_wells:
+		var c: Vector3 = inv * (w[0] as Vector3); var g: Vector3 = inv.basis * Vector3(float(w[2]), 0.0, float(w[3]))
+		var r := float(w[1]) + 0.004
+		for gx in range(floori((c.x - r) / 2.0), floori((c.x + r) / 2.0) + 1):
+			for gz in range(floori((c.z - r) / 2.0), floori((c.z + r) / 2.0) + 1):
+				var k := Vector2i(gx, gz)
+				if not grid.has(k): grid[k] = []
+				(grid[k] as Array).append(wl.size())
+		wl.append([c, r * r, g.x, g.z])
+	var f := s.get_faces(); var o := PackedVector3Array(); var moved := 0
+	for t in f.size() / 3:
+		var tri: Array = [f[t * 3], f[t * 3 + 1], f[t * 3 + 2]]; var hit := false
+		for e in 3:
+			var p: Vector3 = tri[e]
+			var kp := Vector2i(floori(p.x / 2.0), floori(p.z / 2.0))
+			if not grid.has(kp): continue
+			for wi: int in grid[kp]:
+				var wc: Vector3 = wl[wi][0]
+				var dx := p.x - wc.x; var dz := p.z - wc.z
+				if dx * dx + dz * dz > float(wl[wi][1]): continue
+				var py := wc.y + float(wl[wi][2]) * dx + float(wl[wi][3]) * dz
+				if p.y < py - 0.005 and p.y > py - 0.25: tri[e] = Vector3(p.x, py, p.z); hit = true
+		if hit:
+			moved += 1
+			if ((tri[1] as Vector3) - (tri[0] as Vector3)).cross((tri[2] as Vector3) - (tri[0] as Vector3)).length_squared() < 1.0e-10: continue
+		o.append(tri[0]); o.append(tri[1]); o.append(tri[2])
+	if moved == 0: return s
+	var nsh := ConcavePolygonShape3D.new(); nsh.backface_collision = s.backface_collision; nsh.set_faces(o)
+	return nsh
 
 ## A concave shape as pieces of at most COL_CHUNK_TRIS triangles: [[shape, centre], ...]. Each piece's triangles are
 ## stored round its own centre, so the CollisionShape3D that carries it sits where the piece is (the streamer attaches
@@ -341,10 +670,11 @@ func _walk(n: Node, piece: String, inst_name: String) -> void:
 	if n is MeshInstance3D and (n as MeshInstance3D).mesh:
 		var mi := n as MeshInstance3D
 		var c := _cell_of((mi.global_transform * mi.get_aabb()).get_center())
-		if String(n.name) == "ground": fg_src.append([mi.mesh, mi.global_transform, c])      # the far ground covers the whole island
+		var gmesh: Mesh = cur_ground.get(mi.mesh.get_instance_id(), mi.mesh)      # --notrees: with its emptied wells paved over
+		if String(n.name) == "ground": fg_src.append([gmesh, mi.global_transform, c])      # the far ground covers the whole island
 		if not _cell_wanted(c): stat.skipped_cell += 1
 		elif String(n.name) == "wear" and mi.material_override == null: _cell(c).wear.append([mi.mesh, mi.global_transform])
-		elif String(n.name) == "ground": _cell(c).ground.append([mi.mesh, mi.global_transform, "%s__ground" % inst_name])
+		elif String(n.name) == "ground": _cell(c).ground.append([gmesh, mi.global_transform, "%s__ground" % inst_name])
 		else: _cell(c).misc.append({"name": "%s__%s" % [inst_name, String(n.name).replace("@", "")], "mesh": mi.mesh, "xf": mi.global_transform, "ov": mi.material_override, "vb": mi.visibility_range_begin, "ve": mi.visibility_range_end, "vbm": mi.visibility_range_begin_margin, "vem": mi.visibility_range_end_margin, "shadow": mi.cast_shadow})
 	for ch in n.get_children(): _walk(ch, piece, inst_name)
 
@@ -378,13 +708,16 @@ func _body(body: StaticBody3D) -> void:
 		if not (cs is CollisionShape3D) or (cs as CollisionShape3D).shape == null: continue
 		var s := cs as CollisionShape3D
 		if s.shape is ConcavePolygonShape3D:      # ground trimesh of a whole piece: in small pieces, each to the cell it lies in
-			for pc: Array in _split_concave(s.shape):
+			var gsh: ConcavePolygonShape3D = s.shape
+			if not cur_wells.is_empty(): gsh = _lift_wells(gsh, s.global_transform)
+			for pc: Array in _split_concave(gsh):
 				var pxf := s.global_transform * Transform3D(Basis(), pc[1])
 				var c0 := _cell_of(pxf.origin)
 				if not _cell_wanted(c0): continue
 				_cell(c0).col.append([pc[0], pxf, body.collision_layer, body.collision_mask]); stat.shapes += 1
 			continue
 		var p := s.global_position
+		if cur_strip and _tree_at(p): stat.tree_cols_out += 1; continue      # the trunk of a tree that was left out
 		var c := _cell_of(p)
 		if not _cell_wanted(c): continue
 		_cell(c).col.append([s.shape, s.global_transform, body.collision_layer, body.collision_mask]); stat.shapes += 1
@@ -394,6 +727,7 @@ func _props(mmi: MultiMeshInstance3D) -> void:
 	if mm == null or mm.mesh == null: return
 	var nm := String(mmi.name); var tier := nm.get_slice("_", nm.get_slice_count("_") - 1)
 	if not (tier in ["near", "mid", "far"]): tier = "near"
+	if cur_strip and (nm.begins_with("tree_") or nm.begins_with("palm_")): return      # --notrees
 	var mt: Material = mmi.material_override if mmi.material_override else mm.mesh.surface_get_material(0)
 	var kind := "pass"; var two := false; var wear := 0.55; var page := -1; var u2y := 0.0; var custom := Color(0, 0, 0, 1)
 	var use_mesh: Mesh = mm.mesh
@@ -908,6 +1242,8 @@ func _run() -> void:
 		if a == "--check": check = true
 		if a == "--tint": tint_on = true
 		if a == "--nofarground": fg_on = false
+		if a == "--notrees": no_trees = true
+		if a == "--keepwells": well_fill = false
 		if a.begins_with("--out="): out = a.trim_prefix("--out=")
 		if a.begins_with("--area="):
 			var f := a.trim_prefix("--area=").split_floats(","); area = [f[0], f[1], f[2]]
@@ -918,6 +1254,13 @@ func _run() -> void:
 	var t0 := Time.get_ticks_msec()
 	var holder := Node3D.new(); root.add_child(holder)
 	var sha := {}; var k := 0
+	if no_trees:      # the hand-placed trees first: a well one of them stands in is not filled
+		for r0: Dictionary in _rows():
+			var pc0 := String(r0.piece)
+			if not pc0.begins_with("t_") or not ResourceLoader.exists(PIECES + pc0 + ".scn"): continue
+			var i0: Node3D = (load(PIECES + pc0 + ".scn") as PackedScene).instantiate()
+			var p0: Array = r0.get("pos", [0, 0, 0]); i0.position = Vector3(float(p0[0]), float(p0[1]), float(p0[2])); i0.rotation_degrees.y = float(r0.get("yaw", 0))
+			holder.add_child(i0); _keep_trees(i0); holder.remove_child(i0); i0.free()
 	for r: Dictionary in _rows():
 		var piece := String(r.piece); var path := PIECES + piece + ".scn"
 		if not ResourceLoader.exists(path): continue
@@ -929,6 +1272,9 @@ func _run() -> void:
 		var before := cells.size()
 		var touched := {}
 		for c0: Vector2i in cells: touched[c0] = _count(cells[c0])
+		cur_strip = no_trees and not piece.begins_with("t_")
+		cur_trees.clear(); cur_ground.clear(); cur_wells.clear()
+		if cur_strip: _scan_trees(inst)
 		_walk(inst, piece, inst_name)
 		for c1: Vector2i in cells:
 			if not touched.has(c1) or touched[c1] != _count(cells[c1]): cells[c1].pieces[inst_name] = [piece, sha[piece], p, float(r.get("yaw", 0))]
@@ -943,6 +1289,7 @@ func _run() -> void:
 	print("BAKE routed %d pieces in %d ms: %s" % [k, Time.get_ticks_msec() - t0, str(stat)])
 	var routed: int = stat.merged + stat.instanced + stat.pass + stat.far + stat.far_dropped + stat.skipped_cell
 	print("BAKE check props in=%d routed=%d %s" % [stat.props_in, routed, "OK" if routed >= stat.props_in else "MISMATCH"])
+	if no_trees: print("BAKE trees out: %d trees and palms left out (%d trunk colliders), %d wells paved over, %d wells left open (odd shape or a bed)" % [int(stat.trees_out), int(stat.tree_cols_out), int(stat.wells_filled), int(stat.wells_left)])
 	# pass 2 needs the meshes again: reload pieces lazily through the cached PackedScenes (the Mesh objects are kept alive by the records)
 	var tot := {"draw_nodes": 0, "nodes": 0}
 	for c: Vector2i in cells:
@@ -978,7 +1325,7 @@ func _run() -> void:
 			if not held.has(sp) and sp.get_extension() in ["png", "jpg", "webp", "gdshader", "gdshaderinc", "tres", "gd"]: late[sp] = true
 	for lp: String in late: keep[lp] = true
 	print("BAKE check first use: %d texture / shader / material files the cells need were not held from the start, now on the keep list: %s" % [late.size(), str(late.keys()).substr(0, 600)])
-	var man := {"version": VERSION, "keep": keep.keys(), "warm": wi, "layout_sha": FileAccess.get_sha256(LAYOUT), "area": area, "tint": tint_on, "cells": manifest_cells, "far": fw, "stat": stat, "cell_m": CELL}
+	var man := {"version": VERSION, "keep": keep.keys(), "warm": wi, "layout_sha": FileAccess.get_sha256(LAYOUT), "area": area, "tint": tint_on, "no_trees": no_trees, "wells_filled": well_fill and no_trees, "cells": manifest_cells, "far": fw, "stat": stat, "cell_m": CELL}
 	var f := FileAccess.open(out + "manifest.json", FileAccess.WRITE); f.store_string(JSON.stringify(man, " ")); f.close()
 	print("BAKE collision: %d triangle shapes cut into pieces, %d pieces in all, largest %d triangles; shape kinds left out: %s" % [int(stat.col_split), int(stat.col_pieces), int(stat.col_piece_max), str(stat.get("col_unknown", {}))])
 	print("BAKE_DONE cells=%d draw nodes=%d nodes=%d lib meshes=%d shapes=%d materials=%d in %d ms" % [cells.size(), tot.draw_nodes, tot.nodes, lib_mesh.size(), int(stat.get("col_shapes", 0)), mats.size(), Time.get_ticks_msec() - t0])

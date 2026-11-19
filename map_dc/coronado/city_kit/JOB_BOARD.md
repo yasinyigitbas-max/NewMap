@@ -5,6 +5,16 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~04:00 (PC session): TREES-OUT SWITCH IN THE BAKE + BIRD'S-EYE VIEW (Yasin: "yes add it. then show me a
+  birdseye view of the entire city"; "can that same bake fill every tree well once they are gone too? with the same
+  material as around the well"). `bake_runtime.gd --notrees` (OFF by default; docs/RUNTIME_BAKE.md "Trees out"): all
+  4,432 builder trees and palms and their trunk colliders left out, the 215 tree wells paved level in their rim's
+  material (collision lifted too), a well under a hand-placed `t_*` tree stays open. No piece touched. Bake 399 ->
+  266 MB, draw nodes 7,186 -> 6,336. NOT on the phone, walking over a filled well not tried. New tool
+  `tools/city/bake/rt_top.gd`; pictures `review/top_19nov/` (whole city as built / without trees, an Amber close-up).
+  WHAT THE BIRD'S-EYE VIEW SHOWS: about a quarter of the land inside the ring road is built (the 8 samples + the four
+  zones' growth); the rest is roads with empty blocks. The hand-placed tree pieces are NOT started (the four open
+  questions of docs/TREE_PLAN.md are now three).
 - 19 Nov ~03:00 (PC session): TWO PROPOSALS WRITTEN, NOTHING IN THE MAP CHANGED, WAITING FOR YASIN.
   (1) `docs/BUDGET.md` (Yasin: "we are gonna shoot way above budget once the cars and these areas land ... scripts
   arent even in yet"; "yes go ahead"): each system's share of the 150 draws (city 100, rooms 12, cars 15, people 15,

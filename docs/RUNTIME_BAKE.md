@@ -170,6 +170,42 @@ Three changes, measured one at a time on the Redmi (zones gate, stream gate):
   place. The rest is made in quiet frames; how full a whole cell may get before that background falls behind was not
   measured (a cell's bodies wait as data, nothing is late). A convex point counts as one unit: a guess, not measured.
 
+### Trees out, wells paved over (19 Nov; a bake switch, OFF by default)
+Yasin: "we can turn off the trees entirely from the current builders and place your hand placed trees instead";
+"can that same bake fill every tree well once they are gone too? with the same material as around the well". Plan and
+counts: `docs/TREE_PLAN.md`.
+
+`bake_runtime.gd -- --all --notrees` (add `--out=res://map_dc/coronado/city_kit/runtime_nt/` to keep the normal bake):
+- every `tree_*` / `palm_*` batch of every piece is left out, in all three tiers, and the trunk's collision with it.
+  Hedges, agaves, pots and wall plants stay. Pieces whose name starts with `t_` (the hand-placed tree layer, none
+  exists yet) keep their trees.
+- a tree well whose tree went is paved over: the soil is raised to the rim (6 cm) and drawn in the rim's own material
+  with its texture mapping continued, the rim's inner face is removed, and the ground collision is lifted the same
+  way. A trunk on grass, gravel or in a bed changes nothing. A well in which a `t_*` tree stands (within 0.7 m) is
+  left open. `--keepwells` leaves every well open.
+- no piece is read differently or written: the locked pieces and the lock test are untouched.
+
+Measured on the PC, whole merged city (526 pieces, 141 cells):
+
+| | as built | `--notrees` |
+|---|---|---|
+| trees and palms | 4,432 | 0 (4,424 trunk colliders out; 8 trees had none) |
+| wells paved over | - | 215, none left open (most street trees stand in grass parkways, not wells) |
+| prop instances routed | 191,905 | 178,609 |
+| draw nodes in the cells | 7,186 | 6,336 |
+| far world | 18 meshes, 500k triangles | 9 meshes, 492k |
+| bake on disk | 399 MB | 266 MB |
+| bake time | 225 s | 213 s |
+
+Checked by eye: `review/top_19nov/amber_close_trees.jpg` / `_notrees.jpg` (Amber north of 10th, from 45 m up): the
+pavement runs through where the wells were, no patch to be seen. NOT checked: walking over a filled well in the rig,
+and anything on the phone (the cost this saves there is the census's `hide_plants` figure minus the hedges and small
+plants that stay: not measured apart).
+
+BIRD'S-EYE VIEW: `tools/city/bake/rt_top.gd` goes over the bake cell by cell with a straight-down camera 165 m up and
+joins the tiles (2 px a metre, north up; mid tier, no shadows, preview terrain under it). Pictures of the whole city,
+as built and with `--notrees`: `review/top_19nov/city_trees.jpg`, `city_notrees.jpg`.
+
 ### The tiers (19 Nov, a PC session with the Redmi; branch `claude/ecstatic-archimedes-922d2c`)
 Yasin: "i think it snaps from near to far directly and everythings appereance change suddenly as we get near".
 Three things were built. Each has its own switch, and each was measured on the phone (Redmi, 720p, debug build, one

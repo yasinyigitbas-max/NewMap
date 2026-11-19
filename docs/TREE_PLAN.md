@@ -69,10 +69,15 @@ check is easy once the trees are a list of positions.
 
 ## 3. How: the builders' trees off, hand-placed trees instead
 
-1. **Off, in ONE place, without touching a piece.** The runtime bake gets a switch that leaves out every `tree_*` and
-   `palm_*` batch of every piece. The pieces and their locks stay as they are (the lock test keeps passing); the
-   baked city simply has no builder trees. This reaches all 4,432, the locked streets included. Hedges, agaves, pots and
-   wall plants stay: they belong to yards and fences (their cost is one of the three things to measure first).
+1. **Off, in ONE place, without touching a piece. DONE 19 Nov (Yasin: "yes add it"): `bake_runtime.gd --notrees`**,
+   off by default (`docs/RUNTIME_BAKE.md` "Trees out"). It leaves out every `tree_*` and `palm_*` batch of every
+   piece, and the trunks' collision. The pieces and their locks stay as they are; the baked city simply has no builder
+   trees. It reached all 4,432, the locked streets included. Hedges, agaves, pots and wall plants stay: they belong to
+   yards and fences (their cost is one of the three things to measure first).
+   THE WELLS (Yasin: "can that same bake fill every tree well once they are gone too? with the same material as around
+   the well"): yes, done in the same switch. A well whose tree went is paved level in its rim's material; a well in
+   which a hand-placed tree stands is left open, by itself. The whole city has only 215 wells (Amber, the high
+   street, the centre, the arterials): most street trees stand in grass parkways.
 2. **The hand-placed layer.** New pieces `t_<area>` in world coordinates (like the wire pieces `w_*`), one per area,
    each written once by its own script: every tree a line with its place, species, size and the reason it is there.
    Built, checked, shown to Yasin, locked. A fix to one area's trees cannot move a tree anywhere else.
@@ -85,9 +90,7 @@ check is easy once the trees are a list of positions.
    Yasin's order is build all, lock all, then check one by one.
 
 ## 4. Open questions for Yasin
-1. **Empty wells.** A well with no tree reads as "a tree is missing". Options: leave bare soil (looks neglected: right
-   for the gritty edge, wrong for the centre); a low plant in it; or an iron grate over it. A cover needs a small kit
-   part or a ground patch.
+1. ~~Empty wells.~~ ANSWERED by Yasin's idea (19 Nov): the bake paves an emptied well over (section 3, step 1).
 2. **When.** Positions do not depend on the tree models, so the layer can be placed before the new trees arrive and the
    species swapped in. Or wait for the models and do both once.
 3. **Order of areas.** Suggested: apartments and civic first (they pay the most), then the residential streets (the
