@@ -28,21 +28,6 @@ anyway, half of your work is sunk and you kept sending zero failure reports". Do
   job"). Grown pieces must fit IT, not the other way round. Do not run `tools/city/run/terrain.sh` to "fix" a buried
   piece: that reshapes approved ground under other zones.
 
-## Second instance of the same mistake: "the wires exist" is not "the wires show"
-- Yasin: "most of your electric poles dont have wires too" ... "i did check and they arent there" ... "your count
-  told you there were no errors too". My diagnostic counted spans INSIDE the w_rv file (all 414 poles had a span) and
-  I reported that as if it answered him. It did not: it could not see what the game draws.
-- The cause: w_rv was ONE mesh for the whole zone (~1.6 km across) with visibility_range_end 300. Godot measures a
-  mesh's visibility range to its AABB CENTRE, so beyond 300 m from the middle of the zone every wire vanished; and the
-  bake (`bake_runtime.gd _walk`) files a whole mesh into the ONE 200 m cell holding its AABB centre, so it streams in
-  only with that cell. The city-kit skill already warned about this for props (split_props); I did not apply it to
-  my own mesh. The sample wire pieces work because each covers ~200 m.
-- Rule: any mesh a piece builds itself (wires, strips, overlays) must be split per 200 m bake cell (or smaller), one
-  MeshInstance3D per cell, each with its own visibility range. Check it from where the PLAYER stands: a camera at
-  street level in several places across the area, not one shot near the middle; and in the baked city when possible.
-- Rule: when Yasin says something is missing, believe what he saw, find why the game does not show it, and never
-  answer with a count from the file.
-
 ## Fit the ground to what is already there, in this order
 1. The approved terrain (the hills of the zoning map live INSIDE the blocks, not only on the streets).
 2. The street pieces AS BUILT: their real height profile (the leg scripts' SPEC "prof", each leg builds only its half
