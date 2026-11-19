@@ -1,0 +1,20 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -5.5,
+    0.0,
+    4.44000005722046
+   ],
+   "base": "prop_bookcase",
+   "chosen": true,
+   "cond": "",
+   "kind": "window_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_bookcase (2.0 m tall) stands right behind a window]"
+  }
+ ],
+ "scene": "g_un_east_bookstore_0"
+}
