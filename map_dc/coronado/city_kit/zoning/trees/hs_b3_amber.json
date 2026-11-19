@@ -1,0 +1,45 @@
+{
+ "area": "hs_b3_amber",
+ "piece": "n_hs_b3_amber",
+ "zone": "high street",
+ "rule": "docs/TREE_PLAN.md: high street (pilot), Amber spine, arterials - trees in wells on the shop side, palms alternating on Amber: the avenue's signature (zone 406 -> about 360)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's four builder palms stand in paved wells on the Amber plaza; three come back on their own spots, in their wells (the list was written before the check so those wells stay open); the inner one is left out to stay under the in-view limit with the next block's Amber palms, and its well is paved.",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -20.0,
+    4.09,
+    286.0
+   ],
+   "yaw": 0.0,
+   "scale": 1.0,
+   "why": "the plaza's well on Amber by the concrete bollards: a queen palm, the avenue's signature"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -20.0,
+    4.09,
+    300.0
+   ],
+   "yaw": 90.0,
+   "scale": 1.0,
+   "why": "the next well 14 m along Amber"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -30.0,
+    4.09,
+    312.0
+   ],
+   "yaw": 270.0,
+   "scale": 1.0,
+   "why": "the plaza's well by the bins toward Ocean: a fan palm among the queens, alternating"
+  }
+ ]
+}
