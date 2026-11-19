@@ -2,6 +2,7 @@
 // There is no script fall-back: the test app checks ClassDB.class_exists("CityNative") and says so when the module
 // is missing.
 #include "city_native.h"
+#include "city_crowd.h"
 #include "city_traffic.h"
 #include "street_graph.h"
 
@@ -18,6 +19,7 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	}
 	GDREGISTER_CLASS(CityNative);
 	GDREGISTER_CLASS(CityTraffic);   // the traffic: core, drawing, parked cars
+	GDREGISTER_CLASS(CityCrowd);     // the walking crowd: the old crowd core on the new pavements and crossings
 	GDREGISTER_CLASS(StreetGraph);   // tool time: the streets as traffic and people need them, from the baked city
 }
 
