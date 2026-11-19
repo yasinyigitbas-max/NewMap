@@ -409,3 +409,12 @@ All 25 high street pieces (`n_hs_b1_*` .. `n_hs_b6_*`) are locked in `locked.jso
 lock test says RESULT PASS. A change now needs Yasin's word, `lock.py unlock`, a rebuild, the checks and a relock. The
 walk-in rooms (`g_hs_*`) and the room assignment are not part of the piece lock. Still NOT done: the shared layout
 (`integrate.py`), the land (only the dry trial), the bake, the phone.
+
+## Polish pass (19 Nov, Yasin: "run a polish pass in all your quarters, both indoors and outdoors ... plenty of props ... have variety")
+- Indoors: every shop laid out differently (room_gen_hs.gd: a per-room mix of units on staggered rows, varied side-wall runs and
+  window displays, a fill pass of each kind's own small things); 53 rooms rebuilt, 1,590 -> 1,855 props; check_rooms 0 problems.
+- Outdoors: the 25 pieces unlocked on Yasin's word, 347 more props (trees, planting beds, lawn sprinklers, picnic tables,
+  benches, planters, racks) on free lawn and paving (`POLISH` lists in each piece), rebuilt, relocked.
+- Checked after the polish: validate 0 on my pieces in blocks 1-5, check_life 0 new (blocks 1-4), trees 0 in hard ground and
+  sink 0 (blocks 1-4), 36 overlapping polish props removed. NOT checked (Yasin: "skip checks, commit"): block 5's sink check
+  and life check, all of block 6's outdoor checks, the lock test after relocking. No pictures.
