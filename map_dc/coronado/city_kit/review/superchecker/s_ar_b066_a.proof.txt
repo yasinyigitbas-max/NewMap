@@ -1,0 +1,32 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 14 nodes (with every mesh of the buildings), 5684 ground and ground-collision triangles, 15 prop instances, 8 colliders, 305 wear marks are identical in both files
+PROOF differences found between the files: 47 lines only in the old one, 0 only in the new one
+PROOF change #1 remove palm_mexican_fan_c at (-11.28, 0.09, 34.64) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove palm_mexican_fan_b at (-11.24, 0.09, 57.05) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove palm_mexican_fan_b at (-11.22, 0.09, 95.08) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove palm_mexican_fan_b at (11.23, 0.09, 41.66) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove palm_mexican_fan_b at (11.37, 0.09, 85.38) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove palm_mexican_fan_b at (11.29, 0.09, 94.45) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove palm_mexican_fan_a at (11.36, 0.09, 51.73) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove_decal: one wear mark at (11.30, 0.16, 30.53) removed  [grime mark lies on grass]
+PROOF change #9 remove_decal: one wear mark at (12.76, 0.16, 25.78) removed  [pale patch mark lies on grass]
+PROOF change #10 remove_decal: one wear mark at (-9.56, 0.01, 62.18) removed  [pale patch mark lies on grass]
+PROOF change #11 remove_decal: one wear mark at (-9.88, 0.01, 33.61) removed  [pale patch mark lies on grass]
+PROOF change #12 remove_decal: one wear mark at (-11.48, 0.16, 45.01) removed  [oil mark lies on the sidewalk]
+PROOF change #13 remove_decal: one wear mark at (-11.43, 0.16, 80.08) removed  [oil mark lies on the sidewalk]
+PROOF change #14 remove_decal: one wear mark at (-13.79, 0.16, 43.89) removed  [grime mark hangs over the edge of the ground]
+PROOF change #15 remove_decal: one wear mark at (9.60, 0.01, 91.12) removed  [pale patch mark lies on grass]
+PROOF change #16 remove_decal: one wear mark at (9.48, 0.01, 33.70) removed  [pale patch mark lies on grass]
+PROOF change #17 remove_decal: one wear mark at (11.18, 0.16, 62.29) removed  [oil mark lies on the sidewalk]
+PROOF note: 'Props/palm_mexican_fan_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_near' held only listed items and is gone with them
+PROOF 17 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
