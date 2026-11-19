@@ -1063,6 +1063,24 @@ PackedVector3Array CityCrowd::walk_points(double p_step) const {
 	return out;
 }
 
+Dictionary CityCrowd::walk_points_across(double p_step, double p_across, double p_margin) const {
+	PackedVector3Array out; PackedByteArray kinds;
+	const float step = std::max((float)p_step, 0.25f), across = std::max((float)p_across, 0.1f);
+	for (size_t k = 0; k < crowd->segs.size(); k++) {
+		const pc::Seg &S = crowd->segs[k];
+		const float half = std::max(S.hw - (float)p_margin, 0.0f);
+		const int m = std::max(1, (int)(S.len / step)), na = std::max(1, (int)std::ceil(2.0f * half / across));
+		int h = 0; float x, y, z, tx, tz;
+		for (int q = 0; q <= m; q++)
+			for (int a = 0; a <= na; a++) {
+				crowd->at(S, S.len * (float)q / (float)m, -half + 2.0f * half * (float)a / (float)na, h, x, y, z, tx, tz);
+				out.push_back(Vector3(x, y, z)); kinds.push_back((uint8_t)(S.kind == 1 ? 1 : 0));
+			}
+	}
+	Dictionary d; d["points"] = out; d["kinds"] = kinds;
+	return d;
+}
+
 Dictionary CityCrowd::pavement_near(const Vector3 &p_at, double p_max_d) const {
 	Dictionary d; d["ok"] = false;
 	float su = 0, dd = 0, ax = 0, az = 0, ay = 0;
@@ -1411,6 +1429,7 @@ void CityCrowd::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("place_walker", "at", "look"), &CityCrowd::place_walker);
 	ClassDB::bind_method(D_METHOD("pavement_near", "at", "max_d"), &CityCrowd::pavement_near);
 	ClassDB::bind_method(D_METHOD("walk_points", "step"), &CityCrowd::walk_points);
+	ClassDB::bind_method(D_METHOD("walk_points_across", "step", "across", "margin"), &CityCrowd::walk_points_across);
 	ClassDB::bind_method(D_METHOD("fight_stats"), &CityCrowd::fight_stats);
 	ClassDB::bind_method(D_METHOD("remove_walker", "id"), &CityCrowd::remove_walker);
 	ClassDB::bind_method(D_METHOD("set_goal", "id", "place", "stay_s", "enter"), &CityCrowd::set_goal);

@@ -245,6 +245,10 @@ public:
 	Dictionary pavement_near(const Vector3 &p_at, double p_max_d) const;
 	// (audits) every pavement and crossing as points p_step metres apart, at their height
 	PackedVector3Array walk_points(double p_step) const;
+	// (audits) the same over the WHOLE width people may use: on each pavement and crossing a row of points across it
+	// (from -half width + p_margin to +half width - p_margin, p_across apart) every p_step metres along it.
+	// {points: PackedVector3Array, kinds: PackedByteArray (0 pavement, 1 crossing)}
+	Dictionary walk_points_across(double p_step, double p_across, double p_margin) const;
 	// the people round a point: id, at, yaw, speed, mode, act, state, party
 	Array people_near(const Vector3 &p_at, double p_radius) const;
 	// what happened since the last call: [type, id, aux, f] each (ped_crowd.h E_*); also sent as the signal "crowd_event"

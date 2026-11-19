@@ -406,6 +406,33 @@ PackedVector3Array CityTraffic::lane_points(double p_step) const {
 	return out;
 }
 
+PackedVector3Array CityTraffic::lane_points_across(double p_step, double p_half, double p_across) const {
+	PackedVector3Array out;
+	if (!ready) return out;
+	const float step = std::max((float)p_step, 0.25f), half = std::max((float)p_half, 0.0f), across = std::max((float)p_across, 0.1f);
+	const int na = std::max(1, (int)std::ceil(2.0f * half / across));
+	for (int pc = 0; pc < sim->n_pieces; pc++) {
+		if (pc < sim->n_lanes && !(sim->l_flags[pc] & tc::LF_DRIVE)) continue;
+		const int o = sim->p_off[pc], n = sim->p_n[pc];
+		for (int k = 0; k + 1 < n; k++) {
+			const float x0 = sim->ptx[o + k], y0 = sim->pty[o + k], z0 = sim->ptz[o + k];
+			const float dx = sim->ptx[o + k + 1] - x0, dy = sim->pty[o + k + 1] - y0, dz = sim->ptz[o + k + 1] - z0;
+			const float len = std::sqrt(dx * dx + dz * dz);
+			if (len < 1.0e-5f) continue;
+			const float sx = dz / len, sz = -dx / len;   // across the lane
+			const int m = std::max(1, (int)(len / step));
+			for (int q = 0; q < m; q++) {
+				const float u = (float)q / (float)m;
+				for (int a = 0; a <= na; a++) {
+					const float l = -half + 2.0f * half * (float)a / (float)na;
+					out.push_back(Vector3(x0 + dx * u + sx * l, y0 + dy * u, z0 + dz * u + sz * l));
+				}
+			}
+		}
+	}
+	return out;
+}
+
 int CityTraffic::exec_order(const Input::Order &o) {
 	switch (o.type) {
 		case O_SPAWN: { const int id = sim->spawn_scripted(o.model, o.ax, o.az, o.bx, o.bz, false); return id >= 0 ? id : -1; }
@@ -522,6 +549,7 @@ void CityTraffic::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("order_result", "ticket"), &CityTraffic::order_result);
 	ClassDB::bind_method(D_METHOD("bike_stats"), &CityTraffic::bike_stats);
 	ClassDB::bind_method(D_METHOD("lane_points", "step"), &CityTraffic::lane_points);
+	ClassDB::bind_method(D_METHOD("lane_points_across", "step", "half", "across"), &CityTraffic::lane_points_across);
 	ClassDB::bind_method(D_METHOD("set_cyclists", "n"), &CityTraffic::set_cyclists);
 	ClassDB::bind_method(D_METHOD("get_cyclists"), &CityTraffic::get_cyclists);
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "cyclists"), "set_cyclists", "get_cyclists");
