@@ -304,3 +304,8 @@ reusing a street piece puts that bench in front of somebody else's door (the val
 - `prop_wear_mat` names materials by the colour atlas only, so most near props run without normal / ORM maps (the
   first creator was a mid tier). Known, kept, Yasin's call.
 
+
+## Growing a zone (19 Nov)
+For new blocks round a locked sample, outdoors and indoors together, read `.claude/skills/coronado-zone-growth/SKILL.md`:
+the ground solve that meets neighbours flush (edge snap, shared seams, skirts, no T-joints), wear only on paving,
+where props may not stand, the area checks, how to measure a zone, and every mistake Yasin corrected in the strip zone.

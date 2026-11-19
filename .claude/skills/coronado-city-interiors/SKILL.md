@@ -98,3 +98,7 @@ All 12 room scenes (`rooms/*.scn`) are locked in `locked.json` "files" (Yasin, 1
 - **Cameras inside a building's walls** show "props in the open": check a camera is in the room before calling a finding (lesson from the 17 Nov audit).
 - **Room cost** (PC preview, not a phone): 37-41 draws, 16-19k triangles per waterfront shop room. Measure every new room (room_shots prints RS_ROOM).
 - **room_shots** takes `--only=room,room` and a door `along` per room (a row or a corner shop has several shop doors).
+
+## Zone rooms (19 Nov)
+The strip zone's room corrections (vending caps, max 2 wall items a wall, frame insets, nothing loose mid-room, chairs
+face their desk, recycling bins outside, "add the fault to the checker") are in `.claude/skills/coronado-zone-growth/SKILL.md`.
