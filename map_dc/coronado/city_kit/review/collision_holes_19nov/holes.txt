@@ -1,47 +1,9 @@
-Holes in the collision on roads and pavements (tools/city/audit/collision_holes.gd), 2026-11-19T21:54:45
+Holes in the collision on roads and pavements (tools/city/audit/collision_holes.gd), 2026-11-19T22:26:47
 sweep: FULL WIDTH: pavements and crossings across the width people may use (0.10 m short of each edge), lanes 1.4 m each side of their centre line, rows 0.5 m apart across, every 1.0 m along
-points checked 977333 (a ray down every 1.0 m), hole points 344, holes 36; points in cells the bake has no file for (checked all the same): 246
+points checked 977333 (a ray down every 1.0 m), hole points 0, holes 0; points in cells the bake has no file for (checked all the same): 246
 biggest first: centre x, z (height) | size m | points (road / pavement / crossing) | cell
-(-12.3, -593.7) y 6.09 | 6.3 x 6.2 m | 70 (0 road, 70 pavement, 0 crossing) | cell -1_-3
-(-12.3, -606.3) y 6.15 | 6.3 x 6.2 m | 70 (0 road, 70 pavement, 0 crossing) | cell -1_-4
-(12.3, -606.6) y 6.09 | 6.3 x 6.3 m | 70 (0 road, 70 pavement, 0 crossing) | cell 0_-4
-(12.3, -593.7) y 6.03 | 6.3 x 6.2 m | 70 (0 road, 70 pavement, 0 crossing) | cell 0_-3
-(17.1, -1584.5) y 2.15 | 2.8 x 3.1 m | 8 (0 road, 8 pavement, 0 crossing) | cell 0_-8
-(-17.6, -210.2) y 6.15 | 3.0 x 1.8 m | 5 (0 road, 5 pavement, 0 crossing) | cell -1_-2
-(-16.5, -1584.4) y 2.15 | 1.8 x 3.0 m | 5 (0 road, 5 pavement, 0 crossing) | cell -1_-8
-(674.8, -1423.8) y 2.15 | 1.7 x 3.2 m | 4 (0 road, 4 pavement, 0 crossing) | cell 3_-8
-(-16.4, -1416.1) y 8.15 | 1.5 x 2.1 m | 3 (0 road, 3 pavement, 0 crossing) | cell -1_-8
-(580.1, 210.1) y 1.50 | 1.9 x 1.1 m | 3 (0 road, 3 pavement, 0 crossing) | cell 2_1
-(579.5, 301.2) y 1.50 | 1.4 x 2.1 m | 3 (0 road, 3 pavement, 0 crossing) | cell 2_1
-(16.4, -1416.1) y 8.15 | 1.5 x 2.1 m | 3 (0 road, 3 pavement, 0 crossing) | cell 0_-8
-(-190.1, -1585.3) y 2.15 | 2.1 x 1.6 m | 3 (0 road, 3 pavement, 0 crossing) | cell -1_-8
-(674.7, -1344.3) y 2.36 | 1.0 x 1.6 m | 2 (0 road, 2 pavement, 0 crossing) | cell 3_-7
-(674.9, -1185.1) y 4.15 | 1.6 x 1.8 m | 2 (0 road, 2 pavement, 0 crossing) | cell 3_-6
-(375.0, -800.0) y 6.00 | 1.0 x 1.5 m | 2 (2 road, 0 pavement, 0 crossing) | cell 1_-4
-(-975.4, -1009.7) y 4.15 | 1.4 x 1.1 m | 2 (0 road, 2 pavement, 0 crossing) | cell -5_-6
-(674.4, -1387.9) y 2.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell 3_-7
-(674.6, -1214.8) y 4.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell 3_-7
-(645.2, -984.3) y 4.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell 3_-5
-(-390.7, -589.5) y 6.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -2_-3
-(-390.7, -610.5) y 6.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -2_-4
-(-937.0, -1214.7) y 2.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -5_-7
-(-981.5, -990.6) y 4.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -5_-5
-(-809.3, -610.5) y 6.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -5_-4
-(-809.3, -589.5) y 6.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -5_-3
-(-610.0, -1581.4) y 2.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -4_-8
-(-608.9, -1414.5) y 2.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -4_-8
-(-610.9, -1385.4) y 2.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -4_-7
-(-610.5, -809.3) y 6.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -4_-5
-(-610.5, -390.7) y 6.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -4_-2
-(-591.2, -1414.5) y 2.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -3_-8
-(-499.9, -1214.4) y 4.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -3_-7
-(-589.5, -809.3) y 6.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -3_-5
-(-589.5, -390.7) y 6.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -3_-2
-(-409.3, -389.5) y 6.15 | 1.0 x 1.0 m | 1 (0 road, 1 pavement, 0 crossing) | cell -3_-2
 
-NOT HOLES, listed apart: 87 points that miss but lie ON the outer edge of a surface (ground within 0.05 m on one side only, none on the other; the sweep's row touches where a pavement ends and the land begins). x, z (height) | kind | which side the ground is | cell
-(-16.39, -209.75) y 6.15 | pavement | ground +z | cell -1_-2
-(-16.01, -1582.78) y 2.15 | pavement | ground +x | cell -1_-8
+NOT HOLES, listed apart: 73 points that miss but lie ON the outer edge of a surface (ground within 0.05 m on one side only, none on the other; the sweep's row touches where a pavement ends and the land begins). x, z (height) | kind | which side the ground is | cell
 (-390.80, -210.37) y 6.15 | pavement | ground -x | cell -2_-2
 (-389.63, -209.20) y 6.15 | pavement | ground +z | cell -2_-2
 (-390.80, -789.63) y 6.15 | pavement | ground -x | cell -2_-4
@@ -71,8 +33,6 @@ NOT HOLES, listed apart: 87 points that miss but lie ON the outer edge of a surf
 (-410.37, -809.20) y 6.15 | pavement | ground +z | cell -3_-5
 (-409.20, -1010.37) y 6.15 | pavement | ground +x | cell -3_-6
 (-410.37, -1009.20) y 6.15 | pavement | ground +z | cell -3_-6
-(-590.50, -1414.31) y 2.15 | pavement | ground +z | cell -3_-8
-(-590.32, -1414.71) y 2.15 | pavement | ground +x -z | cell -3_-8
 (-590.80, 210.37) y 4.15 | pavement | ground -x | cell -3_1
 (-589.63, 209.20) y 4.15 | pavement | ground -z | cell -3_1
 (-410.37, 209.20) y 2.15 | pavement | ground -z | cell -3_1
@@ -80,7 +40,6 @@ NOT HOLES, listed apart: 87 points that miss but lie ON the outer edge of a surf
 (-789.63, -390.80) y 4.15 | pavement | ground -z | cell -4_-2
 (-790.80, -810.37) y 6.15 | pavement | ground -x | cell -4_-5
 (-789.63, -809.20) y 6.15 | pavement | ground +z | cell -4_-5
-(-609.62, -1414.34) y 2.15 | pavement | ground +z | cell -4_-8
 (-609.20, 210.37) y 4.15 | pavement | ground +x | cell -4_1
 (-789.63, 209.20) y 2.15 | pavement | ground -z | cell -4_1
 (-610.37, 209.20) y 4.15 | pavement | ground -z | cell -4_1
@@ -99,13 +58,9 @@ NOT HOLES, listed apart: 87 points that miss but lie ON the outer edge of a surf
 (-809.20, -810.37) y 6.15 | pavement | ground +x | cell -5_-5
 (-810.37, -809.20) y 6.15 | pavement | ground +z | cell -5_-5
 (-975.40, -1010.76) y 4.15 | pavement | ground -x -z | cell -5_-6
-(-937.40, -1214.81) y 2.15 | pavement | ground -x | cell -5_-7
 (-809.20, 10.37) y 8.15 | pavement | ground +x | cell -5_0
 (-809.20, 189.63) y 2.15 | pavement | ground +x | cell -5_0
 (-810.37, 9.20) y 8.15 | pavement | ground -z | cell -5_0
-(9.66, -606.82) y 6.15 | pavement | ground -x +z | cell 0_-4
-(12.56, -603.90) y 6.00 | pavement | ground -x +z | cell 0_-4
-(16.02, -1582.81) y 2.15 | pavement | ground -x | cell 0_-8
 (259.20, -810.37) y 6.15 | pavement | ground -x | cell 1_-5
 (260.37, -809.20) y 6.15 | pavement | ground +z | cell 1_-5
 (509.20, -189.63) y 8.15 | pavement | ground -x | cell 2_-1
@@ -121,9 +76,4 @@ NOT HOLES, listed apart: 87 points that miss but lie ON the outer edge of a surf
 (490.80, -810.37) y 6.15 | pavement | ground +x | cell 2_-5
 (509.20, -810.37) y 6.15 | pavement | ground -x | cell 2_-5
 (489.63, -809.20) y 6.15 | pavement | ground +z | cell 2_-5
-(579.22, 210.15) y 1.50 | pavement | ground -x | cell 2_1
-(674.86, -1185.75) y 4.15 | pavement | ground -z | cell 3_-6
-(674.32, -1344.26) y 2.36 | pavement | ground -x | cell 3_-7
-(674.32, -1344.44) y 2.36 | pavement | ground -x | cell 3_-7
 (674.31, -1375.14) y 2.15 | pavement | ground -x | cell 3_-7
-(674.34, -1423.99) y 2.15 | pavement | ground -x | cell 3_-8
