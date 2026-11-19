@@ -260,7 +260,7 @@ func _apply_collider(top: Node, f: Dictionary) -> String:
 		var ab := mesh.get_aabb()
 		var bx := BoxShape3D.new(); bx.size = (ab.size * inst.basis.get_scale()).max(Vector3(0.05, 0.05, 0.05))
 		c.shape = bx; c.transform = to_pc * Transform3D(inst.basis.orthonormalized(), inst * ab.get_center())
-	pc.add_child(c); c.owner = top
+	pc.add_child(c, true); c.owner = top      # a readable, checked-unique name: a fast auto name can repeat a saved sibling's name and the save then drops one (19 Nov, cloud session: two hedge colliders lost)
 	return ""
 
 ## a collision box for ONE column or post of a building, under that building's own collision body
