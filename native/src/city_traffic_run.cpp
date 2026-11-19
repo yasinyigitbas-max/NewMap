@@ -43,6 +43,11 @@ const float PAINT[CityTraffic::N_COLOURS][3] = {
 	{ 0.80f, 0.80f, 0.78f }, { 0.012f, 0.012f, 0.014f }, { 0.30f, 0.315f, 0.33f }, { 0.09f, 0.095f, 0.10f }, { 0.02f, 0.04f, 0.13f },
 	{ 0.36f, 0.015f, 0.012f }, { 0.50f, 0.42f, 0.28f }, { 0.03f, 0.08f, 0.045f }, { 0.25f, 0.42f, 0.58f }, { 0.13f, 0.01f, 0.012f }
 };
+// bicycle frames (linear): red, black, white, teal, orange, navy, mint, yellow
+const float BIKE_PAINT[8][3] = {
+	{ 0.45f, 0.02f, 0.02f }, { 0.015f, 0.015f, 0.017f }, { 0.75f, 0.75f, 0.72f }, { 0.02f, 0.25f, 0.25f },
+	{ 0.70f, 0.20f, 0.02f }, { 0.02f, 0.04f, 0.16f }, { 0.35f, 0.62f, 0.45f }, { 0.75f, 0.55f, 0.03f }
+};
 
 inline int64_t usec_now() {
 	return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
@@ -71,9 +76,16 @@ void CityTraffic::step_once(double p_clock) {
 		std::lock_guard<std::mutex> lock(mx);
 		in = input;
 		input.cells_dirty = false;
-		input.kill_ids.clear(); input.kill_stalls.clear(); input.adopt.clear();
+		input.kill_ids.clear(); input.kill_stalls.clear(); input.adopt.clear(); input.orders.clear();
 	}
 	sim->cfg.max_cars = std::min(in.max_cars, (int)MAX_ROWS - 2);
+	sim->cfg.max_bikes = in.bikes;
+	if (!in.orders.empty()) {   // the game's own cars: routed by the core's finder, answered by ticket
+		std::vector<std::pair<int, int>> done;
+		for (const Input::Order &o : in.orders) done.push_back({ o.ticket, exec_order(o) });
+		std::lock_guard<std::mutex> lock(mx);
+		order_done.insert(order_done.end(), done.begin(), done.end());
+	}
 	// the buses: a timetable in real seconds; every 5 minutes by day, every 15 in the evening, every half hour at night
 	{
 		const float tph = in.bus_tph > 0.0f ? in.bus_tph : ((in.hour >= 6.0f && in.hour < 21.0f) ? 12.0f : (in.hour >= 5.0f ? 4.0f : 2.0f));
@@ -243,6 +255,64 @@ void CityTraffic::send(Batch &b) {
 }
 
 // One row: where the car is, how it stands (yaw 0 = facing +z, pitch + = nose up), its size against the mesh, paint, lamps
+// A bicycle, made here (no file): the rider's frame of the far figures' riding poses (people_bake.h): origin on the
+// ground under the crank's axle, +z forward, wheels of 0.34 m. Tubes are four-sided rods; UV.x says what each part is
+// (0 frame, 1 rubber, 2 metal, 3 saddle and grips). About 600 triangles.
+Ref<Mesh> CityTraffic::make_bike_mesh() {
+	PackedVector3Array v, nrm; PackedVector2Array uv; PackedInt32Array ix;
+	auto rod = [&](Vector3 a, Vector3 b, float r, float part) {
+		Vector3 d = b - a;
+		if (d.length_squared() < 1e-8f) return;
+		d.normalize();
+		Vector3 s1 = std::fabs(d.y) < 0.9f ? d.cross(Vector3(0, 1, 0)).normalized() : d.cross(Vector3(1, 0, 0)).normalized();
+		const Vector3 s2 = d.cross(s1);
+		const Vector3 side[4] = { s1, s2, -s1, -s2 };
+		for (int k = 0; k < 4; k++) {
+			const Vector3 o0 = side[k] * r, o1 = side[(k + 1) & 3] * r, nn = (side[k] + side[(k + 1) & 3]).normalized();
+			const int at = (int)v.size();
+			v.push_back(a + o0); v.push_back(a + o1); v.push_back(b + o1); v.push_back(b + o0);
+			for (int q = 0; q < 4; q++) { nrm.push_back(nn); uv.push_back(Vector2(part, 0)); }
+			const int tri[6] = { 0, 2, 1, 0, 3, 2 };
+			for (int q = 0; q < 6; q++) ix.push_back(at + tri[q]);
+		}
+	};
+	auto wheel = [&](float zc) {
+		const float R = 0.34f, yc = 0.34f;
+		const int N = 14;
+		for (int k = 0; k < N; k++) {
+			const float a0 = 6.2831853f * k / N, a1 = 6.2831853f * (k + 1) / N;
+			rod(Vector3(0, yc + R * std::cos(a0), zc + R * std::sin(a0)), Vector3(0, yc + R * std::cos(a1), zc + R * std::sin(a1)), 0.028f, 1.0f);
+			rod(Vector3(0, yc + 0.30f * std::cos(a0), zc + 0.30f * std::sin(a0)), Vector3(0, yc + 0.30f * std::cos(a1), zc + 0.30f * std::sin(a1)), 0.012f, 2.0f);
+		}
+		for (int k = 0; k < 4; k++) {   // spokes, a few
+			const float a = 3.14159265f * k / 4;
+			rod(Vector3(0, yc + 0.29f * std::cos(a), zc + 0.29f * std::sin(a)), Vector3(0, yc - 0.29f * std::cos(a), zc - 0.29f * std::sin(a)), 0.004f, 2.0f);
+		}
+	};
+	const Vector3 bb(0, 0.28f, 0), rear(0, 0.34f, -0.42f), front(0, 0.34f, 0.60f);
+	const Vector3 seat_top(0, 0.80f, -0.15f), head_top(0, 0.92f, 0.47f), head_bot(0, 0.76f, 0.52f);
+	wheel(rear.z); wheel(front.z);
+	rod(bb, seat_top, 0.018f, 0.0f);          // seat tube
+	rod(bb, head_bot, 0.022f, 0.0f);          // down tube
+	rod(seat_top, head_top, 0.018f, 0.0f);    // top tube
+	rod(bb, rear, 0.012f, 0.0f);              // chain stay
+	rod(seat_top, rear, 0.011f, 0.0f);        // seat stay
+	rod(head_bot, head_top, 0.022f, 0.0f);    // head tube
+	rod(head_bot, front, 0.014f, 0.0f);       // fork
+	rod(seat_top, Vector3(0, 0.90f, -0.17f), 0.012f, 2.0f);   // seat post
+	rod(Vector3(0, 0.91f, -0.27f), Vector3(0, 0.91f, -0.05f), 0.055f, 3.0f);   // saddle
+	rod(head_top, Vector3(0, 1.06f, 0.42f), 0.013f, 2.0f);    // stem
+	rod(Vector3(-0.26f, 1.06f, 0.40f), Vector3(0.26f, 1.06f, 0.40f), 0.012f, 2.0f);   // bar
+	rod(Vector3(-0.26f, 1.06f, 0.40f), Vector3(-0.17f, 1.06f, 0.40f), 0.018f, 3.0f);  // grips
+	rod(Vector3(0.17f, 1.06f, 0.40f), Vector3(0.26f, 1.06f, 0.40f), 0.018f, 3.0f);
+	rod(Vector3(-0.09f, 0.28f, 0.0f), Vector3(0.09f, 0.28f, 0.0f), 0.04f, 2.0f);      // the crank's axle and chainring
+	Array arr; arr.resize(Mesh::ARRAY_MAX);
+	arr[Mesh::ARRAY_VERTEX] = v; arr[Mesh::ARRAY_NORMAL] = nrm; arr[Mesh::ARRAY_TEX_UV] = uv; arr[Mesh::ARRAY_INDEX] = ix;
+	Ref<ArrayMesh> am; am.instantiate();
+	am->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arr);
+	return am;
+}
+
 void CityTraffic::put_row(float *r, float x, float y, float z, float yaw, float pitch, float sx, float sy, float sz, const float *col, float c0, float c1, float c2, float c3) {
 	const float cp = std::cos(pitch), sp = std::sin(pitch), cy = std::cos(yaw), sy_ = std::sin(yaw);
 	// the car's axes in the world: forward f, left l = up x f, up u = f x l
@@ -432,6 +502,22 @@ void CityTraffic::_ready() {
 	}
 	for (int m = 0; m < cm::N_MODELS; m++) make_batch(mid_b[m], mesh_mid[m], mat_mid, 64, shadows);
 	make_batch(box_moving, mesh_box, mat_box, 256, false);
+	{   // the bicycles: a mesh and a small material of their own
+		mesh_bike = make_bike_mesh();
+		Ref<Shader> sh; sh.instantiate();
+		sh->set_code(
+				"shader_type spatial;\n"
+				"// the traffic's bicycles (CityTraffic::make_bike_mesh): UV.x 0 = the frame (the row's paint), 1 = rubber, 2 = metal, 3 = saddle and grips\n"
+				"varying vec3 paint;\n"
+				"varying float part;\n"
+				"void vertex() { paint = INSTANCE_CUSTOM.rgb; part = UV.x; }\n"
+				"void fragment() {\n"
+				"\tvec3 c = part < 0.5 ? paint : (part < 1.5 ? vec3(0.03) : (part < 2.5 ? vec3(0.55) : vec3(0.08, 0.06, 0.05)));\n"
+				"\tALBEDO = c; ROUGHNESS = part < 0.5 ? 0.45 : (part < 2.5 && part > 1.5 ? 0.3 : 0.85); METALLIC = part > 1.5 && part < 2.5 ? 0.8 : 0.0;\n"
+				"}\n");
+		mat_bike.instantiate(); mat_bike->set_shader(sh);
+		make_batch(bike_b, mesh_bike, mat_bike, 32, shadows);
+	}
 	// the lamp glows: four squares at the corners of a unit car (x = left / right, z = front / back), made here
 	{
 		PackedVector3Array v; PackedVector2Array uv, uv2; PackedInt32Array ix;
@@ -527,7 +613,7 @@ void CityTraffic::_exit_tree() {
 		for (Batch &b : near_b) drop(b);
 		for (Batch &b : mid_b) drop(b);
 		for (Batch &b : wheel_b) drop(b);
-		drop(box_moving); drop(box_parked); drop(lamps_b);
+		drop(box_moving); drop(box_parked); drop(lamps_b); drop(bike_b);
 		gfx = false;
 	}
 	if (pool_made) {
@@ -569,7 +655,7 @@ void CityTraffic::_process(double p_delta) {
 		input.pc = pc; input.pcx = pcp.x; input.pcy = pcp.y; input.pcz = pcp.z; input.pcyaw = pcyaw; input.pcvx = pcv.x; input.pcvz = pcv.z; input.pchl = player_hl; input.pchw = player_hw;
 		input.cx = cp.x; input.cy = cp.y; input.cz = cp.z; input.fx = cf.x; input.fz = cf.z; input.fov = (float)cam->get_fov() * 1.6f;   // (the screen is wide: the cone is the horizontal view)
 		input.vx = vel_x; input.vz = vel_z;
-		input.max_cars = max_cars; input.density = (float)density; input.parked = parked_on;
+		input.max_cars = max_cars; input.density = (float)density; input.parked = parked_on; input.bikes = cyclists;
 		for (int k = 0; k < LOOSE; k++) {
 			Input::LooseBox &q = input.lb[k];
 			q.on = loose[k].on ? 1 : 0; q.serial = loose[k].serial;
@@ -606,7 +692,8 @@ void CityTraffic::_process(double p_delta) {
 	for (Batch &b : near_b) b.n = 0;
 	for (Batch &b : mid_b) b.n = 0;
 	for (Batch &b : wheel_b) b.n = 0;
-	box_moving.n = 0; lamps_b.n = 0;
+	box_moving.n = 0; lamps_b.n = 0; bike_b.n = 0;
+	bike_draw.clear();
 	body_want.clear();
 
 	// ---- parked cars
@@ -676,6 +763,19 @@ void CityTraffic::_process(double p_delta) {
 	for (int i = 0; i < now.n; i++) {
 		const Row &r = now.rows[i];
 		const float *p = pose[i];
+		if (r.kind == tc::K_BIKE) {   // a cyclist: the bicycle here, its rider in the crowd's far batch (bike_draw)
+			if (p[5] > (float)(mid_r * mid_r) * 2.0f) continue;
+			const float lean = std::min(std::max(-6.0f * p[6], -0.35f), 0.35f);   // (into the turn, as a bicycle leans)
+			grow(bike_b, bike_b.n + 1);
+			float *row = bike_b.buf.ptrw() + (size_t)bike_b.n * ROW;
+			const float *col = BIKE_PAINT[r.colour % 8];
+			put_row(row, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, PAINT[0], col[0], col[1], col[2], 0.0f);
+			lean_row(row, lean); bike_b.n++;
+			const float odo = r.podo + (r.odo - r.podo) * p[7];
+			bike_draw.push_back(p[0]); bike_draw.push_back(p[1]); bike_draw.push_back(p[2]); bike_draw.push_back(p[3]);
+			bike_draw.push_back(lean); bike_draw.push_back(odo / 5.2f); bike_draw.push_back((float)r.id);
+			continue;
+		}
 		if (r.model >= cm::N_MODELS) continue;
 		const float *col = PAINT[r.colour % N_COLOURS];
 		const float brake = (r.flags & 1) ? 1.0f : 0.0f, ind = (float)((r.flags >> 1) & 3);
@@ -723,6 +823,7 @@ void CityTraffic::_process(double p_delta) {
 			if (mid_b[m].n == 0) { put_row(mid_b[m].buf.ptrw(), wp.x, wp.y - 1.0f, wp.z, 0, 0, 0.02f, 0.02f, 0.02f, PAINT[0], 0, 0, 1, 0); mid_b[m].n = 1; }
 		}
 		if (box_moving.n == 0) { put_row(box_moving.buf.ptrw(), wp.x, wp.y - 1.0f, wp.z, 0, 0, 0.02f, 0.02f, 0.02f, PAINT[0], 0, 0, 1, 0); box_moving.n = 1; }
+		if (bike_b.n == 0) { put_row(bike_b.buf.ptrw(), wp.x, wp.y - 1.0f, wp.z, 0, 0, 0.02f, 0.02f, 0.02f, PAINT[0], 0, 0, 1, 0); bike_b.n = 1; }
 		if (lamps_b.n == 0) { put_row(lamps_b.buf.ptrw(), wp.x, wp.y - 1.0f, wp.z, 0, 0, 0.02f, 0.02f, 0.02f, PAINT[0], 1, 0, 1, 0); lamps_b.n = 1; }
 	}
 	// ---- to the graphics card: a batch with rows this frame, or that had rows last frame; the parked far batch only when it changed
@@ -735,6 +836,8 @@ void CityTraffic::_process(double p_delta) {
 	}
 	if (box_moving.n > 0) { box_moving.dirty = true; batches++; }
 	send(box_moving);
+	if (bike_b.n > 0) { bike_b.dirty = true; batches++; }
+	send(bike_b);
 	if (lamps_b.n > 0) { lamps_b.dirty = true; batches++; }
 	send(lamps_b);
 	if (box_parked.n > 0) batches++;
@@ -900,6 +1003,7 @@ Array CityTraffic::cars_near(const Vector3 &p_at, double p_r) const {
 		if (dx * dx + dz * dz > (float)(p_r * p_r)) continue;
 		Dictionary d;
 		d["id"] = r.id; d["at"] = Vector3(r.x, r.y, r.z); d["yaw"] = r.yaw; d["speed"] = r.v; d["model"] = (int)r.model; d["steer"] = r.steer;
+		d["kind"] = (int)r.kind; d["bike"] = r.kind == tc::K_BIKE;
 		out.push_back(d);
 	}
 	return out;

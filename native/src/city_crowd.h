@@ -39,7 +39,7 @@ class CityCrowd : public Node3D {
 	GDCLASS(CityCrowd, Node3D)
 
 public:
-	enum { ROW = 16, POSES = 13, NEAR_MAX = 18 };
+	enum { ROW = 16, POSES = 17, NEAR_MAX = 18 };   // (POSES: as PeopleBake makes them; 13-16 ride a bicycle)
 
 private:
 	pc::Crowd *crowd = nullptr;
@@ -119,6 +119,7 @@ private:
 	void clip_lengths();
 	void onlookers(int p_row, int p_most, float p_seconds, bool p_film);
 	// counters
+	int riders_drawn = 0;   // the traffic's cyclists drawn as riders this frame
 	struct Count { int frames = 0, steps = 0; double step_us = 0, step_us_worst = 0, main_us = 0, main_us_worst = 0, people = 0, near = 0, umbrellas = 0; int most = 0; } cnt;
 
 	bool load();

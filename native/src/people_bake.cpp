@@ -1,5 +1,6 @@
 // PeopleBake: the tool that poses the far figures, all C++. Every body of characters/rocketbox (its light "_far" mesh)
-// is put into 12 poses once (8 steps of the walk, standing, sitting, lying on the back, lying on the front) with the
+// is put into 17 poses once (8 steps of the walk, standing, sitting, lying on the back, lying on the front, sitting on
+// the ground, four turns of the crank on a bicycle) with the
 // figure's own skeleton and clips, and the corners of all of them are written into ONE table (far_poses.bin) that the
 // people's shader reads (rb_person.gdshader, far_merged): so the whole far crowd is one draw, and nothing is posed or
 // read back while the game runs. Run by tools/city/traffic/make_people.gd; nothing here runs in the game.
@@ -61,8 +62,8 @@ PackedStringArray PeopleBake::bake(Node *p_parent, const String &p_dir, const St
 	const Array ids = donors.keys();
 	std::vector<Donor> out;
 	// the Quaternius library's clips, fitted to this figure (make_anims.gd); the figure's old ones if those are not there
-	static const char *const POSE_CLIP[POSES] = { "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Idle_Loop", "Sitting_Idle_Loop", "LayToIdle", "LayToIdle", "GroundSit_Idle_Loop" };
-	static const char *const POSE_OLD[POSES] = { "walk", "walk", "walk", "walk", "walk", "walk", "walk", "walk", "idle", "sit_idle", "sleep", "sleep", "sit_idle" };
+	static const char *const POSE_CLIP[POSES] = { "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Idle_Loop", "Sitting_Idle_Loop", "LayToIdle", "LayToIdle", "GroundSit_Idle_Loop", "Sitting_Idle_Loop", "Sitting_Idle_Loop", "Sitting_Idle_Loop", "Sitting_Idle_Loop" };
+	static const char *const POSE_OLD[POSES] = { "walk", "walk", "walk", "walk", "walk", "walk", "walk", "walk", "idle", "sit_idle", "sleep", "sleep", "sit_idle", "sit_idle", "sit_idle", "sit_idle", "sit_idle" };
 	// per kind of figure: how far it gets in one round of its walk, jog and sprint clips, and how long each round is
 	float gait[2][6] = { { 1.4f, 1.3f, 2.4f, 0.9f, 3.6f, 0.7f }, { 1.3f, 1.3f, 2.2f, 0.9f, 3.3f, 0.7f } };
 	bool used_ual = false;
@@ -133,6 +134,68 @@ PackedStringArray PeopleBake::bake(Node *p_parent, const String &p_dir, const St
 			if (!nm.is_empty()) k = skel->find_bone(nm);
 			bind_bone[b] = k;
 		}
+		// RIDING A BICYCLE (the traffic's cyclists): the seated pose, the body leant forward, lifted so that the leg is
+		// all but straight with the pedal at the bottom, each foot on its pedal (two-bone reach: hip, knee, ankle; the
+		// knee forward), each hand on its grip (shoulder, elbow, wrist; the elbow out and down). f = a quarter turn of the
+		// crank: 0 = the left pedal at the top.
+		auto under = [&](int b, int root) { for (int q = b; q >= 0; q = skel->get_bone_parent(q)) if (q == root) return true; return false; };
+		auto turn_tree = [&](std::vector<Transform3D> &G, int root, const Basis &R, const Vector3 &pivot) {
+			const Transform3D T(R, pivot - R.xform(pivot));
+			for (int b = 0; b < n_bones; b++) if (under(b, root)) G[b] = T * G[b];
+		};
+		auto arc = [](Vector3 a, Vector3 b) -> Basis {
+			if (a.length_squared() < 1e-10f || b.length_squared() < 1e-10f) return Basis();
+			a.normalize(); b.normalize();
+			const Vector3 ax = a.cross(b);
+			const float sn = ax.length(), cs = a.dot(b);
+			if (sn < 1e-6f) return Basis();
+			return Basis(ax / sn, std::atan2(sn, cs));
+		};
+		auto reach = [&](std::vector<Transform3D> &G, int a, int b, int c, const Vector3 &target, const Vector3 &pole) {
+			if (a < 0 || b < 0 || c < 0) return;
+			const Vector3 pa = G[a].origin, pb = G[b].origin, pc = G[c].origin;
+			const float la = (pb - pa).length(), lb = (pc - pb).length();
+			Vector3 tv = target - pa;
+			const float d = std::min(std::max(tv.length(), std::fabs(la - lb) + 1e-3f), la + lb - 1e-3f);
+			const Vector3 u = tv.normalized();
+			Vector3 v = pole - u * pole.dot(u);
+			if (v.length_squared() < 1e-8f) v = Vector3(0, 0, 1) - u * u.z;
+			v.normalize();
+			const float ca = std::min(std::max((la * la + d * d - lb * lb) / (2.0f * la * d), -1.0f), 1.0f);
+			const Vector3 knee = pa + (u * ca + v * std::sqrt(std::max(0.0f, 1.0f - ca * ca))) * la;
+			turn_tree(G, a, arc(pb - pa, knee - pa), pa);
+			const Vector3 pb2 = G[b].origin, pc2 = G[c].origin;
+			turn_tree(G, b, arc(pc2 - pb2, pa + u * d - pb2), pb2);
+		};
+		const int b_pelvis = skel->find_bone("Bip01_Pelvis"), b_spine = skel->find_bone("Bip01_Spine1") >= 0 ? skel->find_bone("Bip01_Spine1") : skel->find_bone("Bip01_Spine");
+		const int b_th[2] = { skel->find_bone("Bip01_L_Thigh"), skel->find_bone("Bip01_R_Thigh") };
+		const int b_ca[2] = { skel->find_bone("Bip01_L_Calf"), skel->find_bone("Bip01_R_Calf") };
+		const int b_ft[2] = { skel->find_bone("Bip01_L_Foot"), skel->find_bone("Bip01_R_Foot") };
+		const int b_ua[2] = { skel->find_bone("Bip01_L_UpperArm"), skel->find_bone("Bip01_R_UpperArm") };
+		const int b_fa[2] = { skel->find_bone("Bip01_L_Forearm"), skel->find_bone("Bip01_R_Forearm") };
+		const int b_hd[2] = { skel->find_bone("Bip01_L_Hand"), skel->find_bone("Bip01_R_Hand") };
+		auto ride = [&](std::vector<Transform3D> &G, int f) {
+			if (b_pelvis < 0 || b_th[0] < 0 || b_th[1] < 0 || b_ca[0] < 0 || b_ft[0] < 0) return;
+			if (b_spine >= 0) turn_tree(G, b_spine, Basis(Vector3(1, 0, 0), 0.32f), G[b_spine].origin);   // leant over the bars
+			// lift and place: the hips 0.17 m behind the crank's axle, as high as the leg reaches to the lowest pedal
+			const float leg = (G[b_ca[0]].origin - G[b_th[0]].origin).length() + (G[b_ft[0]].origin - G[b_ca[0]].origin).length();
+			const float ankle_lo = BB_Y - CRANK + 0.08f, back = 0.17f;
+			const float hip_y = ankle_lo + std::sqrt(std::max(0.0f, 0.93f * leg * 0.93f * leg - back * back));
+			const Vector3 hip0 = (G[b_th[0]].origin + G[b_th[1]].origin) * 0.5f;
+			const Vector3 shift(-G[b_pelvis].origin.x, hip_y - hip0.y, -back - hip0.z);
+			for (int b = 0; b < n_bones; b++) G[b].origin += shift;
+			for (int side = 0; side < 2; side++) {
+				const float ang = 1.5707963f * (float)f + (side ? 3.14159265f : 0.0f);   // 0 = up
+				const float sx = G[b_th[side]].origin.x;
+				const Vector3 pedal(sx * 0.8f, BB_Y + CRANK * std::cos(ang) + 0.08f, CRANK * std::sin(ang));
+				reach(G, b_th[side], b_ca[side], b_ft[side], pedal, Vector3(sx * 0.3f, 0.2f, 1.0f));
+				if (b_ua[side] >= 0 && b_fa[side] >= 0 && b_hd[side] >= 0) {
+					const float gx = (sx >= 0.0f ? 1.0f : -1.0f) * BAR_W;
+					const Vector3 grip(gx, hip_y + 0.16f, BAR_Z);
+					reach(G, b_ua[side], b_fa[side], b_hd[side], grip, Vector3(gx * 2.0f, -0.6f, -0.6f));
+				}
+			}
+		};
 		std::vector<std::vector<Transform3D>> pose_m(POSES, std::vector<Transform3D>(nb));
 		for (int p = 0; p < POSES; p++) {
 			const bool has_new = ual.is_valid() && ual->has_animation(POSE_CLIP[p]);
@@ -142,12 +205,15 @@ PackedStringArray PeopleBake::bake(Node *p_parent, const String &p_dir, const St
 			{
 				Ref<Animation> a = clip_of(clip);
 				const float len = a.is_valid() ? (float)a->get_length() : 1.0f;
-				t = p < 8 ? len * (float)p / 8.0f : (p == 8 ? std::min(0.5f, len) : ((p == 9 || p == 12) ? std::min(1.0f, len * 0.5f) : 0.0f));
+				t = p < 8 ? len * (float)p / 8.0f : (p == 8 ? std::min(0.5f, len) : ((p == 9 || p >= 12) ? std::min(1.0f, len * 0.5f) : 0.0f));
 			}
 			pose_at(clip, t);
+			std::vector<Transform3D> G(n_bones);   // every bone in the figure's own frame (+z forward, feet at 0)
+			for (int b = 0; b < n_bones; b++) G[b] = face * to_model * glob[b];
+			if (p >= RIDE0) ride(G, p - RIDE0);
 			for (int b = 0; b < nb; b++) {
 				const int k = bind_bone[b];
-				pose_m[p][b] = k >= 0 ? face * to_model * glob[k] * skin->get_bind_pose(b) : Transform3D();
+				pose_m[p][b] = k >= 0 ? G[k] * skin->get_bind_pose(b) : Transform3D();
 			}
 		}
 		// how far a round of the walk, the jog and the sprint carries it: twice the feet's swing fore and aft; and its length
@@ -219,7 +285,7 @@ PackedStringArray PeopleBake::bake(Node *p_parent, const String &p_dir, const St
 						nq = -nq; NO[c * 3 + 1] = -NO[c * 3 + 1];
 					}
 				}
-				if (p >= 10) {   // lying: on the ground, whatever height the clip's bed has
+				if (p >= 10 && p <= 12) {   // lying: on the ground, whatever height the clip's bed has
 					float m = 1e9f;
 					for (int c = 0; c < D.corners; c++) m = std::min(m, PO[c * 3 + 1]);
 					for (int c = 0; c < D.corners; c++) PO[c * 3 + 1] -= m - 0.02f;

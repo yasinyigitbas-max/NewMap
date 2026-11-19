@@ -10,6 +10,8 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/array.hpp>
 #include <godot_cpp/variant/packed_byte_array.hpp>
+#include <godot_cpp/variant/packed_int32_array.hpp>
+#include <godot_cpp/variant/packed_vector3_array.hpp>
 
 #include <algorithm>
 #include <functional>
@@ -22,6 +24,7 @@ namespace godot {
 
 CityTraffic::CityTraffic() {
 	sim = new tc::Sim();
+	route_sc = new tc::RouteScratch();
 }
 
 CityTraffic::~CityTraffic() {
@@ -30,6 +33,7 @@ CityTraffic::~CityTraffic() {
 		if (worker.joinable()) worker.join();
 	}
 	delete sim;
+	delete route_sc;
 }
 
 bool CityTraffic::load_streets(const String &p_path) {
@@ -84,6 +88,8 @@ Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, c
 	if (!ready) { d["error"] = "no streets"; return d; }
 	tc::Config keep = sim->cfg;
 	sim->cfg.max_cars = std::min(p_cars, (int)tc::MAX_CARS);
+	sim->cfg.max_bikes = cyclists;
+	int bikes_most = 0;
 	sim->cfg.hour_factor = 1.0f;
 	sim->cfg.dens_scale = (float)p_density;
 	sim->cfg.stuck_despawn_s = p_stuck_rule ? 60.0f : 1.0e9f;
@@ -175,12 +181,13 @@ Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, c
 		if (debug_car >= 0) {   // the one car a failure named: where it is, where it aims, what it is doing, twice a second
 			const int di = sim->find_car(debug_car);
 			if (di >= 0 && t % 10 == 0 && trace.size() < 400)
-				trace.push_back(vformat("t %.1f lane %d path %d s %.1f | aims %.2f is %.2f goal_lat %.2f | v %.1f steer %.2f yaw %.2f | kind %d pull %d man %d why %d arrived %d flags %d colour %d | stopped by %d lead %d | at (%.1f, %.1f)",
+				trace.push_back(vformat("t %.1f lane %d path %d s %.1f | aims %.2f is %.2f goal_lat %.2f | v %.1f steer %.2f yaw %.2f | kind %d pull %d man %d why %d arrived %d flags %d colour %d | stopped by %d lead %d | at (%.1f, %.1f) | refused %d by %d (%.1f)",
 						clock, sim->lane[di], sim->conn[di], sim->s[di], sim->lat[di], sim->latm[di], sim->goal_lat[di], sim->v[di], sim->steer[di], sim->yaw[di], (int)sim->kind[di], (int)sim->pull[di], (int)sim->man[di], (int)sim->why[di],
-						(int)sim->arrived[di], (int)sim->flags[di], (int)sim->colour[di], sim->veto_by[di], sim->lead_id[di], sim->x[di], sim->z[di]));
+						(int)sim->arrived[di], (int)sim->flags[di], (int)sim->colour[di], sim->veto_by[di], sim->lead_id[di], sim->x[di], sim->z[di], (int)sim->yinfo[di][0], (int)sim->yinfo[di][1], sim->yinfo[di][2]));
 		}
 		us_sum += sim->st.last_step_us; us_max = std::max(us_max, sim->st.last_step_us);
 		alive_max = std::max(alive_max, sim->n_alive);
+		bikes_most = std::max(bikes_most, sim->n_bikes);
 		if (t % 20 == 0) {   // once a second of traffic time
 			int a[3] = { 0, 0, 0 };
 			sim->audit(a);
@@ -232,6 +239,8 @@ Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, c
 	d["park_off_mean"] = parking.parked > 0 ? parking.park_off / parking.parked : 0.0; d["park_off_most"] = parking.park_off_max;
 	d["park_yaw_mean_deg"] = parking.parked > 0 ? parking.park_yaw / parking.parked * 57.2958 : 0.0; d["park_yaw_most_deg"] = parking.park_yaw_max * 57.2958;
 	d["bus_lines"] = (int)sim->routes.size(); d["buses_spawned"] = sim->st.buses_spawned; d["bus_stops_served"] = sim->st.bus_stops_served;
+	d["bikes_wanted"] = cyclists; d["bikes_most"] = bikes_most; d["bikes_spawned"] = sim->st.bikes_spawned; d["bike_squeezes"] = sim->st.bike_squeezes;
+	d["routes_found"] = sim->routes_ok.load(); d["routes_failed"] = sim->routes_no.load(); d["reroutes"] = sim->st.reroutes;
 	d["hash"] = (int64_t)(sim->state_hash() & 0x7fffffffffffffffULL);
 	sim->cfg = keep;
 	return d;
@@ -261,34 +270,9 @@ void CityTraffic::make_bus_lines() {
 	auto d2 = [&](int a, int b) { const float dx = stops[a].x - stops[b].x, dz = stops[a].z - stops[b].z; return dx * dx + dz * dz; };
 	// the shortest way from one lane to another THROUGH JUNCTIONS ONLY, never by changing lanes: a bus that has to
 	// change lanes between a stop at the kerb and a turn a few metres on does not always get across, and then stands
-	// at the end of its lane for good (seen in the first run of tests/traffic/test_bus.gd)
-	const int nl = sim->n_lanes;
-	std::vector<float> dist(nl);
-	std::vector<int32_t> prev(nl);
+	// at the end of its lane for good (seen in the first run of tests/traffic/test_bus.gd). The core's route finder.
 	auto conn_route = [&](int from, int to, std::vector<int32_t> &out) -> bool {
-		out.clear();
-		std::fill(dist.begin(), dist.end(), 1e18f); std::fill(prev.begin(), prev.end(), -1);
-		typedef std::pair<float, int32_t> QE;
-		std::priority_queue<QE, std::vector<QE>, std::greater<QE>> q;
-		dist[from] = 0.0f; q.push({ 0.0f, from });
-		while (!q.empty()) {
-			const QE e = q.top(); q.pop();
-			if (e.first > dist[e.second]) continue;
-			if (e.second == to) break;
-			for (int k = sim->l_out_off[e.second]; k < sim->l_out_off[e.second] + sim->l_out_n[e.second]; k++) {
-				const int c = sim->out_conn[k], t = sim->c_to[c];
-				if (sim->p_blocked[nl + c] || t < 0 || t >= nl) continue;
-				const int f = sim->l_flags[t];
-				if (!(f & tc::LF_DRIVE) || (f & (tc::LF_BLOCKED | tc::LF_DEADEND | tc::LF_EXIT))) continue;
-				const float nd = e.first + sim->p_len[nl + c] + sim->p_len[t];
-				if (nd < dist[t]) { dist[t] = nd; prev[t] = e.second; q.push({ nd, t }); }
-			}
-		}
-		if (prev[to] < 0) return false;
-		for (int l = to; l >= 0; l = prev[l]) { out.push_back(l); if (l == from) break; }
-		if (out.back() != from) { out.clear(); return false; }
-		std::reverse(out.begin(), out.end());
-		return true;
+		return sim->find_route_ex(from, to, tc::RO_NO_LANE_CHANGE | tc::RO_NO_DEADEND | tc::RO_NO_EXIT, *route_sc, out);
 	};
 	// metres along the lanes from one stop to another (-1: no way, or it is behind on the same lane)
 	auto way = [&](int a, int b, std::vector<int32_t> &out) -> float {
@@ -377,6 +361,80 @@ void CityTraffic::set_hour(double p_hour) {
 	input.hour = (float)p_hour;
 }
 
+// ---------------------------------------------------------------- the way on the map, the game's own cars
+Dictionary CityTraffic::route(const Vector3 &p_from, const Vector3 &p_to, bool p_bike) const {
+	Dictionary d;
+	d["ok"] = false; d["metres"] = -1.0;
+	if (!ready) return d;
+	std::vector<int32_t> lanes;
+	std::vector<float> pts;
+	const auto t0 = std::chrono::steady_clock::now();
+	const float m = sim->route_points(p_from.x, p_from.z, p_to.x, p_to.z, p_bike ? tc::RO_BIKE : tc::RO_NO_EXIT, *route_sc, lanes, &pts);
+	d["us"] = (double)std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - t0).count();
+	d["searched"] = route_sc->expanded;
+	if (m < 0.0f) return d;
+	PackedVector3Array pv;
+	pv.resize((int64_t)pts.size() / 3);
+	for (int64_t k = 0; k < pv.size(); k++) pv.set(k, Vector3(pts[k * 3], pts[k * 3 + 1], pts[k * 3 + 2]));
+	PackedInt32Array pl;
+	for (int32_t l : lanes) pl.push_back(l);
+	d["ok"] = true; d["metres"] = m; d["points"] = pv; d["lanes"] = pl;
+	return d;
+}
+
+int CityTraffic::exec_order(const Input::Order &o) {
+	switch (o.type) {
+		case O_SPAWN: { const int id = sim->spawn_scripted(o.model, o.ax, o.az, o.bx, o.bz, false); return id >= 0 ? id : -1; }
+		case O_DRIVE: return sim->drive_to(o.car, o.bx, o.bz) ? 1 : -1;
+		case O_PULL: return sim->pull_over(o.car, o.bx, o.bz, o.side) ? 1 : -1;
+		case O_RELEASE: return sim->release_car(o.car) ? 1 : -1;
+		default: return -1;
+	}
+}
+
+int CityTraffic::spawn_driver(const Vector3 &p_from, const Vector3 &p_to, int p_model) {
+	Input::Order o{ O_SPAWN, next_ticket++, -1, p_from.x, p_from.z, p_to.x, p_to.z, 0, p_model };
+	if (!threaded) { answers.push_back({ o.ticket, ready ? exec_order(o) : -1 }); return o.ticket; }
+	std::lock_guard<std::mutex> lock(mx);
+	input.orders.push_back(o);
+	return o.ticket;
+}
+int CityTraffic::drive_car_to(int p_car, const Vector3 &p_to) {
+	Input::Order o{ O_DRIVE, next_ticket++, p_car, 0, 0, p_to.x, p_to.z, 0, 0 };
+	if (!threaded) { answers.push_back({ o.ticket, ready ? exec_order(o) : -1 }); return o.ticket; }
+	std::lock_guard<std::mutex> lock(mx);
+	input.orders.push_back(o);
+	return o.ticket;
+}
+int CityTraffic::pull_car_over(int p_car, const Vector3 &p_to, int p_side) {
+	Input::Order o{ O_PULL, next_ticket++, p_car, 0, 0, p_to.x, p_to.z, p_side, 0 };
+	if (!threaded) { answers.push_back({ o.ticket, ready ? exec_order(o) : -1 }); return o.ticket; }
+	std::lock_guard<std::mutex> lock(mx);
+	input.orders.push_back(o);
+	return o.ticket;
+}
+int CityTraffic::let_car_go(int p_car) {
+	Input::Order o{ O_RELEASE, next_ticket++, p_car, 0, 0, 0, 0, 0, 0 };
+	if (!threaded) { answers.push_back({ o.ticket, ready ? exec_order(o) : -1 }); return o.ticket; }
+	std::lock_guard<std::mutex> lock(mx);
+	input.orders.push_back(o);
+	return o.ticket;
+}
+int CityTraffic::order_result(int p_ticket) {
+	if (threaded) {
+		std::lock_guard<std::mutex> lock(mx);
+		answers.insert(answers.end(), order_done.begin(), order_done.end());
+		order_done.clear();
+	}
+	for (size_t k = 0; k < answers.size(); k++) {
+		if (answers[k].first != p_ticket) continue;
+		const int r = answers[k].second;
+		answers.erase(answers.begin() + (long)k);
+		return r;
+	}
+	return -9;
+}
+
 void CityTraffic::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("load_streets", "path"), &CityTraffic::load_streets);
 	ClassDB::bind_method(D_METHOD("attach", "streamer"), &CityTraffic::attach);
@@ -432,6 +490,15 @@ void CityTraffic::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_knock_feel"), &CityTraffic::get_knock_feel);
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "knock_feel"), "set_knock_feel", "get_knock_feel");
 	ClassDB::bind_method(D_METHOD("cars_near", "at", "radius"), &CityTraffic::cars_near);
+	ClassDB::bind_method(D_METHOD("route", "from", "to", "bike"), &CityTraffic::route, DEFVAL(false));
+	ClassDB::bind_method(D_METHOD("spawn_driver", "from", "to", "model"), &CityTraffic::spawn_driver);
+	ClassDB::bind_method(D_METHOD("drive_car_to", "car", "to"), &CityTraffic::drive_car_to);
+	ClassDB::bind_method(D_METHOD("pull_car_over", "car", "to", "side"), &CityTraffic::pull_car_over);
+	ClassDB::bind_method(D_METHOD("let_car_go", "car"), &CityTraffic::let_car_go);
+	ClassDB::bind_method(D_METHOD("order_result", "ticket"), &CityTraffic::order_result);
+	ClassDB::bind_method(D_METHOD("set_cyclists", "n"), &CityTraffic::set_cyclists);
+	ClassDB::bind_method(D_METHOD("get_cyclists"), &CityTraffic::get_cyclists);
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "cyclists"), "set_cyclists", "get_cyclists");
 	ClassDB::bind_method(D_METHOD("stalls_near", "at", "radius"), &CityTraffic::stalls_near);
 	ClassDB::bind_method(D_METHOD("knock_stats"), &CityTraffic::knock_stats);
 	ClassDB::bind_method(D_METHOD("is_built"), &CityTraffic::is_built);

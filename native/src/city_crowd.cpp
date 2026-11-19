@@ -4,6 +4,7 @@
 #include "city_ped.h"
 #include "city_player.h"
 #include "city_traffic.h"
+#include "people_bake.h"
 #include "ped_inl.h"
 #include "traffic_sim.h"
 
@@ -447,6 +448,34 @@ void CityCrowd::draw(double p_alpha) {
 		for (const Near &nb : near_pool) if (nb.walker == crowd->id[i]) has_body = true;
 		r[15] = has_body ? pr[3] : -(pr[3] + 1.0f);   // (below 0: drawn whole at any distance; else it dissolves where the near body takes over)
 		n++;
+	}
+	// THE TRAFFIC'S CYCLISTS: each rider is a far figure in one of the four riding poses (PeopleBake 13-16, by how far
+	// the crank has turned), on the traffic's bicycle, leaning with it. Who he is comes from the bicycle's id.
+	CityTraffic *trf = traffic_id ? Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(traffic_id))) : nullptr;
+	riders_drawn = 0;
+	if (trf && trf->is_inside_tree()) {
+		const std::vector<float> &bk = trf->bikes_drawn();
+		for (size_t k = 0; k + 6 < bk.size() && n < pc::MAX_PEDS; k += 7) {
+			const uint32_t h = (uint32_t)bk[k + 6] * 2654435761u ^ 0x5bd1e995u;
+			const int female = (h >> 3) % 3u == 0u ? 1 : 0;   // (a third of them women)
+			const std::vector<int> *pool = &pool_casual[female];
+			if (pool->empty()) pool = &pool_casual[0];
+			if (pool->empty()) break;
+			const int body = (*pool)[(h >> 4) % (uint32_t)pool->size()];
+			const float sc = 0.96f + (float)((h >> 5) % 100u) * 0.0009f;
+			const Basis b = Basis(Vector3(0, 1, 0), bk[k + 3]) * Basis(Vector3(0, 0, 1), bk[k + 4]) * Basis().scaled(Vector3(sc, sc, sc));
+			float *r = w + (size_t)n * ROW;
+			r[0] = b.rows[0].x; r[1] = b.rows[0].y; r[2] = b.rows[0].z; r[3] = bk[k];
+			r[4] = b.rows[1].x; r[5] = b.rows[1].y; r[6] = b.rows[1].z; r[7] = bk[k + 1];
+			r[8] = b.rows[2].x; r[9] = b.rows[2].y; r[10] = b.rows[2].z; r[11] = bk[k + 2];
+			const float turns = bk[k + 5] - std::floor(bk[k + 5]);
+			const int pose = PeopleBake::RIDE0 + ((int)(turns * (float)PeopleBake::RIDE_N) % PeopleBake::RIDE_N);
+			r[12] = (float)((h >> 8) % 24u);
+			r[13] = (float)((h >> 13) % 16u) + (float)(body * 64);
+			r[14] = (float)((h >> 17) % 8u) + 8.0f * (float)((h >> 20) % 4u) + POSE_K * (float)pose;
+			r[15] = -((float)((h >> 22) % 997u) / 1000.0f + 1.0f);
+			n++; riders_drawn++;
+		}
 	}
 	RenderingServer *rs = RenderingServer::get_singleton();
 	if (n > 0) rs->multimesh_set_buffer(mm, buf);
@@ -978,6 +1007,7 @@ Dictionary CityCrowd::stats() const {
 	int r[7];
 	crowd->audit(own_clock, r);
 	d["people"] = crowd->n_alive; d["places"] = (int)crowd->places.size(); d["hour"] = hour; d["weekday"] = weekday;
+	d["riders"] = riders_drawn;
 	d["inside_each_other"] = r[0]; d["beside_pavement"] = r[1]; d["standing_a_minute"] = r[3]; d["bad_numbers"] = r[4];
 	d["spawned"] = s.spawned; d["left"] = s.despawned; d["arrivals"] = s.arrivals; d["went_in"] = s.went_in; d["came_out"] = s.came_out; d["sat"] = s.sat; d["crossings"] = s.crossings;
 	d["groups"] = s.parties; d["meetings"] = s.meetings; d["dodges"] = s.dodges; d["fled"] = s.fled; d["bumps"] = s.bumps;
