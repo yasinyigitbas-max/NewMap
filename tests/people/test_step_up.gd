@@ -15,6 +15,9 @@ var fails := 0
 var lane := 0
 var top_y := -9.0
 var clips := {}
+var finger_off := 0.0   # (the gripping fingers: the farthest from the edge's height, m)
+var finger_n := 0
+var shot := false
 const LANES := [[0.2, "a 20 cm kerb"], [0.45, "a 45 cm box"], [1.6, "a 1.6 m wall"], [3.0, "a 3 m wall"]]
 
 func _check(ok: bool, what: String) -> void:
@@ -38,8 +41,16 @@ func _initialize() -> void:
 	player = ClassDB.instantiate(&"CityPlayer"); player.position = Vector3(0, 0.05, 0); root.add_child(player)
 	cam = Camera3D.new(); root.add_child(cam)
 
+var _grab_later := false
+var _grab_frames := 0
 func _process(_d: float) -> bool:
-	if cam and player:
+	if _grab_later:
+		_grab_frames += 1
+		if _grab_frames >= 2:   # (the frame drawn from the new camera)
+			_grab_later = false; _grab_frames = 0
+			root.get_texture().get_image().save_png("res://OUT/climb_grip.png")
+		return false
+	if cam and player and not shot:
 		cam.current = true
 		cam.look_at_from_position(player.global_position + Vector3(4.5, 2.2, 1.5), player.global_position + Vector3(0, 0.9, 1.5), Vector3.UP)
 	return false
@@ -53,6 +64,14 @@ func _start_lane() -> void:
 func _physics_process(delta: float) -> bool:
 	t += delta
 	if player: top_y = maxf(top_y, player.global_position.y); clips[String(player.call(&"get_clip"))] = true
+	if player and float(player.call(&"get_grip_weight")) > 0.95:   # the hands on the edge: the fingers at the top's height
+		var e: Vector3 = player.call(&"get_edge_at")
+		var hp: Array = player.call(&"get_hand_points")
+		for k in [2, 3]: finger_off = maxf(finger_off, absf((hp[k] as Vector3).y - e.y)); finger_n += 1
+		if lane == 2 and not shot and player.global_position.y > 0.6:
+			shot = true
+			cam.look_at_from_position(e + Vector3(2.2, 0.9, -2.4), e + Vector3(0, -0.2, 0), Vector3.UP)
+			_grab_later = true
 	match step:
 		0:
 			if t < 1.0: return false
@@ -73,7 +92,11 @@ func _physics_process(delta: float) -> bool:
 			if t - t0 < 4.0: return false
 			var h: float = LANES[lane][0]
 			var on := top_y > h - 0.06
-			if lane == 2: _check(on and clips.has("ual/ClimbUp_2m"), "%s, in a jump: he grabs it and pulls himself up (ClimbUp_2m), his feet %.2f m up" % [LANES[lane][1], top_y])
+			if lane == 2:
+				_check(on and clips.has("ual/ClimbUp_2m"), "%s, in a jump: he grabs it and pulls himself up (ClimbUp_2m), his feet %.2f m up" % [LANES[lane][1], top_y])
+				_check(float(player.call(&"get_grip_seconds")) > 0.5 and float(player.call(&"get_grip_miss_most")) < 0.05, "his hands held the edge for %.1f s, each wrist at most %.3f m from its place on it" % [float(player.call(&"get_grip_seconds")), float(player.call(&"get_grip_miss_most"))])
+				_check(float(player.call(&"get_grip_tip_most")) < 0.07, "the gripping fingertips lie on the edge's top (at most %.3f m over or under it): not above it, not into it" % float(player.call(&"get_grip_tip_most")))
+				shot = false
 			else: _check(not on, "%s, in a jump: too high (over 2.5 m), he is not up there (feet at most %.2f m)" % [LANES[lane][1], top_y])
 			if lane == 2: lane = 3; _start_lane(); step = 1; t0 = t; return false
 			player.call(&"set_move", Vector2.ZERO, false)

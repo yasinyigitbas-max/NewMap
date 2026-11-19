@@ -48,6 +48,19 @@ class CityPlayer : public CharacterBody3D {
 	                               // Yasin: "make 24 cm step an obvious over step though, he just walked casually over 20 cm")
 	float climb_t = 0.0f, climb_len = 1.0f, jump_y = 0.0f;
 	Vector3 climb_from, climb_to;
+	// the hands on the edge (Yasin: "make sure the characters hands follow the edge and clinch to the edge of the surface on
+	// climbs"): the edge's middle (where the wall's face meets the top), the way off it toward him, his left
+	Vector3 edge_at, edge_out, edge_side;
+	class HandGrip *grip = nullptr;
+	class FootPlant *plant = nullptr;
+	// the clip's own rise and travel (its hips move the figure up as it climbs): taken out, so his hips follow the climb's
+	// path (Yasin: "lower climb needs better placement"; "step up was off too")
+	Vector3 pel_rest, fig_drawn_at, clip_off;
+	bool pel_rest_set = false;
+	Vector3 pelvis_world() const;
+	float grip_w = 0.0f, grip_miss_most = 0.0f, grip_on_s = 0.0f, grip_tip_most = 0.0f;
+	bool hang_set = false;   // (a high climb: hung from the edge by the clip's own hands, on its first frame)
+	void grip_update();
 	int climbs_low = 0, climbs_high = 0;
 	bool try_climb(const Vector3 &p_dir);
 	double clock_s = 0.0;
@@ -99,6 +112,14 @@ public:
 	int get_climbs_low() const { return climbs_low; }
 	int get_climbs_high() const { return climbs_high; }
 	bool is_climbing() const { return climb != 0; }
+	float get_grip_weight() const { return grip_w; }
+	float get_hips_drop() const;
+	Vector3 get_pelvis() const { return pelvis_world(); }
+	float get_grip_miss_most() const { return grip_miss_most; }   // the farthest a gripping wrist ended from its point (m)
+	float get_grip_seconds() const { return grip_on_s; }
+	float get_grip_tip_most() const { return grip_tip_most; }   // the farthest a gripping fingertip was over or under the edge's top (m)
+	Vector3 get_edge_at() const { return edge_at; }
+	Array get_hand_points() const;
 	void take_hit() { hit_t = 0.0; hits_taken++; }   // a blow taken on his feet (the hit clip)
 	int get_hits_taken() const { return hits_taken; }
 	bool get_crouch() const { return crouch; }

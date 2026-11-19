@@ -2,6 +2,8 @@
 #include "city_player.h"
 
 #include "city_ped.h"
+#include "hand_grip.h"
+#include <godot_cpp/classes/skeleton3d.hpp>
 
 #include <godot_cpp/classes/audio_effect_capture.hpp>
 #include <godot_cpp/classes/audio_server.hpp>
@@ -197,20 +199,64 @@ void CityPlayer::_physics_process(double p_delta) {
 	clock_s += dt;
 	if (climb) {   // climbing: up first, then over the edge, as the clip plays; nothing else moves him
 		climb_t += dt;
+		if (climb == 2 && !hang_set && climb_t > dt * 1.5f) {   // (the clip's first pose is up: its hands over its hips)
+			Skeleton3D *sk = fig->skeleton();
+			const int hl = sk ? sk->find_bone("Bip01_L_Hand") : -1, hr = sk ? sk->find_bone("Bip01_R_Hand") : -1;
+			if (hl >= 0 && hr >= 0) {
+				const Transform3D sg = sk->get_global_transform();
+				const Vector3 hands = (sg.xform(sk->get_bone_global_pose(hl).origin) + sg.xform(sk->get_bone_global_pose(hr).origin)) * 0.5f;
+				const Vector3 pel = pelvis_world();
+				const float up_off = hands.y - pel.y;
+				const float in_off = (hands - pel).dot(-edge_out);   // (how far ahead of his hips the hands are)
+				// hips: under the edge by the hands' height, back from it by their reach; feet: the hips' rest below
+				Vector3 hang = edge_at + Vector3(0, 0.07f - up_off - pel_rest.y, 0) + edge_out * std::max(in_off, 0.2f);
+				climb_from = hang;
+			}
+			hang_set = true;
+		}
 		const float u = std::min(climb_t / climb_len, 1.0f);
 		auto ss = [](float a, float b, float x) { const float t = std::min(std::max((x - a) / (b - a), 0.0f), 1.0f); return t * t * (3.0f - 2.0f * t); };
 		Vector3 at = climb_from;
-		at.y += (climb_to.y - climb_from.y) * ss(0.0f, climb == 2 ? 0.7f : 0.6f, u);
-		const float over = ss(climb == 2 ? 0.55f : (climb == 3 ? 0.15f : 0.35f), 1.0f, u);
-		at.x += (climb_to.x - climb_from.x) * over; at.z += (climb_to.z - climb_from.z) * over;
+		if (climb == 2) {
+			// (Yasin: "the hands rise with the body. They should stay pinned to the ledge's edge until he lets go"): up to
+			// the hips at the edge's height just behind it (the hands held, the arms pushing), then over it and up on top
+			const Vector3 mid = Vector3(edge_at.x, edge_at.y - pel_rest.y + 0.05f, edge_at.z) + edge_out * 0.32f;
+			const float a = ss(0.0f, 0.55f, u), b = ss(0.55f, 1.0f, u);
+			at = climb_from.lerp(mid, a).lerp(climb_to, b);
+		} else {
+			// (Yasin: "they shouldnt jump up the character so much on the approach, characters body should lift after the
+			// first leg is on the collision"): forward first, the first foot up onto the top (planted there by FootPlant),
+			// then the body lifts
+			at.y += (climb_to.y - climb_from.y) * ss(climb == 3 ? 0.35f : 0.3f, climb == 3 ? 0.85f : 0.8f, u);
+			const float over = ss(0.0f, 1.0f, u);
+			at.x += (climb_to.x - climb_from.x) * over; at.z += (climb_to.z - climb_from.z) * over;
+		}
 		set_global_position(at); set_velocity(Vector3());
+		// the hands: on the edge while he hangs and pulls (a high climb: from the grab till he is over it; a low one: while
+		// he pushes himself up), let go as he stands up there; a step: no hands
+		{
+			float w = 0.0f;
+			if (climb == 2) w = ss(0.0f, 0.06f, u) * (1.0f - ss(0.58f, 0.72f, u));   // (held till his hips are at the edge, let go as he goes over)
+			else if (climb == 1) w = ss(0.12f, 0.3f, u) * (1.0f - ss(0.55f, 0.75f, u));
+			grip_w = w;
+			grip_update();
+		}
 		const int climb_kind = climb;
-		if (u >= 1.0f) { climb = 0; airborne = false; apply_floor_snap(); }
+		if (u >= 1.0f) { climb = 0; airborne = false; apply_floor_snap(); grip_w = 0.0f; grip_update(); }
 		speed = 0.0f;
 		static const StringName C_LOW("ual/ClimbUp_1m"), C_HIGH("ual/ClimbUp_2m"), C_STEP("ual/StepUp");
 		const StringName cc = climb_kind == 2 ? C_HIGH : (climb_kind == 3 ? C_STEP : C_LOW);
 		const double len = fig->clip_len(cc);
-		fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), at), cc, len > 0.0 ? std::min(std::max(len / (double)climb_len, 0.5), 3.0) : 1.0, -2.0);
+		// the figure placed so its hips are where the climb's path has them: the clip's own displacement (measured from the
+		// last frame's pose) taken off
+		if (u > 0.0f) {
+			Vector3 off = pelvis_world() - fig_drawn_at - pel_rest;
+			clip_off = off;
+		}
+		Vector3 fig_at = at - (climb_t > dt * 1.5f ? clip_off : Vector3());
+		fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), fig_at), cc, len > 0.0 ? std::min(std::max(len / (double)climb_len, 0.5), 3.0) : 1.0, -2.0);
+		fig_drawn_at = fig_at;
+		if (plant) { const bool on = climb != 2 || u > 0.8f; plant->set_active(on); plant->set_influence(on ? 1.0f : 0.0f); plant->fwd = Vector3(std::sin(yaw), 0, std::cos(yaw)); }
 		return;
 	}
 	if (swimming) crouch = false;
@@ -284,6 +330,12 @@ void CityPlayer::_physics_process(double p_delta) {
 	else if (speed > 2.0f) { clip = JOG; cs = speed / 2.4; }
 	else if (speed > 0.2f) { clip = WALK; cs = speed / 0.92; }
 	fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), get_global_position()), clip, std::min(std::max(cs, 0.5), 2.0), hold);
+	if (Skeleton3D *sk = fig->skeleton()) {
+		if (!plant) { plant = memnew(FootPlant); sk->add_child(plant); }
+		const bool on = !airborne && !swimming && !frozen;
+		plant->set_active(on); plant->set_influence(on ? 1.0f : 0.0f);
+		plant->skip = get_rid(); plant->fwd = Vector3(std::sin(yaw), 0, std::cos(yaw));
+	}
 }
 
 // A ledge ahead: its top (a ray down just past the wall), room to stand there, how high over the ground he stands on
@@ -309,11 +361,64 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 	const Vector3 dest(probe.x + p_dir.x * 0.1f, top.y + 0.03f, probe.z + p_dir.z * 0.1f);
 	Transform3D td = get_global_transform(); td.origin = dest;
 	if (test_move(td, Vector3(0, 0.05f, 0))) return false;   // (no room to stand up there)
-	climb = step ? 3 : (low ? 1 : 2); climb_t = 0.0f;
+	{   // the edge: a ray level with the top, from him toward the wall, meets its face; the hands hold there
+		const float ey = top.y - 0.04f;
+		Ref<PhysicsRayQueryParameters3D> q2 = PhysicsRayQueryParameters3D::create(Vector3(p.x, ey, p.z) - p_dir * 0.3f, Vector3(p.x, ey, p.z) + p_dir * 1.2f, 1);
+		q2->set_exclude(ex);
+		const Dictionary hw = ss->intersect_ray(q2);
+		const Vector3 face = hw.is_empty() ? Vector3(probe.x - p_dir.x * 0.2f, ey, probe.z - p_dir.z * 0.2f) : (Vector3)hw["position"];
+		edge_at = Vector3(face.x, top.y, face.z);
+		edge_out = -p_dir;
+		edge_side = Vector3(0, 1, 0).cross(p_dir).normalized();
+	}
+	// the hips' place over his feet as he stands now, before the climb's clip moves them
+	pel_rest = pelvis_world() - p; clip_off = Vector3(); fig_drawn_at = p;
+	if (!pel_rest_set || pel_rest.y < 0.5f || pel_rest.y > 1.3f) pel_rest = Vector3(0, 0.95f, 0);
+	pel_rest.x = 0.0f; pel_rest.z = 0.0f;
+	pel_rest_set = true;
+	climb = step ? 3 : (low ? 1 : 2); climb_t = 0.0f; hang_set = false;
 	climb_len = step ? 0.5f : (low ? 0.85f : 1.7f);
 	climb_from = p; climb_to = dest;
 	if (step) steps_up++; else if (low) climbs_low++; else climbs_high++;
 	return true;
+}
+
+Vector3 CityPlayer::pelvis_world() const {
+	Skeleton3D *sk = fig ? fig->skeleton() : nullptr;
+	if (!sk) return get_global_position() + Vector3(0, 0.95f, 0);
+	const int b = sk->find_bone("Bip01_Pelvis");
+	return b >= 0 ? sk->get_global_transform().xform(sk->get_bone_global_pose(b).origin) : get_global_position() + Vector3(0, 0.95f, 0);
+}
+
+float CityPlayer::get_hips_drop() const { return plant ? plant->hips_drop : 0.0f; }
+
+void CityPlayer::grip_update() {
+	Skeleton3D *sk = fig ? fig->skeleton() : nullptr;
+	if (!sk) return;
+	if (!grip) { grip = memnew(HandGrip); sk->add_child(grip); }
+	grip->set_active(grip_w > 0.001f);
+	grip->set_influence(grip_w);
+	if (grip_w <= 0.001f) return;
+	// the hands 22 cm either side of the middle of the edge, on the edge itself
+	grip->grip[0] = edge_at + edge_side * 0.22f;
+	grip->grip[1] = edge_at - edge_side * 0.22f;
+	grip->out = edge_out; grip->side = edge_side;
+	if (grip_w > 0.95f) {
+		grip_on_s += (float)get_physics_process_delta_time();
+		grip_miss_most = std::max(grip_miss_most, std::max(grip->miss[0], grip->miss[1]));
+		grip_tip_most = std::max(grip_tip_most, std::max(std::fabs(grip->tip_dy[0]), std::fabs(grip->tip_dy[1])));
+	}
+}
+
+Array CityPlayer::get_hand_points() const {
+	Array a;
+	Skeleton3D *sk = fig ? fig->skeleton() : nullptr;
+	if (!sk) return a;
+	for (const char *n : { "Bip01_L_Hand", "Bip01_R_Hand", "Bip01_L_Finger2", "Bip01_R_Finger2", "Bip01_L_Finger22", "Bip01_R_Finger22" }) {
+		const int b = sk->find_bone(n);
+		a.push_back(b >= 0 ? sk->get_global_transform().xform(sk->get_bone_global_pose(b).origin) : Vector3());
+	}
+	return a;
 }
 
 void CityPlayer::set_riding(bool p_on) {
@@ -369,6 +474,14 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_climbs_low"), &CityPlayer::get_climbs_low);
 	ClassDB::bind_method(D_METHOD("get_climbs_high"), &CityPlayer::get_climbs_high);
 	ClassDB::bind_method(D_METHOD("is_climbing"), &CityPlayer::is_climbing);
+	ClassDB::bind_method(D_METHOD("get_grip_weight"), &CityPlayer::get_grip_weight);
+	ClassDB::bind_method(D_METHOD("get_hips_drop"), &CityPlayer::get_hips_drop);
+	ClassDB::bind_method(D_METHOD("get_pelvis"), &CityPlayer::get_pelvis);
+	ClassDB::bind_method(D_METHOD("get_grip_miss_most"), &CityPlayer::get_grip_miss_most);
+	ClassDB::bind_method(D_METHOD("get_grip_seconds"), &CityPlayer::get_grip_seconds);
+	ClassDB::bind_method(D_METHOD("get_grip_tip_most"), &CityPlayer::get_grip_tip_most);
+	ClassDB::bind_method(D_METHOD("get_edge_at"), &CityPlayer::get_edge_at);
+	ClassDB::bind_method(D_METHOD("get_hand_points"), &CityPlayer::get_hand_points);
 	ClassDB::bind_method(D_METHOD("get_hits_taken"), &CityPlayer::get_hits_taken);
 	ClassDB::bind_method(D_METHOD("set_no_touch", "index", "rect"), &CityPlayer::set_no_touch);
 	ClassDB::bind_method(D_METHOD("get_touch_move"), &CityPlayer::get_touch_move);
