@@ -1,0 +1,81 @@
+{
+ "area": "rg_se_b136_w",
+ "piece": "s_rg_se_b136_w",
+ "zone": "ring boulevard (wide curve)",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - palms, the palm boulevard round the island (zone 1,165 -> about 1,000); within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    563.862,
+    1.534,
+    93.29
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "parkway grass at the start of the curve, a fan palm (one species on this stretch: the queen palm here becomes a fan palm), clear of the kerb inlet (2 m)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    570.772,
+    2.128,
+    69.005
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "parkway grass about 25 m round the curve, the next fan palm"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    592.523,
+    2.75,
+    67.489
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "parkway grass across the curve, about 21 m from the last (old spot and species), clear of the cobra lamp (2.1 m)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    586.247,
+    3.162,
+    48.029
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "parkway grass about 20 m on, the next fan palm (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    610.939,
+    3.729,
+    50.213
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "outer parkway grass about 25 m on, the next fan palm (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    598.967,
+    3.969,
+    30.507
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "parkway grass at the far end, the last fan palm about 22 m on; the other spots closer than 20 m go"
+  }
+ ]
+}
