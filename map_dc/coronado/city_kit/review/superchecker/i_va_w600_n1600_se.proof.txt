@@ -1,0 +1,61 @@
+PROOF compared: 96 nodes (with every mesh of the buildings), 2290 ground and ground-collision triangles, 601 prop instances, 211 colliders, 212 wear marks are identical in both files
+PROOF differences found between the files: 76 lines only in the old one, 9 only in the new one
+PROOF change #19 move prop_meter_electric: (36.79, 1.20, 57.60) -> (36.79, 1.20, 57.00), in 1 tier(s) and its collider  [moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 25 cm from a apt door of boat_shed (services keep 35 cm off)]]
+PROOF change #1 remove tree_torrey_pine_b at (96.03, 0.15, 28.00) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_torrey_pine_b at (95.40, 0.15, 77.07) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_eucalyptus_a at (96.35, 0.15, 40.51) removed, in 3 tier(s) and its collider  [tree_eucalyptus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_eucalyptus_a at (95.79, 0.15, 88.39) removed, in 3 tier(s) and its collider  [tree_eucalyptus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove tree_torrey_pine_a at (96.31, 0.15, 54.18) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove tree_eucalyptus_b at (96.43, 0.15, 64.81) removed, in 3 tier(s) and its collider  [tree_eucalyptus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #20 remove prop_trash_cart_black at (39.50, 0.15, 33.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (2.2 m from a wall, 19.1 m from a fence)]]
+PROOF change #21 remove prop_trash_cart_blue at (40.30, 0.15, 33.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.2 m from a wall, 18.9 m from a fence)]]
+PROOF change #22 remove prop_hose_reel_cart at (39.00, 0.15, 70.00) removed, in 1 tier(s) and its collider  [erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart stands 2.2 m from any building wall and 3.0 m inside the block]]
+PROOF change #23 remove prop_trash_receptacle at (42.00, 0.15, 13.31) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (5.5 m from a wall, 2.3 m from a fence)]]
+PROOF change #24 remove prop_trash_receptacle at (65.23, 0.15, 92.99) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (7.2 m from a wall, 7.2 m from a fence)]]
+PROOF change #25 remove prop_picnic_table at (85.61, 0.15, 94.57) removed, in 1 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]]
+PROOF change #45 remove prop_newspaper_box_red at (7.70, 0.15, 24.00) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red leaves 1.0 m of a 1.8 m wide walk]]
+PROOF change #26 remove_decal: one wear mark at (8.12, 0.16, 36.55) removed  [oil mark lies on the sidewalk]
+PROOF change #27 remove_decal: one wear mark at (8.02, 0.16, 41.88) removed  [oil mark lies on the sidewalk]
+PROOF change #28 remove_decal: one wear mark at (7.77, 0.16, 73.00) removed  [tyre marks mark lies on the sidewalk]
+PROOF change #29 remove_decal: one wear mark at (7.77, 0.16, 75.00) removed  [tyre marks mark lies on the sidewalk]
+PROOF change #30 remove_decal: one wear mark at (48.00, 0.16, 77.00) removed  [paint mark lies on gravel]
+PROOF change #31 remove_decal: one wear mark at (64.00, 0.16, 76.50) removed  [paint mark lies on gravel]
+PROOF change #32 remove_decal: one wear mark at (80.00, 0.16, 77.00) removed  [paint mark lies on gravel]
+PROOF change #33 remove_decal: one wear mark at (51.38, 0.16, 69.63) removed  [crack mark lies on gravel]
+PROOF change #34 remove_decal: one wear mark at (90.69, 0.16, 57.81) removed  [crack mark lies on grass]
+PROOF change #35 remove_decal: one wear mark at (77.77, 0.16, 69.69) removed  [crack mark lies on gravel]
+PROOF change #36 remove_decal: one wear mark at (55.40, 0.16, 68.76) removed  [crack mark lies on gravel]
+PROOF change #37 remove_decal: one wear mark at (77.47, 0.16, 69.15) removed  [crack mark lies on gravel]
+PROOF change #38 remove_decal: one wear mark at (81.29, 0.16, 69.35) removed  [crack mark lies on gravel]
+PROOF change #39 remove_decal: one wear mark at (74.79, 0.16, 69.04) removed  [sealed patch mark lies on gravel]
+PROOF change #40 remove_decal: one wear mark at (46.78, 0.16, 67.13) removed  [sealed patch mark lies on gravel]
+PROOF change #41 remove_decal: one wear mark at (36.81, 0.16, 69.79) removed  [pale patch mark lies on gravel]
+PROOF change #42 remove_decal: one wear mark at (34.93, 0.16, 61.11) removed  [oil mark lies under the building boat_shed]
+PROOF change #43 remove_decal: one wear mark at (35.20, 0.16, 67.18) removed  [grime mark lies under the building boat_shed]
+PROOF change #47 add_box: a collision box [0.89987564086914, 1.69993732869625, 5.69980049133301, 0.16, 2.79990580677986, 0.16] for a column of Buildings/bay_boatworks_office  [bay_boatworks_office: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #48 add_box: a collision box [-0.90014171600342, 1.69993732869625, 5.69980049133301, 0.16, 2.79990580677986, 0.16] for a column of Buildings/bay_boatworks_office  [bay_boatworks_office: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #49 add_box: a collision box [3.29989767074585, 1.49999141693115, 8.18481826782227, 1.24003795623779, 2.9999828338623, 0.56980422973633] for a column of Buildings/marine_engines  [marine_engines: a 1.2 x 0.5 m column or post of the building has no collision]
+PROOF change #50 add_box: a collision box [8.24988269805908, 1.49999141693115, 8.03992462158203, 0.63988021850586, 2.9999828338623, 0.28001693725586] for a column of Buildings/marine_engines  [marine_engines: a 0.6 x 0.2 m column or post of the building has no collision]
+PROOF change #51 add_box: a collision box [-0.65014743804932, 1.09995424747467, -8.08507919311523, 0.34021667480469, 2.19990849494934, 0.37013343811035] for a column of Buildings/marine_engines  [marine_engines: a 0.3 x 0.3 m column or post of the building has no collision]
+PROOF change #52 add_box: a collision box [8.41983127593994, 1.49999475479126, 12.18470287323, 0.38016036987305, 2.99998950958252, 0.57013038635254] for a column of Buildings/boat_shed  [boat_shed: a 0.3 x 0.5 m column or post of the building has no collision]
+PROOF change #53 add_box: a collision box [7.80000019073486, 1.59999942779541, 5.95999813079834, 0.16, 3.19999885559082, 0.16] for a column of Buildings/sail_loft  [sail_loft: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF note: 'Props/prop_picnic_table_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_newspaper_box_red_rusty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_receptacle_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_hose_reel_cart_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_blue_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_black_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_eucalyptus_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_near' held only listed items and is gone with them
+PROOF 39 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

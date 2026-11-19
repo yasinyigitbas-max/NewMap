@@ -1,0 +1,620 @@
+{
+ "fixes": [
+  {
+   "at": [
+    36.7856254577637,
+    1.20000004768372,
+    57.6000022888184
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "near_door",
+   "mode": "choose",
+   "n": 19.0,
+   "op": "move",
+   "reason": "moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_electric hangs 25 cm from a apt door of boat_shed (services keep 35 cm off)]",
+   "to": [
+    36.7856255030624,
+    1.20000004768372,
+    57.0000022888185
+   ]
+  },
+  {
+   "at": [
+    96.0346298217773,
+    0.150000005960464,
+    28.0
+   ],
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    95.4045104980469,
+    0.150000005960464,
+    77.0709838867188
+   ],
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    96.3538436889648,
+    0.150000005960464,
+    40.5115661621094
+   ],
+   "base": "tree_eucalyptus_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_eucalyptus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    95.7856216430664,
+    0.150000005960464,
+    88.3888931274414
+   ],
+   "base": "tree_eucalyptus_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_eucalyptus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    96.3084411621094,
+    0.150000005960464,
+    54.1847190856934
+   ],
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    96.4285049438477,
+    0.150000005960464,
+    64.8050689697266
+   ],
+   "base": "tree_eucalyptus_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "tree_eucalyptus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    39.5,
+    0.150000005960464,
+    33.0
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 20.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (2.2 m from a wall, 19.1 m from a fence)]"
+  },
+  {
+   "at": [
+    40.2999992370605,
+    0.150000005960464,
+    33.0
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 21.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (2.2 m from a wall, 18.9 m from a fence)]"
+  },
+  {
+   "at": [
+    39.0,
+    0.150000005960464,
+    70.0
+   ],
+   "base": "prop_hose_reel_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "hydrant_nowhere",
+   "mode": "choose",
+   "n": 22.0,
+   "op": "remove",
+   "reason": "erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hose_reel_cart stands 2.2 m from any building wall and 3.0 m inside the block]"
+  },
+  {
+   "at": [
+    42.0,
+    0.150000005960464,
+    13.3125
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 23.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (5.5 m from a wall, 2.3 m from a fence)]"
+  },
+  {
+   "at": [
+    65.2295227050781,
+    0.150000005960464,
+    92.9911804199219
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 24.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (7.2 m from a wall, 7.2 m from a fence)]"
+  },
+  {
+   "at": [
+    85.6108245849609,
+    0.150000005960464,
+    94.5677719116211
+   ],
+   "base": "prop_picnic_table",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "on_asphalt",
+   "mode": "choose",
+   "n": 25.0,
+   "op": "remove",
+   "reason": "erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]"
+  },
+  {
+   "at": [
+    7.703125,
+    0.150000005960464,
+    24.0
+   ],
+   "base": "prop_newspaper_box_red",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 45.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red leaves 1.0 m of a 1.8 m wide walk]"
+  },
+  {
+   "at": [
+    8.12248150507609,
+    0.162000000476837,
+    36.5538597106934
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 26.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    8.02103328704834,
+    0.162000000476837,
+    41.8760871887207
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 27.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    7.765625,
+    0.162000000476837,
+    73.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 28.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    7.765625,
+    0.162000000476837,
+    75.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 29.0,
+   "op": "remove_decal",
+   "reason": "tyre marks mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    48.0,
+    0.162000000476837,
+    77.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 30.0,
+   "op": "remove_decal",
+   "reason": "paint mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    64.0,
+    0.162000000476837,
+    76.5
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 31.0,
+   "op": "remove_decal",
+   "reason": "paint mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    80.0,
+    0.162000000476837,
+    77.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 32.0,
+   "op": "remove_decal",
+   "reason": "paint mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    51.3757247924805,
+    0.162000000476837,
+    69.6253128051758
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 33.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    90.6895446777344,
+    0.162000000476837,
+    57.8145332336426
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 34.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on grass",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    77.7665710449219,
+    0.162000000476837,
+    69.6911926269531
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 35.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    55.3984756469727,
+    0.162000000476837,
+    68.7556610107422
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 36.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    77.4718627929688,
+    0.162000000476837,
+    69.1511535644531
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 37.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    81.2917633056641,
+    0.162000000476837,
+    69.3539886474609
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 38.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    74.786865234375,
+    0.162000000476837,
+    69.0394134521484
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 39.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    46.7779388427734,
+    0.162000000476837,
+    67.13330078125
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 40.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    36.8108139038086,
+    0.162000000476837,
+    69.7906951904297
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 41.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    34.9261093139648,
+    0.162000000476837,
+    61.1089057922363
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 42.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies under the building boat_shed",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    35.2008781433105,
+    0.162000000476837,
+    67.182861328125
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 43.0,
+   "op": "remove_decal",
+   "reason": "grime mark lies under the building boat_shed",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    35.1001238608385,
+    1.84993733465671,
+    19.0627003502761
+   ],
+   "box": [
+    0.899875640869141,
+    1.69993732869625,
+    5.69980049133301,
+    0.16,
+    2.79990580677986,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 47.0,
+   "name": "sc_col_0",
+   "node": "Buildings/bay_boatworks_office",
+   "op": "add_box",
+   "reason": "bay_boatworks_office: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    36.9001412177111,
+    1.84993733465671,
+    19.0627001929136
+   ],
+   "box": [
+    -0.900141716003418,
+    1.69993732869625,
+    5.69980049133301,
+    0.16,
+    2.79990580677986,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 48.0,
+   "name": "sc_col_1",
+   "node": "Buildings/bay_boatworks_office",
+   "op": "add_box",
+   "reason": "bay_boatworks_office: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    10.8808058249952,
+    1.64999142289162,
+    39.2998973129761
+   ],
+   "box": [
+    3.29989767074585,
+    1.49999141693115,
+    8.18481826782227,
+    1.24003795623779,
+    2.9999828338623,
+    0.569804229736328
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 49.0,
+   "name": "sc_col_0",
+   "node": "Buildings/marine_engines",
+   "op": "add_box",
+   "reason": "marine_engines: a 1.2 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    11.0256992548647,
+    1.64999142289162,
+    44.2498823466228
+   ],
+   "box": [
+    8.24988269805908,
+    1.49999141693115,
+    8.03992462158203,
+    0.639880218505859,
+    2.9999828338623,
+    0.280016937255859
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 50.0,
+   "name": "sc_col_1",
+   "node": "Buildings/marine_engines",
+   "op": "add_box",
+   "reason": "marine_engines: a 0.6 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    27.1507034585946,
+    1.24995425343513,
+    35.3498529153608
+   ],
+   "box": [
+    -0.650147438049316,
+    1.09995424747467,
+    -8.08507919311523,
+    0.340216674804687,
+    2.19990849494934,
+    0.370133438110352
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 51.0,
+   "name": "sc_col_2",
+   "node": "Buildings/marine_engines",
+   "op": "add_box",
+   "reason": "marine_engines: a 0.3 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    12.5809217587275,
+    1.64999476075172,
+    76.4198307433296
+   ],
+   "box": [
+    8.41983127593994,
+    1.49999475479126,
+    12.18470287323,
+    0.380160369873047,
+    2.99998950958252,
+    0.570130386352539
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 52.0,
+   "name": "sc_col_0",
+   "node": "Buildings/boat_shed",
+   "op": "add_box",
+   "reason": "boat_shed: a 0.3 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    41.1999992882255,
+    1.74999943375587,
+    85.4899994993416
+   ],
+   "box": [
+    7.80000019073486,
+    1.59999942779541,
+    5.95999813079834,
+    0.16,
+    3.19999885559082,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 53.0,
+   "name": "sc_col_0",
+   "node": "Buildings/sail_loft",
+   "op": "add_box",
+   "reason": "sail_loft: a 0.1 x 0.1 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "i_va_w600_n1600_se"
+}
