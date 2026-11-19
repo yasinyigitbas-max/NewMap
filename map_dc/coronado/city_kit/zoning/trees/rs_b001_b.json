@@ -1,0 +1,33 @@
+{
+ "area": "rs_b001_b",
+ "piece": "s_rs_b001_b",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    2.15,
+    -1249.383
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, the west face's magnolia (old spot and species); the one 14 m before it goes (closer than the 20-30 m run)"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    2.15,
+    -1239.316
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "east parkway grass, the east face's Torrey pine (old spot and species), staggered 10 m from the magnolia"
+  }
+ ]
+}
