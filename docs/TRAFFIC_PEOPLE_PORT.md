@@ -1072,3 +1072,41 @@ floor) RESULT PASS:
 NOT YET / NOT CHECKED: nothing seen in motion or heard; the capsules, umbrellas and towels were counted, not looked
 at; the player is not in the test app yet (`--walk` is next); talking to the player; a bus line; sounds for a scream
 and "look out"; no phone run.
+
+## 30. People, step 7: talking to the player (20 Nov, on the working branch)
+All C++: class `CityTalk` (`city_talk.*`), the old game's npc_talk.gd + npc_talk_ui.gd + the part of voice.gd it used,
+rewritten. Test `tests/people/test_talk.gd` (headless, `--fixed-fps 60`) RESULT PASS, 21 checks; one picture of the
+screen (`review/people_19nov/talk_screen.jpg`).
+- THE WORDS are the old game's, none new: tool `python -I tools/city/traffic/make_talk.py <old game's project>` writes
+  `city_kit/traffic/talk.json` (129 lines, 19 group conversations sorted by hand onto this map's five kinds of
+  street) and copies the recorded clips those lines need, and no others, into `audio/npc/f` and `audio/npc/m`
+  (842 clips each, 25 MB). Left out: lines about places this map has not (the hotel, the ferry, the theatre, dogs),
+  the 92 situations and 14 shop talks the old game never used.
+- WHO: anybody within 2 m of the player (the Talk button, or the player's signal `interact` = E in the test app).
+- REFUSING: alone 80 % agree, a group 20-35 %, 10 % fewer at night and in rain, a jogger never, a group standing in
+  a circle keeps it private one time in four. Who refuses, or cuts it short, bears a grudge for 24 game hours
+  ("Sorry, not today."); who talked says "Hi again!" within ten game minutes. Kept by who the person IS (his look),
+  `get_memory` / `set_memory` for the game's save file.
+- THE TALK: he and his group stand (`pc::Crowd::hold`), he turns to the player and plays the talking clip. Three lines:
+  a real shop near by by its name ("Is Omar's Bakery near here?"), the mission (`set_mission(en, tr, place)`) or a
+  hint (`set_hint`: a job, food, sights), one small-talk topic of six (how are you, the time, the day, what are you
+  doing, where is the beach, a cafe near here); after an answer the same three kinds again plus Goodbye. Answers are
+  filled with the place's name, the direction as the player sees it, walking minutes (80 m a minute), the crowd's
+  clock and weekday, where the walker is going. After two answers he may cut it short (12 %); six at most.
+- SAYING IT: a tapped line must be said. With the phone's speech plugin (singleton "GodotSpeech": isAvailable,
+  startListening, stopListening, speech_result, speech_error) into the microphone, three tries, four words in five
+  count; without it, typed (same rule) or skipped. Three misses: "Sorry, I don't understand. Bye!". While he types
+  the player stands (`CityPlayer::set_frozen`).
+- THE VOICE: the recorded clip at the walker, in a woman's or a man's voice by the body; a templated line is its
+  clips one after the other ("Sure! Go" + direction + "It's about 4 minutes on foot."). A line with a part never
+  recorded (this map's shop names) is a caption only: in the test 11 lines were voiced, 2 were captions only.
+- THE GROUPS' OWN TALK: the brain's event E_SAY gets its words here: a conversation that fits the street and the kind
+  of group (families, sailors, friends have their own), a caption within 8 m, the voice within 25 m.
+- THE SCREEN, made in code: a caption box at the top (who, English, Turkish), the lines at the bottom right (keys
+  1-4 or a tap), the "say it" box at the bottom with a field, Skip and Back; a Talk button when somebody is in reach.
+- Walking 6 m away ends it ("Bye! Have a nice day!"); so does his being knocked over or leaving.
+- Test app: `--walk=1 --people=N` has it (E).
+NOT YET / NOT CHECKED: nobody has talked to anybody by hand; no sound was HEARD (the test counts the clips it would
+play); the speech plugin is NOT in this repo's phone app (the old game's Android plugin must be added to the export:
+until then it is typing or Skip on the phone too); this map's shop names have no recordings (voice rendering is a
+cloud job); the old data says "About 1 minutes on foot" (its own recorded wording, left as it is).

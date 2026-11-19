@@ -8,6 +8,7 @@
 #include "anim_retarget.h"
 #include "city_crowd.h"
 #include "city_player.h"
+#include "city_talk.h"
 #include "people_bake.h"
 #include "people_places.h"
 #include "street_graph.h"
@@ -30,6 +31,7 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(StreetGraph);   // tool time: the streets as traffic and people need them, from the baked city
 	GDREGISTER_CLASS(CityCrowd);     // the people of the map: who walks where and what they do, and how they are drawn
 	GDREGISTER_CLASS(CityPlayer);    // a person to walk the city with (the test app's stand-in for the game's player)
+	GDREGISTER_CLASS(CityTalk);      // talking to the people: the lines, who remembers the player, captions, choices, the recorded voices
 	GDREGISTER_CLASS(AnimRetarget);  // tool time: the Quaternius animation library's clips fitted to the game's figure
 	GDREGISTER_CLASS(PeopleBake);    // tool time: the far figures of the crowd, every body posed once
 	GDREGISTER_CLASS(PeoplePlaces);  // tool time: the places people go (doors, benches, bus stops ...), from the pieces and the shop list

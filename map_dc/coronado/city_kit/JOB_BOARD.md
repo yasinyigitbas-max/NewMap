@@ -137,6 +137,12 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   round him (he cannot walk through a standing person), running into a walker hands him to his balancing body and he
   walks on afterwards, umbrellas in rain, towels on the beach, the murmur at talking groups.
   `tests/people/test_crowd_game.gd` RESULT PASS. Nothing of it seen in motion yet.
+  20 Nov ~14:00: TALKING TO THE PLAYER (doc section 30), all C++: class `CityTalk` (the old game's lines and flow:
+  refusals and grudges, three lines, say it by microphone / typing / skip, answers with a real shop's name, the
+  direction, minutes, the clock, a mission; "Hi again"; the groups' own conversations; captions and buttons made in
+  code; the recorded voices). Words and 842 clips a voice carried over by `tools/city/traffic/make_talk.py`.
+  `tests/people/test_talk.gd` RESULT PASS. Test app: `--walk=1 --people=N`, E speaks to somebody. The phone's speech
+  plugin is not in this repo's app yet; this map's shop names have no recordings (captions only).
   STILL TO DO FOR "DONE": the game's node (join to the traffic, draw far figures and the 18 near bodies with the
   acts' animations, the balancing body for a walker who is pushed or hit, capsules round the player, umbrellas,
   towels, murmur), a player on foot, the talking, a bus line, the real get-up. NO PICTURE OF THE CROWD EXISTS YET.

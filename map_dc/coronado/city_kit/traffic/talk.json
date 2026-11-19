@@ -1,0 +1,891 @@
+{
+ "_doc": "Written by tools/city/traffic/make_talk.py from the old game's talk data: do not edit by hand.",
+ "speaker": {
+  "en": "Passer-by",
+  "tr": "Yoldan geçen"
+ },
+ "system": {
+  "greet": {
+   "en": "Hi! Yes?",
+   "tr": "Merhaba! Evet?"
+  },
+  "greet_group": {
+   "en": "Oh, hi there!",
+   "tr": "Ah, merhaba!"
+  },
+  "hi_again": {
+   "en": "Hi again!",
+   "tr": "Yine merhaba!"
+  },
+  "not_understood": {
+   "en": "Sorry, I don't understand. Bye!",
+   "tr": "Üzgünüm, anlamadım. Hoşça kal!"
+  },
+  "pick_line": {
+   "en": "Pick a line, then say it.",
+   "tr": "Bir cümle seç, sonra söyle."
+  },
+  "jogger": {
+   "en": "Sorry, I'm running!",
+   "tr": "Kusura bakma, koşuyorum!"
+  },
+  "mic_off": {
+   "en": "Turn on the mic to talk to people.",
+   "tr": "İnsanlarla konuşmak için mikrofonu aç."
+  }
+ },
+ "reject": [
+  {
+   "en": "Sorry, I'm in a hurry.",
+   "tr": "Kusura bakma, acelem var."
+  },
+  {
+   "en": "Not now, sorry.",
+   "tr": "Şimdi olmaz, kusura bakma."
+  },
+  {
+   "en": "Sorry, I'm on the phone.",
+   "tr": "Kusura bakma, telefondayım."
+  },
+  {
+   "en": "I'm late, sorry!",
+   "tr": "Geç kaldım, kusura bakma!"
+  },
+  {
+   "en": "Sorry, I can't talk now.",
+   "tr": "Kusura bakma, şimdi konuşamam."
+  }
+ ],
+ "busy": [
+  {
+   "en": "Sorry, not today.",
+   "tr": "Kusura bakma, bugün olmaz."
+  },
+  {
+   "en": "I told you, I'm busy.",
+   "tr": "Söyledim ya, meşgulüm."
+  },
+  {
+   "en": "Please, not now.",
+   "tr": "Lütfen, şimdi değil."
+  }
+ ],
+ "cut": [
+  {
+   "en": "Oh, I have to go. Bye!",
+   "tr": "Ah, gitmem lazım. Hoşça kal!"
+  },
+  {
+   "en": "Sorry, my friend is waiting. Bye!",
+   "tr": "Kusura bakma, arkadaşım bekliyor. Hoşça kal!"
+  },
+  {
+   "en": "Nice talking to you. Bye!",
+   "tr": "Seninle konuşmak güzeldi. Hoşça kal!"
+  },
+  {
+   "en": "I have to catch the ferry. Bye!",
+   "tr": "Vapura yetişmem lazım. Hoşça kal!"
+  }
+ ],
+ "private": [
+  {
+   "en": "Sorry, this is a private talk.",
+   "tr": "Kusura bakma, bu özel bir konuşma."
+  },
+  {
+   "en": "Excuse us, we are talking about something private.",
+   "tr": "Affedersin, özel bir şey konuşuyoruz."
+  },
+  {
+   "en": "Not now, please. It's private.",
+   "tr": "Şimdi değil, lütfen. Bu özel."
+  },
+  {
+   "en": "Sorry, this is just between us.",
+   "tr": "Üzgünüz, bu sadece aramızda."
+  },
+  {
+   "en": "Can you give us a minute? It's private.",
+   "tr": "Bize bir dakika verir misin? Bu özel."
+  }
+ ],
+ "group_reject": [
+  {
+   "en": "Sorry, we're busy right now.",
+   "tr": "Üzgünüz, şu an meşgulüz."
+  },
+  {
+   "en": "Maybe later, OK?",
+   "tr": "Belki sonra, tamam mı?"
+  },
+  {
+   "en": "Sorry, we're leaving now.",
+   "tr": "Üzgünüz, şimdi gidiyoruz."
+  }
+ ],
+ "topics": {
+  "T1": {
+   "say": [
+    {
+     "en": "How are you?",
+     "tr": "Nasılsın?"
+    },
+    {
+     "en": "How are you today?",
+     "tr": "Bugün nasılsın?"
+    }
+   ],
+   "ans": [
+    {
+     "en": "I'm fine, thank you. And you?",
+     "tr": "İyiyim, teşekkürler. Ya sen?"
+    },
+    {
+     "en": "I'm OK.",
+     "tr": "İdare eder."
+    },
+    {
+     "en": "I'm very happy today!",
+     "tr": "Bugün çok mutluyum!"
+    },
+    {
+     "en": "I'm a little tired.",
+     "tr": "Biraz yorgunum."
+    }
+   ],
+   "follow": {
+    "say": [
+     {
+      "en": "I'm fine, thanks.",
+      "tr": "İyiyim, teşekkürler."
+     },
+     {
+      "en": "I'm good.",
+      "tr": "İyiyim."
+     }
+    ],
+    "ans": [
+     {
+      "en": "Great!",
+      "tr": "Harika!"
+     }
+    ]
+   }
+  },
+  "T3": {
+   "say": [
+    {
+     "en": "Where is the beach?",
+     "tr": "Plaj nerede?"
+    }
+   ],
+   "ans": [
+    {
+     "en": "It's [dir]. About [n] minutes on foot.",
+     "tr": "[dir_tr]. Yürüyerek yaklaşık [n] dakika."
+    }
+   ],
+   "ans_here": [
+    {
+     "en": "It's right here!",
+     "tr": "Tam burada!"
+    }
+   ],
+   "ans_unknown": [
+    {
+     "en": "Sorry, I don't know.",
+     "tr": "Kusura bakma, bilmiyorum."
+    }
+   ],
+   "dir": {
+    "straight": {
+     "en": "straight ahead",
+     "tr": "Dümdüz ileride"
+    },
+    "left": {
+     "en": "on your left",
+     "tr": "Solunda"
+    },
+    "right": {
+     "en": "on your right",
+     "tr": "Sağında"
+    },
+    "behind": {
+     "en": "behind you",
+     "tr": "Arkanda"
+    }
+   }
+  },
+  "T4": {
+   "say": [
+    {
+     "en": "What is near here?",
+     "tr": "Buraya yakın ne var?"
+    }
+   ],
+   "ans": [
+    {
+     "en": "[place] is near here. It is [n] minutes on foot.",
+     "tr": "[place] buraya yakın. Yürüyerek [n] dakika."
+    }
+   ],
+   "ans_none": [
+    {
+     "en": "Sorry, I don't know.",
+     "tr": "Kusura bakma, bilmiyorum."
+    }
+   ]
+  },
+  "T4C": {
+   "say": [
+    {
+     "en": "Any cafe near here?",
+     "tr": "Buralarda kafe var mı?"
+    }
+   ],
+   "ans": [
+    {
+     "en": "Yes, [place] is [n] minutes from here.",
+     "tr": "Evet, [place] buradan [n] dakika."
+    }
+   ],
+   "ans_none": [
+    {
+     "en": "Not near here, sorry.",
+     "tr": "Buralarda yok, kusura bakma."
+    }
+   ]
+  },
+  "T5": {
+   "say": [
+    {
+     "en": "What time is it?",
+     "tr": "Saat kaç?"
+    }
+   ],
+   "ans_0": [
+    {
+     "en": "It's [h] o'clock.",
+     "tr": "Saat [h]."
+    }
+   ],
+   "ans_15": [
+    {
+     "en": "It's quarter past [h].",
+     "tr": "Saat [h]'i çeyrek geçiyor."
+    }
+   ],
+   "ans_30": [
+    {
+     "en": "It's half past [h].",
+     "tr": "Saat [h] buçuk."
+    }
+   ],
+   "ans_45": [
+    {
+     "en": "It's quarter to [h1].",
+     "tr": "Saat [h1]'e çeyrek var."
+    }
+   ]
+  },
+  "T5D": {
+   "say": [
+    {
+     "en": "What day is it today?",
+     "tr": "Bugün günlerden ne?"
+    }
+   ],
+   "ans": [
+    {
+     "en": "It's [weekday].",
+     "tr": "Bugün [weekday_tr]."
+    }
+   ]
+  },
+  "T6": {
+   "say": [
+    {
+     "en": "What are you doing?",
+     "tr": "Ne yapıyorsun?"
+    }
+   ],
+   "home": [
+    {
+     "en": "I'm going home.",
+     "tr": "Eve gidiyorum."
+    }
+   ],
+   "beach": [
+    {
+     "en": "I'm going to the beach.",
+     "tr": "Plaja gidiyorum."
+    }
+   ],
+   "park": [
+    {
+     "en": "I'm going to the park.",
+     "tr": "Parka gidiyorum."
+    }
+   ],
+   "shop": [
+    {
+     "en": "I'm going to [place].",
+     "tr": "[place] yerine gidiyorum."
+    }
+   ],
+   "sitting": [
+    {
+     "en": "I'm just relaxing in the sun.",
+     "tr": "Sadece güneşte dinleniyorum."
+    }
+   ],
+   "navy": [
+    {
+     "en": "I'm a sailor. I work at the naval base.",
+     "tr": "Ben denizciyim. Deniz üssünde çalışıyorum."
+    }
+   ],
+   "refuse": [
+    {
+     "en": "That's private, sorry.",
+     "tr": "Bu özel, kusura bakma."
+    },
+    {
+     "en": "Oh, nothing special.",
+     "tr": "Ah, özel bir şey yok."
+    }
+   ]
+  },
+  "T7": {
+   "say": [
+    {
+     "en": "Goodbye!",
+     "tr": "Hoşça kal!"
+    },
+    {
+     "en": "Bye!",
+     "tr": "Görüşürüz!"
+    }
+   ],
+   "ans": [
+    {
+     "en": "Bye! Have a nice day!",
+     "tr": "Hoşça kal! İyi günler!"
+    }
+   ]
+  }
+ },
+ "three": {
+  "small": [
+   "T1",
+   "T5",
+   "T5D",
+   "T6"
+  ],
+  "P": {
+   "say": {
+    "en": "Is [place] near here?",
+    "tr": "[place] buraya yakın mı?"
+   },
+   "ans": [
+    {
+     "en": "Yes! [place] is [dir]. About [n] minutes on foot.",
+     "tr": "Evet! [place] [dir_tr]. Yürüyerek yaklaşık [n] dakika."
+    }
+   ],
+   "ans_close": [
+    {
+     "en": "Yes, [place] is just [dir].",
+     "tr": "Evet, [place] hemen [dir_tr]."
+    }
+   ]
+  },
+  "M": {
+   "say": {
+    "en": "I need to [obj]. Can you help me?",
+    "tr": "Görevim: [obj_tr]. Yardım eder misin?"
+   },
+   "ans": [
+    {
+     "en": "Sure! Go [dir]. It's about [n] minutes on foot.",
+     "tr": "Tabii! [dir_tr] git. Yürüyerek yaklaşık [n] dakika."
+    }
+   ]
+  },
+  "HJ": {
+   "say": {
+    "en": "Where can I find a job?",
+    "tr": "Nerede iş bulabilirim?"
+   },
+   "ans": [
+    {
+     "en": "Try [place], [dir]. And check the Jobs app on your phone.",
+     "tr": "[place] yerini dene, [dir_tr]. Telefonundaki İş uygulamasına da bak."
+    }
+   ]
+  },
+  "HF": {
+   "say": {
+    "en": "Where can I get something to eat?",
+    "tr": "Nerede bir şeyler yiyebilirim?"
+   },
+   "ans": [
+    {
+     "en": "[place] is good. It's [dir], [n] minutes on foot.",
+     "tr": "[place] iyidir. [dir_tr], yürüyerek [n] dakika."
+    }
+   ]
+  },
+  "HV": {
+   "say": {
+    "en": "What can I see around here?",
+    "tr": "Buralarda ne görebilirim?"
+   },
+   "ans": [
+    {
+     "en": "Visit [place]! It's [dir], [n] minutes on foot.",
+     "tr": "[place] yerini gez! [dir_tr], yürüyerek [n] dakika."
+    }
+   ]
+  },
+  "dir_tr": {
+   "straight": "dümdüz ileride",
+   "left": "solunda",
+   "right": "sağında",
+   "behind": "arkanda"
+  },
+  "dir_go": {
+   "straight": [
+    "straight ahead",
+    "Dümdüz"
+   ],
+   "left": [
+    "left",
+    "Sola"
+   ],
+   "right": [
+    "right",
+    "Sağa"
+   ],
+   "behind": [
+    "back the way you came",
+    "Geri"
+   ]
+  }
+ },
+ "weekdays": [
+  {
+   "en": "Monday",
+   "tr": "pazartesi"
+  },
+  {
+   "en": "Tuesday",
+   "tr": "salı"
+  },
+  {
+   "en": "Wednesday",
+   "tr": "çarşamba"
+  },
+  {
+   "en": "Thursday",
+   "tr": "perşembe"
+  },
+  {
+   "en": "Friday",
+   "tr": "cuma"
+  },
+  {
+   "en": "Saturday",
+   "tr": "cumartesi"
+  },
+  {
+   "en": "Sunday",
+   "tr": "pazar"
+  }
+ ],
+ "conversations": [
+  {
+   "id": "cv_beach_1",
+   "zones": [
+    3
+   ],
+   "kinds": [],
+   "lines": [
+    {
+     "en": "The water is cold today!",
+     "tr": "Su bugün soğuk!"
+    },
+    {
+     "en": "Yes, but the sun is nice.",
+     "tr": "Evet, ama güneş güzel."
+    }
+   ]
+  },
+  {
+   "id": "cv_beach_2",
+   "zones": [
+    3
+   ],
+   "kinds": [],
+   "lines": [
+    {
+     "en": "Look at the big waves!",
+     "tr": "Şu büyük dalgalara bak!"
+    },
+    {
+     "en": "Wow! Let's take a picture.",
+     "tr": "Vay! Bir fotoğraf çekelim."
+    }
+   ]
+  },
+  {
+   "id": "cv_beach_3",
+   "zones": [
+    3
+   ],
+   "kinds": [
+    3
+   ],
+   "lines": [
+    {
+     "en": "Can we make a sand castle?",
+     "tr": "Kumdan kale yapabilir miyiz?"
+    },
+    {
+     "en": "Yes! Get the bucket.",
+     "tr": "Evet! Kovayı getir."
+    },
+    {
+     "en": "This is the best day!",
+     "tr": "Bu en güzel gün!"
+    }
+   ]
+  },
+  {
+   "id": "cv_beach_4",
+   "zones": [
+    3
+   ],
+   "kinds": [],
+   "lines": [
+    {
+     "en": "The sand is so shiny here.",
+     "tr": "Burada kum çok parlak."
+    },
+    {
+     "en": "Yes, it's the gold in the sand.",
+     "tr": "Evet, kumdaki altın rengi pullar."
+    }
+   ]
+  },
+  {
+   "id": "cv_jet",
+   "zones": [
+    0,
+    3
+   ],
+   "kinds": [],
+   "lines": [
+    {
+     "en": "Wow, that jet is loud!",
+     "tr": "Vay, o jet çok gürültülü!"
+    },
+    {
+     "en": "It's from the naval base.",
+     "tr": "Deniz üssünden geliyor."
+    }
+   ]
+  },
+  {
+   "id": "cv_vil_1",
+   "zones": [
+    1,
+    2,
+    4
+   ],
+   "kinds": [],
+   "lines": [
+    {
+     "en": "Are you hungry?",
+     "tr": "Acıktın mı?"
+    },
+    {
+     "en": "A little. Let's get a sandwich.",
+     "tr": "Biraz. Bir sandviç alalım."
+    }
+   ]
+  },
+  {
+   "id": "cv_vil_2",
+   "zones": [
+    2
+   ],
+   "kinds": [],
+   "lines": [
+    {
+     "en": "I need a coffee.",
+     "tr": "Bir kahveye ihtiyacım var."
+    },
+    {
+     "en": "Me too. There's a cafe over there.",
+     "tr": "Ben de. Şurada bir kafe var."
+    }
+   ]
+  },
+  {
+   "id": "cv_vil_3",
+   "zones": [
+    1,
+    2,
+    4
+   ],
+   "kinds": [],
+   "lines": [
+    {
+     "en": "I like this street.",
+     "tr": "Bu sokağı seviyorum."
+    },
+    {
+     "en": "Me too. The shops are nice.",
+     "tr": "Ben de. Dükkanlar güzel."
+    }
+   ]
+  },
+  {
+   "id": "cv_vil_5",
+   "zones": [
+    1,
+    2
+   ],
+   "kinds": [
+    3
+   ],
+   "lines": [
+    {
+     "en": "Can I have an ice cream, please?",
+     "tr": "Bir dondurma alabilir miyim, lütfen?"
+    },
+    {
+     "en": "OK, after lunch.",
+     "tr": "Tamam, öğle yemeğinden sonra."
+    }
+   ]
+  },
+  {
+   "id": "cv_ferry_3",
+   "zones": [
+    2
+   ],
+   "kinds": [],
+   "lines": [
+    {
+     "en": "Do you want to rent bikes?",
+     "tr": "Bisiklet kiralamak ister misin?"
+    },
+    {
+     "en": "Yes, let's ride to the beach.",
+     "tr": "Evet, sahile sürelim."
+    }
+   ]
+  },
+  {
+   "id": "cv_park_2",
+   "zones": [
+    0
+   ],
+   "kinds": [
+    3
+   ],
+   "lines": [
+    {
+     "en": "Can we go to the playground?",
+     "tr": "Oyun parkına gidebilir miyiz?"
+    },
+    {
+     "en": "Yes, for ten minutes.",
+     "tr": "Evet, on dakika."
+    }
+   ]
+  },
+  {
+   "id": "cv_res_1",
+   "zones": [
+    0,
+    1
+   ],
+   "kinds": [],
+   "lines": [
+    {
+     "en": "Your garden looks great.",
+     "tr": "Bahçen harika görünüyor."
+    },
+    {
+     "en": "Thanks! The roses are new.",
+     "tr": "Teşekkürler! Güller yeni."
+    }
+   ]
+  },
+  {
+   "id": "cv_res_2",
+   "zones": [
+    0,
+    3,
+    4
+   ],
+   "kinds": [],
+   "lines": [
+    {
+     "en": "It's a nice evening.",
+     "tr": "Güzel bir akşam."
+    },
+    {
+     "en": "Yes, it's not too hot.",
+     "tr": "Evet, çok sıcak değil."
+    }
+   ]
+  },
+  {
+   "id": "cv_navy_1",
+   "zones": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "kinds": [
+    4
+   ],
+   "lines": [
+    {
+     "en": "What time is your watch tomorrow?",
+     "tr": "Yarın nöbetin saat kaçta?"
+    },
+    {
+     "en": "Six in the morning.",
+     "tr": "Sabah altıda."
+    },
+    {
+     "en": "Ouch. Early night, then.",
+     "tr": "Eyvah. O zaman erken yat."
+    }
+   ]
+  },
+  {
+   "id": "cv_navy_2",
+   "zones": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "kinds": [
+    4
+   ],
+   "lines": [
+    {
+     "en": "Let's get some tacos.",
+     "tr": "Biraz taco alalım."
+    },
+    {
+     "en": "Good idea. I'm so hungry.",
+     "tr": "İyi fikir. Çok açım."
+    }
+   ]
+  },
+  {
+   "id": "cv_navy_3",
+   "zones": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "kinds": [
+    4
+   ],
+   "lines": [
+    {
+     "en": "Is the ship leaving next week?",
+     "tr": "Gemi gelecek hafta mı gidiyor?"
+    },
+    {
+     "en": "Yes, on Monday.",
+     "tr": "Evet, pazartesi."
+    }
+   ]
+  },
+  {
+   "id": "cv_any_1",
+   "zones": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "kinds": [],
+   "lines": [
+    {
+     "en": "What do you want to do tonight?",
+     "tr": "Bu akşam ne yapmak istersin?"
+    },
+    {
+     "en": "Let's have dinner by the water.",
+     "tr": "Su kenarında akşam yemeği yiyelim."
+    }
+   ]
+  },
+  {
+   "id": "cv_any_2",
+   "zones": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "kinds": [],
+   "lines": [
+    {
+     "en": "It's a beautiful day.",
+     "tr": "Çok güzel bir gün."
+    },
+    {
+     "en": "Yes, it's always sunny here.",
+     "tr": "Evet, burası hep güneşli."
+    }
+   ]
+  },
+  {
+   "id": "cv_any_3",
+   "zones": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "kinds": [
+    2
+   ],
+   "lines": [
+    {
+     "en": "Did you see the game last night?",
+     "tr": "Dün geceki maçı gördün mü?"
+    },
+    {
+     "en": "Yes! It was great.",
+     "tr": "Evet! Harikaydı."
+    },
+    {
+     "en": "I can't believe it.",
+     "tr": "İnanamıyorum."
+    }
+   ]
+  }
+ ]
+}

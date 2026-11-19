@@ -59,7 +59,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	const float dt = (float)p_delta;
 	Input *in = Input::get_singleton();
 	Vector2 mv = cmd; bool run = cmd_run;
-	if (!scripted) {   // W A S D or the left stick; Shift (or the right trigger) runs; the arrows or the right stick turn the view
+	if (!scripted && !frozen) {   // W A S D or the left stick; Shift (or the right trigger) runs; the arrows or the right stick turn the view
 		mv = Vector2((in->is_key_pressed(KEY_D) ? 1.0f : 0.0f) - (in->is_key_pressed(KEY_A) ? 1.0f : 0.0f), (in->is_key_pressed(KEY_W) ? 1.0f : 0.0f) - (in->is_key_pressed(KEY_S) ? 1.0f : 0.0f));
 		const Vector2 js((float)in->get_joy_axis(0, JOY_AXIS_LEFT_X), -(float)in->get_joy_axis(0, JOY_AXIS_LEFT_Y));
 		if (js.length() > 0.2f) mv += js;
@@ -69,6 +69,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (e && !e_was) emit_signal("interact");
 		e_was = e;
 	}
+	if (frozen) mv = Vector2();
 	if (mv.length() > 1.0f) mv = mv.normalized();
 	// the way he goes: by the view (forward = away from the camera)
 	const Vector3 fwd(-std::sin(cam_yaw), 0, -std::cos(cam_yaw)), right(std::cos(cam_yaw), 0, -std::sin(cam_yaw));
@@ -111,6 +112,8 @@ void CityPlayer::_process(double p_delta) {
 void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_move", "direction", "run"), &CityPlayer::set_move);
 	ClassDB::bind_method(D_METHOD("get_speed"), &CityPlayer::get_speed);
+	ClassDB::bind_method(D_METHOD("set_frozen", "on"), &CityPlayer::set_frozen);
+	ClassDB::bind_method(D_METHOD("is_frozen"), &CityPlayer::is_frozen);
 	ClassDB::bind_method(D_METHOD("set_body_id", "id"), &CityPlayer::set_body_id);
 	ClassDB::bind_method(D_METHOD("get_body_id"), &CityPlayer::get_body_id);
 	ClassDB::bind_method(D_METHOD("set_capture_mouse", "on"), &CityPlayer::set_capture_mouse);

@@ -219,6 +219,7 @@ public:
 	bool to_body(int p_id, bool p_on, float p_x, float p_z);       // a physical body has it (on), or gives it back at that place (off)
 	void scare(float p_x, float p_z, float p_radius, float p_seconds);
 	void bus_at(int p_place, bool p_on, float p_door_x, float p_door_z, int p_get_off);
+	void conv_end() { conv_line = 99; }                            // the game: this conversation has no more lines
 	void bench_off(int p_place, bool p_off);                       // a knocked-over bench: whoever sits there gets up, nobody sits down
 
 	// where a point of a segment is: u metres from node a, ls beside the line; the line's direction there

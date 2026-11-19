@@ -60,6 +60,7 @@ private:
 	std::vector<uint8_t> cells;
 	bool cells_all = true, cells_dirty = false;
 	std::vector<float> cars, dyn;
+	std::vector<String> place_names;   // the shops' names (places.bin)
 	std::vector<pc::Event> ev_keep;   // what happened, until the game takes it (take_events)
 	Vector3 last_player; bool has_last_player = false;
 	// the far figures
@@ -127,6 +128,11 @@ public:
 	void _on_cell_in(const String &p_key);
 	void _on_cell_out(const String &p_key);
 	void set_player(Object *p_player);
+	// (for the talk, city_talk.cpp) the brain, the player, a shop's name, whether a walker is a woman
+	pc::Crowd *brain() const { return crowd; }
+	uint64_t get_player_id() const { return player_id; }
+	String place_name(int p_place) const { if (!crowd || p_place < 0 || p_place >= (int)crowd->places.size()) return String(); const int n = crowd->places[p_place].name; return n >= 0 && n < (int)place_names.size() ? place_names[n] : String(); }
+	bool walker_female(int p_row) const { return crowd && ((crowd->look[p_row] >> 3) & 1u) != 0; }
 
 	void set_max_people(int p_n) { max_people = p_n; }
 	int get_max_people() const { return max_people; }

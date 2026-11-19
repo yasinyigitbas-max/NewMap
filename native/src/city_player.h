@@ -24,7 +24,7 @@ class CityPlayer : public CharacterBody3D {
 	CityPed *fig = nullptr;
 	Camera3D *cam = nullptr;
 	String body_id = "M2";
-	bool capture_mouse = false, scripted = false, cmd_run = false, e_was = false, cam_set = false;
+	bool capture_mouse = false, scripted = false, cmd_run = false, e_was = false, cam_set = false, frozen = false;
 	Vector2 cmd;
 	float cam_yaw = 0.0f, cam_pitch = -0.18f, cam_dist = 3.4f, yaw = 0.0f, speed = 0.0f;
 	float walk_speed = 1.6f, run_speed = 4.6f;
@@ -42,6 +42,9 @@ public:
 
 	// (tests) walk this way instead of by the keys: x = to its right, y = ahead, seen from the camera
 	void set_move(const Vector2 &p_dir, bool p_run);
+	// he stands and takes no keys (while a line is typed to somebody)
+	void set_frozen(bool p_on) { frozen = p_on; }
+	bool is_frozen() const { return frozen; }
 	double get_speed() const { return speed; }
 	CityPed *figure() { return fig; }
 	void set_body_id(const String &p_id) { body_id = p_id; }

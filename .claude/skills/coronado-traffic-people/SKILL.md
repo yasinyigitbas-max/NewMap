@@ -73,6 +73,12 @@ The full record is `docs/TRAFFIC_PEOPLE_PORT.md` (sections 13-20 are results). T
   set with a Vector4, not a Quaternion; the Write tool will not overwrite a file a patch script changed until it is
   read again.
 
+- Talking (20 Nov, doc section 30): `CityTalk` (`city_talk.*`), data `city_kit/traffic/talk.json` and the clips in
+  `audio/npc/<f|m>/` come from `python -I tools/city/traffic/make_talk.py <old game's project>` (never edit the json
+  by hand; a new line needs its clip rendered first). Test `tests/people/test_talk.gd`. A clip's file name is the
+  line in small letters and digits with underscores; a templated line is cut into sentences and round a place's
+  name; if one part has no clip the whole line is a caption only.
+
 ## Yasin's rules for this job (his words are in the doc)
 - Everything in C++: no script in any frame or tick, no script fallback. Tool-time scripts are fine.
 - Parked cars are LOW DETAIL only. Cars must never touch a pavement, a kerb or grass. Cars move naturally.

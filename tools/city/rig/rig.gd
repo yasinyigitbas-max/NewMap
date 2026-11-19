@@ -371,6 +371,10 @@ func _free_walk(start: Vector3, yaw: float) -> void:
 	pl.position = Vector3(start.x, y_start, start.z); pl.rotation.y = yaw
 	add_child(pl)
 	if people: people.call(&"set_player", pl)
+	if people and ClassDB.class_exists(&"CityTalk"):      # talking to people: one C++ node (E, or the Talk button)
+		var talk: Node = ClassDB.instantiate(&"CityTalk")
+		add_child(talk)
+		talk.call(&"set_crowd", people); talk.call(&"set_player", pl)
 	_say("on foot at (%.0f, %.0f): W A S D, Shift runs, the mouse turns, E speaks to somebody, Esc leaves" % [start.x, start.z])
 	if opt.quit: pl.call(&"set_move", Vector2(0, 1), false)      # (--quit: he walks ahead for 12 s and the run leaves by itself)
 	var last := pl.global_position; var metres := 0.0; var lowest := 0.0; var highest := 0.0

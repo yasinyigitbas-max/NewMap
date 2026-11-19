@@ -90,7 +90,11 @@ bool CityCrowd::load() {
 	if (sb.size() < 16 || !d.load(sb.ptr(), (size_t)sb.size()) || !crowd->build(d)) { UtilityFunctions::push_error("CityCrowd: no streets (", streets_path, "): run tools/city/traffic/make_streets.gd"); return false; }
 	const PackedByteArray pbs = FileAccess::get_file_as_bytes(places_path);
 	pc::PlaceData pd;
-	if (pbs.size() >= 12 && pd.load(pbs.ptr(), (size_t)pbs.size())) crowd->set_places(pd);
+	if (pbs.size() >= 12 && pd.load(pbs.ptr(), (size_t)pbs.size())) {
+		crowd->set_places(pd);
+		place_names.clear();
+		for (const std::string &nm : pd.names) place_names.push_back(String::utf8(nm.c_str()));
+	}
 	else UtilityFunctions::push_warning("CityCrowd: no places (", places_path, "): people only walk about. Run tools/city/traffic/make_places.gd");
 	ready = true;
 	return true;
