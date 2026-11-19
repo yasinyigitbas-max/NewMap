@@ -1,0 +1,23 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 10 nodes (with every mesh of the buildings), 4324 ground and ground-collision triangles, 10 prop instances, 6 colliders, 171 wear marks are identical in both files
+PROOF differences found between the files: 34 lines only in the old one, 0 only in the new one
+PROOF change #1 remove palm_queen_a at (6.50, 0.15, 0.00) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove palm_queen_a at (22.50, 0.16, 0.02) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove palm_queen_a at (54.37, 0.21, 2.61) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove palm_queen_a at (70.10, 0.25, 5.53) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove palm_mexican_fan_a at (38.48, 0.18, 0.77) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove prop_park_bench at (71.38, 0.25, -10.15) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_park_bench leaves 0.9 m of a 3.2 m wide walk]]
+PROOF change #10 remove prop_park_bench at (64.90, 0.25, 20.37) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_park_bench leaves 0.7 m of a 2.8 m wide walk]]
+PROOF change #6 remove_decal: one wear mark at (13.51, 0.02, -0.30) removed  [crack mark lies on grass]
+PROOF change #7 remove_decal: one wear mark at (35.72, 0.04, 9.40) removed  [crack mark lies on grass]
+PROOF change #8 remove_decal: one wear mark at (5.24, 0.01, 1.41) removed  [crack mark lies on grass]
+PROOF note: 'Props/palm_mexican_fan_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_park_bench_worn_near' held only listed items and is gone with them
+PROOF 10 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

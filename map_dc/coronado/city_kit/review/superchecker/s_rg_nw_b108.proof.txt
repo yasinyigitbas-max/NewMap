@@ -1,0 +1,61 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 15 nodes (with every mesh of the buildings), 2348 ground and ground-collision triangles, 8 prop instances, 4 colliders, 344 wear marks are identical in both files
+PROOF differences found between the files: 115 lines only in the old one, 0 only in the new one
+PROOF change #1 remove tree_torrey_pine_b at (-6.45, 0.09, 115.97) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_torrey_pine_b at (-6.45, 0.09, 155.78) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_torrey_pine_b at (-6.45, 0.09, 167.16) removed, in 3 tier(s) and its collider  [tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_coral_a at (6.45, 0.09, 47.78) removed, in 3 tier(s) and its collider  [tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove tree_coral_a at (6.45, 0.09, 134.02) removed, in 3 tier(s) and its collider  [tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove tree_magnolia_b at (6.45, 0.09, 63.76) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove tree_magnolia_b at (6.45, 0.09, 72.84) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove tree_magnolia_b at (6.45, 0.09, 96.31) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove tree_coral_b at (6.45, 0.09, 84.32) removed, in 3 tier(s) and its collider  [tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove tree_coral_b at (6.45, 0.09, 145.49) removed, in 3 tier(s) and its collider  [tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #11 remove palm_mexican_fan_c at (6.45, 0.09, 171.58) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #12 remove tree_magnolia_a at (-6.45, 0.09, 28.52) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #13 remove tree_magnolia_a at (-6.45, 0.09, 65.35) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #14 remove tree_torrey_pine_a at (-6.45, 0.09, 77.83) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #15 remove tree_torrey_pine_a at (-6.45, 0.09, 91.20) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #16 remove tree_torrey_pine_a at (6.45, 0.09, 37.33) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #17 remove tree_magnolia_a at (6.45, 0.09, 122.35) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #18 remove tree_torrey_pine_a at (-6.45, 0.09, 102.22) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #19 remove tree_torrey_pine_a at (-6.45, 0.09, 128.59) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #20 remove tree_torrey_pine_a at (6.45, 0.09, 158.47) removed, in 3 tier(s) and its collider  [tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #21 remove_decal: one wear mark at (-6.45, 0.16, 142.33) removed  [grime mark lies on grass]
+PROOF change #22 remove_decal: one wear mark at (6.45, 0.16, 109.45) removed  [grime mark lies on grass]
+PROOF change #23 remove_decal: one wear mark at (-4.84, 0.01, 126.89) removed  [crack mark lies on grass]
+PROOF change #24 remove_decal: one wear mark at (-4.08, 0.01, 52.15) removed  [crack mark lies on grass]
+PROOF change #25 remove_decal: one wear mark at (-5.53, 0.01, 22.82) removed  [crack mark lies on grass]
+PROOF change #26 remove_decal: one wear mark at (-4.97, 0.01, 32.86) removed  [crack mark lies on grass]
+PROOF change #27 remove_decal: one wear mark at (-5.40, 0.01, 25.20) removed  [crack mark lies on grass]
+PROOF change #28 remove_decal: one wear mark at (-4.11, 0.01, 88.71) removed  [crack mark lies on grass]
+PROOF change #29 remove_decal: one wear mark at (4.67, 0.01, 97.79) removed  [crack mark lies on grass]
+PROOF change #30 remove_decal: one wear mark at (5.49, 0.01, 61.33) removed  [crack mark lies on grass]
+PROOF change #31 remove_decal: one wear mark at (4.33, 0.01, 115.50) removed  [crack mark lies on grass]
+PROOF change #32 remove_decal: one wear mark at (5.57, 0.01, 85.46) removed  [crack mark lies on grass]
+PROOF note: 'Props/cell_near_0_1/tree_torrey_pine_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_1/tree_magnolia_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_0/tree_torrey_pine_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/cell_near_0_0/tree_magnolia_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_torrey_pine_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_mid' held only listed items and is gone with them
+PROOF 32 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

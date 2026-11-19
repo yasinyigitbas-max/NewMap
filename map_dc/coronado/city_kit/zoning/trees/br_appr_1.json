@@ -1,0 +1,45 @@
+{
+ "area": "br_appr_1",
+ "piece": "s_br_appr_1",
+ "zone": "Bridge approach",
+ "rule": "docs/TREE_PLAN.md: waterfront, bridge approach - palms only, spaced, on the median; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    692.0,
+    4.151,
+    -1200.0
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "grass strip at the approach's start, nothing within 3 m: queen palm"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    723.979,
+    4.182,
+    -1199.229
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "grass strip, 32 m on: same rhythm, one species"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    755.598,
+    4.255,
+    -1194.467
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "grass strip, 31.6 m on: same rhythm"
+  }
+ ]
+}
