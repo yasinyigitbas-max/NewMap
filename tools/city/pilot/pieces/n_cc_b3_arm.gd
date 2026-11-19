@@ -45,7 +45,7 @@ func _run() -> void:
 	c.put("prop_trash_receptacle", "worn", Vector3(148.8, y, 12.0), 0.0, "pocket: a bin at the corner")
 	c.put("plant_potted_leafy", "normal", Vector3(148.8, y, 20.0), 0.0, "pocket: a planter closes it toward the yard")
 	# ---- service sides, yards
-	for r2: Dictionary in S + DS: c.services(r2, 4.0, 1, String(r2.folder).contains("brk3") or String(r2.folder).contains("stucco") or String(r2.folder).contains("apt"))
+	for r2: Dictionary in S + DS: c.services(r2, -4.0 if String(r2.folder).contains("mod_svc_row") else 4.0, 1, String(r2.folder).contains("brk3") or String(r2.folder).contains("stucco") or String(r2.folder).contains("apt"))     # the sign shop's meters clear of its back window
 	c.services(DN[0], -4.0, 1, false)     # the print shop's meters clear of its back windows
 	c.services(DN[1], 3.0, 1, false)     # the pharmacy depot's meters clear of its back window
 	c.put("prop_dumpster_3yd_green", "worn", Vector3(51.6, y, 33.0), 90.0, "pizzeria / newsagent: waste, collected from c_se's alley")

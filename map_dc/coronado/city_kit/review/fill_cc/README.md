@@ -184,9 +184,10 @@ model has patio doors only (as block 2's).
   Hanging 0. Raster checks at 25 cm: cannot see the 0.1-0.3 m strips themselves, so a strip reads as its plinth.
 - Dry land trial (never --write): lowers 4306 land nodes, usual 0.13 m, largest 1.21 m (under block 4's lane flats,
   which are cut into the hill with a retaining wall behind); then nothing of the fill lies under the land. LAND NOT WRITTEN.
-- validate / check_life / audit_trees / sink_check / lock test: see the job-board line for the last run (before the
-  last rebuild: validator 1 fault in my pieces, fixed; trees 0 in hard ground; 0 props off the ground; lock PASS;
-  check_life's "fence leads nowhere" lines end on real walls it cannot see, one lone fence removed).
+- Final state, area layout of all six blocks (142 rows): validate.gd 0 lines naming n_cc (15 problems are other
+  pieces'); check_life: no prop over glass, only "fence end leads nowhere" lines, which end on real walls the check
+  cannot see (it uses nominal footprints); audit_trees 0 of 1263 trees in hard ground (sees the trunk's ground only);
+  sink_check 0 props off the ground (street pieces only); lock test RESULT PASS (496 locked pieces untouched).
 - check_rooms --only=g_cc_: 0 problems in 162 rooms.
 
 ## NOT done / NOT checked

@@ -165,7 +165,7 @@ func _run() -> void:
 	c.put("prop_bollard_steel", "worn", Vector3(18.4, 0.15, 211.0), 0.0, "forecourt: keeps cars off the corner")
 	# ---- services
 	c.services(T, -10.0, 0, false, "left")     # meters only: its AC stands on the roof (an AC here stood inside the tower)
-	for r2: Dictionary in A + E + N + [K]: c.services(r2, 3.0, 1, String(r2.folder).contains("apt") or String(r2.folder).contains("stucco") or String(r2.folder).contains("brk3") or String(r2.folder).contains("beach"))
+	for r2: Dictionary in A + E + N + [K]: c.services(r2, 3.0, 0 if r2 == A[0] else 1, String(r2.folder).contains("apt") or String(r2.folder).contains("stucco") or String(r2.folder).contains("brk3") or String(r2.folder).contains("beach"))     # the bakery beside the tower: no condenser (it stood in the tower's corner)
 	for r3: Dictionary in B: c.services(r3, 2.0, 1, true)
 	c.put("prop_dumpster_3yd_green", "worn", Vector3(xw + 2.0, c.yf(xw + 2.0, 236.0), 236.0), 90.0, "tower: waste, wheeled out to Amber on collection day")
 	c.put("prop_dumpster_3yd_blue", "worn", Vector3(xw + 2.0, c.yf(xw + 2.0, 239.0), 239.0), 90.0, "tower: recycling")
