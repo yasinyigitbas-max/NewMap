@@ -1,0 +1,45 @@
+{
+ "area": "rs_b120_a",
+ "piece": "s_rs_b120_a",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; no broadleaf room left in view here and room for 3 trees in all (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -132.204,
+    4.15,
+    6.45
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, the first of the west face's queen palms (no broadleaf room in view: the magnolia here becomes a palm)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -106.577,
+    4.15,
+    6.45
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway 25.6 m on, the second queen palm (old spot and species)"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -152.668,
+    4.15,
+    -6.45
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east parkway grass, the east face's one Torrey pine (old spot), staggered before the west palms; clear of the kerb inlet (1.8 m)"
+  }
+ ]
+}
