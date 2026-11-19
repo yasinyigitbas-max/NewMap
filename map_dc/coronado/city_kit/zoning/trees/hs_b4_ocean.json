@@ -1,0 +1,165 @@
+{
+ "area": "hs_b4_ocean",
+ "piece": "n_hs_b4_ocean",
+ "zone": "ring boulevard (Ocean) and park lawn",
+ "rule": "docs/TREE_PLAN.md: ring boulevard - the palm boulevard round the island (zone 1165 -> about 1000, palms); civic and parks - clumps of 3-5 at the edges, open lawn in the middle",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's nineteen builder trees go (a row of fan palms every 20 m along Ocean Boulevard behind the box hedge, a queen palm and a jacaranda squeezed into the hedge, broadleaf scattered over the lawn); thirteen come back on their own spots: the seven boulevard palms, and two clumps of three at the lawn's east and west edges, the middle left open.",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    58.0,
+    2.274,
+    323.5
+   ],
+   "yaw": 0.0,
+   "scale": 1.0,
+   "why": "the palm row along Ocean Boulevard behind the low box hedge, 20 m apart: the ring boulevard's palms, kept on their own spot (its west end)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    78.0,
+    2.457,
+    323.9
+   ],
+   "yaw": 50.0,
+   "scale": 1.0,
+   "why": "the palm row along Ocean Boulevard behind the low box hedge, 20 m apart: the ring boulevard's palms, kept on their own spot"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    98.0,
+    2.698,
+    324.3
+   ],
+   "yaw": 100.0,
+   "scale": 1.0,
+   "why": "the palm row along Ocean Boulevard behind the low box hedge, 20 m apart: the ring boulevard's palms, kept on their own spot"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    118.0,
+    2.973,
+    324.7
+   ],
+   "yaw": 150.0,
+   "scale": 1.0,
+   "why": "the palm row along Ocean Boulevard behind the low box hedge, 20 m apart: the ring boulevard's palms, kept on their own spot"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    138.0,
+    3.261,
+    325.1
+   ],
+   "yaw": 200.0,
+   "scale": 1.0,
+   "why": "the palm row along Ocean Boulevard behind the low box hedge, 20 m apart: the ring boulevard's palms, kept on their own spot"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    158.0,
+    3.542,
+    325.5
+   ],
+   "yaw": 250.0,
+   "scale": 1.0,
+   "why": "the palm row along Ocean Boulevard behind the low box hedge, 20 m apart: the ring boulevard's palms, kept on their own spot"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    178.0,
+    3.792,
+    325.9
+   ],
+   "yaw": 300.0,
+   "scale": 1.0,
+   "why": "the palm row along Ocean Boulevard behind the low box hedge, 20 m apart: the ring boulevard's palms, kept on their own spot (its east end)"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    156.0,
+    4.108,
+    282.0
+   ],
+   "yaw": 30.0,
+   "scale": 0.9,
+   "why": "the lawn's east edge: a clump of three, its first tree"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    150.0,
+    4.324,
+    272.0
+   ],
+   "yaw": 150.0,
+   "scale": 0.9,
+   "why": "the east clump's second tree, 12 m from the first"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    168.0,
+    4.16,
+    286.0
+   ],
+   "yaw": 270.0,
+   "scale": 1.0,
+   "why": "the east clump's third: a queen palm for height"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    56.0,
+    2.958,
+    276.0
+   ],
+   "yaw": 60.0,
+   "scale": 0.9,
+   "why": "the lawn's west edge by the agave: a clump of three, its first tree"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    52.8,
+    2.584,
+    288.8
+   ],
+   "yaw": 180.0,
+   "scale": 0.85,
+   "why": "the west clump's second, a torrey pine (the coast's own pine)"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    52.8,
+    2.394,
+    297.8
+   ],
+   "yaw": 300.0,
+   "scale": 0.9,
+   "why": "the west clump's third, by the bird of paradise"
+  }
+ ]
+}
