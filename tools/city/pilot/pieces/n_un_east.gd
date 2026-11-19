@@ -48,23 +48,18 @@ const ITEMS := [
 	["prop_usps_collection_box", "worn", -501.2, -570.0, -90.0],
 	["prop_lamp_victorian", "worn", -509.2, -660.0, 0.0], ["prop_lamp_victorian", "worn", -509.2, -632.0, 0.0],
 	["prop_lamp_victorian", "worn", -509.2, -572.0, 0.0], ["prop_lamp_victorian", "worn", -509.2, -540.0, 0.0],
-	["tree_ficus_a", "normal", -478.0, -583.0, 0.0, false], ["tree_ficus_b", "normal", -476.0, -625.0, 0.0, false],
 	# Union Lawn: the bandstand at its east end facing west over the lawn; students on the grass; trees round it
 	["prop_bandstand", "worn", -462.0, -680.0, -90.0],
 	["prop_adirondack_white", "worn", -490.0, -682.0, 80.0], ["prop_adirondack_wood", "worn", -489.0, -679.0, 110.0],
 	["prop_adirondack_white", "worn", -484.0, -688.0, 60.0], ["prop_adirondack_wood", "worn", -482.0, -672.0, 120.0],
 	["prop_picnic_table", "worn", -495.0, -692.0, 0.0], ["prop_picnic_table", "worn", -495.0, -666.0, 0.0],
-	["tree_jacaranda_a", "normal", -505.0, -695.0, 0.0, false], ["tree_jacaranda_b", "normal", -450.0, -695.0, 0.0, false],
-	["tree_magnolia_a", "normal", -505.0, -665.0, 0.0, false], ["prop_sprinkler_impact", "normal", -475.0, -685.0, 0.0, false],
+	["prop_sprinkler_impact", "normal", -475.0, -685.0, 0.0, false],
 	# the volleyball court: benches either side, a bin; trees beyond
 	["prop_park_bench", "worn", -464.0, -537.0, 0.0], ["prop_park_bench", "worn", -464.0, -519.0, 180.0],
-	["prop_trash_receptacle", "worn", -476.0, -537.4, 0.0], ["tree_coral_a", "normal", -485.0, -525.0, 0.0, false],
-	["tree_coral_b", "normal", -445.0, -520.0, 0.0, false],
+	["prop_trash_receptacle", "worn", -476.0, -537.4, 0.0], 
 	# the east street's strip: palms; the service road's end trees
-	["palm_mexican_fan_a", "normal", -411.4, -690.0, 0.0, false], ["palm_mexican_fan_b", "normal", -411.4, -640.0, 0.0, false],
-	["palm_mexican_fan_c", "normal", -411.4, -600.0, 0.0, false], ["palm_mexican_fan_a", "normal", -411.4, -560.0, 0.0, false],
-	["palm_mexican_fan_b", "normal", -411.4, -520.0, 0.0, false],
-	["tree_eucalyptus_a", "normal", -436.0, -690.0, 0.0, false], ["tree_eucalyptus_b", "normal", -436.0, -520.0, 0.0, false],
+	
+	
 ]
 
 var PY: Array = []     # pad heights (local), one per row of B: the ground at the middle of each front
@@ -79,57 +74,95 @@ const POLISH := [
 	["prop_park_bench", "worn", -488.2, -693.2, 175.7],
 	["prop_adirondack_wood", "worn", -469.8, -699.8, 173.1],
 	["prop_adirondack_white", "worn", -451.8, -690.2, 168.5],
-	["tree_torrey_pine_a", "normal", -431.2, -699.8, 47.0, false],
-	["tree_jacaranda_a", "normal", -417.2, -692.8, 94.0, false],
+	
 	["prop_park_bench", "worn", -505.8, -670.2, -181.0],
 	["prop_picnic_table", "worn", -493.8, -688.8, -192.4],
 	["prop_park_bench", "worn", -484.2, -686.8, 169.7],
 	["prop_adirondack_wood", "worn", -472.8, -680.2, 166.6],
 	["prop_adirondack_white", "worn", -449.8, -680.2, 159.9],
-	["tree_ficus_b", "normal", -438.2, -671.2, 141.0, false],
-	["tree_magnolia_a", "normal", -424.2, -678.8, 188.0, false],
-	["tree_eucalyptus_a", "normal", -409.8, -685.8, 235.0, false],
+	
 	["prop_park_bench", "worn", -509.8, -658.2, -90.0],
 	["prop_park_bench", "worn", -493.2, -662.8, -205.6],
-	["tree_coral_a", "normal", -475.8, -655.8, 282.0, false],
-	["tree_torrey_pine_b", "normal", -461.8, -656.8, 329.0, false],
+	
 	["prop_picnic_table", "worn", -448.2, -661.8, 96.1],
-	["tree_jacaranda_b", "normal", -424.2, -664.8, 16.0, false],
 	["prop_trash_receptacle", "worn", -493.2, -637.2, 0.0],
-	["plant_bird_of_paradise", "normal", -465.2, -639.2, 61.0, false],
-	["plant_agave_americana", "normal", -442.8, -633.2, 122.0, false],
-	["tree_magnolia_b", "normal", -416.2, -647.2, 63.0, false],
+	["plant_bird_of_paradise", "normal", -465.2, -639.2, 61.0],
+	["plant_agave_americana", "normal", -442.8, -633.2, 122.0],
 	["prop_bike_rack", "worn", -509.8, -612.2, -90.0],
 	["prop_park_bench", "worn", -492.2, -617.8, -180.0],
-	["plant_potted_succulent", "normal", -473.2, -629.2, 0.0, false],
-	["tree_eucalyptus_b", "normal", -456.2, -629.2, 110.0, false],
-	["tree_torrey_pine_a", "normal", -422.2, -615.2, 157.0, false],
-	["tree_jacaranda_a", "normal", -409.8, -622.8, 204.0, false],
+	["plant_potted_succulent", "normal", -473.2, -629.2, 0.0],
+	
 	["prop_drinking_fountain", "worn", -503.8, -596.2, -90.0],
-	["plant_bougainvillea_mound", "normal", -459.8, -603.2, 183.0, false],
+	["plant_bougainvillea_mound", "normal", -459.8, -603.2, 183.0],
 	["prop_sprinkler_impact", "normal", -442.8, -591.8, 244.0, false],
-	["tree_ficus_b", "normal", -414.8, -603.2, 251.0, false],
 	["prop_newspaper_box_blue", "worn", -509.8, -570.8, -90.0],
 	["prop_recycling_receptacle", "worn", -494.8, -577.8, 0.0],
 	["prop_park_bench", "worn", -481.8, -580.8, 0.0],
-	["plant_agave_americana_small", "normal", -466.8, -572.8, 305.0, false],
-	["tree_magnolia_a", "normal", -454.8, -580.8, 298.0, false],
-	["plant_bird_of_paradise", "normal", -442.8, -583.8, 6.0, false],
-	["tree_eucalyptus_a", "normal", -416.2, -580.2, 345.0, false],
-	["plant_potted_leafy", "normal", -509.8, -560.8, 0.0, false],
-	["plant_agave_americana", "normal", -468.8, -563.8, 67.0, false],
+	["plant_agave_americana_small", "normal", -466.8, -572.8, 305.0],
+	["plant_bird_of_paradise", "normal", -442.8, -583.8, 6.0],
+	["plant_potted_leafy", "normal", -509.8, -560.8, 0.0],
+	["plant_agave_americana", "normal", -468.8, -563.8, 67.0],
 	["prop_sprinkler_impact", "normal", -442.8, -563.8, 128.0, false],
-	["tree_coral_a", "normal", -416.2, -566.2, 32.0, false],
 	["prop_trash_receptacle", "worn", -509.8, -538.2, 0.0],
 	["plant_iceplant_patch", "normal", -496.8, -549.2, 189.0, false],
-	["tree_torrey_pine_b", "normal", -486.8, -538.2, 79.0, false],
-	["tree_jacaranda_b", "normal", -468.2, -544.2, 126.0, false],
-	["tree_magnolia_b", "normal", -450.8, -545.8, 173.0, false],
-	["tree_eucalyptus_b", "normal", -438.2, -531.2, 220.0, false],
-	["plant_agave_americana_small", "normal", -409.8, -548.8, 250.0, false],
+	
+	
+	["plant_agave_americana_small", "normal", -409.8, -548.8, 250.0],
 	["prop_park_bench", "worn", -502.8, -517.2, 0.0],
-	["tree_torrey_pine_a", "normal", -486.8, -517.2, 267.0, false],
 ]
+
+## SUPERCHECKER (19 Nov, Yasin: "use super checker in your entire zone and weed out the unnecessary parts ... be very
+## prone to delete"): tools/city/super/sc.py check on this piece; every finding with no plainly safe place is a
+## deletion (its reason on its line), lamps turned back over their road, oil where no car stands out, a collision
+## box on each building column with none. Applied after everything is placed (hs_fill_lib.sc_apply).
+const SC := {
+ "out": [
+	["prop_trash_receptacle", -501.0, -617.0, "bin_open: prop_trash_receptacle stands in the open (5.8 m from a wall, 265.0 m from a fence)"],
+	["prop_trash_receptacle", -476.0, -636.0, "bin_open: prop_trash_receptacle stands in the open (10.7 m from a wall, 283.8 m from a fence)"],
+	["prop_trash_receptacle", -501.0, -655.0, "bin_open: prop_trash_receptacle stands in the open (7.3 m from a wall, 255.4 m from a fence)"],
+	["prop_trash_receptacle", -476.0, -537.40002, "bin_open: prop_trash_receptacle stands in the open (20.5 m from a wall, 321.4 m from a fence)"],
+	["prop_trash_receptacle", -493.20001, -637.20001, "bin_open: prop_trash_receptacle stands in the open (4.8 m from a wall, 266.8 m from a fence)"],
+	["prop_trash_receptacle", -509.79999, -538.20001, "bin_open: prop_trash_receptacle stands in the open (18.6 m from a wall, 292.4 m from a fence)"],
+	["prop_recycling_receptacle", -501.0, -587.0, "bin_open: prop_recycling_receptacle stands in the open (5.8 m from a wall, 276.1 m from a fence)"],
+	["prop_recycling_receptacle", -494.79999, -577.79999, "bin_open: prop_recycling_receptacle stands in the open (11.8 m from a wall, 285.6 m from a fence)"],
+	["prop_patio_set_4", -494.0, -628.0, "no_reason: prop_patio_set_4 stands alone: no door within 18 m, no wall within 8 m, nothing to sit wit"],
+	["prop_patio_set_4", -487.0, -624.0, "no_reason: prop_patio_set_4 stands alone: no door within 18 m, no wall within 8 m, nothing to sit wit"],
+	["prop_patio_set_4", -480.0, -630.0, "no_reason: prop_patio_set_4 stands alone: no door within 18 m, no wall within 8 m, nothing to sit wit"],
+	["prop_patio_set_4", -494.0, -582.0, "no_reason: prop_patio_set_4 stands alone: no door within 18 m, no wall within 8 m, nothing to sit wit"],
+	["prop_patio_set_4", -486.0, -578.0, "no_reason: prop_patio_set_4 stands alone: no door within 18 m, no wall within 8 m, nothing to sit wit"],
+	["prop_park_bench", -464.0, -537.0, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -464.0, -519.0, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -488.20001, -693.20001, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -505.79999, -670.20001, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -509.79999, -658.20001, "over_edge: prop_park_bench hangs over the edge of its block (2 of its 4 corners)"],
+	["prop_park_bench", -481.79999, -580.79999, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -502.79999, -517.20001, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_newspaper_box_blue", -509.79999, -570.79999, "over_edge: prop_newspaper_box_blue hangs over the edge of its block (2 of its 4 corners)"],
+	["prop_adirondack_white", -451.79999, -690.20001, "no_reason: prop_adirondack_white stands alone: no door within 18 m, no wall within 8 m, nothing to si"],
+	["prop_adirondack_white", -449.79999, -680.20001, "no_reason: prop_adirondack_white stands alone: no door within 18 m, no wall within 8 m, nothing to si"],
+	["prop_adirondack_wood", -482.0, -672.0, "no_reason: prop_adirondack_wood stands alone: no door within 18 m, no wall within 8 m, nothing to sit"],
+	["prop_adirondack_wood", -469.79999, -699.79999, "over_edge: prop_adirondack_wood hangs over the edge of its block (2 of its 4 corners)"],
+	["prop_adirondack_wood", -472.79999, -680.20001, "no_reason: prop_adirondack_wood stands alone: no door within 18 m, no wall within 8 m, nothing to sit"],
+	["prop_picnic_table", -509.79999, -699.79999, "over_edge: prop_picnic_table hangs over the edge of its block (3 of its 4 corners)"],
+	["prop_picnic_table", -448.20001, -661.79999, "no_reason: prop_picnic_table stands alone: no door within 18 m, no wall within 8 m, nothing to sit wi"],
+	["plant_agave_americana_small", -409.79999, -548.79999, "over_edge: plant_agave_americana_small hangs over the edge of its block (1 of its 4 corners)"],
+	["plant_potted_leafy", -509.79999, -560.79999, "over_edge: plant_potted_leafy hangs over the edge of its block (2 of its 4 corners)"],
+ ],
+ "turn": [
+
+ ],
+ "decals": [
+
+ ],
+ "boxes": [
+	["Buildings/union", [0.839634895324707, 1.6999541819095612, 6.701925754547119, 0.16054443359375, 2.800045669078827, 0.16]],
+	["Buildings/cafe", [1.0249133110046387, 1.4999818801879883, 6.8799638748168945, 0.16, 2.9999637603759766, 0.16]],
+	["Buildings/bookstore", [-3.9000229835510254, 1.499967098236084, 5.650000095367432, 0.16, 2.999934196472168, 0.16]],
+	["Buildings/bookstore", [-1.0400550365447998, 1.514954686164856, 7.659996747970581, 0.20003656387329102, 3.029909372329712, 0.19999937057495118]],
+	["Buildings/bookstore", [-4.960036516189575, 1.514954686164856, 7.659996747970581, 0.20003656387329102, 3.029909372329712, 0.19999937057495118]],
+	["Buildings/bookstore", [-2.1000688076019287, 1.499967098236084, 5.650000095367432, 0.16, 2.999934196472168, 0.16]],
+ ],
+}
 
 func _init() -> void: _run.call_deferred()
 
@@ -163,7 +196,6 @@ func _run() -> void:
 		[-484.38, -650.0, ROAD[0], -642.0, "asphalt"],                 # the cafe's (back door v -646.2)
 		[-488.0, -561.0, ROAD[0], -553.0, "asphalt"],                  # the bookstore's (service door v -557)
 		[X0, Z0 + 40.0, -500.0, Z1, "plaza"],                          # the plaza walk along the fronts
-		[-478.8, -583.8, -477.2, -582.2, "mulch"], [-476.8, -625.8, -475.2, -624.2, "mulch"],   # the courts' tree wells
 		[-500.0, -641.28, -470.0, -614.72, "plaza"],                   # the dining court north of the union
 		[-500.0, -589.4, -470.0, -566.0, "plaza"],                     # ... and south of it
 		[X0, Z0, -500.0, Z0 + 40.0, "grass"],
@@ -180,10 +212,11 @@ func _run() -> void:
 		var sill := float(b[5])
 		var f := fp(b); var gy: float = yf.call(f[0], float(b[3])); var top := float(PY[i]) + sill
 		if top - gy > 0.03:
-			H.steps_x(g, float(b[3]), 4.0, f[0] - ceilf((top - gy) / 0.17) * 0.3, f[0], gy, top)
+			H.steps_x2(g, float(b[3]), 4.0, f[0] - ceilf((top - gy) / 0.17) * H.TREAD, f[0], gy, top, yf)
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
 	if PASS >= 2: H.polish(props, g, ITEMS)
 	if PASS >= 2: H.polish(props, g, POLISH)
+	if PASS >= 2: H.sc_apply(root, props, dec, SC)
 	H.finish(root, g, props, dec, "n_un_east")
 	quit()
 

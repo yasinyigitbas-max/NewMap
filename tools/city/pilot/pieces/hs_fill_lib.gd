@@ -314,3 +314,103 @@ static func graded(field: Callable, pads: Array, slope := 0.06) -> Callable:
 static func pad_entry(f: Array, y: float, m := 0.3) -> Array: return [float(f[0]) - m, float(f[1]) - m, float(f[2]) + m, float(f[3]) + m, y]
 static func pad_at(g: K.Ground, f: Array, y: float, field: Callable, m := 0.3) -> void:
 	level_pad(g, "concrete", float(f[0]) - m, float(f[1]) - m, float(f[2]) + m, float(f[3]) + m, y, field)
+
+## ---- superchecker fixes written into a piece's script (19 Nov, Yasin: "use super checker in your entire zone and weed
+## out the unnecessary parts ... be very prone to delete"): a literal list per piece, from the checker's findings, each
+## line with its reason. Applied after every prop is placed, before the piece is saved. Nothing here chooses a place.
+##   out:    [base, x, z, why]   the prop of that base standing at (x, z) (0.25 m) is taken out (drawn and collider)
+##   turn:   [base, x, z, deg]   turned by deg about its own vertical (a lamp's arm back over its road)
+##   decals: [x, z]              the wear mark whose middle is within 0.6 m is taken out (oil where no car stands)
+##   boxes:  [building node, [cx, cy, cz, sx, sy, sz]]   a collision box in that building's frame (a column with none)
+static func sc_apply(root: Node3D, props: K.Props, dec: K.Decals, sc: Dictionary) -> void:
+	var n_out := 0
+	for o: Array in sc.get("out", []):
+		var p := Vector2(float(o[1]), float(o[2]))
+		for k: String in props.items.keys():
+			if k.get_slice("|", 0) != String(o[0]): continue
+			var arr: Array = props.items[k]
+			for i in range(arr.size() - 1, -1, -1):
+				var t: Transform3D = arr[i]
+				if Vector2(t.origin.x, t.origin.z).distance_to(p) < 0.25: arr.remove_at(i); n_out += 1
+		for i in range(props.col_items.size() - 1, -1, -1):
+			var c: Array = props.col_items[i]
+			var t2: Transform3D = c[2]
+			if String(c[0]) == String(o[0]) and Vector2(t2.origin.x, t2.origin.z).distance_to(p) < 0.25: props.col_items.remove_at(i)
+	for o: Array in sc.get("turn", []):
+		var p := Vector2(float(o[1]), float(o[2])); var r := Basis(Vector3.UP, deg_to_rad(float(o[3])))
+		for k: String in props.items.keys():
+			if k.get_slice("|", 0) != String(o[0]): continue
+			var arr: Array = props.items[k]
+			for i in arr.size():
+				var t: Transform3D = arr[i]
+				if Vector2(t.origin.x, t.origin.z).distance_to(p) < 0.25: arr[i] = Transform3D(r * t.basis, t.origin)
+		for i in props.col_items.size():
+			var c: Array = props.col_items[i]
+			var t2: Transform3D = c[2]
+			if String(c[0]) == String(o[0]) and Vector2(t2.origin.x, t2.origin.z).distance_to(p) < 0.25: c[2] = Transform3D(r * t2.basis, t2.origin)
+	var n_dec := 0
+	if dec:
+		for d: Array in sc.get("decals", []):
+			var p := Vector2(float(d[0]), float(d[1]))
+			var q := 0
+			while q + 6 <= dec.V.size():
+				var cen := Vector2.ZERO
+				for j in 6: cen += Vector2(dec.V[q + j].x, dec.V[q + j].z)
+				cen /= 6.0
+				if cen.distance_to(p) < 0.6:
+					for j in 6:
+						dec.V.remove_at(q); dec.N.remove_at(q); dec.UV.remove_at(q); dec.C.remove_at(q)
+					dec.count -= 1; n_dec += 1
+				else: q += 6
+	var boxes: Array = sc.get("boxes", [])
+	var k := 0
+	for b: Array in boxes:
+		var bn: Node3D = root.get_node(String(b[0]))
+		var v: Array = b[1]
+		# into the building's own collision body ("col"), so the box travels with the building and reads as its own
+		var body: Node3D = bn.get_node_or_null("col")
+		if body == null:
+			body = StaticBody3D.new(); body.name = "col"; bn.add_child(body)
+		var cs := CollisionShape3D.new(); cs.name = "sc_col_%d" % k; k += 1
+		var sh := BoxShape3D.new(); sh.size = Vector3(float(v[3]), float(v[4]), float(v[5])); cs.shape = sh
+		cs.transform = body.transform.affine_inverse() * Transform3D(Basis(), Vector3(float(v[0]), float(v[1]), float(v[2])))
+		body.add_child(cs)
+	# batches the deletions emptied are dropped (no empty prop batch is saved)
+	for key: String in props.items.keys():
+		if (props.items[key] as Array).is_empty(): props.items.erase(key)
+	print("SC fixes: %d props out, %d turned, %d marks out, %d column boxes" % [n_out, sc.get("turn", []).size(), n_dec, boxes.size()])
+
+## (campus, 19 Nov, superchecker "ground_step") front steps closed down to the ground: 0.35 m treads, each with its riser
+## and its two sides reaching the field, and a face behind the top tread (steps_z / steps_x stay as they were: the locked
+## high-street pieces were built with them)
+const TREAD := 0.35
+static func steps_z2(g: K.Ground, x: float, w: float, z0: float, z1: float, y0: float, y1: float, field: Callable) -> float:
+	var dh := y1 - y0
+	if absf(dh) < 0.03: return z0
+	var n := ceili(absf(dh) / 0.17); var dz := signf(z1 - z0) * TREAD
+	for k in n:
+		var yb := y0 + dh * float(k + 1) / n
+		var ty := func(_x: float, _z: float) -> float: return yb
+		var za := z0 + dz * k; var zb := z0 + dz * (k + 1)
+		g.quad("concrete", Vector3(x - w * 0.5, yb, za), Vector3(x + w * 0.5, yb, za), Vector3(x + w * 0.5, yb, zb), Vector3(x - w * 0.5, yb, zb))
+		step_face(g, Vector2(x - w * 0.5, za), Vector2(x + w * 0.5, za), ty, field, "concrete", 0.5)          # its riser down to the ground
+		for ex: float in [x - w * 0.5, x + w * 0.5]:
+			step_face(g, Vector2(ex, za), Vector2(ex, zb), ty, field, "concrete", 0.35)                         # its sides down to the ground
+	var top := func(_x: float, _z: float) -> float: return y1
+	step_face(g, Vector2(x - w * 0.5, z0 + dz * n), Vector2(x + w * 0.5, z0 + dz * n), top, field, "concrete", 0.5)      # the top tread's back edge
+	return z0 + dz * n
+static func steps_x2(g: K.Ground, z: float, w: float, x0: float, x1: float, y0: float, y1: float, field: Callable) -> float:
+	var dh := y1 - y0
+	if absf(dh) < 0.03: return x0
+	var n := ceili(absf(dh) / 0.17); var dx := signf(x1 - x0) * TREAD
+	for k in n:
+		var yb := y0 + dh * float(k + 1) / n
+		var ty := func(_x: float, _z: float) -> float: return yb
+		var xa := x0 + dx * k; var xb := x0 + dx * (k + 1)
+		g.quad("concrete", Vector3(xa, yb, z - w * 0.5), Vector3(xb, yb, z - w * 0.5), Vector3(xb, yb, z + w * 0.5), Vector3(xa, yb, z + w * 0.5))
+		step_face(g, Vector2(xa, z - w * 0.5), Vector2(xa, z + w * 0.5), ty, field, "concrete", 0.5)
+		for ez: float in [z - w * 0.5, z + w * 0.5]:
+			step_face(g, Vector2(xa, ez), Vector2(xb, ez), ty, field, "concrete", 0.35)
+	var top := func(_x: float, _z: float) -> float: return y1
+	step_face(g, Vector2(x0 + dx * n, z - w * 0.5), Vector2(x0 + dx * n, z + w * 0.5), top, field, "concrete", 0.5)
+	return x0 + dx * n

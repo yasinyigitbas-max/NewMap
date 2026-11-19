@@ -34,15 +34,12 @@ const PAD := [609.0, -1443.0, 629.0, -1423.0]                # the helipad's tou
 const HF := [598.0, -1449.0, 640.0, -1417.0]                 # the helipad field's fence line
 
 const GREEN := [
-	# plaza trees in wells (mulch squares painted below), facing the junction's crosswalks
-	["tree_ficus_a", "normal", 514.0, -1437.0, 0.0, false], ["tree_ficus_b", "normal", 514.0, -1420.0, 90.0, false],
-	["tree_jacaranda_a", "normal", 530.0, -1418.0, 30.0, false],
+	
 	# 3rd St frontage east of the hall: queen palms in the grass strip (low planting only along the helipad)
-	["palm_queen_a", "normal", 567.0, -1416.0, 0.0, false], ["palm_queen_b", "normal", 580.0, -1416.0, 60.0, false],
-	["palm_queen_a", "normal", 584.5, -1416.0, 120.0, false],
+	
 	["plant_iceplant_patch", "normal", 606.0, -1415.8, 0.0, false], ["plant_iceplant_patch", "normal", 620.0, -1415.8, 90.0, false],
 	["plant_iceplant_patch", "normal", 634.0, -1415.8, 0.0, false],
-	["plant_bird_of_paradise", "normal", 570.0, -1432.0, 0.0, false], ["plant_agave_americana_small", "normal", 576.0, -1436.0, 0.0, false],
+	["plant_bird_of_paradise", "normal", 570.0, -1432.0, 0.0], ["plant_agave_americana_small", "normal", 576.0, -1436.0, 0.0],
 	["prop_sprinkler_popup", "normal", 575.0, -1428.0, 0.0, false], ["prop_sprinkler_popup", "normal", 619.0, -1447.0, 0.0, false],
 ]
 
@@ -55,35 +52,72 @@ var KY := 0.0
 ## free spot this piece already had (found by a scratch tool, OUT/py/freespots_hp.py, chosen per kind of place, frozen
 ## here), standing on the ground as built (hs_fill_lib.polish).
 const POLISH := [
-	["plant_bird_of_paradise", "normal", 509.5, -1452.8, 61.0, false],
-	["plant_agave_americana", "normal", 603.5, -1452.8, 122.0, false],
-	["plant_bougainvillea_mound", "normal", 610.5, -1452.8, 183.0, false],
+	["plant_bird_of_paradise", "normal", 509.5, -1452.8, 61.0],
+	["plant_agave_americana", "normal", 603.5, -1452.8, 122.0],
+	["plant_bougainvillea_mound", "normal", 610.5, -1452.8, 183.0],
 	["prop_sprinkler_impact", "normal", 618.0, -1452.8, 244.0, false],
-	["plant_agave_americana_small", "normal", 625.0, -1452.8, 305.0, false],
-	["plant_bird_of_paradise", "normal", 632.0, -1452.8, 6.0, false],
+	["plant_agave_americana_small", "normal", 625.0, -1452.8, 305.0],
+	["plant_bird_of_paradise", "normal", 632.0, -1452.8, 6.0],
 	["prop_park_bench", "worn", 509.5, -1441.8, -90.0],
-	["plant_potted_leafy", "normal", 512.5, -1434.8, 0.0, false],
+	["plant_potted_leafy", "normal", 512.5, -1434.8, 0.0],
 	["prop_trash_receptacle", "worn", 516.0, -1444.8, 0.0],
 	["prop_bike_rack", "worn", 519.5, -1438.2, -180.0],
-	["plant_potted_succulent", "normal", 529.0, -1439.2, 0.0, false],
+	["plant_potted_succulent", "normal", 529.0, -1439.2, 0.0],
 	["prop_drinking_fountain", "worn", 531.0, -1431.2, 90.0],
 	["prop_newspaper_box_blue", "worn", 533.5, -1444.8, 180.0],
 	["prop_recycling_receptacle", "worn", 540.5, -1443.2, 0.0],
 	["prop_park_bench", "worn", 554.0, -1443.8, 180.0],
-	["plant_agave_americana", "normal", 564.0, -1432.2, 67.0, false],
-	["plant_potted_leafy", "normal", 564.0, -1442.8, 0.0, false],
+	["plant_agave_americana", "normal", 564.0, -1432.2, 67.0],
+	["plant_potted_leafy", "normal", 564.0, -1442.8, 0.0],
 	["prop_sprinkler_impact", "normal", 569.0, -1437.2, 128.0, false],
 	["plant_iceplant_patch", "normal", 572.5, -1431.2, 189.0, false],
 	["prop_park_bench", "worn", 578.0, -1443.2, 90.0],
-	["plant_agave_americana_small", "normal", 580.0, -1437.2, 250.0, false],
+	["plant_agave_americana_small", "normal", 580.0, -1437.2, 250.0],
 	["prop_park_bench", "worn", 585.0, -1444.8, 90.0],
-	["plant_potted_succulent", "normal", 509.5, -1414.8, 0.0, false],
+	["plant_potted_succulent", "normal", 509.5, -1414.8, 0.0],
 	["prop_drinking_fountain", "worn", 509.5, -1428.2, -90.0],
 	["prop_newspaper_box_blue", "worn", 516.0, -1419.2, 0.0],
 	["prop_recycling_receptacle", "worn", 521.5, -1414.8, 0.0],
 	["prop_park_bench", "worn", 524.5, -1421.2, 0.0],
-	["plant_potted_leafy", "normal", 529.0, -1414.8, 0.0, false],
+	["plant_potted_leafy", "normal", 529.0, -1414.8, 0.0],
 ]
+
+## SUPERCHECKER (19 Nov, Yasin: "use super checker in your entire zone and weed out the unnecessary parts ... be very
+## prone to delete"): tools/city/super/sc.py check on this piece; every finding with no plainly safe place is a
+## deletion (its reason on its line), lamps turned back over their road, oil where no car stands out, a collision
+## box on each building column with none. Applied after everything is placed (hs_fill_lib.sc_apply).
+const SC := {
+ "out": [
+	["prop_poster_case", 544.20001, -1440.40002, "no_wall: prop_poster_case is a wall item with no wall behind it"],
+	["prop_poster_case", 551.79999, -1440.40002, "no_wall: prop_poster_case is a wall item with no wall behind it"],
+	["prop_trash_receptacle", 529.59998, -1441.0, "bin_open: prop_trash_receptacle stands in the open (8.9 m from a wall, 64.4 m from a fence)"],
+	["prop_trash_receptacle", 554.59998, -1441.0, "bin_open: prop_trash_receptacle stands in the open (4.9 m from a wall, 43.4 m from a fence)"],
+	["prop_trash_receptacle", 579.5, -1441.0, "bin_open: prop_trash_receptacle stands in the open (21.1 m from a wall, 18.5 m from a fence)"],
+	["prop_trash_receptacle", 526.59998, -1436.19995, "bin_open: prop_trash_receptacle stands in the open (4.5 m from a wall, 70.1 m from a fence)"],
+	["prop_trash_receptacle", 516.0, -1444.80005, "bin_open: prop_trash_receptacle stands in the open (13.1 m from a wall, 71.0 m from a fence)"],
+	["prop_recycling_receptacle", 541.40002, -1441.0, "bin_open: prop_recycling_receptacle stands in the open (4.9 m from a wall, 56.6 m from a fence)"],
+	["prop_recycling_receptacle", 540.5, -1443.19995, "bin_open: prop_recycling_receptacle stands in the open (7.1 m from a wall, 56.5 m from a fence)"],
+	["prop_recycling_receptacle", 521.5, -1414.80005, "bin_open: prop_recycling_receptacle stands in the open (13.2 m from a wall, 76.5 m from a fence)"],
+	["prop_park_bench", 509.5, -1441.80005, "over_edge: prop_park_bench hangs over the edge of its block (2 of its 4 corners)"],
+	["prop_park_bench", 578.0, -1443.19995, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", 585.0, -1444.80005, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["plant_bird_of_paradise", 509.5, -1452.80005, "over_edge: plant_bird_of_paradise hangs over the edge of its block (3 of its 4 corners)"],
+	["plant_bird_of_paradise", 632.0, -1452.80005, "over_edge: plant_bird_of_paradise hangs over the edge of its block (2 of its 4 corners)"],
+	["plant_agave_americana_small", 625.0, -1452.80005, "over_edge: plant_agave_americana_small hangs over the edge of its block (2 of its 4 corners)"],
+	["plant_agave_americana", 603.5, -1452.80005, "over_edge: plant_agave_americana hangs over the edge of its block (2 of its 4 corners)"],
+	["plant_bougainvillea_mound", 610.5, -1452.80005, "over_edge: plant_bougainvillea_mound hangs over the edge of its block (2 of its 4 corners)"],
+	["plant_potted_leafy", 529.0, -1414.80005, "over_edge: plant_potted_leafy hangs over the edge of its block (2 of its 4 corners)"],
+ ],
+ "turn": [
+	["prop_lamp_cobra", 587.20001, -1430.0, 180.0],
+ ],
+ "decals": [
+
+ ],
+ "boxes": [
+	["Buildings/transit_hall", [0.8997230529785156, 1.6999541819095612, 7.199920654296875, 0.16, 2.800045669078827, 0.16]],
+ ],
+}
 
 func _init() -> void: _run.call_deferred()
 
@@ -118,9 +152,6 @@ func _run() -> void:
 	paints.append([LAYBY[0], -1453.1, LAYBY[2], -1452.9, "white"])
 	paints.append([EDRIVE[0], -1452.2, EDRIVE[1], -1451.8, "white"])        # Emergency Drive's stop bar
 	paints.append([PLATFORM[0], -1446.5, PLATFORM[2], -1446.0, "tactile"])
-	# tree wells in the plaza
-	for t: Array in [[514.0, -1437.0], [514.0, -1420.0], [530.0, -1418.0]]:
-		paints.append([float(t[0]) - 0.8, float(t[1]) - 0.8, float(t[0]) + 0.8, float(t[1]) + 0.8, "mulch"])
 	paints.append_array([
 		[EDRIVE[0], ZN, EDRIVE[1], S.THIRD, "asphalt"],         # Emergency Drive
 		[LAYBY[0], LAYBY[1], LAYBY[2], LAYBY[3], "asphalt"],
@@ -141,6 +172,7 @@ func _run() -> void:
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
 	if PASS >= 2: H.polish(props, g, GREEN)
 	if PASS >= 2: H.polish(props, g, POLISH)
+	if PASS >= 2: H.sc_apply(root, props, dec, SC)
 	H.finish(root, g, props, dec, "n_hp_transit")
 	quit()
 

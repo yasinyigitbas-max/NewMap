@@ -60,34 +60,24 @@ const REGIONS := [
 const ITEMS := [
 	# Founders Green: two rows of canary palms down the green, benches facing in, the university's flagless gateway
 	# of two monuments at the green's street end, sprinklers
-	["palm_canary_date_a", "normal", -630.0, -785.0, 0.0, false], ["palm_canary_date_b", "normal", -570.0, -785.0, 0.0, false],
-	["palm_canary_date_b", "normal", -630.0, -770.0, 40.0, false], ["palm_canary_date_a", "normal", -570.0, -770.0, 40.0, false],
-	["palm_canary_date_a", "normal", -630.0, -755.0, 80.0, false], ["palm_canary_date_b", "normal", -570.0, -755.0, 80.0, false],
+	
 	["prop_obelisk_monument", "worn", -612.0, -787.5, 0.0], ["prop_obelisk_monument", "worn", -588.0, -787.5, 0.0],
 	["prop_park_bench", "worn", -622.0, -765.0, 90.0], ["prop_park_bench", "worn", -578.0, -765.0, -90.0],
 	["prop_park_bench", "worn", -622.0, -755.0, 90.0], ["prop_park_bench", "worn", -578.0, -755.0, -90.0],
-	["plant_bird_of_paradise", "normal", -640.0, -750.0, 0.0, false], ["plant_bird_of_paradise", "normal", -560.0, -750.0, 0.0, false],
+	["plant_bird_of_paradise", "normal", -640.0, -750.0, 0.0], ["plant_bird_of_paradise", "normal", -560.0, -750.0, 0.0],
 	["prop_sprinkler_impact", "normal", -640.0, -770.0, 0.0, false], ["prop_sprinkler_impact", "normal", -560.0, -770.0, 0.0, false],
-	["tree_jacaranda_a", "normal", -648.0, -786.0, 0.0, false], ["tree_jacaranda_b", "normal", -552.0, -786.0, 0.0, false],
 	# the strip behind the visitors' stalls (v -729.5 .. -700): trees, a bench at the Founders walk
-	["tree_magnolia_a", "normal", -640.0, -712.0, 0.0, false], ["tree_magnolia_b", "normal", -622.0, -712.0, 60.0, false],
-	["tree_magnolia_b", "normal", -578.0, -712.0, 120.0, false], ["tree_magnolia_a", "normal", -560.0, -712.0, 180.0, false],
-	["tree_coral_a", "normal", -515.0, -712.0, 0.0, false], ["tree_coral_b", "normal", -690.0, -704.0, 0.0, false],
+	
 	["prop_park_bench", "worn", -608.6, -716.0, 90.0], ["prop_park_bench", "worn", -591.4, -716.0, -90.0],
 	["prop_trash_receptacle", "worn", -607.2, -727.6, 0.0], ["prop_lamp_victorian", "worn", -592.6, -727.6, 0.0],
 	# rec: trees along J Ave, round the car park; the field's benches and a fountain; picnic tables by the courts
-	["tree_eucalyptus_a", "normal", -788.6, -775.0, 0.0, false], ["tree_eucalyptus_b", "normal", -788.6, -760.0, 0.0, false],
-	["tree_eucalyptus_a", "normal", -788.6, -725.0, 0.0, false], ["tree_eucalyptus_b", "normal", -788.6, -710.0, 0.0, false],
+	
 	["prop_park_bench", "worn", -720.0, -736.5, 0.0], ["prop_park_bench", "worn", -705.0, -736.5, 0.0],
 	["prop_drinking_fountain", "worn", -712.5, -736.6, 0.0], ["prop_trash_receptacle", "worn", -726.0, -736.6, 0.0],
 	["prop_picnic_table", "worn", -748.0, -712.0, 90.0], ["prop_picnic_table", "worn", -748.0, -722.0, 90.0],
-	["tree_ficus_a", "normal", -748.0, -704.0, 0.0, false],
 	# the garage and the lot: trees in the lot's island strip and the north buffer, the east street's palms
-	["tree_jacaranda_b", "normal", -495.0, -785.0, 0.0, false], ["tree_jacaranda_a", "normal", -475.0, -785.0, 50.0, false],
-	["tree_jacaranda_b", "normal", -440.0, -785.0, 100.0, false], ["tree_jacaranda_a", "normal", -420.0, -785.0, 150.0, false],
-	["palm_mexican_fan_a", "normal", -411.4, -770.0, 0.0, false], ["palm_mexican_fan_b", "normal", -411.4, -720.0, 0.0, false],
-	["palm_mexican_fan_c", "normal", -411.4, -705.0, 0.0, false],
-	["tree_coral_a", "normal", -500.0, -704.0, 0.0, false], ["tree_coral_b", "normal", -470.0, -704.0, 0.0, false],
+	
+	
 ]
 
 var PY: Array = []     # pad heights (local), one per row of B: the ground at the middle of each front
@@ -98,97 +88,97 @@ var PY: Array = []     # pad heights (local), one per row of B: the ground at th
 ## free spot this piece already had (found by a scratch tool, OUT/py/freespots_hp.py, chosen per kind of place, frozen
 ## here), standing on the ground as built (hs_fill_lib.polish).
 const POLISH := [
-	["tree_torrey_pine_a", "normal", -790.5, -790.5, 47.0, false],
-	["tree_jacaranda_a", "normal", -768.0, -790.5, 94.0, false],
-	["tree_ficus_b", "normal", -745.5, -790.5, 141.0, false],
+	
 	["prop_park_bench", "worn", -724.0, -790.5, -180.0],
-	["tree_magnolia_a", "normal", -693.0, -790.5, 188.0, false],
-	["tree_eucalyptus_a", "normal", -669.0, -790.5, 235.0, false],
-	["tree_coral_a", "normal", -521.0, -790.5, 282.0, false],
-	["tree_torrey_pine_b", "normal", -497.0, -790.5, 329.0, false],
-	["tree_jacaranda_b", "normal", -474.5, -790.5, 16.0, false],
-	["tree_magnolia_b", "normal", -438.0, -790.5, 63.0, false],
-	["tree_eucalyptus_b", "normal", -409.5, -790.5, 110.0, false],
-	["tree_torrey_pine_a", "normal", -785.0, -778.0, 157.0, false],
-	["plant_potted_leafy", "normal", -738.0, -780.5, 0.0, false],
+	
+	
+	
+	
+	["plant_potted_leafy", "normal", -738.0, -780.5, 0.0],
 	["prop_trash_receptacle", "worn", -708.5, -789.5, 0.0],
-	["tree_jacaranda_a", "normal", -697.0, -784.5, 204.0, false],
-	["tree_ficus_b", "normal", -688.5, -785.0, 251.0, false],
-	["tree_magnolia_a", "normal", -679.0, -775.5, 298.0, false],
-	["plant_bird_of_paradise", "normal", -663.5, -786.0, 61.0, false],
-	["tree_eucalyptus_a", "normal", -526.0, -777.0, 345.0, false],
-	["tree_coral_a", "normal", -517.0, -784.0, 32.0, false],
-	["tree_torrey_pine_b", "normal", -509.0, -785.5, 79.0, false],
-	["tree_jacaranda_b", "normal", -495.5, -783.5, 126.0, false],
-	["tree_magnolia_b", "normal", -483.5, -778.0, 173.0, false],
-	["tree_eucalyptus_b", "normal", -471.5, -784.0, 220.0, false],
-	["tree_torrey_pine_a", "normal", -448.5, -784.0, 267.0, false],
-	["tree_jacaranda_a", "normal", -438.0, -777.5, 314.0, false],
-	["tree_ficus_b", "normal", -426.5, -784.0, 1.0, false],
-	["tree_magnolia_a", "normal", -416.5, -789.5, 48.0, false],
-	["tree_eucalyptus_a", "normal", -409.5, -776.5, 95.0, false],
-	["tree_coral_a", "normal", -787.5, -766.5, 142.0, false],
-	["plant_agave_americana", "normal", -736.5, -767.5, 122.0, false],
-	["tree_torrey_pine_b", "normal", -728.0, -755.5, 189.0, false],
-	["tree_jacaranda_b", "normal", -708.5, -752.0, 236.0, false],
-	["tree_magnolia_b", "normal", -696.0, -761.0, 283.0, false],
-	["tree_eucalyptus_b", "normal", -689.0, -764.5, 330.0, false],
-	["tree_torrey_pine_a", "normal", -683.5, -769.0, 17.0, false],
-	["tree_jacaranda_a", "normal", -676.5, -758.5, 64.0, false],
-	["tree_ficus_b", "normal", -671.0, -763.0, 111.0, false],
-	["plant_bougainvillea_mound", "normal", -663.5, -762.5, 183.0, false],
-	["tree_magnolia_a", "normal", -530.5, -756.0, 158.0, false],
-	["tree_eucalyptus_a", "normal", -523.5, -756.0, 205.0, false],
-	["tree_coral_a", "normal", -518.5, -751.0, 252.0, false],
-	["tree_torrey_pine_b", "normal", -508.0, -754.0, 299.0, false],
-	["tree_jacaranda_b", "normal", -409.5, -769.0, 346.0, false],
+	
+	["plant_bird_of_paradise", "normal", -663.5, -786.0, 61.0],
+	
+	
+	
+	
+	
+	
+	["plant_agave_americana", "normal", -736.5, -767.5, 122.0],
+	
+	
+	
+	["plant_bougainvillea_mound", "normal", -663.5, -762.5, 183.0],
+	
+	
 	["prop_sprinkler_impact", "normal", -790.5, -735.5, 244.0, false],
-	["tree_magnolia_b", "normal", -735.0, -743.0, 33.0, false],
-	["tree_eucalyptus_b", "normal", -719.5, -743.0, 80.0, false],
-	["tree_torrey_pine_a", "normal", -706.0, -745.5, 127.0, false],
-	["tree_jacaranda_a", "normal", -694.0, -746.0, 174.0, false],
+	
+	
 	["prop_bike_rack", "worn", -670.0, -732.0, 180.0],
 	["prop_park_bench", "worn", -529.0, -732.5, 180.0],
-	["tree_ficus_b", "normal", -508.0, -734.0, 221.0, false],
-	["tree_magnolia_a", "normal", -500.5, -734.0, 268.0, false],
-	["tree_eucalyptus_a", "normal", -494.0, -731.0, 315.0, false],
-	["tree_coral_a", "normal", -482.0, -739.5, 2.0, false],
-	["tree_torrey_pine_b", "normal", -468.5, -732.5, 49.0, false],
-	["tree_jacaranda_b", "normal", -790.5, -714.5, 96.0, false],
-	["plant_agave_americana_small", "normal", -749.0, -716.0, 305.0, false],
-	["plant_bird_of_paradise", "normal", -650.5, -725.5, 6.0, false],
-	["tree_magnolia_b", "normal", -643.0, -716.0, 143.0, false],
-	["tree_eucalyptus_b", "normal", -630.5, -721.5, 190.0, false],
-	["tree_torrey_pine_a", "normal", -621.5, -716.0, 237.0, false],
-	["tree_jacaranda_a", "normal", -614.5, -718.5, 284.0, false],
-	["plant_potted_succulent", "normal", -602.5, -728.5, 0.0, false],
+	
+	
+	
+	["plant_agave_americana_small", "normal", -749.0, -716.0, 305.0],
+	["plant_bird_of_paradise", "normal", -650.5, -725.5, 6.0],
+	
+	
+	["plant_potted_succulent", "normal", -602.5, -728.5, 0.0],
 	["prop_drinking_fountain", "worn", -595.5, -729.0, -90.0],
-	["tree_ficus_b", "normal", -584.0, -724.5, 331.0, false],
-	["tree_magnolia_a", "normal", -577.0, -720.5, 18.0, false],
-	["tree_eucalyptus_a", "normal", -563.0, -720.0, 65.0, false],
-	["tree_coral_a", "normal", -556.0, -718.0, 112.0, false],
-	["tree_torrey_pine_b", "normal", -549.5, -715.0, 159.0, false],
-	["tree_jacaranda_b", "normal", -541.5, -716.5, 206.0, false],
-	["tree_magnolia_b", "normal", -514.0, -715.5, 253.0, false],
-	["tree_eucalyptus_b", "normal", -507.5, -718.5, 300.0, false],
-	["tree_torrey_pine_a", "normal", -501.0, -721.5, 347.0, false],
-	["tree_jacaranda_a", "normal", -494.0, -724.0, 34.0, false],
-	["tree_ficus_b", "normal", -487.5, -728.5, 81.0, false],
-	["tree_magnolia_a", "normal", -481.0, -724.5, 128.0, false],
-	["tree_eucalyptus_a", "normal", -474.5, -721.5, 175.0, false],
-	["tree_coral_a", "normal", -468.0, -710.5, 222.0, false],
-	["tree_torrey_pine_b", "normal", -461.5, -714.5, 269.0, false],
-	["plant_agave_americana", "normal", -455.0, -710.5, 67.0, false],
-	["tree_jacaranda_b", "normal", -790.5, -700.5, 316.0, false],
+	
+	
+	
+	
+	
+	
+	
+	["plant_agave_americana", "normal", -455.0, -710.5, 67.0],
 	["prop_sprinkler_impact", "normal", -689.5, -703.5, 128.0, false],
-	["tree_magnolia_b", "normal", -645.0, -700.5, 3.0, false],
-	["tree_eucalyptus_b", "normal", -634.0, -706.5, 50.0, false],
-	["tree_torrey_pine_a", "normal", -623.0, -700.5, 97.0, false],
+	
 	["prop_newspaper_box_blue", "worn", -603.0, -706.5, 90.0],
 	["plant_iceplant_patch", "normal", -591.0, -705.5, 189.0, false],
-	["tree_jacaranda_a", "normal", -579.0, -700.5, 144.0, false],
-	["tree_ficus_b", "normal", -567.5, -708.0, 191.0, false],
+	
 ]
+
+## SUPERCHECKER (19 Nov, Yasin: "use super checker in your entire zone and weed out the unnecessary parts ... be very
+## prone to delete"): tools/city/super/sc.py check on this piece; every finding with no plainly safe place is a
+## deletion (its reason on its line), lamps turned back over their road, oil where no car stands out, a collision
+## box on each building column with none. Applied after everything is placed (hs_fill_lib.sc_apply).
+const SC := {
+ "out": [
+	["prop_trash_receptacle", -727.0, -784.20001, "bin_open: prop_trash_receptacle stands in the open (6.2 m from a wall, 54.3 m from a fence)"],
+	["prop_trash_receptacle", -607.20001, -727.59998, "bin_open: prop_trash_receptacle stands in the open (37.3 m from a wall, 144.8 m from a fence)"],
+	["prop_trash_receptacle", -726.0, -736.59998, "bin_open: prop_trash_receptacle stands in the open (27.5 m from a wall, 26.0 m from a fence)"],
+	["prop_trash_receptacle", -708.5, -789.5, "bin_open: prop_trash_receptacle stands in the open (11.5 m from a wall, 69.0 m from a fence)"],
+	["prop_recycling_receptacle", -713.0, -786.5, "bin_open: prop_recycling_receptacle stands in the open (8.5 m from a wall, 63.8 m from a fence)"],
+	["prop_bike_rack", -670.0, -732.0, "rack_across: the bike rack stands across the walk, not along it"],
+	["prop_obelisk_monument", -612.0, -787.5, "walk_narrow: prop_obelisk_monument leaves 1.1 m of a 1.8 m wide walk"],
+	["prop_obelisk_monument", -588.0, -787.5, "walk_narrow: prop_obelisk_monument leaves 1.1 m of a 1.8 m wide walk"],
+	["prop_park_bench", -622.0, -765.0, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -578.0, -765.0, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -622.0, -755.0, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -578.0, -755.0, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -608.59998, -716.0, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -591.40002, -716.0, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -720.0, -736.5, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -705.0, -736.5, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -724.0, -790.5, "over_edge: prop_park_bench hangs over the edge of its block (2 of its 4 corners)"],
+	["prop_picnic_table", -748.0, -712.0, "no_reason: prop_picnic_table stands alone: no door within 18 m, no wall within 8 m, nothing to sit wi"],
+	["prop_picnic_table", -748.0, -722.0, "no_reason: prop_picnic_table stands alone: no door within 18 m, no wall within 8 m, nothing to sit wi"],
+ ],
+ "turn": [
+	["prop_lamp_cobra", -651.0, -780.0, 180.0],
+	["prop_lamp_cobra", -549.0, -780.0, 180.0],
+	["prop_lamp_cobra", -651.0, -760.0, 180.0],
+	["prop_lamp_cobra", -549.0, -760.0, 180.0],
+ ],
+ "decals": [
+
+ ],
+ "boxes": [
+
+ ],
+}
 
 func _init() -> void: _run.call_deferred()
 
@@ -281,10 +271,11 @@ func _run() -> void:
 		var sill := float(b[5])
 		var f := fp(b); var gy: float = yf.call(float(b[2]), f[1]); var top := float(PY[i]) + sill
 		if top - gy > 0.03:
-			H.steps_z(g, float(b[2]), 4.0, f[1] - ceilf((top - gy) / 0.17) * 0.3, f[1], gy, top)
+			H.steps_z2(g, float(b[2]), 4.0, f[1] - ceilf((top - gy) / 0.17) * H.TREAD, f[1], gy, top, yf)
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
 	if PASS >= 2: H.polish(props, g, ITEMS)
 	if PASS >= 2: H.polish(props, g, POLISH)
+	if PASS >= 2: H.sc_apply(root, props, dec, SC)
 	H.finish(root, g, props, dec, "n_un_north")
 	quit()
 
@@ -306,8 +297,8 @@ func _build(bl: Node3D, props: K.Props, dec: K.Decals, rr: RandomNumberGenerator
 	P.call("prop_sign_no_parking", "worn", -590.0, -730.2, 0.0)
 	Wr.lane_wear(dec, rr, -739.0, CW[0], CE[1], false, yf)
 	# ---- the museum's and the chapel's forecourts: a bench each side, planters
-	P.call("plant_potted_leafy", "normal", -674.6, -727.6, 0.0, false); P.call("plant_potted_leafy", "normal", -665.4, -727.6, 0.0, false)
-	P.call("plant_potted_succulent", "normal", -537.6, -727.6, 0.0, false); P.call("plant_potted_succulent", "normal", -522.4, -727.6, 0.0, false)
+	P.call("plant_potted_leafy", "normal", -674.6, -727.6, 0.0); P.call("plant_potted_leafy", "normal", -665.4, -727.6, 0.0)
+	P.call("plant_potted_succulent", "normal", -537.6, -727.6, 0.0); P.call("plant_potted_succulent", "normal", -522.4, -727.6, 0.0)
 	# ---- recreation: wheel stops, a lot light, the courts' fences (a gate gap on the walk side), nets, benches by the
 	#      courts, a bike rack and the bins at the rec center's door, the field's bench row
 	for a: Array in RAISLES:
