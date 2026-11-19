@@ -1,0 +1,368 @@
+{
+ "fixes": [
+  {
+   "at": [
+    78.9000015258789,
+    0.617594361305237,
+    184.399993896484
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    103.800003051758,
+    0.935974359512329,
+    184.399993896484
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 19.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    97.9000015258789,
+    0.617594361305237,
+    184.600006103516
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    120.199996948242,
+    0.935974359512329,
+    184.600006103516
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 21.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    114.800003051758,
+    0.935974359512329,
+    187.199996948242
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 22.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    116.900001525879,
+    0.935974359512329,
+    167.0
+   ],
+   "base": "plant_potted_leafy",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 23.0,
+   "op": "add_collider",
+   "reason": "plant_potted_leafy has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    98.8000030517578,
+    0.617594361305237,
+    187.399993896484
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    121.199996948242,
+    0.935974359512329,
+    187.399993896484
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    84.8000030517578,
+    0.617594361305237,
+    187.199996948242
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    108.199996948242,
+    0.935974359512329,
+    187.199996948242
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    75.5999984741211,
+    0.528544187545776,
+    175.600006103516
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (1.9 m from a wall, 34.9 m from a fence)]"
+  },
+  {
+   "at": [
+    99.9000015258789,
+    1.1041544675827,
+    162.800003051758
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (9.6 m from a wall, 22.1 m from a fence)]"
+  },
+  {
+   "at": [
+    122.300003051758,
+    1.41383242607117,
+    162.800003051758
+   ],
+   "base": "prop_trash_cart_black",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (9.2 m from a wall, 2.7 m from a fence)]"
+  },
+  {
+   "at": [
+    99.0999984741211,
+    1.08792877197266,
+    162.800003051758
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (9.9 m from a wall, 22.1 m from a fence)]"
+  },
+  {
+   "at": [
+    121.5,
+    1.40413200855255,
+    162.800003051758
+   ],
+   "base": "prop_trash_cart_blue",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (9.1 m from a wall, 3.5 m from a fence)]"
+  },
+  {
+   "at": [
+    98.3000030517578,
+    1.07170307636261,
+    162.800003051758
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (10.0 m from a wall, 22.1 m from a fence)]"
+  },
+  {
+   "at": [
+    120.699996948242,
+    1.39451491832733,
+    162.800003051758
+   ],
+   "base": "prop_trash_cart_green",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (9.1 m from a wall, 4.3 m from a fence)]"
+  },
+  {
+   "at": [
+    83.3000030517578,
+    0.617594361305237,
+    167.5
+   ],
+   "base": "prop_patio_set_4",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 16.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_patio_set_4 leaves 0.6 m of a 2.8 m wide walk]"
+  },
+  {
+   "at": [
+    111.900001525879,
+    0.935974359512329,
+    167.5
+   ],
+   "base": "prop_picnic_table",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "walk_narrow",
+   "mode": "choose",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table leaves 0.8 m of a 2.8 m wide walk]"
+  },
+  {
+   "at": [
+    53.599838256836,
+    1.35530498623848,
+    181.249924659729
+   ],
+   "box": [
+    -9.10016250610352,
+    0.999979496002197,
+    9.79992771148682,
+    1.03987411499023,
+    1.99995899200439,
+    0.839936294555664
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 24.0,
+   "name": "sc_col_0",
+   "node": "Buildings/fire_station",
+   "op": "add_box",
+   "reason": "fire_station: a 1.0 x 0.8 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    54.5498714447022,
+    0.880280405282974,
+    179.909934043884
+   ],
+   "box": [
+    -8.1501293182373,
+    0.524954915046692,
+    8.45993709564209,
+    0.260046997070312,
+    1.04990983009338,
+    0.259949722290039
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 25.0,
+   "name": "sc_col_1",
+   "node": "Buildings/fire_station",
+   "op": "add_box",
+   "reason": "fire_station: a 0.2 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    76.4297008514404,
+    2.16757035255432,
+    183.164914608002
+   ],
+   "box": [
+    -11.8703022003174,
+    1.54997599124908,
+    5.8649115562439,
+    0.299920120239258,
+    3.09995198249817,
+    0.310153045654297
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 26.0,
+   "name": "sc_col_0",
+   "node": "Buildings/a1",
+   "op": "add_box",
+   "reason": "a1: a 0.3 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    84.6998257637024,
+    2.31754089891911,
+    182.924902915955
+   ],
+   "box": [
+    -3.60017728805542,
+    1.69994653761387,
+    5.62489986419678,
+    0.259767570495605,
+    2.8000108897686,
+    0.289943733215332
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 27.0,
+   "name": "sc_col_1",
+   "node": "Buildings/a1",
+   "op": "add_box",
+   "reason": "a1: a 0.2 x 0.2 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "n_hs_b5_eleventh"
+}
