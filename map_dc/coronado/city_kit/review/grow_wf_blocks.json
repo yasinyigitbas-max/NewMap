@@ -1,0 +1,41 @@
+{
+ "_doc": "Waterfront fill (claude/fill-waterfront): one row per new waterfront fill piece (n_wf_*), grid frame [u, 0, v] (the pieces carry absolute heights), yaw 0. Read by tools/city/pilot/zoning/integrate.py (review/grow_*_blocks.json) into city_grid_layout.json - not run into the shared layout by this branch.",
+ "rows": [
+  {
+   "piece": "n_wf_b1w",
+   "pos": [
+    295.0,
+    0.0,
+    270.0
+   ],
+   "yaw": 0.0,
+   "site": "waterfront fill block 1 west (u 259.2-331, Pier St to the ring)",
+   "variant": "Pier St top: inn, bakery, bike hire, grill; visitor lot; flats; cottages",
+   "from": "grow_wf"
+  },
+  {
+   "piece": "n_wf_b1m",
+   "pos": [
+    367.0,
+    0.0,
+    270.0
+   ],
+   "yaw": 0.0,
+   "site": "waterfront fill block 1 middle (u 331-404)",
+   "variant": "Pier St middle: ice cream row, Pier Steps, Tide Bar, dive & surf; lot; flats; cottages",
+   "from": "grow_wf"
+  },
+  {
+   "piece": "n_wf_b1e",
+   "pos": [
+    470.0,
+    0.0,
+    270.0
+   ],
+   "yaw": 0.0,
+   "site": "waterfront fill block 1 east (u 404-560.8, with Beach Lane)",
+   "variant": "Pier St bottom: Fish House, bait & tackle, surf shop, kayak hire; lot; playground; Beach Lane",
+   "from": "grow_wf"
+  }
+ ]
+}
