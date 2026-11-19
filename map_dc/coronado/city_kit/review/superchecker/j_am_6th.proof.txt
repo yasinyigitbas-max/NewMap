@@ -1,0 +1,17 @@
+PROOF compared: 20 nodes (with every mesh of the buildings), 13208 ground and ground-collision triangles, 15 prop instances, 10 colliders, 130 wear marks are identical in both files
+PROOF differences found between the files: 14 lines only in the old one, 14 only in the new one
+PROOF change #1 move prop_signal_mast_arm: (-11.56, 0.15, 5.76) -> (-11.56, 0.00, 5.76), in 2 tier(s) and its collider  [prop_signal_mast_arm hangs 0.15 m over what is under it]
+PROOF change #2 move prop_signal_mast_arm: (11.56, 0.15, -5.76) -> (11.56, 0.00, -5.76), in 2 tier(s) and its collider  [prop_signal_mast_arm hangs 0.15 m over what is under it]
+PROOF change #3 move prop_storm_drain_curb_inlet: (-9.10, 0.00, -16.60) -> (-9.10, 0.10, -16.60), in 1 tier(s), no collider  [prop_storm_drain_curb_inlet is 0.10 m into the ground]
+PROOF change #4 move prop_storm_drain_curb_inlet: (9.10, 0.00, -16.60) -> (9.10, 0.10, -16.60), in 1 tier(s), no collider  [prop_storm_drain_curb_inlet is 0.10 m into the ground]
+PROOF change #5 move prop_storm_drain_curb_inlet: (-9.10, 0.00, 16.60) -> (-9.10, 0.10, 16.60), in 1 tier(s), no collider  [prop_storm_drain_curb_inlet is 0.10 m into the ground]
+PROOF change #6 move prop_storm_drain_curb_inlet: (9.10, 0.00, 16.60) -> (9.10, 0.10, 16.60), in 1 tier(s), no collider  [prop_storm_drain_curb_inlet is 0.10 m into the ground]
+PROOF change #7 move prop_storm_drain_curb_inlet: (-22.80, 0.00, -3.30) -> (-22.80, 0.10, -3.30), in 1 tier(s), no collider  [prop_storm_drain_curb_inlet is 0.10 m into the ground]
+PROOF change #8 move prop_storm_drain_curb_inlet: (-22.80, 0.00, 3.30) -> (-22.80, 0.10, 3.30), in 1 tier(s), no collider  [prop_storm_drain_curb_inlet is 0.10 m into the ground]
+PROOF change #9 move prop_storm_drain_curb_inlet: (22.80, 0.00, -3.30) -> (22.80, 0.10, -3.30), in 1 tier(s), no collider  [prop_storm_drain_curb_inlet is 0.10 m into the ground]
+PROOF change #10 move prop_storm_drain_curb_inlet: (22.80, 0.00, 3.30) -> (22.80, 0.10, 3.30), in 1 tier(s), no collider  [prop_storm_drain_curb_inlet is 0.10 m into the ground]
+PROOF 10 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
+   at: parse_gdextension_file (core/extension/gdextension_library_loader.cpp:282)
+   at: open_library (core/extension/gdextension.cpp:810)
+   at: load_extensions (core/extension/gdextension_manager.cpp:333)
