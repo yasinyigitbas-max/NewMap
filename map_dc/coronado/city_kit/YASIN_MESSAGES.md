@@ -271,3 +271,13 @@ the other agent suggested these
 - [2026-11-19] i have about 40 animated bodies standard with 50 bones
 
 - [2026-11-19] you just had a context compression, remind yourself the rules, and the task in the first message. act like a developer working for rockstars next GTA and tackle the problems. how far along are you in your queue
+
+- [2026-11-19] is everything c plus plus? also does the crowd have the same feature set as the ones i wrote in the first mesage or any improvements upon them?
+
+- [2026-11-19] omg our entire streamer is written in translated code?
+
+- [2026-11-19] why do sessions keep defaulting to write translated code when the native code is obviously faster by magnitudes?
+
+- [2026-11-19] build all of the missing parts of npcs and crowds, dont call it done unless its 100 percent native code and all features implemented
+
+- [2026-11-20] dont you need all benches to be in the game before you make that piece? most of the map isnt done yet

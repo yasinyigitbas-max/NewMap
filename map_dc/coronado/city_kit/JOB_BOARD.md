@@ -5,6 +5,19 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 20 Nov ~03:00 (PC session): PEOPLE, STEP 3: THE WHOLE BRAIN AND THE PLACES, C++ (Yasin: "build all of the missing
+  parts of npcs and crowds, dont call it done unless its 100 percent native code and all features implemented").
+  Read docs/TRAFFIC_PEOPLE_PORT.md section 26: it has THE LEDGER of his list, line by line (BRAIN / GAME / NOT).
+  NEW TOOL `tools/city/traffic/make_places.gd` (C++ class `PeoplePlaces`): 2,102 places from the pieces' own props
+  and buildings and the shop list -> `traffic/places.bin`. RUN IT AFTER make_streets.gd AFTER EVERY BAKE / NEW BLOCK
+  (nothing of the map is in the code). THE BRAIN (`ped_crowd.*`, `ped_goals.cpp`, `ped_party.cpp`, `ped_life.cpp`):
+  routes and goals, doors, shops with hours, benches, beach, park, cafe, bus stops, groups on their leader's trail,
+  phone calls, shop windows, meetings, beggars, night workers, rain, fright, jumping out of a car's way, the player,
+  the hooks and events. `bash native/tests/run_crowd_test.sh` RESULT PASS with three seeds (846 people, 30 minutes: 0
+  inside each other, 0 beside the pavement, 0 standing a minute; 0.57 ms a step).
+  STILL TO DO FOR "DONE": the game's node (join to the traffic, draw far figures and the 18 near bodies with the
+  acts' animations, the balancing body for a walker who is pushed or hit, capsules round the player, umbrellas,
+  towels, murmur), a player on foot, the talking, a bus line, the real get-up. NO PICTURE OF THE CROWD EXISTS YET.
 - 19 Nov ~23:00 (PC session): PEOPLE, STEP 2: THE WALKING CROWD'S CORE, WRITTEN NEW, PLAIN C++ (`native/src/
   ped_crowd.*`, class `pc::Crowd`). Read docs/TRAFFIC_PEOPLE_PORT.md section 25. A pavement is a little two-way
   street: people keep right in two files, follow, pass when nobody comes, never move into a body (held: side step,

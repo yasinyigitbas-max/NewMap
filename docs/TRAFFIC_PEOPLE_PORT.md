@@ -887,3 +887,102 @@ A SECOND SEED (7): A, B, C the same zeros; in D ONE walker for ONE step passes 9
 - The far figures need baked poses (the old game's pose texture was not brought); the near ones are the 41 bodies.
 - Kerb queues can still stand in a pavement's way (people go round them); 8 pavement ends where people turn back.
 - 19 people round the camera in ordinary streets may look empty: `density` scales it, Yasin's eye decides.
+
+## 26. People, step 3: the whole brain, and the places (20 Nov, on the working branch)
+Yasin, 19 Nov late: "build all of the missing parts of npcs and crowds, dont call it done unless its 100 percent
+native code and all features implemented". His list of the first message is the spec (kept in `OUT/npc_spec.txt` on
+the PC; the ledger below goes through it line by line). THIS STEP IS STILL THE BRAIN: nothing is drawn yet.
+
+### The places (a tool, C++: `native/src/people_places.cpp`, class `PeoplePlaces`; `ped_places.h`)
+`godot --path . --rendering-method mobile --resolution 320x180 -s res://tools/city/traffic/make_places.gd` reads the
+layout, every piece's own props and buildings, the interiors' shop list and streets.bin and writes
+`city_kit/traffic/places.bin` (+ `places_report.txt`): 2,102 places on the map as it is today: 831 home doors, 146
+shop doors (kind, name), 588 bench seats, 206 park and 118 beach places, 12 cafe seats, 147 bus stops, 12 beggars'
+spots, 34 night corners, 8 gates. Each is tied to the pavement one leaves for it.
+NOTHING OF THE MAP IS WRITTEN INTO THE CODE: RUN IT AFTER `make_streets.gd`, AFTER EVERY BAKE / EVERY NEW BLOCK.
+Left out today (no pavement within reach): 89 homes, 15 shops, 294 bench seats (deep in parks), 86 park places, 7 bus
+stops. 70 of the 147 bus stops have no lane within 14 m (for the buses, later). NOT CHECKED BY EYE: which way the
+benches face (the tool reads it from the bench's own shape; 142 of 294 turn their back to the pavement they are
+reached from, which is right for a bench at the kerb and wrong for one at the wall).
+
+### The brain (`native/src/ped_crowd.*`, `ped_goals.cpp`, `ped_party.cpp`, `ped_life.cpp`, `ped_inl.h`; plain C++)
+Console test `bash native/tests/run_crowd_test.sh [seed]` (the real streets.bin and places.bin, 2 minutes): RESULT
+PASS with seeds 20261119, 7 and 3. Run A is 846 people all over the map at noon for 30 minutes, everything on:
+0 inside each other, 0 beside their pavement, 0 standing a minute, 0 bad numbers; out in the road 2.5 s into the
+traffic's green: 0, 0 and 1 walker-look of 1.46 million (the rule is "at most 1 in 100,000": what is left is a
+follower whom its group left behind on a crossing). In those 30 minutes: 2,986 ways planned, 2,213 arrivals, 1,074
+went in at a door, 936 came out, 563 sat down, 27 lay down, 8 had a drink, 271 waited at a bus stop, 4,212 crossings,
+2,816 passes, 270 groups, 4,251 phone calls and shop windows, 288 meetings (40 came to blows), 45 coins, 136 circles,
+210 lines of conversation. A step for 846 people: 0.57 ms (the very first step, which fills the map and plans 800
+ways, takes up to 0.1 s: behind the loading screen).
+
+THE LEDGER (his list; BRAIN = done and tested in the console test; GAME = needs the game's node: drawing, sound,
+the player, the traffic; NOT = not built):
+Walking
+- walks a graph of pavements and crossings: BRAIN (the new map's: 1,006 pavements 61 km, 276 crossings)
+- plans a route to a goal, picks its own goal 120-520 m away: BRAIN (shortest way; a place by the hour and weather)
+- keeps right, each with a slightly different line: BRAIN (two files; each person 6 cm either side of his file)
+- own speed 1.05-1.55 m/s, eases in and out, smooth turning: BRAIN
+- passes a slower walker on the left when there is room, else follows: BRAIN
+- goes round a standing or oncoming person; blocked, squeezes through: BRAIN, and BETTER: never through anybody
+  (side step after 1.2 s, sideways past after 3 s, round after 9 s)
+- steps aside for the player, reports a bump: BRAIN (test H). Feet on the drawn ground near the player: GAME
+- everybody's pace can be scaled, in rain people hurry: BRAIN (test F: 1.14 of their own pace)
+Crossing
+- signals: waits at the kerb, somewhere across the width: BRAIN (on his own half, by the traffic's own clock)
+- no signals: a look first, a gap, step out anyway after a while: BRAIN (12 s here; test D with cars that never brake)
+- stops short of any vehicle, never walks into one: BRAIN (cars are boxes nobody may move into)
+- dodges a car coming at them, off the pavement if needed, two seconds ahead: BRAIN (test D: 22 jumps, 0 run over)
+Who is there
+- a target per zone type: BRAIN (5 kinds of street here, by the hour, weekday and rain)
+- live within 130 m, retired beyond 156 m: BRAIN. Never appear within 35 m in view: BRAIN (stricter: never within
+  40 m at all, in view only at the far edge)
+- half come out of a door, the rest from the edge: BRAIN (test C: 272 of 1,456)
+- first fill instant, later tops up, removes unseen people when too many: BRAIN
+- blocked 45 s and out of view: removed: BRAIN (off in the checks, so nothing is hidden)
+- three levels of care by distance (40 m, 90 m): BRAIN (stepped every tick / 2nd / 4th)
+- up to 1,024 people: BRAIN (cap 1,000)
+Groups
+- couples, friends, families (3-4), sailors, joggers; mix per zone: BRAIN
+- one leads, the others on his exact trail, beside or behind: BRAIN
+- the group at its slowest one's pace, families slower: BRAIN
+- single file when the leader is passing, following or blocked (here also: when somebody comes within 9 m): BRAIN
+- joggers run through and out: BRAIN (they run to their goal like anybody; nothing special at the edge)
+Places
+- homes, shops, gates are doors: in and gone: BRAIN. Shops count people in and let them out; hours by weekday: BRAIN
+- people leave home by time of day: BRAIN (a door's chance follows the hour)
+- beach and park spots, 25-90 s, sitting or lying on back or front: BRAIN
+- benches: sit facing the bench's way; a knocked-over bench is switched off and its sitter gets up: BRAIN (test I)
+- bus stops: wait; a bus at the stop: board through the front door, a few get off: BRAIN (test J). THE BUSES
+  THEMSELVES: NOT (the new map has no bus line; the traffic can drive one)
+- cafes and bars: a drink in front of them: BRAIN (12 seats today: only tables within 18 m of a place that serves)
+- opening a door before going in: BRAIN (1.2 s at the door); the animation: GAME
+Street life
+- phone call or shop window on an 18-50 s roll: BRAIN
+- rain: nobody sits, sitters get up, people shelter at shop fronts: BRAIN (test F)
+- a group stops in a circle to talk, at most two near the player: BRAIN
+- group conversations near the player, 3.2 s a line, 20-40 s apart, fitting the zone: BRAIN (it says WHICH line;
+  the words and voices: GAME)
+- meetings of lone walkers who know each other (always the same pairs): wave, chat, hug, quarrel, blows: BRAIN
+- beggars; about 15 % give a coin, always the same people: BRAIN
+- night workers: BRAIN (test E). Time of day, weekday, sunrise, sunset known to the core: BRAIN
+Danger
+- duck near it, run (3.3 m/s) farther off, some stare, film or call: BRAIN (test G)
+- screaming, "look out" for fast cars: BRAIN (events); the sounds: GAME
+Talking to the player: NOT (the brain has the hold / face / talk hooks it needs)
+Bodies and drawing: GAME, NOT YET (the 41 bodies are here; far figures, the 18 near bodies, the animations for the
+  acts, umbrellas, towels, the murmur, the capsules round the player)
+Hooks: place, remove, goal (to a place: stay or go in; to a point), stay, act, hold and release, hide: BRAIN
+  (test I). Events: appeared, left, arrived, needs a goal (only a walker the game placed), waiting to cross, looking
+  before crossing, bumped the player, met, gave a coin, fight, says a line (+ scream, look out, boards, gets off):
+  BRAIN. "Guests" (the traffic's own simple walkers): NOT NEEDED (there is one walker system now). Self-checks: BRAIN.
+
+### What it does NOT do / what was NOT checked
+- NOT IN THE GAME. No picture of any of it exists. Not on the phone.
+- The last metres to a door or seat are a straight line: through a hedge or a fence if one stands between.
+- At two corners with pavements 1 m wide (near (20, 9) and Amber / 7th) people bunch; they clear, but it will look
+  crowded there at noon with this many people. The density table is a guess (2.5 / 4 / 9 / 12 / 5 people on 100 m of
+  one pavement at the busiest hour): Yasin's eye decides.
+- 45 % of people walk with others, 40 of 288 meetings came to blows: both look high; not tuned.
+- Its own people may brush shoulders (28 cm) and a leader walks through its own people when it must turn round.
+- The test's cars never brake and some drive over pavements: people hit THERE are not counted.

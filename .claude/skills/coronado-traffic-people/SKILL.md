@@ -55,6 +55,15 @@ The full record is `docs/TRAFFIC_PEOPLE_PORT.md` (sections 13-20 are results). T
   ones coming over cannot land; somebody standing must be gone round or one phone call jams a street; a clot at a
   1 m corner only clears when people may turn sideways; test cars of the next junction close this one's gaps.
 
+- The whole brain and the places (20 Nov, doc section 26, WITH THE LEDGER of Yasin's list): after every bake run
+  `make_streets.gd`, THEN `make_places.gd` (class `PeoplePlaces` -> `traffic/places.bin`), then
+  `bash native/tests/run_crowd_test.sh`. Paid for: a crossing's kerb is the kerb of the pavement that runs ACROSS it,
+  not the narrower of the two at the corner; a row moved at once (out of a door, onto a seat) must be moved in the
+  neighbours' grid too, and never onto somebody; "sideways" must stay until there is room, not until a state changes;
+  a group's leader blocked by its own people stands for good; a follower left behind on a crossing finishes it alone
+  and late; a jump out of a car's way must not jump back while the car still comes; a bus: off first, then on;
+  walkers the test places need shops' doors to stay shut or the counts are off.
+
 ## Yasin's rules for this job (his words are in the doc)
 - Everything in C++: no script in any frame or tick, no script fallback. Tool-time scripts are fine.
 - Parked cars are LOW DETAIL only. Cars must never touch a pavement, a kerb or grass. Cars move naturally.
