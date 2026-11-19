@@ -1,0 +1,419 @@
+{
+ "fixes": [
+  {
+   "at": [
+    120.199996948242,
+    2.11395335197449,
+    98.0
+   ],
+   "base": "plant_agave_americana",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 40.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    58.2000007629395,
+    0.464821964502335,
+    102.5
+   ],
+   "base": "plant_agave_americana",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 41.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    95.8000030517578,
+    1.67759621143341,
+    98.0
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 42.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    98.1999969482422,
+    1.66292119026184,
+    102.5
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 43.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    68.1999969482422,
+    0.72974294424057,
+    98.5
+   ],
+   "base": "plant_bougainvillea_mound",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 44.0,
+   "op": "add_collider",
+   "reason": "plant_bougainvillea_mound has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    111.199996948242,
+    1.91661477088928,
+    102.5
+   ],
+   "base": "plant_bougainvillea_mound",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 45.0,
+   "op": "add_collider",
+   "reason": "plant_bougainvillea_mound has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    136.800003051758,
+    5.6977334022522,
+    64.0
+   ],
+   "base": "plant_potted_leafy",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 46.0,
+   "op": "add_collider",
+   "reason": "plant_potted_leafy has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    127.800003051758,
+    5.6977334022522,
+    69.5
+   ],
+   "base": "plant_potted_succulent",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 47.0,
+   "op": "add_collider",
+   "reason": "plant_potted_succulent has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    53.0,
+    0.356673449277878,
+    98.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "worn",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 18.0,
+   "op": "move",
+   "reason": "prop_storm_drain_grate is 0.12 m into the ground",
+   "to": [
+    53.0,
+    0.476673431694508,
+    98.0
+   ]
+  },
+  {
+   "at": [
+    141.0,
+    5.6977334022522,
+    66.0
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    82.0,
+    1.24329996109009,
+    96.0
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    62.0,
+    0.750368773937225,
+    66.0
+   ],
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    72.0,
+    0.995493769645691,
+    88.0
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    116.0,
+    1.86596179008484,
+    136.0
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    88.0,
+    2.24926567077637,
+    70.0
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    61.7999992370605,
+    0.568859577178955,
+    98.5
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    96.0,
+    2.00002598762512,
+    90.0
+   ],
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    112.0,
+    4.03028011322021,
+    66.0
+   ],
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    116.0,
+    2.76658129692078,
+    88.0
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    140.800003051758,
+    2.8018364906311,
+    92.5
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    138.0,
+    3.39473628997803,
+    86.0
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    114.800003051758,
+    2.07552623748779,
+    98.0
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    64.0,
+    0.644164562225342,
+    96.0
+   ],
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    112.0,
+    1.89052748680115,
+    112.0
+   ],
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "remove",
+   "reason": "tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    110.0,
+    1.46611940860748,
+    146.0
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    89.8000030517578,
+    1.46498095989227,
+    98.0
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    131.199996948242,
+    5.6977334022522,
+    62.4000015258789
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 19.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (24.8 m from a wall, 11.3 m from a fence)]"
+  },
+  {
+   "at": [
+    103.400001525879,
+    2.80606150627136,
+    80.0
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 20.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (42.5 m from a wall, 25.6 m from a fence)]"
+  },
+  {
+   "at": [
+    105.199996948242,
+    2.99816870689392,
+    78.0
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 21.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (40.7 m from a wall, 26.9 m from a fence)]"
+  }
+ ],
+ "scene": "n_hs_b5_hill"
+}

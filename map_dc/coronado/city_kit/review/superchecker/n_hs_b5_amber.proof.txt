@@ -1,0 +1,57 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 61 nodes (with every mesh of the buildings), 8784 ground and ground-collision triangles, 104 prop instances, 41 colliders, 8 wear marks are identical in both files
+PROOF differences found between the files: 58 lines only in the old one, 14 only in the new one
+PROOF change #21 add_collider: plant_bougainvillea_mound at (41.80, 0.19, 187.80) got a collision shape  [plant_bougainvillea_mound has no collision: you walk and drive through it]
+PROOF change #22 add_collider: plant_bird_of_paradise at (32.20, 0.16, 185.20) got a collision shape  [plant_bird_of_paradise has no collision: you walk and drive through it]
+PROOF change #1 remove palm_queen_b at (19.20, 0.15, 188.20) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_coral_b at (36.00, 0.17, 186.00) removed, in 3 tier(s) and its collider  [tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_jacaranda_b at (47.20, 0.22, 187.80) removed, in 3 tier(s) and its collider  [tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_coral_a at (37.80, 0.18, 187.80) removed, in 3 tier(s) and its collider  [tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove tree_magnolia_b at (42.80, 0.20, 179.80) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove prop_recycling_receptacle at (33.40, 0.16, 138.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (1.6 m from a wall, 26.9 m from a fence)]]
+PROOF change #7 remove prop_recycling_receptacle at (35.20, 0.17, 178.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (1.8 m from a wall, 45.0 m from a fence)]]
+PROOF change #8 remove prop_trash_cart_black at (33.20, 0.16, 144.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (1.4 m from a wall, 27.3 m from a fence)]]
+PROOF change #9 remove prop_trash_cart_blue at (33.20, 0.16, 144.80) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (1.4 m from a wall, 27.4 m from a fence)]]
+PROOF change #10 remove prop_trash_cart_green at (33.20, 0.16, 145.60) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (1.4 m from a wall, 27.5 m from a fence)]]
+PROOF change #11 remove prop_trash_receptacle at (17.20, 0.15, 187.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (1.5 m from a wall, 63.3 m from a fence)]]
+PROOF change #13 remove plant_potted_succulent at (16.25, 0.15, 125.00) removed, in 1 tier(s), no collider  [erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]]
+PROOF change #14 remove plant_potted_succulent at (16.25, 0.15, 136.40) removed, in 1 tier(s), no collider  [erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]]
+PROOF change #15 remove plant_potted_succulent at (16.25, 0.15, 145.60) removed, in 1 tier(s), no collider  [erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]]
+PROOF change #16 remove plant_potted_succulent at (16.25, 0.15, 179.60) removed, in 1 tier(s), no collider  [erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]]
+PROOF change #12 remove_decal: one wear mark at (47.56, 0.24, 180.06) removed  [oil mark lies on grass]
+PROOF change #23 add_box: a collision box [0.89972305297852, 1.69995418190956, 7.19992065429688, 0.16, 2.80004566907883, 0.16] for a column of Buildings/post  [post: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #24 add_box: a collision box [3.73496723175049, 1.49998188018799, 6.77483320236206, 0.48997978210449, 2.99996376037598, 0.49008373260498] for a column of Buildings/bistro  [bistro: a 0.4 x 0.5 m column or post of the building has no collision]
+PROOF change #25 add_box: a collision box [1.69588756561279, 1.49998188018799, 6.87996387481689, 0.16, 2.99996376037598, 0.16] for a column of Buildings/bistro  [bistro: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #26 add_box: a collision box [2.10492324829102, 1.49998259544373, 6.77483320236206, 0.48997978210449, 2.99996519088745, 0.49008373260498] for a column of Buildings/corner  [corner: a 0.4 x 0.5 m column or post of the building has no collision]
+PROOF change #27 add_box: a collision box [3.94499588012695, 1.49998259544373, 6.87996387481689, 0.16, 2.99996519088745, 0.16] for a column of Buildings/corner  [corner: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #28 add_box: a collision box [-1.88013076782227, 1.49998259544373, 6.77483320236206, 0.16, 2.99996519088745, 0.49008373260498] for a column of Buildings/corner  [corner: a 0.1 x 0.5 m column or post of the building has no collision]
+PROOF change #29 add_box: a collision box [4.39467239379883, 1.49998259544373, 8.27488040924072, 0.48987297058106, 2.99996519088745, 0.48982147216797] for a column of Buildings/arcade  [arcade: a 0.4 x 0.4 m column or post of the building has no collision]
+PROOF change #30 add_box: a collision box [10.6949415206909, 1.49998259544373, 8.37998294830322, 0.16, 2.99996519088745, 0.16] for a column of Buildings/arcade  [arcade: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #31 add_box: a collision box [-2.22535037994385, 1.49998259544373, 8.37998294830322, 0.16, 2.99996519088745, 0.16] for a column of Buildings/arcade  [arcade: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #32 add_box: a collision box [2.22493934631348, 1.49998259544373, 8.37998294830322, 0.16, 2.99996519088745, 0.16] for a column of Buildings/arcade  [arcade: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #33 add_box: a collision box [1.6349458694458, 1.49998188018799, 3.18995499610901, 0.79008487701416, 2.99996376037598, 0.16] for a column of Buildings/cafe  [cafe: a 0.8 x 0.1 m column or post of the building has no collision]
+PROOF change #34 add_box: a collision box [3.152419090271, 1.09999740123749, 3.19466495513916, 0.32506278991699, 2.19999480247498, 0.16940263748169] for a column of Buildings/cafe  [cafe: a 0.3 x 0.1 m column or post of the building has no collision]
+PROOF note: 'Props/tree_magnolia_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_coral_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_receptacle_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_green_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_blue_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_black_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_recycling_receptacle_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/plant_potted_succulent_normal_near' held only listed items and is gone with them
+PROOF 30 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

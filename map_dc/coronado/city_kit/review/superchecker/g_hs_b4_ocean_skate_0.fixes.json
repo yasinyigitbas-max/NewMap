@@ -1,0 +1,35 @@
+{
+ "fixes": [
+  {
+   "at": [
+    3.15343117713928,
+    0.200000002980232,
+    3.70000004768372
+   ],
+   "base": "prop_potted_plant",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_potted_plant stands in front of a 4.0 m wide door (a back or side door)]"
+  },
+  {
+   "at": [
+    1.05114364624023,
+    0.200000002980232,
+    3.70000004768372
+   ],
+   "base": "prop_display_table",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_display_table stands in front of a 4.0 m wide door (a back or side door)]"
+  }
+ ],
+ "scene": "g_hs_b4_ocean_skate_0"
+}

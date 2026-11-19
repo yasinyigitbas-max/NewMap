@@ -1,0 +1,15 @@
+{
+ "area": "hs_b5_hill", "piece": "n_hs_b5_hill", "zone": "park (hill park in the high-street band)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - a park is where trees are the point: clumps of 3-5 at the edges and round the seating, open lawn in the middle (zone 154 -> about 100)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The park's seventeen builder trees go (scattered evenly over the lawn); eight come back on their own spots in three clumps round the seating at the edges: the south picnic tables and benches, the east picnic tables, the west picnic table and bench. The middle of the lawn stays open.",
+ "trees": [
+  {"base": "tree_ficus_b", "cond": "normal", "at": [112.0, 5.891, 112.0], "yaw": 0.0, "scale": 0.9, "why": "the south clump, by the picnic tables at (114, 120): an old ficus over the tables"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [116.0, 5.866, 136.0], "yaw": 120.0, "scale": 0.9, "why": "the south clump by the benches at (98-103, 128-132) and the second picnic table"},
+  {"base": "palm_queen_a", "cond": "normal", "at": [110.0, 5.466, 146.0], "yaw": 240.0, "scale": 1.0, "why": "the south clump's edge toward the street: a queen palm for height"},
+  {"base": "tree_coral_b", "cond": "normal", "at": [138.0, 7.395, 86.0], "yaw": 60.0, "scale": 0.9, "why": "the east clump, by the picnic table at (132, 92)"},
+  {"base": "tree_magnolia_b", "cond": "normal", "at": [140.8, 6.802, 92.5], "yaw": 180.0, "scale": 0.9, "why": "the east clump's second tree, over the same tables"},
+  {"base": "tree_jacaranda_b", "cond": "normal", "at": [61.8, 4.569, 98.5], "yaw": 300.0, "scale": 0.9, "why": "the west clump, by the picnic table at (74, 98.5)"},
+  {"base": "palm_mexican_fan_c", "cond": "normal", "at": [64.0, 4.644, 96.0], "yaw": 30.0, "scale": 1.0, "why": "the west clump by the bougainvillea: a fan palm among the broadleaf"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [72.0, 4.995, 88.0], "yaw": 150.0, "scale": 0.9, "why": "the west clump's third, near the bench at (68, 80)"}
+ ]
+}

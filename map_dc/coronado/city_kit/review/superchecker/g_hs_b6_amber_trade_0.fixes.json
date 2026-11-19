@@ -1,0 +1,20 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -5.55299997329712,
+    0.0,
+    4.34000015258789
+   ],
+   "base": "prop_pegboard_wall",
+   "chosen": true,
+   "cond": "",
+   "kind": "window_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_pegboard_wall (2.0 m tall) stands right behind a window]"
+  }
+ ],
+ "scene": "g_hs_b6_amber_trade_0"
+}

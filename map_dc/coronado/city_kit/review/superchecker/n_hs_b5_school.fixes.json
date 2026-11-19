@@ -1,0 +1,431 @@
+{
+ "fixes": [
+  {
+   "at": [
+    235.399993896484,
+    4.88333320617676,
+    77.5999984741211
+   ],
+   "base": "plant_potted_succulent",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 28.0,
+   "op": "add_collider",
+   "reason": "plant_potted_succulent has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    235.399993896484,
+    4.88333320617676,
+    81.4000015258789
+   ],
+   "base": "plant_potted_succulent",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 29.0,
+   "op": "add_collider",
+   "reason": "plant_potted_succulent has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    208.800003051758,
+    4.88333320617676,
+    85.8000030517578
+   ],
+   "base": "plant_potted_succulent",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 30.0,
+   "op": "add_collider",
+   "reason": "plant_potted_succulent has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    148.800003051758,
+    3.16481113433838,
+    89.8000030517578
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 31.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    153.199996948242,
+    4.46582174301147,
+    75.8000030517578
+   ],
+   "base": "plant_bird_of_paradise",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 32.0,
+   "op": "add_collider",
+   "reason": "plant_bird_of_paradise has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    153.800003051758,
+    2.80555415153503,
+    94.1999969482422
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 33.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    157.199996948242,
+    4.20194005966187,
+    78.8000030517578
+   ],
+   "base": "plant_agave_americana_small",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 34.0,
+   "op": "add_collider",
+   "reason": "plant_agave_americana_small has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    153.199996948242,
+    3.43727850914001,
+    87.1999969482422
+   ],
+   "base": "plant_bougainvillea_mound",
+   "cond": "normal",
+   "kind": "no_collision",
+   "mode": "auto",
+   "n": 35.0,
+   "op": "add_collider",
+   "reason": "plant_bougainvillea_mound has no collision: you walk and drive through it"
+  },
+  {
+   "at": [
+    209.5,
+    4.88333320617676,
+    91.0
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    148.800003051758,
+    3.52915740013123,
+    85.8000030517578
+   ],
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_coral_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    213.5,
+    4.88333320617676,
+    91.0
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    148.199996948242,
+    5.30822086334229,
+    66.1999969482422
+   ],
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    152.0,
+    4.62549638748169,
+    74.0
+   ],
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    158.0,
+    3.37041044235229,
+    88.0
+   ],
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "tree_coral_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    172.0,
+    4.37881278991699,
+    78.0
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    178.0,
+    3.19437694549561,
+    92.0
+   ],
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    148.800003051758,
+    2.67321705818176,
+    95.1999969482422
+   ],
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    160.0,
+    5.00275325775146,
+    70.0
+   ],
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    152.0,
+    3.0028920173645,
+    92.0
+   ],
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    148.800003051758,
+    4.40336179733276,
+    76.1999969482422
+   ],
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "remove",
+   "reason": "tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    158.199996948242,
+    2.71726536750793,
+    95.1999969482422
+   ],
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    156.199996948242,
+    4.97649478912354,
+    70.1999969482422
+   ],
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 14.0,
+   "op": "remove",
+   "reason": "tree_torrey_pine_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    236.0,
+    4.88333320617676,
+    84.0
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 16.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (5.1 m from a wall, 18.7 m from a fence)]"
+  },
+  {
+   "at": [
+    216.399993896484,
+    4.88333320617676,
+    82.4000015258789
+   ],
+   "base": "prop_trash_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (2.5 m from a wall, 12.6 m from a fence)]"
+  },
+  {
+   "at": [
+    217.199996948242,
+    4.88333320617676,
+    82.4000015258789
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 18.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (1.7 m from a wall, 12.6 m from a fence)]"
+  },
+  {
+   "at": [
+    181.0,
+    5.32505464553833,
+    66.5999984741211
+   ],
+   "base": "prop_recycling_receptacle",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "bin_open",
+   "mode": "choose",
+   "n": 19.0,
+   "op": "remove",
+   "reason": "erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (5.4 m from a wall, 14.7 m from a fence)]"
+  },
+  {
+   "at": [
+    238.4296875,
+    5.6207582950592,
+    57.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 20.0,
+   "op": "remove_decal",
+   "reason": "oil mark lies on the sidewalk",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    230.549806555514,
+    6.58328738808632,
+    78.6001117122185
+   ],
+   "box": [
+    0.899888038635254,
+    1.69995418190956,
+    5.69980049133301,
+    0.16,
+    2.80004566907883,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 36.0,
+   "name": "sc_col_0",
+   "node": "Buildings/school_main",
+   "op": "add_box",
+   "reason": "school_main: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    202.299881935119,
+    6.58328738808632,
+    75.699800491333
+   ],
+   "box": [
+    0.899888038635254,
+    1.69995418190956,
+    5.69980049133301,
+    0.16,
+    2.80004566907883,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 37.0,
+   "name": "sc_col_0",
+   "node": "Buildings/school_classes",
+   "op": "add_box",
+   "reason": "school_classes: a 0.1 x 0.1 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "n_hs_b5_school"
+}

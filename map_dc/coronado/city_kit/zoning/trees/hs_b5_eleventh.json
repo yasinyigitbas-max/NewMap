@@ -1,0 +1,9 @@
+{
+ "area": "hs_b5_eleventh", "piece": "n_hs_b5_eleventh", "zone": "high street",
+ "rule": "docs/TREE_PLAN.md: high street (pilot), Amber spine, arterials - trees in wells on the shop side, palms alternating on Amber (zone 406 -> about 360); this block's trees stand on the front grass along Eleventh",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's four builder trees, a front row on the grass along Eleventh every 10-14 m, go; two come back on their own spots, a palm and a jacaranda 22 m apart.",
+ "trees": [
+  {"base": "palm_mexican_fan_b", "cond": "normal", "at": [98.8, 4.618, 187.4], "yaw": 0.0, "scale": 1.0, "why": "the front grass along Eleventh by the agave and the box hedge: a fan palm"},
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [121.2, 4.936, 187.4], "yaw": 90.0, "scale": 0.9, "why": "the same front strip 22 m on: a jacaranda, alternating with the palm"}
+ ]
+}

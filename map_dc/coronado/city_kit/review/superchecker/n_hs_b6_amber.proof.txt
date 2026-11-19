@@ -1,0 +1,40 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 61 nodes (with every mesh of the buildings), 11192 ground and ground-collision triangles, 96 prop instances, 40 colliders, 7 wear marks are identical in both files
+PROOF differences found between the files: 40 lines only in the old one, 8 only in the new one
+PROOF change #28 add_collider: plant_potted_leafy at (31.80, 0.16, -103.10) got a collision shape  [plant_potted_leafy has no collision: you walk and drive through it]
+PROOF change #29 add_collider: plant_potted_leafy at (25.80, 0.16, -103.60) got a collision shape  [plant_potted_leafy has no collision: you walk and drive through it]
+PROOF change #1 remove palm_mexican_fan_a at (21.50, 0.21, -108.00) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove palm_canary_date_b at (28.50, 0.16, -101.50) removed, in 3 tier(s) and its collider  [palm_canary_date_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove prop_newspaper_box_red at (16.30, 2.15, -188.50) removed, in 1 tier(s) and its collider  [erased (in doubt): opening: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red stands in front of a shop window of brick]]
+PROOF change #4 remove prop_trash_receptacle at (17.20, 0.15, -98.60) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (4.9 m from a wall, 99.0 m from a fence)]]
+PROOF change #5 remove prop_trash_receptacle at (21.20, 0.15, -100.60) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (6.9 m from a wall, 99.0 m from a fence)]]
+PROOF change #6 remove prop_recycling_receptacle at (18.00, 0.15, -98.60) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (4.9 m from a wall, 99.0 m from a fence)]]
+PROOF change #7 remove prop_trash_cart_black at (33.40, 1.17, -150.00) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (1.6 m from a wall, 99.0 m from a fence)]]
+PROOF change #8 remove prop_trash_cart_blue at (33.40, 1.19, -150.80) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (1.6 m from a wall, 99.0 m from a fence)]]
+PROOF change #9 remove prop_trash_cart_green at (33.40, 1.21, -151.60) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (1.6 m from a wall, 99.0 m from a fence)]]
+PROOF change #19 remove plant_potted_succulent at (16.25, 2.11, -176.00) removed, in 1 tier(s), no collider  [erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]]
+PROOF change #20 remove plant_potted_succulent at (16.25, 1.82, -161.80) removed, in 1 tier(s), no collider  [erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]]
+PROOF change #21 remove plant_potted_succulent at (16.25, 0.85, -133.00) removed, in 1 tier(s), no collider  [erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]]
+PROOF change #22 remove plant_potted_succulent at (16.25, 0.29, -113.00) removed, in 1 tier(s), no collider  [erased (in doubt): over_edge: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs over the edge of its block (2 of its 4 corners)]]
+PROOF change #23 remove prop_ac_condenser at (31.60, 0.83, -137.60) removed, in 1 tier(s) and its collider  [erased (in doubt): in_model: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser: a part of a building's own mesh passes through it]]
+PROOF change #30 add_box: a collision box [-2.05003440380096, 1.49999868869781, 6.8249933719635, 0.34002284049988, 2.99999737739563, 0.38998655319214] for a column of Buildings/brick  [brick: a 0.3 x 0.3 m column or post of the building has no collision]
+PROOF change #31 add_box: a collision box [1.02481365203857, 1.49998188018799, 6.87996387481689, 0.16, 2.99996376037598, 0.16] for a column of Buildings/row  [row: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #32 add_box: a collision box [6.73489999771118, 1.49998188018799, 6.77483320236206, 0.49018482208252, 2.99996376037598, 0.49008373260498] for a column of Buildings/row  [row: a 0.5 x 0.5 m column or post of the building has no collision]
+PROOF change #33 add_box: a collision box [4.8947925567627, 1.49998188018799, 6.87996387481689, 0.16, 2.99996376037598, 0.16] for a column of Buildings/row  [row: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #34 add_box: a collision box [-3.81753265857697, 1.42064321041107, 8.04999685287476, 0.20498064994812, 2.84128642082214, 1.14000705718994] for a column of Buildings/corner  [corner: a 0.2 x 1.1 m column or post of the building has no collision]
+PROOF change #35 add_box: a collision box [1.02491331100464, 1.49998188018799, 6.87996387481689, 0.16, 2.99996376037598, 0.16] for a column of Buildings/cafe  [cafe: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF note: 'Props/prop_trash_cart_green_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_blue_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_black_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_receptacle_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_canary_date_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_canary_date_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_canary_date_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/plant_potted_succulent_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_newspaper_box_red_worn_near' held only listed items and is gone with them
+PROOF 22 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

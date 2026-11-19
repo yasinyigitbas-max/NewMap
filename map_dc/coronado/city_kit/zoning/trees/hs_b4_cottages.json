@@ -1,0 +1,12 @@
+{
+ "area": "hs_b4_cottages", "piece": "n_hs_b4_cottages", "zone": "high street band, cottage row (residential yards)",
+ "rule": "docs/TREE_PLAN.md: residential yards - one yard tree for every two or three houses, in back yards and at lot corners, never against a fence or a wall (zone 813 -> about 400)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The cottage row's seventeen builder trees go (a line down the back yards every 6-8 m, palms and broadleaf in the front gardens behind the picket fences); five come back on their own spots: three back yards (by the patio set, the swing set, one open) and two front gardens 70 m apart.",
+ "trees": [
+  {"base": "tree_ficus_b", "cond": "normal", "at": [212.0, 6.132, 213.2], "yaw": 0.0, "scale": 0.85, "why": "the north back yard with the patio set (2.9 m off): a ficus over the table"},
+  {"base": "tree_ficus_b", "cond": "normal", "at": [213.8, 5.773, 249.4], "yaw": 90.0, "scale": 0.85, "why": "the back yard 36 m south, 11 m from the cottage: the yard's tree"},
+  {"base": "palm_mexican_fan_b", "cond": "normal", "at": [210.2, 4.633, 281.4], "yaw": 180.0, "scale": 1.0, "why": "the back yard with the swing set (3.1 m off): a fan palm for light shade"},
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [237.8, 6.132, 221.4], "yaw": 270.0, "scale": 0.85, "why": "a front garden behind the white picket fence, 6.3 m from the cottage"},
+  {"base": "tree_magnolia_b", "cond": "normal", "at": [237.8, 4.633, 291.2], "yaw": 45.0, "scale": 0.85, "why": "a front garden 70 m south behind the picket fence"}
+ ]
+}
