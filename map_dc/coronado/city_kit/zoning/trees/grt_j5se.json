@@ -1,0 +1,11 @@
+{
+ "area": "grt_j5se", "piece": "g_v3_j5se", "zone": "gritty edge",
+ "rule": "docs/TREE_PLAN.md: almost none - one scrappy tree in a vacant lot, weeds at fences; a street here lost its trees long ago (zone 109 -> about 30)",
+ "written": "by hand, 19 Nov 2026 (PC session, city-wide superchecker run). Ten builder trees go; this homes block keeps two, on their own spots.",
+ "trees": [
+  {"base": "tree_ficus_a", "cond": "normal", "at": [-768.3, 4.365, -965.3], "yaw": 80.0, "scale": 0.85,
+   "why": "kept on its spot over the back-lawn patio set and gas grill, where the houses' tenants sit"},
+  {"base": "tree_coral_b", "cond": "normal", "at": [-760.3, 4.961, -929.9], "yaw": 290.0, "scale": 0.8,
+   "why": "kept on its spot over the two adirondack chairs, the one shady corner of the south lawns"}
+ ]
+}

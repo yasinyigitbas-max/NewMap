@@ -1,0 +1,11 @@
+{
+ "area": "grt_g4ne",
+ "piece": "g_v1_g4ne",
+ "zone": "gritty edge",
+ "rule": "docs/TREE_PLAN.md: almost none - one scrappy tree in a vacant lot, weeds at fences; a street here lost its trees long ago (zone 109 -> about 30)",
+ "written": "by hand, 19 Nov 2026 (PC session, the city-wide superchecker run). The block's five builder trees (two jacarandas, two ficus, a magnolia among the cottages) go; one tree comes back.",
+ "trees": [
+  {"base": "tree_eucalyptus_a", "cond": "normal", "at": [-571.0, 3.416, -1284.0], "yaw": 15.0, "scale": 0.7,
+   "why": "the cottages' yard: a young self-seeded eucalyptus (the industrial screen trees are just north) between the swing and the bench and grill, so the parents watching the swing sit in its shade"}
+ ]
+}

@@ -1,0 +1,11 @@
+{
+ "area": "grt_j4se",
+ "piece": "g_v2_j4se",
+ "zone": "gritty edge",
+ "rule": "docs/TREE_PLAN.md: almost none - one scrappy tree in a vacant lot, weeds at fences; a street here lost its trees long ago (zone 109 -> about 30)",
+ "written": "by hand, 19 Nov 2026 (PC session, the city-wide superchecker run). The block's two builder coral trees go; one tree comes back.",
+ "trees": [
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [-772.0, 2.837, -1124.0], "yaw": 300.0, "scale": 0.75,
+   "why": "the walk-ups' back lawn, the block's one patch of grass: an old, half-starved magnolia some tenant planted long ago, shading the washing line and the patio set"}
+ ]
+}

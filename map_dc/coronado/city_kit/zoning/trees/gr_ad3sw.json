@@ -1,0 +1,10 @@
+{
+ "area": "gr_ad3sw", "piece": "m_gr_ad3sw", "zone": "commercial strip",
+ "rule": "docs/TREE_PLAN.md: few - the palm parkway; one tree per car-park island end (zone 106 -> about 80)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The hospital side's thirteen builder trees go (a row of nine torrey and norfolk pines along the visitor car park's west hedge, a coral, three palms on the front); three come back on their own spots: two palms on the frontage, one tree at the car park's island end. The palm 2.1 m from the parking booth stays out.",
+ "trees": [
+  {"base": "palm_mexican_fan_c", "cond": "normal", "at": [441.8, 2.225, -1384.0], "yaw": 0.0, "scale": 1.0, "why": "the strip's frontage beside the visitor parking booth, by the cobra lamp: the palm parkway"},
+  {"base": "palm_queen_b", "cond": "normal", "at": [463.5, 2.2, -1384.0], "yaw": 120.0, "scale": 1.0, "why": "the frontage 22 m on, at the car park's mouth by the pay station: the second parkway palm"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [454.5, 3.082, -1346.0], "yaw": 240.0, "scale": 0.85, "why": "the end of the visitor car park's island, among the iceplant and the bird of paradise: the island-end tree, shade for the cars of the clinic's visitors"}
+ ]
+}

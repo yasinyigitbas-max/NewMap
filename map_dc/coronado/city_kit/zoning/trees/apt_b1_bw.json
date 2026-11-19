@@ -1,0 +1,9 @@
+{
+ "area": "apt_b1_bw", "piece": "n_apt_b1_bw", "zone": "apartments",
+ "rule": "docs/TREE_PLAN.md: some - one tree per court, placed for the seating; a street row; hedges only where they close a yard (zone 117 -> about 60)",
+ "written": "by hand, 19 Nov 2026 (PC session, city-wide superchecker run). Nine builder trees go (several 1.5 m off a wall); two stay on their spots.",
+ "trees": [
+  {"base": "tree_coral_a", "cond": "normal", "at": [279.0, 6.15, -704.0], "yaw": 40.0, "scale": 0.9, "why": "the north court's tree, over its kettle grill and patio set"},
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [289.5, 6.15, -756.0], "yaw": 200.0, "scale": 0.95, "why": "the middle court's tree, standing free in its lawn, 17 m from any wall"}
+ ]
+}

@@ -1,0 +1,14 @@
+{
+ "area": "gr_ad5ne", "piece": "m_gr_ad5ne", "zone": "commercial strip",
+ "rule": "docs/TREE_PLAN.md: few - the palm parkway; one tree per car-park island end (zone 106 -> about 80)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The car care corner's twenty-one builder trees go (a palm every 10 m along the north front, a row of five along the east front, corals, a jacaranda and torrey pines round the car park); seven come back on their own spots: five parkway palms about 30 m apart, kept clear of the pylon signs, and the two ends of the shared car park's island.",
+ "trees": [
+  {"base": "palm_mexican_fan_b", "cond": "normal", "at": [529.2, 4.15, -1016.0], "yaw": 0.0, "scale": 1.0, "why": "the strip's north parkway in front of the chicken drive-in: the palm parkway, its west palm"},
+  {"base": "palm_mexican_fan_a", "cond": "normal", "at": [567.6, 4.15, -1016.0], "yaw": 72.0, "scale": 1.0, "why": "the north parkway 38 m on, past the pylon sign (kept 19 m clear of it so the sign reads), opposite the diner"},
+  {"base": "palm_queen_a", "cond": "normal", "at": [596.4, 4.15, -1016.0], "yaw": 144.0, "scale": 1.0, "why": "the north parkway 29 m on, toward the corner"},
+  {"base": "palm_mexican_fan_b", "cond": "normal", "at": [644.2, 4.15, -1021.1], "yaw": 216.0, "scale": 1.0, "why": "the east parkway at the corner by the car wash, 7 m from its pylon sign: the parkway turns the corner"},
+  {"base": "palm_queen_a", "cond": "normal", "at": [644.2, 4.15, -1084.7], "yaw": 288.0, "scale": 1.0, "why": "the east parkway 64 m on, in front of the tyre shop's yard fence: the next palm of the row"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [545.0, 4.144, -1065.0], "yaw": 30.0, "scale": 0.85, "why": "the south end of the shared car park's island (car care row, taqueria), by the lot light: the island-end tree"},
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [543.7, 4.144, -1049.7], "yaw": 200.0, "scale": 0.85, "why": "the north end of the same island, among the bird of paradise: the other island-end tree"}
+ ]
+}

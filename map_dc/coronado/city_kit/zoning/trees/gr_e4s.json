@@ -1,0 +1,11 @@
+{
+ "area": "gr_e4s", "piece": "m_gr_e4s", "zone": "commercial strip",
+ "rule": "docs/TREE_PLAN.md: few - the palm parkway; one tree per car-park island end (zone 106 -> about 80)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). Bridge Motors' ten builder trees go (nine palms 9-12 m apart along the lot's two street fronts behind the iron bollards, a jacaranda); four palms come back on their own spots: every other palm of each front, so the dealer's parkway stays and the cars on show can be seen.",
+ "trees": [
+  {"base": "palm_mexican_fan_a", "cond": "normal", "at": [644.2, 4.15, -1134.1], "yaw": 0.0, "scale": 1.0, "why": "the strip's parkway in front of Bridge Motors, behind the iron bollards: the palm parkway"},
+  {"base": "palm_mexican_fan_c", "cond": "normal", "at": [644.2, 4.15, -1158.4], "yaw": 90.0, "scale": 1.0, "why": "the parkway 24 m on, by the sales office: every other palm, the lot stays in view from the road"},
+  {"base": "palm_mexican_fan_b", "cond": "normal", "at": [627.4, 4.15, -1184.0], "yaw": 180.0, "scale": 1.0, "why": "the lot's south street front, behind the bollards: the parkway goes round the corner"},
+  {"base": "palm_mexican_fan_a", "cond": "normal", "at": [609.5, 4.15, -1184.0], "yaw": 270.0, "scale": 1.0, "why": "the south front 18 m on, the row's west end"}
+ ]
+}

@@ -1,0 +1,9 @@
+{
+ "area": "grt_j4sw", "piece": "g_v2_j4sw", "zone": "gritty edge",
+ "rule": "docs/TREE_PLAN.md: almost none - one scrappy tree in a vacant lot, weeds at fences; a street here lost its trees long ago (zone 109 -> about 30)",
+ "written": "by hand, 19 Nov 2026 (PC session, city-wide superchecker run). Two builder trees go; one comes back on its own spot.",
+ "trees": [
+  {"base": "tree_magnolia_b", "cond": "normal", "at": [-830.2, 2.621, -1129.0], "yaw": 40.0, "scale": 0.8,
+   "why": "the walk-ups' lawn: kept on its spot over the patio set; the second tree stood 5 m off at the same washing line"}
+ ]
+}

@@ -1,0 +1,13 @@
+{
+ "area": "res_250_m1000_ne", "piece": "r_q_250_m1000_ne", "zone": "residential yards",
+ "rule": "docs/TREE_PLAN.md: one yard tree for every two or three houses, in back yards and at lot corners, never against a fence or a wall (zone 813 -> about 400)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The quadrant's twenty-six builder trees go (a row of torrey pines, queen palms and corals every 6-8 m along the back fences, a palm 3 m from a house front, a few in the yards); six come back on their own spots, about one for every two or three houses: by the picnic table, the adirondack chairs, the beach umbrella, the open lot corner, and one on the old back fence row.",
+ "trees": [
+  {"base": "tree_magnolia_b", "cond": "normal", "at": [320.0, 6.081, -1066.0], "yaw": 10.0, "scale": 0.9, "why": "the shared back lawn with the picnic table and the shade sail: a magnolia beside them"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [343.0, 5.638, -1066.0], "yaw": 100.0, "scale": 0.9, "why": "the same lawn 23 m east, 13 m from any wall: the lawn's second tree"},
+  {"base": "tree_norfolk_pine_c", "cond": "normal", "at": [338.0, 5.833, -1088.0], "yaw": 190.0, "scale": 0.85, "why": "the big open lot corner, 35 m from the walls: one norfolk pine, a landmark seen from the street"},
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [353.6, 5.4, -1033.6], "yaw": 280.0, "scale": 0.85, "why": "the back yard with the two white adirondack chairs: shade for them"},
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [283.2, 6.98, -1087.0], "yaw": 30.0, "scale": 0.85, "why": "the south-west back yard by the closed beach umbrella, 5.7 m from the house"},
+  {"base": "tree_torrey_pine_a", "cond": "normal", "at": [284.8, 6.11, -1042.6], "yaw": 120.0, "scale": 0.85, "why": "the west end of the north back fence row, 5.3 m from the house: the row's one tree (it had one every 6 m)"}
+ ]
+}

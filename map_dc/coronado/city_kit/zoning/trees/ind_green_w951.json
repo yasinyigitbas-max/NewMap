@@ -1,0 +1,11 @@
+{
+ "area": "ind_green_w951", "piece": "i_green_w951_n1400_se", "zone": "industrial (the green beside the yards)",
+ "rule": "docs/TREE_PLAN.md: industrial none, only the eucalyptus screen where a yard faces homes; this piece is that buffer green",
+ "written": "by hand, 19 Nov 2026 (PC session, city-wide superchecker run). Nine builder trees go; the buffer keeps three eucalyptus and one jacaranda on their spots.",
+ "trees": [
+  {"base": "tree_eucalyptus_a", "cond": "normal", "at": [-906.9, 2.15, -1374.0], "yaw": 10.0, "scale": 1.0, "why": "the screen along the yard side of the green"},
+  {"base": "tree_eucalyptus_b", "cond": "normal", "at": [-906.9, 2.15, -1336.0], "yaw": 130.0, "scale": 0.95, "why": "the screen along the yard side of the green"},
+  {"base": "tree_eucalyptus_a", "cond": "normal", "at": [-919.9, 2.15, -1305.0], "yaw": 250.0, "scale": 0.9, "why": "the screen at the green's north end"},
+  {"base": "tree_jacaranda_b", "cond": "normal", "at": [-909.9, 2.15, -1312.0], "yaw": 70.0, "scale": 0.85, "why": "one flowering tree on the green, for the homes looking at it"}
+ ]
+}

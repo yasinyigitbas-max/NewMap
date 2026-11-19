@@ -1,0 +1,11 @@
+{
+ "area": "grt_j4ne",
+ "piece": "g_v1_j4ne",
+ "zone": "gritty edge",
+ "rule": "docs/TREE_PLAN.md: almost none - one scrappy tree in a vacant lot, weeds at fences; a street here lost its trees long ago (zone 109 -> about 30)",
+ "written": "by hand, 19 Nov 2026 (PC session). The block's five builder trees (four ficus and a jacaranda between the cottages) go; one tree comes back.",
+ "trees": [
+  {"base": "tree_eucalyptus_b", "cond": "normal", "at": [-764.8, 2.132, -1288.9], "yaw": 35.0, "scale": 0.9,
+   "why": "the cottages' one yard tree: it stands 2.2 m behind the bench that faces the swing and the slide, so whoever watches the children sits in its shade. A eucalyptus, a little under full size: seeded from the screen of eucalyptus along the industrial wall just north, and nobody planted it"}
+ ]
+}

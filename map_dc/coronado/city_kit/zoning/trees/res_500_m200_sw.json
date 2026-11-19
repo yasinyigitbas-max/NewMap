@@ -1,0 +1,16 @@
+{
+ "area": "res_500_m200_sw", "piece": "r_q_500_m200_sw", "zone": "residential yards",
+ "rule": "docs/TREE_PLAN.md: one yard tree for every two or three houses, in back yards and at lot corners, never against a fence or a wall (zone 813 -> about 400)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The quadrant's twenty-eight builder trees go (most of them two rows of corals and torrey pines every 6 m along the back fences, three queen palms 3 m from the house fronts); nine come back on their own spots, about one for every two houses, chosen where people sit or where the lawn is open, never in the fence rows' tight line (two of that line kept, 30 m apart).",
+ "trees": [
+  {"base": "tree_magnolia_b", "cond": "normal", "at": [430.0, 7.977, -134.0], "yaw": 10.0, "scale": 0.9, "why": "the shared back lawn with the picnic table and the shade sail: a magnolia beside them, the lawn's shade tree"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [407.0, 8.573, -134.0], "yaw": 100.0, "scale": 0.9, "why": "the same lawn 23 m west, 13 m from any wall: the second tree of the open lawn"},
+  {"base": "tree_torrey_pine_b", "cond": "normal", "at": [432.0, 7.093, -108.0], "yaw": 190.0, "scale": 0.9, "why": "the north lot corner, 15 m from the houses: a torrey pine, the coast's own pine, at the corner"},
+  {"base": "tree_norfolk_pine_c", "cond": "normal", "at": [412.0, 7.775, -112.0], "yaw": 280.0, "scale": 0.85, "why": "the big open lot corner 35 m from the walls: one norfolk pine, a landmark seen from the street"},
+  {"base": "tree_coral_b", "cond": "normal", "at": [464.1, 7.16, -129.0], "yaw": 30.0, "scale": 0.85, "why": "the east back yard by the adirondack chair: shade for the chair"},
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [476.6, 8.16, -164.6], "yaw": 120.0, "scale": 0.85, "why": "the south-east back yard by the closed beach umbrella, 6 m from the house: the yard's tree"},
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [380.1, 10.03, -164.4], "yaw": 210.0, "scale": 0.85, "why": "the west end's back yard, 7.6 m from the house: a jacaranda at the lot corner"},
+  {"base": "tree_torrey_pine_a", "cond": "normal", "at": [449.2, 8.35, -157.4], "yaw": 300.0, "scale": 0.85, "why": "the back fence line of the south row, kept once here (the old row had one every 6 m): a pine at the lot corner between two yards"},
+  {"base": "tree_coral_a", "cond": "normal", "at": [410.7, 9.15, -157.4], "yaw": 60.0, "scale": 0.85, "why": "the same back fence line 38 m west: the second and last tree of the old row"}
+ ]
+}
