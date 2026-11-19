@@ -1,0 +1,81 @@
+{
+ "fixes": [
+  {
+   "at": [
+    5.0,
+    3.71999990195036,
+    -31.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #12, \"prop_storm_drain_grate is 0.12 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    5.0,
+    3.60199999809265,
+    -31.0
+   ]
+  },
+  {
+   "at": [
+    28.0,
+    3.71999990195036,
+    -31.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #13, \"prop_storm_drain_grate is 0.12 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    28.0,
+    3.60199999809265,
+    -31.0
+   ]
+  },
+  {
+   "at": [
+    5.0,
+    3.71999990195036,
+    -13.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #14, \"prop_storm_drain_grate is 0.12 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    5.0,
+    3.60199999809265,
+    -13.0
+   ]
+  },
+  {
+   "at": [
+    28.0,
+    3.71999990195036,
+    -13.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "rusty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #15, \"prop_storm_drain_grate is 0.12 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    28.0,
+    3.60199999809265,
+    -13.0
+   ]
+  }
+ ],
+ "scene": "n_wf_b1m"
+}

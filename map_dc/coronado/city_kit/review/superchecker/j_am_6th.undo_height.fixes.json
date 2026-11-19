@@ -1,0 +1,195 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -11.5644664764404,
+    0.0,
+    5.76446628570557
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it down (fix #1, \"prop_signal_mast_arm hangs 0.15 m over what is under it\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    -11.5644664764404,
+    0.150000005960464,
+    5.76446628570557
+   ]
+  },
+  {
+   "at": [
+    11.5644664764404,
+    0.0,
+    -5.76446628570557
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it down (fix #2, \"prop_signal_mast_arm hangs 0.15 m over what is under it\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    11.5644664764404,
+    0.150000005960464,
+    -5.76446628570557
+   ]
+  },
+  {
+   "at": [
+    -9.10000038146973,
+    0.100000001490116,
+    -16.6000003814697
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #3, \"prop_storm_drain_curb_inlet is 0.10 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    -9.10000038146973,
+    0.0,
+    -16.6000003814697
+   ]
+  },
+  {
+   "at": [
+    9.10000038146973,
+    0.100000001490116,
+    -16.6000003814697
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #4, \"prop_storm_drain_curb_inlet is 0.10 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    9.10000038146973,
+    0.0,
+    -16.6000003814697
+   ]
+  },
+  {
+   "at": [
+    -9.10000038146973,
+    0.100000001490116,
+    16.6000003814697
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #5, \"prop_storm_drain_curb_inlet is 0.10 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    -9.10000038146973,
+    0.0,
+    16.6000003814697
+   ]
+  },
+  {
+   "at": [
+    9.10000038146973,
+    0.100000001490116,
+    16.6000003814697
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #6, \"prop_storm_drain_curb_inlet is 0.10 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    9.10000038146973,
+    0.0,
+    16.6000003814697
+   ]
+  },
+  {
+   "at": [
+    -22.7999992370605,
+    0.100000001490117,
+    -3.29999995231628
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #7, \"prop_storm_drain_curb_inlet is 0.10 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    -22.7999992370605,
+    0.0,
+    -3.29999995231628
+   ]
+  },
+  {
+   "at": [
+    -22.7999992370605,
+    0.100000001490116,
+    3.29999995231628
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #8, \"prop_storm_drain_curb_inlet is 0.10 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    -22.7999992370605,
+    0.0,
+    3.29999995231628
+   ]
+  },
+  {
+   "at": [
+    22.7999992370605,
+    0.100000001490116,
+    -3.29999995231628
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #9, \"prop_storm_drain_curb_inlet is 0.10 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    22.7999992370605,
+    0.0,
+    -3.29999995231628
+   ]
+  },
+  {
+   "at": [
+    22.7999992370605,
+    0.100000001490116,
+    3.29999995231628
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #10, \"prop_storm_drain_curb_inlet is 0.10 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    22.7999992370605,
+    0.0,
+    3.29999995231628
+   ]
+  }
+ ],
+ "scene": "j_am_6th"
+}

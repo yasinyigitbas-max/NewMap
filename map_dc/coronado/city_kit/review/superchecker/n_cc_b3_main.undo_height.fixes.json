@@ -1,0 +1,43 @@
+{
+ "fixes": [
+  {
+   "at": [
+    150.0,
+    0.8552986845312,
+    143.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "worn",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #4, \"prop_storm_drain_grate is 0.11 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    150.0,
+    0.740298748016357,
+    143.0
+   ]
+  },
+  {
+   "at": [
+    224.949996948242,
+    2.07340002059937,
+    159.584991455078
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #5, \"prop_ac_condenser is 0.32 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    224.949996948242,
+    1.75725793838501,
+    159.584991455078
+   ]
+  }
+ ],
+ "scene": "n_cc_b3_main"
+}

@@ -1,0 +1,33 @@
+{
+ "area": "rs_b063_a",
+ "piece": "s_rs_b063_a",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, one species per block face, 20-30 m apart; the in-view limit (8 broadleaf / 12 trees within 60 m) leaves room for 2 here, 1 broadleaf",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    493.55,
+    7.295,
+    -132.293
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass mid-street, the west face's one jacaranda (old spot and species; the only broadleaf room in view)"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    506.45,
+    7.859,
+    -153.635
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "east parkway grass, the east face's one Torrey pine (old spot and species), staggered 21 m before the jacaranda"
+  }
+ ]
+}

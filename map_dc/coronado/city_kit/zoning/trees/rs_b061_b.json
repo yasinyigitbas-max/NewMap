@@ -1,0 +1,69 @@
+{
+ "area": "rs_b061_b",
+ "piece": "s_rs_b061_b",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; within the in-view limit (8 broadleaf / 12 trees within 60 m)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    506.45,
+    6.15,
+    -429.88
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass at the start, first of the west face's jacarandas (one species a face: the fan palm here becomes a jacaranda)"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    506.45,
+    6.15,
+    -464.288
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway, the jacaranda run continues (old spot and species); driveways in the 34 m between"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    506.45,
+    6.15,
+    -489.978
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway 25.7 m on, the last jacaranda; the 12 m double goes"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    493.55,
+    6.15,
+    -471.603
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway grass, first of the east face's queen palms (old spot and species; the spot 0.8 m from the kerb inlet is skipped)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    493.55,
+    6.15,
+    -494.852
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway 23 m on, the second queen palm; the 8-12 m doubles go"
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+{
+ "area": "rs_b047_b",
+ "piece": "s_rs_b047_b",
+ "zone": "residential street (slope)",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; pines and palms on the slope; within the in-view limit (8 broadleaf / 12 trees within 60 m): no broadleaf room here",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    256.45,
+    7.777,
+    -1248.427
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first of the west face's fan palms (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    256.45,
+    6.74,
+    -1272.592
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway 24 m on, the second fan palm; the 8-16 m doubles and the magnolia go"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    243.55,
+    7.123,
+    -1264.93
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east parkway grass, first of the east face's Torrey pines (sloping street, no broadleaf room in view: the coral tree here becomes a pine)"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    243.55,
+    5.687,
+    -1291.128
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway 26 m on, the second pine (old spot and species)"
+  }
+ ]
+}

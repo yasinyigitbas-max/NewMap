@@ -1,0 +1,45 @@
+{
+ "area": "rs_b081_a",
+ "piece": "s_rs_b081_a",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -736.092,
+    5.296,
+    -993.55
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first of the west face's coral trees (old spot and species)"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    -710.092,
+    6.06,
+    -993.55
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway 26 m on, the second coral tree (one species a face: the fan palm here becomes a coral)"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -736.176,
+    5.293,
+    -1006.45
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east parkway grass, the east face's one coral tree (old spot and species)"
+  }
+ ]
+}

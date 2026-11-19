@@ -1,0 +1,57 @@
+{
+ "area": "rs_b060_a",
+ "piece": "s_rs_b060_a",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; within the in-view limit (8 broadleaf / 12 trees within 60 m): room for 1 broadleaf, so palms",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    493.55,
+    6.15,
+    -770.295
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass at the start, first of the west face's queen palms (old spot and species)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    493.55,
+    6.15,
+    -733.48
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway, the second queen palm (one species a face: the jacaranda here becomes a palm); driveways in the 37 m between"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    506.45,
+    6.15,
+    -753.912
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east parkway grass, first of the east face's queen palms (old spot and species), staggered between the west ones"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    506.45,
+    6.15,
+    -719.036
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway 35 m on, the second queen palm; the 11-14 m doubles go"
+  }
+ ]
+}

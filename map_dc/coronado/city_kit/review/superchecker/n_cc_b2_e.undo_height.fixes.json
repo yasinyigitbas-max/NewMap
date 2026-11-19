@@ -1,0 +1,24 @@
+{
+ "fixes": [
+  {
+   "at": [
+    193.0,
+    0.270000003278255,
+    -118.0
+   ],
+   "base": "prop_storm_drain_grate",
+   "cond": "worn",
+   "kind": "undo_height",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "move",
+   "reason": "put back where it stood: the first run moved it up (fix #6, \"prop_storm_drain_grate is 0.12 m into the ground\") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)",
+   "to": [
+    193.0,
+    0.155000001192093,
+    -118.0
+   ]
+  }
+ ],
+ "scene": "n_cc_b2_e"
+}

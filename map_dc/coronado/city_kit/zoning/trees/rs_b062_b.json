@@ -1,0 +1,69 @@
+{
+ "area": "rs_b062_b",
+ "piece": "s_rs_b062_b",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; within the in-view limit (8 broadleaf / 12 trees within 60 m), tight at the start",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    506.45,
+    8.043,
+    -242.395
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first of the west face's queen palms (one species a face: the jacaranda here becomes a palm)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    506.45,
+    7.749,
+    -265.966
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway 23.6 m on, the palm run continues (old spot and species)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    506.45,
+    7.324,
+    -290.678
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway 24.7 m on, the last queen palm (the magnolia here becomes a palm)"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    493.55,
+    7.718,
+    -267.987
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway grass mid-street, first of the east face's magnolias (old spot and species; the start of the street is tight in view)"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    493.55,
+    7.305,
+    -291.677
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway 23.7 m on, the second magnolia (the pine here becomes a magnolia)"
+  }
+ ]
+}

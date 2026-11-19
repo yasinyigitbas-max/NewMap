@@ -1,0 +1,11 @@
+PROOF compared: 17 nodes (with every mesh of the buildings), 8792 ground and ground-collision triangles, 12 prop instances, 7 colliders, 121 wear marks are identical in both files
+PROOF differences found between the files: 8 lines only in the old one, 8 only in the new one
+PROOF change #1 move prop_signal_mast_arm: (-13.96, 0.00, 8.16) -> (-13.96, 0.15, 8.16), in 2 tier(s) and its collider  [put back where it stood: the first run moved it down (fix #1, "prop_signal_mast_arm hangs 0.15 m over what is under it") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)]
+PROOF change #2 move prop_signal_mast_arm: (13.96, 0.00, -8.16) -> (13.96, 0.15, -8.16), in 2 tier(s) and its collider  [put back where it stood: the first run moved it down (fix #2, "prop_signal_mast_arm hangs 0.15 m over what is under it") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)]
+PROOF change #3 move prop_storm_drain_curb_inlet: (-11.50, 0.10, -16.60) -> (-11.50, 0.00, -16.60), in 1 tier(s), no collider  [put back where it stood: the first run moved it up (fix #3, "prop_storm_drain_curb_inlet is 0.10 m into the ground") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)]
+PROOF change #4 move prop_storm_drain_curb_inlet: (11.50, 0.10, -16.60) -> (11.50, 0.00, -16.60), in 1 tier(s), no collider  [put back where it stood: the first run moved it up (fix #4, "prop_storm_drain_curb_inlet is 0.10 m into the ground") although its foot stood on the ground (the check measured under its outline, which reaches over the kerb or the road)]
+PROOF 4 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
+   at: parse_gdextension_file (core/extension/gdextension_library_loader.cpp:282)
+   at: open_library (core/extension/gdextension.cpp:810)
+   at: load_extensions (core/extension/gdextension_manager.cpp:333)
