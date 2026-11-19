@@ -461,6 +461,7 @@ func _drive(seg: Array) -> void:
 	var prep_ms := Time.get_ticks_msec() - tp
 	var S0: Dictionary = st.stats.duplicate()
 	if traffic: traffic.call(&"report")      # (start its counters with the drive)
+	if people: people.call(&"report")
 	var dts := PackedFloat32Array(); var draws_sum := 0.0; var draws_max := 0; var tris_sum := 0.0; var tris_max := 0
 	var late220 := 0; var late60 := 0; var deepest := 0.0; var max_cells := 0; var slow := 0; var gy := 8.0
 	var segi := 0; var along := 0.0; var t := 0.0; var t_prev := Time.get_ticks_usec(); var hud_t := 0.0; var prev := [S0["in"], S0.out, S0.bodies]
@@ -536,6 +537,7 @@ func _drive(seg: Array) -> void:
 	# for long runs: none of these may grow lap after lap (a leak, or work piling up)
 	_say("  objects %s all=%d nodes=%d orphan_nodes=%d resources=%d | streamer: cells in=%d, bodies waiting=%d, nodes leaving=%d" % [name, int(Performance.get_monitor(Performance.OBJECT_COUNT)), int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT)), int(Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT)), int(Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT)), st.loaded_count(), st._pending.size(), st._leaving.size()])
 	if traffic: _say("  traffic %s %s" % [name, String(traffic.call(&"report"))])
+	if people: _say("  people %s %s | %s" % [name, String(people.call(&"report")), str(people.call(&"stats"))])
 	_say("  mem %s static_mb=%.0f video_mb=%.0f tex_mb=%.0f buf_mb=%.0f" % [name, Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_TEXTURE_MEM_USED) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_BUFFER_MEM_USED) / 1048576.0])
 
 ## --plan=shots (19 Nov, the tiers): pictures from the phone at set distances, to compare the tier settings. A building

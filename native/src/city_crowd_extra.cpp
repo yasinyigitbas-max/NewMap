@@ -3,6 +3,9 @@
 // where a group stands and talks. See city_crowd.h.
 #include "city_crowd.h"
 
+#include <godot_cpp/classes/file_access.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
+
 #include "city_ped.h"
 #include "ped_inl.h"
 
@@ -122,7 +125,10 @@ void CityCrowd::make_extras() {
 		cap_on[k] = false;
 	}
 	// the murmur: two voices, set where groups stand and talk
-	Ref<AudioStreamOggVorbis> og = AudioStreamOggVorbis::load_from_file("res://audio/amb/crowd_murmur.ogg");
+	// (in the app the sound is there as the engine imported it; on the PC without an import, as the file itself)
+	Ref<AudioStreamOggVorbis> og;
+	if (ResourceLoader::get_singleton()->exists("res://audio/amb/crowd_murmur.ogg")) og = ResourceLoader::get_singleton()->load("res://audio/amb/crowd_murmur.ogg");
+	if (og.is_null() && FileAccess::file_exists("res://audio/amb/crowd_murmur.ogg")) og = AudioStreamOggVorbis::load_from_file("res://audio/amb/crowd_murmur.ogg");
 	if (og.is_valid()) {
 		og->set_loop(true);
 		for (int k = 0; k < 2; k++) {

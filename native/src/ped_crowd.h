@@ -307,6 +307,7 @@ private:
 	bool rising(int i, float h);
 	void fight_begins(int i);
 	bool rejoin(int i, int mate_id, int kind);
+	void walk_away_from(int i, int o);
 	void come_out(int place, bool from_bus, float dx, float dz);
 	void free_place(int i);
 	void doors_step(float h);

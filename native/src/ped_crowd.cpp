@@ -496,6 +496,11 @@ void Crowd::update(int i, float h, double clock) {
 				at(S, u[i], 0.0f, hh, ax, ay, az, tx_, tz_);
 				ls[i] = clampf((x[i] - ax) * tz_ - (z[i] - az) * tx_, -edge_off(S), edge_off(S));
 				y[i] = ay; mode[i] = (leader[i] >= 0 && leader[i] != i) ? M_FOLLOW : M_LINE; state[i] = ST_WALK; act[i] = A_NONE; blocked_t[i] = 0.0f;
+				if (mode[i] == M_LINE && hurt_t[i] > 0.0f && mate[i] != 0) {   // (it lost a fight and was knocked down: up again it goes the other way)
+					const int o = find(mate[i]);
+					mate[i] = 0;
+					if (o >= 0) walk_away_from(i, o);
+				}
 				if (mode[i] == M_LINE && kept_mate[i] != 0) {   // (it was knocked about among its people: it goes back to them)
 					const int mid = kept_mate[i];
 					kept_mate[i] = 0;
@@ -517,6 +522,17 @@ void Crowd::update(int i, float h, double clock) {
 	if (leader[i] == i && mode[i] != M_LINE) trail_push(i);   // (its people follow it off the pavement too)
 	if (v[i] > 0.08f) flags[i] |= F_MOVING; else flags[i] &= (uint8_t)~F_MOVING;
 	if (thin[i]) flags[i] |= F_THIN; else flags[i] &= (uint8_t)~F_THIN;
+}
+
+// He turns his back on somebody and walks the other way along his pavement (the loser of a fight: the two stood
+// face to face on one line afterwards, each in the other's way, for seconds).
+void Crowd::walk_away_from(int i, int o) {
+	const Seg &S = segs[seg[i]];
+	if (S.kind != 0) return;
+	int hh = hint[i]; float ax, ay, az, tx_, tz_;
+	at(S, u[i], 0.0f, hh, ax, ay, az, tx_, tz_);
+	if (((x[o] - x[i]) * tx_ + (z[o] - z[i]) * tz_) * (float)dir[i] <= 0.0f) return;   // (he is behind him already)
+	dir[i] = (int8_t)-dir[i]; nxt[i] = -1; pass[i] = 0; route_n[i] = 0; goal[i] = -1; kept_goal[i] = -1;
 }
 
 // Blows begin: who wins is chance, fixed by who the two are (both work it out alike). The loser will walk away hurt:
@@ -562,6 +578,7 @@ void Crowd::walk_line(int i, float h, double clock) {
 		if (pause_t[i] <= 0.0f || flee_t[i] > 0.0f) {
 			if (act[i] == A_FIGHT && fwin[i] && cfg.cheer_s > 0.0f && flee_t[i] <= 0.0f) { act[i] = A_CHEER; pause_t[i] = cfg.cheer_s; return; }   // he has won
 			if (rising(i, h)) return;   // (out of a crouch, out of a fight: that takes a moment)
+			if (hurt_t[i] > 0.0f && mate[i] != 0) { const int o = find(mate[i]); if (o >= 0) walk_away_from(i, o); }   // (the one who lost goes the other way)
 			state[i] = ST_WALK; act[i] = A_NONE; act_t[i] = 0.0f; mate[i] = 0; flags[i] &= (uint8_t)~F_FACE; still_t[i] = 0.0f;
 		}
 		return;
