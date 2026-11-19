@@ -181,7 +181,9 @@ class More:
                 if L.in_quad(zone, it.ctr) and it.kind != 'hedge':
                     self.add('gate_blocked', '%s stands in the way through a gate' % it.base, it.pos, it, mode='choose', fix=self.fix_move(it)); break
             # lane mouths: where the piece's asphalt meets the street
-            if mat in L.HARD and own == me and not has(it.base, LOT_THINGS) and any(np.hypot(m[0] - it.ctr[0], m[2] - it.ctr[1]) < 3.0 for m in getattr(self, 'mouths', [])):
+            # (cloud-top, 19 Nov) not a traffic signal: a signal mast stands at the corner by the mouth on purpose
+            # (j_rg_e660_n1000 and j_rg_nw_e0_n1600 lost theirs this way; put back)
+            if mat in L.HARD and own == me and not has(it.base, LOT_THINGS) and not has(it.base, ('prop_signal',)) and any(np.hypot(m[0] - it.ctr[0], m[2] - it.ctr[1]) < 3.0 for m in getattr(self, 'mouths', [])):
                 self.add('lane_mouth', '%s stands in the mouth of a drive or lane' % it.base, it.pos, it, mode='choose', fix=self.fix_move(it))
             # a narrow path (check_life.gd's rule): paved under it, planting on both sides across, paving both ways along
             if block and mat in ('concrete', 'paving', 'plaza'):

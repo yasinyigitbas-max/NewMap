@@ -1,0 +1,33 @@
+{
+ "fixes": [
+  {
+   "at": [
+    15.6816253662109,
+    0.162000000476837,
+    14.4818116823832
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    -15.6816253662109,
+    0.162000000476837,
+    14.4818116823832
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove_decal",
+   "reason": "grime mark hangs over the edge of the ground",
+   "surface": 0.0,
+   "wear": "wear"
+  }
+ ],
+ "scene": "j_rg_nw_e0_n1600"
+}

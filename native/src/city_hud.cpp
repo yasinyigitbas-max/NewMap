@@ -5,6 +5,11 @@
 #include "city_player.h"
 #include "city_crowd.h"
 #include "city_traffic.h"
+#include "city_car.h"
+#include "city_bike.h"
+#include "car_models.h"
+
+#include <godot_cpp/classes/scene_tree.hpp>
 
 #include <godot_cpp/classes/input_event_mouse_motion.hpp>
 #include <godot_cpp/classes/input_event_screen_drag.hpp>
@@ -258,6 +263,7 @@ Rect2 CityHud::box_rect(int p_what) const {
 		case 0: return Rect2(sz.x - m - b, m, b, b);          // the arrow: top right
 		case 1: return Rect2(sz.x - m - b, sz.y - m - b, b, b);   // the phone: bottom right
 		case 2: return Rect2(m, sz.y - m - b, b, b);          // the inventory: bottom left
+		case 4: return Rect2(sz.x - m - b, m + b + 8.0f * k, b, b);   // the Use button: under the arrow box
 		default: return Rect2(m, m, b, b);                    // money and the clock: top left
 	}
 }
@@ -298,6 +304,14 @@ void CityHud::build() {
 	arrow = memnew(HudArrow); arrow->set_mouse_filter(Control::MOUSE_FILTER_IGNORE); add_child(arrow);   // (over the box, exactly its rectangle)
 	b_inv = box("plate");
 	{ TextureRect *ic = plate::icon_rect("buy", 36); ic->set_mouse_filter(Control::MOUSE_FILTER_IGNORE); ic->set_stretch_mode(TextureRect::STRETCH_KEEP_ASPECT_CENTERED); b_inv->add_child(ic); }
+	b_use = box("green");
+	{
+		VBoxContainer *v = memnew(VBoxContainer); v->set_alignment(BoxContainer::ALIGNMENT_CENTER); v->add_theme_constant_override("separation", -3); v->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+		l_use_en = plate::label("GET IN", plate::FS_HELP, plate::TEXT, 800); l_use_en->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER);
+		l_use_tr = plate::label(String::utf8("BİN"), plate::FS_HELP, Color(1, 1, 1, 0.85f), 600); l_use_tr->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER);
+		v->add_child(l_use_en); v->add_child(l_use_tr); b_use->add_child(v);
+		b_use->set_visible(false);
+	}
 	b_phone = box("plate");
 	{ TextureRect *ic = plate::icon_rect("phone", 36); ic->set_mouse_filter(Control::MOUSE_FILTER_IGNORE); ic->set_stretch_mode(TextureRect::STRETCH_KEEP_ASPECT_CENTERED); b_phone->add_child(ic); }
 	// the panels that open out of their boxes
@@ -345,6 +359,7 @@ void CityHud::layout(const Vector2 &sz) {
 	last_sz = sz;
 	const float k = ui_k_of(sz);
 	auto put = [](Control *c, const Rect2 &r) { c->set_position(r.position); c->set_size(r.size); };
+	put(b_use, box_rect(4));
 	put(b_arrow, box_rect(0)); put(arrow, box_rect(0)); put(b_phone, box_rect(1)); put(b_inv, box_rect(2)); put(b_money, box_rect(3));
 	{ const Rect2 m = box_rect(3); put(needs_box, Rect2(m.position.x, m.get_end().y + 6.0f * k, m.size.x, 32.0f * k)); }
 	// the phone grows out of its button to a phone held up at the right; the inventory out of its box, up the left
@@ -372,6 +387,71 @@ void CityHud::touch(int p_what) {
 
 void CityHud::recentre() { feedback(); if (map) { map->follow = true; map->queue_redraw(); } }
 
+// What the Use button offers: the car or bicycle the player drives or rides (out / off), else the nearest one in reach
+// (a car: within 1.4 m of its side or ends; a bicycle: 2.5 m). The cars and bicycles of the world are the nodes of the
+// "vehicles" group (the start car and bicycle, and any the game places); the traffic's knocked cars are not.
+void CityHud::use_find(CityPlayer *pl) {
+	use_kind = 0; use_target = 0;
+	SceneTree *tr = get_tree();
+	if (!tr || !pl) return;
+	const TypedArray<Node> vs = tr->get_nodes_in_group("vehicles");
+	const bool on_foot = pl->is_visible_in_tree();
+	const Vector3 pp = pl->get_global_position();
+	float best = 1e9f;
+	for (int i = 0; i < vs.size(); i++) {
+		Node *n = Object::cast_to<Node>(vs[i]);
+		if (CityCar *c = Object::cast_to<CityCar>(n)) {
+			if (c->get_player()) { use_kind = 2; use_target = c->get_instance_id(); return; }
+			if (!on_foot || !c->is_visible_in_tree() || (c->get_collision_layer() & 16u)) continue;
+			const Transform3D t = c->get_global_transform();
+			const Vector3 lp = t.affine_inverse().xform(pp);
+			const cm::CarModel &m = cm::MODELS[std::min(std::max(c->get_model(), 0), cm::N_MODELS - 1)];
+			const float dx = std::max(std::fabs(lp.x) - m.half_w, 0.0f), dz = std::max(std::fabs(lp.z) - m.half_len, 0.0f);
+			const float d = std::sqrt(dx * dx + dz * dz);
+			if (d < 1.4f && std::fabs(lp.y) < 2.0f && d < best) { best = d; use_kind = 1; use_target = c->get_instance_id(); }
+		} else if (CityBike *b = Object::cast_to<CityBike>(n)) {
+			const int st = b->get_ride_state();
+			if (st == CityBike::ST_RIDE) { use_kind = 4; use_target = b->get_instance_id(); return; }
+			if (st != CityBike::ST_PARKED || !on_foot) continue;
+			const float d = b->get_global_position().distance_to(pp);
+			if (d < 2.5f && d < best) { best = d; use_kind = 3; use_target = b->get_instance_id(); }
+		}
+	}
+}
+
+void CityHud::use_do() {
+	if (use_kind == 0) return;
+	CityGame *g = CityGame::get();
+	CityPlayer *pl = player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
+	if (!pl && g) pl = Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(g->get_player_id())));
+	Object *o = use_target ? ObjectDB::get_instance(ObjectID(use_target)) : nullptr;
+	if (!pl || !o) return;
+	feedback(); uses++;
+	CityTraffic *trf = traffic_id ? Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(traffic_id))) : nullptr;
+	if (!trf && g) trf = Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(g->get_traffic_id())));
+	if (CityCar *c = Object::cast_to<CityCar>(o)) {
+		const cm::CarModel &m = cm::MODELS[std::min(std::max(c->get_model(), 0), cm::N_MODELS - 1)];
+		if (use_kind == 1) {   // in: the wheel is his
+			pl->set_riding(true);
+			c->take_wheel(true);
+			if (trf) trf->set_player_car(c, m.half_len, m.half_w);
+		} else if (use_kind == 2) {   // out, beside the driver's door (the car's left), when it has (nearly) stopped
+			if (c->get_linear_velocity().length() > 2.5f) return;
+			const Transform3D t = c->get_global_transform();
+			const Vector3 side = t.basis.get_column(0).normalized();
+			c->take_wheel(false);
+			pl->set_riding(false);
+			pl->stand_at(t.origin + side * (m.half_w + 0.7f) + Vector3(0, 0.15f, 0), std::atan2(side.x, side.z));
+			pl->take_view();
+			if (trf) trf->set_player_car(nullptr, 0.0, 0.0);
+		}
+	} else if (CityBike *b = Object::cast_to<CityBike>(o)) {
+		if (use_kind == 3) { b->set_rider_player(pl); b->get_on(); }
+		else if (use_kind == 4) b->get_off();
+	}
+	use_scan = 0.0f;
+}
+
 String CityHud::get_money_text() const { return l_money ? l_money->get_text() : String(); }
 String CityHud::get_time_text() const { return l_time ? l_time->get_text() : String(); }
 
@@ -387,7 +467,27 @@ void CityHud::_process(double p_delta) {
 	CityPlayer *pl = player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
 	if (!pl && g) pl = Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(g->get_player_id())));
 	const bool on_foot = pl && pl->is_visible_in_tree();
-	b_inv->set_visible(on_foot);   // (in a car or on the bike the lower left is the steering; the inventory is for on foot)
+	b_inv->set_visible(on_foot);
+	use_scan -= (float)p_delta;
+	if (use_scan <= 0.0f) {
+		use_scan = 0.1f;
+		const int was = use_kind;
+		use_find(pl);
+		if (use_kind != was || use_target != use_last) {
+			static const char *const EN[5] = { "", "GET IN", "GET OUT", "GET ON", "GET OFF" };
+			static const char *const TR[5] = { "", "BİN", "İN", "BİN", "İN" };
+			l_use_en->set_text(EN[use_kind]); l_use_tr->set_text(String::utf8(TR[use_kind]));
+			if ((use_kind == 1 || use_kind == 3) && use_target != use_last) Input::get_singleton()->vibrate_handheld(200);   // (the old spec: a new target in reach)
+			use_last = use_target;
+		}
+		b_use->set_visible(use_kind != 0 && open < 0);
+	}
+	{
+		Input *in = Input::get_singleton();
+		const bool e = in->is_key_pressed(KEY_E) || in->is_joy_button_pressed(0, JOY_BUTTON_X);
+		if (e && !e_was && open < 0) use_do();
+		e_was = e;
+	}   // (in a car or on the bike the lower left is the steering; the inventory is for on foot)
 	// money and the clock
 	if (g) {
 		l_money->set_text(String("$") + String::num_int64(g->get_money()));
@@ -437,6 +537,7 @@ void CityHud::_process(double p_delta) {
 	if (pl) {
 		pl->set_no_touch(4, box_rect(0)); pl->set_no_touch(5, box_rect(1)); pl->set_no_touch(6, b_inv->is_visible() ? box_rect(2) : Rect2());
 		pl->set_no_touch(7, open >= 0 ? Rect2(Vector2(), sz) : box_rect(3));
+		pl->set_no_touch(0, b_use->is_visible() ? box_rect(4) : Rect2());
 	}
 }
 
@@ -456,6 +557,7 @@ void CityHud::_input(const Ref<InputEvent> &p_event) {
 	}
 	if (!tap) return;
 	if (open >= 0) return;   // (an open panel: its own close button)
+	if (b_use->is_visible() && box_rect(4).has_point(p)) { use_do(); get_viewport()->set_input_as_handled(); return; }
 	for (int w = 0; w < 3; w++) {
 		if (w == 2 && !b_inv->is_visible()) continue;
 		if (box_rect(w).has_point(p)) { touch(w); get_viewport()->set_input_as_handled(); return; }
@@ -475,6 +577,9 @@ void CityHud::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("box_rect", "what"), &CityHud::box_rect);
 	ClassDB::bind_method(D_METHOD("set_world", "crowd", "traffic"), &CityHud::set_world);
 	ClassDB::bind_method(D_METHOD("get_map"), &CityHud::get_map);
+	ClassDB::bind_method(D_METHOD("get_use_kind"), &CityHud::get_use_kind);
+	ClassDB::bind_method(D_METHOD("get_uses"), &CityHud::get_uses);
+	ClassDB::bind_method(D_METHOD("press_use"), &CityHud::press_use);
 }
 
 } // namespace godot

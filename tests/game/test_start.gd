@@ -81,6 +81,58 @@ func _process(delta: float) -> bool:
 			DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://map_dc/coronado/city_kit/review/game_19nov"))
 			root.get_viewport().get_texture().get_image().save_jpg(ProjectSettings.globalize_path("res://map_dc/coronado/city_kit/review/game_19nov/start.jpg"), 0.88)
 			print("START picture review/game_19nov/start.jpg")
+			step = 4; t0 = t
+		4:      # THE USE BUTTON (Yasin: "make the use button as big as phone and map boxes, vibrates and makes sound when used")
+			var hud: Node = game.get_hud()
+			var w := current_scene
+			var pl: Node3D = null
+			for c in w.get_children(): if c.get_class() == "CityPlayer": pl = c
+			var bike: Node3D = w.get_node_or_null(^"StartBike"); var car: Node3D = w.get_node_or_null(^"StartCar")
+			if t - t0 < 0.5: return false
+			var sz := root.get_visible_rect().size; var k := minf(sz.x / 1152.0, sz.y / 648.0)
+			var r: Rect2 = hud.box_rect(4)
+			_check(r.size.distance_to(Vector2(76, 76) * k) < 1.0, "the Use button is the phone button's size, under the arrow box: %s" % str(r))
+			_check(int(hud.get_use_kind()) == 3, "by his bicycle the Use button offers GET ON (%d)" % int(hud.get_use_kind()))
+			var taps0 := int(hud.get_taps())
+			hud.press_use()
+			_check(int(hud.get_taps()) == taps0 + 1 and int(hud.get_open()) == -1, "a tap: a tick and a vibration, and nothing opens")
+			step = 5; t0 = t
+		5:
+			var hud: Node = game.get_hud(); var bike: Node3D = current_scene.get_node_or_null(^"StartBike")
+			if t - t0 < 2.5: return false
+			_check(int(bike.get_ride_state()) == 2 and int(hud.get_use_kind()) == 4, "he got on and rides (the button now says GET OFF)")
+			hud.press_use()
+			step = 6; t0 = t
+		6:
+			var hud: Node = game.get_hud(); var bike: Node3D = current_scene.get_node_or_null(^"StartBike"); var car: Node3D = current_scene.get_node_or_null(^"StartCar")
+			if t - t0 < 2.5: return false
+			var pl: Node3D = null
+			for c in current_scene.get_children(): if c.get_class() == "CityPlayer": pl = c
+			_check(int(bike.get_ride_state()) == 0 and pl.visible, "off again, on foot")
+			# to the car's door
+			var side := car.global_basis.x.normalized()
+			pl.global_position = car.global_position + side * 1.6 + Vector3(0, 0.15, 0)
+			step = 7; t0 = t
+		7:
+			var hud: Node = game.get_hud(); var car: Node3D = current_scene.get_node_or_null(^"StartCar")
+			if t - t0 < 0.6: return false
+			_check(int(hud.get_use_kind()) == 1, "at the car's door the Use button offers GET IN (%d)" % int(hud.get_use_kind()))
+			hud.press_use()
+			step = 8; t0 = t
+		8:
+			var hud: Node = game.get_hud(); var car: Node3D = current_scene.get_node_or_null(^"StartCar")
+			if t - t0 < 0.6: return false
+			var pl: Node3D = null
+			for c in current_scene.get_children(): if c.get_class() == "CityPlayer": pl = c
+			_check(bool(car.get(&"player")) and not pl.visible and int(hud.get_use_kind()) == 2, "in the car: the wheel is his, the button says GET OUT")
+			hud.press_use()
+			step = 10; t0 = t
+		10:
+			if t - t0 < 0.6: return false
+			var hud: Node = game.get_hud(); var car: Node3D = current_scene.get_node_or_null(^"StartCar")
+			var pl: Node3D = null
+			for c in current_scene.get_children(): if c.get_class() == "CityPlayer": pl = c
+			_check(not bool(car.get(&"player")) and pl.visible and pl.global_position.distance_to(car.global_position) < 3.0, "out again beside the car (%.1f m), on foot; %d uses" % [pl.global_position.distance_to(car.global_position), int(hud.get_uses())])
 			step = 9
 		9:
 			print("RESULT %s" % ("PASS" if fails == 0 else "FAIL (%d)" % fails))
