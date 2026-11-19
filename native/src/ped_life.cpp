@@ -301,7 +301,21 @@ bool Crowd::to_body(int p_id, bool p_on, float p_x, float p_z) {
 	if (i < 0) return false;
 	if (p_on) {
 		if (mode[i] != M_BODY) {
-			if (party[i]) leave_party(i);
+			if (party[i]) {
+				// The people it walks with stop and look at it, and it goes back to them when it is on its feet again
+				// (rejoin): whoever leads them stands for up to 14 s, turned to it, and the others gather round him.
+				int mate_row = -1;
+				for (int j = 0; j < hi; j++) if (alive[j] && j != i && party[j] == party[i] && (mate_row < 0 || slot[j] < slot[mate_row])) mate_row = j;
+				kept_mate[i] = mate_row >= 0 ? id[mate_row] : 0; kept_kind[i] = pkind[i];
+				leave_party(i);
+				if (mate_row >= 0) {
+					const int L = party[mate_row] != 0 && leader[mate_row] >= 0 ? leader[mate_row] : mate_row;
+					if (alive[L] && mode[L] == M_LINE && state[L] == ST_WALK && segs[seg[L]].kind == 0) {
+						state[L] = ST_PAUSE; pause_t[L] = 14.0f; act[L] = A_STARE; act_t[L] = 0.0f; v[L] = 0.0f; pass[L] = 0;
+						flags[L] |= F_FACE; face_yaw[L] = std::atan2(p_x - x[L], p_z - z[L]);
+					}
+				}
+			}
 			kept_goal[i] = (flags[i] & F_RESIDENT) ? -1 : goal[i]; kept_stay[i] = stay_t[i]; kept_enter[i] = enter_goal[i];
 			free_place(i); goal[i] = -1; route_n[i] = 0; pass[i] = 0; act[i] = A_NONE; state[i] = ST_WALK; boarding[i] = 0;
 			flags[i] &= (uint8_t)~(F_FACE | F_FLEE); flee_t[i] = 0.0f;
@@ -335,6 +349,29 @@ bool Crowd::fight(int p_a, int p_b) {
 	st.fights++;
 	event(E_FIGHT, id[i], id[j], 0.0f);
 	fight_begins(i); fight_begins(j);
+	return true;
+}
+
+// (after a knock) He goes back to the people he walked with: whoever leads them now leads him too. Not if they are
+// more than 30 m off by then, or not on a pavement's line.
+bool Crowd::rejoin(int i, int mate_id, int kind) {
+	const int m = find(mate_id);
+	if (m < 0 || m == i || party[i] != 0 || mode[i] != M_LINE) return false;
+	const int L = party[m] != 0 && leader[m] >= 0 ? leader[m] : m;
+	if (!alive[L] || mode[L] != M_LINE || pkind[L] == PK_JOGGER || L == i) return false;
+	const float dx = x[L] - x[i], dz = z[L] - z[i];
+	if (dx * dx + dz * dz > 30.0f * 30.0f) return false;
+	if (party[L] == 0) {   // (there were two of them: the other has walked alone since)
+		party[L] = next_party++; leader[L] = (int16_t)L; pkind[L] = (uint8_t)(kind != PK_NONE ? kind : PK_FRIENDS); slot[L] = 0; psize[L] = 1; abreast[L] = 0; trail_d[L] = 0.0f;
+		for (int q = 0; q < TRAIL_N; q++) { trail[L][q][0] = x[L]; trail[L][q][1] = y[L]; trail[L][q][2] = z[L]; }
+		trail_at[L] = 0; lagf[L] = 1.0f;
+	}
+	const int n = psize[L];
+	if (n >= MAX_PARTY) return false;
+	free_place(i); goal[i] = -1; route_n[i] = 0; act[i] = A_NONE; state[i] = ST_WALK;
+	mode[i] = M_FOLLOW; leader[i] = (int16_t)L; party[i] = party[L]; pkind[i] = pkind[L]; slot[i] = (uint8_t)n; abreast[i] = 0; boarding[i] = 0;
+	for (int j = 0; j < hi; j++) if (alive[j] && party[j] == party[L]) psize[j] = (uint8_t)(n + 1);
+	if (state[L] == ST_PAUSE && act[L] == A_STARE) { pause_t[L] = std::min(pause_t[L], 0.8f); }   // (they were waiting for him: on they go)
 	return true;
 }
 

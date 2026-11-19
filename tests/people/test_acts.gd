@@ -23,6 +23,9 @@ var seen := {}          # per walker: the acts it showed, in order, with how lon
 var in_body := 0
 var phone_walkers := {}
 var trace := OS.get_cmdline_user_args().has("--trace")      # the one who takes the last blow, twice a second
+var grp_id := -1
+var grp_party := 0
+var grp_at := Vector3.ZERO
 var clips := {}        # per walker: the clips its animated body played, in order
 
 func _initialize() -> void:
@@ -137,7 +140,9 @@ func _physics_process(delta: float) -> bool:
 		4:
 			if trace and Engine.get_physics_frames() % 30 == 0:
 				for n: Dictionary in crowd.call(&"near_bodies"):
-					if int(n.walker) == b: print("ACTS   trace %.1f s: figure mode %d at %s clip %s" % [t - t0, int(n.figure_mode), str(n.at), String(n.clip)])
+					if int(n.walker) in [b, c] and int(n.figure_mode) == 1:
+						var bd: Dictionary = n.body
+						print("ACTS   trace %.1f s walker %d: state %d steps %d feet down %d quiet %.1f | middle %s going %s | presses at %s | feet %s %s | heading %.2f boxes %d shoves %d" % [t - t0, int(n.walker), int(bd.state), int(bd.steps), int(bd.feet_down), float(bd.quiet_s), str(bd.middle), str(bd.middle_v), str(bd.presses_at), str(bd.foot0), str(bd.foot1), float(bd.heading), int(bd.boxes), int(bd.shoves)])
 			if t - t0 < 20.0: return false
 			var st: Dictionary = crowd.call(&"stats")
 			var fb := _find(b, 13); var fc := _find(c, 13)
@@ -157,6 +162,26 @@ func _physics_process(delta: float) -> bool:
 			_check(not pb.is_empty() and not pc_.is_empty() and int(pb.mode) != 7 and int(pc_.mode) != 7 and int(pb.act) != 13 and int(pc_.act) != 13, "afterwards both are on their feet and done with it (modes %d and %d)" % [int(pb.get("mode", -1)), int(pc_.get("mode", -1))])
 			_check(int(st.inside_each_other) == 0 and int(st.bad_numbers) == 0, "nobody inside anybody, no bad number")
 			print("ACTS seen walking with a phone within 60 m in this run: %d people (not a check)" % phone_walkers.size())
+			# one of a group is knocked down (as the game's physics would): his people wait, and he goes back to them
+			for p: Dictionary in crowd.call(&"people_near", spot, 150.0):
+				if int(p.party) != 0 and int(p.mode) == 4 and float(p.speed) > 0.5:
+					grp_id = int(p.id); grp_party = int(p.party); grp_at = p.at; break
+			if grp_id < 0: print("ACTS   (no group walking within 150 m just now: the going back to one's people was not tried)"); step = 99; return false
+			crowd.call(&"to_body", grp_id, true, grp_at)
+			step = 5; t0 = t
+		5:
+			if t - t0 < 3.0: return false
+			var me := _person(grp_id)
+			var waiting := 0
+			for p: Dictionary in crowd.call(&"people_near", grp_at, 12.0):
+				if int(p.party) == grp_party and int(p.id) != grp_id and float(p.speed) < 0.1: waiting += 1
+			_check(not me.is_empty() and int(me.mode) == 7 and int(me.party) == 0 and waiting >= 1, "one of a group is knocked down: %d of his people stand and wait near him" % waiting)
+			crowd.call(&"to_body", grp_id, false, grp_at)
+			step = 6; t0 = t
+		6:
+			if t - t0 < 6.0: return false
+			var me := _person(grp_id)
+			_check(not me.is_empty() and int(me.party) != 0 and int(me.mode) in [0, 4], "on his feet again he is one of them again (group %d, mode %d, %.1f m/s)" % [int(me.get("party", 0)), int(me.get("mode", -1)), float(me.get("speed", 0.0))])
 			step = 99
 		99:
 			print("RESULT %s" % ("PASS" if fails == 0 else "FAIL (%d)" % fails))

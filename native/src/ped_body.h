@@ -118,6 +118,7 @@ public:
 	void impulse(int body, V3 point, V3 imp);
 	void step(float dt);
 	V3 com() const;
+	V3 pressing_at() const { return cop; }   // (for a trace)
 	V3 com_v() const;
 
 private:
@@ -128,6 +129,7 @@ private:
 	V3 lean_to; bool lean_on = false;   // BALANCE: the place it shifts its weight over (the foot that stays, before the other comes home)
 	V3 cop;                              // BALANCE: the point under its feet it presses on now
 	int last_step = -1;                  // BALANCE: the foot that stepped last
+	float stumble_t = 0;                 // BALANCE: how long it has been stepping along without catching itself (nothing pushing it)
 	float h_want = 0.9f;                 // BALANCE: how high its legs let its hips stand over where its feet are
 	V3 support(V3 q, int only) const;    // the nearest point of what its planted feet cover (only = one foot, -1 = both)
 	struct Hit { int body; V3 r, n, vb; float lam; };

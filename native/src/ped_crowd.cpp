@@ -318,7 +318,7 @@ int Crowd::new_row(int k, float su, int d, float sl, uint32_t p_look) {
 	int h = 0; float sx, sy, sz, tx_, tz_;
 	at(S, su, sl, h, sx, sy, sz, tx_, tz_);
 	alive[i] = 1; id[i] = next_id++; seg[i] = k; dir[i] = (int8_t)d; u[i] = su; ls[i] = sl; hint[i] = h; nxt[i] = -1;
-	state[i] = ST_WALK; why[i] = WHY_NONE; pass[i] = 0; looked[i] = 0; thin[i] = 0; thin_t[i] = 0.0f; mode[i] = M_LINE; act[i] = A_NONE; rise_t[i] = 0.0f; rise_from[i] = 0; mate[i] = 0; kept_goal[i] = -1; kept_stay[i] = 0.0f; kept_enter[i] = 0; hurt_t[i] = 0.0f; hurt_v0[i] = 0.0f; fwin[i] = 0; tier[i] = TIER_FULL; flags[i] = 0;
+	state[i] = ST_WALK; why[i] = WHY_NONE; pass[i] = 0; looked[i] = 0; thin[i] = 0; thin_t[i] = 0.0f; mode[i] = M_LINE; act[i] = A_NONE; rise_t[i] = 0.0f; rise_from[i] = 0; mate[i] = 0; kept_goal[i] = -1; kept_stay[i] = 0.0f; kept_enter[i] = 0; kept_mate[i] = 0; kept_kind[i] = 0; hurt_t[i] = 0.0f; hurt_v0[i] = 0.0f; fwin[i] = 0; tier[i] = TIER_FULL; flags[i] = 0;
 	x[i] = px[i] = sx; y[i] = py[i] = sy; z[i] = pz[i] = sz; hx[i] = tx_ * d; hz[i] = tz_ * d; yaw[i] = pyaw[i] = std::atan2(hx[i], hz[i]);
 	tu[i] = tick; span[i] = 1;
 	rs[i] = rng ^ ((uint64_t)id[i] * 0x9E3779B97F4A7C15ull); if (rs[i] == 0) rs[i] = 1;
@@ -496,6 +496,11 @@ void Crowd::update(int i, float h, double clock) {
 				at(S, u[i], 0.0f, hh, ax, ay, az, tx_, tz_);
 				ls[i] = clampf((x[i] - ax) * tz_ - (z[i] - az) * tx_, -edge_off(S), edge_off(S));
 				y[i] = ay; mode[i] = (leader[i] >= 0 && leader[i] != i) ? M_FOLLOW : M_LINE; state[i] = ST_WALK; act[i] = A_NONE; blocked_t[i] = 0.0f;
+				if (mode[i] == M_LINE && kept_mate[i] != 0) {   // (it was knocked about among its people: it goes back to them)
+					const int mid = kept_mate[i];
+					kept_mate[i] = 0;
+					if (rejoin(i, mid, kept_kind[i])) kept_goal[i] = -1;
+				}
 				if (mode[i] == M_LINE && kept_goal[i] >= 0) {   // (it was knocked about on its way somewhere: it goes on there)
 					const int g = kept_goal[i];
 					kept_goal[i] = -1;

@@ -138,7 +138,7 @@ void Person::start(V3 at, float yaw, V3 vel) {
 		j[s == 0 ? J_SHOULDER_L : J_SHOULDER_R].want = arm_down[s];
 		j[s == 0 ? J_HIP_L : J_HIP_R].want = Q(); j[s == 0 ? J_KNEE_L : J_KNEE_R].want = Q();
 	}
-	state = ST_BALANCE; steps = 0; tilt = 0; quiet = 0; t_state = 0; strength = 1.0f; settled = false; max_speed = 0; heading = yaw; lean_on = false; last_step = -1;
+	state = ST_BALANCE; steps = 0; tilt = 0; quiet = 0; t_state = 0; strength = 1.0f; settled = false; max_speed = 0; heading = yaw; lean_on = false; last_step = -1; stumble_t = 0;
 	cop = flat(at); h_want = rest.pelvis.y + 0.03f;
 	pose_legs();
 }
@@ -158,7 +158,7 @@ void Person::start_pose(const V3 *px, const Q *pq, const V3 *pv, float yaw) {
 		j[s == 0 ? J_SHOULDER_L : J_SHOULDER_R].want = arm_down[s];
 		j[s == 0 ? J_HIP_L : J_HIP_R].want = Q(); j[s == 0 ? J_KNEE_L : J_KNEE_R].want = Q();
 	}
-	state = ST_BALANCE; steps = 0; tilt = 0; quiet = 0; t_state = 0; strength = 1.0f; settled = false; max_speed = 0; heading = yaw; lean_on = false; last_step = -1;
+	state = ST_BALANCE; steps = 0; tilt = 0; quiet = 0; t_state = 0; strength = 1.0f; settled = false; max_speed = 0; heading = yaw; lean_on = false; last_step = -1; stumble_t = 0;
 	cop = support(flat(com()), -1);
 	h_want = b[B_PELVIS].x.y - ground_y(b[B_PELVIS].x.x, b[B_PELVIS].x.z);
 	pose_legs();
@@ -468,7 +468,9 @@ void Person::brain(float dt) {
 	}
 	const float speed = len(flat(cv));
 	const float hp = P.x.y - ground_y(P.x.x, P.x.z);
-	if (tilt > 1.05f || hp < 0.45f * rest.pelvis.y || speed > 4.5f || (steps >= 8 && speed > 1.6f)) { go_fall(); return; }
+	// stumbling along for three seconds without catching itself, and nothing pushing it: it goes down, as a person does
+	stumble_t = (speed > 0.5f && n_hits == 0) ? stumble_t + dt : (speed < 0.3f || n_hits > 0 ? 0.0f : stumble_t);
+	if (tilt > 1.05f || hp < 0.45f * rest.pelvis.y || speed > 4.5f || (steps >= 8 && speed > 1.6f) || stumble_t > 3.0f) { go_fall(); return; }
 	const bool swinging = !foot[0].planted || !foot[1].planted;
 	const V3 left{ std::cos(heading), 0, -std::sin(heading) };
 	const float out = len(xi - support(xi, -1));   // how far that point lies outside what its feet cover
@@ -486,7 +488,11 @@ void Person::brain(float dt) {
 				const V3 dir = norm(xi - stand);
 				float T = 0.20f / std::max(skill, 0.3f);
 				for (int it = 0; it < 2; it++) {
-					tgt = stand + (xi - stand) * std::exp(T / tc) + dir * 0.05f;
+					// ... and a little beyond: 5 cm, and 3.5 cm more with every step already taken. With a fixed 5 cm a body
+					// pushed in the chest out of a fighter's stance stepped backwards at a steady 0.93 m/s for good (seen 20 Nov,
+					// tests/people/test_acts.gd -- --trace: 28 steps in six seconds, never slower): each step only kept up
+					// with the fall, none got ahead of it. A longer step each time does get ahead.
+					tgt = stand + (xi - stand) * std::exp(T / tc) + dir * (0.05f + std::min(0.035f * (float)steps, 0.22f));
 					T = clampf(0.14f + 0.10f * len(flat(tgt - foot[s].p)), 0.16f, 0.26f) / std::max(skill, 0.3f);   // (a step to save itself is a quick one)
 				}
 				const float gap = (dot(tgt, left) - dot(flat(foot[1 - s].p), left)) * (s == 0 ? 1.0f : -1.0f);   // how far it lands on its own side of the other foot

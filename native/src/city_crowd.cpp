@@ -887,7 +887,7 @@ Array CityCrowd::near_bodies() const {
 	for (const Near &nb : near_pool) {
 		if (nb.walker < 0) continue;
 		Dictionary d;
-		d["walker"] = nb.walker; d["woman"] = nb.female != 0; d["clip"] = String(nb.ped->current_clip()); d["in_physical_body"] = nb.in_body; d["shown_s"] = nb.act_t; d["figure_mode"] = (int)nb.ped->get_mode(); d["at"] = nb.ped->body_at();
+		d["walker"] = nb.walker; d["woman"] = nb.female != 0; d["clip"] = String(nb.ped->current_clip()); d["in_physical_body"] = nb.in_body; d["shown_s"] = nb.act_t; d["figure_mode"] = (int)nb.ped->get_mode(); d["at"] = nb.ped->body_at(); d["body"] = nb.ped->get_state();
 		out.push_back(d);
 	}
 	return out;
@@ -963,6 +963,7 @@ void CityCrowd::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_act", "id", "act", "seconds"), &CityCrowd::set_act);
 	ClassDB::bind_method(D_METHOD("hold", "id", "on", "yaw"), &CityCrowd::hold);
 	ClassDB::bind_method(D_METHOD("hide", "id", "on"), &CityCrowd::hide);
+	ClassDB::bind_method(D_METHOD("to_body", "id", "on", "at"), &CityCrowd::to_body);
 	ClassDB::bind_method(D_METHOD("scare", "at", "radius", "seconds"), &CityCrowd::scare);
 	ClassDB::bind_method(D_METHOD("bus_at", "place", "on", "door", "get_off"), &CityCrowd::bus_at);
 	ClassDB::bind_method(D_METHOD("bench_off", "place", "off"), &CityCrowd::bench_off);

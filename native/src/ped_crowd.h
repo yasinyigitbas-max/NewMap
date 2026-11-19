@@ -168,7 +168,8 @@ public:
 	float hurt_t[MAX_PEDS], hurt_v0[MAX_PEDS];  // hurt (he lost a fight): seconds of slow walking left, and his own pace to go back to
 	uint8_t fwin[MAX_PEDS];                     // in a fight: 1 = he will win it
 	int32_t kept_goal[MAX_PEDS];                // where it was going when its body was knocked about (-1 = nowhere): it goes on there afterwards
-	uint8_t kept_enter[MAX_PEDS];
+	uint8_t kept_enter[MAX_PEDS], kept_kind[MAX_PEDS];
+	int32_t kept_mate[MAX_PEDS];                // one of the people it walked with when it was knocked about (an id, 0 = it walked alone): it goes back to them
 	uint8_t rise_from[MAX_PEDS];
 	int32_t mate[MAX_PEDS];                     // whom it met (the other's id) while the meeting lasts, else 0
 	float act_t[MAX_PEDS], stay_t[MAX_PEDS], roll_t[MAX_PEDS], meet_cd[MAX_PEDS], flee_t[MAX_PEDS], say_cd[MAX_PEDS], bump_cd[MAX_PEDS], lookout_cd[MAX_PEDS];
@@ -301,6 +302,7 @@ private:
 	void stay_step(int i, float h);
 	bool rising(int i, float h);
 	void fight_begins(int i);
+	bool rejoin(int i, int mate_id, int kind);
 	void come_out(int place, bool from_bus, float dx, float dz);
 	void free_place(int i);
 	void doors_step(float h);

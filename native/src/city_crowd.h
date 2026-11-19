@@ -174,6 +174,9 @@ public:
 	bool set_act(int p_id, int p_act, double p_seconds);
 	bool hold(int p_id, bool p_on, double p_yaw);
 	bool hide(int p_id, bool p_on);
+	// (the game, and tests) somebody is knocked about by something of the game's own: his walker is where the game says
+	// until it lets him go (on = false: he walks back to the pavement, to his people, and on to where he was going)
+	bool to_body(int p_id, bool p_on, const Vector3 &p_at) { return crowd && crowd->to_body(p_id, p_on, (float)p_at.x, (float)p_at.z); }
 	Array near_bodies() const;     // (tests) every animated body: whose it is and which clip it plays
 	bool fight(int p_a, int p_b) { return crowd && crowd->fight(p_a, p_b); }
 	void scare(const Vector3 &p_at, double p_radius, double p_seconds);

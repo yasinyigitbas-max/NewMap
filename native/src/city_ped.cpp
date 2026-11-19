@@ -347,6 +347,8 @@ Dictionary CityPed::get_state() const {
 	d["mode"] = mode; d["state"] = body.state; d["steps"] = body.steps; d["lean_deg"] = body.tilt * 57.2958f;
 	d["takeovers"] = takeovers; d["falls"] = falls; d["getups"] = getups; d["jump_at_takeover"] = jump_at_takeover;
 	d["strength"] = body.strength; d["fastest_part"] = body.max_speed;
+	// (the balancing, for a trace) which feet stand, where; where it presses; its middle and how fast that goes; its heading
+	{ const vd::V3 c = body.com(), cv = body.com_v(); d["feet_down"] = (body.foot[0].planted ? 1 : 0) + (body.foot[1].planted ? 2 : 0); d["foot0"] = gv(body.foot[0].p); d["foot1"] = gv(body.foot[1].p); d["presses_at"] = gv(body.pressing_at()); d["middle"] = gv(c); d["middle_v"] = gv(cv); d["heading"] = body.heading; d["quiet_s"] = body.quiet; d["settled"] = body.settled; d["boxes"] = n_boxes; d["shoves"] = n_shove; }
 	if (skel) {
 		const Transform3D S = skel->get_global_transform();
 		d["head"] = (S * skel->get_bone_global_pose(bone[pb::B_HEAD])).origin;
