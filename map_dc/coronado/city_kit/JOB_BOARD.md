@@ -72,6 +72,21 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   ('unheld' tested there: 0). STREAMING: collision within 100 m first, the rest in quiet frames, is the DEFAULT, and
   BOTH phone gates PASS for the first time (`colbg_zones`, `colbg_stream`; RUNTIME_BAKE.md "Collision per place").
   NOT on the phone yet: this merged build with all the growth (waits for traffic / people in C++, Yasin's word).
+- 19 Nov: RESIDENTIAL ZONE GROWN AND LOCKED (branch claude/grow-residential; Yasin: "roll out to your whole zone, then
+  do a polish pass", then "skip them and lock it"). 65 quadrant pieces r_q_* (24 blocks: the west / Country Club Ridge,
+  Crown Hill, Glorietta Heights) + wires w_rv, from four variants (rv_designs.gd: V1 village bungalows, V2 spanish hill,
+  V3 beach cottages, V4 mid-century) built by rv_lib.gd; table review/grow_res_blocks.json (integrate.py grow_rows),
+  zone list tools/city/pilot/zoning/res_zone.py, scripts by res_grow.py. Ground fitted to the four streets of each
+  block as BUILT (leg profiles + property lines measured: zoning/legs_measured.json, leg_measure.gd); lots on level
+  terraces with retaining walls. Five corner shops with hand-made rooms (interiors/rooms/rooms_res.gd, g_res_books /
+  cafe / surf / wash / market; table interiors/assignment_res.json). LOCKED by Yasin's word: the 66 pieces and the 5
+  rooms (lock test RESULT PASS). Checked on the final build: check_life 0, seams 0 (702); the validator and the tree
+  audit were NOT re-run on the final rebuild (Yasin: "skip them"); the previous full run had trees 0, rooms 0.
+  New checkers from Yasin's corrections: tools/city/pilot/check_life.gd (pole on asphalt, item in a path, fence end
+  that leads nowhere, wall item over glass), check_rooms "cover" (merged into the combined checker); room_lib records
+  "openings". NOT DONE: the 12 ring-road residential blocks (curved / irregular), the bake numbers for the zone (draws,
+  triangles, download size), KIT_USAGE lines. Known: com_shallow_books / _cafe have house doors (O_apt_door) that the
+  shared cut does not open (their glass shop door hides behind the painted door) - shared-tools fix, passed to the PC.
 - 19 Nov (cloud, `claude/grow-industrial`): the combined indoor checker (8e42e9a) is merged here, and the 14 industrial
   rooms are rebuilt to fit it. `check_rooms.gd -- --only=g_ind_` gives 0 problems (it was 20: repeat, lone, deco,
   window). room_gen_ind.gd now caps repeats with the checker's limits, puts bins only at walls, allows 2 boards a wall

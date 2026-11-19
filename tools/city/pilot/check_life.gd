@@ -7,6 +7,10 @@ extends SceneTree
 ##   path      "there is a trash bin in the middle of the way": a ground item standing on a narrow paved path (concrete
 ##             or paving with planting / lawn on both sides across it) in a block piece; street pieces are left to the
 ##             validator (their furniture zones are paved on purpose)
+##   glass     "prop in the glass": a wall-mounted item (meter, mailbox, light, hose reel, dish, vine ...) hung over a window
+##             or a door of its building, from the measured openings (interiors/room_contracts.json and
+##             room_contracts_res.json; buildings with no measured model are skipped and counted). A window air
+##             conditioner is the one item that belongs in a window.
 ##   fence     "this metal fence doesnt lead to anywhere" / "fences dont enclosure their back yard and dont touch their
 ##             back walls": a fence end that meets nothing - no other fence or gate within 0.35 m, no building wall
 ##             within 0.6 m, and no fence end facing it across an opening (a gate gap, a path or a drive: 0.8-6.5 m
@@ -46,6 +50,11 @@ func _run() -> void:
 	var world := Node3D.new(); root.add_child(world)
 	var nodes := K.place_layout(world)
 	var props: Array = []      # [piece, base, pos Vector2, yaw, y over piece]
+	var bldx: Array = []       # [Transform3D, folder, w, d] every building, for the glass rule
+	var rcm := {}
+	for f: String in ["room_contracts.json", "room_contracts_res.json"]:
+		var pth := "res://map_dc/coronado/city_kit/interiors/" + f
+		if FileAccess.file_exists(pth): rcm.merge(JSON.parse_string(FileAccess.get_file_as_string(pth)).models)
 	var walls: Array = []      # building footprints [center, half, ang]
 	for n: Node3D in nodes:
 		var pname := String(n.get_meta(&"piece", n.name))
@@ -76,6 +85,7 @@ func _run() -> void:
 				if st.is_empty(): continue
 				var gb := b.global_transform.basis
 				walls.append([Vector2(b.global_position.x, b.global_position.z), Vector2(float(st.footprint_wd[0]), float(st.footprint_wd[1])) * 0.5, atan2(gb.z.x, gb.z.z)])
+				bldx.append([b.global_transform, String(b.get_meta(&"kit", "")), float(st.footprint_wd[0]), float(st.footprint_wd[1]), pname])
 		if not only.is_empty():
 			var hit := false
 			for pre: String in only:
@@ -94,6 +104,37 @@ func _run() -> void:
 		if not String(p[1]).begins_with("prop_utility_pole"): continue
 		var m := _mat(p[2])
 		if m in HARD: _report("pole", "%s %s at (%.1f, %.1f) stands on %s" % [p[0], p[1], (p[2] as Vector2).x, (p[2] as Vector2).y, m])
+	# ---- wall item over a window or door ("prop in the glass")
+	var nomodel := {}
+	var bgrid := {}
+	for i2 in bldx.size():
+		var kb := _key(Vector2((bldx[i2][0] as Transform3D).origin.x, (bldx[i2][0] as Transform3D).origin.z))
+		for gx3 in range(kb.x - 3, kb.x + 4):
+			for gz3 in range(kb.y - 3, kb.y + 4):
+				var kk3 := Vector2i(gx3, gz3)
+				if not bgrid.has(kk3): bgrid[kk3] = []
+				(bgrid[kk3] as Array).append(i2)
+	for p: Array in props:
+		var base3 := String(p[1])
+		var e4 := K.manifest(base3)
+		if String(e4.get("mount", "ground")) != "wall" or base3 == "prop_ac_window": continue
+		var t5: Transform3D = p[5]
+		for i3: int in bgrid.get(_key(p[2]), []):
+			var bb: Array = bldx[i3]
+			var lp3: Vector3 = (bb[0] as Transform3D).affine_inverse() * t5.origin
+			var w3 := float(bb[2]); var d3 := float(bb[3])
+			var fac := ""; var al := 0.0
+			if absf(lp3.x) <= w3 * 0.5 + 0.1 and absf(absf(lp3.z) - d3 * 0.5) < 0.35: fac = "front" if lp3.z > 0.0 else "back"; al = lp3.x
+			elif absf(lp3.z) <= d3 * 0.5 + 0.1 and absf(absf(lp3.x) - w3 * 0.5) < 0.35: fac = "right" if lp3.x > 0.0 else "left"; al = lp3.z
+			if fac == "": continue
+			if not rcm.has(String(bb[1])): nomodel[String(bb[1])] = true; break
+			var hw3 := float(e4.get("footprint_w", 0.4)) * 0.5; var y0 := lp3.y; var y1 := lp3.y + float(e4.get("height", 0.4))
+			for o: Dictionary in rcm[String(bb[1])].get("openings", []):
+				if String(o.facade) != fac: continue
+				if al - hw3 < float(o.along) + float(o.w) * 0.5 - 0.03 and al + hw3 > float(o.along) - float(o.w) * 0.5 + 0.03 and y0 < float(o.y1) - 0.03 and y1 > float(o.y0) + 0.03:
+					_report("glass", "%s %s at (%.1f, %.1f) hangs over a %s of %s" % [p[0], base3, (p[2] as Vector2).x, (p[2] as Vector2).y, String(o.region).trim_prefix("O_"), bb[1]]); break
+			break
+	if not nomodel.is_empty(): print("LIFE_INFO glass: %d building models have no measured openings (not checked)" % nomodel.size())
 	# ---- item in a narrow path (block pieces only)
 	for p: Array in props:
 		var pn := String(p[0]); var base := String(p[1])

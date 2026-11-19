@@ -27,7 +27,15 @@ extends RefCounted
 const K := preload("res://tools/city/pilot/kit_lib.gd")
 const W := preload("res://tools/city/pilot/pieces/wear_lib.gd")
 
-const PROP := 9.2
+const PROP := 9.2         # the residential section's property line (the default)
+## the property lines of THIS quadrant's two streets, measured from the legs as built (zoning/legs_measured.json):
+## PU along the street that runs along v (the lots' first u), PV along the street that runs along u (their first v);
+## 9.2 on residential / standard streets, 14.3 on the arterials (3rd / 4th St), 16 on Amber's divided stretch.
+## APU / APV: does that street have an alley mouth at 54-60 (else the alley ends at its property line with bollards)
+var PU := 9.2
+var PV := 9.2
+var APU := true
+var APV := true
 const AL0 := 54.0
 const AL1 := 60.0
 ## quadrant depth along u / v (half the block: 100 m, or 125 m in the 250 m blocks east of Amber) and the block
@@ -74,10 +82,28 @@ static func ss(t: float) -> float:
 func Su(t: float) -> float: return ss((t - 20.0) / (BU - 40.0))
 func Sv(t: float) -> float: return ss((t - 20.0) / (BV - 40.0))
 
-## walking height (street surface + kerb) of the block surface at quadrant (u, v), relative to this junction's pad
+## the four streets round the block as BUILT (res_zone.py: each street's height every 1 m from the quadrant's side,
+## relative to its own start pad): A along u at v = 0, C along u at v = Lv, B along v at u = 0, D along v at u = Lu.
+## Empty: the standard smoothstep on every street.
+var EA: PackedFloat32Array
+var EB: PackedFloat32Array
+var EC: PackedFloat32Array
+var ED: PackedFloat32Array
+var edges := false
+
+static func _samp(e: PackedFloat32Array, t: float) -> float:
+	var i := clampi(int(floor(t)), 0, e.size() - 2); var f := clampf(t - float(i), 0.0, 1.0)
+	return lerpf(e[i], e[i + 1], f)
+
+## walking height (street surface + kerb) of the block surface at quadrant (u, v), relative to this junction's pad:
+## a Coons patch between the four streets (each edge exactly as its leg pieces build it), blended by the smoothstep
+## between the junction tiles. With the standard profiles this is (pu - p0) S(u) + (pv - p0) S(v) + twist S(u) S(v).
 func fh(u: float, v: float) -> float:
 	var a := Su(u); var b := Sv(v)
-	return (pu - p0) * a + (pv - p0) * b + (puv - pu - pv + p0) * a * b + KERB_H
+	if not edges:
+		return (pu - p0) * a + (pv - p0) * b + (puv - pu - pv + p0) * a * b + KERB_H
+	var A := _samp(EA, u); var C := (pv - p0) + _samp(EC, u); var B := _samp(EB, v); var D := (pu - p0) + _samp(ED, v)
+	return (1.0 - b) * A + b * C + (1.0 - a) * B + a * D - (a * (1.0 - b) * (pu - p0) + (1.0 - a) * b * (pv - p0) + a * b * (puv - p0)) + KERB_H
 
 ## ground height under quadrant (u, v): the last surface that holds the point, else the block surface
 func gy(u: float, v: float) -> float:
@@ -110,6 +136,10 @@ func begin(piece: String, site: Dictionary, des: Dictionary) -> void:
 	sx = float(site.sx); sz = float(site.sz)
 	p0 = float(site.p0); pu = float(site.pu); pv = float(site.pv); puv = float(site.puv)
 	BU = float(site.get("Lu", 200.0)); BV = float(site.get("Lv", 200.0)); LU = BU * 0.5; LV = BV * 0.5
+	var pr: Dictionary = site.get("prof", {})
+	if pr.get("A") != null and pr.get("B") != null and pr.get("C") != null and pr.get("D") != null:
+		EA = PackedFloat32Array(pr.A); EB = PackedFloat32Array(pr.B); EC = PackedFloat32Array(pr.C); ED = PackedFloat32Array(pr.D); edges = true
+	PU = float(site.get("pu_line", PROP)); PV = float(site.get("pv_line", PROP)); APU = bool(site.get("apron_u", true)); APV = bool(site.get("apron_v", true))
 	rr = W.rng_for(piece)
 	g = K.Ground.new(); props = K.Props.new(); dec = K.Decals.new()
 	root = Node3D.new(); root.name = piece
@@ -118,7 +148,7 @@ func begin(piece: String, site: Dictionary, des: Dictionary) -> void:
 
 ## ------------------------------------------------------------------------------------------------ props
 func free_at(u: float, v: float, r: float) -> bool:
-	if u - r < PROP or v - r < PROP or u + r > LU or v + r > LV: return false
+	if u - r < PU or v - r < PV or u + r > LU or v + r > LV: return false
 	for o: Array in occ:
 		if Vector2(u, v).distance_to(Vector2(float(o[0]), float(o[1]))) < r + float(o[2]): return false
 	for dp: Vector2 in doorpts:
@@ -196,6 +226,7 @@ func fence_line(a: Vector2, b: Vector2, gaps: Array, panel: String, post: String
 		if g0 > cur + 0.3: fence_run(a + dir * cur, a + dir * g0, panel, post, pw, y)
 		if gate != "":
 			var m := a + dir * float(gp[0])
+			fences.append([m - dir * 0.6, m + dir * 0.6])
 			var la := L2(a.x, a.y); var lb := L2(b.x, b.y)
 			props.add(gate, "worn", L(m.x, m.y, gy(m.x, m.y) if y < -100.0 else y), rad_to_deg(atan2(lb.x - la.x, lb.y - la.y)) + 90.0)
 		cur = g1
@@ -278,10 +309,58 @@ func bq(b: Dictionary, lx: float, lz: float) -> Vector2:
 
 func byaw(b: Dictionary) -> float: return rad_to_deg((b.node as Node3D).rotation.y)
 
-## a prop on a building's wall: lx along the front, lz toward the front (d/2 = front face), height h over its floor
+## the buildings' measured openings (room_contracts.json + the residential models in room_contracts_res.json)
+static var _rc := {}
+static func contract(folder: String) -> Dictionary:
+	if _rc.is_empty():
+		for f: String in ["room_contracts.json", "room_contracts_res.json"]:
+			var pth := "res://map_dc/coronado/city_kit/interiors/" + f
+			if FileAccess.file_exists(pth): _rc.merge(JSON.parse_string(FileAccess.get_file_as_string(pth)).models)
+	return _rc.get(folder, {})
+
+## the wall a building-local point lies on ("front" / "back" / "right" / "left", "" if none) and its along coordinate
+static func facade_of(b: Dictionary, lx: float, lz: float) -> Array:
+	var w: float = b.w; var d: float = b.d
+	if absf(lz) >= d * 0.5 - 0.15: return ["front" if lz > 0.0 else "back", lx]
+	if absf(lx) >= w * 0.5 - 0.15: return ["right" if lx > 0.0 else "left", lz]
+	return ["", 0.0]
+
+## does a wall item [along a0..a1, height y0..y1] on that facade cover a window or a door?
+static func covers(b: Dictionary, fac: String, a0: float, a1: float, y0: float, y1: float) -> bool:
+	for o: Dictionary in contract(String(b.folder)).get("openings", []):
+		if String(o.facade) != fac: continue
+		var oa0 := float(o.along) - float(o.w) * 0.5 - 0.05; var oa1 := float(o.along) + float(o.w) * 0.5 + 0.05
+		if a0 < oa1 and a1 > oa0 and y0 < float(o.y1) + 0.05 and y1 > float(o.y0) - 0.05: return true
+	return false
+
+## a prop on a building's wall: lx along the front, lz toward the front (d/2 = front face), height h over its floor.
+## (19 Nov, Yasin: "prop in the glass") never over a window or a door: slid along the wall until clear, else left out
 func on_wall(b: Dictionary, base: String, cond: String, lx: float, lz: float, h: float, yaw: float) -> void:
+	var fa: Array = facade_of(b, lx, lz)
+	if String(fa[0]) != "" and not base.begins_with("prop_solar") and not base.begins_with("prop_vent"):
+		var e := K.manifest(base)
+		var hw2 := float(e.get("footprint_w", 0.4)) * 0.5; var ht := float(e.get("height", 0.4))
+		var span: float = (float(b.w) if String(fa[0]) in ["front", "back"] else float(b.d)) * 0.5 - hw2 - 0.1
+		var a := float(fa[1]); var found := false
+		for da: float in [0.0, 0.3, -0.3, 0.6, -0.6, 0.9, -0.9, 1.2, -1.2, 1.6, -1.6, 2.0, -2.0, 2.5, -2.5]:
+			var aa := a + da
+			if absf(aa) > span: continue
+			if not covers(b, String(fa[0]), aa - hw2, aa + hw2, h, h + ht):
+				if String(fa[0]) in ["front", "back"]: lx = aa
+				else: lz = aa
+				found = true; break
+		if not found: return
 	var p := bq(b, lx, lz)
 	props.add(base, cond, L(p.x, p.y, float(b.y) + h), yaw, false)
+
+## a window air conditioner sits IN a window: the lower sash of a real ground-floor window on that side wall
+func ac_in_window(b: Dictionary, side: float, yaw: float) -> void:
+	var fac := "right" if side > 0.0 else "left"
+	for o: Dictionary in contract(String(b.folder)).get("openings", []):
+		if String(o.facade) == fac and String(o.region).begins_with("O_win") and float(o.y0) < 2.5:
+			var p := bq(b, side * (float(b.w) * 0.5 + 0.12), float(o.along))
+			props.add("prop_ac_window", "worn", L(p.x, p.y, float(b.y) + float(o.y0) + 0.05), yaw, false)
+			return
 
 ## ------------------------------------------------------------------------------------------------ lots
 ## A row of lots in one sub-block. axis "v": lots side by side along u from s0 to s1, depth along v from f (front, the
@@ -461,7 +540,7 @@ func house_lot(lot: Dictionary) -> void:
 		if String(e[0]).begins_with("door"): dl_x = float(e[1]); break
 	on_wall(b, porch, "worn", dl_x - 0.85, hd * 0.5 + 0.05, 2.1, yaw)
 	on_wall(b, "prop_house_numbers_tile" if rr.randf() < 0.5 else "prop_house_numbers_wood", "worn", dl_x + 0.85, hd * 0.5 + 0.03, 1.75, yaw)
-	if not FENCE.has(front): on_wall(b, "prop_mailbox_wall_black" if rr.randf() < 0.5 else "prop_mailbox_wall_brass", "worn", dl_x + 1.25, hd * 0.5 + 0.05, 1.2, yaw)
+	if not FENCE.has(front): on_wall(b, "prop_mailbox_wall_black" if rr.randf() < 0.5 else "prop_mailbox_wall_brass", "worn", dl_x + 1.5, hd * 0.5 + 0.05, 1.2, yaw)     # clear of the house numbers
 	var pot: Vector2 = bq(b, dl_x - 1.3, hd * 0.5 + 0.4)
 	if free_at(pot.x, pot.y, 0.3): add("plant_potted_succulent", "normal", pot.x, pot.y, 0.0, 0.0, true, 1.0, 0.3)
 	var pot2: Vector2 = bq(b, dl_x + 1.35, hd * 0.5 + 0.45)
@@ -486,9 +565,9 @@ func house_lot(lot: Dictionary) -> void:
 		if free_at(acb.x, acb.y, 0.55): add("prop_ac_condenser_compact", "worn", acb.x, acb.y, yaw + 180.0, 0.0, true, 1.0, 0.55)
 	on_wall(b, "prop_hose_reel_wall", "worn", lx, hd * 0.25, 0.0, wyaw)
 	if rr.randf() < 0.3: on_wall(b, "prop_satellite_dish_round" if rr.randf() < 0.5 else "prop_satellite_dish", "worn", -lx, -hd * 0.3, 2.7, yaw + (90.0 if -lx > 0 else -90.0))
-	if rr.randf() < 0.35: on_wall(b, "prop_ac_window", "worn", -lx, hd * 0.15, 1.3, yaw + (90.0 if -lx > 0 else -90.0))
+	if rr.randf() < 0.35: ac_in_window(b, signf(-lx), yaw + (90.0 if -lx > 0 else -90.0))
 	var wall_plants: bool = design.get("wall_plants", false)
-	if wall_plants:
+	if wall_plants and hw > 9.8:          # the 3.7 m vine clears the corner downspouts only on a wide front
 		on_wall(b, "plant_bougainvillea_wall", "normal", hw * 0.25, hd * 0.5 + 0.3, 0.0, yaw)
 		for kb: float in [-1.5, 0.0, 1.5]:
 			var bwp := bq(b, hw * 0.25 + kb, hd * 0.5 + 0.4); occ.append([bwp.x, bwp.y, 0.55])
@@ -679,12 +758,12 @@ func corner_shop(lot: Dictionary, folder: String, label: String, kind: String) -
 	var w: float = st.footprint_wd[0]; var d: float = st.footprint_wd[1]
 	var s0 := float(lot.s0); var s1 := float(lot.s1)
 	var su := s0 + 1.4 + w * 0.5
-	var tv := PROP + FORE + d * 0.5
+	var tv := PV + FORE + d * 0.5
 	var b := building(folder, su, tv, H, yaw_of(0.0, -1.0), false, label, 0.7)
 	lot.bld = b
 	used[folder] = int(used.get(folder, 0)) + 1
 	shops.append([label, folder, kind])
-	prect(s0, PROP, s1, PROP + FORE, "concrete")
+	prect(s0, PV, s1, PV + FORE, "concrete")
 	# the forecourt: what this shop puts out (never in front of the door), a bench facing the street, a bike rack along
 	# the front, a newspaper box; a sandwich-board style menu is the kit's menu board for cafes
 	var door_s := su
@@ -703,19 +782,19 @@ func corner_shop(lot: Dictionary, folder: String, label: String, kind: String) -
 		var t: Array = things[k]
 		var yy := yaw_of(0.0, -1.0) + (0.0 if String(t[0]) != "prop_bike_rack" else 0.0)
 		if String(t[0]).begins_with("prop_vending") or String(t[0]) == "prop_ice_chest": yy = yaw_of(0.0, -1.0)
-		if try_add(String(t[0]), "worn", sp, PROP + 1.2, yy, 0.5): k += 1
-	dec.add(14, L2(door_s, PROP + 1.4), 0.0, 2.0, 2.4, func(x: float, z: float) -> float: return gyl(x, z), Color(1, 1, 1, 0.55))
+		if try_add(String(t[0]), "worn", sp, PV + 1.2, yy, 0.5): k += 1
+	dec.add(14, L2(door_s, PV + 1.4), 0.0, 2.0, 2.4, func(x: float, z: float) -> float: return gyl(x, z), Color(1, 1, 1, 0.55))
 	# the corner: the neighbourhood's mailbox and a paper box where people pass; pots either side of the door; a lamp
-	try_add("prop_usps_collection_box", "worn", s1 - 0.8, PROP + 0.6, yaw_of(0.0, -1.0), 0.5)
+	try_add("prop_usps_collection_box", "worn", s1 - 0.8, PV + 0.6, yaw_of(0.0, -1.0), 0.5)
 	for sd2: float in [-1.0, 1.0]:
-		try_add("plant_potted_leafy" if kind == "cafe" else "plant_potted_succulent", "normal", door_s + sd2 * 1.1, PROP + FORE - 0.35, 0.0, 0.3)
+		try_add("plant_potted_leafy" if kind == "cafe" else "plant_potted_succulent", "normal", door_s + sd2 * 1.1, PV + FORE - 0.35, 0.0, 0.3)
 	on_wall(b, "prop_porch_light_coach_bronze", "worn", -w * 0.35, d * 0.5 + 0.05, 2.4, yaw_of(0.0, -1.0))
 	on_wall(b, "prop_porch_light_coach_bronze", "worn", w * 0.35, d * 0.5 + 0.05, 2.4, yaw_of(0.0, -1.0))
 	if kind == "sport":       # boards and kayaks out front in the morning (the shop rents them)
-		try_add("prop_kayak_rack", "worn", s0 + 2.0, PROP + 1.0, yaw_of(1.0, 0.0), 0.9)
-		try_add("prop_beach_umbrella_closed", "worn", s0 + 3.2, PROP + 0.8, 0.0, 0.3)
+		try_add("prop_kayak_rack", "worn", s0 + 2.0, PV + 1.0, yaw_of(1.0, 0.0), 0.9)
+		try_add("prop_beach_umbrella_closed", "worn", s0 + 3.2, PV + 0.8, 0.0, 0.3)
 	if kind == "cafe":        # two small tables outside on the forecourt, chairs pushed in
-		try_add("prop_patio_set_4", "worn", s1 - 2.6, PROP + 1.25, 0.0, 1.0)
+		try_add("prop_patio_set_4", "worn", s1 - 2.6, PV + 1.25, 0.0, 1.0)
 	# back of house: meters, AC, the bins in an enclosure off the alley, two staff stalls
 	on_wall(b, "prop_meter_electric", "worn", -w * 0.3, -d * 0.5 - 0.02, 1.05, yaw_of(0.0, 1.0))
 	on_wall(b, "prop_meter_gas", "rusty", -w * 0.3 + 0.9, -d * 0.5 - 0.02, 0.2, yaw_of(0.0, 1.0))
@@ -744,20 +823,25 @@ func corner_shop(lot: Dictionary, folder: String, label: String, kind: String) -
 func alleys() -> void:
 	var c := (AL0 + AL1) * 0.5
 	# gutter first (the first matching paint wins)
-	prect(PROP, c - 0.4, LU, c + 0.4, "concrete")
-	prect(PROP, AL0, LU, AL1, "asphalt")
-	prect(c - 0.4, PROP, c + 0.4, AL0, "concrete"); prect(c - 0.4, AL1, c + 0.4, LV, "concrete")
-	prect(AL0, PROP, AL1, AL0, "asphalt"); prect(AL0, AL1, AL1, LV, "asphalt")
-	surfs.append([PROP, AL0, LU, AL1, "field", 0.0])
-	surfs.append([AL0, PROP, AL1, AL0, "field", 0.0])
+	prect(PU, c - 0.4, LU, c + 0.4, "concrete")
+	prect(PU, AL0, LU, AL1, "asphalt")
+	prect(c - 0.4, PV, c + 0.4, AL0, "concrete"); prect(c - 0.4, AL1, c + 0.4, LV, "concrete")
+	prect(AL0, PV, AL1, AL0, "asphalt"); prect(AL0, AL1, AL1, LV, "asphalt")
+	surfs.append([PU, AL0, LU, AL1, "field", 0.0])
+	surfs.append([AL0, PV, AL1, AL0, "field", 0.0])
+	# a street with no alley mouth (the arterials, Amber): the alley ends at its property line behind bollards
+	if not APU:
+		for bv: float in [AL0 + 0.8, c, AL1 - 0.8]: props.add("prop_bollard_steel", "worn", L(PU + 0.5, bv, fh(PU + 0.5, bv)), 0.0)
+	if not APV:
+		for bu: float in [AL0 + 0.8, c, AL1 - 0.8]: props.add("prop_bollard_steel", "worn", L(bu, PV + 0.5, fh(bu, PV + 0.5)), 0.0)
 	surfs.append([AL0, AL1, AL1, LV, "field", 0.0])
 	var Hc := func(x: float, z: float) -> float: return gyl(x, z)
 	for along_u: bool in [true, false]:
-		var a := L2(PROP, AL0) if along_u else L2(AL0, PROP)
+		var a := L2(PU, AL0) if along_u else L2(AL0, PV)
 		var b := L2(LU, AL1) if along_u else L2(AL1, LV)
 		var LL := LU if along_u else LV
 		W.cracks(dec, rr, minf(a.x, b.x), minf(a.y, b.y), maxf(a.x, b.x), maxf(a.y, b.y), 18, Hc, 0.4)
-		var k := PROP + 3.0
+		var k := (PU if along_u else PV) + 3.0
 		while k < LL - 3.0:
 			var o := Vector2(k, c + rr.randf_range(-1.6, 1.6)) if along_u else Vector2(c + rr.randf_range(-1.6, 1.6), k)
 			W.oil(dec, rr, L2(o.x, o.y), 90.0 if along_u else 0.0, Hc, rr.randf_range(0.45, 0.8))
@@ -766,7 +850,7 @@ func alleys() -> void:
 				dec.add(14, L2(gp.x, gp.y), 90.0 if along_u else 0.0, 0.7, 3.0, Hc, Color(1, 1, 1, rr.randf_range(0.4, 0.65)))
 			k += rr.randf_range(6.0, 10.0)
 		for t in 2:
-			var tp := rr.randf_range(PROP + 6.0, LL - 6.0)
+			var tp := rr.randf_range((PU if along_u else PV) + 6.0, LL - 6.0)
 			var pv2 := Vector2(tp, c) if along_u else Vector2(c, tp)
 			dec.add(2 + t, L2(pv2.x, pv2.y), 90.0 if along_u else 0.0, 2.4, 6.0, Hc, Color(1, 1, 1, 0.9))
 		var ps := rr.randf_range(30.0, 90.0)
@@ -784,12 +868,13 @@ func alley_poles() -> void:
 			var placed := false
 			for dk: float in [0.0, 2.0, -2.0, 4.0, -4.0, 6.0, -6.0, 8.0, -8.0]:
 				var ss2 := s + dk
-				if absf(ss2 - c) < 5.0 or ss2 < PROP + 4.0 or ss2 > LL2 - 2.0: continue
+				if absf(ss2 - c) < 5.0 or ss2 < (PU if along_u else PV) + 4.0 or ss2 > LL2 - 2.0: continue
 				var pu2 := Vector2(ss2, AL0 - 0.45) if along_u else Vector2(AL0 - 0.45, ss2)      # in the rear easement, off the asphalt
 				var ok := true
 				for dp: Vector2 in doorpts:
 					if pu2.distance_to(dp) < 2.2: ok = false; break
 				if ok and not free_at(pu2.x, pu2.y, 0.3): ok = false
+				if ok and near_fence(pu2.x, pu2.y, 0.45): ok = false
 				if ok:
 					var lp2 := L2(pu2.x, pu2.y)
 					for pr: Array in paints:     # never on a paved lot (the corner shops' staff parking)
@@ -899,8 +984,12 @@ func park_d(kind: String) -> void:
 func clear_fences() -> void:
 	var walls: Array = []
 	for k: String in props.items:
-		if k.begins_with("prop_downspout") or k.begins_with("plant_bougainvillea_wall"):
-			for t: Transform3D in props.items[k]: walls.append(Q2(t.origin))
+		if k.begins_with("prop_downspout"):
+			for t: Transform3D in props.items[k]: walls.append([Q2(t.origin), Q2(t.origin)])
+		elif k.begins_with("plant_bougainvillea_wall"):
+			for t: Transform3D in props.items[k]:
+				var hx := t.basis.x.normalized() * 1.85
+				walls.append([Q2(t.origin - hx), Q2(t.origin + hx)])
 	var kept_pts: Array = []
 	for k: String in props.items.keys():
 		var base := k.get_slice("|", 0)
@@ -912,10 +1001,17 @@ func clear_fences() -> void:
 		var keep: Array = []
 		for t: Transform3D in props.items[k]:
 			var q := Q2(t.origin)
-			var ok := not near_fence(q.x, q.y, r + 0.05)
+			var ok := not near_fence(q.x, q.y, r + 0.25)      # a masonry wall is 0.38 m thick
 			if ok:
-				for wq: Vector2 in walls:
-					if q.distance_to(wq) < r + 0.35: ok = false; break
+				for wq: Array in walls:
+					var wa: Vector2 = wq[0]; var wb: Vector2 = wq[1]
+					var tt := clampf((q - wa).dot(wb - wa) / maxf((wb - wa).length_squared(), 1e-6), 0.0, 1.0)
+					if q.distance_to(wa.lerp(wb, tt)) < r + 0.35: ok = false; break
+			# yard furniture never stands on a paved path or pad (the checker's "path" rule)
+			if ok and base in ["prop_clothesline", "prop_patio_set_4", "prop_garden_arbor", "prop_adirondack_wood", "prop_adirondack_white", "prop_bbq_kettle", "prop_bbq_gas_cart", "prop_swing_set", "prop_kayak_rack"]:
+				var lq := L2(q.x, q.y)
+				for pr: Array in paints:
+					if (String(pr[4]) == "concrete" or String(pr[4]) == "paving") and lq.x > float(pr[0]) - r * 0.5 and lq.x < float(pr[2]) + r * 0.5 and lq.y > float(pr[1]) - r * 0.5 and lq.y < float(pr[3]) + r * 0.5: ok = false; break
 			if ok: keep.append(t)
 		props.items[k] = keep
 
@@ -979,7 +1075,7 @@ func build(piece: String, site: Dictionary, des: Dictionary) -> void:
 	for sub: String in ["A", "B", "C"]:
 		var n: int = int(des.get(sub, 3))
 		var axis := "u" if sub == "C" else "v"
-		var s0 := PROP if sub != "B" else AL1
+		var s0 := PU if sub != "B" else AL1
 		var s1 := AL0 if sub == "A" else LU
 		if sub == "C": s0 = AL1; s1 = LV
 		if sub != "A": n = maxi(1, roundi(float(n) * (s1 - s0) / 40.0))      # the design's count is for a 40 m frontage
@@ -989,7 +1085,7 @@ func build(piece: String, site: Dictionary, des: Dictionary) -> void:
 			specs.append(mk.call(lw, i, lw - 2.0))
 		if sub == "A" and not shop.is_empty():
 			specs[0] = {"w": lw, "house": "", "garage": "", "front": "", "back": "", "gs": 0.0, "i": 0, "shop": true}
-		var lots := row(axis, s0, PROP, AL0, specs)
+		var lots := row(axis, s0, PV if axis == "v" else PU, AL0, specs)
 		var prevH := -1000.0
 		for i in lots.size():
 			var lot: Dictionary = lots[i]
