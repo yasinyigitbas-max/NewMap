@@ -26,11 +26,6 @@
    "by": "Yasin",
    "date": "2026-11-17"
   },
-  "j_apt": {
-   "sha256": "44f07bd5f42972cf9d1c3972b58905b7760b6ffcef4a1ed0312c2f6b2d8f0a1a",
-   "by": "Yasin",
-   "date": "2026-11-17"
-  },
   "j_ind": {
    "sha256": "afbce7c77f4130de0fa85bbe1c2fae0f2b4f88fa2f0293ead76e52ce1c6dc3a7",
    "by": "Yasin",
@@ -2778,6 +2773,11 @@
   },
   "s_amber_s": {
    "sha256": "df32859ee208f3e077444d02f7cf0f97914e7ec4de7d41da3471d58f89693028",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "j_apt": {
+   "sha256": "670737d98b35a2f03e4ee32d41ab3882727dc644bc7e52eb8b792fba395fcd46",
    "by": "Yasin",
    "date": "2026-11-19"
   }
