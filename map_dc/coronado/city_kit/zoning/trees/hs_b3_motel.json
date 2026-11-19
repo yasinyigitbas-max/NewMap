@@ -1,0 +1,13 @@
+{
+ "area": "hs_b3_motel", "piece": "n_hs_b3_motel", "zone": "high street band, motel by Ocean",
+ "rule": "docs/TREE_PLAN.md: high street / ring boulevard - palms toward Ocean; strip rule for the car park: one tree per car-park island end",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The motel's ten builder trees go (palms round the lounge lawn, a queen palm and a jacaranda pushed into the hedges, corals and a torrey pine along the car park); six come back on their own spots: the four palms round the guests' lounge (umbrellas, adirondacks) and two along the car park's edge.",
+ "trees": [
+  {"base": "palm_queen_b", "cond": "normal", "at": [-116.0, 2.167, 304.6], "yaw": 0.0, "scale": 1.0, "why": "the lounge lawn by the beach umbrella and the white adirondacks: a queen palm over the loungers"},
+  {"base": "palm_mexican_fan_c", "cond": "normal", "at": [-98.0, 2.175, 304.6], "yaw": 90.0, "scale": 1.0, "why": "the same lawn's second umbrella, 18 m on: a fan palm"},
+  {"base": "palm_mexican_fan_a", "cond": "normal", "at": [-126.0, 2.15, 313.0], "yaw": 180.0, "scale": 1.0, "why": "the lawn's Ocean side by the box hedge: a fan palm toward the boulevard"},
+  {"base": "palm_mexican_fan_b", "cond": "normal", "at": [-90.0, 2.15, 313.5], "yaw": 270.0, "scale": 1.0, "why": "the lawn's Ocean side 36 m east: the matching fan palm"},
+  {"base": "tree_coral_b", "cond": "normal", "at": [-52.8, 2.891, 271.2], "yaw": 45.0, "scale": 0.85, "why": "the car park's edge by the bougainvillea and the wheel stops: the island-end tree"},
+  {"base": "tree_coral_b", "cond": "normal", "at": [-54.0, 2.243, 300.0], "yaw": 135.0, "scale": 0.85, "why": "the car park's north end by the bike rack: the other end's tree"}
+ ]
+}
