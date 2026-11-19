@@ -5,6 +5,25 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~20:30 (PC session): THE FIRST BLOCK IS INSTALLED BY THE SUPERCHECKER: g_v1_j4ne (gritty, J Ave x 4th) AND ITS
+  TWO ROOMS (Yasin, asked "Put the proven fixes into the first block (g_v1_j4ne) now?": "Yes, install it").
+  WHAT CHANGED IN THE MAP, AND NOTHING ELSE: `pieces/g_v1_j4ne.scn` (96 single changes: 5 builder trees out, 54 wear
+  marks off their surface, 12 oil marks with no car place, 10 roof items down onto their roof, 15 collision boxes for
+  columns and posts); the new piece `pieces/t_grt_j4ne.scn` (ONE hand-placed tree, from `zoning/trees/grt_j4ne.json`)
+  with one new row in `city_grid_layout.json` (554 rows); the rooms `g_grt_v1_j4ne_trade_corner_0` (1 poster drawn
+  back out of the wall to the next shop) and `_1` (2 posters); `locked.json` (the block and the two rooms opened and
+  locked again by the install, on his word). Every change is a line in `review/superchecker/<name>.fixes.json` with
+  its proof beside it (`.proof.txt`: PROOF RESULT PASS for all three) and `log.jsonl`. The old files are kept in
+  OUT/super/backup/ (and in git).
+  CHECKED AFTER: lock test RESULT PASS (496 pieces, 103 files); the installed block checks exactly as its proven copy
+  did (0 findings left with one right answer); the validator on this area (block + 10 pieces round it): 0 problems
+  before, 0 after; the life check: the same 37 lines naming this block before and after (they are the kinds that need
+  a place chosen: 19 wall items on glass, 10 fence ends, 7 poles on asphalt, 1 on a path); the tree audit: 0 in hard
+  ground; the old indoor checker on the two rooms: 0 problems; two pictures of the installed block opened.
+  STILL OPEN ON THIS BLOCK: 66 findings that need a place chosen by hand, one at a time; 35 reported only (4 back
+  yards open, 10 fence ends, 7 poles with no wire, the old station and the car wash with a shop door and no room,
+  the wall between the two shops with no thickness, shelves across the back roll-up door of Rim & Tire).
+  NOT DONE: the runtime bake and the phone with this block; the streets round it still carry their builder trees.
 - 19 Nov ~19:30 (PC session): THE SUPERCHECKER'S LIST IS FULL + COLLISIONS (Yasin: "why arent the check list full yet?
   write them in"; "checker should add collisions to everything that sit on the ground, including columns of
   buildings, some of them lack it. speed it up"). STILL NOTHING OF THE MAP CHANGED: copies only.

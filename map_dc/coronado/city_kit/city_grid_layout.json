@@ -5903,6 +5903,16 @@
    ],
    "yaw": 0.0,
    "from": "grid frame"
+  },
+  {
+   "piece": "t_grt_j4ne",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
   }
  ],
  "coverage": {

@@ -16,6 +16,7 @@ the faults"; "remove all of the trees in the area and fill the wells with the ma
   python -I tools/city/super/sc.py layout             faults of the city layout file itself (rows without a file, doubles ...)
   python -I tools/city/super/sc.py look <piece> "--cams=name:x,y,z:tx,ty,tz;..."
                                                       plain views of the piece AS IT IS (only its area loaded)
+  python -I tools/city/super/sc.py install-room <room> --by=Yasin    the same for one room's proven copy
   python -I tools/city/super/sc.py install <piece> --by=Yasin
                                                       put the proven copy in the piece's place (the old file is kept),
                                                       open and close its lock, write the log. Only on Yasin's word.
@@ -265,6 +266,26 @@ def add_layout_row(piece, path=None):
     return True
 
 
+def cmd_install_room(room, by):
+    if by != 'Yasin': sys.exit('install-room needs --by=Yasin: his word, given in the chat')
+    stamp_p = os.path.join(WORK, room + '.stamp.json')
+    if not os.path.exists(stamp_p): sys.exit('no proven copy of %s: run fix-room first' % room)
+    st = json.load(open(stamp_p)); src = os.path.join(L.ROOMS, room + '.scn'); new = os.path.join(WORK, room + '.scn')
+    if st['proof'] != 'PASS' or L.sha_file(src) != st['old_sha256'] or L.sha_file(new) != st['new_sha256']:
+        sys.exit('the room or the copy changed since the proof: run fix-room again')
+    os.makedirs(BACK, exist_ok=True); os.makedirs(REVIEW, exist_ok=True)
+    keep = os.path.join(BACK, '%s.%s.scn' % (room, st['old_sha256'][:10])); shutil.copy2(src, keep)
+    rel = L.fwd(os.path.relpath(src, L.REPO)); lock = os.path.join(L.REPO, 'tools/city/pilot/lock.py')
+    locked = rel in json.load(open(os.path.join(L.CK, 'locked.json'), encoding='utf-8')).get('files', {})
+    if locked: subprocess.run([sys.executable, '-I', lock, 'unlockfile', rel, '--by=Yasin'], cwd=L.REPO, check=True)
+    shutil.copy2(new, src)
+    if locked: subprocess.run([sys.executable, '-I', lock, 'lockfile', rel, '--by=Yasin'], cwd=L.REPO, check=True)
+    shutil.copy2(os.path.join(WORK, room + '.applied.json'), os.path.join(REVIEW, room + '.fixes.json'))
+    shutil.copy2(os.path.join(WORK, room + '.proof.txt'), os.path.join(REVIEW, room + '.proof.txt'))
+    with open(os.path.join(REVIEW, 'log.jsonl'), 'a', encoding='utf-8', newline='\n') as f: f.write(json.dumps(st) + '\n')
+    print('INSTALLED ROOM %s: %d changes; the old file is kept at %s; relocked: %s' % (room, st['changes'], os.path.relpath(keep, L.REPO), locked))
+
+
 def cmd_install(piece, by):
     stamp_p = os.path.join(WORK, piece + '.stamp.json')
     if by != 'Yasin': sys.exit('install needs --by=Yasin: a locked piece changes only with his word, given in the chat')
@@ -310,4 +331,5 @@ if __name__ == '__main__':
     elif a[0] == 'look': cmd_look(a[1], opt.get('cams', ''))
     elif a[0] == 'shots': cmd_shots(a[1], opt.get('cams', ''), opt.get('top'))
     elif a[0] == 'install': cmd_install(a[1], opt.get('by', ''))
+    elif a[0] == 'install-room': cmd_install_room(a[1], opt.get('by', ''))
     else: sys.exit(__doc__)

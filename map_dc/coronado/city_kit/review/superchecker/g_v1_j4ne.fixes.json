@@ -1,0 +1,1519 @@
+{
+ "fixes": [
+  {
+   "at": [
+    15.2294635772705,
+    6.60214376449585,
+    -25.4755363464355
+   ],
+   "base": "prop_vent_box",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "move",
+   "reason": "prop_vent_box hangs 0.91 m over what is under it",
+   "to": [
+    15.2294635772705,
+    5.69214303791523,
+    -25.4755363464355
+   ]
+  },
+  {
+   "at": [
+    75.1799697875977,
+    8.13890075683594,
+    -70.5272521972656
+   ],
+   "base": "prop_vent_box",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 7.0,
+   "op": "move",
+   "reason": "prop_vent_box hangs 1.12 m over what is under it",
+   "to": [
+    75.1799697875977,
+    7.01880615949631,
+    -70.5272521972656
+   ]
+  },
+  {
+   "at": [
+    14.6428956985474,
+    6.60214376449585,
+    -21.9569358825684
+   ],
+   "base": "prop_ac_condenser_compact",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 8.0,
+   "op": "move",
+   "reason": "prop_ac_condenser_compact hangs 0.91 m over what is under it",
+   "to": [
+    14.6428956985474,
+    5.69214303791523,
+    -21.9569358825684
+   ]
+  },
+  {
+   "at": [
+    18.9319915771484,
+    6.60214376449585,
+    -21.8353614807129
+   ],
+   "base": "prop_vent_turbine",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 9.0,
+   "op": "move",
+   "reason": "prop_vent_turbine hangs 0.91 m over what is under it",
+   "to": [
+    18.9319915771484,
+    5.69214303791523,
+    -21.8353614807129
+   ]
+  },
+  {
+   "at": [
+    18.5092296600342,
+    6.60214376449585,
+    -23.9795150756836
+   ],
+   "base": "prop_vent_turbine",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 10.0,
+   "op": "move",
+   "reason": "prop_vent_turbine hangs 0.91 m over what is under it",
+   "to": [
+    18.5092296600342,
+    5.69214303791523,
+    -23.9795150756836
+   ]
+  },
+  {
+   "at": [
+    26.9657001495361,
+    5.38625049591064,
+    -23.1156806945801
+   ],
+   "base": "prop_vent_box",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 11.0,
+   "op": "move",
+   "reason": "prop_vent_box hangs 1.02 m over what is under it",
+   "to": [
+    26.9657001495361,
+    4.36624792218208,
+    -23.1156806945801
+   ]
+  },
+  {
+   "at": [
+    31.3374729156494,
+    5.38625049591064,
+    -19.9475421905518
+   ],
+   "base": "prop_vent_plumbing",
+   "cond": "dirty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 12.0,
+   "op": "move",
+   "reason": "prop_vent_plumbing hangs 1.02 m over what is under it",
+   "to": [
+    31.3374729156494,
+    4.36624792218208,
+    -19.9475421905518
+   ]
+  },
+  {
+   "at": [
+    82.1454010009766,
+    8.13890075683594,
+    -70.4696578979492
+   ],
+   "base": "prop_vent_plumbing",
+   "cond": "dirty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 13.0,
+   "op": "move",
+   "reason": "prop_vent_plumbing hangs 1.12 m over what is under it",
+   "to": [
+    82.1454010009766,
+    7.01880615949631,
+    -70.4696578979492
+   ]
+  },
+  {
+   "at": [
+    73.6635131835938,
+    8.13890075683594,
+    -78.1990203857422
+   ],
+   "base": "prop_ac_condenser_compact",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 15.0,
+   "op": "move",
+   "reason": "prop_ac_condenser_compact hangs 1.12 m over what is under it",
+   "to": [
+    73.6635131835938,
+    7.01880615949631,
+    -78.1990203857422
+   ]
+  },
+  {
+   "at": [
+    25.9000015258789,
+    8.30646133422852,
+    -86.7689666748047
+   ],
+   "base": "prop_tv_antenna",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 16.0,
+   "op": "move",
+   "reason": "prop_tv_antenna hangs 0.69 m over what is under it",
+   "to": [
+    25.9000015258789,
+    7.61562062758622,
+    -86.7689666748047
+   ]
+  },
+  {
+   "at": [
+    30.2000007629395,
+    0.148560985922813,
+    -63.5
+   ],
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "tree_ficus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    30.2000007629395,
+    0.133398532867432,
+    -79.5
+   ],
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "tree_ficus_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    32.2000007629395,
+    0.140949338674545,
+    -70.5999984741211
+   ],
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    32.2000007629395,
+    0.131602451205254,
+    -87.0999984741211
+   ],
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "tree_ficus_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    39.7000007629395,
+    0.151418685913086,
+    -70.4000015258789
+   ],
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "kind": "tree_out",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list"
+  },
+  {
+   "at": [
+    86.2492828369141,
+    0.481807137529055,
+    -58.3884544372559
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 96.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    80.227165222168,
+    0.436968515316645,
+    -58.7478141784668
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 97.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    31.9038960138957,
+    0.169021492203077,
+    -59.9347953796387
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 98.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    71.2040557861328,
+    0.420355806748072,
+    -58.6638145446777
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 99.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    96.3329391479492,
+    0.567326227823893,
+    -58.2687454223633
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 100.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    62.7095705668131,
+    0.335361152887344,
+    -58.7628631591797
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 101.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    17.9472198486328,
+    0.161142888168494,
+    -58.5017242431641
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 102.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    67.7144470214844,
+    0.399797747532527,
+    -58.3042030334473
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 103.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    38.5773010253906,
+    0.194848326345285,
+    -57.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 104.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    50.9647750854492,
+    0.254028682907422,
+    -57.0
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 105.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    59.7084274291992,
+    0.439794853329659,
+    -34.4153747558594
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 106.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    59.515438079834,
+    0.393790349364281,
+    -43.5789260864258
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 107.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    55.2744293212891,
+    0.399135872721672,
+    -14.3759155273438
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 108.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    57.0,
+    0.386848092079163,
+    -39.8045654296875
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 109.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    57.0,
+    0.363735864559809,
+    -44.5298919677734
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 110.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    54.2225036621094,
+    0.162873603403568,
+    -79.733772277832
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 111.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    55.636417388916,
+    0.175300379594167,
+    -77.1934204101563
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 112.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    58.7671928405762,
+    0.1508624330163,
+    -94.0881576538086
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 113.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    54.5372009277344,
+    0.151458380122979,
+    -95.5488815307617
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 114.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    59.3760566711426,
+    0.151497878134251,
+    -90.1080551147461
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 115.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    58.4449920654297,
+    0.150544752677282,
+    -92.416015625
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 116.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    55.2067794799805,
+    0.149527415633202,
+    -94.670524597168
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 117.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    57.0,
+    0.186356407900651,
+    -75.1086883544922
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 118.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    57.0,
+    0.172337576746941,
+    -80.4611129760742
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 119.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on concrete",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    47.235725402832,
+    0.315665746728579,
+    -30.5196990966797
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 120.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    12.6470651626587,
+    0.164755237599214,
+    -32.0461463928223
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 121.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    32.0115245183309,
+    0.198358635107676,
+    -30.6467558542887
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 122.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    20.3089580535889,
+    0.168754061063131,
+    -31.3483829498291
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 123.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    94.6177673339844,
+    0.245970209439596,
+    -88.9063262939453
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 124.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    67.9922790527344,
+    0.179519039889177,
+    -90.8988494873047
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 125.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    70.0218734741211,
+    0.316411269207795,
+    -87.4872131347656
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 126.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    85.0439987182617,
+    0.376166686415672,
+    -86.7448577880859
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 127.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    76.4445266723633,
+    0.335941230257352,
+    -87.5075759887695
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 128.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    88.0213623046875,
+    0.296057336032391,
+    -89.1999664306641
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 129.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    72.1570510864258,
+    0.40977003177007,
+    -86.0529098510742
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 130.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    85.8043670654297,
+    0.16334796945254,
+    -96.6356811523438
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 131.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    78.4287719726563,
+    0.163286795218786,
+    -93.4636688232422
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 132.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    71.7347564697266,
+    0.172685489058495,
+    -91.0191345214844
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 133.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    98.1351470947266,
+    0.22234071791172,
+    -88.3855972290039
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 134.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    74.4624633789063,
+    0.157683146496614,
+    -96.0003356933594
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 135.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    98.5938415527344,
+    0.171268882850806,
+    -94.8872451782227
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 136.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    71.6136856079102,
+    0.157175774375598,
+    -96.8668975830078
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 137.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    72.6725921630859,
+    0.37488779425621,
+    -86.641357421875
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 138.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    62.0278511047363,
+    0.153732173144817,
+    -94.1098709106445
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 139.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    69.5323638916016,
+    0.257890909910202,
+    -89.7691650390625
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 140.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    88.6753997802734,
+    0.198840436836084,
+    -90.5857925415039
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 141.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    76.6362228393555,
+    0.160491799314817,
+    -95.0541076660156
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 142.0,
+   "op": "remove_decal",
+   "reason": "crack mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    85.0803298950195,
+    0.165298578639825,
+    -94.7565460205078
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 143.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    79.9586639404297,
+    0.351688032348951,
+    -87.2119140625
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 144.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    70.9432907104492,
+    0.326442524790764,
+    -86.9376525878906
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 145.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    70.1811752319336,
+    0.159096327920755,
+    -98.1678695678711
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 146.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    85.9350433349609,
+    0.161482483148575,
+    -98.4572448730469
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 147.0,
+   "op": "remove_decal",
+   "reason": "sealed patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    72.8288726806641,
+    0.19289547453324,
+    -91.2234573364258
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 148.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    62.1025199890137,
+    0.154290353258451,
+    -90.3593444824219
+   ],
+   "kind": "wear",
+   "mode": "auto",
+   "n": 149.0,
+   "op": "remove_decal",
+   "reason": "pale patch mark lies on gravel",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    22.228422164917,
+    0.161779244740804,
+    -57.1552696228027
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 170.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    53.0006790161133,
+    0.267637506127357,
+    -56.6249618530273
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 171.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    56.6300888061523,
+    0.419157321254412,
+    -16.0654964447021
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 172.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    56.6363639831543,
+    0.42667663594087,
+    -23.128044128418
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 173.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    57.0925598144531,
+    0.18967234591643,
+    -75.6163940429688
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 174.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on concrete with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    83.7402267456055,
+    0.166516609489918,
+    -93.2097473144531
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 175.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    81.2083358764648,
+    0.159802528719107,
+    -96.9561386108398
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 176.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    61.9650993347168,
+    0.152348391711712,
+    -93.6807556152344
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 177.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    92.1310577392578,
+    0.162822939455509,
+    -97.2231903076172
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 178.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    62.6285781860351,
+    0.15449258685112,
+    -96.3781967163086
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 179.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    64.0927963256836,
+    0.153277439375718,
+    -93.6073226928711
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 180.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    89.6193771362305,
+    0.167215131223202,
+    -94.481086730957
+   ],
+   "kind": "oil_no_car",
+   "mode": "auto",
+   "n": 181.0,
+   "op": "remove_decal",
+   "reason": "an oil mark on gravel with no stall, garage or roll-up door near it",
+   "surface": 0.0,
+   "wear": "wear"
+  },
+  {
+   "at": [
+    12.599977016449,
+    1.6521111279726,
+    -17.1499991416931
+   ],
+   "box": [
+    -3.90002298355103,
+    1.49996709823608,
+    5.65000009536743,
+    0.16,
+    2.99993419647217,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 183.0,
+   "name": "sc_col_0",
+   "node": "Buildings/trade_corner",
+   "op": "add_box",
+   "reason": "trade_corner: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    17.5399634242058,
+    1.66709871590137,
+    -15.14000248909
+   ],
+   "box": [
+    1.03996342420578,
+    1.51495468616486,
+    7.65999674797058,
+    0.200036444664001,
+    3.02990937232971,
+    0.199999370574951
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 184.0,
+   "name": "sc_col_1",
+   "node": "Buildings/trade_corner",
+   "op": "add_box",
+   "reason": "trade_corner: a 0.2 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    15.4599449634552,
+    1.66709871590137,
+    -15.14000248909
+   ],
+   "box": [
+    -1.0400550365448,
+    1.51495468616486,
+    7.65999674797058,
+    0.200036563873291,
+    3.02990937232971,
+    0.199999370574951
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 185.0,
+   "name": "sc_col_2",
+   "node": "Buildings/trade_corner",
+   "op": "add_box",
+   "reason": "trade_corner: a 0.2 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    11.5399634838104,
+    1.66709871590137,
+    -15.14000248909
+   ],
+   "box": [
+    -4.96003651618958,
+    1.51495468616486,
+    7.65999674797058,
+    0.200036563873291,
+    3.02990937232971,
+    0.199999370574951
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 186.0,
+   "name": "sc_col_3",
+   "node": "Buildings/trade_corner",
+   "op": "add_box",
+   "reason": "trade_corner: a 0.2 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    14.3999311923981,
+    1.6521111279726,
+    -17.1499991416931
+   ],
+   "box": [
+    -2.10006880760193,
+    1.49996709823608,
+    5.65000009536743,
+    0.16,
+    2.99993419647217,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 187.0,
+   "name": "sc_col_4",
+   "node": "Buildings/trade_corner",
+   "op": "add_box",
+   "reason": "trade_corner: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    21.4599449634552,
+    1.66709871590137,
+    -15.14000248909
+   ],
+   "box": [
+    4.9599449634552,
+    1.51495468616486,
+    7.65999674797058,
+    0.200036563873291,
+    3.02990937232971,
+    0.199999370574951
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 188.0,
+   "name": "sc_col_5",
+   "node": "Buildings/trade_corner",
+   "op": "add_box",
+   "reason": "trade_corner: a 0.2 x 0.2 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    31.2348718643188,
+    1.66623237729073,
+    -17.025089263916
+   ],
+   "box": [
+    2.73487186431885,
+    1.49998188018799,
+    4.27490997314453,
+    0.489848175048828,
+    2.99996376037598,
+    0.490038909912109
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 189.0,
+   "name": "sc_col_0",
+   "node": "Buildings/old_station",
+   "op": "add_box",
+   "reason": "old_station: a 0.4 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    29.2423448562622,
+    1.66623237729073,
+    -16.9201793670654
+   ],
+   "box": [
+    0.742344856262207,
+    1.49998188018799,
+    4.37981986999512,
+    0.16,
+    2.99996376037598,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 190.0,
+   "name": "sc_col_1",
+   "node": "Buildings/old_station",
+   "op": "add_box",
+   "reason": "old_station: a 0.1 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    83.699791431427,
+    1.91925221681595,
+    -14.1001672744751
+   ],
+   "box": [
+    2.699791431427,
+    1.12496221065521,
+    10.6998319625854,
+    0.539611854553223,
+    2.24992442131042,
+    0.540173568725586
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 191.0,
+   "name": "sc_col_0",
+   "node": "Buildings/hand_car_wash",
+   "op": "add_box",
+   "reason": "hand_car_wash: a 0.5 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    78.6998038291931,
+    1.91925221681595,
+    -14.1001672744751
+   ],
+   "box": [
+    -2.30019617080688,
+    1.12496221065521,
+    10.6998319625854,
+    0.540018119812012,
+    2.24992442131042,
+    0.540173568725586
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 192.0,
+   "name": "sc_col_1",
+   "node": "Buildings/hand_car_wash",
+   "op": "add_box",
+   "reason": "hand_car_wash: a 0.5 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    81.1998996734619,
+    1.91925221681595,
+    -14.1001672744751
+   ],
+   "box": [
+    0.199899673461914,
+    1.12496221065521,
+    10.6998319625854,
+    0.540019073486328,
+    2.24992442131042,
+    0.540173568725586
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 193.0,
+   "name": "sc_col_2",
+   "node": "Buildings/hand_car_wash",
+   "op": "add_box",
+   "reason": "hand_car_wash: a 0.5 x 0.5 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    81.199695110321,
+    2.19424417614937,
+    -13.1251087188721
+   ],
+   "box": [
+    0.199695110321045,
+    1.39995416998863,
+    11.6748905181885,
+    0.200006523132324,
+    1.69994050264359,
+    0.16
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 194.0,
+   "name": "sc_col_3",
+   "node": "Buildings/hand_car_wash",
+   "op": "add_box",
+   "reason": "hand_car_wash: a 0.2 x 0.1 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    12.6301497790205,
+    1.69840478897095,
+    -62.8250143797015
+   ],
+   "box": [
+    1.42498588562012,
+    1.54995767772198,
+    6.06985092163086,
+    0.16,
+    2.09996572136879,
+    0.380151786804199
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 195.0,
+   "name": "sc_col_0",
+   "node": "Buildings/cottage_0",
+   "op": "add_box",
+   "reason": "cottage_0: a 0.1 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    24.6225320495156,
+    2.04631789028645,
+    -76.9250268731523
+   ],
+   "box": [
+    1.8249728679657,
+    1.89994120597839,
+    -5.92253136634827,
+    0.16,
+    1.79997777938843,
+    0.364989795684814
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 196.0,
+   "name": "sc_col_0",
+   "node": "Buildings/cottage_2",
+   "op": "add_box",
+   "reason": "cottage_2: a 0.1 x 0.3 m column or post of the building has no collision"
+  },
+  {
+   "at": [
+    88.4198312759399,
+    1.91889542341232,
+    -60.6153001785278
+   ],
+   "box": [
+    8.41983127593994,
+    1.49999475479126,
+    12.18470287323,
+    0.380160369873047,
+    2.99998950958252,
+    0.570130386352539
+   ],
+   "kind": "column_no_collision",
+   "mode": "auto",
+   "n": 197.0,
+   "name": "sc_col_0",
+   "node": "Buildings/contractor_shed",
+   "op": "add_box",
+   "reason": "contractor_shed: a 0.3 x 0.5 m column or post of the building has no collision"
+  }
+ ],
+ "scene": "g_v1_j4ne"
+}
