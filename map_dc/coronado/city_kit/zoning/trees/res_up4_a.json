@@ -1,0 +1,81 @@
+{
+ "area": "res_up4_a",
+ "piece": "s_res_up4_a",
+ "zone": "Residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - runs of one species per block face, 20-30 m apart, broadleaf on the flat; 3 a place for the in-view limit; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    4.389,
+    -156.286
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, nothing within 3 m: jacaranda, the face's species (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -393.55,
+    2.389,
+    156.286
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass, nothing within 3 m: jacaranda, the face's species (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    5.053,
+    -130.775
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway grass, 25.5 m on: same run (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -393.55,
+    3.053,
+    130.775
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "west parkway grass, 25.5 m on: same run (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    4.422,
+    -154.557
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east parkway grass, 2.7 m off the privacy fence (more than 0.9 m): fan palm, staggered against the west side (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -406.45,
+    2.422,
+    154.557
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "east parkway grass, 2.7 m off the privacy fence (more than 0.9 m): fan palm, staggered against the west side (place 2 of 2 of this piece)"
+  }
+ ]
+}
