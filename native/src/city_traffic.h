@@ -45,6 +45,7 @@
 
 namespace tc {
 class Sim;
+struct RouteScratch;
 }
 
 namespace godot {
@@ -84,7 +85,17 @@ private:
 		std::vector<int32_t> kill_ids, kill_stalls;
 		std::vector<Adopt> adopt;
 		std::vector<float> walkers;   // the crowd's people the drivers must see (DYN_STRIDE floats each): on a road, or waiting to cross
+		int bikes = 8;                // cyclists round the camera
+		// the game's orders to cars of its own (a taxi, a scene's car): done by the step, answered by ticket
+		struct Order { int type, ticket; int32_t car; float ax, az, bx, bz; int side, model; };
+		std::vector<Order> orders;
 	} input;
+	enum { O_SPAWN = 1, O_DRIVE = 2, O_PULL = 3, O_RELEASE = 4 };
+	std::vector<std::pair<int, int>> order_done;   // (under mx) ticket, answer
+	std::vector<std::pair<int, int>> answers;      // (main thread) the answers not yet asked for
+	int next_ticket = 1;
+	int exec_order(const Input::Order &o);         // (the step's thread, or the main thread when there is no thread)
+	tc::RouteScratch *route_sc = nullptr;           // (main thread) the map's route searches
 	struct AdoptDone { int slot; uint32_t serial; int32_t id; };
 	std::vector<AdoptDone> adopt_done;      // (under mx) the step's answers: the row's id, or -1 = it cannot drive on from there
 	uint32_t adopted_serial[6] = { 0, 0, 0, 0, 0, 0 };   // (the step's thread) the knock whose car is a row again: its box no longer counts
@@ -152,6 +163,14 @@ private:
 	std::vector<int32_t> odo_id;
 	static void put_wheels(float *w, const float *car_row, const WheelSet &ws, float steer, float odo);
 	Batch box_moving, box_parked;
+	// THE CYCLISTS: one batch of bicycles (a mesh made here: frame in the rider's colour, black tyres), the riders are the
+	// crowd's far figures in their riding poses (CityCrowd reads bike_draw: x, y, z, yaw, lean, crank turns, id)
+	Batch bike_b;
+	Ref<Mesh> mesh_bike;
+	Ref<ShaderMaterial> mat_bike;
+	std::vector<float> bike_draw;
+	int cyclists = 8;
+	static Ref<Mesh> make_bike_mesh();
 	Batch lamps_b;                 // the lamp glows of every car that shows a light (one draw)
 	Ref<Mesh> mesh_lamps;
 	Ref<ShaderMaterial> mat_lamps;
@@ -256,6 +275,7 @@ public:
 	// width, vx, vz): the traffic's rows, the knocked cars, the player's car. The people the drivers must see
 	// (DYN_STRIDE floats each). The traffic's own clock, which its signals run on.
 	void cars_for_people(std::vector<float> &r_cars) const;
+	const std::vector<float> &bikes_drawn() const { return bike_draw; }   // 7 a cyclist: x, y, z, yaw, lean, crank turns, id
 	void set_walkers(const float *p_dyn, int p_n);
 	double signal_clock() const { return now.clock; }
 	bool has_clock() const { return threaded; }
@@ -263,6 +283,18 @@ public:
 	String report();
 
 	void set_max_cars(int p_n) { max_cars = p_n; }
+	void set_cyclists(int p_n) { cyclists = p_n < 0 ? 0 : p_n; }
+	int get_cyclists() const { return cyclists; }
+	// THE WAY ON THE MAP by road, from the traffic's own route finder (A*): {ok, metres, points (PackedVector3Array, the
+	// way's line), lanes}. p_bike: the ways a bike rides. Main thread, any time; the traffic runs on meanwhile.
+	Dictionary route(const Vector3 &p_from, const Vector3 &p_to, bool p_bike = false) const;
+	// Cars of the game's own (a taxi, a scene's car), routed by the same finder; each call returns a ticket and the step
+	// answers it (order_result: -9 not yet, -1 refused, else the car's id for spawn_driver, 1 for the others)
+	int spawn_driver(const Vector3 &p_from, const Vector3 &p_to, int p_model);
+	int drive_car_to(int p_car, const Vector3 &p_to);
+	int pull_car_over(int p_car, const Vector3 &p_to, int p_side);
+	int let_car_go(int p_car);
+	int order_result(int p_ticket);
 	int get_max_cars() const { return max_cars; }
 	void set_parked(bool p_on) { parked_on = p_on; active_dirty = true; }
 	bool get_parked() const { return parked_on; }

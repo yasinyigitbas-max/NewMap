@@ -27,52 +27,241 @@ static int conn_between(const Sim &S, int from, int to) {
 	return -1;
 }
 
-// Dijkstra on lanes: a junction move costs the lane + connector length, a lane change 25 m (only on lanes long enough
-// to change on). Lanes closed by parked boxes or not public are only used as start or goal.
-bool Sim::find_route(int from, int to, std::vector<int32_t> &out) const {
+// THE ROUTE FINDER: A* on lanes. A lane's cost is its length; a junction move adds its path (a left turn 12 m more, a
+// u-turn 80); a lane change costs 25 m and is allowed only on lanes over 40 m. The guess of what is left is the
+// straight line from a lane's start to the goal lane's start: never more than the road, so the first way found is the
+// shortest. Lanes closed by parked boxes or not public are only used as start or goal. No allocation once the scratch
+// has grown to the map; a search stops after 60,000 lanes.
+bool Sim::find_route_ex(int from, int to, int opts, RouteScratch &sc, std::vector<int32_t> &out, float *r_metres) const {
 	out.clear();
+	if (r_metres) *r_metres = -1.0f;
 	if (from < 0 || to < 0 || from >= n_lanes || to >= n_lanes) return false;
-	if (from == to) { out.push_back(from); return true; }
-	std::vector<float> dist(n_lanes, BIG);
-	std::vector<int32_t> prev(n_lanes, -1);
+	if (from == to) { out.push_back(from); if (r_metres) *r_metres = 0.0f; return true; }
+	if ((int)sc.g.size() != n_lanes) { sc.g.assign(n_lanes, BIG); sc.prev.assign(n_lanes, -1); sc.seen.assign(n_lanes, 0u); sc.gen = 0; }
+	if (++sc.gen == 0u) { std::fill(sc.seen.begin(), sc.seen.end(), 0u); sc.gen = 1; }
+	const uint32_t gen = sc.gen;
+	const float gx = ptx[p_off[to]], gz = ptz[p_off[to]];
+	auto guess = [&](int l) { const float dx = ptx[p_off[l]] - gx, dz = ptz[p_off[l]] - gz; return std::sqrt(dx * dx + dz * dz); };
+	auto usable = [&](int l) {
+		if (l == to) return true;
+		const uint8_t f = l_flags[l];
+		if (!(f & LF_DRIVE) || (f & LF_BLOCKED)) return false;
+		if ((opts & RO_NO_DEADEND) && (f & LF_DEADEND)) return false;
+		if ((opts & RO_NO_EXIT) && (f & LF_EXIT)) return false;
+		if ((opts & RO_BIKE) && (p_vmax[l] > 16.0f || (f & LF_EXIT))) return false;
+		return true;
+	};
+	auto get_g = [&](int l) { return sc.seen[l] == gen ? sc.g[l] : BIG; };
+	auto set_g = [&](int l, float v, int pr) { sc.seen[l] = gen; sc.g[l] = v; sc.prev[l] = pr; };
 	typedef std::pair<float, int32_t> QE;
-	std::priority_queue<QE, std::vector<QE>, std::greater<QE>> q;
-	dist[from] = 0.0f;
-	q.push(QE(0.0f, from));
-	int expanded = 0;
-	auto usable = [&](int l) { return l == to || ((l_flags[l] & LF_DRIVE) && !(l_flags[l] & LF_BLOCKED)); };
-	while (!q.empty()) {
-		QE e = q.top(); q.pop();
-		int l = e.second;
-		if (e.first > dist[l]) continue;
-		if (l == to) break;
-		if (++expanded > 60000) break;
+	sc.heap.clear();
+	auto push = [&](float f, int l) { sc.heap.push_back(QE(f, l)); std::push_heap(sc.heap.begin(), sc.heap.end(), std::greater<QE>()); };
+	set_g(from, 0.0f, -1);
+	push(guess(from), from);
+	sc.expanded = 0;
+	bool found = false;
+	while (!sc.heap.empty()) {
+		std::pop_heap(sc.heap.begin(), sc.heap.end(), std::greater<QE>());
+		const QE e = sc.heap.back(); sc.heap.pop_back();
+		const int l = e.second;
+		const float gl = get_g(l);
+		if (e.first > gl + guess(l) + 1e-3f) continue;   // (an older, worse entry)
+		if (l == to) { found = true; break; }
+		if (++sc.expanded > 60000) break;
 		for (int k = l_out_off[l]; k < l_out_off[l] + l_out_n[l]; k++) {
-			int c = out_conn[k], t = c_to[c];
+			const int c = out_conn[k], t = c_to[c];
 			if (p_blocked[n_lanes + c] || !usable(t)) continue;
-			float nd_ = e.first + p_len[l] + p_len[n_lanes + c] + (c_turn[c] == T_LEFT ? 12.0f : (c_turn[c] == T_UTURN ? 80.0f : 0.0f));
-			if (nd_ < dist[t]) { dist[t] = nd_; prev[t] = l; q.push(QE(nd_, t)); }
+			float nd_ = gl + p_len[l] + p_len[n_lanes + c] + (c_turn[c] == T_LEFT ? 12.0f : (c_turn[c] == T_UTURN ? 80.0f : 0.0f));
+			if ((opts & RO_BIKE) && l_right[t] >= 0) nd_ += 60.0f;   // a bike keeps to the kerb lane
+			if (nd_ < get_g(t)) { set_g(t, nd_, l); push(nd_ + guess(t), t); }
 		}
-		if (p_len[l] > 40.0f) {
-			int nb[2] = { l_left[l], l_right[l] };
+		if (!(opts & RO_NO_LANE_CHANGE) && p_len[l] > 40.0f) {
+			const int nb[2] = { l_left[l], l_right[l] };
 			for (int t : nb) {
 				if (t < 0 || !usable(t)) continue;
-				float nd_ = e.first + 25.0f;
-				if (nd_ < dist[t]) { dist[t] = nd_; prev[t] = l; q.push(QE(nd_, t)); }
+				const float nd_ = gl + ((opts & RO_BIKE) ? 60.0f : 25.0f);
+				if (nd_ < get_g(t)) { set_g(t, nd_, l); push(nd_ + guess(t), t); }
 			}
 		}
 	}
-	if (dist[to] >= BIG * 0.5f) return false;
-	for (int l = to; l >= 0; l = prev[l]) { out.push_back(l); if (l == from) break; }
+	if (!found) { count_route(false); return false; }
+	for (int l = to; l >= 0; l = sc.prev[l]) { out.push_back(l); if (l == from) break; }
 	std::reverse(out.begin(), out.end());
-	return !out.empty() && out[0] == from;
+	if (out.empty() || out[0] != from) { out.clear(); count_route(false); return false; }
+	if (r_metres) *r_metres = get_g(to);
+	count_route(true);
+	return true;
+}
+
+// The nearest public driving lane to a point, and s on it
+int Sim::nearest_drive(float qx, float qz, float max_d, float &out_s, int opts) const {
+	int best = -1;
+	float bd = max_d * max_d, bs = 0.0f;
+	const int cx0 = std::max(0, (int)((qx - max_d - gx0) / GC)), cx1 = std::min(gw - 1, (int)((qx + max_d - gx0) / GC));
+	const int cz0 = std::max(0, (int)((qz - max_d - gz0) / GC)), cz1 = std::min(gh - 1, (int)((qz + max_d - gz0) / GC));
+	for (int cz = cz0; cz <= cz1; cz++) {
+		for (int cx = cx0; cx <= cx1; cx++) {
+			const int c = cz * gw + cx;
+			for (int e = sg_off[c]; e < sg_off[c + 1]; e++) {
+				const int L = sg_piece[e];
+				if (L >= n_lanes || !(l_flags[L] & LF_DRIVE) || (l_flags[L] & LF_BLOCKED)) continue;
+				if ((opts & RO_BIKE) && !bike_lane(L)) continue;
+				const int q = p_off[L] + sg_pt[e];
+				const float ux = ptx[q + 1] - ptx[q], uz = ptz[q + 1] - ptz[q];
+				const float l2 = ux * ux + uz * uz;
+				const float t = l2 > 1e-10f ? clampf(((qx - ptx[q]) * ux + (qz - ptz[q]) * uz) / l2, 0.0f, 1.0f) : 0.0f;
+				const float dx = qx - (ptx[q] + ux * t), dz = qz - (ptz[q] + uz * t);
+				const float d2 = dx * dx + dz * dz;
+				if (d2 < bd) { bd = d2; best = L; bs = ptc[q] + (ptc[q + 1] - ptc[q]) * t; }
+			}
+		}
+	}
+	out_s = bs;
+	return best;
+}
+
+// From (lane a, s_a) to (lane b, s_b): when both are the same lane and the goal is behind, round the block (the best of
+// the junction moves out of a). The metres: what is left of a, the lanes and paths between, s_b of b.
+float Sim::route_lanes_between(int a, float sa, int b, float sb, int opts, RouteScratch &sc, std::vector<int32_t> &out) const {
+	out.clear();
+	if (a < 0 || b < 0) return -1.0f;
+	if (a == b && sb >= sa - 0.5f) { out.push_back(a); return sb - sa; }
+	float best = BIG;
+	std::vector<int32_t> tmp;
+	if (a != b) {
+		float m = 0.0f;
+		if (find_route_ex(a, b, opts, sc, out, &m)) best = m - sa + sb;
+	} else {
+		for (int k = l_out_off[a]; k < l_out_off[a] + l_out_n[a]; k++) {
+			const int c = out_conn[k];
+			if (p_blocked[n_lanes + c]) continue;
+			float m = 0.0f;
+			if (!find_route_ex(c_to[c], b, opts, sc, tmp, &m)) continue;
+			m += p_len[a] - sa + p_len[n_lanes + c] + sb;
+			if (m < best) { best = m; out.assign(1, a); out.insert(out.end(), tmp.begin(), tmp.end()); }
+		}
+	}
+	return best < BIG * 0.5f ? best : -1.0f;
+}
+
+// The way as a line: lane a from s_a, the junction paths and lanes between (a lane change: along the old lane for a
+// car length, then across to the same place on the new one), lane b up to s_b. x, y, z per point.
+void Sim::route_line(const std::vector<int32_t> &lanes, float sa, float sb, std::vector<float> &r) const {
+	r.clear();
+	auto add = [&](float x_, float y_, float z_) {
+		const size_t n = r.size();
+		if (n >= 3) { const float dx = x_ - r[n - 3], dz = z_ - r[n - 1]; if (dx * dx + dz * dz < 0.25f) return; }
+		r.push_back(x_); r.push_back(y_); r.push_back(z_);
+	};
+	auto piece = [&](int pc, float s0, float s1) {   // the points of a piece between s0 and s1
+		const int o = p_off[pc], n = p_n[pc];
+		float ox, oy, oz; int hint = 0;
+		sample(pc, s0, hint, ox, oy, oz); add(ox, oy, oz);
+		float last = s0;
+		for (int k = 0; k <= n; k++) {
+			const float sk = k < n ? ptc[o + k] : s1;
+			if (sk <= s0 || (k < n && sk >= s1)) continue;
+			for (float q = last + 8.0f; q < sk - 1.0f; q += 8.0f) { sample(pc, q, hint, ox, oy, oz); add(ox, oy, oz); }   // (a long straight: every 8 m)
+			if (k < n) add(ptx[o + k], pty[o + k], ptz[o + k]);
+			last = sk;
+		}
+		sample(pc, s1, hint, ox, oy, oz); add(ox, oy, oz);
+	};
+	float s_on = sa;
+	for (size_t k = 0; k < lanes.size(); k++) {
+		const int l = lanes[k];
+		const bool last = k + 1 == lanes.size();
+		if (last) { piece(l, s_on, std::max(std::min(sb, p_len[l]), s_on)); break; }
+		const int nx = lanes[k + 1];
+		const int c = conn_between(*this, l, nx);
+		if (c >= 0) { piece(l, s_on, p_len[l]); piece(n_lanes + c, 0.0f, p_len[n_lanes + c]); s_on = 0.0f; continue; }
+		// a lane change: a car length on, then the same place on the neighbour
+		const float s_x = std::min(s_on + 12.0f, p_len[l]);
+		piece(l, s_on, s_x);
+		float ox, oy, oz; int hint = 0;
+		sample(l, s_x, hint, ox, oy, oz);
+		float best = BIG, bs = 0.0f;
+		const int o = p_off[nx];
+		for (int q = 0; q + 1 < p_n[nx]; q++) {
+			const float ux = ptx[o + q + 1] - ptx[o + q], uz = ptz[o + q + 1] - ptz[o + q], l2 = ux * ux + uz * uz;
+			const float t = l2 > 1e-10f ? clampf(((ox - ptx[o + q]) * ux + (oz - ptz[o + q]) * uz) / l2, 0.0f, 1.0f) : 0.0f;
+			const float dx = ox - (ptx[o + q] + ux * t), dz = oz - (ptz[o + q] + uz * t), d2 = dx * dx + dz * dz;
+			if (d2 < best) { best = d2; bs = ptc[o + q] + (ptc[o + q + 1] - ptc[o + q]) * t; }
+		}
+		s_on = std::min(bs + 6.0f, p_len[nx]);
+	}
+}
+
+float Sim::route_points(float ax, float az, float bx, float bz, int opts, RouteScratch &sc, std::vector<int32_t> &r_lanes, std::vector<float> *r_pts) const {
+	r_lanes.clear();
+	if (r_pts) r_pts->clear();
+	if (!built) return -1.0f;
+	float sa = 0.0f, sb = 0.0f;
+	const float m = best_route(ax, az, bx, bz, opts, sc, r_lanes, sa, sb);
+	if (m < 0.0f) return -1.0f;
+	if (r_pts) route_line(r_lanes, sa, sb, *r_pts);
+	return m;
+}
+
+// The lanes near a point (a street has a lane each way, and more): the nearest point of each lane within max_d, the
+// nearest first. Returns how many (at most k).
+int Sim::near_lanes(float qx, float qz, float max_d, int opts, int k, int32_t *r_lane, float *r_s, float *r_d) const {
+	int n = 0;
+	const int cx0 = std::max(0, (int)((qx - max_d - gx0) / GC)), cx1 = std::min(gw - 1, (int)((qx + max_d - gx0) / GC));
+	const int cz0 = std::max(0, (int)((qz - max_d - gz0) / GC)), cz1 = std::min(gh - 1, (int)((qz + max_d - gz0) / GC));
+	for (int cz = cz0; cz <= cz1; cz++) {
+		for (int cx = cx0; cx <= cx1; cx++) {
+			const int c = cz * gw + cx;
+			for (int e = sg_off[c]; e < sg_off[c + 1]; e++) {
+				const int L = sg_piece[e];
+				if (L >= n_lanes || !(l_flags[L] & LF_DRIVE) || (l_flags[L] & LF_BLOCKED)) continue;
+				if ((opts & RO_BIKE) && !bike_lane(L)) continue;
+				if ((opts & RO_NO_EXIT) && (l_flags[L] & LF_EXIT)) continue;
+				const int q = p_off[L] + sg_pt[e];
+				const float ux = ptx[q + 1] - ptx[q], uz = ptz[q + 1] - ptz[q], l2 = ux * ux + uz * uz;
+				const float t = l2 > 1e-10f ? clampf(((qx - ptx[q]) * ux + (qz - ptz[q]) * uz) / l2, 0.0f, 1.0f) : 0.0f;
+				const float dx = qx - (ptx[q] + ux * t), dz = qz - (ptz[q] + uz * t), d = std::sqrt(dx * dx + dz * dz);
+				if (d > max_d) continue;
+				const float sv = ptc[q] + (ptc[q + 1] - ptc[q]) * t;
+				int at = -1;
+				for (int j = 0; j < n; j++) if (r_lane[j] == L) at = j;
+				if (at >= 0) { if (d < r_d[at]) { r_d[at] = d; r_s[at] = sv; } continue; }
+				if (n < k) at = n++;
+				else { int w = 0; for (int j = 1; j < n; j++) if (r_d[j] > r_d[w]) w = j; if (r_d[w] <= d) continue; at = w; }
+				r_lane[at] = L; r_s[at] = sv; r_d[at] = d;
+			}
+		}
+	}
+	for (int a = 1; a < n; a++) for (int b = a; b > 0 && r_d[b] < r_d[b - 1]; b--) { std::swap(r_d[b], r_d[b - 1]); std::swap(r_s[b], r_s[b - 1]); std::swap(r_lane[b], r_lane[b - 1]); }
+	return n;
+}
+
+// The best way between two points: of the four lanes nearest each end (within 40 m, or 80 m if there are none), the
+// pair whose way plus the walk to and from it (counted twice) is shortest. r_sa / r_sb: where on the first and last lane.
+float Sim::best_route(float ax, float az, float bx, float bz, int opts, RouteScratch &sc, std::vector<int32_t> &r_lanes, float &r_sa, float &r_sb) const {
+	r_lanes.clear();
+	int32_t la[4], lb[4]; float sa[4], sb[4], da[4], db[4];
+	int na = near_lanes(ax, az, 40.0f, opts, 4, la, sa, da), nb = near_lanes(bx, bz, 40.0f, opts, 4, lb, sb, db);
+	if (na == 0) na = near_lanes(ax, az, 80.0f, opts, 4, la, sa, da);
+	if (nb == 0) nb = near_lanes(bx, bz, 80.0f, opts, 4, lb, sb, db);
+	float best = BIG, best_m = -1.0f;
+	std::vector<int32_t> tmp;
+	for (int i = 0; i < na; i++) {
+		for (int j = 0; j < nb; j++) {
+			const float m = route_lanes_between(la[i], sa[i], lb[j], sb[j], opts, sc, tmp);
+			if (m < 0.0f) continue;
+			const float score = m + 2.0f * (da[i] + db[j]);
+			if (score < best) { best = score; best_m = m; r_lanes = tmp; r_sa = sa[i]; r_sb = sb[j]; }
+		}
+	}
+	return best_m;
 }
 
 // Next connector for car i at the end of lane_. Ambient cars choose freely; routed cars take the connector to their
 // next route lane, or ask for a lane change (lc_need) and stop at the lane end until it is done.
 int Sim::pick_routed(int i, int lane_) {
 	lc_need[i] = 0;
-	if (kind[i] == K_AMBIENT || rt[i].empty()) return pick_next(lane_);
+	if (kind[i] == K_AMBIENT || kind[i] == K_BIKE || rt[i].empty()) return pick_free(i, lane_);
 	const std::vector<int32_t> &r = rt[i];
 	int ri = rt_i[i];
 	if (ri < 0 || ri >= (int)r.size() || r[ri] != lane_) {   // off the route (should not happen): find our lane in it
@@ -121,63 +310,33 @@ int Sim::spawn_routed(int kind_, int model_, const std::vector<int32_t> &route, 
 	return i;
 }
 
-// nearest public driving lane to a point; s on it
-static int nearest_drive_lane(const Sim &S, float qx, float qz, float max_d, float &out_s) {
-	int best = -1;
-	float bd = max_d * max_d, bs = 0.0f;
-	int cx0 = std::max(0, (int)((qx - max_d - S.gx0) / S.GC)), cx1 = std::min(S.gw - 1, (int)((qx + max_d - S.gx0) / S.GC));
-	int cz0 = std::max(0, (int)((qz - max_d - S.gz0) / S.GC)), cz1 = std::min(S.gh - 1, (int)((qz + max_d - S.gz0) / S.GC));
-	for (int cz = cz0; cz <= cz1; cz++) {
-		for (int cx = cx0; cx <= cx1; cx++) {
-			int c = cz * S.gw + cx;
-			for (int e = S.sg_off[c]; e < S.sg_off[c + 1]; e++) {
-				int L = S.sg_piece[e];
-				if (L >= S.n_lanes || !(S.l_flags[L] & LF_DRIVE) || (S.l_flags[L] & LF_BLOCKED)) continue;
-				int q = S.p_off[L] + S.sg_pt[e];
-				float ux = S.ptx[q + 1] - S.ptx[q], uz = S.ptz[q + 1] - S.ptz[q];
-				float l2 = ux * ux + uz * uz;
-				float t = l2 > 1e-10f ? clampf(((qx - S.ptx[q]) * ux + (qz - S.ptz[q]) * uz) / l2, 0.0f, 1.0f) : 0.0f;
-				float dx = qx - (S.ptx[q] + ux * t), dz = qz - (S.ptz[q] + uz * t);
-				float d2 = dx * dx + dz * dz;
-				if (d2 < bd) { bd = d2; best = L; bs = S.ptc[q] + (S.ptc[q + 1] - S.ptc[q]) * t; }
-			}
-		}
-	}
-	out_s = bs;
-	return best;
-}
+static int nearest_drive_lane(const Sim &S, float qx, float qz, float max_d, float &out_s) { return S.nearest_drive(qx, qz, max_d, out_s, 0); }
 
-// route from (lane a, s_a) to (lane b, s_b): when both are the same lane and the goal is behind, go round the block
+// route from (lane a, s_a) to (lane b, s_b) for a car of the core (the step's thread: the core's own scratch)
 static bool route_to(Sim &S, int a, float sa, int b, float sb, std::vector<int32_t> &out) {
-	if (a != b || sb > sa + 2.0f) return S.find_route(a, b, out);
-	float best = BIG;
-	std::vector<int32_t> tmp;
-	for (int k = S.l_out_off[a]; k < S.l_out_off[a] + S.l_out_n[a]; k++) {
-		int c = S.out_conn[k];
-		if (S.p_blocked[S.n_lanes + c]) continue;
-		if (!S.find_route(S.c_to[c], b, tmp)) continue;
-		float L = 0.0f;
-		for (int l : tmp) L += S.p_len[l];
-		if (L < best) { best = L; out.clear(); out.push_back(a); out.insert(out.end(), tmp.begin(), tmp.end()); }
-	}
-	return best < BIG;
+	return S.route_lanes_between(a, sa, b, sb, 0, S.rs, out) >= 0.0f;
 }
 
 int Sim::spawn_scripted(int model_, float fx_, float fz_, float tx, float tz, bool hidden) {
 	if (!built) return -1;
-	float sa, sb;
-	int a = nearest_drive_lane(*this, fx_, fz_, 30.0f, sa), b = nearest_drive_lane(*this, tx, tz, 40.0f, sb);
-	if (a < 0 || b < 0) return -1;
+	float sa = 0.0f, sb = 0.0f;
 	std::vector<int32_t> r;
-	if (!route_to(*this, a, sa, b, sb, r)) return -1;
-	sa = clampf(sa, 2.5f, std::max(p_len[a] - 2.5f, 2.6f));
-	int i = place_car(a, sa, 0.0f, model_, 1);
-	if (i < 0) return -1;
-	if (hidden && in_cone(x[i], z[i])) {
-		float dx = x[i] - cam_x, dz = z[i] - cam_z;
-		if (dx * dx + dz * dz < cfg.view_safe_r * cfg.view_safe_r) { alive[i] = 0; n_alive--; while (hi > 0 && !alive[hi - 1]) hi--; return -1; }
+	if (best_route(fx_, fz_, tx, tz, RO_NO_EXIT, rs, r, sa, sb) < 0.0f || r.empty()) return -1;
+	const int a = r[0], b = r.back();
+	// a free spot on its first lane: where it was asked for, else a few metres either way
+	int i = -1;
+	const float tries[7] = { 0.0f, 7.0f, -7.0f, 14.0f, -14.0f, 21.0f, -21.0f };
+	for (float off : tries) {
+		const float s_try = clampf(sa + off, 2.5f, std::max(p_len[a] - 2.5f, 2.6f));
+		if (a == b && s_try > sb - 3.0f) continue;
+		i = place_car(a, s_try, 0.0f, model_, 1);
+		if (i < 0) return -1;
+		bool bad = blocked_by(i, x[i], y[i], z[i], fx[i], fz[i], 0.2f) != 0;
+		if (!bad && hidden && in_cone(x[i], z[i])) { const float dx = x[i] - cam_x, dz = z[i] - cam_z; bad = dx * dx + dz * dz < cfg.view_safe_r * cfg.view_safe_r; }
+		if (!bad) break;
+		alive[i] = 0; n_alive--; while (hi > 0 && !alive[hi - 1]) hi--; i = -1;
 	}
-	if (blocked_by(i, x[i], y[i], z[i], fx[i], fz[i], 0.2f)) { alive[i] = 0; n_alive--; while (hi > 0 && !alive[hi - 1]) hi--; return -1; }
+	if (i < 0) return -1;
 	kind[i] = K_SCRIPTED; tier[i] = TIER_FULL;
 	rt[i] = r; rt_i[i] = 0;
 	goal_ri[i] = (int32_t)r.size() - 1; goal_s[i] = clampf(sb, hl[i] + 0.5f, p_len[b] - 0.5f); goal_lat[i] = 0.0f; pull[i] = 0;
@@ -190,13 +349,21 @@ int Sim::spawn_scripted(int model_, float fx_, float fz_, float tx, float tz, bo
 bool Sim::drive_to(int car_id, float tx, float tz) {
 	int i = find_car(car_id);
 	if (i < 0) return false;
-	float sb;
-	int b = nearest_drive_lane(*this, tx, tz, 40.0f, sb);
-	if (b < 0) return false;
-	int a = lane[i];
-	float sa = conn[i] >= 0 ? 0.0f : s[i];
-	std::vector<int32_t> r;
-	if (!route_to(*this, a, sa, b, sb, r)) return false;
+	const int a = lane[i];
+	const float sa = conn[i] >= 0 ? 0.0f : s[i];
+	// of the lanes near the goal, the one its way is shortest to (a street has a lane each way)
+	int32_t lb[4]; float sbs[4], db[4];
+	int nb = near_lanes(tx, tz, 40.0f, RO_NO_EXIT, 4, lb, sbs, db);
+	if (nb == 0) nb = near_lanes(tx, tz, 80.0f, RO_NO_EXIT, 4, lb, sbs, db);
+	std::vector<int32_t> r, tmp;
+	float best = BIG, sb = 0.0f;
+	int b = -1;
+	for (int j = 0; j < nb; j++) {
+		const float m = route_lanes_between(a, sa, lb[j], sbs[j], RO_NO_EXIT, rs, tmp);
+		if (m < 0.0f || m + 2.0f * db[j] >= best) continue;
+		best = m + 2.0f * db[j]; r = tmp; b = lb[j]; sb = sbs[j];
+	}
+	if (b < 0 || r.empty()) return false;
 	if (flags[i] & F_RES) revoke(i);
 	kind[i] = K_SCRIPTED; tier[i] = TIER_FULL;
 	rt[i] = r; rt_i[i] = 0;

@@ -185,3 +185,11 @@ A stale `streets.bin` gives broken car rows (coloured squares on screen). When a
 Before a run: `adb shell pidof com.yasin.citykit.rig` must be empty; tell the other session by SendMessage; when done
 put ITS app back with `adb install -r` and send "phone free". One fresh run after an install proves less than two runs.
 Measure with a no-traffic run of the SAME app in the SAME session. Numbers of 19 Nov: doc section 18.
+
+- Cyclists and the route finder (doc section 34), paid for: (1) ANOTHER SESSION'S `git pull --autostash` IN THIS
+  FOLDER took the uncommitted work into a stash and a hung git held a file for an hour (it ran as admin: only Yasin
+  could end it). Push a backup branch of uncommitted work before long runs (a temporary GIT_INDEX_FILE + commit-tree +
+  push to claude/wip-*), and tell other sessions to commit from their own worktree. (2) A slow road user in the core
+  changes who waits where: it brought out a left-turner starved for five greens and a parked car the core was never
+  shown; run all 12 core runs, with and without (`--bikes=0`), and trace the one id the failure names. (3) A car may
+  not overtake anything inside its lane up to a stop line: side by side at the line, its nose sits in a turning path.

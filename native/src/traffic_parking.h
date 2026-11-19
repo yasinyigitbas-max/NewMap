@@ -229,6 +229,22 @@ struct Parking {
 		};
 		for (const Job &jb : jobs) show(jb.car_id);
 		for (const Fresh &f : fresh) show(f.car_id);
+		// ... and the parked cars right beside any moving car (10 m along its lane): a stall whose car reaches a little
+		// into the lane (a turned one, a long model) was not known to a car that stood beside it after changing lanes
+		// in a jam, and the two touched (tests/traffic/test_traffic_core.gd, the high street at twice the busiest hour)
+		for (int i = 0; i < sim.hi && (int)dyn.size() < 200 * tc::DYN_STRIDE; i++) {
+			if (!sim.alive[i] || sim.conn[i] >= 0) continue;
+			const int L = sim.lane[i];
+			if (L < 0 || L >= (int)lane_stalls.size()) continue;
+			for (int k : lane_stalls[L]) {
+				const Stall &q = st[k];
+				if (q.model >= RESERVED || std::fabs(q.s - sim.s[i]) > 10.0f + sim.hl[i] || (int)dyn.size() >= 200 * tc::DYN_STRIDE || shown[k] == show_stamp) continue;
+				shown[k] = show_stamp;
+				const cm::CarModel &m = cm::MODELS[q.model];
+				const float b[tc::DYN_STRIDE] = { q.x, q.y, q.z, q.yaw, m.half_len, m.half_w, 0.0f, 0.0f, (float)tc::DYN_OTHER, (float)(100000 + k), 0.0f };
+				dyn.insert(dyn.end(), b, b + tc::DYN_STRIDE);
+			}
+		}
 	}
 
 	// a moving car's paint: its own (a car that pulled out keeps the colour it stood there with), or by its number

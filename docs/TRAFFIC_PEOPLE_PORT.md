@@ -1236,3 +1236,42 @@ somebody lying on his front is drawn on his back as a near body; children have n
 still a script (Yasin has not said to port it); the bake and streets.bin on this branch are older than today's land
 changes (the other session's commits 0bbb66c67, ec43493da): after the next bake run make_streets.gd, make_places.gd,
 the tests.
+
+## 34. Cyclists and the route finder inside the traffic core (19 Nov evening; Yasin: "REWRITE THESE FULLY INN C PLUS PLUS, zero scripts 1. cyclists inside the traffic core; 2. route finding in the traffic core")
+The old game had both half in scripts (bikes.gd chose the riders' lanes and spawned them, BikeRiders only moved them
+along a line and nobody saw them; the map's way was coronado_route.gd, AStar2D in a script). Now all C++:
+- CYCLISTS ARE ROAD USERS OF THE CORE (tc::Sim kind K_BIKE): they appear and leave like cars (the ring, the camera's
+  rules) on kerb lanes a bike rides (not the fast roads, not the bridge), ride 0.55 m off the kerb side at 4-6.5 m/s,
+  keep to signals, stop signs and give-ways, turn mostly straight on and right. Cars see them like any car: they go
+  past one INSIDE THEIR LANE with 0.5 m to spare when there is room, else follow or change lanes; never between a
+  cyclist and the kerb, never within 25 m of a stop line or in a junction (a car that went past one up to a stop sign
+  stood beside him with its nose in a turning car's path: 39 cars locked). A cyclist does not start across a junction
+  he cannot clear before the amber is out. `CityTraffic.cyclists` (8; 0 = none, the game sets it in rain).
+- DRAWN: the bicycle is a mesh made in C++ (frame in one of eight paints, black tyres, metal; about 600 triangles), one
+  batch; it leans into turns. THE RIDER is a far figure of the crowd (CityCrowd reads `bikes_drawn()`), in one of four
+  NEW RIDING POSES of PeopleBake (13-16: the seated pose leant over the bars, lifted so the leg all but straightens at
+  the bottom pedal, two-bone reach of each foot to its pedal a quarter turn apart and of each hand to its grip), picked
+  by how far the crank has turned: still one draw for the whole crowd and its riders. The far-figure table was made
+  again (make_people.gd): 41 bodies x 17 poses, 16.8 MB on the graphics card (was 13). Picture:
+  review/traffic_19nov/bike_rider.jpg.
+- THE ROUTE FINDER (Sim::find_route_ex): A* on lanes (metres; a left turn +12 m, a u-turn +80, a lane change 25 m and
+  only on lanes over 40 m), no allocation once its scratch has grown, any thread with its own scratch. Options: no
+  lane changes (buses), no dead ends, not off the map, bike ways (kerb lanes, no fast roads). Both ends of a trip try
+  the four nearest lanes and keep the best pair (the nearest lane alone ran the wrong way: 42 m came out as 1 km).
+  Used by: the bus lines, the game's own cars, a lost car's new way, and the map: `CityTraffic.route(from, to, bike)`
+  -> {ok, metres, points (a point every 8 m, on the road's height), lanes, car_roads}. The game's own cars:
+  `spawn_driver`, `drive_car_to`, `pull_car_over`, `let_car_go`, answered by ticket (`order_result`) from the traffic's
+  thread. Slowest search across the whole town 1.2 ms.
+- TWO MENDS OF THE CORE ITSELF that the cyclists brought out: a left-turner that has stood a whole cycle at its line
+  asks on the green too (oncoming drivers who can still stop let it go); the parked cars right beside ANY moving car
+  are boxes to the core now (only those round a car parking or pulling out were: one that changed lanes in a jam stood
+  touching a parked car that reached into its lane).
+- Tests, all RESULT PASS on the last build: tests/traffic/test_bikes.gd (three runs with 12-30 cyclists: cars went past
+  them inside their lane 118-1,126 times, no overlap, nobody stuck; the same seed twice), test_route.gd (12 ways by car
+  and bike across town, the game's own car drives 688 m to its goal and stands 0.3 m from it), test_traffic_core (12 of
+  12 with 8 cyclists in every run; `--bikes=0` runs them without), test_bus, test_knock, test_crowd_game, test_acts, the
+  lock test. The knock test's last check counted a drive-on only after the player's car was moved aside; the hit
+  driver now and then drives on before: it counts from the hit.
+- NOT DONE: cyclists do not come off when hit (a car or the player's car that touches one makes him stop, as a car
+  would); the player cannot ride a bike yet; riders' crank turns in four steps; a rider is a far figure even close up.
+  Both are Yasin's next items (docs/GAME_PORT_BOARD.md 2b, 2c). Not tried on the phone.

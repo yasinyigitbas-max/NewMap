@@ -5,6 +5,12 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~20:45 (PC session, traffic and people): CYCLISTS AND THE ROUTE FINDER IN THE TRAFFIC CORE, all C++ (Yasin:
+  "REWRITE THESE FULLY INN C PLUS PLUS, zero scripts"). Cyclists are road users of tc::Sim (cars pass them in the lane,
+  never into a junction), drawn as a C++ bicycle batch with the crowd's far figures in four new riding poses; one A*
+  route finder for buses, the game's own cars and the map (CityTraffic.route). Doc section 34. Tests RESULT PASS:
+  test_bikes, test_route, test_traffic_core (12/12 with cyclists), test_bus, test_knock, test_crowd_game, test_acts,
+  lock test. The port of the old game's UI and systems is queued in docs/GAME_PORT_BOARD.md (Yasin's list).
 - 19 Nov ~22:45 (PC session): THE LAND FITTED UNDER THE WATERFRONT FILL TOO (Yasin, shown the trial pictures:
   "Show me first", then "Yes, fit it"). Only the land: `lower_land_to_pieces.py --only=grow_wf --fit --ease-from`
   wrote exactly the trial he saw: 2,333 nodes lowered (usual 0.24 m, largest 1.64 m), 2,641 raised back to the blocks'

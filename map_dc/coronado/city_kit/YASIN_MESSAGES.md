@@ -323,3 +323,13 @@ the other agent suggested these
 - [2026-11-20] Commit after you are done with this round
 
 - [2026-11-20] So what are the results?
+
+- [2026-11-19] REWRITE THESE FULLY INN C PLUS PLUS, zero scripts 1. cyclists inside the traffic core; 2. route finding in the traffic core;
+
+- [2026-11-19] HUD, minimap, the phone UI, menus, settings,  loading screen, bring these over from the old game after your queue is finished, make jusdgement calls and rewrite in c plus plus if necessary
+
+- [2026-11-19] bring these completely too, lessons, narrator, jobs, money and ATMs, minigames, saving and profiles, make a job board for yourself to make sure you dont forget anything
+
+- [2026-11-19] only you are working on the cars, no one else
+
+- [2026-11-19] also make the bikes able to crash to cars, make a rideable bike for the player, make sure its designed for touch controls, make sure it moves realistic like the cars, our view should wobble riding it. add damage to the bikes, we should be able to get ejected if we hit a car hard enough. use all relevant animations

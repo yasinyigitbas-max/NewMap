@@ -24,6 +24,7 @@
 //  - a move is committed only if the car's box at the new pose overlaps nothing ("veto"), so boxes never overlap.
 #pragma once
 
+#include <atomic>
 #include <cmath>
 #include <cstdint>
 #include <unordered_set>
@@ -57,8 +58,24 @@ enum {
 enum { LF_DRIVE = 1, LF_ROUNDABOUT = 2, LF_BLOCKED = 4, LF_DEADEND = 8,
 	LF_EXIT = 16 };   // the lane runs out of the map (the far end of the bridge): cars drive on to its end and are gone
 enum { E_HONK = 1, E_CRASH = 2, E_HARDBRAKE = 3, E_SPAWN = 4, E_DESPAWN = 5, E_ARRIVE = 6, E_PED_SPAWN = 7, E_PED_DESPAWN = 8 };
-// car kinds: ambient traffic, timetable bus, scripted (CityRide: routed, stops at its goal, never despawned by the sim)
-enum { K_AMBIENT = 0, K_BUS = 1, K_SCRIPTED = 2 };
+// car kinds: ambient traffic, timetable bus, scripted (CityRide: routed, stops at its goal, never despawned by the sim),
+// a cyclist (rides at the kerb side of the kerb lane, 4-6.5 m/s, keeps to the signals like a car; cars squeeze past
+// inside the lane where there is room, else follow or change lanes)
+enum { K_AMBIENT = 0, K_BUS = 1, K_SCRIPTED = 2, K_BIKE = 3 };
+// route finding (find_route_ex): what a route may use
+enum { RO_NO_LANE_CHANGE = 1, RO_NO_DEADEND = 2, RO_NO_EXIT = 4, RO_BIKE = 8 };
+constexpr float BIKE_HL = 0.90f, BIKE_HW = 0.32f;   // a bicycle and its rider seen from above (half length, half width)
+
+// The scratch of one route search. The core's own (the step's thread) is Sim::rs; a caller on another thread (the
+// game asking for a way on the map) brings its own: the street graph itself is not changed after build().
+struct RouteScratch {
+	std::vector<float> g;          // metres to the start of each lane
+	std::vector<int32_t> prev;     // the lane it was reached from
+	std::vector<uint32_t> seen;    // the search that last touched each lane
+	std::vector<std::pair<float, int32_t>> heap;
+	uint32_t gen = 0;
+	int expanded = 0;              // lanes taken off the heap by the last search
+};
 // walker states
 enum { P_WALK = 0, P_WAIT = 1, P_CROSS = 2, P_CORNER = 3, P_PAUSE = 4 };
 enum { MAN_NONE = 0, MAN_LC_PEND = 1, MAN_PASS = 2, MAN_LC_MOVE = 3 };
@@ -98,6 +115,8 @@ struct Config {
 	float t_honk[3] = { 8.0f, 5.0f, 2.5f };      // blocked this long -> honk, s
 	float t_gap[3] = { 2.5f, 1.5f, 0.8f };       // safety margin when taking a gap in crossing traffic, s
 	float ask_after_s = 8.0f;        // at a stop line or a give-way: waited this long -> it asks for a way through
+	int max_bikes = 0;               // cyclists round the camera (x hour_factor); 0 = none (rain, or the game says so)
+	float bike_v_lo = 4.0f, bike_v_hi = 6.5f;   // their own speeds, m/s
 	float dens_scale = 1.0f;         // the streets' own cars-per-metre x this (tests and measurements: more or fewer cars)
 	uint64_t seed = 1;
 };
@@ -108,6 +127,7 @@ struct Stats {
 	int lane_changes = 0, passes = 0, reservations = 0, revoked = 0;
 	int asks = 0, let_through = 0;   // times a waiting car asked for a way through; times another car held back for one
 	int buses_spawned = 0, bus_stops_served = 0, arrivals = 0, reroutes = 0;
+	int bikes_spawned = 0, bike_squeezes = 0;   // cyclists put on the road; times a car went past one inside its lane
 	// build
 	int n_intrusions = 0, n_blocked_lanes = 0, n_deadend_lanes = 0, n_conflict_pairs = 0, n_pass_lanes = 0;
 	double build_ms = 0.0, last_step_us = 0.0;
@@ -209,6 +229,7 @@ public:
 	// ---- cars (structure of arrays)
 	int hi = 0;        // slots [0, hi) may be alive
 	int n_alive = 0;
+	int n_bikes = 0;   // of them cyclists (they do not count against max_cars)
 	int next_id = 1;
 	uint8_t alive[MAX_CARS], kind[MAX_CARS], model[MAX_CARS], colour[MAX_CARS], temper[MAX_CARS], tier[MAX_CARS];
 	uint8_t why[MAX_CARS], man[MAX_CARS], line_passed[MAX_CARS], touching[MAX_CARS], long_look[MAX_CARS];
@@ -241,6 +262,7 @@ public:
 	int8_t lc_need[MAX_CARS];
 	uint8_t arrived[MAX_CARS], pull[MAX_CARS];
 	float pull_d[MAX_CARS];   // how far before its goal a car begins to move sideways to goal_lat (45 m for a bus stop; 14 m into a stall)
+	float vdes[MAX_CARS];     // its own top speed, m/s (a cyclist); 0 = the road's limit
 	int64_t trip[MAX_CARS];
 	int32_t lead_id[MAX_CARS];
 	int32_t chain_c[MAX_CARS][MAX_CHAIN];   // the moves through a cluster of short links, reserved together with the move into it
@@ -307,7 +329,33 @@ public:
 	}
 
 	// ---- routes, buses, scripted cars (traffic_route.cpp)
-	bool find_route(int from_lane, int to_lane, std::vector<int32_t> &out) const;
+	// THE ROUTE FINDER (A*, metres along the lanes; a left turn costs 12 m more, a u-turn 80, a lane change 25 and only
+	// on lanes over 40 m). opts: RO_*. r_metres: the route's cost. Thread: any, with its own scratch.
+	bool find_route_ex(int from_lane, int to_lane, int opts, RouteScratch &sc, std::vector<int32_t> &out, float *r_metres = nullptr) const;
+	bool find_route(int from_lane, int to_lane, std::vector<int32_t> &out) const { return find_route_ex(from_lane, to_lane, 0, rs, out); }
+	mutable RouteScratch rs;   // (the step's thread)
+	mutable std::atomic<int> routes_ok{ 0 }, routes_no{ 0 };   // searches that found a way / none (any thread)
+	void count_route(bool ok) const { (ok ? routes_ok : routes_no).fetch_add(1, std::memory_order_relaxed); }
+	// The nearest public driving lane to a point (within max_d), and s on it; -1 none. opts RO_BIKE: lanes a bike rides.
+	int nearest_drive(float qx, float qz, float max_d, float &r_s, int opts = 0) const;
+	// A way from a point to a point by road: from (lane a, s_a) to (lane b, s_b); behind on the same lane = round the
+	// block. r_lanes: the lanes; r_pts (if given): the way as a line, x, y, z a point every few metres. Returns the
+	// metres, -1 = no way.
+	float route_points(float ax, float az, float bx, float bz, int opts, RouteScratch &sc, std::vector<int32_t> &r_lanes, std::vector<float> *r_pts) const;
+	float route_lanes_between(int a, float sa, int b, float sb, int opts, RouteScratch &sc, std::vector<int32_t> &out) const;
+	int near_lanes(float qx, float qz, float max_d, int opts, int k, int32_t *r_lane, float *r_s, float *r_d) const;
+	float best_route(float ax, float az, float bx, float bz, int opts, RouteScratch &sc, std::vector<int32_t> &r_lanes, float &r_sa, float &r_sb) const;
+	void route_line(const std::vector<int32_t> &lanes, float sa, float sb, std::vector<float> &r_pts) const;
+	// cyclists (traffic_step.cpp)
+	bool bike_lane(int l) const {
+		return l >= 0 && l < n_lanes && (l_flags[l] & LF_DRIVE) && !(l_flags[l] & (LF_BLOCKED | LF_DEADEND | LF_EXIT)) && l_right[l] < 0 && p_vmax[l] <= 16.0f;
+	}
+	int pick_bike(int lane_);
+	int pick_free(int i, int lane_) { return kind[i] == K_BIKE ? pick_bike(lane_) : pick_next(lane_); }
+	float bike_line(int i, int piece) const;   // where in its lane (lat) a cyclist rides on this piece
+	bool try_spawn_bike();
+	int32_t bike_passed[MAX_CARS];   // the cyclist this car last went past (counted once)
+	void bike_pass_mark(int i, int j) { if (bike_passed[i] != id[j]) { bike_passed[i] = id[j]; st.bike_squeezes++; } }
 	int add_route(const int32_t *lanes, int n, const int32_t *stop_ri, const float *stop_s, int ns, const float *tph, int model);
 	int spawn_routed(int kind_, int model_, const std::vector<int32_t> &route, int ri, float s_, float speed);
 	int spawn_scripted(int model_, float fx_, float fz_, float tx, float tz, bool hidden);
@@ -332,6 +380,7 @@ public:
 	// ---- output / queries
 	int signal_state(int lane, double t) const;
 	float signal_red_age(int lane, double t) const;
+	float signal_green_left(int lane, double t) const;
 	int spawn_car(int lane, float s, float speed, int model, int temper);
 	bool remove_car(int car_id);
 	int find_car(int car_id) const;

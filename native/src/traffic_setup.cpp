@@ -455,7 +455,8 @@ bool Sim::build() {
 
 void Sim::reset_cars(uint64_t seed) {
 	std::memset(alive, 0, sizeof(alive));
-	hi = 0; n_alive = 0; next_id = 1; tick = 0;
+	hi = 0; n_alive = 0; n_bikes = 0; next_id = 1; tick = 0;
+	for (int i = 0; i < MAX_CARS; i++) { bike_passed[i] = -1; vdes[i] = 0.0f; }
 	std::fill(c_res.begin(), c_res.end(), (int16_t)0);
 	std::fill(c_ask.begin(), c_ask.end(), -1); std::fill(c_ask_tick.begin(), c_ask_tick.end(), -1000000);
 	rng_s = seed * 0x9E3779B97F4A7C15ULL + 0x853c49e6748fea9bULL;
@@ -483,6 +484,16 @@ int Sim::signal_state(int lane_, double t) const {
 	double ph = std::fmod((t + off) / SIG_CYCLE + (l_phase[lane_] ? 0.5 : 0.0), 1.0);
 	if (ph < 0.0) ph += 1.0;
 	return ph < 0.4 ? SIG_GREEN : (ph < 0.5 ? SIG_YELLOW : SIG_RED);
+}
+
+// seconds of green left on the lane's signal (0 when it is not green)
+float Sim::signal_green_left(int lane_, double t) const {
+	if (lane_ < 0 || lane_ >= n_lanes || l_ctl[lane_] != C_SIGNAL) return 0.0f;
+	const int node = l_sig[lane_];
+	const double off = node >= 0 && node < (int)sig_off.size() ? (double)sig_off[node] : 0.0;
+	double ph = std::fmod((t + off) / SIG_CYCLE + (l_phase[lane_] ? 0.5 : 0.0), 1.0);
+	if (ph < 0.0) ph += 1.0;
+	return ph < 0.4 ? (float)((0.4 - ph) * SIG_CYCLE) : 0.0f;
 }
 
 // seconds since the lane's signal turned red (0 when it is not red)

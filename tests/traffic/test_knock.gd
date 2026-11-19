@@ -19,6 +19,7 @@ var fails := 0
 var target := {}
 var gy := 0.0
 var k0 := {}
+var k_hit := {}   # the counts as the head-on knock begins: its driver may drive on during part 2 already
 var far_most := 0.0
 var speed_most := 0.0
 var spot := Vector3.ZERO
@@ -138,6 +139,7 @@ func _physics_process(delta: float) -> bool:
 			car.call(&"set_controls", 0.7, 0.0, 0.0, 0.0, false)
 			print("KNOCK part 2: head-on into moving car %d at (%.1f, %.1f) doing %.0f km/h, from 16 m at 43 km/h" % [int(target.id), p.x, p.z, float(target.speed) * 3.6])
 			phase = 3; t0 = t; speed_most = 0.0; far_most = 0.0; spot = p
+			k_hit = traffic.call(&"knock_stats")
 		3:
 			_watch()
 			if t - t0 > 2.0: car.call(&"set_controls", 0.0, 1.0, 0.0, 0.0, false)
@@ -159,9 +161,9 @@ func _physics_process(delta: float) -> bool:
 			phase = 4; t0 = t
 		4:
 			var s: Dictionary = traffic.call(&"knock_stats")
-			if int(s.rejoined) == int(k0.rejoined) and t - t0 < 10.0: return false
+			if int(s.rejoined) == int(k_hit.rejoined) and t - t0 < 10.0: return false
 			var why := {-1: "no lane within 3.6 m of it", -2: "it stands at a lane's end", -3: "it stands across the lane", -4: "the traffic is full", -5: "something stands in its way"}
-			_check(int(s.rejoined) > int(k0.rejoined), "with the player's car out of the way the hit driver drives on, %.1f s later (%s)" % [t - t0, "it is a car of the traffic again" if int(s.rejoined) > int(k0.rejoined) else "refused: " + String(why.get(int(s.last_refusal), "never asked"))])
+			_check(int(s.rejoined) > int(k_hit.rejoined), "with the player's car out of the way (or before) the hit driver drives on, %.1f s later (%s)" % [t - t0, "it is a car of the traffic again" if int(s.rejoined) > int(k_hit.rejoined) else "refused: " + String(why.get(int(s.last_refusal), "never asked"))])
 			phase = 9
 		9:
 			print("KNOCK traffic: %s" % String(traffic.call(&"report")))

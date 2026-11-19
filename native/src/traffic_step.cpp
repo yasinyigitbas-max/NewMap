@@ -97,6 +97,34 @@ int Sim::pick_next(int lane_) {
 	return cs[n - 1];
 }
 
+// A cyclist's way on at a junction: a kerb lane a bike rides (not the fast roads, not the bridge off the map), straight
+// on most of the time, right turns more than left ones, never a u-turn. Nothing of that: whatever a car may take.
+int Sim::pick_bike(int lane_) {
+	int cs[24]; float ws[24]; int n = 0; float sum = 0.0f;
+	for (int k = l_out_off[lane_]; k < l_out_off[lane_] + l_out_n[lane_] && n < 24; k++) {
+		const int c = out_conn[k], t = c_to[c];
+		if (p_blocked[n_lanes + c] || c_turn[c] == T_UTURN || !bike_lane(t)) continue;
+		const float w = c_turn[c] == T_STRAIGHT ? 3.0f : (c_turn[c] == T_RIGHT ? 1.2f : 0.6f);
+		cs[n] = c; ws[n] = w; sum += w; n++;
+	}
+	if (n == 0) return pick_next(lane_);
+	float r = rnd() * sum;
+	for (int k = 0; k < n; k++) { r -= ws[k]; if (r <= 0.0f) return cs[k]; }
+	return cs[n - 1];
+}
+
+// Where in its lane a cyclist rides: 0.55 m of its middle from the kerb side of a kerb lane; in a junction it eases
+// toward the path's middle on a turn (a right turn's inside edge is the kerb's corner; a left one crosses the road).
+float Sim::bike_line(int i, int pc) const {
+	const float kerb = -std::max(p_hw[pc] - 0.55f, 0.0f);
+	if (pc >= n_lanes) {
+		const int c = pc - n_lanes;
+		return c_turn[c] == T_STRAIGHT ? kerb * 0.8f : (c_turn[c] == T_RIGHT ? kerb * 0.35f : 0.0f);
+	}
+	return l_right[pc] < 0 ? kerb : 0.0f;
+	(void)i;
+}
+
 // Distance from the car's nose to the next point it may not pass without a reservation (stop line, or the lane end
 // once the nose is past the stop line).
 float Sim::entry_dist(int i) const {
@@ -267,6 +295,13 @@ int Sim::try_reserve(int i, float de) {
 		// line waiting to turn left takes the amber, and the first two seconds of red, once the oncoming traffic has
 		// stopped (it still gives way to whoever is coming, below; the cross street waits for it: it holds the path).
 		const bool left_waited = c_turn[c] == T_LEFT && stop_tick[i] >= 0 && (float)(tick - stop_tick[i]) * dt >= 1.0f;
+		// a cyclist does not start across a junction he cannot clear before the amber is out: a slow bike still in the
+		// middle at the red held the path the waiting left-turners were to take on the amber (a left-turner stood five
+		// greens in the first run of tests/traffic/test_bikes.gd)
+		if (kind[i] == K_BIKE && sg == SIG_GREEN) {
+			const float D = std::max(de, 0.0f) + p_len[n_lanes + c] + 2.0f * hl[i];
+			if (D / std::max(v[i], 3.0f) > signal_green_left(L, clock) + 2.0f && v[i] * v[i] / (2.0f * 2.5f) < de - 0.3f) return W_SIGNAL;
+		}
 		if (sg == SIG_YELLOW) {
 			if (!left_waited && v[i] * v[i] / (2.0f * 3.0f) < de - 0.5f) return W_SIGNAL;   // can stop: stop
 		} else if (sg == SIG_RED) {
@@ -296,6 +331,10 @@ int Sim::try_reserve(int i, float de) {
 		if (l_ctl[L] == C_SIGNAL) {
 			const int sg = signal_state(L, clock);
 			may_ask = c_turn[c] == T_LEFT && (sg == SIG_YELLOW || (sg == SIG_RED && signal_red_age(L, clock) < 6.0f));
+			// ... and a left-turner that has stood at its line a whole cycle asks on the green too: oncoming drivers who
+			// can still stop let it go (with slow cyclists in the oncoming stream and still in the junction on the amber,
+			// one stood six greens in tests/traffic/test_bikes.gd)
+			if (c_turn[c] == T_LEFT && sg == SIG_GREEN && wait_t[i] > 35.0f) may_ask = true;
 			// ... and a car that goes straight on or turns right and still stands at its line on GREEN: the oncoming
 			// cars that turn left across it are to let it go (straight before left). Without this a steady stream of
 			// left-turners, each cleared while still rolling up to the line, kept the junction for the whole green
@@ -331,7 +370,7 @@ int Sim::try_reserve(int i, float de) {
 	{
 		int to = c_to[c];
 		while (nch < MAX_CHAIN && short_link(i, to) && l_out_n[to] > 0) {
-			int c2 = kind[i] == K_AMBIENT || rt[i].empty() ? pick_next(to) : peek_routed(i, to);
+			int c2 = kind[i] == K_AMBIENT || kind[i] == K_BIKE || rt[i].empty() ? pick_free(i, to) : peek_routed(i, to);
 			if (c2 < 0) break;
 			if (l_ctl[to] == C_SIGNAL && signal_state(to, clock) != SIG_GREEN) return why_(1, -1, 0.0f, W_SIGNAL);
 			chain[nch++] = c2;
@@ -653,6 +692,7 @@ void Sim::update_car(int i, float h) {
 		if (pulling) return goal_lat[i] * ess((pull_d[i] - (dg - ahead)) / std::max(pull_d[i] - IN_END_M, 1.0f));
 		return out_lat0[i] * (1.0f - ess((out_d[i] + ahead) / OUT_M));
 	};
+	if (kind[i] == K_BIKE) want = bike_line(i, cp);
 	if (man[i] == MAN_PASS && pass_rem[i] > 0.0f) { want = pass_lat[i]; amax = std::max(amax, want); }
 	else if (pulling) { want = plan(0.0f); amin = std::min(amin, goal_lat[i]); amax = std::max(amax, goal_lat[i]); }
 	else if (leaving) want = plan(0.0f);
@@ -669,10 +709,16 @@ void Sim::update_car(int i, float h) {
 		float gap = t.sa - hl_;
 		if (t.type == TRK_XWALK || t.sb <= -hl_ - 1.0f || gap > avoid_r) continue;
 		if (pull[i] && dg < pull_d[i] && t.sa > dg + hl_ + 0.2f) continue;   // (it lies beyond where this car stops: the car in the next stall is not to be driven round)
-		if (t.type != TRK_STATIC && std::fabs(t.v) >= 1.5f) continue;
+		// a cyclist ahead: go past him in the lane, with room; but never into a junction: within 25 m of the stop line,
+		// or in the junction itself, the car follows him (a car that went past one up to a stop sign stood beside him at
+		// the line with its nose in a turning car's path: 39 cars locked in tests/traffic/test_traffic_core.gd)
+		const bool any_bike = t.type == TRK_CAR && kind[t.idx] == K_BIKE && kind[i] != K_BIKE;
+		const bool bike = any_bike && conn[i] < 0 && l_stop_s[L] - s[i] - hl_ - std::max(t.sb, 0.0f) > 25.0f;
+		if (any_bike && !bike) continue;   // (standing at the line or not: he is followed, not driven round)
+		if (t.type != TRK_STATIC && std::fabs(t.v) >= 1.5f && !bike) continue;
 		bool ped = t.type == TRK_DYN && d_kind[t.idx] == DYN_PED;
 		if (ped && d_vx[t.idx] * d_vx[t.idx] + d_vz[t.idx] * d_vz[t.idx] > 0.09f) continue;   // a walker on the move: wait for them
-		float m = ped ? 0.6f : 0.3f;
+		float m = ped ? 0.6f : (bike ? 0.5f : 0.3f);
 		float cur = clampf(want, amin, amax);
 		if (t.lb <= cur - hw_ - m || t.la >= cur + hw_ + m) continue;
 		float lreq = t.lb + hw_ + m, rreq = t.la - hw_ - m;
@@ -680,9 +726,10 @@ void Sim::update_car(int i, float h) {
 		// happens to be: a car on its way back from the kerb must not pass a queue along the parked cars
 		bool okl = lreq <= std::min(amax, std::max(lim, want)) + 1e-3f, okr = rreq >= std::max(amin, std::min(-lim, want)) - 1e-3f;
 		if (okl && okr) { if (std::fabs(lreq - want) <= std::fabs(rreq - want)) okr = false; else okl = false; }
-		if (okl) amin = std::max(amin, lreq);
+		if (bike && okr && !okl) okr = false;   // (never between a cyclist and the kerb)
+		if (okl) { amin = std::max(amin, lreq); if (bike && gap < 3.0f) bike_pass_mark(i, t.idx); }
 		else if (okr) amax = std::min(amax, rreq);
-		else if (blk < 0 && gap > -0.5f) blk = k;
+		else if (blk < 0 && gap > -0.5f && !bike) blk = k;
 	}
 	const float lat_t = amin <= amax ? clampf(want, amin, amax) : lat[i];
 
@@ -853,7 +900,7 @@ void Sim::update_car(int i, float h) {
 			honk_cd[i] = 6.0f + 4.0f * rnd();
 			st.honks++;
 		}
-		if (man[i] == MAN_NONE && conn[i] < 0 && tier[i] != TIER_FAR && !line_passed[i]) {
+		if (man[i] == MAN_NONE && conn[i] < 0 && tier[i] != TIER_FAR && !line_passed[i] && kind[i] != K_BIKE) {
 			bool ready = false;
 			if (pass_type) ready = is_static ? bgap < std::max(22.0f, 3.0f * v_) : blocked_t[i] >= honk_after + 1.5f;
 			// a slow car ahead on a road with more lanes: normal and pushy drivers overtake
@@ -941,6 +988,7 @@ void Sim::update_car(int i, float h) {
 		float vl = std::min(p_vmax[p] * cfg.t_vf[tp], std::max(ptv[p_off[p]] * cfac, 2.0f));
 		v0 = std::min(v0, std::sqrt(vl * vl + 2.0f * cfg.b_curve * std::max(w.off[k], 0.0f)));
 	}
+	if (vdes[i] > 0.0f) v0 = std::min(v0, vdes[i]);
 	v0 = std::min(v0, v0_e2);
 	if (std::fabs(lat_t - lat[i]) > 0.25f) v0 = std::min(v0, 8.0f);
 	if (man[i] == MAN_PASS) v0 = std::min(v0, 5.5f);
@@ -1119,7 +1167,7 @@ int Sim::place_car(int lane_, float s_, float speed, int model_, int temper_) {
 	steer[i] = latacc[i] = wait_t[i] = blocked_t[i] = honk_cd[i] = crash_t[i] = slow_t[i] = lc_t[i] = pass_lat[i] = pass_rem[i] = hard_cd[i] = 0.0f;
 	for (int k = 0; k < MAX_HELD; k++) { h_conn[i][k] = -1; h_rem[i][k] = 0.0f; }
 	rt[i].clear(); rt_i[i] = 0; goal_ri[i] = -1; lead_id[i] = -1; chain_n[i] = 0; hold_[i] = 0; veto_by[i] = -1; route_of[i] = -1; next_stop[i] = -1; trip[i] = -1;
-	goal_s[i] = goal_lat[i] = dwell[i] = lc_stuck[i] = 0.0f; lc_need[i] = 0; arrived[i] = 0; pull[i] = 0; pull_d[i] = 45.0f;
+	goal_s[i] = goal_lat[i] = dwell[i] = lc_stuck[i] = 0.0f; lc_need[i] = 0; arrived[i] = 0; pull[i] = 0; pull_d[i] = 45.0f; vdes[i] = 0.0f;
 	if (i >= hi) hi = i + 1;
 	n_alive++;
 	return i;
@@ -1137,6 +1185,7 @@ int Sim::spawn_car(int lane_, float s_, float speed, int model_, int temper_) {
 
 void Sim::despawn(int i, int reason) {
 	event(E_DESPAWN, i, (float)reason);
+	if (kind[i] == K_BIKE) n_bikes--;
 	release_all(i);
 	alive[i] = 0; n_alive--;
 	while (hi > 0 && !alive[hi - 1]) hi--;
@@ -1222,11 +1271,11 @@ void Sim::population() {
 		float d2 = dx * dx + dz * dz;
 		bool vis = in_cone(x[i], z[i]);
 		bool bus_done = kind[i] == K_BUS && goal_ri[i] < 0 && nconn[i] < 0 && lc_need[i] == 0 && conn[i] < 0 && p_len[lane[i]] - s[i] < 10.0f;
-		if (kind[i] == K_AMBIENT && conn[i] < 0 && (l_flags[lane[i]] & LF_EXIT) && p_len[lane[i]] - s[i] < hl[i] + 2.5f) despawn(i, 5);   // it has left the map
+		if ((kind[i] == K_AMBIENT || kind[i] == K_BIKE) && conn[i] < 0 && (l_flags[lane[i]] & LF_EXIT) && p_len[lane[i]] - s[i] < hl[i] + 2.5f) despawn(i, 5);   // it has left the map
 		else if ((d2 > cfg.despawn_r * cfg.despawn_r && (x[i] - ring_x) * (x[i] - ring_x) + (z[i] - ring_z) * (z[i] - ring_z) > cfg.despawn_r * cfg.despawn_r) ||
 				(!vis && d2 > cfg.behind_despawn_r * cfg.behind_despawn_r)) despawn(i, 0);
 		else if (!loaded_at(x[i], z[i]) && (!vis || d2 > 250.0f * 250.0f)) despawn(i, 6);   // its cell has gone: so has it
-		else if (kind[i] == K_AMBIENT && why[i] == W_DEADEND && wait_t[i] > 4.0f) despawn(i, 1);
+		else if ((kind[i] == K_AMBIENT || kind[i] == K_BIKE) && why[i] == W_DEADEND && wait_t[i] > 4.0f) despawn(i, 1);
 		else if (bus_done && (!vis || d2 > 80.0f * 80.0f)) despawn(i, 4);
 		else if (bus_done && route_of[i] >= 0 && routes[route_of[i]].loop && lane[i] == routes[route_of[i]].lanes.front()) {   // a loop, and somebody watches: round again
 			rt[i] = routes[route_of[i]].lanes; rt_i[i] = 0; next_stop[i] = 0;
@@ -1266,7 +1315,61 @@ void Sim::population() {
 	// its travel): at 280 km/h a car lives 5 s before the camera has passed it, and 4 tries filled only half the street
 	const float lead = std::sqrt((ring_x - cam_x) * (ring_x - cam_x) + (ring_z - cam_z) * (ring_z - cam_z));
 	const int tries_n = 4 + (int)(lead / 8.0f);
-	for (int tries = 0; tries < tries_n && n_alive < target; tries++) try_spawn();
+	for (int tries = 0; tries < tries_n && n_alive - n_bikes < target; tries++) try_spawn();
+	// the cyclists: a few round the camera, by the hour, none when the game says so (rain)
+	const int bt = std::min((int)std::ceil((float)cfg.max_bikes * clampf(cfg.hour_factor, 0.0f, 1.0f)), MAX_CARS / 8);
+	for (int tries = 0; tries < 2 && n_bikes < bt && n_alive < MAX_CARS - 2; tries++) try_spawn_bike();
+}
+
+// One try for a cyclist: as for a car (the ring, the camera's rules, room round it), on a kerb lane a bike rides; at
+// the kerb side of it, at his own speed.
+bool Sim::try_spawn_bike() {
+	const float ang = rnd() * 6.2831853f;
+	const float ro = std::max(cfg.spawn_r_out, cfg.spawn_r_in + 1.0f), r = std::sqrt(rnd()) * ro;
+	const float qx = ring_x + std::sin(ang) * r, qz = ring_z + std::cos(ang) * r;
+	const int c = cell_of(qx, qz);
+	if (c < 0) return false;
+	const int n = sg_off[c + 1] - sg_off[c];
+	if (n <= 0) return false;
+	const int e = sg_off[c] + std::min((int)(rnd() * (float)n), n - 1);
+	const int L = sg_piece[e];
+	if (L >= n_lanes || !bike_lane(L)) return false;
+	const int q = p_off[L] + sg_pt[e];
+	const float s_ = ptc[q] + rnd() * (ptc[q + 1] - ptc[q]);
+	if (s_ < BIKE_HL + 3.0f || s_ > l_stop_s[L] - BIKE_HL - 8.0f) return false;
+	const float lat0 = -std::max(p_hw[L] - 0.55f, 0.0f);
+	int hint = 0;
+	float o[7];
+	pose_at(L, s_, lat0, 0.0f, 0.0f, 1.0f, hint, o);
+	const float dx = o[0] - cam_x, dz = o[2] - cam_z, dd = std::sqrt(dx * dx + dz * dz);
+	if (dd < cfg.spawn_r_in) return false;
+	{ const float rx = o[0] - ring_x, rz = o[2] - ring_z; if (rx * rx + rz * rz > ro * ro) return false; }
+	if (!loaded_at(o[0], o[2])) return false;
+	const bool vis = in_cone(o[0], o[2]);
+	if ((vis && dd < cfg.view_safe_r) || (!vis && dd > cfg.behind_despawn_r - 20.0f)) return false;
+	for (int j = 0; j < hi; j++) {
+		if (!alive[j]) continue;
+		const float ex = x[j] - o[0], ez = z[j] - o[2];
+		if (ex * ex + ez * ez < 12.0f * 12.0f) return false;
+	}
+	for (int k = 0; k < nd; k++) { const float ex = d_x[k] - o[0], ez = d_z[k] - o[2]; if (ex * ex + ez * ez < 10.0f * 10.0f) return false; }
+	if (static_overlap(o[0], o[1], o[2], o[3], o[4], BIKE_HL + 0.4f, BIKE_HW + 0.3f)) return false;
+	const float vd = cfg.bike_v_lo + rnd() * (cfg.bike_v_hi - cfg.bike_v_lo);
+	const float sp = std::min(vd * 0.9f, std::sqrt(2.0f * 1.2f * std::max(l_stop_s[L] - s_ - BIKE_HL - 1.0f, 0.0f)));
+	const int i = place_car(L, s_, sp, 0, 0);
+	if (i < 0) return false;
+	kind[i] = K_BIKE; vdes[i] = vd;
+	hl[i] = BIKE_HL; hw[i] = BIKE_HW; rad[i] = std::sqrt(BIKE_HL * BIKE_HL + BIKE_HW * BIKE_HW);
+	wb[i] = 1.05f; smax[i] = 0.75f;
+	colour[i] = (uint8_t)(rnd() * 8.0f);
+	lat[i] = latm[i] = lat0;
+	x[i] = px[i] = o[0]; y[i] = py[i] = o[1]; z[i] = pz[i] = o[2]; fx[i] = o[3]; fz[i] = o[4]; pitch[i] = ppitch[i] = o[5]; yaw[i] = pyaw[i] = o[6]; rpitch[i] = o[5];
+	nconn[i] = pick_bike(L);
+	if (blocked_by(i, x[i], y[i], z[i], fx[i], fz[i], 0.1f)) { alive[i] = 0; n_alive--; while (hi > 0 && !alive[hi - 1]) hi--; return false; }
+	tier[i] = dd < cfg.tier_full_r ? TIER_FULL : (dd < cfg.tier_mid_r ? TIER_MID : TIER_FAR);
+	n_bikes++; st.bikes_spawned++; st.spawned++;
+	event(E_SPAWN, i, (float)L);
+	return true;
 }
 
 void Sim::set_view(float x_, float y_, float z_, float fx_, float fz_, float fov_deg) {
