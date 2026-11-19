@@ -1,7 +1,14 @@
 # Superchecker over the city: the cloud session's report (from the bottom of ORDER.txt upward)
 
-**Status: IN PROGRESS** (this file is rewritten as pieces are done; the final version says DONE and where the two
-sessions met).
+**Status: DONE.** The two sessions met at line 49 of ORDER.txt: `n_hs_b1_amber` is claimed by pc-session
+(2026-11-19 18:45Z). This session did **lines 50-150, 101 pieces**, from `n_wf_b2e` (line 150) up to `n_hs_b1_tenth`
+(line 50). Every one: PROOF RESULT PASS, lock test RESULT PASS, committed and pushed.
+
+Totals over the 101 pieces (lines of their `<piece>.fixes.json`): 975 props erased (no plainly safe place, in an
+opening, over an edge, bins in the open ...), 963 props set on the ground / lifted / slid along a wall, 9,441 wear marks
+off their surface removed, 3,110 colliders added (of them 910 later resized to the prop's own size, see "Colliders"),
+1,674 builder trees out, 50 duplicate fence posts erased, 1 tree well paved; the rooms of these pieces fixed with their
+own proofs where they had faults. Trees back by hand: see the zone table.
 
 Branch `claude/festive-faraday-20ltx2`. Every piece below was claimed with `claim.sh <piece> cloud-session`, checked,
 decided (`sc_review.py decide`: erase when unsure, slide a wall item <= 1.2 m along its own wall, keep the known false
@@ -9,7 +16,7 @@ alarms), fixed on a copy with **PROOF RESULT PASS**, given a hand-written tree l
 line with its why, `sc.py trees` ok), installed with `--by=Yasin` under Yasin's word for this run, and committed and
 pushed only after the lock test said **RESULT PASS**. Roads and ground surfaces were never touched.
 
-## Pieces done (47 so far)
+## Pieces done (101, from the bottom of the list up)
 | # | Piece | Zone | Props erased | Props moved | Wear marks out | Colliders added | Colliders resized later | Trees out | Trees back |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | n_wf_b2e | waterfront | 18 | 20 | 60 | 15 | 0 | 4 | 2 |
@@ -55,12 +62,80 @@ pushed only after the lock test said **RESULT PASS**. Roads and ground surfaces 
 | 41 | r_q_0_m1400_sw | residential yards | 12 | 25 | 132 | 31 | 0 | 18 | 5 |
 | 42 | r_q_m200_200_ne | residential yards | 9 | 4 | 125 | 32 | 0 | 14 | 5 |
 | 43 | r_q_m200_200_nw | residential yards | 7 | 1 | 112 | 30 | 0 | 17 | 5 |
+| 44 | r_q_m200_0_se | residential yards | 9 | 0 | 150 | 47 | 0 | 28 | 7 |
+| 45 | r_q_m200_0_ne | residential yards | 5 | 1 | 107 | 31 | 0 | 17 | 5 |
+| 46 | r_q_m200_0_sw | residential yards | 9 | 10 | 138 | 28 | 0 | 14 | 5 |
+| 47 | r_q_m200_0_nw | residential yards | 9 | 0 | 124 | 31 | 0 | 15 | 5 |
+| 48 | r_q_m200_m200_se | residential yards | 7 | 4 | 148 | 48 | 0 | 24 | 7 |
+| 49 | r_q_m200_m200_sw | residential yards | 8 | 5 | 143 | 31 | 0 | 14 | 5 |
+| 50 | r_q_m200_m1000_se | residential yards | 4 | 4 | 100 | 24 | 0 | 14 | 4 |
+| 51 | r_q_m200_m1000_ne | residential yards | 8 | 12 | 130 | 34 | 0 | 16 | 5 |
+| 52 | r_q_m200_m1200_se | residential yards | 12 | 0 | 166 | 48 | 0 | 26 | 6 |
+| 53 | r_q_m200_m1200_ne | residential yards | 6 | 22 | 135 | 34 | 0 | 15 | 5 |
+| 54 | r_q_m200_m1400_se | residential yards | 12 | 37 | 159 | 52 | 0 | 22 | 7 |
+| 55 | r_q_m400_200_ne | residential yards | 15 | 4 | 162 | 51 | 0 | 28 | 7 |
+| 56 | r_q_m400_200_nw | residential yards | 8 | 16 | 121 | 29 | 0 | 17 | 5 |
+| 57 | r_q_m400_0_se | residential yards | 6 | 11 | 123 | 30 | 0 | 17 | 5 |
+| 58 | r_q_m400_0_ne | residential yards | 12 | 0 | 163 | 52 | 0 | 26 | 7 |
+| 59 | r_q_m400_0_sw | residential yards | 7 | 29 | 121 | 31 | 0 | 14 | 5 |
+| 60 | r_q_m400_0_nw | residential yards | 4 | 4 | 126 | 31 | 0 | 16 | 4 |
+| 61 | r_q_m400_m200_se | residential yards | 6 | 0 | 129 | 30 | 0 | 14 | 4 |
+| 62 | r_q_m400_m200_sw | residential yards | 6 | 0 | 128 | 30 | 0 | 18 | 5 |
+| 63 | r_q_m600_200_ne | residential yards | 14 | 35 | 146 | 54 | 0 | 27 | 7 |
+| 64 | r_q_m600_200_nw | residential yards | 11 | 25 | 130 | 33 | 0 | 17 | 5 |
+| 65 | r_q_m600_0_se | residential yards | 6 | 8 | 105 | 27 | 0 | 17 | 5 |
+| 66 | r_q_m600_0_ne | residential yards | 8 | 24 | 157 | 54 | 0 | 23 | 6 |
+| 67 | r_q_m600_0_sw | residential yards | 7 | 17 | 138 | 31 | 0 | 17 | 5 |
+| 68 | r_q_m600_0_nw | residential yards | 8 | 17 | 118 | 30 | 0 | 15 | 5 |
+| 69 | r_q_m600_m200_se | residential yards | 5 | 18 | 106 | 30 | 0 | 12 | 5 |
+| 70 | r_q_m600_m200_ne | residential yards | 7 | 0 | 150 | 50 | 0 | 24 | 7 |
+| 71 | r_q_m600_m200_sw | residential yards | 0 | 1 | 109 | 27 | 0 | 16 | 5 |
+| 72 | r_q_m600_m200_nw | residential yards | 7 | 2 | 142 | 29 | 0 | 15 | 5 |
+| 73 | r_q_m800_200_ne | residential yards | 11 | 35 | 165 | 50 | 0 | 23 | 6 |
+| 74 | r_q_m800_0_se | residential yards | 3 | 2 | 105 | 39 | 0 | 13 | 5 |
+| 75 | r_q_m800_0_ne | residential yards | 7 | 13 | 160 | 51 | 0 | 21 | 6 |
+| 76 | r_q_m800_m200_se | residential yards | 6 | 12 | 127 | 32 | 0 | 18 | 5 |
+| 77 | r_q_m800_m200_ne | residential yards | 4 | 0 | 113 | 26 | 0 | 14 | 4 |
+| 78 | n_hs_b6_garden | high street | 2 | 0 | 6 | 25 | 0 | 11 | 4 |
+| 79 | n_hs_b6_tenth | high street | 1 | 1 | 0 | 25 | 0 | 18 | 5 |
+| 80 | n_hs_b6_hill | high street | 13 | 1 | 0 | 17 | 0 | 16 | 4 |
+| 81 | n_hs_b6_ninth | high street | 12 | 1 | 0 | 9 | 0 | 8 | 3 |
+| 82 | n_hs_b6_amber | high street | 12 | 0 | 0 | 8 | 0 | 2 | 2 |
+| 83 | n_hs_b5_school | high street (school grounds) | 4 | 0 | 1 | 10 | 0 | 14 | 4 |
+| 84 | n_hs_b5_tenth | high street | 0 | 1 | 1 | 24 | 0 | 17 | 3 |
+| 85 | n_hs_b5_hill | park (hill park in the high-street band) | 3 | 1 | 0 | 8 | 0 | 17 | 8 |
+| 86 | n_hs_b5_eleventh | high street | 9 | 0 | 0 | 10 | 0 | 4 | 2 |
+| 87 | n_hs_b5_amber | high street | 10 | 0 | 1 | 14 | 0 | 5 | 3 |
+| 88 | n_hs_b4_ocean | ring boulevard (Ocean) and park lawn | 4 | 0 | 0 | 5 | 0 | 19 | 13 |
+| 89 | n_hs_b4_cottages | high street band, cottage row (residential yards) | 29 | 1 | 7 | 28 | 0 | 17 | 5 |
+| 90 | n_hs_b4_eleventh | high street | 18 | 0 | 0 | 22 | 0 | 15 | 6 |
+| 91 | n_hs_b4_amber | high street | 14 | 0 | 0 | 17 | 0 | 4 | 4 |
+| 92 | n_hs_b3_motel | high street band, motel by Ocean | 7 | 0 | 0 | 17 | 0 | 10 | 6 |
+| 93 | n_hs_b3_cottages | high street band, cottage row (residential yards) | 7 | 1 | 6 | 20 | 0 | 10 | 4 |
+| 94 | n_hs_b3_dingbats | high street | 19 | 1 | 0 | 25 | 0 | 14 | 5 |
+| 95 | n_hs_b3_amber | high street | 15 | 0 | 1 | 9 | 0 | 4 | 3 |
+| 96 | n_hs_b2_ninth | high street | 3 | 0 | 2 | 5 | 0 | 9 | 3 |
+| 97 | n_hs_b2_mews | high street band, mews (residential yards) | 13 | 18 | 7 | 29 | 0 | 9 | 3 |
+| 98 | n_hs_b2_park | park (in the high-street band) | 5 | 1 | 3 | 18 | 0 | 8 | 4 |
+| 99 | n_hs_b2_amber | ? | 16 | 0 | 0 | 15 | 0 | 0 | 0 |
+| 100 | n_hs_b1_eleventh | high street band (yards and lawn) | 3 | 1 | 7 | 15 | 0 | 12 | 4 |
+| 101 | n_hs_b1_tenth | high street | 13 | 1 | 7 | 15 | 0 | 10 | 2 |
 
 | Zone | Builder trees out | Trees back by hand |
 |---|---|---|
 | waterfront | 67 | 20 |
 | commercial strip | 83 | 22 |
-| residential yards | 644 | 180 |
+| residential yards | 1271 | 364 |
+| high street | 137 | 49 |
+| high street (school grounds) | 14 | 4 |
+| park (hill park in the high-street band) | 17 | 8 |
+| ring boulevard (Ocean) and park lawn | 19 | 13 |
+| high street band, cottage row (residential yards) | 27 | 9 |
+| high street band, motel by Ocean | 10 | 6 |
+| high street band, mews (residential yards) | 9 | 3 |
+| park (in the high-street band) | 8 | 4 |
+| high street, no trees (n_hs_b2_amber) | 0 | 0 |
+| high street band (yards and lawn) | 12 | 4 |
 
 (Colliders resized later: see "Colliders" below. Props moved = set back on the ground / lifted out of it where the check had one right answer, plus short slides along
 their own wall. Colliders = boxes added to columns and props that had none. The numbers are lines of each piece's
@@ -69,12 +144,13 @@ their own wall. Colliders = boxes added to columns and props that had none. The 
 ## Where I changed what the tools would have done, and why
 - **Poles that carry a wire are kept.** The decide step erased `prop_utility_pole(_transformer)` items standing in front
   of a garage or overlapping a prop. A wire point was 0.2-0.7 m from each of them: erasing the pole leaves the power line
-  hanging in the air. I turned those lines into `keep` (in r_q_500_m200_sw, r_q_500_m200_nw, r_q_250_m200_ne,
-  r_q_250_m200_nw x2, r_q_250_m1000_se, r_q_250_m1000_ne, r_q_250_m1000_sw). I checked the earlier pieces: no wired pole
-  was erased there (the only pole erased, in m_gr_e4s, was a car-park light).
-- **Doubled fence posts.** In most residential quadrants the fixer refused a "lift the sunk post" line because two
+  hanging in the air. I turned those lines into `keep` in every residential quadrant where it happened (about 30 poles; each such
+  commit says "the wired pole kept", the decision line says why). The checked waterfront and strip pieces erased no
+  wired pole (the only pole erased, in m_gr_e4s, was a car-park light).
+- **Doubled fence posts.** In the first ~43 pieces the fixer refused a "lift the sunk post" line because two
   identical posts stand on the same spot. For each, one post is lifted (`nth 0`) and its duplicate erased (`nth 1`,
-  kind `double_post`), so the joint keeps one post. The proof covers both lines.
+  kind `double_post`), so the joint keeps one post. The proof covers both lines. From r_q_m200_200_nw on I follow the PC
+  session's newer rule in `block.sh` (a doubled post is left as it stands).
 - **Wells:** every builder tree's well line ran; on the waterfront, strip and residential yards the trees stood in grass
   or plain mulch, the fixer found no cut well and paved nothing (0 wells). Two coral trees stood on mulch patches
   (n_wf_b1e, n_wf_b1m): the patches stay, with no tree (ground surfaces are not touched).
@@ -118,8 +194,28 @@ in old spots it is fine, stick to the plan").
   one, kept clear of the pylon signs; one tree at each island end; none in the fenced boat / RV storage yard (m_gr_e4n).
 - **Residential yards (one tree for every two or three houses, never against a fence or a wall):** 5-9 per quadrant,
   where people sit (grills, chairs, swings, picnic tables) and on open lot corners; the tight back-fence rows (one every
-  6 m) and the trees 3 m from the house fronts went. This is about 28 % of the old trees: the plan's zone total is ~half
-  (813 -> 400), its rule per house is what I followed.
+  6 m) and the trees 3 m from the house fronts went. This is about 29 % of the old trees (364 of 1,271): the plan's zone total is ~half (813 -> 400), its rule per
+  house is what I followed; Yasin can ask for more of the old spots back.
+
+
+## The high-street band, parks and Ocean (lines 50-73)
+- **Wells.** Only `n_hs_b3_amber` had trees in paved wells (four Amber palms). Its tree list was written before
+  `block.sh` (another session's tip: the check leaves listed trees' wells open), so the kept palms stand in their wells.
+  One palm was then dropped for the in-view limit and its well paved; the finder had given that well line the palm
+  model's height (-1.48 m local, the ground is +0.09), so the proof (which looks for ground triangles within 0.4 m of that
+  height) said "no well was paved". I set that one line's height to the measured ground; proof PASS, the well check 1 -> 0.
+  **For whoever keeps sc_find.py: a well line should take the ground's height, not the tree's.**
+- **Parks and the school grounds** (`n_hs_b5_hill`, `n_hs_b2_park`, `n_hs_b5_school`, the lawn of `n_hs_b4_ocean`) follow
+  the plan's park rule: clumps at the edges round the seating (picnic tables, benches), open lawn in the middle.
+- **Ocean Boulevard** (`n_hs_b4_ocean`): all seven boulevard palms kept on their spots (ring boulevard = palms).
+- **Amber**: every palm on Amber kept (the avenue's signature), except one in `n_hs_b3_amber` for the in-view limit.
+- **In-view limit.** `sc.py trees` counts every hand-placed tree seen from the streets round a block, the neighbours'
+  too (8 broadleaf, 12 of any kind). In `n_hs_b5_tenth`, `n_hs_b2_park`, `n_hs_b1_tenth`, `n_hs_b3_amber` I dropped trees
+  until it said ok.
+- **A slip of mine, put right:** `n_hs_b2_park` was installed while its tree list was still over the limit (my command
+  checked that the list line printed, not that it said ok). The piece itself was proven and fine, but no tree piece went
+  in with it and the committed list did not pass. The next commit makes the list pass and puts `t_hs_b2_park` in place
+  with its layout row (the same two steps `install` does). From then on the install ran only after an exact "ok".
 
 ## Reported only (left as they are: not props or road wear, or not mine to decide)
 Per piece the checker also lists items it does not fix: `building_sunk`, `edge_step`, `ground_step`, `garage_step`
@@ -129,5 +225,6 @@ piece near), `sail_over_nothing`, `no_reason`, `empty_batch`. They are in each p
 when the check is run again.
 
 ## Not checked
+The PC session's pieces (lines 1-49) are not mine: not checked here, including for the oversized colliders.
 No pictures were taken of the fixed pieces (the proof says what changed, not how it looks). The phone run is not part
 of this job.
