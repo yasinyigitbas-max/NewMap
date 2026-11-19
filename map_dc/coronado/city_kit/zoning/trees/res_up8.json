@@ -1,0 +1,57 @@
+{
+ "area": "res_up8",
+ "piece": "s_res_up8",
+ "zone": "Residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - runs of one species per block face, 20-30 m apart; 4 for the in-view limit; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -593.55,
+    4.556,
+    158.174
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, 2.7 m off the board fence (more than 0.9 m): magnolia, the face's species"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -593.55,
+    5.948,
+    130.897
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass, 27.3 m on: same run"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -606.45,
+    4.287,
+    167.705
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east parkway grass, 2.7 m off the privacy fence: Torrey pine, the face's species"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -606.45,
+    6.895,
+    117.005
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway grass, 50.7 m on (the spot 13 m on was too close): same run"
+  }
+ ]
+}
