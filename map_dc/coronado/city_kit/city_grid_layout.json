@@ -5305,6 +5305,256 @@
    "from": "grow_grt"
   },
   {
+   "piece": "n_hs_b1_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b1_tenth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b1_eleventh",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b2_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b2_park",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b2_mews",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b2_ninth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b3_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b3_dingbats",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b3_cottages",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b3_motel",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b4_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b4_eleventh",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b4_cottages",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b4_ocean",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b5_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b5_eleventh",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b5_hill",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b5_tenth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b5_school",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b6_amber",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b6_ninth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b6_hill",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b6_tenth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b6_garden",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
    "piece": "i_va_w800_n1600_sw",
    "pos": [
     -800.0,
