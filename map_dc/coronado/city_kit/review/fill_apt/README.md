@@ -1,7 +1,11 @@
-# Apartment band fill (branch claude/fill-apartments, 19 Nov) - the whole zone: blocks 1, 2, 3 (drafts for Yasin)
+# Apartment band fill (branch claude/fill-apartments, 19 Nov) - the whole zone: blocks 1, 2, 3 - LOCKED
+
+LOCKED 19 Nov on Yasin's word ("just lock them if you are done with placements"): the eight pieces n_apt_* (`lock.py lock`)
+and the fifteen rooms g_apt_* (`lock.py lockfile`); lock test RESULT PASS (504 locked pieces, 118 locked plan files).
+From now on a change is one thing at a time, on his word for that piece.
 
 Yasin, after block 1: "go on populate the entire zone". The apartment band east of the sample, three blocks, eight
-pieces, 25 hand-designed sub-blocks, 15 shop rooms. Nothing is locked. Nothing shared was changed (see the end).
+pieces, 25 hand-designed sub-blocks, 15 shop rooms. Nothing shared was changed (see the end).
 Each piece is its own script (`tools/city/pilot/pieces/n_apt_*.gd`, the reasons for everything in its header) with my
 copies of the libraries: `apt_fill_lib.gd` (copy of apt_lib + the land on slopes + wall items clear of openings +
 shortened fence panels), `apt_fill_b2_land.gd`, `apt_fill_b3_land.gd` (measured street heights, data only).
