@@ -1,0 +1,58 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -5.46999979019165,
+    0.0,
+    4.69000005722046
+   ],
+   "base": "prop_brochure_rack",
+   "chosen": true,
+   "cond": "",
+   "kind": "window_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: a 1.6 m brochure rack right behind the shop window [prop_brochure_rack (1.6 m tall) stands right behind a window]"
+  },
+  {
+   "at": [
+    -0.0399999991059303,
+    0.9200000166893,
+    -1.95000004768372
+   ],
+   "base": "prop_poster_case",
+   "cond": "",
+   "kind": "shows_through",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "move",
+   "reason": "prop_poster_case reaches 1.5 cm into the wall to the next shop and shows in the next shop",
+   "to": [
+    -0.0750000175650842,
+    0.9200000166893,
+    -1.95000004768372
+   ]
+  },
+  {
+   "at": [
+    -0.0399999991059303,
+    0.9200000166893,
+    4.05000019073486
+   ],
+   "base": "prop_poster_case",
+   "cond": "",
+   "kind": "shows_through",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "move",
+   "reason": "prop_poster_case reaches 1.5 cm into the wall to the next shop and shows in the next shop",
+   "to": [
+    -0.0750000175650842,
+    0.9200000166893,
+    4.05000019073486
+   ]
+  }
+ ],
+ "scene": "g_grt_v1_g4ne_trade_corner_0"
+}

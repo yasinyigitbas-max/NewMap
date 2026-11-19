@@ -2006,11 +2006,6 @@
    "by": "Yasin",
    "date": "2026-11-18"
   },
-  "g_v1_g4ne": {
-   "sha256": "c7d223a3faa0a4e5f774686bf3a10c9eb3dd82fb63e70cd0e42cf04e056fc80b",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
   "g_v2_j4se": {
    "sha256": "fdee89dd5049068976f053318fe62f14af63d27193ee83d0cb313e9b26e858fe",
    "by": "Yasin",
@@ -2675,6 +2670,11 @@
    "sha256": "fd11ced0398f291ca8af85e33a78c6747d2c4c1609c9e6fe0ce3ddd6a0f1e8dc",
    "by": "Yasin",
    "date": "2026-11-19"
+  },
+  "g_v1_g4ne": {
+   "sha256": "9e59df845610f3eb16edbaee37abc4bc0fa8e255146d8a318c206f614d356416",
+   "by": "Yasin",
+   "date": "2026-11-19"
   }
  },
  "files": {
@@ -2772,21 +2772,6 @@
    "sha256": "88b4dc8cd2b7d4611593cd01042a97ecc903d6ad0ed10c6a91df966dfcdf584a",
    "by": "Yasin",
    "date": "2026-11-18"
-  },
-  "map_dc/coronado/city_kit/interiors/rooms/g_grt_v1_g4ne_trade_corner_0.scn": {
-   "sha256": "ab4c1b6363140eb57190c06dcb1db2253440c085dc27dba06cca0cf711b538a3",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
-  "map_dc/coronado/city_kit/interiors/rooms/g_grt_v1_g4ne_trade_corner_1.scn": {
-   "sha256": "59a1820b212a2e33bb0e00a813fe22579bbdbd9c74349dc64ab1647f4bb9fbe1",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
-  "map_dc/coronado/city_kit/interiors/rooms/g_grt_v1_g4ne_tyre_shop_0.scn": {
-   "sha256": "b65b2e12b46d9f49a4280a654f5a2d92d5383d28d34ca2b0283d7677690e915f",
-   "by": "Yasin",
-   "date": "2026-11-19"
   },
   "map_dc/coronado/city_kit/interiors/rooms/g_grt_v2_g4nw_corner_next_1.scn": {
    "sha256": "9343cc1928f4a58c835499b8a46c0fd45e41e73f14dae11b3289ba2551c99b4e",
@@ -3440,6 +3425,21 @@
   },
   "map_dc/coronado/city_kit/interiors/rooms/g_grt_v2_g4nw_row3_1.scn": {
    "sha256": "5aa3a9cbba527f09fbf1118df89fc4e47b5007a1c873c6d88f34eda2d0aa4fa8",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_grt_v1_g4ne_trade_corner_0.scn": {
+   "sha256": "fce2ab3b2f2f077fafdeff1e1dbc2412bfd342ebfdcb775c16f2ac4c27704fdf",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_grt_v1_g4ne_trade_corner_1.scn": {
+   "sha256": "8ec6408ff78ffe5d984bb0e85747b94d5e1f51f13a6b7e68b151bcca8eb08183",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_grt_v1_g4ne_tyre_shop_0.scn": {
+   "sha256": "6d9e5eba723751ae36b3f5125c9504d67893d85a03f7fe8e965e174f4ac98e99",
    "by": "Yasin",
    "date": "2026-11-19"
   }

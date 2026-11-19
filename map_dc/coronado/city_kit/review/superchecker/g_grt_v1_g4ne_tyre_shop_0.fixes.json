@@ -1,0 +1,20 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -2.6654999256134,
+    0.0,
+    6.30000019073486
+   ],
+   "base": "prop_workbench",
+   "chosen": true,
+   "cond": "",
+   "kind": "window_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: a 1.5 m workbench right behind the shop window; the bay behind the counter is the work place [prop_workbench (1.5 m tall) stands right behind a window]"
+  }
+ ],
+ "scene": "g_grt_v1_g4ne_tyre_shop_0"
+}
