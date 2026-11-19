@@ -5,6 +5,24 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~19:30 (PC session): THE SUPERCHECKER'S LIST IS FULL + COLLISIONS (Yasin: "why arent the check list full yet?
+  write them in"; "checker should add collisions to everything that sit on the ground, including columns of
+  buildings, some of them lack it. speed it up"). STILL NOTHING OF THE MAP CHANGED: copies only.
+  THE LAST REPORT UNDER-COUNTED: it named five missing rows of the 89 given to Yasin; about thirty were missing or half
+  done. They are written now (`tools/city/super/sc_more.py`); `tools/city/super/CHECKS.md` is the list row by row:
+  the kind each finding carries, how it is fixed (auto / a place chosen by hand / report), what no check sees.
+  COLLISIONS: `no_collision` (a thing standing on the ground with no collider: it gets the kit's own shape for that
+  prop, as kit_lib gives the others; roof items are left out) and `column_no_collision` (a column or post of a
+  building's own mesh, 0.4-1.6 m up, that the model's collision shape does not cover: a box under that building's
+  collision body). Both are single lines of the fix list with their own proof.
+  TRIED ON COPIES: g_v1_j4ne 96 changes (15 column boxes: the trade corner's posts, the car wash, the old station)
+  proof PASS; r_q_m800_m200_ne 153 changes (14 prop collisions - stucco wall panels among them - 12 column boxes) proof
+  PASS; both copies check clean of what was fixed and show no new fault. Twelve rooms run without error.
+  ALSO FOUND: the city layout names no missing file; 8 piece files are placed by no row (j_rg_e0_s340, j_rg_e627_s0,
+  s_rg_b009, s_rg_b131_1/2, s_rg_b136_w, s_rg_b161_2/w); the residential block's 7 houses have back yards you can walk
+  out of; the gritty block's 7 utility poles carry no wire (no wire piece reaches the growth).
+  NOT DONE: the new kinds were tuned on these two blocks only (expect false alarms elsewhere until pictures are
+  looked at); no install; no city-wide run; a column box is measured from the mesh's points, big ones need a look.
 - 19 Nov ~17:00 (PC session): THE HAND-PLACED TREES, WRITTEN INTO THE SUPERCHECKER (Yasin: "removing existing trees
   entirely from every area it inspects, and only places them by hand according to tree plantation plan we made";
   then, asked what next, "Trees first"). STILL NOTHING OF THE MAP CHANGED: copies only.
