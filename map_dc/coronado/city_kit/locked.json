@@ -2361,11 +2361,6 @@
    "by": "Yasin",
    "date": "2026-11-19"
   },
-  "n_apt_b1_bw": {
-   "sha256": "4990df50260ed004a8672ffc60ebb5e1e447eeb5873af48d4a4e2c717409642b",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
   "n_apt_b2_be": {
    "sha256": "bf47ded9f4fb4f0cce11ece24bce4ca7fdca43585f4a4d203943a9a74f5d9d5d",
    "by": "Yasin",
@@ -2673,6 +2668,11 @@
   },
   "i_life_w800_n1400": {
    "sha256": "672102bbcaa2fb21cd07890160ced9098456a5816bf3129fdf8cbf1f4ac5d3ea",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_apt_b1_bw": {
+   "sha256": "909d4b8f46e25bb639e7ce2eda303ec833e1d9ebbe1195e66ee047978db1d141",
    "by": "Yasin",
    "date": "2026-11-19"
   }
@@ -3068,11 +3068,6 @@
    "by": "Yasin",
    "date": "2026-11-19"
   },
-  "map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_bw__barber__0.scn": {
-   "sha256": "6eabe4083af105a1cd52903e062874e2c607b4135b5d8fc44afb94b32a2dcb5a",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
   "map_dc/coronado/city_kit/interiors/rooms/g_apt_b2_bw__community_room__0.scn": {
    "sha256": "e826efcc84979c11f8e3087d780bf619a938a2a8cfc178ea2b575dd3f395a669",
    "by": "Yasin",
@@ -3095,11 +3090,6 @@
   },
   "map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_7th__coffee_window__0.scn": {
    "sha256": "45872b076584ea3290355fe569e2cd71d2b2db14f27dce29b55ef3c8b0efaa8a",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
-  "map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_bw__bakery__0.scn": {
-   "sha256": "9a09fa8741a63c6e8d07877a4aafd1fd30ac76c457d042eb3056ac2b0eb7de46",
    "by": "Yasin",
    "date": "2026-11-19"
   },
@@ -3440,6 +3430,16 @@
   },
   "map_dc/coronado/city_kit/interiors/rooms/g_ind_vc_w600_n1400_se__brewery_taproom__0.scn": {
    "sha256": "7bd0dbd84f2482ba894843bdd736ca3877b174d250e6f4a39fe3069607643e03",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_bw__bakery__0.scn": {
+   "sha256": "169f24409d9a132489e9a55b58b8ee27626690677d335ebbb3b0966d8d639d7f",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_apt_b1_bw__barber__0.scn": {
+   "sha256": "251ceab1482ab7bd01b7728ad6d05097bd86cbcc40517157e8a93dd6d126bcef",
    "by": "Yasin",
    "date": "2026-11-19"
   }
