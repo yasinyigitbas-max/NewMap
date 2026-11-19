@@ -89,6 +89,12 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   20 Nov ~06:00: THE CROWD IS IN THE GAME AND DRAWN (doc section 27): class `CityCrowd` (joined to the traffic,
   the streamer's cells, the hour), the far figures as ONE draw (tool `make_people.gd` -> `far_poses.bin`, the old
   game's person shader), test app `--people=N`. One picture `review/people_19nov/crowd_first.jpg`.
+  20 Nov ~09:00: QUATERNIUS ANIMATIONS + THE NEAR BODIES (doc section 28; Yasin: "download quaternius universal
+  animation library 1 and 2 ... keep your custom animations for pushes and impacts ... use quaternius animations for
+  getting up"). The free Standard packs (CC0) are in `characters/quaternius_ual/`; tool `make_anims.gd` (C++
+  `AnimRetarget`) fits 84 clips to our figure; the far figures are posed from them; the nearest 12 people are real
+  animated bodies with a clip for every act; pushes and impacts stay the physical body; getting up is LayToIdle.
+  Order after a change of clips: make_anims.gd, then make_people.gd.
   STILL TO DO FOR "DONE": the game's node (join to the traffic, draw far figures and the 18 near bodies with the
   acts' animations, the balancing body for a walker who is pushed or hit, capsules round the player, umbrellas,
   towels, murmur), a player on foot, the talking, a bus line, the real get-up. NO PICTURE OF THE CROWD EXISTS YET.

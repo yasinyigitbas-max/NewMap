@@ -1011,3 +1011,40 @@ NOT YET: the 18 near animated bodies (everybody is a far figure now, so close up
 is 8 frames), acts' animations, the balancing body for a walker, capsules round the player, umbrellas, towels, the
 murmur, a player on foot, talking, buses. Nobody has watched it in the city; whether cars brake for walkers on a
 road was not looked at. Not on the phone.
+
+## 28. People, step 5: the Quaternius animations and the near bodies (20 Nov, on the working branch)
+Yasin: "download quaternius universal animation library 1 and 2 and make all the crowd movements and reactions
+animated. keep your custom animations for pushes and impacts though, but use quaternius animations for getting up".
+- DOWNLOADED from the author's itch.io pages: the free "Standard" pack of library 1 and of library 2 (CC0, 43 clips
+  each): `characters/quaternius_ual/` (the two .glb files, the licence; the folder is not imported by the engine).
+  NOT bought: library 1 "Pro" (120+ clips, 9.99 USD) and the "Source" packs (14.99 USD each). If Yasin has them: put
+  the .glb files in that folder, add them to `tools/city/traffic/make_anims.gd`, run it.
+- FITTED to our 50-bone figure by a tool, C++ (`native/src/anim_retarget.*`, class `AnimRetarget`,
+  `godot --headless --path . -s res://tools/city/traffic/make_anims.gd`): 84 clips for the male and the female
+  figure, `characters/rocketbox/clips_ual_*.res` (3 MB each). `CityPed` loads them as "ual/<name>".
+  Sheet `review/people_19nov/ual_clips.jpg`: walk, sprint, idle, phone, folded arms, sitting, crouch, punch, lying,
+  up on one knee, standing: all read right on our figure.
+- THE FAR FIGURES are posed from them now (walk, standing, sitting, lying): `make_people.gd` again after
+  `make_anims.gd`. A round of the walk carries a man 1.22 m in 1.33 s; jog 2.24 m in 0.93 s; sprint 2.07 m in 0.67 s
+  (measured by the tool; the near body's clip runs at the walker's own pace by these).
+- THE NEAR BODIES (`CityCrowd::make_near / near_update / clip_of`): a pool of up to 18 `CityPed` figures (12 by
+  default, three men to two women) made at the start, every body's near mesh held. The nearest people within 30 m
+  get one, in their own body, clothes and colours (the far figure dissolves over 24-30 m as the body shows). What a
+  walker does picks the clip:
+  walking Walk_Loop / Walk_Formal_Loop at his pace, over 1.9 m/s Jog_Fwd_Loop, over 2.8 m/s Sprint_Loop; standing
+  Idle_Loop; waiting Idle_Loop or Idle_FoldArms_Loop; shop window, staring, shelter Idle_FoldArms_Loop; phone and
+  calling Idle_TalkingPhone_Loop; filming Idle_Lantern_Loop; ducking Crouch_Idle_Loop; chatting and saying a line
+  Idle_Talking_Loop; a quarrel Idle_No_Loop; blows Punch_Jab / Punch_Cross; a coin, a door Interact; sitting
+  Sitting_Idle_Loop, with a drink Sitting_Talking_Loop; lying: the first frame of LayToIdle. The free packs have NO
+  wave and NO hug: the figure's old clips "wave" and "hug" are kept for those two.
+- PUSHES AND IMPACTS stay the physical body (ped_body): a car that reaches a near body, or the player walking into
+  one at more than 1.2 m/s, hands it to its balancing body; its walker is where the body is (the brain's `to_body`),
+  and goes on from there when it is up. GETTING UP is the Quaternius clip LayToIdle (lying on the back to standing,
+  1.5 s), started where the body lies (hips on hips, head toward head); a body on its face is blended onto its back
+  first (0.7 s). The figure's engine test (tests/people/test_city_ped.gd) RESULT PASS with it.
+SEEN: `review/people_19nov/crowd_near.jpg` (plain floor): the nearest people are real bodies in stride, in the same
+clothes as their far figures behind them.
+NOT YET / NOT CHECKED: nothing seen in motion (walk speed against the ground, the dissolve, the get-up); a near body
+hit by a car or shoved by the player INSIDE the crowd was not tried (the body alone was); children (drawn 0.62-0.74
+of a grown-up) have no physical body; beggars sit as on a chair; no sitting-down / standing-up clip is played
+(Sitting_Enter / Sitting_Exit are there); lying on the front is drawn as lying on the back for near bodies.

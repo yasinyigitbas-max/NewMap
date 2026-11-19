@@ -61,11 +61,12 @@ private:
 	std::vector<pc::Event> ev_keep;   // what happened, until the game takes it (take_events)
 	Vector3 last_player; bool has_last_player = false;
 	// the far figures
-	struct Body { String id; int layer = 0, female = 0, corners = 0; float height = 1.8f; int tag = 0; };   // tag: 0 casual, 1 office, 2 police, 3 medical, 4 trade, 5 swim, 6 navy, 7 night
+	struct Body { String id; int layer = 0, female = 0, corners = 0; float height = 1.8f; int tag = 0; Ref<Mesh> near_mesh; };   // tag: 0 casual, 1 office, 2 police, 3 medical, 4 trade, 5 swim, 6 navy, 7 night
 	std::vector<Body> bodies;
 	std::vector<int> pool_casual[2], pool_tag[8];
 	int tex_w = 0, tex_h = 0, corner_h = 1, block_rows = 0, corners_max = 0;
 	float stride[2] = { 1.4f, 1.3f };
+	float gait[2][6] = { { 1.4f, 1.3f, 2.4f, 0.9f, 3.6f, 0.7f }, { 1.3f, 1.3f, 2.2f, 0.9f, 3.3f, 0.7f } };   // per kind: metres and seconds of a round of the walk, the jog, the sprint
 	Ref<ImageTexture> pose_tex;
 	Ref<ShaderMaterial> mat_far, mat_near;
 	Ref<Mesh> far_mesh;
@@ -73,8 +74,11 @@ private:
 	PackedFloat32Array buf;
 	int shown = -1;
 	// the near bodies
-	struct Near { CityPed *ped = nullptr; int walker = -1; int female = 0; float t_since = 0; };
+	struct Near { CityPed *ped = nullptr; int walker = -1; int female = 0; bool in_body = false; float push_cd = 0; Ref<ShaderMaterial> look; };
 	std::vector<Near> near_pool;
+	void make_near();
+	void near_update(double p_delta, double p_alpha);
+	void clip_of(int i, StringName &r_clip, double &r_speed, double &r_hold) const;
 	// counters
 	struct Count { int frames = 0, steps = 0; double step_us = 0, step_us_worst = 0, main_us = 0, main_us_worst = 0, people = 0, near = 0; int most = 0; } cnt;
 

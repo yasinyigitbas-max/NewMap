@@ -1,6 +1,7 @@
 // CityCrowd: see city_crowd.h.
 #include "city_crowd.h"
 
+#include "city_ped.h"
 #include "city_traffic.h"
 #include "ped_inl.h"
 #include "traffic_sim.h"
@@ -97,11 +98,12 @@ bool CityCrowd::load() {
 // The far figures' table, the people's material, the batch.
 void CityCrowd::make_look() {
 	Ref<FileAccess> f = FileAccess::open_compressed(people_dir + String("far_poses.bin"), FileAccess::READ, FileAccess::COMPRESSION_ZSTD);
-	if (f.is_null() || f->get_32() != 0x31525046u) { UtilityFunctions::push_error("CityCrowd: no far figures (", people_dir, "far_poses.bin): run tools/city/traffic/make_people.gd"); return; }
+	if (f.is_null() || f->get_32() != 0x32525046u) { UtilityFunctions::push_error("CityCrowd: no far figures (", people_dir, "far_poses.bin): run tools/city/traffic/make_people.gd"); return; }
 	tex_w = (int)f->get_32(); tex_h = (int)f->get_32(); corner_h = (int)f->get_32();
 	const int poses = (int)f->get_32(), n = (int)f->get_32();
 	corners_max = (int)f->get_32();
-	stride[0] = f->get_float(); stride[1] = f->get_float();
+	for (int g = 0; g < 2; g++) for (int q = 0; q < 6; q++) gait[g][q] = f->get_float();
+	stride[0] = gait[0][0]; stride[1] = gait[1][0];
 	if (poses != POSES || n <= 0 || n > 64 || tex_w <= 0 || tex_h <= 0) { UtilityFunctions::push_error("CityCrowd: far_poses.bin is of another make: run make_people.gd again"); return; }
 	block_rows = (2 * POSES + 1) * corner_h;
 	const Variant mv = JSON::parse_string(FileAccess::get_file_as_string(people_dir + String("rb_meta.json")));
@@ -199,6 +201,7 @@ void CityCrowd::_ready() {
 	if (!ready) { set_process(false); return; }
 	if (cells.empty()) cells.assign((size_t)GRID * GRID, 0);
 	if (draw_on) make_look();
+	if (gfx) make_near();
 	crowd->reset(20261120ull);
 	set_process(true);
 }
@@ -373,10 +376,167 @@ void CityCrowd::draw(double p_alpha) {
 	cnt.people += n; cnt.most = std::max(cnt.most, n);
 }
 
+// The near bodies: a pool of animated figures made once (three men to two women), every body's near mesh held.
+void CityCrowd::make_near() {
+	ResourceLoader *rl = ResourceLoader::get_singleton();
+	for (Body &b : bodies) b.near_mesh = rl->load(people_dir + String("bodies/") + b.id + String(".res"));
+	String first[2];
+	for (const Body &b : bodies) if (first[b.female ? 1 : 0].is_empty()) first[b.female ? 1 : 0] = b.id;
+	const int n = std::min(std::max(near_max, 0), (int)NEAR_MAX);
+	for (int k = 0; k < n; k++) {
+		Near nb;
+		nb.female = (k % 5) >= 3 ? 1 : 0;
+		if (first[nb.female].is_empty()) continue;
+		nb.ped = memnew(CityPed);
+		nb.ped->set_body_id(first[nb.female]);
+		nb.ped->set_clip("ual/Idle_Loop");
+		add_child(nb.ped);
+		nb.ped->set_visible(false);
+		nb.look = mat_near->duplicate();
+		near_pool.push_back(nb);
+	}
+}
+
+// What a near body shows for what its walker does: the clip, how fast it runs, or the moment it is held at.
+void CityCrowd::clip_of(int i, StringName &r_clip, double &r_speed, double &r_hold) const {
+	static const StringName WALK("ual/Walk_Loop"), WALK2("ual/Walk_Formal_Loop"), JOG("ual/Jog_Fwd_Loop"), SPRINT("ual/Sprint_Loop"), IDLE("ual/Idle_Loop"), ARMS("ual/Idle_FoldArms_Loop"),
+			SIT("ual/Sitting_Idle_Loop"), SIT_TALK("ual/Sitting_Talking_Loop"), LIE("ual/LayToIdle"), PHONE("ual/Idle_TalkingPhone_Loop"), FILM("ual/Idle_Lantern_Loop"), DUCK("ual/Crouch_Idle_Loop"),
+			TALK("ual/Idle_Talking_Loop"), NO("ual/Idle_No_Loop"), PUNCH("ual/Punch_Jab"), PUNCH2("ual/Punch_Cross"), GIVE("ual/Interact"), WAVE("wave"), HUG("hug");
+	const int g = (crowd->look[i] >> 3) & 1u, a = crowd->act[i];
+	const float v = crowd->v[i];
+	r_speed = 1.0; r_hold = -1.0;
+	const bool stays = crowd->mode[i] == pc::M_STAY || crowd->mode[i] == pc::M_HELD || crowd->state[i] == pc::ST_PAUSE;
+	if (!stays && v > 0.15f) {   // on its way: the walk at the walker's own pace, a jog, a run
+		if (v > 2.8f) { r_clip = SPRINT; r_speed = v / (gait[g][4] / gait[g][5]); }
+		else if (v > 1.9f) { r_clip = JOG; r_speed = v / (gait[g][2] / gait[g][3]); }
+		else { r_clip = ((crowd->look[i] >> 6) & 3u) == 0u ? WALK2 : WALK; r_speed = v / (gait[g][0] / gait[g][1]); }
+		r_speed = std::min(std::max(r_speed, 0.4), 2.2);
+		if (a == pc::A_WAVE) { r_clip = WAVE; r_speed = 1.0; }
+		return;
+	}
+	switch (a) {
+		case pc::A_SIT: case pc::A_BEG: r_clip = SIT; break;
+		case pc::A_DRINK: r_clip = SIT_TALK; break;
+		case pc::A_LIE_BACK: case pc::A_LIE_FRONT: r_clip = LIE; r_hold = 0.0; break;
+		case pc::A_PHONE: case pc::A_CALL: r_clip = PHONE; break;
+		case pc::A_FILM: r_clip = FILM; break;
+		case pc::A_WINDOW: case pc::A_STARE: case pc::A_SHELTER: r_clip = ARMS; break;
+		case pc::A_DUCK: r_clip = DUCK; break;
+		case pc::A_CHAT: case pc::A_TALK: r_clip = TALK; break;
+		case pc::A_ARGUE: r_clip = NO; break;
+		case pc::A_HUG: r_clip = HUG; break;
+		case pc::A_FIGHT: r_clip = (crowd->id[i] & 1) ? PUNCH : PUNCH2; break;
+		case pc::A_GIVE: case pc::A_DOOR: r_clip = GIVE; break;
+		case pc::A_WAVE: r_clip = WAVE; break;
+		case pc::A_WAIT: r_clip = ((crowd->look[i] >> 9) & 1u) ? ARMS : IDLE; break;
+		default: r_clip = IDLE; break;
+	}
+}
+
+// Who has a near body this frame, what it shows, and the hand-over to its physical body and back.
+void CityCrowd::near_update(double p_delta, double p_alpha) {
+	if (near_pool.empty()) return;
+	Viewport *vp = get_viewport();
+	Camera3D *cam = vp ? vp->get_camera_3d() : nullptr;
+	if (!cam) return;
+	const Vector3 cp = cam->get_global_transform().origin;
+	const float keep2 = (float)((near_r + near_fade + 4.0) * (near_r + near_fade + 4.0)), take2 = (float)((near_r + near_fade) * (near_r + near_fade));
+	// who keeps his body, who gives it back
+	for (Near &nb : near_pool) {
+		nb.push_cd = std::max(0.0f, nb.push_cd - (float)p_delta);
+		if (nb.walker < 0) continue;
+		const int i = crowd->find(nb.walker);
+		const bool busy = nb.ped->get_mode() != CityPed::MODE_ANIM;   // (staggering, down or getting up: it stays this person's)
+		bool drop = i < 0;
+		if (!drop && !busy) {
+			const float dx = crowd->x[i] - cp.x, dz = crowd->z[i] - cp.z;
+			drop = dx * dx + dz * dz > keep2 || (crowd->flags[i] & pc::F_HIDDEN);
+		}
+		if (drop) { if (i >= 0 && nb.in_body) crowd->to_body(nb.walker, false, crowd->x[i], crowd->z[i]); nb.walker = -1; nb.in_body = false; nb.ped->set_visible(false); }
+	}
+	// the nearest people without one take the free ones (of their own kind)
+	for (Near &nb : near_pool) {
+		if (nb.walker >= 0) continue;
+		int best = -1; float bd = take2;
+		for (int i = 0; i < crowd->hi; i++) {
+			if (!crowd->alive[i] || (crowd->flags[i] & pc::F_HIDDEN) || (int)((crowd->look[i] >> 3) & 1u) != nb.female || crowd->mode[i] == pc::M_BODY) continue;
+			const float dx = crowd->x[i] - cp.x, dz = crowd->z[i] - cp.z, d2 = dx * dx + dz * dz;
+			if (d2 >= bd) continue;
+			bool has = false;
+			for (const Near &o : near_pool) if (o.walker == crowd->id[i]) has = true;
+			if (!has) { bd = d2; best = i; }
+		}
+		if (best < 0) continue;
+		float pr[4]; int body; float sc;
+		person_of(best, pr, body, sc);
+		// (the near figure must be of the walker's kind: a walker whose body is of the other kind keeps its far figure)
+		if (bodies[body].female != nb.female) continue;
+		nb.walker = crowd->id[best]; nb.in_body = false;
+		nb.look->set_shader_parameter("person", Vector4(pr[0], pr[1] - (float)(body * 64), pr[2], pr[3]));
+		nb.ped->become(bodies[body].id, bodies[body].near_mesh, nb.look, sc > 0.9f);
+		nb.ped->set_visible(true);
+	}
+	// what each one shows; a car near it; the player walking into it; its physical body
+	Node3D *pl = player_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
+	int n_near = 0;
+	for (Near &nb : near_pool) {
+		if (nb.walker < 0) continue;
+		const int i = crowd->find(nb.walker);
+		if (i < 0) continue;
+		n_near++;
+		float pr[4]; int body; float sc;
+		person_of(i, pr, body, sc);
+		if (nb.ped->get_mode() == CityPed::MODE_ANIM) {
+			if (nb.in_body) { const Vector3 at = nb.ped->get_global_transform().origin; crowd->to_body(nb.walker, false, at.x, at.z); nb.in_body = false; }   // it is up again: its walker goes on from where it stands
+			if (crowd->mode[i] != pc::M_BODY) {
+				const float a = std::min(std::max(((float)(crowd->tick - crowd->tu[i]) + (float)p_alpha) / (float)std::max((int)crowd->span[i], 1), 0.0f), 1.0f);
+				const Vector3 at(crowd->px[i] + (crowd->x[i] - crowd->px[i]) * a, crowd->py[i] + (crowd->y[i] - crowd->py[i]) * a, crowd->pz[i] + (crowd->z[i] - crowd->pz[i]) * a);
+				StringName clip; double speed, hold;
+				clip_of(i, clip, speed, hold);
+				nb.ped->drive(Transform3D(Basis(Vector3(0, 1, 0), lerp_angle(crowd->pyaw[i], crowd->yaw[i], a)).scaled(Vector3(sc, sc, sc)), at), clip, speed, hold);
+			}
+			// the cars near it: its body knows them as boxes, and takes over by itself when one reaches it
+			int nbx = 0;
+			const int nc = (int)cars.size() / 7;
+			for (int c = 0; c < nc && nbx < pb::MAX_BOXES; c++) {
+				const float *q = &cars[(size_t)c * 7];
+				const float dx = q[0] - crowd->x[i], dz = q[1] - crowd->z[i];
+				if (dx * dx + dz * dz > 9.0f * 9.0f) continue;
+				nbx++;
+			}
+			int k = 0;
+			for (int c = 0; c < nc && k < nbx; c++) {
+				const float *q = &cars[(size_t)c * 7];
+				const float dx = q[0] - crowd->x[i], dz = q[1] - crowd->z[i];
+				if (dx * dx + dz * dz > 9.0f * 9.0f) continue;
+				nb.ped->set_box(k++, Vector3(q[0], crowd->y[i] + 0.75f, q[1]), Vector3(q[4], 0.75f, q[3]), q[2], Vector3(q[5], 0, q[6]), nbx);
+			}
+			if (nbx == 0) nb.ped->set_box(-1, Vector3(), Vector3(), 0.0, Vector3(), 0);
+			// the player walks into it: a shove as hard as he comes
+			if (pl && nb.push_cd <= 0.0f && sc > 0.9f) {
+				const Vector3 pp = pl->get_global_position();
+				const float dx = crowd->x[i] - pp.x, dz = crowd->z[i] - pp.z, d2 = dx * dx + dz * dz;
+				const float vx = crowd->pl_vx, vz = crowd->pl_vz, sp = std::sqrt(vx * vx + vz * vz);
+				if (d2 < 0.62f * 0.62f && sp > 1.2f && dx * vx + dz * vz > 0.0f) {
+					nb.ped->push(Vector3(vx, 0, vz) * (35.0f + 18.0f * sp) / sp, Vector3(crowd->x[i], crowd->y[i] + 1.25f, crowd->z[i]));
+					nb.push_cd = 1.5f;
+				}
+			}
+		}
+		if (nb.ped->get_mode() != CityPed::MODE_ANIM) {   // its body has it: the walker is where the body is
+			const Vector3 at = nb.ped->body_at();
+			crowd->to_body(nb.walker, true, at.x, at.z);
+			nb.in_body = true;
+		}
+	}
+	cnt.near += n_near;
+}
+
 void CityCrowd::_process(double p_delta) {
 	if (!ready) return;
 	const int64_t t0 = usec_now();
 	step_brain(p_delta);
+	near_update(p_delta, acc / STEP_S);
 	draw(acc / STEP_S);
 	crowd->events.clear();
 	const double us = (double)(usec_now() - t0);

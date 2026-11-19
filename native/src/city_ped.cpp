@@ -17,12 +17,14 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 
 #include <algorithm>
+#include <vector>
 #include <cmath>
 
 namespace godot {
 
-static const double GETUP_GATHER = 1.0;   // s: from lying into the clip's seated start
+static const double GETUP_GATHER = 1.0;   // s: (the figure's old clip only) from lying into the clip's seated start
 static const double GETUP_SLOW = 0.3;     // the clip's pace meanwhile
+static const char *const GETUP_CLIP = "ual/LayToIdle";   // the Quaternius library's rise from lying on the back
 
 namespace {
 const char *BONE_NAMES[pb::NB] = { "Bip01_Pelvis", "Bip01_Spine1", "Bip01_Head", "Bip01_L_UpperArm", "Bip01_L_Forearm", "Bip01_R_UpperArm", "Bip01_R_Forearm",
@@ -30,6 +32,8 @@ const char *BONE_NAMES[pb::NB] = { "Bip01_Pelvis", "Bip01_Spine1", "Bip01_Head",
 inline vd::V3 v3(const Vector3 &v) { return { (float)v.x, (float)v.y, (float)v.z }; }
 inline Vector3 gv(const vd::V3 &v) { return Vector3(v.x, v.y, v.z); }
 }
+
+static bool clip_start(Skeleton3D *skel, const Ref<Animation> &a, const Transform3D &skel_in_node, int b_hips, int b_head, Vector3 &r_hips, Vector3 &r_head);
 
 void CityPed::make() {
 	if (made) return;
@@ -51,7 +55,7 @@ void CityPed::make() {
 	Ref<Mesh> mesh = rl->load(dir + String("bodies/") + body_id + String(".res"));
 	Ref<Skin> skin = rl->load(dir + String("skin_") + g + String(".res"));
 	if (mesh.is_valid()) {
-		MeshInstance3D *mi = memnew(MeshInstance3D);
+		mi = memnew(MeshInstance3D);
 		mi->set_mesh(mesh);
 		if (skin.is_valid()) mi->set_skin(skin);
 		// (the people's own look, their texture arrays and outfit colours, comes with the crowd's drawing; until then
@@ -74,6 +78,7 @@ void CityPed::make() {
 		if (anim->has_animation(clip)) { anim->play(clip); if (clip_at >= 0.0) { anim->seek(clip_at, true); anim->pause(); } }
 	}
 	// the standing figure in this node's own frame: where each driven bone is, and from them the body's own measures.
+	// (after the facing below is settled, the get-up clip's lying start is read: see the end of this function)
 	// The body's frame is: facing +z, +x to its left. A figure that faces the other way is turned round first.
 	{
 		const int hand = skel->find_bone("Bip01_L_Hand"), fing = skel->find_bone("Bip01_L_Finger1");
@@ -111,6 +116,62 @@ void CityPed::make() {
 	body.skill = (float)skill;
 	body.build(r);
 	for (int i = 0; i < pb::NB; i++) centre_rest[i] = gv(body.c_rest[i]) - Vector3(0, lift, 0);
+	if (anim && anim->has_animation(GETUP_CLIP)) {   // the Quaternius rise from lying: where its figure lies at its start
+		Ref<Animation> a = anim->get_animation(GETUP_CLIP);
+		Vector3 hips, head;
+		if (clip_start(skel, a, skel_in_node, skel->find_bone("Bip01_Pelvis"), skel->find_bone("Bip01_Head"), hips, head)) {
+			has_getup = true; getup_len = a->get_length(); getup_hips = hips; getup_axis = std::atan2(head.x - hips.x, head.z - hips.z);
+		}
+	}
+}
+
+// Where the get-up clip's figure lies at its start: read from the clip's own tracks, bone by bone (node frame).
+static bool clip_start(Skeleton3D *skel, const Ref<Animation> &a, const Transform3D &skel_in_node, int b_hips, int b_head, Vector3 &r_hips, Vector3 &r_head) {
+	if (a.is_null() || b_hips < 0 || b_head < 0) return false;
+	const int n = skel->get_bone_count();
+	std::vector<Transform3D> loc(n), glob(n);
+	for (int b = 0; b < n; b++) loc[b] = skel->get_bone_rest(b);
+	for (int ti = 0; ti < a->get_track_count(); ti++) {
+		const NodePath path = a->track_get_path(ti);
+		if (path.get_subname_count() < 1) continue;
+		const int b = skel->find_bone(path.get_subname(0));
+		if (b < 0) continue;
+		if (a->track_get_type(ti) == Animation::TYPE_POSITION_3D) loc[b].origin = a->position_track_interpolate(ti, 0.0);
+		else if (a->track_get_type(ti) == Animation::TYPE_ROTATION_3D) loc[b].basis = Basis(a->rotation_track_interpolate(ti, 0.0)).scaled_local(loc[b].basis.get_scale());
+	}
+	for (int b = 0; b < n; b++) { const int par = skel->get_bone_parent(b); glob[b] = (par >= 0 && par < b) ? glob[par] * loc[b] : loc[b]; }
+	r_hips = (skel_in_node * glob[b_hips]).origin; r_head = (skel_in_node * glob[b_head]).origin;
+	return true;
+}
+
+void CityPed::become(const String &p_body, const Ref<Mesh> &p_mesh, const Ref<ShaderMaterial> &p_look, bool p_can_body) {
+	body_id = p_body; can_body = p_can_body;
+	if (!made || !mi) return;
+	if (p_mesh.is_valid()) mi->set_mesh(p_mesh);
+	if (p_look.is_valid()) mi->set_material_override(p_look);
+	if (mode != MODE_ANIM) { mode = MODE_ANIM; t_mode = 0.0; }
+	n_shove = 0; n_boxes = 0;
+	cur_clip = StringName(); cur_hold = -1.0;
+	if (anim) anim->set_speed_scale(1.0);
+}
+
+// While it is animated: where it stands, which clip, how fast the clip runs (a walk follows the walker's pace), or
+// the moment of the clip it is held at (lying).
+void CityPed::drive(const Transform3D &p_at, const StringName &p_clip, double p_speed, double p_hold) {
+	if (!made || mode != MODE_ANIM) return;
+	set_global_transform(p_at);
+	if (!anim || !anim->has_animation(p_clip)) return;
+	if (p_clip != cur_clip || p_hold != cur_hold) {
+		cur_clip = p_clip; cur_hold = p_hold;
+		if (p_hold >= 0.0) { anim->play(p_clip, 0.0); anim->seek(p_hold, true); anim->pause(); }
+		else anim->play(p_clip, 0.3);
+	} else if (p_hold < 0.0 && !anim->is_playing()) anim->play(p_clip, 0.1);   // (a clip that ends, a punch, starts again while the act lasts)
+	if (p_hold < 0.0) anim->set_speed_scale((float)p_speed);
+}
+
+Vector3 CityPed::body_at() const {
+	if (mode == MODE_BODY) return gv(body.b[pb::B_PELVIS].x);
+	return get_global_transform().origin;
 }
 
 void CityPed::_ready() {
@@ -178,27 +239,37 @@ void CityPed::to_animation(const StringName &p_clip, double p_blend, bool p_from
 	const pb::Body &P = body.b[pb::B_PELVIS];
 	Vector3 at = gv(P.x);
 	float yaw = body.heading;
-	if (p_from_ground) {   // lying: it gets up facing the way its body points (from its hips to its head, turned round if it lies on its face)
+	StringName play = p_clip;
+	double blend = p_blend;
+	if (p_from_ground && has_getup) {
+		// The Quaternius rise from lying on the back. The node is set so that the clip's lying figure lies where the body
+		// lies: hips on hips, head toward head. A body on its face is turned onto its back by a longer blend first.
+		const vd::V3 d = body.b[pb::B_HEAD].x - P.x;
+		yaw = std::atan2(d.x, d.z) - getup_axis;
+		const Basis rb(Vector3(0, 1, 0), yaw);
+		at = Vector3(P.x.x, 0, P.x.z) - rb.xform(Vector3(getup_hips.x, 0, getup_hips.z));
+		play = StringName(GETUP_CLIP);
+		blend = body.face_up ? 0.3 : 0.7;
+	} else if (p_from_ground) {   // (the figure's old clip: it rises from a seat)
 		const vd::V3 d = body.b[pb::B_HEAD].x - P.x;
 		yaw = std::atan2(d.x, d.z) + (body.face_up ? 3.14159265f : 0.0f);
+		blend = GETUP_GATHER;
 	} else at = (gv(body.foot[0].p) + gv(body.foot[1].p)) * 0.5;
 	at.y = body.gd;
 	// the same pose under the node's new place: the bones are written once more after the move
-	set_global_transform(Transform3D(Basis(Vector3(0, 1, 0), yaw), at));
+	set_global_transform(Transform3D(Basis(Vector3(0, 1, 0), yaw).scaled(get_global_transform().basis.get_scale()), at));
 	write_bones();
-	if (anim && anim->has_animation(p_clip)) {
-		// From the ground: the clip set has no rise from lying (get_up is a rise from a seat). So for the first second the
-		// clip barely runs while the pose the body lay in is blended into the clip's seated start (it gathers itself, sits
-		// up), and only then does it rise at the clip's own pace.
-		anim->set_speed_scale(p_from_ground ? GETUP_SLOW : 1.0);
-		anim->play_with_capture(p_clip, p_from_ground ? GETUP_GATHER : p_blend);
+	if (anim && anim->has_animation(play)) {
+		anim->set_speed_scale((p_from_ground && !has_getup) ? GETUP_SLOW : 1.0);
+		anim->play_with_capture(play, blend);
 	}
+	cur_clip = StringName(); cur_hold = -1.0;
 	mode = p_from_ground ? MODE_GETUP : MODE_ANIM;
 	t_mode = 0.0;
 }
 
 void CityPed::push(const Vector3 &p_impulse, const Vector3 &p_at) {
-	if (!made || !skel) return;
+	if (!made || !skel || !can_body) return;
 	if (mode != MODE_BODY) take_over(Vector3());
 	int part = pb::B_CHEST; float best = 1.0e9f;
 	for (int i = 0; i < pb::NB; i++) { const float d = (float)gv(body.b[i].x).distance_squared_to(p_at); if (d < best) { best = d; part = i; } }
@@ -223,11 +294,15 @@ void CityPed::_physics_process(double p_delta) {
 			const float cy = std::cos(b.yaw), sy = std::sin(b.yaw);
 			const vd::V3 d = v3(o) - b.c;
 			const float lx = d.x * cy - d.z * sy, lz = d.x * sy + d.z * cy;
-			if (std::fabs(lx) < b.half.x + 0.35f && std::fabs(lz) < b.half.z + 0.35f && std::fabs(d.y) < b.half.y + 1.0f && vd::len(b.v) > 0.3f) { take_over(Vector3()); break; }
+			if (can_body && std::fabs(lx) < b.half.x + 0.35f && std::fabs(lz) < b.half.z + 0.35f && std::fabs(d.y) < b.half.y + 1.0f && vd::len(b.v) > 0.3f) { take_over(Vector3()); break; }
 		}
 		return;
 	}
 	if (mode == MODE_GETUP) {
+		if (has_getup) {
+			if (t_mode >= getup_len) { mode = MODE_ANIM; t_mode = 0.0; getups++; cur_clip = StringName(); if (anim && anim->has_animation(clip)) anim->play(clip, 0.3); }
+			return;
+		}
 		if (t_mode >= GETUP_GATHER && anim) anim->set_speed_scale(1.0);
 		if (t_mode >= GETUP_GATHER + getup_len - GETUP_GATHER * GETUP_SLOW) { mode = MODE_ANIM; t_mode = 0.0; getups++; if (anim && anim->has_animation(clip)) anim->play(clip, 0.3); }
 		return;

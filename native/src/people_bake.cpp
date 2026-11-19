@@ -60,13 +60,24 @@ PackedStringArray PeopleBake::bake(Node *p_parent, const String &p_dir, const St
 	const Dictionary donors = ((Dictionary)mv).get("donors", Dictionary());
 	const Array ids = donors.keys();
 	std::vector<Donor> out;
-	static const char *const POSE_CLIP[POSES] = { "walk", "walk", "walk", "walk", "walk", "walk", "walk", "walk", "idle", "sit_idle", "sleep", "sleep" };
-	float stride_m[2] = { 1.4f, 1.3f };
+	// the Quaternius library's clips, fitted to this figure (make_anims.gd); the figure's old ones if those are not there
+	static const char *const POSE_CLIP[POSES] = { "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Walk_Loop", "Idle_Loop", "Sitting_Idle_Loop", "LayToIdle", "LayToIdle" };
+	static const char *const POSE_OLD[POSES] = { "walk", "walk", "walk", "walk", "walk", "walk", "walk", "walk", "idle", "sit_idle", "sleep", "sleep" };
+	// per kind of figure: how far it gets in one round of its walk, jog and sprint clips, and how long each round is
+	float gait[2][6] = { { 1.4f, 1.3f, 2.4f, 0.9f, 3.6f, 0.7f }, { 1.3f, 1.3f, 2.2f, 0.9f, 3.3f, 0.7f } };
+	bool used_ual = false;
 	for (int g = 0; g < 2; g++) {
 		const String gn = g ? "female" : "male";
 		Ref<PackedScene> ps = rl->load(p_dir + String("hero_") + gn + String(".scn"));
 		Ref<Skin> skin = rl->load(p_dir + String("skin_") + gn + String(".res"));
 		Ref<AnimationLibrary> lib = rl->load(p_dir + String("clips_") + gn + String(".res"));
+		Ref<AnimationLibrary> ual;
+		if (rl->exists(p_dir + String("clips_ual_") + gn + String(".res"))) ual = rl->load(p_dir + String("clips_ual_") + gn + String(".res"));
+		auto clip_of = [&](const StringName &name) -> Ref<Animation> {
+			if (ual.is_valid() && ual->has_animation(name)) return ual->get_animation(name);
+			if (lib->has_animation(name)) return lib->get_animation(name);
+			return Ref<Animation>();
+		};
 		if (ps.is_null() || skin.is_null() || lib.is_null()) { rep.push_back("PEOPLE ERROR the " + gn + " figure is not whole (scene, skin, clips)"); return rep; }
 		Node3D *model = Object::cast_to<Node3D>(ps->instantiate());
 		if (!model) continue;
@@ -82,8 +93,8 @@ PackedStringArray PeopleBake::bake(Node *p_parent, const String &p_dir, const St
 		std::vector<Transform3D> glob(n_bones);
 		auto pose_at = [&](const StringName &clip, float t) {
 			skel->reset_bone_poses();
-			if (!lib->has_animation(clip)) { for (int b = 0; b < n_bones; b++) glob[b] = skel->get_bone_global_rest(b); return; }
-			Ref<Animation> a = lib->get_animation(clip);
+			Ref<Animation> a = clip_of(clip);
+			if (a.is_null()) { for (int b = 0; b < n_bones; b++) glob[b] = skel->get_bone_global_rest(b); return; }
 			for (int ti = 0; ti < a->get_track_count(); ti++) {
 				const NodePath path = a->track_get_path(ti);
 				if (path.get_subname_count() < 1) continue;
@@ -124,11 +135,13 @@ PackedStringArray PeopleBake::bake(Node *p_parent, const String &p_dir, const St
 		}
 		std::vector<std::vector<Transform3D>> pose_m(POSES, std::vector<Transform3D>(nb));
 		for (int p = 0; p < POSES; p++) {
-			const StringName clip(POSE_CLIP[p]);
+			const bool has_new = ual.is_valid() && ual->has_animation(POSE_CLIP[p]);
+			const StringName clip(has_new ? POSE_CLIP[p] : POSE_OLD[p]);
+			if (has_new) used_ual = true;
 			float t = 0.0f;
-			if (lib->has_animation(clip)) {
-				Ref<Animation> a = lib->get_animation(clip);
-				const float len = (float)a->get_length();
+			{
+				Ref<Animation> a = clip_of(clip);
+				const float len = a.is_valid() ? (float)a->get_length() : 1.0f;
 				t = p < 8 ? len * (float)p / 8.0f : (p == 8 ? std::min(0.5f, len) : (p == 9 ? std::min(1.0f, len * 0.5f) : 0.0f));
 			}
 			pose_at(clip, t);
@@ -137,18 +150,22 @@ PackedStringArray PeopleBake::bake(Node *p_parent, const String &p_dir, const St
 				pose_m[p][b] = k >= 0 ? face * to_model * glob[k] * skin->get_bind_pose(b) : Transform3D();
 			}
 		}
-		// how long a step of the walk clip is: the feet's swing fore and aft over the clip
+		// how far a round of the walk, the jog and the sprint carries it: twice the feet's swing fore and aft; and its length
 		{
 			const int lf = skel->find_bone("Bip01_L_Foot");
-			if (lf >= 0 && lib->has_animation("walk")) {
+			static const char *const GAIT[3][2] = { { "Walk_Loop", "walk" }, { "Jog_Fwd_Loop", "jog" }, { "Sprint_Loop", "sprint" } };
+			for (int q = 0; q < 3 && lf >= 0; q++) {
+				const StringName cn((ual.is_valid() && ual->has_animation(GAIT[q][0])) ? GAIT[q][0] : GAIT[q][1]);
+				Ref<Animation> a = clip_of(cn);
+				if (a.is_null()) continue;
 				float lo = 1e9f, hi = -1e9f;
-				Ref<Animation> a = lib->get_animation("walk");
-				for (int k = 0; k < 16; k++) {
-					pose_at("walk", (float)a->get_length() * (float)k / 16.0f);
+				for (int k = 0; k < 24; k++) {
+					pose_at(cn, (float)a->get_length() * (float)k / 24.0f);
 					const float fz = (face * to_model * glob[lf]).origin.z;
 					lo = std::min(lo, fz); hi = std::max(hi, fz);
 				}
-				if (hi - lo > 0.2f) stride_m[g] = (hi - lo) * 2.0f;
+				if (hi - lo > 0.2f) gait[g][q * 2] = (hi - lo) * 2.0f;
+				gait[g][q * 2 + 1] = (float)a->get_length();
 			}
 		}
 		// every body of this kind
@@ -238,17 +255,17 @@ PackedStringArray PeopleBake::bake(Node *p_parent, const String &p_dir, const St
 	}
 	Ref<FileAccess> f = FileAccess::open_compressed(p_out, FileAccess::WRITE, FileAccess::COMPRESSION_ZSTD);
 	if (f.is_null()) { rep.push_back("PEOPLE ERROR cannot write " + p_out); return rep; }
-	f->store_32(0x31525046u);   // "FPR1"
+	f->store_32(0x32525046u);   // "FPR2"
 	f->store_32((uint32_t)W); f->store_32((uint32_t)H); f->store_32((uint32_t)corner_h); f->store_32((uint32_t)POSES); f->store_32((uint32_t)out.size()); f->store_32((uint32_t)(corner_h * W));
-	f->store_float(stride_m[0]); f->store_float(stride_m[1]);
+	for (int g = 0; g < 2; g++) for (int q = 0; q < 6; q++) f->store_float(gait[g][q]);
 	for (const Donor &D : out) { f->store_pascal_string(D.id); f->store_32((uint32_t)D.layer); f->store_32((uint32_t)D.female); f->store_32((uint32_t)D.corners); f->store_float(D.height); }
 	PackedByteArray bytes; bytes.resize((int64_t)px.size() * 2);
 	std::memcpy(bytes.ptrw(), px.data(), px.size() * 2);
 	f->store_buffer(bytes);
 	f->close();
 	n_bodies = (int)out.size();
-	rep.push_back(vformat("PEOPLE posed %d bodies in %d poses: %d triangles a body on average, the most corners %d; table %d x %d (%d rows a body), %.1f MB as it is used; a step of the walk: men %.2f m, women %.2f m",
-			(int)out.size(), (int)POSES, tris / (int)out.size(), most, W, H, block_rows, (double)px.size() * 2.0 / 1048576.0, stride_m[0], stride_m[1]));
+	rep.push_back(vformat("PEOPLE posed %d bodies in %d poses: %d triangles a body on average, the most corners %d; table %d x %d (%d rows a body), %.1f MB as it is used; a round of the walk carries men %.2f m in %.2f s, women %.2f m in %.2f s; jog %.2f m in %.2f s; sprint %.2f m in %.2f s; clips: %s",
+			(int)out.size(), (int)POSES, tris / (int)out.size(), most, W, H, block_rows, (double)px.size() * 2.0 / 1048576.0, gait[0][0], gait[0][1], gait[1][0], gait[1][1], gait[0][2], gait[0][3], gait[0][4], gait[0][5], used_ual ? "the Quaternius library's" : "the figure's old ones"));
 	String hs = "PEOPLE standing heights (m):";
 	float foot_lo = 1e9f, foot_hi = -1e9f;
 	for (const Donor &D : out) { hs += vformat(" %s %.2f", D.id, D.height); foot_lo = std::min(foot_lo, D.foot); foot_hi = std::max(foot_hi, D.foot); }

@@ -12,6 +12,9 @@
 #include "ped_body.h"
 
 #include <godot_cpp/classes/animation_player.hpp>
+#include <godot_cpp/classes/mesh.hpp>
+#include <godot_cpp/classes/mesh_instance3d.hpp>
+#include <godot_cpp/classes/shader_material.hpp>
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/skeleton3d.hpp>
 #include <godot_cpp/variant/dictionary.hpp>
@@ -36,6 +39,15 @@ private:
 	Node3D *model = nullptr;
 	Skeleton3D *skel = nullptr;
 	AnimationPlayer *anim = nullptr;
+	MeshInstance3D *mi = nullptr;
+	StringName cur_clip;             // (driven by the crowd) the clip that runs, and the moment it is held at (-1 = it runs)
+	double cur_hold = -1.0;
+	// getting up: the Quaternius clip "LayToIdle" (lying on the back to standing). Where its figure lies at its start, in
+	// this node's frame: the way from its hips to its head, and where its hips are
+	bool has_getup = false;
+	float getup_axis = 0.0f;
+	Vector3 getup_hips;
+	bool can_body = true;            // (a child's figure is drawn smaller: it has no physical body of its own size)
 	int bone[pb::NB];
 	Transform3D bone_rest[pb::NB];   // each driven bone standing, in this node's own frame
 	Vector3 centre_rest[pb::NB];     // each body part's centre standing, in this node's own frame
@@ -69,6 +81,13 @@ public:
 	void set_skill(double p_s) { skill = p_s; }
 	double get_skill() const { return skill; }
 
+	// ---- for the crowd (C++ only): this figure becomes another person; while it is animated the crowd says where it
+	// stands and what it does; what the crowd needs to know of its body
+	void become(const String &p_body, const Ref<Mesh> &p_mesh, const Ref<ShaderMaterial> &p_look, bool p_can_body);
+	void drive(const Transform3D &p_at, const StringName &p_clip, double p_speed, double p_hold);
+	int get_mode() const { return mode; }
+	Vector3 body_at() const;
+	float body_yaw() const { return body.heading; }
 	// A shove or a blow: p_impulse in N s, spread over a fifth of a second, on the part nearest to p_at (world)
 	void push(const Vector3 &p_impulse, const Vector3 &p_at);
 	// Something solid that moves (a car), for this step and until told again: box p_index at p_centre with half sizes,
