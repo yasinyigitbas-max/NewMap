@@ -202,7 +202,7 @@ static func back_of_house(props: K.Props, b: Dictionary, residential := false) -
 		wall(props, b, "prop_meter_gas", "rusty", "back", mx + 1.3, 0.2, 0.02)
 	var n_ac := 1 if w < 14.0 else 2
 	if w < 10.0:     # a small house: the condenser goes beside its side wall, the back wall is the bins' and the meters'
-		props.add("prop_ac_condenser_compact", "worn", at(b, -w * 0.5 - 0.7, -d * 0.5 + 1.4), yaw - 90.0)
+		props.add("prop_ac_condenser_compact", "worn", at(b, -w * 0.5 + 0.55, -d * 0.5 - 0.6), yaw)    # the back wall's free left end (a side wall can stand 0.5 m from the next building)
 	else:
 		for k in n_ac: props.add("prop_ac_condenser", "worn", at(b, x0 + 3.4 + k * 1.3, -d * 0.5 - 0.75), yaw)
 	if residential:
@@ -553,14 +553,14 @@ static func polish_building(ctx: Dictionary, b: Dictionary, rr: RandomNumberGene
 	var h := float(K.building_stats(fol).get("height", 6.0))
 	var home := not (fol.begins_with("commercial/") or fol.begins_with("civic/") or fol.begins_with("garages/") or fol.begins_with("public/"))
 	if fol.begins_with("garages/"): return
+	# (19 Nov, after the validator: the first version crowded the back corners' bins, fences and meters and the door lights)
+	# downspouts at the FRONT corners of the side walls, house numbers above the door head, a dish high on the back wall
 	if h > 4.5:
-		for sd: float in [-1.0, 1.0]: wall(props, b, "prop_downspout_3m", "worn", "back", sd * (w * 0.5 - 0.35), 0.0, 0.02)
+		wall(props, b, "prop_downspout_3m", "worn", "left", d * 0.5 - 0.4, 0.0, 0.02)
+		wall(props, b, "prop_downspout_3m", "worn", "right", d * 0.5 - 0.4, 0.0, 0.02)
 	var ds := doors_of(fol)
-	if home and not ds.is_empty(): wall(props, b, "prop_house_numbers_wood" if rr.randf() < 0.5 else "prop_house_numbers_tile", "worn", "front", float(ds[0]) + 1.25, 1.85, 0.02)
-	if home:
-		var side := "left" if rr.randf() < 0.5 else "right"
-		if rr.randf() < 0.55: wall(props, b, "plant_bougainvillea_wall", "normal", side, rr.randf_range(-d * 0.2, d * 0.2), 0.0, 0.05)
-		elif h > 5.0: wall(props, b, "prop_satellite_dish_round", "worn", side, rr.randf_range(-d * 0.3, d * 0.3), minf(h - 1.2, 5.6), 0.05)
+	if home and not ds.is_empty(): wall(props, b, "prop_house_numbers_wood" if rr.randf() < 0.5 else "prop_house_numbers_tile", "worn", "front", float(ds[0]), 2.95, 0.02)
+	if home and h > 5.0 and rr.randf() < 0.5: wall(props, b, "prop_satellite_dish_round", "worn", "back", rr.randf_range(-w * 0.3, w * 0.3), minf(h - 1.2, 5.6), 0.05)
 	var g0 := at(b, -w * 0.5, -d * 0.5 - 0.35); var g1 := at(b, w * 0.5, -d * 0.5 - 0.35)
 	grime(ctx.dec, Vector2(g0.x, g0.z), Vector2(g1.x, g1.z), rr)
 	if not home or rect.size == Vector2.ZERO: return

@@ -7,7 +7,7 @@
    "kind": "bakery",
    "lights": 4,
    "name": "B Avenue Bakery",
-   "props": 33,
+   "props": 37,
    "w": 8.4
   },
   {
@@ -17,7 +17,7 @@
    "kind": "barber",
    "lights": 3,
    "name": "Eighth Street Barbers",
-   "props": 25,
+   "props": 27,
    "w": 7.9
   },
   {
@@ -27,7 +27,7 @@
    "kind": "taqueria",
    "lights": 3,
    "name": "Taqueria La Esquina",
-   "props": 43,
+   "props": 44,
    "w": 11.4
   },
   {
@@ -37,7 +37,7 @@
    "kind": "nails",
    "lights": 3,
    "name": "Polished Nail Studio",
-   "props": 27,
+   "props": 32,
    "w": 5.4
   },
   {
@@ -47,7 +47,7 @@
    "kind": "dry_cleaner",
    "lights": 3,
    "name": "Seventh Street Cleaners",
-   "props": 18,
+   "props": 27,
    "w": 7.9
   },
   {
@@ -57,7 +57,7 @@
    "kind": "pharmacy",
    "lights": 4,
    "name": "Adela Pharmacy & Post",
-   "props": 22,
+   "props": 23,
    "w": 5.7
   },
   {
@@ -67,7 +67,7 @@
    "kind": "tax",
    "lights": 4,
    "name": "Island Tax Service",
-   "props": 20,
+   "props": 23,
    "w": 6.0
   },
   {
@@ -77,7 +77,7 @@
    "kind": "donuts",
    "lights": 3,
    "name": "Sunrise Donuts",
-   "props": 21,
+   "props": 24,
    "w": 5.7
   },
   {
@@ -87,7 +87,7 @@
    "kind": "coffee",
    "lights": 3,
    "name": "The Coffee Window",
-   "props": 18,
+   "props": 23,
    "w": 5.4
   },
   {
@@ -97,7 +97,7 @@
    "kind": "laundromat",
    "lights": 3,
    "name": "Adela Wash & Fold",
-   "props": 33,
+   "props": 30,
    "w": 7.9
   },
   {
@@ -107,7 +107,7 @@
    "kind": "chapel",
    "lights": 4,
    "name": "Seventh Street Community Church",
-   "props": 76,
+   "props": 81,
    "w": 13.4
   },
   {
@@ -117,7 +117,7 @@
    "kind": "discount",
    "lights": 4,
    "name": "Adela Corner Market",
-   "props": 21,
+   "props": 19,
    "w": 6.9
   },
   {
@@ -127,7 +127,7 @@
    "kind": "bikes",
    "lights": 4,
    "name": "Hill Street Bikes",
-   "props": 21,
+   "props": 25,
    "w": 8.4
   },
   {
