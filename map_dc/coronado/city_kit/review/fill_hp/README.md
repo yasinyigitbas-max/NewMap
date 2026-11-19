@@ -114,3 +114,15 @@ trees in view from any street point against the plan's 8 / 12).
 Final checks (area layouts with the tree pieces): validate 0 / 0; check_life 0 on these pieces; trees 0 in hard ground;
 check_rooms 0 (22 rooms). Locked: the 8 pieces, the 8 tree pieces, the 22 room files; lock test RESULT PASS (537 pieces,
 125 files).
+
+## Colliders true to size (hospital zone only; Yasin: "match all colliders to their object sizes, not bigger not smaller",
+## "keep the uni out of your work this time")
+The 6 hospital files (n_hp_main / transit / west and their tree pieces) were unlocked on his word, patched in place by
+`tools/city/pilot/exact_colliders.gd` (not rebuilt) and relocked: every prop and tree collider rebuilt from its own drawn
+near mesh, triangle for triangle (per-axis scale, so a shortened fence panel collides at its drawn length); the fence posts
+and palm that had none given one; column boxes replaced by the building's own post triangles, or set to the measured post
+where its faces run past the box. Sprinklers and iceplant ground cover stay without (walked over by design).
+Proof: a separate reader pairs every collider with the drawn prop at its place, one to one, and compares every corner:
+656 colliders, largest gap 0.1 mm, none without a prop under it; every other node identical (checked by the tool before
+saving); sha256 of all piece files: only those 6 changed; validate 0; lock test RESULT PASS. The campus pieces were
+restored byte for byte to their locked state and not changed.
