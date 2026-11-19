@@ -3,7 +3,8 @@
 # tree piece and every proven room copy, lock test, commit, push. $2 = the commit message's first line.
 PY=${SC_PY:-/c/Users/yasin/AppData/Local/Programs/Python/Python312/python}
 P=$1
-$PY -I tools/city/super/sc.py install $P --by=Yasin 2>&1 | grep -E "INSTALLED|trees:|needs|changed|no proven" || exit 1
+IO=$($PY -I tools/city/super/sc.py install $P --by=Yasin 2>&1); echo "$IO" | grep -E "INSTALLED|trees:|needs|changed|no proven"
+echo "$IO" | grep -q "^INSTALLED $P" || { echo "NOT INSTALLED: nothing committed"; exit 1; }
 for r in $($PY -I -c "import json,os; p='OUT/super/find/$P.rooms.json'; print(' '.join(json.load(open(p))['rooms']) if os.path.exists(p) else '')"); do
   [ -f OUT/super/work/$r.stamp.json ] && $PY -I tools/city/super/sc.py install-room $r --by=Yasin 2>&1 | grep -E "INSTALLED|changed"
 done
