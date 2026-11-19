@@ -65,6 +65,23 @@ func _nearest_tri(f: PackedVector3Array, xf: Transform3D, q: Vector2) -> Array:
 		if d < float(best[0]): best = [d, (a.y + b.y + c.y) / 3.0, [a, b, c]]
 	return best
 
+## the DRAWN ground ("ground" meshes of the pieces): the nearest upward triangle, as _nearest_tri
+func _drawn_near(n: Node, xf: Transform3D, q: Vector2, out: Array, piece: String) -> void:
+	var nx := xf
+	if n is Node3D: nx = xf * (n as Node3D).transform
+	if n is MeshInstance3D and String(n.name) == "ground" and (n as MeshInstance3D).mesh:
+		var m := (n as MeshInstance3D).mesh
+		for si in m.get_surface_count():
+			var a := m.surface_get_arrays(si); var v: PackedVector3Array = a[Mesh.ARRAY_VERTEX]
+			var idx: PackedInt32Array = a[Mesh.ARRAY_INDEX] if a[Mesh.ARRAY_INDEX] != null else PackedInt32Array(range(v.size()))
+			var f := PackedVector3Array(); f.resize(idx.size())
+			for i in idx.size(): f[i] = v[idx[i]]
+			var r := _nearest_tri(f, nx, q)
+			var nm: String = m.surface_get_name(si)
+			if nm == "" and m.surface_get_material(si): nm = m.surface_get_material(si).resource_name
+			if float(r[0]) < 6.0: out.append({"piece": piece, "surface": nm, "gap_m": snappedf(float(r[0]), 0.001), "y": snappedf(float(r[1]), 0.01)})
+	for c in n.get_children(): _drawn_near(c, nx, q, out, piece)
+
 func _ground_near(n: Node, xf: Transform3D, q: Vector2, out: Array, piece: String, layer: int) -> void:
 	if n is StaticBody3D: layer = (n as StaticBody3D).collision_layer
 	if n is CollisionShape3D and (n as CollisionShape3D).shape is ConcavePolygonShape3D:
@@ -85,6 +102,11 @@ func _run() -> void:
 	var res: Array = []
 	for h: Dictionary in holes:
 		var q := Vector2(float(h.x), float(h.z)); var y := float(h.y)
+		if h.has("pts"):      # (a hole's centre may lie on ground: take its own point nearest the centre)
+			var best := 1.0e9
+			for pp: Array in h.pts:
+				var d := Vector2(float(pp[0]), float(pp[2])).distance_to(Vector2(float(h.x), float(h.z)))
+				if d < best: best = d; q = Vector2(float(pp[0]), float(pp[2])); y = float(pp[1])
 		var near: Array = []
 		for r: Dictionary in rows:
 			var bx: Variant = _box(String(r.piece))
@@ -108,13 +130,16 @@ func _run() -> void:
 		var ground: Array = []
 		for e2: Array in insts: _ground_near(e2[1], Transform3D.IDENTITY, q, ground, String(e2[0]), 1)
 		ground.sort_custom(func(a, b): return float(a.gap_m) < float(b.gap_m))
+		var drawn: Array = []
+		for e4: Array in insts: _drawn_near(e4[1], Transform3D.IDENTITY, q, drawn, String(e4[0]))
+		drawn.sort_custom(func(a, b): return float(a.gap_m) < float(b.gap_m))
 		var bd := minf(absf(q.x - roundf(q.x / 200.0) * 200.0), absf(q.y - roundf(q.y / 200.0) * 200.0))
 		var verdict := "bake" if not hit1.is_empty() else ("layer" if not hit_all.is_empty() else "piece")
 		var o := {"x": h.x, "z": h.z, "y": h.y, "cell": h.cell, "road": int(h.road_points) > 0, "border_m": snappedf(bd, 0.01), "verdict": verdict,
 			"raw_hit_y": snappedf(float((hit_all.position as Vector3).y), 0.01) if not hit_all.is_empty() else null, "raw_hit_piece": who,
-			"pieces": near.map(func(r3): return String(r3.piece)), "ground_near": ground.slice(0, 6)}
+			"pieces": near.map(func(r3): return String(r3.piece)), "ground_near": ground.slice(0, 6), "drawn_near": drawn.slice(0, 6)}
 		res.append(o)
-		print("WHY (%.1f, %.1f) y %.2f %s border %.2f -> %s %s | nearest ground: %s" % [q.x, q.y, y, "road" if o.road else "pavement", bd, verdict, who, str(ground.slice(0, 3).map(func(g): return "%s gap %.3f y %.2f" % [g.piece, g.gap_m, g.y]))])
+		print("WHY (%.1f, %.1f) y %.2f %s border %.2f -> %s %s | nearest collision: %s | nearest drawn: %s" % [q.x, q.y, y, "road" if o.road else "pavement", bd, verdict, who, str(ground.slice(0, 3).map(func(g): return "%s gap %.3f y %.2f" % [g.piece, g.gap_m, g.y])), str(drawn.slice(0, 3).map(func(g): return "%s %s gap %.3f y %.2f" % [g.piece, g.surface, g.gap_m, g.y]))])
 		for e3: Array in insts: (e3[1] as Node).queue_free()
 		await process_frame
 	var f := FileAccess.open(out_path, FileAccess.WRITE); f.store_string(JSON.stringify(res, "\t")); f.close()

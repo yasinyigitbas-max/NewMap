@@ -17,6 +17,11 @@ extends SceneTree
 ##   add_box       one column or post of a building gets a collision box, under that building's own collision body
 ##   fill_well     one tree well whose tree was taken out is paved level in its rim's own material (sc_wells.gd: the
 ##                 runtime bake's own well filler), and the ground's collision is lifted with it
+##   add_ground_col  one flat polygon, listed corner by corner (piece frame, x z, at one height), is added to the piece's
+##                 ground COLLISION only: nothing drawn changes (19 Nov, the collision-holes job; Yasin: "fill those too
+##                 with collisions, dont change the appereance"). For a place the people's ways cross where no ground
+##                 collision is (the pavement ends a little short of where the crowd walks, a corner left open).
+##                 The proof: exactly (corners - 2) new collision triangles, all inside that polygon at that height.
 ## The fix list is a plain file, one line per item, each with the item's own position, its new position and a reason.
 ##
 ##   --apply --in=<scn> --fixes=<json> --out=<scn>     writes a NEW file; <in> is never written
@@ -114,6 +119,7 @@ func _apply(top: Node, f: Dictionary) -> String:
 	if op == "add_collider": return _apply_collider(top, f)
 	if op == "resize_collider": return _apply_collider(top, f, true)
 	if op == "add_box": return _apply_box(top, f)
+	if op == "add_ground_col": return _apply_ground_col(top, f)
 	if op != "move" and op != "remove": return "unknown kind of change"
 	var base := String(f.get("base", "")); var cond := String(f.get("cond", ""))
 	var at := _v3(f["at"])
@@ -320,6 +326,44 @@ func _apply_well(top: Node, f: Dictionary) -> String:
 				var g: Vector3 = to_shape.basis * Vector3(float(w[2]), 0.0, float(w[3]))
 				wl.append([to_shape * (w[0] as Vector3), float(w[1]), g.x, g.z])
 			(cs as CollisionShape3D).shape = Wells.lift_faces((cs as CollisionShape3D).shape as ConcavePolygonShape3D, wl)
+	return ""
+
+## the listed polygon as [Vector3 corners at its height] in the piece's frame; [] when it is not a plain convex polygon
+func _gc_poly(f: Dictionary) -> Array:
+	var y := float(f.get("y", 0.0)); var out: Array = []
+	for c: Array in f.get("poly", []): out.append(Vector3(float(c[0]), y, float(c[1])))
+	if out.size() < 3: return []
+	var sg := 0.0
+	for i in out.size():
+		var a: Vector3 = out[i]; var b: Vector3 = out[(i + 1) % out.size()]; var c2: Vector3 = out[(i + 2) % out.size()]
+		var cr := (b.x - a.x) * (c2.z - b.z) - (b.z - a.z) * (c2.x - b.x)
+		if absf(cr) < 1.0e-9: continue
+		if sg == 0.0: sg = signf(cr)
+		elif signf(cr) != sg: return []
+	return out
+
+func _apply_ground_col(top: Node, f: Dictionary) -> String:
+	var poly := _gc_poly(f)
+	if poly.is_empty(): return "the polygon is not a plain convex polygon of 3 or more corners"
+	var body := top.get_node_or_null(String(f.get("body", "ground_col")))
+	if not (body is StaticBody3D): return "no ground collision body '%s'" % String(f.get("body", "ground_col"))
+	var cs: CollisionShape3D = null
+	for c in body.get_children():
+		if c is CollisionShape3D and (c as CollisionShape3D).shape is ConcavePolygonShape3D: cs = c; break
+	if cs == null: return "the body '%s' has no triangle shape" % String(body.name)
+	var sh := cs.shape as ConcavePolygonShape3D; var ff := sh.get_faces(); var rel := _rel(cs, top)
+	# the winding of the ground that is there (its upward faces), so the new faces face the same way
+	var up := 0
+	for t in ff.size() / 3:
+		var nn := ((rel * ff[t * 3 + 1]) - (rel * ff[t * 3])).cross((rel * ff[t * 3 + 2]) - (rel * ff[t * 3]))
+		if nn.length_squared() > 1.0e-10 and absf(nn.normalized().y) > 0.7: up = 1 if nn.y > 0.0 else -1; break
+	if up == 0: return "no flat ground in that shape to take the facing from"
+	var inv := rel.affine_inverse()
+	for i in range(1, poly.size() - 1):
+		var a: Vector3 = poly[0]; var b: Vector3 = poly[i]; var c3: Vector3 = poly[i + 1]
+		if (b - a).cross(c3 - a).y * up < 0.0: var tmp := b; b = c3; c3 = tmp
+		ff.append(inv * a); ff.append(inv * b); ff.append(inv * c3)
+	var ns := ConcavePolygonShape3D.new(); ns.backface_collision = sh.backface_collision; ns.set_faces(ff); cs.shape = ns
 	return ""
 
 func _apply_decal(top: Node, f: Dictionary) -> String:
@@ -595,6 +639,29 @@ func _prove(a: Node, b: Node, fixes: Array) -> bool:
 					else: q2 += 1
 			if g_new == 0 or g_old == 0: print("PROOF MISSING %s: no well was paved at %s" % [tag, str(at)]); ok = false; continue
 			print("PROOF change %s: the tree well at (%.2f, %.2f, %.2f) paved over: %d ground / collision triangles within 1.3 m replaced by %d  [%s]" % [tag, at.x, at.y, at.z, g_old, g_new, String(f.get("reason", ""))])
+			continue
+		if op == "add_ground_col":
+			var poly := _gc_poly(f); var y := float(f.get("y", 0.0)); var got := 0
+			var p2: Array = []
+			for c: Vector3 in poly: p2.append(Vector2(c.x, c.z))
+			var q3 := 0
+			while q3 < come.size():
+				var rr2: Dictionary = ib.get(come[q3], {})
+				var mine := String(rr2.get("k", "")) == "GC" and not poly.is_empty()
+				if mine:
+					var cen := Vector2.ZERO
+					for vv: Vector3 in rr2["v"]:
+						cen += Vector2(vv.x, vv.z) / 3.0
+						if absf(vv.y - y) > 0.002: mine = false
+						var on := false      # a corner of the polygon or inside it
+						for pc: Vector2 in p2:
+							if pc.distance_to(Vector2(vv.x, vv.z)) < 0.002: on = true
+						if not on and not Geometry2D.is_point_in_polygon(Vector2(vv.x, vv.z), PackedVector2Array(p2)): mine = false
+					if mine and not Geometry2D.is_point_in_polygon(cen, PackedVector2Array(p2)): mine = false
+				if mine and got < poly.size() - 2: come.remove_at(q3); got += 1
+				else: q3 += 1
+			if got != poly.size() - 2: print("PROOF MISSING %s: %d of %d collision triangles found in the polygon at %s" % [tag, got, poly.size() - 2, str(at)]); ok = false; continue
+			print("PROOF change %s: %d collision triangles added (nothing drawn), a %d-corner polygon at height %.3f round (%.2f, %.2f)  [%s]" % [tag, got, poly.size(), y, at.x, at.z, String(f.get("reason", ""))])
 			continue
 		if op == "remove_decal":
 			var hit := -1
