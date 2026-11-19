@@ -19,6 +19,9 @@ extends SceneTree
 ## EXTERIOR: shelters, benches, timetable cases, bike racks, bollards, lamps on the platform; the plaza (lamps, trees in
 ## wells, benches facing the hall, planters, a fountain); the quad (paths lined one species each, benches facing the
 ## lawn, tables, lamps); the café terrace; the lot (stalls, light poles, meters, oil, tyre marks at the aprons).
+## GATE SHOPS (19 Nov night, Yasin: "swap the models with explorable ones"): the café is com_cafe_seaside and the
+## bookstore com_realty (both with real shop doors; the com_shallow_* models had house doors the room cut does not open);
+## their terrace stands beside them on the gate plaza, the bikes along its east edge.
 ## TREES (19 Nov late, Yasin: "remove every tree, fill their wells ... place new trees according to the tree plan"): this
 ## piece has NO trees and no tree wells (each well paved over in the material round it); the campus trees are the
 ## hand-placed layer t_un_campus (docs/TREE_PLAN.md).
@@ -37,7 +40,7 @@ func _run() -> void:
 	var base := L.eased(land, [[Vector2(0.0, -190.8), Vector2(190.8, -190.8), flat], [Vector2(190.8, -190.8), Vector2(190.8, 0.0), flat]], 8.0)
 	var SITES := [["public/pub_university", Vector2(100.0, -150.0), "n", "uni_hall"], ["civic/civ_school_wing", Vector2(30.0, -125.0), "s", "uni_lecture_west"],
 		["civic/civ_library", Vector2(120.0, -66.0), "w", "uni_library"], ["civic/civ_school_wing", Vector2(166.0, -6.4), "s", "uni_science"],
-		["commercial/com_shallow_cafe", Vector2(14.5, -189.5), "n", "uni_gate_cafe"], ["commercial/com_shallow_books", Vector2(23.0, -189.5), "n", "uni_gate_books"],
+		["commercial/com_cafe_seaside", Vector2(14.0, -189.5), "n", "uni_gate_cafe"], ["commercial/com_realty", Vector2(22.6, -189.5), "n", "uni_gate_books"],
 		["commercial/com_kiosk", Vector2(100.0, -172.6), "s", "uni_bus_kiosk"]]
 	var pads: Array = []
 	for st: Array in SITES:
@@ -115,12 +118,12 @@ func _run() -> void:
 	c.put("prop_trash_receptacle", "worn", c.gp(88.0, -151.0), 0.0, "hall: a bin by the steps")
 	c.put("prop_recycling_receptacle", "worn", c.gp(112.0, -151.0), 0.0, "hall: recycling by the steps")
 	# ---- the gate corner: café terrace, bookstore, bikes (students from the gritty edge come in here)
-	for ct: Array in [[10.0, -177.0], [16.0, -177.0], [22.0, -177.0], [10.0, -171.5], [16.0, -171.5], [22.0, -171.5]]:
+	for ct: Array in [[31.0, -184.0], [37.0, -184.0], [43.0, -184.0], [31.0, -178.0], [37.0, -178.0], [43.0, -178.0]]:
 		c.put("prop_cafe_table", "worn", c.gp(float(ct[0]), float(ct[1])), 0.0, "café terrace: tables in the sun by the gate")
 		c.put("prop_cafe_chair", "worn", c.gp(float(ct[0]) - 0.8, float(ct[1])), 90.0, "café terrace: a chair at its table", false)
 		c.put("prop_cafe_chair", "worn", c.gp(float(ct[0]) + 0.8, float(ct[1])), -90.0, "café terrace: a chair at its table", false)
-	c.put("prop_menu_board", "worn", c.gp(9.0, -186.0), 0.0, "café: the day's menu at the terrace entrance")
-	for br: float in [32.0, 36.0, 40.0, 44.0, 48.0]: c.put("prop_bike_rack", "worn", c.gp(br, -186.0), 90.0, "gate corner: students' bikes in rows off the walk")
+	c.put("prop_menu_board", "worn", c.gp(28.0, -188.0), 0.0, "café: the day's menu where the terrace meets the walk")
+	for br: float in [-188.0, -184.0, -180.0, -176.0, -172.0]: c.put("prop_bike_rack", "worn", c.gp(50.0, br), 0.0, "gate corner: students' bikes in a column along the plaza's east edge, off the walk")
 	c.put("prop_newspaper_box_red", "worn", c.gp(7.5, -190.0), 180.0, "gate corner: the student paper at the gate")
 	c.put("prop_newspaper_box_blue", "worn", c.gp(8.3, -190.0), 180.0, "gate corner: papers at the gate")
 	# ---- the lecture wing's lawn

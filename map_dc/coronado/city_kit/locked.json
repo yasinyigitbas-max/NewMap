@@ -2481,11 +2481,6 @@
    "by": "Yasin",
    "date": "2026-11-19"
   },
-  "n_un_ne": {
-   "sha256": "09f94603763f891515b3502ca79a3c28b623390d568b812a200e662d27df93d8",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
   "n_un_nw": {
    "sha256": "aad9f563ccfe50062177f2a1b2084343f3b0b7fee044ba0a5034c386140a5d82",
    "by": "Yasin",
@@ -2503,6 +2498,11 @@
   },
   "t_un_campus": {
    "sha256": "0a2afccb3f0467c8beb3551f2e56536be59d0e4a203b87ed52f611d3b3ba219d",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_un_ne": {
+   "sha256": "1793d8a56c3b110446cc04eb6e9b9a4f822f582ef9d245eb230b4048b8810a40",
    "by": "Yasin",
    "date": "2026-11-19"
   }

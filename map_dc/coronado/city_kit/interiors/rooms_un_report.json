@@ -41,24 +41,24 @@
    "w": 29.4
   },
   {
-   "d": 5.75,
+   "d": 13.0,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_gate_cafe__0.scn",
    "id": "g_un_ne__uni_gate_cafe__0",
    "kind": "cafe",
-   "lights": 3,
+   "lights": 5,
    "name": "Gate Coffee",
-   "props": 10,
-   "w": 6.9
+   "props": 18,
+   "w": 5.4
   },
   {
-   "d": 5.25,
+   "d": 13.0,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_gate_books__0.scn",
    "id": "g_un_ne__uni_gate_books__0",
    "kind": "books",
-   "lights": 2,
+   "lights": 5,
    "name": "Campus Books",
-   "props": 6,
-   "w": 5.9
+   "props": 20,
+   "w": 5.4
   },
   {
    "d": 5.25,

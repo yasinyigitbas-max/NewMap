@@ -72,34 +72,34 @@
   {
    "doors_front": [
     [
-     "apt_door",
-     2.51
+     "shopdoor",
+     -1.76
     ]
    ],
    "label": "uni_gate_cafe",
-   "model": "commercial/com_shallow_cafe",
+   "model": "commercial/com_cafe_seaside",
    "piece": "n_un_ne",
    "pos": [
-    -585.5,
-    6.215,
-    -785.077
+    -586.0,
+    6.248,
+    -781.327
    ],
    "yaw": -180.0
   },
   {
    "doors_front": [
     [
-     "apt_door",
-     -2.01
+     "shopdoor",
+     1.76
     ]
    ],
    "label": "uni_gate_books",
-   "model": "commercial/com_shallow_books",
+   "model": "commercial/com_realty",
    "piece": "n_un_ne",
    "pos": [
-    -577.0,
-    6.212,
-    -785.327
+    -577.4,
+    6.256,
+    -781.327
    ],
    "yaw": -180.0
   },

@@ -10,6 +10,14 @@ every side has 6 m driveway aprons at the same four places. Built one quarter at
 North-east quarter 6.13..6.30 (a low crown); north-west and south-east flat (6.0..6.3); the SOUTH-WEST quarter falls to
 4.0 m at its corner, with the south and west streets' walks falling 6.15 -> 4.15 along it.
 
+## Gate shops swapped (19 Nov night, Yasin: "swap the models with explorable ones")
+The gate café and bookstore were com_shallow_cafe / com_shallow_books, whose front doors are house doors the room cut
+does not open (skill trap list). Now com_cafe_seaside (Gate Coffee) and com_realty (Campus Books): 1.6 m shop doors,
+rooms 5.4 x 13 m each; the terrace moved beside them on the gate plaza, the bikes along its east edge. Rooms 0 problems
+(22), validator 0, life 0, trees 0 in hard ground, sink 0, ground 0, campus land refitted (302 nodes, campus only), lock
+test PASS. NOT CHANGED, same question: the two coffee kiosks (com_kiosk, bus station and stadium walk) also have a
+"residential" door, so their rooms may not open either - not verified, waiting for Yasin.
+
 ## Land, audit, trees, relock (19 Nov night; Yasin: "write the land. then use super checker in your entire zone and weed
 ## out the unnecessary parts, remove every tree, fill their wells ..., place new trees according to the tree plan ... then lock it")
 - LAND WRITTEN (zoning/terrain_grid.npz + game land baked), ONLY INSIDE THE CAMPUS (u/v -792..-408), twice (again after
