@@ -834,3 +834,56 @@ front corner and from above): the wheels sit in their arches, the front one is t
 NOT CHECKED: the right-hand wheels (the same mesh turned about) were not in the picture; never seen in motion (do
 they roll the right way); buses; the phone. Around (-600, -1000) no car turned its front wheels more than 12 degrees
 in 75 s: the bends there are wide.
+
+## 25. People, step 2: the walking crowd's core (19 Nov night, on the working branch)
+Yasin: "they already do all of these but they do them terribly, needs a rewrite". WRITTEN NEW, not the old game's
+crowd core (that one is on the other branch, was made for pavements 2-6 m wide and left people standing inside each
+other on this map's narrow ones). Plain C++, no engine types: `native/src/ped_crowd.h/.cpp` (class `pc::Crowd`).
+THIS IS THE BRAIN ONLY: nothing of it is drawn or in the game yet.
+
+### What it is
+A pavement is treated as a little two-way street, the way the traffic treats a road.
+- It walks the walk graph that is already in `streets.bin`: 1,006 pavement lines (61 km, 1 to 6 m wide) between
+  corner points, 276 crossings (101 at signals, 13 to 29 m long).
+- PEOPLE KEEP RIGHT: two files on every pavement, one each way. A walker follows the one in front and PASSES through
+  the other file when he is clearly faster and nobody comes; he goes back in when somebody does. Head on, both lean to
+  their own right edge and slow.
+- NOBODY EVER MOVES INTO A BODY: every move is checked against everybody near, as the traffic's cars are. Who is held
+  for a second looks for a free place beside; after three seconds he turns sideways and sidles past (a person sideways
+  is 28 cm, not 42); after nine he turns round. Somebody standing still is gone round.
+- CROSSINGS: he goes to the kerb (toes 40 cm behind it, on his own half, the other half is where the people coming
+  over arrive) and waits. At signals he walks while the traffic he crosses has red, by the traffic's own clock, and
+  only if he will be over in time. The map's crossings are long and its lights give 15 s, so people step out on a
+  crossing (1.6 m/s at least) and jog (up to 3.2 m/s) when the light runs out. Without signals he looks, then takes
+  a gap in the cars he is given, and runs if a car comes after all; after 12 s he steps into a shorter gap (the
+  traffic's cars brake for people).
+- PEOPLE APPEAR on pavements of loaded cells in a ring 40-150 m round the camera, never within 80 m in front of it,
+  as many as the kind of street carries (1 / 1.6 / 4 / 5 / 2 people on 100 m of one pavement: quiet, ordinary, busy,
+  promenade, main road), and leave beyond 190 m. Now and then somebody stops for 4-13 s.
+- One step moves everybody (meant for 20 a second on the traffic's thread, drawn between its last two poses).
+  Nothing is allocated in a step; the same seed gives the same crowd.
+
+### What was measured
+`bash native/tests/run_crowd_test.sh` (console, the real streets.bin, about a minute): RESULT PASS (seed 20261119).
+- A. 500 people all over the map, 30 minutes, looked at every second: 0 pairs inside each other, 0 beside their
+  pavement, 0 on the road while their traffic has green, 0 standing for a minute. At any moment 92 % walk (1.29 m/s),
+  0.6 % wait at a kerb (longest 25 s), 1.5 % are on a crossing, 5.8 % stand a while. In the 30 minutes: 1,353
+  crossings walked, 1,110 passes, 687 moves refused, 119 side steps, 29 sidled past, 7 turned round.
+- B. the same seed gives the same crowd.
+- C. as in the game (camera at 43 km/h round the centre, cap 150): 19 people on average, most 25 (that is what the
+  density table gives there); nobody appeared within 40 m or within 80 m in front of the camera; the same four zeros.
+- D. a car that never brakes every 30 s over each of the 175 crossings without signals: people wait for gaps (600
+  walker-seconds), 448 crossings walked, nobody in front of a car.
+- A step for 500 people: 0.22 ms on average (a few ms at worst; once 46 ms, the PC was busy).
+A SECOND SEED (7): A, B, C the same zeros; in D ONE walker for ONE step passes 9 cm from the flank of a test car
+(jogging, mid-crossing). NOT explained, left open: those cars never brake, the real check is with the traffic's cars.
+
+### NOT done / NOT checked
+- NOT IN THE GAME: not on the traffic's thread, the traffic's cars are not handed to it, walkers are not handed to
+  the traffic (so cars would not brake for them), no drawing, no `CityPed` body for a walker who is pushed or hit.
+- No groups (couples, families), no places (doors, benches, bus stops), no reactions (a car on the pavement, a
+  horn, the player in the way), no speaking. People choose their way at random at every corner: nobody is going
+  anywhere.
+- The far figures need baked poses (the old game's pose texture was not brought); the near ones are the 41 bodies.
+- Kerb queues can still stand in a pavement's way (people go round them); 8 pavement ends where people turn back.
+- 19 people round the camera in ordinary streets may look empty: `density` scales it, Yasin's eye decides.

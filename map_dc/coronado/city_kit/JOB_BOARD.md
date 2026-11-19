@@ -5,6 +5,15 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~23:00 (PC session): PEOPLE, STEP 2: THE WALKING CROWD'S CORE, WRITTEN NEW, PLAIN C++ (`native/src/
+  ped_crowd.*`, class `pc::Crowd`). Read docs/TRAFFIC_PEOPLE_PORT.md section 25. A pavement is a little two-way
+  street: people keep right in two files, follow, pass when nobody comes, never move into a body (held: side step,
+  then sidle past sideways, then turn round), wait at the kerb for the traffic's own signal clock, step out and jog
+  on the map's long crossings, take gaps in cars where there are no signals, appear in a ring round the camera.
+  Console test `bash native/tests/run_crowd_test.sh` RESULT PASS: 500 people, 30 minutes, 0 inside each other, 0
+  beside the pavement, 0 on the road at green, 0 standing a minute; same seed same crowd; 0.22 ms a step.
+  NOT DONE: it is the BRAIN ONLY, nothing is drawn or in the game; not joined to the traffic (cars do not know of
+  walkers yet); no groups, places, reactions, speaking; a second seed leaves one near miss with a test car open.
 - 19 Nov ~20:00 (PC session): A TRAFFIC CAR THAT IS HIT IS A REAL CAR, ALL C++ (Yasin after the compaction: "act like
   a developer working for rockstars next GTA and tackle the problems"). Read docs/TRAFFIC_PEOPLE_PORT.md section 23.
   Six physical cars (`CityCar`) are made at the start; a moving or parked car of the traffic that the player's car

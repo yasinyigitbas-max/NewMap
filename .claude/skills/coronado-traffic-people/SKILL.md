@@ -48,6 +48,13 @@ The full record is `docs/TRAFFIC_PEOPLE_PORT.md` (sections 13-20 are results). T
   test's camera must stay over the car). Paid for: a KINEMATIC body that is teleported hands the jump on as speed
   (28,000 m/s): the traffic's boxes are static.
 
+- The walking crowd, new (19 Nov ~23:00, doc section 25): `ped_crowd.*` = `pc::Crowd`, plain C++, on the walk
+  graph of streets.bin; test `bash native/tests/run_crowd_test.sh [seed]` (console, a minute). NOT the old core
+  (`crowd_sim.*` on the other branch). Paid for: the crossings are 13-29 m long and the lights give 15 s (at a stroll
+  nobody ever starts: people step out and jog); waiting people must stand behind the kerb on their OWN half or the
+  ones coming over cannot land; somebody standing must be gone round or one phone call jams a street; a clot at a
+  1 m corner only clears when people may turn sideways; test cars of the next junction close this one's gaps.
+
 ## Yasin's rules for this job (his words are in the doc)
 - Everything in C++: no script in any frame or tick, no script fallback. Tool-time scripts are fine.
 - Parked cars are LOW DETAIL only. Cars must never touch a pavement, a kerb or grass. Cars move naturally.
