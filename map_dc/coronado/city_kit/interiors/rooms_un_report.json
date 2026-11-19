@@ -1,6 +1,126 @@
 {
  "rooms": [
   {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_hall__0.scn",
+   "id": "g_un_ne__uni_hall__0",
+   "kind": "campus_hall",
+   "lights": 6,
+   "name": "Coronado University - Founders Hall",
+   "props": 72,
+   "w": 31.4
+  },
+  {
+   "d": 11.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_lecture_west__0.scn",
+   "id": "g_un_ne__uni_lecture_west__0",
+   "kind": "lecture",
+   "lights": 6,
+   "name": "Lecture Halls West",
+   "props": 62,
+   "w": 29.4
+  },
+  {
+   "d": 15.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_library__0.scn",
+   "id": "g_un_ne__uni_library__0",
+   "kind": "books",
+   "lights": 6,
+   "name": "University Library",
+   "props": 59,
+   "w": 23.4
+  },
+  {
+   "d": 11.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_science__0.scn",
+   "id": "g_un_ne__uni_science__0",
+   "kind": "lecture",
+   "lights": 6,
+   "name": "Science Building",
+   "props": 62,
+   "w": 29.4
+  },
+  {
+   "d": 5.75,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_gate_cafe__0.scn",
+   "id": "g_un_ne__uni_gate_cafe__0",
+   "kind": "cafe",
+   "lights": 3,
+   "name": "Gate Coffee",
+   "props": 10,
+   "w": 6.9
+  },
+  {
+   "d": 5.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_gate_books__0.scn",
+   "id": "g_un_ne__uni_gate_books__0",
+   "kind": "books",
+   "lights": 2,
+   "name": "Campus Books",
+   "props": 6,
+   "w": 5.9
+  },
+  {
+   "d": 5.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_bus_kiosk__0.scn",
+   "id": "g_un_ne__uni_bus_kiosk__0",
+   "kind": "cafe",
+   "lights": 2,
+   "name": "Crown Cafe",
+   "props": 5,
+   "w": 3.4
+  },
+  {
+   "d": 14.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_nw__uni_museum__0.scn",
+   "id": "g_un_nw__uni_museum__0",
+   "kind": "gallery",
+   "lights": 5,
+   "name": "University Art Museum",
+   "props": 50,
+   "w": 23.4
+  },
+  {
+   "d": 15.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_nw__uni_chapel__0.scn",
+   "id": "g_un_nw__uni_chapel__0",
+   "kind": "church",
+   "lights": 5,
+   "name": "University Chapel",
+   "props": 24,
+   "w": 9.4
+  },
+  {
+   "d": 13.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_nw__uni_union__0.scn",
+   "id": "g_un_nw__uni_union__0",
+   "kind": "venue",
+   "lights": 5,
+   "name": "Student Union",
+   "props": 51,
+   "w": 23.4
+  },
+  {
+   "d": 11.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_nw__uni_humanities__0.scn",
+   "id": "g_un_nw__uni_humanities__0",
+   "kind": "lecture",
+   "lights": 6,
+   "name": "Humanities",
+   "props": 62,
+   "w": 29.4
+  },
+  {
+   "d": 11.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_nw__uni_arts__0.scn",
+   "id": "g_un_nw__uni_arts__0",
+   "kind": "lecture",
+   "lights": 6,
+   "name": "Fine Arts",
+   "props": 62,
+   "w": 29.4
+  },
+  {
    "d": 13.15,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_se__uni_rec__0.scn",
    "id": "g_un_se__uni_rec__0",
@@ -9,6 +129,96 @@
    "name": "Rec Center",
    "props": 41,
    "w": 23.4
+  },
+  {
+   "d": 11.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_se__uni_kinesiology__0.scn",
+   "id": "g_un_se__uni_kinesiology__0",
+   "kind": "lecture",
+   "lights": 6,
+   "name": "Kinesiology",
+   "props": 62,
+   "w": 29.4
+  },
+  {
+   "d": 5.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_se__uni_gameday_kiosk__0.scn",
+   "id": "g_un_se__uni_gameday_kiosk__0",
+   "kind": "cafe",
+   "lights": 2,
+   "name": "Crown Cafe",
+   "props": 5,
+   "w": 3.4
+  },
+  {
+   "d": 15.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_sw__uni_dining__0.scn",
+   "id": "g_un_sw__uni_dining__0",
+   "kind": "fast_food",
+   "lights": 6,
+   "name": "Dining Commons",
+   "props": 110,
+   "w": 23.4
+  },
+  {
+   "d": 8.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_sw__uni_dorm_1__0.scn",
+   "id": "g_un_sw__uni_dorm_1__0",
+   "kind": "lobby",
+   "lights": 5,
+   "name": "Torrey Hall",
+   "props": 30,
+   "w": 21.0
+  },
+  {
+   "d": 8.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_sw__uni_dorm_2__0.scn",
+   "id": "g_un_sw__uni_dorm_2__0",
+   "kind": "lobby",
+   "lights": 5,
+   "name": "Jacaranda Hall",
+   "props": 30,
+   "w": 21.0
+  },
+  {
+   "d": 11.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_sw__uni_dorm_3__0.scn",
+   "id": "g_un_sw__uni_dorm_3__0",
+   "kind": "lobby",
+   "lights": 5,
+   "name": "Coral Hall",
+   "props": 52,
+   "w": 18.4
+  },
+  {
+   "d": 11.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_sw__uni_dorm_4__0.scn",
+   "id": "g_un_sw__uni_dorm_4__0",
+   "kind": "lobby",
+   "lights": 5,
+   "name": "Magnolia Hall",
+   "props": 52,
+   "w": 18.4
+  },
+  {
+   "d": 9.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_sw__uni_dorm_5__0.scn",
+   "id": "g_un_sw__uni_dorm_5__0",
+   "kind": "lobby",
+   "lights": 5,
+   "name": "Palm Hall",
+   "props": 22,
+   "w": 17.4
+  },
+  {
+   "d": 9.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_sw__uni_dorm_6__0.scn",
+   "id": "g_un_sw__uni_dorm_6__0",
+   "kind": "lobby",
+   "lights": 5,
+   "name": "Ficus Hall",
+   "props": 22,
+   "w": 17.4
   }
  ]
 }

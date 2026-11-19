@@ -210,6 +210,6 @@ func _run() -> void:
 	c.put("prop_newspaper_box_blue", "worn", c.gp(-11.0, -189.8), 180.0, "gate: the city paper")
 	for br: float in [-186.0, -183.0]: c.put("prop_bike_rack", "worn", c.gp(br, -27.0), 0.0, "arts wing: bikes on the lawn by its west end")
 	for sb: Array in [[-80.0, -150.0], [-150.0, -30.0]]: c.put("prop_park_bench", "worn", c.gp(float(sb[0]), float(sb[1])), 180.0, "lawn: a bench in the shade facing the path")
-	c.put("prop_usps_collection_box", "worn", c.gp(-112.0, -124.0), 0.0, "humanities: the department mailbox")
+	c.put("prop_usps_collection_box", "worn", c.gp(-112.0, -128.0), 0.0, "humanities: the department mailbox, on the grass beside the path")
 	c.finish()
 	quit()

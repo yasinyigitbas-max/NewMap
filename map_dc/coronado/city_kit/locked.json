@@ -2480,6 +2480,26 @@
    "sha256": "40011566b83dab90e37a1cbc638830d9a03d61e579d49ad152597230427528f8",
    "by": "Yasin",
    "date": "2026-11-19"
+  },
+  "n_un_ne": {
+   "sha256": "5529b0d435a95bbd9215891504c2987c4ece8b9a060277f11a7d6686ba45f5e3",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_un_nw": {
+   "sha256": "0975dc79828b2c74ef8898316409d4e0a0eab2c1f250ae7f6a142e12496c47f1",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_un_se": {
+   "sha256": "ba174c5435f62e5ebc4531ed92d305c6624364426cdd375c774a08c98db01ddc",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "n_un_sw": {
+   "sha256": "0e2832a940a26d0d565c3bd611ddf597ced188bb5564458a96541e20c11aed55",
+   "by": "Yasin",
+   "date": "2026-11-19"
   }
  },
  "files": {

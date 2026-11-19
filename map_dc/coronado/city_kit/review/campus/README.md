@@ -1,4 +1,4 @@
-# University campus (claude/sharp-ride-16u9ik, 19 Nov 2026) - DRAFT, NOT SHOWN, NOT LOCKED
+# University campus (claude/sharp-ride-16u9ik, 19 Nov 2026) - LOCKED 19 Nov (Yasin: "run a polish pass then lock")
 
 The campus (ZONING.md MUST site: "west of the stadium, which it shares; students live in the gritty edge") is the
 superblock u/v -790.8..-409.2 (381.6 m square, STREETS.md "2 x 2 cells with its own campus roads"). No street enters it;
@@ -10,7 +10,16 @@ every side has 6 m driveway aprons at the same four places. Built one quarter at
 North-east quarter 6.13..6.30 (a low crown); north-west and south-east flat (6.0..6.3); the SOUTH-WEST quarter falls to
 4.0 m at its corner, with the south and west streets' walks falling 6.15 -> 4.15 along it.
 
-## All four quarters built (19 Nov evening): n_un_ne, n_un_nw, n_un_se, n_un_sw - DRAFT, NOT SHOWN, NOT LOCKED
+## Polish pass and lock (19 Nov late)
+Polish (Yasin: "plenty of life and relevant props"): hydrants within reach of every building, storm drains and manholes
+on the drives and lots, maintenance carts, more lawn chairs, tables, flower beds and sprinklers on the quads and the dorm
+green, bikes between the dorms, patio sets, sideline and tennis benches, fountains, vending by the game-day kiosk,
+papers; the gate café and bookstore set 1 m back (the 6 cm lip at the 6th St walk is gone). After it: ground check 0
+everywhere, no step against any street, validator 0 lines naming n_un, life 0, trees 0 in hard ground, sink 0, rooms 0
+problems in 22, lock test PASS (500 locked pieces). LOCKED: n_un_ne, n_un_nw, n_un_se, n_un_sw (lock.py --by=Yasin).
+Still not in: garage interior, dorm floors above the lobbies, roof plant on the pitched civic roofs, goals on the field.
+
+## All four quarters built (19 Nov evening): n_un_ne, n_un_nw, n_un_se, n_un_sw
 - NE (built): the campus FRONT - the BUS STATION (one-way loop through 6th St's two aprons round a platform island with
   four shelters, timetable cases, bike racks and a coffee kiosk), the UNIVERSITY HALL (pub_university, first use of the
   kit model) across a plaza, the MAIN QUAD, library, lecture wing, science wing, the students' gate café and bookstore,
@@ -42,8 +51,8 @@ cells beside it are the campus quarters not built yet. Dry land trial: at most 0
 ## Ground and checks, all four quarters (campus area layout, 127 rows)
 - The SW quarter's ground eases to the west and south streets' walks as measured every 2 m (they fall 6.15 -> 4.15);
   every building on a pad at the highest ground under it. ground_check: buried 0, hanging 0, steps 0, under 0.
-- Steps against neighbours (stepmap, 25 cm cells): one, in NE - a 6 cm lip at 6th St's walk in front of the gate café
-  and bookstore (u -590..-573, their pads reach the street edge). Not fixed yet (Yasin's word: NE was reported before).
+- Steps against neighbours (stepmap, 25 cm cells): one before the polish, in NE (a 6 cm lip at the gate café and
+  bookstore); fixed in the polish pass.
 - Dry land trial: 259 land nodes lowered, largest 0.09 m (land NOT written).
 - validate.gd 0 lines naming n_un (the area's 12 problems are other pieces'); check_life 0 (after moving two racks off
   the humanities' path); audit_trees 0 of 1289 in hard ground; sink_check 0; check_rooms 0 problems in 22 rooms; lock

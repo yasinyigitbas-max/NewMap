@@ -109,8 +109,8 @@
    "model": "commercial/com_shallow_cafe",
    "pos": [
     -585.5,
-    6.21,
-    -786.077
+    6.215,
+    -785.077
    ],
    "yaw": -180.0,
    "door_index": 0,
@@ -140,8 +140,8 @@
    "model": "commercial/com_shallow_books",
    "pos": [
     -577.0,
-    6.207,
-    -786.327
+    6.212,
+    -785.327
    ],
    "yaw": -180.0,
    "door_index": 0,
