@@ -47,6 +47,12 @@ private:
 	String streets_path = "res://map_dc/coronado/city_kit/traffic/streets.bin";
 	String places_path = "res://map_dc/coronado/city_kit/traffic/places.bin";
 	String people_dir = "res://characters/rocketbox/";
+	// the sea: its depth map and its surface's height
+	String sea_path = "res://tools/city/look/sea_map.png";
+	double sea_y = 0.0;
+	std::vector<float> sea_d;
+	int sea_w = 0, sea_h = 0;
+	float sea_x0 = 0, sea_z0 = 0, sea_step = 8.0f;
 	// settings
 	int max_people = 300;
 	double density = 1.0, hour = 12.0, clock_rate = 0.0, rain = 0.0;   // clock_rate: game hours a real second (0 = the hour stands)
@@ -79,7 +85,7 @@ private:
 	PackedFloat32Array buf;
 	int shown = -1;
 	// the near bodies
-	struct Near { CityPed *ped = nullptr; int walker = -1; int female = 0; bool in_body = false; float push_cd = 0; Ref<ShaderMaterial> look; int act = -1; float act_t = 99.0f; int why = 0, after_kind = 0; float after_t = 0.0f, after_len = 0.0f; bool after_hit = false; };   // act, act_t: what it shows and for how long (the way INTO an act is played once)
+	struct Near { CityPed *ped = nullptr; int walker = -1; int female = 0; bool in_body = false; float push_cd = 0; Ref<ShaderMaterial> look; int act = -1; float act_t = 99.0f, v_s = 0.0f; int why = 0, after_kind = 0; float after_t = 0.0f, after_len = 0.0f; bool after_hit = false; };   // act, act_t: what it shows and for how long (the way INTO an act is played once)
 	// how long the clips into and out of an act are (read from the figure once it is made)
 	bool lens_ok = false;
 	int fight_falls = 0;
@@ -107,7 +113,7 @@ private:
 	void extras_update(double p_alpha);
 	void make_near();
 	void near_update(double p_delta, double p_alpha);
-	void clip_of(int i, float p_t, StringName &r_clip, double &r_speed, double &r_hold, int &r_token) const;
+	void clip_of(int i, float p_t, float p_v, StringName &r_clip, double &r_speed, double &r_hold, int &r_token) const;
 	void clip_lengths();
 	void onlookers(int p_row, int p_most, float p_seconds, bool p_film);
 	// counters
@@ -143,7 +149,7 @@ public:
 	// (for the talk, city_talk.cpp) the brain, the player, a shop's name, whether a walker is a woman
 	pc::Crowd *brain() const { return crowd; }
 	uint64_t get_player_id() const { return player_id; }
-	String place_name(int p_place) const { if (!crowd || p_place < 0 || p_place >= (int)crowd->places.size()) return String(); const int n = crowd->places[p_place].name; return n >= 0 && n < (int)place_names.size() ? place_names[n] : String(); }
+	String place_name(int p_place) const { if (!crowd || p_place < 0 || p_place >= (int)crowd->places.size()) return String(); const int n = crowd->places[p_place].kind == pc::PL_SWIM ? -1 : crowd->places[p_place].name; return n >= 0 && n < (int)place_names.size() ? place_names[n] : String(); }
 	bool walker_female(int p_row) const { return crowd && ((crowd->look[p_row] >> 3) & 1u) != 0; }
 
 	void set_max_people(int p_n) { max_people = p_n; }
@@ -177,6 +183,14 @@ public:
 	// (the game, and tests) somebody is knocked about by something of the game's own: his walker is where the game says
 	// until it lets him go (on = false: he walks back to the pavement, to his people, and on to where he was going)
 	bool to_body(int p_id, bool p_on, const Vector3 &p_at) { return crowd && crowd->to_body(p_id, p_on, (float)p_at.x, (float)p_at.z); }
+	void load_sea();
+	int place_from_file(int p_n) const { return crowd && p_n >= 0 && p_n < (int)crowd->place_from_file.size() ? crowd->place_from_file[p_n] : -1; }
+	int swim_spot_of(int p_place) const { return crowd && p_place >= 0 && p_place < (int)crowd->swim_of.size() ? crowd->swim_of[p_place] : -1; }
+	float sea_depth(float p_x, float p_z) const;    // metres of water at a place (0 = land)
+	void set_sea_path(const String &p_p) { sea_path = p_p; }
+	String get_sea_path() const { return sea_path; }
+	void set_sea_y(double p_y) { sea_y = p_y; }
+	double get_sea_y() const { return sea_y; }
 	Array near_bodies() const;     // (tests) every animated body: whose it is and which clip it plays
 	bool fight(int p_a, int p_b) { return crowd && crowd->fight(p_a, p_b); }
 	void scare(const Vector3 &p_at, double p_radius, double p_seconds);

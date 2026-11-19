@@ -93,6 +93,7 @@ struct Config {
 	float rise_s[A_COUNT] = {};   // per act: seconds it takes to leave it (0 = at once); the game sets them by its animations
 	float fight_s = 4.0f;         // how long blows last
 	int fight_one_in = 5;         // of the long quarrels (a quarter of all) one in so many comes to blows
+	bool swim = false;            // people on the beach go for a swim afterwards (the game: on; half of them, by day, in the dry)
 	float cheer_s = 0.0f;         // how long the winner of a fight celebrates (0 = he just goes)
 	float hurt_s = 0.0f;          // how long the loser of a fight walks slowly afterwards, hurt (the game sets 45)
 	float density = 1.0f;
@@ -134,6 +135,8 @@ public:
 
 	// ---- the places
 	std::vector<Place> places;
+	std::vector<int32_t> place_from_file;       // the number a place has in places.bin -> its number here (-1: left out)
+	std::vector<int32_t> swim_of;               // a place on the beach -> its spot in the sea (-1: none)
 	std::vector<int32_t> occ;                   // per place: who is there or on his way (a walker's id), -1 = free
 	std::vector<int16_t> inside;                // per shop door: how many are in the shop
 	std::vector<uint8_t> place_off;             // per place: 1 = switched off by the game (a knocked-over bench)
@@ -166,6 +169,7 @@ public:
 	float tx[MAX_PEDS], tz[MAX_PEDS], ty[MAX_PEDS], tyaw[MAX_PEDS];   // off the line: where to, and how to face there
 	float rise_t[MAX_PEDS], kept_stay[MAX_PEDS];
 	float hurt_t[MAX_PEDS], hurt_v0[MAX_PEDS];  // hurt (he lost a fight): seconds of slow walking left, and his own pace to go back to
+	uint8_t swam[MAX_PEDS];                     // it has had its swim
 	uint8_t fwin[MAX_PEDS];                     // in a fight: 1 = he will win it
 	int32_t kept_goal[MAX_PEDS];                // where it was going when its body was knocked about (-1 = nowhere): it goes on there afterwards
 	uint8_t kept_enter[MAX_PEDS], kept_kind[MAX_PEDS];

@@ -3,3 +3,4 @@ PLACES found: 831 home doors, 146 shop doors, 118 beach places, 206 park places,
 PLACES left out (no pavement near enough): 89 home doors, 15 shop doors, 86 park places, 7 bus stops, 294 bench seats,
 PLACES bus stops with no lane within 14 m: 70
 PLACES benches: 294, of which 142 turn their back to the pavement they are reached from
+PLACES swim: 118 places on the beach, a spot to swim at for 34 of them (the farthest 60 m out)

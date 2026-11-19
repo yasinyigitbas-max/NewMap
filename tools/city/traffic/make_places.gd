@@ -14,6 +14,9 @@ func _init() -> void:
 	var rep: PackedStringArray = p.build(OUT + "streets.bin", "res://map_dc/coronado/city_kit/city_grid_layout.json", "res://map_dc/coronado/city_kit/pieces/", "res://map_dc/coronado/city_kit/interiors/assignment_all.json")
 	for l in rep: print(l)
 	if int(p.count()) == 0: quit(1); return
+	var sw: PackedStringArray = p.add_swim("", "res://tools/city/look/sea_map.png", "res://tools/city/look/sea_map.json")      # the spots in the sea
+	for l in sw: print(l)
+	rep.append_array(sw)
 	p.save(OUT + "places.bin")
 	var f := FileAccess.open(OUT + "places_report.txt", FileAccess.WRITE)
 	f.store_string("\n".join(rep) + "\n"); f.close()

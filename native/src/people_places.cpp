@@ -9,6 +9,7 @@
 #include "street_build.h"
 
 #include <godot_cpp/classes/file_access.hpp>
+#include <godot_cpp/classes/image.hpp>
 #include <godot_cpp/classes/json.hpp>
 #include <godot_cpp/classes/mesh.hpp>
 #include <godot_cpp/classes/mesh_instance3d.hpp>
@@ -297,7 +298,7 @@ PackedStringArray PeoplePlaces::build(const String &p_streets, const String &p_l
 	}
 
 	rep.push_back(vformat("PLACES read %d pieces placed (%d different, %d not found), %d shop doors", n_inst, (int)pieces.size(), n_missing, n_rooms));
-	static const char *const KN[pc::PL_KINDS] = { "home doors", "shop doors", "beach places", "park places", "gates", "bus stops", "bench seats", "cafe seats", "beggars' spots", "night corners" };
+	static const char *const KN[pc::PL_KINDS] = { "home doors", "shop doors", "beach places", "park places", "gates", "bus stops", "bench seats", "cafe seats", "beggars' spots", "night corners", "spots to swim at" };
 	String line = "PLACES found:";
 	int total = 0;
 	for (int k = 0; k < pc::PL_KINDS; k++) { line += vformat(" %d %s,", n_kind[k], KN[k]); total += n_kind[k]; }
@@ -310,6 +311,67 @@ PackedStringArray PeoplePlaces::build(const String &p_streets, const String &p_l
 	rep.push_back(vformat("PLACES bus stops with no lane within 14 m: %d", bus_no_lane));
 	rep.push_back(vformat("PLACES benches: %d, of which %d turn their back to the pavement they are reached from", benches, benches_back_to_street));
 	delete cw;
+	return rep;
+}
+
+// The sea: for every place on the beach, the nearest spot where the water is 1.6 m deep or more, within 90 m of it and
+// with water all the second half of the way: there the people of that place swim. The sea's surface is at 0 m; the
+// depth map is the test app's own (8 m a texel: red = depth / deep, green = there is water).
+PackedStringArray PeoplePlaces::add_swim(const String &p_places, const String &p_sea_png, const String &p_sea_json) {
+	PackedStringArray rep;
+	if (!p_places.is_empty()) {
+		const PackedByteArray b = FileAccess::get_file_as_bytes(p_places);
+		pc::PlaceData pd;
+		if (b.size() < 12 || !pd.load(b.ptr(), (size_t)b.size())) { rep.push_back("PLACES swim: cannot read " + p_places); return rep; }
+		data = pd;
+	}
+	const Variant mv = JSON::parse_string(FileAccess::get_file_as_string(p_sea_json));
+	Ref<Image> img = Image::load_from_file(p_sea_png);
+	if (mv.get_type() != Variant::DICTIONARY || img.is_null() || img->is_empty()) { rep.push_back("PLACES swim: no sea map (" + p_sea_png + ")"); return rep; }
+	if (img->is_compressed()) img->decompress();
+	const Dictionary meta = mv;
+	const float x0 = meta.get("x0", 0.0), z0 = meta.get("z0", 0.0), step = meta.get("step", 8.0), deep = meta.get("deep", 20.0);
+	const int W = img->get_width(), H = img->get_height();
+	auto depth = [&](float x, float z) -> float {
+		const float fx = (x - x0) / step, fz = (z - z0) / step;
+		const int ix = (int)std::floor(fx), iz = (int)std::floor(fz);
+		if (ix < 0 || iz < 0 || ix >= W - 1 || iz >= H - 1) return 0.0f;
+		const float ax = fx - (float)ix, az = fz - (float)iz;
+		float d = 0.0f;
+		for (int k = 0; k < 4; k++) {
+			const Color c = img->get_pixel(ix + (k & 1), iz + (k >> 1));
+			d += (c.g > 0.5f ? c.r * deep : 0.0f) * ((k & 1) ? ax : 1.0f - ax) * ((k >> 1) ? az : 1.0f - az);
+		}
+		return d;
+	};
+	std::vector<pc::Place> keep;
+	for (const pc::Place &q : data.places) if (q.kind != pc::PL_SWIM) keep.push_back(q);
+	data.places = keep;
+	const int n0 = (int)data.places.size();
+	int beach = 0, made = 0; float far_ = 0.0f;
+	for (int b = 0; b < n0; b++) {
+		if (data.places[b].kind != pc::PL_BEACH) continue;
+		beach++;
+		const pc::Place B = data.places[b];
+		bool done = false;
+		for (float r = 9.0f; r <= 90.0f && !done; r += 3.0f) {
+			float best_d = 0.0f, bx = 0, bz = 0;
+			for (int a = 0; a < 24; a++) {
+				const float an = (float)a * 0.2617994f, sx = B.x + std::sin(an) * r, sz = B.z + std::cos(an) * r;
+				const float d = depth(sx, sz);
+				if (d < 1.6f || d <= best_d) continue;
+				bool wet = true;   // (not across a spit of land: water all the second half of the way)
+				for (int q = 5; q <= 9; q++) if (depth(B.x + (sx - B.x) * (float)q * 0.1f, B.z + (sz - B.z) * (float)q * 0.1f) < 0.1f) wet = false;
+				if (wet) { best_d = d; bx = sx; bz = sz; }
+			}
+			if (best_d <= 0.0f) continue;
+			pc::Place s = B;
+			s.kind = pc::PL_SWIM; s.pose = pc::POSE_STAND; s.sub = 0; s.x = bx; s.z = bz; s.y = -0.38f; s.yaw = std::atan2(bx - B.x, bz - B.z); s.name = b; s.lane = -1; s.lane_s = 0.0f;
+			data.places.push_back(s);
+			made++; far_ = std::max(far_, r); done = true;
+		}
+	}
+	rep.push_back(vformat("PLACES swim: %d places on the beach, a spot to swim at for %d of them (the farthest %.0f m out)", beach, made, far_));
 	return rep;
 }
 
@@ -329,6 +391,7 @@ int PeoplePlaces::count() const { return (int)data.places.size(); }
 void PeoplePlaces::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("build", "streets_bin", "layout_json", "pieces_dir", "rooms_json"), &PeoplePlaces::build);
 	ClassDB::bind_method(D_METHOD("save", "path"), &PeoplePlaces::save);
+	ClassDB::bind_method(D_METHOD("add_swim", "places", "sea_png", "sea_json"), &PeoplePlaces::add_swim);
 	ClassDB::bind_method(D_METHOD("count"), &PeoplePlaces::count);
 }
 

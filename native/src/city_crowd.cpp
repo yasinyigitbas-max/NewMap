@@ -15,6 +15,7 @@
 #include <godot_cpp/classes/rendering_server.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/shader.hpp>
+#include <godot_cpp/classes/texture2d.hpp>
 #include <godot_cpp/classes/texture_layered.hpp>
 #include <godot_cpp/classes/time.hpp>
 #include <godot_cpp/classes/viewport.hpp>
@@ -88,6 +89,8 @@ bool CityCrowd::load() {
 	const PackedByteArray sb = FileAccess::get_file_as_bytes(streets_path);
 	sg::StreetData d;
 	if (sb.size() < 16 || !d.load(sb.ptr(), (size_t)sb.size()) || !crowd->build(d)) { UtilityFunctions::push_error("CityCrowd: no streets (", streets_path, "): run tools/city/traffic/make_streets.gd"); return false; }
+	load_sea();
+	crowd->cfg.swim = !sea_d.empty();
 	const PackedByteArray pbs = FileAccess::get_file_as_bytes(places_path);
 	pc::PlaceData pd;
 	if (pbs.size() >= 12 && pd.load(pbs.ptr(), (size_t)pbs.size())) {
@@ -309,7 +312,9 @@ void CityCrowd::step_brain(double p_delta) {
 		tr->buses_at_stops(bus_buf);
 		std::vector<int> here;
 		for (size_t k = 0; k + 6 < bus_buf.size(); k += 7) {
-			const int place = (int)bus_buf[k];
+			const int pf = (int)bus_buf[k];
+			const int place = pf >= 0 && pf < (int)crowd->place_from_file.size() ? crowd->place_from_file[pf] : -1;   // (the traffic names a stop by its number in places.bin)
+			if (place < 0) continue;
 			here.push_back(place);
 			if (std::find(bus_here.begin(), bus_here.end(), place) != bus_here.end()) continue;
 			const float bx = bus_buf[k + 1], bz = bus_buf[k + 2], hx = std::sin(bus_buf[k + 3]), hz = std::cos(bus_buf[k + 3]), hl = bus_buf[k + 4], hw = bus_buf[k + 5];
@@ -416,7 +421,12 @@ void CityCrowd::draw(double p_alpha) {
 		r[0] = cy; r[1] = 0.0f; r[2] = sy; r[3] = x;
 		r[4] = 0.0f; r[5] = sc; r[6] = 0.0f; r[7] = y;
 		r[8] = -sy; r[9] = 0.0f; r[10] = cy; r[11] = z;
-		r[12] = pr[0]; r[13] = pr[1]; r[14] = pr[2] + POSE_K * (float)pose_of(i);
+		int pose = pose_of(i);
+		const float wd = sea_depth(x, z);   // (in the sea: wading with his feet on the bottom, or lying at the surface: swimming, from afar)
+		const float y_sea = wd > 1.15f ? (float)sea_y - 0.30f : (wd > 0.05f ? (float)sea_y - wd : 1.0e9f);
+		if (wd > 1.15f) pose = 11;
+		if (y_sea < 1.0e8f) r[7] = y_sea;
+		r[12] = pr[0]; r[13] = pr[1]; r[14] = pr[2] + POSE_K * (float)pose;
 		bool has_body = false;
 		for (const Near &nb : near_pool) if (nb.walker == crowd->id[i]) has_body = true;
 		r[15] = has_body ? pr[3] : -(pr[3] + 1.0f);   // (below 0: drawn whole at any distance; else it dissolves where the near body takes over)
@@ -493,7 +503,7 @@ void CityCrowd::clip_lengths() {
 // What a near body shows: the clip of what its walker does. `p_t`: how long it has shown this act (the way INTO an
 // act, sitting down, crouching, squaring up, is played once, then the act's own clip). r_hold: -1 it runs, -2 once
 // and held on its last frame, >= 0 held at that moment. r_token: a new number starts the same clip again.
-void CityCrowd::clip_of(int i, float p_t, StringName &r_clip, double &r_speed, double &r_hold, int &r_token) const {
+void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double &r_speed, double &r_hold, int &r_token) const {
 	static const StringName WALK("ual/Walk_Loop"), WALK2("ual/Walk_Formal_Loop"), JOG("ual/Jog_Fwd_Loop"), SPRINT("ual/Sprint_Loop"), IDLE("ual/Idle_Loop"), ARMS("ual/Idle_FoldArms_Loop"),
 			LOOK("ual/Idle_LookAround_Loop"), SIT_TALK("ual/Sitting_Talking_Loop"), LIE("ual/LayToIdle"), LIE_IN("ual/IdleToLay"), PHONE("ual/Idle_TalkingPhone_Loop"), FILM("ual/Idle_Lantern_Loop"),
 			DUCK("ual/Crouch_Idle_Loop"), DUCK_IN("ual/Crouch_Enter"), DUCK_OUT("ual/Crouch_Exit"), TALK("ual/Idle_Talking_Loop"), NO("ual/Idle_No_Loop"), GIVE("ual/Interact"), WAVE("wave"), HUG("hug"),
@@ -506,7 +516,7 @@ void CityCrowd::clip_of(int i, float p_t, StringName &r_clip, double &r_speed, d
 	static const StringName BLOWS[6] = { StringName("ual/Punch_Jab"), StringName("ual/Punch_Cross"), StringName("ual/Kick"), StringName("ual/Melee_Hook"), StringName("ual/Melee_Uppercut"), StringName("ual/Melee_Knee") };
 	const uint32_t lk = crowd->look[i];
 	const int g = (lk >> 3) & 1u, a = crowd->act[i];
-	const float v = crowd->v[i];
+	const float v = p_v;   // (his pace, smoothed over a moment: somebody held up for a step does not flick to standing and back)
 	r_speed = 1.0; r_hold = -1.0; r_token = 0;
 	if (crowd->mode[i] == pc::M_DODGE) {   // the jump out of a car's way: to the side it goes
 		const float hx = std::sin(crowd->yaw[i]), hz = std::cos(crowd->yaw[i]);
@@ -680,6 +690,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 		person_of(best, pr, body, sc);
 		nb.walker = crowd->id[best]; nb.in_body = false;
 		nb.why = 0; nb.after_kind = 0; nb.after_t = 0.0f;
+		nb.v_s = crowd->v[best];
 		nb.act = crowd->act[best]; nb.act_t = 99.0f;   // (whatever it is doing, it is doing it already)
 		nb.look->set_shader_parameter("person", Vector4(pr[0], pr[1] - (float)(body * 64), pr[2], pr[3]));
 		nb.ped->become(bodies[body].id, bodies[body].near_mesh, nb.look, sc > 0.9f);
@@ -767,7 +778,18 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 				StringName clip; double speed, hold; int token;
 				const int act_now = crowd->act[i] | (crowd->mode[i] == pc::M_DODGE ? 256 : 0);
 				if (nb.act != act_now) { nb.act = act_now; nb.act_t = 0.0f; } else nb.act_t += (float)p_delta;
-				clip_of(i, nb.act_t, clip, speed, hold, token);
+				nb.v_s += (crowd->v[i] - nb.v_s) * std::min((float)p_delta * 5.0f, 1.0f);
+				clip_of(i, nb.act_t, nb.v_s, clip, speed, hold, token);
+				// in the sea: wading while the water is under the chest (his feet on the bottom), then swimming at the
+				// surface (the same two numbers as the player's)
+				{
+					const float wd = sea_depth(at.x, at.z);
+					if (wd > 1.15f) {
+						static const StringName SWIM("ual/Swim_Fwd_Loop"), FLOAT("ual/Swim_Idle_Loop");
+						at.y = (float)sea_y - 0.38f;
+						clip = nb.v_s > 0.2f ? SWIM : FLOAT; speed = nb.v_s > 0.2f ? std::min(std::max(nb.v_s / 1.0f, 0.6f), 1.6f) : 1.0; hold = -1.0; token = 0;
+					} else if (wd > 0.05f) at.y = (float)sea_y - wd;
+				}
 				nb.ped->drive(Transform3D(Basis(Vector3(0, 1, 0), lerp_angle(crowd->pyaw[i], crowd->yaw[i], a)).scaled(Vector3(sc, sc, sc)), at), clip, speed, hold, token);
 				// the last blow of a fight is a real one: the one who takes it is handed to his balancing body, which
 				// staggers back or goes down, and gets up by itself (pushes and falls are never a clip)
@@ -882,6 +904,40 @@ Array CityCrowd::take_events() {
 	return out;
 }
 
+// The sea's depth map (the test app's own: 8 m a texel, red = depth / deep, green = there is water). The sea's surface
+// is at sea_y. Without the map nobody swims.
+void CityCrowd::load_sea() {
+	sea_d.clear();
+	const String meta_path = sea_path.get_basename() + String(".json");
+	if (sea_path.is_empty() || !FileAccess::file_exists(meta_path)) return;
+	const Variant mv = JSON::parse_string(FileAccess::get_file_as_string(meta_path));
+	if (mv.get_type() != Variant::DICTIONARY) return;
+	Ref<Image> img;
+	if (ResourceLoader::get_singleton()->exists(sea_path)) { Ref<Texture2D> t = ResourceLoader::get_singleton()->load(sea_path); if (t.is_valid()) img = t->get_image(); }
+	if (img.is_null() && FileAccess::file_exists(sea_path)) img = Image::load_from_file(sea_path);
+	if (img.is_null() || img->is_empty()) return;
+	if (img->is_compressed()) img->decompress();
+	const Dictionary meta = mv;
+	sea_x0 = meta.get("x0", 0.0); sea_z0 = meta.get("z0", 0.0); sea_step = meta.get("step", 8.0);
+	const float deep = meta.get("deep", 20.0);
+	sea_w = img->get_width(); sea_h = img->get_height();
+	sea_d.resize((size_t)sea_w * sea_h);
+	for (int z = 0; z < sea_h; z++) for (int x = 0; x < sea_w; x++) {
+		const Color c = img->get_pixel(x, z);
+		sea_d[(size_t)z * sea_w + x] = c.g > 0.5f ? c.r * deep : 0.0f;
+	}
+}
+
+float CityCrowd::sea_depth(float p_x, float p_z) const {
+	if (sea_d.empty()) return 0.0f;
+	const float fx = (p_x - sea_x0) / sea_step, fz = (p_z - sea_z0) / sea_step;
+	const int ix = (int)std::floor(fx), iz = (int)std::floor(fz);
+	if (ix < 0 || iz < 0 || ix >= sea_w - 1 || iz >= sea_h - 1) return 0.0f;
+	const float ax = fx - (float)ix, az = fz - (float)iz;
+	const float *q = &sea_d[(size_t)iz * sea_w + ix];
+	return (q[0] * (1.0f - ax) + q[1] * ax) * (1.0f - az) + (q[sea_w] * (1.0f - ax) + q[sea_w + 1] * ax) * az;
+}
+
 Array CityCrowd::near_bodies() const {
 	Array out;
 	for (const Near &nb : near_pool) {
@@ -971,6 +1027,15 @@ void CityCrowd::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("place_info", "place"), &CityCrowd::place_info);
 	ClassDB::bind_method(D_METHOD("fight", "a", "b"), &CityCrowd::fight);
 	ClassDB::bind_method(D_METHOD("near_bodies"), &CityCrowd::near_bodies);
+	ClassDB::bind_method(D_METHOD("sea_depth", "x", "z"), &CityCrowd::sea_depth);
+	ClassDB::bind_method(D_METHOD("place_from_file", "number_in_places_bin"), &CityCrowd::place_from_file);
+	ClassDB::bind_method(D_METHOD("swim_spot_of", "beach_place"), &CityCrowd::swim_spot_of);
+	ClassDB::bind_method(D_METHOD("set_sea_path", "path"), &CityCrowd::set_sea_path);
+	ClassDB::bind_method(D_METHOD("get_sea_path"), &CityCrowd::get_sea_path);
+	ClassDB::bind_method(D_METHOD("set_sea_y", "y"), &CityCrowd::set_sea_y);
+	ClassDB::bind_method(D_METHOD("get_sea_y"), &CityCrowd::get_sea_y);
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, "sea_path"), "set_sea_path", "get_sea_path");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "sea_y"), "set_sea_y", "get_sea_y");
 	ClassDB::bind_method(D_METHOD("people_near", "at", "radius"), &CityCrowd::people_near);
 	ClassDB::bind_method(D_METHOD("take_events"), &CityCrowd::take_events);
 	ClassDB::bind_method(D_METHOD("stats"), &CityCrowd::stats);

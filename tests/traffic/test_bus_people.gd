@@ -43,7 +43,7 @@ func _process(delta: float) -> bool:
 			var lines: Array = traffic.call(&"bus_lines")
 			if lines.is_empty(): _check(false, "no bus line was made"); step = 9; return false
 			var pl: PackedInt32Array = lines[0].places
-			place = pl[mini(4, pl.size() - 1)]
+			place = int(crowd.call(&"place_from_file", pl[mini(4, pl.size() - 1)]))      # (the traffic names a stop by its number in places.bin)
 			var info: Dictionary = crowd.call(&"place_info", place)
 			at = info.at
 			var cam := Camera3D.new(); root.add_child(cam)

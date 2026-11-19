@@ -9,9 +9,20 @@ namespace pc {
 
 void Crowd::set_places(const PlaceData &p) {
 	places.clear();
-	for (const Place &q : p.places) {
+	place_from_file.assign(p.places.size(), -1);
+	swim_of.clear();
+	for (size_t fi = 0; fi < p.places.size(); fi++) {
+		const Place &q = p.places[fi];
 		if (q.seg < 0 || q.seg >= (int)segs.size() || segs[q.seg].np < 2 || segs[q.seg].kind != 0 || q.kind >= PL_KINDS) continue;
+		place_from_file[fi] = (int32_t)places.size();
 		places.push_back(q);
+	}
+	swim_of.assign(places.size(), -1);
+	for (int k = 0; k < (int)places.size(); k++) {   // (a spot in the sea names its place on the beach by that one's number in the file)
+		const Place &q = places[k];
+		if (q.kind != PL_SWIM || q.name < 0 || q.name >= (int)place_from_file.size()) continue;
+		const int b = place_from_file[q.name];
+		if (b >= 0 && places[b].kind == PL_BEACH) swim_of[b] = k;
 	}
 	occ.assign(places.size(), -1); inside.assign(places.size(), 0); place_off.assign(places.size(), 0);
 	for (auto &v_ : seg_places) v_.clear();
@@ -228,6 +239,7 @@ void Crowd::arrive(int i) {
 		case PL_BEACH: act[i] = (look[i] >> 9) & 1u ? A_LIE_FRONT : ((look[i] >> 10) & 1u ? A_GSIT : A_LIE_BACK); s = 25.0f + rnd_of(i) * 65.0f; st.lay++; if (wet) s = 0.0f; break;
 		case PL_CAFE: act[i] = A_DRINK; s = 60.0f + rnd_of(i) * 140.0f; st.drank++; if (wet) s = 0.0f; break;
 		case PL_BUS: act[i] = A_WAIT; s = 240.0f; st.bus_waits++; break;
+		case PL_SWIM: act[i] = A_NONE; s = 25.0f + rnd_of(i) * 45.0f; break;   // (in the sea: what it looks like is the game's, by how deep the water is)
 		case PL_SHOP: act[i] = A_SHELTER; s = 900.0f; break;   // (at a shop's front without going in: out of the rain)
 		default: act[i] = A_NONE; s = 5.0f + rnd_of(i) * 20.0f; break;
 	}
@@ -272,6 +284,14 @@ void Crowd::stay_step(int i, float h) {
 	if (place_off[g] || flee_t[i] > 0.0f) stay_t[i] = 0.0f;
 	if (stay_t[i] > 0.0f) return;
 	if (rising(i, h)) return;   // (getting up takes a moment)
+	// from the beach into the sea: half of the people there, once, by day and in the dry
+	if (cfg.swim && P.kind == PL_BEACH && g < (int)swim_of.size() && swim_of[g] >= 0 && !swam[i] && ((look[i] >> 15) & 1u) && rain < 0.3f && hour >= 9.0f && hour < 19.0f && flee_t[i] <= 0.0f && !place_off[g]) {
+		const int sw = swim_of[g];
+		free_place(i);
+		swam[i] = 1; goal[i] = sw; enter_goal[i] = 0; act[i] = A_NONE;
+		mode[i] = M_OFF; tx[i] = places[sw].x; tz[i] = places[sw].z; ty[i] = places[sw].y; tyaw[i] = places[sw].yaw;
+		return;
+	}
 	// up, and back to the pavement where it left it
 	act[i] = A_NONE; mode[i] = M_BACK; tx[i] = bx[i]; tz[i] = bz[i];
 	int hh = hint[i]; float ax, ay, az, sx, sz;

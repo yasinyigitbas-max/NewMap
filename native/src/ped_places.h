@@ -11,7 +11,9 @@
 
 namespace pc {
 
-enum { PL_HOME = 0, PL_SHOP = 1, PL_BEACH = 2, PL_PARK = 3, PL_GATE = 4, PL_BUS = 5, PL_BENCH = 6, PL_CAFE = 7, PL_BEG = 8, PL_NIGHT = 9, PL_KINDS = 10 };
+enum { PL_HOME = 0, PL_SHOP = 1, PL_BEACH = 2, PL_PARK = 3, PL_GATE = 4, PL_BUS = 5, PL_BENCH = 6, PL_CAFE = 7, PL_BEG = 8, PL_NIGHT = 9,
+	PL_SWIM = 10,   // a spot in the sea off a place on the beach (its `name` is that beach place's number): there one swims
+	PL_KINDS = 11 };
 enum { POSE_STAND = 0, POSE_SIT = 1, POSE_LIE = 2 };
 
 // the shops' kinds, in the order of the interiors' list (assignment_all.json "kinds")
