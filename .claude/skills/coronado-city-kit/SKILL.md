@@ -304,3 +304,9 @@ reusing a street piece puts that bench in front of somebody else's door (the val
 - `prop_wear_mat` names materials by the colour atlas only, so most near props run without normal / ORM maps (the
   first creator was a mid tier). Known, kept, Yasin's call.
 
+
+## Growing a zone from its locked sample (19 Nov)
+Read `.claude/skills/coronado-zone-growth/SKILL.md`: site pieces fitted to the real street grid (property lines 9.2 /
+14.3, aprons, slopes drape), outside + inside together, the polish pass, the checks, the bake numbers, the pictures Yasin
+wants, the lock - and the table of mistakes with his corrections (wall items on windows / in the ceiling, floating
+bars, "they arent prison cells", painting behind the mirror, too few pictures).
