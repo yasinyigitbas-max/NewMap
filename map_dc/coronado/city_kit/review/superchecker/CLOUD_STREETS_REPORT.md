@@ -46,6 +46,7 @@ drive (`s_wf`, `s_wfd`). Left unchecked on purpose: `s_rg_nw_b071` (below).
 
 ## Not done / not checked
 - No pictures were taken of the street pieces: the proofs show what changed, not how it looks.
-- Residential street trees are about 36 % of the builder count (plan: about 63 %); the in-view limit, with the yard
-  lists from the block pass, is what held them down. Ring boulevard about 60 % (plan about 85 %).
+- Trees back against the builder count on these pieces: residential streets 487 of 1,062 (45 %; plan about 63 %), ring
+  boulevard 542 of 1,149 (47 %; plan about 85 %), strip 12 of 17, waterfront drive 12 of 13. The in-view limit, with
+  the yard lists from the block pass and the neighbouring pieces, is what held the street counts down.
 - Pieces claimed by pc-session but not done: s_am_b041_b, s_am_b042_a, s_am_fill_cc, s_am_fill_hs (not mine to touch).
