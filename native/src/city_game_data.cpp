@@ -483,6 +483,7 @@ void CityGame::place_start() {
 	Node3D *bike = Object::cast_to<Node3D>(ClassDB::instantiate("CityBike"));
 	if (bike && parent) {
 		bike->set_name("StartBike");
+		bike->add_to_group("vehicles");
 		bike->set("player", true);
 		bike->set("touch_hud", true);
 		parent->add_child(bike);
@@ -493,6 +494,7 @@ void CityGame::place_start() {
 	const Vector3 car_at = at + side * (hw + 1.35f) - f * 1.5f + Vector3(0, 0.1f, 0);
 	if (car && parent) {
 		car->set_name("StartCar");
+		car->add_to_group("vehicles");
 		car->set("model", 2);
 		parent->add_child(car);
 		car->set_global_transform(Transform3D(Basis(Vector3(0, 1, 0), yaw), car_at));

@@ -88,7 +88,7 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
       tap is detected from the GYRO, the ACCELEROMETER and the MICROPHONE together (Yasin): all three must agree.
 6e. [x] (19 Nov, tests/game/test_save_picture.gd in a real window; the main thread reads the frame in 6.7 ms on the PC, the shrink and jpg on a thread; NOT measured on the phone) THE SAVED GAME'S PICTURE: the menu and the loading screen show where the save left off (taken from the game),
       Continue fades from it into that place seamlessly; black when there is no save.
-7. [x] (20 Nov, tests/game/test_hud.gd in a window RESULT PASS; the phone shows a place for its map: item 8; NOT on the phone: the vibration, the touch) HUD (Yasin's layout: top right a box the size of the phone icon with a "3D-looking" flat arrowhead: GREEN pointing
+7. [x] (20 Nov, tests/game/test_hud.gd in a window RESULT PASS; REOPENED 20 Nov in the recheck: the Use plate promised in 6d was missing (no way to get into a car on the phone); built the same day: the Use button, the phone button's size under the arrow box (GET IN / GET OUT a car, GET ON / GET OFF the bike; a tick and a vibration, nothing opens; Yasin), tests/game/test_start.gd RESULT PASS; the phone shows a place for its map: item 8; NOT on the phone: the vibration, the touch) HUD (Yasin's layout: top right a box the size of the phone icon with a "3D-looking" flat arrowhead: GREEN pointing
       to the mission, GOLDEN YELLOW pointing north when there is none; tapping it opens the phone's full map; top left
       money and time in a box of the same size; HEALTH AND NEEDS integrated but INACTIVE for now)
       (Yasin, 19 Nov: "make sure the expansions happens animated along several frames for both the map and the phone, with
@@ -106,7 +106,7 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 15. [ ] What these need that is not listed: char creator / wardrobe (core/char_creator.gd, ui/wardrobe), story chapters
       (story/chapters, core/story.gd), i18n (core/i18n.gd, strings.csv): ask Yasin before porting these.
 
-6g. [~] (CARS done 19 Nov: car-tex r3 of the assets branch, 8e579333a: the 12 models' new meshes, trim sheet and per-car normal / AO maps, in the traffic's near and light models (traffic_car.gdshader map_mode 2 / 1), the far shape (volt_x's far colour) and the player's car (car_paint.gdshader); tests/traffic/test_car_damage.gd. BIKES: not on the branch yet, Yasin: "bike is coming wait for it i forgot to push") NEW CARS AND BIKES (Yasin, 19 Nov: "big news, we got new cars and bikes, replace the games cars, players car and
+6g. [x] (CARS done 19 Nov: car-tex r3 of the assets branch, 8e579333a: the 12 models' new meshes, trim sheet and per-car normal / AO maps, in the traffic's near and light models (traffic_car.gdshader map_mode 2 / 1), the far shape (volt_x's far colour) and the player's car (car_paint.gdshader); tests/traffic/test_car_damage.gd. BIKES done 20 Nov: the beach cruiser (assets branch 82d711276) on the player's bike (its rig: wheels, crank, pedals, bars turning) and the traffic's cyclists (its mid tier); the rider tuned by Yasin (hands up 10 cm and back 5 cm, the rider up 10 cm, the pedals following the feet) and APPROVED ("okay now its much better"): LEAVE THE BIKE AS IT IS. Not yet: the far riders' poses rebaked for the cruiser) NEW CARS AND BIKES (Yasin, 19 Nov: "big news, we got new cars and bikes, replace the games cars, players car and
       npc bikes and player bikes with these here https://github.com/yasinyigitbas-max/coronado-source/tree/assets after
       save load"): the traffic's cars, the player's car, the cyclists' bikes and the player's bike from the assets branch.
 
@@ -124,6 +124,10 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 ## NOT DONE, kept here for later.
 
 ## Found, to trace
+- tests/game/test_start.gd: one run in the 20 Nov recheck found no ground under the player 5 s after the start (and the
+  car 5.5 m off); the next three runs passed (at 960x540 and 1152x648). A streaming / collision timing to trace.
+- Not done with the Use button: getting into and out of the car has no animation yet (the bike has Sitting_Enter / Exit);
+  stand_at is not bound for scripts.
 - tests/traffic/test_bike_hit.gd: one run in two (19 Nov) the hit cyclist's hips went 19 m up (the other run 1.06 m):
   a rare launch of the thrown rider; not deterministic between runs. Trace the one rider when it happens.
 

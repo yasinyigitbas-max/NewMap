@@ -314,6 +314,27 @@ Dictionary CityCar::get_damage() const {
 	return d;
 }
 
+void CityCar::take_wheel(bool p_on) {
+	if (!made) return;
+	player = p_on;
+	if (p_on) {
+		chase_camera = true;
+		if (!cam) {
+			cam = memnew(Camera3D);
+			cam->set_as_top_level(true);
+			cam->set_fov(62.0); cam->set_near(0.2); cam->set_far(1500.0);
+			add_child(cam);
+		}
+		cam_set = false;
+		cam->make_current();
+		c_handbrake = 0.0f; c_brake = 0.0f;
+	} else {
+		set_controls(0.0, 1.0, 0.0, 1.0, false);   // (left parked: brakes and handbrake on)
+		for (int i = 0; i < 16; i++) t_zone[i] = 0;
+		t_steer_id = -1; t_steer = 0.0f;
+	}
+}
+
 void CityCar::become(int p_model, int p_feel, const Color &p_paint) {
 	model = p_model; feel = p_feel; paint = p_paint;
 	if (made) fit();
@@ -556,6 +577,7 @@ void CityCar::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("launch", "at", "velocity"), &CityCar::launch);
 	ClassDB::bind_method(D_METHOD("put_away", "where"), &CityCar::put_away);
 	ClassDB::bind_method(D_METHOD("hit", "dv"), &CityCar::hit);
+	ClassDB::bind_method(D_METHOD("take_wheel", "on"), &CityCar::take_wheel);
 	ClassDB::bind_method(D_METHOD("repair"), &CityCar::repair);
 	ClassDB::bind_method(D_METHOD("get_damage"), &CityCar::get_damage);
 	ADD_SIGNAL(MethodInfo("damaged", PropertyInfo(Variant::FLOAT, "severity"), PropertyInfo(Variant::FLOAT, "health")));

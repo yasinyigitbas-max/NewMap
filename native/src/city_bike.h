@@ -163,6 +163,8 @@ public:
 	void set_controls(double p_pedal, double p_brake, double p_steer, double p_sprint);
 	// speed, lean, steer, state, damage, bent wheel, chain off, wheels on the ground, the view's wobble, the rider's body...
 	Dictionary get_state() const;
+	int get_ride_state() const { return state; }   // ST_PARKED .. ST_THROWN
+	float get_speed() const { return speed; }
 };
 
 } // namespace godot

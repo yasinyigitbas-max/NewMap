@@ -115,6 +115,8 @@ public:
 	void set_paint(const Color &p_c) { paint = p_c; }
 	Color get_paint() const { return paint; }
 	void set_player(bool p_on) { player = p_on; }
+	// the player gets in (the wheel, the pedals and the chase camera are his) / out (the handbrake on, its camera off)
+	void take_wheel(bool p_on);
 	bool get_player() const { return player; }
 	void set_chase_camera(bool p_on) { chase_camera = p_on; }
 	bool get_chase_camera() const { return chase_camera; }

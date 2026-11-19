@@ -85,6 +85,19 @@ class CityHud : public CanvasLayer {
 	GDCLASS(CityHud, CanvasLayer)
 
 	PanelContainer *b_money = nullptr, *b_arrow = nullptr, *b_inv = nullptr, *b_phone = nullptr;
+	// THE USE BUTTON (the old game's Use plate; Yasin: "make the use button as big as phone and map boxes, vibrates and
+	// makes sound when used but doesnt expand like the other buttons"): under the arrow box, green, shown only when there
+	// is something to do: GET IN a car / GET ON a bicycle within reach (a vibration when a new one comes in reach), GET
+	// OUT / GET OFF while driving or riding. A tap (or E): a tick, a vibration, done; nothing opens.
+	PanelContainer *b_use = nullptr;
+	Label *l_use_en = nullptr, *l_use_tr = nullptr;
+	int use_kind = 0;              // 0 nothing, 1 get in, 2 get out, 3 get on, 4 get off
+	uint64_t use_target = 0, use_last = 0;
+	float use_scan = 0.0f;
+	int uses = 0;
+	bool e_was = false;
+	void use_find(class CityPlayer *pl);
+	void use_do();
 	HudArrow *arrow = nullptr;
 	HudMap *map = nullptr;
 	uint64_t crowd_id = 0, traffic_id = 0;
@@ -122,6 +135,9 @@ public:
 	int get_open() const { return anim_dir >= 0 && open >= 0 && anim > 0.0f ? open : -1; }
 	float get_anim() const { return anim; }
 	int get_taps() const { return taps; }
+	int get_use_kind() const { return use_kind; }
+	int get_uses() const { return uses; }
+	void press_use() { use_do(); }
 	float get_arrow_angle() const { return arrow ? arrow->angle : 0.0f; }
 	bool get_arrow_objective() const { return arrow && arrow->objective; }
 	String get_money_text() const;

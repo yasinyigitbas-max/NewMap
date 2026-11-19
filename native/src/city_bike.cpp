@@ -288,7 +288,7 @@ void CityBike::zones(const Vector2 &sz, Rect2 r[4]) {
 	r[0] = Rect2(0, 0, sz.x * 0.5f, sz.y);
 	r[1] = plate::brake_rect(sz);
 	r[2] = plate::gas_rect(sz);
-	r[3] = plate::use_rect(sz);
+	r[3] = Rect2();   // (getting on and off: the HUD's Use button, CityHud)
 }
 
 void CityBike::read_player() {
@@ -302,9 +302,7 @@ void CityBike::read_player() {
 	if (std::fabs(jx) > 0.12f) st -= jx;
 	c_pedal = up; c_brake = down; c_steer = clampf(st, -1.0f, 1.0f);
 	c_sprint = (in->is_key_pressed(KEY_SHIFT) || in->is_joy_button_pressed(0, JOY_BUTTON_A) || t_sprint) ? 1.0f : 0.0f;
-	const bool e = in->is_key_pressed(KEY_E) || in->is_joy_button_pressed(0, JOY_BUTTON_X);
-	if (e && !e_was) want_toggle = true;
-	e_was = e;
+	(void)e_was;   // (E / the pad's X: the HUD's Use button)
 }
 
 void CityBike::_integrate_forces(PhysicsDirectBodyState3D *p_state) {
@@ -630,7 +628,7 @@ void CityBike::_process(double p_delta) {
 			Rect2 z[4]; zones(sz, z);
 			for (int k = 1; k < 4 && k < hud->get_child_count(); k++) {
 				Control *c = Object::cast_to<Control>(hud->get_child(k));
-				if (c) { c->set_position(z[k].position); c->set_size(z[k].size); }
+				if (c) { c->set_position(z[k].position); c->set_size(z[k].size); c->set_visible(k < 3); }
 			}
 			{   // pressed plates show the pressed look (raised_hi), as the old pedals did
 				bool tb = false, tp = false;
@@ -675,6 +673,7 @@ void CityBike::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_off"), &CityBike::get_off);
 	ClassDB::bind_method(D_METHOD("set_controls", "pedal", "brake", "steer", "sprint"), &CityBike::set_controls);
 	ClassDB::bind_method(D_METHOD("get_state"), &CityBike::get_state);
+	ClassDB::bind_method(D_METHOD("get_ride_state"), &CityBike::get_ride_state);
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "player"), "set_player", "get_player");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "chase_camera"), "set_chase_camera", "get_chase_camera");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "touch_hud"), "set_touch_hud", "get_touch_hud");
