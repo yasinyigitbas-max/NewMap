@@ -1,0 +1,50 @@
+{
+ "_doc": "University campus (claude/sharp-ride-16u9ik) for integrate.py: the same rows as that session's own table review/grow_un_campus.json, copied at the merge (Yasin, 20 Nov: 'merge the campus now'). If that table changes, copy it again.",
+ "rows": [
+  {
+   "piece": "n_un_ne",
+   "pos": [
+    -600.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_un_nw",
+   "pos": [
+    -600.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_un_se",
+   "pos": [
+    -600.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_un_sw",
+   "pos": [
+    -600.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "t_un_campus",
+   "pos": [
+    -600.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0
+  }
+ ]
+}
