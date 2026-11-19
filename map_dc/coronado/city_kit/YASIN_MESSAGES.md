@@ -223,3 +223,15 @@ the other agent suggested these
 - [2026-11-17T14:38] Grade is okay. What was group 2-5
 
 - [2026-11-17T14:50] go on and good luck. ultracode is on, read the rules and my messages from start to finish and make sure the subagents do the same, act like an architect, city planner and exterior designer, no jagged edges
+
+- [2026-11-19] although i explicitly told them not to use a generato, and hand place things, they still did. two, upon their insistance with working with generators, i told them that we build the city piece by peice, lock it, so nothing can change it, but they started mass editing somehow, each thing i found by eye and told them to fix ended up as whole quarters being regenerated from scratch each time, each time i caught something by eye and told them to fix, they broke other things elsewhere, and since they break much faster than i can catch and always give false positive all pass reports, the city became a mess.
+
+- [2026-11-19] second, they completely overlooked the terrain and none of their work took it into acccount, so half of he city is sunk.
+
+- [2026-11-19] i didnt tell you to do anything yet
+
+- [2026-11-19] this is the 4th major rebuild of this city, each time the pilots are perfect, each time evverything breaks as soon as they come out with generators. is there really no way to hand place these things?
+
+- [2026-11-19] cant we just add cement blocks under the buildings, make only the ground around them again to follow the terrain, and move the props on it?
+
+- [2026-11-19] go to repo apply the fix map wide

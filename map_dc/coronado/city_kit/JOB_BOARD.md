@@ -5,6 +5,33 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~06:00 (PC session): THE LAND IS LOWERED TO THE GROWTH BLOCKS, MAP WIDE (Yasin, after a one-block and an
+  eight-block test with before / after pictures: "go to repo apply the fix map wide"). ONLY THE LAND CHANGED: no
+  piece, no layout row, no lock entry, no room (lock.py status: 599 LOCKED ok, as before; git shows two changed data
+  files). New tool `tools/city/pilot/zoning/lower_land_to_pieces.py` (dry run by default, `--write` to apply): where
+  the land is not 5 cm under a GROWTH piece's lowest ground it lowers only the 4 m land nodes those cells rest on;
+  never raises, never touches a sea node, does not re-solve the island. Then `bake_game_terrain.py`.
+  NUMBERS (`tools/city/audit/ground_check.py` on a fresh ground dump, before -> after): piece ground under the land
+  311,101 -> 308 m2 (more than 30 cm under: 187,944 -> 205; more than 1 m: 58,626 -> 59). The 308 m2 left is the
+  approved beach block f_sw: NOT touched (its ground reaches under the sea level; Yasin's call). Road kit: 0 before,
+  0 after. Land grid: 34,567 of 378,338 land nodes lowered (9.1 %), usual 0.27 m, largest 3.68 m, none raised;
+  island lowest -0.99 m as before, highest 14.11 -> 14.10 m. Game land (data_citykit/height.f32z): 1.34 % of the
+  samples lowered, none raised; every other data_citykit file byte-identical.
+  WHAT IT DOES NOT MEND (unchanged, the pieces' own): residential blocks meeting mid-block at different heights,
+  3,123 m of 5,072 m of shared edge jump more than 20 cm (usual 0.66 m, largest 2.86 m): they need retaining walls
+  or a piece fix; 6-12 % of the residential edge against the streets steps about 0.27 m. NEW, from the lowering:
+  banks where lowered land meets untouched land: 600 spots over 0.5 m, 153 over 1 m (55 of those beside empty
+  land, largest 3.91 m at grid 148, 100: picture land_bank_b); "hanging" block edges 784 -> 880 m2.
+  Pictures (preview tool, real pieces, only the pieces of each area loaded): `review/land_19nov/`.
+  NOT DONE / NOT CHECKED: the running game and the phone; buildings and props against their own block's ground;
+  `zoning/terrain.png` (the hillshade picture) and `zoning/piece_ground.npz` are still from 18 Nov 16:00.
+  TRAP: `tools/city/run/terrain.sh` / `terrain.py` re-solve the whole island from `piece_ground.npz`, which does
+  not have the growth blocks: running them now would bury the growth again. `ground_check.py` is still not in
+  `checks.sh`. The whole-city `ground_dump.gd` run dies on the PC (2 GB card) after ~250 pieces and leaves cut-short
+  files: dump in parts (rows 0-70, 70-140, ...) and join them.
+  YASIN TODAY, HIS RULES AGAIN (read YASIN_MESSAGES.md, 19 Nov): no generators, hand-place; a fix for one thing he
+  saw must change that one thing, never rebuild a zone; "all pass" reports from checks that do not measure the
+  thing are false reports. Ask before acting: "i didnt tell you to do anything yet".
 - 19 Nov ~04:15 (PC session): THE GROUND IS NOT CHECKED, AND PART OF THE GROWTH IS SUNK (Yasin, on the bird's-eye view:
   "Many areas are sunk in too... I think these validators and checkers don't do what they are supposed to do"). He is
   right. MEASURED with two new tools (`tools/city/audit/ground_dump.gd` + `ground_check.py`, 1 m grid, every piece's
