@@ -303,6 +303,269 @@
     -1044.0
    ],
    "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -5.08
+    ],
+    [
+     "shopdoor",
+     -2.92
+    ],
+    [
+     "shopdoor",
+     5.08
+    ]
+   ],
+   "label": "harbor_medical_plaza",
+   "model": "commercial/com_spanish_arcade_block",
+   "piece": "m_gr_ad3sw",
+   "pos": [
+    440.0,
+    3.766,
+    -1317.5
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.08
+    ],
+    [
+     "shopdoor",
+     1.08
+    ]
+   ],
+   "label": "visitors_corner",
+   "model": "commercial/com_orange_corner",
+   "piece": "m_gr_ad3sw",
+   "pos": [
+    476.0,
+    2.363,
+    -1373.0
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     1.15
+    ]
+   ],
+   "label": "visitor_parking_booth",
+   "model": "commercial/com_kiosk",
+   "piece": "m_gr_ad3sw",
+   "pos": [
+    434.0,
+    2.393,
+    -1379.0
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -15.0
+    ],
+    [
+     "apt_door",
+     -13.5
+    ],
+    [
+     "apt_door",
+     -7.5
+    ],
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     1.5
+    ],
+    [
+     "apt_door",
+     7.5
+    ],
+    [
+     "apt_door",
+     9.0
+    ],
+    [
+     "apt_door",
+     -15.0
+    ],
+    [
+     "apt_door",
+     -13.5
+    ],
+    [
+     "apt_door",
+     -7.5
+    ],
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     1.5
+    ],
+    [
+     "apt_door",
+     7.5
+    ],
+    [
+     "apt_door",
+     9.0
+    ],
+    [
+     "shopdoor",
+     13.3
+    ]
+   ],
+   "label": "harbor_view_motel",
+   "model": "extras/motel_inn_court",
+   "piece": "m_gr_ad3se",
+   "pos": [
+    552.0,
+    2.405,
+    -1376.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -15.0
+    ],
+    [
+     "apt_door",
+     -13.5
+    ],
+    [
+     "apt_door",
+     -7.5
+    ],
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     1.5
+    ],
+    [
+     "apt_door",
+     7.5
+    ],
+    [
+     "apt_door",
+     9.0
+    ],
+    [
+     "apt_door",
+     -15.0
+    ],
+    [
+     "apt_door",
+     -13.5
+    ],
+    [
+     "apt_door",
+     -7.5
+    ],
+    [
+     "apt_door",
+     -6.0
+    ],
+    [
+     "apt_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     1.5
+    ],
+    [
+     "apt_door",
+     7.5
+    ],
+    [
+     "apt_door",
+     9.0
+    ],
+    [
+     "shopdoor",
+     13.3
+    ]
+   ],
+   "label": "harbor_view_motel_east",
+   "model": "extras/motel_inn_court",
+   "piece": "m_gr_ad3se",
+   "pos": [
+    598.0,
+    2.368,
+    -1376.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     1.15
+    ]
+   ],
+   "label": "crosswalk_coffee",
+   "model": "commercial/com_kiosk",
+   "piece": "m_gr_ad3se",
+   "pos": [
+    520.0,
+    2.263,
+    -1378.0
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -9.0
+    ],
+    [
+     "rollup",
+     6.0
+    ]
+   ],
+   "label": "iron_tide_gym",
+   "model": "industrial/ind_warehouse",
+   "piece": "m_gr_ad3se",
+   "pos": [
+    616.0,
+    3.155,
+    -1318.0
+   ],
+   "yaw": -90.0
   }
  ]
 }

@@ -617,3 +617,20 @@ Counted over the eight new pilot-area blocks (`g_v1_*`, `g_v2_*`, `g_v3_*`, revi
   spot was in front of a door: dropped by the door rule).
 - **Left out on purpose here:** picket / vinyl fences, golf carts, solar panels, beach / riprap / marina pieces, the
   suburban house types (colonial, cape, tudor, craftsman ...): they belong to other zones.
+## Commercial strip growth (18-19 Nov, branch claude/grow-strip; added, the table above is not rewritten)
+Counted over the six new blocks round the strip sample (`m_gr_*`, review/grow_strip/README.md): 1,803 props of 97 types,
+22 buildings of 17 types (outdoors; the 26 shop rooms are counted by the indoor census).
+- **Unused before, used now (props):** fence_stucco_wall + fence_gate_privacy (wash vacuum bays, the neighbourhood
+  centre's garden wall), hedge_privet_2m (screens toward Crown Hill's yards), plant_bougainvillea_wall, prop_bollard_iron
+  (car lot rail), prop_wheel_stop_rubber, prop_cone_18in, prop_golf_cart_blue (storage yard), prop_vent_box /
+  _turbine / _plumbing, prop_solar_panel_x3, prop_ac_condenser_compact, prop_satellite_dish_round (flat roofs),
+  prop_mailbox_post_metal, tree_torrey_pine_b, tree_norfolk_pine_c.
+- **Unused before, used now (buildings):** services/svc_carwash (car care corner), ck/ck_svc_trade (tyre shop),
+  commercial/com_shallow_surf (taqueria).
+- **Used again, by reason:** motel_inn_court x2 (motor court by the hospital), ind_warehouse (24-hour gym),
+  com_spanish_arcade_block (medical row), com_kiosk x3 (coffee walk-up, visitor parking booth, can recycling), the
+  substation, switch rack, boat trailers, containers, propane tank + cylinders, billboards, pay stations, vending.
+- **Still unused anywhere, none fits a commercial strip:** picket / vinyl canal fences, beach signs, riprap, the single
+  solar panel, house numbers (wood), temp fence panels (a construction site would take them), plant_lawn_patch
+  (banned). Every shop / service / industrial building of the kit is now placed somewhere; what is left are houses,
+  civic buildings and landmarks (hero sites, never placed by a zone session).

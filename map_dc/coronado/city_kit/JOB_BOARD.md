@@ -98,6 +98,15 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   or window set. Not tested from gen_shots' cut.
   Still open: the outdoor checks from Yasin's corrections in validate.gd (a building reaching into the street, props
   inside a building's real outline, a wider clear zone at shop doors).
+- 19 Nov (cloud, branch `claude/grow-strip`): COMMERCIAL STRIP GROWTH, stage 1 + 2 done, LOCKED (Yasin 19 Nov: "lock your parts if you
+  are done with them": six m_gr_* pieces + 26 g_strip_* rooms; lock test PASS). Read `review/grow_strip/README.md`. Six blocks round the strip sample (`m_gr_*`, table
+  `review/grow_strip_blocks.json`): A car care corner, B used-car lot at the bridge mouth, C neighbourhood centre by
+  the houses, D hospital side (urgent care, visitor parking), E motel + 24-hour gym, F boat / RV storage. 26 shop rooms
+  (`interiors/assignment_strip.json`, `tools/city/rooms/room_gen_strip.gd`). Ground `zoning/strip_grow_ground.py`
+  (edges take the walk's measured height, shared seams solved once, skirts, no T-joint cracks); wear only on paving.
+  Checks: validator 0, check_life 0, trees 0, sink 0, rooms 0, lock PASS. Baked: 44-70 draws a view, 443-822k tris
+  (over 500k in 9 of 12 views: said in the README), +11.7 MB download. Yasin 19 Nov: the 150 older generated rooms
+  (319 indoor-checker problems, the PC session's request) are NOT this session's job ("Don't do those 150").
 - 18 Nov (strip session, claude/grow-strip): NEW INDOOR PROPS (Yasin, relayed by the PC session: "there are new indoor
   assets to replace old lower quality ones ... fetch them and replace all indoor props with them"; asked directly in
   this session whether the 12 locked hand-made rooms may be unlocked and relocked for it: "Yes, unlock and relock").

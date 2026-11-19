@@ -133,7 +133,7 @@ class Ground:
 ## Paint inside a road rectangle: the rectangle is cut along every paint edge into cells, each cell is either paint
 ## (white / yellow) or asphalt. Paint and asphalt share one plane with no overlap, so nothing can flicker.
 ## paints: Array of [x0, z0, x1, z1, mat]; mat "-" leaves a hole (something else is built there, e.g. steps)
-static func painted_rect(g: Ground, x0: float, z0: float, x1: float, z1: float, paints: Array, yfn: Callable, base := "asphalt") -> void:
+static func painted_rect(g: Ground, x0: float, z0: float, x1: float, z1: float, paints: Array, yfn: Callable, base := "asphalt", merge := true) -> void:
 	var xs := {x0: true, x1: true}; var zs := {z0: true, z1: true}
 	var inside: Array = []
 	for p: Array in paints:
@@ -150,7 +150,9 @@ static func painted_rect(g: Ground, x0: float, z0: float, x1: float, z1: float, 
 			var m := base
 			for p: Array in inside:
 				if cx > p[0] and cx < p[2] and cz > p[1] and cz < p[3]: m = p[4]; break
-			if j == 0 or m != run_m:
+			# merge = false: every cell on its own (all cells share the global grid lines, so no T-joints: hairline
+			# cracks showed the ground below where a merged run's long edge met two shorter cells, Yasin 19 Nov)
+			if j == 0 or m != run_m or not merge:
 				if j > 0 and run_m != "-": g.rect(run_m, xa[i], run_z0, xa[i + 1], za[j], yfn)
 				run_m = m; run_z0 = za[j]
 		if run_m != "-": g.rect(run_m, xa[i], run_z0, xa[i + 1], za[za.size() - 1], yfn)

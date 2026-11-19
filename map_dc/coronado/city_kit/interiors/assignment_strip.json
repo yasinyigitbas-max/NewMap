@@ -1,6 +1,6 @@
 {
  "_doc": "Which shop is behind every shop door of the commercial strip's GROWTH blocks (claude/grow-strip, 18 Nov; Yasin:",
- "count": 18,
+ "count": 26,
  "rooms": [
   {
    "id": "m_gr_ad5ne__crown_car_care_row__0",
@@ -650,6 +650,274 @@
      "facade": "left",
      "along": 0.9,
      "w": 1.2
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad3sw__harbor_medical_plaza__0",
+   "piece": "m_gr_ad3sw",
+   "label": "harbor_medical_plaza",
+   "model": "commercial/com_spanish_arcade_block",
+   "pos": [
+    440.0,
+    3.766,
+    -1317.5
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -5.08,
+   "door_w": 1.6,
+   "bay": [
+    -12.0,
+    -1.0
+   ],
+   "kind": "clinic",
+   "name": "Bayside Urgent Care",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -8.0,
+     "w": 7.18
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad3sw__harbor_medical_plaza__1",
+   "piece": "m_gr_ad3sw",
+   "label": "harbor_medical_plaza",
+   "model": "commercial/com_spanish_arcade_block",
+   "pos": [
+    440.0,
+    3.766,
+    -1317.5
+   ],
+   "yaw": -180.0,
+   "door_index": 1,
+   "door_along": 5.08,
+   "door_w": 1.6,
+   "bay": [
+    -1.0,
+    12.0
+   ],
+   "kind": "physio",
+   "name": "Strand Physical Therapy",
+   "style": "sea",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 7.18
+    },
+    {
+     "facade": "front",
+     "along": 8.0,
+     "w": 7.18
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad3sw__visitors_corner__0",
+   "piece": "m_gr_ad3sw",
+   "label": "visitors_corner",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    476.0,
+    2.363,
+    -1373.0
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -1.08,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "coffee",
+   "name": "Ward Coffee",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.18
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad3sw__visitors_corner__1",
+   "piece": "m_gr_ad3sw",
+   "label": "visitors_corner",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    476.0,
+    2.363,
+    -1373.0
+   ],
+   "yaw": -180.0,
+   "door_index": 1,
+   "door_along": 1.08,
+   "door_w": 1.6,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "florist",
+   "name": "Get Well Flowers",
+   "style": "green",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.18
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad3se__harbor_view_motel__0",
+   "piece": "m_gr_ad3se",
+   "label": "harbor_view_motel",
+   "model": "extras/motel_inn_court",
+   "pos": [
+    552.0,
+    2.405,
+    -1376.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 13.3,
+   "door_w": 1.4,
+   "bay": [
+    10.0,
+    17.7
+   ],
+   "kind": "motel_office",
+   "name": "Harbor View Motel",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 15.0,
+     "w": 5.0
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad3se__harbor_view_motel_east__0",
+   "piece": "m_gr_ad3se",
+   "label": "harbor_view_motel_east",
+   "model": "extras/motel_inn_court",
+   "pos": [
+    598.0,
+    2.368,
+    -1376.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 13.3,
+   "door_w": 1.4,
+   "bay": [
+    10.0,
+    17.7
+   ],
+   "kind": "laundromat",
+   "name": "Guest Laundry",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 15.0,
+     "w": 5.0
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad3se__crosswalk_coffee__0",
+   "piece": "m_gr_ad3se",
+   "label": "crosswalk_coffee",
+   "model": "commercial/com_kiosk",
+   "pos": [
+    520.0,
+    2.263,
+    -1378.0
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": 1.15,
+   "door_w": 0.9,
+   "bay": [
+    -1.7,
+    1.7
+   ],
+   "kind": "coffee",
+   "name": "Crosswalk Coffee",
+   "style": "red",
+   "signs": [
+    {
+     "facade": "left",
+     "along": 0.9,
+     "w": 1.2
+    }
+   ],
+   "source": "strip growth (hand-made shop list)",
+   "built": ""
+  },
+  {
+   "id": "m_gr_ad3se__iron_tide_gym__0",
+   "piece": "m_gr_ad3se",
+   "label": "iron_tide_gym",
+   "model": "industrial/ind_warehouse",
+   "pos": [
+    616.0,
+    3.155,
+    -1318.0
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -9.0,
+   "door_w": 1.0,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "gym",
+   "name": "Iron Tide Gym 24/7",
+   "style": "black",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 12.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 12.87,
+     "w": 1.75
+    },
+    {
+     "facade": "right",
+     "along": 12.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 12.87,
+     "w": 1.75
     }
    ],
    "source": "strip growth (hand-made shop list)",

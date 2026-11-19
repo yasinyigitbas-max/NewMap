@@ -34,6 +34,14 @@ SHOPS = {
                                            (1.0, [0.0, 5.7], "dry_cleaner", "Pressed Right Cleaners", "navy")],
     ("m_gr_ad5nw", "community_credit_union"): [(0.0, None, "bank", "Coronado Community Credit Union", "green")],
     ("m_gr_ad5nw", "recycling_booth"): [(1.1, None, "recycling", "Bottle & Can Recycling", "green")],
+    ("m_gr_ad3sw", "harbor_medical_plaza"): [(-5.0, [-12.0, -1.0], "clinic", "Bayside Urgent Care", "teal"),
+                                             (5.0, [-1.0, 12.0], "physio", "Strand Physical Therapy", "sea")],
+    ("m_gr_ad3sw", "visitors_corner"): [(-1.0, [-5.7, 0.0], "coffee", "Ward Coffee", "black"),
+                                        (1.0, [0.0, 5.7], "florist", "Get Well Flowers", "green")],
+    ("m_gr_ad3se", "harbor_view_motel"): [(13.0, [10.0, 17.7], "motel_office", "Harbor View Motel", "navy")],
+    ("m_gr_ad3se", "harbor_view_motel_east"): [(13.0, [10.0, 17.7], "laundromat", "Guest Laundry", "navy")],
+    ("m_gr_ad3se", "crosswalk_coffee"): [(1.1, None, "coffee", "Crosswalk Coffee", "red")],
+    ("m_gr_ad3se", "iron_tide_gym"): [(-9.0, None, "gym", "Iron Tide Gym 24/7", "black")],
 }
 
 
