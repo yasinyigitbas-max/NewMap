@@ -1,0 +1,119 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -13.9644660949707,
+    0.150000005960464,
+    12.7644653320313
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "move",
+   "reason": "prop_signal_mast_arm hangs 0.15 m over what is under it",
+   "to": [
+    -13.9644660949707,
+    0.0,
+    12.7644653320313
+   ]
+  },
+  {
+   "at": [
+    13.9644660949707,
+    0.150000005960464,
+    -12.7644653320313
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 2.0,
+   "op": "move",
+   "reason": "prop_signal_mast_arm hangs 0.15 m over what is under it",
+   "to": [
+    13.9644660949707,
+    0.0,
+    -12.7644653320313
+   ]
+  },
+  {
+   "at": [
+    -13.9644660949707,
+    0.150000005960464,
+    -12.7644653320313
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 3.0,
+   "op": "move",
+   "reason": "prop_signal_mast_arm hangs 0.15 m over what is under it",
+   "to": [
+    -13.9644660949707,
+    0.0,
+    -12.7644653320313
+   ]
+  },
+  {
+   "at": [
+    13.9644660949707,
+    0.150000005960464,
+    12.7644653320313
+   ],
+   "base": "prop_signal_mast_arm",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 4.0,
+   "op": "move",
+   "reason": "prop_signal_mast_arm hangs 0.15 m over what is under it",
+   "to": [
+    13.9644660949707,
+    0.0,
+    12.7644653320313
+   ]
+  },
+  {
+   "at": [
+    -11.5,
+    0.0,
+    21.2000007629395
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 5.0,
+   "op": "move",
+   "reason": "prop_storm_drain_curb_inlet is 0.10 m into the ground",
+   "to": [
+    -11.5,
+    0.100000001490116,
+    21.2000007629395
+   ]
+  },
+  {
+   "at": [
+    11.5,
+    0.0,
+    21.2000007629395
+   ],
+   "base": "prop_storm_drain_curb_inlet",
+   "cond": "dirty",
+   "kind": "sunk",
+   "mode": "auto",
+   "n": 6.0,
+   "op": "move",
+   "reason": "prop_storm_drain_curb_inlet is 0.10 m into the ground",
+   "to": [
+    11.5,
+    0.100000001490116,
+    21.2000007629395
+   ]
+  }
+ ],
+ "scene": "j_am_3rd"
+}
