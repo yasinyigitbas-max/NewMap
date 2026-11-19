@@ -1,0 +1,69 @@
+{
+ "bicycle_cruiser": {
+  "file_base": "prop_bicycle_cruiser",
+  "batch": "bicycle",
+  "class": "hero_bicycle (proposed, not in SPEC)",
+  "budget": 6000,
+  "budget_mid": 1500,
+  "budget_far": 550,
+  "conds": [
+   "clean"
+  ],
+  "tiers": {
+   "near": 5986,
+   "mid": 1460,
+   "far": 526
+  },
+  "rig": "prop_bicycle_cruiser_rig.glb",
+  "rig_nodes": {
+   "pedal_l": [
+    0.124,
+    0.28,
+    -0.25
+   ],
+   "pedal_r": [
+    -0.124,
+    0.28,
+    0.09
+   ],
+   "crank": [
+    0.0,
+    0.28,
+    -0.08
+   ],
+   "kickstand": [
+    0.036,
+    0.268,
+    -0.155
+   ],
+   "wheel_front": [
+    0.0,
+    0.334,
+    0.55
+   ],
+   "steer": [
+    0.0,
+    0.6927,
+    0.3566
+   ],
+   "wheel_rear": [
+    0.0,
+    0.334,
+    -0.55
+   ],
+   "frame": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "footprint_w": 0.712,
+  "footprint_d": 1.836,
+  "height": 0.999,
+  "regions": [
+   "own page: props/bicycle/bicycle_cruiser_{color,normal,orm}.png (512)"
+  ],
+  "paint_mask": "colour alpha (1 = frame paint, instance tint)",
+  "tex_mib_astc4x4": 1.0
+ }
+}

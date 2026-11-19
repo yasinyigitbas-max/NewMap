@@ -176,10 +176,10 @@ PackedStringArray PeopleBake::bake(Node *p_parent, const String &p_dir, const St
 		const int b_hd[2] = { skel->find_bone("Bip01_L_Hand"), skel->find_bone("Bip01_R_Hand") };
 		auto ride = [&](std::vector<Transform3D> &G, int f) {
 			if (b_pelvis < 0 || b_th[0] < 0 || b_th[1] < 0 || b_ca[0] < 0 || b_ft[0] < 0) return;
-			if (b_spine >= 0) turn_tree(G, b_spine, Basis(Vector3(1, 0, 0), 0.32f), G[b_spine].origin);   // leant over the bars
+			if (b_spine >= 0) turn_tree(G, b_spine, Basis(Vector3(1, 0, 0), BACK_LEAN), G[b_spine].origin);   // (upright on a cruiser)
 			// lift and place: the hips 0.17 m behind the crank's axle, as high as the leg reaches to the lowest pedal
 			const float leg = (G[b_ca[0]].origin - G[b_th[0]].origin).length() + (G[b_ft[0]].origin - G[b_ca[0]].origin).length();
-			const float ankle_lo = BB_Y - CRANK + 0.08f, back = 0.17f;
+			const float ankle_lo = BB_Y - CRANK + 0.08f, back = HIPS_BACK;
 			const float hip_y = ankle_lo + std::sqrt(std::max(0.0f, 0.93f * leg * 0.93f * leg - back * back));
 			const Vector3 hip0 = (G[b_th[0]].origin + G[b_th[1]].origin) * 0.5f;
 			const Vector3 shift(-G[b_pelvis].origin.x, hip_y - hip0.y, -back - hip0.z);
@@ -191,7 +191,7 @@ PackedStringArray PeopleBake::bake(Node *p_parent, const String &p_dir, const St
 				reach(G, b_th[side], b_ca[side], b_ft[side], pedal, Vector3(sx * 0.3f, 0.2f, 1.0f));
 				if (b_ua[side] >= 0 && b_fa[side] >= 0 && b_hd[side] >= 0) {
 					const float gx = (sx >= 0.0f ? 1.0f : -1.0f) * BAR_W;
-					const Vector3 grip(gx, hip_y + 0.16f, BAR_Z);
+					const Vector3 grip(gx, hip_y + BAR_OVER_HIPS, BAR_Z);
 					reach(G, b_ua[side], b_fa[side], b_hd[side], grip, Vector3(gx * 2.0f, -0.6f, -0.6f));
 				}
 			}

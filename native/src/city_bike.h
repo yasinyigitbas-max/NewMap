@@ -109,6 +109,11 @@ private:
 	// drawing and collision
 	MeshInstance3D *mi = nullptr;
 	Ref<ShaderMaterial> mat;
+	// the beach cruiser's rig (bike_look.h): its parts turn: the crank with the pedalling (the pedals stay level), the
+	// wheels with the way gone, the bars and front wheel about the steering axis
+	class Node3D *rig = nullptr, *p_crank = nullptr, *p_pedal[2] = { nullptr, nullptr }, *p_steer = nullptr, *p_wheel[2] = { nullptr, nullptr };
+	Transform3D r_crank, r_pedal[2], r_steer, r_wheel[2];
+	void pose_parts(double p_delta);
 	Ref<PhysicsRayQueryParameters3D> rq;
 	Ref<class SphereShape3D> q_sphere;
 	Ref<class PhysicsShapeQueryParameters3D> q_shape;

@@ -6,6 +6,7 @@
 #include "city_player.h"
 #include "city_traffic.h"
 #include "ui_plate.h"
+#include "bike_look.h"
 
 #include <godot_cpp/classes/box_shape3d.hpp>
 #include <godot_cpp/classes/collision_shape3d.hpp>
@@ -36,10 +37,15 @@ namespace godot {
 
 namespace {
 const float G = 9.81f;
-const float WB = 1.02f;              // wheelbase, m (the bicycle mesh: rear axle z -0.42, front z +0.60)
-const float WR = 0.34f;              // wheel radius
+// the beach cruiser (bike_look.h, measured from the model): rear axle z -0.47, front z +0.63, in the riders' frame
+const float WB = bike_look::HUB_F - bike_look::HUB_R;   // wheelbase, m
+const float WR = bike_look::WR;                         // wheel radius
 const float M_BIKE = 14.0f, M_RIDER = 75.0f;
-const Vector3 RIDER_AT(0.0f, 0.42f, 0.14f);    // the rider's figure (seated clip) in the bicycle's frame: his hips over the saddle (measured: the clip's hips sit 0.31 m behind its origin)
+// the rider's figure (seated clip) in the bicycle's frame: his hips over the saddle (the clip's hips sit 0.31 m behind its
+// origin and 0.545 m under the saddle's top as the old bicycle had them; the cruiser's saddle: top 0.953 m, z -0.225)
+// (Yasin, 19 Nov, on the cruiser: "pull the hands up 10 cm, 5cm back, pull the legs up 10 cm and make sure they align
+// with the pedals": the rider 10 cm higher, the hands 10 cm higher and 5 cm back; the feet still reached to the pedals)
+const Vector3 RIDER_AT(0.0f, bike_look::SADDLE_Y - 0.545f + 0.10f, bike_look::SADDLE_Z + 0.035f + 0.31f);   // (3 cm forward on the saddle: nearer the cruiser's low bars)
 inline float clampf(float v, float a, float b) { return v < a ? a : (v > b ? b : v); }
 inline Basis arc(Vector3 a, Vector3 b) {
 	if (a.length_squared() < 1e-10f || b.length_squared() < 1e-10f) return Basis();
@@ -100,7 +106,7 @@ void BikeReach::_process_modification_with_delta(double p_delta) {
 				const Vector3 sh0 = sk->get_bone_global_pose(b_ua[sd]).origin;
 				const float arm = sk->get_bone_global_pose(b_fa[sd]).origin.distance_to(sh0) + sk->get_bone_global_pose(b_hd[sd]).origin.distance_to(sk->get_bone_global_pose(b_fa[sd]).origin);
 				const Vector3 sh = Gs.origin + Basis(ax, L).xform(sh0 - Gs.origin);
-				worst = std::max(worst, sh.distance_to(to_sk.xform(hand[sd])) - arm * 0.94f);
+				worst = std::max(worst, sh.distance_to(to_sk.xform(hand[sd])) - arm * 0.985f);   // (arms nearly straight, as on a cruiser)
 			}
 			if (worst <= 0.0f || L >= 0.9f) break;
 			L += 0.05f;
@@ -140,16 +146,29 @@ void CityBike::make() {
 	set_collision_mask(1 | 16);      // the world and the traffic's cars
 	set_can_sleep(false);
 	CollisionShape3D *cs = memnew(CollisionShape3D);
-	Ref<BoxShape3D> bx; bx.instantiate(); bx->set_size(Vector3(0.16f, 0.95f, 1.70f));
-	cs->set_shape(bx); cs->set_position(Vector3(0, 0.55f, 0.09f));
+	Ref<BoxShape3D> bx; bx.instantiate(); bx->set_size(Vector3(0.16f, 0.95f, 1.80f));
+	cs->set_shape(bx); cs->set_position(Vector3(0, 0.55f, 0.075f));   // (the cruiser: 1.84 m long, its middle 0.075 m ahead of the crank)
 	add_child(cs);
-	mi = memnew(MeshInstance3D);
-	mi->set_mesh(CityTraffic::bike_mesh());
-	Ref<Shader> sh; sh.instantiate(); sh->set_code(CityTraffic::bike_shader_code());
-	mat.instantiate(); mat->set_shader(sh);
-	mat->set_shader_parameter("paint_u", Vector3(paint.r, paint.g, paint.b));
-	mi->set_material_override(mat);
-	add_child(mi);
+	if (bike_look::available()) {   // the beach cruiser, its parts free to turn
+		mat = bike_look::material(true);
+		mat->set_shader_parameter("paint_u", Vector3(paint.r, paint.g, paint.b));
+		rig = bike_look::make_rig(mat);
+		add_child(rig);
+		auto part = [&](const char *n) { return Object::cast_to<Node3D>(rig->find_child(n, true, false)); };
+		p_crank = part("crank"); p_pedal[0] = part("pedal_l"); p_pedal[1] = part("pedal_r"); p_steer = part("steer");
+		p_wheel[0] = part("wheel_front"); p_wheel[1] = part("wheel_rear");
+		if (p_crank) r_crank = p_crank->get_transform();
+		if (p_steer) r_steer = p_steer->get_transform();
+		for (int k = 0; k < 2; k++) { if (p_pedal[k]) r_pedal[k] = p_pedal[k]->get_transform(); if (p_wheel[k]) r_wheel[k] = p_wheel[k]->get_transform(); }
+	} else {   // (the old made bicycle)
+		mi = memnew(MeshInstance3D);
+		mi->set_mesh(CityTraffic::bike_mesh());
+		Ref<Shader> sh; sh.instantiate(); sh->set_code(CityTraffic::bike_shader_code());
+		mat.instantiate(); mat->set_shader(sh);
+		mat->set_shader_parameter("paint_u", Vector3(paint.r, paint.g, paint.b));
+		mi->set_material_override(mat);
+		add_child(mi);
+	}
 	rq.instantiate();
 	rq->set_collision_mask(1);
 	rider = memnew(CityPed);
@@ -310,7 +329,7 @@ void CityBike::_integrate_forces(PhysicsDirectBodyState3D *p_state) {
 	// the wheels on the ground: one ray each, straight down from the hub
 	float gh[2] = { 0, 0 }; bool on[2] = { false, false };
 	PhysicsDirectSpaceState3D *ss = p_state->get_space_state();
-	const Vector3 hub[2] = { t.xform(Vector3(0, WR, 0.60f)), t.xform(Vector3(0, WR, -0.42f)) };
+	const Vector3 hub[2] = { t.xform(Vector3(0, WR, bike_look::HUB_F)), t.xform(Vector3(0, WR, bike_look::HUB_R)) };
 	for (int k = 0; k < 2 && ss; k++) {
 		rq->set_from(hub[k] + Vector3(0, 0.35f, 0)); rq->set_to(hub[k] - Vector3(0, 0.75f, 0));
 		rq->set_exclude(TypedArray<RID>::make(get_rid()));
@@ -320,7 +339,7 @@ void CityBike::_integrate_forces(PhysicsDirectBodyState3D *p_state) {
 	on_ground = on[0] || on[1];
 	if (!control) { last_set_v = lv; speed = lv.dot(fh); return; }   // thrown, or lying: the engine has it
 	float slope = 0.0f, gy = t.origin.y;
-	if (on[0] && on[1]) { slope = (gh[0] - gh[1]) / WB; gy = gh[1] + (gh[0] - gh[1]) * (0.42f / WB); }
+	if (on[0] && on[1]) { slope = (gh[0] - gh[1]) / WB; gy = gh[1] + (gh[0] - gh[1]) * (-bike_look::HUB_R / WB); }
 	else if (on[0]) gy = gh[0];
 	else if (on[1]) gy = gh[1];
 	if (on_ground) y_ground = gy;
@@ -451,12 +470,15 @@ void CityBike::place_rider(double p_delta) {
 	reach_mod->set_influence(w);
 	for (int s = 0; s < 2; s++) {
 		const float ang = crank + (s ? 3.14159265f : 0.0f);
-		const float sx = s == 0 ? 0.11f : -0.11f;
-		reach_mod->foot[s] = bt.xform(Vector3(sx, 0.28f + 0.17f * std::cos(ang) + 0.08f, 0.17f * std::sin(ang)));
-		reach_mod->hand[s] = bt.xform(Vector3(s == 0 ? 0.22f : -0.22f, 1.07f, 0.39f));
+		const float sx = s == 0 ? bike_look::PEDAL_X : -bike_look::PEDAL_X;
+		reach_mod->foot[s] = bt.xform(Vector3(sx, bike_look::BB_Y + bike_look::CRANK_R * std::cos(ang) + 0.08f, bike_look::CRANK_R * std::sin(ang)));
+		// the grips turn with the bars about the steering axis
+		const Vector3 g0(s == 0 ? bike_look::GRIP_X - 0.01f : -(bike_look::GRIP_X - 0.01f), bike_look::GRIP_Y + 0.01f + 0.10f, bike_look::GRIP_Z - 0.05f);
+		const Vector3 piv(0.0f, 0.6927f, 0.3566f + bike_look::SHIFT);
+		reach_mod->hand[s] = bt.xform(piv + Basis(bike_look::steer_axis(), steer).xform(g0 - piv));
 	}
 	reach_mod->lean_axis = bt.basis.get_column(0).normalized();
-	reach_mod->lean = 0.30f + 0.10f * c_sprint;
+	reach_mod->lean = 0.12f + 0.10f * c_sprint;   // (a beach cruiser is ridden upright: the bars come back to the rider)
 	(void)p_delta;
 }
 
@@ -519,9 +541,24 @@ void CityBike::make_hud() {
 	}
 }
 
+// The cruiser's parts: the wheels roll with the way gone, the crank goes round with the pedalling (the pedals stay level
+// under the feet), the bars and the front wheel turn about the steering axis.
+void CityBike::pose_parts(double p_delta) {
+	if (!rig) return;
+	wheel_ang = std::fmod(wheel_ang + speed * (float)p_delta / WR, 6.2831853f);
+	// (the model's crank rests with the left pedal straight back; the feet's circle has crank = 0 with the left foot at the
+	// top: the drawn crank is a quarter turn on from it, so the pedals are under the feet; Yasin: "pedals dont watch the leg movement")
+	const float th = crank + 1.5707963f;
+	if (p_crank) p_crank->set_transform(Transform3D(r_crank.basis * Basis(Vector3(1, 0, 0), th), r_crank.origin));
+	for (int k = 0; k < 2; k++) if (p_pedal[k]) p_pedal[k]->set_transform(Transform3D(r_pedal[k].basis * Basis(Vector3(1, 0, 0), -th), r_pedal[k].origin));
+	if (p_steer) p_steer->set_transform(Transform3D(Basis(bike_look::steer_axis(), steer) * r_steer.basis, r_steer.origin));
+	for (int k = 0; k < 2; k++) if (p_wheel[k]) p_wheel[k]->set_transform(Transform3D(r_wheel[k].basis * Basis(Vector3(1, 0, 0), wheel_ang), r_wheel[k].origin));
+}
+
 void CityBike::_process(double p_delta) {
 	if (!made) return;
 	st_t += (float)p_delta;
+	pose_parts(p_delta);
 	if (player && !scripted) read_player();
 	if (hit_now && state == ST_RIDE) { hit_now = false; throw_rider(hit_v); }
 	CityPlayer *pl = the_player();

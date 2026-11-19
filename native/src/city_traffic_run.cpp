@@ -1,6 +1,7 @@
 // CityTraffic at run time: the step on its own thread, the car batches, the parked cars, the streamer's cells, the
 // collision pool. See city_traffic.h for how it hangs together.
 #include "city_traffic.h"
+#include "bike_look.h"
 
 #include <godot_cpp/classes/box_shape3d.hpp>
 #include <godot_cpp/classes/collision_shape3d.hpp>
@@ -588,10 +589,16 @@ void CityTraffic::_ready() {
 	for (int m = 0; m < cm::N_MODELS; m++) make_batch(mid_b[m], mesh_mid[m], mat_mid_m[m], 64, shadows);
 	make_batch(box_moving, mesh_box, mat_box, 256, false);
 	{   // the bicycles: a mesh and a small material of their own
-		mesh_bike = make_bike_mesh();
-		Ref<Shader> sh; sh.instantiate();
-		sh->set_code(bike_shader_code());
-		mat_bike.instantiate(); mat_bike->set_shader(sh);
+		if (bike_look::available()) {   // the beach cruiser's mid tier (1,460 triangles), no normal map at this size
+			mesh_bike = bike_look::tier("mid");
+			mat_bike = bike_look::material(false);
+		}
+		if (mesh_bike.is_null()) {
+			mesh_bike = make_bike_mesh();
+			Ref<Shader> sh; sh.instantiate();
+			sh->set_code(bike_shader_code());
+			mat_bike.instantiate(); mat_bike->set_shader(sh);
+		}
 		make_batch(bike_b, mesh_bike, mat_bike, 32, shadows);
 		// the bicycles of cyclists who come off: four physical ones, made now and put away
 		if (bodies_on) {
