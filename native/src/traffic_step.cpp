@@ -643,7 +643,7 @@ void Sim::update_car(int i, float h) {
 	float amin = std::min(-lim, lat[i]), amax = std::max(lim, lat[i]);
 	float want = 0.0f;
 	if (man[i] == MAN_PASS && pass_rem[i] > 0.0f) { want = pass_lat[i]; amax = std::max(amax, want); }
-	else if (pull[i] && dg < 45.0f && conn[i] < 0) { want = goal_lat[i]; amin = std::min(amin, want); amax = std::max(amax, want); }
+	else if (pull[i] && dg < pull_d[i] && conn[i] < 0) { want = goal_lat[i]; amin = std::min(amin, want); amax = std::max(amax, want); }
 	for (int k = 0; k < nt; k++) {   // boxes alongside: never move into them
 		const Track &t = tr[k];
 		if (t.type == TRK_XWALK || t.sa >= hl_ + 0.5f || t.sb <= -hl_ - 0.5f) continue;
@@ -656,6 +656,7 @@ void Sim::update_car(int i, float h) {
 		const Track &t = tr[k];
 		float gap = t.sa - hl_;
 		if (t.type == TRK_XWALK || t.sb <= -hl_ - 1.0f || gap > avoid_r) continue;
+		if (pull[i] && dg < pull_d[i] && t.sa > dg + hl_ + 0.2f) continue;   // (it lies beyond where this car stops: the car in the next stall is not to be driven round)
 		if (t.type != TRK_STATIC && std::fabs(t.v) >= 1.5f) continue;
 		bool ped = t.type == TRK_DYN && d_kind[t.idx] == DYN_PED;
 		if (ped && d_vx[t.idx] * d_vx[t.idx] + d_vz[t.idx] * d_vz[t.idx] > 0.09f) continue;   // a walker on the move: wait for them
@@ -672,7 +673,9 @@ void Sim::update_car(int i, float h) {
 	const float lat_t = amin <= amax ? clampf(want, amin, amax) : lat[i];
 
 	// ---- ahead: everything in the car's corridor is a leader (IDM) and bounds the safe speed
-	const float ratio = man[i] != MAN_NONE ? 0.9f : 0.4f;
+	// (a car pulling in to the kerb steers as hard as one that changes lane: at the gentle rate it stopped at its goal
+	// with the sideways move unfinished, the rate falls with the speed)
+	const float ratio = (man[i] != MAN_NONE || (pull[i] && dg < pull_d[i])) ? 0.9f : 0.4f;
 	float a_int = 0.0f, vsafe = BIG, lead_gap = BIG;
 	int lead = -1;
 	for (int k = 0; k < nt; k++) {
@@ -1063,7 +1066,7 @@ int Sim::place_car(int lane_, float s_, float speed, int model_, int temper_) {
 	steer[i] = latacc[i] = wait_t[i] = blocked_t[i] = honk_cd[i] = crash_t[i] = slow_t[i] = lc_t[i] = pass_lat[i] = pass_rem[i] = hard_cd[i] = 0.0f;
 	for (int k = 0; k < MAX_HELD; k++) { h_conn[i][k] = -1; h_rem[i][k] = 0.0f; }
 	rt[i].clear(); rt_i[i] = 0; goal_ri[i] = -1; lead_id[i] = -1; chain_n[i] = 0; hold_[i] = 0; veto_by[i] = -1; route_of[i] = -1; next_stop[i] = -1; trip[i] = -1;
-	goal_s[i] = goal_lat[i] = dwell[i] = lc_stuck[i] = 0.0f; lc_need[i] = 0; arrived[i] = 0; pull[i] = 0;
+	goal_s[i] = goal_lat[i] = dwell[i] = lc_stuck[i] = 0.0f; lc_need[i] = 0; arrived[i] = 0; pull[i] = 0; pull_d[i] = 45.0f;
 	if (i >= hi) hi = i + 1;
 	n_alive++;
 	return i;

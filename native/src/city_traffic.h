@@ -19,6 +19,8 @@
 #pragma once
 
 #include "street_build.h"
+#include "car_models.h"
+#include "traffic_parking.h"
 
 #include <godot_cpp/classes/mesh.hpp>
 #include <godot_cpp/classes/node3d.hpp>
@@ -44,7 +46,7 @@ class CityTraffic : public Node3D {
 	GDCLASS(CityTraffic, Node3D)
 
 public:
-	enum { MAX_ROWS = 192, POOL = 24, N_COLOURS = 10 };
+	enum { MAX_ROWS = 192, POOL = 24, N_COLOURS = cm::N_COLOURS };
 
 private:
 	// ---- the core and its thread
@@ -62,6 +64,7 @@ private:
 		bool cells_all = true;
 		std::vector<uint8_t> cells;
 		bool cells_dirty = false;
+		bool parked = true;
 	} input;
 	struct Row {     // one moving car as the step left it: its pose now and before its last move
 		int32_t id; uint8_t model, colour, flags, kind;
@@ -77,6 +80,10 @@ private:
 		Row rows[MAX_ROWS];
 	};
 	Snap shared, now;           // shared: under mx; now: the main thread's copy
+	tp::Parking parking;        // the stalls as the traffic knows them (the step's thread; the test)
+	std::vector<tp::Event> park_now;      // (main thread) the ones taken this frame
+	std::vector<tp::Event> park_events;   // stalls that changed (under mx): the main thread takes them
+	int park_out = 0, park_in = 0;          // (under mx) cars that pulled out / parked, so far
 	void step_once(double p_clock);
 	void thread_main();
 
@@ -149,6 +156,7 @@ private:
 		double moving = 0, near = 0, mid = 0, box = 0, parked_mid = 0, parked_all = 0, batches = 0, carry = 0;
 		int moving_most = 0, steps = 0;
 		int uploads = 0;
+		int park_out = 0, park_in = 0;
 	} cnt;
 	Vector3 last_cam;
 	bool has_last_cam = false;
@@ -200,7 +208,7 @@ public:
 	// p_density: 1 = as many cars as the streets carry at their busiest hour (up to p_cars); 2 = twice that, and so on.
 	// Returns counts: overlapping car pairs (must be 0), cars standing over 2 minutes not at a red light, the state
 	// hash (the same seed must give the same hash), the time a step takes.
-	Dictionary run_test(int p_cars, double p_minutes, int64_t p_seed, const Vector3 &p_cam, bool p_whole_city, bool p_stuck_rule, double p_density);
+	Dictionary run_test(int p_cars, double p_minutes, int64_t p_seed, const Vector3 &p_cam, bool p_whole_city, bool p_stuck_rule, double p_density, bool p_parking = false);
 };
 
 } // namespace godot

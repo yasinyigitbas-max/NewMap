@@ -52,6 +52,7 @@ bool CityTraffic::load_streets(const String &p_path) {
 	}
 	sim->set_signal_offsets(nn, off.data());
 	ready = sim->build();
+	parking.init(streets);
 	return ready;
 }
 
@@ -74,7 +75,7 @@ Dictionary CityTraffic::street_stats() const {
 	return d;
 }
 
-Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, const Vector3 &p_cam, bool p_whole_city, bool p_stuck_rule, double p_density) {
+Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, const Vector3 &p_cam, bool p_whole_city, bool p_stuck_rule, double p_density, bool p_parking) {
 	Dictionary d;
 	if (!ready) { d["error"] = "no streets"; return d; }
 	tc::Config keep = sim->cfg;
@@ -87,6 +88,9 @@ Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, c
 		sim->cfg.view_safe_r = 0.0f; sim->cfg.tier_full_r = 6000.0f; sim->cfg.tier_mid_r = 7000.0f;
 	}
 	sim->reset_cars((uint64_t)p_seed);
+	parking.init(streets); parking.rng = 0x9E3779B97F4A7C15ull ^ (uint64_t)p_seed; parking.on = p_parking;
+	parking.set_cells(std::vector<uint8_t>(), true);
+	int64_t ov_parked = 0;
 	sim->set_view(p_cam.x, p_cam.y, p_cam.z, 0.0f, 1.0f, 0.0f);   // no view cone: cars may appear anywhere in the ring
 	const float dt = 0.05f;
 	const int ticks = (int)(p_minutes * 60.0 / dt);
@@ -155,7 +159,9 @@ Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, c
 		worst_standing = standing;
 	};
 	for (int t = 0; t < ticks; t++) {
-		sim->set_dynamic(0, nullptr);
+		parking.tick(*sim, dt);
+		parking.events.clear();
+		sim->set_dynamic((int)parking.dyn.size() / tc::DYN_STRIDE, parking.dyn.data());
 		sim->step(dt, clock);
 		clock += dt;
 		sim->events.clear();
@@ -165,6 +171,7 @@ Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, c
 			int a[3] = { 0, 0, 0 };
 			sim->audit(a);
 			ov_car += a[0]; ov_static += a[1]; ov_dyn += a[2]; checks++;
+			if (p_parking) ov_parked += parking.audit(*sim);
 			int stuck = 0;
 			for (int i = 0; i < sim->hi; i++) {
 				if (!sim->alive[i]) continue;
@@ -179,6 +186,8 @@ Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, c
 		}
 	}
 	d["ticks"] = ticks; d["checks"] = checks;
+	d["parking"] = p_parking; d["pulled_out"] = parking.pulled_out; d["parked"] = parking.parked; d["parking_gave_up"] = parking.gave_up; d["touching_parked"] = ov_parked;
+	parking.init(streets); parking.on = true;
 	d["streets_carry"] = sim->carry;
 	d["cars_wanted"] = sim->cfg.max_cars; d["cars_at_end"] = sim->n_alive; d["cars_most"] = alive_max;
 	d["overlaps_car_car"] = ov_car; d["overlaps_car_parked"] = ov_static; d["overlaps_car_other"] = ov_dyn;
@@ -224,7 +233,7 @@ void CityTraffic::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "streets_path"), "set_streets_path", "get_streets_path");
 	ClassDB::bind_method(D_METHOD("is_built"), &CityTraffic::is_built);
 	ClassDB::bind_method(D_METHOD("street_stats"), &CityTraffic::street_stats);
-	ClassDB::bind_method(D_METHOD("run_test", "cars", "minutes", "seed", "cam", "whole_city", "stuck_rule", "density"), &CityTraffic::run_test);
+	ClassDB::bind_method(D_METHOD("run_test", "cars", "minutes", "seed", "cam", "whole_city", "stuck_rule", "density", "parking"), &CityTraffic::run_test, DEFVAL(false));
 }
 
 } // namespace godot

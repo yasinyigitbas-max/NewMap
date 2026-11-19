@@ -223,6 +223,7 @@ public:
 	float goal_s[MAX_CARS], goal_lat[MAX_CARS], dwell[MAX_CARS], lc_stuck[MAX_CARS];
 	int8_t lc_need[MAX_CARS];
 	uint8_t arrived[MAX_CARS], pull[MAX_CARS];
+	float pull_d[MAX_CARS];   // how far before its goal a car begins to move sideways to goal_lat (45 m for a bus stop; 14 m into a stall)
 	int64_t trip[MAX_CARS];
 	int32_t lead_id[MAX_CARS];
 	int32_t chain_c[MAX_CARS][MAX_CHAIN];   // the moves through a cluster of short links, reserved together with the move into it
@@ -288,6 +289,10 @@ public:
 	bool drive_to(int car_id, float tx, float tz);
 	bool pull_over(int car_id, float tx, float tz, int side);
 	bool release_car(int car_id);
+	// parking (traffic_parking.h): an ambient car drives to s_goal on ITS lane and moves sideways to lat_goal in the
+	// last pull_d metres (it arrives: arrived[i]); a car that starts standing beside its lane and pulls in
+	bool park_at(int car_id, float s_goal, float lat_goal, float pull_d_);
+	int unpark(int lane_, float s_, float lat_, int model_, int temper_);
 	bool set_hold(int car_id, bool on);
 	bool set_kerb_lat(int car_id, float lat_);
 	bool teleport_car(int car_id, int lane_, float s_);

@@ -40,23 +40,12 @@ const float PAINT[CityTraffic::N_COLOURS][3] = {
 	{ 0.80f, 0.80f, 0.78f }, { 0.012f, 0.012f, 0.014f }, { 0.30f, 0.315f, 0.33f }, { 0.09f, 0.095f, 0.10f }, { 0.02f, 0.04f, 0.13f },
 	{ 0.36f, 0.015f, 0.012f }, { 0.50f, 0.42f, 0.28f }, { 0.03f, 0.08f, 0.045f }, { 0.25f, 0.42f, 0.58f }, { 0.13f, 0.01f, 0.012f }
 };
-const int PAINT_W[CityTraffic::N_COLOURS] = { 18, 15, 15, 15, 9, 8, 5, 4, 6, 5 };   // (sum 100)
 
 inline int64_t usec_now() {
 	return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
 }
 
-inline uint32_t hash32(uint32_t v) {
-	v ^= v >> 16; v *= 0x7feb352dU; v ^= v >> 15; v *= 0x846ca68bU; v ^= v >> 16;
-	return v;
-}
-
-// a paint colour by its share of the street, from a hash (the same car keeps its colour)
-inline int pick_colour(uint32_t h) {
-	int pc = (int)(h % 100u), col = 0;
-	for (; col < CityTraffic::N_COLOURS - 1; col++) { pc -= PAINT_W[col]; if (pc < 0) break; }
-	return col;
-}
+using tp::hash32;
 
 inline float lerp_angle(float a, float b, float t) {
 	float d = std::fmod(b - a + 3.14159265f, 6.2831853f);
@@ -83,6 +72,8 @@ void CityTraffic::step_once(double p_clock) {
 	sim->cfg.max_cars = std::min(in.max_cars, (int)MAX_ROWS - 2);
 	sim->cfg.dens_scale = in.density;
 	sim->cfg.hour_factor = 1.0f;
+	if (in.cells_dirty) parking.set_cells(in.cells, in.cells_all);
+	parking.on = in.parked;
 	if (in.cells_dirty) { sim->cells_all = in.cells_all; sim->cell_ok = in.cells; sim->cg_x0 = -GRID / 2; sim->cg_z0 = -GRID / 2; sim->cg_w = GRID; sim->cg_h = GRID; sim->carry_tick = -1; }
 	// the ring cars appear in runs ahead of the camera: 2 s of travel, 200 m at most (what the streamer leads by), and
 	// in view no car appears nearer than 4 s of travel (160 m at least)
@@ -93,7 +84,8 @@ void CityTraffic::step_once(double p_clock) {
 		const float lead = std::min(speed * 2.0f, 200.0f);
 		sim->set_ring(in.vx / speed * lead, in.vz / speed * lead);
 	}
-	sim->set_dynamic(0, nullptr);
+	parking.tick(*sim, STEP_S);
+	sim->set_dynamic((int)parking.dyn.size() / tc::DYN_STRIDE, parking.dyn.data());
 	sim->step(STEP_S, p_clock);
 	sim->events.clear();
 	static thread_local Snap s;
@@ -101,7 +93,7 @@ void CityTraffic::step_once(double p_clock) {
 	for (int i = 0; i < sim->hi && s.n < MAX_ROWS; i++) {
 		if (!sim->alive[i]) continue;
 		Row &r = s.rows[s.n++];
-		r.id = sim->id[i]; r.model = sim->model[i]; r.colour = (uint8_t)pick_colour(hash32((uint32_t)sim->id[i] * 2246822519u + 31u)); r.kind = sim->kind[i];
+		r.id = sim->id[i]; r.model = sim->model[i]; r.colour = tp::Parking::car_colour(*sim, i); r.kind = sim->kind[i];
 		r.flags = (uint8_t)(((sim->flags[i] & tc::F_BRAKE) ? 1 : 0) | ((sim->flags[i] & tc::F_IND_L) ? 2 : 0) | ((sim->flags[i] & tc::F_IND_R) ? 4 : 0));
 		r.x = sim->x[i]; r.y = sim->y[i]; r.z = sim->z[i]; r.yaw = sim->yaw[i]; r.pitch = sim->pitch[i];
 		r.px = sim->px[i]; r.py = sim->py[i]; r.pz = sim->pz[i]; r.pyaw = sim->pyaw[i]; r.ppitch = sim->ppitch[i];
@@ -114,7 +106,10 @@ void CityTraffic::step_once(double p_clock) {
 	{
 		std::lock_guard<std::mutex> lock(mx);
 		shared = s;
+		park_events.insert(park_events.end(), parking.events.begin(), parking.events.end());
+		park_out = parking.pulled_out; park_in = parking.parked;
 	}
+	parking.events.clear();
 }
 
 void CityTraffic::thread_main() {
@@ -200,21 +195,12 @@ void CityTraffic::seed_stalls() {
 	stall_car.assign(ns, Parked{ 255, 0 });
 	stall_mid.assign(ns, 0);
 	cell_stalls.assign((size_t)GRID * GRID, std::vector<int32_t>());
-	float wsum = 0.0f;
-	for (int m = 0; m < cm::N_MODELS; m++) wsum += cm::MODELS[m].weight;
 	for (int k = 0; k < ns; k++) {
 		const float *f = &streets.stall_f[(size_t)k * 8];
 		const int ci = cell_index(f[0], f[2]);
 		if (ci < 0) continue;
 		cell_stalls[ci].push_back(k);
-		const uint32_t h = hash32((uint32_t)k * 2654435761u + 977u);
-		const bool kerb = streets.stall_i[(size_t)k * 4] == 0;
-		if ((h & 1023u) >= (kerb ? 720u : 560u)) continue;   // 70 % of kerb stalls, 55 % of car-park stalls
-		float r = (float)((h >> 10) & 1023u) / 1024.0f * wsum;
-		int m = 0;
-		for (; m < cm::N_MODELS - 1; m++) { r -= cm::MODELS[m].weight; if (r <= 0.0f) break; }
-		const int col = pick_colour(hash32(h + 0x9e3779b9u));
-		stall_car[k].model = (uint8_t)m; stall_car[k].colour = (uint8_t)col;
+		tp::seed_stall(k, streets.stall_i[(size_t)k * 4] == 0, stall_car[k].model, stall_car[k].colour);
 	}
 }
 
@@ -254,6 +240,8 @@ void CityTraffic::cell_set(const String &p_key, bool p_in) {
 	if (cells[(size_t)cz * GRID + cx] == v) return;
 	cells[(size_t)cz * GRID + cx] = v;
 	active_dirty = true;
+	if (!p_in && !cell_stalls.empty())   // a cell that leaves: its stalls go back to what they hold at first (the step does the same on its side)
+		for (int32_t k : cell_stalls[(size_t)cz * GRID + cx]) tp::seed_stall(k, streets.stall_i[(size_t)k * 4] == 0, stall_car[k].model, stall_car[k].colour);
 	std::lock_guard<std::mutex> lock(mx);
 	input.cells = cells; input.cells_all = cells_all; input.cells_dirty = true;
 }
@@ -420,9 +408,20 @@ void CityTraffic::_process(double p_delta) {
 		std::lock_guard<std::mutex> lock(mx);
 		input.cx = cp.x; input.cy = cp.y; input.cz = cp.z; input.fx = cf.x; input.fz = cf.z; input.fov = (float)cam->get_fov() * 1.6f;   // (the screen is wide: the cone is the horizontal view)
 		input.vx = vel_x; input.vz = vel_z;
-		input.max_cars = max_cars; input.density = (float)density;
+		input.max_cars = max_cars; input.density = (float)density; input.parked = parked_on;
 		now = shared;
+		park_now.swap(park_events); park_events.clear();
+		cnt.park_out = park_out; cnt.park_in = park_in;
 	}
+	// stalls that changed: a car pulled out (its stall is empty now) or one parked (the stall takes its model and colour)
+	for (const tp::Event &e : park_now) {
+		if (e.stall < 0 || e.stall >= (int)stall_car.size()) continue;
+		const int ci = cell_index(streets.stall_f[(size_t)e.stall * 8], streets.stall_f[(size_t)e.stall * 8 + 2]);
+		if (!cells_all && (ci < 0 || !cells[ci])) continue;   // (its cell has left meanwhile)
+		stall_car[e.stall].model = e.model; stall_car[e.stall].colour = e.colour;
+		active_dirty = true;
+	}
+	park_now.clear();
 	RenderingServer *rs = RenderingServer::get_singleton();
 	const float alpha = std::min(std::max((float)(t0 - now.t_usec) / (STEP_S * 1.0e6f), 0.0f), 1.0f);
 	// the lamps run on the traffic's clock: a car stops at the red the player sees
@@ -578,6 +577,7 @@ String CityTraffic::report() {
 	String s = vformat("cars moving avg %.1f most %d (the streets there carry %.0f, the cap is %d): near model %.1f, light model %.1f, far shape %.1f | parked: %.0f in the loaded cells, %.1f drawn with the light model | batches drawn avg %.1f, uploads a frame %.1f | main thread a frame: avg %.3f worst %.3f ms | the step (own thread): avg %.3f worst %.3f ms",
 			cnt.moving / f, cnt.moving_most, cnt.carry / f, max_cars, cnt.near / f, cnt.mid / f, cnt.box / f, cnt.parked_all / f, cnt.parked_mid / f, cnt.batches / f, (double)cnt.uploads / f,
 			cnt.main_us / f / 1000.0, cnt.main_us_worst / 1000.0, cnt.step_us / std::max(cnt.steps, 1) / 1000.0, cnt.step_us_worst / 1000.0);
+	s += vformat(" | pulled out of a stall %d, parked %d (since the start)", cnt.park_out, cnt.park_in);
 	cnt = Count();
 	return s;
 }

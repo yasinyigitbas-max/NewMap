@@ -218,6 +218,33 @@ bool Sim::pull_over(int car_id, float tx, float tz, int side) {
 	return true;
 }
 
+// An ambient car parks: its goal is a place on the lane it is on, beside which a free stall lies.
+bool Sim::park_at(int car_id, float s_goal, float lat_goal, float pull_d_) {
+	int i = find_car(car_id);
+	if (i < 0 || kind[i] != K_AMBIENT || conn[i] >= 0 || (flags[i] & F_RES)) return false;
+	if (s_goal < s[i] + 20.0f || s_goal > p_len[lane[i]] - 5.0f) return false;
+	kind[i] = K_SCRIPTED;
+	rt[i].assign(1, lane[i]); rt_i[i] = 0;
+	goal_ri[i] = 0; goal_s[i] = s_goal; goal_lat[i] = lat_goal; pull[i] = 1; pull_d[i] = pull_d_;
+	arrived[i] = 0; dwell[i] = 0.0f; lc_stuck[i] = 0.0f; lc_need[i] = 0;
+	nconn[i] = -1;   // (it stops on this lane)
+	return true;
+}
+
+// A parked car pulls out: a car standing beside lane_ at s_ (lat_ off its middle); it drives off and into the lane
+// as the sideways rules of the core let it. -1 = no room in the pool.
+int Sim::unpark(int lane_, float s_, float lat_, int model_, int temper_) {
+	int i = place_car(lane_, s_, 0.0f, model_, temper_);
+	if (i < 0) return -1;
+	lat[i] = lat_; latv[i] = 0.0f;
+	float o[7];
+	pose_at(lane_, s[i], lat[i], 0.0f, 0.0f, 1.0f, seg[i], o);
+	x[i] = px[i] = o[0]; y[i] = py[i] = o[1]; z[i] = pz[i] = o[2]; fx[i] = o[3]; fz[i] = o[4]; pitch[i] = ppitch[i] = o[5]; yaw[i] = pyaw[i] = o[6];
+	st.spawned++;
+	event(E_SPAWN, i, (float)lane_);
+	return i;
+}
+
 bool Sim::release_car(int car_id) {
 	int i = find_car(car_id);
 	if (i < 0) return false;

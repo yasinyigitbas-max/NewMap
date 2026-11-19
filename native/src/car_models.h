@@ -27,4 +27,15 @@ static const CarModel MODELS[N_MODELS] = {
 	{ "bus_mini", 3.71f, 1.19f, 2.65f, 0.0f },
 };
 
+// paint colours, about as common as on a real street: white, black, silver, grey, dark blue, red, beige, dark green,
+// light blue, maroon (the linear colours themselves: city_traffic_run.cpp PAINT)
+constexpr int N_COLOURS = 10;
+static const int PAINT_W[N_COLOURS] = { 18, 15, 15, 15, 9, 8, 5, 4, 6, 5 };   // (sum 100)
+// a paint colour by its share of the street, from a hash (the same car keeps its colour)
+inline int pick_colour(unsigned h) {
+	int pc = (int)(h % 100u), col = 0;
+	for (; col < N_COLOURS - 1; col++) { pc -= PAINT_W[col]; if (pc < 0) break; }
+	return col;
+}
+
 } // namespace cm
