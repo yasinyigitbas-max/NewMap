@@ -119,7 +119,7 @@ Marine Supply, Harbour Boatworks (service desk). Four room kinds added to room_g
 wine shop, and fill passes for the small office and bookshop).
 
 ## NOT done / NOT checked (block 2)
-- FOUND AFTER LOCKING: the stairs inside the terraces (block 1: the flats' steps to the Beach Walk; block 2: the inn garden stairs, the stairs between the flats' terraces, the street gates) have GRASS treads with concrete risers: their concrete paint comes after the terrace's grass paint and the first paint wins. The Steps' flights are on paving and are right. Fix = put those stair paints first in the scripts and rebuild: needs Yasin's word (locked).
+- FIXED in the polish pass (unlocked, rebuilt, relocked on Yasin's word): the stairs inside the terraces (block 1: the flats' steps to the Beach Walk; block 2: the inn garden stairs, the stairs between the flats' terraces, the street gates) have GRASS treads with concrete risers: their concrete paint comes after the terrace's grass paint and the first paint wins. The Steps' flights are on paving and are right. Fix = put those stair paints first in the scripts and rebuild: needs Yasin's word (locked).
 - b2_down_to_water, b2_steps and b2_boatyard were shot before the street railings replaced the walls (nothing in those views changed).
 - The outdoor pictures show the kit's old painted names on some buildings (e.g. "THE ANCHOR BAR" on the Salty
   Dog): the new signs live in the room scenes, which the outdoor preview does not load (the room pictures show them).
@@ -132,3 +132,25 @@ wine shop, and fill passes for the small office and bookshop).
 `b2_top.jpg`, `b2_pierst.jpg` (Pier St, eye height), `b2_north_street.jpg` (the residential street, eye height),
 `b2_down_to_water.jpg` (from Vista Park over the terraces to the bay), `b2_steep_edge.jpg` (the D1 -> D2 1.8 m wall
 and its stairs), `b2_steps.jpg` (down the Steps from the C2 landing), `b2_boatyard.jpg`; `rooms/b2_rooms_sheet_*.jpg`.
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+# Polish pass (Yasin 19 Nov: "run a polish pass in all your quarters, both indoors and outdoors, fill in the empty
+# stores a bit", "plenty of props", "and life", "most shops look like copy pasted lines of props in interiors, have
+# variety"; no pictures this time - NONE TAKEN, nothing below was looked at, only measured)
+- Unlocked the six pieces and 35 rooms on his word, rebuilt, re-checked, relocked (lock test RESULT PASS).
+- Outdoors: each piece got a polish(b) list of hand-chosen spots with their reasons (forecourt plants, papers and bins,
+  gas bottles and hose carts behind the kitchens, drains and turning arcs in the lots, planting in the strips and on
+  the verges, deck chairs / umbrellas / coolers / showers in the gardens and on the flats' decks, more benches on the
+  Beach Walk, Vista Park and the Steps, the boatyard's work clutter, sand drift). A guard (wf_fill_lib.try_add) refuses
+  a spot that is taken and counts it: placed 204, refused 112. Props now 754 / 657 / 540 / 892 / 761 / 916.
+- Stairs inside the terraces: concrete treads now (the paint order fault).
+- Indoors: room_gen_wf.gd gives each room its own draw (seeded by its name): wall goods start at a different point and
+  take extra kinds of goods, runs of one thing break after 2-3 with a plant / mannequin / display, the middle of the
+  floor is dressed from a per-kind mix (some pieces turned, some gaps), cafes and restaurants mix two- and four-tops,
+  thin shops get more wall goods. 35 rooms regenerated.
+- Checks after: validate.gd 0 / check_life 0 / audit_trees 0 (637 trees) for the n_wf pieces (6 and 95 in others),
+  sink_check 0 (street pieces only), props vs own ground 1,301 measured / 0 off, seams 0 m over 2 cm, ground_check vs
+  the trial land 0 buried / 0 hanging / 0 steps, check_rooms 0 problems in 35 rooms, lock test RESULT PASS.
+- NOT checked: how it looks (no pictures), draws after the added props, the rooms from behind the counter.

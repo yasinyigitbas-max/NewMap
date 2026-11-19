@@ -19,6 +19,7 @@ func _run() -> void:
 	if OS.get_environment("GROUND_ONLY") == "1":
 		b.finish(true); quit(); return
 	life(b)
+	polish(b)
 	b.finish()
 	quit()
 
@@ -123,3 +124,47 @@ func life(b: F) -> void:
 	b.add("prop_lot_light_pole", "worn", 528.0, 70.0, 0.0)
 	b.yard_wear(470.0, 40.0, 560.0, 98.0, 0.9)
 	b.building_wear()
+
+## ---------------------------------------------------------------- POLISH PASS (Yasin 19 Nov: "run a polish pass in all your
+## quarters, both indoors and outdoors ... plenty of props and life"). Every spot below is chosen by hand with its reason;
+## try_add() only refuses a spot that turns out taken (counted and printed), it decides nothing.
+func polish(b: F) -> void:
+	var T := func(base: String, cond: String, pts: Array, yaw := 0.0, surf: Array = []) -> void:
+		for p: Vector2 in pts: b.try_add(base, cond, p.x, p.y, yaw, surf)
+	# the townhouses' yard: what lives in front of garages by the water (a second boat on its trailer, a kayak rack, bins,
+	# hose carts, a golf cart - the island runabout - in its own spot), oil under the stalls, drains
+	T.call("prop_boat_trailer", "worn", [Vector2(462.0, 34.0)], 0.0)
+	T.call("prop_kayak_rack", "worn", [Vector2(419.0, 33.0), Vector2(450.0, 33.0)])
+	T.call("prop_hose_reel_cart", "worn", [Vector2(438.0, 28.0), Vector2(468.4, 34.0)], 90.0)
+	T.call("prop_golf_cart_white", "worn", [Vector2(466.0, 46.0)], 0.0)
+	T.call("plant_potted_leafy", "normal", [Vector2(420.4, 28.2), Vector2(452.0, 28.2)])
+	for d: Vector2 in [Vector2(430.0, 41.0), Vector2(458.0, 41.0)]: b.add("prop_storm_drain_grate", "dirty", d.x, d.y, 0.0, false, 0.002)
+	# the public lot: drains, turning arcs, a bike rack and a bin at the Steps' foot, low planting on the strip
+	for d2: Vector2 in [Vector2(430.0, 101.5), Vector2(456.0, 101.5), Vector2(430.0, 123.5), Vector2(456.0, 123.5)]:
+		b.add("prop_storm_drain_grate", "dirty", d2.x, d2.y, 0.0, false, 0.002)
+	for c: Vector2 in [Vector2(466.0, 83.5), Vector2(466.0, 101.5), Vector2(466.0, 123.5)]: b.mark(15, c, -30.0, 3.0, 2.0, Color(1, 1, 1, 0.45))
+	T.call("prop_bike_rack", "worn", [Vector2(416.0, 110.4)], 90.0)
+	T.call("prop_trash_receptacle", "worn", [Vector2(414.6, 103.0)])
+	T.call("plant_agave_americana_small", "normal", [Vector2(416.0, 144.0), Vector2(426.0, 158.0), Vector2(454.0, 156.0), Vector2(466.0, 144.0)])
+	T.call("plant_iceplant_patch", "normal", [Vector2(436.0, 146.0), Vector2(462.0, 160.0)])
+	T.call("prop_park_bench", "worn", [Vector2(424.0, 162.0), Vector2(457.0, 162.0)], 0.0)   # waiting for a lift at the walk-out
+	# Pier St: the hire shop's bikes out front, a bin, a lifering at the tours' queue (the shuttle goes to the boats)
+	T.call("prop_bike_rack", "worn", [Vector2(424.6, 187.8)], 0.0)
+	T.call("prop_trash_receptacle", "worn", [Vector2(426.0, 177.6), Vector2(446.6, 187.6)])
+	T.call("plant_potted_succulent", "normal", [Vector2(413.6, 186.8), Vector2(444.0, 178.0)])
+	T.call("prop_lifering_stand", "worn", [Vector2(438.8, 180.0)])
+	T.call("prop_newspaper_box_red", "worn", [Vector2(429.0, 187.6)])
+	# the marine supply's yard: anchors-and-rope stock outside (propane, a dumpster, a kayak rack), drains
+	T.call("prop_propane_cylinder_100lb", "rusty", [Vector2(497.0, 16.0), Vector2(497.6, 16.4)])
+	T.call("prop_dumpster_3yd_blue", "rusty", [Vector2(588.0, 22.0)], 90.0)
+	T.call("prop_kayak_rack", "worn", [Vector2(498.6, 30.0)], 90.0)
+	b.add("prop_storm_drain_grate", "dirty", 540.0, 26.0, 0.0, false, 0.002)
+	# the boatyard: work around the boats - kayak racks, a second dumpster for the old antifouling, gas, a hose cart
+	T.call("prop_kayak_rack", "worn", [Vector2(492.0, 96.0), Vector2(516.0, 96.0)])
+	T.call("prop_dumpster_3yd_green", "rusty", [Vector2(548.0, 46.0)], 0.0)
+	T.call("prop_propane_cylinder_100lb", "rusty", [Vector2(490.0, 61.0), Vector2(490.6, 61.4)])
+	T.call("prop_hose_reel_cart", "worn", [Vector2(490.0, 82.0)], 90.0)
+	T.call("prop_cone_28in", "worn", [Vector2(526.0, 58.0), Vector2(526.0, 70.0)])         # round the boat on the stands being sanded
+	b.yard_wear(490.0, 44.0, 560.0, 96.0, 0.5)
+	b.sand_drift(400.0, 186.0, 470.0, 188.8, 4)
+	b.polish_report()

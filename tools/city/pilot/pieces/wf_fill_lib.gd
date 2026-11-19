@@ -144,6 +144,7 @@ func stairs(au: float, av: float, bu: float, bv: float, axis: String, ya: float,
 	var run := (maxf(au, bu) - minf(au, bu)) if axis == "u" else (maxf(av, bv) - minf(av, bv))
 	if run / n < 0.29: print("WARNING %s: stair treads %.2f m at (%.1f, %.1f)" % [name, run / n, au, av])
 	slopes.append([minf(au, bu), minf(av, bv), maxf(au, bu), maxf(av, bv), axis, ya, yb, n])
+	paints.insert(0, rect(au, av, bu, bv, "concrete"))     # concrete treads, whatever the terrace around is painted (first paint wins)
 	return n - 1
 
 func inside(u: float, v: float) -> bool: return Geometry2D.is_point_in_polygon(Vector2(u, v), outline)
@@ -464,6 +465,45 @@ func mat_at(u: float, v: float) -> String:
 	for p: Array in paints:
 		if u > float(p[0]) and u < float(p[2]) and v > float(p[1]) and v < float(p[3]): return String(p[4]) if String(p[4]) != "-" else "asphalt"
 	return "asphalt"
+
+## ---------------------------------------------------------------- the polish pass's guard (each spot is chosen by hand in
+## the piece script; this only refuses a spot that is taken - it decides nothing, and it counts what it refused)
+var polish_placed := 0; var polish_skipped := 0; var polish_skips: Array = []
+## is (u, v) clear for a prop of half-length r: inside the outline, on one level (no step under it), clear of every prop
+## (each by its own size), every building and 1.75 m + r round each of its front doors, every parking stall; surfaces =
+## the ground paints it may stand on (empty = any)
+func free_at(u: float, v: float, r: float, surfaces: Array = []) -> bool:
+	if not inside(u, v): return false
+	var h0 := y(u, v)
+	for o: Vector2 in [Vector2(r, 0), Vector2(-r, 0), Vector2(0, r), Vector2(0, -r)]:
+		if not inside(u + o.x, v + o.y) or absf(y(u + o.x, v + o.y) - h0) > 0.05: return false
+	if not surfaces.is_empty() and not (mat_at(u, v) in surfaces): return false
+	var lp := Vector2(u - ox, v - oz)
+	for k: String in props.items:
+		var hk := half(k.get_slice("|", 0))
+		if hk > 3.0: continue                      # long runs (fences, rails) are checked by the validator
+		for t: Transform3D in props.items[k]:
+			if absf(t.origin.x - lp.x) < r + hk + 0.1 and absf(t.origin.z - lp.y) < r + hk + 0.1: return false
+	for st: Array in stalls:
+		if absf(float(st[0]) - lp.x) < 1.6 + r and absf(float(st[1]) - lp.y) < 3.0 + r: return false
+	for b: Array in B:
+		var n: Node3D = b[0]; var w: float = b[1]; var d: float = b[2]
+		var bp: Vector3 = n.transform.affine_inverse() * Vector3(lp.x, n.position.y, lp.y)
+		if absf(bp.x) < w * 0.5 + 0.05 + r and absf(bp.z) < d * 0.5 + 0.05 + r: return false
+		for e: Array in K.building_stats(String(b[3])).get("doors_front", []):
+			if Vector2(bp.x - float(e[1]), bp.z - d * 0.5).length() < 1.75 + r: return false
+	return true
+
+## place a prop at a hand-chosen spot if it is free (see free_at); counted either way
+func try_add(base: String, cond: String, u: float, v: float, yaw := 0.0, surfaces: Array = []) -> bool:
+	if free_at(u, v, half(base), surfaces):
+		add(base, cond, u, v, yaw); polish_placed += 1; return true
+	polish_skipped += 1
+	if polish_skips.size() < 30: polish_skips.append("%s (%.1f, %.1f)" % [base, u, v])
+	return false
+
+func polish_report() -> void:
+	print("%s POLISH placed %d, refused %d (spot taken): %s" % [name, polish_placed, polish_skipped, ", ".join(polish_skips)])
 
 ## ---------------------------------------------------------------- floor
 func _breaks() -> Array:

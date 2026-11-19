@@ -31,6 +31,7 @@ func _run() -> void:
 	if OS.get_environment("GROUND_ONLY") == "1":
 		b.finish(true); quit(); return
 	life(b)
+	polish(b)
 	b.finish()
 	quit()
 
@@ -225,3 +226,53 @@ func life(b: F) -> void:
 
 ## door offsets (local x, front) of the cottage models (kit stats doors_front)
 const K_DOORS := {"houses/beach_white": -1.4, "houses/beach_blue": -1.4, "houses/beach_teal": 1.4, "houses/beach_large": -2.4}
+
+## ---------------------------------------------------------------- POLISH PASS (Yasin 19 Nov: "run a polish pass in all your
+## quarters, both indoors and outdoors ... plenty of props and life"). Every spot below is chosen by hand with its reason;
+## try_add() only refuses a spot that turns out taken (counted and printed), it decides nothing.
+func polish(b: F) -> void:
+	var T := func(base: String, cond: String, pts: Array, yaw := 0.0, surf: Array = []) -> void:
+		for p: Vector2 in pts: b.try_add(base, cond, p.x, p.y, yaw, surf)
+	# Pier St forecourts: the small things a busy shop front collects (plants, papers, a bin by every door group)
+	T.call("plant_potted_succulent", "normal", [Vector2(266.6, 213.1), Vector2(282.6, 213.1), Vector2(295.0, 213.0)])
+	T.call("prop_newspaper_box_blue", "worn", [Vector2(303.0, 212.4)], 180.0)
+	T.call("prop_usps_collection_box", "worn", [Vector2(262.4, 210.6)], 180.0)           # the corner by B Ave: the inn's guests post cards
+	T.call("plant_potted_leafy", "normal", [Vector2(324.0, 212.2), Vector2(310.9, 228.6)])
+	# the guests' breakfast patio and the inn's garden: deck chairs, a shower for sandy feet, flowers by the walls
+	T.call("plant_bird_of_paradise", "normal", [Vector2(262.6, 216.0), Vector2(262.6, 224.8), Vector2(282.6, 222.0)])
+	T.call("prop_beach_shower", "worn", [Vector2(282.4, 228.2)])
+	T.call("plant_bougainvillea_mound", "normal", [Vector2(262.8, 228.0)])
+	# behind the shops: the grill's gas bottles, a hose cart, the bike hire's tools against its back wall
+	T.call("prop_propane_cylinder_100lb", "rusty", [Vector2(321.6, 229.0), Vector2(322.2, 229.3)])
+	T.call("prop_hose_reel_cart", "worn", [Vector2(300.8, 229.2), Vector2(288.4, 229.2)], 180.0)
+	# the lot: drains in the aisles (it falls to them), oil and tyre arcs where cars turn at the aisle ends
+	for d: Vector2 in [Vector2(283.0, 239.0), Vector2(316.0, 239.0), Vector2(283.0, 257.0), Vector2(316.0, 257.0)]:
+		b.add("prop_storm_drain_grate", "dirty", d.x, d.y, 0.0, false, 0.002)
+	for c: Vector2 in [Vector2(266.0, 239.0), Vector2(328.0, 239.0), Vector2(268.0, 257.0), Vector2(326.0, 257.0)]:
+		b.mark(15, c, 30.0, 3.0, 2.0, Color(1, 1, 1, 0.45))
+	# the planted strip between the lot and the flats: low planting under the trees (agave, bird of paradise, ice plant)
+	T.call("plant_agave_americana_small", "normal", [Vector2(264.0, 262.6), Vector2(291.0, 262.6), Vector2(322.0, 262.6)])
+	T.call("plant_iceplant_patch", "normal", [Vector2(273.0, 263.6), Vector2(306.0, 263.6)])
+	T.call("plant_bird_of_paradise", "normal", [Vector2(279.6, 264.6), Vector2(311.6, 264.6), Vector2(327.6, 264.6)])
+	# the flats' gardens: what holiday people leave out (chairs, a barbecue, a closed umbrella, flowers at the doors)
+	T.call("prop_adirondack_wood", "worn", [Vector2(276.5, 272.4), Vector2(278.5, 272.4)], 160.0)
+	T.call("prop_bbq_kettle", "worn", [Vector2(300.5, 269.4), Vector2(318.0, 268.6)])
+	T.call("prop_beach_umbrella_closed", "worn", [Vector2(287.0, 269.0), Vector2(304.6, 270.0)])
+	T.call("plant_bird_of_paradise", "normal", [Vector2(268.6, 291.6), Vector2(275.6, 291.6), Vector2(296.6, 291.6), Vector2(303.6, 291.6)])
+	T.call("plant_potted_leafy", "normal", [Vector2(314.6, 291.6), Vector2(322.0, 291.6)])
+	# the Beach Walk: a second rest and a bin by it, bike parking at the footpath
+	T.call("prop_park_bench", "worn", [Vector2(312.0, 297.6)], 0.0, ["plaza"])
+	T.call("prop_trash_receptacle", "worn", [Vector2(314.0, 297.6)], 0.0, ["plaza"])
+	T.call("prop_bike_rack", "worn", [Vector2(327.0, 300.0)], 90.0)
+	# the cottages' gardens: deck chairs, umbrellas, a hose cart, flowers in the front gardens, a cooler by the barbecue
+	T.call("prop_adirondack_white", "worn", [Vector2(264.0, 309.0), Vector2(287.0, 304.0), Vector2(301.0, 307.0), Vector2(318.0, 307.0)], 180.0)
+	T.call("prop_beach_umbrella", "worn", [Vector2(270.0, 302.0), Vector2(313.0, 302.5)])
+	T.call("prop_hose_reel_cart", "worn", [Vector2(276.6, 312.6), Vector2(296.6, 312.0)], 90.0)
+	T.call("plant_iceplant_patch", "normal", [Vector2(272.0, 325.6), Vector2(290.0, 324.8), Vector2(316.0, 323.8)])
+	T.call("plant_bougainvillea_mound", "normal", [Vector2(278.0, 325.0), Vector2(302.6, 324.4)])
+	T.call("prop_ice_chest", "worn", [Vector2(266.6, 304.6)])
+	# the footpath to the ring: a bin at its foot, sand carried up on it
+	T.call("prop_trash_receptacle", "worn", [Vector2(330.0, 320.0)])
+	b.sand_drift(323.0, 298.0, 331.0, 324.0, 4); b.sand_drift(261.2, 294.0, 331.0, 298.0, 6)
+	b.sand_drift(295.5, 211.2, 303.5, 214.0, 3)                          # off the returned hire bikes
+	b.polish_report()

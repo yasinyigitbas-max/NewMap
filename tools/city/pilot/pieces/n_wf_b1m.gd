@@ -22,6 +22,7 @@ func _run() -> void:
 	if OS.get_environment("GROUND_ONLY") == "1":
 		b.finish(true); quit(); return
 	life(b)
+	polish(b)
 	b.finish()
 	quit()
 
@@ -174,3 +175,48 @@ func life(b: F) -> void:
 	b.add("plant_bird_of_paradise", "normal", 364.0, 320.8, 0.0); b.add("plant_iceplant_patch", "normal", 376.0, 320.4, 0.0)
 	b.add("plant_agave_americana", "normal", 390.6, 320.0, 0.0)
 	b.building_wear()
+
+## ---------------------------------------------------------------- POLISH PASS (Yasin 19 Nov: "run a polish pass in all your
+## quarters, both indoors and outdoors ... plenty of props and life"). Every spot below is chosen by hand with its reason;
+## try_add() only refuses a spot that turns out taken (counted and printed), it decides nothing.
+func polish(b: F) -> void:
+	var T := func(base: String, cond: String, pts: Array, yaw := 0.0, surf: Array = []) -> void:
+		for p: Vector2 in pts: b.try_add(base, cond, p.x, p.y, yaw, surf)
+	# Pier St forecourts: plants, papers, a bin by each door group, a bench at the Pier Steps' top
+	T.call("plant_potted_leafy", "normal", [Vector2(334.2, 213.0), Vector2(361.2, 213.0), Vector2(379.0, 213.0), Vector2(399.6, 213.0)])
+	T.call("prop_newspaper_box_red", "worn", [Vector2(384.0, 212.4)], 180.0)
+	T.call("prop_recycling_receptacle", "worn", [Vector2(355.6, 212.2)])
+	T.call("prop_sign_ped_crossing", "worn", [Vector2(359.8, 214.2)], 180.0)            # the Pier Steps cross the shops' back strip
+	# the bar's deck: plants at its corners
+	T.call("plant_potted_succulent", "normal", [Vector2(372.0, 227.4), Vector2(377.2, 227.4)])
+	# behind the shops: kegs and gas bottles behind the bar, the dive shop's tank cylinders, bins for the row
+	T.call("prop_propane_cylinder_100lb", "rusty", [Vector2(369.0, 229.2), Vector2(369.6, 229.4)])
+	T.call("prop_propane_cylinder_100lb", "worn", [Vector2(392.4, 229.2), Vector2(393.0, 229.4), Vector2(393.6, 229.2)])
+	for k in 3: b.try_add(["prop_trash_cart_black", "prop_trash_cart_blue", "prop_trash_cart_green"][k], "dirty", 397.0 + k * 0.8, 229.1, 180.0)
+	for k in 3: b.try_add(["prop_trash_cart_black", "prop_trash_cart_blue", "prop_trash_cart_green"][k], "dirty", 337.0 + k * 0.8, 229.1, 180.0)
+	# the lot's drains and the turning arcs at the aisles' ends
+	for d: Vector2 in [Vector2(372.0, 239.0), Vector2(395.0, 239.0), Vector2(372.0, 257.0), Vector2(395.0, 257.0)]:
+		b.add("prop_storm_drain_grate", "dirty", d.x, d.y, 0.0, false, 0.002)
+	for c: Vector2 in [Vector2(401.0, 239.0), Vector2(401.0, 257.0)]: b.mark(15, c, -30.0, 3.0, 2.0, Color(1, 1, 1, 0.45))
+	# the beds beside the ramps and the strip before the flats: more planting
+	T.call("plant_bird_of_paradise", "normal", [Vector2(345.0, 233.6), Vector2(345.0, 251.4), Vector2(357.0, 251.4)])
+	T.call("plant_agave_americana_small", "normal", [Vector2(350.0, 262.6), Vector2(373.0, 262.6), Vector2(391.0, 262.6)])
+	T.call("plant_iceplant_patch", "normal", [Vector2(335.0, 263.4), Vector2(356.0, 263.6), Vector2(402.0, 263.4)])
+	# the flats' gardens: chairs, barbecues, a closed umbrella, a shower, flowers at the paths
+	T.call("prop_adirondack_wood", "worn", [Vector2(352.5, 269.4), Vector2(354.5, 269.4), Vector2(395.0, 269.2)], 160.0)
+	T.call("prop_bbq_kettle", "worn", [Vector2(363.0, 270.2), Vector2(399.4, 276.0)])
+	T.call("prop_beach_umbrella_closed", "worn", [Vector2(374.6, 270.0)])
+	T.call("prop_beach_shower", "worn", [Vector2(381.0, 277.6), Vector2(355.6, 279.0)])
+	T.call("plant_bird_of_paradise", "normal", [Vector2(340.6, 291.6), Vector2(347.4, 291.6), Vector2(364.6, 291.6), Vector2(372.6, 291.6), Vector2(387.0, 291.6), Vector2(394.0, 291.6)])
+	# the Beach Walk: another bench, bike parking
+	T.call("prop_park_bench", "worn", [Vector2(346.0, 297.6), Vector2(392.0, 297.6)], 0.0, ["plaza"])
+	T.call("prop_bike_rack", "worn", [Vector2(360.0, 294.5)], 0.0)
+	# the cottages and ringside flats: deck chairs, umbrellas, a hose cart, a cooler, flowers out front
+	T.call("prop_adirondack_white", "worn", [Vector2(345.0, 303.0), Vector2(366.0, 301.6), Vector2(390.0, 301.4)], 180.0)
+	T.call("prop_beach_umbrella", "worn", [Vector2(347.0, 300.5), Vector2(395.4, 304.2)])
+	T.call("prop_hose_reel_cart", "worn", [Vector2(357.0, 307.0), Vector2(380.0, 305.0)], 90.0)
+	T.call("prop_ice_chest", "worn", [Vector2(360.0, 301.0)])
+	T.call("plant_bougainvillea_mound", "normal", [Vector2(344.0, 321.4), Vector2(370.0, 320.2), Vector2(398.0, 319.6)])
+	T.call("plant_iceplant_patch", "normal", [Vector2(358.0, 320.6), Vector2(383.0, 320.2)])
+	b.sand_drift(331.0, 294.0, 404.0, 298.0, 7); b.sand_drift(353.6, 220.0, 360.0, 230.0, 3)
+	b.polish_report()

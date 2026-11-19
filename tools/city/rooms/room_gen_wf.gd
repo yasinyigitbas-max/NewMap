@@ -57,6 +57,48 @@ const KINDS := {
 	"venue": {"floor": "Carpet012", "light": "pendant", "counter": ["shop_counter", "soda_fountain"], "till": true, "behind": ["drinks_fridge"], "board": true, "walls": ["poster_wall"], "centre": "benches", "window": "waiting", "back": "none", "frames": false},
 }
 const WARM := ["cafe", "bakery", "bar", "restaurant", "books", "venue"]
+## (wf copy, Yasin 19 Nov: "most shops look like copy pasted lines of props in interiors, have variety") per kind: extra
+## wall goods mixed into the wall list, the things that break a run on a wall, and the mix the middle of the floor is
+## dressed from (each cell picks one, some cells turn, some stay empty). Each room draws from them with its own seed.
+const WALL_EXTRA := {"clothes": ["mannequin", "wall_shelf", "fitting_room"], "dive": ["mannequin", "pegboard_wall"], "sport": ["wall_shelf", "mannequin", "shoe_wall"],
+	"rental": ["wall_shelf", "pegboard_wall"], "souvenir": ["bookcase", "glass_display_case"], "shoes": ["mannequin", "wall_shelf"], "jewelry": ["mannequin", "wall_shelf"],
+	"books": ["card_spinner", "display_table"], "bait": ["drinks_fridge"], "store": ["pegboard_wall", "chest_freezer"], "corner_shop": ["chest_freezer", "wall_shelf"],
+	"wine": ["display_table"], "hotel": ["drinks_fridge"], "boatworks": ["workbench"]}
+const BREAK := {"clothes": ["mannequin", "potted_plant"], "dive": ["mannequin", "potted_plant"], "sport": ["mannequin", "potted_plant"], "shoes": ["mannequin", "potted_plant"],
+	"souvenir": ["display_table", "potted_plant"], "jewelry": ["mannequin", "potted_plant"]}
+const CENTRE_MIX := {"clothes": ["clothes_rack", "clothes_rack", "mannequin", "display_table", "garment_rail"], "dive": ["clothes_rack", "mannequin", "display_table", "garment_rail"],
+	"sport": ["clothes_rack", "display_table", "surfboard_rack", "mannequin", "bike_stand"], "rental": ["bike_stand", "surfboard_rack", "clothes_rack", "display_table"],
+	"souvenir": ["display_table", "display_table", "glass_display_case", "card_spinner", "mannequin"], "shoes": ["shoe_bench", "display_table", "mannequin", "shoe_bench"],
+	"jewelry": ["glass_display_case", "display_table", "glass_display_case", "mannequin"], "books": ["display_table", "card_spinner", "display_table", "potted_plant"],
+	"wine": ["display_table", "display_table", "potted_plant"], "store": ["gondola_aisle", "gondola_aisle", "display_table", "chest_freezer"],
+	"corner_shop": ["gondola_aisle", "gondola_aisle", "produce_stand", "chest_freezer"], "bait": ["gondola_aisle", "chest_freezer", "display_table"]}
+## (wf copy, Yasin: "fill in the empty stores a bit") what each kind of shop still lacks on its walls
+const FILL_EXTRA := {"hotel": ["waiting_bench", "potted_plant"], "rental": ["bike_stand", "wall_shelf", "indoor_bin"], "dive": ["wall_shelf", "mannequin", "potted_plant"],
+	"ice_cream": ["potted_plant", "indoor_bin"], "clothes": ["mannequin", "shoe_bench", "potted_plant"], "shoes": ["shoe_bench", "potted_plant"],
+	"souvenir": ["wall_shelf", "potted_plant"], "sport": ["surfboard_rack", "shoe_bench", "potted_plant"], "bait": ["chest_freezer", "wall_shelf"],
+	"office": ["potted_plant"], "cafe": ["potted_plant"], "books": ["display_table", "potted_plant"], "wine": ["wine_backbar", "potted_plant"],
+	"jewelry": ["glass_display_case", "potted_plant"], "corner_shop": ["produce_stand", "drinks_fridge"], "store": ["wall_shelf", "pegboard_wall", "potted_plant"],
+	"boatworks": ["workbench", "indoor_bin"], "bakery": ["potted_plant"], "restaurant": ["potted_plant"], "bar": ["potted_plant"], "fast_food": ["potted_plant"]}
+var vr := RandomNumberGenerator.new()
+var spinners := 0; var manneq := 0
+## one centre cell's item from the room's mix (or the default), capped where the customer would see repeats
+func _mix(kind: String, dflt: String) -> String:
+	if not CENTRE_MIX.has(kind): return dflt
+	var pool: Array = CENTRE_MIX[kind]
+	for tries in 4:
+		var it := String(pool[vr.randi() % pool.size()])
+		if it == "card_spinner" and spinners >= 2: continue
+		if it == "mannequin" and manneq >= 3: continue
+		return it
+	return dflt
+func _put_mix(kind: String, dflt: String, x: float, z: float, yaw: float) -> void:
+	if vr.randf() < 0.08: return                                                  # a gap: room to stand back
+	var it := _mix(kind, dflt)
+	var yy := yaw if vr.randf() < 0.65 else yaw + 90.0
+	if it in ["potted_plant", "card_spinner", "mannequin"]: yy = vr.randf_range(0.0, 0.0) + (0.0 if vr.randf() < 0.5 else 180.0)
+	if _put(it, x, z, yy) or _put(it, x, z, yaw):
+		if it == "card_spinner": spinners += 1
+		if it == "mannequin": manneq += 1
 const WALL_TINTS := [Color(1.0, 0.95, 0.86), Color(0.94, 0.96, 0.98), Color(0.98, 0.92, 0.84), Color(0.9, 0.95, 0.92), Color(1.0, 0.97, 0.93), Color(0.93, 0.9, 0.86)]
 const SHORT := {"cafe": "COFFEE", "bakery": "BAKERY", "bar": "BAR", "restaurant": "KITCHEN", "fast_food": "FOOD", "ice_cream": "ICE CREAM",
 	"clothes": "CLOTHES", "shoes": "SHOES", "jewelry": "JEWELRY", "books": "BOOKS", "gallery": "GALLERY", "salon": "SALON", "pharmacy": "PHARMACY",
@@ -178,6 +220,7 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	rr = R.new(id, F)
 	rr.world_xf = Transform3D(Basis(Vector3.UP, deg_to_rad(float(e.yaw))), Vector3(float(e.pos[0]), float(e.pos[1]), float(e.pos[2])))
 	var hh := _h(id)
+	vr.seed = hh; spinners = 0; manneq = 0                                   # (wf copy) each room its own draw
 	var tint: Color = WALL_TINTS[hh % WALL_TINTS.size()]
 	rr.mat("wall", "PaintedPlaster017", 2.0, tint)
 	var warm := kind in WARM
@@ -265,15 +308,23 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	var sidewin := _side_windows(c)
 	for side: Array in [[X0, 90.0, "left"], [X1, -90.0, "right"]]:
 		var wx := float(side[0]); var yaw := float(side[1]); var inn := 1.0 if yaw > 0.0 else -1.0
-		var items: Array = K.walls
-		var z := ZF - 0.45; var k := 0
+		var items: Array = (K.walls as Array).duplicate()
+		for ex: String in WALL_EXTRA.get(kind, []):
+			if vr.randf() < 0.6: items.insert(vr.randi() % (items.size() + 1), ex)
+		var z := ZF - 0.45; var k := vr.randi() % maxi(items.size(), 1)
 		var tries := 0; var run := 0; var stations := 0
 		while z > ZBp + 0.4 and tries < 60:
 			tries += 1
 			# no endless runs of one thing: after three a break (a plant in the gap), and a barber has three chairs a side
-			if run >= 3:
+			if run >= 2 + (vr.randi() % 2):
 				run = 0
-				if _put("potted_plant", wx + inn * 0.3, z - 0.25, yaw): z -= 0.6
+				var brk: Array = BREAK.get(kind, ["potted_plant"])
+				var bi := String(brk[vr.randi() % brk.size()])
+				if bi == "mannequin" and manneq >= 3: bi = "potted_plant"
+				var bf := _fp(bi, yaw)
+				if _put(bi, wx + inn * (bf.x * 0.5 + 0.05), z - bf.y * 0.5 - 0.05, yaw):
+					z -= bf.y + 0.2
+					if bi == "mannequin": manneq += 1
 				else: z -= 0.3
 				continue
 			var it := String(items[k % items.size()])
@@ -324,39 +375,44 @@ func _room(e: Dictionary, c: Dictionary) -> void:
 	match String(K.centre):
 		"table2":
 			for zz: float in _steps(mz0 + 0.5, mz1 - 0.5, 1.8):
-				for xx: float in _steps(IX0 + 0.95, IX1 - 0.95, 2.1): _group(_table2(xx, zz))
+				var four := vr.randf() < 0.4                                            # (wf copy) two-tops and four-tops mixed by row
+				for xx: float in _steps(IX0 + (0.65 if four else 0.95), IX1 - (0.65 if four else 0.95), 2.3 if four else 2.1):
+					if vr.randf() < 0.12: continue
+					if not _group(_table4(xx, zz) if four else _table2(xx, zz)): _group(_table2(xx, zz))
 		"table4":
 			for zz: float in _steps(mz0 + 0.8, mz1 - 0.8, 2.5):
-				for xx: float in _steps(IX0 + 0.65, IX1 - 0.65, 2.3): _group(_table4(xx, zz))
+				for xx: float in _steps(IX0 + 0.65, IX1 - 0.65, 2.3):
+					if vr.randf() < 0.25: _group(_table2(xx, zz))                          # (wf copy) a two-top among the fours
+					elif not _group(_table4(xx, zz)): _group(_table2(xx, zz))
 		"rows":
 			for xx: float in _steps(IX0 + 0.27, IX1 - 0.27, 1.65):
 				var zz := mz1 - 0.65
 				while zz - 0.61 > mz0:
-					if not _put("gondola_aisle", xx, zz, 90.0): pass
+					_put_mix(kind, "gondola_aisle", xx, zz, 90.0)
 					zz -= 1.24
 		"racks":
 			for xx: float in _steps(IX0 + 0.24, IX1 - 0.24, 1.7):
-				for zz: float in _steps(mz0 + 0.8, mz1 - 0.8, 1.9): _put("clothes_rack", xx, zz, 90.0)
+				for zz: float in _steps(mz0 + 0.8, mz1 - 0.8, 1.9 + vr.randf_range(0.0, 0.5)): _put_mix(kind, "clothes_rack", xx, zz, 90.0)
 		"display":
 			for zz: float in _steps(mz0 + 0.5, mz1 - 0.5, 2.0):
-				for xx: float in _steps(IX0 + 0.68, IX1 - 0.68, 2.5): _put("display_table", xx, zz, 0.0)
+				for xx: float in _steps(IX0 + 0.68, IX1 - 0.68, 2.5): _put_mix(kind, "display_table", xx, zz, 0.0)
 		"shoes":
 			for zz: float in _steps(mz0 + 0.4, mz1 - 0.4, 1.8):
-				for xx: float in _steps(IX0 + 0.55, IX1 - 0.55, 2.3): _put("shoe_bench", xx, zz, 0.0)
+				for xx: float in _steps(IX0 + 0.55, IX1 - 0.55, 2.3): _put_mix(kind, "shoe_bench", xx, zz, 0.0)
 		"cases":
 			for zz: float in _steps(mz0 + 0.4, mz1 - 0.4, 1.8):
-				for xx: float in _steps(IX0 + 0.62, IX1 - 0.62, 2.3): _put("glass_display_case", xx, zz, 0.0)
+				for xx: float in _steps(IX0 + 0.62, IX1 - 0.62, 2.3): _put_mix(kind, "glass_display_case", xx, zz, 0.0)
 		"gifts":
 			var t := 0                                                                  # (wf copy) counted over the whole room
 			for zz: float in _steps(mz0 + 0.5, mz1 - 0.5, 1.9):
 				for xx: float in _steps(IX0 + 0.68, IX1 - 0.68, 2.2):
-					_put("display_table" if (t % 2 == 0 or t > 3) else "card_spinner", xx, zz, 0.0); t += 1   # (wf copy) 2 spinners at most
+					_put_mix(kind, "display_table", xx, zz, 0.0); t += 1                  # (wf copy) the room's own mix, 2 spinners at most
 		"benches":
 			for zz: float in _steps(mz0 + 0.4, mz1 - 0.4, 2.4):
 				for xx: float in _steps(IX0 + 0.74, IX1 - 0.74, 2.6): _put("waiting_bench", xx, zz, 0.0)
 	# ---- (wf copy) "fill": for small rooms the rules above leave bare, the kind's extra items, each against a wall
 	# (back, then the sides from the back forward, never the front wall with the door), on the first free spot
-	for it2: String in K.get("fill", []):
+	for it2: String in (K.get("fill", []) as Array) + (FILL_EXTRA.get(kind, []) as Array):
 		var done := false
 		for wall: Array in [["back", 0.0], ["left", 90.0], ["right", -90.0]]:
 			if done: break

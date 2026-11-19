@@ -24,6 +24,7 @@ func _run() -> void:
 	if OS.get_environment("GROUND_ONLY") == "1":
 		b.finish(true); quit(); return
 	life(b)
+	polish(b)
 	b.finish()
 	quit()
 
@@ -195,3 +196,47 @@ func life(b: F) -> void:
 	b.add("plant_iceplant_patch", "normal", 408.0, 318.4, 0.0); b.add("plant_agave_americana_small", "normal", 427.0, 317.8, 0.0)
 	b.building_wear()
 	b.sand_drift(441.0, 298.0, 470.0, 318.0, 5)
+
+## ---------------------------------------------------------------- POLISH PASS (Yasin 19 Nov: "run a polish pass in all your
+## quarters, both indoors and outdoors ... plenty of props and life"). Every spot below is chosen by hand with its reason;
+## try_add() only refuses a spot that turns out taken (counted and printed), it decides nothing.
+func polish(b: F) -> void:
+	var T := func(base: String, cond: String, pts: Array, yaw := 0.0, surf: Array = []) -> void:
+		for p: Vector2 in pts: b.try_add(base, cond, p.x, p.y, yaw, surf)
+	# Pier St: plants, a bench for the Fish House's queue, a bin and papers at the bait shop, umbrellas for sale
+	T.call("plant_potted_leafy", "normal", [Vector2(406.2, 213.0), Vector2(442.0, 213.0)])
+	T.call("prop_park_bench", "worn", [Vector2(411.6, 212.6)], 180.0)                    # waiting for a table, facing the street
+	T.call("prop_newspaper_box_blue", "worn", [Vector2(453.0, 212.4)], 180.0)
+	T.call("prop_beach_umbrella_closed", "worn", [Vector2(455.6, 213.2), Vector2(463.6, 213.2)])
+	# the kitchens' backs: gas bottles, the fish delivery's cart, bins
+	T.call("prop_propane_cylinder_100lb", "rusty", [Vector2(426.0, 230.6)])
+	T.call("prop_hose_reel_cart", "worn", [Vector2(445.0, 228.0)], 180.0)                # hosing the bait shop's yard
+	T.call("prop_ice_chest", "worn", [Vector2(462.6, 229.2)])                             # the surf shop's cold drinks for the board renters
+	# the lowest lot: drains and turning arcs
+	for d: Vector2 in [Vector2(448.0, 239.0), Vector2(448.0, 257.0), Vector2(410.0, 257.0)]:
+		b.add("prop_storm_drain_grate", "dirty", d.x, d.y, 0.0, false, 0.002)
+	for c: Vector2 in [Vector2(462.0, 239.0), Vector2(462.0, 257.0)]: b.mark(15, c, 30.0, 3.0, 2.0, Color(1, 1, 1, 0.45))
+	T.call("plant_bird_of_paradise", "normal", [Vector2(422.0, 251.4), Vector2(434.0, 233.6)])
+	T.call("plant_agave_americana_small", "normal", [Vector2(420.0, 262.6), Vector2(444.0, 262.6), Vector2(460.0, 262.6)])
+	# the flats and the little rental: chairs, a barbecue, flowers at the paths
+	T.call("prop_adirondack_wood", "worn", [Vector2(418.0, 270.0), Vector2(420.0, 270.0)], 160.0)
+	T.call("prop_beach_umbrella_closed", "worn", [Vector2(435.0, 279.6)])
+	T.call("plant_bird_of_paradise", "normal", [Vector2(411.6, 291.6), Vector2(417.4, 291.6), Vector2(426.8, 291.6), Vector2(432.2, 291.6)])
+	# the playground: a third bench, a bin by the swings, buckets-and-spades sand round the play things
+	T.call("prop_park_bench", "worn", [Vector2(454.0, 270.6)], 180.0)
+	T.call("prop_trash_receptacle", "worn", [Vector2(463.6, 288.0)])
+	b.sand_drift(442.0, 268.0, 466.0, 292.0, 5)
+	# Beach Lane: more palms' company - planting on the verges, a second shower by the bikes, bins
+	T.call("plant_iceplant_patch", "normal", [Vector2(484.0, 302.6), Vector2(508.0, 302.6), Vector2(532.0, 302.6)])
+	T.call("plant_agave_americana_small", "normal", [Vector2(496.0, 302.8), Vector2(520.0, 302.8)])
+	T.call("plant_bird_of_paradise", "normal", [Vector2(463.0, 312.4), Vector2(478.0, 313.0), Vector2(506.0, 313.4), Vector2(526.0, 314.4)])
+	T.call("prop_beach_shower", "worn", [Vector2(482.6, 309.6)])
+	T.call("prop_trash_receptacle", "dirty", [Vector2(546.0, 304.6), Vector2(470.6, 304.6)])
+	T.call("prop_kayak_rack", "worn", [Vector2(544.0, 314.8)])                            # the rental stand's boards by the corner
+	T.call("prop_beach_umbrella_closed", "worn", [Vector2(540.6, 316.0), Vector2(541.4, 316.6)])
+	# the cottages' gardens
+	T.call("prop_adirondack_white", "worn", [Vector2(412.0, 302.0), Vector2(437.0, 302.4)], 180.0)
+	T.call("prop_hose_reel_cart", "worn", [Vector2(426.0, 307.0)], 90.0)
+	T.call("plant_bougainvillea_mound", "normal", [Vector2(416.0, 318.4), Vector2(437.0, 317.4)])
+	b.sand_drift(441.0, 294.0, 470.0, 310.0, 6); b.sand_drift(453.5, 211.2, 468.0, 214.0, 3)
+	b.polish_report()
