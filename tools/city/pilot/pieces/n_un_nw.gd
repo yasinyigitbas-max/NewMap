@@ -170,7 +170,7 @@ func _run() -> void:
 	c.put("prop_sprinkler_impact", "worn", c.gp(-125.0, -110.0), 0.0, "west quad: the lawn's sprinkler head")
 	c.put("prop_sprinkler_impact", "worn", c.gp(-30.0, -50.0), 0.0, "west quad: the lawn's sprinkler head")
 	# ---- the humanities wing's front (on the quad's north path): bikes and a bench
-	for hb: float in [-110.0, -70.0]: c.put("prop_bike_rack", "worn", c.gp(hb, -124.0), 90.0, "humanities: bikes either side of the wing, parallel to the path")
+	for hb: float in [-110.0, -70.0]: c.put("prop_bike_rack", "worn", c.gp(hb, -128.0), 0.0, "humanities: bikes on the grass either side of the wing, off the path")
 	c.put("prop_trash_receptacle", "worn", c.gp(-84.0, -123.4), 0.0, "humanities: a bin by the doors")
 	# ---- the malls (half of each here): palms in wells, lamps
 	for mz: float in [-170.0, -110.0, -50.0]: c.put("palm_canary_date_b", "normal", c.gp(-3.0, mz), c.rr.randf_range(0, 360), "north mall: date palms in wells, the campus axis", true, 0.9)
