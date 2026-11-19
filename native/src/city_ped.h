@@ -94,6 +94,10 @@ public:
 	Vector3 clip_hips_at(const StringName &p_clip, double p_t) const;
 	double clip_pos() const;
 	StringName current_clip() const { return cur_clip; }
+	// what this figure looks like (its body's mesh and its clothes): another figure of the same person takes them on
+	String get_body() const { return body_id; }
+	Ref<Mesh> get_body_mesh() const;
+	Ref<ShaderMaterial> get_look() const;
 	int get_mode() const { return mode; }
 	Skeleton3D *skeleton() const { return skel; }   // (the player's bicycle reaches its feet and hands to the pedals and grips)
 	Vector3 body_at() const;

@@ -146,8 +146,10 @@ void CityBike::make() {
 	set_collision_mask(1 | 16);      // the world and the traffic's cars
 	set_can_sleep(false);
 	CollisionShape3D *cs = memnew(CollisionShape3D);
-	Ref<BoxShape3D> bx; bx.instantiate(); bx->set_size(Vector3(0.16f, 0.95f, 1.80f));
-	cs->set_shape(bx); cs->set_position(Vector3(0, 0.55f, 0.075f));   // (the cruiser: 1.84 m long, its middle 0.075 m ahead of the crank)
+	// the body's box: the frame and the rider, from 35 cm up (below that the wheels' own rays take the ground: a kerb up or
+	// down; a box down to the ground caught on a kerb's edge and the bicycle stood stuck on it, Yasin: "bike doesnt move")
+	Ref<BoxShape3D> bx; bx.instantiate(); bx->set_size(Vector3(0.16f, 0.7f, 1.80f));
+	cs->set_shape(bx); cs->set_position(Vector3(0, 0.7f, 0.075f));   // (the cruiser: 1.84 m long, its middle 0.075 m ahead of the crank)
 	add_child(cs);
 	if (bike_look::available()) {   // the beach cruiser, its parts free to turn
 		mat = bike_look::material(true);
@@ -221,6 +223,13 @@ void CityBike::mount() {
 		fallen = false;
 	}
 	if (pl) pl->set_riding(true);
+	// the rider is the player as he looks (Yasin, 20 Nov: "when we get on it our character becomes a grey person"): his
+	// body and clothes taken over from his own figure
+	if (pl && rider && pl->figure()) {
+		CityPed *pf = pl->figure();
+		const Ref<Mesh> m = pf->get_body_mesh(); const Ref<ShaderMaterial> lk = pf->get_look();
+		if (m.is_valid()) rider->become(pf->get_body(), m, lk.is_valid() ? Ref<ShaderMaterial>(lk->duplicate()) : Ref<ShaderMaterial>(), true);
+	}
 	set_mass(M_BIKE + M_RIDER);
 	state = ST_MOUNT; st_t = 0.0f;
 	clip_in = rider ? (float)std::max(rider->clip_len("ual/Sitting_Enter"), 0.6) : 1.0f;
@@ -522,7 +531,7 @@ void CityBike::make_hud() {
 	Control *blank = memnew(Control); blank->set_mouse_filter(Control::MOUSE_FILTER_IGNORE); hud->add_child(blank);   // (the left: nothing drawn)
 	const char *en_[3] = { "BRAKE", "PEDAL", "GET OFF" }, *tr_[3] = { "FREN", "PEDAL", String::utf8("İN").utf8().get_data() };
 	const char *look[3] = { "plate", "plate_go", "green" };
-	for (int k = 0; k < 3; k++) {
+	for (int k = 0; k < 2; k++) {   // (BRAKE and PEDAL; getting off is the HUD's Use button)
 		PanelContainer *p = plate::panel(look[k]);
 		p->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
 		VBoxContainer *v = memnew(VBoxContainer);

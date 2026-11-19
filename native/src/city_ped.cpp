@@ -142,6 +142,9 @@ Vector3 CityPed::clip_hips_at(const StringName &p_clip, double p_t) const {
 	return hips;
 }
 
+Ref<Mesh> CityPed::get_body_mesh() const { return mi ? mi->get_mesh() : Ref<Mesh>(); }
+Ref<ShaderMaterial> CityPed::get_look() const { return mi ? Ref<ShaderMaterial>(Object::cast_to<ShaderMaterial>(mi->get_material_override().ptr())) : Ref<ShaderMaterial>(); }
+
 double CityPed::clip_pos() const { return anim && anim->is_playing() ? anim->get_current_animation_position() : 0.0; }
 
 static bool clip_pose_at(Skeleton3D *skel, const Ref<Animation> &a, const Transform3D &skel_in_node, int b_hips, int b_head, double p_t, Vector3 &r_hips, Vector3 &r_head) {

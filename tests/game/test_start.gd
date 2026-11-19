@@ -101,6 +101,24 @@ func _process(delta: float) -> bool:
 			var hud: Node = game.get_hud(); var bike: Node3D = current_scene.get_node_or_null(^"StartBike")
 			if t - t0 < 2.5: return false
 			_check(int(bike.get_ride_state()) == 2 and int(hud.get_use_kind()) == 4, "he got on and rides (the button now says GET OFF)")
+			# (Yasin: "bike doesnt move", "our character becomes a grey person"): the pedal held 3 s; a picture of the rider
+			var kw := InputEventKey.new(); kw.keycode = KEY_W; kw.physical_keycode = KEY_W; kw.pressed = true; Input.parse_input_event(kw)
+			step = 51; t0 = t
+		51:
+			var bike: Node3D = current_scene.get_node_or_null(^"StartBike")
+			if t - t0 < 3.0: return false
+			var sp := float((bike.get_state() as Dictionary).speed)
+			var cam := Camera3D.new(); current_scene.add_child(cam); cam.current = true
+			cam.look_at_from_position(bike.global_position + bike.global_basis.x * 3.0 + Vector3(0, 1.4, 0), bike.global_position + Vector3(0, 0.9, 0), Vector3.UP)
+			_check(sp > 2.0, "pedalling 3 s, the bicycle goes: %.1f m/s" % sp)
+			if sp <= 2.0: print("START     the bicycle's state: %s" % str(bike.get_state()))
+			var kw := InputEventKey.new(); kw.keycode = KEY_W; kw.physical_keycode = KEY_W; kw.pressed = false; Input.parse_input_event(kw)
+			step = 52; t0 = t
+		52:
+			var hud: Node = game.get_hud(); var bike: Node3D = current_scene.get_node_or_null(^"StartBike")
+			if t - t0 < 0.3: return false
+			root.get_viewport().get_texture().get_image().save_png("res://OUT/start_bike_rider.png")
+			if float((bike.get_state() as Dictionary).speed) > 1.0 and t - t0 < 6.0: return false   # (stopped before getting off)
 			hud.press_use()
 			step = 6; t0 = t
 		6:
