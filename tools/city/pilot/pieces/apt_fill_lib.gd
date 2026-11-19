@@ -556,8 +556,14 @@ static func polish_building(ctx: Dictionary, b: Dictionary, rr: RandomNumberGene
 	# (19 Nov, after the validator: the first version crowded the back corners' bins, fences and meters and the door lights)
 	# downspouts at the FRONT corners of the side walls, house numbers above the door head, a dish high on the back wall
 	if h > 4.5:
-		wall(props, b, "prop_downspout_3m", "worn", "left", d * 0.5 - 0.4, 0.0, 0.02)
-		wall(props, b, "prop_downspout_3m", "worn", "right", d * 0.5 - 0.4, 0.0, 0.02)
+		for sd: float in [-1.0, 1.0]:
+			var tip := at(b, sd * (w * 0.5 + 0.5), d * 0.5 - 0.4)
+			var crowded := false          # not into a gap where the next building stands within a metre (two downspouts met there)
+			for ob: Dictionary in ctx.blds:
+				if ob == b: continue
+				var lp: Vector3 = (ob.node as Node3D).transform.affine_inverse() * Vector3(tip.x, 0.0, tip.z)
+				if absf(lp.x) < float(ob.w) * 0.5 + 0.6 and absf(lp.z) < float(ob.d) * 0.5 + 0.6: crowded = true
+			if not crowded: wall(props, b, "prop_downspout_3m", "worn", "left" if sd < 0.0 else "right", d * 0.5 - 0.4, 0.0, 0.02)
 	var ds := doors_of(fol)
 	if home and not ds.is_empty(): wall(props, b, "prop_house_numbers_wood" if rr.randf() < 0.5 else "prop_house_numbers_tile", "worn", "front", float(ds[0]), 2.95, 0.02)
 	if home and h > 5.0 and rr.randf() < 0.5: wall(props, b, "prop_satellite_dish_round", "worn", "back", rr.randf_range(-w * 0.3, w * 0.3), minf(h - 1.2, 5.6), 0.05)

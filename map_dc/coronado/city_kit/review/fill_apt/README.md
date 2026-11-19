@@ -11,6 +11,31 @@ copies of the libraries: `apt_fill_lib.gd` (copy of apt_lib + the land on slopes
 shortened fence panels), `apt_fill_b2_land.gd`, `apt_fill_b3_land.gd` (measured street heights, data only).
 Rows in `review/grow_apt_blocks.json` (my own table; `integrate.py` takes it later; NOT run into the shared layout).
 
+## Polish pass (19 Nov, after the first lock; Yasin: "run a polish pass in all your quarters, both indoors and outdoors,
+## fill in the empty stores a bit", "plenty of props", "most shops look like copy pasted lines of props in interiors, have variety")
+Unlocked on his word, polished, relocked (lock test RESULT PASS, 504 / 118). No pictures this time (his word).
+- Outdoors: 6,444 -> 6,954 props (+510). Each piece script got a polish block at its end with its own random sequence:
+  every building's downspouts (side walls' front corners, left out where the next building stands within a metre),
+  house numbers above the door, a dish high on some back walls, back-wall grime, plants at the front corners, a privet
+  hedge down a side yard (the kit's privet, unused before), a residents' bike rack in walk-up front yards, things in the
+  back yards; and 7-12 hand-chosen yard spots per piece (a patio corner, chairs under an arbor, a bark bed of plants,
+  tools, bins, a swing, a shade tree with a bench, a clothesline). Every added prop tested on its own spot first (clear
+  of buildings, door steps, other props, walks, stalls, alleys) and left out where the spot is not free.
+  diff_piece.gd against the locked versions: nothing removed or moved EXCEPT on the five small shops of blocks 1 and 2
+  (6-9 m wide): the AC condenser moved from the back wall's middle (on the bin carts' side) to the back wall's free
+  left end, and on block 3's small cottages and bookshop the compact condensers moved 2.4 m to that same spot (a fix
+  in the shared back-of-house rule of my library: the first place could land inside the next building). The ground's
+  heights unchanged; new bark beds added cells.
+- Indoors (15 rooms, 486 props): every wall now starts its list at a different item, breaks its runs at 2-4 with the
+  kind's own small things, with uneven gaps; tables and displays stand a little off the grid and some places stay
+  empty; a fill pass adds each kind's extras along free stretches of wall. The corner market and the bike shop are
+  stocked where the kit's shelves and gondolas are empty models; the dry cleaner has racks of cleaned clothes down the
+  middle. check_rooms --only=g_apt_: 0 problems.
+- Checks after the polish: validator - my pieces only the 21 shortened-panel lines (as before); check_life - only the
+  enclosure mouths and the tennis gate (as before); trees 0 in hard ground; sink 0 (street pieces only).
+- Not done: no new pictures (as asked); Hilltop Books stays a small room; the triangle count grows with the props
+  (not re-measured).
+
 ## The three blocks
 | block | where | pieces | land | what it is |
 |---|---|---|---|---|
