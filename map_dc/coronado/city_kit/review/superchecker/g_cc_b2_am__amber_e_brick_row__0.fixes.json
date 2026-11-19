@@ -1,0 +1,20 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -8.29899978637695,
+    0.0,
+    5.55749988555908
+   ],
+   "base": "prop_drinks_fridge",
+   "chosen": true,
+   "cond": "",
+   "kind": "window_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_drinks_fridge (2.0 m tall) stands right behind a window]"
+  }
+ ],
+ "scene": "g_cc_b2_am__amber_e_brick_row__0"
+}
