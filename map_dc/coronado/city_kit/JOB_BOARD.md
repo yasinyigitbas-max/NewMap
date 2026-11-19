@@ -5,6 +5,26 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~14:00 (PC session): CARS THAT STEER + A CAR TO DRIVE, ALL C++ (Yasin: "a moving traffic system and good car
+  physics ... ride exactly like gta 4 if not gta 5 ... cars just slide into turns instead of steering into turns, take
+  abrupt u turns, lock the traffic up ... ALL MUST BE WRITTEN 100% IN C PLUS PLUS"; second: "gta 5 level npcs ...
+  balance themselves, be able to pushed around and resist falls"; then "you can get the old npcs from the game BUT
+  FULLY WRITTEN IN C PLUS PLUS" and "i have about 40 animated bodies standard with 50 bones"). Read
+  docs/TRAFFIC_PEOPLE_PORT.md section 21. KEPT: the old core's brain (following, junction go-aheads, signals, right of
+  way, the parking's books). NEW: every traffic car is a STEERED BODY (`native/src/traffic_body.h`): front wheels at a
+  hand's rate and within their lock, the rear follows, no sideways slide, no turn tighter than a car's; lane changes
+  and the way into / out of a kerb stall are steered S-curves; cars lean and dip. Traffic test RESULT PASS, 12 runs
+  (0 overlaps, 0 crashes, 0 refused moves, nobody stuck, hardest sideways push 4 m/s2 where it was up to 11). NEW: the
+  PHYSICAL car (`veh_dyn.*`: springs, tyres that slip, engine, gears, brakes; two feels, IV soft and sliding, V
+  flatter and grippier, for all 12 models) and `CityCar`, a car to drive on the engine's physics (`--car=stern_g` in
+  the rig); console test PASS for 24 car x feel pairs, engine test PASS. Lock test RESULT PASS.
+  NOT DONE: nobody has driven it (the feel is tuned to numbers only); `--car` was written, NOT run; no phone run; a
+  hit traffic car is not yet handed to the physical car; traffic wheels do not turn on screen; PEOPLE not started.
+  FOUND IN THE MAP: on today's bake the streets tool measures Amber Ave between z -1100 and -800 (b038 / b039) as a
+  1 + 1 lane street with the kerb 4.5 m from the middle (it was 2 + 2 lanes, 11.5 m): 9 junction paths touch a kerb
+  there and the whole-city traffic jams at (-8, -826) on a streets file made from it. Something lies over Amber's
+  outer lanes since the growth. NOT looked at, nothing changed; the committed streets.bin (older bake) stays until
+  Yasin says. A fresh bake + `make_streets.gd` is needed before the kerb check of the steered cars counts.
 - 19 Nov ~10:45 (PC session): x_wall_feet REDONE FROM THE BLOCKS' EDGES (Yasin on the first version: "there are still big
   gaps, fill them"). The first version (entry below) only put a face under a wall foot measured above the land at its
   two ends: stretches in between and edges with no wall stayed open. Now `wall_feet.py` walks every growth block's

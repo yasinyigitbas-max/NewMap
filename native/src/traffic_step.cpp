@@ -1,6 +1,7 @@
 // traffic2 phase 1: the per-tick part of the traffic core (sensing, speed, junction rules, manoeuvres, population).
 // Nothing here allocates (the event list keeps its capacity) and nothing touches Godot types.
 #include "traffic_sim.h"
+#include "traffic_body.h"
 
 #include <algorithm>
 #include <chrono>
@@ -578,7 +579,7 @@ void Sim::update_car(int i, float h) {
 	{
 		float u = span[i] > 0 ? clampf((float)(tick - tu[i]) / (float)span[i], 0.0f, 1.0f) : 1.0f;
 		px[i] += (x[i] - px[i]) * u; py[i] += (y[i] - py[i]) * u; pz[i] += (z[i] - pz[i]) * u;
-		pyaw[i] += adiff(pyaw[i], yaw[i]) * u; ppitch[i] += (pitch[i] - ppitch[i]) * u;
+		pyaw[i] += adiff(pyaw[i], yaw[i]) * u; ppitch[i] += (pitch[i] - ppitch[i]) * u; proll[i] += (roll[i] - proll[i]) * u;
 	}
 	tu[i] = tick;
 	span[i] = tier[i] == TIER_FULL ? 1 : (tier[i] == TIER_MID ? 4 : 8);
@@ -615,7 +616,7 @@ void Sim::update_car(int i, float h) {
 	if (touch >= 0 || crash_t[i] > 0.0f) {
 		if (touch < 0) crash_t[i] = std::max(0.0f, crash_t[i] - h);
 		acc[i] = 0.0f; v[i] = 0.0f; latv[i] = 0.0f; why[i] = W_CRASH; wait_t[i] += h;
-		steer[i] *= 0.5f; latacc[i] = 0.0f;
+		latacc[i] = 0.0f;
 		flags[i] = nf | F_BRAKE | (touch >= 0 ? (uint32_t)F_EMERG : 0u);
 		return;
 	}
@@ -642,8 +643,19 @@ void Sim::update_car(int i, float h) {
 	const float lim = std::max(lane_hw - hw_ - 0.05f, 0.0f);
 	float amin = std::min(-lim, lat[i]), amax = std::max(lim, lat[i]);
 	float want = 0.0f;
+	// A steered car goes to the kerb and comes away from it on an S laid along the ROAD (it depends on where the car
+	// is, not on the clock): into a stall or a stop the S ends IN_END_M before the car stops; out of a stall it is done
+	// after OUT_M. plan(ahead) = where that line lies `ahead` metres further on.
+	const bool pulling = pull[i] && dg < pull_d[i] && conn[i] < 0;
+	const bool leaving = out_lat0[i] != 0.0f && !pulling;
+	auto ess = [](float u) { u = clampf(u, 0.0f, 1.0f); return u * u * (3.0f - 2.0f * u); };
+	auto plan = [&](float ahead) {
+		if (pulling) return goal_lat[i] * ess((pull_d[i] - (dg - ahead)) / std::max(pull_d[i] - IN_END_M, 1.0f));
+		return out_lat0[i] * (1.0f - ess((out_d[i] + ahead) / OUT_M));
+	};
 	if (man[i] == MAN_PASS && pass_rem[i] > 0.0f) { want = pass_lat[i]; amax = std::max(amax, want); }
-	else if (pull[i] && dg < pull_d[i] && conn[i] < 0) { want = goal_lat[i]; amin = std::min(amin, want); amax = std::max(amax, want); }
+	else if (pulling) { want = plan(0.0f); amin = std::min(amin, goal_lat[i]); amax = std::max(amax, goal_lat[i]); }
+	else if (leaving) want = plan(0.0f);
 	for (int k = 0; k < nt; k++) {   // boxes alongside: never move into them
 		const Track &t = tr[k];
 		if (t.type == TRK_XWALK || t.sa >= hl_ + 0.5f || t.sb <= -hl_ - 0.5f) continue;
@@ -664,7 +676,9 @@ void Sim::update_car(int i, float h) {
 		float cur = clampf(want, amin, amax);
 		if (t.lb <= cur - hw_ - m || t.la >= cur + hw_ + m) continue;
 		float lreq = t.lb + hw_ + m, rreq = t.la - hw_ - m;
-		bool okl = lreq <= amax + 1e-3f, okr = rreq >= amin - 1e-3f;
+		// room to go round it is the LANE's room (and the place a pass or a pull-in is headed for), not wherever the car
+		// happens to be: a car on its way back from the kerb must not pass a queue along the parked cars
+		bool okl = lreq <= std::min(amax, std::max(lim, want)) + 1e-3f, okr = rreq >= std::max(amin, std::min(-lim, want)) - 1e-3f;
 		if (okl && okr) { if (std::fabs(lreq - want) <= std::fabs(rreq - want)) okr = false; else okl = false; }
 		if (okl) amin = std::max(amin, lreq);
 		else if (okr) amax = std::min(amax, rreq);
@@ -675,7 +689,8 @@ void Sim::update_car(int i, float h) {
 	// ---- ahead: everything in the car's corridor is a leader (IDM) and bounds the safe speed
 	// (a car pulling in to the kerb steers as hard as one that changes lane: at the gentle rate it stopped at its goal
 	// with the sideways move unfinished, the rate falls with the speed)
-	const float ratio = (man[i] != MAN_NONE || (pull[i] && dg < pull_d[i])) ? 0.9f : 0.4f;
+	// (metres sideways per metre forward: what a car can steer, not what a dot can slide)
+	const float ratio = (man[i] != MAN_NONE || pulling || leaving) ? 0.5f : 0.3f;
 	float a_int = 0.0f, vsafe = BIG, lead_gap = BIG;
 	int lead = -1;
 	for (int k = 0; k < nt; k++) {
@@ -684,9 +699,14 @@ void Sim::update_car(int i, float h) {
 		if (gap < -0.3f) continue;   // alongside or behind
 		float reach = 0.7f * ratio * std::max(gap, 0.0f);
 		float lr = lat[i] + clampf(lat_t - lat[i], -reach, reach);
+		if (pulling || leaving) lr = clampf(plan(std::max(gap, 0.0f)), amin, amax);   // (on its S: where the line lies when the car is there)
 		bool ped = t.type == TRK_DYN && d_kind[t.idx] == DYN_PED;
 		float m = ped ? 0.5f : (std::fabs(t.v) > 1.0f ? 0.2f : 0.3f);
-		if (t.lb <= lr - hw_ - m || t.la >= lr + hw_ + m) continue;
+		// (the body may still be a little to one side of the line: what is ahead of the BODY itself counts too, without
+		// the margin: with it, a car standing a hand's width off its line took the parked car beside it for one ahead of
+		// it, and stood there for good)
+		const float lb_ = lr + (latm[i] - lat[i]);
+		if ((t.lb <= lr - hw_ - m || t.la >= lr + hw_ + m) && (t.lb <= lb_ - hw_ - 0.05f || t.la >= lb_ + hw_ + 0.05f)) continue;
 		float vl = t.v, g = gap;
 		if (vl < -0.3f || t.facing) { g = gap + std::min(vl, 0.0f) * 2.0f - 10.0f; vl = 0.0f; }   // head on: keep well back
 		float s0 = cfg.t_s0[tp];
@@ -860,7 +880,7 @@ void Sim::update_car(int i, float h) {
 						dpass = std::max(dpass, t.sb + hl_ + 2.5f); lreq = std::max(lreq, t.lb + hw_ + 0.35f);
 					}
 					float lmax = lane_hw + 2.0f * p_hw[l_opp[L]] - hw_ - 0.2f;
-					bool feas = lreq <= lmax && lreq - lat[i] <= 0.7f * 0.9f * std::max(bgap - 0.3f, 0.0f) && dpass + 8.0f < de_line;
+					bool feas = lreq <= lmax && lreq - lat[i] <= 0.7f * 0.5f * std::max(bgap - 0.3f, 0.0f) && dpass + 8.0f < de_line;
 					if (feas && pass_clear(i, w, tr, nt, blk, lreq, dpass)) {
 						if (res) { revoke(i); res = false; stop_d = de; }
 						man[i] = MAN_PASS; pass_lat[i] = lreq; pass_rem[i] = dpass;
@@ -943,76 +963,106 @@ void Sim::update_car(int i, float h) {
 	if (vn < 0.0f) vn = 0.0f;
 	if (vn < 0.06f && vn <= v_) vn = 0.0f;
 
-	// ---- move: sideways rate follows the forward speed, then the veto
+	// ---- move. The body is a steered car (traffic_body.h): the line the driver aims for moves sideways as the car
+	// moves forward, he steers for it, the car goes where its wheels take it. Then the veto, on the BODY.
 	float vm = 0.5f * (v_ + vn);
 	float ds = vm * h;
 	if (!res) {   // never past an unreserved entry point
 		float lim_d = std::max(stop_d - 0.05f, 0.0f);
 		if (ds > lim_d) { ds = lim_d; if (v_ > 1.5f) emerg = true; vn = 0.0f; vm = ds / h; }
 	}
-	float vlmax = std::min(1.6f, ratio * vm);
-	if (std::fabs(lat[i]) > lim + 0.05f && man[i] != MAN_PASS) vlmax = std::max(vlmax, 0.3f);   // creep back into the lane even when held
-	float lv = latv[i] + clampf(clampf((lat_t - lat[i]) * 2.0f, -vlmax, vlmax) - latv[i], -4.0f * h, 4.0f * h);
-	lv = clampf(lv, -vlmax, vlmax);
+	bool moved = ds > 1e-5f;
+	const float vlmax = std::min(1.6f, ratio * vm);
+	// its sideways speed builds up and runs out no faster than a car can bend its path (0.15 per metre = a 6.7 m
+	// radius; 2.5 m/s^2 at speed), and it slows toward its place so that it arrives without a kink
+	const float lacc = std::min(2.5f, 0.15f * vm * vm);
+	const float lerr = lat_t - lat[i];
+	const float lwant = (lerr < 0.0f ? -1.0f : 1.0f) * std::min(vlmax, std::sqrt(1.6f * lacc * std::fabs(lerr)));
+	float lv = clampf(latv[i] + clampf(lwant - latv[i], -lacc * h, lacc * h), -vlmax, vlmax);
 	float nlat = lat[i] + lv * h;
-	if ((lat_t - lat[i]) * (lat_t - nlat) <= 0.0f) { nlat = lat_t; lv = 0.0f; }
-	float nhoff = hoff[i] + clampf(clampf(std::atan2(lv, std::max(vm, 0.8f)), -0.75f, 0.75f) - hoff[i], -0.45f * ds, 0.45f * ds);
-	// where that leads (lane -> reserved connector -> lane), without touching the state yet
-	int np_ = cp; float ns_ = s[i] + ds;
-	if (conn[i] < 0) {
-		if (ns_ >= p_len[L]) {
-			if (res) {
-				ns_ -= p_len[L]; np_ = n_lanes + nconn[i];
-				if (ns_ >= p_len[np_]) { ns_ -= p_len[np_]; np_ = c_to[nconn[i]]; }
-			}
-		}
-	} else if (ns_ >= p_len[cp]) {
-		ns_ -= p_len[cp]; np_ = L;
-		if (ns_ >= p_len[L] && res) { ns_ -= p_len[L]; np_ = n_lanes + nconn[i]; }
-	}
-	if (ns_ > p_len[np_] - 0.01f) ns_ = p_len[np_] - 0.01f;
-	float o[7];
-	bool moved = ds > 1e-5f || std::fabs(nlat - lat[i]) > 1e-5f;
+	if (lerr * (lat_t - nlat) <= 0.0f) { nlat = lat_t; lv = 0.0f; }
+	if (!moved) { nlat = lat[i]; lv = 0.0f; }   // a standing car's line stands too
+	Body nb{ x[i], z[i], yaw[i], steer[i] };
+	BodyRun br;
 	if (moved) {
-		int hint = np_ == cp ? seg[i] : 0;
-		pose_at(np_, ns_, nlat, nhoff, fx[i], fz[i], hint, o);
-		int hit = blocked_by(i, o[0], o[1], o[2], o[3], o[4], 0.06f);
-		if (hit && std::fabs(nlat - lat[i]) > 1e-5f) {   // try again without the sideways part
-			pose_at(np_, ns_, lat[i], hoff[i], fx[i], fz[i], hint, o);
-			if (ds > 1e-5f && !blocked_by(i, o[0], o[1], o[2], o[3], o[4], 0.06f)) { hit = 0; nlat = lat[i]; lv = 0.0f; nhoff = hoff[i]; }
+		br = body_run(nb, w, wb[i], smax[i], ds, vm, lat[i], nlat);
+		int hit = blocked_by(i, nb.x, y[i], nb.z, std::sin(nb.yaw), std::cos(nb.yaw), 0.06f);
+		if (hit && std::fabs(nlat - lat[i]) > 1e-5f) {   // try again without moving the line
+			Body b2{ x[i], z[i], yaw[i], steer[i] };
+			const BodyRun r2 = body_run(b2, w, wb[i], smax[i], ds, vm, lat[i], lat[i]);
+			if (!blocked_by(i, b2.x, y[i], b2.z, std::sin(b2.yaw), std::cos(b2.yaw), 0.06f)) { hit = 0; nb = b2; br = r2; nlat = lat[i]; lv = 0.0f; }
 		}
-		if (hit == 2 && ds > 1e-5f) {   // a parked car's corner in the way (turning bodies sweep wide): nudge past it inside the lane
-			const float nudges[4] = { 0.3f, -0.3f, 0.6f, -0.6f };
-			float lane_room = std::max(p_hw[np_] - hw_ + 0.3f, 0.3f);
-			for (float nd_ : nudges) {
-				float tl = lat[i] + nd_;
-				if (std::fabs(tl) > lane_room) continue;
-				pose_at(np_, ns_, tl, hoff[i], fx[i], fz[i], hint, o);
-				if (!blocked_by(i, o[0], o[1], o[2], o[3], o[4], 0.06f)) { hit = 0; nlat = tl; lv = 0.0f; nhoff = hoff[i]; break; }
+		if (hit && vm < 3.0f) {   // crawling and something's corner is in the way: turn the wheel and creep round it
+			const float turns[4] = { 0.22f, -0.22f, 0.45f, -0.45f };
+			for (float tn : turns) {
+				Body b2{ x[i], z[i], yaw[i], clampf(steer[i] + tn, -smax[i], smax[i]) };
+				const float dyw = ds * std::tan(b2.steer) / wb[i], ym = b2.yaw + 0.5f * dyw;
+				const float rx = b2.x - 0.5f * wb[i] * fx[i] + ds * std::sin(ym), rz = b2.z - 0.5f * wb[i] * fz[i] + ds * std::cos(ym);
+				b2.yaw += dyw; b2.x = rx + 0.5f * wb[i] * std::sin(b2.yaw); b2.z = rz + 0.5f * wb[i] * std::cos(b2.yaw);
+				BodyRun r2;
+				win_project(w, b2.x, b2.z, 0.0f, r2.s_c, r2.lat_c);
+				// only round a corner, never off the road: its middle stays within the lane's own width + the room a pass may use
+				if (std::fabs(r2.lat_c) > std::max(amax, -amin) + 0.5f) continue;
+				if (blocked_by(i, b2.x, y[i], b2.z, std::sin(b2.yaw), std::cos(b2.yaw), 0.06f)) continue;
+				r2.dyaw = dyw;
+				hit = 0; nb = b2; br = r2; nlat = lat[i]; lv = 0.0f; st.crawl_round++;
+				break;
 			}
-			if (hit) pose_at(np_, ns_, nlat, nhoff, fx[i], fz[i], hint, o);
 		}
 		if (hit) {
 			st.vetoes++;
 			if (v_ > 1.0f) emerg = true;
-			vn = 0.0f; ds = 0.0f; nlat = lat[i]; lv = 0.0f; nhoff = hoff[i];
+			vn = 0.0f; ds = 0.0f; nlat = lat[i]; lv = 0.0f;
 			moved = false;
 		}
 	}
-	const float old_yaw = yaw[i];
 	acc[i] = (vn - v_) / h;
 	v[i] = vn; latv[i] = lv;
+	calm[i] = (std::fabs(lv) < 1.0e-4f && std::fabs(lat[i]) < 0.05f && std::fabs(lat_t) < 0.05f) ? calm[i] + h : 0.0f;
+	float dyaw = 0.0f;
 	if (moved) {
-		lat[i] = nlat; hoff[i] = nhoff;
-		commit_move(i, ds);
+		lat[i] = nlat;
+		float adv = std::max(br.s_c, 0.0f);
+		if (!res) adv = std::min(adv, std::max(stop_d - 0.05f, 0.0f));
+		commit_move(i, adv);
 		int p = conn[i] >= 0 ? n_lanes + conn[i] : lane[i];
-		pose_at(p, s[i], lat[i], hoff[i], fx[i], fz[i], seg[i], o);
-		x[i] = o[0]; y[i] = o[1]; z[i] = o[2]; fx[i] = o[3]; fz[i] = o[4]; pitch[i] = o[5]; yaw[i] = o[6];
+		float o[7];
+		pose_at(p, s[i], 0.0f, 0.0f, fx[i], fz[i], seg[i], o);   // the road's height and slope under it
+		x[i] = nb.x; z[i] = nb.z; yaw[i] = nb.yaw; steer[i] = nb.steer;
+		fx[i] = std::sin(nb.yaw); fz[i] = std::cos(nb.yaw);
+		y[i] = o[1]; rpitch[i] = o[5];
+		dyaw = br.dyaw; latm[i] = br.lat_c;
+		if (out_lat0[i] != 0.0f) { out_d[i] += adv; if (out_d[i] >= OUT_M + 4.0f || pulling) out_lat0[i] = 0.0f; }
+		{   // what the test reads
+			const float e = std::fabs(br.lat_c - lat[i]);
+			st.trk_sum += e; st.trk_n++;
+			if (conn[i] >= 0) { if (e > st.trk_max_junction) { st.trk_max_junction = e; const float wv[8] = { x[i], z[i], vm, lat[i], (float)conn[i], (float)c_turn[conn[i]], h, (float)id[i] }; std::memcpy(st.worst_j, wv, sizeof(wv)); } }
+			else {
+				st.trk_max = std::max(st.trk_max, e);
+				if (calm[i] > 4.0f) st.trk_max_calm = std::max(st.trk_max_calm, e);
+				if (calm[i] > 4.0f && man[i] == MAN_NONE && !pull[i] && std::fabs(lat_t) < 0.05f && std::fabs(lat[i]) < 0.05f && kind[i] == K_AMBIENT)
+				{
+					const float ov = std::fabs(br.lat_c) + hw_ - p_hw[lane[i]];
+					if (ov > st.lane_over_max) { st.lane_over_max = ov; const float wv[8] = { x[i], z[i], vm, s[i], (float)lane[i], p_len[lane[i]], h, (float)id[i] }; std::memcpy(st.worst_o, wv, sizeof(wv)); }
+				}
+			}
+			if (br.sat) st.steer_sat++;
+			if (tier[i] == TIER_FULL) st.yaw_step_max = std::max(st.yaw_step_max, std::fabs(dyaw));
+		}
 	}
-	float dyaw = adiff(old_yaw, yaw[i]);
-	float steer_t = ds > 0.02f ? clampf(std::atan(2.7f * dyaw / ds), -0.6f, 0.6f) : steer[i];
-	steer[i] += (steer_t - steer[i]) * 0.5f;
-	latacc[i] += (vm * dyaw / h - latacc[i]) * 0.5f;
+	{   // the body on its springs: it leans out of a turn and dips under the brakes, and swings back
+		const float ay = vm * dyaw / h;
+		latacc[i] += (ay - latacc[i]) * 0.5f;
+		st.latacc_max = std::max(st.latacc_max, std::fabs(ay));
+		const float rt_ = clampf(0.0125f * ay, -0.10f, 0.10f), pt_ = clampf(0.0085f * acc[i], -0.07f, 0.05f);
+		const int n = std::min(std::max((int)(h / 0.05f + 0.5f), 1), 8);
+		const float q = h / (float)n;
+		for (int k = 0; k < n; k++) {
+			rollv[i] += (49.0f * (rt_ - roll[i]) - 6.3f * rollv[i]) * q; roll[i] += rollv[i] * q;
+			dpitv[i] += (64.0f * (pt_ - dpit[i]) - 8.0f * dpitv[i]) * q; dpit[i] += dpitv[i] * q;
+		}
+		pitch[i] = rpitch[i] + dpit[i];
+	}
 
 	// ---- flags, reasons, events
 	L = lane[i];
@@ -1061,6 +1111,9 @@ int Sim::place_car(int lane_, float s_, float speed, int model_, int temper_) {
 	float o[7];
 	pose_at(lane_, s[i], 0.0f, 0.0f, 0.0f, 1.0f, seg[i], o);
 	x[i] = px[i] = o[0]; y[i] = py[i] = o[1]; z[i] = pz[i] = o[2]; fx[i] = o[3]; fz[i] = o[4]; pitch[i] = ppitch[i] = o[5]; yaw[i] = pyaw[i] = o[6];
+	// the body: a car's wheelbase is about 0.59 of its length and its wheels turn 35 degrees; a bus's 0.5 and 46
+	wb[i] = hl[i] > 3.0f ? 1.0f * hl[i] : 1.18f * hl[i]; smax[i] = hl[i] > 3.0f ? 0.80f : 0.61f;
+	rpitch[i] = o[5]; latm[i] = 0.0f; roll[i] = proll[i] = rollv[i] = dpit[i] = dpitv[i] = 0.0f; out_lat0[i] = out_d[i] = 0.0f; calm[i] = 10.0f;
 	tu[i] = tick; span[i] = 1; stop_tick[i] = -1; flags[i] = 0; tier[i] = TIER_FULL;
 	why[i] = 0; man[i] = 0; line_passed[i] = 0; touching[i] = 0; long_look[i] = 0; lc_dir[i] = 0;
 	steer[i] = latacc[i] = wait_t[i] = blocked_t[i] = honk_cd[i] = crash_t[i] = slow_t[i] = lc_t[i] = pass_lat[i] = pass_rem[i] = hard_cd[i] = 0.0f;

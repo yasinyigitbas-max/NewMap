@@ -10,6 +10,12 @@ extends Node3D
 ##   --drive=NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT   a drive of your own, as often as you like, instead of a plan: no
 ##             rebuild needed for a new route. ROUTE is a route name or points x,z:x,z:... (NIGHT 0 or 1), e.g.
 ##             --drive=gritty/-740,-1000:-600,-1000:-600,-860/60/25/0
+##   --car=NAME[/V]   DRIVE IT YOURSELF instead of a plan (19 Nov; C++ class CityCar, native/src/city_car.* + veh_dyn.*: the
+##             physical car; this script only makes the node and tells the streamer where it is). NAME: stern_g, stern_e,
+##             volt_s, volt_x, sakura, sakura_t, van, fiamma_r, fiamma_gt, taxi, bus_city, bus_mini; /V = the GTA 5 feel
+##             (flatter, more grip), without it the GTA 4 feel (soft, leans, slides). W A S D or the arrows, Space =
+##             handbrake, S reverses once it stands, a pad works too, Esc leaves. --at=x,z,yaw where it starts (yaw in
+##             degrees, 0 = facing +z). With --traffic=N the traffic sees it and brakes for it
 ##   --quit    leave when the plan is done (default with a plan from the args file; by hand it loops)
 ##   --lead=2  --maxcells=30  --loading=2  --bodies=6  --coltris=1200  --colms=2     streamer settings to compare
 ##   --lights=20   real lamp lights at night (the engine's light grid; 8 on a stock engine)
@@ -106,7 +112,7 @@ var sun: DirectionalLight3D
 var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
 var traffic: Node            # the C++ traffic (--traffic=N); null without it
-var opt := {"traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0}
+var opt := {"car": "", "at": "", "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -132,10 +138,10 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost"]:
+		for k: String in ["car", "at", "traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
-				opt[k] = v if k in ["plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["density", "scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs", "colrange", "boost"] else int(v))
+				opt[k] = v if k in ["car", "at", "plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["density", "scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs", "colrange", "boost"] else int(v))
 	if from_file and not ("--loop" in args): opt.quit = true
 	Engine.max_fps = 0
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
@@ -254,6 +260,10 @@ func _run() -> void:
 		_say("warmnight %d ms" % (Time.get_ticks_msec() - tw))
 	for i in 10: await get_tree().process_frame
 	_say("boot first_area_ms=%d warm_ms=%d (graphics memory reserve %d MB: %d ms) cells=%d static_mb=%.0f video_mb=%.0f" % [t1 - t0, Time.get_ticks_msec() - t1, int(opt.gpureserve), int(st.stats.get("reserve_ms", 0)), st.loaded_count(), Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0])
+	if String(opt.car) != "":      # a car to drive yourself, instead of a plan
+		await _free_drive(first)
+		get_tree().quit()
+		return
 	if String(opt.plan) == "census":
 		await _census()
 		await get_tree().create_timer(0.5).timeout
@@ -275,6 +285,41 @@ func _run() -> void:
 		if opt.quit: break
 	await get_tree().create_timer(0.5).timeout
 	get_tree().quit()
+
+## DRIVE IT YOURSELF (--car). All the driving is C++ (CityCar): this makes the node, sets it on the ground, and each frame
+## tells the streamer where the car is and writes the speed on the screen.
+func _free_drive(first: Vector3) -> void:
+	if not ClassDB.class_exists(&"CityCar"):
+		_say("ERROR --car needs the native module (bash native/build.sh)"); return
+	var names := ["stern_e", "volt_s", "stern_g", "volt_x", "sakura_t", "sakura", "van", "fiamma_r", "fiamma_gt", "taxi", "bus_city", "bus_mini"]
+	var q := String(opt.car).split("/")
+	var m := maxi(names.find(q[0]), 0) if names.has(q[0]) else 2
+	var start := first; var yaw := 0.0
+	if String(opt.at) != "":
+		var f := String(opt.at).split_floats(","); start = Vector3(f[0], 0, f[1]); yaw = deg_to_rad(f[2]) if f.size() > 2 else 0.0
+		st.update_focus(start, true)
+		for i in 30: st.update_focus(start, false); await get_tree().process_frame
+	_ground(start, 0.0)
+	for i in 4: await get_tree().physics_frame
+	var car: Node3D = ClassDB.instantiate(&"CityCar")
+	car.set(&"model", m); car.set(&"feel", 1 if (q.size() > 1 and q[1].to_upper() == "V") else 0)
+	car.set(&"player", true); car.set(&"chase_camera", true); car.set(&"wheel_mask", 0xFFFFFFEF)
+	car.position = Vector3(start.x, _ground(start, 0.0) + 0.15, start.z); car.rotation.y = yaw
+	add_child(car)
+	var s0: Dictionary = car.call(&"get_state")
+	if traffic: traffic.call(&"set_player_car", car, 2.3, 1.0)
+	_say("car %s (%s feel): %d kg, wheelbase %.2f m; W A S D / arrows, Space = handbrake, Esc leaves" % [names[m], "GTA 5" if int(car.get(&"feel")) == 1 else "GTA 4", int(s0.mass), float(s0.wheelbase)])
+	var last := car.global_position
+	while not Input.is_key_pressed(KEY_ESCAPE):
+		await get_tree().process_frame
+		var p: Vector3 = car.global_position
+		var dt := maxf(get_process_delta_time(), 0.001)
+		st.update_focus(p, false, (p - last) / dt); last = p
+		var s: Dictionary = car.call(&"get_state")
+		if Engine.get_process_frames() % 6 == 0:
+			hud.text = "%3d km/h   gear %s   %d rpm   side %.2f g   %s" % [absi(int(s.kmh)), "R" if int(s.gear) < 0 else str(int(s.gear)), int(s.rpm), absf(float(s.side_g)), "SLIDING" if float(s.slip_most) > 1.4 else ""]
+	_say("car: %.0f m driven, hardest knock %.0f g" % [float(s0.get("metres", 0.0)) if false else float((car.call(&"get_state") as Dictionary).metres), float((car.call(&"get_state") as Dictionary).hardest_knock_g)])
+	if traffic: _say("  traffic %s" % String(traffic.call(&"report")))
 
 ## Where a frame's time went: with --probe the wait for the physics thread and for the render server to digest what the
 ## streamer handed over (-1 without it), the streamer's own main-thread part, draw preparation, drawing on the CPU and

@@ -2,6 +2,8 @@
 // collision pool. See city_traffic.h for how it hangs together.
 #include "city_traffic.h"
 
+#include <godot_cpp/classes/rigid_body3d.hpp>
+
 #include "car_models.h"
 #include "traffic_sim.h"
 
@@ -85,7 +87,12 @@ void CityTraffic::step_once(double p_clock) {
 		sim->set_ring(in.vx / speed * lead, in.vz / speed * lead);
 	}
 	parking.tick(*sim, STEP_S);
-	sim->set_dynamic((int)parking.dyn.size() / tc::DYN_STRIDE, parking.dyn.data());
+	dyn_all = parking.dyn;
+	if (in.pc) {
+		const float b[tc::DYN_STRIDE] = { in.pcx, in.pcy, in.pcz, in.pcyaw, in.pchl, in.pchw, in.pcvx, in.pcvz, (float)tc::DYN_PLAYER_CAR, -2.0f, 0.0f };
+		dyn_all.insert(dyn_all.end(), b, b + tc::DYN_STRIDE);
+	}
+	sim->set_dynamic((int)dyn_all.size() / tc::DYN_STRIDE, dyn_all.data());
 	sim->step(STEP_S, p_clock);
 	sim->events.clear();
 	static thread_local Snap s;
@@ -97,7 +104,7 @@ void CityTraffic::step_once(double p_clock) {
 		r.flags = (uint8_t)(((sim->flags[i] & tc::F_BRAKE) ? 1 : 0) | ((sim->flags[i] & tc::F_IND_L) ? 2 : 0) | ((sim->flags[i] & tc::F_IND_R) ? 4 : 0));
 		r.x = sim->x[i]; r.y = sim->y[i]; r.z = sim->z[i]; r.yaw = sim->yaw[i]; r.pitch = sim->pitch[i];
 		r.px = sim->px[i]; r.py = sim->py[i]; r.pz = sim->pz[i]; r.pyaw = sim->pyaw[i]; r.ppitch = sim->ppitch[i];
-		r.v = sim->v[i]; r.hl = sim->hl[i]; r.hw = sim->hw[i];
+		r.v = sim->v[i]; r.hl = sim->hl[i]; r.hw = sim->hw[i]; r.roll = sim->roll[i]; r.proll = sim->proll[i]; r.steer = sim->steer[i];
 		r.tu = sim->tu[i]; r.span = std::max(1, (int)sim->span[i]);
 	}
 	s.tick = sim->tick; s.t_usec = usec_now(); s.clock = p_clock + STEP_S;
@@ -185,6 +192,15 @@ void CityTraffic::put_row(float *r, float x, float y, float z, float yaw, float 
 	r[8] = lz * sx; r[9] = uz * sy; r[10] = fz * sz; r[11] = z;
 	r[12] = col[0]; r[13] = col[1]; r[14] = col[2]; r[15] = 1.0f;
 	r[16] = c0; r[17] = c1; r[18] = c2; r[19] = c3;
+}
+
+void CityTraffic::lean_row(float *r, float roll) {
+	if (roll > -1.0e-4f && roll < 1.0e-4f) return;
+	const float c = std::cos(roll), sn = std::sin(roll);
+	for (int k = 0; k < 3; k++) {   // left and up turn about forward: + = the left side rises
+		const float l = r[k * 4], u = r[k * 4 + 1];
+		r[k * 4] = l * c + u * sn; r[k * 4 + 1] = u * c - l * sn;
+	}
 }
 
 // ---------------------------------------------------------------- parked cars
@@ -404,8 +420,21 @@ void CityTraffic::_process(double p_delta) {
 		else { vel_x = 0.0f; vel_z = 0.0f; }
 	}
 	last_cam = cp; has_last_cam = true;
+	bool pc = false;
+	Vector3 pcp, pcv; float pcyaw = 0.0f;
+	if (player_id != 0) {
+		Node3D *pn = Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(player_id)));
+		if (pn && pn->is_inside_tree()) {
+			const Transform3D pt = pn->get_global_transform();
+			const Vector3 pf = pt.basis.get_column(2);
+			pcp = pt.origin; pcyaw = std::atan2(pf.x, pf.z); pc = true;
+			RigidBody3D *rb = Object::cast_to<RigidBody3D>(pn);
+			if (rb) pcv = rb->get_linear_velocity();
+		} else player_id = 0;
+	}
 	{
 		std::lock_guard<std::mutex> lock(mx);
+		input.pc = pc; input.pcx = pcp.x; input.pcy = pcp.y; input.pcz = pcp.z; input.pcyaw = pcyaw; input.pcvx = pcv.x; input.pcvz = pcv.z; input.pchl = player_hl; input.pchw = player_hw;
 		input.cx = cp.x; input.cy = cp.y; input.cz = cp.z; input.fx = cf.x; input.fz = cf.z; input.fov = (float)cam->get_fov() * 1.6f;   // (the screen is wide: the cone is the horizontal view)
 		input.vx = vel_x; input.vz = vel_z;
 		input.max_cars = max_cars; input.density = (float)density; input.parked = parked_on;
@@ -471,7 +500,7 @@ void CityTraffic::_process(double p_delta) {
 	struct Near { float d2; int i; };
 	Near nearest[16];
 	int n_near = 0;
-	static thread_local float pose[MAX_ROWS][6];   // x, y, z, yaw, pitch, d2
+	static thread_local float pose[MAX_ROWS][7];   // x, y, z, yaw, pitch, d2, roll
 	for (int i = 0; i < now.n; i++) {
 		const Row &r = now.rows[i];
 		const float a = std::min(std::max(((float)(now.tick - r.tu) + alpha) / (float)r.span, 0.0f), 1.0f);
@@ -480,6 +509,7 @@ void CityTraffic::_process(double p_delta) {
 		p[3] = lerp_angle(r.pyaw, r.yaw, a); p[4] = r.ppitch + (r.pitch - r.ppitch) * a;
 		const float dx = p[0] - cp.x, dy = p[1] - cp.y, dz = p[2] - cp.z;
 		p[5] = dx * dx + dy * dy + dz * dz;
+		p[6] = r.proll + (r.roll - r.proll) * a;
 		if (p[5] < (float)(near_r * near_r) && near_max > 0) {   // the few nearest get the near model
 			int at = n_near < near_max ? n_near++ : -1;
 			if (at < 0) { int worst = 0; for (int q = 1; q < n_near; q++) if (nearest[q].d2 > nearest[worst].d2) worst = q; if (nearest[worst].d2 > p[5]) at = worst; }
@@ -497,11 +527,11 @@ void CityTraffic::_process(double p_delta) {
 		for (int q = 0; q < n_near; q++) if (nearest[q].i == i) is_near = true;
 		if (is_near) {
 			Batch &b = near_b[r.model];
-			if (b.n < b.cap) { put_row(b.buf.ptrw() + (size_t)b.n * ROW, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, col, brake, ind, lamps, 0.0f); b.n++; c_near++; }
+			if (b.n < b.cap) { put_row(b.buf.ptrw() + (size_t)b.n * ROW, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, col, brake, ind, lamps, 0.0f); lean_row(b.buf.ptrw() + (size_t)b.n * ROW, p[6]); b.n++; c_near++; }
 		} else if (p[5] < (float)(mid_r * mid_r)) {
 			Batch &b = mid_b[r.model];
 			grow(b, b.n + 1);
-			put_row(b.buf.ptrw() + (size_t)b.n * ROW, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, col, brake, ind, lamps, 0.0f); b.n++; c_mid++;
+			put_row(b.buf.ptrw() + (size_t)b.n * ROW, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, col, brake, ind, lamps, 0.0f); lean_row(b.buf.ptrw() + (size_t)b.n * ROW, p[6]); b.n++; c_mid++;
 		} else if (p[5] < (float)(far_r * far_r)) {
 			const cm::CarModel &m = cm::MODELS[r.model];
 			grow(box_moving, box_moving.n + 1);
@@ -570,6 +600,11 @@ void CityTraffic::_physics_process(double p_delta) {
 			pool_model[k] = -2;   // put away
 		}
 	}
+}
+
+void CityTraffic::set_player_car(Object *p_car, double p_half_len, double p_half_w) {
+	player_id = p_car ? (uint64_t)p_car->get_instance_id() : 0;
+	player_hl = (float)p_half_len; player_hw = (float)p_half_w;
 }
 
 String CityTraffic::report() {

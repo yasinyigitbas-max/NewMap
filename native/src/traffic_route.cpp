@@ -240,6 +240,8 @@ int Sim::unpark(int lane_, float s_, float lat_, int model_, int temper_) {
 	float o[7];
 	pose_at(lane_, s[i], lat[i], 0.0f, 0.0f, 1.0f, seg[i], o);
 	x[i] = px[i] = o[0]; y[i] = py[i] = o[1]; z[i] = pz[i] = o[2]; fx[i] = o[3]; fz[i] = o[4]; pitch[i] = ppitch[i] = o[5]; yaw[i] = pyaw[i] = o[6];
+	latm[i] = lat[i]; rpitch[i] = o[5];
+	out_lat0[i] = lat_; out_d[i] = 0.0f; calm[i] = 0.0f;
 	st.spawned++;
 	event(E_SPAWN, i, (float)lane_);
 	return i;
@@ -248,7 +250,7 @@ int Sim::unpark(int lane_, float s_, float lat_, int model_, int temper_) {
 bool Sim::release_car(int car_id) {
 	int i = find_car(car_id);
 	if (i < 0) return false;
-	kind[i] = K_AMBIENT; rt[i].clear(); goal_ri[i] = -1; pull[i] = 0; arrived[i] = 0; lc_need[i] = 0; dwell[i] = 0.0f;
+	kind[i] = K_AMBIENT; rt[i].clear(); goal_ri[i] = -1; pull[i] = 0; arrived[i] = 0; lc_need[i] = 0; dwell[i] = 0.0f; out_lat0[i] = 0.0f;
 	if (!(flags[i] & F_RES)) nconn[i] = pick_next(lane[i]);
 	return true;
 }
@@ -268,8 +270,9 @@ bool Sim::set_kerb_lat(int car_id, float lat_) {
 	lat[i] = lat_; goal_lat[i] = lat_; pull[i] = 1; latv[i] = 0.0f;
 	int p = conn[i] >= 0 ? n_lanes + conn[i] : lane[i];
 	float o[7];
-	pose_at(p, s[i], lat[i], hoff[i], fx[i], fz[i], seg[i], o);
+	pose_at(p, s[i], lat[i], 0.0f, fx[i], fz[i], seg[i], o);
 	x[i] = px[i] = o[0]; y[i] = py[i] = o[1]; z[i] = pz[i] = o[2]; fx[i] = o[3]; fz[i] = o[4]; pitch[i] = ppitch[i] = o[5]; yaw[i] = pyaw[i] = o[6];
+	latm[i] = lat[i]; rpitch[i] = o[5]; steer[i] = 0.0f;
 	return true;
 }
 
@@ -286,6 +289,7 @@ bool Sim::teleport_car(int car_id, int lane_, float s_) {
 	float o[7];
 	pose_at(lane_, s[i], 0.0f, 0.0f, fx[i], fz[i], seg[i], o);
 	x[i] = px[i] = o[0]; y[i] = py[i] = o[1]; z[i] = pz[i] = o[2]; fx[i] = o[3]; fz[i] = o[4]; pitch[i] = ppitch[i] = o[5]; yaw[i] = pyaw[i] = o[6];
+	latm[i] = 0.0f; rpitch[i] = o[5]; steer[i] = 0.0f;
 	tu[i] = tick; span[i] = 1;
 	return true;
 }

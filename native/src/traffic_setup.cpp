@@ -218,6 +218,17 @@ void Sim::build_speed_caps() {
 					float kappa = th / (0.5f * (la + lb));
 					if (kappa > 1e-4f) cap = std::min(cap, std::max(std::sqrt(cfg.a_lat / kappa), 2.5f));
 				}
+				// A path through a junction is a smooth curve with no map kinks in it, and its bend is not even: a wide
+				// path goes straight and then turns sharply. A steered car must be slow enough for the SHARPEST part
+				// (the 5 m chords above smooth that away), so there the bend from point to point counts too.
+				if (p >= n_lanes) {
+					float ax2 = ptx[o + i] - ptx[o + i - 1], az2 = ptz[o + i] - ptz[o + i - 1], bx2 = ptx[o + i + 1] - ptx[o + i], bz2 = ptz[o + i + 1] - ptz[o + i];
+					float la2 = std::sqrt(ax2 * ax2 + az2 * az2), lb2 = std::sqrt(bx2 * bx2 + bz2 * bz2);
+					if (la2 > 0.05f && lb2 > 0.05f) {
+						float kappa = std::fabs(std::atan2(ax2 * bz2 - az2 * bx2, ax2 * bx2 + az2 * bz2)) / (0.5f * (la2 + lb2));
+						if (kappa > 1e-4f) cap = std::min(cap, std::max(std::sqrt(cfg.a_lat / kappa), 2.2f));
+					}
+				}
 			}
 			ptv[o + i] = cap;
 		}

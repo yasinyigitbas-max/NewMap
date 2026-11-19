@@ -593,3 +593,103 @@ separate terrain files (`map_dc/coronado/terrain/data_citykit`, the land between
 never reads them. Cars and people are only on the pieces' streets and pavements, so they do not need them, but where
 the terrain and a piece's ground disagree, this job would not see it. Also: a car does not lean sideways (no roll:
 on a street with a cross slope it stands level across); 9 pavement points have no ground (the holes of section 15).
+
+## 21. Cars that STEER, and a car to drive (19 Nov, on the working branch)
+Yasin: "cars just slide into turns instead of steering into turns, take abrupt u turns, lock the traffic up ... make
+the cars and their physics gta 5 level, if not minimum gta 4 ... 100% in C plus plus".
+
+### What was wrong, and what was kept
+The old core's BRAIN is sound and stays: following by time gap, junction go-aheads, signals, stop signs, right of way,
+"never move into a body", the spawn ring, the parking's books. Its BODY was the fault: a car was a dot at (lane, s,
+sideways offset) with its nose glued to the line's direction. Through a bend the whole car pivoted about its middle
+(it "slid"), a lane change was a sideways slide, and nothing limited how fast it could turn.
+
+### The body now (`native/src/traffic_body.h`, used by `traffic_step.cpp`)
+- The core's (s, lat) is only THE LINE THE DRIVER AIMS FOR. The car is a steered body: front wheels turn at a
+  driver's hand rate (1 rad/s), no further than their lock (35 degrees, a bus 46) and no further than gives 4 m/s2 of
+  sideways push at its speed; the rear axle follows. The driver looks 2.6-12 m down his line (by speed) and steers at
+  that point. The heading changes only because the car moves on turned wheels: no turning on the spot, no turn
+  tighter than a car's, no sideways slide.
+- The veto ("never move into a body") is on the body's own box. s is where the body's middle lies along the line.
+- The line itself moves sideways only as a car can steer: its sideways speed builds and runs out no faster than a
+  6.7 m radius allows, and it slows into its place without a kink.
+- Into and out of a kerb stall a car drives an S laid along the ROAD (20 m in, ending 4 m before it stops; 11 m out),
+  and only where the kerb is free for it (no parked car in the 20 m before the stall / 15.5 m after it). A car that is
+  out of its lane keeps seeing the parked cars round it until it is back (it used to forget them after 9 s).
+- In a junction a car is slow enough for the SHARPEST part of its path (the old cap smoothed a path's bend over 10 m).
+- The body leans out of a turn and dips under the brakes (a spring) and swings back; near and light models are
+  drawn leaning.
+- U-turns: the streets have no U-turn paths (the streets tool makes straight, left and right only).
+
+### The test (`tests/traffic/test_traffic_core.gd`, 12 runs of 30 traffic minutes): RESULT PASS
+| | old body (sections 16-18) | steered body |
+|---|---|---|
+| overlapping pairs; cars standing over 2 min not at a red | 0; 0 | 0; 0 |
+| crashes / emergency brakes / moves refused, a run | 0 / 0-2 / 0-2 | 0 / 0 / 0 |
+| hardest sideways push | up to 11 m/s2 | 4.0 m/s2 |
+| most turn of a near car in one step (a twentieth of a second) | whatever the line does | 2.5 degrees |
+| a car holding its lane: its middle off its line | 0 (it IS the line) | 0.22 m at most |
+| while it changes line (lane change, pulling out or in): behind its line | 0 | up to 1.2 m (it follows, never leads) |
+| in a junction: its middle off the path | 0 | 0.80 m at most (right turns at 5 m/s) |
+| a moving car touching a parked one | 0 | 0 |
+| a car in its stall: off the middle / off the direction | set there | 0.00 m / 0.0 degrees (driven there) |
+| cars that parked in 30 min (residential / centre / high street) | 38-42 / 19-20 / 30-33 | 24 / 9 / 11 (they need free kerb now) |
+| a step for 190 cars on the PC | 0.32 ms | 0.36 ms |
+The same seed gives the same state. Lock test RESULT PASS. To follow ONE car: `-- --trace=ID --only=PART_OF_RUN_NAME`.
+
+### The kerbs: what is checked and what is NOT
+The streets tool (`street_build.cpp`, `check_paths`) now DRIVES the steered body (the longest, widest car, at the
+turn's own speed) along every junction path and picks, per path, the curve on which neither the path as wide as a
+car nor the driven body leaves the asphalt. Run on today's bake (layout 2d21a036): 109,239 places of the body
+checked, off the asphalt in 280 on 10 paths, ALL at the three places where that bake's Amber Ave is broken (below);
+the other 1,287 paths are clean. BUT `streets.bin` in git is still the one made from the earlier bake (55b2b1dc): on
+it the body was NOT checked against the ground (that bake is gone) and its curves were chosen for the old body. So
+"a steered car never touches a kerb" is NOT proven for the file in git. It needs a fresh bake and a streets run.
+
+### FOUND IN THE MAP (not the traffic code): Amber Ave between z -1100 and -800
+On today's bake the tool measures Amber Ave's blocks b038 / b039 differently from the bake the streets were made
+from: b039's kerb is 4.5 m from the middle instead of 11.5 m, the median is gone, "LANES CHANGE 2 + 2 -> 1 + 1" at
+(-1.8, -1096) and (-1.6, -936), node 36 moved 5.5 m, 9 paths touch a kerb at nodes 37 / 96 / 97, 1 lane point and 1
+kerb stall are off the asphalt. On a streets file made from it the whole-city traffic run jams at (-8, -826).
+Something lies over Amber's outer lanes there since the growth was merged. NOT looked at (no picture taken), nothing
+changed. The report is kept locally (`OUT/streets_report_bake_2d21a036_v2.txt`). Until Yasin says, the committed
+`streets.bin` stays.
+
+### The physical car (`native/src/veh_dyn.h/.cpp`, plain C++; `native/src/city_car.*`, class `CityCar`)
+For the car the player drives (and, next, for a traffic car that is hit). A rigid body on four sprung wheels:
+- springs with a softer way in than out, bump stops, an anti-roll bar per axle, a roll-centre height (how much it leans);
+- tyres that keep how far their tread is bent: that one state gives the grip curve (rise, peak, a little less
+  beyond it: the slide), a locked wheel's pull, and a car that stands still on a hill; forward and side grip share
+  one circle;
+- engine torque by revs, a clutch that takes up from idle like an automatic, gears by revs and pedal with a cut in
+  pull, a differential with a little lock, front / rear / all wheel drive; brakes by axle, a handbrake, ABS;
+- a steering lock that shrinks with speed to what the tyres can use, the inner wheel turning more than the outer,
+  the wheel easing toward a slide.
+Two FEELS for each of the 12 models (`make_spec`): IV = soft springs, little damping, a low roll centre, tyres that
+let go early and gently (it leans, dives, squats, slides); V = stiffer, flatter, more grip, ABS.
+`CityCar` puts it on one of the engine's rigid bodies: the engine keeps the place and does the crashes, the C++ works
+out every force in 6 small steps a physics step (one ray per wheel). Body and wheels are drawn apart (meshes
+`*_q_body.res` and `*_q_w0..3.res`, 2.3 MB, brought from the old game: the body mesh notes where its wheels are and
+the physical wheels sit exactly there). Keys, pad and a chase camera are in the class. `CityTraffic.set_player_car`
+gives the traffic the player's car as a box: drivers brake for it and go round it.
+
+Console test (`bash native/tests/run_veh_test.sh`, no Godot, 12 cars x 2 feels): RESULT PASS. The saloon (stern_g):
+0-100 km/h in 8.0 s, top 223 km/h, 100-0 in 46.8 m, side grip 0.93 g, leans 3.4 degrees at half a g and 5.9 at the
+limit, dives 4.1 degrees under the brakes, its tail comes out under power (IV); 7.9 s, 37.6 m with ABS, 1.08 g, 1.2 /
+2.4 degrees (V). The sports car: 4.8 s / 3.7 s, 326 km/h. Front-drive cars push wide instead of sliding. Every car
+stands still, holds a 15 % hill on the handbrake, settles after a sudden turn of the wheel; a handbrake turn brings
+the tail round (not the buses').
+Engine test (`tests/car/test_city_car.gd`, headless, `--fixed-fps 60`): RESULT PASS for stern_g IV and fiamma_r V:
+the same 0-100 and braking as the console test (8.0 s, 47.2 m; 3.8 s, 35.5 m), a wall at 68-73 km/h stops it where
+it is, upright; it reverses away.
+Drive it: `--car=stern_g` (GTA 4 feel) or `--car=stern_g/V`, with `--at=x,z,yaw` and `--traffic=N` (rig.gd).
+
+### NOT done / NOT checked
+- Nobody has DRIVEN it: the feel is tuned to numbers, not to a hand. Yasin drives, says what is wrong, it is tuned.
+- The engine test ran on the PC's default physics engine. The phone runs Jolt: not run there. No phone run of any of
+  this (the Redmi comes last).
+- `--car` in the test app is written but was NOT run (no window was opened in this session).
+- A traffic car that is hit still stops as a box for a few seconds; it is not yet handed to the physical car to be
+  shoved and spun. That hand-over is the next step.
+- Traffic cars' wheels are part of one mesh: they do not turn or steer on screen (the body's lean is drawn).
+- No engine sound, no tyre marks, no damage.

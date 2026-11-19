@@ -15,7 +15,23 @@ The full record is `docs/TRAFFIC_PEOPLE_PORT.md` (sections 13-20 are results). T
   the pavements, queues at kerbs, uses the signals; people still stand inside each other on narrow pavements.
   `city_crowd.cpp` and the test still carry DEBUG lines (`dbg_kinds`, `near_kinds`): remove before "done".
 - NOT STARTED: drawing people (far figures, 18 near bodies), places (doors, benches), reactions, speaking.
-- NOT DONE in traffic: wheels turning, indicators, reversing into a stall, car parks, roll on cross slopes.
+- NOT DONE in traffic: wheels turning on screen, indicators, reversing into a stall, car parks, roll on cross slopes,
+  a hit traffic car handed to the physical car (`CityCar`).
+
+## Since 19 Nov ~14:00 (working branch `claude/festive-faraday-20ltx2`; doc section 21)
+- Traffic cars are STEERED BODIES (`traffic_body.h`): the core's (s, lat) is the line the driver aims for, the body
+  follows it on turned wheels. Never bring back a pose made from the line (`pose_at`) for a moving car.
+- The physical car: `veh_dyn.*` (plain C++) + `CityCar` (`city_car.*`); two feels (IV, V). Tests:
+  `bash native/tests/run_veh_test.sh` (console, seconds) and `tests/car/test_city_car.gd` (headless, `--fixed-fps 60`).
+- Traps paid for on 19 Nov: (1) a sideways move must be one a car can steer: lay it along the ROAD (the S of `plan()`),
+  not along the clock, or a slow car never finishes it. (2) The body must FOLLOW its line, never lead it: the core has
+  only cleared the way as far as the line has gone. (3) A car standing a hand's width off its line took the parked car
+  beside it for one ahead of it and stood for good: the body's own corridor has no margin. (4) A car out of its lane
+  must keep seeing the parked cars until it is back, not for a fixed time. (5) Junction speed must fit the SHARPEST
+  part of a path. (6) `make_streets.gd` on a newer bake silently gives other streets: compare the report's first line
+  (layout_sha) and its CHECK lines with git's before keeping the file. (7) One car's history beats ten guesses:
+  `--trace=ID --only=PART_OF_RUN_NAME` on the traffic test prints it. (8) A heredoc with an apostrophe in it broke
+  again: notes and patches go into a file made with the Write tool.
 
 ## Yasin's rules for this job (his words are in the doc)
 - Everything in C++: no script in any frame or tick, no script fallback. Tool-time scripts are fine.

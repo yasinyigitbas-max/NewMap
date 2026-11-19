@@ -9,9 +9,12 @@ const STREETS := "res://map_dc/coronado/city_kit/traffic/streets.bin"
 
 func _init() -> void:
 	var minutes := 30.0; var cars := 80
+	var trace_car := -1; var only := ""      ## --trace=ID the history of one car (with --only=PART of a run's name: that run alone)
 	for a: String in OS.get_cmdline_user_args():
 		if a.begins_with("--minutes="): minutes = float(a.trim_prefix("--minutes="))
 		if a.begins_with("--cars="): cars = int(a.trim_prefix("--cars="))
+		if a.begins_with("--trace="): trace_car = int(a.trim_prefix("--trace="))
+		if a.begins_with("--only="): only = a.trim_prefix("--only=")
 	if not ClassDB.class_exists(&"CityTraffic"):
 		print("TRAFFIC ERROR the native module is not built: run  bash native/build.sh"); print("RESULT FAIL"); quit(1); return
 	var t: Object = ClassDB.instantiate(&"CityTraffic")
@@ -34,7 +37,9 @@ func _init() -> void:
 		["residential streets with parking", cars, Vector3(-800, 4, -1050), false, false, 1.0, true],
 		["city centre with parking", cars, Vector3(0, 6, -600), false, false, 1.0, true],
 		["high street with parking at twice the busiest hour", cars, Vector3(0, 4, -100), false, false, 2.0, true]]
+	t.set(&"debug_car", trace_car)
 	for r: Array in runs:
+		if only != "" and not String(r[0]).contains(only): continue
 		var t0 := Time.get_ticks_msec()
 		var parking: bool = r.size() > 6 and bool(r[6])
 		var d: Dictionary = t.run_test(int(r[1]), minutes, 7, r[2], bool(r[3]), bool(r[4]), float(r[5]), parking)
@@ -49,7 +54,13 @@ func _init() -> void:
 		print("TRAFFIC   cars most %d, at end %d (the streets there carry %.0f, the cap is %d) | appeared %d, left %d, taken away stuck %d, at a dead end %d | mean speed %.1f km/h" % [int(d.cars_most), int(d.cars_at_end), float(d.streets_carry), int(d.cars_wanted), int(d.spawned), int(d.despawned), int(d.taken_away_stuck), int(d.taken_away_dead_end), float(d.mean_speed_kmh)])
 		print("TRAFFIC   overlapping pairs seen: car-car %d (must be 0) | standing over 2 min not at a red: at most %d cars (%s)%s" % [int(d.overlaps_car_car), int(d.stuck_over_2min_most), "must be 0" if not over else "over capacity: none may stand over 10 min", "" if int(d.stuck_over_2min_most) == 0 else ", longest %.0f s at (%.0f, %.0f), reason %d" % [float(d.stuck_longest_s), (d.stuck_at as Vector3).x, (d.stuck_at as Vector3).z, int(d.stuck_why)]])
 		print("TRAFFIC   crashes %d, emergency brakes %d, hard brakes %d, honks %d, lane changes %d, junction go-aheads %d, moves refused %d, waited long and asked for a way through %d (others held back for them %d times) | a step: mean %.0f, worst %.0f microseconds" % [int(d.crashes), int(d.emergency_brakes), int(d.hard_brakes), int(d.honks), int(d.lane_changes), int(d.reservations), int(d.moves_refused), int(d.asks), int(d.let_through), float(d.step_us_mean), float(d.step_us_worst)])
+		print("TRAFFIC   steering: the car's middle off the line its driver aims for: mean %.2f m; most %.2f m while it holds a line on a lane, %.2f m while it changes line (lane change, pulling out or in), %.2f m in a junction | a car holding its lane reaches over the lane's edge by at most %.2f m | hardest side push %.1f m/s2 | most turn in one step (near cars) %.1f deg | moves at full lock %d of %d | crept round a corner %d times" % [float(d.line_miss_mean), float(d.line_miss_holding), float(d.line_miss_lane), float(d.line_miss_junction), float(d.over_lane_edge), float(d.side_accel_most), rad_to_deg(float(d.turn_a_step_most)), int(d.moves_at_full_lock), int(d.body_moves), int(d.crept_round)])
+		print("TRAFFIC   the worst of those: in a junction %s | over a lane's edge %s" % [String(d.worst_in_junction), String(d.worst_over_edge)])
+		if parking: print("TRAFFIC   kerb stalls beside a lane: %d, of them turned against the lane %d, closer together than a car is long %d; cars drive into and out of %d" % [int(d.stalls_beside_a_lane), int(d.stalls_turned), int(d.stalls_close_together), int(d.stalls_cars_use)])
+		if parking: print("TRAFFIC   in their stalls: beside the middle by mean %.2f m, most %.2f m; off the stall's direction by mean %.1f, most %.1f deg" % [float(d.park_off_mean), float(d.park_off_most), float(d.park_yaw_mean_deg), float(d.park_yaw_most_deg)])
 		if parking: print("TRAFFIC   parking: %d cars pulled out of a stall, %d parked, %d gave up on the way | a moving car touching a parked one: %d (must be 0)" % [int(d.pulled_out), int(d.parked), int(d.parking_gave_up), int(d.touching_parked)])
+		for tl: String in d.trace: print("TRAFFIC     trace: %s" % tl)
+		for tc: String in d.touch_cases: print("TRAFFIC     touch: %s" % tc)
 		if not ok:
 			for c: Dictionary in d.standing:
 				print("TRAFFIC     standing: car %d at (%.0f, %.0f) %.0f s, why %d, lane %d (%.1f of %.1f m), control %d signal %d, on path %d next path %d turn %d to lane %d node %d | leader %d stopped by %d | refused: reason %d by car %d value %.1f | flags %d man %d" % [int(c.id), float(c.x), float(c.z), float(c.wait_s), int(c.why), int(c.lane), float(c.s), float(c.lane_len), int(c.control), int(c.signal), int(c.on_path), int(c.next_path), int(c.turn), int(c.to_lane), int(c.node), int(c.leader), int(c.stopped_by), int(c.refused_why), int(c.refused_by), float(c.refused_value), int(c.flags), int(c.man)])

@@ -65,10 +65,15 @@ private:
 		std::vector<uint8_t> cells;
 		bool cells_dirty = false;
 		bool parked = true;
+		bool pc = false;            // the player's car (set_player_car): a box the drivers see, brake for and go round
+		float pcx = 0, pcy = 0, pcz = 0, pcyaw = 0, pcvx = 0, pcvz = 0, pchl = 2.2f, pchw = 0.95f;
 	} input;
+	uint64_t player_id = 0;
+	float player_hl = 2.2f, player_hw = 0.95f;
+	std::vector<float> dyn_all;   // (the step's thread) the boxes handed to the core this step
 	struct Row {     // one moving car as the step left it: its pose now and before its last move
 		int32_t id; uint8_t model, colour, flags, kind;
-		float x, y, z, yaw, pitch, px, py, pz, pyaw, ppitch, v, hl, hw;
+		float x, y, z, yaw, pitch, px, py, pz, pyaw, ppitch, v, hl, hw, roll, proll, steer;
 		int32_t tu, span;
 	};
 	struct Snap {
@@ -94,6 +99,7 @@ private:
 	bool shadows = true;
 	bool bodies_on = true;
 	double night = 0.0;
+	int debug_car = -1;          // tests: the history of this car is kept and handed back by run_test ("trace")
 	String streets_path = "res://map_dc/coronado/city_kit/traffic/streets.bin";
 	int near_max = 4;            // moving cars drawn with the near model, at most
 	double near_r = 22.0, mid_r = 85.0, far_r = 420.0, parked_mid_r = 35.0;
@@ -121,6 +127,7 @@ private:
 	void make_batch(Batch &b, const Ref<Mesh> &p_mesh, const Ref<ShaderMaterial> &p_mat, int p_cap, bool p_shadow);
 	void grow(Batch &b, int p_need);
 	void send(Batch &b);
+	static void lean_row(float *r, float roll);   // a row already put: the body leans about its own length (near and light models)
 	static void put_row(float *r, float x, float y, float z, float yaw, float pitch, float sx, float sy, float sz, const float *col, float c0, float c1, float c2, float c3);
 	int warm_frames = 40;        // the first frames: one row of every batch in front of the camera, so its shaders are built behind the loading screen
 
@@ -183,6 +190,9 @@ public:
 	void attach(Object *p_streamer);
 	void _on_cell_in(const String &p_key);
 	void _on_cell_out(const String &p_key);
+	// The car the player drives (any Node3D; a RigidBody3D gives its speed too): the traffic sees it as a moving box.
+	// null = none.
+	void set_player_car(Object *p_car, double p_half_len, double p_half_w);
 	// One line for the test app's log: what was drawn and what it cost since the last call
 	String report();
 
@@ -198,6 +208,8 @@ public:
 	bool get_bodies() const { return bodies_on; }
 	void set_night(double p_n) { night = p_n; }
 	double get_night() const { return night; }
+	void set_debug_car(int p_id) { debug_car = p_id; }
+	int get_debug_car() const { return debug_car; }
 	void set_streets_path(const String &p_path) { streets_path = p_path; }
 	String get_streets_path() const { return streets_path; }
 

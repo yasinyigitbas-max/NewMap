@@ -1,5 +1,6 @@
 // The street builder: see street_build.h
 #include "street_build.h"
+#include "traffic_body.h"
 
 #include <algorithm>
 #include <cmath>
@@ -1152,19 +1153,96 @@ void Builder::check_paths() {
 		}
 		return bad;
 	};
+	// A STEERED car (the traffic's body, traffic_body.h: the longest and widest car, at a turn's speed) driven from 20 m
+	// before the path to 12 m after it: points of its body (four corners, the middle of each side) that are not on the
+	// asphalt while its middle is on the path, and how far its middle strays from the path.
+	int drive_n = 0; float drive_miss = 0.0f;
+	auto drive_bad = [&](int c) {
+		const int a = out.conns[(size_t)c * StreetData::CONN], b = out.conns[(size_t)c * StreetData::CONN + 1];
+		tc::Window w;
+		w.n = 0;
+		std::vector<float> line;   // x, z of the lane before, the path, the lane after
+		{
+			const int o0 = out.lane_off[a], o1 = out.lane_off[a + 1];
+			int k = o1 - 1; float back = 0.0f;
+			while (k > o0 && back < 22.0f) { back += std::hypot(out.lane_pts[(size_t)k * 3] - out.lane_pts[(size_t)(k - 1) * 3], out.lane_pts[(size_t)k * 3 + 2] - out.lane_pts[(size_t)(k - 1) * 3 + 2]); k--; }
+			for (; k < o1 - 1; k++) { line.push_back(out.lane_pts[(size_t)k * 3]); line.push_back(out.lane_pts[(size_t)k * 3 + 2]); }
+		}
+		const int i_path0 = (int)line.size() / 2;
+		for (size_t q = 0; q + 2 < pts.size() + 1; q += 3) { line.push_back(pts[q]); line.push_back(pts[q + 2]); }
+		const int i_path1 = (int)line.size() / 2 - 1;
+		{
+			const int o0 = out.lane_off[b], o1 = out.lane_off[b + 1];
+			float fwd = 0.0f;
+			for (int k = o0 + 1; k < o1 && fwd < 14.0f; k++) {
+				fwd += std::hypot(out.lane_pts[(size_t)k * 3] - out.lane_pts[(size_t)(k - 1) * 3], out.lane_pts[(size_t)k * 3 + 2] - out.lane_pts[(size_t)(k - 1) * 3 + 2]);
+				line.push_back(out.lane_pts[(size_t)k * 3]); line.push_back(out.lane_pts[(size_t)k * 3 + 2]);
+			}
+		}
+		float acc = 0.0f, s_path0 = 0.0f, s_path1 = 0.0f;
+		for (size_t q = 0; q * 2 < line.size() && w.n < tc::WIN_MAX; q++) {
+			if (q > 0) { const float d = std::hypot(line[q * 2] - line[q * 2 - 2], line[q * 2 + 1] - line[q * 2 - 1]); if (d < 0.05f) continue; acc += d; }
+			if ((int)q <= i_path0) s_path0 = acc;
+			if ((int)q <= i_path1) s_path1 = acc;
+			w.x[w.n] = line[q * 2]; w.z[w.n] = line[q * 2 + 1]; w.s[w.n] = acc; w.n++;
+		}
+		if (w.n < 3) return 0;
+		const float HL = 2.6f, HW = 0.95f, WB = 3.05f;
+		// how sharply the path turns decides the speed it is driven at (the traffic's own rule: 2.2 m/s^2 sideways)
+		float tight = 1.0e9f;
+		for (int k = 1; k + 1 < w.n; k++) {
+			if (w.s[k] < s_path0 || w.s[k] > s_path1) continue;
+			const float d0x = w.x[k] - w.x[k - 1], d0z = w.z[k] - w.z[k - 1], d1x = w.x[k + 1] - w.x[k], d1z = w.z[k + 1] - w.z[k];
+			const float turn = std::fabs(std::atan2(d0x * d1z - d0z * d1x, d0x * d1x + d0z * d1z));
+			const float seg = 0.5f * (std::hypot(d0x, d0z) + std::hypot(d1x, d1z));
+			if (turn > 1.0e-4f) tight = std::min(tight, seg / turn);
+		}
+		const float v = std::min(std::max(std::sqrt(2.2f * tight), 2.0f), 12.0f);
+		tc::Body bd{ w.x[0], w.z[0], std::atan2(w.x[1] - w.x[0], w.z[1] - w.z[0]), 0.0f };
+		int bad = 0;
+		float done = 0.0f;
+		// (the window's own scale starts at its first point: shift it as the car goes, as the core's window does)
+		const float total = w.s[w.n - 1];
+		std::vector<float> s0(w.s, w.s + w.n);
+		while (done < total - 1.0f) {
+			for (int k = 0; k < w.n; k++) w.s[k] = s0[k] - done;
+			const tc::BodyRun r = tc::body_run(bd, w, WB, 0.61f, 0.4f, v, 0.0f, 0.0f);
+			done += std::max(r.s_c, 0.05f);
+			if (done < s_path0 - 1.0f || done > s_path1 + 3.0f) continue;
+			drive_miss = std::max(drive_miss, std::fabs(r.lat_c));
+			const float fx = std::sin(bd.yaw), fz = std::cos(bd.yaw);
+			const float px[6] = { HL, HL, -HL, -HL, 0.0f, 0.0f }, pl[6] = { HW, -HW, HW, -HW, HW, -HW };
+			bool ok = true;
+			for (int q = 0; q < 6 && ok; q++) ok = is_road(ground->layer_at(bd.x + fx * px[q] + fz * pl[q], bd.z + fz * px[q] - fx * pl[q]));
+			drive_n++;
+			if (!ok) bad++;
+		}
+		return bad;
+	};
 	for (int c = 0; c < nc; c++) {
 		int best = 40, best_bad = 1 << 30;
 		for (int k = 0; k < 7 && best_bad > 0; k++) {
 			out.conns[(size_t)c * StreetData::CONN + 4] = REACH[k];
 			pts.clear();
 			out.path(c, pts);
-			const int bad = count_bad();
+			const int bad = count_bad() + drive_bad(c);   // the path itself as wide as a car, and the steered car on it
 			if (bad < best_bad) { best_bad = bad; best = REACH[k]; }
 		}
 		out.conns[(size_t)c * StreetData::CONN + 4] = best;
 		pts.clear();
 		out.path(c, pts);
 		rep.path_pts += (int)pts.size() / 3;
+		{
+			drive_n = 0; drive_miss = 0.0f;
+			const int db = drive_bad(c);
+			rep.body_pts += drive_n; rep.body_pts_off_road += db; if (db > 0) rep.body_paths_off_road++;
+			rep.body_miss_max = std::max(rep.body_miss_max, drive_miss);
+			best_bad = count_bad();   // (the lines below report the path's own points, as before)
+			if (db > 0 && best_bad == 0) {
+				const int node = out.conns[(size_t)c * StreetData::CONN + 3];
+				if (bad_at_node[node]++ < 4) say("A STEERED CAR'S BODY LEAVES THE ASPHALT at node %d (%.1f, %.1f), path %d: %d of %d places, even on the best curve", node, nodes[node].x, nodes[node].z, c, db, drive_n);
+			}
+		}
 		if (best != 40) rep.paths_widened++;
 		if (best_bad > 0) {
 			rep.path_pts_off_road += best_bad; rep.paths_off_road++;
@@ -1550,6 +1628,8 @@ void Builder::build() {
 	say("CHECK lane points off the asphalt %d, without ground %d (both must be 0)", rep.lane_pts_off_road, rep.lane_pts_no_ground);
 	say("CHECK paths through the junctions: %d (%d take a wider curve to keep off a kerb), %d points checked as wide as a car: %d touch a kerb, on %d paths (must be 0)", out.connections(), rep.paths_widened,
 			rep.path_pts, rep.path_pts_off_road, rep.paths_off_road);
+	say("CHECK a steered car driven along every path (the traffic's own body, the longest car): %d places, its body off the asphalt in %d, on %d paths (must be 0) | its middle strays from the path by at most %.2f m",
+			rep.body_pts, rep.body_pts_off_road, rep.body_paths_off_road, rep.body_miss_max);
 	say("CHECK lane points where a car's side would be off the asphalt: %d (must be 0)", rep.lane_pts_tight);
 	say("CHECK steepest lane %.1f %%, largest height kink at a lane point %.3f m", rep.worst_grade * 100.0, rep.worst_kink);
 	say("CHECK junctions (3 legs and more): %d with signals, %d with stop bars, %d with neither | approaches %d: %d signal, %d stop, %d free", rep.nodes_signal, rep.nodes_stop, rep.nodes_free,

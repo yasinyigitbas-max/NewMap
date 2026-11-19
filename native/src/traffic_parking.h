@@ -47,6 +47,8 @@ struct Parking {
 		int32_t prev = -1, next = -1;   // the kerb stalls right before / after it on the same lane (within 8 m), or -1
 		int32_t cell = -1;
 		uint8_t model = EMPTY, colour = 0, loaded = 0;
+		float skew = 0;             // how far it is turned against its lane, rad (0 = along the kerb)
+		uint8_t usable = 0;         // a steered car can drive into and out of it: along the kerb, with room to the next ones
 	};
 	std::vector<Stall> st;
 	std::vector<std::vector<int32_t>> lane_stalls;   // per lane: its kerb stalls, by s
@@ -57,9 +59,14 @@ struct Parking {
 	struct Fresh { int32_t car_id; float t; };
 	std::vector<Fresh> fresh;                        // cars that have just pulled out (the parked cars round them are shown to the core)
 	std::vector<float> dyn;                          // the boxes for Sim::set_dynamic (the caller hands them over, with its own)
+	std::vector<uint32_t> shown;                     // per stall: the step it was last put in dyn
+	uint32_t show_stamp = 0;
 	std::vector<Event> events;                       // what changed since the caller last took them
 	uint64_t rng = 0x9E3779B97F4A7C15ull;
 	int pulled_out = 0, parked = 0, gave_up = 0;
+	int n_lane_stalls = 0, n_skewed = 0, n_close = 0, n_usable = 0;   // of the kerb stalls beside a lane
+	double park_off = 0.0, park_yaw = 0.0;   // summed over the cars that parked: how far beside the stall's middle, how far from its direction (rad)
+	float park_off_max = 0.0f, park_yaw_max = 0.0f;
 	float every_s = 4.0f;       // about one car pulls out and one parks in this many seconds, where there are cars to do it
 	bool on = true;
 	int grid = 64; float cell_m = 200.0f;
@@ -76,7 +83,7 @@ struct Parking {
 		st.assign(ns, Stall());
 		kerb_kind.assign(ns, 0);
 		jobs.clear(); fresh.clear(); events.clear(); dyn.clear(); cand.clear();
-		pulled_out = parked = gave_up = 0;
+		pulled_out = parked = gave_up = 0; park_off = park_yaw = 0.0; park_off_max = park_yaw_max = 0.0f;
 		lane_stalls.assign(std::max(nl, 0), std::vector<int32_t>());
 		for (int k = 0; k < ns; k++) {
 			Stall &q = st[k];
@@ -97,7 +104,12 @@ struct Parking {
 				if (len < 1.0e-4f) continue;
 				const float t = std::min(std::max(((q.x - ax) * dx + (q.z - az) * dz) / (len * len), 0.0f), 1.0f);
 				const float ex = q.x - (ax + dx * t), ez = q.z - (az + dz * t), d2 = ex * ex + ez * ez;
-				if (d2 < best) { best = d2; q.s = acc + t * len; q.lat = ((q.x - ax) * dz - (q.z - az) * dx) / len; }   // left of travel = (dz, -dx)
+				if (d2 < best) {   // left of travel = (dz, -dx)
+					best = d2; q.s = acc + t * len; q.lat = ((q.x - ax) * dz - (q.z - az) * dx) / len;
+					float dy = std::fabs(std::atan2(dx, dz) - q.yaw);
+					while (dy > 3.14159265f) dy = std::fabs(dy - 6.2831853f);
+					q.skew = dy > 1.5708f ? 3.14159265f - dy : dy;   // (a stall has no front and back)
+				}
 				acc += len;
 			}
 			if (best > 6.0f * 6.0f || std::fabs(q.lat) < 2.0f || std::fabs(q.lat) > 4.5f) continue;   // (not beside its lane after all: it stays a car that only stands)
@@ -107,6 +119,20 @@ struct Parking {
 		for (auto &v : lane_stalls) {
 			std::sort(v.begin(), v.end(), [&](int a, int b) { return st[a].s < st[b].s; });
 			for (size_t i = 0; i + 1 < v.size(); i++) if (st[v[i + 1]].s - st[v[i]].s < 8.0f) { st[v[i]].next = v[i + 1]; st[v[i + 1]].prev = v[i]; }
+		}
+		// A steered car drives into and out of a stall that lies ALONG the kerb with a car's length to its neighbours.
+		// The others (turned stalls, stalls closer together than a car is long) keep cars that only stand.
+		n_lane_stalls = n_skewed = n_close = n_usable = 0;
+		for (int k = 0; k < ns; k++) {
+			Stall &q = st[k];
+			if (q.lane < 0) continue;
+			n_lane_stalls++;
+			const bool skewed = q.skew > 0.10f;
+			const bool close = (q.prev >= 0 && q.s - st[q.prev].s < 5.4f) || (q.next >= 0 && st[q.next].s - q.s < 5.4f);
+			if (skewed) n_skewed++;
+			if (close) n_close++;
+			q.usable = (!skewed && !close) ? 1 : 0;
+			if (q.usable) n_usable++;
 		}
 	}
 
@@ -139,8 +165,14 @@ struct Parking {
 			const int i = sim.find_car(jb.car_id);
 			bool done = false;
 			if (i < 0) { q.model = EMPTY; done = true; }   // (the car is gone: its cell left, or it was taken away)
-			else if (sim.arrived[i] && (std::fabs(sim.lat[i] - q.lat) < 0.3f || (sim.wait_t[i] > 5.0f && std::fabs(sim.lat[i] - q.lat) < 0.8f))) {
+			else if (sim.arrived[i] && (std::fabs(sim.latm[i] - q.lat) < 0.3f || (sim.wait_t[i] > 5.0f && std::fabs(sim.latm[i] - q.lat) < 0.8f))) {
 				// it stands in the stall (or, rarely, a little off it after 5 s: then it counts as in)
+				{
+					const float off = std::fabs(sim.latm[i] - q.lat);
+					float dy = std::fabs(sim.yaw[i] - q.yaw); while (dy > 3.14159265f) dy = std::fabs(dy - 6.2831853f);
+					if (dy > 1.5708f) dy = 3.14159265f - dy;   // (a stall has no front and back)
+					park_off += off; park_yaw += dy; park_off_max = std::max(park_off_max, off); park_yaw_max = std::max(park_yaw_max, dy);
+				}
 				q.model = sim.model[i]; q.colour = car_colour(sim, i);
 				events.push_back(Event{ jb.stall, q.model, q.colour });
 				sim.despawn(i, 7);
@@ -159,7 +191,10 @@ struct Parking {
 		}
 		for (size_t j = 0; j < fresh.size();) {
 			fresh[j].t += h;
-			if (fresh[j].t > 9.0f || sim.find_car(fresh[j].car_id) < 0) { fresh[j] = fresh.back(); fresh.pop_back(); } else j++;
+			// (until it is back in its lane: a steered car needs some metres for that, not a fixed time)
+			const int fi = sim.find_car(fresh[j].car_id);
+			const bool back = fi >= 0 && fresh[j].t > 3.0f && std::fabs(sim.lat[fi]) < 0.25f && std::fabs(sim.latm[fi]) < 0.5f;
+			if (fi < 0 || back) { fresh[j] = fresh.back(); fresh.pop_back(); } else j++;
 		}
 		// ---- now and then: one pulls out, one parks
 		if (sim.tick % 10 == 0) {
@@ -170,6 +205,8 @@ struct Parking {
 		// ---- the parked cars round a car that is parking or has just pulled out are boxes to the core: it never moves
 		// into them (the lanes themselves keep 0.85 m off the parked cars; this is for the way in and out)
 		dyn.clear();
+		if (shown.size() != st.size()) shown.assign(st.size(), 0);
+		show_stamp++;
 		auto show = [&](int car_id) {
 			const int i = sim.find_car(car_id);
 			if (i < 0) return;
@@ -177,7 +214,8 @@ struct Parking {
 			if (L < 0 || L >= (int)lane_stalls.size()) return;
 			for (int k : lane_stalls[L]) {
 				const Stall &q = st[k];
-				if (q.model >= RESERVED || std::fabs(q.s - sim.s[i]) > 45.0f || (int)dyn.size() >= 64 * tc::DYN_STRIDE) continue;
+				if (q.model >= RESERVED || std::fabs(q.s - sim.s[i]) > 45.0f || (int)dyn.size() >= 200 * tc::DYN_STRIDE || shown[k] == show_stamp) continue;
+				shown[k] = show_stamp;
 				const cm::CarModel &m = cm::MODELS[q.model];
 				const float b[tc::DYN_STRIDE] = { q.x, q.y, q.z, q.yaw, m.half_len, m.half_w, 0.0f, 0.0f, (float)tc::DYN_OTHER, (float)(100000 + k), 0.0f };
 				dyn.insert(dyn.end(), b, b + tc::DYN_STRIDE);
@@ -192,14 +230,26 @@ struct Parking {
 		return sim.colour[i] >= 100 ? (uint8_t)(sim.colour[i] - 100) : (uint8_t)cm::pick_colour(hash32((uint32_t)sim.id[i] * 2246822519u + 31u));
 	}
 
+	// is any stall of lane L taken whose middle lies between s0 and s1 (not stall `but`)?
+	bool taken_between(int L, float s0, float s1, int but) const {
+		for (int k : lane_stalls[L]) {
+			if (k == but) continue;
+			const Stall &q = st[k];
+			if (q.s <= s0) continue;
+			if (q.s >= s1) break;
+			if (q.model != EMPTY) return true;   // (a stall somebody is on his way into counts)
+		}
+		return false;
+	}
+
 	void try_pull_out(tc::Sim &sim) {
 		if (cand.empty() || sim.n_alive >= sim.cfg.max_cars + 4 || sim.n_alive >= tc::MAX_CARS - 4) return;
 		for (int tries = 0; tries < 10; tries++) {
 			const int k = cand[std::min((int)(rnd() * (float)cand.size()), (int)cand.size() - 1)];
 			Stall &q = st[k];
-			if (q.model >= RESERVED || !q.loaded) continue;
-			if (taken(q.next)) continue;                                   // room to swing out
+			if (q.model >= RESERVED || !q.loaded || !q.usable) continue;
 			const int L = q.lane;
+			if (taken_between(L, q.s, q.s + tc::OUT_M + 4.5f, k)) continue;   // free kerb ahead for the S out into the lane
 			if (q.s < 45.0f || q.s > sim.p_len[L] - 30.0f) continue;       // not at a junction
 			const float dx = q.x - sim.cam_x, dz = q.z - sim.cam_z, d2 = dx * dx + dz * dz;
 			if (d2 < 14.0f * 14.0f || d2 > 300.0f * 300.0f) continue;      // not on top of the camera, not where nobody sees it
@@ -235,17 +285,40 @@ struct Parking {
 				const float ahead = q.s - sim.s[i];
 				if (ahead < 35.0f) continue;
 				if (ahead > 120.0f) break;
-				if (q.model != EMPTY || !q.loaded || taken(q.prev) || q.s > sim.p_len[L] - 30.0f) continue;
+				if (q.model != EMPTY || !q.loaded || !q.usable || q.s > sim.p_len[L] - 30.0f) continue;
+				if (taken_between(L, q.s - 20.0f, q.s, k)) continue;   // free kerb before it for the S in
 				{ const float dx = q.x - sim.cam_x, dz = q.z - sim.cam_z; if (dx * dx + dz * dz > 300.0f * 300.0f) continue; }
 				bool other = false;
 				for (const Job &jb : jobs) if (jb.stall == q.prev || jb.stall == q.next) other = true;
 				if (other) continue;
-				if (!sim.park_at(sim.id[i], q.s, q.lat, 14.0f)) break;
+				if (!sim.park_at(sim.id[i], q.s, q.lat, 20.0f)) break;
 				q.model = RESERVED;
 				jobs.push_back(Job{ sim.id[i], k, 0.0f });
 				return;
 			}
 		}
+	}
+
+	// For the test's failure lines: the first moving car that touches a parked one, and what it is doing
+	bool touch_case(const tc::Sim &sim, int out_i[6], float out_f[6]) const {
+		for (int i = 0; i < sim.hi; i++) {
+			if (!sim.alive[i] || sim.conn[i] >= 0) continue;
+			const int L = sim.lane[i];
+			if (L < 0 || L >= (int)lane_stalls.size()) continue;
+			for (int k : lane_stalls[L]) {
+				const Stall &q = st[k];
+				if (q.model >= RESERVED || std::fabs(q.s - sim.s[i]) > 9.0f) continue;
+				const cm::CarModel &m = cm::MODELS[q.model];
+				if (!boxes_touch(sim.x[i], sim.z[i], sim.fx[i], sim.fz[i], sim.hl[i], sim.hw[i], q.x, q.z, std::sin(q.yaw), std::cos(q.yaw), m.half_len, m.half_w)) continue;
+				int role = 0;   // 1 = on its way into a stall, 2 = has just pulled out
+				for (const Job &jb : jobs) if (jb.car_id == sim.id[i]) role = 1;
+				for (const Fresh &f : fresh) if (f.car_id == sim.id[i]) role = 2;
+				out_i[0] = sim.id[i]; out_i[1] = role; out_i[2] = sim.man[i]; out_i[3] = sim.kind[i]; out_i[4] = k; out_i[5] = sim.why[i];
+				out_f[0] = sim.lat[i]; out_f[1] = sim.latm[i]; out_f[2] = q.lat; out_f[3] = q.s - sim.s[i]; out_f[4] = sim.v[i]; out_f[5] = (float)dyn.size() / (float)tc::DYN_STRIDE;
+				return true;
+			}
+		}
+		return false;
 	}
 
 	// For the test: moving cars that touch a parked car (must be 0). The car that is entering a stall does not count

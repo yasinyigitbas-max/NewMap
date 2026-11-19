@@ -73,6 +73,8 @@ struct Report {
 	int nodes_signal = 0, nodes_stop = 0, nodes_free = 0, short_edges = 0;
 	int heads_other_tile = 0, heads_no_junction = 0;   // signal heads against the lamps' clock tiles
 	int path_pts = 0, path_pts_off_road = 0, paths_off_road = 0, paths_widened = 0;   // the paths through the junctions
+	int body_pts = 0, body_pts_off_road = 0, body_paths_off_road = 0;   // a steered car driven along each of them: points of its body
+	float body_miss_max = 0.0f;                                        // how far its middle strays from the path at most, m
 	int lane_pts_tight = 0;        // lane points where a car's side would be off the asphalt
 	int walks = 0, crossings = 0, crossings_signal = 0, crossings_unpainted = 0, walk_driveways = 0;
 	int stalls_kerb = 0, stalls_park = 0, stalls_no_ground = 0, stalls_kerb_off_road = 0;

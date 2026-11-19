@@ -91,6 +91,8 @@ Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, c
 	parking.init(streets); parking.rng = 0x9E3779B97F4A7C15ull ^ (uint64_t)p_seed; parking.on = p_parking;
 	parking.set_cells(std::vector<uint8_t>(), true);
 	int64_t ov_parked = 0;
+	Array touch_cases;
+	Array trace;
 	sim->set_view(p_cam.x, p_cam.y, p_cam.z, 0.0f, 1.0f, 0.0f);   // no view cone: cars may appear anywhere in the ring
 	const float dt = 0.05f;
 	const int ticks = (int)(p_minutes * 60.0 / dt);
@@ -165,13 +167,27 @@ Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, c
 		sim->step(dt, clock);
 		clock += dt;
 		sim->events.clear();
+		if (debug_car >= 0) {   // the one car a failure named: where it is, where it aims, what it is doing, twice a second
+			const int di = sim->find_car(debug_car);
+			if (di >= 0 && t % 10 == 0 && trace.size() < 400)
+				trace.push_back(vformat("t %.1f lane %d path %d s %.1f | aims %.2f is %.2f goal_lat %.2f | v %.1f steer %.2f yaw %.2f | kind %d pull %d man %d why %d arrived %d flags %d colour %d | stopped by %d lead %d | at (%.1f, %.1f)",
+						clock, sim->lane[di], sim->conn[di], sim->s[di], sim->lat[di], sim->latm[di], sim->goal_lat[di], sim->v[di], sim->steer[di], sim->yaw[di], (int)sim->kind[di], (int)sim->pull[di], (int)sim->man[di], (int)sim->why[di],
+						(int)sim->arrived[di], (int)sim->flags[di], (int)sim->colour[di], sim->veto_by[di], sim->lead_id[di], sim->x[di], sim->z[di]));
+		}
 		us_sum += sim->st.last_step_us; us_max = std::max(us_max, sim->st.last_step_us);
 		alive_max = std::max(alive_max, sim->n_alive);
 		if (t % 20 == 0) {   // once a second of traffic time
 			int a[3] = { 0, 0, 0 };
 			sim->audit(a);
 			ov_car += a[0]; ov_static += a[1]; ov_dyn += a[2]; checks++;
-			if (p_parking) ov_parked += parking.audit(*sim);
+			if (p_parking) {
+				const int nt = parking.audit(*sim);
+				ov_parked += nt;
+				int ti[6]; float tf[6];
+				if (nt > 0 && touch_cases.size() < 8 && parking.touch_case(*sim, ti, tf))
+					touch_cases.push_back(vformat("at %.0f s car %d (%s, manoeuvre %d, kind %d, why %d) touches the car in stall %d, %.1f m ahead: aims %.2f m beside its lane's middle, is %.2f m, the stall is %.2f m; speed %.1f; parked cars shown to the core as boxes this step: %.0f",
+							clock, ti[0], ti[1] == 1 ? "parking" : (ti[1] == 2 ? "just pulled out" : "passing"), ti[2], ti[3], ti[5], ti[4], tf[3], tf[0], tf[1], tf[2], tf[4], tf[5]));
+			}
 			int stuck = 0;
 			for (int i = 0; i < sim->hi; i++) {
 				if (!sim->alive[i]) continue;
@@ -199,6 +215,17 @@ Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, c
 	d["mean_speed_kmh"] = v_n > 0 ? v_sum / (double)v_n * 3.6 : 0.0;
 	d["step_us_mean"] = ticks > 0 ? us_sum / ticks : 0.0; d["step_us_worst"] = us_max;
 	d["standing"] = worst_standing;
+	d["touch_cases"] = touch_cases;
+	d["worst_in_junction"] = vformat("at (%.0f, %.0f) at %.1f m/s, its line %.2f m beside the path's middle, path %d turn %d, a step of %.2f s, car %d", sim->st.worst_j[0], sim->st.worst_j[1], sim->st.worst_j[2], sim->st.worst_j[3], (int)sim->st.worst_j[4], (int)sim->st.worst_j[5], sim->st.worst_j[6], (int)sim->st.worst_j[7]);
+	d["worst_over_edge"] = vformat("at (%.0f, %.0f) at %.1f m/s, %.1f m along lane %d of %.1f m, a step of %.2f s, car %d", sim->st.worst_o[0], sim->st.worst_o[1], sim->st.worst_o[2], sim->st.worst_o[3], (int)sim->st.worst_o[4], sim->st.worst_o[5], sim->st.worst_o[6], (int)sim->st.worst_o[7]);
+	d["trace"] = trace;
+	d["stalls_beside_a_lane"] = parking.n_lane_stalls; d["stalls_turned"] = parking.n_skewed; d["stalls_close_together"] = parking.n_close;
+	d["stalls_cars_use"] = parking.n_usable;
+	d["line_miss_mean"] = sim->st.trk_n > 0 ? sim->st.trk_sum / (double)sim->st.trk_n : 0.0; d["line_miss_lane"] = sim->st.trk_max; d["line_miss_holding"] = sim->st.trk_max_calm; d["line_miss_junction"] = sim->st.trk_max_junction;
+	d["over_lane_edge"] = sim->st.lane_over_max; d["side_accel_most"] = sim->st.latacc_max; d["turn_a_step_most"] = sim->st.yaw_step_max;
+	d["moves_at_full_lock"] = sim->st.steer_sat; d["body_moves"] = sim->st.trk_n; d["crept_round"] = sim->st.crawl_round;
+	d["park_off_mean"] = parking.parked > 0 ? parking.park_off / parking.parked : 0.0; d["park_off_most"] = parking.park_off_max;
+	d["park_yaw_mean_deg"] = parking.parked > 0 ? parking.park_yaw / parking.parked * 57.2958 : 0.0; d["park_yaw_most_deg"] = parking.park_yaw_max * 57.2958;
 	d["hash"] = (int64_t)(sim->state_hash() & 0x7fffffffffffffffULL);
 	sim->cfg = keep;
 	return d;
@@ -210,6 +237,7 @@ void CityTraffic::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_cell_in", "key"), &CityTraffic::_on_cell_in);
 	ClassDB::bind_method(D_METHOD("_on_cell_out", "key"), &CityTraffic::_on_cell_out);
 	ClassDB::bind_method(D_METHOD("report"), &CityTraffic::report);
+	ClassDB::bind_method(D_METHOD("set_player_car", "car", "half_len", "half_w"), &CityTraffic::set_player_car);
 	ClassDB::bind_method(D_METHOD("set_max_cars", "n"), &CityTraffic::set_max_cars);
 	ClassDB::bind_method(D_METHOD("get_max_cars"), &CityTraffic::get_max_cars);
 	ClassDB::bind_method(D_METHOD("set_parked", "on"), &CityTraffic::set_parked);
@@ -231,6 +259,9 @@ void CityTraffic::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "bodies"), "set_bodies", "get_bodies");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "night"), "set_night", "get_night");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "streets_path"), "set_streets_path", "get_streets_path");
+	ClassDB::bind_method(D_METHOD("set_debug_car", "id"), &CityTraffic::set_debug_car);
+	ClassDB::bind_method(D_METHOD("get_debug_car"), &CityTraffic::get_debug_car);
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "debug_car"), "set_debug_car", "get_debug_car");
 	ClassDB::bind_method(D_METHOD("is_built"), &CityTraffic::is_built);
 	ClassDB::bind_method(D_METHOD("street_stats"), &CityTraffic::street_stats);
 	ClassDB::bind_method(D_METHOD("run_test", "cars", "minutes", "seed", "cam", "whole_city", "stuck_rule", "density", "parking"), &CityTraffic::run_test, DEFVAL(false));

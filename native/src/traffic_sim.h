@@ -39,6 +39,8 @@ constexpr int MAX_ROUTES = 16;
 constexpr int WIN_MAX = 72;
 constexpr int TRK_MAX = 48;
 constexpr float BIG = 1.0e9f;
+constexpr float OUT_M = 11.0f;      // a car leaving a kerb stall is in its lane after this many metres
+constexpr float IN_END_M = 4.0f;    // a car entering one is beside the kerb this many metres before it stops
 constexpr double SIG_CYCLE = 30.0;   // the map's signal cycle, seconds (the bake's signal shader: signal_cycle)
 
 enum { T_STRAIGHT = 0, T_LEFT = 1, T_RIGHT = 2, T_UTURN = 3 };
@@ -109,6 +111,13 @@ struct Stats {
 	// build
 	int n_intrusions = 0, n_blocked_lanes = 0, n_deadend_lanes = 0, n_conflict_pairs = 0, n_pass_lanes = 0;
 	double build_ms = 0.0, last_step_us = 0.0;
+	// the steered body: how far its middle strays from the line the driver aims for (on lanes, in junctions), how far
+	// a car going straight in its lane reaches over the lane's edge, the hardest turn, moves at full lock
+	double trk_sum = 0.0;
+	int trk_n = 0, steer_sat = 0, crawl_round = 0;
+	float trk_max_calm = 0.0f;   // ... of a car that has held its line for 4 s and more
+	float trk_max = 0.0f, trk_max_junction = 0.0f, lane_over_max = 0.0f, latacc_max = 0.0f, yaw_step_max = 0.0f;
+	float worst_j[8] = { 0 }, worst_o[8] = { 0 };   // where the two worst cases were: x, z, speed, the line's own offset, path or lane, turn, time step, car
 };
 
 struct Track {
@@ -211,7 +220,15 @@ public:
 	float x[MAX_CARS], y[MAX_CARS], z[MAX_CARS], fx[MAX_CARS], fz[MAX_CARS], yaw[MAX_CARS], pitch[MAX_CARS];
 	float px[MAX_CARS], py[MAX_CARS], pz[MAX_CARS], pyaw[MAX_CARS], ppitch[MAX_CARS];
 	float hl[MAX_CARS], hw[MAX_CARS], rad[MAX_CARS];
-	float steer[MAX_CARS], latacc[MAX_CARS];
+	float steer[MAX_CARS], latacc[MAX_CARS];   // steer: the front wheels' angle, rad, + = left (the body is a steered car: traffic_body.h)
+	float wb[MAX_CARS], smax[MAX_CARS];        // wheelbase, the steering's lock
+	float latm[MAX_CARS];                      // where the body's middle really is beside its line (lat is where the driver aims)
+	// a car that has pulled out of a kerb stall: where it stood beside its lane (0 = no such plan) and how far it has
+	// come since. Its way into the lane is an S over OUT_M metres of road, as its way into a stall is one (pull_plan)
+	float out_lat0[MAX_CARS], out_d[MAX_CARS];
+	float calm[MAX_CARS];   // seconds since the driver last moved his line sideways (tests: how well a car HOLDS a line)
+	float roll[MAX_CARS], proll[MAX_CARS], rollv[MAX_CARS];   // the body leans out of a turn (+ = left side up) ...
+	float dpit[MAX_CARS], dpitv[MAX_CARS], rpitch[MAX_CARS];   // ... and dips under the brakes; rpitch = the road's own slope
 	float wait_t[MAX_CARS], blocked_t[MAX_CARS], honk_cd[MAX_CARS], crash_t[MAX_CARS], slow_t[MAX_CARS], lc_t[MAX_CARS];
 	float pass_lat[MAX_CARS], pass_rem[MAX_CARS], hard_cd[MAX_CARS];
 	int32_t h_conn[MAX_CARS][MAX_HELD];
