@@ -5,6 +5,25 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 19 Nov ~22:00 (PC session): THE LAND FITTED UNDER THE APARTMENT FILL (Yasin: "apartmen block still built under the
+  terrain fix it"; "they were supposed to be careful from th start"; "CONSIDER THE ELEVATION" - "i deliberately wrote
+  this to all of them"). The apartment and waterfront fill branches had been merged into this branch that afternoon
+  (commits a4874e33, 3c77453a) and their 14 pieces added to the layout; the land was not fitted to them.
+  MEASURED BEFORE: apartments 38,813 m2 of 88,318 m2 of block ground under the land. Blocks 1 and 2: up to 26 cm
+  under on 3-64 % of each piece. Block 3 (n_apt_b3_w / _e): 76 % and 83 % under, up to 0.70 m and 1.03 m: that block
+  did not follow the land. Waterfront fill: 16,334 m2 under, 8,462 m2 by more than 30 cm, deepest 1.42 m.
+  DONE (ONLY THE LAND; no piece, no lock): `lower_land_to_pieces.py OUT/super/ground --only=grow_apt --fit
+  --ease-from=<the land before>` (new option --only: of the growth zones only these families ask and are fitted):
+  4,671 nodes lowered (usual 0.13 m, largest 1.19 m), 715 raised back to the blocks' edges, none of another family,
+  no sea node; changed nodes lie in x 256..492, z -784..-296. Game land baked again (height.f32z); `x_wall_feet`
+  rebuilt for the new land and the new blocks (87 blocks, 7,417 faces). AFTER: apartments 0 m2 under the land; every
+  other family as before; lock test RESULT PASS (510 pieces, 153 files). Pictures as it was / fitted:
+  OUT/super/work/apt_shots (sent to Yasin).
+  NEW TOOL: `tools/city/super/sc_ground.py` writes the whole city's ground in the form ground_check.py and the land
+  tools read, from the superchecker's read-outs (30 s; the Godot whole-city dump dies on this PC's card).
+  NOT DONE: THE WATERFRONT FILL IS STILL 16,334 m2 UNDER THE LAND (not asked; it lies at the shore that was redrawn on
+  19 Nov morning: a look first). The runtime bake and the phone have not been run with this land. Block 3's own
+  ground still ignores the hill: the land was cut to it (up to 1.19 m), the block was not rebuilt.
 - 19 Nov ~20:30 (PC session): THE FIRST BLOCK IS INSTALLED BY THE SUPERCHECKER: g_v1_j4ne (gritty, J Ave x 4th) AND ITS
   TWO ROOMS (Yasin, asked "Put the proven fixes into the first block (g_v1_j4ne) now?": "Yes, install it").
   WHAT CHANGED IN THE MAP, AND NOTHING ELSE: `pieces/g_v1_j4ne.scn` (96 single changes: 5 builder trees out, 54 wear

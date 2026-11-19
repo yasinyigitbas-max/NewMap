@@ -22,6 +22,7 @@ untouched land with nothing built on it.
               fit_up()): a block's edge does not stand over the land, the land does not cover a piece
   --ease-from=<npz>   also ease the banks beside the lowered land (see ease()); <npz> is the land grid from BEFORE
               the lowering:  git show bac444bc:map_dc/coronado/city_kit/zoning/terrain_grid.npz > OUT/terrain_grid_before_lowering.npz
+  --only=grow_apt[,..]   of the growth zones, only these families ask and are fitted
   --ask=all   let every family's ground ask (default: only the growth zones, from 'grow_*' layout rows; the road kit
               and the approved samples keep the land terrain.py fitted to them)
 After --write: python -I tools/city/pilot/zoning/bake_game_terrain.py (the game-format land, data_citykit).
@@ -230,7 +231,10 @@ def main():
     # fitted). The road kit and the approved samples were fitted by terrain.py and stay as they are: their cells
     # within 5 cm are raster noise, and the waterfront sample's ground reaches under the sea level.
     askall = '--ask=all' in sys.argv
-    may = np.array([askall or f.startswith('grow_') for f in fams])[fi]
+    # --only=grow_apt[,grow_wf]: of the growth zones, only these families ask and are fitted (19 Nov evening: the
+    # apartment fill was merged with its ground under the land; the other zones were fitted that morning)
+    only = next((a.split('=', 1)[1].split(',') for a in sys.argv[1:] if a.startswith('--only=')), None)
+    may = np.array([askall or (f.startswith('grow_') and (only is None or any(f.startswith(o) for o in only))) for f in fams])[fi]
     not_asked = over & ~may
     over = over & may
     # the nodes those cells rest on
