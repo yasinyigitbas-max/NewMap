@@ -1,0 +1,153 @@
+{
+ "area": "res_a",
+ "piece": "s_res_a",
+ "zone": "Residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - parkway trees, runs of one species per block face, 20-30 m apart; west face fan palms because broadleaf on both faces put 12 in view (limit 8); Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    4.15,
+    -358.632
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, nothing within 3 m: fan palm, the face's species (palms: the broadleaf in-view limit) (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    4.15,
+    -241.368
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass, nothing within 3 m: fan palm, the face's species (palms: the broadleaf in-view limit) (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    4.15,
+    -333.94
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway grass, 24.7 m on: same run (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    4.15,
+    -266.06
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "west parkway grass, 24.7 m on: same run (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    4.15,
+    -308.246
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "west parkway grass, 25.7 m on: same run (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    4.15,
+    -291.754
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "west parkway grass, 25.7 m on: same run (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    4.15,
+    -356.373
+   ],
+   "yaw": 318,
+   "scale": 0.95,
+   "why": "east parkway grass, nothing within 3 m: coral tree, the face's species (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    4.15,
+    -243.627
+   ],
+   "yaw": 71,
+   "scale": 0.85,
+   "why": "east parkway grass, nothing within 3 m: coral tree, the face's species (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    4.15,
+    -330.244
+   ],
+   "yaw": 184,
+   "scale": 0.9,
+   "why": "east parkway grass, 26.2 m on: same run (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    4.15,
+    -269.756
+   ],
+   "yaw": 297,
+   "scale": 0.95,
+   "why": "east parkway grass, 26.2 m on: same run (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    -793.55,
+    4.15,
+    -308.117
+   ],
+   "yaw": 50,
+   "scale": 0.85,
+   "why": "east parkway grass, 22.1 m on: same run (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    -806.45,
+    4.15,
+    -291.883
+   ],
+   "yaw": 163,
+   "scale": 0.9,
+   "why": "east parkway grass, 22.1 m on: same run (place 2 of 2 of this piece)"
+  }
+ ]
+}
