@@ -1,0 +1,12 @@
+{
+ "area": "res_m400_0_sw", "piece": "r_q_m400_0_sw", "zone": "residential yards",
+ "rule": "docs/TREE_PLAN.md: one yard tree for every two or three houses, in back yards and at lot corners, never against a fence or a wall (zone 813 -> about 400)",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The quadrant's fourteen builder trees go (jacarandas, eucalyptus and ficus along the back fences, a queen palm 3 m from a house front, others by the seating); five come back on their own spots, about one for every two houses: by the adirondack chair, the grill, the swing set, on the open lot corner, and one back yard.",
+ "trees": [
+  {"base": "tree_coral_b", "cond": "normal", "at": [-451.0, 6.59, 29.1], "yaw": 15.0, "scale": 0.85, "why": "the back yard with the adirondack chair (1.3 m off): a coral tree to sit under"},
+  {"base": "tree_jacaranda_a", "cond": "normal", "at": [-477.0, 6.77, 85.5], "yaw": 105.0, "scale": 0.85, "why": "the south-west yard with the kettle grill (1.7 m off): a jacaranda over the cook"},
+  {"base": "tree_magnolia_a", "cond": "normal", "at": [-442.6, 5.33, 63.2], "yaw": 195.0, "scale": 0.85, "why": "the yard with the swing set (2.8 m off): shade over the swings"},
+  {"base": "tree_ficus_b", "cond": "normal", "at": [-496.8, 7.71, 96.6], "yaw": 285.0, "scale": 0.9, "why": "the open lot corner at the south-west, 24 m from the walls: an old ficus"},
+  {"base": "tree_ficus_b", "cond": "normal", "at": [-412.4, 6.15, 42.6], "yaw": 45.0, "scale": 0.85, "why": "the east back yard of the north row, 7 m from the house: the yard's tree"}
+ ]
+}
