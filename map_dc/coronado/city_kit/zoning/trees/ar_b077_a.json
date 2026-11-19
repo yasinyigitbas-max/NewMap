@@ -1,0 +1,69 @@
+{
+ "area": "ar_b077_a",
+ "piece": "s_ar_b077_a",
+ "zone": "Arterial",
+ "rule": "docs/TREE_PLAN.md: arterials - trees on the grass strips only, one species a face; west face fan palms to keep the broadleaf in view under its limit; Yasin 19 Nov: no tree stays in a well, new trees by hand on grass",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    35.868,
+    14.086,
+    -1188.732
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west grass strip, nothing within 3 m: fan palm (palms here: the broadleaf in view is near its limit)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    89.811,
+    12.666,
+    -1188.678
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west grass strip, 54 m on (the strip between holds the next piece's view): same run"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    115.392,
+    11.604,
+    -1188.627
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west grass strip, 25.6 m on: same run"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    32.058,
+    14.118,
+    -1211.341
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east grass strip, nothing within 3 m: magnolia, the face's species"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    65.947,
+    13.481,
+    -1211.332
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "east grass strip, 33.8 m on: same run"
+  }
+ ]
+}

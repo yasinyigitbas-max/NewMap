@@ -1,0 +1,39 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 19 nodes (with every mesh of the buildings), 7424 ground and ground-collision triangles, 21 prop instances, 11 colliders, 344 wear marks are identical in both files
+PROOF differences found between the files: 63 lines only in the old one, 0 only in the new one
+PROOF change #1 remove tree_jacaranda_b at (-11.27, 0.03, 35.87) removed, in 3 tier(s) and its collider  [tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove tree_jacaranda_b at (11.21, -1.92, 102.96) removed, in 3 tier(s) and its collider  [tree_jacaranda_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove tree_jacaranda_a at (-11.26, -0.16, 48.77) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove tree_jacaranda_a at (-11.32, -1.39, 89.81) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove tree_jacaranda_a at (11.29, -1.42, 90.50) removed, in 3 tier(s) and its collider  [tree_jacaranda_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove palm_mexican_fan_a at (-11.25, -1.81, 100.33) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove palm_mexican_fan_a at (-11.37, -2.46, 115.39) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove tree_magnolia_a at (11.34, 0.06, 32.06) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove tree_magnolia_a at (11.33, -0.58, 65.95) removed, in 3 tier(s) and its collider  [tree_magnolia_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove tree_magnolia_b at (11.26, -0.07, 43.22) removed, in 3 tier(s) and its collider  [tree_magnolia_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #11 remove_decal: one wear mark at (-9.82, -0.20, 46.73) removed  [pale patch mark lies on grass]
+PROOF change #12 remove_decal: one wear mark at (-11.41, -0.50, 65.89) removed  [oil mark lies on the sidewalk]
+PROOF change #13 remove_decal: one wear mark at (-11.01, -2.06, 108.00) removed  [oil mark lies on the sidewalk]
+PROOF change #14 remove_decal: one wear mark at (-13.78, -1.82, 102.21) removed  [grime mark lies on grass]
+PROOF change #15 remove_decal: one wear mark at (-13.78, -2.32, 113.92) removed  [grime mark lies on grass]
+PROOF change #16 remove_decal: one wear mark at (9.78, -1.65, 94.24) removed  [pale patch mark lies on grass]
+PROOF change #17 remove_decal: one wear mark at (11.21, -0.29, 58.09) removed  [oil mark lies on the sidewalk]
+PROOF change #18 remove_decal: one wear mark at (11.41, -2.25, 112.22) removed  [oil mark lies on the sidewalk]
+PROOF note: 'Props/tree_magnolia_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_magnolia_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/tree_jacaranda_b_normal_near' held only listed items and is gone with them
+PROOF 18 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
