@@ -1,0 +1,297 @@
+{
+ "area": "apt",
+ "piece": "s_apt",
+ "zone": "Apartments street",
+ "rule": "docs/TREE_PLAN.md: apartments - a street row; residential street rule (runs of one species per block face, gaps at lamps and signs), thinned to 2 a face by the in-view limit (12 trees, 8 broadleaf within 60 m: the piece stands 6 times in a row). Yasin 19 Nov: no tree stays in a well, new trees by hand on grass only",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    243.55,
+    6.15,
+    -554.5
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass: the face's queen palm row (palms keep the broadleaf count under the in-view limit), nothing in the way (place 1 of 6 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    256.45,
+    6.15,
+    -645.5
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway grass: the face's queen palm row (palms keep the broadleaf count under the in-view limit), nothing in the way (place 2 of 6 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    295.5,
+    6.15,
+    -593.55
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "west parkway grass: the face's queen palm row (palms keep the broadleaf count under the in-view limit), nothing in the way (place 3 of 6 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    204.5,
+    6.15,
+    -606.45
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "west parkway grass: the face's queen palm row (palms keep the broadleaf count under the in-view limit), nothing in the way (place 4 of 6 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -406.45,
+    6.15,
+    -954.5
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "west parkway grass: the face's queen palm row (palms keep the broadleaf count under the in-view limit), nothing in the way (place 5 of 6 of this piece)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    243.55,
+    6.15,
+    -754.5
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "west parkway grass: the face's queen palm row (palms keep the broadleaf count under the in-view limit), nothing in the way (place 6 of 6 of this piece)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    243.55,
+    6.15,
+    -518.0
+   ],
+   "yaw": 318,
+   "scale": 0.95,
+   "why": "west parkway grass, 36.5 m on: the lamp at 72 m stands in the gap (place 1 of 6 of this piece)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    256.45,
+    6.15,
+    -682.0
+   ],
+   "yaw": 71,
+   "scale": 0.85,
+   "why": "west parkway grass, 36.5 m on: the lamp at 72 m stands in the gap (place 2 of 6 of this piece)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    332.0,
+    6.15,
+    -593.55
+   ],
+   "yaw": 184,
+   "scale": 0.9,
+   "why": "west parkway grass, 36.5 m on: the lamp at 72 m stands in the gap (place 3 of 6 of this piece)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    168.0,
+    6.15,
+    -606.45
+   ],
+   "yaw": 297,
+   "scale": 0.95,
+   "why": "west parkway grass, 36.5 m on: the lamp at 72 m stands in the gap (place 4 of 6 of this piece)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    -406.45,
+    6.15,
+    -918.0
+   ],
+   "yaw": 50,
+   "scale": 0.85,
+   "why": "west parkway grass, 36.5 m on: the lamp at 72 m stands in the gap (place 5 of 6 of this piece)"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    243.55,
+    6.15,
+    -718.0
+   ],
+   "yaw": 163,
+   "scale": 0.9,
+   "why": "west parkway grass, 36.5 m on: the lamp at 72 m stands in the gap (place 6 of 6 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    256.45,
+    6.15,
+    -557.0
+   ],
+   "yaw": 276,
+   "scale": 0.95,
+   "why": "east parkway grass: the face's jacaranda run, hydrant 2.8 m away stays reachable (place 1 of 6 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    243.55,
+    6.15,
+    -643.0
+   ],
+   "yaw": 29,
+   "scale": 0.85,
+   "why": "east parkway grass: the face's jacaranda run, hydrant 2.8 m away stays reachable (place 2 of 6 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    293.0,
+    6.15,
+    -606.45
+   ],
+   "yaw": 142,
+   "scale": 0.9,
+   "why": "east parkway grass: the face's jacaranda run, hydrant 2.8 m away stays reachable (place 3 of 6 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    207.0,
+    6.15,
+    -593.55
+   ],
+   "yaw": 255,
+   "scale": 0.95,
+   "why": "east parkway grass: the face's jacaranda run, hydrant 2.8 m away stays reachable (place 4 of 6 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -393.55,
+    6.15,
+    -957.0
+   ],
+   "yaw": 8,
+   "scale": 0.85,
+   "why": "east parkway grass: the face's jacaranda run, hydrant 2.8 m away stays reachable (place 5 of 6 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    256.45,
+    6.15,
+    -757.0
+   ],
+   "yaw": 121,
+   "scale": 0.9,
+   "why": "east parkway grass: the face's jacaranda run, hydrant 2.8 m away stays reachable (place 6 of 6 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    256.45,
+    6.15,
+    -517.5
+   ],
+   "yaw": 234,
+   "scale": 0.95,
+   "why": "east parkway grass, 39.5 m on: the sign and lamp at 63-73 m stand in the gap (place 1 of 6 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    243.55,
+    6.15,
+    -682.5
+   ],
+   "yaw": 347,
+   "scale": 0.85,
+   "why": "east parkway grass, 39.5 m on: the sign and lamp at 63-73 m stand in the gap (place 2 of 6 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    332.5,
+    6.15,
+    -606.45
+   ],
+   "yaw": 100,
+   "scale": 0.9,
+   "why": "east parkway grass, 39.5 m on: the sign and lamp at 63-73 m stand in the gap (place 3 of 6 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    167.5,
+    6.15,
+    -593.55
+   ],
+   "yaw": 213,
+   "scale": 0.95,
+   "why": "east parkway grass, 39.5 m on: the sign and lamp at 63-73 m stand in the gap (place 4 of 6 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -393.55,
+    6.15,
+    -917.5
+   ],
+   "yaw": 326,
+   "scale": 0.85,
+   "why": "east parkway grass, 39.5 m on: the sign and lamp at 63-73 m stand in the gap (place 5 of 6 of this piece)"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    256.45,
+    6.15,
+    -717.5
+   ],
+   "yaw": 79,
+   "scale": 0.9,
+   "why": "east parkway grass, 39.5 m on: the sign and lamp at 63-73 m stand in the gap (place 6 of 6 of this piece)"
+  }
+ ]
+}

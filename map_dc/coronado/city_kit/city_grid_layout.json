@@ -9383,6 +9383,186 @@
    ],
    "yaw": 0.0,
    "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b162_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b158_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b157_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_am_b042_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b157_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_am_b043_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b156_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_am_b044_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b156_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_amber_n",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b155_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_amber_s",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b155_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b154_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b154_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_apt",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b153_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b153_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
   }
  ],
  "coverage": {

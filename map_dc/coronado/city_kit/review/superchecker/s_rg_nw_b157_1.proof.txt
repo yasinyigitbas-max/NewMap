@@ -1,0 +1,29 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 13 nodes (with every mesh of the buildings), 5704 ground and ground-collision triangles, 11 prop instances, 6 colliders, 266 wear marks are identical in both files
+PROOF differences found between the files: 59 lines only in the old one, 0 only in the new one
+PROOF change #1 remove palm_mexican_fan_a at (11.30, 0.09, 12.36) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove palm_mexican_fan_a at (-11.30, 0.09, 75.70) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove palm_mexican_fan_b at (11.30, 0.09, 25.66) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove palm_mexican_fan_b at (11.30, 0.09, 49.11) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove palm_mexican_fan_b at (11.30, 0.09, 73.05) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove palm_mexican_fan_b at (-11.30, 0.09, 12.08) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove palm_mexican_fan_b at (-11.30, 0.09, 23.28) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove palm_mexican_fan_b at (-11.30, 0.09, 39.80) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove palm_mexican_fan_c at (11.30, 0.09, 37.07) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove palm_mexican_fan_c at (11.30, 0.09, 62.41) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #11 remove palm_mexican_fan_c at (-11.30, 0.09, 51.11) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #12 remove palm_mexican_fan_c at (-11.30, 0.09, 63.40) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #13 remove_decal: one wear mark at (8.80, 0.01, 21.91) removed  [crack mark lies on grass]
+PROOF change #14 remove_decal: one wear mark at (-9.28, 0.01, 39.81) removed  [crack mark lies on grass]
+PROOF note: 'Props/palm_mexican_fan_c_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_near' held only listed items and is gone with them
+PROOF 14 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

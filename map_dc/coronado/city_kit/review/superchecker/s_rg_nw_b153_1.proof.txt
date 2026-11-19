@@ -1,0 +1,33 @@
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+     at: initialize (servers/audio/audio_server.cpp:258)
+PROOF compared: 14 nodes (with every mesh of the buildings), 6072 ground and ground-collision triangles, 14 prop instances, 8 colliders, 274 wear marks are identical in both files
+PROOF differences found between the files: 60 lines only in the old one, 0 only in the new one
+PROOF change #1 remove palm_mexican_fan_a at (8.33, 0.09, 17.09) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #2 remove palm_mexican_fan_a at (-14.27, 0.09, 29.83) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #3 remove palm_mexican_fan_a at (-14.27, 0.09, 55.35) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #4 remove palm_mexican_fan_a at (-14.27, 0.09, 76.77) removed, in 3 tier(s) and its collider  [palm_mexican_fan_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #5 remove palm_queen_a at (8.33, 0.09, 30.43) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #6 remove palm_queen_a at (8.33, 0.09, 54.40) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #7 remove palm_queen_a at (8.33, 0.09, 67.36) removed, in 3 tier(s) and its collider  [palm_queen_a: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #8 remove palm_mexican_fan_c at (8.33, 0.09, 42.19) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #9 remove palm_mexican_fan_c at (-14.27, 0.09, 65.93) removed, in 3 tier(s) and its collider  [palm_mexican_fan_c: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #10 remove palm_queen_b at (8.33, 0.09, 78.19) removed, in 3 tier(s) and its collider  [palm_queen_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #11 remove palm_mexican_fan_b at (-14.27, 0.09, 17.31) removed, in 3 tier(s) and its collider  [palm_mexican_fan_b: every builder tree goes (tree plan); trees come back by hand in the area's own tree list]
+PROOF change #12 remove_decal: one wear mark at (5.95, 0.01, 40.21) removed  [crack mark lies on grass]
+PROOF note: 'Props/palm_mexican_fan_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_b_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_c_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_queen_a_normal_near' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_far' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_mid' held only listed items and is gone with them
+PROOF note: 'Props/palm_mexican_fan_a_normal_near' held only listed items and is gone with them
+PROOF 12 listed changes, every one found, nothing else differs
+PROOF RESULT PASS
