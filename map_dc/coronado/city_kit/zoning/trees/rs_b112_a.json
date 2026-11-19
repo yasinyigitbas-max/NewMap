@@ -1,0 +1,57 @@
+{
+ "area": "rs_b112_a",
+ "piece": "s_rs_b112_a",
+ "zone": "residential street",
+ "rule": "docs/TREE_PLAN.md: residential streets - street trees in the parkway, runs of one species per block face, 20-30 m apart, gaps at driveways and lamps; within the in-view limit (8 broadleaf / 12 trees within 60 m): room for 4 here",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    -159.278,
+    6.15,
+    -193.55
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "west parkway grass, first of the west face's fan palms (old spot and species)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    -123.054,
+    6.15,
+    -193.55
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "west parkway, the second fan palm (one species a face: the queen palm here becomes a fan palm); driveways in the 36 m between"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    -156.111,
+    6.15,
+    -206.45
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "east parkway grass, first of the east face's coral trees (old spot and species)"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -129.98,
+    6.15,
+    -206.45
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "east parkway 26 m on, the second coral tree; the 11-13 m doubles and the jacaranda go"
+  }
+ ]
+}
