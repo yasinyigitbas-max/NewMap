@@ -202,6 +202,10 @@ class Finder(sc_more.More):
             if it.mount != 'ground' or it.kind in ('fence', 'post', 'gate', 'hedge'): continue
             if has(it.base, WF_STRUCT) or has(it.base, GROUND_COVER): continue
             x, z = (it.pos[0], it.pos[2]) if it.kind in ('tree', 'post_overhead') else (it.ctr[0], it.ctr[1])
+            # a kit prop's origin is its foot: when the ground under the origin is at its base, it stands right, whatever
+            # its outline reaches over (19 Nov streets: signal mast arms over the road read 'hangs 0.15 m' and were pushed
+            # into the pavement; kerb inlets in the gutter read '0.10 m into the ground' against the kerb and were lifted)
+            if any(abs(it.y0 - s) <= TOL_AIR for s, k in self.supports(it, it.pos[0], it.pos[2]) if k in ('ground', 'bld')): continue
             sup = self.supports(it, x, z)
             if not sup:
                 # nothing under its middle: try its origin, then call it off the ground altogether
