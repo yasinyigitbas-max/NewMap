@@ -2,21 +2,6 @@
  "fixes": [
   {
    "at": [
-    -25.9000244140625,
-    0.150000005960464,
-    -11.2999267578125
-   ],
-   "base": "prop_signal_mast_arm",
-   "chosen": true,
-   "cond": "worn",
-   "kind": "lane_mouth",
-   "mode": "choose",
-   "n": 5.0,
-   "op": "remove",
-   "reason": "erased (in doubt): lane_mouth: no plainly safe place (Yasin: delete when unsure) [prop_signal_mast_arm stands in the mouth of a drive or lane]"
-  },
-  {
-   "at": [
     15.6816253662109,
     0.162000000476837,
     14.4818116823832
