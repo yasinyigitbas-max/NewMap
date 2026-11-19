@@ -1,6 +1,6 @@
 {
  "_doc": "High street fill (claude/fill-high-street, 19 Nov): which business is behind which door of the new high street",
- "count": 42,
+ "count": 53,
  "rooms": [
   {
    "id": "hs_b1_amber_brick_row_0",
@@ -1519,6 +1519,403 @@
      "facade": "front",
      "along": 9.75,
      "w": 5.68
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_brick_0",
+   "piece": "n_hs_b6_amber",
+   "label": "brick",
+   "model": "ck/ck_brk3_row2",
+   "pos": [
+    23.6,
+    6.148899999999999,
+    -183.7
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -1.1,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "books",
+   "name": "Ninth Street Books",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: a bookshop at the top of the climb, by 9th St",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.4
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_bankph_0",
+   "piece": "n_hs_b6_amber",
+   "label": "bankph",
+   "model": "ck/ck_svc_bank_pharm",
+   "pos": [
+    22.6,
+    6.0888,
+    -171.5
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 4.6,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "bank",
+   "name": "Hill Savings",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: the hill's savings bank on its main street",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 2.48
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 3.4
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_row_0",
+   "piece": "n_hs_b6_amber",
+   "label": "row",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    24.77,
+    5.7136,
+    -155.85
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -4.08,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    -3.0
+   ],
+   "kind": "jewelry",
+   "name": "Silver Tide",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: a jeweller in the small shop row",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 5.18
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_row_1",
+   "piece": "n_hs_b6_amber",
+   "label": "row",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    24.77,
+    5.7136,
+    -155.85
+   ],
+   "yaw": -90.0,
+   "door_index": 1,
+   "door_along": -1.92,
+   "door_w": 1.6,
+   "bay": [
+    -3.0,
+    2.92
+   ],
+   "kind": "shoes",
+   "name": "Hill Shoes",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: shoes for the hill's families (a key shop was tried first: its pegboard covered the back door)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_row_2",
+   "piece": "n_hs_b6_amber",
+   "label": "row",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    24.77,
+    5.7136,
+    -155.85
+   ],
+   "yaw": -90.0,
+   "door_index": 2,
+   "door_along": 7.76,
+   "door_w": 1.6,
+   "bay": [
+    2.92,
+    8.7
+   ],
+   "kind": "clothes",
+   "name": "Hillcrest Threads",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: a clothes shop, the row's corner to the bike rack",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 5.18
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_corner_0",
+   "piece": "n_hs_b6_amber",
+   "label": "corner",
+   "model": "ck/ck_brk3_corner2",
+   "pos": [
+    23.6,
+    5.2157,
+    -140.2
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": 4.9,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "pharmacy",
+   "name": "Ninth Street Pharmacy",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: the chemist by the paseo, nearest the rec center and the hill",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 2.4,
+     "w": 2.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_trade_0",
+   "piece": "n_hs_b6_amber",
+   "label": "trade",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    22.6,
+    4.6912,
+    -125.3
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "store",
+   "name": "Coronado Hardware",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: the hardware counter (paint, hinges, garden tools) the hill's houses need",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_trade_1",
+   "piece": "n_hs_b6_amber",
+   "label": "trade",
+   "model": "ck/ck_svc_trade",
+   "pos": [
+    22.6,
+    4.6912,
+    -125.3
+   ],
+   "yaw": -90.0,
+   "door_index": 1,
+   "door_along": 3.0,
+   "door_w": 1.8,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "cleaners",
+   "name": "Plaza Cleaners",
+   "style": "sun",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: a dry cleaner by the pocket plaza (a gift shop's frames were too tall for the trade building's 2.2 m ceiling; a key shop's pegboard covered its roll-up)",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_amber_cafe_0",
+   "piece": "n_hs_b6_amber",
+   "label": "cafe",
+   "model": "commercial/com_cafe_seaside",
+   "pos": [
+    24.77,
+    4.3636,
+    -115.0
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "cafe",
+   "name": "Hillclimb Coffee",
+   "style": "cream",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: coffee at the pocket plaza, the rest on the climb up Amber",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 3.8,
+     "w": 3.0
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_ninth_a1_0",
+   "piece": "n_hs_b6_ninth",
+   "label": "a1",
+   "model": "apartments/apt_stucco3_cream",
+   "pos": [
+    90.5,
+    7.641,
+    -175.9
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -9.2,
+    9.2
+   ],
+   "kind": "corner_shop",
+   "name": "Hilltop Market",
+   "style": "red",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: the corner shop the hill walks to, under three storeys of flats on 9th St; newspapers and the ice chest at its door",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 6.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 6.67,
+     "w": 1.35
+    }
+   ]
+  },
+  {
+   "id": "hs_b6_ninth_rec_center_0",
+   "piece": "n_hs_b6_ninth",
+   "label": "rec_center",
+   "model": "civic/civ_rec_center",
+   "pos": [
+    65.0,
+    6.7894000000000005,
+    -173.05
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "hall",
+   "name": "Hill Rec Center",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "block 6: the hill's rec center hall (classes, the after-school club), the community-hall layout",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 7.72,
+     "w": 1.45
+    },
+    {
+     "facade": "left",
+     "along": 7.72,
+     "w": 1.45
+    },
+    {
+     "facade": "right",
+     "along": 7.72,
+     "w": 1.45
+    },
+    {
+     "facade": "left",
+     "along": 7.72,
+     "w": 1.45
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 3.0
     }
    ]
   }

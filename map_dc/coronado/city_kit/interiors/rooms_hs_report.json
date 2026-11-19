@@ -1,14 +1,14 @@
 {
  "rooms": [
   {
-   "d": 14.15,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b5_amber_post_0.scn",
-   "id": "g_hs_b5_amber_post_0",
-   "kind": "bank",
-   "lights": 6,
-   "name": "Coronado Post Office",
-   "props": 58,
-   "w": 21.4
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b6_amber_trade_1.scn",
+   "id": "g_hs_b6_amber_trade_1",
+   "kind": "cleaners",
+   "lights": 4,
+   "name": "Plaza Cleaners",
+   "props": 27,
+   "w": 5.7
   }
  ]
 }
