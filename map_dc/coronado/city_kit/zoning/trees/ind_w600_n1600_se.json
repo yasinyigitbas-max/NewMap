@@ -1,0 +1,10 @@
+{
+ "area": "ind_w600_n1600_se", "piece": "i_va_w600_n1600_se", "zone": "industrial",
+ "rule": "docs/TREE_PLAN.md: none - only the screen of eucalyptus where a yard faces homes (zone 51 -> about 30)",
+ "written": "by hand, 19 Nov 2026 (PC session, city-wide superchecker run). The six builder trees along the east wall: the three eucalyptus stay as the screen, on their own spots; the three torrey pines go.",
+ "trees": [
+  {"base": "tree_eucalyptus_a", "cond": "normal", "at": [-503.6, 2.15, -1559.5], "yaw": 0.0, "scale": 1.0, "why": "the screen along the yard's east wall, toward the homes"},
+  {"base": "tree_eucalyptus_b", "cond": "normal", "at": [-503.6, 2.15, -1535.2], "yaw": 120.0, "scale": 0.95, "why": "the screen along the yard's east wall, toward the homes"},
+  {"base": "tree_eucalyptus_a", "cond": "normal", "at": [-504.2, 2.15, -1511.6], "yaw": 240.0, "scale": 0.9, "why": "the screen along the yard's east wall, toward the homes"}
+ ]
+}

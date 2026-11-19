@@ -1,0 +1,108 @@
+PROOF compared: 178 nodes (with every mesh of the buildings), 5074 ground and ground-collision triangles, 513 prop instances, 163 colliders, 432 wear marks are identical in both files
+PROOF differences found between the files: 113 lines only in the old one, 19 only in the new one
+PROOF change #83 add_collider: fence_temp_fence_panel_screen at (82.50, 0.15, 61.00) got a collision shape  [fence_temp_fence_panel_screen has no collision: you walk and drive through it]
+PROOF change #84 add_collider: fence_temp_fence_panel_screen at (82.50, 0.15, 61.30) got a collision shape  [fence_temp_fence_panel_screen has no collision: you walk and drive through it]
+PROOF change #85 add_collider: fence_temp_fence_panel at (84.00, 0.15, 61.50) got a collision shape  [fence_temp_fence_panel has no collision: you walk and drive through it]
+PROOF change #86 add_collider: fence_temp_fence_panel at (84.00, 0.15, 61.80) got a collision shape  [fence_temp_fence_panel has no collision: you walk and drive through it]
+PROOF change #87 add_collider: fence_temp_fence_panel at (84.00, 0.15, 62.10) got a collision shape  [fence_temp_fence_panel has no collision: you walk and drive through it]
+PROOF change #9 move prop_meter_gas: (51.70, 0.35, 28.53) -> (52.30, 0.35, 28.53), in 1 tier(s) and its collider  [moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 23 cm from a apt door of workwear_store (services keep 35 cm off)]]
+PROOF change #10 move prop_meter_gas: (84.90, 0.35, 96.02) -> (85.50, 0.35, 96.02), in 1 tier(s) and its collider  [moved slid +0.6 m along its wall: a short slide along its own wall clears the opening [prop_meter_gas hangs 17 cm over a apt door of fleet_wash]]
+PROOF change #5 remove prop_barricade_type1 at (89.00, 0.15, 39.00) removed, in 1 tier(s) and its collider  [erased (in doubt): garage: no plainly safe place (Yasin: delete when unsure) [prop_barricade_type1 stands in front of the garage lockup_4]]
+PROOF change #6 remove prop_barricade_type1 at (89.00, 0.15, 40.80) removed, in 1 tier(s) and its collider  [erased (in doubt): garage: no plainly safe place (Yasin: delete when unsure) [prop_barricade_type1 stands in front of the garage lockup_4]]
+PROOF change #7 remove prop_barricade_type1 at (89.00, 0.15, 42.60) removed, in 1 tier(s) and its collider  [erased (in doubt): garage: no plainly safe place (Yasin: delete when unsure) [prop_barricade_type1 stands in front of the garage lockup_5]]
+PROOF change #8 remove prop_barricade_type1 at (89.00, 0.15, 44.40) removed, in 1 tier(s) and its collider  [erased (in doubt): garage: no plainly safe place (Yasin: delete when unsure) [prop_barricade_type1 stands in front of the garage lockup_5]]
+PROOF change #11 remove prop_trash_cart_black at (39.80, 0.15, 31.80) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (1.8 m from a wall, 23.1 m from a fence)]]
+PROOF change #12 remove prop_trash_cart_blue at (30.00, 0.15, 31.70) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (1.7 m from a wall, 21.1 m from a fence)]]
+PROOF change #13 remove prop_hydrant_red at (60.62, 0.15, 72.90) removed, in 1 tier(s) and its collider  [erased (in doubt): hydrant_nowhere: no plainly safe place (Yasin: delete when unsure) [prop_hydrant_red stands 7.2 m from any building wall and 3.0 m inside the block]]
+PROOF change #14 remove prop_picnic_table at (29.87, 0.15, 49.30) removed, in 1 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_picnic_table stands on asphalt where vehicles go]]
+PROOF change #15 remove prop_trash_receptacle at (29.34, 0.15, 47.03) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle stands in the open (8.0 m from a wall, 20.7 m from a fence)]]
+PROOF change #16 remove prop_vending_snack at (30.33, 0.15, 45.69) removed, in 3 tier(s) and its collider  [erased (in doubt): on_asphalt: no plainly safe place (Yasin: delete when unsure) [prop_vending_snack stands on asphalt where vehicles go]]
+PROOF change #17 remove prop_trash_cart_blue at (67.74, 0.15, 64.35) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (15.6 m from a wall, 14.8 m from a fence)]]
+PROOF change #18 remove prop_trash_cart_blue at (73.75, 0.15, 64.41) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_blue stands in the open (15.6 m from a wall, 8.9 m from a fence)]]
+PROOF change #19 remove prop_trash_cart_green at (67.62, 0.15, 68.72) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (11.3 m from a wall, 16.0 m from a fence)]]
+PROOF change #20 remove prop_trash_cart_green at (76.48, 0.15, 67.10) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_green stands in the open (12.9 m from a wall, 7.4 m from a fence)]]
+PROOF change #21 remove prop_trash_cart_black at (62.18, 0.15, 68.92) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (11.1 m from a wall, 21.2 m from a fence)]]
+PROOF change #22 remove prop_trash_cart_black at (63.14, 0.15, 68.61) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_trash_cart_black stands in the open (11.4 m from a wall, 20.2 m from a fence)]]
+PROOF change #23 remove prop_recycling_receptacle at (79.46, 0.15, 63.32) removed, in 1 tier(s) and its collider  [erased (in doubt): bin_open: no plainly safe place (Yasin: delete when unsure) [prop_recycling_receptacle stands in the open (14.2 m from a wall, 3.1 m from a fence)]]
+PROOF change #67 remove prop_usps_collection_box at (27.00, 0.15, 13.31) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_usps_collection_box leaves 0.9 m of a 1.8 m wide walk]]
+PROOF change #68 remove prop_newspaper_box_red at (31.50, 0.15, 13.31) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_newspaper_box_red leaves 1.0 m of a 1.8 m wide walk]]
+PROOF change #69 remove prop_trash_receptacle at (7.70, 0.15, 31.00) removed, in 1 tier(s) and its collider  [erased (in doubt): walk_narrow: no plainly safe place (Yasin: delete when unsure) [prop_trash_receptacle leaves 0.9 m of a 1.8 m wide walk]]
+PROOF change #24 remove_decal: one wear mark at (35.49, 0.16, 68.15) removed  [tyre marks mark lies on concrete]
+PROOF change #25 remove_decal: one wear mark at (37.33, 0.16, 67.35) removed  [tyre marks mark lies on concrete]
+PROOF change #26 remove_decal: one wear mark at (34.19, 0.16, 65.15) removed  [tyre marks mark lies on concrete]
+PROOF change #27 remove_decal: one wear mark at (36.02, 0.16, 64.35) removed  [tyre marks mark lies on concrete]
+PROOF change #28 remove_decal: one wear mark at (65.28, 0.16, 98.92) removed  [crack mark lies on gravel]
+PROOF change #29 remove_decal: one wear mark at (80.65, 0.16, 82.31) removed  [crack mark lies under the building fleet_wash]
+PROOF change #30 remove_decal: one wear mark at (82.14, 0.16, 89.10) removed  [crack mark lies under the building fleet_wash]
+PROOF change #31 remove_decal: one wear mark at (85.42, 0.16, 82.87) removed  [crack mark lies under the building fleet_wash]
+PROOF change #32 remove_decal: one wear mark at (83.23, 0.16, 88.86) removed  [crack mark lies under the building fleet_wash]
+PROOF change #33 remove_decal: one wear mark at (76.57, 0.16, 87.03) removed  [crack mark lies under the building fleet_wash]
+PROOF change #34 remove_decal: one wear mark at (86.17, 0.16, 81.13) removed  [crack mark lies under the building fleet_wash]
+PROOF change #35 remove_decal: one wear mark at (65.56, 0.16, 87.07) removed  [crack mark lies under the building fleet_wash]
+PROOF change #36 remove_decal: one wear mark at (83.45, 0.16, 92.09) removed  [crack mark lies under the building fleet_wash]
+PROOF change #37 remove_decal: one wear mark at (82.55, 0.16, 86.56) removed  [crack mark lies under the building fleet_wash]
+PROOF change #38 remove_decal: one wear mark at (84.40, 0.16, 88.25) removed  [crack mark lies under the building fleet_wash]
+PROOF change #39 remove_decal: one wear mark at (65.00, 0.16, 81.14) removed  [crack mark lies under the building fleet_wash]
+PROOF change #40 remove_decal: one wear mark at (69.52, 0.16, 83.90) removed  [crack mark lies under the building fleet_wash]
+PROOF change #41 remove_decal: one wear mark at (84.13, 0.16, 90.06) removed  [crack mark lies under the building fleet_wash]
+PROOF change #42 remove_decal: one wear mark at (75.36, 0.16, 83.58) removed  [crack mark lies under the building fleet_wash]
+PROOF change #43 remove_decal: one wear mark at (64.77, 0.16, 93.46) removed  [crack mark lies under the building fleet_wash]
+PROOF change #44 remove_decal: one wear mark at (83.64, 0.16, 81.16) removed  [crack mark lies under the building fleet_wash]
+PROOF change #45 remove_decal: one wear mark at (67.51, 0.16, 81.24) removed  [crack mark lies under the building fleet_wash]
+PROOF change #46 remove_decal: one wear mark at (78.83, 0.16, 92.20) removed  [crack mark lies under the building fleet_wash]
+PROOF change #47 remove_decal: one wear mark at (63.73, 0.16, 85.61) removed  [crack mark lies under the building fleet_wash]
+PROOF change #48 remove_decal: one wear mark at (67.86, 0.16, 92.43) removed  [crack mark lies under the building fleet_wash]
+PROOF change #49 remove_decal: one wear mark at (72.38, 0.16, 92.02) removed  [sealed patch mark lies under the building fleet_wash]
+PROOF change #50 remove_decal: one wear mark at (73.20, 0.16, 82.41) removed  [sealed patch mark lies under the building fleet_wash]
+PROOF change #51 remove_decal: one wear mark at (85.98, 0.16, 98.86) removed  [sealed patch mark lies on gravel]
+PROOF change #52 remove_decal: one wear mark at (79.27, 0.16, 91.77) removed  [sealed patch mark lies under the building fleet_wash]
+PROOF change #53 remove_decal: one wear mark at (30.20, 0.16, 60.59) removed  [sealed patch mark lies on concrete]
+PROOF change #54 remove_decal: one wear mark at (67.75, 0.16, 93.16) removed  [pale patch mark lies under the building fleet_wash]
+PROOF change #55 remove_decal: one wear mark at (78.68, 0.16, 89.37) removed  [oil mark lies under the building fleet_wash]
+PROOF change #56 remove_decal: one wear mark at (84.48, 0.16, 85.20) removed  [oil mark lies under the building fleet_wash]
+PROOF change #57 remove_decal: one wear mark at (66.27, 0.16, 89.78) removed  [oil mark lies under the building fleet_wash]
+PROOF change #58 remove_decal: one wear mark at (83.70, 0.16, 87.19) removed  [oil mark lies under the building fleet_wash]
+PROOF change #59 remove_decal: one wear mark at (67.63, 0.16, 93.34) removed  [oil mark lies under the building fleet_wash]
+PROOF change #60 remove_decal: one wear mark at (65.18, 0.16, 84.89) removed  [oil mark lies under the building fleet_wash]
+PROOF change #61 remove_decal: one wear mark at (71.96, 0.16, 87.59) removed  [oil mark lies under the building fleet_wash]
+PROOF change #62 remove_decal: one wear mark at (85.55, 0.16, 89.84) removed  [oil mark lies under the building fleet_wash]
+PROOF change #63 remove_decal: one wear mark at (65.41, 0.16, 92.07) removed  [oil mark lies under the building fleet_wash]
+PROOF change #64 remove_decal: one wear mark at (79.30, 0.16, 95.23) removed  [oil mark lies under the building fleet_wash]
+PROOF change #65 remove_decal: one wear mark at (80.54, 0.16, 85.28) removed  [grime mark lies under the building fleet_wash]
+PROOF change #66 remove_decal: one wear mark at (80.28, 0.16, 81.78) removed  [grime mark lies under the building fleet_wash]
+PROOF change #75 remove_decal: one wear mark at (30.21, 0.16, 64.25) removed  [an oil mark on concrete with no stall, garage or roll-up door near it]
+PROOF change #76 remove_decal: one wear mark at (31.97, 0.16, 65.82) removed  [an oil mark on concrete with no stall, garage or roll-up door near it]
+PROOF change #77 remove_decal: one wear mark at (33.90, 0.16, 64.73) removed  [an oil mark on concrete with no stall, garage or roll-up door near it]
+PROOF change #78 remove_decal: one wear mark at (35.98, 0.16, 65.90) removed  [an oil mark on concrete with no stall, garage or roll-up door near it]
+PROOF change #79 remove_decal: one wear mark at (38.15, 0.16, 64.31) removed  [an oil mark on concrete with no stall, garage or roll-up door near it]
+PROOF change #80 remove_decal: one wear mark at (39.74, 0.16, 63.72) removed  [an oil mark on concrete with no stall, garage or roll-up door near it]
+PROOF change #81 remove_decal: one wear mark at (35.13, 0.16, 64.45) removed  [an oil mark on concrete with no stall, garage or roll-up door near it]
+PROOF change #82 remove_decal: one wear mark at (38.14, 0.16, 64.45) removed  [an oil mark on concrete with no stall, garage or roll-up door near it]
+PROOF change #88 add_box: a collision box [0.94991254806519, 1.49995875358582, 6.82486248016357, 0.34013370513916, 2.99991750717163, 0.39007286071777] for a column of Buildings/public_works_office  [public_works_office: a 0.3 x 0.4 m column or post of the building has no collision]
+PROOF change #89 add_box: a collision box [3.10231399536133, 1.58192455768585, 6.82956886291504, 1.03496078491211, 3.1638491153717, 0.3994856262207] for a column of Buildings/public_works_office  [public_works_office: a 1.0 x 0.4 m column or post of the building has no collision]
+PROOF change #90 add_box: a collision box [-2.89757585525513, 1.58192455768585, 6.82956886291504, 1.03496078491211, 3.1638491153717, 0.3994856262207] for a column of Buildings/public_works_office  [public_works_office: a 1.0 x 0.4 m column or post of the building has no collision]
+PROOF change #91 add_box: a collision box [6.9498028755188, 1.49995875358582, 6.82486248016357, 0.34013370513916, 2.99991750717163, 0.39007286071777] for a column of Buildings/public_works_office  [public_works_office: a 0.3 x 0.4 m column or post of the building has no collision]
+PROOF change #92 add_box: a collision box [-2.2000458240509, 1.49999821186066, 5.65000009536743, 0.16, 2.99999642372131, 0.16] for a column of Buildings/workwear_store  [workwear_store: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #93 add_box: a collision box [7.80000019073486, 1.59999942779541, 5.95999813079834, 0.16, 3.19999885559082, 0.16] for a column of Buildings/salt_and_sign_store  [salt_and_sign_store: a 0.1 x 0.1 m column or post of the building has no collision]
+PROOF change #94 add_box: a collision box [2.699791431427, 1.12496221065521, 10.6998319625854, 0.53961185455322, 2.24992442131042, 0.54017356872559] for a column of Buildings/fleet_wash  [fleet_wash: a 0.5 x 0.5 m column or post of the building has no collision]
+PROOF change #95 add_box: a collision box [-2.30019617080688, 1.12496221065521, 10.6998319625854, 0.54001811981201, 2.24992442131042, 0.54017356872559] for a column of Buildings/fleet_wash  [fleet_wash: a 0.5 x 0.5 m column or post of the building has no collision]
+PROOF change #96 add_box: a collision box [0.19989967346191, 1.12496221065521, 10.6998319625854, 0.54001907348633, 2.24992442131042, 0.54017356872559] for a column of Buildings/fleet_wash  [fleet_wash: a 0.5 x 0.5 m column or post of the building has no collision]
+PROOF change #97 add_box: a collision box [0.19969511032105, 1.39995416998863, 11.6748905181885, 0.20000652313232, 1.69994050264359, 0.16] for a column of Buildings/fleet_wash  [fleet_wash: a 0.2 x 0.1 m column or post of the building has no collision]
+PROOF note: 'Props/prop_recycling_receptacle_clean_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_black_clean_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_green_clean_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_blue_clean_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_vending_snack_clean_far' held only listed items and is gone with them
+PROOF note: 'Props/prop_vending_snack_clean_mid' held only listed items and is gone with them
+PROOF note: 'Props/prop_vending_snack_clean_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_receptacle_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_picnic_table_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_hydrant_red_rusty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_receptacle_dirty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_newspaper_box_red_rusty_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_usps_collection_box_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_blue_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_trash_cart_black_worn_near' held only listed items and is gone with them
+PROOF note: 'Props/prop_barricade_type1_worn_near' held only listed items and is gone with them
+PROOF 88 listed changes, every one found, nothing else differs
+PROOF RESULT PASS

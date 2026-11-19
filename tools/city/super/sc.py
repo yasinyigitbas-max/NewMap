@@ -105,8 +105,12 @@ def cmd_fix(piece, fixes_path=None):
     # removals last within their kind is not needed (items are found by place, not by number), but wells must come
     # after their trees: the well filler looks for the well of a trunk position, the tree itself may still stand
     seen = set(); uniq = []
-    for f in todo:          # one item listed by two checks (a wear mark off its surface AND oil with no car): carry it out once
-        k = (f['op'], f.get('base', ''), f.get('wear', ''), f.get('surface', 0), tuple(round(float(v), 3) for v in f['at']))
+    # one item listed by two checks (a wear mark off its surface AND oil with no car; a prop moved down by one check and
+    # deleted by another): carry it out once, and a removal wins over every other change to the same prop
+    todo.sort(key=lambda f: 0 if f['op'] in ('remove', 'remove_decal') else 1)
+    for f in todo:
+        prop_op = 'prop' if f['op'] in ('move', 'remove', 'add_collider') else f['op']
+        k = (prop_op, f.get('base', ''), f.get('wear', ''), f.get('surface', 0), tuple(round(float(v), 3) for v in f['at']))
         if k in seen: continue
         seen.add(k); uniq.append(f)
     todo = uniq

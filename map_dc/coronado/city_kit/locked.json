@@ -2026,11 +2026,6 @@
    "by": "Yasin",
    "date": "2026-11-19"
   },
-  "i_vb_w800_n1600_se": {
-   "sha256": "ff674064b8b11193074f2d92e3b5aed5f093663cb80157f902c1c6427cef1ab1",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
   "i_vb_w600_n1400_sw": {
    "sha256": "5ce786e1e9741b4bf46462cdcbe45da068f471849ae8578c8396d8bcc089e851",
    "by": "Yasin",
@@ -2675,6 +2670,11 @@
    "sha256": "6c3f29360fc1e82199f55f229820fbef750035ed1e76765aad6b86355f6693cd",
    "by": "Yasin",
    "date": "2026-11-19"
+  },
+  "i_vb_w800_n1600_se": {
+   "sha256": "a88223e57f30bb918d3e92fe79a1c5500108570371a4caa76a9b033508f7ad13",
+   "by": "Yasin",
+   "date": "2026-11-19"
   }
  },
  "files": {
@@ -2818,11 +2818,6 @@
    "by": "Yasin",
    "date": "2026-11-19"
   },
-  "map_dc/coronado/city_kit/interiors/rooms/g_ind_vb_w800_n1600_se__workwear_store__1.scn": {
-   "sha256": "2ea80255fff618a93f3ed4f3f3c9f144e2bba74cd5ef09f4bbf7c4c72cb5f41e",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
   "map_dc/coronado/city_kit/interiors/rooms/g_ind_va_w600_n1600_se__marine_engines__0.scn": {
    "sha256": "ffb42119118405e14a54710e827052d4dbde78199eb5bef133fee38833086324",
    "by": "Yasin",
@@ -2840,11 +2835,6 @@
   },
   "map_dc/coronado/city_kit/interiors/rooms/g_ind_vc_w600_n1400_ne__island_restaurant_supply__0.scn": {
    "sha256": "20545385c019e6afe13913e6b1eff65cd78d9eebaa00a9e8a82f05155ce230e9",
-   "by": "Yasin",
-   "date": "2026-11-19"
-  },
-  "map_dc/coronado/city_kit/interiors/rooms/g_ind_vb_w800_n1600_se__public_works_office__1.scn": {
-   "sha256": "61cd6394120061a47e9dc8ee0bb28b2d8038754deb2d45347cee70edf5270925",
    "by": "Yasin",
    "date": "2026-11-19"
   },
@@ -3440,6 +3430,16 @@
   },
   "map_dc/coronado/city_kit/interiors/rooms/g_ind_va_w800_n1600_sw__hfs_office__0.scn": {
    "sha256": "aa5139a62da8fa913e10a628fc6766829166030900a635c46af09250858d7e9a",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_ind_vb_w800_n1600_se__public_works_office__1.scn": {
+   "sha256": "a5b20d2e89512c86358d1a6c21b04b835629972e0616a360fdde30072e65f5fb",
+   "by": "Yasin",
+   "date": "2026-11-19"
+  },
+  "map_dc/coronado/city_kit/interiors/rooms/g_ind_vb_w800_n1600_se__workwear_store__1.scn": {
+   "sha256": "0dc082a7026ed5d65fd3acfc664915bc3ac0615840c9a7817435c1931526b86e",
    "by": "Yasin",
    "date": "2026-11-19"
   }

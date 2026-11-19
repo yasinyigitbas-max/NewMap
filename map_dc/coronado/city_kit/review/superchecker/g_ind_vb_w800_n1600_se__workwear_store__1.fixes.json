@@ -1,0 +1,80 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -2.36999988555908,
+    0.0,
+    -5.43599987030029
+   ],
+   "base": "prop_grocery_shelf",
+   "chosen": true,
+   "cond": "",
+   "kind": "door_blocked",
+   "mode": "choose",
+   "n": 1.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_grocery_shelf stands in front of a 1.0 m wide door (a back or side door)]"
+  },
+  {
+   "at": [
+    -4.55000019073486,
+    0.0,
+    4.65000009536743
+   ],
+   "base": "prop_mannequin",
+   "chosen": true,
+   "cond": "",
+   "kind": "window_blocked",
+   "mode": "choose",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_mannequin (1.7 m tall) stands right behind a window]"
+  },
+  {
+   "at": [
+    -3.25,
+    0.0,
+    4.65000009536743
+   ],
+   "base": "prop_mannequin",
+   "chosen": true,
+   "cond": "",
+   "kind": "window_blocked",
+   "mode": "choose",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_mannequin (1.7 m tall) stands right behind a window]"
+  },
+  {
+   "at": [
+    3.25,
+    0.0,
+    4.65000009536743
+   ],
+   "base": "prop_mannequin",
+   "chosen": true,
+   "cond": "",
+   "kind": "window_blocked",
+   "mode": "choose",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_mannequin (1.7 m tall) stands right behind a window]"
+  },
+  {
+   "at": [
+    4.55000019073486,
+    0.0,
+    4.65000009536743
+   ],
+   "base": "prop_mannequin",
+   "chosen": true,
+   "cond": "",
+   "kind": "window_blocked",
+   "mode": "choose",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "erased: no plainly safe place (Yasin: delete when unsure) [prop_mannequin (1.7 m tall) stands right behind a window]"
+  }
+ ],
+ "scene": "g_ind_vb_w800_n1600_se__workwear_store__1"
+}
