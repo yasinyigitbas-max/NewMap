@@ -75,7 +75,15 @@ class CityGame : public Node {
 	double autosave_t = 0.0;
 	double autosave_s = 60.0;
 	Dictionary slot_sections;      // the active slot's "sections" (settings, checkpoints)
-	uint64_t player_id = 0;
+	uint64_t player_id = 0, crowd_id = 0, traffic_id = 0;
+	bool pending_new = false;        // a new game: set the player down at the start when the world gives him
+	Dictionary pending_player;       // a loaded game: where he was, for when the world gives him
+	Vector3 start_centre = Vector3(0, 0, -600);   // the city centre (Yasin: "start the player next to a bike and car in the city center")
+	Dictionary start_info;
+	void place_start();
+	double start_hold = -1.0;        // held on the start spot until the ground's collision is under him (seconds held)
+	Vector3 start_at; uint64_t start_bike = 0, start_car = 0;
+	void hold_start(double p_delta);
 	String slot_path(int s) const;
 	Dictionary read_slot(int s) const;
 	bool write_slot(int s, const Dictionary &d);
@@ -181,6 +189,13 @@ public:
 	int new_game_overwrite(int p_slot);
 	int continue_game(int p_slot);
 	void set_player(Object *p_player);
+	// the world's crowd and traffic (the start is found on the crowd's pavements; the traffic is told of the car)
+	void set_world(Object *p_crowd, Object *p_traffic);
+	Dictionary get_start_info() const { return start_info; }
+	// where the world should load first: the saved place (a loaded game) or the city centre (a new game)
+	Vector3 world_start() const;
+	void set_start_centre(const Vector3 &p_c) { start_centre = p_c; }
+	Vector3 get_start_centre() const { return start_centre; }
 	void set_saves_dir(const String &p_d) { saves_dir = p_d; }
 	String get_saves_dir() const { return saves_dir; }
 	void set_autosave_s(double p_s) { autosave_s = p_s; }

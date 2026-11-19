@@ -225,6 +225,17 @@ void CityCrowd::_ready() {
 	if (draw_on) make_look();
 	if (gfx) { make_near(); make_extras(); }
 	crowd->reset(20261120ull);
+	for (size_t k = 0; k < crowd->segs.size(); k++) {   // the floor under the pavements and crossings, 2 m strips
+		const pc::Seg &S = crowd->segs[k];
+		const int m = std::max(1, (int)(S.len / 2.0f));
+		int h = 0; float x0, y0, z0, x1, y1, z1, tx, tz;
+		crowd->at(S, 0.0f, 0.0f, h, x0, y0, z0, tx, tz);
+		for (int q = 1; q <= m; q++) {
+			crowd->at(S, S.len * (float)q / (float)m, 0.0f, h, x1, y1, z1, tx, tz);
+			way_floor.add(Vector3(x0, y0, z0), Vector3(x1, y1, z1), S.hw + 0.15f);
+			x0 = x1; y0 = y1; z0 = z1;
+		}
+	}
 	set_process(true);
 }
 
@@ -235,6 +246,7 @@ void CityCrowd::_exit_tree() {
 	inst = RID(); mm = RID(); gfx = false;
 	near_pool.clear();
 	free_extras();
+	way_floor.clear();
 }
 
 // ---------------------------------------------------------------- who else there is
@@ -941,6 +953,7 @@ void CityCrowd::_process(double p_delta) {
 	if (!ready) return;
 	const int64_t t0 = usec_now();
 	step_brain(p_delta);
+	if (Viewport *wv = get_viewport()) if (Camera3D *wc = wv->get_camera_3d()) if (get_world_3d().is_valid()) way_floor.update(wc->get_global_position(), get_world_3d()->get_space());
 	{   // the traffic's cyclists who came off this frame: the rider is one of ours now, on the road where he fell
 		CityTraffic *trf = traffic_id ? Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(traffic_id))) : nullptr;
 		if (trf && trf->is_inside_tree()) {
@@ -998,6 +1011,31 @@ int CityCrowd::place_near(const Vector3 &p_at, int p_kind, double p_radius) cons
 		if (d2 < bd) { bd = d2; best = p; }
 	}
 	return best;
+}
+
+PackedVector3Array CityCrowd::walk_points(double p_step) const {
+	PackedVector3Array out;
+	const float step = std::max((float)p_step, 0.25f);
+	for (size_t k = 0; k < crowd->segs.size(); k++) {
+		const pc::Seg &S = crowd->segs[k];
+		const int m = std::max(1, (int)(S.len / step));
+		int h = 0; float x, y, z, tx, tz;
+		for (int q = 0; q <= m; q++) { crowd->at(S, S.len * (float)q / (float)m, 0.0f, h, x, y, z, tx, tz); out.push_back(Vector3(x, y, z)); }
+	}
+	return out;
+}
+
+Dictionary CityCrowd::pavement_near(const Vector3 &p_at, double p_max_d) const {
+	Dictionary d; d["ok"] = false;
+	float su = 0, dd = 0, ax = 0, az = 0, ay = 0;
+	const int k = crowd->nearest_walk(p_at.x, p_at.z, (float)p_max_d, su, dd, ax, az, ay);
+	if (k < 0) return d;
+	int h = 0; float x, y, z, tx, tz;
+	crowd->at(crowd->segs[k], su, 0.0f, h, x, y, z, tx, tz);
+	d["ok"] = true; d["at"] = Vector3(x, y, z); d["yaw"] = std::atan2(tx, tz);
+	d["half_width"] = crowd->segs[k].hw;
+	d["side"] = Vector3(tz, 0, -tx);   // (left of the way it runs; which side the road is on is the caller's to try)
+	return d;
 }
 
 Dictionary CityCrowd::place_info(int p_place) const {
@@ -1140,6 +1178,8 @@ void CityCrowd::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "streets_path"), "set_streets_path", "get_streets_path");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "places_path"), "set_places_path", "get_places_path");
 	ClassDB::bind_method(D_METHOD("place_walker", "at", "look"), &CityCrowd::place_walker);
+	ClassDB::bind_method(D_METHOD("pavement_near", "at", "max_d"), &CityCrowd::pavement_near);
+	ClassDB::bind_method(D_METHOD("walk_points", "step"), &CityCrowd::walk_points);
 	ClassDB::bind_method(D_METHOD("remove_walker", "id"), &CityCrowd::remove_walker);
 	ClassDB::bind_method(D_METHOD("set_goal", "id", "place", "stay_s", "enter"), &CityCrowd::set_goal);
 	ClassDB::bind_method(D_METHOD("set_goal_point", "id", "at", "stay_s"), &CityCrowd::set_goal_point);

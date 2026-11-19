@@ -388,6 +388,24 @@ Dictionary CityTraffic::route(const Vector3 &p_from, const Vector3 &p_to, bool p
 	return d;
 }
 
+PackedVector3Array CityTraffic::lane_points(double p_step) const {
+	PackedVector3Array out;
+	if (!ready) return out;
+	const float step = std::max((float)p_step, 0.25f);
+	for (int pc = 0; pc < sim->n_pieces; pc++) {
+		if (pc < sim->n_lanes && !(sim->l_flags[pc] & tc::LF_DRIVE)) continue;
+		const int o = sim->p_off[pc], n = sim->p_n[pc];
+		for (int k = 0; k + 1 < n; k++) {
+			const float x0 = sim->ptx[o + k], y0 = sim->pty[o + k], z0 = sim->ptz[o + k];
+			const float dx = sim->ptx[o + k + 1] - x0, dy = sim->pty[o + k + 1] - y0, dz = sim->ptz[o + k + 1] - z0;
+			const float len = std::sqrt(dx * dx + dz * dz);
+			const int m = std::max(1, (int)(len / step));
+			for (int q = 0; q < m; q++) { const float u = (float)q / (float)m; out.push_back(Vector3(x0 + dx * u, y0 + dy * u, z0 + dz * u)); }
+		}
+	}
+	return out;
+}
+
 int CityTraffic::exec_order(const Input::Order &o) {
 	switch (o.type) {
 		case O_SPAWN: { const int id = sim->spawn_scripted(o.model, o.ax, o.az, o.bx, o.bz, false); return id >= 0 ? id : -1; }
@@ -503,6 +521,7 @@ void CityTraffic::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("let_car_go", "car"), &CityTraffic::let_car_go);
 	ClassDB::bind_method(D_METHOD("order_result", "ticket"), &CityTraffic::order_result);
 	ClassDB::bind_method(D_METHOD("bike_stats"), &CityTraffic::bike_stats);
+	ClassDB::bind_method(D_METHOD("lane_points", "step"), &CityTraffic::lane_points);
 	ClassDB::bind_method(D_METHOD("set_cyclists", "n"), &CityTraffic::set_cyclists);
 	ClassDB::bind_method(D_METHOD("get_cyclists"), &CityTraffic::get_cyclists);
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "cyclists"), "set_cyclists", "get_cyclists");

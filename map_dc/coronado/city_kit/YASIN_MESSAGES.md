@@ -345,3 +345,11 @@ the other agent suggested these
 - [2026-11-19] we need some updates ffor the hud. upper right mini map should be a phone icon sized box, displaying a 3d looking 2d arrow head like shape showing the mission direction in green color, if there is no objective, golden yellow colored arrow head showing north. once clicked, it should review the full phone map, both should be adapted to the new layout of the map / and left corner money and time should fit into same sized box as phone and map
 
 - [2026-11-19] and again when you come to them, integrate health and needs but keep them inactive for now
+
+- [2026-11-19] also if there is a saved game, in the main menu, game should take a screenshot from the game will load from, that screen should ne shown on the loading menu and game should load into that scene directly, seamlessly / if there isnt a saved game yet, that screen should have a black background
+
+- [2026-11-19] bike interface should only activate after we get onto it and it should be much more subtle. two pedals to acc and brk on the lower right and left side of the screen for steering / dont add a steering wheel on the left, it should be a blank screen only accepting inputs
+
+- [2026-11-19] actually this might be a good time to get the old games control sceme too, copy it as it was, same goes for everywhere else on foot too
+
+- [2026-11-19] so are there holes on the roads? / do that now / fix all of them then move on with your queue

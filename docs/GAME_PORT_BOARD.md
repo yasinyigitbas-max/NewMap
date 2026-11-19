@@ -27,6 +27,14 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
   arrow head showing north. once clicked, it should review the full phone map, both should be adapted to the new layout
   of the map"; "and left corner money and time should fit into same sized box as phone and map"
 - "integrate health and needs but keep them inactive for now"
+- "so are there holes on the roads?" / "do that now" / "fix all of them then move on with your queue"
+- "get the old games control scheme too, copy it as it was, same goes for everywhere else on foot too" (spec:
+  docs/OLD_CONTROLS_SPEC.md); the bike: "only activate after we get onto it ... much more subtle. two pedals to acc and
+  brk on the lower right and left side of the screen for steering"; "dont add a steering wheel on the left, it should be a
+  blank screen only accepting inputs"
+- "if there is a saved game, in the main menu, game should take a screenshot from the game will load from, that screen
+  should be shown on the loading menu and game should load into that scene directly, seamlessly"; "if there isnt a saved
+  game yet, that screen should have a black background"
 - Standing rules: everything per frame or tick in C++ (memory: runtime code in C++); scripts only for tools and tests;
   one question, one run; the phone last; don't waste his usage or his PC; say what was not checked.
 
@@ -51,8 +59,18 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 4. [x] (19 Nov, test_shell) Menus: main menu, pause menu, game over (old: core/main_menu.gd, pause_menu.gd, game_over.gd, ui/kit, ui/theme).
 5. [x] (19 Nov, test_shell; the graphics preset and render scale are stored for the city to read, not yet applied to it) Settings (old: core/game_settings.gd, settings_panel.gd, view_distance.gd; per-phone device settings).
 6. [x] (19 Nov, test_shell) Saving and profiles (old: core/save_game.gd slots, profiles.gd, game_state.gd: hour, day, clock).
-6b. [ ] NEW GAME START (Yasin): the player set down in the city centre beside a bicycle and a car, on a way (pavement or
+6b. [x] (19 Nov, tests/game/test_start.gd in the real city) NEW GAME START (Yasin): the player set down in the city centre beside a bicycle and a car, on a way (pavement or
       road), never in or on a building.
+6c. [x] (19 Nov) HOLES in the city's collision on the ways: tools/city/audit/collision_holes.gd found 89 (each about 1 m,
+      49 on the seams between cells; review/collision_holes_19nov/holes.txt); WayFloor (C++) lays a collision floor 3 cm
+      under every lane, junction path, pavement and crossing round the camera, so none of them can be fallen through. The
+      list went to the city-kit session to mend in the pieces / bake.
+6d. [ ] THE OLD CONTROL SCHEME copied as it was (docs/OLD_CONTROLS_SPEC.md): on foot the invisible left-half move stick
+      and right-half look, double taps (crouch / jump), the Use plate, the phone button; the car's GAS / BRAKE plates and
+      speed plate; the bike the same (blank left steering, two pedals at the lower right, only while riding: done in a
+      first form). Keys as the old game.
+6e. [ ] THE SAVED GAME'S PICTURE: the menu and the loading screen show where the save left off (taken from the game),
+      Continue fades from it into that place seamlessly; black when there is no save.
 7. [ ] HUD (Yasin's layout: top right a box the size of the phone icon with a "3D-looking" flat arrowhead: GREEN pointing
       to the mission, GOLDEN YELLOW pointing north when there is none; tapping it opens the phone's full map; top left
       money and time in a box of the same size; HEALTH AND NEEDS integrated but INACTIVE for now) (old: ui/hud/hud.gd, objectives.gd, ui/health_bar.gd, needs_hud.gd, caption_help.gd).

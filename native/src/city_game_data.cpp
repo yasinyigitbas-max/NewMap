@@ -2,6 +2,11 @@
 #include "city_game.h"
 
 #include <godot_cpp/classes/audio_server.hpp>
+#include <godot_cpp/classes/world3d.hpp>
+#include <godot_cpp/classes/rigid_body3d.hpp>
+#include <godot_cpp/classes/physics_ray_query_parameters3d.hpp>
+#include <godot_cpp/classes/physics_direct_space_state3d.hpp>
+#include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/dir_access.hpp>
 #include <godot_cpp/classes/file_access.hpp>
 #include <godot_cpp/classes/json.hpp>
@@ -235,6 +240,7 @@ void CityGame::apply_snapshot(const Dictionary &st) {
 	flags = g.get("flags", Dictionary()); voice = g.get("voice", "f");
 	Node3D *pl = player_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
 	const Dictionary p = st.get("player", Dictionary());
+	if (!pl && p.has("pos")) pending_player = p;   // (the world gives the player later)
 	if (pl && p.has("pos")) {
 		const Array a = p["pos"];
 		if (a.size() == 3) pl->set_global_position(Vector3((float)(double)a[0], (float)(double)a[1], (float)(double)a[2]));
@@ -342,6 +348,8 @@ bool CityGame::load_slot(int p_slot) {
 int CityGame::new_game() {
 	const int s = create_slot("New player");
 	if (s < 0) return -1;
+	pending_new = true; pending_player = Dictionary();
+	if (player_id && crowd_id) place_start();
 	day = 1; hour = 9.0; money = 50; flags = Dictionary();
 	settings_defaults(); load_device(); apply_settings();
 	save();
@@ -357,7 +365,136 @@ int CityGame::continue_game(int p_slot) {
 	return p_slot;
 }
 
-void CityGame::set_player(Object *p_player) { player_id = p_player ? (uint64_t)p_player->get_instance_id() : 0; }
+void CityGame::set_player(Object *p_player) {
+	player_id = p_player ? (uint64_t)p_player->get_instance_id() : 0;
+	if (!p_player) return;
+	if (pending_new) place_start();
+	else if (!pending_player.is_empty()) { Dictionary st; st["player"] = pending_player; pending_player = Dictionary(); apply_snapshot(st); }
+}
+
+Vector3 CityGame::world_start() const {
+	if (!pending_player.is_empty() && pending_player.has("pos")) { const Array a = pending_player["pos"]; if (a.size() == 3) return Vector3((float)(double)a[0], (float)(double)a[1], (float)(double)a[2]); }
+	return start_centre;
+}
+
+void CityGame::hold_start(double p_delta) {
+	start_hold += p_delta;
+	Node3D *pl = player_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
+	Node3D *bike = start_bike ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(start_bike))) : nullptr;
+	if (!pl || !pl->is_inside_tree()) { start_hold = -1.0; return; }
+	PhysicsDirectSpaceState3D *ss = pl->get_world_3d().is_valid() ? pl->get_world_3d()->get_direct_space_state() : nullptr;
+	float gy = -1e9f;
+	if (ss) {
+		Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(start_at + Vector3(0, 2.0f, 0), start_at - Vector3(0, 2.0f, 0), 1);
+		const Dictionary h = ss->intersect_ray(q);
+		if (!h.is_empty()) gy = ((Vector3)h["position"]).y;
+	}
+	if (gy < -1e8f && start_hold > 2.0 && ss) {   // the ground round him is there but not under him: a hole in a piece's collision; along the pavement to solid ground
+		auto ground_at = [&](const Vector3 &p) -> float {
+			Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(p + Vector3(0, 2.0f, 0), p - Vector3(0, 2.0f, 0), 1);
+			const Dictionary h = ss->intersect_ray(q);
+			return h.is_empty() ? -1e9f : ((Vector3)h["position"]).y;
+		};
+		const float yaw = (float)(double)start_info.get("yaw", 0.0);
+		const Vector3 f(std::sin(yaw), 0, std::cos(yaw));
+		bool moved = false;
+		for (int k = 1; k <= 5 && !moved; k++) {
+			for (int sgn = -1; sgn <= 1 && !moved; sgn += 2) {
+				const Vector3 c = start_at + f * (2.0f * (float)k * (float)sgn);
+				const float g1 = ground_at(c), g2 = ground_at(c + f * 1.8f);
+				if (g1 > -1e8f && g2 > -1e8f && std::fabs(g1 - start_at.y) < 0.6f) {
+					start_at = Vector3(c.x, g1, c.z); gy = g1; moved = true;
+					if (bike) bike->set_global_position(Vector3(c.x, g2 + 0.03f, c.z) + f * 1.8f);
+					Node3D *car = start_car ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(start_car))) : nullptr;
+					if (car) car->set_global_position(car->get_global_position() + f * (2.0f * (float)k * (float)sgn));   // (the car goes along with them)
+					start_info["moved_off_a_hole_m"] = 2.0f * (float)k;
+				}
+			}
+		}
+	}
+	if (gy < -1e8f && start_hold < 20.0) {   // not yet: keep him on the spot
+		pl->set_global_position(start_at + Vector3(0, 0.05f, 0));
+		if (CharacterBody3D *cb = Object::cast_to<CharacterBody3D>(pl)) cb->set_velocity(Vector3());
+		return;
+	}
+	if (gy > -1e8f) pl->set_global_position(Vector3(start_at.x, gy + 0.05f, start_at.z));
+	if (bike && ss) {   // the bicycle's own spot must have ground under it too (a corner between pavement stretches may have none): else along to one that has
+		auto ground_at = [&](const Vector3 &p) -> float {
+			Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(p + Vector3(0, 2.0f, 0), p - Vector3(0, 2.0f, 0), 1);
+			const Dictionary h = ss->intersect_ray(q);
+			return h.is_empty() ? -1e9f : ((Vector3)h["position"]).y;
+		};
+		const float yaw = (float)(double)start_info.get("yaw", 0.0);
+		const Vector3 f(std::sin(yaw), 0, std::cos(yaw)), sd(f.z, 0, -f.x);
+		const Vector3 base(start_at.x, start_at.y, start_at.z);
+		const Vector3 tries[8] = { base + f * 1.8f, base + f * 1.4f, base - f * 1.8f, base + sd * 1.2f, base - sd * 1.2f, base + f * 2.6f, base - f * 2.6f, base + f * 1.0f + sd * 0.8f };
+		for (const Vector3 &c : tries) {
+			const float g = ground_at(c);
+			if (g > -1e8f && std::fabs(g - start_at.y) < 0.5f) { bike->set_global_position(Vector3(c.x, g + 0.03f, c.z)); start_info["bike"] = bike->get_global_position(); break; }
+		}
+	}
+	pl->call("set_frozen", false);
+	if (RigidBody3D *rb = Object::cast_to<RigidBody3D>(bike)) rb->set_freeze_enabled(false);
+	start_info["ground_found_after_s"] = start_hold; start_info["ground"] = gy;
+	start_hold = -1.0;
+}
+
+void CityGame::set_world(Object *p_crowd, Object *p_traffic) {
+	crowd_id = p_crowd ? (uint64_t)p_crowd->get_instance_id() : 0;
+	traffic_id = p_traffic ? (uint64_t)p_traffic->get_instance_id() : 0;
+}
+
+// A new game: the player on the pavement nearest the city centre (pavements are outdoors: never in or on a building),
+// facing along it; his bicycle just ahead of him on the pavement; a car at the kerb beside him, on the road's side
+// (the side where 3 m out is no longer pavement).
+void CityGame::place_start() {
+	pending_new = false;
+	Node3D *pl = player_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
+	Object *crowd = crowd_id ? ObjectDB::get_instance(ObjectID(crowd_id)) : nullptr;
+	start_info = Dictionary();
+	if (!pl || !crowd) return;
+	const Dictionary pv = crowd->call("pavement_near", start_centre, 400.0);
+	if (!(bool)pv.get("ok", false)) return;
+	const Vector3 at = pv["at"];
+	const float yaw = (float)(double)pv["yaw"], hw = (float)(double)pv.get("half_width", 0.75);
+	const Vector3 f(std::sin(yaw), 0, std::cos(yaw));
+	Vector3 side = pv["side"];
+	{   // which side is the road: 3 m out, the pavement is no longer under the point
+		const Dictionary a = crowd->call("pavement_near", at + side * (hw + 2.0f), 2.0);
+		const Dictionary b = crowd->call("pavement_near", at - side * (hw + 2.0f), 2.0);
+		const bool a_pave = (bool)a.get("ok", false), b_pave = (bool)b.get("ok", false);
+		if (a_pave && !b_pave) side = -side;
+	}
+	pl->set_global_position(at + Vector3(0, 0.05f, 0));
+	pl->set_global_rotation(Vector3(0, yaw, 0));
+	Node *parent = pl->get_parent();
+	Node3D *bike = Object::cast_to<Node3D>(ClassDB::instantiate("CityBike"));
+	if (bike && parent) {
+		bike->set_name("StartBike");
+		bike->set("player", true);
+		bike->set("touch_hud", true);
+		parent->add_child(bike);
+		bike->set_global_transform(Transform3D(Basis(Vector3(0, 1, 0), yaw), at + f * 1.8f + side * std::min(hw * 0.4f, 0.4f) + Vector3(0, 0.03f, 0)));
+		bike->call("set_rider_player", pl);
+	}
+	Node3D *car = Object::cast_to<Node3D>(ClassDB::instantiate("CityCar"));
+	const Vector3 car_at = at + side * (hw + 1.35f) - f * 1.5f + Vector3(0, 0.1f, 0);
+	if (car && parent) {
+		car->set_name("StartCar");
+		car->set("model", 2);
+		parent->add_child(car);
+		car->set_global_transform(Transform3D(Basis(Vector3(0, 1, 0), yaw), car_at));
+		car->call("set_controls", 0.0, 1.0, 0.0, 1.0, false);   // (parked: the brakes on)
+	}
+	// held there (and the bicycle frozen) until the streamed ground's collision is under them: placed before it came, he
+	// fell through to the plane under the city (seen in the first run of tests/game/test_start.gd)
+	start_at = at; start_hold = 0.0; start_bike = bike ? (uint64_t)bike->get_instance_id() : 0; start_car = car ? (uint64_t)car->get_instance_id() : 0;
+	pl->call("set_frozen", true);
+	if (RigidBody3D *rb = Object::cast_to<RigidBody3D>(bike)) rb->set_freeze_enabled(true);
+	start_info["player"] = at; start_info["yaw"] = yaw; start_info["bike"] = bike ? bike->get_global_position() : Vector3();
+	start_info["car"] = car_at; start_info["pavement_half_width"] = hw; start_info["road_side"] = side;
+	emit_signal("start_placed", start_info);
+}
 
 void CityGame::_bind_methods() {
 	ClassDB::bind_static_method("CityGame", D_METHOD("en", "key", "args"), &CityGame::en, DEFVAL(Array()));
@@ -394,6 +531,12 @@ void CityGame::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("new_game_overwrite", "slot"), &CityGame::new_game_overwrite);
 	ClassDB::bind_method(D_METHOD("continue_game", "slot"), &CityGame::continue_game);
 	ClassDB::bind_method(D_METHOD("set_player", "player"), &CityGame::set_player);
+	ClassDB::bind_method(D_METHOD("set_world", "crowd", "traffic"), &CityGame::set_world);
+	ClassDB::bind_method(D_METHOD("get_start_info"), &CityGame::get_start_info);
+	ClassDB::bind_method(D_METHOD("world_start"), &CityGame::world_start);
+	ClassDB::bind_method(D_METHOD("set_start_centre", "at"), &CityGame::set_start_centre);
+	ClassDB::bind_method(D_METHOD("get_start_centre"), &CityGame::get_start_centre);
+	ADD_SIGNAL(MethodInfo("start_placed", PropertyInfo(Variant::DICTIONARY, "info")));
 	ClassDB::bind_method(D_METHOD("set_saves_dir", "dir"), &CityGame::set_saves_dir);
 	ClassDB::bind_method(D_METHOD("get_saves_dir"), &CityGame::get_saves_dir);
 	ClassDB::bind_method(D_METHOD("set_autosave_s", "seconds"), &CityGame::set_autosave_s);

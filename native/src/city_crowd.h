@@ -12,6 +12,8 @@
 // The test app's script only makes the node and sets numbers; nothing here is called from script per frame.
 #pragma once
 
+#include "way_floor.h"
+
 #include "ped_crowd.h"
 #include "street_build.h"
 
@@ -119,6 +121,7 @@ private:
 	void clip_lengths();
 	void onlookers(int p_row, int p_most, float p_seconds, bool p_film);
 	// counters
+	WayFloor way_floor;      // a collision floor 3 cm under every pavement and crossing (the city's collision has holes)
 	int riders_drawn = 0;   // the traffic's cyclists drawn as riders this frame
 	// cyclists who came off (CityTraffic::bikes_down_now): each is a person on the road now, given a near body at once
 	// and thrown by the blow; if no body can be his within 1.5 s (far from the camera) he just walks to the pavement
@@ -209,6 +212,11 @@ public:
 	// the place of a kind nearest a point (-1 = none within the radius); kinds: ped_places.h PL_*
 	int place_near(const Vector3 &p_at, int p_kind, double p_radius) const;
 	Dictionary place_info(int p_place) const;
+	// The nearest point of the pavement to p_at (within p_max_d): {ok, at (on the pavement, its height), yaw (along it),
+	// edge (the kerb's side: a unit vector to the road), half_width}. Pavements are outdoors: never in or on a building.
+	Dictionary pavement_near(const Vector3 &p_at, double p_max_d) const;
+	// (audits) every pavement and crossing as points p_step metres apart, at their height
+	PackedVector3Array walk_points(double p_step) const;
 	// the people round a point: id, at, yaw, speed, mode, act, state, party
 	Array people_near(const Vector3 &p_at, double p_radius) const;
 	// what happened since the last call: [type, id, aux, f] each (ped_crowd.h E_*); also sent as the signal "crowd_event"

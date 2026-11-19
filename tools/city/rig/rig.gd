@@ -122,6 +122,7 @@ var env: Environment
 var look: Node                  # the look pack (--look=1); null with --look=0
 var traffic: Node            # the C++ traffic (--traffic=N); null without it
 var _shot_place := -1          # --walkshot: the place the picture is of
+var game: Node = null           # the game's shell (CityGame) when it started this world
 var _shot_cam: Camera3D
 var people: Node             # the C++ crowd (--people=N); null without it
 var opt := {"car": "", "walk": "", "walkshot": "", "walkcrowd": 0, "water": 0.0, "at": "", "people": 0, "hour": 12.5, "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0}
@@ -155,6 +156,15 @@ func _ready() -> void:
 				var v := a.trim_prefix("--%s=" % k)
 				opt[k] = v if k in ["car", "walk", "walkshot", "at", "plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["water", "density", "scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs", "colrange", "boost"] else int(v))
 	if from_file and not ("--loop" in args): opt.quit = true
+	# STARTED BY THE GAME'S SHELL (C++ CityGame, game/boot.tscn: New game / Continue): on foot in the city with the people,
+	# the traffic and the parked cars, where the shell says (the city centre for a new game, the saved place otherwise);
+	# the shell places the player, his bicycle and a car itself once it has them (CityGame.set_world / set_player)
+	game = get_tree().root.get_node_or_null(^"Game")
+	if game and game.get_class() == "CityGame":
+		opt.walk = "1"; opt.people = 200; opt.traffic = 40; opt.parked = 1; opt.quit = false
+		var ws: Vector3 = game.call(&"world_start")
+		opt.at = "%f,%f" % [ws.x, ws.z]
+	else: game = null
 	Engine.max_fps = 0
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	if float(opt.scale) <= 0.0:      # no --scale given: 720p (1640x720 on the Redmi's 2460x1080)
@@ -412,6 +422,10 @@ func _free_walk(start: Vector3, yaw: float) -> void:
 	var y_start := _ground(start, 0.0) + 0.05
 	pl.position = Vector3(start.x, y_start, start.z); pl.rotation.y = yaw
 	add_child(pl)
+	if game:      # the shell sets him down (a new game: the pavement nearest the centre, with his bicycle and a car; or where he was saved)
+		pl.set(&"capture_mouse", false)
+		game.call(&"set_world", people, traffic)
+		game.call(&"set_player", pl)
 	if people: people.call(&"set_player", pl)
 	if people and ClassDB.class_exists(&"CityTalk"):      # talking to people: one C++ node (E, or the Talk button)
 		var talk: Node = ClassDB.instantiate(&"CityTalk")

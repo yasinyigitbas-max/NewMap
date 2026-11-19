@@ -26,6 +26,7 @@
 #include "street_build.h"
 #include "car_models.h"
 #include "traffic_parking.h"
+#include "way_floor.h"
 
 #include <godot_cpp/classes/mesh.hpp>
 #include <godot_cpp/classes/node3d.hpp>
@@ -170,6 +171,7 @@ private:
 	Ref<Mesh> mesh_bike;
 	Ref<ShaderMaterial> mat_bike;
 	std::vector<float> bike_draw;
+	WayFloor way_floor;      // a collision floor 3 cm under every lane and junction path (the city's collision has holes)
 	int cyclists = 8;
 	// cyclists who came off (the step hands them over): the rider is the crowd's (bikes_down_now: 9 floats each: x, y,
 	// z, yaw, speed, the car's vx, vz, the bicycle's id, its paint), the bicycle is one of a pool of physical ones
@@ -293,6 +295,8 @@ public:
 	static Ref<Mesh> bike_mesh() { return make_bike_mesh(); }
 	static String bike_shader_code();
 	Dictionary bike_stats() const;
+	// (audits) every lane and junction path as points p_step metres apart, at the road's height
+	PackedVector3Array lane_points(double p_step) const;
 	void set_walkers(const float *p_dyn, int p_n);
 	double signal_clock() const { return now.clock; }
 	bool has_clock() const { return threaded; }

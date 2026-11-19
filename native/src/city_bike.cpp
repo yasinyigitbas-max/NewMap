@@ -5,6 +5,7 @@
 #include "ped_body.h"
 #include "city_player.h"
 #include "city_traffic.h"
+#include "ui_plate.h"
 
 #include <godot_cpp/classes/box_shape3d.hpp>
 #include <godot_cpp/classes/collision_shape3d.hpp>
@@ -14,6 +15,9 @@
 #include <godot_cpp/classes/input_event_screen_drag.hpp>
 #include <godot_cpp/classes/input_event_screen_touch.hpp>
 #include <godot_cpp/classes/label.hpp>
+#include <godot_cpp/classes/panel_container.hpp>
+#include <godot_cpp/classes/style_box_flat.hpp>
+#include <godot_cpp/classes/texture_rect.hpp>
 #include <godot_cpp/classes/mesh_instance3d.hpp>
 #include <godot_cpp/classes/physics_direct_space_state3d.hpp>
 #include <godot_cpp/classes/physics_shape_query_parameters3d.hpp>
@@ -222,13 +226,16 @@ void CityBike::_input(const Ref<InputEvent> &p_event) {
 	if (!vp) return;
 	const Vector2 sz = vp->get_visible_rect().size;
 	if (sz.x < 1.0f || sz.y < 1.0f) return;
-	auto zone = [&](const Vector2 &p) { return (p.x > sz.x * 0.8f && p.y < sz.y * 0.28f) ? 3 : (p.x < sz.x * 0.75f ? 1 : 2); };
+	Rect2 z[4];
+	zones(sz, z);
+	auto zone = [&](const Vector2 &p) { for (int k = 1; k < 4; k++) if (z[k].grow(16.0f).has_point(p)) return k; return 0; };
 	if (const InputEventScreenTouch *t = Object::cast_to<InputEventScreenTouch>(p_event.ptr())) {
 		const int id = t->get_index();
 		const Vector2 p = t->get_position();
 		if (t->is_pressed()) {
-			if (p.x < sz.x * 0.5f) { if (t_steer_id < 0) { t_steer_id = id; t_steer_x0 = p.x; t_steer = 0.0f; } }
-			else if (id >= 0 && id < 16) { t_zone[id] = zone(p); t_y0[id] = p.y; if (t_zone[id] == 3) want_toggle = true; }
+			const int zk = zone(p);
+			if (zk == 0 && z[0].has_point(p)) { if (t_steer_id < 0) { t_steer_id = id; t_steer_x0 = p.x; t_steer = 0.0f; } }
+			else if (zk > 0 && id >= 0 && id < 16) { t_zone[id] = zk; t_y0[id] = p.y; if (zk == 3) want_toggle = true; }
 		} else {
 			if (id == t_steer_id) { t_steer_id = -1; t_steer = 0.0f; }
 			if (id >= 0 && id < 16) { if (t_zone[id] == 2) t_sprint = false; t_zone[id] = 0; }
@@ -238,12 +245,25 @@ void CityBike::_input(const Ref<InputEvent> &p_event) {
 	if (const InputEventScreenDrag *d = Object::cast_to<InputEventScreenDrag>(p_event.ptr())) {
 		const int id = d->get_index();
 		const Vector2 p = d->get_position();
-		if (id == t_steer_id) t_steer = clampf(-(p.x - t_steer_x0) / (sz.x * 0.15f), -1.0f, 1.0f);   // + = left, as the keys
-		else if (id >= 0 && id < 16 && (t_zone[id] == 1 || t_zone[id] == 2) && p.x >= sz.x * 0.5f) {
-			t_zone[id] = zone(p) == 3 ? t_zone[id] : zone(p);
-			if (t_zone[id] == 2) t_sprint = t_y0[id] - p.y > sz.y * 0.12f;
+		if (id == t_steer_id) t_steer = clampf(-(p.x - t_steer_x0) / (sz.x * 0.12f), -1.0f, 1.0f);   // + = left, as the keys
+		else if (id >= 0 && id < 16 && (t_zone[id] == 1 || t_zone[id] == 2)) {
+			const int zk = zone(p);
+			if (zk == 1 || zk == 2) t_zone[id] = zk;   // (a thumb may slide from one pedal to the other)
+			if (t_zone[id] == 2) t_sprint = t_y0[id] - p.y > sz.y * 0.10f;
 		}
 	}
+}
+
+// Where the controls are (Yasin: "only activate after we get onto it and it should be much more subtle. two pedals to
+// acc and brk on the lower right and left side of the screen for steering"): 0 steer (the lower left: a thumb slid
+// sideways), 1 brake and 2 pedal (two pedals side by side at the lower right; slide up on the pedal to sprint), 3 off
+// (a small button at the top right). The touch and the drawing both come from here.
+void CityBike::zones(const Vector2 &sz, Rect2 r[4]) {
+	const float m = 28.0f, pw = std::min(124.0f, sz.x * 0.11f), ph = std::min(156.0f, sz.y * 0.26f);
+	r[0] = Rect2(0, sz.y * 0.40f, sz.x * 0.45f, sz.y * 0.60f);
+	r[2] = Rect2(sz.x - m - pw, sz.y - m - ph, pw, ph);
+	r[1] = Rect2(r[2].position.x - 14.0f - pw, sz.y - m - ph * 0.82f, pw, ph * 0.82f);
+	r[3] = Rect2(sz.x - m - 64.0f, m, 64.0f, 64.0f);
 }
 
 void CityBike::read_player() {
@@ -471,19 +491,27 @@ void CityBike::view(double p_delta) {
 // The touch zones, drawn while the player rides (or stands by his bicycle): steer, brake, pedal, on / off
 void CityBike::make_hud() {
 	hud = memnew(CanvasLayer);
+	hud->set_layer(40);
 	add_child(hud);
-	const char *names[4] = { "STEER", "BRAKE", "PEDAL  (slide up: sprint)", "ON / OFF" };
-	const Color cols[4] = { Color(1, 1, 1, 0.10f), Color(1, 0.3f, 0.2f, 0.14f), Color(0.3f, 1, 0.4f, 0.14f), Color(1, 1, 0.3f, 0.16f) };
+	const char *icons[4] = { "", "down", "up", "exit" };
 	for (int k = 0; k < 4; k++) {
-		ColorRect *r = memnew(ColorRect);
-		r->set_color(cols[k]);
-		r->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
-		Label *l = memnew(Label);
-		l->set_text(names[k]);
-		l->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
-		l->set_position(Vector2(12, 8));
-		r->add_child(l);
-		hud->add_child(r);
+		PanelContainer *p = memnew(PanelContainer);
+		Ref<StyleBoxFlat> sb; sb.instantiate();
+		sb->set_bg_color(Color(1, 1, 1, k == 0 ? 0.05f : 0.10f));
+		sb->set_border_width_all(k == 0 ? 0 : 1); sb->set_border_color(Color(1, 1, 1, 0.22f));
+		sb->set_corner_radius_all(k == 0 ? 18 : 14);
+		p->add_theme_stylebox_override("panel", sb);
+		p->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+		if (k == 0) {   // the steering: a faint arrow pair at the bottom of the zone
+			Label *l = plate::label(String::utf8("‹  ›"), plate::FS_TITLE, Color(1, 1, 1, 0.35f), 700);
+			l->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER); l->set_vertical_alignment(VERTICAL_ALIGNMENT_BOTTOM);
+			l->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+			p->add_child(l);
+		} else {
+			TextureRect *ic = plate::icon_rect(icons[k], k == 3 ? 28 : 40, Color(1, 1, 1, 0.55f));
+			p->add_child(ic);
+		}
+		hud->add_child(p);
 	}
 }
 
@@ -550,20 +578,22 @@ void CityBike::_process(double p_delta) {
 	if (state == ST_PARKED && fallen && on_ground && get_linear_velocity().length() < 0.2f && std::fabs(get_global_basis().get_column(1).y) > 0.85f) fallen = false;   // (it came to rest on its wheels)
 	place_rider(p_delta);
 	view(p_delta);
-	// the touch zones
+	// the touch controls: only while he rides, faint
 	if (touch_hud && player) {
 		if (!hud) make_hud();
-		const bool show = state == ST_RIDE || state == ST_MOUNT || (state == ST_PARKED && pl && pl->get_global_position().distance_to(get_global_position()) < 2.5f);
+		const bool show = state == ST_RIDE;
 		hud->set_visible(show);
 		Viewport *vp = get_viewport();
 		if (show && vp) {
 			const Vector2 sz = vp->get_visible_rect().size;
-			const Rect2 rects[4] = { Rect2(0, sz.y * 0.45f, sz.x * 0.5f, sz.y * 0.55f), Rect2(sz.x * 0.5f, sz.y * 0.45f, sz.x * 0.25f, sz.y * 0.55f),
-				Rect2(sz.x * 0.75f, sz.y * 0.45f, sz.x * 0.25f, sz.y * 0.55f), Rect2(sz.x * 0.8f, 0, sz.x * 0.2f, sz.y * 0.28f) };
-			for (int k = 0; k < 4 && k < hud->get_child_count(); k++) {
-				ColorRect *r = Object::cast_to<ColorRect>(hud->get_child(k));
-				if (r) { r->set_position(rects[k].position); r->set_size(rects[k].size); }
+			Rect2 z[4]; zones(sz, z);
+			z[0] = Rect2(28.0f, sz.y - 28.0f - 92.0f, std::min(260.0f, sz.x * 0.24f), 92.0f);   // (the steering pad drawn small: the zone itself is the lower left)
+			if (Control *pad = Object::cast_to<Control>(hud->get_child(0))) pad->set_visible(false);   // (Yasin: the left is a blank screen that only takes the steering)
+			for (int k = 1; k < 4 && k < hud->get_child_count(); k++) {
+				Control *c = Object::cast_to<Control>(hud->get_child(k));
+				if (c) { c->set_position(z[k].position); c->set_size(z[k].size); }
 			}
+			if (Control *off = Object::cast_to<Control>(hud->get_child(3))) off->set_modulate(Color(1, 1, 1, std::fabs(speed) < 1.5f ? 1.0f : 0.35f));
 		}
 	}
 }

@@ -662,6 +662,11 @@ void CityTraffic::_ready() {
 		input.cells = cells; input.cells_all = cells_all; input.cells_dirty = true;
 	}
 	if (streets.sig_grid.size() == 3) RenderingServer::get_singleton()->global_shader_parameter_set(StringName("ck_signal_grid"), Vector3(streets.sig_grid[0], streets.sig_grid[1], streets.sig_grid[2]));
+	for (int pc = 0; pc < sim->n_pieces; pc++) {   // the floor under the lanes and junction paths
+		if (pc < sim->n_lanes && !(sim->l_flags[pc] & tc::LF_DRIVE)) continue;
+		const int o = sim->p_off[pc], n = sim->p_n[pc];
+		for (int k = 0; k + 1 < n; k++) way_floor.add(Vector3(sim->ptx[o + k], sim->pty[o + k], sim->ptz[o + k]), Vector3(sim->ptx[o + k + 1], sim->pty[o + k + 1], sim->ptz[o + k + 1]), sim->p_hw[pc] + 0.2f);
+	}
 	sim->reset_cars(20261119ull);
 	quit.store(false);
 	worker = std::thread(&CityTraffic::thread_main, this);
@@ -679,6 +684,7 @@ void CityTraffic::_exit_tree() {
 	keep_models.clear(); hidden.clear();
 	RenderingServer *rs = RenderingServer::get_singleton();
 	if (gfx) rs->global_shader_parameter_set(StringName("ck_signal_time"), -1.0f);   // the lamps go back to their own clock
+	way_floor.clear();
 	auto drop = [&](Batch &b) {
 		if (b.inst.is_valid()) rs->free_rid(b.inst);
 		if (b.mm.is_valid()) rs->free_rid(b.mm);
@@ -713,6 +719,7 @@ void CityTraffic::_process(double p_delta) {
 		else { vel_x = 0.0f; vel_z = 0.0f; }
 	}
 	last_cam = cp; has_last_cam = true;
+	if (get_world_3d().is_valid()) way_floor.update(cp, get_world_3d()->get_space());
 	bool pc = false;
 	Vector3 pcp, pcv; float pcyaw = 0.0f;
 	if (player_id != 0) {

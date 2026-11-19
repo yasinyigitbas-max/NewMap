@@ -65,6 +65,7 @@ void CityGame::_process(double p_delta) {
 		if (autosave_t >= autosave_s) save();
 	}
 	if (play_phase) step_play(p_delta);
+	if (start_hold >= 0.0) hold_start(p_delta);
 }
 
 void CityGame::_unhandled_input(const Ref<InputEvent> &p_event) {
@@ -581,14 +582,15 @@ void CityGame::step_play(double p_delta) {
 		set_loading(0.4, "loading.building");
 		Node *w = ps.is_valid() ? ps->instantiate() : nullptr;
 		if (!w) { play_phase = 0; close_loading(); open_menu(); return; }
+		// the slot first (new or loaded): the world asks where to load the moment it enters the tree
+		const int s = play_action();
+		if (s < 0) { memdelete(w); play_phase = 0; close_loading(); open_menu(); return; }
 		SceneTree *tr = get_tree();
 		Node *old = tr->get_current_scene();
 		tr->get_root()->add_child(w);
 		tr->set_current_scene(w);
 		if (old && old != w && old != this && !old->is_ancestor_of(this)) old->queue_free();
 		world_on = true;
-		const int s = play_action();
-		if (s < 0) { play_phase = 0; close_loading(); open_menu(); return; }
 		set_loading(0.5, "");
 		close_menu();
 		emit_signal("play_started", s);

@@ -125,6 +125,7 @@ private:
 	void place_rider(double p_delta);
 	void view(double p_delta);
 	void make_hud();
+	static void zones(const Vector2 &sz, Rect2 r[4]);
 	CityPlayer *the_player() const;
 	void mount();
 	void dismount();
