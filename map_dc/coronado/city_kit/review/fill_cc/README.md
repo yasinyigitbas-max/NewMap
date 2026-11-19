@@ -145,3 +145,49 @@ unbaked numbers with ~120 layout rows loaded; the bake (target ~150) and the pho
 
 ## NOT done / NOT checked
 No bake, no phone run, no lock, land not written. Flat block, so no steepest-edge picture (no edge steeper than 0 cm).
+
+---
+
+# Blocks 3-6 (claude/fill-city-centre, 19 Nov 2026) - DRAFT, NOT SHOWN, NOT LOCKED, NO PICTURES YET
+
+Yasin: "start them and roll out to your all bloks", then "skip pictures, just commit as soon as you can". Built and
+checked by the numbers below; the pictures of blocks 3-6 were skipped (only an early block 3 set was looked at, which
+found the two faults fixed last: dark strips in front of the shops, bare asphalt yards in block 3).
+
+## How the land was handled (blocks 3-6 are on the slope)
+- Walk heights measured from the street pieces every 2 m (tables in each script); the land read from
+  zoning/terrain_grid.npz and embedded per piece (4 m table).
+- Every building on a LEVEL PAD at its walk's highest point along it (never under the walk); 0.3 m in front of its wall a
+  paved frontage strip follows the walk exactly; the step at the low end of a building is a retaining face at its own
+  wall (a plinth, up to ~45 cm on Amber's 5 % stretch, where the shop-houses are narrow so they step one by one).
+- Open ground (yards, greens, parks) follows the land, eased smoothly (8 m) to every edge it meets; courts level; seam
+  strips at the locked housing squares' own heights, so their steps are retaining faces inside my pieces, not holes.
+- The housing squares' lanes run on as ALLEYS to the driveway aprons that exist on 6th St (A4 at u -146..-140, B5 at u
+  190..196, C5 from B Ave's apron); lanes with no apron to reach end in PARKING COURTS at their own height (block 4 u
+  -60..-54, block 5 u 54..60, block 6 both lanes). An apron on 8th St at u 190..196 would let block 6's court through:
+  Yasin's call (streets are locked).
+
+## What was built
+| Block | Pieces | Very tall building | What |
+|---|---|---|---|
+| 3 | n_cc_b3_am, _arm, _main | 59 m glass tower, Amber x 8th | 8th St shops stepping up the hill, 7th St south row with the arcade, B Ave flats, raised residents' garden, alleys B3/C3/D3, 34 rooms |
+| 4 | n_cc_b4_w, _e | 50 m condo tower, C Ave x 6th | 6th St shop row, Amber shop-houses climbing, C Ave flats, alley A4, lane L4 to a parking court, the green with a play corner, 21+ rooms |
+| 5 | n_cc_b5_w, _e | 59 m glass tower, B Ave x 6th | Amber shop-houses climbing, 6th St row with the arcade, flats on lane L5, court, the green and vegetable beds, alleys B5/C5, rooms |
+| 6 | n_cc_b6 | 50 m condo tower, Amber x 8th | the L round the housing square: Amber shops, 8th St row stepping up, B Ave and 9th St rows, two parking courts, the hillside park (paths, play, sports court, vegetable beds), rooms |
+Blocks 4-6: 88 buildings, 77 rooms (162 rooms in the whole fill). The condo towers have no lobby room: the measured
+model has patio doors only (as block 2's).
+
+## Checks (what each can and cannot see)
+- ground_check + my 25 cm seam test, all 17 pieces: no empty patch and no overlap with any street; no ground under a
+  walk except < 8 cm on two short lines of Amber (fixed by easing, not re-checked); the steps left (20-50 cm) are at
+  corners where a housing square's own edge stands higher than the walk (their height, kept so there is no hole).
+  Hanging 0. Raster checks at 25 cm: cannot see the 0.1-0.3 m strips themselves, so a strip reads as its plinth.
+- Dry land trial (never --write): lowers 4306 land nodes, usual 0.13 m, largest 1.21 m (under block 4's lane flats,
+  which are cut into the hill with a retaining wall behind); then nothing of the fill lies under the land. LAND NOT WRITTEN.
+- validate / check_life / audit_trees / sink_check / lock test: see the job-board line for the last run (before the
+  last rebuild: validator 1 fault in my pieces, fixed; trees 0 in hard ground; 0 props off the ground; lock PASS;
+  check_life's "fence leads nowhere" lines end on real walls it cannot see, one lone fence removed).
+- check_rooms --only=g_cc_: 0 problems in 162 rooms.
+
+## NOT done / NOT checked
+No pictures of blocks 4-6, no picture review after the last fixes, no bake, no phone run, no lock, land not written.
