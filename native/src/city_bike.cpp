@@ -24,6 +24,7 @@
 #include <godot_cpp/classes/shader.hpp>
 #include <godot_cpp/classes/sphere_shape3d.hpp>
 #include <godot_cpp/classes/skeleton3d.hpp>
+#include <godot_cpp/classes/v_box_container.hpp>
 #include <godot_cpp/classes/viewport.hpp>
 #include <godot_cpp/classes/world3d.hpp>
 #include <godot_cpp/core/class_db.hpp>
@@ -245,7 +246,11 @@ void CityBike::_input(const Ref<InputEvent> &p_event) {
 	if (const InputEventScreenDrag *d = Object::cast_to<InputEventScreenDrag>(p_event.ptr())) {
 		const int id = d->get_index();
 		const Vector2 p = d->get_position();
-		if (id == t_steer_id) t_steer = clampf(-(p.x - t_steer_x0) / (sz.x * 0.12f), -1.0f, 1.0f);   // + = left, as the keys
+		if (id == t_steer_id) {   // the old stick: full at 80 px (of the 648 px canvas), a dead zone of 0.08
+			const float k = std::max(sz.y / 648.0f, 0.5f);
+			const float sx = clampf(-(p.x - t_steer_x0) / (80.0f * k), -1.0f, 1.0f);
+			t_steer = std::fabs(sx) > 0.08f ? sx : 0.0f;
+		}
 		else if (id >= 0 && id < 16 && (t_zone[id] == 1 || t_zone[id] == 2)) {
 			const int zk = zone(p);
 			if (zk == 1 || zk == 2) t_zone[id] = zk;   // (a thumb may slide from one pedal to the other)
@@ -259,11 +264,12 @@ void CityBike::_input(const Ref<InputEvent> &p_event) {
 // sideways), 1 brake and 2 pedal (two pedals side by side at the lower right; slide up on the pedal to sprint), 3 off
 // (a small button at the top right). The touch and the drawing both come from here.
 void CityBike::zones(const Vector2 &sz, Rect2 r[4]) {
-	const float m = 28.0f, pw = std::min(124.0f, sz.x * 0.11f), ph = std::min(156.0f, sz.y * 0.26f);
-	r[0] = Rect2(0, sz.y * 0.40f, sz.x * 0.45f, sz.y * 0.60f);
-	r[2] = Rect2(sz.x - m - pw, sz.y - m - ph, pw, ph);
-	r[1] = Rect2(r[2].position.x - 14.0f - pw, sz.y - m - ph * 0.82f, pw, ph * 0.82f);
-	r[3] = Rect2(sz.x - m - 64.0f, m, 64.0f, 64.0f);
+	// the old game's car scheme (docs/OLD_CONTROLS_SPEC.md): the left half an invisible stick for the bar; BRAKE and the
+	// pedal where the car's BRAKE and GAS plates were; getting off where the Use plate was
+	r[0] = Rect2(0, 0, sz.x * 0.5f, sz.y);
+	r[1] = plate::brake_rect(sz);
+	r[2] = plate::gas_rect(sz);
+	r[3] = plate::use_rect(sz);
 }
 
 void CityBike::read_player() {
@@ -493,24 +499,22 @@ void CityBike::make_hud() {
 	hud = memnew(CanvasLayer);
 	hud->set_layer(40);
 	add_child(hud);
-	const char *icons[4] = { "", "down", "up", "exit" };
-	for (int k = 0; k < 4; k++) {
-		PanelContainer *p = memnew(PanelContainer);
-		Ref<StyleBoxFlat> sb; sb.instantiate();
-		sb->set_bg_color(Color(1, 1, 1, k == 0 ? 0.05f : 0.10f));
-		sb->set_border_width_all(k == 0 ? 0 : 1); sb->set_border_color(Color(1, 1, 1, 0.22f));
-		sb->set_corner_radius_all(k == 0 ? 18 : 14);
-		p->add_theme_stylebox_override("panel", sb);
+	Control *blank = memnew(Control); blank->set_mouse_filter(Control::MOUSE_FILTER_IGNORE); hud->add_child(blank);   // (the left: nothing drawn)
+	const char *en_[3] = { "BRAKE", "PEDAL", "GET OFF" }, *tr_[3] = { "FREN", "PEDAL", String::utf8("İN").utf8().get_data() };
+	const char *look[3] = { "plate", "plate_go", "green" };
+	for (int k = 0; k < 3; k++) {
+		PanelContainer *p = plate::panel(look[k]);
 		p->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
-		if (k == 0) {   // the steering: a faint arrow pair at the bottom of the zone
-			Label *l = plate::label(String::utf8("‹  ›"), plate::FS_TITLE, Color(1, 1, 1, 0.35f), 700);
-			l->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER); l->set_vertical_alignment(VERTICAL_ALIGNMENT_BOTTOM);
-			l->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
-			p->add_child(l);
-		} else {
-			TextureRect *ic = plate::icon_rect(icons[k], k == 3 ? 28 : 40, Color(1, 1, 1, 0.55f));
-			p->add_child(ic);
-		}
+		VBoxContainer *v = memnew(VBoxContainer);
+		v->set_alignment(k == 2 ? BoxContainer::ALIGNMENT_CENTER : BoxContainer::ALIGNMENT_END);
+		v->add_theme_constant_override("separation", -2);
+		v->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+		Label *a = plate::label(en_[k], k == 2 ? plate::FS_ACTION : plate::FS_ACTION, plate::TEXT, 700);
+		a->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER); a->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+		Label *b = plate::label(String::utf8(tr_[k]), plate::FS_HELP, k == 2 ? Color(1, 1, 1, 0.85f) : plate::DIM, 600);
+		b->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER); b->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+		v->add_child(a); v->add_child(b);
+		p->add_child(v);
 		hud->add_child(p);
 	}
 }
@@ -587,13 +591,17 @@ void CityBike::_process(double p_delta) {
 		if (show && vp) {
 			const Vector2 sz = vp->get_visible_rect().size;
 			Rect2 z[4]; zones(sz, z);
-			z[0] = Rect2(28.0f, sz.y - 28.0f - 92.0f, std::min(260.0f, sz.x * 0.24f), 92.0f);   // (the steering pad drawn small: the zone itself is the lower left)
-			if (Control *pad = Object::cast_to<Control>(hud->get_child(0))) pad->set_visible(false);   // (Yasin: the left is a blank screen that only takes the steering)
 			for (int k = 1; k < 4 && k < hud->get_child_count(); k++) {
 				Control *c = Object::cast_to<Control>(hud->get_child(k));
 				if (c) { c->set_position(z[k].position); c->set_size(z[k].size); }
 			}
-			if (Control *off = Object::cast_to<Control>(hud->get_child(3))) off->set_modulate(Color(1, 1, 1, std::fabs(speed) < 1.5f ? 1.0f : 0.35f));
+			{   // pressed plates show the pressed look (raised_hi), as the old pedals did
+				bool tb = false, tp = false;
+				for (int i = 0; i < 16; i++) { tb = tb || t_zone[i] == 1; tp = tp || t_zone[i] == 2; }
+				if (PanelContainer *pb = Object::cast_to<PanelContainer>(hud->get_child(1))) pb->add_theme_stylebox_override("panel", plate::box(tb || c_brake > 0.5f ? "raised_hi" : "plate"));
+				if (PanelContainer *pp = Object::cast_to<PanelContainer>(hud->get_child(2))) pp->add_theme_stylebox_override("panel", plate::box(tp || c_pedal > 0.5f ? "raised_hi" : "plate_go"));
+			}
+			if (Control *off = Object::cast_to<Control>(hud->get_child(3))) off->set_visible(std::fabs(speed) < 1.5f);   // (the Use plate's "Get off": only when it can be done)
 		}
 	}
 }

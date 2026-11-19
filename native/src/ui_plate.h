@@ -41,5 +41,15 @@ void set_dual(Button *b, const String &en, const String &tr);
 void set_disabled(Button *b, bool off);
 void relook(Button *b, const String &look);
 
+// The old game's control places (docs/OLD_CONTROLS_SPEC.md), at its 1152x648 canvas, scaled to the screen by its height and
+// kept to the right / bottom edges: the phone button (76x76, 24 from the corner), GAS (104x144) and BRAKE (120x96) above
+// it, right edges aligned, 8 apart; the speed plate bottom left (208x112); the Use plate under the top right box.
+Rect2 phone_rect(const Vector2 &sz);
+Rect2 gas_rect(const Vector2 &sz);
+Rect2 brake_rect(const Vector2 &sz);
+Rect2 speed_rect(const Vector2 &sz);
+Rect2 top_right_box(const Vector2 &sz);
+Rect2 use_rect(const Vector2 &sz);
+
 } // namespace plate
 } // namespace godot

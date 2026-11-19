@@ -8,6 +8,11 @@
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/input_event_mouse_motion.hpp>
+#include <godot_cpp/classes/input_event_screen_drag.hpp>
+#include <godot_cpp/classes/scene_tree.hpp>
+#include <godot_cpp/classes/window.hpp>
+#include <godot_cpp/classes/input_event_screen_touch.hpp>
+#include <godot_cpp/classes/viewport.hpp>
 #include <godot_cpp/classes/physics_direct_space_state3d.hpp>
 #include <godot_cpp/classes/physics_ray_query_parameters3d.hpp>
 #include <godot_cpp/classes/world3d.hpp>
@@ -49,6 +54,41 @@ void CityPlayer::_exit_tree() {
 }
 
 void CityPlayer::_input(const Ref<InputEvent> &p_event) {
+	if (frozen) return;
+	Viewport *vp = get_viewport();
+	const Vector2 sz = vp ? vp->get_visible_rect().size : Vector2(1152, 648);
+	auto on_button = [&](const Vector2 &p) { for (int k = 0; k < n_no_touch; k++) if (no_touch[k].has_point(p)) return true; return false; };
+	auto sens = [&]() { Object *g = get_tree() ? get_tree()->get_root()->get_node_or_null("Game") : nullptr; return g ? (float)(double)g->call("get_setting", "cam_sens") : 1.0f; };
+	auto inv = [&]() { Object *g = get_tree() ? get_tree()->get_root()->get_node_or_null("Game") : nullptr; return g ? (bool)g->call("get_setting", "invert_y") : false; };
+	if (const InputEventScreenTouch *t = Object::cast_to<InputEventScreenTouch>(p_event.ptr())) {
+		const int id = t->get_index();
+		const Vector2 p = t->get_position();
+		if (id < 0 || id >= 16) return;
+		if (t->is_pressed()) {
+			if (on_button(p)) return;
+			const int half = p.x < sz.x * 0.5f ? 0 : 1;
+			if (clock_s - tap_t[half] < 0.32 && p.distance_to(tap_p[half]) < 110.0f) {   // a double tap: crouch (left) / jump (right)
+				if (half == 0) crouch = !crouch; else jump_want = true;
+				tap_t[half] = -9.0;
+			} else { tap_t[half] = clock_s; tap_p[half] = p; }
+			if (half == 0) { move_on[id] = true; move_start[id] = p; }
+		} else {
+			move_on[id] = false;
+			bool any = false;
+			for (int k = 0; k < 16; k++) any = any || move_on[k];
+			if (!any) touch_mv = Vector2();
+		}
+		return;
+	}
+	if (const InputEventScreenDrag *d = Object::cast_to<InputEventScreenDrag>(p_event.ptr())) {
+		const int id = d->get_index();
+		if (id >= 0 && id < 16 && move_on[id]) { touch_mv = ((d->get_position() - move_start[id]) / 80.0f).limit_length(1.0f); return; }
+		Vector2 rel = d->get_relative() * 1.2f * sens();   // the look: 0.25 deg a pixel, x1.2 for a thumb
+		if (inv()) rel.y = -rel.y;
+		cam_yaw -= rel.x * 0.25f * 0.0174533f;
+		cam_pitch = std::min(std::max(cam_pitch - rel.y * 0.25f * 0.0174533f, -1.1f), 0.5f);
+		return;
+	}
 	const InputEventMouseMotion *mm = Object::cast_to<InputEventMouseMotion>(p_event.ptr());
 	if (mm && Input::get_singleton()->get_mouse_mode() == Input::MOUSE_MODE_CAPTURED) {
 		cam_yaw -= (float)mm->get_relative().x * 0.0035f;
@@ -68,6 +108,12 @@ void CityPlayer::_physics_process(double p_delta) {
 		const Vector2 js((float)in->get_joy_axis(0, JOY_AXIS_LEFT_X), -(float)in->get_joy_axis(0, JOY_AXIS_LEFT_Y));
 		if (js.length() > 0.2f) mv += js;
 		run = in->is_key_pressed(KEY_SHIFT) || in->get_joy_axis(0, JOY_AXIS_TRIGGER_RIGHT) > 0.3;
+		if (mv.length() > 0.05f && !run) mv = mv.normalized() * 0.6f;   // (the old game: a key walks at 0.6, Shift runs at 1.0)
+		if (touch_mv.length() > 0.05f) { mv = Vector2(touch_mv.x, -touch_mv.y); run = touch_mv.length() > 0.9f; }   // the invisible stick (screen up = ahead)
+		const bool space = in->is_key_pressed(KEY_SPACE), ck = in->is_key_pressed(KEY_C) || in->is_key_pressed(KEY_CTRL);
+		if (space && !space_was) jump_want = true;
+		if (ck && !c_was) crouch = !crouch;
+		space_was = space; c_was = ck;
 		cam_yaw += ((in->is_key_pressed(KEY_LEFT) ? 1.0f : 0.0f) - (in->is_key_pressed(KEY_RIGHT) ? 1.0f : 0.0f) - (std::fabs(in->get_joy_axis(0, JOY_AXIS_RIGHT_X)) > 0.2 ? (float)in->get_joy_axis(0, JOY_AXIS_RIGHT_X) : 0.0f)) * 2.2f * dt;
 		const bool e = in->is_key_pressed(KEY_E) || in->is_joy_button_pressed(0, JOY_BUTTON_X);
 		if (e && !e_was) emit_signal("interact");
@@ -87,7 +133,10 @@ void CityPlayer::_physics_process(double p_delta) {
 			if (!hit.is_empty() && water_y - (double)Vector3(hit["position"]).y < 0.9) swimming = false;
 		}
 	} else swimming = false;
-	const float top = swimming ? (run ? 1.7f : 1.0f) : (run ? run_speed : walk_speed);
+	clock_s += dt;
+	if (swimming) crouch = false;
+	float top = swimming ? (run ? 1.7f : 1.0f) : (run ? run_speed : walk_speed);
+	if (crouch && !swimming) top *= 0.45f;
 	const Vector3 want = (fwd * mv.y + right * mv.x) * top;
 	Vector3 v = get_velocity();
 	const Vector3 hv(v.x, 0, v.z);
@@ -95,7 +144,9 @@ void CityPlayer::_physics_process(double p_delta) {
 	v.x = nh.x + knock_v.x; v.z = nh.z + knock_v.z;
 	knock_v = Vector3();
 	if (swimming) v.y = std::min(std::max(((float)water_y - 0.38f - (float)here.y) * 4.0f, -1.5f), 1.5f);   // he floats: his body lies at the surface
+	else if (is_on_floor() && jump_want && !frozen) { v.y = 4.3f; airborne = true; crouch = false; }   // a jump: 4.3 m/s up (about 0.95 m)
 	else v.y = is_on_floor() ? -0.5f : v.y - 9.81f * dt;
+	jump_want = false;
 	set_velocity(v);
 	move_and_slide();
 	const Vector3 got = get_velocity();
@@ -107,12 +158,19 @@ void CityPlayer::_physics_process(double p_delta) {
 	}
 	// his figure: the Quaternius clips by his pace
 	static const StringName IDLE("ual/Idle_Loop"), WALK("ual/Walk_Loop"), JOG("ual/Jog_Fwd_Loop"), SPRINT("ual/Sprint_Loop"), SWIM("ual/Swim_Fwd_Loop"), FLOAT("ual/Swim_Idle_Loop");
-	StringName clip = IDLE; double cs = 1.0;
+	static const StringName CR_IDLE("ual/Crouch_Idle_Loop"), CR_FWD("ual/Crouch_Fwd_Loop"), J_UP("ual/Jump_Start"), J_AIR("ual/Jump_Loop"), J_LAND("ual/Jump_Land");
+	StringName clip = IDLE; double cs = 1.0, hold = -1.0;
+	const bool floor_now = is_on_floor();
+	if (airborne && floor_now && get_velocity().y <= 0.0f) { airborne = false; land_t = 0.35f; }
+	land_t = std::max(0.0f, land_t - dt);
 	if (swimming) { clip = speed > 0.25f ? SWIM : FLOAT; cs = speed > 0.25f ? speed / 1.0 : 1.0; }
+	else if (airborne) { clip = get_velocity().y > 1.0f ? J_UP : J_AIR; hold = get_velocity().y > 1.0f ? -2.0 : -1.0; }
+	else if (land_t > 0.0f) { clip = J_LAND; hold = -2.0; }
+	else if (crouch) { clip = speed > 0.2f ? CR_FWD : CR_IDLE; cs = speed > 0.2f ? speed / 0.8 : 1.0; }
 	else if (speed > 3.6f) { clip = SPRINT; cs = speed / 3.1; }
 	else if (speed > 2.0f) { clip = JOG; cs = speed / 2.4; }
 	else if (speed > 0.2f) { clip = WALK; cs = speed / 0.92; }
-	fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), get_global_position()), clip, std::min(std::max(cs, 0.5), 2.0), -1.0);
+	fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), get_global_position()), clip, std::min(std::max(cs, 0.5), 2.0), hold);
 }
 
 void CityPlayer::set_riding(bool p_on) {
@@ -154,6 +212,11 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_water_y"), &CityPlayer::get_water_y);
 	ClassDB::bind_method(D_METHOD("is_swimming"), &CityPlayer::is_swimming);
 	ClassDB::bind_method(D_METHOD("get_clip"), &CityPlayer::get_clip);
+	ClassDB::bind_method(D_METHOD("set_crouch", "on"), &CityPlayer::set_crouch);
+	ClassDB::bind_method(D_METHOD("get_crouch"), &CityPlayer::get_crouch);
+	ClassDB::bind_method(D_METHOD("jump"), &CityPlayer::jump);
+	ClassDB::bind_method(D_METHOD("set_no_touch", "index", "rect"), &CityPlayer::set_no_touch);
+	ClassDB::bind_method(D_METHOD("get_touch_move"), &CityPlayer::get_touch_move);
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "water_y"), "set_water_y", "get_water_y");
 	ClassDB::bind_method(D_METHOD("set_body_id", "id"), &CityPlayer::set_body_id);
 	ClassDB::bind_method(D_METHOD("get_body_id"), &CityPlayer::get_body_id);

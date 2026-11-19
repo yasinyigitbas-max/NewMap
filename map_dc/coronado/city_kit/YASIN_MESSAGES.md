@@ -353,3 +353,9 @@ the other agent suggested these
 - [2026-11-19] actually this might be a good time to get the old games control sceme too, copy it as it was, same goes for everywhere else on foot too
 
 - [2026-11-19] so are there holes on the roads? / do that now / fix all of them then move on with your queue
+
+- [2026-11-19] dont forget to copy the controls as it is, double taps on both sides for crouch and jump, and tapping the back sings a punch, alternating between right and left once we are in the cobat mode. when phone is swung down in landscape, we should enter combat mode, locking onto the nearest npc, and keep locked on until they are or we are defeated. give npcs some low health that takes a few jabs to run out and player character should get into fighting mode once we swing down hard
+
+- [2026-11-19] make npcs defend themselves attack back or try to dodge sideways once we hit them, they shouldnt get into combat mode unless we hit them
+
+- [2026-11-19] player will tap the back of the phone for hitsm gyro accelero and mic will be used at the same time to detect thoose taps

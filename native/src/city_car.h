@@ -44,7 +44,12 @@ class CityCar : public RigidBody3D {
 	// touch driving (20 Nov): one finger steers (left half), others press brake / gas / handbrake (right half)
 	int t_steer_id = -1;
 	float t_steer_x0 = 0, t_steer = 0;
-	int t_zone[16] = { 0 };      // per finger index: 0 none, 1 brake, 2 gas, 3 handbrake
+	int t_zone[16] = { 0 };      // per finger index: 0 none, 1 brake, 2 gas
+	// the old game's car controls (docs/OLD_CONTROLS_SPEC.md): drawn while the player drives
+	class CanvasLayer *hud = nullptr;
+	class PanelContainer *hud_gas = nullptr, *hud_brake = nullptr;
+	class Label *hud_kmh = nullptr;
+	void make_hud();
 	Vector3 com;                 // the centre of mass in the node's own frame (the node's origin is on the ground under the car)
 	MeshInstance3D *wheel_vis[4] = { nullptr, nullptr, nullptr, nullptr };
 	MeshInstance3D *mi_body = nullptr;

@@ -1,5 +1,6 @@
 // CityCar: see city_car.h.
 #include "city_car.h"
+#include "ui_plate.h"
 
 #include "car_models.h"
 
@@ -9,6 +10,10 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/input_event.hpp>
 #include <godot_cpp/classes/input_event_screen_drag.hpp>
+#include <godot_cpp/classes/v_box_container.hpp>
+#include <godot_cpp/classes/panel_container.hpp>
+#include <godot_cpp/classes/label.hpp>
+#include <godot_cpp/classes/canvas_layer.hpp>
 #include <godot_cpp/classes/input_event_screen_touch.hpp>
 #include <godot_cpp/classes/viewport.hpp>
 #include <godot_cpp/classes/mesh.hpp>
@@ -181,23 +186,24 @@ void CityCar::_ready() {
 	set_process(true);
 }
 
-// Touch driving (20 Nov): left half of the screen = steering by sliding a thumb sideways from where it landed;
-// right half = brake (inner quarter) and gas (outer quarter); the top right corner = handbrake. Many fingers at once.
+// Touch driving: the old game's scheme (docs/OLD_CONTROLS_SPEC.md; Yasin: "copy it as it was"): the left half of the screen is
+// an invisible stick for the wheel (full lock at 80 px, a dead zone of 0.08); GAS and BRAKE are the old plates above the
+// phone button's corner (BRAKE held at a standstill reverses). Many fingers at once.
 void CityCar::_input(const Ref<InputEvent> &p_event) {
 	if (!player) return;
 	Viewport *vp = get_viewport();
 	if (!vp) return;
 	const Vector2 sz = vp->get_visible_rect().size;
 	if (sz.x < 1.0f || sz.y < 1.0f) return;
+	const float k = std::max(sz.y / 648.0f, 0.5f);
+	auto zone = [&](const Vector2 &p) { return plate::gas_rect(sz).grow(8.0f).has_point(p) ? 2 : (plate::brake_rect(sz).grow(8.0f).has_point(p) ? 1 : 0); };
 	if (const InputEventScreenTouch *t = Object::cast_to<InputEventScreenTouch>(p_event.ptr())) {
 		const int id = t->get_index();
 		const Vector2 p = t->get_position();
 		if (t->is_pressed()) {
-			if (p.x < sz.x * 0.5f) {
-				if (t_steer_id < 0) { t_steer_id = id; t_steer_x0 = p.x; t_steer = 0.0f; }
-			} else if (id >= 0 && id < 16) {
-				t_zone[id] = (p.x > sz.x * 0.8f && p.y < sz.y * 0.28f) ? 3 : (p.x < sz.x * 0.75f ? 1 : 2);
-			}
+			const int zk = zone(p);
+			if (zk && id >= 0 && id < 16) t_zone[id] = zk;
+			else if (p.x < sz.x * 0.5f && t_steer_id < 0) { t_steer_id = id; t_steer_x0 = p.x; t_steer = 0.0f; }
 		} else {
 			if (id == t_steer_id) { t_steer_id = -1; t_steer = 0.0f; }
 			if (id >= 0 && id < 16) t_zone[id] = 0;
@@ -207,19 +213,41 @@ void CityCar::_input(const Ref<InputEvent> &p_event) {
 	if (const InputEventScreenDrag *d = Object::cast_to<InputEventScreenDrag>(p_event.ptr())) {
 		const int id = d->get_index();
 		const Vector2 p = d->get_position();
-		if (id == t_steer_id) {
-			t_steer = std::min(std::max(-(p.x - t_steer_x0) / (sz.x * 0.15f), -1.0f), 1.0f);   // + = left, as the keys
-		} else if (id >= 0 && id < 16 && t_zone[id] != 0 && p.x >= sz.x * 0.5f) {
-			t_zone[id] = (p.x > sz.x * 0.8f && p.y < sz.y * 0.28f) ? 3 : (p.x < sz.x * 0.75f ? 1 : 2);   // a thumb may slide between pedals
-		}
+		if (id == t_steer_id) { const float sx = std::min(std::max(-(p.x - t_steer_x0) / (80.0f * k), -1.0f), 1.0f); t_steer = std::fabs(sx) > 0.08f ? sx : 0.0f; }
+		else if (id >= 0 && id < 16 && t_zone[id] != 0) { const int zk = zone(p); if (zk) t_zone[id] = zk; }   // (a thumb may slide between the pedals)
 	}
+}
+
+void CityCar::make_hud() {
+	hud = memnew(CanvasLayer);
+	hud->set_layer(40);
+	add_child(hud);
+	auto pedal = [&](const char *en_, const char *tr_, const char *look) {
+		PanelContainer *p = plate::panel(look);
+		p->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+		VBoxContainer *v = memnew(VBoxContainer);
+		v->set_alignment(BoxContainer::ALIGNMENT_END); v->add_theme_constant_override("separation", -2); v->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+		Label *a = plate::label(en_, plate::FS_ACTION, plate::TEXT, 700); a->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER);
+		Label *b = plate::label(tr_, plate::FS_HELP, plate::DIM, 600); b->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER);
+		v->add_child(a); v->add_child(b); p->add_child(v); hud->add_child(p);
+		return p;
+	};
+	hud_gas = pedal("GAS", "GAZ", "plate_go");
+	hud_brake = pedal("BRAKE", "FREN", "plate");
+	PanelContainer *sp = plate::panel("plate");
+	sp->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+	sp->set_name("Speed");
+	VBoxContainer *v = memnew(VBoxContainer); v->add_theme_constant_override("separation", -6);
+	hud_kmh = plate::label("0", plate::FS_DISPLAY, plate::TEXT, 700);
+	v->add_child(hud_kmh); v->add_child(plate::caps("km/h"));
+	sp->add_child(v); hud->add_child(sp);
 }
 
 // The keys and the pad. S (or the left trigger) brakes; once the car stands it becomes the reverse gear's pedal.
 void CityCar::read_player() {
 	Input *in = Input::get_singleton();
 	bool tg = false, tb = false, th = false;
-	for (int i = 0; i < 16; i++) { tb = tb || t_zone[i] == 1; tg = tg || t_zone[i] == 2; th = th || t_zone[i] == 3; }
+	for (int i = 0; i < 16; i++) { tb = tb || t_zone[i] == 1; tg = tg || t_zone[i] == 2; }
 	const float up = std::max(in->is_key_pressed(KEY_W) || in->is_key_pressed(KEY_UP) || tg ? 1.0f : 0.0f, std::max(0.0f, (float)in->get_joy_axis(0, JOY_AXIS_TRIGGER_RIGHT)));
 	const float down = std::max(in->is_key_pressed(KEY_S) || in->is_key_pressed(KEY_DOWN) || tb ? 1.0f : 0.0f, std::max(0.0f, (float)in->get_joy_axis(0, JOY_AXIS_TRIGGER_LEFT)));
 	float st = (in->is_key_pressed(KEY_A) || in->is_key_pressed(KEY_LEFT) ? 1.0f : 0.0f) - (in->is_key_pressed(KEY_D) || in->is_key_pressed(KEY_RIGHT) ? 1.0f : 0.0f) + t_steer;
@@ -227,7 +255,8 @@ void CityCar::read_player() {
 	if (std::fabs(jx) > 0.12f) st -= jx;
 	if (dir == 1 && down > 0.1f && up < 0.1f && car.speed < 0.8f) dir = -1;
 	else if (dir == -1 && up > 0.1f && car.speed > -0.8f) dir = 1;
-	c_throttle = dir == 1 ? up : down; c_brake = dir == 1 ? down : up;
+	c_throttle = dir == 1 ? up : down * 0.6f; c_brake = dir == 1 ? down : up;   // (reverse at 0.6, as the old game)
+	if (dir == -1 && car.speed < -4.2f) c_throttle = 0.0f;   // (and no faster than 15 km/h backwards: held, it reached 50)
 	c_steer = std::min(std::max(st, -1.0f), 1.0f);
 	c_handbrake = (in->is_key_pressed(KEY_SPACE) || in->is_joy_button_pressed(0, JOY_BUTTON_A) || th) ? 1.0f : 0.0f;
 	if (up < 0.05f && down < 0.05f && std::fabs(car.speed) < 0.6f) c_brake = 0.35f;   // left alone at a standstill it holds itself (also on a hill)
@@ -283,6 +312,23 @@ void CityCar::_integrate_forces(PhysicsDirectBodyState3D *p_state) {
 
 void CityCar::_process(double p_delta) {
 	if (!made) return;
+	if (player) {   // the old pedals and the speed plate, while the player drives
+		if (!hud) make_hud();
+		Viewport *vp = get_viewport();
+		if (vp) {
+			const Vector2 sz = vp->get_visible_rect().size;
+			const Rect2 g = plate::gas_rect(sz), b = plate::brake_rect(sz), s = plate::speed_rect(sz);
+			hud_gas->set_position(g.position); hud_gas->set_size(g.size);
+			hud_brake->set_position(b.position); hud_brake->set_size(b.size);
+			if (Control *sp = Object::cast_to<Control>(hud->get_node_or_null("Speed"))) { sp->set_position(s.position); sp->set_size(s.size); }
+			bool tb = false, tg = false;
+			for (int i = 0; i < 16; i++) { tb = tb || t_zone[i] == 1; tg = tg || t_zone[i] == 2; }
+			hud_gas->add_theme_stylebox_override("panel", plate::box(tg ? "raised_hi" : "plate_go"));
+			hud_brake->add_theme_stylebox_override("panel", plate::box(tb ? "raised_hi" : "plate"));
+			hud_kmh->set_text(String::num_int64((int64_t)std::lround(std::fabs(car.speed) * 3.6f)));
+		}
+		hud->set_visible(true);
+	} else if (hud) hud->set_visible(false);
 	for (int i = 0; i < 4; i++) {   // the wheels: on their springs, turned, spun
 		if (!wheel_vis[i] || !split) continue;
 		const vd::Wheel &w = car.wh[i];

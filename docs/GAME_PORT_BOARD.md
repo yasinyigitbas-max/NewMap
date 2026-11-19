@@ -35,6 +35,14 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 - "if there is a saved game, in the main menu, game should take a screenshot from the game will load from, that screen
   should be shown on the loading menu and game should load into that scene directly, seamlessly"; "if there isnt a saved
   game yet, that screen should have a black background"
+- "dont forget to copy the controls as it is, double taps on both sides for crouch and jump, and tapping the back sings a
+  punch, alternating between right and left once we are in the cobat mode. when phone is swung down in landscape, we
+  should enter combat mode, locking onto the nearest npc, and keep locked on until they are or we are defeated. give npcs
+  some low health that takes a few jabs to run out and player character should get into fighting mode once we swing down
+  hard"
+- "make npcs defend themselves attack back or try to dodge sideways once we hit them, they shouldnt get into combat mode
+  unless we hit them"; "player will tap the back of the phone for hitsm gyro accelero and mic will be used at the same
+  time to detect thoose taps"
 - Standing rules: everything per frame or tick in C++ (memory: runtime code in C++); scripts only for tools and tests;
   one question, one run; the phone last; don't waste his usage or his PC; say what was not checked.
 
@@ -65,10 +73,18 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
       49 on the seams between cells; review/collision_holes_19nov/holes.txt); WayFloor (C++) lays a collision floor 3 cm
       under every lane, junction path, pavement and crossing round the camera, so none of them can be fallen through. The
       list went to the city-kit session to mend in the pieces / bake.
-6d. [ ] THE OLD CONTROL SCHEME copied as it was (docs/OLD_CONTROLS_SPEC.md): on foot the invisible left-half move stick
+6d. [x] (19 Nov, tests/people/test_touch_controls.gd: walk / run, look, both double taps, the car's GAS / BRAKE and reverse, the bike's pedal and steering; the Use plate and the phone button come with the HUD, item 7) THE OLD CONTROL SCHEME copied as it was (docs/OLD_CONTROLS_SPEC.md): on foot the invisible left-half move stick
       and right-half look, double taps (crouch / jump), the Use plate, the phone button; the car's GAS / BRAKE plates and
       speed plate; the bike the same (blank left steering, two pedals at the lower right, only while riding: done in a
       first form). Keys as the old game.
+6f. [ ] COMBAT MODE (Yasin): a hard downward swing of the phone (landscape; the accelerometer) enters it: the player takes
+      his fighting stance (PunchKick_Enter / fight idle), locks onto the nearest person and stays locked until one of them
+      is beaten; a tap on the BACK of the phone (a sharp spike on the accelerometer) throws a punch, right and left in
+      turn (Punch_Jab / Punch_Cross); people have low health (a few jabs), blows and falls by the balancing body, the
+      beaten one down (not killed: Yasin earlier "they shouldnt kill each other"); keys for the PC (F fight, mouse click
+      punch) to test.
+      People never fight unless the player hits them; once hit they defend, hit back or dodge sideways (Yasin). The back
+      tap is detected from the GYRO, the ACCELEROMETER and the MICROPHONE together (Yasin): all three must agree.
 6e. [ ] THE SAVED GAME'S PICTURE: the menu and the loading screen show where the save left off (taken from the game),
       Continue fades from it into that place seamlessly; black when there is no save.
 7. [ ] HUD (Yasin's layout: top right a box the size of the phone icon with a "3D-looking" flat arrowhead: GREEN pointing

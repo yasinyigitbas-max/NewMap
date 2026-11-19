@@ -7,6 +7,8 @@
 //  - `set_move` drives it instead of the keys (tests).
 #pragma once
 
+#include <algorithm>
+
 #include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/input_event.hpp>
@@ -29,6 +31,15 @@ class CityPlayer : public CharacterBody3D {
 	float cam_yaw = 0.0f, cam_pitch = -0.18f, cam_dist = 3.4f, yaw = 0.0f, speed = 0.0f;
 	float walk_speed = 1.6f, run_speed = 4.6f;
 	Vector3 cam_pos, knock_v;
+	// THE OLD GAME'S TOUCH SCHEME (docs/OLD_CONTROLS_SPEC.md; Yasin: "copy it as it was"): the left half of the screen is
+	// an invisible floating stick (full at 80 px), the right half looks (0.25 deg a pixel x 1.2), a double tap (0.32 s,
+	// 110 px) on the left crouches, on the right jumps
+	Vector2 move_start[16]; bool move_on[16] = {}; Vector2 touch_mv;
+	double tap_t[2] = { -9, -9 }; Vector2 tap_p[2];
+	bool crouch = false, jump_want = false, space_was = false, c_was = false, airborne = false;
+	float land_t = 0.0f;
+	double clock_s = 0.0;
+	Rect2 no_touch[4]; int n_no_touch = 0;   // screen rectangles that are buttons (the Use plate, the phone): not move / look
 	double water_y = -1000.0;   // the water's surface (-1000 = there is none): deeper than his chest he swims
 	bool swimming = false;
 
@@ -46,6 +57,12 @@ public:
 	void set_move(const Vector2 &p_dir, bool p_run);
 	// he stands and takes no keys (while a line is typed to somebody)
 	void set_frozen(bool p_on) { frozen = p_on; }
+	void set_crouch(bool p_on) { crouch = p_on; }
+	bool get_crouch() const { return crouch; }
+	void jump() { jump_want = true; }
+	// a button's rectangle on the screen that move / look must not take (k 0..3)
+	void set_no_touch(int p_k, const Rect2 &p_r) { if (p_k >= 0 && p_k < 4) { no_touch[p_k] = p_r; n_no_touch = std::max(n_no_touch, p_k + 1); } }
+	Vector2 get_touch_move() const { return touch_mv; }
 	bool is_frozen() const { return frozen; }
 	// somebody hits him: he is knocked that way (m/s)
 	void knock(const Vector3 &p_v) { knock_v += p_v; }
