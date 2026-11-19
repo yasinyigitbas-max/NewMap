@@ -1,0 +1,153 @@
+{
+ "area": "strip_art",
+ "piece": "s_strip_art",
+ "zone": "commercial strip (arterial)",
+ "rule": "docs/TREE_PLAN.md: commercial strip, few - the palm parkway; one tree per car-park island end (zone 106 -> about 80)",
+ "written": "19 Nov 2026 (PC session, streets pass): picked by hand from the builder trees' spots, one by one",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    526.0,
+    4.15,
+    -1211.3
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "south parkway grass at the start of the run: the strip's palm parkway begins here (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    474.0,
+    4.15,
+    -1188.7
+   ],
+   "yaw": 113,
+   "scale": 0.85,
+   "why": "south parkway grass at the start of the run: the strip's palm parkway begins here (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    557.0,
+    4.15,
+    -1211.3
+   ],
+   "yaw": 226,
+   "scale": 0.9,
+   "why": "south parkway grass about 30 m on, between the cobra lamps (2.8 m clear): the next palm of the row (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    443.0,
+    4.15,
+    -1188.7
+   ],
+   "yaw": 339,
+   "scale": 0.95,
+   "why": "south parkway grass about 30 m on, between the cobra lamps (2.8 m clear): the next palm of the row (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    591.0,
+    4.15,
+    -1211.3
+   ],
+   "yaw": 92,
+   "scale": 0.85,
+   "why": "south parkway grass at the far end, the last palm before the junction; the 11 m doubles in between go (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    409.0,
+    4.15,
+    -1188.7
+   ],
+   "yaw": 205,
+   "scale": 0.9,
+   "why": "south parkway grass at the far end, the last palm before the junction; the 11 m doubles in between go (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    526.0,
+    4.15,
+    -1188.7
+   ],
+   "yaw": 318,
+   "scale": 0.95,
+   "why": "north parkway grass at the start, beside the bus stop: shade for people waiting (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    474.0,
+    4.15,
+    -1211.3
+   ],
+   "yaw": 71,
+   "scale": 0.85,
+   "why": "north parkway grass at the start, beside the bus stop: shade for people waiting (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    552.0,
+    4.15,
+    -1188.7
+   ],
+   "yaw": 184,
+   "scale": 0.9,
+   "why": "north parkway grass about 26 m on: the row continues on the shop side (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    448.0,
+    4.15,
+    -1211.3
+   ],
+   "yaw": 297,
+   "scale": 0.95,
+   "why": "north parkway grass about 26 m on: the row continues on the shop side (place 2 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    587.0,
+    4.15,
+    -1188.7
+   ],
+   "yaw": 50,
+   "scale": 0.85,
+   "why": "north parkway grass at the far end, the last palm before the junction (place 1 of 2 of this piece)"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    413.0,
+    4.15,
+    -1211.3
+   ],
+   "yaw": 163,
+   "scale": 0.9,
+   "why": "north parkway grass at the far end, the last palm before the junction (place 2 of 2 of this piece)"
+  }
+ ]
+}
