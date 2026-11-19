@@ -95,6 +95,11 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
   `AnimRetarget`) fits 84 clips to our figure; the far figures are posed from them; the nearest 12 people are real
   animated bodies with a clip for every act; pushes and impacts stay the physical body; getting up is LayToIdle.
   Order after a change of clips: make_anims.gd, then make_people.gd.
+  20 Nov ~11:00: A PLAYER ON FOOT AND THE CROWD ROUND HIM (doc section 29), all C++: class `CityPlayer`
+  (walks, runs, camera behind, the Quaternius clips by his pace; `CityCrowd::set_player`), 12 capsules on the people
+  round him (he cannot walk through a standing person), running into a walker hands him to his balancing body and he
+  walks on afterwards, umbrellas in rain, towels on the beach, the murmur at talking groups.
+  `tests/people/test_crowd_game.gd` RESULT PASS. Nothing of it seen in motion yet.
   STILL TO DO FOR "DONE": the game's node (join to the traffic, draw far figures and the 18 near bodies with the
   acts' animations, the balancing body for a walker who is pushed or hit, capsules round the player, umbrellas,
   towels, murmur), a player on foot, the talking, a bus line, the real get-up. NO PICTURE OF THE CROWD EXISTS YET.

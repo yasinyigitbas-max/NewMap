@@ -2,6 +2,7 @@
 #include "city_crowd.h"
 
 #include "city_ped.h"
+#include "city_player.h"
 #include "city_traffic.h"
 #include "ped_inl.h"
 #include "traffic_sim.h"
@@ -124,6 +125,19 @@ void CityCrowd::make_look() {
 	}
 	const PackedByteArray px = f->get_buffer((int64_t)tex_w * tex_h * 8);
 	if (px.size() != (int64_t)tex_w * tex_h * 8) { UtilityFunctions::push_error("CityCrowd: far_poses.bin is cut short"); return; }
+	{   // where a lying figure lies in its own frame (for the towel under it): body 0, the pose "lying on the back"
+		auto unhalf = [](uint16_t h) { const int e = (h >> 10) & 31, m = h & 1023; float f = e == 0 ? std::ldexp((float)m, -24) : std::ldexp((float)(m + 1024), e - 25); return (h & 0x8000) ? -f : f; };
+		const uint16_t *hp = (const uint16_t *)px.ptr();
+		float lo[2] = { 1e9f, 1e9f }, hi[2] = { -1e9f, -1e9f };
+		const int row0 = 2 * 10 * corner_h;
+		for (int c = 0; c < bodies[0].corners && c < corner_h * tex_w; c++) {
+			const uint16_t *q = hp + ((size_t)row0 * tex_w + c) * 4;
+			const float vx = unhalf(q[0]), vz = unhalf(q[2]);
+			lo[0] = std::min(lo[0], vx); hi[0] = std::max(hi[0], vx); lo[1] = std::min(lo[1], vz); hi[1] = std::max(hi[1], vz);
+		}
+		lie_c = Vector3(0.5f * (lo[0] + hi[0]), 0, 0.5f * (lo[1] + hi[1]));
+		lie_yaw = (hi[0] - lo[0]) > (hi[1] - lo[1]) ? 1.5707963f : 0.0f;
+	}
 	Ref<Image> img = Image::create_from_data(tex_w, tex_h, false, Image::FORMAT_RGBAH, px);
 	pose_tex = ImageTexture::create_from_image(img);
 
@@ -201,7 +215,7 @@ void CityCrowd::_ready() {
 	if (!ready) { set_process(false); return; }
 	if (cells.empty()) cells.assign((size_t)GRID * GRID, 0);
 	if (draw_on) make_look();
-	if (gfx) make_near();
+	if (gfx) { make_near(); make_extras(); }
 	crowd->reset(20261120ull);
 	set_process(true);
 }
@@ -212,11 +226,24 @@ void CityCrowd::_exit_tree() {
 	if (mm.is_valid()) rs->free_rid(mm);
 	inst = RID(); mm = RID(); gfx = false;
 	near_pool.clear();
+	free_extras();
 }
 
 // ---------------------------------------------------------------- who else there is
 void CityCrowd::set_traffic(Object *p_traffic) { traffic_id = p_traffic ? (uint64_t)p_traffic->get_instance_id() : 0; }
-void CityCrowd::set_player(Object *p_player) { player_id = p_player ? (uint64_t)p_player->get_instance_id() : 0; has_last_player = false; }
+void CityCrowd::set_player(Object *p_player) {
+	player_id = p_player ? (uint64_t)p_player->get_instance_id() : 0; has_last_player = false;
+	// the test app's stand-in player gets a body and clothes like the people's (his own, never dissolving)
+	CityPlayer *cp = Object::cast_to<CityPlayer>(p_player);
+	if (cp && cp->figure() && gfx && !bodies.empty()) {
+		int body = 0;
+		for (int k = 0; k < (int)bodies.size(); k++) if (bodies[k].id == cp->get_body_id()) body = k;
+		Ref<ShaderMaterial> m = mat_near->duplicate();
+		m->set_shader_parameter("person", Vector4(7.0f, 0.0f, 3.0f + 8.0f, 0.2f));
+		m->set_shader_parameter("fade_band", Vector2(1.0e5f, 1.0e5f + 1.0f));
+		cp->figure()->become(bodies[body].id, bodies[body].near_mesh, m, false);
+	}
+}
 
 void CityCrowd::cell_set(const String &p_key, bool p_in) {
 	const PackedStringArray p = p_key.split("_");
@@ -300,6 +327,10 @@ void CityCrowd::step_brain(double p_delta) {
 			if (!road && !waits) continue;
 			const float b[tc::DYN_STRIDE] = { crowd->x[i], crowd->y[i], crowd->z[i], crowd->yaw[i], 0.25f, 0.25f, crowd->hx[i] * crowd->v[i], crowd->hz[i] * crowd->v[i],
 				(float)(road ? tc::DYN_PED : tc::DYN_XWALK), (float)(300000 + crowd->id[i]), road ? (float)tc::DF_ON_ROAD : 0.0f };
+			dyn.insert(dyn.end(), b, b + tc::DYN_STRIDE);
+		}
+		if (crowd->has_player) {   // the player on foot: the drivers see him wherever he is
+			const float b[tc::DYN_STRIDE] = { crowd->pl_x, last_player.y, crowd->pl_z, 0.0f, 0.3f, 0.3f, crowd->pl_vx, crowd->pl_vz, (float)tc::DYN_PLAYER, -3.0f, (float)tc::DF_ON_ROAD };
 			dyn.insert(dyn.end(), b, b + tc::DYN_STRIDE);
 		}
 		tr->set_walkers(dyn.data(), (int)dyn.size() / tc::DYN_STRIDE);
@@ -538,6 +569,7 @@ void CityCrowd::_process(double p_delta) {
 	step_brain(p_delta);
 	near_update(p_delta, acc / STEP_S);
 	draw(acc / STEP_S);
+	extras_update(acc / STEP_S);
 	crowd->events.clear();
 	const double us = (double)(usec_now() - t0);
 	cnt.frames++; cnt.main_us += us; cnt.main_us_worst = std::max(cnt.main_us_worst, us);
@@ -607,6 +639,10 @@ Dictionary CityCrowd::stats() const {
 	d["spawned"] = s.spawned; d["left"] = s.despawned; d["arrivals"] = s.arrivals; d["went_in"] = s.went_in; d["came_out"] = s.came_out; d["sat"] = s.sat; d["crossings"] = s.crossings;
 	d["groups"] = s.parties; d["meetings"] = s.meetings; d["dodges"] = s.dodges; d["fled"] = s.fled; d["bumps"] = s.bumps;
 	d["bodies"] = (int)bodies.size(); d["drawn"] = shown;
+	int nn = 0, nbdy = 0;
+	for (const Near &nb : near_pool) { if (nb.walker >= 0) nn++; if (nb.in_body) nbdy++; }
+	d["near_bodies"] = nn; d["near_pool"] = (int)near_pool.size(); d["in_physical_body"] = nbdy; d["umbrellas"] = prop_shown[0]; d["towels"] = prop_shown[1];
+	d["ducked"] = s.ducks; d["stared"] = s.stared; d["coins"] = s.coins; d["lines_said"] = s.lines_said;
 	return d;
 }
 

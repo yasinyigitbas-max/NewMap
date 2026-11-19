@@ -1048,3 +1048,27 @@ NOT YET / NOT CHECKED: nothing seen in motion (walk speed against the ground, th
 hit by a car or shoved by the player INSIDE the crowd was not tried (the body alone was); children (drawn 0.62-0.74
 of a grown-up) have no physical body; beggars sit as on a chair; no sitting-down / standing-up clip is played
 (Sitting_Enter / Sitting_Exit are there); lying on the front is drawn as lying on the back for near bodies.
+
+## 29. People, step 6: a player on foot, and the crowd round him (20 Nov, on the working branch)
+All C++. Test `tests/people/test_crowd_game.gd` (headless, `--fixed-fps 60`, the real streets and places over a flat
+floor) RESULT PASS:
+- THE PLAYER ON FOOT (`city_player.*`, class `CityPlayer`, a CharacterBody3D): a stand-in for the game's own player.
+  Capsule 0.3 x 1.75 m on layer 2, stopped by the world (1), the traffic's cars (16) and the people's capsules (32).
+  W A S D or the left stick, Shift runs (1.6 and 4.6 m/s), the mouse or the arrows turn the view, E = the signal
+  `interact`. His figure is a `CityPed` with the Quaternius clips by his pace (idle, walk, jog, sprint), a camera
+  3.4 m behind. `set_move(direction, run)` drives him in tests. `CityCrowd::set_player(node)` takes him: the crowd
+  steps aside for him, the traffic sees him as somebody on the road.
+- CAPSULES (`city_crowd_extra.cpp`): 12 static capsules (0.24 x 1.7 m, layer 32) stand on the people within 8 m of
+  the player, moved each physics step: he cannot walk through a person who stands. In the test he walks at a slow
+  pace into a standing person and stops 0.54 m from him, centre to centre.
+- RUNNING INTO SOMEBODY: at 4.6 m/s the walker he ran at was in his physical body (the balancing one) at once, and
+  walked on 3 s later (the brain's `to_body` on, then off, at the place where the body stands).
+- UMBRELLAS AND TOWELS: two batches of small shapes made in code (one draw each). In rain two people in five carry an
+  umbrella (always the same people; 34 of 83 in the test); a towel lies under everybody who lies on the beach.
+- THE MURMUR: two voices of the old game's crowd murmur (`audio/amb/crowd_murmur.ogg`) stand at the two nearest
+  groups who talk.
+- The test also: 11 of the 12 pool bodies in use round him; a fright at his place: 3 duck, 7 run; nobody inside
+  anybody; the game heard 142 events in 10 s; main thread 0.087 ms a frame on average (worst 1.8 ms).
+NOT YET / NOT CHECKED: nothing seen in motion or heard; the capsules, umbrellas and towels were counted, not looked
+at; the player is not in the test app yet (`--walk` is next); talking to the player; a bus line; sounds for a scream
+and "look out"; no phone run.

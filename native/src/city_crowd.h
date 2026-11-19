@@ -16,6 +16,7 @@
 #include "street_build.h"
 
 #include <godot_cpp/classes/image_texture.hpp>
+#include <godot_cpp/classes/material.hpp>
 #include <godot_cpp/classes/mesh.hpp>
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/shader_material.hpp>
@@ -32,6 +33,7 @@ namespace godot {
 
 class CityTraffic;
 class CityPed;
+class AudioStreamPlayer3D;
 
 class CityCrowd : public Node3D {
 	GDCLASS(CityCrowd, Node3D)
@@ -76,11 +78,27 @@ private:
 	// the near bodies
 	struct Near { CityPed *ped = nullptr; int walker = -1; int female = 0; bool in_body = false; float push_cd = 0; Ref<ShaderMaterial> look; };
 	std::vector<Near> near_pool;
+	// the smaller things (city_crowd_extra.cpp): capsules round the player, umbrellas, towels, the murmur
+	enum { CAPSULES = 12 };
+	bool extras = false;
+	RID cap_body[CAPSULES], cap_shape[CAPSULES];
+	bool cap_on[CAPSULES];
+	Ref<Mesh> mesh_umb, mesh_towel;
+	Ref<Material> mat_prop;
+	RID prop_mm[2], prop_inst[2];
+	PackedFloat32Array prop_buf[2];
+	int prop_shown[2] = { 0, 0 };
+	AudioStreamPlayer3D *murmur[2] = { nullptr, nullptr };
+	Vector3 lie_c;              // a lying figure's middle, in its own frame, and the way it lies (for the towel under it)
+	float lie_yaw = 0.0f;
+	void make_extras();
+	void free_extras();
+	void extras_update(double p_alpha);
 	void make_near();
 	void near_update(double p_delta, double p_alpha);
 	void clip_of(int i, StringName &r_clip, double &r_speed, double &r_hold) const;
 	// counters
-	struct Count { int frames = 0, steps = 0; double step_us = 0, step_us_worst = 0, main_us = 0, main_us_worst = 0, people = 0, near = 0; int most = 0; } cnt;
+	struct Count { int frames = 0, steps = 0; double step_us = 0, step_us_worst = 0, main_us = 0, main_us_worst = 0, people = 0, near = 0, umbrellas = 0; int most = 0; } cnt;
 
 	bool load();
 	void make_look();
@@ -100,6 +118,7 @@ public:
 	void _ready() override;
 	void _exit_tree() override;
 	void _process(double p_delta) override;
+	void _physics_process(double p_delta) override;
 
 	// who else there is: the traffic (cars to see and to be seen by, the signals' clock), the streamer (its cells),
 	// the player on foot (any Node3D; people step aside for him and may be talked to)

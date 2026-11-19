@@ -64,6 +64,15 @@ The full record is `docs/TRAFFIC_PEOPLE_PORT.md` (sections 13-20 are results). T
   and late; a jump out of a car's way must not jump back while the car still comes; a bus: off first, then on;
   walkers the test places need shops' doors to stay shut or the counts are off.
 
+- The crowd in the game (20 Nov, doc sections 27-29): `CityCrowd` (far figures = one draw from `far_poses.bin`; the
+  nearest 12 are `CityPed` bodies with the Quaternius clips, `characters/rocketbox/clips_ual_*.res`), `CityPlayer`
+  (a player on foot), `city_crowd_extra.cpp` (capsules, umbrellas, towels, murmur). Tests: `tests/people/
+  test_city_ped.gd` and `tests/people/test_crowd_game.gd` (headless, `--fixed-fps 60`). After a change of clips:
+  `make_anims.gd`, then `make_people.gd`. Paid for: an AnimationPlayer does not run and a Skeleton3D gives its rest
+  pose in a tool that draws nothing (the tools read the tracks and do the bone maths themselves); a shader's vec4 is
+  set with a Vector4, not a Quaternion; the Write tool will not overwrite a file a patch script changed until it is
+  read again.
+
 ## Yasin's rules for this job (his words are in the doc)
 - Everything in C++: no script in any frame or tick, no script fallback. Tool-time scripts are fine.
 - Parked cars are LOW DETAIL only. Cars must never touch a pavement, a kerb or grass. Cars move naturally.

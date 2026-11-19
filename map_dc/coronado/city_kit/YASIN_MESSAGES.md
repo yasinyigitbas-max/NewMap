@@ -281,3 +281,13 @@ the other agent suggested these
 - [2026-11-19] build all of the missing parts of npcs and crowds, dont call it done unless its 100 percent native code and all features implemented
 
 - [2026-11-20] dont you need all benches to be in the game before you make that piece? most of the map isnt done yet
+
+- [2026-11-20] also download quaternius universal animation library 1 and 2 and make all the crowd movements and reactions animated. keep your custom animations for pushes and impacts though, but use quaternius animations for getting up
+
+- [2026-11-20] there were two sets of them, did you download both?
+
+- [2026-11-20] are you still writing everything in c plus plus?
+
+- [2026-11-20] you just went thru a context compression, remind yourself of the rules
+
+- [2026-11-20] act like the developer working on the next gta in rockstar studios
