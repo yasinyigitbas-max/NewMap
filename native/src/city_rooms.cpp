@@ -78,10 +78,12 @@ void CityRooms::finish(int i) {
 	Room &rm = rooms[i];
 	ResourceLoader *rl = ResourceLoader::get_singleton();
 	Node3D *bd = Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(rm.building)));
-	Ref<PackedScene> ps = rl->load_threaded_get(rm.scn);
+	Ref<PackedScene> ps;
+	{ pm::Scope _g(pm::ROOM_GET); ps = rl->load_threaded_get(rm.scn); }
 	loading--;
 	if (!bd || ps.is_null()) { rm.state = 0; return; }
-	Node3D *root = Object::cast_to<Node3D>(ps->instantiate());
+	Node3D *root = nullptr;
+	{ pm::Scope _n(pm::ROOM_INST); root = Object::cast_to<Node3D>(ps->instantiate()); }
 	if (!root) { rm.state = 0; return; }
 	// the doors: the leaves' script dropped (C++ swings them, below), their measures kept
 	rm.leaves.clear();
@@ -117,7 +119,7 @@ void CityRooms::finish(int i) {
 		}
 	}
 	root->set_name("room");
-	bd->add_child(root);
+	{ pm::Scope _a(pm::ROOM_ADD); bd->add_child(root); }
 	rm.node = (uint64_t)root->get_instance_id(); rm.state = 2; live++; woken++;
 	set_open(rm, true);
 }
@@ -243,7 +245,14 @@ void CityRooms::_process(double p_delta) {
 		light_rooms(cp);
 	}
 	add_col(cp);
-	doors(p_delta, cp);
+	// B34 (Yasin, 20 Nov: "doors of the places open too late and we see our character clipping into them"): the doors
+	// open for the player (the camera trails him by ~3.4 m); the camera only when there is no player (the rig's drives)
+	Vector3 who = cp;
+	if (CityStream *st = Object::cast_to<CityStream>(ObjectDB::get_instance(ObjectID(stream_id)))) {
+		Node3D *pl = st->get_player_id() ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(st->get_player_id()))) : nullptr;
+		if (pl && pl->is_inside_tree() && pl->is_visible_in_tree()) who = pl->get_global_position() + Vector3(0, 1.0f, 0);
+	}
+	doors(p_delta, who);
 }
 
 void CityRooms::_exit_tree() {

@@ -168,6 +168,7 @@ public:
 
 	void update_focus(const Vector3 &p, bool p_now = false, const Vector3 &p_velocity = Vector3());
 	void set_player(Object *p_player) { player_id = p_player ? (uint64_t)p_player->get_instance_id() : 0; }
+	uint64_t get_player_id() const { return player_id; }      // (CityRooms: the doors open for the player, not the camera)
 	void set_tiers(bool p_on, double p_band = -1.0, double p_arrive = -1.0);
 	Ref<Shader> shader_variant(const Ref<Shader> &p_plain, const PackedStringArray &p_defines);
 	Ref<Shader> baked_shader(const Ref<ShaderMaterial> &p_m) const;

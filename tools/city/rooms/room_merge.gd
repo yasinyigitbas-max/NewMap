@@ -50,8 +50,11 @@ func _run() -> void:
 			var im: Image = (ss.material_override as StandardMaterial3D).albedo_texture.get_image()
 			if im and not im.is_empty():
 				if im.is_compressed(): im.decompress()
+				if not im.has_mipmaps(): im.generate_mipmaps()
+				# ETC2, not Basis Universal: the phones' GPUs read it as it is; Basis was transcoded on the CPU the first time a
+				# room was made, 57-59 ms on the main thread on the PC (20 Nov). (ASTC failed to build on this PC: no ASTC there.)
 				var tex := PortableCompressedTexture2D.new(); tex.keep_compressed_buffer = true
-				tex.create_from_image(im, PortableCompressedTexture2D.COMPRESSION_MODE_BASIS_UNIVERSAL)
+				tex.create_from_image(im, PortableCompressedTexture2D.COMPRESSION_MODE_ETC2)
 				var m := (ss.material_override as StandardMaterial3D).duplicate() as StandardMaterial3D; m.albedo_texture = tex
 				ds.material_override = m
 		var ps := PackedScene.new(); _own(dst, dst); ps.pack(dst)

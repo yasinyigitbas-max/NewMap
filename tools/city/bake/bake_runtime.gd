@@ -730,7 +730,8 @@ func _room_meta(nm: String) -> Dictionary:
 	if sh and sh.mesh:
 		var fs := sh.mesh.get_faces()
 		var sxf := _room_rel(sh, rn)
-		for v in fs: var w := sxf * v; faces.append(w); lo = lo.min(w); hi = hi.max(w)
+		for v in fs: var w := sxf * v; lo = lo.min(w); hi = hi.max(w)      # (the shell's size only: its faces are not the collision)
+	faces.append_array(_room_box(rn, lo, hi))
 	var props := rn.get_node_or_null(^"Props")
 	if props:      # a box for each piece of furniture (its mesh's box, placed)
 		var boxes: Array = []      # [mesh box, room-frame transform]
@@ -759,6 +760,44 @@ func _room_meta(nm: String) -> Dictionary:
 	rn.free()
 	room_meta_cache[nm] = m
 	return m
+
+## B33 (Yasin, 20 Nov: "we could vault over the windows of them both from inside and ourside, make their collision a simple
+## square where the shop will fit into"): a room's walls as a plain box round its floors (the floors' outline, from the floor
+## to the shell's top), open only at its entrances (their door height from "openings", else 2.4 m), and its floors. The
+## shell's own faces (window openings and all, ~1,000 triangles) are no longer the collision. Room frame.
+func _room_box(rn: Node3D, lo: Vector3, hi: Vector3) -> PackedVector3Array:
+	var out := PackedVector3Array()
+	var quad := func(a: Vector3, b: Vector3, c: Vector3, d: Vector3) -> void:
+		out.append(a); out.append(b); out.append(c); out.append(a); out.append(c); out.append(d)
+	var fl: Array = rn.get_meta(&"floors", [])
+	if fl.is_empty(): return out
+	var x0 := 1e9; var z0 := 1e9; var x1 := -1e9; var z1 := -1e9
+	for f: Array in fl:
+		x0 = minf(x0, float(f[0])); z0 = minf(z0, float(f[1])); x1 = maxf(x1, float(f[2])); z1 = maxf(z1, float(f[3]))
+		quad.call(Vector3(float(f[0]), 0.0, float(f[1])), Vector3(float(f[2]), 0.0, float(f[1])), Vector3(float(f[2]), 0.0, float(f[3])), Vector3(float(f[0]), 0.0, float(f[3])))
+	var y0 := 0.0; var y1 := maxf(hi.y, 2.6) if hi.y > -1e8 else 3.2
+	# the door gaps: [axis, wall at, from, to, top]
+	var gaps: Array = []
+	var ops: Array = rn.get_meta(&"openings", [])
+	for e: Array in rn.get_meta(&"entrances", []):
+		var top := 2.4
+		for o: Array in ops:
+			if o.size() >= 7 and String(o[6]) == "door" and String(o[0]) == String(e[0]) and absf(float(o[1]) - float(e[1])) < 0.05 and absf(float(o[2]) - float(e[2])) < 0.05: top = float(o[5])
+		gaps.append([String(e[0]), float(e[1]), float(e[2]), float(e[3]), top])
+	# the four walls: [axis, at, along from, along to]; a wall "z" stands at z = at and runs along x
+	for w: Array in [["z", z0, x0, x1], ["z", z1, x0, x1], ["x", x0, z0, z1], ["x", x1, z0, z1]]:
+		var cuts: Array = []
+		for g: Array in gaps:
+			if String(g[0]) == String(w[0]) and absf(float(g[1]) - float(w[1])) < 0.8: cuts.append([maxf(float(g[2]), float(w[2])), minf(float(g[3]), float(w[3])), float(g[4])])
+		cuts.sort_custom(func(a: Array, b: Array) -> bool: return float(a[0]) < float(b[0]))
+		var pt := func(along: float, y: float) -> Vector3: return Vector3(along, y, float(w[1])) if String(w[0]) == "z" else Vector3(float(w[1]), y, along)
+		var s0 := float(w[2])
+		for c: Array in cuts:
+			if float(c[0]) > s0: quad.call(pt.call(s0, y0), pt.call(float(c[0]), y0), pt.call(float(c[0]), y1), pt.call(s0, y1))
+			if float(c[2]) < y1: quad.call(pt.call(float(c[0]), float(c[2])), pt.call(float(c[1]), float(c[2])), pt.call(float(c[1]), y1), pt.call(float(c[0]), y1))      # over the door
+			s0 = maxf(s0, float(c[1]))
+		if float(w[3]) > s0: quad.call(pt.call(s0, y0), pt.call(float(w[3]), y0), pt.call(float(w[3]), y1), pt.call(s0, y1))
+	return out
 
 func _room_rel(n: Node3D, r: Node3D) -> Transform3D:      # a node's transform in its room's frame (the room is not in the tree)
 	var t := n.transform; var q := n.get_parent()
@@ -1346,6 +1385,9 @@ func _build_cell(c: Vector2i) -> Dictionary:
 		var mmi := MultiMeshInstance3D.new(); mmi.name = ("brk_%d_%s" if ib.get("brk", false) else "i%d_%s") % [k, String(ib.name)]; k += 1; mmi.multimesh = mm
 		if ib.get("brk", false):      # B9: its colliders (those of this cell; CityBreakables pairs them with the instances by place)
 			mmi.set_meta(&"brk_cols", rec.get("brkcol", [])); mmi.set_meta(&"brk_kind", String(ib.name))
+			# each prop's place (the batch's own instance transforms): CityBreakables reads this, not the rendering server
+			# (a read there waits for the render thread: 31-42 ms a cell, 20 Nov)
+			mmi.set_meta(&"brk_xfs", ib.xfs.duplicate())
 		if ib.mat:
 			mmi.material_override = ib.mat
 			if (ib.mat as Material).resource_path != "" and not (ib.mat as Material).resource_path.contains("::"): keep[(ib.mat as Material).resource_path] = true

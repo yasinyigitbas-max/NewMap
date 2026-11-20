@@ -110,14 +110,21 @@ void CityBreakables::add_cell(const String &p_key) {
 		const Ref<MultiMesh> mm = mmi->get_multimesh();
 		// the transforms read from the buffer in ONE call: get_instance_transform(i) asks the rendering server each time
 		// (and with a render thread syncs with it each time: 80-150 ms for one cell on the PC, 20 Nov)
-		const PackedFloat32Array buf = mm->get_buffer();
-		const int stride = 12 + (mm->is_using_colors() ? 4 : 0) + (mm->is_using_custom_data() ? 4 : 0);
+		// the places from the bake's meta "brk_xfs" (no rendering-server read: with a render thread one waits for it, 31-42 ms
+		// a cell on the PC); an older bake: the buffer, read in one call
+		const Array xfs = mmi->has_meta("brk_xfs") ? Array(mmi->get_meta("brk_xfs")) : Array();
+		PackedFloat32Array buf; int stride = 12;
+		if (xfs.is_empty()) { buf = mm->get_buffer(); stride = 12 + (mm->is_using_colors() ? 4 : 0) + (mm->is_using_custom_data() ? 4 : 0); }
 		const Transform3D gx = mmi->get_global_transform();
-		const int ninst = std::min((int)mm->get_instance_count(), (int)(buf.size() / stride));
+		const int ninst = xfs.is_empty() ? std::min((int)mm->get_instance_count(), (int)(buf.size() / stride)) : (int)xfs.size();
 		for (int i = 0; i < ninst; i++) {
 			Item it; it.mmi = (uint64_t)mmi->get_instance_id(); it.idx = i; it.cell = p_key;
-			const float *q = buf.ptr() + (int64_t)i * stride;   // a 3 x 4 matrix, row by row: basis row, origin
-			const Transform3D lx(Basis(q[0], q[1], q[2], q[4], q[5], q[6], q[8], q[9], q[10]), Vector3(q[3], q[7], q[11]));
+			Transform3D lx;
+			if (!xfs.is_empty()) lx = xfs[i];
+			else {
+				const float *q = buf.ptr() + (int64_t)i * stride;   // a 3 x 4 matrix, row by row: basis row, origin
+				lx = Transform3D(Basis(q[0], q[1], q[2], q[4], q[5], q[6], q[8], q[9], q[10]), Vector3(q[3], q[7], q[11]));
+			}
 			it.home = gx * lx; it.at = it.home.origin;
 			it.radius = std::max(0.15f, 0.5f * std::max(ab.size.x, ab.size.z)); it.height = std::max(ab.size.y, 0.3f); it.mass = kind_mass(kind);
 			float best = 0.6f * 0.6f;   // its collider: the nearest of the node's within 0.6 m
@@ -209,8 +216,12 @@ void CityBreakables::hits(const Vector3 &cam) {
 		const float sp = Vector2(c.vel.x, c.vel.z).length();
 		if (sp < BREAK_SPEED) continue;
 		const Vector3 fw = Vector3(c.vel.x, 0, c.vel.z) / sp, sd(fw.z, 0, -fw.x);
-		for (const KeyValue<String, std::vector<int>> &kv : by_cell)
-			for (int i : kv.value) {
+		// only the cell under the car and the eight round it (was: every prop of every loaded cell, 3-6 ms on the PC)
+		const int cx = (int)std::floor(c.at.x / 200.0f), cz = (int)std::floor(c.at.z / 200.0f);
+		for (int ox = -1; ox <= 1; ox++) for (int oz = -1; oz <= 1; oz++) {
+			const std::vector<int> *lst = by_cell.getptr(vformat("%d_%d", cx + ox, cz + oz));
+			if (!lst) continue;
+			for (int i : *lst) {
 				Item &it = items[i];
 				if (!it.mmi || it.broken) continue;
 				const Vector3 d = it.at - c.at;
@@ -218,6 +229,7 @@ void CityBreakables::hits(const Vector3 &cam) {
 				const float along = d.dot(fw), across = d.dot(sd);   // inside the car's box (its nose a little ahead) grown by the prop's radius
 				if (std::fabs(along) < c.half_len + 0.35f + it.radius && std::fabs(across) < c.half_w + it.radius) knock(i, c.vel);
 			}
+		}
 	}
 }
 
@@ -261,15 +273,15 @@ void CityBreakables::put_back(int i) {
 
 void CityBreakables::_process(double p_delta) {
 	pm::Scope _pm(pm::BREAKABLES);   // (the slow-frame marks, perf_marks.h)
-	if (!arriving.empty()) { const String k = arriving.front(); arriving.erase(arriving.begin()); add_cell(k); }   // one arrived cell a frame
+	if (!arriving.empty()) { pm::Scope _c(pm::BRK_CELL); const String k = arriving.front(); arriving.erase(arriving.begin()); add_cell(k); }   // one arrived cell a frame
 	if (!made || items.empty()) return;
 	Viewport *vp = get_viewport();
 	Camera3D *cam = vp ? vp->get_camera_3d() : nullptr;
 	if (!cam) return;
 	const Vector3 cp = cam->get_global_position();
 	frame++;
-	if (frame % 10 == 0) pool_update(cp);
-	if (frame % 2 == 0) hits(cp);
+	if (frame % 10 == 0) { pm::Scope _p(pm::BRK_POOL); pool_update(cp); }
+	if (frame % 2 == 0) { pm::Scope _h(pm::BRK_HITS); hits(cp); }
 	// put back what lies out of sight long enough
 	for (int k = 0; k < DEBRIS; k++) {
 		Debris &d = debris[k];

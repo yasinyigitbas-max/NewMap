@@ -22,7 +22,7 @@ namespace godot {
 
 class CityRooms : public Node3D {
 	GDCLASS(CityRooms, Node3D)
-	static constexpr float WAKE_M = 75.0f, SLEEP_M = 95.0f, LIGHT_M = 40.0f, DOOR_TRIGGER = 2.2f, DOOR_MAX_DEG = 95.0f, DOOR_SPEED = 2.6f;
+	static constexpr float WAKE_M = 75.0f, SLEEP_M = 95.0f, LIGHT_M = 40.0f, DOOR_TRIGGER = 3.0f, DOOR_MAX_DEG = 95.0f, DOOR_SPEED = 3.6f;      // B34: 3 m from the player (was 2.2 m from the camera, 3.4 m behind him), open in ~0.3 s
 	// MAX_LIGHTS: the engine's mobile light grid draws up to 32 lights for one fixed cost and drops the rest (sorted by view depth);
 	// the city's lamps take 20 (rig / game Lights budget), so the rooms get the other 12: the nearest rooms' lights, room by room
 	static constexpr int MAX_LIVE = 10, MAX_LIGHTS = 12;
