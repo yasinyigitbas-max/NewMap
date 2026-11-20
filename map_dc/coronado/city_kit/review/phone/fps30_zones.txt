@@ -1,6 +1,6 @@
-# phone rig run 'fps30_zones'  2026-11-20T13:44Z  args: --plan=zones --maxfps=30
-# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 289 -> 292 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
-# commit 36f943134 | meminfo at 60 s:          Native Heap:   131436                         132608;            Graphics:    74076                          74076;           TOTAL PSS:   308132            TOTAL RSS:   397604       TOTAL SWAP PSS:      328;
+# phone rig run 'fps30_zones'  2026-11-20T13:52Z  args: --plan=zones --maxfps=30
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 295 -> 294 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit ee1d07ff1 | meminfo at 60 s:          Native Heap:     8944                          10156;            Graphics:    73300                          73300;           TOTAL PSS:   309160            TOTAL RSS:   261788       TOTAL SWAP PSS:   135463;
 ERROR: Can't open dynamic library: native/bin/libcoronado_city.android.arm64.so. Error: dlopen failed: library "libcoronado_city.android.arm64.so" not found.
 ERROR: Can't open GDExtension dynamic library: 'res://native/coronado_city.gdextension'.
 ERROR: Error loading extension: 'res://native/coronado_city.gdextension'.
@@ -10,3 +10,4 @@ SCRIPT ERROR: Cannot call method 'call' on a null value.
 ERROR: Cannot find static method.
 ERROR: Required object "rp_child" is null.
 SCRIPT ERROR: Invalid type in function 'add_child' in base 'Node3D (rig.gd)'. Cannot convert argument 1 from int to Object.
+ERROR: Couldn't present to Vulkan queue (VkResult error VK_ERROR_SURFACE_LOST_KHR).
