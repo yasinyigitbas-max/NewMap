@@ -440,6 +440,50 @@
    "yaw": 0.0,
    "site": "Piece n_w_w0b (WEST FILL, the small spot Yasin marked north of the 56 % block): u -937..-900, v -1300..-1214, 37 x 86 m; flat 2.0..2.1.",
    "variant": "the industrial edge's ALLOTMENTS: beds on mulch inside a picket fence with a gate, a tool shed, water, benches; workers from the yards next door keep plots here."
+  },
+  {
+   "piece": "n_w_q1",
+   "pos": [
+    -678.0,
+    0.0,
+    -930.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_q1 (WEST FILL, a small hole left inside the gritty edge (the square Yasin marked in the 51 % block)): u -678..-662, v -930..-919, 16 x 11 m, flat.",
+   "variant": "a POCKET GARDEN for the walk-ups round it: a bench facing a flower bed."
+  },
+  {
+   "piece": "n_w_q2",
+   "pos": [
+    -244.0,
+    0.0,
+    -695.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_q2 (WEST FILL, a small hole left inside the civic heart (v_nw)): u -244..-220, v -695..-665, 24 x 30 m, flat.",
+   "variant": "a quiet SEATING GARDEN for the civic offices: a bench facing beds of agaves, a fountain."
+  },
+  {
+   "piece": "n_w_q3",
+   "pos": [
+    -238.0,
+    0.0,
+    -568.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_q3 (WEST FILL, a small hole left inside the civic heart (v_sw)): u -238..-209, v -568..-548, 29 x 20 m, flat.",
+   "variant": "a LUNCH CORNER for the civic offices: two tables and a bike rack."
+  },
+  {
+   "piece": "n_w_q4",
+   "pos": [
+    -134.0,
+    0.0,
+    -538.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_q4 (WEST FILL, a small hole left inside the civic heart (v_se)): u -134..-106, v -538..-502, 28 x 36 m, flat.",
+   "variant": "a small PLAYGROUND for families visiting the civic offices: mulch pad, play structure, swings, a bench facing it."
   }
  ]
 }
