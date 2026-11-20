@@ -10,6 +10,7 @@ __pycache__/
 
 # runtime bake output: derived from the locked pieces by tools/city/bake (make_arrays.py, bake_runtime.gd)
 /map_dc/coronado/city_kit/runtime/
+/map_dc/coronado/city_kit/runtime_pb/
 /map_dc/coronado/city_kit/runtime_tex/
 /map_dc/coronado/city_kit/runtime_nt/
 

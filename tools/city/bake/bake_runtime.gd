@@ -677,7 +677,7 @@ const GC_TEXEL := 2.5
 
 func _ground_class(img: Image, x0: float, z0: float, wx: float, wz: float) -> void:
 	var w := int(round(wx / GC_TEXEL)); var h := int(round(wz / GC_TEXEL))
-	var small := img.duplicate(); small.resize(w, h, Image.INTERPOLATE_BILINEAR)
+	var small: Image = img.duplicate(); small.resize(w, h, Image.INTERPOLATE_BILINEAR)
 	var bytes := PackedByteArray(); bytes.resize(w * h)
 	var look := Image.create(w, h, false, Image.FORMAT_RGB8)
 	var cols := [Color(0.1, 0.1, 0.1), Color(0.2, 0.7, 0.2), Color(0.9, 0.85, 0.4), Color(0.5, 0.33, 0.15)]
