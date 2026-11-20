@@ -675,7 +675,7 @@ func _shots() -> void:
 const CENSUS_VIEWS := [["centre", 0.0, -600.0, 1.0, 0.0], ["apartments", 250.0, -600.0, 1.0, 0.0], ["gritty", -600.0, -1000.0, 1.0, 0.0],
 	["waterfront", 570.0, 200.0, -1.0, 0.0], ["industrial", -800.0, -1400.0, 1.0, 0.0], ["pilot", 0.0, 0.0, 0.0, 1.0], ["civic", -200.0, -600.0, 1.0, 0.0]]
 const CENSUS_DAY := ["baseline", "hide_plants", "hide_props_near", "hide_props_mid", "hide_props_other", "hide_bldg_near", "hide_bldg_mid",
-	"hide_ground", "hide_wear", "hide_far", "hide_far_ground", "hide_misc", "shadows_off", "shadow_map_2048", "shadow_map_1024",
+	"hide_ground", "hide_wear", "hide_far", "hide_far_ground", "hide_misc", "hide_rooms", "shadows_off", "shadow_map_2048", "shadow_map_1024",
 	"fxaa_off", "scale_0.50", "scale_0.67", "scale_0.85", "scale_1.00", "cheap_bldg_mid", "cheap_bldg_all", "cheap_props_mid",
 	"cheap_plants_mid", "plants_opaque", "look_parts_off", "look_contact_off", "look_windows_off", "look_glass_off", "look_detail_off",
 	"look_signs_off", "look_propmaps_off", "look_between_off", "baseline", "sky_reflection_off", "baseline"]      # (the reflection last: switching it back on left the GPU slower until the next teleport, phone 19 Nov)
@@ -708,6 +708,11 @@ func _census_nodes(kind: String) -> Array:
 			"glow":
 				for nm in ["glow_halo", "glow_pool"]:
 					if cn.get_node_or_null(nm): out.append(cn.get_node(nm))
+			"rooms":      # B14: the awake walk-in rooms (C++ CityRooms puts each under its building as "room")
+				var bn2 := cn.get_node_or_null("Buildings")
+				if bn2:
+					for b2: Node in bn2.get_children():
+						if b2.get_node_or_null("room"): out.append(b2.get_node("room"))
 			"misc":
 				var m := cn.get_node_or_null("Misc")
 				if m: out.append_array(m.get_children())

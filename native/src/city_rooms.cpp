@@ -4,6 +4,7 @@
 #include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/concave_polygon_shape3d.hpp>
 #include <godot_cpp/classes/omni_light3d.hpp>
+#include <godot_cpp/classes/light3d.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/static_body3d.hpp>
@@ -98,7 +99,9 @@ void CityRooms::finish(int i) {
 		Light3D *L = Object::cast_to<Light3D>(lights[k]);
 		if (!L) continue;
 		L->set_shadow(false); L->set_enable_distance_fade(true); L->set_distance_fade_begin(LIGHT_M - 10.0f); L->set_distance_fade_length(10.0f);
+		rm.lights.push_back((uint64_t)L->get_instance_id());
 	}
+	rm.lit = true; set_lit(rm, false);      // (lit by light_rooms when it is among the nearest)
 	// its collision (the bake's: the shell's faces and the furniture's boxes, room frame)
 	if (!rm.col.is_empty() && rl->exists(rm.col)) {
 		Ref<Resource> cd = rl->load(rm.col);
@@ -125,7 +128,7 @@ void CityRooms::sleep(int i) {
 		if (Node *p = root->get_parent()) p->remove_child(root);
 		if (st) st->give_away(root); else memdelete(root);
 	}
-	rm.node = 0; rm.leaves.clear(); rm.state = 0; live--;
+	rm.node = 0; rm.leaves.clear(); rm.lights.clear(); rm.state = 0; live--;
 }
 
 // ---------------------------------------------------------------- the doors
@@ -147,6 +150,32 @@ void CityRooms::doors(double p_delta, const Vector3 &cam) {
 			const float e = f.amount * f.amount * (3.0f - 2.0f * f.amount);
 			Vector3 rot = l->get_rotation(); rot.y = DOOR_MAX_DEG * 0.017453292f * e * f.sign * f.dir; l->set_rotation(rot);
 		}
+	}
+}
+
+void CityRooms::set_lit(Room &rm, bool p_on) {
+	if (rm.lit == p_on) return;
+	rm.lit = p_on;
+	for (uint64_t id : rm.lights) if (Light3D *L = Object::cast_to<Light3D>(ObjectDB::get_instance(ObjectID(id)))) L->set_visible(p_on);
+}
+
+// the light budget: the nearest awake rooms within LIGHT_M keep their lights on while their lights fit in MAX_LIGHTS (a room is
+// lit whole or not at all); the rest are off, so the light grid never overflows and drops the city's own lamps
+void CityRooms::light_rooms(const Vector3 &cam) {
+	std::vector<std::pair<float, int>> near;
+	for (int i = 0; i < (int)rooms.size(); i++) {
+		if (rooms[i].state != 2) continue;
+		const float d = rooms[i].centre_world.distance_to(cam);
+		if (d < LIGHT_M) near.push_back({ d, i }); else set_lit(rooms[i], false);
+	}
+	std::sort(near.begin(), near.end());
+	int used = 0;
+	for (size_t k = 0; k < near.size(); k++) {
+		Room &rm = rooms[near[k].second];
+		const int n = (int)rm.lights.size();
+		const bool on = used + n <= MAX_LIGHTS;
+		if (on) used += n;
+		set_lit(rm, on);
 	}
 }
 
@@ -175,6 +204,7 @@ void CityRooms::_process(double p_delta) {
 		}
 		std::sort(want.begin(), want.end());
 		for (auto &w : want) { if (live + loading >= MAX_LIVE || loading >= 2) break; wake(w.second); }
+		light_rooms(cp);
 	}
 	doors(p_delta, cp);
 }

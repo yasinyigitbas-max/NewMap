@@ -23,13 +23,17 @@ namespace godot {
 class CityRooms : public Node3D {
 	GDCLASS(CityRooms, Node3D)
 	static constexpr float WAKE_M = 75.0f, SLEEP_M = 95.0f, LIGHT_M = 40.0f, DOOR_TRIGGER = 2.2f, DOOR_MAX_DEG = 95.0f, DOOR_SPEED = 2.6f;
-	static constexpr int MAX_LIVE = 10;
+	// MAX_LIGHTS: the engine's mobile light grid draws up to 32 lights for one fixed cost and drops the rest (sorted by view depth);
+	// the city's lamps take 20 (rig / game Lights budget), so the rooms get the other 12: the nearest rooms' lights, room by room
+	static constexpr int MAX_LIVE = 10, MAX_LIGHTS = 12;
 	struct Leaf { uint64_t node = 0; Vector3 mid, out_dir; float sign = 1.0f, amount = 0.0f, dir = 1.0f; };
 	struct Room {
 		String cell, scn, raw, col; uint64_t building = 0; Vector3 centre_local, centre_world;
 		int state = 0;           // 0 asleep, 1 loading, 2 awake
 		uint64_t node = 0;       // the room's root (awake)
 		std::vector<Leaf> leaves;
+		std::vector<uint64_t> lights;      // the room's lights (on only while it is among the nearest lit rooms)
+		bool lit = true;
 	};
 	std::vector<Room> rooms;
 	HashMap<String, std::vector<int>> by_cell;
@@ -43,6 +47,8 @@ class CityRooms : public Node3D {
 	void finish(int i);
 	void sleep(int i);
 	void doors(double p_delta, const Vector3 &p_cam);
+	void light_rooms(const Vector3 &p_cam);
+	void set_lit(Room &rm, bool p_on);
 protected:
 	static void _bind_methods();
 public:
