@@ -77,7 +77,6 @@ extends Node3D
 ##   --carshadows=1|0  the near cars cast sun shadows (1, default)      --carbodies=1|0  the pool of collision boxes
 ##   --plan=shots  no drives: pictures of a building at set distances and of a street, saved as JPG in
 ##                 user://rig/shots/ (phone_rig.sh shots NAME ... pulls them to review/tiers/NAME/)
-const Stream := preload("res://tools/city/bake/city_stream.gd")
 const Lights := preload("res://tools/city/bake/city_lights.gd")
 const Look := preload("res://tools/city/look/look.gd")
 const LookShots := preload("res://tools/city/look/look_shots.gd")
@@ -190,7 +189,8 @@ func _ready() -> void:
 	var gp := MeshInstance3D.new(); var pm := PlaneMesh.new(); pm.size = Vector2(6000, 6000); gp.mesh = pm
 	var gm := StandardMaterial3D.new(); gm.albedo_color = Color(0.36, 0.42, 0.3); gm.roughness = 1.0; gp.material_override = gm; gp.position.y = -0.05; add_child(gp)
 	if look and look.sea: gp.position.y = -2.0      # under the look's sea (at 0 m): 5 cm below it would flicker far away
-	st = Stream.new(); st.name = "City"; st.lead_seconds = float(opt.lead); st.max_cells = int(opt.maxcells); st.max_loading = int(opt.loading); st.bodies_per_frame = int(opt.bodies); st.body_tris_per_frame = int(opt.coltris); st.loader_mode = int(opt.loader); st.gpu_reserve_mb = int(opt.gpureserve); st.col_ms_per_frame = float(opt.colms); st.attach_bodies = not opt.nocol; st.show_cells = not opt.hide; st.probe = opt.probe
+	st = ClassDB.instantiate(&"CityStream"); st.name = "City";      # the streamer is C++ (native/src/city_stream.*) since 20 Nov
+	st.lead_seconds = float(opt.lead); st.max_cells = int(opt.maxcells); st.max_loading = int(opt.loading); st.bodies_per_frame = int(opt.bodies); st.body_tris_per_frame = int(opt.coltris); st.loader_mode = int(opt.loader); st.gpu_reserve_mb = int(opt.gpureserve); st.col_ms_per_frame = float(opt.colms); st.attach_bodies = not opt.nocol; st.show_cells = not opt.hide; st.probe = opt.probe
 	st.col_range = float(opt.colrange); st.prepare_boost = float(opt.boost); st.col_background = not ("--colnobg" in args)
 	st.tiers = opt.tiers; st.tier_band = float(opt.band); st.arrive_s = float(opt.arrive); st.far_ground = not opt.nofarground; add_child(st)
 	RenderingServer.viewport_set_measure_render_time(get_viewport().get_viewport_rid(), true)
@@ -279,7 +279,8 @@ func _run() -> void:
 	cam.global_position = first + Vector3(0, 8, 0); cam.look_at(cam.global_position + Vector3(0, 0, -50))
 	st.update_focus(first, true)
 	var t1 := Time.get_ticks_msec()
-	if not opt.nowarm: await st.warm_up(cam, 4)
+	if not opt.nowarm:
+		st.warm_up(cam, 4); await st.warmed_up
 	# THE NIGHT ONCE, behind the loading screen (on by default since 19 Nov; --nowarmnight to compare). The first dusk of
 	# a session built the look's night shaders, loaded its night textures and the lights' shader versions in the middle
 	# of a drive: 33 ms of GPU and a 41 ms frame at 720p, up to 120 ms at 1.5 x; the second dusk had none of it. Drawn
@@ -419,6 +420,7 @@ func _touch_guide() -> void:
 ## frame tells the streamer where he is.
 func _free_walk(start: Vector3, yaw: float) -> void:
 	var pl: Node3D = ClassDB.instantiate(&"CityPlayer")
+	st.set_player(pl)      # B7: riding (the player hidden where he got in), the streamer follows the camera (CityStream::update_focus)
 	if String(opt.walk).length() > 1: pl.set(&"body_id", String(opt.walk))
 	pl.set(&"capture_mouse", not opt.quit)
 	if float(opt.water) > -999.0: pl.set(&"water_y", float(opt.water))      # --water=Y: the sea's surface: deeper than his chest he swims
@@ -473,13 +475,6 @@ func _free_walk(start: Vector3, yaw: float) -> void:
 				break
 		elif opt.quit and Time.get_ticks_msec() - t_start > 12000: break
 		var p: Vector3 = pl.global_position
-		# B7 (Yasin 20 Nov: "far roads stay loaded, roads never load outside of the city, once we get out of the car they load
-		# again"; "when roads dont switch, i fall into a gap"): in a car or on a bicycle the player is frozen and hidden where
-		# he got in (CityPlayer::set_riding) and the city kept streaming round THAT spot. Riding, it streams round the camera
-		# (the car's / the bicycle's chase camera).
-		if not pl.visible:
-			var rc := get_viewport().get_camera_3d()
-			if rc: p = rc.global_position
 		var dt := maxf(get_process_delta_time(), 0.001)
 		st.update_focus(p, false, (p - last) / dt)
 		if pl.visible:      # (the walk's own numbers: on foot only)
@@ -551,11 +546,8 @@ func _drive(seg: Array) -> void:
 		var dr := int(R.get_rendering_info(R.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)); var tr := int(R.get_rendering_info(R.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME))
 		gpu.append(R.viewport_get_measured_render_time_gpu(get_viewport().get_viewport_rid()))
 		draws_sum += dr; tris_sum += tr; draws_max = maxi(draws_max, dr); tris_max = maxi(tris_max, tr); max_cells = maxi(max_cells, st.loaded_count())
-		for k: String in st.cells:
-			if st.cells[k].state != st.IN:
-				var dd: float = st._dist(k, p)
-				if dd < 60.0: late60 += 1
-				if dd < 220.0: late220 += 1; deepest = maxf(deepest, 220.0 - dd)
+		var lc: Vector3 = st.late_cells(p)      # (cells not in within 60 m, within 220 m, the deepest reach into 220 m)
+		late60 += int(lc.x); late220 += int(lc.y); deepest = maxf(deepest, lc.z)
 		var S: Dictionary = st.stats
 		if opt.probe: pw.append(float(S.get("phys_wait_ms", 0.0)))
 		if slow_line != "":      # the slow frame of one frame ago, now with the engine's counters for it
@@ -590,7 +582,7 @@ func _drive(seg: Array) -> void:
 	pw.sort()
 	_say("  collision %s made=%d units, a body waited at most %d ms from coming into range | physics thread wait a frame (probe): median %.1f p99 %.1f worst %.1f ms" % [name, int(st.stats.get("col_units", 0)) - units0, int(st.stats.get("body_wait_ms_worst", 0)), pw[pw.size() / 2] if pw.size() > 0 else -1.0, pw[int(pw.size() * 0.99)] if pw.size() > 0 else -1.0, pw[pw.size() - 1] if pw.size() > 0 else -1.0])
 	# for long runs: none of these may grow lap after lap (a leak, or work piling up)
-	_say("  objects %s all=%d nodes=%d orphan_nodes=%d resources=%d | streamer: cells in=%d, bodies waiting=%d, nodes leaving=%d" % [name, int(Performance.get_monitor(Performance.OBJECT_COUNT)), int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT)), int(Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT)), int(Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT)), st.loaded_count(), st._pending.size(), st._leaving.size() + st._reap.size() + st._reaping])
+	_say("  objects %s all=%d nodes=%d orphan_nodes=%d resources=%d | streamer: cells in=%d, bodies waiting=%d, nodes leaving=%d" % [name, int(Performance.get_monitor(Performance.OBJECT_COUNT)), int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT)), int(Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT)), int(Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT)), st.loaded_count(), st.pending_count(), st.leaving_count()])
 	if traffic: _say("  traffic %s %s" % [name, String(traffic.call(&"report"))])
 	if people: _say("  people %s %s | %s" % [name, String(people.call(&"report")), str(people.call(&"stats"))])
 	_say("  mem %s static_mb=%.0f video_mb=%.0f tex_mb=%.0f buf_mb=%.0f" % [name, Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_TEXTURE_MEM_USED) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_BUFFER_MEM_USED) / 1048576.0])
@@ -645,7 +637,7 @@ func _shots() -> void:
 	var best: Node3D = null; var bd := 1.0e9
 	for k: String in st.cells:
 		var cn: Node = st.cells[k].node
-		if cn == null or st.cells[k].state != st.IN: continue
+		if cn == null or st.cells[k].state != 4: continue
 		var bn := cn.get_node_or_null("Buildings")
 		if bn == null: continue
 		for b: Node in bn.get_children():
@@ -705,7 +697,7 @@ func _census_nodes(kind: String) -> Array:
 			if (String(ch.name) == "far_ground") == (kind == "far_ground"): out.append(ch)
 		return out
 	for k: String in st.cells:
-		if st.cells[k].state != st.IN: continue
+		if st.cells[k].state != 4: continue
 		var cn: Node = st.cells[k].node
 		match kind:
 			"ground":

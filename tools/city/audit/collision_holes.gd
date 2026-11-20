@@ -13,7 +13,7 @@ extends SceneTree
 ## a row across it every --step, --across apart, --margin short of each edge) and every lane over --lane_half each side
 ## of its centre line (CityTraffic.lane_points_across). --centre = the old centre-line scan. A point in a cell the bake
 ## has no file for is still checked (the ground there is its neighbours' chunks; before, it was skipped and counted).
-const Stream := preload("res://tools/city/bake/city_stream.gd")
+const STREAM_CLASS := &"CityStream"      # the streamer is C++ since 20 Nov (native/src/city_stream.*)
 const OUT := "res://map_dc/coronado/city_kit/review/collision_holes_19nov/"
 var st: Node
 var traffic: Node
@@ -41,7 +41,7 @@ func _initialize() -> void:
 		if a.begins_with("--across="): across = float(a.trim_prefix("--across="))
 		if a.begins_with("--margin="): margin = float(a.trim_prefix("--margin="))
 		if a.begins_with("--lane_half="): lane_half = float(a.trim_prefix("--lane_half="))
-	st = Stream.new(); st.name = "City"; st.show_cells = false; st.col_range = 0.0; st.bodies_per_frame = 60; st.body_tris_per_frame = 60000; st.col_ms_per_frame = 40.0; st.max_cells = 12
+	st = ClassDB.instantiate(STREAM_CLASS); st.name = "City"; st.show_cells = false; st.col_range = 0.0; st.bodies_per_frame = 60; st.body_tris_per_frame = 60000; st.col_ms_per_frame = 40.0; st.max_cells = 12
 	root.add_child(st)
 	traffic = ClassDB.instantiate(&"CityTraffic")
 	crowd = ClassDB.instantiate(&"CityCrowd")
