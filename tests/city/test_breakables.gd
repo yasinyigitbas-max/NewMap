@@ -7,7 +7,7 @@ extends SceneTree
 var st: Node3D
 var cam: Camera3D
 var car: RigidBody3D
-var step := 0
+var step := -1
 var t := 0.0
 var fails := 0
 var target := Vector3.ZERO
@@ -23,13 +23,17 @@ func _initialize() -> void:
 	var sun := DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-50, 30, 0); w.add_child(sun)
 	cam = Camera3D.new(); w.add_child(cam); cam.current = true
 	st = ClassDB.instantiate(&"CityStream"); st.name = "City"; w.add_child(st)
-	st.update_focus(Vector3(-12, 0, -606), true)      # the city centre (the start), everything round it now
+
 
 func _brk() -> Object: return st.get_node_or_null(^"Breakables")
 
 func _process(dt: float) -> bool:
 	t += dt
 	match step:
+		-1:      # (the streamer's _ready has run by the first frame)
+			st.update_focus(Vector3(-12, 0, -606), true)      # the city centre (the start), everything round it now
+			print("BRK   loaded cells %d, breakables %s" % [st.loaded_count(), str(_brk().call(&"get_state"))])
+			step = 0; return false
 		0:      # a breakable standing in the open: a bus-stop sign, a cone or a bollard with 14 m of clear road before it
 			var cells: Dictionary = st.cells
 			for k: String in cells:
@@ -55,6 +59,15 @@ func _process(dt: float) -> bool:
 				if target != Vector3.ZERO: break
 			_check(target != Vector3.ZERO, "a breakable with a clear run-up near the centre at %s (state %s)" % [str(target), str(_brk().call(&"get_state") if _brk() else "no Breakables node")])
 			if target == Vector3.ZERO: return _end()
+			cam.global_position = target + Vector3(0, 2, 6); cam.look_at(target)
+			step = 10; t = 0.0
+		10:      # standing: the props near the camera have colliders (nobody walks through a bollard)
+			if t < 0.5: return false
+			var s0: Dictionary = _brk().call(&"get_state")
+			var dirc := (start - target); dirc.y = 0; dirc = dirc.normalized()
+			var hit := cam.get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(target + dirc * 2.0 + Vector3(0, 0.5, 0), target - dirc * 0.5 + Vector3(0, 0.5, 0)))
+			_check(int(s0.colliders_now) > 0, "standing props near the camera have colliders: %s" % str(s0))
+			_check(not hit.is_empty() and (hit.position as Vector3).distance_to(target + Vector3(0, 0.5, 0)) < 1.0, "a ray at knee height meets the prop itself (%s)" % str(hit.get("position", "nothing")))
 			car = ClassDB.instantiate(&"CityCar"); car.name = "TestCar"; car.add_to_group("vehicles"); root.add_child(car)
 			var fwd := (target - start); fwd.y = 0; fwd = fwd.normalized()
 			car.global_transform = Transform3D(Basis(Vector3.UP, atan2(fwd.x, fwd.z)), start)

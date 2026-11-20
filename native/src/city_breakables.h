@@ -35,7 +35,7 @@ class CityBreakables : public Node3D {
 	std::vector<Item> items;
 	HashMap<String, std::vector<int>> by_cell;
 	std::vector<int> free_slots;
-	RID pool_body[POOL]; int pool_item[POOL];
+	RID pool_body[POOL]; int pool_item[POOL] = {};
 	HashMap<int64_t, RID> shape_cache;      // hash of a collider's points -> its convex shape
 	struct Debris { RigidBody3D *body = nullptr; MeshInstance3D *mi = nullptr; CollisionShape3D *cs = nullptr; int item = -1; float t = 0.0f; };
 	Debris debris[DEBRIS];
@@ -53,6 +53,7 @@ class CityBreakables : public Node3D {
 protected:
 	static void _bind_methods();
 public:
+	CityBreakables() { for (int k = 0; k < POOL; k++) pool_item[k] = -1; }
 	void set_stream(Object *p_stream);
 	void _on_cell_in(const String &p_key) { add_cell(p_key); }
 	void _on_cell_out(const String &p_key) { drop_cell(p_key); }
