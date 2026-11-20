@@ -1,0 +1,44 @@
+# phone rig run 'fix3_zones'  2026-11-20T17:46Z  args: --plan=zones
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 298 -> 298 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit 756e78456 | meminfo at 60 s: 
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 look=1 bloom=0 upscale=0 sharp=0.20 reflect=1 plan=zones lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=153 tiers=true band=8.0 arrive=0.50 far_ground=true tier_materials=31
+RIG native coronado_city 0.1 release android arm64, godot-cpp 4.5 | its own threads: ok (4 threads, 0.7 ms; the device reports 8)
+ERROR: This function (free_rid) can only be called from the render thread. 
+ERROR: This function (free_rid) can only be called from the render thread. 
+ERROR: This function (free_rid) can only be called from the render thread. 
+ERROR: This function (free_rid) can only be called from the render thread. 
+ERROR: This function (free_rid) can only be called from the render thread. 
+ERROR: This function (free_rid) can only be called from the render thread. 
+ERROR: This function (free_rid) can only be called from the render thread. 
+ERROR: This function (free_rid) can only be called from the render thread. 
+ERROR: This function (free_rid) can only be called from the render thread. 
+ERROR: This function (free_rid) can only be called from the render thread. 
+ERROR: This function (free_rid) can only be called from the render thread. 
+ERROR: This function (free_rid) can only be called from the render thread. 
+ERROR: Method/function failed. Returning: ERR_FILE_CORRUPT
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_grt_v3_j5se_corner_shop_1.scn.
+ERROR: Method/function failed. Returning: ERR_FILE_CORRUPT
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_grt_v3_j5sw_corner_shop_0.scn.
+RIG warmnight 1457 ms
+RIG boot first_area_ms=969 warm_ms=3009 (graphics memory reserve 192 MB: 155 ms) cells=10 static_mb=165 video_mb=691
+ERROR: Method/function failed. Returning: ERR_FILE_CORRUPT
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_sw__rear_walkup_b__0.scn.
+ERROR: Method/function failed. Returning: ERR_FILE_CORRUPT
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_nw__pawn_laundry_row__1.scn.
+RIG slow gritty_60kmh 254 ms at t=4.4 s pos=(-671, -1000): cells in +0 out +0, bodies +0, loading ["-2_-5:1", "-2_-6:1"] | marks: rig 251.6 focus 0.0 | to_streamer 0.1 streamer 0.0 | to_draw 0.1 draw -0.2 | to_physics 0.6 physics 1.9 | sys: rooms 0.1, breakables 0.0, brk_hits 0.0 | at: physics_wait -1.0 render_wait -1.0 streamer 0.01 setup 0.0 draw_cpu 2.1 gpu 19.6 | then: physics_wait -1.0 render_wait -1.0 streamer 0.02 setup 0.1 draw_cpu 0.8 gpu 24.5
+ERROR: Method/function failed. Returning: ERR_FILE_CORRUPT
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_se__brick_shops_c__0.scn.
+ERROR: Method/function failed. Returning: ERR_FILE_CORRUPT
+ERROR: Error when trying to parse Variant.
+RIG slow gritty_60kmh 49 ms at t=12.0 s pos=(-600, -941): cells in +0 out +0, bodies +1, loading [] | marks: rig 0.4 focus 0.0 | to_streamer 0.2 streamer 5.0 | to_draw 41.6 draw 1.0 | to_physics 0.7 physics 0.0 | sys: rooms 0.3, breakables 0.0 | at: physics_wait -1.0 render_wait -1.0 streamer 5.01 setup 0.2 draw_cpu 4.3 gpu 16.5 | then: physics_wait -1.0 render_wait -1.0 streamer 0.75 setup 0.1 draw_cpu 2.8 gpu 16.9
+RIG slow gritty_60kmh 67 ms at t=12.1 s pos=(-600, -939): cells in +0 out +0, bodies +1, loading [] | marks: rig 0.1 focus 0.0 | to_streamer 0.0 streamer 0.3 | to_draw 64.8 draw 0.7 | to_physics 1.2 physics 0.0 | sys: rooms 0.1, breakables 0.0, brk_hits 0.0 | at: physics_wait -1.0 render_wait -1.0 streamer 0.33 setup 0.2 draw_cpu 0.8 gpu 17.1 | then: physics_wait -1.0 render_wait -1.0 streamer 2.13 setup 0.1 draw_cpu 2.6 gpu 17.3
+ERROR: Method/function failed. Returning: ERR_FILE_CORRUPT
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_se__bar_walkup__0.scn.
