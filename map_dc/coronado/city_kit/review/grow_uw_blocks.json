@@ -308,6 +308,138 @@
    "yaw": 0.0,
    "site": "Piece n_w_w6 (WEST FILL, the west strip, on the ridge): u -986..-809, v -191..-9, 177 x 182 m; the land climbs from",
    "variant": "houses on their own level pads stepping up the ridge round the edges; in its heart RIDGE COMMUNITY CHURCH with its lot off the alley and its garden."
+  },
+  {
+   "piece": "n_w_x1",
+   "pos": [
+    -791.0,
+    0.0,
+    -391.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_x1 (WEST FILL, between the west strip and the campus's south-west): u -791..-609, v -391..-300, 182 x 91 m;",
+   "variant": "RESIDENTIAL: houses facing the north street, a back lane from the west apron to the east apron, a second row of houses facing the lane with their yards fenced against the quarter's yards behind."
+  },
+  {
+   "piece": "n_w_e1",
+   "pos": [
+    -930.0,
+    0.0,
+    209.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_e1 (WEST FILL, the south-west edge's west end): u -930..-809, v 209..256, 121 x 47 m; flat at 2.0.",
+   "variant": "beach cottages facing the north street, a shared lot off the apron between them, their yards fenced against the sound wall to the ring road."
+  },
+  {
+   "piece": "n_w_e1b",
+   "pos": [
+    -966.0,
+    0.0,
+    209.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_e1b (WEST FILL, the corner pocket by the ring road): u -966..-930, v 209..240, 36 x 31 m; flat 2.0.",
+   "variant": "a BEACH-SIDE POCKET: a rinse shower and a bench for people walking up from the shore, bike racks, a table."
+  },
+  {
+   "piece": "n_w_e2",
+   "pos": [
+    -791.0,
+    0.0,
+    209.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_e2 (WEST FILL, the south-west edge): u -791..-609, v 209..275, 182 x 66 m; the land falls from 4.2 (east) to",
+   "variant": "the beach side's houses (beach cottages, ranches, spanish) facing the north street on their own pads down the slope, a back lane between the aprons, a sound wall along the ring road behind it."
+  },
+  {
+   "piece": "n_w_e3",
+   "pos": [
+    -591.0,
+    0.0,
+    209.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_e3 (WEST FILL, the south-west edge): u -591..-409, v 209..288, 182 x 79 m; land 2.0..4.2 toward the shore.",
+   "variant": "beach-side houses facing the north street, a back lane, the sound wall to the ring road."
+  },
+  {
+   "piece": "n_w_e4",
+   "pos": [
+    -391.0,
+    0.0,
+    209.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_e4 (WEST FILL, the south-west edge by the beach road): u -391..-209, v 209..302, 182 x 93 m; flat at 2.0.",
+   "variant": "beach-side houses facing the north street; on the east end the SURF SHACK (surf shop) and the BEACH BEAN caf\u00e9 facing the street with bikes, boards and tables; a back lane, the sound wall to the ring road."
+  },
+  {
+   "piece": "n_w_w7",
+   "pos": [
+    -980.0,
+    0.0,
+    9.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w7 (WEST FILL, the crest of Country Club Ridge): u -980..-809, v 9..190, 171 x 181 m; the land climbs from",
+   "variant": "RIDGE PARK (ZONING: Country Club Ridge's west houses run down to the beach and the park): an OVERLOOK on the crest with benches facing south-west over the shore, lawns falling down the ridge, a playground, a picnic grove with grills, paths lit at night, the park's lot off the east apron, the snack h"
+  },
+  {
+   "piece": "n_w_w2a",
+   "pos": [
+    -986.0,
+    0.0,
+    -900.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w2a (WEST FILL, the west strip's north end at the gritty edge): u -986..-809, v -900..-809, 177 x 91 m; land",
+   "variant": "the step from the gritty edge to the ridge's houses: APARTMENTS facing the south street (garden, stucco, spanish, dingbat, court), their parking court behind off the alley and the east apron, yards with washing lines, barbecues and tables; the sound wall to the ring road."
+  },
+  {
+   "piece": "n_w_w2b",
+   "pos": [
+    -982.0,
+    0.0,
+    -991.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w2b (WEST FILL, between the ring road and the gritty edge): u -982..-900, v -991..-900, 82 x 91 m; land 4.0..4.6.",
+   "variant": "RIDGE COMMUNITY GARDEN AND PLAYGROUND for the apartments and the gritty edge: allotment beds on mulch inside a picket fence with its gate, the tool shed (a container), water, a playground on mulch, benches, tables."
+  },
+  {
+   "piece": "n_w_w1",
+   "pos": [
+    -938.0,
+    0.0,
+    -1186.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w1 (WEST FILL, the strip between the ring road's houses and the gritty edge): u -938..-900, v -1186..-1009,",
+   "variant": "RIDGE GARDEN NURSERY: rows of plants on gravel inside a chain-link fence, the sales hut at the north end, a parking strip, a bench; the land climbs 2 m along it."
+  },
+  {
+   "piece": "n_w_w0a",
+   "pos": [
+    -1000.0,
+    0.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w0a (WEST FILL, the strip inside the ring road at the north-west): u -1000..-969, v -1400..-1200, 31 x 200 m; land 2.1..2.6.",
+   "variant": "a GREEN BUFFER between the ring road and the industrial edge: a walking and running path, benches facing the lawn, a drinking fountain, lamps; its trees (a windbreak) come with the tree layer."
+  },
+  {
+   "piece": "n_w_w0b",
+   "pos": [
+    -937.0,
+    0.0,
+    -1300.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w0b (WEST FILL, the small spot Yasin marked north of the 56 % block): u -937..-900, v -1300..-1214, 37 x 86 m; flat 2.0..2.1.",
+   "variant": "the industrial edge's ALLOTMENTS: beds on mulch inside a picket fence with a gate, a tool shed, water, benches; workers from the yards next door keep plots here."
   }
  ]
 }

@@ -64,7 +64,8 @@ def houses(tag, face, front, a0, a1, models, rear, seed=0, pad=True):
         body+=F(V2(face,la,zr),V2(face,gc-0.6,zr),'yard: the rear fence')
         body+=F(V2(face,gc+0.6,zr),V2(face,lb,zr),'yard: the rear fence')
         g=V2(face,gc,zr); yaw=0.0 if face in 'ns' else 90.0
-        body+='\tc.put("fence_gate_privacy", "worn", Vector3(%.2f, c.yf(%.2f, %.2f), %.2f), %.1f, "yard: the gate to the parking pad", false)\n'%(g[0],g[0],g[1],g[1],yaw)
+        if pad: body+='\tc.put("fence_gate_privacy", "worn", Vector3(%.2f, c.yf(%.2f, %.2f), %.2f), %.1f, "yard: the gate to the parking pad", false)\n'%(g[0],g[0],g[1],g[1],yaw)
+        else: body+=F(V2(face,gc-0.6,zr),V2(face,gc+0.6,zr),'yard: the rear fence')
         if pad:
             p0=V2(face,gc-2.6,zr+sgn*0.4); p1=V2(face,gc+2.6,rear)
             paints.append(('concrete',min(p0[0],p1[0]),min(p0[1],p1[1]),max(p0[0],p1[0]),max(p0[1],p1[1]),'%s %d: the parking pad off the lane'%(tag,i)))

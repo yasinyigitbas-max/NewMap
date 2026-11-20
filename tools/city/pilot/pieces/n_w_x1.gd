@@ -1,0 +1,341 @@
+extends SceneTree
+## Piece n_w_x1 (WEST FILL, between the west strip and the campus's south-west): u -791..-609, v -391..-300, 182 x 91 m;
+## land 4.2 (west) to 6.2 (east). SITE: a street north (aprons x 44..51.5, 130..137.5), streets west and east (aprons z
+## 44..51.5), the residential quarter's yards south.
+## PLANNER: RESIDENTIAL: houses facing the north street, a back lane from the west apron to the east apron, a second row
+## of houses facing the lane with their yards fenced against the quarter's yards behind.
+## Layout row (-791.0, 0, -391.0): local x = u - (-791.0), z = v - (-391.0), heights absolute. Built by the west fill (University
+## session, 20 Nov; review/fill_west/PLAN.md). Ground: the land 8 cm over it, eased over 8 m to the measured height of
+## whatever borders each side; buildings on level pads at the highest ground under them (plinth faces downhill).
+const L := preload("res://tools/city/pilot/pieces/w_fill_lib.gd")
+## site u -791.0..-609.0 v -391.0..-300.0 (182.0 x 91.0 m); neighbours N {np.str_('j_rs_3l1r_b'): 6, np.str_('s_rs_b103_a'): 40, np.str_('s_rs_b103_b'): 40, np.str_('j_rs_t_lrl_a'): 6} S {np.str_('r_q_m800_m200_ne'): 46, np.str_('r_q_m600_m200_nw'): 46} W {np.str_('j_rs_3l1r_b'): 6, np.str_('s_res_a'): 40} E {np.str_('j_rs_t_lrl_a'): 6, np.str_('s_res_b'): 40}
+const LAND := {"x0": -9.0, "z0": -9.0, "step": 4.0, "nx": 51, "nz": 28, "h": [3.95,3.95,3.95,3.95,3.95,3.95,3.95,3.96,3.98,4.00,4.03,4.07,4.11,4.15,4.20,4.26,4.31,4.38,4.44,4.51,4.58,4.65,4.72,4.79,4.87,4.94,5.02,5.09,5.17,5.24,5.31,5.38,5.45,5.51,5.57,5.63,5.69,5.74,5.78,5.83,5.86,5.89,5.92,5.93,5.95,5.95,5.95,5.95,5.95,5.95,5.95,3.95,3.95,3.95,3.95,3.95,3.95,3.95,3.96,3.98,4.00,4.02,4.06,4.10,4.14,4.19,4.24,4.30,4.36,4.42,4.49,4.56,4.63,4.70,4.77,4.85,4.92,5.00,5.07,5.15,5.22,5.29,5.36,5.43,5.49,5.56,5.62,5.67,5.72,5.77,5.81,5.85,5.88,5.91,5.93,5.94,5.95,5.95,5.95,5.95,5.95,5.95,3.95,3.95,3.95,3.95,3.95,3.95,3.95,3.97,3.99,4.01,4.04,4.08,4.12,4.17,4.22,4.28,4.34,4.40,4.46,4.53,4.60,4.67,4.75,4.82,4.90,4.97,5.05,5.12,5.19,5.27,5.34,5.41,5.47,5.54,5.60,5.65,5.71,5.76,5.80,5.84,5.87,5.90,5.93,5.94,5.95,5.95,5.95,5.95,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.10,4.10,4.10,4.11,4.13,4.16,4.19,4.22,4.26,4.31,4.36,4.41,4.47,4.53,4.60,4.66,4.73,4.80,4.88,4.95,5.03,5.10,5.17,5.25,5.32,5.40,5.47,5.54,5.60,5.67,5.73,5.79,5.84,5.89,5.94,5.98,6.01,6.04,6.07,6.09,6.10,6.10,6.10,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.11,4.12,4.13,4.14,4.15,4.18,4.21,4.25,4.29,4.34,4.39,4.44,4.50,4.55,4.61,4.67,4.74,4.81,4.88,4.96,5.03,5.10,5.17,5.24,5.31,5.38,5.45,5.52,5.59,5.65,5.71,5.76,5.82,5.86,5.90,5.94,5.98,6.02,6.04,6.06,6.08,6.09,6.09,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.10,4.12,4.14,4.16,4.18,4.21,4.24,4.28,4.32,4.35,4.40,4.45,4.51,4.57,4.63,4.70,4.76,4.83,4.90,4.96,5.02,5.10,5.17,5.24,5.31,5.37,5.44,5.51,5.56,5.62,5.68,5.73,5.79,5.84,5.88,5.92,5.96,6.00,6.01,6.04,6.05,6.07,6.09,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.11,4.14,4.15,4.18,4.21,4.22,4.26,4.29,4.34,4.38,4.43,4.48,4.53,4.59,4.65,4.70,4.76,4.83,4.89,4.96,5.03,5.10,5.17,5.24,5.29,5.36,5.42,5.49,5.55,5.61,5.67,5.72,5.77,5.82,5.85,5.90,5.93,5.97,6.00,6.03,6.05,6.07,6.09,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.12,4.14,4.16,4.18,4.22,4.24,4.28,4.31,4.36,4.40,4.44,4.49,4.54,4.60,4.65,4.72,4.77,4.84,4.90,4.97,5.03,5.09,5.16,5.22,5.29,5.35,5.42,5.48,5.54,5.60,5.64,5.70,5.75,5.80,5.84,5.88,5.92,5.96,5.99,6.00,6.03,6.05,6.08,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.12,4.15,4.17,4.20,4.23,4.26,4.29,4.32,4.36,4.41,4.46,4.51,4.56,4.61,4.67,4.73,4.77,4.84,4.90,4.97,5.03,5.09,5.16,5.22,5.29,5.34,5.40,5.47,5.52,5.58,5.63,5.69,5.74,5.79,5.83,5.86,5.90,5.94,5.97,6.00,6.03,6.05,6.08,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.13,4.16,4.18,4.20,4.23,4.26,4.30,4.34,4.38,4.42,4.47,4.51,4.56,4.62,4.67,4.73,4.79,4.85,4.91,4.97,5.04,5.09,5.15,5.21,5.28,5.34,5.40,5.46,5.52,5.58,5.63,5.67,5.72,5.77,5.81,5.85,5.90,5.93,5.97,6.00,6.02,6.04,6.07,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.13,4.15,4.18,4.21,4.25,4.28,4.32,4.34,4.38,4.43,4.47,4.52,4.57,4.63,4.68,4.74,4.80,4.84,4.91,4.96,5.03,5.09,5.15,5.22,5.28,5.34,5.39,5.45,5.50,5.56,5.61,5.67,5.72,5.76,5.81,5.85,5.88,5.91,5.95,5.98,6.02,6.05,6.07,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.13,4.16,4.19,4.22,4.25,4.28,4.32,4.36,4.39,4.44,4.48,4.53,4.57,4.62,4.68,4.73,4.79,4.85,4.91,4.97,5.03,5.10,5.14,5.21,5.27,5.33,5.39,5.45,5.50,5.56,5.61,5.66,5.70,5.75,5.79,5.83,5.88,5.91,5.95,5.99,6.02,6.04,6.07,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.13,4.16,4.19,4.22,4.25,4.29,4.32,4.37,4.39,4.43,4.49,4.53,4.58,4.63,4.69,4.74,4.80,4.85,4.90,4.97,5.02,5.09,5.15,5.21,5.27,5.33,5.39,5.43,5.49,5.55,5.60,5.65,5.70,5.75,5.79,5.83,5.88,5.90,5.94,5.98,6.01,6.04,6.07,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.13,4.17,4.19,4.23,4.24,4.28,4.32,4.36,4.40,4.44,4.49,4.54,4.59,4.64,4.68,4.73,4.79,4.85,4.91,4.97,5.03,5.09,5.15,5.20,5.26,5.32,5.38,5.44,5.50,5.55,5.60,5.65,5.70,5.73,5.78,5.83,5.87,5.91,5.94,5.98,6.01,6.05,6.06,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.12,4.16,4.18,4.22,4.25,4.29,4.33,4.36,4.41,4.43,4.48,4.53,4.58,4.63,4.68,4.74,4.79,4.85,4.91,4.96,5.02,5.08,5.14,5.20,5.27,5.32,5.38,5.44,5.49,5.54,5.59,5.64,5.69,5.74,5.79,5.83,5.87,5.91,5.93,5.97,6.00,6.04,6.07,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.13,4.16,4.19,4.22,4.26,4.28,4.32,4.35,4.40,4.44,4.48,4.53,4.58,4.63,4.68,4.73,4.78,4.84,4.90,4.96,5.02,5.08,5.15,5.20,5.26,5.31,5.38,5.43,5.49,5.54,5.60,5.65,5.70,5.75,5.78,5.82,5.86,5.90,5.94,5.98,6.01,6.04,6.08,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.13,4.15,4.18,4.21,4.25,4.28,4.32,4.35,4.40,4.44,4.47,4.52,4.57,4.62,4.67,4.73,4.78,4.84,4.90,4.96,5.01,5.07,5.14,5.20,5.26,5.32,5.38,5.44,5.50,5.55,5.59,5.65,5.69,5.74,5.79,5.83,5.87,5.91,5.95,5.97,6.01,6.04,6.07,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.13,4.15,4.18,4.21,4.25,4.28,4.30,4.34,4.38,4.43,4.47,4.52,4.57,4.62,4.67,4.73,4.77,4.83,4.89,4.95,5.01,5.07,5.14,5.20,5.26,5.31,5.37,5.44,5.49,5.55,5.60,5.66,5.70,5.75,5.80,5.83,5.87,5.91,5.95,5.98,6.02,6.04,6.08,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.13,4.15,4.17,4.20,4.23,4.26,4.30,4.34,4.38,4.42,4.46,4.50,4.55,4.60,4.65,4.71,4.77,4.83,4.89,4.95,5.01,5.06,5.13,5.19,5.26,5.32,5.38,5.45,5.50,5.56,5.61,5.65,5.70,5.75,5.80,5.84,5.89,5.92,5.96,5.99,6.01,6.04,6.07,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.12,4.14,4.17,4.19,4.22,4.26,4.29,4.32,4.36,4.40,4.45,4.50,4.54,4.60,4.65,4.71,4.77,4.81,4.87,4.93,5.00,5.06,5.13,5.20,5.26,5.33,5.38,5.44,5.50,5.56,5.61,5.67,5.72,5.77,5.82,5.85,5.89,5.92,5.96,5.99,6.02,6.05,6.07,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.13,4.14,4.17,4.18,4.21,4.24,4.27,4.31,4.34,4.39,4.44,4.49,4.53,4.58,4.63,4.68,4.74,4.80,4.87,4.93,5.00,5.07,5.12,5.19,5.26,5.33,5.39,5.46,5.51,5.57,5.63,5.68,5.72,5.77,5.82,5.86,5.90,5.94,5.98,6.01,6.03,6.05,6.07,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.12,4.14,4.15,4.18,4.19,4.22,4.25,4.29,4.32,4.37,4.42,4.47,4.53,4.57,4.63,4.67,4.73,4.79,4.85,4.92,4.98,5.05,5.12,5.20,5.26,5.34,5.40,5.46,5.52,5.58,5.64,5.69,5.74,5.79,5.84,5.88,5.92,5.95,5.98,6.01,6.04,6.06,6.08,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.11,4.13,4.14,4.16,4.17,4.19,4.22,4.25,4.30,4.35,4.41,4.46,4.52,4.56,4.60,4.65,4.70,4.76,4.84,4.91,4.97,5.05,5.12,5.19,5.26,5.34,5.40,5.47,5.54,5.60,5.66,5.71,5.76,5.79,5.84,5.88,5.93,5.98,6.01,6.04,6.05,6.08,6.08,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.10,4.12,4.13,4.14,4.15,4.17,4.19,4.22,4.27,4.32,4.38,4.44,4.50,4.55,4.59,4.63,4.68,4.75,4.83,4.89,4.95,5.02,5.11,5.20,5.28,5.35,5.43,5.49,5.55,5.61,5.67,5.72,5.77,5.81,5.86,5.91,5.97,6.01,6.02,6.05,6.06,6.08,6.09,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.10,4.11,4.12,4.13,4.13,4.13,4.15,4.16,4.21,4.30,4.37,4.43,4.51,4.55,4.58,4.60,4.63,4.69,4.83,4.89,4.94,4.99,5.11,5.21,5.29,5.36,5.44,5.50,5.57,5.64,5.70,5.75,5.80,5.85,5.85,5.91,6.00,6.04,6.06,6.08,6.08,6.10,6.11,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.10,4.10,4.10,4.10,4.10,4.10,4.10,4.10,4.10,4.33,4.33,4.39,4.54,4.56,4.56,4.56,4.56,4.56,4.91,4.91,4.91,4.88,5.11,5.24,5.31,5.39,5.46,5.53,5.59,5.66,5.72,5.78,5.83,5.87,5.83,5.90,6.10,6.10,6.10,6.10,6.10,6.10,6.10,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.10,4.10,4.10,4.10,4.10,4.10,4.10,4.10,4.10,4.33,4.33,4.39,4.55,4.56,4.56,4.56,4.56,4.56,4.91,4.91,4.91,4.88,5.12,5.24,5.31,5.39,5.46,5.53,5.59,5.66,5.72,5.78,5.83,5.87,5.79,5.85,6.10,6.10,6.10,6.10,6.10,6.10,6.10,6.10,5.95,5.95,5.95,3.95,3.95,3.95,4.10,4.10,4.10,4.10,4.10,4.10,4.10,4.10,4.10,4.10,4.33,4.33,4.39,4.54,4.56,4.56,4.56,4.56,4.56,4.91,4.91,4.91,4.88,5.13,5.24,5.31,5.39,5.46,5.53,5.59,5.66,5.72,5.78,5.83,5.87,5.80,5.94,6.10,6.10,6.10,6.10,6.10,6.10,6.10,6.10,5.95,5.95,5.95]}
+const EDGE_N := [[0.0,4.15],[2.0,4.15],[4.0,4.15],[6.0,4.15],[8.0,4.15],[10.0,4.15],[12.0,4.151],[14.0,4.153],[16.0,4.158],[18.0,4.163],[20.0,4.171],[22.0,4.18],[24.0,4.191],[26.0,4.203],[28.0,4.217],[30.0,4.232],[32.0,4.249],[34.0,4.267],[36.0,4.287],[38.0,4.307],[40.0,4.329],[42.0,4.352],[44.0,4.377],[46.0,4.402],[48.0,4.429],[50.0,4.456],[52.0,4.484],[54.0,4.513],[56.0,4.544],[58.0,4.574],[60.0,4.606],[62.0,4.638],[64.0,4.672],[66.0,4.705],[68.0,4.739],[70.0,4.774],[72.0,4.81],[74.0,4.845],[76.0,4.881],[78.0,4.918],[80.0,4.954],[82.0,4.991],[84.0,5.028],[86.0,5.066],[88.0,5.103],[90.0,5.141],[92.0,5.178],[94.0,5.216],[96.0,5.253],[98.0,5.29],[100.0,5.327],[102.0,5.364],[104.0,5.401],[106.0,5.437],[108.0,5.473],[110.0,5.508],[112.0,5.543],[114.0,5.578],[116.0,5.612],[118.0,5.645],[120.0,5.678],[122.0,5.71],[124.0,5.741],[126.0,5.772],[128.0,5.801],[130.0,5.83],[132.0,5.858],[134.0,5.885],[136.0,5.911],[138.0,5.936],[140.0,5.959],[142.0,5.982],[144.0,6.003],[146.0,6.023],[148.0,6.042],[150.0,6.06],[152.0,6.075],[154.0,6.09],[156.0,6.103],[158.0,6.115],[160.0,6.125],[162.0,6.133],[164.0,6.14],[166.0,6.145],[168.0,6.148],[170.0,6.15],[172.0,6.15],[174.0,6.15],[176.0,6.15],[178.0,6.15],[180.0,6.15],[182.0,6.15]]
+const EDGE_S := [[0.0,4.15],[2.0,4.15],[4.0,4.15],[6.0,4.15],[8.0,4.15],[10.0,4.15],[12.0,4.15],[14.0,4.15],[16.0,4.15],[18.0,4.15],[20.0,4.15],[22.0,4.15],[24.0,4.15],[26.0,4.15],[28.0,4.15],[30.0,4.15],[32.0,4.15],[34.0,4.15],[36.0,4.15],[38.0,4.383],[40.0,4.383],[42.0,4.383],[44.0,4.383],[46.0,4.402],[48.0,4.428],[50.0,4.456],[52.0,4.61],[54.0,4.61],[56.0,4.61],[58.0,4.61],[60.0,4.61],[62.0,4.61],[64.0,4.61],[66.0,4.61],[68.0,4.61],[70.0,4.61],[72.0,4.96],[74.0,4.96],[76.0,4.96],[78.0,4.96],[80.0,4.96],[82.0,4.96],[84.0,4.96],[86.0,4.96],[88.0,4.96],[90.0,4.96],[92.0,5.178],[94.0,5.216],[96.0,5.253],[98.0,5.29],[100.0,5.327],[102.0,5.364],[104.0,5.401],[106.0,5.437],[108.0,5.473],[110.0,5.508],[112.0,5.543],[114.0,5.578],[116.0,5.612],[118.0,5.645],[120.0,5.678],[122.0,5.71],[124.0,5.741],[126.0,5.772],[128.0,5.801],[130.0,5.83],[132.0,5.858],[134.0,5.885],[136.0,5.911],[138.0,5.917],[140.0,5.917],[142.0,5.917],[144.0,5.917],[146.0,6.15],[148.0,6.15],[150.0,6.15],[152.0,6.15],[154.0,6.15],[156.0,6.15],[158.0,6.15],[160.0,6.15],[162.0,6.15],[164.0,6.15],[166.0,6.15],[168.0,6.15],[170.0,6.15],[172.0,6.15],[174.0,6.15],[176.0,6.15],[178.0,6.15],[180.0,6.15],[182.0,6.15]]
+const EDGE_W := [[0.0,4.15],[2.0,4.15],[4.0,4.15],[6.0,4.15],[8.0,4.15],[10.0,4.15],[12.0,4.15],[14.0,4.15],[16.0,4.15],[18.0,4.15],[20.0,4.15],[22.0,4.15],[24.0,4.15],[26.0,4.15],[28.0,4.15],[30.0,4.15],[32.0,4.15],[34.0,4.15],[36.0,4.15],[38.0,4.15],[40.0,4.15],[42.0,4.15],[44.0,4.15],[46.0,4.15],[48.0,4.15],[50.0,4.15],[52.0,4.15],[54.0,4.15],[56.0,4.15],[58.0,4.15],[60.0,4.15],[62.0,4.15],[64.0,4.15],[66.0,4.15],[68.0,4.15],[70.0,4.15],[72.0,4.15],[74.0,4.15],[76.0,4.15],[78.0,4.15],[80.0,4.15],[82.0,4.15],[84.0,4.15],[86.0,4.15],[88.0,4.15],[90.0,4.15]]
+const EDGE_E := [[0.0,6.15],[2.0,6.15],[4.0,6.15],[6.0,6.15],[8.0,6.15],[10.0,6.15],[12.0,6.15],[14.0,6.15],[16.0,6.15],[18.0,6.15],[20.0,6.15],[22.0,6.15],[24.0,6.15],[26.0,6.15],[28.0,6.15],[30.0,6.15],[32.0,6.15],[34.0,6.15],[36.0,6.15],[38.0,6.15],[40.0,6.15],[42.0,6.15],[44.0,6.15],[46.0,6.15],[48.0,6.15],[50.0,6.15],[52.0,6.15],[54.0,6.15],[56.0,6.15],[58.0,6.15],[60.0,6.15],[62.0,6.15],[64.0,6.15],[66.0,6.15],[68.0,6.15],[70.0,6.15],[72.0,6.15],[74.0,6.15],[76.0,6.15],[78.0,6.15],[80.0,6.15],[82.0,6.15],[84.0,6.15],[86.0,6.15],[88.0,6.15],[90.0,6.15]]
+
+func _init() -> void: _run.call_deferred()
+
+func _run() -> void:
+	var c := L.new("n_w_x1", 4.15)
+	var W := 182.00; var D := 91.00
+	var land := func(x: float, z: float) -> float: return L.land_at(LAND, x, z) + 0.08
+	var base := L.edged(land, W, D, EDGE_N, EDGE_S, EDGE_W, EDGE_E, 8.0)
+	var SITES := [["houses/ranch_peach", Vector2(10.33, 3.00), "n", "n1_0"],
+		["houses/spanish_small", Vector2(23.00, 3.00), "n", "n1_1"],
+		["houses/beach_teal", Vector2(35.67, 3.00), "n", "n1_2"],
+		["houses/craftsman_sage", Vector2(61.40, 3.00), "n", "n2_0"],
+		["houses/tudor_brick", Vector2(76.20, 3.00), "n", "n2_1"],
+		["houses/mcm_teal", Vector2(91.00, 3.00), "n", "n2_2"],
+		["houses/colonial_white", Vector2(105.80, 3.00), "n", "n2_3"],
+		["houses/spanish_white", Vector2(120.60, 3.00), "n", "n2_4"],
+		["houses/hipranch_sand", Vector2(146.33, 3.00), "n", "n3_0"],
+		["houses/ranch_porch", Vector2(159.00, 3.00), "n", "n3_1"],
+		["houses/cape_white", Vector2(171.67, 3.00), "n", "n3_2"],
+		["houses/ranch_pink", Vector2(11.25, 56.00), "n", "s1_0"],
+		["houses/spanish_peach", Vector2(25.75, 56.00), "n", "s1_1"],
+		["houses/craftsman_olive", Vector2(40.25, 56.00), "n", "s1_2"],
+		["houses/contemporary_white", Vector2(54.75, 56.00), "n", "s1_3"],
+		["houses/mcm_white", Vector2(69.25, 56.00), "n", "s1_4"],
+		["houses/cape_grey", Vector2(83.75, 56.00), "n", "s1_5"],
+		["houses/tudor_stucco", Vector2(98.25, 56.00), "n", "s1_6"],
+		["houses/ranch_siding", Vector2(112.75, 56.00), "n", "s1_7"],
+		["houses/beach_blue", Vector2(127.25, 56.00), "n", "s1_8"],
+		["houses/colonial_blue", Vector2(141.75, 56.00), "n", "s1_9"],
+		["houses/spanish_pink", Vector2(156.25, 56.00), "n", "s1_10"],
+		["houses/craftsman_cedar", Vector2(170.75, 56.00), "n", "s1_11"]]
+	var pads: Array = []
+	for st: Array in SITES:
+		var r0: Array = L.bld_rect(String(st[0]), st[1], String(st[2]))
+		pads.append([maxf(0.0, float(r0[0]) - 0.3), maxf(0.0, float(r0[1]) - 0.3), minf(W, float(r0[2]) + 0.3), minf(D, float(r0[3]) + 0.3)])
+	var gl := L.grid_lots(0.0, 0.0, W, D, pads, base)
+	c.terrain(gl.lots)
+	c.skirt_depth = 0.5
+	c.paint("asphalt", 0.00, 44.00, 182.00, 50.00)                # the back lane (west apron to east apron, z 44..51.5)
+	c.paint("asphalt", 44.00, 0.00, 52.00, 44.00)                # lane from the first north apron
+	c.paint("asphalt", 130.00, 0.00, 138.00, 44.00)                # lane from the second north apron
+	c.paint("concrete", 10.90, 38.40, 16.10, 44.00)                # n1 0: the parking pad off the lane
+	c.paint("concrete", 17.23, 38.40, 22.43, 44.00)                # n1 1: the parking pad off the lane
+	c.paint("concrete", 36.23, 38.40, 41.43, 44.00)                # n1 2: the parking pad off the lane
+	c.paint("concrete", 62.50, 38.40, 67.70, 44.00)                # n2 0: the parking pad off the lane
+	c.paint("concrete", 69.90, 38.40, 75.10, 44.00)                # n2 1: the parking pad off the lane
+	c.paint("concrete", 92.10, 38.40, 97.30, 44.00)                # n2 2: the parking pad off the lane
+	c.paint("concrete", 99.50, 38.40, 104.70, 44.00)                # n2 3: the parking pad off the lane
+	c.paint("concrete", 121.70, 38.40, 126.90, 44.00)                # n2 4: the parking pad off the lane
+	c.paint("concrete", 146.90, 38.40, 152.10, 44.00)                # n3 0: the parking pad off the lane
+	c.paint("concrete", 153.23, 38.40, 158.43, 44.00)                # n3 1: the parking pad off the lane
+	c.paint("concrete", 172.23, 38.40, 177.43, 44.00)                # n3 2: the parking pad off the lane
+	c.paint("grass", 0.0, 0.0, W, D)
+	c.build_floor(L.rect_edges(0.0, 0.0, W, D))
+	if c.stage == "ground": c.finish(); quit(); return
+	var B := {}
+	for k in SITES.size():
+		c.y0 = float(gl.pads[k][4])
+		B[String(SITES[k][3])] = c.bld(String(SITES[k][0]), SITES[k][1], String(SITES[k][2]), false, String(SITES[k][3]), 0.70)
+
+	c.privacy(Vector2(4.53, 14.15), Vector2(4.30, 14.15), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(16.13, 14.15), Vector2(16.37, 14.15), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(4.30, 14.15), Vector2(4.30, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(16.37, 14.15), Vector2(16.37, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(4.30, 38.00), Vector2(12.90, 38.00), "yard: the rear fence")
+	c.privacy(Vector2(14.10, 38.00), Vector2(16.37, 38.00), "yard: the rear fence")
+	c.put("fence_gate_privacy", "worn", Vector3(13.50, c.yf(13.50, 38.00), 38.00), 0.0, "yard: the gate to the parking pad", false)
+	c.stalls.append([13.50, 41.00, 0.0, c.yf(13.50, 41.00)])
+	c.oil(Vector2(13.50, 41.00), 0.0)
+	c.put("prop_adirondack_white", "worn", c.gp(7.55, 25.00), 222.0, "back yard: a chair on the lawn")
+	c.put("prop_adirondack_wood", "worn", c.gp(13.12, 27.00), 312.0, "back yard: a chair on the lawn facing the sun")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(17.33, 2.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(18.85, 13.25), Vector2(16.97, 13.25), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(27.15, 13.25), Vector2(29.03, 13.25), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(16.97, 13.25), Vector2(16.97, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(29.03, 13.25), Vector2(29.03, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(16.97, 38.00), Vector2(19.23, 38.00), "yard: the rear fence")
+	c.privacy(Vector2(20.43, 38.00), Vector2(29.03, 38.00), "yard: the rear fence")
+	c.put("fence_gate_privacy", "worn", Vector3(19.83, c.yf(19.83, 38.00), 38.00), 0.0, "yard: the gate to the parking pad", false)
+	c.stalls.append([19.83, 41.00, 0.0, c.yf(19.83, 41.00)])
+	c.oil(Vector2(19.83, 41.00), 0.0)
+	c.put("prop_patio_set_4", "worn", c.gp(20.21, 24.55), 283.0, "back yard: the patio table")
+	c.put("prop_adirondack_white", "worn", c.gp(25.79, 26.55), 13.0, "back yard: a chair on the lawn")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(28.35, 2.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(31.12, 14.25), Vector2(29.63, 14.25), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(40.22, 14.25), Vector2(41.70, 14.25), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(29.63, 14.25), Vector2(29.63, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(41.70, 14.25), Vector2(41.70, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(29.63, 38.00), Vector2(38.23, 38.00), "yard: the rear fence")
+	c.privacy(Vector2(39.43, 38.00), Vector2(41.70, 38.00), "yard: the rear fence")
+	c.put("fence_gate_privacy", "worn", Vector3(38.83, c.yf(38.83, 38.00), 38.00), 0.0, "yard: the gate to the parking pad", false)
+	c.stalls.append([38.83, 41.00, 0.0, c.yf(38.83, 41.00)])
+	c.oil(Vector2(38.83, 41.00), 0.0)
+	c.put("prop_swing_set", "worn", c.gp(32.88, 25.05), 344.0, "back yard: the kids' swings")
+	c.put("prop_patio_set_4", "worn", c.gp(38.45, 27.05), 74.0, "back yard: the patio table")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(41.42, 2.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(55.70, 19.05), Vector2(54.30, 19.05), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(67.10, 19.05), Vector2(68.50, 19.05), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(54.30, 19.05), Vector2(54.30, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(68.50, 19.05), Vector2(68.50, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(54.30, 38.00), Vector2(64.50, 38.00), "yard: the rear fence")
+	c.privacy(Vector2(65.70, 38.00), Vector2(68.50, 38.00), "yard: the rear fence")
+	c.put("fence_gate_privacy", "worn", Vector3(65.10, c.yf(65.10, 38.00), 38.00), 0.0, "yard: the gate to the parking pad", false)
+	c.stalls.append([65.10, 41.00, 0.0, c.yf(65.10, 41.00)])
+	c.oil(Vector2(65.10, 41.00), 0.0)
+	c.put("prop_patio_set_4", "worn", c.gp(58.14, 27.45), 333.0, "back yard: the patio table")
+	c.put("prop_adirondack_white", "worn", c.gp(64.66, 29.45), 63.0, "back yard: a chair on the lawn")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(68.30, 2.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(70.00, 14.75), Vector2(69.10, 14.75), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(82.40, 14.75), Vector2(83.30, 14.75), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(69.10, 14.75), Vector2(69.10, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(83.30, 14.75), Vector2(83.30, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(69.10, 38.00), Vector2(71.90, 38.00), "yard: the rear fence")
+	c.privacy(Vector2(73.10, 38.00), Vector2(83.30, 38.00), "yard: the rear fence")
+	c.put("fence_gate_privacy", "worn", Vector3(72.50, c.yf(72.50, 38.00), 38.00), 0.0, "yard: the gate to the parking pad", false)
+	c.stalls.append([72.50, 41.00, 0.0, c.yf(72.50, 41.00)])
+	c.oil(Vector2(72.50, 41.00), 0.0)
+	c.put("prop_swing_set", "worn", c.gp(72.94, 25.30), 34.0, "back yard: the kids' swings")
+	c.put("prop_patio_set_4", "worn", c.gp(79.46, 27.30), 124.0, "back yard: the patio table")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(83.60, 2.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(84.00, 14.15), Vector2(83.90, 14.15), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(98.00, 14.15), Vector2(98.10, 14.15), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(83.90, 14.15), Vector2(83.90, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(98.10, 14.15), Vector2(98.10, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(83.90, 38.00), Vector2(94.10, 38.00), "yard: the rear fence")
+	c.privacy(Vector2(95.30, 38.00), Vector2(98.10, 38.00), "yard: the rear fence")
+	c.put("fence_gate_privacy", "worn", Vector3(94.70, c.yf(94.70, 38.00), 38.00), 0.0, "yard: the gate to the parking pad", false)
+	c.stalls.append([94.70, 41.00, 0.0, c.yf(94.70, 41.00)])
+	c.oil(Vector2(94.70, 41.00), 0.0)
+	c.put("prop_picnic_table", "worn", c.gp(87.74, 25.00), 95.0, "back yard: a table in the yard")
+	c.put("prop_swing_set", "worn", c.gp(94.26, 27.00), 185.0, "back yard: the kids' swings")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(99.20, 2.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(99.80, 13.85), Vector2(98.70, 13.85), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(111.80, 13.85), Vector2(112.90, 13.85), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(98.70, 13.85), Vector2(98.70, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(112.90, 13.85), Vector2(112.90, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(98.70, 38.00), Vector2(101.50, 38.00), "yard: the rear fence")
+	c.privacy(Vector2(102.70, 38.00), Vector2(112.90, 38.00), "yard: the rear fence")
+	c.put("fence_gate_privacy", "worn", Vector3(102.10, c.yf(102.10, 38.00), 38.00), 0.0, "yard: the gate to the parking pad", false)
+	c.stalls.append([102.10, 41.00, 0.0, c.yf(102.10, 41.00)])
+	c.oil(Vector2(102.10, 41.00), 0.0)
+	c.put("prop_clothesline", "worn", c.gp(102.54, 24.85), 156.0, "back yard: washing on the line")
+	c.put("prop_picnic_table", "worn", c.gp(109.06, 26.85), 246.0, "back yard: a table in the yard")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(113.00, 2.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(114.30, 15.05), Vector2(113.50, 15.05), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(126.90, 15.05), Vector2(127.70, 15.05), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(113.50, 15.05), Vector2(113.50, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(127.70, 15.05), Vector2(127.70, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(113.50, 38.00), Vector2(123.70, 38.00), "yard: the rear fence")
+	c.privacy(Vector2(124.90, 38.00), Vector2(127.70, 38.00), "yard: the rear fence")
+	c.put("fence_gate_privacy", "worn", Vector3(124.30, c.yf(124.30, 38.00), 38.00), 0.0, "yard: the gate to the parking pad", false)
+	c.stalls.append([124.30, 41.00, 0.0, c.yf(124.30, 41.00)])
+	c.oil(Vector2(124.30, 41.00), 0.0)
+	c.put("prop_bbq_gas_cart", "worn", c.gp(117.34, 25.45), 217.0, "back yard: the gas grill")
+	c.put("prop_clothesline", "worn", c.gp(123.86, 27.45), 307.0, "back yard: washing on the line")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(128.10, 2.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(140.33, 13.55), Vector2(140.30, 13.55), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(152.33, 13.55), Vector2(152.37, 13.55), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(140.30, 13.55), Vector2(140.30, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(152.37, 13.55), Vector2(152.37, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(140.30, 38.00), Vector2(148.90, 38.00), "yard: the rear fence")
+	c.privacy(Vector2(150.10, 38.00), Vector2(152.37, 38.00), "yard: the rear fence")
+	c.put("fence_gate_privacy", "worn", Vector3(149.50, c.yf(149.50, 38.00), 38.00), 0.0, "yard: the gate to the parking pad", false)
+	c.stalls.append([149.50, 41.00, 0.0, c.yf(149.50, 41.00)])
+	c.oil(Vector2(149.50, 41.00), 0.0)
+	c.put("prop_swing_set", "worn", c.gp(143.55, 24.70), 84.0, "back yard: the kids' swings")
+	c.put("prop_patio_set_4", "worn", c.gp(149.12, 26.70), 174.0, "back yard: the patio table")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(153.53, 2.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(153.70, 14.15), Vector2(152.97, 14.15), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(164.30, 14.15), Vector2(165.03, 14.15), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(152.97, 14.15), Vector2(152.97, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(165.03, 14.15), Vector2(165.03, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(152.97, 38.00), Vector2(155.23, 38.00), "yard: the rear fence")
+	c.privacy(Vector2(156.43, 38.00), Vector2(165.03, 38.00), "yard: the rear fence")
+	c.put("fence_gate_privacy", "worn", Vector3(155.83, c.yf(155.83, 38.00), 38.00), 0.0, "yard: the gate to the parking pad", false)
+	c.stalls.append([155.83, 41.00, 0.0, c.yf(155.83, 41.00)])
+	c.oil(Vector2(155.83, 41.00), 0.0)
+	c.put("prop_picnic_table", "worn", c.gp(156.21, 25.00), 145.0, "back yard: a table in the yard")
+	c.put("prop_swing_set", "worn", c.gp(161.79, 27.00), 235.0, "back yard: the kids' swings")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(165.50, 2.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(166.47, 12.85), Vector2(165.63, 12.85), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(176.87, 12.85), Vector2(177.70, 12.85), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(165.63, 12.85), Vector2(165.63, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(177.70, 12.85), Vector2(177.70, 38.00), "yard: the lot-line fence")
+	c.privacy(Vector2(165.63, 38.00), Vector2(174.23, 38.00), "yard: the rear fence")
+	c.privacy(Vector2(175.43, 38.00), Vector2(177.70, 38.00), "yard: the rear fence")
+	c.put("fence_gate_privacy", "worn", Vector3(174.83, c.yf(174.83, 38.00), 38.00), 0.0, "yard: the gate to the parking pad", false)
+	c.stalls.append([174.83, 41.00, 0.0, c.yf(174.83, 41.00)])
+	c.oil(Vector2(174.83, 41.00), 0.0)
+	c.put("prop_clothesline", "worn", c.gp(168.88, 24.35), 206.0, "back yard: washing on the line")
+	c.put("prop_picnic_table", "worn", c.gp(174.45, 26.35), 296.0, "back yard: a table in the yard")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(178.07, 2.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(6.20, 67.15), Vector2(4.30, 67.15), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(16.30, 67.15), Vector2(18.20, 67.15), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(4.30, 67.15), Vector2(4.30, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(18.20, 67.15), Vector2(18.20, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(4.30, 90.40), Vector2(14.28, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(15.47, 90.40), Vector2(18.20, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(14.28, 90.40), Vector2(15.47, 90.40), "yard: the rear fence")
+	c.put("prop_picnic_table", "worn", c.gp(8.06, 77.70), 195.0, "back yard: a table in the yard")
+	c.put("prop_swing_set", "worn", c.gp(14.44, 79.70), 285.0, "back yard: the kids' swings")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(17.50, 55.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(19.45, 68.05), Vector2(18.80, 68.05), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(32.05, 68.05), Vector2(32.70, 68.05), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(18.80, 68.05), Vector2(18.80, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(32.70, 68.05), Vector2(32.70, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(18.80, 90.40), Vector2(21.52, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(22.73, 90.40), Vector2(32.70, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(21.52, 90.40), Vector2(22.73, 90.40), "yard: the rear fence")
+	c.put("prop_clothesline", "worn", c.gp(22.56, 78.15), 256.0, "back yard: washing on the line")
+	c.put("prop_picnic_table", "worn", c.gp(28.94, 80.15), 346.0, "back yard: a table in the yard")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(33.25, 55.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(34.55, 72.05), Vector2(33.30, 72.05), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(45.95, 72.05), Vector2(47.20, 72.05), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(33.30, 72.05), Vector2(33.30, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(47.20, 72.05), Vector2(47.20, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(33.30, 90.40), Vector2(43.27, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(44.48, 90.40), Vector2(47.20, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(43.27, 90.40), Vector2(44.48, 90.40), "yard: the rear fence")
+	c.put("prop_bbq_gas_cart", "worn", c.gp(37.06, 80.15), 317.0, "back yard: the gas grill")
+	c.put("prop_clothesline", "worn", c.gp(43.44, 82.15), 47.0, "back yard: washing on the line")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(47.15, 55.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(49.15, 69.35), Vector2(47.80, 69.35), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(60.35, 69.35), Vector2(61.70, 69.35), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(47.80, 69.35), Vector2(47.80, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(61.70, 69.35), Vector2(61.70, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(47.80, 90.40), Vector2(50.52, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(51.73, 90.40), Vector2(61.70, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(50.52, 90.40), Vector2(51.73, 90.40), "yard: the rear fence")
+	c.put("prop_bbq_kettle", "worn", c.gp(51.56, 78.80), 18.0, "back yard: a grill on the patio")
+	c.put("prop_bbq_gas_cart", "worn", c.gp(57.94, 80.80), 108.0, "back yard: the gas grill")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(61.55, 55.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(62.00, 67.65), Vector2(62.30, 67.65), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(76.50, 67.65), Vector2(76.20, 67.65), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(62.30, 67.65), Vector2(62.30, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(76.20, 67.65), Vector2(76.20, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(62.30, 90.40), Vector2(72.28, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(73.47, 90.40), Vector2(76.20, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(72.28, 90.40), Vector2(73.47, 90.40), "yard: the rear fence")
+	c.put("prop_adirondack_wood", "worn", c.gp(66.06, 77.95), 79.0, "back yard: a chair on the lawn facing the sun")
+	c.put("prop_bbq_kettle", "worn", c.gp(72.44, 79.95), 169.0, "back yard: a grill on the patio")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(77.70, 55.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(78.80, 65.85), Vector2(76.80, 65.85), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(88.70, 65.85), Vector2(90.70, 65.85), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(76.80, 65.85), Vector2(76.80, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(90.70, 65.85), Vector2(90.70, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(76.80, 90.40), Vector2(79.53, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(80.72, 90.40), Vector2(90.70, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(79.53, 90.40), Vector2(80.72, 90.40), "yard: the rear fence")
+	c.put("prop_adirondack_white", "worn", c.gp(80.56, 77.05), 140.0, "back yard: a chair on the lawn")
+	c.put("prop_adirondack_wood", "worn", c.gp(86.94, 79.05), 230.0, "back yard: a chair on the lawn facing the sun")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(89.90, 55.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(91.80, 67.25), Vector2(91.30, 67.25), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(104.70, 67.25), Vector2(105.20, 67.25), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(91.30, 67.25), Vector2(91.30, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(105.20, 67.25), Vector2(105.20, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(91.30, 90.40), Vector2(101.28, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(102.47, 90.40), Vector2(105.20, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(101.28, 90.40), Vector2(102.47, 90.40), "yard: the rear fence")
+	c.put("prop_patio_set_4", "worn", c.gp(95.06, 77.75), 201.0, "back yard: the patio table")
+	c.put("prop_adirondack_white", "worn", c.gp(101.44, 79.75), 291.0, "back yard: a chair on the lawn")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(105.90, 55.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(107.45, 66.65), Vector2(105.80, 66.65), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(118.05, 66.65), Vector2(119.70, 66.65), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(105.80, 66.65), Vector2(105.80, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(119.70, 66.65), Vector2(119.70, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(105.80, 90.40), Vector2(108.53, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(109.72, 90.40), Vector2(119.70, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(108.53, 90.40), Vector2(109.72, 90.40), "yard: the rear fence")
+	c.put("prop_swing_set", "worn", c.gp(109.56, 77.45), 262.0, "back yard: the kids' swings")
+	c.put("prop_patio_set_4", "worn", c.gp(115.94, 79.45), 352.0, "back yard: the patio table")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(119.25, 55.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(122.95, 68.25), Vector2(120.30, 68.25), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(131.55, 68.25), Vector2(134.20, 68.25), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(120.30, 68.25), Vector2(120.30, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(134.20, 68.25), Vector2(134.20, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(120.30, 90.40), Vector2(130.28, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(131.47, 90.40), Vector2(134.20, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(130.28, 90.40), Vector2(131.47, 90.40), "yard: the rear fence")
+	c.put("prop_picnic_table", "worn", c.gp(124.06, 78.25), 323.0, "back yard: a table in the yard")
+	c.put("prop_swing_set", "worn", c.gp(130.44, 80.25), 53.0, "back yard: the kids' swings")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(132.75, 55.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(135.25, 67.35), Vector2(134.80, 67.35), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(148.25, 67.35), Vector2(148.70, 67.35), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(134.80, 67.35), Vector2(134.80, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(148.70, 67.35), Vector2(148.70, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(134.80, 90.40), Vector2(137.53, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(138.72, 90.40), Vector2(148.70, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(137.53, 90.40), Vector2(138.72, 90.40), "yard: the rear fence")
+	c.put("prop_clothesline", "worn", c.gp(138.56, 77.80), 24.0, "back yard: washing on the line")
+	c.put("prop_picnic_table", "worn", c.gp(144.94, 79.80), 114.0, "back yard: a table in the yard")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(149.45, 55.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(149.70, 67.95), Vector2(149.30, 67.95), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(162.80, 67.95), Vector2(163.20, 67.95), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(149.30, 67.95), Vector2(149.30, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(163.20, 67.95), Vector2(163.20, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(149.30, 90.40), Vector2(159.28, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(160.47, 90.40), Vector2(163.20, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(159.28, 90.40), Vector2(160.47, 90.40), "yard: the rear fence")
+	c.put("prop_bbq_gas_cart", "worn", c.gp(153.06, 78.10), 85.0, "back yard: the gas grill")
+	c.put("prop_clothesline", "worn", c.gp(159.44, 80.10), 175.0, "back yard: washing on the line")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(164.00, 55.40), 0.0, "front: a pot by the walk")
+	c.privacy(Vector2(165.05, 71.55), Vector2(163.80, 71.55), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(176.45, 71.55), Vector2(177.70, 71.55), "yard: the side fence from the house to the lot line")
+	c.privacy(Vector2(163.80, 71.55), Vector2(163.80, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(177.70, 71.55), Vector2(177.70, 90.40), "yard: the lot-line fence")
+	c.privacy(Vector2(163.80, 90.40), Vector2(166.53, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(167.72, 90.40), Vector2(177.70, 90.40), "yard: the rear fence")
+	c.privacy(Vector2(166.53, 90.40), Vector2(167.72, 90.40), "yard: the rear fence")
+	c.put("prop_bbq_kettle", "worn", c.gp(167.56, 79.90), 146.0, "back yard: a grill on the patio")
+	c.put("prop_bbq_gas_cart", "worn", c.gp(173.94, 81.90), 236.0, "back yard: the gas grill")
+	c.put("prop_usps_collection_box" if false else "plant_potted_succulent", "normal", c.gp(177.65, 55.40), 0.0, "front: a pot by the walk")
+	c.alley_wear(0.0, 44.0, 182.0, 50.0, false)
+	c.tyre(Vector2(3.0, 47.0), 90.0, 6.0, 0.45)
+	c.tyre(Vector2(179.0, 47.0), -90.0, 6.0, 0.45)
+	c.tyre(Vector2(48.0, 3.0), 0.0, 6.0, 0.45)
+	c.tyre(Vector2(134.0, 3.0), 0.0, 6.0, 0.45)
+	for k2: String in B:
+		var r: Dictionary = B[k2]
+		c.services(r, 2.0, 1 if not String(r.folder).begins_with("apartments/") else 2, String(r.folder).begins_with("apartments/") or String(r.folder).begins_with("houses/"))
+		for dr: Array in r.doors:
+			var q: Vector3 = dr[1]; var o: Vector3 = dr[2]
+			c.grime(Vector2(q.x + o.x * 0.9, q.z + o.z * 0.9), 0.0, 1.6, 1.4, 0.40)
+	c.finish()
+	quit()
