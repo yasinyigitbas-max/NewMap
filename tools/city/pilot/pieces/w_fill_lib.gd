@@ -19,9 +19,11 @@ func fence(panel: String, post: String, w: float, a: Vector2, b: Vector2, reason
 	if L2 < 0.2: return
 	var n := maxi(1, int(ceil(L2 / w))); var dir := (b - a).normalized(); var step := L2 / n
 	var yaw := rad_to_deg(atan2(dir.x, dir.y)) + 90.0
+	# panels flush with both ends (the first starts at a, the last ends at b, the overlap shared between them), so no
+	# panel pokes past the run's end (the iron() rule of cc_fill_lib)
 	for i in n:
-		var m: Vector2 = a + dir * (step * (i + 0.5))
-		put(panel, cond, Vector3(m.x, _low(m, dir, step * 0.5), m.y), yaw, reason, false)
+		var m: Vector2 = a + dir * (w * 0.5 + (L2 - w) * float(i) / float(n - 1)) if n > 1 else a.lerp(b, 0.5)
+		put(panel, cond, Vector3(m.x, _low(m, dir, w * 0.5), m.y), yaw, reason, false)
 	for i in n + 1:
 		var pp: Vector2 = a + dir * (step * i)
 		put(post, cond, Vector3(pp.x, yf(pp.x, pp.y), pp.y), yaw, "fence post at every joint", false)

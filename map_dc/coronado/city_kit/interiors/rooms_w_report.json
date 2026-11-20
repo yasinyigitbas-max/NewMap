@@ -104,10 +104,10 @@
    "d": 14.15,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c1__post_office__0.scn",
    "id": "g_w_c1__post_office__0",
-   "kind": "bank",
+   "kind": "store",
    "lights": 6,
    "name": "Coronado Post Office",
-   "props": 30,
+   "props": 43,
    "w": 21.4
   },
   {
