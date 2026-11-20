@@ -40,7 +40,7 @@ public:
 // a slope, the top of a climb). Off when he is in the air.
 class FootPlant : public SkeletonModifier3D {
 	GDCLASS(FootPlant, SkeletonModifier3D)
-	int b_pel = -1, b_th[2] = { -1, -1 }, b_ca[2] = { -1, -1 }, b_ft[2] = { -1, -1 };
+	int b_pel = -1, b_th[2] = { -1, -1 }, b_ca[2] = { -1, -1 }, b_ft[2] = { -1, -1 }, b_toe[2] = { -1, -1 };
 	float ankle_h = 0.08f;
 	bool found = false;
 	void find_bones(Skeleton3D *sk);
@@ -55,6 +55,7 @@ public:
 	// puts down is pinned where it landed until it lifts; on lifting, the rest of the pin's offset fades in 0.1 s
 	bool locked[2] = { false, false };
 	Vector3 lock_w[2], rel_off[2], prev_fw[2], prev_root;
+	float toe_y0[2] = { 0, 0 };   // the ball of the foot's height over the floor as it was pinned (it is held while it stays down)
 	float rel_t[2] = { 0, 0 };   // since the pin let go
 	bool have_prev = false;
 	uint64_t last_us = 0;

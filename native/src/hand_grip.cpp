@@ -108,7 +108,8 @@ void FootPlant::find_bones(Skeleton3D *sk) {
 	found = true;
 	b_pel = sk->find_bone("Bip01_Pelvis");
 	const char *th[2] = { "Bip01_L_Thigh", "Bip01_R_Thigh" }, *ca[2] = { "Bip01_L_Calf", "Bip01_R_Calf" }, *ft[2] = { "Bip01_L_Foot", "Bip01_R_Foot" };
-	for (int s = 0; s < 2; s++) { b_th[s] = sk->find_bone(th[s]); b_ca[s] = sk->find_bone(ca[s]); b_ft[s] = sk->find_bone(ft[s]); }
+	const char *toe[2] = { "Bip01_L_Toe0", "Bip01_R_Toe0" };
+	for (int s = 0; s < 2; s++) { b_th[s] = sk->find_bone(th[s]); b_ca[s] = sk->find_bone(ca[s]); b_ft[s] = sk->find_bone(ft[s]); b_toe[s] = sk->find_bone(toe[s]); }
 	// the ankle's height over the sole: the foot bone's rest height over the figure's feet (its rest stands on 0)
 	if (b_ft[0] >= 0) {
 		const float k = sk->get_global_transform().basis.get_column(0).length();
@@ -165,20 +166,25 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 		const float body_v = (have_prev && p_delta > 0.0) ? Vector2(sg.origin.x - prev_root.x, sg.origin.z - prev_root.z).length() / (float)p_delta : 0.0f;
 		const float v_keep = body_v < 0.15f ? 1.6f : 1.0f, v_take = body_v < 0.15f ? 1.2f : 0.6f;   // (standing: a clip's shuffle does not move a foot on the floor)
 		prev_fw[s] = fw;
-		// (a pin lets go as the clip lifts the foot, so the foot catches up in the air, or once 12 cm behind: a crouched foot swings without rising)
-		const float pin_gap = locked[s] ? Vector2(fw.x - lock_w[s].x, fw.z - lock_w[s].z).length() : 0.0f;
-		const bool plant_now = locked[s] ? (h_clip < ankle_h + 0.03f && clip_v < v_keep && pin_gap < 0.12f) : (h_clip < ankle_h + 0.02f && clip_v < v_take);
+		// THE PIN HOLDS THE BALL OF THE FOOT (the toe bone), not the ankle: through the stance the heel rises and the ankle rolls
+		// forward over the toes, as a walking foot does. Pinning the ankle held it back there, and at toe-off the clip's foot
+		// was 6.7 cm ahead: it slid to catch up (tests/people/trace_crowd.gd, 20 Nov). The pin is taken as the heel lands (the
+		// ankle down) and held while the toes stay down; it lets go as they lift, or once 12 cm behind (a crouched swing).
+		const Vector3 pw = b_toe[s] >= 0 ? sg.xform(sk->get_bone_global_pose(b_toe[s]).origin) : fw;
+		const float h_toe = pw.y - sg.origin.y;
+		const float pin_gap = locked[s] ? Vector2(pw.x - lock_w[s].x, pw.z - lock_w[s].z).length() : 0.0f;
+		const bool plant_now = locked[s] ? (h_toe < toe_y0[s] + 0.025f && clip_v < v_keep + 0.6f && pin_gap < 0.12f) : (h_clip < ankle_h + 0.02f && clip_v < v_take);
 		if (plant_now) {
-			if (!locked[s]) { locked[s] = true; lock_w[s] = fw + rel_off[s]; }
-			slide[s] = Vector3(lock_w[s].x - fw.x, 0.0f, lock_w[s].z - fw.z);
+			if (!locked[s]) { locked[s] = true; lock_w[s] = pw + rel_off[s]; toe_y0[s] = std::min(h_toe, 0.06f); }
+			slide[s] = Vector3(lock_w[s].x - pw.x, 0.0f, lock_w[s].z - pw.z);
 			rel_off[s] = Vector3();
 		} else {
 			// standing, a clip that moves a foot along the floor (the crouch's widening stance) makes it a little step: the foot
 			// lifts up to 4 cm as it goes, not a slide
 			if (body_v < 0.15f && h_clip < ankle_h + 0.03f && clip_v > 0.25f) d += std::min(0.04f, 0.02f * clip_v);
 			if (locked[s]) {
-				locked[s] = false; rel_t[s] = 0.0f; rel_off[s] = Vector3(lock_w[s].x - fw.x, 0.0f, lock_w[s].z - fw.z);
-				const float g = rel_off[s].length(); gap_sum += g; gap_n++; gap_most = std::max(gap_most, g); if (h_clip >= ankle_h + 0.03f) gap_by_lift++;
+				locked[s] = false; rel_t[s] = 0.0f; rel_off[s] = Vector3(lock_w[s].x - pw.x, 0.0f, lock_w[s].z - pw.z);
+				const float g = rel_off[s].length(); gap_sum += g; gap_n++; gap_most = std::max(gap_most, g); if (h_toe >= toe_y0[s] + 0.025f) gap_by_lift++;
 			}
 			rel_t[s] += (float)p_delta;
 			rel_off[s] *= (float)std::exp(-p_delta / 0.06);   // (about 0.15 s; holding it till the lift made more pops: tried 20 Nov)
