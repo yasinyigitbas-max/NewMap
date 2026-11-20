@@ -107,8 +107,8 @@ private:
 	// player 0.75 m to the side)
 	Vector3 dm_foot0[2]; float dm_fk = 0.0f; double dm_seat_t = 0.0;
 	// lifting a fallen bicycle before getting on (the player bends down and lifts it: ual/PickUp_Kneeling)
-	float lift_t = -1.0f; Transform3D lift_from, lift_to;
-	static constexpr float LIFT_S = 1.3f;
+	float lift_t = -1.0f, lift_wait = 0.0f; int lift_phase = 0; Transform3D lift_from, lift_to; Vector3 lift_up;   // (lift_up: the way its top lies, level)   // (phase 0: he walks to it; 1: lifts)
+	static constexpr float LIFT_S = 1.9f;   // (ual/PickUp_Kneeling: down to the kneel by 0.7 s, up again 1.0-1.45 s)
 	float wheel_ang = 0.0f;
 	bool on_ground = false, fallen = false;
 	float damage = 0.0f, hardest = 0.0f;

@@ -35,7 +35,7 @@ func _physics_process(delta: float) -> bool:
 	t += delta; n += 1
 	cam.current = true
 	var focus: Vector3 = bike.global_position + Vector3(0, 0.8, 0)
-	cam.look_at_from_position(focus + Vector3(3.6, 0.9, 2.2), focus, Vector3.UP)
+	cam.look_at_from_position(focus + (Vector3(3.6, 0.9, 2.2) if step < 3 else Vector3(1.2, 1.0, 3.4)), focus, Vector3.UP)   # (take 2 from the side: his hands on it)
 	if n % 2 == 0 and t > 0.5: root.get_texture().get_image().save_png("%s/f_%03d.png" % [out, shot]); shot += 1
 	match step:
 		0:

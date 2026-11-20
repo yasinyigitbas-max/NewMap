@@ -222,10 +222,14 @@ bool CityBike::get_on() {
 		const Vector3 f = get_global_basis().get_column(2);
 		lift_from = get_global_transform();
 		lift_to = Transform3D(Basis(Vector3(0, 1, 0), std::atan2(f.x, f.z)), get_global_position() + Vector3(0, 0.05f, 0));
-		lift_t = 0.0f;
+		lift_t = 0.0f; lift_phase = 0; lift_wait = 0.0f;
 		set_linear_velocity(Vector3()); set_angular_velocity(Vector3());
-		pl->talk_face(true, get_global_position());
-		pl->gesture(3, LIFT_S);
+		// first he walks up to it (Yasin: "he doesnt seem to be reaching the bike to lift it"): on the side its saddle and
+		// bars lie toward, just past them, as one picks a bicycle up (from the wheels' side its top is out of reach)
+		lift_up = get_global_basis().get_column(1); lift_up.y = 0.0f;
+		if (lift_up.length() < 0.2f) { lift_up = pl->get_global_position() - get_global_position(); lift_up.y = 0.0f; }
+		lift_up = lift_up.length() > 0.05f ? lift_up.normalized() : Vector3(1, 0, 0);
+		pl->walk_to(get_global_position() + lift_up * 1.05f);
 		return true;
 	}
 	mount();
@@ -684,12 +688,44 @@ void CityBike::_process(double p_delta) {
 		if (state == ST_PARKED) get_on(); else if (state == ST_RIDE) get_off();
 	}
 	if (lift_t >= 0.0f) {   // the bicycle comes up with his hands (from 0.35 to 0.95 of the lift), then he gets on
-		lift_t += (float)p_delta;
-		const float k = clampf((lift_t / LIFT_S - 0.35f) / 0.6f, 0.0f, 1.0f), e = k * k * (3.0f - 2.0f * k);
+		CityPlayer *lp = the_player();
+		if (lift_phase == 0) {   // walking up to it (3 s at most), then he faces it and bends down
+			lift_wait += (float)p_delta;
+			if (!lp || lp->walk_done() || lift_wait > 3.0f) {
+				lift_phase = 1; lift_t = 0.0f;
+				if (lp) {
+					lp->halt(); lp->gesture(3, LIFT_S);   // (stopped dead: the kneel is not lost to a stop step)
+					lp->talk_face(true, lift_from.origin + lift_up * 0.5f);   // (facing the middle of it)
+					// it comes up on its wheels and a little toward him: upright half a metre in front of him, in his hands
+					Vector3 to = lp->get_global_position() - lift_up * 0.5f; to.y = lift_from.origin.y + 0.05f;
+					lift_to.origin = to;
+				}
+			}
+		} else {   // the kneel's own clock (it starts when the clip does), else this one
+			const double gt = lp ? lp->gesture_time() : -1.0;
+			lift_t = gt >= 0.0 ? std::max(lift_t, (float)gt) : lift_t + (float)p_delta;
+		}
+		// (Yasin: "bike is levitating to him, add a pick up animation and make him kneel then lift the bike") the bicycle
+		// stays down while he kneels and takes hold of it, and comes up on its wheels as he stands up (0.95-1.45 s of
+		// ual/PickUp_Kneeling); it rose from 0.45 s, while he was still going down
+		const float k = lift_phase == 1 ? clampf((lift_t - 0.95f) / 0.5f, 0.0f, 1.0f) : 0.0f, e = k * k * (3.0f - 2.0f * k);
 		const Quaternion q = Quaternion(lift_from.basis.orthonormalized()).slerp(Quaternion(lift_to.basis.orthonormalized()), e);
 		set_global_transform(Transform3D(Basis(q), lift_from.origin.lerp(lift_to.origin, e)));
 		set_linear_velocity(Vector3()); set_angular_velocity(Vector3());
+		// his hands: on the grip that is uppermost and on the saddle, from as he reaches down until he lets go at the top
+		if (lp && lift_phase == 1) {
+			const Transform3D bt = get_global_transform();
+			const Vector3 gl = bt.xform(Vector3(bike_look::GRIP_X, bike_look::GRIP_Y, bike_look::GRIP_Z)), gr = bt.xform(Vector3(-bike_look::GRIP_X, bike_look::GRIP_Y, bike_look::GRIP_Z));
+			const Vector3 bar = gl.y > gr.y ? gl : gr, seat = bt.xform(Vector3(0.0f, bike_look::SADDLE_Y, bike_look::SADDLE_Z));
+			Vector3 out = lp->get_global_position() - bt.origin; out.y = 0.0f; out = out.length() > 0.05f ? out.normalized() : Vector3(1, 0, 0);
+			const Vector3 left = Vector3(0, 1, 0).cross(-out);   // (his left, facing the bike)
+			const bool bar_left = (bar - seat).dot(left) > 0.0f;
+			// (his hands: reaching it as he goes down 0.3-0.65 s, on it while he kneels and stands, letting go 1.6-1.85 s)
+			const float w = clampf((lift_t - 0.3f) / 0.35f, 0.0f, 1.0f) * (1.0f - clampf((lift_t - 1.6f) / 0.25f, 0.0f, 1.0f));
+			lp->hold_points(w > 0.0f, bar_left ? bar : seat, bar_left ? seat : bar, out, w);
+		}
 		if (lift_t >= LIFT_S) {
+			if (lp) lp->hold_points(false, Vector3(), Vector3(), Vector3(1, 0, 0), 0.0f);
 			lift_t = -1.0f; fallen = false;
 			if (CityPlayer *lp = the_player()) lp->talk_face(false, Vector3());
 			mount();

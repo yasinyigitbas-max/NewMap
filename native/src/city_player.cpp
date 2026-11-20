@@ -322,7 +322,13 @@ void CityPlayer::_physics_process(double p_delta) {
 	if (crouch && !swimming) top *= 0.45f;
 	if (combat) top = std::min(top, 1.4f);   // (in his stance he steps, he does not run)
 	if (settle_t < 1.1f) { settle_t += dt; top = std::min(top, walk_top); }   // (Yasin: "ease it into idle after the climb then walk again": walking first, not running off)
-	const Vector3 want = (fwd * mv.y + right * mv.x) * top;
+	Vector3 want = (fwd * mv.y + right * mv.x) * top;
+	if (auto_on) {   // walking to a spot by himself (walk_to): an easy walk, slowing as he gets there
+		const Vector3 d(auto_to.x - here.x, 0, auto_to.z - here.z);
+		auto_stuck = speed < 0.1f ? auto_stuck + dt : 0.0f;
+		if (d.length() < 0.2f || swimming || airborne || auto_stuck > 0.4f) auto_on = false;
+		else want = d.normalized() * std::min(walk_top * 0.8f, d.length() * 1.6f + 0.25f);
+	}
 	Vector3 v = get_velocity();
 	const Vector3 hv(v.x, 0, v.z);
 	const float yaw0 = yaw;
@@ -383,11 +389,11 @@ void CityPlayer::_physics_process(double p_delta) {
 		const char *pre = "step/";
 		const float native_walk = 0.92f;   // (the walk the step clips were made from: Walk_Loop's own pace)
 		if (step_mode != 0 && (airborne || settle_t < 1.1f)) step_mode = 0;
-		if (step_mode == 0 && want_len > 0.05f && move_speed < 0.05f && speed < 0.08f && turn_left < 0.6f && !airborne && settle_t >= 1.1f) {
+		if (step_mode == 0 && want_len > 0.05f && move_speed < 0.05f && speed < 0.08f && turn_left < 0.6f && !airborne && settle_t >= 1.1f && !auto_on) {   // (walking to a spot by himself: a step or two, no start: it carried him past the spot)
 			const StringName c(String(pre) + String("start"));
 			if (fig->clip_len(c) > 0.0) { step_mode = 1; step_clip = c; step_t = 0.0f; step_cs = run ? 1.3f : std::max(std::min(want_len, walk_top) / native_walk, 0.8f); starts++; }   // (never slower than x0.8: at half stick a x0.5 first step took 1.8 s; off into a run: a quicker first step, x1.3, then he gathers into the jog)
 		}
-		if (step_mode == 0 && want_len < 0.05f && move_speed > 0.3f && move_speed < walk_top * 1.05f && !airborne && fig->clip_len(StringName(String(pre) + String("stop_l"))) > 0.0) {
+		if (step_mode == 0 && !auto_on && want_len < 0.05f && move_speed > 0.3f && move_speed < walk_top * 1.05f && !airborne && fig->clip_len(StringName(String(pre) + String("stop_l"))) > 0.0) {
 			// waiting for the next footfall (at most half a step): he keeps his pace till then
 			double ld = 0.0; int ns = 1;
 			const StringName cur = fig->current_clip();
@@ -509,6 +515,16 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (fig->clip_len(clip) <= 0.0) { clip = best ? JOG : WALK; cs = speed / sv[best]; }   // (a figure without the step library: the fists)
 	}
 	if (clip == IDLE || clip == S_IDLE) gait_i = -1;
+	// his hands on what another system gives him (the climb's grip does it: off when nothing holds them, never in a climb)
+	if (climb == 0) {
+		Skeleton3D *sk = fig->skeleton();
+		if (sk && !grip && hold_on) { grip = memnew(HandGrip); sk->add_child(grip); }
+		if (grip) {
+			const float w = hold_on ? hold_w : 0.0f;
+			grip->set_active(w > 0.001f); grip->set_influence(w);
+			if (w > 0.001f) { grip->one_hand = false; grip->grip[0] = hold_p[0]; grip->grip[1] = hold_p[1]; grip->out = hold_out; grip->side = hold_side; }
+		}
+	}
 	// THE PHONE in his hands (the crowd's own phone clips): standing, in his hand / at his ear / held up; walking, the
 	// walk with the phone in the hand or at the ear (the same legs: the stride matches)
 	if (phone_kind != 0 && heavy && step_mode == 0 && gest_t <= 0.0f) {
@@ -661,6 +677,11 @@ Dictionary CityPlayer::get_frame_log() const {
 	d["speed"] = speed; d["yaw"] = yaw;
 	d["clip"] = get_clip(); d["step"] = step_mode; d["starts"] = starts; d["stops"] = stops; d["turns"] = turns; d["climb"] = climb; d["u"] = climb ? climb_t / climb_len : -1.0f; d["settle"] = settle_t; d["clip_off"] = clip_off;
 	return d;
+}
+
+double CityPlayer::gesture_time() const {
+	static const StringName G_LIFT("ual/PickUp_Kneeling");
+	return (fig && gest_kind == 3 && cur_clip_is(G_LIFT)) ? fig->clip_pos() : -1.0;
 }
 
 Vector3 CityPlayer::get_grip_now() const { return Vector3(climb ? climb_t / climb_len : -1.0f, grip ? grip->miss[0] : 0.0f, grip ? grip->miss[1] : 0.0f); }

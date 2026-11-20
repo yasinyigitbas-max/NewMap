@@ -55,6 +55,20 @@ public:
 	// the phone in his hands (CityHud): 0 none, 1 in his hand, 2 at his ear (a call), 3 held up (the camera)
 	int phone_kind = 0;
 	void set_phone(int p_kind) { phone_kind = p_kind; }
+	// walking to a spot by himself (another system's: the bicycle he goes to lift); done when he is within 12 cm
+	bool auto_on = false; Vector3 auto_to;
+	float auto_stuck = 0.0f;   // (walking into something on the way there: done once he has not moved for 0.4 s)
+	void walk_to(const Vector3 &p_at) { auto_on = true; auto_to = p_at; auto_stuck = 0.0f; }
+	// stop dead where he is (another system takes over his body: the bicycle he kneels to lift)
+	// where his gesture's clip is (s), or -1 when it is not playing (the bicycle's lift follows the kneel's own time)
+	double gesture_time() const;
+	void halt() { auto_on = false; move_speed = 0.0f; step_mode = 0; stop_ph_prev = -1.0; set_velocity(Vector3()); }
+	bool walk_done() const { return !auto_on; }
+	// his hands held to two points by another system (the climb's HandGrip: the bicycle's grip and saddle as he lifts it)
+	bool hold_on = false; Vector3 hold_p[2], hold_out, hold_side; float hold_w = 0.0f;
+	void hold_points(bool p_on, const Vector3 &p_l, const Vector3 &p_r, const Vector3 &p_out, float p_w) {
+		hold_on = p_on; hold_p[0] = p_l; hold_p[1] = p_r; hold_out = p_out; hold_side = Vector3(0, 1, 0).cross(-p_out).normalized(); hold_w = p_w;
+	}
 private:
 	float turn_yaw0 = 0.0f, turn_k = 1.0f;   // a turn on the spot (step_mode 3): the way he faced, the clip's turn scaled to the angle
 	Vector3 cam_pos, knock_v;
