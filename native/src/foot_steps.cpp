@@ -68,6 +68,7 @@ void FootSteps::_ready() {
 		pl[k]->set_unit_size(3.0f); pl[k]->set_max_distance(30.0f);
 		add_child(pl[k]);
 	}
+	if (own) set_own(true);      // (set before the node was in the tree)
 	rng ^= (uint32_t)get_instance_id();
 	set_process(true);
 }
@@ -115,9 +116,19 @@ void FootSteps::step(int p_foot, const Vector3 &p_at) {
 	(void)p_foot;
 }
 
+void FootSteps::set_own(bool p_own) {
+	own = p_own;
+	if (own) volume_db = 2.0f;
+	for (int k = 0; k < 2; k++) if (pl[k]) {
+		pl[k]->set_attenuation_model(own ? AudioStreamPlayer3D::ATTENUATION_DISABLED : AudioStreamPlayer3D::ATTENUATION_INVERSE_DISTANCE);
+		pl[k]->set_attenuation_filter_db(own ? 0.0f : -24.0f);
+	}
+}
+
 void FootSteps::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_figure", "ped"), &FootSteps::set_figure);
 	ClassDB::bind_method(D_METHOD("set_volume_db", "db"), &FootSteps::set_volume_db);
+	ClassDB::bind_method(D_METHOD("set_own", "own"), &FootSteps::set_own);
 	ClassDB::bind_method(D_METHOD("get_volume_db"), &FootSteps::get_volume_db);
 	ClassDB::bind_method(D_METHOD("get_steps"), &FootSteps::get_steps);
 	ClassDB::bind_method(D_METHOD("get_last_kind"), &FootSteps::get_last_kind);

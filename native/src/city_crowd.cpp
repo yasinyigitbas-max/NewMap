@@ -268,7 +268,7 @@ void CityCrowd::set_player(Object *p_player) {
 		CityAmbience *am = memnew(CityAmbience); am->set_name("Ambience"); add_child(am); am->set_crowd(this);
 	}
 	if (cp && cp->figure() && !cp->has_node("FootSteps")) {   // B16: his footsteps, by what he walks on
-		FootSteps *fs = memnew(FootSteps); fs->set_name("FootSteps"); cp->add_child(fs); fs->set_figure(cp->figure());
+		FootSteps *fs = memnew(FootSteps); fs->set_name("FootSteps"); cp->add_child(fs); fs->set_figure(cp->figure()); fs->set_own(true);
 	}
 	if (cp && cp->figure() && gfx && !bodies.empty()) {
 		int body = 0;

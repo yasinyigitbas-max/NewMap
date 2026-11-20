@@ -56,6 +56,11 @@ public:
 	static int class_at(float p_x, float p_z);
 	void set_figure(Object *p_ped);
 	void set_volume_db(double p_db) { volume_db = (float)p_db; }
+	// B16 (Yasin, 20 Nov: "i think our footsteps dont play in the game yet"): the player's own steps played at -12 dB walking,
+	// 3.5-4 m from the camera (3 m unit size, distance filter), soft samples under the ambience and the engine: not heard.
+	// His own: no distance fall-off, louder (as his engine, B30); the crowd's stay quiet and 3D
+	void set_own(bool p_own);
+	bool own = false;
 	double get_volume_db() const { return volume_db; }
 	int get_steps() const { return steps; }
 	int get_last_kind() const { return last_kind; }
