@@ -15,6 +15,7 @@
 #include <godot_cpp/classes/audio_stream.hpp>
 #include <godot_cpp/variant/packed_byte_array.hpp>
 #include <cstdint>
+#include <vector>
 
 namespace godot {
 
@@ -38,11 +39,13 @@ private:
 	int steps = 0, last_kind = -1;
 	uint32_t rng = 0x9e3779b9u;
 	// shared by every FootSteps of the run
-	static PackedByteArray cls;
+	// (plain C++ statics only: a Godot type built as a static runs its constructor when the library loads, before the
+	// engine is connected, and the module fails to load - Windows error 1114, seen 20 Nov)
+	static std::vector<uint8_t> cls;
 	static int cw, ch;
 	static float cx0, cz0, ctex;
 	static bool cls_tried;
-	static Ref<AudioStream> snd[N_KINDS][5];
+	static Ref<AudioStream> (*snd)[5];   // made on first use, never destroyed (the engine is gone before statics die)
 	static bool snd_tried;
 	static void load_shared();
 	float rnd() { rng ^= rng << 13; rng ^= rng >> 17; rng ^= rng << 5; return (float)(rng & 0xffffff) / 16777216.0f; }

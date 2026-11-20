@@ -118,6 +118,7 @@ public:
 	// the player gets in (the wheel, the pedals and the chase camera are his) / out (the handbrake on, its camera off)
 	void take_wheel(bool p_on);
 	bool get_player() const { return player; }
+	const vd::Car &dyn() const { return car; }   // (the engine sound reads the revs, the gear, the pedal)
 	void set_chase_camera(bool p_on) { chase_camera = p_on; }
 	bool get_chase_camera() const { return chase_camera; }
 	void set_wheel_mask(int p_mask) { wheel_mask = (uint32_t)p_mask; }

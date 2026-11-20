@@ -1,5 +1,6 @@
 // CityCar: see city_car.h.
 #include "city_car.h"
+#include "engine_sound.h"
 #include "ui_plate.h"
 
 #include "car_models.h"
@@ -506,6 +507,7 @@ void CityCar::_process(double p_delta) {
 	if (!hits_due.empty()) { const std::vector<Vector3> hd = hits_due; hits_due.clear(); for (const Vector3 &dv : hd) hit(dv); }
 	if (player) {   // the old pedals and the speed plate, while the player drives
 		if (!hud) make_hud();
+		if (!has_node("Engine")) { EngineSound *es = memnew(EngineSound); es->set_name("Engine"); add_child(es); es->set_car(this); }   // B4: his engine, made from the revs and the gears
 		Viewport *vp = get_viewport();
 		if (vp) {
 			const Vector2 sz = vp->get_visible_rect().size;

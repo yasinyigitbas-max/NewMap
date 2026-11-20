@@ -13,11 +13,11 @@
 
 namespace godot {
 
-PackedByteArray FootSteps::cls;
+std::vector<uint8_t> FootSteps::cls;
 int FootSteps::cw = 0, FootSteps::ch = 0;
 float FootSteps::cx0 = 0.0f, FootSteps::cz0 = 0.0f, FootSteps::ctex = 2.5f;
 bool FootSteps::cls_tried = false;
-Ref<AudioStream> FootSteps::snd[FootSteps::N_KINDS][5];
+Ref<AudioStream> (*FootSteps::snd)[5] = nullptr;
 bool FootSteps::snd_tried = false;
 
 static const char *RUNTIME = "res://map_dc/coronado/city_kit/runtime/far/";
@@ -31,12 +31,13 @@ void FootSteps::load_shared() {
 			const Dictionary d = v;
 			cw = (int)d.get("w", 0); ch = (int)d.get("h", 0);
 			cx0 = (float)(double)d.get("x0", 0.0); cz0 = (float)(double)d.get("z0", 0.0); ctex = (float)(double)d.get("texel", 2.5);
-			cls = FileAccess::get_file_as_bytes(String(RUNTIME) + "ground_class.bin");
-			if (cls.size() != cw * ch) { cls = PackedByteArray(); cw = ch = 0; }
+			const PackedByteArray b = FileAccess::get_file_as_bytes(String(RUNTIME) + "ground_class.bin");
+			if (b.size() == cw * ch) cls.assign(b.ptr(), b.ptr() + b.size()); else { cls.clear(); cw = ch = 0; }
 		}
 	}
 	if (!snd_tried) {
 		snd_tried = true;
+		snd = new Ref<AudioStream>[N_KINDS][5];
 		static const char *NAME[N_KINDS] = { "concrete", "grass", "sand", "dirt", "wood" };
 		ResourceLoader *rl = ResourceLoader::get_singleton();
 		for (int k = 0; k < N_KINDS; k++)
@@ -48,7 +49,7 @@ void FootSteps::load_shared() {
 }
 
 int FootSteps::class_at(float p_x, float p_z) {
-	if (cw <= 0) return HARD;
+	if (cw <= 0 || cls.empty()) return HARD;
 	const int x = (int)std::floor((p_x - cx0) / ctex), z = (int)std::floor((p_z - cz0) / ctex);
 	if (x < 0 || z < 0 || x >= cw || z >= ch) return SAND;   // (off the picture: the beach and the sea's edge)
 	return (int)cls[z * cw + x];
@@ -99,6 +100,7 @@ void FootSteps::step(int p_foot, const Vector3 &p_at) {
 	int kind = class_at(p_at.x, p_at.z);
 	last_kind = kind; steps++;
 	const int i = (int)(rnd() * 4.999f);
+	if (!snd) return;
 	Ref<AudioStream> s = snd[kind][i].is_valid() ? snd[kind][i] : snd[HARD][i];
 	if (s.is_null() || !pl[next_pl]) return;
 	AudioStreamPlayer3D *p = pl[next_pl]; next_pl ^= 1;
