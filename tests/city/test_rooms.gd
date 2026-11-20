@@ -84,6 +84,30 @@ func _process(dt: float) -> bool:
 			var hit2 := space.intersect_ray(q)
 			var by_shell := not hit2.is_empty() and (hit2.collider as Node).name != &"room_col" and not (hit2.collider as Node).is_ancestor_of(rn2)
 			_check(not by_shell, "the building's own shell does not block the entrance (%s)" % (str(hit2.collider.get_parent().name if hit2.has("collider") and hit2.collider else "clear")))
+			# B33: a window is no way in: a ray from 2 m out through a window opening's middle meets the room's wall
+			var win: Array = []
+			for o: Array in rn2.get_meta(&"openings", []):
+				if o.size() >= 7 and String(o[6]) != "door" and float(o[5]) - float(o[4]) > 0.5: win = o; break
+			if win.is_empty():      # (a room built before 19 Nov records no windows: the wall across from its entrance, at 1.5 m)
+				var fl: Array = rn2.get_meta(&"floors", []); var en: Array = rn2.get_meta(&"entrances", [])
+				if not fl.is_empty() and not en.is_empty():
+					var x0 := 1e9; var z0 := 1e9; var x1 := -1e9; var z1 := -1e9
+					for f2: Array in fl: x0 = minf(x0, float(f2[0])); z0 = minf(z0, float(f2[1])); x1 = maxf(x1, float(f2[2])); z1 = maxf(z1, float(f2[3]))
+					var e0: Array = en[0]; var zax := String(e0[0]) == "z"
+					var far_at := (z0 if absf(float(e0[1]) - z1) < absf(float(e0[1]) - z0) else z1) if zax else (x0 if absf(float(e0[1]) - x1) < absf(float(e0[1]) - x0) else x1)
+					var inside_pt := Vector3((x0 + x1) * 0.5, 1.5, far_at) if zax else Vector3(far_at, 1.5, (z0 + z1) * 0.5)
+					var mid_pt := Vector3((x0 + x1) * 0.5, 1.5, (z0 + z1) * 0.5)
+					var gi: Vector3 = rn2.global_transform * inside_pt; var gm: Vector3 = rn2.global_transform * mid_pt
+					var dirw := (gi - gm).normalized()
+					var hit4 := space.intersect_ray(PhysicsRayQueryParameters3D.create(gi + dirw * 2.0, gm))
+					_check(not hit4.is_empty() and (hit4.position as Vector3).distance_to(gi) < 0.6, "the wall across from the entrance is closed to walking (B33): the ray from 2 m outside meets %s at %.2f m from the wall line" % [str(hit4.get("collider", "nothing")), (hit4.position as Vector3).distance_to(gi) if not hit4.is_empty() else -1.0])
+			else:
+				var al := (float(win[2]) + float(win[3])) * 0.5; var wy := (float(win[4]) + float(win[5])) * 0.5
+				var inner := Vector3(al, wy, float(win[1])) if String(win[0]) == "z" else Vector3(float(win[1]), wy, al)
+				var outd := (door.out as Vector3) if String(win[0]) == "z" else (rn2.global_transform.basis * Vector3(signf(float(win[1])), 0, 0)).normalized()
+				var wi: Vector3 = rn2.global_transform * inner
+				var hit3 := space.intersect_ray(PhysicsRayQueryParameters3D.create(wi + outd * 2.0, wi - outd * 1.0))
+				_check(not hit3.is_empty(), "a window (%s %.1f, %.1f..%.1f m) is closed to walking: the ray meets %s" % [String(win[0]), float(win[1]), float(win[4]), float(win[5]), str(hit3.get("collider", "nothing"))])
 			cam.global_position = door.mid + door.out * 1.0 + Vector3(0, 0.5, 0); cam.look_at(door.mid)
 			step = 3; t = 0.0
 		3:      # at the door: a leaf swings

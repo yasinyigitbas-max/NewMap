@@ -6,6 +6,7 @@ What it can swap:
   --gd=a.gd,b.gd     scripts (repo paths): the plain .gd goes in at assets/<path>; the exported .gdc and its .remap are
                      taken out, so the engine loads the plain script (it does in an exported game)
   --file=src:dst     any other file (dst = the path inside the APK)
+  --dir=a/b,c/d      every file of these repo folders, at assets/<folder>/ (e.g. the merged rooms: runtime/rooms)
 What it cannot: project settings (assets/project.binary is binary: export for those), anything that needs an import
 (textures, models, scenes made by the editor's export), and the bake's runtime files are fine to swap only if the
 same paths (use --file).
@@ -48,6 +49,13 @@ def main():
         put["assets/" + g] = os.path.join(ROOT, g)
         drop.add("assets/" + g + ".remap")
         drop.add("assets/" + g[:-3] + ".gdc")
+    for dd in (arg("dir") or "").split(","):      # --dir=repo/folder: every file in it, at assets/<repo/folder>/ (not recursive)
+        dd = dd.strip().strip("/")
+        if not dd:
+            continue
+        for fn in sorted(os.listdir(os.path.join(ROOT, dd))):
+            if os.path.isfile(os.path.join(ROOT, dd, fn)) and not fn.endswith(".import"):
+                put["assets/%s/%s" % (dd, fn)] = os.path.join(ROOT, dd, fn)
     for f in (arg("file") or "").split(","):
         if ":" in f:
             s, d = f.split(":", 1)

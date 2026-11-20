@@ -41,7 +41,7 @@ class CityBreakables : public Node3D {
 	struct Debris { RigidBody3D *body = nullptr; MeshInstance3D *mi = nullptr; CollisionShape3D *cs = nullptr; int item = -1; float t = 0.0f; };
 	Debris debris[DEBRIS];
 	uint64_t stream_id = 0, traffic_id = 0;
-	bool made = false; int frame = 0; int broken_n = 0;
+	bool made = false; int frame = 0; int broken_n = 0; int traffic_look = -1000;      // (the frame the traffic was last looked for)
 	void make();
 	void add_cell(const String &p_key);
 	void drop_cell(const String &p_key);

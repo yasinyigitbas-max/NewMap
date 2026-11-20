@@ -199,7 +199,10 @@ void CityBreakables::hits(const Vector3 &cam) {
 		if (!v || !rb || !rb->is_class("CityCar") || v->get_global_position().distance_squared_to(cam) > 80.0f * 80.0f) continue;   // (cars only: the old game's rule)
 		cars.push_back(Car{ v->get_global_position(), rb->get_linear_velocity(), 2.4f, 1.0f });
 	}
-	if (!traffic_id) {   // the traffic (found once)
+	// the traffic, found once; where there is none (the rig's drives), looked for again only every 2 s: the search walks the
+	// whole tree (~29,000 nodes) and ran every other frame, 12-16 ms (phone, 20 Nov)
+	if (!traffic_id && (frame - traffic_look) >= 120) {
+		traffic_look = frame;
 		const TypedArray<Node> t = tr->get_root()->find_children("*", "CityTraffic", true, false);
 		if (t.size() > 0) traffic_id = (uint64_t)Object::cast_to<Object>(t[0])->get_instance_id();
 	}

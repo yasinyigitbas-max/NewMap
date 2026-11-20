@@ -55,7 +55,10 @@ func _run() -> void:
 				# room was made, 57-59 ms on the main thread on the PC (20 Nov). (ASTC failed to build on this PC: no ASTC there.)
 				var tex := PortableCompressedTexture2D.new(); tex.keep_compressed_buffer = true
 				tex.create_from_image(im, PortableCompressedTexture2D.COMPRESSION_MODE_ETC2)
-				var m := (ss.material_override as StandardMaterial3D).duplicate() as StandardMaterial3D; m.albedo_texture = tex
+				# one shared shader for every room's signs (a StandardMaterial3D per room compiled its own shader at first use:
+				# 48-82 ms a room on the main thread, 20 Nov); the room's material only holds its picture
+				var m := ShaderMaterial.new(); m.shader = load("res://tools/city/rooms/rt_room_sign.gdshader")
+				m.set_shader_parameter(&"sign_tex", tex)
 				ds.material_override = m
 		var ps := PackedScene.new(); _own(dst, dst); ps.pack(dst)
 		ResourceSaver.save(ps, OUT + f, ResourceSaver.FLAG_COMPRESS)
