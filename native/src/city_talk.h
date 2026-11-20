@@ -130,6 +130,8 @@ private:
 	void build_ui();
 	void show_options();
 	void freeze_player(bool p_on);
+	void player_body(const char *p_method, const Variant &p_a, const Variant &p_b);
+	void refuse(int p_row);
 	int find_target() const;
 
 protected:

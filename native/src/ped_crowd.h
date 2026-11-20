@@ -63,7 +63,9 @@ enum { A_NONE = 0, A_SIT = 1, A_LIE_BACK = 2, A_LIE_FRONT = 3, A_PHONE = 4, A_WI
 	A_RISE = 22,     // leaving an act that takes a moment to leave (up from a seat, out of a crouch): rise_from, rise_t
 	A_GSIT = 23,     // sitting on the ground (the sand, the grass)
 	A_CHEER = 24,    // he has won a fight: his arms go up
-	A_COUNT = 25 };
+	A_NOD = 25,      // a nod (yes, goodbye)
+	A_NO = 26,       // a shake of the head, a hand waved off (he will not talk)
+	A_COUNT = 27 };
 enum { PK_NONE = 0, PK_COUPLE = 1, PK_FRIENDS = 2, PK_FAMILY = 3, PK_SAILORS = 4, PK_JOGGER = 5, PK_COUNT = 6 };
 enum { TIER_FULL = 0, TIER_MID = 1, TIER_FAR = 2 };
 enum { E_SPAWN = 1, E_DESPAWN = 2, E_ARRIVE = 3, E_NEED_GOAL = 4, E_WAIT_CROSS = 5, E_LOOK_CROSS = 6, E_BUMP = 7,

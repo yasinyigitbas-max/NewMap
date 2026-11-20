@@ -44,6 +44,14 @@ class CityPlayer : public CharacterBody3D {
 	float step_t = 0.0f, step_cs = 1.0f, step_v0 = 0.0f;
 	double stop_ph_prev = -1.0;   // (waiting for the footfall to stop on: the stride's share last frame)
 	int starts = 0, stops = 0, turns = 0;    // (the tests)
+	// IN A TALK (CityTalk; Yasin, 20 Nov: "starting chat with npc doesnt play any animation"): he faces whom he talks to
+	// and his body talks when he says a line; 0 talking (ual/Idle_Talking_Loop), 1 a nod (ual/Yes), 2 no (Idle_No_Loop)
+	bool talk_on = false; Vector3 talk_at;
+	int gest_kind = 0; float gest_t = 0.0f;
+public:
+	void talk_face(bool p_on, const Vector3 &p_at) { talk_on = p_on; talk_at = p_at; }
+	void gesture(int p_kind, double p_seconds) { gest_kind = p_kind; gest_t = (float)p_seconds; }
+private:
 	float turn_yaw0 = 0.0f, turn_k = 1.0f;   // a turn on the spot (step_mode 3): the way he faced, the clip's turn scaled to the angle
 	Vector3 cam_pos, knock_v;
 	// THE OLD GAME'S TOUCH SCHEME (docs/OLD_CONTROLS_SPEC.md; Yasin: "copy it as it was"): the left half of the screen is

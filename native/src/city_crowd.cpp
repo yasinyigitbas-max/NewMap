@@ -640,7 +640,7 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 		if (p_t < (float)p_in_len) { r_clip = p_in; r_hold = -2.0; } else r_clip = p_loop;
 	};
 	switch (a) {
-		case pc::A_SIT: seq(SIT_IN, l_sit_in, SITS[(lk >> 12) % 6u]); break;
+		case pc::A_SIT: seq(SIT_IN, l_sit_in, speaking(crowd->id[i]) ? SIT_TALK : SITS[(lk >> 12) % 6u]); break;   // (talking to the player from his seat: the seated talk)
 		case pc::A_DRINK: seq(SIT_IN, l_sit_in, ((int)(p_t / 5.0f) % 3 == 1) ? SIT_DRINK : SIT_TALK); break;   // a word, a sip, a word
 		case pc::A_GSIT: seq(GSIT_IN, l_gsit_in, GSIT); break;
 		case pc::A_BEG: {   // a beggar: his hand out to whoever comes by, a nod to the one who gives
@@ -665,6 +665,8 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 		case pc::A_STARE: seq(SURPRISE, l_surprise, ((lk >> 9) & 1u) ? ARMS : LOOK); break;
 		case pc::A_DUCK: seq(DUCK_IN, l_duck_in, DUCK); break;
 		case pc::A_CHAT: case pc::A_TALK: r_clip = TALK; break;
+		case pc::A_NOD: { static const StringName YES("ual/Yes"); r_clip = YES; r_hold = -2.0; } break;   // (the Animator, 20 Nov: talks had no nod)
+		case pc::A_NO: r_clip = NO; break;   // (and no refusal: he walked on with a caption)
 		case pc::A_ARGUE: r_clip = ((lk >> 5) & 1u) ? NO : ANGRY; break;
 		case pc::A_HUG: r_clip = HUG; break;
 		case pc::A_GIVE: r_clip = GIVE_COIN; r_hold = -2.0; break;

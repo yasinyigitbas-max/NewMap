@@ -185,7 +185,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	if (!fig) return;
 	const float dt = (float)p_delta;
 	sense(p_delta);
-	punch_t += p_delta; hit_t += p_delta; combat_t += p_delta; uncombat_t += p_delta;
+	punch_t += p_delta; hit_t += p_delta; combat_t += p_delta; uncombat_t += p_delta; gest_t = std::max(gest_t - (float)p_delta, 0.0f);
 	{   // a PC: F fights, J or a left click punches
 		Input *ki = Input::get_singleton();
 		const bool f = ki->is_key_pressed(KEY_F), j = ki->is_key_pressed(KEY_J), m = ki->is_mouse_button_pressed(MOUSE_BUTTON_LEFT) && ki->get_mouse_mode() == Input::MOUSE_MODE_CAPTURED;
@@ -341,8 +341,10 @@ void CityPlayer::_physics_process(double p_delta) {
 		// it over a step or two (2.6-3.2 m/s2 up, 3-4 down; it was 9 and 7-14).
 		const float want_len = Vector3(want.x, 0, want.z).length();
 		if (step_mode == 3 && (airborne || settle_t < 1.1f)) step_mode = 0;
-		if (want_len > 0.05f && step_mode != 3) {
-			const float want_yaw = std::atan2(want.x, want.z);
+		// (in a talk with the stick let go, he turns to face whom he talks to, as if asked to go there)
+		const bool face_talk = talk_on && want_len <= 0.05f && Vector2(talk_at.x - here.x, talk_at.z - here.z).length() > 0.2f;
+		if ((want_len > 0.05f || face_talk) && step_mode != 3) {
+			const float want_yaw = face_talk ? std::atan2(talk_at.x - here.x, talk_at.z - here.z) : std::atan2(want.x, want.z);
 			float d = std::fmod(want_yaw - yaw + 3.14159265f, 6.2831853f); if (d < 0.0f) d += 6.2831853f; d -= 3.14159265f;
 			// TURNING ON THE SPOT (the Quaternius Turn90 / Turn180, make_steps.gd: the body turns by the clip's "yaw"):
 			// standing, asked to go more than 50 degrees off the way he faces, he turns with his feet (the 90 up to 135
@@ -485,6 +487,10 @@ void CityPlayer::_physics_process(double p_delta) {
 	else if (crouch) { clip = speed > 0.2f ? CR_FWD : CR_IDLE; cs = speed > 0.2f ? speed / 0.8 : 1.0; }
 	else if (!crouch && speed < 0.5f && crouch_t < fig->clip_len(CR_OUT) && !airborne) { clip = CR_OUT; hold = -2.0; }   // (up out of it)
 	else if (heavy && step_mode != 0) { clip = step_clip; cs = step_cs; hold = -2.0; }   // (a start or a stop: played through)
+	else if (heavy && gest_t > 0.0f && speed < 0.08f) {   // a talk's gesture: talking, a nod, a no
+		static const StringName G_TALK("ual/Idle_Talking_Loop"), G_YES("ual/Yes"), G_NO("ual/Idle_No_Loop");
+		clip = gest_kind == 1 ? G_YES : (gest_kind == 2 ? G_NO : G_TALK); hold = gest_kind == 1 ? -2.0 : -1.0;
+	}
 	else if (speed > 0.08f || (heavy && turn_left > 0.35f && move_speed < 0.4f && Vector3(want.x, 0, want.z).length() > 0.05f)) {
 		// THE GAIT SET (see the header): the clip whose own pace is nearest his (kept until another is clearly nearer), played
 		// at his pace over its own, so the planted foot stays put. (Turning on the spot: the slowest walk, slowly: he steps
@@ -716,6 +722,8 @@ void CityPlayer::_process(double p_delta) {
 void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_move", "direction", "run"), &CityPlayer::set_move);
 	ClassDB::bind_method(D_METHOD("get_speed"), &CityPlayer::get_speed);
+	ClassDB::bind_method(D_METHOD("talk_face", "on", "at"), &CityPlayer::talk_face);
+	ClassDB::bind_method(D_METHOD("gesture", "kind", "seconds"), &CityPlayer::gesture);
 	ClassDB::bind_method(D_METHOD("set_frozen", "on"), &CityPlayer::set_frozen);
 	ClassDB::bind_method(D_METHOD("is_frozen"), &CityPlayer::is_frozen);
 	ClassDB::bind_method(D_METHOD("knock", "velocity"), &CityPlayer::knock);

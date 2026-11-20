@@ -238,7 +238,9 @@ void CityTalk::say(int p_row, const Dictionary &p_line, const Dictionary &p_sub)
 	last_result = en;
 	speak(0, p_row, p_line, p_sub);
 	CityCrowd *c = crowd_node();
-	if (c && p_row >= 0 && c->brain()->mode[p_row] != pc::M_LINE) c->brain()->set_act(c->brain()->id[p_row], pc::A_TALK, 3.0f);   // (one who walks on says it as he goes)
+	if (c && p_row >= 0 && c->brain()->mode[p_row] == pc::M_STAY && (c->brain()->act[p_row] == pc::A_SIT || c->brain()->act[p_row] == pc::A_DRINK))
+		c->speaking_for(c->brain()->id[p_row], 3.0);   // (from his seat: the seated talk, he stays seated)
+	else if (c && p_row >= 0 && c->brain()->mode[p_row] != pc::M_LINE) c->brain()->set_act(c->brain()->id[p_row], pc::A_TALK, 3.0f);   // (one who walks on says it as he goes)
 	const Dictionary sp = data.get("speaker", Dictionary());
 	caption(sp.get("en", "Passer-by"), en, tr_s, LINE_S);
 	emit_signal("npc_line", en, tr_s);
@@ -276,13 +278,13 @@ String CityTalk::begin(int p_id) {
 	const int row = b->find(p_id);
 	if (row < 0) return String();
 	Mem &m = mem_of(row);
-	if (m.busy_until > now_h) { say(row, pick(data["busy"])); return "busy"; }
+	if (m.busy_until > now_h) { say(row, pick(data["busy"])); refuse(row); return "busy"; }
 	int n = 1, lead = row;
 	if (b->party[row] != 0) {
 		n = 0;
 		for (int j = 0; j < b->hi; j++) if (b->alive[j] && b->party[j] == b->party[row]) { n++; if (b->leader[j] == j) lead = j; }
 		// a group that stands talking keeps it to itself one time in four (always the same groups)
-		if (b->act[lead] == pc::A_CHAT && ((uint32_t)b->party[row] * 2654435761u >> 28) < 4u) { say(row, pick(data["private"])); m.busy_until = now_h + GRUDGE_H; return "private"; }
+		if (b->act[lead] == pc::A_CHAT && ((uint32_t)b->party[row] * 2654435761u >> 28) < 4u) { say(row, pick(data["private"])); refuse(row); m.busy_until = now_h + GRUDGE_H; return "private"; }
 		if (b->pkind[row] == pc::PK_JOGGER) { say(row, sys("jogger")); return "jogger"; }
 	}
 	double p = n == 1 ? SINGLE_P : std::min(GROUP_P * (1.0 + 0.25 * (n - 2)), GROUP_CAP);
@@ -291,7 +293,7 @@ String CityTalk::begin(int p_id) {
 	const double roll = force_roll >= 0.0 ? force_roll : randf();
 	const double yaw = std::atan2(player_pos().x - b->x[row], player_pos().z - b->z[row]);
 	if (roll >= p || !b->hold(p_id, true, (float)yaw)) {
-		say(row, pick(data[n > 1 ? "group_reject" : "reject"])); m.busy_until = now_h + GRUDGE_H; return "reject";
+		say(row, pick(data[n > 1 ? "group_reject" : "reject"])); refuse(row); m.busy_until = now_h + GRUDGE_H; return "reject";
 	}
 	const bool again = m.met_until > now_h;
 	start(row);
@@ -309,9 +311,11 @@ void CityTalk::start(int p_row) {
 	done.clear(); options.clear(); selected = -1; saying = false;
 	if (b->party[p_row] != 0)
 		for (int j = 0; j < b->hi; j++)
-			if (j != p_row && b->alive[j] && b->party[j] == b->party[p_row] && b->hold(b->id[j], true, b->yaw[j])) held.push_back(b->id[j]);
+			if (j != p_row && b->alive[j] && b->party[j] == b->party[p_row] && b->hold(b->id[j], true, (float)std::atan2(player_pos().x - b->x[j], player_pos().z - b->z[j]))) held.push_back(b->id[j]);
 	mem_of(p_row).met++;
 	n_talks++;
+	player_body("talk_face", true, Vector3(b->x[p_row], b->y[p_row], b->z[p_row]));   // (the player turns to him and says hello)
+	player_body("gesture", 0, 1.5);
 	emit_signal("started", active);
 }
 
@@ -322,6 +326,7 @@ void CityTalk::end(const String &p_outcome) {
 	if (c && c->brain()) {
 		pc::Crowd *b = c->brain();
 		for (int id : held) b->hold(id, false, 0.0f);
+		if (p_outcome == "bye" || p_outcome == "cut") b->set_act(a, pc::A_NOD, 1.3f);   // (a nod as they part, then he walks on)
 		const int row = b->find(a);
 		if (row >= 0) {
 			Mem &m = mem_of(row);
@@ -330,6 +335,8 @@ void CityTalk::end(const String &p_outcome) {
 		}
 	}
 	close_say();
+	player_body("talk_face", false, Vector3());
+	if (p_outcome == "bye" || p_outcome == "cut") player_body("gesture", 1, 1.2);   // (the player nods too)
 	active = -1; held.clear(); options.clear(); selected = -1;
 	show_options();
 	emit_signal("ended", a, p_outcome);
@@ -460,6 +467,7 @@ void CityTalk::said(bool p_ok, const String &p_how) {
 	if (p_ok) {
 		const Opt o = options[selected];
 		close_say();
+		player_body("gesture", 0, 2.5);   // (the player says his line: his body talks)
 		emit_signal("listen_result", true, MAX_TRIES - tries, p_how);
 		answer(o);
 		return;
@@ -602,6 +610,24 @@ void CityTalk::answer_topic(int p_row, const String &p_tid) {
 		const String k = doing(p_row, sub);
 		say(p_row, pick(T6.has(k) ? T6[k] : T6["home"]), sub);
 	}
+}
+
+// The player's body in a talk (CityPlayer: talk_face, gesture), by name, as freeze_player does
+void CityTalk::player_body(const char *p_method, const Variant &p_a, const Variant &p_b) {
+	const CityCrowd *c = crowd_node();
+	const uint64_t pid = player_id ? player_id : (c ? c->get_player_id() : 0);
+	Object *p = pid ? ObjectDB::get_instance(pid) : nullptr;
+	if (p && p->has_method(p_method)) p->call(p_method, p_a, p_b);
+}
+
+// He will not talk: he stops a moment, turns to the player, shakes his head, and goes on (a jogger runs on)
+void CityTalk::refuse(int p_row) {
+	CityCrowd *c = crowd_node();
+	if (!c || !c->brain() || p_row < 0 || !has_player()) return;
+	pc::Crowd *b = c->brain();
+	b->face_yaw[p_row] = (float)std::atan2(player_pos().x - b->x[p_row], player_pos().z - b->z[p_row]);
+	b->flags[p_row] |= pc::F_FACE;
+	b->set_act(b->id[p_row], pc::A_NO, 1.8f);
 }
 
 // ---------------------------------------------------------------- saying the line
@@ -928,6 +954,13 @@ void CityTalk::_process(double p_delta) {
 	if (talk_btn) talk_btn->set_visible(false);
 	const int row = b->find(active);
 	if (row < 0 || b->mode[row] == pc::M_BODY) { end("gone"); return; }   // he left, or was knocked over
+	// they keep facing each other while they talk (the yaw was worked out once, at the start: the player stepped aside
+	// and the man talked to the empty air)
+	if (has_player()) {
+		const Vector3 pp = player_pos();
+		for (int id : held) { const int r = b->find(id); if (r >= 0) b->face_yaw[r] = (float)std::atan2(pp.x - b->x[r], pp.z - b->z[r]); }
+		player_body("talk_face", true, Vector3(b->x[row], b->y[row], b->z[row]));
+	}
 	if (has_player()) {
 		const Vector3 p = player_pos();
 		const float dx = b->x[row] - p.x, dz = b->z[row] - p.z;
