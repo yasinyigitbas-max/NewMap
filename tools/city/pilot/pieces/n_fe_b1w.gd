@@ -23,6 +23,7 @@ const W := preload("res://tools/city/pilot/pieces/wear_lib.gd")
 const H := preload("res://tools/city/pilot/pieces/hs_fill_lib.gd")
 const S := preload("res://tools/city/pilot/pieces/n_fe_site.gd")
 
+const BLK := "b1"
 const X0 := 259.0
 const X1 := 375.0
 const Z0 := -900.0
@@ -64,7 +65,31 @@ const ITEMS := [
 	["plant_iceplant_patch", "normal", 352.6, -811.8, 0.0, false], ["plant_iceplant_patch", "normal", 369.4, -811.8, 0.0, false],
 ]
 
-const SC := {"out": [], "turn": [], "decals": [], "boxes": []}
+## SUPERCHECKER (20 Nov, Yasin via the coordinator: "be MUCH more prone to delete ... any prop or road/ground mark
+## with any finding or any doubt is deleted with its reason"): tools/city/super/sc.py check on this piece (area layout
+## OUT/fill/fe/area.json); every finding on an item is a deletion here with the checker's reason; a collision box on
+## each building column the checker measured. Applied after everything is placed (hs_fill_lib.sc_apply).
+const SC := {
+ "out": [
+	["prop_trash_receptacle", 346.000, -832.600, "bin_open: prop_trash_receptacle stands in the open (8.3 m from a wall, 68.0 m from a fence)"],
+	["prop_park_bench", 346.600, -884.000, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_play_structure", 361.000, -886.000, "no_reason: prop_play_structure stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_swing_set", 366.500, -876.500, "no_reason: prop_swing_set stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_slide", 354.500, -890.500, "no_reason: prop_slide stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+ ],
+ "turn": [
+ ],
+ "decals": [
+
+ ],
+ "boxes": [
+	["Buildings/a1", [-11.870302200317383, 1.5499759912490845, 5.8649115562438965, 0.2999201202392578, 3.099951982498169, 0.31015304565429686]],
+	["Buildings/a1", [-3.60017728805542, 1.6999465376138687, 5.624899864196777, 0.25976757049560545, 2.8000108897686005, 0.289943733215332]],
+	["Buildings/a2", [-11.870152950286865, 1.549957036972046, 5.8649115562438965, 0.29997257232666014, 3.099914073944092, 0.31015304565429686]],
+	["Buildings/a2", [-3.600220203399658, 1.6999385803937912, 5.624899864196777, 0.2598400497436523, 2.799950987100601, 0.289943733215332]],
+	["Buildings/a3", [9.469815254211426, 1.5499759912490845, 5.8649115562438965, 0.3001642608642578, 3.099951982498169, 0.31015304565429686]],
+ ],
+}
 
 var PY: Array = []
 
@@ -88,7 +113,7 @@ func _run() -> void:
 	var pe: Array = []
 	for b: Array in B:
 		PY.append(H.pad_height(fp(b), float(b[4]), yb)); pe.append(H.pad_entry(fp(b), float(PY[PY.size() - 1])))
-	var yf := H.graded(yb, pe)
+	var yf := S.field(BLK, pe)
 	# the stall rows as their own patches (their lines cut only their own cells): north row u 266 .. 344.6, south row
 	# u 266 .. 301.1 and 312.9 .. 344.6 (the leg between)
 	var ln: Array = []; var ls: Array = []
