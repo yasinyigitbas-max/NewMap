@@ -1,5 +1,5 @@
 extends SceneTree
-const Stream := preload("res://tools/city/bake/city_stream.gd")
+const STREAM_CLASS := &"CityStream"      # the streamer is C++ since 20 Nov (native/src/city_stream.*)
 const Lights := preload("res://tools/city/bake/city_lights.gd")
 ## Before / after pictures of the building look pack (docs/LOOK_BUILDINGS.md) in the BAKED city, same sun, sky and
 ## ambient light as the phone rig (tools/city/rig/rig.gd). The three changes are global shader values, so one run
@@ -77,7 +77,7 @@ func _run() -> void:
 		var fm: ShaderMaterial = load("res://map_dc/coronado/city_kit/runtime/lib/mat_far_solid.tres")
 		var fsh := Shader.new(); fsh.code = "shader_type spatial;\nrender_mode cull_back;\n" + FileAccess.get_file_as_string("res://tools/city/look/far_glow_patch.gdshaderinc")
 		fm.shader = fsh; fm.set_shader_parameter(&"albedo_tex", load("res://map_dc/coronado/city_kit/runtime_tex/far_color_glow.png"))
-	var st: Node3D = Stream.new(); st.name = "City"; root.add_child(st)
+	var st: Node3D = ClassDB.instantiate(STREAM_CLASS); st.name = "City"; root.add_child(st)
 	var lights: Node3D = Lights.new(); lights.budget = 8; lights.stream = st; root.add_child(lights)
 	for x in extra: root.add_child((load(String(x)) as PackedScene).instantiate())      # --extra=res://...scn: a prototype layer (look job 4)
 	var cam := Camera3D.new(); cam.fov = fov; cam.near = 0.08; cam.far = 900.0; root.add_child(cam); cam.current = true

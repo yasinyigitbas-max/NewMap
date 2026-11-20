@@ -1,0 +1,105 @@
+{
+ "area": "ea_lens",
+ "piece": "n_ea_lens",
+ "zone": "civic and parks (Bridge Meadow)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; waterfront - palms only, spaced palms on the promenade; never on the sand below the dune line (SHORE_GUIDE); held to the plan's in-view limit (12 trees, 8 broadleaf within 60 m of a street point)",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, ea fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    709.5,
+    2.774,
+    -1338.0
+   ],
+   "yaw": 20,
+   "scale": 0.95,
+   "why": "playground clump: shade on its west fence"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    737.0,
+    2.698,
+    -1340.0
+   ],
+   "yaw": 120,
+   "scale": 0.9,
+   "why": "playground clump: shade on its east fence by the swings"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    723.0,
+    2.852,
+    -1330.5
+   ],
+   "yaw": 220,
+   "scale": 0.9,
+   "why": "playground clump: behind the parents' benches (south fence)"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    758.0,
+    2.972,
+    -1306.0
+   ],
+   "yaw": 300,
+   "scale": 0.95,
+   "why": "picnic grove clump: its west side"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    782.0,
+    2.943,
+    -1318.0
+   ],
+   "yaw": 60,
+   "scale": 0.9,
+   "why": "picnic grove clump: its east side"
+  },
+  {
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "at": [
+    772.0,
+    3.139,
+    -1290.0
+   ],
+   "yaw": 180,
+   "scale": 0.85,
+   "why": "picnic grove clump: its south side"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    858.0,
+    4.154,
+    -1248.0
+   ],
+   "yaw": 30,
+   "scale": 0.95,
+   "why": "bandstand edge: behind it, south-east"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    858.0,
+    4.375,
+    -1222.0
+   ],
+   "yaw": 250,
+   "scale": 0.9,
+   "why": "bandstand edge: behind it, north-east"
+  }
+ ]
+}

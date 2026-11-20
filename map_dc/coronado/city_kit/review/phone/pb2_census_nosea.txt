@@ -1,0 +1,48 @@
+# phone rig run 'pb2_census_nosea'  2026-11-20T02:59Z  args: --plan=census --census=day --scale=1.5 --views=waterfront --sea=0
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 380 -> 383 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit dba4e3c91 | meminfo at 60 s:          Native Heap:   238068                         239272;            Graphics:   876600                         876600;           TOTAL PSS:  1229120            TOTAL RSS:  1320516       TOTAL SWAP PSS:      482;
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=1.50 look=1 bloom=0 upscale=0 sharp=0.20 reflect=1 plan=census lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=140 tiers=false band=8.0 arrive=0.50 far_ground=true tier_materials=31
+RIG native coronado_city 0.1 release android arm64, godot-cpp 4.5 | its own threads: ok (4 threads, 0.7 ms; the device reports 8)
+RIG warmnight 1093 ms
+RIG boot first_area_ms=664 warm_ms=2304 (graphics memory reserve 192 MB: 107 ms) cells=10 static_mb=138 video_mb=480
+RIG census look=1 glow=1 reflect=1
+RIG census waterfront view at (570, 200) looking (-1, 0) battery_temp=? cells=10
+RIG census waterfront baseline gpu_ms med=33.41 p95=33.78 saves=0.00 | draw_cpu_ms med=0.63 | draws=148 tris=1568k frames=57
+RIG census waterfront hide_plants gpu_ms med=30.53 p95=30.82 saves=2.88 | draw_cpu_ms med=2.83 | draws=115 tris=1436k frames=62
+RIG census waterfront hide_props_near gpu_ms med=31.66 p95=32.05 saves=1.75 | draw_cpu_ms med=2.79 | draws=120 tris=1217k frames=60
+RIG census waterfront hide_props_mid gpu_ms med=32.43 p95=32.78 saves=0.98 | draw_cpu_ms med=3.17 | draws=138 tris=1439k frames=59
+RIG census waterfront hide_props_other gpu_ms med=33.44 p95=33.96 saves=-0.03 | draw_cpu_ms med=3.25 | draws=148 tris=1568k frames=57
+RIG census waterfront hide_bldg_near gpu_ms med=30.14 p95=31.03 saves=3.27 | draw_cpu_ms med=2.97 | draws=130 tris=1506k frames=63
+RIG census waterfront hide_bldg_mid gpu_ms med=33.17 p95=33.39 saves=0.24 | draw_cpu_ms med=2.72 | draws=111 tris=1548k frames=58
+RIG census waterfront hide_ground gpu_ms med=32.07 p95=32.39 saves=1.34 | draw_cpu_ms med=3.15 | draws=143 tris=1398k frames=60
+RIG census waterfront hide_wear gpu_ms med=32.69 p95=33.01 saves=0.72 | draw_cpu_ms med=3.16 | draws=145 tris=1558k frames=59
+RIG census waterfront hide_far gpu_ms med=30.59 p95=30.90 saves=2.82 | draw_cpu_ms med=3.22 | draws=138 tris=892k frames=62
+RIG census waterfront hide_far_ground gpu_ms med=33.34 p95=33.62 saves=0.07 | draw_cpu_ms med=3.12 | draws=147 tris=1547k frames=57
+RIG census waterfront hide_misc gpu_ms med=33.41 p95=33.67 saves=0.00 | draw_cpu_ms med=3.15 | draws=147 tris=1567k frames=57
+RIG census waterfront shadows_off gpu_ms med=30.63 p95=30.90 saves=2.78 | draw_cpu_ms med=2.38 | draws=110 tris=1253k frames=62
+RIG census waterfront shadow_map_2048 gpu_ms med=33.46 p95=33.65 saves=-0.05 | draw_cpu_ms med=3.19 | draws=148 tris=1568k frames=57
+RIG census waterfront shadow_map_1024 gpu_ms med=32.85 p95=33.16 saves=0.56 | draw_cpu_ms med=3.23 | draws=148 tris=1568k frames=58
+RIG census waterfront fxaa_off gpu_ms med=31.25 p95=31.55 saves=2.16 | draw_cpu_ms med=3.10 | draws=148 tris=1568k frames=60
+RIG census waterfront scale_0.50 gpu_ms med=29.87 p95=30.38 saves=3.54 | draw_cpu_ms med=3.10 | draws=148 tris=1568k frames=63
+RIG census waterfront scale_0.67 gpu_ms med=29.34 p95=29.89 saves=4.07 | draw_cpu_ms med=3.07 | draws=148 tris=1568k frames=64
+RIG census waterfront scale_0.85 gpu_ms med=30.00 p95=30.30 saves=3.41 | draw_cpu_ms med=3.10 | draws=148 tris=1568k frames=62
+RIG census waterfront scale_1.00 gpu_ms med=29.42 p95=30.28 saves=3.99 | draw_cpu_ms med=3.11 | draws=148 tris=1568k frames=62
+RIG census waterfront cheap_bldg_mid gpu_ms med=35.38 p95=35.78 saves=-1.97 | draw_cpu_ms med=3.23 | draws=148 tris=1568k frames=54
+RIG census waterfront cheap_bldg_all gpu_ms med=32.71 p95=33.24 saves=0.70 | draw_cpu_ms med=3.24 | draws=148 tris=1568k frames=58
+RIG census waterfront cheap_props_mid gpu_ms med=35.22 p95=35.59 saves=-1.81 | draw_cpu_ms med=3.21 | draws=148 tris=1568k frames=55
+RIG census waterfront cheap_plants_mid gpu_ms med=35.03 p95=35.49 saves=-1.62 | draw_cpu_ms med=3.23 | draws=148 tris=1568k frames=55
+RIG census waterfront plants_opaque gpu_ms med=30.21 p95=31.07 saves=3.21 | draw_cpu_ms med=3.25 | draws=148 tris=1568k frames=63
+RIG census waterfront look_parts_off gpu_ms med=35.03 p95=35.44 saves=-1.62 | draw_cpu_ms med=3.22 | draws=148 tris=1568k frames=55
+RIG census waterfront look_contact_off gpu_ms med=35.49 p95=35.86 saves=-2.08 | draw_cpu_ms med=3.19 | draws=148 tris=1568k frames=54
+RIG census waterfront look_windows_off gpu_ms med=35.52 p95=35.90 saves=-2.11 | draw_cpu_ms med=3.22 | draws=148 tris=1568k frames=54
+RIG census waterfront look_glass_off gpu_ms med=35.23 p95=35.58 saves=-1.82 | draw_cpu_ms med=3.28 | draws=148 tris=1568k frames=54
+RIG census waterfront look_detail_off gpu_ms med=35.31 p95=35.57 saves=-1.90 | draw_cpu_ms med=3.26 | draws=148 tris=1568k frames=54
+RIG census waterfront look_signs_off gpu_ms med=35.53 p95=35.72 saves=-2.12 | draw_cpu_ms med=3.25 | draws=148 tris=1568k frames=54
+RIG census waterfront look_propmaps_off gpu_ms med=35.41 p95=35.73 saves=-2.00 | draw_cpu_ms med=3.20 | draws=148 tris=1568k frames=54
+RIG census waterfront look_between_off gpu_ms med=35.43 p95=35.67 saves=-2.02 | draw_cpu_ms med=3.24 | draws=148 tris=1568k frames=54
+RIG census waterfront baseline gpu_ms med=35.44 p95=35.74 saves=-2.02 | draw_cpu_ms med=3.29 | draws=148 tris=1568k frames=54
+RIG census waterfront sky_reflection_off gpu_ms med=36.62 p95=37.02 saves=-3.21 | draw_cpu_ms med=3.28 | draws=148 tris=1568k frames=53
+RIG census waterfront baseline gpu_ms med=36.23 p95=37.40 saves=-2.81 | draw_cpu_ms med=3.29 | draws=148 tris=1568k frames=53
+RIG census waterfront done battery_temp=?
+RIG plan_done census

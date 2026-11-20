@@ -90,7 +90,11 @@ private:
 	LineEdit *say_edit = nullptr;
 	double cap_t = 0.0;
 	int target = -1;                 // whom the Talk button would speak to now
-	Object *speech = nullptr;        // the phone's speech plugin (singleton "GodotSpeech"), when the app has it
+	// the phone's speech plugin (singleton "GodotSpeech"), when the app has it: held by its id, never as a pointer. B1 (20 Nov):
+	// on the phone the plugin's object was already freed when the world left the tree, and _exit_tree's is_connected on the
+	// kept pointer locked its destroyed mutex: SIGABRT (review/phone/crash_20nov_0314/tombstone_19nov_*.txt, symbolised)
+	uint64_t speech_id = 0;
+	Object *speech_obj() const { return speech_id ? ObjectDB::get_instance(ObjectID(speech_id)) : nullptr; }
 
 	CityCrowd *crowd_node() const;
 	Vector3 player_pos() const;

@@ -53,7 +53,11 @@ public:
 		for (auto it = built.begin(); it != built.end();) {
 			const int bx = (int)(it->first >> 32), bz = (int)(int32_t)(it->first & 0xffffffff);
 			const float cx = ((float)bx + 0.5f) * BLOCK - p.x, cz = ((float)bz + 0.5f) * BLOCK - p.z;
-			if (cx * cx + cz * cz > FAR * FAR) { ps->free_rid(it->second.body); ps->free_rid(it->second.shape); it = built.erase(it); } else ++it;
+			if (cx * cx + cz * cz > FAR * FAR) {   // (an empty block has no body: Jolt reports a free of nothing - B27, 20 Nov: 28 errors a run from the traffic's and the crowd's floors each)
+				if (it->second.body.is_valid()) ps->free_rid(it->second.body);
+				if (it->second.shape.is_valid()) ps->free_rid(it->second.shape);
+				it = built.erase(it);
+			} else ++it;
 		}
 		int made = 0;
 		const int r = (int)std::ceil(NEAR / BLOCK);

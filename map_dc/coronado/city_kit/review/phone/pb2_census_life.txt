@@ -1,0 +1,132 @@
+# phone rig run 'pb2_census_life'  2026-11-20T02:50Z  args: --plan=census --census=day --scale=1.5 --views=centre,apartments,waterfront --traffic=40 --people=60
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 345 -> 367 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit e7d4fdb30 | meminfo at 60 s:          Native Heap:   369996                         371204;            Graphics:  1144316                        1144316;           TOTAL PSS:  1629436            TOTAL RSS:  1720268       TOTAL SWAP PSS:      481;
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=1.50 look=1 bloom=0 upscale=0 sharp=0.20 reflect=1 plan=census lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=140 tiers=false band=8.0 arrive=0.50 far_ground=true tier_materials=31
+RIG native coronado_city 0.1 release android arm64, godot-cpp 4.5 | its own threads: ok (4 threads, 1.8 ms; the device reports 8)
+RIG warmnight 1202 ms
+RIG boot first_area_ms=791 warm_ms=2611 (graphics memory reserve 192 MB: 148 ms) cells=10 static_mb=205 video_mb=566
+RIG census look=1 glow=1 reflect=1
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+RIG census centre view at (0, -600) looking (1, 0) battery_temp=? cells=14
+RIG census centre baseline gpu_ms med=32.22 p95=32.55 saves=0.00 | draw_cpu_ms med=4.32 | draws=165 tris=1401k frames=59
+RIG census centre hide_plants gpu_ms med=29.86 p95=30.29 saves=2.36 | draw_cpu_ms med=3.95 | draws=148 tris=1354k frames=63
+RIG census centre hide_props_near gpu_ms med=30.76 p95=31.28 saves=1.45 | draw_cpu_ms med=4.38 | draws=156 tris=1071k frames=61
+RIG census centre hide_props_mid gpu_ms med=32.45 p95=32.81 saves=-0.24 | draw_cpu_ms med=4.73 | draws=165 tris=1392k frames=58
+RIG census centre hide_props_other gpu_ms med=33.12 p95=33.72 saves=-0.91 | draw_cpu_ms med=4.51 | draws=176 tris=1465k frames=57
+RIG census centre hide_bldg_near gpu_ms med=31.82 p95=32.12 saves=0.40 | draw_cpu_ms med=4.38 | draws=175 tris=1451k frames=60
+RIG census centre hide_bldg_mid gpu_ms med=31.12 p95=32.08 saves=1.10 | draw_cpu_ms med=4.10 | draws=117 tris=1433k frames=61
+RIG census centre hide_ground gpu_ms med=31.30 p95=31.66 saves=0.92 | draw_cpu_ms med=4.58 | draws=169 tris=1248k frames=60
+RIG census centre hide_wear gpu_ms med=30.57 p95=31.06 saves=1.65 | draw_cpu_ms med=4.67 | draws=169 tris=1433k frames=61
+RIG census centre hide_far gpu_ms med=30.45 p95=31.19 saves=1.77 | draw_cpu_ms med=4.47 | draws=162 tris=1053k frames=61
+RIG census centre hide_far_ground gpu_ms med=32.33 p95=32.67 saves=-0.11 | draw_cpu_ms med=4.63 | draws=165 tris=1394k frames=58
+RIG census centre hide_misc gpu_ms med=32.60 p95=32.93 saves=-0.38 | draw_cpu_ms med=4.66 | draws=169 tris=1447k frames=58
+RIG census centre shadows_off gpu_ms med=30.46 p95=30.69 saves=1.75 | draw_cpu_ms med=3.78 | draws=140 tris=1083k frames=62
+RIG census centre shadow_map_2048 gpu_ms med=32.81 p95=33.22 saves=-0.59 | draw_cpu_ms med=4.89 | draws=175 tris=1468k frames=58
+RIG census centre shadow_map_1024 gpu_ms med=32.26 p95=32.70 saves=-0.04 | draw_cpu_ms med=4.94 | draws=177 tris=1480k frames=59
+RIG census centre fxaa_off gpu_ms med=30.32 p95=30.54 saves=1.90 | draw_cpu_ms med=4.82 | draws=178 tris=1494k frames=61
+RIG census centre scale_0.50 gpu_ms med=28.73 p95=28.94 saves=3.49 | draw_cpu_ms med=4.82 | draws=179 tris=1494k frames=62
+RIG census centre scale_0.67 gpu_ms med=29.45 p95=29.93 saves=2.77 | draw_cpu_ms med=4.77 | draws=177 tris=1493k frames=62
+RIG census centre scale_0.85 gpu_ms med=29.31 p95=29.79 saves=2.91 | draw_cpu_ms med=4.93 | draws=177 tris=1485k frames=62
+RIG census centre scale_1.00 gpu_ms med=29.42 p95=30.05 saves=2.79 | draw_cpu_ms med=4.72 | draws=174 tris=1476k frames=62
+RIG census centre cheap_bldg_mid gpu_ms med=33.54 p95=33.95 saves=-1.32 | draw_cpu_ms med=4.15 | draws=169 tris=1462k frames=57
+RIG census centre cheap_bldg_all gpu_ms med=32.15 p95=32.38 saves=0.07 | draw_cpu_ms med=3.88 | draws=166 tris=1451k frames=59
+RIG census centre cheap_props_mid gpu_ms med=34.44 p95=34.98 saves=-2.22 | draw_cpu_ms med=3.64 | draws=168 tris=1449k frames=55
+RIG census centre cheap_plants_mid gpu_ms med=34.73 p95=35.00 saves=-2.51 | draw_cpu_ms med=4.14 | draws=171 tris=1451k frames=55
+RIG census centre plants_opaque gpu_ms med=30.96 p95=31.28 saves=1.26 | draw_cpu_ms med=4.45 | draws=165 tris=1440k frames=61
+RIG census centre look_parts_off gpu_ms med=33.81 p95=34.25 saves=-1.60 | draw_cpu_ms med=4.59 | draws=164 tris=1443k frames=56
+RIG census centre look_contact_off gpu_ms med=34.29 p95=34.64 saves=-2.08 | draw_cpu_ms med=4.43 | draws=164 tris=1428k frames=56
+RIG census centre look_windows_off gpu_ms med=35.54 p95=36.98 saves=-3.32 | draw_cpu_ms med=4.40 | draws=163 tris=1423k frames=54
+RIG census centre look_glass_off gpu_ms med=36.56 p95=36.96 saves=-4.35 | draw_cpu_ms med=4.46 | draws=164 tris=1434k frames=52
+RIG census centre look_detail_off gpu_ms med=36.14 p95=37.07 saves=-3.93 | draw_cpu_ms med=4.46 | draws=166 tris=1430k frames=53
+RIG census centre look_signs_off gpu_ms med=36.06 p95=37.42 saves=-3.85 | draw_cpu_ms med=4.24 | draws=166 tris=1438k frames=53
+RIG census centre look_propmaps_off gpu_ms med=36.94 p95=37.29 saves=-4.73 | draw_cpu_ms med=4.49 | draws=165 tris=1446k frames=52
+RIG census centre look_between_off gpu_ms med=36.00 p95=37.04 saves=-3.78 | draw_cpu_ms med=4.22 | draws=166 tris=1454k frames=53
+RIG census centre baseline gpu_ms med=36.78 p95=37.11 saves=-4.56 | draw_cpu_ms med=4.48 | draws=163 tris=1453k frames=52
+RIG census centre sky_reflection_off gpu_ms med=34.89 p95=36.92 saves=-2.67 | draw_cpu_ms med=4.32 | draws=163 tris=1451k frames=54
+RIG census centre baseline gpu_ms med=36.61 p95=36.98 saves=-4.40 | draw_cpu_ms med=4.48 | draws=163 tris=1433k frames=52
+RIG census centre done battery_temp=?
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+RIG census apartments view at (250, -600) looking (1, 0) battery_temp=? cells=12
+RIG census apartments baseline gpu_ms med=44.80 p95=45.92 saves=0.00 | draw_cpu_ms med=4.76 | draws=181 tris=1696k frames=43
+RIG census apartments hide_plants gpu_ms med=45.31 p95=47.95 saves=-0.51 | draw_cpu_ms med=4.39 | draws=153 tris=1549k frames=42
+RIG census apartments hide_props_near gpu_ms med=45.62 p95=47.46 saves=-0.82 | draw_cpu_ms med=4.23 | draws=148 tris=1179k frames=42
+RIG census apartments hide_props_mid gpu_ms med=46.43 p95=46.92 saves=-1.63 | draw_cpu_ms med=4.56 | draws=168 tris=1604k frames=42
+RIG census apartments hide_props_other gpu_ms med=46.05 p95=46.34 saves=-1.25 | draw_cpu_ms med=4.81 | draws=179 tris=1711k frames=42
+RIG census apartments hide_bldg_near gpu_ms med=45.63 p95=46.82 saves=-0.84 | draw_cpu_ms med=4.51 | draws=163 tris=1674k frames=42
+RIG census apartments hide_bldg_mid gpu_ms med=46.01 p95=46.45 saves=-1.21 | draw_cpu_ms med=4.50 | draws=134 tris=1736k frames=42
+RIG census apartments hide_ground gpu_ms med=45.92 p95=46.23 saves=-1.12 | draw_cpu_ms med=4.90 | draws=182 tris=1533k frames=42
+RIG census apartments hide_wear gpu_ms med=46.27 p95=46.92 saves=-1.47 | draw_cpu_ms med=4.98 | draws=186 tris=1771k frames=42
+RIG census apartments hide_far gpu_ms med=45.81 p95=47.08 saves=-1.01 | draw_cpu_ms med=4.80 | draws=182 tris=1401k frames=42
+RIG census apartments hide_far_ground gpu_ms med=46.60 p95=47.30 saves=-1.80 | draw_cpu_ms med=4.98 | draws=188 tris=1755k frames=42
+RIG census apartments hide_misc gpu_ms med=46.36 p95=46.74 saves=-1.56 | draw_cpu_ms med=4.99 | draws=186 tris=1745k frames=42
+RIG census apartments shadows_off gpu_ms med=46.47 p95=46.76 saves=-1.68 | draw_cpu_ms med=3.88 | draws=140 tris=1161k frames=42
+RIG census apartments shadow_map_2048 gpu_ms med=45.87 p95=47.32 saves=-1.07 | draw_cpu_ms med=5.18 | draws=188 tris=1746k frames=42
+RIG census apartments shadow_map_1024 gpu_ms med=46.51 p95=47.02 saves=-1.71 | draw_cpu_ms med=5.10 | draws=190 tris=1739k frames=42
+RIG census apartments fxaa_off gpu_ms med=45.59 p95=45.90 saves=-0.79 | draw_cpu_ms med=5.11 | draws=190 tris=1744k frames=42
+RIG census apartments scale_0.50 gpu_ms med=44.27 p95=45.37 saves=0.53 | draw_cpu_ms med=5.22 | draws=190 tris=1732k frames=42
+RIG census apartments scale_0.67 gpu_ms med=44.10 p95=44.88 saves=0.70 | draw_cpu_ms med=5.26 | draws=192 tris=1733k frames=43
+RIG census apartments scale_0.85 gpu_ms med=44.66 p95=45.26 saves=0.14 | draw_cpu_ms med=5.31 | draws=192 tris=1734k frames=43
+RIG census apartments scale_1.00 gpu_ms med=45.20 p95=45.72 saves=-0.40 | draw_cpu_ms med=5.06 | draws=190 tris=1724k frames=42
+RIG census apartments cheap_bldg_mid gpu_ms med=46.22 p95=46.63 saves=-1.42 | draw_cpu_ms med=5.15 | draws=190 tris=1727k frames=42
+RIG census apartments cheap_bldg_all gpu_ms med=46.14 p95=46.49 saves=-1.34 | draw_cpu_ms med=5.18 | draws=190 tris=1731k frames=42
+RIG census apartments cheap_props_mid gpu_ms med=46.01 p95=46.33 saves=-1.21 | draw_cpu_ms med=5.14 | draws=190 tris=1723k frames=42
+RIG census apartments cheap_plants_mid gpu_ms med=45.88 p95=46.37 saves=-1.08 | draw_cpu_ms med=5.39 | draws=193 tris=1739k frames=42
+RIG census apartments plants_opaque gpu_ms med=46.36 p95=46.76 saves=-1.56 | draw_cpu_ms med=5.45 | draws=191 tris=1736k frames=42
+RIG census apartments look_parts_off gpu_ms med=46.07 p95=46.54 saves=-1.28 | draw_cpu_ms med=5.34 | draws=192 tris=1743k frames=42
+RIG census apartments look_contact_off gpu_ms med=46.62 p95=47.15 saves=-1.82 | draw_cpu_ms med=5.24 | draws=192 tris=1745k frames=42
+RIG census apartments look_windows_off gpu_ms med=46.69 p95=47.31 saves=-1.89 | draw_cpu_ms med=5.38 | draws=196 tris=1761k frames=42
+RIG census apartments look_glass_off gpu_ms med=46.57 p95=46.99 saves=-1.77 | draw_cpu_ms med=5.44 | draws=199 tris=1770k frames=42
+RIG census apartments look_detail_off gpu_ms med=46.59 p95=47.03 saves=-1.79 | draw_cpu_ms med=5.43 | draws=196 tris=1768k frames=42
+RIG census apartments look_signs_off gpu_ms med=46.66 p95=47.18 saves=-1.87 | draw_cpu_ms med=5.42 | draws=194 tris=1759k frames=42
+RIG census apartments look_propmaps_off gpu_ms med=46.61 p95=47.15 saves=-1.81 | draw_cpu_ms med=5.19 | draws=195 tris=1754k frames=41
+RIG census apartments look_between_off gpu_ms med=46.79 p95=47.21 saves=-1.99 | draw_cpu_ms med=5.54 | draws=199 tris=1772k frames=42
+RIG census apartments baseline gpu_ms med=46.71 p95=47.17 saves=-1.91 | draw_cpu_ms med=5.52 | draws=197 tris=1761k frames=41
+RIG census apartments sky_reflection_off gpu_ms med=45.87 p95=46.45 saves=-1.07 | draw_cpu_ms med=5.39 | draws=195 tris=1756k frames=42
+RIG census apartments baseline gpu_ms med=46.42 p95=46.91 saves=-1.62 | draw_cpu_ms med=5.32 | draws=192 tris=1745k frames=42
+RIG census apartments done battery_temp=?
+RIG census waterfront view at (570, 200) looking (-1, 0) battery_temp=? cells=10
+RIG census waterfront baseline gpu_ms med=45.75 p95=46.29 saves=0.00 | draw_cpu_ms med=3.89 | draws=156 tris=1669k frames=42
+RIG census waterfront hide_plants gpu_ms med=45.61 p95=46.07 saves=0.13 | draw_cpu_ms med=3.31 | draws=126 tris=1546k frames=42
+RIG census waterfront hide_props_near gpu_ms med=45.25 p95=45.51 saves=0.50 | draw_cpu_ms med=3.55 | draws=132 tris=1329k frames=43
+RIG census waterfront hide_props_mid gpu_ms med=46.32 p95=46.83 saves=-0.57 | draw_cpu_ms med=3.93 | draws=152 tris=1560k frames=42
+RIG census waterfront hide_props_other gpu_ms med=45.92 p95=46.25 saves=-0.17 | draw_cpu_ms med=3.97 | draws=163 tris=1690k frames=42
+RIG census waterfront hide_bldg_near gpu_ms med=45.21 p95=47.72 saves=0.53 | draw_cpu_ms med=3.78 | draws=150 tris=1655k frames=42
+RIG census waterfront hide_bldg_mid gpu_ms med=45.83 p95=46.22 saves=-0.08 | draw_cpu_ms med=3.73 | draws=132 tris=1703k frames=42
+RIG census waterfront hide_ground gpu_ms med=46.55 p95=47.11 saves=-0.80 | draw_cpu_ms med=4.20 | draws=170 tris=1578k frames=42
+RIG census waterfront hide_wear gpu_ms med=45.71 p95=46.29 saves=0.03 | draw_cpu_ms med=4.54 | draws=173 tris=1756k frames=42
+RIG census waterfront hide_far gpu_ms med=45.81 p95=46.90 saves=-0.07 | draw_cpu_ms med=4.36 | draws=167 tris=1102k frames=42
+RIG census waterfront hide_far_ground gpu_ms med=45.44 p95=46.85 saves=0.30 | draw_cpu_ms med=4.50 | draws=175 tris=1760k frames=43
+RIG census waterfront hide_misc gpu_ms med=45.49 p95=45.87 saves=0.26 | draw_cpu_ms med=4.47 | draws=175 tris=1780k frames=42
+RIG census waterfront shadows_off gpu_ms med=45.97 p95=46.98 saves=-0.22 | draw_cpu_ms med=3.29 | draws=129 tris=1376k frames=42
+RIG census waterfront shadow_map_2048 gpu_ms med=46.10 p95=46.40 saves=-0.35 | draw_cpu_ms med=4.58 | draws=180 tris=1792k frames=42
+RIG census waterfront shadow_map_1024 gpu_ms med=45.30 p95=45.58 saves=0.45 | draw_cpu_ms med=4.62 | draws=179 tris=1789k frames=43
+RIG census waterfront fxaa_off gpu_ms med=45.42 p95=46.30 saves=0.33 | draw_cpu_ms med=4.62 | draws=184 tris=1812k frames=42
+RIG census waterfront scale_0.50 gpu_ms med=44.09 p95=45.42 saves=1.66 | draw_cpu_ms med=4.44 | draws=182 tris=1818k frames=42
+RIG census waterfront scale_0.67 gpu_ms med=42.76 p95=46.25 saves=2.99 | draw_cpu_ms med=4.30 | draws=179 tris=1798k frames=42
+RIG census waterfront scale_0.85 gpu_ms med=45.07 p95=45.62 saves=0.68 | draw_cpu_ms med=4.51 | draws=182 tris=1814k frames=42
+RIG census waterfront scale_1.00 gpu_ms med=44.44 p95=44.63 saves=1.31 | draw_cpu_ms med=4.61 | draws=181 tris=1824k frames=42
+RIG census waterfront cheap_bldg_mid gpu_ms med=45.64 p95=46.79 saves=0.11 | draw_cpu_ms med=4.56 | draws=179 tris=1818k frames=42
+RIG census waterfront cheap_bldg_all gpu_ms med=45.54 p95=46.25 saves=0.20 | draw_cpu_ms med=4.54 | draws=179 tris=1832k frames=43
+RIG census waterfront cheap_props_mid gpu_ms med=45.58 p95=46.17 saves=0.17 | draw_cpu_ms med=4.32 | draws=178 tris=1819k frames=42
+RIG census waterfront cheap_plants_mid gpu_ms med=45.99 p95=46.69 saves=-0.24 | draw_cpu_ms med=4.45 | draws=179 tris=1816k frames=42
+RIG census waterfront plants_opaque gpu_ms med=46.10 p95=46.62 saves=-0.35 | draw_cpu_ms med=4.70 | draws=182 tris=1822k frames=42
+RIG census waterfront look_parts_off gpu_ms med=46.43 p95=46.99 saves=-0.68 | draw_cpu_ms med=4.63 | draws=179 tris=1786k frames=42
+RIG census waterfront look_contact_off gpu_ms med=45.91 p95=46.77 saves=-0.17 | draw_cpu_ms med=4.50 | draws=176 tris=1777k frames=42
+RIG census waterfront look_windows_off gpu_ms med=45.49 p95=47.00 saves=0.26 | draw_cpu_ms med=4.36 | draws=173 tris=1757k frames=42
+RIG census waterfront look_glass_off gpu_ms med=46.29 p95=46.75 saves=-0.54 | draw_cpu_ms med=4.37 | draws=172 tris=1754k frames=42
+RIG census waterfront look_detail_off gpu_ms med=46.39 p95=46.90 saves=-0.64 | draw_cpu_ms med=4.50 | draws=174 tris=1758k frames=42
+RIG census waterfront look_signs_off gpu_ms med=45.35 p95=47.23 saves=0.40 | draw_cpu_ms med=4.51 | draws=177 tris=1763k frames=42
+RIG census waterfront look_propmaps_off gpu_ms med=46.22 p95=47.07 saves=-0.47 | draw_cpu_ms med=4.40 | draws=176 tris=1749k frames=42
+RIG census waterfront look_between_off gpu_ms med=45.56 p95=47.13 saves=0.19 | draw_cpu_ms med=4.48 | draws=176 tris=1752k frames=42
+RIG census waterfront baseline gpu_ms med=46.35 p95=47.10 saves=-0.60 | draw_cpu_ms med=4.43 | draws=174 tris=1743k frames=42
+RIG census waterfront sky_reflection_off gpu_ms med=46.22 p95=46.91 saves=-0.47 | draw_cpu_ms med=4.49 | draws=174 tris=1744k frames=42
+RIG census waterfront baseline gpu_ms med=46.62 p95=47.16 saves=-0.88 | draw_cpu_ms med=4.42 | draws=173 tris=1743k frames=42
+RIG census waterfront done battery_temp=?
+RIG plan_done census

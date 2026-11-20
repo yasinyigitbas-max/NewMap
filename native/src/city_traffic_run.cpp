@@ -1,5 +1,6 @@
 // CityTraffic at run time: the step on its own thread, the car batches, the parked cars, the streamer's cells, the
 // collision pool. See city_traffic.h for how it hangs together.
+#include "perf_marks.h"
 #include "city_traffic.h"
 #include "bike_look.h"
 
@@ -376,6 +377,8 @@ Ref<Mesh> CityTraffic::make_bike_mesh() {
 	return am;
 }
 
+static const float NEAR_BAND = 4.0f, MID_BAND = 10.0f;   // B6: metres a car crosses between two of its models
+
 void CityTraffic::put_row(float *r, float x, float y, float z, float yaw, float pitch, float sx, float sy, float sz, const float *col, float c0, float c1, float c2, float c3) {
 	const float cp = std::cos(pitch), sp = std::sin(pitch), cy = std::cos(yaw), sy_ = std::sin(yaw);
 	// the car's axes in the world: forward f, left l = up x f, up u = f x l
@@ -736,6 +739,7 @@ void CityTraffic::_exit_tree() {
 
 // ---------------------------------------------------------------- every frame
 void CityTraffic::_process(double p_delta) {
+	pm::Scope _pm(pm::TRAFFIC);   // (the slow-frame marks, perf_marks.h)
 	if (!ready || !gfx) return;
 	const int64_t t0 = usec_now();
 	Viewport *vp = get_viewport();
@@ -904,16 +908,42 @@ void CityTraffic::_process(double p_delta) {
 				float *row = b.buf.ptrw() + (size_t)b.n * ROW;
 				put_row(row, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, col, brake, ind, lamps, 0.0f);
 				Batch &wb = wheel_b[r.model];
+				bool wheels_put = false;
 				if (wheels[r.model].on && wb.n + 4 <= wb.cap) {   // its wheels stay on the road while the body leans over them
+					wheels_put = true;
 					put_wheels(wb.buf.ptrw() + (size_t)wb.n * ROW, row, wheels[r.model], r.psteer + (r.steer - r.psteer) * p[7], r.podo + (r.odo - r.podo) * p[7]);
 					wb.n += 4;
 				}
 				lean_row(row, p[6]); b.n++; c_near++;
+				// B6: over its last NEAR_BAND metres the near model fades out into the light model (complementary dither)
+				const float dn = std::sqrt(p[5]);
+				if (dn > (float)near_r - NEAR_BAND) {
+					const float f = std::min(std::max(((float)near_r - dn) / NEAR_BAND, 0.0f), 1.0f);
+					row[15] = std::max(f, 0.001f);
+					if (wheels_put) for (int w = 1; w <= 4; w++) wb.buf.ptrw()[(size_t)(wb.n - w) * ROW + 15] = std::max(f, 0.001f);
+					Batch &mb = mid_b[r.model];
+					grow(mb, mb.n + 1);
+					float *mrow = mb.buf.ptrw() + (size_t)mb.n * ROW;
+					put_row(mrow, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, col, brake, ind, lamps, 0.0f); lean_row(mrow, p[6]);
+					mrow[15] = 1.0f + f; mb.n++; c_mid++;
+				}
 			}
 		} else if (p[5] < (float)(mid_r * mid_r)) {
 			Batch &b = mid_b[r.model];
 			grow(b, b.n + 1);
-			put_row(b.buf.ptrw() + (size_t)b.n * ROW, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, col, brake, ind, lamps, 0.0f); lean_row(b.buf.ptrw() + (size_t)b.n * ROW, p[6]); b.n++; c_mid++;
+			float *mrow = b.buf.ptrw() + (size_t)b.n * ROW;
+			put_row(mrow, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, col, brake, ind, lamps, 0.0f); lean_row(mrow, p[6]); b.n++; c_mid++;
+			// B6: over its last MID_BAND metres the light model fades out into the far shape
+			const float dm = std::sqrt(p[5]);
+			if (dm > (float)mid_r - MID_BAND) {
+				const float f = std::min(std::max(((float)mid_r - dm) / MID_BAND, 0.0f), 1.0f);
+				mrow[15] = std::max(f, 0.001f);
+				const cm::CarModel &m = cm::MODELS[r.model];
+				grow(box_moving, box_moving.n + 1);
+				float *brow = box_moving.buf.ptrw() + (size_t)box_moving.n * ROW;
+				put_row(brow, p[0], p[1], p[2], p[3], p[4], m.half_w * 2.0f / box_size[0], m.height / (box_size[1] + box_y0), m.half_len * 2.0f / box_size[2], col, brake, 0.0f, lamps, 0.0f);
+				brow[15] = 1.0f + f; box_moving.n++; c_box++;
+			}
 		} else if (p[5] < (float)(far_r * far_r)) {
 			const cm::CarModel &m = cm::MODELS[r.model];
 			grow(box_moving, box_moving.n + 1);
@@ -1110,6 +1140,7 @@ void CityTraffic::loose_update(double p_delta) {
 // are sent; a body changes its box only when it gets a car of another model. A car that the player's car, or a car
 // already knocked loose, will touch within a sixth of a second becomes a physical car instead of a box.
 void CityTraffic::_physics_process(double p_delta) {
+	pm::Scope _pm(pm::TRAFFIC_PHYS);   // (the slow-frame marks, perf_marks.h)
 	if (!pool_made || !bodies_on) return;
 	loose_update(p_delta);
 	PhysicsServer3D *ps = PhysicsServer3D::get_singleton();

@@ -1,9 +1,12 @@
 // CityCrowd: see city_crowd.h.
+#include "perf_marks.h"
 #include "city_crowd.h"
 
 #include "city_ped.h"
 #include "hand_grip.h"
 #include "city_player.h"
+#include "foot_steps.h"
+#include "city_ambience.h"
 #include "city_traffic.h"
 #include "people_bake.h"
 #include "ped_inl.h"
@@ -261,6 +264,12 @@ void CityCrowd::set_player(Object *p_player) {
 	player_id = p_player ? (uint64_t)p_player->get_instance_id() : 0; has_last_player = false;
 	// the test app's stand-in player gets a body and clothes like the people's (his own, never dissolving)
 	CityPlayer *cp = Object::cast_to<CityPlayer>(p_player);
+	if (p_player && !has_node("Ambience")) {   // B3: the sound of the place round him
+		CityAmbience *am = memnew(CityAmbience); am->set_name("Ambience"); add_child(am); am->set_crowd(this);
+	}
+	if (cp && cp->figure() && !cp->has_node("FootSteps")) {   // B16: his footsteps, by what he walks on
+		FootSteps *fs = memnew(FootSteps); fs->set_name("FootSteps"); cp->add_child(fs); fs->set_figure(cp->figure());
+	}
 	if (cp && cp->figure() && gfx && !bodies.empty()) {
 		int body = 0;
 		for (int k = 0; k < (int)bodies.size(); k++) if (bodies[k].id == cp->get_body_id()) body = k;
@@ -1087,6 +1096,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 }
 
 void CityCrowd::_process(double p_delta) {
+	pm::Scope _pm(pm::CROWD);   // (the slow-frame marks, perf_marks.h)
 	if (!ready) return;
 	const int64_t t0 = usec_now();
 	step_brain(p_delta);
@@ -1354,7 +1364,11 @@ void CityCrowd::player_fight(double p_delta) {
 			const float dx = crowd->x[i] - pp.x, dz = crowd->z[i] - pp.z, d2 = dx * dx + dz * dz;
 			if (d2 < bd) { bd = d2; best = i; }
 		}
-		if (best < 0) return;
+		if (best < 0) {   // nobody near: he still takes his guard, facing ahead (B20: Yasin could not get into combat to try it); asked again, he drops it
+			if (pl->get_combat()) pl->set_combat(false, Vector3());
+			else { const float yaw = (float)(double)pl->get_view()[0]; pl->set_combat(true, pp + Vector3(std::sin(yaw), 0.0f, std::cos(yaw)) * 3.0f); }
+			return;
+		}
 		const int keep = pf.locks + 1;
 		pf = PFight(); pf.locks = keep;
 		pf.walker = crowd->id[best];

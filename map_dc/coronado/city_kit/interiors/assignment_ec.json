@@ -1,0 +1,84 @@
+{
+ "_doc": "ec fill (claude/fill-high-street, 20 Nov): which business or service is behind which shop / civic door of the ec",
+ "count": 3,
+ "rooms": [
+  {
+   "id": "ec_dune_n_snackbar_0",
+   "piece": "n_ec_dune_n",
+   "label": "snackbar",
+   "model": "commercial/com_cafe_seaside",
+   "pos": [
+    1099.8,
+    3.3722,
+    -414.0
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "fast_food",
+   "name": "Shoreline Snack Bar",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "hot dogs, fries, ice cream and cold drinks where the beach walk from the v -400 crossing meets the promenade; people eat on its terrace or carry it down to the sand",
+   "signs": []
+  },
+  {
+   "id": "ec_dune_s_cafe_0",
+   "piece": "n_ec_dune_s",
+   "label": "cafe",
+   "model": "commercial/com_cafe_seaside",
+   "pos": [
+    1062.8,
+    3.8299,
+    -214.0
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "cafe",
+   "name": "Dune Cafe",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "coffee, iced tea and sandwiches on the promenade where the beach walk from the v -200 crossing arrives; the terrace looks over the dune to the sea",
+   "signs": []
+  },
+  {
+   "id": "ec_dune_s_rentals_0",
+   "piece": "n_ec_dune_s",
+   "label": "rentals",
+   "model": "commercial/com_surf_shop",
+   "pos": [
+    983.05,
+    1.358,
+    -24.0
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "sport",
+   "name": "South Beach Rentals",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "kayaks, paddle boards, umbrellas and boogie boards for hire at the south access, the one the people from the waterfront use; its racks stand in its yard and at the water",
+   "signs": []
+  }
+ ]
+}

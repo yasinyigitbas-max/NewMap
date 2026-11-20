@@ -1,0 +1,114 @@
+{
+ "rooms": [
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fe_b1e_shops_0.scn",
+   "id": "g_fe_b1e_shops_0",
+   "kind": "cleaners",
+   "lights": 4,
+   "name": "Crown Hill Laundry",
+   "props": 25,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fe_b1e_shops_1.scn",
+   "id": "g_fe_b1e_shops_1",
+   "kind": "cafe",
+   "lights": 5,
+   "name": "Hilltop Coffee",
+   "props": 23,
+   "w": 5.92
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fe_b1e_shops_2.scn",
+   "id": "g_fe_b1e_shops_2",
+   "kind": "salon",
+   "lights": 4,
+   "name": "Corner Cuts Barbers",
+   "props": 23,
+   "w": 5.78
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fe_b1e_corner_0.scn",
+   "id": "g_fe_b1e_corner_0",
+   "kind": "corner_shop",
+   "lights": 5,
+   "name": "Crown Hill Market",
+   "props": 22,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fe_b1e_corner_1.scn",
+   "id": "g_fe_b1e_corner_1",
+   "kind": "pharmacy",
+   "lights": 5,
+   "name": "Hilltop Pharmacy",
+   "props": 22,
+   "w": 5.7
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fe_b2_trade_0.scn",
+   "id": "g_fe_b2_trade_0",
+   "kind": "sport",
+   "lights": 4,
+   "name": "Ringside Bikes",
+   "props": 16,
+   "w": 5.7
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fe_b2_trade_1.scn",
+   "id": "g_fe_b2_trade_1",
+   "kind": "cleaners",
+   "lights": 4,
+   "name": "Ringside Dry Cleaners",
+   "props": 27,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fe_b2_cafe_0.scn",
+   "id": "g_fe_b2_cafe_0",
+   "kind": "cafe",
+   "lights": 5,
+   "name": "Overlook Cafe",
+   "props": 20,
+   "w": 5.4
+  },
+  {
+   "d": 13.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fe_r5_rec_0.scn",
+   "id": "g_fe_r5_rec_0",
+   "kind": "sport",
+   "lights": 6,
+   "name": "Glorietta Rec Center",
+   "props": 48,
+   "w": 23.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fe_r1_bakery_0.scn",
+   "id": "g_fe_r1_bakery_0",
+   "kind": "bakery",
+   "lights": 6,
+   "name": "Point Bakery",
+   "props": 29,
+   "w": 8.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fe_r1_surf_0.scn",
+   "id": "g_fe_r1_surf_0",
+   "kind": "sport",
+   "lights": 6,
+   "name": "Glorietta Surf Co.",
+   "props": 23,
+   "w": 8.4
+  }
+ ]
+}

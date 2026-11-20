@@ -43,7 +43,9 @@ do_bake() {
   fi
   echo "PHONE_RIG import (first time: several minutes)"; "$GODOT" --headless --path . --import > "$OUT/import.log" 2>&1
   echo "PHONE_RIG bake (about 1-3 minutes, a window opens)"
-  "$GODOT" --path . --rendering-method mobile --resolution 640x360 -s res://tools/city/bake/bake_runtime.gd -- --all > "$OUT/bake.log" 2>&1
+  # (--render-thread safe: the game runs with a separate render thread since 20 Nov (B28); the PC tools read meshes and
+  # make textures, which needs the old mode: the room merge broke without it, "finalize can only be called from the render thread")
+  "$GODOT" --path . --render-thread safe --rendering-method mobile --resolution 640x360 -s res://tools/city/bake/bake_runtime.gd -- --all > "$OUT/bake.log" 2>&1
   grep -a "^BAKE_DONE\|^BAKE check\|SCRIPT ERROR" "$OUT/bake.log" | cut -c1-200
   grep -aq "^BAKE_DONE" "$OUT/bake.log" || die "the bake did not finish: see OUT/bake.log"
 }
@@ -74,6 +76,9 @@ do_export() {
   rm -f "$OUT/citykit_rig.apk"
   "$GODOT_EXPORT" --headless --path . --export-debug Rig "$(winpath "$OUT/citykit_rig.apk")" > "$OUT/export.log" 2>&1
   [ -f "$OUT/citykit_rig.apk" ] || { tail -15 "$OUT/export.log"; die "no APK: see OUT/export.log"; }
+  # (20 Nov: an export whose editor could not load the GDExtension - its Windows DLL copy locked by another Godot - left the
+  # Android library out without failing: a grey screen on every phone) no game library in the APK = no APK
+  unzip -l "$OUT/citykit_rig.apk" | grep -q "libcoronado_city.android.arm64.so" || { mv "$OUT/citykit_rig.apk" "$OUT/citykit_rig_NO_NATIVE.apk"; grep -a "extension\|dll" "$OUT/export.log" | head -5; die "the APK has no libcoronado_city.android.arm64.so (the editor could not load the extension: close other Godot runs, delete native/bin/~*, export again)"; }
   ls -la "$OUT/citykit_rig.apk" | awk '{print "PHONE_RIG apk", $5/1048576, "MB"}'
 }
 

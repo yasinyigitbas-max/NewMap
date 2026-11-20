@@ -9,9 +9,15 @@ run/main_scene="res://tools/city/rig/rig.tscn"
 
 [rendering]
 renderer/rendering_method="mobile"
+; B28 (Yasin, 20 Nov: "moving draws into its own thread? it won big in the old build"): the separate render thread
+driver/threads/thread_model=2
 textures/vram_compression/import_etc2_astc=true
 ; the game engine's own light grid (docs/engine, patch e): 32 omni + 32 spot lights for a fixed cost. A stock engine ignores it.
 lights_and_shadows/mobile_light_grid=true
+; per-building shader values (rt_bldg: tint, wear, lit windows, tier pivot / window = 5 slots a building): the default
+; 65,536 slots overflowed on the phone's 210 km/h drive and the app froze (20 Nov, review/phone/crash_20nov_0314).
+; 262,144 slots = 4 MB of graphics memory.
+limits/global_shader_variables/buffer_size=262144
 
 [display]
 window/size/viewport_width=1600
@@ -20,6 +26,18 @@ window/size/viewport_height=900
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot_speech/plugin.cfg")
+
+[audio]
+; B22 (Yasin 20 Nov: back taps "USED MIC INPUT (SOUND OF TAP) ACCELEROMETER AND GYRO"): the microphone gives nothing unless
+; audio input is on (the old game had it on). The mic only confirms a softer tap; a hard one counts on motion alone.
+driver/enable_input=true
+
+[input_devices]
+; B20 (Yasin 20 Nov: "swaying phone fast downwards doesnt put us into the combat mode"): since Godot 4.3 the phone's motion
+; sensors are OFF unless enabled here, and Input.get_accelerometer() / get_gyroscope() read zero (CityPlayer::sense took
+; that for a PC). The swing into combat and the tap-to-punch need both.
+sensors/enable_accelerometer=true
+sensors/enable_gyroscope=true
 
 [physics]
 ; the phone test rig runs the game's physics setup (Jolt on its own thread); the PC tools keep the default engine

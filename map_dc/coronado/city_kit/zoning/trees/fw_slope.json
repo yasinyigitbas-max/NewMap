@@ -1,0 +1,81 @@
+{
+ "area": "fw_slope",
+ "piece": "n_fw_slope",
+ "zone": "apartments (Crown Hill west slope)",
+ "rule": "docs/TREE_PLAN.md: apartments - one tree per court; parks - clumps of 3-5 at the edges and round the seating",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, fw: the north-west column), after the superchecker: no builder trees; each line placed for its reason",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -346.0,
+    3.48,
+    -1308.0
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "court 1's garden"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -290.0,
+    4.73,
+    -1308.0
+   ],
+   "yaw": 70,
+   "scale": 0.9,
+   "why": "court 2's garden"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -234.0,
+    6.188,
+    -1308.0
+   ],
+   "yaw": 140,
+   "scale": 0.9,
+   "why": "court 3's garden"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -296.0,
+    6.433,
+    -1246.0
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "Lookout park clump west of the playground"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -305.0,
+    6.223,
+    -1240.0
+   ],
+   "yaw": 90,
+   "scale": 0.85,
+   "why": "Lookout park clump, second"
+  },
+  {
+   "base": "tree_eucalyptus_a",
+   "cond": "normal",
+   "at": [
+    -292.0,
+    7.162,
+    -1229.0
+   ],
+   "yaw": 180,
+   "scale": 0.85,
+   "why": "Lookout park clump by the upper walk's benches"
+  }
+ ]
+}

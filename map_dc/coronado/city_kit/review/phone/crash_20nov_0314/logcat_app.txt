@@ -1,0 +1,1017 @@
+11-20 03:09:39.196 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color,raw:am start -n com.yasin.citykit.rig/com.godot.game.GodotAppLauncher'
+11-20 03:09:39.256 I/ActivityTaskManager( 1836): START u0 {flg=0x10000000 cmp=com.yasin.citykit.rig/com.godot.game.GodotAppLauncher} from uid 2000 from pid 32600 callingPackage com.android.shell
+11-20 03:09:39.288 I/ActivityManager( 1836): Start proc 32603:com.yasin.citykit.rig/u0a290 for next-top-activity {com.yasin.citykit.rig/com.godot.game.GodotAppLauncher} caller=com.android.shell
+11-20 03:09:39.292 E/ActivityManagerWrapper( 2687): getRecentTasks: mainTaskId=1079   userId=0   baseIntent=Intent { act=null flag=268435456 cmp=ComponentInfo{com.yasin.citykit.rig/com.godot.game.GodotAppLauncher} }
+11-20 03:09:39.293 I/sin.citykit.rig(32603): Late-enabling -Xcheck:jni
+11-20 03:09:39.308 I/sin.citykit.rig(32603): Using generational CollectorTypeCMC GC.
+11-20 03:09:39.309 E/ActivityManagerWrapper( 2687): getRecentTasks: mainTaskId=1079   userId=0   baseIntent=Intent { act=null flag=268435456 cmp=ComponentInfo{com.yasin.citykit.rig/com.godot.game.GodotAppLauncher} }
+11-20 03:09:39.318 D/nativeloader(32603): Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+11-20 03:09:39.321 I/MessageMonitor(32603): Load libmiui_runtime
+11-20 03:09:39.324 I/SmartPower.com.yasin.citykit.rig/10290(32603)( 1836): died->invisible(6590ms) R(process start ) adj=-10000.
+11-20 03:09:39.327 I/PowerHalWrapper( 1836): amsBoostNotify pid:32603,activity:com.godot.game.GodotAppLauncher, package:com.yasin.citykit.rig, mProcessCreatePacknull 
+11-20 03:09:39.327 I/mtkpower_client( 1836): [Legacy][PowerHal_Wrap_notifyAppState] com.yasin.citykit.rig/com.godot.game.GodotAppLauncher pid=32603 state:1
+11-20 03:09:39.327 I/game_scn( 1836): collectForegroundAppList packName=com.yasin.citykit.rig, actName=com.godot.game.GodotAppLauncher, pid=32603, uid=10290, state:RESUMED
+11-20 03:09:39.331 I/libPowerHal( 1115): [perfNotifyAppState] pack:com.yasin.citykit.rig, act:com.godot.game.GodotAppLauncher, state:1, pid:32603, uid:10290, fps:-1
+11-20 03:09:39.333 D/nativeloader(32603): Loading libbase.so instead of libwalkstack.so due to b/349878424
+11-20 03:09:39.333 D/nativeloader(32603): Load libbase.so using system ns (caller=/system_ext/framework/miui-framework.jar): ok
+11-20 03:09:39.335 I/SmartPower.com.yasin.citykit.rig/10290(32603)( 1836): invisible->visible(11ms) R(become visible) adj=0.
+11-20 03:09:39.336 D/CompatibilityChangeReporter(32603): Compat change id reported: 171979766; UID 10290; state: ENABLED
+11-20 03:09:39.336 D/AppScoutStateMachine(32603): 32603-ScoutStateMachinecreated
+11-20 03:09:39.384 D/nativeloader(32603): Configuring clns-4 for other apk /data/app/~~2r12UhB3Mea9pe9Bla-Rfw==/com.yasin.citykit.rig-LiqX3Fb_2BNJfu0LxorPvg==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~2r12UhB3Mea9pe9Bla-Rfw==/com.yasin.citykit.rig-LiqX3Fb_2BNJfu0LxorPvg==/lib/arm64:/data/app/~~2r12UhB3Mea9pe9Bla-Rfw==/com.yasin.citykit.rig-LiqX3Fb_2BNJfu0LxorPvg==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.yasin.citykit.rig
+11-20 03:09:39.390 W/RecentsModel( 2687): getRunningTask   taskInfo=TaskInfo{userId=0 taskId=1079 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=com.yasin.citykit.rig/com.godot.game.GodotAppLauncher } baseActivity=ComponentInfo{com.yasin.citykit.rig/com.godot.game.GodotAppLauncher} topActivity=ComponentInfo{com.yasin.citykit.rig/com.godot.game.GodotApp} origActivity=ComponentInfo{com.yasin.citykit.rig/com.godot.game.GodotAppLauncher} realActivity=ComponentInfo{com.yasin.citykit.rig/com.godot.game.GodotApp} numActivities=1 lastActiveTime=548042051 supportsSplitScreenMultiWindow=true supportsMultiWindow=true resizeMode=2 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=200 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@e9dadba} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=0 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{bedd46b com.godot.game.GodotAppLauncher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isSleeping=false topActivityInSizeCompat=false topActivityInMiuiSizeCompat=false topActivityEligibleForLetterboxEducation= false locusId=null displayAreaFeatureId=1 cameraCompatControlState=hidden mIsCastMode=false}
+11-20 03:09:39.390 W/RecentsModel( 2687): getTaskInfoIgnoreHomeAndFreeform   taskInfo=ComponentInfo{com.yasin.citykit.rig/com.godot.game.GodotAppLauncher}
+11-20 03:09:39.390 D/nativeloader(32603): Load libframework-connectivity-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity.jar: ok
+11-20 03:09:39.392 E/ActivityManagerWrapper( 2687): getRecentTasks: mainTaskId=1079   userId=0   baseIntent=Intent { act=null flag=268435456 cmp=ComponentInfo{com.yasin.citykit.rig/com.godot.game.GodotAppLauncher} }
+11-20 03:09:39.394 V/GraphicsEnvironment(32603): ANGLE Developer option for 'com.yasin.citykit.rig' set to: 'default'
+11-20 03:09:39.394 V/GraphicsEnvironment(32603): ANGLE GameManagerService for com.yasin.citykit.rig: false
+11-20 03:09:39.394 V/GraphicsEnvironment(32603): App is not on the allowlist for updatable production driver.
+11-20 03:09:39.397 I/ForceDarkHelperStubImpl(32603): initialize for com.yasin.citykit.rig , ForceDarkOrigin
+11-20 03:09:39.398 D/nativeloader(32603): Load libforcedarkimpl.so using system ns (caller=/system_ext/framework/miui-framework.jar): ok
+11-20 03:09:39.398 D/sin.citykit.rig(32603): JNI_OnLoad success
+11-20 03:09:39.398 I/MiuiForceDarkConfig(32603): setConfig density:2.750000, mainRule:0, secondaryRule:0, tertiaryRule:0
+11-20 03:09:39.399 D/NetworkSecurityConfig(32603): No Network Security Config specified, using platform default
+11-20 03:09:39.400 D/NetworkSecurityConfig(32603): No Network Security Config specified, using platform default
+11-20 03:09:39.401 D/CompatibilityChangeReporter(32603): Compat change id reported: 183155436; UID 10290; state: ENABLED
+11-20 03:09:39.428 I/MSYNC3-VariableRefreshRate(32603): Variable refreshrate is disabled
+11-20 03:09:39.433 D/nativeloader(32603): Load libpowerhalwrap_jni.so using system ns (caller=/system/framework/mediatek-framework.jar): ok
+11-20 03:09:39.434 I/PowerHalWrapper(32603): PowerHalWrapper.getInstance 
+11-20 03:09:39.435 D/MiuiMultiWindowAdapter(32603): MiuiMultiWindowAdapter::getFreeformVideoWhiteListInSystem::LIST_ABOUT_SUPPORT_LANDSCAPE_VIDEO = [com.hunantv.imgo.activity, com.tencent.qqlive, com.qiyi.video, com.hunantv.imgo.activity.inter, com.tencent.qqlivei18n, com.iqiyi.i18n, tv.danmaku.bili]
+11-20 03:09:39.437 D/libMEOW (32603): meow new tls: 0xb4000077eb5f0400
+11-20 03:09:39.438 D/libMEOW (32603): meow reload base cfg path: na
+11-20 03:09:39.438 D/libMEOW (32603): meow reload overlay cfg path: na
+11-20 03:09:39.438 W/QT      (32603): qt_process_init() called
+11-20 03:09:39.438 E/QT      (32603): [QT]file does not exist
+11-20 03:09:39.438 W/QT      (32603): Support!!
+11-20 03:09:39.438 E/QT      (32603): [QT]file does not exist
+11-20 03:09:39.439 D/libMEOW (32603): applied 1 plugins for [com.yasin.citykit.rig]:
+11-20 03:09:39.439 D/libMEOW (32603):   plugin 1: [libMEOW_gift.so]:
+11-20 03:09:39.439 D/libMEOW (32603): meow delete tls: 0xb4000077eb5f0400
+11-20 03:09:39.460 D/IS_CTS_MODE(32603): false
+11-20 03:09:39.460 D/MULTI_WINDOW_ENABLED(32603): false
+11-20 03:09:39.463 D/DecorView[](32603): getWindowModeFromSystem  windowmode is 1
+11-20 03:09:39.469 D/GodotActivity(32603): Project command line parameters: [--xr_mode_regular, --xr-mode, off, --fullscreen, --background_color, #000000]
+11-20 03:09:39.469 D/GodotActivity(32603): Launch intent Intent { flg=0x10000000 cmp=com.yasin.citykit.rig/com.godot.game.GodotAppLauncher } with parameters []
+11-20 03:09:39.480 W/libc    (32603): Access denied finding property "ro.vendor.df.effect.conflict"
+11-20 03:09:39.476 W/sin.citykit.rig(32603): type=1400 audit(0.0:151812): avc: denied { read } for name="u:object_r:vendor_displayfeature_prop:s0" dev="tmpfs" ino=442 scontext=u:r:untrusted_app:s0:c34,c257,c512,c768 tcontext=u:object_r:vendor_displayfeature_prop:s0 tclass=file permissive=0 app=com.yasin.citykit.rig
+11-20 03:09:39.483 V/GodotActivity(32603): Creating new Godot fragment instance.
+11-20 03:09:39.502 V/Godot   (32603): Initializing Godot plugin registry
+11-20 03:09:39.507 I/GodotPluginRegistry(32603): Registering runtime plugin AndroidRuntime
+11-20 03:09:39.508 I/GodotPluginRegistry(32603): Initializing Godot plugin GodotSpeech
+11-20 03:09:39.508 I/GodotPluginRegistry(32603): Completed initialization for Godot plugin GodotSpeech
+11-20 03:09:39.508 V/Godot   (32603): InitEngine with params: [--xr_mode_regular, --xr-mode, off, --fullscreen, --background_color, #000000]
+11-20 03:09:39.812 D/nativeloader(32603): Load /data/app/~~2r12UhB3Mea9pe9Bla-Rfw==/com.yasin.citykit.rig-LiqX3Fb_2BNJfu0LxorPvg==/base.apk!/lib/arm64-v8a/libgodot_android.so using class loader ns clns-4 (caller=/data/app/~~2r12UhB3Mea9pe9Bla-Rfw==/com.yasin.citykit.rig-LiqX3Fb_2BNJfu0LxorPvg==/base.apk): ok
+11-20 03:09:39.814 V/Godot   (32603): Godot native layer initialization completed: true
+11-20 03:09:39.814 V/Godot   (32603): Setting up native layer with params: [--xr-mode, off, --fullscreen]
+11-20 03:09:39.860 V/Godot   (32603): Godot native layer setup completed
+11-20 03:09:39.861 V/Godot   (32603): OnInitRenderView: GodotFragment{9e22ef2} (f088ae2f-b9af-456b-ad1e-d26cf197fcc1 id=0x7f07002c)
+11-20 03:09:39.867 D/CompatibilityChangeReporter(32603): Compat change id reported: 210923482; UID 10290; state: ENABLED
+11-20 03:09:39.873 D/Godot   (32603): Render view should be transparent: false
+11-20 03:09:39.873 I/sin.citykit.rig(32603): Compiler allocated 4143KB to compile void android.widget.TextView.<init>(android.content.Context, android.util.AttributeSet, int, int)
+11-20 03:09:39.884 D/vulkan  (32603): searching for layers in '/data/app/~~2r12UhB3Mea9pe9Bla-Rfw==/com.yasin.citykit.rig-LiqX3Fb_2BNJfu0LxorPvg==/lib/arm64'
+11-20 03:09:39.885 D/vulkan  (32603): searching for layers in '/data/app/~~2r12UhB3Mea9pe9Bla-Rfw==/com.yasin.citykit.rig-LiqX3Fb_2BNJfu0LxorPvg==/base.apk!/lib/arm64-v8a'
+11-20 03:09:39.886 I/WindowManager( 1836): rotation changed from 0 to 1 due ActivityRecord{b38143e u0 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher} t1079}
+11-20 03:09:39.887 D/Godot   (32603): renderingDevice: vulkan (ProjectSettings)
+11-20 03:09:39.887 D/Godot   (32603): 			renderer: mobile (ProjectSettings)
+11-20 03:09:39.888 I/SurfaceFactory(32603): [static] sSurfaceFactory = com.mediatek.view.impl.SurfaceFactoryImpl@47c4208
+11-20 03:09:39.895 W/OnBackInvokedCallback(32603): OnBackInvokedCallback is not enabled for the application.
+11-20 03:09:39.895 W/OnBackInvokedCallback(32603): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+11-20 03:09:39.904 V/Godot   (32603): OnStart: GodotFragment{9e22ef2} (f088ae2f-b9af-456b-ad1e-d26cf197fcc1 id=0x7f07002c)
+11-20 03:09:39.907 V/Godot   (32603): OnResume: GodotFragment{9e22ef2} (f088ae2f-b9af-456b-ad1e-d26cf197fcc1 id=0x7f07002c)
+11-20 03:09:39.907 V/VkRenderer(32603): Renderer resumed
+11-20 03:09:39.957 W/libc    ( 2676): Access denied finding property "qemu.hw.mainkeys"
+11-20 03:09:39.967 W/libc    ( 7391): Access denied finding property "qemu.hw.mainkeys"
+11-20 03:09:39.974 D/VRI[GodotAppLauncher](32603): hardware acceleration = true, forceHwAccelerated = false
+11-20 03:09:39.980 D/CoreBackPreview( 1836): Window{c025ab9 u0 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@678965f, mPriority=0}
+11-20 03:09:39.980 D/libMEOW (32603): meow new tls: 0xb400007766ffce00
+11-20 03:09:39.980 D/libMEOW (32603): applied 1 plugins for [com.yasin.citykit.rig]:
+11-20 03:09:39.980 D/libMEOW (32603):   plugin 1: [libMEOW_gift.so]:
+11-20 03:09:39.982 W/Looper  (32603): PerfMonitor looperActivity : package=com.yasin.citykit.rig/com.godot.game.GodotAppLauncher time=1ms latency=648ms running=0ms  procState=-1  historyMsgCount=4 (msgIndex=3 wall=91ms seq=3 late=4ms h=android.app.ActivityThread$H w=110) (msgIndex=4 wall=552ms seq=4 late=97ms h=android.app.ActivityThread$H w=159)
+11-20 03:09:39.982 D/RecentsImpl( 2687): mActivityStateObserver com.godot.game.GodotApp
+11-20 03:09:39.982 W/RecentsImpl( 2687): onResumed className=com.godot.game.GodotApp   mIsInAnotherPro=false   isKeyguardLocked=false   mSecuritySpaceGuideShown=false
+11-20 03:09:39.984 I/Choreographer(32603): Skipped 68 frames!  The application may be doing too much work on its main thread.
+11-20 03:09:39.994 I/BufferQueueDebug( 1148): [com.yasin.citykit.rig/com.godot.game.GodotAppLauncher#13981](this:0xb4000076445858a8,id:-1,api:0,p:-1,c:-1) BufferQueue core=(1148:/system/bin/surfaceflinger)
+11-20 03:09:39.996 W/WindowManager( 1836): Changing focus from null to Window{c025ab9 u0 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher} displayId=0 Callers=com.android.server.wm.RootWindowContainer.updateFocusedWindowLocked:484 com.android.server.wm.WindowManagerService.updateFocusedWindowLocked:6450 com.android.server.wm.WindowManagerService.relayoutWindow:2761 com.android.server.wm.Session.relayout:277 
+11-20 03:09:39.996 D/WindowManager( 1836): Input focus has changed to Window{c025ab9 u0 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher} display=0 updateInputWindows = true
+11-20 03:09:39.996 I/WindowManager( 1836): Relayout Window{c025ab9 u0 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher}: oldVis=4 newVis=0 focusMayChange = true requestedWidth = 2460 requestedHeight = 1080 outFrames = ClientWindowFrames{frame=[0,0][2460,1080] display=[0,0][2460,1080] parentFrame=[0,0][0,0] parentClippedByDisplayCutout=false} outSurfaceControl = Surface(name=com.yasin.citykit.rig/com.godot.game.GodotAppLauncher)/@0xbe4e975
+11-20 03:09:39.997 D/WindowManager( 1836): Update InputWindowHandle: c025ab9 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher, frame=[0,0,0,0], touchableRegion=SkRegion((0,0,2460,1080)), scaleFactor=1.0, transform=null, windowToken=android.os.BinderProxy@5e4480, isClone=false, visibal=true, focusable=true, changed=true
+11-20 03:09:39.998 D/BufferQueueConsumer(32603): [](id:7f5b00000000,api:0,p:-1,c:32603) connect: controlledByApp=false
+11-20 03:09:40.001 E/FBI     (32603): Can't load library: dlopen failed: library "libmagtsync.so" not found
+11-20 03:09:40.002 I/SurfaceFlinger( 1148): setTransactionState focusRequest transactionId:7885560118231 frontWin:c025ab9 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher
+11-20 03:09:40.002 D/MiuiMultiWindowAdapter(32603): MiuiMultiWindowAdapter::getFreeformVideoWhiteListInSystem::LIST_ABOUT_SUPPORT_LANDSCAPE_VIDEO = [com.hunantv.imgo.activity, com.tencent.qqlive, com.qiyi.video, com.hunantv.imgo.activity.inter, com.tencent.qqlivei18n, com.iqiyi.i18n, tv.danmaku.bili]
+11-20 03:09:40.002 D/libMEOW (32603): meow new tls: 0xb4000077eaceafc0
+11-20 03:09:40.002 D/libMEOW (32603): applied 1 plugins for [com.yasin.citykit.rig]:
+11-20 03:09:40.002 D/libMEOW (32603):   plugin 1: [libMEOW_gift.so]:
+11-20 03:09:40.004 D/SurfaceView(32603): UPDATE null, mIsCastMode = false
+11-20 03:09:40.005 I/BufferQueueDebug( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:-1) BufferQueue core=(1148:/system/bin/surfaceflinger)
+11-20 03:09:40.007 D/BufferQueueConsumer(32603): [](id:7f5b00000001,api:0,p:-1,c:32603) connect: controlledByApp=false
+11-20 03:09:40.007 V/VkSurfaceView(32603): On surface created
+11-20 03:09:40.007 V/VkSurfaceView(32603): On surface changed [4]: 2460 x 1080
+11-20 03:09:40.007 V/VkRenderer(32603): Initializing renderer...
+11-20 03:09:40.007 I/godot   (32603): Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+11-20 03:09:40.008 E/SurfaceSyncer(32603): Failed to find sync for id=0
+11-20 03:09:40.014 D/WindowManager( 1836): update navigation bar window=Window{c025ab9 u0 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher}, disableFlags=0, appearance=0, this=com.android.server.wm.DisplayPolicy@6f638a4
+11-20 03:09:40.016 W/libc    (32603): Access denied finding property "vendor.migl.debug"
+11-20 03:09:40.017 E/libMiGL (32603): libmigl:This GPU version is note support Variable Shading Rate
+11-20 03:09:40.018 E/libEGL  (32603): pre_cache appList: ,,
+11-20 03:09:40.027 D/sin.citykit.rig(32603): MiuiProcessManagerServiceStub setSchedFifo
+11-20 03:09:40.027 I/MiuiProcessManagerImpl(32603): setSchedFifo pid:32603, mode:3
+11-20 03:09:40.030 I/GodotInputHandler(32603): === Input Device ignored: uinput-fpc
+11-20 03:09:40.035 I/godot   (32603): Vulkan 1.1.177 - Forward Mobile - Using Device #0: ARM - Mali-G610 MC6
+11-20 03:09:40.047 D/BLASTBufferQueue(32603): [VRI[GodotAppLauncher]#0](f:0,a:1) acquireNextBufferLocked size=2460x1080 mFrameNumber=1 applyTransaction=true mTimestamp=535770897477703(auto) mPendingTransactions.size=0 graphicBufferId=140028818751488 transform=7
+11-20 03:09:40.049 W/Parcel  (32603): Expecting binder but got null!
+11-20 03:09:40.052 D/BufferStateLayer( 1148): com.yasin.citykit.rig/com.godot.game.GodotAppLauncher#13981 setBuffer frameId=1, bufferId=140028818751488 fenceId=475, w= 1080, h=2460
+11-20 03:09:40.052 W/Looper  (32603): PerfMonitor doFrame : time=68ms vsyncFrame=0 latency=564ms procState=-1 historyMsgCount=4 (msgIndex=1 wall=91ms seq=3 late=4ms h=android.app.ActivityThread$H w=110) (msgIndex=2 wall=552ms seq=4 late=97ms h=android.app.ActivityThread$H w=159)
+11-20 03:09:40.054 D/WindowManager( 1836): finishDrawingLocked: mDrawState=COMMIT_DRAW_PENDING Window{c025ab9 u0 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher} in Surface(name=com.yasin.citykit.rig/com.godot.game.GodotAppLauncher)/@0xe0fe144
+11-20 03:09:40.054 D/MiuiFreeFormGesturePointerEventListener( 1836): finishDrawingWindow: topFullScreenWindow= Window{c025ab9 u0 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher}
+11-20 03:09:40.057 I/WindowManager( 1836): showSurfaceRobustly mWin:Window{c025ab9 u0 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher}
+11-20 03:09:40.058 D/WindowManager( 1836): Update InputWindowHandle: c025ab9 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher, frame=[0,0,0,0], touchableRegion=SkRegion((0,0,2460,1080)), scaleFactor=1.0, transform=null, windowToken=android.os.BinderProxy@5e4480, isClone=false, visibal=true, focusable=true, changed=true
+11-20 03:09:40.062 D/WindowManager( 1836): Update InputWindowHandle: c025ab9 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher, frame=[0,0,0,0], touchableRegion=SkRegion((0,0,2460,1080)), scaleFactor=1.0, transform=null, windowToken=android.os.BinderProxy@5e4480, isClone=false, visibal=true, focusable=true, changed=true
+11-20 03:09:40.062 I/ActivityTaskManager( 1836): Displayed com.yasin.citykit.rig/com.godot.game.GodotAppLauncher: +801ms
+11-20 03:09:40.063 D/SurfaceView(32603): UPDATE Surface(name=SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher])/@0x7ebc10c, mIsProjectionMode = false
+11-20 03:09:40.063 D/SurfaceControl(32603): nativeSetScreenProjection ===> setScreenProjection
+11-20 03:09:40.063 D/SurfaceControl(32603): nativeSetScreenProjection ===> setScreenProjection
+11-20 03:09:40.063 D/SurfaceControl(32603): nativeSetScreenProjection ===> setScreenProjection
+11-20 03:09:40.070 E/SurfaceSyncer(32603): Failed to find sync for id=0
+11-20 03:09:40.074 D/DecorView[](32603): onWindowFocusChanged hasWindowFocus true
+11-20 03:09:40.074 D/MiuiFreeFormGesturePointerEventListener( 1836): finishDrawingWindow: topFullScreenWindow= Window{c025ab9 u0 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher}
+11-20 03:09:40.074 I/HandWritingStubImpl(32603): refreshLastKeyboardType: 1
+11-20 03:09:40.074 I/HandWritingStubImpl(32603): getCurrentKeyboardType: 1
+11-20 03:09:40.080 I/HandWritingStubImpl(32603): getCurrentKeyboardType: 1
+11-20 03:09:40.080 I/sin.citykit.rig(32603): Compiler allocated 5092KB to compile void android.view.ViewRootImpl.performTraversals()
+11-20 03:09:40.095 W/RenderInspector(32603): DequeueBuffer time out on com.yasin.citykit.rig/com.godot.game.GodotAppLauncher, count=1, avg=10 ms, max=10 ms.
+11-20 03:09:40.254 D/sin.citykit.rig(32603): PlayerBase::PlayerBase()
+11-20 03:09:40.254 D/sin.citykit.rig(32603): TrackPlayerBase::TrackPlayerBase()
+11-20 03:09:40.254 I/libOpenSLES(32603): Emulating old channel mask behavior (ignoring positional mask 0x3, using default mask 0x3 based on channel count of 2)
+11-20 03:09:40.254 D/AudioTrack(32603): INSP: type=audio,case=1,set=0xb40000775e764c00,stream_type=3,sample_rate=44100,format=0x1,channel_mask=0x3,frame_count=0,flags=0x104,notification_frames=-2,session_id=11441,transfer_type=0,uid=-1,pid=-1
+11-20 03:09:40.254 D/AudioTrack(32603): getCallingPackageName packagename_processed is com.yasin.citykit.rig
+11-20 03:09:40.255 D/AudioTrack(32603): set: mPowerTrackStatus=0
+11-20 03:09:40.266 D/AudioTrack(32603): createTrack_l(1164): 0xb40000775e764c00, mCblk = 0x78bfbea000, mLatency = 74, mAfLatency = 42, frameCount = 1418, mSampleRate = 44100, mFlags = 0, mReqFrameCount = 1418, mNotificationFramesAct = 472
+11-20 03:09:40.269 D/AudioTrack(32603): start(1164): 0xb40000775e764c00, prior state:STATE_STOPPED
+11-20 03:09:40.291 I/godot   (32603): 
+11-20 03:09:40.340 D/AudioALSAHardware( 1090): [DEBUG] setDeviceStatusChanged: devices=[0x2], status=[1], isFast=[1]
+11-20 03:09:40.340 D/AudioALSAHardware( 1090): [DEBUG] setCachedParam2soundfx: targetScenario PLAYBACK_LOW_LATENCY
+11-20 03:09:40.340 D/AudioALSAHardware( 1090): [DEBUG] setCachedParam2soundfx: mMisoundEnable is 0
+11-20 03:09:40.414 E/gralloc4(32603): ERROR: Format allocation info not found for format: 38
+11-20 03:09:40.415 E/gralloc4(32603): ERROR: Format allocation info not found for format: 0
+11-20 03:09:40.415 E/gralloc4(32603): Invalid base format! req_base_format = 0x0, req_format = 0x38, type = 0x0
+11-20 03:09:40.415 E/gralloc4(32603): ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
+11-20 03:09:40.415 E/Gralloc4(32603): isSupported(1, 1, 56, 1, ...) failed with 5
+11-20 03:09:40.415 E/GraphicBufferAllocator(32603): Failed to allocate (4 x 4) layerCount 1 format 56 usage b00: 5
+11-20 03:09:40.415 E/AHardwareBuffer(32603): GraphicBuffer(w=4, h=4, lc=1) failed (Unknown error -5), handle=0x0
+11-20 03:09:40.416 E/gralloc4(32603): ERROR: Format allocation info not found for format: 38
+11-20 03:09:40.417 E/gralloc4(32603): ERROR: Format allocation info not found for format: 0
+11-20 03:09:40.417 E/gralloc4(32603): Invalid base format! req_base_format = 0x0, req_format = 0x38, type = 0x0
+11-20 03:09:40.417 E/gralloc4(32603): ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
+11-20 03:09:40.417 E/Gralloc4(32603): isSupported(1, 1, 56, 1, ...) failed with 5
+11-20 03:09:40.417 E/GraphicBufferAllocator(32603): Failed to allocate (4 x 4) layerCount 1 format 56 usage b00: 5
+11-20 03:09:40.417 E/AHardwareBuffer(32603): GraphicBuffer(w=4, h=4, lc=1) failed (Unknown error -5), handle=0x0
+11-20 03:09:40.430 D/WindowManager( 1836): Update InputWindowHandle: c025ab9 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher, frame=[0,0,0,0], touchableRegion=SkRegion((0,0,2460,1080)), scaleFactor=1.0, transform=null, windowToken=android.os.BinderProxy@5e4480, isClone=false, visibal=true, focusable=true, changed=true
+11-20 03:09:40.432 I/SwappyDisplayManager(32603): Using internal com/google/androidgamesdk/SwappyDisplayManager class from dex bytes.
+11-20 03:09:40.433 I/SwappyDisplayManager(32603): Starting looper thread
+11-20 03:09:40.444 W/libc    (32603): Access denied finding property "persist.vendor.debug.gpud.enable"
+11-20 03:09:40.444 D/BLASTBufferQueue(32603): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher]#1](f:0,a:1) acquireNextBufferLocked size=2460x1080 mFrameNumber=1 applyTransaction=true mTimestamp=535771295343241(auto) mPendingTransactions.size=0 graphicBufferId=140028818751502 transform=7
+11-20 03:09:40.449 D/BufferStateLayer( 1148): SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984 setBuffer frameId=1, bufferId=140028818751502 fenceId=643, w= 1080, h=2460
+11-20 03:09:40.584 D/WindowManager( 1836): setParent old=ActivityRecord{b38143e u0 com.yasin.citykit.rig/com.godot.game.GodotAppLauncher} t1079},new=null,this window=Window{1ba669 u0 Splash Screen com.yasin.citykit.rig},callers=com.android.server.wm.WindowContainer.removeChild:817 com.android.server.wm.ActivityRecord.removeChild:4733 com.android.server.wm.ActivityRecord.removeChild:421 com.android.server.wm.WindowContainer.removeImmediately:878 com.android.server.wm.WindowState.removeImmediately:2653 com.android.server.wm.WindowState.destroySurface:3833 
+11-20 03:09:40.677 V/Godot   (32603): OnGodotSetupCompleted
+11-20 03:09:41.016 I/libPowerHal( 1115): [updateFPS] pid(32603) : -1 => 120
+11-20 03:09:41.016 I/libPowerHal( 1115): [perfNotifyAppState] pack:com.yasin.citykit.rig, act:com.godot.game.GodotAppLauncher, state:5, pid:32603, uid:10290, fps:120
+11-20 03:09:41.344 I/AudioTrack(32603): isLongTimeZeroData zoer date time 1 Seconds
+11-20 03:09:41.838 V/Godot   (32603): OnGodotMainLoopStarted
+11-20 03:09:41.840 I/godot   (32603): RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 look=1 bloom=0 upscale=0 sharp=0.20 reflect=1 plan=zones lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=140 tiers=false band=8.0 arrive=0.50 far_ground=true tier_materials=31
+11-20 03:09:41.841 I/godot   (32603): RIG native coronado_city 0.1 release android arm64, godot-cpp 4.5 | its own threads: ok (4 threads, 1.0 ms; the device reports 8)
+11-20 03:09:42.016 I/libPowerHal( 1115): [updateFPS] pid(32603) : 120 => -1
+11-20 03:09:42.017 I/libPowerHal( 1115): [perfNotifyAppState] pack:com.yasin.citykit.rig, act:com.godot.game.GodotAppLauncher, state:5, pid:32603, uid:10290, fps:-1
+11-20 03:09:42.350 I/AudioTrack(32603): isLongTimeZeroData zoer date time 2 Seconds
+11-20 03:09:42.936 I/SwappyDisplayManager(32603): Terminating looper thread
+11-20 03:09:42.936 E/godot   (32603): WARNING: The requested V-Sync mode Disabled is not available. Falling back to V-Sync mode Enabled.
+11-20 03:09:42.936 E/godot   (32603):    at: swap_chain_resize (drivers/vulkan/rendering_device_driver_vulkan.cpp:3768)
+11-20 03:09:42.937 E/gralloc4(32603): ERROR: Format allocation info not found for format: 38
+11-20 03:09:42.937 E/gralloc4(32603): ERROR: Format allocation info not found for format: 0
+11-20 03:09:42.937 E/gralloc4(32603): Invalid base format! req_base_format = 0x0, req_format = 0x38, type = 0x0
+11-20 03:09:42.937 E/gralloc4(32603): ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
+11-20 03:09:42.937 E/Gralloc4(32603): isSupported(1, 1, 56, 1, ...) failed with 5
+11-20 03:09:42.937 E/GraphicBufferAllocator(32603): Failed to allocate (4 x 4) layerCount 1 format 56 usage b00: 5
+11-20 03:09:42.937 E/AHardwareBuffer(32603): GraphicBuffer(w=4, h=4, lc=1) failed (Unknown error -5), handle=0x0
+11-20 03:09:42.938 E/gralloc4(32603): ERROR: Format allocation info not found for format: 38
+11-20 03:09:42.938 E/gralloc4(32603): ERROR: Format allocation info not found for format: 0
+11-20 03:09:42.938 E/gralloc4(32603): Invalid base format! req_base_format = 0x0, req_format = 0x38, type = 0x0
+11-20 03:09:42.938 E/gralloc4(32603): ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
+11-20 03:09:42.938 E/Gralloc4(32603): isSupported(1, 1, 56, 1, ...) failed with 5
+11-20 03:09:42.938 E/GraphicBufferAllocator(32603): Failed to allocate (4 x 4) layerCount 1 format 56 usage b00: 5
+11-20 03:09:42.938 E/AHardwareBuffer(32603): GraphicBuffer(w=4, h=4, lc=1) failed (Unknown error -5), handle=0x0
+11-20 03:09:42.955 I/SwappyDisplayManager(32603): Using internal com/google/androidgamesdk/SwappyDisplayManager class from dex bytes.
+11-20 03:09:42.957 I/SwappyDisplayManager(32603): Starting looper thread
+11-20 03:09:42.967 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=0.40 dur=2518.73 max=2518.73 min=2518.73
+11-20 03:09:43.375 I/AudioTrack(32603): isLongTimeZeroData zoer date time 3 Seconds
+11-20 03:09:43.861 I/godot   (32603): RIG warmnight 613 ms
+11-20 03:09:43.983 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=39.39 dur=1015.47 max=146.74 min=8.41
+11-20 03:09:44.017 I/libPowerHal( 1115): [updateFPS] pid(32603) : -1 => 60
+11-20 03:09:44.017 I/libPowerHal( 1115): [perfNotifyAppState] pack:com.yasin.citykit.rig, act:com.godot.game.GodotAppLauncher, state:5, pid:32603, uid:10290, fps:60
+11-20 03:09:44.042 I/godot   (32603): RIG boot first_area_ms=628 warm_ms=1572 (graphics memory reserve 192 MB: 132 ms) cells=10 static_mb=129 video_mb=420
+11-20 03:09:44.222 I/godot   (32603): RIG slow gritty_60kmh 47 ms at t=0.2 s pos=(-738, -1000): cells in +0 out +0, bodies +0, loading ["-3_-4:1", "-3_-7:1"] | marks: rig 0.6 focus 0.5 | to_streamer 0.1 streamer 2.5 | to_draw 0.0 draw 42.5 | to_physics 0.8 physics 0.4 | at: physics_wait 0.2 render_wait 0.1 streamer 2.27 setup 0.0 draw_cpu 1.4 gpu 15.1 | then: physics_wait 0.2 render_wait 0.0 streamer 2.58 setup 0.3 draw_cpu 0.8 gpu 15.0
+11-20 03:09:44.399 I/AudioTrack(32603): isLongTimeZeroData zoer date time 4 Seconds
+11-20 03:09:44.992 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.45 dur=1009.08 max=33.56 min=8.07
+11-20 03:09:45.406 I/AudioTrack(32603): isLongTimeZeroData zoer date time 5 Seconds
+11-20 03:09:45.504 D/ProfileInstaller(32603): Installing profile for com.yasin.citykit.rig
+11-20 03:09:45.993 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=63.92 dur=1001.32 max=33.33 min=7.84
+11-20 03:09:46.414 I/AudioTrack(32603): isLongTimeZeroData zoer date time 6 Seconds
+11-20 03:09:47.003 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=67.35 dur=1009.70 max=24.85 min=8.03
+11-20 03:09:47.019 I/libPowerHal( 1115): [updateFPS] pid(32603) : 60 => 90
+11-20 03:09:47.019 I/libPowerHal( 1115): [perfNotifyAppState] pack:com.yasin.citykit.rig, act:com.godot.game.GodotAppLauncher, state:5, pid:32603, uid:10290, fps:90
+11-20 03:09:47.447 I/AudioTrack(32603): isLongTimeZeroData zoer date time 7 Seconds
+11-20 03:09:48.005 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=66.91 dur=1001.42 max=33.29 min=7.93
+11-20 03:09:48.447 I/AudioTrack(32603): isLongTimeZeroData zoer date time 8 Seconds
+11-20 03:09:49.006 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=66.89 dur=1001.58 max=24.85 min=8.01
+11-20 03:09:49.459 I/AudioTrack(32603): isLongTimeZeroData zoer date time 9 Seconds
+11-20 03:09:50.006 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:09:50.007 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=64.94 dur=1000.96 max=17.54 min=7.85
+11-20 03:09:50.020 I/libPowerHal( 1115): [updateFPS] pid(32603) : 90 => 60
+11-20 03:09:50.021 I/libPowerHal( 1115): [perfNotifyAppState] pack:com.yasin.citykit.rig, act:com.godot.game.GodotAppLauncher, state:5, pid:32603, uid:10290, fps:60
+11-20 03:09:50.479 I/AudioTrack(32603): isLongTimeZeroData zoer date time 10 Seconds
+11-20 03:09:51.017 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=66.31 dur=1010.42 max=23.29 min=7.98
+11-20 03:09:51.471 I/AudioTrack(32603): isLongTimeZeroData zoer date time 11 Seconds
+11-20 03:09:52.018 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=69.95 dur=1000.75 max=17.02 min=7.78
+11-20 03:09:52.021 I/libPowerHal( 1115): [updateFPS] pid(32603) : 60 => 90
+11-20 03:09:52.021 I/libPowerHal( 1115): [perfNotifyAppState] pack:com.yasin.citykit.rig, act:com.godot.game.GodotAppLauncher, state:5, pid:32603, uid:10290, fps:90
+11-20 03:09:52.510 I/AudioTrack(32603): isLongTimeZeroData zoer date time 12 Seconds
+11-20 03:09:53.019 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=74.90 dur=1001.27 max=17.05 min=7.56
+11-20 03:09:53.505 I/AudioTrack(32603): isLongTimeZeroData zoer date time 13 Seconds
+11-20 03:09:54.029 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=73.29 dur=1009.64 max=25.42 min=7.92
+11-20 03:09:54.527 I/AudioTrack(32603): isLongTimeZeroData zoer date time 14 Seconds
+11-20 03:09:55.039 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=75.24 dur=1010.04 max=25.25 min=7.93
+11-20 03:09:55.550 I/AudioTrack(32603): isLongTimeZeroData zoer date time 15 Seconds
+11-20 03:09:56.040 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=73.91 dur=1001.25 max=24.63 min=7.66
+11-20 03:09:56.559 I/AudioTrack(32603): isLongTimeZeroData zoer date time 16 Seconds
+11-20 03:09:57.041 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=74.92 dur=1001.12 max=25.37 min=7.37
+11-20 03:09:57.582 I/AudioTrack(32603): isLongTimeZeroData zoer date time 17 Seconds
+11-20 03:09:58.043 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=82.85 dur=1001.81 max=22.98 min=7.89
+11-20 03:09:58.606 I/AudioTrack(32603): isLongTimeZeroData zoer date time 18 Seconds
+11-20 03:09:59.053 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=90.14 dur=1009.53 max=24.25 min=7.91
+11-20 03:09:59.605 I/AudioTrack(32603): isLongTimeZeroData zoer date time 19 Seconds
+11-20 03:10:00.055 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=86.84 dur=1001.85 max=17.21 min=7.35
+11-20 03:10:00.638 I/AudioTrack(32603): isLongTimeZeroData zoer date time 20 Seconds
+11-20 03:10:01.056 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=80.93 dur=1000.88 max=24.36 min=7.56
+11-20 03:10:01.605 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:10:01.649 I/AudioTrack(32603): isLongTimeZeroData zoer date time 21 Seconds
+11-20 03:10:02.065 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=79.24 dur=1009.56 max=17.21 min=7.67
+11-20 03:10:02.654 I/AudioTrack(32603): isLongTimeZeroData zoer date time 22 Seconds
+11-20 03:10:03.075 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=73.29 dur=1009.73 max=16.93 min=7.88
+11-20 03:10:03.683 I/AudioTrack(32603): isLongTimeZeroData zoer date time 23 Seconds
+11-20 03:10:04.084 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=71.32 dur=1009.52 max=17.24 min=7.46
+11-20 03:10:04.671 I/AudioTrack(32603): isLongTimeZeroData zoer date time 24 Seconds
+11-20 03:10:05.086 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=68.86 dur=1001.96 max=24.69 min=7.79
+11-20 03:10:05.695 I/AudioTrack(32603): isLongTimeZeroData zoer date time 25 Seconds
+11-20 03:10:06.096 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=69.35 dur=1009.32 max=25.09 min=7.44
+11-20 03:10:06.718 I/AudioTrack(32603): isLongTimeZeroData zoer date time 26 Seconds
+11-20 03:10:07.097 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=70.88 dur=1001.73 max=17.54 min=7.88
+11-20 03:10:07.726 I/AudioTrack(32603): isLongTimeZeroData zoer date time 27 Seconds
+11-20 03:10:08.098 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=72.93 dur=1000.93 max=16.94 min=7.92
+11-20 03:10:08.734 I/AudioTrack(32603): isLongTimeZeroData zoer date time 28 Seconds
+11-20 03:10:09.053 I/godot   (32603): RIG drive gritty_60kmh speed=60 km/h secs=25 frames=1825 fps=73.0 | frame_ms med=16.0 p95=18.5 p99=22.9 worst=47 | over16.7=34.0% over33=2 over50=0 over100=0
+11-20 03:10:09.053 I/godot   (32603): RIG   map gritty_60kmh draws avg=112 max=162 | tris avg=1012k max=1457k | cells most=14 in=9 out=5 dropped=0 cap_hits=0 | gpu_ms med=11.36 p95=13.25
+11-20 03:10:09.053 I/godot   (32603): RIG   stream gritty_60kmh start_ready_ms=0 (worst frame meanwhile 0 ms) | request_to_in ms mean=172 worst=306 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 0.86, body 1.80 (col_51 shapes=24 new=445), removal step 0.25 | bodies late=0
+11-20 03:10:09.053 I/godot   (32603): RIG   slow gritty_60kmh frames over 33 ms by what the streamer was doing: { "loading": 1, "bodies": 1 } | over 45 ms: { "loading": 1 }
+11-20 03:10:09.053 I/godot   (32603): RIG   collision gritty_60kmh made=313840 units, a body waited at most 1 ms from coming into range | physics thread wait a frame (probe): median 0.4 p99 3.0 worst 4.4 ms
+11-20 03:10:09.053 I/godot   (32603): RIG   objects gritty_60kmh all=8967 nodes=2479 orphan_nodes=0 resources=1732 | streamer: cells in=14, bodies waiting=0, nodes leaving=0
+11-20 03:10:09.054 I/godot   (32603): RIG   mem gritty_60kmh static_mb=137 video_mb=439 tex_mb=114 buf_mb=284
+11-20 03:10:09.100 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=77.89 dur=1001.37 max=17.46 min=7.40
+11-20 03:10:09.762 I/AudioTrack(32603): isLongTimeZeroData zoer date time 29 Seconds
+11-20 03:10:10.101 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=76.89 dur=1001.42 max=41.34 min=7.99
+11-20 03:10:10.768 I/AudioTrack(32603): isLongTimeZeroData zoer date time 30 Seconds
+11-20 03:10:11.028 I/libPowerHal( 1115): [updateFPS] pid(32603) : 90 => 60
+11-20 03:10:11.029 I/libPowerHal( 1115): [perfNotifyAppState] pack:com.yasin.citykit.rig, act:com.godot.game.GodotAppLauncher, state:5, pid:32603, uid:10290, fps:60
+11-20 03:10:11.103 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=64.86 dur=1002.16 max=24.25 min=8.01
+11-20 03:10:11.796 I/AudioTrack(32603): isLongTimeZeroData zoer date time 31 Seconds
+11-20 03:10:12.104 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=63.95 dur=1000.72 max=25.09 min=7.80
+11-20 03:10:12.741 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:10:12.801 I/AudioTrack(32603): isLongTimeZeroData zoer date time 32 Seconds
+11-20 03:10:13.114 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=65.36 dur=1009.81 max=24.93 min=7.50
+11-20 03:10:13.808 I/AudioTrack(32603): isLongTimeZeroData zoer date time 33 Seconds
+11-20 03:10:14.123 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=62.41 dur=1009.50 max=24.89 min=8.09
+11-20 03:10:14.847 I/AudioTrack(32603): isLongTimeZeroData zoer date time 34 Seconds
+11-20 03:10:15.125 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.91 dur=1001.51 max=33.02 min=16.10
+11-20 03:10:15.856 I/AudioTrack(32603): isLongTimeZeroData zoer date time 35 Seconds
+11-20 03:10:16.126 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=54.93 dur=1001.32 max=24.98 min=16.05
+11-20 03:10:16.878 I/AudioTrack(32603): isLongTimeZeroData zoer date time 36 Seconds
+11-20 03:10:17.128 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.89 dur=1001.89 max=25.24 min=16.08
+11-20 03:10:17.886 I/AudioTrack(32603): isLongTimeZeroData zoer date time 37 Seconds
+11-20 03:10:18.137 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.47 dur=1009.07 max=24.86 min=15.94
+11-20 03:10:18.682 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:V''
+11-20 03:10:18.894 I/AudioTrack(32603): isLongTimeZeroData zoer date time 38 Seconds
+11-20 03:10:19.147 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.43 dur=1009.80 max=24.99 min=8.33
+11-20 03:10:19.919 I/AudioTrack(32603): isLongTimeZeroData zoer date time 39 Seconds
+11-20 03:10:20.148 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.92 dur=1001.33 max=24.84 min=16.08
+11-20 03:10:20.926 I/AudioTrack(32603): isLongTimeZeroData zoer date time 40 Seconds
+11-20 03:10:21.149 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.92 dur=1001.36 max=40.68 min=8.80
+11-20 03:10:21.934 I/AudioTrack(32603): isLongTimeZeroData zoer date time 41 Seconds
+11-20 03:10:22.151 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.92 dur=1001.28 max=25.11 min=8.42
+11-20 03:10:22.959 I/AudioTrack(32603): isLongTimeZeroData zoer date time 42 Seconds
+11-20 03:10:23.160 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.42 dur=1009.58 max=17.57 min=16.03
+11-20 03:10:23.966 I/AudioTrack(32603): isLongTimeZeroData zoer date time 43 Seconds
+11-20 03:10:24.170 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.42 dur=1009.88 max=25.58 min=15.78
+11-20 03:10:24.992 I/AudioTrack(32603): isLongTimeZeroData zoer date time 44 Seconds
+11-20 03:10:25.014 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:10:25.180 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.45 dur=1009.71 max=25.20 min=8.26
+11-20 03:10:26.014 I/AudioTrack(32603): isLongTimeZeroData zoer date time 45 Seconds
+11-20 03:10:26.190 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.42 dur=1009.73 max=24.82 min=16.22
+11-20 03:10:26.316 I/godot   (32603): RIG slow centre_60kmh 70 ms at t=16.5 s pos=(0, -466): cells in +0 out +0, bodies +0, loading ["-1_-1:1", "0_-1:1"] | marks: rig 1.9 focus 1.3 | to_streamer 1.0 streamer 1.1 | to_draw 0.1 draw 62.2 | to_physics 0.6 physics 2.2 | at: physics_wait 0.4 render_wait 0.0 streamer 0.71 setup 0.2 draw_cpu 1.9 gpu 14.1 | then: physics_wait 0.1 render_wait 0.0 streamer 0.20 setup 0.1 draw_cpu 2.0 gpu 15.4
+11-20 03:10:27.022 I/AudioTrack(32603): isLongTimeZeroData zoer date time 46 Seconds
+11-20 03:10:27.199 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=49.54 dur=1009.38 max=74.27 min=16.18
+11-20 03:10:28.046 I/AudioTrack(32603): isLongTimeZeroData zoer date time 47 Seconds
+11-20 03:10:28.209 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.42 dur=1009.84 max=24.93 min=15.69
+11-20 03:10:29.038 I/AudioTrack(32603): isLongTimeZeroData zoer date time 48 Seconds
+11-20 03:10:29.210 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.93 dur=1001.28 max=25.02 min=15.99
+11-20 03:10:30.063 I/AudioTrack(32603): isLongTimeZeroData zoer date time 49 Seconds
+11-20 03:10:30.220 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.44 dur=1009.59 max=33.18 min=16.00
+11-20 03:10:31.086 I/AudioTrack(32603): isLongTimeZeroData zoer date time 50 Seconds
+11-20 03:10:31.221 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.91 dur=1001.55 max=25.11 min=16.15
+11-20 03:10:31.701 W/libc    ( 4194): Access denied finding property "persist.vendor.battery.erp"
+11-20 03:10:32.093 I/AudioTrack(32603): isLongTimeZeroData zoer date time 51 Seconds
+11-20 03:10:32.223 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.91 dur=1001.58 max=25.09 min=15.81
+11-20 03:10:33.105 I/AudioTrack(32603): isLongTimeZeroData zoer date time 52 Seconds
+11-20 03:10:33.232 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=55.48 dur=1009.46 max=25.71 min=15.85
+11-20 03:10:34.126 I/AudioTrack(32603): isLongTimeZeroData zoer date time 53 Seconds
+11-20 03:10:34.242 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.46 dur=1009.54 max=25.14 min=15.69
+11-20 03:10:34.842 I/godot   (32603): RIG drive centre_60kmh speed=60 km/h secs=25 frames=1464 fps=58.5 | frame_ms med=16.8 p95=24.9 p99=26.5 worst=70 | over16.7=51.8% over33=2 over50=1 over100=0
+11-20 03:10:34.842 I/godot   (32603): RIG   map centre_60kmh draws avg=132 max=168 | tris avg=1324k max=1761k | cells most=14 in=9 out=17 dropped=0 cap_hits=0 | gpu_ms med=14.40 p95=15.66
+11-20 03:10:34.842 I/godot   (32603): RIG   stream centre_60kmh start_ready_ms=763 (worst frame meanwhile 40 ms) | request_to_in ms mean=312 worst=591 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.89, body 2.02 (col_24 shapes=19 new=1709), removal step 0.68 | bodies late=0
+11-20 03:10:34.842 I/godot   (32603): RIG   slow centre_60kmh frames over 33 ms by what the streamer was doing: { "bodies": 1, "loading": 1 } | over 45 ms: { "loading": 1 }
+11-20 03:10:34.843 I/godot   (32603): RIG   collision centre_60kmh made=467455 units, a body waited at most 153 ms from coming into range | physics thread wait a frame (probe): median 0.5 p99 5.2 worst 8.4 ms
+11-20 03:10:34.843 I/godot   (32603): RIG   objects centre_60kmh all=16016 nodes=4198 orphan_nodes=1539 resources=2718 | streamer: cells in=14, bodies waiting=0, nodes leaving=9
+11-20 03:10:34.843 I/godot   (32603): RIG   mem centre_60kmh static_mb=177 video_mb=654 tex_mb=114 buf_mb=491
+11-20 03:10:35.134 I/AudioTrack(32603): isLongTimeZeroData zoer date time 54 Seconds
+11-20 03:10:35.252 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.45 dur=1009.72 max=24.96 min=16.13
+11-20 03:10:36.158 I/AudioTrack(32603): isLongTimeZeroData zoer date time 55 Seconds
+11-20 03:10:36.253 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=52.93 dur=1001.39 max=33.49 min=16.11
+11-20 03:10:36.298 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:10:37.166 I/AudioTrack(32603): isLongTimeZeroData zoer date time 56 Seconds
+11-20 03:10:37.254 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.92 dur=1001.43 max=32.84 min=7.95
+11-20 03:10:38.174 I/AudioTrack(32603): isLongTimeZeroData zoer date time 57 Seconds
+11-20 03:10:38.256 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.93 dur=1001.25 max=25.10 min=8.17
+11-20 03:10:39.214 I/AudioTrack(32603): isLongTimeZeroData zoer date time 58 Seconds
+11-20 03:10:39.265 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.43 dur=1009.69 max=33.03 min=7.61
+11-20 03:10:40.212 I/AudioTrack(32603): isLongTimeZeroData zoer date time 59 Seconds
+11-20 03:10:40.275 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.43 dur=1009.56 max=24.91 min=15.75
+11-20 03:10:41.230 I/AudioTrack(32603): isLongTimeZeroData out of time 0S 0mS
+11-20 03:10:41.230 I/AudioTrack(32603): isLongTimeZeroData zoer date time 0 Seconds
+11-20 03:10:41.285 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.43 dur=1009.82 max=24.95 min=15.89
+11-20 03:10:42.256 I/AudioTrack(32603): isLongTimeZeroData zoer date time 1 Seconds
+11-20 03:10:42.286 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.92 dur=1001.37 max=33.04 min=8.15
+11-20 03:10:43.262 I/AudioTrack(32603): isLongTimeZeroData zoer date time 2 Seconds
+11-20 03:10:43.288 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.92 dur=1001.41 max=24.50 min=15.90
+11-20 03:10:44.286 I/AudioTrack(32603): isLongTimeZeroData zoer date time 3 Seconds
+11-20 03:10:44.314 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.46 dur=1026.37 max=33.37 min=8.32
+11-20 03:10:45.294 I/AudioTrack(32603): isLongTimeZeroData zoer date time 4 Seconds
+11-20 03:10:45.315 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.93 dur=1001.16 max=24.91 min=8.04
+11-20 03:10:46.302 I/AudioTrack(32603): isLongTimeZeroData zoer date time 5 Seconds
+11-20 03:10:46.325 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.41 dur=1009.78 max=17.32 min=15.81
+11-20 03:10:47.099 I/sin.citykit.rig(32603): Explicit concurrent mark compact GC freed 496KB AllocSpace bytes, 0(0B) LOS objects, 49% free, 3512KB/7024KB, paused 92us,1.709ms total 19.223ms
+11-20 03:10:47.326 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.91 dur=1001.47 max=33.34 min=8.34
+11-20 03:10:47.334 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:10:47.341 I/AudioTrack(32603): isLongTimeZeroData zoer date time 6 Seconds
+11-20 03:10:48.328 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.92 dur=1001.35 max=25.37 min=8.30
+11-20 03:10:48.336 I/AudioTrack(32603): isLongTimeZeroData zoer date time 7 Seconds
+11-20 03:10:49.337 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.42 dur=1009.62 max=16.96 min=16.02
+11-20 03:10:49.357 I/AudioTrack(32603): isLongTimeZeroData zoer date time 8 Seconds
+11-20 03:10:49.741 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:V''
+11-20 03:10:50.347 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.43 dur=1009.51 max=17.36 min=15.76
+11-20 03:10:50.381 I/AudioTrack(32603): isLongTimeZeroData zoer date time 9 Seconds
+11-20 03:10:51.348 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.92 dur=1001.40 max=25.04 min=15.46
+11-20 03:10:51.375 I/AudioTrack(32603): isLongTimeZeroData zoer date time 10 Seconds
+11-20 03:10:52.358 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.40 dur=1009.91 max=17.27 min=15.81
+11-20 03:10:52.403 I/AudioTrack(32603): isLongTimeZeroData zoer date time 11 Seconds
+11-20 03:10:53.360 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=54.92 dur=1001.44 max=41.10 min=7.91
+11-20 03:10:53.409 I/AudioTrack(32603): isLongTimeZeroData zoer date time 12 Seconds
+11-20 03:10:54.361 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.93 dur=1001.17 max=24.94 min=16.19
+11-20 03:10:54.414 I/AudioTrack(32603): isLongTimeZeroData zoer date time 13 Seconds
+11-20 03:10:55.370 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.43 dur=1009.51 max=32.96 min=8.49
+11-20 03:10:55.454 I/AudioTrack(32603): isLongTimeZeroData zoer date time 14 Seconds
+11-20 03:10:56.380 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.42 dur=1009.68 max=17.16 min=16.12
+11-20 03:10:56.469 I/AudioTrack(32603): isLongTimeZeroData zoer date time 15 Seconds
+11-20 03:10:57.390 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.43 dur=1009.68 max=33.12 min=16.00
+11-20 03:10:57.485 I/AudioTrack(32603): isLongTimeZeroData zoer date time 16 Seconds
+11-20 03:10:57.860 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:10:58.399 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.41 dur=1009.83 max=18.02 min=15.28
+11-20 03:10:58.513 I/AudioTrack(32603): isLongTimeZeroData zoer date time 17 Seconds
+11-20 03:10:59.133 W/libc    ( 4194): Access denied finding property "persist.vendor.battery.erp"
+11-20 03:10:59.409 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.46 dur=1009.48 max=33.82 min=7.81
+11-20 03:10:59.518 I/AudioTrack(32603): isLongTimeZeroData zoer date time 18 Seconds
+11-20 03:11:00.419 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.42 dur=1009.82 max=25.11 min=15.48
+11-20 03:11:00.525 I/AudioTrack(32603): isLongTimeZeroData zoer date time 19 Seconds
+11-20 03:11:01.377 I/godot   (32603): RIG drive waterfront_60kmh speed=60 km/h secs=25 frames=1480 fps=59.2 | frame_ms med=16.7 p95=23.7 p99=26.0 worst=31 | over16.7=50.7% over33=0 over50=0 over100=0
+11-20 03:11:01.378 I/godot   (32603): RIG   map waterfront_60kmh draws avg=106 max=140 | tris avg=967k max=1331k | cells most=13 in=6 out=20 dropped=0 cap_hits=0 | gpu_ms med=14.09 p95=14.71
+11-20 03:11:01.378 I/godot   (32603): RIG   stream waterfront_60kmh start_ready_ms=1524 (worst frame meanwhile 29 ms) | request_to_in ms mean=94 worst=185 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.89, body 2.02 (col_24 shapes=19 new=1709), removal step 2.63 | bodies late=0
+11-20 03:11:01.378 I/godot   (32603): RIG   slow waterfront_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+11-20 03:11:01.378 I/godot   (32603): RIG   collision waterfront_60kmh made=244764 units, a body waited at most 309 ms from coming into range | physics thread wait a frame (probe): median 0.4 p99 4.6 worst 7.7 ms
+11-20 03:11:01.379 I/godot   (32603): RIG   objects waterfront_60kmh all=7188 nodes=2192 orphan_nodes=121 resources=1068 | streamer: cells in=12, bodies waiting=0, nodes leaving=3
+11-20 03:11:01.379 I/godot   (32603): RIG   mem waterfront_60kmh static_mb=141 video_mb=477 tex_mb=116 buf_mb=313
+11-20 03:11:01.428 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.43 dur=1009.53 max=24.91 min=15.84
+11-20 03:11:01.549 I/AudioTrack(32603): isLongTimeZeroData zoer date time 20 Seconds
+11-20 03:11:02.430 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.89 dur=1001.96 max=33.13 min=8.03
+11-20 03:11:02.548 I/AudioTrack(32603): isLongTimeZeroData zoer date time 21 Seconds
+11-20 03:11:03.431 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.95 dur=1000.90 max=32.61 min=8.21
+11-20 03:11:03.581 I/AudioTrack(32603): isLongTimeZeroData zoer date time 22 Seconds
+11-20 03:11:04.441 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.43 dur=1009.67 max=24.78 min=16.09
+11-20 03:11:04.592 I/AudioTrack(32603): isLongTimeZeroData zoer date time 23 Seconds
+11-20 03:11:05.442 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.91 dur=1001.52 max=25.08 min=15.92
+11-20 03:11:05.599 I/AudioTrack(32603): isLongTimeZeroData zoer date time 24 Seconds
+11-20 03:11:06.452 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.46 dur=1009.40 max=24.92 min=16.03
+11-20 03:11:06.625 I/AudioTrack(32603): isLongTimeZeroData zoer date time 25 Seconds
+11-20 03:11:06.657 D/nativeloader(  361): Extending system_exposed_libraries: libapuwareapusys.mtk.so:libapuwareapusys_v2.mtk.so:libapuwarexrp.mtk.so:libapuwarexrp_v2.mtk.so:libapuwareutils.mtk.so:libapuwareutils_v2.mtk.so:libapuwarehmp.mtk.so:libmcv_runtime_usdk.mtk.so:libneuron_graph_delegate.mtk.so:libneuronusdk_adapter.mtk.so:libtflite_mtk.mtk.so:libarmnn_ndk.mtk.so:libcmdl_ndk.mtk.so:libnir_neon_driver_ndk.mtk.so:libmvpu_runtime.mtk.so:libmvpu_runtime_pub.mtk.so:libmvpu_engine_pub.mtk.so:libmvpu_pattern_pub.mtk.so:libmvpuop_mtk_cv.mtk.so:libmvpuop_mtk_nn.mtk.so:libteeservice_client.trustonic.so:libmisys_jni.xiaomi.so
+11-20 03:11:07.395 D/nativeloader(  491): Load /data/app/~~y2eWZYNncOEhu7xYMVU7Mw==/com.android.chrome-d4STeIWLbFBYwi2vkd_h3w==/base.apk!/lib/arm64-v8a/libchromium_android_linker.so using class loader ns clns-4 (caller=/data/app/~~y2eWZYNncOEhu7xYMVU7Mw==/com.android.chrome-d4STeIWLbFBYwi2vkd_h3w==/base.apk): ok
+11-20 03:11:07.453 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.93 dur=1001.21 max=33.09 min=8.05
+11-20 03:11:07.459 D/nativeloader(  491): Load /data/app/~~y2eWZYNncOEhu7xYMVU7Mw==/com.android.chrome-d4STeIWLbFBYwi2vkd_h3w==/base.apk!/lib/arm64-v8a/libchrome.so using class loader ns clns-4 (caller=/data/app/~~y2eWZYNncOEhu7xYMVU7Mw==/com.android.chrome-d4STeIWLbFBYwi2vkd_h3w==/base.apk): ok
+11-20 03:11:07.631 I/AudioTrack(32603): isLongTimeZeroData zoer date time 26 Seconds
+11-20 03:11:08.341 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:11:08.463 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.40 dur=1010.02 max=25.21 min=8.16
+11-20 03:11:08.638 I/AudioTrack(32603): isLongTimeZeroData zoer date time 27 Seconds
+11-20 03:11:09.473 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.44 dur=1009.61 max=24.92 min=8.41
+11-20 03:11:09.677 I/AudioTrack(32603): isLongTimeZeroData zoer date time 28 Seconds
+11-20 03:11:10.432 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:V''
+11-20 03:11:10.474 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.94 dur=1001.06 max=33.25 min=8.03
+11-20 03:11:10.672 I/AudioTrack(32603): isLongTimeZeroData zoer date time 29 Seconds
+11-20 03:11:11.484 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.41 dur=1009.99 max=24.80 min=8.43
+11-20 03:11:11.694 I/AudioTrack(32603): isLongTimeZeroData zoer date time 30 Seconds
+11-20 03:11:12.485 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.91 dur=1001.51 max=24.23 min=16.11
+11-20 03:11:12.717 I/AudioTrack(32603): isLongTimeZeroData zoer date time 31 Seconds
+11-20 03:11:13.486 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.93 dur=1001.22 max=33.25 min=8.25
+11-20 03:11:13.711 I/AudioTrack(32603): isLongTimeZeroData zoer date time 32 Seconds
+11-20 03:11:14.496 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.43 dur=1009.62 max=25.04 min=16.20
+11-20 03:11:14.749 I/AudioTrack(32603): isLongTimeZeroData zoer date time 33 Seconds
+11-20 03:11:15.497 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=55.92 dur=1001.42 max=24.93 min=15.61
+11-20 03:11:15.745 I/AudioTrack(32603): isLongTimeZeroData zoer date time 34 Seconds
+11-20 03:11:16.499 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.90 dur=1001.64 max=24.65 min=15.95
+11-20 03:11:16.765 I/AudioTrack(32603): isLongTimeZeroData zoer date time 35 Seconds
+11-20 03:11:17.500 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.93 dur=1001.14 max=24.65 min=16.13
+11-20 03:11:17.805 I/AudioTrack(32603): isLongTimeZeroData zoer date time 36 Seconds
+11-20 03:11:18.510 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.43 dur=1009.52 max=24.87 min=16.09
+11-20 03:11:18.813 I/AudioTrack(32603): isLongTimeZeroData zoer date time 37 Seconds
+11-20 03:11:19.511 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=54.93 dur=1001.36 max=33.34 min=8.00
+11-20 03:11:19.677 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:11:19.822 I/AudioTrack(32603): isLongTimeZeroData zoer date time 38 Seconds
+11-20 03:11:20.513 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.90 dur=1001.75 max=25.00 min=8.04
+11-20 03:11:20.845 I/AudioTrack(32603): isLongTimeZeroData zoer date time 39 Seconds
+11-20 03:11:21.514 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.93 dur=1001.24 max=24.85 min=8.35
+11-20 03:11:21.856 I/AudioTrack(32603): isLongTimeZeroData zoer date time 40 Seconds
+11-20 03:11:22.515 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.93 dur=1001.08 max=24.85 min=15.47
+11-20 03:11:22.862 I/AudioTrack(32603): isLongTimeZeroData zoer date time 41 Seconds
+11-20 03:11:23.525 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.40 dur=1010.02 max=33.31 min=8.37
+11-20 03:11:23.885 I/AudioTrack(32603): isLongTimeZeroData zoer date time 42 Seconds
+11-20 03:11:24.534 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.44 dur=1009.30 max=17.77 min=15.37
+11-20 03:11:24.893 I/AudioTrack(32603): isLongTimeZeroData zoer date time 43 Seconds
+11-20 03:11:25.536 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.91 dur=1001.55 max=24.93 min=15.77
+11-20 03:11:25.933 I/AudioTrack(32603): isLongTimeZeroData zoer date time 44 Seconds
+11-20 03:11:26.546 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.41 dur=1009.70 max=17.46 min=15.90
+11-20 03:11:26.929 I/AudioTrack(32603): isLongTimeZeroData zoer date time 45 Seconds
+11-20 03:11:27.430 I/godot   (32603): RIG drive industrial_60kmh speed=60 km/h secs=25 frames=1477 fps=59.1 | frame_ms med=16.8 p95=23.8 p99=25.8 worst=30 | over16.7=52.9% over33=0 over50=0 over100=0
+11-20 03:11:27.430 I/godot   (32603): RIG   map industrial_60kmh draws avg=143 max=193 | tris avg=1050k max=1464k | cells most=11 in=9 out=17 dropped=0 cap_hits=0 | gpu_ms med=14.14 p95=14.89
+11-20 03:11:27.431 I/godot   (32603): RIG   stream industrial_60kmh start_ready_ms=1033 (worst frame meanwhile 28 ms) | request_to_in ms mean=194 worst=359 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 1.90, body 3.18 (col_9 shapes=8 new=533), removal step 2.63 | bodies late=0
+11-20 03:11:27.431 I/godot   (32603): RIG   slow industrial_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+11-20 03:11:27.431 I/godot   (32603): RIG   collision industrial_60kmh made=236310 units, a body waited at most 150 ms from coming into range | physics thread wait a frame (probe): median 0.5 p99 4.5 worst 7.1 ms
+11-20 03:11:27.432 I/godot   (32603): RIG   objects industrial_60kmh all=7434 nodes=2224 orphan_nodes=0 resources=1052 | streamer: cells in=11, bodies waiting=0, nodes leaving=0
+11-20 03:11:27.432 I/godot   (32603): RIG   mem industrial_60kmh static_mb=138 video_mb=468 tex_mb=115 buf_mb=305
+11-20 03:11:27.547 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.91 dur=1001.53 max=24.33 min=15.64
+11-20 03:11:27.949 I/AudioTrack(32603): isLongTimeZeroData zoer date time 46 Seconds
+11-20 03:11:28.557 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.45 dur=1009.36 max=41.48 min=8.14
+11-20 03:11:28.973 I/AudioTrack(32603): isLongTimeZeroData zoer date time 47 Seconds
+11-20 03:11:29.558 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.90 dur=1001.66 max=33.21 min=8.28
+11-20 03:11:29.969 I/AudioTrack(32603): isLongTimeZeroData zoer date time 48 Seconds
+11-20 03:11:30.240 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:11:30.559 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=55.93 dur=1001.18 max=33.57 min=8.04
+11-20 03:11:30.989 I/AudioTrack(32603): isLongTimeZeroData zoer date time 49 Seconds
+11-20 03:11:31.016 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:V''
+11-20 03:11:31.569 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.45 dur=1009.81 max=25.26 min=8.31
+11-20 03:11:31.705 W/libc    ( 4194): Access denied finding property "persist.vendor.battery.erp"
+11-20 03:11:31.998 I/AudioTrack(32603): isLongTimeZeroData zoer date time 50 Seconds
+11-20 03:11:32.571 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=51.93 dur=1001.34 max=25.29 min=15.80
+11-20 03:11:33.021 I/AudioTrack(32603): isLongTimeZeroData zoer date time 51 Seconds
+11-20 03:11:33.572 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=48.93 dur=1001.49 max=25.99 min=15.56
+11-20 03:11:34.046 I/AudioTrack(32603): isLongTimeZeroData zoer date time 52 Seconds
+11-20 03:11:34.573 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=50.94 dur=1001.14 max=25.06 min=16.14
+11-20 03:11:35.053 I/AudioTrack(32603): isLongTimeZeroData zoer date time 53 Seconds
+11-20 03:11:35.575 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=48.92 dur=1001.57 max=25.69 min=15.64
+11-20 03:11:36.077 I/AudioTrack(32603): isLongTimeZeroData zoer date time 54 Seconds
+11-20 03:11:36.584 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=53.49 dur=1009.56 max=25.70 min=15.80
+11-20 03:11:37.086 I/AudioTrack(32603): isLongTimeZeroData zoer date time 55 Seconds
+11-20 03:11:37.594 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=55.47 dur=1009.62 max=25.08 min=16.13
+11-20 03:11:38.093 I/AudioTrack(32603): isLongTimeZeroData zoer date time 56 Seconds
+11-20 03:11:38.596 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=52.92 dur=1001.59 max=25.13 min=16.26
+11-20 03:11:39.117 I/AudioTrack(32603): isLongTimeZeroData zoer date time 57 Seconds
+11-20 03:11:39.605 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=49.52 dur=1009.64 max=25.04 min=16.36
+11-20 03:11:40.125 I/AudioTrack(32603): isLongTimeZeroData zoer date time 58 Seconds
+11-20 03:11:40.615 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=48.53 dur=1009.63 max=25.20 min=16.10
+11-20 03:11:40.703 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:11:41.149 I/AudioTrack(32603): isLongTimeZeroData zoer date time 59 Seconds
+11-20 03:11:41.624 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=50.52 dur=1009.55 max=25.82 min=15.52
+11-20 03:11:42.173 I/AudioTrack(32603): isLongTimeZeroData out of time 0S 0mS
+11-20 03:11:42.181 I/AudioTrack(32603): isLongTimeZeroData zoer date time 0 Seconds
+11-20 03:11:42.643 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=47.14 dur=1018.31 max=25.40 min=15.91
+11-20 03:11:43.181 I/AudioTrack(32603): isLongTimeZeroData zoer date time 1 Seconds
+11-20 03:11:43.644 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=51.94 dur=1001.15 max=25.42 min=16.09
+11-20 03:11:44.193 I/AudioTrack(32603): isLongTimeZeroData zoer date time 2 Seconds
+11-20 03:11:44.653 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.45 dur=1009.51 max=25.25 min=15.65
+11-20 03:11:45.213 I/AudioTrack(32603): isLongTimeZeroData zoer date time 3 Seconds
+11-20 03:11:45.655 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.92 dur=1001.41 max=24.15 min=15.98
+11-20 03:11:46.221 I/AudioTrack(32603): isLongTimeZeroData zoer date time 4 Seconds
+11-20 03:11:46.664 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.43 dur=1009.63 max=25.02 min=8.01
+11-20 03:11:47.232 I/AudioTrack(32603): isLongTimeZeroData zoer date time 5 Seconds
+11-20 03:11:47.682 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=53.04 dur=1018.09 max=25.19 min=16.11
+11-20 03:11:48.252 I/AudioTrack(32603): isLongTimeZeroData zoer date time 6 Seconds
+11-20 03:11:48.700 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=49.12 dur=1017.92 max=25.30 min=16.14
+11-20 03:11:49.260 I/AudioTrack(32603): isLongTimeZeroData zoer date time 7 Seconds
+11-20 03:11:49.710 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=47.53 dur=1009.86 max=25.25 min=16.13
+11-20 03:11:50.284 I/AudioTrack(32603): isLongTimeZeroData zoer date time 8 Seconds
+11-20 03:11:50.728 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=47.16 dur=1017.89 max=25.24 min=16.12
+11-20 03:11:51.299 I/AudioTrack(32603): isLongTimeZeroData zoer date time 9 Seconds
+11-20 03:11:51.637 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:11:51.729 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=48.95 dur=1000.96 max=25.23 min=15.77
+11-20 03:11:52.011 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:V''
+11-20 03:11:52.305 I/AudioTrack(32603): isLongTimeZeroData zoer date time 10 Seconds
+11-20 03:11:52.739 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=47.53 dur=1009.97 max=25.41 min=15.88
+11-20 03:11:53.341 I/AudioTrack(32603): isLongTimeZeroData zoer date time 11 Seconds
+11-20 03:11:53.740 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=52.94 dur=1001.22 max=25.31 min=16.08
+11-20 03:11:54.333 I/AudioTrack(32603): isLongTimeZeroData zoer date time 12 Seconds
+11-20 03:11:54.750 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.44 dur=1009.79 max=24.91 min=15.90
+11-20 03:11:54.936 I/godot   (32603): RIG drive apartments_60kmh speed=60 km/h secs=25 frames=1303 fps=52.1 | frame_ms med=17.3 p95=27.1 p99=28.8 worst=31 | over16.7=60.2% over33=0 over50=0 over100=0
+11-20 03:11:54.936 I/godot   (32603): RIG   map apartments_60kmh draws avg=181 max=232 | tris avg=1521k max=1760k | cells most=14 in=9 out=18 dropped=0 cap_hits=0 | gpu_ms med=16.69 p95=19.90
+11-20 03:11:54.936 I/godot   (32603): RIG   stream apartments_60kmh start_ready_ms=2487 (worst frame meanwhile 34 ms) | request_to_in ms mean=146 worst=291 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 4.49, body 3.18 (col_9 shapes=8 new=533), removal step 2.63 | bodies late=0
+11-20 03:11:54.936 I/godot   (32603): RIG   slow apartments_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+11-20 03:11:54.937 I/godot   (32603): RIG   collision apartments_60kmh made=453143 units, a body waited at most 578 ms from coming into range | physics thread wait a frame (probe): median 0.5 p99 3.9 worst 5.6 ms
+11-20 03:11:54.937 I/godot   (32603): RIG   objects apartments_60kmh all=15838 nodes=4250 orphan_nodes=1564 resources=2338 | streamer: cells in=14, bodies waiting=0, nodes leaving=9
+11-20 03:11:54.937 I/godot   (32603): RIG   mem apartments_60kmh static_mb=181 video_mb=675 tex_mb=114 buf_mb=512
+11-20 03:11:55.357 I/AudioTrack(32603): isLongTimeZeroData zoer date time 13 Seconds
+11-20 03:11:55.768 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=55.02 dur=1017.75 max=24.91 min=16.24
+11-20 03:11:56.373 I/AudioTrack(32603): isLongTimeZeroData zoer date time 14 Seconds
+11-20 03:11:56.778 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=52.49 dur=1009.80 max=33.03 min=16.23
+11-20 03:11:57.378 I/AudioTrack(32603): isLongTimeZeroData zoer date time 15 Seconds
+11-20 03:11:57.779 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=52.93 dur=1001.36 max=25.51 min=7.99
+11-20 03:11:58.413 I/AudioTrack(32603): isLongTimeZeroData zoer date time 16 Seconds
+11-20 03:11:58.789 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=54.48 dur=1009.62 max=24.99 min=16.27
+11-20 03:11:59.420 I/AudioTrack(32603): isLongTimeZeroData zoer date time 17 Seconds
+11-20 03:11:59.815 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.52 dur=1026.24 max=33.13 min=15.82
+11-20 03:12:00.428 I/AudioTrack(32603): isLongTimeZeroData zoer date time 18 Seconds
+11-20 03:12:00.579 W/libc    ( 4194): Access denied finding property "persist.vendor.battery.erp"
+11-20 03:12:00.825 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=55.46 dur=1009.67 max=25.10 min=16.03
+11-20 03:12:01.468 I/AudioTrack(32603): isLongTimeZeroData zoer date time 19 Seconds
+11-20 03:12:01.826 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=53.93 dur=1001.33 max=25.02 min=15.64
+11-20 03:12:02.462 I/AudioTrack(32603): isLongTimeZeroData zoer date time 20 Seconds
+11-20 03:12:02.836 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=54.47 dur=1009.82 max=25.12 min=16.26
+11-20 03:12:03.484 I/AudioTrack(32603): isLongTimeZeroData zoer date time 21 Seconds
+11-20 03:12:03.845 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=55.48 dur=1009.44 max=24.88 min=16.11
+11-20 03:12:04.508 I/AudioTrack(32603): isLongTimeZeroData zoer date time 22 Seconds
+11-20 03:12:04.855 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.42 dur=1010.09 max=33.28 min=15.87
+11-20 03:12:05.328 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:12:05.505 I/AudioTrack(32603): isLongTimeZeroData zoer date time 23 Seconds
+11-20 03:12:05.856 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.93 dur=1001.14 max=32.74 min=8.58
+11-20 03:12:06.540 I/AudioTrack(32603): isLongTimeZeroData zoer date time 24 Seconds
+11-20 03:12:06.866 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.43 dur=1009.70 max=26.09 min=15.65
+11-20 03:12:07.535 I/AudioTrack(32603): isLongTimeZeroData zoer date time 25 Seconds
+11-20 03:12:07.876 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.44 dur=1009.60 max=25.05 min=15.81
+11-20 03:12:08.556 I/AudioTrack(32603): isLongTimeZeroData zoer date time 26 Seconds
+11-20 03:12:08.877 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.91 dur=1001.49 max=25.04 min=15.85
+11-20 03:12:09.580 I/AudioTrack(32603): isLongTimeZeroData zoer date time 27 Seconds
+11-20 03:12:09.878 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.93 dur=1001.23 max=25.17 min=8.01
+11-20 03:12:10.575 I/AudioTrack(32603): isLongTimeZeroData zoer date time 28 Seconds
+11-20 03:12:10.888 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.42 dur=1009.80 max=25.73 min=15.78
+11-20 03:12:11.596 I/AudioTrack(32603): isLongTimeZeroData zoer date time 29 Seconds
+11-20 03:12:11.898 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.42 dur=1009.57 max=17.63 min=15.70
+11-20 03:12:12.620 I/AudioTrack(32603): isLongTimeZeroData zoer date time 30 Seconds
+11-20 03:12:12.908 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.40 dur=1009.98 max=17.06 min=16.18
+11-20 03:12:13.628 I/AudioTrack(32603): isLongTimeZeroData zoer date time 31 Seconds
+11-20 03:12:13.917 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.46 dur=1009.43 max=33.06 min=15.70
+11-20 03:12:14.123 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:V''
+11-20 03:12:14.641 I/AudioTrack(32603): isLongTimeZeroData zoer date time 32 Seconds
+11-20 03:12:14.918 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.93 dur=1001.20 max=32.84 min=8.17
+11-20 03:12:15.676 I/AudioTrack(32603): isLongTimeZeroData zoer date time 33 Seconds
+11-20 03:12:15.920 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.92 dur=1001.36 max=33.11 min=8.48
+11-20 03:12:16.668 I/AudioTrack(32603): isLongTimeZeroData zoer date time 34 Seconds
+11-20 03:12:16.921 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.90 dur=1001.72 max=25.37 min=15.78
+11-20 03:12:17.692 I/AudioTrack(32603): isLongTimeZeroData zoer date time 35 Seconds
+11-20 03:12:17.931 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.47 dur=1009.47 max=33.15 min=16.20
+11-20 03:12:18.035 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:12:18.716 I/AudioTrack(32603): isLongTimeZeroData zoer date time 36 Seconds
+11-20 03:12:18.932 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.92 dur=1001.43 max=25.10 min=16.00
+11-20 03:12:19.726 I/AudioTrack(32603): isLongTimeZeroData zoer date time 37 Seconds
+11-20 03:12:19.942 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.46 dur=1009.42 max=24.98 min=16.23
+11-20 03:12:20.753 I/AudioTrack(32603): isLongTimeZeroData zoer date time 38 Seconds
+11-20 03:12:20.943 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.91 dur=1001.56 max=24.19 min=16.22
+11-20 03:12:21.608 I/godot   (32603): RIG drive pilot_60kmh speed=60 km/h secs=25 frames=1437 fps=57.5 | frame_ms med=16.9 p95=25.3 p99=26.8 worst=28 | over16.7=53.9% over33=0 over50=0 over100=0
+11-20 03:12:21.608 I/godot   (32603): RIG   map pilot_60kmh draws avg=151 max=178 | tris avg=1355k max=1804k | cells most=14 in=8 out=18 dropped=0 cap_hits=0 | gpu_ms med=14.40 p95=15.39
+11-20 03:12:21.608 I/godot   (32603): RIG   stream pilot_60kmh start_ready_ms=1658 (worst frame meanwhile 26 ms) | request_to_in ms mean=158 worst=404 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 4.49, body 3.18 (col_9 shapes=8 new=533), removal step 2.63 | bodies late=0
+11-20 03:12:21.608 I/godot   (32603): RIG   slow pilot_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+11-20 03:12:21.609 I/godot   (32603): RIG   collision pilot_60kmh made=384973 units, a body waited at most 602 ms from coming into range | physics thread wait a frame (probe): median 0.4 p99 4.0 worst 5.7 ms
+11-20 03:12:21.609 I/godot   (32603): RIG   objects pilot_60kmh all=27283 nodes=4421 orphan_nodes=6638 resources=4605 | streamer: cells in=14, bodies waiting=632, nodes leaving=147
+11-20 03:12:21.609 I/godot   (32603): RIG   mem pilot_60kmh static_mb=243 video_mb=983 tex_mb=115 buf_mb=819
+11-20 03:12:21.756 I/AudioTrack(32603): isLongTimeZeroData zoer date time 39 Seconds
+11-20 03:12:21.953 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=48.54 dur=1009.40 max=198.48 min=8.77
+11-20 03:12:22.765 I/AudioTrack(32603): isLongTimeZeroData zoer date time 40 Seconds
+11-20 03:12:22.963 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=55.46 dur=1009.76 max=33.10 min=8.21
+11-20 03:12:23.788 I/AudioTrack(32603): isLongTimeZeroData zoer date time 41 Seconds
+11-20 03:12:23.972 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.46 dur=1009.58 max=41.36 min=7.90
+11-20 03:12:24.796 I/AudioTrack(32603): isLongTimeZeroData zoer date time 42 Seconds
+11-20 03:12:24.974 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.91 dur=1001.54 max=24.98 min=8.14
+11-20 03:12:25.820 I/AudioTrack(32603): isLongTimeZeroData zoer date time 43 Seconds
+11-20 03:12:25.975 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.92 dur=1001.30 max=25.15 min=8.15
+11-20 03:12:26.832 I/AudioTrack(32603): isLongTimeZeroData zoer date time 44 Seconds
+11-20 03:12:26.985 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.42 dur=1009.92 max=25.22 min=8.11
+11-20 03:12:27.838 I/AudioTrack(32603): isLongTimeZeroData zoer date time 45 Seconds
+11-20 03:12:27.986 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.93 dur=1001.24 max=33.24 min=8.38
+11-20 03:12:28.876 I/AudioTrack(32603): isLongTimeZeroData zoer date time 46 Seconds
+11-20 03:12:28.987 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.92 dur=1001.31 max=25.27 min=15.79
+11-20 03:12:29.122 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:12:29.868 I/AudioTrack(32603): isLongTimeZeroData zoer date time 47 Seconds
+11-20 03:12:29.997 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.41 dur=1009.78 max=18.12 min=15.20
+11-20 03:12:30.878 I/AudioTrack(32603): isLongTimeZeroData zoer date time 48 Seconds
+11-20 03:12:30.998 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.93 dur=1001.29 max=33.22 min=8.27
+11-20 03:12:31.705 W/libc    ( 4194): Access denied finding property "persist.vendor.battery.erp"
+11-20 03:12:31.900 I/AudioTrack(32603): isLongTimeZeroData zoer date time 49 Seconds
+11-20 03:12:32.017 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.95 dur=1018.08 max=33.34 min=8.03
+11-20 03:12:32.908 I/AudioTrack(32603): isLongTimeZeroData zoer date time 50 Seconds
+11-20 03:12:33.026 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.43 dur=1009.65 max=33.22 min=8.14
+11-20 03:12:33.917 I/AudioTrack(32603): isLongTimeZeroData zoer date time 51 Seconds
+11-20 03:12:34.028 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.92 dur=1001.44 max=24.97 min=15.99
+11-20 03:12:34.945 I/AudioTrack(32603): isLongTimeZeroData zoer date time 52 Seconds
+11-20 03:12:35.029 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.91 dur=1001.61 max=24.86 min=8.35
+11-20 03:12:35.278 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:V''
+11-20 03:12:35.951 I/AudioTrack(32603): isLongTimeZeroData zoer date time 53 Seconds
+11-20 03:12:36.039 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.43 dur=1009.49 max=17.20 min=15.79
+11-20 03:12:36.988 I/AudioTrack(32603): isLongTimeZeroData zoer date time 54 Seconds
+11-20 03:12:37.048 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.44 dur=1009.52 max=24.90 min=16.24
+11-20 03:12:37.996 I/AudioTrack(32603): isLongTimeZeroData zoer date time 55 Seconds
+11-20 03:12:38.058 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.43 dur=1009.80 max=32.89 min=8.23
+11-20 03:12:39.004 I/AudioTrack(32603): isLongTimeZeroData zoer date time 56 Seconds
+11-20 03:12:39.068 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.41 dur=1009.70 max=17.51 min=16.01
+11-20 03:12:40.028 I/AudioTrack(32603): isLongTimeZeroData zoer date time 57 Seconds
+11-20 03:12:40.077 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.44 dur=1009.50 max=33.02 min=15.92
+11-20 03:12:40.344 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:12:41.036 I/AudioTrack(32603): isLongTimeZeroData zoer date time 58 Seconds
+11-20 03:12:41.087 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.43 dur=1009.62 max=33.41 min=16.14
+11-20 03:12:42.060 I/AudioTrack(32603): isLongTimeZeroData zoer date time 59 Seconds
+11-20 03:12:42.097 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.41 dur=1009.72 max=17.30 min=15.92
+11-20 03:12:43.070 I/AudioTrack(32603): isLongTimeZeroData out of time 0S 0mS
+11-20 03:12:43.084 I/AudioTrack(32603): isLongTimeZeroData zoer date time 0 Seconds
+11-20 03:12:43.106 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.42 dur=1009.68 max=17.21 min=15.81
+11-20 03:12:44.091 I/AudioTrack(32603): isLongTimeZeroData zoer date time 1 Seconds
+11-20 03:12:44.116 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.44 dur=1009.44 max=24.68 min=8.37
+11-20 03:12:45.102 I/AudioTrack(32603): isLongTimeZeroData zoer date time 2 Seconds
+11-20 03:12:45.126 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.42 dur=1010.17 max=24.98 min=15.76
+11-20 03:12:46.109 I/AudioTrack(32603): isLongTimeZeroData zoer date time 3 Seconds
+11-20 03:12:46.127 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.92 dur=1001.40 max=33.12 min=8.09
+11-20 03:12:47.129 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.89 dur=1001.79 max=25.03 min=8.14
+11-20 03:12:47.132 I/AudioTrack(32603): isLongTimeZeroData zoer date time 4 Seconds
+11-20 03:12:48.114 I/godot   (32603): RIG drive strip_60kmh speed=60 km/h secs=25 frames=1477 fps=59.1 | frame_ms med=16.8 p95=23.3 p99=26.3 worst=34 | over16.7=51.4% over33=1 over50=0 over100=0
+11-20 03:12:48.115 I/godot   (32603): RIG   map strip_60kmh draws avg=104 max=125 | tris avg=962k max=1191k | cells most=14 in=6 out=19 dropped=0 cap_hits=0 | gpu_ms med=14.12 p95=14.86
+11-20 03:12:48.115 I/godot   (32603): RIG   stream strip_60kmh start_ready_ms=1491 (worst frame meanwhile 196 ms) | request_to_in ms mean=127 worst=248 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 4.49, body 3.18 (col_9 shapes=8 new=533), removal step 2.63 | bodies late=0
+11-20 03:12:48.115 I/godot   (32603): RIG   slow strip_60kmh frames over 33 ms by what the streamer was doing: { "bodies": 1 } | over 45 ms: {  }
+11-20 03:12:48.115 I/godot   (32603): RIG   collision strip_60kmh made=564460 units, a body waited at most 215 ms from coming into range | physics thread wait a frame (probe): median 0.5 p99 5.6 worst 9.4 ms
+11-20 03:12:48.116 I/godot   (32603): RIG   objects strip_60kmh all=29660 nodes=3191 orphan_nodes=8616 resources=4262 | streamer: cells in=13, bodies waiting=0, nodes leaving=470
+11-20 03:12:48.116 I/godot   (32603): RIG   mem strip_60kmh static_mb=260 video_mb=1022 tex_mb=115 buf_mb=858
+11-20 03:12:48.130 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.96 dur=1000.72 max=24.60 min=8.05
+11-20 03:12:48.157 I/AudioTrack(32603): isLongTimeZeroData zoer date time 5 Seconds
+11-20 03:12:49.139 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.46 dur=1009.48 max=32.97 min=8.35
+11-20 03:12:49.148 I/AudioTrack(32603): isLongTimeZeroData zoer date time 6 Seconds
+11-20 03:12:50.149 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.42 dur=1009.90 max=33.24 min=8.26
+11-20 03:12:50.176 I/AudioTrack(32603): isLongTimeZeroData zoer date time 7 Seconds
+11-20 03:12:51.159 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.44 dur=1009.42 max=25.01 min=8.30
+11-20 03:12:51.196 I/AudioTrack(32603): isLongTimeZeroData zoer date time 8 Seconds
+11-20 03:12:52.020 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:12:52.168 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.43 dur=1009.74 max=25.34 min=8.27
+11-20 03:12:52.203 I/AudioTrack(32603): isLongTimeZeroData zoer date time 9 Seconds
+11-20 03:12:53.170 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.91 dur=1001.57 max=24.87 min=16.13
+11-20 03:12:53.228 I/AudioTrack(32603): isLongTimeZeroData zoer date time 10 Seconds
+11-20 03:12:54.171 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.92 dur=1001.34 max=33.16 min=16.03
+11-20 03:12:54.236 I/AudioTrack(32603): isLongTimeZeroData zoer date time 11 Seconds
+11-20 03:12:55.181 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.43 dur=1009.55 max=24.81 min=8.04
+11-20 03:12:55.248 I/AudioTrack(32603): isLongTimeZeroData zoer date time 12 Seconds
+11-20 03:12:56.097 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:V''
+11-20 03:12:56.190 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.43 dur=1009.57 max=25.01 min=16.00
+11-20 03:12:56.283 I/AudioTrack(32603): isLongTimeZeroData zoer date time 13 Seconds
+11-20 03:12:57.192 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.91 dur=1001.43 max=25.01 min=16.24
+11-20 03:12:57.282 I/AudioTrack(32603): isLongTimeZeroData zoer date time 14 Seconds
+11-20 03:12:58.194 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.89 dur=1001.75 max=17.22 min=7.93
+11-20 03:12:58.308 I/AudioTrack(32603): isLongTimeZeroData zoer date time 15 Seconds
+11-20 03:12:59.195 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.93 dur=1001.17 max=24.75 min=8.15
+11-20 03:12:59.326 I/AudioTrack(32603): isLongTimeZeroData zoer date time 16 Seconds
+11-20 03:13:00.204 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.45 dur=1009.65 max=25.00 min=8.43
+11-20 03:13:00.332 I/AudioTrack(32603): isLongTimeZeroData zoer date time 17 Seconds
+11-20 03:13:01.214 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.44 dur=1009.74 max=25.03 min=9.04
+11-20 03:13:01.355 I/AudioTrack(32603): isLongTimeZeroData zoer date time 18 Seconds
+11-20 03:13:02.029 W/libc    ( 4194): Access denied finding property "persist.vendor.battery.erp"
+11-20 03:13:02.224 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.47 dur=1009.47 max=24.99 min=15.84
+11-20 03:13:02.363 I/AudioTrack(32603): isLongTimeZeroData zoer date time 19 Seconds
+11-20 03:13:02.609 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:13:03.233 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.41 dur=1009.85 max=17.47 min=15.30
+11-20 03:13:03.372 I/AudioTrack(32603): isLongTimeZeroData zoer date time 20 Seconds
+11-20 03:13:04.243 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.43 dur=1009.41 max=17.29 min=15.84
+11-20 03:13:04.399 I/AudioTrack(32603): isLongTimeZeroData zoer date time 21 Seconds
+11-20 03:13:05.253 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.41 dur=1009.90 max=32.96 min=8.27
+11-20 03:13:05.397 I/AudioTrack(32603): isLongTimeZeroData zoer date time 22 Seconds
+11-20 03:13:06.254 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.92 dur=1001.31 max=25.09 min=15.90
+11-20 03:13:06.414 I/AudioTrack(32603): isLongTimeZeroData zoer date time 23 Seconds
+11-20 03:13:07.255 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.92 dur=1001.35 max=33.03 min=8.09
+11-20 03:13:07.454 I/AudioTrack(32603): isLongTimeZeroData zoer date time 24 Seconds
+11-20 03:13:08.273 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.94 dur=1017.93 max=24.60 min=16.20
+11-20 03:13:08.447 I/AudioTrack(32603): isLongTimeZeroData zoer date time 25 Seconds
+11-20 03:13:09.283 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.44 dur=1009.67 max=24.91 min=15.99
+11-20 03:13:09.470 I/AudioTrack(32603): isLongTimeZeroData zoer date time 26 Seconds
+11-20 03:13:10.284 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.92 dur=1001.31 max=24.77 min=16.21
+11-20 03:13:10.493 I/AudioTrack(32603): isLongTimeZeroData zoer date time 27 Seconds
+11-20 03:13:11.286 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.91 dur=1001.45 max=24.96 min=16.21
+11-20 03:13:11.487 I/AudioTrack(32603): isLongTimeZeroData zoer date time 28 Seconds
+11-20 03:13:12.287 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.91 dur=1001.43 max=25.13 min=16.06
+11-20 03:13:12.515 I/AudioTrack(32603): isLongTimeZeroData zoer date time 29 Seconds
+11-20 03:13:13.228 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:13:13.297 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.44 dur=1009.38 max=24.97 min=16.00
+11-20 03:13:13.518 I/AudioTrack(32603): isLongTimeZeroData zoer date time 30 Seconds
+11-20 03:13:13.922 I/godot   (32603): RIG drive civic_60kmh speed=60 km/h secs=25 frames=1476 fps=59.0 | frame_ms med=16.7 p95=23.8 p99=26.3 worst=29 | over16.7=50.5% over33=0 over50=0 over100=0
+11-20 03:13:13.923 I/godot   (32603): RIG   map civic_60kmh draws avg=122 max=156 | tris avg=1079k max=1232k | cells most=14 in=9 out=18 dropped=0 cap_hits=0 | gpu_ms med=14.30 p95=15.24
+11-20 03:13:13.923 I/godot   (32603): RIG   stream civic_60kmh start_ready_ms=796 (worst frame meanwhile 29 ms) | request_to_in ms mean=71 worst=179 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 4.49, body 3.18 (col_9 shapes=8 new=533), removal step 2.63 | bodies late=0
+11-20 03:13:13.923 I/godot   (32603): RIG   slow civic_60kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+11-20 03:13:13.923 I/godot   (32603): RIG   collision civic_60kmh made=287014 units, a body waited at most 220 ms from coming into range | physics thread wait a frame (probe): median 0.4 p99 3.8 worst 5.6 ms
+11-20 03:13:13.924 I/godot   (32603): RIG   objects civic_60kmh all=25782 nodes=3013 orphan_nodes=7301 resources=2923 | streamer: cells in=14, bodies waiting=0, nodes leaving=172
+11-20 03:13:13.924 I/godot   (32603): RIG   mem civic_60kmh static_mb=234 video_mb=829 tex_mb=115 buf_mb=665
+11-20 03:13:14.306 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.41 dur=1009.89 max=25.01 min=9.27
+11-20 03:13:14.527 I/AudioTrack(32603): isLongTimeZeroData zoer date time 31 Seconds
+11-20 03:13:15.316 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.45 dur=1009.72 max=33.30 min=8.26
+11-20 03:13:15.566 I/AudioTrack(32603): isLongTimeZeroData zoer date time 32 Seconds
+11-20 03:13:16.317 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.93 dur=1001.25 max=24.36 min=16.17
+11-20 03:13:16.558 I/AudioTrack(32603): isLongTimeZeroData zoer date time 33 Seconds
+11-20 03:13:16.813 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:V''
+11-20 03:13:17.327 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.43 dur=1009.83 max=32.81 min=8.14
+11-20 03:13:17.566 I/AudioTrack(32603): isLongTimeZeroData zoer date time 34 Seconds
+11-20 03:13:18.337 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.42 dur=1009.57 max=17.13 min=15.91
+11-20 03:13:18.593 I/AudioTrack(32603): isLongTimeZeroData zoer date time 35 Seconds
+11-20 03:13:19.346 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.42 dur=1009.56 max=16.81 min=16.29
+11-20 03:13:19.599 I/AudioTrack(32603): isLongTimeZeroData zoer date time 36 Seconds
+11-20 03:13:20.356 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.43 dur=1009.61 max=33.39 min=8.04
+11-20 03:13:20.638 I/AudioTrack(32603): isLongTimeZeroData zoer date time 37 Seconds
+11-20 03:13:21.358 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.91 dur=1001.55 max=24.71 min=15.56
+11-20 03:13:21.646 I/AudioTrack(32603): isLongTimeZeroData zoer date time 38 Seconds
+11-20 03:13:22.367 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.41 dur=1009.81 max=17.37 min=15.92
+11-20 03:13:22.654 I/AudioTrack(32603): isLongTimeZeroData zoer date time 39 Seconds
+11-20 03:13:23.377 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.44 dur=1009.54 max=33.35 min=15.77
+11-20 03:13:23.694 I/AudioTrack(32603): isLongTimeZeroData zoer date time 40 Seconds
+11-20 03:13:24.387 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.42 dur=1009.66 max=17.21 min=15.96
+11-20 03:13:24.702 I/AudioTrack(32603): isLongTimeZeroData zoer date time 41 Seconds
+11-20 03:13:24.883 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:13:25.388 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.92 dur=1001.35 max=24.87 min=15.79
+11-20 03:13:25.700 I/AudioTrack(32603): isLongTimeZeroData zoer date time 42 Seconds
+11-20 03:13:26.398 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.43 dur=1009.77 max=33.27 min=8.24
+11-20 03:13:26.733 I/AudioTrack(32603): isLongTimeZeroData zoer date time 43 Seconds
+11-20 03:13:27.400 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.89 dur=1001.89 max=25.08 min=16.11
+11-20 03:13:27.725 I/AudioTrack(32603): isLongTimeZeroData zoer date time 44 Seconds
+11-20 03:13:28.409 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.45 dur=1009.19 max=24.86 min=16.11
+11-20 03:13:28.711 D/nativeloader(  927): Extending system_exposed_libraries: libapuwareapusys.mtk.so:libapuwareapusys_v2.mtk.so:libapuwarexrp.mtk.so:libapuwarexrp_v2.mtk.so:libapuwareutils.mtk.so:libapuwareutils_v2.mtk.so:libapuwarehmp.mtk.so:libmcv_runtime_usdk.mtk.so:libneuron_graph_delegate.mtk.so:libneuronusdk_adapter.mtk.so:libtflite_mtk.mtk.so:libarmnn_ndk.mtk.so:libcmdl_ndk.mtk.so:libnir_neon_driver_ndk.mtk.so:libmvpu_runtime.mtk.so:libmvpu_runtime_pub.mtk.so:libmvpu_engine_pub.mtk.so:libmvpu_pattern_pub.mtk.so:libmvpuop_mtk_cv.mtk.so:libmvpuop_mtk_nn.mtk.so:libteeservice_client.trustonic.so:libmisys_jni.xiaomi.so
+11-20 03:13:28.714 D/nativeloader(  927): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-aarch64-android.so:libclang_rt.asan-arm-android.so:libclang_rt.hwasan-aarch64-android.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvndksupport.so:libvulkan.so
+11-20 03:13:28.715 D/nativeloader(  927): InitVndkspLibrariesProduct: android.hardware.common-V2-ndk.so:android.hardware.common.fmq-V1-ndk.so:android.hardware.graphics.allocator-V1-ndk.so:android.hardware.graphics.common-V3-ndk.so:android.hardware.graphics.common@1.0.so:android.hardware.graphics.common@1.1.so:android.hardware.graphics.common@1.2.so:android.hardware.graphics.composer3-V1-ndk.so:android.hardware.graphics.mapper@2.0.so:android.hardware.graphics.mapper@2.1.so:android.hardware.graphics.mapper@3.0.so:android.hardware.graphics.mapper@4.0.so:android.hardware.renderscript@1.0.so:android.hidl.memory.token@1.0.so:android.hidl.memory@1.0-impl.so:android.hidl.memory@1.0.so:android.hidl.safe_union@1.0.so:libRSCpuRef.so:libRSDriver.so:libRS_internal.so:libbacktrace.so:libbase.so:libbcinfo.so:libblas.so:libc++.so:libcompiler_rt.so:libcutils.so:libdmabufheap.so:libgralloctypes.so:libhardware.so:libhidlbase.so:libhidlmemory.so:libion.so:libjsoncpp.so:liblzma.so:libprocessgroup.so:libunwindstack.so:libutils.so:libutilscallstack.so:libz.so
+11-20 03:13:28.751 I/AudioTrack(32603): isLongTimeZeroData zoer date time 45 Seconds
+11-20 03:13:29.411 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.88 dur=1001.97 max=33.14 min=8.14
+11-20 03:13:29.757 I/AudioTrack(32603): isLongTimeZeroData zoer date time 46 Seconds
+11-20 03:13:30.420 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.47 dur=1008.93 max=24.81 min=15.70
+11-20 03:13:30.782 I/AudioTrack(32603): isLongTimeZeroData zoer date time 47 Seconds
+11-20 03:13:31.375 W/libc    ( 1836): Access denied finding property "wifi.interface"
+11-20 03:13:31.421 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.91 dur=1001.49 max=33.11 min=8.05
+11-20 03:13:31.693 W/libc    ( 4194): Access denied finding property "persist.vendor.battery.erp"
+11-20 03:13:31.790 I/AudioTrack(32603): isLongTimeZeroData zoer date time 48 Seconds
+11-20 03:13:32.423 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.91 dur=1001.44 max=40.98 min=8.17
+11-20 03:13:32.813 I/AudioTrack(32603): isLongTimeZeroData zoer date time 49 Seconds
+11-20 03:13:33.432 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.44 dur=1009.45 max=24.87 min=16.19
+11-20 03:13:33.813 I/AudioTrack(32603): isLongTimeZeroData zoer date time 50 Seconds
+11-20 03:13:34.442 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.41 dur=1009.85 max=33.20 min=8.06
+11-20 03:13:34.830 I/AudioTrack(32603): isLongTimeZeroData zoer date time 51 Seconds
+11-20 03:13:35.443 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.93 dur=1001.21 max=25.25 min=15.79
+11-20 03:13:35.837 I/AudioTrack(32603): isLongTimeZeroData zoer date time 52 Seconds
+11-20 03:13:36.445 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.92 dur=1001.37 max=24.62 min=8.12
+11-20 03:13:36.863 I/AudioTrack(32603): isLongTimeZeroData zoer date time 53 Seconds
+11-20 03:13:37.454 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.40 dur=1009.96 max=17.24 min=16.06
+11-20 03:13:37.891 I/AudioTrack(32603): isLongTimeZeroData zoer date time 54 Seconds
+11-20 03:13:38.136 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:13:38.455 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.94 dur=1001.02 max=25.13 min=15.87
+11-20 03:13:38.897 I/AudioTrack(32603): isLongTimeZeroData zoer date time 55 Seconds
+11-20 03:13:39.465 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.41 dur=1009.87 max=25.00 min=8.04
+11-20 03:13:39.469 I/godot   (32603): RIG drive stadium_60kmh speed=60 km/h secs=25 frames=1488 fps=59.5 | frame_ms med=16.7 p95=23.0 p99=25.5 worst=34 | over16.7=49.9% over33=1 over50=0 over100=0
+11-20 03:13:39.470 I/godot   (32603): RIG   map stadium_60kmh draws avg=120 max=224 | tris avg=985k max=1369k | cells most=14 in=8 out=11 dropped=0 cap_hits=0 | gpu_ms med=14.13 p95=14.68
+11-20 03:13:39.470 I/godot   (32603): RIG   stream stadium_60kmh start_ready_ms=529 (worst frame meanwhile 29 ms) | request_to_in ms mean=364 worst=636 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 4.49, body 3.18 (col_9 shapes=8 new=533), removal step 2.63 | bodies late=0
+11-20 03:13:39.470 I/godot   (32603): RIG   slow stadium_60kmh frames over 33 ms by what the streamer was doing: { "bodies": 1 } | over 45 ms: {  }
+11-20 03:13:39.470 I/godot   (32603): RIG   collision stadium_60kmh made=286114 units, a body waited at most 0 ms from coming into range | physics thread wait a frame (probe): median 0.4 p99 4.1 worst 6.2 ms
+11-20 03:13:39.471 I/godot   (32603): RIG   objects stadium_60kmh all=29775 nodes=5351 orphan_nodes=7349 resources=3964 | streamer: cells in=14, bodies waiting=0, nodes leaving=176
+11-20 03:13:39.471 I/godot   (32603): RIG   mem stadium_60kmh static_mb=258 video_mb=981 tex_mb=115 buf_mb=817
+11-20 03:13:39.917 I/AudioTrack(32603): isLongTimeZeroData zoer date time 56 Seconds
+11-20 03:13:40.466 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.94 dur=1001.08 max=33.49 min=8.19
+11-20 03:13:40.930 I/AudioTrack(32603): isLongTimeZeroData zoer date time 57 Seconds
+11-20 03:13:41.477 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.39 dur=1010.39 max=33.11 min=8.24
+11-20 03:13:41.937 I/AudioTrack(32603): isLongTimeZeroData zoer date time 58 Seconds
+11-20 03:13:42.486 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.45 dur=1009.20 max=24.71 min=8.12
+11-20 03:13:42.964 I/AudioTrack(32603): isLongTimeZeroData zoer date time 59 Seconds
+11-20 03:13:43.496 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.43 dur=1009.67 max=33.28 min=15.98
+11-20 03:13:43.970 I/AudioTrack(32603): isLongTimeZeroData out of time 0S 0mS
+11-20 03:13:43.970 I/AudioTrack(32603): isLongTimeZeroData zoer date time 0 Seconds
+11-20 03:13:44.505 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.44 dur=1009.65 max=33.06 min=8.16
+11-20 03:13:45.005 I/AudioTrack(32603): isLongTimeZeroData zoer date time 1 Seconds
+11-20 03:13:45.515 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=57.45 dur=1009.56 max=33.11 min=15.90
+11-20 03:13:46.013 I/AudioTrack(32603): isLongTimeZeroData zoer date time 2 Seconds
+11-20 03:13:46.516 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=54.92 dur=1001.46 max=24.95 min=16.16
+11-20 03:13:47.021 I/AudioTrack(32603): isLongTimeZeroData zoer date time 3 Seconds
+11-20 03:13:47.518 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.93 dur=1001.21 max=25.17 min=15.73
+11-20 03:13:48.045 I/AudioTrack(32603): isLongTimeZeroData zoer date time 4 Seconds
+11-20 03:13:48.527 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.42 dur=1009.79 max=25.08 min=7.74
+11-20 03:13:49.053 I/AudioTrack(32603): isLongTimeZeroData zoer date time 5 Seconds
+11-20 03:13:49.530 E/godot   (32603): ERROR: Too many instances using shader instance variables. Increase buffer size in Project Settings.
+11-20 03:13:49.530 E/godot   (32603):    at: global_shader_parameters_instance_allocate (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2031)
+11-20 03:13:49.530 E/godot   (32603): ERROR: Too many instances using shader instance variables. Increase buffer size in Project Settings.
+11-20 03:13:49.530 E/godot   (32603):    at: global_shader_parameters_instance_allocate (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2031)
+11-20 03:13:49.530 E/godot   (32603): ERROR: Too many instances using shader instance variables. Increase buffer size in Project Settings.
+11-20 03:13:49.530 E/godot   (32603):    at: global_shader_parameters_instance_allocate (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2031)
+11-20 03:13:49.530 E/godot   (32603): ERROR: Too many instances using shader instance variables. Increase buffer size in Project Settings.
+11-20 03:13:49.530 E/godot   (32603):    at: global_shader_parameters_instance_allocate (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2031)
+11-20 03:13:49.537 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=56.45 dur=1009.75 max=25.05 min=15.97
+11-20 03:13:50.061 I/AudioTrack(32603): isLongTimeZeroData zoer date time 6 Seconds
+11-20 03:13:50.538 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=49.93 dur=1001.33 max=25.13 min=16.14
+11-20 03:13:51.087 I/AudioTrack(32603): isLongTimeZeroData zoer date time 7 Seconds
+11-20 03:13:51.540 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=52.93 dur=1001.32 max=25.52 min=15.51
+11-20 03:13:52.093 I/AudioTrack(32603): isLongTimeZeroData zoer date time 8 Seconds
+11-20 03:13:52.541 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=51.92 dur=1001.57 max=25.46 min=15.97
+11-20 03:13:53.117 I/AudioTrack(32603): isLongTimeZeroData zoer date time 9 Seconds
+11-20 03:13:53.132 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:13:53.552 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=59.36 dur=1010.77 max=33.02 min=8.10
+11-20 03:13:54.128 I/AudioTrack(32603): isLongTimeZeroData zoer date time 10 Seconds
+11-20 03:13:54.561 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.48 dur=1008.52 max=25.02 min=8.21
+11-20 03:13:55.133 I/AudioTrack(32603): isLongTimeZeroData zoer date time 11 Seconds
+11-20 03:13:55.562 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=58.92 dur=1001.44 max=33.25 min=16.02
+11-20 03:13:56.150 I/AudioTrack(32603): isLongTimeZeroData zoer date time 12 Seconds
+11-20 03:13:56.580 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=54.04 dur=1017.75 max=25.53 min=15.91
+11-20 03:13:57.165 I/AudioTrack(32603): isLongTimeZeroData zoer date time 13 Seconds
+11-20 03:13:57.589 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=51.51 dur=1009.58 max=25.51 min=16.06
+11-20 03:13:58.173 I/AudioTrack(32603): isLongTimeZeroData zoer date time 14 Seconds
+11-20 03:13:58.599 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=45.56 dur=1009.58 max=25.28 min=15.99
+11-20 03:13:59.200 I/AudioTrack(32603): isLongTimeZeroData zoer date time 15 Seconds
+11-20 03:13:59.609 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=49.51 dur=1009.85 max=25.22 min=16.34
+11-20 03:13:59.969 I/godot   (32603): RIG drive seventh_210kmh speed=209 km/h secs=20 frames=1114 fps=55.7 | frame_ms med=16.9 p95=26.0 p99=28.3 worst=33 | over16.7=54.6% over33=0 over50=0 over100=0
+11-20 03:13:59.969 I/godot   (32603): RIG   map seventh_210kmh draws avg=150 max=233 | tris avg=1349k max=2050k | cells most=16 in=23 out=28 dropped=0 cap_hits=0 | gpu_ms med=14.62 p95=18.86
+11-20 03:13:59.969 I/godot   (32603): RIG   stream seventh_210kmh start_ready_ms=485 (worst frame meanwhile 29 ms) | request_to_in ms mean=63 worst=184 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 4.49, body 3.18 (col_9 shapes=8 new=533), removal step 2.63 | bodies late=0
+11-20 03:13:59.969 I/godot   (32603): RIG   slow seventh_210kmh frames over 33 ms by what the streamer was doing: {  } | over 45 ms: {  }
+11-20 03:13:59.970 I/godot   (32603): RIG   collision seventh_210kmh made=389045 units, a body waited at most 101 ms from coming into range | physics thread wait a frame (probe): median 0.6 p99 3.7 worst 5.3 ms
+11-20 03:13:59.970 I/godot   (32603): RIG   objects seventh_210kmh all=44017 nodes=3787 orphan_nodes=16034 resources=7357 | streamer: cells in=16, bodies waiting=1058, nodes leaving=937
+11-20 03:13:59.970 I/godot   (32603): RIG   mem seventh_210kmh static_mb=326 video_mb=1051 tex_mb=115 buf_mb=887
+11-20 03:14:00.206 I/AudioTrack(32603): isLongTimeZeroData zoer date time 16 Seconds
+11-20 03:14:00.612 I/BufferQueueProducer( 1148): [SurfaceView[com.yasin.citykit.rig/com.godot.game.GodotAppLauncher](BLAST)#13984](this:0xb4000076445d08a8,id:-1,api:0,p:-1,c:1148) queueBuffer: fps=60.82 dur=1002.90 max=33.10 min=8.22
+11-20 03:14:01.115 I/libPowerHal( 1115): [updateFPS] pid(32603) : 60 => 90
+11-20 03:14:01.115 I/libPowerHal( 1115): [perfNotifyAppState] pack:com.yasin.citykit.rig, act:com.godot.game.GodotAppLauncher, state:5, pid:32603, uid:10290, fps:90
+11-20 03:14:01.229 I/AudioTrack(32603): isLongTimeZeroData zoer date time 17 Seconds
+11-20 03:14:02.115 I/libPowerHal( 1115): [updateFPS] pid(32603) : 90 => 120
+11-20 03:14:02.116 I/libPowerHal( 1115): [perfNotifyAppState] pack:com.yasin.citykit.rig, act:com.godot.game.GodotAppLauncher, state:5, pid:32603, uid:10290, fps:120
+11-20 03:14:02.262 I/AudioTrack(32603): isLongTimeZeroData zoer date time 18 Seconds
+11-20 03:14:03.116 I/libPowerHal( 1115): [updateFPS] pid(32603) : 120 => -1
+11-20 03:14:03.116 I/libPowerHal( 1115): [perfNotifyAppState] pack:com.yasin.citykit.rig, act:com.godot.game.GodotAppLauncher, state:5, pid:32603, uid:10290, fps:-1
+11-20 03:14:03.261 I/AudioTrack(32603): isLongTimeZeroData zoer date time 19 Seconds
+11-20 03:14:03.463 W/libc    ( 4194): Access denied finding property "persist.vendor.battery.erp"
+11-20 03:14:04.285 I/AudioTrack(32603): isLongTimeZeroData zoer date time 20 Seconds
+11-20 03:14:05.293 I/AudioTrack(32603): isLongTimeZeroData zoer date time 21 Seconds
+11-20 03:14:05.330 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:14:06.301 I/AudioTrack(32603): isLongTimeZeroData zoer date time 22 Seconds
+11-20 03:14:07.341 I/AudioTrack(32603): isLongTimeZeroData zoer date time 23 Seconds
+11-20 03:14:08.333 I/AudioTrack(32603): isLongTimeZeroData zoer date time 24 Seconds
+11-20 03:14:09.346 I/AudioTrack(32603): isLongTimeZeroData zoer date time 25 Seconds
+11-20 03:14:10.365 I/AudioTrack(32603): isLongTimeZeroData zoer date time 26 Seconds
+11-20 03:14:11.373 I/AudioTrack(32603): isLongTimeZeroData zoer date time 27 Seconds
+11-20 03:14:12.396 I/AudioTrack(32603): isLongTimeZeroData zoer date time 28 Seconds
+11-20 03:14:13.415 I/AudioTrack(32603): isLongTimeZeroData zoer date time 29 Seconds
+11-20 03:14:14.415 I/AudioTrack(32603): isLongTimeZeroData zoer date time 30 Seconds
+11-20 03:14:15.455 I/AudioTrack(32603): isLongTimeZeroData zoer date time 31 Seconds
+11-20 03:14:16.463 I/AudioTrack(32603): isLongTimeZeroData zoer date time 32 Seconds
+11-20 03:14:17.472 I/AudioTrack(32603): isLongTimeZeroData zoer date time 33 Seconds
+11-20 03:14:18.120 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:14:18.499 I/AudioTrack(32603): isLongTimeZeroData zoer date time 34 Seconds
+11-20 03:14:19.503 I/AudioTrack(32603): isLongTimeZeroData zoer date time 35 Seconds
+11-20 03:14:20.527 I/AudioTrack(32603): isLongTimeZeroData zoer date time 36 Seconds
+11-20 03:14:21.539 I/AudioTrack(32603): isLongTimeZeroData zoer date time 37 Seconds
+11-20 03:14:22.545 I/AudioTrack(32603): isLongTimeZeroData zoer date time 38 Seconds
+11-20 03:14:23.573 I/AudioTrack(32603): isLongTimeZeroData zoer date time 39 Seconds
+11-20 03:14:24.591 I/AudioTrack(32603): isLongTimeZeroData zoer date time 40 Seconds
+11-20 03:14:25.599 I/AudioTrack(32603): isLongTimeZeroData zoer date time 41 Seconds
+11-20 03:14:26.623 I/AudioTrack(32603): isLongTimeZeroData zoer date time 42 Seconds
+11-20 03:14:27.631 I/AudioTrack(32603): isLongTimeZeroData zoer date time 43 Seconds
+11-20 03:14:28.639 I/AudioTrack(32603): isLongTimeZeroData zoer date time 44 Seconds
+11-20 03:14:29.663 I/AudioTrack(32603): isLongTimeZeroData zoer date time 45 Seconds
+11-20 03:14:30.326 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:14:30.671 I/AudioTrack(32603): isLongTimeZeroData zoer date time 46 Seconds
+11-20 03:14:31.685 I/AudioTrack(32603): isLongTimeZeroData zoer date time 47 Seconds
+11-20 03:14:31.702 W/libc    ( 4194): Access denied finding property "persist.vendor.battery.erp"
+11-20 03:14:32.703 I/AudioTrack(32603): isLongTimeZeroData zoer date time 48 Seconds
+11-20 03:14:33.711 I/AudioTrack(32603): isLongTimeZeroData zoer date time 49 Seconds
+11-20 03:14:34.735 I/AudioTrack(32603): isLongTimeZeroData zoer date time 50 Seconds
+11-20 03:14:35.743 I/AudioTrack(32603): isLongTimeZeroData zoer date time 51 Seconds
+11-20 03:14:36.737 I/AudioTrack(32603): isLongTimeZeroData zoer date time 52 Seconds
+11-20 03:14:37.775 I/AudioTrack(32603): isLongTimeZeroData zoer date time 53 Seconds
+11-20 03:14:38.783 I/AudioTrack(32603): isLongTimeZeroData zoer date time 54 Seconds
+11-20 03:14:39.807 I/AudioTrack(32603): isLongTimeZeroData zoer date time 55 Seconds
+11-20 03:14:40.814 I/AudioTrack(32603): isLongTimeZeroData zoer date time 56 Seconds
+11-20 03:14:41.823 I/AudioTrack(32603): isLongTimeZeroData zoer date time 57 Seconds
+11-20 03:14:42.421 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:14:42.848 I/AudioTrack(32603): isLongTimeZeroData zoer date time 58 Seconds
+11-20 03:14:43.855 I/AudioTrack(32603): isLongTimeZeroData zoer date time 59 Seconds
+11-20 03:14:44.878 I/AudioTrack(32603): isLongTimeZeroData out of time 0S 0mS
+11-20 03:14:44.882 I/AudioTrack(32603): isLongTimeZeroData zoer date time 0 Seconds
+11-20 03:14:45.919 I/AudioTrack(32603): isLongTimeZeroData zoer date time 1 Seconds
+11-20 03:14:46.916 I/AudioTrack(32603): isLongTimeZeroData zoer date time 2 Seconds
+11-20 03:14:47.934 I/AudioTrack(32603): isLongTimeZeroData zoer date time 3 Seconds
+11-20 03:14:48.958 I/AudioTrack(32603): isLongTimeZeroData zoer date time 4 Seconds
+11-20 03:14:49.966 I/AudioTrack(32603): isLongTimeZeroData zoer date time 5 Seconds
+11-20 03:14:50.982 I/AudioTrack(32603): isLongTimeZeroData zoer date time 6 Seconds
+11-20 03:14:51.989 I/AudioTrack(32603): isLongTimeZeroData zoer date time 7 Seconds
+11-20 03:14:52.995 I/AudioTrack(32603): isLongTimeZeroData zoer date time 8 Seconds
+11-20 03:14:54.032 I/AudioTrack(32603): isLongTimeZeroData zoer date time 9 Seconds
+11-20 03:14:55.038 I/AudioTrack(32603): isLongTimeZeroData zoer date time 10 Seconds
+11-20 03:14:56.047 I/AudioTrack(32603): isLongTimeZeroData zoer date time 11 Seconds
+11-20 03:14:57.073 I/AudioTrack(32603): isLongTimeZeroData zoer date time 12 Seconds
+11-20 03:14:57.191 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:14:58.078 I/AudioTrack(32603): isLongTimeZeroData zoer date time 13 Seconds
+11-20 03:14:59.102 I/AudioTrack(32603): isLongTimeZeroData zoer date time 14 Seconds
+11-20 03:15:00.111 I/AudioTrack(32603): isLongTimeZeroData zoer date time 15 Seconds
+11-20 03:15:01.135 I/AudioTrack(32603): isLongTimeZeroData zoer date time 16 Seconds
+11-20 03:15:02.158 I/AudioTrack(32603): isLongTimeZeroData zoer date time 17 Seconds
+11-20 03:15:03.167 I/AudioTrack(32603): isLongTimeZeroData zoer date time 18 Seconds
+11-20 03:15:04.179 I/AudioTrack(32603): isLongTimeZeroData zoer date time 19 Seconds
+11-20 03:15:05.207 I/AudioTrack(32603): isLongTimeZeroData zoer date time 20 Seconds
+11-20 03:15:06.206 I/AudioTrack(32603): isLongTimeZeroData zoer date time 21 Seconds
+11-20 03:15:07.230 I/AudioTrack(32603): isLongTimeZeroData zoer date time 22 Seconds
+11-20 03:15:08.238 I/AudioTrack(32603): isLongTimeZeroData zoer date time 23 Seconds
+11-20 03:15:09.246 I/AudioTrack(32603): isLongTimeZeroData zoer date time 24 Seconds
+11-20 03:15:10.279 I/AudioTrack(32603): isLongTimeZeroData zoer date time 25 Seconds
+11-20 03:15:11.294 I/AudioTrack(32603): isLongTimeZeroData zoer date time 26 Seconds
+11-20 03:15:12.303 I/AudioTrack(32603): isLongTimeZeroData zoer date time 27 Seconds
+11-20 03:15:13.326 I/AudioTrack(32603): isLongTimeZeroData zoer date time 28 Seconds
+11-20 03:15:14.326 I/AudioTrack(32603): isLongTimeZeroData zoer date time 29 Seconds
+11-20 03:15:15.342 I/AudioTrack(32603): isLongTimeZeroData zoer date time 30 Seconds
+11-20 03:15:16.366 I/AudioTrack(32603): isLongTimeZeroData zoer date time 31 Seconds
+11-20 03:15:16.574 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:15:17.365 I/AudioTrack(32603): isLongTimeZeroData zoer date time 32 Seconds
+11-20 03:15:18.398 I/AudioTrack(32603): isLongTimeZeroData zoer date time 33 Seconds
+11-20 03:15:19.409 I/AudioTrack(32603): isLongTimeZeroData zoer date time 34 Seconds
+11-20 03:15:20.415 I/AudioTrack(32603): isLongTimeZeroData zoer date time 35 Seconds
+11-20 03:15:21.442 I/AudioTrack(32603): isLongTimeZeroData zoer date time 36 Seconds
+11-20 03:15:22.448 I/AudioTrack(32603): isLongTimeZeroData zoer date time 37 Seconds
+11-20 03:15:23.454 I/AudioTrack(32603): isLongTimeZeroData zoer date time 38 Seconds
+11-20 03:15:24.494 I/AudioTrack(32603): isLongTimeZeroData zoer date time 39 Seconds
+11-20 03:15:25.502 I/AudioTrack(32603): isLongTimeZeroData zoer date time 40 Seconds
+11-20 03:15:26.526 I/AudioTrack(32603): isLongTimeZeroData zoer date time 41 Seconds
+11-20 03:15:27.550 I/AudioTrack(32603): isLongTimeZeroData zoer date time 42 Seconds
+11-20 03:15:27.930 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:15:28.542 I/AudioTrack(32603): isLongTimeZeroData zoer date time 43 Seconds
+11-20 03:15:29.582 I/AudioTrack(32603): isLongTimeZeroData zoer date time 44 Seconds
+11-20 03:15:30.574 I/AudioTrack(32603): isLongTimeZeroData zoer date time 45 Seconds
+11-20 03:15:31.598 I/AudioTrack(32603): isLongTimeZeroData zoer date time 46 Seconds
+11-20 03:15:31.699 W/libc    ( 4194): Access denied finding property "persist.vendor.battery.erp"
+11-20 03:15:32.622 I/AudioTrack(32603): isLongTimeZeroData zoer date time 47 Seconds
+11-20 03:15:33.630 I/AudioTrack(32603): isLongTimeZeroData zoer date time 48 Seconds
+11-20 03:15:34.639 I/AudioTrack(32603): isLongTimeZeroData zoer date time 49 Seconds
+11-20 03:15:35.662 I/AudioTrack(32603): isLongTimeZeroData zoer date time 50 Seconds
+11-20 03:15:36.670 I/AudioTrack(32603): isLongTimeZeroData zoer date time 51 Seconds
+11-20 03:15:37.679 I/AudioTrack(32603): isLongTimeZeroData zoer date time 52 Seconds
+11-20 03:15:38.702 I/AudioTrack(32603): isLongTimeZeroData zoer date time 53 Seconds
+11-20 03:15:39.712 I/AudioTrack(32603): isLongTimeZeroData zoer date time 54 Seconds
+11-20 03:15:39.832 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:15:40.750 I/AudioTrack(32603): isLongTimeZeroData zoer date time 55 Seconds
+11-20 03:15:41.746 I/AudioTrack(32603): isLongTimeZeroData zoer date time 56 Seconds
+11-20 03:15:42.765 I/AudioTrack(32603): isLongTimeZeroData zoer date time 57 Seconds
+11-20 03:15:43.790 I/AudioTrack(32603): isLongTimeZeroData zoer date time 58 Seconds
+11-20 03:15:44.797 I/AudioTrack(32603): isLongTimeZeroData zoer date time 59 Seconds
+11-20 03:15:45.822 I/AudioTrack(32603): isLongTimeZeroData out of time 0S 0mS
+11-20 03:15:45.824 I/AudioTrack(32603): isLongTimeZeroData zoer date time 0 Seconds
+11-20 03:15:46.830 I/AudioTrack(32603): isLongTimeZeroData zoer date time 1 Seconds
+11-20 03:15:47.853 I/AudioTrack(32603): isLongTimeZeroData zoer date time 2 Seconds
+11-20 03:15:48.878 I/AudioTrack(32603): isLongTimeZeroData zoer date time 3 Seconds
+11-20 03:15:49.870 I/AudioTrack(32603): isLongTimeZeroData zoer date time 4 Seconds
+11-20 03:15:50.894 I/AudioTrack(32603): isLongTimeZeroData zoer date time 5 Seconds
+11-20 03:15:51.917 I/AudioTrack(32603): isLongTimeZeroData zoer date time 6 Seconds
+11-20 03:15:52.263 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:15:52.909 I/AudioTrack(32603): isLongTimeZeroData zoer date time 7 Seconds
+11-20 03:15:53.934 I/AudioTrack(32603): isLongTimeZeroData zoer date time 8 Seconds
+11-20 03:15:54.942 I/AudioTrack(32603): isLongTimeZeroData zoer date time 9 Seconds
+11-20 03:15:55.966 I/AudioTrack(32603): isLongTimeZeroData zoer date time 10 Seconds
+11-20 03:15:56.989 I/AudioTrack(32603): isLongTimeZeroData zoer date time 11 Seconds
+11-20 03:15:57.997 I/AudioTrack(32603): isLongTimeZeroData zoer date time 12 Seconds
+11-20 03:15:59.006 I/AudioTrack(32603): isLongTimeZeroData zoer date time 13 Seconds
+11-20 03:16:00.029 I/AudioTrack(32603): isLongTimeZeroData zoer date time 14 Seconds
+11-20 03:16:01.038 I/AudioTrack(32603): isLongTimeZeroData zoer date time 15 Seconds
+11-20 03:16:02.049 I/AudioTrack(32603): isLongTimeZeroData zoer date time 16 Seconds
+11-20 03:16:03.069 I/AudioTrack(32603): isLongTimeZeroData zoer date time 17 Seconds
+11-20 03:16:04.077 I/AudioTrack(32603): isLongTimeZeroData zoer date time 18 Seconds
+11-20 03:16:05.110 I/AudioTrack(32603): isLongTimeZeroData zoer date time 19 Seconds
+11-20 03:16:05.528 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:16:06.126 I/AudioTrack(32603): isLongTimeZeroData zoer date time 20 Seconds
+11-20 03:16:06.338 W/libc    ( 4194): Access denied finding property "persist.vendor.battery.erp"
+11-20 03:16:07.133 I/AudioTrack(32603): isLongTimeZeroData zoer date time 21 Seconds
+11-20 03:16:08.174 I/AudioTrack(32603): isLongTimeZeroData zoer date time 22 Seconds
+11-20 03:16:09.166 I/AudioTrack(32603): isLongTimeZeroData zoer date time 23 Seconds
+11-20 03:16:10.189 I/AudioTrack(32603): isLongTimeZeroData zoer date time 24 Seconds
+11-20 03:16:11.200 I/AudioTrack(32603): isLongTimeZeroData zoer date time 25 Seconds
+11-20 03:16:12.206 I/AudioTrack(32603): isLongTimeZeroData zoer date time 26 Seconds
+11-20 03:16:13.229 I/AudioTrack(32603): isLongTimeZeroData zoer date time 27 Seconds
+11-20 03:16:14.239 I/AudioTrack(32603): isLongTimeZeroData zoer date time 28 Seconds
+11-20 03:16:15.245 I/AudioTrack(32603): isLongTimeZeroData zoer date time 29 Seconds
+11-20 03:16:16.285 I/AudioTrack(32603): isLongTimeZeroData zoer date time 30 Seconds
+11-20 03:16:17.277 I/AudioTrack(32603): isLongTimeZeroData zoer date time 31 Seconds
+11-20 03:16:18.158 I/adbd    (30041): adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:*''
+11-20 03:16:18.301 I/AudioTrack(32603): isLongTimeZeroData zoer date time 32 Seconds
+11-20 03:16:19.325 I/AudioTrack(32603): isLongTimeZeroData zoer date time 33 Seconds

@@ -1,0 +1,57 @@
+{
+ "area": "ea_cape",
+ "piece": "n_ea_cape",
+ "zone": "civic and parks / waterfront (North Beach: the park band along the ring and its promenade)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; waterfront - palms only, spaced palms on the promenade; never on the sand below the dune line (SHORE_GUIDE); held to the plan's in-view limit (12 trees, 8 broadleaf within 60 m of a street point)",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, ea fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "palm_canary_date_a",
+   "cond": "normal",
+   "at": [
+    559.0,
+    1.869,
+    -1631.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "the Commons: one big palm between the rentals and the cafe (nearer the rentals: the in-view limit from the ring), shade over the middle of the forecourt"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    681.7,
+    1.945,
+    -1503.9
+   ],
+   "yaw": 320,
+   "scale": 0.95,
+   "why": "promenade: spaced palm, land side"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    598.0,
+    1.748,
+    -1621.0
+   ],
+   "yaw": 40,
+   "scale": 0.9,
+   "why": "picnic tables clump: shade on the first table from the west (afternoon sun)"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    668.5,
+    2.105,
+    -1505.0
+   ],
+   "yaw": 70,
+   "scale": 0.9,
+   "why": "the third picnic table: a pine for shade beside it (light crown, the coast)"
+  }
+ ]
+}

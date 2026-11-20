@@ -1,4 +1,5 @@
 // CityHud: see city_hud.h.
+#include "perf_marks.h"
 #include "city_hud.h"
 #include "city_phone.h"
 
@@ -475,6 +476,7 @@ String CityHud::get_money_text() const { return l_money ? l_money->get_text() : 
 String CityHud::get_time_text() const { return l_time ? l_time->get_text() : String(); }
 
 void CityHud::_process(double p_delta) {
+	pm::Scope _pm(pm::HUD);   // (the slow-frame marks, perf_marks.h)
 	CityGame *g = CityGame::get();
 	Viewport *vp = get_viewport();
 	if (!vp) return;

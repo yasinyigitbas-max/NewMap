@@ -3,7 +3,7 @@ extends SceneTree
 ##   godot --path . --rendering-method mobile --resolution 1280x720 -s res://tools/city/traffic/traffic_shots.gd -- --out=OUT/shots [--night] [--cars=60] [--density=1.0] [--view=name] [--noparked] [--at=name,x,h,z,lx,lh,lz,sec]
 ## It builds what the test app builds (the streamer, the look, the C++ traffic node), stands at each viewpoint for a
 ## few seconds so the traffic settles, and saves a PNG. Needs the bake, streets.bin and the native module.
-const Stream := preload("res://tools/city/bake/city_stream.gd")
+const STREAM_CLASS := &"CityStream"      # the streamer is C++ since 20 Nov (native/src/city_stream.*)
 const Look := preload("res://tools/city/look/look.gd")
 ## name, camera x, height above the street, z, look at x, height, z, seconds to wait
 const VIEWS := [
@@ -39,7 +39,7 @@ func _run() -> void:
 	var look: Node = Look.new(); world.add_child(look)
 	var gp := MeshInstance3D.new(); var pm := PlaneMesh.new(); pm.size = Vector2(6000, 6000); gp.mesh = pm
 	var gm := StandardMaterial3D.new(); gm.albedo_color = Color(0.36, 0.42, 0.3); gp.material_override = gm; gp.position.y = -2.0; world.add_child(gp)
-	var st: Node3D = Stream.new(); world.add_child(st)
+	var st: Node3D = ClassDB.instantiate(STREAM_CLASS); world.add_child(st)
 	if look.has_method(&"attach_stream"): look.attach_stream(st)
 	var cam := Camera3D.new(); cam.fov = 74.0; cam.near = 0.08; cam.far = 900.0; world.add_child(cam); cam.current = true
 	var tr: Node = ClassDB.instantiate(&"CityTraffic")
