@@ -68,7 +68,6 @@ func _run() -> void:
 	c.put("prop_cafe_table", "worn", c.gp(70.00, 170.00), 0.0, "corner plaza: tables")
 	c.put("prop_newspaper_box_red", "worn", c.gp(78.40, 58.00), 90.0, "Amber: papers")
 	c.put("prop_newspaper_box_blue", "worn", c.gp(78.40, 59.00), 90.0, "Amber: papers")
-	c.put("prop_trash_receptacle", "worn", c.gp(59.40, 155.00), 0.0, "corner plaza: a bin")
 	c.put("prop_drinking_fountain", "worn", c.gp(59.40, 100.00), 0.0, "stadium walk: water")
 	c.put("plant_potted_leafy", "worn", c.gp(78.60, 33.50), 0.0, "Amber: planters between the shops")
 	c.put("plant_potted_leafy", "worn", c.gp(78.60, 55.00), 0.0, "Amber: planters between the shops")

@@ -16,7 +16,6 @@ BODY='\n'+''.join([
  put("prop_park_bench",22.0,49.8,0,"playground: a bench for the parents facing it"),
  put("prop_park_bench",42.0,66.0,-90,"playground: a bench facing it from the path side"),
  put("prop_drinking_fountain",42.6,46.0,0,"park: water where the paths cross"),
- put("prop_trash_receptacle",42.6,49.0,0,"park: a bin by the bench and the path"),
  chain([(54,8),(88,8),(88,38),(54,38)],3,15.0,1.6,"dog run: chain-link round it",gate="fence_gate_wrought_iron"),
  put("prop_park_bench",72.0,30.0,180,"dog run: a bench inside, facing the run"),
  put("prop_beach_sign_dog",52.6,22.0,90,"dog run: the rules sign at its gate"),

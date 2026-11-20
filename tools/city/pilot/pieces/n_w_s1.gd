@@ -78,8 +78,6 @@ func _run() -> void:
 	for pt: Array in [[28.0, 58.0], [70.0, 56.0]]: c.put("prop_picnic_table", "worn", c.gp(float(pt[0]), float(pt[1])), 0.0, "apartments: a table in the yard")
 	c.put("prop_adirondack_wood", "worn", c.gp(90.0, 58.0), 180.0, "apartments: a chair in the yard facing the sun")
 	# ---- the bins against the shops' back walls, the power line on gravel
-	c.put("prop_dumpster_3yd_green", "worn", c.gp(120.0, 70.6), 0.0, "Gate Pizza: kitchen waste against its back wall")
-	c.put("prop_dumpster_3yd_green", "worn", c.gp(158.0, 70.6), 0.0, "The Gatehouse: waste against its back wall")
 	for pz: float in [20.0, 70.0, 120.0, 170.0]: c.put("prop_utility_pole", "worn", c.gp(pz, 1.5), 0.0, "rear easement: the power line on poles, on gravel")
 	for k2: String in B:
 		var r: Dictionary = B[k2]

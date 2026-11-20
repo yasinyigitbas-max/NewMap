@@ -20,6 +20,6 @@ BODY='\n'+''.join([
  put("prop_newspaper_box_red",1.2,58.0,90,"stadium side: the sports paper"),
  ''.join(put("prop_cafe_table",x,z,0,"corner plaza: tables outside the diner") for x,z in ((8,150),(14,150),(8,158),(14,158))),
  put("prop_bus_shelter",1.2,166.0,90,"corner plaza: the game-day bus shelter facing the street"),
- put("prop_bench_bus_stop",1.4,174.0,90,"bus stop: a seat"), put("prop_trash_receptacle",22.6,142.0,0,"corner plaza: a bin against the lot's light pole base"),
+ put("prop_bench_bus_stop",1.4,174.0,90,"bus stop: a seat"),
  put("prop_dumpster_3yd_green",19.0,64.0,0,"The Bullpen: waste against its back wall"),
 ])

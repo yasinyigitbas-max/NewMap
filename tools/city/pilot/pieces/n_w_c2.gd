@@ -50,7 +50,6 @@ func _run() -> void:
 	c.put("prop_park_bench", "worn", c.gp(22.00, 49.80), 0.0, "playground: a bench for the parents facing it")
 	c.put("prop_park_bench", "worn", c.gp(42.00, 66.00), -90.0, "playground: a bench facing it from the path side")
 	c.put("prop_drinking_fountain", "worn", c.gp(42.60, 46.00), 0.0, "park: water where the paths cross")
-	c.put("prop_trash_receptacle", "worn", c.gp(42.60, 49.00), 0.0, "park: a bin by the bench and the path")
 	c.ring_fence("chainlink", [Vector2(54.00, 8.00), Vector2(88.00, 8.00), Vector2(88.00, 38.00), Vector2(54.00, 38.00)], 3, 15.00, 1.60, "fence_gate_wrought_iron", "dog run: chain-link round it")
 	c.put("prop_park_bench", "worn", c.gp(72.00, 30.00), 180.0, "dog run: a bench inside, facing the run")
 	c.put("prop_beach_sign_dog", "worn", c.gp(52.60, 22.00), 90.0, "dog run: the rules sign at its gate")

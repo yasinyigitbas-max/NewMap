@@ -8,5 +8,5 @@ BODY='\n'+''.join([
  chain([(3,3),(37,3),(37,37),(3,37)],2,20.0,1.1,"playground: a picket fence round it",gate="fence_gate_picket",kind="picket"),
  put("prop_play_structure",14.0,16.0,0,"playground: the climbing frame"), put("prop_swing_set",28.0,12.0,0,"playground: swings"),
  put("prop_slide",28.0,26.0,0,"playground: the slide"), put("prop_shade_sail",12.0,28.0,0,"playground: shade"),
- put("prop_park_bench",20.0,34.0,180,"playground: a bench for the parents facing it"), put("prop_trash_receptacle",34.0,34.6,0,"playground: a bin against the fence"),
+ put("prop_park_bench",20.0,34.0,180,"playground: a bench for the parents facing it"),
 ])

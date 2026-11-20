@@ -351,7 +351,6 @@ func _run() -> void:
 	c.put("prop_cafe_table", "worn", c.gp(14.00, 158.00), 0.0, "corner plaza: tables outside the diner")
 	c.put("prop_bus_shelter", "worn", c.gp(1.20, 166.00), 90.0, "corner plaza: the game-day bus shelter facing the street")
 	c.put("prop_bench_bus_stop", "worn", c.gp(1.40, 174.00), 90.0, "bus stop: a seat")
-	c.put("prop_trash_receptacle", "worn", c.gp(22.60, 142.00), 0.0, "corner plaza: a bin against the lot's light pole base")
 	c.put("prop_dumpster_3yd_green", "worn", c.gp(19.00, 64.00), 0.0, "The Bullpen: waste against its back wall")
 	for k2: String in B:
 		var r: Dictionary = B[k2]

@@ -16,7 +16,6 @@ BODY='\n'+''.join([
  ''.join(put("prop_lamp_victorian",58.6,z,0,"stadium walk: lit") for z in (10.0,50.0,90.0,130.0,170.0)),
  ''.join(put("prop_menu_board",78.4,z,90,"Amber: a shop's board on the walk") for z in (43.0,86.0,146.0)),
  ''.join(put("prop_cafe_table",x,z,0,"corner plaza: tables") for x,z in ((64,162),(70,162),(64,170),(70,170))),
- put("prop_newspaper_box_red",78.4,58.0,90,"Amber: papers"), put("prop_newspaper_box_blue",78.4,59.0,90,"Amber: papers"),
- put("prop_trash_receptacle",59.4,155.0,0,"corner plaza: a bin"), put("prop_drinking_fountain",59.4,100.0,0,"stadium walk: water"),
+ put("prop_newspaper_box_red",78.4,58.0,90,"Amber: papers"), put("prop_newspaper_box_blue",78.4,59.0,90,"Amber: papers"), put("prop_drinking_fountain",59.4,100.0,0,"stadium walk: water"),
  ''.join(put("plant_potted_leafy",78.6,z,0,"Amber: planters between the shops") for z in (33.5,55.0,97.0,119.0,139.0)),
 ])

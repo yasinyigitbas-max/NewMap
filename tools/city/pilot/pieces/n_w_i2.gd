@@ -59,7 +59,6 @@ func _run() -> void:
 	c.put("prop_container_20ft_white", "worn", c.gp(6.0, 12.0), 0.0, "builders' yard: the site office in a container by the gate")
 	c.put("prop_container_20ft_blue", "worn", c.gp(6.0, 22.0), 0.0, "builders' yard: tool store")
 	for kr in 5: c.put("prop_k_rail", "worn", c.gp(14.0 + kr * 4.2, 64.0), 0.0, "builders' yard: k-rails waiting for the next road job")
-	for ro: Array in [[34.0, 30.0], [40.0, 30.0]]: c.put("prop_dumpster_rolloff_20yd", "worn", c.gp(float(ro[0]), float(ro[1])), 0.0, "builders' yard: roll-offs for the demolition jobs")
 	for tf in 4: c.put("fence_temp_fence_panel", "worn", c.gp(14.0, 40.0 + tf * 0.4), 0.0, "builders' yard: temporary fence panels stacked", false)
 	for cn: Array in [[20.0, 50.0], [20.6, 50.4], [21.2, 50.0], [22.0, 50.6]]: c.put("prop_cone_28in", "worn", c.gp(float(cn[0]), float(cn[1])), 0.0, "builders' yard: cones")
 	for br: Array in [[28.0, 50.0], [28.0, 53.0]]: c.put("prop_barricade_type3", "worn", c.gp(float(br[0]), float(br[1])), 0.0, "builders' yard: barricades for road closures")
@@ -88,7 +87,6 @@ func _run() -> void:
 	c.tyre(Vector2(88.0, 127.0), -80.0, 6.0, 0.45); c.tyre(Vector2(76.0, 124.0), 20.0, 5.0, 0.4)
 	# ---- Strand Tire & Brake: forecourt, waiting bench, the drinks machine against its wall, oil and marks
 	c.put("prop_vending_soda", "worn", c.gp(60.6, 145.0), -90.0, "tire & brake: drinks against its east wall")
-	c.put("prop_park_bench", "worn", c.gp(64.0, 152.0), 180.0, "tire & brake: a bench for the waiting customers, facing the bays")
 	var fx := 68.0
 	while fx < 89.0:
 		c.stalls.append([fx, 160.0, 90.0, c.yf(fx, 160.0)]); fx += 2.7

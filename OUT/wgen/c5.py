@@ -12,5 +12,4 @@ BODY='\n'+''.join([
  put("prop_menu_board",33.4,30.0,90,"bakery: today's bread"), put("prop_menu_board",33.4,84.0,90,"café: the menu"),
  put("prop_park_bench",33.4,88.0,90,"Amber: a bench on the walk facing the avenue"),
  ''.join(put("prop_bike_rack",6.0,z,90,"back walk: bikes") for z in (20.0,60.0)),
- put("prop_trash_receptacle",14.6,40.0,0,"back walk: a bin against the bakery's back corner"),
 ])

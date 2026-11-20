@@ -13,7 +13,7 @@ PAINTS=[("asphalt",128,40,171,58,"the park's lot (east apron z 44..51.5)"),("pla
 BODY='\n'+''.join([
  ''.join(put("prop_park_bench",x,30.6,180,"overlook: a bench facing south-west over the ridge to the shore") for x in (126,134,142,150,158)),
  put("prop_obelisk_monument",142,14,0,"overlook: the ridge's survey marker and plaque"),
- put("prop_drinking_fountain",164,20,0,"overlook: water"), put("prop_trash_receptacle",120.6,20,0,"overlook: a bin against the terrace edge"),
+ put("prop_drinking_fountain",164,20,0,"overlook: water"),
  ''.join(put("prop_lamp_victorian",x,z,0,"park: the paths lit") for x,z in ((96.6,20),(96.6,70),(96.6,130),(40,100.6),(140,100.6))),
  put("prop_play_structure",114,124,0,"playground: the climbing frame on mulch"), put("prop_swing_set",130,116,0,"playground: swings"), put("prop_slide",130,134,0,"playground: the slide"),
  put("prop_park_bench",120,142.6,180,"playground: a bench for the parents facing it"), put("prop_shade_sail",106,136,0,"playground: shade"),

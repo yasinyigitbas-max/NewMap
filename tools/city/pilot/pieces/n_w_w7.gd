@@ -52,7 +52,6 @@ func _run() -> void:
 	c.put("prop_park_bench", "worn", c.gp(158.00, 30.60), 180.0, "overlook: a bench facing south-west over the ridge to the shore")
 	c.put("prop_obelisk_monument", "worn", c.gp(142.00, 14.00), 0.0, "overlook: the ridge's survey marker and plaque")
 	c.put("prop_drinking_fountain", "worn", c.gp(164.00, 20.00), 0.0, "overlook: water")
-	c.put("prop_trash_receptacle", "worn", c.gp(120.60, 20.00), 0.0, "overlook: a bin against the terrace edge")
 	c.put("prop_lamp_victorian", "worn", c.gp(96.60, 20.00), 0.0, "park: the paths lit")
 	c.put("prop_lamp_victorian", "worn", c.gp(96.60, 70.00), 0.0, "park: the paths lit")
 	c.put("prop_lamp_victorian", "worn", c.gp(96.60, 130.00), 0.0, "park: the paths lit")

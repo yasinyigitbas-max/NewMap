@@ -56,7 +56,6 @@ func _run() -> void:
 	for bx: float in [3.0, 5.5, 46.0, 49.0]: c.put("prop_bike_rack", "worn", c.gp(bx, 89.8), 0.0, "student strip: bikes along the walk")
 	for nb: Array in [[79.6, 89.6, "prop_newspaper_box_red"], [80.6, 89.6, "prop_newspaper_box_blue"]]: c.put(String(nb[2]), "worn", c.gp(float(nb[0]), float(nb[1])), 0.0, "corner: the student paper and the city paper")
 	c.put("prop_trash_receptacle", "worn", c.gp(78.9, 86.0), 0.0, "corner terrace: a bin against the deli's corner")
-	c.put("prop_recycling_receptacle", "worn", c.gp(78.9, 61.0), 0.0, "corner terrace: recycling against the deli's back corner")
 	for lp: float in [20.0, 52.0, 86.0]: c.put("prop_lamp_victorian", "worn", c.gp(lp, 90.2), 0.0, "frontage: lamps")
 	var sx := 4.0
 	while sx < 77.0:

@@ -42,7 +42,6 @@ func _run() -> void:
 	c.put("prop_slide", "worn", c.gp(28.00, 26.00), 0.0, "playground: the slide")
 	c.put("prop_shade_sail", "worn", c.gp(12.00, 28.00), 0.0, "playground: shade")
 	c.put("prop_park_bench", "worn", c.gp(20.00, 34.00), 180.0, "playground: a bench for the parents facing it")
-	c.put("prop_trash_receptacle", "worn", c.gp(34.00, 34.60), 0.0, "playground: a bin against the fence")
 	for k2: String in B:
 		var r: Dictionary = B[k2]
 		c.services(r, 2.0, 1 if not String(r.folder).begins_with("apartments/") else 2, String(r.folder).begins_with("apartments/") or String(r.folder).begins_with("houses/"))

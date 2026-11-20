@@ -106,7 +106,6 @@ func _run() -> void:
 	c.put("prop_usps_collection_box", "worn", c.gp(36.0, 176.0), 0.0, "south street: the mailbox at the townhouses' end")
 	# ---- thrift row: a rail of clothes outside is inside the shop; a bench and bin outside
 	c.put("prop_park_bench", "worn", c.gp(30.0, 1.4), 180.0, "thrift row: a bench on the walk facing the street")
-	c.put("prop_trash_receptacle", "worn", c.gp(3.6, 3.0), 0.0, "thrift row: a bin against its west end")
 	# ---- service sides, door grime (heavy wear)
 	for r: Dictionary in shops: c.services(r, 2.0, 1, false)
 	for r2: Dictionary in homes: c.services(r2, 2.0, 2, true)
@@ -114,7 +113,5 @@ func _run() -> void:
 		for dr2: Array in r3.doors:
 			var q: Vector3 = dr2[1]; var o: Vector3 = dr2[2]
 			c.grime(Vector2(q.x + o.x * 0.9, q.z + o.z * 0.9), 0.0, 1.8, 1.6, 0.6)
-	c.put("prop_dumpster_3yd_green", "worn", c.gp(69.0, 120.0), 0.0, "the row's waste, against the court apartments' back wall")
-	c.put("prop_dumpster_3yd_blue", "worn", c.gp(72.6, 120.0), 0.0, "the row's recycling, beside it")
 	c.finish()
 	quit()

@@ -157,8 +157,6 @@ func _run() -> void:
 	c.put("prop_bike_rack", "worn", c.gp(121.00, 89.60), 0.0, "apartments: bikes along the frontage")
 	c.put("prop_bus_shelter", "worn", c.gp(100.00, 90.20), 180.0, "south street: a bus shelter facing the street")
 	c.cmu(Vector2(0.6, 0.6), Vector2(0.6, 90.4), "ring road: the sound wall")
-	c.put("prop_dumpster_3yd_green", "worn", c.gp(122.00, 24.00), 0.0, "apartments: the shared bins at the court's end")
-	c.put("prop_dumpster_3yd_blue", "worn", c.gp(118.40, 24.00), 0.0, "apartments: recycling")
 	for k2: String in B:
 		var r: Dictionary = B[k2]
 		c.services(r, 2.0, 1 if not String(r.folder).begins_with("apartments/") else 2, String(r.folder).begins_with("apartments/") or String(r.folder).begins_with("houses/"))

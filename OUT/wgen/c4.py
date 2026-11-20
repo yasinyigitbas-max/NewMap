@@ -13,6 +13,5 @@ BODY='\n'+''.join([
  put("prop_obelisk_monument",22.5,166.0,0,"promenade: the statue at the stadium end"),
  ''.join(put("prop_park_bench",x,z,yw,"stadium square: a bench facing the statue") for x,z,yw in ((14.0,166,90),(31.0,166,-90))),
  put("prop_drinking_fountain",28.0,100.0,0,"promenade: water"), put("prop_bike_rack",12.0,176.0,0,"stadium square: bikes"),
- put("prop_trash_receptacle",11.0,154.0,0,"stadium square: a bin at its edge"),
  ''.join(put("plant_bird_of_paradise",x,z,0,"promenade: a bed of flowers") for x,z in ((6,40),(38,80),(6,120),(38,30))),
 ])

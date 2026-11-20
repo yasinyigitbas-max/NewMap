@@ -167,7 +167,6 @@ func _run() -> void:
 	c.put("prop_cafe_table", "worn", c.gp(175.00, 14.00), 0.0, "Beach Bean: a table on its terrace")
 	c.put("prop_cafe_table", "worn", c.gp(179.00, 14.00), 0.0, "Beach Bean: a table on its terrace")
 	c.put("prop_cafe_table", "worn", c.gp(175.00, 20.00), 0.0, "Beach Bean: a table on its terrace")
-	c.put("prop_trash_receptacle", "worn", c.gp(171.40, 26.00), 0.0, "Beach Bean: a bin against its back corner")
 	c.put("prop_beach_shower", "worn", c.gp(178.00, 28.00), 0.0, "Beach Bean: a rinse shower for people off the beach")
 	for k2: String in B:
 		var r: Dictionary = B[k2]

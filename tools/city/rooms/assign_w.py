@@ -18,7 +18,7 @@ IN = os.path.join(ROOT, "map_dc/coronado/city_kit/interiors")
 # None = the whole floor, kind of room_gen_strip.KINDS, shop name, sign style)
 SHOPS = {
     # ---- n_w_i1: marine trades
-    ("n_w_i1", "boatworks"): [(None, None, "workshop", "Coronado Boatworks", "navy")],
+    ("n_w_i1", "boatworks"): [(None, None, "store", "Coronado Boatworks Chandlery", "navy")],
     ("n_w_i1", "marine_engines"): [(None, None, "workshop", "Bay Marine Engines", "teal")],
     ("n_w_i1", "marine_supply"): [(None, None, "store", "Coronado Marine Supply", "navy")],
     # ---- n_w_i2: industry to the gritty edge
@@ -32,14 +32,14 @@ SHOPS = {
     ("n_w_g1", "corner_market"): [(None, None, "corner_shop", "Strand Corner Market", "sun")],
     # ---- the rest of the west fill (20 Nov)
     ("n_w_c1", "fire_station"): [(None, None, "office", "Fire Station 2", "navy")],
-    ("n_w_c1", "post_office"): [(None, None, "office", "Coronado Post Office", "navy")],
+    ("n_w_c1", "post_office"): [(None, None, "bank", "Coronado Post Office", "navy")],
     ("n_w_c1", "church"): [(None, None, "church", "St. Andrew's", "navy")],
     ("n_w_c3", "senior_center"): [(None, None, "venue", "Ridge Senior Center", "teal")],
     ("n_w_c6", "child_care"): [(None, None, "lobby", "Bright Start Child Care", "sun")],
     ("n_w_c8", "team_store"): [(None, None, "clothes", "Stadium Team Store", "navy")],
     ("n_w_c8", "bullpen_bar"): [(None, None, "bar", "The Bullpen", "sun")],
     ("n_w_c8", "touchdown_diner"): [(None, None, "restaurant", "Touchdown Diner", "sun")],
-    ("n_w_c9", "arcade"): [(None, None, "souvenir", "Amber Arcade Gifts", "teal")],
+    ("n_w_c9", "arcade"): [(None, None, "store", "Amber Arcade Gifts", "teal")],
     ("n_w_c9", "bakery"): [(None, None, "bakery", "Amber Bakery", "sun")],
     ("n_w_c9", "shop_row"): [(None, None, "shoes", "Amber Shoes", "navy")],
     ("n_w_c9", "amber_diner"): [(None, None, "restaurant", "Amber Diner", "sun")],
