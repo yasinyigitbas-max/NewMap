@@ -2,7 +2,7 @@ extends SceneTree
 ## The player's bicycle (C++: CityBike, BikeReach, CityPed's balancing body), headless with physics:
 ##   godot --headless --fixed-fps 60 --path . -s res://tests/people/test_bike_ride.gd
 ## A flat floor. The player stands by a bicycle; the script presses its pedals, bar and brake (set_controls) as a
-## thumb would. PASS needs: he gets on (the Quaternius Sitting_Enter clip, then riding: Driving_Loop with his feet on
+## thumb would. PASS needs: he gets on (from standing beside it onto the saddle, then riding: Driving_Loop with his feet on
 ## the pedals); pedalling takes it to a rider's speed and it stays upright; sprinting goes faster; the view wobbles with
 ## the pedalling; steering turns it and it leans INTO the turn; the brakes stop it in a short way without throwing him;
 ## he gets off (the cruiser's own dismount) and stands beside it as the player again; back on, he rides into a wall at a sprint: he is
@@ -65,7 +65,8 @@ func _physics_process(delta: float) -> bool:
 			step = 1; t0 = t
 		1:
 			if String(s.state) != "riding" and t - t0 < 5.0: return false
-			_check(String(s.state) == "riding" and clips.has("Sitting_Enter"), "getting on plays Sitting_Enter, then he rides (%.1f s; clips %s)" % [t - t0, str(clips.keys())])
+			# (since 20 Nov getting on is the get-off played backwards: standing beside it, then the seated clip as he sits)
+			_check(String(s.state) == "riding" and clips.has("Idle_Loop") and clips.has("Driving_Loop"), "getting on: from standing beside it onto the saddle (the get-off backwards), then he rides (%.1f s; clips %s)" % [t - t0, str(clips.keys())])
 			_check(not player.visible, "the player himself is not there while he rides (his figure is the rider)")
 			bike.call(&"set_controls", 1.0, 0.0, 0.0, 0.0)
 			p0 = bike.global_position; step = 2; t0 = t

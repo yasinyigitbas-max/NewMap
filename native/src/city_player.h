@@ -45,7 +45,8 @@ class CityPlayer : public CharacterBody3D {
 	double stop_ph_prev = -1.0;   // (waiting for the footfall to stop on: the stride's share last frame)
 	int starts = 0, stops = 0, turns = 0;    // (the tests)
 	// IN A TALK (CityTalk; Yasin, 20 Nov: "starting chat with npc doesnt play any animation"): he faces whom he talks to
-	// and his body talks when he says a line; 0 talking (ual/Idle_Talking_Loop), 1 a nod (ual/Yes), 2 no (Idle_No_Loop)
+	// and his body talks when he says a line; 0 talking (ual/Idle_Talking_Loop), 1 a nod (ual/Yes), 2 no (Idle_No_Loop),
+	// 3 bending down to lift something (ual/PickUp_Kneeling: a fallen bicycle)
 	bool talk_on = false; Vector3 talk_at;
 	int gest_kind = 0; float gest_t = 0.0f;
 public:

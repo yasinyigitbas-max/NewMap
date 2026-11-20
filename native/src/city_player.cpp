@@ -488,8 +488,8 @@ void CityPlayer::_physics_process(double p_delta) {
 	else if (!crouch && speed < 0.5f && crouch_t < fig->clip_len(CR_OUT) && !airborne) { clip = CR_OUT; hold = -2.0; }   // (up out of it)
 	else if (heavy && step_mode != 0) { clip = step_clip; cs = step_cs; hold = -2.0; }   // (a start or a stop: played through)
 	else if (heavy && gest_t > 0.0f && speed < 0.08f) {   // a talk's gesture: talking, a nod, a no
-		static const StringName G_TALK("ual/Idle_Talking_Loop"), G_YES("ual/Yes"), G_NO("ual/Idle_No_Loop");
-		clip = gest_kind == 1 ? G_YES : (gest_kind == 2 ? G_NO : G_TALK); hold = gest_kind == 1 ? -2.0 : -1.0;
+		static const StringName G_TALK("ual/Idle_Talking_Loop"), G_YES("ual/Yes"), G_NO("ual/Idle_No_Loop"), G_LIFT("ual/PickUp_Kneeling");
+		clip = gest_kind == 1 ? G_YES : (gest_kind == 2 ? G_NO : (gest_kind == 3 ? G_LIFT : G_TALK)); hold = (gest_kind == 1 || gest_kind == 3) ? -2.0 : -1.0;
 	}
 	else if (speed > 0.08f || (heavy && turn_left > 0.35f && move_speed < 0.4f && Vector3(want.x, 0, want.z).length() > 0.05f)) {
 		// THE GAIT SET (see the header): the clip whose own pace is nearest his (kept until another is clearly nearer), played
