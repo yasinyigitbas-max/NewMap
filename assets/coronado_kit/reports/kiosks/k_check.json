@@ -1,0 +1,428 @@
+{
+ "rows": [
+  {
+   "asset": "prop_kiosk_hotdog_cart",
+   "tier": "near",
+   "tris": 2460,
+   "verts": 2308,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -0.983,
+     0.0,
+     -1.233
+    ],
+    [
+     0.983,
+     2.396,
+     0.733
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_hotdog_cart",
+   "tier": "mid",
+   "tris": 556,
+   "verts": 705,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -0.983,
+     0.0,
+     -1.233
+    ],
+    [
+     0.983,
+     2.34,
+     0.733
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_hotdog_cart",
+   "tier": "far",
+   "tris": 164,
+   "verts": 226,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -0.98,
+     0.0,
+     -1.23
+    ],
+    [
+     0.98,
+     2.34,
+     0.73
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_hotdog_cart",
+   "tier": "col",
+   "tris": 12,
+   "verts": 24,
+   "bounds": [
+    [
+     -0.88,
+     0.0,
+     -0.43
+    ],
+    [
+     0.94,
+     0.94,
+     0.43
+    ]
+   ],
+   "boxes": 1,
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_paleta_cart",
+   "tier": "near",
+   "tris": 2634,
+   "verts": 2477,
+   "flip_frac": 0.0001,
+   "bounds": [
+    [
+     -0.611,
+     0.0,
+     -0.988
+    ],
+    [
+     1.118,
+     2.196,
+     0.405
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_paleta_cart",
+   "tier": "mid",
+   "tris": 784,
+   "verts": 761,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -0.608,
+     0.0,
+     -0.988
+    ],
+    [
+     1.118,
+     2.14,
+     0.378
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_paleta_cart",
+   "tier": "far",
+   "tris": 114,
+   "verts": 160,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -0.43,
+     0.0,
+     -0.985
+    ],
+    [
+     1.115,
+     2.14,
+     0.376
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_paleta_cart",
+   "tier": "col",
+   "tris": 12,
+   "verts": 24,
+   "bounds": [
+    [
+     -0.58,
+     0.0,
+     -0.4
+    ],
+    [
+     0.44,
+     1.06,
+     0.4
+    ]
+   ],
+   "boxes": 1,
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_taco_stand",
+   "tier": "near",
+   "tris": 3182,
+   "verts": 3037,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -1.57,
+     0.0,
+     -1.52
+    ],
+    [
+     1.57,
+     2.78,
+     2.129
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_taco_stand",
+   "tier": "mid",
+   "tris": 420,
+   "verts": 572,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -1.52,
+     0.0,
+     -1.52
+    ],
+    [
+     1.52,
+     2.78,
+     2.135
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_taco_stand",
+   "tier": "far",
+   "tris": 126,
+   "verts": 256,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -1.52,
+     -0.005,
+     -1.52
+    ],
+    [
+     1.52,
+     2.78,
+     2.05
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_taco_stand",
+   "tier": "col",
+   "tris": 96,
+   "verts": 192,
+   "bounds": [
+    [
+     -1.48,
+     -0.005,
+     -1.48
+    ],
+    [
+     1.48,
+     2.08,
+     2.07
+    ]
+   ],
+   "boxes": 8,
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_shaveice_shack",
+   "tier": "near",
+   "tris": 2396,
+   "verts": 2515,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -1.797,
+     0.0,
+     -1.05
+    ],
+    [
+     1.35,
+     3.035,
+     1.78
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_shaveice_shack",
+   "tier": "mid",
+   "tris": 330,
+   "verts": 606,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -1.809,
+     0.0,
+     -1.05
+    ],
+    [
+     1.35,
+     3.035,
+     1.78
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_shaveice_shack",
+   "tier": "far",
+   "tris": 52,
+   "verts": 104,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -1.35,
+     0.0,
+     -1.05
+    ],
+    [
+     1.35,
+     3.035,
+     1.78
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_shaveice_shack",
+   "tier": "col",
+   "tris": 36,
+   "verts": 72,
+   "bounds": [
+    [
+     -1.75,
+     0.0,
+     -0.97
+    ],
+    [
+     1.23,
+     2.48,
+     1.17
+    ]
+   ],
+   "boxes": 3,
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_lemonade_stand",
+   "tier": "near",
+   "tris": 2744,
+   "verts": 2359,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -1.05,
+     0.0,
+     -0.62
+    ],
+    [
+     1.461,
+     2.5,
+     0.62
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_lemonade_stand",
+   "tier": "mid",
+   "tris": 554,
+   "verts": 642,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -1.05,
+     0.0,
+     -0.62
+    ],
+    [
+     1.461,
+     2.5,
+     0.62
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_lemonade_stand",
+   "tier": "far",
+   "tris": 88,
+   "verts": 176,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -1.02,
+     0.0,
+     -0.62
+    ],
+    [
+     1.461,
+     2.5,
+     0.62
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "prop_kiosk_lemonade_stand",
+   "tier": "col",
+   "tris": 72,
+   "verts": 144,
+   "bounds": [
+    [
+     -0.85,
+     0.0,
+     -0.36
+    ],
+    [
+     1.46,
+     2.18,
+     0.36
+    ]
+   ],
+   "boxes": 6,
+   "errors": []
+  }
+ ],
+ "tex": {
+  "kiosks_color.png": [
+   1024,
+   1024,
+   1.333
+  ],
+  "kiosks_normal.png": [
+   512,
+   512,
+   0.333
+  ],
+  "kiosks_orm.png": [
+   512,
+   512,
+   0.333
+  ]
+ },
+ "tex_mib": 2.0,
+ "pass_": true,
+ "budget": {
+  "near": 4500,
+  "mid": 1350,
+  "far": 200
+ }
+}

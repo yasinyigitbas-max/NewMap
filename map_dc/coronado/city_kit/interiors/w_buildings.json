@@ -1,0 +1,4828 @@
+{
+ "_doc": "room_contracts_cc.gd: every building of the n_w_* pieces, grid frame (review/grow_uw_blocks.json)",
+ "buildings": [
+  {
+   "doors_front": [
+    [
+     "rollup",
+     -10.0
+    ],
+    [
+     "shopdoor",
+     8.0
+    ]
+   ],
+   "label": "boatworks",
+   "model": "industrial/ind_factory",
+   "piece": "n_w_i1",
+   "pos": [
+    -455.0,
+    2.2,
+    -1562.3
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -6.5
+    ],
+    [
+     "rollup",
+     0.6
+    ],
+    [
+     "rollup",
+     6.0
+    ]
+   ],
+   "label": "marine_engines",
+   "model": "industrial/ind_repair",
+   "piece": "n_w_i1",
+   "pos": [
+    -434.0,
+    2.203,
+    -1471.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -9.0
+    ],
+    [
+     "rollup",
+     6.0
+    ]
+   ],
+   "label": "marine_supply",
+   "model": "industrial/ind_warehouse",
+   "piece": "n_w_i1",
+   "pos": [
+    -475.0,
+    2.201,
+    -1467.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -9.0
+    ],
+    [
+     "rollup",
+     6.0
+    ]
+   ],
+   "label": "building_supply",
+   "model": "industrial/ind_warehouse",
+   "piece": "n_w_i2",
+   "pos": [
+    -434.0,
+    2.496,
+    -1366.5
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -6.5
+    ],
+    [
+     "rollup",
+     0.6
+    ],
+    [
+     "rollup",
+     6.0
+    ]
+   ],
+   "label": "tire_brake",
+   "model": "industrial/ind_repair",
+   "piece": "n_w_i2",
+   "pos": [
+    -450.0,
+    3.983,
+    -1245.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.08
+    ],
+    [
+     "shopdoor",
+     1.08
+    ]
+   ],
+   "label": "liquor_deli",
+   "model": "commercial/com_orange_corner",
+   "piece": "n_w_i2",
+   "pos": [
+    -468.0,
+    4.149,
+    -1228.173
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -3.26
+    ]
+   ],
+   "label": "anchor_bar",
+   "model": "commercial/com_bar_crown",
+   "piece": "n_w_g1",
+   "pos": [
+    -419.95,
+    4.337,
+    -1174.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -4.0
+    ],
+    [
+     "apt_door",
+     4.0
+    ]
+   ],
+   "label": "walkup_n",
+   "model": "apartments/apt_dingbat_teal",
+   "piece": "n_w_g1",
+   "pos": [
+    -420.45,
+    4.586,
+    -1156.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.08
+    ],
+    [
+     "shopdoor",
+     -1.92
+    ],
+    [
+     "shopdoor",
+     7.76
+    ]
+   ],
+   "label": "laundry_pawn",
+   "model": "commercial/com_orange_row",
+   "piece": "n_w_g1",
+   "pos": [
+    -420.173,
+    5.045,
+    -1124.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -4.0
+    ],
+    [
+     "apt_door",
+     4.0
+    ]
+   ],
+   "label": "walkup_s",
+   "model": "apartments/apt_dingbat_pink",
+   "piece": "n_w_g1",
+   "pos": [
+    -420.45,
+    5.4,
+    -1100.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -4.95
+    ],
+    [
+     "apt_door",
+     -3.45
+    ],
+    [
+     "apt_door",
+     3.45
+    ],
+    [
+     "apt_door",
+     4.95
+    ],
+    [
+     "apt_door",
+     -4.95
+    ],
+    [
+     "apt_door",
+     -3.45
+    ],
+    [
+     "apt_door",
+     3.45
+    ],
+    [
+     "apt_door",
+     4.95
+    ]
+   ],
+   "label": "court_apts",
+   "model": "apartments/apt_court_white",
+   "piece": "n_w_g1",
+   "pos": [
+    -418.1,
+    5.71,
+    -1078.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.08
+    ],
+    [
+     "shopdoor",
+     -1.92
+    ],
+    [
+     "shopdoor",
+     7.76
+    ]
+   ],
+   "label": "thrift_row",
+   "model": "commercial/com_boutique_row",
+   "piece": "n_w_g1",
+   "pos": [
+    -484.0,
+    4.548,
+    -1173.827
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "rollup",
+     -7.85
+    ],
+    [
+     "apt_door",
+     -4.2
+    ],
+    [
+     "patio",
+     -7.85
+    ],
+    [
+     "rollup",
+     1.45
+    ],
+    [
+     "apt_door",
+     -2.2
+    ],
+    [
+     "patio",
+     1.45
+    ],
+    [
+     "rollup",
+     4.95
+    ],
+    [
+     "apt_door",
+     8.6
+    ],
+    [
+     "patio",
+     4.95
+    ]
+   ],
+   "label": "townhouses",
+   "model": "apartments/apt_townhouse_cays",
+   "piece": "n_w_g1",
+   "pos": [
+    -480.0,
+    6.179,
+    -1017.4
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.08
+    ],
+    [
+     "shopdoor",
+     1.08
+    ]
+   ],
+   "label": "corner_market",
+   "model": "commercial/com_orange_corner",
+   "piece": "n_w_g1",
+   "pos": [
+    -425.0,
+    6.169,
+    -1019.173
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "rollup",
+     -5.9
+    ],
+    [
+     "rollup",
+     0.0
+    ],
+    [
+     "rollup",
+     5.9
+    ]
+   ],
+   "label": "fire_station",
+   "model": "civic/civ_fire_station",
+   "piece": "n_w_c1",
+   "pos": [
+    -343.0,
+    6.214,
+    -776.05
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "post_office",
+   "model": "civic/civ_post_office",
+   "piece": "n_w_c1",
+   "pos": [
+    -291.0,
+    6.193,
+    -775.55
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "church",
+   "model": "civic/civ_church",
+   "piece": "n_w_c1",
+   "pos": [
+    -225.0,
+    6.18,
+    -771.1
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "rollup",
+     -7.85
+    ],
+    [
+     "apt_door",
+     -4.2
+    ],
+    [
+     "patio",
+     -7.85
+    ],
+    [
+     "rollup",
+     1.45
+    ],
+    [
+     "apt_door",
+     -2.2
+    ],
+    [
+     "patio",
+     1.45
+    ],
+    [
+     "rollup",
+     4.95
+    ],
+    [
+     "apt_door",
+     8.6
+    ],
+    [
+     "patio",
+     4.95
+    ]
+   ],
+   "label": "townhouses_1",
+   "model": "apartments/apt_townhouse_cays",
+   "piece": "n_w_c3",
+   "pos": [
+    -381.6,
+    6.197,
+    -572.7
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "rollup",
+     -7.85
+    ],
+    [
+     "apt_door",
+     -4.2
+    ],
+    [
+     "patio",
+     -7.85
+    ],
+    [
+     "rollup",
+     1.45
+    ],
+    [
+     "apt_door",
+     -2.2
+    ],
+    [
+     "patio",
+     1.45
+    ],
+    [
+     "rollup",
+     4.95
+    ],
+    [
+     "apt_door",
+     8.6
+    ],
+    [
+     "patio",
+     4.95
+    ]
+   ],
+   "label": "townhouses_2",
+   "model": "apartments/apt_townhouse_cays",
+   "piece": "n_w_c3",
+   "pos": [
+    -381.6,
+    6.207,
+    -520.7
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "rollup",
+     -7.25
+    ],
+    [
+     "apt_door",
+     -4.0
+    ],
+    [
+     "patio",
+     -7.25
+    ],
+    [
+     "rollup",
+     1.25
+    ],
+    [
+     "apt_door",
+     -2.0
+    ],
+    [
+     "patio",
+     1.25
+    ],
+    [
+     "rollup",
+     4.75
+    ],
+    [
+     "apt_door",
+     8.0
+    ],
+    [
+     "patio",
+     4.75
+    ]
+   ],
+   "label": "townhouses_3",
+   "model": "apartments/apt_townhouse_modern",
+   "piece": "n_w_c3",
+   "pos": [
+    -381.6,
+    6.214,
+    -497.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "rollup",
+     -7.85
+    ],
+    [
+     "apt_door",
+     -4.2
+    ],
+    [
+     "patio",
+     -7.85
+    ],
+    [
+     "rollup",
+     1.45
+    ],
+    [
+     "apt_door",
+     -2.2
+    ],
+    [
+     "patio",
+     1.45
+    ],
+    [
+     "rollup",
+     4.95
+    ],
+    [
+     "apt_door",
+     8.6
+    ],
+    [
+     "patio",
+     4.95
+    ]
+   ],
+   "label": "townhouses_4",
+   "model": "apartments/apt_townhouse_cays",
+   "piece": "n_w_c3",
+   "pos": [
+    -381.6,
+    6.214,
+    -472.7
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "senior_center",
+   "model": "civic/civ_community_center",
+   "piece": "n_w_c3",
+   "pos": [
+    -377.05,
+    6.234,
+    -431.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.08
+    ],
+    [
+     "shopdoor",
+     -1.92
+    ],
+    [
+     "shopdoor",
+     7.76
+    ]
+   ],
+   "label": "boutiques",
+   "model": "commercial/com_boutique_row",
+   "piece": "n_w_c5",
+   "pos": [
+    -27.173,
+    6.18,
+    -489.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     3.26
+    ]
+   ],
+   "label": "bakery",
+   "model": "commercial/com_bakery",
+   "piece": "n_w_c5",
+   "pos": [
+    -27.173,
+    6.17,
+    -469.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.08
+    ],
+    [
+     "shopdoor",
+     1.08
+    ]
+   ],
+   "label": "corner_shop",
+   "model": "commercial/com_orange_corner",
+   "piece": "n_w_c5",
+   "pos": [
+    -27.173,
+    6.17,
+    -452.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     1.76
+    ]
+   ],
+   "label": "realty",
+   "model": "commercial/com_realty",
+   "piece": "n_w_c5",
+   "pos": [
+    -27.173,
+    6.17,
+    -438.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.76
+    ]
+   ],
+   "label": "cafe",
+   "model": "commercial/com_cafe_seaside",
+   "piece": "n_w_c5",
+   "pos": [
+    -27.173,
+    6.17,
+    -424.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     -6.4
+    ],
+    [
+     "apt_door",
+     6.4
+    ],
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "faculty_1",
+   "model": "apartments/apt_spanish_revival",
+   "piece": "n_w_c6",
+   "pos": [
+    -577.0,
+    6.188,
+    -381.5
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ],
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ]
+   ],
+   "label": "faculty_2",
+   "model": "apartments/apt_garden_cream",
+   "piece": "n_w_c6",
+   "pos": [
+    -525.0,
+    6.18,
+    -381.9
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "faculty_3",
+   "model": "apartments/apt_stucco3_cream",
+   "piece": "n_w_c6",
+   "pos": [
+    -499.0,
+    6.177,
+    -379.9
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     -6.4
+    ],
+    [
+     "apt_door",
+     6.4
+    ],
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "faculty_4",
+   "model": "apartments/apt_spanish_white",
+   "piece": "n_w_c6",
+   "pos": [
+    -477.0,
+    6.169,
+    -381.5
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "child_care",
+   "model": "civic/civ_school_wing",
+   "piece": "n_w_c6",
+   "pos": [
+    -431.0,
+    6.178,
+    -378.05
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.08
+    ],
+    [
+     "shopdoor",
+     -1.92
+    ],
+    [
+     "shopdoor",
+     7.76
+    ]
+   ],
+   "label": "team_store",
+   "model": "commercial/com_boutique_row",
+   "piece": "n_w_c8",
+   "pos": [
+    -379.827,
+    6.24,
+    -371.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -3.26
+    ]
+   ],
+   "label": "bullpen_bar",
+   "model": "commercial/com_bar_crown",
+   "piece": "n_w_c8",
+   "pos": [
+    -380.05,
+    6.249,
+    -321.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     4.76
+    ]
+   ],
+   "label": "touchdown_diner",
+   "model": "commercial/com_bistro",
+   "piece": "n_w_c8",
+   "pos": [
+    -379.827,
+    6.26,
+    -291.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -5.08
+    ],
+    [
+     "shopdoor",
+     -2.92
+    ],
+    [
+     "shopdoor",
+     5.08
+    ]
+   ],
+   "label": "arcade",
+   "model": "commercial/com_spanish_arcade_block",
+   "piece": "n_w_c9",
+   "pos": [
+    -30.05,
+    6.18,
+    -371.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     3.26
+    ]
+   ],
+   "label": "bakery",
+   "model": "commercial/com_bakery",
+   "piece": "n_w_c9",
+   "pos": [
+    -27.173,
+    6.18,
+    -348.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.08
+    ],
+    [
+     "shopdoor",
+     -1.92
+    ],
+    [
+     "shopdoor",
+     7.76
+    ]
+   ],
+   "label": "shop_row",
+   "model": "commercial/com_orange_row",
+   "piece": "n_w_c9",
+   "pos": [
+    -27.173,
+    6.19,
+    -327.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     4.76
+    ]
+   ],
+   "label": "amber_diner",
+   "model": "commercial/com_bistro",
+   "piece": "n_w_c9",
+   "pos": [
+    -27.173,
+    6.2,
+    -305.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.08
+    ],
+    [
+     "shopdoor",
+     -1.92
+    ],
+    [
+     "shopdoor",
+     7.76
+    ]
+   ],
+   "label": "boutiques",
+   "model": "commercial/com_boutique_row",
+   "piece": "n_w_c9",
+   "pos": [
+    -27.173,
+    6.209,
+    -283.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -3.26
+    ]
+   ],
+   "label": "surf_shop",
+   "model": "commercial/com_surf_shop",
+   "piece": "n_w_c9",
+   "pos": [
+    -26.95,
+    6.217,
+    -263.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.08
+    ],
+    [
+     "shopdoor",
+     1.08
+    ]
+   ],
+   "label": "corner_shop",
+   "model": "commercial/com_orange_corner",
+   "piece": "n_w_c9",
+   "pos": [
+    -27.173,
+    6.227,
+    -245.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     1.15
+    ]
+   ],
+   "label": "kiosk_w",
+   "model": "commercial/com_kiosk",
+   "piece": "n_w_c10",
+   "pos": [
+    -275.0,
+    6.18,
+    -221.923
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     1.15
+    ]
+   ],
+   "label": "kiosk_e",
+   "model": "commercial/com_kiosk",
+   "piece": "n_w_c10",
+   "pos": [
+    -239.0,
+    6.18,
+    -221.923
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     1.15
+    ]
+   ],
+   "label": "kiosk_w",
+   "model": "commercial/com_kiosk",
+   "piece": "n_w_c11",
+   "pos": [
+    -161.0,
+    6.18,
+    -221.923
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     1.15
+    ]
+   ],
+   "label": "kiosk_e",
+   "model": "commercial/com_kiosk",
+   "piece": "n_w_c11",
+   "pos": [
+    -125.0,
+    6.18,
+    -221.923
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ],
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ]
+   ],
+   "label": "apts_1",
+   "model": "apartments/apt_garden_cream",
+   "piece": "n_w_s1",
+   "pos": [
+    -775.0,
+    6.169,
+    -818.1
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "apts_2",
+   "model": "apartments/apt_stucco3_peach",
+   "piece": "n_w_s1",
+   "pos": [
+    -727.8,
+    6.164,
+    -820.1
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     -6.4
+    ],
+    [
+     "apt_door",
+     6.4
+    ],
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "apts_3",
+   "model": "apartments/apt_spanish_white",
+   "piece": "n_w_s1",
+   "pos": [
+    -706.0,
+    6.164,
+    -818.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -4.0
+    ],
+    [
+     "apt_door",
+     4.0
+    ]
+   ],
+   "label": "apts_4",
+   "model": "apartments/apt_dingbat_teal",
+   "piece": "n_w_s1",
+   "pos": [
+    -687.0,
+    6.169,
+    -820.45
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     4.76
+    ]
+   ],
+   "label": "gate_pizza",
+   "model": "commercial/com_bistro",
+   "piece": "n_w_s1",
+   "pos": [
+    -671.0,
+    6.168,
+    -820.173
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -3.26
+    ]
+   ],
+   "label": "campus_cycles",
+   "model": "commercial/com_surf_shop",
+   "piece": "n_w_s1",
+   "pos": [
+    -645.0,
+    6.168,
+    -819.95
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -3.26
+    ]
+   ],
+   "label": "gatehouse_pub",
+   "model": "commercial/com_bar_crown",
+   "piece": "n_w_s1",
+   "pos": [
+    -633.0,
+    6.171,
+    -819.95
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     1.76
+    ]
+   ],
+   "label": "housing_office",
+   "model": "commercial/com_realty",
+   "piece": "n_w_s1",
+   "pos": [
+    -620.0,
+    6.179,
+    -820.173
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     7.92
+    ],
+    [
+     "shopdoor",
+     10.08
+    ]
+   ],
+   "label": "campus_market",
+   "model": "extras/ext_grocery_market",
+   "piece": "n_w_s2a",
+   "pos": [
+    -440.0,
+    6.107,
+    -854.173
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "apts_n",
+   "model": "apartments/apt_stucco3_cream",
+   "piece": "n_w_s2a",
+   "pos": [
+    -420.1,
+    6.17,
+    -969.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ],
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ]
+   ],
+   "label": "apts_m",
+   "model": "apartments/apt_garden_mint",
+   "piece": "n_w_s2a",
+   "pos": [
+    -418.1,
+    6.164,
+    -916.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -4.95
+    ],
+    [
+     "apt_door",
+     -3.45
+    ],
+    [
+     "apt_door",
+     3.45
+    ],
+    [
+     "apt_door",
+     4.95
+    ],
+    [
+     "apt_door",
+     -4.95
+    ],
+    [
+     "apt_door",
+     -3.45
+    ],
+    [
+     "apt_door",
+     3.45
+    ],
+    [
+     "apt_door",
+     4.95
+    ]
+   ],
+   "label": "apts_s",
+   "model": "apartments/apt_court_white",
+   "piece": "n_w_s2a",
+   "pos": [
+    -418.1,
+    6.161,
+    -886.0
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "rollup",
+     -7.25
+    ],
+    [
+     "apt_door",
+     -4.0
+    ],
+    [
+     "patio",
+     -7.25
+    ],
+    [
+     "rollup",
+     1.25
+    ],
+    [
+     "apt_door",
+     -2.0
+    ],
+    [
+     "patio",
+     1.25
+    ],
+    [
+     "rollup",
+     4.75
+    ],
+    [
+     "apt_door",
+     8.0
+    ],
+    [
+     "patio",
+     4.75
+    ]
+   ],
+   "label": "townhouses",
+   "model": "apartments/apt_townhouse_modern",
+   "piece": "n_w_s2a",
+   "pos": [
+    -470.0,
+    6.179,
+    -981.6
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.08
+    ],
+    [
+     "shopdoor",
+     -1.92
+    ],
+    [
+     "shopdoor",
+     7.76
+    ]
+   ],
+   "label": "print_boba",
+   "model": "commercial/com_boutique_row",
+   "piece": "n_w_s2b",
+   "pos": [
+    -577.0,
+    6.177,
+    -820.173
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -4.08
+    ],
+    [
+     "shopdoor",
+     -1.92
+    ],
+    [
+     "shopdoor",
+     7.76
+    ]
+   ],
+   "label": "burrito_books",
+   "model": "commercial/com_orange_row",
+   "piece": "n_w_s2b",
+   "pos": [
+    -557.0,
+    6.168,
+    -820.173
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -3.26
+    ]
+   ],
+   "label": "quad_pub",
+   "model": "commercial/com_bar_crown",
+   "piece": "n_w_s2b",
+   "pos": [
+    -533.0,
+    6.164,
+    -819.95
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.08
+    ],
+    [
+     "shopdoor",
+     1.08
+    ]
+   ],
+   "label": "corner_deli",
+   "model": "commercial/com_orange_corner",
+   "piece": "n_w_s2b",
+   "pos": [
+    -519.0,
+    6.164,
+    -820.173
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     2.8
+    ]
+   ],
+   "label": "east_0",
+   "model": "houses/craftsman_sage",
+   "piece": "n_w_w3",
+   "pos": [
+    -821.25,
+    6.168,
+    -776.12
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     1.4
+    ]
+   ],
+   "label": "east_1",
+   "model": "houses/ranch_peach",
+   "piece": "n_w_w3",
+   "pos": [
+    -818.4,
+    6.161,
+    -754.38
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -1.4
+    ]
+   ],
+   "label": "east_2",
+   "model": "houses/spanish_white",
+   "piece": "n_w_w3",
+   "pos": [
+    -818.35,
+    6.158,
+    -732.62
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -0.2
+    ]
+   ],
+   "label": "east_3",
+   "model": "houses/tudor_brick",
+   "piece": "n_w_w3",
+   "pos": [
+    -817.85,
+    6.158,
+    -710.88
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     1.25
+    ],
+    [
+     "garage_wood",
+     4.45
+    ]
+   ],
+   "label": "east_4",
+   "model": "houses/mcm_teal",
+   "piece": "n_w_w3",
+   "pos": [
+    -817.75,
+    6.158,
+    -689.12
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -2.8
+    ]
+   ],
+   "label": "east_5",
+   "model": "houses/craftsman_cedar",
+   "piece": "n_w_w3",
+   "pos": [
+    -821.0,
+    6.155,
+    -667.38
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "east_6",
+   "model": "houses/colonial_white",
+   "piece": "n_w_w3",
+   "pos": [
+    -818.2,
+    6.161,
+    -645.62
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.0
+    ]
+   ],
+   "label": "east_7",
+   "model": "houses/ranch_porch",
+   "piece": "n_w_w3",
+   "pos": [
+    -818.4,
+    6.169,
+    -623.88
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -1.4
+    ]
+   ],
+   "label": "north_0",
+   "model": "houses/spanish_pink",
+   "piece": "n_w_w3",
+   "pos": [
+    -968.67,
+    4.31,
+    -781.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "north_1",
+   "model": "houses/cape_white",
+   "piece": "n_w_w3",
+   "pos": [
+    -950.0,
+    4.469,
+    -782.45
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -3.5
+    ],
+    [
+     "garage",
+     3.8
+    ]
+   ],
+   "label": "north_2",
+   "model": "houses/hipranch_sand",
+   "piece": "n_w_w3",
+   "pos": [
+    -931.33,
+    4.741,
+    -782.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -3.57
+    ]
+   ],
+   "label": "north_3",
+   "model": "houses/victorian_yellow",
+   "piece": "n_w_w3",
+   "pos": [
+    -912.67,
+    5.046,
+    -779.35
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     3.5
+    ],
+    [
+     "slider",
+     -1.8
+    ]
+   ],
+   "label": "north_4",
+   "model": "houses/contemporary_white",
+   "piece": "n_w_w3",
+   "pos": [
+    -894.0,
+    5.369,
+    -780.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.0
+    ]
+   ],
+   "label": "north_5",
+   "model": "houses/ranch_siding",
+   "piece": "n_w_w3",
+   "pos": [
+    -875.33,
+    5.683,
+    -781.85
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "south_0",
+   "model": "houses/colonial_blue",
+   "piece": "n_w_w3",
+   "pos": [
+    -968.67,
+    4.304,
+    -618.45
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     1.4
+    ]
+   ],
+   "label": "south_1",
+   "model": "houses/spanish_peach",
+   "piece": "n_w_w3",
+   "pos": [
+    -950.0,
+    4.496,
+    -618.35
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     2.8
+    ]
+   ],
+   "label": "south_2",
+   "model": "houses/craftsman_olive",
+   "piece": "n_w_w3",
+   "pos": [
+    -931.33,
+    4.761,
+    -621.25
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     1.4
+    ]
+   ],
+   "label": "south_3",
+   "model": "houses/beach_teal",
+   "piece": "n_w_w3",
+   "pos": [
+    -912.67,
+    5.021,
+    -618.6
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     1.5
+    ],
+    [
+     "garage_wood",
+     4.7
+    ]
+   ],
+   "label": "south_4",
+   "model": "houses/mcm_white",
+   "piece": "n_w_w3",
+   "pos": [
+    -894.0,
+    5.385,
+    -618.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     0.45
+    ]
+   ],
+   "label": "south_5",
+   "model": "houses/tudor_stucco",
+   "piece": "n_w_w3",
+   "pos": [
+    -875.33,
+    5.703,
+    -617.6
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "school_a",
+   "model": "civic/civ_school_wing",
+   "piece": "n_w_w4",
+   "pos": [
+    -941.0,
+    4.656,
+    -534.95
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "school_b",
+   "model": "civic/civ_school_wing",
+   "piece": "n_w_w4",
+   "pos": [
+    -896.0,
+    5.13,
+    -534.95
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.0
+    ]
+   ],
+   "label": "east_0",
+   "model": "houses/ranch_pink",
+   "piece": "n_w_w4",
+   "pos": [
+    -818.4,
+    6.163,
+    -576.12
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     2.8
+    ]
+   ],
+   "label": "east_1",
+   "model": "houses/craftsman_stucco",
+   "piece": "n_w_w4",
+   "pos": [
+    -821.0,
+    6.068,
+    -554.38
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -1.4
+    ]
+   ],
+   "label": "east_2",
+   "model": "houses/spanish_white",
+   "piece": "n_w_w4",
+   "pos": [
+    -818.35,
+    5.83,
+    -532.62
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     -1.5
+    ],
+    [
+     "garage_wood",
+     -4.7
+    ]
+   ],
+   "label": "east_3",
+   "model": "houses/mcm_shed",
+   "piece": "n_w_w4",
+   "pos": [
+    -818.0,
+    5.493,
+    -510.88
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -0.2
+    ]
+   ],
+   "label": "east_4",
+   "model": "houses/tudor_brick",
+   "piece": "n_w_w4",
+   "pos": [
+    -817.85,
+    5.083,
+    -489.12
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "east_5",
+   "model": "houses/colonial_white",
+   "piece": "n_w_w4",
+   "pos": [
+    -818.2,
+    4.715,
+    -467.38
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     4.0
+    ],
+    [
+     "garage",
+     -4.3
+    ]
+   ],
+   "label": "east_6",
+   "model": "houses/hipranch_grey",
+   "piece": "n_w_w4",
+   "pos": [
+    -818.05,
+    4.442,
+    -445.62
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     2.8
+    ]
+   ],
+   "label": "east_7",
+   "model": "houses/craftsman_sage",
+   "piece": "n_w_w4",
+   "pos": [
+    -821.25,
+    4.27,
+    -423.88
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     -4.0
+    ],
+    [
+     "slider",
+     1.8
+    ]
+   ],
+   "label": "north_0",
+   "model": "houses/contemporary_grey",
+   "piece": "n_w_w4",
+   "pos": [
+    -968.67,
+    4.293,
+    -581.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     1.4
+    ]
+   ],
+   "label": "north_1",
+   "model": "houses/ranch_peach",
+   "piece": "n_w_w4",
+   "pos": [
+    -950.0,
+    4.449,
+    -581.6
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     0.4
+    ]
+   ],
+   "label": "north_2",
+   "model": "houses/spanish_small",
+   "piece": "n_w_w4",
+   "pos": [
+    -931.33,
+    4.671,
+    -582.1
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     3.57
+    ]
+   ],
+   "label": "north_3",
+   "model": "houses/victorian_blue",
+   "piece": "n_w_w4",
+   "pos": [
+    -912.67,
+    5.001,
+    -579.35
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "north_4",
+   "model": "houses/cape_grey",
+   "piece": "n_w_w4",
+   "pos": [
+    -894.0,
+    5.337,
+    -582.45
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     1.25
+    ],
+    [
+     "garage_wood",
+     4.45
+    ]
+   ],
+   "label": "north_5",
+   "model": "houses/mcm_teal",
+   "piece": "n_w_w4",
+   "pos": [
+    -875.33,
+    5.707,
+    -582.25
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -1.4
+    ]
+   ],
+   "label": "south_0",
+   "model": "houses/spanish_pink",
+   "piece": "n_w_w4",
+   "pos": [
+    -968.67,
+    4.196,
+    -418.3
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -2.8
+    ]
+   ],
+   "label": "south_1",
+   "model": "houses/craftsman_cedar",
+   "piece": "n_w_w4",
+   "pos": [
+    -950.0,
+    4.219,
+    -421.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.0
+    ]
+   ],
+   "label": "south_2",
+   "model": "houses/ranch_siding",
+   "piece": "n_w_w4",
+   "pos": [
+    -931.33,
+    4.221,
+    -418.15
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "south_3",
+   "model": "houses/colonial_blue",
+   "piece": "n_w_w4",
+   "pos": [
+    -912.67,
+    4.238,
+    -418.45
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.4
+    ]
+   ],
+   "label": "south_4",
+   "model": "houses/beach_white",
+   "piece": "n_w_w4",
+   "pos": [
+    -894.0,
+    4.252,
+    -419.1
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     0.45
+    ]
+   ],
+   "label": "south_5",
+   "model": "houses/tudor_stucco",
+   "piece": "n_w_w4",
+   "pos": [
+    -875.33,
+    4.256,
+    -417.6
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -1.25
+    ]
+   ],
+   "label": "cottage_n0",
+   "model": "houses/narrow_cottage_siding",
+   "piece": "n_w_w5",
+   "pos": [
+    -972.0,
+    4.189,
+    -333.3
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     1.25
+    ]
+   ],
+   "label": "cottage_n1",
+   "model": "houses/narrow_cottage_stucco_clay",
+   "piece": "n_w_w5",
+   "pos": [
+    -958.5,
+    4.19,
+    -332.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -1.25
+    ]
+   ],
+   "label": "cottage_n2",
+   "model": "houses/narrow_cottage_siding",
+   "piece": "n_w_w5",
+   "pos": [
+    -945.0,
+    4.188,
+    -333.3
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     1.25
+    ]
+   ],
+   "label": "cottage_n3",
+   "model": "houses/narrow_cottage_stucco_clay",
+   "piece": "n_w_w5",
+   "pos": [
+    -931.5,
+    4.19,
+    -332.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -1.25
+    ]
+   ],
+   "label": "cottage_n4",
+   "model": "houses/narrow_cottage_siding",
+   "piece": "n_w_w5",
+   "pos": [
+    -918.0,
+    4.19,
+    -333.3
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     1.25
+    ]
+   ],
+   "label": "cottage_n5",
+   "model": "houses/narrow_cottage_stucco_clay",
+   "piece": "n_w_w5",
+   "pos": [
+    -904.5,
+    4.19,
+    -332.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -1.25
+    ]
+   ],
+   "label": "cottage_n6",
+   "model": "houses/narrow_cottage_siding",
+   "piece": "n_w_w5",
+   "pos": [
+    -891.0,
+    4.188,
+    -333.3
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     1.25
+    ]
+   ],
+   "label": "cottage_n7",
+   "model": "houses/narrow_cottage_stucco_clay",
+   "piece": "n_w_w5",
+   "pos": [
+    -877.5,
+    4.19,
+    -332.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     1.25
+    ]
+   ],
+   "label": "cottage_s0",
+   "model": "houses/narrow_cottage_stucco_clay",
+   "piece": "n_w_w5",
+   "pos": [
+    -972.0,
+    4.189,
+    -267.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -1.25
+    ]
+   ],
+   "label": "cottage_s1",
+   "model": "houses/narrow_cottage_siding",
+   "piece": "n_w_w5",
+   "pos": [
+    -958.5,
+    4.189,
+    -266.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     1.25
+    ]
+   ],
+   "label": "cottage_s2",
+   "model": "houses/narrow_cottage_stucco_clay",
+   "piece": "n_w_w5",
+   "pos": [
+    -945.0,
+    4.19,
+    -267.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -1.25
+    ]
+   ],
+   "label": "cottage_s3",
+   "model": "houses/narrow_cottage_siding",
+   "piece": "n_w_w5",
+   "pos": [
+    -931.5,
+    4.189,
+    -266.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     1.25
+    ]
+   ],
+   "label": "cottage_s4",
+   "model": "houses/narrow_cottage_stucco_clay",
+   "piece": "n_w_w5",
+   "pos": [
+    -918.0,
+    4.19,
+    -267.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -1.25
+    ]
+   ],
+   "label": "cottage_s5",
+   "model": "houses/narrow_cottage_siding",
+   "piece": "n_w_w5",
+   "pos": [
+    -904.5,
+    4.19,
+    -266.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     1.25
+    ]
+   ],
+   "label": "cottage_s6",
+   "model": "houses/narrow_cottage_stucco_clay",
+   "piece": "n_w_w5",
+   "pos": [
+    -891.0,
+    4.19,
+    -267.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -1.25
+    ]
+   ],
+   "label": "cottage_s7",
+   "model": "houses/narrow_cottage_siding",
+   "piece": "n_w_w5",
+   "pos": [
+    -877.5,
+    4.188,
+    -266.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.0
+    ]
+   ],
+   "label": "east_0",
+   "model": "houses/ranch_porch",
+   "piece": "n_w_w5",
+   "pos": [
+    -818.4,
+    4.186,
+    -376.12
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -1.4
+    ]
+   ],
+   "label": "east_1",
+   "model": "houses/spanish_white",
+   "piece": "n_w_w5",
+   "pos": [
+    -818.35,
+    4.189,
+    -354.38
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     2.8
+    ]
+   ],
+   "label": "east_2",
+   "model": "houses/craftsman_olive",
+   "piece": "n_w_w5",
+   "pos": [
+    -821.25,
+    4.188,
+    -332.62
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     1.5
+    ],
+    [
+     "garage_wood",
+     4.7
+    ]
+   ],
+   "label": "east_3",
+   "model": "houses/mcm_white",
+   "piece": "n_w_w5",
+   "pos": [
+    -818.0,
+    4.187,
+    -310.88
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -0.2
+    ]
+   ],
+   "label": "east_4",
+   "model": "houses/tudor_brick",
+   "piece": "n_w_w5",
+   "pos": [
+    -817.85,
+    4.188,
+    -289.12
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "east_5",
+   "model": "houses/colonial_blue",
+   "piece": "n_w_w5",
+   "pos": [
+    -818.45,
+    4.185,
+    -267.38
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -3.0
+    ]
+   ],
+   "label": "east_6",
+   "model": "houses/hipranch_nogarage",
+   "piece": "n_w_w5",
+   "pos": [
+    -817.8,
+    4.18,
+    -245.62
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     1.4
+    ]
+   ],
+   "label": "east_7",
+   "model": "houses/spanish_peach",
+   "piece": "n_w_w5",
+   "pos": [
+    -818.35,
+    4.169,
+    -223.88
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "north_0",
+   "model": "houses/cape_grey",
+   "piece": "n_w_w5",
+   "pos": [
+    -968.67,
+    4.184,
+    -382.45
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -2.8
+    ]
+   ],
+   "label": "north_1",
+   "model": "houses/craftsman_cedar",
+   "piece": "n_w_w5",
+   "pos": [
+    -950.0,
+    4.189,
+    -379.0
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.0
+    ]
+   ],
+   "label": "north_2",
+   "model": "houses/ranch_pink",
+   "piece": "n_w_w5",
+   "pos": [
+    -931.33,
+    4.181,
+    -381.6
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     3.5
+    ],
+    [
+     "slider",
+     -1.8
+    ]
+   ],
+   "label": "north_3",
+   "model": "houses/contemporary_white",
+   "piece": "n_w_w5",
+   "pos": [
+    -912.67,
+    4.187,
+    -380.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.4
+    ]
+   ],
+   "label": "north_4",
+   "model": "houses/beach_blue",
+   "piece": "n_w_w5",
+   "pos": [
+    -894.0,
+    4.18,
+    -380.9
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -1.4
+    ]
+   ],
+   "label": "north_5",
+   "model": "houses/spanish_pink",
+   "piece": "n_w_w5",
+   "pos": [
+    -875.33,
+    4.188,
+    -381.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -3.57
+    ]
+   ],
+   "label": "south_0",
+   "model": "houses/victorian_yellow",
+   "piece": "n_w_w5",
+   "pos": [
+    -968.67,
+    4.186,
+    -220.65
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.0
+    ]
+   ],
+   "label": "south_1",
+   "model": "houses/ranch_siding",
+   "piece": "n_w_w5",
+   "pos": [
+    -950.0,
+    4.189,
+    -218.15
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "south_2",
+   "model": "houses/colonial_white",
+   "piece": "n_w_w5",
+   "pos": [
+    -931.33,
+    4.18,
+    -218.2
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     1.25
+    ],
+    [
+     "garage_wood",
+     4.45
+    ]
+   ],
+   "label": "south_3",
+   "model": "houses/mcm_teal",
+   "piece": "n_w_w5",
+   "pos": [
+    -912.67,
+    4.188,
+    -217.75
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     2.8
+    ]
+   ],
+   "label": "south_4",
+   "model": "houses/craftsman_stucco",
+   "piece": "n_w_w5",
+   "pos": [
+    -894.0,
+    4.189,
+    -221.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "south_5",
+   "model": "houses/cape_white",
+   "piece": "n_w_w5",
+   "pos": [
+    -875.33,
+    4.186,
+    -217.55
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "ridge_church",
+   "model": "civic/civ_church",
+   "piece": "n_w_w6",
+   "pos": [
+    -926.0,
+    4.664,
+    -84.9
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     1.0
+    ],
+    [
+     "garage_wood",
+     4.2
+    ]
+   ],
+   "label": "east_0",
+   "model": "houses/mcm_large",
+   "piece": "n_w_w6",
+   "pos": [
+    -820.75,
+    4.261,
+    -176.12
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -0.5
+    ],
+    [
+     "french",
+     -3.4
+    ]
+   ],
+   "label": "east_1",
+   "model": "houses/spanish_large",
+   "piece": "n_w_w6",
+   "pos": [
+    -821.4,
+    4.583,
+    -154.38
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     3.05
+    ]
+   ],
+   "label": "east_2",
+   "model": "houses/craftsman_large",
+   "piece": "n_w_w6",
+   "pos": [
+    -822.5,
+    5.216,
+    -132.62
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -2.1
+    ],
+    [
+     "garage",
+     4.2
+    ]
+   ],
+   "label": "east_3",
+   "model": "houses/colonial_large_garage",
+   "piece": "n_w_w6",
+   "pos": [
+    -820.9,
+    6.028,
+    -110.88
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     1.5
+    ],
+    [
+     "garage_wood",
+     4.7
+    ]
+   ],
+   "label": "east_4",
+   "model": "houses/mcm_white",
+   "piece": "n_w_w6",
+   "pos": [
+    -818.0,
+    6.852,
+    -89.12
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -1.4
+    ]
+   ],
+   "label": "east_5",
+   "model": "houses/spanish_white",
+   "piece": "n_w_w6",
+   "pos": [
+    -818.35,
+    7.513,
+    -67.38
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     2.8
+    ]
+   ],
+   "label": "east_6",
+   "model": "houses/craftsman_sage",
+   "piece": "n_w_w6",
+   "pos": [
+    -821.25,
+    7.995,
+    -45.62
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     0.45
+    ]
+   ],
+   "label": "east_7",
+   "model": "houses/tudor_stucco",
+   "piece": "n_w_w6",
+   "pos": [
+    -817.6,
+    8.159,
+    -23.88
+   ],
+   "yaw": 90.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     -4.0
+    ],
+    [
+     "slider",
+     1.8
+    ]
+   ],
+   "label": "north_0",
+   "model": "houses/contemporary_grey",
+   "piece": "n_w_w6",
+   "pos": [
+    -968.67,
+    4.188,
+    -181.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -3.5
+    ],
+    [
+     "garage",
+     3.8
+    ]
+   ],
+   "label": "north_1",
+   "model": "houses/hipranch_sand",
+   "piece": "n_w_w6",
+   "pos": [
+    -950.0,
+    4.187,
+    -182.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -1.4
+    ]
+   ],
+   "label": "north_2",
+   "model": "houses/spanish_pink",
+   "piece": "n_w_w6",
+   "pos": [
+    -931.33,
+    4.18,
+    -181.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     3.57
+    ]
+   ],
+   "label": "north_3",
+   "model": "houses/victorian_blue",
+   "piece": "n_w_w6",
+   "pos": [
+    -912.67,
+    4.177,
+    -179.35
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     1.4
+    ]
+   ],
+   "label": "north_4",
+   "model": "houses/ranch_peach",
+   "piece": "n_w_w6",
+   "pos": [
+    -894.0,
+    4.169,
+    -181.6
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "north_5",
+   "model": "houses/colonial_white",
+   "piece": "n_w_w6",
+   "pos": [
+    -875.33,
+    4.163,
+    -181.8
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -2.4
+    ],
+    [
+     "french",
+     1.2
+    ]
+   ],
+   "label": "south_0",
+   "model": "houses/beach_large",
+   "piece": "n_w_w6",
+   "pos": [
+    -968.67,
+    4.296,
+    -21.65
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     1.25
+    ],
+    [
+     "garage_wood",
+     4.45
+    ]
+   ],
+   "label": "south_1",
+   "model": "houses/mcm_teal",
+   "piece": "n_w_w6",
+   "pos": [
+    -950.0,
+    4.634,
+    -17.75
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     1.4
+    ]
+   ],
+   "label": "south_2",
+   "model": "houses/spanish_peach",
+   "piece": "n_w_w6",
+   "pos": [
+    -931.33,
+    5.158,
+    -18.35
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -2.8
+    ]
+   ],
+   "label": "south_3",
+   "model": "houses/craftsman_cedar",
+   "piece": "n_w_w6",
+   "pos": [
+    -912.67,
+    5.815,
+    -21.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "south_4",
+   "model": "houses/cape_large",
+   "piece": "n_w_w6",
+   "pos": [
+    -894.0,
+    6.523,
+    -22.3
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -0.2
+    ]
+   ],
+   "label": "south_5",
+   "model": "houses/tudor_brick",
+   "piece": "n_w_w6",
+   "pos": [
+    -875.33,
+    7.226,
+    -17.85
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     1.4
+    ]
+   ],
+   "label": "n1_0",
+   "model": "houses/ranch_peach",
+   "piece": "n_w_x1",
+   "pos": [
+    -780.67,
+    4.238,
+    -381.6
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     0.4
+    ]
+   ],
+   "label": "n1_1",
+   "model": "houses/spanish_small",
+   "piece": "n_w_x1",
+   "pos": [
+    -768.0,
+    4.3,
+    -382.1
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     1.4
+    ]
+   ],
+   "label": "n1_2",
+   "model": "houses/beach_teal",
+   "piece": "n_w_x1",
+   "pos": [
+    -755.33,
+    4.432,
+    -381.4
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     2.8
+    ]
+   ],
+   "label": "n2_0",
+   "model": "houses/craftsman_sage",
+   "piece": "n_w_x1",
+   "pos": [
+    -729.6,
+    4.806,
+    -378.75
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -0.2
+    ]
+   ],
+   "label": "n2_1",
+   "model": "houses/tudor_brick",
+   "piece": "n_w_x1",
+   "pos": [
+    -714.8,
+    5.035,
+    -382.15
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     1.25
+    ],
+    [
+     "garage_wood",
+     4.45
+    ]
+   ],
+   "label": "n2_2",
+   "model": "houses/mcm_teal",
+   "piece": "n_w_x1",
+   "pos": [
+    -700.0,
+    5.31,
+    -382.25
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "n2_3",
+   "model": "houses/colonial_white",
+   "piece": "n_w_x1",
+   "pos": [
+    -685.2,
+    5.555,
+    -381.8
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -1.4
+    ]
+   ],
+   "label": "n2_4",
+   "model": "houses/spanish_white",
+   "piece": "n_w_x1",
+   "pos": [
+    -670.4,
+    5.796,
+    -381.65
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -3.5
+    ],
+    [
+     "garage",
+     3.8
+    ]
+   ],
+   "label": "n3_0",
+   "model": "houses/hipranch_sand",
+   "piece": "n_w_x1",
+   "pos": [
+    -644.67,
+    6.088,
+    -382.2
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.0
+    ]
+   ],
+   "label": "n3_1",
+   "model": "houses/ranch_porch",
+   "piece": "n_w_x1",
+   "pos": [
+    -632.0,
+    6.155,
+    -381.6
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "n3_2",
+   "model": "houses/cape_white",
+   "piece": "n_w_x1",
+   "pos": [
+    -619.33,
+    6.17,
+    -382.45
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.0
+    ]
+   ],
+   "label": "s1_0",
+   "model": "houses/ranch_pink",
+   "piece": "n_w_x1",
+   "pos": [
+    -779.75,
+    4.272,
+    -328.6
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     1.4
+    ]
+   ],
+   "label": "s1_1",
+   "model": "houses/spanish_peach",
+   "piece": "n_w_x1",
+   "pos": [
+    -765.25,
+    4.408,
+    -328.65
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     2.8
+    ]
+   ],
+   "label": "s1_2",
+   "model": "houses/craftsman_olive",
+   "piece": "n_w_x1",
+   "pos": [
+    -750.75,
+    4.544,
+    -325.75
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     3.5
+    ],
+    [
+     "slider",
+     -1.8
+    ]
+   ],
+   "label": "s1_3",
+   "model": "houses/contemporary_white",
+   "piece": "n_w_x1",
+   "pos": [
+    -736.25,
+    4.722,
+    -327.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     1.5
+    ],
+    [
+     "garage_wood",
+     4.7
+    ]
+   ],
+   "label": "s1_4",
+   "model": "houses/mcm_white",
+   "piece": "n_w_x1",
+   "pos": [
+    -721.75,
+    4.948,
+    -329.0
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "s1_5",
+   "model": "houses/cape_grey",
+   "piece": "n_w_x1",
+   "pos": [
+    -707.25,
+    5.12,
+    -329.45
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     0.45
+    ]
+   ],
+   "label": "s1_6",
+   "model": "houses/tudor_stucco",
+   "piece": "n_w_x1",
+   "pos": [
+    -692.75,
+    5.375,
+    -329.4
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.0
+    ]
+   ],
+   "label": "s1_7",
+   "model": "houses/ranch_siding",
+   "piece": "n_w_x1",
+   "pos": [
+    -678.25,
+    5.572,
+    -328.85
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.4
+    ]
+   ],
+   "label": "s1_8",
+   "model": "houses/beach_blue",
+   "piece": "n_w_x1",
+   "pos": [
+    -663.75,
+    5.763,
+    -327.9
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "s1_9",
+   "model": "houses/colonial_blue",
+   "piece": "n_w_x1",
+   "pos": [
+    -649.25,
+    5.947,
+    -328.55
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -1.4
+    ]
+   ],
+   "label": "s1_10",
+   "model": "houses/spanish_pink",
+   "piece": "n_w_x1",
+   "pos": [
+    -634.75,
+    6.075,
+    -328.7
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_craftsman",
+     -2.8
+    ]
+   ],
+   "label": "s1_11",
+   "model": "houses/craftsman_cedar",
+   "piece": "n_w_x1",
+   "pos": [
+    -620.25,
+    6.163,
+    -326.0
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.4
+    ]
+   ],
+   "label": "w_0",
+   "model": "houses/beach_white",
+   "piece": "n_w_e1",
+   "pos": [
+    -920.5,
+    2.197,
+    219.1
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     1.4
+    ]
+   ],
+   "label": "w_1",
+   "model": "houses/beach_teal",
+   "piece": "n_w_e1",
+   "pos": [
+    -905.5,
+    2.179,
+    218.6
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     0.4
+    ]
+   ],
+   "label": "w_2",
+   "model": "houses/spanish_small",
+   "piece": "n_w_e1",
+   "pos": [
+    -890.5,
+    2.177,
+    217.9
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.4
+    ]
+   ],
+   "label": "w_3",
+   "model": "houses/beach_blue",
+   "piece": "n_w_e1",
+   "pos": [
+    -875.5,
+    2.178,
+    219.1
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.4
+    ]
+   ],
+   "label": "e_0",
+   "model": "houses/beach_blue",
+   "piece": "n_w_e1",
+   "pos": [
+    -837.25,
+    2.163,
+    219.1
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     1.4
+    ]
+   ],
+   "label": "e_1",
+   "model": "houses/beach_teal",
+   "piece": "n_w_e1",
+   "pos": [
+    -819.75,
+    2.183,
+    218.6
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.4
+    ]
+   ],
+   "label": "r0_0",
+   "model": "houses/beach_white",
+   "piece": "n_w_e2",
+   "pos": [
+    -782.33,
+    2.199,
+    219.1
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     1.4
+    ]
+   ],
+   "label": "r0_1",
+   "model": "houses/beach_teal",
+   "piece": "n_w_e2",
+   "pos": [
+    -769.0,
+    2.255,
+    218.6
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     0.4
+    ]
+   ],
+   "label": "r0_2",
+   "model": "houses/spanish_small",
+   "piece": "n_w_e2",
+   "pos": [
+    -755.67,
+    2.35,
+    217.9
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.4
+    ]
+   ],
+   "label": "r1_0",
+   "model": "houses/beach_blue",
+   "piece": "n_w_e2",
+   "pos": [
+    -729.6,
+    2.726,
+    219.1
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     1.4
+    ]
+   ],
+   "label": "r1_1",
+   "model": "houses/ranch_peach",
+   "piece": "n_w_e2",
+   "pos": [
+    -714.8,
+    3.003,
+    218.4
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -1.4
+    ]
+   ],
+   "label": "r1_2",
+   "model": "houses/spanish_white",
+   "piece": "n_w_e2",
+   "pos": [
+    -700.0,
+    3.289,
+    218.35
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -2.4
+    ],
+    [
+     "french",
+     1.2
+    ]
+   ],
+   "label": "r1_3",
+   "model": "houses/beach_large",
+   "piece": "n_w_e2",
+   "pos": [
+    -685.2,
+    3.544,
+    221.65
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "r1_4",
+   "model": "houses/cape_white",
+   "piece": "n_w_e2",
+   "pos": [
+    -670.4,
+    3.782,
+    217.55
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.0
+    ]
+   ],
+   "label": "r2_0",
+   "model": "houses/ranch_porch",
+   "piece": "n_w_e2",
+   "pos": [
+    -644.33,
+    4.08,
+    218.4
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     1.4
+    ]
+   ],
+   "label": "r2_1",
+   "model": "houses/beach_teal",
+   "piece": "n_w_e2",
+   "pos": [
+    -631.0,
+    4.156,
+    218.6
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -1.4
+    ]
+   ],
+   "label": "r2_2",
+   "model": "houses/spanish_pink",
+   "piece": "n_w_e2",
+   "pos": [
+    -617.67,
+    4.17,
+    218.3
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     1.4
+    ]
+   ],
+   "label": "r0_0",
+   "model": "houses/spanish_peach",
+   "piece": "n_w_e3",
+   "pos": [
+    -582.33,
+    4.178,
+    218.35
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.4
+    ]
+   ],
+   "label": "r0_1",
+   "model": "houses/beach_blue",
+   "piece": "n_w_e3",
+   "pos": [
+    -569.0,
+    4.152,
+    219.1
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.0
+    ]
+   ],
+   "label": "r0_2",
+   "model": "houses/ranch_pink",
+   "piece": "n_w_e3",
+   "pos": [
+    -555.67,
+    4.073,
+    218.4
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     2.8
+    ]
+   ],
+   "label": "r1_0",
+   "model": "houses/craftsman_stucco",
+   "piece": "n_w_e3",
+   "pos": [
+    -529.6,
+    3.773,
+    221.0
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.4
+    ]
+   ],
+   "label": "r1_1",
+   "model": "houses/beach_white",
+   "piece": "n_w_e3",
+   "pos": [
+    -514.8,
+    3.505,
+    219.1
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_modern",
+     1.25
+    ],
+    [
+     "garage_wood",
+     4.45
+    ]
+   ],
+   "label": "r1_2",
+   "model": "houses/mcm_teal",
+   "piece": "n_w_e3",
+   "pos": [
+    -500.0,
+    3.287,
+    217.75
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     0.4
+    ]
+   ],
+   "label": "r1_3",
+   "model": "houses/spanish_small",
+   "piece": "n_w_e3",
+   "pos": [
+    -485.2,
+    2.962,
+    217.9
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.0
+    ]
+   ],
+   "label": "r1_4",
+   "model": "houses/ranch_siding",
+   "piece": "n_w_e3",
+   "pos": [
+    -470.4,
+    2.719,
+    218.15
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -2.4
+    ],
+    [
+     "french",
+     1.2
+    ]
+   ],
+   "label": "r2_0",
+   "model": "houses/beach_large",
+   "piece": "n_w_e3",
+   "pos": [
+    -444.33,
+    2.357,
+    221.65
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -1.4
+    ]
+   ],
+   "label": "r2_1",
+   "model": "houses/spanish_white",
+   "piece": "n_w_e3",
+   "pos": [
+    -431.0,
+    2.232,
+    218.35
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "r2_2",
+   "model": "houses/cape_grey",
+   "piece": "n_w_e3",
+   "pos": [
+    -417.67,
+    2.179,
+    217.55
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -3.26
+    ]
+   ],
+   "label": "surf_shack",
+   "model": "commercial/com_surf_shop",
+   "piece": "n_w_e4",
+   "pos": [
+    -241.0,
+    2.198,
+    219.95
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     -1.76
+    ]
+   ],
+   "label": "beach_bean",
+   "model": "commercial/com_cafe_seaside",
+   "piece": "n_w_e4",
+   "pos": [
+    -225.0,
+    2.195,
+    220.173
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     1.4
+    ]
+   ],
+   "label": "r0_0",
+   "model": "houses/beach_teal",
+   "piece": "n_w_e4",
+   "pos": [
+    -382.33,
+    2.196,
+    218.6
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.4
+    ]
+   ],
+   "label": "r0_1",
+   "model": "houses/beach_white",
+   "piece": "n_w_e4",
+   "pos": [
+    -369.0,
+    2.192,
+    219.1
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     0.4
+    ]
+   ],
+   "label": "r0_2",
+   "model": "houses/spanish_small",
+   "piece": "n_w_e4",
+   "pos": [
+    -355.67,
+    2.188,
+    217.9
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -1.4
+    ]
+   ],
+   "label": "r1_0",
+   "model": "houses/beach_blue",
+   "piece": "n_w_e4",
+   "pos": [
+    -329.6,
+    2.188,
+    219.1
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     1.4
+    ]
+   ],
+   "label": "r1_1",
+   "model": "houses/ranch_peach",
+   "piece": "n_w_e4",
+   "pos": [
+    -314.8,
+    2.195,
+    218.4
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     -2.4
+    ],
+    [
+     "french",
+     1.2
+    ]
+   ],
+   "label": "r1_2",
+   "model": "houses/beach_large",
+   "piece": "n_w_e4",
+   "pos": [
+    -300.0,
+    2.202,
+    221.65
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door_spanish",
+     -1.4
+    ]
+   ],
+   "label": "r1_3",
+   "model": "houses/spanish_pink",
+   "piece": "n_w_e4",
+   "pos": [
+    -285.2,
+    2.196,
+    218.3
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "door",
+     0.0
+    ]
+   ],
+   "label": "r1_4",
+   "model": "houses/cape_white",
+   "piece": "n_w_e4",
+   "pos": [
+    -270.4,
+    2.193,
+    217.55
+   ],
+   "yaw": -180.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     1.15
+    ]
+   ],
+   "label": "snack_hut",
+   "model": "commercial/com_kiosk",
+   "piece": "n_w_w7",
+   "pos": [
+    -826.077,
+    6.636,
+    69.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ],
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ]
+   ],
+   "label": "apts_1",
+   "model": "apartments/apt_garden_mint",
+   "piece": "n_w_w2a",
+   "pos": [
+    -970.0,
+    4.32,
+    -818.1
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "shopdoor",
+     0.0
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -3.35
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     -7.45
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     3.35
+    ],
+    [
+     "patio",
+     7.45
+    ],
+    [
+     "patio",
+     7.45
+    ]
+   ],
+   "label": "apts_2",
+   "model": "apartments/apt_stucco3_peach",
+   "piece": "n_w_w2a",
+   "pos": [
+    -942.0,
+    4.616,
+    -820.1
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "civic_door",
+     0.0
+    ],
+    [
+     "apt_door",
+     -6.4
+    ],
+    [
+     "apt_door",
+     6.4
+    ],
+    [
+     "civic_door",
+     0.0
+    ]
+   ],
+   "label": "apts_3",
+   "model": "apartments/apt_spanish_revival",
+   "piece": "n_w_w2a",
+   "pos": [
+    -918.0,
+    4.974,
+    -818.5
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -4.0
+    ],
+    [
+     "apt_door",
+     4.0
+    ]
+   ],
+   "label": "apts_4",
+   "model": "apartments/apt_dingbat_pink",
+   "piece": "n_w_w2a",
+   "pos": [
+    -896.0,
+    5.334,
+    -820.45
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -4.95
+    ],
+    [
+     "apt_door",
+     -3.45
+    ],
+    [
+     "apt_door",
+     3.45
+    ],
+    [
+     "apt_door",
+     4.95
+    ],
+    [
+     "apt_door",
+     -4.95
+    ],
+    [
+     "apt_door",
+     -3.45
+    ],
+    [
+     "apt_door",
+     3.45
+    ],
+    [
+     "apt_door",
+     4.95
+    ]
+   ],
+   "label": "apts_5",
+   "model": "apartments/apt_court_white",
+   "piece": "n_w_w2a",
+   "pos": [
+    -876.0,
+    5.735,
+    -818.1
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ],
+    [
+     "apt_door",
+     -7.95
+    ],
+    [
+     "apt_door",
+     -6.45
+    ],
+    [
+     "apt_door",
+     -0.75
+    ],
+    [
+     "apt_door",
+     0.75
+    ],
+    [
+     "apt_door",
+     6.45
+    ],
+    [
+     "apt_door",
+     7.95
+    ]
+   ],
+   "label": "apts_6",
+   "model": "apartments/apt_garden_cream",
+   "piece": "n_w_w2a",
+   "pos": [
+    -831.0,
+    6.162,
+    -818.1
+   ],
+   "yaw": 0.0
+  },
+  {
+   "doors_front": [
+    [
+     "apt_door",
+     1.15
+    ]
+   ],
+   "label": "nursery_hut",
+   "model": "commercial/com_kiosk",
+   "piece": "n_w_w1",
+   "pos": [
+    -919.0,
+    2.274,
+    -1174.077
+   ],
+   "yaw": -180.0
+  }
+ ]
+}

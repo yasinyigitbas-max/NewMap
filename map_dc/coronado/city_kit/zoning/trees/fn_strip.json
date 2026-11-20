@@ -1,0 +1,45 @@
+{
+ "area": "fn_strip",
+ "piece": "n_fn_strip",
+ "zone": "greenway (a linear park between house yards and shop yards)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - trees at the edges and round the seating, the path open",
+ "written": "by hand, 20 Nov 2026 (fill_east fn, after the superchecker pass): no builder trees were ever in these pieces; these placed after the plan; thinned by hand to the plan's in-view limit (sc.py trees: at most 8 broadleaf / 12 trees in view from a street point, all lists counted)",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    380,
+    2.348,
+    -1365
+   ],
+   "yaw": 0,
+   "scale": 0.85,
+   "why": "the greenway's 3rd St lawn: shade by the entry"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    380,
+    4.016,
+    -1290
+   ],
+   "yaw": 90,
+   "scale": 0.85,
+   "why": "the lawn by the old tot lot, west of the path"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    395,
+    4.313,
+    -1095
+   ],
+   "yaw": 120,
+   "scale": 0.85,
+   "why": "the lawn south of the second garden"
+  }
+ ]
+}

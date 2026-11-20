@@ -1,0 +1,57 @@
+{
+ "area": "fe_r7",
+ "piece": "n_fe_r7",
+ "zone": "civic and parks (the playground) and apartments (Glorietta Mews)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; held to the plan's in-view limit (12 trees, 8 broadleaf within 60 m of a street point): the ring's palm boulevard already fills most of it, so fewer trees than clumps of 3-5 (thinned by hand, 20 Nov); the mews green: one tree per court",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, fe fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    584.0,
+    5.146,
+    -727.0
+   ],
+   "yaw": 10,
+   "scale": 0.95,
+   "why": "playground clump: shade over the parents' west side"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    590.0,
+    4.929,
+    -732.0
+   ],
+   "yaw": 190,
+   "scale": 0.9,
+   "why": "playground clump: the clump's north end by the walk from the car park"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    612.0,
+    4.585,
+    -731.0
+   ],
+   "yaw": 300,
+   "scale": 0.9,
+   "why": "playground clump: the east end, toward the ring path"
+  },
+  {
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "at": [
+    552.0,
+    5.526,
+    -706.0
+   ],
+   "yaw": 130,
+   "scale": 0.9,
+   "why": "the mews green: its one tree, beside the picnic tables"
+  }
+ ]
+}

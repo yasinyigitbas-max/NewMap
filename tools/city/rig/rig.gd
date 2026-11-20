@@ -37,7 +37,7 @@ extends Node3D
 ##   --look=day_half | day_clear   two more days to choose from (queue 3); --look=day is the default day
 ##   --air=0|1     with the look: gulls over the waterfront, a plane now and then, smoke and steam in the industrial zone
 ##             (tools/city/look/air.gd, one draw); OFF by default until measured
-##   --sea=1|0     with the look: 1 (default) the look's sea (tools/city/look/sea.gd) instead of the green plane under the water
+##   --sea=1|0     with the look: 1 (default) the look's sea (C++ CitySea) instead of the green plane under the water
 ##   --bloom=0|1   with --look=1: 1 adds a soft glow round bright things (GTA 4 style); costs pixels, off by default
 ##   --glow=1|0    with the look: 1 (default) the look's lamp halos and pools (tools/city/look/glow.gdshader), 0 the bake's
 ##   --blobs=0|1   with the look: 1 soft tree shadows beyond the 50 m sun shadow (look job 4); OFF by default: it reads
@@ -77,7 +77,6 @@ extends Node3D
 ##   --carshadows=1|0  the near cars cast sun shadows (1, default)      --carbodies=1|0  the pool of collision boxes
 ##   --plan=shots  no drives: pictures of a building at set distances and of a street, saved as JPG in
 ##                 user://rig/shots/ (phone_rig.sh shots NAME ... pulls them to review/tiers/NAME/)
-const Stream := preload("res://tools/city/bake/city_stream.gd")
 const Lights := preload("res://tools/city/bake/city_lights.gd")
 const Look := preload("res://tools/city/look/look.gd")
 const LookShots := preload("res://tools/city/look/look_shots.gd")
@@ -125,7 +124,7 @@ var _shot_place := -1          # --walkshot: the place the picture is of
 var game: Node = null           # the game's shell (CityGame) when it started this world
 var _shot_cam: Camera3D
 var people: Node             # the C++ crowd (--people=N); null without it
-var opt := {"car": "", "walk": "", "walkshot": "", "walkcrowd": 0, "water": 0.0, "at": "", "people": 0, "hour": 12.5, "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0}
+var opt := {"car": "", "walk": "", "walkshot": "", "walkcrowd": 0, "water": 0.0, "at": "", "people": 0, "hour": 12.5, "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": true, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0, "rooms": 1, "maxfps": 0}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -137,6 +136,11 @@ func _ready() -> void:
 	var from_file := false
 	if FileAccess.file_exists("user://rig_args.txt"):
 		args.append_array(FileAccess.get_file_as_string("user://rig_args.txt").replace("\n", " ").split(" ", false)); from_file = true
+	# --game (Yasin, 20 Nov: "cant you just inject skipping the rig?"): the rig app opens the game's menu instead of a measuring
+	# run (game/boot.tscn; the game then loads this scene as its world, with its own Game node at the root)
+	if "--game" in args and get_tree().root.get_node_or_null(^"Game") == null:
+		get_tree().change_scene_to_file.call_deferred("res://game/boot.tscn")
+		return
 	for a in args:
 		if a == "--quit": opt.quit = true
 		if a == "--nowarm": opt.nowarm = true
@@ -151,7 +155,7 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["car", "walk", "walkshot", "walkcrowd", "water", "at", "people", "hour", "traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost"]:
+		for k: String in ["car", "walk", "walkshot", "walkcrowd", "water", "at", "people", "hour", "traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost", "rooms", "maxfps"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
 				opt[k] = v if k in ["car", "walk", "walkshot", "at", "plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["water", "density", "scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs", "colrange", "boost"] else int(v))
@@ -168,7 +172,7 @@ func _ready() -> void:
 		var ws: Vector3 = game.call(&"world_start")
 		opt.at = "%f,%f" % [ws.x, ws.z]
 	else: game = null
-	Engine.max_fps = 0
+	Engine.max_fps = int(opt.maxfps)      # --maxfps=30: the frame-rate cap test (Yasin, 20 Nov: "if we lock the fps at 30 ..."); 0 = no cap
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	if float(opt.scale) <= 0.0:      # no --scale given: 720p (1640x720 on the Redmi's 2460x1080)
 		var ws := DisplayServer.window_get_size(); opt.scale = clampf(720.0 / maxf(1.0, float(mini(ws.x, ws.y))), 0.25, 1.0)
@@ -187,12 +191,13 @@ func _ready() -> void:
 		sun = DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-48, -35, 0); sun.light_energy = 1.25
 		sun.shadow_enabled = OS.get_environment("NOSHADOW") != "1"; sun.directional_shadow_max_distance = 50.0; add_child(sun)      # the game's sun shadow distance
 	if int(opt.reflect) == 0: env.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED
-	var gp := MeshInstance3D.new(); var pm := PlaneMesh.new(); pm.size = Vector2(6000, 6000); gp.mesh = pm
-	var gm := StandardMaterial3D.new(); gm.albedo_color = Color(0.36, 0.42, 0.3); gm.roughness = 1.0; gp.material_override = gm; gp.position.y = -0.05; add_child(gp)
-	if look and look.sea: gp.position.y = -2.0      # under the look's sea (at 0 m): 5 cm below it would flicker far away
-	st = Stream.new(); st.name = "City"; st.lead_seconds = float(opt.lead); st.max_cells = int(opt.maxcells); st.max_loading = int(opt.loading); st.bodies_per_frame = int(opt.bodies); st.body_tris_per_frame = int(opt.coltris); st.loader_mode = int(opt.loader); st.gpu_reserve_mb = int(opt.gpureserve); st.col_ms_per_frame = float(opt.colms); st.attach_bodies = not opt.nocol; st.show_cells = not opt.hide; st.probe = opt.probe
+	# the backstop under everything (C++ CitySea.make_backstop: drawn last, so only what nothing else covers is shaded); under the look's
+	# sea (at 0 m) 2 m down: 5 cm below it would flicker far away
+	add_child(ClassDB.class_call_static(&"CitySea", &"make_backstop", 6000.0, -2.0 if (look and look.sea) else -0.05))
+	st = ClassDB.instantiate(&"CityStream"); st.name = "City";      # the streamer is C++ (native/src/city_stream.*) since 20 Nov
+	st.lead_seconds = float(opt.lead); st.max_cells = int(opt.maxcells); st.max_loading = int(opt.loading); st.bodies_per_frame = int(opt.bodies); st.body_tris_per_frame = int(opt.coltris); st.loader_mode = int(opt.loader); st.gpu_reserve_mb = int(opt.gpureserve); st.col_ms_per_frame = float(opt.colms); st.attach_bodies = not opt.nocol; st.show_cells = not opt.hide; st.probe = opt.probe
 	st.col_range = float(opt.colrange); st.prepare_boost = float(opt.boost); st.col_background = not ("--colnobg" in args)
-	st.tiers = opt.tiers; st.tier_band = float(opt.band); st.arrive_s = float(opt.arrive); st.far_ground = not opt.nofarground; add_child(st)
+	st.tiers = opt.tiers; st.tier_band = float(opt.band); st.arrive_s = float(opt.arrive); st.far_ground = not opt.nofarground; st.rooms = int(opt.rooms) != 0; add_child(st)      # --rooms=0: no walk-in rooms (B14 A/B)
 	RenderingServer.viewport_set_measure_render_time(get_viewport().get_viewport_rid(), true)
 	RenderingServer.frame_pre_draw.connect(func() -> void: _t_pre = Time.get_ticks_usec())
 	RenderingServer.frame_post_draw.connect(func() -> void: _t_post = Time.get_ticks_usec())
@@ -279,7 +284,8 @@ func _run() -> void:
 	cam.global_position = first + Vector3(0, 8, 0); cam.look_at(cam.global_position + Vector3(0, 0, -50))
 	st.update_focus(first, true)
 	var t1 := Time.get_ticks_msec()
-	if not opt.nowarm: await st.warm_up(cam, 4)
+	if not opt.nowarm:
+		st.warm_up(cam, 4); await st.warmed_up
 	# THE NIGHT ONCE, behind the loading screen (on by default since 19 Nov; --nowarmnight to compare). The first dusk of
 	# a session built the look's night shaders, loaded its night textures and the lights' shader versions in the middle
 	# of a drive: 33 ms of GPU and a 41 ms frame at 720p, up to 120 ms at 1.5 x; the second dusk had none of it. Drawn
@@ -419,6 +425,7 @@ func _touch_guide() -> void:
 ## frame tells the streamer where he is.
 func _free_walk(start: Vector3, yaw: float) -> void:
 	var pl: Node3D = ClassDB.instantiate(&"CityPlayer")
+	st.set_player(pl)      # B7: riding (the player hidden where he got in), the streamer follows the camera (CityStream::update_focus)
 	if String(opt.walk).length() > 1: pl.set(&"body_id", String(opt.walk))
 	pl.set(&"capture_mouse", not opt.quit)
 	if float(opt.water) > -999.0: pl.set(&"water_y", float(opt.water))      # --water=Y: the sea's surface: deeper than his chest he swims
@@ -475,8 +482,10 @@ func _free_walk(start: Vector3, yaw: float) -> void:
 		var p: Vector3 = pl.global_position
 		var dt := maxf(get_process_delta_time(), 0.001)
 		st.update_focus(p, false, (p - last) / dt)
-		metres += Vector2(p.x - last.x, p.z - last.z).length(); last = p
-		lowest = minf(lowest, p.y - y_start); highest = maxf(highest, p.y - y_start)
+		if pl.visible:      # (the walk's own numbers: on foot only)
+			metres += Vector2(p.x - last.x, p.z - last.z).length()
+			lowest = minf(lowest, p.y - y_start); highest = maxf(highest, p.y - y_start)
+		last = p
 		if Engine.get_process_frames() % 6 == 0: hud.text = "%.1f m/s" % float(pl.call(&"get_speed"))
 	if frame_ms.size() > 20:
 		frame_ms.sort()
@@ -509,6 +518,9 @@ func _drive(seg: Array) -> void:
 	if traffic: traffic.call(&"report")      # (start its counters with the drive)
 	if people: people.call(&"report")
 	var dts := PackedFloat32Array(); var draws_sum := 0.0; var draws_max := 0; var tris_sum := 0.0; var tris_max := 0
+	# (B28, 20 Nov) with a render thread every RenderingServer read waits for it: the counters are read every 30th frame
+	var rs_every := 30 if int(ProjectSettings.get_setting("rendering/driver/threads/thread_model", 1)) == 2 else 1
+	var rs_n := 0; var fi := 0
 	var late220 := 0; var late60 := 0; var deepest := 0.0; var max_cells := 0; var slow := 0; var gy := 8.0
 	var segi := 0; var along := 0.0; var t := 0.0; var t_prev := Time.get_ticks_usec(); var hud_t := 0.0; var prev := [S0["in"], S0.out, S0.bodies]
 	var ready0: int = st.ready_ms.size() + st.ready_dropped; var slow_line := ""; var cause := {}; var cause45 := {}; var pw := PackedFloat32Array(); var gpu := PackedFloat32Array()
@@ -528,6 +540,9 @@ func _drive(seg: Array) -> void:
 		if lit > 0.05 and Engine.get_process_frames() % 15 == 0: lights.update_lights(cam.global_position, lit)
 		await get_tree().process_frame
 		var now := Time.get_ticks_usec(); var dt := (now - t_prev) / 1000000.0; t += dt; dts.append(dt * 1000.0)
+		var sysd: Dictionary = st.perf_take() if st.has_method(&"perf_take") else {}      # the C++ systems' own frame times (perf_marks.h)
+		var sys_top: Array = sysd.keys(); sys_top.sort_custom(func(a: String, b: String) -> bool: return float(sysd[a]) > float(sysd[b]))
+		var sys_s := ", ".join(sys_top.slice(0, 3).map(func(k: String) -> String: return "%s %.1f" % [k, float(sysd[k])]))
 		# where the frame that just ended spent its time, mark to mark (ms): this script | the streamer's update_focus |
 		# other scripts up to the streamer | the streamer's frame work and probes | the rest of the scripts up to the
 		# draw | the draw (materials, render server, drawing, presenting) | after the draw up to the first physics
@@ -539,14 +554,15 @@ func _drive(seg: Array) -> void:
 		along += dt * sp
 		while along >= (pts[segi] as Vector3).distance_to(pts[segi + 1]):
 			along -= (pts[segi] as Vector3).distance_to(pts[segi + 1]); segi = (segi + 1) % (pts.size() - 1)
-		var dr := int(R.get_rendering_info(R.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)); var tr := int(R.get_rendering_info(R.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME))
-		gpu.append(R.viewport_get_measured_render_time_gpu(get_viewport().get_viewport_rid()))
-		draws_sum += dr; tris_sum += tr; draws_max = maxi(draws_max, dr); tris_max = maxi(tris_max, tr); max_cells = maxi(max_cells, st.loaded_count())
-		for k: String in st.cells:
-			if st.cells[k].state != st.IN:
-				var dd: float = st._dist(k, p)
-				if dd < 60.0: late60 += 1
-				if dd < 220.0: late220 += 1; deepest = maxf(deepest, 220.0 - dd)
+		fi += 1
+		var dr := 0; var tr := 0
+		if fi % rs_every == 0:
+			dr = int(R.get_rendering_info(R.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)); tr = int(R.get_rendering_info(R.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME))
+			gpu.append(R.viewport_get_measured_render_time_gpu(get_viewport().get_viewport_rid()))
+			draws_sum += dr; tris_sum += tr; draws_max = maxi(draws_max, dr); tris_max = maxi(tris_max, tr); rs_n += 1
+		max_cells = maxi(max_cells, st.loaded_count())
+		var lc: Vector3 = st.late_cells(p)      # (cells not in within 60 m, within 220 m, the deepest reach into 220 m)
+		late60 += int(lc.x); late220 += int(lc.y); deepest = maxf(deepest, lc.z)
 		var S: Dictionary = st.stats
 		if opt.probe: pw.append(float(S.get("phys_wait_ms", 0.0)))
 		if slow_line != "":      # the slow frame of one frame ago, now with the engine's counters for it
@@ -558,7 +574,7 @@ func _drive(seg: Array) -> void:
 			if dt > 0.045: cause45[why] = int(cause45.get(why, 0)) + 1
 			if slow < 25 and dt > 0.040:
 				slow += 1
-				slow_line = "slow %s %.0f ms at t=%.1f s pos=(%.0f, %.0f): cells in +%d out +%d, bodies +%d, loading %s | marks: %s | at: %s" % [name, dt * 1000.0, t, p.x, p.z, d_in, int(S.out) - int(prev[1]), d_b, str(ld), marks, _parts()]
+				slow_line = "slow %s %.0f ms at t=%.1f s pos=(%.0f, %.0f): cells in +%d out +%d, bodies +%d, loading %s | marks: %s | sys: %s | at: %s" % [name, dt * 1000.0, t, p.x, p.z, d_in, int(S.out) - int(prev[1]), d_b, str(ld), marks, sys_s, _parts()]
 		prev = [S["in"], S.out, S.bodies]
 		hud_t += dt
 		if hud_t > 0.25:
@@ -575,13 +591,13 @@ func _drive(seg: Array) -> void:
 	for i in range(maxi(ready0 - st.ready_dropped, 0), st.ready_ms.size()): rs += st.ready_ms[i]; rw = maxf(rw, st.ready_ms[i])
 	_say("drive %s speed=%.0f km/h secs=%.0f frames=%d fps=%.1f | frame_ms med=%.1f p95=%.1f p99=%.1f worst=%.0f | over16.7=%.1f%% over33=%d over50=%d over100=%d" % [name, sp * 3.6, t, n, n / t, sorted[n / 2], sorted[int(n * 0.95)], sorted[int(n * 0.99)], sorted[n - 1], 100.0 * o17 / n, o33, o50, o100])
 	gpu.sort()      # the GPU's own time a frame (the phone is held at the 60 fps step by vsync, so the frame time hides small costs)
-	_say("  map %s draws avg=%.0f max=%d | tris avg=%.0fk max=%dk | cells most=%d in=%d out=%d dropped=%d cap_hits=%d | gpu_ms med=%.2f p95=%.2f" % [name, draws_sum / n, draws_max, tris_sum / n / 1000.0, tris_max / 1000, max_cells, int(S1["in"]) - int(S0["in"]), int(S1.out) - int(S0.out), int(S1.dropped) - int(S0.dropped), int(S1.capped) - int(S0.capped), gpu[gpu.size() / 2] if gpu.size() > 0 else -1.0, gpu[int(gpu.size() * 0.95)] if gpu.size() > 0 else -1.0])
+	_say("  map %s draws avg=%.0f max=%d | tris avg=%.0fk max=%dk | cells most=%d in=%d out=%d dropped=%d cap_hits=%d | gpu_ms med=%.2f p95=%.2f" % [name, draws_sum / maxi(rs_n, 1), draws_max, tris_sum / maxi(rs_n, 1) / 1000.0, tris_max / 1000, max_cells, int(S1["in"]) - int(S0["in"]), int(S1.out) - int(S0.out), int(S1.dropped) - int(S0.dropped), int(S1.capped) - int(S0.capped), gpu[gpu.size() / 2] if gpu.size() > 0 else -1.0, gpu[int(gpu.size() * 0.95)] if gpu.size() > 0 else -1.0])
 	_say("  stream %s start_ready_ms=%d (worst frame meanwhile %.0f ms) | request_to_in ms mean=%.0f worst=%.0f | late frames: 220m=%d (deepest %.0f m) 60m=%d | main thread worst ms: cell add %.2f, body %.2f (%s), removal step %.2f | bodies late=%d" % [name, prep_ms, prep_worst, rs / maxf(1.0, st.ready_ms.size() + st.ready_dropped - ready0), rw, late220, deepest, late60, float(S1.add_ms_worst), float(S1.body_ms_worst), str(S1.get("body_worst_what", "")), float(S1.remove_ms_worst), int(S1.body_late) - int(S0.body_late)])
 	_say("  slow %s frames over 33 ms by what the streamer was doing: %s | over 45 ms: %s" % [name, str(cause), str(cause45)])
 	pw.sort()
 	_say("  collision %s made=%d units, a body waited at most %d ms from coming into range | physics thread wait a frame (probe): median %.1f p99 %.1f worst %.1f ms" % [name, int(st.stats.get("col_units", 0)) - units0, int(st.stats.get("body_wait_ms_worst", 0)), pw[pw.size() / 2] if pw.size() > 0 else -1.0, pw[int(pw.size() * 0.99)] if pw.size() > 0 else -1.0, pw[pw.size() - 1] if pw.size() > 0 else -1.0])
 	# for long runs: none of these may grow lap after lap (a leak, or work piling up)
-	_say("  objects %s all=%d nodes=%d orphan_nodes=%d resources=%d | streamer: cells in=%d, bodies waiting=%d, nodes leaving=%d" % [name, int(Performance.get_monitor(Performance.OBJECT_COUNT)), int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT)), int(Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT)), int(Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT)), st.loaded_count(), st._pending.size(), st._leaving.size()])
+	_say("  objects %s all=%d nodes=%d orphan_nodes=%d resources=%d | streamer: cells in=%d, bodies waiting=%d, nodes leaving=%d" % [name, int(Performance.get_monitor(Performance.OBJECT_COUNT)), int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT)), int(Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT)), int(Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT)), st.loaded_count(), st.pending_count(), st.leaving_count()])
 	if traffic: _say("  traffic %s %s" % [name, String(traffic.call(&"report"))])
 	if people: _say("  people %s %s | %s" % [name, String(people.call(&"report")), str(people.call(&"stats"))])
 	_say("  mem %s static_mb=%.0f video_mb=%.0f tex_mb=%.0f buf_mb=%.0f" % [name, Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_TEXTURE_MEM_USED) / 1048576.0, R.get_rendering_info(R.RENDERING_INFO_BUFFER_MEM_USED) / 1048576.0])
@@ -636,7 +652,7 @@ func _shots() -> void:
 	var best: Node3D = null; var bd := 1.0e9
 	for k: String in st.cells:
 		var cn: Node = st.cells[k].node
-		if cn == null or st.cells[k].state != st.IN: continue
+		if cn == null or st.cells[k].state != 4: continue
 		var bn := cn.get_node_or_null("Buildings")
 		if bn == null: continue
 		for b: Node in bn.get_children():
@@ -674,7 +690,7 @@ func _shots() -> void:
 const CENSUS_VIEWS := [["centre", 0.0, -600.0, 1.0, 0.0], ["apartments", 250.0, -600.0, 1.0, 0.0], ["gritty", -600.0, -1000.0, 1.0, 0.0],
 	["waterfront", 570.0, 200.0, -1.0, 0.0], ["industrial", -800.0, -1400.0, 1.0, 0.0], ["pilot", 0.0, 0.0, 0.0, 1.0], ["civic", -200.0, -600.0, 1.0, 0.0]]
 const CENSUS_DAY := ["baseline", "hide_plants", "hide_props_near", "hide_props_mid", "hide_props_other", "hide_bldg_near", "hide_bldg_mid",
-	"hide_ground", "hide_wear", "hide_far", "hide_far_ground", "hide_misc", "shadows_off", "shadow_map_2048", "shadow_map_1024",
+	"hide_ground", "hide_wear", "hide_far", "hide_far_ground", "hide_misc", "hide_rooms", "shadows_off", "shadow_map_2048", "shadow_map_1024",
 	"fxaa_off", "scale_0.50", "scale_0.67", "scale_0.85", "scale_1.00", "cheap_bldg_mid", "cheap_bldg_all", "cheap_props_mid",
 	"cheap_plants_mid", "plants_opaque", "look_parts_off", "look_contact_off", "look_windows_off", "look_glass_off", "look_detail_off",
 	"look_signs_off", "look_propmaps_off", "look_between_off", "baseline", "sky_reflection_off", "baseline"]      # (the reflection last: switching it back on left the GPU slower until the next teleport, phone 19 Nov)
@@ -696,7 +712,7 @@ func _census_nodes(kind: String) -> Array:
 			if (String(ch.name) == "far_ground") == (kind == "far_ground"): out.append(ch)
 		return out
 	for k: String in st.cells:
-		if st.cells[k].state != st.IN: continue
+		if st.cells[k].state != 4: continue
 		var cn: Node = st.cells[k].node
 		match kind:
 			"ground":
@@ -707,6 +723,11 @@ func _census_nodes(kind: String) -> Array:
 			"glow":
 				for nm in ["glow_halo", "glow_pool"]:
 					if cn.get_node_or_null(nm): out.append(cn.get_node(nm))
+			"rooms":      # B14: the awake walk-in rooms (C++ CityRooms puts each under its building as "room")
+				var bn2 := cn.get_node_or_null("Buildings")
+				if bn2:
+					for b2: Node in bn2.get_children():
+						if b2.get_node_or_null("room"): out.append(b2.get_node("room"))
 			"misc":
 				var m := cn.get_node_or_null("Misc")
 				if m: out.append_array(m.get_children())

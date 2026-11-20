@@ -1,0 +1,57 @@
+{
+ "area": "ea_south",
+ "piece": "n_ea_south",
+ "zone": "civic and parks (Approach Green)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; waterfront - palms only, spaced palms on the promenade; never on the sand below the dune line (SHORE_GUIDE); held to the plan's in-view limit (12 trees, 8 broadleaf within 60 m of a street point)",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, ea fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    706.0,
+    4.289,
+    -1150.0
+   ],
+   "yaw": 10,
+   "scale": 0.9,
+   "why": "the first picnic table: shade on its west side"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    754.0,
+    4.36,
+    -1120.0
+   ],
+   "yaw": 140,
+   "scale": 0.95,
+   "why": "the sail table: a clump beside it"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    768.0,
+    4.39,
+    -1114.0
+   ],
+   "yaw": 230,
+   "scale": 0.9,
+   "why": "the sail table: a clump beside it"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    840.0,
+    4.797,
+    -1120.0
+   ],
+   "yaw": 300,
+   "scale": 0.95,
+   "why": "the green walk's east end: one pine on the lawn"
+  }
+ ]
+}

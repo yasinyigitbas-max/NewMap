@@ -1,0 +1,129 @@
+{
+ "area": "eb_nw",
+ "piece": "n_eb_nw",
+ "zone": "civic and parks (Ringside Meadow)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; waterfront - palms only, spaced on the promenade; never on the sand below the dune line (SHORE_GUIDE); held to the plan's in-view limit (12 trees, 8 broadleaf within 60 m of a street point)",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, eb fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    754.0,
+    4.618,
+    -898.0
+   ],
+   "yaw": 20,
+   "scale": 1.0,
+   "why": "the meadow grove: shade on its north-west table"
+  },
+  {
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "at": [
+    768.0,
+    4.715,
+    -922.0
+   ],
+   "yaw": 140,
+   "scale": 0.95,
+   "why": "the meadow grove: shade on its south side, over the gas grill"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    740.0,
+    4.55,
+    -906.0
+   ],
+   "yaw": 75,
+   "scale": 1.0,
+   "why": "the meadow grove: its west edge"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    780.0,
+    4.769,
+    -903.0
+   ],
+   "yaw": 200,
+   "scale": 0.9,
+   "why": "the meadow grove: its east edge, toward the loop"
+  },
+  {
+   "base": "tree_eucalyptus_a",
+   "cond": "normal",
+   "at": [
+    842.0,
+    5.106,
+    -1026.0
+   ],
+   "yaw": 30,
+   "scale": 1.0,
+   "why": "the north grove: shade over its west table"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    872.0,
+    5.34,
+    -1020.0
+   ],
+   "yaw": 110,
+   "scale": 0.95,
+   "why": "the north grove: its east edge, toward the bridge verge"
+  },
+  {
+   "base": "tree_eucalyptus_b",
+   "cond": "normal",
+   "at": [
+    856.0,
+    5.157,
+    -1040.0
+   ],
+   "yaw": 250,
+   "scale": 0.9,
+   "why": "the north grove: behind it, a screen from the bridge"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    840.0,
+    5.112,
+    -905.0
+   ],
+   "yaw": 60,
+   "scale": 0.9,
+   "why": "over the bench pair on the loop"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    906.0,
+    5.096,
+    -816.0
+   ],
+   "yaw": 15,
+   "scale": 1.0,
+   "why": "over the bench pair on the Meadow Walk"
+  },
+  {
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "at": [
+    747.0,
+    4.522,
+    -816.0
+   ],
+   "yaw": 300,
+   "scale": 0.9,
+   "why": "over the west bench pair on the Meadow Walk"
+  }
+ ]
+}

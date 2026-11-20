@@ -146,6 +146,7 @@ public:
 	Vector3 door_spot() const;     // node frame: where a person stands to get in (beside the door, on the ground)
 	Vector3 seat_hips() const;     // node frame: the driver's hips on his seat
 	bool get_player() const { return player; }
+	const vd::Car &dyn() const { return car; }   // (the engine sound reads the revs, the gear, the pedal)
 	void set_chase_camera(bool p_on) { chase_camera = p_on; }
 	bool get_chase_camera() const { return chase_camera; }
 	void set_wheel_mask(int p_mask) { wheel_mask = (uint32_t)p_mask; }

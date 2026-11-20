@@ -1,5 +1,5 @@
 extends SceneTree
-const Stream := preload("res://tools/city/bake/city_stream.gd")
+const STREAM_CLASS := &"CityStream"      # the streamer is C++ since 20 Nov (native/src/city_stream.*)
 const Lights := preload("res://tools/city/bake/city_lights.gd")
 const Plates := preload("res://tools/city/bake/sign_plates.gd")
 ## Preview and measure the BAKED city (city_kit/runtime) through the streamer. Same sun, sky and flat ground as
@@ -65,7 +65,7 @@ func _run() -> void:
 	RenderingServer.global_shader_parameter_set(&"ck_wind_strength", wind)
 	var gp := MeshInstance3D.new(); var pm := PlaneMesh.new(); pm.size = Vector2(4000, 4000); gp.mesh = pm
 	var gm := StandardMaterial3D.new(); gm.albedo_color = Color(0.36, 0.42, 0.3); gm.roughness = 1.0; gp.material_override = gm; gp.position.y = -0.05; root.add_child(gp)
-	var st: Node3D = Stream.new(); st.runtime_dir = rt; st.name = "City"; root.add_child(st)
+	var st: Node3D = ClassDB.instantiate(STREAM_CLASS); st.runtime_dir = rt; st.name = "City"; root.add_child(st)
 	st.set_night(night); st.lead_seconds = lead_s
 	var cam := Camera3D.new(); cam.fov = 60.0; cam.far = 2000.0; root.add_child(cam); cam.current = true
 	if "--nofar" in OS.get_cmdline_user_args() and st.far_world: st.far_world.visible = false
@@ -147,7 +147,7 @@ func _run() -> void:
 		for i in pts.size() - 1: total += (pts[i] as Vector3).distance_to(pts[i + 1])
 		st.update_focus(pts[0], true)
 		if "--warm" in OS.get_cmdline_user_args():
-			cam.global_position = (pts[0] as Vector3) + Vector3(0, 7.7, 0); await st.warm_up(cam)
+			cam.global_position = (pts[0] as Vector3) + Vector3(0, 7.7, 0); st.warm_up(cam); await st.warmed_up
 		for i in 5: await process_frame
 		# --blind: draw nothing during the drive. On the cloud the software GPU takes every CPU core to draw, which
 		# starves the loader threads; blind, the timings are the loader's own (meshes are still uploaded).
@@ -172,8 +172,8 @@ func _run() -> void:
 			# a cell is late when the player is nearer to it than a tier needs it and it is not in yet:
 			# 220 m = its mid tier should already show (until it is in, its far versions show: no hole); 60 m = near tier
 			for k: String in st.cells:
-				if st.cells[k].state != st.IN:
-					var dd: float = st._dist(k, p)
+				if st.cells[k].state != 4:      # (4 = CityStream.IN)
+					var dd: float = st.cell_distance(k, p)
 					if dd < 60.0: late60 += 1
 					if dd < 220.0: late220 += 1; worst_gap = maxf(worst_gap, 220.0 - dd)
 		while st.busy(): await process_frame

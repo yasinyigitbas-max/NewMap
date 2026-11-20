@@ -1,0 +1,84 @@
+{
+ "_doc": "eb fill (claude/fill-high-street, 20 Nov): which business or service is behind which shop door of the eb",
+ "count": 3,
+ "rooms": [
+  {
+   "id": "eb_ne_kiosk_0",
+   "piece": "n_eb_ne",
+   "label": "kiosk",
+   "model": "commercial/com_kiosk",
+   "pos": [
+    1050.0,
+    3.3556,
+    -1032.0
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": 1.15,
+   "door_w": 0.9,
+   "bay": [
+    -1.7,
+    1.7
+   ],
+   "kind": "cafe",
+   "name": "Bridge Beach Snack Shack",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "the walk-up counter of Bridge Beach: cold drinks, ice cream and hot dogs for the families on the sand north of the bridge",
+   "signs": []
+  },
+  {
+   "id": "eb_me_cafe_0",
+   "piece": "n_eb_me",
+   "label": "cafe",
+   "model": "commercial/com_cafe_seaside",
+   "pos": [
+    1178.0,
+    3.0997,
+    -722.0
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "cafe",
+   "name": "Bayshore Beach Cafe",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "the beach park's cafe in the middle of the shore: coffee, lunch and ice tea, its terrace on the promenade",
+   "signs": []
+  },
+  {
+   "id": "eb_se_hire_0",
+   "piece": "n_eb_se",
+   "label": "hire",
+   "model": "commercial/com_surf_shop",
+   "pos": [
+    1138.0,
+    3.0389,
+    -630.0
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "sport",
+   "name": "Bayshore Paddle Hire",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "kayaks, paddle boards and wetsuits to hire on the widest beach, at the end of the Glorietta Walk",
+   "signs": []
+  }
+ ]
+}

@@ -1,0 +1,119 @@
+# phone rig run 'pb_stream_life'  2026-11-20T02:00Z  args: --plan=stream --traffic=40 --people=60 --probe
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 333 -> 335 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit 06d05a3e5 | meminfo at 60 s:          Native Heap:   437500                         438712;            Graphics:  1143424                        1143424;           TOTAL PSS:  1697565            TOTAL RSS:  1789884       TOTAL SWAP PSS:      536;
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 look=1 bloom=0 upscale=0 sharp=0.20 reflect=1 plan=stream lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=140 tiers=false band=8.0 arrive=0.50 far_ground=true tier_materials=31
+RIG native coronado_city 0.1 release android arm64, godot-cpp 4.5 | its own threads: ok (4 threads, 2.9 ms; the device reports 8)
+RIG warmnight 431 ms
+RIG boot first_area_ms=547 warm_ms=3792 (graphics memory reserve 192 MB: 79 ms) cells=12 static_mb=199 video_mb=447
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+RIG slow loop_108kmh 55 ms at t=47.0 s pos=(500, -909): cells in +0 out +0, bodies +0, loading ["2_-7:1"] | marks: rig 1.5 focus 1.3 | to_streamer 0.1 streamer 1.3 | to_draw 2.1 draw 48.4 | to_physics 0.2 physics 0.6 | at: physics_wait 0.2 render_wait 0.0 streamer 1.14 setup 0.2 draw_cpu 1.4 gpu 18.5 | then: physics_wait 0.1 render_wait 0.0 streamer 1.01 setup 0.1 draw_cpu 1.2 gpu 18.0
+RIG drive loop_108kmh speed=108 km/h secs=60 frames=2782 fps=46.4 | frame_ms med=23.1 p95=28.9 p99=31.5 worst=55 | over16.7=75.8% over33=5 over50=1 over100=0
+RIG   map loop_108kmh draws avg=147 max=273 | tris avg=1331k max=1951k | cells most=16 in=34 out=32 dropped=0 cap_hits=0 | gpu_ms med=17.88 p95=19.64
+RIG   stream loop_108kmh start_ready_ms=2 (worst frame meanwhile 0 ms) | request_to_in ms mean=295 worst=707 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 3.16, body 2.35 (col_11 shapes=24 new=1071), removal step 3.97 | bodies late=0
+RIG   slow loop_108kmh frames over 33 ms by what the streamer was doing: { "loading": 2, "bodies": 2, "cell_in": 1 } | over 45 ms: { "loading": 1 }
+RIG   collision loop_108kmh made=755369 units, a body waited at most 0 ms from coming into range | physics thread wait a frame (probe): median 0.5 p99 5.1 worst 9.2 ms
+RIG   objects loop_108kmh all=21309 nodes=4580 orphan_nodes=4553 resources=6825 | streamer: cells in=14, bodies waiting=1179, nodes leaving=930
+RIG   traffic loop_108kmh cars moving avg 30.8 most 40 (the streets there carry 27, the cap is 40): near model 0.7, light model 2.9, far shape 21.9 | parked: 506 in the loaded cells, 5.6 drawn with the light model | batches drawn avg 9.3, uploads a frame 8.4 | main thread a frame: avg 0.274 worst 1.387 ms | the step (own thread): avg 0.340 worst 1.720 ms | pulled out of a stall 5, parked 3 (since the start) | bus lines 2: buses put on the road 3, stops served 0 | knocked loose: 0 moving, 0 parked; drove on 0, taken away 0, no free physical car 0
+RIG   people loop_108kmh people avg 36.2 most 66 (cap 60, 2136 places known), hour 12.5 | main thread a frame: avg 0.261 worst 2.059 ms (of it the crowd's step: avg 0.069 worst 0.650 ms a step, 1200 steps) | drawn as one batch of far figures; near bodies avg 2.8 | { "capsules_on": 0, "capsule_steps": 3661, "extras": true, "has_player": false, "people": 18, "places": 2136, "hour": 12.5, "weekday": 2, "riders": 1, "riders_thrown": 0, "riders_given_a_body": 0, "inside_each_other": 0, "beside_pavement": 0, "standing_a_minute": 0, "bad_numbers": 0, "spawned": 412, "left": 394, "arrivals": 0, "went_in": 0, "came_out": 133, "sat": 0, "crossings": 0, "groups": 57, "meetings": 1, "dodges": 0, "fled": 0, "bumps": 0, "bodies": 41, "drawn": 19, "near_bodies": 0, "near_pool": 12, "in_physical_body": 0, "umbrellas": 0, "towels": 0, "ducked": 0, "stared": 0, "coins": 0, "lines_said": 0, "clip_seconds": [1.29999995231628, 1.03333330154419, 2.5, 2.16666674613953, 3.0, 1.53333330154419, 0.83333331346512, 0.83333331346512, 0.6
+RIG   mem loop_108kmh static_mb=269 video_mb=841 tex_mb=138 buf_mb=660
+RIG slow loop_210kmh 60 ms at t=0.7 s pos=(-564, -600): cells in +0 out +0, bodies +1, loading [] | marks: rig 1.1 focus 1.0 | to_streamer 0.1 streamer 5.8 | to_draw 2.0 draw 46.9 | to_physics 0.8 physics 2.8 | at: physics_wait 1.1 render_wait 0.0 streamer 4.67 setup 0.3 draw_cpu 1.3 gpu 48.9 | then: physics_wait 1.6 render_wait 0.0 streamer 4.04 setup 0.2 draw_cpu 1.6 gpu 10.6
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+RIG slow loop_210kmh 54 ms at t=3.7 s pos=(-388, -600): cells in +0 out +0, bodies +1, loading [] | marks: rig 0.9 focus 0.8 | to_streamer 0.1 streamer 5.7 | to_draw 1.4 draw 43.8 | to_physics 0.8 physics 0.4 | at: physics_wait 0.6 render_wait 0.0 streamer 5.10 setup 0.2 draw_cpu 1.5 gpu 44.9 | then: physics_wait 1.9 render_wait 0.0 streamer 2.39 setup 0.2 draw_cpu 2.6 gpu 11.0
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+RIG slow loop_210kmh 473 ms at t=30.7 s pos=(247, -1000): cells in +0 out +0, bodies +1, loading ["-1_-4:1", "-1_-7:1"] | marks: rig 0.5 focus 0.3 | to_streamer 0.0 streamer 4.1 | to_draw 1.0 draw 463.5 | to_physics 0.6 physics 3.5 | at: physics_wait 0.1 render_wait 0.0 streamer 3.97 setup 0.1 draw_cpu 1.5 gpu 21.4 | then: physics_wait 0.2 render_wait 0.0 streamer 10.78 setup 0.3 draw_cpu 1.1 gpu 22.6
+RIG drive loop_210kmh speed=209 km/h secs=55 frames=2205 fps=40.1 | frame_ms med=24.8 p95=32.2 p99=34.6 worst=473 | over16.7=95.9% over33=57 over50=3 over100=1
+RIG   map loop_210kmh draws avg=138 max=263 | tris avg=1243k max=2024k | cells most=16 in=64 out=74 dropped=0 cap_hits=0 | gpu_ms med=20.86 p95=22.58
+RIG   stream loop_210kmh start_ready_ms=549 (worst frame meanwhile 32 ms) | request_to_in ms mean=94 worst=710 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 3.16, body 2.40 (col_6 shapes=12 new=436), removal step 8.40 | bodies late=0
+RIG   slow loop_210kmh frames over 33 ms by what the streamer was doing: { "bodies": 51, "cell_in": 2, "loading": 4 } | over 45 ms: { "bodies": 2, "loading": 1 }
+RIG   collision loop_210kmh made=573459 units, a body waited at most 7221 ms from coming into range | physics thread wait a frame (probe): median 0.6 p99 5.0 worst 6.5 ms
+RIG   objects loop_210kmh all=50727 nodes=2413 orphan_nodes=22578 resources=14757 | streamer: cells in=16, bodies waiting=757, nodes leaving=6686
+RIG   traffic loop_210kmh cars moving avg 30.9 most 46 (the streets there carry 26, the cap is 40): near model 0.5, light model 2.1, far shape 23.4 | parked: 536 in the loaded cells, 5.8 drawn with the light model | batches drawn avg 8.4, uploads a frame 7.5 | main thread a frame: avg 0.293 worst 1.338 ms | the step (own thread): avg 0.359 worst 3.440 ms | pulled out of a stall 8, parked 3 (since the start) | bus lines 2: buses put on the road 6, stops served 0 | knocked loose: 0 moving, 0 parked; drove on 0, taken away 0, no free physical car 0
+RIG   people loop_210kmh people avg 29.9 most 68 (cap 60, 2136 places known), hour 12.5 | main thread a frame: avg 0.273 worst 2.059 ms (of it the crowd's step: avg 0.071 worst 1.116 ms a step, 1094 steps) | drawn as one batch of far figures; near bodies avg 1.7 | { "capsules_on": 0, "capsule_steps": 6975, "extras": true, "has_player": false, "people": 17, "places": 2136, "hour": 12.5, "weekday": 2, "riders": 1, "riders_thrown": 0, "riders_given_a_body": 0, "inside_each_other": 0, "beside_pavement": 0, "standing_a_minute": 0, "bad_numbers": 0, "spawned": 1048, "left": 1031, "arrivals": 0, "went_in": 0, "came_out": 307, "sat": 0, "crossings": 1, "groups": 165, "meetings": 1, "dodges": 0, "fled": 0, "bumps": 0, "bodies": 41, "drawn": 18, "near_bodies": 2, "near_pool": 12, "in_physical_body": 0, "umbrellas": 0, "towels": 0, "ducked": 0, "stared": 0, "coins": 0, "lines_said": 0, "clip_seconds": [1.29999995231628, 1.03333330154419, 2.5, 2.16666674613953, 3.0, 1.53333330154419, 0.83333331346512, 0.83333331346512, 
+RIG   mem loop_210kmh static_mb=405 video_mb=1130 tex_mb=138 buf_mb=945
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+RIG slow loop_280kmh 46 ms at t=0.3 s pos=(-581, -600): cells in +0 out +0, bodies +1, loading [] | marks: rig 1.9 focus 1.3 | to_streamer 0.1 streamer 5.3 | to_draw 5.0 draw 30.2 | to_physics 0.4 physics 1.5 | at: physics_wait 0.3 render_wait 0.0 streamer 5.03 setup 0.3 draw_cpu 1.8 gpu 38.2 | then: physics_wait 1.3 render_wait 0.0 streamer 3.80 setup 0.2 draw_cpu 2.0 gpu 12.5
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+ERROR: Failed to free RID: The specified RID has no owner.
+RIG slow loop_280kmh 47 ms at t=12.4 s pos=(367, -600): cells in +0 out +0, bodies +1, loading [] | marks: rig 1.0 focus 0.9 | to_streamer 0.1 streamer 6.9 | to_draw 1.7 draw 33.7 | to_physics 0.5 physics 1.9 | at: physics_wait 0.1 render_wait 0.0 streamer 6.76 setup 0.2 draw_cpu 3.0 gpu 34.3 | then: physics_wait 0.1 render_wait 0.0 streamer 3.60 setup 0.3 draw_cpu 2.2 gpu 14.8
+RIG slow loop_280kmh 40 ms at t=14.2 s pos=(500, -602): cells in +0 out +0, bodies +1, loading [] | marks: rig 1.8 focus 1.6 | to_streamer 0.1 streamer 6.6 | to_draw 2.0 draw 26.9 | to_physics 0.5 physics 0.9 | at: physics_wait 0.3 render_wait 0.0 streamer 6.37 setup 0.3 draw_cpu 1.7 gpu 32.0 | then: physics_wait 0.1 render_wait 0.0 streamer 5.26 setup 0.2 draw_cpu 2.0 gpu 23.3
+RIG drive loop_280kmh speed=281 km/h secs=40 frames=1586 fps=39.6 | frame_ms med=25.0 p95=32.5 p99=34.9 worst=47 | over16.7=98.4% over33=51 over50=0 over100=0
+RIG   map loop_280kmh draws avg=140 max=264 | tris avg=1266k max=1983k | cells most=18 in=59 out=62 dropped=0 cap_hits=0 | gpu_ms med=21.12 p95=22.90
+RIG   stream loop_280kmh start_ready_ms=73 (worst frame meanwhile 30 ms) | request_to_in ms mean=58 worst=149 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 3.16, body 2.40 (col_6 shapes=12 new=436), removal step 13.41 | bodies late=184
+RIG   slow loop_280kmh frames over 33 ms by what the streamer was doing: { "bodies": 42, "loading": 8, "cell_in": 1 } | over 45 ms: { "bodies": 2 }
+RIG   collision loop_280kmh made=316692 units, a body waited at most 5482 ms from coming into range | physics thread wait a frame (probe): median 0.5 p99 4.6 worst 9.0 ms
+RIG   objects loop_280kmh all=67894 nodes=1994 orphan_nodes=37068 resources=15786 | streamer: cells in=15, bodies waiting=706, nodes leaving=11509
+RIG   traffic loop_280kmh cars moving avg 31.8 most 45 (the streets there carry 27, the cap is 40): near model 0.4, light model 2.1, far shape 23.9 | parked: 560 in the loaded cells, 5.9 drawn with the light model | batches drawn avg 8.1, uploads a frame 7.1 | main thread a frame: avg 0.286 worst 1.406 ms | the step (own thread): avg 0.351 worst 2.246 ms | pulled out of a stall 13, parked 3 (since the start) | bus lines 2: buses put on the road 7, stops served 0 | knocked loose: 0 moving, 0 parked; drove on 0, taken away 0, no free physical car 0
+RIG   people loop_280kmh people avg 29.3 most 65 (cap 60, 2136 places known), hour 12.5 | main thread a frame: avg 0.282 worst 1.256 ms (of it the crowd's step: avg 0.075 worst 0.628 ms a step, 799 steps) | drawn as one batch of far figures; near bodies avg 1.9 | { "capsules_on": 0, "capsule_steps": 9379, "extras": true, "has_player": false, "people": 11, "places": 2136, "hour": 12.5, "weekday": 2, "riders": 1, "riders_thrown": 0, "riders_given_a_body": 0, "inside_each_other": 0, "beside_pavement": 0, "standing_a_minute": 0, "bad_numbers": 0, "spawned": 1655, "left": 1644, "arrivals": 0, "went_in": 0, "came_out": 445, "sat": 0, "crossings": 2, "groups": 254, "meetings": 1, "dodges": 0, "fled": 0, "bumps": 0, "bodies": 41, "drawn": 12, "near_bodies": 0, "near_pool": 12, "in_physical_body": 0, "umbrellas": 0, "towels": 0, "ducked": 0, "stared": 0, "coins": 0, "lines_said": 0, "clip_seconds": [1.29999995231628, 1.03333330154419, 2.5, 2.16666674613953, 3.0, 1.53333330154419, 0.83333331346512, 0.83333331346512, 0
+RIG   mem loop_280kmh static_mb=493 video_mb=1136 tex_mb=138 buf_mb=951
+RIG plan_done lap=1

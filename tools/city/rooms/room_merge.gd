@@ -9,7 +9,8 @@ extends SceneTree
 ##     textures as layers of runtime_tex/arr_room.png); the clear glass, door leaves, signs, wear and potted plants as
 ##     they are. Lights unchanged.
 ## Needs the runtime bake (runtime/lib) and tools/city/rooms/make_room_array.py + an import first.
-##   xvfb-run -a godot --path . --rendering-method mobile --rendering-driver vulkan -s res://tools/city/rooms/room_merge.gd [-- --only=name,name]
+##   xvfb-run -a godot --path . --render-thread safe --rendering-method mobile --rendering-driver vulkan -s res://tools/city/rooms/room_merge.gd [-- --only=name,name]
+##   (--render-thread safe: the project runs a separate render thread since 20 Nov; this tool makes textures, which needs the old mode)
 const DIR := "res://map_dc/coronado/city_kit/interiors/rooms/"
 const OUT := "res://map_dc/coronado/city_kit/runtime/rooms/"
 const LIB := "res://map_dc/coronado/city_kit/runtime/lib/"
@@ -40,6 +41,26 @@ func _run() -> void:
 		var before := _draws(src)
 		var dst := _merge_room(src)
 		var after := _draws(dst)
+		# (20 Nov, B14) no GDScript in the game's rooms: the door leaves' door_swing.gd is dropped (not in the phone build;
+		# C++ CityRooms swings them from the leaves' own metas mid / out_dir / open_sign)
+		for lf: Node in dst.find_children("DoorLeaf_*", "Node3D", true, false): lf.set_script(null)
+		# (20 Nov, Yasin: "all shop signs are pink bands") the shop signs' texture (PortableCompressedTexture2D) came out of the
+		# merge empty: rebuilt from the room's own image, its compressed data kept (room_lib.gd's 18 Nov lesson)
+		var ss := src.find_child("Signs", true, false) as MeshInstance3D; var ds := dst.find_child("Signs", true, false) as MeshInstance3D
+		if ss and ds and ss.material_override is StandardMaterial3D:
+			var im: Image = (ss.material_override as StandardMaterial3D).albedo_texture.get_image()
+			if im and not im.is_empty():
+				if im.is_compressed(): im.decompress()
+				if not im.has_mipmaps(): im.generate_mipmaps()
+				# ETC2, not Basis Universal: the phones' GPUs read it as it is; Basis was transcoded on the CPU the first time a
+				# room was made, 57-59 ms on the main thread on the PC (20 Nov). (ASTC failed to build on this PC: no ASTC there.)
+				var tex := PortableCompressedTexture2D.new(); tex.keep_compressed_buffer = true
+				tex.create_from_image(im, PortableCompressedTexture2D.COMPRESSION_MODE_ETC2)
+				# one shared shader for every room's signs (a StandardMaterial3D per room compiled its own shader at first use:
+				# 48-82 ms a room on the main thread, 20 Nov); the room's material only holds its picture
+				var m := ShaderMaterial.new(); m.shader = load("res://tools/city/rooms/rt_room_sign.gdshader")
+				m.set_shader_parameter(&"sign_tex", tex)
+				ds.material_override = m
 		var ps := PackedScene.new(); _own(dst, dst); ps.pack(dst)
 		ResourceSaver.save(ps, OUT + f, ResourceSaver.FLAG_COMPRESS)
 		tot[0] += 1; tot[1] += before; tot[2] += after

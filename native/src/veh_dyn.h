@@ -95,6 +95,10 @@ struct Spec {
 	float brake_front = 0.64f;
 	float handbrake_g = 0.9f;
 	bool abs = false;
+	// traction and stability control (B5, Yasin 20 Nov: "car is too prone to slide"): the pedal is eased off while a
+	// driven wheel spins past its grip peak or the body slides wider than `tcs_beta_deg`. 0 = none, 1 = all the way
+	float tcs = 0.0f;
+	float tcs_beta_deg = 7.0f;
 	// steering
 	float lock_deg = 36.0f;
 	float steer_rate = 2.4f;        // rad/s at a standstill
@@ -148,6 +152,7 @@ public:
 	int gear = 1;            // 1..gears (forward)
 	float shift_t = 0;       // > 0: in the middle of a change
 	float clutch = 0;        // 0 open .. 1 closed (told, for sound and tests)
+	float tc_gain = 1;       // traction / stability control: the share of the pedal let through (1 = all)
 	float steer_now = 0;     // rad, the steering as it stands (the middle of the two front wheels)
 	// read by the caller
 	float speed = 0;         // m/s along the body's nose

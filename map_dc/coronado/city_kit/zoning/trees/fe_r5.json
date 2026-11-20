@@ -1,0 +1,33 @@
+{
+ "area": "fe_r5",
+ "piece": "n_fe_r5",
+ "zone": "civic and parks (the rec center, courts, picnic grove)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; held to the plan's in-view limit (12 trees, 8 broadleaf within 60 m of a street point): the ring's palm boulevard already fills most of it, so fewer trees than clumps of 3-5 (thinned by hand, 20 Nov)",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, fe fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "at": [
+    562.0,
+    5.373,
+    -485.0
+   ],
+   "yaw": 160,
+   "scale": 0.9,
+   "why": "the picnic pavilion's lawn: a tree beside the sail"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    572.0,
+    5.217,
+    -570.0
+   ],
+   "yaw": 45,
+   "scale": 1.0,
+   "why": "the north lawn along the -600 street: one pine at its middle"
+  }
+ ]
+}

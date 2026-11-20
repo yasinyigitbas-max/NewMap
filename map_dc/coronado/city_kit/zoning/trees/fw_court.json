@@ -1,0 +1,81 @@
+{
+ "area": "fw_court",
+ "piece": "n_fw_court",
+ "zone": "apartments and a neighbourhood park (by the civic band)",
+ "rule": "docs/TREE_PLAN.md: apartments - one tree per court; civic and parks - clumps of 3-5 at the edges and round the seating",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, fw: the north-west column), after the superchecker: no builder trees; each line placed for its reason",
+ "trees": [
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -312.0,
+    6.774,
+    -958.0
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "Crown Court's garden"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -330.0,
+    6.547,
+    -890.0
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "park NW clump"
+  },
+  {
+   "base": "tree_eucalyptus_a",
+   "cond": "normal",
+   "at": [
+    -334.0,
+    6.236,
+    -823.0
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "park SW clump at the entry"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    -274.0,
+    6.201,
+    -819.0
+   ],
+   "yaw": 90,
+   "scale": 0.85,
+   "why": "park SE clump"
+  },
+  {
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "at": [
+    -362.0,
+    6.379,
+    -915.0
+   ],
+   "yaw": 0,
+   "scale": 0.8,
+   "why": "the west walk-ups' back lawn (w3/w4)"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -238.0,
+    6.59,
+    -868.0
+   ],
+   "yaw": 0,
+   "scale": 0.8,
+   "why": "the east walk-ups' back lawn (e4 .. e6)"
+  }
+ ]
+}
