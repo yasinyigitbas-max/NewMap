@@ -147,7 +147,7 @@ room is listed.
 | Marek's table | **Clay's Diner** (industrial docks, the harbour diner): an ordinary diner by day; after closing, Marek's corner booth, where the cook (from Marek's home) makes the home dishes that aren't on the menu. That's the soup | Kit room |
 | Marek's front | **Ocean Travel** (industrial, drivers_cafe building), near the diner | Kit room |
 | The pawn shop (Theo's guitar, M15) | **Crownado Vintage** (gritty edge) | Kit room |
-| The night run, directions (M10) | Clay's Diner → through the gritty edge, past **High Tide Bottles & Kitchen** (the clerk who gives directions) → the **Seabreeze Motel**, room six | Kit |
+| The night run, directions (M10) | Clay's Diner → through the gritty edge, past **High Tide Bottles & Kitchen** (the clerk who gives directions) → the **Harbor View Motel**, room six (outside the door) | Kit |
 | The police stop (M10) | Any street; **Crownado Police Front Desk** if it goes badly | Kit |
 | The driving lesson (M11) | **Island Hospital** car park (the hospital zone) and the streets round **Island Transit Center** | Kit |
 | The stakeout (M12) | The beach road by the base; the **Beach Lookout** (`lmk_beach_lookout`); the signals at the **Ferry Landing**; the *Good Hope* = `boat_troller` | Kit |
@@ -157,7 +157,7 @@ room is listed.
 | The container-yard stealth (M17) | The industrial docks yard: containers, dock crane, `temp_fence_panel`, signs on the fences; **Ocean Travel**'s back room is the office | Kit; the signs are decals |
 | The fire (M19) | **The Fish House**; the drive to **Island Hospital – Emergency Department** | Kit rooms |
 | Kai's crew (M21) | **Ocean Park Skate** (the skate plaza: `skate_*` props) | Kit |
-| The safehouse (M20) | **Seabreeze Motel** (strip, `sea_breeze_motel`): three motel rooms | Building kit; **three motel room interiors are new** |
+| The safehouse (M20) | **Harbor View Motel** (strip): its built **office** and **Guest Laundry** rooms, and the walkway outside the guest-room doors | Kit rooms |
 | The Fourth of July (M22) | **Amber Ave** (the parade), **Amber Beach Plaza**, the **Ferry Landing**, the bay, Gus's `boat_skiff` from **Harbour Boatworks**, Whitmore's `boat_express`, the *Good Hope* `boat_troller` | Kit |
 | The trial (M23) | **Coronado County Courthouse** (city centre, assignment_cc) | Kit room |
 | Benny's diner | **Hank's Diner** (high street arcade) | Kit room |
@@ -166,12 +166,11 @@ room is listed.
 ## 8. What still has to be built (short list)
 1. **The flat** inside Hillcrest Terraces: Mrs. Finch's ground-floor kitchen and the upstairs flat (living room,
    kitchen with two fridge shelves, the hero's room, a bathroom). It's home base, so it's worth it.
-2. **Three motel rooms** inside the Seabreeze Motel (lived-in: laundry on lines, a TV, kids' homework).
-3. **The Fish House, burned:** a damage state (scorch decals, a collapsed awning, broken stools), not a new building.
-4. **Small props:** Whitmore's waterfront model under glass, a 1970s Navy radio set (Finch's), Marek's notebook, a
+2. **The Fish House, burned:** a damage state (scorch decals, a collapsed awning, broken stools), not a new building.
+3. **Small props:** Whitmore's waterfront model under glass, a 1970s Navy radio set (Finch's), Marek's notebook, a
    taxi livery for Benny's car, a grey livery for the patrol boat, the sign decals for the yard ("NO ENTRY", "STAFF
    ONLY", "DANGER", "NO SMOKING").
-5. **The sketch panels** for P1 and P3 (2D art, in the old game's panel style).
+4. **The sketch panels** for P1 and P3 (2D art, in the old game's panel style).
 
 Everything else in the script is already in the city.
 

@@ -38,7 +38,7 @@ never a wall.
 | 7 | Fish Out of Water | The Fish House; the waterfront | imperatives; the time (*o'clock, half past*); present simple he / she / it | kitchen, orders, money | imperatives; 3rd person -s |
 | 8 | First Check-In | City Hall Front Desk | adverbs of frequency (*always, usually, sometimes, never*), the daily routine | routine verbs | frequency |
 | 9 | Lookout | Hillside Park | family, *have got / has got*, possessive *'s* and *his / her*, describing people | family, appearance | family; *have got* |
-| 10 | Old Friend | Clay's Diner (docks) → the gritty edge → the Seabreeze Motel, at night | present continuous (*I'm riding… He's waiting.*), directions (*turn left, go straight, next to, opposite*) | the street, directions | present continuous; directions |
+| 10 | Old Friend | Clay's Diner (docks) → the gritty edge → the Harbor View Motel, at night | present continuous (*I'm riding… He's waiting.*), directions (*turn left, go straight, next to, opposite*) | the street, directions | present continuous; directions |
 
 ## Act 3: Undertow (A1 part 3: rules, now, ability, the past of *be*)
 | # | Mission | Place | New | Words | Practice test |
@@ -56,7 +56,7 @@ never a wall.
 | 17 | Signs | The container yard; Ocean Travel | reading signs (*NO ENTRY, STAFF ONLY, DANGER, PUSH, PULL, OPEN, CLOSED*); present continuous on the phone, whispered | signs | signs |
 | 18 | Codebreaker | Mrs. Finch's kitchen | numbers and dates recycled, *there are* + numbers, *When…? How many…?* | the ledger | review: numbers and dates |
 | 19 | Fire | The Fish House; Island Hospital ER | emergency English: *Help! There is a fire. A man is inside. I am at…*; the body (*his arm, his head*) | fire, the body, the hospital | emergency English |
-| 20 | Little Fish, Again | Seabreeze Motel | review: describing people and relaying (*Her name is… She is nine. She wants…*), *want to* | people, needs | review: people |
+| 20 | Little Fish, Again | Harbor View Motel (office, Guest Laundry, walkway) | review: describing people and relaying (*Her name is… She is nine. She wants…*), *want to* | people, needs | review: people |
 | 21 | Everyone Has a Job | All over the island | *Let's…*, *I want to…*, *and / but / because* | the plan | review: plans |
 | 22 | Fourth of July | Amber Ave; the Ferry Landing; the bay | the mayday: *This is… There is… There are… We need help.* | the radio: *Mayday, Over, Copy* | — |
 | 23 | Your Words | Coronado County Courthouse | review: *My name is… I was… That is not true. I was afraid, but…* | the court | — |

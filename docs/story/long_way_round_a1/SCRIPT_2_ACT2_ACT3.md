@@ -169,7 +169,7 @@ night runs (fast, dirty, risky).
 
 ## M10: Old Friend
 - **Where:** **Clay's Diner** (the harbour diner at the industrial docks, two doors from Marek's **Ocean Travel**) → a
-  night ride through the gritty edge → the **Seabreeze Motel** on the strip.
+  night ride through the gritty edge → the **Harbor View Motel** on the strip.
 - **Length:** 20 minutes.
 - **Why it's here:**
   - Story: the first "small favour". It's so easy, and that's the danger.
@@ -196,7 +196,7 @@ night runs (fast, dirty, risky).
   "He's from home. He makes it like your mother."
 - **PLAY:** if the hero eats, hunger +40, free. It's delicious: steam, a spice sound, and the (inner) line [surprised,
   homesick]: "*…It tastes like home.*" The temptation is not money. It's soup.
-- **MAREK\*** [a sports bag on the table] "Take this to the motel on the strip. The Seabreeze. Room six." *(a smile)*
+- **MAREK\*** [a sports bag on the table] "Take this to the motel on the strip. Harbor View. Room six." *(a smile)*
   "Don't open it. Don't stop. Two hundred dollars. One hour. How much is one hour with the fish man?"
 - (The number floats over the hero's head: $14. Then it shrinks.)
 
@@ -207,8 +207,8 @@ night runs (fast, dirty, risky).
   - Halfway, the cheap phone dies (a $30 phone). Now the hero must ask.
 - One shop is open at 1 a.m.: **High Tide Bottles & Kitchen**. The clerk, SALIM, bored, eating sunflower seeds (*the
   whole island eats them*).
-  - PLAYER: "Excuse me. Where is the Seabreeze Motel?"
-  - **SALIM** [cheerful night owl] "The Seabreeze? At this time? …OK, not my business. Go straight, turn left at the
+  - PLAYER: "Excuse me. Where is the Harbor View Motel?"
+  - **SALIM** [cheerful night owl] "The Harbor View? At this time? …OK, not my business. Go straight, turn left at the
     taco place. It's on the strip, next to the pizza place, opposite the gas station."
   - (The fog lifts on the direction words. *Slower, please.* makes Salim repeat it with his hands.)
   - PLAYER: "Turn left at the taco place. Thank you!"
@@ -225,7 +225,7 @@ night runs (fast, dirty, risky).
   lesson that Act 4 turns round.
   - **BRODY** [flat, tired] "Evening. What are you doing?" → PLAYER (think → say): tiles *I / am / riding / my / bike.* →
     "I'm riding my bike."
-  - **BRODY** "Where are you going?" → PLAYER: "I'm going to the Seabreeze Motel." / "I'm going home."
+  - **BRODY** "Where are you going?" → PLAYER: "I'm going to the Harbor View Motel." / "I'm going home."
   - **BRODY** [light on the bag] "What's in the bag?" → PLAYER: "Clothes." (the lie) / "I don't know." (the dangerous
     truth)
   - **BRODY** "Where do you live?" → PLAYER: "I live at Hillcrest Terraces."
@@ -237,7 +237,7 @@ night runs (fast, dirty, risky).
   A soft fail; the mission still ends.
 
 ### Beat 5: Room six
-- **CAM:** the Seabreeze Motel at 1:30, behind Gus' Pizza, its neon half dead. Room six's door opens on its chain. A
+- **CAM:** the Harbor View Motel at 1:30, its neon half dead (the old painted sign on the building still says BREEZE MOTEL: nobody repainted it). Room six's door opens on its chain. A
   huge silent man, DUTCH, takes the bag and gives an envelope. Behind him, for one second: a child's shoe by the bed.
   (A seed: the motel is where Marek keeps people. The hero comes back here in M20.)
 - **DUTCH** [one word] "Go."

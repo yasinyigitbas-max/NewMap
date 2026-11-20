@@ -212,8 +212,10 @@ languages, with small words.
 ---
 
 ## M20: Little Fish, Again
-- **Where:** Clay's Diner (the docks); then the **Seabreeze Motel** on the strip: three rooms where Marek's
-  "workers" live.
+- **Where:** Clay's Diner (the docks); then the **Harbor View Motel** on the strip, where Marek's "workers" live. Two
+  of its rooms are already built: the **motel office** (Sharon's desk) and the **Guest Laundry** (where the families
+  gather). The rest happens outside, on the walkway in front of the guest-room doors. No guest-room interiors are
+  needed: the people come out to the walkway, as motel life really works.
 - **Length:** 25 minutes.
 - **Why it's here:**
   - Story: the hero goes *back* to Marek, pretending to be beaten. Ruth knows this time: the hero calls her first, and
@@ -242,11 +244,14 @@ languages, with small words.
 - **MAREK\*** "Good. You speak both now. You're useful. Go to the motel. Help Sharon with the new people."
 
 ### Beat 3: The motel (relaying)
-- **CAM:** the Seabreeze Motel on the strip, behind Gus' Pizza. Upstairs: a walkway of doors, laundry on lines, a TV
-  playing a cartoon, kids doing homework on the floor. People. Neighbours, not victims in a cut-scene.
+- **CAM:** the Harbor View Motel on the strip. The motel office: a bell on the counter, a key board, a TV. Behind the
+  counter, **SHARON**. Through the side door, the Guest Laundry: machines turning, laundry folded on every surface,
+  kids doing homework on the floor between the machines, a woman cutting a boy's hair on a plastic chair. People.
+  Neighbours, not victims in a cut-scene.
 - **SHARON** [Marek's house manager; flat Midwestern English, a smoker's cough, tired more than evil; a clipboard] "You're
   the translator? Finally. Room four: the rent is more now. Room six: they work Sunday. Room nine: the lady. Her kid is
-  on the boat. She doesn't go to the landing. Kids come here first."
+  on the boat. She doesn't go to the landing. Kids come here first." *(she nods at the laundry door)* "They're all in
+  there. They're always in there."
 - **How relaying plays:** Sharon speaks English to the hero. The hero turns to the person and speaks the native
   language (picking a line). Then the person answers in the native language, and **the hero tells Sharon in English,
   aloud**, in short A1.
@@ -256,15 +261,17 @@ languages, with small words.
     eyebrows).
   - **Why it works at A1:** relaying is short. *Her name is Nadia. She is from {the region}. She wants her daughter.*
     That's exactly what a beginner bilingual really does, and it's powerful: the hero is the only bridge in the room.
-- **Room four:** a family. PLAYER (to Sharon): "OK. They know. They are not happy."
-- **Room six:** three young men from the hero's region; they recognise the accent.
+- **Room four** (a family at the laundry's folding table). PLAYER (back in the office, to Sharon): "OK. They know. They
+  are not happy."
+- **Room six** (three young men from the hero's region, by the machines; they recognise the accent).
   - **YOUNG MAN\*** [whispering] "*You're from our side of the river. Get us out.*"
   - PLAYER (to Sharon, cool): "He says OK. Sunday is OK." (a lie in English: the first lie the hero tells *for*
     someone)
 
 ### Beat 4: Nadia
-- **CAM:** room nine. NADIA, 30s, sewing a small yellow raincoat by the window. A child's drawing on the wall: a girl, a
-  sun, a boat.
+- **CAM:** outside on the walkway, by the door of room nine. NADIA, 30s, sits on a plastic chair by her door in the
+  last light, sewing a small yellow raincoat. Taped to the inside of her window, facing out: a child's drawing of a
+  girl, a sun and a boat.
 - **NADIA\*** [careful hope, which hurts more than fear] "*You speak English? Sharon tells me nothing. My daughter, Lali.
   She is nine. She is on the boat. When does it come? Where? I want her to see my face first.*"
 - **PLAY:** the question, in A1 English, to Sharon, made casual so it doesn't sound suspicious:
@@ -277,13 +284,13 @@ languages, with small words.
   - **Kind:** "*The Fourth. Eleven. I will be there. I bring her to you.*"
   - Each sets a flag: in M22 Nadia's actions depend on what she was told.
 - **Job perks:** cook for the motel; **teacher**: teach Nadia "911" and "Help, please" in English (she uses it in M22);
-  **nurse**: a feverish child in room four. Each raises the motel's trust, and the motel helps on the night.
+  **nurse**: a feverish child in the laundry. Each raises the motel's trust, and the motel helps on the night.
 
 ### Beat 5: The signal
-- **CAM:** night, the motel roof. The hero texts Brody and Ruth: *July 4. 11. Ferry Landing. 12 people. 4 children.*
+- **CAM:** night, the dark end of the motel walkway, by the ice machine. The hero texts Brody and Ruth: *July 4. 11. Ferry Landing. 12 people. 4 children.*
 - **MUS:** `MUS-25 "Two Lives"`: Marek's frame drum and the main theme's trumpet alternate, two bars each, never
   together.
-- Below, a dark sedan pulls into the motel lot. Marek gets out, smoking, and looks up at the roof. The hero ducks. He looks for a long time.
+- Below, a dark sedan pulls into the motel lot. Marek gets out, smoking, and looks up along the walkway. The hero steps back into the shadow of the ice machine. He looks for a long time.
   Then he goes in.
 - **Practice test:** review: people.
 
@@ -360,7 +367,7 @@ languages, with small words.
   knows on every corner: the Trans with a flag stall outside Hilltop Market, Mr. Delgado silently waving a flag, Brenda
   with Admiral in a star bandana, Salim eating seeds, Joy from the library on a float.
 - **MUS:** the marching band plays the main theme `MUS-04` as a march. The city's song is the hero's song.
-- **PLAY:** the hero is "with Marek's people" and must be seen near the Seabreeze. They can eat a hot dog, but going
+- **PLAY:** the hero is "with Marek's people" and must be seen near the Harbor View Motel. They can eat a hot dog, but going
   too far raises Marek's suspicion.
 - **Needs:** topped up quietly at the start of Phase 2 (the rule).
 
@@ -434,7 +441,7 @@ languages, with small words.
   - **LALI\*** [small, curious] "*What did you say to him? What language is that?*"
   - PLAYER (the game offers it in the native language): "*English. I teach you.*"
 - If Nadia came (the truth in M20), she runs in and the reunion happens in foil blankets: no lines, only music. If not,
-  the hero takes Lali to the motel at dawn, and the reunion happens in room nine. Both are beautiful; one comes sooner.
+  the hero takes Lali to the motel at dawn, and the reunion happens on the walkway outside room nine. Both are beautiful; one comes sooner.
   The truth always gets there faster in this game.
 - **MUS:** `MUS-28 "Home"`, the first sung song in the game (MUSIC.md), over the dawn.
 
