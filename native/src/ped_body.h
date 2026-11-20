@@ -146,6 +146,7 @@ private:
 	void contacts();
 	void pos_fix1(int i, V3 r, V3 n, float depth, V3 vb);
 	void pos_fix2(int i, int k, V3 ri, V3 rk, V3 corr);
+	void self_contacts();   // the limbs against the trunk, the head and each other (not through them)
 	void ang_fix2(int i, int k, V3 dphi);   // (dphi by value: it is cut to a small turn)
 	float ground_y(float x, float z) const { return (gd - gn.x * x - gn.z * z) / gn.y; }
 };

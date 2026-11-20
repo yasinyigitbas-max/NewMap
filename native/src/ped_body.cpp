@@ -93,13 +93,13 @@ void Person::build(const Rest &p_rest) {
 		J.bone = bone; J.swing = swing; J.twist = twist; J.kp = kp; J.kd = 0.05f * kp; J.tmax = tmax;
 	};
 	joint(J_SPINE, B_PELVIS, B_CHEST, rest.waist, false, up, 0, 0, up, 0.55f, 0.5f, 600.0f, 250.0f);
-	joint(J_NECK, B_CHEST, B_HEAD, rest.neck, false, up, 0, 0, up, 0.65f, 0.8f, 60.0f, 40.0f);
+	joint(J_NECK, B_CHEST, B_HEAD, rest.neck, false, up, 0, 0, up, 0.6f, 0.7f, 60.0f, 40.0f);
 	for (int s = 0; s < 2; s++) {
 		const V3 du = norm(rest.elbow[s] - rest.shoulder[s]);
 		const V3 ea = norm(cross(du, V3{ 0, 0, 1 }));   // an elbow bends the forearm forward
-		joint(s == 0 ? J_SHOULDER_L : J_SHOULDER_R, B_CHEST, s == 0 ? B_UARM_L : B_UARM_R, rest.shoulder[s], false, up, 0, 0, du, 1.9f, 1.3f, 90.0f, 70.0f);
-		joint(s == 0 ? J_ELBOW_L : J_ELBOW_R, s == 0 ? B_UARM_L : B_UARM_R, s == 0 ? B_FARM_L : B_FARM_R, rest.elbow[s], true, ea, -0.35f, 2.2f, du, 0, 0, 50.0f, 45.0f);
-		joint(s == 0 ? J_HIP_L : J_HIP_R, B_PELVIS, s == 0 ? B_THIGH_L : B_THIGH_R, rest.hip[s], false, up, 0, 0, norm(rest.knee[s] - rest.hip[s]), 1.5f, 0.6f, 500.0f, 220.0f);
+		joint(s == 0 ? J_SHOULDER_L : J_SHOULDER_R, B_CHEST, s == 0 ? B_UARM_L : B_UARM_R, rest.shoulder[s], false, up, 0, 0, du, 1.6f, 0.9f, 90.0f, 70.0f);   // (was 1.9 / 1.3 rad: the arm went through the chest)
+		joint(s == 0 ? J_ELBOW_L : J_ELBOW_R, s == 0 ? B_UARM_L : B_UARM_R, s == 0 ? B_FARM_L : B_FARM_R, rest.elbow[s], true, ea, -0.05f, 2.3f, du, 0, 0, 50.0f, 45.0f);   // (it bent 20 degrees the wrong way)
+		joint(s == 0 ? J_HIP_L : J_HIP_R, B_PELVIS, s == 0 ? B_THIGH_L : B_THIGH_R, rest.hip[s], false, up, 0, 0, norm(norm(rest.knee[s] - rest.hip[s]) + V3{ 0, 0, 0.42f }), 1.15f, 0.45f, 500.0f, 220.0f);   // (a cone tipped forward: a leg goes far forward, little back or across; it went 86 degrees any way)
 		joint(s == 0 ? J_KNEE_L : J_KNEE_R, s == 0 ? B_THIGH_L : B_THIGH_R, s == 0 ? B_CALF_L : B_CALF_R, rest.knee[s], true, V3{ 1, 0, 0 }, -0.05f, 2.4f, up, 0, 0, 350.0f, 180.0f);
 		joint(s == 0 ? J_ANKLE_L : J_ANKLE_R, s == 0 ? B_CALF_L : B_CALF_R, s == 0 ? B_FOOT_L : B_FOOT_R, rest.ankle[s], false, up, 0, 0, V3{ 0, 0, 1 }, 0.7f, 0.4f, 120.0f, 80.0f);
 		// arms hang by the sides, a little bent (the skeleton stands with them held out)
@@ -242,6 +242,51 @@ void Person::solve_joint(Joint &J) {
 	}
 }
 
+// THE LIMBS AGAINST THE BODY (Yasin, 20 Nov: "peoples arms and legs go thru their bodies"): each pair of parts that
+// are not joined, capsule against capsule, pushed apart where they overlap: the arms against the trunk, the head and
+// each other, the thighs and the calves against each other
+static inline void seg_closest(V3 p1, V3 q1, V3 p2, V3 q2, V3 &c1, V3 &c2) {
+	const V3 d1 = q1 - p1, d2 = q2 - p2, r = p1 - p2;
+	const float a = dot(d1, d1), e = dot(d2, d2), f = dot(d2, r);
+	float s = 0.0f, t = 0.0f;
+	if (a <= 1e-8f && e <= 1e-8f) { c1 = p1; c2 = p2; return; }
+	if (a <= 1e-8f) { t = clampf(f / e, 0.0f, 1.0f); }
+	else {
+		const float c = dot(d1, r);
+		if (e <= 1e-8f) s = clampf(-c / a, 0.0f, 1.0f);
+		else {
+			const float bb = dot(d1, d2), den = a * e - bb * bb;
+			s = den > 1e-8f ? clampf((bb * f - c * e) / den, 0.0f, 1.0f) : 0.0f;
+			t = (bb * s + f) / e;
+			if (t < 0.0f) { t = 0.0f; s = clampf(-c / a, 0.0f, 1.0f); }
+			else if (t > 1.0f) { t = 1.0f; s = clampf((bb - c) / a, 0.0f, 1.0f); }
+		}
+	}
+	c1 = p1 + d1 * s; c2 = p2 + d2 * t;
+}
+
+void Person::self_contacts() {
+	static const int PAIRS[][2] = {
+		{ B_FARM_L, B_CHEST }, { B_FARM_R, B_CHEST }, { B_FARM_L, B_PELVIS }, { B_FARM_R, B_PELVIS },
+		{ B_UARM_L, B_PELVIS }, { B_UARM_R, B_PELVIS }, { B_FARM_L, B_HEAD }, { B_FARM_R, B_HEAD },
+		{ B_UARM_L, B_HEAD }, { B_UARM_R, B_HEAD }, { B_FARM_L, B_FARM_R }, { B_UARM_L, B_FARM_R }, { B_UARM_R, B_FARM_L },
+		{ B_FARM_L, B_THIGH_L }, { B_FARM_R, B_THIGH_R }, { B_FARM_L, B_THIGH_R }, { B_FARM_R, B_THIGH_L },
+		{ B_THIGH_L, B_THIGH_R }, { B_CALF_L, B_CALF_R }, { B_CALF_L, B_THIGH_R }, { B_CALF_R, B_THIGH_L },
+		{ B_FOOT_L, B_CALF_R }, { B_FOOT_R, B_CALF_L }, { B_FOOT_L, B_FOOT_R } };
+	for (const auto &pr : PAIRS) {
+		const int i = pr[0], k = pr[1];
+		Body &A = b[i], &B = b[k];
+		if (!A.on || !B.on) continue;
+		const V3 a0 = A.x + rot(A.q, A.a), a1 = A.x + rot(A.q, A.b), b0 = B.x + rot(B.q, B.a), b1 = B.x + rot(B.q, B.b);
+		V3 ca, cb; seg_closest(a0, a1, b0, b1, ca, cb);
+		const V3 dd = ca - cb;
+		const float dist = len(dd), need = A.r + B.r;
+		if (dist >= need || dist < 1e-6f) continue;
+		const V3 n = dd * (1.0f / dist);
+		pos_fix2(i, k, (ca - n * A.r) - A.x, (cb + n * B.r) - B.x, n * (need - dist));
+	}
+}
+
 // Every part against the ground and against the cars: pushed out along the surface
 void Person::contacts() {
 	for (int i = 0; i < NB; i++) {
@@ -353,6 +398,7 @@ void Person::sub(float h) {
 	V3 vpre[96];
 	for (int it = 0; it < 2; it++) {
 		for (int k = 0; k < NJ; k++) solve_joint(j[k]);
+		self_contacts();
 		const int n0 = n_hits;
 		contacts();
 		for (int q = n0; q < n_hits; q++) { const Body &B = b[hits[q].body]; vpre[q] = B.v + cross(B.w, hits[q].r) - hits[q].vb; }
@@ -449,7 +495,8 @@ void Person::brain(float dt) {
 		float vmax = 0;
 		for (int i = 0; i < NB; i++) vmax = std::max(vmax, len(b[i].v));
 		quiet = vmax < 0.35f ? quiet + dt : 0.0f;
-		if (quiet > 0.7f || t_state > 8.0f) { state = ST_REST; t_state = 0; strength = 0.12f; face_up = rot(C.q, V3{ 0, 0, 1 }).y > 0.0f; }
+		// (Yasin, 20 Nov: "they take forever to finish": still for 0.35 s, or 3 s at most; it was 0.7 s or 8 s)
+		if (quiet > 0.35f || t_state > 3.0f) { state = ST_REST; t_state = 0; strength = 0.12f; face_up = rot(C.q, V3{ 0, 0, 1 }).y > 0.0f; }
 		return;
 	}
 	// ---- BALANCE
@@ -472,13 +519,19 @@ void Person::brain(float dt) {
 	stumble_t = (speed > 0.5f && n_hits == 0) ? stumble_t + dt : (speed < 0.3f || n_hits > 0 ? 0.0f : stumble_t);
 	// (Yasin, 20 Nov: "people are very unlikely to fall and step countless times to balance themselves": a hard shove used
 	// to be caught in 5-8 steps. A person catches a push in one to three steps or goes down: tests/people/sweep_shove.gd)
-	if (tilt > 0.9f || hp < 0.5f * rest.pelvis.y || speed > 3.4f || (steps >= 3 && speed > 1.1f) || steps >= 5 || stumble_t > 1.6f) { go_fall(); return; }
+	// (Yasin, 20 Nov: "shoves drop people too easily now, they should try to balance for 3 steps as hard as they can then
+	// fall if they still cant") for its first three steps it gives up only when it is truly overwhelmed (tipped past
+	// 70 degrees, its hips at 40 % of their height, 5 m/s); a fourth step needed and it goes down (below). It gave up at
+	// 3.4 m/s or 50 degrees at once: a hard shove dropped people where they stood.
+	const bool fighting = steps < 3;
+	if (tilt > (fighting ? 1.25f : 0.9f) || hp < (fighting ? 0.4f : 0.5f) * rest.pelvis.y || speed > (fighting ? 5.0f : 3.4f) || stumble_t > 1.6f) { go_fall(); return; }
 	const bool swinging = !foot[0].planted || !foot[1].planted;
 	const V3 left{ std::cos(heading), 0, -std::sin(heading) };
 	const float out = len(xi - support(xi, -1));   // how far that point lies outside what its feet cover
 	if (!swinging) {
 		int s = -1;
 		V3 tgt{};
+		if (out > 0.03f && steps >= 3) { go_fall(); return; }   // (three steps did not catch it: down it goes)
 		if (out > 0.03f) {
 			// It is going over. One foot steps to where the point WILL be when that foot comes down (it runs away from
 			// the standing foot faster and faster: e times as far every third of a second), and a little beyond.
@@ -495,7 +548,7 @@ void Person::brain(float dt) {
 					// tests/people/test_acts.gd -- --trace: 28 steps in six seconds, never slower): each step only kept up
 					// with the fall, none got ahead of it. A longer step each time does get ahead.
 					tgt = stand + (xi - stand) * std::exp(T / tc) + dir * (0.05f + std::min(0.035f * (float)steps, 0.22f));
-					T = clampf(0.14f + 0.10f * len(flat(tgt - foot[s].p)), 0.16f, 0.26f) / std::max(skill, 0.3f);   // (a step to save itself is a quick one)
+					T = clampf(0.14f + 0.10f * len(flat(tgt - foot[s].p)), 0.16f, 0.26f) / std::max(skill, 0.3f) * (steps < 3 ? 0.85f : 1.0f);   // (a step to save itself is a quick one; its first three as quick as it can)
 				}
 				const float gap = (dot(tgt, left) - dot(flat(foot[1 - s].p), left)) * (s == 0 ? 1.0f : -1.0f);   // how far it lands on its own side of the other foot
 				if (gap >= 0.12f) break;
