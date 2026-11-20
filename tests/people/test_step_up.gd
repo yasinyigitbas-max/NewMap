@@ -24,6 +24,8 @@ var seq := []
 var shot_name := ""
 var shot_frames := 0
 var shot_done := {}
+var hips_prev := -99.0
+var hips_jump := 0.0   # the drawn hips' biggest rise or fall in one frame on this lane
 # h, depth across his way (thin = a fence), what it is, what walking does, what a jump does
 const LANES := [
 	[0.2, 3.0, "a 20 cm kerb", "step", ""],
@@ -32,6 +34,7 @@ const LANES := [
 	[1.6, 3.0, "a 1.6 m wall", "climb", "climb"],      # (Yasin: "lose those jumps at high vault and high climb")
 	[1.1, 0.08, "a 1.1 m fence", "vault", "vault"],
 	[3.0, 3.0, "a 3 m wall", "stop", "stop"],
+	[0.14, 3.0, "a 14 cm kerb", "walk", ""],   # (Yasin: "kerbs shouldnt require step up animation, but if you can make it truly seamless its okay")
 ]
 
 func _check(ok: bool, what: String) -> void:
@@ -69,11 +72,16 @@ func _process(_d: float) -> bool:
 func _start_lane() -> void:
 	player.global_position = Vector3(lane * 6.0, 0.05, 0.0)
 	player.velocity = Vector3.ZERO
-	top_y = -9.0; clips = {}; seq = []
+	top_y = -9.0; clips = {}; seq = []; hips_prev = -99.0; hips_jump = 0.0
 	player.call(&"set_move", Vector2(0, 1), false)
 
 func _watch() -> void:
 	top_y = maxf(top_y, player.global_position.y)
+	var fl: Dictionary = player.call(&"get_frame_log")
+	if fl.has("pelvis_drawn"):
+		var hy: float = (fl.pelvis_drawn as Vector3).y
+		if hips_prev > -90.0: hips_jump = maxf(hips_jump, absf(hy - hips_prev))
+		hips_prev = hy
 	var c := String(player.call(&"get_clip"))
 	clips[c] = true
 	if seq.is_empty() or seq[-1] != c: seq.append(c)
@@ -106,6 +114,7 @@ func _judge(what: String, jump: bool) -> void:
 			var c := "ual/ClimbUp_2m" if h > 0.5 else "ual/ClimbUp_1m"
 			_check(on_top and clips.has(c) and _settled(), "%s, %s: up on it (%s), feet %.2f m up, then a moment standing (%s)" % [name, how, c, top_y, str(seq)])
 		"vault": _check(over and clips.has("ual/SafetyVault") and _settled(), "%s, %s: over it (Vault) to the far side (at z %.2f), then a moment standing (%s)" % [name, how, z, str(seq)])
+		"walk": _check(on_top and not clips.has("ual/StepUp") and hips_jump < 0.03, "%s, %s: walked onto it, no step clip, the hips never jump (most %.3f m in a frame), feet %.2f m up (%s)" % [name, how, hips_jump, top_y, str(seq)])
 		"stop": _check(not on_top and not over, "%s, %s: not up, not over (feet at most %.2f m, at z %.2f)" % [name, how, top_y, z])
 
 func _physics_process(delta: float) -> bool:

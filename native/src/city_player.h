@@ -53,6 +53,7 @@ class CityPlayer : public CharacterBody3D {
 	Vector3 edge_at, edge_out, edge_side;
 	class HandGrip *grip = nullptr;
 	class FootPlant *plant = nullptr;
+	float vis_dy = 0.0f, kerb_t = 0.0f;   // the drawn figure under the body after a lift onto a kerb (eased away)
 	// the clip's own rise and travel (its hips move the figure up as it climbs): taken out, so his hips follow the climb's
 	// path (Yasin: "lower climb needs better placement"; "step up was off too")
 	Vector3 pel_rest, fig_drawn_at, clip_off;

@@ -741,7 +741,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 	auto give = [&](Near &nb, int best) {
 		float pr[4]; int body; float sc;
 		person_of(best, pr, body, sc);
-		nb.walker = crowd->id[best]; nb.in_body = false; nb.has_last = false; nb.v_s = crowd->v[best];
+		nb.walker = crowd->id[best]; nb.in_body = false; nb.has_last = false; nb.has_y = false; nb.v_s = crowd->v[best];
 		nb.why = 0; nb.after_kind = 0; nb.after_t = 0.0f;
 		nb.v_s = crowd->v[best];
 		nb.act = crowd->act[best]; nb.act_t = 99.0f;
@@ -798,7 +798,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 		if (best < 0) continue;
 		float pr[4]; int body; float sc;
 		person_of(best, pr, body, sc);
-		nb.walker = crowd->id[best]; nb.in_body = false; nb.has_last = false; nb.v_s = crowd->v[best];
+		nb.walker = crowd->id[best]; nb.in_body = false; nb.has_last = false; nb.has_y = false; nb.v_s = crowd->v[best];
 		nb.why = 0; nb.after_kind = 0; nb.after_t = 0.0f;
 		nb.v_s = crowd->v[best];
 		nb.act = crowd->act[best]; nb.act_t = 99.0f;   // (whatever it is doing, it is doing it already)
@@ -907,6 +907,11 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 						if (dist > 0.8f && dist < 4.0f) at += d / dist * (std::min((dist - 0.8f) * 0.5f, 1.2f) * std::min(std::max(w, 0.0f), 1.0f));
 					}
 				}
+				// (a kerb: the walker's height steps 12-15 cm between two of the crowd's ticks, and the whole figure went up 5 cm a
+				// frame. The figure eases up after it (about 0.1 s) while its foot plant puts the leading foot on the kerb's top;
+				// Yasin: "kerbs shouldnt require step up animation, but if you can make it truly seamless its okay")
+				if (!nb.has_y || std::fabs(at.y - nb.y_s) > 0.4f) { nb.y_s = at.y; nb.has_y = true; }
+				else { nb.y_s += (at.y - nb.y_s) * (1.0f - std::exp(-(float)p_delta / 0.09f)); at.y = nb.y_s; }
 				StringName clip; double speed, hold; int token;
 				const int act_now = crowd->act[i] | (crowd->mode[i] == pc::M_DODGE ? 256 : 0);
 				if (nb.act != act_now) { nb.act = act_now; nb.act_t = 0.0f; } else nb.act_t += (float)p_delta;
