@@ -1,0 +1,84 @@
+{
+ "_doc": "ea fill (claude/fill-high-street, 20 Nov): which business is behind which shop door of the ea pieces (n_ea_*, the",
+ "count": 3,
+ "rooms": [
+  {
+   "id": "ea_cape_rent_0",
+   "piece": "n_ea_cape",
+   "label": "rent",
+   "model": "commercial/com_surf_shop",
+   "pos": [
+    548.0,
+    2.0861,
+    -1630.0
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "sport",
+   "name": "North Beach Rentals",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "kayaks, paddle boards, wetsuits and beach bikes to hire at the first beach access by the u 500 junction (its kayak racks on the sand)",
+   "signs": []
+  },
+  {
+   "id": "ea_cape_cafe_0",
+   "piece": "n_ea_cape",
+   "label": "cafe",
+   "model": "commercial/com_cafe_seaside",
+   "pos": [
+    578.0,
+    1.9691,
+    -1630.0
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": -1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "cafe",
+   "name": "North Beach Cafe",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "coffee, iced tea and sandwiches on the forecourt for the beach and for the hospital's staff on their breaks across the ring",
+   "signs": []
+  },
+  {
+   "id": "ea_shore_scoops_0",
+   "piece": "n_ea_shore",
+   "label": "scoops",
+   "model": "commercial/com_surf_shop",
+   "pos": [
+    970.5,
+    3.7409,
+    -1170.0
+   ],
+   "yaw": -90.0,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "ice_cream",
+   "name": "Bridge Point Scoops",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "ice cream on the promenade where the beach is busiest, between the crest lookout and the dog beach",
+   "signs": []
+  }
+ ]
+}
