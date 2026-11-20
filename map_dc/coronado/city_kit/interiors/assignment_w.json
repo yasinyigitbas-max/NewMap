@@ -20,8 +20,8 @@
     -17.7,
     17.7
    ],
-   "kind": "workshop",
-   "name": "Coronado Boatworks",
+   "kind": "store",
+   "name": "Coronado Boatworks Chandlery",
    "style": "navy",
    "signs": [
     {
@@ -565,7 +565,7 @@
     -10.7,
     10.7
    ],
-   "kind": "office",
+   "kind": "bank",
    "name": "Coronado Post Office",
    "style": "navy",
    "signs": [],
@@ -1010,7 +1010,7 @@
     -11.7,
     11.7
    ],
-   "kind": "souvenir",
+   "kind": "store",
    "name": "Amber Arcade Gifts",
    "style": "teal",
    "signs": [

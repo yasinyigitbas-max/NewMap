@@ -4,10 +4,10 @@
    "d": 16.0,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_i1__boatworks__0.scn",
    "id": "g_w_i1__boatworks__0",
-   "kind": "workshop",
+   "kind": "store",
    "lights": 6,
-   "name": "Coronado Boatworks",
-   "props": 66,
+   "name": "Coronado Boatworks Chandlery",
+   "props": 94,
    "w": 35.4
   },
   {
@@ -104,10 +104,10 @@
    "d": 14.15,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c1__post_office__0.scn",
    "id": "g_w_c1__post_office__0",
-   "kind": "office",
+   "kind": "bank",
    "lights": 6,
    "name": "Coronado Post Office",
-   "props": 22,
+   "props": 30,
    "w": 21.4
   },
   {
@@ -224,10 +224,10 @@
    "d": 15.0,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c9__arcade__0.scn",
    "id": "g_w_c9__arcade__0",
-   "kind": "souvenir",
-   "lights": 5,
+   "kind": "store",
+   "lights": 6,
    "name": "Amber Arcade Gifts",
-   "props": 42,
+   "props": 65,
    "w": 23.4
   },
   {
