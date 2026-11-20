@@ -100,5 +100,7 @@ AudioStreamPlayer3D *loop(Node3D *p_owner, const String &p_name, const String &p
 
 int played() { return n_played; }
 
+void clear() { if (sets) { delete sets; sets = nullptr; } }
+
 } // namespace elsfx
 } // namespace godot

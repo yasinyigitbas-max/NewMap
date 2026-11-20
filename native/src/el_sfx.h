@@ -21,6 +21,8 @@ Node *play(Node *p_owner, const String &p_base, float p_db = 0.0f, float p_pitch
 AudioStreamPlayer3D *loop(Node3D *p_owner, const String &p_name, const String &p_base, float p_db, float p_pitch = 1.0f, float p_range = 50.0f);
 // the number of sounds played (the tests)
 int played();
+// let every kept stream go (the module's shutdown, before the engine checks for resources still in use)
+void clear();
 
 } // namespace elsfx
 } // namespace godot
