@@ -40,6 +40,9 @@ func _run() -> void:
 		var before := _draws(src)
 		var dst := _merge_room(src)
 		var after := _draws(dst)
+		# (20 Nov, B14) no GDScript in the game's rooms: the door leaves' door_swing.gd is dropped (not in the phone build;
+		# C++ CityRooms swings them from the leaves' own metas mid / out_dir / open_sign)
+		for lf: Node in dst.find_children("DoorLeaf_*", "Node3D", true, false): lf.set_script(null)
 		var ps := PackedScene.new(); _own(dst, dst); ps.pack(dst)
 		ResourceSaver.save(ps, OUT + f, ResourceSaver.FLAG_COMPRESS)
 		tot[0] += 1; tot[1] += before; tot[2] += after
