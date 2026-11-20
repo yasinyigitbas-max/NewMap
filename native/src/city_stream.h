@@ -77,6 +77,7 @@ private:
 	std::vector<float> v_add_ms, v_ready_ms; int ready_dropped = 0;
 	StaticBody3D *probe_body = nullptr;
 	uint64_t player_id = 0;
+	bool focus_set = false;      // (B37: a focus exists to compare a riding camera's jump with)
 	// teleport frames (a place prepared): the worst one, what this node did in it, printed at release_prepared() as a RIG line
 	uint64_t prep_last_us = 0; double prep_worst_ms = 0.0; String prep_worst_what; int frame_adds = 0, frame_bodies = 0;
 	// warm-up (behind the loading screen): frames left of the warm scene, then the graphics-memory reserve

@@ -297,10 +297,15 @@ void CityStream::update_focus(const Vector3 &p_in, bool p_now, const Vector3 &p_
 		Node3D *pl = Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(player_id)));
 		if (pl && pl->is_inside_tree() && !pl->is_visible()) {
 			Viewport *vp = get_viewport();
-			if (Camera3D *cam = vp ? vp->get_camera_3d() : nullptr) p = cam->get_global_position();
+			if (Camera3D *cam = vp ? vp->get_camera_3d() : nullptr) {
+				p = cam->get_global_position();
+				// B37: a camera that jumped further than any vehicle moves in one update (a new camera at the origin for a
+				// frame) is not followed: the streamer keeps its focus (teleports go through prepare())
+				if (focus_set && (p - focus).length() > 80.0f) p = focus;
+			}
 		}
 	}
-	focus = p;
+	focus = p; focus_set = true;
 	Vector3 lead(p_velocity.x, 0, p_velocity.z); lead *= (float)lead_seconds;
 	if (lead.length() > (float)max_lead) lead = lead.normalized() * (float)max_lead;
 	const int steps = 1 + (int)(lead.length() / 60.0f);   // the range swept along the lead, a point every 60 m or less

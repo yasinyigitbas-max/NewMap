@@ -50,6 +50,17 @@
 
 namespace godot {
 
+// B37 (Yasin, 20 Nov: "when we get into cars and bike, the world reloads, all of the texturs reload from far to near"): a
+// top-level camera sits at the world's origin until its first update; made current there, the streamer (which follows the
+// camera while he rides) loaded round the origin for a frame and reloaded the whole place. Put behind the car first.
+static void cam_behind(Camera3D *p_cam, const Transform3D &p_t, float p_back, float p_up) {
+	if (!p_cam) return;
+	const Vector3 fwd = p_t.basis.get_column(2);
+	const Vector3 at = p_t.origin + Vector3(0, 1.1f, 0);
+	p_cam->set_global_transform(Transform3D(Basis(), at - Vector3(fwd.x, 0, fwd.z).normalized() * p_back + Vector3(0, p_up, 0)).looking_at(at, Vector3(0, 1, 0)));
+}
+
+
 // Made once: the nodes, the engine body's settings, the wheel ray, the camera. What depends on the model is in fit().
 void CityCar::make() {
 	if (made) return;
@@ -95,6 +106,7 @@ void CityCar::make() {
 		cam->set_as_top_level(true);
 		cam->set_fov(62.0); cam->set_near(0.2); cam->set_far(1500.0);
 		add_child(cam);
+		if (is_inside_tree()) cam_behind(cam, get_global_transform(), 7.0f, 1.6f);
 		cam->make_current();
 	}
 	fit();
@@ -342,6 +354,7 @@ void CityCar::take_wheel(bool p_on) {
 			add_child(cam);
 		}
 		cam_set = false;
+		if (is_inside_tree()) cam_behind(cam, get_global_transform(), 7.0f, 1.6f);
 		cam->make_current();
 		c_handbrake = 0.0f; c_brake = 0.0f;
 	} else {

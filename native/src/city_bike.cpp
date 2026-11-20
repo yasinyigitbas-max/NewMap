@@ -275,7 +275,13 @@ void CityBike::mount() {
 	}
 	lean = lean_v = 0.0f;
 	if (rider) rider->set_visible(true);
-	if (cam && chase_camera) { cam->make_current(); cam_set = false; }
+	if (cam && chase_camera) {      // B37: put behind the bike before it is made current (a top-level camera starts at the origin)
+		if (is_inside_tree()) {
+			const Transform3D t = get_global_transform(); const Vector3 fwd = t.basis.get_column(2); const Vector3 at = t.origin + Vector3(0, 1.0f, 0);
+			cam->set_global_transform(Transform3D(Basis(), at - Vector3(fwd.x, 0, fwd.z).normalized() * 4.5f + Vector3(0, 1.2f, 0)).looking_at(at, Vector3(0, 1, 0)));
+		}
+		cam->make_current(); cam_set = false;
+	}
 }
 
 void CityBike::dismount() {
