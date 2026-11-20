@@ -80,6 +80,8 @@ var cur_trees := {}          # its trees, world: Vector2i (0.5 m bucket) -> Arra
 var cur_ground := {}         # its ground meshes with the wells filled: source mesh instance id -> Mesh
 var cur_wells: Array = []    # the wells filled in it, world: [centre on the rim plane, radius, slope x, slope z]
 var kept_trees := {}         # the hand-placed trees (t_* pieces), world: Vector2i (2 m bucket) -> Array of Vector2
+var gap_col := true          # --nogapcol: buildings get only their kit "col" shell (as before 20 Nov)
+var gap_cache := {}          # kit folder -> Array of [ConvexPolygonShape3D, Transform3D] (building space)
 var fill_cache := {}         # ground mesh key + its trees -> [Mesh, wells in the mesh's own frame]
 
 func _init() -> void: _run.call_deferred()
@@ -666,6 +668,104 @@ func _linear_texel(tex: Texture2D, uv: Vector2) -> Color:
 	var c := im.get_pixel(clampi(int(uv.x * im.get_width()), 0, im.get_width() - 1), clampi(int(uv.y * im.get_height()), 0, im.get_height() - 1))
 	return c.srgb_to_linear()
 
+# ---------------------------------------------------------------- B15: collision for what the kit's col shell leaves out
+## Yasin, 20 Nov: "stairs around or columns under buildings dont have colliders, add them". A kit building's collision is
+## its hand-made "col" shell; measured over the kit (122 of 128 buildings, 1,480 parts): outside stairs, columns under
+## overhangs, porch walls, shopfront panels are not in it and the player walks through them. Here, once per kit folder:
+## the near model's triangles in its lowest GAP_LOW metres are voxelised (GAP_VOX); voxels within GAP_PAD of the shell or
+## inside it (a vertical ray crosses the shell an odd number of times) are dropped; what is left is split into connected
+## parts, and each part of at least GAP_MIN voxels becomes a convex shape of its own triangles (a flight of stairs a ramp
+## the player walks up, a column a column). Building space: the same frame as the shell's CollisionShape3D.
+const GAP_VOX := 0.25
+const GAP_LOW := 3.5
+const GAP_PAD := 0.3
+const GAP_MIN := 6
+const KitLib := preload("res://tools/city/pilot/kit_lib.gd")
+
+func _gap_first_mesh(n: Node) -> MeshInstance3D:
+	if n is MeshInstance3D and (n as MeshInstance3D).mesh: return n
+	for c in n.get_children():
+		var m := _gap_first_mesh(c)
+		if m: return m
+	return null
+
+func _gap_tris(mi: MeshInstance3D) -> PackedVector3Array:
+	var out_t := PackedVector3Array()
+	for si in mi.mesh.get_surface_count():
+		var a := mi.mesh.surface_get_arrays(si)
+		var v: PackedVector3Array = a[Mesh.ARRAY_VERTEX]
+		var idx: PackedInt32Array = a[Mesh.ARRAY_INDEX]
+		if idx.is_empty(): idx = PackedInt32Array(range(v.size()))
+		for i in idx: out_t.append(mi.transform * v[i])
+	return out_t
+
+func _gap_hulls(kit: String) -> Array:
+	if gap_cache.has(kit): return gap_cache[kit]
+	var res: Array = []
+	gap_cache[kit] = res
+	var dir: String = KitLib._bdir(kit)
+	var nf: String = KitLib._tier_file(dir, "near"); var cf: String = KitLib._tier_file(dir, "col")
+	if nf == "" or cf == "": return res
+	var ni: Node = (load(nf) as PackedScene).instantiate(); var ci: Node = (load(cf) as PackedScene).instantiate()
+	var nm := _gap_first_mesh(ni); var cm := _gap_first_mesh(ci)
+	var nt := _gap_tris(nm) if nm else PackedVector3Array()
+	var ct := _gap_tris(cm) if cm else PackedVector3Array()
+	ni.free(); ci.free()
+	if nt.is_empty() or ct.is_empty(): return res
+	var y0 := 1.0e9
+	for q in nt: y0 = minf(y0, q.y)
+	var pr := int(ceil(GAP_PAD / GAP_VOX))
+	var col := {}
+	for i in range(0, ct.size(), 3):
+		for q in [ct[i], ct[i + 1], ct[i + 2], (ct[i] + ct[i + 1] + ct[i + 2]) / 3.0, (ct[i] + ct[i + 1]) * 0.5, (ct[i + 1] + ct[i + 2]) * 0.5, (ct[i] + ct[i + 2]) * 0.5]:
+			var k := Vector3i((q / GAP_VOX).floor())
+			for dx in range(-pr, pr + 1):
+				for dy in range(-pr, pr + 1):
+					for dz in range(-pr, pr + 1): col[k + Vector3i(dx, dy, dz)] = true
+	var tri_of := {}      # voxel -> triangle starts that touch it
+	for i in range(0, nt.size(), 3):
+		for q in [nt[i], nt[i + 1], nt[i + 2], (nt[i] + nt[i + 1] + nt[i + 2]) / 3.0]:
+			if q.y > y0 + GAP_LOW: continue
+			var k := Vector3i((q / GAP_VOX).floor())
+			if col.has(k): continue
+			if not tri_of.has(k): tri_of[k] = []
+			(tri_of[k] as Array).append(i)
+	var keep := {}
+	for k: Vector3i in tri_of:
+		var o := (Vector3(k) + Vector3(0.5, 0.5, 0.5)) * GAP_VOX
+		var hits := 0
+		for i in range(0, ct.size(), 3):
+			if Geometry3D.ray_intersects_triangle(o, Vector3.UP, ct[i], ct[i + 1], ct[i + 2]) != null: hits += 1
+		if hits % 2 == 0: keep[k] = true
+	var seen := {}
+	for k: Vector3i in keep:
+		if seen.has(k): continue
+		var st := [k]; seen[k] = true; var vox: Array = []
+		while not st.is_empty():
+			var q: Vector3i = st.pop_back(); vox.append(q)
+			for d in [Vector3i(1, 0, 0), Vector3i(-1, 0, 0), Vector3i(0, 1, 0), Vector3i(0, -1, 0), Vector3i(0, 0, 1), Vector3i(0, 0, -1)]:
+				var w: Vector3i = q + d
+				if keep.has(w) and not seen.has(w): seen[w] = true; st.append(w)
+		if vox.size() < GAP_MIN: continue
+		var used := {}; var verts := PackedVector3Array()
+		for q: Vector3i in vox:
+			for i: int in tri_of[q]:
+				if used.has(i): continue
+				used[i] = true; verts.append(nt[i]); verts.append(nt[i + 1]); verts.append(nt[i + 2])
+		if verts.size() < 12: continue
+		var c := Vector3()
+		for q in verts: c += q
+		c /= float(verts.size())
+		var local := PackedVector3Array()
+		for q in verts: local.append(q - c)
+		var am := ArrayMesh.new(); var arr := []; arr.resize(Mesh.ARRAY_MAX); arr[Mesh.ARRAY_VERTEX] = local
+		am.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+		var hull: ConvexPolygonShape3D = am.create_convex_shape(true, true)
+		if hull == null or hull.points.size() < 4: continue
+		res.append([hull, Transform3D(Basis(), c)])
+	stat["gap_kits"] = int(stat.get("gap_kits", 0)) + 1; stat["gap_parts"] = int(stat.get("gap_parts", 0)) + res.size()
+	return res
+
 # ---------------------------------------------------------------- pass 1: route every object of every piece
 func _walk(n: Node, piece: String, inst_name: String) -> void:
 	if n.has_meta(&"kit") and n is Node3D:
@@ -706,6 +806,9 @@ func _building(b: Node3D, piece: String, inst_name: String) -> void:
 				if bsh is ConcavePolygonShape3D:
 					for pc: Array in _split_concave(bsh): rec.col.append([pc[0], (cs as CollisionShape3D).transform * Transform3D(Basis(), pc[1]), (ch as StaticBody3D).collision_layer, (ch as StaticBody3D).collision_mask])
 				else: rec.col.append([bsh, (cs as CollisionShape3D).transform, (ch as StaticBody3D).collision_layer, (ch as StaticBody3D).collision_mask])
+	if gap_col and not rec.col.is_empty():      # B15: the parts the kit's col shell leaves out (stairs, columns, low walls)
+		var lay: int = int(rec.col[0][2]); var msk: int = int(rec.col[0][3])
+		for g: Array in _gap_hulls(String(rec.kit)): rec.col.append([g[0], g[1], lay, msk])
 	rec["pivot"] = pivot      # the far version's pivot: near and mid measure their distance to the same point (rt_tier)
 	if _cell_wanted(c): _cell(c).bld.append(rec)
 	else: stat.skipped_cell += 1
@@ -1253,6 +1356,7 @@ func _run() -> void:
 		if a == "--nofarground": fg_on = false
 		if a == "--notrees": no_trees = true
 		if a == "--keepwells": well_fill = false
+		if a == "--nogapcol": gap_col = false
 		if a.begins_with("--out="): out = a.trim_prefix("--out=")
 		if a.begins_with("--area="):
 			var f := a.trim_prefix("--area=").split_floats(","); area = [f[0], f[1], f[2]]
