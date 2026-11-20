@@ -1,6 +1,22 @@
 # The story
 
-## Current: *Wish You Were Here* (A1 only): `wish_you_were_here/`
+## Current: *The Long Way Round*, A1 edition: `long_way_round_a1/`
+Yasin, 20 Nov: "fit the A1 syllabus to your first draft with my scenario … use as few non-existing places and props as
+possible, our game has many locations now".
+
+This is Version A (Yasin's own beats in Yasin's order) rebuilt for A1:
+- **Shape:** four acts, 23 missions.
+- **Lines:** every player line is A1.
+- **The climax:** the mayday is all A1 ("There is a fire. There are twelve people. We need help.").
+- **Places:** every scene is set in a place already in the city: the Harbor Office, the Navy Gatehouse, Shoal, Hillcrest
+  Terraces, Hilltop Market, the library, The Fish House, Island Legal Aid, Island Laundry, Ocean Travel, the Villager
+  Theatre, The Crown & Anchor, the Ferry Landing, the courthouse, and more.
+- **Still to build:** the flat interior, one interview room, three motel rooms, a burned state for The Fish House and a
+  few small props (BIBLE.md section 8).
+
+Start with `long_way_round_a1/BIBLE.md`, then `A1_MAP.md`.
+
+## Also A1: *Wish You Were Here*: `wish_you_were_here/`
 Yasin, after reading A, B and C: "we aim language starters, and no one can reach B2 in 25 hours from zero." The game
 now covers **A1 only** (A2 is the sequel or the post-game), and Yasin asked for an entirely new story designed for
 that.
