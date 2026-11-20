@@ -86,6 +86,7 @@ class CityPlayer : public CharacterBody3D {
 	Vector3 acc_lp; bool acc_init = false;
 	double acc_spike_t = -9.0, mic_spike_t = -9.0;
 	float mic_avg = 0.01f;
+	float gyro_peak = 0.0f, acc_peak = 0.0f;   // (the swing: each sensor's peak over the last quarter second)
 	class AudioEffectCapture *mic_cap = nullptr;
 	void sense(double p_dt);
 	double water_y = -1000.0;   // the water's surface (-1000 = there is none): deeper than his chest he swims

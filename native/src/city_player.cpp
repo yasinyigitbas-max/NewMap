@@ -130,7 +130,12 @@ void CityPlayer::sense(double p_dt) {
 	const Vector3 hp = a - acc_lp;
 	acc_lp += (a - acc_lp) * (float)std::min(1.0, p_dt * 4.0);
 	const float gyro = g.length();
-	if (gyro > 7.0f && std::fabs(a.length() - 9.81f) > 12.0f && swing_cd <= 0.0) { combat_req = true; swing_cd = 1.5; }
+	// a swing: the gyro's and the accelerometer's peaks over the last quarter second (a real swing's two peaks seldom fall in
+	// one frame; Yasin: "swaying phone fast downwards doesnt put us into the combat mode"; the sensors themselves are switched
+	// on in project.godot on claude/perf-bugs)
+	gyro_peak = std::max(gyro_peak * (float)std::exp(-p_dt / 0.25), gyro);
+	acc_peak = std::max(acc_peak * (float)std::exp(-p_dt / 0.25), std::fabs(a.length() - 9.81f));
+	if (gyro_peak > 4.5f && acc_peak > 6.0f && swing_cd <= 0.0) { combat_req = true; swing_cd = 1.5; gyro_peak = 0.0f; acc_peak = 0.0f; }
 	if (hp.length() > 3.5f && gyro < 3.0f) acc_spike_t = clock_s;
 	if (mic_cap) {
 		const int n = mic_cap->get_frames_available();

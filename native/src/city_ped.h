@@ -99,6 +99,7 @@ public:
 	String get_body() const { return body_id; }
 	Ref<Mesh> get_body_mesh() const;
 	Ref<ShaderMaterial> get_look() const;
+	Vector3 bone_world(const char *p_bone) const;   // (traces) a bone's place as drawn, world
 	int get_mode() const { return mode; }
 	Skeleton3D *skeleton() const { return skel; }   // (the player's bicycle reaches its feet and hands to the pedals and grips)
 	Vector3 body_at() const;

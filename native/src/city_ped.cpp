@@ -142,6 +142,12 @@ Vector3 CityPed::clip_hips_at(const StringName &p_clip, double p_t) const {
 	return hips;
 }
 
+Vector3 CityPed::bone_world(const char *p_bone) const {
+	if (!skel) return Vector3();
+	const int b = skel->find_bone(p_bone);
+	return b >= 0 ? skel->get_global_transform().xform(skel->get_bone_global_pose(b).origin) : Vector3();
+}
+
 Ref<Mesh> CityPed::get_body_mesh() const { return mi ? mi->get_mesh() : Ref<Mesh>(); }
 Ref<ShaderMaterial> CityPed::get_look() const { return mi ? Ref<ShaderMaterial>(Object::cast_to<ShaderMaterial>(mi->get_material_override().ptr())) : Ref<ShaderMaterial>(); }
 
