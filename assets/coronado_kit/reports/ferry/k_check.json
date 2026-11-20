@@ -1,0 +1,108 @@
+{
+ "rows": [
+  {
+   "asset": "veh_ferry_passenger",
+   "tier": "near",
+   "tris": 5748,
+   "verts": 6951,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -3.547,
+     -1.46,
+     -10.62
+    ],
+    [
+     3.547,
+     7.55,
+     10.585
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "veh_ferry_passenger",
+   "tier": "mid",
+   "tris": 1158,
+   "verts": 1816,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -3.39,
+     -1.45,
+     -10.573
+    ],
+    [
+     3.39,
+     6.38,
+     10.585
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "veh_ferry_passenger",
+   "tier": "far",
+   "tris": 186,
+   "verts": 302,
+   "flip_frac": 0.0,
+   "bounds": [
+    [
+     -3.3,
+     -1.45,
+     -10.5
+    ],
+    [
+     3.3,
+     5.82,
+     10.5
+    ]
+   ],
+   "errors": []
+  },
+  {
+   "asset": "veh_ferry_passenger",
+   "tier": "col",
+   "tris": 84,
+   "verts": 168,
+   "bounds": [
+    [
+     -3.3,
+     -1.55,
+     -10.5
+    ],
+    [
+     3.3,
+     5.995,
+     9.6
+    ]
+   ],
+   "boxes": 7,
+   "errors": []
+  }
+ ],
+ "tex": {
+  "ferry_color.png": [
+   1024,
+   1024,
+   1.333
+  ],
+  "ferry_normal.png": [
+   512,
+   512,
+   0.333
+  ],
+  "ferry_orm.png": [
+   512,
+   512,
+   0.333
+  ]
+ },
+ "tex_mib": 2.0,
+ "pass_": true,
+ "budget": {
+  "near": 8000,
+  "mid": 2400,
+  "far": 200
+ }
+}

@@ -1,5 +1,6 @@
 // CityGame: the screens, the clock and the way into the world (see city_game.h). Every control is built here with
 // ui_plate, after the old game's loading_screen.gd, main_menu.gd, pause_menu.gd, game_over.gd and settings_panel.gd.
+#include "perf_marks.h"
 #include "city_game.h"
 
 #include "ui_plate.h"
@@ -59,6 +60,7 @@ void CityGame::_ready() {
 }
 
 void CityGame::_process(double p_delta) {
+	pm::Scope _pm(pm::GAME);   // (the slow-frame marks, perf_marks.h)
 	SceneTree *tr = get_tree();
 	const bool paused = tr && tr->is_paused();
 	if (clock_running && !paused && world_on) {   // the game's clock: one game hour is ten real minutes
@@ -75,8 +77,12 @@ void CityGame::_process(double p_delta) {
 	if (play_phase) step_play(p_delta);
 	if (start_hold >= 0.0) hold_start(p_delta);
 	if (ld_fade >= 0.0 && ld_root) {   // the loading screen fades off the picture into the live world
-		ld_fade += p_delta;
-		const double a = 1.0 - ld_fade / 0.8;
+		// B21 (Yasin 20 Nov: "CONTINUE AFTER LOADING SNAPS BACK TO THE GAME HARD, AND JITTER A BIT"): the first frames in the
+		// world are the heaviest and one long frame skipped most of a linear 0.8 s fade. Now at most a 30 fps step a frame,
+		// eased in and out, over 1.2 s.
+		ld_fade += std::min(p_delta, 1.0 / 30.0);
+		const double u = std::min(1.0, ld_fade / 1.2);
+		const double a = 1.0 - u * u * (3.0 - 2.0 * u);
 		if (a <= 0.0) { loading->set_visible(false); ld_root->set_modulate(Color(1, 1, 1, 1)); ld_root->set_mouse_filter(Control::MOUSE_FILTER_STOP); ld_fade = -1.0; }
 		else ld_root->set_modulate(Color(1, 1, 1, (float)a));
 	}
@@ -670,10 +676,14 @@ void CityGame::step_play(double p_delta) {
 		play_phase = 2; play_t = 0.0; play_quiet = 0;
 		return;
 	}
-	// settling: 45 frames in a row under 40 ms, at most 20 s
-	play_quiet = p_delta < 0.040 ? play_quiet + 1 : 0;
-	set_loading(0.5 + 0.5 * std::min(1.0, std::max(play_t / 20.0, (double)play_quiet / 45.0)), "");
-	if (play_quiet >= 45 || play_t > 20.0) { close_loading(); play_phase = 0; }
+	// settling: 45 frames in a row under 40 ms AND the player in the world and let go (hold_start: the ground's collision
+	// under him, he can move), at most 20 s. (B2, Yasin 20 Nov: "we can click the hud but being able to control the
+	// character happens much later ... hide it behind the loading": the quiet frames alone ended it while he was still held.)
+	// (B21: "quiet" is a frame under 25 ms - smooth on the phone's 60 Hz - and only after 8 s under 40 ms as before)
+	play_quiet = p_delta < (play_t < 8.0 ? 0.025 : 0.040) ? play_quiet + 1 : 0;
+	const bool free_to_move = player_id != 0 && start_hold < 0.0;
+	set_loading(0.5 + 0.5 * std::min(free_to_move ? 1.0 : 0.95, std::max(play_t / 20.0, (double)play_quiet / 45.0)), "");
+	if ((play_quiet >= 45 && free_to_move) || play_t > 20.0) { close_loading(); play_phase = 0; }
 }
 
 // ---------------------------------------------------------------- the tests' thumb

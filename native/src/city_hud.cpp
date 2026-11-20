@@ -1,4 +1,5 @@
 // CityHud: see city_hud.h.
+#include "perf_marks.h"
 #include "city_hud.h"
 #include "city_phone.h"
 
@@ -6,6 +7,7 @@
 #include "city_player.h"
 #include "city_crowd.h"
 #include "city_traffic.h"
+#include "city_shops.h"
 #include "city_car.h"
 #include "city_bike.h"
 #include "car_models.h"
@@ -269,6 +271,44 @@ Rect2 CityHud::box_rect(int p_what) const {
 	}
 }
 
+void HudStars::_draw() {
+	if (level <= 0) return;
+	const Vector2 sz = get_size();
+	const float r = std::min(sz.y * 0.48f, sz.x / 10.5f), gap = (sz.x - 10.0f * r) / 4.0f;
+	const bool dim = !seen && std::fmod(clock, 0.8f) > 0.4f;
+	for (int k = 0; k < 5; k++) {
+		const Vector2 c(r + (float)k * (2.0f * r + gap), sz.y * 0.5f);
+		PackedVector2Array pts;
+		for (int q = 0; q < 10; q++) {
+			const float a = -1.5707963f + (float)q * 0.62831853f, rr = (q & 1) ? r * 0.45f : r;
+			pts.push_back(c + Vector2(std::cos(a), std::sin(a)) * rr);
+		}
+		PackedVector2Array ring = pts; ring.push_back(pts[0]);
+		if (k < level) {
+			const Color gold = dim ? Color(0.55f, 0.42f, 0.12f, 0.75f) : Color(1.0f, 0.78f, 0.18f);
+			PackedColorArray cs; cs.push_back(gold);
+			draw_polygon(pts, cs);
+			draw_polyline(ring, Color(0.18f, 0.12f, 0.02f, 0.9f), 1.5f, true);
+		} else draw_polyline(ring, Color(1.0f, 1.0f, 1.0f, 0.45f), 1.5f, true);
+	}
+}
+
+void CityHud::set_wanted(int p_level, bool p_seen) {
+	if (!stars) return;
+	const int l = std::min(std::max(p_level, 0), 5);
+	if (l != stars->level || p_seen != stars->seen) { stars->level = l; stars->seen = p_seen; stars->queue_redraw(); }
+}
+
+void CityHud::note(const String &p_en, const String &p_tr, double p_seconds) {
+	if (!b_note) return;
+	l_note_en->set_text(p_en); l_note_tr->set_text(p_tr); l_note_tr->set_visible(!p_tr.is_empty());
+	note_t = (float)p_seconds;
+	b_note->set_visible(true);
+	b_note->reset_size();
+}
+
+String CityHud::get_note() const { return b_note && b_note->is_visible() && l_note_en ? l_note_en->get_text() : String(); }
+
 void CityHud::_ready() {
 	if (Engine::get_singleton()->is_editor_hint()) return;
 	set_layer(30);
@@ -285,6 +325,15 @@ void CityHud::build() {
 		l_money = plate::label("$0", plate::FS_BODY, Color(0.55f, 0.92f, 0.62f), 800); l_money->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER);
 		l_time = plate::label("00:00", plate::FS_BODY, plate::TEXT, 700); l_time->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER);
 		v->add_child(l_money); v->add_child(l_time); b_money->add_child(v);
+	}
+	// the wanted stars (under the money box) and the word in the middle (BUSTED)
+	stars = memnew(HudStars); stars->set_mouse_filter(Control::MOUSE_FILTER_IGNORE); add_child(stars);
+	b_note = box("plate"); b_note->set_visible(false);
+	{
+		VBoxContainer *v = memnew(VBoxContainer); v->set_alignment(BoxContainer::ALIGNMENT_CENTER); v->add_theme_constant_override("separation", -2); v->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+		l_note_en = plate::label("", plate::FS_TITLE, Color(1.0f, 0.82f, 0.25f), 900); l_note_en->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER);
+		l_note_tr = plate::label("", plate::FS_BODY, plate::TEXT, 700); l_note_tr->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER);
+		v->add_child(l_note_en); v->add_child(l_note_tr); b_note->add_child(v);
 	}
 	// health and needs (inactive: hidden while CityGame keeps them off)
 	{
@@ -377,6 +426,7 @@ void CityHud::layout(const Vector2 &sz) {
 	auto put = [](Control *c, const Rect2 &r) { c->set_position(r.position); c->set_size(r.size); };
 	put(b_use, box_rect(4));
 	put(b_arrow, box_rect(0)); put(arrow, box_rect(0)); put(b_phone, box_rect(1)); put(b_inv, box_rect(2)); put(b_money, box_rect(3));
+	if (stars) { const Rect2 m = box_rect(3); stars->set_position(Vector2(m.position.x, m.position.y + m.size.y + 6.0f)); stars->set_size(Vector2(m.size.x * 1.6f, m.size.y * 0.26f)); }
 	{ const Rect2 m = box_rect(3); put(needs_box, Rect2(m.position.x, m.get_end().y + 6.0f * k, m.size.x, 32.0f * k)); }
 	// the phone grows out of its button to a phone held up at the right; the inventory out of its box, up the left
 	// (Yasin: "all revealed screens should be full screen")
@@ -428,7 +478,7 @@ void CityHud::use_find(CityPlayer *pl) {
 		Node *n = Object::cast_to<Node>(vs[i]);
 		if (CityCar *c = Object::cast_to<CityCar>(n)) {
 			if (c->get_player()) { use_kind = 2; use_target = c->get_instance_id(); return; }
-			if (!on_foot || !c->is_visible_in_tree() || (c->get_collision_layer() & 16u)) continue;
+			if (!on_foot || !c->is_visible_in_tree() || ((c->get_collision_layer() & 16u) && !c->has_meta("takeable"))) continue;
 			const Transform3D t = c->get_global_transform();
 			const Vector3 lp = t.affine_inverse().xform(pp);
 			const cm::CarModel &m = cm::MODELS[std::min(std::max(c->get_model(), 0), cm::N_MODELS - 1)];
@@ -443,6 +493,19 @@ void CityHud::use_find(CityPlayer *pl) {
 			if (d < 2.5f && d < best) { best = d; use_kind = 3; use_target = b->get_instance_id(); }
 		}
 	}
+	// BUYING (Yasin: "add us and npcs giving money receiving things animations"): on foot at a shop's counter, its cashier free
+	if (use_kind == 0 && on_foot) {
+		CityGame *g = CityGame::get();
+		if (CityShops *sh = g ? Object::cast_to<CityShops>(g->get_shops()) : nullptr) if (sh->can_buy()) use_kind = 6;
+	}
+	// TAKING A CAR (Yasin's GTA IV list): on foot by a car of the traffic that stands or crawls (a red light, a jam)
+	use_row = -1;
+	if (use_kind == 0 && on_foot) {
+		CityGame *g = CityGame::get();
+		CityTraffic *trf = traffic_id ? Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(traffic_id))) : nullptr;
+		if (!trf && g) trf = Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(g->get_traffic_id())));
+		if (trf) { const int32_t id = trf->car_to_take(pp, 1.3, 2.5); if (id >= 0) { use_kind = 5; use_row = id; } }
+	}
 }
 
 void CityHud::use_do() {
@@ -450,6 +513,22 @@ void CityHud::use_do() {
 	CityGame *g = CityGame::get();
 	CityPlayer *pl = player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
 	if (!pl && g) pl = Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(g->get_player_id())));
+	if (use_kind == 6 && pl) {   // at a counter: he pays and takes what he bought (CityShops)
+		if (CityShops *sh = g ? Object::cast_to<CityShops>(g->get_shops()) : nullptr) if (sh->buy()) { feedback(); uses++; }
+		use_scan = 0.0f;
+		return;
+	}
+	if (use_kind == 5 && pl) {   // the car is taken from its driver: he gets out (to fight, two in five, or to run), the player gets in
+		CityTraffic *trf = traffic_id ? Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(traffic_id))) : nullptr;
+		if (!trf && g) trf = Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(g->get_traffic_id())));
+		CityCar *c = trf ? Object::cast_to<CityCar>(trf->take_car(use_row, UtilityFunctions::randf() < 0.4)) : nullptr;
+		if (!c) return;
+		feedback(); uses++; cars_taken++;
+		const cm::CarModel &m = cm::MODELS[std::min(std::max(c->get_model(), 0), cm::N_MODELS - 1)];
+		if (c->enter(pl)) trf->set_player_car(c, m.half_len, m.half_w);
+		use_scan = 0.0f;
+		return;
+	}
 	Object *o = use_target ? ObjectDB::get_instance(ObjectID(use_target)) : nullptr;
 	if (!pl || !o) return;
 	feedback(); uses++;
@@ -475,6 +554,7 @@ String CityHud::get_money_text() const { return l_money ? l_money->get_text() : 
 String CityHud::get_time_text() const { return l_time ? l_time->get_text() : String(); }
 
 void CityHud::_process(double p_delta) {
+	pm::Scope _pm(pm::HUD);   // (the slow-frame marks, perf_marks.h)
 	CityGame *g = CityGame::get();
 	Viewport *vp = get_viewport();
 	if (!vp) return;
@@ -484,6 +564,11 @@ void CityHud::_process(double p_delta) {
 	if (photo_hide > 0) { photo_hide--; show = false; }   // (a photo: the view without the HUD and the phone)
 	set_visible(show);
 	if (!show) return;
+	if (b_note && b_note->is_visible()) {   // the word in the middle: a moment, then gone
+		note_t -= (float)p_delta;
+		if (note_t <= 0.0f) b_note->set_visible(false);
+		else { const Vector2 ns = b_note->get_combined_minimum_size(); b_note->set_size(ns); b_note->set_position(Vector2((sz.x - ns.x) * 0.5f, sz.y * 0.26f)); }
+	}
 	CityPlayer *pl = player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
 	if (!pl && g) pl = Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(g->get_player_id())));
 	const bool on_foot = pl && pl->is_visible_in_tree();
@@ -494,8 +579,8 @@ void CityHud::_process(double p_delta) {
 		const int was = use_kind;
 		use_find(pl);
 		if (use_kind != was || use_target != use_last) {
-			static const char *const EN[5] = { "", "GET IN", "GET OUT", "GET ON", "GET OFF" };
-			static const char *const TR[5] = { "", "BİN", "İN", "BİN", "İN" };
+			static const char *const EN[7] = { "", "GET IN", "GET OUT", "GET ON", "GET OFF", "TAKE CAR", "BUY" };
+			static const char *const TR[7] = { "", "BİN", "İN", "BİN", "İN", "ARABAYI AL", "SATIN AL" };
 			l_use_en->set_text(EN[use_kind]); l_use_tr->set_text(String::utf8(TR[use_kind]));
 			if ((use_kind == 1 || use_kind == 3) && use_target != use_last) Input::get_singleton()->vibrate_handheld(200);   // (the old spec: a new target in reach)
 			use_last = use_target;
@@ -511,6 +596,7 @@ void CityHud::_process(double p_delta) {
 	// money and the clock
 	if (g) {
 		l_money->set_text(String("$") + String::num_int64(g->get_money()));
+		if (stars && stars->level > 0 && !stars->seen) { stars->clock += (float)p_delta; stars->queue_redraw(); }
 		l_time->set_text(g->hhmm());
 		needs_box->set_visible(g->get_needs_active());
 	}

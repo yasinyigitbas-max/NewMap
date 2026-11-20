@@ -84,10 +84,12 @@ class CityPlayer : public CharacterBody3D {
 	int punches = 0, hits_taken = 0;
 	double combat_t = 9.0, uncombat_t = 9.0;
 	double hit_t = 9.0;
+	StringName act_clip; double act_left = 0.0; float act_yaw = 0.0f; int acts = 0;
 	Vector3 acc_lp; bool acc_init = false;
 	double acc_spike_t = -9.0, mic_spike_t = -9.0;
 	float mic_avg = 0.01f;
-	float gyro_peak = 0.0f, acc_peak = 0.0f;   // (the swing: each sensor's peak over the last quarter second)
+	float gyro_peak = 0.0f, acc_peak = 0.0f;
+	Vector3 acc_prev; bool acc_prev_ok = false; float tap_score = 0.0f; double mic_on_t = 0.0;   // (the back tap: last frame's reading, the last jerk score, time since the mic started)   // (the swing: each sensor's peak over the last quarter second)
 	class AudioEffectCapture *mic_cap = nullptr;
 	void sense(double p_dt);
 	double water_y = -1000.0;   // the water's surface (-1000 = there is none): deeper than his chest he swims
@@ -107,6 +109,11 @@ public:
 	void set_move(const Vector2 &p_dir, bool p_run);
 	// he stands and takes no keys (while a line is typed to somebody)
 	void set_frozen(bool p_on) { frozen = p_on; }
+	// AN ACT (Yasin, 20 Nov: "add us and npcs giving money receiving things animations"): a clip played once where he stands,
+	// turned to p_yaw, his feet still while it lasts (paying at a counter, taking what he bought)
+	void act(const StringName &p_clip, double p_seconds, double p_yaw);
+	String get_act() const { return act_left > 0.0 ? String(act_clip) : String(); }
+	int get_acts() const { return acts; }
 	void set_crouch(bool p_on) { crouch = p_on; }
 	// combat: asked for (a swing / F) and punches (a back tap / J / click) are taken by the crowd
 	void request_combat() { combat_req = true; }

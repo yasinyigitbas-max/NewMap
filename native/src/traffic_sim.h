@@ -233,6 +233,11 @@ public:
 	int next_id = 1;
 	uint8_t alive[MAX_CARS], kind[MAX_CARS], model[MAX_CARS], colour[MAX_CARS], temper[MAX_CARS], tier[MAX_CARS];
 	uint8_t why[MAX_CARS], man[MAX_CARS], line_passed[MAX_CARS], touching[MAX_CARS], long_look[MAX_CARS];
+	// SIRENS (the game's police cars and ambulances, CityLaw): a car with its siren on; the cars in the kerb lane ahead
+	// of it (within 40 m) slow to a crawl and keep to the kerb side of their lane while it is behind them
+	uint8_t siren[MAX_CARS];
+	bool any_siren = false;
+	int yields = 0;
 	int8_t lc_dir[MAX_CARS];
 	int32_t id[MAX_CARS], lane[MAX_CARS], conn[MAX_CARS], nconn[MAX_CARS], seg[MAX_CARS];
 	int32_t tu[MAX_CARS], span[MAX_CARS], stop_tick[MAX_CARS];

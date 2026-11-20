@@ -221,7 +221,7 @@ Dictionary CityTraffic::run_test(int p_cars, double p_minutes, int64_t p_seed, c
 	d["overlaps_car_car"] = ov_car; d["overlaps_car_parked"] = ov_static; d["overlaps_car_other"] = ov_dyn;
 	d["stuck_over_2min_most"] = stuck_max; d["stuck_longest_s"] = stuck_wait; d["stuck_at"] = Vector3(stuck_x, 0, stuck_z); d["stuck_why"] = stuck_why; d["stuck_id"] = stuck_id;
 	d["spawned"] = sim->st.spawned; d["despawned"] = sim->st.despawned; d["taken_away_stuck"] = sim->st.stuck_despawned; d["taken_away_dead_end"] = sim->st.deadend_despawned;
-	d["crashes"] = sim->st.crashes; d["emergency_brakes"] = sim->st.emergencies; d["hard_brakes"] = sim->st.hard_brakes; d["honks"] = sim->st.honks;
+	d["crashes"] = sim->st.crashes; d["emergency_brakes"] = sim->st.emergencies; d["hard_brakes"] = sim->st.hard_brakes; d["honks"] = sim->st.honks; d["yields"] = sim->yields;
 	d["asks"] = sim->st.asks; d["let_through"] = sim->st.let_through;
 	d["lane_changes"] = sim->st.lane_changes; d["passes"] = sim->st.passes; d["reservations"] = sim->st.reservations; d["moves_refused"] = sim->st.vetoes;
 	d["mean_speed_kmh"] = v_n > 0 ? v_sum / (double)v_n * 3.6 : 0.0;
@@ -446,7 +446,11 @@ PackedVector3Array CityTraffic::lane_points_across(double p_step, double p_half,
 
 int CityTraffic::exec_order(const Input::Order &o) {
 	switch (o.type) {
-		case O_SPAWN: { const int id = sim->spawn_scripted(o.model, o.ax, o.az, o.bx, o.bz, false); return id >= 0 ? id : -1; }
+		case O_SPAWN: {
+			const int id = sim->spawn_scripted(o.model, o.ax, o.az, o.bx, o.bz, false);
+			if (id >= 0 && o.side > 0) { const int i = sim->find_car(id); if (i >= 0) { sim->colour[i] = (uint8_t)((o.side - 1) % N_COLOURS); sim->temper[i] = 2; sim->siren[i] = 1; sim->any_siren = true; } }
+			return id >= 0 ? id : -1;
+		}
 		case O_DRIVE: return sim->drive_to(o.car, o.bx, o.bz) ? 1 : -1;
 		case O_PULL: return sim->pull_over(o.car, o.bx, o.bz, o.side) ? 1 : -1;
 		case O_RELEASE: return sim->release_car(o.car) ? 1 : -1;
@@ -454,8 +458,18 @@ int CityTraffic::exec_order(const Input::Order &o) {
 	}
 }
 
-int CityTraffic::spawn_driver(const Vector3 &p_from, const Vector3 &p_to, int p_model) {
-	Input::Order o{ O_SPAWN, next_ticket++, -1, p_from.x, p_from.z, p_to.x, p_to.z, 0, p_model };
+bool CityTraffic::car_pose(int32_t p_id, Vector3 &r_at, float &r_yaw, float &r_speed) const {
+	for (int k = 0; k < now.n; k++) {
+		const Row &r = now.rows[k];
+		if (r.id != p_id) continue;
+		r_at = Vector3(r.x, r.y, r.z); r_yaw = r.yaw; r_speed = r.v;
+		return true;
+	}
+	return false;
+}
+
+int CityTraffic::spawn_driver(const Vector3 &p_from, const Vector3 &p_to, int p_model, int p_paint) {
+	Input::Order o{ O_SPAWN, next_ticket++, -1, p_from.x, p_from.z, p_to.x, p_to.z, p_paint >= 0 ? p_paint + 1 : 0, p_model };
 	if (!threaded) { answers.push_back({ o.ticket, ready ? exec_order(o) : -1 }); return o.ticket; }
 	std::lock_guard<std::mutex> lock(mx);
 	input.orders.push_back(o);
@@ -481,6 +495,21 @@ int CityTraffic::let_car_go(int p_car) {
 	std::lock_guard<std::mutex> lock(mx);
 	input.orders.push_back(o);
 	return o.ticket;
+}
+void CityTraffic::panic(const Vector3 &p_at, double p_radius, double p_seconds) {
+	(void)p_seconds;
+	if (!threaded) {
+		if (!ready || !sim) return;
+		const float r2 = (float)(p_radius * p_radius);
+		for (int i = 0; i < sim->hi; i++) {
+			if (!sim->alive[i] || sim->kind[i] != tc::K_AMBIENT) continue;
+			const float dx = sim->x[i] - (float)p_at.x, dz = sim->z[i] - (float)p_at.z;
+			if (dx * dx + dz * dz <= r2 && sim->temper[i] != 2) { sim->temper[i] = 2; panicked++; }
+		}
+		return;
+	}
+	std::lock_guard<std::mutex> lock(mx);
+	input.panics.push_back((float)p_at.x); input.panics.push_back((float)p_at.z); input.panics.push_back((float)p_radius);
 }
 int CityTraffic::order_result(int p_ticket) {
 	if (threaded) {
@@ -554,9 +583,12 @@ void CityTraffic::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "knock_feel"), "set_knock_feel", "get_knock_feel");
 	ClassDB::bind_method(D_METHOD("cars_near", "at", "radius"), &CityTraffic::cars_near);
 	ClassDB::bind_method(D_METHOD("route", "from", "to", "bike"), &CityTraffic::route, DEFVAL(false));
-	ClassDB::bind_method(D_METHOD("spawn_driver", "from", "to", "model"), &CityTraffic::spawn_driver);
+	ClassDB::bind_method(D_METHOD("spawn_driver", "from", "to", "model", "paint"), &CityTraffic::spawn_driver, DEFVAL(-1));
 	ClassDB::bind_method(D_METHOD("drive_car_to", "car", "to"), &CityTraffic::drive_car_to);
 	ClassDB::bind_method(D_METHOD("pull_car_over", "car", "to", "side"), &CityTraffic::pull_car_over);
+	ClassDB::bind_method(D_METHOD("panic", "at", "radius", "seconds"), &CityTraffic::panic);
+	ClassDB::bind_method(D_METHOD("car_to_take", "at", "radius", "max_speed"), &CityTraffic::car_to_take);
+	ClassDB::bind_method(D_METHOD("take_car", "id", "fight"), &CityTraffic::take_car);
 	ClassDB::bind_method(D_METHOD("let_car_go", "car"), &CityTraffic::let_car_go);
 	ClassDB::bind_method(D_METHOD("order_result", "ticket"), &CityTraffic::order_result);
 	ClassDB::bind_method(D_METHOD("bike_stats"), &CityTraffic::bike_stats);

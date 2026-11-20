@@ -1,0 +1,403 @@
+# phone rig run 'rooms_zones'  2026-11-20T10:41Z  args: --plan=zones
+# phone: 22041216UG android 13 serial FEMFRK8PYDMBKBAQ | battery temp 277 -> 409 (0.1 C) | exporter Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# commit 9d0961e6f | meminfo at 60 s:          Native Heap:   402692                         403904;            Graphics:  1134596                        1134596;           TOTAL PSS:  1650683            TOTAL RSS:  1734928       TOTAL SWAP PSS:      385;
+Godot Engine v4.7.2.stable.coronado_all7.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+RIG start engine=4.7.2-stable (coronado_all7) device=22041216UG gpu=Mali-G610 MC6 screen=(2460, 1080) scale=0.67 look=1 bloom=0 upscale=0 sharp=0.20 reflect=1 plan=zones lead=2.0 maxcells=30 loading=2 bodies=6 lights=20 loader=0 coltris=1200 cells_baked=153 tiers=true band=8.0 arrive=0.50 far_ground=true tier_materials=31
+RIG native coronado_city 0.1 release android arm64, godot-cpp 4.5 | its own threads: ok (4 threads, 0.7 ms; the device reports 8)
+ERROR: No loader found for resource: res://assets/coronado_kit/props/kiosks/kiosks_color.png (expected type: Texture2D)
+ERROR: No loader found for resource: res://assets/coronado_kit/props/kiosks/kiosks_orm.png (expected type: Texture2D)
+ERROR: No loader found for resource: res://assets/coronado_kit/props/kiosks/kiosks_normal.png (expected type: Texture2D)
+ERROR: Can't load dependency: 'res://assets/coronado_kit/props/kiosks/kiosks_color.png'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/lib/warm.scn.
+ERROR: Error loading resource: 'res://map_dc/coronado/city_kit/runtime/lib/warm.scn'.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_grt_v2_j5ne_brick_row_1.scn.
+ERROR: Parameter "tex" is null.
+RIG warmnight 1891 ms
+RIG boot first_area_ms=836 warm_ms=2128 (graphics memory reserve 192 MB: 0 ms) cells=10 static_mb=159 video_mb=485
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_grt_v2_j5ne_brick_row_2.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_grt_v2_j5ne_corner_next_0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Parameter "tex" is null.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_grt_v3_j5se_corner_shop_0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+RIG slow gritty_60kmh 41 ms at t=0.6 s pos=(-731, -1000): cells in +0 out +0, bodies +4, loading [] | marks: rig 0.4 focus 0.0 | to_streamer 27.5 streamer 2.3 | to_draw 0.2 draw 8.7 | to_physics 0.7 physics 0.8 | at: physics_wait -1.0 render_wait -1.0 streamer 2.32 setup 0.3 draw_cpu 1.6 gpu 15.2 | then: physics_wait -1.0 render_wait -1.0 streamer 2.38 setup 0.1 draw_cpu 2.3 gpu 15.1
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_grt_v2_j5ne_corner_block_0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_grt_v3_j5se_corner_shop_1.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+RIG slow gritty_60kmh 48 ms at t=0.7 s pos=(-729, -1000): cells in +0 out +0, bodies +4, loading [] | marks: rig 0.2 focus 0.0 | to_streamer 0.1 streamer 2.0 | to_draw 6.4 draw 36.9 | to_physics 0.7 physics 1.5 | at: physics_wait -1.0 render_wait -1.0 streamer 1.97 setup 30.3 draw_cpu 1.9 gpu 14.9 | then: physics_wait -1.0 render_wait -1.0 streamer 1.22 setup 0.1 draw_cpu 2.6 gpu 14.9
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_nw__body_shop__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_sw__rear_walkup_b__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_sw__boarded_pair__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_sw__walkup_shops__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_nw__pawn_laundry_row__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_sw__corner_liquor__0.scn.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_nw__pawn_laundry_row__1.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_nw__boarded_pair__0.scn.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_sw__side_walkup__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_sw__rear_walkup_c__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_se__pawn_chicken__1.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_se__pawn_chicken__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_ne__corner_market__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_ne__dive_bar__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_ne__corner_market__1.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_se__brick_shops_c__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_se__brick_shops_c__1.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_ne__deli_walkup__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_se__brick_shops_c__2.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_g_se__bar_walkup__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_w_s1__housing_office__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_w_s2b__print_boba__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_w_s1__gatehouse_pub__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_w_s1__campus_cycles__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_w_s2b__burrito_books__0.scn.
+RIG drive gritty_60kmh speed=60 km/h secs=25 frames=1220 fps=48.8 | frame_ms med=19.1 p95=28.0 p99=32.1 worst=48 | over16.7=66.6% over33=9 over50=0 over100=0
+RIG   map gritty_60kmh draws avg=131 max=174 | tris avg=1225k max=1647k | cells most=14 in=9 out=5 dropped=0 cap_hits=0 | gpu_ms med=17.24 p95=17.90
+RIG   stream gritty_60kmh start_ready_ms=0 (worst frame meanwhile 0 ms) | request_to_in ms mean=303 worst=575 | late frames: 220m=0 (deepest 0 m) 60m=0 | main thread worst ms: cell add 3.36, body 2.27 (col_69 new=1056), removal step 0.00 | bodies late=0
+RIG   slow gritty_60kmh frames over 33 ms by what the streamer was doing: { "bodies": 6, "none": 2, "cell_in": 1 } | over 45 ms: { "bodies": 1 }
+RIG   collision gritty_60kmh made=636076 units, a body waited at most 0 ms from coming into range | physics thread wait a frame (probe): median -1.0 p99 -1.0 worst -1.0 ms
+RIG   objects gritty_60kmh all=16700 nodes=3348 orphan_nodes=0 resources=1408 | streamer: cells in=14, bodies waiting=0, nodes leaving=0
+RIG   mem gritty_60kmh static_mb=179 video_mb=523 tex_mb=119 buf_mb=361
+RIG   teleport worst frame 34 ms: streamer 12.43 ms, cells added 1, bodies made 12, cells loading 1, physics wait -, render wait -, bodies waiting 80
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: No loader found for resource: res://map_dc/coronado/shops/interior/assets/tex/Wood058_1k_color.jpg (expected type: Texture2D)
+ERROR: No loader found for resource: res://map_dc/coronado/shops/interior/assets/tex/Wood058_1k_normal.jpg (expected type: Texture2D)
+ERROR: Can't load dependency: 'res://map_dc/coronado/shops/interior/assets/tex/Wood058_1k_color.jpg'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/cv_city_hall.scn.
+ERROR: Can't load dependency: 'res://map_dc/coronado/shops/interior/assets/tex/Wood058_1k_color.jpg'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/cv_police.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: No loader found for resource: res://map_dc/coronado/shops/interior/assets/tex/Wood058_1k_color.jpg (expected type: Texture2D)
+ERROR: No loader found for resource: res://map_dc/coronado/shops/interior/assets/tex/Wood058_1k_normal.jpg (expected type: Texture2D)
+ERROR: Can't load dependency: 'res://map_dc/coronado/shops/interior/assets/tex/Wood058_1k_color.jpg'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_cc_b1_court__courthouse__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_c_sw__ck_svc_cinema_fast__1.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_c_sw__ck_svc_cinema_fast__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_c_nw__twr_office__0.scn.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_c_sw__urb_brick_corner__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_c_nw__urb_dept_store__0.scn.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_c_sw__urb_mall__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_c_nw__urb_brick_row__0.scn.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_c_ne__twr_glass__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Parameter "tex" is null.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_cc_b3_arm__seventh_s_newsagent__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_c_ne__twr_hotel__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_cc_b2_7th__seventh_insurance__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_cc_b2_7th__alleyd2_tailor__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_cc_b3_arm__seventh_s_pizza_block__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_c_se__mod_twr_office__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_cc_b3_arm__alleyd3_print__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: No loader found for resource: res://map_dc/coronado/shops/interior/assets/tex/Wood058_1k_color.jpg (expected type: Texture2D)
+ERROR: No loader found for resource: res://map_dc/coronado/shops/interior/assets/tex/Wood058_1k_normal.jpg (expected type: Texture2D)
+ERROR: Can't load dependency: 'res://map_dc/coronado/shops/interior/assets/tex/Wood058_1k_color.jpg'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_c_sw__com_bank__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_c_se__mod_twr_office__1.scn.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_c_sw__mod_svc_row__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_cc_b3_arm__alleyd3_bike_works__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_c_sw__mod_svc_row__1.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_cc_b3_arm__alleyd3_sign_shop__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_cc_b3_am__amber_se_corner_cafe__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Parameter "tex" is null.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_w_c5__boutiques__0.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_cc_b3_am__amber_se_brick_row__0.scn.
+ERROR: Parameter "tex" is null.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd.
+ERROR: Parameter "tex" is null.
+ERROR: Can't load dependency: 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd'.
+ERROR: Error when trying to parse Variant.
+ERROR: Error when trying to parse Variant.
+ERROR: Failed loading resource: res://map_dc/coronado/city_kit/runtime/rooms/g_cc_b3_am__amber_se_brick_row__1.scn.
+ERROR: Attempt to open script 'res://map_dc/coronado/city_kit/interiors/rooms/door_swing.gd' resulted in error 'Can't open'.

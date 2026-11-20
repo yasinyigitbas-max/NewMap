@@ -57,7 +57,7 @@ class RigidBody3D;
 class CityTraffic : public Node3D {
 	GDCLASS(CityTraffic, Node3D)
 public:
-	struct RageOut { float x, y, z, yaw; uint32_t serial; int foe; uint32_t foe_serial; };
+	struct RageOut { float x, y, z, yaw; uint32_t serial; int foe; uint32_t foe_serial; };   // foe -5: his car was taken and he runs
 private:
 
 public:
@@ -94,6 +94,7 @@ private:
 		// the game's orders to cars of its own (a taxi, a scene's car): done by the step, answered by ticket
 		struct Order { int type, ticket; int32_t car; float ax, az, bx, bz; int side, model; };
 		std::vector<Order> orders;
+		std::vector<float> panics;   // x, z, r: drivers who heard shots there (CityCrowd::gunshot)
 	} input;
 	enum { O_SPAWN = 1, O_DRIVE = 2, O_PULL = 3, O_RELEASE = 4 };
 	std::vector<std::pair<int, int>> order_done;   // (under mx) ticket, answer
@@ -242,6 +243,10 @@ private:
 		// ROAD RAGE (Yasin, 19 Nov): hit by the player's car (by_player), or by another knocked car (hit_by: its slot and
 		// serial); once it stands, its driver gets out (driver_out: the car never drives on again)
 		bool by_player = false, driver_out = false;
+		// CAR ALARMS (Yasin's GTA IV list): a parked car that is knocked and moves rings for 20 s
+		class AudioStreamPlayer3D *alarm = nullptr; float alarm_t = 0.0f; bool alarm_rang = false;
+		// TAKEN (hijack): the player took it from its driver; it is his car now (never braked, never asked back) until he leaves it far behind
+		bool taken = false;
 		int hit_by = -1; uint32_t hit_by_serial = 0;
 	};
 	LooseCar loose[LOOSE];
@@ -253,7 +258,7 @@ private:
 	std::vector<Ref<Resource>> keep_models;   // every model's body and wheels, held so that a knock loads nothing
 	struct Hidden { int32_t id; int frames; bool seen; };
 	std::vector<Hidden> hidden;      // rows that are a physical car now: not drawn, no box, until the step has dropped them
-	struct KnockCount { int moving = 0, parked = 0, rejoined = 0, drivers_out = 0, taken_away = 0, no_slot = 0, refused = 0; } kc;
+	struct KnockCount { int moving = 0, parked = 0, rejoined = 0, drivers_out = 0, taken_away = 0, no_slot = 0, refused = 0, alarms = 0; } kc;
 	bool knock(BodyWant &w);
 	void loose_update(double p_delta);
 	void loose_put_away(int k);
@@ -332,10 +337,23 @@ public:
 	Dictionary route(const Vector3 &p_from, const Vector3 &p_to, bool p_bike = false) const;
 	// Cars of the game's own (a taxi, a scene's car), routed by the same finder; each call returns a ticket and the step
 	// answers it (order_result: -9 not yet, -1 refused, else the car's id for spawn_driver, 1 for the others)
-	int spawn_driver(const Vector3 &p_from, const Vector3 &p_to, int p_model);
+	int spawn_driver(const Vector3 &p_from, const Vector3 &p_to, int p_model, int p_paint = -1);   // p_paint >= 0: that colour, and it drives boldly (the police, an ambulance)
+	// where a car of the traffic is now (the main thread's copy): false if there is no such car
+	bool car_pose(int32_t p_id, Vector3 &r_at, float &r_yaw, float &r_speed) const;
 	int drive_car_to(int p_car, const Vector3 &p_to);
 	int pull_car_over(int p_car, const Vector3 &p_to, int p_side);
 	int let_car_go(int p_car);
+	// SHOTS (Yasin's GTA IV list: "cars flee from gunfire"): every driver within p_radius of p_at drives off as hard as
+	// he dares (the boldest temper: quickest off the line, shortest gaps, fastest), from now on. The guns will call it.
+	void panic(const Vector3 &p_at, double p_radius, double p_seconds);
+	int panicked = 0;
+	// TAKING A CAR (Yasin's GTA IV list: "driver reacts when you take their car"): the moving car nearest p_at within
+	// p_r going slower than p_max_v (its id, -1 none); and taking it: it becomes a physical car where it is, stopped, its
+	// driver gets out at his door and either goes for the player (p_fight) or runs off shouting. Returns the car (a
+	// CityCar, in the group "vehicles"), null if it cannot be.
+	int32_t car_to_take(const Vector3 &p_at, double p_r, double p_max_v) const;
+	Object *take_car(int32_t p_id, bool p_fight);
+	int cars_taken = 0;
 	int order_result(int p_ticket);
 	int get_max_cars() const { return max_cars; }
 	void set_parked(bool p_on) { parked_on = p_on; active_dirty = true; }

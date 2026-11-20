@@ -43,7 +43,7 @@ void Car::init(const Spec &p_spec) {
 	curve_c = 0.63662f * (3.14159f - std::asin(clampf(s.slide, 0.5f, 0.995f)));
 	curve_b = std::tan(1.5708f / curve_c);
 	eng_w = s.rpm_idle / RPM;
-	gear = 1; shift_t = 0; clutch = 0; steer_now = 0; speed = 0; lat_g = long_g = 0;
+	gear = 1; shift_t = 0; clutch = 0; tc_gain = 1; steer_now = 0; speed = 0; lat_g = long_g = 0;
 }
 
 void Car::ray(int i, const Chassis &c, V3 &r_from, V3 &r_dir, float &r_len) const {
@@ -172,7 +172,19 @@ void Car::substep(Chassis &c, float dt, bool move) {
 	}
 	const float gr = in.dir == 1 ? s.ratio[gear - 1] * s.final_drive : (in.dir == -1 ? -s.ratio_rev * s.final_drive : 0.0f);
 	const float w_idle = s.rpm_idle / RPM;
-	float te = engine_torque(eng_w, thr);
+	if (s.tcs > 0.0f && in.dir != 0) {   // traction and stability control: how much of the pedal the wheels can use now
+		float spin = 0.0f;
+		for (int i = 0; i < 4; i++) if (wh[i].driven && wh[i].ground) spin = std::max(spin, sgn((float)in.dir) * wh[i].xi_x / s.relax_x / s.ratio_peak);
+		const V3 fwd = rot(c.q, V3{ 0, 0, 1 }), lft = rot(c.q, V3{ 1, 0, 0 });
+		const float vf = dot(c.v, fwd), vl = dot(c.v, lft);
+		const float beta = std::fabs(vf) > 3.0f ? std::fabs(std::atan2(vl, std::fabs(vf))) * 57.296f : 0.0f;
+		float want = 1.0f - s.tcs * clampf((spin - 1.1f) / 0.9f, 0.0f, 1.0f);
+		want = std::min(want, 1.0f - s.tcs * clampf((beta - s.tcs_beta_deg) / 10.0f, 0.0f, 1.0f));
+		want = std::max(want, 0.15f);   // never all: the driver still feels the pedal
+		const float rate = (want < tc_gain ? 10.0f : 2.5f) * dt;   // cuts in fast, gives back gently
+		tc_gain = clampf(tc_gain + clampf(want - tc_gain, -rate, rate), 0.15f, 1.0f);
+	} else tc_gain = 1.0f;
+	float te = engine_torque(eng_w, thr * tc_gain);
 	if (eng_w < w_idle) te += clampf((w_idle - eng_w) * 0.04f * s.torque, 0.0f, 0.7f * s.torque);   // the idle holds itself
 	float cap = 0.0f;
 	clutch = 0.0f;
@@ -305,6 +317,9 @@ Spec make_spec(int model, int feel) {
 	s.steer_rate = v ? 3.0f : 2.0f; s.steer_assist = v ? 0.5f : 0.2f;
 	s.abs = v; s.brake_g = v ? 1.25f : 1.0f; s.cla = v ? 0.25f : 0.0f;
 	s.lock_deg = 36.0f;
+	// B5 ("car is too prone to slide"): a firm hand on the pedal in both feels; IV keeps a bit more of its slide
+	s.tcs = v ? 0.9f : 0.75f; s.tcs_beta_deg = v ? 6.0f : 8.0f;
+	s.grip_rear = v ? 1.04f : 1.06f;   // a touch more at the rear: the tail follows rather than leads
 	if (b.kind == 1) {   // sports: stiffer, lower, wider tyres, a tighter differential
 		s.freq_f *= 1.25f; s.freq_r *= 1.25f; s.arb_f *= 1.4f; s.arb_r *= 1.4f; s.mu *= 1.10f; s.slip_peak_deg -= 1.0f;
 		s.travel_up -= 0.02f; s.travel_down -= 0.03f; s.diff_lock = 90.0f; s.brake_g *= 1.1f; s.cla += 0.35f; s.steer_rate *= 1.15f;

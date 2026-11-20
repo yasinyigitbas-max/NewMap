@@ -81,6 +81,19 @@ public:
 	int get_target_route_points(int p_k) const { return p_k >= 0 && p_k < 3 ? troute[p_k].size() : 0; }
 };
 
+// THE WANTED LEVEL (Yasin's GTA IV list: "police ... wanted level, chases"): five stars under the money box, the
+// wanted ones gold, the rest an outline; while no policeman sees the player they blink (he is being searched for).
+class HudStars : public Control {
+	GDCLASS(HudStars, Control)
+protected:
+	static void _bind_methods() {}
+public:
+	int level = 0;
+	bool seen = true;
+	float clock = 0.0f;
+	void _draw() override;
+};
+
 class CityHud : public CanvasLayer {
 	GDCLASS(CityHud, CanvasLayer)
 	friend class CityPhone;
@@ -93,7 +106,9 @@ class CityHud : public CanvasLayer {
 	// OUT / GET OFF while driving or riding. A tap (or E): a tick, a vibration, done; nothing opens.
 	PanelContainer *b_use = nullptr;
 	Label *l_use_en = nullptr, *l_use_tr = nullptr;
-	int use_kind = 0;              // 0 nothing, 1 get in, 2 get out, 3 get on, 4 get off
+	int use_kind = 0;              // 0 nothing, 1 get in, 2 get out, 3 get on, 4 get off, 5 take a car from its driver, 6 buy at a counter
+	int32_t use_row = -1;          // (5) the traffic's car
+	int cars_taken = 0;
 	uint64_t use_target = 0, use_last = 0;
 	float use_scan = 0.0f;
 	int uses = 0;
@@ -105,6 +120,9 @@ class CityHud : public CanvasLayer {
 	uint64_t crowd_id = 0, traffic_id = 0;
 	Label *l_money = nullptr, *l_time = nullptr;
 	Control *needs_box = nullptr;
+	HudStars *stars = nullptr;
+	// a word in the middle of the screen for a moment (BUSTED, ...): English over the helper language
+	PanelContainer *b_note = nullptr; Label *l_note_en = nullptr, *l_note_tr = nullptr; float note_t = 0.0f;
 	// the two panels that open: 0 the phone (its map), 1 the inventory
 	PanelContainer *pan[2] = { nullptr, nullptr };
 	int open = -1;                 // which panel is open (or opening / closing)
@@ -148,6 +166,11 @@ public:
 	String get_money_text() const;
 	String get_time_text() const;
 	Rect2 box_rect(int p_what) const;   // 0 arrow, 1 phone, 2 inventory, 3 money
+	// the law (CityLaw): the wanted level (0 none, 1..5) and whether the police see him now; a word for a moment
+	void set_wanted(int p_level, bool p_seen);
+	int get_wanted() const { return stars ? stars->level : 0; }
+	void note(const String &p_en, const String &p_tr, double p_seconds);
+	String get_note() const;
 };
 
 } // namespace godot

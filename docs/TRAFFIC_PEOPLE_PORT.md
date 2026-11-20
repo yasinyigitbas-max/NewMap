@@ -1352,3 +1352,49 @@ CityBike (native/src/city_bike.*), all C++, on one of the engine's rigid bodies 
 - NOT done: the graphics preset and render scale are stored but not yet applied to the city (the streamer and the
   pixel look will read them); story, economy, needs, lessons have empty sections in the save until they come; the
   lessons buttons say "soon" until the phone comes; no download screen (this repo has no content packs).
+
+## 38. Street life: the GTA IV list (20 Nov; Yasin: "i want all of them"; guns: "they dont exist yet but they will be")
+Branch `claude/street-life`. All C++.
+- REACTIONS (B31): `CityCrowd::alarm` runs the crowd's scare on the player's blows, any car hitting a walker (> 2.5 m/s),
+  a cyclist thrown, an NPC fight's knock-down; NPC fights get onlookers who film and call.
+- ACTORS (`city_crowd_actors.cpp`): a walker held and moved by the game (walk / jog / run to a point or after somebody,
+  stand with a clip of its own, a uniform: police or medical bodies). Helpers, paramedics, officers, muggers, robbed
+  drivers, cowering people are actors. A placed actor is taken away when let go. Trap: the near figure must be of the
+  walker's kind (a woman's police body F4 with a man's look got no near figure): `actor_place` turns the look round.
+- THE HURT: a hard knock (car > 8 m/s, cyclist thrown hard) and `CityPed::set_stay_down` keeps the body lying until
+  `treat` (a medic) or 2 minutes. Helpers: one kneels (Fixing_Kneeling), one calls.
+- GUNS (hooks only): `CityCrowd::gun_aimed(from, dir, s)` (hands up = Surprise held at 0.45 s, or a crouch; then run),
+  `gunshot(at, by_player)` (alarm 45 m, incident, `CityTraffic::panic`: drivers within 40 m take the boldest temper).
+- SOUNDS: `tools/city/audio/make_sfx.py` -> audio/sfx (car alarm, police wail, yelp, ambulance hi-lo, horn);
+  `city_sfx.h` loads them; the phone export packs audio/sfx/*.wav.
+- CAR ALARMS: a parked car knocked loose rings 20 s once it moves.
+- TAKING A CAR: the HUD's TAKE CAR by a standing car of the traffic; `CityTraffic::take_car`: a physical car (kept while
+  he is in it or getting in or out: trap, the "far from the camera" rule put it away in its first frame in a test whose
+  camera had not yet followed); the driver fights (two in five) or runs and calls.
+- THE LAW (`city_law.*`, made by CityGame with the world): incidents -> reports (police near: at once; else a witness's
+  call, 7 s) -> stars (HudStars under the money box, blinking while unseen); police cars = stars (max 4), dark blue,
+  light bar, wail / yelp, spawned 150-200 m away behind the camera; pull over near him on foot, two officers run to
+  him: BUSTED (fine 50 a star, 3.5 s held). Lost after 12 s + 6 s a star unseen and 60 m from the last sighting.
+  Ambulance (white van, hi-lo) 10 s after a hard knock; paramedics kneel 8 s, he gets up. Muggings every ~150 s on foot:
+  threat, hand-over, run; the victim calls; a police car for the mugger, an officer runs him down.
+- SIRENS IN THE TRAFFIC: `Sim::siren[]`; a car in the kerb lane with a siren car within 40 m behind slows to 2.5 m/s and
+  keeps to the kerb side of its lane (never over it). Released cars lose the siren.
+- Tests: tests/people/test_street_life.gd, tests/traffic/test_take_car.gd, tests/traffic/test_law.gd.
+- NOT DONE: police shooting (no guns), roadblocks, ramming; the arrest has no animation of its own; cops run straight
+  lines (as road rage does: through what is in the way); nothing of it measured on the phone.
+
+## 39. People in the shops (20 Nov; Yasin: "add npcs into shops, some customers and a cashier, add us and npcs giving money receiving things animations")
+- WHERE: `tools/city/rooms/room_people.gd` (run WITH the renderer: headless, a MultiMesh's instance transforms read back as
+  zero) reads every room scene once -> `city_kit/traffic/room_people.json` (568 of 645 rooms): the staff spot behind the
+  till or counter, the queue spot before it, up to 6 browse spots before shelves and fridges, the door in and out, all in
+  the room's frame. The till's sides are the interiors skill's (staff at +Z: cash_register, checkout_counter,
+  laundry_counter; customers at +Z: shop_counter, bar_counter, pastry_case, shelves). Rerun it when rooms change.
+- WHO: `CityShops` (city_shops.*, made by CityGame with the law) opens the 4 nearest rooms CityRooms has awake within
+  45 m (`CityRooms::awake_rooms`): a cashier (Counter_Idle_Loop), up to two customers at a time from the door: shelves
+  (Idle_LookAround_Loop), queue (behind whoever pays), pay, out and on as one of the crowd (`CityCrowd::actor_free`).
+- THE PAY, four moves of 1.4 s: the cashier rings it up (Counter_Show); the money over (Counter_Give); the goods over
+  (the cashier's Counter_Give); taken (Interact). The player at the queue spot: the HUD's BUY (SATIN AL), the same moves
+  on him (`CityPlayer::act`), the shop's kind sets the item and the price; short of money the cashier shakes his head.
+- Test: tests/people/test_shops.gd (a real room by a pavement, as if awake).
+- NOT DONE: customers sit at cafe tables; the goods are not seen in the hand (no prop); the cashier is in his own clothes
+  (no shop uniform); not seen in the streamed city with a window; not on the phone.

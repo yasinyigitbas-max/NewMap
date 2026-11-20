@@ -1,4 +1,5 @@
 // CityPed: see city_ped.h.
+#include "perf_marks.h"
 #include "city_ped.h"
 #include "hand_grip.h"
 
@@ -367,6 +368,7 @@ void CityPed::set_box(int p_index, const Vector3 &p_centre, const Vector3 &p_hal
 }
 
 void CityPed::_physics_process(double p_delta) {
+	pm::Scope _pm(pm::PED_PHYS);   // (the slow-frame marks, perf_marks.h)
 	if (!made || !skel) return;
 	t_mode += p_delta;
 	if (mode == MODE_ANIM) {
@@ -429,7 +431,7 @@ void CityPed::_physics_process(double p_delta) {
 	// (on its feet but never quiet for six seconds: it is taken back anyway. Seen 20 Nov: after a blow in a fight a body
 	// kept stepping backwards at a steady 1.1 m/s for as long as it was watched.)
 	if (body.state == pb::ST_BALANCE && n_shove == 0 && ((body.settled && t_mode > 0.8) || t_mode > 6.0)) to_animation(clip, body.settled ? 0.35 : 0.6, false);
-	else if (body.state == pb::ST_REST && body.t_state > 1.2f) to_animation("get_up", 0.5, true);
+	else if (body.state == pb::ST_REST && body.t_state > 1.2f && !stay_down) to_animation("get_up", 0.5, true);
 }
 
 Dictionary CityPed::get_state() const {

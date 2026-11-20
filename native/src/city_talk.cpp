@@ -1,4 +1,5 @@
 // CityTalk: see city_talk.h. The flow, the chances and the times are the old game's (npc_talk.gd).
+#include "perf_marks.h"
 #include "city_talk.h"
 
 #include "city_crowd.h"
@@ -474,6 +475,7 @@ void CityTalk::said(bool p_ok, const String &p_how) {
 	}
 	if (say_status) say_status->set_text(vformat("Try again (%d left)  ·  Tekrar dene", MAX_TRIES - tries));
 	if (say_edit) say_edit->clear();
+	Object *speech = speech_obj();
 	if (listening || (speech && bool(speech->call("isAvailable")))) listen();
 }
 
@@ -612,6 +614,7 @@ void CityTalk::freeze_player(bool p_on) {
 
 void CityTalk::open_say() {
 	saying = true;
+	Object *speech = speech_obj();
 	const bool mic = speech && bool(speech->call("isAvailable"));
 	if (say_panel) {
 		say_en->set_text(options[selected].en); say_tr->set_text(options[selected].tr);
@@ -626,6 +629,7 @@ void CityTalk::open_say() {
 }
 
 void CityTalk::close_say() {
+	Object *speech = speech_obj();
 	if (listening && speech) speech->call("stopListening");
 	listening = false;
 	if (!saying) return;
@@ -635,6 +639,7 @@ void CityTalk::close_say() {
 }
 
 void CityTalk::listen() {
+	Object *speech = speech_obj();
 	if (!speech) return;
 	if (OS::get_singleton()->get_name() == "Android") OS::get_singleton()->request_permission("android.permission.RECORD_AUDIO");
 	speech->call("startListening", "en-US");
@@ -865,7 +870,7 @@ Dictionary CityTalk::stats() const {
 	Dictionary d;
 	d["active"] = active; d["talks"] = n_talks; d["lines"] = n_lines; d["voiced"] = n_voiced; d["silent"] = n_silent; d["group_lines"] = n_conv_lines;
 	d["remembered"] = (int)memory.size(); d["options"] = (int)options.size(); d["saying"] = saying; d["tries"] = tries; d["last_line"] = last_result;
-	d["conversations"] = (int)convs.size(); d["clips_loaded"] = (int)clips.size(); d["target"] = target; d["speech_plugin"] = speech != nullptr;
+	d["conversations"] = (int)convs.size(); d["clips_loaded"] = (int)clips.size(); d["target"] = target; d["speech_plugin"] = speech_obj() != nullptr;
 	return d;
 }
 
@@ -879,7 +884,8 @@ void CityTalk::_ready() {
 	}
 	if (ui_on) build_ui();
 	if (Engine::get_singleton()->has_singleton("GodotSpeech")) {
-		speech = Engine::get_singleton()->get_singleton("GodotSpeech");
+		Object *speech = Engine::get_singleton()->get_singleton("GodotSpeech");
+		speech_id = speech ? (uint64_t)speech->get_instance_id() : 0;
 		if (speech && speech->has_signal("speech_result")) speech->connect("speech_result", Callable(this, "_on_speech_result"));
 		if (speech && speech->has_signal("speech_error")) speech->connect("speech_error", Callable(this, "_on_speech_error"));
 	}
@@ -890,6 +896,8 @@ void CityTalk::_ready() {
 void CityTalk::_exit_tree() {
 	if (Engine::get_singleton()->is_editor_hint()) return;
 	if (active >= 0) end("gone");
+	Object *speech = speech_obj();
+	speech_id = 0;
 	if (speech) {
 		if (speech->is_connected("speech_result", Callable(this, "_on_speech_result"))) speech->disconnect("speech_result", Callable(this, "_on_speech_result"));
 		if (speech->is_connected("speech_error", Callable(this, "_on_speech_error"))) speech->disconnect("speech_error", Callable(this, "_on_speech_error"));
@@ -897,6 +905,7 @@ void CityTalk::_exit_tree() {
 }
 
 void CityTalk::_process(double p_delta) {
+	pm::Scope _pm(pm::TALK);   // (the slow-frame marks, perf_marks.h)
 	CityCrowd *c = crowd_node();
 	// the clock people remember by: the crowd's hours where its clock runs, else a game hour in two and a half minutes
 	now_h += hours_per_second > 0.0 ? hours_per_second * p_delta : p_delta / 150.0;

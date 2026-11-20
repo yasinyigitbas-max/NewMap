@@ -1,0 +1,222 @@
+Drop box contents: 272 entries
+Max entries: 1000
+Low priority rate limit period: 2000 ms
+Low priority tags: {data_app_wtf, keymaster, system_server_wtf, system_app_strictmode, system_app_wtf, system_server_strictmode, data_app_strictmode, netstats}
+Searching for: data_app_native_crash
+
+========================================
+2026-11-19 17:17:01 data_app_native_crash (text, 7756 bytes)
+Process: com.yasin.citykit.rig
+PID: 18590
+UID: 10290
+Frozen: false
+Flags: 0x22a83e46
+Package: com.yasin.citykit.rig v1 (citykit-rig)
+Foreground: Yes
+Process-Runtime: 12290832
+Build: POCO/xagapro_global/xagapro:13/TP1A.220624.014/V14.0.8.0.TLOMIXM:user/release-keys
+Loading-Progress: 1.0
+Dropped-Count: 0
+
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+Build fingerprint: 'POCO/xagapro_global/xagapro:13/TP1A.220624.014/V14.0.8.0.TLOMIXM:user/release-keys'
+Revision: '0'
+ABI: 'arm64'
+Timestamp: 2026-11-19 17:17:00.361419897+0300
+Process uptime: 20s
+ZygotePid: 1084
+Cmdline: com.yasin.citykit.rig
+pid: 18590, tid: 18623, name: VkThread  >>> com.yasin.citykit.rig <<<
+uid: 10290
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+signal 6 (SIGABRT), code -1 (SI_QUEUE), fault addr --------
+Abort message: 'FORTIFY: pthread_mutex_lock called on a destroyed mutex (0xb4000077eac21ed0)'
+    x0  0000000000000000  x1  00000000000048bf  x2  0000000000000006  x3  0000007769c91960
+    x4  0000000080808080  x5  0000000080808080  x6  0000000080808080  x7  8080808080808080
+    x8  00000000000000f0  x9  00000078a58d8b70  x10 0000000000000001  x11 00000078a594da10
+    x12 0101010101010101  x13 000000007fffffff  x14 00000000081c17a2  x15 0000000000000028
+    x16 00000078a59bda50  x17 00000078a5996550  x18 0000007768ebe000  x19 000000000000489e
+    x20 00000000000048bf  x21 00000000ffffffff  x22 0000007769c91c58  x23 0000007769c92f80
+    x24 00000000000059df  x25 000000000000a459  x26 b400007775054000  x27 0000000000000000
+    x28 0000007769c92010  x29 0000007769c919e0
+    lr  00000078a593dc48  sp  0000007769c91940  pc  00000078a593dc74  pst 0000000000001000
+backtrace:
+      #00 pc 000000000008cc74  /apex/com.android.runtime/lib64/bionic/libc.so (abort+164) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+      #01 pc 000000000008eafc  /apex/com.android.runtime/lib64/bionic/libc.so (__fortify_fatal(char const*, ...)+124) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+      #02 pc 00000000000fccac  /apex/com.android.runtime/lib64/bionic/libc.so (HandleUsingDestroyedMutex(pthread_mutex_t*, char const*)+60) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+      #03 pc 00000000000fcb40  /apex/com.android.runtime/lib64/bionic/libc.so (pthread_mutex_lock+208) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+      #04 pc 00000000000eada0  /data/app/~~c8kMLVbyyc0g4myasZBlcA==/com.yasin.citykit.rig-wVULJ0UAQ9qtmsKgSKOllw==/base.apk!libc++_shared.so (std::__ndk1::recursive_mutex::lock()+12) (BuildId: ba615e4ff75bc2d8ba1eee93f983e02bc427c433)
+      #05 pc 0000000004462aa4  /data/app/~~c8kMLVbyyc0g4myasZBlcA==/com.yasin.citykit.rig-wVULJ0UAQ9qtmsKgSKOllw==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #06 pc 000000000446fc3c  /data/app/~~c8kMLVbyyc0g4myasZBlcA==/com.yasin.citykit.rig-wVULJ0UAQ9qtmsKgSKOllw==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #07 pc 0000000000287150  /data/app/~~c8kMLVbyyc0g4myasZBlcA==/com.yasin.citykit.rig-wVULJ0UAQ9qtmsKgSKOllw==/base.apk
+      #08 pc 0000000000118ab0  /data/app/~~c8kMLVbyyc0g4myasZBlcA==/com.yasin.citykit.rig-wVULJ0UAQ9qtmsKgSKOllw==/base.apk
+      #09 pc 00000000024a488c  /data/app/~~c8kMLVbyyc0g4myasZBlcA==/com.yasin.citykit.rig-wVULJ0UAQ9qtmsKgSKOllw==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #10 pc 00000000024a47c8  /data/app/~~c8kMLVbyyc0g4myasZBlcA==/com.yasin.citykit.rig-wVULJ0UAQ9qtmsKgSKOllw==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #11 pc 00000000024a47c8  /data/app/~~c8kMLVbyyc0g4myasZBlcA==/com.yasin.citykit.rig-wVULJ0UAQ9qtmsKgSKOllw==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #12 pc 00000000024aa690  /data/app/~~c8kMLVbyyc0g4myasZBlcA==/com.yasin.citykit.rig-wVULJ0UAQ9qtmsKgSKOllw==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #13 pc 00000000024e37ec  /data/app/~~c8kMLVbyyc0g4myasZBlcA==/com.yasin.citykit.rig-wVULJ0UAQ9qtmsKgSKOllw==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #14 pc 0000000001300800  /data/app/~~c8kMLVbyyc0g4myasZBlcA==/com.yasin.citykit.rig-wVULJ0UAQ9qtmsKgSKOllw==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #15 pc 0000000001301030  /data/app/~~c8kMLVbyyc0g4myasZBlcA==/com.yasin.citykit.rig-wVULJ0UAQ9qtmsKgSKOllw==/base.apk!libgodot_android.so (Java_org_godotengine_godot_GodotLib_step+784) (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #16 pc 000000000034b8e0  /apex/com.android.art/lib64/libart.so (art_quick_generic_jni_trampoline+144) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #17 pc 00000000003345c0  /apex/com.android.art/lib64/libart.so (art_quick_invoke_static_stub+640) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #18 pc 0000000000696394  /apex/com.android.art/lib64/libart.so (bool art::interpreter::DoCall<false>(art::ArtMethod*, art::Thread*, art::ShadowFrame&, art::Instruction const*, unsigned short, bool, art::JValue*)+2400) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #19 pc 000000000073efa8  /apex/com.android.art/lib64/libart.so (void art::interpreter::ExecuteSwitchImplCpp<false>(art::interpreter::SwitchImplContext*)+700) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #20 pc 000000000041e988  /apex/com.android.art/lib64/libart.so (ExecuteSwitchImplAsm+8) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #21 pc 00000000002637c0  /data/app/~~c8kMLVbyyc0g4myasZBlcA==/com.yasin.citykit.rig-wVULJ0UAQ9qtmsKgSKOllw==/base.apk (org.godotengine.godot.vulkan.VkRenderer.onVkDrawFrame+0)
+      #22 pc 0000000000696550  /apex/com.android.art/lib64/libart.so (bool art::interpreter::DoCall<false>(art::ArtMethod*, art::Thread*, art::ShadowFrame&, art::Instruction const*, unsigned short, bool, art::JValue*)+2844) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #23 pc 000000000073ef0c  /apex/com.android.art/lib64/libart.so (void art::interpreter::ExecuteSwitchImplCpp<false>(art::interpreter::SwitchImplContext*)+544) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #24 pc 000000000041e988  /apex/com.android.art/lib64/libart.so (ExecuteSwitchImplAsm+8) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #25 pc 0000000000264130  /data/app/~~c8kMLVbyyc0g4myasZBlcA==/com.yasin.citykit.rig-wVULJ0UAQ9qtmsKgSKOllw==/base.apk (org.godotengine.godot.vulkan.VkThread.run+0)
+      #26 pc 000000000041dcb0  /apex/com.android.art/lib64/libart.so (artQuickToInterpreterBridge+1260) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #27 pc 000000000034ba18  /apex/com.android.art/lib64/libart.so (art_quick_to_interpreter_bridge+88) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #28 pc 00000000003342f4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #29 pc 00000000002a4308  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+232) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #30 pc 000000000051d3ac  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1392) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #31 pc 000000000051ce28  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallbackWithUffdGc(void*)+12) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #32 pc 00000000000fb90c  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*)+204) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+      #33 pc 000000000008e4b0  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+64) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+
+========================================
+2026-11-19 17:32:43 data_app_native_crash (text, 7756 bytes)
+Process: com.yasin.citykit.rig
+PID: 19682
+UID: 10290
+Frozen: false
+Flags: 0x22a83e46
+Package: com.yasin.citykit.rig v1 (citykit-rig)
+Foreground: Yes
+Process-Runtime: 12290699
+Build: POCO/xagapro_global/xagapro:13/TP1A.220624.014/V14.0.8.0.TLOMIXM:user/release-keys
+Loading-Progress: 1.0
+Dropped-Count: 0
+
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+Build fingerprint: 'POCO/xagapro_global/xagapro:13/TP1A.220624.014/V14.0.8.0.TLOMIXM:user/release-keys'
+Revision: '0'
+ABI: 'arm64'
+Timestamp: 2026-11-19 17:32:43.158599030+0300
+Process uptime: 19s
+ZygotePid: 1084
+Cmdline: com.yasin.citykit.rig
+pid: 19682, tid: 19717, name: VkThread  >>> com.yasin.citykit.rig <<<
+uid: 10290
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+signal 6 (SIGABRT), code -1 (SI_QUEUE), fault addr --------
+Abort message: 'FORTIFY: pthread_mutex_lock called on a destroyed mutex (0xb4000077eac61610)'
+    x0  0000000000000000  x1  0000000000004d05  x2  0000000000000006  x3  000000776956d960
+    x4  0000000080808080  x5  0000000080808080  x6  0000000080808080  x7  8080808080808080
+    x8  00000000000000f0  x9  00000078a58d8b70  x10 0000000000000001  x11 00000078a594da10
+    x12 0101010101010101  x13 000000007fffffff  x14 0000000008209208  x15 0000000000000028
+    x16 00000078a59bda50  x17 00000078a5996550  x18 00000077680d8000  x19 0000000000004ce2
+    x20 0000000000004d05  x21 00000000ffffffff  x22 000000776956dc58  x23 000000776956ef80
+    x24 00000000000059df  x25 000000000000a459  x26 b400007771ff4c00  x27 0000000000000000
+    x28 000000776956e010  x29 000000776956d9e0
+    lr  00000078a593dc48  sp  000000776956d940  pc  00000078a593dc74  pst 0000000000001000
+backtrace:
+      #00 pc 000000000008cc74  /apex/com.android.runtime/lib64/bionic/libc.so (abort+164) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+      #01 pc 000000000008eafc  /apex/com.android.runtime/lib64/bionic/libc.so (__fortify_fatal(char const*, ...)+124) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+      #02 pc 00000000000fccac  /apex/com.android.runtime/lib64/bionic/libc.so (HandleUsingDestroyedMutex(pthread_mutex_t*, char const*)+60) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+      #03 pc 00000000000fcb40  /apex/com.android.runtime/lib64/bionic/libc.so (pthread_mutex_lock+208) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+      #04 pc 00000000000eada0  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libc++_shared.so (std::__ndk1::recursive_mutex::lock()+12) (BuildId: ba615e4ff75bc2d8ba1eee93f983e02bc427c433)
+      #05 pc 0000000004462aa4  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #06 pc 000000000446fc3c  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #07 pc 0000000000287150  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk
+      #08 pc 0000000000118ab0  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk
+      #09 pc 00000000024a488c  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #10 pc 00000000024a47c8  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #11 pc 00000000024a47c8  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #12 pc 00000000024aa690  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #13 pc 00000000024e37ec  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #14 pc 0000000001300800  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #15 pc 0000000001301030  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (Java_org_godotengine_godot_GodotLib_step+784) (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #16 pc 000000000034b8e0  /apex/com.android.art/lib64/libart.so (art_quick_generic_jni_trampoline+144) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #17 pc 00000000003345c0  /apex/com.android.art/lib64/libart.so (art_quick_invoke_static_stub+640) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #18 pc 0000000000696394  /apex/com.android.art/lib64/libart.so (bool art::interpreter::DoCall<false>(art::ArtMethod*, art::Thread*, art::ShadowFrame&, art::Instruction const*, unsigned short, bool, art::JValue*)+2400) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #19 pc 000000000073efa8  /apex/com.android.art/lib64/libart.so (void art::interpreter::ExecuteSwitchImplCpp<false>(art::interpreter::SwitchImplContext*)+700) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #20 pc 000000000041e988  /apex/com.android.art/lib64/libart.so (ExecuteSwitchImplAsm+8) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #21 pc 00000000002637c0  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk (org.godotengine.godot.vulkan.VkRenderer.onVkDrawFrame+0)
+      #22 pc 0000000000696550  /apex/com.android.art/lib64/libart.so (bool art::interpreter::DoCall<false>(art::ArtMethod*, art::Thread*, art::ShadowFrame&, art::Instruction const*, unsigned short, bool, art::JValue*)+2844) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #23 pc 000000000073ef0c  /apex/com.android.art/lib64/libart.so (void art::interpreter::ExecuteSwitchImplCpp<false>(art::interpreter::SwitchImplContext*)+544) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #24 pc 000000000041e988  /apex/com.android.art/lib64/libart.so (ExecuteSwitchImplAsm+8) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #25 pc 0000000000264130  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk (org.godotengine.godot.vulkan.VkThread.run+0)
+      #26 pc 000000000041dcb0  /apex/com.android.art/lib64/libart.so (artQuickToInterpreterBridge+1260) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #27 pc 000000000034ba18  /apex/com.android.art/lib64/libart.so (art_quick_to_interpreter_bridge+88) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #28 pc 00000000003342f4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #29 pc 00000000002a4308  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+232) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #30 pc 000000000051d3ac  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1392) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #31 pc 000000000051ce28  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallbackWithUffdGc(void*)+12) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #32 pc 00000000000fb90c  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*)+204) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+      #33 pc 000000000008e4b0  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+64) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+
+========================================
+2026-11-19 17:33:20 data_app_native_crash (text, 7756 bytes)
+Process: com.yasin.citykit.rig
+PID: 19866
+UID: 10290
+Frozen: false
+Flags: 0x22a83e46
+Package: com.yasin.citykit.rig v1 (citykit-rig)
+Foreground: Yes
+Process-Runtime: 12290297
+Build: POCO/xagapro_global/xagapro:13/TP1A.220624.014/V14.0.8.0.TLOMIXM:user/release-keys
+Loading-Progress: 1.0
+Dropped-Count: 0
+
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+Build fingerprint: 'POCO/xagapro_global/xagapro:13/TP1A.220624.014/V14.0.8.0.TLOMIXM:user/release-keys'
+Revision: '0'
+ABI: 'arm64'
+Timestamp: 2026-11-19 17:33:20.471567417+0300
+Process uptime: 20s
+ZygotePid: 1084
+Cmdline: com.yasin.citykit.rig
+pid: 19866, tid: 19901, name: VkThread  >>> com.yasin.citykit.rig <<<
+uid: 10290
+tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+signal 6 (SIGABRT), code -1 (SI_QUEUE), fault addr --------
+Abort message: 'FORTIFY: pthread_mutex_lock called on a destroyed mutex (0xb4000077eac4e5d0)'
+    x0  0000000000000000  x1  0000000000004dbd  x2  0000000000000006  x3  000000776cbb8960
+    x4  0000000080808080  x5  0000000080808080  x6  0000000080808080  x7  8080808080808080
+    x8  00000000000000f0  x9  00000078a58d8b70  x10 0000000000000001  x11 00000078a594da10
+    x12 0101010101010101  x13 000000007fffffff  x14 000000000820cdc8  x15 0000000000000028
+    x16 00000078a59bda50  x17 00000078a5996550  x18 000000776a7aa000  x19 0000000000004d9a
+    x20 0000000000004dbd  x21 00000000ffffffff  x22 000000776cbb8c58  x23 000000776cbb9f80
+    x24 00000000000059df  x25 000000000000a459  x26 b40000777542b400  x27 0000000000000000
+    x28 000000776cbb9010  x29 000000776cbb89e0
+    lr  00000078a593dc48  sp  000000776cbb8940  pc  00000078a593dc74  pst 0000000000001000
+backtrace:
+      #00 pc 000000000008cc74  /apex/com.android.runtime/lib64/bionic/libc.so (abort+164) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+      #01 pc 000000000008eafc  /apex/com.android.runtime/lib64/bionic/libc.so (__fortify_fatal(char const*, ...)+124) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+      #02 pc 00000000000fccac  /apex/com.android.runtime/lib64/bionic/libc.so (HandleUsingDestroyedMutex(pthread_mutex_t*, char const*)+60) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+      #03 pc 00000000000fcb40  /apex/com.android.runtime/lib64/bionic/libc.so (pthread_mutex_lock+208) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+      #04 pc 00000000000eada0  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libc++_shared.so (std::__ndk1::recursive_mutex::lock()+12) (BuildId: ba615e4ff75bc2d8ba1eee93f983e02bc427c433)
+      #05 pc 0000000004462aa4  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #06 pc 000000000446fc3c  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #07 pc 0000000000287150  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk
+      #08 pc 0000000000118ab0  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk
+      #09 pc 00000000024a488c  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #10 pc 00000000024a47c8  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #11 pc 00000000024a47c8  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #12 pc 00000000024aa690  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #13 pc 00000000024e37ec  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #14 pc 0000000001300800  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #15 pc 0000000001301030  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk!libgodot_android.so (Java_org_godotengine_godot_GodotLib_step+784) (BuildId: 113c69525320720bef4d526dcba9e8e7550b341f)
+      #16 pc 000000000034b8e0  /apex/com.android.art/lib64/libart.so (art_quick_generic_jni_trampoline+144) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #17 pc 00000000003345c0  /apex/com.android.art/lib64/libart.so (art_quick_invoke_static_stub+640) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #18 pc 0000000000696394  /apex/com.android.art/lib64/libart.so (bool art::interpreter::DoCall<false>(art::ArtMethod*, art::Thread*, art::ShadowFrame&, art::Instruction const*, unsigned short, bool, art::JValue*)+2400) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #19 pc 000000000073efa8  /apex/com.android.art/lib64/libart.so (void art::interpreter::ExecuteSwitchImplCpp<false>(art::interpreter::SwitchImplContext*)+700) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #20 pc 000000000041e988  /apex/com.android.art/lib64/libart.so (ExecuteSwitchImplAsm+8) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #21 pc 00000000002637c0  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk (org.godotengine.godot.vulkan.VkRenderer.onVkDrawFrame+0)
+      #22 pc 0000000000696550  /apex/com.android.art/lib64/libart.so (bool art::interpreter::DoCall<false>(art::ArtMethod*, art::Thread*, art::ShadowFrame&, art::Instruction const*, unsigned short, bool, art::JValue*)+2844) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #23 pc 000000000073ef0c  /apex/com.android.art/lib64/libart.so (void art::interpreter::ExecuteSwitchImplCpp<false>(art::interpreter::SwitchImplContext*)+544) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #24 pc 000000000041e988  /apex/com.android.art/lib64/libart.so (ExecuteSwitchImplAsm+8) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #25 pc 0000000000264130  /data/app/~~4Uwm3uzjWAsY4vHHKOHCCA==/com.yasin.citykit.rig-qqLGwl2MEpzIAsSH8eRFMA==/base.apk (org.godotengine.godot.vulkan.VkThread.run+0)
+      #26 pc 000000000041dcb0  /apex/com.android.art/lib64/libart.so (artQuickToInterpreterBridge+1260) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #27 pc 000000000034ba18  /apex/com.android.art/lib64/libart.so (art_quick_to_interpreter_bridge+88) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #28 pc 00000000003342f4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #29 pc 00000000002a4308  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+232) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #30 pc 000000000051d3ac  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1392) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #31 pc 000000000051ce28  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallbackWithUffdGc(void*)+12) (BuildId: 9d2fa628a1f38431dc07689a83cd4e80)
+      #32 pc 00000000000fb90c  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*)+204) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+      #33 pc 000000000008e4b0  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+64) (BuildId: e17f03d82d277eb8d7c51ca3961f4cf9)
+

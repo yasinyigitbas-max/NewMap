@@ -39,6 +39,7 @@ class AudioStreamPlayer3D;
 
 class CityCrowd : public Node3D {
 	GDCLASS(CityCrowd, Node3D)
+	friend class CityLaw;   // (the law directs the actors: city_law.cpp)
 
 public:
 	enum { ROW = 16, POSES = 17, NEAR_MAX = 18 };   // (POSES: as PeopleBake makes them; 13-16 ride a bicycle)
@@ -127,8 +128,47 @@ private:
 	// distance stare, film or call). The same spot again within 3 s is one alarm.
 	struct Alarm { Vector3 at; double t; };
 	std::vector<Alarm> alarms_recent;
-	int alarms[5] = { 0, 0, 0, 0, 0 }, cars_hit_people = 0;
+	int alarms[8] = { 0, 0, 0, 0, 0, 0, 0, 0 }, cars_hit_people = 0;
 	void alarm(const Vector3 &p_at, float p_radius, float p_seconds, int p_kind);
+	// what happened that the law (CityLaw) should hear of: kind as the alarm's (1 the player hits someone, 2 a car hits
+	// someone, 3 a cyclist comes off, 4 a fight between ours, 5 a shot, 6 a mugging, 7 a car taken); by the player or
+	// not; the person hurt (-1 none) and how badly (0 a blow, 1 down, 2 down and staying down: an ambulance is wanted)
+	struct Incident { Vector3 at; int kind; bool by_player; int victim; int hurt; double t; };
+	std::vector<Incident> incidents;
+	void incident(const Vector3 &p_at, int p_kind, bool p_by_player, int p_victim, int p_hurt);
+
+	// ---- ACTORS (city_crowd_actors.cpp): a walker the game takes off its day to do something of the game's: walk or
+	// run to a point or after somebody, stand facing a way, play a clip of its own. Held (M_HELD) while it is one; let go,
+	// it walks back to the pavement and on (or is taken away if the game placed it). The helpers, the paramedics, the
+	// police on foot, a mugger and his victim, a driver pulled out of his car are actors.
+	struct Actor {
+		int walker = -1, role = 0, st = 0;
+		float t = 0.0f, life = 0.0f;              // seconds in this state; in all
+		Vector3 to; int to_walker = -1;           // where it goes (or after whom: to_walker >= 0 follows him; -2 the player)
+		float speed = 0.0f, near = 0.6f;          // m/s (0: it stands); how near is there
+		bool arrived = false, placed = false;     // placed: made by the game (taken away when let go)
+		float face = 0.0f; bool facing = false;   // standing: turned this way
+		StringName clip; double hold = -1.0; int token = 0;   // its own clip while it stands (empty: the crowd's own)
+		int helps = -1;                           // (helpers, medics) the one he kneels by
+		float ground_t = 0.0f;
+	};
+	std::vector<Actor> actors;
+	std::vector<std::pair<int, int>> uniforms;   // walker -> body tag (2 police, 3 medical): the clothes of the job
+	enum { R_NONE = 0, R_HELPER = 1, R_MEDIC = 2, R_COP = 3, R_MUGGER = 4, R_VICTIM = 5, R_DRIVER = 6, R_COWER = 7, R_CALLER = 8, R_STAFF = 9, R_SHOPPER = 10 };
+	Actor *actor_of(int p_walker);
+	const Actor *actor_of(int p_walker) const;
+	void actor_clip(const Actor &p_a, StringName &r_clip, double &r_speed, double &r_hold, int &r_token) const;
+	float ground_y(const Vector3 &p_at, float p_def) const;
+	void actors_update(double p_delta);
+	void stay_down(int p_walker, bool p_on);
+	void driver_robbed(int p_walker);
+	int drivers_robbed = 0;
+	int uniform_of(int p_walker) const;
+	// the hurt who stay down (a hard knock): the body lies until a medic has been (or two minutes)
+	struct Down { int walker; double t; bool treated = false; int helpers = 0; };
+	std::vector<Down> downs;
+	void helpers_for(int p_victim, const Vector3 &p_at);
+	int helpers_sent = 0, helpers_knelt = 0, steps_in = 0;
 	// counters
 	WayFloor way_floor;      // a collision floor 3 cm under every pavement and crossing (the city's collision has holes)
 	int riders_drawn = 0;   // the traffic's cyclists drawn as riders this frame
@@ -252,6 +292,35 @@ public:
 	Array near_bodies() const;     // (tests) every animated body: whose it is and which clip it plays
 	bool fight(int p_a, int p_b) { return crowd && crowd->fight(p_a, p_b); }
 	void scare(const Vector3 &p_at, double p_radius, double p_seconds);
+	// ---- actors (see the private part): the game's hands on a walker
+	bool actor_take(int p_walker, int p_role);
+	int actor_place(const Vector3 &p_at, int p_tag, double p_yaw, int p_role);   // a new person in the clothes of tag (0 own)
+	bool actor_go(int p_walker, const Vector3 &p_to, double p_speed, double p_near);
+	bool actor_follow(int p_walker, int p_target, double p_speed, double p_near);   // p_target -2: the player
+	bool actor_stand(int p_walker, double p_yaw, const StringName &p_clip, double p_hold, int p_token);
+	bool actor_arrived(int p_walker) const;
+	bool is_actor(int p_walker) const;
+	int actor_role(int p_walker) const;
+	void actor_release(int p_walker);
+	// let go as one of the crowd's own (even one the game placed): he walks back to the pavement and on with his day
+	void actor_free(int p_walker);
+	Vector3 walker_at(int p_walker) const;
+	bool walker_alive(int p_walker) const;
+	// the hurt who lie until a medic comes: is he one; the medic has been (he gets up)
+	bool is_down(int p_walker) const;
+	void treat(int p_walker);
+	Array downs_list() const;   // [{walker, at, t, treated}]
+	// what happened since the last call (CityLaw): [{at, kind, by_player, victim, hurt}]
+	Array take_incidents();
+	std::vector<Incident> &incidents_raw() { return incidents; }
+	// GUNS (none yet; Yasin, 20 Nov: "they dont exist yet but they will be"): what the weapons will tell the people. Aimed
+	// at: whoever stands in the line within 25 m puts his hands up or cowers while it lasts, then runs. A shot: everybody
+	// near ducks or runs, farther ones film or call, and the traffic round it is told (CityTraffic::panic).
+	void gun_aimed(const Vector3 &p_from, const Vector3 &p_dir, double p_seconds);
+	void gunshot(const Vector3 &p_at, bool p_by_player);
+	// (tests, scenes) a walker near the camera knocked down hard: he lies until a medic has been; false if he has no body near
+	bool knock_down_walker(int p_walker);
+	int cowering = 0, shots_heard = 0;
 	void bus_at(int p_place, bool p_on, const Vector3 &p_door, int p_get_off);
 	void bench_off(int p_place, bool p_off);
 	// the place of a kind nearest a point (-1 = none within the radius); kinds: ped_places.h PL_*
