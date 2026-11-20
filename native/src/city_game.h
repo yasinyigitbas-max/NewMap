@@ -89,6 +89,8 @@ class CityGame : public Node {
 	double autosave_s = 60.0;
 	Dictionary slot_sections;      // the active slot's "sections" (settings, checkpoints)
 	uint64_t player_id = 0, crowd_id = 0, traffic_id = 0;
+	uint64_t law_id = 0;            // the police, the ambulance, the crimes (CityLaw): made with the world
+	void make_law();
 	bool pending_new = false;        // a new game: set the player down at the start when the world gives him
 	Dictionary pending_player;       // a loaded game: where he was, for when the world gives him
 	Vector3 start_centre = Vector3(0, 0, -600);   // the city centre (Yasin: "start the player next to a bike and car in the city center")
@@ -238,6 +240,7 @@ public:
 	uint64_t get_player_id() const { return player_id; }
 	uint64_t get_crowd_id() const { return crowd_id; }
 	uint64_t get_traffic_id() const { return traffic_id; }
+	Object *get_law() const;
 	void set_objective(const Vector3 &p_at) { objective_on = true; objective_at = p_at; }
 	void clear_objective() { objective_on = false; }
 	bool get_objective_on() const { return objective_on; }

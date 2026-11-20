@@ -1575,6 +1575,7 @@ void CityCrowd::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("take_incidents"), &CityCrowd::take_incidents);
 	ClassDB::bind_method(D_METHOD("gun_aimed", "from", "dir", "seconds"), &CityCrowd::gun_aimed);
 	ClassDB::bind_method(D_METHOD("gunshot", "at", "by_player"), &CityCrowd::gunshot);
+	ClassDB::bind_method(D_METHOD("knock_down_walker", "walker"), &CityCrowd::knock_down_walker);
 	ClassDB::bind_method(D_METHOD("set_traffic", "traffic"), &CityCrowd::set_traffic);
 	ClassDB::bind_method(D_METHOD("attach", "streamer"), &CityCrowd::attach);
 	ClassDB::bind_method(D_METHOD("_on_cell_in", "key"), &CityCrowd::_on_cell_in);

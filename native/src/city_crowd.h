@@ -39,6 +39,7 @@ class AudioStreamPlayer3D;
 
 class CityCrowd : public Node3D {
 	GDCLASS(CityCrowd, Node3D)
+	friend class CityLaw;   // (the law directs the actors: city_law.cpp)
 
 public:
 	enum { ROW = 16, POSES = 17, NEAR_MAX = 18 };   // (POSES: as PeopleBake makes them; 13-16 ride a bicycle)
@@ -315,6 +316,8 @@ public:
 	// near ducks or runs, farther ones film or call, and the traffic round it is told (CityTraffic::panic).
 	void gun_aimed(const Vector3 &p_from, const Vector3 &p_dir, double p_seconds);
 	void gunshot(const Vector3 &p_at, bool p_by_player);
+	// (tests, scenes) a walker near the camera knocked down hard: he lies until a medic has been; false if he has no body near
+	bool knock_down_walker(int p_walker);
 	int cowering = 0, shots_heard = 0;
 	void bus_at(int p_place, bool p_on, const Vector3 &p_door, int p_get_off);
 	void bench_off(int p_place, bool p_off);

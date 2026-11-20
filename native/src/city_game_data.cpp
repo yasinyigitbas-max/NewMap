@@ -1,5 +1,6 @@
 // CityGame: text, the game's state, settings and saves (see city_game.h). The screens are in city_game_ui.cpp.
 #include "city_game.h"
+#include "city_law.h"
 
 #include <godot_cpp/classes/audio_server.hpp>
 #include <godot_cpp/classes/world3d.hpp>
@@ -382,6 +383,7 @@ int CityGame::continue_game(int p_slot) {
 void CityGame::set_player(Object *p_player) {
 	player_id = p_player ? (uint64_t)p_player->get_instance_id() : 0;
 	if (!p_player) return;
+	make_law();
 	if (pending_new) place_start();
 	else if (!pending_player.is_empty()) { Dictionary st; st["player"] = pending_player; pending_player = Dictionary(); apply_snapshot(st); }
 }
@@ -456,7 +458,26 @@ void CityGame::hold_start(double p_delta) {
 void CityGame::set_world(Object *p_crowd, Object *p_traffic) {
 	crowd_id = p_crowd ? (uint64_t)p_crowd->get_instance_id() : 0;
 	traffic_id = p_traffic ? (uint64_t)p_traffic->get_instance_id() : 0;
+	make_law();
 }
+
+// THE LAW (city_law.h): one with the world (beside the crowd: it goes when the world goes), told who is who
+void CityGame::make_law() {
+	Node *crowd = crowd_id ? Object::cast_to<Node>(ObjectDB::get_instance(ObjectID(crowd_id))) : nullptr;
+	Object *traffic = traffic_id ? ObjectDB::get_instance(ObjectID(traffic_id)) : nullptr;
+	Object *pl = player_id ? ObjectDB::get_instance(ObjectID(player_id)) : nullptr;
+	if (!crowd || !traffic || !pl || !crowd->get_parent()) return;
+	CityLaw *law = law_id ? Object::cast_to<CityLaw>(ObjectDB::get_instance(ObjectID(law_id))) : nullptr;
+	if (!law) {
+		law = memnew(CityLaw);
+		law->set_name("Law");
+		crowd->get_parent()->add_child(law);
+		law_id = law->get_instance_id();
+	}
+	law->set_world(crowd, traffic, pl);
+}
+
+Object *CityGame::get_law() const { return law_id ? ObjectDB::get_instance(ObjectID(law_id)) : nullptr; }
 
 // A new game: the player on the pavement nearest the city centre (pavements are outdoors: never in or on a building),
 // facing along it; his bicycle just ahead of him on the pavement; a car at the kerb beside him, on the road's side
@@ -548,6 +569,7 @@ void CityGame::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("continue_game", "slot"), &CityGame::continue_game);
 	ClassDB::bind_method(D_METHOD("set_player", "player"), &CityGame::set_player);
 	ClassDB::bind_method(D_METHOD("set_world", "crowd", "traffic"), &CityGame::set_world);
+	ClassDB::bind_method(D_METHOD("get_law"), &CityGame::get_law);
 	ClassDB::bind_method(D_METHOD("get_start_info"), &CityGame::get_start_info);
 	ClassDB::bind_method(D_METHOD("world_start"), &CityGame::world_start);
 	ClassDB::bind_method(D_METHOD("set_start_centre", "at"), &CityGame::set_start_centre);

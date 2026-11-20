@@ -324,6 +324,22 @@ void CityCrowd::driver_robbed(int p_walker) {
 	drivers_robbed++;
 }
 
+bool CityCrowd::knock_down_walker(int p_walker) {
+	for (Near &nb : near_pool) {
+		if (nb.walker != p_walker || !nb.ped) continue;
+		const Vector3 at = nb.ped->body_at();
+		const float y = crowd ? crowd->yaw[std::max(crowd->find(p_walker), 0)] : 0.0f;
+		const Vector3 back(-std::sin(y), 0.0f, -std::cos(y));
+		nb.ped->knock_down(back * 2.5f, back * 40.0f, at + Vector3(0, 1.5f, 0));
+		nb.push_cd = 1.0f; nb.why = 4;
+		stay_down(p_walker, true);
+		incident(at, 2, false, p_walker, 2);
+		helpers_for(p_walker, at);
+		return true;
+	}
+	return false;
+}
+
 // ---- guns (none yet): what they will tell the people
 
 void CityCrowd::gun_aimed(const Vector3 &p_from, const Vector3 &p_dir, double p_seconds) {

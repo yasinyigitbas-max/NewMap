@@ -626,6 +626,16 @@ void Sim::update_car(int i, float h) {
 	hard_cd[i] = std::max(0.0f, hard_cd[i] - h);
 	const int tp = temper[i];
 	const float hl_ = hl[i], hw_ = hw[i];
+	// a siren behind it in its lane (the kerb lane: it has no lane to its right), close: it makes way
+	bool yield_ = false;
+	if (any_siren && kind[i] == K_AMBIENT && conn[i] < 0 && !siren[i] && l_right[lane[i]] < 0) {
+		for (int j = 0; j < hi; j++) {
+			if (!alive[j] || !siren[j] || lane[j] != lane[i] || conn[j] >= 0) continue;
+			const float d = s[i] - s[j];
+			if (d > 0.0f && d < 40.0f) { yield_ = true; break; }
+		}
+		if (yield_) yields++;
+	}
 	const float v_ = v[i];
 	const float bc = cfg.t_b[tp], am = cfg.t_a[tp];
 	uint32_t nf = flags[i] & (uint32_t)F_RES;
@@ -711,6 +721,7 @@ void Sim::update_car(int i, float h) {
 	if (man[i] == MAN_PASS && pass_rem[i] > 0.0f) { want = pass_lat[i]; amax = std::max(amax, want); }
 	else if (pulling) { want = plan(0.0f); amin = std::min(amin, goal_lat[i]); amax = std::max(amax, goal_lat[i]); }
 	else if (leaving) want = plan(0.0f);
+	else if (yield_) { want = -std::max(p_hw[lane[i]] - hw_ - 0.3f, 0.0f); amin = std::min(amin, want); }   // (to the kerb side of its lane, never over it)
 	for (int k = 0; k < nt; k++) {   // boxes alongside: never move into them
 		const Track &t = tr[k];
 		if (t.type == TRK_XWALK || t.sa >= hl_ + 0.5f || t.sb <= -hl_ - 0.5f) continue;
@@ -1007,6 +1018,7 @@ void Sim::update_car(int i, float h) {
 	v0 = std::min(v0, v0_e2);
 	if (std::fabs(lat_t - lat[i]) > 0.25f) v0 = std::min(v0, 8.0f);
 	if (man[i] == MAN_PASS) v0 = std::min(v0, 5.5f);
+	if (yield_) v0 = std::min(v0, 2.5f);
 	v0 = std::max(v0, 0.5f);
 	float a_free;
 	if (v_ <= v0) { float r = v_ / v0; r *= r; a_free = am * (1.0f - r * r); }
@@ -1163,7 +1175,7 @@ int Sim::place_car(int lane_, float s_, float speed, int model_, int temper_) {
 	if (i < 0 || lane_ < 0 || lane_ >= n_lanes) return -1;
 	int nm = (int)m_hl.size();
 	model_ = nm > 0 ? std::min(std::max(model_, 0), nm - 1) : 0;
-	alive[i] = 1; kind[i] = 0; model[i] = (uint8_t)model_; temper[i] = (uint8_t)std::min(std::max(temper_, 0), 2);
+	alive[i] = 1; kind[i] = 0; model[i] = (uint8_t)model_; temper[i] = (uint8_t)std::min(std::max(temper_, 0), 2); siren[i] = 0;
 	colour[i] = (uint8_t)(rnd() * (float)std::max(cfg.n_colours, 1));
 	id[i] = next_id++;
 	hl[i] = nm > 0 ? m_hl[model_] : 2.2f; hw[i] = nm > 0 ? m_hw[model_] : 0.95f;

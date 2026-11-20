@@ -1271,7 +1271,7 @@ Array CityTraffic::stalls_near(const Vector3 &p_at, double p_r) const {
 
 Dictionary CityTraffic::knock_stats() const {
 	Dictionary d;
-	d["moving"] = kc.moving; d["parked"] = kc.parked; d["rejoined"] = kc.rejoined; d["drivers_out"] = kc.drivers_out; d["alarms"] = kc.alarms; d["taken_away"] = kc.taken_away; d["no_slot"] = kc.no_slot; d["last_refusal"] = kc.refused;
+	d["moving"] = kc.moving; d["parked"] = kc.parked; d["rejoined"] = kc.rejoined; d["drivers_out"] = kc.drivers_out; d["alarms"] = kc.alarms; d["yields"] = sim ? sim->yields : 0; d["cars_taken"] = cars_taken; d["panicked"] = panicked; d["taken_away"] = kc.taken_away; d["no_slot"] = kc.no_slot; d["last_refusal"] = kc.refused;
 	Array a;
 	for (int k = 0; k < LOOSE; k++) {
 		if (!loose[k].on || !loose[k].car) continue;

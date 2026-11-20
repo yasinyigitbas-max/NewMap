@@ -337,7 +337,9 @@ public:
 	Dictionary route(const Vector3 &p_from, const Vector3 &p_to, bool p_bike = false) const;
 	// Cars of the game's own (a taxi, a scene's car), routed by the same finder; each call returns a ticket and the step
 	// answers it (order_result: -9 not yet, -1 refused, else the car's id for spawn_driver, 1 for the others)
-	int spawn_driver(const Vector3 &p_from, const Vector3 &p_to, int p_model);
+	int spawn_driver(const Vector3 &p_from, const Vector3 &p_to, int p_model, int p_paint = -1);   // p_paint >= 0: that colour, and it drives boldly (the police, an ambulance)
+	// where a car of the traffic is now (the main thread's copy): false if there is no such car
+	bool car_pose(int32_t p_id, Vector3 &r_at, float &r_yaw, float &r_speed) const;
 	int drive_car_to(int p_car, const Vector3 &p_to);
 	int pull_car_over(int p_car, const Vector3 &p_to, int p_side);
 	int let_car_go(int p_car);
