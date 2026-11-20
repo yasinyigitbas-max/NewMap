@@ -190,6 +190,7 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 			rel_off[s] *= (float)std::exp(-p_delta / 0.06);   // (about 0.15 s; holding it till the lift made more pops: tried 20 Nov)
 			slide[s] = rel_off[s];
 		}
+		slide_w[s] = slide[s];
 		if (std::fabs(d) < 0.004f && slide[s].length_squared() < 1e-6f) { want[s] = 0.0f; continue; }
 		want[s] = d;
 		got[s] = true;

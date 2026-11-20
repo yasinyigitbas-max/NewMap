@@ -294,7 +294,9 @@ void CityPlayer::_physics_process(double p_delta) {
 	const Vector3 want = (fwd * mv.y + right * mv.x) * top;
 	Vector3 v = get_velocity();
 	const Vector3 hv(v.x, 0, v.z);
-	const Vector3 nh = hv.move_toward(want, (want.length() > hv.length() ? 9.0f : 14.0f) * dt);
+	// (letting go: he slows over a couple of steps, 7 m/s2, as a person stops; braked at 14 his feet skated 0.7 m out of a
+	// sprint while the clip was still on its way into idle: tests/people/trace_locomotion.gd "stop")
+	const Vector3 nh = hv.move_toward(want, (want.length() > hv.length() ? 9.0f : (want.length() < 0.05f ? 7.0f : 14.0f)) * dt);
 	v.x = nh.x + knock_v.x; v.z = nh.z + knock_v.z;
 	knock_v = Vector3();
 	if (swimming) v.y = std::min(std::max(((float)water_y - 0.38f - (float)here.y) * 4.0f, -1.5f), 1.5f);   // he floats: his body lies at the surface
@@ -354,8 +356,8 @@ void CityPlayer::_physics_process(double p_delta) {
 	else if (!crouch && speed < 0.5f && crouch_t < fig->clip_len(CR_OUT) && !airborne) { clip = CR_OUT; hold = -2.0; }   // (up out of it)
 	else if (speed > 3.6f) { clip = SPRINT; cs = speed / 3.1; }
 	else if (speed > 2.0f) { clip = JOG; cs = speed / 2.4; }
-	else if (speed > 0.2f) { clip = WALK; cs = speed / 0.92; }
-	fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), get_global_position()), clip, std::min(std::max(cs, 0.5), 2.0), hold);
+	else if (speed > 0.08f) { clip = WALK; cs = speed / 0.92; }   // (slowing to a stop: the walk slows with him, his feet stay put)
+	fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), get_global_position()), clip, std::min(std::max(cs, clip == WALK ? 0.15 : 0.5), 2.0), hold);
 	if (Skeleton3D *sk = fig->skeleton()) {
 		if (!plant) { plant = memnew(FootPlant); sk->add_child(plant); }
 		const bool on = !airborne && !swimming && !frozen;
@@ -473,7 +475,7 @@ Vector3 CityPlayer::pelvis_world() const {
 Dictionary CityPlayer::get_frame_log() const {
 	Dictionary d;
 	d["node"] = get_global_position(); d["fig_at"] = fig ? fig->get_global_position() : Vector3(); d["pelvis"] = pelvis_world();
-	if (plant) { d["foot_l"] = plant->foot_w[0]; d["foot_r"] = plant->foot_w[1]; d["pelvis_drawn"] = plant->pelvis_w; d["plant_on"] = plant->is_active(); }
+	if (plant) { d["foot_l"] = plant->foot_w[0]; d["foot_r"] = plant->foot_w[1]; d["pelvis_drawn"] = plant->pelvis_w; d["plant_on"] = plant->is_active(); d["lock"] = Vector2i(plant->locked[0], plant->locked[1]); d["slide_l"] = plant->slide_w[0]; d["slide_r"] = plant->slide_w[1]; }
 	d["speed"] = speed; d["yaw"] = yaw;
 	d["clip"] = get_clip(); d["climb"] = climb; d["u"] = climb ? climb_t / climb_len : -1.0f; d["settle"] = settle_t; d["clip_off"] = clip_off;
 	return d;

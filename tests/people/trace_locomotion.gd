@@ -91,4 +91,4 @@ func _report() -> void:
 	if OS.get_cmdline_user_args().has("--frames"):
 		for i in frames.size():
 			var f: Dictionary = frames[i]
-			if f.has("foot_l"): print("LOCOF %04d %-12s %-20s sp %.2f L %s R %s hips %s" % [i, f.part, String(f.clip).trim_prefix("ual/"), float(f.speed), str(f.foot_l), str(f.foot_r), str(f.pelvis_drawn)])
+			if f.has("foot_l"): print("LOCOF %04d %-12s %-20s sp %.2f L %s R %s hips %s lock %s slide R %s" % [i, f.part, String(f.clip).trim_prefix("ual/"), float(f.speed), str(f.foot_l), str(f.foot_r), str(f.pelvis_drawn), str(f.get("lock", "")), str(f.get("slide_r", ""))])
