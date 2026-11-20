@@ -160,6 +160,19 @@ void CityCar::fit() {
 	if (mat_wheel.is_valid()) mat_wheel->set_shader_parameter("paint", paint);
 	mi_body->set_mesh(body_mesh);
 	set_car_maps();
+	// the driver's door: behind the front-left wheel's arch, 0.42 of the wheelbase long (0.95-1.25 m), from the sill to under
+	// the roof, the outer part of the body's left side; hinged at its front edge
+	{
+		const float r = split ? wr[0] : 0.33f, wb = split ? sp.wheelbase : cmod.half_len * 1.2f;
+		const float zf = (split ? wc[0].z : cmod.half_len * 0.62f) - r * 1.15f;
+		const float L = std::min(std::max(0.42f * wb, 0.95f), 1.25f);
+		const float y0 = (split ? wc[0].y : r) - r * 0.12f;   // (lower took a sliver of the underbody with it)
+		door_lo = Vector3(cmod.half_w * 0.42f, y0, zf - L);
+		door_hi = Vector3(cmod.half_w + 0.2f, cmod.height * 0.87f, zf);
+		door_hinge = Vector2(cmod.half_w * 0.9f, zf);
+		if (mat.is_valid()) { mat->set_shader_parameter("door_lo", door_lo); mat->set_shader_parameter("door_hi", door_hi); mat->set_shader_parameter("door_hinge", door_hinge); }
+		set_door(0.0f);
+	}
 	// the hull the dents are placed on: the drawn body
 	if (body_mesh.is_valid()) { const AABB a = body_mesh->get_aabb(); if (a.size.length() > 1.0f) hull = a; }
 	base_torque = car.s.torque;
@@ -333,6 +346,21 @@ void CityCar::take_wheel(bool p_on) {
 		for (int i = 0; i < 16; i++) t_zone[i] = 0;
 		t_steer_id = -1; t_steer = 0.0f;
 	}
+}
+
+void CityCar::set_door(float p_open) {
+	door = std::min(std::max(p_open, 0.0f), 1.0f);
+	if (mat.is_valid()) mat->set_shader_parameter("door_open", door * door * (3.0f - 2.0f * door));
+}
+
+Vector3 CityCar::door_spot() const {
+	const float z = 0.5f * (door_lo.z + door_hi.z) + 0.15f;
+	return Vector3(door_hinge.x / 0.9f + 0.55f, 0.0f, z);
+}
+
+Vector3 CityCar::seat_hips() const {
+	const float half_w = door_hinge.x / 0.9f;
+	return Vector3(half_w * 0.36f, door_lo.y + 0.42f, 0.5f * (door_lo.z + door_hi.z) - 0.18f);
 }
 
 void CityCar::become(int p_model, int p_feel, const Color &p_paint) {
@@ -578,6 +606,8 @@ void CityCar::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("put_away", "where"), &CityCar::put_away);
 	ClassDB::bind_method(D_METHOD("hit", "dv"), &CityCar::hit);
 	ClassDB::bind_method(D_METHOD("take_wheel", "on"), &CityCar::take_wheel);
+	ClassDB::bind_method(D_METHOD("set_door", "open"), &CityCar::set_door);
+	ClassDB::bind_method(D_METHOD("get_door"), &CityCar::get_door);
 	ClassDB::bind_method(D_METHOD("repair"), &CityCar::repair);
 	ClassDB::bind_method(D_METHOD("get_damage"), &CityCar::get_damage);
 	ADD_SIGNAL(MethodInfo("damaged", PropertyInfo(Variant::FLOAT, "severity"), PropertyInfo(Variant::FLOAT, "health")));

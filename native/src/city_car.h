@@ -60,6 +60,8 @@ class CityCar : public RigidBody3D {
 	Ref<ShaderMaterial> mat;
 	bool split = false;          // the model has its wheels apart: they spin, steer and ride their springs
 	Vector3 hub_local[4];        // the hubs at rest, node frame
+	// THE DRIVER'S DOOR (the car's left, +x): its part of the body, from the front-left wheel and the model's size; how far open
+	Vector3 door_lo, door_hi; Vector2 door_hinge; float door = 0.0f;
 	Camera3D *cam = nullptr;
 	Vector3 cam_pos, cam_look;
 	float cam_yaw = 0;
@@ -117,6 +119,10 @@ public:
 	void set_player(bool p_on) { player = p_on; }
 	// the player gets in (the wheel, the pedals and the chase camera are his) / out (the handbrake on, its camera off)
 	void take_wheel(bool p_on);
+	void set_door(float p_open);   // 0 shut .. 1 open
+	float get_door() const { return door; }
+	Vector3 door_spot() const;     // node frame: where a person stands to get in (beside the door, on the ground)
+	Vector3 seat_hips() const;     // node frame: the driver's hips on his seat
 	bool get_player() const { return player; }
 	void set_chase_camera(bool p_on) { chase_camera = p_on; }
 	bool get_chase_camera() const { return chase_camera; }

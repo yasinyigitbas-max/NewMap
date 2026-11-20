@@ -38,6 +38,13 @@ uniform vec3 steer_center = vec3(0.0);
 uniform vec3 steer_axis = vec3(0.0, 0.0, 1.0);
 // fix3p car damage (vehicles/car_damage.gd): up to 8 dents in mesh space. dent_p = (centre, radius m),
 // dent_d = (push direction * depth m, 0). dent_n = 0 on undamaged cars: the loop is skipped.
+// the driver's door (CityCar: Yasin, 20 Nov: "CARS DOORS SHOULD OPEN"): the body's part inside door_lo..door_hi swings
+// about a vertical hinge at its front edge (door_hinge: x, z), out by door_open x door_max (rad)
+uniform float door_open = 0.0;
+uniform float door_max = 1.15;
+uniform vec3 door_lo = vec3(0.0);
+uniform vec3 door_hi = vec3(0.0);
+uniform vec2 door_hinge = vec2(0.0);
 uniform int dent_n = 0;
 uniform vec4 dent_p[8];
 uniform vec4 dent_d[8];
@@ -80,6 +87,13 @@ void vertex() {
 			float wob = 0.75 + 0.25 * sin(dot(VERTEX, vec3(23.0, 17.0, 29.0)) + float(i) * 1.7);
 			VERTEX += dent_d[i].xyz * f * f * wob;
 		}
+	}
+	if (door_open > 0.001 && UV2.x <= 1.5 && all(greaterThanEqual(VERTEX, door_lo)) && all(lessThanEqual(VERTEX, door_hi))) {
+		float a = -door_open * door_max;   // (its back edge swings out, to +x)
+		float c = cos(a), s = sin(a);
+		vec2 p = VERTEX.xz - door_hinge;
+		VERTEX.xz = door_hinge + vec2(p.x * c + p.y * s, -p.x * s + p.y * c);
+		NORMAL.xz = vec2(NORMAL.x * c + NORMAL.z * s, -NORMAL.x * s + NORMAL.z * c);
 	}
 	if (UV2.x > 1.5) {
 		vec3 ax = normalize(steer_axis);
