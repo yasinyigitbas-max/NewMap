@@ -1114,6 +1114,7 @@ void CityCrowd::_process(double p_delta) {
 				const int w = crowd->place_held_at(r.x, r.z, h & ~8u, r.yaw);
 				if (w < 0) continue;
 				by_serial.push_back({ r.serial, w });
+				if (r.foe == -5) { driver_robbed(w); continue; }   // (his car was taken: he runs, city_crowd_actors.cpp)
 				rages++;
 				int foe = r.foe == -1 ? -1 : -3;
 				if (r.foe >= 0) for (const auto &b : by_serial) if (b.first == r.foe_serial) foe = b.second;
@@ -1539,7 +1540,7 @@ Dictionary CityCrowd::stats() const {
 	d["near_bodies"] = nn; d["near_pool"] = (int)near_pool.size(); d["in_physical_body"] = nbdy; d["umbrellas"] = prop_shown[0]; d["towels"] = prop_shown[1];
 	d["alarms_player_hit"] = alarms[1]; d["alarms_car_hit"] = alarms[2]; d["alarms_bike_down"] = alarms[3]; d["alarms_npc_fight"] = alarms[4]; d["cars_hit_people"] = cars_hit_people;
 	d["helpers_sent"] = helpers_sent; d["helpers_knelt"] = helpers_knelt; d["steps_in"] = steps_in; d["actors"] = (int)actors.size(); d["downs"] = (int)downs.size();
-	d["cowering"] = cowering; d["shots_heard"] = shots_heard; d["alarms_shot"] = alarms[5]; d["alarms_mugging"] = alarms[6]; d["alarms_car_taken"] = alarms[7];
+	d["cowering"] = cowering; d["shots_heard"] = shots_heard; d["drivers_robbed"] = drivers_robbed; d["alarms_shot"] = alarms[5]; d["alarms_mugging"] = alarms[6]; d["alarms_car_taken"] = alarms[7];
 	d["ducked"] = s.ducks; d["stared"] = s.stared; d["coins"] = s.coins; d["lines_said"] = s.lines_said;
 	{ PackedFloat32Array cl; const double ls[11] = { l_sit_in, l_sit_out, l_gsit_in, l_gsit_out, l_lie_in, l_lie_out, l_duck_in, l_duck_out, l_fight_in, l_fight_out, l_surprise }; for (double l : ls) cl.push_back((float)l); d["clip_seconds"] = cl; }   // into and out of: a seat, the ground, lying, a crouch, a fight; the start
 	d["shoved_by_player"] = n_shoved; d["told_him_off"] = n_told_off; d["hit_back"] = n_hit_back;

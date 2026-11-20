@@ -57,7 +57,7 @@ class RigidBody3D;
 class CityTraffic : public Node3D {
 	GDCLASS(CityTraffic, Node3D)
 public:
-	struct RageOut { float x, y, z, yaw; uint32_t serial; int foe; uint32_t foe_serial; };
+	struct RageOut { float x, y, z, yaw; uint32_t serial; int foe; uint32_t foe_serial; };   // foe -5: his car was taken and he runs
 private:
 
 public:
@@ -245,6 +245,8 @@ private:
 		bool by_player = false, driver_out = false;
 		// CAR ALARMS (Yasin's GTA IV list): a parked car that is knocked and moves rings for 20 s
 		class AudioStreamPlayer3D *alarm = nullptr; float alarm_t = 0.0f; bool alarm_rang = false;
+		// TAKEN (hijack): the player took it from its driver; it is his car now (never braked, never asked back) until he leaves it far behind
+		bool taken = false;
 		int hit_by = -1; uint32_t hit_by_serial = 0;
 	};
 	LooseCar loose[LOOSE];
@@ -343,6 +345,13 @@ public:
 	// he dares (the boldest temper: quickest off the line, shortest gaps, fastest), from now on. The guns will call it.
 	void panic(const Vector3 &p_at, double p_radius, double p_seconds);
 	int panicked = 0;
+	// TAKING A CAR (Yasin's GTA IV list: "driver reacts when you take their car"): the moving car nearest p_at within
+	// p_r going slower than p_max_v (its id, -1 none); and taking it: it becomes a physical car where it is, stopped, its
+	// driver gets out at his door and either goes for the player (p_fight) or runs off shouting. Returns the car (a
+	// CityCar, in the group "vehicles"), null if it cannot be.
+	int32_t car_to_take(const Vector3 &p_at, double p_r, double p_max_v) const;
+	Object *take_car(int32_t p_id, bool p_fight);
+	int cars_taken = 0;
 	int order_result(int p_ticket);
 	int get_max_cars() const { return max_cars; }
 	void set_parked(bool p_on) { parked_on = p_on; active_dirty = true; }

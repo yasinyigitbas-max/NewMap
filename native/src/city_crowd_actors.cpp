@@ -285,6 +285,24 @@ void CityCrowd::actors_update(double p_delta) {
 			}
 			if ((a.st == 1 && !still_down && !by_near && a.t > 4.0f) || a.life > 70.0f) { actor_release(a.walker); continue; }
 		}
+		if (a.role == R_DRIVER) {
+			if (a.st == 0 && a.t > 1.2f) {   // out: away from the player, shouting
+				Vector3 pp = pl ? pl->get_global_position() : at - Vector3(0, 0, 1);
+				Vector3 d = at - pp; d.y = 0.0f;
+				if (d.length() < 0.1f) d = Vector3(1, 0, 0);
+				d.normalize();
+				actor_go(a.walker, at + d * 22.0f, 5.0, 0.6);
+				alarm(at, 18.0f, 8.0f, 7);
+				incident(at, 7, true, a.walker, 0);
+				a.st = 1;
+			} else if (a.st == 1 && (a.arrived || a.t > 8.0f)) {   // far enough: he calls
+				static const StringName PHONE("ual/Idle_TalkingPhone_Loop");
+				const Vector3 pp = pl ? pl->get_global_position() : at;
+				actor_stand(a.walker, std::atan2(pp.x - at.x, pp.z - at.z), PHONE, -1.0, 0);
+				crowd->act[i] = pc::A_CALL;
+				a.st = 2;
+			} else if (a.st == 2 && a.t > 9.0f) { actor_release(a.walker); continue; }
+		}
 		if (a.role == R_COWER && a.life > a.near) {   // (gun_aimed: near is how long it lasts) the aim is off him: he runs
 			const Vector3 from = a.to;
 			actor_release(a.walker);
@@ -293,6 +311,17 @@ void CityCrowd::actors_update(double p_delta) {
 		}
 		k++;
 	}
+}
+
+// A driver whose car the player took (CityTraffic::take_car, not fighting): out of the seat, he runs off 22 m away from
+// the player, then stands and calls (the police: CityLaw hears of it as an incident)
+void CityCrowd::driver_robbed(int p_walker) {
+	if (!actor_take(p_walker, R_DRIVER)) return;
+	static const StringName EXIT("ual/Sitting_Exit");
+	Actor *a = actor_of(p_walker);
+	actor_stand(p_walker, a->face, EXIT, -2.0, 7101);
+	a->st = 0;
+	drivers_robbed++;
 }
 
 // ---- guns (none yet): what they will tell the people

@@ -160,6 +160,8 @@ private:
 	float ground_y(const Vector3 &p_at, float p_def) const;
 	void actors_update(double p_delta);
 	void stay_down(int p_walker, bool p_on);
+	void driver_robbed(int p_walker);
+	int drivers_robbed = 0;
 	int uniform_of(int p_walker) const;
 	// the hurt who stay down (a hard knock): the body lies until a medic has been (or two minutes)
 	struct Down { int walker; double t; bool treated = false; int helpers = 0; };

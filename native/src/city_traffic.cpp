@@ -573,6 +573,8 @@ void CityTraffic::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("drive_car_to", "car", "to"), &CityTraffic::drive_car_to);
 	ClassDB::bind_method(D_METHOD("pull_car_over", "car", "to", "side"), &CityTraffic::pull_car_over);
 	ClassDB::bind_method(D_METHOD("panic", "at", "radius", "seconds"), &CityTraffic::panic);
+	ClassDB::bind_method(D_METHOD("car_to_take", "at", "radius", "max_speed"), &CityTraffic::car_to_take);
+	ClassDB::bind_method(D_METHOD("take_car", "id", "fight"), &CityTraffic::take_car);
 	ClassDB::bind_method(D_METHOD("let_car_go", "car"), &CityTraffic::let_car_go);
 	ClassDB::bind_method(D_METHOD("order_result", "ticket"), &CityTraffic::order_result);
 	ClassDB::bind_method(D_METHOD("bike_stats"), &CityTraffic::bike_stats);
