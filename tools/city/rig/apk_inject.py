@@ -15,7 +15,9 @@ keeps its data (rig_args.txt).
 
   python -I tools/city/rig/apk_inject.py --in=OUT/citykit_rig.apk --out=OUT/inject/rig_inj.apk --so --gd=tools/city/rig/rig.gd
 """
+import hashlib
 import os
+import struct
 import subprocess
 import sys
 import zipfile
@@ -32,6 +34,46 @@ def arg(name, default=None):
         if a.startswith("--" + name + "="):
             return a.split("=", 1)[1]
     return default
+
+
+SPARSE = "assets/assets.sparsepck"
+
+
+def sparse_index(data, put, drop):
+    """The export's file index (a sparse Godot pack, format 4: header, then at 0x68 the count and per file: padded path,
+    offset, SIZE, MD5, flags). The engine reads a file by the size listed here: a swapped file of another size came out
+    cut short ("file corrupt", 20 Nov). Swapped files get their new size and MD5, added files an entry, removed ones none."""
+    n = struct.unpack_from("<I", data, 0x68)[0]
+    p = 0x6C
+    ents = []
+    for _ in range(n):
+        ln = struct.unpack_from("<I", data, p)[0]; p += 4
+        path = data[p:p + ln].rstrip(b"\0").decode("utf-8"); p += ln
+        off, size = struct.unpack_from("<QQ", data, p); p += 16
+        md5 = data[p:p + 16]; p += 16
+        fl = struct.unpack_from("<I", data, p)[0]; p += 4
+        ents.append([path, off, size, md5, fl])
+    if p != len(data):
+        sys.exit("the sparse index did not parse to its end (%d of %d): format changed?" % (p, len(data)))
+    rel = {d[len("assets/"):]: s for d, s in put.items() if d.startswith("assets/")}
+    gone = {d[len("assets/"):] for d in drop if d.startswith("assets/")}
+    seen = set()
+    out_ents = []
+    for e in ents:
+        if e[0] in gone:
+            continue
+        if e[0] in rel:
+            b = open(rel[e[0]], "rb").read(); e[2] = len(b); e[3] = hashlib.md5(b).digest(); seen.add(e[0])
+        out_ents.append(e)
+    for path, src in rel.items():
+        if path not in seen:
+            b = open(src, "rb").read(); out_ents.append([path, 0, len(b), hashlib.md5(b).digest(), 0])
+    body = bytearray(data[:0x68]) + struct.pack("<I", len(out_ents))
+    for path, off, size, md5, fl in out_ents:
+        pb = path.encode("utf-8"); ln = (len(pb) + 1 + 3) // 4 * 4
+        body += struct.pack("<I", ln) + pb + b"\0" * (ln - len(pb)) + struct.pack("<QQ", off, size) + md5 + struct.pack("<I", fl)
+    print("INJECT index: %d entries (was %d), %d sizes updated" % (len(out_ents), n, len(seen)))
+    return bytes(body)
 
 
 def main():
@@ -69,6 +111,9 @@ def main():
         for it in zi.infolist():
             if it.filename in put or it.filename in drop or it.filename.startswith("META-INF/"):
                 continue      # (replaced, taken out, or the old signature: apksigner writes a new one)
+            if it.filename == SPARSE:
+                zo.writestr(it, sparse_index(zi.read(SPARSE), put, drop), compress_type=it.compress_type)
+                continue
             zo.writestr(it, zi.read(it.filename), compress_type=it.compress_type)
         for d, s in put.items():
             # native libraries stored, not deflated (the app maps them straight from the APK)
