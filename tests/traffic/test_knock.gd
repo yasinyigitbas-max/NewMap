@@ -116,6 +116,7 @@ func _physics_process(delta: float) -> bool:
 			for c: Dictionary in s.out:
 				if bool(c.parked): moved = maxf(moved, Vector2((c.at as Vector3).x - spot.x, (c.at as Vector3).z - spot.z).length()); up = minf(up, float(c.up))
 			_check(moved > 0.3, "it was shoved: %.1f m from its stall" % moved)
+			_check(int(s.alarms) - int(k0.get("alarms", 0)) >= 1, "its alarm rings (Yasin's GTA IV list: car alarms): %d alarm(s)" % (int(s.alarms) - int(k0.get("alarms", 0))))
 			_check(speed_most < 40.0 and far_most < 4.0, "no wild numbers: fastest knocked car %.1f m/s, farthest from the ground's height %.2f m" % [speed_most, far_most])
 			var cs: Dictionary = car.call(&"get_state")
 			_check(float(cs.hardest_knock_g) > 1.0 and car.global_basis.y.y > 0.5, "the player's car felt it (%.0f g) and is on its wheels (%.2f)" % [float(cs.hardest_knock_g), car.global_basis.y.y])

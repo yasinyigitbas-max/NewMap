@@ -1,6 +1,8 @@
 // CityTraffic at run time: the step on its own thread, the car batches, the parked cars, the streamer's cells, the
 // collision pool. See city_traffic.h for how it hangs together.
 #include "city_traffic.h"
+#include "city_sfx.h"
+#include <godot_cpp/classes/audio_stream_player3d.hpp>
 #include "bike_look.h"
 
 #include <godot_cpp/classes/box_shape3d.hpp>
@@ -1024,6 +1026,8 @@ void CityTraffic::loose_put_away(int k) {
 	L.car->set_collision_layer(0); L.car->set_collision_mask(0);
 	L.car->put_away(Vector3(0.0f, -700.0f - 8.0f * (float)k, 0.0f));
 	L.on = false; L.rest_t = 0.0f;
+	if (L.alarm) L.alarm->stop();
+	L.alarm_rang = false; L.alarm_t = 0.0f;
 }
 
 // A car of the traffic (a row, or a parked one) becomes a physical car where it is, with the speed it has.
@@ -1048,6 +1052,8 @@ bool CityTraffic::knock(BodyWant &w) {
 	L.car->set_collision_layer(16); L.car->set_collision_mask(1 | 16);
 	L.car->launch(Transform3D(bs, Vector3(w.x, w.y + 0.03f, w.z)), bs.get_column(2) * w.v);
 	L.parked = w.stall >= 0;
+	L.alarm_rang = false; L.alarm_t = 0.0f;
+	if (L.alarm) L.alarm->stop();
 	// a parked car stands with its handbrake on; a driver who is hit holds his wheel for a moment, then brakes
 	L.car->set_controls(0.0, 0.0, L.parked ? 0.0 : std::min(std::max(w.steer / 0.61f, -1.0f), 1.0f), L.parked ? 1.0 : 0.0, false);
 	L.on = true; L.model = w.model; L.colour = w.colour; L.serial = ++loose_serial; L.rest_t = 0.0f; L.age = 0.0f; L.ask_cd = 0.0f;
@@ -1092,7 +1098,21 @@ void CityTraffic::loose_update(double p_delta) {
 		L.rest_t = (v.length_squared() < 0.12f && av.length_squared() < 0.09f) ? L.rest_t + dt : 0.0f;
 		const float dx = t.origin.x - last_cam.x, dz = t.origin.z - last_cam.z, d2 = dx * dx + dz * dz;
 		if (t.origin.y < last_cam.y - 120.0f || d2 > 180.0f * 180.0f || (d2 > 120.0f * 120.0f && L.rest_t > 1.0f)) { loose_put_away(k); kc.taken_away++; continue; }
-		if (L.parked) continue;
+		if (L.parked) {   // nobody in it: its alarm rings once it is shoved (20 s)
+			if (!L.alarm_rang && L.age > 0.05f && v.length() > 0.4f) {
+				L.alarm_rang = true; kc.alarms++;
+				if (!L.alarm) {
+					L.alarm = memnew(AudioStreamPlayer3D);
+					L.alarm->set_stream(city_sfx("car_alarm.wav", true));
+					L.alarm->set_unit_size(7.0); L.alarm->set_max_distance(90.0); L.alarm->set_volume_db(-3.0);
+					L.car->add_child(L.alarm);
+				}
+				if (L.alarm->get_stream().is_valid()) L.alarm->play();
+				L.alarm_t = 20.0f;
+			}
+			if (L.alarm && L.alarm->is_playing()) { L.alarm_t -= dt; if (L.alarm_t <= 0.0f) L.alarm->stop(); }
+			continue;
+		}
 		if (L.age > 0.35f) L.car->set_controls(0.0, 0.7, 0.0, 0.0, false);
 		// ROAD RAGE (Yasin: "once collided, the driver should get out and attack us, unless its a parked car"; "if other cars
 		// hit each other, they should try to attack the aggressor car instead"): once it stands, its driver gets out
@@ -1208,7 +1228,7 @@ Array CityTraffic::stalls_near(const Vector3 &p_at, double p_r) const {
 
 Dictionary CityTraffic::knock_stats() const {
 	Dictionary d;
-	d["moving"] = kc.moving; d["parked"] = kc.parked; d["rejoined"] = kc.rejoined; d["drivers_out"] = kc.drivers_out; d["taken_away"] = kc.taken_away; d["no_slot"] = kc.no_slot; d["last_refusal"] = kc.refused;
+	d["moving"] = kc.moving; d["parked"] = kc.parked; d["rejoined"] = kc.rejoined; d["drivers_out"] = kc.drivers_out; d["alarms"] = kc.alarms; d["taken_away"] = kc.taken_away; d["no_slot"] = kc.no_slot; d["last_refusal"] = kc.refused;
 	Array a;
 	for (int k = 0; k < LOOSE; k++) {
 		if (!loose[k].on || !loose[k].car) continue;

@@ -243,6 +243,8 @@ private:
 		// ROAD RAGE (Yasin, 19 Nov): hit by the player's car (by_player), or by another knocked car (hit_by: its slot and
 		// serial); once it stands, its driver gets out (driver_out: the car never drives on again)
 		bool by_player = false, driver_out = false;
+		// CAR ALARMS (Yasin's GTA IV list): a parked car that is knocked and moves rings for 20 s
+		class AudioStreamPlayer3D *alarm = nullptr; float alarm_t = 0.0f; bool alarm_rang = false;
 		int hit_by = -1; uint32_t hit_by_serial = 0;
 	};
 	LooseCar loose[LOOSE];
@@ -254,7 +256,7 @@ private:
 	std::vector<Ref<Resource>> keep_models;   // every model's body and wheels, held so that a knock loads nothing
 	struct Hidden { int32_t id; int frames; bool seen; };
 	std::vector<Hidden> hidden;      // rows that are a physical car now: not drawn, no box, until the step has dropped them
-	struct KnockCount { int moving = 0, parked = 0, rejoined = 0, drivers_out = 0, taken_away = 0, no_slot = 0, refused = 0; } kc;
+	struct KnockCount { int moving = 0, parked = 0, rejoined = 0, drivers_out = 0, taken_away = 0, no_slot = 0, refused = 0, alarms = 0; } kc;
 	bool knock(BodyWant &w);
 	void loose_update(double p_delta);
 	void loose_put_away(int k);
