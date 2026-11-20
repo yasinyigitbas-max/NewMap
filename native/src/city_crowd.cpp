@@ -1397,6 +1397,7 @@ Dictionary CityCrowd::fight_stats() const {
 
 Dictionary CityCrowd::stats() const {
 	Dictionary d;
+	{ int on = 0; for (int k = 0; k < CAPSULES; k++) on += cap_on[k] ? 1 : 0; d["capsules_on"] = on; d["capsule_steps"] = cap_steps; d["extras"] = extras; d["has_player"] = crowd->has_player; }
 	const pc::Stats &s = crowd->st;
 	int r[7];
 	crowd->audit(own_clock, r);

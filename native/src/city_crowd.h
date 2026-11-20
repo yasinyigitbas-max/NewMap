@@ -102,6 +102,7 @@ private:
 	// the smaller things (city_crowd_extra.cpp): capsules round the player, umbrellas, towels, the murmur
 	enum { CAPSULES = 12 };
 	bool extras = false;
+	int cap_steps = 0;   // (tests) physics steps the capsules were placed
 	RID cap_body[CAPSULES], cap_shape[CAPSULES];
 	bool cap_on[CAPSULES];
 	Ref<Mesh> mesh_umb, mesh_towel;

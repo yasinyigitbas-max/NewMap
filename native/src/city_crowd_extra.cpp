@@ -205,11 +205,14 @@ void CityCrowd::extras_update(double p_alpha) {
 void CityCrowd::_physics_process(double p_delta) {
 	(void)p_delta;
 	if (!extras || !ready) return;
+	cap_steps++;
 	PhysicsServer3D *ps = PhysicsServer3D::get_singleton();
 	int pick[CAPSULES]; float pd[CAPSULES]; int n = 0;
 	if (crowd->has_player) {
 		for (int i = 0; i < crowd->hi; i++) {
-			if (!crowd->alive[i] || (crowd->flags[i] & pc::F_HIDDEN) || crowd->mode[i] == pc::M_BODY) continue;
+			// (a person in his balancing body too, while he stands: Yasin, 20 Nov: "we can just pass thru npcs": bumped, a person
+			// was handed to his body and his capsule went, and the player walked through him)
+			if (!crowd->alive[i] || (crowd->flags[i] & pc::F_HIDDEN)) continue;
 			const float dx = crowd->x[i] - crowd->pl_x, dz = crowd->z[i] - crowd->pl_z, d2 = dx * dx + dz * dz;
 			if (d2 > 64.0f) continue;
 			int at = n < CAPSULES ? n++ : -1;
@@ -221,8 +224,18 @@ void CityCrowd::_physics_process(double p_delta) {
 		if (k < n) {
 			const int i = pick[k];
 			const bool low = crowd->mode[i] == pc::M_STAY && (crowd->act[i] == pc::A_LIE_BACK || crowd->act[i] == pc::A_LIE_FRONT);
-			ps->body_set_state(cap_body[k], PhysicsServer3D::BODY_STATE_TRANSFORM, Transform3D(Basis(), Vector3(crowd->x[i], crowd->y[i] + (low ? -0.5f : 0.85f), crowd->z[i])));
-			cap_on[k] = true;
+			Vector3 at(crowd->x[i], crowd->y[i] + (low ? -0.5f : 0.85f), crowd->z[i]);
+			bool keep = true;
+			if (crowd->mode[i] == pc::M_BODY) {   // on his body: where it is, while it stands (lying, nothing to bump)
+				keep = false;
+				for (const Near &nb : near_pool) {
+					if (nb.walker != crowd->id[i] || !nb.ped) continue;
+					const Vector3 b = nb.ped->body_at();
+					if (b.y - crowd->y[i] > 0.6f) { at = Vector3(b.x, crowd->y[i] + 0.85f, b.z); keep = true; }
+				}
+			}
+			if (keep) { ps->body_set_state(cap_body[k], PhysicsServer3D::BODY_STATE_TRANSFORM, Transform3D(Basis(), at)); cap_on[k] = true; }
+			else if (cap_on[k]) { ps->body_set_state(cap_body[k], PhysicsServer3D::BODY_STATE_TRANSFORM, Transform3D(Basis(), Vector3(0, -900.0f - k * 4.0f, 0))); cap_on[k] = false; }
 		} else if (cap_on[k]) {
 			ps->body_set_state(cap_body[k], PhysicsServer3D::BODY_STATE_TRANSFORM, Transform3D(Basis(), Vector3(0, -900.0f - k * 4.0f, 0)));
 			cap_on[k] = false;
