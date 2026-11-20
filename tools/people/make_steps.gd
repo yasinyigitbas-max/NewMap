@@ -2,7 +2,8 @@ extends SceneTree
 ## The player's moving clips, all from the Quaternius pack (the Animator, 20 Nov; Yasin: "cant we make start walk end
 ## walk stop ones ourselves?", "just work on quaternius animations", "just make one normal mode"), for each figure:
 ## characters/rocketbox/clips_step_<male|female>.res, library "step" on CityPed:
-##  walk, jog, idle  Walk_Loop, Jog_Fwd_Loop, Idle_Loop with the hands open (the fingers of Idle_Talking_Loop)
+##  walk, jog, idle  Walk_Loop, Jog_Fwd_Loop, Idle_Loop with the hands open (the fingers of Idle_Talking_Loop); the idle's
+##                   hips and legs held still (its upper body moves as it did)
 ##  start            from standing (idle's first frame) into the walk: the weight goes over the right foot, the body tips
 ##                   a little forward, the left foot steps off; the walk comes in slow and reaches its own pace just as
 ##                   the clip ends, exactly at the loop's start (the walk takes over at its own first frame, no jump)
@@ -74,6 +75,7 @@ func _initialize() -> void:
 		var gaits := {}
 		for c in [["walk", "Walk_Loop"], ["jog", "Jog_Fwd_Loop"], ["idle", IDLE]]:
 			var a := _open_hands(ual.get_animation(String(c[1])), open_src)
+			if c[0] == "idle": a = _still_legs(a)
 			out.add_animation(StringName(c[0]), a); gaits[c[0]] = a; made += 1
 		var walk: Animation = gaits["walk"]
 		var idle_o: Animation = gaits["idle"]
@@ -334,6 +336,26 @@ func _open_hands(src: Animation, hands: Animation) -> Animation:
 		if not bn.contains("Finger") or not hp.has(bn) or hp[bn][0] == null: continue
 		while a.track_get_key_count(i) > 0: a.track_remove_key(i, 0)
 		a.rotation_track_insert_key(i, 0.0, hp[bn][0])
+	return a
+
+## the idle with still legs (Yasin, 20 Nov: "remove the leg twitch in the idle animation entirely, upper body movement
+## is good but his leg looks like he is having a seizure"): the hips and legs held at the clip's first frame (where the
+## walk start begins and the stops end, so they still meet it exactly); the spine, arms and head move as they did
+const STILL := ["Bip01_Pelvis", "Bip01_L_Thigh", "Bip01_L_Calf", "Bip01_L_Foot", "Bip01_R_Thigh", "Bip01_R_Calf", "Bip01_R_Foot"]
+func _still_legs(src: Animation) -> Animation:
+	var a: Animation = src.duplicate(true)
+	for i in a.get_track_count():
+		var bn := String(a.track_get_path(i).get_subname(0))
+		if not bn in STILL: continue
+		match a.track_get_type(i):
+			Animation.TYPE_ROTATION_3D:
+				var q: Quaternion = a.rotation_track_interpolate(i, 0.0)
+				while a.track_get_key_count(i) > 0: a.track_remove_key(i, 0)
+				a.rotation_track_insert_key(i, 0.0, q)
+			Animation.TYPE_POSITION_3D:
+				var v: Vector3 = a.position_track_interpolate(i, 0.0)
+				while a.track_get_key_count(i) > 0: a.track_remove_key(i, 0)
+				a.position_track_insert_key(i, 0.0, v)
 	return a
 
 func _minf(p: PackedFloat32Array) -> float:
