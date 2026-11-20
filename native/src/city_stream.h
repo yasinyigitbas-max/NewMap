@@ -72,6 +72,7 @@ private:
 	std::vector<Node *> leaving;                  // reap_thread off: freed in parts on the main thread
 	HashMap<int, uint64_t> ramping;               // cell -> arrival usec while its switch to far sweeps out (tiers)
 	Dictionary stats;
+	mutable Dictionary cells_cache; mutable uint64_t cells_sig = 0; mutable bool cells_made = false;   // (get_cells: rebuilt only when a state or node changed - the night lights read it once per cell, 20 Nov: 45 ms frames)
 	std::vector<float> v_add_ms, v_ready_ms; int ready_dropped = 0;
 	StaticBody3D *probe_body = nullptr;
 	uint64_t player_id = 0;
@@ -177,7 +178,7 @@ public:
 	void set_night(double v);
 	void warm_up(Camera3D *p_cam, int p_frames = 3);
 	// for the rig and tools
-	Dictionary get_cells() const;           // key -> {"state", "node"}: built on request (not per frame)
+	Dictionary get_cells() const;           // key -> {"state", "node"}: the same table until a cell changes (scripts read it in loops)
 	Vector3 get_focus() const { return focus; }
 	Dictionary get_stats() const { return stats; }
 	PackedFloat32Array get_ready_ms() const;

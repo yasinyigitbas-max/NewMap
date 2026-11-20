@@ -226,8 +226,12 @@ bool CityStream::is_ready(const Vector3 &p) const {
 }
 
 Dictionary CityStream::get_cells() const {
+	uint64_t sig = 1469598103934665603ull;      // (FNV over every cell's state and node: a few hundred ns)
+	for (const Cell &c : cells) { sig = (sig ^ (uint64_t)c.state) * 1099511628211ull; sig = (sig ^ (uint64_t)(uintptr_t)c.node) * 1099511628211ull; }
+	if (cells_made && sig == cells_sig) return cells_cache;
 	Dictionary d;
 	for (const Cell &c : cells) { Dictionary e; e["state"] = c.state; e["node"] = c.node; d[c.key] = e; }
+	cells_cache = d; cells_sig = sig; cells_made = true;
 	return d;
 }
 
