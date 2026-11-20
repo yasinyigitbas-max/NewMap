@@ -43,11 +43,12 @@ class CityPlayer : public CharacterBody3D {
 	float move_speed = 0.0f;      // the pace he means (his body turns, then goes the way it faces)
 	Vector3 lean_a;               // his acceleration, smoothed: the body leans into a turn and into a start
 	float last_speed = 0.0f;
-	int step_mode = 0;            // a step clip playing: 1 the start, 2 a stop (tools/people/make_steps.gd)
+	int step_mode = 0;            // a step clip playing: 1 the start, 2 a stop, 3 a turn on the spot (tools/people/make_steps.gd)
 	StringName step_clip;
 	float step_t = 0.0f, step_cs = 1.0f, step_v0 = 0.0f;
 	double stop_ph_prev = -1.0;   // (waiting for the footfall to stop on: the stride's share last frame)
-	int starts = 0, stops = 0;    // (the tests)
+	int starts = 0, stops = 0, turns = 0;    // (the tests)
+	float turn_yaw0 = 0.0f, turn_k = 1.0f;   // a turn on the spot (step_mode 3): the way he faced, the clip's turn scaled to the angle
 	bool is_angry() const { return mood == 1 || combat || angry_t < ANGRY_HOLD; }
 	Vector3 cam_pos, knock_v;
 	// THE OLD GAME'S TOUCH SCHEME (docs/OLD_CONTROLS_SPEC.md; Yasin: "copy it as it was"): the left half of the screen is

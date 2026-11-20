@@ -72,6 +72,17 @@ func _initialize() -> void:
 			out.add_animation(StringName("%s_stop_l" % s[0]), _stop(walk, idle, land_l, v))
 			out.add_animation(StringName("%s_stop_r" % s[0]), _stop(walk, idle, fmod(land_l + 0.5, 1.0), v))
 			made += 3
+		# TURNS on the spot: the clip's own turn taken out of its hips and kept as meta "yaw" (the player turns his body
+		# by it, so the clip's planted feet stay where they are on the ground). The Rocketbox 90s, for both gaits (the
+		# player scales them from 45 to 180 degrees). (The fitted Quaternius Turn90 / Turn180 turn 0 degrees: their turn
+		# is lost in the fitting; their feet shuffle on the spot)
+		var rbl: AnimationLibrary = load("res://characters/rocketbox/clips_%s.res" % g)
+		for tt in [["turn_l", rbl, "turn_left_inplace"], ["turn_r", rbl, "turn_right_inplace"]]:
+			var src: AnimationLibrary = tt[1]
+			if not src.has_animation(String(tt[2])): print("STEPS ERROR no clip %s" % tt[2]); continue
+			print("STEPS   %s from %s:" % [tt[0], tt[2]])
+			out.add_animation(StringName(tt[0]), _turn(src.get_animation(String(tt[2])), idle))
+			made += 1
 		var path := "res://characters/rocketbox/clips_step_%s.res" % g
 		var err := ResourceSaver.save(out, path)
 		print("STEPS %s: %s (%s)" % [g, path, "saved" if err == OK else "ERROR %d" % err])
@@ -250,3 +261,53 @@ func _stance_side(p: Dictionary) -> Vector3:
 	var d := Vector3(f.x - h.x, 0, 0)
 	last_stance = d.normalized() if d.length() > 0.001 else Vector3(-1, 0, 0)
 	return last_stance
+
+## A turn on the spot with its turn taken out: every frame the hips' heading against the first frame (about the
+## figure's up, + turns forward toward +x as the player's yaw does) is measured, the hips (and with them everything)
+## are turned back by it about the skeleton's origin, and the heading is kept as meta "yaw" (rad, a value per 1/30 s)
+func _turn(src: Animation, idle: Animation) -> Animation:
+	var tf := to_fig.orthonormalized()
+	var up := (to_fig.inverse() * Vector3(0, 1, 0)).normalized()
+	var pi := skel.find_bone(pelvis)
+	var par := skel.get_bone_parent(pi)
+	var g0: Basis = (_glob(_mix(_pose(src, 0.0), {}, 0.0))[pi] as Transform3D).basis.orthonormalized()
+	var n := int(round(src.length * FPS))
+	var yaw := PackedFloat32Array()
+	var last := 0.0
+	for k in n + 1:
+		var g: Basis = (_glob(_mix(_pose(src, minf(k / FPS, src.length)), {}, 0.0))[pi] as Transform3D).basis.orthonormalized()
+		var v := (tf * (g * g0.inverse()) * tf.inverse()) * Vector3(0, 0, 1)
+		var y := atan2(v.x, v.z)
+		while y - last > PI: y -= TAU
+		while y - last < -PI: y += TAU
+		yaw.append(y); last = y
+	# where the turn is all but done (97 %): the clip is cut 0.35 s after it, and from 0.25 s before it blends into
+	# ual/Idle_Loop's first frame, so it ends exactly where standing (and the walk start) begins (the Rocketbox turn
+	# settles 0.7 s more into its own stance: the start that followed slid its feet 0.31 m/s)
+	var done := 0
+	for k in n + 1:
+		if absf(yaw[k]) >= absf(yaw[n]) * 0.97: done = k; break
+	var cut := minf(src.length, done / FPS + 0.35)
+	var idle0 := _pose(idle, 0.0)
+	var pose_at := func(t: float) -> Dictionary:
+		var p := _mix(_pose(src, t), {}, 0.0)
+		var gl := _glob(p)
+		var pg: Transform3D = gl[par] if par >= 0 else Transform3D()
+		var fk := clampf(t * FPS, 0.0, float(n))
+		var y: float = lerpf(yaw[int(fk)], yaw[mini(int(fk) + 1, n)], fk - floorf(fk))
+		var turn_back := Basis(up, -y)
+		var gp: Transform3D = gl[pi]
+		var ng := Transform3D(turn_back * gp.basis, turn_back * gp.origin)
+		var local := pg.affine_inverse() * ng
+		p[pelvis][0] = local.basis.orthonormalized().get_rotation_quaternion()
+		p[pelvis][1] = local.origin
+		return _mix(p, idle0, _ss(done / FPS - 0.25, cut, t))
+	var a := _bake(cut, pose_at, 1.0, 0.0, 0.0)
+	a.set_meta("yaw", yaw)
+	a.set_meta("done_at", done / FPS)   # (the turn 97 % done)
+	print("STEPS     %.2f s (cut from %.2f), turns %+.0f degrees (half way at %.2f s, 97 %% at %.2f s)" % [cut, src.length, rad_to_deg(yaw[n]), _half(yaw) / FPS, done / FPS])
+	return a
+
+func _half(y: PackedFloat32Array) -> float:
+	for k in y.size(): if absf(y[k]) >= absf(y[y.size() - 1]) * 0.5: return float(k)
+	return 0.0

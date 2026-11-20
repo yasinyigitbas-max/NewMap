@@ -311,12 +311,37 @@ void CityPlayer::_physics_process(double p_delta) {
 		// 195 and 130 degrees a second; it was 9, 515 a second), he slows into a sharp one, and he gathers pace and loses
 		// it over a step or two (2.6-3.2 m/s2 up, 3-4 down; it was 9 and 7-14).
 		const float want_len = Vector3(want.x, 0, want.z).length();
-		if (want_len > 0.05f) {
+		if (step_mode == 3 && (airborne || settle_t < 1.1f)) step_mode = 0;
+		if (want_len > 0.05f && step_mode != 3) {
 			const float want_yaw = std::atan2(want.x, want.z);
 			float d = std::fmod(want_yaw - yaw + 3.14159265f, 6.2831853f); if (d < 0.0f) d += 6.2831853f; d -= 3.14159265f;
-			const float rate = move_speed < 0.4f ? 5.0f : (move_speed < 2.0f ? 3.4f : 2.3f);
-			yaw += std::min(std::max(d, -rate * dt), rate * dt);
-			turn_left = std::fabs(d) - std::min(std::fabs(d), rate * dt);
+			// TURNING ON THE SPOT (the Rocketbox turn, its own turn taken out: make_steps.gd): standing, asked to go more
+			// than 50 degrees off the way he faces, he turns with his feet (the clip's turn scaled to the angle, 45 to
+			// 180 degrees), then sets off. Smaller: he steps round as before.
+			if (step_mode == 0 && move_speed < 0.05f && speed < 0.08f && std::fabs(d) > 0.87f && !airborne && settle_t >= 1.1f) {
+				const StringName c(d > 0.0f ? "step/turn_l" : "step/turn_r");
+				if (fig->clip_len(c) > 0.0) {
+					step_mode = 3; step_clip = c; step_t = 0.0f; turn_yaw0 = yaw;
+					turn_k = std::min(std::max(std::fabs(d) / 1.5707963f, 0.5f), 2.0f);
+					step_cs = angry ? 1.6f : 1.3f;   // (an angry man turns quicker; 90 degrees in about 1.5 s, 1.2 s)
+					turns++;
+				}
+			}
+			if (step_mode != 3) {
+				// (walking, asked to go back the way he came: he turns slowly while he brakes, and turns on the spot once
+				// he has stopped: a man plants his feet to turn round, he does not walk a tight circle)
+				const float rate = (move_speed < 0.4f ? 5.0f : (move_speed < 2.0f ? 3.4f : 2.3f)) * (std::fabs(d) > 2.0f && move_speed > 0.3f ? 0.3f : 1.0f);
+				yaw += std::min(std::max(d, -rate * dt), rate * dt);
+				turn_left = std::fabs(d) - std::min(std::fabs(d), rate * dt);
+			}
+		}
+		if (step_mode == 3) {
+			const double len = fig->clip_len(step_clip);
+			const double at = cur_clip_is(step_clip) ? fig->clip_pos() : (double)step_t;
+			step_t += dt * step_cs;
+			yaw = turn_yaw0 + turn_k * (float)fig->clip_curve(step_clip, "yaw", at, 0.0);
+			move_speed = 0.0f; turn_left = 0.0f;
+			if (at >= len - 0.02 || step_t > len + 0.3) step_mode = 0;   // (the clip ends on the idle's first frame: the start begins where it expects)
 		}
 		float target = want_len * std::max(0.0f, std::cos(std::min(turn_left, 1.5707963f)));
 		// THE STEP CLIPS (tools/people/make_steps.gd; Yasin: "make start walk end walk stop ones ourselves"): out of
@@ -344,7 +369,7 @@ void CityPlayer::_physics_process(double p_delta) {
 				} else target = move_speed;
 			}
 		} else if (step_mode == 0) stop_ph_prev = -1.0;
-		if (step_mode != 0) {
+		if (step_mode == 1 || step_mode == 2) {
 			const double len = fig->clip_len(step_clip);
 			const double at = cur_clip_is(step_clip) ? fig->clip_pos() : (double)step_t;
 			step_t += dt * step_cs;
@@ -591,7 +616,7 @@ Dictionary CityPlayer::get_frame_log() const {
 	d["node"] = get_global_position(); d["fig_at"] = fig ? fig->get_global_position() : Vector3(); d["pelvis"] = pelvis_world();
 	if (plant) { d["foot_l"] = plant->foot_w[0]; d["foot_r"] = plant->foot_w[1]; d["pelvis_drawn"] = plant->pelvis_w; d["plant_on"] = plant->is_active(); d["lock"] = Vector2i(plant->locked[0], plant->locked[1]); d["slide_l"] = plant->slide_w[0]; d["slide_r"] = plant->slide_w[1]; }
 	d["speed"] = speed; d["yaw"] = yaw;
-	d["clip"] = get_clip(); d["step"] = step_mode; d["starts"] = starts; d["stops"] = stops; d["climb"] = climb; d["u"] = climb ? climb_t / climb_len : -1.0f; d["settle"] = settle_t; d["clip_off"] = clip_off;
+	d["clip"] = get_clip(); d["step"] = step_mode; d["starts"] = starts; d["stops"] = stops; d["turns"] = turns; d["climb"] = climb; d["u"] = climb ? climb_t / climb_len : -1.0f; d["settle"] = settle_t; d["clip_off"] = clip_off;
 	return d;
 }
 

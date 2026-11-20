@@ -245,12 +245,22 @@ void CityPed::drive(const Transform3D &p_at, const StringName &p_clip, double p_
 
 // A made step clip's pace at t: the share of the walk's ground pace the body moves at (meta "pace", 30 a second; 1 for
 // a clip without one)
-double CityPed::clip_pace(const StringName &p_clip, double p_t) const {
-	if (!anim || !anim->has_animation(p_clip)) return 1.0;
+double CityPed::clip_pace(const StringName &p_clip, double p_t) const { return clip_curve(p_clip, "pace", p_t, 1.0); }
+
+// A made clip's number (meta, e.g. a turn's "done_at"), or p_def
+double CityPed::clip_meta(const StringName &p_clip, const String &p_key, double p_def) const {
+	if (!anim || !anim->has_animation(p_clip)) return p_def;
 	const Ref<Animation> a = anim->get_animation(p_clip);
-	if (a.is_null() || !a->has_meta("pace")) return 1.0;
-	const PackedFloat32Array p = a->get_meta("pace");
-	if (p.size() == 0) return 1.0;
+	return (a.is_valid() && a->has_meta(p_key)) ? (double)a->get_meta(p_key) : p_def;
+}
+
+// A made clip's curve (meta: a value per 1/30 s, e.g. "pace", a turn's "yaw") at t, or p_def without one
+double CityPed::clip_curve(const StringName &p_clip, const String &p_key, double p_t, double p_def) const {
+	if (!anim || !anim->has_animation(p_clip)) return p_def;
+	const Ref<Animation> a = anim->get_animation(p_clip);
+	if (a.is_null() || !a->has_meta(p_key)) return p_def;
+	const PackedFloat32Array p = a->get_meta(p_key);
+	if (p.size() == 0) return p_def;
 	const double f = std::min(std::max(p_t * 30.0, 0.0), (double)(p.size() - 1));
 	const int i = (int)f; const int j = std::min(i + 1, (int)p.size() - 1);
 	return p[i] + (p[j] - p[i]) * (f - i);

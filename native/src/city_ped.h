@@ -90,6 +90,8 @@ public:
 	void drive(const Transform3D &p_at, const StringName &p_clip, double p_speed, double p_hold, int p_token = 0);
 	double clip_len(const StringName &p_clip) const;
 	double clip_pace(const StringName &p_clip, double p_t) const;
+	double clip_curve(const StringName &p_clip, const String &p_key, double p_t, double p_def) const;
+	double clip_meta(const StringName &p_clip, const String &p_key, double p_def) const;
 	// a clip's hips at a moment of it, read from its own tracks (the figure's own frame, metres): how far the clip itself
 	// carries the body (a climb's rise and travel); and the moment the playing clip is at now
 	Vector3 clip_hips_at(const StringName &p_clip, double p_t) const;
