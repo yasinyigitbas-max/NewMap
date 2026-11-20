@@ -168,9 +168,11 @@ room is listed.
    kitchen with two fridge shelves, the hero's room, a bathroom). It's home base, so it's worth it.
 2. **The Fish House, burned:** a damage state (scorch decals, a collapsed awning, broken stools), not a new building.
 3. **Small props:** Whitmore's waterfront model under glass, a 1970s Navy radio set (Finch's), Marek's notebook, a
-   taxi livery for Benny's car, a grey livery for the patrol boat, the sign decals for the yard ("NO ENTRY", "STAFF
+   few extras on the kit's own `taxi` model for Benny, a grey livery for the patrol boat, the sign decals for the yard ("NO ENTRY", "STAFF
    ONLY", "DANGER", "NO SMOKING").
 4. **The sketch panels** for P1 and P3 (2D art, in the old game's panel style).
+
+Every object in items 2 and 3 is described in detail (size, look, parts, states, budget) in `PROPS_TO_MAKE.md`.
 
 Everything else in the script is already in the city.
 
