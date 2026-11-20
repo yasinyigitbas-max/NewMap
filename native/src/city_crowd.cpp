@@ -415,6 +415,10 @@ void CityCrowd::person_of(int i, float r[4], int &r_body, float &r_scale) const 
 		if (g >= 0 && g < (int)crowd->places.size() && crowd->places[g].kind == pc::PL_NIGHT && !pool_tag[7].empty()) { pool = &pool_tag[7]; role = 5; }
 		else role = 2;   // a beggar: his own clothes, dirty
 	} else if (crowd->pkind[i] == pc::PK_SAILORS && !pool_tag[6].empty()) { pool = &pool_tag[6]; role = 4; }
+	if (!uniforms.empty()) {   // (an actor in the clothes of his job: police, medical)
+		const int ut = uniform_of(crowd->id[i]);
+		if (ut > 0 && ut < 8 && !pool_tag[ut].empty()) { pool = &pool_tag[ut]; role = 0; }
+	}
 	if (pool->empty()) pool = &pool_casual[0];
 	if (!pool->empty()) body = (*pool)[(h >> 4) % (uint32_t)pool->size()];
 	r_body = body;
@@ -543,7 +547,7 @@ void CityCrowd::alarm(const Vector3 &p_at, float p_radius, float p_seconds, int 
 	}
 	alarms_recent.push_back(Alarm{ p_at, own_clock });
 	crowd->scare(p_at.x, p_at.z, p_radius, p_seconds);
-	if (p_kind >= 0 && p_kind < 5) alarms[p_kind]++;
+	if (p_kind >= 0 && p_kind < 8) alarms[p_kind]++;
 	emit_signal("crowd_event", 18, -1, p_kind, 0.0);
 }
 
@@ -763,7 +767,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 	auto give = [&](Near &nb, int best) {
 		float pr[4]; int body; float sc;
 		person_of(best, pr, body, sc);
-		nb.walker = crowd->id[best]; nb.in_body = false; nb.has_last = false; nb.has_y = false; nb.v_s = crowd->v[best];
+		nb.walker = crowd->id[best]; nb.in_body = false; nb.has_last = false; nb.has_y = false; nb.v_s = crowd->v[best]; nb.ped->set_stay_down(false);
 		nb.why = 0; nb.after_kind = 0; nb.after_t = 0.0f;
 		nb.v_s = crowd->v[best];
 		nb.act = crowd->act[best]; nb.act_t = 99.0f;
@@ -820,7 +824,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 		if (best < 0) continue;
 		float pr[4]; int body; float sc;
 		person_of(best, pr, body, sc);
-		nb.walker = crowd->id[best]; nb.in_body = false; nb.has_last = false; nb.has_y = false; nb.v_s = crowd->v[best];
+		nb.walker = crowd->id[best]; nb.in_body = false; nb.has_last = false; nb.has_y = false; nb.v_s = crowd->v[best]; nb.ped->set_stay_down(false);
 		nb.why = 0; nb.after_kind = 0; nb.after_t = 0.0f;
 		nb.v_s = crowd->v[best];
 		nb.act = crowd->act[best]; nb.act_t = 99.0f;   // (whatever it is doing, it is doing it already)
@@ -983,6 +987,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 					else if (r.chase) { clip = RUN; hold = -1.0; token = 0; }
 					else { clip = ANGRY; hold = -1.0; token = 0; }
 				}
+				if (const Actor *ac = actor_of(nb.walker)) actor_clip(*ac, clip, speed, hold, token);   // (the game's: city_crowd_actors.cpp)
 				// in the sea: wading while the water is under the chest (his feet on the bottom), then swimming at the
 				// surface (the same two numbers as the player's)
 				{
@@ -1017,7 +1022,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 					const int j = crowd->find(crowd->mate[i]);
 					if (j >= 0) {
 						Vector3 d(crowd->x[i] - crowd->x[j], 0, crowd->z[i] - crowd->z[j]);
-						if (d.length() > 0.05f && d.length() < 2.5f) { nb.ped->push(d.normalized() * 80.0f, Vector3(crowd->x[i], crowd->y[i] + 1.25f, crowd->z[i])); nb.push_cd = 4.0f; nb.why = 2; fight_falls++; alarm(Vector3(crowd->x[i], crowd->y[i], crowd->z[i]), 16.0f, 8.0f, 4); }
+						if (d.length() > 0.05f && d.length() < 2.5f) { nb.ped->push(d.normalized() * 80.0f, Vector3(crowd->x[i], crowd->y[i] + 1.25f, crowd->z[i])); nb.push_cd = 4.0f; nb.why = 2; fight_falls++; const Vector3 fat(crowd->x[i], crowd->y[i], crowd->z[i]); alarm(fat, 16.0f, 8.0f, 4); incident(fat, 4, false, nb.walker, 1); helpers_for(nb.walker, fat); }
 					}
 				}
 			}
@@ -1055,7 +1060,17 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 					fast = std::max(fast, std::sqrt(q[5] * q[5] + q[6] * q[6]));
 				}
 				nb.why = 5;
-				if (fast > 2.5f) { cars_hit_people++; alarm(at, 30.0f, 12.0f, 2); }
+				if (fast > 2.5f) {
+					cars_hit_people++; alarm(at, 30.0f, 12.0f, 2);
+					// whose car: the player's if his is the one by him
+					bool mine = false;
+					if (Node3D *pc_n = car_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(car_id))) : nullptr) mine = pc_n->get_global_position().distance_to(at) < 5.0f;
+					// a hard knock (faster than 8 m/s, about 30 km/h) and he stays down until a medic has been
+					const bool hard = fast > 8.0f;
+					if (hard) stay_down(nb.walker, true);
+					incident(at, 2, mine, nb.walker, hard ? 2 : 1);
+					if (!is_actor(nb.walker)) helpers_for(nb.walker, at);
+				}
 			}
 			crowd->to_body(nb.walker, true, at.x, at.z);
 			nb.in_body = true;
@@ -1069,6 +1084,7 @@ void CityCrowd::_process(double p_delta) {
 	if (!ready) return;
 	const int64_t t0 = usec_now();
 	step_brain(p_delta);
+	actors_update(p_delta);
 	if (Viewport *wv = get_viewport()) if (Camera3D *wc = wv->get_camera_3d()) if (get_world_3d().is_valid()) way_floor.update(wc->get_global_position(), get_world_3d()->get_space());
 	{   // the traffic's cyclists who came off this frame: the rider is one of ours now, on the road where he fell
 		CityTraffic *trf = traffic_id ? Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(traffic_id))) : nullptr;
@@ -1095,6 +1111,9 @@ void CityCrowd::_process(double p_delta) {
 				thrown.push_back(Thrown{ w, vel, imp, Vector3(dn[k], dn[k + 1], dn[k + 2]), 0.0f });
 				riders_thrown++;
 				alarm(Vector3(dn[k], dn[k + 1], dn[k + 2]), 30.0f, 10.0f, 3);
+				if (rel > 6.0f) stay_down(w, true);   // (a hard one: he lies until a medic has been)
+				incident(Vector3(dn[k], dn[k + 1], dn[k + 2]), 3, false, w, rel > 6.0f ? 2 : 1);
+				helpers_for(w, Vector3(dn[k], dn[k + 1], dn[k + 2]));
 			}
 			// the drivers who got out of hit cars
 			std::vector<CityTraffic::RageOut> ro;
@@ -1105,6 +1124,7 @@ void CityCrowd::_process(double p_delta) {
 				const int w = crowd->place_held_at(r.x, r.z, h & ~8u, r.yaw);
 				if (w < 0) continue;
 				by_serial.push_back({ r.serial, w });
+				if (r.foe == -5) { driver_robbed(w); continue; }   // (his car was taken: he runs, city_crowd_actors.cpp)
 				rages++;
 				int foe = r.foe == -1 ? -1 : -3;
 				if (r.foe >= 0) for (const auto &b : by_serial) if (b.first == r.foe_serial) foe = b.second;
@@ -1291,7 +1311,7 @@ Array CityCrowd::near_bodies() const {
 	for (const Near &nb : near_pool) {
 		if (nb.walker < 0) continue;
 		Dictionary d;
-		d["walker"] = nb.walker; d["woman"] = nb.female != 0; d["clip"] = String(nb.ped->current_clip()); d["in_physical_body"] = nb.in_body; d["shown_s"] = nb.act_t; d["figure_mode"] = (int)nb.ped->get_mode(); d["at"] = nb.ped->body_at(); d["body"] = nb.ped->get_state();
+		d["walker"] = nb.walker; d["woman"] = nb.female != 0; d["clip"] = String(nb.ped->current_clip()); d["in_physical_body"] = nb.in_body; d["shown_s"] = nb.act_t; d["figure_mode"] = (int)nb.ped->get_mode(); d["body_id"] = nb.ped->get_body(); d["at"] = nb.ped->body_at(); d["body"] = nb.ped->get_state();
 		const bool planted = nb.plant && nb.plant->is_active();   // (as drawn: after the foot plant, read inside it)
 		d["foot_l"] = planted ? nb.plant->foot_w[0] : nb.ped->bone_world("Bip01_L_Foot"); d["foot_r"] = planted ? nb.plant->foot_w[1] : nb.ped->bone_world("Bip01_R_Foot");
 		d["pelvis"] = planted ? nb.plant->pelvis_w : nb.ped->bone_world("Bip01_Pelvis"); d["planted"] = planted;
@@ -1382,6 +1402,20 @@ void CityCrowd::player_fight(double p_delta) {
 				// so the knock-down after a blow makes nobody new react; the fight itself goes on)
 				else { pf.st = 4; pf.st_t = 0.0f; pf.ai_t = 0.25f; }
 				alarm(at, pf.hp <= 0 ? 30.0f : 22.0f, pf.hp <= 0 ? 12.0f : 8.0f, 1);
+				incident(at, 1, true, pf.walker, pf.hp <= 0 ? 1 : 0);
+				// a brave man near by may come to the victim's aid (the old games: "men may step in"): one in four first blows
+				if (pf.landed == 1) {
+					for (int j = 0; j < crowd->hi; j++) {
+						if (!crowd->alive[j] || crowd->id[j] == pf.walker || crowd->mode[j] != pc::M_LINE || crowd->party[j] != 0 || (crowd->flags[j] & (pc::F_SCRIPT | pc::F_HIDDEN))) continue;
+						if (((crowd->look[j] >> 3) & 1u) != 0u || (crowd->look[j] >> 24) % 4u != 0u) continue;   // (a man, one in four)
+						const float bx = crowd->x[j] - at.x, bz = crowd->z[j] - at.z;
+						if (bx * bx + bz * bz > 14.0f * 14.0f || is_actor(crowd->id[j])) continue;
+						if (!crowd->hold(crowd->id[j], true, std::atan2(pp.x - crowd->x[j], pp.z - crowd->z[j]))) continue;
+						Rager rg{ crowd->id[j], 1.2f, -1 }; ragers.push_back(rg); rages++; steps_in++;
+						break;
+					}
+				}
+				if (pf.hp <= 0) helpers_for(pf.walker, at);
 				if (pf.hp <= 0) { pf.npc_beaten++; crowd->hurt_t[i] = 40.0f; end_fight(false); return; }   // (down by his body; he gets up and walks off hurt)
 			} else pf.missed++;
 		}
@@ -1519,6 +1553,8 @@ Dictionary CityCrowd::stats() const {
 	for (const Near &nb : near_pool) { if (nb.walker >= 0) nn++; if (nb.in_body) nbdy++; }
 	d["near_bodies"] = nn; d["near_pool"] = (int)near_pool.size(); d["in_physical_body"] = nbdy; d["umbrellas"] = prop_shown[0]; d["towels"] = prop_shown[1];
 	d["alarms_player_hit"] = alarms[1]; d["alarms_car_hit"] = alarms[2]; d["alarms_bike_down"] = alarms[3]; d["alarms_npc_fight"] = alarms[4]; d["cars_hit_people"] = cars_hit_people;
+	d["helpers_sent"] = helpers_sent; d["helpers_knelt"] = helpers_knelt; d["steps_in"] = steps_in; d["actors"] = (int)actors.size(); d["downs"] = (int)downs.size();
+	d["cowering"] = cowering; d["shots_heard"] = shots_heard; d["drivers_robbed"] = drivers_robbed; d["alarms_shot"] = alarms[5]; d["alarms_mugging"] = alarms[6]; d["alarms_car_taken"] = alarms[7];
 	d["ducked"] = s.ducks; d["stared"] = s.stared; d["coins"] = s.coins; d["lines_said"] = s.lines_said;
 	{ PackedFloat32Array cl; const double ls[11] = { l_sit_in, l_sit_out, l_gsit_in, l_gsit_out, l_lie_in, l_lie_out, l_duck_in, l_duck_out, l_fight_in, l_fight_out, l_surprise }; for (double l : ls) cl.push_back((float)l); d["clip_seconds"] = cl; }   // into and out of: a seat, the ground, lying, a crouch, a fight; the start
 	d["shoved_by_player"] = n_shoved; d["told_him_off"] = n_told_off; d["hit_back"] = n_hit_back;
@@ -1536,6 +1572,25 @@ String CityCrowd::report() {
 }
 
 void CityCrowd::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("actor_take", "walker", "role"), &CityCrowd::actor_take);
+	ClassDB::bind_method(D_METHOD("actor_place", "at", "tag", "yaw", "role"), &CityCrowd::actor_place);
+	ClassDB::bind_method(D_METHOD("actor_go", "walker", "to", "speed", "near"), &CityCrowd::actor_go);
+	ClassDB::bind_method(D_METHOD("actor_follow", "walker", "target", "speed", "near"), &CityCrowd::actor_follow);
+	ClassDB::bind_method(D_METHOD("actor_stand", "walker", "yaw", "clip", "hold", "token"), &CityCrowd::actor_stand);
+	ClassDB::bind_method(D_METHOD("actor_arrived", "walker"), &CityCrowd::actor_arrived);
+	ClassDB::bind_method(D_METHOD("is_actor", "walker"), &CityCrowd::is_actor);
+	ClassDB::bind_method(D_METHOD("actor_role", "walker"), &CityCrowd::actor_role);
+	ClassDB::bind_method(D_METHOD("actor_release", "walker"), &CityCrowd::actor_release);
+	ClassDB::bind_method(D_METHOD("actor_free", "walker"), &CityCrowd::actor_free);
+	ClassDB::bind_method(D_METHOD("walker_at", "walker"), &CityCrowd::walker_at);
+	ClassDB::bind_method(D_METHOD("walker_alive", "walker"), &CityCrowd::walker_alive);
+	ClassDB::bind_method(D_METHOD("is_down", "walker"), &CityCrowd::is_down);
+	ClassDB::bind_method(D_METHOD("treat", "walker"), &CityCrowd::treat);
+	ClassDB::bind_method(D_METHOD("downs_list"), &CityCrowd::downs_list);
+	ClassDB::bind_method(D_METHOD("take_incidents"), &CityCrowd::take_incidents);
+	ClassDB::bind_method(D_METHOD("gun_aimed", "from", "dir", "seconds"), &CityCrowd::gun_aimed);
+	ClassDB::bind_method(D_METHOD("gunshot", "at", "by_player"), &CityCrowd::gunshot);
+	ClassDB::bind_method(D_METHOD("knock_down_walker", "walker"), &CityCrowd::knock_down_walker);
 	ClassDB::bind_method(D_METHOD("set_traffic", "traffic"), &CityCrowd::set_traffic);
 	ClassDB::bind_method(D_METHOD("attach", "streamer"), &CityCrowd::attach);
 	ClassDB::bind_method(D_METHOD("_on_cell_in", "key"), &CityCrowd::_on_cell_in);

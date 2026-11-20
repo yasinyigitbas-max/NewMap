@@ -20,6 +20,7 @@ namespace godot {
 
 void CityRooms::set_stream(Object *p_stream) {
 	stream_id = p_stream ? (uint64_t)p_stream->get_instance_id() : 0;
+	if (!is_in_group("city_rooms")) add_to_group("city_rooms");   // (CityShops finds it so)
 	if (!p_stream) return;
 	p_stream->connect("cell_in", Callable(this, "_on_cell_in"));
 	p_stream->connect("cell_out", Callable(this, "_on_cell_out"));
@@ -122,6 +123,16 @@ void CityRooms::finish(int i) {
 	{ pm::Scope _a(pm::ROOM_ADD); bd->add_child(root); }
 	rm.node = (uint64_t)root->get_instance_id(); rm.state = 2; live++; woken++;
 	set_open(rm, true);
+}
+
+void CityRooms::awake_rooms(std::vector<std::pair<String, Transform3D>> &r_out) const {
+	for (const Room &rm : rooms) {
+		if (rm.state != 2) continue;
+		Node3D *root = Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(rm.node)));
+		if (!root || !root->is_inside_tree()) continue;
+		const String nm = (rm.raw.is_empty() ? rm.scn : rm.raw).get_file().get_basename();
+		r_out.push_back({ nm, root->get_global_transform() });
+	}
 }
 
 void CityRooms::sleep(int i) {

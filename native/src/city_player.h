@@ -84,6 +84,7 @@ class CityPlayer : public CharacterBody3D {
 	int punches = 0, hits_taken = 0;
 	double combat_t = 9.0, uncombat_t = 9.0;
 	double hit_t = 9.0;
+	StringName act_clip; double act_left = 0.0; float act_yaw = 0.0f; int acts = 0;
 	Vector3 acc_lp; bool acc_init = false;
 	double acc_spike_t = -9.0, mic_spike_t = -9.0;
 	float mic_avg = 0.01f;
@@ -108,6 +109,11 @@ public:
 	void set_move(const Vector2 &p_dir, bool p_run);
 	// he stands and takes no keys (while a line is typed to somebody)
 	void set_frozen(bool p_on) { frozen = p_on; }
+	// AN ACT (Yasin, 20 Nov: "add us and npcs giving money receiving things animations"): a clip played once where he stands,
+	// turned to p_yaw, his feet still while it lasts (paying at a counter, taking what he bought)
+	void act(const StringName &p_clip, double p_seconds, double p_yaw);
+	String get_act() const { return act_left > 0.0 ? String(act_clip) : String(); }
+	int get_acts() const { return acts; }
 	void set_crouch(bool p_on) { crouch = p_on; }
 	// combat: asked for (a swing / F) and punches (a back tap / J / click) are taken by the crowd
 	void request_combat() { combat_req = true; }

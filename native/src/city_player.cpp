@@ -185,7 +185,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	if (!fig) return;
 	const float dt = (float)p_delta;
 	sense(p_delta);
-	punch_t += p_delta; hit_t += p_delta; combat_t += p_delta; uncombat_t += p_delta;
+	punch_t += p_delta; hit_t += p_delta; combat_t += p_delta; uncombat_t += p_delta; act_left = std::max(act_left - p_delta, 0.0);
 	{   // a PC: F fights, J or a left click punches
 		Input *ki = Input::get_singleton();
 		const bool f = ki->is_key_pressed(KEY_F), j = ki->is_key_pressed(KEY_J), m = ki->is_mouse_button_pressed(MOUSE_BUTTON_LEFT) && ki->get_mouse_mode() == Input::MOUSE_MODE_CAPTURED;
@@ -211,7 +211,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (e && !e_was) emit_signal("interact");
 		e_was = e;
 	}
-	if (frozen) mv = Vector2();
+	if (frozen || act_left > 0.0) mv = Vector2();
 	if (mv.length() > 1.0f) mv = mv.normalized();
 	// the way he goes: by the view (forward = away from the camera)
 	const Vector3 fwd(-std::sin(cam_yaw), 0, -std::cos(cam_yaw)), right(std::cos(cam_yaw), 0, -std::sin(cam_yaw));
@@ -374,6 +374,11 @@ void CityPlayer::_physics_process(double p_delta) {
 	if (swimming) { clip = speed > 0.25f ? SWIM : FLOAT; cs = speed > 0.25f ? speed / 1.0 : 1.0; }
 	else if (airborne) { clip = get_velocity().y > 1.0f ? J_UP : J_AIR; hold = get_velocity().y > 1.0f ? -2.0 : -1.0; }
 	else if (land_t > 0.0f) { clip = J_LAND; hold = -2.0; }
+	else if (act_left > 0.0 && !combat) {   // an act: the clip once, turned the way it asks
+		clip = act_clip; hold = -2.0;
+		float d = act_yaw - yaw; while (d > 3.14159265f) d -= 6.2831853f; while (d < -3.14159265f) d += 6.2831853f;
+		yaw += std::min(std::max(d, -8.0f * dt), 8.0f * dt);
+	}
 	else if (combat) {   // his guard (the way into a fight, held on its last frame); a punch, the jab and the cross in turn
 		static const StringName GUARD("ual/PunchKick_Enter"), JAB("ual/Punch_Jab"), CROSS("ual/Punch_Cross");
 		static const StringName HIT("ual/Hit_Chest");
@@ -578,10 +583,17 @@ void CityPlayer::_process(double p_delta) {
 	cam->set_global_transform(Transform3D(Basis(), cam_pos).looking_at(head, Vector3(0, 1, 0)));
 }
 
+void CityPlayer::act(const StringName &p_clip, double p_seconds, double p_yaw) {
+	act_clip = p_clip; act_left = p_seconds; act_yaw = (float)p_yaw; acts++;
+}
+
 void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_move", "direction", "run"), &CityPlayer::set_move);
 	ClassDB::bind_method(D_METHOD("get_speed"), &CityPlayer::get_speed);
 	ClassDB::bind_method(D_METHOD("set_frozen", "on"), &CityPlayer::set_frozen);
+	ClassDB::bind_method(D_METHOD("act", "clip", "seconds", "yaw"), &CityPlayer::act);
+	ClassDB::bind_method(D_METHOD("get_act"), &CityPlayer::get_act);
+	ClassDB::bind_method(D_METHOD("get_acts"), &CityPlayer::get_acts);
 	ClassDB::bind_method(D_METHOD("is_frozen"), &CityPlayer::is_frozen);
 	ClassDB::bind_method(D_METHOD("knock", "velocity"), &CityPlayer::knock);
 	ClassDB::bind_method(D_METHOD("set_water_y", "y"), &CityPlayer::set_water_y);

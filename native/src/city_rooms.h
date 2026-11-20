@@ -66,6 +66,8 @@ public:
 	void _on_cell_in(const String &p_key) { arriving.push_back(p_key); }
 	void _on_cell_out(const String &p_key) { drop_cell(p_key); }
 	Dictionary get_state() const;
+	// the rooms awake now: the room's name (its scene's, as interiors/room_people.json names it) and where it stands
+	void awake_rooms(std::vector<std::pair<String, Transform3D>> &r_out) const;
 	void _process(double p_delta) override;
 	void _exit_tree() override;
 };

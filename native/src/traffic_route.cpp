@@ -417,7 +417,7 @@ int Sim::unpark(int lane_, float s_, float lat_, int model_, int temper_) {
 bool Sim::release_car(int car_id) {
 	int i = find_car(car_id);
 	if (i < 0) return false;
-	kind[i] = K_AMBIENT; rt[i].clear(); goal_ri[i] = -1; pull[i] = 0; arrived[i] = 0; lc_need[i] = 0; dwell[i] = 0.0f; out_lat0[i] = 0.0f;
+	kind[i] = K_AMBIENT; rt[i].clear(); goal_ri[i] = -1; pull[i] = 0; arrived[i] = 0; lc_need[i] = 0; dwell[i] = 0.0f; out_lat0[i] = 0.0f; siren[i] = 0;
 	if (!(flags[i] & F_RES)) nconn[i] = pick_next(lane[i]);
 	return true;
 }
