@@ -1,6 +1,7 @@
 // CityCar: see city_car.h.
 #include "perf_marks.h"
 #include "city_car.h"
+#include "city_crowd.h"
 #include "engine_sound.h"
 #include "ui_plate.h"
 
@@ -518,7 +519,10 @@ void CityCar::_integrate_forces(PhysicsDirectBodyState3D *p_state) {
 			rq->set_to(Vector3(from.x + d.x * len, from.y + d.y * len, from.z + d.z * len));
 			const Dictionary h = ss->intersect_ray(rq);
 			if (!h.is_empty()) {
-				const Vector3 hp = h["position"], hn = h["normal"];
+				Vector3 hp = h["position"], hn = h["normal"];
+				// (Yasin, 20 Nov: "we should drive over them and car should be lifted a bit off the ground") a downed person under
+				// the wheel is ground too: it rides up over him (people's bodies are not in the engine's physics)
+				if (CityCrowd::the) { const float top = CityCrowd::the->body_under(hp); if (top > hp.y && top < hp.y + 0.45f) { hp.y = top; hn = Vector3(0, 1, 0); bumps_over++; } }
 				car.set_ground(i, true, vd::V3{ hp.x, hp.y, hp.z }, vd::V3{ hn.x, hn.y, hn.z }, 1.0f);
 				hit = true;
 			}
@@ -592,7 +596,7 @@ Dictionary CityCar::get_state() const {
 	d["metres"] = odo; d["hardest_knock_g"] = hardest_hit;
 	int on = 0; float slip = 0;
 	for (int i = 0; i < 4; i++) { if (car.wh[i].ground) on++; slip = std::max(slip, car.wh[i].slip); }
-	d["wheels_on_ground"] = on; d["slip_most"] = slip;
+	d["wheels_on_ground"] = on; d["slip_most"] = slip; d["bumps_over"] = bumps_over;
 	d["wheelbase"] = car.s.wheelbase; d["track"] = car.s.track_f; d["wheel_r"] = car.s.wheel_r; d["mass"] = car.s.mass;
 	return d;
 }

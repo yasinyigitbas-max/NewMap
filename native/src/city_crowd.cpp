@@ -90,7 +90,25 @@ int tag_of(const String &t, bool police) {
 } // namespace
 
 CityCrowd::CityCrowd() { crowd = new pc::Crowd(); }
-CityCrowd::~CityCrowd() { delete crowd; }
+CityCrowd *CityCrowd::the = nullptr;
+
+CityCrowd::~CityCrowd() { if (the == this) the = nullptr; delete crowd; }
+
+float CityCrowd::body_under(const Vector3 &p_at) const {
+	float top = -1.0e9f;
+	for (const Near &nb : near_pool) if (nb.walker >= 0 && nb.ped) top = std::max(top, nb.ped->top_over(p_at, 0.25f));
+	if (player_id) if (CityPlayer *pl = Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id)))) if (pl->figure()) top = std::max(top, pl->figure()->top_over(p_at, 0.25f));
+	return top;
+}
+
+int CityCrowd::car_boxes(CityPed *p_ped, int k, const float *q, float p_ground_y) {
+	const float hl = q[3], hw = q[4], fx = std::sin(q[2]), fz = std::cos(q[2]);
+	const Vector3 v(q[5], 0, q[6]);
+	p_ped->set_box(k, Vector3(q[0], p_ground_y + 0.535f, q[1]), Vector3(hw, 0.315f, hl), q[2], v, k + 2);   // (the body: 0.22-0.85 m)
+	const float off = -0.175f * hl;   // (the cabin: from 55 % of the way back to 20 % forward, 0.85-1.45 m)
+	p_ped->set_box(k + 1, Vector3(q[0] + fx * off, p_ground_y + 1.15f, q[1] + fz * off), Vector3(hw * 0.9f, 0.3f, 0.375f * hl), q[2], v, k + 2);
+	return k + 2;
+}
 
 // The streets, the places, the bodies' table.
 bool CityCrowd::load() {
@@ -227,6 +245,7 @@ void CityCrowd::make_look() {
 }
 
 void CityCrowd::_ready() {
+	the = this;
 	if (!ready) load();
 	if (!ready) { set_process(false); return; }
 	if (cells.empty()) cells.assign((size_t)GRID * GRID, 0);
@@ -843,22 +862,15 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 	// still from the moment of the take-over, and a car at 25 km/h moved a man 0.4 m and left him standing: seen 20 Nov
 	// in tests/people/test_car_hits.gd.)
 	auto feed_boxes = [&](Near &nb, int i) {
-		int nbx = 0;
-		const int nc = (int)cars.size() / 7;
-		for (int c = 0; c < nc && nbx < pb::MAX_BOXES; c++) {
-			const float *q = &cars[(size_t)c * 7];
-			const float dx = q[0] - crowd->x[i], dz = q[1] - crowd->z[i];
-			if (dx * dx + dz * dz > 9.0f * 9.0f) continue;
-			nbx++;
-		}
 		int k = 0;
-		for (int c = 0; c < nc && k < nbx; c++) {
+		const int nc = (int)cars.size() / 7;
+		for (int c = 0; c < nc && k + 2 <= pb::MAX_BOXES; c++) {
 			const float *q = &cars[(size_t)c * 7];
 			const float dx = q[0] - crowd->x[i], dz = q[1] - crowd->z[i];
 			if (dx * dx + dz * dz > 9.0f * 9.0f) continue;
-			nb.ped->set_box(k++, Vector3(q[0], crowd->y[i] + 0.75f, q[1]), Vector3(q[4], 0.75f, q[3]), q[2], Vector3(q[5], 0, q[6]), nbx);
+			k = car_boxes(nb.ped, k, q, crowd->y[i]);
 		}
-		if (nbx == 0) nb.ped->set_box(-1, Vector3(), Vector3(), 0.0, Vector3(), 0);
+		if (k == 0) nb.ped->set_box(-1, Vector3(), Vector3(), 0.0, Vector3(), 0);
 	};
 	// what each one shows; a car near it; the player walking into it; its physical body
 	Node3D *pl = player_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
@@ -1395,6 +1407,18 @@ void CityCrowd::player_fight(double p_delta) {
 	const float dt = (float)p_delta;
 	CityPed *pfig = pl->figure();
 	car_hit_cd = std::max(car_hit_cd - dt, 0.0f);
+	if (pfig) {   // the cars near him, as the people feel them (his body rolls on a bonnet and slides off it)
+		const Vector3 me = pfig->body_at();
+		int k = 0;
+		const int nc = (int)cars.size() / 7;
+		for (int c = 0; c < nc && k + 2 <= pb::MAX_BOXES; c++) {
+			const float *q = &cars[(size_t)c * 7];
+			const float dx = q[0] - me.x, dz = q[1] - me.z;
+			if (dx * dx + dz * dz > 81.0f) continue;
+			k = car_boxes(pfig, k, q, pl->get_global_position().y);
+		}
+		if (k == 0) pfig->set_box(-1, Vector3(), Vector3(), 0.0, Vector3(), 0);
+	}
 	if (pf.player_down) {   // beaten (or run over): he lies until his body has him up again
 		// (and not before he has been down: his figure goes over to its balancing body a frame after knock_down, and that
 		// frame it was still animated, so a car's hit let him go at once and he stood where he was: car_hit_cd)
@@ -1420,7 +1444,9 @@ void CityCrowd::player_fight(double p_delta) {
 			if (sp < 0.8f) continue;
 			const Vector3 dir = cv / sp;
 			if (sp > 2.5f) {   // knocked down and thrown with the car's speed
-				pfig->knock_down(dir * std::min(sp * 0.85f, 12.0f) + Vector3(0, std::min(sp * 0.15f, 2.5f), 0), dir * 45.0f, me + Vector3(0, 1.0f, 0));
+				// (his legs swept at the knees, only a little speed of his own: the car's bonnet does the rest, he goes up onto
+				// it and is carried, and slides off; launched at the car's speed he flew on ahead of it)
+				pfig->knock_down(dir * std::min(sp * 0.3f, 4.0f) + Vector3(0, 0.6f, 0), dir * std::min(sp * 9.0f, 90.0f), me + Vector3(0, 0.45f, 0));
 				pf.player_down = true; pl->set_frozen(true);
 				if (pf.walker >= 0) end_fight(true);
 			} else { pl->take_hit(); pl->knock(dir * (sp + 1.0f)); }

@@ -89,6 +89,9 @@ public:
 	// held on its last frame. A new p_token starts the same clip again (the next blow of a fight).
 	void drive(const Transform3D &p_at, const StringName &p_clip, double p_speed, double p_hold, int p_token = 0);
 	double clip_len(const StringName &p_clip) const;
+	// (a car's wheel over a downed body, the Animator 20 Nov) the highest top of its body's parts within p_r of p
+	// (level distance), or -1e9: only while its physical body has it (lying, falling, getting up)
+	float top_over(const Vector3 &p_at, float p_r) const;
 	double clip_pace(const StringName &p_clip, double p_t) const;
 	double clip_curve(const StringName &p_clip, const String &p_key, double p_t, double p_def) const;
 	double clip_meta(const StringName &p_clip, const String &p_key, double p_def) const;

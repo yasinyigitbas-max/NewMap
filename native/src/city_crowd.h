@@ -201,6 +201,13 @@ protected:
 public:
 	CityCrowd();
 	~CityCrowd();
+	// (the Animator, 20 Nov: "we should drive over them and car should be lifted a bit off the ground") the crowd a car
+	// asks what is under its wheels: the highest downed body's top within 0.25 m of p, or -1e9
+	static CityCrowd *the;
+	float body_under(const Vector3 &p_at) const;
+	// a car as the bodies feel it: a low box for the bonnet and the boot (0.22-0.85 m over the road: a body slides under
+	// its sills and is swept onto it) and one for the cabin on top; 2 boxes from box k on
+	static int car_boxes(CityPed *p_ped, int k, const float *q, float p_ground_y);
 
 	void _ready() override;
 	void _exit_tree() override;

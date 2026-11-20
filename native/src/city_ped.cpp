@@ -264,6 +264,17 @@ double CityPed::clip_curve(const StringName &p_clip, const String &p_key, double
 	return p[i] + (p[j] - p[i]) * (f - i);
 }
 
+float CityPed::top_over(const Vector3 &p_at, float p_r) const {
+	if (mode == MODE_ANIM || !made) return -1.0e9f;
+	float top = -1.0e9f;
+	for (int i = 0; i < pb::NB; i++) {
+		const pb::Body &B = body.b[i];
+		const float dx = B.x.x - p_at.x, dz = B.x.z - p_at.z, rr = p_r + B.r + 0.05f;
+		if (dx * dx + dz * dz < rr * rr) top = std::max(top, B.x.y + B.r);
+	}
+	return top;
+}
+
 double CityPed::clip_len(const StringName &p_clip) const {
 	if (!anim || !anim->has_animation(p_clip)) return 0.0;
 	const Ref<Animation> a = anim->get_animation(p_clip);
