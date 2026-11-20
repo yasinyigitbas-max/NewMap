@@ -1060,7 +1060,8 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 					// "not the bone the phone", "pull it 3 cms back into the hand. fingers should cover it and it shouldnt clip and
 					// it should stand straight"): placed in the world each frame, not by the hand's bone: upright whatever way the hand
 					// is turned, its face toward him; its lower part in the fist's grip (where the clip's torch handle was), so the
-					// fingers close round it and not through it; 2 cm left on the photo (1.74 cm toward his right, 0.98 cm forward)
+					// fingers close round it and not through it; on the front photo (taken from his front-left) 7 cm left and 3 cm
+					// back ("pull 3 more cms back and 5 more cms left"): 7.56 cm toward his right, 0.82 cm forward,
 					// and 3 cm up
 					if (nb.phone && nb.phone->is_visible()) {
 						if (Node3D *ba = Object::cast_to<Node3D>(nb.phone->get_parent())) {
@@ -1068,7 +1069,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 							Vector3 fwd = fb.get_column(2); fwd.y = 0.0f; fwd = fwd.length() > 0.01f ? fwd.normalized() : Vector3(0, 0, 1);
 							const Vector3 up(0, 1, 0), left = up.cross(fwd);
 							const Vector3 grip = ba->get_global_transform().xform(nb.phone_base);   // (the fist's grip)
-							const Vector3 at = grip + fb.xform(Vector3(-0.0174f, 0.03f, 0.0098f)) + up * (0.145f * 0.5f - 0.045f);   // (4.5 cm of it in the fist)
+							const Vector3 at = grip + fb.xform(Vector3(-0.0756f, 0.03f, 0.0082f)) + up * (0.145f * 0.5f - 0.045f);   // (4.5 cm of it in the fist)
 							nb.phone->set_global_transform(Transform3D(Basis(fwd, left, up).scaled(Vector3(nb.phone_k, nb.phone_k, nb.phone_k)), at));
 						}
 					}
