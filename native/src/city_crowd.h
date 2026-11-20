@@ -70,6 +70,7 @@ private:
 	std::vector<uint8_t> cells;
 	bool cells_all = true, cells_dirty = false;
 	std::vector<float> cars, dyn, bus_buf;
+	float car_hit_cd = 0.0f, car_hit_v = 0.0f; int cars_hit_player = 0;   // (a car reaching the player on foot: player_fight)
 	std::vector<int> bus_here;          // the stops (places) a bus stands at now
 	int buses_served = 0;
 	std::vector<String> place_names;   // the shops' names (places.bin)

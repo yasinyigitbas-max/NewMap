@@ -276,7 +276,9 @@ void CityCrowd::set_player(Object *p_player) {
 		Ref<ShaderMaterial> m = mat_near->duplicate();
 		m->set_shader_parameter("person", Vector4(7.0f, 0.0f, 3.0f + 8.0f, 0.2f));
 		m->set_shader_parameter("fade_band", Vector2(1.0e5f, 1.0e5f + 1.0f));
-		cp->figure()->become(bodies[body].id, bodies[body].near_mesh, m, false);
+		// (with his physical body: it was false, and nothing could knock him over, a car (Yasin, 20 Nov: "i got run over by
+		// cars several times", "still passing right thru") nor a beating; the fight's "beaten" froze him standing)
+		cp->figure()->become(bodies[body].id, bodies[body].near_mesh, m, true);
 	}
 }
 
@@ -1353,10 +1355,39 @@ void CityCrowd::player_fight(double p_delta) {
 	if (!pl || !pl->is_inside_tree()) { if (pf.walker >= 0) end_fight(true); return; }
 	const float dt = (float)p_delta;
 	CityPed *pfig = pl->figure();
-	if (pf.player_down) {   // beaten: he lies until his body has him up again
-		if (pfig && pfig->get_mode() == CityPed::MODE_ANIM) { pf.player_down = false; pl->set_frozen(false); }
+	car_hit_cd = std::max(car_hit_cd - dt, 0.0f);
+	if (pf.player_down) {   // beaten (or run over): he lies until his body has him up again
+		// (and not before he has been down: his figure goes over to its balancing body a frame after knock_down, and that
+		// frame it was still animated, so a car's hit let him go at once and he stood where he was: car_hit_cd)
+		if (pfig && pfig->get_mode() == CityPed::MODE_ANIM && car_hit_cd <= 0.0f) { pf.player_down = false; pl->set_frozen(false); }
 		pl->take_combat_request();
 		return;
+	}
+	// RUN OVER (Yasin, 20 Nov: "i got run over by cars several times while playing"; nothing showed it): a car that
+	// reaches the player on foot at speed knocks him down (his balancing body, as when he is beaten; he gets up and
+	// has his body back); a slow one bumps him (the hit clip and a push)
+	if (pfig && pl->is_visible_in_tree() && car_hit_cd <= 0.0f && pfig->get_mode() == CityPed::MODE_ANIM) {
+		const Vector3 me = pl->get_global_position();
+		const int nc = (int)cars.size() / 7;
+		for (int c = 0; c < nc; c++) {
+			const float *q = &cars[(size_t)c * 7];
+			const float dx = me.x - q[0], dz = me.z - q[1];
+			if (dx * dx + dz * dz > 36.0f) continue;
+			const float hx = std::sin(q[2]), hz = std::cos(q[2]);
+			const float along = dx * hx + dz * hz, across = dx * hz - dz * hx;
+			if (std::fabs(along) > q[3] + 0.3f || std::fabs(across) > q[4] + 0.3f) continue;
+			const Vector3 cv(q[5], 0.0f, q[6]);
+			const float sp = cv.length();
+			if (sp < 0.8f) continue;
+			const Vector3 dir = cv / sp;
+			if (sp > 2.5f) {   // knocked down and thrown with the car's speed
+				pfig->knock_down(dir * std::min(sp * 0.85f, 12.0f) + Vector3(0, std::min(sp * 0.15f, 2.5f), 0), dir * 45.0f, me + Vector3(0, 1.0f, 0));
+				pf.player_down = true; pl->set_frozen(true);
+				if (pf.walker >= 0) end_fight(true);
+			} else { pl->take_hit(); pl->knock(dir * (sp + 1.0f)); }
+			cars_hit_player++; car_hit_cd = 1.5f; car_hit_v = sp;
+			break;
+		}
 	}
 	const Vector3 pp = pl->get_global_position();
 	if (pl->take_combat_request()) {
@@ -1553,7 +1584,7 @@ Dictionary CityCrowd::stats() const {
 	int nn = 0, nbdy = 0;
 	for (const Near &nb : near_pool) { if (nb.walker >= 0) nn++; if (nb.in_body) nbdy++; }
 	d["near_bodies"] = nn; d["near_pool"] = (int)near_pool.size(); d["in_physical_body"] = nbdy; d["umbrellas"] = prop_shown[0]; d["towels"] = prop_shown[1];
-	d["alarms_player_hit"] = alarms[1]; d["alarms_car_hit"] = alarms[2]; d["alarms_bike_down"] = alarms[3]; d["alarms_npc_fight"] = alarms[4]; d["cars_hit_people"] = cars_hit_people;
+	d["alarms_player_hit"] = alarms[1]; d["alarms_car_hit"] = alarms[2]; d["alarms_bike_down"] = alarms[3]; d["alarms_npc_fight"] = alarms[4]; d["cars_hit_people"] = cars_hit_people; d["cars_hit_player"] = cars_hit_player; d["car_hit_v"] = car_hit_v; d["player_down_now"] = pf.player_down;
 	d["ducked"] = s.ducks; d["stared"] = s.stared; d["coins"] = s.coins; d["lines_said"] = s.lines_said;
 	{ PackedFloat32Array cl; const double ls[11] = { l_sit_in, l_sit_out, l_gsit_in, l_gsit_out, l_lie_in, l_lie_out, l_duck_in, l_duck_out, l_fight_in, l_fight_out, l_surprise }; for (double l : ls) cl.push_back((float)l); d["clip_seconds"] = cl; }   // into and out of: a seat, the ground, lying, a crouch, a fight; the start
 	d["shoved_by_player"] = n_shoved; d["told_him_off"] = n_told_off; d["hit_back"] = n_hit_back;
