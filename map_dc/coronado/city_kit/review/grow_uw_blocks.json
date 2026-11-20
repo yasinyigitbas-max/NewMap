@@ -11,6 +11,17 @@
    "yaw": 0.0,
    "site": "industrial east half 1 (u -500..-409, v -1586..-1414)",
    "variant": "marine trades: Coronado Boatworks, Bay Marine Engines, Coronado Marine Supply, storage yard, staff and customer parking"
+  },
+  {
+   "piece": "n_w_i2",
+   "pos": [
+    -500.0,
+    0.0,
+    -1386.0
+   ],
+   "yaw": 0.0,
+   "site": "industrial east half 2 (u -500..-409, v -1386..-1214)",
+   "variant": "builders' yard, Pacific Building Supply, RV and boat storage, Strand Tire & Brake, Strand Liquor & Deli, tagged block wall to the gritty side"
   }
  ]
 }
