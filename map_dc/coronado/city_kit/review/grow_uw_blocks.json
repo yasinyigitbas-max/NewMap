@@ -1,0 +1,533 @@
+{
+ "_doc": "West fill (University session, 20 Nov; review/fill_west/PLAN.md): this session's own table, for integrate.py",
+ "rows": [
+  {
+   "piece": "n_w_i1",
+   "pos": [
+    -500.0,
+    0.0,
+    -1586.0
+   ],
+   "yaw": 0.0,
+   "site": "industrial east half 1 (u -500..-409, v -1586..-1414)",
+   "variant": "marine trades: Coronado Boatworks, Bay Marine Engines, Coronado Marine Supply, storage yard, staff and customer parking"
+  },
+  {
+   "piece": "n_w_i2",
+   "pos": [
+    -500.0,
+    0.0,
+    -1386.0
+   ],
+   "yaw": 0.0,
+   "site": "industrial east half 2 (u -500..-409, v -1386..-1214)",
+   "variant": "builders' yard, Pacific Building Supply, RV and boat storage, Strand Tire & Brake, Strand Liquor & Deli, tagged block wall to the gritty side"
+  },
+  {
+   "piece": "n_w_g1",
+   "pos": [
+    -500.0,
+    0.0,
+    -1186.0
+   ],
+   "yaw": 0.0,
+   "site": "gritty edge east half (u -500..-409, v -1186..-1009)",
+   "variant": "the Anchor bar, walk-ups, coin laundry, court apartments, thrift row, townhouses, corner market, two worn lots, vacant lot, bus shelter"
+  },
+  {
+   "piece": "n_w_c1",
+   "pos": [
+    -391.0,
+    0.0,
+    -791.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c1 (WEST FILL, civic band north): u -391..-209, v -791..-700, 182 x 91 m, flat 6.0..6.15.",
+   "variant": "the civic band's front on 6th St, opposite the campus's east side: FIRE STATION 2 (engine bays straight onto 6th St over its apron, the training yard behind off the west apron), the POST OFFICE (customer lot off the second 6th St apron), ST. ANDREW'S CHURCH (its garden behind); a shared lot behind t"
+  },
+  {
+   "piece": "n_w_c2",
+   "pos": [
+    -391.0,
+    0.0,
+    -700.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c2 (WEST FILL, the civic park): u -391..-300, v -700..-609, 91 x 91 m, flat.",
+   "variant": "the neighbourhood's park beside the civic heart (CITY_PLAN: parks in the transition areas): a PLAYGROUND on a mulch pad (play structure, swings, slide, benches facing it for the parents), a fenced DOG RUN with its gate and a bench inside, an open lawn, picnic tables, paths lit at night, a small lot "
+  },
+  {
+   "piece": "n_w_c3",
+   "pos": [
+    -391.0,
+    0.0,
+    -591.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c3 (WEST FILL, east of the campus): u -391..-305, v -591..-409, 86 x 182 m, flat.",
+   "variant": "STAFF TOWNHOUSES facing the campus (the garage and the stadium walk) across the street, their parking courts behind off the aprons, back yards; the SENIOR CENTER on the south corner with a garden of benches and tables."
+  },
+  {
+   "piece": "n_w_c4",
+   "pos": [
+    -95.0,
+    0.0,
+    -590.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c4 (WEST FILL, the stadium promenade): u -95..-50, v -590..-409, 45 x 181 m, flat.",
+   "variant": "the STADIUM PROMENADE, a green walk from the city centre to the stadium: a paved path, lawns, benches facing the lawns, lamps, bike racks, a statue at the stadium end, drinking fountains."
+  },
+  {
+   "piece": "n_w_c5",
+   "pos": [
+    -50.0,
+    0.0,
+    -502.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c5 (WEST FILL, Amber Avenue's west side south of the centre): u -50..-16, v -502..-409, 34 x 93 m, flat.",
+   "variant": "AMBER SHOPS facing the avenue: a boutique row, a bakery, a corner shop, a realty office, a caf\u00e9; benches and planters on the walk."
+  },
+  {
+   "piece": "n_w_c6",
+   "pos": [
+    -591.0,
+    0.0,
+    -391.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c6 (WEST FILL, south of the campus): u -591..-409, v -391..-300, 182 x 91 m, flat.",
+   "variant": "FACULTY APARTMENTS facing the campus's dorms across the street (spanish, garden, stucco), and on the east corner BRIGHT START CHILD CARE with its fenced playground; parking courts behind off the aprons, yards with barbecues."
+  },
+  {
+   "piece": "n_w_c7",
+   "pos": [
+    -500.0,
+    0.0,
+    -300.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c7 (WEST FILL, the neighbourhood park south of the campus): u -500..-409, v -300..-209, 91 x 91 m, flat.",
+   "variant": "the residential quarter's park: two TENNIS COURTS in a chain-link cage (gate on the path), a SAND VOLLEYBALL court, a lawn with tables, benches facing the courts, a small lot off the east apron."
+  },
+  {
+   "piece": "n_w_c8",
+   "pos": [
+    -391.0,
+    0.0,
+    -391.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c8 (WEST FILL, west of the stadium): u -391..-305, v -391..-209, 86 x 182 m, flat.",
+   "variant": "the stadium's west side: STADIUM TEAM STORE, THE BULLPEN (sports bar), the TOUCHDOWN DINER face the west street; behind them the TAILGATE LOT (rows, lights, grills on the edges) between the street and the stadium."
+  },
+  {
+   "piece": "n_w_c9",
+   "pos": [
+    -95.0,
+    0.0,
+    -391.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c9 (WEST FILL, Amber Avenue's west side by the stadium): u -95..-16, v -391..-210, 79 x 181 m, flat.",
+   "variant": "AMBER AVENUE SHOPS face the avenue (an arcade block, a bakery, a shop row, the AMBER DINER, a boutique row, a surf shop, a corner shop); behind them a planted walk to the stadium with benches and bike racks (no lot: Amber's shoppers walk, the stadium has its own parking)."
+  },
+  {
+   "piece": "n_w_c10",
+   "pos": [
+    -305.0,
+    0.0,
+    -240.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c10 (WEST FILL, the stadium's south-west fan plaza): u -305..-209, v -240..-209, 96 x 31 m, flat.",
+   "variant": "a FAN PLAZA where the crowd comes off the south street: two ticket and snack kiosks, benches, bins against the kiosks, bike racks, bollards against cars, the team statue, a bus shelter on the street."
+  },
+  {
+   "piece": "n_w_c11",
+   "pos": [
+    -191.0,
+    0.0,
+    -240.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c11 (WEST FILL, the stadium's south-east fan plaza): u -191..-95, v -240..-209, 96 x 31 m, flat.",
+   "variant": "a FAN PLAZA where the crowd comes off the south street: two ticket and snack kiosks, benches, bins against the kiosks, bike racks, bollards against cars, the team statue, a bus shelter on the street."
+  },
+  {
+   "piece": "n_w_h1",
+   "pos": [
+    -295.0,
+    0.0,
+    -294.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_h1 (WEST FILL, a 40 x 40 m hole in the stadium's car park): u -295..-255, v -294..-254, flat.",
+   "variant": "the stadium's car park left four kit-park-sized holes; this one becomes TENNIS COURTS (two, in a chain-link cage)."
+  },
+  {
+   "piece": "n_w_h2",
+   "pos": [
+    -245.0,
+    0.0,
+    -294.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_h2 (WEST FILL, a 40 x 40 m hole in the stadium's car park): u -245..-205, v -294..-254, flat.",
+   "variant": "a PLAYGROUND for families on game days: mulch pad, play structure, swings, slide, shade sail, benches facing it, a picket fence with a gate."
+  },
+  {
+   "piece": "n_w_h3",
+   "pos": [
+    -195.0,
+    0.0,
+    -294.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_h3 (WEST FILL, a 40 x 40 m hole in the stadium's car park): u -195..-155, v -294..-254, flat.",
+   "variant": "a PICNIC GROVE for tailgaters who walk off the lot: lawn, tables, grills, benches (its trees come with the tree layer)."
+  },
+  {
+   "piece": "n_w_h4",
+   "pos": [
+    -145.0,
+    0.0,
+    -294.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_h4 (WEST FILL, a 40 x 40 m hole in the stadium's car park): u -145..-105, v -294..-254, flat.",
+   "variant": "a second pair of TENNIS COURTS (the stadium end's public courts)."
+  },
+  {
+   "piece": "n_w_p1",
+   "pos": [
+    -252.0,
+    0.0,
+    -652.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_p1 (WEST FILL, a 40 x 40 m hole inside the civic heart v_nw): u -252..-212, v -652..-612, flat.",
+   "variant": "the civic heart's MEMORIAL GREEN: a cross of paths, the memorial in the middle, benches facing it, flower beds."
+  },
+  {
+   "piece": "n_w_p2",
+   "pos": [
+    -188.0,
+    0.0,
+    -642.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_p2 (WEST FILL, the 40 x 30 m hole inside the civic heart v_ne, the spot Yasin marked east of the 18 % block):",
+   "variant": "a SUCCULENT GARDEN for the civic offices' lunch break: a dry garden on mulch, a path, benches, a table."
+  },
+  {
+   "piece": "n_w_s1",
+   "pos": [
+    -791.0,
+    0.0,
+    -900.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_s1 (WEST FILL, north of the campus, west half): u -791..-609, v -900..-809, 182 x 91 m.",
+   "variant": "where the students live, facing the campus's north side across 6th St (ZONING): a row of STUDENT APARTMENTS (garden, stucco, spanish, a dingbat) along 6th St, then by the campus's north-west gate a little STUDENT STRIP: GATE PIZZA, CAMPUS CYCLES, THE GATEHOUSE (pub), the STUDENT HOUSING OFFICE. Behi"
+  },
+  {
+   "piece": "n_w_s2a",
+   "pos": [
+    -500.0,
+    0.0,
+    -991.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_s2a (WEST FILL, north of the campus, east of the gritty edge): u -500..-409, v -991..-809, 91 x 182 m,",
+   "variant": "across 6th St from the campus bus station: the CAMPUS MARKET (a grocery students walk to off the bus) with its lot on 6th St's apron and the east apron, carts and a corral, the pylon sign; north of it STUDENT APARTMENTS facing the east street (stucco, garden, court) and townhouses on the north stree"
+  },
+  {
+   "piece": "n_w_s2b",
+   "pos": [
+    -591.0,
+    0.0,
+    -900.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_s2b (WEST FILL, north of the campus): u -591..-500, v -900..-809, 91 x 91 m, flat 6.0..6.15.",
+   "variant": "the STUDENT STRIP facing the student union and the gate caf\u00e9 across 6th St: a shop row (PRINT & COPY, BOBA TEA, PHONE FIX), a second row (BURRITO BAR, TEXTBOOK EXCHANGE), THE QUAD PUB, a corner terrace with tables; behind, a lot off the west street and the 6th St lane, bins against the back walls."
+  },
+  {
+   "piece": "n_w_s2c",
+   "pos": [
+    -545.0,
+    0.0,
+    -940.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_s2c (WEST FILL, the pocket between the gritty edge's lot and the student strip): u -545..-500,",
+   "variant": "a STUDENT POCKET PARK behind the strip: a mural wall against the gritty lot, lawn, tables, a ping-pong-less corner of benches facing the lawn, bike racks, a drinking fountain; reached from the strip's back lane and the market block."
+  },
+  {
+   "piece": "n_w_w3",
+   "pos": [
+    -986.0,
+    0.0,
+    -791.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w3 (WEST FILL, the west strip, Country Club Ridge's foot): u -986..-809, v -791..-609, 177 x 182 m.",
+   "variant": "RESIDENTIAL (ZONING: the west houses running down Country Club Ridge): houses face the east, north and south streets, every back yard fenced with a gate to its parking pad off a back lane; the lanes join an alley between the two street aprons; in the block's heart RIDGE POCKET PARK (playground, lawn"
+  },
+  {
+   "piece": "n_w_w4",
+   "pos": [
+    -986.0,
+    0.0,
+    -591.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w4 (WEST FILL, the west strip): u -986..-809, v -591..-409, 177 x 182 m; land 4.2 (west) to 6.2 (north-east).",
+   "variant": "houses round the edges as in the block north; in its heart RIDGEVIEW ELEMENTARY: two classroom wings on the school yard with a playground and the playing field; staff and drop-off off the alley."
+  },
+  {
+   "piece": "n_w_w5",
+   "pos": [
+    -986.0,
+    0.0,
+    -391.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w5 (WEST FILL, the west strip): u -986..-809, v -391..-209, 177 x 182 m; flat at 4.0..4.2.",
+   "variant": "houses round the edges; in its heart a COTTAGE COURT: two rows of narrow cottages with porches facing a shared green (benches, a table, a community garden on mulch), reached on foot from the lanes."
+  },
+  {
+   "piece": "n_w_w6",
+   "pos": [
+    -986.0,
+    0.0,
+    -191.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w6 (WEST FILL, the west strip, on the ridge): u -986..-809, v -191..-9, 177 x 182 m; the land climbs from",
+   "variant": "houses on their own level pads stepping up the ridge round the edges; in its heart RIDGE COMMUNITY CHURCH with its lot off the alley and its garden."
+  },
+  {
+   "piece": "n_w_x1",
+   "pos": [
+    -791.0,
+    0.0,
+    -391.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_x1 (WEST FILL, between the west strip and the campus's south-west): u -791..-609, v -391..-300, 182 x 91 m;",
+   "variant": "RESIDENTIAL: houses facing the north street, a back lane from the west apron to the east apron, a second row of houses facing the lane with their yards fenced against the quarter's yards behind."
+  },
+  {
+   "piece": "n_w_e1",
+   "pos": [
+    -930.0,
+    0.0,
+    209.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_e1 (WEST FILL, the south-west edge's west end): u -930..-809, v 209..256, 121 x 47 m; flat at 2.0.",
+   "variant": "beach cottages facing the north street, a shared lot off the apron between them, their yards fenced against the sound wall to the ring road."
+  },
+  {
+   "piece": "n_w_e1b",
+   "pos": [
+    -966.0,
+    0.0,
+    209.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_e1b (WEST FILL, the corner pocket by the ring road): u -966..-930, v 209..240, 36 x 31 m; flat 2.0.",
+   "variant": "a BEACH-SIDE POCKET: a rinse shower and a bench for people walking up from the shore, bike racks, a table."
+  },
+  {
+   "piece": "n_w_e2",
+   "pos": [
+    -791.0,
+    0.0,
+    209.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_e2 (WEST FILL, the south-west edge): u -791..-609, v 209..275, 182 x 66 m; the land falls from 4.2 (east) to",
+   "variant": "the beach side's houses (beach cottages, ranches, spanish) facing the north street on their own pads down the slope, a back lane between the aprons, a sound wall along the ring road behind it."
+  },
+  {
+   "piece": "n_w_e3",
+   "pos": [
+    -591.0,
+    0.0,
+    209.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_e3 (WEST FILL, the south-west edge): u -591..-409, v 209..288, 182 x 79 m; land 2.0..4.2 toward the shore.",
+   "variant": "beach-side houses facing the north street, a back lane, the sound wall to the ring road."
+  },
+  {
+   "piece": "n_w_e4",
+   "pos": [
+    -391.0,
+    0.0,
+    209.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_e4 (WEST FILL, the south-west edge by the beach road): u -391..-209, v 209..302, 182 x 93 m; flat at 2.0.",
+   "variant": "beach-side houses facing the north street; on the east end the SURF SHACK (surf shop) and the BEACH BEAN caf\u00e9 facing the street with bikes, boards and tables; a back lane, the sound wall to the ring road."
+  },
+  {
+   "piece": "n_w_w7",
+   "pos": [
+    -980.0,
+    0.0,
+    9.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w7 (WEST FILL, the crest of Country Club Ridge): u -980..-809, v 9..190, 171 x 181 m; the land climbs from",
+   "variant": "RIDGE PARK (ZONING: Country Club Ridge's west houses run down to the beach and the park): an OVERLOOK on the crest with benches facing south-west over the shore, lawns falling down the ridge, a playground, a picnic grove with grills, paths lit at night, the park's lot off the east apron, the snack h"
+  },
+  {
+   "piece": "n_w_w2a",
+   "pos": [
+    -986.0,
+    0.0,
+    -900.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w2a (WEST FILL, the west strip's north end at the gritty edge): u -986..-809, v -900..-809, 177 x 91 m; land",
+   "variant": "the step from the gritty edge to the ridge's houses: APARTMENTS facing the south street (garden, stucco, spanish, dingbat, court), their parking court behind off the alley and the east apron, yards with washing lines, barbecues and tables; the sound wall to the ring road."
+  },
+  {
+   "piece": "n_w_w2b",
+   "pos": [
+    -982.0,
+    0.0,
+    -991.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w2b (WEST FILL, between the ring road and the gritty edge): u -982..-900, v -991..-900, 82 x 91 m; land 4.0..4.6.",
+   "variant": "RIDGE COMMUNITY GARDEN AND PLAYGROUND for the apartments and the gritty edge: allotment beds on mulch inside a picket fence with its gate, the tool shed (a container), water, a playground on mulch, benches, tables."
+  },
+  {
+   "piece": "n_w_w1",
+   "pos": [
+    -938.0,
+    0.0,
+    -1186.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w1 (WEST FILL, the strip between the ring road's houses and the gritty edge): u -938..-900, v -1186..-1009,",
+   "variant": "RIDGE GARDEN NURSERY: rows of plants on gravel inside a chain-link fence, the sales hut at the north end, a parking strip, a bench; the land climbs 2 m along it."
+  },
+  {
+   "piece": "n_w_w0a",
+   "pos": [
+    -1000.0,
+    0.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w0a (WEST FILL, the strip inside the ring road at the north-west): u -1000..-969, v -1400..-1200, 31 x 200 m; land 2.1..2.6.",
+   "variant": "a GREEN BUFFER between the ring road and the industrial edge: a walking and running path, benches facing the lawn, a drinking fountain, lamps; its trees (a windbreak) come with the tree layer."
+  },
+  {
+   "piece": "n_w_w0b",
+   "pos": [
+    -937.0,
+    0.0,
+    -1300.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w0b (WEST FILL, the small spot Yasin marked north of the 56 % block): u -937..-900, v -1300..-1214, 37 x 86 m; flat 2.0..2.1.",
+   "variant": "the industrial edge's ALLOTMENTS: beds on mulch inside a picket fence with a gate, a tool shed, water, benches; workers from the yards next door keep plots here."
+  },
+  {
+   "piece": "n_w_q1",
+   "pos": [
+    -678.0,
+    0.0,
+    -930.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_q1 (WEST FILL, a small hole left inside the gritty edge (the square Yasin marked in the 51 % block)): u -678..-662, v -930..-919, 16 x 11 m, flat.",
+   "variant": "a POCKET GARDEN for the walk-ups round it: a bench facing a flower bed."
+  },
+  {
+   "piece": "n_w_q2",
+   "pos": [
+    -244.0,
+    0.0,
+    -695.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_q2 (WEST FILL, a small hole left inside the civic heart (v_nw)): u -244..-220, v -695..-665, 24 x 30 m, flat.",
+   "variant": "a quiet SEATING GARDEN for the civic offices: a bench facing beds of agaves, a fountain."
+  },
+  {
+   "piece": "n_w_q3",
+   "pos": [
+    -238.0,
+    0.0,
+    -568.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_q3 (WEST FILL, a small hole left inside the civic heart (v_sw)): u -238..-209, v -568..-548, 29 x 20 m, flat.",
+   "variant": "a LUNCH CORNER for the civic offices: two tables and a bike rack."
+  },
+  {
+   "piece": "n_w_q4",
+   "pos": [
+    -134.0,
+    0.0,
+    -538.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_q4 (WEST FILL, a small hole left inside the civic heart (v_se)): u -134..-106, v -538..-502, 28 x 36 m, flat.",
+   "variant": "a small PLAYGROUND for families visiting the civic offices: mulch pad, play structure, swings, a bench facing it."
+  },
+  {
+   "piece": "t_w_north",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "trees of the west fill north of 6th St",
+   "variant": "hand-placed tree layer (docs/TREE_PLAN.md)"
+  },
+  {
+   "piece": "t_w_civic",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "trees of the civic and stadium band",
+   "variant": "hand-placed tree layer (docs/TREE_PLAN.md)"
+  },
+  {
+   "piece": "t_w_strip",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "trees of the west strip and round the campus",
+   "variant": "hand-placed tree layer (docs/TREE_PLAN.md)"
+  },
+  {
+   "piece": "t_w_edge",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "palms of the south-west edge",
+   "variant": "hand-placed tree layer (docs/TREE_PLAN.md)"
+  }
+ ]
+}
