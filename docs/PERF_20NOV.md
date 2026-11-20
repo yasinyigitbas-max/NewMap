@@ -31,3 +31,11 @@ The phone was hot for the census runs (battery 34.5 -> 38.3 C): read differences
 | Draw stalls on the CPU side | single frames of 35-47 ms in "draw" with the GPU at 14 ms, nothing loading | open: possibly the cleanup thread freeing render instances under the server's lock; the next phone build A/B's it |
 | The tier fade (B6, rig --tiers) | the first five zones as without it (gritty 59.9, centre 54.8, waterfront 58.9, industrial 58.8 fps; apartments 52.2 -> 47.8); from the sixth on EVERY drive at 39.4-39.8 fps | the step is the phone, not the fade: at 38.5-39 C it capped itself near 40 fps. The fade's own cost looks small (apartments -4 fps); to be measured again on a cool phone before turning it on |
 | **The phone's heat cap** | a sudden, flat 39.4-39.8 fps in every drive once the battery is past ~38 C (pb2_zones_tiers from 'pilot' on; the same ceiling in pb_stream_life / pb2_stream_life) | the '40 fps with traffic and people' was mostly this cap. Long runs must be read with the temperature; the game should lower its own load before the phone does (a heat-aware quality step: a candidate) |
+
+## 3. The C++ streamer on the phone (pb3_zones, pb3_stream_life, pb4_zones)
+- Day zones as with the script (55-72 fps; 210 km/h 54.8-54.9 fps); traffic and people 44-46 fps (the script's build 39.6-44.5); no freeze.
+- A regression found and fixed: night drives had 33 frames over 50 ms each (pb3) - city_lights.gd reads the cell table once per cell and the
+  C++ getter rebuilt it on every read (~20,000 builds an update). Kept and rebuilt only on change (stream5): pb4 night centre 48.8 -> 55.0 fps,
+  gritty 51.7 -> 58.3 fps, no frame over 50 ms.
+- Still failing the gate narrowly: teleport frames of 62-137 ms (the script build: 55-63) and 3-7 frames over 33 ms in a few zones. Open.
+- The 76 "Failed to free RID" errors with traffic and people (B27): still there. Open.
