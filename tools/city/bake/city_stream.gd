@@ -60,6 +60,8 @@ signal cell_out(key: String)
 @export var tier_band := 8.0          ## with tiers: metres of dithered overlap at each tier switch (0 = hard cuts; at most 8, the bake's node ranges)
 @export var arrive_s := 0.5           ## with tiers: an arriving cell's switch to far sweeps from the camera out to 220 m in this time (0 = all at once)
 @export var far_ground := true        ## the far world's ground (streets before their cell loads); false hides it
+@export var skyline := true           ## the painted ring of San Diego round the horizon (tools/city/look/skyline.gd, 20 Nov): one draw, never culled
+const Skyline := preload("res://tools/city/look/skyline.gd")
 
 enum {NONE, LOADING, BUILDING, READY, IN}
 const MAP := 64                       ## ck_cells_loaded is MAP x MAP texels, cell (0, 0) at its middle
@@ -113,6 +115,7 @@ func _ready() -> void:
 	var fp := runtime_dir + "far/far_world.scn"
 	if ResourceLoader.exists(fp):
 		far_world = (load(fp) as PackedScene).instantiate(); add_child(far_world)
+	if skyline: add_child(Skyline.build())      # San Diego round the horizon: one draw, always there, never culled (tools/city/look/skyline.gd)
 	set_far_ground(far_ground)
 	set_tiers(tiers, tier_band, arrive_s)
 
