@@ -21,6 +21,7 @@
 #include "engine_sound.h"
 #include "city_stream.h"
 #include "city_breakables.h"
+#include "city_sea.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/class_db.hpp>
@@ -47,6 +48,7 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(CityPed);       // one person with a real body: animation, and a body that balances, falls and gets up
 	GDREGISTER_CLASS(StreetGraph);   // tool time: the streets as traffic and people need them, from the baked city
 	GDREGISTER_CLASS(CityCrowd);     // the people of the map: who walks where and what they do, and how they are drawn
+	GDREGISTER_CLASS(CitySea);       // the sea, drawn after the city (port of tools/city/look/sea.gd)
 	GDREGISTER_CLASS(CityBreakables);   // small street props that cars knock over (B9)
 	GDREGISTER_CLASS(CityStream);    // the baked city streamed round the player (port of city_stream.gd, 20 Nov)
 	GDREGISTER_CLASS(EngineSound);   // a car's engine made sample by sample from its revs, gears and pedal (B4)
