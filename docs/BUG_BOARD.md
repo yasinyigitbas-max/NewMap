@@ -40,6 +40,7 @@ B10 and B11 (agreed with the people session).
 | B24 | "everyones shoulders are too far back, push all of them both player and npcs shoulders forward" | people | end of the queue (the people session's B16 of 20 Nov 03:49, renumbered when the two boards were joined) |
 | B25 | "kerbs shouldnt require step up animation, but if you can make it truly seamless its okay" | people | end of the queue (the people session's B17 of 20 Nov 03:49, renumbered when the two boards were joined) |
 | B26 | "bike riders need idle on the bike animation with one leg down and seamlessly transition into riding again after movement is detected" | people | end of the queue (the people session's B18 of 20 Nov 03:49, renumbered when the two boards were joined) Same wish as B19. |
+| B27 | (found 20 Nov, phone pb_stream_life) 76 "Failed to free RID: The specified RID has no owner" (Jolt, the physics thread) in bursts of 4 or 8 every few seconds, only with traffic and people on (none in pb_zones; none in the 19 Nov traffic / people runs) | perf | open: the only physics objects our C++ makes by hand (the crowd's 12 capsules, the traffic's 24 pooled bodies) are freed once, at exit; so an engine-side body freed twice; suspects: the people's balancing bodies when bumped, the rig's drive car. Harmless so far (the run finished). Log: OUT/logcat_pb_stream_life.txt (local), review/phone/pb_stream_life.txt. |
 
 ## FIXED (20 Nov)
 | # | Bug | Fix |
