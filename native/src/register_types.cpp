@@ -23,6 +23,7 @@
 #include "city_breakables.h"
 #include "city_sea.h"
 #include "city_skyline.h"
+#include "city_rooms.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/class_db.hpp>
@@ -49,6 +50,7 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(CityPed);       // one person with a real body: animation, and a body that balances, falls and gets up
 	GDREGISTER_CLASS(StreetGraph);   // tool time: the streets as traffic and people need them, from the baked city
 	GDREGISTER_CLASS(CityCrowd);     // the people of the map: who walks where and what they do, and how they are drawn
+	GDREGISTER_CLASS(CityRooms);     // the shops' rooms woken by distance, their doors swung (B14)
 	GDREGISTER_CLASS(CitySkyline);   // the San Diego ring round the horizon (port of tools/city/look/skyline.gd)
 	GDREGISTER_CLASS(CitySea);       // the sea, drawn after the city (port of tools/city/look/sea.gd)
 	GDREGISTER_CLASS(CityBreakables);   // small street props that cars knock over (B9)

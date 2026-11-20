@@ -2,6 +2,7 @@
 #include "city_stream.h"
 #include "city_breakables.h"
 #include "city_skyline.h"
+#include "city_rooms.h"
 #include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/collision_object3d.hpp>
 #include <godot_cpp/classes/box_shape3d.hpp>
@@ -71,6 +72,7 @@ void CityStream::_ready() {
 	if (skyline) { CitySkyline *sk = memnew(CitySkyline); sk->build(); add_child(sk); }   // San Diego round the horizon: one draw, never culled
 	set_far_ground(far_ground);
 	set_tiers(tiers, tier_band, arrive_s);
+	if (rooms) { CityRooms *rr = memnew(CityRooms); rr->set_name("Rooms"); add_child(rr); rr->set_stream(this); }   // B14
 	if (breakables) { CityBreakables *bk = memnew(CityBreakables); bk->set_name("Breakables"); add_child(bk); bk->set_stream(this); }   // B9
 	set_process(true);
 }
@@ -644,6 +646,7 @@ void CityStream::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("pending_count"), &CityStream::pending_count);
 	ClassDB::bind_method(D_METHOD("leaving_count"), &CityStream::leaving_count);
 	ClassDB::bind_method(D_METHOD("cell_node", "key"), &CityStream::cell_node);
+	ClassDB::bind_method(D_METHOD("set_rooms", "v"), &CityStream::set_rooms); ClassDB::bind_method(D_METHOD("get_rooms"), &CityStream::get_rooms); ADD_PROPERTY(PropertyInfo(Variant::BOOL, "rooms"), "set_rooms", "get_rooms");
 	ClassDB::bind_method(D_METHOD("set_skyline", "v"), &CityStream::set_skyline); ClassDB::bind_method(D_METHOD("get_skyline"), &CityStream::get_skyline); ADD_PROPERTY(PropertyInfo(Variant::BOOL, "skyline"), "set_skyline", "get_skyline");
 	ClassDB::bind_method(D_METHOD("set_breakables", "v"), &CityStream::set_breakables); ClassDB::bind_method(D_METHOD("get_breakables"), &CityStream::get_breakables); ADD_PROPERTY(PropertyInfo(Variant::BOOL, "breakables"), "set_breakables", "get_breakables");
 	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "cells", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "", "get_cells");
