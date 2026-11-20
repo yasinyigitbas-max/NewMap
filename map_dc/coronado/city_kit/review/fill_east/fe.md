@@ -83,3 +83,19 @@ walk is exactly my height (sampled), the step is in the junction's own corner ce
 r_q_250_m1000_se's edge has a 6 - 8 cm step of its own (u 294 .. 296, and at its corner v -990.6); my edge follows a
 linear table there, 6 cm off over ~1 m. The exact-collider patch was applied to the saved pieces IN PLACE: rebuilding a
 piece from its script drops it (run exact_colliders.gd again after any rebuild).
+
+## Final numbers (20 Nov, after trees and exact colliders; area layout)
+- validate.gd: 0 on fe pieces (22 problems in the area, all in n_apt_* / r_q_* pieces, the same before my pieces).
+- check_life.gd: 0 lines naming an fe piece.
+- audit_trees.gd: 82 trees checked in the area, 0 in hard ground.
+- check_rooms.gd --only=g_fe_: 0 problems, 11 rooms.
+- buried.py: 0 of 147,647 1 m cells with the land over my ground (closest 4.8 cm under it).
+- grade.py: median 1.5 %, 99 % under 6.0 %, 0.33 % over 8 % (pad faces, steps, the courts' and skate pad's faces).
+- seams.py: every street walk edge within 2 cm except the junction corners (above) and the r_q quadrant's own step.
+- exact colliders: colexact_verify largest gap 0.1 mm on all 14 files.
+- superchecker after the exact colliders: it reports `no_collision` / `column_no_collision` again on every piece (44 -
+  210 per piece). The same happens on the locked n_hp_west (68 + 10) whose colliders were made the same way: the
+  checker's reader does not see exact_colliders.gd's shapes (colexact_verify does, corner for corner). A checker blind
+  spot for the coordinator, not changed. Before the colliders step: only report-only kinds were left.
+- Room findings still listed by the superchecker (report-only for it): sign_wrong, shop_lacks, staff_door_off,
+  thin_wall, window_empty, no_counter (rec center). Not fixed by hand.
