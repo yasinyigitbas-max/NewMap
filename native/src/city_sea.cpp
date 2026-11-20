@@ -88,6 +88,11 @@ void CitySea::build() {
 	set_meta("tris", tris); set_meta("deep", meta.get("deep", 20.0));
 }
 
+void CitySea::_exit_tree() {
+	if (g_sea_mat) g_sea_mat->unref();
+	set_material_override(Ref<Material>());
+}
+
 void CitySea::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("build"), &CitySea::build);
 	ClassDB::bind_method(D_METHOD("get_tris"), &CitySea::get_tris);

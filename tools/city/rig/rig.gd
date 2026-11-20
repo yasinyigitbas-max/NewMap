@@ -37,7 +37,7 @@ extends Node3D
 ##   --look=day_half | day_clear   two more days to choose from (queue 3); --look=day is the default day
 ##   --air=0|1     with the look: gulls over the waterfront, a plane now and then, smoke and steam in the industrial zone
 ##             (tools/city/look/air.gd, one draw); OFF by default until measured
-##   --sea=1|0     with the look: 1 (default) the look's sea (tools/city/look/sea.gd) instead of the green plane under the water
+##   --sea=1|0     with the look: 1 (default) the look's sea (C++ CitySea) instead of the green plane under the water
 ##   --bloom=0|1   with --look=1: 1 adds a soft glow round bright things (GTA 4 style); costs pixels, off by default
 ##   --glow=1|0    with the look: 1 (default) the look's lamp halos and pools (tools/city/look/glow.gdshader), 0 the bake's
 ##   --blobs=0|1   with the look: 1 soft tree shadows beyond the 50 m sun shadow (look job 4); OFF by default: it reads
@@ -186,9 +186,9 @@ func _ready() -> void:
 		sun = DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-48, -35, 0); sun.light_energy = 1.25
 		sun.shadow_enabled = OS.get_environment("NOSHADOW") != "1"; sun.directional_shadow_max_distance = 50.0; add_child(sun)      # the game's sun shadow distance
 	if int(opt.reflect) == 0: env.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED
-	var gp := MeshInstance3D.new(); var pm := PlaneMesh.new(); pm.size = Vector2(6000, 6000); gp.mesh = pm
-	var gm := StandardMaterial3D.new(); gm.albedo_color = Color(0.36, 0.42, 0.3); gm.roughness = 1.0; gp.material_override = gm; gp.position.y = -0.05; add_child(gp)
-	if look and look.sea: gp.position.y = -2.0      # under the look's sea (at 0 m): 5 cm below it would flicker far away
+	# the backstop under everything (C++ CitySea.make_backstop: drawn last, so only what nothing else covers is shaded); under the look's
+	# sea (at 0 m) 2 m down: 5 cm below it would flicker far away
+	add_child(ClassDB.class_call_static(&"CitySea", &"make_backstop", 6000.0, -2.0 if (look and look.sea) else -0.05))
 	st = ClassDB.instantiate(&"CityStream"); st.name = "City";      # the streamer is C++ (native/src/city_stream.*) since 20 Nov
 	st.lead_seconds = float(opt.lead); st.max_cells = int(opt.maxcells); st.max_loading = int(opt.loading); st.bodies_per_frame = int(opt.bodies); st.body_tris_per_frame = int(opt.coltris); st.loader_mode = int(opt.loader); st.gpu_reserve_mb = int(opt.gpureserve); st.col_ms_per_frame = float(opt.colms); st.attach_bodies = not opt.nocol; st.show_cells = not opt.hide; st.probe = opt.probe
 	st.col_range = float(opt.colrange); st.prepare_boost = float(opt.boost); st.col_background = not ("--colnobg" in args)

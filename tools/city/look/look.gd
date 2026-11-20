@@ -19,7 +19,7 @@ extends Node
 ##  - SKY MAP (look job 5): the sky drawn into a 128 x 64 panorama when the time of day changes (8,192 pixels, once),
 ##    global ck_sky_map for glass and wet ground (sky_reflect.gdshaderinc): one read on those pixels only. --wet DEMO
 ##    swaps the ground's shader for rt_ground + the snippet: one more read (puddles) + one (sky map) per ground pixel.
-##  - SEA (sea.gd + sea.gdshader, queue 2 job 3): one draw (~33k triangles) in the place of the green plane; unshaded;
+##  - SEA (C++ CitySea + sea.gdshader, queue 2 job 3): one draw (~33k triangles) in the place of the green plane; unshaded;
 ##    per water pixel 3 texture reads (two ripple reads + the sky map) and ~40 arithmetic steps.
 ##  - AIR (air.gd + air.gdshader, queue 2 job 5, OFF by default): one draw of small alpha quads moved by the shader.
 ##  - BLOOM: only with --bloom=1 (off by default): a blur chain at 1/4 .. 1/16 size plus one read per pixel. Measure
@@ -31,7 +31,6 @@ const SKY_SHADER_PATH := "res://tools/city/look/sky.gdshader"
 const NOISE_PATH := "res://tools/city/look/sky_noise.png"
 const Blobs := preload("res://tools/city/look/blob_shadows.gd")
 const DayCycle := preload("res://tools/city/look/day_cycle.gd")
-const Sea := preload("res://tools/city/look/sea.gd")
 const Weather := preload("res://tools/city/look/weather.gd")
 const Air := preload("res://tools/city/look/air.gd")
 ## the moon: where the night's light comes from (the same direction the night used before the running day)
@@ -190,7 +189,8 @@ func _ready() -> void:
 		RenderingServer.global_shader_parameter_add(&"ck_sky_map", RenderingServer.GLOBAL_VAR_TYPE_SAMPLER2D, sky_map.get_texture())
 		RenderingServer.global_shader_parameter_add(&"ck_wet", RenderingServer.GLOBAL_VAR_TYPE_FLOAT, wet); _map_added = true
 	else: RenderingServer.global_shader_parameter_set(&"ck_sky_map", sky_map.get_texture())
-	if sea: add_child(Sea.build())      # one draw, built once (tens of ms at start)
+	if sea:      # one draw, built once; C++ CitySea (native/src/city_sea.*), drawn after the city (20 Nov: 13 ms at the waterfront)
+		var sea_mi: Node = ClassDB.instantiate(&"CitySea"); sea_mi.call(&"build"); add_child(sea_mi)
 	if air: add_child(Air.build())      # one draw, nothing per frame
 	if cars:      # the game's car shader needs its global refl_env (x daylight, y cloud) before it is loaded
 		if not _refl_added:
@@ -399,7 +399,7 @@ func _apply(t0: Dictionary) -> void:
 		RenderingServer.global_shader_parameter_set(&"ck_look_sky_top", t.zenith.lerp(t.middle, 0.4))
 		RenderingServer.global_shader_parameter_set(&"ck_look_sky_horizon", t.haze)
 	RenderingServer.global_shader_parameter_set(&"ck_wet", wet)
-	var sm := Sea.material()      # the sea's own light (it is unshaded): ambient + the sun on a flat surface
+	var sm: ShaderMaterial = ClassDB.class_call_static(&"CitySea", &"get_sea_material")      # the sea's own light (it is unshaded): ambient + the sun on a flat surface
 	sm.set_shader_parameter(&"light", Vector3(env.ambient_light_color.r, env.ambient_light_color.g, env.ambient_light_color.b) * env.ambient_light_energy + Vector3(sun.light_color.r, sun.light_color.g, sun.light_color.b) * sun.light_energy * maxf(light_v.y, 0.0) * 0.55)
 	sm.set_shader_parameter(&"sun_dir", sun_v if mo < 0.5 else moon_v)
 	sm.set_shader_parameter(&"sun_light", Vector3(sun.light_color.r, sun.light_color.g, sun.light_color.b) * sun.light_energy)

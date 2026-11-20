@@ -19,6 +19,7 @@ public:
 	static Ref<ShaderMaterial> get_sea_material();
 	static MeshInstance3D *make_backstop(double p_size, double p_y);   // the flat plane under everything (holes show it, not the sky)
 	void build();
+	void _exit_tree() override;   // the shared material let go with the sea (else the engine reports it leaked at exit)
 	int tris = 0;
 	int get_tris() const { return tris; }
 };
