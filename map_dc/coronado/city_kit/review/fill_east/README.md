@@ -45,3 +45,28 @@ pads are empty), most park benches and tables went: the parks are quieter than p
 - Trees thin (2-6 per piece): the tree plan's in-view limit was mostly used by the streets' own trees.
 - Shop names repeat across areas (Crown Hill / Hilltop in fw and fe).
 - The exact colliders are patched into the saved files; any rebuild of a piece needs `exact_colliders.gd` again.
+
+# The east shore beyond the ring (20 Nov, later): grass > sand > sea, LOCKED
+Yasin: "FILL THAT RED AREA WITH GRASS > SAND AND BEYOND IT SHOULD BE THE SEA ... MAKE THE SEA SAND CONNECTION SEAMLESS AND
+BUBBLY". Method `SHORE_GUIDE.md`; per strip `ea.md` (v -1700..-1100), `eb.md` (-1100..-500), `ec.md` (-500..0).
+15 pieces (n_ea_cape/shore/lens/south, n_eb_nw/sw/ne/me/se, n_ec_hill_n/hill_s/dune_n/dune_s/beach_n/beach_s, all at
+[0,0,0]), 13 tree pieces (113 trees), 9 rooms (cafes, snack bars, an ice cream shop, rentals / paddle hire). No land written.
+- Coordinator's checks before locking: superchecker re-run on all 15 and their rooms: every room 0 fixes left; every
+  outdoor "one right answer" equals the no_collision blind spot exactly (15 of 15); the rest report-only (wide_batch,
+  empty_area, ground_low = beach sand beside the sea, ground_step / edge_step <= 9 cm). eb's 3 rooms: the superchecker's
+  6 deletions installed on Yasin's word (the builder was blocked from install-room). Colliders: 28 files, largest gap
+  0.2 mm. Ground overlap: eb 0; ea 1-4 m2 slivers against the bridge ramps / ring pieces, ec 1 m2 against s_rg_se_b137_1
+  (outline rounding of 2-3 cm). Lock: 28 pieces + 9 rooms, lock test RESULT PASS. Rows added to grow_hospital_blocks.json.
+- Waterline vs the foam strip (zoning/shore_foam.json): ea median 7 mm (max 0.14 m), eb median 3.7 cm (max 0.21 m), ec
+  1.1 m seaward of the foam's centre line (the water edge still falls inside the foam strip; the foam line there stands on
+  land 9 cm high).
+- Cost of "delete when unsure": ec lost all 1,596 sand / grass wear marks (no footpaths, wet band or towels); no sand
+  footpaths anywhere. Not in the kit: fire rings, restroom building, a grass/sand blend (the edge is a curve with iceplant
+  and agaves). No car parks (no apron on the ring's east side). Where the lift is 0 near the water, the terrain coincides
+  with the sand until the land is lowered under the pieces at integration (lower_land_to_pieces, as the waterfront got).
+- Nobody has looked at the shore at eye height; no bake with these pieces, no phone run.
+
+# San Diego skyline ring (20 Nov): `review/skyline/README.md`
+Painted from real geography (landmarks.json), one draw, drawn by direction at the far plane: never culled, never faded,
+never cut by the 900 m far plane; hooked into city_stream.gd (always on) and look.gd. The grid's -v is true bearing 26.4
+deg, not true north. Weakest: the south view (Coronado Shores as plain boxes, Tijuana faint).
