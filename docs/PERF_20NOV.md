@@ -14,8 +14,6 @@ gave 17.2 and 7.7 ms of GPU: one run is one run.
 | SIGABRT on going to the menu / quitting (B1, 3 tombstones of 19 Nov) | the end of walk runs | CityTalk::_exit_tree asked a raw pointer to the phone's speech plugin, already freed (symbolised: the same day's library rebuilt with symbols, code segment the same size to the byte) | the plugin held by its object id | pb_walk_quit: the world torn down with the plugin present, no crash |
 | The native module would not load (found before install) | export log, Windows error 1114 | a Godot type (PackedByteArray) as a C++ static: built when the library loads, before the engine is connected | plain C++ statics; tests/game/test_native_load.gd | RESULT PASS |
 
-## 2. Where the frame goes (to be filled from pb2_* runs)
-
 ## 2. Where the frame goes (phone runs pb2_*, 20 Nov, review/phone/pb2_*.txt)
 
 The phone was hot for the census runs (battery 34.5 -> 38.3 C): read differences under ~1 ms as noise.
@@ -23,7 +21,7 @@ The phone was hot for the census runs (battery 34.5 -> 38.3 C): read differences
 | Finding | Numbers | What it means / what was done |
 |---|---|---|
 | **The sea and the plane under it: 13 ms** | waterfront at 1.5x: 46.6 ms GPU with the sea, 33.4 ms with --sea=0 (pb2_census_base / _nosea) | the old census's "unexplained 30.9 ms". The sea's shader is cheap; two full-screen surfaces (the sea and the rig's 6 km green plane 2 m under it) were shaded under every building. FIX READY in C++ (CitySea, sea1): both drawn after the city (render priority), so hidden water is never shaded. Waiting for the script call sites to be switched (look.gd, rig.gd: Yasin's word). |
-| Traffic and people | centre 31.1 -> 32.2 ms, apartments 42.4 -> 44.8 ms at 1.5x (pb2_census_life vs _base); main thread 0.3 + 0.3 ms a frame | life is not the main cost; the ~40 fps of the life stream runs is mostly heat and the heavier route |
+| Traffic and people | centre 31.1 -> 32.2 ms, apartments 42.4 -> 44.8 ms at 1.5x (pb2_census_life vs _base); main thread 0.3 + 0.3 ms a frame | life costs 1-2 ms at 1.5x; the ~40 fps of the life stream runs is the phone's heat cap (below) |
 | The streamer's cleanup | 210 km/h + traffic + people: 6,686 parts waited (script); 0 waiting with the reaper thread | the freeze's cause, fixed (stream3, now C++ CityStream) |
 | Teleports | 236 / 386 ms frames (pb_zones) -> 55 / 63 ms (pb2_zones) | removals no longer run while a place is prepared |
 | Collision for stairs and columns (B15) | +2-11 % collision a zone (gritty 304k -> 337k units); bodies within 0.6 s | cheap |
@@ -31,4 +29,5 @@ The phone was hot for the census runs (battery 34.5 -> 38.3 C): read differences
 | Sun shadows | 0.8-2.8 ms at 1.5x (2048 map: no saving) | a look change: Yasin's call |
 | Plants (cut-out) | 0.3-3.2 ms (plants_opaque) | the tree models (docs/TREE_ARTIST_BRIEF.md) |
 | Draw stalls on the CPU side | single frames of 35-47 ms in "draw" with the GPU at 14 ms, nothing loading | open: possibly the cleanup thread freeing render instances under the server's lock; the next phone build A/B's it |
-| The tier fade (B6, rig --tiers) | pb2_zones_tiers: ~40 fps, 30+ frames over 33 ms a zone | too costly as it is (discard in every tier shader on Mali); cars use their own cheap cross-fade (tiers1) |
+| The tier fade (B6, rig --tiers) | the first five zones as without it (gritty 59.9, centre 54.8, waterfront 58.9, industrial 58.8 fps; apartments 52.2 -> 47.8); from the sixth on EVERY drive at 39.4-39.8 fps | the step is the phone, not the fade: at 38.5-39 C it capped itself near 40 fps. The fade's own cost looks small (apartments -4 fps); to be measured again on a cool phone before turning it on |
+| **The phone's heat cap** | a sudden, flat 39.4-39.8 fps in every drive once the battery is past ~38 C (pb2_zones_tiers from 'pilot' on; the same ceiling in pb_stream_life / pb2_stream_life) | the '40 fps with traffic and people' was mostly this cap. Long runs must be read with the temperature; the game should lower its own load before the phone does (a heat-aware quality step: a candidate) |
