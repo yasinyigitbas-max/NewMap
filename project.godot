@@ -25,6 +25,13 @@ window/size/viewport_height=900
 
 enabled=PackedStringArray("res://addons/godot_speech/plugin.cfg")
 
+[input_devices]
+; B20 (Yasin 20 Nov: "swaying phone fast downwards doesnt put us into the combat mode"): since Godot 4.3 the phone's motion
+; sensors are OFF unless enabled here, and Input.get_accelerometer() / get_gyroscope() read zero (CityPlayer::sense took
+; that for a PC). The swing into combat and the tap-to-punch need both.
+sensors/enable_accelerometer=true
+sensors/enable_gyroscope=true
+
 [physics]
 ; the phone test rig runs the game's physics setup (Jolt on its own thread); the PC tools keep the default engine
 3d/physics_engine.android="Jolt Physics"

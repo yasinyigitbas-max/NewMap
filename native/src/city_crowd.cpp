@@ -1232,7 +1232,11 @@ void CityCrowd::player_fight(double p_delta) {
 			const float dx = crowd->x[i] - pp.x, dz = crowd->z[i] - pp.z, d2 = dx * dx + dz * dz;
 			if (d2 < bd) { bd = d2; best = i; }
 		}
-		if (best < 0) return;
+		if (best < 0) {   // nobody near: he still takes his guard, facing ahead (B20: Yasin could not get into combat to try it); asked again, he drops it
+			if (pl->get_combat()) pl->set_combat(false, Vector3());
+			else { const float yaw = (float)(double)pl->get_view()[0]; pl->set_combat(true, pp + Vector3(std::sin(yaw), 0.0f, std::cos(yaw)) * 3.0f); }
+			return;
+		}
 		const int keep = pf.locks + 1;
 		pf = PFight(); pf.locks = keep;
 		pf.walker = crowd->id[best];

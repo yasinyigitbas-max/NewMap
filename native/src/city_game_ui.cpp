@@ -75,8 +75,12 @@ void CityGame::_process(double p_delta) {
 	if (play_phase) step_play(p_delta);
 	if (start_hold >= 0.0) hold_start(p_delta);
 	if (ld_fade >= 0.0 && ld_root) {   // the loading screen fades off the picture into the live world
-		ld_fade += p_delta;
-		const double a = 1.0 - ld_fade / 0.8;
+		// B21 (Yasin 20 Nov: "CONTINUE AFTER LOADING SNAPS BACK TO THE GAME HARD, AND JITTER A BIT"): the first frames in the
+		// world are the heaviest and one long frame skipped most of a linear 0.8 s fade. Now at most a 30 fps step a frame,
+		// eased in and out, over 1.2 s.
+		ld_fade += std::min(p_delta, 1.0 / 30.0);
+		const double u = std::min(1.0, ld_fade / 1.2);
+		const double a = 1.0 - u * u * (3.0 - 2.0 * u);
 		if (a <= 0.0) { loading->set_visible(false); ld_root->set_modulate(Color(1, 1, 1, 1)); ld_root->set_mouse_filter(Control::MOUSE_FILTER_STOP); ld_fade = -1.0; }
 		else ld_root->set_modulate(Color(1, 1, 1, (float)a));
 	}
@@ -673,7 +677,8 @@ void CityGame::step_play(double p_delta) {
 	// settling: 45 frames in a row under 40 ms AND the player in the world and let go (hold_start: the ground's collision
 	// under him, he can move), at most 20 s. (B2, Yasin 20 Nov: "we can click the hud but being able to control the
 	// character happens much later ... hide it behind the loading": the quiet frames alone ended it while he was still held.)
-	play_quiet = p_delta < 0.040 ? play_quiet + 1 : 0;
+	// (B21: "quiet" is a frame under 25 ms - smooth on the phone's 60 Hz - and only after 8 s under 40 ms as before)
+	play_quiet = p_delta < (play_t < 8.0 ? 0.025 : 0.040) ? play_quiet + 1 : 0;
 	const bool free_to_move = player_id != 0 && start_hold < 0.0;
 	set_loading(0.5 + 0.5 * std::min(free_to_move ? 1.0 : 0.95, std::max(play_t / 20.0, (double)play_quiet / 45.0)), "");
 	if ((play_quiet >= 45 && free_to_move) || play_t > 20.0) { close_loading(); play_phase = 0; }

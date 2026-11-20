@@ -19,7 +19,7 @@ B10 and B11 (agreed with the people session).
 | B3 | "add ambient sounds based on zones" | perf | wish |
 | B4 | "high quality car sounds with convincing shifts and higher gears" | perf | the car has no engine sound yet (CityCar); the gearbox exists in veh_dyn |
 | B5 | "car is too prone to slide" | perf | FIX on claude/perf-bugs: traction and stability control in veh_dyn (the pedal eased off while a driven wheel spins past its grip peak or the body slides wider than 6-8 degrees), a touch more rear grip. Console test (native/tests/run_veh_test.sh) RESULT PASS: full throttle in a 50 km/h turn swung the tail 47-90 degrees on the rear-drive cars, now 7-29; sakura_t IV no longer spins in a steady turn; 0-100, braking and the handbrake turn about as before. Not yet driven in the game. |
-| B6 | "lod snaps in, we need to ease it in" (also "might be the same lod bug that makes tiers snap") | runtime | the bake's tiers (bake_runtime / city_stream) |
+| B6 | "lod snaps in, we need to ease it in" (also "might be the same lod bug that makes tiers snap"); 20 Nov: "not only the buildings, everything inluding cars and trees snap in lod tiers too bad its impossible to ignore" | perf | the bake's tiers (bake_runtime / city_stream) |
 | B7 | "far roads stay loaded, roads never load outside of the city, once we get out of the car they load again"; "when roads dont switch, i fall into a gap" | runtime | streaming while driving; WayFloor (this session) covers the ways round the camera only |
 | B8 | "next to where we spawn city centers corner pavements are missing" | superchecker | the pieces at the city centre (start: about x -12, z -606) |
 | B9 | "small props should be breakable" | perf | the old game had world_fx breakables |
@@ -28,10 +28,13 @@ B10 and B11 (agreed with the people session).
 | B12 | tests/game/test_start.gd failed once (no ground under the player 5 s in) | perf | flaky; streaming timing |
 | B13 | tests/traffic/test_bike_hit.gd: once a hit rider's hips went 19 m up | perf | flaky; trace the rider when it happens |
 | B14 | "none of the shops appear in the game, i think they were forgotten to be cut in the bake step" | perf | the interiors (city_kit/interiors, room_lib: doors and windows cut into the locked building at bake time) are not in the runtime bake |
-| B15 | "stairs around or columns under buildings dont have colliders, add them" | perf | open |
+| B15 | "stairs around or columns under buildings dont have colliders, add them" | perf | CAUSE: a building's collision in the bake is its kit "col" mesh (kit_lib.gd: a simplified shell), which leaves stairs and columns out. To do: in the bake, collision for the parts of the near model that stand outside the shell; then a re-bake and the zones gate (collision budget). |
 | B16 | "add footsteps to the game based on terrain" | perf | open; C++ (standing rule) |
-| B17 | "we can see thru the windows of all cars up close, i mean see behind, its bugged" | perf | open |
+| B17 | "we can see thru the windows of all cars up close, i mean see behind, its bugged"; "every near tier cars windows disappear, might have something to do with the reflections we added" | perf | open |
 | B18 | "new bikes and biking animations for npcs arent in the game" | perf | open |
+| B19 | "we need an animation for bikes at rest with rider on it" | perf | open |
+| B20 | "swaying phone fast downwards doesnt put us into the combat mode as desgned so i couldnt test the combat" | perf | CAUSE: the phone's motion sensors were never enabled (Godot 4.3+ needs input_devices/sensors/enable_accelerometer + enable_gyroscope; without them both read zero and CityPlayer::sense took the phone for a PC). FIX on claude/perf-bugs: both enabled in project.godot; with nobody within 10 m a swing now still takes the guard (a second swing drops it). The swing test itself (gyro > 7 rad/s and 12 m/s2 over gravity in the SAME frame) is strict: city_player.cpp is the people session's file, asked them to loosen it. Not yet tried on the phone. |
+| B21 | "CONTINUE AFTER LOADING SNAPS BACK TO THE GAME HARD, AND JITTER A BIT, NEEDS TO BE SMOOTHER" | perf | FIX on claude/perf-bugs: the fade off the loading picture was linear (0.8 s) on the raw frame time, so the first heavy frames skipped most of it; now at most a 30 fps step a frame, eased, 1.2 s; and the world counts as settled only after frames under 25 ms (40 ms after 8 s). Not yet seen on the phone. |
 
 ## FIXED (20 Nov)
 | # | Bug | Fix |
