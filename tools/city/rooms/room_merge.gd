@@ -43,6 +43,17 @@ func _run() -> void:
 		# (20 Nov, B14) no GDScript in the game's rooms: the door leaves' door_swing.gd is dropped (not in the phone build;
 		# C++ CityRooms swings them from the leaves' own metas mid / out_dir / open_sign)
 		for lf: Node in dst.find_children("DoorLeaf_*", "Node3D", true, false): lf.set_script(null)
+		# (20 Nov, Yasin: "all shop signs are pink bands") the shop signs' texture (PortableCompressedTexture2D) came out of the
+		# merge empty: rebuilt from the room's own image, its compressed data kept (room_lib.gd's 18 Nov lesson)
+		var ss := src.find_child("Signs", true, false) as MeshInstance3D; var ds := dst.find_child("Signs", true, false) as MeshInstance3D
+		if ss and ds and ss.material_override is StandardMaterial3D:
+			var im: Image = (ss.material_override as StandardMaterial3D).albedo_texture.get_image()
+			if im and not im.is_empty():
+				if im.is_compressed(): im.decompress()
+				var tex := PortableCompressedTexture2D.new(); tex.keep_compressed_buffer = true
+				tex.create_from_image(im, PortableCompressedTexture2D.COMPRESSION_MODE_BASIS_UNIVERSAL)
+				var m := (ss.material_override as StandardMaterial3D).duplicate() as StandardMaterial3D; m.albedo_texture = tex
+				ds.material_override = m
 		var ps := PackedScene.new(); _own(dst, dst); ps.pack(dst)
 		ResourceSaver.save(ps, OUT + f, ResourceSaver.FLAG_COMPRESS)
 		tot[0] += 1; tot[1] += before; tot[2] += after

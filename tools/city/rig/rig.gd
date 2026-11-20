@@ -136,6 +136,11 @@ func _ready() -> void:
 	var from_file := false
 	if FileAccess.file_exists("user://rig_args.txt"):
 		args.append_array(FileAccess.get_file_as_string("user://rig_args.txt").replace("\n", " ").split(" ", false)); from_file = true
+	# --game (Yasin, 20 Nov: "cant you just inject skipping the rig?"): the rig app opens the game's menu instead of a measuring
+	# run (game/boot.tscn; the game then loads this scene as its world, with its own Game node at the root)
+	if "--game" in args and get_tree().root.get_node_or_null(^"Game") == null:
+		get_tree().change_scene_to_file.call_deferred("res://game/boot.tscn")
+		return
 	for a in args:
 		if a == "--quit": opt.quit = true
 		if a == "--nowarm": opt.nowarm = true
