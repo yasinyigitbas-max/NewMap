@@ -101,7 +101,7 @@ private:
 		int st_mode = 0, st_walker = -1; float st_t = 0.0f; bool st_moving = false; StringName st_clip;
 		// a phone in his raised hand while he films (Yasin, 20 Nov: "put a rectangular phone like shape in npcs hands when
 		// they are recording"): made the first time it is needed, shown only then
-		class MeshInstance3D *phone = nullptr; };   // act, act_t: what it shows and for how long (the way INTO an act is played once)
+		class MeshInstance3D *phone = nullptr; Vector3 phone_base; };   // act, act_t: what it shows and for how long (the way INTO an act is played once)
 	// how long the clips into and out of an act are (read from the figure once it is made)
 	bool lens_ok = false;
 	int fight_falls = 0;

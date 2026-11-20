@@ -1049,11 +1049,21 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 							Ref<BoxMesh> bm; bm.instantiate(); bm->set_size(Vector3(0.009f, 0.07f, 0.145f) / k);   // (upright, its face toward him: thin along the hand, tall up its side)
 							Ref<StandardMaterial3D> mat; mat.instantiate(); mat->set_albedo(Color(0.05f, 0.05f, 0.06f)); mat->set_roughness(0.35f); mat->set_metallic(0.3f);
 							m->set_mesh(bm); m->set_material_override(mat); m->set_cast_shadows_setting(GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);
-							m->set_position(Vector3(0.09f, -0.02f, 0.0f) / k);   // (along the hand, past the palm: held in the fingers)
+							nb.phone_base = Vector3(0.09f, -0.02f, 0.0f) / k;   // (along the hand, past the palm: held in the fingers)
+							m->set_position(nb.phone_base);
 							ba->add_child(m); nb.phone = m;
 						}
 					}
 					if (nb.phone) nb.phone->set_visible(rec && nb.ped->get_mode() == CityPed::MODE_ANIM);
+					// (Yasin, 20 Nov: "push it 10 cms to left on that photo and 3 cms up", "actually 5cms left", "not the bone the phone":
+					// the phone alone moves, the hand stays. The photo looks at him from his front-left, so that is 4.35 cm toward his
+					// right, 2.45 cm forward, 3 cm up, in his own frame, whatever way the hand's bone points)
+					if (nb.phone && nb.phone->is_visible()) {
+						if (Node3D *ba = Object::cast_to<Node3D>(nb.phone->get_parent())) {
+							const Vector3 wd = nb.ped->get_global_transform().basis.orthonormalized().xform(Vector3(-0.0435f, 0.03f, 0.0245f));
+							nb.phone->set_position(nb.phone_base + ba->get_global_transform().basis.inverse().xform(wd));
+						}
+					}
 				}
 				// the feet on the real ground, planted ones pinned where they land (Yasin, 20 Nov: "i want them pixel perfect":
 				// tests/people/trace_crowd.gd found walkers' planted feet sliding 0.24-0.36 m/s and feet 23 cm over the ground
