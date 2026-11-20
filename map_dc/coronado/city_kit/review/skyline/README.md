@@ -113,3 +113,28 @@ Re-paint after a change of the data: `python3 tools/city/look/make_skyline.py` (
 - The carrier is always there (in reality one or two carriers are in port on most days, sometimes none).
 - Shots were taken in the cloud preview (lavapipe, no shadows, sky reflection off); colours there differ a little from
   the phone. Not run on the phone; no aerial shot (the shot tool stands at eye height).
+
+## The proof shots (`day/`, `night/`, `contact_sheet.jpg`; copies in OUT/skyline/)
+Taken with the rig's own picture tool on the runtime bake (`--shots=... --look=1 --reflect=0`, NOSHADOW=1, cloud
+preview), eye 1.6 m over the ground, 1640 x 720, 74 deg lens, far 900 m. A view's yaw is grid yaw (0 = -Z): true
+N = -26.4, E = 63.6, S = 153.6, W = 243.6. Every view is a teleport (the rig throws the cells away and loads the new
+place), so the set also shows the ring present after each teleport.
+| Shot | Place (grid x, z) | Looking | What it shows |
+|---|---|---|---|
+| `day/nshore_N` | north shore -480, -1600 | true N | the bay, downtown to the right (NNE), Point Loma faint to the left |
+| `day/nshore_E` | north shore | true E | downtown on the left across the water, the bridge far down the shore road, mountains faint |
+| `day/eshore_E` | east shore 1020, -1100 (200 m from the bridge's start) | true E | the 3D bridge rising out of the island and curving away to Barrio Logan, the shipyards' cranes, downtown left |
+| `day/eshore_N` | east shore | true N | downtown across the bay, seen from the east (turned and nearer: parallax) |
+| `day/sbeach_S` | south beach 490, 400 | true S | open Pacific; Coronado Shores' towers to the left (SE) along the beach |
+| `day/sbeach_E` | south beach | true E | Coronado Shores, the Strand side, mountains |
+| `day/west_W` | west 1,700 m out -1700, -300 | true W | Point Loma across the bay with the lighthouse |
+| `day/west_N` | west | true N | Point Loma's north half, the carrier at North Island, downtown to the right (NE) |
+| `day/nshore_N_again` | north shore, after 8 teleports | true N | the same picture as `nshore_N` (horizon band differs by 2.6 / 255 on average: clouds and water move): stable |
+| `night/nshore_NNE`, `night/eshore_E` | | | `--look=night`: downtown's windows, the towns' lights on the mesas, the bridge's rail lights |
+The green flat in several shots is the rig's stand-in plane for land the kit has not built (not part of the ring).
+Seen in the pictures: the cards meet the sea without a line and without flicker, no seam anywhere round (the strip
+wraps); downtown, Point Loma and the carrier sit in their real directions from three far-apart places.
+NOT checked: the phone (no phone here), a high or aerial camera (the shot tool stands at eye level), the running day's
+dusk / dawn tints (only day and night presets were shot), the look's thick weathers.
+A trap met: after re-painting, the PNGs must be imported again (`godot --headless --path . --import`) or the rig keeps
+drawing the old ones from .godot/imported.
