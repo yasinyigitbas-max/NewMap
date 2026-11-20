@@ -36,6 +36,13 @@ signal cell_out(key: String)
 @export var max_loading := 2          ## cells on the loader threads at once
 @export var max_cells := 30           ## memory cap: cells in the scene
 @export var frame_budget_ms := 1.5    ## main-thread time a frame may spend removing (the old game's phone budget for streaming)
+## THE REAPER (20 Nov): leaving cells are freed on a thread of the streamer's own, not on the main thread in parts. The
+## phone's 210 km/h drive with traffic and people piled 6,686 parts (22.6k orphan nodes) that the main thread could not
+## free in its frames (a part costs 1-2 ms there, mostly render instances freed under the server's lock), and the
+## buildings' slots in the instance-uniform buffer went with them (the 20 Nov freeze). The loader threads already BUILD
+## cells outside the tree; the reaper takes them apart the same way: leaf by leaf, a short pause every REAP_BATCH parts so
+## it never holds the servers' locks for long. false = the main thread in parts, as before (busy_remove_ms below).
+@export var reap_thread := true
 @export var busy_remove_ms := 0.6    ## while cells load: removal time a frame once more than `leaving_backlog` parts wait (0 = quiet frames only, as before 20 Nov)
 @export var leaving_backlog := 384   ## (the 4x instance-uniform buffer holds ~4x the 16k orphan nodes that overflowed the old one)
 @export var bodies_per_frame := 6    ## collision bodies made and attached a frame, at most
@@ -73,7 +80,14 @@ var far_world: Node3D
 var focus := Vector3.ZERO
 var night := 0.0
 var _keep: Array = []    # shared materials, held for the node's life
-var _leaving: Array = [] # nodes on their way out, freed in parts
+var _leaving: Array = [] # nodes on their way out, freed in parts (reap_thread off)
+var _reap: Array = []     # nodes handed to the reaper thread
+var _reap_mx := Mutex.new()
+var _reap_sem := Semaphore.new()
+var _reaper: Thread = null
+var _reap_quit := false
+var _reaping := 0         # parts the reaper holds now (for busy())
+const REAP_BATCH := 24
 var _map_img: Image
 var _map_tex: ImageTexture
 var _map_dirty := false
@@ -112,6 +126,8 @@ func _ready() -> void:
 	if loader_mode == 0:
 		for i in max_loading:
 			var th := Thread.new(); th.start(_loader, Thread.PRIORITY_LOW); _threads.append(th)
+	if reap_thread:
+		_reaper = Thread.new(); _reaper.start(_reap_loop, Thread.PRIORITY_LOW)
 	var fp := runtime_dir + "far/far_world.scn"
 	if ResourceLoader.exists(fp):
 		far_world = (load(fp) as PackedScene).instantiate(); add_child(far_world)
@@ -194,7 +210,7 @@ func loading_keys() -> Array:
 func busy() -> bool:
 	for k: String in cells:
 		if cells[k].state in [LOADING, BUILDING, READY]: return true
-	return not _leaving.is_empty() or not _pending.is_empty()
+	return not _leaving.is_empty() or not _pending.is_empty() or _reaping > 0 or not _reap.is_empty()
 
 ## every cell within `load_dist` of `p` is in the scene, and the collision within `ready_col_m` of it is in the world
 ## (so a player put there stands on something)
@@ -349,8 +365,8 @@ func _process_stream(t0: int) -> void:
 		if cells[k2].state == READY:
 			if cells[k2].node == null: cells[k2].state = NONE; continue      # its file did not load: asked for again when wanted
 			if cells[k2].cancel:
-				for b0: Array in cells[k2].bodies: _leaving.append(b0[2])
-				_leaving.append(cells[k2].node); cells[k2].bodies = []; cells[k2].node = null; cells[k2].state = NONE; stats.dropped += 1; continue
+				for b0: Array in cells[k2].bodies: _away(b0[2])
+				_away(cells[k2].node); cells[k2].bodies = []; cells[k2].node = null; cells[k2].state = NONE; stats.dropped += 1; continue
 			var d := _dist(k2, focus)
 			if d < bd: bd = d; best = k2
 	if best != "":
@@ -461,6 +477,39 @@ func _exit_tree() -> void:
 	for th: Thread in _threads: _sem.post()
 	for th2: Thread in _threads: th2.wait_to_finish()
 	_threads.clear()
+	if _reaper:
+		_reap_quit = true; _reap_sem.post(); _reaper.wait_to_finish(); _reaper = null
+		for n: Node in _reap:
+			if is_instance_valid(n): n.free()
+		_reap.clear()
+
+## A node leaves the streamer's care: to the reaper thread, or (reap_thread off) to the main thread's parts.
+func _away(n: Node) -> void:
+	if n == null: return
+	if _reaper == null: _leaving.append(n); return
+	_reap_mx.lock(); _reap.append(n); _reap_mx.unlock(); _reap_sem.post()
+
+## The reaper: takes leaving nodes apart leaf by leaf (a body goes whole, with its shapes) and frees them; outside the
+## tree, as the loader threads build them. A short pause every REAP_BATCH parts lets the main thread at the servers.
+func _reap_loop() -> void:
+	var work: Array = []
+	while true:
+		_reap_sem.wait()
+		if _reap_quit: return
+		_reap_mx.lock(); work.append_array(_reap); _reap.clear(); _reaping = work.size(); _reap_mx.unlock()
+		var n_done := 0
+		while not work.is_empty():
+			if _reap_quit: return
+			var n: Node = work[work.size() - 1]
+			if n.get_child_count() > 0 and not (n is CollisionObject3D):
+				var ch := n.get_child(n.get_child_count() - 1); n.remove_child(ch); work.append(ch)
+			else:
+				work.pop_back(); n.free()
+			n_done += 1
+			if n_done % REAP_BATCH == 0:
+				_reaping = work.size()
+				OS.delay_usec(300)
+		_reaping = 0
 
 ## loader or worker thread: build the cell and take its collision bodies off, to be attached in steps
 func _build(c: Dictionary) -> void:
@@ -480,7 +529,7 @@ func _add(k: String) -> void:
 	add_child(c.node); _apply_night(c.node)
 	for b: Array in c.bodies:
 		if attach_bodies: _pending.append([b[0], b[1], b[2], k, Time.get_ticks_msec(), 0])
-		else: _leaving.append(b[2])
+		else: _away(b[2])
 	c.bodies = []
 	c.state = IN; stats["in"] += 1; _mark(k, true); cell_in.emit(k)
 
@@ -488,8 +537,8 @@ func _remove(k: String) -> void:
 	var c: Dictionary = cells[k]
 	_mark(k, false)      # the far world shows the cell's far versions from this frame on
 	for i in range(_pending.size() - 1, -1, -1):      # bodies it never got to attach
-		if String(_pending[i][3]) == k: _leaving.append(_pending[i][2]); _pending.remove_at(i)
-	remove_child(c.node); _leaving.append(c.node)
+		if String(_pending[i][3]) == k: _away(_pending[i][2]); _pending.remove_at(i)
+	remove_child(c.node); _away(c.node)
 	c.node = null; c.state = NONE; stats.out += 1; cell_out.emit(k)
 
 ## Draw one of every baked material once (lib/warm.scn) so its shaders are built now and not at the first cell that
