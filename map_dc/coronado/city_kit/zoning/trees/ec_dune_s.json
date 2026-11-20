@@ -1,0 +1,105 @@
+{
+ "area": "ec_dune_s",
+ "piece": "n_ec_dune_s",
+ "zone": "park and promenade (the lawn above the dune, the cafe, the rental shop)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; waterfront: palms; never on sand below the dune line (SHORE_GUIDE.md); the ring's palm boulevard is within 60 m only of the hill pieces' west edge, kept clear",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, ec fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    1049.0,
+    4.236,
+    -224.0
+   ],
+   "yaw": 60,
+   "scale": 1.0,
+   "why": "Dune Cafe: a palm off its north-west corner, shade on the lawn"
+  },
+  {
+   "base": "palm_canary_date_a",
+   "cond": "normal",
+   "at": [
+    1034.0,
+    5.314,
+    -240.0
+   ],
+   "yaw": 210,
+   "scale": 1.0,
+   "why": "the cafe's lawn table: shade"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    1024.0,
+    4.408,
+    -192.0
+   ],
+   "yaw": 330,
+   "scale": 0.95,
+   "why": "the picnic table south of the beach walk: shade"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    1012.0,
+    3.634,
+    -155.0
+   ],
+   "yaw": 100,
+   "scale": 1.0,
+   "why": "the beach chairs: a palm behind them"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    970.0,
+    1.398,
+    -34.0
+   ],
+   "yaw": 170,
+   "scale": 1.0,
+   "why": "South Beach Rentals: a palm off its north-west corner"
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "at": [
+    958.0,
+    1.549,
+    -47.0
+   ],
+   "yaw": 40,
+   "scale": 0.95,
+   "why": "the picnic table by the rental shop: shade"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    978.0,
+    1.932,
+    -75.0
+   ],
+   "yaw": 260,
+   "scale": 0.9,
+   "why": "the beach chairs at v -70: a palm behind them"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    976.0,
+    3.13,
+    -116.0
+   ],
+   "yaw": 300,
+   "scale": 1.05,
+   "why": "the picnic table at v -110: shade"
+  }
+ ]
+}

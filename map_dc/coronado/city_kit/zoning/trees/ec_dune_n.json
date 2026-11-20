@@ -1,0 +1,105 @@
+{
+ "area": "ec_dune_n",
+ "piece": "n_ec_dune_n",
+ "zone": "park and promenade (the lawn above the dune, the snack bar)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; waterfront: palms; never on sand below the dune line (SHORE_GUIDE.md); the ring's palm boulevard is within 60 m only of the hill pieces' west edge, kept clear",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, ec fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    1086.0,
+    3.522,
+    -424.0
+   ],
+   "yaw": 20,
+   "scale": 1.0,
+   "why": "Shoreline Snack Bar: a palm off its north-west corner, shade on the lawn"
+  },
+  {
+   "base": "palm_canary_date_a",
+   "cond": "normal",
+   "at": [
+    1072.0,
+    3.907,
+    -440.0
+   ],
+   "yaw": 160,
+   "scale": 1.0,
+   "why": "the snack bar's lawn table: shade"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    1066.0,
+    4.753,
+    -380.0
+   ],
+   "yaw": 280,
+   "scale": 0.95,
+   "why": "the picnic table south of the beach walk: shade"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    1054.0,
+    4.092,
+    -478.0
+   ],
+   "yaw": 90,
+   "scale": 0.9,
+   "why": "the north picnic table: shade"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    1044.0,
+    6.064,
+    -333.0
+   ],
+   "yaw": 200,
+   "scale": 1.0,
+   "why": "the beach chairs: a palm behind them"
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "at": [
+    1024.0,
+    7.03,
+    -306.0
+   ],
+   "yaw": 330,
+   "scale": 1.05,
+   "why": "the second pair of beach chairs: a palm behind them"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    1100.0,
+    2.826,
+    -470.0
+   ],
+   "yaw": 250,
+   "scale": 1.05,
+   "why": "the promenade's land side at its north end: the Coronado palm by the walk"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    1094.0,
+    3.282,
+    -300.0
+   ],
+   "yaw": 120,
+   "scale": 1.0,
+   "why": "the promenade's land side opposite the benches at v -297"
+  }
+ ]
+}
