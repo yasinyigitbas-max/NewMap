@@ -32,7 +32,7 @@ SHOPS = {
     ("n_w_g1", "corner_market"): [(None, None, "corner_shop", "Strand Corner Market", "sun")],
     # ---- the rest of the west fill (20 Nov)
     ("n_w_c1", "fire_station"): [(None, None, "office", "Fire Station 2", "navy")],
-    ("n_w_c1", "post_office"): [(None, None, "bank", "Coronado Post Office", "navy")],
+    ("n_w_c1", "post_office"): [(None, None, "store", "Coronado Post Office", "navy")],
     ("n_w_c1", "church"): [(None, None, "church", "St. Andrew's", "navy")],
     ("n_w_c3", "senior_center"): [(None, None, "venue", "Ridge Senior Center", "teal")],
     ("n_w_c6", "child_care"): [(None, None, "lobby", "Bright Start Child Care", "sun")],
