@@ -1,6 +1,7 @@
 // FootSteps: see foot_steps.h.
 #include "perf_marks.h"
 #include "foot_steps.h"
+#include "el_sfx.h"
 #include "city_ped.h"
 #include <godot_cpp/classes/audio_stream_player3d.hpp>
 #include <godot_cpp/classes/file_access.hpp>
@@ -102,9 +103,16 @@ void FootSteps::_process(double p_delta) {
 void FootSteps::step(int p_foot, const Vector3 &p_at) {
 	int kind = class_at(p_at.x, p_at.z);
 	last_kind = kind; steps++;
-	const int i = (int)(rnd() * 4.999f);
+	int i = (int)(rnd() * 4.999f);
+	if (i == last_i) i = (i + 1 + (int)(rnd() * 3.999f)) % 5;   // (never the same take twice running)
+	last_i = i;
 	if (!snd) return;
 	Ref<AudioStream> s = snd[kind][i].is_valid() ? snd[kind][i] : snd[HARD][i];
+	if (speed > 2.2f) {   // running (the jog is 2.8 m/s, the walk 1.05-1.4): the run takes (heavier, a scuff), the same surface
+		static const char *RUN[N_KINDS] = { "concrete", "grass", "sand", "dirt", "wood" };
+		Ref<AudioStream> r = elsfx::pick(String("res://audio/steps/footstep_run_") + String(RUN[kind]) + String("_"), 0, 3);
+		if (r.is_valid()) { s = r; runs++; }
+	}
 	if (s.is_null() || !pl[next_pl]) return;
 	AudioStreamPlayer3D *p = pl[next_pl]; next_pl ^= 1;
 	p->set_global_position(p_at);
@@ -131,6 +139,7 @@ void FootSteps::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_own", "own"), &FootSteps::set_own);
 	ClassDB::bind_method(D_METHOD("get_volume_db"), &FootSteps::get_volume_db);
 	ClassDB::bind_method(D_METHOD("get_steps"), &FootSteps::get_steps);
+	ClassDB::bind_method(D_METHOD("get_run_steps"), &FootSteps::get_run_steps);
 	ClassDB::bind_method(D_METHOD("get_last_kind"), &FootSteps::get_last_kind);
 	ClassDB::bind_static_method("FootSteps", D_METHOD("class_at", "x", "z"), &FootSteps::class_at);
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "volume_db"), "set_volume_db", "get_volume_db");

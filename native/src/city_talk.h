@@ -80,6 +80,14 @@ private:
 	std::vector<Ref<AudioStream>> queue[2];
 	int voice_walker[2] = { -1, -1 };
 	HashMap<String, Ref<AudioStream>> clips;
+	// the street's own shouts (barks and reactions, audio/npc/<voice>/bark/<cat>_NN.ogg): each person one voice of the
+	// cast (voice_of), a few at once, never the same take twice running for a voice and kind
+	AudioStreamPlayer3D *bark_pl[3] = { nullptr, nullptr, nullptr };
+	int bark_walker[3] = { -1, -1, -1 };
+	int bark_next = 0, n_barks = 0;
+	double clock_s = 0.0, bark_free_at = 0.0, scan_t = 0.0;
+	HashMap<int, double> barked_at;      // by walker id: when he last shouted
+	HashMap<String, int> bark_last;      // by "<voice>/<cat>": the take played last
 	// the screen
 	CanvasLayer *layer = nullptr;
 	Control *root = nullptr;
@@ -109,6 +117,10 @@ private:
 	static bool heard(const String &p_said, const PackedStringArray &p_accept);
 	static PackedStringArray segments(const String &p_tmpl, const Dictionary &p_sub);
 	Ref<AudioStream> clip(const String &p_voice, const String &p_text);
+	Ref<AudioStream> load_clip(const String &p_path);
+	String voice_of(int p_row) const;
+	bool bark(int p_row, const String &p_cat, float p_chance = 1.0f);
+	void bark_scan();
 	void speak(int p_ch, int p_row, const Dictionary &p_line, const Dictionary &p_sub);
 	void say(int p_row, const Dictionary &p_line, const Dictionary &p_sub = Dictionary());
 	void caption(const String &p_who, const String &p_en, const String &p_tr, double p_seconds);
@@ -157,6 +169,10 @@ public:
 	int get_active() const { return active; }
 	Array get_options() const;
 	Dictionary stats() const;
+	// the cast voice a person speaks with ("m1".."m4", "f1".."f4"): the same person always the same voice
+	static String cast_voice(uint32_t p_look, bool p_female);
+	String get_voice_of(int p_id) const;
+	bool test_bark(int p_id, const String &p_cat);
 	// the mission the "can you help me" line is about (none: a hint, "HJ" a job, "HF" food, "HV" sights)
 	void set_mission(const String &p_en, const String &p_tr, const Vector3 &p_at);
 	void clear_mission() { has_mission = false; }

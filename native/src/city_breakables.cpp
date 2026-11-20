@@ -1,6 +1,7 @@
 // CityBreakables: see city_breakables.h.
 #include "perf_marks.h"
 #include "city_breakables.h"
+#include "el_sfx.h"
 #include "city_stream.h"
 #include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/collision_shape3d.hpp>
@@ -246,6 +247,11 @@ void CityBreakables::knock(int i, const Vector3 &p_vel) {
 	MultiMeshInstance3D *mmi = Object::cast_to<MultiMeshInstance3D>(ObjectDB::get_instance(ObjectID(it.mmi)));
 	if (!mmi) return;
 	it.broken = true; it.down_t = 0.0f; broken_n++;
+	{   // its sound (el_sfx.h): a bin, a fence, or anything else rings like a pole
+		const String kind = (mmi->has_meta("brk_kind") ? String(mmi->get_meta("brk_kind")) : String(mmi->get_name())).to_lower();
+		const char *set = kind.contains("bin") || kind.contains("newsbox") || kind.contains("trash") ? "hit_bin_" : (kind.contains("fence") || kind.contains("rail") || kind.contains("barrier") ? "hit_fence_" : "hit_pole_");
+		elsfx::play(this, String("res://audio/sfx/car/") + String(set), std::min(-8.0f + p_vel.length() * 0.5f, 0.0f), 0.06f, to_local(it.at + Vector3(0, 0.6f, 0)), 50.0f);
+	}
 	set_instance(it, false);
 	if (it.pool >= 0) { PhysicsServer3D::get_singleton()->body_clear_shapes(pool_body[it.pool]); pool_item[it.pool] = -1; it.pool = -1; }
 	Debris &d = debris[k];

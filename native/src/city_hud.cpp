@@ -2,6 +2,7 @@
 #include "perf_marks.h"
 #include "city_hud.h"
 #include "city_phone.h"
+#include "el_sfx.h"
 
 #include "city_game.h"
 #include "city_player.h"
@@ -441,6 +442,15 @@ void CityHud::feedback() {
 	Input::get_singleton()->vibrate_handheld(15);
 }
 
+bool CityHud::stinger(const String &p_kind) {
+	static const char *const OK[] = { "mission_start", "mission_pass", "mission_fail", "notify", "msg_ping", "app_tap", "camera_shutter" };
+	for (const char *k : OK) if (p_kind == k) {
+		const bool loud = p_kind.begins_with("mission");
+		return elsfx::play(this, String("res://audio/ui/") + p_kind + String("_"), loud ? -3.0f : -8.0f, 0.0f) != nullptr;
+	}
+	return false;
+}
+
 void CityHud::touch(int p_what) {
 	feedback();
 	const int want = p_what == 3 ? -1 : (p_what == 2 ? 1 : 0);   // the arrow and the phone open the phone (on its map)
@@ -675,6 +685,7 @@ void CityHud::_input(const Ref<InputEvent> &p_event) {
 
 void CityHud::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_player", "player"), &CityHud::set_player);
+	ClassDB::bind_method(D_METHOD("stinger", "kind"), &CityHud::stinger);
 	ClassDB::bind_method(D_METHOD("get_phone"), &CityHud::get_phone);
 	ClassDB::bind_method(D_METHOD("press", "what"), &CityHud::press);
 	ClassDB::bind_method(D_METHOD("get_open"), &CityHud::get_open);

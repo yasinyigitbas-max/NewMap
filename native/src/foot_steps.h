@@ -36,7 +36,7 @@ private:
 	AudioStreamPlayer3D *pl[2] = { nullptr, nullptr };
 	int next_pl = 0;
 	float volume_db = -6.0f;
-	int steps = 0, last_kind = -1;
+	int steps = 0, last_kind = -1, last_i = -1, runs = 0;
 	uint32_t rng = 0x9e3779b9u;
 	// shared by every FootSteps of the run
 	// (plain C++ statics only: a Godot type built as a static runs its constructor when the library loads, before the
@@ -63,6 +63,7 @@ public:
 	bool own = false;
 	double get_volume_db() const { return volume_db; }
 	int get_steps() const { return steps; }
+	int get_run_steps() const { return runs; }
 	int get_last_kind() const { return last_kind; }
 	void _ready() override;
 	void _process(double p_delta) override;

@@ -101,6 +101,15 @@ class CityCar : public RigidBody3D {
 	std::vector<Vector3> hits_due;   // (found in the physics step, applied in _process)
 	int hits = 0;
 	double snd_t = -9.0, clock_t = 0.0;
+	// the recorded car sounds (el_sfx.h): the door's open / shut, the horn key, the tyres, a crash's after-sounds
+	bool door_was_open = false, horn_held = false, wall_touch = false;   // (wall_touch: a side contact this physics step, the player's car)
+	double skid_t = -9.0, creak_at = -1.0, sand_t = -9.0;
+	int sand_kind = 0;
+	const char *sound_class(bool p_horn) const;   // engine: compact | v6 | v8 | diesel | ev; horn: compact | sedan | sport | van | bus
+	void drive_sounds(double p_delta);
+public:
+	void lock_sound();   // (city_car_door.cpp: he walked away, the car locks)
+private:
 	String last_sound;
 	class AudioStreamPlayer3D *snd = nullptr;
 	class CPUParticles3D *smoke = nullptr;

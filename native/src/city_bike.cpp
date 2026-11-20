@@ -1,6 +1,7 @@
 // CityBike and BikeReach: see city_bike.h.
 #include "perf_marks.h"
 #include "city_bike.h"
+#include "el_sfx.h"
 
 #include "city_ped.h"
 #include "ped_body.h"
@@ -460,6 +461,7 @@ void CityBike::_integrate_forces(PhysicsDirectBodyState3D *p_state) {
 // is a loose body from here on
 void CityBike::throw_rider(const Vector3 &p_blow) {
 	state = ST_THROWN; st_t = 0.0f; throws++;
+	if (player) { if (CityPlayer *tp = the_player()) tp->vocal("pain"); }   // (thrown off: his groan)
 	set_mass(M_BIKE);
 	fallen = true;
 	if (reach_mod) { reach_mod->set_influence(0.0f); reach_mod->set_active(false); }
@@ -681,12 +683,30 @@ void CityBike::pose_parts(double p_delta) {
 	for (int k = 0; k < 2; k++) if (p_wheel[k]) p_wheel[k]->set_transform(Transform3D(r_wheel[k].basis * Basis(Vector3(1, 0, 0), wheel_ang), r_wheel[k].origin));
 }
 
+// the bicycle's recorded sounds (el_sfx.h): coasting, the chain while he pedals, the bell (H or the pad's Y), a hard
+// brake's squeal
+void CityBike::bike_sounds() {
+	const bool riding = state == ST_RIDE && player;
+	const float u = std::fabs(speed);
+	elsfx::loop(this, "Freewheel", "res://audio/sfx/bike/bike_freewheel_loop_", riding && u > 1.0f && c_pedal < 0.05f ? std::min(-20.0f + u * 1.6f, -6.0f) : -80.0f, 0.8f + std::min(u, 10.0f) * 0.04f, 20.0f);
+	elsfx::loop(this, "Chain", "res://audio/sfx/bike/bike_chain_loop_", riding && u > 0.5f && c_pedal > 0.05f ? -12.0f : -80.0f, 0.85f + std::min(u, 10.0f) * 0.03f, 15.0f);
+	if (!riding) { bell_held = false; braking = false; return; }
+	Input *in = Input::get_singleton();
+	const bool b = !scripted && (in->is_key_pressed(KEY_H) || in->is_joy_button_pressed(0, JOY_BUTTON_Y));
+	if (b && !bell_held) elsfx::play(this, "res://audio/sfx/bike/bike_bell_", -4.0f, 0.0f, Vector3(0, 1.0f, 0.4f), 40.0f);
+	bell_held = b;
+	const bool hard = c_brake > 0.7f && u > 4.0f;
+	if (hard && !braking) elsfx::play(this, "res://audio/sfx/bike/bike_brake_squeal_", -6.0f, 0.05f, Vector3(0, 0.4f, 0), 30.0f);
+	braking = c_brake > 0.3f;
+}
+
 void CityBike::_process(double p_delta) {
 	pm::Scope _pm(pm::BIKE);   // (the slow-frame marks, perf_marks.h)
 	if (!made) return;
 	st_t += (float)p_delta;
 	pose_parts(p_delta);
 	if (player && !scripted) read_player();
+	bike_sounds();
 	if (hit_now && state == ST_RIDE) { hit_now = false; throw_rider(hit_v); }
 	CityPlayer *pl = the_player();
 	if (want_toggle) {

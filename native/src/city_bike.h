@@ -86,6 +86,8 @@ private:
 	uint64_t player_id = 0;       // the CityPlayer who rides it (hidden and still while he rides)
 	int state = ST_PARKED;
 	float st_t = 0.0f;
+	bool bell_held = false, braking = false;   // (the recorded sounds: the bell key, a hard brake's squeal once)
+	void bike_sounds();
 	// controls: 0..1 pedal, 0..1 brake, -1 (right) .. 1 (left) steer, 0..1 sprint
 	float c_pedal = 0, c_brake = 0, c_steer = 0, c_sprint = 0;
 	bool scripted = false, want_toggle = false, e_was = false;

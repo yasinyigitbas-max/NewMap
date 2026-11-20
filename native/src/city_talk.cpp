@@ -5,6 +5,8 @@
 #include "city_crowd.h"
 #include "ped_places.h"
 
+#include <godot_cpp/classes/scene_tree.hpp>
+#include <godot_cpp/classes/window.hpp>
 #include <godot_cpp/classes/audio_stream_ogg_vorbis.hpp>
 #include <godot_cpp/classes/audio_stream_player3d.hpp>
 #include <godot_cpp/classes/box_container.hpp>
@@ -188,7 +190,10 @@ PackedStringArray CityTalk::segments(const String &p_tmpl, const Dictionary &p_s
 Ref<AudioStream> CityTalk::clip(const String &p_voice, const String &p_text) {
 	const String s = slug(p_text);
 	if (s.is_empty()) return Ref<AudioStream>();
-	const String path = clips_dir + p_voice + "/" + s + ".ogg";
+	return load_clip(clips_dir + p_voice + String("/") + s + String(".ogg"));
+}
+
+Ref<AudioStream> CityTalk::load_clip(const String &path) {
 	if (clips.has(path)) return clips[path];
 	Ref<AudioStream> st;
 	if (ResourceLoader::get_singleton()->exists(path)) st = ResourceLoader::get_singleton()->load(path);
@@ -197,12 +202,31 @@ Ref<AudioStream> CityTalk::clip(const String &p_voice, const String &p_text) {
 	return st;
 }
 
+// THE CAST (Yasin, 20 Nov: "dont record all the npc lines from the same voices"): eight recorded voices, four men
+// (m1 Liam, m2 Roger, m3 Brian, m4 Bill) and four women (f1 Jessica, f2 Sarah, f3 Heather, f4 Nan), every line in
+// each. A person's voice comes from who he is (his look), so he sounds the same every time he is met.
+String CityTalk::cast_voice(uint32_t p_look, bool p_female) {
+	uint32_t h = p_look * 2654435761u; h ^= h >> 16; h *= 0x45d9f3bu; h ^= h >> 16;
+	return String(p_female ? "f" : "m") + String::num_int64(1 + (int64_t)(h % 4u));
+}
+
+String CityTalk::voice_of(int p_row) const {
+	const CityCrowd *c = crowd_node();
+	if (!c || !c->brain() || p_row < 0) return "m1";
+	return cast_voice(c->brain()->look[p_row], c->walker_female(p_row));
+}
+
+String CityTalk::get_voice_of(int p_id) const {
+	const CityCrowd *c = crowd_node();
+	return c && c->brain() ? voice_of(c->brain()->find(p_id)) : String();
+}
+
 // the recorded voice of a line, at the walker: the whole line's clip, or a templated line's clips in turn; a line
 // with a part that was never recorded (a new place's name) is not spoken at all
 void CityTalk::speak(int p_ch, int p_row, const Dictionary &p_line, const Dictionary &p_sub) {
 	CityCrowd *c = crowd_node();
 	if (!c || p_row < 0) return;
-	const String v = c->walker_female(p_row) ? "f" : "m";
+	const String v = voice_of(p_row);   // (his own voice of the cast; a line it lacks is a caption only)
 	const String tmpl = p_line.get("en", "");
 	std::vector<Ref<AudioStream>> q;
 	Ref<AudioStream> whole = clip(v, fill(tmpl, p_sub));
@@ -710,6 +734,38 @@ void CityTalk::_on_crowd_event(int p_type, int p_id, int p_aux, double p_f) {
 		const int r = cc && cc->brain() ? cc->brain()->find(p_id) : -1;
 		if (r >= 0) mem_of(r).busy_until = now_h + GRUDGE_H;
 		if (active == p_id) end("cut");
+		if (r >= 0) bark(r, p_aux >= 2 ? "angry" : "hit");
+		{   // (his effort as he shoves)
+			const uint64_t pid = player_id ? player_id : (cc ? cc->get_player_id() : 0);
+			Object *pl = pid ? ObjectDB::get_instance(pid) : nullptr;
+			if (pl && pl->has_method("vocal")) pl->call("vocal", "throw");
+		}   // (first "Ow! Hey!", shoved again: "What's your problem?!")
+		return;
+	}
+	// THE STREET'S VOICE (barks and reactions): what happens near the player is heard
+	if (p_type == pc::E_SCREAM || p_type == pc::E_BUMP || p_type == pc::E_MEET || p_type == 17) {
+		CityCrowd *cc = crowd_node();
+		const int r = cc && cc->brain() ? cc->brain()->find(p_id) : -1;
+		if (r >= 0) {
+			if (p_type == pc::E_SCREAM) bark(r, "scared");
+			else if (p_type == pc::E_BUMP) bark(r, "complain", 0.7f);
+			else if (p_type == 17) bark(r, "angry");
+			else if (p_f < 0.5) bark(r, "greet", 0.5f);   // (a wave to somebody he knows)
+		}
+		return;
+	}
+	if (p_type == 18) {   // an alarm (aux: 1 the player hit somebody, 2 a car hit somebody, 3 a cyclist came off, 4 a fight)
+		CityCrowd *cc = crowd_node();
+		if (!cc || !cc->brain() || !has_player() || p_aux != 2) return;
+		const pc::Crowd *b = cc->brain();
+		const Vector3 p = player_pos();
+		int best = -1; float bd = 30.0f * 30.0f;
+		for (int i = 0; i < b->hi; i++) {
+			if (!b->alive[i] || b->mode[i] == pc::M_BODY) continue;
+			const float dx = b->x[i] - p.x, dz = b->z[i] - p.z, d2 = dx * dx + dz * dz;
+			if (d2 < bd) { bd = d2; best = i; }
+		}
+		if (best >= 0) bark(best, "run_over");
 		return;
 	}
 	if (p_type != pc::E_SAY || !loaded) return;
@@ -873,7 +929,14 @@ void CityTalk::set_player(Object *p_player) {
 	if (p_player && p_player->has_signal("interact")) p_player->connect("interact", Callable(this, "_on_interact"));
 }
 
-void CityTalk::set_mission(const String &p_en, const String &p_tr, const Vector3 &p_at) { mission_en = p_en; mission_tr = p_tr; mission_at = p_at; has_mission = !p_en.is_empty(); }
+void CityTalk::set_mission(const String &p_en, const String &p_tr, const Vector3 &p_at) {
+	const bool fresh = !p_en.is_empty() && (!has_mission || p_en != mission_en);
+	mission_en = p_en; mission_tr = p_tr; mission_at = p_at; has_mission = !p_en.is_empty();
+	if (fresh && is_inside_tree()) {   // a new mission: its sting (CityHud::stinger)
+		const TypedArray<Node> hs = get_tree()->get_root()->find_children("*", "CityHud", true, false);
+		if (hs.size() > 0) Object::cast_to<Node>(hs[0])->call("stinger", "mission_start");
+	}
+}
 
 Dictionary CityTalk::get_memory() const {
 	Dictionary d;
@@ -892,10 +955,73 @@ void CityTalk::set_memory(const Dictionary &p_m) {
 	}
 }
 
+// One shout of kind p_cat ("greet", "complain", "scared", "angry", "hit", "pain", "call_police", "photos", "run_over")
+// by the walker in row p_row, in his own voice; near the player only, one at a time per person, a breath between
+// two of the street's
+bool CityTalk::bark(int p_row, const String &p_cat, float p_chance) {
+	CityCrowd *c = crowd_node();
+	if (!c || !c->brain() || p_row < 0) return false;
+	pc::Crowd *b = c->brain();
+	if (has_player()) {
+		const Vector3 p = player_pos();
+		const float dx = b->x[p_row] - p.x, dz = b->z[p_row] - p.z;
+		if (dx * dx + dz * dz > 35.0f * 35.0f) return false;
+	}
+	if (b->id[p_row] == active) return false;   // (he is talking with the player)
+	if (clock_s < bark_free_at || (p_chance < 1.0f && randf() > p_chance)) return false;
+	const int id = b->id[p_row];
+	if (barked_at.has(id) && clock_s - barked_at[id] < 8.0) return false;
+	const String v = voice_of(p_row), key = v + String("/") + p_cat;
+	const int last = bark_last.has(key) ? bark_last[key] : 0;
+	Ref<AudioStream> st; int n = 0;
+	const int start = 1 + (int)(randf() * 6.0);
+	for (int t = 0; t < 6 && st.is_null(); t++) {
+		n = 1 + (start - 1 + t) % 6;
+		if (n == last) continue;
+		st = load_clip(clips_dir + v + String("/bark/") + p_cat + String("_") + String::num_int64(n).pad_zeros(2) + String(".ogg"));
+	}
+	if (st.is_null()) return false;
+	bark_last[key] = n; barked_at[id] = clock_s; bark_free_at = clock_s + 0.6; n_barks++;
+	if (!audio_on) return true;
+	AudioStreamPlayer3D *pl = bark_pl[bark_next]; bark_next = (bark_next + 1) % 3;
+	if (!pl) return true;
+	pl->stop(); pl->set_stream(st);
+	pl->set_global_position(Vector3(b->x[p_row], b->y[p_row] + 1.6f, b->z[p_row]));
+	pl->set_pitch_scale(0.97f + 0.06f * (float)randf());
+	pl->play();
+	for (int k = 0; k < 3; k++) if (bark_pl[k] == pl) bark_walker[k] = id;
+	return true;
+}
+
+// what the people near the player are doing that has a voice: holding a phone up at something (photos), calling
+// (call_police), lying knocked down (pain)
+void CityTalk::bark_scan() {
+	CityCrowd *c = crowd_node();
+	if (!c || !c->brain() || !has_player()) return;
+	pc::Crowd *b = c->brain();
+	const Vector3 p = player_pos();
+	for (int i = 0; i < b->hi; i++) {
+		if (!b->alive[i]) continue;
+		const float dx = b->x[i] - p.x, dz = b->z[i] - p.z;
+		if (dx * dx + dz * dz > 25.0f * 25.0f) continue;
+		if (b->act[i] == pc::A_FILM) bark(i, "photos", 0.5f);
+		else if (b->act[i] == pc::A_CALL) bark(i, "call_police", 0.5f);
+		else if (b->mode[i] == pc::M_BODY) bark(i, "pain", 0.3f);
+	}
+}
+
+bool CityTalk::test_bark(int p_id, const String &p_cat) {
+	CityCrowd *c = crowd_node();
+	if (!c || !c->brain()) return false;
+	bark_free_at = 0.0; barked_at.erase(p_id);
+	return bark(c->brain()->find(p_id), p_cat);
+}
+
 Dictionary CityTalk::stats() const {
 	Dictionary d;
 	d["active"] = active; d["talks"] = n_talks; d["lines"] = n_lines; d["voiced"] = n_voiced; d["silent"] = n_silent; d["group_lines"] = n_conv_lines;
 	d["remembered"] = (int)memory.size(); d["options"] = (int)options.size(); d["saying"] = saying; d["tries"] = tries; d["last_line"] = last_result;
+	d["barks"] = n_barks;
 	d["conversations"] = (int)convs.size(); d["clips_loaded"] = (int)clips.size(); d["target"] = target; d["speech_plugin"] = speech_obj() != nullptr;
 	return d;
 }
@@ -907,6 +1033,11 @@ void CityTalk::_ready() {
 		voice[k] = memnew(AudioStreamPlayer3D);
 		voice[k]->set_unit_size(k == 0 ? 5.0f : 3.5f); voice[k]->set_max_distance(k == 0 ? 40.0f : 28.0f);
 		add_child(voice[k]);
+	}
+	for (int k = 0; k < 3; k++) {
+		bark_pl[k] = memnew(AudioStreamPlayer3D);
+		bark_pl[k]->set_unit_size(6.0f); bark_pl[k]->set_max_distance(45.0f);
+		add_child(bark_pl[k]);
 	}
 	if (ui_on) build_ui();
 	if (Engine::get_singleton()->has_singleton("GodotSpeech")) {
@@ -938,6 +1069,14 @@ void CityTalk::_process(double p_delta) {
 	if (!c || !c->brain()) return;
 	pc::Crowd *b = c->brain();
 	if (cap_t > 0.0) { cap_t -= p_delta; if (cap_t <= 0.0 && cap_panel) cap_panel->set_visible(false); }
+	clock_s += p_delta;
+	for (int k = 0; k < 3; k++) {
+		if (!bark_pl[k] || bark_walker[k] < 0) continue;
+		const int row = b->find(bark_walker[k]);
+		if (row >= 0) bark_pl[k]->set_global_position(Vector3(b->x[row], b->y[row] + 1.6f, b->z[row]));
+		if (!bark_pl[k]->is_playing()) bark_walker[k] = -1;
+	}
+	if ((scan_t -= p_delta) <= 0.0) { scan_t = 0.35; bark_scan(); }
 	// the voices stay at their speakers; a line's clips play one after the other
 	for (int k = 0; k < 2; k++) {
 		if (!voice[k]) continue;
@@ -1002,6 +1141,8 @@ void CityTalk::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_resize"), &CityTalk::_on_resize);
 	ClassDB::bind_method(D_METHOD("set_data_path", "path"), &CityTalk::set_data_path);
 	ClassDB::bind_method(D_METHOD("get_data_path"), &CityTalk::get_data_path);
+	ClassDB::bind_method(D_METHOD("get_voice_of", "id"), &CityTalk::get_voice_of);
+	ClassDB::bind_method(D_METHOD("test_bark", "id", "cat"), &CityTalk::test_bark);
 	ClassDB::bind_method(D_METHOD("set_clips_dir", "dir"), &CityTalk::set_clips_dir);
 	ClassDB::bind_method(D_METHOD("get_clips_dir"), &CityTalk::get_clips_dir);
 	ClassDB::bind_method(D_METHOD("set_ui", "on"), &CityTalk::set_ui);

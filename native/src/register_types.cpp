@@ -1,3 +1,4 @@
+#include "el_sfx.h"
 // coronado_city: the new map's native module (GDExtension). Traffic and people in C++ (docs/TRAFFIC_PEOPLE_PORT.md).
 // There is no script fall-back: the test app checks ClassDB.class_exists("CityNative") and says so when the module
 // is missing.
@@ -75,6 +76,7 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 }
 
 void uninitialize_coronado_city(ModuleInitializationLevel p_level) {
+	if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE) godot::elsfx::clear();
 }
 
 extern "C" {

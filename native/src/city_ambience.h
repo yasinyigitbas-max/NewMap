@@ -43,6 +43,17 @@ private:
 	bool pacific(float x, float z) const;
 	void sample(const Vector3 &p);
 	void gains(double hour, float rain);
+	// THE ZONE BED (audio/amb/zone/zone_<name>_0.ogg, stereo loops; docs/AUDIO_EL_HOOKUPS.md): the place's own bed under the
+	// others, from what the rings found (no zone map yet: beach by the Pacific, marina by the bay, parks on grass, downtown on
+	// wide hard ground, homes elsewhere; hospital / campus / industrial wait for one), crossfaded in 3 s on a change
+	AudioStreamPlayer *zone_pl[2] = {};
+	int zone = -1, zone_cur = 0, zone_cand = -1;
+	float zone_wait = 0.0f;   // (a new zone must hold 3 s: no flicker at its edge)
+	int zone_of() const;
+	void zone_bed(float dt);
+public:
+	int get_zone() const { return zone; }
+private:
 protected:
 	static void _bind_methods();
 public:
