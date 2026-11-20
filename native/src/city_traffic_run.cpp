@@ -81,7 +81,7 @@ void CityTraffic::step_once(double p_clock) {
 		std::lock_guard<std::mutex> lock(mx);
 		in = input;
 		input.cells_dirty = false;
-		input.kill_ids.clear(); input.kill_stalls.clear(); input.adopt.clear(); input.orders.clear();
+		input.kill_ids.clear(); input.kill_stalls.clear(); input.adopt.clear(); input.orders.clear(); input.panics.clear();
 	}
 	sim->cfg.max_cars = std::min(in.max_cars, (int)MAX_ROWS - 2);
 	sim->cfg.max_bikes = in.bikes;
@@ -90,6 +90,14 @@ void CityTraffic::step_once(double p_clock) {
 		for (const Input::Order &o : in.orders) done.push_back({ o.ticket, exec_order(o) });
 		std::lock_guard<std::mutex> lock(mx);
 		order_done.insert(order_done.end(), done.begin(), done.end());
+	}
+	for (size_t k = 0; k + 2 < in.panics.size(); k += 3) {   // shots heard: the drivers round them drive off hard
+		const float r2 = in.panics[k + 2] * in.panics[k + 2];
+		for (int i = 0; i < sim->hi; i++) {
+			if (!sim->alive[i] || sim->kind[i] != tc::K_AMBIENT) continue;
+			const float dx = sim->x[i] - in.panics[k], dz = sim->z[i] - in.panics[k + 1];
+			if (dx * dx + dz * dz <= r2 && sim->temper[i] != 2) { sim->temper[i] = 2; panicked++; }
+		}
 	}
 	// the buses: a timetable in real seconds; every 5 minutes by day, every 15 in the evening, every half hour at night
 	{

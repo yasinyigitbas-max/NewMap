@@ -94,6 +94,7 @@ private:
 		// the game's orders to cars of its own (a taxi, a scene's car): done by the step, answered by ticket
 		struct Order { int type, ticket; int32_t car; float ax, az, bx, bz; int side, model; };
 		std::vector<Order> orders;
+		std::vector<float> panics;   // x, z, r: drivers who heard shots there (CityCrowd::gunshot)
 	} input;
 	enum { O_SPAWN = 1, O_DRIVE = 2, O_PULL = 3, O_RELEASE = 4 };
 	std::vector<std::pair<int, int>> order_done;   // (under mx) ticket, answer
@@ -336,6 +337,10 @@ public:
 	int drive_car_to(int p_car, const Vector3 &p_to);
 	int pull_car_over(int p_car, const Vector3 &p_to, int p_side);
 	int let_car_go(int p_car);
+	// SHOTS (Yasin's GTA IV list: "cars flee from gunfire"): every driver within p_radius of p_at drives off as hard as
+	// he dares (the boldest temper: quickest off the line, shortest gaps, fastest), from now on. The guns will call it.
+	void panic(const Vector3 &p_at, double p_radius, double p_seconds);
+	int panicked = 0;
 	int order_result(int p_ticket);
 	int get_max_cars() const { return max_cars; }
 	void set_parked(bool p_on) { parked_on = p_on; active_dirty = true; }

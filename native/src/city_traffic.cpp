@@ -482,6 +482,21 @@ int CityTraffic::let_car_go(int p_car) {
 	input.orders.push_back(o);
 	return o.ticket;
 }
+void CityTraffic::panic(const Vector3 &p_at, double p_radius, double p_seconds) {
+	(void)p_seconds;
+	if (!threaded) {
+		if (!ready || !sim) return;
+		const float r2 = (float)(p_radius * p_radius);
+		for (int i = 0; i < sim->hi; i++) {
+			if (!sim->alive[i] || sim->kind[i] != tc::K_AMBIENT) continue;
+			const float dx = sim->x[i] - (float)p_at.x, dz = sim->z[i] - (float)p_at.z;
+			if (dx * dx + dz * dz <= r2 && sim->temper[i] != 2) { sim->temper[i] = 2; panicked++; }
+		}
+		return;
+	}
+	std::lock_guard<std::mutex> lock(mx);
+	input.panics.push_back((float)p_at.x); input.panics.push_back((float)p_at.z); input.panics.push_back((float)p_radius);
+}
 int CityTraffic::order_result(int p_ticket) {
 	if (threaded) {
 		std::lock_guard<std::mutex> lock(mx);
@@ -557,6 +572,7 @@ void CityTraffic::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("spawn_driver", "from", "to", "model"), &CityTraffic::spawn_driver);
 	ClassDB::bind_method(D_METHOD("drive_car_to", "car", "to"), &CityTraffic::drive_car_to);
 	ClassDB::bind_method(D_METHOD("pull_car_over", "car", "to", "side"), &CityTraffic::pull_car_over);
+	ClassDB::bind_method(D_METHOD("panic", "at", "radius", "seconds"), &CityTraffic::panic);
 	ClassDB::bind_method(D_METHOD("let_car_go", "car"), &CityTraffic::let_car_go);
 	ClassDB::bind_method(D_METHOD("order_result", "ticket"), &CityTraffic::order_result);
 	ClassDB::bind_method(D_METHOD("bike_stats"), &CityTraffic::bike_stats);

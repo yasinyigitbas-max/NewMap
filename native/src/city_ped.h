@@ -60,6 +60,7 @@ private:
 	// told
 	double jump_at_takeover = 0.0;   // how far a driven bone moved when the body took over, m (must be ~0)
 	int takeovers = 0, falls = 0, getups = 0;
+	bool stay_down = false;          // (the hurt who wait for a medic) lying, it does not get up until let
 
 	void make();
 	void take_over(const Vector3 &p_vel);
@@ -101,6 +102,9 @@ public:
 	Ref<ShaderMaterial> get_look() const;
 	Vector3 bone_world(const char *p_bone) const;   // (traces) a bone's place as drawn, world
 	int get_mode() const { return mode; }
+	// a hard knock: once down it lies until told (a medic has been); false: it gets up as it would
+	void set_stay_down(bool p_on) { stay_down = p_on; }
+	bool get_stay_down() const { return stay_down; }
 	Skeleton3D *skeleton() const { return skel; }   // (the player's bicycle reaches its feet and hands to the pedals and grips)
 	Vector3 body_at() const;
 	float body_yaw() const { return body.heading; }
