@@ -1,6 +1,28 @@
 # The story
 
-## Current: *The Long Way Round*, A1 edition: `long_way_round_a1/`
+## Newest: *First Gear*, an A1 story designed from scratch: `first_gear/`
+Yasin, 20 Nov: "a story to teach English in it, covering each topic of the CEFR syllabus for A1 level, using the existing
+assets and locations ... without being a good game first I don't think it can teach well ... we need deep characters."
+
+- **The idea:** the hero comes for a hotel job that is gone, and becomes the driver of Lou Brannigan, 77. He was the
+  island's driving teacher for 35 years. A stroke has locked his words away. Lou and the hero are both beginners, and
+  their words come back at the same speed. Forty years ago Lou was *the Ghost*, the getaway driver of an unsolved 1986
+  robbery. He spent the money in secret on the island, on twelve brass plaques that say *"For people who start
+  again."* The villain wants the money; the guard who was hurt that night still lives on the island.
+- **The theme:** small words tell the truth. The villain has the biggest English in the game and uses it to lie.
+- **The game:** driving is the core verb (Lou's seven rules are the skills); voice is the action; the hero is Lou's
+  voice (CEFR mediation, a new verb); a "nod" button to pretend you understood, which costs something at the right
+  moments; WordBook photo cards from the open world feed Lou's therapy; a playable 1986 flashback where the player
+  sings to keep a stranger alive; a car chase steered by an old man singing directions down a phone.
+- **A1:** every CEFR A1 grammar point, topic, can-do and skill is mapped to the mission that teaches it and the ones
+  that recycle it (`A1_SYLLABUS.md`). There are 1,271 voice lines with `[tone]` tags for the renderer; the 417 player
+  lines were checked against the A1 contract.
+- **Places:** only buildings and rooms already placed in the city kit. To build: Lou's house and garage interiors, the
+  tower's base room, Bonnie (a 1974 sedan), and small props (`BIBLE.md` section 8).
+
+Start with `first_gear/BIBLE.md`, then `A1_SYLLABUS.md`, then the four scripts, `SIDE_STORIES.md` and `MUSIC.md`.
+
+## Earlier: *The Long Way Round*, A1 edition: `long_way_round_a1/`
 Yasin, 20 Nov: "fit the A1 syllabus to your first draft with my scenario … use as few non-existing places and props as
 possible, our game has many locations now".
 
