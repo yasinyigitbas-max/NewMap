@@ -668,6 +668,37 @@ func _linear_texel(tex: Texture2D, uv: Vector2) -> Color:
 	var c := im.get_pixel(clampi(int(uv.x * im.get_width()), 0, im.get_width() - 1), clampi(int(uv.y * im.get_height()), 0, im.get_height() - 1))
 	return c.srgb_to_linear()
 
+# ---------------------------------------------------------------- B16: the ground's surface classes (footsteps)
+## Yasin, 20 Nov: "add footsteps to the game based on terrain". From the top-down picture of the island's ground (before
+## it is compressed): one byte a GC_TEXEL-metre texel, 0 hard (asphalt, pavement, concrete), 1 grass, 2 sand, 3 dirt.
+## far/ground_class.bin (w * h bytes, row z, column x) + far/ground_class.json (x0, z0, texel, w, h); a look at it in
+## far/ground_class.png (black hard, green grass, yellow sand, brown dirt). The game (C++ FootSteps) reads both.
+const GC_TEXEL := 2.5
+
+func _ground_class(img: Image, x0: float, z0: float, wx: float, wz: float) -> void:
+	var w := int(round(wx / GC_TEXEL)); var h := int(round(wz / GC_TEXEL))
+	var small := img.duplicate(); small.resize(w, h, Image.INTERPOLATE_BILINEAR)
+	var bytes := PackedByteArray(); bytes.resize(w * h)
+	var look := Image.create(w, h, false, Image.FORMAT_RGB8)
+	var cols := [Color(0.1, 0.1, 0.1), Color(0.2, 0.7, 0.2), Color(0.9, 0.85, 0.4), Color(0.5, 0.33, 0.15)]
+	var count := [0, 0, 0, 0]
+	for y in h:
+		for x in w:
+			var c := small.get_pixel(x, y)
+			var mx := maxf(c.r, maxf(c.g, c.b)); var mn := minf(c.r, minf(c.g, c.b))
+			var sat := 0.0 if mx < 0.001 else (mx - mn) / mx
+			var k := 0
+			if c.g > c.r * 1.04 and c.g > c.b * 1.08 and sat > 0.12: k = 1                       # green: grass
+			elif c.r >= c.g and c.g >= c.b and sat > 0.14 and mx > 0.52: k = 2                  # light warm: sand
+			elif c.r >= c.g and c.g >= c.b and sat > 0.2 and mx <= 0.52: k = 3                  # dark warm: dirt, bark
+			bytes[y * w + x] = k; count[k] += 1
+			look.set_pixel(x, y, cols[k])
+	var f := FileAccess.open(out + "far/ground_class.bin", FileAccess.WRITE); f.store_buffer(bytes); f.close()
+	var j := FileAccess.open(out + "far/ground_class.json", FileAccess.WRITE)
+	j.store_string(JSON.stringify({"x0": x0, "z0": z0, "texel": GC_TEXEL, "w": w, "h": h, "classes": ["hard", "grass", "sand", "dirt"], "count": count})); j.close()
+	look.save_png(out + "far/ground_class.png")
+	stat["ground_class"] = count
+
 # ---------------------------------------------------------------- B15: collision for what the kit's col shell leaves out
 ## Yasin, 20 Nov: "stairs around or columns under buildings dont have colliders, add them". A kit building's collision is
 ## its hand-made "col" shell; measured over the kit (122 of 128 buildings, 1,480 parts): outside stairs, columns under
@@ -1284,6 +1315,7 @@ func _build_far_ground() -> Dictionary:
 	img.convert(Image.FORMAT_RGB8)
 	img.resize(px_w, px_h, Image.INTERPOLATE_LANCZOS)
 	var dbg := img.duplicate(); dbg.resize(px_w / 4, px_h / 4, Image.INTERPOLATE_LANCZOS); dbg.save_png(out + "far/far_ground_small.png")      # a look at it (not used by the game)
+	_ground_class(img, x0, z0, wx, wz)      # B16: what the ground is made of, for the footsteps
 	img.generate_mipmaps()
 	var tex: Texture2D = null
 	var cimg := img.duplicate()
