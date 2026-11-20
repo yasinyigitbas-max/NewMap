@@ -287,10 +287,10 @@ languages, with small words.
   **nurse**: a feverish child in the laundry. Each raises the motel's trust, and the motel helps on the night.
 
 ### Beat 5: The signal
-- **CAM:** night, the dark end of the motel walkway, by the ice machine. The hero texts Brody and Ruth: *July 4. 11. Ferry Landing. 12 people. 4 children.*
+- **CAM:** night, the dark end of the motel walkway. The hero texts Brody and Ruth: *July 4. 11. Ferry Landing. 12 people. 4 children.*
 - **MUS:** `MUS-25 "Two Lives"`: Marek's frame drum and the main theme's trumpet alternate, two bars each, never
   together.
-- Below, a dark sedan pulls into the motel lot. Marek gets out, smoking, and looks up along the walkway. The hero steps back into the shadow of the ice machine. He looks for a long time.
+- Below, a dark sedan pulls into the motel lot. Marek gets out, smoking, and looks up along the walkway. The hero steps back into the dark. He looks for a long time.
   Then he goes in.
 - **Practice test:** review: people.
 
