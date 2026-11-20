@@ -9,6 +9,8 @@ run/main_scene="res://tools/city/rig/rig.tscn"
 
 [rendering]
 renderer/rendering_method="mobile"
+; B28 (Yasin, 20 Nov: "moving draws into its own thread? it won big in the old build"): the separate render thread
+driver/threads/thread_model=2
 textures/vram_compression/import_etc2_astc=true
 ; the game engine's own light grid (docs/engine, patch e): 32 omni + 32 spot lights for a fixed cost. A stock engine ignores it.
 lights_and_shadows/mobile_light_grid=true

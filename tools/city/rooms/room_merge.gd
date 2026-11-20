@@ -9,7 +9,8 @@ extends SceneTree
 ##     textures as layers of runtime_tex/arr_room.png); the clear glass, door leaves, signs, wear and potted plants as
 ##     they are. Lights unchanged.
 ## Needs the runtime bake (runtime/lib) and tools/city/rooms/make_room_array.py + an import first.
-##   xvfb-run -a godot --path . --rendering-method mobile --rendering-driver vulkan -s res://tools/city/rooms/room_merge.gd [-- --only=name,name]
+##   xvfb-run -a godot --path . --render-thread safe --rendering-method mobile --rendering-driver vulkan -s res://tools/city/rooms/room_merge.gd [-- --only=name,name]
+##   (--render-thread safe: the project runs a separate render thread since 20 Nov; this tool makes textures, which needs the old mode)
 const DIR := "res://map_dc/coronado/city_kit/interiors/rooms/"
 const OUT := "res://map_dc/coronado/city_kit/runtime/rooms/"
 const LIB := "res://map_dc/coronado/city_kit/runtime/lib/"

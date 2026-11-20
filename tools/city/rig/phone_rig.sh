@@ -43,7 +43,9 @@ do_bake() {
   fi
   echo "PHONE_RIG import (first time: several minutes)"; "$GODOT" --headless --path . --import > "$OUT/import.log" 2>&1
   echo "PHONE_RIG bake (about 1-3 minutes, a window opens)"
-  "$GODOT" --path . --rendering-method mobile --resolution 640x360 -s res://tools/city/bake/bake_runtime.gd -- --all > "$OUT/bake.log" 2>&1
+  # (--render-thread safe: the game runs with a separate render thread since 20 Nov (B28); the PC tools read meshes and
+  # make textures, which needs the old mode: the room merge broke without it, "finalize can only be called from the render thread")
+  "$GODOT" --path . --render-thread safe --rendering-method mobile --resolution 640x360 -s res://tools/city/bake/bake_runtime.gd -- --all > "$OUT/bake.log" 2>&1
   grep -a "^BAKE_DONE\|^BAKE check\|SCRIPT ERROR" "$OUT/bake.log" | cut -c1-200
   grep -aq "^BAKE_DONE" "$OUT/bake.log" || die "the bake did not finish: see OUT/bake.log"
 }
