@@ -97,7 +97,7 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
       and close animated over several frames, a sound and a short vibration on each touch; an INVENTORY box bottom left,
       the phone's size and look, that opens the weapons we carry (none yet: an empty list). (old: ui/hud/hud.gd, objectives.gd, ui/health_bar.gd, needs_hud.gd, caption_help.gd).
 8. [x] (20 Nov, tests/game/test_phone_map.gd in the real city and test_hud.gd, both RESULT PASS in a window; the enterable rooms = the shops' doors of places.bin; up to 3 player targets routed and saved (Yasin); NOT on the phone: pinch and drag) (the HUD arrow box replaces the minimap, Yasin) The phone's map (old: ui/phone/map_view.gd, ui/hud/coronado_route.gd: the way on the map from item 2).
-9. [ ] The phone UI and its apps (old: ui/phone/*: phone, apps, call, camera, CV, delivery, films, jobs, learn, transit, drone).
+9. [~] (20 Nov, step 1: tests/game/test_phone.gd RESULT PASS in a window; test_hud, test_phone_map RESULT PASS; test_start not rerun to the end (closed while the city loaded); NOT on the phone) CityPhone (C++): the phone button opens its HOME (13 app tiles drawn in code), the arrow box its Map; Camera (a photo of the view without the HUD, user://photos) and Photos; Contacts and Messages (English over Turkish, in the save); an incoming Call (Answer, Hang up); Settings (the game's own). Waiting, with a page that says so: Bank, Transit, Delivery (item 10), Jobs (11), Learn, Films (12), Radio (no car radio yet). Still to port from the old phone: the pull-out of the phone in his hand, Drone (dev only). The phone UI and its apps (old: ui/phone/*: phone, apps, call, camera, CV, delivery, films, jobs, learn, transit, drone).
 10. [ ] Money and ATMs (old: economy/economy.gd, atm.gd, broke_watch.gd).
 11. [ ] Jobs and deliveries (old: jobs/jobs.gd, delivery/*, ui/jobs/*, minigames/jobs/*, cityride/city_ride.gd: the taxi).
 12. [ ] Lessons (old: lessons/lessons.gd, lesson_panel.gd, lesson_unlocks.gd, ui/phone/learn_app.gd).
@@ -130,6 +130,12 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
   stand_at is not bound for scripts.
 - tests/traffic/test_bike_hit.gd: one run in two (19 Nov) the hit cyclist's hips went 19 m up (the other run 1.06 m):
   a rare launch of the thrown rider; not deterministic between runs. Trace the one rider when it happens.
+
+## Yasin, 20 Nov: "AFTER YOU ARE DONE WITH ANIMATIONS, CONTINUE BRINGING THE OLD SYSTEMS OF THE GAME BACK ONE BY ONE, ONLY C PLUS
+## PLUS EVERYTHING EXCEPT FOR STORY SHOULD BE ADDED TO THIS GAME IN NATIVE CODE"
+After the animations (bug board B10, B11, then B15-B18), in order: 9 the phone's apps, 10 money and ATMs, 11 jobs and
+deliveries, 12 lessons, 13 narrator / captions / dialogue, 14 minigames, then 15 without the story (char creator,
+wardrobe, i18n): all C++. The story stays out.
 
 ## Still waiting on Yasin (from before)
 - His go for people inside the shops; the voices; a fresh bake, then make_streets.gd, make_places.gd and the tests.

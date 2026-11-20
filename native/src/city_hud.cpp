@@ -1,6 +1,7 @@
 // CityHud: see city_hud.h.
 #include "perf_marks.h"
 #include "city_hud.h"
+#include "city_phone.h"
 
 #include "city_game.h"
 #include "city_player.h"
@@ -322,6 +323,21 @@ void CityHud::build() {
 		MarginContainer *mc = memnew(MarginContainer);
 		for (const char *side : { "margin_left", "margin_right", "margin_top", "margin_bottom" }) mc->add_theme_constant_override(side, 18);
 		VBoxContainer *v = memnew(VBoxContainer); v->add_theme_constant_override("separation", 10);
+		if (p == 0) {   // the phone: its own header, home and apps (city_phone.cpp); the map is one of its apps
+			phone = memnew(CityPhone); phone->hud = this;
+			phone->set_v_size_flags(Control::SIZE_EXPAND_FILL); phone->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+			v->add_child(phone);
+			map = memnew(HudMap);
+			map->set_clip_contents(true); map->set_mouse_filter(Control::MOUSE_FILTER_STOP);
+			Button *me = plate::button("", "raised", "pin");   // centre on the player again
+			me->set_custom_minimum_size(Vector2(56, 56));
+			me->connect("pressed", callable_mp(this, &CityHud::recentre));
+			mc->add_child(v); pn->add_child(mc);
+			add_child(pn);
+			pan[p] = pn;
+			phone->set_map(map, me);
+			continue;
+		}
 		HBoxContainer *top = memnew(HBoxContainer);
 		VBoxContainer *tt = memnew(VBoxContainer); tt->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 		tt->add_child(plate::label(p == 0 ? "MAP" : "WEAPONS", plate::FS_TITLE, plate::TEXT, 800));
@@ -383,8 +399,18 @@ void CityHud::touch(int p_what) {
 	if (open >= 0 && open != want) { pan[open]->set_visible(false); anim = 0.0f; }
 	open = want; anim_dir = 1;
 	if (want == 0) from_rect[0] = box_rect(p_what == 0 ? 0 : 1);   // (the map out of the arrow box, the phone out of its button)
+	if (want == 0 && phone) phone->open_app(p_what == 0 ? String("map") : String("home"));   // (the arrow: the map; the phone button: its home)
 	pan[open]->set_visible(true);
 }
+
+void CityHud::open_phone() {
+	if (open == 0 && anim_dir >= 0) return;
+	if (open >= 0 && open != 0) { pan[open]->set_visible(false); anim = 0.0f; }
+	open = 0; anim_dir = 1; from_rect[0] = box_rect(1);
+	pan[0]->set_visible(true);
+}
+
+Object *CityHud::get_phone() const { return phone; }
 
 void CityHud::recentre() { feedback(); if (map) { map->follow = true; map->queue_redraw(); } }
 
@@ -433,17 +459,10 @@ void CityHud::use_do() {
 	if (CityCar *c = Object::cast_to<CityCar>(o)) {
 		const cm::CarModel &m = cm::MODELS[std::min(std::max(c->get_model(), 0), cm::N_MODELS - 1)];
 		if (use_kind == 1) {   // in: the wheel is his
-			pl->set_riding(true);
-			c->take_wheel(true);
+			if (!c->enter(pl)) return;   // (he walks to the door, opens it, sits in, closes it: then the wheel is his)
 			if (trf) trf->set_player_car(c, m.half_len, m.half_w);
 		} else if (use_kind == 2) {   // out, beside the driver's door (the car's left), when it has (nearly) stopped
-			if (c->get_linear_velocity().length() > 2.5f) return;
-			const Transform3D t = c->get_global_transform();
-			const Vector3 side = t.basis.get_column(0).normalized();
-			c->take_wheel(false);
-			pl->set_riding(false);
-			pl->stand_at(t.origin + side * (m.half_w + 0.7f) + Vector3(0, 0.15f, 0), std::atan2(side.x, side.z));
-			pl->take_view();
+			if (!c->leave()) return;   // (the door opens, he gets out and stands by it as the player)
 			if (trf) trf->set_player_car(nullptr, 0.0, 0.0);
 		}
 	} else if (CityBike *b = Object::cast_to<CityBike>(o)) {
@@ -463,7 +482,8 @@ void CityHud::_process(double p_delta) {
 	if (!vp) return;
 	const Vector2 sz = vp->get_visible_rect().size;
 	if (sz != last_sz) layout(sz);
-	const bool show = !g || (g->is_playing() && !g->is_pause_open());
+	bool show = !g || (g->is_playing() && !g->is_pause_open());
+	if (photo_hide > 0) { photo_hide--; show = false; }   // (a photo: the view without the HUD and the phone)
 	set_visible(show);
 	if (!show) return;
 	CityPlayer *pl = player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
@@ -568,6 +588,7 @@ void CityHud::_input(const Ref<InputEvent> &p_event) {
 
 void CityHud::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_player", "player"), &CityHud::set_player);
+	ClassDB::bind_method(D_METHOD("get_phone"), &CityHud::get_phone);
 	ClassDB::bind_method(D_METHOD("press", "what"), &CityHud::press);
 	ClassDB::bind_method(D_METHOD("get_open"), &CityHud::get_open);
 	ClassDB::bind_method(D_METHOD("get_anim"), &CityHud::get_anim);

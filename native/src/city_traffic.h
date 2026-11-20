@@ -299,7 +299,12 @@ public:
 	// width, vx, vz): the traffic's rows, the knocked cars, the player's car. The people the drivers must see
 	// (DYN_STRIDE floats each). The traffic's own clock, which its signals run on.
 	void cars_for_people(std::vector<float> &r_cars) const;
-	const std::vector<float> &bikes_drawn() const { return bike_draw; }   // 7 a cyclist: x, y, z, yaw, lean, crank turns, id
+	static constexpr int BIKE_STRIDE = 8;
+	const std::vector<float> &bikes_drawn() const { return bike_draw; }   // 8 a cyclist: x, y, z, yaw, lean, crank turns, id, paint
+	static const float *bike_paint(int p_colour);   // a cyclist's bicycle paint (linear rgb)
+	// the cyclists the crowd draws as near riders (on a rig of their own): the batch leaves their bicycles out
+	std::vector<int> bike_hide;
+	void hide_bikes(const std::vector<int> &p_ids) { bike_hide = p_ids; }
 	const std::vector<float> &bikes_down_now() const { return downs_now; }
 	// ROAD RAGE: the drivers who got out (the crowd takes them: a person at the door). foe: -1 the player (his car hit it),
 	// -2 the driver who did the hitting (he is gone for), else the slot of the car that hit it (foe_serial: that car's)

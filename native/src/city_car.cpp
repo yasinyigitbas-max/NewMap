@@ -5,6 +5,7 @@
 #include "ui_plate.h"
 
 #include "car_models.h"
+#include "city_player.h"
 
 #include <godot_cpp/classes/box_shape3d.hpp>
 #include <godot_cpp/classes/collision_shape3d.hpp>
@@ -162,6 +163,19 @@ void CityCar::fit() {
 	if (mat_wheel.is_valid()) mat_wheel->set_shader_parameter("paint", paint);
 	mi_body->set_mesh(body_mesh);
 	set_car_maps();
+	// the driver's door: behind the front-left wheel's arch, 0.42 of the wheelbase long (0.95-1.25 m), from the sill to under
+	// the roof, the outer part of the body's left side; hinged at its front edge
+	{
+		const float r = split ? wr[0] : 0.33f, wb = split ? sp.wheelbase : cmod.half_len * 1.2f;
+		const float zf = (split ? wc[0].z : cmod.half_len * 0.62f) - r * 1.15f;
+		const float L = std::min(std::max(0.42f * wb, 0.95f), 1.25f);
+		const float y0 = (split ? wc[0].y : r) - r * 0.12f;   // (lower took a sliver of the underbody with it)
+		door_lo = Vector3(cmod.half_w * 0.42f, y0, zf - L);
+		door_hi = Vector3(cmod.half_w + 0.2f, cmod.height * 0.87f, zf);
+		door_hinge = Vector2(cmod.half_w * 0.9f, zf);
+		if (mat.is_valid()) { mat->set_shader_parameter("door_lo", door_lo); mat->set_shader_parameter("door_hi", door_hi); mat->set_shader_parameter("door_hinge", door_hinge); }
+		set_door(0.0f);
+	}
 	// the hull the dents are placed on: the drawn body
 	if (body_mesh.is_valid()) { const AABB a = body_mesh->get_aabb(); if (a.size.length() > 1.0f) hull = a; }
 	base_torque = car.s.torque;
@@ -337,6 +351,26 @@ void CityCar::take_wheel(bool p_on) {
 	}
 }
 
+bool CityCar::enter_node(Node3D *p_player) { return enter(Object::cast_to<CityPlayer>(p_player)); }
+
+void CityCar::set_door(float p_open) {
+	door = std::min(std::max(p_open, 0.0f), 1.0f);
+	if (mat.is_valid()) mat->set_shader_parameter("door_open", door * door * (3.0f - 2.0f * door));
+}
+
+Vector3 CityCar::door_spot() const {
+	const float z = 0.5f * (door_lo.z + door_hi.z) + 0.15f;
+	return Vector3(door_hinge.x / 0.9f + 0.55f, 0.0f, z);
+}
+
+Vector3 CityCar::seat_hips() const {
+	const float half_w = door_hinge.x / 0.9f;
+	// (low enough that his head clears the roof: a seated figure's head top is about 0.88 m over its hips; the first seat,
+	// 0.42 m over the sill, put the head through the roof: tests/game/test_car_entry.gd)
+	const float roof = door_hi.y / 0.87f;
+	return Vector3(half_w * 0.36f, std::min(door_lo.y + 0.30f, roof - 0.98f), 0.5f * (door_lo.z + door_hi.z) - 0.18f);
+}
+
 void CityCar::become(int p_model, int p_feel, const Color &p_paint) {
 	model = p_model; feel = p_feel; paint = p_paint;
 	if (made) fit();
@@ -506,6 +540,7 @@ void CityCar::_process(double p_delta) {
 	pm::Scope _pm(pm::CAR);   // (the slow-frame marks, perf_marks.h)
 	if (!made) return;
 	clock_t += p_delta;
+	door_update(p_delta);
 	if (!hits_due.empty()) { const std::vector<Vector3> hd = hits_due; hits_due.clear(); for (const Vector3 &dv : hd) hit(dv); }
 	if (player) {   // the old pedals and the speed plate, while the player drives
 		if (!hud) make_hud();
@@ -582,6 +617,13 @@ void CityCar::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("put_away", "where"), &CityCar::put_away);
 	ClassDB::bind_method(D_METHOD("hit", "dv"), &CityCar::hit);
 	ClassDB::bind_method(D_METHOD("take_wheel", "on"), &CityCar::take_wheel);
+	ClassDB::bind_method(D_METHOD("set_door", "open"), &CityCar::set_door);
+	ClassDB::bind_method(D_METHOD("enter", "player"), &CityCar::enter_node);
+	ClassDB::bind_method(D_METHOD("leave"), &CityCar::leave);
+	ClassDB::bind_method(D_METHOD("get_entry_state"), &CityCar::get_entry_state);
+	ClassDB::bind_method(D_METHOD("is_seated"), &CityCar::is_seated);
+	ClassDB::bind_method(D_METHOD("get_driver_hips"), &CityCar::get_driver_hips);
+	ClassDB::bind_method(D_METHOD("get_door"), &CityCar::get_door);
 	ClassDB::bind_method(D_METHOD("repair"), &CityCar::repair);
 	ClassDB::bind_method(D_METHOD("get_damage"), &CityCar::get_damage);
 	ADD_SIGNAL(MethodInfo("damaged", PropertyInfo(Variant::FLOAT, "severity"), PropertyInfo(Variant::FLOAT, "health")));

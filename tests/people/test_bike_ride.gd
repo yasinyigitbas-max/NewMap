@@ -5,7 +5,7 @@ extends SceneTree
 ## thumb would. PASS needs: he gets on (the Quaternius Sitting_Enter clip, then riding: Driving_Loop with his feet on
 ## the pedals); pedalling takes it to a rider's speed and it stays upright; sprinting goes faster; the view wobbles with
 ## the pedalling; steering turns it and it leans INTO the turn; the brakes stop it in a short way without throwing him;
-## he gets off (Sitting_Exit) and stands beside it as the player again; back on, he rides into a wall at a sprint: he is
+## he gets off (the cruiser's own dismount) and stands beside it as the player again; back on, he rides into a wall at a sprint: he is
 ## thrown (his balancing body: hips near the floor), the bicycle is damaged (the front wheel bent), he gets up by
 ## himself and is the player again, on foot.
 var player: Node3D
@@ -108,7 +108,7 @@ func _physics_process(delta: float) -> bool:
 		7:
 			if String(s.state) != "parked" and t - t0 < 5.0: return false
 			var dd: float = player.global_position.distance_to(bike.global_position)
-			_check(String(s.state) == "parked" and clips.has("Sitting_Exit") and player.visible and not bool(player.call(&"is_frozen")) and dd < 1.6, "getting off plays Sitting_Exit; he stands beside it (%.2f m) as the player again" % dd)
+			_check(String(s.state) == "parked" and player.visible and not bool(player.call(&"is_frozen")) and dd < 1.6, "getting off (the cruiser's own dismount: tests/people/test_bike_off.gd); he stands beside it (%.2f m) as the player again" % dd)
 			_wall(18.0)
 			_check(bool(bike.call(&"get_on")), "he gets on again")
 			step = 8; t0 = t

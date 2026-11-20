@@ -10,6 +10,7 @@ var game: Node
 var t := 0.0
 var t0 := 0.0
 var step := 0
+var seated_t := 0.0
 var fails := 0
 var info := {}
 
@@ -139,15 +140,17 @@ func _process(delta: float) -> bool:
 			step = 8; t0 = t
 		8:
 			var hud: Node = game.get_hud(); var car: Node3D = current_scene.get_node_or_null(^"StartCar")
-			if t - t0 < 0.6: return false
+			if t - t0 < 0.6 or (not bool(car.call(&"is_seated")) and t - t0 < 20.0): seated_t = t; return false
+			if t - seated_t < 0.5: return false   # (he walks to the door, opens it, sits in, closes it)
 			var pl: Node3D = null
 			for c in current_scene.get_children(): if c.get_class() == "CityPlayer": pl = c
+			print("START   (car: entry state %d, seated %s, wheel his %s; player visible %s; use kind %d; %.1f s)" % [int(car.call(&"get_entry_state")), str(car.call(&"is_seated")), str(car.get(&"player")), str(pl.visible), int(hud.get_use_kind()), t - t0])
 			_check(bool(car.get(&"player")) and not pl.visible and int(hud.get_use_kind()) == 2, "in the car: the wheel is his, the button says GET OUT")
 			hud.press_use()
 			step = 10; t0 = t
 		10:
-			if t - t0 < 0.6: return false
 			var hud: Node = game.get_hud(); var car: Node3D = current_scene.get_node_or_null(^"StartCar")
+			if t - t0 < 0.6 or (int(car.call(&"get_entry_state")) != 0 and t - t0 < 15.0): return false   # (the door opens, he gets out, it closes)
 			var pl: Node3D = null
 			for c in current_scene.get_children(): if c.get_class() == "CityPlayer": pl = c
 			_check(not bool(car.get(&"player")) and pl.visible and pl.global_position.distance_to(car.global_position) < 3.0, "out again beside the car (%.1f m), on foot; %d uses" % [pl.global_position.distance_to(car.global_position), int(hud.get_uses())])

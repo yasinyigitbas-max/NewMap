@@ -318,7 +318,9 @@ void CityPlayer::_physics_process(double p_delta) {
 	const Vector3 want = (fwd * mv.y + right * mv.x) * top;
 	Vector3 v = get_velocity();
 	const Vector3 hv(v.x, 0, v.z);
-	const Vector3 nh = hv.move_toward(want, (want.length() > hv.length() ? 9.0f : 14.0f) * dt);
+	// (letting go: he slows over a couple of steps, 7 m/s2, as a person stops; braked at 14 his feet skated 0.7 m out of a
+	// sprint while the clip was still on its way into idle: tests/people/trace_locomotion.gd "stop")
+	const Vector3 nh = hv.move_toward(want, (want.length() > hv.length() ? 9.0f : (want.length() < 0.05f ? 7.0f : 14.0f)) * dt);
 	v.x = nh.x + knock_v.x; v.z = nh.z + knock_v.z;
 	knock_v = Vector3();
 	if (swimming) v.y = std::min(std::max(((float)water_y - 0.38f - (float)here.y) * 4.0f, -1.5f), 1.5f);   // he floats: his body lies at the surface
@@ -333,17 +335,25 @@ void CityPlayer::_physics_process(double p_delta) {
 	else if (!swimming && !airborne && !frozen && is_on_wall() && Vector3(want.x, 0, want.z).length() > 0.3f) {
 		const Vector3 dir = Vector3(want.x, 0, want.z).normalized();
 		Transform3D t2 = get_global_transform();
-		const Vector3 up(0, 0.24f, 0), ahead = dir * 0.3f;
+		// (only as far ahead as this frame's step: a 30 cm jump forward was a pop; the figure is drawn rising onto it: vis_dy)
+		const Vector3 up(0, 0.24f, 0), ahead = dir * std::max(Vector3(get_velocity().x, 0, get_velocity().z).length() * (float)p_delta, 0.04f);
 		if (!test_move(t2, up)) {
 			t2.origin += up;
 			if (!test_move(t2, ahead)) {
 				t2.origin += ahead;
-				if (test_move(t2, Vector3(0, -0.3f, 0))) { set_global_position(t2.origin); apply_floor_snap(); steps_up++; }
+				if (test_move(t2, Vector3(0, -0.3f, 0))) {   // down onto its top, exactly (the whole 24 cm lift left him 10 cm over a 14 cm kerb for a frame)
+					const float y0 = (float)get_global_position().y;
+					set_global_position(t2.origin);
+					move_and_collide(Vector3(0, -0.3f, 0));
+					steps_up++; vis_dy -= (float)get_global_position().y - y0;
+					kerb_t = 0.25f;   // (the frame the kerb's face stopped him is not a stop: the clip walks on)
+				}
 			}
 		}
 	}
 	const Vector3 got = get_velocity();
 	speed = Vector3(got.x, 0, got.z).length();
+	if (kerb_t > 0.0f) { kerb_t -= dt; speed = std::max(speed, Vector3(nh.x, 0, nh.z).length()); }   // (onto a kerb: his pace, not the face's stop)
 	if (combat) {   // in combat he faces his target whichever way he steps
 		const Vector3 to = combat_target - get_global_position();
 		const float want_yaw = std::atan2(to.x, to.z);
@@ -378,8 +388,9 @@ void CityPlayer::_physics_process(double p_delta) {
 	else if (!crouch && speed < 0.5f && crouch_t < fig->clip_len(CR_OUT) && !airborne) { clip = CR_OUT; hold = -2.0; }   // (up out of it)
 	else if (speed > 3.6f) { clip = SPRINT; cs = speed / 3.1; }
 	else if (speed > 2.0f) { clip = JOG; cs = speed / 2.4; }
-	else if (speed > 0.2f) { clip = WALK; cs = speed / 0.92; }
-	fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), get_global_position()), clip, std::min(std::max(cs, 0.5), 2.0), hold);
+	else if (speed > 0.08f) { clip = WALK; cs = speed / 0.92; }   // (slowing to a stop: the walk slows with him, his feet stay put)
+	vis_dy *= std::exp(-dt / 0.09f); if (std::fabs(vis_dy) < 0.001f) vis_dy = 0.0f;   // (lifted onto a kerb: the figure rises after, its foot already on it)
+	fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), get_global_position() + Vector3(0, vis_dy, 0)), clip, std::min(std::max(cs, clip == WALK ? 0.15 : 0.5), 2.0), hold);
 	if (Skeleton3D *sk = fig->skeleton()) {
 		if (!plant) { plant = memnew(FootPlant); sk->add_child(plant); }
 		const bool on = !airborne && !swimming && !frozen;
@@ -453,7 +464,7 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 			}
 		}
 	}
-	const bool step = !airborne && rise > 0.08f && rise <= 0.24f;
+	const bool step = !airborne && rise > 0.16f && rise <= 0.24f;   // (a kerb, up to 16 cm, is walked onto: no clip; Yasin: "kerbs shouldnt require step up animation")
 	const bool low = !airborne && rise > 0.24f && rise <= 0.5f;
 	const bool high = rise > 0.5f && rise <= 2.5f;   // (no jump needed: walking into it he climbs it)
 	if (!step && !low && !high) return false;
@@ -497,7 +508,7 @@ Vector3 CityPlayer::pelvis_world() const {
 Dictionary CityPlayer::get_frame_log() const {
 	Dictionary d;
 	d["node"] = get_global_position(); d["fig_at"] = fig ? fig->get_global_position() : Vector3(); d["pelvis"] = pelvis_world();
-	if (plant) { d["foot_l"] = plant->foot_w[0]; d["foot_r"] = plant->foot_w[1]; d["pelvis_drawn"] = plant->pelvis_w; d["plant_on"] = plant->is_active(); }
+	if (plant) { d["foot_l"] = plant->foot_w[0]; d["foot_r"] = plant->foot_w[1]; d["pelvis_drawn"] = plant->pelvis_w; d["plant_on"] = plant->is_active(); d["lock"] = Vector2i(plant->locked[0], plant->locked[1]); d["slide_l"] = plant->slide_w[0]; d["slide_r"] = plant->slide_w[1]; }
 	d["speed"] = speed; d["yaw"] = yaw;
 	d["clip"] = get_clip(); d["climb"] = climb; d["u"] = climb ? climb_t / climb_len : -1.0f; d["settle"] = settle_t; d["clip_off"] = clip_off;
 	return d;

@@ -1,6 +1,7 @@
 // CityPed: see city_ped.h.
 #include "perf_marks.h"
 #include "city_ped.h"
+#include "hand_grip.h"
 
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/rigid_body3d.hpp>
@@ -53,6 +54,7 @@ void CityPed::make() {
 	const TypedArray<Node> sks = model->find_children("*", "Skeleton3D", true, false);
 	if (sks.size() == 0) { UtilityFunctions::push_error("CityPed: the scene has no skeleton"); return; }
 	skel = Object::cast_to<Skeleton3D>(sks[0]);
+	{ Posture *po = memnew(Posture); po->set_name("Posture"); skel->add_child(po); }   // (the first modifier: everyone's shoulders forward)
 	// the scene carries the player's own model: out with its meshes, in with this person's body
 	const TypedArray<Node> old = model->find_children("*", "MeshInstance3D", true, false);
 	for (int i = 0; i < old.size(); i++) { Node *n = Object::cast_to<Node>(old[i]); if (n) { n->get_parent()->remove_child(n); n->queue_free(); } }
@@ -185,17 +187,19 @@ void CityPed::become(const String &p_body, const Ref<Mesh> &p_mesh, const Ref<Sh
 
 // While it is animated: where it stands, which clip, how fast the clip runs (a walk follows the walker's pace), or
 // the moment of the clip it is held at (lying).
-// The walking loops: where their left foot lands (a share of the loop) and how many strides a loop holds (measured:
-// tools/people/clip_audit.gd STRIDE)
+// The walking loops: where their left foot lands (a share of the loop) and how many strides a loop holds. Landing = the
+// foot furthest forward of the hips (tools/people/clip_audit.gd --track, 20 Nov, the same for men and women); the first
+// table took the foot's lowest point, mid-stance in a walk: a jog handing over to a walk put the walk a fifth of a
+// stride on and the feet jumped 26-42 cm (tests/people/trace_locomotion.gd "stop")
 bool CityPed::stride_of(const StringName &p_clip, double &r_left_down, int &r_strides) {
 	static const StringName W("ual/Walk_Loop"), J("ual/Jog_Fwd_Loop"), S("ual/Sprint_Loop"), C("ual/Crouch_Fwd_Loop"), F("ual/Walk_Formal_Loop"), P("ual/Walk_Phone_Loop"), T("ual/Walk_Talk_Loop"), X("ual/Walk_Text_Loop"), H("ual/Walk_Hurt_Loop");
-	if (p_clip == W) { r_left_down = 0.185; r_strides = 1; return true; }
-	if (p_clip == J) { r_left_down = 0.018; r_strides = 1; return true; }
-	if (p_clip == S) { r_left_down = 0.024; r_strides = 1; return true; }
-	if (p_clip == C) { r_left_down = 0.367; r_strides = 1; return true; }
-	if (p_clip == F) { r_left_down = 0.012; r_strides = 1; return true; }
-	if (p_clip == P || p_clip == T || p_clip == X) { r_left_down = 0.090; r_strides = 2; return true; }   // (two strides: the walk twice, its arms mixed in)
-	if (p_clip == H) { r_left_down = 0.044; r_strides = 4; return true; }
+	if (p_clip == W) { r_left_down = 0.0; r_strides = 1; return true; }
+	if (p_clip == J) { r_left_down = 0.924; r_strides = 1; return true; }
+	if (p_clip == S) { r_left_down = 0.838; r_strides = 1; return true; }
+	if (p_clip == C) { r_left_down = 0.0; r_strides = 1; return true; }
+	if (p_clip == F) { r_left_down = 0.0; r_strides = 1; return true; }
+	if (p_clip == P || p_clip == T || p_clip == X) { r_left_down = 0.0; r_strides = 2; return true; }   // (two strides: the walk twice, its arms mixed in)
+	if (p_clip == H) { r_left_down = 0.0; r_strides = 4; return true; }
 	return false;
 }
 

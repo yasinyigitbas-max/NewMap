@@ -33,6 +33,9 @@
 
 namespace godot {
 
+class CityPed;
+class CityPlayer;
+
 class CityCar : public RigidBody3D {
 	GDCLASS(CityCar, RigidBody3D)
 
@@ -60,6 +63,21 @@ class CityCar : public RigidBody3D {
 	Ref<ShaderMaterial> mat;
 	bool split = false;          // the model has its wheels apart: they spin, steer and ride their springs
 	Vector3 hub_local[4];        // the hubs at rest, node frame
+	// THE DRIVER'S DOOR (the car's left, +x): its part of the body, from the front-left wheel and the model's size; how far open
+	Vector3 door_lo, door_hi; Vector2 door_hinge; float door = 0.0f;
+	// GETTING IN AND OUT (city_car_door.cpp): the driver figure and where it is in the sequence
+	enum { DR_NONE, DR_WALK, DR_FACE, DR_OPEN_IN, DR_SIT_IN, DR_TURN_IN, DR_CLOSE_IN, DR_SEATED, DR_OPEN_OUT, DR_TURN_OUT, DR_STAND_OUT, DR_CLOSE_OUT };
+	CityPed *driver = nullptr;
+	class BikeReach *dr_reach = nullptr;   // his feet on the pedals and hands on the wheel (the bicycle's reach)
+	void door_reach(float p_w);
+	int dr_state = DR_NONE, dr_k = 0;
+	float dr_t = 0.0f, dr_yaw = 0.0f;
+	Vector3 dr_at; Transform3D dr_from;
+	std::vector<Vector3> dr_path;
+	uint64_t dr_player = 0;
+	CityPlayer *door_player() const;
+	Transform3D door_root(const StringName &p_clip, double p_t, const Vector3 &p_hips, float p_yaw) const;
+	void door_update(double p_delta);
 	Camera3D *cam = nullptr;
 	Vector3 cam_pos, cam_look;
 	float cam_yaw = 0;
@@ -117,6 +135,16 @@ public:
 	void set_player(bool p_on) { player = p_on; }
 	// the player gets in (the wheel, the pedals and the chase camera are his) / out (the handbrake on, its camera off)
 	void take_wheel(bool p_on);
+	void set_door(float p_open);   // 0 shut .. 1 open
+	bool enter(CityPlayer *p_player);   // he walks to the door, opens it, sits in, closes it: then the wheel is his
+	bool leave();                       // stopped: the door opens, he gets out, stands by it as the player
+	bool enter_node(Node3D *p_player);
+	int get_entry_state() const { return dr_state; }
+	Vector3 get_driver_hips() const;   // (the tests) the driver figure's hips as drawn, world
+	bool is_seated() const { return dr_state == DR_SEATED; }
+	float get_door() const { return door; }
+	Vector3 door_spot() const;     // node frame: where a person stands to get in (beside the door, on the ground)
+	Vector3 seat_hips() const;     // node frame: the driver's hips on his seat
 	bool get_player() const { return player; }
 	const vd::Car &dyn() const { return car; }   // (the engine sound reads the revs, the gear, the pedal)
 	void set_chase_camera(bool p_on) { chase_camera = p_on; }

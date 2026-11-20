@@ -78,6 +78,10 @@ func _initialize() -> void:
 		var fr := maxi(2, int(ceil(len * FPS)))
 		var P: Array = []
 		for f in fr + 1: P.append(_pose(a, tracks, minf(f / FPS, len)))
+		if OS.get_cmdline_user_args().has("--track"):   # (every frame: the hips and feet, metres, the figure's frame: +z forward)
+			for f in range(0, fr + 1):
+				var hp: Vector3 = P[f][pel]; var lf: Vector3 = P[f][feet[0]]; var rf: Vector3 = P[f][feet[1]]
+				print("TRACK %s t %.2f hips z %+.3f y %.3f | L z %+.3f y %.3f | R z %+.3f y %.3f" % [nm, f / FPS, hp.z, hp.y, lf.z, lf.y, rf.z, rf.y])
 		# per frame, per bone: the move
 		var pops := []
 		var worst_move := 0.0; var worst_bone := ""

@@ -108,7 +108,8 @@ void FootPlant::find_bones(Skeleton3D *sk) {
 	found = true;
 	b_pel = sk->find_bone("Bip01_Pelvis");
 	const char *th[2] = { "Bip01_L_Thigh", "Bip01_R_Thigh" }, *ca[2] = { "Bip01_L_Calf", "Bip01_R_Calf" }, *ft[2] = { "Bip01_L_Foot", "Bip01_R_Foot" };
-	for (int s = 0; s < 2; s++) { b_th[s] = sk->find_bone(th[s]); b_ca[s] = sk->find_bone(ca[s]); b_ft[s] = sk->find_bone(ft[s]); }
+	const char *toe[2] = { "Bip01_L_Toe0", "Bip01_R_Toe0" };
+	for (int s = 0; s < 2; s++) { b_th[s] = sk->find_bone(th[s]); b_ca[s] = sk->find_bone(ca[s]); b_ft[s] = sk->find_bone(ft[s]); b_toe[s] = sk->find_bone(toe[s]); }
 	// the ankle's height over the sole: the foot bone's rest height over the figure's feet (its rest stands on 0)
 	if (b_ft[0] >= 0) {
 		const float k = sk->get_global_transform().basis.get_column(0).length();
@@ -165,21 +166,31 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 		const float body_v = (have_prev && p_delta > 0.0) ? Vector2(sg.origin.x - prev_root.x, sg.origin.z - prev_root.z).length() / (float)p_delta : 0.0f;
 		const float v_keep = body_v < 0.15f ? 1.6f : 1.0f, v_take = body_v < 0.15f ? 1.2f : 0.6f;   // (standing: a clip's shuffle does not move a foot on the floor)
 		prev_fw[s] = fw;
-		// (also let go when the pin is 8 cm behind where the clip has the foot: a crouched foot swings without rising)
-		const float pin_gap = locked[s] ? Vector2(fw.x - lock_w[s].x, fw.z - lock_w[s].z).length() : 0.0f;
-		const bool plant_now = locked[s] ? (h_clip < ankle_h + 0.03f && clip_v < v_keep && pin_gap < 0.08f) : (h_clip < ankle_h + 0.02f && clip_v < v_take);
+		// THE PIN HOLDS THE BALL OF THE FOOT (the toe bone), not the ankle: through the stance the heel rises and the ankle rolls
+		// forward over the toes, as a walking foot does. Pinning the ankle held it back there, and at toe-off the clip's foot
+		// was 6.7 cm ahead: it slid to catch up (tests/people/trace_crowd.gd, 20 Nov). The pin is taken as the heel lands (the
+		// ankle down) and held while the toes stay down; it lets go as they lift, or once 12 cm behind (a crouched swing).
+		const Vector3 pw = b_toe[s] >= 0 ? sg.xform(sk->get_bone_global_pose(b_toe[s]).origin) : fw;
+		const float h_toe = pw.y - sg.origin.y;
+		const float pin_gap = locked[s] ? Vector2(pw.x - lock_w[s].x, pw.z - lock_w[s].z).length() : 0.0f;
+		const bool plant_now = locked[s] ? (h_toe < toe_y0[s] + 0.025f && clip_v < v_keep + 0.6f && pin_gap < 0.12f) : (h_clip < ankle_h + 0.02f && clip_v < v_take);
 		if (plant_now) {
-			if (!locked[s]) { locked[s] = true; lock_w[s] = fw + rel_off[s]; }
-			slide[s] = Vector3(lock_w[s].x - fw.x, 0.0f, lock_w[s].z - fw.z);
+			if (!locked[s]) { locked[s] = true; lock_w[s] = pw + rel_off[s]; toe_y0[s] = std::min(h_toe, 0.06f); }
+			slide[s] = Vector3(lock_w[s].x - pw.x, 0.0f, lock_w[s].z - pw.z);
 			rel_off[s] = Vector3();
 		} else {
 			// standing, a clip that moves a foot along the floor (the crouch's widening stance) makes it a little step: the foot
 			// lifts up to 4 cm as it goes, not a slide
 			if (body_v < 0.15f && h_clip < ankle_h + 0.03f && clip_v > 0.25f) d += std::min(0.04f, 0.02f * clip_v);
-			if (locked[s]) { locked[s] = false; rel_off[s] = Vector3(lock_w[s].x - fw.x, 0.0f, lock_w[s].z - fw.z); }
-			rel_off[s] *= (float)std::exp(-p_delta / 0.06);   // (about 0.15 s to nothing)
+			if (locked[s]) {
+				locked[s] = false; rel_t[s] = 0.0f; rel_off[s] = Vector3(lock_w[s].x - pw.x, 0.0f, lock_w[s].z - pw.z);
+				const float g = rel_off[s].length(); gap_sum += g; gap_n++; gap_most = std::max(gap_most, g); if (h_toe >= toe_y0[s] + 0.025f) gap_by_lift++;
+			}
+			rel_t[s] += (float)p_delta;
+			rel_off[s] *= (float)std::exp(-p_delta / 0.06);   // (about 0.15 s; holding it till the lift made more pops: tried 20 Nov)
 			slide[s] = rel_off[s];
 		}
+		slide_w[s] = slide[s];
 		if (std::fabs(d) < 0.004f && slide[s].length_squared() < 1e-6f) { want[s] = 0.0f; continue; }
 		want[s] = d;
 		got[s] = true;
@@ -222,6 +233,41 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 		sk->set_bone_global_pose(c, Transform3D(foot_keep, Gc3.origin));   // (the sole stays as the clip had it: flat)
 		const float k = sg.basis.get_column(0).length();
 		foot_off[s] = (sg.xform(Gc3.origin).y - sg.xform(target).y) * (k > 0.0f ? 1.0f : 1.0f);
+	}
+}
+
+void Posture::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_angle", "a"), &Posture::set_angle);
+	ClassDB::bind_method(D_METHOD("get_angle"), &Posture::get_angle);
+	ClassDB::bind_method(D_METHOD("get_moved"), &Posture::get_moved);
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "angle"), "set_angle", "get_angle");
+}
+
+void Posture::_process_modification_with_delta(double p_delta) {
+	(void)p_delta;
+	Skeleton3D *sk = get_skeleton();
+	if (!sk) return;
+	if (!found) {
+		found = true;
+		b_cl[0] = sk->find_bone("Bip01_L_Clavicle"); b_cl[1] = sk->find_bone("Bip01_R_Clavicle");
+		b_ua[0] = sk->find_bone("Bip01_L_UpperArm"); b_ua[1] = sk->find_bone("Bip01_R_UpperArm");
+		b_pel = sk->find_bone("Bip01_Pelvis"); b_neck = sk->find_bone("Bip01_Neck");
+	}
+	if (b_cl[0] < 0 || b_cl[1] < 0 || b_ua[0] < 0 || b_ua[1] < 0 || b_pel < 0 || b_neck < 0 || angle == 0.0f) return;
+	// the chest's frame as the clip has it now: up from the hips to the neck, left from the right shoulder to the left
+	Vector3 up = sk->get_bone_global_pose(b_neck).origin - sk->get_bone_global_pose(b_pel).origin;
+	const Vector3 left = sk->get_bone_global_pose(b_ua[0]).origin - sk->get_bone_global_pose(b_ua[1]).origin;
+	if (up.length_squared() < 1e-8f || left.length_squared() < 1e-8f) return;
+	up.normalize();
+	const Vector3 fwd = left.cross(up).normalized();   // (the body's frame: +x left, +y up, +z forward)
+	for (int s = 0; s < 2; s++) {
+		const Transform3D G = sk->get_bone_global_pose(b_cl[s]);
+		const Vector3 arm = sk->get_bone_global_pose(b_ua[s]).origin - G.origin;
+		// the turn that brings the shoulder joint forward (the sign from the arm's side)
+		const float sg = (Basis(up, angle).xform(arm) - arm).dot(fwd) >= 0.0f ? 1.0f : -1.0f;
+		const Basis R(up, angle * sg);
+		sk->set_bone_global_pose(b_cl[s], Transform3D(R * G.basis, G.origin));
+		moved[s] = (R.xform(arm) - arm).dot(fwd) * (float)sk->get_global_transform().basis.get_scale().x;
 	}
 }
 

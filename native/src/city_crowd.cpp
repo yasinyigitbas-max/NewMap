@@ -3,6 +3,7 @@
 #include "city_crowd.h"
 
 #include "city_ped.h"
+#include "hand_grip.h"
 #include "city_player.h"
 #include "foot_steps.h"
 #include "city_ambience.h"
@@ -476,7 +477,13 @@ void CityCrowd::draw(double p_alpha) {
 	riders_drawn = 0;
 	if (trf && trf->is_inside_tree()) {
 		const std::vector<float> &bk = trf->bikes_drawn();
-		for (size_t k = 0; k + 6 < bk.size() && n < pc::MAX_PEDS; k += 7) {
+		if (gfx) {   // the nearest ones as real riders (city_crowd_riders.cpp); they are left out here
+			Viewport *rv = get_viewport();
+			Camera3D *rc = rv ? rv->get_camera_3d() : nullptr;
+			if (rc) near_riders(bk, rc->get_global_position(), trf);
+		}
+		for (size_t k = 0; k + CityTraffic::BIKE_STRIDE - 1 < bk.size() && n < pc::MAX_PEDS; k += CityTraffic::BIKE_STRIDE) {
+			if (std::find(rider_ids.begin(), rider_ids.end(), (int)bk[k + 6]) != rider_ids.end()) continue;
 			const uint32_t h = (uint32_t)bk[k + 6] * 2654435761u ^ 0x5bd1e995u;
 			const int female = (h >> 3) % 3u == 0u ? 1 : 0;   // (a third of them women)
 			const std::vector<int> *pool = &pool_casual[female];
@@ -605,9 +612,13 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 	}
 	const bool stays = crowd->mode[i] == pc::M_STAY || crowd->mode[i] == pc::M_HELD || crowd->state[i] == pc::ST_PAUSE;
 	if (!stays && v > 0.15f) {   // on its way: the walk at the walker's own pace, a jog, a run
-		if (v > 2.8f) { r_clip = SPRINT; r_speed = v / (gait[g][4] / gait[g][5]); }
-		else if (v > 1.9f) { r_clip = JOG; r_speed = v / (gait[g][2] / gait[g][3]); }
-		else { r_clip = ((lk >> 6) & 3u) == 0u ? WALK2 : WALK; r_speed = v / (gait[g][0] / gait[g][1]); }
+		// each clip's own ground speed, measured on the figures (tools/people/clip_audit.gd STRIDE: man, woman): the bake's
+		// walk round (1.4 m in 1.3 s) was 18 % fast, and every walker's planted foot slid 0.2 m/s (tests/people/trace_crowd.gd)
+		static const float WALK_V[2] = { 0.91f, 0.94f }, JOG_V[2] = { 2.40f, 2.49f }, SPRINT_V[2] = { 3.16f, 3.28f };
+		const int gk = g ? 1 : 0;
+		if (v > 2.8f) { r_clip = SPRINT; r_speed = v / SPRINT_V[gk]; }
+		else if (v > 1.9f) { r_clip = JOG; r_speed = v / JOG_V[gk]; }
+		else { r_clip = ((lk >> 6) & 3u) == 0u ? WALK2 : WALK; r_speed = v / WALK_V[gk]; }
 		// at a walk the hands are free: a phone at the ear or in the hand, a word to the one beside him (in a group
 		// one of them talks for four seconds, then the next, then nobody for a while)
 		if (v <= 1.9f) {
@@ -619,7 +630,9 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 			if (crowd->hurt_t[i] > 0.0f) r_clip = WALK_HURT;   // he lost a fight: slowly away, his hands at his face
 		}
 		r_speed = std::min(std::max(r_speed, 0.4), 2.2);
-		if (a == pc::A_WAVE) { r_clip = WAVE; r_speed = 1.0; }
+		// (a wave in passing: the standing wave clip on a walker made his whole figure skate, 0.94 m/s: tests/people/trace_crowd.gd
+		// --acts. Walking, he walks on; stopped, he waves)
+		if (a == pc::A_WAVE && v < 0.3f) { r_clip = WAVE; r_speed = 1.0; }
 		return;
 	}
 	// first the way into the act, once; then the act
@@ -750,7 +763,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 	auto give = [&](Near &nb, int best) {
 		float pr[4]; int body; float sc;
 		person_of(best, pr, body, sc);
-		nb.walker = crowd->id[best]; nb.in_body = false;
+		nb.walker = crowd->id[best]; nb.in_body = false; nb.has_last = false; nb.has_y = false; nb.v_s = crowd->v[best];
 		nb.why = 0; nb.after_kind = 0; nb.after_t = 0.0f;
 		nb.v_s = crowd->v[best];
 		nb.act = crowd->act[best]; nb.act_t = 99.0f;
@@ -807,7 +820,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 		if (best < 0) continue;
 		float pr[4]; int body; float sc;
 		person_of(best, pr, body, sc);
-		nb.walker = crowd->id[best]; nb.in_body = false;
+		nb.walker = crowd->id[best]; nb.in_body = false; nb.has_last = false; nb.has_y = false; nb.v_s = crowd->v[best];
 		nb.why = 0; nb.after_kind = 0; nb.after_t = 0.0f;
 		nb.v_s = crowd->v[best];
 		nb.act = crowd->act[best]; nb.act_t = 99.0f;   // (whatever it is doing, it is doing it already)
@@ -910,17 +923,44 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 						Vector3 d(crowd->x[j] - crowd->x[i], 0, crowd->z[j] - crowd->z[i]);
 						const float dist = d.length();
 						float w = 1.0f;
-						if (fighting) w = std::min((crowd->cfg.fight_s - crowd->pause_t[i]) / 0.5f, 1.0f);
+						if (fighting) w = std::min((crowd->cfg.fight_s - crowd->pause_t[i]) / 1.0f, 1.0f);   // (over a second: two steps in)
 						else if (ac == pc::A_CHEER) w = std::min(crowd->pause_t[i] / 0.5f, 1.0f);
 						else w = crowd->cfg.rise_s[pc::A_FIGHT] > 0.0f ? crowd->rise_t[i] / crowd->cfg.rise_s[pc::A_FIGHT] : 0.0f;
 						if (dist > 0.8f && dist < 4.0f) at += d / dist * (std::min((dist - 0.8f) * 0.5f, 1.2f) * std::min(std::max(w, 0.0f), 1.0f));
 					}
 				}
+				// (a kerb: the walker's height steps 12-15 cm between two of the crowd's ticks, and the whole figure went up 5 cm a
+				// frame. The figure eases up after it (about 0.1 s) while its foot plant puts the leading foot on the kerb's top;
+				// Yasin: "kerbs shouldnt require step up animation, but if you can make it truly seamless its okay")
+				if (!nb.has_y || std::fabs(at.y - nb.y_s) > 0.4f) { nb.y_s = at.y; nb.has_y = true; }
+				else { nb.y_s += (at.y - nb.y_s) * (1.0f - std::exp(-(float)p_delta / 0.09f)); at.y = nb.y_s; }
 				StringName clip; double speed, hold; int token;
 				const int act_now = crowd->act[i] | (crowd->mode[i] == pc::M_DODGE ? 256 : 0);
 				if (nb.act != act_now) { nb.act = act_now; nb.act_t = 0.0f; } else nb.act_t += (float)p_delta;
-				nb.v_s += (crowd->v[i] - nb.v_s) * std::min((float)p_delta * 5.0f, 1.0f);
+				// the clip's pace from how fast the figure really moves (smoothed over about 0.15 s), not the walker's planned speed:
+				// on a curve, weaving or slowing they differ, and the planted feet slid (tests/people/trace_crowd.gd)
+				{
+					float v_real = crowd->v[i];
+					if (nb.has_last && p_delta > 1e-4) v_real = Vector2(at.x - nb.last_at.x, at.z - nb.last_at.z).length() / (float)p_delta;
+					if (v_real > 6.0f) v_real = crowd->v[i];   // (a jump of the row: not a pace)
+					nb.last_at = at; nb.has_last = true;
+					nb.v_s += (v_real - nb.v_s) * std::min((float)p_delta * 7.0f, 1.0f);
+				}
 				clip_of(i, nb.act_t, nb.v_s, clip, speed, hold, token);
+				// MOVING WHILE A STANDING CLIP PLAYS: he walks there. (Fighters closing in glided 1.2 m in half a second on
+				// their guard clip, a wave in passing, sitting down while still going: the feet skated 0.5-0.9 m/s,
+				// tests/people/trace_crowd.gd --acts.) Once he stands, the act's clip from where it was.
+				{
+					double ld; int ns;
+					nb.stepping = nb.v_s > (nb.stepping ? 0.15f : 0.3f);   // (on above 0.3 m/s, off under 0.15: no flicker between the two)
+		if (nb.stepping && !CityPed::stride_of(clip, ld, ns) && crowd->mode[i] != pc::M_DODGE) {
+						static const StringName STEP_W("ual/Walk_Loop"), STEP_J("ual/Jog_Fwd_Loop");
+						if (nb.v_s > 1.9f) { clip = STEP_J; speed = nb.v_s / (nb.female ? 2.49 : 2.40); }
+						else { clip = STEP_W; speed = std::max((double)nb.v_s / (nb.female ? 0.94 : 0.91), 0.4); }
+						hold = -1.0; token = 0;
+						nb.act_t = 0.0f;   // (the act's way in starts when he stands)
+					}
+				}
 				if (pf.walker == nb.walker && pf.angry) {   // fighting the player: his guard, a blow, a dodge, a step in
 					static const StringName GUARD("ual/PunchKick_Enter"), JAB("ual/Punch_Jab"), CROSS("ual/Punch_Cross"), DL("ual/Dodge_Left"), DR("ual/Dodge_Right"), STEP("ual/Walk_Loop");
 					speed = 1.0; token = 0;
@@ -953,7 +993,24 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 						clip = nb.v_s > 0.2f ? SWIM : FLOAT; speed = nb.v_s > 0.2f ? std::min(std::max(nb.v_s / 1.0f, 0.6f), 1.6f) : 1.0; hold = -1.0; token = 0;
 					} else if (wd > 0.05f) at.y = (float)sea_y - wd;
 				}
+				{   // (a person's size scales his stride: a walking clip's pace divided by it, or a big walker's feet slid)
+					double ld; int ns;
+					if (CityPed::stride_of(clip, ld, ns)) speed /= std::max((double)sc, 0.5);
+				}
 				nb.ped->drive(Transform3D(Basis(Vector3(0, 1, 0), lerp_angle(crowd->pyaw[i], crowd->yaw[i], a)).scaled(Vector3(sc, sc, sc)), at), clip, speed, hold, token);
+				// the feet on the real ground, planted ones pinned where they land (Yasin, 20 Nov: "i want them pixel perfect":
+				// tests/people/trace_crowd.gd found walkers' planted feet sliding 0.24-0.36 m/s and feet 23 cm over the ground
+				// or 3 cm in it where the crowd's path height and the ground differ); off while seated, on the ground, lying or
+				// swimming, and while the figure fades in
+				if (Skeleton3D *psk = nb.ped->skeleton()) {
+					if (!nb.plant) { nb.plant = memnew(FootPlant); psk->add_child(nb.plant); }
+					if (nb.plant_walker != nb.walker) { nb.plant->reset(); nb.plant_walker = nb.walker; }
+					const String cn = String(clip);
+					const bool on = sc > 0.9f && !cn.begins_with("ual/Sitting") && !cn.begins_with("ual/GroundSit") && !cn.contains("Lay") && !cn.begins_with("ual/Swim");
+					nb.plant->set_active(on); nb.plant->set_influence(on ? 1.0f : 0.0f);
+					const float fy = lerp_angle(crowd->pyaw[i], crowd->yaw[i], a);
+					nb.plant->fwd = Vector3(std::sin(fy), 0.0f, std::cos(fy));
+				}
 				// the last blow of a fight is a real one: the one who takes it is handed to his balancing body, which
 				// staggers back or goes down, and gets up by itself (pushes and falls are never a clip)
 				if (crowd->act[i] == pc::A_FIGHT && sc > 0.9f && nb.push_cd <= 0.0f && crowd->fwin[i] == 0 && crowd->pause_t[i] < 0.70f && crowd->pause_t[i] > 0.2f && l_fight_in > 0.0) {
@@ -1235,7 +1292,10 @@ Array CityCrowd::near_bodies() const {
 		if (nb.walker < 0) continue;
 		Dictionary d;
 		d["walker"] = nb.walker; d["woman"] = nb.female != 0; d["clip"] = String(nb.ped->current_clip()); d["in_physical_body"] = nb.in_body; d["shown_s"] = nb.act_t; d["figure_mode"] = (int)nb.ped->get_mode(); d["at"] = nb.ped->body_at(); d["body"] = nb.ped->get_state();
-		d["foot_l"] = nb.ped->bone_world("Bip01_L_Foot"); d["foot_r"] = nb.ped->bone_world("Bip01_R_Foot"); d["pelvis"] = nb.ped->bone_world("Bip01_Pelvis");
+		const bool planted = nb.plant && nb.plant->is_active();   // (as drawn: after the foot plant, read inside it)
+		d["foot_l"] = planted ? nb.plant->foot_w[0] : nb.ped->bone_world("Bip01_L_Foot"); d["foot_r"] = planted ? nb.plant->foot_w[1] : nb.ped->bone_world("Bip01_R_Foot");
+		d["pelvis"] = planted ? nb.plant->pelvis_w : nb.ped->bone_world("Bip01_Pelvis"); d["planted"] = planted;
+		if (nb.plant) { d["gap_mean"] = nb.plant->gap_n ? nb.plant->gap_sum / nb.plant->gap_n : 0.0f; d["gap_most"] = nb.plant->gap_most; d["gaps"] = nb.plant->gap_n; d["gaps_by_lift"] = nb.plant->gap_by_lift; }
 		d["hand_l"] = nb.ped->bone_world("Bip01_L_Hand"); d["hand_r"] = nb.ped->bone_world("Bip01_R_Hand"); d["v"] = nb.v_s;
 		{ const int i = crowd->find(nb.walker); d["act"] = i >= 0 ? (int)crowd->act[i] : -1; d["mode"] = i >= 0 ? (int)crowd->mode[i] : -1; d["ground"] = i >= 0 ? crowd->y[i] : 0.0f; }
 		out.push_back(d);
@@ -1393,7 +1453,7 @@ void CityCrowd::rage_update(double p_delta) {
 			const float dist = d.length();
 			if (!on_foot) {   // in his car: he yells by it; a hit and run (driven 60 m off) and he gives up after a while
 				r.chase = false;
-				r.away_t = dist > 60.0f ? r.away_t + (float)p_delta : 0.0f;
+				r.away_t = dist > 60.0f ? r.away_t + (float)p_delta : 0.0f; r.dist = dist;
 				if (r.away_t > 4.0f) { crowd->hold(r.walker, false, 0.0f); rage_given_up++; ragers.erase(ragers.begin() + k); continue; }
 				k++; continue;
 			}
@@ -1438,7 +1498,7 @@ Dictionary CityCrowd::fight_stats() const {
 	d["landed"] = pf.landed; d["missed"] = pf.missed; d["attacks"] = pf.attacks; d["hits_on_player"] = pf.hits_on_player; d["dodges"] = pf.dodges;
 	d["npc_beaten"] = pf.npc_beaten; d["player_beaten"] = pf.player_beaten; d["locks"] = pf.locks; d["player_down"] = pf.player_down;
 	d["rages"] = rages; d["rage_fights"] = rage_fights; d["rage_npc_fights"] = rage_npc_fights; d["rage_chases"] = rage_chases; d["rage_given_up"] = rage_given_up;
-	Array rg; for (const Rager &r : ragers) { Dictionary e; e["walker"] = r.walker; e["t"] = r.t; e["foe"] = r.foe; e["chase"] = r.chase; rg.push_back(e); }
+	Array rg; for (const Rager &r : ragers) { Dictionary e; e["walker"] = r.walker; e["t"] = r.t; e["foe"] = r.foe; e["chase"] = r.chase; e["dist"] = r.dist; e["away_t"] = r.away_t; rg.push_back(e); }
 	d["ragers"] = rg;
 	return d;
 }
@@ -1450,7 +1510,7 @@ Dictionary CityCrowd::stats() const {
 	int r[7];
 	crowd->audit(own_clock, r);
 	d["people"] = crowd->n_alive; d["places"] = (int)crowd->places.size(); d["hour"] = hour; d["weekday"] = weekday;
-	d["riders"] = riders_drawn; d["riders_thrown"] = riders_thrown; d["riders_given_a_body"] = riders_bodied;
+	d["riders"] = riders_drawn; d["riders_near"] = riders_near; d["riders_miss"] = riders_miss; d["riders_miss_hand"] = riders_miss_hand; d["riders_limbs"] = riders_limbs; d["riders_thrown"] = riders_thrown; d["riders_given_a_body"] = riders_bodied;
 	d["inside_each_other"] = r[0]; d["beside_pavement"] = r[1]; d["standing_a_minute"] = r[3]; d["bad_numbers"] = r[4];
 	d["spawned"] = s.spawned; d["left"] = s.despawned; d["arrivals"] = s.arrivals; d["went_in"] = s.went_in; d["came_out"] = s.came_out; d["sat"] = s.sat; d["crossings"] = s.crossings;
 	d["groups"] = s.parties; d["meetings"] = s.meetings; d["dodges"] = s.dodges; d["fled"] = s.fled; d["bumps"] = s.bumps;

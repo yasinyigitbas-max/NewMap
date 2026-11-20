@@ -53,6 +53,7 @@ class CityPlayer : public CharacterBody3D {
 	Vector3 edge_at, edge_out, edge_side;
 	class HandGrip *grip = nullptr;
 	class FootPlant *plant = nullptr;
+	float vis_dy = 0.0f, kerb_t = 0.0f;   // the drawn figure under the body after a lift onto a kerb (eased away)
 	// the clip's own rise and travel (its hips move the figure up as it climbs): taken out, so his hips follow the climb's
 	// path (Yasin: "lower climb needs better placement"; "step up was off too")
 	Vector3 pel_rest, fig_drawn_at, clip_off;
@@ -154,6 +155,7 @@ public:
 	// feet at a place facing a way, with his own view again
 	void set_riding(bool p_on);
 	void stand_at(const Vector3 &p_at, double p_yaw);
+	float get_yaw() const { return yaw; }
 	Array get_view() const { Array a; a.push_back(yaw); a.push_back(cam_yaw); a.push_back(cam_pitch); return a; }
 	void set_view(double p_yaw, double p_cam_yaw, double p_cam_pitch) { yaw = (float)p_yaw; cam_yaw = (float)p_cam_yaw; cam_pitch = (float)p_cam_pitch; }
 	void take_view() { if (cam) { cam->make_current(); cam_set = false; } }

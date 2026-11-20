@@ -40,7 +40,7 @@ public:
 // a slope, the top of a climb). Off when he is in the air.
 class FootPlant : public SkeletonModifier3D {
 	GDCLASS(FootPlant, SkeletonModifier3D)
-	int b_pel = -1, b_th[2] = { -1, -1 }, b_ca[2] = { -1, -1 }, b_ft[2] = { -1, -1 };
+	int b_pel = -1, b_th[2] = { -1, -1 }, b_ca[2] = { -1, -1 }, b_ft[2] = { -1, -1 }, b_toe[2] = { -1, -1 };
 	float ankle_h = 0.08f;
 	bool found = false;
 	void find_bones(Skeleton3D *sk);
@@ -50,13 +50,35 @@ public:
 	RID skip;              // the player's own body (not ground)
 	Vector3 fwd;           // world: the way he faces (the knees forward)
 	float hips_drop = 0.0f, foot_off[2] = { 0, 0 };
-	Vector3 foot_w[2], pelvis_w;   // (traces) the feet and hips as drawn this frame, world
+	Vector3 foot_w[2], pelvis_w, slide_w[2];   // (traces) the feet and hips as drawn this frame, world
 	// FOOT LOCK (Yasin, 20 Nov: "i want them pixel perfect"; a planted foot slid on the ground with the clip): a foot the clip
 	// puts down is pinned where it landed until it lifts; on lifting, the rest of the pin's offset fades in 0.1 s
 	bool locked[2] = { false, false };
 	Vector3 lock_w[2], rel_off[2], prev_fw[2], prev_root;
+	float toe_y0[2] = { 0, 0 };   // the ball of the foot's height over the floor as it was pinned (it is held while it stays down)
+	float rel_t[2] = { 0, 0 };   // since the pin let go
 	bool have_prev = false;
-	uint64_t last_us = 0;   // (the tests) how far the hips went down, how far each sole ended from its ground
+	uint64_t last_us = 0;
+	float gap_sum = 0.0f, gap_most = 0.0f; int gap_n = 0, gap_by_lift = 0;   // (traces) the pins' gaps as they let go   // (the tests) how far the hips went down, how far each sole ended from its ground
+	void _process_modification_with_delta(double p_delta) override;
+	void reset() { locked[0] = locked[1] = false; rel_off[0] = rel_off[1] = Vector3(); have_prev = false; }   // (another person in the same figure)
+};
+
+// Posture: everyone's shoulders forward (Yasin, 20 Nov: "everyones shoulders are too far back, push all of them both player
+// and npcs shoulders forward"). The first modifier on every CityPed figure (player, crowd, riders): after the clip, each
+// collarbone is turned round the chest's own up (pelvis to neck) so the shoulder joint comes forward; the arm follows.
+class Posture : public SkeletonModifier3D {
+	GDCLASS(Posture, SkeletonModifier3D)
+	int b_cl[2] = { -1, -1 }, b_ua[2] = { -1, -1 }, b_pel = -1, b_neck = -1;
+	bool found = false;
+protected:
+	static void _bind_methods();
+public:
+	float angle = 0.21f;   // rad (12 degrees): how far each collarbone turns forward
+	float moved[2] = { 0, 0 };   // (the tests) how far each shoulder joint came forward this frame, metres
+	void set_angle(float a) { angle = a; }
+	float get_angle() const { return angle; }
+	float get_moved() const { return 0.5f * (moved[0] + moved[1]); }
 	void _process_modification_with_delta(double p_delta) override;
 };
 

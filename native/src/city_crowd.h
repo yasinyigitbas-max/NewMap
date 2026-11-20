@@ -89,7 +89,7 @@ private:
 	PackedFloat32Array buf;
 	int shown = -1;
 	// the near bodies
-	struct Near { CityPed *ped = nullptr; int walker = -1; int female = 0; bool in_body = false; float push_cd = 0; Ref<ShaderMaterial> look; int act = -1; float act_t = 99.0f, v_s = 0.0f; int why = 0, after_kind = 0; float after_t = 0.0f, after_len = 0.0f; bool after_hit = false; };   // act, act_t: what it shows and for how long (the way INTO an act is played once)
+	struct Near { CityPed *ped = nullptr; class FootPlant *plant = nullptr; int plant_walker = -1; Vector3 last_at; bool has_last = false; int walker = -1; int female = 0; bool in_body = false; float push_cd = 0; Ref<ShaderMaterial> look; int act = -1; float act_t = 99.0f, v_s = 0.0f; int why = 0, after_kind = 0; float after_t = 0.0f, after_len = 0.0f; bool after_hit = false; bool stepping = false; float y_s = 0.0f; bool has_y = false; };   // act, act_t: what it shows and for how long (the way INTO an act is played once)
 	// how long the clips into and out of an act are (read from the figure once it is made)
 	bool lens_ok = false;
 	int fight_falls = 0;
@@ -132,6 +132,14 @@ private:
 	// counters
 	WayFloor way_floor;      // a collision floor 3 cm under every pavement and crossing (the city's collision has holes)
 	int riders_drawn = 0;   // the traffic's cyclists drawn as riders this frame
+	// the nearest cyclists as real riders on a cruiser rig of their own (city_crowd_riders.cpp)
+	static constexpr int RIDERS_NEAR = 3;
+	struct NearRider { CityPed *ped = nullptr; class BikeReach *reach = nullptr; Node3D *rig = nullptr, *crank = nullptr, *pedal[2] = { nullptr, nullptr }, *wheel[2] = { nullptr, nullptr };
+		Transform3D r_crank, r_pedal[2], r_wheel[2]; Ref<ShaderMaterial> look, paint; int id = -1, linger = 0; float seat = 0.0f; };   // seat: how far under the usual saddle place this person sits (shorter legs)
+	std::vector<NearRider> rider_pool;
+	std::vector<int> rider_ids;
+	int riders_near = 0; float riders_miss = 0.0f; bool riders_miss_hand = false; String riders_limbs;
+	void near_riders(const std::vector<float> &p_bikes, const Vector3 &p_cam, CityTraffic *p_trf);
 	// THE PLAYER'S FIGHT (Yasin: "locking onto the nearest npc, and keep locked on until they are or we are defeated. give
 	// npcs some low health that takes a few jabs"; "make npcs defend themselves attack back or try to dodge sideways once we
 	// hit them, they shouldnt get into combat mode unless we hit them"). Locked on the nearest person; he goes on with his
@@ -154,7 +162,7 @@ private:
 	// the player driving off (60 m away) is a hit and run: he gives up and walks off; the player on foot: he runs after
 	// him and the fight starts when he reaches him
 	// the run: Sprint_Enter into it, Sprint_Loop, Sprint_Exit as he reaches the player (Yasin: "use enter exit run animations")
-	struct Rager { int walker; float t; int foe; bool chase = false; float away_t = 0.0f, chase_t = 0.0f, arrive_t = -1.0f; };
+	struct Rager { int walker; float t; int foe; bool chase = false; float away_t = 0.0f, chase_t = 0.0f, arrive_t = -1.0f, dist = 0.0f; };
 	std::vector<Rager> ragers;
 	int rages = 0, rage_fights = 0, rage_npc_fights = 0, rage_chases = 0, rage_given_up = 0;
 	void rage_update(double p_delta);
