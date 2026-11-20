@@ -432,17 +432,10 @@ void CityHud::use_do() {
 	if (CityCar *c = Object::cast_to<CityCar>(o)) {
 		const cm::CarModel &m = cm::MODELS[std::min(std::max(c->get_model(), 0), cm::N_MODELS - 1)];
 		if (use_kind == 1) {   // in: the wheel is his
-			pl->set_riding(true);
-			c->take_wheel(true);
+			if (!c->enter(pl)) return;   // (he walks to the door, opens it, sits in, closes it: then the wheel is his)
 			if (trf) trf->set_player_car(c, m.half_len, m.half_w);
 		} else if (use_kind == 2) {   // out, beside the driver's door (the car's left), when it has (nearly) stopped
-			if (c->get_linear_velocity().length() > 2.5f) return;
-			const Transform3D t = c->get_global_transform();
-			const Vector3 side = t.basis.get_column(0).normalized();
-			c->take_wheel(false);
-			pl->set_riding(false);
-			pl->stand_at(t.origin + side * (m.half_w + 0.7f) + Vector3(0, 0.15f, 0), std::atan2(side.x, side.z));
-			pl->take_view();
+			if (!c->leave()) return;   // (the door opens, he gets out and stands by it as the player)
 			if (trf) trf->set_player_car(nullptr, 0.0, 0.0);
 		}
 	} else if (CityBike *b = Object::cast_to<CityBike>(o)) {
