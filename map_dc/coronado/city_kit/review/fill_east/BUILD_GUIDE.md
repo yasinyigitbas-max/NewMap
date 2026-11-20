@@ -88,3 +88,9 @@ must say ok; copy `OUT/super/work/t_<px>_<name>.scn` into `map_dc/coronado/city_
 Last: `godot --headless --path . -s res://tools/city/pilot/exact_colliders.gd -- <piece> --save` for every piece and
 tree piece (each prop's collider rebuilt from its own drawn mesh), verify with
 `godot --headless --path . -s res://OUT/colexact_verify.gd -- <pieces...>` (largest gap must be under 1 mm).
+
+## 20 Nov, later (Yasin): speed, and delete more
+"dont wait for approval this time, fill the land as fast as you can then run superchecker. when working with superchecker
+be much more prone to delete a prop or road mark". So: no stop for approval between pieces; in the superchecker pass any
+prop or road / ground mark (oil, tyre marks, wear decals, stall-line oddities) with a finding or a doubt is DELETED with its
+reason; move one only when the safe spot is obvious.
