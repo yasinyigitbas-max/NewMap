@@ -1,0 +1,84 @@
+{
+ "rooms": [
+  {
+   "d": 10.25,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fw_bay_condo_0.scn",
+   "id": "g_fw_bay_condo_0",
+   "kind": "cafe",
+   "lights": 6,
+   "name": "Bayfront Cafe",
+   "props": 37,
+   "w": 17.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fw_slope_market_0.scn",
+   "id": "g_fw_slope_market_0",
+   "kind": "corner_shop",
+   "lights": 5,
+   "name": "Hilltop Market",
+   "props": 20,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fw_slope_market_1.scn",
+   "id": "g_fw_slope_market_1",
+   "kind": "cleaners",
+   "lights": 4,
+   "name": "Suds Laundromat",
+   "props": 25,
+   "w": 5.7
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fw_slope_coffee_0.scn",
+   "id": "g_fw_slope_coffee_0",
+   "kind": "cafe",
+   "lights": 5,
+   "name": "Crown Hill Coffee",
+   "props": 18,
+   "w": 5.4
+  },
+  {
+   "d": 13.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fw_crest_bakery_0.scn",
+   "id": "g_fw_crest_bakery_0",
+   "kind": "bakery",
+   "lights": 6,
+   "name": "Crest Bakery",
+   "props": 29,
+   "w": 8.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fw_crest_salon_0.scn",
+   "id": "g_fw_crest_salon_0",
+   "kind": "salon",
+   "lights": 5,
+   "name": "Crest Cuts",
+   "props": 37,
+   "w": 11.4
+  },
+  {
+   "d": 13.15,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fw_court_community_0.scn",
+   "id": "g_fw_court_community_0",
+   "kind": "hall",
+   "lights": 6,
+   "name": "Crown Hill Community Center",
+   "props": 117,
+   "w": 23.4
+  },
+  {
+   "d": 11.1,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fw_court_pharmacy_0.scn",
+   "id": "g_fw_court_pharmacy_0",
+   "kind": "pharmacy",
+   "lights": 6,
+   "name": "Crown Hill Pharmacy",
+   "props": 29,
+   "w": 11.4
+  }
+ ]
+}

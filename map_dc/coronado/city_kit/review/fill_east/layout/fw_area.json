@@ -1,0 +1,540 @@
+{
+ "instances": [
+  {
+   "piece": "j_apt",
+   "pos": [
+    -600.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "sample G"
+  },
+  {
+   "piece": "s_ar_b067_a",
+   "pos": [
+    -400.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 90.0,
+   "from": "art",
+   "site": "b067"
+  },
+  {
+   "piece": "s_ar_b067_b",
+   "pos": [
+    -200.0,
+    4.0,
+    -1400.0
+   ],
+   "yaw": -90.0,
+   "from": "art",
+   "site": "b067"
+  },
+  {
+   "piece": "s_ar_b075_a",
+   "pos": [
+    -400.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 90.0,
+   "from": "art",
+   "site": "b075"
+  },
+  {
+   "piece": "s_ar_b075_b",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": -90.0,
+   "from": "art",
+   "site": "b075"
+  },
+  {
+   "piece": "j_ar_e3",
+   "pos": [
+    -400.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "art",
+   "site": "node -400,-1400"
+  },
+  {
+   "piece": "j_ar_c3",
+   "pos": [
+    -200.0,
+    4.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "art",
+   "site": "node -200,-1400"
+  },
+  {
+   "piece": "j_ar_e4",
+   "pos": [
+    -400.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "art",
+   "site": "node -400,-1200"
+  },
+  {
+   "piece": "j_ar_c4",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "art",
+   "site": "node -200,-1200"
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    -400.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 90.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    -400.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    -200.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": -90.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_rs_3l1r_b",
+   "pos": [
+    -200.0,
+    8.0,
+    -1000.0
+   ],
+   "yaw": 180.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "s_rs_b019_a",
+   "pos": [
+    -400.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b019"
+  },
+  {
+   "piece": "s_rs_b019_b",
+   "pos": [
+    -400.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b019"
+  },
+  {
+   "piece": "s_rs_b020_a",
+   "pos": [
+    -400.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b020"
+  },
+  {
+   "piece": "s_rs_b020_b",
+   "pos": [
+    -400.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b020"
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    -400.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b021"
+  },
+  {
+   "piece": "s_rs_b021_b",
+   "pos": [
+    -400.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b021"
+  },
+  {
+   "piece": "s_rs_b029_a",
+   "pos": [
+    -200.0,
+    4.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b029"
+  },
+  {
+   "piece": "s_rs_b029_b",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b029"
+  },
+  {
+   "piece": "s_rs_b030_a",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b030"
+  },
+  {
+   "piece": "s_rs_b030_b",
+   "pos": [
+    -200.0,
+    8.0,
+    -1000.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b030"
+  },
+  {
+   "piece": "s_rs_b031_a",
+   "pos": [
+    -200.0,
+    8.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b031"
+  },
+  {
+   "piece": "s_rs_b031_b",
+   "pos": [
+    -200.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b031"
+  },
+  {
+   "piece": "s_rs_b083_a",
+   "pos": [
+    -400.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 90.0,
+   "from": "resstd",
+   "site": "b083"
+  },
+  {
+   "piece": "s_rs_b083_b",
+   "pos": [
+    -200.0,
+    8.0,
+    -1000.0
+   ],
+   "yaw": -90.0,
+   "from": "resstd",
+   "site": "b083"
+  },
+  {
+   "piece": "s_rs_b091_a",
+   "pos": [
+    -400.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": 90.0,
+   "from": "resstd",
+   "site": "b091"
+  },
+  {
+   "piece": "s_rs_b091_b",
+   "pos": [
+    -200.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": -90.0,
+   "from": "resstd",
+   "site": "b091"
+  },
+  {
+   "piece": "j_rg_nw_w200_n1600",
+   "pos": [
+    -200.0,
+    2.0,
+    -1600.00012207031
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "-200.0,-1600.0"
+  },
+  {
+   "piece": "j_rg_nw_w400_n1600",
+   "pos": [
+    -400.0,
+    2.0,
+    -1600.00012207031
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "-400.0,-1600.0"
+  },
+  {
+   "piece": "s_rg_nw_b018",
+   "pos": [
+    -400.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 180.0,
+   "from": "ring_nw",
+   "site": "b018"
+  },
+  {
+   "piece": "s_rg_nw_b028",
+   "pos": [
+    -200.0,
+    4.0,
+    -1400.0
+   ],
+   "yaw": 180.0,
+   "from": "ring_nw",
+   "site": "b028"
+  },
+  {
+   "piece": "s_rg_nw_b147_2",
+   "pos": [
+    -105.5,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b147"
+  },
+  {
+   "piece": "s_rg_nw_b148_1",
+   "pos": [
+    -216.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b148"
+  },
+  {
+   "piece": "s_rg_nw_b148_2",
+   "pos": [
+    -300.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b148"
+  },
+  {
+   "piece": "s_rg_nw_b149_1",
+   "pos": [
+    -416.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b149"
+  },
+  {
+   "piece": "r_q_m200_m1400_se",
+   "pos": [
+    -200.0,
+    4.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_m200_m1200_ne",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_m200_m1200_se",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_m200_m1000_ne",
+   "pos": [
+    -200.0,
+    8.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_m200_m1000_se",
+   "pos": [
+    -200.0,
+    8.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "n_fw_bay",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_fw"
+  },
+  {
+   "piece": "n_fw_slope",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_fw"
+  },
+  {
+   "piece": "n_fw_crest",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_fw"
+  },
+  {
+   "piece": "n_fw_court",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_fw"
+  },
+  {
+   "piece": "t_fw_bay",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fw_court",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fw_crest",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fw_slope",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  }
+ ]
+}

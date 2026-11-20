@@ -78,10 +78,51 @@ static func g(blk: String, u: float, v: float) -> float:
 	y = lerpf(tab(t[2], u), y, smoothstep(0.0, EASE, v - float(e[0])))
 	y = lerpf(tab(t[3], u), y, smoothstep(0.0, EASE, float(e[1]) - v))
 	# never under the land: where a walk is lower than the land beside it (block C's north edge, 2 cm) the eased ground
-	# keeps 2 cm over the land (measured: on every walk edge the land is under the walk, so the seam stays exact)
-	return maxf(y, LAND.at(u, v) + 0.02)
+	# keeps 1 cm over the land (measured: on every walk edge the land is under the walk, so the seam stays exact)
+	return maxf(y, LAND.at(u, v) + 0.01)
 
 ## distance to the block's nearest walk edge
 static func edge_d(blk: String, u: float, v: float) -> float:
 	var e: Array = BLK[blk]
 	return minf(minf(u - W, E - u), minf(v - float(e[0]), float(e[1]) - v))
+
+const HL := preload("res://tools/city/pilot/pieces/hs_fill_lib.gd")
+## (20 Nov) closed front steps where a door path meets a building's pad standing over the graded ground in front of it
+## (on the slope the pad is at the highest ground under the building; near a walk the grading eases back onto the walk,
+## so the pad's front edge stands as a low retaining face): treads 0.35 m, risers <= 0.17 m, down to the ground
+## (hs_fill_lib.steps_z2 / steps_x2). f: the building's bbox footprint, yaw its facing, alongs [[world pos, width]] of
+## the door paths along the front. Nothing where the step is under 3 cm. Returns how many flights were drawn.
+static func door_steps(g: RefCounted, f: Array, yaw: float, py: float, yf: Callable, paths: Array) -> int:
+	var n_f := 0
+	for pw: Array in paths:
+		var a: float = pw[0]; var w: float = pw[1]
+		var dir := 0.0; var e := 0.0
+		if absf(yaw) < 1.0: e = float(f[3]) + 0.3; dir = 1.0
+		elif absf(absf(yaw) - 180.0) < 1.0: e = float(f[1]) - 0.3; dir = -1.0
+		elif absf(yaw - 90.0) < 1.0: e = float(f[2]) + 0.3; dir = 1.0
+		else: e = float(f[0]) - 0.3; dir = -1.0
+		var along_z := absf(yaw) < 1.0 or absf(absf(yaw) - 180.0) < 1.0
+		var at := func(t: float) -> float: return float(yf.call(a, t)) if along_z else float(yf.call(t, a))
+		var res := py - float(at.call(e))
+		if res < 0.03: continue
+		var n := ceili(res / 0.17)
+		var e0 := e + dir * n * HL.TREAD; var y0 := float(at.call(e0))
+		for _k in 4:          # the flight's foot lower on the slope may need one more tread: settle n so the top meets the pad
+			n = ceili((py - y0) / 0.17); e0 = e + dir * n * HL.TREAD; y0 = float(at.call(e0))
+		if along_z: HL.steps_z2(g, a, w, e0, e, y0, py, yf)
+		else: HL.steps_x2(g, a, w, e0, e, y0, py, yf)
+		n_f += 1
+	return n_f
+
+## (20 Nov) the field graded up to the pads like hs_fill_lib.graded (6 % aprons round every pad), but each pad's apron
+## reaches only `reach` metres at 6 % and then falls away as a grass bank at `bank` (33 %) to the plain ground: on the
+## hill a pad 1-2 m higher than its neighbour 11 m away otherwise graded its 6 % apron over the lower pad's front (block
+## C: 0.95 m of field over crest_2's front edge). pads: [[u0, v0, u1, v1, y], ...]
+static func graded(field: Callable, pads: Array, slope := 0.06, reach := 6.0, bank := 0.33) -> Callable:
+	return func(x: float, z: float) -> float:
+		var y: float = field.call(x, z)
+		for p: Array in pads:
+			var dx := maxf(maxf(float(p[0]) - x, x - float(p[2])), 0.0); var dz := maxf(maxf(float(p[1]) - z, z - float(p[3])), 0.0)
+			var d := sqrt(dx * dx + dz * dz)
+			y = maxf(y, float(p[4]) - slope * minf(d, reach) - bank * maxf(d - reach, 0.0))
+		return y

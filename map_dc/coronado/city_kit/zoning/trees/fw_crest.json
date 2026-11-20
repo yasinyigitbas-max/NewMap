@@ -1,0 +1,57 @@
+{
+ "area": "fw_crest",
+ "piece": "n_fw_crest",
+ "zone": "apartments (Crown Hill west slope, high)",
+ "rule": "docs/TREE_PLAN.md: apartments - one tree per court; parks - clumps of 3-5; commercial - few",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, fw: the north-west column), after the superchecker: no builder trees; each line placed for its reason",
+ "trees": [
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    -349.0,
+    5.499,
+    -1112.0
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "Hillcrest Gardens west court"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -314.0,
+    6.497,
+    -1114.0
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "Hillcrest Green clump, NW of the sitting square"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -312.0,
+    6.597,
+    -1086.0
+   ],
+   "yaw": 200,
+   "scale": 0.85,
+   "why": "Hillcrest Green clump, SW"
+  },
+  {
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "at": [
+    -367.0,
+    6.03,
+    -1040.0
+   ],
+   "yaw": 0,
+   "scale": 0.75,
+   "why": "the west dingbats' back lawn (ding_1/ding_2)"
+  }
+ ]
+}
