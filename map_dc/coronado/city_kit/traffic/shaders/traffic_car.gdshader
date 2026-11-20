@@ -70,7 +70,8 @@ void fragment() {
 		vec3 o = texture(trim_orm, UV).rgb;
 		vec3 co = texture(car_orm, UV2).rgb;
 		ALBEDO = mix(ALBEDO, ALBEDO * vec3(0.62, 0.58, 0.52) + vec3(0.075, 0.065, 0.05), clamp(co.g * 0.9, 0.0, 1.0));   // road film
-		ALBEDO += gm * co.b * vec3(0.26, 0.26, 0.27);   // the cabin behind the tinted glass
+		ALBEDO = mix(ALBEDO, ALBEDO * 0.45, gm);   // B17 (20 Nov): tinted glass is dark; at 0.14 + the cabin's 0.26 the windows read pale and see-through
+		ALBEDO += gm * co.b * vec3(0.07, 0.07, 0.075);   // the cabin behind the tinted glass, a hint of it
 		ALBEDO *= mix(1.0, co.r, 0.2);
 		ROUGHNESS = clamp(o.g + co.g * 0.35, 0.03, 1.0);
 		METALLIC = o.b;
@@ -86,5 +87,7 @@ void fragment() {
 	// rubber: near-black, not paint, not glass, not a lens: matte (else the sky's reflection turns the tyres white)
 	float rub = (1.0 - pm) * (1.0 - lm) * (1.0 - smoothstep(0.05, 0.12, gm)) * (1.0 - smoothstep(0.03, 0.10, max(t.r, max(t.g, t.b))));
 	ROUGHNESS = mix(ROUGHNESS, 0.9, rub);
+	ROUGHNESS = mix(ROUGHNESS, max(ROUGHNESS, 0.1), gm);   // (B17: glass at 0.04 mirrored the sky at every grazing angle)
+	SPECULAR = mix(SPECULAR, 0.5, gm);
 	SPECULAR = mix(SPECULAR, 0.15, rub);
 }

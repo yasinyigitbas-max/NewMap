@@ -57,7 +57,7 @@ uniform sampler2D glass_cracks : hint_default_black, filter_linear_mipmap, repea
 uniform sampler2D env_pano : source_color, hint_default_black, filter_linear_mipmap, repeat_disable;
 global uniform vec2 refl_env;
 const float ENV_PAINT = 0.8;     // clear coat strength (checked offline: horizon + trees read, colour stays)
-const float ENV_GLASS = 0.65;    // tinted car glass: dark with the street in it, not a mirror
+const float ENV_GLASS = 0.35;    // tinted car glass: dark with the street in it, not a mirror (B17, 20 Nov: at 0.65 the windows read pale and see-through)
 vec3 env_at(vec3 dw, float lod) {
 	float u = atan(dw.x, -dw.z) * 0.15915494 + 0.5;
 	float v = clamp(acos(clamp(dw.y, -1.0, 1.0)) * 0.31830989, 0.004, 0.996) * 0.5;   // each panorama = one half
@@ -114,7 +114,8 @@ void fragment() {
 			float g = co.g * grime_strength;
 			// road film: darker, warmer, duller; heavier on the paint than on the black trim
 			ALBEDO = mix(ALBEDO, ALBEDO * vec3(0.62, 0.58, 0.52) + vec3(0.075, 0.065, 0.05), clamp(g * 0.9, 0.0, 1.0));
-			ALBEDO += gm * co.b * vec3(0.26, 0.26, 0.27);                  // cabin behind the tinted glass (B on glass)
+			ALBEDO = mix(ALBEDO, ALBEDO * 0.45, gm);   // B17 (20 Nov): tinted glass is dark; at 0.14 + the cabin's 0.26 the windows read pale and see-through
+			ALBEDO += gm * co.b * vec3(0.07, 0.07, 0.075);   // the cabin behind the tinted glass, a hint of it
 			float aoc = co.r * orm.r;
 			ALBEDO *= mix(1.0, co.r, 0.2 * ao_strength);                     // gap cavities read as lines, not only in shade
 			ROUGHNESS = clamp(orm.g + g * 0.35 + (co.b - 0.5) * 0.22 * pm * (1.0 - gm), 0.03, 1.0);   // B on paint: clear-coat roughness variation
@@ -179,7 +180,7 @@ void fragment() {
 			}
 		}
 		METALLIC = max(max(0.35 * gm, bare * 0.85), (m1 || m2) ? orm.b : 0.0);
-		SPECULAR = mix(0.6, 1.0, gm);
+		SPECULAR = mix(0.6, 0.5, gm);   // (glass: F0 0.04, real glass; it was 0.08)
 		// white-tyres fix: tyres / black trim are ~0.005 albedo; at roughness 0.55 + specular 0.6 the sky reflection
 		// is all you see and they read white. Near-black non-paint, non-glass texels = rubber: matte, low specular.
 		float rub = (1.0 - pm) * (1.0 - lm) * (1.0 - smoothstep(0.05, 0.12, gm)) * (1.0 - smoothstep(0.03, 0.10, max(t.r, max(t.g, t.b))));
@@ -198,8 +199,9 @@ void fragment() {
 			vec3 env = env_at(normalize(rw), ROUGHNESS * 7.0);
 			// paint: a clear coat over the colour (Fresnel, ~0.25 face-on); glass: dark, mostly the reflection
 			float k = mix(0.25, 1.0, fres) * gloss * gloss;
+			k *= 1.0 - gm * 0.3;   // (glass reflects less at grazing angles than the clear coat: no milky side windows)
 			EMISSION = env * refl * k * mix(vec3(1.0), ALBEDO * 1.6, mref);
-			ALBEDO *= 1.0 - gm * 0.6 * k;   // what the glass reflects it does not show behind it
+			ALBEDO *= 1.0 - gm * 0.35 * k;   // what the glass reflects it does not show behind it
 		}
 	}
 }
