@@ -77,6 +77,193 @@
    "yaw": 0.0,
    "site": "the pocket behind the strip (u -545..-500, v -940..-900)",
    "variant": "student pocket park with a mural wall, tables, benches"
+  },
+  {
+   "piece": "n_w_c1",
+   "pos": [
+    -391.0,
+    0.0,
+    -791.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c1 (WEST FILL, civic band north): u -391..-209, v -791..-700, 182 x 91 m, flat 6.0..6.15.",
+   "variant": "the civic band's front on 6th St, opposite the campus's east side: FIRE STATION 2 (engine bays straight onto 6th St over its apron, the training yard behind off the west apron), the POST OFFICE (customer lot off the second 6th St apron), ST. ANDREW'S CHURCH (its garden behind); a shared lot behind t"
+  },
+  {
+   "piece": "n_w_c2",
+   "pos": [
+    -391.0,
+    0.0,
+    -700.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c2 (WEST FILL, the civic park): u -391..-300, v -700..-609, 91 x 91 m, flat.",
+   "variant": "the neighbourhood's park beside the civic heart (CITY_PLAN: parks in the transition areas): a PLAYGROUND on a mulch pad (play structure, swings, slide, benches facing it for the parents), a fenced DOG RUN with its gate and a bench inside, an open lawn, picnic tables, paths lit at night, a small lot "
+  },
+  {
+   "piece": "n_w_c3",
+   "pos": [
+    -391.0,
+    0.0,
+    -591.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c3 (WEST FILL, east of the campus): u -391..-305, v -591..-409, 86 x 182 m, flat.",
+   "variant": "STAFF TOWNHOUSES facing the campus (the garage and the stadium walk) across the street, their parking courts behind off the aprons, back yards; the SENIOR CENTER on the south corner with a garden of benches and tables."
+  },
+  {
+   "piece": "n_w_c4",
+   "pos": [
+    -95.0,
+    0.0,
+    -590.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c4 (WEST FILL, the stadium promenade): u -95..-50, v -590..-409, 45 x 181 m, flat.",
+   "variant": "the STADIUM PROMENADE, a green walk from the city centre to the stadium: a paved path, lawns, benches facing the lawns, lamps, bike racks, a statue at the stadium end, drinking fountains."
+  },
+  {
+   "piece": "n_w_c5",
+   "pos": [
+    -50.0,
+    0.0,
+    -502.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c5 (WEST FILL, Amber Avenue's west side south of the centre): u -50..-16, v -502..-409, 34 x 93 m, flat.",
+   "variant": "AMBER SHOPS facing the avenue: a boutique row, a bakery, a corner shop, a realty office, a caf\u00e9; benches and planters on the walk."
+  },
+  {
+   "piece": "n_w_c6",
+   "pos": [
+    -591.0,
+    0.0,
+    -391.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c6 (WEST FILL, south of the campus): u -591..-409, v -391..-300, 182 x 91 m, flat.",
+   "variant": "FACULTY APARTMENTS facing the campus's dorms across the street (spanish, garden, stucco), and on the east corner BRIGHT START CHILD CARE with its fenced playground; parking courts behind off the aprons, yards with barbecues."
+  },
+  {
+   "piece": "n_w_c7",
+   "pos": [
+    -500.0,
+    0.0,
+    -300.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c7 (WEST FILL, the neighbourhood park south of the campus): u -500..-409, v -300..-209, 91 x 91 m, flat.",
+   "variant": "the residential quarter's park: two TENNIS COURTS in a chain-link cage (gate on the path), a SAND VOLLEYBALL court, a lawn with tables, benches facing the courts, a small lot off the east apron."
+  },
+  {
+   "piece": "n_w_c8",
+   "pos": [
+    -391.0,
+    0.0,
+    -391.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c8 (WEST FILL, west of the stadium): u -391..-305, v -391..-209, 86 x 182 m, flat.",
+   "variant": "the stadium's west side: STADIUM TEAM STORE, THE BULLPEN (sports bar), the TOUCHDOWN DINER face the west street; behind them the TAILGATE LOT (rows, lights, grills on the edges) between the street and the stadium."
+  },
+  {
+   "piece": "n_w_c9",
+   "pos": [
+    -95.0,
+    0.0,
+    -391.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c9 (WEST FILL, Amber Avenue's west side by the stadium): u -95..-16, v -391..-210, 79 x 181 m, flat.",
+   "variant": "AMBER AVENUE SHOPS face the avenue (an arcade block, a bakery, a shop row, the AMBER DINER, a boutique row, a surf shop, a corner shop); behind them a planted walk to the stadium with benches and bike racks (no lot: Amber's shoppers walk, the stadium has its own parking)."
+  },
+  {
+   "piece": "n_w_c10",
+   "pos": [
+    -305.0,
+    0.0,
+    -240.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c10 (WEST FILL, the stadium's south-west fan plaza): u -305..-209, v -240..-209, 96 x 31 m, flat.",
+   "variant": "a FAN PLAZA where the crowd comes off the south street: two ticket and snack kiosks, benches, bins against the kiosks, bike racks, bollards against cars, the team statue, a bus shelter on the street."
+  },
+  {
+   "piece": "n_w_c11",
+   "pos": [
+    -191.0,
+    0.0,
+    -240.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_c11 (WEST FILL, the stadium's south-east fan plaza): u -191..-95, v -240..-209, 96 x 31 m, flat.",
+   "variant": "a FAN PLAZA where the crowd comes off the south street: two ticket and snack kiosks, benches, bins against the kiosks, bike racks, bollards against cars, the team statue, a bus shelter on the street."
+  },
+  {
+   "piece": "n_w_h1",
+   "pos": [
+    -295.0,
+    0.0,
+    -294.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_h1 (WEST FILL, a 40 x 40 m hole in the stadium's car park): u -295..-255, v -294..-254, flat.",
+   "variant": "the stadium's car park left four kit-park-sized holes; this one becomes TENNIS COURTS (two, in a chain-link cage)."
+  },
+  {
+   "piece": "n_w_h2",
+   "pos": [
+    -245.0,
+    0.0,
+    -294.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_h2 (WEST FILL, a 40 x 40 m hole in the stadium's car park): u -245..-205, v -294..-254, flat.",
+   "variant": "a PLAYGROUND for families on game days: mulch pad, play structure, swings, slide, shade sail, benches facing it, a picket fence with a gate."
+  },
+  {
+   "piece": "n_w_h3",
+   "pos": [
+    -195.0,
+    0.0,
+    -294.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_h3 (WEST FILL, a 40 x 40 m hole in the stadium's car park): u -195..-155, v -294..-254, flat.",
+   "variant": "a PICNIC GROVE for tailgaters who walk off the lot: lawn, tables, grills, benches (its trees come with the tree layer)."
+  },
+  {
+   "piece": "n_w_h4",
+   "pos": [
+    -145.0,
+    0.0,
+    -294.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_h4 (WEST FILL, a 40 x 40 m hole in the stadium's car park): u -145..-105, v -294..-254, flat.",
+   "variant": "a second pair of TENNIS COURTS (the stadium end's public courts)."
+  },
+  {
+   "piece": "n_w_p1",
+   "pos": [
+    -252.0,
+    0.0,
+    -652.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_p1 (WEST FILL, a 40 x 40 m hole inside the civic heart v_nw): u -252..-212, v -652..-612, flat.",
+   "variant": "the civic heart's MEMORIAL GREEN: a cross of paths, the memorial in the middle, benches facing it, flower beds."
+  },
+  {
+   "piece": "n_w_p2",
+   "pos": [
+    -188.0,
+    0.0,
+    -642.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_p2 (WEST FILL, the 40 x 30 m hole inside the civic heart v_ne, the spot Yasin marked east of the 18 % block):",
+   "variant": "a SUCCULENT GARDEN for the civic offices' lunch break: a dry garden on mulch, a path, benches, a table."
   }
  ]
 }
