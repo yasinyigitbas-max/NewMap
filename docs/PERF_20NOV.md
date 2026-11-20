@@ -56,3 +56,6 @@ The phone was hot for the census runs (battery 34.5 -> 38.3 C): read differences
 - 108 / 210 / 280 km/h with 40 cars and 60 people: 49.0 / 48.9 / 48.1 fps (pb3: 45.8 / 44.3 / 44.2; the script streamer's runs 39.6-44.5),
   no frame over 50 ms in the drives, 0 errors in the log (B27 fixed).
 - Still over the gate: 14-22 frames over 33 ms a drive (0.5-0.8 %, the gate allows 0.2 %) and one 254 ms teleport frame (the loader stall, section 4).
+- What those 33 ms frames are (pb7 "RIG slow" marks): they come as a cell arrives (5-11 a drive) or loads (5-10): the frame draws the new
+  cell for the first time (GPU 16-19 ms, draw 13-25 ms on the main thread), the streamer itself 0.1-7 ms. The next lead: spread a new
+  cell's first drawing over frames (e.g. its parts shown in a few steps), measured with the rig's show_cells / first-draw switch.
