@@ -1,6 +1,7 @@
 // CityStream: see city_stream.h (a port of tools/city/bake/city_stream.gd; the comments there hold the measurements).
 #include "city_stream.h"
 #include "city_breakables.h"
+#include "city_skyline.h"
 #include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/collision_object3d.hpp>
 #include <godot_cpp/classes/box_shape3d.hpp>
@@ -67,6 +68,7 @@ void CityStream::_ready() {
 		Ref<PackedScene> ps = rl->load(fp);
 		if (ps.is_valid()) { far_world = Object::cast_to<Node3D>(ps->instantiate()); if (far_world) add_child(far_world); }
 	}
+	if (skyline) { CitySkyline *sk = memnew(CitySkyline); sk->build(); add_child(sk); }   // San Diego round the horizon: one draw, never culled
 	set_far_ground(far_ground);
 	set_tiers(tiers, tier_band, arrive_s);
 	if (breakables) { CityBreakables *bk = memnew(CityBreakables); bk->set_name("Breakables"); add_child(bk); bk->set_stream(this); }   // B9
@@ -642,6 +644,7 @@ void CityStream::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("pending_count"), &CityStream::pending_count);
 	ClassDB::bind_method(D_METHOD("leaving_count"), &CityStream::leaving_count);
 	ClassDB::bind_method(D_METHOD("cell_node", "key"), &CityStream::cell_node);
+	ClassDB::bind_method(D_METHOD("set_skyline", "v"), &CityStream::set_skyline); ClassDB::bind_method(D_METHOD("get_skyline"), &CityStream::get_skyline); ADD_PROPERTY(PropertyInfo(Variant::BOOL, "skyline"), "set_skyline", "get_skyline");
 	ClassDB::bind_method(D_METHOD("set_breakables", "v"), &CityStream::set_breakables); ClassDB::bind_method(D_METHOD("get_breakables"), &CityStream::get_breakables); ADD_PROPERTY(PropertyInfo(Variant::BOOL, "breakables"), "set_breakables", "get_breakables");
 	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "cells", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "", "get_cells");
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3, "focus", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "", "get_focus");

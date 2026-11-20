@@ -33,7 +33,6 @@ const Blobs := preload("res://tools/city/look/blob_shadows.gd")
 const DayCycle := preload("res://tools/city/look/day_cycle.gd")
 const Weather := preload("res://tools/city/look/weather.gd")
 const Air := preload("res://tools/city/look/air.gd")
-const Skyline := preload("res://tools/city/look/skyline.gd")
 ## the moon: where the night's light comes from (the same direction the night used before the running day)
 const MOON_ELEV := 40.0
 const MOON_AZIM := -35.0
@@ -405,7 +404,7 @@ func _apply(t0: Dictionary) -> void:
 	sm.set_shader_parameter(&"sun_dir", sun_v if mo < 0.5 else moon_v)
 	sm.set_shader_parameter(&"sun_light", Vector3(sun.light_color.r, sun.light_color.g, sun.light_color.b) * sun.light_energy)
 	Air.material().set_shader_parameter(&"light", sm.get_shader_parameter(&"light"))
-	var sk := Skyline.material()      # the skyline ring (20 Nov): painted in the day haze, tinted to this hour's haze, lit windows by night
+	var sk: ShaderMaterial = ClassDB.class_call_static(&"CitySkyline", &"get_skyline_material")      # the skyline ring (20 Nov): painted in the day haze, tinted to this hour's haze, lit windows by night
 	sk.set_shader_parameter(&"tint", Vector3(haze.r / 0.80, haze.g / 0.78, haze.b / 0.71))
 	sk.set_shader_parameter(&"haze_col", haze); sk.set_shader_parameter(&"haze_more", clampf((float(t.fog_density) - 0.001) / 0.004, 0.0, 0.5))
 	sk.set_shader_parameter(&"lights", clampf(float(t.get("lights", night)), 0.0, 1.0))

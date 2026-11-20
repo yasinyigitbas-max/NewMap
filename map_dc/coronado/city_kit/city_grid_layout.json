@@ -5305,6 +5305,306 @@
    "from": "grow_grt"
   },
   {
+   "piece": "n_fw_bay",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_fw_slope",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_fw_crest",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_fw_court",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_fn_west",
+   "pos": [
+    0.0,
+    2.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_fn_mid",
+   "pos": [
+    0.0,
+    2.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_fn_east",
+   "pos": [
+    0.0,
+    2.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_fn_strip",
+   "pos": [
+    0.0,
+    2.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_fe_b1w",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_fe_b1e",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_fe_b2",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_fe_r7",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_fe_r5",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_fe_r3",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_fe_r1",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_ea_cape",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_ea_shore",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_ea_lens",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_ea_south",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_eb_nw",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_eb_sw",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_eb_ne",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_eb_me",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_eb_se",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_ec_hill_n",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_ec_hill_s",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_ec_dune_n",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_ec_dune_s",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_ec_beach_n",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_ec_beach_s",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
    "piece": "n_hp_main",
    "pos": [
     0.0,
@@ -6465,6 +6765,486 @@
    "from": "grow_un"
   },
   {
+   "piece": "n_w_i1",
+   "pos": [
+    -500.0,
+    0.0,
+    -1586.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_i2",
+   "pos": [
+    -500.0,
+    0.0,
+    -1386.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_g1",
+   "pos": [
+    -500.0,
+    0.0,
+    -1186.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_c1",
+   "pos": [
+    -391.0,
+    0.0,
+    -791.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_c2",
+   "pos": [
+    -391.0,
+    0.0,
+    -700.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_c3",
+   "pos": [
+    -391.0,
+    0.0,
+    -591.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_c4",
+   "pos": [
+    -95.0,
+    0.0,
+    -590.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_c5",
+   "pos": [
+    -50.0,
+    0.0,
+    -502.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_c6",
+   "pos": [
+    -591.0,
+    0.0,
+    -391.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_c7",
+   "pos": [
+    -500.0,
+    0.0,
+    -300.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_c8",
+   "pos": [
+    -391.0,
+    0.0,
+    -391.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_c9",
+   "pos": [
+    -95.0,
+    0.0,
+    -391.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_c10",
+   "pos": [
+    -305.0,
+    0.0,
+    -240.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_c11",
+   "pos": [
+    -191.0,
+    0.0,
+    -240.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_h1",
+   "pos": [
+    -295.0,
+    0.0,
+    -294.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_h2",
+   "pos": [
+    -245.0,
+    0.0,
+    -294.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_h3",
+   "pos": [
+    -195.0,
+    0.0,
+    -294.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_h4",
+   "pos": [
+    -145.0,
+    0.0,
+    -294.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_p1",
+   "pos": [
+    -252.0,
+    0.0,
+    -652.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_p2",
+   "pos": [
+    -188.0,
+    0.0,
+    -642.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_s1",
+   "pos": [
+    -791.0,
+    0.0,
+    -900.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_s2a",
+   "pos": [
+    -500.0,
+    0.0,
+    -991.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_s2b",
+   "pos": [
+    -591.0,
+    0.0,
+    -900.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_s2c",
+   "pos": [
+    -545.0,
+    0.0,
+    -940.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_w3",
+   "pos": [
+    -986.0,
+    0.0,
+    -791.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_w4",
+   "pos": [
+    -986.0,
+    0.0,
+    -591.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_w5",
+   "pos": [
+    -986.0,
+    0.0,
+    -391.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_w6",
+   "pos": [
+    -986.0,
+    0.0,
+    -191.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_x1",
+   "pos": [
+    -791.0,
+    0.0,
+    -391.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_e1",
+   "pos": [
+    -930.0,
+    0.0,
+    209.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_e1b",
+   "pos": [
+    -966.0,
+    0.0,
+    209.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_e2",
+   "pos": [
+    -791.0,
+    0.0,
+    209.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_e3",
+   "pos": [
+    -591.0,
+    0.0,
+    209.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_e4",
+   "pos": [
+    -391.0,
+    0.0,
+    209.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_w7",
+   "pos": [
+    -980.0,
+    0.0,
+    9.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_w2a",
+   "pos": [
+    -986.0,
+    0.0,
+    -900.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_w2b",
+   "pos": [
+    -982.0,
+    0.0,
+    -991.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_w1",
+   "pos": [
+    -938.0,
+    0.0,
+    -1186.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_w0a",
+   "pos": [
+    -1000.0,
+    0.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_w0b",
+   "pos": [
+    -937.0,
+    0.0,
+    -1300.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_q1",
+   "pos": [
+    -678.0,
+    0.0,
+    -930.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_q2",
+   "pos": [
+    -244.0,
+    0.0,
+    -695.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_q3",
+   "pos": [
+    -238.0,
+    0.0,
+    -568.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "n_w_q4",
+   "pos": [
+    -134.0,
+    0.0,
+    -538.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "t_w_north",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "t_w_civic",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "t_w_strip",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
+   "piece": "t_w_edge",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_uw"
+  },
+  {
    "piece": "n_wf_b1w",
    "pos": [
     295.0,
@@ -6543,6 +7323,146 @@
    ],
    "yaw": 0.0,
    "from": "grid frame"
+  },
+  {
+   "piece": "t_10th_e",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_am_b037_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_am_b037_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_am_b038_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_am_b038_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_am_b039_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_am_b039_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_am_b040_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_am_b042_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_am_b043_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_am_b044_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_amber_n",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_amber_s",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_apt",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
   },
   {
    "piece": "t_apt_b1_7th",
@@ -6625,6 +7545,306 @@
    "from": "trees"
   },
   {
+   "piece": "t_ar_b065_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b066_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b066_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b067_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b067_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b068_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b068_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b069_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b069_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b070_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b070_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b073_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b073_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b074_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b074_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b075_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b075_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b076_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b076_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b077_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b077_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ar_b078_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_br_appr_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_br_appr_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_br_appr_3",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_br_appr_4",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_br_appr_5",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_br_appr_6",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_cc_amber_n",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_cc_amber_s",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
    "piece": "t_cc_b1_court",
    "pos": [
     0.0,
@@ -6636,6 +7856,306 @@
   },
   {
    "piece": "t_cc_b1_west",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_cc_b4_w",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_civ",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ea_cape",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ea_lens",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ea_shore",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ea_south",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_eb_me",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_eb_ne",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_eb_nw",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_eb_se",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_eb_sw",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ec_dune_n",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ec_dune_s",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ec_hill_n",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ec_hill_s",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fe_b1e",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fe_b1w",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fe_b2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fe_r1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fe_r3",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fe_r5",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fe_r7",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fn_east",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fn_mid",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fn_strip",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fn_west",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fw_bay",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fw_court",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fw_crest",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fw_slope",
    "pos": [
     0.0,
     0.0,
@@ -6836,6 +8356,76 @@
   },
   {
    "piece": "t_hp_west",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_hs_b1_amber",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_hs_b1_eleventh",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_hs_b1_tenth",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_hs_b2_mews",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_hs_b2_ninth",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_hs_b2_park",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_hs_b3_amber",
    "pos": [
     0.0,
     0.0,
@@ -7355,6 +8945,96 @@
    "from": "trees"
   },
   {
+   "piece": "t_res_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_res_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_res_c",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_res_dn2_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_res_dn2_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_res_dn4_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_res_dn4_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_res_dn6",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_res_dn8",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
    "piece": "t_res_m200_0_ne",
    "pos": [
     0.0,
@@ -7715,6 +9395,2036 @@
    "from": "trees"
   },
   {
+   "piece": "t_res_up2_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_res_up2_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_res_up4_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_res_up4_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_res_up6",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_res_up8",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_b087",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_b158_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_b159_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_b159_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b018",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b028",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b036",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b046",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b056",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b072",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b079",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b080",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b088",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b096",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b102",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b108",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b116",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b124",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b141_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b141_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b142_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b143_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b144_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b144_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b145_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b145_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b145_3",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b146_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b146_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b147_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b147_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b148_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b148_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b149_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b149_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b150_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b150_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b151_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b151_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b152_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b152_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b153_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b153_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b154_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b154_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b155_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b155_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b156_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b156_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b157_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b157_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b158_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b162_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b162_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b162_3",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b163_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b163_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_nw_b163_3",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b009",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b017",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b027",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b035",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b055",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b095",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b101",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b107",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b115",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b123",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b130",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b131_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b131_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b132_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b132_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b133_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b133_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b134_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b134_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b135_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b135_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b136_w",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b137_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b137_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b138_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b138_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b139_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b139_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b140_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b140_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b161_1",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b161_2",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rg_se_b161_w",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b001_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b002_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b002_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b004_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b004_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b005_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b005_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b011_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b011_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b012_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b019_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b019_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b020_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b020_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b021_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b022_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b022_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b023_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b023_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b024_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b024_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b029_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b029_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b030_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b030_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b031_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b031_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b032_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b047_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b047_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b048_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b048_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b049_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b049_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b051_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b059_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b059_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b060_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b060_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b061_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b061_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b062_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b062_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b063_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b063_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b081_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b082_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b083_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b083_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b084_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b084_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b085_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b085_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b086_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b086_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b089_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b089_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b090_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b090_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b091_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b091_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b092_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b093_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b094_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b094_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b100_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b103_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b103_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b104_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b104_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b105_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b106_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b106_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b109_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b109_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b110_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b110_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b111_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b111_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b112_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b112_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b113_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b113_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b114_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b114_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b117_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b117_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b118_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b118_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b119_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b119_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b120_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b121_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b122_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b122_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b125_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b125_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b126_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b126_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b127_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b127_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b128_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b128_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b129_a",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_rs_b129_b",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_strip_art",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "trees"
+  },
+  {
    "piece": "t_wf_b1e",
    "pos": [
     0.0,
@@ -7775,2657 +11485,7 @@
    "from": "trees"
   },
   {
-   "piece": "t_hs_b3_amber",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_hs_b2_ninth",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_hs_b2_mews",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_hs_b2_park",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_cc_b4_w",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_hs_b1_eleventh",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_hs_b1_tenth",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_hs_b1_amber",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
    "piece": "t_wfd",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_10th_e",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_strip_art",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b129_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b129_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b128_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b128_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b127_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b127_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b126_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b126_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b125_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b125_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b122_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b122_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b121_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b120_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b119_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b119_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b118_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b118_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b117_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b117_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b114_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b114_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b113_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b113_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b112_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b112_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b111_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b111_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b110_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b110_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b109_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b109_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b106_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b106_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b105_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b104_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b104_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b103_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b103_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b100_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b094_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b094_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b093_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b092_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b091_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b091_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b090_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b090_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b089_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b089_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b086_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b086_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b085_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b085_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b084_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b084_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b083_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b083_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b082_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b081_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b063_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b063_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b062_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b062_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b061_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b061_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b060_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b060_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b059_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b059_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b051_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b049_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b049_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b048_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b048_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b047_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_am_b038_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b047_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b032_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b031_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b031_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_am_b038_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b030_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b030_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b029_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_am_b039_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b029_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b024_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b024_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_am_b039_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b023_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b023_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b022_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_am_b040_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b022_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b021_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b020_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_am_b037_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b020_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b019_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_am_b037_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b019_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b012_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b011_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b011_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b005_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b005_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b004_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b004_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b002_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b002_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rs_b001_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b161_w",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b161_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b161_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b140_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b140_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b139_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b139_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b138_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b138_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b137_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b137_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b136_w",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b135_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b135_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b134_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b134_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b133_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b133_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b132_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b132_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b131_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b131_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b130",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b123",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b115",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b107",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b101",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b095",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b055",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b035",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b027",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b017",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_se_b009",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b163_3",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b163_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b163_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b162_3",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b162_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b162_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b158_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b157_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_am_b042_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b157_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_am_b043_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b156_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_am_b044_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b156_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_amber_n",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b155_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_amber_s",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b155_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b154_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b154_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_apt",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b153_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b153_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b152_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b152_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b151_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b151_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b150_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b150_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b149_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b149_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b148_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b065_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b148_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b066_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b147_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b066_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b147_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b146_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b067_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b067_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b146_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b068_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b145_3",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b068_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b069_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b145_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b145_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b069_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b070_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b144_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b070_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b144_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b073_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b073_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b074_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b143_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b074_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b142_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b075_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b075_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b141_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b076_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b141_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b076_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b077_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b124",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b077_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b116",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_ar_b078_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b108",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_br_appr_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_br_appr_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b102",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_br_appr_3",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b096",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_br_appr_4",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_br_appr_5",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b088",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_br_appr_6",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b080",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b079",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b072",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b056",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_cc_amber_n",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b046",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_cc_amber_s",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b036",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_civ",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b028",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_nw_b018",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_res_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_b159_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_res_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_b159_1",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_res_c",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_b158_2",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_res_dn2_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_rg_b087",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_res_dn4_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_res_dn2_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_res_dn4_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_res_dn6",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_res_dn8",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_res_up2_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_res_up2_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_res_up4_b",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_res_up4_a",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_res_up6",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "trees"
-  },
-  {
-   "piece": "t_res_up8",
    "pos": [
     0.0,
     0.0,
