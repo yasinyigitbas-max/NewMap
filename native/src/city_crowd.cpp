@@ -4,6 +4,7 @@
 #include "city_ped.h"
 #include "city_player.h"
 #include "foot_steps.h"
+#include "city_ambience.h"
 #include "city_traffic.h"
 #include "people_bake.h"
 #include "ped_inl.h"
@@ -261,6 +262,9 @@ void CityCrowd::set_player(Object *p_player) {
 	player_id = p_player ? (uint64_t)p_player->get_instance_id() : 0; has_last_player = false;
 	// the test app's stand-in player gets a body and clothes like the people's (his own, never dissolving)
 	CityPlayer *cp = Object::cast_to<CityPlayer>(p_player);
+	if (p_player && !has_node("Ambience")) {   // B3: the sound of the place round him
+		CityAmbience *am = memnew(CityAmbience); am->set_name("Ambience"); add_child(am); am->set_crowd(this);
+	}
 	if (cp && cp->figure() && !cp->has_node("FootSteps")) {   // B16: his footsteps, by what he walks on
 		FootSteps *fs = memnew(FootSteps); fs->set_name("FootSteps"); cp->add_child(fs); fs->set_figure(cp->figure());
 	}

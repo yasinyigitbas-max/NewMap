@@ -17,6 +17,7 @@
 #include "people_places.h"
 #include "street_graph.h"
 #include "foot_steps.h"
+#include "city_ambience.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/class_db.hpp>
@@ -43,6 +44,7 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(CityPed);       // one person with a real body: animation, and a body that balances, falls and gets up
 	GDREGISTER_CLASS(StreetGraph);   // tool time: the streets as traffic and people need them, from the baked city
 	GDREGISTER_CLASS(CityCrowd);     // the people of the map: who walks where and what they do, and how they are drawn
+	GDREGISTER_CLASS(CityAmbience);  // the sound of the place: surf, bay, gulls, birds, crickets, wind, traffic hum, rain (B3)
 	GDREGISTER_CLASS(FootSteps);     // footsteps by what the ground is made of (B16)
 	GDREGISTER_CLASS(CityPlayer);    // a person to walk the city with (the test app's stand-in for the game's player)
 	GDREGISTER_CLASS(CityTalk);      // talking to the people: the lines, who remembers the player, captions, choices, the recorded voices
