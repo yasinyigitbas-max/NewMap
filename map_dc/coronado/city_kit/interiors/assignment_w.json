@@ -1,0 +1,551 @@
+{
+ "_doc": "Which shop is behind every shop door of the WEST FILL (University session, 20 Nov; copy of assign_un.py) (claude/fill-city-centre, 19 Nov; Yasin via the",
+ "count": 10,
+ "rooms": [
+  {
+   "id": "w_i1__boatworks__0",
+   "piece": "n_w_i1",
+   "label": "boatworks",
+   "model": "industrial/ind_factory",
+   "pos": [
+    -455.0,
+    2.2,
+    -1562.3
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": 8.0,
+   "door_w": 1.6,
+   "bay": [
+    -17.7,
+    17.7
+   ],
+   "kind": "workshop",
+   "name": "Coronado Boatworks",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 12.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 12.67,
+     "w": 1.35
+    },
+    {
+     "facade": "front",
+     "along": 10.0,
+     "w": 5.0
+    },
+    {
+     "facade": "right",
+     "along": 12.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 12.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 12.97,
+     "w": 1.95
+    },
+    {
+     "facade": "left",
+     "along": 12.97,
+     "w": 1.95
+    },
+    {
+     "facade": "right",
+     "along": 12.97,
+     "w": 1.95
+    },
+    {
+     "facade": "left",
+     "along": 12.97,
+     "w": 1.95
+    }
+   ],
+   "source": "west fill (hand-made room list)",
+   "built": ""
+  },
+  {
+   "id": "w_i1__marine_engines__0",
+   "piece": "n_w_i1",
+   "label": "marine_engines",
+   "model": "industrial/ind_repair",
+   "pos": [
+    -434.0,
+    2.203,
+    -1471.8
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -6.5,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "workshop",
+   "name": "Bay Marine Engines",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "front",
+     "along": -5.0,
+     "w": 3.6
+    },
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    }
+   ],
+   "source": "west fill (hand-made room list)",
+   "built": ""
+  },
+  {
+   "id": "w_i1__marine_supply__0",
+   "piece": "n_w_i1",
+   "label": "marine_supply",
+   "model": "industrial/ind_warehouse",
+   "pos": [
+    -475.0,
+    2.201,
+    -1467.5
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -9.0,
+   "door_w": 1.0,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "store",
+   "name": "Coronado Marine Supply",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 12.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 12.87,
+     "w": 1.75
+    },
+    {
+     "facade": "right",
+     "along": 12.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 12.87,
+     "w": 1.75
+    }
+   ],
+   "source": "west fill (hand-made room list)",
+   "built": ""
+  },
+  {
+   "id": "w_i2__building_supply__0",
+   "piece": "n_w_i2",
+   "label": "building_supply",
+   "model": "industrial/ind_warehouse",
+   "pos": [
+    -434.0,
+    2.496,
+    -1366.5
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -9.0,
+   "door_w": 1.0,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "store",
+   "name": "Pacific Building Supply",
+   "style": "green",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 12.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 12.87,
+     "w": 1.75
+    },
+    {
+     "facade": "right",
+     "along": 12.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 12.87,
+     "w": 1.75
+    }
+   ],
+   "source": "west fill (hand-made room list)",
+   "built": ""
+  },
+  {
+   "id": "w_i2__tire_brake__0",
+   "piece": "n_w_i2",
+   "label": "tire_brake",
+   "model": "industrial/ind_repair",
+   "pos": [
+    -450.0,
+    3.983,
+    -1245.8
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -6.5,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "workshop",
+   "name": "Strand Tire & Brake",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "front",
+     "along": -5.0,
+     "w": 3.6
+    },
+    {
+     "facade": "right",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "left",
+     "along": 8.67,
+     "w": 1.35
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "right",
+     "along": 8.87,
+     "w": 1.75
+    },
+    {
+     "facade": "left",
+     "along": 8.87,
+     "w": 1.75
+    }
+   ],
+   "source": "west fill (hand-made room list)",
+   "built": ""
+  },
+  {
+   "id": "w_i2__liquor_deli__0",
+   "piece": "n_w_i2",
+   "label": "liquor_deli",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    -468.0,
+    4.149,
+    -1228.173
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -1.08,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "corner_shop",
+   "name": "Strand Liquor & Deli",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ],
+   "source": "west fill (hand-made room list)",
+   "built": ""
+  },
+  {
+   "id": "w_g1__anchor_bar__0",
+   "piece": "n_w_g1",
+   "label": "anchor_bar",
+   "model": "commercial/com_bar_crown",
+   "pos": [
+    -419.95,
+    4.337,
+    -1174.0
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bar",
+   "name": "The Anchor",
+   "style": "navy",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 8.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 0.0,
+     "w": 3.6
+    }
+   ],
+   "source": "west fill (hand-made room list)",
+   "built": ""
+  },
+  {
+   "id": "w_g1__laundry_pawn__0",
+   "piece": "n_w_g1",
+   "label": "laundry_pawn",
+   "model": "commercial/com_orange_row",
+   "pos": [
+    -420.173,
+    5.045,
+    -1124.0
+   ],
+   "yaw": 90.0,
+   "door_index": 0,
+   "door_along": -4.08,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "cleaners",
+   "name": "Coin Laundry",
+   "style": "teal",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 5.18
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ],
+   "source": "west fill (hand-made room list)",
+   "built": ""
+  },
+  {
+   "id": "w_g1__thrift_row__0",
+   "piece": "n_w_g1",
+   "label": "thrift_row",
+   "model": "commercial/com_boutique_row",
+   "pos": [
+    -484.0,
+    4.548,
+    -1173.827
+   ],
+   "yaw": -180.0,
+   "door_index": 0,
+   "door_along": -4.08,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "clothes",
+   "name": "Second Chance Thrift",
+   "style": "green",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -6.0,
+     "w": 5.18
+    },
+    {
+     "facade": "front",
+     "along": 0.0,
+     "w": 5.18
+    },
+    {
+     "facade": "front",
+     "along": 6.0,
+     "w": 5.18
+    }
+   ],
+   "source": "west fill (hand-made room list)",
+   "built": ""
+  },
+  {
+   "id": "w_g1__corner_market__0",
+   "piece": "n_w_g1",
+   "label": "corner_market",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    -425.0,
+    6.169,
+    -1019.173
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -1.08,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "corner_shop",
+   "name": "Strand Corner Market",
+   "style": "sun",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ],
+   "source": "west fill (hand-made room list)",
+   "built": ""
+  }
+ ]
+}

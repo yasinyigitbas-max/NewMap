@@ -1,0 +1,14 @@
+{
+ "rooms": [
+  {
+   "d": 16.0,
+   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_i1__boatworks__0.scn",
+   "id": "g_w_i1__boatworks__0",
+   "kind": "workshop",
+   "lights": 6,
+   "name": "Coronado Boatworks",
+   "props": 66,
+   "w": 35.4
+  }
+ ]
+}
