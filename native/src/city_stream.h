@@ -187,6 +187,9 @@ public:
 	float cell_distance(const String &p_key, const Vector3 &p) const;
 	Vector3 late_cells(const Vector3 &p) const;   // (cells not in within 60 m, within 220 m, the deepest reach into 220 m)
 	int pending_count() const { return (int)pending.size(); }
+	Node3D *cell_node(const String &p_key) const { return cell_index.has(p_key) ? cells[cell_index[p_key]].node : nullptr; }
+	bool breakables = true;   // B9: a CityBreakables child follows the cells (set before the node enters the tree)
+	void set_breakables(bool v) { breakables = v; } bool get_breakables() const { return breakables; }
 	int leaving_count() const;
 };
 

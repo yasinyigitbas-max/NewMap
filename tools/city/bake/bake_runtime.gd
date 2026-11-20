@@ -80,6 +80,13 @@ var cur_trees := {}          # its trees, world: Vector2i (0.5 m bucket) -> Arra
 var cur_ground := {}         # its ground meshes with the wells filled: source mesh instance id -> Mesh
 var cur_wells: Array = []    # the wells filled in it, world: [centre on the rim plane, radius, slope x, slope z]
 var kept_trees := {}         # the hand-placed trees (t_* pieces), world: Vector2i (2 m bucket) -> Array of Vector2
+## B9 (Yasin 20 Nov: "small props should be breakable"; the old game's rule: only cars break them): these kinds' near
+## copies are not merged but kept as instances in nodes named brk_<kind> (one per kind and cell), and their colliders are
+## taken out of the cell's bodies and stored on that node (meta "brk_cols": [[points, world transform], ...]); the C++
+## CityBreakables draws them whole, gives the ones near the player colliders, and knocks one over when a car hits it.
+const BRK_KINDS := ["prop_bus_stop_sign", "prop_beach_sign", "prop_cone_", "prop_mailbox_post", "prop_bollard_steel", "prop_bollard_iron", "prop_trash_bin", "prop_newsbox", "prop_parking_meter"]
+var brk_on := true           # --nobreak: bake as before
+var cur_brk: Array = []      # this piece's breakables, world: [position, claimed] (each claims ONE collider, the nearest)
 var gap_col := true          # --nogapcol: buildings get only their kit "col" shell (as before 20 Nov)
 var gap_cache := {}          # kit folder -> Array of [ConvexPolygonShape3D, Transform3D] (building space)
 var fill_cache := {}         # ground mesh key + its trees -> [Mesh, wells in the mesh's own frame]
@@ -668,6 +675,26 @@ func _linear_texel(tex: Texture2D, uv: Vector2) -> Color:
 	var c := im.get_pixel(clampi(int(uv.x * im.get_width()), 0, im.get_width() - 1), clampi(int(uv.y * im.get_height()), 0, im.get_height() - 1))
 	return c.srgb_to_linear()
 
+# ---------------------------------------------------------------- B9: breakable props
+func _brk_kind(nm: String) -> bool:
+	if not brk_on: return false
+	for k: String in BRK_KINDS:
+		if nm.begins_with(k): return true
+	return false
+
+func _brk_key(p: Vector3) -> Vector3i: return Vector3i(roundi(p.x * 2.0), roundi(p.y * 2.0), roundi(p.z * 2.0))
+
+## before a piece is walked: where its breakables stand (their colliders are found by place in _body)
+func _brk_scan(root: Node) -> void:
+	cur_brk = []
+	if not brk_on: return
+	for n: Node in root.find_children("*", "MultiMeshInstance3D", true, false):
+		var mmi := n as MultiMeshInstance3D
+		var nm := String(mmi.name)
+		if not nm.ends_with("_near") or not _brk_kind(nm) or mmi.multimesh == null: continue
+		for i in mmi.multimesh.instance_count:
+			cur_brk.append([(mmi.global_transform * mmi.multimesh.get_instance_transform(i)).origin, false])
+
 # ---------------------------------------------------------------- B16: the ground's surface classes (footsteps)
 ## Yasin, 20 Nov: "add footsteps to the game based on terrain". From the top-down picture of the island's ground (before
 ## it is compressed): one byte a GC_TEXEL-metre texel, 0 hard (asphalt, pavement, concrete), 1 grass, 2 sand, 3 dirt.
@@ -863,6 +890,18 @@ func _body(body: StaticBody3D) -> void:
 		if cur_strip and _tree_at(p): stat.tree_cols_out += 1; continue      # the trunk of a tree that was left out
 		var c := _cell_of(p)
 		if not _cell_wanted(c): continue
+		if s.shape is ConvexPolygonShape3D and not cur_brk.is_empty():      # B9: a breakable's collider (found by place, at its foot or a little above)
+			var hit := -1; var hd := 0.35 * 0.35      # the nearest unclaimed breakable within 35 cm across, its collider at most 2.5 m above its foot
+			for bi in cur_brk.size():
+				var bp: Vector3 = cur_brk[bi][0]
+				if cur_brk[bi][1] or p.y < bp.y - 0.3 or p.y > bp.y + 2.5: continue
+				var d2 := Vector2(p.x - bp.x, p.z - bp.z).length_squared()
+				if d2 < hd: hd = d2; hit = bi
+			if hit >= 0:
+				cur_brk[hit][1] = true
+				if not _cell(c).has("brkcol"): _cell(c)["brkcol"] = []
+				_cell(c).brkcol.append([(s.shape as ConvexPolygonShape3D).points, s.global_transform]); stat["brk_cols"] = int(stat.get("brk_cols", 0)) + 1
+				continue
 		_cell(c).col.append([s.shape, s.global_transform, body.collision_layer, body.collision_mask]); stat.shapes += 1
 
 func _props(mmi: MultiMeshInstance3D) -> void:
@@ -922,6 +961,11 @@ func _props(mmi: MultiMeshInstance3D) -> void:
 			var key := [mmi.get_instance_id(), tier, "pass"]
 			if not cell.inst.has(key): cell.inst[key] = {"mesh": mm.mesh, "mat": mt, "kind": kind, "xfs": [], "custom": [], "vb": mmi.visibility_range_begin, "ve": mmi.visibility_range_end, "shadow": mmi.cast_shadow, "name": nm}
 			cell.inst[key].xfs.append(xf); cell.inst[key].custom.append(custom); stat.pass += 1
+		elif tier == "near" and kind == "prop" and _brk_kind(nm):      # B9: kept whole, one node per kind and cell
+			var rmb: Material = _mat_prop(mt, two, false, tier)
+			var keyb := ["brk", tier, _mesh_key(use_mesh), rmb.resource_path]
+			if not cell.inst.has(keyb): cell.inst[keyb] = {"mesh": use_mesh, "mat": rmb, "kind": kind, "xfs": [], "custom": [], "shadow": mmi.cast_shadow, "name": nm, "brk": true}
+			cell.inst[keyb].xfs.append(xf); cell.inst[keyb].custom.append(custom); stat["brk"] = int(stat.get("brk", 0)) + 1
 		elif tier == "near" and tris > MERGE_TRIS:
 			var rm: Material = _mat_prop(mt, two, false, tier) if kind == "prop" else _mat_fol(mt, false, tier)
 			var key2 := [sub, tier, _mesh_key(use_mesh), rm.resource_path]
@@ -1095,7 +1139,9 @@ func _build_cell(c: Vector2i) -> Dictionary:
 		for i in ib.xfs.size():
 			mm.set_instance_transform(i, ib.xfs[i]); pts2.append((ib.xfs[i] as Transform3D).origin)
 			if mm.use_custom_data: mm.set_instance_custom_data(i, ib.custom[i])
-		var mmi := MultiMeshInstance3D.new(); mmi.name = "i%d_%s" % [k, String(ib.name)]; k += 1; mmi.multimesh = mm
+		var mmi := MultiMeshInstance3D.new(); mmi.name = ("brk_%d_%s" if ib.get("brk", false) else "i%d_%s") % [k, String(ib.name)]; k += 1; mmi.multimesh = mm
+		if ib.get("brk", false):      # B9: its colliders (those of this cell; CityBreakables pairs them with the instances by place)
+			mmi.set_meta(&"brk_cols", rec.get("brkcol", [])); mmi.set_meta(&"brk_kind", String(ib.name))
 		if ib.mat:
 			mmi.material_override = ib.mat
 			if (ib.mat as Material).resource_path != "" and not (ib.mat as Material).resource_path.contains("::"): keep[(ib.mat as Material).resource_path] = true
@@ -1389,6 +1435,7 @@ func _run() -> void:
 		if a == "--notrees": no_trees = true
 		if a == "--keepwells": well_fill = false
 		if a == "--nogapcol": gap_col = false
+		if a == "--nobreak": brk_on = false
 		if a.begins_with("--out="): out = a.trim_prefix("--out=")
 		if a.begins_with("--area="):
 			var f := a.trim_prefix("--area=").split_floats(","); area = [f[0], f[1], f[2]]
@@ -1420,6 +1467,7 @@ func _run() -> void:
 		cur_strip = no_trees and not piece.begins_with("t_")
 		cur_trees.clear(); cur_ground.clear(); cur_wells.clear()
 		if cur_strip: _scan_trees(inst)
+		_brk_scan(inst)
 		_walk(inst, piece, inst_name)
 		for c1: Vector2i in cells:
 			if not touched.has(c1) or touched[c1] != _count(cells[c1]): cells[c1].pieces[inst_name] = [piece, sha[piece], p, float(r.get("yaw", 0))]
