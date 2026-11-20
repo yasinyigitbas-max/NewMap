@@ -40,6 +40,7 @@ class CityCar : public RigidBody3D {
 	GDCLASS(CityCar, RigidBody3D)
 
 	vd::Car car;
+	int bumps_over = 0;   // (the tests) wheel steps that rode over a downed person
 	bool made = false;
 	int model = 2, feel = vd::FEEL_IV;
 	Color paint = Color(0.55f, 0.57f, 0.6f);

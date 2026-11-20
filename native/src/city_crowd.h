@@ -72,6 +72,7 @@ private:
 	std::vector<uint8_t> cells;
 	bool cells_all = true, cells_dirty = false;
 	std::vector<float> cars, dyn, bus_buf;
+	float car_hit_cd = 0.0f, car_hit_v = 0.0f; int cars_hit_player = 0;   // (a car reaching the player on foot: player_fight)
 	std::vector<int> bus_here;          // the stops (places) a bus stands at now
 	int buses_served = 0;
 	std::vector<String> place_names;   // the shops' names (places.bin)
@@ -99,7 +100,10 @@ public:
 private:
 	struct Near { CityPed *ped = nullptr; class FootPlant *plant = nullptr; int plant_walker = -1; Vector3 last_at; bool has_last = false; int walker = -1; int female = 0; bool in_body = false; float push_cd = 0; Ref<ShaderMaterial> look; int act = -1; float act_t = 99.0f, v_s = 0.0f; int why = 0, after_kind = 0; float after_t = 0.0f, after_len = 0.0f; bool after_hit = false; bool stepping = false; float y_s = 0.0f; bool has_y = false;
 		// the walk start / stop (tools/people/make_steps.gd) for the walker it shows: 1 setting off, 2 stopping
-		int st_mode = 0, st_walker = -1; float st_t = 0.0f; bool st_moving = false; StringName st_clip; };   // act, act_t: what it shows and for how long (the way INTO an act is played once)
+		int st_mode = 0, st_walker = -1; float st_t = 0.0f; bool st_moving = false; StringName st_clip;
+		// a phone in his raised hand while he films (Yasin, 20 Nov: "put a rectangular phone like shape in npcs hands when
+		// they are recording"): made the first time it is needed, shown only then
+		class MeshInstance3D *phone = nullptr; Vector3 phone_base; float phone_k = 0.01f; };   // act, act_t: what it shows and for how long (the way INTO an act is played once)
 	// how long the clips into and out of an act are (read from the figure once it is made)
 	bool lens_ok = false;
 	int fight_falls = 0;
@@ -242,6 +246,13 @@ protected:
 public:
 	CityCrowd();
 	~CityCrowd();
+	// (the Animator, 20 Nov: "we should drive over them and car should be lifted a bit off the ground") the crowd a car
+	// asks what is under its wheels: the highest downed body's top within 0.25 m of p, or -1e9
+	static CityCrowd *the;
+	float body_under(const Vector3 &p_at) const;
+	// a car as the bodies feel it: a low box for the bonnet and the boot (0.22-0.85 m over the road: a body slides under
+	// its sills and is swept onto it) and one for the cabin on top; 2 boxes from box k on
+	static int car_boxes(CityPed *p_ped, int k, const float *q, float p_ground_y);
 
 	void _ready() override;
 	void _exit_tree() override;

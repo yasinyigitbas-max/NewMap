@@ -30,6 +30,7 @@ namespace godot {
 static const double GETUP_GATHER = 1.0;   // s: (the figure's old clip only) from lying into the clip's seated start
 static const double GETUP_SLOW = 0.3;     // the clip's pace meanwhile
 static const char *const GETUP_CLIP = "ual/LayToIdle";   // the Quaternius library's rise from lying on the back
+static const double GETUP_PACE = 1.25;   // (the rise played a quarter quicker: "they take forever to finish")
 
 namespace {
 const char *BONE_NAMES[pb::NB] = { "Bip01_Pelvis", "Bip01_Spine1", "Bip01_Head", "Bip01_L_UpperArm", "Bip01_L_Forearm", "Bip01_R_UpperArm", "Bip01_R_Forearm",
@@ -264,6 +265,17 @@ double CityPed::clip_curve(const StringName &p_clip, const String &p_key, double
 	return p[i] + (p[j] - p[i]) * (f - i);
 }
 
+float CityPed::top_over(const Vector3 &p_at, float p_r) const {
+	if (mode == MODE_ANIM || !made) return -1.0e9f;
+	float top = -1.0e9f;
+	for (int i = 0; i < pb::NB; i++) {
+		const pb::Body &B = body.b[i];
+		const float dx = B.x.x - p_at.x, dz = B.x.z - p_at.z, rr = p_r + B.r + 0.05f;
+		if (dx * dx + dz * dz < rr * rr) top = std::max(top, B.x.y + B.r);
+	}
+	return top;
+}
+
 double CityPed::clip_len(const StringName &p_clip) const {
 	if (!anim || !anim->has_animation(p_clip)) return 0.0;
 	const Ref<Animation> a = anim->get_animation(p_clip);
@@ -361,7 +373,7 @@ void CityPed::to_animation(const StringName &p_clip, double p_blend, bool p_from
 	set_global_transform(Transform3D(Basis(Vector3(0, 1, 0), yaw).scaled(get_global_transform().basis.get_scale()), at));
 	write_bones();
 	if (anim && anim->has_animation(play)) {
-		anim->set_speed_scale((p_from_ground && !has_getup) ? GETUP_SLOW : 1.0);
+		anim->set_speed_scale((p_from_ground && !has_getup) ? GETUP_SLOW : (p_from_ground ? GETUP_PACE : 1.0));
 		anim->play_with_capture(play, blend);
 	}
 	cur_clip = StringName(); cur_hold = -1.0; cur_token = 0;
@@ -415,7 +427,7 @@ void CityPed::_physics_process(double p_delta) {
 	}
 	if (mode == MODE_GETUP) {
 		if (has_getup) {
-			if (t_mode >= getup_len) { mode = MODE_ANIM; t_mode = 0.0; getups++; cur_clip = StringName(); if (anim && anim->has_animation(clip)) anim->play(clip, 0.3); }
+			if (t_mode >= getup_len / GETUP_PACE) { mode = MODE_ANIM; t_mode = 0.0; getups++; cur_clip = StringName(); if (anim && anim->has_animation(clip)) anim->play(clip, 0.3); }
 			return;
 		}
 		if (t_mode >= GETUP_GATHER && anim) anim->set_speed_scale(1.0);
@@ -461,7 +473,7 @@ void CityPed::_physics_process(double p_delta) {
 	// (on its feet but never quiet for six seconds: it is taken back anyway. Seen 20 Nov: after a blow in a fight a body
 	// kept stepping backwards at a steady 1.1 m/s for as long as it was watched.)
 	if (body.state == pb::ST_BALANCE && n_shove == 0 && ((body.settled && t_mode > 0.8) || t_mode > 6.0)) to_animation(clip, body.settled ? 0.35 : 0.6, false);
-	else if (body.state == pb::ST_REST && body.t_state > 1.2f && !stay_down) to_animation("get_up", 0.5, true);
+	else if (body.state == pb::ST_REST && body.t_state > 0.5f && !stay_down) to_animation("get_up", 0.5, true);   // (lying a moment, not 1.2 s: "they take forever"; the badly hurt stay down, street life)
 }
 
 Dictionary CityPed::get_state() const {

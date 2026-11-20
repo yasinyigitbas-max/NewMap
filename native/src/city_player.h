@@ -54,6 +54,7 @@ public:
 	void gesture(int p_kind, double p_seconds) { gest_kind = p_kind; gest_t = (float)p_seconds; }
 	// the phone in his hands (CityHud): 0 none, 1 in his hand, 2 at his ear (a call), 3 held up (the camera)
 	int phone_kind = 0;
+	bool fig_was_body = false;   // (his figure was on its physical body last frame: knocked down, getting up)
 	void set_phone(int p_kind) { phone_kind = p_kind; }
 	// walking to a spot by himself (another system's: the bicycle he goes to lift); done when he is within 12 cm
 	bool auto_on = false; Vector3 auto_to;
