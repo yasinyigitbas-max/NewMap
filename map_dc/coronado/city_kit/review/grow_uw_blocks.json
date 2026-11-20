@@ -1,0 +1,16 @@
+{
+ "_doc": "West fill (University session, 20 Nov; review/fill_west/PLAN.md): this session's own table, for integrate.py",
+ "rows": [
+  {
+   "piece": "n_w_i1",
+   "pos": [
+    -500.0,
+    0.0,
+    -1586.0
+   ],
+   "yaw": 0.0,
+   "site": "industrial east half 1 (u -500..-409, v -1586..-1414)",
+   "variant": "marine trades: Coronado Boatworks, Bay Marine Engines, Coronado Marine Supply, storage yard, staff and customer parking"
+  }
+ ]
+}
