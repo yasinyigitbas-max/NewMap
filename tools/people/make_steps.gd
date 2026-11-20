@@ -274,15 +274,27 @@ func _stance_side(p: Dictionary) -> Vector3:
 ## the idle's first frame, so standing (and the walk start) begins where it expects. Meta "yaw", "done_at".
 func _turn(src: Animation, idle: Animation, total: float) -> Animation:
 	var fb := [skel.find_bone("Bip01_L_Foot"), skel.find_bone("Bip01_R_Foot")]
-	var tb := [skel.find_bone("Bip01_L_Toe0"), skel.find_bone("Bip01_R_Toe0")]
 	var n := int(round(src.length * FPS))
+	var tf := to_fig.orthonormalized()
+	# the foot's own forward: of its bone's axes (either sign), the one that points most forward (+z) and least up in the
+	# first frame (the skeleton has no toe bones: a heading from the toe read 0 degrees all through)
+	var axis := [Vector3.ZERO, Vector3.ZERO]
+	var gl0 := _glob(_mix(_pose(src, 0.0), {}, 0.0))
+	for s in 2:
+		var bb: Basis = (gl0[fb[s]] as Transform3D).basis.orthonormalized()
+		var best := -9.0
+		for ax in [Vector3(1, 0, 0), Vector3(-1, 0, 0), Vector3(0, 1, 0), Vector3(0, -1, 0), Vector3(0, 0, 1), Vector3(0, 0, -1)]:
+			var w: Vector3 = tf * (bb * ax)
+			var score := w.z - absf(w.y) * 0.5
+			if score > best: best = score; axis[s] = ax
 	var head := [PackedFloat32Array(), PackedFloat32Array()]; var fy := [PackedFloat32Array(), PackedFloat32Array()]
 	for k in n + 1:
 		var gl := _glob(_mix(_pose(src, minf(k / FPS, src.length)), {}, 0.0))
 		for s in 2:
-			var f: Vector3 = to_fig * (gl[fb[s]] as Transform3D).origin
-			var t: Vector3 = to_fig * (gl[tb[s]] as Transform3D).origin if tb[s] >= 0 else f + Vector3(0, 0, 0.1)
-			head[s].append(atan2(t.x - f.x, t.z - f.z)); fy[s].append(f.y)
+			var tr: Transform3D = gl[fb[s]]
+			var f: Vector3 = to_fig * tr.origin
+			var w: Vector3 = tf * (tr.basis.orthonormalized() * (axis[s] as Vector3))
+			head[s].append(atan2(w.x, w.z)); fy[s].append(f.y)
 	var low := minf(_minf(fy[0]), _minf(fy[1]))
 	var raw := PackedFloat32Array(); raw.append(0.0)
 	for k in range(1, n + 1):

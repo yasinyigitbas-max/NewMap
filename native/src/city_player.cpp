@@ -285,7 +285,13 @@ void CityPlayer::_physics_process(double p_delta) {
 		return;
 	}
 	if (swimming) crouch = false;
-	if (crouch != crouch_prev) { crouch_prev = crouch; crouch_t = 0.0f; }
+	if (crouch != crouch_prev) {
+		crouch_prev = crouch; crouch_t = 0.0f;
+		// up out of the crouch while still moving: he rises through his walk (Crouch_Fwd hands over to the walk at the
+		// same point of the stride) and stops on a footfall; Crouch_Exit is for standing still (cut in mid-stride, its
+		// feet slid 0.41-0.52 m/s: tests/people/trace_locomotion.gd "stand up")
+		if (speed > 0.15f && (!crouch || mv.length() > 0.1f)) crouch_t = 99.0f;   // (and down into it while he keeps moving: straight into the crouch walk, in step; stopping as he crouches he plays Crouch_Enter: going crouch walk -> crouch idle slid 2.1 m/s)
+	}
 	crouch_t += dt;
 	const float walk_top = walk_speed;
 	float top = swimming ? (run ? 1.7f : 1.0f) : (run ? run_speed : walk_top);
@@ -353,7 +359,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (step_mode != 0 && (airborne || settle_t < 1.1f)) step_mode = 0;
 		if (step_mode == 0 && want_len > 0.05f && move_speed < 0.05f && speed < 0.08f && turn_left < 0.6f && !airborne && settle_t >= 1.1f) {
 			const StringName c(String(pre) + String("start"));
-			if (fig->clip_len(c) > 0.0) { step_mode = 1; step_clip = c; step_t = 0.0f; step_cs = std::max(std::min(want_len, walk_top) / native_walk, 0.8f); starts++; }   // (never slower than x0.8: at half stick a x0.5 first step took 1.8 s)
+			if (fig->clip_len(c) > 0.0) { step_mode = 1; step_clip = c; step_t = 0.0f; step_cs = run ? 1.3f : std::max(std::min(want_len, walk_top) / native_walk, 0.8f); starts++; }   // (never slower than x0.8: at half stick a x0.5 first step took 1.8 s; off into a run: a quicker first step, x1.3, then he gathers into the jog)
 		}
 		if (step_mode == 0 && want_len < 0.05f && move_speed > 0.3f && move_speed < walk_top * 1.05f && !airborne && fig->clip_len(StringName(String(pre) + String("stop_l"))) > 0.0) {
 			// waiting for the next footfall (at most half a step): he keeps his pace till then

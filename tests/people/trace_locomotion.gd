@@ -22,7 +22,9 @@ const TOUR := [
 	[3.0, "turn round", Vector2(0, -0.55), false, false],   # (standing, asked back the way he came: the turn on the spot, then off)
 	[1.5, "stop 2", Vector2.ZERO, false, false],
 	[2.5, "turn right", Vector2(0.55, 0), false, false],   # (standing, asked 90 degrees right)
-	[1.5, "stop 3", Vector2.ZERO, false, false],
+	[2.8, "stop 3", Vector2.ZERO, false, false],   # (long enough to stand: the next part starts from standing)
+	[3.0, "off running", Vector2(0, 1.0), true, false],   # (from standing straight into a run)
+	[1.8, "stop 4", Vector2.ZERO, false, false],
 	[3.0, "walk turning", Vector2(0.45, 0.4), false, false],
 	[0.6, "crouch down", Vector2.ZERO, false, true],
 	[2.5, "crouch walk", Vector2(0, 0.7), false, true],
