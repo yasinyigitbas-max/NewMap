@@ -66,6 +66,120 @@ const TH_DOORS := {"apartments/apt_townhouse_cays": [[-4.7, -1.7], [7.85, 9.35]]
 
 var PY: Array = []
 
+## SUPERCHECKER (20 Nov; Yasin: "be MUCH more prone to delete: any prop or road/ground mark with any finding or any
+## doubt is deleted with its reason, no relocating"): tools/city/super/sc.py check on this piece (area layout
+## OUT/fill/fw/area.json); every prop with a finding taken out (its reason on its line), every mark with a finding
+## taken out, a collision box on each building column the checker measured with none. Applied after everything is
+## placed (hs_fill_lib.sc_apply). Left: report-only kinds (wide_batch, empty_area, ground_step).
+const SC := {
+ "out": [
+	["prop_park_bench", -290.000, -1546.800, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -290.000, -1531.200, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -320.000, -1524.400, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -312.000, -1524.400, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -316.000, -1501.400, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", -222.000, -1420.000, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_patio_set_4", -318.000, -1486.500, "no_reason: prop_patio_set_4 stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_patio_set_4", -258.000, -1486.500, "no_reason: prop_patio_set_4 stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_patio_set_4", -222.000, -1486.500, "no_reason: prop_patio_set_4 stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_picnic_table", -288.000, -1513.000, "no_reason: prop_picnic_table stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_picnic_table", -280.000, -1517.000, "no_reason: prop_picnic_table stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_bbq_gas_cart", -316.500, -1546.600, "no_reason: prop_bbq_gas_cart stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_play_structure", -319.000, -1513.000, "no_reason: prop_play_structure stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_swing_set", -311.000, -1517.500, "no_reason: prop_swing_set stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_slide", -310.500, -1508.500, "no_reason: prop_slide stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_shade_sail", -310.000, -1539.000, "sail_over_nothing: a shade sail with no table, seat or play item under it"],
+ ],
+ "turn": [
+ ],
+ "decals": [
+	[-383.666, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-376.844, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-370.632, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-364.403, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-357.868, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-349.691, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-341.241, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-334.971, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-328.132, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-321.178, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-312.492, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-304.088, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-298.907, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-292.645, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-286.012, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-279.614, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-272.254, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-264.240, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-258.921, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-253.062, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-246.053, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-239.180, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-231.673, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-225.344, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+	[-218.542, -1457.000],   # oil_no_car: an oil mark on yellow with no stall, garage or roll-up door near it
+ ],
+ "boxes": [
+	["Buildings/bay_1", [-11.8703, 1.54998, 5.86491, 0.29992, 3.09995, 0.31015]],
+	["Buildings/bay_1", [-3.60018, 1.69995, 5.6249, 0.25977, 2.80001, 0.28994]],
+	["Buildings/bay_2", [-11.87015, 1.54996, 5.86491, 0.29997, 3.09991, 0.31015]],
+	["Buildings/bay_2", [-3.60022, 1.69994, 5.6249, 0.25984, 2.79995, 0.28994]],
+	["Buildings/bay_4", [-11.8703, 1.54998, 5.86491, 0.29992, 3.09995, 0.31015]],
+	["Buildings/bay_4", [-3.60018, 1.69995, 5.6249, 0.25977, 2.80001, 0.28994]],
+	["Buildings/bay_5", [-11.87015, 1.54996, 5.86491, 0.29997, 3.09991, 0.31015]],
+	["Buildings/bay_5", [-3.60022, 1.69994, 5.6249, 0.25984, 2.79995, 0.28994]],
+	["Buildings/tn_1", [-0.7502, 1.29997, -5.36012, 0.9398, 2.59994, 0.76002]],
+	["Buildings/tn_1", [-0.01024, 1.54, 4.42995, 0.35999, 3.07999, 0.26008]],
+	["Buildings/tn_1", [2.77483, 1.54, 4.35989, 0.16, 3.07999, 0.16]],
+	["Buildings/tn_1", [-3.60015, 1.49999, 4.95997, 0.23999, 2.99998, 0.16]],
+	["Buildings/tn_1", [9.19989, 1.49999, 4.95997, 0.23999, 2.99998, 0.16]],
+	["Buildings/tn_2", [-0.7502, 1.29997, -5.36012, 0.9398, 2.59994, 0.76002]],
+	["Buildings/tn_2", [-0.01024, 1.54, 4.42995, 0.35999, 3.07999, 0.26008]],
+	["Buildings/tn_2", [2.77483, 1.54, 4.35989, 0.16, 3.07999, 0.16]],
+	["Buildings/tn_2", [-3.60015, 1.49999, 4.95997, 0.23999, 2.99998, 0.16]],
+	["Buildings/tn_2", [9.19989, 1.49999, 4.95997, 0.23999, 2.99998, 0.16]],
+	["Buildings/tn_3", [-0.7502, 1.29997, -5.36012, 0.9398, 2.59994, 0.76002]],
+	["Buildings/tn_3", [-0.01024, 1.54, 4.42995, 0.35999, 3.07999, 0.26008]],
+	["Buildings/tn_3", [2.77483, 1.54, 4.35989, 0.16, 3.07999, 0.16]],
+	["Buildings/tn_3", [-3.60015, 1.49999, 4.95997, 0.23999, 2.99998, 0.16]],
+	["Buildings/tn_3", [9.19989, 1.49999, 4.95997, 0.23999, 2.99998, 0.16]],
+	["Buildings/tn_4", [-0.7502, 1.29997, -5.36012, 0.9398, 2.59994, 0.76002]],
+	["Buildings/tn_4", [-0.01024, 1.54, 4.42995, 0.35999, 3.07999, 0.26008]],
+	["Buildings/tn_4", [2.77483, 1.54, 4.35989, 0.16, 3.07999, 0.16]],
+	["Buildings/tn_4", [-3.60015, 1.49999, 4.95997, 0.23999, 2.99998, 0.16]],
+	["Buildings/tn_4", [9.19989, 1.49999, 4.95997, 0.23999, 2.99998, 0.16]],
+	["Buildings/tn_5", [-0.7502, 1.29997, -5.36012, 0.9398, 2.59994, 0.76002]],
+	["Buildings/tn_5", [-0.01024, 1.54, 4.42995, 0.35999, 3.07999, 0.26008]],
+	["Buildings/tn_5", [2.77483, 1.54, 4.35989, 0.16, 3.07999, 0.16]],
+	["Buildings/tn_5", [-3.60015, 1.49999, 4.95997, 0.23999, 2.99998, 0.16]],
+	["Buildings/tn_5", [9.19989, 1.49999, 4.95997, 0.23999, 2.99998, 0.16]],
+	["Buildings/tn_6", [-0.7502, 1.29997, -5.36012, 0.9398, 2.59994, 0.76002]],
+	["Buildings/tn_6", [-0.01024, 1.54, 4.42995, 0.35999, 3.07999, 0.26008]],
+	["Buildings/tn_6", [2.77483, 1.54, 4.35989, 0.16, 3.07999, 0.16]],
+	["Buildings/tn_6", [-3.60015, 1.49999, 4.95997, 0.23999, 2.99998, 0.16]],
+	["Buildings/tn_6", [9.19989, 1.49999, 4.95997, 0.23999, 2.99998, 0.16]],
+	["Buildings/ts_1", [-5.49754, 1.53997, 4.96097, 0.94503, 3.07995, 0.16]],
+	["Buildings/ts_1", [-0.21017, 1.53997, 4.1609, 0.35977, 3.07995, 0.16]],
+	["Buildings/ts_1", [6.50225, 1.53997, 4.96097, 0.94504, 3.07995, 0.16]],
+	["Buildings/ts_2", [-5.49754, 1.53997, 4.96097, 0.94503, 3.07995, 0.16]],
+	["Buildings/ts_2", [-0.21017, 1.53997, 4.1609, 0.35977, 3.07995, 0.16]],
+	["Buildings/ts_2", [6.50225, 1.53997, 4.96097, 0.94504, 3.07995, 0.16]],
+	["Buildings/ts_3", [-5.49754, 1.53997, 4.96097, 0.94503, 3.07995, 0.16]],
+	["Buildings/ts_3", [-0.21017, 1.53997, 4.1609, 0.35977, 3.07995, 0.16]],
+	["Buildings/ts_3", [6.50225, 1.53997, 4.96097, 0.94504, 3.07995, 0.16]],
+	["Buildings/ts_4", [-5.49754, 1.53997, 4.96097, 0.94503, 3.07995, 0.16]],
+	["Buildings/ts_4", [-0.21017, 1.53997, 4.1609, 0.35977, 3.07995, 0.16]],
+	["Buildings/ts_4", [6.50225, 1.53997, 4.96097, 0.94504, 3.07995, 0.16]],
+	["Buildings/ts_5", [-5.49754, 1.53997, 4.96097, 0.94503, 3.07995, 0.16]],
+	["Buildings/ts_5", [-0.21017, 1.53997, 4.1609, 0.35977, 3.07995, 0.16]],
+	["Buildings/ts_5", [6.50225, 1.53997, 4.96097, 0.94504, 3.07995, 0.16]],
+	["Buildings/ts_6", [-5.49754, 1.53997, 4.96097, 0.94503, 3.07995, 0.16]],
+	["Buildings/ts_6", [-0.21017, 1.53997, 4.1609, 0.35977, 3.07995, 0.16]],
+	["Buildings/ts_6", [6.50225, 1.53997, 4.96097, 0.94504, 3.07995, 0.16]],
+ ],
+}
+
+
 func _init() -> void: _run.call_deferred()
 
 static func bbox(f: String) -> Array: return (K.building_stats(f).near as Dictionary).bbox
@@ -90,7 +204,7 @@ func _run() -> void:
 	# the tot lot's bark pad is level too: the field grades up to it like to a building's pad
 	var tot_y := H.pad_height([TOT[0] + 0.3, TOT[1] + 0.3, TOT[2] - 0.3, TOT[3] - 0.3], 0.0, yb)
 	pe.append([TOT[0], TOT[1], TOT[2], TOT[3], tot_y])
-	var gr := H.graded(yb, pe)
+	var gr := S.graded(yb, pe)      # 6 % aprons, then a bank (n_fw_site.graded)
 	# the grading eases back onto the plain ground within 4 m of every walk, so the seams with the streets stay exact
 	var yf := func(x: float, z: float) -> float: return lerpf(float(yb.call(x, z)), float(gr.call(x, z)), smoothstep(0.0, 4.0, S.edge_d("A", x, z)))
 	# ---- patches painted on their own (their stall lines would cut the whole field into slivers): the two courts
@@ -152,10 +266,27 @@ func _run() -> void:
 		[-232.0, -1447.3, -229.0, -1428.0, "concrete"],                    # ... its walk from the mews
 	])
 	for r: Array in regions: H.paint(g, r[0], r[1], r[2], r[3], r[5], String(r[4]), yf, 1.0)
+	# (superchecker "ground_step": where a patch's 2 m edge meets the field's own cuts the two sheets differ by up to
+	# 13 cm on the banks) a 0.2 m face under every patch edge, so nobody looks under the upper sheet
+	var lo := func(x: float, z: float) -> float: return float(yf.call(x, z)) - 0.2
+	for r: Array in regions:
+		for e: Array in [[r[0], r[1], r[2], r[1]], [r[0], r[3], r[2], r[3]], [r[0], r[1], r[0], r[3]], [r[2], r[1], r[2], r[3]]]:
+			H.skirt(g, Vector2(e[0], e[1]), Vector2(e[2], e[3]), yf, "wall", lo)
 	H.paint(g, X0, Z0, X1, Z1, main, "grass", yf)
 	for i in B.size(): H.pad_at(g, fp(B[i]), float(PY[i]), yf)
+	# closed front steps where a door path meets a pad standing over the graded ground (n_fw_site.door_steps)
+	var nst := 0
+	for i in B.size():
+		var b: Array = B[i]; var m := String(b[1]); var ps: Array = []
+		if m.ends_with("beach_condo"): ps = [[-300.0, 2.0]]
+		elif m.contains("garden"): ps = [[ua(b, -7.2), 2.0], [ua(b, 0.0), 2.0], [ua(b, 7.2), 2.0]]
+		else:
+			for d: Array in TH_DOORS[m]: ps.append([(ua(b, float(d[0])) + ua(b, float(d[1]))) * 0.5, absf(float(d[1]) - float(d[0]))])
+		nst += S.door_steps(g, fp(b), float(b[4]), float(PY[i]), yf, ps)
+	print("front steps: %d flights" % nst)
 	H.level_pad(g, "mulch", TOT[0], TOT[1], TOT[2], TOT[3], tot_y, yf)
 	if PASS >= 2: _build(bl, props, dec, rr, yf, tot_y)
+	if PASS >= 2: H.sc_apply(root, props, dec, SC)
 	H.finish(root, g, props, dec, "n_fw_bay")
 	quit()
 

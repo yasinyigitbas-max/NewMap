@@ -1,0 +1,253 @@
+{
+ "_doc": "North-west column (fw; claude/fill-high-street, 20 Nov): which business or service is behind which shop / civic door",
+ "count": 8,
+ "rooms": [
+  {
+   "id": "fw_bay_condo_0",
+   "piece": "n_fw_bay",
+   "label": "condo",
+   "model": "apartments/apt_beach_condo",
+   "pos": [
+    -300.0,
+    2.3084,
+    -1566.4
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.6,
+   "bay": [
+    -8.7,
+    8.7
+   ],
+   "kind": "cafe",
+   "name": "Bayfront Cafe",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "the beach condo's ground-floor front door on the bay walk: coffee for the people walking the bay, tables on its terrace",
+   "signs": []
+  },
+  {
+   "id": "fw_slope_market_0",
+   "piece": "n_fw_slope",
+   "label": "market",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    -370.0,
+    2.4682,
+    -1371.83
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": -1.08,
+   "door_w": 1.6,
+   "bay": [
+    -5.7,
+    0.0
+   ],
+   "kind": "corner_shop",
+   "name": "Hilltop Market",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "the neighbourhood's corner store at the slope's low corner on the arterial: milk, bread, the day's things for the apartments above",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "left",
+     "along": 7.55,
+     "w": 0.8
+    }
+   ]
+  },
+  {
+   "id": "fw_slope_market_1",
+   "piece": "n_fw_slope",
+   "label": "market",
+   "model": "commercial/com_orange_corner",
+   "pos": [
+    -370.0,
+    2.4682,
+    -1371.83
+   ],
+   "yaw": 180.0,
+   "door_index": 1,
+   "door_along": 1.08,
+   "door_w": 1.6,
+   "bay": [
+    0.0,
+    5.7
+   ],
+   "kind": "cleaners",
+   "name": "Suds Laundromat",
+   "style": "teal",
+   "font": "Overpass",
+   "built": "",
+   "why": "the laundromat next door: walk-up apartments have no machines; people wash while they shop",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 3.0,
+     "w": 5.18
+    },
+    {
+     "facade": "right",
+     "along": 7.55,
+     "w": 0.8
+    },
+    {
+     "facade": "right",
+     "along": 2.4,
+     "w": 3.2
+    }
+   ]
+  },
+  {
+   "id": "fw_slope_coffee_0",
+   "piece": "n_fw_slope",
+   "label": "coffee",
+   "model": "commercial/com_cafe_seaside",
+   "pos": [
+    -222.0,
+    4.3255,
+    -1371.83
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": -1.76,
+   "door_w": 1.6,
+   "bay": [
+    -2.7,
+    2.7
+   ],
+   "kind": "cafe",
+   "name": "Crown Hill Coffee",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "coffee at the NE corner where the walk down from Crown Hill meets the arterial to the bay",
+   "signs": []
+  },
+  {
+   "id": "fw_crest_bakery_0",
+   "piece": "n_fw_crest",
+   "label": "bakery",
+   "model": "commercial/com_bakery",
+   "pos": [
+    -222.0,
+    10.1416,
+    -1171.83
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": 3.26,
+   "door_w": 1.6,
+   "bay": [
+    -4.2,
+    4.2
+   ],
+   "kind": "bakery",
+   "name": "Crest Bakery",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "bread at the crest, the busiest and highest corner of the slope; its tables on the corner terrace",
+   "signs": []
+  },
+  {
+   "id": "fw_crest_salon_0",
+   "piece": "n_fw_crest",
+   "label": "salon",
+   "model": "ck/ck_svc_trade_1d",
+   "pos": [
+    -240.0,
+    9.9925,
+    -1174.0
+   ],
+   "yaw": 180.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "salon",
+   "name": "Crest Cuts",
+   "style": "navy",
+   "font": "Overpass",
+   "built": "",
+   "why": "the hill's hair salon beside the bakery, for the apartments round the crest",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  },
+  {
+   "id": "fw_court_community_0",
+   "piece": "n_fw_court",
+   "label": "community",
+   "model": "civic/civ_community_center",
+   "pos": [
+    -369.0,
+    6.2661,
+    -826.95
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": 0.0,
+   "door_w": 1.8,
+   "bay": [
+    -11.7,
+    11.7
+   ],
+   "kind": "hall",
+   "name": "Crown Hill Community Center",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "the neighbourhood's hall on the civic band's edge: meetings, classes, the residents' association, by the park",
+   "signs": []
+  },
+  {
+   "id": "fw_court_pharmacy_0",
+   "piece": "n_fw_court",
+   "label": "pharmacy",
+   "model": "ck/ck_svc_trade_1d",
+   "pos": [
+    -228.0,
+    6.2537,
+    -822.0
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -3.0,
+   "door_w": 1.8,
+   "bay": [
+    -5.7,
+    5.7
+   ],
+   "kind": "pharmacy",
+   "name": "Crown Hill Pharmacy",
+   "style": "green",
+   "font": "Overpass",
+   "built": "",
+   "why": "prescriptions for the apartments on the hill and the civic band's walkers, at the SE corner",
+   "signs": [
+    {
+     "facade": "front",
+     "along": -3.0,
+     "w": 5.2
+    }
+   ]
+  }
+ ]
+}

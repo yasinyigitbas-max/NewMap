@@ -1,0 +1,81 @@
+{
+ "area": "fw_bay",
+ "piece": "n_fw_bay",
+ "zone": "residential (bay-front apartments and townhouses, Crown Hill north)",
+ "rule": "docs/TREE_PLAN.md: apartments - one tree per court; residential yards - one per two or three houses; parks - clumps of 3-5 at the edges",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, fw: the north-west column), after the superchecker: no builder trees; each line placed for its reason",
+ "trees": [
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -352.0,
+    2.204,
+    -1555.0
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "shade on bay_1/bay_2's rear lawn (their court behind the row)"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    -386.5,
+    2.149,
+    -1568.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "the bay row's west end, the palm of the bay front"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -262.0,
+    2.741,
+    -1515.0
+   ],
+   "yaw": 10,
+   "scale": 0.9,
+   "why": "Mews Green east clump: shade over the lawn by the cross path"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    -268.0,
+    2.633,
+    -1524.0
+   ],
+   "yaw": 120,
+   "scale": 0.85,
+   "why": "Mews Green east clump, second crown"
+  },
+  {
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "at": [
+    -369.0,
+    2.265,
+    -1489.0
+   ],
+   "yaw": 0,
+   "scale": 0.8,
+   "why": "tn_1's back garden (one tree for the west townhouses)"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -270.0,
+    3.631,
+    -1422.0
+   ],
+   "yaw": 150,
+   "scale": 0.8,
+   "why": "ts_5's back garden (for ts_4 .. ts_6)"
+  }
+ ]
+}
