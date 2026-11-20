@@ -81,6 +81,8 @@ func _physics_process(delta: float) -> bool:
 			_check(int(fs.attacks) + int(fs.dodges) >= 1, "once hit he fights back: %d blows at the player (%d landed), %d dodges sideways" % [int(fs.attacks), int(fs.hits_on_player), int(fs.dodges)])
 			_check(int(fs.npc_beaten) + int(fs.player_beaten) == 1, "one of them is beaten: %s (%.0f s)" % ["the person" if int(fs.npc_beaten) > 0 else "the player", t - t0])
 			_check(not bool(player.call(&"get_combat")), "the fight is over")
+			var cst: Dictionary = crowd.call(&"stats")
+			_check(int(cst.alarms_player_hit) >= 1, "the street reacts to the player's blows (B31): %d alarm(s); %d ran, %d stared / filmed / called, %d ducked" % [int(cst.alarms_player_hit), int(cst.fled), int(cst.stared), int(cst.ducked)])
 			step = 4; t0 = t
 		4:      # the beaten person falls with his weight
 			for nb: Dictionary in crowd.call(&"near_bodies"):

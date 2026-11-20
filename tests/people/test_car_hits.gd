@@ -96,6 +96,7 @@ func _physics_process(delta: float) -> bool:
 			_check(lowest < 0.5 and was_down, "the car knocks him over (his hips %.2f m over the ground at the lowest), he lies, and gets up" % lowest)
 			_check(back, "and he walks back to the pavement (%.0f s after the car set off; %.1f m from where he stood)" % [t - t0, (p.at as Vector3).distance_to(from) if not p.is_empty() else -1.0])
 			var st: Dictionary = crowd.call(&"stats")
+			_check(int(st.alarms_car_hit) >= 1 and int(st.fled) + int(st.stared) + int(st.ducked) > 0, "the street reacts to the hit (B31): %d alarm(s); %d ran, %d stared / filmed / called, %d ducked" % [int(st.alarms_car_hit), int(st.fled), int(st.stared), int(st.ducked)])
 			_check(int(st.bad_numbers) == 0, "no bad number")
 			step = 9
 		9:
