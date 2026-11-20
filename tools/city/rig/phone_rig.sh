@@ -74,6 +74,9 @@ do_export() {
   rm -f "$OUT/citykit_rig.apk"
   "$GODOT_EXPORT" --headless --path . --export-debug Rig "$(winpath "$OUT/citykit_rig.apk")" > "$OUT/export.log" 2>&1
   [ -f "$OUT/citykit_rig.apk" ] || { tail -15 "$OUT/export.log"; die "no APK: see OUT/export.log"; }
+  # (20 Nov: an export whose editor could not load the GDExtension - its Windows DLL copy locked by another Godot - left the
+  # Android library out without failing: a grey screen on every phone) no game library in the APK = no APK
+  unzip -l "$OUT/citykit_rig.apk" | grep -q "libcoronado_city.android.arm64.so" || { mv "$OUT/citykit_rig.apk" "$OUT/citykit_rig_NO_NATIVE.apk"; grep -a "extension\|dll" "$OUT/export.log" | head -5; die "the APK has no libcoronado_city.android.arm64.so (the editor could not load the extension: close other Godot runs, delete native/bin/~*, export again)"; }
   ls -la "$OUT/citykit_rig.apk" | awk '{print "PHONE_RIG apk", $5/1048576, "MB"}'
 }
 
