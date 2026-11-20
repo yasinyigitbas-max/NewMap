@@ -58,6 +58,7 @@ public:
 	bool have_prev = false;
 	uint64_t last_us = 0;   // (the tests) how far the hips went down, how far each sole ended from its ground
 	void _process_modification_with_delta(double p_delta) override;
+	void reset() { locked[0] = locked[1] = false; rel_off[0] = rel_off[1] = Vector3(); have_prev = false; }   // (another person in the same figure)
 };
 
 } // namespace godot

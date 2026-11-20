@@ -2,6 +2,7 @@
 #include "city_crowd.h"
 
 #include "city_ped.h"
+#include "hand_grip.h"
 #include "city_player.h"
 #include "city_traffic.h"
 #include "people_bake.h"
@@ -583,9 +584,13 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 	}
 	const bool stays = crowd->mode[i] == pc::M_STAY || crowd->mode[i] == pc::M_HELD || crowd->state[i] == pc::ST_PAUSE;
 	if (!stays && v > 0.15f) {   // on its way: the walk at the walker's own pace, a jog, a run
-		if (v > 2.8f) { r_clip = SPRINT; r_speed = v / (gait[g][4] / gait[g][5]); }
-		else if (v > 1.9f) { r_clip = JOG; r_speed = v / (gait[g][2] / gait[g][3]); }
-		else { r_clip = ((lk >> 6) & 3u) == 0u ? WALK2 : WALK; r_speed = v / (gait[g][0] / gait[g][1]); }
+		// each clip's own ground speed, measured on the figures (tools/people/clip_audit.gd STRIDE: man, woman): the bake's
+		// walk round (1.4 m in 1.3 s) was 18 % fast, and every walker's planted foot slid 0.2 m/s (tests/people/trace_crowd.gd)
+		static const float WALK_V[2] = { 0.91f, 0.94f }, JOG_V[2] = { 2.40f, 2.49f }, SPRINT_V[2] = { 3.16f, 3.28f };
+		const int gk = g ? 1 : 0;
+		if (v > 2.8f) { r_clip = SPRINT; r_speed = v / SPRINT_V[gk]; }
+		else if (v > 1.9f) { r_clip = JOG; r_speed = v / JOG_V[gk]; }
+		else { r_clip = ((lk >> 6) & 3u) == 0u ? WALK2 : WALK; r_speed = v / WALK_V[gk]; }
 		// at a walk the hands are free: a phone at the ear or in the hand, a word to the one beside him (in a group
 		// one of them talks for four seconds, then the next, then nobody for a while)
 		if (v <= 1.9f) {
@@ -932,6 +937,19 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 					} else if (wd > 0.05f) at.y = (float)sea_y - wd;
 				}
 				nb.ped->drive(Transform3D(Basis(Vector3(0, 1, 0), lerp_angle(crowd->pyaw[i], crowd->yaw[i], a)).scaled(Vector3(sc, sc, sc)), at), clip, speed, hold, token);
+				// the feet on the real ground, planted ones pinned where they land (Yasin, 20 Nov: "i want them pixel perfect":
+				// tests/people/trace_crowd.gd found walkers' planted feet sliding 0.24-0.36 m/s and feet 23 cm over the ground
+				// or 3 cm in it where the crowd's path height and the ground differ); off while seated, on the ground, lying or
+				// swimming, and while the figure fades in
+				if (Skeleton3D *psk = nb.ped->skeleton()) {
+					if (!nb.plant) { nb.plant = memnew(FootPlant); psk->add_child(nb.plant); }
+					if (nb.plant_walker != nb.walker) { nb.plant->reset(); nb.plant_walker = nb.walker; }
+					const String cn = String(clip);
+					const bool on = sc > 0.9f && !cn.begins_with("ual/Sitting") && !cn.begins_with("ual/GroundSit") && !cn.contains("Lay") && !cn.begins_with("ual/Swim");
+					nb.plant->set_active(on); nb.plant->set_influence(on ? 1.0f : 0.0f);
+					const float fy = lerp_angle(crowd->pyaw[i], crowd->yaw[i], a);
+					nb.plant->fwd = Vector3(std::sin(fy), 0.0f, std::cos(fy));
+				}
 				// the last blow of a fight is a real one: the one who takes it is handed to his balancing body, which
 				// staggers back or goes down, and gets up by itself (pushes and falls are never a clip)
 				if (crowd->act[i] == pc::A_FIGHT && sc > 0.9f && nb.push_cd <= 0.0f && crowd->fwin[i] == 0 && crowd->pause_t[i] < 0.70f && crowd->pause_t[i] > 0.2f && l_fight_in > 0.0) {
@@ -1197,7 +1215,9 @@ Array CityCrowd::near_bodies() const {
 		if (nb.walker < 0) continue;
 		Dictionary d;
 		d["walker"] = nb.walker; d["woman"] = nb.female != 0; d["clip"] = String(nb.ped->current_clip()); d["in_physical_body"] = nb.in_body; d["shown_s"] = nb.act_t; d["figure_mode"] = (int)nb.ped->get_mode(); d["at"] = nb.ped->body_at(); d["body"] = nb.ped->get_state();
-		d["foot_l"] = nb.ped->bone_world("Bip01_L_Foot"); d["foot_r"] = nb.ped->bone_world("Bip01_R_Foot"); d["pelvis"] = nb.ped->bone_world("Bip01_Pelvis");
+		const bool planted = nb.plant && nb.plant->is_active();   // (as drawn: after the foot plant, read inside it)
+		d["foot_l"] = planted ? nb.plant->foot_w[0] : nb.ped->bone_world("Bip01_L_Foot"); d["foot_r"] = planted ? nb.plant->foot_w[1] : nb.ped->bone_world("Bip01_R_Foot");
+		d["pelvis"] = planted ? nb.plant->pelvis_w : nb.ped->bone_world("Bip01_Pelvis"); d["planted"] = planted;
 		d["hand_l"] = nb.ped->bone_world("Bip01_L_Hand"); d["hand_r"] = nb.ped->bone_world("Bip01_R_Hand"); d["v"] = nb.v_s;
 		{ const int i = crowd->find(nb.walker); d["act"] = i >= 0 ? (int)crowd->act[i] : -1; d["mode"] = i >= 0 ? (int)crowd->mode[i] : -1; d["ground"] = i >= 0 ? crowd->y[i] : 0.0f; }
 		out.push_back(d);

@@ -57,7 +57,10 @@ func _report() -> void:
 				var hgt: float = (f[key] as Vector3).y - float(f.g) - 0.075
 				B.sunk = minf(B.sunk, hgt)
 				var lower: bool = (key == "fl") == ((f.fl as Vector3).y <= (f.fr as Vector3).y)
-				if lower and hgt < 0.03 and (H[i - 2][key] as Vector3).y - float(f.g) - 0.075 < 0.03 and (H[i + 2][key] as Vector3).y - float(f.g) - 0.075 < 0.03:
+				# planted: within 1.5 cm of its own lowest over the 25 frames round it, and so two frames before and after
+				var lo := 99.0
+				for j in range(maxi(0, i - 12), mini(H.size(), i + 13)): lo = minf(lo, (H[j][key] as Vector3).y)
+				if lower and (f[key] as Vector3).y - lo < 0.015 and (H[i - 2][key] as Vector3).y - lo < 0.015 and (H[i + 2][key] as Vector3).y - lo < 0.015:
 					var v := Vector2((f[key] as Vector3).x - (H[i - 1][key] as Vector3).x, (f[key] as Vector3).z - (H[i - 1][key] as Vector3).z).length() * 60.0
 					B.slide_n += 1; B.slide += v; B.slide_max = maxf(B.slide_max, v)
 			if not c.begins_with("Sitting") and not c.begins_with("GroundSit") and not c.contains("Lay"):
@@ -74,6 +77,11 @@ func _report() -> void:
 					sw[pair] = int(sw.get(pair, 0)) + 1
 					if pops.size() < 40: pops.append("walker %d frame %d %-4s %.3f m (round it %.3f) %s" % [w, int(f.f), key, mv, med, pair])
 	print("CROWD %d people traced near the camera for %.0f s" % [people, secs])
+	for a2: String in OS.get_cmdline_user_args():
+		if a2.begins_with("--walker="):
+			var ww := int(a2.trim_prefix("--walker="))
+			if hist.has(ww):
+				for f in hist[ww]: print("CROWDF %d %-18s v %.2f L %s R %s hips %s ground %.2f" % [int(f.f), f.clip, float(f.v), str(f.fl), str(f.fr), str(f.p), float(f.g)])
 	for c in by:
 		var B: Dictionary = by[c]
 		print("CROWD %-26s %5d frames | pops %3d | planted foot slides mean %.2f m/s worst %.2f (%d) | foot into the ground %.3f m | lower foot over it %.3f m" % [c, B.n, B.pops, B.slide / maxf(B.slide_n, 1), B.slide_max, B.slide_n, B.sunk, B.float])
