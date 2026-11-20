@@ -98,7 +98,10 @@ public:
 private:
 	struct Near { CityPed *ped = nullptr; class FootPlant *plant = nullptr; int plant_walker = -1; Vector3 last_at; bool has_last = false; int walker = -1; int female = 0; bool in_body = false; float push_cd = 0; Ref<ShaderMaterial> look; int act = -1; float act_t = 99.0f, v_s = 0.0f; int why = 0, after_kind = 0; float after_t = 0.0f, after_len = 0.0f; bool after_hit = false; bool stepping = false; float y_s = 0.0f; bool has_y = false;
 		// the walk start / stop (tools/people/make_steps.gd) for the walker it shows: 1 setting off, 2 stopping
-		int st_mode = 0, st_walker = -1; float st_t = 0.0f; bool st_moving = false; StringName st_clip; };   // act, act_t: what it shows and for how long (the way INTO an act is played once)
+		int st_mode = 0, st_walker = -1; float st_t = 0.0f; bool st_moving = false; StringName st_clip;
+		// a phone in his raised hand while he films (Yasin, 20 Nov: "put a rectangular phone like shape in npcs hands when
+		// they are recording"): made the first time it is needed, shown only then
+		class MeshInstance3D *phone = nullptr; };   // act, act_t: what it shows and for how long (the way INTO an act is played once)
 	// how long the clips into and out of an act are (read from the figure once it is made)
 	bool lens_ok = false;
 	int fight_falls = 0;

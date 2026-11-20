@@ -12,6 +12,10 @@
 #include "ped_inl.h"
 #include "traffic_sim.h"
 
+#include <godot_cpp/classes/bone_attachment3d.hpp>
+#include <godot_cpp/classes/box_mesh.hpp>
+#include <godot_cpp/classes/mesh_instance3d.hpp>
+#include <godot_cpp/classes/standard_material3d.hpp>
 #include <godot_cpp/classes/array_mesh.hpp>
 #include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/file_access.hpp>
@@ -1035,6 +1039,22 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 					if (CityPed::stride_of(clip, ld, ns)) speed /= std::max((double)sc, 0.5);
 				}
 				nb.ped->drive(Transform3D(Basis(Vector3(0, 1, 0), lerp_angle(crowd->pyaw[i], crowd->yaw[i], a)).scaled(Vector3(sc, sc, sc)), at), clip, speed, hold, token);
+				{   // the phone he films with: a dark slab, 7 x 14.5 x 0.9 cm, in his raised left hand (the filming clip holds it up)
+					const bool rec = crowd->act[i] == pc::A_FILM;
+					if (rec && !nb.phone) {
+						if (Skeleton3D *sk = nb.ped->skeleton()) {
+							const float k = std::max((float)sk->get_global_transform().basis.get_scale().x / std::max(sc, 0.5f), 1e-4f);   // (the skeleton's units: centimetres)
+							BoneAttachment3D *ba = memnew(BoneAttachment3D); ba->set_bone_name("Bip01_L_Hand"); sk->add_child(ba);
+							MeshInstance3D *m = memnew(MeshInstance3D);
+							Ref<BoxMesh> bm; bm.instantiate(); bm->set_size(Vector3(0.009f, 0.07f, 0.145f) / k);   // (upright, its face toward him: thin along the hand, tall up its side)
+							Ref<StandardMaterial3D> mat; mat.instantiate(); mat->set_albedo(Color(0.05f, 0.05f, 0.06f)); mat->set_roughness(0.35f); mat->set_metallic(0.3f);
+							m->set_mesh(bm); m->set_material_override(mat); m->set_cast_shadows_setting(GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);
+							m->set_position(Vector3(0.09f, -0.02f, 0.0f) / k);   // (along the hand, past the palm: held in the fingers)
+							ba->add_child(m); nb.phone = m;
+						}
+					}
+					if (nb.phone) nb.phone->set_visible(rec && nb.ped->get_mode() == CityPed::MODE_ANIM);
+				}
 				// the feet on the real ground, planted ones pinned where they land (Yasin, 20 Nov: "i want them pixel perfect":
 				// tests/people/trace_crowd.gd found walkers' planted feet sliding 0.24-0.36 m/s and feet 23 cm over the ground
 				// or 3 cm in it where the crowd's path height and the ground differ); off while seated, on the ground, lying or
