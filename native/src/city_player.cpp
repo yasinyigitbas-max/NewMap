@@ -51,7 +51,10 @@ void CityPlayer::_ready() {
 	cam->set_fov(62.0); cam->set_near(0.1); cam->set_far(1500.0);
 	add_child(cam);
 	cam->make_current();
-	if (OS::get_singleton()->has_feature("mobile")) {   // the microphone, for the back tap's knock (its sound must agree with the motion)
+	if (OS::get_singleton()->has_feature("mobile")) {   // the microphone, for the back tap's knock (it confirms a softer tap; never needed)
+		// (B22: audio input is on in project.godot since 20 Nov - without it the microphone gave nothing - and Android
+		// asks the player once for the microphone)
+		if (OS::get_singleton()->get_name() == "Android") OS::get_singleton()->request_permission("android.permission.RECORD_AUDIO");
 		AudioServer *as = AudioServer::get_singleton();
 		int b = as->get_bus_index("TapMic");
 		if (b < 0) { as->add_bus(); b = as->get_bus_count() - 1; as->set_bus_name(b, "TapMic"); as->set_bus_volume_db(b, -80.0f); }
@@ -135,19 +138,38 @@ void CityPlayer::sense(double p_dt) {
 	// on in project.godot on claude/perf-bugs)
 	gyro_peak = std::max(gyro_peak * (float)std::exp(-p_dt / 0.25), gyro);
 	acc_peak = std::max(acc_peak * (float)std::exp(-p_dt / 0.25), std::fabs(a.length() - 9.81f));
-	if (gyro_peak > 4.5f && acc_peak > 6.0f && swing_cd <= 0.0) { combat_req = true; swing_cd = 1.5; gyro_peak = 0.0f; acc_peak = 0.0f; }
-	if (hp.length() > 3.5f && gyro < 3.0f) acc_spike_t = clock_s;
+	// (B20/B22, Yasin: "BRING MY SWING DOWN TO ENTER COMBAT": a little easier than 4.5 / 6)
+	if (gyro_peak > 4.0f && acc_peak > 5.0f && swing_cd <= 0.0) { combat_req = true; swing_cd = 1.5; gyro_peak = 0.0f; acc_peak = 0.0f; }
+	// THE BACK TAP (B22, Yasin 20 Nov: "TAPPING ON THE BACK OF THE PHONE TO ATTACK PEOPLE DOESNT WORK, WE USED TO HAVE A WORKING
+	// SYSTEM ... MIC ... ACCELEROMETER AND GYRO"; "MAKE THE BACK TAPS EASY TO DETECT"): the old game's player/back_tap.gd rules,
+	// a little easier. The jerk between two frames, weighted to the axis through the screen (a knock on the back pushes the
+	// phone along z; a shake or a side knock moves it along x / y and scores low): over TAP_HARD it counts alone; over
+	// TAP_SOFT with the gyro's twitch or the mic's knock. The mic alone never counts (talk, street noise). Not during or
+	// just after a swing (that is the way into combat, not a punch). Until 20 Nov all three had to agree within 0.1 s with
+	// the gyro QUIET, and the mic never got a sample (audio input was off): no tap ever landed.
+	static const float TAP_HARD = 3.0f, TAP_SOFT = 1.8f, TAP_GYRO = 0.6f, SIDE_W = 0.35f, MIC_KNOCK = 0.3f;
+	float mic_now = 0.0f;
 	if (mic_cap) {
 		const int n = mic_cap->get_frames_available();
 		if (n > 0) {
 			const PackedVector2Array fr = mic_cap->get_buffer(n);
-			float peak = 0.0f;
-			for (int k = 0; k < fr.size(); k++) peak = std::max(peak, std::max(std::fabs(fr[k].x), std::fabs(fr[k].y)));
-			if (peak > 0.25f && peak > mic_avg * 5.0f) mic_spike_t = clock_s;
-			mic_avg += (peak - mic_avg) * 0.05f;
+			for (int k = 0; k < fr.size(); k++) mic_now = std::max(mic_now, std::max(std::fabs(fr[k].x), std::fabs(fr[k].y)));
 		}
-	} else mic_spike_t = acc_spike_t;   // (no microphone: the motion alone)
-	if (combat && tap_cd <= 0.0 && acc_spike_t > clock_s - 0.12 && std::fabs(acc_spike_t - mic_spike_t) < 0.1) { punch_req = true; tap_cd = 0.25; acc_spike_t = -9.0; }
+	}
+	mic_on_t += p_dt;
+	if (mic_on_t < 0.4) mic_now = 0.0f;   // (a microphone starts with a pop)
+	const bool mic_knock = mic_now > MIC_KNOCK && mic_now > mic_avg * 4.0f;
+	mic_avg += (mic_now - mic_avg) * 0.05f;
+	if (mic_knock) mic_spike_t = clock_s;
+	const Vector3 d = acc_prev_ok ? a - acc_prev : Vector3();
+	acc_prev = a; acc_prev_ok = true;
+	tap_score = std::sqrt(d.z * d.z + SIDE_W * SIDE_W * (d.x * d.x + d.y * d.y));
+	const bool heard = clock_s - mic_spike_t < 0.08;
+	const bool in_swing = gyro_peak > 3.0f || swing_cd > 1.1;
+	const bool tap = !in_swing && (tap_score >= TAP_HARD || (tap_score >= TAP_SOFT && (gyro >= TAP_GYRO || heard)));
+	if (tap) acc_spike_t = clock_s;
+	if (combat && tap_cd <= 0.0 && tap) { punch_req = true; tap_cd = 0.22; acc_spike_t = -9.0; }
+	(void)hp;
 }
 
 int CityPlayer::take_punch() {

@@ -25,6 +25,11 @@ window/size/viewport_height=900
 
 enabled=PackedStringArray("res://addons/godot_speech/plugin.cfg")
 
+[audio]
+; B22 (Yasin 20 Nov: back taps "USED MIC INPUT (SOUND OF TAP) ACCELEROMETER AND GYRO"): the microphone gives nothing unless
+; audio input is on (the old game had it on). The mic only confirms a softer tap; a hard one counts on motion alone.
+driver/enable_input=true
+
 [input_devices]
 ; B20 (Yasin 20 Nov: "swaying phone fast downwards doesnt put us into the combat mode"): since Godot 4.3 the phone's motion
 ; sensors are OFF unless enabled here, and Input.get_accelerometer() / get_gyroscope() read zero (CityPlayer::sense took
