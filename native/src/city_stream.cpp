@@ -367,6 +367,24 @@ void CityStream::_process(double) {
 	}
 	stats["t_proc1"] = (int64_t)usec();
 	if (warm_phase) warm_step();
+	// a teleport loading: the worst frame (from this node's last _process to this one) and what was done in it
+	const uint64_t now = usec();
+	if (!prepared.empty() && prep_last_us) {
+		const double fr = (double)(now - prep_last_us) / 1000.0;
+		if (fr > prep_worst_ms) {
+			prep_worst_ms = fr;
+			int loading = 0; for (const Cell &c : cells) if (c.state == LOADING || c.state == BUILDING) loading++;
+			prep_worst_what = vformat("frame %.0f ms: streamer %.2f ms, cells added %d, bodies made %d, cells loading %d, physics wait %s, render wait %s, bodies waiting %d",
+				fr, (double)stats["proc_ms"], frame_adds, frame_bodies, loading, String(stats.get("phys_wait_ms", "-")), String(stats.get("rs_wait_ms", "-")), (int)pending.size());
+		}
+	}
+	prep_last_us = prepared.empty() ? 0 : now;
+	frame_adds = 0; frame_bodies = 0;
+}
+
+void CityStream::release_prepared() {
+	if (!prepared.empty() && prep_worst_ms > 0.0) UtilityFunctions::print("RIG   teleport worst ", prep_worst_what);
+	prepared.clear(); prep_worst_ms = 0.0; prep_worst_what = String(); prep_last_us = 0;
 }
 
 void CityStream::process_stream(uint64_t t0) {
@@ -429,7 +447,7 @@ void CityStream::process_stream(uint64_t t0) {
 			make_body(e);
 			const double bms = (double)(usec() - tb) / 1000.0;
 			if (bms > (double)stats["body_ms_worst"]) { stats["body_ms_worst"] = bms; stats["body_worst_what"] = vformat("%s new=%d", nm, cost); }
-			stats["bodies"] = (int)stats["bodies"] + 1; stats["col_units"] = (int)stats.get("col_units", 0) + cost;
+			stats["bodies"] = (int)stats["bodies"] + 1; stats["col_units"] = (int)stats.get("col_units", 0) + cost; frame_bodies++;
 			if (col_range <= 0.0 || e.inrange_ms > 0)
 				stats["body_wait_ms_worst"] = std::max((int64_t)stats.get("body_wait_ms_worst", 0), (int64_t)(msec() - (e.inrange_ms > 0 ? e.inrange_ms : e.arrive_ms)));
 		}
@@ -479,7 +497,7 @@ void CityStream::add_cell(int i) {
 		else away(b.marker);
 	}
 	c.bodies.clear();
-	c.state = IN; stats["in"] = (int)stats["in"] + 1; mark(i, true);
+	c.state = IN; stats["in"] = (int)stats["in"] + 1; mark(i, true); frame_adds++;
 	emit_signal("cell_in", c.key);
 }
 

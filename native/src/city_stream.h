@@ -76,6 +76,8 @@ private:
 	std::vector<float> v_add_ms, v_ready_ms; int ready_dropped = 0;
 	StaticBody3D *probe_body = nullptr;
 	uint64_t player_id = 0;
+	// teleport frames (a place prepared): the worst one, what this node did in it, printed at release_prepared() as a RIG line
+	uint64_t prep_last_us = 0; double prep_worst_ms = 0.0; String prep_worst_what; int frame_adds = 0, frame_bodies = 0;
 	// warm-up (behind the loading screen): frames left of the warm scene, then the graphics-memory reserve
 	Node3D *warm_node = nullptr; int warm_frames = 0, warm_phase = 0; double warm_prev_night = 0.0; std::vector<RID> warm_held; uint64_t warm_t0 = 0;
 	// loader threads
@@ -174,7 +176,7 @@ public:
 	bool busy() const;
 	bool is_ready(const Vector3 &p) const;
 	void prepare(const Vector3 &p) { prepared.push_back(p); }
-	void release_prepared() { prepared.clear(); }
+	void release_prepared();
 	void set_night(double v);
 	void warm_up(Camera3D *p_cam, int p_frames = 3);
 	// for the rig and tools
