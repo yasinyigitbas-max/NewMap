@@ -1,4 +1,5 @@
 // CityBike and BikeReach: see city_bike.h.
+#include "perf_marks.h"
 #include "city_bike.h"
 
 #include "city_ped.h"
@@ -563,6 +564,7 @@ void CityBike::pose_parts(double p_delta) {
 }
 
 void CityBike::_process(double p_delta) {
+	pm::Scope _pm(pm::BIKE);   // (the slow-frame marks, perf_marks.h)
 	if (!made) return;
 	st_t += (float)p_delta;
 	pose_parts(p_delta);

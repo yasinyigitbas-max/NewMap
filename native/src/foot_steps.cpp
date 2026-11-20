@@ -1,4 +1,5 @@
 // FootSteps: see foot_steps.h.
+#include "perf_marks.h"
 #include "foot_steps.h"
 #include "city_ped.h"
 #include <godot_cpp/classes/audio_stream_player3d.hpp>
@@ -72,6 +73,7 @@ void FootSteps::_ready() {
 }
 
 void FootSteps::_process(double p_delta) {
+	pm::Scope _pm(pm::STEPS);   // (the slow-frame marks, perf_marks.h)
 	CityPed *ped = fig_id ? Object::cast_to<CityPed>(ObjectDB::get_instance(ObjectID(fig_id))) : nullptr;
 	if (!ped || !ped->is_inside_tree() || !ped->is_visible_in_tree()) return;
 	Skeleton3D *sk = ped->skeleton();

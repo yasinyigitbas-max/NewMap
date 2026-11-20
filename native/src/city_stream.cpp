@@ -1,5 +1,6 @@
 // CityStream: see city_stream.h (a port of tools/city/bake/city_stream.gd; the comments there hold the measurements).
 #include "city_stream.h"
+#include "perf_marks.h"
 #include "city_breakables.h"
 #include "city_skyline.h"
 #include "city_rooms.h"
@@ -614,7 +615,14 @@ void CityStream::warm_step() {
 }
 
 // ---------------------------------------------------------------- binding
+Dictionary CityStream::perf_take() {
+	Dictionary d;
+	for (int k = 0; k < pm::N; k++) { if (pm::acc_ms[k] > 0.0) d[pm::NAME[k]] = pm::acc_ms[k]; pm::acc_ms[k] = 0.0; }
+	return d;
+}
+
 void CityStream::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("perf_take"), &CityStream::perf_take);
 	ADD_SIGNAL(MethodInfo("cell_in", PropertyInfo(Variant::STRING, "key")));
 	ADD_SIGNAL(MethodInfo("cell_out", PropertyInfo(Variant::STRING, "key")));
 	ADD_SIGNAL(MethodInfo("warmed_up"));

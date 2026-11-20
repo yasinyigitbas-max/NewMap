@@ -1,4 +1,5 @@
 // CityTalk: see city_talk.h. The flow, the chances and the times are the old game's (npc_talk.gd).
+#include "perf_marks.h"
 #include "city_talk.h"
 
 #include "city_crowd.h"
@@ -904,6 +905,7 @@ void CityTalk::_exit_tree() {
 }
 
 void CityTalk::_process(double p_delta) {
+	pm::Scope _pm(pm::TALK);   // (the slow-frame marks, perf_marks.h)
 	CityCrowd *c = crowd_node();
 	// the clock people remember by: the crowd's hours where its clock runs, else a game hour in two and a half minutes
 	now_h += hours_per_second > 0.0 ? hours_per_second * p_delta : p_delta / 150.0;

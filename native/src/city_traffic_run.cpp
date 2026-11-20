@@ -1,5 +1,6 @@
 // CityTraffic at run time: the step on its own thread, the car batches, the parked cars, the streamer's cells, the
 // collision pool. See city_traffic.h for how it hangs together.
+#include "perf_marks.h"
 #include "city_traffic.h"
 #include "bike_look.h"
 
@@ -738,6 +739,7 @@ void CityTraffic::_exit_tree() {
 
 // ---------------------------------------------------------------- every frame
 void CityTraffic::_process(double p_delta) {
+	pm::Scope _pm(pm::TRAFFIC);   // (the slow-frame marks, perf_marks.h)
 	if (!ready || !gfx) return;
 	const int64_t t0 = usec_now();
 	Viewport *vp = get_viewport();
@@ -1136,6 +1138,7 @@ void CityTraffic::loose_update(double p_delta) {
 // are sent; a body changes its box only when it gets a car of another model. A car that the player's car, or a car
 // already knocked loose, will touch within a sixth of a second becomes a physical car instead of a box.
 void CityTraffic::_physics_process(double p_delta) {
+	pm::Scope _pm(pm::TRAFFIC_PHYS);   // (the slow-frame marks, perf_marks.h)
 	if (!pool_made || !bodies_on) return;
 	loose_update(p_delta);
 	PhysicsServer3D *ps = PhysicsServer3D::get_singleton();

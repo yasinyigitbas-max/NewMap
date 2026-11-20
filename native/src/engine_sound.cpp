@@ -1,4 +1,5 @@
 // EngineSound: see engine_sound.h.
+#include "perf_marks.h"
 #include "engine_sound.h"
 #include "city_car.h"
 #include <godot_cpp/classes/audio_stream_generator.hpp>
@@ -92,6 +93,7 @@ void EngineSound::fill(AudioStreamGeneratorPlayback *pb, int n, float rpm, float
 }
 
 void EngineSound::_process(double p_delta) {
+	pm::Scope _pm(pm::ENGINE);   // (the slow-frame marks, perf_marks.h)
 	CityCar *c = car_id ? Object::cast_to<CityCar>(ObjectDB::get_instance(ObjectID(car_id))) : nullptr;
 	if (!c || !pl) return;
 	Ref<AudioStreamGeneratorPlayback> pb = pl->get_stream_playback();

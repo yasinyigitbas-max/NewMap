@@ -1,4 +1,5 @@
 // CityAmbience: see city_ambience.h. Numbers from the old game's ambience.gd unless said.
+#include "perf_marks.h"
 #include "city_ambience.h"
 #include "city_crowd.h"
 #include "foot_steps.h"
@@ -112,6 +113,7 @@ void CityAmbience::_ready() {
 }
 
 void CityAmbience::_process(double p_delta) {
+	pm::Scope _pm(pm::AMBIENCE);   // (the slow-frame marks, perf_marks.h)
 	const float dt = (float)p_delta;
 	Viewport *vp = get_viewport();
 	Camera3D *cam = vp ? vp->get_camera_3d() : nullptr;

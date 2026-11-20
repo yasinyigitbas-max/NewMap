@@ -26,6 +26,11 @@ class CityRooms : public Node3D {
 	// MAX_LIGHTS: the engine's mobile light grid draws up to 32 lights for one fixed cost and drops the rest (sorted by view depth);
 	// the city's lamps take 20 (rig / game Lights budget), so the rooms get the other 12: the nearest rooms' lights, room by room
 	static constexpr int MAX_LIVE = 10, MAX_LIGHTS = 12;
+	// a room's collision (median 1,040 triangles, up to 3,760) went in as ONE shape the moment the room came: the physics
+	// thread built it in one step and the frame waited 46-90 ms for it (phone, 20 Nov: none of those with the rooms off).
+	// Now in pieces of COL_TRIS, one piece a frame over all rooms, and only within COL_M (nobody touches a wall from 75 m)
+	static constexpr int COL_TRIS = 400;
+	static constexpr float COL_M = 40.0f;
 	struct Leaf { uint64_t node = 0; Vector3 mid, out_dir; float sign = 1.0f, amount = 0.0f, dir = 1.0f; };
 	struct Room {
 		String cell, scn, raw, col; uint64_t building = 0; Vector3 centre_local, centre_world;
@@ -34,6 +39,9 @@ class CityRooms : public Node3D {
 		std::vector<Leaf> leaves;
 		std::vector<uint64_t> lights;      // the room's lights (on only while it is among the nearest lit rooms)
 		bool lit = true;
+		PackedVector3Array col_faces;      // its collision, put in COL_TRIS at a time once the camera is within COL_M
+		int col_at = 0;
+		uint64_t body = 0;
 	};
 	std::vector<Room> rooms;
 	HashMap<String, std::vector<int>> by_cell;
@@ -49,7 +57,8 @@ class CityRooms : public Node3D {
 	void doors(double p_delta, const Vector3 &p_cam);
 	void light_rooms(const Vector3 &p_cam);
 	void set_lit(Room &rm, bool p_on);
-	void set_open(Room &rm, bool p_open);      // the building's near model: cut open (room in) or closed (no room)
+	void set_open(Room &rm, bool p_open);
+	void add_col(const Vector3 &p_cam);      // the next piece of the nearest room's collision      // the building's near model: cut open (room in) or closed (no room)
 protected:
 	static void _bind_methods();
 public:

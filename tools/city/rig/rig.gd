@@ -518,6 +518,9 @@ func _drive(seg: Array) -> void:
 	if traffic: traffic.call(&"report")      # (start its counters with the drive)
 	if people: people.call(&"report")
 	var dts := PackedFloat32Array(); var draws_sum := 0.0; var draws_max := 0; var tris_sum := 0.0; var tris_max := 0
+	# (B28, 20 Nov) with a render thread every RenderingServer read waits for it: the counters are read every 30th frame
+	var rs_every := 30 if int(ProjectSettings.get_setting("rendering/driver/threads/thread_model", 1)) == 2 else 1
+	var rs_n := 0; var fi := 0
 	var late220 := 0; var late60 := 0; var deepest := 0.0; var max_cells := 0; var slow := 0; var gy := 8.0
 	var segi := 0; var along := 0.0; var t := 0.0; var t_prev := Time.get_ticks_usec(); var hud_t := 0.0; var prev := [S0["in"], S0.out, S0.bodies]
 	var ready0: int = st.ready_ms.size() + st.ready_dropped; var slow_line := ""; var cause := {}; var cause45 := {}; var pw := PackedFloat32Array(); var gpu := PackedFloat32Array()
@@ -537,6 +540,9 @@ func _drive(seg: Array) -> void:
 		if lit > 0.05 and Engine.get_process_frames() % 15 == 0: lights.update_lights(cam.global_position, lit)
 		await get_tree().process_frame
 		var now := Time.get_ticks_usec(); var dt := (now - t_prev) / 1000000.0; t += dt; dts.append(dt * 1000.0)
+		var sysd: Dictionary = st.perf_take() if st.has_method(&"perf_take") else {}      # the C++ systems' own frame times (perf_marks.h)
+		var sys_top: Array = sysd.keys(); sys_top.sort_custom(func(a: String, b: String) -> bool: return float(sysd[a]) > float(sysd[b]))
+		var sys_s := ", ".join(sys_top.slice(0, 3).map(func(k: String) -> String: return "%s %.1f" % [k, float(sysd[k])]))
 		# where the frame that just ended spent its time, mark to mark (ms): this script | the streamer's update_focus |
 		# other scripts up to the streamer | the streamer's frame work and probes | the rest of the scripts up to the
 		# draw | the draw (materials, render server, drawing, presenting) | after the draw up to the first physics
@@ -548,9 +554,13 @@ func _drive(seg: Array) -> void:
 		along += dt * sp
 		while along >= (pts[segi] as Vector3).distance_to(pts[segi + 1]):
 			along -= (pts[segi] as Vector3).distance_to(pts[segi + 1]); segi = (segi + 1) % (pts.size() - 1)
-		var dr := int(R.get_rendering_info(R.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)); var tr := int(R.get_rendering_info(R.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME))
-		gpu.append(R.viewport_get_measured_render_time_gpu(get_viewport().get_viewport_rid()))
-		draws_sum += dr; tris_sum += tr; draws_max = maxi(draws_max, dr); tris_max = maxi(tris_max, tr); max_cells = maxi(max_cells, st.loaded_count())
+		fi += 1
+		var dr := 0; var tr := 0
+		if fi % rs_every == 0:
+			dr = int(R.get_rendering_info(R.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)); tr = int(R.get_rendering_info(R.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME))
+			gpu.append(R.viewport_get_measured_render_time_gpu(get_viewport().get_viewport_rid()))
+			draws_sum += dr; tris_sum += tr; draws_max = maxi(draws_max, dr); tris_max = maxi(tris_max, tr); rs_n += 1
+		max_cells = maxi(max_cells, st.loaded_count())
 		var lc: Vector3 = st.late_cells(p)      # (cells not in within 60 m, within 220 m, the deepest reach into 220 m)
 		late60 += int(lc.x); late220 += int(lc.y); deepest = maxf(deepest, lc.z)
 		var S: Dictionary = st.stats
@@ -564,7 +574,7 @@ func _drive(seg: Array) -> void:
 			if dt > 0.045: cause45[why] = int(cause45.get(why, 0)) + 1
 			if slow < 25 and dt > 0.040:
 				slow += 1
-				slow_line = "slow %s %.0f ms at t=%.1f s pos=(%.0f, %.0f): cells in +%d out +%d, bodies +%d, loading %s | marks: %s | at: %s" % [name, dt * 1000.0, t, p.x, p.z, d_in, int(S.out) - int(prev[1]), d_b, str(ld), marks, _parts()]
+				slow_line = "slow %s %.0f ms at t=%.1f s pos=(%.0f, %.0f): cells in +%d out +%d, bodies +%d, loading %s | marks: %s | sys: %s | at: %s" % [name, dt * 1000.0, t, p.x, p.z, d_in, int(S.out) - int(prev[1]), d_b, str(ld), marks, sys_s, _parts()]
 		prev = [S["in"], S.out, S.bodies]
 		hud_t += dt
 		if hud_t > 0.25:
@@ -581,7 +591,7 @@ func _drive(seg: Array) -> void:
 	for i in range(maxi(ready0 - st.ready_dropped, 0), st.ready_ms.size()): rs += st.ready_ms[i]; rw = maxf(rw, st.ready_ms[i])
 	_say("drive %s speed=%.0f km/h secs=%.0f frames=%d fps=%.1f | frame_ms med=%.1f p95=%.1f p99=%.1f worst=%.0f | over16.7=%.1f%% over33=%d over50=%d over100=%d" % [name, sp * 3.6, t, n, n / t, sorted[n / 2], sorted[int(n * 0.95)], sorted[int(n * 0.99)], sorted[n - 1], 100.0 * o17 / n, o33, o50, o100])
 	gpu.sort()      # the GPU's own time a frame (the phone is held at the 60 fps step by vsync, so the frame time hides small costs)
-	_say("  map %s draws avg=%.0f max=%d | tris avg=%.0fk max=%dk | cells most=%d in=%d out=%d dropped=%d cap_hits=%d | gpu_ms med=%.2f p95=%.2f" % [name, draws_sum / n, draws_max, tris_sum / n / 1000.0, tris_max / 1000, max_cells, int(S1["in"]) - int(S0["in"]), int(S1.out) - int(S0.out), int(S1.dropped) - int(S0.dropped), int(S1.capped) - int(S0.capped), gpu[gpu.size() / 2] if gpu.size() > 0 else -1.0, gpu[int(gpu.size() * 0.95)] if gpu.size() > 0 else -1.0])
+	_say("  map %s draws avg=%.0f max=%d | tris avg=%.0fk max=%dk | cells most=%d in=%d out=%d dropped=%d cap_hits=%d | gpu_ms med=%.2f p95=%.2f" % [name, draws_sum / maxi(rs_n, 1), draws_max, tris_sum / maxi(rs_n, 1) / 1000.0, tris_max / 1000, max_cells, int(S1["in"]) - int(S0["in"]), int(S1.out) - int(S0.out), int(S1.dropped) - int(S0.dropped), int(S1.capped) - int(S0.capped), gpu[gpu.size() / 2] if gpu.size() > 0 else -1.0, gpu[int(gpu.size() * 0.95)] if gpu.size() > 0 else -1.0])
 	_say("  stream %s start_ready_ms=%d (worst frame meanwhile %.0f ms) | request_to_in ms mean=%.0f worst=%.0f | late frames: 220m=%d (deepest %.0f m) 60m=%d | main thread worst ms: cell add %.2f, body %.2f (%s), removal step %.2f | bodies late=%d" % [name, prep_ms, prep_worst, rs / maxf(1.0, st.ready_ms.size() + st.ready_dropped - ready0), rw, late220, deepest, late60, float(S1.add_ms_worst), float(S1.body_ms_worst), str(S1.get("body_worst_what", "")), float(S1.remove_ms_worst), int(S1.body_late) - int(S0.body_late)])
 	_say("  slow %s frames over 33 ms by what the streamer was doing: %s | over 45 ms: %s" % [name, str(cause), str(cause45)])
 	pw.sort()

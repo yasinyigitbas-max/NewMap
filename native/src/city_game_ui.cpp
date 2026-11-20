@@ -1,5 +1,6 @@
 // CityGame: the screens, the clock and the way into the world (see city_game.h). Every control is built here with
 // ui_plate, after the old game's loading_screen.gd, main_menu.gd, pause_menu.gd, game_over.gd and settings_panel.gd.
+#include "perf_marks.h"
 #include "city_game.h"
 
 #include "ui_plate.h"
@@ -59,6 +60,7 @@ void CityGame::_ready() {
 }
 
 void CityGame::_process(double p_delta) {
+	pm::Scope _pm(pm::GAME);   // (the slow-frame marks, perf_marks.h)
 	SceneTree *tr = get_tree();
 	const bool paused = tr && tr->is_paused();
 	if (clock_running && !paused && world_on) {   // the game's clock: one game hour is ten real minutes

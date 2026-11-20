@@ -1,4 +1,5 @@
 // CityRooms: see city_rooms.h.
+#include "perf_marks.h"
 #include "city_rooms.h"
 #include "city_stream.h"
 #include <godot_cpp/classes/camera3d.hpp>
@@ -69,6 +70,7 @@ void CityRooms::wake(int i) {
 	if (!rm.scn.is_empty() && !rl->exists(rm.scn)) rm.scn = rm.raw;      // (no merged copy: the room as its builders saved it)
 	if (rm.scn.is_empty()) return;
 	rl->load_threaded_request(rm.scn);
+	if (!rm.col.is_empty() && rl->exists(rm.col)) rl->load_threaded_request(rm.col);
 	rm.state = 1; loading++;
 }
 
@@ -104,16 +106,14 @@ void CityRooms::finish(int i) {
 	}
 	rm.lit = true; set_lit(rm, false);      // (lit by light_rooms when it is among the nearest)
 	// its collision (the bake's: the shell's faces and the furniture's boxes, room frame)
+	// (loaded with the room on the loader threads; its faces go in piece by piece, add_col)
+	rm.col_faces = PackedVector3Array(); rm.col_at = 0; rm.body = 0;
 	if (!rm.col.is_empty() && rl->exists(rm.col)) {
-		Ref<Resource> cd = rl->load(rm.col);
-		if (cd.is_valid()) {
-			const PackedVector3Array faces = cd->get("data");
-			if (faces.size() >= 3) {
-				StaticBody3D *body = memnew(StaticBody3D); body->set_name("room_col"); body->set_collision_layer(1); body->set_collision_mask(0);
-				Ref<ConcavePolygonShape3D> sh; sh.instantiate(); sh->set_backface_collision_enabled(true); sh->set_faces(faces);
-				const uint32_t ow = body->create_shape_owner(body); body->shape_owner_add_shape(ow, sh);
-				root->add_child(body);
-			}
+		Ref<Resource> cd = rl->load_threaded_get_status(rm.col) != ResourceLoader::THREAD_LOAD_INVALID_RESOURCE ? rl->load_threaded_get(rm.col) : rl->load(rm.col);
+		if (cd.is_valid()) rm.col_faces = cd->get("data");
+		if (rm.col_faces.size() >= 3) {
+			StaticBody3D *body = memnew(StaticBody3D); body->set_name("room_col"); body->set_collision_layer(1); body->set_collision_mask(0);
+			root->add_child(body); rm.body = (uint64_t)body->get_instance_id();
 		}
 	}
 	root->set_name("room");
@@ -134,6 +134,7 @@ void CityRooms::sleep(int i) {
 		if (st) st->give_away(root); else memdelete(root);
 	}
 	rm.node = 0; rm.leaves.clear(); rm.lights.clear(); rm.state = 0; live--;
+	rm.col_faces = PackedVector3Array(); rm.col_at = 0; rm.body = 0;
 }
 
 // ---------------------------------------------------------------- the doors
@@ -167,6 +168,26 @@ void CityRooms::set_open(Room &rm, bool p_open) {
 	if (m.is_valid() && nr->get_mesh() != m) nr->set_mesh(m);
 }
 
+void CityRooms::add_col(const Vector3 &cam) {
+	int best = -1; float bd = COL_M;
+	for (int i = 0; i < (int)rooms.size(); i++) {
+		const Room &rm = rooms[i];
+		if (rm.state != 2 || rm.body == 0 || rm.col_at >= rm.col_faces.size()) continue;
+		const float d = rm.centre_world.distance_to(cam);
+		if (d < bd) { bd = d; best = i; }
+	}
+	if (best < 0) return;
+	Room &rm = rooms[best];
+	StaticBody3D *body = Object::cast_to<StaticBody3D>(ObjectDB::get_instance(ObjectID(rm.body)));
+	if (!body) { rm.col_at = rm.col_faces.size(); return; }
+	const int n = std::min((int)rm.col_faces.size() - rm.col_at, COL_TRIS * 3);
+	Ref<ConcavePolygonShape3D> sh; sh.instantiate(); sh->set_backface_collision_enabled(true);
+	sh->set_faces(rm.col_faces.slice(rm.col_at, rm.col_at + n));
+	const uint32_t ow = body->create_shape_owner(body); body->shape_owner_add_shape(ow, sh);
+	rm.col_at += n;
+	if (rm.col_at >= rm.col_faces.size()) rm.col_faces = PackedVector3Array();   // (all in: the copy is not needed)
+}
+
 void CityRooms::set_lit(Room &rm, bool p_on) {
 	if (rm.lit == p_on) return;
 	rm.lit = p_on;
@@ -194,6 +215,7 @@ void CityRooms::light_rooms(const Vector3 &cam) {
 }
 
 void CityRooms::_process(double p_delta) {
+	pm::Scope _pm(pm::ROOMS);   // (the slow-frame marks, perf_marks.h)
 	if (!arriving.empty()) { const String k = arriving.front(); arriving.erase(arriving.begin()); add_cell(k); }
 	Viewport *vp = get_viewport();
 	Camera3D *cam = vp ? vp->get_camera_3d() : nullptr;
@@ -220,6 +242,7 @@ void CityRooms::_process(double p_delta) {
 		for (auto &w : want) { if (live + loading >= MAX_LIVE || loading >= 2) break; wake(w.second); }
 		light_rooms(cp);
 	}
+	add_col(cp);
 	doors(p_delta, cp);
 }
 

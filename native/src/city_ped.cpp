@@ -1,4 +1,5 @@
 // CityPed: see city_ped.h.
+#include "perf_marks.h"
 #include "city_ped.h"
 
 #include <godot_cpp/classes/character_body3d.hpp>
@@ -363,6 +364,7 @@ void CityPed::set_box(int p_index, const Vector3 &p_centre, const Vector3 &p_hal
 }
 
 void CityPed::_physics_process(double p_delta) {
+	pm::Scope _pm(pm::PED_PHYS);   // (the slow-frame marks, perf_marks.h)
 	if (!made || !skel) return;
 	t_mode += p_delta;
 	if (mode == MODE_ANIM) {

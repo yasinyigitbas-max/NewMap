@@ -1,4 +1,5 @@
 // CityCar: see city_car.h.
+#include "perf_marks.h"
 #include "city_car.h"
 #include "engine_sound.h"
 #include "ui_plate.h"
@@ -502,6 +503,7 @@ void CityCar::_integrate_forces(PhysicsDirectBodyState3D *p_state) {
 }
 
 void CityCar::_process(double p_delta) {
+	pm::Scope _pm(pm::CAR);   // (the slow-frame marks, perf_marks.h)
 	if (!made) return;
 	clock_t += p_delta;
 	if (!hits_due.empty()) { const std::vector<Vector3> hd = hits_due; hits_due.clear(); for (const Vector3 &dv : hd) hit(dv); }

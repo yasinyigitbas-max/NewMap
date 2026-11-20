@@ -1,4 +1,5 @@
 // CityCrowd: see city_crowd.h.
+#include "perf_marks.h"
 #include "city_crowd.h"
 
 #include "city_ped.h"
@@ -1007,6 +1008,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 }
 
 void CityCrowd::_process(double p_delta) {
+	pm::Scope _pm(pm::CROWD);   // (the slow-frame marks, perf_marks.h)
 	if (!ready) return;
 	const int64_t t0 = usec_now();
 	step_brain(p_delta);

@@ -1,4 +1,5 @@
 // CityBreakables: see city_breakables.h.
+#include "perf_marks.h"
 #include "city_breakables.h"
 #include "city_stream.h"
 #include <godot_cpp/classes/camera3d.hpp>
@@ -107,9 +108,17 @@ void CityBreakables::add_cell(const String &p_key) {
 		const Array cols = mmi->has_meta("brk_cols") ? Array(mmi->get_meta("brk_cols")) : Array();
 		const AABB ab = mmi->get_multimesh()->get_mesh()->get_aabb();
 		const Ref<MultiMesh> mm = mmi->get_multimesh();
-		for (int i = 0; i < mm->get_instance_count(); i++) {
+		// the transforms read from the buffer in ONE call: get_instance_transform(i) asks the rendering server each time
+		// (and with a render thread syncs with it each time: 80-150 ms for one cell on the PC, 20 Nov)
+		const PackedFloat32Array buf = mm->get_buffer();
+		const int stride = 12 + (mm->is_using_colors() ? 4 : 0) + (mm->is_using_custom_data() ? 4 : 0);
+		const Transform3D gx = mmi->get_global_transform();
+		const int ninst = std::min((int)mm->get_instance_count(), (int)(buf.size() / stride));
+		for (int i = 0; i < ninst; i++) {
 			Item it; it.mmi = (uint64_t)mmi->get_instance_id(); it.idx = i; it.cell = p_key;
-			it.home = mmi->get_global_transform() * mm->get_instance_transform(i); it.at = it.home.origin;
+			const float *q = buf.ptr() + (int64_t)i * stride;   // a 3 x 4 matrix, row by row: basis row, origin
+			const Transform3D lx(Basis(q[0], q[1], q[2], q[4], q[5], q[6], q[8], q[9], q[10]), Vector3(q[3], q[7], q[11]));
+			it.home = gx * lx; it.at = it.home.origin;
 			it.radius = std::max(0.15f, 0.5f * std::max(ab.size.x, ab.size.z)); it.height = std::max(ab.size.y, 0.3f); it.mass = kind_mass(kind);
 			float best = 0.6f * 0.6f;   // its collider: the nearest of the node's within 0.6 m
 			for (int c = 0; c < cols.size(); c++) {
@@ -251,6 +260,7 @@ void CityBreakables::put_back(int i) {
 }
 
 void CityBreakables::_process(double p_delta) {
+	pm::Scope _pm(pm::BREAKABLES);   // (the slow-frame marks, perf_marks.h)
 	if (!arriving.empty()) { const String k = arriving.front(); arriving.erase(arriving.begin()); add_cell(k); }   // one arrived cell a frame
 	if (!made || items.empty()) return;
 	Viewport *vp = get_viewport();

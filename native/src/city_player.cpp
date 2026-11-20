@@ -1,4 +1,5 @@
 // CityPlayer: see city_player.h.
+#include "perf_marks.h"
 #include "city_player.h"
 
 #include "city_ped.h"
@@ -180,6 +181,7 @@ int CityPlayer::take_punch() {
 }
 
 void CityPlayer::_physics_process(double p_delta) {
+	pm::Scope _pm(pm::PLAYER_PHYS);   // (the slow-frame marks, perf_marks.h)
 	if (!fig) return;
 	const float dt = (float)p_delta;
 	sense(p_delta);
@@ -554,6 +556,7 @@ void CityPlayer::stand_at(const Vector3 &p_at, double p_yaw) {
 String CityPlayer::get_clip() const { return fig ? String(fig->current_clip()) : String(); }
 
 void CityPlayer::_process(double p_delta) {
+	pm::Scope _pm(pm::PLAYER);   // (the slow-frame marks, perf_marks.h)
 	if (!cam) return;
 	const float dt = (float)std::min(p_delta, 0.1);
 	const Vector3 head = get_global_position() + Vector3(0, 1.55f, 0);

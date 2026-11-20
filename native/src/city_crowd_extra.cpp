@@ -1,6 +1,7 @@
 // CityCrowd, the smaller things round the people: twelve collision capsules that stand on the people nearest the
 // player (so he bumps into them), umbrellas in rain, towels under the people who lie on the beach, and a quiet murmur
 // where a group stands and talks. See city_crowd.h.
+#include "perf_marks.h"
 #include "city_crowd.h"
 
 #include <godot_cpp/classes/file_access.hpp>
@@ -203,6 +204,7 @@ void CityCrowd::extras_update(double p_alpha) {
 
 // The capsules stand on the people nearest the player (within 8 m): he bumps into them.
 void CityCrowd::_physics_process(double p_delta) {
+	pm::Scope _pm(pm::CROWD_PHYS);   // (the slow-frame marks, perf_marks.h)
 	(void)p_delta;
 	if (!extras || !ready) return;
 	cap_steps++;

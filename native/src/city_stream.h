@@ -47,6 +47,7 @@ class Camera3D;
 class CityStream : public Node3D {
 	GDCLASS(CityStream, Node3D)
 public:
+	Dictionary perf_take();      // the per-system frame times since the last call (perf_marks.h), then zeroed
 	enum { NONE = 0, LOADING = 1, BUILDING = 2, READY = 3, IN = 4 };
 	static constexpr int MAP = 64;
 private:
