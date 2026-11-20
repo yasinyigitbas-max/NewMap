@@ -13,6 +13,13 @@ uniform sampler2DArray albedo_arr : source_color, filter_linear_mipmap, repeat_d
 uniform sampler2D albedo_tex : source_color, filter_linear_mipmap, repeat_disable;           // the kit's far atlas
 #endif
 uniform float range_begin = 220.0;
+#ifndef RT_CUT
+global uniform float ck_night;
+global uniform vec4 ck_look_sky_horizon : source_color;
+#define ck_far_sky ck_look_sky_horizon
+uniform float far_glass = 0.0;     // (0.2 on the bld_lod page) straight-on sky reflection of the far glass (rt_bldg glass_reflect 0.15 .. grazing)
+uniform float far_wear = 1.0;      // (0.92 on the bld_lod page) the near / mid's grime (wear 0.65) on average, which the far does not compute
+#endif
 uniform float scissor = 0.5;
 #include "res://map_dc/coronado/city_kit/shaders/rt/rt_tier.gdshaderinc"
 varying float v_flat;
@@ -45,7 +52,18 @@ void fragment() {
 #else
 	vec4 t = texture(albedo_tex, UV);
 #endif
+#ifdef RT_CUT
 	ALBEDO = mix(t.rgb, vec3(1.0), v_flat) * COLOR.rgb;
+#else
+	// a far prop (v_flat 1): its flat vertex colour. A far building (LOD match, 20 Nov): the near baked into
+	// bld_lod_color.png; COLOR = the building's tint, applied like rt_bldg does (walls, not glass or dark / saturated
+	// texels), and its glass (alpha = 1 - glass) a little lighter, as the near's glass reflects the sky straight on
+	float lum = dot(t.rgb, vec3(0.299, 0.587, 0.114));
+	float sat = max(t.r, max(t.g, t.b)) - min(t.r, min(t.g, t.b));
+	float paint = smoothstep(0.28, 0.55, lum) * (1.0 - smoothstep(0.18, 0.4, sat));
+	vec3 bld = mix(t.rgb, ck_far_sky.rgb, (1.0 - t.a) * far_glass * (1.0 - 0.94 * ck_night)) * mix(vec3(1.0), COLOR.rgb, paint) * far_wear;
+	ALBEDO = mix(bld, COLOR.rgb, v_flat);
+#endif
 	ROUGHNESS = 0.9;
 	SPECULAR = 0.3;
 #ifdef RT_CUT

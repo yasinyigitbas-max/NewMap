@@ -622,13 +622,20 @@ func _mat_bldg(src: Material) -> Material:
 	var m := ShaderMaterial.new(); m.shader = load(SH + "rt_bldg.gdshader")
 	for u: StringName in [&"albedo_tex", &"normal_tex", &"orm_tex", &"emission_tex", &"grime_tex", &"has_normal", &"has_orm", &"has_emission", &"emission_energy", &"wear", &"foot_m", &"grime_meters", &"streaks"]:
 		if s.get_shader_parameter(u) != null: m.set_shader_parameter(u, s.get_shader_parameter(u))
+	var at: Texture2D = s.get_shader_parameter(&"albedo_tex")
+	if at and at.resource_path in [LOD_PAGE, LOD_PAGE_B]: m.set_shader_parameter(&"lod_glass", true)
 	return _save_mat(sig, m)
 
 func _mat_far(kind: String) -> String:
 	var sig := "far_%s" % kind
 	if not mats.has(sig):
-		var m := ShaderMaterial.new(); m.shader = load(SH + "rt_far_%s.gdshader" % kind)
+		var m := ShaderMaterial.new(); m.shader = load(SH + "rt_far_%s.gdshader" % ("cut" if kind == "cut" else "solid"))
 		if kind == "cut": m.set_shader_parameter(&"albedo_arr", load(TEX + "arr_fol_albedo.png"))
+		elif kind == "solid" or kind == "solid_b":      # LOD match (20 Nov): far buildings baked from their near (their page, glass and average
+			# grime) and the far props (flat vertex colour; they read no texel), in ONE material, so the old far atlas
+			# (far_color.png) is not loaded at all unless a building far is not baked yet ("legacy")
+			m.set_shader_parameter(&"albedo_tex", load(LOD_PAGE if kind == "solid" else LOD_PAGE_B))
+			m.set_shader_parameter(&"far_glass", 0.2); m.set_shader_parameter(&"far_wear", 0.92)
 		else: m.set_shader_parameter(&"albedo_tex", load("res://assets/coronado_kit/textures/far_color.png"))
 		m.set_shader_parameter(&"range_begin", MID_END)
 		_save_mat(sig, m)
@@ -695,10 +702,18 @@ func _building(b: Node3D, piece: String, inst_name: String) -> void:
 			var mi := ch as MeshInstance3D
 			var mt: Material = mi.get_surface_override_material(0) if mi.get_surface_override_material(0) else mi.mesh.surface_get_material(0)
 			if String(mi.name) == "mid": pivot.y = (mi.global_transform * mi.get_aabb()).get_center().y      # (x, z stay the origin: the cell it was routed to)
+			# LOD match (20 Nov): a piece holds a copy of its buildings' tiers from when it was made; the kit's current
+			# mid / far (baked from the near by tools/city/lod/lod_bake.py) replace that copy, with the same transform
+			var mesh: Mesh = mi.mesh
+			var lt := _lod_tier(rec.kit, String(mi.name)) if String(mi.name) != "near" else {}
+			if not lt.is_empty():
+				mesh = lt.mesh
+				if String(mi.name) == "mid": mt = _lod_mid_mat(mt, lt.tex)
 			if String(mi.name) == "far":
-				_far_add(pivot, _mat_far("solid"), mi.mesh, mi.global_transform, pivot, 1.0e9, false, false, null, 0.0)
+				var ftint: Color = (_tint_for(rec.name, rec.kit)[0] if tint_on else Color.WHITE) if not lt.is_empty() else Color.WHITE
+				_far_add(pivot, _mat_far("legacy" if lt.is_empty() else ("solid" if (lt.tex as Texture2D).resource_path == LOD_PAGE else "solid_b")), mesh, mi.global_transform, pivot, 1.0e9, false, false, null, 0.0, ftint)
 				continue
-			rec.tiers.append({"name": String(mi.name), "mesh": mi.mesh, "lxf": mi.transform, "mat": mt, "vb": mi.visibility_range_begin, "ve": mi.visibility_range_end, "vbm": mi.visibility_range_begin_margin, "vem": mi.visibility_range_end_margin, "shadow": mi.cast_shadow})
+			rec.tiers.append({"name": String(mi.name), "mesh": mesh, "lxf": mi.transform, "mat": mt, "vb": mi.visibility_range_begin, "ve": mi.visibility_range_end, "vbm": mi.visibility_range_begin_margin, "vem": mi.visibility_range_end_margin, "shadow": mi.cast_shadow})
 		elif ch is StaticBody3D:
 			for cs in ch.get_children():
 				if not (cs is CollisionShape3D) or (cs as CollisionShape3D).shape == null: continue
@@ -801,10 +816,44 @@ func _props(mmi: MultiMeshInstance3D) -> void:
 			cell.merged[key3].items.append([use_mesh, xf, wear, float(page), u2y]); stat.merged += 1
 
 ## one far object: its far mesh into the chunk's bucket for that material
-func _far_add(where: Vector3, matkey: String, mesh: Mesh, xf: Transform3D, pivot: Vector3, end: float, flat: bool, two: bool, atlas: Texture2D, page: float) -> void:
+func _far_add(where: Vector3, matkey: String, mesh: Mesh, xf: Transform3D, pivot: Vector3, end: float, flat: bool, two: bool, atlas: Texture2D, page: float, tint := Color.WHITE) -> void:
 	var key := [Vector2i(floori(where.x / CHUNK_FAR), floori(where.z / CHUNK_FAR)), matkey]
 	if not far.has(key): far[key] = []
-	far[key].append([mesh, xf, pivot, end, flat, two, atlas, page])
+	far[key].append([mesh, xf, pivot, end, flat, two, atlas, page, tint])
+
+## LOD match (20 Nov): the kit's current mid / far of a building when it is baked from its near (its texture is
+## LOD_PAGE, tools/city/lod/lod_bake.py), else {} (the piece's own copy is used, as before)
+const LOD_PAGE := "res://assets/coronado_kit/textures/bld_lod_color.png"
+const LOD_PAGE_B := "res://assets/coronado_kit/textures/bld_lod_color_b.png"      # the types no piece places yet
+const KitLib := preload("res://tools/city/pilot/kit_lib.gd")
+var lod_tiers := {}
+func _lod_tier(kit: String, tier: String) -> Dictionary:
+	var k := kit + "|" + tier
+	if lod_tiers.has(k): return lod_tiers[k]
+	var r := {}
+	var f := KitLib._tier_file(KitLib._bdir(kit), tier) if kit != "" else ""
+	if f != "":
+		var inst: Node = (load(f) as PackedScene).instantiate()
+		var src := KitLib._first_mesh(inst)
+		if src and src.mesh:
+			var m: Material = src.get_surface_override_material(0) if src.get_surface_override_material(0) else src.mesh.surface_get_material(0)
+			if m is BaseMaterial3D and (m as BaseMaterial3D).albedo_texture and (m as BaseMaterial3D).albedo_texture.resource_path in [LOD_PAGE, LOD_PAGE_B]:
+				r = {"mesh": src.mesh, "tex": (m as BaseMaterial3D).albedo_texture}
+		inst.free()
+	lod_tiers[k] = r
+	return r
+
+## the piece's weathered mid material (its wear kept) on the LOD page: no ORM / normal / emission texture; the
+## page's alpha is the glass (rt_bldg lod_glass)
+func _lod_mid_mat(src: Material, tex: Texture2D) -> Material:
+	if not (src is ShaderMaterial): return src
+	var k := "lodmid_%d" % src.get_instance_id()
+	if lod_tiers.has(k): return lod_tiers[k]
+	var m: ShaderMaterial = (src as ShaderMaterial).duplicate()
+	m.set_shader_parameter(&"albedo_tex", tex); m.set_shader_parameter(&"has_orm", false); m.set_shader_parameter(&"has_normal", false); m.set_shader_parameter(&"has_emission", false)
+	for u: StringName in [&"orm_tex", &"normal_tex", &"emission_tex"]: m.set_shader_parameter(u, null)
+	lod_tiers[k] = m
+	return m
 
 # ---------------------------------------------------------------- pass 2: build
 ## props merged into one mesh: vertices relative to `centre`, CUSTOM0 = (prop origin, wear)
@@ -1061,7 +1110,7 @@ func _build_far() -> Dictionary:
 			var hc := _cell_of(e[2]); var code := float((hc.x + 32) + (hc.y + 32) * 64)      # its cell, for rt_far's "is my cell in?"
 			var order: Array = [[0, 1, 2]] if not two else [[0, 1, 2], [0, 2, 1]]
 			for t in range(0, idx.size(), 3):
-				var fc := Color.WHITE
+				var fc: Color = e[8]      # white, or a far building's tint (rt_far paints it on the walls)
 				if flat and e[6] != null:      # a far prop: one flat colour per triangle, read from its atlas (no texture at 220 m and beyond)
 					var cuv := (uv[idx[t]] + uv[idx[t + 1]] + uv[idx[t + 2]]) / 3.0
 					fc = _linear_texel(e[6], cuv) * 0.9
