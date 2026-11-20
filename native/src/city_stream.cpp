@@ -591,24 +591,36 @@ void CityStream::warm_up(Camera3D *p_cam, int p_frames) {
 	warm_frames = std::max(p_frames, 1); warm_phase = 1;
 }
 
+void CityStream::_reserve_make() {
+	RenderingDevice *rd = RenderingServer::get_singleton()->get_rendering_device();
+	if (!rd) return;
+	for (int i = 0; i < gpu_reserve_mb / 16; i++) warm_held.push_back(rd->vertex_buffer_create(16 * 1024 * 1024));
+}
+
+void CityStream::_reserve_free() {
+	RenderingDevice *rd = RenderingServer::get_singleton()->get_rendering_device();
+	for (const RID &r : warm_held) if (rd && r.is_valid()) rd->free_rid(r);
+	warm_held.clear();
+}
+
 void CityStream::warm_step() {
 	if (warm_phase == 1) {
 		if (--warm_frames > 0) return;
 		RenderingServer::get_singleton()->global_shader_parameter_set("ck_night", warm_prev_night);
 		if (warm_node) { warm_node->queue_free(); warm_node = nullptr; }
-		RenderingDevice *rd = RenderingServer::get_singleton()->get_rendering_device();
-		if (rd && gpu_reserve_mb > 0) {
+		if (gpu_reserve_mb > 0 && RenderingServer::get_singleton()->get_rendering_device()) {
+			// the RenderingDevice may only be used on the render thread (B28: with a separate render thread the 12 frees
+			// below were refused from the main thread, "free_rid can only be called from the render thread", and the 192 MB
+			// stayed taken): made and freed there, in that order (one queue)
 			warm_t0 = msec();
-			for (int i = 0; i < gpu_reserve_mb / 16; i++) warm_held.push_back(rd->vertex_buffer_create(16 * 1024 * 1024));
+			RenderingServer::get_singleton()->call_on_render_thread(Callable(this, "_reserve_make"));
 			warm_frames = 2; warm_phase = 2; return;
 		}
 		warm_phase = 0; emit_signal("warmed_up"); return;
 	}
 	if (warm_phase == 2) {
 		if (--warm_frames > 0) return;
-		RenderingDevice *rd = RenderingServer::get_singleton()->get_rendering_device();
-		for (const RID &r : warm_held) if (rd) rd->free_rid(r);
-		warm_held.clear();
+		RenderingServer::get_singleton()->call_on_render_thread(Callable(this, "_reserve_free"));
 		stats["reserve_ms"] = (int64_t)(msec() - warm_t0);
 		warm_phase = 0; emit_signal("warmed_up");
 	}
@@ -622,6 +634,7 @@ Dictionary CityStream::perf_take() {
 }
 
 void CityStream::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("_reserve_make"), &CityStream::_reserve_make); ClassDB::bind_method(D_METHOD("_reserve_free"), &CityStream::_reserve_free);
 	ClassDB::bind_method(D_METHOD("perf_take"), &CityStream::perf_take);
 	ADD_SIGNAL(MethodInfo("cell_in", PropertyInfo(Variant::STRING, "key")));
 	ADD_SIGNAL(MethodInfo("cell_out", PropertyInfo(Variant::STRING, "key")));

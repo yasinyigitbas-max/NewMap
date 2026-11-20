@@ -112,6 +112,10 @@ private:
 	static Ref<Shape3D> col_shape(const Variant &cd);
 	void process_stream(uint64_t t0);
 	void warm_step();
+public:
+	void _reserve_make();      // (the GPU reserve, on the render thread: call_on_render_thread)
+	void _reserve_free();
+private:
 protected:
 	static void _bind_methods();
 public:
