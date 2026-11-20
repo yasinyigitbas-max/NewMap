@@ -1,0 +1,33 @@
+{
+ "ferry_passenger": {
+  "file_base": "veh_ferry_passenger",
+  "batch": "ferry",
+  "label": "Two-deck harbour passenger ferry (unbranded, \"Sea Breeze\")",
+  "class": "vessel (APPROVED 20 Nov 2026)",
+  "budget": 8000,
+  "budget_mid": 2400,
+  "budget_far": 200,
+  "col_boxes": 7,
+  "col_max_boxes": 12,
+  "conds": [
+   "clean"
+  ],
+  "tiers": {
+   "near": 5748,
+   "mid": 1158,
+   "far": 186
+  },
+  "length": 21.205,
+  "beam": 7.094,
+  "height": 9.01,
+  "hull_loa": 21.0,
+  "hull_beam": 6.6,
+  "draft_keel": 1.45,
+  "frame": "Y up, bow +Z, X starboard, metres; origin on the design waterline (y=0) at hull length/beam centre; draw water at y=0",
+  "regions": [
+   "own page: vehicles/ferry/ferry_{color,normal,orm}.png (1024/512/512)"
+  ],
+  "tex_pool": "vehicles",
+  "tex_mib_astc4x4": 2.0
+ }
+}

@@ -1,0 +1,165 @@
+{
+ "_doc": "Street-food kiosks and the passenger ferry (Yasin, 20 Nov: 'ADD THEM INTO THE GAME, RANDOMLY PLACED AROUND THE MAP AT THE LOGICAL LOCATIONS, LIKE SEA SIDE, CORNER OF SOME STREETS, NEAR CAMPUS ETC.'). Grid frame. Each spot chosen by hand for its reason, then checked in the assembled city (OUT probe, 20 Nov): the footprint on paving and level, nothing in its box, 1.6 m clear in front of the counter (+Z, turned by yaw toward the customers), the physics ground the paving itself. y = the paving (the ferry: the waterline). Built into the overlay piece x_street_food (tools/city/pilot/pieces/x_street_food.gd). Not placed: a taco stand at the commercial strip (no free level paving at its lot corner or shop front).",
+ "items": [
+  {
+   "kind": "shaveice_shack",
+   "pos": [
+    588.5,
+    1.5,
+    250.0
+   ],
+   "yaw": 90.0,
+   "why": "waterfront promenade at the top of the beach: shave ice for beach-goers"
+  },
+  {
+   "kind": "lemonade_stand",
+   "pos": [
+    589.5,
+    1.5,
+    285.87
+   ],
+   "yaw": 91.0,
+   "why": "waterfront promenade, the south end of the beach walk: cold drinks for the sand"
+  },
+  {
+   "kind": "paleta_cart",
+   "pos": [
+    605.95,
+    1.5,
+    142.37
+   ],
+   "yaw": 92.5,
+   "why": "the waterfront's north plaza over the water: ice lollies on the seawall walk"
+  },
+  {
+   "kind": "taco_stand",
+   "pos": [
+    508.97,
+    1.5,
+    306.6
+   ],
+   "yaw": 1.5,
+   "why": "the bay plaza at the end of the waterfront streets, tables looking at the water"
+  },
+  {
+   "kind": "taco_stand",
+   "pos": [
+    -518.33,
+    6.375,
+    -736.63
+   ],
+   "yaw": 8.3,
+   "why": "the campus quad: students' lunch between lectures"
+  },
+  {
+   "kind": "hotdog_cart",
+   "pos": [
+    -438.0,
+    6.138,
+    -488.0
+   ],
+   "yaw": 0.0,
+   "why": "the campus south plaza by the gate: quick food on the way in and out"
+  },
+  {
+   "kind": "paleta_cart",
+   "pos": [
+    -638.0,
+    6.156,
+    -788.0
+   ],
+   "yaw": 0.0,
+   "why": "the campus north-west walk: ice lollies on the long path between buildings"
+  },
+  {
+   "kind": "hotdog_cart",
+   "pos": [
+    537.15,
+    2.147,
+    -1437.52
+   ],
+   "yaw": -0.2,
+   "why": "the hospital's transit plaza: visitors and staff off the bus"
+  },
+  {
+   "kind": "hotdog_cart",
+   "pos": [
+    -280.0,
+    6.15,
+    -420.0
+   ],
+   "yaw": -90.0,
+   "why": "the stadium's west forecourt: game-day crowds"
+  },
+  {
+   "kind": "taco_stand",
+   "pos": [
+    -279.0,
+    6.15,
+    -350.0
+   ],
+   "yaw": -90.0,
+   "why": "the stadium's west forecourt, by the second entrance"
+  },
+  {
+   "kind": "hotdog_cart",
+   "pos": [
+    -75.0,
+    6.15,
+    -613.0
+   ],
+   "yaw": 0.0,
+   "why": "the city-centre court: office lunch at the main crossing"
+  },
+  {
+   "kind": "taco_stand",
+   "pos": [
+    186.5,
+    6.15,
+    -825.87
+   ],
+   "yaw": -88.6,
+   "why": "the downtown plaza on the 5th block: lunch for the offices round it"
+  },
+  {
+   "kind": "paleta_cart",
+   "pos": [
+    -26.81,
+    4.15,
+    13.77
+   ],
+   "yaw": 76.9,
+   "why": "the high-street corner at the crossing: an ice-lolly cart where people wait to cross"
+  },
+  {
+   "kind": "lemonade_stand",
+   "pos": [
+    -113.33,
+    6.15,
+    -639.46
+   ],
+   "yaw": 0.5,
+   "why": "the civic park's plaza: drinks for the park and the courts"
+  },
+  {
+   "kind": "hotdog_cart",
+   "pos": [
+    318.43,
+    6.15,
+    -519.3
+   ],
+   "yaw": -32.2,
+   "why": "the apartments' street corner: the cart the neighbourhood walks to"
+  },
+  {
+   "kind": "ferry",
+   "pos": [
+    678.0,
+    0.0,
+    200.0
+   ],
+   "yaw": 0.0,
+   "why": "lying at anchor 35 m off the waterfront pier's head, bow north along the shore, in 2.3-2.6 m of water (the pier itself stands in 0-0.3 m: no berth; its real berth is the north-bay ferry landing, on hold)"
+  }
+ ]
+}

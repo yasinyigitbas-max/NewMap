@@ -7325,6 +7325,16 @@
    "from": "grid frame"
   },
   {
+   "piece": "x_street_food",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grid frame"
+  },
+  {
    "piece": "t_10th_e",
    "pos": [
     0.0,
