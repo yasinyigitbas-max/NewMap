@@ -881,14 +881,16 @@ void CityTraffic::_process(double p_delta) {
 		if (r.kind == tc::K_BIKE) {   // a cyclist: the bicycle here, its rider in the crowd's far batch (bike_draw)
 			if (p[5] > (float)(mid_r * mid_r) * 2.0f) continue;
 			const float lean = std::min(std::max(-6.0f * p[6], -0.35f), 0.35f);   // (into the turn, as a bicycle leans)
-			grow(bike_b, bike_b.n + 1);
-			float *row = bike_b.buf.ptrw() + (size_t)bike_b.n * ROW;
-			const float *col = BIKE_PAINT[r.colour % 8];
-			put_row(row, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, PAINT[0], col[0], col[1], col[2], 0.0f);
-			lean_row(row, lean); bike_b.n++;
+			if (std::find(bike_hide.begin(), bike_hide.end(), (int)r.id) == bike_hide.end()) {   // (a near rider's has its own rig)
+				grow(bike_b, bike_b.n + 1);
+				float *row = bike_b.buf.ptrw() + (size_t)bike_b.n * ROW;
+				const float *col = BIKE_PAINT[r.colour % 8];
+				put_row(row, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, PAINT[0], col[0], col[1], col[2], 0.0f);
+				lean_row(row, lean); bike_b.n++;
+			}
 			const float odo = r.podo + (r.odo - r.podo) * p[7];
 			bike_draw.push_back(p[0]); bike_draw.push_back(p[1]); bike_draw.push_back(p[2]); bike_draw.push_back(p[3]);
-			bike_draw.push_back(lean); bike_draw.push_back(odo / 5.2f); bike_draw.push_back((float)r.id);
+			bike_draw.push_back(lean); bike_draw.push_back(odo / 5.2f); bike_draw.push_back((float)r.id); bike_draw.push_back((float)(r.colour % 8));
 			continue;
 		}
 		if (r.model >= cm::N_MODELS) continue;
@@ -1276,5 +1278,7 @@ String CityTraffic::report() {
 	cnt = Count();
 	return s;
 }
+
+const float *CityTraffic::bike_paint(int p_colour) { return BIKE_PAINT[((p_colour % 8) + 8) % 8]; }
 
 } // namespace godot

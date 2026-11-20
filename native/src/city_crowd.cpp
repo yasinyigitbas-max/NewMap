@@ -468,7 +468,13 @@ void CityCrowd::draw(double p_alpha) {
 	riders_drawn = 0;
 	if (trf && trf->is_inside_tree()) {
 		const std::vector<float> &bk = trf->bikes_drawn();
-		for (size_t k = 0; k + 6 < bk.size() && n < pc::MAX_PEDS; k += 7) {
+		if (gfx) {   // the nearest ones as real riders (city_crowd_riders.cpp); they are left out here
+			Viewport *rv = get_viewport();
+			Camera3D *rc = rv ? rv->get_camera_3d() : nullptr;
+			if (rc) near_riders(bk, rc->get_global_position(), trf);
+		}
+		for (size_t k = 0; k + CityTraffic::BIKE_STRIDE - 1 < bk.size() && n < pc::MAX_PEDS; k += CityTraffic::BIKE_STRIDE) {
+			if (std::find(rider_ids.begin(), rider_ids.end(), (int)bk[k + 6]) != rider_ids.end()) continue;
 			const uint32_t h = (uint32_t)bk[k + 6] * 2654435761u ^ 0x5bd1e995u;
 			const int female = (h >> 3) % 3u == 0u ? 1 : 0;   // (a third of them women)
 			const std::vector<int> *pool = &pool_casual[female];
@@ -1438,7 +1444,7 @@ Dictionary CityCrowd::stats() const {
 	int r[7];
 	crowd->audit(own_clock, r);
 	d["people"] = crowd->n_alive; d["places"] = (int)crowd->places.size(); d["hour"] = hour; d["weekday"] = weekday;
-	d["riders"] = riders_drawn; d["riders_thrown"] = riders_thrown; d["riders_given_a_body"] = riders_bodied;
+	d["riders"] = riders_drawn; d["riders_near"] = riders_near; d["riders_miss"] = riders_miss; d["riders_miss_hand"] = riders_miss_hand; d["riders_limbs"] = riders_limbs; d["riders_thrown"] = riders_thrown; d["riders_given_a_body"] = riders_bodied;
 	d["inside_each_other"] = r[0]; d["beside_pavement"] = r[1]; d["standing_a_minute"] = r[3]; d["bad_numbers"] = r[4];
 	d["spawned"] = s.spawned; d["left"] = s.despawned; d["arrivals"] = s.arrivals; d["went_in"] = s.went_in; d["came_out"] = s.came_out; d["sat"] = s.sat; d["crossings"] = s.crossings;
 	d["groups"] = s.parties; d["meetings"] = s.meetings; d["dodges"] = s.dodges; d["fled"] = s.fled; d["bumps"] = s.bumps;

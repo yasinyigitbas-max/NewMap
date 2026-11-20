@@ -124,6 +124,14 @@ private:
 	// counters
 	WayFloor way_floor;      // a collision floor 3 cm under every pavement and crossing (the city's collision has holes)
 	int riders_drawn = 0;   // the traffic's cyclists drawn as riders this frame
+	// the nearest cyclists as real riders on a cruiser rig of their own (city_crowd_riders.cpp)
+	static constexpr int RIDERS_NEAR = 3;
+	struct NearRider { CityPed *ped = nullptr; class BikeReach *reach = nullptr; Node3D *rig = nullptr, *crank = nullptr, *pedal[2] = { nullptr, nullptr }, *wheel[2] = { nullptr, nullptr };
+		Transform3D r_crank, r_pedal[2], r_wheel[2]; Ref<ShaderMaterial> look, paint; int id = -1, linger = 0; float seat = 0.0f; };   // seat: how far under the usual saddle place this person sits (shorter legs)
+	std::vector<NearRider> rider_pool;
+	std::vector<int> rider_ids;
+	int riders_near = 0; float riders_miss = 0.0f; bool riders_miss_hand = false; String riders_limbs;
+	void near_riders(const std::vector<float> &p_bikes, const Vector3 &p_cam, CityTraffic *p_trf);
 	// THE PLAYER'S FIGHT (Yasin: "locking onto the nearest npc, and keep locked on until they are or we are defeated. give
 	// npcs some low health that takes a few jabs"; "make npcs defend themselves attack back or try to dodge sideways once we
 	// hit them, they shouldnt get into combat mode unless we hit them"). Locked on the nearest person; he goes on with his

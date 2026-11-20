@@ -32,6 +32,8 @@ constexpr float GRIP_X = 0.32f, GRIP_Y = 0.974f, GRIP_Z = 0.194f;  // the grips'
 // the steering axis: from the steer pivot (0, 0.693, 0.437) down to the front axle (0, 0.334, 0.63)
 inline Vector3 steer_axis() { return Vector3(0.0f, 0.6927f - 0.334f, 0.3566f - 0.55f).normalized(); }
 
+// the rider's figure (seated clip) in the riders' frame: his hips over the saddle (CityBike, the crowd's near riders)
+inline Vector3 rider_at() { return Vector3(0.0f, SADDLE_Y - 0.545f + 0.10f, SADDLE_Z + 0.035f + 0.31f); }
 inline bool available() { return ResourceLoader::get_singleton()->exists(dir() + String("prop_bicycle_cruiser_rig.glb")); }
 
 inline String shader_code() {

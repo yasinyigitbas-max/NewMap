@@ -60,6 +60,9 @@ protected:
 
 public:
 	Vector3 foot[2], hand[2];    // world: left, right
+	// (the crowd's near riders) the targets in a bicycle node's own frame, made world when the bones are posed: the body and
+	// the bicycle then never part (world targets set a frame early were 6 cm behind a cyclist at 4 m/s)
+	uint64_t frame_id = 0; Vector3 foot_l[2], hand_l[2];
 	Vector3 lean_axis;           // world: the axis the back leans about (the bicycle's left)
 	float lean = 0.0f;           // rad, the back over the bars (at least)
 	float lean_used = 0.0f;      // what it took for the hands to reach the grips

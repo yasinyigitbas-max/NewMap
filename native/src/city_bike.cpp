@@ -48,7 +48,7 @@ const float M_BIKE = 14.0f, M_RIDER = 75.0f;
 constexpr float IDLE_TILT = 0.11f;                              // rad: the bike tipped onto the rider's left foot when he stands still on it
 const Vector3 IDLE_SHIFT(0.0f, -0.13f, 0.11f);                 // the rider forward off the saddle, a little down (his foot on the ground)
 constexpr float IDLE_CRANK = 1.25f - 3.14159265f;              // the crank parked with the right pedal forward and up
-const Vector3 RIDER_AT(0.0f, bike_look::SADDLE_Y - 0.545f + 0.10f, bike_look::SADDLE_Z + 0.035f + 0.31f);   // (3 cm forward on the saddle: nearer the cruiser's low bars)
+const Vector3 RIDER_AT = bike_look::rider_at();   // (3 cm forward on the saddle: nearer the cruiser's low bars)
 inline float clampf(float v, float a, float b) { return v < a ? a : (v > b ? b : v); }
 inline Basis arc(Vector3 a, Vector3 b) {
 	if (a.length_squared() < 1e-10f || b.length_squared() < 1e-10f) return Basis();
@@ -98,6 +98,13 @@ void BikeReach::_process_modification_with_delta(double p_delta) {
 	Skeleton3D *sk = get_skeleton();
 	if (!sk) return;
 	if (!found) find_bones(sk);
+	if (frame_id) {
+		if (Node3D *fr = Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(frame_id)))) {
+			const Transform3D ft = fr->get_global_transform();
+			for (int s = 0; s < 2; s++) { foot[s] = ft.xform(foot_l[s]); hand[s] = ft.xform(hand_l[s]); }
+			lean_axis = ft.basis.get_column(0).normalized();
+		}
+	}
 	const Transform3D to_sk = sk->get_global_transform().affine_inverse();
 	if (b_spine >= 0) {   // the back over the bars: leant at least `lean`, more if the arms need it to reach the grips
 		const Transform3D Gs = sk->get_bone_global_pose(b_spine);
