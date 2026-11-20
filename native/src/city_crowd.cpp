@@ -1403,7 +1403,7 @@ void CityCrowd::rage_update(double p_delta) {
 			const float dist = d.length();
 			if (!on_foot) {   // in his car: he yells by it; a hit and run (driven 60 m off) and he gives up after a while
 				r.chase = false;
-				r.away_t = dist > 60.0f ? r.away_t + (float)p_delta : 0.0f;
+				r.away_t = dist > 60.0f ? r.away_t + (float)p_delta : 0.0f; r.dist = dist;
 				if (r.away_t > 4.0f) { crowd->hold(r.walker, false, 0.0f); rage_given_up++; ragers.erase(ragers.begin() + k); continue; }
 				k++; continue;
 			}
@@ -1448,7 +1448,7 @@ Dictionary CityCrowd::fight_stats() const {
 	d["landed"] = pf.landed; d["missed"] = pf.missed; d["attacks"] = pf.attacks; d["hits_on_player"] = pf.hits_on_player; d["dodges"] = pf.dodges;
 	d["npc_beaten"] = pf.npc_beaten; d["player_beaten"] = pf.player_beaten; d["locks"] = pf.locks; d["player_down"] = pf.player_down;
 	d["rages"] = rages; d["rage_fights"] = rage_fights; d["rage_npc_fights"] = rage_npc_fights; d["rage_chases"] = rage_chases; d["rage_given_up"] = rage_given_up;
-	Array rg; for (const Rager &r : ragers) { Dictionary e; e["walker"] = r.walker; e["t"] = r.t; e["foe"] = r.foe; e["chase"] = r.chase; rg.push_back(e); }
+	Array rg; for (const Rager &r : ragers) { Dictionary e; e["walker"] = r.walker; e["t"] = r.t; e["foe"] = r.foe; e["chase"] = r.chase; e["dist"] = r.dist; e["away_t"] = r.away_t; rg.push_back(e); }
 	d["ragers"] = rg;
 	return d;
 }

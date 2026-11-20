@@ -176,6 +176,8 @@ func _physics_process(delta: float) -> bool:
 		41:
 			var fs: Dictionary = crowd.call(&"fight_stats")
 			if int(fs.rage_given_up) == 0 and t - t0 < 12.0: return false
+			if int(fs.rage_given_up) == 0:
+				for r: Dictionary in fs.ragers: print("RAGE      rager %d foe %d: the player %.1f m away, away %.1f s; the player at %s, his car at %s" % [int(r.walker), int(r.foe), float(r.get("dist", -1)), float(r.get("away_t", -1)), str(player.global_position), str((car as Node3D).global_position)])
 			_check(int(fs.rage_given_up) >= 1 and int(fs.rage_fights) == 0, "a hit and run: the player drove off, the driver gave up (%.1f s)" % (t - t0))
 			part = 3; phase = 2; t0 = t; rager = -1
 		5:      # he runs after the player and the fight starts when he reaches him

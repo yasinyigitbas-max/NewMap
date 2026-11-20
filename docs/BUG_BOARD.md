@@ -22,6 +22,7 @@ traffic / people / game session; "runtime" = the phone runtime / streaming sessi
 | B13 | tests/traffic/test_bike_hit.gd: once a hit rider's hips went 19 m up | this session | flaky; trace the rider when it happens |
 | B14 | "none of the shops appear in the game, i think they were forgotten to be cut in the bake step" | bake / interiors | the interiors (city_kit/interiors, room_lib: doors and windows cut into the locked building at bake time) are not in the runtime bake |
 | B17 | "kerbs shouldnt require step up animation, but if you can make it truly seamless its okay" | this session | end of the queue |
+| B21 | tests/traffic/test_road_rage.gd fails about half its runs (20 Nov, 3 of 6; the same build passed and failed): either the hit-and-run driver does not give up in 12 s, or the second head-on's driver never gets out | this session | flaky by which car the test hits; the test now prints the rager's distance to the player and where the player and his car are when it fails |
 | B19 | "WATCH THE BIKE HOP OFF ANIMATION AND FIX THAT TOO" | this session | end of the queue: trace Sitting_Exit off the cruiser frame by frame |
 | B20 | "WE NEED A GET INTO CAR, GET OUT OF CAR ANIMATION TOO. CARS DOORS SHOULD OPEN, SEATING IN, DOOR CLOSE, THEN WE CAN DRIVE OFF" | this session | end of the queue |
 

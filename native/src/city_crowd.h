@@ -154,7 +154,7 @@ private:
 	// the player driving off (60 m away) is a hit and run: he gives up and walks off; the player on foot: he runs after
 	// him and the fight starts when he reaches him
 	// the run: Sprint_Enter into it, Sprint_Loop, Sprint_Exit as he reaches the player (Yasin: "use enter exit run animations")
-	struct Rager { int walker; float t; int foe; bool chase = false; float away_t = 0.0f, chase_t = 0.0f, arrive_t = -1.0f; };
+	struct Rager { int walker; float t; int foe; bool chase = false; float away_t = 0.0f, chase_t = 0.0f, arrive_t = -1.0f, dist = 0.0f; };
 	std::vector<Rager> ragers;
 	int rages = 0, rage_fights = 0, rage_npc_fights = 0, rage_chases = 0, rage_given_up = 0;
 	void rage_update(double p_delta);
