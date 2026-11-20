@@ -470,7 +470,9 @@ void Person::brain(float dt) {
 	const float hp = P.x.y - ground_y(P.x.x, P.x.z);
 	// stumbling along for three seconds without catching itself, and nothing pushing it: it goes down, as a person does
 	stumble_t = (speed > 0.5f && n_hits == 0) ? stumble_t + dt : (speed < 0.3f || n_hits > 0 ? 0.0f : stumble_t);
-	if (tilt > 1.05f || hp < 0.45f * rest.pelvis.y || speed > 4.5f || (steps >= 8 && speed > 1.6f) || stumble_t > 3.0f) { go_fall(); return; }
+	// (Yasin, 20 Nov: "people are very unlikely to fall and step countless times to balance themselves": a hard shove used
+	// to be caught in 5-8 steps. A person catches a push in one to three steps or goes down: tests/people/sweep_shove.gd)
+	if (tilt > 0.9f || hp < 0.5f * rest.pelvis.y || speed > 3.4f || (steps >= 3 && speed > 1.1f) || steps >= 5 || stumble_t > 1.6f) { go_fall(); return; }
 	const bool swinging = !foot[0].planted || !foot[1].planted;
 	const V3 left{ std::cos(heading), 0, -std::sin(heading) };
 	const float out = len(xi - support(xi, -1));   // how far that point lies outside what its feet cover
@@ -529,7 +531,7 @@ void Person::brain(float dt) {
 			const float dl = len(dv), reach = 0.55f * std::sqrt(skill);
 			// (a step that cannot reach far enough is still taken, as long as a leg is: two or three such steps catch a
 			// hard shove, the way a person runs a few steps to stay up. It goes down when the point is hopelessly far.)
-			if (out > 1.4f * skill) { go_fall(); return; }
+			if (out > 0.85f * skill) { go_fall(); return; }
 			if (dl > reach) tgt = hipf + dv * (reach / dl);
 			Foot &f = foot[s];
 			f.from = f.p; f.to = tgt; f.t = 0;
