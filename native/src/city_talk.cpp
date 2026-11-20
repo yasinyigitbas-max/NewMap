@@ -256,7 +256,7 @@ int CityTalk::find_target() const {
 	for (int i = 0; i < b->hi; i++) {
 		if (!b->alive[i]) continue;
 		const int m = b->mode[i];
-		if (m != pc::M_LINE && m != pc::M_STAY && m != pc::M_FOLLOW) continue;
+		if (m != pc::M_LINE && m != pc::M_STAY && m != pc::M_FOLLOW && !(m == pc::M_HELD && c->talkable_actor(b->id[i]))) continue;   // (the shop's people: CityCrowd::talkable_actor)
 		if (b->flee_t[i] > 0.0f || std::fabs(b->y[i] - p.y) > 2.0f) continue;
 		const float dx = b->x[i] - p.x, dz = b->z[i] - p.z, d2 = dx * dx + dz * dz;
 		if (d2 < bd) { bd = d2; best = i; }
@@ -292,7 +292,7 @@ String CityTalk::begin(int p_id) {
 	if (h < 7.0 || h >= 21.0 || c->get_rain() > 0.5) p -= BAD_MOD;
 	const double roll = force_roll >= 0.0 ? force_roll : randf();
 	const double yaw = std::atan2(player_pos().x - b->x[row], player_pos().z - b->z[row]);
-	if (roll >= p || !b->hold(p_id, true, (float)yaw)) {
+	if (roll >= p || !c->talk_hold(p_id, true, yaw)) {      // (street life: a shop person is held too; the animator: the refusal has a body)
 		say(row, pick(data[n > 1 ? "group_reject" : "reject"])); refuse(row); m.busy_until = now_h + GRUDGE_H; return "reject";
 	}
 	const bool again = m.met_until > now_h;
@@ -325,7 +325,7 @@ void CityTalk::end(const String &p_outcome) {
 	CityCrowd *c = crowd_node();
 	if (c && c->brain()) {
 		pc::Crowd *b = c->brain();
-		for (int id : held) b->hold(id, false, 0.0f);
+		for (int id : held) c->talk_hold(id, false, 0.0);
 		if (p_outcome == "bye" || p_outcome == "cut") b->set_act(a, pc::A_NOD, 1.3f);   // (a nod as they part, then he walks on)
 		const int row = b->find(a);
 		if (row >= 0) {

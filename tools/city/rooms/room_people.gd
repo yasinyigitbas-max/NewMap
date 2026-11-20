@@ -7,6 +7,8 @@ extends SceneTree
 ##   queue   [x, z, yaw]   in front of it, facing the staff (where a customer pays: the player too)
 ##   browse  [[x, z, yaw]] in front of shelves, fridges, racks, facing them (up to 6, spread out)
 ##   door_in [x, z], door_out [x, z]   just inside and just outside its first entrance
+##   seats   [[x, z, yaw]] chairs and waiting benches (a bench: two seats), where a sitter's feet are, facing as the
+##           seat faces (chairs face their +Z: the interiors skill), 8 cm forward of the seat's middle as the crowd's benches
 ## The till's and counter's sides are the kit's (the interiors skill, checked by rendering every prop from four sides):
 ## the STAFF side is +Z for cash_register, checkout_counter, laundry_counter, espresso_machine; the CUSTOMER side is +Z for
 ## shop_counter, bar_counter, pastry_case and the shelves. Every spot must lie on the room's floor (meta "floors"), 0.3 m
@@ -14,6 +16,7 @@ extends SceneTree
 const ROOMS := "res://map_dc/coronado/city_kit/interiors/rooms/"
 const OUT := "res://map_dc/coronado/city_kit/traffic/room_people.json"      # (beside the crowd's other data: the phone export packs it)
 const SERVICE := [["cash_register", 1], ["checkout_counter", 1], ["shop_counter", -1], ["bar_counter", -1], ["laundry_counter", 1], ["pastry_case", -1]]
+const SEATS := ["cafe_chair", "side_chair", "waiting_bench", "booth_bench", "shoe_bench", "theatre_seat"]   # (seat height ~0.45 m: no bar stools, no barber chairs)
 const BROWSE := ["shelf", "fridge", "freezer", "rack", "spinner", "produce_stand", "display", "case", "cabinet", "ice_chest", "bookcase"]
 
 func _initialize() -> void:
@@ -61,7 +64,9 @@ func _room(r: Node) -> Dictionary:
 	if ents.is_empty(): return {"why": "no entrance"}
 	var res := {}
 	var shop: Dictionary = r.get_meta("shop", {})
-	res["kind"] = String(shop.get("kind", r.name.get_slice("_", 1) if String(r.name).begins_with("ap_") or String(r.name).begins_with("cv_") else ""))
+	# (a hand-made room has no shop meta: its name says it, last word: ap_corner_cafe a cafe, cv_city_hall a hall)
+	var nm_parts := String(r.name).split("_")
+	res["kind"] = String(shop.get("kind", nm_parts[nm_parts.size() - 1] if String(r.name).begins_with("ap_") or String(r.name).begins_with("cv_") else ""))
 	res["name"] = String(shop.get("name", ""))
 	# the service point: the first kind of till or counter found, the first of them that leaves both spots on the floor
 	for sv in SERVICE:
@@ -104,6 +109,23 @@ func _room(r: Node) -> Dictionary:
 		if picked.size() > 0 and bd < 1.2: break
 		picked.append(cand[best]); cand.remove_at(best)
 	res["browse"] = picked
+	# the seats
+	var seats := []
+	for key in SEATS:
+		for inst in _instances(props, key):
+			var t: Transform3D = inst.t
+			var fz := t.basis.z; fz.y = 0.0
+			if fz.length() < 0.1: continue
+			fz = fz.normalized()
+			var along := Vector3(fz.z, 0.0, -fz.x)
+			var offs := [-0.42, 0.42] if String(key).contains("bench") else [0.0]
+			for o in offs:
+				var p := t.origin + along * float(o) + fz * 0.08
+				if not _on_floor(floors, p.x, p.z): continue
+				if Vector2(p.x - float(res.queue[0]), p.z - float(res.queue[1])).length() < 1.0: continue
+				seats.append([p.x, p.z, atan2(fz.x, fz.z)])
+				if seats.size() >= 10: break
+	res["seats"] = seats
 	# the first entrance: just inside and just outside its middle
 	var e: Array = ents[0]
 	var mid := (float(e[2]) + float(e[3])) * 0.5

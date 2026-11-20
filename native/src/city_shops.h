@@ -8,6 +8,15 @@
 //    (Idle_LookAround_Loop), queue, and pay: the cashier rings it up (Counter_Show), the customer hands the money over
 //    (Counter_Give), the cashier hands the goods over (Counter_Give) and the customer takes them (Interact); then out of
 //    the door and on along the pavement. They are the crowd's actors (CityCrowd: city_crowd_actors.cpp).
+//  - SITTING (Yasin: "add sitting cafe npcs too"): rooms with chairs or benches (cafe_chair, side_chair, booth_bench,
+//    waiting_bench ...) have people sitting (a sitting clip: idle, a drink, a word, the phone), placed seated when the shop
+//    opens; one gets up now and then (Sitting_Exit) and goes; in a place that serves food or drink a customer who has paid
+//    may sit down at a free seat for a while instead of leaving.
+//  - TALKING: all of them (cashier, customers, sitters) can be talked to as anybody (CityTalk; CityCrowd::talk_hold): they
+//    stop, turn to the player (a sitter stays seated) and go on afterwards.
+//  - THE PURCHASE SCREEN (to come): with purchase_screen on, BUY (or the game's call open_purchase(cashier)) does not sell
+//    at once: it sends purchase_requested({room, kind, name, cashier, item, item_tr, price}) and the cashier waits facing the
+//    player; the screen answers complete_purchase(item, item_tr, price) (the pay's moves, the money) or cancel_purchase().
 //  - THE PLAYER: on foot at a shop's queue spot with the cashier free, the Use button says BUY (SATIN AL): the same four
 //    moves with him (CityPlayer::act), the money taken (the shop's kind sets what and how much), a word on the HUD; not
 //    enough money: the cashier shakes his head.
@@ -30,10 +39,12 @@ public:
 
 private:
 	uint64_t crowd_id = 0, player_id = 0, rooms_id = 0;
-	struct Spots { String kind, name; Vector3 staff, queue, door_in, door_out; float staff_yaw = 0.0f, queue_yaw = 0.0f; std::vector<Vector3> browse; std::vector<float> browse_yaw; bool ok = false; };
+	struct Spots { String kind, name; Vector3 staff, queue, door_in, door_out; float staff_yaw = 0.0f, queue_yaw = 0.0f; std::vector<Vector3> browse, seats; std::vector<float> browse_yaw, seat_yaw; bool ok = false; };
 	Dictionary data;            // room_people.json "rooms"
 	bool loaded = false;
 	struct Customer { int walker = -1, st = C_IN; float t = 0.0f, look = 0.0f; int looks = 0, spot = -1; };
+	enum { S_SIT = 0, S_RISE = 1, S_LEAVE = 2, S_GO = 3, S_DONE = 4 };
+	struct Sitter { int walker = -1, seat = -1, st = S_SIT; float t = 0.0f, stay = 60.0f; };
 	struct Shop {
 		String room; Transform3D xf; Spots sp;
 		int cashier = -1;
@@ -42,6 +53,12 @@ private:
 		int pay_who = -2;            // who is paying now: -1 the player, a walker, -2 nobody
 		float pay_t = 0.0f; int pay_step = 0;
 		bool seen = true, manual = false, no_money = false;
+		std::vector<Sitter> sit;
+		std::vector<uint8_t> seat_taken;
+		float floor_y = 0.0f;
+		bool serves = false;         // food or drink: a paying customer may sit down after
+		// the purchase screen: -3 in pay_who while it is open; what it chose
+		bool custom = false; String c_item, c_tr; int c_price = 0;
 	};
 	std::vector<Shop> shops;
 	float scan_t = 0.0f;
@@ -53,7 +70,11 @@ private:
 	void shop_update(Shop &s, double p_delta);
 	void pay_update(Shop &s, double p_delta);
 	String price_item(const String &p_kind, int &r_price, String &r_tr) const;
-	int buys = 0, sales = 0, refused = 0, customers_in = 0, customers_out = 0;
+	void sit_update(Shop &s, double p_delta);
+	int free_seat(const Shop &s) const;
+	void seat(Shop &s, int p_walker, int p_seat, float p_stay, bool p_placed);
+	bool purchase_screen = false;
+	int buys = 0, sales = 0, refused = 0, customers_in = 0, customers_out = 0, sat_down = 0, got_up = 0, screens = 0;
 
 protected:
 	static void _bind_methods();
@@ -66,6 +87,13 @@ public:
 	// the player: is he at a shop's queue spot with its cashier free (the HUD's BUY); buy there
 	bool can_buy() const;
 	bool buy();
+	// the purchase screen's hooks (see the top)
+	void set_purchase_screen(bool p_on) { purchase_screen = p_on; }
+	bool get_purchase_screen() const { return purchase_screen; }
+	bool open_purchase(int p_cashier);
+	bool complete_purchase(const String &p_item, const String &p_item_tr, int p_price);
+	void cancel_purchase();
+	bool is_cashier(int p_walker) const;
 	Array shops_info() const;
 	Dictionary stats() const;
 	// (tests) a room as if CityRooms had it awake: the room's name (room_people.json) and where it stands

@@ -24,6 +24,7 @@ var k_hit := {}   # the counts as the head-on knock begins: its driver may drive
 var far_most := 0.0
 var speed_most := 0.0
 var spot := Vector3.ZERO
+var tried := []      # part 2: the cars aimed at that pulled into a kerb stall first (another is chosen)
 
 func _initialize() -> void:
 	for a: String in OS.get_cmdline_user_args():
@@ -126,7 +127,7 @@ func _physics_process(delta: float) -> bool:
 			var best := {}; var best_d := 1.0e9
 			for c: Dictionary in traffic.call(&"cars_near", at, 200.0):
 				var d := (c.at as Vector3).distance_to(spot)
-				if float(c.speed) > 5.0 and d > 60.0 and d < best_d: best_d = d; best = c
+				if float(c.speed) > 5.0 and d > 60.0 and d < best_d and not tried.has(int(c.id)): best_d = d; best = c
 			if best.is_empty():
 				if t - t0 > 60.0: _check(false, "no moving car to hit within 200 m in a minute"); phase = 9
 				return false
@@ -144,10 +145,22 @@ func _physics_process(delta: float) -> bool:
 			k_hit = traffic.call(&"knock_stats")
 		3:
 			_watch()
+			if OS.get_cmdline_user_args().has("--trace") and t - t0 < 4.0 and int((t - t0) * 4.0) != int((t - t0 - delta) * 4.0):
+				var tc := {}
+				for c: Dictionary in traffic.call(&"cars_near", spot, 60.0): if int(c.id) == int(target.id): tc = c
+				var ks: Dictionary = traffic.call(&"knock_stats")
+				print("KNOCK     t+%.2f player car %s v %s | target %s | knocked moving %d parked %d | no_slot %d taken_away %d loose %d rejoined %d" % [t - t0, str(car.global_position.snapped(Vector3.ONE * 0.1)), str(car.linear_velocity.snapped(Vector3.ONE * 0.1)), ("at %s v %.1f yaw %.2f" % [str((tc.at as Vector3).snapped(Vector3.ONE * 0.1)), float(tc.speed), float(tc.yaw)]) if not tc.is_empty() else "gone", int(ks.moving) - int(k_hit.moving), int(ks.parked) - int(k_hit.parked), int(ks.no_slot), int(ks.taken_away), (ks.out as Array).size(), int(ks.rejoined)])
 			if t - t0 > 2.0: car.call(&"set_controls", 0.0, 1.0, 0.0, 0.0, false)
 			if t - t0 < 14.0: return false
 			var s: Dictionary = traffic.call(&"knock_stats")
 			var n := int(s.moving) - int(k0.moving)
+			# (the car aimed at may pull into a kerb stall in front of the player's car: it is a parked car then, and knocked as
+			# one. That is the traffic doing what it does, not a knock that failed: another moving car, three tries at most)
+			if n == 0 and tried.size() < 2:   # (parked first, or turned off the line before the car reached it)
+				tried.append(int(target.id))
+				print("KNOCK   (car %d was not hit as a moving car: %s; another one)" % [int(target.id), "it pulled into a kerb stall first" if int(s.parked) > int(k0.parked) else "it left the line before the car reached it"])
+				phase = 2; t0 = t
+				return false
 			_check(n >= 1, "the moving car became a physical car (%d moving cars knocked loose, %d parked)" % [n, int(s.parked) - int(k0.parked)])
 			_check(speed_most < 40.0 and far_most < 4.0, "no wild numbers: fastest knocked car %.1f m/s, farthest from the ground's height %.2f m" % [speed_most, far_most])
 			var cs: Dictionary = car.call(&"get_state")
