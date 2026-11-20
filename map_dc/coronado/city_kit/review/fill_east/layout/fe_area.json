@@ -1,0 +1,1387 @@
+{
+ "instances": [
+  {
+   "piece": "j_apt",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "sample A"
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "sample A"
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": -180.0,
+   "from": "sample A"
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 90.0,
+   "from": "sample A"
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": -90.0,
+   "from": "sample A"
+  },
+  {
+   "piece": "a_ne",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "sample A"
+  },
+  {
+   "piece": "a_nw",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "sample A"
+  },
+  {
+   "piece": "a_se",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "sample A"
+  },
+  {
+   "piece": "a_sw",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "sample A"
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    -200.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "sample V"
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    -600.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "sample G"
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    570.0,
+    1.35,
+    200.0
+   ],
+   "yaw": 90.0,
+   "from": "sample W"
+  },
+  {
+   "piece": "j_ar_ad5",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "art",
+   "site": "node 500,-1000"
+  },
+  {
+   "piece": "j_rs_t_rrr_a",
+   "pos": [
+    500.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 180.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    -400.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 90.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    -400.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_apt",
+   "pos": [
+    -200.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": -90.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_rs_3l1r_c",
+   "pos": [
+    250.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": -90.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_rs_3l1r_c",
+   "pos": [
+    250.0,
+    8.0,
+    -400.0
+   ],
+   "yaw": 90.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_rs_3l1r_d",
+   "pos": [
+    500.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 180.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_rs_2l2r_adj_a",
+   "pos": [
+    500.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": 180.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_rs_2l2r_adj_a",
+   "pos": [
+    500.0,
+    6.0,
+    -400.0
+   ],
+   "yaw": 90.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_rs_1l3r_b",
+   "pos": [
+    -200.0,
+    2.0,
+    200.0
+   ],
+   "yaw": -90.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_rs_1l3r_b",
+   "pos": [
+    250.0,
+    12.0,
+    -200.0
+   ],
+   "yaw": 90.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_rs_1l3r_c",
+   "pos": [
+    250.0,
+    10.0,
+    0.0
+   ],
+   "yaw": 90.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_rs_4r_d",
+   "pos": [
+    -400.0,
+    2.0,
+    200.0
+   ],
+   "yaw": 180.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_rs_4r_d",
+   "pos": [
+    250.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 90.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "j_rs_4r_e",
+   "pos": [
+    500.0,
+    8.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": null
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    -400.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b021"
+  },
+  {
+   "piece": "s_res_dn2_b",
+   "pos": [
+    -200.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b034"
+  },
+  {
+   "piece": "s_res_up2_b",
+   "pos": [
+    -200.0,
+    2.0,
+    200.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b034"
+  },
+  {
+   "piece": "s_rs_b049_a",
+   "pos": [
+    250.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b049"
+  },
+  {
+   "piece": "s_rs_b049_b",
+   "pos": [
+    250.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b049"
+  },
+  {
+   "piece": "s_apt",
+   "pos": [
+    250.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b050"
+  },
+  {
+   "piece": "s_rs_b051_b",
+   "pos": [
+    250.0,
+    8.0,
+    -400.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b051"
+  },
+  {
+   "piece": "s_res_up4_b",
+   "pos": [
+    250.0,
+    8.0,
+    -400.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b052"
+  },
+  {
+   "piece": "s_res_dn4_b",
+   "pos": [
+    250.0,
+    12.0,
+    -200.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b052"
+  },
+  {
+   "piece": "s_res_dn2_b",
+   "pos": [
+    250.0,
+    12.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b053"
+  },
+  {
+   "piece": "s_res_up2_b",
+   "pos": [
+    250.0,
+    10.0,
+    0.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b053"
+  },
+  {
+   "piece": "s_res_dn4_b",
+   "pos": [
+    250.0,
+    10.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b054"
+  },
+  {
+   "piece": "s_res_up4_b",
+   "pos": [
+    250.0,
+    6.0,
+    200.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b054"
+  },
+  {
+   "piece": "s_rs_b059_a",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b059"
+  },
+  {
+   "piece": "s_rs_b059_b",
+   "pos": [
+    500.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b059"
+  },
+  {
+   "piece": "s_rs_b060_a",
+   "pos": [
+    500.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b060"
+  },
+  {
+   "piece": "s_rs_b060_b",
+   "pos": [
+    500.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b060"
+  },
+  {
+   "piece": "s_rs_b061_a",
+   "pos": [
+    500.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b061"
+  },
+  {
+   "piece": "s_rs_b061_b",
+   "pos": [
+    500.0,
+    6.0,
+    -400.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b061"
+  },
+  {
+   "piece": "s_rs_b062_a",
+   "pos": [
+    500.0,
+    6.0,
+    -400.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b062"
+  },
+  {
+   "piece": "s_rs_b062_b",
+   "pos": [
+    500.0,
+    8.0,
+    -200.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b062"
+  },
+  {
+   "piece": "s_rs_b063_a",
+   "pos": [
+    500.0,
+    8.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b063"
+  },
+  {
+   "piece": "s_rs_b063_b",
+   "pos": [
+    500.0,
+    4.0,
+    0.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b063"
+  },
+  {
+   "piece": "s_rs_b086_a",
+   "pos": [
+    250.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 90.0,
+   "from": "resstd",
+   "site": "b086"
+  },
+  {
+   "piece": "s_rs_b086_b",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": -90.0,
+   "from": "resstd",
+   "site": "b086"
+  },
+  {
+   "piece": "s_rs_b094_a",
+   "pos": [
+    250.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": 90.0,
+   "from": "resstd",
+   "site": "b094"
+  },
+  {
+   "piece": "s_rs_b094_b",
+   "pos": [
+    500.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": -90.0,
+   "from": "resstd",
+   "site": "b094"
+  },
+  {
+   "piece": "s_rs_b100_b",
+   "pos": [
+    500.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": -90.0,
+   "from": "resstd",
+   "site": "b100"
+  },
+  {
+   "piece": "s_rs_b106_a",
+   "pos": [
+    250.0,
+    8.0,
+    -400.0
+   ],
+   "yaw": 90.0,
+   "from": "resstd",
+   "site": "b106"
+  },
+  {
+   "piece": "s_rs_b106_b",
+   "pos": [
+    500.0,
+    6.0,
+    -400.0
+   ],
+   "yaw": -90.0,
+   "from": "resstd",
+   "site": "b106"
+  },
+  {
+   "piece": "s_rs_b114_a",
+   "pos": [
+    250.0,
+    12.0,
+    -200.0
+   ],
+   "yaw": 90.0,
+   "from": "resstd",
+   "site": "b114"
+  },
+  {
+   "piece": "s_rs_b114_b",
+   "pos": [
+    500.0,
+    8.0,
+    -200.0
+   ],
+   "yaw": -90.0,
+   "from": "resstd",
+   "site": "b114"
+  },
+  {
+   "piece": "s_rs_b122_a",
+   "pos": [
+    250.0,
+    10.0,
+    0.0
+   ],
+   "yaw": 90.0,
+   "from": "resstd",
+   "site": "b122"
+  },
+  {
+   "piece": "s_rs_b122_b",
+   "pos": [
+    500.0,
+    4.0,
+    0.0
+   ],
+   "yaw": -90.0,
+   "from": "resstd",
+   "site": "b122"
+  },
+  {
+   "piece": "j_rg_nw_e657_n800",
+   "pos": [
+    657.332702636719,
+    4.0,
+    -800.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "657.3,-800.0"
+  },
+  {
+   "piece": "s_rg_nw_b141_1",
+   "pos": [
+    657.539428710938,
+    4.0,
+    -815.498657226562
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b141"
+  },
+  {
+   "piece": "s_rg_nw_b141_2",
+   "pos": [
+    658.596557617188,
+    4.0,
+    -894.75048828125
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b141"
+  },
+  {
+   "piece": "j_rg_e660_n1000",
+   "pos": [
+    659.999206542969,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "660.0,-1000.0"
+  },
+  {
+   "piece": "s_rg_b087",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 90.0,
+   "from": "ring_nw",
+   "site": "b087"
+  },
+  {
+   "piece": "j_rg_se_e627_s0",
+   "pos": [
+    626.538635253906,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "626.5,0.0"
+  },
+  {
+   "piece": "j_rg_se_e647_n200",
+   "pos": [
+    646.999816894531,
+    4.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "647.0,-200.0"
+  },
+  {
+   "piece": "j_rg_se_e652_n400",
+   "pos": [
+    651.997375488281,
+    4.0,
+    -400.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "652.0,-400.0"
+  },
+  {
+   "piece": "j_rg_se_e655_n600",
+   "pos": [
+    654.664978027344,
+    4.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "654.7,-600.0"
+  },
+  {
+   "piece": "s_rg_se_b136_w",
+   "pos": [
+    570.0,
+    1.35,
+    99.9999923706055
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "W_N"
+  },
+  {
+   "piece": "s_rg_se_b137_1",
+   "pos": [
+    628.591369628906,
+    4.0,
+    -13.3430194854736
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "b137"
+  },
+  {
+   "piece": "s_rg_se_b137_2",
+   "pos": [
+    641.624084472656,
+    4.0,
+    -98.0606536865234
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "b137"
+  },
+  {
+   "piece": "s_rg_se_b138_1",
+   "pos": [
+    647.637268066406,
+    4.0,
+    -225.492065429688
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "b138"
+  },
+  {
+   "piece": "s_rg_se_b138_2",
+   "pos": [
+    649.613037109375,
+    4.0,
+    -304.49853515625
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "b138"
+  },
+  {
+   "piece": "s_rg_se_b139_1",
+   "pos": [
+    652.204040527344,
+    4.0,
+    -415.498596191406
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "b139"
+  },
+  {
+   "piece": "s_rg_se_b139_2",
+   "pos": [
+    653.327819824219,
+    4.0,
+    -499.75
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "b139"
+  },
+  {
+   "piece": "s_rg_se_b140_1",
+   "pos": [
+    655.011779785156,
+    4.0,
+    -625.997680664062
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "b140"
+  },
+  {
+   "piece": "s_rg_se_b140_2",
+   "pos": [
+    656.065551757812,
+    4.0,
+    -704.999572753906
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "b140"
+  },
+  {
+   "piece": "s_rg_se_b095",
+   "pos": [
+    500.0,
+    6.0,
+    -800.0
+   ],
+   "yaw": 90.0,
+   "from": "ring_se",
+   "site": "b095"
+  },
+  {
+   "piece": "s_rg_se_b101",
+   "pos": [
+    500.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 90.0,
+   "from": "ring_se",
+   "site": "b101"
+  },
+  {
+   "piece": "s_rg_se_b107",
+   "pos": [
+    500.0,
+    6.0,
+    -400.0
+   ],
+   "yaw": 90.0,
+   "from": "ring_se",
+   "site": "b107"
+  },
+  {
+   "piece": "s_rg_se_b115",
+   "pos": [
+    500.0,
+    8.0,
+    -200.0
+   ],
+   "yaw": 90.0,
+   "from": "ring_se",
+   "site": "b115"
+  },
+  {
+   "piece": "s_rg_se_b123",
+   "pos": [
+    500.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 90.0,
+   "from": "ring_se",
+   "site": "b123"
+  },
+  {
+   "piece": "n_apt_b1_bw",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
+   "piece": "n_apt_b1_be",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
+   "piece": "n_apt_b1_7th",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
+   "piece": "n_apt_b2_7th",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
+   "piece": "n_apt_b2_be",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
+   "piece": "n_apt_b2_bw",
+   "pos": [
+    250.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
+   "piece": "n_apt_b3_w",
+   "pos": [
+    250.0,
+    8.0,
+    -400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
+   "piece": "n_apt_b3_e",
+   "pos": [
+    250.0,
+    8.0,
+    -400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_apt"
+  },
+  {
+   "piece": "n_cc_b2_e",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b3_main",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b5_e",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_cc_b6",
+   "pos": [
+    0.0,
+    6.0,
+    -600.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_cc"
+  },
+  {
+   "piece": "n_hs_b5_tenth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b6_tenth",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "n_hs_b6_garden",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hs"
+  },
+  {
+   "piece": "r_q_250_m1000_nw",
+   "pos": [
+    250.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_250_m1000_sw",
+   "pos": [
+    250.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_250_m1000_ne",
+   "pos": [
+    250.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_250_m1000_se",
+   "pos": [
+    250.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_250_m200_nw",
+   "pos": [
+    250.0,
+    12.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_250_m200_sw",
+   "pos": [
+    250.0,
+    12.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_250_m200_ne",
+   "pos": [
+    250.0,
+    12.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_250_m200_se",
+   "pos": [
+    250.0,
+    12.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_250_0_ne",
+   "pos": [
+    250.0,
+    10.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_500_m200_nw",
+   "pos": [
+    500.0,
+    8.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_500_m200_sw",
+   "pos": [
+    500.0,
+    8.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_500_0_nw",
+   "pos": [
+    500.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "m_gr_ad5ne",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_strip"
+  },
+  {
+   "piece": "m_gr_ad5nw",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_strip"
+  },
+  {
+   "piece": "n_wf_b2w",
+   "pos": [
+    297.0,
+    0.0,
+    100.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_wf"
+  },
+  {
+   "piece": "n_wf_b2m",
+   "pos": [
+    367.0,
+    0.0,
+    100.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_wf"
+  },
+  {
+   "piece": "n_wf_b2e",
+   "pos": [
+    470.0,
+    0.0,
+    60.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_wf"
+  },
+  {
+   "piece": "n_fe_b1w",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_fe"
+  },
+  {
+   "piece": "n_fe_b1e",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_fe"
+  },
+  {
+   "piece": "n_fe_b2",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_fe"
+  },
+  {
+   "piece": "n_fe_r7",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_fe"
+  },
+  {
+   "piece": "n_fe_r5",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_fe"
+  },
+  {
+   "piece": "n_fe_r3",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_fe"
+  },
+  {
+   "piece": "n_fe_r1",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_fe"
+  },
+  {
+   "piece": "t_fe_b1w",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fe_b1e",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fe_b2",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fe_r7",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fe_r5",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fe_r3",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fe_r1",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  }
+ ]
+}
