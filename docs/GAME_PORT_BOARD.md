@@ -131,6 +131,12 @@ RESULT PASS, and commit and push after every item. The old game is the checkout 
 - tests/traffic/test_bike_hit.gd: one run in two (19 Nov) the hit cyclist's hips went 19 m up (the other run 1.06 m):
   a rare launch of the thrown rider; not deterministic between runs. Trace the one rider when it happens.
 
+## Yasin, 20 Nov: "AFTER YOU ARE DONE WITH ANIMATIONS, CONTINUE BRINGING THE OLD SYSTEMS OF THE GAME BACK ONE BY ONE, ONLY C PLUS
+## PLUS EVERYTHING EXCEPT FOR STORY SHOULD BE ADDED TO THIS GAME IN NATIVE CODE"
+After the animations (bug board B10, B11, then B15-B18), in order: 9 the phone's apps, 10 money and ATMs, 11 jobs and
+deliveries, 12 lessons, 13 narrator / captions / dialogue, 14 minigames, then 15 without the story (char creator,
+wardrobe, i18n): all C++. The story stays out.
+
 ## Still waiting on Yasin (from before)
 - His go for people inside the shops; the voices; a fresh bake, then make_streets.gd, make_places.gd and the tests.
 

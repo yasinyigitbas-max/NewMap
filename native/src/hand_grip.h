@@ -55,8 +55,10 @@ public:
 	// puts down is pinned where it landed until it lifts; on lifting, the rest of the pin's offset fades in 0.1 s
 	bool locked[2] = { false, false };
 	Vector3 lock_w[2], rel_off[2], prev_fw[2], prev_root;
+	float rel_t[2] = { 0, 0 };   // since the pin let go
 	bool have_prev = false;
-	uint64_t last_us = 0;   // (the tests) how far the hips went down, how far each sole ended from its ground
+	uint64_t last_us = 0;
+	float gap_sum = 0.0f, gap_most = 0.0f; int gap_n = 0, gap_by_lift = 0;   // (traces) the pins' gaps as they let go   // (the tests) how far the hips went down, how far each sole ended from its ground
 	void _process_modification_with_delta(double p_delta) override;
 	void reset() { locked[0] = locked[1] = false; rel_off[0] = rel_off[1] = Vector3(); have_prev = false; }   // (another person in the same figure)
 };

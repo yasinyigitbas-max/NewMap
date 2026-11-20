@@ -28,7 +28,12 @@ func _initialize() -> void:
 func _physics_process(delta: float) -> bool:
 	t += delta
 	if t < 6.0: return false
-	if t > 6.0 + secs: _report(); quit(); return true
+	if t > 6.0 + secs:
+		var gs := 0.0; var gn := 0; var gm := 0.0; var gl := 0
+		for nb: Dictionary in crowd.call(&"near_bodies"):
+			if nb.has("gaps"): gs += float(nb.gap_mean) * int(nb.gaps); gn += int(nb.gaps); gm = maxf(gm, float(nb.gap_most)); gl += int(nb.gaps_by_lift)
+		print("CROWD PINS let go %d times (%d as the foot lifted): the gap to the clip's foot then mean %.3f m, most %.3f m" % [gn, gl, gs / maxf(gn, 1), gm])
+		_report(); quit(); return true
 	var fr := int((t - 6.0) * 60.0)
 	for nb: Dictionary in crowd.call(&"near_bodies"):
 		if int(nb.figure_mode) != 0: continue   # (its balancing body: physics, not a clip)

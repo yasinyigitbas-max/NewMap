@@ -165,9 +165,9 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 		const float body_v = (have_prev && p_delta > 0.0) ? Vector2(sg.origin.x - prev_root.x, sg.origin.z - prev_root.z).length() / (float)p_delta : 0.0f;
 		const float v_keep = body_v < 0.15f ? 1.6f : 1.0f, v_take = body_v < 0.15f ? 1.2f : 0.6f;   // (standing: a clip's shuffle does not move a foot on the floor)
 		prev_fw[s] = fw;
-		// (also let go when the pin is 8 cm behind where the clip has the foot: a crouched foot swings without rising)
+		// (a pin lets go as the clip lifts the foot, so the foot catches up in the air, or once 12 cm behind: a crouched foot swings without rising)
 		const float pin_gap = locked[s] ? Vector2(fw.x - lock_w[s].x, fw.z - lock_w[s].z).length() : 0.0f;
-		const bool plant_now = locked[s] ? (h_clip < ankle_h + 0.03f && clip_v < v_keep && pin_gap < 0.08f) : (h_clip < ankle_h + 0.02f && clip_v < v_take);
+		const bool plant_now = locked[s] ? (h_clip < ankle_h + 0.03f && clip_v < v_keep && pin_gap < 0.12f) : (h_clip < ankle_h + 0.02f && clip_v < v_take);
 		if (plant_now) {
 			if (!locked[s]) { locked[s] = true; lock_w[s] = fw + rel_off[s]; }
 			slide[s] = Vector3(lock_w[s].x - fw.x, 0.0f, lock_w[s].z - fw.z);
@@ -176,8 +176,12 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 			// standing, a clip that moves a foot along the floor (the crouch's widening stance) makes it a little step: the foot
 			// lifts up to 4 cm as it goes, not a slide
 			if (body_v < 0.15f && h_clip < ankle_h + 0.03f && clip_v > 0.25f) d += std::min(0.04f, 0.02f * clip_v);
-			if (locked[s]) { locked[s] = false; rel_off[s] = Vector3(lock_w[s].x - fw.x, 0.0f, lock_w[s].z - fw.z); }
-			rel_off[s] *= (float)std::exp(-p_delta / 0.06);   // (about 0.15 s to nothing)
+			if (locked[s]) {
+				locked[s] = false; rel_t[s] = 0.0f; rel_off[s] = Vector3(lock_w[s].x - fw.x, 0.0f, lock_w[s].z - fw.z);
+				const float g = rel_off[s].length(); gap_sum += g; gap_n++; gap_most = std::max(gap_most, g); if (h_clip >= ankle_h + 0.03f) gap_by_lift++;
+			}
+			rel_t[s] += (float)p_delta;
+			rel_off[s] *= (float)std::exp(-p_delta / 0.06);   // (about 0.15 s; holding it till the lift made more pops: tried 20 Nov)
 			slide[s] = rel_off[s];
 		}
 		if (std::fabs(d) < 0.004f && slide[s].length_squared() < 1e-6f) { want[s] = 0.0f; continue; }

@@ -733,7 +733,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 	auto give = [&](Near &nb, int best) {
 		float pr[4]; int body; float sc;
 		person_of(best, pr, body, sc);
-		nb.walker = crowd->id[best]; nb.in_body = false;
+		nb.walker = crowd->id[best]; nb.in_body = false; nb.has_last = false; nb.v_s = crowd->v[best];
 		nb.why = 0; nb.after_kind = 0; nb.after_t = 0.0f;
 		nb.v_s = crowd->v[best];
 		nb.act = crowd->act[best]; nb.act_t = 99.0f;
@@ -790,7 +790,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 		if (best < 0) continue;
 		float pr[4]; int body; float sc;
 		person_of(best, pr, body, sc);
-		nb.walker = crowd->id[best]; nb.in_body = false;
+		nb.walker = crowd->id[best]; nb.in_body = false; nb.has_last = false; nb.v_s = crowd->v[best];
 		nb.why = 0; nb.after_kind = 0; nb.after_t = 0.0f;
 		nb.v_s = crowd->v[best];
 		nb.act = crowd->act[best]; nb.act_t = 99.0f;   // (whatever it is doing, it is doing it already)
@@ -902,7 +902,15 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 				StringName clip; double speed, hold; int token;
 				const int act_now = crowd->act[i] | (crowd->mode[i] == pc::M_DODGE ? 256 : 0);
 				if (nb.act != act_now) { nb.act = act_now; nb.act_t = 0.0f; } else nb.act_t += (float)p_delta;
-				nb.v_s += (crowd->v[i] - nb.v_s) * std::min((float)p_delta * 5.0f, 1.0f);
+				// the clip's pace from how fast the figure really moves (smoothed over about 0.15 s), not the walker's planned speed:
+				// on a curve, weaving or slowing they differ, and the planted feet slid (tests/people/trace_crowd.gd)
+				{
+					float v_real = crowd->v[i];
+					if (nb.has_last && p_delta > 1e-4) v_real = Vector2(at.x - nb.last_at.x, at.z - nb.last_at.z).length() / (float)p_delta;
+					if (v_real > 6.0f) v_real = crowd->v[i];   // (a jump of the row: not a pace)
+					nb.last_at = at; nb.has_last = true;
+					nb.v_s += (v_real - nb.v_s) * std::min((float)p_delta * 7.0f, 1.0f);
+				}
 				clip_of(i, nb.act_t, nb.v_s, clip, speed, hold, token);
 				if (pf.walker == nb.walker && pf.angry) {   // fighting the player: his guard, a blow, a dodge, a step in
 					static const StringName GUARD("ual/PunchKick_Enter"), JAB("ual/Punch_Jab"), CROSS("ual/Punch_Cross"), DL("ual/Dodge_Left"), DR("ual/Dodge_Right"), STEP("ual/Walk_Loop");
@@ -935,6 +943,10 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 						at.y = (float)sea_y - 0.38f;
 						clip = nb.v_s > 0.2f ? SWIM : FLOAT; speed = nb.v_s > 0.2f ? std::min(std::max(nb.v_s / 1.0f, 0.6f), 1.6f) : 1.0; hold = -1.0; token = 0;
 					} else if (wd > 0.05f) at.y = (float)sea_y - wd;
+				}
+				{   // (a person's size scales his stride: a walking clip's pace divided by it, or a big walker's feet slid)
+					double ld; int ns;
+					if (CityPed::stride_of(clip, ld, ns)) speed /= std::max((double)sc, 0.5);
 				}
 				nb.ped->drive(Transform3D(Basis(Vector3(0, 1, 0), lerp_angle(crowd->pyaw[i], crowd->yaw[i], a)).scaled(Vector3(sc, sc, sc)), at), clip, speed, hold, token);
 				// the feet on the real ground, planted ones pinned where they land (Yasin, 20 Nov: "i want them pixel perfect":
@@ -1218,6 +1230,7 @@ Array CityCrowd::near_bodies() const {
 		const bool planted = nb.plant && nb.plant->is_active();   // (as drawn: after the foot plant, read inside it)
 		d["foot_l"] = planted ? nb.plant->foot_w[0] : nb.ped->bone_world("Bip01_L_Foot"); d["foot_r"] = planted ? nb.plant->foot_w[1] : nb.ped->bone_world("Bip01_R_Foot");
 		d["pelvis"] = planted ? nb.plant->pelvis_w : nb.ped->bone_world("Bip01_Pelvis"); d["planted"] = planted;
+		if (nb.plant) { d["gap_mean"] = nb.plant->gap_n ? nb.plant->gap_sum / nb.plant->gap_n : 0.0f; d["gap_most"] = nb.plant->gap_most; d["gaps"] = nb.plant->gap_n; d["gaps_by_lift"] = nb.plant->gap_by_lift; }
 		d["hand_l"] = nb.ped->bone_world("Bip01_L_Hand"); d["hand_r"] = nb.ped->bone_world("Bip01_R_Hand"); d["v"] = nb.v_s;
 		{ const int i = crowd->find(nb.walker); d["act"] = i >= 0 ? (int)crowd->act[i] : -1; d["mode"] = i >= 0 ? (int)crowd->mode[i] : -1; d["ground"] = i >= 0 ? crowd->y[i] : 0.0f; }
 		out.push_back(d);
