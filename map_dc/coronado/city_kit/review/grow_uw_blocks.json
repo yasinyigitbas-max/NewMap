@@ -35,50 +35,6 @@
    "variant": "the Anchor bar, walk-ups, coin laundry, court apartments, thrift row, townhouses, corner market, two worn lots, vacant lot, bus shelter"
   },
   {
-   "piece": "n_w_s1",
-   "pos": [
-    -791.0,
-    0.0,
-    -900.0
-   ],
-   "yaw": 0.0,
-   "site": "north of the campus, west (u -791..-609, v -900..-809)",
-   "variant": "student apartments along 6th St, Gate Pizza, Campus Cycles, The Gatehouse pub, housing office, alley parking, yards"
-  },
-  {
-   "piece": "n_w_s2a",
-   "pos": [
-    -500.0,
-    0.0,
-    -991.0
-   ],
-   "yaw": 0.0,
-   "site": "north of the campus, east (u -500..-409, v -991..-809)",
-   "variant": "Campus Market with its lot, student apartments, townhouses, residents' court with sand volleyball"
-  },
-  {
-   "piece": "n_w_s2b",
-   "pos": [
-    -591.0,
-    0.0,
-    -900.0
-   ],
-   "yaw": 0.0,
-   "site": "north of the campus, middle (u -591..-500, v -900..-809)",
-   "variant": "student strip: print & boba, burrito & textbooks, The Quad Pub, corner deli, terrace, back lot"
-  },
-  {
-   "piece": "n_w_s2c",
-   "pos": [
-    -545.0,
-    0.0,
-    -940.0
-   ],
-   "yaw": 0.0,
-   "site": "the pocket behind the strip (u -545..-500, v -940..-900)",
-   "variant": "student pocket park with a mural wall, tables, benches"
-  },
-  {
    "piece": "n_w_c1",
    "pos": [
     -391.0,
@@ -264,6 +220,94 @@
    "yaw": 0.0,
    "site": "Piece n_w_p2 (WEST FILL, the 40 x 30 m hole inside the civic heart v_ne, the spot Yasin marked east of the 18 % block):",
    "variant": "a SUCCULENT GARDEN for the civic offices' lunch break: a dry garden on mulch, a path, benches, a table."
+  },
+  {
+   "piece": "n_w_s1",
+   "pos": [
+    -791.0,
+    0.0,
+    -900.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_s1 (WEST FILL, north of the campus, west half): u -791..-609, v -900..-809, 182 x 91 m.",
+   "variant": "where the students live, facing the campus's north side across 6th St (ZONING): a row of STUDENT APARTMENTS (garden, stucco, spanish, a dingbat) along 6th St, then by the campus's north-west gate a little STUDENT STRIP: GATE PIZZA, CAMPUS CYCLES, THE GATEHOUSE (pub), the STUDENT HOUSING OFFICE. Behi"
+  },
+  {
+   "piece": "n_w_s2a",
+   "pos": [
+    -500.0,
+    0.0,
+    -991.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_s2a (WEST FILL, north of the campus, east of the gritty edge): u -500..-409, v -991..-809, 91 x 182 m,",
+   "variant": "across 6th St from the campus bus station: the CAMPUS MARKET (a grocery students walk to off the bus) with its lot on 6th St's apron and the east apron, carts and a corral, the pylon sign; north of it STUDENT APARTMENTS facing the east street (stucco, garden, court) and townhouses on the north stree"
+  },
+  {
+   "piece": "n_w_s2b",
+   "pos": [
+    -591.0,
+    0.0,
+    -900.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_s2b (WEST FILL, north of the campus): u -591..-500, v -900..-809, 91 x 91 m, flat 6.0..6.15.",
+   "variant": "the STUDENT STRIP facing the student union and the gate caf\u00e9 across 6th St: a shop row (PRINT & COPY, BOBA TEA, PHONE FIX), a second row (BURRITO BAR, TEXTBOOK EXCHANGE), THE QUAD PUB, a corner terrace with tables; behind, a lot off the west street and the 6th St lane, bins against the back walls."
+  },
+  {
+   "piece": "n_w_s2c",
+   "pos": [
+    -545.0,
+    0.0,
+    -940.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_s2c (WEST FILL, the pocket between the gritty edge's lot and the student strip): u -545..-500,",
+   "variant": "a STUDENT POCKET PARK behind the strip: a mural wall against the gritty lot, lawn, tables, a ping-pong-less corner of benches facing the lawn, bike racks, a drinking fountain; reached from the strip's back lane and the market block."
+  },
+  {
+   "piece": "n_w_w3",
+   "pos": [
+    -986.0,
+    0.0,
+    -791.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w3 (WEST FILL, the west strip, Country Club Ridge's foot): u -986..-809, v -791..-609, 177 x 182 m.",
+   "variant": "RESIDENTIAL (ZONING: the west houses running down Country Club Ridge): houses face the east, north and south streets, every back yard fenced with a gate to its parking pad off a back lane; the lanes join an alley between the two street aprons; in the block's heart RIDGE POCKET PARK (playground, lawn"
+  },
+  {
+   "piece": "n_w_w4",
+   "pos": [
+    -986.0,
+    0.0,
+    -591.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w4 (WEST FILL, the west strip): u -986..-809, v -591..-409, 177 x 182 m; land 4.2 (west) to 6.2 (north-east).",
+   "variant": "houses round the edges as in the block north; in its heart RIDGEVIEW ELEMENTARY: two classroom wings on the school yard with a playground and the playing field; staff and drop-off off the alley."
+  },
+  {
+   "piece": "n_w_w5",
+   "pos": [
+    -986.0,
+    0.0,
+    -391.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w5 (WEST FILL, the west strip): u -986..-809, v -391..-209, 177 x 182 m; flat at 4.0..4.2.",
+   "variant": "houses round the edges; in its heart a COTTAGE COURT: two rows of narrow cottages with porches facing a shared green (benches, a table, a community garden on mulch), reached on foot from the lanes."
+  },
+  {
+   "piece": "n_w_w6",
+   "pos": [
+    -986.0,
+    0.0,
+    -191.0
+   ],
+   "yaw": 0.0,
+   "site": "Piece n_w_w6 (WEST FILL, the west strip, on the ridge): u -986..-809, v -191..-9, 177 x 182 m; the land climbs from",
+   "variant": "houses on their own level pads stepping up the ridge round the edges; in its heart RIDGE COMMUNITY CHURCH with its lot off the alley and its garden."
   }
  ]
 }
