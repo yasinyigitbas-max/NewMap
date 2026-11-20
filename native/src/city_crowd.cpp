@@ -1051,17 +1051,25 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 							m->set_mesh(bm); m->set_material_override(mat); m->set_cast_shadows_setting(GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);
 							nb.phone_base = Vector3(0.09f, -0.02f, 0.0f) / k;   // (along the hand, past the palm: held in the fingers)
 							m->set_position(nb.phone_base);
-							ba->add_child(m); nb.phone = m;
+							ba->add_child(m); nb.phone = m; nb.phone_k = k;
+							m->set_as_top_level(true);   // (placed in the world each frame: upright, not turned with the hand)
 						}
 					}
 					if (nb.phone) nb.phone->set_visible(rec && nb.ped->get_mode() == CityPed::MODE_ANIM);
-					// (Yasin, 20 Nov: "push it 10 cms to left on that photo and 3 cms up", "actually 5cms left", "not the bone the phone":
-					// the phone alone moves, the hand stays. The photo looks at him from his front-left, so that is 4.35 cm toward his
-					// right, 2.45 cm forward, 3 cm up, in his own frame, whatever way the hand's bone points)
+					// HOW HE HOLDS IT (Yasin, 20 Nov: "push it 10 cms to left on that photo and 3 cms up", "actually 5cms left",
+					// "not the bone the phone", "pull it 3 cms back into the hand. fingers should cover it and it shouldnt clip and
+					// it should stand straight"): placed in the world each frame, not by the hand's bone: upright whatever way the hand
+					// is turned, its face toward him; its lower part in the fist's grip (where the clip's torch handle was), so the
+					// fingers close round it and not through it; 2 cm left on the photo (1.74 cm toward his right, 0.98 cm forward)
+					// and 3 cm up
 					if (nb.phone && nb.phone->is_visible()) {
 						if (Node3D *ba = Object::cast_to<Node3D>(nb.phone->get_parent())) {
-							const Vector3 wd = nb.ped->get_global_transform().basis.orthonormalized().xform(Vector3(-0.0435f, 0.03f, 0.0245f));
-							nb.phone->set_position(nb.phone_base + ba->get_global_transform().basis.inverse().xform(wd));
+							const Basis fb = nb.ped->get_global_transform().basis.orthonormalized();
+							Vector3 fwd = fb.get_column(2); fwd.y = 0.0f; fwd = fwd.length() > 0.01f ? fwd.normalized() : Vector3(0, 0, 1);
+							const Vector3 up(0, 1, 0), left = up.cross(fwd);
+							const Vector3 grip = ba->get_global_transform().xform(nb.phone_base);   // (the fist's grip)
+							const Vector3 at = grip + fb.xform(Vector3(-0.0174f, 0.03f, 0.0098f)) + up * (0.145f * 0.5f - 0.045f);   // (4.5 cm of it in the fist)
+							nb.phone->set_global_transform(Transform3D(Basis(fwd, left, up).scaled(Vector3(nb.phone_k, nb.phone_k, nb.phone_k)), at));
 						}
 					}
 				}
