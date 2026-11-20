@@ -389,7 +389,7 @@ void CityCrowd::step_brain(double p_delta) {
 		}
 		tr->set_walkers(dyn.data(), (int)dyn.size() / tc::DYN_STRIDE);
 	}
-	for (const pc::Event &e : crowd->events) if (e.type == pc::E_FIGHT) onlookers(crowd->find(e.id), 4, crowd->cfg.fight_s, true);   // a fight: people stop and look, one films it
+	for (const pc::Event &e : crowd->events) if (e.type == pc::E_FIGHT) onlookers(crowd->find(e.id), 5, crowd->cfg.fight_s, true, true);   // a fight: people stop and look, one films it, one calls
 	for (const pc::Event &e : crowd->events) { emit_signal("crowd_event", (int)e.type, e.id, e.aux, e.f); if (ev_keep.size() < 512) ev_keep.push_back(e); }
 	crowd->events.clear();
 }
@@ -526,14 +526,27 @@ void CityCrowd::make_near() {
 // What a near body shows for what its walker does: the clip, how fast it runs, or the moment it is held at.
 // The nearest passers-by stop and look at what happens where walker `p_row` is; with `p_film` the first of them holds
 // his phone up at it.
-void CityCrowd::onlookers(int p_row, int p_most, float p_seconds, bool p_film) {
+void CityCrowd::alarm(const Vector3 &p_at, float p_radius, float p_seconds, int p_kind) {
+	for (size_t k = 0; k < alarms_recent.size();) {
+		if (own_clock - alarms_recent[k].t > 3.0) { alarms_recent[k] = alarms_recent.back(); alarms_recent.pop_back(); continue; }
+		if (alarms_recent[k].at.distance_squared_to(p_at) < 6.0f * 6.0f) return;
+		k++;
+	}
+	alarms_recent.push_back(Alarm{ p_at, own_clock });
+	crowd->scare(p_at.x, p_at.z, p_radius, p_seconds);
+	if (p_kind >= 0 && p_kind < 5) alarms[p_kind]++;
+	emit_signal("crowd_event", 18, -1, p_kind, 0.0);
+}
+
+void CityCrowd::onlookers(int p_row, int p_most, float p_seconds, bool p_film, bool p_call) {
 	if (p_row < 0) return;
 	int n = 0;
 	for (int j = 0; j < crowd->hi && n < p_most; j++) {
 		if (j == p_row || !crowd->alive[j] || crowd->mode[j] != pc::M_LINE || crowd->state[j] != pc::ST_WALK || crowd->act[j] != pc::A_NONE || crowd->party[j] != 0) continue;
 		const float dx = crowd->x[p_row] - crowd->x[j], dz = crowd->z[p_row] - crowd->z[j], d2 = dx * dx + dz * dz;
 		if (d2 > 81.0f || d2 < 2.25f) continue;
-		if (!crowd->set_act(crowd->id[j], (p_film && n == 0) ? pc::A_FILM : pc::A_STARE, p_seconds)) continue;
+		const int a = (p_film && n == 0) ? pc::A_FILM : ((p_call && n == 1) ? pc::A_CALL : pc::A_STARE);
+		if (!crowd->set_act(crowd->id[j], a, p_seconds)) continue;
 		crowd->flags[j] |= pc::F_FACE; crowd->face_yaw[j] = std::atan2(dx, dz);
 		n++;
 	}
@@ -995,7 +1008,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 					const int j = crowd->find(crowd->mate[i]);
 					if (j >= 0) {
 						Vector3 d(crowd->x[i] - crowd->x[j], 0, crowd->z[i] - crowd->z[j]);
-						if (d.length() > 0.05f && d.length() < 2.5f) { nb.ped->push(d.normalized() * 80.0f, Vector3(crowd->x[i], crowd->y[i] + 1.25f, crowd->z[i])); nb.push_cd = 4.0f; nb.why = 2; fight_falls++; }
+						if (d.length() > 0.05f && d.length() < 2.5f) { nb.ped->push(d.normalized() * 80.0f, Vector3(crowd->x[i], crowd->y[i] + 1.25f, crowd->z[i])); nb.push_cd = 4.0f; nb.why = 2; fight_falls++; alarm(Vector3(crowd->x[i], crowd->y[i], crowd->z[i]), 16.0f, 8.0f, 4); }
 					}
 				}
 			}
@@ -1021,6 +1034,20 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 		if (nb.ped->get_mode() != CityPed::MODE_ANIM) {   // its body has it: the walker is where the body is
 			if (nb.ped->get_mode() == CityPed::MODE_BODY) feed_boxes(nb, i);
 			const Vector3 at = nb.ped->body_at();
+			// its body took over by itself (no shove, fight or fall of ours set a why): a car reached it. Hit by a car going
+			// faster than a walk, the street reacts.
+			if (!nb.in_body && nb.why == 0) {
+				float fast = 0.0f;
+				const int nc = (int)cars.size() / 7;
+				for (int c = 0; c < nc; c++) {
+					const float *q = &cars[(size_t)c * 7];
+					const float dx = q[0] - at.x, dz = q[1] - at.z;
+					if (dx * dx + dz * dz > 6.0f * 6.0f) continue;
+					fast = std::max(fast, std::sqrt(q[5] * q[5] + q[6] * q[6]));
+				}
+				nb.why = 5;
+				if (fast > 2.5f) { cars_hit_people++; alarm(at, 30.0f, 12.0f, 2); }
+			}
 			crowd->to_body(nb.walker, true, at.x, at.z);
 			nb.in_body = true;
 		}
@@ -1057,6 +1084,7 @@ void CityCrowd::_process(double p_delta) {
 				const Vector3 imp = rel > 0.1f ? (cv - bv) / rel * (rel > 4.0f ? 70.0f : 40.0f) : Vector3();
 				thrown.push_back(Thrown{ w, vel, imp, Vector3(dn[k], dn[k + 1], dn[k + 2]), 0.0f });
 				riders_thrown++;
+				alarm(Vector3(dn[k], dn[k + 1], dn[k + 2]), 30.0f, 10.0f, 3);
 			}
 			// the drivers who got out of hit cars
 			std::vector<CityTraffic::RageOut> ro;
@@ -1336,7 +1364,10 @@ void CityCrowd::player_fight(double p_delta) {
 				// an ordinary blow: he takes it on his feet (the hit clips, as in the crowd's own fights) and stays in the fight;
 				// the last one drops him as a whole body with its weight (the balancing body, falling: it does not catch itself)
 				if (pf.hp <= 0) { if (nb) { nb->ped->knock_down(dir * 2.8f, dir * 45.0f, at + Vector3(0, 1.55f, 0)); nb->push_cd = 1.0f; nb->why = 4; } }
+				// the street sees the player hit him: a blow, and harder when he goes down (the same spot within 3 s is one alarm,
+				// so the knock-down after a blow makes nobody new react; the fight itself goes on)
 				else { pf.st = 4; pf.st_t = 0.0f; pf.ai_t = 0.25f; }
+				alarm(at, pf.hp <= 0 ? 30.0f : 22.0f, pf.hp <= 0 ? 12.0f : 8.0f, 1);
 				if (pf.hp <= 0) { pf.npc_beaten++; crowd->hurt_t[i] = 40.0f; end_fight(false); return; }   // (down by his body; he gets up and walks off hurt)
 			} else pf.missed++;
 		}
@@ -1473,6 +1504,7 @@ Dictionary CityCrowd::stats() const {
 	int nn = 0, nbdy = 0;
 	for (const Near &nb : near_pool) { if (nb.walker >= 0) nn++; if (nb.in_body) nbdy++; }
 	d["near_bodies"] = nn; d["near_pool"] = (int)near_pool.size(); d["in_physical_body"] = nbdy; d["umbrellas"] = prop_shown[0]; d["towels"] = prop_shown[1];
+	d["alarms_player_hit"] = alarms[1]; d["alarms_car_hit"] = alarms[2]; d["alarms_bike_down"] = alarms[3]; d["alarms_npc_fight"] = alarms[4]; d["cars_hit_people"] = cars_hit_people;
 	d["ducked"] = s.ducks; d["stared"] = s.stared; d["coins"] = s.coins; d["lines_said"] = s.lines_said;
 	{ PackedFloat32Array cl; const double ls[11] = { l_sit_in, l_sit_out, l_gsit_in, l_gsit_out, l_lie_in, l_lie_out, l_duck_in, l_duck_out, l_fight_in, l_fight_out, l_surprise }; for (double l : ls) cl.push_back((float)l); d["clip_seconds"] = cl; }   // into and out of: a seat, the ground, lying, a crouch, a fight; the start
 	d["shoved_by_player"] = n_shoved; d["told_him_off"] = n_told_off; d["hit_back"] = n_hit_back;

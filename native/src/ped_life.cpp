@@ -92,6 +92,8 @@ void Crowd::scare(float p_x, float p_z, float p_radius, float p_seconds) {
 	if (scares.size() < 8) scares.push_back(Scare{ p_x, p_z, p_radius, p_seconds });
 	for (int i = 0; i < hi; i++) {
 		if (!alive[i] || (flags[i] & (F_SCRIPT | F_HIDDEN)) || mode[i] == M_BODY || mode[i] == M_HELD) continue;
+		// (the ones in the fight go on with it; the ones already looking, filming, calling or ducking are reacting already)
+		if (act[i] == A_FIGHT || act[i] == A_ARGUE || act[i] == A_CHEER || act[i] == A_STARE || act[i] == A_FILM || act[i] == A_CALL || act[i] == A_DUCK) continue;
 		const float dx = x[i] - p_x, dz = z[i] - p_z, d2 = dx * dx + dz * dz;
 		if (d2 > p_radius * p_radius) continue;
 		const float dd = std::sqrt(d2);
@@ -102,8 +104,10 @@ void Crowd::scare(float p_x, float p_z, float p_radius, float p_seconds) {
 			flee_t[i] = 0.0f;
 			continue;
 		}
-		if (roll >= 75u && dd > 18.0f && mode[i] == M_LINE && !party[i]) {   // far enough to feel safe: it watches
-			state[i] = ST_PAUSE; pause_t[i] = p_seconds * 0.8f; act[i] = roll < 87u ? A_STARE : (roll < 94u ? A_FILM : A_CALL); act_t[i] = 0.0f; v[i] = 0.0f; pass[i] = 0;
+		// far enough to feel safe: almost half of them watch; of those about a third film it and a quarter call (B31, Yasin:
+		// "they were supposed to call the police or take pictures videos")
+		if (roll >= 55u && dd > 12.0f && mode[i] == M_LINE && !party[i]) {
+			state[i] = ST_PAUSE; pause_t[i] = p_seconds * 0.8f; act[i] = roll < 73u ? A_STARE : (roll < 88u ? A_FILM : A_CALL); act_t[i] = 0.0f; v[i] = 0.0f; pass[i] = 0;
 			flags[i] |= F_FACE; face_yaw[i] = std::atan2(-dx, -dz);
 			st.stared++;
 			continue;

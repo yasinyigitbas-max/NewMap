@@ -120,7 +120,15 @@ private:
 	void near_update(double p_delta, double p_alpha);
 	void clip_of(int i, float p_t, float p_v, StringName &r_clip, double &r_speed, double &r_hold, int &r_token) const;
 	void clip_lengths();
-	void onlookers(int p_row, int p_most, float p_seconds, bool p_film);
+	void onlookers(int p_row, int p_most, float p_seconds, bool p_film, bool p_call = false);
+	// Something people react to (B31, Yasin 20 Nov: "they were supposed to call the police or take pictures videos ...
+	// and try to run away"): kind 1 the player hits someone, 2 a car hits someone, 3 a cyclist comes off, 4 a fight
+	// between two of ours knocks one down. The crowd's scare at that spot (near ones duck, others run, some at a safe
+	// distance stare, film or call). The same spot again within 3 s is one alarm.
+	struct Alarm { Vector3 at; double t; };
+	std::vector<Alarm> alarms_recent;
+	int alarms[5] = { 0, 0, 0, 0, 0 }, cars_hit_people = 0;
+	void alarm(const Vector3 &p_at, float p_radius, float p_seconds, int p_kind);
 	// counters
 	WayFloor way_floor;      // a collision floor 3 cm under every pavement and crossing (the city's collision has holes)
 	int riders_drawn = 0;   // the traffic's cyclists drawn as riders this frame
