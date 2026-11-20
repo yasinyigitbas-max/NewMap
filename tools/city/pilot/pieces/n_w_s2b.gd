@@ -67,7 +67,7 @@ func _run() -> void:
 	for dz: Array in [[14.0, 71.6, "prop_dumpster_3yd_green"], [34.0, 71.6, "prop_dumpster_3yd_blue"], [58.0, 71.8, "prop_dumpster_3yd_green"]]: c.put(String(dz[2]), "worn", c.gp(float(dz[0]), float(dz[1])), 0.0, "the strip's bins against the back walls")
 	for k2: String in B:
 		var r: Dictionary = B[k2]
-		c.services(r, 2.0, 1 if not String(r.folder).begins_with("apartments/") else 2, String(r.folder).begins_with("apartments/") or String(r.folder).begins_with("houses/"))
+		if not String(r.folder).begins_with("houses/"): c.services(r, 2.0, 1 if not String(r.folder).begins_with("apartments/") else 2, String(r.folder).begins_with("apartments/"))
 		for dr: Array in r.doors:
 			var q: Vector3 = dr[1]; var o: Vector3 = dr[2]
 			c.grime(Vector2(q.x + o.x * 0.9, q.z + o.z * 0.9), 0.0, 1.6, 1.4, 0.45)

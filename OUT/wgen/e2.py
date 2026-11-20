@@ -8,5 +8,5 @@ slope, a back lane between the aprons, a sound wall along the ring road behind i
         ('r2','n',3.0,140.0,180.0,['ranch_porch','beach_teal','spanish_pink'],46.0,True)],
   lanes=[('asphalt',0,46.0,182.0,52.0,'the back lane'),('asphalt',44.0,0,52.0,46.0,'lane from the north apron'),('asphalt',130.0,0,138.0,46.0,'lane from the north apron')],
   extra_sites=[], extra_paints=[],
-  extra_body=''.join([lane_wear(0,46.0,182.0,52.0,False),'\tc.cmu(Vector2(0.6, 65.40), Vector2(181.40, 65.40), "ring road: the sound wall behind the lane")\n',tyre(48,3,0),tyre(134,3,0)]), W=182.0, D=66.0, wall=False)
+  extra_body=''.join([lane_wear(0,46.0,182.0,52.0,False),tyre(48,3,0),tyre(134,3,0)]), W=182.0, D=66.0, wall=False)
 globals().update(R)

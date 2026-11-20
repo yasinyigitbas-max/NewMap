@@ -55,7 +55,7 @@ func _run() -> void:
 	# ---- the market: carts, corral, pylon sign, the lot's stalls, lights, marks
 	c.put("prop_pylon_sign", "worn", c.gp(84.0, 178.0), 0.0, "Campus Market: the pylon sign on 6th St")
 	c.put("prop_cart_corral", "worn", c.gp(30.0, 166.0), 90.0, "lot: the cart corral in the middle of the rows")
-	for sc: Array in [[50.0, 151.6, 90.0], [51.0, 151.6, 92.0], [52.0, 151.6, 88.0], [70.0, 158.0, 40.0], [12.0, 170.0, 120.0]]: c.put("prop_shopping_cart", "worn", c.gp(float(sc[0]), float(sc[1])), float(sc[2]), "Campus Market: carts by the door and some left in the lot")
+	for sc: Array in [[51.0, 151.6, 92.0], [70.0, 158.0, 40.0], [12.0, 170.0, 120.0]]: c.put("prop_shopping_cart", "worn", c.gp(float(sc[0]), float(sc[1])), float(sc[2]), "Campus Market: carts by the door and some left in the lot")
 	c.put("prop_ice_chest", "worn", c.gp(78.0, 147.0), 0.0, "Campus Market: the ice chest on the front walk")
 	c.put("prop_vending_soda", "worn", c.gp(43.6, 146.8), 0.0, "Campus Market: drinks against its front wall")
 	for nb: Array in [[76.6, 147.6, "prop_newspaper_box_red"], [77.4, 145.0, "prop_newspaper_box_blue"]]: c.put(String(nb[2]), "worn", c.gp(float(nb[0]), float(nb[1])), 0.0, "Campus Market: papers by the door")
@@ -86,7 +86,7 @@ func _run() -> void:
 	c.put("prop_park_bench", "worn", c.gp(89.6, 58.0), 90.0, "east street: a bench on the walk facing the street")
 	for k2: String in B:
 		var r: Dictionary = B[k2]
-		c.services(r, 2.0, 1 if not String(r.folder).begins_with("apartments/") else 2, String(r.folder).begins_with("apartments/") or String(r.folder).begins_with("houses/"))
+		if not String(r.folder).begins_with("houses/"): c.services(r, 2.0, 1 if not String(r.folder).begins_with("apartments/") else 2, String(r.folder).begins_with("apartments/"))
 		for dr: Array in r.doors:
 			var q: Vector3 = dr[1]; var o: Vector3 = dr[2]
 			c.grime(Vector2(q.x + o.x * 0.9, q.z + o.z * 0.9), 0.0, 1.6, 1.4, 0.45)

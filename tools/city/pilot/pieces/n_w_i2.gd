@@ -103,7 +103,7 @@ func _run() -> void:
 		c.stalls.append([6.0, ly, 90.0, c.yf(6.0, ly)]); ly += 2.7
 	c.oil(Vector2(6.0, 149.4), 90.0); c.tyre(Vector2(20.0, 168.0), 10.0, 6.0, 0.45); c.cracks(0.0, 140.0, 25.0, 172.0, 6, 0.55)
 	# ---- the block wall on the gritty side (tagged), from the storage fence's corner to the street
-	c.cmu(Vector2(0.6, 120.6), Vector2(0.6, 171.4), "gritty side: a block wall closing the lots from the storage fence to the street, tagged")
+	c.cmu(Vector2(0.6, 120.0), Vector2(0.6, 171.4), "gritty side: a block wall closing the lots from the storage fence to the street, tagged")
 	# ---- service sides, door grime
 	for r: Dictionary in [BS, TB, LD]: c.services(r, 2.0, 1, false)
 	for r3: Dictionary in [BS, TB, LD]:

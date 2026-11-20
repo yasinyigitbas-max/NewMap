@@ -19,5 +19,4 @@ BODY='\n'+''.join([
  ''.join(put("prop_picnic_table",x,66,0,"apartments: a table in the yard") for x in (30,140)),
  ''.join(put("prop_bike_rack",x,89.6,0,"apartments: bikes along the frontage") for x in (30,58,79,121)),
  put("prop_bus_shelter",100,90.2,180,"south street: a bus shelter facing the street"),
- '\tc.cmu(Vector2(0.6, 0.6), Vector2(0.6, 90.4), "ring road: the sound wall")\n',
 ])

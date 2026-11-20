@@ -27,6 +27,8 @@ def ok(u,v,piece):
     for du,dv in [(0,0),(1,0),(-1,0),(0,1),(0,-1)]:
         h,m,pn=cell(u+du,v+dv)
         if m not in ('grass','mulch') or pn!=piece: return False
+    for du,dv in [(3,0),(-3,0),(0,3),(0,-3),(2.2,2.2),(-2.2,2.2),(2.2,-2.2),(-2.2,-2.2)]:
+        if cell(u+du,v+dv)[2]!=piece: return False     # 3 m inside its own piece: clear of the neighbours' props
     for (pc,x0,z0,x1,z1) in blds:
         if math.hypot(max(x0-u,0,u-x1),max(z0-v,0,v-z1))<4.0: return False
     for (x,z) in near(fgrid,u,v,2): 
@@ -95,7 +97,7 @@ while changed:
             out.remove(near_t[0]); dropped+=1; changed=True; break
 print('candidates',len(cands),'chosen',len(chosen),'after cap',len(out),'dropped',dropped)
 # write pieces by area
-areas={'t_w_north':lambda u,v: v<-800,'t_w_civic':lambda u,v: v>=-800 and u>-410,'t_w_strip':lambda u,v: v>=-800 and u<=-410 and v<200,'t_w_edge':lambda u,v: v>=200}
+areas={'t_w_north':lambda u,v: v<-800,'t_w_civic':lambda u,v: -800<=v<200 and u>-410,'t_w_strip':lambda u,v: -800<=v<200 and u<=-410,'t_w_edge':lambda u,v: v>=200}
 for nm,f in areas.items():
     ts=[t for t in out if f(t[0],t[1])]
     lines=',\n'.join('\t[%.2f, %.2f, %.3f, "%s", %.2f, "%s"]'%(t[0],t[1],cell(t[0],t[1])[0],t[2],0.85 if not t[2].startswith('palm') else 1.0,t[3].replace('"',"'")) for t in ts)

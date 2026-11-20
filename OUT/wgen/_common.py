@@ -56,8 +56,8 @@ def houses(tag, face, front, a0, a1, models, rear, seed=0, pad=True):
         hl=ac-w/2; hr=ac+w/2; la=lines[i]+0.3; lb=lines[i+1]-0.3
         def F(p,q,why): return '\tc.privacy(Vector2(%.2f, %.2f), Vector2(%.2f, %.2f), "%s")\n'%(p[0],p[1],q[0],q[1],why)
         bk=back+sgn*0.15
-        body+=F(V2(face,hl,bk),V2(face,la,bk),'yard: the side fence from the house to the lot line')
-        body+=F(V2(face,hr,bk),V2(face,lb,bk),'yard: the side fence from the house to the lot line')
+        body+=F(V2(face,hl+1.0,bk),V2(face,la,bk),'yard: the side fence from the house wall to the lot line')
+        body+=F(V2(face,hr-1.0,bk),V2(face,lb,bk),'yard: the side fence from the house wall to the lot line')
         body+=F(V2(face,la,bk),V2(face,la,zr),'yard: the lot-line fence')
         body+=F(V2(face,lb,bk),V2(face,lb,zr),'yard: the lot-line fence')
         gc=ac+(lot*0.25 if i%2==0 else -lot*0.25)
@@ -84,7 +84,7 @@ def ring_block(name, U, V, hdr, doc, rows, lanes, extra_sites=(), extra_paints=(
     sites=list(extra_sites); paints=list(lanes)+list(extra_paints); body=''
     for k,(tag,face,front,a0,a1,models,rear,pad) in enumerate(rows):
         s,p,b=houses(tag,face,front,a0,a1,models,rear,seed=k*3+len(name),pad=pad); sites+=s; paints+=p; body+=b
-    if wall: body+='\tc.cmu(Vector2(0.6, 0.6), Vector2(0.6, %.1f), "ring road: the sound wall along the back of the houses")\n'%(D-0.6)
+    if False and wall: body+='\tc.cmu(Vector2(0.6, 0.6), Vector2(0.6, %.1f), "ring road: the sound wall along the back of the houses")\n'%(D-0.6)
     return dict(NAME=name,U=U,V=V,W=W,D=D,Y0=4.15,HDR=hdr,DOC=doc,SITES=sites,PAINTS=paints,BODY='\n'+body+extra_body,GRIME=0.4)
 def lane_wear(x0,z0,x1,z1,along_z):
     return '\tc.alley_wear(%.1f, %.1f, %.1f, %.1f, %s)\n'%(x0,z0,x1,z1,'true' if along_z else 'false')

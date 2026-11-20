@@ -85,14 +85,11 @@ func _run() -> void:
 	c.tyre(Vector2(88.0, 129.0), -80.0, 6.0, 0.5); c.tyre(Vector2(43.0, 172.0), 0.0, 6.0, 0.5); c.cracks(40.0, 120.0, 68.0, 155.0, 10, 0.6)
 	c.oil(Vector2(43.0, 143.4), 90.0); c.oil(Vector2(64.0, 148.8), 90.0)
 	# ---- the vacant lot: a weathered board fence along the lot side, weeds, a cart, an old drum
-	c.fence("fence_weathered_board", "fence_post_privacy", 2.0, Vector2(30.0, 60.5), Vector2(30.0, 154.5), "vacant lot: an old board fence along the lot side")
-	c.fence("fence_weathered_board", "fence_post_privacy", 2.0, Vector2(0.6, 154.5), Vector2(30.0, 154.5), "vacant lot: the board fence behind the townhouses")
 	for ag: Array in [[8.0, 80.0], [16.0, 98.0], [22.0, 120.0], [10.0, 140.0], [6.0, 112.0]]: c.put("plant_agave_americana_small", "normal", c.gp(float(ag[0]), float(ag[1])), c.rr.randf_range(0, 360), "vacant lot: weeds and self-sown agave")
 	c.put("prop_shopping_cart", "worn", c.gp(14.0, 128.0), 110.0, "vacant lot: a shopping cart dumped over the fence")
 	c.put("prop_channelizer_drum", "worn", c.gp(24.0, 90.0), 0.0, "vacant lot: an old drum")
 	c.put("prop_container_20ft_red", "rusty", c.gp(8.0, 70.0), 0.0, "vacant lot: a rusting container someone left")
 	# ---- the block wall to the gravel yards (tagged), from the thrift row's back to the vacant lot's board fence
-	c.cmu(Vector2(0.6, 20.0), Vector2(0.6, 154.5), "gritty side: a block wall to the gravel yards next door, tagged")
 	# ---- utility poles on gravel pads in the rear easement
 	for pz: float in [64.0, 92.0, 118.0]: c.put("prop_utility_pole", "worn", c.gp(32.0, pz), 0.0, "rear easement: the power line on poles, on gravel")
 	c.put("prop_utility_pole_transformer", "worn", c.gp(32.0, 78.0), 0.0, "rear easement: the block's transformer pole")

@@ -156,10 +156,9 @@ func _run() -> void:
 	c.put("prop_bike_rack", "worn", c.gp(79.00, 89.60), 0.0, "apartments: bikes along the frontage")
 	c.put("prop_bike_rack", "worn", c.gp(121.00, 89.60), 0.0, "apartments: bikes along the frontage")
 	c.put("prop_bus_shelter", "worn", c.gp(100.00, 90.20), 180.0, "south street: a bus shelter facing the street")
-	c.cmu(Vector2(0.6, 0.6), Vector2(0.6, 90.4), "ring road: the sound wall")
 	for k2: String in B:
 		var r: Dictionary = B[k2]
-		c.services(r, 2.0, 1 if not String(r.folder).begins_with("apartments/") else 2, String(r.folder).begins_with("apartments/") or String(r.folder).begins_with("houses/"))
+		if not String(r.folder).begins_with("houses/"): c.services(r, 2.0, 1 if not String(r.folder).begins_with("apartments/") else 2, String(r.folder).begins_with("apartments/"))
 		for dr: Array in r.doors:
 			var q: Vector3 = dr[1]; var o: Vector3 = dr[2]
 			c.grime(Vector2(q.x + o.x * 0.9, q.z + o.z * 0.9), 0.0, 1.6, 1.4, 0.45)

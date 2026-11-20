@@ -7,5 +7,5 @@ PLANNER: beach-side houses facing the north street, a back lane, the sound wall 
         ('r2','n',3.0,140.0,180.0,['beach_large','spanish_white','cape_grey'],56.0,True)],
   lanes=[('asphalt',0,56.0,182.0,62.0,'the back lane'),('asphalt',44.0,0,52.0,56.0,'lane from the north apron'),('asphalt',130.0,0,138.0,56.0,'lane from the north apron')],
   extra_sites=[], extra_paints=[],
-  extra_body=''.join([lane_wear(0,56.0,182.0,62.0,False),'\tc.cmu(Vector2(0.6, 78.40), Vector2(181.40, 78.40), "ring road: the sound wall behind the lane")\n',tyre(48,3,0),tyre(134,3,0)]), W=182.0, D=79.0, wall=False)
+  extra_body=''.join([lane_wear(0,56.0,182.0,62.0,False),tyre(48,3,0),tyre(134,3,0)]), W=182.0, D=79.0, wall=False)
 globals().update(R)

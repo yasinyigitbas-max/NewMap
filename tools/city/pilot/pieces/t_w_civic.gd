@@ -5,7 +5,7 @@ extends SceneTree
 ## from every building, 1.5 m from fences, 2.2 m from other props, 7 m between trees; parks and courts: clumps round
 ## the seating; house yards: one per two houses by the patio; the beach side: palms; the ridge: pines; the gritty
 ## edge: one scrappy tree; industrial and the shop fronts: none; at most 8 broadleaf / 12 trees within 60 m of any
-## paved point of the west fill. 53 trees.
+## paved point of the west fill. 48 trees.
 const L := preload("res://tools/city/pilot/pieces/cc_fill_lib.gd")
 const TREES := [
 	[-337.39, -762.50, 6.210, "tree_jacaranda_a", 0.85, "park: shade round the seating (picnic_table)"],
@@ -38,26 +38,21 @@ const TREES := [
 	[-230.38, -259.80, 6.172, "tree_ficus_b", 0.85, "park: shade round the seating (park_bench)"],
 	[-221.62, -265.24, 6.180, "tree_jacaranda_a", 0.85, "park: shade round the seating (park_bench)"],
 	[-191.98, -282.88, 6.162, "tree_coral_a", 0.85, "park: shade round the seating (picnic_table)"],
-	[-158.63, -280.88, 6.163, "tree_ficus_a", 0.85, "park: shade round the seating (picnic_table)"],
-	[-168.35, -283.39, 6.180, "tree_jacaranda_b", 0.85, "park: shade round the seating (picnic_table)"],
-	[-185.69, -259.93, 6.171, "tree_magnolia_b", 0.85, "park: shade round the seating (picnic_table)"],
-	[-192.37, -262.52, 6.160, "tree_ficus_b", 0.85, "park: shade round the seating (picnic_table)"],
-	[-183.10, -269.49, 6.180, "tree_jacaranda_a", 0.85, "park: shade round the seating (picnic_table)"],
-	[-237.37, -640.50, 6.180, "tree_ficus_b", 0.85, "park: shade round the seating (park_bench)"],
-	[-227.84, -643.81, 6.179, "tree_jacaranda_a", 0.85, "park: shade round the seating (park_bench)"],
-	[-227.54, -620.88, 6.179, "tree_coral_a", 0.85, "park: shade round the seating (park_bench)"],
-	[-237.41, -623.23, 6.180, "tree_magnolia_a", 0.85, "park: shade round the seating (park_bench)"],
-	[-222.40, -627.43, 6.180, "tree_ficus_a", 0.85, "park: shade round the seating (park_bench)"],
-	[-222.80, -636.95, 6.180, "tree_jacaranda_b", 0.85, "park: shade round the seating (park_bench)"],
-	[-175.21, -620.56, 6.180, "tree_coral_b", 0.85, "park: shade round the seating (park_bench)"],
-	[-185.46, -621.85, 6.159, "tree_magnolia_b", 0.85, "park: shade round the seating (park_bench)"],
-	[-153.17, -621.20, 6.171, "tree_ficus_b", 0.85, "park: shade round the seating (park_bench)"],
-	[-161.27, -623.58, 6.180, "tree_jacaranda_a", 0.85, "park: shade round the seating (park_bench)"],
-	[-165.26, -614.25, 6.156, "tree_coral_a", 0.85, "park: shade round the seating (picnic_table)"],
-	[-381.77, 246.55, 2.186, "palm_mexican_fan_a", 1.00, "back yard: a yard tree by the patio"],
-	[-368.43, 247.05, 2.181, "palm_queen_a", 1.00, "back yard: a yard tree by the patio"],
-	[-329.36, 247.05, 2.188, "palm_queen_b", 1.00, "back yard: a yard tree by the patio"],
-	[-299.76, 249.60, 2.195, "palm_mexican_fan_a", 1.00, "back yard: a yard tree by the patio"],
+	[-158.63, -280.88, 6.163, "tree_magnolia_a", 0.85, "park: shade round the seating (picnic_table)"],
+	[-168.35, -283.39, 6.180, "tree_ficus_a", 0.85, "park: shade round the seating (picnic_table)"],
+	[-185.69, -259.93, 6.171, "tree_coral_b", 0.85, "park: shade round the seating (picnic_table)"],
+	[-183.10, -269.49, 6.180, "tree_magnolia_b", 0.85, "park: shade round the seating (picnic_table)"],
+	[-179.94, -276.61, 6.180, "tree_magnolia_a", 0.85, "park: shade round the seating (bbq_kettle)"],
+	[-237.37, -640.50, 6.180, "tree_coral_b", 0.85, "park: shade round the seating (park_bench)"],
+	[-227.84, -643.81, 6.179, "tree_magnolia_b", 0.85, "park: shade round the seating (park_bench)"],
+	[-227.54, -620.88, 6.179, "tree_ficus_b", 0.85, "park: shade round the seating (park_bench)"],
+	[-237.41, -623.23, 6.180, "tree_jacaranda_a", 0.85, "park: shade round the seating (park_bench)"],
+	[-222.40, -627.43, 6.180, "tree_coral_a", 0.85, "park: shade round the seating (park_bench)"],
+	[-222.80, -636.95, 6.180, "tree_magnolia_a", 0.85, "park: shade round the seating (park_bench)"],
+	[-175.21, -620.56, 6.180, "tree_ficus_a", 0.85, "park: shade round the seating (park_bench)"],
+	[-153.17, -621.20, 6.171, "tree_jacaranda_b", 0.85, "park: shade round the seating (park_bench)"],
+	[-161.27, -623.58, 6.180, "tree_coral_b", 0.85, "park: shade round the seating (park_bench)"],
+	[-237.32, -686.72, 6.175, "tree_jacaranda_b", 0.85, "park: shade round the seating (park_bench)"],
 	[-115.92, -516.87, 6.180, "tree_coral_b", 0.85, "park: shade round the seating (play_structure)"],
 	[-125.17, -523.45, 6.180, "tree_magnolia_b", 0.85, "park: shade round the seating (play_structure)"],
 	[-116.15, -527.16, 6.180, "tree_ficus_b", 0.85, "park: shade round the seating (play_structure)"]]

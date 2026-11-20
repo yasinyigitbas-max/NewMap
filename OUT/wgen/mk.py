@@ -39,7 +39,7 @@ func _run() -> void:
 %s
 	for k2: String in B:
 		var r: Dictionary = B[k2]
-		c.services(r, 2.0, 1 if not String(r.folder).begins_with("apartments/") else 2, String(r.folder).begins_with("apartments/") or String(r.folder).begins_with("houses/"))
+		if not String(r.folder).begins_with("houses/"): c.services(r, 2.0, 1 if not String(r.folder).begins_with("apartments/") else 2, String(r.folder).begins_with("apartments/"))
 		for dr: Array in r.doors:
 			var q: Vector3 = dr[1]; var o: Vector3 = dr[2]
 			c.grime(Vector2(q.x + o.x * 0.9, q.z + o.z * 0.9), 0.0, 1.6, 1.4, %.2f)
