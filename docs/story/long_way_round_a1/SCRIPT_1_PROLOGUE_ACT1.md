@@ -58,7 +58,8 @@ it (a gesture, an object, a number on a screen).
 ### Beat 4: Safe
 - **CAM:** hands pull the hero onto the patrol boat's deck. Faces in life vests. Their words are muffled, as
   underwater: the first Word Fog, in sound. A foil blanket.
-- **SAILOR** [gentle, very slow, to a frightened person] "Safe."
+- **SAILOR** (DANNY, a young harbour-patrol sailor; we meet him again in M18) [gentle, very slow, to a frightened
+  person] "Safe."
 - The word appears on screen, alone, white, in the centre. The first English word of the game.
 - **CAM:** pull up into the rain; the boat's lights shrink toward the Ferry Landing; black.
 - **TITLE:** *THE LONG WAY ROUND*.
@@ -67,39 +68,125 @@ it (a gesture, an object, a number on a screen).
 
 ## P2: Who Are You?
 - **Where:** **City Hall Front Desk** (the civic band; the kit's city hall room): a big public hall with a long counter,
-  queue ropes, desks behind the counter, wooden waiting benches, tall windows. The morning after the rescue. Ruth's
-  resettlement desk is one of the desks behind the counter. It's the same desk as the check-ins in M8 and M16, so
+  queue ropes on posts, desks behind the counter, wooden waiting benches, tall windows. The morning after the rescue.
+  Ruth's resettlement desk is one of the desks behind the counter. It's the same desk as the check-ins in M8 and M16, so
   every check-in is a callback to this first one.
-  - Dressing on the existing room (small props only): a flag on a stand by Ruth's desk, a broken coffee machine, a
-    height-chart poster on the wall behind her, and a paper sign on the counter: *RESETTLEMENT*.
-- **CAM (opening):** a short cut from the rescue: the patrol boat at the Ferry Landing at dawn, a grey Navy van, the
-  city centre in the rain, city hall's columned porch. Inside: the waiting benches are full (other people from the
-  boat, in foil blankets and borrowed clothes). A number on a ticket in the hero's hand: 41. A screen over the counter
-  clicks to *41*. This is the first number the player reads, and the reason Ruth is on her 40th interview today.
-- **Length:** 8 minutes.
-- **Why it's here:**
-  - Story: meet RUTH. The hero's first English lie.
-  - Play: character creation, done as the interview (Yasin's idea): the form fills as the player chooses, and the
-    player *says* each choice. It's also the voice tutorial.
-  - Language: *My name is…*, spelling, numbers (age), colours, *My eyes are… / My hair is… / I am tall*, jobs.
+  - Dressing on the existing room (small props only):
+    - a flag on a stand by Ruth's desk;
+    - a broken coffee machine on a side table;
+    - a height-chart poster on the wall behind her;
+    - a paper sign on the counter: *RESETTLEMENT*;
+    - a number screen over the counter;
+    - a small table by the benches with a hand-written sign, *FREE BOOKS*: picture dictionaries in a box;
+    - beside it, a rail of donated clothes on hangers (the kit's clothes-shop rail and hangers) with a sign,
+      *FREE CLOTHES*.
+- **Length:** 15 minutes.
+- **Why it's here:** the interview does two jobs at once, and the first one is the heart of it.
+  1. **Character creation (Yasin's idea).** Ruth's form *is* the character creator:
+     - name (said and spelled), age, face and skin, eyes, hair, height, pronouns, the inner voice, the job from home;
+     - **the clothes** (Yasin's "a look and attire"), chosen from the donated-clothes rail on the way out.
 
-### Beat 1: Ruth
-- **CAM:** first person, on the chair in front of Ruth's desk behind the counter. **RUTH ALVARADO** sits down with a
-  thick file and a paper bag of sunflower seeds. She cracks a seed and looks at us for a long time.
+     The player picks each one *and says it aloud*. It's the game's first voice practice, and its language is the most
+     useful A1 there is: describing yourself.
+  2. **The controls tutorial,** woven *around* the form: every control the game has, each taught by a reason in the
+     scene and used again at once (the table at the end of P2). The tutorial never interrupts the creator; it fills
+     the moments between Ruth's questions (waiting, walking to her desk, her pen, her coffee).
+  - **Story:** meet RUTH. The hero's first English lie. The release: the hero leaves this hall free, with a phone,
+    an address and a check-in date.
+  - **Language:** *My name is…*, spelling, numbers (the ticket, the age), colours, *My eyes are… / My hair is… / I am
+    tall*, jobs, *please / thank you*, *this*.
+- **The camp is cut for now** (Yasin, 21 Nov: "skipping the camp and integrating the tutorial into the interview …
+  maybe later we can add the camp again"). The hero is released the same day into the resettlement programme, with
+  monthly check-ins. If the camp comes back, it slots in between Beat 6 (the question) and Beat 7 (the release), and
+  the first draft's camp vignettes are in `docs/story/SCRIPT_0_PROLOGUE_ACT1.md` (P3).
+
+### How the tutorial teaches (rules for this mission)
+- **No words on screen.** The player may know no English at all. Every control is shown by a **pictogram**: a phone
+  outline with a hand on it, animated, as in a phone's own setup screens.
+  - a finger dragging on the right half (look);
+  - a finger dragging on the left half (move);
+  - the same, but further (run);
+  - two quick taps on the right half (jump);
+  - two quick taps on the left half (crouch);
+  - a tap on the green Use plate;
+  - a tap on the phone button;
+  - the phone swung down hard, held sideways (fight stance);
+  - a finger knocking on the *back* of the phone (punch).
+- **Each pictogram appears only when the scene asks for that control,** pulses until the player does it, and fades
+  for good once it's done twice. Nothing is a test: there's no fail and no timer.
+- **Someone in the scene always gives the reason**, so the control is a story beat, not a lesson: Ruth needs you at
+  her desk, the line is empty, her pen falls, the coffee machine is broken.
+- The voice (saying lines) and the word tiles are taught by the same scene, as before.
+- **First person until the hero has a face.** Before the form, the player doesn't look like anyone yet. So Beats 1–4
+  are **first person**: only the hands and the grey NAVY sleeves are seen (the same for everyone). The game's normal
+  third-person camera starts at the moment the face is finished (Beat 5): the camera pulls out of the hero's head and
+  the player sees, for the first time, the person they made.
+
+### Beat 1: The hall (LOOK)
+- **CAM (opening):**
+  - a short cut from the rescue: the patrol boat at the Ferry Landing at dawn;
+  - a grey Navy van;
+  - the city centre in the rain;
+  - city hall's columned porch.
+- **CAM:** inside, first person, on a waiting bench. The hero wears what the sailors gave them: a grey sweatshirt with
+  **NAVY** across the chest, too big, and jogging pants. (It's why Benny thinks they're a sailor in M1.) A paper ticket
+  in the hero's hand: **41**. The camera is still, looking at the floor.
 - **MUS:** `MUS-02 "The Office"`: brushed snare, upright bass, a clock-like vibraphone. Dry and a little funny.
-- **RUTH** [tired, her 40th interview today, not unkind; she points at herself] "Hi. I'm Ruth. Ruth." *(points at the
+- **SFX:** a *ding*. A voice over the counter: "Number thirty-nine!" (fog).
+- **TUTORIAL: LOOK.** The pictogram: a finger dragging on the right half of the screen.
+  - The player looks up and around: the counter, the queue ropes, the people from the boat on the benches in foil
+    blankets, the rain on the tall windows, the number screen over the counter showing **39**.
+  - The pictogram fades when the player has looked at the screen. (The game checks the camera actually reached it.)
+- On the bench beside the hero, a man in the same NAVY sweatshirt: **OMAR**, another survivor from the boat (an older
+  man from somewhere else; he speaks neither the hero's language nor English). He holds up his ticket and points.
+  - **OMAR** [quiet, careful, proud of the word] "Forty." *(points at the hero's ticket)* "…Forty-one?"
+  - PLAYER: "Forty-one." (the first word the player says: a number)
+  - **OMAR** [a small smile; a thumbs-up]
+- *Ding.* "Number forty!" Omar stands, touches the hero's shoulder, and goes to the counter.
+  (Omar is a cameo in the epilogue.)
+
+### Beat 2: Forty-one (MOVE, RUN, JUMP)
+- **SFX:** *ding*. The screen: **41**. Behind the counter a woman stands up at a desk and waves a file: **RUTH**.
+- **TUTORIAL: MOVE.** The pictogram: a finger dragging on the left half. The player walks toward the counter.
+- **TUTORIAL: RUN.** Ruth waves faster, impatient: **RUTH** [across the hall] "Come, come! Forty-one!" The pictogram:
+  the same drag, further. The player runs.
+- **TUTORIAL: JUMP.** The queue ropes make a long zigzag lane to the counter, and it's completely empty.
+  - **RUTH** [pointing at the rope, deadpan] "Nobody's in the line. Jump it."
+  - The pictogram: two quick taps on the right half. The hero jumps the rope (it's about 40 cm high).
+  - A security guard at the door looks up: "Hey!" Then he sees Ruth's face and goes back to his newspaper.
+  - **Why:** it's a joke, and a first rule broken with the officer's blessing. It also tells the player that this
+    game lets you take shortcuts.
+
+### Beat 3: Ruth (USE, the voice)
+- **TUTORIAL: USE.** At Ruth's desk, the green **Use** plate appears with a chair icon: *Sit*. The pictogram: a tap
+  on the plate. The hero sits.
+- **CAM:** first person, across Ruth's desk. **RUTH ALVARADO** sits down with a thick file and a paper bag of sunflower
+  seeds. She cracks a seed and looks at us for a long time.
+- **RUTH** [tired, her 40th interview today, not unkind; pointing at herself] "Hi. I'm Ruth. Ruth." *(pointing at the
   hero)* "You. Name?"
-- **PLAY:** the first voice line. The hero's name is typed in a field; then said.
+- **PLAY:** the first voice line. The hero's name is typed in a field, then said.
   - PLAYER: "My name is {NAME}."
   - (If the voice check fails three times: **RUTH** [shrugs] "Close enough.")
 - **RUTH** [miming writing letters] "Spell it?"
 - **PLAY:** the alphabet as tiles. The player spells the name letter by letter; each letter lights as it's heard.
-- **RUTH** [to a long name] "...Wow. OK." / [to a short one] "Short. I like short."
+- **RUTH** [to a long name] "…Wow. OK." / [to a short one] "Short. I like short."
 
-### Beat 2: The form (character creation)
+### Beat 4: The pen (CROUCH)
+- Ruth writes, and her pen rolls off the desk and under it, toward the hero's feet.
+- **RUTH** [sighing, not moving; her back hurts] "My pen…"
+- **TUTORIAL: CROUCH.** The pictogram: two quick taps on the left half. The hero crouches and sees the pen under the
+  desk.
+- **USE again:** the plate shows a hand icon: *Pick up*. The hero picks it up, crouch-walks back out and stands up
+  (two taps on the left half again: crouching toggles).
+- PLAYER: "This?" (holding it out)
+- **RUTH** [taking it] "Thank you." *(beat, a tiny nod)* "Polite. Good."
+- PLAYER: "Thank you." (if the player says it back, Ruth almost smiles: **RUTH** "No, *I* say thank you. You say: you're
+  welcome. …Never mind.")
+
+### Beat 5: The form (character creation; MOVE and USE again)
 - **CAM:** Ruth turns the file round. A blank outline of a person, like a police sketch form. As the player chooses,
-  the outline fills in pencil. The camera cuts between the form and the hero's reflection in the dark rainy window:
-  the window is the mirror.
+  the outline fills in pencil. The camera cuts between the form and the hero's reflection in the dark, rainy window
+  beside the desk: the window is the mirror.
 - **RUTH** [holding up fingers, then writing 18 to 45 on a pad] "Age?"
   - PLAYER: "I am {AGE}."
 - **The look**, step by step. Ruth looks up from the form each time:
@@ -110,9 +197,16 @@ it (a gesture, an object, a number on a screen).
   3. **Hair.**
      - **RUTH** "Hair?"
      - PLAYER: "My hair is {black}." / or "I have no hair." (a chunk; **RUTH** [dry] "Lucky. Saves time.")
-  4. **Height.**
-     - **RUTH** [nodding at the height chart on the wall] "Stand there, please."
+  4. **Height: the reveal (MOVE and USE, used again without a pictogram unless the player is stuck for 10 seconds).**
+     - **RUTH** [nodding at the height-chart poster on the wall] "Stand there, please."
+     - The hero gets up (the stick stands you up from a seat, so no button is needed). **CAM:** as they stand, the
+       camera pulls back out of their head, slowly, up and behind, into the game's third-person view. The player sees
+       the hero for the first time: the face, eyes and hair they just chose, in the too-big NAVY sweatshirt, in the
+       middle of city hall. A soft swell of `MUS-02`. From here on, the game is third person.
+     - The player walks the hero to the chart, and they stand against it.
+     - The height slider is set here, live against the chart's lines.
      - PLAYER: "I am {tall / short}."
+     - **RUTH** "OK. Sit." (the Use plate: *Sit*)
   5. **Pronouns:** a tick box on the form (he / she / they). Ruth: "On the form. You choose." No voice line. Ruth
      nods and moves on without comment.
   6. **The inner voice:** two short sample thoughts. The player picks one.
@@ -123,76 +217,106 @@ it (a gesture, an object, a number on a screen).
      - **RUTH** [she writes it twice and underlines it] "Good. That's good."
      - **Why:** the job is a real skill in the game. It gives one special solution per act (the *Job perks* table at
        the end of part 3). Who you were still matters.
-- **SFX:** the broken coffee machine gurgles and suddenly works. Ruth stares at it.
-  - **RUTH** [deadpan] "First time in four years. You're lucky."
 
-### Beat 3: The question
-- **CAM:** Ruth puts the pen down. A close two-shot. Rain. The music stops.
+### Beat 6: The coffee machine (SWING and BACK TAP: the fight controls)
+- **CAM:** Ruth gets up, goes to the coffee machine on the side table and presses its button. Nothing. She presses it
+  again, and hits it with the flat of her hand. Nothing.
+- **RUTH** [to the machine, deadpan] "Four years." *(to the hero)* "Coffee? …No coffee. It never works."
+- The hero stands up and goes to it (the player walks there; there's no pictogram, because they know it now).
+- **TUTORIAL: SWING (the fight stance).** The pictogram: the phone held sideways, swung down hard, like a hammer.
+  - The hero raises their fists in the fight stance (the game's real combat mode: PunchKick_Enter, the guard up),
+    facing the machine.
+  - **RUTH** [one eyebrow up] "…OK."
+- **TUTORIAL: BACK TAP (the punch).** The pictogram: a finger knocking on the *back* of the phone.
+  - A tap throws a jab; the next tap throws the other hand (left, right, in turn).
+  - Two or three punches to the side of the machine: on the third, it shudders, gurgles and pours a perfect cup of
+    coffee.
+- **TUTORIAL: SWING again (lower the guard).** The same pictogram: swing down again, and the hero drops their fists.
+- **RUTH** [staring at the cup, then at the hero] "First time in four years." *(she takes the cup)* "You're lucky."
+  *(beat, dry, pointing at the hero's fists)* "Machines, OK. People, no. People, police."
+- **Why it's here:**
+  - The fight controls are the hardest to discover (a swing and a knock on the *back* of a phone, which nobody guesses)
+    and the most dangerous to learn on a person. A broken machine is the funniest safe target in the hall.
+  - Ruth's line sets the game's rule in four words: fighting people has consequences (the Status system, the police).
+- **For the engine:** combat mode locks onto the nearest person, and with nobody near, a swing still raises the guard
+  (BUG_BOARD B20). The machine needs to be a **scripted punch target**: the lock-on points at it, and three hits play
+  the gurgle and spawn the cup. That's a small hook in the combat code, used only here.
+
+### Beat 7: The question
+- **CAM:** back at the desk. Ruth puts the coffee down and the pen down. A close two-shot. Rain. The music stops.
 - **RUTH** [quiet, looking at the hero as a person for the first time] "The boat. Who?"
 - She slides a photo across: Marek, the face from the sketchbook, in an old police photo.
 - **CAM:** push in on the photo. Three notes of the fiddle from `MUS-01`.
 - **PLAY:** the first word-tile moment. The tiles: *I / don't / know.*
   - PLAYER (think → say): "I don't know."
-- **RUTH** [a long look; not believing it] "OK." *(taps the photo, then the file)* "Thirty days. Then we talk again."
+- **RUTH** [a long look; not believing it] "OK." *(she taps the photo, then the file)* "Every month, we talk. Here. Like
+  a test."
 - **Why:** the hero's first English sentence that matters is a lie that protects the man who nearly drowned them. In
   M16 the hero gets the same question again, with a few more words and fewer excuses.
-- **Practice test:** Me (name, age, look).
 
----
-
-## P3: Thirty Days
-- **Where:** sketch panels for the camp (no 3D camp), with small playable moments; then the **Navy Gatehouse** in 3D.
-- **Length:** 6 minutes.
-- **Why it's here:**
-  - Story: time passes. Yasin's beats: the waiting, the books, *study*.
-  - Play: the needs appear softly (hunger at the canteen); the phone.
-  - Language: *please / thank you / sorry*, *this / that*, days, numbers to 100.
-- **MUS:** `MUS-03 "Thirty Days"`: a gentle loop that grows a little each day (picked guitar, then a soft beat, then a
-  glockenspiel, then strings).
-
-### Vignettes
-Each vignette is a sketch panel that comes alive for 30–60 seconds: the drawing gains colour where the player
-interacts. A day counter is drawn on a wall.
-1. **Day 2: the canteen line.**
-   - **COOK** [loud, cheerful, used to it; pointing] "Rice? Chicken? Beans?"
-   - PLAYER: "This, please." → **COOK** [delighted] "*Please!* Manners!" (a double portion)
-   - The hunger icon appears for the first time, full.
-   - **Why:** *please* gets you more. The first lesson is social.
-2. **Day 5: football in the yard.** A sailor, DANNY, keeps score on his fingers.
-   - PLAYER (at the end, shouting the score): "Five… three!"
-   - **DANNY** [good loser] "Good game, man… sorry, *friend*. Good game, friend." (He corrects himself to the neutral
-     word, on purpose: it's the game's rule played as a character beat.)
-3. **Day 9: the book cart.** Yasin's beat: *they gave us books and told us to study.* A volunteer, WALT, hands out
-   picture dictionaries.
-   - **WALT** [warm, a retired teacher, very slow, tapping the book] "Book. For you. Study. Every day."
-   - PLAYER: "Thank you."
-   - In the book: a pressed flower and a pencil note, unreadable now. The hero can read it in M13: "*Hello. I was here
-     in 2019. Now I am a cook. It is OK. — Rosa.*"
-4. **Day 14: night, the dorm.** Another detainee, OMAR, whispers the days from the picture book. English is the
-   only language they share.
-   - **OMAR** [whispering, proud] "Monday. Tuesday. …Wednesday?"
-   - PLAYER: "Thursday."
-   - **OMAR** [grinning in the dark] "Friday!"
-5. **Day 22: Omar leaves.**
-   - **OMAR** [careful, proud] "Goodbye, my friend. See you… in America."
-   - (He is a cameo in the epilogue.)
-6. **Day 30: release. The panel becomes 3D: the Navy Gatehouse.** Ruth with a plastic bag: the hero's watch, a dry
-   family photo, a cheap phone. This is Yasin's beat: the officer reminds them about the apps and the tests.
-   - **RUTH** [fast, then remembering to slow down; tapping the phone] "Your phone. There's an app: Pocket. English
-     lessons. Every day." *(she points at the screen: a cartoon pocket)* "And we talk. Every month. Like a test,
-     OK?"
-   - PLAYER: "OK. Every day."
-   - **RUTH** [dry] "Everybody says that." *(beat, softer)* "A taxi is here. The government pays. Good luck, {NAME}."
-   - PLAYER: "Thank you, Ruth."
-   - **RUTH** [walking away, waving the seed bag over her shoulder] "Officer Alvarado. …Ruth is OK."
+### Beat 8: The release (the PHONE button; Yasin's beat: the officer and the apps)
+- Ruth puts a plastic bag on the desk: the hero's watch, a family photo (dry now) and a cheap phone.
+- **RUTH** [fast, then remembering to slow down] "Your things. Your phone. The government pays. One year."
+- **TUTORIAL: PHONE.** The phone button (bottom right) pulses. The pictogram: a tap on it. The phone opens.
+  - **RUTH** [leaning over, tapping the screen] "This app: Pocket. English. Lessons. Every day." *(a cartoon pocket
+    opens)* "And this…" *(the Map app: a pin on the hill)* "…your room. Hillcrest Terraces." *(she taps the map
+    button at the top right of the screen: the HUD's arrow box)* "And the green arrow, it shows you where."
+  - The player closes the phone (a tap on the phone button again).
+- **RUTH** [pointing at the *FREE BOOKS* table by the benches] "And a book. Take one. Study." (Yasin's beat: they give
+  you a book and tell you to study.)
+- PLAYER: "OK. Thank you."
+- **RUTH** [dry] "Everybody says OK." *(beat, softer)* "A taxi is outside. The government pays. Good luck, {NAME}."
+- PLAYER: "Thank you, Ruth."
+- **RUTH** [already opening the next file, waving the seed bag over her shoulder] "Officer Alvarado." *(beat)* "…Ruth is
+  OK." *(to the hall)* "Forty-two!"
+- **PLAY: the clothes (the last step of character creation).** On the way out, the *FREE CLOTHES* rail. The Use plate:
+  *Choose*.
+  - The creator opens on the rail itself: shirts, trousers or skirts, shoes, a jacket, a cap, all second-hand and a bit
+    mismatched, because that's what a donation rail has.
+  - The hero tries them on in the curtained changing booth beside the rail (the kit's `fitting_room`, with its
+    mirror).
+  - Each choice is said aloud, with colours and clothes words: PLAYER: "This shirt, please." / "The blue jacket,
+    please."
+  - **The NAVY sweatshirt stays on top** for now: it's raining. A volunteer at the rail (an old man, WALT, with a
+    retired teacher's patience) says it slowly: "Keep the sweatshirt. It's raining." (It's why Benny thinks the hero
+    is a sailor. The player can take it off at home, in the wardrobe.)
+  - More clothes come later: the shops on the island sell them, and the wardrobe at home keeps them.
+- **PLAY:** the *FREE BOOKS* table: the Use plate, *Take*. A picture dictionary.
+  - **WALT** [tapping the book, very slow] "Book. For you. Study. Every day."
+  - PLAYER: "Thank you."
+  - Inside it: a pressed flower and a pencil note, unreadable now. The hero can read it in M13: "*Hello. I was here in
+    2019. Now I am a cook. It is OK. — Rosa.*"
+- On a bench, Omar holds up his own new phone and grins: two newcomers with the same cheap phone. He waves. PLAYER (if
+  the player wants): "Goodbye, Omar." → **OMAR** [proud, careful] "Goodbye, my friend. See you… in America."
 
 ### End of the prologue
-- **CAM:** the gatehouse barrier lifts. Morning sun, palms. The camera cranes up over the fence: for the first time,
-  the island. The hill, the towers of the centre, the long beach, the Bridge in the haze.
-- **MUS:** `MUS-04 "Coronado (Main Theme)"`: the fiddle melody of `MUS-01`, now played by a bright trumpet over a
-  sunny West-Coast groove. The sea has become a city.
+- **CAM:** the hero pushes open city hall's front doors. The rain has stopped. Morning sun on the wet steps, palms
+  dripping. The camera cranes up from the steps, over the porch and the roof: for the first time, the island. The
+  hill, the towers of the centre, the long beach, the Bridge in the haze. At the kerb below, a dented taxi waits with
+  its hazard lights on.
+- **MUS:** `MUS-04 "Coronado (Main Theme)"`: the fiddle melody of `MUS-01`, now played by a bright trumpet over a sunny
+  West-Coast groove. The sea has become a city.
 - **TITLE:** *ACT ONE: OFF THE BOAT*.
-- **Practice test:** days and numbers.
+- **Practice test:** Me (name, age, look).
+
+### The tutorial at a glance (for the implementer)
+| Control (OLD_CONTROLS_SPEC.md) | Taught in | The reason in the scene | Used again |
+|---|---|---|---|
+| Look: drag on the right half | Beat 1 | find your number on the screen | all game; M1 (looking out of the taxi) |
+| Move: drag on the left half | Beat 2 | Ruth calls 41 | Beat 5 (the height chart) |
+| Run: drag further | Beat 2 | Ruth waves "Come, come!" | M1 (the gas station) |
+| Jump: double tap on the right half | Beat 2 | the empty queue lane: "Jump it." | M4 (the walk), M17 (the yard) |
+| Crouch: double tap on the left half (toggle) | Beat 4 | Ruth's pen under the desk | M17 (stealth) |
+| Use plate: *Sit*, *Pick up*, *Choose*, *Take* | Beats 3, 4, 8 | the chair, the pen, the clothes rail, the book | everywhere |
+| Phone button | Beat 8 | Ruth shows Pocket and the map | everywhere |
+| The HUD arrow box (opens the map) | Beat 8 | Ruth: "the green arrow shows you where" | M1 onward |
+| Swing down: fight stance (and again: guard down) | Beat 6 | the broken coffee machine | M10 (if the police stop goes badly), M22 (Dutch on the deck) |
+| Back tap: punch (left and right in turn) | Beat 6 | the broken coffee machine | M22 |
+| Voice: say the line | Beat 1 (*Forty-one*), Beat 3 (the name) | Omar, Ruth | every scene |
+| Word tiles (scramble, then say) | Beat 7 | "I don't know." | every mission |
+
+**Not taught here:** driving (M11, Theo), the bike (M10), the boat (M21, Gus), swimming (P1, already). They're taught
+where the story first needs them.
 
 ---
 
@@ -200,11 +324,11 @@ interacts. A day counter is drawn on a wall.
 The act's goal on screen: **"Food. A room. A job."**
 
 ## M1: Benny's Meter
-- **Where:** the Navy Gatehouse → along the strip (past **McDowell's**, **Crown Plaza**, **Lupe's Tacos**) → **Shoal**
-  gas station → the high street → the hill.
+- **Where:** the steps of city hall → the long way round: past the Navy base fence, along the strip (past
+  **McDowell's**, **Crown Plaza**, **Lupe's Tacos**) → **Shoal** gas station → the high street → the hill.
 - **Length:** 10 minutes.
 - **Why it's here:**
-  - Story: Yasin's taxi beat. The driver thinks you're a sailor (you came out of the Navy base) and talks fast with
+  - Story: Yasin's taxi beat. The driver thinks you're a sailor (the NAVY sweatshirt the rescuers gave you) and talks fast with
     expressions. You say *Sorry, I'm new, slower please*. He gets louder, then slower. Then name, age and job. Then
     the hero thinks: *I need to study.*
   - Play: the drive is the map tutorial: districts appear as the taxi passes. A stop teaches interact and the
@@ -212,10 +336,11 @@ The act's goal on screen: **"Food. A room. A job."**
   - Language: *to be* in every form, pronouns, countries, jobs.
 
 ### Beat 1: The fast talker
-- **CAM:** outside the gatehouse, a dented taxi (the kit car with a taxi livery), a hula girl on the dash. BENNY
+- **CAM:** at the kerb below city hall's steps, a dented taxi (the kit's `taxi` model with Benny's extras), a hula
+  girl on the dash. BENNY
   OKAFOR leans on it, singing with the radio.
 - **MUS:** `MUS-05 "Benny's Radio"` on the car radio (diegetic): sunny Afrobeat with yacht-rock keys.
-- **BENNY** [very fast, joyful, one breath] "Hey-hey-hey, there they are! Fresh off the base! You a sailor, boss? Shore
+- **BENNY** [very fast, joyful, one breath] "Hey-hey-hey, there they are! NAVY, huh? You a sailor, boss? Shore
   leave? First time in Coronado? Oh, you're gonna love it, hop in, hop in, the meter's on Uncle Sam today!"
 - The subtitle is almost all fog.
 - **PLAY:** two thought bubbles over the hero's head: *"Sorry, I'm new."* and *"Slower, please."*
@@ -232,6 +357,8 @@ The act's goal on screen: **"Food. A room. A job."**
 ### Beat 2: The drive (*to be*)
 - **CAM:** the back seat, free look. Benny names each place as it passes, and a soft label appears on screen and on
   the map.
+- **BENNY** [winking at the meter] "I take the long way round. You see the island. Uncle Sam pays!" (the game's
+  title, said as a joke, the first time; it comes back at the very end)
 - **BENNY** [tour guide, proud, slow] "This is the Navy base. Big base. Planes, ships." *(over his shoulder)* "Where are
   you from, boss?"
 - PLAYER: "I am from {COUNTRY}." (the game accepts any country)
@@ -257,15 +384,15 @@ The act's goal on screen: **"Food. A room. A job."**
   something else again.
 
 ### Beat 4: Shoal (the bladder)
-- The bladder icon appears, nearly full: the camp coffee.
+- The bladder icon appears, nearly full: Ruth made the hero drink the second cup from the machine they fixed.
 - (inner) [a little embarrassed] "*Oh no.*"
 - PLAYER: "Benny… toilet, please?" (a chunk; *Can I use the toilet, please?* is taught by the clerk's answer)
-- **BENNY** [knowing, cheerful] "The base coffee! Every time!" *(pulls into **Shoal**)*
+- **BENNY** [knowing, cheerful] "City hall coffee! Every time!" *(pulls into **Shoal**)*
 - **PLAY:** the restroom door: a picture of a toilet and a sign. The clerk, a bored teenager:
   - **CLERK** [monotone, eyes on her phone] "Restrooms are for customers only."
   - PLAYER: "Slower, please."
   - **CLERK** [slower, *more* bored] "For. Customers. You buy something. Then toilet."
-  - **PLAY:** buy the cheapest thing, gum. PLAYER: "This, please." (from P3) She gives the key on a giant plastic
+  - **PLAY:** buy the cheapest thing, gum. PLAYER: "This, please." (a chunk; the clothes rail in P2 used it) She gives the key on a giant plastic
     hot dog.
 - **Why:** real life that no textbook teaches; it's funny, and it shows that a small purchase opens doors.
 

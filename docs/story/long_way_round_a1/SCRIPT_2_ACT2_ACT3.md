@@ -70,7 +70,7 @@ night runs (fast, dirty, risky).
 - **MAREK\*** [warm, delighted, an uncle at a wedding] "Little fish! There you are. You're alive. I told them you swim
   well."
 - **CAM:** he turns into the light. The sketchbook face, older, in the same good coat.
-- **MAREK\*** [opening his arms, not hugging, just showing he could] "Thirty days with the Navy, and now a job, a room…
+- **MAREK\*** [opening his arms, not hugging, just showing he could] "A few weeks ago the Navy fished you out, and now a job, a room…
   Look at you. Like an American."
 - **PLAY:** no prompt. If the player tries English, Marek laughs and answers in the native language: "*Why do you talk
   their language to me? We are family.*" English feels like a wall between you and him, and it should.
@@ -352,7 +352,7 @@ The act's goal on screen: **"Find out what Marek does."**
   - Language: *was / were*; *yesterday, last week, last month*.
 
 ### Beat 1: Rosa's note
-- **CAM:** before leaving, the hero picks up the camp picture dictionary (P3). The pressed flower and the pencil note.
+- **CAM:** before leaving, the hero picks up the picture dictionary from city hall's free-books table (P2). The pressed flower and the pencil note.
   **Now it's readable:**
   > *Hello. I was here in 2019. I was afraid. Now I am a cook. It is OK. — Rosa*
 - (inner) [moved] "*I can read it.*"

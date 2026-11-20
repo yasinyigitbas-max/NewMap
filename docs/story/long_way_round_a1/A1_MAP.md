@@ -19,8 +19,7 @@ never a wall.
 | # | Mission | Place | New | Words | Practice test |
 |---|---|---|---|---|---|
 | P1 | Salt Water | Sketches; the bay off the Ferry Landing | — (wordless; one English word: *Safe*) | — | — |
-| P2 | Who Are You? | City Hall Front Desk (Ruth's desk) | *My name is…*, spelling (the alphabet), numbers 1–50 (age), *My eyes are… / My hair is… / I am tall*, *I am a* + job | the face, hair, colours, six jobs | Me: name, age, look |
-| P3 | Thirty Days | Sketches; the Navy Gatehouse | *please / thank you / sorry*, *this / that*, days of the week, numbers to 100 | food words, days | Days and numbers |
+| P2 | Who Are You? | City Hall Front Desk (Ruth's desk; the clothes rail; the free books) | *My name is…*, spelling (the alphabet), numbers 1–50 (the ticket, the age), *My eyes are… / My hair is… / I am tall*, *I am a* + job, *please / thank you*, *this* | the face, hair, colours, clothes, six jobs | Me: name, age, look |
 
 ## Act 1: Off the Boat (A1 part 1: me, my home, my food)
 | # | Mission | Place | New | Words | Practice test |
@@ -36,7 +35,7 @@ never a wall.
 | # | Mission | Place | New | Words | Practice test |
 |---|---|---|---|---|---|
 | 7 | Fish Out of Water | The Fish House; the waterfront | imperatives; the time (*o'clock, half past*); present simple he / she / it | kitchen, orders, money | imperatives; 3rd person -s |
-| 8 | First Check-In | City Hall Front Desk | adverbs of frequency (*always, usually, sometimes, never*), the daily routine | routine verbs | frequency |
+| 8 | First Check-In | City Hall Front Desk | adverbs of frequency (*always, usually, sometimes, never*), the daily routine, the days of the week | routine verbs, days | frequency |
 | 9 | Lookout | Hillside Park | family, *have got / has got*, possessive *'s* and *his / her*, describing people | family, appearance | family; *have got* |
 | 10 | Old Friend | Clay's Diner (docks) → the gritty edge → the Harbor View Motel, at night | present continuous (*I'm riding… He's waiting.*), directions (*turn left, go straight, next to, opposite*) | the street, directions | present continuous; directions |
 

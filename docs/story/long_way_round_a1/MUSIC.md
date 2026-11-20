@@ -21,8 +21,8 @@ and the cue ids are the same. This file lists what this edition uses and what ch
 |---|---|---|---|
 | MUS-01 | Salt Water | P1 (the bay off the Ferry Landing), M22 (the mayday, with the many-language choir) | M20 (overboard) is cut, so the choir version is used only in M22 |
 | MUS-02 | The Office | P2, M8 and M16 (all at Ruth's desk at City Hall Front Desk) | — |
-| MUS-03 | Thirty Days | P3 (sketch montage); the music box in M13 (Rosa's note) | — |
-| MUS-04 | Coronado (Main Theme) | End of P3; M9 (cello); M22 (the parade's marching band); M23 (the steps) | — |
+| MUS-03 | Thirty Days | Only as the music box in M13 (Rosa's note) | The camp montage (P3) is cut for now; the full cue comes back with it |
+| MUS-04 | Coronado (Main Theme) | End of P2 (city hall's doors); M9 (cello); M22 (the parade's marching band); M23 (the steps) | — |
 | MUS-05 | Benny's Radio | M1 and every Benny fare | **New A1 lyrics** (below) |
 | MUS-06 | Mrs. Finch | M2, M15 | — |
 | MUS-07 | Upstairs | M3 and the sleep sting | — |

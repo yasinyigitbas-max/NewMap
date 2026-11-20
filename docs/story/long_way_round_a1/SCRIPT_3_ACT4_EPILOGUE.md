@@ -128,9 +128,10 @@ languages, with small words.
 
 ### Beat 4: Dawn at the Ferry Landing
 - **CAM:** dawn. Three cars at the old Ferry Landing: Brody's, Ruth's (she came in a Navy sweater over pyjamas) and
-  Priya's. And a grey harbour patrol boat at the end of the landing: on its deck, **DANNY** (the football sailor from P3,
+  Priya's. And a grey harbour patrol boat at the end of the landing: on its deck, **DANNY** (the sailor who pulled the hero out of the water in P1,
   now harbour patrol).
-- **DANNY** [recognising the hero, grinning] "Five-three! You beat us five-three! I still think about it."
+- **DANNY** [recognising the hero, grinning] "Hey! The swimmer! You're dry now!" *(beat, gentler)* "Safe?"
+- PLAYER: "Safe." (the first English word of the game, said back to the man who said it)
 - **RUTH** [reading the decoded pages, then to the hero] "Last time you said: 'I don't know.'" *(beat)* "Now you bring me
   a notebook, a date and a boat."
 - **BRODY** [heavy] "The book is stolen. In court, a good lawyer kills it." *(beat)* "But now we know where. And when."
@@ -511,7 +512,7 @@ languages, with small words.
 ---
 
 # EPILOGUE: The Bridge
-- **Where:** a montage across the island; the **Navy Gatehouse**; Benny's taxi; the **Bridge Tollhouse** and the Bridge.
+- **Where:** a montage across the island; the steps of **city hall**; Benny's taxi; the **Bridge Tollhouse** and the Bridge.
 - **Length:** 6 minutes plus the credits.
 - **Why it's here:** the circle closes. The hero becomes, for someone else, what Benny, Theo and Ruth were for them.
 
@@ -528,17 +529,18 @@ Each shot is in a place the player knows:
   her a living sunflower.
 - **Hank's Diner:** Theo on the TV, a late-night comedy spot in Los Angeles. He says "my roommate", and the whole diner
   laughs. Benny points at the TV and tells everyone he knows him.
-- **The Casa del Mar Inn**'s kitchen door: **Omar** from the camp, in a cook's apron. He sees the hero across the
-  street. "THURSDAY!" / PLAYER: "FRIDAY!"
+- **The Casa del Mar Inn**'s kitchen door: **Omar** from the boat (P2), in a cook's apron. He sees the hero across the
+  street. **OMAR** "FORTY!" / PLAYER: "FORTY-ONE!"
 
 ### Beat 2: The fare
-- **CAM:** the Navy Gatehouse, morning sun: the exact framing of the end of P3. Benny's taxi. But Benny is in the
+- **CAM:** the steps of city hall, morning sun after rain: the exact framing of the end of P2. Benny's taxi. But Benny is in the
   *passenger* seat with his arm in a cast (he says aliens; it was a skateboard), and the hero is at the wheel. The
   hero drives Benny's taxi three days a week now.
-- The barrier lifts. A young newcomer walks out with a plastic bag and a cheap phone. The camera never shows their face
+- City hall's doors open. A young newcomer walks out with a plastic bag, a cheap phone and a too-big grey NAVY
+  sweatshirt. The camera never shows their face
   clearly: it could be anyone.
 - They get in the back. Silent. Terrified.
-- **BENNY** [opening his mouth to start at full speed: "Hey-hey-hey, fresh off the base—"]
+- **BENNY** [opening his mouth to start at full speed: "Hey-hey-hey, NAVY, huh? You a sail—"]
 - The hero puts a hand on Benny's arm. Benny stops. Smiles. Nods.
 - **PLAY:** the last voice lines of the game. The player says them to the newcomer *slowly*, every word apart, the way
   Ruth and Benny once did:
@@ -548,7 +550,7 @@ Each shot is in a place the player knows:
   - PLAYER: "It's on me."
 
 ### Beat 3: The Bridge
-- **CAM:** one long, unbroken helicopter shot follows the taxi from the gatehouse down the strip, past Lupe's Tacos and
+- **CAM:** one long, unbroken helicopter shot follows the taxi from city hall down the strip, past Lupe's Tacos and
   Shoal, along Amber Ave, past the Library, the Crown & Anchor and Hilltop Market, down to the waterfront and The Fish
   House: M1's route and the whole game's map in one move. Then past the **Bridge Tollhouse** and *up the Bridge*, the
   first time the game has ever crossed it.
@@ -570,6 +572,6 @@ Each shot is in a place the player knows:
 | Cook | The lid on Theo's pan (M2) | Gus lets you make the specials (+tips) | Cook for Finch: a rent discount (M15) | Cook for the motel: Nadia trusts you (M20) |
 | Mechanic | Fix Benny's door (a free ride home) | Fix the night bike's light (M10, an easier stop) | Start Pickle for the show (M13) | Start the skiff first time; fix Finch's radio (M21–22) |
 | Nurse | Dress Theo's burn (M2) | Treat Admiral's paw (Brenda tips double) | Help Theo on a night shift (side) | Stabilise Gus in the fire (M19) |
-| Teacher | Help Omar with the days (P3) | Tutor Kai for cash (side) | Help Priya read the signs faster (M17) | Teach Nadia "911" and "Help, please" (M20) |
+| Teacher | Help Omar spell his name for the next desk (P2) | Tutor Kai for cash (side) | Help Priya read the signs faster (M17) | Teach Nadia "911" and "Help, please" (M20) |
 | Builder | Fix Finch's gate (a rent discount) | Fix Gus's stools (+pay) | Read the tower plans (M14) | A loose fence panel in the yard (M17) |
 | Driver | Benny lets you drive home (M1) | Skip the bike: borrow Theo's car early | Skip the lessons (M11) | Drive the getaway in M17; faster to the ER in M19 |

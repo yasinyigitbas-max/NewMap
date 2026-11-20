@@ -314,9 +314,36 @@ each one:
 - **The spare key on a fish keyring:** a brass key on a ring with a small blue enamel fish (M19). ≤150 tris.
 - **Ruth's sunflower-seed bag:** a crumpled brown paper bag with a printed sunflower, a few seeds and shells by it on the
   desk (P2, M8, M16, the courthouse steps). ≤150 tris.
-- **Rosa's pressed flower and note:** a flat dried flower and a lined paper note in pencil, inside the camp picture
-  dictionary. The book is a ≤300-tris prop with an open state (P3, M13).
+- **Rosa's pressed flower and note:** a flat dried flower and a lined paper note in pencil, inside the picture
+  dictionary from city hall's free-books table. The book is a ≤300-tris prop with an open state (P2, M13).
 - **The job card:** an index card on a corkboard with a hand-drawn fish and the words *HELP WANTED – THE FISH HOUSE – ASK
   FOR GUS – NO EXPERIENCE – NOT AFRAID OF FIRE* (M5). A texture on a card quad.
 - **The number ticket and the counter screen at city hall:** a small paper ticket *41* and a red LED number screen above
   the counter, which the game can change (P2, M8). The screen is a box ≤100 tris with an emissive number.
+
+## 8. City hall's interview dressing (P2: character creation and the controls tutorial)
+P2 happens in the existing **City Hall Front Desk** room. The kit already has the waiting benches, office desks and
+chairs, filing cabinets, the clothes rack (`clothes_rack`) and the changing booth with its mirror (`fitting_room`).
+These are the only new things:
+- **The coffee machine:** the tutorial's punch target (Beat 6). A free-standing office coffee machine on a side
+  table: 40 × 45 × 60 cm, brushed steel and black plastic, a small display, three buttons, a cup slot with a drip
+  tray, a hand-written note taped to it: *OUT OF ORDER (AGAIN)*. Small prop ≤600 tris.
+  - **Three hit states** (the game plays them on the three punches): a dent on its side panel at each hit (a blend
+    shape or three swapped side panels), the note flying off at the second.
+  - At the third, it lights up and pours: an emissive display, a steam particle, a paper cup appearing in the slot (a
+    tiny cup prop, ≤100 tris).
+  - It needs to be a **punch target** for the combat code (the lock-on points at it).
+- **A flag on a stand:** a pole 2.2 m with a gold finial, a weighted base, the US flag hanging folded on the pole (no
+  wind indoors: it's a draped mesh, not cloth). Medium ≤800 tris.
+- **The height-chart poster:** a 60 × 210 cm paper poster taped to the wall: metric and imperial lines, numbers every
+  10 cm, a faint printed seal. A decal (one texture, 256 × 1024). It must line up with the real metres, because the
+  height slider is set against it.
+- **The number screen:** see section 7 (a red LED number over the counter, changed by the game: 39, 40, 41, 42).
+- **The tickets:** a paper ticket dispenser on a post by the entrance (a red ticket roll, ≤300 tris), and the paper
+  ticket *41* in the hero's hand (a card quad).
+- **Two hand-written signs** on card, taped to the table and the rail: *FREE BOOKS* and *FREE CLOTHES* (decals).
+- **The box of picture dictionaries** on the table: a cardboard box with five or six books standing in it (the books
+  are the same ≤300-tris prop as Rosa's book).
+- **The grey NAVY sweatshirt:** a clothing item for the character system, not a prop. Heather grey, crew neck, one size
+  too big (the sleeves cover half the hands), **NAVY** in dark-blue block capitals across the chest. Worn by the hero
+  and Omar in P2, and by the newcomer in the epilogue. The player can take it off at home (the wardrobe).

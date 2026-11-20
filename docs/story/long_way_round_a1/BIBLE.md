@@ -11,7 +11,7 @@ What stays from the first draft:
 - Yasin's own beats, in Yasin's order:
   - the sketches of why the hero left;
   - the interview that is character creation;
-  - the waiting camp;
+  - the waiting camp (cut for now, 21 Nov: the hero is released after the interview; it can come back later);
   - the officer and the phone apps;
   - the chatty taxi that slows down;
   - the flatmate, the dinner, *it's on me*, the food delivery and *keep the change*;
@@ -49,8 +49,9 @@ contract.
 ---
 
 ## 1. The pitch
-You were pulled out of the sea at night by a harbour patrol boat, with nothing but your name. Thirty days later the
-resettlement office lets you out of the Navy gate with a cheap phone, a room address and forty dollars.
+You were pulled out of the sea at night by a harbour patrol boat, with nothing but your name. The next morning the
+resettlement office at city hall interviews you and lets you go, with a cheap phone, a room address and forty
+dollars.
 
 On Coronado Island you must:
 - feed yourself;
@@ -82,11 +83,11 @@ the player that small English is enough to save lives.
 - **Thinking moments (the word tiles).** Yasin's scrambled sentences. At a dramatic peak, time slows and the words
   float. The player orders them and says them. A wrong order is said out loud and the NPC reacts (a joke or a
   danger), then the player tries again. Used in every mission, two or three times at most.
-- **Pocket** (the phone's lessons; Ruth installs it in P3). It is never forced. When a structure has been met three
+- **Pocket** (the phone's lessons; Ruth installs it in P2). It is never forced. When a structure has been met three
   times, Pocket offers its lesson and a practice test (five questions: scrambles plus voice, as Yasin described).
   - Yasin's beat "*I'd better study*" stays as the hero's own thought after the taxi and after the house tour. It is
     a nudge to open Pocket, never a wall.
-- **Check-ins with Ruth.** Three conversations about the hero's real in-game life: the tests, as story (P3, M8,
+- **Check-ins with Ruth.** Three conversations about the hero's real in-game life: the tests, as story (P2, M8,
   M16).
 
 ## 4. Needs (unchanged)
@@ -137,8 +138,7 @@ room is listed.
 |---|---|---|
 | The rescue at sea (P1) | The bay at night off the **Ferry Landing** (`lmk_ferry_landing`); the harbour patrol boat is `boat_express` in a grey livery; a `lifering_stand` ring | Kit (one new paint livery) |
 | The interview (P2) and the check-ins (M8, M16) | **City Hall Front Desk** (civic band, `cv_city_hall`): the counter, queue ropes, waiting benches, Ruth's desk behind the counter | Kit room; a flag, a coffee machine, a height-chart poster, a RESETTLEMENT sign and a number screen as dressing |
-| The thirty days (P3) | Sketch panels (the old game's panel style), plus the release at the **Navy Gatehouse** (`lmk_navy_gatehouse`) | No build |
-| The taxi ride (M1) | The gatehouse → the strip (**Crown Plaza**, **McDowell's**) → **Shoal** gas station (the restroom gag) → the high street → the hill | All kit |
+| The taxi ride (M1) | City hall → the long way round, past the Navy base fence → the strip (**Crown Plaza**, **McDowell's**) → **Shoal** gas station (the restroom gag) → the high street → the hill | All kit |
 | The home: Mrs. Finch's building | **Hillcrest Terraces** (the hill apartments, high street fill block 5–6): Finch on the ground floor, Theo and the hero upstairs | Building kit; **the flat interior is the one big new interior** |
 | Groceries (M4) | **Hilltop Market** (the Trans' shop) | Kit room (assignment_hs / res) |
 | The CV (M5) | **Coronado Public Library** (high street, with Library Grounds Coffee) | Kit room |
@@ -161,7 +161,7 @@ room is listed.
 | The Fourth of July (M22) | **Amber Ave** (the parade), **Amber Beach Plaza**, the **Ferry Landing**, the bay, Gus's `boat_skiff` from **Harbour Boatworks**, Whitmore's `boat_express`, the *Good Hope* `boat_troller` | Kit |
 | The trial (M23) | **Coronado County Courthouse** (city centre, assignment_cc) | Kit room |
 | Benny's diner | **Hank's Diner** (high street arcade) | Kit room |
-| The epilogue | The Navy Gatehouse; Benny's taxi; the drive to the **Bridge Tollhouse** (`lmk_bridge_tollhouse`) and onto the Bridge | Kit |
+| The epilogue | The steps of city hall; Benny's taxi; the drive to the **Bridge Tollhouse** (`lmk_bridge_tollhouse`) and onto the Bridge | Kit |
 
 ## 8. What still has to be built (short list)
 1. **The flat** inside Hillcrest Terraces: Mrs. Finch's ground-floor kitchen and the upstairs flat (living room,
@@ -170,7 +170,7 @@ room is listed.
 3. **Small props:** Whitmore's waterfront model under glass, a 1970s Navy radio set (Finch's), Marek's notebook, a
    few extras on the kit's own `taxi` model for Benny, a grey livery for the patrol boat, the sign decals for the yard ("NO ENTRY", "STAFF
    ONLY", "DANGER", "NO SMOKING").
-4. **The sketch panels** for P1 and P3 (2D art, in the old game's panel style).
+4. **The sketch panels** for P1 (2D art, in the old game's panel style).
 
 Every object in items 2 and 3 is described in detail (size, look, parts, states, budget) in `PROPS_TO_MAKE.md`.
 
@@ -179,7 +179,7 @@ Everything else in the script is already in the city.
 ## 9. Structure
 | Part | A1 stage | Missions | Hours | Goal on screen |
 |---|---|---|---|---|
-| Prologue: *Salt Water* | Starter | P1–P3 | 1 | Be released |
+| Prologue: *Salt Water* | Starter | P1–P2 | 0.5 | Be released |
 | Act 1: *Off the Boat* | A1 part 1: me, my home, my food | 1–6 | 6 | Food. A room. A job. |
 | Act 2: *The Debt* | A1 part 2: work, people, days | 7–10 | 5 | Pay Marek. Keep the job. |
 | Act 3: *Undertow* | A1 part 3: rules, now, ability, the past of *be* | 11–16 | 6 | Find out what Marek does. |
