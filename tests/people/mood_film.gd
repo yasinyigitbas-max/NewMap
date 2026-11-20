@@ -1,8 +1,7 @@
 extends SceneTree
-## The player's two gaits in motion, side by side (the Animator, 20 Nov; Yasin: "rocketbox is good for casual, but
-## quaternius is good for an angry walk"). Two players, each in its own little world on a checkered floor (1 m), given
-## the same stick: stand, walk, turn right while walking, run, stop, turn round, walk, stop. Left casual (mood 0), right
-## angry (mood 1). A camera goes along with each.
+## The player's movements in motion (the Animator, 20 Nov): one player on a checkered floor (1 m), given the stick:
+## stand, walk, turn right while walking, run, stop, turn round, walk, stop. A camera goes along with him.
+## (It filmed two moods side by side until Yasin: "just make one normal mode, lets drop the angry entirely".)
 ##   godot --path . --rendering-method mobile --resolution 320x180 --fixed-fps 50 -s res://tests/people/mood_film.gd -- --out=OUT/mood_film
 ## Writes <out>/p<panel>_<frame>.png (every other physics frame: 25 fps); tools/people/gait_film.py --mood lays them out.
 const W := 440
@@ -36,7 +35,7 @@ func _initialize() -> void:
 	img.set_pixel(0, 0, Color(0.52, 0.53, 0.55)); img.set_pixel(1, 1, Color(0.52, 0.53, 0.55))
 	img.set_pixel(1, 0, Color(0.40, 0.41, 0.43)); img.set_pixel(0, 1, Color(0.40, 0.41, 0.43))
 	var tex := ImageTexture.create_from_image(img)
-	for k in 2:
+	for k in 1:
 		var vp := SubViewport.new(); vp.size = Vector2i(W, H); vp.own_world_3d = true
 		vp.render_target_update_mode = SubViewport.UPDATE_ALWAYS; vp.msaa_3d = Viewport.MSAA_4X
 		root.add_child(vp)
@@ -49,7 +48,6 @@ func _initialize() -> void:
 		var fm := StandardMaterial3D.new(); fm.albedo_texture = tex; fm.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 		fm.uv1_scale = Vector3(100, 100, 1); fl.material_override = fm; vp.add_child(fl)
 		var p: CharacterBody3D = ClassDB.instantiate(&"CityPlayer"); p.position = Vector3(0, 0.05, 0); vp.add_child(p)
-		p.call(&"set_mood", k)
 		var cam := Camera3D.new(); cam.fov = 40.0; vp.add_child(cam)
 		players.append(p); cams.append(cam); vps.append(vp); look.append(Vector3(0, 0.9, 0))
 
@@ -66,7 +64,7 @@ func _physics_process(delta: float) -> bool:
 	if seg < 0 or seg_t >= float(TOUR[seg][0]):
 		seg += 1; seg_t = 0.0
 		if seg >= TOUR.size():
-			print("FILM 2 panels x %d frames saved: %s" % [shot, out]); quit(0); return true
+			print("FILM %d panel(s) x %d frames saved: %s" % [players.size(), shot, out]); quit(0); return true
 		for p in players: p.call(&"set_move", TOUR[seg][1], TOUR[seg][2])
 	if n % 2 == 0:
 		for i in vps.size(): (vps[i] as SubViewport).get_texture().get_image().save_png("%s/p%d_%03d.png" % [out, i, shot])

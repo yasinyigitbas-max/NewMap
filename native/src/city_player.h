@@ -30,15 +30,11 @@ class CityPlayer : public CharacterBody3D {
 	Vector2 cmd;
 	float cam_yaw = 0.0f, cam_pitch = -0.18f, cam_dist = 3.4f, yaw = 0.0f, speed = 0.0f;
 	// THE GAIT (the Animator, 20 Nov; Yasin: "i want RDR like grounded heavy bodied people and not rushed movements";
-	// "rocketbox is good for casual, but quaternius is good for an angry walk"). Two sets of walking clips, each played
-	// at its own speed (x1.74 and x1.48 before: tests/people/gait_film.gd): CASUAL = the Rocketbox mocap walks and run,
-	// ANGRY = the Quaternius walk, jog and sprint. Angry while he squares up, when he is hit or shoved, and for
-	// ANGRY_HOLD seconds after; or always with set_mood(1). The speeds are the clips' own (planted foot, clip_audit --rb).
-	float walk_speed = 1.35f, run_speed = 3.1f;          // casual: walk_fast at x1.0, run at x1.15
-	float angry_walk_speed = 1.2f, angry_run_speed = 3.6f;   // angry: Walk_Loop at x1.3, Sprint_Loop at x1.14
-	int mood = 0;                 // 0 casual, 1 angry always
-	double angry_t = 99.0;        // since the last thing that made him angry, s
-	static constexpr double ANGRY_HOLD = 25.0;
+	// "just open the hands of quaternius animations and use them for walk"; "just make one normal mode, lets drop the
+	// angry entirely"): the Quaternius walk and jog with the hands open (tools/people/make_steps.gd: "step/walk",
+	// "step/jog", "step/idle"), each played near its own speed (before: the walk x1.74, the sprint x1.48,
+	// tests/people/gait_film.gd).
+	float walk_speed = 1.05f, run_speed = 2.8f;          // the walk at x1.14, the jog at x1.17
 	int gait_i = -1;              // the walking clip of the set playing now (kept a little past the midpoint: no flicker)
 	float move_speed = 0.0f;      // the pace he means (his body turns, then goes the way it faces)
 	Vector3 lean_a;               // his acceleration, smoothed: the body leans into a turn and into a start
@@ -49,7 +45,6 @@ class CityPlayer : public CharacterBody3D {
 	double stop_ph_prev = -1.0;   // (waiting for the footfall to stop on: the stride's share last frame)
 	int starts = 0, stops = 0, turns = 0;    // (the tests)
 	float turn_yaw0 = 0.0f, turn_k = 1.0f;   // a turn on the spot (step_mode 3): the way he faced, the clip's turn scaled to the angle
-	bool is_angry() const { return mood == 1 || combat || angry_t < ANGRY_HOLD; }
 	Vector3 cam_pos, knock_v;
 	// THE OLD GAME'S TOUCH SCHEME (docs/OLD_CONTROLS_SPEC.md; Yasin: "copy it as it was"): the left half of the screen is
 	// an invisible floating stick (full at 80 px), the right half looks (0.25 deg a pixel x 1.2), a double tap (0.32 s,
@@ -134,7 +129,7 @@ public:
 	bool take_combat_request() { const bool r = combat_req; combat_req = false; return r; }
 	int take_punch();   // 0 none, else 1 + the side of a punch that starts now
 	// (Yasin: "use punch kick enter exit animations too"): into the guard with PunchKick_Enter played through, out of it with PunchKick_Exit
-	void set_combat(bool p_on, const Vector3 &p_target) { if (p_on && !combat) combat_t = 0.0; if (!p_on && combat) uncombat_t = 0.0; if (p_on != combat) angry_t = 0.0; combat = p_on; combat_target = p_target; if (!p_on) punch_req = false; }   // (in and out of a fight: angry)
+	void set_combat(bool p_on, const Vector3 &p_target) { if (p_on && !combat) combat_t = 0.0; if (!p_on && combat) uncombat_t = 0.0; combat = p_on; combat_target = p_target; if (!p_on) punch_req = false; }
 	bool get_combat() const { return combat; }
 	int get_punches() const { return punches; }
 	int get_steps_up() const { return steps_up; }
@@ -152,7 +147,7 @@ public:
 	Dictionary get_frame_log() const;   // (traces) the climb's progress, the two wrists' miss now   // the farthest a gripping fingertip was over or under the edge's top (m)
 	Vector3 get_edge_at() const { return edge_at; }
 	Array get_hand_points() const;
-	void take_hit() { hit_t = 0.0; hits_taken++; angry_t = 0.0; }   // a blow taken on his feet (the hit clip)
+	void take_hit() { hit_t = 0.0; hits_taken++; }   // a blow taken on his feet (the hit clip)
 	int get_hits_taken() const { return hits_taken; }
 	bool get_crouch() const { return crouch; }
 	void jump() { jump_want = true; }
@@ -161,7 +156,7 @@ public:
 	Vector2 get_touch_move() const { return touch_mv; }
 	bool is_frozen() const { return frozen; }
 	// somebody hits him: he is knocked that way (m/s)
-	void knock(const Vector3 &p_v) { knock_v += p_v; if (p_v.length() > 1.0f) angry_t = 0.0; }   // (shoved: angry)
+	void knock(const Vector3 &p_v) { knock_v += p_v; }
 	// water: he walks in; where it is deeper than 1.15 m he swims at the surface; where it gets shallower than 0.9 m he
 	// stands up and walks out
 	void set_water_y(double p_y) { water_y = p_y; }
@@ -169,9 +164,6 @@ public:
 	bool is_swimming() const { return swimming; }
 	String get_clip() const;
 	double get_speed() const { return speed; }
-	void set_mood(int p_m) { mood = p_m; }
-	int get_mood() const { return mood; }
-	bool get_angry() const { return is_angry(); }
 	CityPed *figure() { return fig; }
 	// on a bicycle (CityBike): he is not there as a body while he rides (no collision, not drawn, no keys); back on his
 	// feet at a place facing a way, with his own view again

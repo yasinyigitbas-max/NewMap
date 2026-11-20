@@ -17,7 +17,7 @@ TITLES = [
     "Quaternius jog: own speed",
     "Rocketbox run: own speed",
 ]
-MOOD_TITLES = ["Casual (Rocketbox mocap)", "Angry (Quaternius)"]
+MOOD_TITLES = ["Quaternius, hands open: start, walk, turn, run, stop, turn round"]
 COLS, BAR, SCALE = 3, 30, 0.75
 
 
@@ -47,8 +47,8 @@ def main(src, dst, titles=TITLES, cols=COLS, scale=SCALE, step=1, colors=128):
 
 
 if __name__ == "__main__":
-    if "--mood" in sys.argv:   # (tests/people/mood_film.gd: two panels, casual and angry)
+    if "--mood" in sys.argv:   # (tests/people/mood_film.gd: the player in motion)
         a = [x for x in sys.argv[1:] if x != "--mood"]
-        main(a[0], a[1], MOOD_TITLES, 2, 0.7, 2, 64)   # (12.5 fps, small: it is 19 s long)
+        main(a[0], a[1], MOOD_TITLES, 1, 0.9, 2, 64)   # (12.5 fps, small: it is 19 s long)
     else:
         main(sys.argv[1], sys.argv[2])

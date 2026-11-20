@@ -322,7 +322,7 @@ int Crowd::new_row(int k, float su, int d, float sl, uint32_t p_look) {
 	x[i] = px[i] = sx; y[i] = py[i] = sy; z[i] = pz[i] = sz; hx[i] = tx_ * d; hz[i] = tz_ * d; yaw[i] = pyaw[i] = std::atan2(hx[i], hz[i]);
 	tu[i] = tick; span[i] = 1;
 	rs[i] = rng ^ ((uint64_t)id[i] * 0x9E3779B97F4A7C15ull); if (rs[i] == 0) rs[i] = 1;
-	v0[i] = 1.05f + 0.5f * rnd_of(i); v[i] = v0[i];
+	v0[i] = 0.95f + 0.35f * rnd_of(i); v[i] = v0[i];   // (0.95-1.30 m/s: the walk clip's own pace is 0.92; 1.05-1.55 played it up to x1.7, rushed: the Animator, 20 Nov)
 	look[i] = p_look ? p_look : hash32((uint32_t)(rs[i] >> 20) ^ (uint32_t)id[i] * 2654435761u);
 	file_bias[i] = (rnd_of(i) - 0.5f) * 0.12f;
 	wait_t[i] = blocked_t[i] = still_t[i] = pass_t[i] = pause_t[i] = side_t[i] = side_goal[i] = own_lat[i] = wait_lat[i] = hold_u[i] = odo[i] = 0.0f;

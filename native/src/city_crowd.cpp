@@ -952,6 +952,37 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 						nb.act_t = 0.0f;   // (the act's way in starts when he stands)
 					}
 				}
+				// THE PLAYER'S MOVEMENTS FOR EVERYBODY (the Animator, 20 Nov; Yasin: "give the new movements to npcs too";
+				// "just open the hands of quaternius animations and use them for walk"): the walk, jog and idle with the
+				// hands open, and the walk stop (make_steps.gd) when he comes to a stand. (A fight keeps its fists: the
+				// clips below override this.)
+				{
+					static const StringName UW("ual/Walk_Loop"), UJ("ual/Jog_Fwd_Loop"), UI("ual/Idle_Loop"), OW("step/walk"), OJ("step/jog"), OI("step/idle"),
+							OSL("step/stop_l"), OSR("step/stop_r");
+					if (nb.st_walker != nb.walker) { nb.st_walker = nb.walker; nb.st_mode = 0; nb.st_moving = nb.v_s > 0.3f; }
+					const bool plain = hold < 0.0 && token == 0 && (clip == UW || clip == UI);
+					const bool moving = nb.v_s > (nb.st_moving ? 0.15f : 0.3f);
+					if (nb.ped->clip_len(OW) > 0.0 && plain) {
+						// (no start for them: the crowd's brain moves them at its own pace from the first frame, not the clip's,
+						// and its planted foot slid 1.24 m/s, tests/people/trace_crowd.gd; the stop stands still: 0.00)
+						if (!moving && nb.st_moving && nb.st_mode == 0 && (nb.ped->current_clip() == OW || nb.ped->current_clip() == UW)) {
+							// on the foot nearer its landing (the walk's left lands at 0 of its loop, the right at 0.5)
+							const double len = nb.ped->clip_len(nb.ped->current_clip());
+							double ph = len > 0.0 ? nb.ped->clip_pos() / len : 0.0; ph -= std::floor(ph);
+							nb.st_mode = 2; nb.st_t = 0.0f; nb.st_clip = (ph > 0.25 && ph < 0.75) ? OSR : OSL;
+						}
+						if (nb.st_mode == 2 && moving) nb.st_mode = 0;   // (changed his mind)
+						if (nb.st_mode != 0) {
+							nb.st_t += (float)p_delta;
+							if (nb.st_t >= (float)nb.ped->clip_len(nb.st_clip)) nb.st_mode = 0;
+							else { clip = nb.st_clip; speed = 1.0; hold = -2.0; token = 9100 + nb.st_mode; }
+						}
+					} else if (!plain) nb.st_mode = 0;
+					nb.st_moving = moving;
+					if (nb.ped->clip_len(OW) > 0.0 && hold < 0.0 && token == 0) {
+						if (clip == UW) clip = OW; else if (clip == UJ) clip = OJ; else if (clip == UI) clip = OI;
+					}
+				}
 				if (pf.walker == nb.walker && pf.angry) {   // fighting the player: his guard, a blow, a dodge, a step in
 					static const StringName GUARD("ual/PunchKick_Enter"), JAB("ual/Punch_Jab"), CROSS("ual/Punch_Cross"), DL("ual/Dodge_Left"), DR("ual/Dodge_Right"), STEP("ual/Walk_Loop");
 					speed = 1.0; token = 0;

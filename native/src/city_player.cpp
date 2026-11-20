@@ -161,7 +161,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	if (!fig) return;
 	const float dt = (float)p_delta;
 	sense(p_delta);
-	punch_t += p_delta; hit_t += p_delta; combat_t += p_delta; uncombat_t += p_delta; angry_t += p_delta;
+	punch_t += p_delta; hit_t += p_delta; combat_t += p_delta; uncombat_t += p_delta;
 	{   // a PC: F fights, J or a left click punches
 		Input *ki = Input::get_singleton();
 		const bool f = ki->is_key_pressed(KEY_F), j = ki->is_key_pressed(KEY_J), m = ki->is_mouse_button_pressed(MOUSE_BUTTON_LEFT) && ki->get_mouse_mode() == Input::MOUSE_MODE_CAPTURED;
@@ -287,9 +287,8 @@ void CityPlayer::_physics_process(double p_delta) {
 	if (swimming) crouch = false;
 	if (crouch != crouch_prev) { crouch_prev = crouch; crouch_t = 0.0f; }
 	crouch_t += dt;
-	const bool angry = is_angry();
-	const float walk_top = angry ? angry_walk_speed : walk_speed;
-	float top = swimming ? (run ? 1.7f : 1.0f) : (run ? (angry ? angry_run_speed : run_speed) : walk_top);
+	const float walk_top = walk_speed;
+	float top = swimming ? (run ? 1.7f : 1.0f) : (run ? run_speed : walk_top);
 	if (crouch && !swimming) top *= 0.45f;
 	if (combat) top = std::min(top, 1.4f);   // (in his stance he steps, he does not run)
 	if (settle_t < 1.1f) { settle_t += dt; top = std::min(top, walk_top); }   // (Yasin: "ease it into idle after the climb then walk again": walking first, not running off)
@@ -315,15 +314,16 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (want_len > 0.05f && step_mode != 3) {
 			const float want_yaw = std::atan2(want.x, want.z);
 			float d = std::fmod(want_yaw - yaw + 3.14159265f, 6.2831853f); if (d < 0.0f) d += 6.2831853f; d -= 3.14159265f;
-			// TURNING ON THE SPOT (the Rocketbox turn, its own turn taken out: make_steps.gd): standing, asked to go more
-			// than 50 degrees off the way he faces, he turns with his feet (the clip's turn scaled to the angle, 45 to
-			// 180 degrees), then sets off. Smaller: he steps round as before.
+			// TURNING ON THE SPOT (the Quaternius Turn90 / Turn180, make_steps.gd: the body turns by the clip's "yaw"):
+			// standing, asked to go more than 50 degrees off the way he faces, he turns with his feet (the 90 up to 135
+			// degrees, scaled to the angle; the 180 beyond), then sets off. Smaller: he steps round as before.
 			if (step_mode == 0 && move_speed < 0.05f && speed < 0.08f && std::fabs(d) > 0.87f && !airborne && settle_t >= 1.1f) {
-				const StringName c(d > 0.0f ? "step/turn_l" : "step/turn_r");
+				const bool half = std::fabs(d) > 2.36f;
+				const StringName c(half ? (d > 0.0f ? "step/turn180_l" : "step/turn180_r") : (d > 0.0f ? "step/turn_l" : "step/turn_r"));
 				if (fig->clip_len(c) > 0.0) {
 					step_mode = 3; step_clip = c; step_t = 0.0f; turn_yaw0 = yaw;
-					turn_k = std::min(std::max(std::fabs(d) / 1.5707963f, 0.5f), 2.0f);
-					step_cs = angry ? 1.6f : 1.3f;   // (an angry man turns quicker; 90 degrees in about 1.5 s, 1.2 s)
+					turn_k = half ? std::fabs(d) / 3.14159265f : std::min(std::max(std::fabs(d) / 1.5707963f, 0.5f), 1.5f);
+					step_cs = 1.2f;
 					turns++;
 				}
 			}
@@ -348,8 +348,8 @@ void CityPlayer::_physics_process(double p_delta) {
 		// standing he sets off with the start clip (his weight over the right foot, the left steps off), and letting go
 		// while walking he walks on to the next footfall and stops with that foot's stop clip (the trunk carries on, the
 		// hips sink, the feet come together). His body moves by the clip's own pace curve, so the planted foot stays put.
-		const char *pre = angry ? "step/ual_" : "step/rb_";
-		const float native_walk = angry ? 0.92f : 1.35f;   // (the walk each set's step clips were made from)
+		const char *pre = "step/";
+		const float native_walk = 0.92f;   // (the walk the step clips were made from: Walk_Loop's own pace)
 		if (step_mode != 0 && (airborne || settle_t < 1.1f)) step_mode = 0;
 		if (step_mode == 0 && want_len > 0.05f && move_speed < 0.05f && speed < 0.08f && turn_left < 0.6f && !airborne && settle_t >= 1.1f) {
 			const StringName c(String(pre) + String("start"));
@@ -434,7 +434,8 @@ void CityPlayer::_physics_process(double p_delta) {
 	// his figure: the Quaternius clips by his pace
 	static const StringName IDLE("ual/Idle_Loop"), WALK("ual/Walk_Loop"), JOG("ual/Jog_Fwd_Loop"), SPRINT("ual/Sprint_Loop"), SWIM("ual/Swim_Fwd_Loop"), FLOAT("ual/Swim_Idle_Loop");
 	static const StringName CR_IDLE("ual/Crouch_Idle_Loop"), CR_FWD("ual/Crouch_Fwd_Loop"), J_UP("ual/Jump_Start"), J_AIR("ual/Jump_Loop"), J_LAND("ual/Jump_Land"), CR_IN("ual/Crouch_Enter"), CR_OUT("ual/Crouch_Exit");
-	StringName clip = IDLE; double cs = 1.0, hold = -1.0;
+	static const StringName S_IDLE("step/idle");
+	StringName clip = fig->clip_len(S_IDLE) > 0.0 ? S_IDLE : IDLE; double cs = 1.0, hold = -1.0;   // (standing: the hands open)
 	const bool floor_now = is_on_floor();
 	if (airborne && floor_now && get_velocity().y <= 0.0f) { airborne = false; land_t = 0.35f; }
 	land_t = std::max(0.0f, land_t - dt);
@@ -458,22 +459,20 @@ void CityPlayer::_physics_process(double p_delta) {
 		// THE GAIT SET (see the header): the clip whose own pace is nearest his (kept until another is clearly nearer), played
 		// at his pace over its own, so the planted foot stays put. (Turning on the spot: the slowest walk, slowly: he steps
 		// round instead of spinning on his heels.)
-		static const StringName RB_WS("walk_slow"), RB_W("walk"), RB_WF("walk_fast"), RB_RUN("run");
-		static const StringName CASUAL[4] = { RB_WS, RB_W, RB_WF, RB_RUN };
-		static const float CASUAL_V[4] = { 0.81f, 1.00f, 1.35f, 2.69f };   // (the planted foot's pace: clip_audit.gd --rb)
-		static const StringName ANGRY[3] = { WALK, JOG, SPRINT };
-		static const float ANGRY_V[3] = { 0.92f, 2.40f, 3.10f };
-		const StringName *set = angry ? ANGRY : CASUAL; const float *sv = angry ? ANGRY_V : CASUAL_V; const int ns = angry ? 3 : 4;
+		static const StringName S_WALK("step/walk"), S_JOG("step/jog");
+		static const StringName SET[2] = { S_WALK, S_JOG };
+		static const float SV[2] = { 0.92f, 2.40f };   // (the planted foot's pace: clip_audit.gd)
+		const StringName *set = SET; const float *sv = SV; const int ns = 2;
 		const float sp = std::max(speed, 0.3f);
 		int best = 0;
 		for (int g = 1; g < ns; g++) if (std::fabs(std::log(sp / sv[g])) < std::fabs(std::log(sp / sv[best]))) best = g;
-		const int gi = gait_i - (angry ? 100 : 0);   // (100 + i: a clip of the angry set; i: the casual one)
+		const int gi = gait_i;
 		if (gi >= 0 && gi < ns && std::fabs(std::log(sp / sv[gi])) < std::fabs(std::log(sp / sv[best])) + 0.12f) best = gi;
-		gait_i = best + (angry ? 100 : 0);
+		gait_i = best;
 		clip = set[best]; cs = speed > 0.08f ? speed / sv[best] : 0.45;
-		if (fig->clip_len(clip) <= 0.0) { clip = WALK; cs = speed / 0.92; }   // (a figure without the Rocketbox library)
+		if (fig->clip_len(clip) <= 0.0) { clip = best ? JOG : WALK; cs = speed / sv[best]; }   // (a figure without the step library: the fists)
 	}
-	if (clip == IDLE) gait_i = -1;
+	if (clip == IDLE || clip == S_IDLE) gait_i = -1;
 	vis_dy *= std::exp(-dt / 0.09f); if (std::fabs(vis_dy) < 0.001f) vis_dy = 0.0f;   // (lifted onto a kerb: the figure rises after, its foot already on it)
 	// THE LEAN: his body tilts with its acceleration, into a turn and a little forward into a start, back into a stop
 	// (a person's weight going round with him; at most 8 degrees, eased over 0.18 s)
@@ -494,8 +493,8 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (ang > 0.14f) { const Vector3 hz = Vector3(up.x, 0, up.z).normalized(); up = Vector3(0, std::cos(0.14f), 0) + hz * std::sin(0.14f); }
 		if (ang > 0.002f) fb = Basis(Quaternion(Vector3(0, 1, 0), up)) * fb;
 	}
-	static const StringName RB_SLOW("walk_slow");
-	const bool slowest = clip == WALK || clip == RB_SLOW;
+	static const StringName S_WALK2("step/walk");
+	const bool slowest = clip == WALK || clip == S_WALK2;
 	fig->drive(Transform3D(fb, get_global_position() + Vector3(0, vis_dy, 0)), clip, std::min(std::max(cs, slowest ? 0.15 : 0.5), 2.0), hold);
 	if (Skeleton3D *sk = fig->skeleton()) {
 		if (!plant) { plant = memnew(FootPlant); sk->add_child(plant); }
@@ -686,9 +685,6 @@ void CityPlayer::_process(double p_delta) {
 void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_move", "direction", "run"), &CityPlayer::set_move);
 	ClassDB::bind_method(D_METHOD("get_speed"), &CityPlayer::get_speed);
-	ClassDB::bind_method(D_METHOD("set_mood", "mood"), &CityPlayer::set_mood);
-	ClassDB::bind_method(D_METHOD("get_mood"), &CityPlayer::get_mood);
-	ClassDB::bind_method(D_METHOD("get_angry"), &CityPlayer::get_angry);
 	ClassDB::bind_method(D_METHOD("set_frozen", "on"), &CityPlayer::set_frozen);
 	ClassDB::bind_method(D_METHOD("is_frozen"), &CityPlayer::is_frozen);
 	ClassDB::bind_method(D_METHOD("knock", "velocity"), &CityPlayer::knock);
