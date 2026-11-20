@@ -70,7 +70,7 @@ night runs (fast, dirty, risky).
 - **MAREK\*** [warm, delighted, an uncle at a wedding] "Little fish! There you are. You're alive. I told them you swim
   well."
 - **CAM:** he turns into the light. The sketchbook face, older, in the same good coat.
-- **MAREK\*** [opening his arms, not hugging, just showing he could] "A few weeks ago the Navy fished you out, and now a job, a room…
+- **MAREK\*** [opening his arms, not hugging, just showing he could] "Thirty days with the Navy, and now a job, a room…
   Look at you. Like an American."
 - **PLAY:** no prompt. If the player tries English, Marek laughs and answers in the native language: "*Why do you talk
   their language to me? We are family.*" English feels like a wall between you and him, and it should.
@@ -89,8 +89,7 @@ night runs (fast, dirty, risky).
 ---
 
 ## M8: First Check-In
-- **Where:** **City Hall Front Desk**: Ruth's resettlement desk behind the counter, the same desk as P2. Outside: the
-  street in front of city hall.
+- **Where:** **Island Legal Aid** (city centre: the resettlement office shares it). Outside: the street.
 - **Length:** 10 minutes.
 - **Why it's here:**
   - Story: Yasin's "we will be tested regularly", as story. It's the first test since Marek, and the hero can't say
@@ -99,8 +98,7 @@ night runs (fast, dirty, risky).
   - Language: adverbs of frequency, the daily routine.
 
 ### Beat 1: The routine
-- **CAM:** city hall: the hero takes a number (no queue this time; just two people on the benches). Ruth's desk behind
-  the counter, now with a dying plant. Sunflower seeds.
+- **CAM:** a small office with legal files, a dying plant. Ruth. Sunflower seeds.
 - **MUS:** `MUS-02 "The Office"`, a little faster.
 - **RUTH** [typing, not looking up] "Sit. How are you?"
 - PLAYER: "I'm fine, thank you. And you?"
@@ -168,8 +166,8 @@ night runs (fast, dirty, risky).
 ---
 
 ## M10: Old Friend
-- **Where:** **Clay's Diner** (the harbour diner at the industrial docks, two doors from Marek's **Ocean Travel**) → a
-  night ride through the gritty edge → the **Harbor View Motel** on the strip.
+- **Where:** **Island Laundry** (gritty edge; **Crownado Vintage** the pawn shop next door) → a night ride → the
+  container yard at the industrial docks (containers, the dock crane) → **Ocean Travel**.
 - **Length:** 20 minutes.
 - **Why it's here:**
   - Story: the first "small favour". It's so easy, and that's the danger.
@@ -178,45 +176,41 @@ night runs (fast, dirty, risky).
 
 ### Beat 1: The call
 - **SFX:** 23:10, in bed. A voice message in the native language.
-- **MAREK\*** [cheerful, music behind him] "Little fish. Wake up. A small favour. The diner at the docks, by my office.
-  Come now. Bring a jacket, it's cold."
+- **MAREK\*** [cheerful, music behind him] "Little fish. Wake up. A small favour. The laundry on the corner, by the pawn
+  shop. Come now. Bring a jacket, it's cold."
 - **PLAY:** the player can ignore it. If they do, Marek calls again; then his man sits outside Hillcrest Terraces, and
   Mrs. Finch, with her binoculars, calls the police on *him*. It's funny, but the debt goes up $300 ("*Your old lady
   embarrassed me.*"). The run happens the next night either way. **This is the one Marek run the story requires.**
 - **Needs:** energy at 60 % after a Gus shift. The screen edges soften; the hero yawns.
 
 ### Beat 2: Soup
-- **CAM:** Clay's Diner at night, closed to the public: chairs up on the tables, one light on over the corner booth.
-  Three men play cards. Marek is in the booth with a bowl of soup. Clay's is an ordinary harbour diner by day; at
-  night it's Marek's table. The diner's cook is from Marek's home, and after closing he cooks the home dishes that
-  aren't on the menu.
-- **MUS:** `MUS-11 "Marek"`, the "diner" variation: the accordion on a small radio behind the counter, and the cook's
-  knife on the board as the drum.
-- **MAREK\*** [the cook brings a second bowl] "Eat. You're thin. The fish man doesn't feed you?" *(nodding at the cook)*
-  "He's from home. He makes it like your mother."
+- **CAM:** Island Laundry at night: one dryer turning, empty. Through a bead curtain at the back: a card table, three
+  men, Marek eating soup.
+- **MUS:** `MUS-11 "Marek"`, the "laundry" variation: the dryer's thump is the drum.
+- **MAREK\*** [pouring a second bowl] "Eat. You're thin. The fish man doesn't feed you?"
 - **PLAY:** if the hero eats, hunger +40, free. It's delicious: steam, a spice sound, and the (inner) line [surprised,
   homesick]: "*…It tastes like home.*" The temptation is not money. It's soup.
-- **MAREK\*** [a sports bag on the table] "Take this to the motel on the strip. Harbor View. Room six." *(a smile)*
-  "Don't open it. Don't stop. Two hundred dollars. One hour. How much is one hour with the fish man?"
+- **MAREK\*** [a sports bag on the table] "Take this to the docks. Ocean Travel. My office." *(a smile)* "Don't open
+  it. Don't stop. Two hundred dollars. One hour. How much is one hour with the fish man?"
 - (The number floats over the hero's head: $14. Then it shrinks.)
 
 ### Beat 3: The ride (directions, now)
-- **PLAY:** an old bike behind the diner. The phone's GPS speaks in English, and this is why the player *needs*
+- **PLAY:** an old bike behind the laundry. The phone's GPS speaks in English, and this is why the player *needs*
   direction words now:
   - **GPS** [calm synthetic voice] "Turn left. …Go straight. …Turn right at the lights."
   - Halfway, the cheap phone dies (a $30 phone). Now the hero must ask.
 - One shop is open at 1 a.m.: **High Tide Bottles & Kitchen**. The clerk, SALIM, bored, eating sunflower seeds (*the
   whole island eats them*).
-  - PLAYER: "Excuse me. Where is the Harbor View Motel?"
-  - **SALIM** [cheerful night owl] "The Harbor View? At this time? …OK, not my business. Go straight, turn left at the
-    taco place. It's on the strip, next to the pizza place, opposite the gas station."
+  - PLAYER: "Excuse me. Where is Ocean Travel?"
+  - **SALIM** [cheerful night owl] "Ocean Travel? At this time? …OK, not my business. Go straight, turn left at the big
+    crane. It's next to the blue containers, opposite the burger place."
   - (The fog lifts on the direction words. *Slower, please.* makes Salim repeat it with his hands.)
-  - PLAYER: "Turn left at the taco place. Thank you!"
+  - PLAYER: "Turn left at the crane. Thank you!"
 - **Why:** directions taught by need, at night, with a stranger who becomes a regular (Salim is always open and knows
   everything that happens at night).
 
 ### Beat 4: The stop (Status)
-- **CAM:** on the strip, the bike swerves into the headlights of a police car. One whoop of the siren. A
+- **CAM:** on the dock road, the bike swerves into the headlights of a police car. One whoop of the siren. A
   spotlight.
 - **MUS:** a hard cut to silence, then `MUS-13 "Status"`: a ticking hi-hat over a low drone. It can resolve up or down.
 - **DET. HAL BRODY** gets out. Heavy, slow, a flashlight on the bike, the bag, the hour.
@@ -225,7 +219,7 @@ night runs (fast, dirty, risky).
   lesson that Act 4 turns round.
   - **BRODY** [flat, tired] "Evening. What are you doing?" → PLAYER (think → say): tiles *I / am / riding / my / bike.* →
     "I'm riding my bike."
-  - **BRODY** "Where are you going?" → PLAYER: "I'm going to the Harbor View Motel." / "I'm going home."
+  - **BRODY** "Where are you going?" → PLAYER: "I'm going to Ocean Travel." / "I'm going home."
   - **BRODY** [light on the bag] "What's in the bag?" → PLAYER: "Clothes." (the lie) / "I don't know." (the dangerous
     truth)
   - **BRODY** "Where do you live?" → PLAYER: "I live at Hillcrest Terraces."
@@ -236,10 +230,9 @@ night runs (fast, dirty, risky).
 - A badly failed talk: a trip to the **Crownado Police Front Desk**, the bag "lost" (Marek adds $500), Ruth gets a call.
   A soft fail; the mission still ends.
 
-### Beat 5: Room six
-- **CAM:** the Harbor View Motel at 1:30, its neon half dead (the old painted sign on the building still says BREEZE MOTEL: nobody repainted it). Room six's door opens on its chain. A
-  huge silent man, DUTCH, takes the bag and gives an envelope. Behind him, for one second: a child's shoe by the bed.
-  (A seed: the motel is where Marek keeps people. The hero comes back here in M20.)
+### Beat 5: Ocean Travel
+- **CAM:** a small travel agency at the docks, closed, posters of beaches in its window. Its back door opens. A huge
+  silent man, DUTCH, takes the bag and gives an envelope.
 - **DUTCH** [one word] "Go."
 - $200. The Bank app: **MAREK: $4,800**.
 - **CAM:** the ride home along the beach road at dawn, the sky pink, the Bridge glowing. The most beautiful ride so far
@@ -352,7 +345,7 @@ The act's goal on screen: **"Find out what Marek does."**
   - Language: *was / were*; *yesterday, last week, last month*.
 
 ### Beat 1: Rosa's note
-- **CAM:** before leaving, the hero picks up the picture dictionary from city hall's free-books table (P2). The pressed flower and the pencil note.
+- **CAM:** before leaving, the hero picks up the camp picture dictionary (P3). The pressed flower and the pencil note.
   **Now it's readable:**
   > *Hello. I was here in 2019. I was afraid. Now I am a cook. It is OK. — Rosa*
 - (inner) [moved] "*I can read it.*"
@@ -411,7 +404,7 @@ The act's goal on screen: **"Find out what Marek does."**
 ---
 
 ## M14: Second Shift
-- **Where:** Clay's Diner → the **Villager Theatre** (a landmark; the Whitmore Foundation's gala is being set up) → the
+- **Where:** Island Laundry → the **Villager Theatre** (a landmark; the Whitmore Foundation's gala is being set up) → the
   waterfront **construction site** ("Whitmore Point") → The Fish House.
 - **Length:** 20 minutes.
 - **Why it's here:**
@@ -421,8 +414,7 @@ The act's goal on screen: **"Find out what Marek does."**
   - Language: adjectives and *very*.
 
 ### Beat 1: Interest
-- **CAM:** Clay's Diner, the corner booth, at lunchtime this time (Marek in plain sight among dock workers). Marek adds
-  numbers with his gold pen.
+- **CAM:** the laundry's back room. Marek adds numbers with his gold pen.
 - **MAREK\*** [sorry, as if he's the victim] "Little fish, bad news. Interest. The banks invented it, not me." *(the
   notebook turned round)* "**$5,800.**"
 - (inner) [panic] "*I paid two hundred… and it's MORE?*"
@@ -504,8 +496,8 @@ The act's goal on screen: **"Find out what Marek does."**
   - PLAYER: "I can pay half." / "Sorry. I can't."
   - If the hero pays: **THEO** [stunned; suspicious; grateful; not asking] "…Where did you… No. I'm not asking. Thank
     you."
-  - If not: Theo nods and sells his guitar at **Crownado Vintage**, the pawn shop in the gritty edge, and the hero
-    sees it in the window there later. Both are valid; the second costs the friendship a little.
+  - If not: Theo nods and sells his guitar at **Crownado Vintage**, the pawn shop beside Marek's laundry, and the
+    hero sees it in the window there later. Both are valid; the second costs the friendship a little.
 
 ### Beat 3: Finch's errands (her price)
 - **FINCH** (the next morning; a list in perfect handwriting) "Three errands. Every month. And I forget the hour you
@@ -525,8 +517,7 @@ The act's goal on screen: **"Find out what Marek does."**
 ---
 
 ## M16: Check-In Two
-- **Where:** **City Hall Front Desk**; then the steps of the **Coronado County Courthouse** next door (it stands on its
-  square beside city hall); then home at night.
+- **Where:** **Island Legal Aid**; then outside the **Coronado County Courthouse** across the plaza; then home at night.
 - **Length:** 15 minutes. The end of Act 3.
 - **Why it's here:**
   - Story: the moral turn. The hero has a few more words now, enough for the truth. The act ends with the cost of
@@ -568,7 +559,7 @@ The act's goal on screen: **"Find out what Marek does."**
   years." *(his card on the step)* "Stop the night bags. Or help me."
 
 ### Beat 3: The warning
-- **CAM:** night, Hillcrest Terraces. The light over the double door is broken. On the mat: a dead fish wrapped in a page of a local
+- **CAM:** night, Hillcrest Terraces. The gate light is broken. On the mat: a dead fish wrapped in a page of a local
   paper. A circled headline: **"WATERFRONT LEASE REVIEW."**
 - **SFX:** the phone. A photo from an unknown number: Theo, asleep in Pickle in the hospital car park after his shift,
   taken an hour ago.

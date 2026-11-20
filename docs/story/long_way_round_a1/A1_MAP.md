@@ -19,7 +19,8 @@ never a wall.
 | # | Mission | Place | New | Words | Practice test |
 |---|---|---|---|---|---|
 | P1 | Salt Water | Sketches; the bay off the Ferry Landing | — (wordless; one English word: *Safe*) | — | — |
-| P2 | Who Are You? | City Hall Front Desk (Ruth's desk; the clothes rail; the free books) | *My name is…*, spelling (the alphabet), numbers 1–50 (the ticket, the age), *My eyes are… / My hair is… / I am tall*, *I am a* + job, *please / thank you*, *this* | the face, hair, colours, clothes, six jobs | Me: name, age, look |
+| P2 | Who Are You? | The Harbor Office | *My name is…*, spelling (the alphabet), numbers 1–50 (age), *My eyes are… / My hair is… / I am tall*, *I am a* + job | the face, hair, colours, six jobs | Me: name, age, look |
+| P3 | Thirty Days | Sketches; the Navy Gatehouse | *please / thank you / sorry*, *this / that*, days of the week, numbers to 100 | food words, days | Days and numbers |
 
 ## Act 1: Off the Boat (A1 part 1: me, my home, my food)
 | # | Mission | Place | New | Words | Practice test |
@@ -35,9 +36,9 @@ never a wall.
 | # | Mission | Place | New | Words | Practice test |
 |---|---|---|---|---|---|
 | 7 | Fish Out of Water | The Fish House; the waterfront | imperatives; the time (*o'clock, half past*); present simple he / she / it | kitchen, orders, money | imperatives; 3rd person -s |
-| 8 | First Check-In | City Hall Front Desk | adverbs of frequency (*always, usually, sometimes, never*), the daily routine, the days of the week | routine verbs, days | frequency |
+| 8 | First Check-In | Island Legal Aid | adverbs of frequency (*always, usually, sometimes, never*), the daily routine | routine verbs | frequency |
 | 9 | Lookout | Hillside Park | family, *have got / has got*, possessive *'s* and *his / her*, describing people | family, appearance | family; *have got* |
-| 10 | Old Friend | Clay's Diner (docks) → the gritty edge → the Harbor View Motel, at night | present continuous (*I'm riding… He's waiting.*), directions (*turn left, go straight, next to, opposite*) | the street, directions | present continuous; directions |
+| 10 | Old Friend | Island Laundry → the docks, at night | present continuous (*I'm riding… He's waiting.*), directions (*turn left, go straight, next to, opposite*) | the street, directions | present continuous; directions |
 
 ## Act 3: Undertow (A1 part 3: rules, now, ability, the past of *be*)
 | # | Mission | Place | New | Words | Practice test |
@@ -47,7 +48,7 @@ never a wall.
 | 13 | Theo's Big Night | The Crown & Anchor | *was / were*; *yesterday, last week, last month* | feelings, the stage | *was / were* |
 | 14 | Second Shift | Villager Theatre; the construction site | adjectives and *very* (*big, small, old, new, expensive, beautiful*) | the theatre, the model, money | adjectives |
 | 15 | Rent Day | The post office, the pharmacy, the bank | dates, months, ordinals; *Can you…, please?* | dates, errands | dates and months |
-| 16 | Check-In Two | City Hall Front Desk | a small past simple (*went, worked, saw, had, got*, plus -ed), *What did you do?*; *because* | the week, the docks | past simple (a first look) |
+| 16 | Check-In Two | Island Legal Aid | a small past simple (*went, worked, saw, had, got*, plus -ed), *What did you do?*; *because* | the week, the docks | past simple (a first look) |
 
 ## Act 4: The Long Way Round (A1 part 4: everything, in a crisis)
 | # | Mission | Place | New | Words | Practice test |
@@ -55,7 +56,7 @@ never a wall.
 | 17 | Signs | The container yard; Ocean Travel | reading signs (*NO ENTRY, STAFF ONLY, DANGER, PUSH, PULL, OPEN, CLOSED*); present continuous on the phone, whispered | signs | signs |
 | 18 | Codebreaker | Mrs. Finch's kitchen | numbers and dates recycled, *there are* + numbers, *When…? How many…?* | the ledger | review: numbers and dates |
 | 19 | Fire | The Fish House; Island Hospital ER | emergency English: *Help! There is a fire. A man is inside. I am at…*; the body (*his arm, his head*) | fire, the body, the hospital | emergency English |
-| 20 | Little Fish, Again | Harbor View Motel (office, Guest Laundry, walkway) | review: describing people and relaying (*Her name is… She is nine. She wants…*), *want to* | people, needs | review: people |
+| 20 | Little Fish, Again | Seabreeze Motel | review: describing people and relaying (*Her name is… She is nine. She wants…*), *want to* | people, needs | review: people |
 | 21 | Everyone Has a Job | All over the island | *Let's…*, *I want to…*, *and / but / because* | the plan | review: plans |
 | 22 | Fourth of July | Amber Ave; the Ferry Landing; the bay | the mayday: *This is… There is… There are… We need help.* | the radio: *Mayday, Over, Copy* | — |
 | 23 | Your Words | Coronado County Courthouse | review: *My name is… I was… That is not true. I was afraid, but…* | the court | — |
