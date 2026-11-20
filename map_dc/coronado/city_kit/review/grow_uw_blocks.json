@@ -33,6 +33,50 @@
    "yaw": 0.0,
    "site": "gritty edge east half (u -500..-409, v -1186..-1009)",
    "variant": "the Anchor bar, walk-ups, coin laundry, court apartments, thrift row, townhouses, corner market, two worn lots, vacant lot, bus shelter"
+  },
+  {
+   "piece": "n_w_s1",
+   "pos": [
+    -791.0,
+    0.0,
+    -900.0
+   ],
+   "yaw": 0.0,
+   "site": "north of the campus, west (u -791..-609, v -900..-809)",
+   "variant": "student apartments along 6th St, Gate Pizza, Campus Cycles, The Gatehouse pub, housing office, alley parking, yards"
+  },
+  {
+   "piece": "n_w_s2a",
+   "pos": [
+    -500.0,
+    0.0,
+    -991.0
+   ],
+   "yaw": 0.0,
+   "site": "north of the campus, east (u -500..-409, v -991..-809)",
+   "variant": "Campus Market with its lot, student apartments, townhouses, residents' court with sand volleyball"
+  },
+  {
+   "piece": "n_w_s2b",
+   "pos": [
+    -591.0,
+    0.0,
+    -900.0
+   ],
+   "yaw": 0.0,
+   "site": "north of the campus, middle (u -591..-500, v -900..-809)",
+   "variant": "student strip: print & boba, burrito & textbooks, The Quad Pub, corner deli, terrace, back lot"
+  },
+  {
+   "piece": "n_w_s2c",
+   "pos": [
+    -545.0,
+    0.0,
+    -940.0
+   ],
+   "yaw": 0.0,
+   "site": "the pocket behind the strip (u -545..-500, v -940..-900)",
+   "variant": "student pocket park with a mural wall, tables, benches"
   }
  ]
 }
