@@ -1,0 +1,105 @@
+{
+ "area": "ec_hill_n",
+ "piece": "n_ec_hill_n",
+ "zone": "park (Shore Hill Park: picnic grove, summit lookout)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; waterfront: palms; never on sand below the dune line (SHORE_GUIDE.md); the ring's palm boulevard is within 60 m only of the hill pieces' west edge, kept clear",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, ec fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "palm_canary_date_a",
+   "cond": "normal",
+   "at": [
+    735.0,
+    4.294,
+    -452.0
+   ],
+   "yaw": 30,
+   "scale": 1.0,
+   "why": "picnic grove clump: its west edge, shade on the first tables"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    768.0,
+    4.685,
+    -481.0
+   ],
+   "yaw": 110,
+   "scale": 0.95,
+   "why": "picnic grove clump: the south edge behind the tables"
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "at": [
+    789.0,
+    5.623,
+    -457.0
+   ],
+   "yaw": 200,
+   "scale": 1.05,
+   "why": "picnic grove clump: the east edge"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    750.0,
+    4.692,
+    -440.0
+   ],
+   "yaw": 300,
+   "scale": 0.9,
+   "why": "picnic grove clump: the north edge, by the drinking fountain"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    885.0,
+    10.767,
+    -356.0
+   ],
+   "yaw": 40,
+   "scale": 0.9,
+   "why": "lookout: the coast's own pine, wind-bent, at the terrace's south-west corner"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    885.0,
+    10.838,
+    -329.0
+   ],
+   "yaw": 160,
+   "scale": 1.0,
+   "why": "lookout: the north-west corner, framing the view"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    916.0,
+    11.088,
+    -356.5
+   ],
+   "yaw": 250,
+   "scale": 1.0,
+   "why": "lookout: a tall palm at its sea corner, seen from the beach"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    884.0,
+    7.556,
+    -478.0
+   ],
+   "yaw": 70,
+   "scale": 0.95,
+   "why": "north lawn: shade beside the picnic table on the hill's flank"
+  }
+ ]
+}
