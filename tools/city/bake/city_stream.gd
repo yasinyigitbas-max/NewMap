@@ -37,7 +37,7 @@ signal cell_out(key: String)
 @export var max_cells := 30           ## memory cap: cells in the scene
 @export var frame_budget_ms := 1.5    ## main-thread time a frame may spend removing (the old game's phone budget for streaming)
 @export var busy_remove_ms := 0.6    ## while cells load: removal time a frame once more than `leaving_backlog` parts wait (0 = quiet frames only, as before 20 Nov)
-@export var leaving_backlog := 64
+@export var leaving_backlog := 384   ## (the 4x instance-uniform buffer holds ~4x the 16k orphan nodes that overflowed the old one)
 @export var bodies_per_frame := 6    ## collision bodies made and attached a frame, at most
 @export var body_tris_per_frame := 1200   ## and at most this much NEW collision a frame, in triangles (a convex point counts as one; the first body always goes). The phone builds roughly 5 microseconds a triangle on its physics thread.
 @export var attach_bodies := true    ## test switch: false = a cell's collision is never attached (to see what attaching costs)
@@ -418,7 +418,9 @@ func _process_stream(t0: int) -> void:
 	# slots in the engine's instance-uniform buffer, it overflowed ("Too many instances using shader instance
 	# variables", 482 errors) and the app froze (review/phone/crash_20nov_0314).
 	var rm_from := t0 if quiet else Time.get_ticks_usec()      # busy frames: their own small budget, whatever came before
-	var rm_budget := frame_budget_ms if quiet else (busy_remove_ms if _leaving.size() > leaving_backlog else 0.0)
+	# (not while a place is being prepared - a teleport: it drops a whole area at once and the destination loads; removing
+	# then met the loaders' locks and gave 236 / 386 ms frames on the phone, pb_zones 20 Nov; the quiet frames after clear it)
+	var rm_budget := frame_budget_ms if quiet else (busy_remove_ms if _leaving.size() > leaving_backlog and _prepared.is_empty() else 0.0)
 	while not _leaving.is_empty() and (Time.get_ticks_usec() - rm_from) / 1000.0 < rm_budget:
 		var tr := Time.get_ticks_usec()
 		var n: Node = _leaving[_leaving.size() - 1]
