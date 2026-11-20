@@ -418,7 +418,11 @@ void CityCrowd::step_brain(double p_delta) {
 			dyn.insert(dyn.end(), b, b + tc::DYN_STRIDE);
 		}
 		if (crowd->has_player) {   // the player on foot: the drivers see him wherever he is
-			const float b[tc::DYN_STRIDE] = { crowd->pl_x, last_player.y, crowd->pl_z, 0.0f, 0.3f, 0.3f, crowd->pl_vx, crowd->pl_vz, (float)tc::DYN_PLAYER, -3.0f, (float)tc::DF_ON_ROAD };
+			// (knocked down, where his body lies: it may be metres from where he was standing)
+			float px = crowd->pl_x, pz = crowd->pl_z;
+			if (CityPlayer *dp = player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr)
+				if (dp->figure() && dp->figure()->get_mode() != CityPed::MODE_ANIM) { const Vector3 ba = dp->figure()->body_at(); px = ba.x; pz = ba.z; }
+			const float b[tc::DYN_STRIDE] = { px, last_player.y, pz, 0.0f, 0.3f, 0.3f, crowd->pl_vx, crowd->pl_vz, (float)tc::DYN_PLAYER, -3.0f, (float)tc::DF_ON_ROAD };
 			dyn.insert(dyn.end(), b, b + tc::DYN_STRIDE);
 		}
 		tr->set_walkers(dyn.data(), (int)dyn.size() / tc::DYN_STRIDE);

@@ -474,6 +474,17 @@ void CityPlayer::_physics_process(double p_delta) {
 	static const StringName CR_IDLE("ual/Crouch_Idle_Loop"), CR_FWD("ual/Crouch_Fwd_Loop"), J_UP("ual/Jump_Start"), J_AIR("ual/Jump_Loop"), J_LAND("ual/Jump_Land"), CR_IN("ual/Crouch_Enter"), CR_OUT("ual/Crouch_Exit");
 	static const StringName S_IDLE("step/idle");
 	StringName clip = fig->clip_len(S_IDLE) > 0.0 ? S_IDLE : IDLE; double cs = 1.0, hold = -1.0;   // (standing: the hands open)
+	// up again after being knocked down: he is where his body got up, not where he was standing (the figure snapped
+	// back to his standing place, 1.8 m after a car's hit: tests/people/run_over_film.gd)
+	{
+		const bool body_now = fig->get_mode() != CityPed::MODE_ANIM;
+		if (fig_was_body && !body_now) {
+			const Vector3 o = fig->get_global_transform().origin;
+			set_global_position(Vector3(o.x, std::max(o.y, (float)get_global_position().y - 0.5f) + 0.05f, o.z));
+			set_velocity(Vector3()); move_speed = 0.0f;
+		}
+		fig_was_body = body_now;
+	}
 	const bool floor_now = is_on_floor();
 	if (airborne && floor_now && get_velocity().y <= 0.0f) { airborne = false; land_t = 0.35f; }
 	land_t = std::max(0.0f, land_t - dt);
