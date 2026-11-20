@@ -51,3 +51,8 @@ The phone was hot for the census runs (battery 34.5 -> 38.3 C): read differences
      19 Nov "draw stall while a heavy cell loads, not understood". Most likely the loader thread holding the graphics device while it
      uploads a big cell's meshes (resource load), and the frame's draw waiting for it. Engine level (Yasin: last resort); it happens
      only while a teleport loads (behind the fade, the old view still on screen), never in the drives. Open.
+
+## 5. Traffic and people with every fix in (pb7_stream_life)
+- 108 / 210 / 280 km/h with 40 cars and 60 people: 49.0 / 48.9 / 48.1 fps (pb3: 45.8 / 44.3 / 44.2; the script streamer's runs 39.6-44.5),
+  no frame over 50 ms in the drives, 0 errors in the log (B27 fixed).
+- Still over the gate: 14-22 frames over 33 ms a drive (0.5-0.8 %, the gate allows 0.2 %) and one 254 ms teleport frame (the loader stall, section 4).
