@@ -16,6 +16,9 @@ const FPS := 30.0
 ## [prefix, library file stem, walk clip, left foot landing (share of loop), the walk's own ground pace m/s (the planted
 ## foot's, clip_audit.gd; the same numbers as CityPlayer's)]; the right foot lands half a loop away
 const SETS := [["rb", "clips_%s", "walk_fast", 0.800, 1.35], ["ual", "clips_ual_%s", "Walk_Loop", 0.0, 0.92]]
+## where in the walk the start blends in, after the right foot lands (share of the loop): 0.12 (the left about to
+## lift, behind) dragged the left foot back along the ground and the right forward under load (0.31 m/s slide)
+const START_AT := 0.25
 const IDLE := "Idle_Loop"   # (in clips_ual: the idle the player stands in)
 const TRUNK := ["Bip01_Spine", "Bip01_Spine1", "Bip01_Spine2"]
 ## the figure's frame: which way is forward is measured from the walk itself (the way its planted foot goes back is
@@ -206,7 +209,7 @@ func _walk_time(rate: Callable, t: float) -> float:
 
 func _start(walk: Animation, idle: Animation, land_l: float, v: float) -> Animation:
 	var L := walk.length
-	var w0 := fposmod(land_l + 0.5 + 0.12, 1.0) * L      # (the right foot just down, the left about to lift)
+	var w0 := fposmod(land_l + 0.5 + START_AT, 1.0) * L   # (the right foot under the body, the left passing it: both where standing has them)
 	var dist := L - w0 if L - w0 > 0.05 else 2.0 * L - w0   # (to the loop's end: its first frame again)
 	var rate := func(t: float) -> float: return 0.35 + 0.65 * _ss(0.15, 0.7, t)
 	# the length at which the walk has covered dist
