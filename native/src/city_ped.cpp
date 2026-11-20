@@ -1,5 +1,6 @@
 // CityPed: see city_ped.h.
 #include "city_ped.h"
+#include "hand_grip.h"
 
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/rigid_body3d.hpp>
@@ -52,6 +53,7 @@ void CityPed::make() {
 	const TypedArray<Node> sks = model->find_children("*", "Skeleton3D", true, false);
 	if (sks.size() == 0) { UtilityFunctions::push_error("CityPed: the scene has no skeleton"); return; }
 	skel = Object::cast_to<Skeleton3D>(sks[0]);
+	{ Posture *po = memnew(Posture); po->set_name("Posture"); skel->add_child(po); }   // (the first modifier: everyone's shoulders forward)
 	// the scene carries the player's own model: out with its meshes, in with this person's body
 	const TypedArray<Node> old = model->find_children("*", "MeshInstance3D", true, false);
 	for (int i = 0; i < old.size(); i++) { Node *n = Object::cast_to<Node>(old[i]); if (n) { n->get_parent()->remove_child(n); n->queue_free(); } }

@@ -63,4 +63,22 @@ public:
 	void reset() { locked[0] = locked[1] = false; rel_off[0] = rel_off[1] = Vector3(); have_prev = false; }   // (another person in the same figure)
 };
 
+// Posture: everyone's shoulders forward (Yasin, 20 Nov: "everyones shoulders are too far back, push all of them both player
+// and npcs shoulders forward"). The first modifier on every CityPed figure (player, crowd, riders): after the clip, each
+// collarbone is turned round the chest's own up (pelvis to neck) so the shoulder joint comes forward; the arm follows.
+class Posture : public SkeletonModifier3D {
+	GDCLASS(Posture, SkeletonModifier3D)
+	int b_cl[2] = { -1, -1 }, b_ua[2] = { -1, -1 }, b_pel = -1, b_neck = -1;
+	bool found = false;
+protected:
+	static void _bind_methods();
+public:
+	float angle = 0.21f;   // rad (12 degrees): how far each collarbone turns forward
+	float moved[2] = { 0, 0 };   // (the tests) how far each shoulder joint came forward this frame, metres
+	void set_angle(float a) { angle = a; }
+	float get_angle() const { return angle; }
+	float get_moved() const { return 0.5f * (moved[0] + moved[1]); }
+	void _process_modification_with_delta(double p_delta) override;
+};
+
 } // namespace godot

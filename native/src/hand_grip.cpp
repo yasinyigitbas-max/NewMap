@@ -229,4 +229,39 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 	}
 }
 
+void Posture::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_angle", "a"), &Posture::set_angle);
+	ClassDB::bind_method(D_METHOD("get_angle"), &Posture::get_angle);
+	ClassDB::bind_method(D_METHOD("get_moved"), &Posture::get_moved);
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "angle"), "set_angle", "get_angle");
+}
+
+void Posture::_process_modification_with_delta(double p_delta) {
+	(void)p_delta;
+	Skeleton3D *sk = get_skeleton();
+	if (!sk) return;
+	if (!found) {
+		found = true;
+		b_cl[0] = sk->find_bone("Bip01_L_Clavicle"); b_cl[1] = sk->find_bone("Bip01_R_Clavicle");
+		b_ua[0] = sk->find_bone("Bip01_L_UpperArm"); b_ua[1] = sk->find_bone("Bip01_R_UpperArm");
+		b_pel = sk->find_bone("Bip01_Pelvis"); b_neck = sk->find_bone("Bip01_Neck");
+	}
+	if (b_cl[0] < 0 || b_cl[1] < 0 || b_ua[0] < 0 || b_ua[1] < 0 || b_pel < 0 || b_neck < 0 || angle == 0.0f) return;
+	// the chest's frame as the clip has it now: up from the hips to the neck, left from the right shoulder to the left
+	Vector3 up = sk->get_bone_global_pose(b_neck).origin - sk->get_bone_global_pose(b_pel).origin;
+	const Vector3 left = sk->get_bone_global_pose(b_ua[0]).origin - sk->get_bone_global_pose(b_ua[1]).origin;
+	if (up.length_squared() < 1e-8f || left.length_squared() < 1e-8f) return;
+	up.normalize();
+	const Vector3 fwd = left.cross(up).normalized();   // (the body's frame: +x left, +y up, +z forward)
+	for (int s = 0; s < 2; s++) {
+		const Transform3D G = sk->get_bone_global_pose(b_cl[s]);
+		const Vector3 arm = sk->get_bone_global_pose(b_ua[s]).origin - G.origin;
+		// the turn that brings the shoulder joint forward (the sign from the arm's side)
+		const float sg = (Basis(up, angle).xform(arm) - arm).dot(fwd) >= 0.0f ? 1.0f : -1.0f;
+		const Basis R(up, angle * sg);
+		sk->set_bone_global_pose(b_cl[s], Transform3D(R * G.basis, G.origin));
+		moved[s] = (R.xform(arm) - arm).dot(fwd) * (float)sk->get_global_transform().basis.get_scale().x;
+	}
+}
+
 } // namespace godot
