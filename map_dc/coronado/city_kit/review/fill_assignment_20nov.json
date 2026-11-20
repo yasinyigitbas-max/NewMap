@@ -1,0 +1,361 @@
+{
+ "_doc": "20 Nov: the empty land left inside the ring road, split between two sessions (Yasin: 'distribute the rest of the empty map to hospital and university sessions and tell them to populate them'). Squares are 200 m street-lattice blocks in the grid frame (u = x, v = z; corners u0,v0 .. u1,v1). 'built_now_percent' = how much of the block's land already has a piece on it: fill ONLY the empty part, never move or touch an existing or locked piece. Measured by tools/city/audit/empty_blocks.py on 8fc21cd (every piece's ground on a 1 m grid; streets not counted as land).",
+ "hospital": {
+  "session": "Hospital",
+  "area": "the east side (u >= 0) and the north-west edge between the industrial / gritty zones and Amber (u -400..0 north of v -1000)",
+  "blocks": [
+   {
+    "u0": -400,
+    "v0": -1600,
+    "u1": -200,
+    "v1": -1400,
+    "built_now_percent": 0,
+    "empty_m2": 28536
+   },
+   {
+    "u0": -200,
+    "v0": -1600,
+    "u1": 0,
+    "v1": -1400,
+    "built_now_percent": 0,
+    "empty_m2": 27399
+   },
+   {
+    "u0": 0,
+    "v0": -1600,
+    "u1": 200,
+    "v1": -1400,
+    "built_now_percent": 0,
+    "empty_m2": 29671
+   },
+   {
+    "u0": 200,
+    "v0": -1600,
+    "u1": 400,
+    "v1": -1400,
+    "built_now_percent": 0,
+    "empty_m2": 6068
+   },
+   {
+    "u0": -400,
+    "v0": -1400,
+    "u1": -200,
+    "v1": -1200,
+    "built_now_percent": 0,
+    "empty_m2": 28536
+   },
+   {
+    "u0": 600,
+    "v0": -1400,
+    "u1": 800,
+    "v1": -1200,
+    "built_now_percent": 25,
+    "empty_m2": 20947
+   },
+   {
+    "u0": 800,
+    "v0": -1400,
+    "u1": 1000,
+    "v1": -1200,
+    "built_now_percent": 0,
+    "empty_m2": 12819
+   },
+   {
+    "u0": -400,
+    "v0": -1200,
+    "u1": -200,
+    "v1": -1000,
+    "built_now_percent": 0,
+    "empty_m2": 29406
+   },
+   {
+    "u0": 800,
+    "v0": -1200,
+    "u1": 1000,
+    "v1": -1000,
+    "built_now_percent": 0,
+    "empty_m2": 4422
+   },
+   {
+    "u0": -400,
+    "v0": -1000,
+    "u1": -200,
+    "v1": -800,
+    "built_now_percent": 0,
+    "empty_m2": 30276
+   },
+   {
+    "u0": 200,
+    "v0": -1000,
+    "u1": 400,
+    "v1": -800,
+    "built_now_percent": 55,
+    "empty_m2": 13894
+   },
+   {
+    "u0": 400,
+    "v0": -1000,
+    "u1": 600,
+    "v1": -800,
+    "built_now_percent": 0,
+    "empty_m2": 29841
+   },
+   {
+    "u0": 600,
+    "v0": -1000,
+    "u1": 800,
+    "v1": -800,
+    "built_now_percent": 0,
+    "empty_m2": 6903
+   },
+   {
+    "u0": 400,
+    "v0": -800,
+    "u1": 600,
+    "v1": -600,
+    "built_now_percent": 51,
+    "empty_m2": 15138
+   },
+   {
+    "u0": 600,
+    "v0": -800,
+    "u1": 800,
+    "v1": -600,
+    "built_now_percent": 0,
+    "empty_m2": 6641
+   },
+   {
+    "u0": 400,
+    "v0": -600,
+    "u1": 600,
+    "v1": -400,
+    "built_now_percent": 51,
+    "empty_m2": 15138
+   },
+   {
+    "u0": 600,
+    "v0": -600,
+    "u1": 800,
+    "v1": -400,
+    "built_now_percent": 0,
+    "empty_m2": 6183
+   },
+   {
+    "u0": 400,
+    "v0": -400,
+    "u1": 600,
+    "v1": -200,
+    "built_now_percent": 51,
+    "empty_m2": 15138
+   },
+   {
+    "u0": 600,
+    "v0": -400,
+    "u1": 800,
+    "v1": -200,
+    "built_now_percent": 0,
+    "empty_m2": 5518
+   },
+   {
+    "u0": 400,
+    "v0": -200,
+    "u1": 600,
+    "v1": 0,
+    "built_now_percent": 51,
+    "empty_m2": 15138
+   }
+  ],
+  "empty_m2": 347612
+ },
+ "university": {
+  "session": "University",
+  "area": "the west side (u < 0) round the campus: the west strip inside the ring, the stadium / civic surroundings and the south-west edge",
+  "blocks": [
+   {
+    "u0": -600,
+    "v0": -1600,
+    "u1": -400,
+    "v1": -1400,
+    "built_now_percent": 47,
+    "empty_m2": 15179
+   },
+   {
+    "u0": -600,
+    "v0": -1400,
+    "u1": -400,
+    "v1": -1200,
+    "built_now_percent": 47,
+    "empty_m2": 15328
+   },
+   {
+    "u0": -1000,
+    "v0": -1200,
+    "u1": -800,
+    "v1": -1000,
+    "built_now_percent": 65,
+    "empty_m2": 8133
+   },
+   {
+    "u0": -600,
+    "v0": -1200,
+    "u1": -400,
+    "v1": -1000,
+    "built_now_percent": 51,
+    "empty_m2": 14534
+   },
+   {
+    "u0": -1000,
+    "v0": -1000,
+    "u1": -800,
+    "v1": -800,
+    "built_now_percent": 26,
+    "empty_m2": 21737
+   },
+   {
+    "u0": -800,
+    "v0": -1000,
+    "u1": -600,
+    "v1": -800,
+    "built_now_percent": 51,
+    "empty_m2": 15127
+   },
+   {
+    "u0": -600,
+    "v0": -1000,
+    "u1": -400,
+    "v1": -800,
+    "built_now_percent": 22,
+    "empty_m2": 23757
+   },
+   {
+    "u0": -1000,
+    "v0": -800,
+    "u1": -800,
+    "v1": -600,
+    "built_now_percent": 0,
+    "empty_m2": 29406
+   },
+   {
+    "u0": -400,
+    "v0": -800,
+    "u1": -200,
+    "v1": -600,
+    "built_now_percent": 18,
+    "empty_m2": 25060
+   },
+   {
+    "u0": -1000,
+    "v0": -600,
+    "u1": -800,
+    "v1": -400,
+    "built_now_percent": 0,
+    "empty_m2": 29406
+   },
+   {
+    "u0": -400,
+    "v0": -600,
+    "u1": -200,
+    "v1": -400,
+    "built_now_percent": 52,
+    "empty_m2": 16225
+   },
+   {
+    "u0": -200,
+    "v0": -600,
+    "u1": 0,
+    "v1": -400,
+    "built_now_percent": 61,
+    "empty_m2": 12687
+   },
+   {
+    "u0": -1000,
+    "v0": -400,
+    "u1": -800,
+    "v1": -200,
+    "built_now_percent": 0,
+    "empty_m2": 29406
+   },
+   {
+    "u0": -800,
+    "v0": -400,
+    "u1": -600,
+    "v1": -200,
+    "built_now_percent": 51,
+    "empty_m2": 15138
+   },
+   {
+    "u0": -600,
+    "v0": -400,
+    "u1": -400,
+    "v1": -200,
+    "built_now_percent": 26,
+    "empty_m2": 22620
+   },
+   {
+    "u0": -400,
+    "v0": -400,
+    "u1": -200,
+    "v1": -200,
+    "built_now_percent": 40,
+    "empty_m2": 21106
+   },
+   {
+    "u0": -200,
+    "v0": -400,
+    "u1": 0,
+    "v1": -200,
+    "built_now_percent": 42,
+    "empty_m2": 19740
+   },
+   {
+    "u0": -1000,
+    "v0": -200,
+    "u1": -800,
+    "v1": 0,
+    "built_now_percent": 0,
+    "empty_m2": 29406
+   },
+   {
+    "u0": -1000,
+    "v0": 0,
+    "u1": -800,
+    "v1": 200,
+    "built_now_percent": 0,
+    "empty_m2": 29304
+   },
+   {
+    "u0": -1000,
+    "v0": 200,
+    "u1": -800,
+    "v1": 400,
+    "built_now_percent": 0,
+    "empty_m2": 7266
+   },
+   {
+    "u0": -800,
+    "v0": 200,
+    "u1": -600,
+    "v1": 400,
+    "built_now_percent": 0,
+    "empty_m2": 11223
+   },
+   {
+    "u0": -600,
+    "v0": 200,
+    "u1": -400,
+    "v1": 400,
+    "built_now_percent": 0,
+    "empty_m2": 13542
+   },
+   {
+    "u0": -400,
+    "v0": 200,
+    "u1": -200,
+    "v1": 400,
+    "built_now_percent": 0,
+    "empty_m2": 15837
+   }
+  ],
+  "empty_m2": 441167
+ }
+}

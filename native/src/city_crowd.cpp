@@ -1197,6 +1197,9 @@ Array CityCrowd::near_bodies() const {
 		if (nb.walker < 0) continue;
 		Dictionary d;
 		d["walker"] = nb.walker; d["woman"] = nb.female != 0; d["clip"] = String(nb.ped->current_clip()); d["in_physical_body"] = nb.in_body; d["shown_s"] = nb.act_t; d["figure_mode"] = (int)nb.ped->get_mode(); d["at"] = nb.ped->body_at(); d["body"] = nb.ped->get_state();
+		d["foot_l"] = nb.ped->bone_world("Bip01_L_Foot"); d["foot_r"] = nb.ped->bone_world("Bip01_R_Foot"); d["pelvis"] = nb.ped->bone_world("Bip01_Pelvis");
+		d["hand_l"] = nb.ped->bone_world("Bip01_L_Hand"); d["hand_r"] = nb.ped->bone_world("Bip01_R_Hand"); d["v"] = nb.v_s;
+		{ const int i = crowd->find(nb.walker); d["act"] = i >= 0 ? (int)crowd->act[i] : -1; d["mode"] = i >= 0 ? (int)crowd->mode[i] : -1; d["ground"] = i >= 0 ? crowd->y[i] : 0.0f; }
 		out.push_back(d);
 	}
 	return out;
@@ -1401,6 +1404,7 @@ Dictionary CityCrowd::fight_stats() const {
 
 Dictionary CityCrowd::stats() const {
 	Dictionary d;
+	{ int on = 0; for (int k = 0; k < CAPSULES; k++) on += cap_on[k] ? 1 : 0; d["capsules_on"] = on; d["capsule_steps"] = cap_steps; d["extras"] = extras; d["has_player"] = crowd->has_player; }
 	const pc::Stats &s = crowd->st;
 	int r[7];
 	crowd->audit(own_clock, r);

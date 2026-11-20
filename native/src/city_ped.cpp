@@ -142,6 +142,12 @@ Vector3 CityPed::clip_hips_at(const StringName &p_clip, double p_t) const {
 	return hips;
 }
 
+Vector3 CityPed::bone_world(const char *p_bone) const {
+	if (!skel) return Vector3();
+	const int b = skel->find_bone(p_bone);
+	return b >= 0 ? skel->get_global_transform().xform(skel->get_bone_global_pose(b).origin) : Vector3();
+}
+
 Ref<Mesh> CityPed::get_body_mesh() const { return mi ? mi->get_mesh() : Ref<Mesh>(); }
 Ref<ShaderMaterial> CityPed::get_look() const { return mi ? Ref<ShaderMaterial>(Object::cast_to<ShaderMaterial>(mi->get_material_override().ptr())) : Ref<ShaderMaterial>(); }
 
@@ -178,15 +184,47 @@ void CityPed::become(const String &p_body, const Ref<Mesh> &p_mesh, const Ref<Sh
 
 // While it is animated: where it stands, which clip, how fast the clip runs (a walk follows the walker's pace), or
 // the moment of the clip it is held at (lying).
+// The walking loops: where their left foot lands (a share of the loop) and how many strides a loop holds (measured:
+// tools/people/clip_audit.gd STRIDE)
+bool CityPed::stride_of(const StringName &p_clip, double &r_left_down, int &r_strides) {
+	static const StringName W("ual/Walk_Loop"), J("ual/Jog_Fwd_Loop"), S("ual/Sprint_Loop"), C("ual/Crouch_Fwd_Loop"), F("ual/Walk_Formal_Loop"), P("ual/Walk_Phone_Loop"), T("ual/Walk_Talk_Loop"), X("ual/Walk_Text_Loop"), H("ual/Walk_Hurt_Loop");
+	if (p_clip == W) { r_left_down = 0.185; r_strides = 1; return true; }
+	if (p_clip == J) { r_left_down = 0.018; r_strides = 1; return true; }
+	if (p_clip == S) { r_left_down = 0.024; r_strides = 1; return true; }
+	if (p_clip == C) { r_left_down = 0.367; r_strides = 1; return true; }
+	if (p_clip == F) { r_left_down = 0.012; r_strides = 1; return true; }
+	if (p_clip == P || p_clip == T || p_clip == X) { r_left_down = 0.090; r_strides = 2; return true; }   // (two strides: the walk twice, its arms mixed in)
+	if (p_clip == H) { r_left_down = 0.044; r_strides = 4; return true; }
+	return false;
+}
+
 void CityPed::drive(const Transform3D &p_at, const StringName &p_clip, double p_speed, double p_hold, int p_token) {
 	if (!made || mode != MODE_ANIM) return;
 	set_global_transform(p_at);
 	if (!anim || !anim->has_animation(p_clip)) return;
 	if (p_clip != cur_clip || p_hold != cur_hold || p_token != cur_token) {
 		const bool again = p_clip == cur_clip;
+		const StringName was = cur_clip;
+		const double was_pos = anim->is_playing() ? anim->get_current_animation_position() : -1.0;
 		cur_clip = p_clip; cur_hold = p_hold; cur_token = p_token;
 		if (p_hold >= 0.0) { anim->play(p_clip, 0.0); anim->seek(p_hold, true); anim->pause(); }
-		else { anim->play(p_clip, p_hold < -1.5 ? 0.18 : 0.3); if (again || p_hold < -1.5) anim->seek(0.0, true); }
+		else {
+			anim->play(p_clip, p_hold < -1.5 ? 0.18 : 0.3);
+			// (Yasin, 20 Nov: "i want them pixel perfect"; tests/people/trace_locomotion.gd: stopping from a sprint went
+			// Sprint, Jog, Walk, Idle, each new loop from its own start: the feet jumped 11-18 cm a frame) one walking loop
+			// handing over to another starts at the same point of the stride (each loop's left foot lands at a measured
+			// share of it: tools/people/clip_audit.gd STRIDE)
+			double ph_was = 0.0, ph_new = 0.0; int n_was = 1, n_new = 1;
+			const double len_new = anim->get_animation(p_clip)->get_length();
+			if (!again && was_pos >= 0.0 && stride_of(was, ph_was, n_was) && stride_of(p_clip, ph_new, n_new) && anim->has_animation(was)) {
+				const double len_was = anim->get_animation(was)->get_length();
+				const double u = len_was > 0.0 ? was_pos / len_was : 0.0;
+				double phase = u * n_was - ph_was * n_was; phase -= std::floor(phase);   // (the share of one stride since the left foot landed)
+				double u_new = (phase + ph_new * n_new) / n_new; u_new -= std::floor(u_new);
+				anim->seek(u_new * len_new, true);
+			} else if (again) anim->seek(0.0, true);   // (the same clip again: from its start; a new one starts at its start
+			                                           // by itself, without a seek that would cut the blend short)
+		}
 	} else if (p_hold < 0.0 && p_hold > -1.5 && !anim->is_playing()) anim->play(p_clip, 0.1);   // (a clip that ends starts again while the act lasts)
 	if (p_hold < 0.0) anim->set_speed_scale((float)p_speed);
 }
