@@ -87,6 +87,12 @@ var kept_trees := {}         # the hand-placed trees (t_* pieces), world: Vector
 const BRK_KINDS := ["prop_bus_stop_sign", "prop_beach_sign", "prop_cone_", "prop_mailbox_post", "prop_bollard_steel", "prop_bollard_iron", "prop_trash_bin", "prop_newsbox", "prop_parking_meter"]
 var brk_on := true           # --nobreak: bake as before
 var cur_brk: Array = []      # this piece's breakables, world: [position, claimed] (each claims ONE collider, the nearest)
+var rooms_on := true          # --norooms: buildings stay closed (as before 20 Nov)
+var rooms_idx := {}           # "piece|label" -> Array of room file names (interiors/rooms/<name>.scn)
+var room_meta_cache := {}     # room file name -> {"cut": [...], "centre": Vector3}
+var room_contracts := {}      # model -> contract (all interiors/room_contracts*.json)
+var room_regs := {}           # atlas regions (assets/coronado_kit/textures/city_layout.json)
+var room_cut_cache := {}      # kit + cut signature -> the cut near mesh
 var gap_col := true          # --nogapcol: buildings get only their kit "col" shell (as before 20 Nov)
 var gap_cache := {}          # kit folder -> Array of [ConvexPolygonShape3D, Transform3D] (building space)
 var fill_cache := {}         # ground mesh key + its trees -> [Mesh, wells in the mesh's own frame]
@@ -675,6 +681,198 @@ func _linear_texel(tex: Texture2D, uv: Vector2) -> Color:
 	var c := im.get_pixel(clampi(int(uv.x * im.get_width()), 0, im.get_width() - 1), clampi(int(uv.y * im.get_height()), 0, im.get_height() - 1))
 	return c.srgb_to_linear()
 
+# ---------------------------------------------------------------- B14: the shops' rooms
+## Yasin, 20 Nov: "none of the shops appear in the game, i think they were forgotten to be cut in the bake step". The rooms
+## (map_dc/coronado/city_kit/interiors/rooms/*.scn, the interiors sessions') stand in their building's own frame. Here, for
+## every building with rooms (interiors/assignment_*.json: piece + label): its near model gets the room's openings cut
+## (the room's meta "cut": [facade, along], matched to the model's contract openings and the atlas regions, as the
+## preview's room_shots.gd does it), its collision shell is opened at the entrance doors, and its node lists the rooms
+## (meta "rooms") for the C++ CityRooms, which wakes them by distance. Each room's collision (its shell's faces and a box
+## for each piece of furniture) is written once to runtime/rooms/<name>_col.res. The locked piece files are never touched.
+const ROOM_DIR := "res://map_dc/coronado/city_kit/interiors/"
+const ROOM_OPEN := ["O_shopdoor", "O_civic_door", "O_storefront", "O_win_", "O_glass_plain", "O_civic_win", "O_small_"]
+const ROOM_DOORS := ["O_shopdoor", "O_civic_door"]
+
+func _rooms_load() -> void:
+	if not rooms_on: return
+	var files := {}
+	for f in DirAccess.get_files_at(ROOM_DIR + "rooms/"):
+		if f.ends_with(".scn"): files[f.get_basename()] = true
+	for f in DirAccess.get_files_at(ROOM_DIR):
+		if not (f.begins_with("assignment_") and f.ends_with(".json")): continue
+		var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(ROOM_DIR + f))
+		var rows: Array = (d as Dictionary).get("rooms", []) if d is Dictionary else (d if d is Array else [])
+		for r: Variant in rows:
+			if not (r is Dictionary) or not (r as Dictionary).has("id") or not (r as Dictionary).has("piece"): continue
+			var id := String(r.id); var nm := ""
+			for cand: String in [String(r.get("built", "")), id, "g_" + id]:
+				if cand != "" and files.has(cand): nm = cand; break
+			if nm == "": continue
+			var key := "%s|%s" % [String(r.piece), String(r.get("label", ""))]
+			if not rooms_idx.has(key): rooms_idx[key] = []
+			if not (rooms_idx[key] as Array).has(nm): (rooms_idx[key] as Array).append(nm)
+	for f in DirAccess.get_files_at(ROOM_DIR):
+		if f.begins_with("room_contracts") and f.ends_with(".json"):
+			var c: Variant = JSON.parse_string(FileAccess.get_file_as_string(ROOM_DIR + f))
+			if c is Dictionary: (room_contracts as Dictionary).merge((c as Dictionary).get("models", {}), false)
+	room_regs = JSON.parse_string(FileAccess.get_file_as_string("res://assets/coronado_kit/textures/city_layout.json")).regions
+	DirAccess.make_dir_recursive_absolute(out + "rooms")
+	stat["rooms_buildings"] = rooms_idx.size()
+
+## a room's cut list and centre, and its collision written once (runtime/rooms/<name>_col.res)
+func _room_meta(nm: String) -> Dictionary:
+	if room_meta_cache.has(nm): return room_meta_cache[nm]
+	# (not cached: 600 rooms' textures held to the end filled the GPU and the far-ground picture died, 20 Nov)
+	var rn: Node3D = (ResourceLoader.load(ROOM_DIR + "rooms/" + nm + ".scn", "", ResourceLoader.CACHE_MODE_IGNORE_DEEP) as PackedScene).instantiate()
+	var faces := PackedVector3Array()
+	var lo := Vector3(1e9, 1e9, 1e9); var hi := -lo
+	var sh := rn.get_node_or_null(^"shell") as MeshInstance3D
+	if sh and sh.mesh:
+		var fs := sh.mesh.get_faces()
+		var sxf := _room_rel(sh, rn)
+		for v in fs: var w := sxf * v; faces.append(w); lo = lo.min(w); hi = hi.max(w)
+	var props := rn.get_node_or_null(^"Props")
+	if props:      # a box for each piece of furniture (its mesh's box, placed)
+		var boxes: Array = []      # [mesh box, room-frame transform]
+		for n: Node in props.find_children("*", "GeometryInstance3D", true, false):
+			var nxf := _room_rel(n as Node3D, rn)
+			if n is MultiMeshInstance3D and (n as MultiMeshInstance3D).multimesh and (n as MultiMeshInstance3D).multimesh.mesh:
+				var mm := (n as MultiMeshInstance3D).multimesh
+				for i in mm.instance_count: boxes.append([mm.mesh.get_aabb(), nxf * mm.get_instance_transform(i)])
+			elif n is MeshInstance3D and (n as MeshInstance3D).mesh:
+				boxes.append([(n as MeshInstance3D).mesh.get_aabb(), nxf])
+		for bx: Array in boxes:
+			var ab: AABB = bx[0]
+			if ab.size.y < 0.25: continue      # (rugs, frames on walls: nothing to walk into)
+			if true:
+				var xf: Transform3D = bx[1]
+				var c := [ab.position, ab.position + Vector3(ab.size.x, 0, 0), ab.position + Vector3(ab.size.x, 0, ab.size.z), ab.position + Vector3(0, 0, ab.size.z)]
+				var t := []
+				for q: Vector3 in c: t.append(xf * q)
+				for q2: Vector3 in c: t.append(xf * (q2 + Vector3(0, ab.size.y, 0)))
+				for quad: Array in [[0, 1, 2, 3], [4, 7, 6, 5], [0, 4, 5, 1], [1, 5, 6, 2], [2, 6, 7, 3], [3, 7, 4, 0]]:
+					faces.append(t[quad[0]]); faces.append(t[quad[1]]); faces.append(t[quad[2]])
+					faces.append(t[quad[0]]); faces.append(t[quad[2]]); faces.append(t[quad[3]])
+	var cd: Resource = ColData.new(); cd.kind = 0; cd.data = faces; cd.backface = true
+	ResourceSaver.save(cd, out + "rooms/" + nm + "_col.res", ResourceSaver.FLAG_COMPRESS)
+	var m := {"cut": rn.get_meta(&"cut", []), "centre": (lo + hi) * 0.5 if faces.size() > 0 else Vector3.ZERO}
+	rn.free()
+	room_meta_cache[nm] = m
+	return m
+
+func _room_rel(n: Node3D, r: Node3D) -> Transform3D:      # a node's transform in its room's frame (the room is not in the tree)
+	var t := n.transform; var q := n.get_parent()
+	while q and q != r and q is Node3D: t = (q as Node3D).transform * t; q = q.get_parent()
+	return t
+
+## the openings of a model the rooms ask to cut (ground floor, in the atlas's opening regions)
+func _room_openings(model: String, cuts: Array) -> Array:
+	var ops: Array = []
+	if not room_contracts.has(model): return ops
+	for o: Dictionary in (room_contracts[model] as Dictionary).openings:
+		if int(o.floor) != 0 or not room_regs.has(o.region): continue
+		if not ROOM_OPEN.any(func(pp: String) -> bool: return String(o.region).begins_with(pp)): continue
+		if not cuts.is_empty() and not cuts.any(func(c: Array) -> bool: return String(c[0]) == String(o.facade) and absf(float(c[1]) - float(o.along)) < 0.05): continue
+		ops.append(o)
+	return ops
+
+## the near model with the openings' panels taken out (triangles mapped into an opening region, inside its rectangle)
+func _room_cut_mesh(src: Mesh, lxf: Transform3D, ops: Array) -> Mesh:
+	var am := ArrayMesh.new(); var dropped := 0
+	for si in src.get_surface_count():
+		var a := src.surface_get_arrays(si)
+		var v: PackedVector3Array = a[Mesh.ARRAY_VERTEX]; var t: PackedVector2Array = a[Mesh.ARRAY_TEX_UV]
+		var idx: PackedInt32Array = a[Mesh.ARRAY_INDEX]
+		var keep := PackedInt32Array()
+		for k in idx.size() / 3:
+			var i0 := idx[k * 3]; var i1 := idx[k * 3 + 1]; var i2 := idx[k * 3 + 2]
+			var cu := (t[i0] + t[i1] + t[i2]) / 3.0; cu.x = fposmod(cu.x, 1.0)
+			var cp := lxf * ((v[i0] + v[i1] + v[i2]) / 3.0)
+			var drop := false
+			for o: Dictionary in ops:
+				var uv: Array = room_regs[o.region].uv
+				if not (cu.x >= float(uv[0]) and cu.x <= float(uv[2]) and cu.y >= float(uv[1]) and cu.y <= float(uv[3])): continue
+				var fr := String(o.facade) == "front" or String(o.facade) == "back"
+				var along := cp.x if fr else cp.z; var pl := cp.z if fr else cp.x
+				if absf(along - float(o.along)) <= float(o.w) * 0.5 + 0.05 and cp.y >= float(o.y0) - 0.05 and cp.y <= float(o.y1) + 0.05 and absf(pl - float(o.plane)) < 0.3: drop = true; break
+			if drop: dropped += 1; continue
+			keep.append(i0); keep.append(i1); keep.append(i2)
+		a[Mesh.ARRAY_INDEX] = keep
+		am.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, a)
+		am.surface_set_material(si, src.surface_get_material(si))
+	stat["rooms_tris_cut"] = int(stat.get("rooms_tris_cut", 0)) + dropped
+	return am
+
+## a concave collision piece with the entrance doors cut out of the walls that lie in their facade plane: each wall
+## triangle is split into the parts outside the door rectangle (below, above, left, right of it: convex clips)
+func _room_cut_col(shape: ConcavePolygonShape3D, xf: Transform3D, doors: Array) -> ConcavePolygonShape3D:
+	var f := shape.get_faces(); var outf := PackedVector3Array(); var changed := false
+	var inv := xf.affine_inverse()
+	for k in range(0, f.size(), 3):
+		var a := xf * f[k]; var b := xf * f[k + 1]; var c := xf * f[k + 2]
+		var hit: Dictionary = {}
+		for o: Dictionary in doors:
+			var fr := String(o.facade) == "front" or String(o.facade) == "back"
+			var pl := float(o.plane)
+			var da := (a.z if fr else a.x) - pl; var db := (b.z if fr else b.x) - pl; var dc := (c.z if fr else c.x) - pl
+			if absf(da) > 0.6 or absf(db) > 0.6 or absf(dc) > 0.6: continue
+			var p2 := PackedVector2Array([Vector2(a.x if fr else a.z, a.y), Vector2(b.x if fr else b.z, b.y), Vector2(c.x if fr else c.z, c.y)])
+			var a0 := float(o.along) - float(o.w) * 0.5; var a1 := float(o.along) + float(o.w) * 0.5
+			var rect := PackedVector2Array([Vector2(a0, float(o.y0) - 5.0), Vector2(a1, float(o.y0) - 5.0), Vector2(a1, float(o.y1)), Vector2(a0, float(o.y1))])
+			if Geometry2D.intersect_polygons(p2, rect).is_empty(): continue
+			hit = {"o": o, "fr": fr, "p2": p2, "a0": a0, "a1": a1}; break
+		if hit.is_empty():
+			outf.append(f[k]); outf.append(f[k + 1]); outf.append(f[k + 2]); continue
+		changed = true
+		var o2: Dictionary = hit.o; var fr2: bool = hit.fr; var p22: PackedVector2Array = hit.p2
+		var y1 := float(o2.y1); var A0: float = hit.a0; var A1: float = hit.a1; var BIG := 1.0e4
+		var regions := [PackedVector2Array([Vector2(-BIG, y1), Vector2(BIG, y1), Vector2(BIG, BIG), Vector2(-BIG, BIG)]),      # above the door
+			PackedVector2Array([Vector2(-BIG, -BIG), Vector2(A0, -BIG), Vector2(A0, y1), Vector2(-BIG, y1)]),                  # left of it
+			PackedVector2Array([Vector2(A1, -BIG), Vector2(BIG, -BIG), Vector2(BIG, y1), Vector2(A1, y1)])]                    # right of it
+		# the triangle's plane: the facade coordinate of a point from its (along, y) by the triangle's own plane
+		var n := (b - a).cross(c - a)
+		for rg: PackedVector2Array in regions:
+			for poly: PackedVector2Array in Geometry2D.intersect_polygons(p22, rg):
+				for ti in range(1, poly.size() - 1):      # convex: a fan
+					for q: Vector2 in [poly[0], poly[ti], poly[ti + 1]]:
+						var w := Vector3(q.x, q.y, 0.0) if fr2 else Vector3(0.0, q.y, q.x)
+						# solve the plane for the missing coordinate
+						if fr2: w.z = a.z if absf(n.z) < 1e-6 else a.z - (n.x * (w.x - a.x) + n.y * (w.y - a.y)) / n.z
+						else: w.x = a.x if absf(n.x) < 1e-6 else a.x - (n.y * (w.y - a.y) + n.z * (w.z - a.z)) / n.x
+						outf.append(inv * w)
+	if not changed: return shape
+	var s2 := ConcavePolygonShape3D.new(); s2.backface_collision = shape.backface_collision; s2.set_faces(outf)
+	stat["rooms_col_cut"] = int(stat.get("rooms_col_cut", 0)) + 1
+	return s2
+
+## a building with rooms: cut its near model and collision, and list its rooms
+func _room_building(rec: Dictionary, piece: String) -> void:
+	var key := "%s|%s" % [piece, String(rec.label)]
+	if not rooms_on or not rooms_idx.has(key): return
+	var model := String(rec.kit)
+	var cuts: Array = []; var list: Array = []; var cut_all := false
+	for nm: String in rooms_idx[key]:
+		var m := _room_meta(nm)
+		if (m.cut as Array).is_empty(): cut_all = true      # (a room with no list: every ground-floor opening, as room_shots.gd)
+		cuts.append_array(m.cut)
+		var merged := out + "rooms/" + nm + ".scn"
+		list.append({"scn": merged, "raw": ROOM_DIR + "rooms/" + nm + ".scn", "col": out + "rooms/" + nm + "_col.res", "centre": m.centre})
+	if cut_all: cuts = []
+	var ops := _room_openings(model, cuts)
+	if ops.is_empty() and list.is_empty(): return
+	for t: Dictionary in rec.tiers:
+		if String(t.name) != "near" or ops.is_empty(): continue
+		var ck := model + "|" + str(ops.map(func(o: Dictionary) -> String: return "%s%.2f" % [o.facade, float(o.along)]))
+		if not room_cut_cache.has(ck): room_cut_cache[ck] = _room_cut_mesh(t.mesh, t.lxf, ops)
+		t.mesh = room_cut_cache[ck]
+	var doors := ops.filter(func(o: Dictionary) -> bool: return ROOM_DOORS.any(func(pp: String) -> bool: return String(o.region).begins_with(pp)))
+	if not doors.is_empty():
+		for ci in (rec.col as Array).size():
+			var e: Array = rec.col[ci]
+			if e[0] is ConcavePolygonShape3D: e[0] = _room_cut_col(e[0], e[1], doors)
+	rec["rooms"] = list
+	stat["rooms_placed"] = int(stat.get("rooms_placed", 0)) + list.size()
+
 # ---------------------------------------------------------------- B9: breakable props
 func _brk_kind(nm: String) -> bool:
 	if not brk_on: return false
@@ -867,6 +1065,7 @@ func _building(b: Node3D, piece: String, inst_name: String) -> void:
 	if gap_col and not rec.col.is_empty():      # B15: the parts the kit's col shell leaves out (stairs, columns, low walls)
 		var lay: int = int(rec.col[0][2]); var msk: int = int(rec.col[0][3])
 		for g: Array in _gap_hulls(String(rec.kit)): rec.col.append([g[0], g[1], lay, msk])
+	_room_building(rec, piece)      # B14: the rooms' openings cut, the rooms listed
 	rec["pivot"] = pivot      # the far version's pivot: near and mid measure their distance to the same point (rt_tier)
 	if _cell_wanted(c): _cell(c).bld.append(rec)
 	else: stat.skipped_cell += 1
@@ -1092,6 +1291,7 @@ func _build_cell(c: Vector2i) -> Dictionary:
 	for b: Dictionary in rec.bld:
 		var node := Node3D.new(); node.name = String(b.name); node.transform = b.xf
 		node.set_meta(&"kit", b.kit); node.set_meta(&"piece", b.piece); node.set_meta(&"label", b.label); bn.add_child(node)
+		if b.has("rooms"): node.set_meta(&"rooms", b.rooms)      # B14: CityRooms wakes them
 		var seed_v := float(absi(hash(b.name)) % 1000) * 0.137
 		for t: Dictionary in b.tiers:
 			var mi2 := MeshInstance3D.new(); mi2.name = String(t.name); mi2.mesh = _lib_mesh(t.mesh); mi2.transform = t.lxf
@@ -1435,12 +1635,14 @@ func _run() -> void:
 		if a == "--notrees": no_trees = true
 		if a == "--keepwells": well_fill = false
 		if a == "--nogapcol": gap_col = false
+		if a == "--norooms": rooms_on = false
 		if a == "--nobreak": brk_on = false
 		if a.begins_with("--out="): out = a.trim_prefix("--out=")
 		if a.begins_with("--area="):
 			var f := a.trim_prefix("--area=").split_floats(","); area = [f[0], f[1], f[2]]
 	if check: _check(); return
 	if not all and area.is_empty(): print("BAKE needs --all or --area=x,z,r"); quit(2); return
+	_rooms_load()
 	for d in ["lib", "cells", "far"]: DirAccess.make_dir_recursive_absolute(out + d)
 	layers = JSON.parse_string(FileAccess.get_file_as_string(TEX + "arrays.json"))
 	var t0 := Time.get_ticks_msec()
