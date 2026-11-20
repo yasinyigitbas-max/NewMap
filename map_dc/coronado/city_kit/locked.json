@@ -3310,6 +3310,21 @@
    "sha256": "bbbb0faa41e56bb004bacf11b62892f3f862d651e04e90f5ed0a04ce32dd5fa7",
    "by": "Yasin",
    "date": "2026-11-20"
+  },
+  "n_sc_west": {
+   "sha256": "193774eadac3db7fb885974c63f6242de96ef243b6f4d29bcbd3fd558d69e322",
+   "by": "Yasin",
+   "date": "2026-11-20"
+  },
+  "n_sc_mid": {
+   "sha256": "75b748d4f746f03a91772884d2235e39b1884ca5d32352bdd9240fad9c37c60c",
+   "by": "Yasin",
+   "date": "2026-11-20"
+  },
+  "n_sc_south": {
+   "sha256": "281e0c1da2b65c1c3490d19d2f96b8ff19ae7eb4053d873483905debebbbb599",
+   "by": "Yasin",
+   "date": "2026-11-20"
   }
  },
  "files": {
