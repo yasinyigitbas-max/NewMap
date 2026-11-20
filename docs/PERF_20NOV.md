@@ -39,3 +39,15 @@ The phone was hot for the census runs (battery 34.5 -> 38.3 C): read differences
   gritty 51.7 -> 58.3 fps, no frame over 50 ms.
 - Still failing the gate narrowly: teleport frames of 62-137 ms (the script build: 55-63) and 3-7 frames over 33 ms in a few zones. Open.
 - The 76 "Failed to free RID" errors with traffic and people (B27): still there. Open.
+
+## 4. Teleports, frame by frame (pb5 / pb6, the streamer's own report: "RIG teleport worst")
+- After brk3 a cell's arrival costs 2.8-3.6 ms again (CityBreakables had searched every arriving cell inside its arrival frame: 25-27 ms).
+- Driving is clean in every zone (pb5 / pb6: no frame over 50 ms; 0-3 over 33 ms a zone; 210 km/h 55 fps; night 55-58 fps).
+- Teleport frames, two kinds:
+  1. 32-48 ms (most): 11-21 collision bodies made in the frame (the 4x teleport budget), then 7-19 ms waiting for the physics thread.
+     Under the 50 ms gate; it buys the quick "ready" (0.3-2.7 s). Kept.
+  2. 62-355 ms (one or two a lap, the size varies run to run): the streamer did NOTHING in the frame (0.02 ms, nothing added or made,
+     physics and render waits ~0) while one or two cells were loading on its loader threads. The main thread was held elsewhere - the
+     19 Nov "draw stall while a heavy cell loads, not understood". Most likely the loader thread holding the graphics device while it
+     uploads a big cell's meshes (resource load), and the frame's draw waiting for it. Engine level (Yasin: last resort); it happens
+     only while a teleport loads (behind the fade, the old view still on screen), never in the drives. Open.
