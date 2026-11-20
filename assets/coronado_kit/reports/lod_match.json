@@ -1,0 +1,2831 @@
+{
+ "density": 3.33319091796875,
+ "page": [
+  2048,
+  2048
+ ],
+ "page_file": "bld_lod_color.png",
+ "fill": 0.9191060066223145,
+ "buildings": [
+  {
+   "name": "apartments/apt_beach_condo",
+   "tris_before": {
+    "near": 3452,
+    "mid": 834,
+    "far": 18
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment",
+   "far_rehull": false,
+   "far_boxes": 6,
+   "tris_mid": 834,
+   "tris_far": 78
+  },
+  {
+   "name": "apartments/apt_court_white",
+   "tris_before": {
+    "near": 3143,
+    "mid": 633,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment",
+   "far_rehull": false,
+   "far_boxes": 4,
+   "tris_mid": 633,
+   "tris_far": 62
+  },
+  {
+   "name": "apartments/apt_dingbat_pink",
+   "tris_before": {
+    "near": 3319,
+    "mid": 719,
+    "far": 16
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 719,
+   "tris_far": 46
+  },
+  {
+   "name": "apartments/apt_dingbat_teal",
+   "tris_before": {
+    "near": 3319,
+    "mid": 719,
+    "far": 16
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 719,
+   "tris_far": 46
+  },
+  {
+   "name": "apartments/apt_garden_cream",
+   "tris_before": {
+    "near": 3475,
+    "mid": 789,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 789,
+   "tris_far": 52
+  },
+  {
+   "name": "apartments/apt_garden_mint",
+   "tris_before": {
+    "near": 3489,
+    "mid": 781,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 781,
+   "tris_far": 40
+  },
+  {
+   "name": "apartments/apt_spanish_revival",
+   "tris_before": {
+    "near": 3038,
+    "mid": 902,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 902,
+   "tris_far": 10
+  },
+  {
+   "name": "apartments/apt_spanish_white",
+   "tris_before": {
+    "near": 3306,
+    "mid": 874,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 874,
+   "tris_far": 22
+  },
+  {
+   "name": "apartments/apt_stucco3_cream",
+   "tris_before": {
+    "near": 3088,
+    "mid": 658,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 658,
+   "tris_far": 30
+  },
+  {
+   "name": "apartments/apt_stucco3_peach",
+   "tris_before": {
+    "near": 3440,
+    "mid": 686,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment",
+   "far_rehull": false,
+   "far_boxes": 5,
+   "tris_mid": 686,
+   "tris_far": 72
+  },
+  {
+   "name": "apartments/apt_townhouse_cays",
+   "tris_before": {
+    "near": 3452,
+    "mid": 968,
+    "far": 76
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 968,
+   "tris_far": 76
+  },
+  {
+   "name": "apartments/apt_townhouse_modern",
+   "tris_before": {
+    "near": 3082,
+    "mid": 954,
+    "far": 28
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 954,
+   "tris_far": 28
+  },
+  {
+   "name": "civic/civ_church",
+   "tris_before": {
+    "near": 4722,
+    "mid": 1018,
+    "far": 64
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 5,
+   "tris_mid": 1018,
+   "tris_far": 114
+  },
+  {
+   "name": "civic/civ_city_hall",
+   "tris_before": {
+    "near": 4507,
+    "mid": 532,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 6,
+   "tris_mid": 532,
+   "tris_far": 82
+  },
+  {
+   "name": "civic/civ_community_center",
+   "tris_before": {
+    "near": 2361,
+    "mid": 448,
+    "far": 30
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 4,
+   "tris_mid": 448,
+   "tris_far": 70
+  },
+  {
+   "name": "civic/civ_fire_station",
+   "tris_before": {
+    "near": 3737,
+    "mid": 502,
+    "far": 50
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 502,
+   "tris_far": 60
+  },
+  {
+   "name": "civic/civ_harbor_office",
+   "tris_before": {
+    "near": 2685,
+    "mid": 460,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 6,
+   "tris_mid": 460,
+   "tris_far": 82
+  },
+  {
+   "name": "civic/civ_library",
+   "tris_before": {
+    "near": 2270,
+    "mid": 564,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 564,
+   "tris_far": 20
+  },
+  {
+   "name": "civic/civ_museum",
+   "tris_before": {
+    "near": 4692,
+    "mid": 686,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 686,
+   "tris_far": 52
+  },
+  {
+   "name": "civic/civ_police",
+   "tris_before": {
+    "near": 3809,
+    "mid": 554,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 554,
+   "tris_far": 30
+  },
+  {
+   "name": "civic/civ_post_office",
+   "tris_before": {
+    "near": 2094,
+    "mid": 518,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 518,
+   "tris_far": 52
+  },
+  {
+   "name": "civic/civ_rec_center",
+   "tris_before": {
+    "near": 3576,
+    "mid": 510,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 510,
+   "tris_far": 30
+  },
+  {
+   "name": "civic/civ_school_wing",
+   "tris_before": {
+    "near": 2188,
+    "mid": 550,
+    "far": 30
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 550,
+   "tris_far": 40
+  },
+  {
+   "name": "commercial/com_bakery",
+   "tris_before": {
+    "near": 1880,
+    "mid": 372,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop x2",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 372,
+   "tris_far": 10
+  },
+  {
+   "name": "commercial/com_bank",
+   "tris_before": {
+    "near": 1724,
+    "mid": 274,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "corner_shop",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 274,
+   "tris_far": 10
+  },
+  {
+   "name": "commercial/com_bar_crown",
+   "tris_before": {
+    "near": 1936,
+    "mid": 326,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop x2",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 326,
+   "tris_far": 20
+  },
+  {
+   "name": "commercial/com_bistro",
+   "tris_before": {
+    "near": 1298,
+    "mid": 286,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop x2",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 286,
+   "tris_far": 10
+  },
+  {
+   "name": "commercial/com_boutique_row",
+   "tris_before": {
+    "near": 2072,
+    "mid": 447,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    3600,
+    1050,
+    60
+   ],
+   "budget_class": "shop x3",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 447,
+   "tris_far": 10
+  },
+  {
+   "name": "commercial/com_cafe_seaside",
+   "tris_before": {
+    "near": 1186,
+    "mid": 257,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 20,
+   "budget": [
+    1200,
+    350,
+    20
+   ],
+   "budget_class": "shop x1",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 257,
+   "tris_far": 20
+  },
+  {
+   "name": "commercial/com_gas_station",
+   "tris_before": {
+    "near": 2332,
+    "mid": 467,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "corner_shop",
+   "far_rehull": false,
+   "far_boxes": 5,
+   "tris_mid": 467,
+   "tris_far": 60
+  },
+  {
+   "name": "commercial/com_grocery_bigbox",
+   "tris_before": {
+    "near": 3026,
+    "mid": 516,
+    "far": 160
+   },
+   "dens": 3.33,
+   "far_budget": 200,
+   "budget": [
+    12000,
+    3500,
+    200
+   ],
+   "budget_class": "shop x10",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 516,
+   "tris_far": 190
+  },
+  {
+   "name": "commercial/com_kiosk",
+   "tris_before": {
+    "near": 576,
+    "mid": 166,
+    "far": 14
+   },
+   "dens": 3.33,
+   "far_budget": 20,
+   "budget": [
+    1200,
+    350,
+    20
+   ],
+   "budget_class": "shop x1",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 166,
+   "tris_far": 14
+  },
+  {
+   "name": "commercial/com_orange_arcade_block",
+   "tris_before": {
+    "near": 3735,
+    "mid": 744,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    4800,
+    1400,
+    80
+   ],
+   "budget_class": "shop x4",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 744,
+   "tris_far": 30
+  },
+  {
+   "name": "commercial/com_orange_corner",
+   "tris_before": {
+    "near": 2366,
+    "mid": 496,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop x2",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 496,
+   "tris_far": 20
+  },
+  {
+   "name": "commercial/com_orange_row",
+   "tris_before": {
+    "near": 2870,
+    "mid": 599,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    3600,
+    1050,
+    60
+   ],
+   "budget_class": "shop x3",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 599,
+   "tris_far": 10
+  },
+  {
+   "name": "commercial/com_realty",
+   "tris_before": {
+    "near": 1168,
+    "mid": 237,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 20,
+   "budget": [
+    1200,
+    350,
+    20
+   ],
+   "budget_class": "shop x1",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 237,
+   "tris_far": 10
+  },
+  {
+   "name": "commercial/com_shallow_books",
+   "tris_before": {
+    "near": 987,
+    "mid": 210,
+    "far": 20
+   },
+   "dens": 3.33,
+   "far_budget": 20,
+   "budget": [
+    1200,
+    350,
+    20
+   ],
+   "budget_class": "shop x1",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 210,
+   "tris_far": 20
+  },
+  {
+   "name": "commercial/com_shallow_cafe",
+   "tris_before": {
+    "near": 1108,
+    "mid": 210,
+    "far": 20
+   },
+   "dens": 3.33,
+   "far_budget": 20,
+   "budget": [
+    1200,
+    350,
+    20
+   ],
+   "budget_class": "shop x1",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 210,
+   "tris_far": 20
+  },
+  {
+   "name": "commercial/com_shallow_surf",
+   "tris_before": {
+    "near": 1054,
+    "mid": 184,
+    "far": 20
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop x2",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 184,
+   "tris_far": 20
+  },
+  {
+   "name": "commercial/com_spanish_arcade_block",
+   "tris_before": {
+    "near": 3154,
+    "mid": 638,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    4800,
+    1400,
+    80
+   ],
+   "budget_class": "shop x4",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 638,
+   "tris_far": 40
+  },
+  {
+   "name": "commercial/com_strip_mall_l",
+   "tris_before": {
+    "near": 4577,
+    "mid": 794,
+    "far": 119
+   },
+   "dens": 3.33,
+   "far_budget": 260,
+   "budget": [
+    15600,
+    4550,
+    260
+   ],
+   "budget_class": "shop x13",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 794,
+   "tris_far": 139
+  },
+  {
+   "name": "commercial/com_surf_shop",
+   "tris_before": {
+    "near": 1262,
+    "mid": 266,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop x2",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 266,
+   "tris_far": 10
+  },
+  {
+   "name": "extras/ext_grocery_market",
+   "tris_before": {
+    "near": 2066,
+    "mid": 517,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 100,
+   "budget": [
+    6000,
+    1750,
+    100
+   ],
+   "budget_class": "shop x5",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 517,
+   "tris_far": 10
+  },
+  {
+   "name": "extras/ext_hospital",
+   "tris_before": {
+    "near": 4625,
+    "mid": 890,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 9,
+   "tris_mid": 890,
+   "tris_far": 100
+  },
+  {
+   "name": "extras/ext_marina_office",
+   "tris_before": {
+    "near": 2454,
+    "mid": 346,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 9,
+   "tris_mid": 346,
+   "tris_far": 112
+  },
+  {
+   "name": "extras/ext_motel_crown",
+   "tris_before": {
+    "near": 4903,
+    "mid": 1214,
+    "far": 20
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "apartment_large",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 1214,
+   "tris_far": 50
+  },
+  {
+   "name": "extras/ext_parking_garage",
+   "tris_before": {
+    "near": 1850,
+    "mid": 456,
+    "far": 38
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2000,
+    600,
+    40
+   ],
+   "budget_class": "warehouse",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 456,
+   "tris_far": 38
+  },
+  {
+   "name": "extras/motel_inn_court",
+   "tris_before": {
+    "near": 4290,
+    "mid": 1050,
+    "far": 46
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "apartment_large",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 1050,
+   "tris_far": 66
+  },
+  {
+   "name": "garages/carport_clay",
+   "tris_before": {
+    "near": 251,
+    "mid": 85,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 12,
+   "budget": [
+    300,
+    100,
+    12
+   ],
+   "budget_class": "garage",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 85,
+   "tris_far": 10
+  },
+  {
+   "name": "garages/carport_comp",
+   "tris_before": {
+    "near": 251,
+    "mid": 85,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 12,
+   "budget": [
+    300,
+    100,
+    12
+   ],
+   "budget_class": "garage",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 85,
+   "tris_far": 10
+  },
+  {
+   "name": "garages/double_siding_comp",
+   "tris_before": {
+    "near": 294,
+    "mid": 72,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 12,
+   "budget": [
+    300,
+    100,
+    12
+   ],
+   "budget_class": "garage",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 72,
+   "tris_far": 10
+  },
+  {
+   "name": "garages/double_stucco_clay",
+   "tris_before": {
+    "near": 290,
+    "mid": 72,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 12,
+   "budget": [
+    300,
+    100,
+    12
+   ],
+   "budget_class": "garage",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 72,
+   "tris_far": 10
+  },
+  {
+   "name": "garages/double_stucco_comp",
+   "tris_before": {
+    "near": 294,
+    "mid": 72,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 12,
+   "budget": [
+    300,
+    100,
+    12
+   ],
+   "budget_class": "garage",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 72,
+   "tris_far": 10
+  },
+  {
+   "name": "garages/single_siding_comp",
+   "tris_before": {
+    "near": 278,
+    "mid": 72,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 12,
+   "budget": [
+    300,
+    100,
+    12
+   ],
+   "budget_class": "garage",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 72,
+   "tris_far": 10
+  },
+  {
+   "name": "garages/single_stucco_clay",
+   "tris_before": {
+    "near": 270,
+    "mid": 72,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 12,
+   "budget": [
+    300,
+    100,
+    12
+   ],
+   "budget_class": "garage",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 72,
+   "tris_far": 10
+  },
+  {
+   "name": "garages/single_stucco_comp",
+   "tris_before": {
+    "near": 278,
+    "mid": 72,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 12,
+   "budget": [
+    300,
+    100,
+    12
+   ],
+   "budget_class": "garage",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 72,
+   "tris_far": 10
+  },
+  {
+   "name": "garages/single_stucco_flat",
+   "tris_before": {
+    "near": 288,
+    "mid": 70,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 12,
+   "budget": [
+    300,
+    100,
+    12
+   ],
+   "budget_class": "garage",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 70,
+   "tris_far": 10
+  },
+  {
+   "name": "houses/beach_blue",
+   "tris_before": {
+    "near": 1489,
+    "mid": 308,
+    "far": 30
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 308,
+   "tris_far": 40
+  },
+  {
+   "name": "houses/beach_large",
+   "tris_before": {
+    "near": 2373,
+    "mid": 432,
+    "far": 30
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 432,
+   "tris_far": 50
+  },
+  {
+   "name": "houses/beach_teal",
+   "tris_before": {
+    "near": 1489,
+    "mid": 308,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 308,
+   "tris_far": 32
+  },
+  {
+   "name": "houses/beach_white",
+   "tris_before": {
+    "near": 1477,
+    "mid": 308,
+    "far": 30
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 308,
+   "tris_far": 40
+  },
+  {
+   "name": "houses/cape_grey",
+   "tris_before": {
+    "near": 1418,
+    "mid": 300,
+    "far": 30
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 300,
+   "tris_far": 40
+  },
+  {
+   "name": "houses/cape_large",
+   "tris_before": {
+    "near": 2466,
+    "mid": 444,
+    "far": 30
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 444,
+   "tris_far": 50
+  },
+  {
+   "name": "houses/cape_white",
+   "tris_before": {
+    "near": 1418,
+    "mid": 300,
+    "far": 30
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 300,
+   "tris_far": 30
+  },
+  {
+   "name": "houses/colonial_blue",
+   "tris_before": {
+    "near": 2369,
+    "mid": 404,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 404,
+   "tris_far": 52
+  },
+  {
+   "name": "houses/colonial_large_garage",
+   "tris_before": {
+    "near": 2489,
+    "mid": 474,
+    "far": 38
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 474,
+   "tris_far": 58
+  },
+  {
+   "name": "houses/colonial_white",
+   "tris_before": {
+    "near": 2341,
+    "mid": 404,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 404,
+   "tris_far": 52
+  },
+  {
+   "name": "houses/contemporary_grey",
+   "tris_before": {
+    "near": 1783,
+    "mid": 326,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 326,
+   "tris_far": 20
+  },
+  {
+   "name": "houses/contemporary_white",
+   "tris_before": {
+    "near": 1791,
+    "mid": 326,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 326,
+   "tris_far": 20
+  },
+  {
+   "name": "houses/craftsman_cedar",
+   "tris_before": {
+    "near": 2270,
+    "mid": 415,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 415,
+   "tris_far": 42
+  },
+  {
+   "name": "houses/craftsman_large",
+   "tris_before": {
+    "near": 2376,
+    "mid": 396,
+    "far": 30
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 396,
+   "tris_far": 50
+  },
+  {
+   "name": "houses/craftsman_olive",
+   "tris_before": {
+    "near": 2307,
+    "mid": 406,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 406,
+   "tris_far": 52
+  },
+  {
+   "name": "houses/craftsman_sage",
+   "tris_before": {
+    "near": 2307,
+    "mid": 406,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 406,
+   "tris_far": 52
+  },
+  {
+   "name": "houses/craftsman_stucco",
+   "tris_before": {
+    "near": 2267,
+    "mid": 411,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 411,
+   "tris_far": 52
+  },
+  {
+   "name": "houses/hipranch_grey",
+   "tris_before": {
+    "near": 1473,
+    "mid": 348,
+    "far": 38
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 348,
+   "tris_far": 38
+  },
+  {
+   "name": "houses/hipranch_nogarage",
+   "tris_before": {
+    "near": 1219,
+    "mid": 274,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 274,
+   "tris_far": 32
+  },
+  {
+   "name": "houses/hipranch_sand",
+   "tris_before": {
+    "near": 1451,
+    "mid": 348,
+    "far": 38
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 348,
+   "tris_far": 38
+  },
+  {
+   "name": "houses/mcm_large",
+   "tris_before": {
+    "near": 1652,
+    "mid": 384,
+    "far": 41
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 384,
+   "tris_far": 51
+  },
+  {
+   "name": "houses/mcm_shed",
+   "tris_before": {
+    "near": 1437,
+    "mid": 327,
+    "far": 31
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 327,
+   "tris_far": 31
+  },
+  {
+   "name": "houses/mcm_teal",
+   "tris_before": {
+    "near": 1454,
+    "mid": 326,
+    "far": 31
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 326,
+   "tris_far": 31
+  },
+  {
+   "name": "houses/mcm_white",
+   "tris_before": {
+    "near": 1486,
+    "mid": 326,
+    "far": 31
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 326,
+   "tris_far": 31
+  },
+  {
+   "name": "houses/narrow_2sty_siding",
+   "tris_before": {
+    "near": 2384,
+    "mid": 524,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 524,
+   "tris_far": 42
+  },
+  {
+   "name": "houses/narrow_2sty_stucco_clay",
+   "tris_before": {
+    "near": 1804,
+    "mid": 487,
+    "far": 34
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 487,
+   "tris_far": 44
+  },
+  {
+   "name": "houses/narrow_cottage_siding",
+   "tris_before": {
+    "near": 1384,
+    "mid": 374,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 374,
+   "tris_far": 32
+  },
+  {
+   "name": "houses/narrow_cottage_stucco_clay",
+   "tris_before": {
+    "near": 1158,
+    "mid": 366,
+    "far": 34
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 366,
+   "tris_far": 34
+  },
+  {
+   "name": "houses/ranch_peach",
+   "tris_before": {
+    "near": 1450,
+    "mid": 354,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 354,
+   "tris_far": 32
+  },
+  {
+   "name": "houses/ranch_pink",
+   "tris_before": {
+    "near": 1438,
+    "mid": 354,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 354,
+   "tris_far": 32
+  },
+  {
+   "name": "houses/ranch_porch",
+   "tris_before": {
+    "near": 1450,
+    "mid": 354,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 354,
+   "tris_far": 32
+  },
+  {
+   "name": "houses/ranch_siding",
+   "tris_before": {
+    "near": 1400,
+    "mid": 354,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 354,
+   "tris_far": 32
+  },
+  {
+   "name": "houses/spanish_large",
+   "tris_before": {
+    "near": 2347,
+    "mid": 506,
+    "far": 50
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 506,
+   "tris_far": 50
+  },
+  {
+   "name": "houses/spanish_peach",
+   "tris_before": {
+    "near": 2294,
+    "mid": 419,
+    "far": 37
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 419,
+   "tris_far": 47
+  },
+  {
+   "name": "houses/spanish_pink",
+   "tris_before": {
+    "near": 2296,
+    "mid": 419,
+    "far": 37
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 419,
+   "tris_far": 47
+  },
+  {
+   "name": "houses/spanish_small",
+   "tris_before": {
+    "near": 1357,
+    "mid": 312,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    1500,
+    450,
+    40
+   ],
+   "budget_class": "house_small",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 312,
+   "tris_far": 32
+  },
+  {
+   "name": "houses/spanish_white",
+   "tris_before": {
+    "near": 2294,
+    "mid": 419,
+    "far": 37
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 419,
+   "tris_far": 47
+  },
+  {
+   "name": "houses/tudor_brick",
+   "tris_before": {
+    "near": 1694,
+    "mid": 326,
+    "far": 42
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 326,
+   "tris_far": 52
+  },
+  {
+   "name": "houses/tudor_stucco",
+   "tris_before": {
+    "near": 1734,
+    "mid": 326,
+    "far": 42
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 326,
+   "tris_far": 52
+  },
+  {
+   "name": "houses/victorian_blue",
+   "tris_before": {
+    "near": 2486,
+    "mid": 523,
+    "far": 46
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 523,
+   "tris_far": 56
+  },
+  {
+   "name": "houses/victorian_yellow",
+   "tris_before": {
+    "near": 2413,
+    "mid": 492,
+    "far": 46
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "house_large",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 492,
+   "tris_far": 56
+  },
+  {
+   "name": "industrial/ind_factory",
+   "tris_before": {
+    "near": 2394,
+    "mid": 488,
+    "far": 18
+   },
+   "dens": 3.33,
+   "far_budget": 200,
+   "budget": [
+    8000,
+    2500,
+    200
+   ],
+   "budget_class": "landmark",
+   "far_rehull": false,
+   "far_boxes": 5,
+   "tris_mid": 488,
+   "tris_far": 68
+  },
+  {
+   "name": "industrial/ind_repair",
+   "tris_before": {
+    "near": 1231,
+    "mid": 288,
+    "far": 18
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2000,
+    600,
+    40
+   ],
+   "budget_class": "warehouse",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 288,
+   "tris_far": 38
+  },
+  {
+   "name": "industrial/ind_warehouse",
+   "tris_before": {
+    "near": 1879,
+    "mid": 448,
+    "far": 18
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2000,
+    600,
+    40
+   ],
+   "budget_class": "warehouse",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 448,
+   "tris_far": 38
+  },
+  {
+   "name": "landmarks/lmk_beach_lookout",
+   "tris_before": {
+    "near": 3542,
+    "mid": 646,
+    "far": 68
+   },
+   "dens": 3.33,
+   "far_budget": 200,
+   "budget": [
+    8000,
+    2500,
+    200
+   ],
+   "budget_class": "landmark",
+   "far_rehull": false,
+   "far_boxes": 5,
+   "tris_mid": 646,
+   "tris_far": 118
+  },
+  {
+   "name": "landmarks/lmk_red_spire_church",
+   "tris_before": {
+    "near": 5568,
+    "mid": 1040,
+    "far": 56
+   },
+   "dens": 3.33,
+   "far_budget": 200,
+   "budget": [
+    8000,
+    2500,
+    200
+   ],
+   "budget_class": "landmark",
+   "far_rehull": false,
+   "far_boxes": 4,
+   "tris_mid": 1040,
+   "tris_far": 96
+  },
+  {
+   "name": "landmarks/lmk_village_theatre",
+   "tris_before": {
+    "near": 4889,
+    "mid": 852,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 200,
+   "budget": [
+    8000,
+    2500,
+    200
+   ],
+   "budget_class": "landmark",
+   "far_rehull": false,
+   "far_boxes": 7,
+   "tris_mid": 852,
+   "tris_far": 80
+  },
+  {
+   "name": "public/pub_chapel",
+   "tris_before": {
+    "near": 1436,
+    "mid": 338,
+    "far": 42
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 338,
+   "tris_far": 62
+  },
+  {
+   "name": "public/pub_hospital",
+   "tris_before": {
+    "near": 3626,
+    "mid": 590,
+    "far": 62
+   },
+   "dens": 3.33,
+   "far_budget": 200,
+   "budget": [
+    8000,
+    2500,
+    200
+   ],
+   "budget_class": "landmark",
+   "far_rehull": false,
+   "far_boxes": 4,
+   "tris_mid": 590,
+   "tris_far": 102
+  },
+  {
+   "name": "public/pub_museum",
+   "tris_before": {
+    "near": 2038,
+    "mid": 452,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 4,
+   "tris_mid": 452,
+   "tris_far": 62
+  },
+  {
+   "name": "public/pub_skate_shed",
+   "tris_before": {
+    "near": 817,
+    "mid": 242,
+    "far": 30
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2000,
+    600,
+    40
+   ],
+   "budget_class": "warehouse",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 242,
+   "tris_far": 40
+  },
+  {
+   "name": "public/pub_stadium",
+   "tris_before": {
+    "near": 6138,
+    "mid": 2334,
+    "far": 192
+   },
+   "dens": 1.17,
+   "far_budget": 200,
+   "budget": [
+    8000,
+    2500,
+    200
+   ],
+   "budget_class": "landmark",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 2334,
+   "tris_far": 192
+  },
+  {
+   "name": "public/pub_university",
+   "tris_before": {
+    "near": 3660,
+    "mid": 422,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 422,
+   "tris_far": 52
+  },
+  {
+   "name": "services/svc_carwash",
+   "tris_before": {
+    "near": 1952,
+    "mid": 572,
+    "far": 32
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2000,
+    600,
+    40
+   ],
+   "budget_class": "warehouse",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 572,
+   "tris_far": 32
+  },
+  {
+   "name": "urban/twr_condo_shores",
+   "tris_before": {
+    "near": 4968,
+    "mid": 958,
+    "far": 90
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    6000,
+    1800,
+    120
+   ],
+   "budget_class": "tower x1.5",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 958,
+   "tris_far": 120
+  },
+  {
+   "name": "urban/twr_glass",
+   "tris_before": {
+    "near": 5368,
+    "mid": 386,
+    "far": 106
+   },
+   "dens": 3.33,
+   "far_budget": 144,
+   "budget": [
+    7200,
+    2160,
+    144
+   ],
+   "budget_class": "tower x1.8",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 386,
+   "tris_far": 126
+  },
+  {
+   "name": "urban/twr_hotel",
+   "tris_before": {
+    "near": 3526,
+    "mid": 440,
+    "far": 74
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    4000,
+    1200,
+    80
+   ],
+   "budget_class": "tower x1",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 440,
+   "tris_far": 74
+  },
+  {
+   "name": "urban/twr_office",
+   "tris_before": {
+    "near": 4418,
+    "mid": 494,
+    "far": 82
+   },
+   "dens": 3.33,
+   "far_budget": 96,
+   "budget": [
+    4800,
+    1440,
+    96
+   ],
+   "budget_class": "tower x1.2",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 494,
+   "tris_far": 92
+  },
+  {
+   "name": "urban/urb_brick_corner",
+   "tris_before": {
+    "near": 3244,
+    "mid": 400,
+    "far": 42
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "apartment_large",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 400,
+   "tris_far": 52
+  },
+  {
+   "name": "urban/urb_brick_row",
+   "tris_before": {
+    "near": 2974,
+    "mid": 476,
+    "far": 34
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 476,
+   "tris_far": 44
+  },
+  {
+   "name": "urban/urb_courthouse",
+   "tris_before": {
+    "near": 3278,
+    "mid": 510,
+    "far": 22
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 4,
+   "tris_mid": 510,
+   "tris_far": 62
+  },
+  {
+   "name": "urban/urb_dept_store",
+   "tris_before": {
+    "near": 3554,
+    "mid": 492,
+    "far": 34
+   },
+   "dens": 3.33,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 492,
+   "tris_far": 64
+  },
+  {
+   "name": "urban/urb_mall",
+   "tris_before": {
+    "near": 3568,
+    "mid": 734,
+    "far": 42
+   },
+   "dens": 3.33,
+   "far_budget": 200,
+   "budget": [
+    8000,
+    2500,
+    200
+   ],
+   "budget_class": "landmark",
+   "far_rehull": false,
+   "far_boxes": 9,
+   "tris_mid": 734,
+   "tris_far": 132
+  },
+  {
+   "name": "examples/mod_apt_row",
+   "tris_before": {
+    "near": 2582,
+    "mid": 776,
+    "far": 34
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 776,
+   "tris_far": 34
+  },
+  {
+   "name": "examples/mod_brk_row",
+   "tris_before": {
+    "near": 3174,
+    "mid": 778,
+    "far": 34
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 778,
+   "tris_far": 34
+  },
+  {
+   "name": "examples/mod_svc_row",
+   "tris_before": {
+    "near": 1776,
+    "mid": 404,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop x2",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 404,
+   "tris_far": 10
+  },
+  {
+   "name": "examples/mod_twr_office",
+   "tris_before": {
+    "near": 3580,
+    "mid": 1056,
+    "far": 50
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    4000,
+    1200,
+    80
+   ],
+   "budget_class": "tower",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 1056,
+   "tris_far": 80
+  },
+  {
+   "name": "examples/mod_wh_shed",
+   "tris_before": {
+    "near": 1626,
+    "mid": 444,
+    "far": 18
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2000,
+    600,
+    40
+   ],
+   "budget_class": "warehouse",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 444,
+   "tris_far": 18
+  },
+  {
+   "name": "ck/ck_apt3_row2",
+   "tris_before": {
+    "near": 3112,
+    "mid": 764,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment block",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 764,
+   "tris_far": 40
+  },
+  {
+   "name": "ck/ck_apt3_row3_boarded",
+   "tris_before": {
+    "near": 3574,
+    "mid": 1016,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment block",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 1016,
+   "tris_far": 10
+  },
+  {
+   "name": "ck/ck_apt3_row3",
+   "tris_before": {
+    "near": 3596,
+    "mid": 944,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment block",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 944,
+   "tris_far": 10
+  },
+  {
+   "name": "ck/ck_brk3_corner2",
+   "tris_before": {
+    "near": 3516,
+    "mid": 794,
+    "far": 34
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment block",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 794,
+   "tris_far": 34
+  },
+  {
+   "name": "ck/ck_brk3_row2_fe",
+   "tris_before": {
+    "near": 3378,
+    "mid": 846,
+    "far": 34
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment block",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 846,
+   "tris_far": 34
+  },
+  {
+   "name": "ck/ck_brk3_row2",
+   "tris_before": {
+    "near": 2998,
+    "mid": 726,
+    "far": 34
+   },
+   "dens": 3.33,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment block",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 726,
+   "tris_far": 34
+  },
+  {
+   "name": "ck/ck_grt_row2",
+   "tris_before": {
+    "near": 1220,
+    "mid": 302,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop bay per 6 m x2",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 302,
+   "tris_far": 10
+  },
+  {
+   "name": "ck/ck_grt_row3",
+   "tris_before": {
+    "near": 2808,
+    "mid": 664,
+    "far": 40
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    3600,
+    1050,
+    60
+   ],
+   "budget_class": "shop bay per 6 m x3",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 664,
+   "tris_far": 40
+  },
+  {
+   "name": "ck/ck_svc_bank_pharm",
+   "tris_before": {
+    "near": 2636,
+    "mid": 684,
+    "far": 258
+   },
+   "dens": 3.33,
+   "far_budget": 60,
+   "budget": [
+    2500,
+    750,
+    60
+   ],
+   "budget_class": "corner shop / bank",
+   "far_rehull": true,
+   "far_boxes": 0,
+   "tris_mid": 684,
+   "tris_far": 10
+  },
+  {
+   "name": "ck/ck_svc_cinema_fast",
+   "tris_before": {
+    "near": 2282,
+    "mid": 554,
+    "far": 240
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop bay per 6 m x2",
+   "far_rehull": true,
+   "far_boxes": 0,
+   "tris_mid": 554,
+   "tris_far": 10
+  },
+  {
+   "name": "ck/ck_svc_pawn_fast",
+   "tris_before": {
+    "near": 2318,
+    "mid": 534,
+    "far": 214
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop bay per 6 m x2",
+   "far_rehull": true,
+   "far_boxes": 0,
+   "tris_mid": 534,
+   "tris_far": 10
+  },
+  {
+   "name": "ck/ck_svc_trade_1d",
+   "tris_before": {
+    "near": 1460,
+    "mid": 354,
+    "far": 214
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop bay per 6 m x2",
+   "far_rehull": true,
+   "far_boxes": 1,
+   "tris_mid": 354,
+   "tris_far": 20
+  },
+  {
+   "name": "ck/ck_svc_trade",
+   "tris_before": {
+    "near": 1562,
+    "mid": 416,
+    "far": 268
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop bay per 6 m x2",
+   "far_rehull": true,
+   "far_boxes": 2,
+   "tris_mid": 416,
+   "tris_far": 30
+  },
+  {
+   "name": "ck/mod_fastfood",
+   "tris_before": {
+    "near": 2438,
+    "mid": 552,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop bay per 6 m x2",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 552,
+   "tris_far": 20
+  },
+  {
+   "name": "ck/mod_stg_row_roofed",
+   "tris_before": {
+    "near": 1584,
+    "mid": 352,
+    "far": 10
+   },
+   "dens": 3.33,
+   "far_budget": 40,
+   "budget": [
+    2000,
+    600,
+    40
+   ],
+   "budget_class": "warehouse (storage row)",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 352,
+   "tris_far": 10
+  },
+  {
+   "name": "ck/mod_wh_dist",
+   "tris_before": {
+    "near": 5504,
+    "mid": 1900,
+    "far": 108
+   },
+   "dens": 3.33,
+   "far_budget": 240,
+   "budget": [
+    12000,
+    3600,
+    240
+   ],
+   "budget_class": "warehouse x6 sheds",
+   "far_rehull": false,
+   "far_boxes": 4,
+   "tris_mid": 1900,
+   "tris_far": 148
+  }
+ ]
+}

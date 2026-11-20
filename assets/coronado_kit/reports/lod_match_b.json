@@ -1,0 +1,851 @@
+{
+ "density": 3.16656494140625,
+ "page": [
+  1024,
+  1024
+ ],
+ "page_file": "bld_lod_color_b.png",
+ "fill": 0.9155664443969727,
+ "buildings": [
+  {
+   "name": "apartments/apt_shores_slab",
+   "tris_before": {
+    "near": 4856,
+    "mid": 796,
+    "far": 106
+   },
+   "dens": 3.17,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "apartment_large",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 796,
+   "tris_far": 116
+  },
+  {
+   "name": "landmarks/lmk_blue_dome_chapel",
+   "tris_before": {
+    "near": 6118,
+    "mid": 1218,
+    "far": 64
+   },
+   "dens": 3.17,
+   "far_budget": 200,
+   "budget": [
+    8000,
+    2500,
+    200
+   ],
+   "budget_class": "landmark",
+   "far_rehull": false,
+   "far_boxes": 5,
+   "tris_mid": 1218,
+   "tris_far": 114
+  },
+  {
+   "name": "landmarks/lmk_bridge_tollhouse",
+   "tris_before": {
+    "near": 2590,
+    "mid": 420,
+    "far": 22
+   },
+   "dens": 3.17,
+   "far_budget": 200,
+   "budget": [
+    8000,
+    2500,
+    200
+   ],
+   "budget_class": "landmark",
+   "far_rehull": false,
+   "far_boxes": 6,
+   "tris_mid": 420,
+   "tris_far": 82
+  },
+  {
+   "name": "landmarks/lmk_crown_boathouse",
+   "tris_before": {
+    "near": 4052,
+    "mid": 760,
+    "far": 66
+   },
+   "dens": 3.17,
+   "far_budget": 200,
+   "budget": [
+    8000,
+    2500,
+    200
+   ],
+   "budget_class": "landmark",
+   "far_rehull": false,
+   "far_boxes": 5,
+   "tris_mid": 760,
+   "tris_far": 116
+  },
+  {
+   "name": "landmarks/lmk_crown_hotel_annex",
+   "tris_before": {
+    "near": 7371,
+    "mid": 1104,
+    "far": 78
+   },
+   "dens": 3.17,
+   "far_budget": 200,
+   "budget": [
+    8000,
+    2500,
+    200
+   ],
+   "budget_class": "landmark",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 1104,
+   "tris_far": 108
+  },
+  {
+   "name": "landmarks/lmk_ferry_landing",
+   "tris_before": {
+    "near": 3598,
+    "mid": 670,
+    "far": 56
+   },
+   "dens": 3.17,
+   "far_budget": 200,
+   "budget": [
+    8000,
+    2500,
+    200
+   ],
+   "budget_class": "landmark",
+   "far_rehull": false,
+   "far_boxes": 4,
+   "tris_mid": 670,
+   "tris_far": 96
+  },
+  {
+   "name": "landmarks/lmk_glorietta_mansion",
+   "tris_before": {
+    "near": 7215,
+    "mid": 722,
+    "far": 22
+   },
+   "dens": 3.17,
+   "far_budget": 200,
+   "budget": [
+    8000,
+    2500,
+    200
+   ],
+   "budget_class": "landmark",
+   "far_rehull": false,
+   "far_boxes": 6,
+   "tris_mid": 722,
+   "tris_far": 82
+  },
+  {
+   "name": "landmarks/lmk_navy_gatehouse",
+   "tris_before": {
+    "near": 2742,
+    "mid": 532,
+    "far": 36
+   },
+   "dens": 3.17,
+   "far_budget": 200,
+   "budget": [
+    8000,
+    2500,
+    200
+   ],
+   "budget_class": "landmark",
+   "far_rehull": false,
+   "far_boxes": 5,
+   "tris_mid": 532,
+   "tris_far": 86
+  },
+  {
+   "name": "examples/ex_house_cottage_clay",
+   "tris_before": {
+    "near": 1620,
+    "mid": 372,
+    "far": 22
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    1650,
+    500,
+    40
+   ],
+   "budget_class": "mod_house_small (snap-in house)",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 372,
+   "tris_far": 32
+  },
+  {
+   "name": "examples/ex_house_garage_siding",
+   "tris_before": {
+    "near": 1622,
+    "mid": 388,
+    "far": 22
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    1650,
+    500,
+    40
+   ],
+   "budget_class": "mod_house_small (snap-in house)",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 388,
+   "tris_far": 32
+  },
+  {
+   "name": "examples/ex_house_ranch_stucco",
+   "tris_before": {
+    "near": 1630,
+    "mid": 364,
+    "far": 22
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    1650,
+    500,
+    40
+   ],
+   "budget_class": "mod_house_small (snap-in house)",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 364,
+   "tris_far": 32
+  },
+  {
+   "name": "examples/ex_shop_corner_bakery",
+   "tris_before": {
+    "near": 1356,
+    "mid": 306,
+    "far": 10
+   },
+   "dens": 3.17,
+   "far_budget": 20,
+   "budget": [
+    1200,
+    350,
+    20
+   ],
+   "budget_class": "shop bay per 6 m x1",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 306,
+   "tris_far": 10
+  },
+  {
+   "name": "examples/ex_shop_row_cafe_books",
+   "tris_before": {
+    "near": 1960,
+    "mid": 424,
+    "far": 10
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop bay per 6 m x2",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 424,
+   "tris_far": 10
+  },
+  {
+   "name": "examples/mod_stg_row",
+   "tris_before": {
+    "near": 558,
+    "mid": 184,
+    "far": 10
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    2000,
+    600,
+    40
+   ],
+   "budget_class": "warehouse",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 184,
+   "tris_far": 10
+  },
+  {
+   "name": "examples_map/apt3_row2",
+   "tris_before": {
+    "near": 3112,
+    "mid": 764,
+    "far": 10
+   },
+   "dens": 3.17,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment block",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 764,
+   "tris_far": 30
+  },
+  {
+   "name": "examples_map/apt3_row3",
+   "tris_before": {
+    "near": 3596,
+    "mid": 944,
+    "far": 10
+   },
+   "dens": 3.17,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment block",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 944,
+   "tris_far": 10
+  },
+  {
+   "name": "examples_map/brk3_corner2",
+   "tris_before": {
+    "near": 3434,
+    "mid": 784,
+    "far": 34
+   },
+   "dens": 3.17,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment block",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 784,
+   "tris_far": 34
+  },
+  {
+   "name": "examples_map/brk3_row2",
+   "tris_before": {
+    "near": 2998,
+    "mid": 726,
+    "far": 34
+   },
+   "dens": 3.17,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment block",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 726,
+   "tris_far": 34
+  },
+  {
+   "name": "examples_map/brk3_row3",
+   "tris_before": {
+    "near": 3460,
+    "mid": 826,
+    "far": 34
+   },
+   "dens": 3.17,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment block",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 826,
+   "tris_far": 34
+  },
+  {
+   "name": "examples_map/civ_hall3",
+   "tris_before": {
+    "near": 2848,
+    "mid": 513,
+    "far": 112
+   },
+   "dens": 3.17,
+   "far_budget": 120,
+   "budget": [
+    5000,
+    1500,
+    120
+   ],
+   "budget_class": "civic",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 513,
+   "tris_far": 112
+  },
+  {
+   "name": "examples_map/garage_w6_stucco",
+   "tris_before": {
+    "near": 1182,
+    "mid": 280,
+    "far": 32
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    1650,
+    500,
+    40
+   ],
+   "budget_class": "mod_house_small (snap-in house)",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 280,
+   "tris_far": 32
+  },
+  {
+   "name": "examples_map/garage_w9_clay",
+   "tris_before": {
+    "near": 1390,
+    "mid": 348,
+    "far": 32
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    1650,
+    500,
+    40
+   ],
+   "budget_class": "mod_house_small (snap-in house)",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 348,
+   "tris_far": 32
+  },
+  {
+   "name": "examples_map/garage_w9_siding",
+   "tris_before": {
+    "near": 1442,
+    "mid": 372,
+    "far": 32
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    1650,
+    500,
+    40
+   ],
+   "budget_class": "mod_house_small (snap-in house)",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 372,
+   "tris_far": 32
+  },
+  {
+   "name": "examples_map/house_w6_clay",
+   "tris_before": {
+    "near": 1364,
+    "mid": 304,
+    "far": 22
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    1650,
+    500,
+    40
+   ],
+   "budget_class": "mod_house_small (snap-in house)",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 304,
+   "tris_far": 32
+  },
+  {
+   "name": "examples_map/house_w6_comp",
+   "tris_before": {
+    "near": 1362,
+    "mid": 296,
+    "far": 22
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    1650,
+    500,
+    40
+   ],
+   "budget_class": "mod_house_small (snap-in house)",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 296,
+   "tris_far": 32
+  },
+  {
+   "name": "examples_map/house_w6_comp_siding",
+   "tris_before": {
+    "near": 1428,
+    "mid": 328,
+    "far": 22
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    1650,
+    500,
+    40
+   ],
+   "budget_class": "mod_house_small (snap-in house)",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 328,
+   "tris_far": 32
+  },
+  {
+   "name": "examples_map/house_w6_peach_porch",
+   "tris_before": {
+    "near": 1627,
+    "mid": 352,
+    "far": 22
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    1650,
+    500,
+    40
+   ],
+   "budget_class": "mod_house_small (snap-in house)",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 352,
+   "tris_far": 32
+  },
+  {
+   "name": "examples_map/house_w9_pink_hip",
+   "tris_before": {
+    "near": 1394,
+    "mid": 300,
+    "far": 22
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    1650,
+    500,
+    40
+   ],
+   "budget_class": "mod_house_small (snap-in house)",
+   "far_rehull": false,
+   "far_boxes": 1,
+   "tris_mid": 300,
+   "tris_far": 32
+  },
+  {
+   "name": "examples_map/shop_row2_surf_cafe",
+   "tris_before": {
+    "near": 2314,
+    "mid": 524,
+    "far": 30
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop bay per 6 m x2",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 524,
+   "tris_far": 30
+  },
+  {
+   "name": "examples_map/shop_row3",
+   "tris_before": {
+    "near": 3096,
+    "mid": 692,
+    "far": 40
+   },
+   "dens": 3.17,
+   "far_budget": 60,
+   "budget": [
+    3600,
+    1050,
+    60
+   ],
+   "budget_class": "shop bay per 6 m x3",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 692,
+   "tris_far": 40
+  },
+  {
+   "name": "examples_map/shop_row4",
+   "tris_before": {
+    "near": 3878,
+    "mid": 860,
+    "far": 50
+   },
+   "dens": 3.17,
+   "far_budget": 80,
+   "budget": [
+    4800,
+    1400,
+    80
+   ],
+   "budget_class": "shop bay per 6 m x4",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 860,
+   "tris_far": 50
+  },
+  {
+   "name": "examples_map/stg_row2",
+   "tris_before": {
+    "near": 1094,
+    "mid": 245,
+    "far": 26
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    2000,
+    600,
+    40
+   ],
+   "budget_class": "warehouse (storage row)",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 245,
+   "tris_far": 26
+  },
+  {
+   "name": "examples_map/stg_row3",
+   "tris_before": {
+    "near": 1576,
+    "mid": 349,
+    "far": 34
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    2000,
+    600,
+    40
+   ],
+   "budget_class": "warehouse (storage row)",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 349,
+   "tris_far": 34
+  },
+  {
+   "name": "examples_map/svb_row2",
+   "tris_before": {
+    "near": 1572,
+    "mid": 436,
+    "far": 32
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop bay per 6 m x2",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 436,
+   "tris_far": 32
+  },
+  {
+   "name": "examples_map/svb_row3",
+   "tris_before": {
+    "near": 2154,
+    "mid": 594,
+    "far": 32
+   },
+   "dens": 3.17,
+   "far_budget": 60,
+   "budget": [
+    3600,
+    1050,
+    60
+   ],
+   "budget_class": "shop bay per 6 m x3",
+   "far_rehull": false,
+   "far_boxes": 2,
+   "tris_mid": 594,
+   "tris_far": 52
+  },
+  {
+   "name": "examples_map/twr_bay1",
+   "tris_before": {
+    "near": 2552,
+    "mid": 762,
+    "far": 74
+   },
+   "dens": 3.17,
+   "far_budget": 80,
+   "budget": [
+    4000,
+    1200,
+    80
+   ],
+   "budget_class": "tower per 10 storeys x1",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 762,
+   "tris_far": 74
+  },
+  {
+   "name": "examples_renamed/apt_row",
+   "tris_before": {
+    "near": 2582,
+    "mid": 776,
+    "far": 34
+   },
+   "dens": 3.17,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment block",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 776,
+   "tris_far": 34
+  },
+  {
+   "name": "examples_renamed/brk_row",
+   "tris_before": {
+    "near": 3174,
+    "mid": 778,
+    "far": 34
+   },
+   "dens": 3.17,
+   "far_budget": 80,
+   "budget": [
+    3500,
+    1000,
+    80
+   ],
+   "budget_class": "apartment block",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 778,
+   "tris_far": 34
+  },
+  {
+   "name": "examples_renamed/stg_row",
+   "tris_before": {
+    "near": 558,
+    "mid": 184,
+    "far": 10
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    2000,
+    600,
+    40
+   ],
+   "budget_class": "warehouse (storage row)",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 184,
+   "tris_far": 10
+  },
+  {
+   "name": "examples_renamed/svc_row",
+   "tris_before": {
+    "near": 1776,
+    "mid": 404,
+    "far": 10
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    2400,
+    700,
+    40
+   ],
+   "budget_class": "shop bay per 6 m x2",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 404,
+   "tris_far": 10
+  },
+  {
+   "name": "examples_renamed/twr_office",
+   "tris_before": {
+    "near": 3580,
+    "mid": 1056,
+    "far": 50
+   },
+   "dens": 3.17,
+   "far_budget": 80,
+   "budget": [
+    4000,
+    1200,
+    80
+   ],
+   "budget_class": "tower per 10 storeys x1",
+   "far_rehull": false,
+   "far_boxes": 3,
+   "tris_mid": 1056,
+   "tris_far": 80
+  },
+  {
+   "name": "examples_renamed/wh_shed",
+   "tris_before": {
+    "near": 1626,
+    "mid": 444,
+    "far": 18
+   },
+   "dens": 3.17,
+   "far_budget": 40,
+   "budget": [
+    2000,
+    600,
+    40
+   ],
+   "budget_class": "warehouse (storage row)",
+   "far_rehull": false,
+   "far_boxes": 0,
+   "tris_mid": 444,
+   "tris_far": 18
+  }
+ ]
+}

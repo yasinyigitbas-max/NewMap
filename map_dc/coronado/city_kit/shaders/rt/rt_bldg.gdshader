@@ -19,6 +19,10 @@ uniform sampler2D grime_tex : source_color, filter_linear_mipmap, repeat_enable;
 uniform bool has_normal = true;
 uniform bool has_orm = true;
 uniform bool has_emission = false;
+// LOD match (20 Nov, tools/city/lod/lod_bake.py): the mid tier's texture is the near model baked onto it
+// (textures/bld_lod_color.png) and its ALPHA is 1 - glass. With lod_glass the mid's glass reflects the sky like the
+// near's (no texture read added: the alpha comes with the colour) and lights up at night by 3 m bays.
+uniform bool lod_glass = false;
 uniform float emission_energy = 1.0;
 uniform float wear : hint_range(0.0, 1.0) = 0.45;
 uniform float foot_m = 1.4;
@@ -105,7 +109,7 @@ void fragment() {
 	ROUGHNESS = 0.9;
 #else
 	vec4 alb = texture(albedo_tex, UV);
-	vec3 orm = has_orm ? texture(orm_tex, UV).rgb : vec3(1.0, 0.8, 0.0);
+	vec3 orm = has_orm ? texture(orm_tex, UV).rgb : (lod_glass ? vec3(1.0, mix(0.08, 0.8, alb.a), 0.0) : vec3(1.0, 0.8, 0.0));
 	vec3 a = abs(v_wn);
 	vec2 guv = (a.y >= a.x && a.y >= a.z) ? v_wp.xz : (a.x >= a.z ? v_wp.zy : v_wp.xy);
 	vec4 grime = texture(grime_tex, guv / grime_meters);
@@ -137,7 +141,7 @@ void fragment() {
 	AO_LIGHT_AFFECT = contact_light * ck_look_contact;      // the kit's occlusion (recesses, under eaves and sills) also in sunlight
 	if (has_normal) NORMAL_MAP = texture(normal_tex, UV).rgb;
 	vec3 emi = vec3(0.0);
-	if (ck_look_glass > 0.5 && has_orm) {
+	if (ck_look_glass > 0.5 && (has_orm || lod_glass)) {
 		// glass = the smooth, non-metal texels of the ORM (roughness 0.08; nothing else in the kit is under 0.25)
 		float glass = (1.0 - smoothstep(0.1, 0.22, orm.g)) * (1.0 - smoothstep(0.1, 0.3, orm.b)) * wall;
 		if (glass > 0.01) {
@@ -179,6 +183,19 @@ void fragment() {
 			float hsh = fract(sin(dot(bay + lit_seed, vec2(12.9898, 78.233))) * 43758.5453);
 			float on = step(0.34, hsh) * smoothstep(hsh * 0.6, hsh * 0.6 + 0.25, ck_night) * mix(0.35, 1.0, fract(hsh * 7.31));
 			emi += texture(emission_tex, UV).rgb * night_color * emission_energy * night_energy * on;
+		}
+	}
+	if (lod_glass && ck_night > 0.001 && ck_look_windows > 0.5) {
+		// the mid's glass at night: a lamp per 3 m bay, the near's on / off rate, brightness and light colours
+		float g = (1.0 - alb.a) * wall;
+		if (g > 0.01) {
+			vec2 bay = floor(vec2(a.x >= a.z ? v_wp.z : v_wp.x, v_wp.y) / 3.0);
+			vec2 hw = win_hash(bay + lit_seed); vec2 hr = win_hash(floor(bay * vec2(0.5, 1.0)) + lit_seed * 1.7 + 0.31);
+			float on = step(0.34, hw.x) * smoothstep(hw.x * 0.6, hw.x * 0.6 + 0.25, ck_night);
+			float bright = mix(0.35, 0.85, hr.x) * mix(0.8, 1.1, hw.y);
+			vec3 lamp = mix(vec3(1.0, 0.56, 0.24), vec3(1.0, 0.7, 0.42), smoothstep(0.0, 0.55, hr.y));
+			lamp = mix(lamp, vec3(1.0, 0.8, 0.58), step(0.72, hr.y));
+			emi += g * lamp * (emission_energy * night_energy * on * bright);
 		}
 	}
 	// night signs: the letters (lighter than their board) glow, the board a little; one sign in seven flickers
