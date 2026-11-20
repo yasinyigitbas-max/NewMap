@@ -473,10 +473,19 @@ func _free_walk(start: Vector3, yaw: float) -> void:
 				break
 		elif opt.quit and Time.get_ticks_msec() - t_start > 12000: break
 		var p: Vector3 = pl.global_position
+		# B7 (Yasin 20 Nov: "far roads stay loaded, roads never load outside of the city, once we get out of the car they load
+		# again"; "when roads dont switch, i fall into a gap"): in a car or on a bicycle the player is frozen and hidden where
+		# he got in (CityPlayer::set_riding) and the city kept streaming round THAT spot. Riding, it streams round the camera
+		# (the car's / the bicycle's chase camera).
+		if not pl.visible:
+			var rc := get_viewport().get_camera_3d()
+			if rc: p = rc.global_position
 		var dt := maxf(get_process_delta_time(), 0.001)
 		st.update_focus(p, false, (p - last) / dt)
-		metres += Vector2(p.x - last.x, p.z - last.z).length(); last = p
-		lowest = minf(lowest, p.y - y_start); highest = maxf(highest, p.y - y_start)
+		if pl.visible:      # (the walk's own numbers: on foot only)
+			metres += Vector2(p.x - last.x, p.z - last.z).length()
+			lowest = minf(lowest, p.y - y_start); highest = maxf(highest, p.y - y_start)
+		last = p
 		if Engine.get_process_frames() % 6 == 0: hud.text = "%.1f m/s" % float(pl.call(&"get_speed"))
 	if frame_ms.size() > 20:
 		frame_ms.sort()
