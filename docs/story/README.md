@@ -1,4 +1,20 @@
-# The story: three versions
+# The story
+
+## Current: *Wish You Were Here* (A1 only): `wish_you_were_here/`
+Yasin, after reading A, B and C: "we aim language starters, and no one can reach B2 in 25 hours from zero." The game
+now covers **A1 only** (A2 is the sequel or the post-game), and Yasin asked for an entirely new story designed for
+that.
+
+The new story:
+- The hero comes to Coronado to find their missing sibling, Ari, and becomes a delivery rider in Ari's jacket.
+- Ari's postcards, written in A1 English, are a trail across the island.
+- The rider job is an A1 job: names, numbers, addresses, *Here you are*, repeated at every door.
+- The finale is a night of twelve deliveries.
+- The confrontation is won by a hundred riders each saying one small true sentence.
+
+Start with `wish_you_were_here/BIBLE.md`, then `A1_MAP.md` (the rules for every player line).
+
+## Earlier: three versions that climb to B2 (kept for their scenes and ideas, not for their level)
 Yasin asked (20 Nov 2026) for the old game's story rewritten as a real game that also teaches English, plus two more
 versions of the designer's own. All three:
 - follow the same rules: voice is the verb, the Word Fog with the word > sentence > syntax translation tiers, optional
