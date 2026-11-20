@@ -106,7 +106,7 @@ class CityHud : public CanvasLayer {
 	// OUT / GET OFF while driving or riding. A tap (or E): a tick, a vibration, done; nothing opens.
 	PanelContainer *b_use = nullptr;
 	Label *l_use_en = nullptr, *l_use_tr = nullptr;
-	int use_kind = 0;              // 0 nothing, 1 get in, 2 get out, 3 get on, 4 get off, 5 take a car from its driver
+	int use_kind = 0;              // 0 nothing, 1 get in, 2 get out, 3 get on, 4 get off, 5 take a car from its driver, 6 buy at a counter
 	int32_t use_row = -1;          // (5) the traffic's car
 	int cars_taken = 0;
 	uint64_t use_target = 0, use_last = 0;

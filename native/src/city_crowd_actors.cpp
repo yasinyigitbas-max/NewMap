@@ -117,6 +117,17 @@ void CityCrowd::actor_release(int p_walker) {
 	for (size_t k = 0; k < uniforms.size(); k++) if (uniforms[k].first == p_walker) { uniforms.erase(uniforms.begin() + (long)k); break; }
 }
 
+void CityCrowd::actor_free(int p_walker) {
+	for (size_t k = 0; k < actors.size(); k++) if (actors[k].walker == p_walker) { actors.erase(actors.begin() + (long)k); break; }
+	for (size_t k = 0; k < uniforms.size(); k++) if (uniforms[k].first == p_walker) { uniforms.erase(uniforms.begin() + (long)k); break; }
+	if (!crowd) return;
+	const int i = crowd->find(p_walker);
+	if (i < 0) return;
+	crowd->flags[i] &= (uint8_t)~pc::F_SCRIPT;
+	crowd->act[i] = pc::A_NONE;
+	crowd->hold(p_walker, false, 0.0f);
+}
+
 // the ground under a point: the world's collision (an actor off the pavements walks on the road, kerbs and all)
 float CityCrowd::ground_y(const Vector3 &p_at, float p_def) const {
 	Ref<World3D> w = get_world_3d();

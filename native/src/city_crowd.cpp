@@ -1581,6 +1581,7 @@ void CityCrowd::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("is_actor", "walker"), &CityCrowd::is_actor);
 	ClassDB::bind_method(D_METHOD("actor_role", "walker"), &CityCrowd::actor_role);
 	ClassDB::bind_method(D_METHOD("actor_release", "walker"), &CityCrowd::actor_release);
+	ClassDB::bind_method(D_METHOD("actor_free", "walker"), &CityCrowd::actor_free);
 	ClassDB::bind_method(D_METHOD("walker_at", "walker"), &CityCrowd::walker_at);
 	ClassDB::bind_method(D_METHOD("walker_alive", "walker"), &CityCrowd::walker_alive);
 	ClassDB::bind_method(D_METHOD("is_down", "walker"), &CityCrowd::is_down);

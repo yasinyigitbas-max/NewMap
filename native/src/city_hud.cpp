@@ -7,6 +7,7 @@
 #include "city_player.h"
 #include "city_crowd.h"
 #include "city_traffic.h"
+#include "city_shops.h"
 #include "city_car.h"
 #include "city_bike.h"
 #include "car_models.h"
@@ -492,6 +493,11 @@ void CityHud::use_find(CityPlayer *pl) {
 			if (d < 2.5f && d < best) { best = d; use_kind = 3; use_target = b->get_instance_id(); }
 		}
 	}
+	// BUYING (Yasin: "add us and npcs giving money receiving things animations"): on foot at a shop's counter, its cashier free
+	if (use_kind == 0 && on_foot) {
+		CityGame *g = CityGame::get();
+		if (CityShops *sh = g ? Object::cast_to<CityShops>(g->get_shops()) : nullptr) if (sh->can_buy()) use_kind = 6;
+	}
 	// TAKING A CAR (Yasin's GTA IV list): on foot by a car of the traffic that stands or crawls (a red light, a jam)
 	use_row = -1;
 	if (use_kind == 0 && on_foot) {
@@ -507,6 +513,11 @@ void CityHud::use_do() {
 	CityGame *g = CityGame::get();
 	CityPlayer *pl = player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
 	if (!pl && g) pl = Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(g->get_player_id())));
+	if (use_kind == 6 && pl) {   // at a counter: he pays and takes what he bought (CityShops)
+		if (CityShops *sh = g ? Object::cast_to<CityShops>(g->get_shops()) : nullptr) if (sh->buy()) { feedback(); uses++; }
+		use_scan = 0.0f;
+		return;
+	}
 	if (use_kind == 5 && pl) {   // the car is taken from its driver: he gets out (to fight, two in five, or to run), the player gets in
 		CityTraffic *trf = traffic_id ? Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(traffic_id))) : nullptr;
 		if (!trf && g) trf = Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(g->get_traffic_id())));
@@ -568,8 +579,8 @@ void CityHud::_process(double p_delta) {
 		const int was = use_kind;
 		use_find(pl);
 		if (use_kind != was || use_target != use_last) {
-			static const char *const EN[6] = { "", "GET IN", "GET OUT", "GET ON", "GET OFF", "TAKE CAR" };
-			static const char *const TR[6] = { "", "BİN", "İN", "BİN", "İN", "ARABAYI AL" };
+			static const char *const EN[7] = { "", "GET IN", "GET OUT", "GET ON", "GET OFF", "TAKE CAR", "BUY" };
+			static const char *const TR[7] = { "", "BİN", "İN", "BİN", "İN", "ARABAYI AL", "SATIN AL" };
 			l_use_en->set_text(EN[use_kind]); l_use_tr->set_text(String::utf8(TR[use_kind]));
 			if ((use_kind == 1 || use_kind == 3) && use_target != use_last) Input::get_singleton()->vibrate_handheld(200);   // (the old spec: a new target in reach)
 			use_last = use_target;

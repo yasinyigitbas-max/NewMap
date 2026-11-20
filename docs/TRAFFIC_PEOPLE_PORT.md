@@ -1382,3 +1382,19 @@ Branch `claude/street-life`. All C++.
 - Tests: tests/people/test_street_life.gd, tests/traffic/test_take_car.gd, tests/traffic/test_law.gd.
 - NOT DONE: police shooting (no guns), roadblocks, ramming; the arrest has no animation of its own; cops run straight
   lines (as road rage does: through what is in the way); nothing of it measured on the phone.
+
+## 39. People in the shops (20 Nov; Yasin: "add npcs into shops, some customers and a cashier, add us and npcs giving money receiving things animations")
+- WHERE: `tools/city/rooms/room_people.gd` (run WITH the renderer: headless, a MultiMesh's instance transforms read back as
+  zero) reads every room scene once -> `city_kit/traffic/room_people.json` (568 of 645 rooms): the staff spot behind the
+  till or counter, the queue spot before it, up to 6 browse spots before shelves and fridges, the door in and out, all in
+  the room's frame. The till's sides are the interiors skill's (staff at +Z: cash_register, checkout_counter,
+  laundry_counter; customers at +Z: shop_counter, bar_counter, pastry_case, shelves). Rerun it when rooms change.
+- WHO: `CityShops` (city_shops.*, made by CityGame with the law) opens the 4 nearest rooms CityRooms has awake within
+  45 m (`CityRooms::awake_rooms`): a cashier (Counter_Idle_Loop), up to two customers at a time from the door: shelves
+  (Idle_LookAround_Loop), queue (behind whoever pays), pay, out and on as one of the crowd (`CityCrowd::actor_free`).
+- THE PAY, four moves of 1.4 s: the cashier rings it up (Counter_Show); the money over (Counter_Give); the goods over
+  (the cashier's Counter_Give); taken (Interact). The player at the queue spot: the HUD's BUY (SATIN AL), the same moves
+  on him (`CityPlayer::act`), the shop's kind sets the item and the price; short of money the cashier shakes his head.
+- Test: tests/people/test_shops.gd (a real room by a pavement, as if awake).
+- NOT DONE: customers sit at cafe tables; the goods are not seen in the hand (no prop); the cashier is in his own clothes
+  (no shop uniform); not seen in the streamed city with a window; not on the phone.

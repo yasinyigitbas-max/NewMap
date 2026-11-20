@@ -154,7 +154,7 @@ private:
 	};
 	std::vector<Actor> actors;
 	std::vector<std::pair<int, int>> uniforms;   // walker -> body tag (2 police, 3 medical): the clothes of the job
-	enum { R_NONE = 0, R_HELPER = 1, R_MEDIC = 2, R_COP = 3, R_MUGGER = 4, R_VICTIM = 5, R_DRIVER = 6, R_COWER = 7, R_CALLER = 8 };
+	enum { R_NONE = 0, R_HELPER = 1, R_MEDIC = 2, R_COP = 3, R_MUGGER = 4, R_VICTIM = 5, R_DRIVER = 6, R_COWER = 7, R_CALLER = 8, R_STAFF = 9, R_SHOPPER = 10 };
 	Actor *actor_of(int p_walker);
 	const Actor *actor_of(int p_walker) const;
 	void actor_clip(const Actor &p_a, StringName &r_clip, double &r_speed, double &r_hold, int &r_token) const;
@@ -302,6 +302,8 @@ public:
 	bool is_actor(int p_walker) const;
 	int actor_role(int p_walker) const;
 	void actor_release(int p_walker);
+	// let go as one of the crowd's own (even one the game placed): he walks back to the pavement and on with his day
+	void actor_free(int p_walker);
 	Vector3 walker_at(int p_walker) const;
 	bool walker_alive(int p_walker) const;
 	// the hurt who lie until a medic comes: is he one; the medic has been (he gets up)
