@@ -71,30 +71,25 @@ const ITEMS := [
 	["prop_lifering_stand", "clean", 350.0, -1584.6, 180.0],
 	["prop_lamp_victorian", "worn", 326.0, -1583.0, 0.0], ["prop_lamp_victorian", "worn", 374.0, -1583.0, 0.0],
 	["prop_lamp_victorian", "worn", 340.0, -1566.0, 0.0], ["prop_lamp_victorian", "worn", 360.0, -1566.0, 0.0],
-	["prop_trash_receptacle", "worn", 343.0, -1562.6, 0.0], ["prop_recycling_receptacle", "worn", 357.0, -1562.6, 0.0],
-	["prop_bike_rack", "worn", 365.0, -1563.4, 0.0],
-	["prop_newspaper_box_blue", "worn", 345.0, -1562.7, 180.0],
-	["prop_drinking_fountain", "worn", 339.2, -1562.7, 180.0],
+	["prop_trash_receptacle", "worn", 341.8, -1562.6, 0.0], ["prop_recycling_receptacle", "worn", 358.2, -1562.6, 0.0],
+	["prop_bike_rack", "worn", 369.0, -1563.4, 0.0],
+	["prop_newspaper_box_blue", "worn", 347.0, -1562.7, 180.0],
 	["plant_potted_leafy", "normal", 323.0, -1563.5, 0.0], ["plant_potted_leafy", "normal", 377.0, -1563.5, 0.0],
 	# ---- the fish house's tables on the plaza by its door (u 320), under umbrellas; its menu planters
 	["prop_patio_set_4", "worn", 323.5, -1574.5, 0.0], ["prop_patio_set_4", "worn", 323.5, -1570.0, 15.0],
 	["prop_patio_set_4", "worn", 327.5, -1572.0, 0.0],
-	["prop_beach_umbrella", "clean", 323.5, -1574.5, 0.0], ["prop_beach_umbrella", "clean", 323.5, -1570.0, 0.0],
-	["prop_beach_umbrella", "clean", 327.5, -1572.0, 0.0],
 	["plant_potted_succulent", "normal", 320.6, -1578.0, 0.0], ["plant_potted_succulent", "normal", 320.6, -1567.0, 0.0],
 	# ---- the rental: kayak racks and rental bikes out on the paving in front of it (u 382), its sign of the day
 	["prop_kayak_rack", "clean", 378.0, -1571.0, 90.0], ["prop_kayak_rack", "clean", 378.0, -1567.0, 90.0],
-	["prop_bicycle_cruiser", "clean", 380.6, -1580.0, 0.0], ["prop_bicycle_cruiser", "clean", 379.6, -1580.0, 0.0],
-	["prop_bicycle_cruiser", "clean", 378.6, -1580.0, 0.0],
 	["prop_beach_sign_rules", "worn", 381.0, -1582.0, -90.0],
 	# ---- the inn: chairs on its bay lawn facing the water, a barbecue for the guests, vending and ice by the office
-	["prop_adirondack_white", "worn", 272.4, -1580.5, 180.0], ["prop_adirondack_white", "worn", 280.0, -1580.5, 180.0],
-	["prop_adirondack_wood", "worn", 287.4, -1580.5, 180.0], ["prop_adirondack_wood", "worn", 294.9, -1580.5, 180.0],
-	["prop_vending_soda", "clean", 264.0, -1576.8, 180.0], ["prop_ice_chest", "clean", 262.8, -1572.0, 90.0],
-	["plant_bird_of_paradise", "normal", 276.0, -1578.0, 0.0], ["plant_bird_of_paradise", "normal", 291.0, -1578.0, 0.0],
-	["prop_mailbox_post_metal", "worn", 266.0, -1584.2, 180.0],
+	["prop_adirondack_white", "worn", 275.5, -1580.5, 180.0], ["prop_adirondack_white", "worn", 283.5, -1580.5, 180.0],
+	["prop_adirondack_wood", "worn", 290.8, -1580.5, 180.0], ["prop_adirondack_wood", "worn", 298.2, -1580.5, 180.0],
+	["prop_vending_soda", "clean", 264.0, -1576.8, 180.0], ["prop_ice_chest", "clean", 261.0, -1572.0, 90.0],
+	["plant_bird_of_paradise", "normal", 263.5, -1580.0, 0.0],
+	["prop_mailbox_post_metal", "worn", 265.4, -1582.8, 180.0],
 	["prop_bbq_gas_cart", "worn", 284.0, -1559.0, 0.0], ["prop_picnic_table", "worn", 280.0, -1556.0, 0.0],
-	["prop_ac_condenser", "worn", 263.4, -1566.0, 90.0], ["prop_ac_condenser", "worn", 298.4, -1566.0, -90.0],
+	["prop_ac_condenser", "worn", 261.6, -1566.0, 90.0],
 	# ---- FERRY GREEN: the playground on its sand (west), a shade sail over the picnic tables, benches facing the play
 	#      ground for the parents, a fountain; lawn open in the middle
 	["prop_play_structure", "worn", 318.0, -1528.0, 0.0], ["prop_swing_set", "worn", 326.5, -1532.0, 0.0],
@@ -107,21 +102,21 @@ const ITEMS := [
 	["prop_bbq_kettle", "worn", 356.6, -1528.5, 0.0],
 	["prop_park_bench", "worn", 376.0, -1520.0, -90.0], ["prop_park_bench", "worn", 384.0, -1538.0, 180.0],
 	["prop_sprinkler_impact", "normal", 372.0, -1530.0, 0.0, false], ["prop_sprinkler_impact", "normal", 340.0, -1510.0, 0.0, false],
-	["plant_bougainvillea_mound", "normal", 390.0, -1542.0, 0.0], ["plant_agave_americana", "normal", 308.0, -1541.0, 0.0],
+	["plant_bougainvillea_mound", "normal", 390.0, -1542.0, 0.0], ["plant_agave_americana", "normal", 308.0, -1539.5, 0.0],
 	# ---- FERRY WALK: lamps on its west side, a bench and bin where it meets the lot's footway
-	["prop_lamp_globe", "worn", 300.9, -1550.0, 0.0], ["prop_lamp_globe", "worn", 300.9, -1520.0, 0.0],
-	["prop_lamp_globe", "worn", 300.9, -1490.0, 0.0], ["prop_lamp_globe", "worn", 300.9, -1440.0, 0.0],
+	["prop_lamp_globe", "worn", 300.0, -1550.0, 0.0], ["prop_lamp_globe", "worn", 300.0, -1520.0, 0.0],
+	["prop_lamp_globe", "worn", 300.0, -1490.0, 0.0], ["prop_lamp_globe", "worn", 300.0, -1440.0, 0.0],
 	# ---- the 3rd St forecourt: the bakery's and the coffee shop's tables at their doors, benches facing the street,
 	#      paper boxes and racks by the doors, lamps
-	["prop_patio_set_4", "worn", 311.0, -1416.6, 0.0], ["prop_patio_set_4", "worn", 362.0, -1416.6, 0.0],
-	["prop_patio_set_4", "worn", 356.0, -1416.6, 15.0],
-	["prop_park_bench", "worn", 299.0, -1415.4, 0.0], ["prop_bike_rack", "worn", 295.5, -1418.2, 90.0],
-	["prop_newspaper_box_red", "worn", 270.5, -1418.8, 0.0], ["prop_newspaper_box_blue", "worn", 271.2, -1418.8, 0.0],
+	["prop_patio_set_4", "worn", 306.5, -1416.6, 0.0], ["prop_patio_set_4", "worn", 362.0, -1416.6, 0.0],
+	["prop_patio_set_4", "worn", 356.4, -1416.6, 15.0],
+	["prop_park_bench", "worn", 300.0, -1415.4, 0.0], ["prop_bike_rack", "worn", 297.5, -1418.2, 90.0],
+	["prop_newspaper_box_red", "worn", 273.0, -1418.8, 0.0], ["prop_newspaper_box_blue", "worn", 273.7, -1418.8, 0.0],
 	["prop_bike_rack", "worn", 330.5, -1418.4, 0.0],
 	["prop_lamp_victorian", "worn", 276.0, -1415.0, 0.0], ["prop_lamp_victorian", "worn", 316.0, -1415.0, 0.0],
 	["prop_lamp_victorian", "worn", 348.0, -1415.0, 0.0], ["prop_lamp_victorian", "worn", 380.0, -1415.0, 0.0],
 	["plant_potted_leafy", "normal", 300.0, -1419.0, 0.0],
-	["prop_usps_collection_box", "worn", 274.8, -1418.6, 0.0],
+	["prop_usps_collection_box", "worn", 275.5, -1418.6, 0.0],
 	# ---- the corner green (u 364 - 400 on 3rd St): benches under the hospital's side, planting
 	["prop_park_bench", "worn", 372.0, -1424.0, 0.0], ["prop_park_bench", "worn", 386.0, -1424.0, 0.0],
 	["plant_bougainvillea_mound", "normal", 379.0, -1432.0, 0.0], ["plant_agave_americana_small", "normal", 393.0, -1430.0, 0.0],
@@ -129,6 +124,52 @@ const ITEMS := [
 ]
 
 var PY: Array = []     # pad heights (local), one per row of B
+
+## SUPERCHECKER (20 Nov; the coordinator, Yasin's word: "be MUCH more prone to delete: any prop or road/ground mark with
+## any finding or any doubt is deleted with its reason, no relocating attempts"): tools/city/super/sc.py check on this
+## piece (area layout OUT/fill/fn/area.json). Every prop with a finding is taken out (its reason on its line); a
+## collision box on each building column the checker measured without one. Every oil mark and lane-wear stripe was
+## also taken out of the script itself (the checker found oil on the drive's centre line with no car near it).
+const SC := {
+ "out": [
+	["prop_trash_receptacle", 341.800, -1562.600, "bin_open: prop_trash_receptacle stands in the open (4.6 m from a wall, 99.0 m from a fence)"],
+	["prop_recycling_receptacle", 358.200, -1562.600, "bin_open: prop_recycling_receptacle stands in the open (4.6 m from a wall, 99.0 m from a fence)"],
+	["prop_park_bench", 344.000, -1580.500, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", 356.000, -1580.500, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", 364.000, -1580.500, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", 314.000, -1538.600, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", 323.000, -1538.600, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", 333.600, -1528.000, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", 376.000, -1520.000, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", 384.000, -1538.000, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_park_bench", 386.000, -1424.000, "no_reason: prop_park_bench stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_picnic_table", 347.500, -1526.000, "no_reason: prop_picnic_table stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_play_structure", 318.000, -1528.000, "no_reason: prop_play_structure stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_swing_set", 326.500, -1532.000, "no_reason: prop_swing_set stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_slide", 326.500, -1524.500, "no_reason: prop_slide stands alone: no door within 18 m, no wall within 8 m, nothing to sit with"],
+	["prop_shade_sail", 350.000, -1526.000, "sail_over_nothing: a shade sail with no table, seat or play item under it"],
+ ],
+ "boxes": [
+	["Buildings/inn", [16.8874, 1.1000, -5.0201, 0.4152, 2.2000, 0.2400]],
+	["Buildings/inn", [-19.0705, 1.5500, 6.3649, 0.3000, 3.1000, 0.3101]],
+	["Buildings/inn", [-17.0251, 1.3000, -5.3601, 0.8399, 2.6000, 0.7598]],
+	["Buildings/inn", [17.4997, 1.5300, 4.9409, 0.1600, 3.0600, 0.1620]],
+	["Buildings/inn", [-10.5005, 1.7000, 6.1249, 0.2601, 2.8000, 0.2900]],
+	["Buildings/fish_house", [3.7350, 1.5000, 6.7748, 0.4900, 3.0000, 0.4901]],
+	["Buildings/fish_house", [1.6959, 1.5000, 6.8800, 0.1600, 3.0000, 0.1600]],
+	["Buildings/ferry_office", [0.8999, 1.6999, 5.6998, 0.1600, 2.7999, 0.1600]],
+	["Buildings/ferry_office", [-0.9001, 1.6999, 5.6998, 0.1600, 2.7999, 0.1600]],
+	["Buildings/rental", [2.0366, 1.5000, 6.8799, 0.1600, 3.0000, 0.1600]],
+	["Buildings/corner", [2.1049, 1.5000, 6.7748, 0.4900, 3.0000, 0.4901]],
+	["Buildings/corner", [3.9450, 1.5000, 6.8800, 0.1600, 3.0000, 0.1600]],
+	["Buildings/corner", [-1.8801, 1.5000, 6.7748, 0.1600, 3.0000, 0.4901]],
+	["Buildings/bakery", [2.2349, 1.5000, 6.7748, 0.4899, 3.0000, 0.4901]],
+	["Buildings/bakery", [-0.0134, 1.5000, 6.8800, 0.1600, 3.0000, 0.1600]],
+	["Buildings/pub", [2.0367, 1.5000, 6.8799, 0.1600, 3.0000, 0.1600]],
+	["Buildings/pub", [0.0132, 1.5000, 6.8799, 0.1600, 3.0000, 0.1600]],
+	["Buildings/coffee", [1.0249, 1.5000, 6.8800, 0.1600, 3.0000, 0.1600]],
+ ],
+}
 
 func _init() -> void: _run.call_deferred()
 
@@ -154,7 +195,12 @@ func _run() -> void:
 	var pe: Array = []
 	for b: Array in B:
 		PY.append(H.pad_height(fp(b), float(b[4]), yb)); pe.append(H.pad_entry(fp(b), float(PY[PY.size() - 1])))
-	var yf := H.graded(yb, pe)
+	var yg := H.graded(yb, pe)
+	# the grading up to the pads is eased back onto the plain ground within 4 m of the block's edges, so every edge
+	# keeps its street walk's height (a pad near a walk otherwise lifts the edge: 8.5 cm at Amber, first build)
+	var yf := func(x: float, z: float) -> float:
+		var d := minf(minf(x - X0, X1 - x), minf(z - Z0, Z1 - z))
+		return lerpf(float(yb.call(x, z)), float(yg.call(x, z)), smoothstep(0.0, 4.0, d))
 	var paints: Array = []
 	for b: Array in B: paints.append(H.pad_rect(fp(b)))
 	# ---- stall lines: the park and ride's five rows (28 stalls each, 2.7 m, u 311 .. 386.6), the inn's lot (two rows
@@ -169,6 +215,8 @@ func _run() -> void:
 	for k in 22:
 		var x := 304.5 + 2.7 * k
 		paints.append([x - 0.05, -1453.0, x + 0.05, -1447.5, "white"])
+	for z: float in [-1460.5, -1459.5, -1458.5, -1457.5, -1456.5, -1455.5, -1454.5, -1453.5]:
+		paints.append([FWALK[0], z - 0.25, FWALK[1], z + 0.25, "white"])     # the zebra where Ferry Walk crosses the drive
 	paints.append([262.5, -1457.08, 394.0, -1456.92, "yellow"])          # the drive's centre line
 	paints.append([262.0, -1461.0, 262.4, -1457.08, "white"])            # stop bar at the apron (the inbound side)
 	paints.append_array([
@@ -185,8 +233,7 @@ func _run() -> void:
 		[320.0, -1585.7, 382.0, -1562.0, "plaza"],                      # FERRY PLAZA (open to the gap)
 		[359.0, -1562.0, 366.0, -1544.5, "plaza"],                      # ... its walk past the office to the green
 		[362.0, -1544.5, 366.0, -1502.5, "plaza"],                      # ... and through the green to the lot
-		[310.0, -1540.0, 331.0, -1516.0, "sand"],                       # the playground's sand
-		[343.0, -1531.0, 358.0, -1521.0, "concrete"],                   # the picnic pad under the sail
+		# (the playground's sand and the picnic pad were taken out with their play items and tables: superchecker no_reason)
 		[304.0, -1544.5, 362.0, -1542.5, "plaza"],                      # the green's path from Ferry Walk to the plaza walk
 		[259.2, -1585.7, 300.4, -1583.7, "plaza"],                      # the 1st St front walk of the inn
 		[266.3, -1583.7, 268.3, -1576.0, "plaza"],                      # the inn's office path (door u 267.34)
@@ -224,6 +271,7 @@ func _run() -> void:
 		H.steps_z2(g, float(b[2]), 4.0, f[1] - ceilf((top - gy) / 0.17) * H.TREAD, f[1], gy, top, yf)
 	if PASS >= 2: _build(bl, props, dec, rr, yf)
 	if PASS >= 2: H.polish(props, g, ITEMS)
+	H.sc_apply(root, props, dec, SC)
 	H.finish(root, g, props, dec, "n_fn_east")
 	quit()
 
@@ -232,41 +280,37 @@ func _build(bl: Node3D, props: K.Props, dec: K.Decals, rr: RandomNumberGenerator
 	for i in B.size():
 		var b: Array = B[i]
 		K.building(bl, String(b[1]), Vector3(b[2], float(PY[i]), b[3]), float(b[4]), String(b[0]))
-	# ---- Ferry Drive: the stop sign at the apron (outbound side), lamps on its north verge over the drive, the
-	#      park and ride's pay station and a no-parking sign at the drive's mouth
+	# ---- Ferry Drive: the stop sign at the apron (outbound side), cobra lamps on the verges with their arms over the
+	#      drive, the park and ride's pay station on the grass beside Ferry Walk (where the riders walk off), a
+	#      no-parking sign at the drive's mouth
 	P.call("prop_sign_stop", "worn", 262.4, -1452.4, 90.0)
 	P.call("prop_sign_no_parking", "worn", 266.0, -1461.6, 0.0)
-	for x: float in [292.0, 340.0, 380.0]: P.call("prop_lamp_cobra", "worn", x, -1462.8, 0.0)
-	P.call("prop_pay_station", "worn", 302.0, -1465.0, 90.0)
-	# ---- the park and ride: wheel stops at the stalls' heads, lot lights on the row ends (u 307.5 / 390.5 are the
-	#      connectors: the poles stand on the island ends of the back-to-back rows)
+	P.call("prop_lamp_cobra", "worn", 292.0, -1462.8, 0.0)
+	for x: float in [370.0, 390.0]: P.call("prop_lamp_cobra", "worn", x, -1451.5, 180.0)
+	P.call("prop_pay_station", "worn", 299.6, -1464.0, 90.0)
+	# ---- the park and ride: wheel stops at the stalls' heads (rows 1, 3, 5 nose north, 2 and 4 nose south), lot
+	#      lights on the green's edge north of the last row (the rows are back to back: no island for a pole)
 	for k in 28:
 		var x := 312.35 + 2.7 * k
 		P.call("prop_wheel_stop_concrete", "worn", x, -1465.9, 0.0)
 		P.call("prop_wheel_stop_concrete", "worn", x, -1467.1, 0.0)
+		P.call("prop_wheel_stop_concrete", "worn", x, -1483.9, 0.0)
 		P.call("prop_wheel_stop_concrete", "worn", x, -1485.1, 0.0)
-		P.call("prop_wheel_stop_concrete", "worn", x, -1497.6, 0.0)
-	for x: float in [330.0, 368.0]:
-		P.call("prop_lot_light_pole", "worn", x, -1466.5, 0.0)
-		P.call("prop_lot_light_pole", "worn", x, -1484.5, 0.0)
+		P.call("prop_wheel_stop_concrete", "worn", x, -1501.9, 0.0)
+	for x: float in [330.0, 368.0]: P.call("prop_lot_light_pole", "worn", x, -1503.4, 0.0)
 	# oil where cars stand all day (the ferry commuters' stalls nearest the walk)
-	for x: float in [313.7, 321.8, 335.3, 351.5, 370.4]: W.oil(dec, rr, Vector2(x, -1463.7), 0.0, yf, 0.5)
-	for x: float in [316.4, 343.4, 362.3]: W.oil(dec, rr, Vector2(x, -1487.3), 0.0, yf, 0.5)
 	# ---- the inn's guest lot: wheel stops, a light, the inn's dumpster on its north end by the back walk
 	for k in 23:
 		var z := -1528.65 + 2.7 * k
 		P.call("prop_wheel_stop_concrete", "worn", 271.1, z, 90.0)
 		P.call("prop_wheel_stop_concrete", "worn", 287.9, z, 90.0)
-	P.call("prop_lot_light_pole", "worn", 279.5, -1532.0, 0.0)
-	P.call("prop_dumpster_3yd_green", "worn", 274.0, -1559.6, 0.0)
+	P.call("prop_lot_light_pole", "worn", 272.0, -1532.0, 0.0)
+	P.call("prop_dumpster_3yd_green", "worn", 279.5, -1531.2, 0.0)       # at the aisle's head: the truck backs up the aisle
 	# ---- the shops' back yard: each shop's bin against its back wall, condensers, the delivery stalls' wheel stops
-	for x: float in [264.0, 290.0, 307.0, 320.0, 345.0]: P.call("prop_dumpster_3yd_blue" if x > 300.0 else "prop_dumpster_3yd_green", "worn", x, -1436.9, 0.0)
-	for x: float in [272.0, 279.0, 313.0, 333.0, 350.5, 357.0]: P.call("prop_ac_condenser", "worn", x, -1436.6, 0.0)
+	for x: float in [266.8, 287.8, 310.5, 327.3, 344.5, 354.8]: P.call("prop_dumpster_3yd_blue" if x > 300.0 else "prop_dumpster_3yd_green", "worn", x, -1436.9, 0.0)
+	for x: float in [272.0, 281.8, 313.0, 321.3, 333.5, 346.5, 352.8, 361.5]: P.call("prop_ac_condenser", "worn", x, -1436.6, 0.0)
 	for k in 21: P.call("prop_wheel_stop_concrete", "worn", 305.85 + 2.7 * k, -1448.1, 0.0)
-	W.oil(dec, rr, Vector2(310.0, -1450.5), 0.0, yf, 0.5); W.oil(dec, rr, Vector2(339.7, -1450.5), 0.0, yf, 0.5)
 	# ---- the ferry office: its flag-less monument stone by the steps, a bench either side of the door (people wait
 	#      for the boat out of the wind)
 	P.call("prop_park_bench", "worn", 344.0, -1563.4, 180.0)
 	P.call("prop_park_bench", "worn", 356.0, -1563.4, 180.0)
-	W.lane_wear(dec, rr, -1457.0, 263.0, 392.0, false, yf)
-	W.lane_wear(dec, rr, -1476.0, 307.0, 387.0, false, yf)

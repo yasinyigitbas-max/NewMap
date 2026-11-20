@@ -1,0 +1,57 @@
+{
+ "area": "fn_east",
+ "piece": "n_fn_east",
+ "zone": "ferry district: commercial (3rd St row), the inn's lawn, Ferry Green (park)",
+ "rule": "docs/TREE_PLAN.md: commercial - few; waterfront - palms; civic and parks - clumps of 3-5 at the edges and round the seating",
+ "written": "by hand, 20 Nov 2026 (fill_east fn, after the superchecker pass): no builder trees were ever in these pieces; these placed after the plan; thinned by hand to the plan's in-view limit (sc.py trees: at most 8 broadleaf / 12 trees in view from a street point, all lists counted)",
+ "trees": [
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    345,
+    2.067,
+    -1520
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "Ferry Green clump: shade for the families waiting for a boat"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    352,
+    2.078,
+    -1532
+   ],
+   "yaw": 120,
+   "scale": 0.85,
+   "why": "Ferry Green clump: the second crown, toward the ticket office"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    338,
+    2.091,
+    -1534
+   ],
+   "yaw": 240,
+   "scale": 0.9,
+   "why": "Ferry Green clump: the third, seen from the plaza walk"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    269.5,
+    2.151,
+    -1581.5
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "the inn's bay lawn: one palm by the office path (waterfront: palms)"
+  }
+ ]
+}

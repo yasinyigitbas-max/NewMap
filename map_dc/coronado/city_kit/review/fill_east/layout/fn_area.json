@@ -1,0 +1,1229 @@
+{
+ "instances": [
+  {
+   "piece": "j_strip",
+   "pos": [
+    500.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "sample M"
+  },
+  {
+   "piece": "s_strip_art",
+   "pos": [
+    500.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "sample M"
+  },
+  {
+   "piece": "s_strip_art",
+   "pos": [
+    500.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": -180.0,
+   "from": "sample M"
+  },
+  {
+   "piece": "s_strip_side",
+   "pos": [
+    500.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "sample M"
+  },
+  {
+   "piece": "s_strip_side",
+   "pos": [
+    500.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": -180.0,
+   "from": "sample M"
+  },
+  {
+   "piece": "m_ne",
+   "pos": [
+    500.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "sample M"
+  },
+  {
+   "piece": "m_nw",
+   "pos": [
+    500.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "sample M"
+  },
+  {
+   "piece": "m_se",
+   "pos": [
+    500.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "sample M"
+  },
+  {
+   "piece": "m_sw",
+   "pos": [
+    500.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "sample M"
+  },
+  {
+   "piece": "j_am_3rd",
+   "pos": [
+    0.0,
+    8.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "amber",
+   "site": null
+  },
+  {
+   "piece": "j_am_4th",
+   "pos": [
+    0.0,
+    14.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "amber",
+   "site": null
+  },
+  {
+   "piece": "s_am_b037_a",
+   "pos": [
+    0.0,
+    8.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "amber",
+   "site": "b037"
+  },
+  {
+   "piece": "s_am_b037_b",
+   "pos": [
+    0.0,
+    14.0,
+    -1200.0
+   ],
+   "yaw": 180.0,
+   "from": "amber",
+   "site": "b037"
+  },
+  {
+   "piece": "s_am_b038_a",
+   "pos": [
+    0.0,
+    14.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "amber",
+   "site": "b038"
+  },
+  {
+   "piece": "s_ar_b057_a",
+   "pos": [
+    500.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "art",
+   "site": "b057"
+  },
+  {
+   "piece": "s_ar_b058_b",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 180.0,
+   "from": "art",
+   "site": "b058"
+  },
+  {
+   "piece": "s_ar_b066_b",
+   "pos": [
+    -400.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": -90.0,
+   "from": "art",
+   "site": "b066"
+  },
+  {
+   "piece": "s_ar_b067_a",
+   "pos": [
+    -400.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 90.0,
+   "from": "art",
+   "site": "b067"
+  },
+  {
+   "piece": "s_ar_b067_b",
+   "pos": [
+    -200.0,
+    4.0,
+    -1400.0
+   ],
+   "yaw": -90.0,
+   "from": "art",
+   "site": "b067"
+  },
+  {
+   "piece": "s_ar_b068_a",
+   "pos": [
+    -200.0,
+    4.0,
+    -1400.0
+   ],
+   "yaw": 90.0,
+   "from": "art",
+   "site": "b068"
+  },
+  {
+   "piece": "s_ar_b068_b",
+   "pos": [
+    0.0,
+    8.0,
+    -1400.0
+   ],
+   "yaw": -90.0,
+   "from": "art",
+   "site": "b068"
+  },
+  {
+   "piece": "s_ar_b069_a",
+   "pos": [
+    0.0,
+    8.0,
+    -1400.0
+   ],
+   "yaw": 90.0,
+   "from": "art",
+   "site": "b069"
+  },
+  {
+   "piece": "s_ar_b069_b",
+   "pos": [
+    250.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": -90.0,
+   "from": "art",
+   "site": "b069"
+  },
+  {
+   "piece": "s_ar_b070_a",
+   "pos": [
+    250.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 90.0,
+   "from": "art",
+   "site": "b070"
+  },
+  {
+   "piece": "s_ar_b070_b",
+   "pos": [
+    500.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": -90.0,
+   "from": "art",
+   "site": "b070"
+  },
+  {
+   "piece": "s_ar_b074_b",
+   "pos": [
+    -400.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": -90.0,
+   "from": "art",
+   "site": "b074"
+  },
+  {
+   "piece": "s_ar_b075_a",
+   "pos": [
+    -400.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 90.0,
+   "from": "art",
+   "site": "b075"
+  },
+  {
+   "piece": "s_ar_b075_b",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": -90.0,
+   "from": "art",
+   "site": "b075"
+  },
+  {
+   "piece": "s_ar_b076_a",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": 90.0,
+   "from": "art",
+   "site": "b076"
+  },
+  {
+   "piece": "s_ar_b076_b",
+   "pos": [
+    0.0,
+    14.0,
+    -1200.0
+   ],
+   "yaw": -90.0,
+   "from": "art",
+   "site": "b076"
+  },
+  {
+   "piece": "s_ar_b077_a",
+   "pos": [
+    0.0,
+    14.0,
+    -1200.0
+   ],
+   "yaw": 90.0,
+   "from": "art",
+   "site": "b077"
+  },
+  {
+   "piece": "s_ar_b077_b",
+   "pos": [
+    250.0,
+    8.0,
+    -1200.0
+   ],
+   "yaw": -90.0,
+   "from": "art",
+   "site": "b077"
+  },
+  {
+   "piece": "s_ar_b078_a",
+   "pos": [
+    250.0,
+    8.0,
+    -1200.0
+   ],
+   "yaw": 90.0,
+   "from": "art",
+   "site": "b078"
+  },
+  {
+   "piece": "j_ar_e3",
+   "pos": [
+    -400.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "art",
+   "site": "node -400,-1400"
+  },
+  {
+   "piece": "j_ar_c3",
+   "pos": [
+    -200.0,
+    4.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "art",
+   "site": "node -200,-1400"
+  },
+  {
+   "piece": "j_ar_b3",
+   "pos": [
+    250.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "art",
+   "site": "node 250,-1400"
+  },
+  {
+   "piece": "j_ar_ad3",
+   "pos": [
+    500.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "art",
+   "site": "node 500,-1400"
+  },
+  {
+   "piece": "j_ar_e4",
+   "pos": [
+    -400.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "art",
+   "site": "node -400,-1200"
+  },
+  {
+   "piece": "j_ar_c4",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "art",
+   "site": "node -200,-1200"
+  },
+  {
+   "piece": "j_ar_b4",
+   "pos": [
+    250.0,
+    8.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "art",
+   "site": "node 250,-1200"
+  },
+  {
+   "piece": "j_ar_ad5",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "art",
+   "site": "node 500,-1000"
+  },
+  {
+   "piece": "s_br_appr_1",
+   "pos": [
+    685.5,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "bridge",
+   "site": "b160"
+  },
+  {
+   "piece": "s_rs_b019_a",
+   "pos": [
+    -400.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b019"
+  },
+  {
+   "piece": "s_rs_b019_b",
+   "pos": [
+    -400.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b019"
+  },
+  {
+   "piece": "s_rs_b020_a",
+   "pos": [
+    -400.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b020"
+  },
+  {
+   "piece": "s_rs_b029_a",
+   "pos": [
+    -200.0,
+    4.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b029"
+  },
+  {
+   "piece": "s_rs_b029_b",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b029"
+  },
+  {
+   "piece": "s_rs_b030_a",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b030"
+  },
+  {
+   "piece": "s_rs_b047_a",
+   "pos": [
+    250.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b047"
+  },
+  {
+   "piece": "s_rs_b047_b",
+   "pos": [
+    250.0,
+    8.0,
+    -1200.0
+   ],
+   "yaw": -180.0,
+   "from": "resstd",
+   "site": "b047"
+  },
+  {
+   "piece": "s_rs_b048_a",
+   "pos": [
+    250.0,
+    8.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b048"
+  },
+  {
+   "piece": "s_rs_b059_a",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "resstd",
+   "site": "b059"
+  },
+  {
+   "piece": "s_rs_b086_b",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": -90.0,
+   "from": "resstd",
+   "site": "b086"
+  },
+  {
+   "piece": "j_rg_nw_e0_n1600",
+   "pos": [
+    0.0,
+    2.0,
+    -1600.00012207031
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "0.0,-1600.0"
+  },
+  {
+   "piece": "j_rg_nw_e250_n1600",
+   "pos": [
+    250.0,
+    2.0,
+    -1600.00012207031
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "250.0,-1600.0"
+  },
+  {
+   "piece": "j_rg_nw_e500_n1600",
+   "pos": [
+    500.0,
+    2.0,
+    -1600.00012207031
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "500.0,-1600.0"
+  },
+  {
+   "piece": "j_rg_nw_e660_n1200",
+   "pos": [
+    660.000061035156,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "660.0,-1200.0"
+  },
+  {
+   "piece": "j_rg_nw_e660_n1400",
+   "pos": [
+    660.000061035156,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "660.0,-1400.0"
+  },
+  {
+   "piece": "j_rg_nw_w200_n1600",
+   "pos": [
+    -200.0,
+    2.0,
+    -1600.00012207031
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "-200.0,-1600.0"
+  },
+  {
+   "piece": "j_rg_nw_w400_n1600",
+   "pos": [
+    -400.0,
+    2.0,
+    -1600.00012207031
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "-400.0,-1600.0"
+  },
+  {
+   "piece": "s_rg_nw_b018",
+   "pos": [
+    -400.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 180.0,
+   "from": "ring_nw",
+   "site": "b018"
+  },
+  {
+   "piece": "s_rg_nw_b028",
+   "pos": [
+    -200.0,
+    4.0,
+    -1400.0
+   ],
+   "yaw": 180.0,
+   "from": "ring_nw",
+   "site": "b028"
+  },
+  {
+   "piece": "s_rg_nw_b036",
+   "pos": [
+    0.0,
+    8.0,
+    -1400.0
+   ],
+   "yaw": 180.0,
+   "from": "ring_nw",
+   "site": "b036"
+  },
+  {
+   "piece": "s_rg_nw_b046",
+   "pos": [
+    250.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 180.0,
+   "from": "ring_nw",
+   "site": "b046"
+  },
+  {
+   "piece": "s_rg_nw_b056",
+   "pos": [
+    500.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 180.0,
+   "from": "ring_nw",
+   "site": "b056"
+  },
+  {
+   "piece": "s_rg_nw_b071",
+   "pos": [
+    500.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 90.0,
+   "from": "ring_nw",
+   "site": "b071"
+  },
+  {
+   "piece": "s_rg_nw_b079",
+   "pos": [
+    500.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 90.0,
+   "from": "ring_nw",
+   "site": "b079"
+  },
+  {
+   "piece": "s_rg_nw_b144_1",
+   "pos": [
+    660.0,
+    4.0,
+    -1225.50012207031
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b144"
+  },
+  {
+   "piece": "s_rg_nw_b144_2",
+   "pos": [
+    660.0,
+    3.0,
+    -1300.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b144"
+  },
+  {
+   "piece": "s_rg_nw_b145_1",
+   "pos": [
+    484.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b145"
+  },
+  {
+   "piece": "s_rg_nw_b145_2",
+   "pos": [
+    428.25,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b145"
+  },
+  {
+   "piece": "s_rg_nw_b145_3",
+   "pos": [
+    327.5,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b145"
+  },
+  {
+   "piece": "s_rg_nw_b146_1",
+   "pos": [
+    234.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b146"
+  },
+  {
+   "piece": "s_rg_nw_b146_2",
+   "pos": [
+    130.5,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b146"
+  },
+  {
+   "piece": "s_rg_nw_b147_1",
+   "pos": [
+    -27.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b147"
+  },
+  {
+   "piece": "s_rg_nw_b147_2",
+   "pos": [
+    -105.5,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b147"
+  },
+  {
+   "piece": "s_rg_nw_b148_1",
+   "pos": [
+    -216.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b148"
+  },
+  {
+   "piece": "s_rg_nw_b148_2",
+   "pos": [
+    -300.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b148"
+  },
+  {
+   "piece": "s_rg_nw_b149_1",
+   "pos": [
+    -416.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b149"
+  },
+  {
+   "piece": "s_rg_nw_b163_1",
+   "pos": [
+    660.0,
+    2.0,
+    -1425.5
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b163"
+  },
+  {
+   "piece": "s_rg_nw_b163_2",
+   "pos": [
+    645.954833984375,
+    2.0,
+    -1510.75915527344
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b163"
+  },
+  {
+   "piece": "s_rg_nw_b163_3",
+   "pos": [
+    595.69775390625,
+    2.0,
+    -1575.45837402344
+   ],
+   "yaw": 0.0,
+   "from": "ring_nw",
+   "site": "b163"
+  },
+  {
+   "piece": "s_rg_b087",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 90.0,
+   "from": "ring_nw",
+   "site": "b087"
+  },
+  {
+   "piece": "r_q_m200_m1400_se",
+   "pos": [
+    -200.0,
+    4.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_m200_m1200_ne",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_m200_m1200_se",
+   "pos": [
+    -200.0,
+    10.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_0_m1400_sw",
+   "pos": [
+    0.0,
+    8.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_0_m1400_se",
+   "pos": [
+    0.0,
+    8.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_0_m1200_nw",
+   "pos": [
+    0.0,
+    14.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_0_m1200_sw",
+   "pos": [
+    0.0,
+    14.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_0_m1200_ne",
+   "pos": [
+    0.0,
+    14.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_0_m1200_se",
+   "pos": [
+    0.0,
+    14.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_250_m1400_sw",
+   "pos": [
+    250.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_250_m1400_se",
+   "pos": [
+    250.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_250_m1200_nw",
+   "pos": [
+    250.0,
+    8.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_250_m1200_sw",
+   "pos": [
+    250.0,
+    8.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_250_m1200_ne",
+   "pos": [
+    250.0,
+    8.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "r_q_250_m1200_se",
+   "pos": [
+    250.0,
+    8.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "m_gr_ad5ne",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_strip"
+  },
+  {
+   "piece": "m_gr_e4s",
+   "pos": [
+    500.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_strip"
+  },
+  {
+   "piece": "m_gr_ad5nw",
+   "pos": [
+    500.0,
+    4.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_strip"
+  },
+  {
+   "piece": "m_gr_ad3sw",
+   "pos": [
+    500.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_strip"
+  },
+  {
+   "piece": "m_gr_ad3se",
+   "pos": [
+    500.0,
+    2.0,
+    -1400.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_strip"
+  },
+  {
+   "piece": "m_gr_e4n",
+   "pos": [
+    500.0,
+    4.0,
+    -1200.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_strip"
+  },
+  {
+   "piece": "s_rs_b086_a",
+   "pos": [
+    250.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 90.0,
+   "from": "resstd",
+   "site": "b086"
+  },
+  {
+   "piece": "n_hp_west",
+   "pos": [
+    0.0,
+    2.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hp"
+  },
+  {
+   "piece": "r_q_250_m1000_ne",
+   "pos": [
+    250.0,
+    6.0,
+    -1000.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_res"
+  },
+  {
+   "piece": "n_fn_west",
+   "pos": [
+    0,
+    2.0,
+    0
+   ],
+   "yaw": 0,
+   "from": "grow_fn"
+  },
+  {
+   "piece": "n_fn_mid",
+   "pos": [
+    0,
+    2.0,
+    0
+   ],
+   "yaw": 0,
+   "from": "grow_fn"
+  },
+  {
+   "piece": "n_fn_east",
+   "pos": [
+    0,
+    2.0,
+    0
+   ],
+   "yaw": 0,
+   "from": "grow_fn"
+  },
+  {
+   "piece": "n_fn_strip",
+   "pos": [
+    0,
+    2.0,
+    0
+   ],
+   "yaw": 0,
+   "from": "grow_fn"
+  },
+  {
+   "piece": "t_fn_west",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fn_mid",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fn_east",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_fn_strip",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  }
+ ]
+}

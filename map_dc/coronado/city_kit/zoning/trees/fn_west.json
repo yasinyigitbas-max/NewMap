@@ -1,0 +1,81 @@
+{
+ "area": "fn_west",
+ "piece": "n_fn_west",
+ "zone": "apartments and residential yards (the bay row, the Crown Lane townhouses) + a pocket green",
+ "rule": "docs/TREE_PLAN.md: apartments - one tree per court, placed for the seating; residential yards - one for every two or three houses, never against a fence or a wall; civic and parks - clumps of 3-5 at the edges",
+ "written": "by hand, 20 Nov 2026 (fill_east fn, after the superchecker pass): no builder trees were ever in these pieces; these placed after the plan; thinned by hand to the plan's in-view limit (sc.py trees: at most 8 broadleaf / 12 trees in view from a street point, all lists counted)",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    -150,
+    2.599,
+    -1550
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "the bay row's back gardens: one tree for the court between the first two buildings"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    -122,
+    2.75,
+    -1549
+   ],
+   "yaw": 60,
+   "scale": 0.9,
+   "why": "the court behind the white court building"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    -52,
+    2.662,
+    -1560
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "Amber Green clump: the west end, shade over the lawn by the walk"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    -28,
+    2.366,
+    -1566
+   ],
+   "yaw": 200,
+   "scale": 0.9,
+   "why": "Amber Green clump: the crown nearer the bay"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -160,
+    3.372,
+    -1494
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "Crown Lane north row: one tree for the first two gardens"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    -134,
+    4.753,
+    -1426
+   ],
+   "yaw": 180,
+   "scale": 0.9,
+   "why": "Crown Lane south row: the gardens toward 3rd St (pines on the hill streets)"
+  }
+ ]
+}
