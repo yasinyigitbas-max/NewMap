@@ -66,8 +66,16 @@ it (a gesture, an object, a number on a screen).
 ---
 
 ## P2: Who Are You?
-- **Where:** **the Harbor Office** (the waterfront), its interview room: a desk, a window with blinds, rain, a flag,
-  a broken coffee machine, a height chart painted on the wall.
+- **Where:** **City Hall Front Desk** (the civic band; the kit's city hall room): a big public hall with a long counter,
+  queue ropes, desks behind the counter, wooden waiting benches, tall windows. The morning after the rescue. Ruth's
+  resettlement desk is one of the desks behind the counter. It's the same desk as the check-ins in M8 and M16, so
+  every check-in is a callback to this first one.
+  - Dressing on the existing room (small props only): a flag on a stand by Ruth's desk, a broken coffee machine, a
+    height-chart poster on the wall behind her, and a paper sign on the counter: *RESETTLEMENT*.
+- **CAM (opening):** a short cut from the rescue: the patrol boat at the Ferry Landing at dawn, a grey Navy van, the
+  city centre in the rain, city hall's columned porch. Inside: the waiting benches are full (other people from the
+  boat, in foil blankets and borrowed clothes). A number on a ticket in the hero's hand: 41. A screen over the counter
+  clicks to *41*. This is the first number the player reads, and the reason Ruth is on her 40th interview today.
 - **Length:** 8 minutes.
 - **Why it's here:**
   - Story: meet RUTH. The hero's first English lie.
@@ -76,8 +84,8 @@ it (a gesture, an object, a number on a screen).
   - Language: *My name is…*, spelling, numbers (age), colours, *My eyes are… / My hair is… / I am tall*, jobs.
 
 ### Beat 1: Ruth
-- **CAM:** first person on a plastic chair. The door opens. **RUTH ALVARADO**: a thick file, a paper bag of sunflower
-  seeds. She sits, cracks a seed, and looks at us for a long time.
+- **CAM:** first person, on the chair in front of Ruth's desk behind the counter. **RUTH ALVARADO** sits down with a
+  thick file and a paper bag of sunflower seeds. She cracks a seed and looks at us for a long time.
 - **MUS:** `MUS-02 "The Office"`: brushed snare, upright bass, a clock-like vibraphone. Dry and a little funny.
 - **RUTH** [tired, her 40th interview today, not unkind; she points at herself] "Hi. I'm Ruth. Ruth." *(points at the
   hero)* "You. Name?"

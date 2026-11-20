@@ -212,7 +212,7 @@ languages, with small words.
 ---
 
 ## M20: Little Fish, Again
-- **Where:** Island Laundry (gritty edge); then the **Seabreeze Motel** on the strip: three rooms where Marek's
+- **Where:** Clay's Diner (the docks); then the **Seabreeze Motel** on the strip: three rooms where Marek's
   "workers" live.
 - **Length:** 25 minutes.
 - **Why it's here:**
@@ -234,7 +234,7 @@ languages, with small words.
 - **RUTH** [hating it; knowing it's the only way] "…OK. You call me every night. Every night, {NAME}."
 
 ### Beat 2: The return
-- **CAM:** Island Laundry. The hero walks in head down, shaking (an act: the camera shows the hero's steady hand behind
+- **CAM:** Clay's Diner after closing, the corner booth. The hero walks in head down, shaking (an act: the camera shows the hero's steady hand behind
   their back, so the player knows).
 - **MAREK\*** [delighted, arms open; this time he does hug] "The fish swims home! They always swim home."
 - **PLAY:** perform defeat, *in the native language* (chosen from native-language lines). These are the only lines in
@@ -283,7 +283,7 @@ languages, with small words.
 - **CAM:** night, the motel roof. The hero texts Brody and Ruth: *July 4. 11. Ferry Landing. 12 people. 4 children.*
 - **MUS:** `MUS-25 "Two Lives"`: Marek's frame drum and the main theme's trumpet alternate, two bars each, never
   together.
-- Below, the laundry's back door opens. Marek, smoking, looks up at the roof. The hero ducks. He looks for a long time.
+- Below, a dark sedan pulls into the motel lot. Marek gets out, smoking, and looks up at the roof. The hero ducks. He looks for a long time.
   Then he goes in.
 - **Practice test:** review: people.
 
@@ -517,7 +517,7 @@ Each shot is in a place the player knows:
 - **Priya**'s front page, framed, in Library Grounds Coffee.
 - **Hilltop Market:** a photo of the hero on the wall by the till, under a hand-written sign: *OUR HERO (STILL PAYS FOR
   MANGOES)*.
-- **Ruth** at Island Legal Aid clears her desk: she's retiring. The dead plant goes in the bin; a young caseworker hands
+- **Ruth** at city hall clears her desk behind the counter: she's retiring. The dead plant goes in the bin; a young caseworker hands
   her a living sunflower.
 - **Hank's Diner:** Theo on the TV, a late-night comedy spot in Los Angeles. He says "my roommate", and the whole diner
   laughs. Benny points at the TV and tells everyone he knows him.

@@ -117,7 +117,7 @@ As before:
 |---|---|---|---|
 | **YOU ({NAME})** | Chosen in P2: look, pronouns, inner voice, a job from home (cook, mechanic, nurse, teacher, builder, driver) | The player's voice; thoughts in one of two narrator voices | The bridge |
 | **MAREK** | 50s, the smuggler; runs **Ocean Travel**, a travel agency at the docks (his joke) | Recorded in each localisation language; warm, smoky, fatherly | Comfort; the villain |
-| **RUTH ALVARADO** | 54, the resettlement officer. Sunflower seeds. Her desk is at **Island Legal Aid** downtown (the resettlement office shares it) | Low, dry, deadpan; she slows down only when it matters | The law; the long way |
+| **RUTH ALVARADO** | 54, the resettlement officer. Sunflower seeds. Her resettlement desk is behind the counter at **City Hall Front Desk** | Low, dry, deadpan; she slows down only when it matters | The law; the long way |
 | **BENNY OKAFOR** | 61, taxi driver, "the lights over North Island", calls everyone "boss" | Fast, musical; louder and slower when asked, which is the joke | The first friend; fast travel |
 | **THEO PARK** | 28, the flatmate, a night porter at Island Hospital, a would-be comic, cooks one dish | Quick, self-mocking, warm | The heart |
 | **MRS. DOLORES FINCH** | 79, the landlady, ground floor; a retired Navy radio operator and codebreaker | Crisp, the clearest English on the island (she speaks like a radio) | The surprise genius; she talks the hero through the mayday |
@@ -136,18 +136,18 @@ room is listed.
 | Story place | Where in our city | Status |
 |---|---|---|
 | The rescue at sea (P1) | The bay at night off the **Ferry Landing** (`lmk_ferry_landing`); the harbour patrol boat is `boat_express` in a grey livery; a `lifering_stand` ring | Kit (one new paint livery) |
-| Processing and the interview (P2) | **The Harbor Office** (`civ_harbor_office`, built at the waterfront as `wf_harbor_office`) | Kit building; interview room is new (one room) |
+| The interview (P2) and the check-ins (M8, M16) | **City Hall Front Desk** (civic band, `cv_city_hall`): the counter, queue ropes, waiting benches, Ruth's desk behind the counter | Kit room; a flag, a coffee machine, a height-chart poster, a RESETTLEMENT sign and a number screen as dressing |
 | The thirty days (P3) | Sketch panels (the old game's panel style), plus the release at the **Navy Gatehouse** (`lmk_navy_gatehouse`) | No build |
 | The taxi ride (M1) | The gatehouse → the strip (**Crown Plaza**, **McDowell's**) → **Shoal** gas station (the restroom gag) → the high street → the hill | All kit |
 | The home: Mrs. Finch's building | **Hillcrest Terraces** (the hill apartments, high street fill block 5–6): Finch on the ground floor, Theo and the hero upstairs | Building kit; **the flat interior is the one big new interior** |
 | Groceries (M4) | **Hilltop Market** (the Trans' shop) | Kit room (assignment_hs / res) |
 | The CV (M5) | **Coronado Public Library** (high street, with Library Grounds Coffee) | Kit room |
 | Gus's restaurant (M6, M7, M19) | **The Fish House** (waterfront, assignment_wf), with **Pier Poke & Tacos** and **Pier Bait & Tackle** as neighbours | Kit room; a burned state for M19 (a texture swap and props) |
-| Ruth's check-ins (P3, M8, M16) | **Island Legal Aid** (city centre, assignment_cc) | Kit room |
 | The lookout (M9) | **Hillside Park** lookout (the high street fill, hill) | Kit |
-| Marek's soup and cards | **Island Laundry** (gritty edge, pawn_laundry_row), with **Crownado Vintage** (the pawn shop) next door | Kit rooms |
-| Marek's front | **Ocean Travel** (industrial, drivers_cafe building) | Kit room |
-| Night runs, directions (M10) | The gritty edge → the container yard (`container_20ft_*`, `dock_crane`) → **Harbor Market** or **High Tide Bottles & Kitchen** (the clerk who gives directions) | Kit |
+| Marek's table | **Clay's Diner** (industrial docks, the harbour diner): an ordinary diner by day; after closing, Marek's corner booth, where the cook (from Marek's home) makes the home dishes that aren't on the menu. That's the soup | Kit room |
+| Marek's front | **Ocean Travel** (industrial, drivers_cafe building), near the diner | Kit room |
+| The pawn shop (Theo's guitar, M15) | **Crownado Vintage** (gritty edge) | Kit room |
+| The night run, directions (M10) | Clay's Diner → through the gritty edge, past **High Tide Bottles & Kitchen** (the clerk who gives directions) → the **Seabreeze Motel**, room six | Kit |
 | The police stop (M10) | Any street; **Crownado Police Front Desk** if it goes badly | Kit |
 | The driving lesson (M11) | **Island Hospital** car park (the hospital zone) and the streets round **Island Transit Center** | Kit |
 | The stakeout (M12) | The beach road by the base; the **Beach Lookout** (`lmk_beach_lookout`); the signals at the **Ferry Landing**; the *Good Hope* = `boat_troller` | Kit |
@@ -166,13 +166,12 @@ room is listed.
 ## 8. What still has to be built (short list)
 1. **The flat** inside Hillcrest Terraces: Mrs. Finch's ground-floor kitchen and the upstairs flat (living room,
    kitchen with two fridge shelves, the hero's room, a bathroom). It's home base, so it's worth it.
-2. **One interview room** inside the Harbor Office (a desk, a window, a flag, a height chart on the wall).
-3. **Three motel rooms** inside the Seabreeze Motel (lived-in: laundry on lines, a TV, kids' homework).
-4. **The Fish House, burned:** a damage state (scorch decals, a collapsed awning, broken stools), not a new building.
-5. **Small props:** Whitmore's waterfront model under glass, a 1970s Navy radio set (Finch's), Marek's notebook, a
+2. **Three motel rooms** inside the Seabreeze Motel (lived-in: laundry on lines, a TV, kids' homework).
+3. **The Fish House, burned:** a damage state (scorch decals, a collapsed awning, broken stools), not a new building.
+4. **Small props:** Whitmore's waterfront model under glass, a 1970s Navy radio set (Finch's), Marek's notebook, a
    taxi livery for Benny's car, a grey livery for the patrol boat, the sign decals for the yard ("NO ENTRY", "STAFF
    ONLY", "DANGER", "NO SMOKING").
-6. **The sketch panels** for P1 and P3 (2D art, in the old game's panel style).
+5. **The sketch panels** for P1 and P3 (2D art, in the old game's panel style).
 
 Everything else in the script is already in the city.
 
