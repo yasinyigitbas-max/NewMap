@@ -116,7 +116,7 @@ void BikeReach::_process_modification_with_delta(double p_delta) {
 				const Vector3 sh0 = sk->get_bone_global_pose(b_ua[sd]).origin;
 				const float arm = sk->get_bone_global_pose(b_fa[sd]).origin.distance_to(sh0) + sk->get_bone_global_pose(b_hd[sd]).origin.distance_to(sk->get_bone_global_pose(b_fa[sd]).origin);
 				const Vector3 sh = Gs.origin + Basis(ax, L).xform(sh0 - Gs.origin);
-				worst = std::max(worst, sh.distance_to(to_sk.xform(hand[sd])) - arm * 0.985f);   // (arms nearly straight, as on a cruiser)
+				if (w_hand[sd] > 0.99f) worst = std::max(worst, sh.distance_to(to_sk.xform(hand[sd])) - arm * 0.985f);   // (arms nearly straight, as on a cruiser)
 			}
 			if (worst <= 0.0f || L >= 0.9f) break;
 			L += 0.05f;
@@ -127,12 +127,14 @@ void BikeReach::_process_modification_with_delta(double p_delta) {
 	const Vector3 fwd_s = to_sk.basis.xform(lean_axis.cross(Vector3(0, 1, 0))).normalized();   // the bicycle's forward, in skeleton space
 	for (int s = 0; s < 2; s++) {
 		const Vector3 side = to_sk.basis.xform(lean_axis).normalized() * (s == 0 ? 1.0f : -1.0f);
-		reach(sk, b_th[s], b_ca[s], b_ft[s], to_sk.xform(foot[s]), fwd_s + side * 0.25f + Vector3(0, 0.2f, 0));
-		reach(sk, b_ua[s], b_fa[s], b_hd[s], to_sk.xform(hand[s]), side * 1.6f - fwd_s * 0.5f + Vector3(0, -0.6f, 0));
-		if (b_fa[s] >= 0 && b_hd[s] >= 0 && std::fabs(hand_turn) > 1e-3f) {   // each hand turned about its forearm onto the grip (Yasin: "turn the left hand 90 degree right and right hand 90 degree right")
+		const Vector3 ft = b_ft[s] >= 0 ? sk->get_bone_global_pose(b_ft[s]).origin.lerp(to_sk.xform(foot[s]), w_foot[s]) : to_sk.xform(foot[s]);
+		if (w_foot[s] > 0.001f) reach(sk, b_th[s], b_ca[s], b_ft[s], ft, fwd_s + side * 0.25f + Vector3(0, 0.2f, 0));
+		const Vector3 hd = b_hd[s] >= 0 ? sk->get_bone_global_pose(b_hd[s]).origin.lerp(to_sk.xform(hand[s]), w_hand[s]) : to_sk.xform(hand[s]);
+		if (w_hand[s] > 0.001f) reach(sk, b_ua[s], b_fa[s], b_hd[s], hd, side * 1.6f - fwd_s * 0.5f + Vector3(0, -0.6f, 0));
+		if (b_fa[s] >= 0 && b_hd[s] >= 0 && std::fabs(hand_turn * w_hand[s]) > 1e-3f) {   // each hand turned about its forearm onto the grip (Yasin: "turn the left hand 90 degree right and right hand 90 degree right")
 			const Transform3D Gh = sk->get_bone_global_pose(b_hd[s]);
 			const Vector3 d = (Gh.origin - sk->get_bone_global_pose(b_fa[s]).origin).normalized();
-			sk->set_bone_global_pose(b_hd[s], Transform3D(Basis(d, hand_turn) * Gh.basis, Gh.origin));
+			sk->set_bone_global_pose(b_hd[s], Transform3D(Basis(d, hand_turn * w_hand[s]) * Gh.basis, Gh.origin));
 		}
 		if (b_ft[s] >= 0) miss_foot[s] = sk->get_bone_global_pose(b_ft[s]).origin.distance_to(to_sk.xform(foot[s]));
 		if (b_hd[s] >= 0) miss_hand[s] = sk->get_bone_global_pose(b_hd[s]).origin.distance_to(to_sk.xform(hand[s]));
@@ -250,7 +252,11 @@ void CityBike::mount() {
 
 void CityBike::dismount() {
 	state = ST_DISMOUNT; st_t = 0.0f;
-	clip_out = rider ? (float)std::max(rider->clip_len("ual/Sitting_Exit"), 0.6) : 1.0f;
+	clip_out = 1.3f;
+	const Transform3D inv = get_global_transform().affine_inverse();
+	for (int s = 0; s < 2; s++) dm_foot0[s] = reach_mod ? inv.xform(reach_mod->foot[s]) : Vector3();
+	dm_fk = foot_down * foot_down * (3.0f - 2.0f * foot_down);
+	dm_seat_t = rider ? rider->clip_pos() : 0.0;
 }
 
 void CityBike::set_controls(double p_pedal, double p_brake, double p_steer, double p_sprint) {
@@ -477,7 +483,7 @@ void CityBike::place_rider(double p_delta) {
 	// standing still on it: the left foot comes down; any movement (pedalling, rolling) and it goes back to its pedal
 	{
 		const float dt = (float)p_delta;
-		const bool still = state == ST_RIDE && std::fabs(speed) < 0.35f && c_pedal < 0.05f;
+		const bool still = (state == ST_RIDE && std::fabs(speed) < 0.35f && c_pedal < 0.05f) || (state == ST_DISMOUNT && st_t < 0.6f * clip_out);
 		foot_down = still ? std::min(1.0f, foot_down + dt / 0.55f) : std::max(0.0f, foot_down - dt / 0.28f);
 		if (still && foot_down > 0.0f) {   // (the crank turned back to the ready place, the short way round)
 			float d = std::remainder(IDLE_CRANK - crank, 6.2831853f);
@@ -487,13 +493,14 @@ void CityBike::place_rider(double p_delta) {
 	const float fk = foot_down * foot_down * (3.0f - 2.0f * foot_down);   // (eased)
 	const Transform3D at(bt.basis, bt.xform(RIDER_AT + IDLE_SHIFT * fk));
 	static const StringName IN("ual/Sitting_Enter"), RIDE("ual/Driving_Loop"), OUT("ual/Sitting_Exit");
+	(void)OUT;
+	if (state == ST_DISMOUNT) { dismount_pose(bt); return; }
 	if (state == ST_MOUNT) rider->drive(at, IN, 1.0, -2.0);
-	else if (state == ST_DISMOUNT) rider->drive(at, OUT, 1.0, -2.0);
 	else rider->drive(at, RIDE, 1.0, -1.0);
 	if (!reach_mod) return;
+	for (int s = 0; s < 2; s++) { reach_mod->w_foot[s] = 1.0f; reach_mod->w_hand[s] = 1.0f; }
 	float w = 1.0f;
 	if (state == ST_MOUNT) w = clampf((st_t / clip_in - 0.35f) / 0.6f, 0.0f, 1.0f);
-	else if (state == ST_DISMOUNT) w = clampf(1.0f - st_t / (clip_out * 0.5f), 0.0f, 1.0f);
 	reach_mod->set_active(w > 0.001f);
 	reach_mod->set_influence(w);
 	for (int s = 0; s < 2; s++) {
@@ -514,6 +521,57 @@ void CityBike::place_rider(double p_delta) {
 	reach_mod->lean_axis = bt.basis.get_column(0).normalized();
 	reach_mod->lean = 0.12f + 0.10f * c_sprint;   // (a beach cruiser is ridden upright: the bars come back to the rider)
 	(void)p_delta;
+}
+
+// Getting off a step-through cruiser (see foot_down in the header): u = 0..1 over clip_out.
+//  0.00-0.85 his hips go from the saddle (the seated clip's hips) over to his standing place 0.5 m to the bike's left; the
+//            clip crossfades from riding to standing (Idle) in 0.3 s and his root with it, so the hips never jump
+//  0.12-0.55 the right foot leaves its pedal, comes forward over the low frame and down beside the left one
+//  0.60-0.85 the left foot (planted on the ground since he stopped) steps out to its standing place
+//  0.45-0.70 the right hand lets go; 0.80-1.00 the left; 0.88-1.00 the feet are the clip's own again
+void CityBike::dismount_pose(const Transform3D &bt) {
+	static const StringName RIDE("ual/Driving_Loop"), IDLE("ual/Idle_Loop");
+	const float u = clampf(st_t / clip_out, 0.0f, 1.0f);
+	auto ss = [](float a, float b, float x) { const float k = clampf((x - a) / (b - a), 0.0f, 1.0f); return k * k * (3.0f - 2.0f * k); };
+	const float gy = y_ground + 0.085f;
+	const Vector3 seat_at = RIDER_AT + IDLE_SHIFT * dm_fk;
+	const Vector3 stand_end(0.5f, 0.0f, 0.05f);
+	const Vector3 stand_start = seat_at + rider->clip_hips_at(RIDE, dm_seat_t) - rider->clip_hips_at(IDLE, 0.0);
+	const float m = ss(0.0f, 0.85f, u), bw = std::min(st_t / 0.3f, 1.0f);
+	const Vector3 at_l = seat_at.lerp(stand_start.lerp(stand_end, m), bw);
+	// upright as he stands (the bike is tipped onto his foot)
+	const Vector3 f = bt.basis.get_column(2);
+	const Basis yb(Vector3(0, 1, 0), std::atan2(f.x, f.z));
+	const Basis rb = Basis(Quaternion(bt.basis.orthonormalized()).slerp(Quaternion(yb), ss(0.1f, 0.8f, u)));
+	rider->drive(Transform3D(rb, bt.xform(at_l)), IDLE, 1.0, -1.0);
+	if (!reach_mod) return;
+	reach_mod->set_active(true); reach_mod->set_influence(1.0f);
+	auto ground = [&](const Vector3 &l) { Vector3 g = bt.xform(l); g.y = gy; return g; };
+	// left foot: to the ground (if it was not), then a step out to where he stands
+	{
+		const Vector3 p0 = bt.xform(dm_foot0[0]), down = ground(Vector3(0.28f, 0.0f, 0.12f)), end = ground(stand_end + Vector3(0.10f, 0.0f, 0.0f));
+		const float a = ss(0.0f, 0.25f, u) * (1.0f - dm_fk) + dm_fk, b = ss(0.6f, 0.85f, u);
+		Vector3 p = p0.lerp(down, a).lerp(end, b);
+		p.y += 0.08f * std::sin(3.14159265f * b) + (dm_fk < 0.99f ? 0.08f * std::sin(3.14159265f * ss(0.0f, 0.25f, u)) : 0.0f);
+		reach_mod->foot[0] = p;
+	}
+	// right foot: off the pedal, forward over the low frame (a quadratic arc), down beside the other
+	{
+		const Vector3 p0 = bt.xform(dm_foot0[1]), mid = bt.xform(Vector3(0.10f, 0.62f, 0.30f)), end = ground(stand_end - Vector3(0.10f, 0.0f, 0.0f));
+		const float k = ss(0.12f, 0.55f, u);
+		reach_mod->foot[1] = p0 * ((1 - k) * (1 - k)) + mid * (2 * k * (1 - k)) + end * (k * k);
+	}
+	// the hands on the grips (as riding) until they let go
+	for (int s = 0; s < 2; s++) {
+		const Vector3 g0(s == 0 ? bike_look::GRIP_X - 0.01f : -(bike_look::GRIP_X - 0.01f), bike_look::GRIP_Y + 0.01f + 0.10f, bike_look::GRIP_Z - 0.05f);
+		const Vector3 piv(0.0f, 0.6927f, 0.3566f + bike_look::SHIFT);
+		reach_mod->hand[s] = bt.xform(piv + Basis(bike_look::steer_axis(), steer).xform(g0 - piv));
+	}
+	reach_mod->w_hand[1] = 1.0f - ss(0.45f, 0.70f, u);
+	reach_mod->w_hand[0] = 1.0f - ss(0.80f, 1.0f, u);
+	reach_mod->w_foot[0] = reach_mod->w_foot[1] = 1.0f - ss(0.88f, 1.0f, u);
+	reach_mod->lean_axis = bt.basis.get_column(0).normalized();
+	reach_mod->lean = 0.12f * (1.0f - m);
 }
 
 // Behind and above, swinging round as it turns; it rolls with the lean, sways and bobs with the pedalling, shakes over
@@ -609,7 +667,7 @@ void CityBike::_process(double p_delta) {
 			const Transform3D bt = get_global_transform();
 			const Vector3 f = bt.basis.get_column(2);
 			pl->set_riding(false);
-			pl->stand_at(bt.xform(Vector3(0.75f, 0.0f, 0.0f)), std::atan2(f.x, f.z));
+			pl->stand_at(bt.xform(Vector3(0.5f, 0.0f, 0.05f)), std::atan2(f.x, f.z));   // (where the dismount left him: dismount_pose)
 			pl->take_view();
 		}
 	}

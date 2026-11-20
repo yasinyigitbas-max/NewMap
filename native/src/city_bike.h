@@ -69,6 +69,7 @@ public:
 	float hand_turn = 1.5707963f;   // each hand turned about its forearm, rad (+ = to the right, seen from behind the rider)
 	Vector3 hips_w, shoulder_w, foot_w;   // (the tests) world places after the reach: the pelvis, the left shoulder, the left foot
 	float miss_foot[2] = { 0, 0 }, miss_hand[2] = { 0, 0 };   // how far each ended from its target, m (the tests)
+	float w_foot[2] = { 1, 1 }, w_hand[2] = { 1, 1 };   // each limb's share of its target (getting off: a hand lets go)
 	void _process_modification_with_delta(double p_delta) override;
 };
 
@@ -100,6 +101,11 @@ private:
 	// transition into riding again after movement is detected"): 0 riding .. 1 the left foot on the ground, the bike
 	// tipped onto it, the rider forward off the saddle, the right pedal parked forward and up, ready to push
 	float foot_down = 0.0f;
+	// GETTING OFF (Yasin, 20 Nov: "WATCH THE BIKE HOP OFF ANIMATION AND FIX THAT TOO"): a step-through cruiser's dismount, made
+	// here: up off the saddle over the planted left foot, the right leg forward over the low frame, a step out, the hands
+	// let go; he ends standing where the player takes over (the old way: a chair's stand-up clip on the saddle, then the
+	// player 0.75 m to the side)
+	Vector3 dm_foot0[2]; float dm_fk = 0.0f; double dm_seat_t = 0.0;
 	float wheel_ang = 0.0f;
 	bool on_ground = false, fallen = false;
 	float damage = 0.0f, hardest = 0.0f;
@@ -135,6 +141,7 @@ private:
 	void read_player();
 	void throw_rider(const Vector3 &p_blow);
 	void place_rider(double p_delta);
+	void dismount_pose(const Transform3D &p_bt);
 	void view(double p_delta);
 	void make_hud();
 	static void zones(const Vector2 &sz, Rect2 r[4]);
