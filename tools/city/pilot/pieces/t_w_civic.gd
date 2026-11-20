@@ -5,7 +5,7 @@ extends SceneTree
 ## from every building, 1.5 m from fences, 2.2 m from other props, 7 m between trees; parks and courts: clumps round
 ## the seating; house yards: one per two houses by the patio; the beach side: palms; the ridge: pines; the gritty
 ## edge: one scrappy tree; industrial and the shop fronts: none; at most 8 broadleaf / 12 trees within 60 m of any
-## paved point of the west fill. 48 trees.
+## paved point of the west fill. 46 trees.
 const L := preload("res://tools/city/pilot/pieces/cc_fill_lib.gd")
 const TREES := [
 	[-337.39, -762.50, 6.210, "tree_jacaranda_a", 0.85, "park: shade round the seating (picnic_table)"],
@@ -49,13 +49,11 @@ const TREES := [
 	[-237.41, -623.23, 6.180, "tree_jacaranda_a", 0.85, "park: shade round the seating (park_bench)"],
 	[-222.40, -627.43, 6.180, "tree_coral_a", 0.85, "park: shade round the seating (park_bench)"],
 	[-222.80, -636.95, 6.180, "tree_magnolia_a", 0.85, "park: shade round the seating (park_bench)"],
-	[-175.21, -620.56, 6.180, "tree_ficus_a", 0.85, "park: shade round the seating (park_bench)"],
-	[-153.17, -621.20, 6.171, "tree_jacaranda_b", 0.85, "park: shade round the seating (park_bench)"],
-	[-161.27, -623.58, 6.180, "tree_coral_b", 0.85, "park: shade round the seating (park_bench)"],
-	[-237.32, -686.72, 6.175, "tree_jacaranda_b", 0.85, "park: shade round the seating (park_bench)"],
-	[-115.92, -516.87, 6.180, "tree_coral_b", 0.85, "park: shade round the seating (play_structure)"],
-	[-125.17, -523.45, 6.180, "tree_magnolia_b", 0.85, "park: shade round the seating (play_structure)"],
-	[-116.15, -527.16, 6.180, "tree_ficus_b", 0.85, "park: shade round the seating (play_structure)"]]
+	[-228.36, -679.79, 6.179, "tree_magnolia_b", 0.85, "park: shade round the seating (park_bench)"],
+	[-237.43, -682.02, 6.176, "tree_ficus_b", 0.85, "park: shade round the seating (park_bench)"],
+	[-118.78, -518.80, 6.180, "tree_jacaranda_a", 0.85, "park: shade round the seating (play_structure)"],
+	[-125.32, -523.72, 6.180, "tree_coral_a", 0.85, "park: shade round the seating (play_structure)"],
+	[-118.86, -527.32, 6.180, "tree_magnolia_a", 0.85, "park: shade round the seating (play_structure)"]]
 
 func _init() -> void: _run.call_deferred()
 

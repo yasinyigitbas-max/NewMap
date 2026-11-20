@@ -37,7 +37,7 @@ def ok(u,v,piece):
         if math.hypot(x-u,z-v)<2.2: return False
     return True
 KIND={}
-for p in ['n_w_c2','n_w_c7','n_w_h1','n_w_h2','n_w_h3','n_w_h4','n_w_p1','n_w_p2','n_w_q1','n_w_q2','n_w_q3','n_w_q4','n_w_w7','n_w_w0a','n_w_w0b','n_w_w2b','n_w_c4','n_w_s2c','n_w_e1b','n_w_c1','n_w_c3','n_w_c6','n_w_c10','n_w_c11']: KIND[p]='park'
+for p in ['n_w_c2','n_w_c7','n_w_h1','n_w_h2','n_w_h3','n_w_h4','n_w_p1','n_w_q1','n_w_q2','n_w_q3','n_w_q4','n_w_w7','n_w_w0a','n_w_w0b','n_w_w2b','n_w_c4','n_w_s2c','n_w_e1b','n_w_c1','n_w_c3','n_w_c6','n_w_c10','n_w_c11']: KIND[p]='park'
 for p in ['n_w_w3','n_w_w4','n_w_w5','n_w_w6','n_w_x1']: KIND[p]='yards'
 for p in ['n_w_e1','n_w_e2','n_w_e3','n_w_e4']: KIND[p]='beach'
 for p in ['n_w_s1','n_w_s2a','n_w_w2a']: KIND[p]='court'

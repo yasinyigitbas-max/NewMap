@@ -1,7 +1,9 @@
 extends SceneTree
 ## Piece n_w_p2 (WEST FILL, the 40 x 30 m hole inside the civic heart v_ne, the spot Yasin marked east of the 18 % block):
 ## u -188..-148, v -642..-612, flat.
-## PLANNER: a SUCCULENT GARDEN for the civic offices' lunch break: a dry garden on mulch, a path, benches, a table.
+## PLANNER: a SUCCULENT GARDEN round the civic heart's own trees and bench that stand in this hole (v_ne's norfolk pine,
+## two date palms and a bench): the whole of it mulch, agaves in beds away from their trunks and the bench; no path, no
+## furniture of its own (the bench is v_ne's).
 ## Layout row (-188.0, 0, -642.0): local x = u - (-188.0), z = v - (-642.0), heights absolute. Built by the west fill (University
 ## session, 20 Nov; review/fill_west/PLAN.md). Ground: the land 8 cm over it, eased over 8 m to the measured height of
 ## whatever borders each side; buildings on level pads at the highest ground under them (plinth faces downhill).
@@ -28,9 +30,7 @@ func _run() -> void:
 	var gl := L.grid_lots(0.0, 0.0, W, D, pads, base)
 	c.terrain(gl.lots)
 	c.skirt_depth = 0.5
-	c.paint("concrete", 0.00, 13.00, 40.00, 17.00)                # path
-	c.paint("mulch", 2.00, 2.00, 38.00, 12.00)                # dry garden
-	c.paint("mulch", 2.00, 18.00, 38.00, 28.00)                # dry garden
+	c.paint("mulch", 0.00, 0.00, 40.00, 30.00)                # the dry garden
 	c.paint("grass", 0.0, 0.0, W, D)
 	c.build_floor(L.rect_edges(0.0, 0.0, W, D))
 	if c.stage == "ground": c.finish(); quit(); return
@@ -39,21 +39,16 @@ func _run() -> void:
 		c.y0 = float(gl.pads[k][4])
 		B[String(SITES[k][3])] = c.bld(String(SITES[k][0]), SITES[k][1], String(SITES[k][2]), false, String(SITES[k][3]), 0.70)
 
-	c.put("plant_agave_americana", "worn", c.gp(6.00, 6.00), 0.0, "succulent garden: agaves on mulch")
-	c.put("plant_agave_americana", "worn", c.gp(18.00, 8.00), 0.0, "succulent garden: agaves on mulch")
-	c.put("plant_agave_americana", "worn", c.gp(30.00, 6.00), 0.0, "succulent garden: agaves on mulch")
-	c.put("plant_agave_americana", "worn", c.gp(10.00, 24.00), 0.0, "succulent garden: agaves on mulch")
-	c.put("plant_agave_americana", "worn", c.gp(26.00, 22.00), 0.0, "succulent garden: agaves on mulch")
+	c.put("plant_agave_americana", "worn", c.gp(8.00, 5.00), 0.0, "succulent garden: agaves on mulch")
+	c.put("plant_agave_americana", "worn", c.gp(28.00, 5.00), 0.0, "succulent garden: agaves on mulch")
 	c.put("plant_agave_americana", "worn", c.gp(34.00, 25.00), 0.0, "succulent garden: agaves on mulch")
-	c.put("plant_potted_succulent", "worn", c.gp(12.00, 12.30), 0.0, "succulent garden: pots along the path")
-	c.put("plant_potted_succulent", "worn", c.gp(28.00, 12.30), 0.0, "succulent garden: pots along the path")
-	c.put("prop_park_bench", "worn", c.gp(8.00, 17.80), 0.0, "succulent garden: a bench facing the garden")
-	c.put("prop_park_bench", "worn", c.gp(32.00, 17.80), 0.0, "succulent garden: a bench facing the garden")
-	c.put("prop_picnic_table", "worn", c.gp(20.00, 23.00), 0.0, "succulent garden: a lunch table")
-	c.put("prop_drinking_fountain", "worn", c.gp(20.00, 12.40), 0.0, "succulent garden: water")
+	c.put("plant_agave_americana", "worn", c.gp(26.00, 26.00), 0.0, "succulent garden: agaves on mulch")
+	c.put("plant_agave_americana_small", "worn", c.gp(14.00, 4.00), 0.0, "succulent garden: young agaves")
+	c.put("plant_agave_americana_small", "worn", c.gp(22.00, 7.00), 0.0, "succulent garden: young agaves")
+	c.put("plant_agave_americana_small", "worn", c.gp(30.00, 10.00), 0.0, "succulent garden: young agaves")
 	for k2: String in B:
 		var r: Dictionary = B[k2]
-		c.services(r, 2.0, 1 if not String(r.folder).begins_with("apartments/") else 2, String(r.folder).begins_with("apartments/") or String(r.folder).begins_with("houses/"))
+		if not String(r.folder).begins_with("houses/"): c.services(r, 2.0, 1 if not String(r.folder).begins_with("apartments/") else 2, String(r.folder).begins_with("apartments/"))
 		for dr: Array in r.doors:
 			var q: Vector3 = dr[1]; var o: Vector3 = dr[2]
 			c.grime(Vector2(q.x + o.x * 0.9, q.z + o.z * 0.9), 0.0, 1.6, 1.4, 0.45)

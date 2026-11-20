@@ -45,7 +45,6 @@ func _run() -> void:
 	for bn: Array in [[19.0, 10.0, 90.0], [25.0, 30.0, -90.0]]: c.put("prop_park_bench", "worn", c.gp(float(bn[0]), float(bn[1])), float(bn[2]), "pocket park: a bench on the path facing the lawn")
 	c.put("prop_drinking_fountain", "worn", c.gp(24.8, 20.0), 0.0, "pocket park: water by the path")
 	for br: float in [4.0, 38.0, 41.0]: c.put("prop_bike_rack", "worn", c.gp(br, 38.0), 0.0, "pocket park: bikes on the strip side")
-	c.put("prop_trash_receptacle", "worn", c.gp(22.0, 1.8), 0.0, "pocket park: a bin against the mural wall")
 	for pl: Array in [[3.0, 20.0], [42.0, 20.0]]: c.put("plant_bird_of_paradise", "normal", c.gp(float(pl[0]), float(pl[1])), c.rr.randf_range(0, 360), "pocket park: flower beds at its sides")
 	for k2: String in B:
 		var r: Dictionary = B[k2]

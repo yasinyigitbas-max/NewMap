@@ -55,7 +55,7 @@ def houses(tag, face, front, a0, a1, models, rear, seed=0, pad=True):
         zr=rear-sgn*6.0 if pad else rear                 # rear fence line (pad between it and the lane)
         hl=ac-w/2; hr=ac+w/2; la=lines[i]+0.3; lb=lines[i+1]-0.3
         def F(p,q,why): return '\tc.privacy(Vector2(%.2f, %.2f), Vector2(%.2f, %.2f), "%s")\n'%(p[0],p[1],q[0],q[1],why)
-        bk=back+sgn*0.15
+        bk=front+sgn*d*0.5      # the yard's side fences leave the house at its mid-depth (their ends inside the walls)
         body+=F(V2(face,hl+1.0,bk),V2(face,la,bk),'yard: the side fence from the house wall to the lot line')
         body+=F(V2(face,hr-1.0,bk),V2(face,lb,bk),'yard: the side fence from the house wall to the lot line')
         body+=F(V2(face,la,bk),V2(face,la,zr),'yard: the lot-line fence')
