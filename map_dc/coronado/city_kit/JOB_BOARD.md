@@ -5,6 +5,7 @@ ones the moment Yasin asks for them, never delete his rules. Method and traps li
 `.claude/skills/coronado-city-kit/SKILL.md`; the zone plan in `CITY_PLAN.md`.
 
 ## WHERE WE ARE (17 Nov ~11:50 UTC, written before a context compaction)
+- 20 Nov (Hospital session, branch claude/fill-high-street): THE HOSPITAL SESSION'S EMPTY LAND FILLED AND LOCKED: 15 pieces (n_fw_* NW column, n_fn_* north end + greenway strip, n_fe_* east blocks + ring band), 15 tree pieces (60 trees), 38 rooms; superchecker indoors and outdoors (delete when unsure: every playground's play items went), true-size colliders, 0 ground overlap, lock test RESULT PASS. Rows review/grow_hospital_blocks.json; report review/fill_east/README.md. Nobody has seen pictures of it.
 - 19 Nov ~20:45 (PC session, traffic and people): CYCLISTS AND THE ROUTE FINDER IN THE TRAFFIC CORE, all C++ (Yasin:
   "REWRITE THESE FULLY INN C PLUS PLUS, zero scripts"). Cyclists are road users of tc::Sim (cars pass them in the lane,
   never into a junction), drawn as a C++ bicycle batch with the crowd's far figures in four new riding poses; one A*
