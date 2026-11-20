@@ -1,0 +1,256 @@
+{
+ "instances": [
+  {
+   "piece": "j_rg_se_e627_s0",
+   "pos": [
+    626.538635253906,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "626.5,0.0"
+  },
+  {
+   "piece": "j_rg_se_e647_n200",
+   "pos": [
+    646.999816894531,
+    4.0,
+    -200.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "647.0,-200.0"
+  },
+  {
+   "piece": "j_rg_se_e652_n400",
+   "pos": [
+    651.997375488281,
+    4.0,
+    -400.0
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "652.0,-400.0"
+  },
+  {
+   "piece": "s_rg_se_b136_w",
+   "pos": [
+    570.0,
+    1.35,
+    99.9999923706055
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "W_N"
+  },
+  {
+   "piece": "s_rg_se_b137_1",
+   "pos": [
+    628.591369628906,
+    4.0,
+    -13.3430194854736
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "b137"
+  },
+  {
+   "piece": "s_rg_se_b137_2",
+   "pos": [
+    641.624084472656,
+    4.0,
+    -98.0606536865234
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "b137"
+  },
+  {
+   "piece": "s_rg_se_b138_1",
+   "pos": [
+    647.637268066406,
+    4.0,
+    -225.492065429688
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "b138"
+  },
+  {
+   "piece": "s_rg_se_b138_2",
+   "pos": [
+    649.613037109375,
+    4.0,
+    -304.49853515625
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "b138"
+  },
+  {
+   "piece": "s_rg_se_b139_1",
+   "pos": [
+    652.204040527344,
+    4.0,
+    -415.498596191406
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "b139"
+  },
+  {
+   "piece": "s_rg_se_b139_2",
+   "pos": [
+    653.327819824219,
+    4.0,
+    -499.75
+   ],
+   "yaw": 0.0,
+   "from": "ring_se",
+   "site": "b139"
+  },
+  {
+   "piece": "s_rg_se_b107",
+   "pos": [
+    500.0,
+    6.0,
+    -400.0
+   ],
+   "yaw": 90.0,
+   "from": "ring_se",
+   "site": "b107"
+  },
+  {
+   "piece": "s_rg_se_b115",
+   "pos": [
+    500.0,
+    8.0,
+    -200.0
+   ],
+   "yaw": 90.0,
+   "from": "ring_se",
+   "site": "b115"
+  },
+  {
+   "piece": "n_wf_b2e",
+   "pos": [
+    470.0,
+    0.0,
+    60.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_wf"
+  },
+  {
+   "piece": "x_shore_foam",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grid frame"
+  },
+  {
+   "piece": "n_ec_hill_n",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ec"
+  },
+  {
+   "piece": "n_ec_hill_s",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ec"
+  },
+  {
+   "piece": "n_ec_dune_n",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ec"
+  },
+  {
+   "piece": "n_ec_dune_s",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ec"
+  },
+  {
+   "piece": "n_ec_beach_n",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ec"
+  },
+  {
+   "piece": "n_ec_beach_s",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_ec"
+  },
+  {
+   "piece": "t_ec_dune_n",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ec_dune_s",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ec_hill_n",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  },
+  {
+   "piece": "t_ec_hill_s",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0,
+   "from": "trees"
+  }
+ ]
+}

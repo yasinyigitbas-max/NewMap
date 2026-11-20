@@ -1,0 +1,105 @@
+{
+ "area": "ec_hill_s",
+ "piece": "n_ec_hill_s",
+ "zone": "park (Shore Hill Park: picnic lawn, south lookout, playground)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; waterfront: palms; never on sand below the dune line (SHORE_GUIDE.md); the ring's palm boulevard is within 60 m only of the hill pieces' west edge, kept clear",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, ec fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "palm_canary_date_a",
+   "cond": "normal",
+   "at": [
+    764.0,
+    4.91,
+    -238.0
+   ],
+   "yaw": 20,
+   "scale": 1.0,
+   "why": "picnic lawn clump: its north-west corner"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    795.0,
+    5.365,
+    -212.0
+   ],
+   "yaw": 140,
+   "scale": 1.0,
+   "why": "picnic lawn clump: the east side, by the table under the sail"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    808.0,
+    6.517,
+    -240.0
+   ],
+   "yaw": 260,
+   "scale": 0.95,
+   "why": "picnic lawn clump: shade on the north-east table"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    879.0,
+    8.775,
+    -240.0
+   ],
+   "yaw": 300,
+   "scale": 0.95,
+   "why": "south lookout: the pine at its west corner"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    903.0,
+    9.092,
+    -241.0
+   ],
+   "yaw": 80,
+   "scale": 1.05,
+   "why": "south lookout: a palm at its sea corner"
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "at": [
+    724.0,
+    3.134,
+    -64.0
+   ],
+   "yaw": 190,
+   "scale": 0.95,
+   "why": "playground: shade on its north-west corner"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    750.5,
+    2.787,
+    -63.0
+   ],
+   "yaw": 50,
+   "scale": 0.9,
+   "why": "playground: its north-east corner, by the fountain side"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    782.0,
+    2.13,
+    -36.0
+   ],
+   "yaw": 230,
+   "scale": 1.0,
+   "why": "south picnic spot: between its two tables"
+  }
+ ]
+}

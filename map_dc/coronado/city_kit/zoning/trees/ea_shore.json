@@ -1,0 +1,165 @@
+{
+ "area": "ea_shore",
+ "piece": "n_ea_shore",
+ "zone": "civic and parks / waterfront (Bridge Beach: the grass band along the ramp and its promenade)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; waterfront - palms only, spaced palms on the promenade; never on the sand below the dune line (SHORE_GUIDE); held to the plan's in-view limit (12 trees, 8 broadleaf within 60 m of a street point)",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, ea fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    739.2,
+    2.118,
+    -1414.7
+   ],
+   "yaw": 10,
+   "scale": 1.0,
+   "why": "promenade: spaced palms on its land side between the lamps"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    795.6,
+    2.461,
+    -1396.1
+   ],
+   "yaw": 70,
+   "scale": 0.95,
+   "why": "promenade: spaced palm, land side"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    848.0,
+    2.787,
+    -1368.4
+   ],
+   "yaw": 130,
+   "scale": 1.0,
+   "why": "promenade: spaced palm, land side"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    890.8,
+    3.214,
+    -1328.1
+   ],
+   "yaw": 190,
+   "scale": 0.9,
+   "why": "promenade: spaced palm, land side"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    923.8,
+    3.576,
+    -1278.8
+   ],
+   "yaw": 250,
+   "scale": 1.0,
+   "why": "promenade: spaced palm, land side"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    944.2,
+    3.837,
+    -1223.6
+   ],
+   "yaw": 310,
+   "scale": 0.95,
+   "why": "promenade: spaced palm, land side"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    953.6,
+    4.059,
+    -1165.0
+   ],
+   "yaw": 10,
+   "scale": 1.0,
+   "why": "promenade: spaced palm, land side, across from the ice cream forecourt"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    957.3,
+    4.491,
+    -1105.3
+   ],
+   "yaw": 70,
+   "scale": 0.9,
+   "why": "promenade: spaced palm, land side, the south end"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    928.5,
+    4.537,
+    -1222.0
+   ],
+   "yaw": 40,
+   "scale": 0.9,
+   "why": "picnic grass clump: shade between the two southern tables and the ramp"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    929.0,
+    5.035,
+    -1188.0
+   ],
+   "yaw": 150,
+   "scale": 0.9,
+   "why": "picnic grass clump: beside the middle table"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    930.0,
+    4.946,
+    -1158.0
+   ],
+   "yaw": 260,
+   "scale": 0.85,
+   "why": "picnic grass clump: by the last table, short of the lookout"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    962.0,
+    3.566,
+    -1186.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "the ice cream forecourt: a queen palm at its south end"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    966.0,
+    3.699,
+    -1153.5
+   ],
+   "yaw": 90,
+   "scale": 0.95,
+   "why": "the ice cream forecourt: a queen palm at its north end"
+  }
+ ]
+}

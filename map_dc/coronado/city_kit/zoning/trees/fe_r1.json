@@ -1,0 +1,33 @@
+{
+ "area": "fe_r1",
+ "piece": "n_fe_r1",
+ "zone": "civic and parks (bandstand lawn, lookout) and the corner shops",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; held to the plan's in-view limit (12 trees, 8 broadleaf within 60 m of a street point): the ring's palm boulevard already fills most of it, so fewer trees than clumps of 3-5 (thinned by hand, 20 Nov); commercial: few",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, fe fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    591.0,
+    4.571,
+    -118.0
+   ],
+   "yaw": 250,
+   "scale": 0.9,
+   "why": "bandstand clump: the east arc"
+  },
+  {
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "at": [
+    580.0,
+    5.29,
+    -164.0
+   ],
+   "yaw": 200,
+   "scale": 0.9,
+   "why": "the hill lawn: one tree beside the picnic tables, shade with the view"
+  }
+ ]
+}

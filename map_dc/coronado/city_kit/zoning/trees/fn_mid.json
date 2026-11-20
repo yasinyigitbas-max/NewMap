@@ -1,0 +1,105 @@
+{
+ "area": "fn_mid",
+ "piece": "n_fn_mid",
+ "zone": "park (Amber Steps), apartments (the bayfront condos), residential yards (the townhouses)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - clumps of 3-5 at the edges and round the seating, open lawn in the middle; apartments - one per court; residential yards - one per two or three houses",
+ "written": "by hand, 20 Nov 2026 (fill_east fn, after the superchecker pass): no builder trees were ever in these pieces; these placed after the plan; thinned by hand to the plan's in-view limit (sc.py trees: at most 8 broadleaf / 12 trees in view from a street point, all lists counted)",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    28,
+    6.656,
+    -1460
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "Amber Steps upper clump: shade on the slope beside the walk"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    40,
+    6.507,
+    -1452
+   ],
+   "yaw": 90,
+   "scale": 0.85,
+   "why": "Amber Steps upper clump: the second crown"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    30,
+    7.351,
+    -1440
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "Amber Steps upper clump: a pine toward the hilltop corner"
+  },
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    30,
+    3.539,
+    -1540
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "Amber Steps lower lawn: the clump's west tree"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    105,
+    2.696,
+    -1551
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "the condos' back gardens: the first court"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    150,
+    2.494,
+    -1550
+   ],
+   "yaw": 60,
+   "scale": 0.85,
+   "why": "the condos' back gardens: the middle court"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    108,
+    3.811,
+    -1492
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "Bayview Lane north row: one tree for its west gardens"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    178,
+    2.666,
+    -1492
+   ],
+   "yaw": 90,
+   "scale": 0.9,
+   "why": "Bayview Lane north row: one for its east gardens"
+  }
+ ]
+}

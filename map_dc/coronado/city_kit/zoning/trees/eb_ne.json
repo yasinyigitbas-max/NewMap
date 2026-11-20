@@ -1,0 +1,153 @@
+{
+ "area": "eb_ne",
+ "piece": "n_eb_ne",
+ "zone": "civic and parks / waterfront (Bridge Beach, the bluff)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; waterfront - palms only, spaced on the promenade; never on the sand below the dune line (SHORE_GUIDE); held to the plan's in-view limit (12 trees, 8 broadleaf within 60 m of a street point)",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, eb fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    968.0,
+    4.637,
+    -1073.0
+   ],
+   "yaw": 50,
+   "scale": 0.95,
+   "why": "the ramp-side grove: its west, a screen from the off-ramp"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    999.0,
+    3.7,
+    -1074.0
+   ],
+   "yaw": 170,
+   "scale": 0.9,
+   "why": "the ramp-side grove: its east, shade on the tables"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    1041.0,
+    3.006,
+    -1046.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "the snack shack: a palm by its tables"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    1012.0,
+    3.153,
+    -1080.0
+   ],
+   "yaw": 30,
+   "scale": 1.0,
+   "why": "the promenade: a palm at the dog beach's gate"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    1096.0,
+    2.892,
+    -1004.0
+   ],
+   "yaw": 100,
+   "scale": 0.95,
+   "why": "the promenade: a palm on its land side, north beach"
+  },
+  {
+   "base": "palm_canary_date_a",
+   "cond": "normal",
+   "at": [
+    1160.0,
+    3.016,
+    -968.0
+   ],
+   "yaw": 200,
+   "scale": 1.0,
+   "why": "the promenade: a palm on its land side where it turns round the approach"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    1146.0,
+    6.729,
+    -886.0
+   ],
+   "yaw": 20,
+   "scale": 1.0,
+   "why": "the bluff overlook: a pine at its north-west corner (the bluff's character)"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    1146.0,
+    6.057,
+    -862.0
+   ],
+   "yaw": 140,
+   "scale": 0.9,
+   "why": "the bluff overlook: a pine at its south-west corner"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    1088.0,
+    6.0,
+    -858.0
+   ],
+   "yaw": 260,
+   "scale": 0.95,
+   "why": "the bluff grove: shade on its tables"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    1103.0,
+    5.686,
+    -846.0
+   ],
+   "yaw": 80,
+   "scale": 0.9,
+   "why": "the bluff grove: its east"
+  },
+  {
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "at": [
+    1072.0,
+    5.675,
+    -842.0
+   ],
+   "yaw": 190,
+   "scale": 0.9,
+   "why": "the bluff grove: its west"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    1214.0,
+    3.588,
+    -862.0
+   ],
+   "yaw": 50,
+   "scale": 1.0,
+   "why": "the promenade: a palm on its land side under the bluff"
+  }
+ ]
+}

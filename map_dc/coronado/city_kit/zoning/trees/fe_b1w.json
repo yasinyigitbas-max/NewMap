@@ -1,0 +1,33 @@
+{
+ "area": "fe_b1w",
+ "piece": "n_fe_b1w",
+ "zone": "apartments (Crown Hill Gardens)",
+ "rule": "docs/TREE_PLAN.md: apartments - some: one tree per court, placed for the seating; hedges only where they close a yard",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, fe fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    325.0,
+    6.047,
+    -843.0
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "why": "the court's one tree: shade over the lawn east of the leg, by the tables"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    362.0,
+    5.752,
+    -885.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "the north-east lawn (the old tot lot): one palm, light crown, seen from the court"
+  }
+ ]
+}

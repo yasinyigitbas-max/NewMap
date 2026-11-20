@@ -1,0 +1,33 @@
+{
+ "area": "fe_b1e",
+ "piece": "n_fe_b1e",
+ "zone": "apartments (Crown Hill Mews)",
+ "rule": "docs/TREE_PLAN.md: apartments - some: one tree per court, placed for the seating; hedges only where they close a yard",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, fe fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "tree_magnolia_a",
+   "cond": "normal",
+   "at": [
+    455.0,
+    5.292,
+    -905.0
+   ],
+   "yaw": 30,
+   "scale": 0.95,
+   "why": "the mews' green: its tree, shading the picnic side of the lawn"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    393.0,
+    5.574,
+    -897.0
+   ],
+   "yaw": 200,
+   "scale": 0.9,
+   "why": "the green's west end by the play corner, shade for the parents' side"
+  }
+ ]
+}

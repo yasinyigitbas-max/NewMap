@@ -96,7 +96,10 @@ func _h(s: String) -> int: return absi(hash(s))
 
 func _run() -> void:
 	var only := PackedStringArray(); var kinds := PackedStringArray(); var limit := 100000
+	var asg_file := "assignment_hp.json"; var rep_file := "rooms_hp_report.json"     # (fill 20 Nov) --assign= / --report= : one pair per area
 	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--assign="): asg_file = a.trim_prefix("--assign=")
+		if a.begins_with("--report="): rep_file = a.trim_prefix("--report=")
 		if a.begins_with("--only="): only = a.trim_prefix("--only=").split(",", false)
 		if a.begins_with("--kinds="): kinds = a.trim_prefix("--kinds=").split(",", false)
 		if a.begins_with("--limit="): limit = int(a.trim_prefix("--limit="))
@@ -104,7 +107,7 @@ func _run() -> void:
 		if f.begins_with("manifest_") and f.ends_with(".json"): _man(MAN + f)
 	var rc: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(D + "room_contracts.json")).models
 	rc.merge(JSON.parse_string(FileAccess.get_file_as_string(D + "room_contracts_hp.json")).models)
-	var asg: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(D + "assignment_hp.json"))
+	var asg: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(D + asg_file))
 	var n := 0
 	for e: Dictionary in asg.rooms:
 		if String(e.built) != "": continue
@@ -113,7 +116,7 @@ func _run() -> void:
 		if n >= limit: break
 		await _room(e, rc[String(e.model)])
 		n += 1
-	var fo := FileAccess.open(D + "rooms_hp_report.json", FileAccess.WRITE)
+	var fo := FileAccess.open(D + rep_file, FileAccess.WRITE)
 	fo.store_string(JSON.stringify({"rooms": report}, " ")); fo.close()
 	print("GEN_DONE rooms=%d" % n)
 	quit()
