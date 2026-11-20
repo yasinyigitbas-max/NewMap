@@ -608,7 +608,9 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 			if (crowd->hurt_t[i] > 0.0f) r_clip = WALK_HURT;   // he lost a fight: slowly away, his hands at his face
 		}
 		r_speed = std::min(std::max(r_speed, 0.4), 2.2);
-		if (a == pc::A_WAVE) { r_clip = WAVE; r_speed = 1.0; }
+		// (a wave in passing: the standing wave clip on a walker made his whole figure skate, 0.94 m/s: tests/people/trace_crowd.gd
+		// --acts. Walking, he walks on; stopped, he waves)
+		if (a == pc::A_WAVE && v < 0.3f) { r_clip = WAVE; r_speed = 1.0; }
 		return;
 	}
 	// first the way into the act, once; then the act
@@ -899,7 +901,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 						Vector3 d(crowd->x[j] - crowd->x[i], 0, crowd->z[j] - crowd->z[i]);
 						const float dist = d.length();
 						float w = 1.0f;
-						if (fighting) w = std::min((crowd->cfg.fight_s - crowd->pause_t[i]) / 0.5f, 1.0f);
+						if (fighting) w = std::min((crowd->cfg.fight_s - crowd->pause_t[i]) / 1.0f, 1.0f);   // (over a second: two steps in)
 						else if (ac == pc::A_CHEER) w = std::min(crowd->pause_t[i] / 0.5f, 1.0f);
 						else w = crowd->cfg.rise_s[pc::A_FIGHT] > 0.0f ? crowd->rise_t[i] / crowd->cfg.rise_s[pc::A_FIGHT] : 0.0f;
 						if (dist > 0.8f && dist < 4.0f) at += d / dist * (std::min((dist - 0.8f) * 0.5f, 1.2f) * std::min(std::max(w, 0.0f), 1.0f));
@@ -918,6 +920,20 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 					nb.v_s += (v_real - nb.v_s) * std::min((float)p_delta * 7.0f, 1.0f);
 				}
 				clip_of(i, nb.act_t, nb.v_s, clip, speed, hold, token);
+				// MOVING WHILE A STANDING CLIP PLAYS: he walks there. (Fighters closing in glided 1.2 m in half a second on
+				// their guard clip, a wave in passing, sitting down while still going: the feet skated 0.5-0.9 m/s,
+				// tests/people/trace_crowd.gd --acts.) Once he stands, the act's clip from where it was.
+				{
+					double ld; int ns;
+					nb.stepping = nb.v_s > (nb.stepping ? 0.15f : 0.3f);   // (on above 0.3 m/s, off under 0.15: no flicker between the two)
+		if (nb.stepping && !CityPed::stride_of(clip, ld, ns) && crowd->mode[i] != pc::M_DODGE) {
+						static const StringName STEP_W("ual/Walk_Loop"), STEP_J("ual/Jog_Fwd_Loop");
+						if (nb.v_s > 1.9f) { clip = STEP_J; speed = nb.v_s / (nb.female ? 2.49 : 2.40); }
+						else { clip = STEP_W; speed = std::max((double)nb.v_s / (nb.female ? 0.94 : 0.91), 0.4); }
+						hold = -1.0; token = 0;
+						nb.act_t = 0.0f;   // (the act's way in starts when he stands)
+					}
+				}
 				if (pf.walker == nb.walker && pf.angry) {   // fighting the player: his guard, a blow, a dodge, a step in
 					static const StringName GUARD("ual/PunchKick_Enter"), JAB("ual/Punch_Jab"), CROSS("ual/Punch_Cross"), DL("ual/Dodge_Left"), DR("ual/Dodge_Right"), STEP("ual/Walk_Loop");
 					speed = 1.0; token = 0;
