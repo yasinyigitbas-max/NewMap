@@ -90,7 +90,15 @@ private:
 	PackedFloat32Array buf;
 	int shown = -1;
 	// the near bodies
-	struct Near { CityPed *ped = nullptr; class FootPlant *plant = nullptr; int plant_walker = -1; Vector3 last_at; bool has_last = false; int walker = -1; int female = 0; bool in_body = false; float push_cd = 0; Ref<ShaderMaterial> look; int act = -1; float act_t = 99.0f, v_s = 0.0f; int why = 0, after_kind = 0; float after_t = 0.0f, after_len = 0.0f; bool after_hit = false; bool stepping = false; float y_s = 0.0f; bool has_y = false; };   // act, act_t: what it shows and for how long (the way INTO an act is played once)
+	// who is saying a line from his seat (CityTalk: a seated person keeps his act; his body shows the seated talk)
+	std::unordered_map<int, double> speak_until;
+public:
+	void speaking_for(int p_id, double p_seconds) { speak_until[p_id] = own_clock + p_seconds; }
+	bool speaking(int p_id) const { auto it = speak_until.find(p_id); return it != speak_until.end() && it->second > own_clock; }
+private:
+	struct Near { CityPed *ped = nullptr; class FootPlant *plant = nullptr; int plant_walker = -1; Vector3 last_at; bool has_last = false; int walker = -1; int female = 0; bool in_body = false; float push_cd = 0; Ref<ShaderMaterial> look; int act = -1; float act_t = 99.0f, v_s = 0.0f; int why = 0, after_kind = 0; float after_t = 0.0f, after_len = 0.0f; bool after_hit = false; bool stepping = false; float y_s = 0.0f; bool has_y = false;
+		// the walk start / stop (tools/people/make_steps.gd) for the walker it shows: 1 setting off, 2 stopping
+		int st_mode = 0, st_walker = -1; float st_t = 0.0f; bool st_moving = false; StringName st_clip; };   // act, act_t: what it shows and for how long (the way INTO an act is played once)
 	// how long the clips into and out of an act are (read from the figure once it is made)
 	bool lens_ok = false;
 	int fight_falls = 0;

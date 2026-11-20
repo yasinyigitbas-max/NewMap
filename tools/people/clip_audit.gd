@@ -55,12 +55,14 @@ func _initialize() -> void:
 	n = skel.get_bone_count()
 	parent.resize(n); bname.resize(n)
 	for b in n: parent[b] = skel.get_bone_parent(b); rest.append(skel.get_bone_rest(b)); bname[b] = skel.get_bone_name(b)
-	var lib: AnimationLibrary = load("res://characters/rocketbox/clips_ual_%s.res" % g)
+	# --rb: the Rocketbox library (characters/rocketbox/clips_<g>.res) and its walking loops instead
+	var rb := OS.get_cmdline_user_args().has("--rb")
+	var lib: AnimationLibrary = load(("res://characters/rocketbox/clips_%s.res" if rb else "res://characters/rocketbox/clips_ual_%s.res") % g)
 	var feet := [skel.find_bone("Bip01_L_Foot"), skel.find_bone("Bip01_R_Foot")]
 	var pel := skel.find_bone("Bip01_Pelvis")
 	var lines := PackedStringArray()
 	lines.append("CLIP AUDIT %s figure, skeleton scale %.4f, %d bones, at %d fps" % [g, k, n, int(FPS)])
-	var names: Array = USED if not every else Array(lib.get_animation_list())
+	var names: Array = (["walk_slow", "walk", "walk_fast", "jog", "run", "sprint"] if rb else USED) if not every else Array(lib.get_animation_list())
 	var flagged := 0
 	for nm in names:
 		if only != "" and nm != only: continue
@@ -98,7 +100,7 @@ func _initialize() -> void:
 			round.sort()
 			var med: float = round[round.size() / 2] if round.size() > 0 else 0.0
 			if mv > 0.02 and mv > med * 4.0: pops.append("f%d %s %.3f m (round it %.3f)" % [f, bname[mb], mv, med])
-		var is_loop := String(nm).ends_with("_Loop")
+		var is_loop := String(nm).ends_with("_Loop") or rb
 		var seam := 0.0; var seam_bone := ""
 		if is_loop:
 			for b in n:
@@ -110,7 +112,7 @@ func _initialize() -> void:
 		for f in fr + 1:
 			var y0: float = (P[f][feet[0]] as Vector3).y; var y1: float = (P[f][feet[1]] as Vector3).y
 			low = minf(low, minf(y0, y1)); high_low = maxf(high_low, minf(y0, y1))
-		if String(nm).ends_with("_Loop") and (String(nm).begins_with("Walk") or String(nm).begins_with("Jog") or String(nm).begins_with("Sprint") or String(nm).begins_with("Crouch_Fwd")):
+		if (rb or String(nm).ends_with("_Loop")) and (String(nm).begins_with("walk") or String(nm).begins_with("jog") or String(nm).begins_with("run") or String(nm).begins_with("sprint") or String(nm).begins_with("Walk") or String(nm).begins_with("Jog") or String(nm).begins_with("Sprint") or String(nm).begins_with("Crouch_Fwd")):
 			# the stride: when each foot is lowest (planted), as a share of the loop; and the planted foot's speed back (the
 			# clip's own ground speed)
 			var fl := 0; var fr2 := 0
@@ -125,6 +127,11 @@ func _initialize() -> void:
 			spd.sort()
 			var zmin := 9.0; var zmax := -9.0
 			for f2 in fr + 1: zmin = minf(zmin, (P[f2][feet[0]] as Vector3).z - (P[f2][pel] as Vector3).z); zmax = maxf(zmax, (P[f2][feet[0]] as Vector3).z - (P[f2][pel] as Vector3).z)
+			# landing (what CityPed::stride_of holds): the left foot furthest forward of the hips
+			var fw := 0
+			for f2 in fr + 1:
+				if (P[f2][feet[0]] as Vector3).z - (P[f2][pel] as Vector3).z > (P[fw][feet[0]] as Vector3).z - (P[fw][pel] as Vector3).z: fw = f2
+			print("LANDING %-20s left foot furthest forward at %.3f of the loop" % [nm, float(fw) / fr])
 			print("STRIDE %-20s left foot down at %.3f, right at %.3f of the loop; planted foot back at %.2f m/s (median of %d frames); the foot's reach fore and aft %.3f m: ground speed %.2f m/s (two steps a loop)" % [nm, float(fl) / fr, float(fr2) / fr, spd[spd.size() / 2] if spd.size() > 0 else 0.0, spd.size(), zmax - zmin, 2.0 * (zmax - zmin) / len])
 		var finds := PackedStringArray()
 		if not pops.is_empty(): finds.append("POP x%d: %s" % [pops.size(), ", ".join(PackedStringArray(pops.slice(0, 3)))])

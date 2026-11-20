@@ -52,7 +52,9 @@ func _physics_process(delta: float) -> bool:
 				if int(nb.walker) != who: continue
 				var nm := String(nb.clip).trim_prefix("ual/")
 				if clips.is_empty() or clips.back() != nm: clips.append(nm)
-				if d > 0.3 and d < 1.0 and nm.begins_with("Walk") and absf((nb.at as Vector3).y + d) < 0.12: waded = true
+				# (walking: the Quaternius walk, or since 20 Nov the same with the hands open, its start and stops: "step/...")
+				var walking := nm.begins_with("Walk") or nm in ["step/walk", "step/start", "step/stop_l", "step/stop_r"]
+				if d > 0.3 and d < 1.0 and walking and absf((nb.at as Vector3).y + d) < 0.12: waded = true
 				if d > 1.3 and nm.begins_with("Swim"): swam_y = (nb.at as Vector3).y
 	match step:
 		0:

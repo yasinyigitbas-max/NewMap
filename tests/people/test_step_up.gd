@@ -124,8 +124,8 @@ func _physics_process(delta: float) -> bool:
 		0:
 			if t < 1.0: return false
 			lane = 0; _start_lane(); step = 1; t0 = t
-		1:      # walking into the lane's thing
-			if t - t0 < 4.0: return false
+		1:      # walking into the lane's thing (5 s: he walks at 1.05 m/s since 20 Nov, was 1.6, and takes a first step)
+			if t - t0 < 5.0: return false
 			_judge(LANES[lane][3], false)
 			if LANES[lane][4] != "":   # now a jump into it
 				player.global_position = Vector3(lane * 6.0, 0.05, 1.6); player.velocity = Vector3.ZERO

@@ -215,6 +215,23 @@ bool CityBike::get_on() {
 	if (state != ST_PARKED || damage >= 100.0f) return false;
 	CityPlayer *pl = the_player();
 	if (!pl || pl->get_global_position().distance_to(get_global_position()) > 2.5f) return false;
+	if (lift_t >= 0.0f) return true;   // (already lifting it)
+	if (fallen || std::fabs(get_global_basis().get_column(1).y) < 0.85f) {
+		// (the Animator, 20 Nov: the fallen bicycle jumped upright while the player stood still) he faces it, bends down and
+		// lifts it; it comes up with his hands; then he gets on
+		const Vector3 f = get_global_basis().get_column(2);
+		lift_from = get_global_transform();
+		lift_to = Transform3D(Basis(Vector3(0, 1, 0), std::atan2(f.x, f.z)), get_global_position() + Vector3(0, 0.05f, 0));
+		lift_t = 0.0f; lift_phase = 0; lift_wait = 0.0f;
+		set_linear_velocity(Vector3()); set_angular_velocity(Vector3());
+		// first he walks up to it (Yasin: "he doesnt seem to be reaching the bike to lift it"): on the side its saddle and
+		// bars lie toward, just past them, as one picks a bicycle up (from the wheels' side its top is out of reach)
+		lift_up = get_global_basis().get_column(1); lift_up.y = 0.0f;
+		if (lift_up.length() < 0.2f) { lift_up = pl->get_global_position() - get_global_position(); lift_up.y = 0.0f; }
+		lift_up = lift_up.length() > 0.05f ? lift_up.normalized() : Vector3(1, 0, 0);
+		pl->walk_to(get_global_position() + lift_up * 1.05f);
+		return true;
+	}
 	mount();
 	return true;
 }
@@ -244,8 +261,18 @@ void CityBike::mount() {
 		if (m.is_valid()) rider->become(pf->get_body(), m, lk.is_valid() ? Ref<ShaderMaterial>(lk->duplicate()) : Ref<ShaderMaterial>(), true);
 	}
 	set_mass(M_BIKE + M_RIDER);
+	// GETTING ON is the get-off played backwards (the Animator, 20 Nov: he appeared on the saddle at once): from standing
+	// at its left side, a step in, the right leg over the low frame onto its pedal, up onto the saddle, the hands to the
+	// bars; the left foot stays down (he is standing still on it) until he rides off
 	state = ST_MOUNT; st_t = 0.0f;
-	clip_in = rider ? (float)std::max(rider->clip_len("ual/Sitting_Enter"), 0.6) : 1.0f;
+	clip_in = 1.3f;
+	foot_down = 1.0f; dm_fk = 1.0f; dm_seat_t = 0.0;
+	crank = IDLE_CRANK;
+	{
+		const float ang = crank + 3.14159265f;   // (the right foot ends on its pedal)
+		dm_foot0[1] = Vector3(-bike_look::PEDAL_X, bike_look::BB_Y + bike_look::CRANK_R * std::cos(ang) + 0.08f, bike_look::CRANK_R * std::sin(ang));
+		dm_foot0[0] = Vector3(0.28f, 0.0f, 0.12f);
+	}
 	lean = lean_v = 0.0f;
 	if (rider) rider->set_visible(true);
 	if (cam && chase_camera) { cam->make_current(); cam_set = false; }
@@ -495,9 +522,10 @@ void CityBike::place_rider(double p_delta) {
 	const Transform3D at(bt.basis, bt.xform(RIDER_AT + IDLE_SHIFT * fk));
 	static const StringName IN("ual/Sitting_Enter"), RIDE("ual/Driving_Loop"), OUT("ual/Sitting_Exit");
 	(void)OUT;
-	if (state == ST_DISMOUNT) { dismount_pose(bt); return; }
-	if (state == ST_MOUNT) rider->drive(at, IN, 1.0, -2.0);
-	else rider->drive(at, RIDE, 1.0, -1.0);
+	(void)IN;
+	if (state == ST_DISMOUNT) { dismount_pose(bt, clampf(st_t / clip_out, 0.0f, 1.0f), false); return; }
+	if (state == ST_MOUNT) { dismount_pose(bt, 1.0f - clampf(st_t / clip_in, 0.0f, 1.0f), true); return; }
+	rider->drive(at, RIDE, 1.0, -1.0);
 	if (!reach_mod) return;
 	for (int s = 0; s < 2; s++) { reach_mod->w_foot[s] = 1.0f; reach_mod->w_hand[s] = 1.0f; }
 	float w = 1.0f;
@@ -530,21 +558,20 @@ void CityBike::place_rider(double p_delta) {
 //  0.12-0.55 the right foot leaves its pedal, comes forward over the low frame and down beside the left one
 //  0.60-0.85 the left foot (planted on the ground since he stopped) steps out to its standing place
 //  0.45-0.70 the right hand lets go; 0.80-1.00 the left; 0.88-1.00 the feet are the clip's own again
-void CityBike::dismount_pose(const Transform3D &bt) {
+void CityBike::dismount_pose(const Transform3D &bt, float u, bool p_on) {
 	static const StringName RIDE("ual/Driving_Loop"), IDLE("ual/Idle_Loop");
-	const float u = clampf(st_t / clip_out, 0.0f, 1.0f);
 	auto ss = [](float a, float b, float x) { const float k = clampf((x - a) / (b - a), 0.0f, 1.0f); return k * k * (3.0f - 2.0f * k); };
 	const float gy = y_ground + 0.085f;
 	const Vector3 seat_at = RIDER_AT + IDLE_SHIFT * dm_fk;
 	const Vector3 stand_end(0.5f, 0.0f, 0.05f);
 	const Vector3 stand_start = seat_at + rider->clip_hips_at(RIDE, dm_seat_t) - rider->clip_hips_at(IDLE, 0.0);
-	const float m = ss(0.0f, 0.85f, u), bw = std::min(st_t / 0.3f, 1.0f);
+	const float m = ss(0.0f, 0.85f, u), bw = p_on ? 1.0f : std::min(st_t / 0.3f, 1.0f);   // (getting on: no fade in from riding)
 	const Vector3 at_l = seat_at.lerp(stand_start.lerp(stand_end, m), bw);
 	// upright as he stands (the bike is tipped onto his foot)
 	const Vector3 f = bt.basis.get_column(2);
 	const Basis yb(Vector3(0, 1, 0), std::atan2(f.x, f.z));
 	const Basis rb = Basis(Quaternion(bt.basis.orthonormalized()).slerp(Quaternion(yb), ss(0.1f, 0.8f, u)));
-	rider->drive(Transform3D(rb, bt.xform(at_l)), IDLE, 1.0, -1.0);
+	rider->drive(Transform3D(rb, bt.xform(at_l)), (p_on && u < 0.2f) ? RIDE : IDLE, 1.0, -1.0);   // (getting on: the seated clip as he sits)
 	if (!reach_mod) return;
 	reach_mod->set_active(true); reach_mod->set_influence(1.0f);
 	auto ground = [&](const Vector3 &l) { Vector3 g = bt.xform(l); g.y = gy; return g; };
@@ -660,6 +687,50 @@ void CityBike::_process(double p_delta) {
 		want_toggle = false;
 		if (state == ST_PARKED) get_on(); else if (state == ST_RIDE) get_off();
 	}
+	if (lift_t >= 0.0f) {   // the bicycle comes up with his hands (from 0.35 to 0.95 of the lift), then he gets on
+		CityPlayer *lp = the_player();
+		if (lift_phase == 0) {   // walking up to it (3 s at most), then he faces it and bends down
+			lift_wait += (float)p_delta;
+			if (!lp || lp->walk_done() || lift_wait > 3.0f) {
+				lift_phase = 1; lift_t = 0.0f;
+				if (lp) {
+					lp->halt(); lp->gesture(3, LIFT_S);   // (stopped dead: the kneel is not lost to a stop step)
+					lp->talk_face(true, lift_from.origin + lift_up * 0.5f);   // (facing the middle of it)
+					// it comes up on its wheels and a little toward him: upright half a metre in front of him, in his hands
+					Vector3 to = lp->get_global_position() - lift_up * 0.5f; to.y = lift_from.origin.y + 0.05f;
+					lift_to.origin = to;
+				}
+			}
+		} else {   // the kneel's own clock (it starts when the clip does), else this one
+			const double gt = lp ? lp->gesture_time() : -1.0;
+			lift_t = gt >= 0.0 ? std::max(lift_t, (float)gt) : lift_t + (float)p_delta;
+		}
+		// (Yasin: "bike is levitating to him, add a pick up animation and make him kneel then lift the bike") the bicycle
+		// stays down while he kneels and takes hold of it, and comes up on its wheels as he stands up (0.95-1.45 s of
+		// ual/PickUp_Kneeling); it rose from 0.45 s, while he was still going down
+		const float k = lift_phase == 1 ? clampf((lift_t - 0.95f) / 0.5f, 0.0f, 1.0f) : 0.0f, e = k * k * (3.0f - 2.0f * k);
+		const Quaternion q = Quaternion(lift_from.basis.orthonormalized()).slerp(Quaternion(lift_to.basis.orthonormalized()), e);
+		set_global_transform(Transform3D(Basis(q), lift_from.origin.lerp(lift_to.origin, e)));
+		set_linear_velocity(Vector3()); set_angular_velocity(Vector3());
+		// his hands: on the grip that is uppermost and on the saddle, from as he reaches down until he lets go at the top
+		if (lp && lift_phase == 1) {
+			const Transform3D bt = get_global_transform();
+			const Vector3 gl = bt.xform(Vector3(bike_look::GRIP_X, bike_look::GRIP_Y, bike_look::GRIP_Z)), gr = bt.xform(Vector3(-bike_look::GRIP_X, bike_look::GRIP_Y, bike_look::GRIP_Z));
+			const Vector3 bar = gl.y > gr.y ? gl : gr, seat = bt.xform(Vector3(0.0f, bike_look::SADDLE_Y, bike_look::SADDLE_Z));
+			Vector3 out = lp->get_global_position() - bt.origin; out.y = 0.0f; out = out.length() > 0.05f ? out.normalized() : Vector3(1, 0, 0);
+			const Vector3 left = Vector3(0, 1, 0).cross(-out);   // (his left, facing the bike)
+			const bool bar_left = (bar - seat).dot(left) > 0.0f;
+			// (his hands: reaching it as he goes down 0.3-0.65 s, on it while he kneels and stands, letting go 1.6-1.85 s)
+			const float w = clampf((lift_t - 0.3f) / 0.35f, 0.0f, 1.0f) * (1.0f - clampf((lift_t - 1.6f) / 0.25f, 0.0f, 1.0f));
+			lp->hold_points(w > 0.0f, bar_left ? bar : seat, bar_left ? seat : bar, out, w);
+		}
+		if (lift_t >= LIFT_S) {
+			if (lp) lp->hold_points(false, Vector3(), Vector3(), Vector3(1, 0, 0), 0.0f);
+			lift_t = -1.0f; fallen = false;
+			if (CityPlayer *lp = the_player()) lp->talk_face(false, Vector3());
+			mount();
+		}
+	}
 	if (state == ST_MOUNT && st_t >= clip_in * 0.95f) { state = ST_RIDE; st_t = 0.0f; }
 	if (state == ST_DISMOUNT && st_t >= clip_out) {   // off, standing by its left side
 		state = ST_PARKED; st_t = 0.0f;
@@ -767,6 +838,7 @@ void CityBike::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_rider_body"), &CityBike::get_rider_body);
 	ClassDB::bind_method(D_METHOD("set_rider_player", "player"), &CityBike::set_rider_player);
 	ClassDB::bind_method(D_METHOD("get_on"), &CityBike::get_on);
+	ClassDB::bind_method(D_METHOD("knock_over"), &CityBike::knock_over);
 	ClassDB::bind_method(D_METHOD("get_off"), &CityBike::get_off);
 	ClassDB::bind_method(D_METHOD("set_controls", "pedal", "brake", "steer", "sprint"), &CityBike::set_controls);
 	ClassDB::bind_method(D_METHOD("get_state"), &CityBike::get_state);

@@ -631,6 +631,7 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 				talks = ((int)(own_clock * 0.25) + crowd->party[i]) % ((int)crowd->psize[i] + 1) == (int)crowd->slot[i];
 			if (a == pc::A_PHONE || a == pc::A_CALL) r_clip = ((lk >> 13) & 1u) ? WALK_TEXT : WALK_PHONE;
 			else if (talks) r_clip = WALK_TALK;
+			if (crowd->carry[i] && a != pc::A_PHONE && a != pc::A_CALL && !talks) { static const StringName CARRY("ual/Walk_Carry_Loop"); r_clip = CARRY; }   // (his shopping in his arms)
 			if (crowd->hurt_t[i] > 0.0f) r_clip = WALK_HURT;   // he lost a fight: slowly away, his hands at his face
 		}
 		r_speed = std::min(std::max(r_speed, 0.4), 2.2);
@@ -644,7 +645,7 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 		if (p_t < (float)p_in_len) { r_clip = p_in; r_hold = -2.0; } else r_clip = p_loop;
 	};
 	switch (a) {
-		case pc::A_SIT: seq(SIT_IN, l_sit_in, SITS[(lk >> 12) % 6u]); break;
+		case pc::A_SIT: seq(SIT_IN, l_sit_in, speaking(crowd->id[i]) ? SIT_TALK : SITS[(lk >> 12) % 6u]); break;   // (talking to the player from his seat: the seated talk)
 		case pc::A_DRINK: seq(SIT_IN, l_sit_in, ((int)(p_t / 5.0f) % 3 == 1) ? SIT_DRINK : SIT_TALK); break;   // a word, a sip, a word
 		case pc::A_GSIT: seq(GSIT_IN, l_gsit_in, GSIT); break;
 		case pc::A_BEG: {   // a beggar: his hand out to whoever comes by, a nod to the one who gives
@@ -669,6 +670,8 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 		case pc::A_STARE: seq(SURPRISE, l_surprise, ((lk >> 9) & 1u) ? ARMS : LOOK); break;
 		case pc::A_DUCK: seq(DUCK_IN, l_duck_in, DUCK); break;
 		case pc::A_CHAT: case pc::A_TALK: r_clip = TALK; break;
+		case pc::A_NOD: { static const StringName YES("ual/Yes"); r_clip = YES; r_hold = -2.0; } break;   // (the Animator, 20 Nov: talks had no nod)
+		case pc::A_NO: r_clip = NO; break;   // (and no refusal: he walked on with a caption)
 		case pc::A_ARGUE: r_clip = ((lk >> 5) & 1u) ? NO : ANGRY; break;
 		case pc::A_HUG: r_clip = HUG; break;
 		case pc::A_GIVE: r_clip = GIVE_COIN; r_hold = -2.0; break;
@@ -709,6 +712,7 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 		default:   // standing: at a kerb for the lights a look round, folded arms; a jogger gets his breath
 			if (crowd->state[i] == pc::ST_WAIT) { const uint32_t w = (lk >> 9) % 3u; r_clip = (crowd->party[i] != 0 && crowd->pkind[i] == pc::PK_JOGGER) ? TIRED : (w == 0u ? IDLE : (w == 1u ? ARMS : LOOK)); }
 			else r_clip = IDLE;
+			if (crowd->hurt_t[i] > 0.0f) { static const StringName NURSE("ual/Bandage_Loop"); r_clip = NURSE; }   // (hurt and standing: he sees to it)
 			break;
 	}
 }
@@ -963,6 +967,37 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 						else { clip = STEP_W; speed = std::max((double)nb.v_s / (nb.female ? 0.94 : 0.91), 0.4); }
 						hold = -1.0; token = 0;
 						nb.act_t = 0.0f;   // (the act's way in starts when he stands)
+					}
+				}
+				// THE PLAYER'S MOVEMENTS FOR EVERYBODY (the Animator, 20 Nov; Yasin: "give the new movements to npcs too";
+				// "just open the hands of quaternius animations and use them for walk"): the walk, jog and idle with the
+				// hands open, and the walk stop (make_steps.gd) when he comes to a stand. (A fight keeps its fists: the
+				// clips below override this.)
+				{
+					static const StringName UW("ual/Walk_Loop"), UJ("ual/Jog_Fwd_Loop"), UI("ual/Idle_Loop"), OW("step/walk"), OJ("step/jog"), OI("step/idle"),
+							OSL("step/stop_l"), OSR("step/stop_r");
+					if (nb.st_walker != nb.walker) { nb.st_walker = nb.walker; nb.st_mode = 0; nb.st_moving = nb.v_s > 0.3f; }
+					const bool plain = hold < 0.0 && token == 0 && (clip == UW || clip == UI);
+					const bool moving = nb.v_s > (nb.st_moving ? 0.15f : 0.3f);
+					if (nb.ped->clip_len(OW) > 0.0 && plain) {
+						// (no start for them: the crowd's brain moves them at its own pace from the first frame, not the clip's,
+						// and its planted foot slid 1.24 m/s, tests/people/trace_crowd.gd; the stop stands still: 0.00)
+						if (!moving && nb.st_moving && nb.st_mode == 0 && (nb.ped->current_clip() == OW || nb.ped->current_clip() == UW)) {
+							// on the foot nearer its landing (the walk's left lands at 0 of its loop, the right at 0.5)
+							const double len = nb.ped->clip_len(nb.ped->current_clip());
+							double ph = len > 0.0 ? nb.ped->clip_pos() / len : 0.0; ph -= std::floor(ph);
+							nb.st_mode = 2; nb.st_t = 0.0f; nb.st_clip = (ph > 0.25 && ph < 0.75) ? OSR : OSL;
+						}
+						if (nb.st_mode == 2 && moving) nb.st_mode = 0;   // (changed his mind)
+						if (nb.st_mode != 0) {
+							nb.st_t += (float)p_delta;
+							if (nb.st_t >= (float)nb.ped->clip_len(nb.st_clip)) nb.st_mode = 0;
+							else { clip = nb.st_clip; speed = 1.0; hold = -2.0; token = 9100 + nb.st_mode; }
+						}
+					} else if (!plain) nb.st_mode = 0;
+					nb.st_moving = moving;
+					if (nb.ped->clip_len(OW) > 0.0 && hold < 0.0 && token == 0) {
+						if (clip == UW) clip = OW; else if (clip == UJ) clip = OJ; else if (clip == UI) clip = OI;
 					}
 				}
 				if (pf.walker == nb.walker && pf.angry) {   // fighting the player: his guard, a blow, a dodge, a step in

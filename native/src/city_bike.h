@@ -106,6 +106,9 @@ private:
 	// let go; he ends standing where the player takes over (the old way: a chair's stand-up clip on the saddle, then the
 	// player 0.75 m to the side)
 	Vector3 dm_foot0[2]; float dm_fk = 0.0f; double dm_seat_t = 0.0;
+	// lifting a fallen bicycle before getting on (the player bends down and lifts it: ual/PickUp_Kneeling)
+	float lift_t = -1.0f, lift_wait = 0.0f; int lift_phase = 0; Transform3D lift_from, lift_to; Vector3 lift_up;   // (lift_up: the way its top lies, level)   // (phase 0: he walks to it; 1: lifts)
+	static constexpr float LIFT_S = 1.9f;   // (ual/PickUp_Kneeling: down to the kneel by 0.7 s, up again 1.0-1.45 s)
 	float wheel_ang = 0.0f;
 	bool on_ground = false, fallen = false;
 	float damage = 0.0f, hardest = 0.0f;
@@ -141,7 +144,7 @@ private:
 	void read_player();
 	void throw_rider(const Vector3 &p_blow);
 	void place_rider(double p_delta);
-	void dismount_pose(const Transform3D &p_bt);
+	void dismount_pose(const Transform3D &bt, float p_u, bool p_on);   // (p_on: getting on, the same played backwards)
 	void view(double p_delta);
 	void make_hud();
 	static void zones(const Vector2 &sz, Rect2 r[4]);
@@ -172,6 +175,13 @@ public:
 	void set_rider_player(Object *p_player);
 	// Get on (the player must stand within 2.5 m) / off (it must be nearly still); for tests and scenes too
 	bool get_on();
+	// (tests, films) a parked bicycle laid on its side, as after a fall
+	void knock_over() {
+		if (state != ST_PARKED) return;
+		const Vector3 f = get_global_basis().get_column(2);
+		set_global_transform(Transform3D(Basis(f.normalized(), 1.45f) * get_global_basis(), get_global_position() + Vector3(0, 0.2f, 0)));
+		set_linear_velocity(Vector3()); set_angular_velocity(Vector3()); fallen = true;
+	}
 	bool get_off();
 	// Pedals and bar when nobody's hands are on the keys (tests, scenes): 0..1, 0..1, -1 (right) .. 1 (left), 0..1
 	void set_controls(double p_pedal, double p_brake, double p_steer, double p_sprint);

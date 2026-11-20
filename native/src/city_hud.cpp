@@ -572,6 +572,9 @@ void CityHud::_process(double p_delta) {
 	CityPlayer *pl = player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
 	if (!pl && g) pl = Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(g->get_player_id())));
 	const bool on_foot = pl && pl->is_visible_in_tree();
+	// the phone in his hands (the Animator, 20 Nov: the phone had no animation): at his ear on a call, held up for the
+	// camera, in his hand while its screen is open
+	if (pl) pl->set_phone(!phone ? 0 : (phone->get_call_state() == 2 ? 2 : (!phone->is_visible_in_tree() ? 0 : (phone->get_app() == "camera" ? 3 : 1))));
 	b_inv->set_visible(on_foot);
 	use_scan -= (float)p_delta;
 	if (use_scan <= 0.0f) {

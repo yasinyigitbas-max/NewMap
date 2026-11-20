@@ -216,9 +216,8 @@ void Crowd::leave_line(int i) {
 void Crowd::arrive(int i) {
 	st.arrivals++;
 	event(E_ARRIVE, id[i], goal[i], 0.0f);
-	if (boarding[i]) {   // at the bus's door: in
-		st.boarded++; event(E_BOARD, id[i], goal[i], 0.0f);
-		kill(i, 6);
+	if (boarding[i]) {   // at the bus's door: a hand to it (0.8 s), then in (M_OFF counts it and takes him)
+		door_t[i] = 0.8f; act[i] = A_DOOR; v[i] = 0.0f;
 		return;
 	}
 	if (goal[i] < 0) {   // a spot on the pavement: it stands a moment (or as long as the game said), then chooses again
@@ -319,6 +318,10 @@ void Crowd::come_out(int place, bool from_bus, float dx_, float dz_) {
 	move_row(i, ox, oz); y[i] = py[i] = from_bus ? y[i] : P.y;
 	mode[i] = M_BACK; v[i] = 0.0f;
 	yaw[i] = pyaw[i] = std::atan2(bx[i] - ox, bz[i] - oz);
+	if (!from_bus) {   // out of a shop: a moment in its doorway (the door), and one in three carries what he bought
+		door_t[i] = 0.9f; act[i] = A_DOOR;
+		carry[i] = (places[place].kind == PL_SHOP && rnd() < 0.34f) ? 1 : 0;
+	}
 	if (from_bus) { st.alighted++; event(E_ALIGHT, id[i], place, 0.0f); } else st.came_out++;
 }
 

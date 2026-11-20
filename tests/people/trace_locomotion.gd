@@ -2,7 +2,8 @@ extends SceneTree
 ## The player's moves in play, frame by frame (C++: CityPlayer, CityPed, FootPlant; Yasin, 20 Nov: "inspect for every
 ## animation in the game ... all of them", "i want them pixel perfect"), in a window:
 ##   godot --path . --rendering-method mobile --resolution 960x540 --fixed-fps 60 -s res://tests/people/trace_locomotion.gd [-- --frames]
-## A tour on a flat floor: idle, walk, jog, sprint, stop, a walking turn, crouch-walk, stand, a jump and its landing, idle.
+## A tour on a flat floor: idle, walk, jog, sprint, stop, turn round and turn right from standing, a walking turn,
+## crouch-walk, stand, a jump and its landing, idle.
 ## Every physics frame: the feet and hips as drawn (after the foot plant), the clip, the speed. Per part of the tour:
 ##  - SLIDE: a planted foot (the lower, within 4 cm of the floor) moving over the ground: its speed (should be ~0)
 ##  - POP: the hips or a foot jumping in one frame (over 3x the frames round it and over 3 cm), and which clips met there
@@ -18,6 +19,12 @@ const TOUR := [
 	[3.0, "jog", Vector2(0, 0.9), false, false],
 	[3.0, "sprint", Vector2(0, 1.0), true, false],
 	[1.5, "stop", Vector2.ZERO, false, false],
+	[3.0, "turn round", Vector2(0, -0.55), false, false],   # (standing, asked back the way he came: the turn on the spot, then off)
+	[1.5, "stop 2", Vector2.ZERO, false, false],
+	[2.5, "turn right", Vector2(0.55, 0), false, false],   # (standing, asked 90 degrees right)
+	[2.8, "stop 3", Vector2.ZERO, false, false],   # (long enough to stand: the next part starts from standing)
+	[3.0, "off running", Vector2(0, 1.0), true, false],   # (from standing straight into a run)
+	[1.8, "stop 4", Vector2.ZERO, false, false],
 	[3.0, "walk turning", Vector2(0.45, 0.4), false, false],
 	[0.6, "crouch down", Vector2.ZERO, false, true],
 	[2.5, "crouch walk", Vector2(0, 0.7), false, true],

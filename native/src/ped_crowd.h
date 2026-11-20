@@ -63,7 +63,9 @@ enum { A_NONE = 0, A_SIT = 1, A_LIE_BACK = 2, A_LIE_FRONT = 3, A_PHONE = 4, A_WI
 	A_RISE = 22,     // leaving an act that takes a moment to leave (up from a seat, out of a crouch): rise_from, rise_t
 	A_GSIT = 23,     // sitting on the ground (the sand, the grass)
 	A_CHEER = 24,    // he has won a fight: his arms go up
-	A_COUNT = 25 };
+	A_NOD = 25,      // a nod (yes, goodbye)
+	A_NO = 26,       // a shake of the head, a hand waved off (he will not talk)
+	A_COUNT = 27 };
 enum { PK_NONE = 0, PK_COUPLE = 1, PK_FRIENDS = 2, PK_FAMILY = 3, PK_SAILORS = 4, PK_JOGGER = 5, PK_COUNT = 6 };
 enum { TIER_FULL = 0, TIER_MID = 1, TIER_FAR = 2 };
 enum { E_SPAWN = 1, E_DESPAWN = 2, E_ARRIVE = 3, E_NEED_GOAL = 4, E_WAIT_CROSS = 5, E_LOOK_CROSS = 6, E_BUMP = 7,
@@ -170,6 +172,9 @@ public:
 	float tx[MAX_PEDS], tz[MAX_PEDS], ty[MAX_PEDS], tyaw[MAX_PEDS];   // off the line: where to, and how to face there
 	float rise_t[MAX_PEDS], kept_stay[MAX_PEDS];
 	float hurt_t[MAX_PEDS], hurt_v0[MAX_PEDS];  // hurt (he lost a fight): seconds of slow walking left, and his own pace to go back to
+	// (the Animator, 20 Nov) at a door a moment: out of a shop (standing in its doorway), into a bus (a hand to its door);
+	// and what he carries: 1 a shopping bag, out of a shop, until he is gone
+	float door_t[MAX_PEDS]; uint8_t carry[MAX_PEDS];
 	uint8_t swam[MAX_PEDS];                     // it has had its swim
 	uint8_t fwin[MAX_PEDS];                     // in a fight: 1 = he will win it
 	int32_t kept_goal[MAX_PEDS];                // where it was going when its body was knocked about (-1 = nowhere): it goes on there afterwards

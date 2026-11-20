@@ -29,7 +29,48 @@ class CityPlayer : public CharacterBody3D {
 	bool capture_mouse = false, scripted = false, cmd_run = false, e_was = false, cam_set = false, frozen = false;
 	Vector2 cmd;
 	float cam_yaw = 0.0f, cam_pitch = -0.18f, cam_dist = 3.4f, yaw = 0.0f, speed = 0.0f;
-	float walk_speed = 1.6f, run_speed = 4.6f;
+	// THE GAIT (the Animator, 20 Nov; Yasin: "i want RDR like grounded heavy bodied people and not rushed movements";
+	// "just open the hands of quaternius animations and use them for walk"; "just make one normal mode, lets drop the
+	// angry entirely"): the Quaternius walk and jog with the hands open (tools/people/make_steps.gd: "step/walk",
+	// "step/jog", "step/idle"), each played near its own speed (before: the walk x1.74, the sprint x1.48,
+	// tests/people/gait_film.gd).
+	float walk_speed = 1.05f, run_speed = 2.8f;          // the walk at x1.14, the jog at x1.17
+	int gait_i = -1;              // the walking clip of the set playing now (kept a little past the midpoint: no flicker)
+	float move_speed = 0.0f;      // the pace he means (his body turns, then goes the way it faces)
+	Vector3 lean_a;               // his acceleration, smoothed: the body leans into a turn and into a start
+	float last_speed = 0.0f;
+	int step_mode = 0;            // a step clip playing: 1 the start, 2 a stop, 3 a turn on the spot (tools/people/make_steps.gd)
+	StringName step_clip;
+	float step_t = 0.0f, step_cs = 1.0f, step_v0 = 0.0f;
+	double stop_ph_prev = -1.0;   // (waiting for the footfall to stop on: the stride's share last frame)
+	int starts = 0, stops = 0, turns = 0;    // (the tests)
+	// IN A TALK (CityTalk; Yasin, 20 Nov: "starting chat with npc doesnt play any animation"): he faces whom he talks to
+	// and his body talks when he says a line; 0 talking (ual/Idle_Talking_Loop), 1 a nod (ual/Yes), 2 no (Idle_No_Loop),
+	// 3 bending down to lift something (ual/PickUp_Kneeling: a fallen bicycle)
+	bool talk_on = false; Vector3 talk_at;
+	int gest_kind = 0; float gest_t = 0.0f;
+public:
+	void talk_face(bool p_on, const Vector3 &p_at) { talk_on = p_on; talk_at = p_at; }
+	void gesture(int p_kind, double p_seconds) { gest_kind = p_kind; gest_t = (float)p_seconds; }
+	// the phone in his hands (CityHud): 0 none, 1 in his hand, 2 at his ear (a call), 3 held up (the camera)
+	int phone_kind = 0;
+	void set_phone(int p_kind) { phone_kind = p_kind; }
+	// walking to a spot by himself (another system's: the bicycle he goes to lift); done when he is within 12 cm
+	bool auto_on = false; Vector3 auto_to;
+	float auto_stuck = 0.0f;   // (walking into something on the way there: done once he has not moved for 0.4 s)
+	void walk_to(const Vector3 &p_at) { auto_on = true; auto_to = p_at; auto_stuck = 0.0f; }
+	// stop dead where he is (another system takes over his body: the bicycle he kneels to lift)
+	// where his gesture's clip is (s), or -1 when it is not playing (the bicycle's lift follows the kneel's own time)
+	double gesture_time() const;
+	void halt() { auto_on = false; move_speed = 0.0f; step_mode = 0; stop_ph_prev = -1.0; set_velocity(Vector3()); }
+	bool walk_done() const { return !auto_on; }
+	// his hands held to two points by another system (the climb's HandGrip: the bicycle's grip and saddle as he lifts it)
+	bool hold_on = false; Vector3 hold_p[2], hold_out, hold_side; float hold_w = 0.0f;
+	void hold_points(bool p_on, const Vector3 &p_l, const Vector3 &p_r, const Vector3 &p_out, float p_w) {
+		hold_on = p_on; hold_p[0] = p_l; hold_p[1] = p_r; hold_out = p_out; hold_side = Vector3(0, 1, 0).cross(-p_out).normalized(); hold_w = p_w;
+	}
+private:
+	float turn_yaw0 = 0.0f, turn_k = 1.0f;   // a turn on the spot (step_mode 3): the way he faced, the clip's turn scaled to the angle
 	Vector3 cam_pos, knock_v;
 	// THE OLD GAME'S TOUCH SCHEME (docs/OLD_CONTROLS_SPEC.md; Yasin: "copy it as it was"): the left half of the screen is
 	// an invisible floating stick (full at 80 px), the right half looks (0.25 deg a pixel x 1.2), a double tap (0.32 s,
