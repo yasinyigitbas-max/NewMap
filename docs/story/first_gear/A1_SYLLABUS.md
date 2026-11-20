@@ -16,7 +16,7 @@ carry the player.
    plus at most five new words a mission, each shown first with a picture or an object.
 4. **Fixed chunks** (taught as wholes before their grammar): *Hello. / Goodbye. / Please. / Thank you. / Sorry? /
    Slower, please. / I don't understand. / Excuse me. / Here you are. / Can I have …, please? / No problem. / Let's go. /
-   Keep the change. / Nice to meet you. / See you tomorrow. / I'm sorry.* (sympathy) */ Happy birthday.*
+   Keep the change. / Have you got any …?* (in shops, before *have got* is taught) */ Nice to meet you. / See you tomorrow. / I'm sorry.* (sympathy) */ Happy birthday.*
 5. **Joiners:** *and* from Act 1; *but* and *or* from Act 2; *because* from Act 3. Nothing else.
 6. **Tenses:** present *be*, *have got*, present simple, *can*, imperatives (Prologue–Act 2); present continuous (M12);
    *was / were* (M14); a small past simple (M15: *went, saw, took, had, came, drove, hit, sang, hid, gave, said, was /
