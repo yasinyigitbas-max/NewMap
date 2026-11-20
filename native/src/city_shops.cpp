@@ -68,6 +68,8 @@ CityShops::Spots CityShops::spots_of(const String &p_room) const {
 	sp.queue = v3(qu); sp.queue_yaw = (float)(double)qu[2];
 	sp.door_in = v3(di); sp.door_out = v3(dout);
 	for (int k = 0; k < br.size(); k++) { const Array b = br[k]; if (b.size() >= 3) { sp.browse.push_back(v3(b)); sp.browse_yaw.push_back((float)(double)b[2]); } }
+	const Array se = d.get("seats", Array());
+	for (int k = 0; k < se.size(); k++) { const Array b = se[k]; if (b.size() >= 3) { sp.seats.push_back(v3(b)); sp.seat_yaw.push_back((float)(double)b[2]); } }
 	sp.ok = true;
 	return sp;
 }
@@ -87,7 +89,20 @@ void CityShops::open_shop(const String &p_room, const Transform3D &p_xf) {
 	if (s.cashier < 0) return;
 	cr->actor_stand(s.cashier, wyaw(s, s.sp.staff_yaw), C_IDLE(), -1.0, 0);
 	s.next = 1.0f + 4.0f * rnd();
+	s.floor_y = p_xf.origin.y + 0.02f;   // (the room's floor: 2 cm over its piece's ground, the interiors' rule)
+	static const char *const SERVES[] = { "cafe", "restaurant", "bar", "bakery", "fast_food", "diner", "ice_cream", "taqueria", "canteen", "taproom", "panaderia", "coffee" };
+	for (const char *k : SERVES) if (s.sp.kind == k) s.serves = true;
+	// people already sitting: about a third of the seats (one at least where there are seats), four at most
+	s.seat_taken.assign(s.sp.seats.size(), 0);
 	shops.push_back(s);
+	Shop &sh = shops.back();
+	const int want = std::min((int)sh.sp.seats.size() == 0 ? 0 : std::max(1, (int)sh.sp.seats.size() / 3), 4);
+	for (int k = 0; k < want; k++) {
+		const int st = free_seat(sh);
+		if (st < 0) break;
+		const int wk = cr->actor_place(w(sh, sh.sp.seats[st]), 0, wyaw(sh, sh.sp.seat_yaw[st]), CityCrowd::R_SITTER);
+		if (wk >= 0) seat(sh, wk, st, 30.0f + 90.0f * rnd(), true);
+	}
 }
 
 bool CityShops::open_room(const String &p_room, const Transform3D &p_xf) {
@@ -103,7 +118,8 @@ void CityShops::close_shop(Shop &s) {
 	if (!cr) return;
 	if (s.cashier >= 0) cr->actor_release(s.cashier);
 	for (Customer &c : s.cust) if (c.walker >= 0 && cr->is_actor(c.walker)) cr->actor_release(c.walker);
-	s.cashier = -1; s.cust.clear();
+	for (Sitter &t : s.sit) if (t.walker >= 0 && cr->is_actor(t.walker)) cr->actor_release(t.walker);
+	s.cashier = -1; s.cust.clear(); s.sit.clear();
 	CityPlayer *pl = player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
 	if (s.pay_who == -1 && pl) pl->set_frozen(false);
 }
@@ -148,6 +164,41 @@ bool CityShops::buy() {
 	for (Shop &s : shops) {
 		const Vector3 q = w(s, s.sp.queue);
 		if (s.cashier < 0 || s.pay_who != -2 || Vector2(pp.x - q.x, pp.z - q.z).length() >= 1.0f) continue;
+		if (purchase_screen) return open_purchase(s.cashier);
+		s.pay_who = -1; s.pay_t = 0.0f; s.pay_step = 0; s.custom = false;
+		buys++;
+		return true;
+	}
+	return false;
+}
+
+bool CityShops::is_cashier(int p_walker) const {
+	for (const Shop &s : shops) if (s.cashier == p_walker && p_walker >= 0) return true;
+	return false;
+}
+
+// THE PURCHASE SCREEN's hook: the cashier waits for the player, facing him; the screen is told what the shop is
+bool CityShops::open_purchase(int p_cashier) {
+	CityCrowd *cr = crowd_id ? Object::cast_to<CityCrowd>(ObjectDB::get_instance(ObjectID(crowd_id))) : nullptr;
+	for (Shop &s : shops) {
+		if (s.cashier != p_cashier || p_cashier < 0) continue;
+		if (s.pay_who != -2) return false;   // (busy with a customer)
+		s.pay_who = -3; s.pay_t = 0.0f; s.pay_step = 0;
+		if (cr) cr->actor_stand(s.cashier, wyaw(s, s.sp.staff_yaw), C_IDLE(), -1.0, 0);
+		int price = 0; String tr; const String item = price_item(s.sp.kind, price, tr);
+		Dictionary d;
+		d["room"] = s.room; d["kind"] = s.sp.kind; d["name"] = s.sp.name; d["cashier"] = s.cashier; d["item"] = item; d["item_tr"] = tr; d["price"] = price;
+		screens++;
+		emit_signal("purchase_requested", d);
+		return true;
+	}
+	return false;
+}
+
+bool CityShops::complete_purchase(const String &p_item, const String &p_item_tr, int p_price) {
+	for (Shop &s : shops) {
+		if (s.pay_who != -3) continue;
+		s.custom = true; s.c_item = p_item; s.c_tr = p_item_tr; s.c_price = std::max(p_price, 0);
 		s.pay_who = -1; s.pay_t = 0.0f; s.pay_step = 0;
 		buys++;
 		return true;
@@ -155,11 +206,15 @@ bool CityShops::buy() {
 	return false;
 }
 
+void CityShops::cancel_purchase() {
+	for (Shop &s : shops) if (s.pay_who == -3) { s.pay_who = -2; s.pay_t = 0.0f; s.pay_step = 0; }
+}
+
 // the pay at the counter, for a customer or the player: rung up, the money over, the goods over, taken (four moves)
 void CityShops::pay_update(Shop &s, double p_delta) {
 	CityCrowd *cr = Object::cast_to<CityCrowd>(ObjectDB::get_instance(ObjectID(crowd_id)));
 	CityPlayer *pl = player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
-	if (!cr || s.pay_who == -2) return;
+	if (!cr || s.pay_who == -2 || s.pay_who == -3) return;   // (nobody paying; the purchase screen open: he waits)
 	const float sy = wyaw(s, s.sp.staff_yaw), qy = wyaw(s, s.sp.queue_yaw);
 	const bool player = s.pay_who == -1;
 	s.pay_t += (float)p_delta;
@@ -167,7 +222,8 @@ void CityShops::pay_update(Shop &s, double p_delta) {
 	const int step = s.no_money ? 3 : (int)(s.pay_t / STEP_S);
 	if (step == s.pay_step && s.pay_t > 0.05f) return;
 	s.pay_step = step;
-	int price = 0; String tr; const String item = price_item(s.sp.kind, price, tr);
+	int price = 0; String tr; String item = price_item(s.sp.kind, price, tr);
+	if (player && s.custom) { item = s.c_item; tr = s.c_tr; price = s.c_price; }
 	CityGame *g = CityGame::get();
 	if (player && step == 0 && g && g->get_money() < price) {   // not enough: he shakes his head
 		cr->actor_stand(s.cashier, sy, NO(), -1.0, 0);
@@ -197,7 +253,17 @@ void CityShops::pay_update(Shop &s, double p_delta) {
 			}
 			cr->actor_stand(s.cashier, sy, C_IDLE(), -1.0, 0);
 			sales++;
-			for (Customer &c : s.cust) if (c.walker == s.pay_who) { c.st = C_OUT; c.t = 0.0f; cr->actor_go(c.walker, w(s, s.sp.door_in), 1.3, 0.35); }
+			for (Customer &c : s.cust) {
+				if (c.walker != s.pay_who) continue;
+				const int st = s.serves && rnd() < 0.6f ? free_seat(s) : -1;
+				if (st >= 0) {   // with what he bought, to a free seat a while
+					Sitter t; t.walker = c.walker; t.seat = st; t.st = S_GO; t.stay = 25.0f + 50.0f * rnd();
+					s.seat_taken[st] = 1; s.sit.push_back(t);
+					cr->actor_go(c.walker, w(s, s.sp.seats[st]), 1.2, 0.15);
+					if (CityCrowd::Actor *a = cr->actor_of(c.walker)) a->role = CityCrowd::R_SITTER;
+					c.st = C_GONE;   // (a sitter now)
+				} else { c.st = C_OUT; c.t = 0.0f; cr->actor_go(c.walker, w(s, s.sp.door_in), 1.3, 0.35); }
+			}
 			s.pay_who = -2; s.pay_t = 0.0f; s.pay_step = 0; s.no_money = false;
 			break;
 	}
@@ -270,6 +336,63 @@ void CityShops::shop_update(Shop &s, double p_delta) {
 	}
 	s.cust.erase(std::remove_if(s.cust.begin(), s.cust.end(), [](const Customer &c) { return c.st == C_GONE; }), s.cust.end());
 	pay_update(s, p_delta);
+	sit_update(s, p_delta);
+}
+
+int CityShops::free_seat(const Shop &s) const {
+	std::vector<int> fr;
+	for (int k = 0; k < (int)s.seat_taken.size(); k++) if (!s.seat_taken[k]) fr.push_back(k);
+	if (fr.empty()) return -1;
+	return fr[(size_t)(rnd() * (float)fr.size()) % fr.size()];
+}
+
+// he sits: on the seat's spot, the floor's height, a sitting clip of his own (idle, a drink, a word, the phone)
+void CityShops::seat(Shop &s, int p_walker, int p_seat, float p_stay, bool p_placed) {
+	CityCrowd *cr = Object::cast_to<CityCrowd>(ObjectDB::get_instance(ObjectID(crowd_id)));
+	if (!cr) return;
+	static const StringName SITS[6] = { StringName("ual/Sitting_Idle_Loop"), StringName("ual/Sitting_Idle02_Loop"), StringName("ual/Sitting_Drink_Loop"), StringName("ual/Sitting_Talking_Loop"), StringName("ual/Sitting_Phone_Loop"), StringName("ual/Sitting_Text_Loop") };
+	const int pick = (int)(rnd() * 6.0f) % 6;
+	const StringName &clip = (s.serves && rnd() < 0.5f) ? SITS[2] : SITS[pick];
+	cr->actor_seat(p_walker, s.floor_y, wyaw(s, s.sp.seat_yaw[p_seat]), clip);
+	if (p_placed) { Sitter t; t.walker = p_walker; t.seat = p_seat; t.st = S_SIT; t.stay = p_stay; s.sit.push_back(t); }
+	s.seat_taken[p_seat] = 1;
+	sat_down++;
+}
+
+void CityShops::sit_update(Shop &s, double p_delta) {
+	CityCrowd *cr = Object::cast_to<CityCrowd>(ObjectDB::get_instance(ObjectID(crowd_id)));
+	if (!cr) return;
+	static const StringName RISE("ual/Sitting_Exit");
+	for (Sitter &t : s.sit) {
+		if (t.st == S_DONE) continue;
+		if (!cr->walker_alive(t.walker) || !cr->is_actor(t.walker)) { if (t.seat >= 0) s.seat_taken[t.seat] = 0; t.st = S_DONE; continue; }
+		CityCrowd::Actor *a = cr->actor_of(t.walker);
+		if (a && a->talking) continue;   // (talked to: he stays put)
+		t.t += (float)p_delta;
+		switch (t.st) {
+			case S_GO:   // to his seat with what he bought
+				if (cr->actor_arrived(t.walker) || t.t > 15.0f) { seat(s, t.walker, t.seat, t.stay, false); t.st = S_SIT; t.t = 0.0f; }
+				break;
+			case S_SIT:
+				if (t.t > t.stay) { cr->actor_stand(t.walker, wyaw(s, s.sp.seat_yaw[t.seat]), RISE, -2.0, 7301 + got_up); t.st = S_RISE; t.t = 0.0f; }
+				break;
+			case S_RISE:   // up out of the seat; then out of the door
+				if (t.t > 1.3f) {
+					if (a) a->seated = false;
+					s.seat_taken[t.seat] = 0;
+					cr->actor_go(t.walker, w(s, s.sp.door_in), 1.3, 0.35);
+					t.st = S_LEAVE; t.t = 0.0f; got_up++;
+				}
+				break;
+			case S_LEAVE:
+				if (cr->actor_arrived(t.walker) || t.t > 20.0f) { cr->actor_go(t.walker, w(s, s.sp.door_out), 1.3, 0.3); t.st = S_GO + 10; t.t = 0.0f; }
+				break;
+			default:   // (13) out on the pavement: on his way as anybody
+				if (cr->actor_arrived(t.walker) || t.t > 15.0f) { cr->actor_free(t.walker); t.st = S_DONE; customers_out++; }
+				break;
+		}
+	}
+	s.sit.erase(std::remove_if(s.sit.begin(), s.sit.end(), [](const Sitter &t) { return t.st == S_DONE; }), s.sit.end());
 }
 
 void CityShops::_process(double p_delta) {
@@ -319,6 +442,8 @@ Array CityShops::shops_info() const {
 		d["staff"] = w(s, s.sp.staff); d["queue"] = w(s, s.sp.queue); d["door_out"] = w(s, s.sp.door_out);
 		Array cs; for (const Customer &c : s.cust) { Dictionary e; e["walker"] = c.walker; e["state"] = c.st; cs.push_back(e); }
 		d["customers"] = cs;
+		Array ss; for (const Sitter &t : s.sit) { Dictionary e; e["walker"] = t.walker; e["state"] = t.st; e["seat"] = t.seat; ss.push_back(e); }
+		d["sitters"] = ss; d["seats"] = (int)s.sp.seats.size(); d["serves"] = s.serves;
 		r.push_back(d);
 	}
 	return r;
@@ -326,7 +451,7 @@ Array CityShops::shops_info() const {
 
 Dictionary CityShops::stats() const {
 	Dictionary d;
-	d["shops"] = (int)shops.size(); d["sales"] = sales; d["buys"] = buys; d["refused"] = refused; d["customers_in"] = customers_in; d["customers_out"] = customers_out; d["loaded"] = loaded; d["rooms_known"] = data.size();
+	d["shops"] = (int)shops.size(); d["sales"] = sales; d["buys"] = buys; d["refused"] = refused; d["customers_in"] = customers_in; d["customers_out"] = customers_out; d["sat_down"] = sat_down; d["got_up"] = got_up; d["screens"] = screens; d["loaded"] = loaded; d["rooms_known"] = data.size();
 	return d;
 }
 
@@ -337,4 +462,12 @@ void CityShops::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("open_room", "room", "xf"), &CityShops::open_room);
 	ClassDB::bind_method(D_METHOD("shops_info"), &CityShops::shops_info);
 	ClassDB::bind_method(D_METHOD("stats"), &CityShops::stats);
+	ClassDB::bind_method(D_METHOD("set_purchase_screen", "on"), &CityShops::set_purchase_screen);
+	ClassDB::bind_method(D_METHOD("get_purchase_screen"), &CityShops::get_purchase_screen);
+	ClassDB::bind_method(D_METHOD("open_purchase", "cashier"), &CityShops::open_purchase);
+	ClassDB::bind_method(D_METHOD("complete_purchase", "item", "item_tr", "price"), &CityShops::complete_purchase);
+	ClassDB::bind_method(D_METHOD("cancel_purchase"), &CityShops::cancel_purchase);
+	ClassDB::bind_method(D_METHOD("is_cashier", "walker"), &CityShops::is_cashier);
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "purchase_screen"), "set_purchase_screen", "get_purchase_screen");
+	ADD_SIGNAL(MethodInfo("purchase_requested", PropertyInfo(Variant::DICTIONARY, "shop")));
 }

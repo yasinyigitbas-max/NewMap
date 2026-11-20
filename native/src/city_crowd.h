@@ -40,6 +40,7 @@ class AudioStreamPlayer3D;
 class CityCrowd : public Node3D {
 	GDCLASS(CityCrowd, Node3D)
 	friend class CityLaw;   // (the law directs the actors: city_law.cpp)
+	friend class CityShops;   // (the shops' people are actors too: city_shops.cpp)
 
 public:
 	enum { ROW = 16, POSES = 17, NEAR_MAX = 18 };   // (POSES: as PeopleBake makes them; 13-16 ride a bicycle)
@@ -151,10 +152,14 @@ private:
 		StringName clip; double hold = -1.0; int token = 0;   // its own clip while it stands (empty: the crowd's own)
 		int helps = -1;                           // (helpers, medics) the one he kneels by
 		float ground_t = 0.0f;
+		// TALKED TO (CityTalk): he stops what he does, turns to the player (not seated), and goes on after; his own clip kept
+		bool talking = false; StringName s_clip; double s_hold = -1.0; int s_token = 0; float s_face = 0.0f; bool s_facing = false;
+		// SEATED (a chair): his height is the floor's, never the seat's (the room's furniture collision is under him)
+		bool seated = false; float floor_y = 0.0f;
 	};
 	std::vector<Actor> actors;
 	std::vector<std::pair<int, int>> uniforms;   // walker -> body tag (2 police, 3 medical): the clothes of the job
-	enum { R_NONE = 0, R_HELPER = 1, R_MEDIC = 2, R_COP = 3, R_MUGGER = 4, R_VICTIM = 5, R_DRIVER = 6, R_COWER = 7, R_CALLER = 8, R_STAFF = 9, R_SHOPPER = 10 };
+	enum { R_NONE = 0, R_HELPER = 1, R_MEDIC = 2, R_COP = 3, R_MUGGER = 4, R_VICTIM = 5, R_DRIVER = 6, R_COWER = 7, R_CALLER = 8, R_STAFF = 9, R_SHOPPER = 10, R_SITTER = 11 };
 	Actor *actor_of(int p_walker);
 	const Actor *actor_of(int p_walker) const;
 	void actor_clip(const Actor &p_a, StringName &r_clip, double &r_speed, double &r_hold, int &r_token) const;
@@ -304,6 +309,12 @@ public:
 	void actor_release(int p_walker);
 	// let go as one of the crowd's own (even one the game placed): he walks back to the pavement and on with his day
 	void actor_free(int p_walker);
+	// seated on a chair: the floor's height kept (p_floor_y), a sitting clip
+	bool actor_seat(int p_walker, double p_floor_y, double p_yaw, const StringName &p_clip);
+	// TALKING (Yasin: "all of them should be interactible like normal npcs"): the shop's people may be talked to as anybody;
+	// CityTalk holds and lets go through this (an actor pauses and goes on; anybody else is held as before)
+	bool talkable_actor(int p_walker) const;
+	bool talk_hold(int p_walker, bool p_on, double p_yaw);
 	Vector3 walker_at(int p_walker) const;
 	bool walker_alive(int p_walker) const;
 	// the hurt who lie until a medic comes: is he one; the medic has been (he gets up)

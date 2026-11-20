@@ -1396,5 +1396,18 @@ Branch `claude/street-life`. All C++.
   (the cashier's Counter_Give); taken (Interact). The player at the queue spot: the HUD's BUY (SATIN AL), the same moves
   on him (`CityPlayer::act`), the shop's kind sets the item and the price; short of money the cashier shakes his head.
 - Test: tests/people/test_shops.gd (a real room by a pavement, as if awake).
-- NOT DONE: customers sit at cafe tables; the goods are not seen in the hand (no prop); the cashier is in his own clothes
-  (no shop uniform); not seen in the streamed city with a window; not on the phone.
+- SITTING (Yasin: "add sitting cafe npcs too"): room_people.json has the seats too (cafe_chair, side_chair, booth_bench,
+  waiting_bench, shoe_bench, theatre_seat: seat height ~0.45 m; no bar stools); a third of them (4 at most) have people
+  when the shop opens, each with a sitting clip; they get up (Sitting_Exit) after 30-120 s and go; in a place that serves
+  food or drink 6 in 10 paying customers sit down a while. A seated actor keeps the FLOOR's height (trap: the room's
+  furniture collision under the ground ray put him on the seat's top, and the sitting clip lifted him again).
+- TALKING ("all of them should be interactible like normal npcs"): CityTalk takes the shop's people too
+  (CityCrowd::talkable_actor, talk_hold): they stop, turn to the player (a sitter stays seated), Idle_Talking_Loop, and go
+  on after with their own clip.
+- THE PURCHASE SCREEN ("cashiers should have a hook to open purchase screen when its implemented"): purchase_screen on,
+  BUY (or open_purchase(cashier)) sends purchase_requested({room, kind, name, cashier, item, item_tr, price}) and the
+  cashier waits; complete_purchase(item, item_tr, price) runs the pay with the player; cancel_purchase() lets him go.
+- A hand-made room (ap_*, cv_*) has no shop meta: its kind is its name's last word (ap_corner_cafe a cafe).
+- Tests: tests/people/test_shops.gd, tests/people/test_shop_life.gd.
+- NOT DONE: the goods are not seen in the hand (no prop); no shop uniform; walking actors go in straight lines (through a
+  shelf in their way); not seen in the streamed city with a window; not on the phone.

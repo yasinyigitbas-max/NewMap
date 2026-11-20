@@ -96,6 +96,7 @@ bool CityCrowd::actor_follow(int p_walker, int p_target, double p_speed, double 
 bool CityCrowd::actor_stand(int p_walker, double p_yaw, const StringName &p_clip, double p_hold, int p_token) {
 	Actor *a = actor_of(p_walker);
 	if (!a) return false;
+	if (a->talking) { a->s_clip = p_clip; a->s_hold = p_hold; a->s_token = p_token; a->s_face = (float)p_yaw; a->s_facing = true; return true; }   // (after the talk)
 	a->speed = 0.0f; a->to_walker = -1; a->arrived = true; a->face = (float)p_yaw; a->facing = true;
 	a->clip = p_clip; a->hold = p_hold; a->token = p_token; a->t = 0.0f;
 	return true;
@@ -128,6 +129,38 @@ void CityCrowd::actor_free(int p_walker) {
 	crowd->hold(p_walker, false, 0.0f);
 }
 
+bool CityCrowd::actor_seat(int p_walker, double p_floor_y, double p_yaw, const StringName &p_clip) {
+	Actor *a = actor_of(p_walker);
+	if (!a || !crowd) return false;
+	a->seated = true; a->floor_y = (float)p_floor_y;
+	const int i = crowd->find(p_walker);
+	if (i >= 0) { crowd->y[i] = crowd->py[i] = (float)p_floor_y; crowd->act[i] = pc::A_SIT; }
+	return actor_stand(p_walker, p_yaw, p_clip, -1.0, 0);
+}
+
+bool CityCrowd::talkable_actor(int p_walker) const {
+	const Actor *a = actor_of(p_walker);
+	return a && (a->role == R_STAFF || a->role == R_SHOPPER || a->role == R_SITTER) && (a->arrived || a->speed <= 0.0f || a->seated);
+}
+
+bool CityCrowd::talk_hold(int p_walker, bool p_on, double p_yaw) {
+	if (!crowd) return false;
+	Actor *a = actor_of(p_walker);
+	if (!a) return crowd->hold(p_walker, p_on, (float)p_yaw);
+	if (p_on) {
+		if (a->talking) return true;
+		if (!talkable_actor(p_walker)) return false;
+		a->s_clip = a->clip; a->s_hold = a->hold; a->s_token = a->token; a->s_face = a->face; a->s_facing = a->facing;
+		a->talking = true;
+		if (!a->seated) { a->face = (float)p_yaw; a->facing = true; }
+		return true;
+	}
+	if (!a->talking) return true;
+	a->talking = false;
+	a->clip = a->s_clip; a->hold = a->s_hold; a->token = a->s_token; a->face = a->s_face; a->facing = a->s_facing;
+	return true;
+}
+
 // the ground under a point: the world's collision (an actor off the pavements walks on the road, kerbs and all)
 float CityCrowd::ground_y(const Vector3 &p_at, float p_def) const {
 	Ref<World3D> w = get_world_3d();
@@ -149,6 +182,7 @@ void CityCrowd::actor_clip(const Actor &a, StringName &r_clip, double &r_speed, 
 		else { r_clip = RUN; r_speed = a.speed / 5.6f; }
 		return;
 	}
+	if (a.talking && !a.seated) { static const StringName TALK("ual/Idle_Talking_Loop"); r_clip = TALK; r_hold = -1.0; r_token = 0; r_speed = 1.0; return; }
 	if (!a.clip.is_empty()) { r_clip = a.clip; r_hold = a.hold; r_token = a.token; r_speed = 1.0; return; }
 	if (r_clip.is_empty()) { r_clip = IDLE; r_hold = -1.0; r_token = 0; r_speed = 1.0; }
 }
@@ -253,6 +287,8 @@ void CityCrowd::actors_update(double p_delta) {
 		a.t += dt; a.life += dt;
 		if (crowd->mode[i] == pc::M_BODY) { k++; continue; }   // (knocked about: his body has him; he is ours again when he is up)
 		if (crowd->mode[i] != pc::M_HELD) crowd->hold(a.walker, true, a.face);
+		if (a.seated) { crowd->y[i] = crowd->py[i] = a.floor_y; }
+		if (a.talking) { crowd->hold(a.walker, true, a.face); k++; continue; }   // (talked to: he stands, or sits, and listens)
 		Vector3 at(crowd->x[i], crowd->y[i], crowd->z[i]);
 		Vector3 to = a.to;
 		if (a.to_walker == -2 && pl) to = pl->get_global_position();
@@ -273,7 +309,7 @@ void CityCrowd::actors_update(double p_delta) {
 		} else if (a.facing) crowd->hold(a.walker, true, a.face);
 		// on the road the pavement's height is wrong: the ground under him, now and then
 		a.ground_t -= dt;
-		if (a.ground_t <= 0.0f) {
+		if (a.ground_t <= 0.0f && !a.seated) {
 			a.ground_t = 0.25f;
 			const float gy = ground_y(Vector3(crowd->x[i], crowd->y[i], crowd->z[i]), crowd->y[i]);
 			if (std::fabs(gy - crowd->y[i]) < 1.0f) { crowd->y[i] = gy; crowd->py[i] = gy; }
