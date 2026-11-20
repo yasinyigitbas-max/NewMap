@@ -124,7 +124,7 @@ var _shot_place := -1          # --walkshot: the place the picture is of
 var game: Node = null           # the game's shell (CityGame) when it started this world
 var _shot_cam: Camera3D
 var people: Node             # the C++ crowd (--people=N); null without it
-var opt := {"car": "", "walk": "", "walkshot": "", "walkcrowd": 0, "water": 0.0, "at": "", "people": 0, "hour": 12.5, "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": true, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0, "rooms": 1}
+var opt := {"car": "", "walk": "", "walkshot": "", "walkcrowd": 0, "water": 0.0, "at": "", "people": 0, "hour": 12.5, "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": true, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0, "rooms": 1, "maxfps": 0}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -155,7 +155,7 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["car", "walk", "walkshot", "walkcrowd", "water", "at", "people", "hour", "traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost", "rooms"]:
+		for k: String in ["car", "walk", "walkshot", "walkcrowd", "water", "at", "people", "hour", "traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost", "rooms", "maxfps"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
 				opt[k] = v if k in ["car", "walk", "walkshot", "at", "plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["water", "density", "scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs", "colrange", "boost"] else int(v))
@@ -172,7 +172,7 @@ func _ready() -> void:
 		var ws: Vector3 = game.call(&"world_start")
 		opt.at = "%f,%f" % [ws.x, ws.z]
 	else: game = null
-	Engine.max_fps = 0
+	Engine.max_fps = int(opt.maxfps)      # --maxfps=30: the frame-rate cap test (Yasin, 20 Nov: "if we lock the fps at 30 ..."); 0 = no cap
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	if float(opt.scale) <= 0.0:      # no --scale given: 720p (1640x720 on the Redmi's 2460x1080)
 		var ws := DisplayServer.window_get_size(); opt.scale = clampf(720.0 / maxf(1.0, float(mini(ws.x, ws.y))), 0.25, 1.0)
