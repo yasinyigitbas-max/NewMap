@@ -51,6 +51,9 @@ class CityPlayer : public CharacterBody3D {
 public:
 	void talk_face(bool p_on, const Vector3 &p_at) { talk_on = p_on; talk_at = p_at; }
 	void gesture(int p_kind, double p_seconds) { gest_kind = p_kind; gest_t = (float)p_seconds; }
+	// the phone in his hands (CityHud): 0 none, 1 in his hand, 2 at his ear (a call), 3 held up (the camera)
+	int phone_kind = 0;
+	void set_phone(int p_kind) { phone_kind = p_kind; }
 private:
 	float turn_yaw0 = 0.0f, turn_k = 1.0f;   // a turn on the spot (step_mode 3): the way he faced, the clip's turn scaled to the angle
 	Vector3 cam_pos, knock_v;

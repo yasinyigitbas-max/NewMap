@@ -509,6 +509,14 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (fig->clip_len(clip) <= 0.0) { clip = best ? JOG : WALK; cs = speed / sv[best]; }   // (a figure without the step library: the fists)
 	}
 	if (clip == IDLE || clip == S_IDLE) gait_i = -1;
+	// THE PHONE in his hands (the crowd's own phone clips): standing, in his hand / at his ear / held up; walking, the
+	// walk with the phone in the hand or at the ear (the same legs: the stride matches)
+	if (phone_kind != 0 && heavy && step_mode == 0 && gest_t <= 0.0f) {
+		static const StringName P_HAND("ual/Idle_Lantern_Loop"), P_EAR("ual/Idle_TalkingPhone_Loop"), P_UP("ual/Idle_Torch_Loop"),
+				P_WALK_HAND("ual/Walk_Text_Loop"), P_WALK_EAR("ual/Walk_Phone_Loop"), S_WALK3("step/walk");
+		if (clip == IDLE || clip == S_IDLE) clip = phone_kind == 2 ? P_EAR : (phone_kind == 3 ? P_UP : P_HAND);
+		else if ((clip == S_WALK3 || clip == WALK) && fig->clip_len(P_WALK_HAND) > 0.0) clip = phone_kind == 2 ? P_WALK_EAR : P_WALK_HAND;
+	}
 	vis_dy *= std::exp(-dt / 0.09f); if (std::fabs(vis_dy) < 0.001f) vis_dy = 0.0f;   // (lifted onto a kerb: the figure rises after, its foot already on it)
 	// THE LEAN: his body tilts with its acceleration, into a turn and a little forward into a start, back into a stop
 	// (a person's weight going round with him; at most 8 degrees, eased over 0.18 s)
@@ -724,6 +732,7 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_speed"), &CityPlayer::get_speed);
 	ClassDB::bind_method(D_METHOD("talk_face", "on", "at"), &CityPlayer::talk_face);
 	ClassDB::bind_method(D_METHOD("gesture", "kind", "seconds"), &CityPlayer::gesture);
+	ClassDB::bind_method(D_METHOD("set_phone", "kind"), &CityPlayer::set_phone);
 	ClassDB::bind_method(D_METHOD("set_frozen", "on"), &CityPlayer::set_frozen);
 	ClassDB::bind_method(D_METHOD("is_frozen"), &CityPlayer::is_frozen);
 	ClassDB::bind_method(D_METHOD("knock", "velocity"), &CityPlayer::knock);
