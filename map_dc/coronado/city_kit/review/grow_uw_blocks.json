@@ -484,6 +484,50 @@
    "yaw": 0.0,
    "site": "Piece n_w_q4 (WEST FILL, a small hole left inside the civic heart (v_se)): u -134..-106, v -538..-502, 28 x 36 m, flat.",
    "variant": "a small PLAYGROUND for families visiting the civic offices: mulch pad, play structure, swings, a bench facing it."
+  },
+  {
+   "piece": "t_w_north",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "trees of the west fill north of 6th St",
+   "variant": "hand-placed tree layer (docs/TREE_PLAN.md)"
+  },
+  {
+   "piece": "t_w_civic",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "trees of the civic and stadium band",
+   "variant": "hand-placed tree layer (docs/TREE_PLAN.md)"
+  },
+  {
+   "piece": "t_w_strip",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "trees of the west strip and round the campus",
+   "variant": "hand-placed tree layer (docs/TREE_PLAN.md)"
+  },
+  {
+   "piece": "t_w_edge",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "site": "palms of the south-west edge",
+   "variant": "hand-placed tree layer (docs/TREE_PLAN.md)"
   }
  ]
 }

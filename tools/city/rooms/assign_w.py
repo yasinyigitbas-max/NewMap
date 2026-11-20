@@ -30,6 +30,41 @@ SHOPS = {
     ("n_w_g1", "laundry_pawn"): [(None, None, "cleaners", "Coin Laundry", "teal")],
     ("n_w_g1", "thrift_row"): [(None, None, "clothes", "Second Chance Thrift", "green")],
     ("n_w_g1", "corner_market"): [(None, None, "corner_shop", "Strand Corner Market", "sun")],
+    # ---- the rest of the west fill (20 Nov)
+    ("n_w_c1", "fire_station"): [(None, None, "office", "Fire Station 2", "navy")],
+    ("n_w_c1", "post_office"): [(None, None, "office", "Coronado Post Office", "navy")],
+    ("n_w_c1", "church"): [(None, None, "church", "St. Andrew's", "navy")],
+    ("n_w_c3", "senior_center"): [(None, None, "venue", "Ridge Senior Center", "teal")],
+    ("n_w_c6", "child_care"): [(None, None, "lobby", "Bright Start Child Care", "sun")],
+    ("n_w_c8", "team_store"): [(None, None, "clothes", "Stadium Team Store", "navy")],
+    ("n_w_c8", "bullpen_bar"): [(None, None, "bar", "The Bullpen", "sun")],
+    ("n_w_c8", "touchdown_diner"): [(None, None, "restaurant", "Touchdown Diner", "sun")],
+    ("n_w_c9", "arcade"): [(None, None, "souvenir", "Amber Arcade Gifts", "teal")],
+    ("n_w_c9", "bakery"): [(None, None, "bakery", "Amber Bakery", "sun")],
+    ("n_w_c9", "shop_row"): [(None, None, "shoes", "Amber Shoes", "navy")],
+    ("n_w_c9", "amber_diner"): [(None, None, "restaurant", "Amber Diner", "sun")],
+    ("n_w_c9", "boutiques"): [(None, None, "clothes", "Ridge Boutique", "green")],
+    ("n_w_c9", "surf_shop"): [(None, None, "sport", "Strand Surf", "teal")],
+    ("n_w_c9", "corner_shop"): [(None, None, "corner_shop", "Amber Market", "sun")],
+    ("n_w_c5", "boutiques"): [(None, None, "jewelry", "Bay Jewelers", "navy")],
+    ("n_w_c5", "bakery"): [(None, None, "ice_cream", "Scoops", "sun")],
+    ("n_w_c5", "corner_shop"): [(None, None, "pharmacy", "Amber Pharmacy", "green")],
+    ("n_w_c5", "realty"): [(None, None, "office", "Ridge Realty", "navy")],
+    ("n_w_c5", "cafe"): [(None, None, "cafe", "Amber Coffee", "teal")],
+    ("n_w_s1", "gate_pizza"): [(None, None, "restaurant", "Gate Pizza", "sun")],
+    ("n_w_s1", "campus_cycles"): [(None, None, "bike", "Campus Cycles", "green")],
+    ("n_w_s1", "gatehouse_pub"): [(None, None, "bar", "The Gatehouse", "navy")],
+    ("n_w_s1", "housing_office"): [(None, None, "office", "Student Housing Office", "teal")],
+    ("n_w_s2a", "campus_market"): [(None, None, "grocery", "Campus Market", "green")],
+    ("n_w_s2b", "print_boba"): [(None, None, "print", "Print & Copy", "navy")],
+    ("n_w_s2b", "burrito_books"): [(None, None, "fast_food", "Burrito Bar", "sun")],
+    ("n_w_s2b", "quad_pub"): [(None, None, "bar", "The Quad Pub", "navy")],
+    ("n_w_s2b", "corner_deli"): [(None, None, "corner_shop", "Corner Deli", "sun")],
+    ("n_w_w4", "school_a"): [(None, None, "lecture", "Ridgeview Elementary", "teal")],
+    ("n_w_w4", "school_b"): [(None, None, "lecture", "Ridgeview Elementary - Library", "teal")],
+    ("n_w_w6", "ridge_church"): [(None, None, "church", "Ridge Community Church", "navy")],
+    ("n_w_e4", "surf_shack"): [(None, None, "sport", "Surf Shack", "teal")],
+    ("n_w_e4", "beach_bean"): [(None, None, "cafe", "Beach Bean", "sun")],
 }
 # not walk-in (no room): homes (walk-ups, court apartments, townhouses, houses) are not entered in this pass
 
@@ -47,6 +82,8 @@ def main():
         for k, (along, bay, kind, name, style) in enumerate(SHOPS[key]):
             if kind is None: continue        # a second door of the shop before it
             fronts = [e for e in c["entrances"] if e["facade"] == "front" and e["floor"] == 0 and e["kind"] in ("shop", "civic", "residential")]
+            if not fronts:
+                print("  no front entrance (no room):", key, b["model"]); break
             ent = fronts[0] if along is None else min(fronts, key=lambda e: abs(e["along"] - along))
             bx = bay if bay is not None else [fl["box_min"][0], fl["box_max"][0]]
             # the shop's boards: every front board over its bay; a building with one shop also takes its side boards
@@ -58,7 +95,7 @@ def main():
                           "style": style, "signs": signs, "source": "west fill (hand-made room list)", "built": ""})
     json.dump({"_doc": __doc__.strip().split("\n")[0], "count": len(rooms), "rooms": rooms}, open(os.path.join(IN, "assignment_w.json"), "w"), indent=1)
     print("ASSIGN cc rooms=%d" % len(rooms))
-    for m in missing: print("  no shop listed for", m)
+    print("  homes and kiosks without a room:", len(missing))
 
 
 if __name__ == "__main__":
