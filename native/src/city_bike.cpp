@@ -45,6 +45,9 @@ const float M_BIKE = 14.0f, M_RIDER = 75.0f;
 // origin and 0.545 m under the saddle's top as the old bicycle had them; the cruiser's saddle: top 0.953 m, z -0.225)
 // (Yasin, 19 Nov, on the cruiser: "pull the hands up 10 cm, 5cm back, pull the legs up 10 cm and make sure they align
 // with the pedals": the rider 10 cm higher, the hands 10 cm higher and 5 cm back; the feet still reached to the pedals)
+constexpr float IDLE_TILT = 0.11f;                              // rad: the bike tipped onto the rider's left foot when he stands still on it
+const Vector3 IDLE_SHIFT(0.0f, -0.13f, 0.11f);                 // the rider forward off the saddle, a little down (his foot on the ground)
+constexpr float IDLE_CRANK = 1.25f - 3.14159265f;              // the crank parked with the right pedal forward and up
 const Vector3 RIDER_AT(0.0f, bike_look::SADDLE_Y - 0.545f + 0.10f, bike_look::SADDLE_Z + 0.035f + 0.31f);   // (3 cm forward on the saddle: nearer the cruiser's low bars)
 inline float clampf(float v, float a, float b) { return v < a ? a : (v > b ? b : v); }
 inline Basis arc(Vector3 a, Vector3 b) {
@@ -366,7 +369,7 @@ void CityBike::_integrate_forces(PhysicsDirectBodyState3D *p_state) {
 	const bool locked = riding && c_brake > 0.9f && u > 3.0f;   // the rear wheel locks: it skids
 	if (locked) slide = true;
 	// the lean a rider takes into the turn, with a little lag and overshoot (second order)
-	const float lt = on_ground ? -std::atan(u * rr / G) : lean;
+	const float lt = (on_ground ? -std::atan(u * rr / G) : lean) - IDLE_TILT * foot_down;   // (standing still: tipped onto the left foot)
 	lean_v += (40.0f * (lt - lean) - 9.0f * lean_v) * dt;
 	lean += lean_v * dt;
 	lean = clampf(lean, -0.75f, 0.75f);
@@ -464,7 +467,18 @@ void CityBike::place_rider(double p_delta) {
 		return;
 	}
 	const Transform3D bt = get_global_transform();
-	const Transform3D at(bt.basis, bt.xform(RIDER_AT));
+	// standing still on it: the left foot comes down; any movement (pedalling, rolling) and it goes back to its pedal
+	{
+		const float dt = (float)p_delta;
+		const bool still = state == ST_RIDE && std::fabs(speed) < 0.35f && c_pedal < 0.05f;
+		foot_down = still ? std::min(1.0f, foot_down + dt / 0.55f) : std::max(0.0f, foot_down - dt / 0.28f);
+		if (still && foot_down > 0.0f) {   // (the crank turned back to the ready place, the short way round)
+			float d = std::remainder(IDLE_CRANK - crank, 6.2831853f);
+			crank += clampf(d, -4.0f * dt, 4.0f * dt);
+		}
+	}
+	const float fk = foot_down * foot_down * (3.0f - 2.0f * foot_down);   // (eased)
+	const Transform3D at(bt.basis, bt.xform(RIDER_AT + IDLE_SHIFT * fk));
 	static const StringName IN("ual/Sitting_Enter"), RIDE("ual/Driving_Loop"), OUT("ual/Sitting_Exit");
 	if (state == ST_MOUNT) rider->drive(at, IN, 1.0, -2.0);
 	else if (state == ST_DISMOUNT) rider->drive(at, OUT, 1.0, -2.0);
@@ -479,6 +493,12 @@ void CityBike::place_rider(double p_delta) {
 		const float ang = crank + (s ? 3.14159265f : 0.0f);
 		const float sx = s == 0 ? bike_look::PEDAL_X : -bike_look::PEDAL_X;
 		reach_mod->foot[s] = bt.xform(Vector3(sx, bike_look::BB_Y + bike_look::CRANK_R * std::cos(ang) + 0.08f, bike_look::CRANK_R * std::sin(ang)));
+		if (s == 0 && fk > 0.0f) {   // the left foot: off its pedal, out and down to the ground beside the bike (lifted on the way)
+			Vector3 g = bt.xform(Vector3(0.28f, 0.0f, 0.12f));
+			g.y = y_ground + 0.085f;
+			const Vector3 p = reach_mod->foot[0];
+			reach_mod->foot[0] = p.lerp(g, fk) + Vector3(0.0f, 0.10f * std::sin(3.14159265f * fk), 0.0f);
+		}
 		// the grips turn with the bars about the steering axis
 		const Vector3 g0(s == 0 ? bike_look::GRIP_X - 0.01f : -(bike_look::GRIP_X - 0.01f), bike_look::GRIP_Y + 0.01f + 0.10f, bike_look::GRIP_Z - 0.05f);
 		const Vector3 piv(0.0f, 0.6927f, 0.3566f + bike_look::SHIFT);
@@ -654,6 +674,7 @@ Dictionary CityBike::get_state() const {
 	Dictionary d;
 	static const char *const NAMES[5] = { "parked", "getting on", "riding", "getting off", "thrown" };
 	d["state"] = NAMES[state]; d["state_id"] = state;
+	d["foot_down"] = foot_down;
 	d["speed"] = speed; d["kmh"] = speed * 3.6f; d["lean"] = lean; d["steer"] = steer; d["crank"] = crank;
 	d["on_ground"] = on_ground; d["fallen"] = fallen; d["upright"] = get_global_basis().get_column(1).y;
 	d["damage"] = damage; d["wheel_bent"] = damage > 30.0f; d["chain_off"] = damage >= 70.0f; d["wrecked"] = damage >= 100.0f;

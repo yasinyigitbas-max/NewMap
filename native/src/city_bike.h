@@ -93,6 +93,10 @@ private:
 	float steer = 0.0f;           // the front wheel's angle, rad (+ = left)
 	float lean = 0.0f, lean_v = 0.0f;   // the lean it is to have, rad (+ = left side up, as the traffic's rows)
 	float crank = 0.0f;           // rad
+	// STANDING STILL ON IT (Yasin, 20 Nov: "bike riders need idle on the bike animation with one leg down and seamlessly
+	// transition into riding again after movement is detected"): 0 riding .. 1 the left foot on the ground, the bike
+	// tipped onto it, the rider forward off the saddle, the right pedal parked forward and up, ready to push
+	float foot_down = 0.0f;
 	float wheel_ang = 0.0f;
 	bool on_ground = false, fallen = false;
 	float damage = 0.0f, hardest = 0.0f;
