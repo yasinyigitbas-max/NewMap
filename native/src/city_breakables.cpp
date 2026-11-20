@@ -34,6 +34,7 @@ void CityBreakables::set_stream(Object *p_stream) {
 	if (!p_stream) return;
 	p_stream->connect("cell_in", Callable(this, "_on_cell_in"));
 	p_stream->connect("cell_out", Callable(this, "_on_cell_out"));
+	set_process(true);
 }
 
 void CityBreakables::make() {
@@ -92,9 +93,15 @@ void CityBreakables::add_cell(const String &p_key) {
 	if (!cn) return;
 	make();
 	std::vector<int> &list = by_cell[p_key];
-	const TypedArray<Node> found = cn->find_children("brk_*", "MultiMeshInstance3D", true, false);
-	for (int f = 0; f < found.size(); f++) {
-		MultiMeshInstance3D *mmi = Object::cast_to<MultiMeshInstance3D>(found[f]);
+	// the bake puts them straight under the cell's Props node (bake_runtime.gd): no search of the whole cell (25 ms on the
+	// phone: pb4_zones' 'cell add' with find_children)
+	Node *props = cn->get_node_or_null(NodePath("Props"));
+	if (!props) return;
+	const int nch = props->get_child_count();
+	for (int f = 0; f < nch; f++) {
+		Node *ch = props->get_child(f);
+		if (!String(ch->get_name()).begins_with("brk_")) continue;
+		MultiMeshInstance3D *mmi = Object::cast_to<MultiMeshInstance3D>(ch);
 		if (!mmi || mmi->get_multimesh().is_null() || mmi->get_multimesh()->get_mesh().is_null()) continue;
 		const String kind = mmi->has_meta("brk_kind") ? String(mmi->get_meta("brk_kind")) : String(mmi->get_name());
 		const Array cols = mmi->has_meta("brk_cols") ? Array(mmi->get_meta("brk_cols")) : Array();
@@ -119,6 +126,7 @@ void CityBreakables::add_cell(const String &p_key) {
 }
 
 void CityBreakables::drop_cell(const String &p_key) {
+	for (size_t k = 0; k < arriving.size(); k++) if (arriving[k] == p_key) { arriving.erase(arriving.begin() + (long)k); break; }   // (left before it was looked at)
 	if (!by_cell.has(p_key)) return;
 	PhysicsServer3D *ps = PhysicsServer3D::get_singleton();
 	for (int i : by_cell[p_key]) {
@@ -243,6 +251,7 @@ void CityBreakables::put_back(int i) {
 }
 
 void CityBreakables::_process(double p_delta) {
+	if (!arriving.empty()) { const String k = arriving.front(); arriving.erase(arriving.begin()); add_cell(k); }   // one arrived cell a frame
 	if (!made || items.empty()) return;
 	Viewport *vp = get_viewport();
 	Camera3D *cam = vp ? vp->get_camera_3d() : nullptr;
