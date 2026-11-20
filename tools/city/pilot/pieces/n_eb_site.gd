@@ -313,12 +313,41 @@ static func graded(field: Callable, pads: Array, slope := 0.06) -> Callable:
 			y = maxf(y, y0 + maxf(float(p[4]) - slope * d - y0, 0.0) * (1.0 - smoothstep(REACH - 3.0, REACH, d)))
 		return y
 
+## A closed fence round `pts` (each side from pts[i] to pts[i + 1], the last back to the first): H.fence's panels (never
+## stretched, each standing at the lower ground of its ends), and ONE post at every joint, the corners included (H.fence
+## would put two posts at each corner). gaps: [[side index, distance along that side from its start, width]] leave the
+## panel(s) out there (a gate or an opening: the two ends face each other across it).
+static func fence_loop(props: K.Props, panel: String, post: String, cond: String, pts: Array, gaps: Array, y: Callable) -> void:
+	var joints := {}
+	for i in pts.size():
+		var a := Vector2(pts[i][0], pts[i][1]); var b := Vector2(pts[(i + 1) % pts.size()][0], pts[(i + 1) % pts.size()][1])
+		var gs: Array = []
+		for gp: Array in gaps:
+			if int(gp[0]) == i: gs.append([float(gp[1]), float(gp[2])])
+		H.fence(props, panel, "", a, b, y, 2.0, cond, gs)
+		var n := maxi(1, ceili(a.distance_to(b) / 2.0 - 0.02)); var d := (b - a).normalized(); var seg := a.distance_to(b) / n
+		var drawn: Array = []
+		for k in n:
+			var sk := false
+			for gp: Array in gs:
+				if absf(seg * (k + 0.5) - float(gp[0])) < float(gp[1]) * 0.5: sk = true
+			drawn.append(not sk)
+		for k in n + 1:
+			if not ((k > 0 and drawn[k - 1]) or (k < n and drawn[k])): continue     # no post standing alone in an opening
+			var p := a + d * seg * k
+			var key := Vector2i(roundi(p.x * 100.0), roundi(p.y * 100.0))
+			if not joints.has(key): joints[key] = [p, rad_to_deg(atan2(d.x, d.y))]
+	for jv: Array in joints.values():
+		var p: Vector2 = jv[0]
+		props.add(post, cond, Vector3(p.x, float(y.call(p.x, p.y)) - 0.02, p.y), float(jv[1]))
+
 ## ---------------------------------------------------------------- one piece, drawn from its own hand lists
 ## Every list comes from the piece script (each line with its reason there); this only draws them:
 ##  B      buildings [label, model, u, v, yaw]: each on a level concrete pad at the highest ground under it (+0.3 m margin)
 ##  TERR   level plaza terraces [u0, v0, u1, v1]: at the highest ground under them, faces down to the field
 ##  PAVE   paved rects [u0, v0, u1, v1, mat] at the field's height (paths, landings, forecourts)
-##  FENCES [panel, post, au, av, bu, bv, cond]: H.fence (a post at every joint), each panel on the field
+##  FENCES [panel, post, cond, corners [[u, v], ...], gaps [[side, at, width]]]: a CLOSED fence round the corners (every
+##         end meets the next run; an opening only where a gap is listed), fence_loop below
 ##  ITEMS  [base, cond, u, v, yaw(, collide)] on the field
 ## The field: the ground rule g() graded up to the pads and terraces at 6 % within 8 m (graded() above). The promenade (PROM, 3 m, plaza)
 ## and the sand (east of DUNE) are painted everywhere they fall in the piece. Returns the building pad heights.
@@ -354,8 +383,7 @@ static func run_piece(name: String, rect: Array, mask: String, B: Array, TERR: A
 		K.building(bl, String(b[1]), Vector3(b[2], float(PY[i]), b[3]), float(b[4]), String(b[0]))
 		print("BUILDING %s %s at (%.2f, %.4f, %.2f) yaw %.0f" % [b[0], b[1], b[2], PY[i], b[3], b[4]])
 	for f: Array in FENCES:
-		var fy := func(x: float, z: float) -> float: return float(yf.call(x, z))
-		H.fence(props, String(f[0]), String(f[1]), Vector2(f[2], f[3]), Vector2(f[4], f[5]), fy, 2.0, String(f[6]))
+		fence_loop(props, String(f[0]), String(f[1]), String(f[2]), f[3], f[4], yf)
 	for it: Array in ITEMS:
 		H.put(props, String(it[0]), String(it[1]), float(it[2]), float(it[3]), yf, float(it[4]), bool(it[5]) if it.size() > 5 else true)
 	H.sc_apply(root, props, dec, SC)

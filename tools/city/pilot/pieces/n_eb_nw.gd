@@ -9,8 +9,8 @@ extends SceneTree
 ## come in: the ring has no apron on this side, the bridge approach none either) and walk east to the sea. The land rises
 ## gently from 4.2 at the ring to 5.5 under the bridge's verge: a quiet MEADOW for picnics and an evening walk, its paths
 ## leading on to the beach: the MEADOW WALK from the -800 junction (on through n_eb_ne to the promenade) and the RING
-## GATE loop from the -1000 junction down to it. Picnic groves with their grills, benches in pairs, park lamps, rail
-## fences at the two gates (bins against them), bike racks for the riders off the ring path. The bridge's verge is kept
+## GATE loop from the -1000 junction down to it. Picnic groves with their grills, benches in pairs, park lamps, bike
+## racks for the riders off the ring path at the two gates. The bridge's verge is kept
 ## clear. Trees come only from the hand list zoning/trees/eb_nw.json.
 ## LAND: the ground follows it (n_eb_site.g): 5 cm over it, eased onto the ring's walk (4.15) and the bridge's edge
 ## within 12 m; no buildings here.
@@ -25,22 +25,14 @@ const PAVE := [
 	[674.0, -807.5, 960.0, -804.5, "plaza"],       # MEADOW WALK: from the -800 junction east (on in n_eb_ne to the promenade)
 	[758.5, -804.5, 761.5, -800.0, "plaza"],       # the link south into n_eb_sw's Glorietta path (u 760)
 ]
-const FENCES := [
-	# the gates on the ring's walk: a low rail either side of each walk's mouth, along the park's edge (the bins stand
-	# against it, a post at every joint)
-	["fence_vinyl_canal_rail", "fence_post_vinyl", 677.5, -1020.0, 677.5, -1010.0, "worn"],
-	["fence_vinyl_canal_rail", "fence_post_vinyl", 677.5, -1002.0, 677.5, -992.0, "worn"],
-	["fence_vinyl_canal_rail", "fence_post_vinyl", 677.0, -822.0, 677.0, -810.0, "worn"],
-]
+## (check_life, 20 Nov: the open rails planned at the two gates had ends "leading nowhere"; they went, and the bins that
+## stood against them with them: a bin in the open is a fault; Yasin: delete when unsure)
+const FENCES := []
 const ITEMS := [
-	# ---- RING GATE (v -1006): bins against the north rail, a bike rack beside the walk for the ring path's riders
-	["prop_trash_receptacle", "worn", 678.4, -1016.0, 90.0],
-	["prop_recycling_receptacle", "worn", 678.4, -1017.2, 90.0],
+	# ---- RING GATE (v -1006): a bike rack beside the walk for the ring path's riders
 	["prop_bike_rack", "worn", 688.0, -1010.0, 0.0],
 	["prop_lamp_victorian", "worn", 680.0, -1002.6, 0.0],              # lights the gate
-	# ---- MEADOW GATE (v -806): bins against its rail, a rack
-	["prop_trash_receptacle", "worn", 677.9, -815.0, 90.0],
-	["prop_recycling_receptacle", "worn", 677.9, -816.2, 90.0],
+	# ---- MEADOW GATE (v -806): a rack
 	["prop_bike_rack", "worn", 690.0, -810.0, 0.0],
 	["prop_lamp_victorian", "worn", 680.0, -802.8, 0.0],
 	# ---- lamps along the Ring Gate walk (north side, on the grass 1.1 m off its edge) and its south leg (east side)

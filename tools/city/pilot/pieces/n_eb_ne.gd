@@ -37,21 +37,23 @@ const PAVE := [
 	[1158.5, -866.0, 1161.5, -807.5, "plaza"],      # the path up to the Bluff Overlook
 	[1219.0, -829.0, 1233.0, -823.0, "plaza"],      # BLUFF ACCESS landing: from the promenade over the dune line
 ]
+## (check_life, 20 Nov: open fence runs had ends "leading nowhere": every fence here is now closed, its opening listed)
 const FENCES := [
-	# the DOG BEACH (v -1094 .. -1068): a dune fence each side, from the dune line down the sand, stopping short of the water
-	["fence_weathered_board", "fence_post_privacy", 1021.0, -1094.0, 1066.0, -1094.0, "worn"],
-	["fence_weathered_board", "fence_post_privacy", 1037.0, -1068.0, 1086.0, -1068.0, "worn"],
-	# the bluff access: dune fences along the dune line north and south of its landing (the bins stand against the north one)
-	["fence_weathered_board", "fence_post_privacy", 1230.0, -831.0, 1231.0, -845.0, "worn"],
-	["fence_weathered_board", "fence_post_privacy", 1229.5, -821.0, 1227.0, -810.0, "worn"],
-	# the overlook's rail on its sea edge
-	["fence_vinyl_canal_rail", "fence_post_vinyl", 1171.6, -881.6, 1171.6, -866.4, "worn"],
+	# the DOG BEACH (v -1094 .. -1068): fenced all round on the sand, 11 - 12 m short of the water; its gate (3 m) in the
+	# middle of the land side, facing the promenade
+	["fence_weathered_board", "fence_post_privacy", "worn", [[1022.0, -1094.0], [1062.0, -1094.0], [1082.0, -1068.0], [1038.0, -1068.0]], [[3, 15.3, 3.0]]],
+	# the bluff access: two fenced dune plots on the dune line either side of its landing (ice plant inside, the bins
+	# against the north one)
+	["fence_weathered_board", "fence_post_privacy", "worn", [[1229.5, -844.0], [1234.5, -844.0], [1234.5, -834.0], [1229.5, -834.0]], []],
+	["fence_weathered_board", "fence_post_privacy", "worn", [[1227.5, -820.0], [1232.5, -820.0], [1232.5, -811.0], [1227.5, -811.0]], []],
+	# the overlook's rail round the terrace (0.3 m in), a 3.4 m opening on its south side where the path arrives
+	["fence_vinyl_canal_rail", "fence_post_vinyl", "worn", [[1150.3, -881.7], [1171.7, -881.7], [1171.7, -866.3], [1150.3, -866.3]], [[2, 11.7, 3.4]]],
 ]
 const ITEMS := [
 	# ================= BRIDGE BEACH
-	# ---- the DOG BEACH: its signs at the top of each fence (facing the promenade), a bag bin against each fence
-	["prop_beach_sign_dog", "worn", 1022.6, -1093.4, -135.0], ["prop_beach_sign_dog", "worn", 1038.6, -1068.6, -135.0],
-	["prop_trash_receptacle", "worn", 1030.0, -1093.2, 0.0], ["prop_trash_receptacle", "worn", 1046.0, -1068.8, 0.0],
+	# ---- the DOG BEACH: its sign outside the gate (facing the promenade), two bag bins inside against the land-side fence
+	["prop_beach_sign_dog", "worn", 1030.8, -1078.2, -135.0],
+	["prop_trash_receptacle", "worn", 1033.4, -1076.9, -32.0], ["prop_trash_receptacle", "worn", 1028.2, -1085.5, -32.0],
 	# ---- the SNACK SHACK: bins against its north wall, its tables on the grass beside it (one under a sail)
 	["prop_trash_receptacle", "worn", 1050.2, -1035.0, 0.0], ["prop_recycling_receptacle", "worn", 1051.4, -1035.0, 0.0],
 	["prop_picnic_table", "worn", 1038.0, -1040.0, 0.0], ["prop_shade_sail", "worn", 1038.0, -1040.0, 0.0],
@@ -82,7 +84,7 @@ const ITEMS := [
 	["prop_lamp_victorian", "worn", 1074.3, -1020.0, 0.0], ["prop_lamp_victorian", "worn", 1105.4, -1000.0, 0.0],
 	["prop_lamp_victorian", "worn", 1147.7, -975.0, 0.0], ["prop_lamp_victorian", "worn", 1182.8, -950.0, 0.0],
 	# ---- dune edge: ice plant holding the sand just over the grass's edge (ground cover, walked over: no collider), agaves
-	["plant_iceplant_patch", "normal", 1028.0, -1086.0, 0.0, false], ["plant_iceplant_patch", "normal", 1080.0, -1014.0, 30.0, false],
+	["plant_iceplant_patch", "normal", 1080.0, -1014.0, 30.0, false],
 	["plant_iceplant_patch", "normal", 1136.0, -992.0, 60.0, false], ["plant_agave_americana", "normal", 1147.0, -986.0, 0.0],
 	# ================= THE BLUFF
 	# ---- the BLUFF OVERLOOK: benches facing the sea 3 m short of the rail, bins against the rail, a lamp, a fountain
@@ -96,11 +98,12 @@ const ITEMS := [
 	["prop_lamp_victorian", "worn", 1100.0, -808.6, 0.0], ["prop_lamp_victorian", "worn", 1195.0, -808.6, 0.0],
 	["prop_lamp_victorian", "worn", 1215.9, -880.0, 0.0], ["prop_lamp_victorian", "worn", 1218.7, -850.0, 0.0],
 	# ---- BLUFF ACCESS: shower over the dune line, the rules sign, a bike rack along the promenade, bins against the
-	#      north dune fence
+	#      north dune plot's fence
 	["prop_beach_shower", "clean", 1235.4, -826.0, 0.0],
 	["prop_beach_sign_rules", "worn", 1232.4, -829.6, -90.0],
 	["prop_bike_rack", "worn", 1215.2, -834.0, 90.0],
-	["prop_trash_receptacle", "worn", 1229.6, -835.0, 90.0], ["prop_recycling_receptacle", "worn", 1229.7, -836.2, 90.0],
+	["prop_trash_receptacle", "worn", 1228.7, -836.0, 90.0], ["prop_recycling_receptacle", "worn", 1228.7, -837.2, 90.0],
+	["plant_iceplant_patch", "normal", 1232.0, -839.0, 0.0, false], ["plant_iceplant_patch", "normal", 1230.0, -815.5, 90.0, false],   # inside the two dune plots
 	# ---- the SECOND LIFEGUARD TOWER and its life ring, facing the water
 	["prop_lifeguard_tower", "worn", 1262.0, -852.0, 105.0],
 	["prop_lifering_stand", "clean", 1256.0, -845.0, 105.0],
