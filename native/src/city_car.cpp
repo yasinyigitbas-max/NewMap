@@ -310,6 +310,10 @@ void CityCar::crash_sound(float p_sev) {
 		snd->set_unit_size(6.0f); snd->set_max_distance(90.0f);
 		add_child(snd);
 	}
+	if (player && p_sev >= 8.0f && dr_player) {   // the driver feels it: his groan (CityPlayer::vocal)
+		Object *pl = ObjectDB::get_instance(ObjectID(dr_player));
+		if (pl && pl->has_method("vocal")) pl->call("vocal", p_sev >= 14.0f ? "pain" : "hurt");
+	}
 	if (p_sev >= 10.0f) {   // a heavy one: the glass goes too, and the bent metal creaks after it
 		elsfx::play(this, "res://audio/sfx/car/glass_shatter_", -2.0f, 0.05f, Vector3(0, 0.9f, 0), 70.0f);
 		creak_at = clock_t + 0.9;

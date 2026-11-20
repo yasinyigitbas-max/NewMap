@@ -455,6 +455,7 @@ void CityBike::_integrate_forces(PhysicsDirectBodyState3D *p_state) {
 // is a loose body from here on
 void CityBike::throw_rider(const Vector3 &p_blow) {
 	state = ST_THROWN; st_t = 0.0f; throws++;
+	if (player) { if (CityPlayer *tp = the_player()) tp->vocal("pain"); }   // (thrown off: his groan)
 	set_mass(M_BIKE);
 	fallen = true;
 	if (reach_mod) { reach_mod->set_influence(0.0f); reach_mod->set_active(false); }

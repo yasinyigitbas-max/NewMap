@@ -209,7 +209,7 @@ public:
 	Vector2 get_touch_move() const { return touch_mv; }
 	bool is_frozen() const { return frozen; }
 	// somebody hits him: he is knocked that way (m/s)
-	void knock(const Vector3 &p_v) { knock_v += p_v; if (p_v.length() > 2.0f) vox(V_HURT, 0.4); }
+	void knock(const Vector3 &p_v) { knock_v += p_v; const float k = p_v.length(); if (k > 6.0f) vox(V_PAIN, 0.8); else if (k > 2.0f) vox(V_HURT, 0.4); }   // (a hard blow: a groan)
 	// water: he walks in; where it is deeper than 1.15 m he swims at the surface; where it gets shallower than 0.9 m he
 	// stands up and walks out
 	void set_water_y(double p_y) { water_y = p_y; }
