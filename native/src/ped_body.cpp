@@ -443,8 +443,10 @@ void Person::sub(float h) {
 // The legs while they only carry: thigh, calf and foot drawn from the hip to where the foot stands
 void Person::pose_legs() {
 	const Body &P = b[B_PELVIS];
-	const V3 fwd = rot(P.q, V3{ 0, 0, 1 });
 	const Q qh = qaxis(V3{ 0, 1, 0 }, heading);
+	// the knees bend toward where his feet point (Yasin, 20 Nov: "his legs bend like a pelicans not humans", "they bend
+	// backwards": the pelvis's own forward, taken over from the animation, pointed behind him while he staggered)
+	const V3 fwd = rot(qh, V3{ 0, 0, 1 });
 	for (int s = 0; s < 2; s++) {
 		const Joint &hj = j[s == 0 ? J_HIP_L : J_HIP_R], &kj = j[s == 0 ? J_KNEE_L : J_KNEE_R], &aj = j[s == 0 ? J_ANKLE_L : J_ANKLE_R];
 		const V3 H = P.x + rot(P.q, hj.ap), A = foot[s].p + V3{ 0, ankle_h, 0 };
@@ -521,10 +523,12 @@ void Person::brain(float dt) {
 	// to be caught in 5-8 steps. A person catches a push in one to three steps or goes down: tests/people/sweep_shove.gd)
 	// (Yasin, 20 Nov: "shoves drop people too easily now, they should try to balance for 3 steps as hard as they can then
 	// fall if they still cant") for its first three steps it gives up only when it is truly overwhelmed (tipped past
-	// 70 degrees, its hips at 40 % of their height, 5 m/s); a fourth step needed and it goes down (below). It gave up at
-	// 3.4 m/s or 50 degrees at once: a hard shove dropped people where they stood.
+	// 57 degrees, its hips at 45 % of their height, 5 m/s); a fourth step needed and it goes down (below). It gave up at
+	// 3.4 m/s or 50 degrees at once: a hard shove dropped people where they stood. (Allowed 72 degrees, a body leaning
+	// back stood on with its hips far behind its feet, like a pelican: Yasin, "the bones above knees are too far
+	// behind the feet")
 	const bool fighting = steps < 3;
-	if (tilt > (fighting ? 1.25f : 0.9f) || hp < (fighting ? 0.4f : 0.5f) * rest.pelvis.y || speed > (fighting ? 5.0f : 3.4f) || stumble_t > 1.6f) { go_fall(); return; }
+	if (tilt > (fighting ? 1.0f : 0.9f) || hp < (fighting ? 0.45f : 0.5f) * rest.pelvis.y || speed > (fighting ? 5.0f : 3.4f) || stumble_t > 1.6f) { go_fall(); return; }
 	const bool swinging = !foot[0].planted || !foot[1].planted;
 	const V3 left{ std::cos(heading), 0, -std::sin(heading) };
 	const float out = len(xi - support(xi, -1));   // how far that point lies outside what its feet cover
