@@ -49,7 +49,14 @@ protected:
 public:
 	RID skip;              // the player's own body (not ground)
 	Vector3 fwd;           // world: the way he faces (the knees forward)
-	float hips_drop = 0.0f, foot_off[2] = { 0, 0 };   // (the tests) how far the hips went down, how far each sole ended from its ground
+	float hips_drop = 0.0f, foot_off[2] = { 0, 0 };
+	Vector3 foot_w[2], pelvis_w;   // (traces) the feet and hips as drawn this frame, world
+	// FOOT LOCK (Yasin, 20 Nov: "i want them pixel perfect"; a planted foot slid on the ground with the clip): a foot the clip
+	// puts down is pinned where it landed until it lifts; on lifting, the rest of the pin's offset fades in 0.1 s
+	bool locked[2] = { false, false };
+	Vector3 lock_w[2], rel_off[2], prev_fw[2], prev_root;
+	bool have_prev = false;
+	uint64_t last_us = 0;   // (the tests) how far the hips went down, how far each sole ended from its ground
 	void _process_modification_with_delta(double p_delta) override;
 };
 

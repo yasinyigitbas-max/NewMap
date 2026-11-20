@@ -20,6 +20,7 @@ traffic / people / game session; "runtime" = the phone runtime / streaming sessi
 | B11 | the hands on a climb: held only while in reach (the 5 cm target met while holding); Yasin wants them pinned till he lets go | this session | test_step_up PASS; watch it |
 | B12 | tests/game/test_start.gd failed once (no ground under the player 5 s in) | this session | flaky; streaming timing |
 | B13 | tests/traffic/test_bike_hit.gd: once a hit rider's hips went 19 m up | this session | flaky; trace the rider when it happens |
+| B14 | "none of the shops appear in the game, i think they were forgotten to be cut in the bake step" | bake / interiors | the interiors (city_kit/interiors, room_lib: doors and windows cut into the locked building at bake time) are not in the runtime bake |
 
 ## FIXED (20 Nov)
 | # | Bug | Fix |

@@ -468,6 +468,8 @@ Vector3 CityPlayer::pelvis_world() const {
 Dictionary CityPlayer::get_frame_log() const {
 	Dictionary d;
 	d["node"] = get_global_position(); d["fig_at"] = fig ? fig->get_global_position() : Vector3(); d["pelvis"] = pelvis_world();
+	if (plant) { d["foot_l"] = plant->foot_w[0]; d["foot_r"] = plant->foot_w[1]; d["pelvis_drawn"] = plant->pelvis_w; d["plant_on"] = plant->is_active(); }
+	d["speed"] = speed; d["yaw"] = yaw;
 	d["clip"] = get_clip(); d["climb"] = climb; d["u"] = climb ? climb_t / climb_len : -1.0f; d["settle"] = settle_t; d["clip_off"] = clip_off;
 	return d;
 }

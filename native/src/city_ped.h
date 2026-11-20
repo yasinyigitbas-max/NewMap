@@ -93,6 +93,7 @@ public:
 	// carries the body (a climb's rise and travel); and the moment the playing clip is at now
 	Vector3 clip_hips_at(const StringName &p_clip, double p_t) const;
 	double clip_pos() const;
+	static bool stride_of(const StringName &p_clip, double &r_left_down, int &r_strides);
 	StringName current_clip() const { return cur_clip; }
 	// what this figure looks like (its body's mesh and its clothes): another figure of the same person takes them on
 	String get_body() const { return body_id; }
