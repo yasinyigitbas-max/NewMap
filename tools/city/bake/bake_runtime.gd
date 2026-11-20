@@ -1242,7 +1242,6 @@ func _far_add(where: Vector3, matkey: String, mesh: Mesh, xf: Transform3D, pivot
 ## LOD_PAGE, tools/city/lod/lod_bake.py), else {} (the piece's own copy is used, as before)
 const LOD_PAGE := "res://assets/coronado_kit/textures/bld_lod_color.png"
 const LOD_PAGE_B := "res://assets/coronado_kit/textures/bld_lod_color_b.png"      # the types no piece places yet
-const KitLib := preload("res://tools/city/pilot/kit_lib.gd")
 var lod_tiers := {}
 func _lod_tier(kit: String, tier: String) -> Dictionary:
 	var k := kit + "|" + tier
