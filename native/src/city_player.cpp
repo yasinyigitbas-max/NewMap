@@ -1,6 +1,8 @@
 // CityPlayer: see city_player.h.
 #include "perf_marks.h"
 #include "city_player.h"
+#include "el_sfx.h"
+#include "foot_steps.h"
 
 #include "city_ped.h"
 #include "hand_grip.h"
@@ -10,6 +12,10 @@
 #include <godot_cpp/classes/audio_server.hpp>
 #include <godot_cpp/classes/audio_stream_microphone.hpp>
 #include <godot_cpp/classes/audio_stream_player.hpp>
+#include <godot_cpp/classes/audio_stream_player3d.hpp>
+#include <godot_cpp/classes/audio_stream_ogg_vorbis.hpp>
+#include <godot_cpp/classes/file_access.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/os.hpp>
 
 #include <godot_cpp/classes/capsule_shape3d.hpp>
@@ -173,10 +179,58 @@ void CityPlayer::sense(double p_dt) {
 	(void)hp;
 }
 
+void CityPlayer::vox_load() {
+	static const char *const KIND[V_KINDS] = { "jump", "climb", "land", "hurt", "pain", "death", "breath", "punch", "throw" };
+	vox_gender = get_vocal_gender();
+	ResourceLoader *rl = ResourceLoader::get_singleton();
+	for (int k = 0; k < V_KINDS; k++) {
+		vox_bank[k].clear(); vox_last[k] = -1;
+		for (int n = 1; n <= 12; n++) {
+			const String path = String("res://audio/player/") + vox_gender + String("/") + String(KIND[k]) + String("_") + String::num_int64(n).pad_zeros(2) + String(".ogg");
+			Ref<AudioStream> st;
+			if (rl->exists(path)) st = rl->load(path);
+			if (st.is_null() && FileAccess::file_exists(path)) st = AudioStreamOggVorbis::load_from_file(path);
+			if (st.is_null()) break;
+			vox_bank[k].push_back(st);
+		}
+	}
+}
+
+// one of his vocal sounds: a take of the kind at random, never the one played last; p_gap keeps the same kind from
+// stacking, p_chance lets a frequent action (a jump, a punch) go quiet now and then
+bool CityPlayer::vox(int p_kind, double p_gap, float p_chance) {
+	if (p_kind < 0 || p_kind >= V_KINDS || !is_inside_tree()) return false;
+	if (vox_gender != get_vocal_gender() || vox_gender.is_empty()) vox_load();
+	std::vector<Ref<AudioStream>> &bank = vox_bank[p_kind];
+	if (bank.empty() || vox_clock - vox_at[p_kind] < p_gap) return false;
+	vox_rng ^= vox_rng << 13; vox_rng ^= vox_rng >> 17; vox_rng ^= vox_rng << 5;
+	if (p_chance < 1.0f && (float)(vox_rng & 0xffff) / 65536.0f > p_chance) return false;
+	int n = (int)((vox_rng >> 8) % (uint32_t)bank.size());
+	if (bank.size() > 1 && n == vox_last[p_kind]) n = (n + 1 + (int)((vox_rng >> 20) % (uint32_t)(bank.size() - 1))) % (int)bank.size();
+	vox_last[p_kind] = n; vox_at[p_kind] = vox_clock; vox_count++;
+	if (!vox_pl) {
+		vox_pl = memnew(AudioStreamPlayer3D);
+		vox_pl->set_name("Voice"); vox_pl->set_unit_size(4.0f); vox_pl->set_max_distance(30.0f);
+		add_child(vox_pl);
+		vox_pl->set_position(Vector3(0, 1.6f, 0));
+	}
+	vox_pl->stop(); vox_pl->set_stream(bank[n]);
+	vox_pl->set_pitch_scale(0.98f + 0.04f * (float)((vox_rng >> 4) & 0xff) / 255.0f);
+	vox_pl->play();
+	return true;
+}
+
+bool CityPlayer::vocal(const String &p_kind) {
+	static const char *const KIND[V_KINDS] = { "jump", "climb", "land", "hurt", "pain", "death", "breath", "punch", "throw" };
+	for (int k = 0; k < V_KINDS; k++) if (p_kind == KIND[k]) { vox_at[k] = -9.0; return vox(k, 0.0); }
+	return false;
+}
+
 int CityPlayer::take_punch() {
 	if (!punch_req || !combat || punch_t < punch_len * 0.7) { punch_req = false; return 0; }
 	punch_req = false;
 	punch_t = 0.0; punch_side ^= 1; punches++;
+	vox(V_PUNCH, 0.25, 0.85f);
 	return 1 + punch_side;
 }
 
@@ -429,7 +483,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	v.x = nh.x + knock_v.x; v.z = nh.z + knock_v.z;
 	knock_v = Vector3();
 	if (swimming) v.y = std::min(std::max(((float)water_y - 0.38f - (float)here.y) * 4.0f, -1.5f), 1.5f);   // he floats: his body lies at the surface
-	else if (is_on_floor() && jump_want && !frozen) { v.y = 4.3f; airborne = true; crouch = false; jump_y = (float)here.y; }   // a jump: 4.3 m/s up (about 0.95 m)
+	else if (is_on_floor() && jump_want && !frozen) { v.y = 4.3f; airborne = true; crouch = false; jump_y = (float)here.y; air_min_vy = 0.0f; vox(V_JUMP, 0.4, 0.8f); }   // a jump: 4.3 m/s up (about 0.95 m)
 	else v.y = is_on_floor() ? -0.5f : v.y - 9.81f * dt;
 	jump_want = false;
 	set_velocity(v);
@@ -476,8 +530,22 @@ void CityPlayer::_physics_process(double p_delta) {
 	static const StringName S_IDLE("step/idle");
 	StringName clip = fig->clip_len(S_IDLE) > 0.0 ? S_IDLE : IDLE; double cs = 1.0, hold = -1.0;   // (standing: the hands open)
 	const bool floor_now = is_on_floor();
-	if (airborne && floor_now && get_velocity().y <= 0.0f) { airborne = false; land_t = 0.35f; }
+	if (airborne) air_min_vy = std::min(air_min_vy, get_velocity().y);
+	if (airborne && floor_now && get_velocity().y <= 0.0f) {
+		airborne = false; land_t = 0.35f;
+		if (air_min_vy < -5.5f) vox(V_LAND, 0.3);   // a hard landing (from about 1.5 m up): the breath knocked out of him
+		if (air_min_vy < -2.5f) {   // the feet coming down (a jump, a drop): the landing takes of the ground under him
+			static const char *NAME[FootSteps::N_KINDS] = { "concrete", "grass", "sand", "dirt", "wood" };
+			const Vector3 gp = get_global_position(); const int k = FootSteps::class_at(gp.x, gp.z);
+			elsfx::play(this, String("res://audio/steps/footstep_land_") + String(NAME[k]) + String("_"), air_min_vy < -5.5f ? 0.0f : -5.0f, 0.05f, Vector3(), 25.0f, 0, 3);
+		}
+		air_min_vy = 0.0f;
+	}
 	land_t = std::max(0.0f, land_t - dt);
+	// out of breath: a run of 8 s or more, then he stops (or slows to a walk)
+	vox_clock += p_delta;
+	if (!swimming && speed > 2.2f) run_t += dt;
+	else { if (run_t > 8.0f && speed < 1.2f) vox(V_BREATH, 4.0); if (speed < 1.2f) run_t = std::max(0.0f, run_t - dt * 4.0f); }
 	if (swimming) { clip = speed > 0.25f ? SWIM : FLOAT; cs = speed > 0.25f ? speed / 1.0 : 1.0; }
 	else if (airborne) { clip = get_velocity().y > 1.0f ? J_UP : J_AIR; hold = get_velocity().y > 1.0f ? -2.0 : -1.0; }
 	else if (land_t > 0.0f) { clip = J_LAND; hold = -2.0; }
@@ -624,7 +692,7 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 				pel_rest = pelvis_world() - p; if (pel_rest.y < 0.5f || pel_rest.y > 1.3f) pel_rest = Vector3(0, 0.95f, 0);
 				pel_rest.x = 0.0f; pel_rest.z = 0.0f; pel_rest_set = true;
 				clip_off = Vector3(); fig_drawn_at = p;
-				climb = 4; climb_t = 0.0f; hang_set = true;
+				climb = 4; climb_t = 0.0f; hang_set = true; vox(V_CLIMB, 0.6);
 				climb_len = rise > 0.6f ? 1.05f : 0.9f;
 				climb_from = p;
 				// over the rail: his hips 25 cm over its top, a little past it; then down onto the far side
@@ -660,6 +728,7 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 	pel_rest.x = 0.0f; pel_rest.z = 0.0f;
 	pel_rest_set = true;
 	climb = step ? 3 : (low ? 1 : 2); climb_t = 0.0f; hang_set = false;
+	if (!step) vox(V_CLIMB, 0.6, low ? 0.6f : 1.0f);   // (a step up has no voice; a high wall always)
 	climb_len = step ? 0.5f : (low ? 0.85f : 1.7f);
 	climb_from = p; climb_to = dest;
 	if (step) steps_up++; else if (low) climbs_low++; else climbs_high++;
@@ -803,6 +872,9 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_no_touch", "index", "rect"), &CityPlayer::set_no_touch);
 	ClassDB::bind_method(D_METHOD("get_touch_move"), &CityPlayer::get_touch_move);
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "water_y"), "set_water_y", "get_water_y");
+	ClassDB::bind_method(D_METHOD("vocal", "kind"), &CityPlayer::vocal);
+	ClassDB::bind_method(D_METHOD("get_vocal_count"), &CityPlayer::get_vocal_count);
+	ClassDB::bind_method(D_METHOD("get_vocal_gender"), &CityPlayer::get_vocal_gender);
 	ClassDB::bind_method(D_METHOD("set_body_id", "id"), &CityPlayer::set_body_id);
 	ClassDB::bind_method(D_METHOD("get_body_id"), &CityPlayer::get_body_id);
 	ClassDB::bind_method(D_METHOD("set_capture_mouse", "on"), &CityPlayer::set_capture_mouse);

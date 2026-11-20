@@ -137,6 +137,9 @@ class CityHud : public CanvasLayer {
 	void layout(const Vector2 &sz);
 	void touch(int p_what);        // 0 the arrow, 1 the phone, 2 the inventory, 3 a panel's close
 	void feedback();               // the tick and the vibration of a touch
+	// a UI sound of the recorded sets (el_sfx.h): "mission_start" | "mission_pass" | "mission_fail" | "notify" | "msg_ping"
+	// | "app_tap" | "camera_shutter"; false when there is no such set
+	bool stinger(const String &p_kind);
 	void recentre();
 
 protected:

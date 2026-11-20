@@ -147,7 +147,17 @@ func _physics_process(delta: float) -> bool:
 					break
 			var s := _st()
 			_check(int(s.group_lines) == g0 + 2, "a group's conversation gets its words (%d lines)" % (int(s.group_lines) - g0))
-			_check(int(s.voiced) >= 10 and int(s.remembered) >= 1, "%d lines spoken with a recorded voice, %d as a caption only; %d talks, %d people remember him" % [int(s.voiced), int(s.silent), int(s.talks), int(s.remembered)])
+			# (directions and times are captions only: their recordings were dropped, Yasin 20 Nov; the rest is voiced)
+			_check(int(s.voiced) >= 8 and int(s.silent) <= 5 and int(s.remembered) >= 1, "%d lines spoken with a recorded voice, %d as a caption only (directions / times); %d talks, %d people remember him" % [int(s.voiced), int(s.silent), int(s.talks), int(s.remembered)])
+			# THE CAST: each person one of eight voices, the same every time; the street's shouts in that voice
+			var v1 := String(talk.call(&"get_voice_of", who))
+			_check(v1.length() == 2 and "mf".contains(v1[0]) and "1234".contains(v1[1]) and v1 == String(talk.call(&"get_voice_of", who)), "he speaks with one voice of the cast (%s)" % v1)
+			var voices := {}
+			for p: Dictionary in crowd.call(&"people_near", spot, 400.0): voices[String(talk.call(&"get_voice_of", int(p.id)))] = true
+			_check(voices.size() >= 5, "the people near by speak with %d different voices" % voices.size())
+			var b0 := int(_st().get("barks", 0))
+			var shouted := bool(talk.call(&"test_bark", who, "scared")) and bool(talk.call(&"test_bark", who, "greet"))
+			_check(shouted and int(_st().barks) == b0 + 2, "he shouts in his voice (a scared one and a greeting: %d)" % (int(_st().barks) - b0))
 			print("TALK every line he heard: %s" % " / ".join(PackedStringArray(lines)))
 			step = 99
 		99:

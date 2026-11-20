@@ -205,7 +205,7 @@ void CityCar::door_update(double p_delta) {
 		case DR_CLOSE_OUT: {
 			const float T = 0.5f;
 			set_door(1.0f - ssf(0.15f, T, dr_t));
-			if (dr_t >= T) { dr_state = DR_NONE; dr_t = 0.0f; dr_player = 0; }
+			if (dr_t >= T) { dr_state = DR_NONE; dr_t = 0.0f; dr_player = 0; lock_sound(); }
 		} break;
 		default: break;
 	}

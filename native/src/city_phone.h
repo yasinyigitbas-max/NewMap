@@ -120,6 +120,7 @@ public:
 	void open_thread(const String &p_contact);
 	// a call
 	void ring(const String &p_caller);
+	void ringtone(bool p_on);
 	void answer();
 	void hang_up();
 	int get_call_state() const { return call_state; }

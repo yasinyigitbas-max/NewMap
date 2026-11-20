@@ -5,6 +5,9 @@
 #include "ui_plate.h"
 
 #include "car_models.h"
+#include "el_sfx.h"
+#include <string>
+#include "foot_steps.h"
 #include "city_player.h"
 
 #include <godot_cpp/classes/box_shape3d.hpp>
@@ -307,10 +310,61 @@ void CityCar::crash_sound(float p_sev) {
 		snd->set_unit_size(6.0f); snd->set_max_distance(90.0f);
 		add_child(snd);
 	}
+	if (p_sev >= 10.0f) {   // a heavy one: the glass goes too, and the bent metal creaks after it
+		elsfx::play(this, "res://audio/sfx/car/glass_shatter_", -2.0f, 0.05f, Vector3(0, 0.9f, 0), 70.0f);
+		creak_at = clock_t + 0.9;
+	} else if (p_sev >= 5.0f && (UtilityFunctions::randi() & 1u)) elsfx::play(this, "res://audio/sfx/car/metal_scrape_", -6.0f, 0.06f, Vector3(), 50.0f);
 	snd->set_stream(st);
 	snd->set_volume_db(std::min(std::max(-10.0f + p_sev * 1.2f, -10.0f), 4.0f));
 	snd->set_pitch_scale((float)UtilityFunctions::randf_range(0.92, 1.06));
 	snd->play();
+}
+
+const char *CityCar::sound_class(bool p_horn) const {
+	const std::string id = cm::MODELS[std::min(std::max(model, 0), cm::N_MODELS - 1)].id;
+	if (id.rfind("bus", 0) == 0) return p_horn ? "bus" : "diesel";
+	if (id == "van") return p_horn ? "van" : "diesel";
+	if (id.rfind("fiamma", 0) == 0) return p_horn ? "sport" : "v8";
+	if (id.rfind("volt", 0) == 0 || id == "stern_e") return p_horn ? (id == "volt_s" ? "compact" : "sedan") : "ev";
+	if (id == "sakura") return "compact";
+	if (id == "sakura_t") return p_horn ? "sedan" : "diesel";
+	return p_horn ? "sedan" : "v6";   // (stern_g, the taxi)
+}
+
+void CityCar::lock_sound() {
+	elsfx::play(this, "res://audio/sfx/car/car_lock_chirp_", -4.0f, 0.0f, Vector3(0, 1.0f, 0), 30.0f);
+	elsfx::play(this, "res://audio/sfx/car/car_lock_mech_", -8.0f, 0.03f, Vector3(0, 0.8f, 0), 15.0f);
+}
+
+// the player's car, each frame: the horn key, the tyres squealing in a slide, a skid on a hard stop, sand under them
+void CityCar::drive_sounds(double p_delta) {
+	if (creak_at > 0.0 && clock_t >= creak_at) { creak_at = -1.0; elsfx::play(this, "res://audio/sfx/car/metal_creak_", -6.0f, 0.05f, Vector3(), 30.0f); }
+	if (!player) {
+		if (has_node("TyreSqueal")) elsfx::loop(this, "TyreSqueal", "res://audio/sfx/car/tyre_squeal_loop_", -80.0f);
+		if (has_node("SandSlide")) elsfx::loop(this, "SandSlide", "res://audio/sfx/car/slide_sand_loop_", -80.0f);
+		return;
+	}
+	Input *in = Input::get_singleton();
+	const bool h = in->is_key_pressed(KEY_H) || in->is_joy_button_pressed(0, JOY_BUTTON_Y);
+	if (h && !horn_held) elsfx::play(this, String("res://audio/sfx/car/horn_") + String(sound_class(true)) + String("_"), 0.0f, 0.0f, Vector3(0, 0.6f, 1.5f), 120.0f);
+	horn_held = h;
+	float slip = 0.0f; int on = 0;
+	for (int i = 0; i < 4; i++) if (car.wh[i].ground) { on++; slip = std::max(slip, car.wh[i].slip); }
+	const float sp = std::fabs(car.speed);
+	if (clock_t - sand_t > 0.5) {   // (what is under it, twice a second)
+		sand_t = clock_t;
+		const Vector3 p = get_global_position();
+		sand_kind = FootSteps::class_at(p.x, p.z);
+	}
+	const bool sand = sand_kind == FootSteps::SAND;
+	const bool sliding = on >= 2 && sp > 4.0f && slip > 1.05f;
+	const float db = sliding ? std::min(-16.0f + (slip - 1.0f) * 24.0f, -1.0f) : -80.0f;
+	elsfx::loop(this, "TyreSqueal", "res://audio/sfx/car/tyre_squeal_loop_", sand ? -80.0f : db, 0.9f + std::min(sp, 30.0f) * 0.006f, 70.0f);
+	elsfx::loop(this, "SandSlide", "res://audio/sfx/car/slide_sand_loop_", sand && sp > 3.0f && on >= 2 ? std::min(-14.0f + sp * 0.4f, -2.0f) : -80.0f, 1.0f, 40.0f);
+	if ((c_brake > 0.8f || c_handbrake > 0.5f) && sp > 8.0f && slip > 1.2f && on >= 2 && clock_t - skid_t > 2.0) {
+		skid_t = clock_t;
+		elsfx::play(this, sand ? "res://audio/sfx/car/skid_sand_" : "res://audio/sfx/car/skid_asphalt_", -3.0f, 0.04f, Vector3(), 70.0f);
+	}
 }
 
 void CityCar::repair() {
@@ -344,8 +398,14 @@ void CityCar::take_wheel(bool p_on) {
 		cam_set = false;
 		cam->make_current();
 		c_handbrake = 0.0f; c_brake = 0.0f;
+		elsfx::play(this, "res://audio/sfx/car/seatbelt_buckle_", -8.0f, 0.03f, Vector3(-0.4f, 0.9f, 0), 10.0f);
+		elsfx::play(this, String("res://audio/sfx/car/engine_start_") + String(sound_class(false)) + String("_"), -2.0f, 0.02f, Vector3(0, 0.6f, 1.4f), 50.0f);
 	} else {
 		set_controls(0.0, 1.0, 0.0, 1.0, false);   // (left parked: brakes and handbrake on)
+		if (made && is_inside_tree()) {   // the engine off, the belt off
+			elsfx::play(this, "res://audio/sfx/car/engine_stall_", -6.0f, 0.02f, Vector3(0, 0.6f, 1.4f), 40.0f);
+			elsfx::play(this, "res://audio/sfx/car/seatbelt_unbuckle_", -8.0f, 0.03f, Vector3(-0.4f, 0.9f, 0), 10.0f);
+		}
 		for (int i = 0; i < 16; i++) t_zone[i] = 0;
 		t_steer_id = -1; t_steer = 0.0f;
 	}
@@ -355,6 +415,8 @@ bool CityCar::enter_node(Node3D *p_player) { return enter(Object::cast_to<CityPl
 
 void CityCar::set_door(float p_open) {
 	door = std::min(std::max(p_open, 0.0f), 1.0f);
+	if (!door_was_open && door > 0.04f) { door_was_open = true; elsfx::play(this, "res://audio/sfx/car/car_door_open_", -4.0f, 0.04f, Vector3(0.9f, 0.9f, 0.3f), 25.0f); }
+	else if (door_was_open && door < 0.02f) { door_was_open = false; elsfx::play(this, "res://audio/sfx/car/car_door_close_", -2.0f, 0.04f, Vector3(0.9f, 0.9f, 0.3f), 35.0f); }
 	if (mat.is_valid()) mat->set_shader_parameter("door_open", door * door * (3.0f - 2.0f * door));
 }
 
@@ -541,6 +603,7 @@ void CityCar::_process(double p_delta) {
 	if (!made) return;
 	clock_t += p_delta;
 	door_update(p_delta);
+	drive_sounds(p_delta);
 	if (!hits_due.empty()) { const std::vector<Vector3> hd = hits_due; hits_due.clear(); for (const Vector3 &dv : hd) hit(dv); }
 	if (player) {   // the old pedals and the speed plate, while the player drives
 		if (!hud) make_hud();

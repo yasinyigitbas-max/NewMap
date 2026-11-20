@@ -8,7 +8,9 @@
 #pragma once
 
 #include <algorithm>
+#include <vector>
 
+#include <godot_cpp/classes/audio_stream.hpp>
 #include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/input_event.hpp>
@@ -19,6 +21,7 @@
 namespace godot {
 
 class CityPed;
+class AudioStreamPlayer3D;
 
 class CityPlayer : public CharacterBody3D {
 	GDCLASS(CityPlayer, CharacterBody3D)
@@ -26,6 +29,23 @@ class CityPlayer : public CharacterBody3D {
 	CityPed *fig = nullptr;
 	Camera3D *cam = nullptr;
 	String body_id = "M2";
+	// HIS VOICE (Yasin, 20 Nov: "make sure players sounds have variety, same grunt shouldnt play everytime ... at least
+	// 4 varieties"; one recorded voice per gender, audio/player/<m|f>/<kind>_NN.ogg): a random take of the kind, never
+	// the one played last, from the set of his body's gender
+public:
+	enum { V_JUMP = 0, V_CLIMB, V_LAND, V_HURT, V_PAIN, V_DEATH, V_BREATH, V_PUNCH, V_THROW, V_KINDS };
+private:
+	AudioStreamPlayer3D *vox_pl = nullptr;
+	std::vector<Ref<AudioStream>> vox_bank[V_KINDS];
+	String vox_gender;
+	int vox_last[V_KINDS] = { -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+	double vox_at[V_KINDS] = { -9, -9, -9, -9, -9, -9, -9, -9, -9 };
+	double vox_clock = 0.0;
+	uint32_t vox_rng = 0x6b43a9b5u;
+	int vox_count = 0;
+	float air_min_vy = 0.0f, run_t = 0.0f;
+	void vox_load();
+	bool vox(int p_kind, double p_gap = 0.3, float p_chance = 1.0f);
 	bool capture_mouse = false, scripted = false, cmd_run = false, e_was = false, cam_set = false, frozen = false;
 	Vector2 cmd;
 	float cam_yaw = 0.0f, cam_pitch = -0.18f, cam_dist = 3.4f, yaw = 0.0f, speed = 0.0f;
@@ -180,7 +200,7 @@ public:
 	Dictionary get_frame_log() const;   // (traces) the climb's progress, the two wrists' miss now   // the farthest a gripping fingertip was over or under the edge's top (m)
 	Vector3 get_edge_at() const { return edge_at; }
 	Array get_hand_points() const;
-	void take_hit() { hit_t = 0.0; hits_taken++; }   // a blow taken on his feet (the hit clip)
+	void take_hit() { hit_t = 0.0; hits_taken++; vox(V_HURT, 0.4); }   // a blow taken on his feet (the hit clip)
 	int get_hits_taken() const { return hits_taken; }
 	bool get_crouch() const { return crouch; }
 	void jump() { jump_want = true; }
@@ -189,7 +209,7 @@ public:
 	Vector2 get_touch_move() const { return touch_mv; }
 	bool is_frozen() const { return frozen; }
 	// somebody hits him: he is knocked that way (m/s)
-	void knock(const Vector3 &p_v) { knock_v += p_v; }
+	void knock(const Vector3 &p_v) { knock_v += p_v; if (p_v.length() > 2.0f) vox(V_HURT, 0.4); }
 	// water: he walks in; where it is deeper than 1.15 m he swims at the surface; where it gets shallower than 0.9 m he
 	// stands up and walks out
 	void set_water_y(double p_y) { water_y = p_y; }
@@ -207,6 +227,9 @@ public:
 	void set_view(double p_yaw, double p_cam_yaw, double p_cam_pitch) { yaw = (float)p_yaw; cam_yaw = (float)p_cam_yaw; cam_pitch = (float)p_cam_pitch; }
 	void take_view() { if (cam) { cam->make_current(); cam_set = false; } }
 	void set_body_id(const String &p_id) { body_id = p_id; }
+	bool vocal(const String &p_kind);           // a vocal sound by name ("jump", "throw", ...): other systems' (a shove)
+	int get_vocal_count() const { return vox_count; }
+	String get_vocal_gender() const { return body_id.begins_with("F") ? "f" : "m"; }
 	String get_body_id() const { return body_id; }
 	void set_capture_mouse(bool p_on) { capture_mouse = p_on; }
 	bool get_capture_mouse() const { return capture_mouse; }

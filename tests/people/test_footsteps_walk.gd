@@ -45,6 +45,7 @@ func _process(_d: float) -> bool:
 				player.call(&"set_move", Vector2.ZERO, false)
 				_check(int(fs.call(&"get_steps")) >= 14, "and running 4 s: %d steps in all" % int(fs.call(&"get_steps")))
 				_check(plays > 10, "the sounds play (a step player playing in %d frames)" % plays)
+				_check(int(fs.call(&"get_run_steps")) >= 3, "running, the run takes play (%d)" % int(fs.call(&"get_run_steps")))
 				print("RESULT %s (%d failed)" % ["PASS" if fails == 0 else "FAIL", fails])
 				quit(1 if fails > 0 else 0); return true
 	return false

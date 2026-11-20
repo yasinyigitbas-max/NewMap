@@ -1,6 +1,7 @@
 // CityAmbience: see city_ambience.h. Numbers from the old game's ambience.gd unless said.
 #include "perf_marks.h"
 #include "city_ambience.h"
+#include "el_sfx.h"
 #include "city_crowd.h"
 #include "foot_steps.h"
 #include <godot_cpp/classes/audio_stream_player.hpp>
@@ -78,6 +79,40 @@ void CityAmbience::gains(double hour, float rain) {
 	for (float &v : gain) v = clamp01(v);
 }
 
+static const char *const ZONE_NAME[] = { "beach", "marina", "parks", "downtown", "homes", "hospital", "campus", "industrial" };
+
+int CityAmbience::zone_of() const {
+	if (near_sea < 200.0f) return 0;
+	if (near_bay < 150.0f) return 1;
+	if (green > 0.45f) return 2;
+	if (hard > 0.75f) return 3;
+	return 4;
+}
+
+void CityAmbience::zone_bed(float dt) {
+	const int z = muted ? -1 : zone_of();
+	if (z != zone_cand) { zone_cand = z; zone_wait = 0.0f; }
+	zone_wait += dt;
+	if (z != zone && (zone_wait >= 3.0f || zone < 0 || z < 0)) {
+		zone = z;
+		if (z >= 0) {
+			zone_cur ^= 1;
+			AudioStreamPlayer *a = zone_pl[zone_cur];
+			const Ref<AudioStream> st = elsfx::pick(String("res://audio/amb/zone/zone_") + String(ZONE_NAME[z]) + String("_"), 0, 1, true);
+			if (st.is_valid()) { a->set_stream(st); a->set_volume_db(-60.0f); a->play(rnd() * std::max((float)st->get_length() - 1.0f, 0.0f)); }
+		}
+	}
+	for (int i = 0; i < 2; i++) {
+		AudioStreamPlayer *a = zone_pl[i];
+		if (!a->is_playing()) continue;
+		const float tgt = (zone >= 0 && i == zone_cur) ? master_db - 14.0f : -60.0f;
+		float v = a->get_volume_db();
+		v = v < tgt ? std::min(v + dt * 16.0f, tgt) : std::max(v - dt * 16.0f, tgt);
+		a->set_volume_db(v);
+		if (v <= -59.5f && tgt <= -60.0f) a->stop();
+	}
+}
+
 void CityAmbience::_ready() {
 	if (!sea_box_read) {
 		sea_box_read = true;
@@ -106,6 +141,7 @@ void CityAmbience::_ready() {
 	for (int i = 0; i < 5; i++) { const String p = vformat("%sgull_call_%d.ogg", DIR, i + 1); if (rl->exists(p)) gull_s[i] = rl->load(p); }
 	for (int i = 0; i < 2; i++) { const String p = vformat("%snavy_jet_flyover_%d.ogg", DIR, i + 1); if (rl->exists(p)) jet_s[i] = rl->load(p); }
 	if (rl->exists(String(DIR) + "helicopter_flyover.ogg")) heli_s = rl->load(String(DIR) + "helicopter_flyover.ogg");
+	for (int i = 0; i < 2; i++) { zone_pl[i] = memnew(AudioStreamPlayer); add_child(zone_pl[i]); }
 	gull = memnew(AudioStreamPlayer3D); gull->set_unit_size(8.0f); gull->set_max_distance(120.0f); add_child(gull);
 	fly = memnew(AudioStreamPlayer3D); fly->set_unit_size(60.0f); fly->set_max_distance(2500.0f); add_child(fly);
 	rng ^= (uint32_t)get_instance_id();
@@ -124,6 +160,7 @@ void CityAmbience::_process(double p_delta) {
 	const float rain = c ? (float)c->get_rain() : 0.0f;
 	sample_t -= p_delta;
 	if (sample_t <= 0.0) { sample_t = 0.5; sample(p); gains(hour, rain); }
+	zone_bed(dt);
 	for (int k = 0; k < N_BEDS; k++) {
 		AudioStreamPlayer *b = bed[k];
 		if (!b || b->get_stream().is_null()) continue;
@@ -184,6 +221,7 @@ Dictionary CityAmbience::get_state() const {
 
 void CityAmbience::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_crowd", "crowd"), &CityAmbience::set_crowd);
+	ClassDB::bind_method(D_METHOD("get_zone"), &CityAmbience::get_zone);
 	ClassDB::bind_method(D_METHOD("set_wind", "metres_a_second"), &CityAmbience::set_wind);
 	ClassDB::bind_method(D_METHOD("set_muted", "muted"), &CityAmbience::set_muted);
 	ClassDB::bind_method(D_METHOD("set_master_db", "db"), &CityAmbience::set_master_db);

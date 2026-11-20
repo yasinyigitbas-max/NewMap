@@ -257,6 +257,11 @@ private:
 	uint32_t loose_serial = 0;
 	std::vector<Ref<Resource>> keep_models;   // every model's body and wheels, held so that a knock loads nothing
 	struct Hidden { int32_t id; int frames; bool seen; };
+	// the buses' recorded stop sounds near the listener (el_sfx.h): air brake, kneel beep, doors open as it stands at a
+	// stop, doors close as it leaves
+	std::vector<std::pair<int, int>> bus_stopped;   // (row id, the stop it stands at)
+	int bus_sounds = 0, bus_frame = 0;
+	void bus_stop_sounds(const Vector3 &p_listener);
 	std::vector<Hidden> hidden;      // rows that are a physical car now: not drawn, no box, until the step has dropped them
 	struct KnockCount { int moving = 0, parked = 0, rejoined = 0, drivers_out = 0, taken_away = 0, no_slot = 0, refused = 0, alarms = 0; } kc;
 	bool knock(BodyWant &w);

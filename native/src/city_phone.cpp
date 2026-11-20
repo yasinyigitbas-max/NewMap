@@ -2,6 +2,8 @@
 #include "city_phone.h"
 #include "city_game.h"
 #include "city_hud.h"
+#include "el_sfx.h"
+#include <godot_cpp/classes/audio_stream_player.hpp>
 #include "ui_plate.h"
 
 #include <godot_cpp/classes/dir_access.hpp>
@@ -250,6 +252,7 @@ void CityPhone::open_app(const String &p_id) {
 	if (id == "map" && !map_page) id = "home";
 	if (call_state != 0 && id != "call") { cur = "call"; show_page("call"); return; }   // (a call takes the screen)
 	if (!page(id)) id = "home";
+	if (id != cur && id != "home" && id != "call" && hud) hud->stinger("app_tap");
 	cur = id;
 	if (id == "photos") refresh_gallery();
 	if (id == "contacts") refresh_contacts();
@@ -270,6 +273,7 @@ void CityPhone::set_data(const Dictionary &d) { CityGame *g = CityGame::get(); i
 void CityPhone::take_photo() {
 	if (photo_frames >= 0) return;
 	tap_feedback();
+	if (hud) hud->stinger("camera_shutter");
 	photo_frames = 0;
 	if (hud) hud->photo_hide = 3;   // (the HUD and this phone are not in the photo)
 }
@@ -359,6 +363,7 @@ void CityPhone::receive_message(const String &p_contact, const String &p_en, con
 	Array t = th.get(p_contact, Array());
 	Dictionary m; m["in"] = true; m["en"] = p_en; m["tr"] = p_tr; m["at"] = Time::get_singleton()->get_unix_time_from_system();
 	t.push_back(m); th[p_contact] = t; d["threads"] = th; set_data(d);
+	if (hud) hud->stinger("msg_ping");
 	emit_signal("message_received", p_contact, p_en);
 	if (cur == "messages") refresh_threads();
 	if (cur == "thread" && thread_of == p_contact) refresh_thread();
@@ -434,6 +439,18 @@ void CityPhone::refresh_thread() {
 }
 
 // ---------------------------------------------------------------- a call
+// the ring (one recorded ring cycle, looped) until he answers or declines
+void CityPhone::ringtone(bool p_on) {
+	AudioStreamPlayer *a = Object::cast_to<AudioStreamPlayer>(get_node_or_null(NodePath("Ringtone")));
+	if (!p_on) { if (a) a->stop(); return; }
+	if (!a) {
+		a = memnew(AudioStreamPlayer); a->set_name("Ringtone"); add_child(a);
+	}
+	Ref<AudioStream> st = elsfx::pick("res://audio/ui/ringtone_", 0, 1, true);
+	if (st.is_null()) return;
+	a->set_stream(st); a->set_volume_db(-4.0f); a->play();
+}
+
 void CityPhone::ring(const String &p_caller) {
 	caller = p_caller; call_state = 1; call_t = 0.0;
 	if (cur != "call") before_call = cur;
@@ -442,6 +459,7 @@ void CityPhone::ring(const String &p_caller) {
 	b_answer->set_visible(true); b_decline->set_visible(true); b_hang->set_visible(false);
 	cur = "call"; show_page("call");
 	if (hud) hud->open_phone();
+	ringtone(true);
 	emit_signal("call_ringing", p_caller);
 }
 
@@ -449,6 +467,7 @@ void CityPhone::answer() {
 	if (call_state != 1) return;
 	tap_feedback();
 	call_state = 2; call_t = 0.0;
+	ringtone(false);
 	b_answer->set_visible(false); b_decline->set_visible(false); b_hang->set_visible(true);
 	emit_signal("call_answered", caller);
 }
@@ -458,6 +477,7 @@ void CityPhone::hang_up() {
 	tap_feedback();
 	const bool was_on = call_state == 2;
 	call_state = 0;
+	ringtone(false);
 	emit_signal("call_ended", caller, was_on);
 	open_app(before_call == "call" ? String("home") : before_call);
 }

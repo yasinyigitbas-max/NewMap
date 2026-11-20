@@ -1,6 +1,8 @@
 // CityRooms: see city_rooms.h.
 #include "perf_marks.h"
 #include "city_rooms.h"
+#include "el_sfx.h"
+#include <godot_cpp/classes/audio_stream_player3d.hpp>
 #include "city_stream.h"
 #include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/concave_polygon_shape3d.hpp>
@@ -151,6 +153,49 @@ void CityRooms::sleep(int i) {
 }
 
 // ---------------------------------------------------------------- the doors
+int CityRooms::room_kind(const String &p_scn) {
+	const String s = p_scn.get_file().to_lower();
+	for (const char *k : { "apt_", "condo", "house", "home", "cottage", "bungalow", "_row", "ck_brk" }) if (s.contains(k)) return 1;
+	for (const char *k : { "cv_", "office", "bank", "clinic", "hall", "library", "police", "school", "church", "hospital", "rec_center", "post" }) if (s.contains(k)) return 2;
+	return 0;
+}
+
+void CityRooms::door_sound(Node3D *p_leaf, const Vector3 &p_at, bool p_open, int p_kind) {
+	const String nm = String(p_leaf->get_name()).to_lower();
+	const char *mat = nm.contains("glass") || (p_kind == 0 && !nm.contains("wood")) ? "glass" : (nm.contains("metal") || nm.contains("steel") ? "metal" : "wood");
+	const Vector3 local = get_global_transform().affine_inverse().xform(p_at);
+	elsfx::play(this, String("res://audio/sfx/door/door_") + String(mat) + String(p_open ? "_open_" : "_close_"), -4.0f, 0.05f, local, 25.0f);
+	if (p_open && p_kind == 0) elsfx::play(this, "res://audio/sfx/door/door_shop_bell_", -8.0f, 0.02f, local + Vector3(0, 1.2f, 0), 20.0f);
+	door_sounds++;
+}
+
+// the nearest awake room's tone, from its middle (heard inside and at its door, not out on the street)
+void CityRooms::room_tone(const Vector3 &cam) {
+	int best = -1; float bd = 14.0f;
+	for (int i = 0; i < (int)rooms.size(); i++) {
+		if (rooms[i].state != 2) continue;
+		const float d = rooms[i].centre_world.distance_to(cam);
+		if (d < bd) { bd = d; best = i; }
+	}
+	static const char *TONE[3] = { "res://audio/amb/room/room_shop_", "res://audio/amb/room/room_home_", "res://audio/amb/room/room_office_" };
+	AudioStreamPlayer3D *a = Object::cast_to<AudioStreamPlayer3D>(get_node_or_null(NodePath("RoomTone")));
+	if (best < 0) { if (a && a->is_playing()) a->stop(); tone_room = -1; return; }
+	if (best != tone_room || !a || !a->is_playing()) {
+		const Ref<AudioStream> st = elsfx::pick(TONE[room_kind(rooms[best].scn)], 0, 1, true);
+		if (st.is_null()) return;
+		if (!a) {
+			a = memnew(AudioStreamPlayer3D); a->set_name("RoomTone");
+			a->set_unit_size(3.0f); a->set_max_distance(12.0f); a->set_volume_db(-8.0f);
+			a->set_attenuation_filter_db(-6.0f);
+			add_child(a);
+		}
+		if (a->get_stream() != st) a->set_stream(st);
+		if (!a->is_playing()) a->play();
+		tone_room = best;
+	}
+	a->set_global_position(rooms[best].centre_world + Vector3(0, 1.5f, 0));
+}
+
 void CityRooms::doors(double p_delta, const Vector3 &cam) {
 	for (Room &rm : rooms) {
 		if (rm.state != 2) continue;
@@ -165,7 +210,10 @@ void CityRooms::doors(double p_delta, const Vector3 &cam) {
 				f.dir = (cam - mid).dot(outw) > 0.0f ? -1.0f : 1.0f;
 			}
 			const float step = DOOR_SPEED * (float)p_delta;
+			const float was = f.amount;
 			f.amount = want > f.amount ? std::min(want, f.amount + step) : std::max(want, f.amount - step);
+			if (was <= 0.001f && f.amount > 0.001f) door_sound(l, mid, true, room_kind(rm.scn));
+			else if (was > 0.001f && f.amount <= 0.001f) door_sound(l, mid, false, room_kind(rm.scn));
 			const float e = f.amount * f.amount * (3.0f - 2.0f * f.amount);
 			Vector3 rot = l->get_rotation(); rot.y = DOOR_MAX_DEG * 0.017453292f * e * f.sign * f.dir; l->set_rotation(rot);
 		}
@@ -264,6 +312,7 @@ void CityRooms::_process(double p_delta) {
 		if (pl && pl->is_inside_tree() && pl->is_visible_in_tree()) who = pl->get_global_position() + Vector3(0, 1.0f, 0);
 	}
 	doors(p_delta, who);
+	if ((frame & 7) == 0) room_tone(who);   // (8 frames apart: it follows him in and out)
 }
 
 void CityRooms::_exit_tree() {
@@ -275,6 +324,7 @@ Dictionary CityRooms::get_state() const {
 	Dictionary d; int known = 0;
 	for (const Room &rm : rooms) if (!rm.cell.is_empty()) known++;
 	d["known"] = known; d["live"] = live; d["loading"] = loading; d["woken_total"] = woken;
+	d["door_sounds"] = door_sounds; d["tone_room"] = tone_room;
 	return d;
 }
 

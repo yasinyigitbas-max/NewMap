@@ -56,6 +56,11 @@ class CityRooms : public Node3D {
 	void sleep(int i);
 	void doors(double p_delta, const Vector3 &p_cam);
 	void light_rooms(const Vector3 &p_cam);
+	// the recorded sounds (el_sfx.h): a door's swing and shut (wood, glass or metal; a shop's bell), the nearest room's tone
+	static int room_kind(const String &p_scn);   // 0 shop, 1 home, 2 office
+	void door_sound(Node3D *p_leaf, const Vector3 &p_at, bool p_open, int p_kind);
+	void room_tone(const Vector3 &p_cam);
+	int tone_room = -1, door_sounds = 0;
 	void set_lit(Room &rm, bool p_on);
 	void set_open(Room &rm, bool p_open);
 	void add_col(const Vector3 &p_cam);      // the next piece of the nearest room's collision      // the building's near model: cut open (room in) or closed (no room)

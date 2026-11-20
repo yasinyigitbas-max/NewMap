@@ -2,6 +2,7 @@
 // collision pool. See city_traffic.h for how it hangs together.
 #include "perf_marks.h"
 #include "city_traffic.h"
+#include "el_sfx.h"
 #include "city_sfx.h"
 #include <godot_cpp/classes/audio_stream_player3d.hpp>
 #include "bike_look.h"
@@ -883,6 +884,7 @@ void CityTraffic::_process(double p_delta) {
 			if (at >= 0) nearest[at] = Near{ p[5], i };
 		}
 	}
+	if ((++bus_frame & 3) == 0) bus_stop_sounds(cp);
 	for (size_t h = 0; h < hidden.size();) {   // the step has dropped it: forget it
 		hidden[h].frames++;
 		if (!hidden[h].seen && hidden[h].frames > 30) { hidden[h] = hidden.back(); hidden.pop_back(); continue; }
@@ -1314,6 +1316,32 @@ Dictionary CityTraffic::knock_stats() const {
 	}
 	d["out"] = a;
 	return d;
+}
+
+void CityTraffic::bus_stop_sounds(const Vector3 &p_l) {
+	std::vector<std::pair<int, int>> keep;
+	for (int i = 0; i < now.n; i++) {
+		const Row &r = now.rows[i];
+		if (r.kind != tc::K_BUS) continue;
+		const Vector3 at(r.x, r.y + 1.5f, r.z);
+		const bool near = at.distance_squared_to(p_l) < 70.0f * 70.0f;
+		int was = -1;
+		for (const auto &b : bus_stopped) if (b.first == (int)r.id) was = b.second;
+		if (r.stop >= 0) keep.push_back({ (int)r.id, r.stop });
+		if (!near || was == r.stop) continue;
+		const Vector3 loc = to_local(at);
+		const Vector3 door = to_local(at + Vector3(std::cos(r.yaw), 0.0f, -std::sin(r.yaw)) * r.hw);   // (the kerb side)
+		if (r.stop >= 0 && was < 0) {   // it has stopped
+			elsfx::play(this, "res://audio/sfx/bus/bus_air_brake_", -3.0f, 0.04f, loc, 80.0f);
+			elsfx::play(this, "res://audio/sfx/bus/bus_kneel_beep_", -8.0f, 0.0f, door, 35.0f);
+			elsfx::play(this, "res://audio/sfx/bus/bus_door_open_", -5.0f, 0.03f, door, 40.0f);
+			bus_sounds += 3;
+		} else if (r.stop < 0 && was >= 0) {   // it leaves
+			elsfx::play(this, "res://audio/sfx/bus/bus_door_close_", -5.0f, 0.03f, door, 40.0f);
+			bus_sounds++;
+		}
+	}
+	bus_stopped.swap(keep);
 }
 
 void CityTraffic::buses_at_stops(std::vector<float> &r_buses) const {

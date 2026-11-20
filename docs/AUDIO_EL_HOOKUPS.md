@@ -30,3 +30,19 @@ On the merge git reports add/add conflicts on those .ogg files: take this branch
 ## Not in this commit
 - Voices (NPC lines, barks, reactions, and the effort grunts jump / climb / hit / tired / death): on hold for Yasin's line-by-line review.
 - Engine idle / rev: synthesised in code.
+
+## Hooked up (20 Nov, all C++ in native/src; Yasin: "make it c plus plus")
+Shared: `el_sfx.h/.cpp` loads a numbered set once (imported, or the raw .ogg when not imported), picks a take at random and never the one played last, and plays one-shots on a self-freeing 3D (or flat UI) player; loops sit on a named child player.
+- Player voice (CityPlayer, `audio/player/<m|f>/<kind>_NN.ogg`, gender from the body id "F.." / "M.."): jump (4 in 5), climb (a high wall always, a low one 3 in 5; a step up silent), hard landing (falling faster than 5.5 m/s), hit / knocked (take_hit, a knock > 2 m/s), punch (85 in 100), throw on a shove (CityTalk's shove event), breath after 8 s+ of running when he stops. `vocal(kind)` plays any kind from other code; pain / death are loaded and wait for a death / injury state.
+- Footsteps (FootSteps): run takes above 3 m/s; walk takes never twice running. Landing takes (`footstep_land_<surface>`) in CityPlayer on any landing from a jump or a drop.
+- NPC voices (CityTalk): each person one of the 8 cast voices (`cast_voice`, from his look); barks in his voice: shoved (hit, again: angry), screams (scared), bumped (complain), a fight (angry), a car hits somebody (run_over, the nearest), a wave (greet), filming / calling / in pain near the player (photos / call_police / pain).
+- Car (CityCar): door open / close from the door's swing, belt + engine start by class on taking the wheel, engine off + unbuckle on leaving it, lock chirp + clunk when he has walked off, horn key (H / pad Y) by class, tyre squeal loop by slip, skid (asphalt / sand) on a hard locked stop, sand slide loop, crash >= 10: glass + a creak 0.9 s later, crash >= 5: a scrape half the time.
+- Breakables (CityBreakables): hit_bin / hit_fence / hit_pole by the item's kind when knocked down.
+- Bike (CityBike): freewheel loop coasting, chain loop pedalling, bell (H / pad Y), brake squeal on a hard brake.
+- Bus (CityTraffic, buses within 70 m): air brake + kneel beep + doors open on stopping at a stop, doors close leaving.
+- Doors (CityRooms): wood / glass / metal open and close from the leaf's swing (shops: glass and the shop bell), room tone (shop / home / office from the room's name) from the nearest awake room within 14 m.
+- Zone beds (CityAmbience): beach / marina / parks / downtown / homes from the place rings, 3 s crossfade, a zone must hold 3 s.
+- Phone / UI (CityPhone, CityHud::stinger): ringtone looped until answered or hung up, msg_ping on a message, camera_shutter on a photo, app_tap opening an app, mission_start on a new mission (CityTalk::set_mission); `stinger("mission_pass" | "mission_fail" | "notify")` is there for the mission code.
+
+## Still waiting
+- bus_fare_chime: the player cannot board a bus yet. zone_hospital / campus / industrial: need a zone map. metal_scrape_loop (sustained wall contact): needs contact tracking in CityCar. Player pain / death: no injury or death state yet.
