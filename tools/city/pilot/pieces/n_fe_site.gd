@@ -136,3 +136,20 @@ static func paint_rows(g: K.Ground, x0: float, z0: float, z1: float, xr: Callabl
 			if m == "-": continue
 			g.quad(m, Vector3(xa[c], yfn.call(xa[c], za), za), Vector3(xa[c + 1], yfn.call(xa[c + 1], za), za),
 				Vector3(xb[c + 1], yfn.call(xb[c + 1], zb), zb), Vector3(xb[c], yfn.call(xb[c], zb), zb))
+
+## distance from (u, v) to the nearest walk edge of a block (graded aprons ease back onto the plain ground before it,
+## so a raised pad never lifts a walk's seam)
+static func edge_d(blk: String, u: float, v: float) -> float:
+	var best := INF; var p := Vector2(u, v)
+	var ls: Array = edges(blk).duplicate()
+	if blk == "b1": ls.append([375.0, -900.0, 375.0, -809.0, 0.0])     # the seam n_fe_b1w | n_fe_b1e: both plain there
+	for e: Array in ls:
+		var a := Vector2(e[0], e[1]); var b := Vector2(e[2], e[3])
+		var t := clampf((p - a).dot(b - a) / maxf((b - a).length_squared(), 1e-9), 0.0, 1.0)
+		best = minf(best, p.distance_to(a + (b - a) * t))
+	return best
+## the field of a block graded up to its pads (hs_fill_lib.graded), eased back onto the plain ground within 4 m of a walk
+static func field(blk: String, pads: Array) -> Callable:
+	var yb := func(x: float, z: float) -> float: return y(blk, x, z)
+	var gr := H.graded(yb, pads)
+	return func(x: float, z: float) -> float: return lerpf(float(yb.call(x, z)), float(gr.call(x, z)), smoothstep(0.0, 4.0, edge_d(blk, x, z)))
