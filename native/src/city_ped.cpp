@@ -79,6 +79,9 @@ void CityPed::make() {
 		// the Quaternius library's clips, fitted to this figure (tool make_anims.gd): "ual/Walk_Loop" and so on
 		Ref<AnimationLibrary> ual = rl->load(dir + String("clips_ual_") + g + String(".res"));
 		if (ual.is_valid()) anim->add_animation_library(StringName("ual"), ual);
+		// the walk starts and stops made from them (tools/people/make_steps.gd): "step/rb_start", "step/ual_stop_l" ...
+		Ref<AnimationLibrary> steps = rl->load(dir + String("clips_step_") + g + String(".res"));
+		if (steps.is_valid()) anim->add_animation_library(StringName("step"), steps);
 		if (lib->has_animation("get_up")) { Ref<Animation> a = lib->get_animation("get_up"); getup_len = a->get_length(); }
 		if (anim->has_animation(clip)) { anim->play(clip); if (clip_at >= 0.0) { anim->seek(clip_at, true); anim->pause(); } }
 	}
@@ -238,6 +241,19 @@ void CityPed::drive(const Transform3D &p_at, const StringName &p_clip, double p_
 		}
 	} else if (p_hold < 0.0 && p_hold > -1.5 && !anim->is_playing()) anim->play(p_clip, 0.1);   // (a clip that ends starts again while the act lasts)
 	if (p_hold < 0.0) anim->set_speed_scale((float)p_speed);
+}
+
+// A made step clip's pace at t: the share of the walk's ground pace the body moves at (meta "pace", 30 a second; 1 for
+// a clip without one)
+double CityPed::clip_pace(const StringName &p_clip, double p_t) const {
+	if (!anim || !anim->has_animation(p_clip)) return 1.0;
+	const Ref<Animation> a = anim->get_animation(p_clip);
+	if (a.is_null() || !a->has_meta("pace")) return 1.0;
+	const PackedFloat32Array p = a->get_meta("pace");
+	if (p.size() == 0) return 1.0;
+	const double f = std::min(std::max(p_t * 30.0, 0.0), (double)(p.size() - 1));
+	const int i = (int)f; const int j = std::min(i + 1, (int)p.size() - 1);
+	return p[i] + (p[j] - p[i]) * (f - i);
 }
 
 double CityPed::clip_len(const StringName &p_clip) const {

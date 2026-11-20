@@ -304,7 +304,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		// (letting go: he slows over a couple of steps, 7 m/s2, as a person stops; braked at 14 his feet skated 0.7 m out of a
 		// sprint while the clip was still on its way into idle: tests/people/trace_locomotion.gd "stop")
 		nh = hv.move_toward(want, (want.length() > hv.length() ? 9.0f : (want.length() < 0.05f ? 7.0f : 14.0f)) * dt);
-		move_speed = nh.length();
+		move_speed = nh.length(); step_mode = 0; stop_ph_prev = -1.0;
 	} else {
 		// A HEAVY BODY (Yasin: "RDR like grounded heavy bodied people and not rushed movements"): he turns first and goes
 		// the way he faces, no sideways glide. A turn takes time (standing 5 rad/s, walking 3.4, running 2.3: about 290,
@@ -318,9 +318,48 @@ void CityPlayer::_physics_process(double p_delta) {
 			yaw += std::min(std::max(d, -rate * dt), rate * dt);
 			turn_left = std::fabs(d) - std::min(std::fabs(d), rate * dt);
 		}
-		const float target = want_len * std::max(0.0f, std::cos(std::min(turn_left, 1.5707963f)));
-		const float acc = target > move_speed ? (move_speed < walk_top ? 2.6f : 3.2f) : (target < 0.05f ? 4.0f : 3.0f);
-		move_speed = move_speed + std::min(std::max(target - move_speed, -acc * dt), acc * dt);
+		float target = want_len * std::max(0.0f, std::cos(std::min(turn_left, 1.5707963f)));
+		// THE STEP CLIPS (tools/people/make_steps.gd; Yasin: "make start walk end walk stop ones ourselves"): out of
+		// standing he sets off with the start clip (his weight over the right foot, the left steps off), and letting go
+		// while walking he walks on to the next footfall and stops with that foot's stop clip (the trunk carries on, the
+		// hips sink, the feet come together). His body moves by the clip's own pace curve, so the planted foot stays put.
+		const char *pre = angry ? "step/ual_" : "step/rb_";
+		const float native_walk = angry ? 0.92f : 1.35f;   // (the walk each set's step clips were made from)
+		if (step_mode != 0 && (airborne || settle_t < 1.1f)) step_mode = 0;
+		if (step_mode == 0 && want_len > 0.05f && move_speed < 0.05f && speed < 0.08f && turn_left < 0.6f && !airborne && settle_t >= 1.1f) {
+			const StringName c(String(pre) + String("start"));
+			if (fig->clip_len(c) > 0.0) { step_mode = 1; step_clip = c; step_t = 0.0f; step_cs = std::max(std::min(want_len, walk_top) / native_walk, 0.8f); starts++; }   // (never slower than x0.8: at half stick a x0.5 first step took 1.8 s)
+		}
+		if (step_mode == 0 && want_len < 0.05f && move_speed > 0.3f && move_speed < walk_top * 1.05f && !airborne && fig->clip_len(StringName(String(pre) + String("stop_l"))) > 0.0) {
+			// waiting for the next footfall (at most half a step): he keeps his pace till then
+			double ld = 0.0; int ns = 1;
+			const StringName cur = fig->current_clip();
+			if (CityPed::stride_of(cur, ld, ns) && fig->clip_len(cur) > 0.0) {
+				double ph = fig->clip_pos() / fig->clip_len(cur) * ns - ld * ns; ph -= std::floor(ph);
+				const int side = (stop_ph_prev >= 0.0 && stop_ph_prev > 0.75 && ph < 0.25) ? 1 : ((stop_ph_prev >= 0.0 && stop_ph_prev < 0.5 && ph >= 0.5) ? 2 : 0);
+				stop_ph_prev = ph;
+				if (side) {
+					step_mode = 2; step_clip = StringName(String(pre) + String(side == 1 ? "stop_l" : "stop_r")); step_t = 0.0f; step_v0 = move_speed;
+					step_cs = std::min(std::max(move_speed / native_walk, 0.5f), 1.5f); stops++; stop_ph_prev = -1.0;
+				} else target = move_speed;
+			}
+		} else if (step_mode == 0) stop_ph_prev = -1.0;
+		if (step_mode != 0) {
+			const double len = fig->clip_len(step_clip);
+			const double at = cur_clip_is(step_clip) ? fig->clip_pos() : (double)step_t;
+			step_t += dt * step_cs;
+			const float pace = (float)fig->clip_pace(step_clip, at);
+			if (step_mode == 1 && want_len < 0.05f) step_mode = 0;          // (let go while setting off: he just stops)
+			else if (step_mode == 2 && want_len > 0.05f) step_mode = 0;     // (pushed on while stopping: he walks on)
+			else if (at >= len - 0.02 || step_t > len + 0.3) {
+				if (step_mode == 2) move_speed = 0.0f;
+				step_mode = 0;
+			} else move_speed = native_walk * step_cs * pace;   // (the clip's own pace at the rate it plays: the planted foot stays put)
+		}
+		if (step_mode == 0) {
+			const float acc = target > move_speed ? (move_speed < walk_top ? 2.6f : 3.2f) : (target < 0.05f ? 4.0f : 3.0f);
+			move_speed = move_speed + std::min(std::max(target - move_speed, -acc * dt), acc * dt);
+		}
 		nh = Vector3(std::sin(yaw), 0, std::cos(yaw)) * move_speed;
 	}
 	v.x = nh.x + knock_v.x; v.z = nh.z + knock_v.z;
@@ -389,6 +428,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	else if (crouch && speed < 0.5f && crouch_t < fig->clip_len(CR_IN)) { clip = CR_IN; hold = -2.0; }   // (down into the crouch)
 	else if (crouch) { clip = speed > 0.2f ? CR_FWD : CR_IDLE; cs = speed > 0.2f ? speed / 0.8 : 1.0; }
 	else if (!crouch && speed < 0.5f && crouch_t < fig->clip_len(CR_OUT) && !airborne) { clip = CR_OUT; hold = -2.0; }   // (up out of it)
+	else if (heavy && step_mode != 0) { clip = step_clip; cs = step_cs; hold = -2.0; }   // (a start or a stop: played through)
 	else if (speed > 0.08f || (heavy && turn_left > 0.35f && move_speed < 0.4f && Vector3(want.x, 0, want.z).length() > 0.05f)) {
 		// THE GAIT SET (see the header): the clip whose own pace is nearest his (kept until another is clearly nearer), played
 		// at his pace over its own, so the planted foot stays put. (Turning on the spot: the slowest walk, slowly: he steps
@@ -551,7 +591,7 @@ Dictionary CityPlayer::get_frame_log() const {
 	d["node"] = get_global_position(); d["fig_at"] = fig ? fig->get_global_position() : Vector3(); d["pelvis"] = pelvis_world();
 	if (plant) { d["foot_l"] = plant->foot_w[0]; d["foot_r"] = plant->foot_w[1]; d["pelvis_drawn"] = plant->pelvis_w; d["plant_on"] = plant->is_active(); d["lock"] = Vector2i(plant->locked[0], plant->locked[1]); d["slide_l"] = plant->slide_w[0]; d["slide_r"] = plant->slide_w[1]; }
 	d["speed"] = speed; d["yaw"] = yaw;
-	d["clip"] = get_clip(); d["climb"] = climb; d["u"] = climb ? climb_t / climb_len : -1.0f; d["settle"] = settle_t; d["clip_off"] = clip_off;
+	d["clip"] = get_clip(); d["step"] = step_mode; d["starts"] = starts; d["stops"] = stops; d["climb"] = climb; d["u"] = climb ? climb_t / climb_len : -1.0f; d["settle"] = settle_t; d["clip_off"] = clip_off;
 	return d;
 }
 
