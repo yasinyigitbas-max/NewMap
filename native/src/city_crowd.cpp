@@ -627,6 +627,7 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 				talks = ((int)(own_clock * 0.25) + crowd->party[i]) % ((int)crowd->psize[i] + 1) == (int)crowd->slot[i];
 			if (a == pc::A_PHONE || a == pc::A_CALL) r_clip = ((lk >> 13) & 1u) ? WALK_TEXT : WALK_PHONE;
 			else if (talks) r_clip = WALK_TALK;
+			if (crowd->carry[i] && a != pc::A_PHONE && a != pc::A_CALL && !talks) { static const StringName CARRY("ual/Walk_Carry_Loop"); r_clip = CARRY; }   // (his shopping in his arms)
 			if (crowd->hurt_t[i] > 0.0f) r_clip = WALK_HURT;   // he lost a fight: slowly away, his hands at his face
 		}
 		r_speed = std::min(std::max(r_speed, 0.4), 2.2);
@@ -707,6 +708,7 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 		default:   // standing: at a kerb for the lights a look round, folded arms; a jogger gets his breath
 			if (crowd->state[i] == pc::ST_WAIT) { const uint32_t w = (lk >> 9) % 3u; r_clip = (crowd->party[i] != 0 && crowd->pkind[i] == pc::PK_JOGGER) ? TIRED : (w == 0u ? IDLE : (w == 1u ? ARMS : LOOK)); }
 			else r_clip = IDLE;
+			if (crowd->hurt_t[i] > 0.0f) { static const StringName NURSE("ual/Bandage_Loop"); r_clip = NURSE; }   // (hurt and standing: he sees to it)
 			break;
 	}
 }

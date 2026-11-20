@@ -318,7 +318,7 @@ int Crowd::new_row(int k, float su, int d, float sl, uint32_t p_look) {
 	int h = 0; float sx, sy, sz, tx_, tz_;
 	at(S, su, sl, h, sx, sy, sz, tx_, tz_);
 	alive[i] = 1; id[i] = next_id++; seg[i] = k; dir[i] = (int8_t)d; u[i] = su; ls[i] = sl; hint[i] = h; nxt[i] = -1;
-	state[i] = ST_WALK; why[i] = WHY_NONE; pass[i] = 0; looked[i] = 0; thin[i] = 0; thin_t[i] = 0.0f; mode[i] = M_LINE; act[i] = A_NONE; rise_t[i] = 0.0f; rise_from[i] = 0; mate[i] = 0; kept_goal[i] = -1; kept_stay[i] = 0.0f; kept_enter[i] = 0; kept_mate[i] = 0; kept_kind[i] = 0; hurt_t[i] = 0.0f; hurt_v0[i] = 0.0f; fwin[i] = 0; swam[i] = 0; tier[i] = TIER_FULL; flags[i] = 0;
+	state[i] = ST_WALK; why[i] = WHY_NONE; pass[i] = 0; looked[i] = 0; thin[i] = 0; thin_t[i] = 0.0f; mode[i] = M_LINE; act[i] = A_NONE; rise_t[i] = 0.0f; rise_from[i] = 0; mate[i] = 0; kept_goal[i] = -1; kept_stay[i] = 0.0f; kept_enter[i] = 0; kept_mate[i] = 0; kept_kind[i] = 0; hurt_t[i] = 0.0f; hurt_v0[i] = 0.0f; door_t[i] = 0.0f; carry[i] = 0; fwin[i] = 0; swam[i] = 0; tier[i] = TIER_FULL; flags[i] = 0;
 	x[i] = px[i] = sx; y[i] = py[i] = sy; z[i] = pz[i] = sz; hx[i] = tx_ * d; hz[i] = tz_ * d; yaw[i] = pyaw[i] = std::atan2(hx[i], hz[i]);
 	tu[i] = tick; span[i] = 1;
 	rs[i] = rng ^ ((uint64_t)id[i] * 0x9E3779B97F4A7C15ull); if (rs[i] == 0) rs[i] = 1;
@@ -486,10 +486,16 @@ void Crowd::update(int i, float h, double clock) {
 	switch (mode[i]) {
 		case M_LINE: walk_line(i, h, clock); break;
 		case M_OFF:
+			if (door_t[i] > 0.0f) {   // a hand to the bus's door, then in
+				door_t[i] -= h; v[i] = 0.0f; act[i] = A_DOOR;
+				if (door_t[i] <= 0.0f) { door_t[i] = 0.0f; st.boarded++; event(E_BOARD, id[i], goal[i], 0.0f); kill(i, 6); }
+				break;
+			}
 			if (free_move(i, tx[i], tz[i], std::min(v0[i], 1.4f) * cfg.pace, h)) arrive(i);
 			else if (blocked_t[i] > 14.0f && !boarding[i]) { free_place(i); goal[i] = -1; mode[i] = M_BACK; tx[i] = bx[i]; tz[i] = bz[i]; blocked_t[i] = 0.0f; }   // it cannot get there: back
 			break;
 		case M_BACK:
+			if (door_t[i] > 0.0f) { door_t[i] -= h; v[i] = 0.0f; act[i] = door_t[i] > 0.0f ? A_DOOR : A_NONE; break; }   // (in a shop's doorway a moment, then off)
 			if (free_move(i, tx[i], tz[i], v0[i] * cfg.pace, h)) {   // on the pavement's line again, where it left it
 				const Seg &S = segs[seg[i]];
 				int hh = hint[i]; float ax, ay, az, tx_, tz_;

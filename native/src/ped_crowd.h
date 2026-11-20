@@ -172,6 +172,9 @@ public:
 	float tx[MAX_PEDS], tz[MAX_PEDS], ty[MAX_PEDS], tyaw[MAX_PEDS];   // off the line: where to, and how to face there
 	float rise_t[MAX_PEDS], kept_stay[MAX_PEDS];
 	float hurt_t[MAX_PEDS], hurt_v0[MAX_PEDS];  // hurt (he lost a fight): seconds of slow walking left, and his own pace to go back to
+	// (the Animator, 20 Nov) at a door a moment: out of a shop (standing in its doorway), into a bus (a hand to its door);
+	// and what he carries: 1 a shopping bag, out of a shop, until he is gone
+	float door_t[MAX_PEDS]; uint8_t carry[MAX_PEDS];
 	uint8_t swam[MAX_PEDS];                     // it has had its swim
 	uint8_t fwin[MAX_PEDS];                     // in a fight: 1 = he will win it
 	int32_t kept_goal[MAX_PEDS];                // where it was going when its body was knocked about (-1 = nowhere): it goes on there afterwards
