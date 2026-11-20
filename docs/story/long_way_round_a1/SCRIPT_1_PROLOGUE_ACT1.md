@@ -397,8 +397,11 @@ The act's goal on screen: **"Food. A room. A job."**
 - **Why:** real life that no textbook teaches; it's funny, and it shows that a small purchase opens doors.
 
 ### Beat 5: The hill
-- **CAM:** the taxi climbs to **Hillcrest Terraces**: a stucco apartment building on the hill with a lemon tree by the
-  gate. On a ground-floor balcony, an old woman with binoculars, aimed at the taxi.
+- **CAM:** the taxi climbs to **Hillcrest Terraces**: six small apartment houses on three terraces stepping up the
+  hill, all facing west, down Amber Ave to the ocean. It stops at the **lowest terrace**, the nearest to the street:
+  the **white Spanish house** (the kit's `apt_spanish_white`: two storeys, a red-tile hip roof, brown shutters, a
+  double front door in the middle with a small iron balcony above it). In its front garden, on the bench facing the
+  view, an old woman with binoculars, aimed at the taxi. A lemon tree in a big clay pot by her door.
 - **BENNY** [handing a card over the seat; serious for one second] "My number. You need a ride, call Benny. Not free.
   But cheap. Cheap for you." *(grin)* "Welcome to Coronado, boss."
 - PLAYER: "Thank you, Benny."
@@ -411,7 +414,17 @@ The act's goal on screen: **"Food. A room. A job."**
 ---
 
 ## M2: House Rules
-- **Where:** **Hillcrest Terraces**: Mrs. Finch's ground floor and the upstairs flat.
+- **Where:** **Hillcrest Terraces**, the white Spanish house on the lowest terrace (`apt_spanish_white`).
+  - **Mrs. Finch's flat:** the ground floor, behind the left-hand side door. Its front window looks over the front
+    garden and the path, so she sees everyone who comes.
+  - **The double door in the middle** opens on the shared stairs (*no shoes on my stairs*).
+  - **The upstairs flat** (Theo's, and now the hero's) is the one with the **small iron balcony** over the double
+    door, looking west down Amber Ave to the ocean.
+  - The court between this house and its neighbour (tables, a grill, washing lines, bins) is the residents' yard:
+    Theo smokes there, Finch hangs her washing there, the M19 neighbours come out there.
+  - **Why this house:** two storeys (a landlady below, a flat above), a front garden with a bench (Finch's lookout)
+    and the street right below (she sees the taxi arrive). It's the closest of the six to Amber Ave, so it's easy to
+    reach from everywhere.
 - **Length:** 12 minutes.
 - **Why it's here:**
   - Story: Mrs. Finch and Theo, and home base.
@@ -419,7 +432,7 @@ The act's goal on screen: **"Food. A room. A job."**
   - Language: *there is / there are*, rooms and furniture, prepositions, plurals.
 
 ### Beat 1: Mrs. Finch
-- **CAM:** low angle from the gate. The binoculars come down.
+- **CAM:** low angle from the garden path. The binoculars come down.
 - **MUS:** `MUS-06 "Mrs. Finch"`: harpsichord and muted trumpet over a tango bass. She is more dangerous than she
   looks.
 - **FINCH** [crisp, every consonant: the clearest English on the island; she was a Navy radio operator] "You are the
@@ -455,7 +468,9 @@ The act's goal on screen: **"Food. A room. A job."**
   - **THEO** "Is there a dishwasher?" → PLAYER: "No, there isn't." → **THEO** "Correct! Sadly."
 - **The hero's room.**
   - **THEO** [stepping aside, proud] "Your room!" (Small: a bed, a desk with an old PC, a chair, a wardrobe, a window
-    with the Bridge far away. The camera lingers on the window: the Bridge is the last image of the game.)
+    the front of the house, down Amber Ave to the ocean. The camera lingers on the window: at sunset it's gold. The
+    Bridge is behind the house, to the north-east; the hero sees it for the first time from the Hillside Park
+    lookout, up the hill, in M9.)
   - **THEO** "Where's the lamp?" → PLAYER: "The lamp is on the desk." → **THEO** "Correct!"
   - **THEO** "Is there a ghost?" *(a long, serious beat)* "…Probably not."
 - **The bathroom.** Theo opens the door and closes it again at once. **THEO** [serious] "I'll clean that. This week.
@@ -483,7 +498,7 @@ The act's goal on screen: **"Food. A room. A job."**
 
 ### Beat 1: The fridge
 - **CAM:** Theo opens the fridge. Two shelves. His: kimchi jars, eggs, hot sauce, fifteen energy drinks. The other:
-  empty except for one lemon from the tree by the gate.
+  empty except for one lemon from the potted tree by the front door.
 - **THEO** "My shelf. Your shelf." *(the lemon)* "That's from Mrs. Finch's tree. Don't tell her."
 - The hunger bar appears: 40 %.
 - (inner) [quiet, a little ashamed] "*I'm hungry. I have no food.*"
@@ -523,7 +538,8 @@ The act's goal on screen: **"Food. A room. A job."**
 
 ### Beat 5: The first night
 - **PLAY:** the bed (*Sleep*, the save).
-- **CAM:** the window: the Bridge lit up. A red airplane light blinks over the base. (Is it green? No. Not tonight.)
+- **CAM:** the window: the last light over the ocean at the end of Amber Ave, the street lamps coming on down the hill.
+  A red airplane light blinks over the base to the north. (Is it green? No. Not tonight.)
 - (inner) [tired, almost smiling] "*There is a bed. There is a window. There is a friend. Maybe.*"
 - **MUS:** `MUS-07 "Upstairs"`: a soft piano lullaby.
 - **Practice test:** *like*.

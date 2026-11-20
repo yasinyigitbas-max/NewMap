@@ -568,7 +568,7 @@ The act's goal on screen: **"Find out what Marek does."**
   years." *(his card on the step)* "Stop the night bags. Or help me."
 
 ### Beat 3: The warning
-- **CAM:** night, Hillcrest Terraces. The gate light is broken. On the mat: a dead fish wrapped in a page of a local
+- **CAM:** night, Hillcrest Terraces. The light over the double door is broken. On the mat: a dead fish wrapped in a page of a local
   paper. A circled headline: **"WATERFRONT LEASE REVIEW."**
 - **SFX:** the phone. A photo from an unknown number: Theo, asleep in Pickle in the hospital car park after his shift,
   taken an hour ago.

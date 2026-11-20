@@ -139,7 +139,7 @@ room is listed.
 | The rescue at sea (P1) | The bay at night off the **Ferry Landing** (`lmk_ferry_landing`); the harbour patrol boat is `boat_express` in a grey livery; a `lifering_stand` ring | Kit (one new paint livery) |
 | The interview (P2) and the check-ins (M8, M16) | **City Hall Front Desk** (civic band, `cv_city_hall`): the counter, queue ropes, waiting benches, Ruth's desk behind the counter | Kit room; a flag, a coffee machine, a height-chart poster, a RESETTLEMENT sign and a number screen as dressing |
 | The taxi ride (M1) | City hall → the long way round, past the Navy base fence → the strip (**Crown Plaza**, **McDowell's**) → **Shoal** gas station (the restroom gag) → the high street → the hill | All kit |
-| The home: Mrs. Finch's building | **Hillcrest Terraces** (the hill apartments, high street fill block 5–6): Finch on the ground floor, Theo and the hero upstairs | Building kit; **the flat interior is the one big new interior** |
+| The home: Mrs. Finch's building | **Hillcrest Terraces** (high street fill block 6, piece `n_hs_b6_hill`): the white Spanish house on the lowest terrace (`apt_spanish_white`). Finch in the left ground-floor flat; Theo and the hero in the upstairs flat with the balcony; the shared stairs behind the double door; the court beside it | Building kit; **the flat interior is the one big new interior** |
 | Groceries (M4) | **Hilltop Market** (the Trans' shop) | Kit room (assignment_hs / res) |
 | The CV (M5) | **Coronado Public Library** (high street, with Library Grounds Coffee) | Kit room |
 | Gus's restaurant (M6, M7, M19) | **The Fish House** (waterfront, assignment_wf), with **Pier Poke & Tacos** and **Pier Bait & Tackle** as neighbours | Kit room; a burned state for M19 (a texture swap and props) |
@@ -164,8 +164,15 @@ room is listed.
 | The epilogue | The steps of city hall; Benny's taxi; the drive to the **Bridge Tollhouse** (`lmk_bridge_tollhouse`) and onto the Bridge | Kit |
 
 ## 8. What still has to be built (short list)
-1. **The flat** inside Hillcrest Terraces: Mrs. Finch's ground-floor kitchen and the upstairs flat (living room,
-   kitchen with two fridge shelves, the hero's room, a bathroom). It's home base, so it's worth it.
+1. **The flat** inside the white Spanish house on Hillcrest Terraces' lowest terrace (`apt_spanish_white`):
+   - Mrs. Finch's ground-floor flat behind the left side door (her kitchen and hall: M15, M18; her photo wall; the
+     rotary phone);
+   - the shared stairs behind the double door;
+   - the upstairs flat with the balcony: living room, kitchen with two fridge shelves, the hero's room (its window
+     on the front, west, toward the ocean), Theo's room, a bathroom.
+
+   It's home base, so it's worth it. A potted lemon tree by Finch's door (a pot from the kit, a lemon-tree plant to
+   make).
 2. **The Fish House, burned:** a damage state (scorch decals, a collapsed awning, broken stools), not a new building.
 3. **Small props:** Whitmore's waterfront model under glass, a 1970s Navy radio set (Finch's), Marek's notebook, a
    few extras on the kit's own `taxi` model for Benny, a grey livery for the patrol boat, the sign decals for the yard ("NO ENTRY", "STAFF
