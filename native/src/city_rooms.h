@@ -49,6 +49,7 @@ class CityRooms : public Node3D {
 	void doors(double p_delta, const Vector3 &p_cam);
 	void light_rooms(const Vector3 &p_cam);
 	void set_lit(Room &rm, bool p_on);
+	void set_open(Room &rm, bool p_open);      // the building's near model: cut open (room in) or closed (no room)
 protected:
 	static void _bind_methods();
 public:

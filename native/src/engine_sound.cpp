@@ -50,7 +50,13 @@ void EngineSound::_ready() {
 	Ref<AudioStreamGenerator> gen; gen.instantiate();
 	gen->set_mix_rate(sr); gen->set_buffer_length(0.12f);
 	pl = memnew(AudioStreamPlayer3D);
-	pl->set_stream(gen); pl->set_unit_size(6.0f); pl->set_max_distance(120.0f);
+	pl->set_stream(gen);
+	// B30 (Yasin, 20 Nov: "engine sound becomes unhearable when throttled a lot"): the chase camera trails further back the
+	// faster the car goes (9.5 m + its follow lag, ~16 m at 200 km/h), and the 3D fall-off (unit size 6 m) and distance filter
+	// made the player's own engine ~9 dB quieter and duller exactly at full throttle. His own car's engine: no fall-off,
+	// no distance filter; it still pans with the car's place on screen.
+	pl->set_attenuation_model(AudioStreamPlayer3D::ATTENUATION_DISABLED); pl->set_attenuation_filter_db(0.0f);
+	pl->set_max_distance(0.0f);
 	add_child(pl);
 	pl->play();
 	pipe.tune(pipe_hz, 2.0f, sr); rasp_r.tune(rasp_hz, 1.5f, sr);

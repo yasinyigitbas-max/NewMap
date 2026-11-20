@@ -5,6 +5,7 @@
 #include <godot_cpp/classes/concave_polygon_shape3d.hpp>
 #include <godot_cpp/classes/omni_light3d.hpp>
 #include <godot_cpp/classes/light3d.hpp>
+#include <godot_cpp/classes/mesh_instance3d.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/static_body3d.hpp>
@@ -118,12 +119,16 @@ void CityRooms::finish(int i) {
 	root->set_name("room");
 	bd->add_child(root);
 	rm.node = (uint64_t)root->get_instance_id(); rm.state = 2; live++; woken++;
+	set_open(rm, true);
 }
 
 void CityRooms::sleep(int i) {
 	Room &rm = rooms[i];
 	Node *root = Object::cast_to<Node>(ObjectDB::get_instance(ObjectID(rm.node)));
 	CityStream *st = Object::cast_to<CityStream>(ObjectDB::get_instance(ObjectID(stream_id)));
+	bool other = false;      // (a building with several rooms closes when its last room sleeps)
+	for (int k = 0; k < (int)rooms.size(); k++) if (k != i && rooms[k].state == 2 && rooms[k].building == rm.building) other = true;
+	if (!other) set_open(rm, false);
 	if (root) {
 		if (Node *p = root->get_parent()) p->remove_child(root);
 		if (st) st->give_away(root); else memdelete(root);
@@ -151,6 +156,15 @@ void CityRooms::doors(double p_delta, const Vector3 &cam) {
 			Vector3 rot = l->get_rotation(); rot.y = DOOR_MAX_DEG * 0.017453292f * e * f.sign * f.dir; l->set_rotation(rot);
 		}
 	}
+}
+
+// the building shows its openings only while its room is in (the bake keeps both near models on the near node's metas)
+void CityRooms::set_open(Room &rm, bool p_open) {
+	Node3D *bd = Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(rm.building)));
+	MeshInstance3D *nr = bd ? Object::cast_to<MeshInstance3D>(bd->get_node_or_null(NodePath("near"))) : nullptr;
+	if (!nr || !nr->has_meta("open") || !nr->has_meta("closed")) return;
+	const Ref<Mesh> m = nr->get_meta(p_open ? "open" : "closed");
+	if (m.is_valid() && nr->get_mesh() != m) nr->set_mesh(m);
 }
 
 void CityRooms::set_lit(Room &rm, bool p_on) {

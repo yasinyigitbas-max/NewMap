@@ -864,6 +864,7 @@ func _room_building(rec: Dictionary, piece: String) -> void:
 		if String(t.name) != "near" or ops.is_empty(): continue
 		var ck := model + "|" + str(ops.map(func(o: Dictionary) -> String: return "%s%.2f" % [o.facade, float(o.along)]))
 		if not room_cut_cache.has(ck): room_cut_cache[ck] = _room_cut_mesh(t.mesh, t.lxf, ops)
+		t["closed"] = t.mesh      # (shown until the room is in: no opening without its room behind it, Yasin 20 Nov)
 		t.mesh = room_cut_cache[ck]
 	var doors := ops.filter(func(o: Dictionary) -> bool: return ROOM_DOORS.any(func(pp: String) -> bool: return String(o.region).begins_with(pp)))
 	if not doors.is_empty():
@@ -1295,6 +1296,9 @@ func _build_cell(c: Vector2i) -> Dictionary:
 		var seed_v := float(absi(hash(b.name)) % 1000) * 0.137
 		for t: Dictionary in b.tiers:
 			var mi2 := MeshInstance3D.new(); mi2.name = String(t.name); mi2.mesh = _lib_mesh(t.mesh); mi2.transform = t.lxf
+			if t.has("closed"):      # B14 (Yasin, 20 Nov: "many rooms load too late, i see empty spaces under the buildings then the
+				# stores pop up"): the near model with its openings cut is put in by CityRooms only once the room is there
+				mi2.set_meta(&"open", mi2.mesh); mi2.mesh = _lib_mesh(t.closed); mi2.set_meta(&"closed", mi2.mesh)
 			var bmat := _mat_bldg(t.mat)
 			mi2.set_surface_override_material(0, bmat)
 			var wk3 := "%s|bldg|%d" % [bmat.resource_path, mi2.mesh.surface_get_format(0)]

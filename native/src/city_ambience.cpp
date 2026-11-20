@@ -4,6 +4,7 @@
 #include "foot_steps.h"
 #include <godot_cpp/classes/audio_stream_player.hpp>
 #include <godot_cpp/classes/audio_stream_player3d.hpp>
+#include <godot_cpp/classes/audio_stream_ogg_vorbis.hpp>
 #include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/file_access.hpp>
 #include <godot_cpp/classes/json.hpp>
@@ -91,7 +92,14 @@ void CityAmbience::_ready() {
 	for (int k = 0; k < N_BEDS; k++) {
 		bed[k] = memnew(AudioStreamPlayer);
 		const String p = String(DIR) + BED_FILE[k] + ".ogg";
-		if (rl->exists(p)) bed[k]->set_stream(rl->load(p));
+		if (rl->exists(p)) {
+			Ref<AudioStream> st = rl->load(p);
+			// B29 (Yasin, 20 Nov: "ambient sounds cut off a lot"): the beds' files are imported without looping, so each one
+			// played to its end (20-60 s from its random start), fell silent and faded back in over ~5 s; a bed loops
+			Ref<AudioStreamOggVorbis> ogg = st;
+			if (ogg.is_valid()) ogg->set_loop(true);
+			bed[k]->set_stream(st);
+		}
 		add_child(bed[k]);
 	}
 	for (int i = 0; i < 5; i++) { const String p = vformat("%sgull_call_%d.ogg", DIR, i + 1); if (rl->exists(p)) gull_s[i] = rl->load(p); }
