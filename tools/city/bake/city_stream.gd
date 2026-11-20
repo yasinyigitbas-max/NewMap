@@ -36,7 +36,9 @@ signal cell_out(key: String)
 @export var max_loading := 2          ## cells on the loader threads at once
 @export var max_cells := 30           ## memory cap: cells in the scene
 @export var frame_budget_ms := 1.5    ## main-thread time a frame may spend removing (the old game's phone budget for streaming)
-@export var bodies_per_frame := 6     ## collision bodies made and attached a frame, at most
+@export var busy_remove_ms := 0.6    ## while cells load: removal time a frame once more than `leaving_backlog` parts wait (0 = quiet frames only, as before 20 Nov)
+@export var leaving_backlog := 64
+@export var bodies_per_frame := 6    ## collision bodies made and attached a frame, at most
 @export var body_tris_per_frame := 1200   ## and at most this much NEW collision a frame, in triangles (a convex point counts as one; the first body always goes). The phone builds roughly 5 microseconds a triangle on its physics thread.
 @export var attach_bodies := true    ## test switch: false = a cell's collision is never attached (to see what attaching costs)
 @export var show_cells := true       ## test switch: false = cells are added hidden (to see what their first drawing costs)
@@ -410,8 +412,14 @@ func _process_stream(t0: int) -> void:
 				stats["body_wait_ms_worst"] = maxi(int(stats.get("body_wait_ms_worst", 0)), Time.get_ticks_msec() - (int(e[5]) if int(e[5]) > 0 else int(e[4])))
 		for e2: Array in _pending:      # a body still waiting with the player 40 m away would be a hole in the ground
 			if (e2[0] as Vector3).distance_to(focus) < 40.0: stats.body_late += 1; break
-	# cells on their way out: a part at a time inside the frame budget
-	while quiet and not _leaving.is_empty() and (Time.get_ticks_usec() - t0) / 1000.0 < frame_budget_ms:
+	# cells on their way out: a part at a time inside the frame budget. In quiet frames the whole budget; while cells
+	# load (always, at 210 km/h) a small one once the backlog is over `leaving_backlog` parts. Until 20 Nov removals ran
+	# only in quiet frames: on the phone's 210 km/h drive 937 parts (16k nodes) piled up, the buildings still held their
+	# slots in the engine's instance-uniform buffer, it overflowed ("Too many instances using shader instance
+	# variables", 482 errors) and the app froze (review/phone/crash_20nov_0314).
+	var rm_from := t0 if quiet else Time.get_ticks_usec()      # busy frames: their own small budget, whatever came before
+	var rm_budget := frame_budget_ms if quiet else (busy_remove_ms if _leaving.size() > leaving_backlog else 0.0)
+	while not _leaving.is_empty() and (Time.get_ticks_usec() - rm_from) / 1000.0 < rm_budget:
 		var tr := Time.get_ticks_usec()
 		var n: Node = _leaving[_leaving.size() - 1]
 		if n.get_child_count() > 0 and not (n is CollisionObject3D):

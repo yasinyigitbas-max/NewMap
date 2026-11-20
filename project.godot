@@ -12,6 +12,10 @@ renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
 ; the game engine's own light grid (docs/engine, patch e): 32 omni + 32 spot lights for a fixed cost. A stock engine ignores it.
 lights_and_shadows/mobile_light_grid=true
+; per-building shader values (rt_bldg: tint, wear, lit windows, tier pivot / window = 5 slots a building): the default
+; 65,536 slots overflowed on the phone's 210 km/h drive and the app froze (20 Nov, review/phone/crash_20nov_0314).
+; 262,144 slots = 4 MB of graphics memory.
+limits/global_shader_variables/buffer_size=262144
 
 [display]
 window/size/viewport_width=1600

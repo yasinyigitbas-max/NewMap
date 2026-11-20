@@ -670,10 +670,13 @@ void CityGame::step_play(double p_delta) {
 		play_phase = 2; play_t = 0.0; play_quiet = 0;
 		return;
 	}
-	// settling: 45 frames in a row under 40 ms, at most 20 s
+	// settling: 45 frames in a row under 40 ms AND the player in the world and let go (hold_start: the ground's collision
+	// under him, he can move), at most 20 s. (B2, Yasin 20 Nov: "we can click the hud but being able to control the
+	// character happens much later ... hide it behind the loading": the quiet frames alone ended it while he was still held.)
 	play_quiet = p_delta < 0.040 ? play_quiet + 1 : 0;
-	set_loading(0.5 + 0.5 * std::min(1.0, std::max(play_t / 20.0, (double)play_quiet / 45.0)), "");
-	if (play_quiet >= 45 || play_t > 20.0) { close_loading(); play_phase = 0; }
+	const bool free_to_move = player_id != 0 && start_hold < 0.0;
+	set_loading(0.5 + 0.5 * std::min(free_to_move ? 1.0 : 0.95, std::max(play_t / 20.0, (double)play_quiet / 45.0)), "");
+	if ((play_quiet >= 45 && free_to_move) || play_t > 20.0) { close_loading(); play_phase = 0; }
 }
 
 // ---------------------------------------------------------------- the tests' thumb
