@@ -66,6 +66,7 @@ class CityGame : public Node {
 	bool objective_on = false; Vector3 objective_at;
 	// the player's own targets on the phone's map (Yasin: "up to 3 targets should be routable and kept"): {x, z, name}, saved
 	Array map_targets;
+	Dictionary phone_data;         // the phone's contacts, messages, photos (CityPhone)
 	// HEALTH AND NEEDS (Yasin: "integrate health and needs but keep them inactive for now"): kept and saved, never drained
 	// while needs_active is off; the HUD's bars are hidden then
 	float health = 1.0f, hunger = 1.0f, thirst = 1.0f, energy = 1.0f;
@@ -243,6 +244,9 @@ public:
 	Vector3 get_objective_at() const { return objective_at; }
 	bool get_needs_active() const { return needs_active; }
 	Array get_map_targets() const { return map_targets; }
+	Dictionary get_phone_data() const { return phone_data; }
+	void set_phone_data(const Dictionary &p_d) { phone_data = p_d; }
+	VBoxContainer *make_settings_panel(const Callable &p_back) { return build_settings_panel([p_back]() { p_back.call(); }); }
 	void set_map_targets(const Array &p_t) { map_targets = p_t; }
 	void set_needs_active(bool p_on) { needs_active = p_on; }
 	Object *get_hud() const;

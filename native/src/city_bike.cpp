@@ -730,7 +730,7 @@ void CityBike::_process(double p_delta) {
 				if (PanelContainer *pb = Object::cast_to<PanelContainer>(hud->get_child(1))) pb->add_theme_stylebox_override("panel", plate::box(tb || c_brake > 0.5f ? "raised_hi" : "plate"));
 				if (PanelContainer *pp = Object::cast_to<PanelContainer>(hud->get_child(2))) pp->add_theme_stylebox_override("panel", plate::box(tp || c_pedal > 0.5f ? "raised_hi" : "plate_go"));
 			}
-			if (Control *off = Object::cast_to<Control>(hud->get_child(3))) off->set_visible(std::fabs(speed) < 1.5f);   // (the Use plate's "Get off": only when it can be done)
+			if (Control *off = hud->get_child_count() > 3 ? Object::cast_to<Control>(hud->get_child(3)) : nullptr) off->set_visible(std::fabs(speed) < 1.5f);   // (the Use plate's "Get off": only when it can be done)
 		}
 	}
 }

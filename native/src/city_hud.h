@@ -83,6 +83,8 @@ public:
 
 class CityHud : public CanvasLayer {
 	GDCLASS(CityHud, CanvasLayer)
+	friend class CityPhone;
+	class CityPhone *phone = nullptr;   // the phone's screens (city_phone.h): its home, its apps, the map among them
 
 	PanelContainer *b_money = nullptr, *b_arrow = nullptr, *b_inv = nullptr, *b_phone = nullptr;
 	// THE USE BUTTON (the old game's Use plate; Yasin: "make the use button as big as phone and map boxes, vibrates and
@@ -138,6 +140,9 @@ public:
 	int get_use_kind() const { return use_kind; }
 	int get_uses() const { return uses; }
 	void press_use() { use_do(); }
+	int photo_hide = 0;                 // frames the HUD stays hidden (a photo is being taken)
+	void open_phone();                  // open the phone panel (a call rings), without a touch
+	Object *get_phone() const;
 	float get_arrow_angle() const { return arrow ? arrow->angle : 0.0f; }
 	bool get_arrow_objective() const { return arrow && arrow->objective; }
 	String get_money_text() const;

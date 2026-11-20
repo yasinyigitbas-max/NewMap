@@ -5,6 +5,7 @@
 #include "city_car.h"
 #include "city_game.h"
 #include "city_hud.h"
+#include "city_phone.h"
 #include "hand_grip.h"
 #include "city_native.h"
 #include "city_ped.h"
@@ -31,6 +32,8 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(CityNative);
 	GDREGISTER_CLASS(CityTraffic);   // the traffic: core, drawing, parked cars
 	GDREGISTER_CLASS(BikeReach);
+	GDREGISTER_CLASS(PhoneTile);
+	GDREGISTER_CLASS(CityPhone);
 	GDREGISTER_CLASS(HandGrip);
 	GDREGISTER_CLASS(Posture);       // everyone's shoulders forward
 	GDREGISTER_CLASS(FootPlant);     // the player's feet on the ground under them      // the player's hands on a ledge's edge while he climbs     // the player's bicycle: the rider's feet and hands to the pedals and grips
