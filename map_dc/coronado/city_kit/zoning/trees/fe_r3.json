@@ -1,0 +1,45 @@
+{
+ "area": "fe_r3",
+ "piece": "n_fe_r3",
+ "zone": "civic and parks (skate spot, lookout, picnic lawn) and apartments (Glorietta Terraces)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; held to the plan's in-view limit (12 trees, 8 broadleaf within 60 m of a street point): the ring's palm boulevard already fills most of it, so fewer trees than clumps of 3-5 (thinned by hand, 20 Nov); the apartments: one tree per court",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, fe fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    622.0,
+    4.321,
+    -306.0
+   ],
+   "yaw": 120,
+   "scale": 1.0,
+   "why": "lookout clump: a pine at the lookout's north side, framing the bay"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    570.0,
+    5.614,
+    -246.0
+   ],
+   "yaw": 100,
+   "scale": 0.95,
+   "why": "picnic lawn clump: shade on the lawn's west side"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    588.0,
+    4.803,
+    -376.0
+   ],
+   "yaw": 160,
+   "scale": 1.0,
+   "why": "the north lawn: one palm over its benches' side"
+  }
+ ]
+}

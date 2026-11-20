@@ -1,0 +1,33 @@
+{
+ "area": "fe_b2",
+ "piece": "n_fe_b2",
+ "zone": "civic and parks (Glorietta Ring Park north, Ringside)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; held to the plan's in-view limit (12 trees, 8 broadleaf within 60 m of a street point): the ring's palm boulevard already fills most of it, so fewer trees than clumps of 3-5 (thinned by hand, 20 Nov)",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, fe fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    596.0,
+    4.518,
+    -922.0
+   ],
+   "yaw": 250,
+   "scale": 0.95,
+   "why": "picnic grove clump: shade on the grove's north side"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    538.0,
+    4.935,
+    -905.0
+   ],
+   "yaw": 15,
+   "scale": 0.85,
+   "why": "the garden apartments' court behind them: its one tree"
+  }
+ ]
+}
