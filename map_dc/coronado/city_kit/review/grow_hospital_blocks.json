@@ -1,0 +1,140 @@
+{
+ "note": "Hospital session's fill of its empty land (20 Nov, Yasin: 'populate them ... take the elevation of the map into consideration ... run superchecker on everything you built to bugfix and lock'). Branch claude/fill-high-street; method review/fill_east/BUILD_GUIDE.md, per-area READMEs review/fill_east/{fw,fn,fe}.md. Pieces in the grid frame: n_fw_* at [0,0,0], n_fn_* at [0,2,0], n_fe_* at [0,4,0], yaw 0, as each piece script says. The hand-tree pieces t_fw_* / t_fn_* / t_fe_* (pos [0,0,0]) come in through zoning/trees/{fw,fn,fe}_*.json. Not filled (Yasin: keep beyond the last highway as sea and shoreline): blocks u 800..1000 at v -1400..-1000.",
+ "rows": [
+  {
+   "piece": "n_fw_bay",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_fw_slope",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_fw_crest",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_fw_court",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_fn_west",
+   "pos": [
+    0.0,
+    2.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_fn_mid",
+   "pos": [
+    0.0,
+    2.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_fn_east",
+   "pos": [
+    0.0,
+    2.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_fn_strip",
+   "pos": [
+    0.0,
+    2.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_fe_b1w",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_fe_b1e",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_fe_b2",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_fe_r7",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_fe_r5",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_fe_r3",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "piece": "n_fe_r1",
+   "pos": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "yaw": 0.0
+  }
+ ]
+}
