@@ -21,6 +21,10 @@ traffic / people / game session; "runtime" = the phone runtime / streaming sessi
 | B12 | tests/game/test_start.gd failed once (no ground under the player 5 s in) | this session | flaky; streaming timing |
 | B13 | tests/traffic/test_bike_hit.gd: once a hit rider's hips went 19 m up | this session | flaky; trace the rider when it happens |
 | B14 | "none of the shops appear in the game, i think they were forgotten to be cut in the bake step" | bake / interiors | the interiors (city_kit/interiors, room_lib: doors and windows cut into the locked building at bake time) are not in the runtime bake |
+| B15 | "about the nudges and ragdolls, people are very unlikely to fall and step countless times to balance themselves" (more falls, far fewer balancing steps) | this session | end of the queue (Yasin) |
+| B16 | "everyones shoulders are too far back, push all of them both player and npcs shoulders forward" | this session | end of the queue |
+| B17 | "kerbs shouldnt require step up animation, but if you can make it truly seamless its okay" | this session | end of the queue |
+| B18 | "bike riders need idle on the bike animation with one leg down and seamlessly transition into riding again after movement is detected" | this session | end of the queue |
 
 ## FIXED (20 Nov)
 | # | Bug | Fix |
