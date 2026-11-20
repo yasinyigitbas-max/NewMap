@@ -9,9 +9,9 @@ This is Version A (Yasin's own beats in Yasin's order) rebuilt for A1:
 - **Lines:** every player line is A1.
 - **The climax:** the mayday is all A1 ("There is a fire. There are twelve people. We need help.").
 - **Places:** every scene is set in a place already in the city: the Harbor Office, the Navy Gatehouse, Shoal, Hillcrest
-  Terraces, Hilltop Market, the library, The Fish House, Island Legal Aid, Island Laundry, Ocean Travel, the Villager
+  Terraces, Hilltop Market, the library, The Fish House, City Hall Front Desk, Clay's Diner, Ocean Travel, the Villager
   Theatre, The Crown & Anchor, the Ferry Landing, the courthouse, and more.
-- **Still to build:** the flat interior, one interview room, three motel rooms, a burned state for The Fish House and a
+- **Still to build:** the flat interior, a burned state for The Fish House and a
   few small props (BIBLE.md section 8).
 
 Start with `long_way_round_a1/BIBLE.md`, then `A1_MAP.md`.

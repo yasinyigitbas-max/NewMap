@@ -128,9 +128,10 @@ languages, with small words.
 
 ### Beat 4: Dawn at the Ferry Landing
 - **CAM:** dawn. Three cars at the old Ferry Landing: Brody's, Ruth's (she came in a Navy sweater over pyjamas) and
-  Priya's. And a grey harbour patrol boat at the end of the landing: on its deck, **DANNY** (the football sailor from P3,
+  Priya's. And a grey harbour patrol boat at the end of the landing: on its deck, **DANNY** (the sailor who pulled the hero out of the water in P1,
   now harbour patrol).
-- **DANNY** [recognising the hero, grinning] "Five-three! You beat us five-three! I still think about it."
+- **DANNY** [recognising the hero, grinning] "Hey! The swimmer! You're dry now!" *(beat, gentler)* "Safe?"
+- PLAYER: "Safe." (the first English word of the game, said back to the man who said it)
 - **RUTH** [reading the decoded pages, then to the hero] "Last time you said: 'I don't know.'" *(beat)* "Now you bring me
   a notebook, a date and a boat."
 - **BRODY** [heavy] "The book is stolen. In court, a good lawyer kills it." *(beat)* "But now we know where. And when."
@@ -212,8 +213,10 @@ languages, with small words.
 ---
 
 ## M20: Little Fish, Again
-- **Where:** Island Laundry (gritty edge); then the **Seabreeze Motel** on the strip: three rooms where Marek's
-  "workers" live.
+- **Where:** Clay's Diner (the docks); then the **Harbor View Motel** on the strip, where Marek's "workers" live. Two
+  of its rooms are already built: the **motel office** (Sharon's desk) and the **Guest Laundry** (where the families
+  gather). The rest happens outside, on the walkway in front of the guest-room doors. No guest-room interiors are
+  needed: the people come out to the walkway, as motel life really works.
 - **Length:** 25 minutes.
 - **Why it's here:**
   - Story: the hero goes *back* to Marek, pretending to be beaten. Ruth knows this time: the hero calls her first, and
@@ -234,7 +237,7 @@ languages, with small words.
 - **RUTH** [hating it; knowing it's the only way] "…OK. You call me every night. Every night, {NAME}."
 
 ### Beat 2: The return
-- **CAM:** Island Laundry. The hero walks in head down, shaking (an act: the camera shows the hero's steady hand behind
+- **CAM:** Clay's Diner after closing, the corner booth. The hero walks in head down, shaking (an act: the camera shows the hero's steady hand behind
   their back, so the player knows).
 - **MAREK\*** [delighted, arms open; this time he does hug] "The fish swims home! They always swim home."
 - **PLAY:** perform defeat, *in the native language* (chosen from native-language lines). These are the only lines in
@@ -242,11 +245,14 @@ languages, with small words.
 - **MAREK\*** "Good. You speak both now. You're useful. Go to the motel. Help Sharon with the new people."
 
 ### Beat 3: The motel (relaying)
-- **CAM:** the Seabreeze Motel on the strip, behind Gus' Pizza. Upstairs: a walkway of doors, laundry on lines, a TV
-  playing a cartoon, kids doing homework on the floor. People. Neighbours, not victims in a cut-scene.
+- **CAM:** the Harbor View Motel on the strip. The motel office: a bell on the counter, a key board, a TV. Behind the
+  counter, **SHARON**. Through the side door, the Guest Laundry: machines turning, laundry folded on every surface,
+  kids doing homework on the floor between the machines, a woman cutting a boy's hair on a plastic chair. People.
+  Neighbours, not victims in a cut-scene.
 - **SHARON** [Marek's house manager; flat Midwestern English, a smoker's cough, tired more than evil; a clipboard] "You're
   the translator? Finally. Room four: the rent is more now. Room six: they work Sunday. Room nine: the lady. Her kid is
-  on the boat. She doesn't go to the landing. Kids come here first."
+  on the boat. She doesn't go to the landing. Kids come here first." *(she nods at the laundry door)* "They're all in
+  there. They're always in there."
 - **How relaying plays:** Sharon speaks English to the hero. The hero turns to the person and speaks the native
   language (picking a line). Then the person answers in the native language, and **the hero tells Sharon in English,
   aloud**, in short A1.
@@ -256,15 +262,17 @@ languages, with small words.
     eyebrows).
   - **Why it works at A1:** relaying is short. *Her name is Nadia. She is from {the region}. She wants her daughter.*
     That's exactly what a beginner bilingual really does, and it's powerful: the hero is the only bridge in the room.
-- **Room four:** a family. PLAYER (to Sharon): "OK. They know. They are not happy."
-- **Room six:** three young men from the hero's region; they recognise the accent.
+- **Room four** (a family at the laundry's folding table). PLAYER (back in the office, to Sharon): "OK. They know. They
+  are not happy."
+- **Room six** (three young men from the hero's region, by the machines; they recognise the accent).
   - **YOUNG MAN\*** [whispering] "*You're from our side of the river. Get us out.*"
   - PLAYER (to Sharon, cool): "He says OK. Sunday is OK." (a lie in English: the first lie the hero tells *for*
     someone)
 
 ### Beat 4: Nadia
-- **CAM:** room nine. NADIA, 30s, sewing a small yellow raincoat by the window. A child's drawing on the wall: a girl, a
-  sun, a boat.
+- **CAM:** outside on the walkway, by the door of room nine. NADIA, 30s, sits on a plastic chair by her door in the
+  last light, sewing a small yellow raincoat. Taped to the inside of her window, facing out: a child's drawing of a
+  girl, a sun and a boat.
 - **NADIA\*** [careful hope, which hurts more than fear] "*You speak English? Sharon tells me nothing. My daughter, Lali.
   She is nine. She is on the boat. When does it come? Where? I want her to see my face first.*"
 - **PLAY:** the question, in A1 English, to Sharon, made casual so it doesn't sound suspicious:
@@ -277,13 +285,13 @@ languages, with small words.
   - **Kind:** "*The Fourth. Eleven. I will be there. I bring her to you.*"
   - Each sets a flag: in M22 Nadia's actions depend on what she was told.
 - **Job perks:** cook for the motel; **teacher**: teach Nadia "911" and "Help, please" in English (she uses it in M22);
-  **nurse**: a feverish child in room four. Each raises the motel's trust, and the motel helps on the night.
+  **nurse**: a feverish child in the laundry. Each raises the motel's trust, and the motel helps on the night.
 
 ### Beat 5: The signal
-- **CAM:** night, the motel roof. The hero texts Brody and Ruth: *July 4. 11. Ferry Landing. 12 people. 4 children.*
+- **CAM:** night, the dark end of the motel walkway. The hero texts Brody and Ruth: *July 4. 11. Ferry Landing. 12 people. 4 children.*
 - **MUS:** `MUS-25 "Two Lives"`: Marek's frame drum and the main theme's trumpet alternate, two bars each, never
   together.
-- Below, the laundry's back door opens. Marek, smoking, looks up at the roof. The hero ducks. He looks for a long time.
+- Below, a dark sedan pulls into the motel lot. Marek gets out, smoking, and looks up along the walkway. The hero steps back into the dark. He looks for a long time.
   Then he goes in.
 - **Practice test:** review: people.
 
@@ -360,7 +368,7 @@ languages, with small words.
   knows on every corner: the Trans with a flag stall outside Hilltop Market, Mr. Delgado silently waving a flag, Brenda
   with Admiral in a star bandana, Salim eating seeds, Joy from the library on a float.
 - **MUS:** the marching band plays the main theme `MUS-04` as a march. The city's song is the hero's song.
-- **PLAY:** the hero is "with Marek's people" and must be seen near the Seabreeze. They can eat a hot dog, but going
+- **PLAY:** the hero is "with Marek's people" and must be seen near the Harbor View Motel. They can eat a hot dog, but going
   too far raises Marek's suspicion.
 - **Needs:** topped up quietly at the start of Phase 2 (the rule).
 
@@ -434,7 +442,7 @@ languages, with small words.
   - **LALI\*** [small, curious] "*What did you say to him? What language is that?*"
   - PLAYER (the game offers it in the native language): "*English. I teach you.*"
 - If Nadia came (the truth in M20), she runs in and the reunion happens in foil blankets: no lines, only music. If not,
-  the hero takes Lali to the motel at dawn, and the reunion happens in room nine. Both are beautiful; one comes sooner.
+  the hero takes Lali to the motel at dawn, and the reunion happens on the walkway outside room nine. Both are beautiful; one comes sooner.
   The truth always gets there faster in this game.
 - **MUS:** `MUS-28 "Home"`, the first sung song in the game (MUSIC.md), over the dawn.
 
@@ -504,7 +512,7 @@ languages, with small words.
 ---
 
 # EPILOGUE: The Bridge
-- **Where:** a montage across the island; the **Navy Gatehouse**; Benny's taxi; the **Bridge Tollhouse** and the Bridge.
+- **Where:** a montage across the island; the steps of **city hall**; Benny's taxi; the **Bridge Tollhouse** and the Bridge.
 - **Length:** 6 minutes plus the credits.
 - **Why it's here:** the circle closes. The hero becomes, for someone else, what Benny, Theo and Ruth were for them.
 
@@ -517,21 +525,22 @@ Each shot is in a place the player knows:
 - **Priya**'s front page, framed, in Library Grounds Coffee.
 - **Hilltop Market:** a photo of the hero on the wall by the till, under a hand-written sign: *OUR HERO (STILL PAYS FOR
   MANGOES)*.
-- **Ruth** at Island Legal Aid clears her desk: she's retiring. The dead plant goes in the bin; a young caseworker hands
+- **Ruth** at city hall clears her desk behind the counter: she's retiring. The dead plant goes in the bin; a young caseworker hands
   her a living sunflower.
 - **Hank's Diner:** Theo on the TV, a late-night comedy spot in Los Angeles. He says "my roommate", and the whole diner
   laughs. Benny points at the TV and tells everyone he knows him.
-- **The Casa del Mar Inn**'s kitchen door: **Omar** from the camp, in a cook's apron. He sees the hero across the
-  street. "THURSDAY!" / PLAYER: "FRIDAY!"
+- **The Casa del Mar Inn**'s kitchen door: **Omar** from the boat (P2), in a cook's apron. He sees the hero across the
+  street. **OMAR** "FORTY!" / PLAYER: "FORTY-ONE!"
 
 ### Beat 2: The fare
-- **CAM:** the Navy Gatehouse, morning sun: the exact framing of the end of P3. Benny's taxi. But Benny is in the
+- **CAM:** the steps of city hall, morning sun after rain: the exact framing of the end of P2. Benny's taxi. But Benny is in the
   *passenger* seat with his arm in a cast (he says aliens; it was a skateboard), and the hero is at the wheel. The
   hero drives Benny's taxi three days a week now.
-- The barrier lifts. A young newcomer walks out with a plastic bag and a cheap phone. The camera never shows their face
+- City hall's doors open. A young newcomer walks out with a plastic bag, a cheap phone and a too-big grey NAVY
+  sweatshirt. The camera never shows their face
   clearly: it could be anyone.
 - They get in the back. Silent. Terrified.
-- **BENNY** [opening his mouth to start at full speed: "Hey-hey-hey, fresh off the base—"]
+- **BENNY** [opening his mouth to start at full speed: "Hey-hey-hey, NAVY, huh? You a sail—"]
 - The hero puts a hand on Benny's arm. Benny stops. Smiles. Nods.
 - **PLAY:** the last voice lines of the game. The player says them to the newcomer *slowly*, every word apart, the way
   Ruth and Benny once did:
@@ -541,7 +550,7 @@ Each shot is in a place the player knows:
   - PLAYER: "It's on me."
 
 ### Beat 3: The Bridge
-- **CAM:** one long, unbroken helicopter shot follows the taxi from the gatehouse down the strip, past Lupe's Tacos and
+- **CAM:** one long, unbroken helicopter shot follows the taxi from city hall down the strip, past Lupe's Tacos and
   Shoal, along Amber Ave, past the Library, the Crown & Anchor and Hilltop Market, down to the waterfront and The Fish
   House: M1's route and the whole game's map in one move. Then past the **Bridge Tollhouse** and *up the Bridge*, the
   first time the game has ever crossed it.
@@ -563,6 +572,6 @@ Each shot is in a place the player knows:
 | Cook | The lid on Theo's pan (M2) | Gus lets you make the specials (+tips) | Cook for Finch: a rent discount (M15) | Cook for the motel: Nadia trusts you (M20) |
 | Mechanic | Fix Benny's door (a free ride home) | Fix the night bike's light (M10, an easier stop) | Start Pickle for the show (M13) | Start the skiff first time; fix Finch's radio (M21–22) |
 | Nurse | Dress Theo's burn (M2) | Treat Admiral's paw (Brenda tips double) | Help Theo on a night shift (side) | Stabilise Gus in the fire (M19) |
-| Teacher | Help Omar with the days (P3) | Tutor Kai for cash (side) | Help Priya read the signs faster (M17) | Teach Nadia "911" and "Help, please" (M20) |
+| Teacher | Help Omar spell his name for the next desk (P2) | Tutor Kai for cash (side) | Help Priya read the signs faster (M17) | Teach Nadia "911" and "Help, please" (M20) |
 | Builder | Fix Finch's gate (a rent discount) | Fix Gus's stools (+pay) | Read the tower plans (M14) | A loose fence panel in the yard (M17) |
 | Driver | Benny lets you drive home (M1) | Skip the bike: borrow Theo's car early | Skip the lessons (M11) | Drive the getaway in M17; faster to the ER in M19 |
