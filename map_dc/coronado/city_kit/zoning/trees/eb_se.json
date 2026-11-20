@@ -1,0 +1,129 @@
+{
+ "area": "eb_se",
+ "piece": "n_eb_se",
+ "zone": "civic and parks / waterfront (the paddle hire lawn)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; waterfront - palms only, spaced on the promenade; never on the sand below the dune line (SHORE_GUIDE); held to the plan's in-view limit (12 trees, 8 broadleaf within 60 m of a street point)",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, eb fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    1150.0,
+    2.889,
+    -643.0
+   ],
+   "yaw": 40,
+   "scale": 1.0,
+   "why": "the paddle hire: a palm at its forecourt's north corner"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    1151.0,
+    2.761,
+    -616.0
+   ],
+   "yaw": 130,
+   "scale": 0.95,
+   "why": "the paddle hire: a palm at its forecourt's south corner"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    1032.0,
+    3.72,
+    -628.0
+   ],
+   "yaw": 20,
+   "scale": 1.0,
+   "why": "the walk grove: shade on its table"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    1051.0,
+    3.633,
+    -629.0
+   ],
+   "yaw": 140,
+   "scale": 0.9,
+   "why": "the walk grove: its east"
+  },
+  {
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "at": [
+    1068.0,
+    3.224,
+    -566.0
+   ],
+   "yaw": 250,
+   "scale": 0.95,
+   "why": "the middle grove: its east"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    1052.0,
+    3.339,
+    -552.0
+   ],
+   "yaw": 70,
+   "scale": 1.0,
+   "why": "the middle grove: its west"
+  },
+  {
+   "base": "tree_eucalyptus_a",
+   "cond": "normal",
+   "at": [
+    1098.0,
+    2.87,
+    -536.0
+   ],
+   "yaw": 180,
+   "scale": 0.95,
+   "why": "the south grove: its east"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    1082.0,
+    2.998,
+    -522.0
+   ],
+   "yaw": 300,
+   "scale": 0.9,
+   "why": "the south grove: its south"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    1114.0,
+    2.878,
+    -566.0
+   ],
+   "yaw": 90,
+   "scale": 1.0,
+   "why": "over the bench pair on the lawn"
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "at": [
+    1143.0,
+    2.752,
+    -598.0
+   ],
+   "yaw": 220,
+   "scale": 0.95,
+   "why": "over the bench pair at the south access"
+  }
+ ]
+}

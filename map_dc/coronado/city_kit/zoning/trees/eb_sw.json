@@ -1,0 +1,129 @@
+{
+ "area": "eb_sw",
+ "piece": "n_eb_sw",
+ "zone": "civic and parks (Glorietta Meadow, the knoll lookout)",
+ "rule": "docs/TREE_PLAN.md: civic and parks - yes, grouped: clumps of 3-5 at the edges and round the seating, open lawn in the middle; waterfront - palms only, spaced on the promenade; never on the sand below the dune line (SHORE_GUIDE); held to the plan's in-view limit (12 trees, 8 broadleaf within 60 m of a street point)",
+ "written": "by hand, 20 Nov 2026 (claude/fill-high-street, eb fill): after the superchecker pass, after the plan",
+ "trees": [
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    827.0,
+    4.561,
+    -712.0
+   ],
+   "yaw": 40,
+   "scale": 1.0,
+   "why": "the bandstand: a clump at its south-east, shade for the crowd"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    803.0,
+    4.53,
+    -714.0
+   ],
+   "yaw": 160,
+   "scale": 0.95,
+   "why": "the bandstand: its south-west"
+  },
+  {
+   "base": "tree_ficus_a",
+   "cond": "normal",
+   "at": [
+    828.0,
+    4.471,
+    -688.0
+   ],
+   "yaw": 280,
+   "scale": 0.9,
+   "why": "the bandstand: its north-east, over the north benches' side"
+  },
+  {
+   "base": "tree_magnolia_b",
+   "cond": "normal",
+   "at": [
+    748.0,
+    4.461,
+    -768.0
+   ],
+   "yaw": 90,
+   "scale": 0.9,
+   "why": "the west grove's east edge (the trees of the grove keep 60 m off the ring)"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    845.0,
+    4.341,
+    -640.0
+   ],
+   "yaw": 10,
+   "scale": 1.0,
+   "why": "the knoll grove: its north-west"
+  },
+  {
+   "base": "tree_eucalyptus_a",
+   "cond": "normal",
+   "at": [
+    871.0,
+    4.38,
+    -652.0
+   ],
+   "yaw": 120,
+   "scale": 0.95,
+   "why": "the knoll grove: its east, up the slope"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    856.0,
+    4.403,
+    -661.0
+   ],
+   "yaw": 230,
+   "scale": 0.9,
+   "why": "the knoll grove: its south"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    886.0,
+    5.57,
+    -545.0
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "why": "the lookout: a palm at its north-west corner, seen from the meadow"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    887.0,
+    6.132,
+    -521.0
+   ],
+   "yaw": 70,
+   "scale": 0.95,
+   "why": "the lookout: a palm at its south-west corner"
+  },
+  {
+   "base": "tree_ficus_b",
+   "cond": "normal",
+   "at": [
+    770.0,
+    4.533,
+    -752.0
+   ],
+   "yaw": 310,
+   "scale": 0.9,
+   "why": "over the bench pair on the Meadow path"
+  }
+ ]
+}
