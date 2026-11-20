@@ -24,10 +24,11 @@ const PAVE := [
 	[1145.3, -638.0, 1165.5, -622.0, "plaza"],      # the hire shop's forecourt (racks), out to the promenade
 	[1156.0, -609.0, 1172.0, -603.0, "plaza"],      # SOUTH ACCESS landing: from the promenade over the dune line onto the sand
 ]
+## (check_life, 20 Nov: the open dune fence runs had ends "leading nowhere": they are closed dune plots now)
 const FENCES := [
-	# dune fences along the dune line either side of the access landing (the bins stand against the south one)
-	["fence_weathered_board", "fence_post_privacy", 1169.0, -612.0, 1172.7, -626.0, "worn"],
-	["fence_weathered_board", "fence_post_privacy", 1165.5, -600.0, 1160.5, -586.0, "worn"],
+	# two fenced dune plots on the dune line either side of the access landing (ice plant inside; the bins against the south one)
+	["fence_weathered_board", "fence_post_privacy", "worn", [[1169.0, -627.0], [1175.0, -627.0], [1175.0, -613.0], [1169.0, -613.0]], []],
+	["fence_weathered_board", "fence_post_privacy", "worn", [[1160.0, -600.0], [1166.0, -600.0], [1166.0, -587.0], [1160.0, -587.0]], []],
 ]
 const ITEMS := [
 	# ---- the PADDLE HIRE: surfboard racks and two kayak racks in its forecourt (clear of the door at v -626.7), its
@@ -38,11 +39,12 @@ const ITEMS := [
 	["prop_trash_cart_green", "worn", 1130.0, -632.0, 90.0], ["prop_trash_cart_blue", "worn", 1130.0, -630.6, 90.0],
 	["prop_ac_condenser", "worn", 1130.2, -627.6, -90.0],
 	# ---- SOUTH ACCESS: shower over the dune line, the rules sign, bike racks along the walk (north of it), bins against
-	#      the south dune fence, the access lamp
+	#      the south dune plot's fence
 	["prop_beach_shower", "clean", 1174.0, -606.0, 0.0],
 	["prop_beach_sign_rules", "worn", 1171.4, -610.0, -90.0],
 	["prop_bike_rack", "worn", 1140.0, -609.6, 0.0], ["prop_bike_rack", "worn", 1146.0, -609.6, 0.0],
-	["prop_trash_receptacle", "worn", 1164.0, -597.4, 90.0], ["prop_recycling_receptacle", "worn", 1163.6, -596.2, 90.0],
+	["prop_trash_receptacle", "worn", 1159.2, -597.4, 90.0], ["prop_recycling_receptacle", "worn", 1159.2, -596.2, 90.0],
+	["plant_iceplant_patch", "normal", 1172.0, -620.0, 0.0, false], ["plant_iceplant_patch", "normal", 1163.0, -593.5, 60.0, false],   # inside the two dune plots
 	# ---- three VOLLEYBALL courts on the open sand (nets parallel to the shore)
 	["prop_volleyball_net", "clean", 1250.0, -638.0, -79.0],
 	["prop_volleyball_net", "clean", 1254.0, -617.0, -79.0],

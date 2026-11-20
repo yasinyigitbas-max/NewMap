@@ -9,8 +9,7 @@ extends SceneTree
 ## n_eb_nw's Meadow Walk) joins it. The land is flat at 4.2 - 4.6 and rises in the south-east to a knoll (6.2 at
 ## u 900, v -520, on into n_eb's southern neighbour): on its top the KNOLL LOOKOUT, a level paved terrace with a rail,
 ## benches facing the sea over the beach. In the meadow a BANDSTAND (shade, music on summer evenings) with benches
-## round it, two picnic groves with their grills, rail fences at the ring gate (the bins stand against them), lamps
-## along the walks, bike racks at the gate. Trees only from the hand list zoning/trees/eb_sw.json.
+## round it, two picnic groves with their grills, lamps along the walks, bike racks at the gate. Trees only from the hand list zoning/trees/eb_sw.json.
 ## LAND: the ground follows it (n_eb_site.g); the lookout terrace stands level at the highest ground under it, the
 ## knoll graded up to it at 6 %, faces where it stands proud.
 const S := preload("res://tools/city/pilot/pieces/n_eb_site.gd")
@@ -25,15 +24,14 @@ const PAVE := [
 	[758.5, -800.0, 761.5, -607.5, "plaza"],       # the MEADOW path (u 760) from n_eb_nw's Meadow Walk down to it
 	[898.5, -604.5, 901.5, -540.0, "plaza"],       # the path up the knoll to the lookout
 ]
+## (check_life, 20 Nov: open rail runs had ends "leading nowhere": the ring gate's rails went with the bins against them;
+## the lookout's rail goes all round the terrace, its opening where the path arrives)
 const FENCES := [
-	["fence_vinyl_canal_rail", "fence_post_vinyl", 676.5, -622.0, 676.5, -611.0, "worn"],    # the ring gate's rails, either side
-	["fence_vinyl_canal_rail", "fence_post_vinyl", 676.5, -601.0, 676.5, -591.0, "worn"],    # of the walk's mouth
-	["fence_vinyl_canal_rail", "fence_post_vinyl", 911.4, -539.6, 911.4, -526.4, "worn"],    # the lookout's rail on its east (sea) edge
+	# the KNOLL LOOKOUT's rail round the terrace (0.3 m in from its edge), a 3.4 m opening on its north side at the path
+	["fence_vinyl_canal_rail", "fence_post_vinyl", "worn", [[890.3, -539.7], [911.7, -539.7], [911.7, -526.3], [890.3, -526.3]], [[0, 9.7, 3.4]]],
 ]
 const ITEMS := [
-	# ---- the RING GATE (v -606): bins against the north rail, a bike rack beside the walk, the gate lamp
-	["prop_trash_receptacle", "worn", 677.4, -616.0, 90.0],
-	["prop_recycling_receptacle", "worn", 677.4, -617.2, 90.0],
+	# ---- the RING GATE (v -606): a bike rack beside the walk, the gate lamp
 	["prop_bike_rack", "worn", 690.0, -610.0, 0.0],
 	["prop_lamp_victorian", "worn", 680.0, -602.4, 0.0],
 	# ---- lamps: the Glorietta Walk (south side, on the grass), the Meadow path (east side), the knoll path (east side)
@@ -44,7 +42,7 @@ const ITEMS := [
 	["prop_lamp_victorian", "worn", 902.6, -590.0, 0.0], ["prop_lamp_victorian", "worn", 902.6, -560.0, 0.0],
 	# ---- the KNOLL LOOKOUT: two benches facing the sea (3.4 m short of the rail), bins against the rail, its lamp
 	["prop_park_bench", "worn", 908.0, -535.0, 90.0], ["prop_park_bench", "worn", 908.0, -531.6, 90.0],
-	["prop_trash_receptacle", "worn", 910.7, -528.2, 90.0],
+	["prop_trash_receptacle", "worn", 910.9, -527.6, 90.0],
 	["prop_lamp_victorian", "worn", 891.4, -538.6, 0.0],
 	# ---- the BANDSTAND in the meadow east of the Meadow path: shade and summer music; benches facing it from the
 	#      north and the west
