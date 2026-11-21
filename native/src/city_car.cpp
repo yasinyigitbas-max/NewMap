@@ -41,6 +41,7 @@
 #include <godot_cpp/classes/physics_material.hpp>
 #include <godot_cpp/classes/physics_server3d.hpp>
 #include <godot_cpp/classes/rendering_server.hpp>
+#include <godot_cpp/classes/project_settings.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/shader.hpp>
 #include <godot_cpp/classes/shader_material.hpp>
@@ -93,7 +94,8 @@ void CityCar::make() {
 		static bool refl_ok = false;
 		if (!refl_ok) {
 			RenderingServer *rs = RenderingServer::get_singleton();
-			if (!rs->global_shader_parameter_get_list().has(StringName("refl_env"))) rs->global_shader_parameter_add("refl_env", RenderingServer::GLOBAL_VAR_TYPE_VEC2, Vector2(1.0f, 0.0f));
+			// (not RenderingServer's list of globals: outside the editor it is empty and logs an error; the project's own entry)
+			if (!ProjectSettings::get_singleton()->has_setting("shader_globals/refl_env")) rs->global_shader_parameter_add("refl_env", RenderingServer::GLOBAL_VAR_TYPE_VEC2, Vector2(1.0f, 0.0f));
 			refl_ok = true;
 		}
 		mat.instantiate(); mat->set_shader(sh); mat->set_shader_parameter("atlas", atlas);

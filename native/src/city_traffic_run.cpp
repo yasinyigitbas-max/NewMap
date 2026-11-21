@@ -855,9 +855,34 @@ void CityTraffic::_process(double p_delta) {
 		float *w = mid_b[m].buf.ptrw();
 		for (int32_t k : lst) {
 			const float *f = &streets.stall_f[(size_t)k * 8];
-			put_row(w + (size_t)mid_b[m].n * ROW, f[0], f[1] + 0.02f, f[2], f[3], f[4], 1.0f, 1.0f, 1.0f, PAINT[stall_car[k].colour], 0.0f, 0.0f, 0.0f, 1.0f);
-			mid_b[m].n++; parked_mid_n++;
 			const float dx = f[0] - cp.x, dz = f[2] - cp.z;
+			// PARKED CARS NEAR THE CAMERA DRAW THE NEAR MODEL (Yasin, 21 Nov: "moving cars are fine, parked ones have this": a parked
+			// car was the light model even beside him: no roof, white seams, the paint wrong). As a moving car: inside near_r the
+			// near model with its wheels; over the last NEAR_BAND metres it crosses into the light model (complementary dither).
+			const float dn = std::sqrt(dx * dx + dz * dz);
+			float mid_a = 1.0f, mid_flag = 1.0f;   // (the light model's row: alpha, and the parked flag its shader cuts by)
+			bool mid_on = true;
+			if (dn < (float)near_r) {
+				Batch &nb = near_b[m];
+				grow(nb, nb.n + 1);
+				float *row = nb.buf.ptrw() + (size_t)nb.n * ROW;
+				put_row(row, f[0], f[1] + 0.02f, f[2], f[3], f[4], 1.0f, 1.0f, 1.0f, PAINT[stall_car[k].colour], 0.0f, 0.0f, 0.0f, 0.0f);
+				nb.n++;
+				Batch &wb = wheel_b[m];
+				bool wheels_put = false;
+				if (wheels[m].on) { grow(wb, wb.n + 4); put_wheels(wb.buf.ptrw() + (size_t)wb.n * ROW, row, wheels[m], 0.0f, 0.0f); wb.n += 4; wheels_put = true; }
+				if (dn <= (float)near_r - NEAR_BAND) mid_on = false;   // (the near model alone)
+				const float fa = std::min(std::max(((float)near_r - dn) / NEAR_BAND, 0.0f), 1.0f);
+				row[15] = std::max(fa, 0.001f);
+				if (wheels_put) for (int q = 1; q <= 4; q++) wb.buf.ptrw()[(size_t)(wb.n - q) * ROW + 15] = std::max(fa, 0.001f);
+				mid_a = 1.0f + fa; mid_flag = 0.0f;
+			}
+			if (mid_on) {
+				w = mid_b[m].buf.ptrw();
+				put_row(w + (size_t)mid_b[m].n * ROW, f[0], f[1] + 0.02f, f[2], f[3], f[4], 1.0f, 1.0f, 1.0f, PAINT[stall_car[k].colour], 0.0f, 0.0f, 0.0f, mid_flag);
+				w[(size_t)mid_b[m].n * ROW + 15] = mid_a;
+				mid_b[m].n++; parked_mid_n++;
+			}
 			if (bodies_on && dx * dx + dz * dz < 30.0f * 30.0f) body_want.push_back(BodyWant{ dx * dx + dz * dz, f[0], f[1], f[2], f[3], f[4], m, -1, k, 0.0f, 0.0f, stall_car[k].colour });
 		}
 	}
