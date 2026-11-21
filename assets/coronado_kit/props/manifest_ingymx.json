@@ -1,0 +1,295 @@
+{
+ "dumbbell_rack": {
+  "file_base": "prop_dumbbell_rack",
+  "batch": "ingymx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1120
+  },
+  "footprint_w": 1.8,
+  "footprint_d": 0.656,
+  "height": 1.003,
+  "regions": [
+   "baked:dumbbell_rack"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 4.09,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 2.09,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.26,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 6400,
+  "bake_slot_px": 32,
+  "bake_px_per_m": 414.3,
+  "col": 1,
+  "secs": 18.5
+ },
+ "rowing_machine": {
+  "file_base": "prop_rowing_machine",
+  "batch": "ingymx",
+  "class": "medium",
+  "budget": 800,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 625
+  },
+  "footprint_w": 2.39,
+  "footprint_d": 0.56,
+  "height": 1.14,
+  "regions": [
+   "baked:rowing_machine"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 0.51,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 2.42,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.04,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 0.29,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1503,
+  "bake_slot_px": 32,
+  "bake_px_per_m": 179.2,
+  "col": 1,
+  "secs": 26.8
+ },
+ "treadmill": {
+  "file_base": "prop_treadmill",
+  "batch": "ingymx",
+  "class": "medium",
+  "budget": 1000,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 494
+  },
+  "footprint_w": 2.0,
+  "footprint_d": 0.863,
+  "height": 1.553,
+  "regions": [
+   "baked:treadmill"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 6.2,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 1.8,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 1.75,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1236,
+  "bake_slot_px": 32,
+  "bake_px_per_m": 84.1,
+  "col": 1,
+  "secs": 19.0
+ },
+ "bike_repair_stand": {
+  "file_base": "prop_bike_repair_stand",
+  "batch": "ingymx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 812
+  },
+  "footprint_w": 1.69,
+  "footprint_d": 0.926,
+  "height": 1.36,
+  "regions": [
+   "baked:bike_repair_stand"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 1.18,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.2,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.19,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 0.06,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3050,
+  "bake_slot_px": 32,
+  "bake_px_per_m": 414.3,
+  "col": 1,
+  "secs": 17.8
+ },
+ "dive_tank_rack": {
+  "file_base": "prop_dive_tank_rack",
+  "batch": "ingymx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1129
+  },
+  "footprint_w": 1.5,
+  "footprint_d": 0.571,
+  "height": 0.867,
+  "regions": [
+   "baked:dive_tank_rack"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 9.25,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.34,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 1.25,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3428,
+  "bake_slot_px": 32,
+  "bake_px_per_m": 414.3,
+  "col": 1,
+  "secs": 17.1
+ },
+ "rod_rack": {
+  "file_base": "prop_rod_rack",
+  "batch": "ingymx",
+  "class": "medium",
+  "budget": 1000,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 828
+  },
+  "footprint_w": 1.4,
+  "footprint_d": 0.402,
+  "height": 2.354,
+  "regions": [
+   "baked:rod_rack"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 2.8,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.37,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.08,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.46,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 4043,
+  "bake_slot_px": 32,
+  "bake_px_per_m": 414.3,
+  "col": 1,
+  "secs": 12.3
+ },
+ "bait_tank": {
+  "file_base": "prop_bait_tank",
+  "batch": "ingymx",
+  "class": "medium",
+  "budget": 800,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 462
+  },
+  "footprint_w": 1.342,
+  "footprint_d": 0.78,
+  "height": 1.568,
+  "regions": [
+   "baked:bait_tank"
+  ],
+  "trim": {
+   "ti_plastic": {
+    "area_m2": 9.8,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.54,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.11,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.13,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3796,
+  "bake_slot_px": 32,
+  "bake_px_per_m": 105.3,
+  "col": 2,
+  "secs": 18.7
+ }
+}
