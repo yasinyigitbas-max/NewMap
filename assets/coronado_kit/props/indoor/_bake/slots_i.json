@@ -568,6 +568,174 @@
     64,
     64
    ]
+  ],
+  "shopping_basket_stack": [
+   [
+    944,
+    640,
+    64,
+    64
+   ]
+  ],
+  "lottery_atm_stand": [
+   [
+    928,
+    736,
+    96,
+    96
+   ]
+  ],
+  "magazine_rack": [
+   [
+    816,
+    832,
+    80,
+    80
+   ]
+  ],
+  "wetsuit_rack": [
+   [
+    64,
+    752,
+    64,
+    64
+   ]
+  ],
+  "helmet_wall": [
+   [
+    128,
+    752,
+    80,
+    80
+   ]
+  ],
+  "folded_stack_table": [
+   [
+    208,
+    768,
+    64,
+    64
+   ]
+  ],
+  "bargain_bin": [
+   [
+    272,
+    768,
+    64,
+    64
+   ]
+  ],
+  "flower_bucket_stand": [
+   [
+    336,
+    768,
+    64,
+    64
+   ]
+  ],
+  "shopping_cart": [
+   [
+    400,
+    768,
+    64,
+    64
+   ]
+  ],
+  "security_mirror": [
+   [
+    464,
+    768,
+    64,
+    64
+   ]
+  ],
+  "candle_shelf": [
+   [
+    528,
+    800,
+    80,
+    80
+   ]
+  ],
+  "herb_jar_wall": [
+   [
+    0,
+    800,
+    64,
+    64
+   ]
+  ],
+  "guitar_wall": [
+   [
+    64,
+    816,
+    64,
+    64
+   ]
+  ],
+  "tv_electronics_stack": [
+   [
+    128,
+    832,
+    80,
+    80
+   ]
+  ],
+  "phone_display_table": [
+   [
+    208,
+    832,
+    80,
+    80
+   ]
+  ],
+  "skateboard_deck_wall": [
+   [
+    288,
+    832,
+    64,
+    64
+   ]
+  ],
+  "boot_display_wall": [
+   [
+    352,
+    832,
+    64,
+    64
+   ]
+  ],
+  "tshirt_wall": [
+   [
+    416,
+    832,
+    80,
+    80
+   ]
+  ],
+  "postcard_rack": [
+   [
+    608,
+    832,
+    64,
+    64
+   ]
+  ],
+  "display_plinth": [
+   [
+    688,
+    832,
+    64,
+    64
+   ]
+  ],
+  "foot_measure_stool": [
+   [
+    752,
+    832,
+    64,
+    64
+   ]
   ]
  }
 }
