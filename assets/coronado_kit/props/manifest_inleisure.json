@@ -1,0 +1,49 @@
+{
+ "pool_table": {
+  "file_base": "prop_pool_table",
+  "batch": "inleisure",
+  "class": "large",
+  "budget": 2400,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 2280
+  },
+  "footprint_w": 2.276,
+  "footprint_d": 1.282,
+  "height": 0.822,
+  "regions": [
+   "baked:pool_table"
+  ],
+  "trim": {
+   "ti_fabric": {
+    "area_m2": 3.07,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 15.92,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 2.36,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.47,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 0.0,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 9190,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 556.9,
+  "col": 1,
+  "secs": 27.7
+ }
+}
