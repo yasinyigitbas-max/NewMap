@@ -91,6 +91,10 @@ void CityPed::make() {
 		// the Mixamo walk and the UAL walk loop, the hands open: "pwalk/start_a" ...
 		Ref<AnimationLibrary> pwalk = rl->load(dir + String("clips_player_walk_") + g + String(".res"));
 		if (pwalk.is_valid()) anim->add_animation_library(StringName("pwalk"), pwalk);
+		// the player's run (tools/people/make_player_runs.gd): the jog and fast-run tiers' loops, run starts, stops and
+		// running turns, both feet: "prun/jog_a" ...
+		Ref<AnimationLibrary> prun = rl->load(dir + String("clips_player_run_") + g + String(".res"));
+		if (prun.is_valid()) anim->add_animation_library(StringName("prun"), prun);
 		if (lib->has_animation("get_up")) { Ref<Animation> a = lib->get_animation("get_up"); getup_len = a->get_length(); }
 		if (anim->has_animation(clip)) { anim->play(clip); if (clip_at >= 0.0) { anim->seek(clip_at, true); anim->pause(); } }
 	}
@@ -222,6 +226,10 @@ bool CityPed::stride_of(const StringName &p_clip, double &r_left_down, int &r_st
 	static const StringName PN[3] = { "pwalk/walk_mx1", "pwalk/walk_mx2", "pwalk/walk_mx3" };
 	static const double LD[3] = { 0.206897, 0.225806, 0.193548 };
 	for (int i = 0; i < 3; i++) if (p_clip == PN[i]) { r_left_down = LD[i]; r_strides = 1; return true; }
+	// the player's run loops (tools/people/make_player_runs.gd; their "left_down" meta, the same in both figures)
+	static const StringName RN[8] = { "prun/jog_a", "prun/jog_b", "prun/jog_c", "prun/jog_d", "prun/fast_a", "prun/fast_b", "prun/fast_c", "prun/fast_d" };
+	static const double RLD[8] = { 0.240, 0.227, 0.286, 0.227, 0.238, 0.250, 0.211, 0.250 };
+	for (int i = 0; i < 8; i++) if (p_clip == RN[i]) { r_left_down = RLD[i]; r_strides = 1; return true; }
 	return false;
 }
 

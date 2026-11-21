@@ -2,8 +2,9 @@
 // walked through, bumped into and talked to in the test app: a body that walks and runs on the engine's physics (it
 // stands on the world, and stops at cars and at the capsules that stand on the people round it), the same animated
 // figure the crowd's people have (the Quaternius clips by its pace), and a camera behind it.
-//  - W A S D or the left stick walk, Shift (right trigger) runs, the mouse (or the arrows, the right stick) turns the
-//    view, E (pad X) = "interact" (a signal: the crowd's talk hangs on it).
+//  - W A S D or the left stick walk, Shift jogs, a double tap of Shift (held) runs fast; a stick's push picks the tier
+//    (light walk, from 0.60 the jog, from 0.92 the fast run; back under 0.50 / 0.85), the right trigger half / full
+//    jogs / runs fast; the mouse (or the arrows, the right stick) turns the view, E (pad X) = "interact" (a signal: the crowd's talk hangs on it).
 //  - `set_move` drives it instead of the keys (tests).
 #pragma once
 
@@ -67,6 +68,20 @@ private:
 	float yaw_debt = 0.0f, yaw_fr = 0.0f;
 	float pw_settle = 0.0f;   // (the stand after a stop: the idle, while the last of his pace eases out)   // (a walking turn's yaw still to give him, and the rate it is given at)
 	float yaw_r = 0.0f;                  // (his steering's turn rate now, rad/s: it builds up and eases off, no snap)
+	// THE PLAYER'S RUN (Yasin, 21 Nov 23:29-23:35: two run tiers, JOG and FAST RUN, every run take he named in, random,
+	// never the same twice running; tools/people/make_player_runs.gd, library "prun"): the tier asked (0 walk, 1 jog, 2 fast
+	// run: stick magnitude with hysteresis, Shift / double-tap Shift on keys), each tier's loop pick and the one before,
+	// the run start / stop / turn picks, the loop a start or turn hands over to (index into the prun loops).
+	int pr_tier = 0, cmd_tier = -1;
+	int pr_jog = -1, pr_jog_last = -1, pr_fast = -1, pr_fast_last = -1, pr_start_last = -1, pr_stop_last = -1, pr_stop_next = -1;
+	int pr_turn_next = -1, pr_t180_last[2] = { -1, -1 };
+	int step_to_loop = -1;        // (a prun start / turn: the prun loop it hands over to)
+	bool step_turn_clip = false;  // (a start or stop that turns him: its body turns by the clip's yaw, like a walking turn)
+	bool step_end_stand = false;  // (a turn that ends standing: Running_To_Turn)
+	double pr_ph_prev = -1.0;
+	float pr_wait_t = 0.0f, shift_tap_t = 9.0f;
+	bool shift_was = false, fast_latch = false;
+	float fast_speed = 4.6f;
 	int pw_pick(int p_n, int p_last);
 	int pw_count(const StringName *p_names, int p_max) const;
 	// THE PROCEDURAL LAYERS, switchable (Yasin, 23:35, 21 Nov: compare the raw mocap with the corrected one; the walk test's
@@ -84,7 +99,7 @@ private:
 	// angry entirely"): the Quaternius walk and jog with the hands open (tools/people/make_steps.gd: "step/walk",
 	// "step/jog", "step/idle"), each played near its own speed (before: the walk x1.74, the sprint x1.48,
 	// tests/people/gait_film.gd).
-	float walk_speed = 1.4f, run_speed = 2.8f;           // the walk: pwalk/walk_mx at x0.91, walk_ual at x1.52 (Yasin, 21 Nov: "raise the speed"; was 1.05); the jog at x1.17
+	float walk_speed = 1.4f, run_speed = 2.8f;           // run_speed: the JOG tier's shared pace (prun/jog_a..d at x1.27 / x1.15 / x0.76 / x0.87); fast_speed: the FAST tier's (fast_a..d x1.14 / x1.02 / x0.94 / x0.93)           // the walk: pwalk/walk_mx at x0.91, walk_ual at x1.52 (Yasin, 21 Nov: "raise the speed"; was 1.05); the jog at x1.17
 	int gait_i = -1;              // the walking clip of the set playing now (kept a little past the midpoint: no flicker)
 	float move_speed = 0.0f;      // the pace he means (his body turns, then goes the way it faces)
 	Vector3 lean_a;               // his acceleration, smoothed: the body leans into a turn and into a start
@@ -268,6 +283,10 @@ public:
 	double get_walk_speed() const { return walk_speed; }
 	void set_run_speed(double p_s) { run_speed = (float)p_s; }
 	double get_run_speed() const { return run_speed; }
+	void set_fast_speed(double p_s) { fast_speed = (float)p_s; }
+	double get_fast_speed() const { return fast_speed; }
+	void set_move_tier(const Vector2 &p_dir, int p_tier) { cmd = p_dir; cmd_run = p_tier > 0; cmd_tier = p_tier; scripted = true; }
+	int get_tier() const { return pr_tier; }
 };
 
 } // namespace godot
