@@ -71,7 +71,7 @@ private:
 	// angry entirely"): the Quaternius walk and jog with the hands open (tools/people/make_steps.gd: "step/walk",
 	// "step/jog", "step/idle"), each played near its own speed (before: the walk x1.74, the sprint x1.48,
 	// tests/people/gait_film.gd).
-	float walk_speed = 1.05f, run_speed = 2.8f;          // the walk at x1.14, the jog at x1.17
+	float walk_speed = 1.4f, run_speed = 2.8f;           // the walk: pwalk/walk_mx at x0.91, walk_ual at x1.52 (Yasin, 21 Nov: "raise the speed"; was 1.05); the jog at x1.17
 	int gait_i = -1;              // the walking clip of the set playing now (kept a little past the midpoint: no flicker)
 	float move_speed = 0.0f;      // the pace he means (his body turns, then goes the way it faces)
 	Vector3 lean_a;               // his acceleration, smoothed: the body leans into a turn and into a start
