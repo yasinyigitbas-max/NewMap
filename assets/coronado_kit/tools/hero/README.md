@@ -1,7 +1,7 @@
 # Hotel Bel (hero landmark) build sources
 
 Built with the coronado_kit_v2 generator (/workspace/coronado_kit_v2/tools) copied to a working dir with
-`geom_kitroot_ao_cull.patch` applied (KIT_ROOT env override + exact AABB culling in vertex_ao, output identical).
+`kit_tools.patch` applied (geom: KIT_ROOT env override, exact bbox culling in vertex_ao, union_faces and fix_tjunctions, output identical; build: turret `no_head`, box `notj`; validate: landmark category accepts the hero class).
 
 - `city_hero.py`  the hand-designed Hotel Bel (drop into the kit tools dir)
 - `atlas_add.py`  additive city-atlas edit: R_shingle (red shingle tile row), S_shingle swatch, SG_hotelbel sign

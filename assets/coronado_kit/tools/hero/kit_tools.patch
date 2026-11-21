@@ -1,0 +1,126 @@
+--- /workspace/coronado_kit_v2/tools/geom.py	2026-11-16 09:36:36.592805403 +0300
++++ geom.py	2026-11-21 12:48:28.115604375 +0300
+@@ -3,7 +3,7 @@
+ T-junction repair, vertex AO, tangents and glTF (.glb) export.  Pure numpy."""
+ import numpy as np, json, math, struct, os
+ from pathlib import Path
+-KIT=Path('/workspace/coronado_kit_v2')
++KIT=Path(os.environ.get('KIT_ROOT',os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+ LAYOUT=json.load(open(KIT/'textures/atlas_layout.json'))
+ REG=LAYOUT['regions']; FAR=LAYOUT['far']['regions']
+ # which shared near/mid atlas this process builds against: 'house' (bld_*) or 'city' (city_*, phase B); far atlas is shared
+@@ -280,9 +280,17 @@
+             return [face]   # never inside
+     return [face.copy(p) for p in pieces]
+ 
++def _sbox(s):
++    bb=getattr(s,'_bb',None)
++    if bb is None:
++        P=np.array([p for (_,poly) in s.faces for p in poly]) if s.faces else np.zeros((1,3))
++        bb=s._bb=(P.min(0)-1e-3,P.max(0)+1e-3)
++    return bb
+ def union_faces(solids_faces, solids):
+-    """solids_faces: list per solid of Face lists. solids earlier in the list have priority."""
++    """solids_faces: list per solid of Face lists. solids earlier in the list have priority.
++    (speed: a face piece whose bounding box misses a solid's box is left as it is: subtract() would return it whole)"""
+     out=[]
++    SB=[_sbox(s) if s is not None else None for s in solids]
+     for i,fl in enumerate(solids_faces):
+         if getattr(solids[i],'noclip',False): out+=list(fl); continue   # applied pieces that live inside a reveal (arch spandrels)
+         for f in fl:
+@@ -291,8 +299,11 @@
+                 if j==i or s is None: continue
+                 if getattr(s,'nocut',False): continue
+                 mode='high' if i<j else 'low'
+-                nxt=[]
+-                for g in cur: nxt+=subtract(g,s,mode)
++                lo,hi=SB[j]; nxt=[]
++                for g in cur:
++                    P=np.asarray(g.pts)
++                    if (P.min(0)>hi).any() or (P.max(0)<lo).any(): nxt.append(g); continue
++                    nxt+=subtract(g,s,mode)
+                 cur=nxt
+                 if not cur: break
+             out+=cur
+@@ -320,17 +331,22 @@
+         key=np.round(P/tol).astype(np.int64)
+         _,idx=np.unique(key,axis=0,return_index=True); V=P[idx]
+         new=[]; changed=False
++        oX=np.argsort(V[:,0],kind='stable'); VX=V[oX,0]
+         for t in tris:
+             done=False
+             for e in range(3):
+                 a,b=t.p[e],t.p[(e+1)%3]; ab=b-a; L=np.linalg.norm(ab)
+                 if L<1e-6: continue
+-                d=V-a; s=d@ab/(L*L)
++                # (speed) only the vertices within the edge's x range can lie on it; kept in their original order
++                i0=np.searchsorted(VX,min(a[0],b[0])-tol,'left'); i1=np.searchsorted(VX,max(a[0],b[0])+tol,'right')
++                Vs=V[np.sort(oX[i0:i1])]
++                if not len(Vs): continue
++                d=Vs-a; s=d@ab/(L*L)
+                 perp=np.linalg.norm(d-np.outer(s,ab),axis=1)
+-                m=(s>1e-4)&(s<1-1e-4)&(perp<tol*0.5)&(np.abs(V@t.f.n-np.dot(a,t.f.n))<tol)
++                m=(s>1e-4)&(s<1-1e-4)&(perp<tol*0.5)&(np.abs(Vs@t.f.n-np.dot(a,t.f.n))<tol)
+                 if m.any():
+                     k=np.where(m)[0][np.argmin(np.abs(s[m]-0.5))]
+-                    c=t.p[(e+2)%3]; v=V[k]
++                    c=t.p[(e+2)%3]; v=Vs[k]
+                     new.append(Tri([a,v,c],t.f)); new.append(Tri([v,b,c],t.f)); done=True; changed=True; break
+             if not done: new.append(t)
+         tris=new
+@@ -376,16 +392,24 @@
+     r=np.sqrt(u1); ph=2*np.pi*u2
+     loc=np.stack([r*np.cos(ph),r*np.sin(ph),np.sqrt(1-u1)],1)
+     occ=np.zeros(len(points))
++    # exact culling (hb_kit speed-up): a ray shorter than maxd can only hit a triangle whose box lies within maxd of the
++    # chunk's points; the result is identical to testing every triangle
++    TL=np.minimum(np.minimum(V0,V1),V2); TH=np.maximum(np.maximum(V0,V1),V2)
++    order=np.lexsort((points[:,2],points[:,0])) if len(points)>64 else np.arange(len(points))
++    points=points[order]; normals=normals[order]; inv_order=np.argsort(order)
+     for i in range(0,len(points),64):
+         P=points[i:i+64]; Nn=normals[i:i+64]
++        lo=P.min(0)-maxd-0.01; hi=P.max(0)+maxd+0.01
++        sel=np.all((TH>=lo)&(TL<=hi),axis=1)
+         T=np.cross(Nn,[0.31,0.77,0.56]); T/=np.linalg.norm(T,axis=1,keepdims=True)+1e-9; B=np.cross(Nn,T)
+         D=(loc[None,:,0:1]*T[:,None]+loc[None,:,1:2]*B[:,None]+loc[None,:,2:3]*Nn[:,None]).reshape(-1,3)
+         O=np.repeat(P+Nn*0.004,samples,0)
+-        h=ray_tri(O,D,V0,V1,V2,maxd)
++        h=ray_tri(O,D,V0[sel],V1[sel],V2[sel],maxd) if sel.any() else np.zeros(len(O),bool)
+         if ground:
+             g=(D[:,1]<-1e-3)&((-O[:,1]/np.where(D[:,1]<-1e-3,D[:,1],-1))<maxd*1.5)
+             h=h|(g*(rng.random(len(g))<0.55))   # ground occludes partially (bounce light)
+         occ[i:i+64]=h.reshape(-1,samples).mean(1)
++    occ=occ[inv_order]
+     return np.clip(1-occ*strength,0.25,1)
+ 
+ # ------------------------------------------------------------------ mesh assembly + glb
+--- /workspace/coronado_kit_v2/tools/build.py	2026-11-16 10:25:41.983853245 +0300
++++ build.py	2026-11-21 12:58:29.113292097 +0300
+@@ -699,7 +699,7 @@
+                     sc=sc0+op['c']
+                     for (s0,s1,y0,y1,d0,d1,nm) in ((sc-op['w']/2-0.05,sc+op['w']/2+0.05,op['t0']-0.075,op['t0'],-0.01,0.085,'sill'),
+                                                     (sc-op['w']/2-0.08,sc+op['w']/2+0.08,op['t1'],op['t1']+0.14,-0.01,0.05,'head')):
+-                        if nm=='head' and y1>W-0.05: continue
++                        if nm=='head' and (y1>W-0.05 or op.get('no_head')): continue
+                         bp=[(tuple(n),off+d1),(tuple(-n),-(off+d0)),(tuple(sa),s1),(tuple(-sa),-s0),((0,1,0),y1),((0,-1,0),-y0)]
+                         br=[T,None,T,T,T,T]
+                         so=Solid(bp,br,nm); so.nocut=True; so.overlay=True
+@@ -744,6 +744,7 @@
+                 if np.dot(n,dn)>0.99: rl[k]=None
+         so=Solid(pl,rl,kw.get('name','box'))
+         if kw.get('overlay'): so.nocut=True; so.overlay=True
++        if kw.get('notj'): so.notj=True
+         return [(so,rl,meta or {'type':'box'})]
+ 
+     def _prism_y(s,tier,cx,cz,y0,y1,r,sides=8,top=None,side=None,bottom=None,tiers=('near','mid','far'),meta=None,rot=None,**kw):
+--- /workspace/coronado_kit_v2/tools/validate.py	2026-11-16 08:10:28.575897067 +0300
++++ validate.py	2026-11-21 13:01:54.288309330 +0300
+@@ -281,7 +281,7 @@
+         # class sanity vs category
+         cat=list(cats)[0] if cats else ''
+         expect={'garage':{'garage'},'adu':{'adu'},'house':{'house_small','house_large'},'duplex':{'duplex'},
+-                'apartment':{'apartment','apartment_large'},'shop':{'shop','corner_shop'},'civic':{'civic'},'landmark':{'landmark'},
++                'apartment':{'apartment','apartment_large'},'shop':{'shop','corner_shop'},'civic':{'civic'},'landmark':{'landmark','hero'},
+                 'motel':{'apartment_large','apartment'},'warehouse':{'warehouse'},'tower':{'tower'},'urban':{'tower','civic','landmark','apartment','apartment_large','shop','corner_shop','warehouse'}}
+         if cat in expect and bc not in expect[cat]: mres['errors'].append(f'category {cat} with budget class {bc}')
+         for f in sorted(files):

@@ -62,7 +62,7 @@ m2 = mask[::2, ::2]
 assert (col[~mask] == col0[~mask]).all() and (nor[~m2] == nor0[~m2]).all() and (orm[~m2] == orm0[~m2]).all()
 Image.fromarray(col).save(T + '/city_color.png'); Image.fromarray(nor).save(T + '/city_normal.png'); Image.fromarray(orm).save(T + '/city_orm.png')
 uv = lambda p: [p[0] / 2048, p[1] / 2048, p[2] / 2048, p[3] / 2048]
-R['R_shingle'] = {'kind': 'tile', 'px': NEW['R_shingle'], 'uv': uv(NEW['R_shingle']), 'tile_m': 0.5, 'u_period_m': 16.0, 'note': 'Hotel Bel: red painted 3-tab shingles (R_comp recoloured)'}
+R['R_shingle'] = {'kind': 'tile', 'px': NEW['R_shingle'], 'uv': uv(NEW['R_shingle']), 'tile_m': 1.0, 'u_period_m': 16.0, 'note': 'Hotel Bel: red painted 3-tab shingles (R_comp recoloured)'}
 p = NEW['S_shingle']; R['S_shingle'] = {'kind': 'swatch', 'of': 'R_shingle', 'px': p, 'uv_center': [(p[0] + p[2]) / 4096, (p[1] + p[3]) / 4096]}
 R['SG_hotelbel'] = {'kind': 'sign', 'px': NEW['SG_hotelbel'], 'uv': uv(NEW['SG_hotelbel']), 'size_m': [2.88, 0.6], 'tile_x': False, 'glow': False}
 L['signs']['SG_hotelbel'] = 'HOTEL BEL'
