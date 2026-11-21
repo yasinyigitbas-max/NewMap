@@ -31,3 +31,17 @@ Fill: 99 pieces, ~1.46 M ground triangles, ~11,200 props (trees, agave, iceplant
 - North strip: the zoning terrain there is ~5 m under sea level, so the fill there reads as sea with a thin beach.
 - The ground array gains 2 layers (gray_rocks, rock030): on the PC run make_arrays.py, reimport, bake, and rebuild the
   native module (city_sea.cpp skirt) for Windows / Android.
+
+## Review fixes (Yasin's review of the pairs, 21 Nov, commit 9ea16ad6)
+- Props on the tennis courts: the courts are not "ground" meshes, so the first audit counted them as empty.
+  foot_dump.gd + footprints.py now dump every other mesh and prop/tree box map-wide. Courts and paving count as
+  covered (the fill tucks under their edge, never over it). Every fill prop stays clear (trees 3 m, others radius + 1 m).
+  Two small pockets that are building footprints are not filled any more (4 pieces dropped: fl_0_0, fl_1_m4, fl_m1_0,
+  fl_m2_m4; 95 fill pieces now).
+- Dark blotches near the beach: the kit's iceplant mat. Removed everywhere.
+- Trees: no fill trees within 64 m of a street.
+- check_fill.py: 0 props on or near an existing piece; 0 fill vertices above a neighbour's surface; tree cap: 0 street
+  points pushed over 12 by the fill (the existing city already has 5,925 such points, max 37).
+- Validator (whole city): 607 problems; the fill rows in the shown tail are riprap-against-riprap overlaps.
+- Superchecker on fl_m9_m6: 245 tree_out (the tree plan: builder trees go; trees come from hand-written lists only),
+  plus 1 ground_buried, 1 ground_step, 1 empty_area, 10 wide_batch. Not fixed: that needs Yasin's word on the trees.
