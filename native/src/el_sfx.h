@@ -18,7 +18,7 @@ Ref<AudioStream> pick(const String &p_base, int p_first = 0, int p_width = 1, bo
 // a one-shot at p_owner (a 3D node: there, local offset p_at; any other node: flat, as UI). Returns the player or null.
 Node *play(Node *p_owner, const String &p_base, float p_db = 0.0f, float p_pitch_var = 0.04f, const Vector3 &p_at = Vector3(), float p_range = 40.0f, int p_first = 0, int p_width = 1);
 // a looped sound kept on a named child player of p_owner (made on first use); p_db < -60 stops it
-AudioStreamPlayer3D *loop(Node3D *p_owner, const String &p_name, const String &p_base, float p_db, float p_pitch = 1.0f, float p_range = 50.0f);
+AudioStreamPlayer3D *loop(Node3D *p_owner, const String &p_name, const String &p_base, float p_db, float p_pitch = 1.0f, float p_range = 50.0f, int p_take = -1);
 // the number of sounds played (the tests)
 int played();
 // let every kept stream go (the module's shutdown, before the engine checks for resources still in use)

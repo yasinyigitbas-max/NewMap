@@ -81,12 +81,16 @@ Node *play(Node *p_owner, const String &p_base, float p_db, float p_pitch_var, c
 	return a;
 }
 
-AudioStreamPlayer3D *loop(Node3D *p_owner, const String &p_name, const String &p_base, float p_db, float p_pitch, float p_range) {
+AudioStreamPlayer3D *loop(Node3D *p_owner, const String &p_name, const String &p_base, float p_db, float p_pitch, float p_range, int p_take) {
 	if (!p_owner || !p_owner->is_inside_tree()) return nullptr;
 	AudioStreamPlayer3D *a = Object::cast_to<AudioStreamPlayer3D>(p_owner->get_node_or_null(NodePath(p_name)));
 	if (p_db < -60.0f) { if (a && a->is_playing()) a->stop(); return a; }
 	if (!a) {
-		Ref<AudioStream> st = pick(p_base, 0, 1, true);
+		Ref<AudioStream> st;
+		if (p_take >= 0) {
+			Set &s = get(p_base, 0, 1, true);
+			if (p_take < (int)s.v.size()) st = s.v[p_take];
+		} else st = pick(p_base, 0, 1, true);
 		if (st.is_null()) return nullptr;
 		a = memnew(AudioStreamPlayer3D);
 		a->set_name(p_name); a->set_bus(bus()); a->set_stream(st);

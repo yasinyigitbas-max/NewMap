@@ -123,7 +123,7 @@ Every file and its trigger, levels and source take is in el_manifest.json next t
 
 ## Engine layers per price class: start, idle, rev, stall (P1)
 
-Idle, low/high-rpm cruise loops and throttle-blip one-shots added 21 Nov 2026 (two takes each; EV is an electric motor whine). Not hooked up yet (`engine_sound.cpp` still synthesises the running engine).
+Idle, low/high-rpm cruise loops and throttle-blip one-shots added 21 Nov 2026 (two takes each; EV is an electric motor whine). Hooked up in `engine_sound.cpp`: equal-power idle/low/high layers and `engine_rev_up` on a sharp throttle-on; the old generator is the fallback if a class is missing.
 
 | file | status | trigger | dur s | loop |
 |---|---|---|---|---|

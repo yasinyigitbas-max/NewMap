@@ -15,7 +15,7 @@ On the merge git reports add/add conflicts on those .ogg files: take this branch
 ## Needs code (new files)
 - Footsteps (FootSteps): run speed (> ~3 m/s) -> `audio/steps/footstep_run_<surface>_000..004`; landing from a jump / fall -> `footstep_land_<surface>_000..003`.
 - Doors (CityRooms, B34 door swing): `audio/sfx/door/door_<wood|glass|metal>_<open|close>_0..3`, shop doors `door_shop_bell_0..3`, locked doors `door_locked_rattle_0..3`.
-- Car (CityCar), engine idle / rev stay synthesised in `engine_sound.cpp` (AudioStreamGenerator, samples cannot go there):
+- Car (CityCar), running engine in `engine_sound.cpp` (recorded loops, the old generator is the fallback if the files are missing):
   - ignition `audio/sfx/car/engine_start_<compact|v6|v8|diesel|ev>_0..3` by price class; switch-off / stall `engine_stall_0..3`
   - `car_door_open/close_0..3` on enter / exit; `car_lock_chirp_0..3` + `car_lock_mech_0..3`; `seatbelt_buckle/unbuckle_0..3`
   - horn key: `horn_<compact|sedan|sport|van|bus>_0..3` by class
@@ -29,7 +29,7 @@ On the merge git reports add/add conflicts on those .ogg files: take this branch
 
 ## Not in this commit
 - Voices (NPC lines, barks, reactions, and the effort grunts jump / climb / hit / tired / death): on hold for Yasin's line-by-line review.
-- Engine idle / rev: synthesised in code.
+- Engine idle / rev: recorded loops `engine_{idle,rev_low,rev_high,rev_up}_<compact|v6|v8|diesel|ev>_0..1`. Equal-power crossfade and pitch 0.85..1.25 by revs; `engine_rev_up` on a sharp throttle-on. The player's car (no distance fall-off, B30) plus the nearest few traffic cars get the full layers (at most 10 loop voices). The old generator is the fallback if a class's files are missing (the player's car only).
 
 ## Hooked up (20 Nov, all C++ in native/src; Yasin: "make it c plus plus")
 Shared: `el_sfx.h/.cpp` loads a numbered set once (imported, or the raw .ogg when not imported), picks a take at random and never the one played last, and plays one-shots on a self-freeing 3D (or flat UI) player; loops sit on a named child player.

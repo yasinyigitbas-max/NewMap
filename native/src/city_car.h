@@ -137,6 +137,7 @@ public:
 
 	void set_model(int p_model) { model = p_model; }
 	int get_model() const { return model; }
+	static String engine_class_for(int p_model);   // same mapping as sound_class(false): compact | v6 | v8 | diesel | ev
 	void set_feel(int p_feel) { feel = p_feel; }
 	int get_feel() const { return feel; }
 	void set_paint(const Color &p_c) { paint = p_c; }
