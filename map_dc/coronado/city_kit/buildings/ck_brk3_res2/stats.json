@@ -22,5 +22,5 @@
   "mid": 848,
   "near": 3328
  },
- "lod_match": "mid/far: ck_brk3_row2 baked shell + res front baked from the near into bld_lod_color.png rows 2015-2040 (OUT tools res2_lod.py)"
+ "lod_match": "mid/far: ck_brk3_row2 baked shell + this front baked from the near (front_bake.gd, albedo x vertex colour) into the empty bottom rows 2015-2040 of bld_lod_color.png (res_kit/res2_lod.py)"
 }

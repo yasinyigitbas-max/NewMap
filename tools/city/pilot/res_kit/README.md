@@ -16,3 +16,12 @@ Build (scratch kit = copy of the coronado kit tools; the generator is pure Pytho
    unchanged, asserted) -> `apply_res2_lod.gd`. Mid 848, far 34. Budget (SPEC apartment block): 3500 / 1000 / 80.
 
 The new piece glbs have no .import on the box (Godot --import aborts on _staging .blend files): reimport on the PC.
+
+## Variants (21 Nov 17:47)
+- ck_brk3_res2b: pieces urb_brk_front_6m_3sty_res_b / _walkup_b (run_res_b.py): warm sand stucco render on the ground
+  floor up to the belt, stone foot band, dark painted cornice, stone lintels upstairs. Doors -1.1 / +3.0. near 3456 / mid 898 / far 34.
+- ck_brk3_res_corner2: mirror of res2 (walkup_t at -3, res at +3) for the ck_brk3_corner2 slots: doors -3.0 / +4.9 like
+  corner2. No corner piers (2 x 270 tris would make it 3836 > 3500). near 3328 / mid 848 / far 34.
+- LOD charts in bld_lod_color.png rows 2015-2040: res2 cols 0-94, res2b 95-189, res_corner2 190-284 (rebuild: restore the
+  pre-pilot page, then `res2_lod.py ck_brk3_res2 3 332`, `... ck_brk3_res2b 98 382`, `... ck_brk3_res_corner2 193 332`,
+  copying bake/bld_lod_color_new.png over the page after each, then apply_res2_lod.gd <kit>).

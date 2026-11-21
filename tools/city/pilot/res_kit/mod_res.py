@@ -48,3 +48,42 @@ def brk_front_res_t(storeys=3):
 def brk_front_walkup_t(storeys=3):
     b=brk_front_walkup(storeys); b.name=f'urb_brk_front_6m_{storeys}sty_walkup_t'; H=UFL+storeys*UST
     add_trims(b,6.0,_ops(b),H); return b
+
+# ---- variant B (Yasin 21 Nov 17:47: "a second colour/trim variant"): same bays, a cream rendered (stucco) ground floor
+# up to the belt course, a dark painted cornice, stone lintels upstairs only. Same openings, so the doors do not move.
+SB={'t':'plane','mat':'W_stucco','tint':(0.86,0.75,0.58)}   # pass 1: warm sand (cream read as near-white)
+DK={'t':'trim','mat':'T_dark','tint':(0.78,0.78,0.78)}
+def add_trims_b(b, w, ops, H):
+    top=UFL+UST-0.16
+    g=sorted([o for o in ops if o['t0']<top],key=lambda o:o['c'])
+    x=-w/2; segs=[]
+    for o in g:
+        a=o['c']-o['w']/2; e=o['c']+o['w']/2
+        if a>x+1e-3: segs.append((x,a,0.0,top))
+        if o['t0']>0.01: segs.append((a,e,0.0,o['t0']))
+        if o['t1']<top-0.01: segs.append((a,e,o['t1'],top))
+        x=e
+    if x<w/2-1e-3: segs.append((x,w/2,0.0,top))
+    for (x0,x1,y0,y1) in segs:
+        # 35 mm render: only its face is drawn (its edges at the reveals are hidden by the frames, sills and the belt;
+        # budget: the tiled 0.5 m stucco rows already cost ~14 tris per panel)
+        dr_=[(0,0,-1),(0,-1,0),(0,1,0),(-1,0,0),(1,0,0)]
+        b.add('box',x0=x0,x1=x1,y0=y0,y1=y1,z0=0.0,z1=0.035,top=SB,side=SB,bottom=SB,tiers=('near','mid'),
+              meta={'type':'trim'},name='render',overlay=True,drop=tuple(dr_))
+    # a smooth stone band at the foot of the render
+    b.add('box',x0=-w/2,x1=w/2,y0=0.0,y1=0.30,z0=0.0,z1=0.055,top=LT,side=LT,bottom=LT,
+          tiers=('near','mid'),meta={'type':'trim'},name='plinth',overlay=True,drop=((0,0,-1),(0,-1,0)))
+    for o in ops:
+        if not str(o['k']).startswith('dh') or o['t0']<top: continue
+        hw=o['w']/2+0.10
+        b.add('box',x0=o['c']-hw,x1=o['c']+hw,y0=o['t1']+0.03,y1=o['t1']+0.21,z0=0.0,z1=0.06,top=LT,side=LT,bottom=LT,
+              tiers=('near',),meta={'type':'trim'},name='lintel',overlay=True,drop=((0,0,-1),))
+    b.add('box',x0=-w/2,x1=w/2,y0=H-0.12,y1=H+0.16,z0=0.0,z1=0.20,top=DK,side=DK,bottom=DK,
+          tiers=('near','mid'),meta={'type':'trim'},name='cornice',overlay=True,drop=((0,0,-1),))
+    b.add('box',x0=-w/2,x1=w/2,y0=H+0.16,y1=H+0.24,z0=0.0,z1=0.28,top=DK,side=DK,bottom=DK,
+          tiers=('near','mid'),meta={'type':'trim'},name='cornice_drip',overlay=True,drop=((0,0,-1),))
+
+def brk_front_res_b(storeys=3):
+    b=brk_front_res(storeys); b.name=f'urb_brk_front_6m_{storeys}sty_res_b'; H=UFL+storeys*UST; add_trims_b(b,6.0,_ops(b),H); return b
+def brk_front_walkup_b(storeys=3):
+    b=brk_front_walkup(storeys); b.name=f'urb_brk_front_6m_{storeys}sty_walkup_b'; H=UFL+storeys*UST; add_trims_b(b,6.0,_ops(b),H); return b

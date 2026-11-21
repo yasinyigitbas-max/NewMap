@@ -4,8 +4,12 @@ geometry as ck_brk3_row2, so the mid reuses row2's baked triangles + UVs as they
 baked from the res2 near (front_bake.gd: orthographic, unshaded) and written into the page's EMPTY bottom strip
 (rows 2015-2047 were fill grey; every other pixel unchanged). Two charts (front below / above y=6) so each fits.
 Writes OUT/shops_apply/res/bake/{mid,far}.bin/.json for apply_res2_lod.gd."""
-import json, numpy as np
+import json, sys, os, numpy as np
 from PIL import Image
+# usage: res2_lod.py [KIT] [X0] [FRONT_TRIS]   (defaults: the pilot ck_brk3_res2 at strip column 3, 332 front tris)
+KIT = sys.argv[1] if len(sys.argv) > 1 else 'ck_brk3_res2'
+X0 = int(sys.argv[2]) if len(sys.argv) > 2 else 3
+NFRONT = int(sys.argv[3]) if len(sys.argv) > 3 else 332
 R = '/workspace/NewMap/'; D = R + 'OUT/shops_apply/res/dump/'; B = R + 'OUT/shops_apply/res/bake/'
 PAGE = R + 'assets/coronado_kit/textures/bld_lod_color.png'; PW = 2048; PAD = 3
 DENS = 3.33319091796875; YS = 6.0; YT = 10.44; FILL = (128, 128, 128, 255)
@@ -14,10 +18,10 @@ def L(n):
     f = np.frombuffer(raw[:nv * 48], np.float32).reshape(nv, 12).copy(); I = np.frombuffer(raw[nv * 48:nv * 48 + s['ni'] * 4], np.int32).reshape(-1, 3).copy()
     return f, I
 # ---- texels: bake (16 px/m, x -6..6, y 0..10.44) -> two charts at the page density
-bake = Image.open(B + 'ck_brk3_res2.png').convert('RGB'); bw, bh = bake.size; ppm = bw / 12.0
+bake = Image.open(B + KIT + '.png').convert('RGB'); bw, bh = bake.size; ppm = bw / 12.0
 arr = np.asarray(bake).astype(np.float32) / 255
 glass = (arr.mean(-1) < 0.16).astype(np.float32)
-GAIN = 0.978
+GAIN = np.array([1.040, 1.057, 1.071])   # front_bake.gd (albedo x vertex colour) -> page: fitted on the brick of ck_brk3_row2 upper floors vs its own baked chart
 def chart(y0, y1):
     r0 = int(round((YT - y1) * ppm)); r1 = int(round((YT - y0) * ppm))
     w = int(round(12 * DENS)); h = int(round((y1 - y0) * DENS))
@@ -27,17 +31,19 @@ def chart(y0, y1):
     return np.dstack([rgb, a])
 cA = chart(0, YS); cB = chart(YS, YT)
 page = np.array(Image.open(PAGE)); before = page.copy()
-strip = page[2015:]; assert (strip == FILL).all(), 'bottom strip is not empty any more'
 ROW = 2015 + PAD
+need = cA.shape[1] + cB.shape[1] + 4 * PAD + PAD
+assert (page[2015:2015 + max(cA.shape[0], cB.shape[0]) + 2 * PAD, X0 - PAD:X0 - PAD + need] == FILL).all(), 'target rows are not empty'
 slots = {}
-x = PAD
+x = X0
 for nm, c in (('A', cA), ('B', cB)):
     h, w = c.shape[:2]; px = (np.clip(c, 0, 1) * 255 + 0.5).astype(np.uint8)
     padded = np.pad(px, ((PAD, PAD), (PAD, PAD), (0, 0)), mode='edge')
     page[ROW - PAD:ROW + h + PAD, x - PAD:x + w + PAD] = padded
     slots[nm] = (x, ROW, w, h); x += w + 2 * PAD + PAD
 changed = np.any(page != before, -1); ys, xs = np.nonzero(changed)
-assert ys.min() >= 2015, 'touched a pixel outside the empty strip'
+assert ys.min() >= 2015 and xs.min() >= X0 - PAD, 'touched a pixel outside the empty strip'
+OUTD = B + KIT + '/'; os.makedirs(OUTD, exist_ok=True)
 Image.fromarray(page, 'RGBA').save(B + 'bld_lod_color_new.png')
 print('charts', slots, 'pixels changed', int(changed.sum()), 'rows', ys.min(), ys.max(), 'cols', xs.min(), xs.max())
 def uv(xx, yy):
@@ -65,8 +71,9 @@ def split_y(f, I, ys):
         out += [[a, ab, ac], [ab, b, c], [ab, c, ac]]
     return np.array(V, np.float32), np.array(out, np.int32)
 # ---- mid: row2's baked shell (tris 250..) + res2's own front relief (its first 332 tris) on the new charts
-fr, Ir = L('ck_brk3_row2_mid'); fs, Is = L('ck_brk3_res2_mid')
-shell_I = Ir[250:]; front_I = Is[:332]
+fr, Ir = L('ck_brk3_row2_mid'); fs, Is = L(KIT + '_mid')
+shell_I = Ir[250:]; front_I = Is[:NFRONT]
+assert len(Is) - NFRONT == len(Ir) - 250, 'shell is not the ck_brk3_row2 shell'
 fF, iF = split_y(fs, front_I, YS)
 used = np.unique(iF); remap = -np.ones(len(fF), int); remap[used] = np.arange(len(used)); fF = fF[used]; iF = remap[iF]
 # a vertex on y=6 shared by tris above and below needs one copy per chart
@@ -98,5 +105,5 @@ for t in If:
     newI.append([len(newf), len(newf) + 1, len(newf) + 2]); newf += list(vs)
 far_f = np.array(newf, np.float32); far_I = np.array(newI, np.int32)
 for nm, f, I in (('mid', mid_f, mid_I), ('far', far_f, far_I)):
-    open(B + nm + '.bin', 'wb').write(f.tobytes() + I.astype(np.int32).tobytes())
-    json.dump({'nv': len(f), 'ni': int(I.size)}, open(B + nm + '.json', 'w')); print(nm, 'tris', len(I))
+    open(OUTD + nm + '.bin', 'wb').write(f.tobytes() + I.astype(np.int32).tobytes())
+    json.dump({'nv': len(f), 'ni': int(I.size)}, open(OUTD + nm + '.json', 'w')); print(nm, 'tris', len(I))

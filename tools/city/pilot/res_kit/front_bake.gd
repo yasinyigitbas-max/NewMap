@@ -16,7 +16,11 @@ func _run() -> void:
 	root.add_child(vp)
 	var env := Environment.new(); env.background_mode = Environment.BG_COLOR; env.background_color = Color(0.5, 0.5, 0.5); env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
 	var we := WorldEnvironment.new(); we.environment = env; vp.add_child(we)
-	var ps: PackedScene = load("res://map_dc/coronado/city_kit/buildings/%s/%s_near.scn" % [kit, kit]); vp.add_child(ps.instantiate())
+	var ps: PackedScene = load("res://map_dc/coronado/city_kit/buildings/%s/%s_near.scn" % [kit, kit]); var inst := ps.instantiate(); vp.add_child(inst)
+	# albedo x vertex colour (the kit's building shader multiplies the vertex colour in: tints such as a stucco render)
+	var sm := ShaderMaterial.new(); sm.shader = load("res://tools/city/pilot/res_kit/front_bake_vc.gdshader")
+	var mi := inst as MeshInstance3D if inst is MeshInstance3D else inst.get_child(0) as MeshInstance3D
+	sm.set_shader_parameter(&"albedo_tex", (mi.mesh.surface_get_material(0) as BaseMaterial3D).albedo_texture); mi.material_override = sm
 	var cam := Camera3D.new(); cam.projection = Camera3D.PROJECTION_ORTHOGONAL; cam.size = y1 - y0; cam.keep_aspect = Camera3D.KEEP_HEIGHT
 	cam.near = 0.05; cam.far = 60.0; cam.position = Vector3((x0 + x1) * 0.5, (y0 + y1) * 0.5, 30.0); vp.add_child(cam); cam.current = true
 	for i in 10: await process_frame

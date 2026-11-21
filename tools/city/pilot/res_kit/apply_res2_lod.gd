@@ -2,7 +2,9 @@ extends SceneTree
 ## Write the res2 LOD-match mid / far (res2_lod.py arrays) into map_dc/.../ck_brk3_res2/ck_brk3_res2_{mid,far}.scn with
 ## ck_brk3_row2's own mid / far material (same page, same material: batches with its neighbours).
 func _init() -> void:
-	var B := "res://OUT/shops_apply/res/bake/"; var K := "res://map_dc/coronado/city_kit/buildings/"
+	var kit := "ck_brk3_res2"
+	for a in OS.get_cmdline_user_args(): kit = a
+	var B := "res://OUT/shops_apply/res/bake/%s/" % kit; var K := "res://map_dc/coronado/city_kit/buildings/"
 	for tier in ["mid", "far"]:
 		var meta: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(B + tier + ".json"))
 		var raw := FileAccess.get_file_as_bytes(B + tier + ".bin"); var nv := int(meta.nv); var ni := int(meta.ni)
@@ -17,10 +19,10 @@ func _init() -> void:
 		var am := ArrayMesh.new(); am.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
 		var rmi := _first((load(K + "ck_brk3_row2/ck_brk3_row2_%s.scn" % tier) as PackedScene).instantiate())
 		am.surface_set_material(0, rmi.mesh.surface_get_material(0))
-		var src := K + "ck_brk3_res2/ck_brk3_res2_%s.scn" % tier
+		var src := K + "%s/%s_%s.scn" % [kit, kit, tier]
 		var root := (load(src) as PackedScene).instantiate(); var mi := _first(root); mi.mesh = am
 		var out := PackedScene.new(); out.pack(root); ResourceSaver.save(out, src); root.free()
-		print("res2 ", tier, " tris ", ni / 3, " mat ", am.surface_get_material(0).resource_path, " ", (am.surface_get_material(0) as BaseMaterial3D).albedo_texture.resource_path if am.surface_get_material(0) is BaseMaterial3D else "")
+		print(kit, " ", tier, " tris ", ni / 3, " mat ", am.surface_get_material(0).resource_path, " ", (am.surface_get_material(0) as BaseMaterial3D).albedo_texture.resource_path if am.surface_get_material(0) is BaseMaterial3D else "")
 	quit()
 func _first(n: Node) -> MeshInstance3D:
 	if n is MeshInstance3D: return n

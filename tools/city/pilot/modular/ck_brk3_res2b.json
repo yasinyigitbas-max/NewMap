@@ -1,0 +1,93 @@
+{
+ "name": "ck_brk3_res2b",
+ "group": "urban",
+ "outline": {
+  "kind": "block",
+  "W": 12.0,
+  "D": 14.0,
+  "storeys": 3,
+  "wall": "W_brick",
+  "tint": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "budget": "apartment",
+  "floor": 0.3,
+  "storey": 3.0,
+  "parapet": 1.0,
+  "sills": true,
+  "foundation": false,
+  "far_facade": "F_c_brick_3",
+  "far_tile": 3.0
+ },
+ "pieces": [
+  {
+   "piece": "urb_brk_front_6m_3sty_res_b",
+   "x": -3.0,
+   "z": 6.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_brk_front_6m_3sty_walkup_b",
+   "x": 3.0,
+   "z": 6.775,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_brk_back_6m_3sty",
+   "x": 3.0,
+   "z": -6.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_brk_back_6m_3sty",
+   "x": -3.0,
+   "z": -6.85,
+   "rot_y": 180
+  },
+  {
+   "piece": "urb_brk_side_14m_3sty",
+   "x": 5.85,
+   "z": 0.0,
+   "rot_y": 90
+  },
+  {
+   "piece": "urb_brk_side_14m_3sty",
+   "x": -5.85,
+   "z": 0.0,
+   "rot_y": 270
+  },
+  {
+   "piece": "urb_brk_roof_6x14_3sty",
+   "x": -3.0,
+   "z": 0.0,
+   "rot_y": 0
+  },
+  {
+   "piece": "urb_brk_roof_6x14_3sty",
+   "x": 3.0,
+   "z": 0.0,
+   "rot_y": 0
+  }
+ ],
+ "budget_class": "apartment",
+ "budget": [
+  3500,
+  1000,
+  80
+ ],
+ "col_boxes": 1,
+ "far_from": "snapped outline hull",
+ "merged": {
+  "near_mid": "pieces merged, 1 mesh/1 primitive/1 material",
+  "far_col": "outline hull + <=12 boxes"
+ },
+ "far_tiles": {
+  "example": "@map:brk3_row2",
+  "nx": 1,
+  "nz": 1,
+  "size": 0.0
+ },
+ "note": "Yasin 21 Nov 17:28: residential brick row, the ck_brk3_row2 shell with a residential bay (urb_brk_front_6m_3sty_res: door + stoop at x=-1.1 where the shop door was, sash window) instead of the shopfront bay. Pilot; placed nowhere yet."
+}
