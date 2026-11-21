@@ -513,11 +513,22 @@ void CityPlayer::_physics_process(double p_delta) {
 			// degrees, scaled to the angle; the 180 beyond), then sets off. Smaller: he steps round as before.
 			if (step_mode == 0 && move_speed < 0.05f && speed < 0.08f && std::fabs(d) > 0.87f && !airborne && settle_t >= 1.1f && !(run && pr && std::fabs(d) < 2.6f)) {   // (off into a run 50-150 degrees round: the turning run start does it)
 				const bool half = std::fabs(d) > 2.36f;
-				const StringName c(half ? (d > 0.0f ? "step/turn180_l" : "step/turn180_r") : (d > 0.0f ? "step/turn_l" : "step/turn_r"));
+				// (Yasin, 21 Nov 23:45: the Mixamo turn 90s, fitted to the base idle's stance, pwalk/sturn_l / _r; the old UAL
+				// step turns only for a figure without them. Past 135 degrees: one turn of up to x1.25 now and another after.)
+				static const StringName ST_L("pwalk/sturn_l"), ST_R("pwalk/sturn_r");
+				const StringName mx_c = d > 0.0f ? ST_L : ST_R;
+				const bool mx = fig->clip_len(mx_c) > 0.0;
+				const StringName c = mx ? mx_c : StringName(half ? (d > 0.0f ? "step/turn180_l" : "step/turn180_r") : (d > 0.0f ? "step/turn_l" : "step/turn_r"));
 				if (fig->clip_len(c) > 0.0) {
 					step_mode = 3; step_pw = false; step_clip = c; step_t = 0.0f; turn_yaw0 = yaw;
-					turn_k = half ? std::fabs(d) / 3.14159265f : std::min(std::max(std::fabs(d) / 1.5707963f, 0.5f), 1.5f);
-					step_cs = 1.2f;
+					if (mx) {
+						const float ye = std::max(std::fabs((float)fig->clip_curve(c, "yaw", fig->clip_len(c), 1.5707963)), 0.5f);
+						turn_k = std::min(std::max(std::fabs(d) / ye, 0.7f), 1.25f);
+						step_cs = 1.0f;
+					} else {
+						turn_k = half ? std::fabs(d) / 3.14159265f : std::min(std::max(std::fabs(d) / 1.5707963f, 0.5f), 1.5f);
+						step_cs = 1.2f;
+					}
 					turns++;
 				}
 			}
@@ -768,7 +779,10 @@ void CityPlayer::_physics_process(double p_delta) {
 			// start, stop or turn up to 9 m/s2: a run stops from 4.6 m/s inside a second, its feet would skate behind)
 			const bool pr_step = step_pw && (step_mode != 0 || pw_mode_before != 0) && String(step_clip).begins_with("prun/");
 			const float lim = pr_step ? 9.0f : 3.5f;
-			move_speed = pw_speed_before + std::min(std::max(move_speed - pw_speed_before, -lim * dt), lim * dt);
+			// (in a walk's stop the clip's own braking is followed up to 7 m/s2: held to 3.5 the body ran on over the planted
+			// foot, 6-14 cm in the mirrored stops; 21 Nov 23:45)
+			const float brake = (!pr_step && step_pw && step_mode == 2) ? 7.0f : lim;
+			move_speed = pw_speed_before + std::min(std::max(move_speed - pw_speed_before, -brake * dt), lim * dt);
 			step_lat = pw_lat_before + std::min(std::max(step_lat - pw_lat_before, -lim * dt), lim * dt);
 		}
 		nh = Vector3(std::sin(yaw), 0, std::cos(yaw)) * move_speed + Vector3(std::cos(yaw), 0, -std::sin(yaw)) * step_lat;

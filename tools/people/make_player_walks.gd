@@ -263,6 +263,10 @@ func _fit_stance(a: Animation, idle: Animation, at_start: bool) -> String:
 			var off: Vector3 = gi[fb_i].origin - g0[fb_i].origin
 			var qo: Quaternion = gi[fb_i].basis.get_rotation_quaternion() * g0[fb_i].basis.get_rotation_quaternion().inverse()
 			var target: Vector3 = gm[fb_i].origin + off * i_f
+			# (a foot moved more than 2 cm to its idle place is lifted as it goes, up to 3 cm: a small step, not a drag along
+			# the floor; 21 Nov 23:45)
+			var off_m := (skel_x.basis * Vector3(off.x, 0, off.z)).length()
+			if off_m > 0.02 and ww > 0.0 and ww < 1.0: target += skel_x.basis.inverse() * Vector3(0, minf(0.03, off_m * 0.4) * sin(PI * ww), 0)
 			var fq: Quaternion = Quaternion().slerp(qo, i_f) * gm[fb_i].basis.get_rotation_quaternion()
 			_ik(loc, g, sd, target, fq)
 		_set_key(a, "Bip01_Pelvis", k, loc[pel], true)
@@ -271,6 +275,48 @@ func _fit_stance(a: Animation, idle: Animation, at_start: bool) -> String:
 				var bn := "Bip01_%s_%s" % [sd, part]
 				_set_key(a, bn, k, loc[sk.find_bone(bn)], false)
 	return info
+
+## A STOP'S PLANTED FOOT STAYS PUT (21 Nov 23:45): the base idle's stance is placed on the foot the stop ends standing on,
+## not that foot pulled to where the idle has it (that slid it 10-17 cm over the floor). The clip's root goes over to the
+## idle's place while the other foot makes its last step, and the body's travel (vz / vx) takes the same move back, so in
+## the world the planted foot does not move; at the end the pose is the idle's.
+func _shift_to_stance(a: Animation, idle: Animation) -> String:
+	var frames := int(ceil(a.length * FPS)) + 1
+	var feet := [sk.find_bone("Bip01_L_Foot"), sk.find_bone("Bip01_R_Foot")]
+	var ys := [PackedFloat32Array(), PackedFloat32Array()]
+	var g_end := _globals(_locals(a, a.length)); var gi := _globals(_locals(idle, 0.0))
+	for k in frames:
+		var g := _globals(_locals(a, minf(k / FPS, a.length)))
+		for s in 2: ys[s].append(g[feet[s]].origin.y)
+	var last := [-1, -1]; var first := [-1, -1]
+	for s in 2:
+		var y: PackedFloat32Array = ys[s]
+		var lo := INF
+		for v in y: lo = minf(lo, v)
+		for k in range(frames - 1, -1, -1):
+			if y[k] > lo + 1.5: last[s] = k + 1; break
+		if last[s] >= 0:
+			first[s] = 0
+			for k in range(last[s] - 1, -1, -1):
+				if y[k] < lo + 1.0: first[s] = k; break
+	var sw := 0 if last[0] > last[1] else 1
+	if last[sw] < 0: return "no last step"
+	var pl := 1 - sw
+	var off_f := skel_x.basis * (gi[feet[pl]].origin - g_end[feet[pl]].origin); off_f.y = 0.0
+	var off_s := skel_x.basis.inverse() * off_f
+	var w0 := float(first[sw]); var w1 := float(maxi(last[sw], first[sw] + 6))
+	var ri := a.find_track(_bone_path(0), Animation.TYPE_POSITION_3D)
+	for k in a.track_get_key_count(ri):
+		var t := a.track_get_key_time(ri, k)
+		a.track_set_key_value(ri, k, (a.track_get_key_value(ri, k) as Vector3) + off_s * smoothstep(w0, w1, t * FPS))
+	for key_ax in [["vz", off_f.z], ["vx", off_f.x]]:
+		if not a.has_meta(key_ax[0]): continue
+		var c: PackedFloat32Array = (a.get_meta(key_ax[0]) as PackedFloat32Array).duplicate()
+		for i in c.size():
+			var ds := smoothstep(w0, w1, float(i) + 0.5) - smoothstep(w0, w1, float(i) - 0.5)
+			c[i] -= float(key_ax[1]) * ds * FPS
+		a.set_meta(key_ax[0], c)
+	return "planted %s, idle placed %.1f cm over %.2f-%.2fs" % ["LR"[pl], off_f.length() * 100.0, w0 / FPS, w1 / FPS]
 
 ## THE BODY'S MOVE, SMOOTH (Yasin, 21 Nov: "why are those jerks in between? they didnt exist in the original files"):
 ## the converter's vz / vx come from the hips' own travel, as smooth as the mocap. (Taken from the planted foot instead,
@@ -465,6 +511,11 @@ func _initialize() -> void:
 				if kind == "start": n_start += 2
 				else: n_stop += 2
 				print("PLAYER_WALK %s %s -> %s (leads %s) + %s mirrored (nearest take %.0f cm)" % [gender, src, n1, lead, n2, near])
+		# STANDING TURNS (Yasin, 21 Nov 23:45: the on-the-spot turns were still the UAL ones, fitted to the old step/idle
+		# stance): the Male Locomotion pack's left / right turn 90, both figures, both ends fitted to base_idle's stance
+		for st in [["sturn_l", "ML_Left_Turn_90"], ["sturn_r", "ML_Right_Turn_90"]]:
+			if pk == null or not pk.has_animation(st[1]): print("PLAYER_WALK %s %s MISSING" % [gender, st[1]]); continue
+			clips[st[0]] = _copy(pk.get_animation(st[1])); src_of[st[0]] = st[1]; order.append(st[0])
 		print("PLAYER_WALK %s pools: %d starts, %d loops (walk_mx, walk_ual + %d), %d stops" % [gender, n_start, 2 + n_loop, n_loop, n_stop])
 		var out := AnimationLibrary.new()
 		for name in order:
@@ -472,7 +523,12 @@ func _initialize() -> void:
 			var nh := _open_hands(a, idle)
 			if src_of.has(name): a.set_meta("source", "mx/" + src_of[name])
 			var info := ""
-			if not name.begins_with("walk"):
+			if name.begins_with("sturn"):
+				var fa := _fit_stance(a, stance, true); var fb := _fit_stance(a, stance, false)
+				a.set_meta("done_at", a.length)
+				var yc: PackedFloat32Array = a.get_meta("yaw", PackedFloat32Array())
+				info += " stance in:%s out:%s yaw end %.1f deg, from idle %.1f cm, into idle %.1f cm" % [fa, fb, rad_to_deg(yc[yc.size() - 1]) if yc.size() > 0 else 0.0, _pose_d(_legs(a, 0.0), _legs(stance, 0.0)), _pose_d(_legs(a, a.length), _legs(stance, 0.0))]
+			elif not name.begins_with("walk"):
 				var done := float(a.get_meta("done_at", a.length))
 				if name.begins_with("stop"):
 					var still := a.length
@@ -482,6 +538,7 @@ func _initialize() -> void:
 						still = t
 					a.set_meta("still_at", still); a.set_meta("done_at", a.length); done = a.length
 					info += " still_at %.2f" % still
+				if name.begins_with("stop"): info += " shift: " + _shift_to_stance(a, stance)
 				if name.begins_with("start") or name.begins_with("stop"): info += " idle stance:" + _fit_stance(a, stance, name.begins_with("start"))
 				info += " v_scale %.3f" % _vel_scaled(a)
 				if name.begins_with("start"):
@@ -508,7 +565,7 @@ func _initialize() -> void:
 				# (a new loop: its pace is the planted foot's, so it plays at his pace over that with the feet put)
 				var gv0 := float(a.get_meta("ground_v", 1.5)); var kf := _vel_scaled(a)
 				a.set_meta("ground_v", gv0 * kf); info += " ground_v %.3f -> %.3f" % [gv0, gv0 * kf]
-			var sl := _slide(a, float(a.get_meta("done_at", a.length)) if not name.begins_with("walk") else a.length)
+			var sl := 0.0 if name.begins_with("sturn") else _slide(a, float(a.get_meta("done_at", a.length)) if not name.begins_with("walk") else a.length)
 			a.set_meta("slide_cm", sl)
 			out.add_animation(name, a)
 			print("PLAYER_WALK %s %s %.2fs loop=%d hands %d slide %.1f cm%s" % [gender, name, a.length, a.loop_mode, nh, sl, info])
