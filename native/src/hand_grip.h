@@ -54,6 +54,7 @@ public:
 	// FOOT LOCK (Yasin, 20 Nov: "i want them pixel perfect"; a planted foot slid on the ground with the clip): a foot the clip
 	// puts down is pinned where it landed until it lifts; on lifting, the rest of the pin's offset fades in 0.1 s
 	bool locked[2] = { false, false };
+	bool lock_on = true;   // (off for the player's pwalk clips: they plant their own feet, and the pin's catch-up popped them: Yasin, 21 Nov "why are those jerks")
 	Vector3 lock_w[2], rel_off[2], prev_fw[2], prev_root;
 	float toe_y0[2] = { 0, 0 };   // the ball of the foot's height over the floor as it was pinned (it is held while it stays down)
 	float rel_t[2] = { 0, 0 };   // since the pin let go

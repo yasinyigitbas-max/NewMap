@@ -219,6 +219,9 @@ bool CityPed::stride_of(const StringName &p_clip, double &r_left_down, int &r_st
 	static const StringName PM("pwalk/walk_mx"), PU("pwalk/walk_ual");
 	if (p_clip == PM) { r_left_down = 0.2258; r_strides = 1; return true; }
 	if (p_clip == PU) { r_left_down = 0.0; r_strides = 1; return true; }
+	static const StringName PN[3] = { "pwalk/walk_mx1", "pwalk/walk_mx2", "pwalk/walk_mx3" };
+	static const double LD[3] = { 0.206897, 0.225806, 0.193548 };
+	for (int i = 0; i < 3; i++) if (p_clip == PN[i]) { r_left_down = LD[i]; r_strides = 1; return true; }
 	return false;
 }
 
@@ -246,8 +249,8 @@ void CityPed::drive(const Transform3D &p_at, const StringName &p_clip, double p_
 				const double u = len_was > 0.0 ? was_pos / len_was : 0.0;
 				double phase = u * n_was - ph_was * n_was; phase -= std::floor(phase);   // (the share of one stride since the left foot landed)
 				double u_new = (phase + ph_new * n_new) / n_new; u_new -= std::floor(u_new);
-				anim->seek(u_new * len_new, true);
-			} else if (seek_to >= 0.0 && !again) anim->seek(std::min(seek_to, len_new), true);   // (asked: where its pose is)
+				anim->seek(u_new * len_new, false);
+			} else if (seek_to >= 0.0 && !again) anim->seek(std::min(seek_to, len_new), false);   // (asked: where its pose is)
 			else if (again) anim->seek(0.0, true);   // (the same clip again: from its start; a new one starts at its start
 			                                           // by itself, without a seek that would cut the blend short)
 		}

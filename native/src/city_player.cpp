@@ -39,6 +39,27 @@
 
 namespace godot {
 
+// Player walk pools: all takes go to both figures (Yasin, 21 Nov 22:24: "ignore gender tags").
+static const int PW_NS = 4, PW_NM = 5, PW_NE = 4;
+struct PwNames {
+	StringName start[PW_NS] = { "pwalk/start_a", "pwalk/start_b", "pwalk/start_c", "pwalk/start_d" };
+	StringName main[PW_NM] = { "pwalk/walk_mx", "pwalk/walk_ual", "pwalk/walk_mx1", "pwalk/walk_mx2", "pwalk/walk_mx3" };
+	StringName stop[PW_NE] = { "pwalk/stop_a", "pwalk/stop_b", "pwalk/stop_c", "pwalk/stop_d" };
+	StringName k_in[PW_NM] = { "ph_in_mx", "ph_in_ual", "ph_in_mx1", "ph_in_mx2", "ph_in_mx3" };
+	StringName k_out[PW_NM] = { "ph_out_mx", "ph_out_ual", "ph_out_mx1", "ph_out_mx2", "ph_out_mx3" };
+	StringName k_at[PW_NM] = { "in_at_mx", "in_at_ual", "in_at_mx1", "in_at_mx2", "in_at_mx3" };
+	StringName k_oat[PW_NM] = { "out_at_mx", "out_at_ual", "out_at_mx1", "out_at_mx2", "out_at_mx3" };
+};
+static const PwNames &pwn() { static const PwNames n; return n; }   // (made on first use: a StringName cannot be made before the engine is up)
+#define PW_START (pwn().start)
+#define PW_MAIN (pwn().main)
+#define PW_STOP (pwn().stop)
+#define K_IN (pwn().k_in)
+#define K_OUT (pwn().k_out)
+#define K_AT (pwn().k_at)
+#define K_OAT (pwn().k_oat)
+static bool pw_loop(const StringName &p_c) { for (int i = 0; i < PW_NM; i++) if (p_c == PW_MAIN[i]) return true; return false; }
+
 // one of n, never p_last (xorshift32; the first time any of them)
 int CityPlayer::pw_pick(int p_n, int p_last) {
 	pw_rng ^= pw_rng << 13; pw_rng ^= pw_rng >> 17; pw_rng ^= pw_rng << 5;
@@ -276,7 +297,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		const Vector2 js((float)in->get_joy_axis(0, JOY_AXIS_LEFT_X), -(float)in->get_joy_axis(0, JOY_AXIS_LEFT_Y));
 		if (js.length() > 0.2f) mv += js;
 		run = in->is_key_pressed(KEY_SHIFT) || in->get_joy_axis(0, JOY_AXIS_TRIGGER_RIGHT) > 0.3;
-		if (mv.length() > 0.05f && !run) mv = mv.normalized() * 0.6f;   // (the old game: a key walks at 0.6, Shift runs at 1.0)
+		if (mv.length() > 0.05f && !run) mv = mv.normalized();   // (a key walks at the full walk, 1.4 m/s: at the old game's 0.6 the walk clips played in slow motion; Shift runs)
 		if (touch_mv.length() > 0.05f) { mv = Vector2(touch_mv.x, -touch_mv.y); run = touch_mv.length() > 0.9f; }   // the invisible stick (screen up = ahead)
 		const bool space = in->is_key_pressed(KEY_SPACE), ck = in->is_key_pressed(KEY_C) || in->is_key_pressed(KEY_CTRL);
 		if (space && !space_was) jump_want = true;
@@ -448,10 +469,18 @@ void CityPlayer::_physics_process(double p_delta) {
 				// he has stopped: a man plants his feet to turn round, he does not walk a tight circle)
 				const float rate = (move_speed < 0.4f ? 5.0f : (move_speed < 2.0f ? 3.4f : 2.3f)) * (std::fabs(d) > 2.0f && move_speed > 0.3f ? 0.3f : 1.0f) * (pw_turn_next >= 0 ? 0.1f : 1.0f)   // (a walking turn waited for, at most a stride: its clip does the turning)
 					* ((step_mode == 1 || step_mode == 2) && step_pw ? (std::fabs(d) > 0.35f ? 0.35f : 0.0f) : 1.0f);   // (in a pwalk start or stop the clip turns him; he steers only when asked clearly off, slowly: turning the body round a planted foot slid it 5-6 cm)
-				yaw += std::min(std::max(d, -rate * dt), rate * dt);
-				turn_left = std::fabs(d) - std::min(std::fabs(d), rate * dt);
+				// (the rate builds up and eases off at 14 rad/s2: a snap from no turn to 3.4 rad/s in one frame, at the end of
+				// a walking turn or as the stick moves, jerked his whole body round)
+				const float ease = std::sqrt(2.0f * 14.0f * std::fabs(d));   // (the rate it can still stop from by the time he faces the way: no stop in one frame)
+				const float want_r = dt > 0.0f ? std::min(std::max(d / dt, -std::min(rate, ease)), std::min(rate, ease)) : 0.0f;
+				yaw_r += std::min(std::max(want_r - yaw_r, -14.0f * dt), 14.0f * dt);
+				float stp = yaw_r * dt;
+				if ((d >= 0.0f && stp > d) || (d <= 0.0f && stp < d)) { stp = d; yaw_r = dt > 0.0f ? d / dt : 0.0f; }
+				yaw += stp;
+				turn_left = std::fabs(d - stp);
 			}
 		}
+		if (step_mode == 3 || step_mode == 4 || (want_len <= 0.05f && !face_talk)) yaw_r = 0.0f;   // (a clip turns him, or nothing asks him round)
 		if (step_mode == 3) {
 			const double len = fig->clip_len(step_clip);
 			const double at = cur_clip_is(step_clip) ? fig->clip_pos() : (double)step_t;
@@ -475,19 +504,16 @@ void CityPlayer::_physics_process(double p_delta) {
 		// Stop_Walking and it mirrored) not used last time, cut in where the loop's pose is its first frame; asked round
 		// while walking, the walking turn (left, right, or the 180 either way) cut in the same way. The body moves by the
 		// clip's own vz / vx and turns by its yaw, at the rate it plays: the planted foot stays put.
-		static const StringName PW_START[2] = { StringName("pwalk/start_a"), StringName("pwalk/start_b") };
-		static const StringName PW_MAIN[2] = { StringName("pwalk/walk_mx"), StringName("pwalk/walk_ual") };
-		static const StringName PW_STOP[2] = { StringName("pwalk/stop_a"), StringName("pwalk/stop_b") };
 		static const StringName PW_TURN[4] = { StringName("pwalk/turn_l"), StringName("pwalk/turn_r"), StringName("pwalk/turn180_l"), StringName("pwalk/turn180_r") };
 		static const StringName K_VZ("vz"), K_VX("vx"), K_YAW("yaw"), K_DONE("done_at"), K_VOUT("v_out"), K_GV("ground_v");
-		static const StringName K_IN[2] = { StringName("ph_in_mx"), StringName("ph_in_ual") }, K_OUT[2] = { StringName("ph_out_mx"), StringName("ph_out_ual") };
-		static const StringName K_AT[2] = { StringName("in_at_mx"), StringName("in_at_ual") }, K_OAT[2] = { StringName("out_at_mx"), StringName("out_at_ual") };
 		const bool pw = fig->clip_len(PW_START[0]) > 0.0 && fig->clip_len(PW_MAIN[0]) > 0.0;
+		const float pw_speed_before = move_speed, pw_lat_before = step_lat;
+		const int pw_mode_before = step_mode;
 		const double gv_mx = pw ? fig->clip_meta_sn(PW_MAIN[0], K_GV, 1.533) : 1.533;   // (the Mixamo walk's own pace: its stops and turns are cut from it)
 		if (step_mode == 0 && want_len > 0.05f && move_speed < 0.05f && speed < 0.08f && turn_left < 0.6f && !airborne && settle_t >= 1.1f && !auto_on && pw) {
-			const int k = pw_pick(2, pw_start_last); pw_start_last = k;
-			pw_main = pw_pick(2, pw_main_last); pw_main_last = pw_main;
-			step_mode = 1; step_pw = true; step_clip = PW_START[k]; step_t = 0.0f; step_yaw_prev = 0.0;
+			const int k = pw_pick(PW_NS, pw_start_last); pw_start_last = k;
+			pw_main = pw_pick(PW_NM, pw_main_last); pw_main_last = pw_main;
+			step_mode = 1; step_pw = true; step_clip = PW_START[k]; step_t = 0.0f; step_yaw_prev = 0.0; hand_t = 0.0f;
 			step_end = (float)fig->clip_meta_sn(step_clip, K_OAT[pw_main], fig->clip_meta_sn(step_clip, K_DONE, fig->clip_len(step_clip)));   // (where the walk loop takes over)
 			step_cs = run ? 1.3f : std::min(std::max(std::min(want_len, walk_top) / (float)fig->clip_meta_sn(step_clip, K_VOUT, 0.85), 0.8f), 1.3f);   // (he ends the start at the pace he walks on at)
 			starts++;
@@ -500,19 +526,19 @@ void CityPlayer::_physics_process(double p_delta) {
 		int pw_mi = -1; double pw_ph = 0.0;
 		if (pw && step_mode == 0) {
 			const StringName cur = fig->current_clip();
-			pw_mi = cur == PW_MAIN[0] ? 0 : (cur == PW_MAIN[1] ? 1 : -1);
+			for (int i = 0; i < PW_NM; i++) if (cur == PW_MAIN[i]) { pw_mi = i; break; }
 			const double cl = pw_mi >= 0 ? fig->clip_len(cur) : 0.0;
 			if (cl > 0.0) pw_ph = fig->clip_pos() / cl; else pw_mi = -1;
 		}
 		bool pw_waits = false;
-		if (pw_mi >= 0 && !auto_on && want_len < 0.05f && move_speed > 0.05f && move_speed < walk_top * 1.05f && !airborne) {   // (even slow, out of a turn: easing to the idle from mid-stride slid a foot 12 cm)
+		if (pw_mi >= 0 && pw_settle <= 0.0f && !auto_on && want_len < 0.05f && move_speed > 0.05f && move_speed < walk_top * 1.05f && !airborne) {   // (even slow, out of a turn: easing to the idle from mid-stride slid a foot 12 cm)
 			// letting go: on at his pace to where the stop is cut in (the stop not used last time: at most one stride)
 			pw_turn_next = -1;
-			if (pw_stop_next < 0) pw_stop_next = pw_pick(2, pw_stop_last);
+			if (pw_stop_next < 0) pw_stop_next = pw_pick(PW_NE, pw_stop_last);
 			if (pw_crossed(pw_ph_prev, pw_ph, fig->clip_meta_sn(PW_STOP[pw_stop_next], K_IN[pw_mi], 0.0))) {
 				step_mode = 2; step_pw = true; step_clip = PW_STOP[pw_stop_next]; pw_stop_last = pw_stop_next; pw_stop_next = -1;
 				step_t = (float)fig->clip_meta_sn(step_clip, K_AT[pw_mi], 0.0); step_yaw_prev = fig->clip_curve_sn(step_clip, K_YAW, step_t, 0.0);
-				fig->set_next_seek(step_t); step_v0 = move_speed; step_end = (float)fig->clip_len(step_clip);
+				fig->set_next_seek(step_t); step_v0 = move_speed; step_end = (float)fig->clip_len(step_clip); hand_v = move_speed; hand_t = -1.0f;
 				step_cs = std::min(std::max(move_speed / (float)gv_mx, 0.6f), 1.4f); stops++;
 				pw_ph_prev = -1.0;
 			} else { target = move_speed; pw_waits = true; }
@@ -526,7 +552,7 @@ void CityPlayer::_physics_process(double p_delta) {
 			else if (pw_crossed(pw_ph_prev, pw_ph, fig->clip_meta_sn(PW_TURN[pw_turn_next], K_IN[pw_mi], 0.0))) {
 				step_mode = 4; step_pw = true; step_clip = PW_TURN[pw_turn_next]; pw_turn_last = pw_turn_next; pw_turn_next = -1; pw_wait_t = 0.0f;
 				step_t = (float)fig->clip_meta_sn(step_clip, K_AT[pw_mi], 0.0); step_yaw_prev = fig->clip_curve_sn(step_clip, K_YAW, step_t, 0.0);
-				fig->set_next_seek(step_t);
+				fig->set_next_seek(step_t); hand_v = move_speed; hand_t = -1.0f;
 				step_end = (float)fig->clip_meta_sn(step_clip, K_OAT[pw_main >= 0 ? pw_main : 0], fig->clip_meta_sn(step_clip, K_DONE, fig->clip_len(step_clip)));
 				const float yaw_end = std::fabs((float)fig->clip_curve_sn(step_clip, K_YAW, step_end, 0.63));
 				turn_k = ad > 2.36f ? ad / std::max(yaw_end, 0.1f) : std::min(std::max(ad / std::max(yaw_end, 0.1f), 1.0f), 1.6f);   // (the 180 scaled to the angle; a smaller turn up to x1.6, the rest steered)
@@ -555,18 +581,27 @@ void CityPlayer::_physics_process(double p_delta) {
 			const double at = cur_clip_is(step_clip) ? fig->clip_pos() : (double)step_t;
 			step_t += dt * step_cs;
 			const double y = fig->clip_curve_sn(step_clip, K_YAW, at, 0.0);
-			yaw += (float)((y - step_yaw_prev) * (step_mode == 4 ? turn_k : 1.0)); step_yaw_prev = y;
+			if (step_mode == 4) {   // (the walking turn's yaw, followed at a rate that builds up and eases off: cut in from the loop at the
+				// clip's own turn rate, or handed back with the clip still turning, his body was swung round in one frame)
+				yaw_debt += (float)((y - step_yaw_prev) * turn_k);
+			}   // (a straight start / stop keeps his heading: the converter's small hip-yaw tail was a 5 degree spike at rest)
+			step_yaw_prev = y;
 			if (step_mode == 1 && want_len < 0.05f) { step_mode = 0; step_lat = 0.0f; }          // (let go while setting off: he just stops)
 			else if (step_mode == 2 && want_len > 0.05f) { step_mode = 0; step_lat = 0.0f; }     // (pushed on while stopping: he walks on)
 			else if (at >= step_end - 0.02 || step_t > step_end + 0.3f) {
 				if (step_mode == 2) move_speed = 0.0f;
 				else {
 					if (pw_main >= 0) fig->set_next_seek(fig->clip_meta_sn(step_clip, K_OUT[pw_main], 0.0) * fig->clip_len(PW_MAIN[pw_main]));   // (the walk takes over where its pose is)
-					move_speed = std::min(std::max(move_speed, 0.3f), std::max(want_len, 0.3f));   // (a footfall's peak is not his pace: from there he goes at the pace asked, at most)
+					move_speed = std::max(move_speed, 0.3f);   // (on at the clip's own last pace: the walk's pace eases to the one asked from there; a snap to the pace asked jerked him)
 				}
 				step_mode = 0; step_lat = 0.0f;
 			} else {
 				move_speed = step_cs * (float)fig->clip_curve_sn(step_clip, K_VZ, at, 0.0);   // (the clip's own pace at the rate it plays)
+				// THE HANDOVER (Yasin, 21 Nov: "the jerks are still there"): cut in from the loop, the clip's pace at its cut-in
+				// point is not his (the stop's 0.64 m/s against the loop's 1.4): what it lacks is carried and eased out over the
+				// crossfade, 0.35 s, so his body does not snap to the clip's pace in one frame
+				if (hand_t < 0.0f) { hand_off = hand_v - move_speed; hand_t = 0.35f; }
+				if (hand_t > 0.0f) { const float w = hand_t / 0.35f; move_speed += hand_off * w * w * (3.0f - 2.0f * w); hand_t = std::max(hand_t - dt, 0.0f); }
 				step_lat = step_cs * (float)fig->clip_curve_sn(step_clip, K_VX, at, 0.0);
 			}
 		} else if (step_mode == 1 || step_mode == 2) {
@@ -581,11 +616,28 @@ void CityPlayer::_physics_process(double p_delta) {
 				step_mode = 0;
 			} else move_speed = native_walk * step_cs * pace;   // (the clip's own pace at the rate it plays: the planted foot stays put)
 		}
+		if (std::fabs(yaw_debt) > 1e-5f || std::fabs(yaw_fr) > 1e-4f) {
+			if (step_mode != 4) yaw_debt = 0.0f;   // (handed back: the steering takes him on from here; the turn's rate only eases off)
+			const float want_r = yaw_debt * 9.0f;
+			yaw_fr += std::min(std::max(want_r - yaw_fr, -24.0f * dt), 24.0f * dt);
+			float stp = yaw_fr * dt;
+			if (step_mode == 4 && ((yaw_debt >= 0.0f && stp > yaw_debt) || (yaw_debt <= 0.0f && stp < yaw_debt))) stp = yaw_debt;
+			yaw += stp; yaw_debt -= step_mode == 4 ? stp : 0.0f;
+			if (step_mode != 4 && std::fabs(yaw_fr) < 0.05f) yaw_fr = 0.0f;
+		}
 		if (step_mode == 0) {
 			const float acc = target > move_speed ? (move_speed < walk_top ? 2.6f : 3.2f) : (target < 0.05f ? 4.0f : 3.0f);
 			move_speed = move_speed + std::min(std::max(target - move_speed, -acc * dt), acc * dt);
 		}
 		if (step_mode == 0 || !step_pw) step_lat = 0.0f;
+		if (pw_mode_before == 2 && step_mode == 0 && want_len < 0.05f) pw_settle = 0.35f;   // (a stop's end: what pace is left eases out under the idle's crossfade)
+		pw_settle = std::max(pw_settle - dt, 0.0f);
+		if (pw && !airborne) {
+			// (the clip curves give the desired speed, never an impulse: also covers the final sample of a stop and a
+			// cancelled start/stop. The raw hips' pace is followed, up to 3.5 m/s2, sideways as well as forward.)
+			move_speed = pw_speed_before + std::min(std::max(move_speed - pw_speed_before, -3.5f * dt), 3.5f * dt);
+			step_lat = pw_lat_before + std::min(std::max(step_lat - pw_lat_before, -3.5f * dt), 3.5f * dt);
+		}
 		nh = Vector3(std::sin(yaw), 0, std::cos(yaw)) * move_speed + Vector3(std::cos(yaw), 0, -std::sin(yaw)) * step_lat;
 	}
 	v.x = nh.x + knock_v.x; v.z = nh.z + knock_v.z;
@@ -690,27 +742,28 @@ void CityPlayer::_physics_process(double p_delta) {
 		static const StringName G_TALK("ual/Idle_Talking_Loop"), G_YES("ual/Yes"), G_NO("ual/Idle_No_Loop"), G_LIFT("ual/PickUp_Kneeling");
 		clip = gest_kind == 1 ? G_YES : (gest_kind == 2 ? G_NO : (gest_kind == 3 ? G_LIFT : G_TALK)); hold = (gest_kind == 1 || gest_kind == 3) ? -2.0 : -1.0;
 	}
-	else if (speed > 0.08f || (heavy && turn_left > 0.35f && move_speed < 0.4f && Vector3(want.x, 0, want.z).length() > 0.05f)) {
+	else if ((speed > 0.08f && pw_settle <= 0.0f) || (heavy && turn_left > 0.35f && move_speed < 0.4f && Vector3(want.x, 0, want.z).length() > 0.05f)) {
 		// THE GAIT SET (see the header): the clip whose own pace is nearest his (kept until another is clearly nearer), played
 		// at his pace over its own, so the planted foot stays put. (Turning on the spot: the slowest walk, slowly: he steps
 		// round instead of spinning on his heels.)
 		static const StringName S_WALK("step/walk"), S_JOG("step/jog");
-		static const StringName PWM[2] = { StringName("pwalk/walk_mx"), StringName("pwalk/walk_ual") };
 		static const StringName K_GV2("ground_v");
 		// (the player's walk: this walk's main loop, the Mixamo walk at its own 1.53 m/s or the UAL walk at 0.92; a walk
 		// begun without a start picks one too)
 		StringName set[2] = { S_WALK, S_JOG };
 		float sv[2] = { 0.92f, 2.40f };   // (the planted foot's pace: clip_audit.gd)
 		const int ns = 2;
-		if (fig->clip_len(PWM[0]) > 0.0) {
-			if (pw_main < 0) { pw_main = pw_pick(2, pw_main_last); pw_main_last = pw_main; }
-			set[0] = PWM[pw_main]; sv[0] = (float)fig->clip_meta_sn(PWM[pw_main], K_GV2, pw_main == 0 ? 1.533 : 0.92);
+		if (fig->clip_len(PW_MAIN[0]) > 0.0) {
+			if (pw_main < 0) { pw_main = pw_pick(PW_NM, pw_main_last); pw_main_last = pw_main; }
+			set[0] = PW_MAIN[pw_main]; sv[0] = (float)fig->clip_meta_sn(PW_MAIN[pw_main], K_GV2, pw_main == 0 ? 1.533 : 0.92);
 		}
 		const float sp = std::max(speed, 0.3f);
 		int best = 0;
 		for (int g = 1; g < ns; g++) if (std::fabs(std::log(sp / sv[g])) < std::fabs(std::log(sp / sv[best]))) best = g;
+		if (!run && speed <= walk_top * 1.05f && fig->clip_len(PW_MAIN[0]) > 0.0) best = 0;
 		const int gi = gait_i;
 		if (gi >= 0 && gi < ns && std::fabs(std::log(sp / sv[gi])) < std::fabs(std::log(sp / sv[best])) + 0.12f) best = gi;
+		if (!run && speed <= walk_top * 1.05f && fig->clip_len(PW_MAIN[0]) > 0.0) best = 0;
 		gait_i = best;
 		clip = set[best]; cs = speed > 0.08f ? speed / sv[best] : 0.45;
 		if (fig->clip_len(clip) <= 0.0) { clip = best ? JOG : WALK; cs = speed / sv[best]; }   // (a figure without the step library: the fists)
@@ -732,7 +785,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		static const StringName P_HAND("ual/Idle_Lantern_Loop"), P_EAR("ual/Idle_TalkingPhone_Loop"), P_UP("ual/Idle_Torch_Loop"),
 				P_WALK_HAND("ual/Walk_Text_Loop"), P_WALK_EAR("ual/Walk_Phone_Loop"), S_WALK3("step/walk"), PWM3[2] = { StringName("pwalk/walk_mx"), StringName("pwalk/walk_ual") };
 		if (clip == IDLE || clip == S_IDLE) clip = phone_kind == 2 ? P_EAR : (phone_kind == 3 ? P_UP : P_HAND);
-		else if ((clip == S_WALK3 || clip == WALK || clip == PWM3[0] || clip == PWM3[1]) && fig->clip_len(P_WALK_HAND) > 0.0) clip = phone_kind == 2 ? P_WALK_EAR : P_WALK_HAND;
+		else if ((clip == S_WALK3 || clip == WALK || pw_loop(clip)) && fig->clip_len(P_WALK_HAND) > 0.0) clip = phone_kind == 2 ? P_WALK_EAR : P_WALK_HAND;
 	}
 	// IDLE VARIATIONS (Yasin, 21 Nov: "base step/idle plays 4 full loops, then ONE random variation ... back to the base
 	// ... never two variations back to back ... avoid repeating the same variation twice in a row"; no UAL, no
@@ -774,6 +827,10 @@ void CityPlayer::_physics_process(double p_delta) {
 		}
 		last_speed = move_speed;
 		lean_a += (a - lean_a) * std::min(dt / 0.18f, 1.0f);
+		// (on foot with the pwalk clips: no lean; the mocap leans by itself, and the lean's tilt followed every change of
+		// pace and turn: Yasin, 21 Nov "is there anything else influencing the way he walks?")
+		static const StringName PWS("pwalk/start_a");
+		if (heavy && fig->clip_len(PWS) > 0.0) lean_a = Vector3();
 	}
 	Basis fb(Vector3(0, 1, 0), yaw);
 	{
@@ -783,13 +840,16 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (ang > 0.002f) fb = Basis(Quaternion(Vector3(0, 1, 0), up)) * fb;
 	}
 	static const StringName S_WALK2("step/walk"), PWM2[2] = { StringName("pwalk/walk_mx"), StringName("pwalk/walk_ual") };
-	const bool slowest = clip == WALK || clip == S_WALK2 || clip == PWM2[0] || clip == PWM2[1];
+	const bool slowest = clip == WALK || clip == S_WALK2 || pw_loop(clip);
 	fig->drive(Transform3D(fb, get_global_position() + Vector3(0, vis_dy, 0)), clip, std::min(std::max(cs, slowest ? 0.15 : 0.5), 2.0), hold);
 	if (Skeleton3D *sk = fig->skeleton()) {
 		if (!plant) { plant = memnew(FootPlant); sk->add_child(plant); }
 		const bool on = !airborne && !swimming && !frozen;
 		plant->set_active(on); plant->set_influence(on ? 1.0f : 0.0f);
 		plant->skip = get_rid(); plant->fwd = Vector3(std::sin(yaw), 0, std::cos(yaw));
+		static const StringName PWS2("pwalk/start_a");
+		plant->lock_on = true;   // (kept on the pwalk clips too: off, the planted feet drifted up to 6-9 cm; its release is not what jerked him: noplant 240 flagged frames vs 227)
+		(void)PWS2;
 	}
 }
 

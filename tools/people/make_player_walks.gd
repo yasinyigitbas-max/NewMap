@@ -20,12 +20,17 @@ extends SceneTree
 ##                          of the clip it starts from there (of its first 0.6 s: the nearest feet)
 ##   ph_out_mx / ph_out_ual (starts, turns) the share of each loop it hands over at, and out_at_mx / out_at_ual the
 ##                          moment of the clip it does (near done_at: the nearest feet)
-##   vz / vx / pace         made again from the planted foot (_vel_from_feet)
+##   vz / vx / pace         the converter's smooth hip motion, scaled once per take (_vel_scaled); NOT switched at each footfall
 ##   still_at               (stops) where he is standing still
 ##   v_out                  (starts) his pace over the half second before done_at, m/s (the start plays at the walk over it)
 ##   slide_cm               the planted foot's worst drift with the body moved by vz / vx / yaw (checked here)
 const DIR := "res://characters/rocketbox/"
 const MX_SRC := "/workspace/share/anim/walk/src/clips_mx_%s.res"
+## (Yasin, 22:24 / 22:26, 21 Nov: "he downloaded more Mixamo walks and starts"; "add the new stop walk too"; gender tags
+## ignored: every clip goes to both figures) Start Walking (1), Female Start Walking, Female Stop Walking, Walking (1) (2)
+## (3), fitted by the same Mixamo converter (perf-bugs AnimRetarget, mixamo rig) into clips_mxnew_<g>.res
+const MX_NEW := "res://tools/people/player_walk_sources/clips_mxnew_%s.res"
+const DUP_CM := 2.0   # (a take whose feet and head stay within 2 cm of one we have, all through, is the same take)
 const FPS := 30.0
 
 var sk: Skeleton3D
@@ -90,6 +95,24 @@ func _mirror(src: Animation) -> Animation:
 	if a.has_meta("left_down"): a.set_meta("left_down", fposmod(float(a.get_meta("left_down")) + 0.5, 1.0))
 	a.set_meta("mirrored", true)
 	return a
+
+## the worst distance (cm) of the feet and the head between two takes over their common length (a duplicate: about 0)
+func _dup_cm(a: Animation, b: Animation) -> float:
+	if absf(a.length - b.length) > 0.1: return INF
+	var w := 0.0
+	for i in 16:
+		var t := minf(a.length, b.length) * i / 15.0
+		w = maxf(w, _pose_d(_legs(a, t), _legs(b, t)))
+	return w
+
+## the foot that sets off first: the one whose ankle has gone 5 cm first ("L" / "R")
+func _lead(a: Animation) -> String:
+	var l0 := _legs(a, 0.0)
+	for i in range(1, int(a.length * 30.0)):
+		var l := _legs(a, i / 30.0)
+		if (l[0] - l0[0]).length() > 0.05: return "L"
+		if (l[2] - l0[2]).length() > 0.05: return "R"
+	return "?"
 
 ## an editable copy (the packs are compressed: their keys cannot be changed), sampled at 30 a second
 func _copy(src: Animation) -> Animation:
@@ -245,6 +268,43 @@ func _fit_stance(a: Animation, idle: Animation, at_start: bool) -> String:
 				_set_key(a, bn, k, loc[sk.find_bone(bn)], false)
 	return info
 
+## THE BODY'S MOVE, SMOOTH (Yasin, 21 Nov: "why are those jerks in between? they didnt exist in the original files"):
+## the converter's vz / vx come from the hips' own travel, as smooth as the mocap. (Taken from the planted foot instead,
+## they jumped at every change of foot: the body lurched 0.5-1 m/s within a frame, the hips and head jerked.) Only
+## their scale is fitted: the figure's legs are not the actor's, so the hips' travel is scaled by the share that keeps
+## the planted feet still (least squares over the frames a foot is down), then eased over 5 frames.
+func _vel_scaled(a: Animation) -> float:
+	var frames := int(ceil(a.length * FPS)) + 1
+	var fb := [sk.find_bone("Bip01_L_Foot"), sk.find_bone("Bip01_R_Foot")]
+	var pts: Array = []
+	var lo := [INF, INF]
+	for k in frames:
+		var g := _globals(_locals(a, minf(k / FPS, a.length)))
+		var pr := [skel_x * g[fb[0]].origin, skel_x * g[fb[1]].origin]
+		pts.append(pr)
+		for s in 2: lo[s] = minf(lo[s], pr[s].y)
+	var vz0: PackedFloat32Array = a.get_meta("vz"); var vx0: PackedFloat32Array = a.get_meta("vx")
+	var num := 0.0; var den := 0.0
+	for k in frames - 1:
+		var dy := _curve(a, "yaw", (k + 1) / FPS) - _curve(a, "yaw", k / FPS)
+		var r := Vector3(_curve(a, "vx", k / FPS), 0, _curve(a, "vz", k / FPS)) / FPS   # (the body's move this frame, its own frame)
+		for s in 2:
+			if pts[k][s].y < lo[s] + 0.01 and pts[k + 1][s].y < lo[s] + 0.01:
+				var need: Vector3 = pts[k][s] - Basis(Vector3.UP, dy) * pts[k + 1][s]   # (the move that keeps this foot put)
+				need.y = 0.0
+				num += need.dot(r); den += r.dot(r)
+	var kf := clampf(num / den, 0.7, 1.4) if den > 1e-9 else 1.0
+	var sz := PackedFloat32Array(); var sx := PackedFloat32Array()
+	var nz := vz0.size()
+	for i in nz:
+		var az := 0.0; var ax := 0.0; var w := 0.0
+		for j in range(-2, 3):
+			var q := clampi(i + j, 0, nz - 1); var ww := 3.0 - absf(j)
+			az += vz0[q] * ww; ax += vx0[q] * ww; w += ww
+		sz.append(kf * az / w); sx.append(kf * ax / w)
+	a.set_meta("vz", sz); a.set_meta("vx", sx); a.set_meta("pace", sz); a.set_meta("v_scale", kf)
+	return kf
+
 ## THE BODY'S MOVE FROM THE PLANTED FOOT (the converter took vz / vx from the hips: a planted foot still slid 4-6 cm in
 ## the starts and stops): each frame the foot lower on the ground is the planted one, and the body moves (and keeps
 ## the clip's turn) so that it stays where it is in the world; vz / vx are made again from that, m/s, 30 a second.
@@ -365,9 +425,39 @@ func _initialize() -> void:
 		clips["turn_l"] = _copy(mx.get_animation(&"Walking_Left_Turn")); clips["turn_r"] = _mirror(mx.get_animation(&"Walking_Left_Turn"))
 		clips["turn180_r"] = _copy(mx.get_animation(&"Walking_Turn_180")); clips["turn180_l"] = _mirror(mx.get_animation(&"Walking_Turn_180"))
 		var src_of := {"walk_mx": "Walking", "start_a": "Start_Walking", "start_b": "Start_Walking (mirrored)", "stop_a": "Stop_Walking", "stop_b": "Stop_Walking (mirrored)", "turn_l": "Walking_Left_Turn", "turn_r": "Walking_Left_Turn (mirrored)", "turn180_r": "Walking_Turn_180", "turn180_l": "Walking_Turn_180 (mirrored)"}
-		var out := AnimationLibrary.new()
+		var order := ["start_a", "start_b", "walk_mx", "walk_ual", "stop_a", "stop_b", "turn_l", "turn_r", "turn180_l", "turn180_r"]
 		var loops := {"mx": clips["walk_mx"], "ual": clips["walk_ual"]}
-		for name in ["start_a", "start_b", "walk_mx", "walk_ual", "stop_a", "stop_b", "turn_l", "turn_r", "turn180_l", "turn180_r"]:
+		# THE NEW TAKES: a duplicate of one we have is left out; every start and stop gets its other foot by mirroring
+		var nw: AnimationLibrary = load(MX_NEW % gender)
+		var n_start := 2; var n_stop := 2; var n_loop := 0
+		var have := {"start": [clips["start_a"], clips["start_b"]], "stop": [clips["stop_a"], clips["stop_b"]], "walk": [clips["walk_mx"]]}
+		print("PLAYER_WALK %s start_a leads with %s" % [gender, _lead(clips["start_a"])])
+		for src in ["Start_Walking_1", "Start_Walking_F", "Stop_Walking_F", "Walking_1", "Walking_2", "Walking_3"]:
+			if nw == null or not nw.has_animation(src): print("PLAYER_WALK %s %s MISSING" % [gender, src]); continue
+			var a := _copy(nw.get_animation(src))
+			var kind: String = "start" if src.begins_with("Start") else ("stop" if src.begins_with("Stop") else "walk")
+			var near := INF
+			for b in have[kind]: near = minf(near, _dup_cm(a, b))
+			if near < DUP_CM: print("PLAYER_WALK %s %s SKIPPED: the same take as one we have (%.1f cm)" % [gender, src, near]); continue
+			if kind == "walk":
+				n_loop += 1; var nm := "walk_mx%d" % n_loop
+				clips[nm] = a; src_of[nm] = src; order.insert(order.find("walk_ual") + 1, nm); loops["mx%d" % n_loop] = a; have["walk"].append(a)
+				print("PLAYER_WALK %s %s -> %s (nearest take %.0f cm)" % [gender, src, nm, near])
+			else:
+				var lead := _lead(a)
+				var m := _mirror(nw.get_animation(src))
+				var nn: int = n_start if kind == "start" else n_stop
+				var n1: String = kind + "_" + "abcdefgh"[nn]; var n2: String = kind + "_" + "abcdefgh"[nn + 1]
+				clips[n1] = a; clips[n2] = m; src_of[n1] = src; src_of[n2] = src + " (mirrored)"
+				var at: int = order.find(kind + "_" + "abcdefgh"[nn - 1]) + 1
+				order.insert(at, n2); order.insert(at, n1)
+				have[kind].append(a); have[kind].append(m)
+				if kind == "start": n_start += 2
+				else: n_stop += 2
+				print("PLAYER_WALK %s %s -> %s (leads %s) + %s mirrored (nearest take %.0f cm)" % [gender, src, n1, lead, n2, near])
+		print("PLAYER_WALK %s pools: %d starts, %d loops (walk_mx, walk_ual + %d), %d stops" % [gender, n_start, 2 + n_loop, n_loop, n_stop])
+		var out := AnimationLibrary.new()
+		for name in order:
 			var a: Animation = clips[name]
 			var nh := _open_hands(a, idle)
 			if src_of.has(name): a.set_meta("source", "mx/" + src_of[name])
@@ -383,7 +473,7 @@ func _initialize() -> void:
 					a.set_meta("still_at", still); a.set_meta("done_at", a.length); done = a.length
 					info += " still_at %.2f" % still
 				if name.begins_with("start") or name.begins_with("stop"): info += " idle stance:" + _fit_stance(a, idle, name.begins_with("start"))
-				_vel_from_feet(a)
+				info += " v_scale %.3f" % _vel_scaled(a)
 				if name.begins_with("start"):
 					var vs := 0.0
 					for i in 16: vs += _curve(a, "vz", done - 0.5 + i / 30.0) / 16.0
@@ -404,6 +494,10 @@ func _initialize() -> void:
 						var ho := _hand_over(a, loops[lk], done, 0.6 if name.begins_with("start") else 0.2)
 						a.set_meta("ph_out_" + lk, ho.y); a.set_meta("out_at_" + lk, ho.x)
 						info += " out_%s %.2f at %.2fs (%.0f cm)" % [lk, ho.y, ho.x, ho.z]
+			if name.begins_with("walk_mx") and name != "walk_mx" and a.has_meta("vz"):
+				# (a new loop: its pace is the planted foot's, so it plays at his pace over that with the feet put)
+				var gv0 := float(a.get_meta("ground_v", 1.5)); var kf := _vel_scaled(a)
+				a.set_meta("ground_v", gv0 * kf); info += " ground_v %.3f -> %.3f" % [gv0, gv0 * kf]
 			var sl := _slide(a, float(a.get_meta("done_at", a.length)) if not name.begins_with("walk") else a.length)
 			a.set_meta("slide_cm", sl)
 			out.add_animation(name, a)

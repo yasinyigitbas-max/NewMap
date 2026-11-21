@@ -173,7 +173,7 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 		const Vector3 pw = b_toe[s] >= 0 ? sg.xform(sk->get_bone_global_pose(b_toe[s]).origin) : fw;
 		const float h_toe = pw.y - sg.origin.y;
 		const float pin_gap = locked[s] ? Vector2(pw.x - lock_w[s].x, pw.z - lock_w[s].z).length() : 0.0f;
-		const bool plant_now = locked[s] ? (h_toe < toe_y0[s] + 0.025f && clip_v < v_keep + 0.6f && pin_gap < 0.12f) : (h_clip < ankle_h + 0.02f && clip_v < v_take);
+		const bool plant_now = lock_on && (locked[s] ? (h_toe < toe_y0[s] + 0.025f && clip_v < v_keep + 0.6f && pin_gap < 0.12f) : (h_clip < ankle_h + 0.02f && clip_v < v_take));
 		if (plant_now) {
 			if (!locked[s]) { locked[s] = true; lock_w[s] = pw + rel_off[s]; toe_y0[s] = std::min(h_toe, 0.06f); }
 			slide[s] = Vector3(lock_w[s].x - pw.x, 0.0f, lock_w[s].z - pw.z);
