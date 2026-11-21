@@ -421,7 +421,18 @@ func _run() -> void:
 	H.sc_apply(root, props, dec, SC)
 	_empty_report(paints)
 	root.set_meta(&"stalls", stalls)
-	H.finish(root, g, props, dec, NAME)
+	# (H.finish, with the shade sails' fabric made two-sided between the props' build and the save)
+	if dec:
+		var wm := dec.build()
+		if wm: root.add_child(wm)
+	var mi := MeshInstance3D.new(); mi.name = "ground"; mi.mesh = g.build()
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF; root.add_child(mi)
+	var body := StaticBody3D.new(); body.name = "ground_col"
+	var cs := CollisionShape3D.new(); cs.shape = mi.mesh.create_trimesh_shape(); body.add_child(cs); root.add_child(body)
+	if props.count() > 0: props.build(root, K)
+	_sails_two_sided(root)
+	print("%s: ground tris %d, props %d, buildings %d" % [NAME, g.tri_count(), props.count(), root.get_node("Buildings").get_child_count()])
+	K.save_piece(root, NAME)
 	quit()
 
 ## ---------------------------------------------------------------- the quay, the pier, the berths, the boats
@@ -449,6 +460,78 @@ func _rose(fw: Callable) -> void:
 		var p0: Vector2 = at.call(a0, R1); var p1: Vector2 = at.call(a1, R1); var q0: Vector2 = at.call(a0, R2); var q1: Vector2 = at.call(a1, R2)
 		g.poly("curb", PackedVector2Array([p0, q0, q1, p1]), fw)
 		g.poly("concrete", PackedVector2Array([q0, sq.call(a0), sq.call(a1), q1]), fw)
+
+## The kit's shade sail has a one-sided fabric, some of its triangles wound to face down (their normals up): from
+## above the plaza showed bare poles and half a sail (Yasin, polish 3 review). Its batches here get a copy of the
+## model whose fabric (everything above 2.4 m but the post caps' narrow tops) is drawn both ways: each fabric
+## triangle once per side, each with the flat normal of the side it faces. No transparency, the same material;
+## the posts are unchanged. +1 triangle per fabric triangle.
+func _sails_two_sided(root: Node) -> void:
+	var cache := {}
+	for n: Node in root.find_children("prop_shade_sail_*", "MultiMeshInstance3D", true, false):
+		var mmi := n as MultiMeshInstance3D
+		var mm: MultiMesh = mmi.multimesh
+		var src: Mesh = mm.mesh
+		var base_mat: Material = mmi.material_override if mmi.material_override else src.surface_get_material(0)
+		var key := [src, base_mat]
+		if not cache.has(key): cache[key] = _two_sided(src, base_mat)
+		mm.mesh = cache[key]; mmi.material_override = null
+		print("SAIL two-sided fabric: ", n.name)
+
+func _two_sided(src: Mesh, base_mat: Material) -> ArrayMesh:
+	var out := ArrayMesh.new()
+	for si in src.get_surface_count():
+		var arr := src.surface_get_arrays(si)
+		var V: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]; var N: PackedVector3Array = arr[Mesh.ARRAY_NORMAL]
+		var UV: PackedVector2Array = arr[Mesh.ARRAY_TEX_UV]
+		var idx: PackedInt32Array = arr[Mesh.ARRAY_INDEX]
+		if idx.is_empty():
+			idx.resize(V.size())
+			for i in V.size(): idx[i] = i
+		# the model's own convention: the sign between the winding's cross product and the normal, read off the posts
+		var agree := 0
+		for t in range(0, idx.size(), 3):
+			var a := V[idx[t]]; var b := V[idx[t + 1]]; var c := V[idx[t + 2]]
+			if minf(a.y, minf(b.y, c.y)) > 2.4: continue
+			agree += 1 if (b - a).cross(c - a).dot(N[idx[t]]) > 0.0 else -1
+		var sgn := 1.0 if agree >= 0 else -1.0
+		var ov := PackedVector3Array(); var on := PackedVector3Array(); var ou := PackedVector2Array()
+		var fv := PackedVector3Array(); var fn := PackedVector3Array(); var fu := PackedVector2Array()
+		var fabric := 0
+		for t in range(0, idx.size(), 3):
+			var i0 := idx[t]; var i1 := idx[t + 1]; var i2 := idx[t + 2]
+			var a := V[i0]; var b := V[i1]; var c := V[i2]
+			var f := (b - a).cross(c - a)
+			var is_fabric := minf(a.y, minf(b.y, c.y)) > 2.4 and f.length() > 1e-6 and absf(f.normalized().y) > 0.2 and f.length() > 0.02
+			if not is_fabric:
+				for i: int in [i0, i1, i2]: ov.append(V[i]); on.append(N[i]); ou.append(UV[i] if not UV.is_empty() else Vector2.ZERO)
+				continue
+			fabric += 1
+			var nf := (f * sgn).normalized()
+			for i: int in [i0, i1, i2]: fv.append(V[i]); fn.append(nf); fu.append(UV[i] if not UV.is_empty() else Vector2.ZERO)
+			for i: int in [i0, i2, i1]: fv.append(V[i]); fn.append(-nf); fu.append(UV[i] if not UV.is_empty() else Vector2.ZERO)
+		# the posts with the batch's own material; the fabric its own surface, the same material dyed a canvas
+		# terracotta so it reads against the pale paving from above (opaque, nothing else changed)
+		for part: Array in [[ov, on, ou, base_mat], [fv, fn, fu, _sail_dye(base_mat)]]:
+			if (part[0] as PackedVector3Array).is_empty(): continue
+			var na := []; na.resize(Mesh.ARRAY_MAX)
+			na[Mesh.ARRAY_VERTEX] = part[0]; na[Mesh.ARRAY_NORMAL] = part[1]; na[Mesh.ARRAY_TEX_UV] = part[2]
+			out.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, na)
+			out.surface_set_material(out.get_surface_count() - 1, part[3])
+		print("SAIL surface %d: %d triangles, %d fabric doubled (convention %+d)" % [si, idx.size() / 3, fabric, int(sgn)])
+	return out
+
+func _sail_dye(m: Material) -> Material:
+	# the kit's wear shader has no tint, so the fabric gets a plain opaque material on the same atlas texture
+	var d := StandardMaterial3D.new()
+	var tex: Texture2D = null
+	if m is ShaderMaterial: tex = (m as ShaderMaterial).get_shader_parameter("albedo_tex")
+	elif m is BaseMaterial3D: tex = (m as BaseMaterial3D).albedo_texture
+	d.albedo_texture = tex
+	d.albedo_color = Color(0.86, 0.52, 0.38)
+	d.roughness = 0.9
+	print("SAIL dye from ", m.get_class(), " tex ", tex != null)
+	return d
 
 func _waterfront() -> void:
 	for q: Array in QUAYS:
