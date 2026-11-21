@@ -193,7 +193,7 @@ func _ready() -> void:
 		var sea_mi: Node = ClassDB.instantiate(&"CitySea"); sea_mi.call(&"build"); add_child(sea_mi)
 	if air: add_child(Air.build())      # one draw, nothing per frame
 	if cars:      # the game's car shader needs its global refl_env (x daylight, y cloud) before it is loaded
-		if not _refl_added:
+		if not _refl_added and not RenderingServer.global_shader_parameter_get_list().has(&"refl_env"):      # (the game: project.godot [shader_globals], 21 Nov)
 			RenderingServer.global_shader_parameter_add(&"refl_env", RenderingServer.GLOBAL_VAR_TYPE_VEC2, Vector2(1.0, 0.0)); _refl_added = true
 		car_map = SubViewport.new(); car_map.size = Vector2i(128, 128); car_map.use_hdr_2d = true; car_map.disable_3d = true
 		car_map.render_target_update_mode = SubViewport.UPDATE_ONCE
