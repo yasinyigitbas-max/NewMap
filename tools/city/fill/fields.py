@@ -83,6 +83,11 @@ def main():
     cls = D['cls']; road = D['road'] > 0; mat = D['mat']; x0 = float(D['x0']); z0 = float(D['z0']); res = float(D['res'])
     H, W = cls.shape
     cov = cls == 1
+    # 21 Nov review (shrubs on the tennis courts): the low horizontal surfaces of the other meshes (courts, paving,
+    # decks; footprints.py) are covered too, the fill tucks under their edge
+    FP = np.load(os.path.join(OUT, 'foot.npz'))
+    fsurf = FP['surf']; fsurf_top = FP['surf_top']; focc = FP['occ']
+    cov = cov | fsurf
     xs = x0 + (np.arange(W) + 0.5) * res; zs = z0 + (np.arange(H) + 0.5) * res
     g = np.load(os.path.join(KIT, 'zoning/terrain_grid.npz')); T = g['heights'].astype(np.float32); tu0 = float(g['u0']); tv0 = float(g['v0']); ts = float(g['step'])
     fx = np.clip((xs - tu0) / ts, 0, T.shape[1] - 1.001); fz = np.clip((zs - tv0) / ts, 0, T.shape[0] - 1.001)
@@ -112,15 +117,25 @@ def main():
     isl0 = shapely.contains_xy(island, XX, ZZ)
     # (d0 > -14 | on the island: a low spot inside the outline, under 0 m but with no water laid on it, gets wet sand)
     dom = (sd > -0.35) & on_isl & ((d0 > -14) | isl0) & (Hb > -1.8)
-    del isl0
     isl = shapely.contains_xy(island, XX, ZZ)
     lab, n = ndi.label((~cov) & isl & (d0 > 30))
     sizes = np.bincount(lab.ravel()); big = list(set(np.nonzero(sizes * res * res > 20000)[0]) - {0})
+    # a small pocket that is (almost) all the footprint of something already there (a building with no ground mesh)
+    # is not empty: no fill in it
+    occn = np.bincount(lab.ravel(), weights=focc.ravel().astype(np.float64), minlength=len(sizes))
+    full = [k for k in range(1, len(sizes)) if k not in big and occn[k] > 0.9 * sizes[k]]
+    if full:
+        cov = cov | np.isin(lab, full)
+        sd = (ndi.distance_transform_edt(~cov) - ndi.distance_transform_edt(cov)).astype(np.float32) * res
+        dom = (sd > -0.35) & on_isl & ((d0 > -14) | isl0) & (Hb > -1.8)
+        lab = np.where(np.isin(lab, full), 0, lab)
+    print('fields: pockets that are a footprint already, not filled:', len(full), flush=True)
     gapid = np.where(np.isin(lab, big) | (lab == 0), 0, lab).astype(np.int32)
     del lab
     need = cov & ndi.binary_dilation(dom & ~cov, iterations=3)
     print('fields: exact edge heights at', int(need.sum()), 'cells', flush=True)
     eh = edge_heights(os.path.join(ROOT, 'OUT/ground_fill'), need, x0, z0, res, W, H)
+    eh = np.where(np.isnan(eh) & need & fsurf, fsurf_top, eh).astype(np.float32)      # (a court's edge: its own top)
     have = np.isfinite(eh)
     print('fields: edge cells with a height', int(have.sum()), flush=True)
     _, (nj, ni) = ndi.distance_transform_edt(~have, return_indices=True)

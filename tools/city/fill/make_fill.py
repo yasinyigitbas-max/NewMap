@@ -132,6 +132,12 @@ def main():
     R = lambda a: Raster(a, x0, z0, res)
     f_dom = R(dsd); f_h = R(F['h']); f_d0 = R(F['d0']); f_sd = R(F['sd']); f_road = R(F['droad'])
     gap = (F['gapid'] > 0)
+    # 21 Nov review: every prop keeps clear of what the other pieces already draw (footprints.py: courts, paving,
+    # walls, fences, buildings, props, trees); distance in m from the nearest of them
+    FP = np.load(os.path.join(OUT, 'foot.npz'))
+    global f_occ
+    f_occ = R((ndi.distance_transform_edt(~(FP['occ'] | FP['surf'])) * res).astype(np.float32))
+    del FP
     f_gap = R(ndi.gaussian_filter(gap.astype(np.float32), 2))
     # noise at 2 m (a 4 m and 1 m version by sampling); seeded, so a re-run gives the same island
     s2 = (H // 4 + 1, W // 4 + 1)
@@ -317,7 +323,11 @@ def props_for(name, X0, Z0, height, f_dom, f_sd, f_d0, f_road, f_gap, n_grove, n
         # polish 2 render review: the kit's lawn patch has a rectangular perimeter, visible as black frames at grazing
         # angles; omit that prop rather than cover the island in frames. Iceplant is a small dune mat, not a giant bush.
         if base == 'plant_lawn_patch': return
-        if base == 'plant_iceplant_patch': scale *= 0.4
+        # 21 Nov review: the kit's iceplant mat reads as a dark blotch on the grass at eye height: none any more
+        if base == 'plant_iceplant_patch': return
+        # never on or against an existing piece: trees 3 m clear (the crown), the rest their radius + 1 m
+        clear = 3.0 if base.startswith('tree_') else r * scale + 1.0
+        if f_occ(np.array([[x, z]]))[0] < clear or f_sd(np.array([[x, z]]))[0] < clear: return
         p = np.array([[x, z], [x + r, z], [x - r, z], [x, z + r], [x, z - r]])
         y = float(height(p).min()) - 0.03
         out.append([base, cond, round(float(x), 3), round(y, 3), round(float(z), 3), round(float(yaw), 1), bool(collide), round(float(scale), 3)])
@@ -344,7 +354,7 @@ def props_for(name, X0, Z0, height, f_dom, f_sd, f_d0, f_road, f_gap, n_grove, n
     P = cand(110, 4.0)
     if len(P):
         d0 = f_d0(P); rd = f_road(P); gv = n_grove(P)
-        ok = (d0 > beach_w(P) + 14) & (gv > 0.66) & (rd > 60) & ~near_trail(P, 4.0) & (slope(P) < 0.15) & (f_gap(P) < 0.05)
+        ok = (d0 > beach_w(P) + 14) & (gv > 0.66) & (rd > 64) & ~near_trail(P, 4.0) & (slope(P) < 0.15) & (f_gap(P) < 0.05)
         for x, z in P[ok]:
             sp = rng.random()
             base = 'tree_torrey_pine_a' if sp < 0.38 else 'tree_torrey_pine_b' if sp < 0.66 else 'tree_eucalyptus_a' if sp < 0.85 else 'tree_eucalyptus_b'
@@ -353,7 +363,7 @@ def props_for(name, X0, Z0, height, f_dom, f_sd, f_d0, f_road, f_gap, n_grove, n
     if len(P):
         d0 = f_d0(P); rd = f_road(P)
         ok = (d0 > beach_w(P) + 14) & (rd > 18) & (rd <= 60) & ~near_trail(P, 4.0) & (slope(P) < 0.15) & (f_gap(P) < 0.05)
-        for x, z in P[ok][:2]:
+        for x, z in P[ok][:0]:      # review: no lone trees within 64 m of a street (existing trees already use the cap)
             put('tree_torrey_pine_a' if rng.random() < 0.5 else 'tree_torrey_pine_b', 'normal', x, z, rng.uniform(0, 360), True, rng.uniform(0.75, 1.0), 0.8)
     # MEADOW TUFTS: dry tufts and green tufts break the ground's flatness at eye height (lawn patch, no collider)
     P = cand(70, 1.5)

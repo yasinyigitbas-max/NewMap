@@ -12195,16 +12195,6 @@
    "from": "fill 21 Nov (tools/city/fill, generated)"
   },
   {
-   "piece": "fl_m2_m4",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "fill 21 Nov (tools/city/fill, generated)"
-  },
-  {
    "piece": "fl_m2_m3",
    "pos": [
     0.0,
@@ -12255,16 +12245,6 @@
    "from": "fill 21 Nov (tools/city/fill, generated)"
   },
   {
-   "piece": "fl_m1_0",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "fill 21 Nov (tools/city/fill, generated)"
-  },
-  {
    "piece": "fl_m1_1",
    "pos": [
     0.0,
@@ -12286,16 +12266,6 @@
   },
   {
    "piece": "fl_0_m9",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "fill 21 Nov (tools/city/fill, generated)"
-  },
-  {
-   "piece": "fl_0_0",
    "pos": [
     0.0,
     0.0,
@@ -12346,16 +12316,6 @@
   },
   {
    "piece": "fl_1_m8",
-   "pos": [
-    0.0,
-    0.0,
-    0.0
-   ],
-   "yaw": 0.0,
-   "from": "fill 21 Nov (tools/city/fill, generated)"
-  },
-  {
-   "piece": "fl_1_m4",
    "pos": [
     0.0,
     0.0,
@@ -12553,6 +12513,6 @@
    ],
    "blocks": []
   },
-  "fill_rows": 99
+  "fill_rows": 95
  }
 }
