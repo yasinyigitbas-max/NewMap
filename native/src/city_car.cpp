@@ -88,7 +88,14 @@ void CityCar::make() {
 	Ref<Shader> sh = rl->load("res://vehicles/car_paint.gdshader");
 	Ref<Texture2D> atlas = rl->load("res://vehicles/models/Textures/car_atlas_1024.png");
 	if (sh.is_valid()) {
-		// (the paint shader reads the global `refl_env`: whoever makes the car sees to it that it exists, as the rig does)
+		// (the paint shader reads the global `refl_env` (x daylight, y cloud): the first car makes it if nothing has (21 Nov: in the
+		// game it never was: "Shader uses global parameter 'refl_env', but it was removed" on the S23 as cars came in))
+		static bool refl_ok = false;
+		if (!refl_ok) {
+			RenderingServer *rs = RenderingServer::get_singleton();
+			if (!rs->global_shader_parameter_get_list().has(StringName("refl_env"))) rs->global_shader_parameter_add("refl_env", RenderingServer::GLOBAL_VAR_TYPE_VEC2, Vector2(1.0f, 0.0f));
+			refl_ok = true;
+		}
 		mat.instantiate(); mat->set_shader(sh); mat->set_shader_parameter("atlas", atlas);
 		// the damage's photo detail and the street reflected in the paint (the old game's car_models.gd)
 		mat->set_shader_parameter("damage_detail", rl->load("res://vehicles/tex/car_damage_detail.png"));
