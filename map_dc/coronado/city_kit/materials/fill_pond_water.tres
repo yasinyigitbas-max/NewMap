@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://tools/city/look/sea.gdshader" id="1_n7614"]
+[ext_resource type="Texture2D" path="res://tools/city/look/sky_noise.png" id="2_r0yht"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_n7614")
+shader_parameter/ripple_tex = ExtResource("2_r0yht")
+shader_parameter/shallow = null
+shader_parameter/deep_col = null
+shader_parameter/light = null
+shader_parameter/sun_dir = null
+shader_parameter/sun_light = null
+shader_parameter/ripple = null
+shader_parameter/glint = null

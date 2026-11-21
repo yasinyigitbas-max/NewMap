@@ -230,6 +230,11 @@ func _restyle(cell: Node) -> void:
 		if b: cell.add_child(b)
 	if wet > 0.0: _wet_ground(cell)
 	if cars and cell.get_node_or_null("look_cars") == null: _park(cell)
+	# the fill's lagoons (21 Nov, tools/city/fill): their still water is drawn with the live sea material (the look's
+	# light and sky), not the copy saved in the piece
+	if sea:
+		for w: Node in cell.find_children("*pond_*", "GeometryInstance3D", true, false):
+			(w as GeometryInstance3D).material_override = ClassDB.class_call_static(&"CitySea", &"get_sea_material")
 	if not glow: return
 	for nm: String in ["glow_halo", "glow_pool"]:
 		var g := cell.get_node_or_null(nm) as GeometryInstance3D

@@ -158,7 +158,13 @@ func _lib_ground(gm: Mesh) -> Mesh:
 			var ga := gm.surface_get_arrays(si); var base := GV.size(); var n := (ga[Mesh.ARRAY_VERTEX] as PackedVector3Array).size()
 			GV.append_array(ga[Mesh.ARRAY_VERTEX]); GN.append_array(ga[Mesh.ARRAY_NORMAL]); GUV.append_array(ga[Mesh.ARRAY_TEX_UV])
 			var u2 := PackedVector2Array(); u2.resize(n); u2.fill(Vector2(float(_layer("ground", sm2.albedo_texture)), sm2.roughness)); GU2.append_array(u2)
-			var col := PackedColorArray(); col.resize(n); col.fill(sm2.albedo_color.srgb_to_linear()); GC.append_array(col)
+			var col := PackedColorArray(); col.resize(n); col.fill(sm2.albedo_color.srgb_to_linear())
+			# the fill ground (21 Nov, tools/city/fill): a tint per vertex (soft variation over the big lawns, meadows and
+			# beaches) rides on the surface's tint; the pieces before it have no vertex colours and are baked as before
+			var vc: Variant = ga[Mesh.ARRAY_COLOR]
+			if vc != null and (vc as PackedColorArray).size() == n:
+				for q in n: col[q] = col[q] * (vc as PackedColorArray)[q].srgb_to_linear()
+			GC.append_array(col)
 			for ix: int in (ga[Mesh.ARRAY_INDEX] as PackedInt32Array): GI.append(ix + base)
 		var garr := []; garr.resize(Mesh.ARRAY_MAX)
 		garr[Mesh.ARRAY_VERTEX] = GV; garr[Mesh.ARRAY_NORMAL] = GN; garr[Mesh.ARRAY_TEX_UV] = GUV; garr[Mesh.ARRAY_TEX_UV2] = GU2; garr[Mesh.ARRAY_COLOR] = GC; garr[Mesh.ARRAY_INDEX] = GI
