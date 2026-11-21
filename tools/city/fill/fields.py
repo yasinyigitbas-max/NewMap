@@ -109,7 +109,10 @@ def main():
     d0 = (ndi.distance_transform_edt(land0) - ndi.distance_transform_edt(~land0)).astype(np.float32) * res
     sd = (ndi.distance_transform_edt(~cov) - ndi.distance_transform_edt(cov)).astype(np.float32) * res
     on_isl = shapely.contains_xy(island.buffer(30), XX, ZZ)
-    dom = (sd > -0.35) & on_isl & (d0 > -14) & (Hb > -1.8)
+    isl0 = shapely.contains_xy(island, XX, ZZ)
+    # (d0 > -14 | on the island: a low spot inside the outline, under 0 m but with no water laid on it, gets wet sand)
+    dom = (sd > -0.35) & on_isl & ((d0 > -14) | isl0) & (Hb > -1.8)
+    del isl0
     isl = shapely.contains_xy(island, XX, ZZ)
     lab, n = ndi.label((~cov) & isl & (d0 > 30))
     sizes = np.bincount(lab.ravel()); big = list(set(np.nonzero(sizes * res * res > 20000)[0]) - {0})

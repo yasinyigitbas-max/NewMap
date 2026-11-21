@@ -203,8 +203,9 @@ def main():
         cx = math.floor((x0 + (i * 8 + 0.5) * res) / CELL); cz = math.floor((z0 + (j * 8 + 0.5) * res) / CELL)
         cells.add((cx, cz))
     # tiny gaps (under 8 cells of 4 m) are caught by the full-resolution test
-    jj, ii = np.nonzero(dom & gap)
-    for j, i in zip(jj[::50], ii[::50]):
+    # (and every thin sliver along the neighbours: dom pixels within 3 m of their ground, strided)
+    jj, ii = np.nonzero(dom & (gap | (F['sd'] < 3.0)))
+    for j, i in zip(jj[::20], ii[::20]):
         cells.add((math.floor((x0 + (i + 0.5) * res) / CELL), math.floor((z0 + (j + 0.5) * res) / CELL)))
     cells = sorted(cells)
     print('make_fill: %d cells' % len(cells), flush=True)
@@ -227,7 +228,7 @@ def main():
         fine = (np.abs(f_dom(cen)) < 3) | (relief_amp(cen) > 0.02) | (f_gap(cen) > 0.05)
         T = np.concatenate([T[~fine], subdivide(T[fine])])
         cen = T.mean(1)
-        fine2 = (np.abs(f_dom(cen)) < 1.2) & (f_gap(cen) > 0.05)
+        fine2 = (np.abs(f_dom(cen)) < 1.2) & ((f_gap(cen) > 0.05) | (f_sd(cen) < 1.5))      # (0.5 m slivers between pieces)
         T = np.concatenate([T[~fine2], subdivide(T[fine2])])
         T, _ = split(T, L['keep'])
         if len(T) == 0: continue
