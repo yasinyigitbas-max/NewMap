@@ -1,0 +1,102 @@
+{
+ "_doc": "Built-in interiors (22 Nov 2026 pilot): what fills a kit building's hand-placed slot markers, per shop kind. A slot marker (Marker3D in <model>_interior.scn, meta slot_type, variant, lift) takes sets[kind][slot_type][variant]. There is NO fallback: a kind without a set, a slot type the set does not name, a variant out of range or a prop file that does not exist fails the validator and the bake (so a room can never be filled with stray plants). 'required' = slot types every model offering this kind must have. Props are kit indoor props (assets/coronado_kit/props/indoor, file base without prop_ and _clean_near).",
+ "sets": {
+  "bank": {
+   "required": [
+    "till",
+    "counter",
+    "staff",
+    "queue",
+    "seat",
+    "desk",
+    "decor"
+   ],
+   "till": [
+    "bulletproof_teller_window"
+   ],
+   "counter": [
+    "shop_counter",
+    "security_grille_counter",
+    "copier_large_format_printer"
+   ],
+   "staff": [
+    "office_chair"
+   ],
+   "queue": [
+    "stanchion"
+   ],
+   "seat": [
+    "waiting_bench",
+    "side_chair",
+    "office_chair"
+   ],
+   "desk": [
+    "office_desk"
+   ],
+   "shelf": [
+    "brochure_rack",
+    "filing_cabinet",
+    "change_machine"
+   ],
+   "decor": [
+    "gallery_frame",
+    "poster_case",
+    "security_mirror"
+   ],
+   "safe": [
+    "wall_safe"
+   ],
+   "bin": [
+    "indoor_bin"
+   ]
+  },
+  "office": {
+   "_doc": "provisional (22 Nov): the bank hall as an office front room - Shore Bank (c_sw__com_bank__0) is assigned kind office on com_bank; a reception counter where the tellers sit, plants where the queue stands",
+   "required": [
+    "counter",
+    "staff",
+    "seat",
+    "desk",
+    "decor"
+   ],
+   "till": [
+    "shop_counter"
+   ],
+   "counter": [
+    "shop_counter",
+    "shop_counter",
+    "copier_large_format_printer"
+   ],
+   "staff": [
+    "office_chair"
+   ],
+   "queue": [
+    "potted_plant"
+   ],
+   "seat": [
+    "waiting_bench",
+    "side_chair",
+    "office_chair"
+   ],
+   "desk": [
+    "office_desk"
+   ],
+   "shelf": [
+    "brochure_rack",
+    "filing_cabinet",
+    "wall_shelf"
+   ],
+   "decor": [
+    "gallery_frame",
+    "poster_case",
+    "security_mirror"
+   ],
+   "safe": [
+    "wall_safe"
+   ],
+   "bin": [
+    "indoor_bin"
+   ]
+  }
+ }
+}

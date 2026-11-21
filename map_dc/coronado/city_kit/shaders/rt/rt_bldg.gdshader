@@ -120,10 +120,15 @@ void fragment() {
 	vec2 suv = (a.x >= a.z ? vec2(v_wp.z, v_wp.y) : vec2(v_wp.x, v_wp.y)) * vec2(1.0 / 1.6, 1.0 / 19.0);
 	float streak = smoothstep(0.35, 0.85, texture(grime_tex, suv).a) * wall * streaks;
 	float amount = clamp((cavity * 0.75 + foot * 0.85 + film + streak * 0.6) * clamp(wear + wear_add, 0.0, 1.0), 0.0, 0.9);
+	// built-in interiors (22 Nov, tools/city/rooms/builtin): vertex alpha < 0.5 = an indoor face (every kit building
+	// exports RGB vertex colours, so alpha is 1 everywhere else): no street grime, no exterior paint tint, no contact
+	// line, no window glass reflection on it
+	float outdoor = step(0.5, COLOR.a);
+	amount *= outdoor;
 	// the tint paints the walls, not the glass or the dark trims: it fades out on dark and on saturated texels
 	float lum = dot(alb.rgb, vec3(0.299, 0.587, 0.114));
 	float sat = max(alb.r, max(alb.g, alb.b)) - min(alb.r, min(alb.g, alb.b));
-	float paint = smoothstep(0.28, 0.55, lum) * (1.0 - smoothstep(0.18, 0.4, sat)) * wall;
+	float paint = smoothstep(0.28, 0.55, lum) * (1.0 - smoothstep(0.18, 0.4, sat)) * wall * outdoor;
 	vec3 base = alb.rgb * COLOR.rgb * mix(vec3(1.0), tint, paint);
 	vec3 col = mix(base, base * grime.rgb * 1.1, amount * 0.8);
 	// close-up detail: walls go soft at arm's length (one atlas texel is ~1-2 cm); a fine tiling grain only near the camera
@@ -132,7 +137,7 @@ void fragment() {
 		if (near_f > 0.01) col *= 1.0 + (texture(ck_look_detail_tex, guv / detail_m).r - 0.5) * 1.6 * detail_amount * near_f;
 	}
 	// contact: a thin dark line where the wall stands on the ground
-	float line = (1.0 - smoothstep(0.0, contact_line_m, v_y)) * wall;
+	float line = (1.0 - smoothstep(0.0, contact_line_m, v_y)) * wall * outdoor;
 	col *= 1.0 - contact_line * ck_look_contact * line * line;
 	ALBEDO = col;
 	ROUGHNESS = clamp(mix(orm.g, max(orm.g, 0.85), amount), 0.05, 1.0);
@@ -143,7 +148,7 @@ void fragment() {
 	vec3 emi = vec3(0.0);
 	if (ck_look_glass > 0.5 && (has_orm || lod_glass)) {
 		// glass = the smooth, non-metal texels of the ORM (roughness 0.08; nothing else in the kit is under 0.25)
-		float glass = (1.0 - smoothstep(0.1, 0.22, orm.g)) * (1.0 - smoothstep(0.1, 0.3, orm.b)) * wall;
+		float glass = (1.0 - smoothstep(0.1, 0.22, orm.g)) * (1.0 - smoothstep(0.1, 0.3, orm.b)) * wall * outdoor;
 		if (glass > 0.01) {
 			vec2 hw = win_hash(floor(v_win) + lit_seed);
 			vec3 view = normalize(CAMERA_POSITION_WORLD - v_wp);
