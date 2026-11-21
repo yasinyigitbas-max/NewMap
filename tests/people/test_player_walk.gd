@@ -81,7 +81,7 @@ func _process(dt: float) -> bool:
 	elif phase == 1:
 		if t > 3.5: phase = 2; t = 0.0; player.call(&"set_move", Vector2(0, 0), false)
 	elif phase == 2:
-		if c == "step/idle" and float(d.get("speed", 1)) < 0.02 and t > 0.5:
+		if c.begins_with("pidle/base_") and float(d.get("speed", 1)) < 0.02 and t > 0.5:
 			walks.append(cur.duplicate()); print("PWALK   walk %d: %s" % [walks.size(), cur])
 			cur = {"start": "", "main": "", "stop": ""}
 			if walks.size() >= CYCLES: phase = 3; t = 0.0; player.call(&"set_move", Vector2(0, 1), false)
@@ -93,7 +93,7 @@ func _process(dt: float) -> bool:
 		elif t >= 8.0 and t < 10.5: player.call(&"set_move", Vector2(0, -1), false)
 		elif t >= 10.5: phase = 4; t = 0.0; player.call(&"set_move", Vector2(0, 0), false)
 	elif phase == 4:
-		if c == "step/idle" and t > 1.0 and float(d.get("speed", 1)) < 0.02: phase = 5; t = 0.0; player.call(&"set_move", Vector2(0, 1), false)
+		if c.begins_with("pidle/base_") and t > 1.0 and float(d.get("speed", 1)) < 0.02: phase = 5; t = 0.0; player.call(&"set_move", Vector2(0, 1), false)
 		if t > 8.0: phase = 5; t = 0.0
 	elif phase == 5:   # let go while setting off
 		if c.begins_with("pwalk/start") and t > 0.3 and cancel_start == "":

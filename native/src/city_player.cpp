@@ -62,6 +62,13 @@ static const PwNames &pwn() { static const PwNames n; return n; }   // (made on 
 static bool pw_loop(const StringName &p_c) { for (int i = 0; i < PW_NM; i++) if (p_c == PW_MAIN[i]) return true; return false; }
 
 // one of n, never p_last (xorshift32; the first time any of them)
+// (each figure's own pool: the takes its library has, in order; the male has no female start / stop: Yasin, 23:34)
+int CityPlayer::pw_count(const StringName *p_names, int p_max) const {
+	int n = 0;
+	while (n < p_max && fig && fig->clip_len(p_names[n]) > 0.0) n++;
+	return n > 0 ? n : 1;
+}
+
 int CityPlayer::pw_pick(int p_n, int p_last) {
 	pw_rng ^= pw_rng << 13; pw_rng ^= pw_rng >> 17; pw_rng ^= pw_rng << 5;
 	if (p_n < 2) return 0;
@@ -93,7 +100,8 @@ void CityPlayer::_ready() {
 	set_max_slides(4);
 	fig = memnew(CityPed);
 	fig->set_body_id(body_id);
-	fig->set_clip("ual/Idle_Loop");
+	fig->set_clip("pidle/base_standing");
+
 	add_child(fig);
 	cam = memnew(Camera3D);
 	cam->set_as_top_level(true);
@@ -279,7 +287,7 @@ int CityPlayer::take_punch() {
 void CityPlayer::_physics_process(double p_delta) {
 	pm::Scope _pm(pm::PLAYER_PHYS);   // (the slow-frame marks, perf_marks.h)
 	if (!fig) return;
-	if (frozen || climb != 0) { if (idv_take >= 0) fig->set_next_blend(0.15); idv_take = -1; idv_t = 0.0; }
+	if (frozen || climb != 0) { if (idv_take >= 0) fig->set_next_blend(0.15); idv_take = -1; idv_t = 0.0; idv_span = 0.0; }
 	const float dt = (float)p_delta;
 	sense(p_delta);
 	punch_t += p_delta; hit_t += p_delta; combat_t += p_delta; uncombat_t += p_delta; act_left = std::max(act_left - p_delta, 0.0);
@@ -512,8 +520,8 @@ void CityPlayer::_physics_process(double p_delta) {
 		const int pw_mode_before = step_mode;
 		const double gv_mx = pw ? fig->clip_meta_sn(PW_MAIN[0], K_GV, 1.533) : 1.533;   // (the Mixamo walk's own pace: its stops and turns are cut from it)
 		if (step_mode == 0 && want_len > 0.05f && move_speed < 0.05f && speed < 0.08f && turn_left < 0.6f && !airborne && settle_t >= 1.1f && !auto_on && pw) {
-			const int k = pw_pick(PW_NS, pw_start_last); pw_start_last = k;
-			pw_main = pw_pick(PW_NM_PICK, pw_main_last); pw_main_last = pw_main;
+			const int k = pw_pick(pw_count(PW_START, PW_NS), pw_start_last); pw_start_last = k;
+			pw_main = pw_pick(pw_count(PW_MAIN, PW_NM_PICK), pw_main_last); pw_main_last = pw_main;
 			step_mode = 1; step_pw = true; step_clip = PW_START[k]; step_t = 0.0f; step_yaw_prev = 0.0; hand_t = 0.0f;
 			step_end = (float)fig->clip_meta_sn(step_clip, K_OAT[pw_main], fig->clip_meta_sn(step_clip, K_DONE, fig->clip_len(step_clip)));   // (where the walk loop takes over)
 			step_cs = run ? 1.3f : std::min(std::max(std::min(want_len, walk_top) / (float)fig->clip_meta_sn(step_clip, K_VOUT, 0.85), 0.8f), 1.3f);   // (he ends the start at the pace he walks on at)
@@ -535,7 +543,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (pw_mi >= 0 && pw_settle <= 0.0f && !auto_on && want_len < 0.05f && move_speed > 0.05f && move_speed < walk_top * 1.05f && !airborne) {   // (even slow, out of a turn: easing to the idle from mid-stride slid a foot 12 cm)
 			// letting go: on at his pace to where the stop is cut in (the stop not used last time: at most one stride)
 			pw_turn_next = -1;
-			if (pw_stop_next < 0) pw_stop_next = pw_pick(PW_NE, pw_stop_last);
+			if (pw_stop_next < 0) pw_stop_next = pw_pick(pw_count(PW_STOP, PW_NE), pw_stop_last);
 			if (pw_crossed(pw_ph_prev, pw_ph, fig->clip_meta_sn(PW_STOP[pw_stop_next], K_IN[pw_mi], 0.0))) {
 				step_mode = 2; step_pw = true; step_clip = PW_STOP[pw_stop_next]; pw_stop_last = pw_stop_next; pw_stop_next = -1;
 				step_t = (float)fig->clip_meta_sn(step_clip, K_AT[pw_mi], 0.0); step_yaw_prev = fig->clip_curve_sn(step_clip, K_YAW, step_t, 0.0);
@@ -755,7 +763,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		float sv[2] = { 0.92f, 2.40f };   // (the planted foot's pace: clip_audit.gd)
 		const int ns = 2;
 		if (fig->clip_len(PW_MAIN[0]) > 0.0) {
-			if (pw_main < 0) { pw_main = pw_pick(PW_NM_PICK, pw_main_last); pw_main_last = pw_main; }
+			if (pw_main < 0) { pw_main = pw_pick(pw_count(PW_MAIN, PW_NM_PICK), pw_main_last); pw_main_last = pw_main; }
 			set[0] = PW_MAIN[pw_main]; sv[0] = (float)fig->clip_meta_sn(PW_MAIN[pw_main], K_GV2, pw_main < PW_NM_PICK ? 1.533 : 0.92);
 		}
 		const float sp = std::max(speed, 0.3f);
@@ -788,33 +796,31 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (clip == IDLE || clip == S_IDLE) clip = phone_kind == 2 ? P_EAR : (phone_kind == 3 ? P_UP : P_HAND);
 		else if ((clip == S_WALK3 || clip == WALK || pw_loop(clip)) && fig->clip_len(P_WALK_HAND) > 0.0) clip = phone_kind == 2 ? P_WALK_EAR : P_WALK_HAND;
 	}
-	// IDLE VARIATIONS (Yasin, 21 Nov: "base step/idle plays 4 full loops, then ONE random variation ... back to the base
-	// ... never two variations back to back ... avoid repeating the same variation twice in a row"; no UAL, no
-	// Idle_Transition, no texting). The takes (tools/people/make_player_idles.gd) hold step/idle's planted legs and pelvis
-	// still: the feet do not move in them or in the crossfades, and the body never travels. Moving, crouching, a fight,
-	// a phone, a climb, a car (frozen) or the water: the base or whatever is asked plays at once (0.15 s).
+	// LONG MIXAMO IDLES (Yasin, 21 Nov 23:19): 15-30 seconds looping, one fidget, then a different base.
+	// No UAL/step base. Whole-body mocap, no frozen-leg re-stance; both pools exclude their previous pick.
 	{
+		static const StringName BASE[4] = { StringName("pidle/base_standing"), StringName("pidle/base_idle"), StringName("pidle/base_idle1"), StringName("pidle/base_orc") };
 		static const StringName IDV[5] = { StringName("pidle/Looking_Around_idle"), StringName("pidle/Looking"), StringName("pidle/Arm_Stretching"), StringName("pidle/Neck_Stretching"), StringName("pidle/Bored") };
-		const double IDV_LOOPS = 4.0, IDV_IN = 0.4, IDV_OUT = 0.4;
 		const bool standing = clip == S_IDLE && hold < 0.0 && step_mode == 0 && climb == 0 && !airborne && !swimming && !frozen && mv.length_squared() < 0.0001f && speed < 0.05f;
+		auto rnd = [&]() -> uint32_t { idv_rng ^= idv_rng << 13; idv_rng ^= idv_rng >> 17; idv_rng ^= idv_rng << 5; return idv_rng; };
+		auto pick = [&](int n, int last) -> int { int k = (int)(rnd() % (uint32_t)(last < 0 ? n : n - 1)); return last >= 0 && k >= last ? k + 1 : k; };
 		if (!standing) {
-			if (idv_take >= 0) fig->set_next_blend(0.15);   // (cancelled: the next clip comes in fast)
-			idv_take = -1; idv_t = 0.0;
-		} else if (idv_take < 0) {
+			if (idv_take >= 0) fig->set_next_blend(0.15);
+			idv_take = -1; idv_t = 0.0; idv_span = 0.0;
+			// (not quite still yet, a stop's last pace easing out: never the UAL step/idle; the stand's first base already)
+			if (clip == S_IDLE && hold < 0.0 && fig->clip_len(BASE[1]) > 0.0) clip = BASE[1];
+		} else if (fig->clip_len(BASE[0]) > 0.0) {
+			// (just stood still: the stops settle into base_idle's stance, so the stand opens with it; after each fidget a
+			// different base than the one before)
+			if (idv_span <= 0.0) { idv_base = 1; idv_span = 15.0 + (rnd() % 15001u) * 0.001; }
 			idv_t += dt;
-			const double bl = fig->clip_len(S_IDLE);
-			if (bl > 0.0 && idv_t >= IDV_LOOPS * bl) {   // (four complete base loops, then crossfade into the take)
-				idv_rng ^= idv_rng << 13; idv_rng ^= idv_rng >> 17; idv_rng ^= idv_rng << 5;   // (xorshift32)
-				int k = (int)(idv_rng % 4u);
-				if (idv_last < 0) k = (int)(idv_rng % 5u); else if (k >= idv_last) k++;   // (any but the last one)
-				if (fig->clip_len(IDV[k]) > 0.0) { idv_take = k; idv_last = k; idv_t = 0.0; fig->set_next_blend(IDV_IN); }
-				else idv_t = 0.0;   // (a figure without the takes: the base goes on)
+			if (idv_take < 0 && idv_t >= idv_span) {
+				idv_take = pick(5, idv_last); idv_last = idv_take; idv_t = 0.0; fig->set_next_blend(0.6);
+			} else if (idv_take >= 0 && idv_t >= fig->clip_len(IDV[idv_take]) - 0.6) {
+				idv_take = -1; idv_t = 0.0; idv_base = pick(4, idv_base); idv_span = 15.0 + (rnd() % 15001u) * 0.001; fig->set_next_blend(0.6);
 			}
-		} else {
-			idv_t += dt;
-			if (idv_t >= fig->clip_len(IDV[idv_take]) - IDV_OUT) { idv_take = -1; idv_t = 0.0; fig->set_next_blend(IDV_OUT); }   // (back to the base, its loop from the start)
+			clip = idv_take >= 0 ? IDV[idv_take] : BASE[idv_base];
 		}
-		if (idv_take >= 0) clip = IDV[idv_take];
 	}
 	vis_dy *= std::exp(-dt / 0.09f); if (std::fabs(vis_dy) < 0.001f) vis_dy = 0.0f;   // (lifted onto a kerb: the figure rises after, its foot already on it)
 	// THE LEAN: his body tilts with its acceleration, into a turn and a little forward into a start, back into a stop
@@ -831,7 +837,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		// (on foot with the pwalk clips: no lean; the mocap leans by itself, and the lean's tilt followed every change of
 		// pace and turn: Yasin, 21 Nov "is there anything else influencing the way he walks?")
 		static const StringName PWS("pwalk/start_a");
-		if (heavy && fig->clip_len(PWS) > 0.0) lean_a = Vector3();
+		if ((heavy && fig->clip_len(PWS) > 0.0) || (raw_layers & RAW_ALL)) lean_a = Vector3();
 	}
 	Basis fb(Vector3(0, 1, 0), yaw);
 	{
@@ -844,12 +850,19 @@ void CityPlayer::_physics_process(double p_delta) {
 	const bool slowest = clip == WALK || clip == S_WALK2 || pw_loop(clip);
 	fig->drive(Transform3D(fb, get_global_position() + Vector3(0, vis_dy, 0)), clip, std::min(std::max(cs, slowest ? 0.15 : 0.5), 2.0), hold);
 	if (Skeleton3D *sk = fig->skeleton()) {
-		if (!plant) { plant = memnew(FootPlant); sk->add_child(plant); }
-		const bool on = !airborne && !swimming && !frozen;
+		if (!plant) {
+			plant = memnew(FootPlant); sk->add_child(plant);
+			// (Yasin, 21 Nov 23:19 "the animations are still played with": the player's mocap plays untouched, no 12-degree
+			// shoulder roll; the crowd keeps its posture)
+		}
+		if (Posture *po = posture_node(sk)) po->set_active((raw_layers & RAW_POSTURE_ON) && !(raw_layers & RAW_ALL));
+		// The idle mocap keeps its own hips/legs; no pin/ground IK or synthetic shuffle lift while standing.
+		const bool idle_mocap = String(clip).begins_with("pidle/");
+		const bool on = !airborne && !swimming && !frozen && !idle_mocap && !(raw_layers & RAW_ALL);
 		plant->set_active(on); plant->set_influence(on ? 1.0f : 0.0f);
 		plant->skip = get_rid(); plant->fwd = Vector3(std::sin(yaw), 0, std::cos(yaw));
 		static const StringName PWS2("pwalk/start_a");
-		plant->lock_on = true;   // (kept on the pwalk clips too: off, the planted feet drifted up to 6-9 cm; its release is not what jerked him: noplant 240 flagged frames vs 227)
+		plant->lock_on = !(raw_layers & RAW_PIN);   // (kept on the pwalk clips too: off, the planted feet drifted up to 6-9 cm; its release is not what jerked him: noplant 240 flagged frames vs 227)
 		(void)PWS2;
 	}
 }
@@ -966,7 +979,7 @@ Dictionary CityPlayer::get_frame_log() const {
 	d["node"] = get_global_position(); d["fig_at"] = fig ? fig->get_global_position() : Vector3(); d["pelvis"] = pelvis_world();
 	if (plant) { d["foot_l"] = plant->foot_w[0]; d["foot_r"] = plant->foot_w[1]; d["pelvis_drawn"] = plant->pelvis_w; d["plant_on"] = plant->is_active(); d["lock"] = Vector2i(plant->locked[0], plant->locked[1]); d["slide_l"] = plant->slide_w[0]; d["slide_r"] = plant->slide_w[1]; }
 	d["speed"] = speed; d["yaw"] = yaw;
-	d["idle_take"] = idv_take; d["idle_time"] = idv_t; d["idle_last"] = idv_last;
+	d["idle_base"] = idv_base; d["idle_span"] = idv_span; d["idle_take"] = idv_take; d["idle_time"] = idv_t; d["idle_last"] = idv_last;
 	d["pw_start"] = pw_start_last; d["pw_main"] = pw_main; d["pw_stop"] = pw_stop_last; d["pw_turn"] = pw_turn_last; d["step_lat"] = step_lat;
 	d["clip"] = get_clip(); d["fig_mode"] = fig ? (int)fig->get_mode() : -1; d["fig_at"] = fig ? fig->body_at() : Vector3(); d["step"] = step_mode; d["starts"] = starts; d["stops"] = stops; d["turns"] = turns; d["climb"] = climb; d["u"] = climb ? climb_t / climb_len : -1.0f; d["settle"] = settle_t; d["clip_off"] = clip_off;
 	return d;
@@ -1024,7 +1037,12 @@ void CityPlayer::stand_at(const Vector3 &p_at, double p_yaw) {
 	yaw = (float)p_yaw;
 	cam_yaw = (float)p_yaw + 3.14159265f;   // (his view behind him)
 	set_velocity(Vector3());
-	if (fig) fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), p_at), StringName("ual/Idle_Loop"), 1.0, -1.0);
+	if (fig) fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), p_at), StringName("pidle/base_standing"), 1.0, -1.0);
+}
+
+Posture *CityPlayer::posture_node(Skeleton3D *p_sk) {
+	if (p_sk != posture_sk) { posture_sk = p_sk; posture = Object::cast_to<Posture>(p_sk->get_node_or_null(NodePath("Posture"))); }
+	return posture;
 }
 
 String CityPlayer::get_clip() const { return fig ? String(fig->current_clip()) : String(); }
@@ -1047,6 +1065,8 @@ void CityPlayer::act(const StringName &p_clip, double p_seconds, double p_yaw) {
 
 void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_move", "direction", "run"), &CityPlayer::set_move);
+	ClassDB::bind_method(D_METHOD("set_raw_layers", "bits"), &CityPlayer::set_raw_layers);
+	ClassDB::bind_method(D_METHOD("get_raw_layers"), &CityPlayer::get_raw_layers);
 	ClassDB::bind_method(D_METHOD("get_speed"), &CityPlayer::get_speed);
 	ClassDB::bind_method(D_METHOD("talk_face", "on", "at"), &CityPlayer::talk_face);
 	ClassDB::bind_method(D_METHOD("gesture", "kind", "seconds"), &CityPlayer::gesture);

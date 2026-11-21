@@ -30,6 +30,10 @@ const MX_SRC := "/workspace/share/anim/walk/src/clips_mx_%s.res"
 ## ignored: every clip goes to both figures) Start Walking (1), Female Start Walking, Female Stop Walking, Walking (1) (2)
 ## (3), fitted by the same Mixamo converter (perf-bugs AnimRetarget, mixamo rig) into clips_mxnew_<g>.res
 const MX_NEW := "res://tools/people/player_walk_sources/clips_mxnew_%s.res"
+## (Yasin, 23:34, 21 Nov: "the female takes don't suit the male") the male figure leaves out Female Start / Stop Walking
+## and takes the walking loops of his Male Locomotion and Action Adventure packs (fitted the same way, clips_mxpack_<g>.res)
+const MX_PACK := "res://tools/people/player_walk_sources/clips_mxpack_%s.res"
+const SKIP := {"male": ["Start_Walking_F", "Stop_Walking_F"], "female": ["ML_Walking", "AA_Walking"]}
 const DUP_CM := 2.0   # (a take whose feet and head stay within 2 cm of one we have, all through, is the same take)
 const FPS := 30.0
 
@@ -415,7 +419,10 @@ func _initialize() -> void:
 		print("PLAYER_WALK %s lateral %s, rest asymmetry %.2f cm" % [gender, lat, asym])
 		var mx: AnimationLibrary = load(MX_SRC % gender)
 		var steps: AnimationLibrary = load(DIR + "clips_step_%s.res" % gender)
-		var idle: Animation = steps.get_animation(&"idle")
+		var idle: Animation = steps.get_animation(&"idle")   # (its open fingers: every clip holds them)
+		# THE STANCE the starts set off from and the stops settle into (Yasin, 21 Nov 23:19: the UAL idle no longer plays):
+		# the long Mixamo base pidle/base_idle (Idle.fbx), the standard Mixamo stance the fidgets share (tools/people/make_player_idles.gd)
+		var stance: Animation = (load(DIR + "clips_player_idle_%s.res" % gender) as AnimationLibrary).get_animation(&"base_idle")
 		var clips := {}
 		clips["walk_mx"] = _copy(mx.get_animation(&"Walking"))
 		var ual := _copy(steps.get_animation(&"walk")); ual.set_meta("ground_v", 0.92); ual.set_meta("left_down", 0.0); ual.set_meta("source", "step/walk (ual/Walk_Loop)")
@@ -429,12 +436,15 @@ func _initialize() -> void:
 		var loops := {"mx": clips["walk_mx"], "ual": clips["walk_ual"]}
 		# THE NEW TAKES: a duplicate of one we have is left out; every start and stop gets its other foot by mirroring
 		var nw: AnimationLibrary = load(MX_NEW % gender)
+		var pk: AnimationLibrary = load(MX_PACK % gender)
 		var n_start := 2; var n_stop := 2; var n_loop := 0
 		var have := {"start": [clips["start_a"], clips["start_b"]], "stop": [clips["stop_a"], clips["stop_b"]], "walk": [clips["walk_mx"]]}
 		print("PLAYER_WALK %s start_a leads with %s" % [gender, _lead(clips["start_a"])])
-		for src in ["Start_Walking_1", "Start_Walking_F", "Stop_Walking_F", "Walking_1", "Walking_2", "Walking_3"]:
-			if nw == null or not nw.has_animation(src): print("PLAYER_WALK %s %s MISSING" % [gender, src]); continue
-			var a := _copy(nw.get_animation(src))
+		for src in ["Start_Walking_1", "Start_Walking_F", "Stop_Walking_F", "Walking_1", "Walking_2", "Walking_3", "ML_Walking", "AA_Walking"]:
+			if src in SKIP[gender]: print("PLAYER_WALK %s %s left out for this figure" % [gender, src]); continue
+			var lib: AnimationLibrary = pk if src.begins_with("ML_") or src.begins_with("AA_") else nw
+			if lib == null or not lib.has_animation(src): print("PLAYER_WALK %s %s MISSING" % [gender, src]); continue
+			var a := _copy(lib.get_animation(src))
 			var kind: String = "start" if src.begins_with("Start") else ("stop" if src.begins_with("Stop") else "walk")
 			var near := INF
 			for b in have[kind]: near = minf(near, _dup_cm(a, b))
@@ -445,7 +455,7 @@ func _initialize() -> void:
 				print("PLAYER_WALK %s %s -> %s (nearest take %.0f cm)" % [gender, src, nm, near])
 			else:
 				var lead := _lead(a)
-				var m := _mirror(nw.get_animation(src))
+				var m := _mirror(lib.get_animation(src))
 				var nn: int = n_start if kind == "start" else n_stop
 				var n1: String = kind + "_" + "abcdefgh"[nn]; var n2: String = kind + "_" + "abcdefgh"[nn + 1]
 				clips[n1] = a; clips[n2] = m; src_of[n1] = src; src_of[n2] = src + " (mirrored)"
@@ -472,14 +482,14 @@ func _initialize() -> void:
 						still = t
 					a.set_meta("still_at", still); a.set_meta("done_at", a.length); done = a.length
 					info += " still_at %.2f" % still
-				if name.begins_with("start") or name.begins_with("stop"): info += " idle stance:" + _fit_stance(a, idle, name.begins_with("start"))
+				if name.begins_with("start") or name.begins_with("stop"): info += " idle stance:" + _fit_stance(a, stance, name.begins_with("start"))
 				info += " v_scale %.3f" % _vel_scaled(a)
 				if name.begins_with("start"):
 					var vs := 0.0
 					for i in 16: vs += _curve(a, "vz", done - 0.5 + i / 30.0) / 16.0
 					a.set_meta("v_out", vs); info += " v_out %.2f m/s" % vs
-					info += " from idle %.0f cm" % _pose_d(_legs(a, 0.0), _legs(idle, 0.0))
-				if name.begins_with("stop"): info += " into idle %.0f cm" % _pose_d(_legs(a, a.length), _legs(idle, 0.0))
+					info += " from idle %.0f cm" % _pose_d(_legs(a, 0.0), _legs(stance, 0.0))
+				if name.begins_with("stop"): info += " into idle %.0f cm" % _pose_d(_legs(a, a.length), _legs(stance, 0.0))
 				for lk in loops:
 					if name.begins_with("start"): continue   # (a start comes out of the idle)
 					# the cut in: the moment of the clip (its first 0.6 s) and the share of the loop whose feet are nearest

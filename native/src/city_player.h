@@ -33,6 +33,8 @@ class CityPlayer : public CharacterBody3D {
 	// 4 varieties"; one recorded voice per gender, audio/player/<m|f>/<kind>_NN.ogg): a random take of the kind, never
 	// the one played last, from the set of his body's gender
 public:
+	void set_raw_layers(int p_bits) { raw_layers = p_bits; }
+	int get_raw_layers() const { return raw_layers; }
 	enum { V_JUMP = 0, V_CLIMB, V_LAND, V_HURT, V_PAIN, V_DEATH, V_BREATH, V_PUNCH, V_THROW, V_KINDS };
 private:
 	AudioStreamPlayer3D *vox_pl = nullptr;
@@ -46,10 +48,9 @@ private:
 	float air_min_vy = 0.0f, run_t = 0.0f;
 	void vox_load();
 	bool vox(int p_kind, double p_gap = 0.3, float p_chance = 1.0f);
-	// IDLE VARIATIONS (Yasin, 21 Nov): standing on foot, step/idle plays IDV_LOOPS full loops, then one pidle/* take
-	// (never the same one twice running), then the base again; anything else asked of him resets it
-	int idv_take = -1, idv_last = -1;   // the take playing (-1: the base), the one before
-	double idv_t = 0.0;                 // seconds into the base's loops, or into the take
+	// Mixamo long bases (15-30s) alternate with full-body fidgets; each pool excludes its last pick.
+	int idv_take = -1, idv_last = -1, idv_base = -1;
+	double idv_t = 0.0, idv_span = 0.0;
 	uint32_t idv_rng = 0x9e3779b9u;
 	// THE PLAYER'S WALK (Yasin, 21 Nov: "we should see one of the random starts, random main walks, and random stop walks.
 	// again, never the same one again"; tools/people/make_player_walks.gd, library "pwalk"): each walk picks its start,
@@ -67,6 +68,14 @@ private:
 	float pw_settle = 0.0f;   // (the stand after a stop: the idle, while the last of his pace eases out)   // (a walking turn's yaw still to give him, and the rate it is given at)
 	float yaw_r = 0.0f;                  // (his steering's turn rate now, rad/s: it builds up and eases off, no snap)
 	int pw_pick(int p_n, int p_last);
+	int pw_count(const StringName *p_names, int p_max) const;
+	// THE PROCEDURAL LAYERS, switchable (Yasin, 23:35, 21 Nov: compare the raw mocap with the corrected one; the walk test's
+	// F / P / K keys): RAW_PIN the foot pin off; RAW_ALL every layer off (FootPlant: pin, ground fit, the standing-shuffle
+	// lift; the lean; the shoulder posture); RAW_POSTURE_ON the crowd's 12-degree shoulder posture on him (off by default)
+	enum { RAW_PIN = 1, RAW_ALL = 2, RAW_POSTURE_ON = 4 };
+	int raw_layers = 0;
+	class Skeleton3D *posture_sk = nullptr; class Posture *posture = nullptr;
+	class Posture *posture_node(class Skeleton3D *p_sk);
 	bool capture_mouse = false, scripted = false, cmd_run = false, e_was = false, cam_set = false, frozen = false;
 	Vector2 cmd;
 	float cam_yaw = 0.0f, cam_pitch = -0.18f, cam_dist = 3.4f, yaw = 0.0f, speed = 0.0f;
