@@ -996,8 +996,8 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 				// hands open, and the walk stop (make_steps.gd) when he comes to a stand. (A fight keeps its fists: the
 				// clips below override this.)
 				{
-					static const StringName UW("ual/Walk_Loop"), UJ("ual/Jog_Fwd_Loop"), UI("ual/Idle_Loop"), OW("step/walk"), OJ("step/jog"), OI("step/idle"),
-							OSL("step/stop_l"), OSR("step/stop_r");
+					static const StringName UW("ual/Walk_Loop"), UJ("ual/Jog_Fwd_Loop"), UI("ual/Idle_Loop"), OW("walk"), OJ("run"), OI("step/idle"),
+							OSL("step/rb_stop_l"), OSR("step/rb_stop_r");   // (the Rocketbox walk and run again: Yasin, 21 Nov)
 					if (nb.st_walker != nb.walker) { nb.st_walker = nb.walker; nb.st_mode = 0; nb.st_moving = nb.v_s > 0.3f; }
 					const bool plain = hold < 0.0 && token == 0 && (clip == UW || clip == UI);
 					const bool moving = nb.v_s > (nb.st_moving ? 0.15f : 0.3f);
@@ -1007,7 +1007,9 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 						if (!moving && nb.st_moving && nb.st_mode == 0 && (nb.ped->current_clip() == OW || nb.ped->current_clip() == UW)) {
 							// on the foot nearer its landing (the walk's left lands at 0 of its loop, the right at 0.5)
 							const double len = nb.ped->clip_len(nb.ped->current_clip());
-							double ph = len > 0.0 ? nb.ped->clip_pos() / len : 0.0; ph -= std::floor(ph);
+							double ph = len > 0.0 ? nb.ped->clip_pos() / len : 0.0;
+							if (nb.ped->current_clip() == OW) ph -= 0.630;   // (the Rocketbox walk's left foot lands at 0.630 of its loop)
+							ph -= std::floor(ph);
 							nb.st_mode = 2; nb.st_t = 0.0f; nb.st_clip = (ph > 0.25 && ph < 0.75) ? OSR : OSL;
 						}
 						if (nb.st_mode == 2 && moving) nb.st_mode = 0;   // (changed his mind)
@@ -1019,7 +1021,9 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 					} else if (!plain) nb.st_mode = 0;
 					nb.st_moving = moving;
 					if (nb.ped->clip_len(OW) > 0.0 && hold < 0.0 && token == 0) {
-						if (clip == UW) clip = OW; else if (clip == UJ) clip = OJ; else if (clip == UI) clip = OI;
+						// (played at the same ground pace: the Rocketbox walk's own is 1.00 m/s against Walk_Loop's 0.91, the run's 2.69
+						// against the jog's 2.40)
+						if (clip == UW) { clip = OW; speed *= 0.91; } else if (clip == UJ) { clip = OJ; speed *= 2.40 / 2.69; } else if (clip == UI) clip = OI;
 					}
 				}
 				if (pf.walker == nb.walker && pf.angry) {   // fighting the player: his guard, a blow, a dodge, a step in

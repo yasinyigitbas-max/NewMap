@@ -196,7 +196,7 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 		const Vector3 pw = b_toe[s] >= 0 ? sg.xform(sk->get_bone_global_pose(b_toe[s]).origin) : fw;
 		const float h_toe = pw.y - sg.origin.y;
 		const float pin_gap = locked[s] ? Vector2(pw.x - lock_w[s].x, pw.z - lock_w[s].z).length() : 0.0f;
-		const bool plant_now = locked[s] ? (h_toe < toe_y0[s] + 0.025f && clip_v < v_keep + 0.6f && pin_gap < 0.12f) : (h_clip < ankle_h + 0.02f && clip_v < v_take);
+		const bool plant_now = locked[s] ? (h_toe < toe_y0[s] + 0.025f && clip_v < v_keep + 0.6f && pin_gap < 0.08f) : (h_clip < ankle_h + 0.02f && clip_v < v_take);   // (the pin lets go 8 cm off the clip's foot, was 12: the leg was pulled after it)
 		if (plant_now) {
 			if (!locked[s]) { locked[s] = true; lock_w[s] = pw + rel_off[s]; toe_y0[s] = std::min(h_toe, 0.06f); }
 			slide[s] = Vector3(lock_w[s].x - pw.x, 0.0f, lock_w[s].z - pw.z);
@@ -243,7 +243,15 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 		const Vector3 tv = target - pa;
 		const float d = std::min(std::max(tv.length(), std::fabs(la - lb) + 1e-3f), la + lb - 1e-3f);
 		const Vector3 u = tv.normalized();
-		Vector3 v = fwd_s - u * fwd_s.dot(u);
+		// THE KNEE WHERE THE CLIP HAS IT (Yasin, 21 Nov: "i found the reason of pelican legs, your feet plantation breaks the
+		// models i think, when upper body moves lower body cannot follow"): the knee was bent toward the way the capsule
+		// faces; when the hips turned, twisted or leant away from it (a turn on the spot, a lean, a stop) the knee was
+		// thrown sideways or backward. Now it bends in the clip's own leg plane (the clip's knee off the hip-to-foot line),
+		// and only a leg the clip holds nearly straight leans on the facing to choose its side (a little, forward)
+		const Vector3 fwd_p = fwd_s - u * fwd_s.dot(u);
+		Vector3 v = (pb - pa) - u * (pb - pa).dot(u);
+		if (v.length() < 0.03f * la) v += fwd_p * 0.03f * la;
+		if (v.length_squared() < 1e-8f) v = fwd_p;
 		if (v.length_squared() < 1e-8f) continue;
 		v.normalize();
 		const float ca = std::min(std::max((la * la + d * d - lb * lb) / (2.0f * la * d), -1.0f), 1.0f);

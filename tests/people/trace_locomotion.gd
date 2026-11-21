@@ -33,9 +33,13 @@ const TOUR := [
 	[1.5, "idle", Vector2.ZERO, false, false],
 ]
 var seg := -1
+var shots := ""   # (-- --shots=DIR: every 3rd frame saved as a picture, the part in its name)
+var n_shot := 0
 var seg_t := 0.0
 
 func _initialize() -> void:
+	for u: String in OS.get_cmdline_user_args():
+		if u.begins_with("--shots="): shots = u.trim_prefix("--shots="); DirAccess.make_dir_recursive_absolute(shots)
 	var b := StaticBody3D.new(); var cs := CollisionShape3D.new(); var sh := BoxShape3D.new(); sh.size = Vector3(400, 2, 400); cs.shape = sh; b.add_child(cs)
 	var mi := MeshInstance3D.new(); var bm := BoxMesh.new(); bm.size = sh.size; mi.mesh = bm; b.add_child(mi); b.position = Vector3(0, -1, 0); root.add_child(b)
 	var sun := DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-50, 35, 0); root.add_child(sun)
@@ -58,6 +62,8 @@ func _physics_process(delta: float) -> bool:
 		part = s[1]
 	var f: Dictionary = player.call(&"get_frame_log")
 	f["part"] = part
+	if shots != "" and int(t * 60.0) % 3 == 0:
+		root.get_texture().get_image().save_png("%s/f_%04d_%s.png" % [shots, n_shot, part.replace(" ", "_")]); n_shot += 1
 	frames.append(f)
 	return false
 

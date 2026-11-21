@@ -204,6 +204,14 @@ bool CityPed::stride_of(const StringName &p_clip, double &r_left_down, int &r_st
 	if (p_clip == F) { r_left_down = 0.0; r_strides = 1; return true; }
 	if (p_clip == P || p_clip == T || p_clip == X) { r_left_down = 0.0; r_strides = 2; return true; }   // (two strides: the walk twice, its arms mixed in)
 	if (p_clip == H) { r_left_down = 0.0; r_strides = 4; return true; }
+	// the Rocketbox walks and run (the walk and run of everybody again, Yasin 21 Nov: "we need to go back to rocketbox
+	// walking and running"; clip_audit.gd --rb, the left foot furthest forward)
+	static const StringName RWS("walk_slow"), RW("walk"), RWF("walk_fast"), RJ("jog"), RR("run");
+	if (p_clip == RWS) { r_left_down = 0.831; r_strides = 1; return true; }
+	if (p_clip == RW) { r_left_down = 0.630; r_strides = 1; return true; }
+	if (p_clip == RWF) { r_left_down = 0.800; r_strides = 1; return true; }
+	if (p_clip == RJ) { r_left_down = 0.739; r_strides = 1; return true; }
+	if (p_clip == RR) { r_left_down = 0.844; r_strides = 1; return true; }
 	// the player's walk and jog with the hands open (tools/people/make_steps.gd): the Quaternius loops' own strides
 	static const StringName SW("step/walk"), SJ("step/jog");
 	if (p_clip == SW) { r_left_down = 0.0; r_strides = 1; return true; }

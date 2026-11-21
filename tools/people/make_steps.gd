@@ -19,6 +19,9 @@ const FPS := 30.0
 ## own ground pace (the planted foot's), m/s, the same number as CityPlayer's
 const WALK_LAND_L := 0.0
 const WALK_V := 0.92
+## the Rocketbox "walk" (the player's and the crowd's walk again since 21 Nov): its left foot lands at 0.630 of the loop
+const RB_LAND_L := 0.630
+const RB_V := 1.00
 const OPEN_HANDS := "Idle_Talking_Loop"   # (whose fingers are relaxed and open)
 ## where in the walk the start blends in, after the right foot lands (share of the loop): 0.12 (the left about to
 ## lift, behind) dragged the left foot back along the ground and the right forward under load (0.31 m/s slide)
@@ -79,6 +82,17 @@ func _initialize() -> void:
 			out.add_animation(StringName(c[0]), a); gaits[c[0]] = a; made += 1
 		var walk: Animation = gaits["walk"]
 		var idle_o: Animation = gaits["idle"]
+		# BACK TO THE ROCKETBOX WALK AND RUN (Yasin, 21 Nov: "we need to go back to rocketbox walking and running, this walking
+		# and running are too cartooney"): the start and the stops made from the Rocketbox "walk" too (its left foot lands
+		# at 0.630 of its loop, its own ground pace 1.00 m/s: clip_audit.gd --rb), ending on the same standing idle
+		var rbl: AnimationLibrary = load("res://characters/rocketbox/clips_%s.res" % g)
+		if rbl.has_animation("walk"):
+			var rw: Animation = rbl.get_animation("walk")
+			out.add_animation(&"rb_start", _start(rw, idle_o, RB_LAND_L, RB_V))
+			out.add_animation(&"rb_stop_l", _stop(rw, idle_o, RB_LAND_L, RB_V))
+			out.add_animation(&"rb_stop_r", _stop(rw, idle_o, fmod(RB_LAND_L + 0.5, 1.0), RB_V))
+			made += 3
+		else: print("STEPS ERROR no Rocketbox walk in clips_%s" % g)
 		out.add_animation(&"start", _start(walk, idle_o, WALK_LAND_L, WALK_V))
 		out.add_animation(&"stop_l", _stop(walk, idle_o, WALK_LAND_L, WALK_V))
 		out.add_animation(&"stop_r", _stop(walk, idle_o, fmod(WALK_LAND_L + 0.5, 1.0), WALK_V))
