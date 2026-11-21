@@ -485,6 +485,22 @@ void CityStream::build(const Ref<PackedScene> &p_ps, Built &r_out) const {
 	Node3D *node = Object::cast_to<Node3D>(p_ps->instantiate());
 	r_out.node = node;
 	if (!node) return;
+	if (std::fabs(near_m - 60.0) > 0.01) {   // the buildings' near / mid switch (near_m, city_stream.h)
+		const float nm = (float)near_m;
+		const TypedArray<Node> ns = node->find_children("near", "MeshInstance3D", true, false);
+		for (int i = 0; i < ns.size(); i++) {
+			GeometryInstance3D *g = Object::cast_to<GeometryInstance3D>(ns[i]);
+			if (!g || std::fabs(g->get_visibility_range_end() - 64.0f) > 0.5f) continue;   // (only the bake's 0-60 m window)
+			g->set_visibility_range_end(nm + 4.0f); g->set_instance_shader_parameter("ck_win", Vector2(0.0f, nm));
+		}
+		const TypedArray<Node> ms = node->find_children("mid", "MeshInstance3D", true, false);
+		for (int i = 0; i < ms.size(); i++) {
+			GeometryInstance3D *g = Object::cast_to<GeometryInstance3D>(ms[i]);
+			if (!g || std::fabs(g->get_visibility_range_begin() - 56.0f) > 0.5f) continue;   // (the bake's 60-220 m window)
+			const Vector2 w = g->get_instance_shader_parameter("ck_win");
+			g->set_visibility_range_begin(nm - 4.0f); g->set_instance_shader_parameter("ck_win", Vector2(nm, w.y > nm ? w.y : 220.0f));
+		}
+	}
 	const TypedArray<Node> found = node->find_children("col*", "Node3D", true, false);   // the bodies-to-be (bake_runtime.gd _col_marker)
 	for (int i = 0; i < found.size(); i++) {
 		Node3D *b = Object::cast_to<Node3D>(found[i]);
@@ -708,6 +724,7 @@ void CityStream::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_col_background", "v"), &CityStream::set_col_background); ClassDB::bind_method(D_METHOD("get_col_background"), &CityStream::get_col_background); ADD_PROPERTY(PropertyInfo(Variant::BOOL, "col_background"), "set_col_background", "get_col_background");
 	ClassDB::bind_method(D_METHOD("set_prepare_boost", "v"), &CityStream::set_prepare_boost); ClassDB::bind_method(D_METHOD("get_prepare_boost"), &CityStream::get_prepare_boost); ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "prepare_boost"), "set_prepare_boost", "get_prepare_boost");
 	ClassDB::bind_method(D_METHOD("set_tiers_on", "v"), &CityStream::set_tiers_on); ClassDB::bind_method(D_METHOD("get_tiers"), &CityStream::get_tiers); ADD_PROPERTY(PropertyInfo(Variant::BOOL, "tiers"), "set_tiers_on", "get_tiers");
+	ClassDB::bind_method(D_METHOD("set_near_m", "v"), &CityStream::set_near_m); ClassDB::bind_method(D_METHOD("get_near_m"), &CityStream::get_near_m); ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "near_m"), "set_near_m", "get_near_m");
 	ClassDB::bind_method(D_METHOD("set_tier_band", "v"), &CityStream::set_tier_band); ClassDB::bind_method(D_METHOD("get_tier_band"), &CityStream::get_tier_band); ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "tier_band"), "set_tier_band", "get_tier_band");
 	ClassDB::bind_method(D_METHOD("set_arrive_s", "v"), &CityStream::set_arrive_s); ClassDB::bind_method(D_METHOD("get_arrive_s"), &CityStream::get_arrive_s); ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "arrive_s"), "set_arrive_s", "get_arrive_s");
 }

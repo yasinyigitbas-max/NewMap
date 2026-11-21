@@ -123,6 +123,11 @@ public:
 	// the properties (same names as city_stream.gd)
 	String runtime_dir = "res://map_dc/coronado/city_kit/runtime/";
 	double load_dist = 240.0, unload_dist = 300.0, lead_seconds = 2.0, max_lead = 200.0;
+	// THE NEAR / MID SWITCH OF THE BUILDINGS (Yasin, 21 Nov: "make it 100m"): the bake cuts at 60 m (bake_runtime.gd NEAR_END);
+	// each arriving cell's near and mid are moved to this distance as it is built (the loader thread: the node ranges, kept
+	// 4 m wider as the bake has them, and the shader's window ck_win). 60 = as baked.
+	double near_m = 100.0;
+	void set_near_m(double v) { near_m = v; } double get_near_m() const { return near_m; }
 	int max_loading = 2, max_cells = 30;
 	double frame_budget_ms = 1.5;
 	bool reap_thread = true;
