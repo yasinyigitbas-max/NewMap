@@ -3,7 +3,7 @@ extends SceneTree
 ## crashed the same day):
 ##   godot --path . --rendering-method mobile --resolution 960x540 -s res://tests/game/test_menu_roundtrip.gd
 ## A new game; once he is let go: Esc (the pause menu), "Main menu", then "Continue" back into the game, twice; then
-## the menu once more and Quit. Every step is printed before and after it, flushed, so a crash shows where it was.
+## the menu once more. (Esc is held 0.2 s.) Fails if the app quits on its own. Every step is printed before and after it, flushed, so a crash shows where it was.
 var game: Node
 var t := 0.0
 var t0 := 0.0
@@ -20,10 +20,13 @@ func _initialize() -> void:
 	for f in DirAccess.get_files_at("user://menu_test_saves/"): DirAccess.remove_absolute("user://menu_test_saves/" + f)
 	boot.add_child(game); root.add_child(boot); current_scene = boot
 
+# Esc held down 0.2 s, as a finger does (pressed and let go in one frame, the rig's walk never saw it held: the first
+# version of this test passed while the game itself quit on Esc)
 func _esc() -> void:
-	var e := InputEventKey.new(); e.keycode = KEY_ESCAPE; e.pressed = true
+	var e := InputEventKey.new(); e.keycode = KEY_ESCAPE; e.physical_keycode = KEY_ESCAPE; e.pressed = true
 	Input.parse_input_event(e)
-	var u := InputEventKey.new(); u.keycode = KEY_ESCAPE; u.pressed = false
+	await create_timer(0.2).timeout
+	var u := InputEventKey.new(); u.keycode = KEY_ESCAPE; u.physical_keycode = KEY_ESCAPE; u.pressed = false
 	Input.parse_input_event(u)
 
 # a real click (mouse down and up at the button's middle, through the viewport), as a thumb does: the engine's button code

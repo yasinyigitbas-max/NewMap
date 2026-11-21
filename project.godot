@@ -4,6 +4,8 @@
 config_version=5
 
 [application]
+
+config/quit_on_go_back=false
 config/name="Coronado City Kit"
 run/main_scene="res://tools/city/rig/rig.tscn"
 

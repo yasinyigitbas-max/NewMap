@@ -393,7 +393,9 @@ func _free_drive(first: Vector3) -> void:
 	_say("car %s (%s feel): %d kg, wheelbase %.2f m; W A S D / arrows, Space = handbrake, Esc leaves" % [names[m], "GTA 5" if int(car.get(&"feel")) == 1 else "GTA 4", int(s0.mass), float(s0.wheelbase)])
 	var last := car.global_position
 	var t_start := Time.get_ticks_msec()
-	while not Input.is_key_pressed(KEY_ESCAPE):
+	# (B1, 21 Nov: Esc is the game's pause menu: started by the game, the run never ends on it; Esc used to end the run and
+	# quit the app: "whenever pause menu is accessed the game crashes")
+	while game != null or not Input.is_key_pressed(KEY_ESCAPE):
 		await get_tree().process_frame
 		if opt.quit and Time.get_ticks_msec() - t_start > 12000: break      # (--quit: a 12 s try-out that leaves by itself)
 		var p: Vector3 = car.global_position
@@ -454,7 +456,9 @@ func _free_walk(start: Vector3, yaw: float) -> void:
 	var t_start := Time.get_ticks_msec()
 	var shot_sent := false
 	var frame_ms := PackedFloat32Array()
-	while not Input.is_key_pressed(KEY_ESCAPE):
+	# (B1, 21 Nov: Esc is the game's pause menu: started by the game, the run never ends on it; Esc used to end the run and
+	# quit the app: "whenever pause menu is accessed the game crashes")
+	while game != null or not Input.is_key_pressed(KEY_ESCAPE):
 		await get_tree().process_frame
 		if Time.get_ticks_msec() - t_start > 2000: frame_ms.append(get_process_delta_time() * 1000.0)      # (after two seconds of settling)
 		if _shot_place >= 0:      # (--walkshot: people are sent to the place once the crowd is there; the picture after 16 s)
