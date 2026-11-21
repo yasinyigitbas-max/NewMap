@@ -31,7 +31,7 @@ func _check(ok: bool, what: String) -> void:
 
 func _initialize() -> void:
 	female = "female" in OS.get_cmdline_user_args()
-	var b := StaticBody3D.new(); var cs := CollisionShape3D.new(); var sh := BoxShape3D.new(); sh.size = Vector3(400, 2, 400); cs.shape = sh; b.add_child(cs)
+	var b := StaticBody3D.new(); var cs := CollisionShape3D.new(); var sh := BoxShape3D.new(); sh.size = Vector3(1200, 2, 1200); cs.shape = sh; b.add_child(cs)
 	b.position = Vector3(0, -1, 0); root.add_child(b)
 	player = ClassDB.instantiate(&"CityPlayer"); player.position = Vector3(0, 0.05, 0)
 	if female: player.set(&"body_id", "F1")

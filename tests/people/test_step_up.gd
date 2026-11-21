@@ -101,6 +101,16 @@ func _settled() -> bool:   # after the climb: Idle came between the climb's clip
 	for k in seq.size(): if String(seq[k]).begins_with("ual/Climb") or seq[k] == "ual/StepUp" or seq[k] == "ual/SafetyVault": i = k
 	return i >= 0 and i + 1 < seq.size() and seq[i + 1] == "ual/Idle_Loop"
 
+## (22 Nov: with the player's "ptrav" library the Mixamo traversal climbs and vaults (native/src/city_player_traversal.cpp,
+## tests/people/test_player_traversal.gd); the UAL ones stay for a figure without it)
+func _trav() -> bool: return bool((player.call(&"get_trav") as Dictionary).get("lib", false))
+func _has_any(prefixes: Array) -> bool:
+	for c in clips.keys():
+		for p in prefixes: if String(c).begins_with(p): return true
+	return false
+const TRAV_CLIMB := ["ptrav/Running_Jump_Climb", "ptrav/Braced_Hang_To_Crouch", "ptrav/Climbing_Double", "ptrav/Stand_To_Freehang", "ptrav/Sprint_To_Wall_Climb"]
+const TRAV_VAULT := ["ptrav/Vault_Over_Box_To_Cover", "ptrav/Jumping_Over_Into_Combat", "ptrav/Running_Jump_a", "ptrav/Jump_b"]
+
 func _judge(what: String, jump: bool) -> void:
 	var h: float = LANES[lane][0]; var deep: float = LANES[lane][1]
 	var name: String = LANES[lane][2]
@@ -108,6 +118,10 @@ func _judge(what: String, jump: bool) -> void:
 	var on_top := top_y > h - 0.06 and deep > 1.0
 	var over := z > 3.0 + deep + 0.3
 	var how := "in a jump" if jump else "walking"
+	if _trav() and (what == "climb" or what == "vault"):
+		if what == "climb": _check(on_top and _has_any(TRAV_CLIMB), "%s, %s: up on it (ptrav), feet %.2f m up (%s)" % [name, how, top_y, str(seq)])
+		else: _check(over and _has_any(TRAV_VAULT), "%s, %s: over it (ptrav vault) to the far side (at z %.2f) (%s)" % [name, how, z, str(seq)])
+		return
 	match what:
 		"step": _check(on_top and clips.has("ual/StepUp") and _settled(), "%s, %s: an obvious step over it (StepUp), feet %.2f m up, then a moment standing (%s)" % [name, how, top_y, str(seq)])
 		"climb":
@@ -142,7 +156,8 @@ func _physics_process(delta: float) -> bool:
 			_start_lane(); step = 1; t0 = t
 		3:      # the hands, over all the climbs and vaults
 			player.call(&"set_move", Vector2.ZERO, false)
-			_check(float(player.call(&"get_grip_seconds")) > 1.0, "the hands held the edges and rails for %.1f s in all" % float(player.call(&"get_grip_seconds")))
+			if _trav(): print("CLIMB   (the ptrav climbs: the mocap's own hands, fitted to the edge's height; no grip IK)")
+			else: _check(float(player.call(&"get_grip_seconds")) > 1.0, "the hands held the edges and rails for %.1f s in all" % float(player.call(&"get_grip_seconds")))
 			_check(float(player.call(&"get_grip_miss_most")) < 0.05, "a holding hand at most %.3f m from its place on the edge (the 5 cm target)" % float(player.call(&"get_grip_miss_most")))
 			_check(float(player.call(&"get_grip_tip_most")) < 0.07, "a holding hand's fingertips at most %.3f m over or under the edge's top" % float(player.call(&"get_grip_tip_most")))
 			step = 4; t0 = t
@@ -157,7 +172,8 @@ func _physics_process(delta: float) -> bool:
 		6:
 			clips[String(player.call(&"get_clip"))] = true
 			if t - t0 < 2.0: return false
-			_check(clips.has("ual/Crouch_Enter") and clips.has("ual/Crouch_Idle_Loop") and clips.has("ual/Crouch_Exit"), "the crouch: down, held and up with its clips")
+			if _trav(): _check((clips.has("ptrav/Standing_To_Crouched") or clips.has("ptrav/Crouched_Walking")) and clips.has("ptrav/Crouching_Idle") and _has_any(["ptrav/Crouch_To_Stand", "ptrav/Crouched_To_Standing"]), "the crouch (ptrav): down, held and up with its clips (%s)" % [clips.keys()])
+			else: _check(clips.has("ual/Crouch_Enter") and clips.has("ual/Crouch_Idle_Loop") and clips.has("ual/Crouch_Exit"), "the crouch: down, held and up with its clips")
 			print("RESULT %s" % ("PASS" if fails == 0 else "FAIL (%d)" % fails))
 			quit(1 if fails else 0)
 			return true
