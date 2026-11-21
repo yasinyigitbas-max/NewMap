@@ -316,6 +316,30 @@
    "yaw": 220,
    "scale": 1.0,
    "why": "the museum garden's lawn: palms in a loose group by the terrace"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    309.0,
+    1.5,
+    -1757.5
+   ],
+   "yaw": 60,
+   "scale": 1.0,
+   "why": "the quay apron's west bed: a palm over the benches where people wait for the boat"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    377.0,
+    1.5,
+    -1757.5
+   ],
+   "yaw": 170,
+   "scale": 1.0,
+   "why": "the quay apron's east bed: a palm over the benches where people wait for the boat"
   }
  ]
 }

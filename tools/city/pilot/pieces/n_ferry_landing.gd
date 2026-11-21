@@ -90,6 +90,10 @@ const BEDS := [
 	[322.0, -1740.0, 334.0, -1731.0], [366.0, -1740.0, 378.0, -1731.0],
 ]
 
+## the quay apron's two beds (its west and east ends, clear of the landing steps at u 319 and of the walk from the
+## terminal to the pier at u 343): a palm each (the trees list), agave and bougainvillea, low boxwood round them
+const APRON_BEDS := [[305.0, -1761.0, 313.0, -1754.0], [373.0, -1761.0, 381.0, -1754.0]]
+
 const LOOP := [324.0, -1714.0, 376.0, -1676.0, 14.0]
 const ISLE := [333.0, -1705.0, 367.0, -1685.0, 5.0]
 ## buildings: [label, folder, u, v, yaw, why]
@@ -374,7 +378,10 @@ func _run() -> void:
 		for k in n: pts.append(ro[ci * n + k])
 		g.poly("plaza", pts, fw)
 	# ---- the quay apron on the bastion and the revetments
-	H.paint(g, 304.0, -1768.0, 382.0, VF, _bands(304.0, -1768.0, 382.0, VF), "concrete", fq)
+	var apron: Array = []
+	for bd: Array in APRON_BEDS: apron.append([bd[0], bd[1], bd[2], bd[3], "mulch"])
+	apron.append_array(_bands(304.0, -1768.0, 382.0, VF))
+	H.paint(g, 304.0, -1768.0, 382.0, VF, apron, "concrete", fq)
 	H.paint(g, U0, TOE, 212.0, VF, [], "ferry_riprap", fx)
 	H.paint(g, 384.0, TOE, U1, VF, [], "ferry_riprap", fx)
 	# the west seawall's end (u 212): a face from the promenade's edge down the revetment beside it
@@ -520,6 +527,16 @@ func _dress() -> void:
 	for u: float in [329.5, 332.0, 366.0, 368.5]: P("prop_park_bench", "worn", u, -1766.0, 180.0)
 	for c: Array in [[311.5, -1767.7], [322.6, -1767.7], [371.5, -1767.7], [304.6, -1760.0]]: P("prop_lifering_stand", "worn", c[0], c[1], 180.0 if c[1] < -1765.0 else -90.0)
 	P("prop_dock_box", "clean", 316.0, -1767.2, 180.0)
+	# the apron's beds and seats: boxwood along each bed's long sides, its shrubs; bench pairs facing the bay with the
+	# terminal at their backs (people waiting for the boat), pots between them
+	for bd: Array in APRON_BEDS:
+		var u0: float = bd[0]; var v0: float = bd[1]; var u1: float = bd[2]; var v1: float = bd[3]
+		H.hedge(props, Vector2(u0 + 1.0, v1 - 0.5), Vector2(u1 - 1.0, v1 - 0.5), func(u: float, v: float) -> float: return QUAY)
+		H.hedge(props, Vector2(u0 + 1.0, v0 + 0.5), Vector2(u1 - 1.0, v0 + 0.5), func(u: float, v: float) -> float: return QUAY)
+		P("plant_bougainvillea_mound", "normal", u0 + 2.0, (v0 + v1) * 0.5, 0.0)
+		P("plant_agave_americana", "normal", u1 - 1.8, (v0 + v1) * 0.5 + 1.0, 0.0)
+	for u: float in [324.0, 326.5, 360.0, 362.5]: P("prop_park_bench", "worn", u, -1756.5, 180.0)
+	for u: float in [321.5, 365.0]: P("plant_potted_leafy", "normal", u, -1756.3, 0.0)
 	# ---- the west promenade: lamps, bench pairs facing the bay, lifering stands, the beach steps' kayak rack and shower
 	for u: float in [218.0, 248.0, 279.0, 302.0]: P("prop_lamp_victorian", "worn", u, -1749.3, 0.0)
 	for u: float in [224.0, 226.5, 263.0, 265.5, 289.0, 291.5]: P("prop_park_bench", "worn", u, -1748.6, 180.0)
