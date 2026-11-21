@@ -856,6 +856,134 @@
     64,
     64
    ]
+  ],
+  "garment_conveyor": [
+   [
+    832,
+    912,
+    64,
+    64
+   ]
+  ],
+  "barber_pole": [
+   [
+    496,
+    944,
+    64,
+    64
+   ]
+  ],
+  "change_machine": [
+   [
+    0,
+    960,
+    64,
+    64
+   ]
+  ],
+  "laundry_cart": [
+   [
+    560,
+    960,
+    64,
+    64
+   ]
+  ],
+  "dispensary_counter_partition": [
+   [
+    624,
+    960,
+    64,
+    64
+   ]
+  ],
+  "blood_pressure_kiosk": [
+   [
+    304,
+    384,
+    48,
+    48
+   ]
+  ],
+  "pedicure_chair": [
+   [
+    400,
+    448,
+    48,
+    48
+   ]
+  ],
+  "bulletproof_teller_window": [
+   [
+    592,
+    512,
+    48,
+    48
+   ]
+  ],
+  "wall_safe": [
+   [
+    592,
+    560,
+    48,
+    48
+   ]
+  ],
+  "security_grille_counter": [
+   [
+    976,
+    896,
+    48,
+    48
+   ]
+  ],
+  "tattoo_bed_chair": [
+   [
+    240,
+    912,
+    48,
+    48
+   ]
+  ],
+  "flash_art_wall": [
+   [
+    976,
+    944,
+    48,
+    48
+   ]
+  ],
+  "hood_dryer_chair": [
+   [
+    240,
+    960,
+    48,
+    48
+   ]
+  ],
+  "po_box_wall": [
+   [
+    288,
+    976,
+    48,
+    48
+   ]
+  ],
+  "parcel_scale": [
+   [
+    336,
+    976,
+    48,
+    48
+   ]
+  ],
+  "copier_large_format_printer": [
+   [
+    384,
+    976,
+    48,
+    48
+   ]
   ]
  }
 }
