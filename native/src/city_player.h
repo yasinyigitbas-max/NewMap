@@ -19,6 +19,8 @@
 #include <godot_cpp/variant/vector2.hpp>
 #include <godot_cpp/variant/vector3.hpp>
 
+#include "city_player_traversal.h"
+
 namespace godot {
 
 class CityPed;
@@ -139,6 +141,33 @@ public:
 	void hold_points(bool p_on, const Vector3 &p_l, const Vector3 &p_r, const Vector3 &p_out, float p_w) {
 		hold_on = p_on; hold_p[0] = p_l; hold_p[1] = p_r; hold_out = p_out; hold_side = Vector3(0, 1, 0).cross(-p_out).normalized(); hold_w = p_w;
 	}
+private:
+	// TRAVERSAL (Yasin, 22 Nov: jumps, landings, the fall off an edge, the crouch, cover, vaults and climbs: the "ptrav"
+	// library; city_player_traversal.cpp)
+	TravState trv;
+	bool trav_lib() const;
+	bool trav_physics(float p_dt, const Vector2 &p_mv, const Vector3 &p_fwd, const Vector3 &p_right);
+	void trav_figure(StringName &r_clip, double &r_cs, double &r_hold, float &r_yaw_add, Vector3 &r_off);
+	Vector3 trav_hips_now() const;
+	void trav_hand(const Vector3 &p_hl, const Vector3 &p_fig, float p_yaw, double p_blend);
+	Vector3 trav_fo(float p_dt);
+	int trav_pick(int p_pool, int p_n);
+	float trav_ground(const Vector3 &p_at, float p_up, float p_down, bool *r_hit) const;
+	void trav_start(const StringName &p_clip, double p_t0, double p_end, float p_yaw, int p_then);
+	void trav_clip(float p_dt, const Vector3 &p_want);
+	void trav_done();
+	void trav_air(const Vector3 &p_v, float p_from_y);
+	void trav_air_step(float p_dt);
+	void trav_land(float p_drop);
+	bool trav_jump(const Vector3 &p_want);
+	bool trav_obstacle(const Vector3 &p_want, float p_dt, bool p_force);
+	bool trav_cover_enter(const Vector3 &p_want);
+	void trav_cover(float p_dt, const Vector3 &p_want);
+	bool trav_edge(float p_dt);
+public:
+	Dictionary get_trav() const;
+	void set_trav_mess(double p_chance);
+	void set_facing(double p_yaw);   // (tests, the walk test's ledges) he and the view face that way
 private:
 	float turn_yaw0 = 0.0f, turn_k = 1.0f;   // a turn on the spot (step_mode 3): the way he faced, the clip's turn scaled to the angle
 	Vector3 cam_pos, knock_v;

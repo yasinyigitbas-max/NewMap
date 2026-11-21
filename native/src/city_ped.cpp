@@ -95,6 +95,9 @@ void CityPed::make() {
 		// running turns, both feet: "prun/jog_a" ...
 		Ref<AnimationLibrary> prun = rl->load(dir + String("clips_player_run_") + g + String(".res"));
 		if (prun.is_valid()) anim->add_animation_library(StringName("prun"), prun);
+		// jumps, landings, falls, the crouch, cover, vaults and climbs: "ptrav/Jump_a" ... (tools/people/make_player_traversal.gd)
+		Ref<AnimationLibrary> ptrav = rl->load(dir + String("clips_player_trav_") + g + String(".res"));
+		if (ptrav.is_valid()) anim->add_animation_library(StringName("ptrav"), ptrav);
 		if (lib->has_animation("get_up")) { Ref<Animation> a = lib->get_animation("get_up"); getup_len = a->get_length(); }
 		if (anim->has_animation(clip)) { anim->play(clip); if (clip_at >= 0.0) { anim->seek(clip_at, true); anim->pause(); } }
 	}

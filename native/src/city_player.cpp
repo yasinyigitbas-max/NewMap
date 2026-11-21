@@ -393,6 +393,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		}
 	} else swimming = false;
 	clock_s += dt;
+	if (trav_physics(dt, mv, fwd, right)) return;   // (a jump, a fall, a vault or climb, cover: city_player_traversal.cpp)
 	if (climb) {   // climbing: up first, then over the edge, as the clip plays; nothing else moves him
 		climb_t += dt;
 		if (climb == 2 && !hang_set && climb_t > dt * 1.5f) {   // (the clip's first pose is up: its hands over its hips)
@@ -486,7 +487,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	crouch_t += dt;
 	const float walk_top = walk_speed;
 	float top = swimming ? (run ? 1.7f : 1.0f) : (pr_tier >= 2 ? fast_speed : (run ? run_speed : walk_top));
-	if (crouch && !swimming) top *= 0.45f;
+	if (crouch && !swimming) top *= trav_lib() ? 0.75f : 0.45f;   // (the Mixamo crouch walks at 1.05 m/s)
 	if (combat) top = std::min(top, 1.4f);   // (in his stance he steps, he does not run)
 	if (settle_t < 1.1f) { settle_t += dt; top = std::min(top, walk_top); }   // (Yasin: "ease it into idle after the climb then walk again": walking first, not running off)
 	Vector3 want = (fwd * mv.y + right * mv.x) * top;
@@ -862,7 +863,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		const float want_yaw = std::atan2(to.x, to.z);
 		float d = std::fmod(want_yaw - yaw + 3.14159265f, 6.2831853f); if (d < 0.0f) d += 6.2831853f; d -= 3.14159265f;
 		yaw += std::min(std::max(d, -10.0f * dt), 10.0f * dt);
-	} else if (!heavy && speed > 0.25f) {   // he faces the way he walks (the heavy body turned above)
+	} else if (!heavy && speed > 0.25f && !trv.strafe) {   // he faces the way he walks (the heavy body turned above; not sneaking sideways in the crouch)
 		const float want_yaw = std::atan2(got.x, got.z);
 		float d = std::fmod(want_yaw - yaw + 3.14159265f, 6.2831853f); if (d < 0.0f) d += 6.2831853f; d -= 3.14159265f;
 		yaw += std::min(std::max(d, -9.0f * dt), 9.0f * dt);
@@ -1049,7 +1050,9 @@ void CityPlayer::_physics_process(double p_delta) {
 		static const StringName PWS("pwalk/start_a");
 		if ((heavy && fig->clip_len(PWS) > 0.0) || (raw_layers & RAW_ALL)) lean_a = Vector3();
 	}
-	Basis fb(Vector3(0, 1, 0), yaw);
+	float trav_yaw_add = 0.0f; Vector3 trav_off;
+	trav_figure(clip, cs, hold, trav_yaw_add, trav_off);   // (the Mixamo crouch loops; a traversal move's hand-over)
+	Basis fb(Vector3(0, 1, 0), yaw + trav_yaw_add);
 	{
 		Vector3 up = (Vector3(0, 9.81f, 0) + lean_a * 0.7f).normalized();
 		const float ang = std::acos(std::min(up.y, 1.0f));
@@ -1058,7 +1061,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	}
 	static const StringName S_WALK2("step/walk"), PWM2[2] = { StringName("pwalk/walk_mx"), StringName("pwalk/walk_ual") };
 	const bool slowest = clip == WALK || clip == S_WALK2 || pw_loop(clip);
-	fig->drive(Transform3D(fb, get_global_position() + Vector3(0, vis_dy, 0)), clip, std::min(std::max(cs, slowest ? 0.15 : 0.5), 2.0), hold);
+	fig->drive(Transform3D(fb, get_global_position() + Vector3(0, vis_dy, 0) + trav_off), clip, std::min(std::max(cs, slowest ? 0.15 : 0.5), 2.0), hold);
 	if (Skeleton3D *sk = fig->skeleton()) {
 		if (!plant) {
 			plant = memnew(FootPlant); sk->add_child(plant);
@@ -1117,7 +1120,7 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 		const Dictionary hb = ss->intersect_ray(qb);
 		const bool beyond_low = !hb.is_empty() && ((Vector3)hb["position"]).y < top.y - 0.25f;
 		// (Yasin: "lose those jumps at high vault and high climb and trigger them much earlier"): walking or jumping alike
-		const bool fence_h = rise > 0.24f && rise <= 1.4f;
+		const bool fence_h = rise > 0.24f && rise <= 1.4f && !trav_lib();   // (with the ptrav library its vaults and climbs do it)
 		if (beyond_low && fence_h) {
 			const Vector3 land = (Vector3)hb["position"] + Vector3(0, 0.03f, 0);
 			Transform3D tl = get_global_transform(); tl.origin = land;
@@ -1143,8 +1146,8 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 		}
 	}
 	const bool step = !airborne && rise > 0.16f && rise <= 0.24f;   // (a kerb, up to 16 cm, is walked onto: no clip; Yasin: "kerbs shouldnt require step up animation")
-	const bool low = !airborne && rise > 0.24f && rise <= 0.5f;
-	const bool high = rise > 0.5f && rise <= 2.5f;   // (no jump needed: walking into it he climbs it)
+	const bool low = !airborne && rise > 0.24f && rise <= 0.5f && !trav_lib();
+	const bool high = rise > 0.5f && rise <= 2.5f && !trav_lib();   // (no jump needed: walking into it he climbs it)
 	if (!step && !low && !high) return false;
 	// (his place up there: far enough in from the edge that his whole body stands on the top, 45 cm past where its top was found)
 	const Vector3 dest = Vector3(p.x, top.y + 0.002f, p.z) + p_dir * (to_face + 0.45f);   // (on the top itself: no snap down after)
@@ -1193,6 +1196,7 @@ Dictionary CityPlayer::get_frame_log() const {
 	d["tier"] = pr_tier; d["pr_jog"] = pr_jog; d["pr_fast"] = pr_fast; d["pr_start"] = pr_start_last; d["pr_stop"] = pr_stop_last; d["move_speed"] = move_speed; d["yaw"] = yaw;
 	d["pw_start"] = pw_start_last; d["pw_main"] = pw_main; d["pw_stop"] = pw_stop_last; d["pw_turn"] = pw_turn_last; d["step_lat"] = step_lat;
 	d["clip"] = get_clip(); d["fig_mode"] = fig ? (int)fig->get_mode() : -1; d["fig_at"] = fig ? fig->body_at() : Vector3(); d["step"] = step_mode; d["starts"] = starts; d["stops"] = stops; d["turns"] = turns; d["climb"] = climb; d["u"] = climb ? climb_t / climb_len : -1.0f; d["settle"] = settle_t; d["clip_off"] = clip_off;
+	d["trav"] = trv.mode; d["trav_clip"] = trv.clip;
 	return d;
 }
 
@@ -1335,6 +1339,9 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_fast_speed"), &CityPlayer::get_fast_speed);
 	ClassDB::bind_method(D_METHOD("set_move_tier", "direction", "tier"), &CityPlayer::set_move_tier);
 	ClassDB::bind_method(D_METHOD("get_tier"), &CityPlayer::get_tier);
+	ClassDB::bind_method(D_METHOD("get_trav"), &CityPlayer::get_trav);
+	ClassDB::bind_method(D_METHOD("set_trav_mess", "chance"), &CityPlayer::set_trav_mess);
+	ClassDB::bind_method(D_METHOD("set_facing", "yaw"), &CityPlayer::set_facing);
 	ClassDB::bind_method(D_METHOD("get_run_speed"), &CityPlayer::get_run_speed);
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "body_id"), "set_body_id", "get_body_id");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "capture_mouse"), "set_capture_mouse", "get_capture_mouse");
