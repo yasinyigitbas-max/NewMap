@@ -42,7 +42,7 @@ void CityCrowd::near_riders(const std::vector<float> &bk, const Vector3 &cam, Ci
 			for (int s = 0; s < 2; s++) { if (nr.pedal[s]) nr.r_pedal[s] = nr.pedal[s]->get_transform(); if (nr.wheel[s]) nr.r_wheel[s] = nr.wheel[s]->get_transform(); }
 			holder->set_visible(false);
 			nr.ped = memnew(CityPed);
-			nr.ped->set_alias(false);
+			// (the cyclists play the takes too: Mixamo only)
 			nr.ped->set_body_id("M1");
 			nr.ped->set_clip("ual/Driving_Loop");
 			add_child(nr.ped);

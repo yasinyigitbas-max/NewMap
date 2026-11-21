@@ -34,7 +34,7 @@ const LANES := [
 	[1.6, 3.0, "a 1.6 m wall", "climb", "climb"],      # (Yasin: "lose those jumps at high vault and high climb")
 	[1.1, 0.08, "a 1.1 m fence", "vault", "vault"],
 	[3.0, 3.0, "a 3 m wall", "climb", "climb"],   # (the double climb, Mixamo, 21 Nov: Yasin "all kinds of movement including double climbs")
-	[0.14, 3.0, "a 14 cm kerb", "walk", ""],   # (Yasin: "kerbs shouldnt require step up animation, but if you can make it truly seamless its okay")
+	[0.14, 3.0, "a 14 cm kerb", "step", ""],   # (since 21 Nov every kerb over 5 cm plays Mixamo's step up: Yasin "REPLACE ALL YOUR CODE WITH CLIPS")   # (Yasin: "kerbs shouldnt require step up animation, but if you can make it truly seamless its okay")
 ]
 
 func _check(ok: bool, what: String) -> void:
@@ -98,7 +98,7 @@ func _watch() -> void:
 
 func _settled() -> bool:   # after the climb: Idle came between the climb's clip and walking
 	var i := -1
-	for k in seq.size(): if String(seq[k]).begins_with("ual/Climb") or String(seq[k]).begins_with("mx/Climb") or seq[k] == "ual/StepUp" or seq[k] == "ual/SafetyVault": i = k
+	for k in seq.size(): if String(seq[k]).begins_with("ual/Climb") or String(seq[k]).begins_with("mx/Climb") or seq[k] == "ual/StepUp" or seq[k] == "ual/SafetyVault" or seq[k] == "mx/Ascending_Stairs" or seq[k] == "mx/Vault_Over_Box_to_Cover": i = k
 	return i >= 0 and i + 1 < seq.size() and seq[i + 1] == "ual/Idle_Loop"
 
 func _judge(what: String, jump: bool) -> void:
@@ -109,13 +109,13 @@ func _judge(what: String, jump: bool) -> void:
 	var over := z > 3.0 + deep + 0.3
 	var how := "in a jump" if jump else "walking"
 	match what:
-		"step": _check(on_top and clips.has("ual/StepUp") and _settled(), "%s, %s: an obvious step over it (StepUp), feet %.2f m up, then a moment standing (%s)" % [name, how, top_y, str(seq)])
+		"step": _check(on_top and clips.has("mx/Ascending_Stairs") and _settled(), "%s, %s: an obvious step over it (StepUp), feet %.2f m up, then a moment standing (%s)" % [name, how, top_y, str(seq)])
 		"climb":
 			# (since 21 Nov the high climb is Mixamo's pull-up, a 3 m wall its double climb)
-			var c := "mx/Climbing_double" if h > 2.5 else ("mx/Climbing_single" if h > 0.5 else "ual/ClimbUp_1m")
+			var c := "mx/Climbing_double" if h > 2.5 else ("mx/Climbing_single" if h > 0.5 else "mx/Ascending_Stairs")
 			_check(on_top and clips.has(c) and (_settled() or h > 2.5), "%s, %s: up on it (%s), feet %.2f m up, then a moment standing (%s)" % [name, how, c, top_y, str(seq)])
-		"vault": _check(over and clips.has("ual/SafetyVault") and _settled(), "%s, %s: over it (Vault) to the far side (at z %.2f), then a moment standing (%s)" % [name, how, z, str(seq)])
-		"walk": _check(on_top and not clips.has("ual/StepUp") and hips_jump < 0.03, "%s, %s: walked onto it, no step clip, the hips never jump (most %.3f m in a frame), feet %.2f m up (%s)" % [name, how, hips_jump, top_y, str(seq)])
+		"vault": _check(over and (clips.has("ual/SafetyVault") or clips.has("mx/Vault_Over_Box_to_Cover")) and _settled(), "%s, %s: over it (Vault) to the far side (at z %.2f), then a moment standing (%s)" % [name, how, z, str(seq)])
+		"walk": _check(on_top and hips_jump < 0.03, "%s, %s: walked onto it, no step clip, the hips never jump (most %.3f m in a frame), feet %.2f m up (%s)" % [name, how, hips_jump, top_y, str(seq)])
 		"stop": _check(not on_top and not over, "%s, %s: not up, not over (feet at most %.2f m, at z %.2f)" % [name, how, top_y, z])
 
 func _physics_process(delta: float) -> bool:
@@ -126,7 +126,7 @@ func _physics_process(delta: float) -> bool:
 			if t < 1.0: return false
 			lane = 0; _start_lane(); step = 1; t0 = t
 		1:      # walking into the lane's thing (5 s: he walks at 1.05 m/s since 20 Nov, was 1.6, and takes a first step)
-			if t - t0 < 5.0: return false
+			if t - t0 < 8.0: return false   # (Mixamo's climbs at their own length, 3-4 s)
 			_judge(LANES[lane][3], false)
 			if LANES[lane][4] != "":   # now a jump into it
 				player.global_position = Vector3(lane * 6.0, 0.05, 1.6); player.velocity = Vector3.ZERO
@@ -136,16 +136,14 @@ func _physics_process(delta: float) -> bool:
 			if lane >= LANES.size(): step = 3; t0 = t; return false
 			_start_lane(); t0 = t
 		2:      # the jump
-			if t - t0 < 4.0: return false
+			if t - t0 < 7.0: return false
 			_judge(LANES[lane][4], true)
 			lane += 1
 			if lane >= LANES.size(): step = 3; t0 = t; return false
 			_start_lane(); step = 1; t0 = t
 		3:      # the hands, over all the climbs and vaults
 			player.call(&"set_move", Vector2.ZERO, false)
-			_check(float(player.call(&"get_grip_seconds")) > 0.6, "the hands held the edges and rails for %.1f s in all" % float(player.call(&"get_grip_seconds")))
-			_check(float(player.call(&"get_grip_miss_most")) < 0.05, "a holding hand at most %.3f m from its place on the edge (the 5 cm target)" % float(player.call(&"get_grip_miss_most")))
-			_check(float(player.call(&"get_grip_tip_most")) < 0.07, "a holding hand's fingertips at most %.3f m over or under the edge's top" % float(player.call(&"get_grip_tip_most")))
+			# (the hands are no longer pinned to the edges: Mixamo's clips as they are, 21 Nov)
 			step = 4; t0 = t
 		4:      # the crouch
 			if t - t0 < 0.5: return false
@@ -158,7 +156,7 @@ func _physics_process(delta: float) -> bool:
 		6:
 			clips[String(player.call(&"get_clip"))] = true
 			if t - t0 < 2.0: return false
-			_check(clips.has("ual/Crouch_Enter") and clips.has("ual/Crouch_Idle_Loop") and clips.has("ual/Crouch_Exit"), "the crouch: down, held and up with its clips")
+			_check((clips.has("ual/Crouch_Idle_Loop") or clips.has("ual/Crouch_Enter")) and clips.has("ual/Crouch_Exit"), "the crouch: held and up with its clips (Mixamo has no way down: it blends in)")
 			print("RESULT %s" % ("PASS" if fails == 0 else "FAIL (%d)" % fails))
 			quit(1 if fails else 0)
 			return true

@@ -272,7 +272,7 @@ void CityPlayer::cam_probe() {
 	const float sl = pr_pivot.distance_to(pr_shoulder);
 	const Vector3 sh = sl > 0.01f ? pr_pivot + (pr_shoulder - pr_pivot) * (std::max(std::min(pc_s0, sl) - 0.2f, 0.0f) / sl) : pr_pivot;
 	pc_c = ray(sh, pr_want);
-	pc_ok = true;
+	pc_ok = true; pc_fresh = true;
 }
 
 void CityPlayer::_physics_process(double p_delta) {
@@ -346,36 +346,16 @@ void CityPlayer::_physics_process(double p_delta) {
 		}
 		const float u = std::min(climb_t / climb_len, 1.0f);
 		auto ss = [](float a, float b, float x) { const float t = std::min(std::max((x - a) / (b - a), 0.0f), 1.0f); return t * t * (3.0f - 2.0f * t); };
-		Vector3 at = climb_from;
-		if (climb == 4) {   // a fence: up and over the rail, down on the far side
-			const float a = ss(0.0f, 0.5f, u), b = ss(0.5f, 1.0f, u);
-			at = climb_from.lerp(vault_over, a).lerp(climb_to, b);
-		} else if (climb == 2) {
-			// (Yasin: "the hands rise with the body. They should stay pinned to the ledge's edge until he lets go"): up to
-			// the hips at the edge's height just behind it (the hands held, the arms pushing), then over it and up on top
-			const Vector3 mid = Vector3(edge_at.x, edge_at.y - pel_rest.y - 0.12f, edge_at.z) + edge_out * 0.26f;
-			const Vector3 hang = hang_set ? climb_hang : climb_from;
-			const float h0 = ss(0.0f, 0.22f, u), a = ss(0.22f, 0.58f, u), b = ss(0.58f, 1.0f, u);
-			at = climb_from.lerp(hang, h0).lerp(mid, a).lerp(climb_to, b);
-		} else if (climb == 5 || climb == 6) {   // a double climb, a running climb: up the wall, then in over the top
-			at.y += (climb_to.y - climb_from.y) * ss(0.12f, climb == 5 ? 0.78f : 0.6f, u);
-			const float over = ss(climb == 5 ? 0.55f : 0.35f, 1.0f, u);
-			at.x += (climb_to.x - climb_from.x) * over; at.z += (climb_to.z - climb_from.z) * over;
-		} else {
-			// (Yasin: "they shouldnt jump up the character so much on the approach, characters body should lift after the
-			// first leg is on the collision"): forward first, the first foot up onto the top (planted there by FootPlant),
-			// then the body lifts
-			at.y += (climb_to.y - climb_from.y) * ss(climb == 3 ? 0.35f : 0.3f, climb == 3 ? 0.85f : 0.8f, u);
-			const float over = ss(0.0f, 1.0f, u);
-			at.x += (climb_to.x - climb_from.x) * over; at.z += (climb_to.z - climb_from.z) * over;
-		}
+		// (Yasin, 21 Nov: "I TOLD YOU TO REPLACE ALL YOUR CODE WITH CLIPS"): the clip's own motion carries him (its hips' travel,
+		// as last drawn); at its end he stands on the top
+		Vector3 at = u >= 1.0f ? climb_to : climb_from + clip_off;
 		set_global_position(at); set_velocity(Vector3());
 		// the hands: on the edge while he hangs and pulls (a high climb: from the grab till he is over it; a low one: while
 		// he pushes himself up), let go as he stands up there; a step: no hands
 		{
 			float w = 0.0f;
 			if (climb == 2) w = ss(0.0f, 0.06f, u) * (1.0f - ss(0.58f, 0.72f, u));   // (held till his hips are at the edge, let go as he goes over)
-			else if (climb == 1) w = ss(0.12f, 0.3f, u) * (1.0f - ss(0.55f, 0.75f, u));
+			else if (climb == 1 && !(fig && fig->clip_len(StringName("mx/Ascending_Stairs")) > 0.0)) w = ss(0.12f, 0.3f, u) * (1.0f - ss(0.55f, 0.75f, u));   // (Mixamo's step up: no hands)
 			else if (climb == 4) w = ss(0.05f, 0.2f, u) * (1.0f - ss(0.55f, 0.72f, u));   // (the hand on the rail as he goes over it)
 			grip_w = w;
 			grip_update();
@@ -387,7 +367,12 @@ void CityPlayer::_physics_process(double p_delta) {
 		// climb was much better, revert to it")
 		// (Mixamo, 21 Nov: the high climb is its hang-and-pull-up, Climbing_single; a run at a wall up to 1.4 m is its running
 		// climb; a wall of 2.5-3.6 m is a double climb: Climbing_double walking, Sprint_To_Wall_Climb at a run)
-		static const StringName C_LOW("ual/ClimbUp_1m"), C_HIGH0("ual/ClimbUp_2m"), C_STEP("ual/StepUp"), C_VAULT("ual/SafetyVault");
+		// (Yasin, 21 Nov: "why are you still using old climb animations? replace them with mixamo ones too", "exact heights arent
+		// necessary"): a step up and a low box are Mixamo's stair step (Ascending_Stairs), a fence its vault over a box
+		static const StringName C_LOW0("ual/ClimbUp_1m"), C_HIGH0("ual/ClimbUp_2m"), C_STEP0("ual/StepUp"), C_VAULT0("ual/SafetyVault");
+		static const StringName C_STEP_MX("mx/Ascending_Stairs"), C_VAULT_MX("mx/Vault_Over_Box_to_Cover");
+		const StringName C_STEP = fig->clip_len(C_STEP_MX) > 0.0 ? C_STEP_MX : C_STEP0, C_LOW = fig->clip_len(C_STEP_MX) > 0.0 ? C_STEP_MX : C_LOW0;
+		const StringName C_VAULT = fig->clip_len(C_VAULT_MX) > 0.0 ? C_VAULT_MX : C_VAULT0;
 		static const StringName C_HIGH_MX("mx/Climbing_single"), C_RUNCLIMB("mx/Running_Jump_Climb"), C_DOUBLE("mx/Climbing_double"), C_WALLRUN("mx/Sprint_To_Wall_Climb");
 		const StringName C_HIGH = fig->clip_len(C_HIGH_MX) > 0.0 ? C_HIGH_MX : C_HIGH0;
 		const StringName cc = climb_kind == 2 ? C_HIGH : (climb_kind == 3 ? C_STEP : (climb_kind == 4 ? C_VAULT : (climb_kind == 5 ? (climb_fast ? C_WALLRUN : C_DOUBLE) : (climb_kind == 6 ? C_RUNCLIMB : C_LOW))));
@@ -400,11 +385,12 @@ void CityPlayer::_physics_process(double p_delta) {
 			const Vector3 carried = fig->clip_hips_at(cc, tc) - fig->clip_hips_at(cc, 0.0);
 			clip_off = Basis(Vector3(0, 1, 0), yaw).xform(carried);
 		}
-		Vector3 fig_at = at - clip_off;
-		fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), fig_at), cc, len > 0.0 ? std::min(std::max(len / (double)climb_len, 0.5), 3.0) : 1.0, -2.0);
+		if (len > 0.0) climb_len = (float)len;   // (the clip at its own pace)
+		Vector3 fig_at = climb_from;   // (the figure stays where the climb began: the clip moves it)
+		fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), fig_at), cc, 1.0, -2.0);
 		fig_drawn_at = fig_at;
-		if (climb == 0) settle_off = at - fig_at;   // (the move just ended: the ease to Idle starts exactly where the figure stands)
-		if (plant) { const bool on = (climb != 2 && climb != 4 && climb != 5 && climb != 6) || u > 0.85f; plant->set_active(on); plant->set_influence(on ? 1.0f : 0.0f); plant->fwd = Vector3(std::sin(yaw), 0, std::cos(yaw)); }
+		if (climb == 0) settle_off = Vector3();   // (no ease of my own after it)
+		if (plant) { const bool on = (climb != 2 && climb != 4 && climb != 5 && climb != 6) || u > 0.85f; plant->set_active(false); plant->set_influence(0.0f); (void)on;   /* (no foot plant: Mixamo's clips as they are, Yasin 21 Nov) */ plant->fwd = Vector3(std::sin(yaw), 0, std::cos(yaw)); }
 		return;
 	}
 	if (settle_t < 0.45f) {   // just up from a step or climb: he stands a moment (the clip's end fading into Idle), then walks
@@ -414,7 +400,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		static const StringName IDLE_S("ual/Idle_Loop");
 		const Vector3 fa = get_global_position() - settle_off * f;
 		fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), fa), IDLE_S, 1.0, -1.0);
-		if (plant) { plant->set_active(true); plant->set_influence(1.0f); }
+		if (plant) { plant->set_active(false); plant->set_influence(0.0f); }   // (no foot plant)
 		return;
 	}
 	if (swimming) crouch = false;
@@ -471,7 +457,7 @@ void CityPlayer::_physics_process(double p_delta) {
 					step_mode = 3; step_clip = c; step_t = 0.0f; turn_yaw0 = yaw;
 					// (scaled by the clip's own turn: the made ones turn 90 or 180 degrees, Mixamo's 90 to 123)
 					const float yend = std::fabs((float)fig->clip_curve(c, "yaw", fig->clip_len(c), half ? 3.14159265 : 1.5707963));
-					turn_k = half ? std::fabs(d) / std::max(yend, 0.5f) : std::min(std::max(std::fabs(d) / std::max(yend, 0.5f), 0.4f), 1.6f);
+					turn_k = 1.0f; (void)yend;   // (the clip's own turn, not scaled: Yasin, 21 Nov)
 					step_cs = 1.2f;
 					turns++;
 				}
@@ -484,7 +470,7 @@ void CityPlayer::_physics_process(double p_delta) {
 				if (tc && fig->clip_len(StringName(tc)) > 0.0) {
 					const StringName c(tc);
 					const float yend = (float)fig->clip_curve(c, "yaw", fig->clip_len(c), 0.0);
-					if (yend * d > 0.0f) { step_mode = 4; step_clip = c; step_t = 0.0f; turn_yaw0 = yaw; turn_k = std::fabs(d) / std::max(std::fabs(yend), 1.0f); step_cs = 1.0f; turns++; }
+					if (yend * d > 0.0f) { step_mode = 4; step_clip = c; step_t = 0.0f; turn_yaw0 = yaw; turn_k = 1.0f; step_cs = 1.0f; turns++; }
 				}
 			}
 			if (step_mode != 3 && step_mode != 4) {
@@ -526,7 +512,7 @@ void CityPlayer::_physics_process(double p_delta) {
 				// (Mixamo's start stands still for its first moments: it starts 0.12 s before its feet move)
 				double lead = 0.0; const double sl = fig->clip_len(c);
 				for (double tt = 0.0; tt < sl * 0.5; tt += 1.0 / 30.0) if (fig->clip_curve(c, "pace", tt, 1.0) > 0.12) { lead = std::max(tt - 0.12, 0.0); break; }
-				if (lead > 0.0) { fig->start_at(lead); step_t = (float)lead; }
+				(void)lead;   // (from its own start: Yasin, 21 Nov)
 			}   // (never slower than x0.8: at half stick a x0.5 first step took 1.8 s; off into a run: a quicker first step, x1.3, then he gathers into the jog)
 		}
 		if (step_mode == 0 && !auto_on && want_len < 0.05f && move_speed > 0.3f && move_speed < walk_top * 1.05f && !airborne && fig->clip_len(StringName(String(pre) + String("stop_l"))) > 0.0) {
@@ -645,7 +631,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	else { if (run_t > 8.0f && speed < 1.2f) vox(V_BREATH, 4.0); if (speed < 1.2f) run_t = std::max(0.0f, run_t - dt * 4.0f); }
 	if (swimming) { clip = speed > 0.25f ? SWIM : FLOAT; cs = speed > 0.25f ? speed / 1.0 : 1.0; }
 	else if (airborne && jump_run && fig->clip_len(StringName("mx/Running_Jump")) > 0.0) { clip = StringName("mx/Running_Jump"); hold = -2.0; }   // (off at a run: Mixamo's running jump)
-	else if (airborne) { clip = get_velocity().y > 1.0f ? J_UP : J_AIR; hold = get_velocity().y > 1.0f ? -2.0 : -1.0; }
+	else if (airborne) { clip = J_UP; hold = -2.0; }   // (Mixamo's jump, once through: its take-off, the air and the landing are one clip)
 	else if (land_t > 0.0f && land_hard && fig->clip_len(StringName("mx/Falling_To_Landing")) > 0.0) { clip = StringName("mx/Falling_To_Landing"); hold = -2.0; }   // (a long drop: a real landing)
 	else if (land_t > 0.0f) { clip = J_LAND; hold = -2.0; }
 	else if (act_left > 0.0 && !combat) {   // an act: the clip once, turned the way it asks
@@ -710,7 +696,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (sk && !grip && hold_on) { grip = memnew(HandGrip); sk->add_child(grip); }
 		if (grip) {
 			const float w = hold_on ? hold_w : 0.0f;
-			grip->set_active(w > 0.001f); grip->set_influence(w);
+			grip->set_active(false); grip->set_influence(0.0f); (void)w;   /* (no hand grip: Mixamo's clips as they are, Yasin 21 Nov) */
 			if (w > 0.001f) { grip->one_hand = false; grip->grip[0] = hold_p[0]; grip->grip[1] = hold_p[1]; grip->out = hold_out; grip->side = hold_side; }
 		}
 	}
@@ -737,18 +723,20 @@ void CityPlayer::_physics_process(double p_delta) {
 	}
 	Basis fb(Vector3(0, 1, 0), yaw);
 	{
-		Vector3 up = (Vector3(0, 9.81f, 0) + lean_a * 0.7f).normalized();
+		Vector3 up(0, 1, 0);   // (no lean (Yasin, 21 Nov: "you still add things to them like jumps, remove all your modifications", "they are breaking every animation": the clips play as Mixamo made them))
 		const float ang = std::acos(std::min(up.y, 1.0f));
 		if (ang > 0.14f) { const Vector3 hz = Vector3(up.x, 0, up.z).normalized(); up = Vector3(0, std::cos(0.14f), 0) + hz * std::sin(0.14f); }
 		if (ang > 0.002f) fb = Basis(Quaternion(Vector3(0, 1, 0), up)) * fb;
 	}
 	static const StringName S_WALK2("step/walk"), R_WS2("walk_slow");
 	const bool slowest = clip == WALK || clip == S_WALK2 || clip == R_WS2;
-	fig->drive(Transform3D(fb, get_global_position() + Vector3(0, vis_dy, 0)), clip, std::min(std::max(cs, slowest ? 0.15 : 0.5), 2.0), hold);
+	Vector3 fpos = get_global_position();
+	if (airborne && !swimming && fpos.y > jump_y) fpos.y = jump_y;   // (the clip's own jump: the body's arc not shown on top of it)
+	fig->drive(Transform3D(fb, fpos), clip, std::min(std::max(cs, slowest ? 0.15 : 0.5), 2.0), hold);
 	if (Skeleton3D *sk = fig->skeleton()) {
 		if (!plant) { plant = memnew(FootPlant); sk->add_child(plant); }
 		const bool on = !airborne && !swimming && !frozen;
-		plant->set_active(on); plant->set_influence(on ? 1.0f : 0.0f);
+		plant->set_active(false); plant->set_influence(0.0f); (void)on;   /* (no foot plant: Mixamo's clips as they are, Yasin 21 Nov) */
 		plant->skip = get_rid(); plant->fwd = Vector3(std::sin(yaw), 0, std::cos(yaw));
 	}
 }
@@ -767,7 +755,7 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 	// ahead, found by a ray at shin height (and, in a jump, at chest height) up to 45 cm from him (his front 15 cm from it); the move starts there,
 	// his stride carried into it
 	Vector3 face; bool has_face = false;
-	for (float hgt : { 0.12f, 0.6f }) {
+	for (float hgt : { 0.05f, 0.12f, 0.6f }) {
 		Ref<PhysicsRayQueryParameters3D> qf = PhysicsRayQueryParameters3D::create(Vector3(p.x, p.y + hgt, p.z), Vector3(p.x, p.y + hgt, p.z) + p_dir * 0.45f, 1);   // (Yasin: "make sure they trigger from really up close": his front 15 cm from it)
 		qf->set_exclude(ex);
 		const Dictionary hf = ss->intersect_ray(qf);
@@ -808,7 +796,7 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 				pel_rest.x = 0.0f; pel_rest.z = 0.0f; pel_rest_set = true;
 				clip_off = Vector3(); fig_drawn_at = p;
 				climb = 4; climb_t = 0.0f; hang_set = true; vox(V_CLIMB, 0.6);
-				climb_len = rise > 0.6f ? 1.05f : 0.9f;
+				climb_len = (fig && fig->clip_len(StringName("mx/Vault_Over_Box_to_Cover")) > 0.0) ? (rise > 0.6f ? 1.7f : 1.5f) : (rise > 0.6f ? 1.05f : 0.9f);   // (Mixamo's vault, 3.5 s of it: given more time)
 				climb_from = p;
 				// over the rail: his hips 25 cm over its top, a little past it; then down onto the far side
 				vault_over = Vector3(edge_at.x, top.y + 0.25f - pel_rest.y, edge_at.z) + p_dir * 0.12f;
@@ -818,7 +806,7 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 			}
 		}
 	}
-	const bool step = !airborne && rise > 0.16f && rise <= 0.24f;   // (a kerb, up to 16 cm, is walked onto: no clip; Yasin: "kerbs shouldnt require step up animation")
+	const bool step = !airborne && rise > 0.05f && rise <= 0.24f;   // (every kerb over 5 cm: Mixamo's step up, 21 Nov)   // (a kerb, up to 16 cm, is walked onto: no clip; Yasin: "kerbs shouldnt require step up animation")
 	const bool low = !airborne && rise > 0.24f && rise <= 0.5f;
 	const bool high = rise > 0.5f && rise <= 2.5f;   // (no jump needed: walking into it he climbs it)
 	const bool dbl = !airborne && rise > 2.5f && rise <= 3.6f;   // (a double climb: Mixamo's, 21 Nov)
@@ -847,7 +835,8 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 	climb_fast = speed > 2.4f;
 	climb = step ? 3 : (low ? 1 : (dbl ? 5 : (run_climb ? 6 : 2))); climb_t = 0.0f; hang_set = climb >= 5;
 	if (!step) vox(V_CLIMB, 0.6, low ? 0.6f : 1.0f);   // (a step up has no voice; a high wall always)
-	climb_len = step ? 0.5f : (low ? 0.85f : (climb == 5 ? (climb_fast ? 1.8f : 3.4f) : (climb == 6 ? 1.6f : (fig && fig->clip_len(StringName("mx/Climbing_single")) > 0.0 ? 2.6f : 1.7f))));
+	const bool mx_step = fig && fig->clip_len(StringName("mx/Ascending_Stairs")) > 0.0;
+	climb_len = step ? (mx_step ? 0.75f : 0.5f) : (low ? (mx_step ? 1.0f : 0.85f) : (climb == 5 ? (climb_fast ? 1.8f : 3.4f) : (climb == 6 ? 1.6f : (fig && fig->clip_len(StringName("mx/Climbing_single")) > 0.0 ? 2.6f : 1.7f))));
 	climb_from = p; climb_to = dest;
 	if (step) steps_up++; else if (low) climbs_low++; else climbs_high++;
 	return true;
@@ -885,7 +874,7 @@ void CityPlayer::grip_update() {
 	Skeleton3D *sk = fig ? fig->skeleton() : nullptr;
 	if (!sk) return;
 	if (!grip) { grip = memnew(HandGrip); sk->add_child(grip); }
-	grip->set_active(grip_w > 0.001f);
+	grip->set_active(false); grip_w = 0.0f;   /* (no hand grip: Mixamo's clips as they are, Yasin 21 Nov) */
 	grip->set_influence(grip_w);
 	if (grip_w <= 0.001f) return;
 	// the hands 22 cm either side of the middle of the edge, on the edge itself
@@ -1004,17 +993,16 @@ void CityPlayer::_process(double p_delta) {
 	// blocked: it rises a little over him and comes in, looking down past what is in the way.
 	// (21 Nov: the rays are cast in the physics step, cam_probe(): the phones run physics on its own thread and allow the
 	// world's collision to be asked only then. They are cast from this frame's framing and read here the next frame.)
-	side_cd = std::max(side_cd - dt, 0.0f);
-	pr_pivot = cam_pivot; pr_right = right; pr_back = back; pr_d = cam_d; pr_here_side = want_side * side_sign; pr_want_side = want_side; pr_skip = skip;
 	if (pc_ok) {
-		const float here = pc_here;
-		if (side_cd <= 0.0f) {
-			if (side_sign < 0.0f && pc_right > 0.95f) { side_sign = 1.0f; side_cd = 1.0f; }   // (back to the right)
-			else if (here < 0.6f && pc_other > here + 0.2f) { side_sign = -side_sign; side_cd = 1.0f; }
-		}
-		const float lift_want = (here < 0.5f && pc_other < 0.5f) ? 0.55f : 0.0f;
+		const float here = pc_here, other = pc_other;
+		// (Yasin, 21 Nov: "camera is fighting the use now ... make it look for better angle only when blocked", "no just make it seek
+		// a new angle whenever its blocked, not a timed camera"): it moves only when its view is blocked (under 45 % clear):
+		// to the other shoulder if that one is clear, up over him if both are blocked; otherwise it stays where it is
+		if (pc_fresh && here < 0.45f && other > 0.9f) { side_sign = -side_sign; pc_fresh = false; }   // (then a fresh look from the new side first: the old one would swap it straight back)
+		const float lift_want = (here < 0.45f && other < 0.45f) ? 0.55f : 0.0f;
 		cam_lift += (lift_want - cam_lift) * (1.0f - std::exp(-dt * 3.0f));
 	}
+	pr_pivot = cam_pivot; pr_right = right; pr_back = back; pr_d = cam_d; pr_here_side = want_side * side_sign; pr_want_side = want_side; pr_skip = skip;
 	const Vector3 shoulder = cam_pivot + right * cam_side + Vector3(0, cam_lift, 0);   // (over his shoulder: he stands off the middle)
 	Vector3 want = shoulder + back * (cam_d * (1.0f - 0.3f * cam_lift / 0.55f));
 	pr_shoulder = shoulder; pr_want = want; pr_set = true;

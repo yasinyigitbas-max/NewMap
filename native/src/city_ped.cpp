@@ -29,8 +29,9 @@ namespace godot {
 
 static const double GETUP_GATHER = 1.0;   // s: (the figure's old clip only) from lying into the clip's seated start
 static const double GETUP_SLOW = 0.3;     // the clip's pace meanwhile
-static const char *const GETUP_CLIP = "ual/LayToIdle";   // the Quaternius library's rise from lying on the back
-static const double GETUP_PACE = 1.25;   // (the rise played a quarter quicker: "they take forever to finish")
+static const char *const GETUP_CLIP = "mx/Getting_Up";   // (Mixamo's rise from the back, 21 Nov; was ual/LayToIdle)
+static const char *const GETUP_CLIP_OLD = "ual/LayToIdle";   // the Quaternius library's rise from lying on the back
+static const double GETUP_PACE = 1.0;   // (Mixamo's rise at its own pace: "just use mixamos", 21 Nov; the old one was played x1.25)
 
 namespace {
 const char *BONE_NAMES[pb::NB] = { "Bip01_Pelvis", "Bip01_Spine1", "Bip01_Head", "Bip01_L_UpperArm", "Bip01_L_Forearm", "Bip01_R_UpperArm", "Bip01_R_Forearm",
@@ -55,7 +56,7 @@ void CityPed::make() {
 	const TypedArray<Node> sks = model->find_children("*", "Skeleton3D", true, false);
 	if (sks.size() == 0) { UtilityFunctions::push_error("CityPed: the scene has no skeleton"); return; }
 	skel = Object::cast_to<Skeleton3D>(sks[0]);
-	{ Posture *po = memnew(Posture); po->set_name("Posture"); skel->add_child(po); }   // (the first modifier: everyone's shoulders forward)
+	// (no Posture: the shoulders as the clip has them) (Yasin, 21 Nov: "you still add things to them like jumps, remove all your modifications", "they are breaking every animation": the clips play as Mixamo made them)
 	// the scene carries the player's own model: out with its meshes, in with this person's body
 	const TypedArray<Node> old = model->find_children("*", "MeshInstance3D", true, false);
 	for (int i = 0; i < old.size(); i++) { Node *n = Object::cast_to<Node>(old[i]); if (n) { n->get_parent()->remove_child(n); n->queue_free(); } }
@@ -130,8 +131,9 @@ void CityPed::make() {
 	body.skill = (float)skill;
 	body.build(r);
 	for (int i = 0; i < pb::NB; i++) centre_rest[i] = gv(body.c_rest[i]) - Vector3(0, lift, 0);
-	if (anim && anim->has_animation(GETUP_CLIP)) {   // the Quaternius rise from lying: where its figure lies at its start
-		Ref<Animation> a = anim->get_animation(GETUP_CLIP);
+	const char *getup_name = anim && anim->has_animation(GETUP_CLIP) ? GETUP_CLIP : GETUP_CLIP_OLD;
+	if (anim && anim->has_animation(getup_name)) {   // the rise from lying (Mixamo's): where its figure lies at its start
+		Ref<Animation> a = anim->get_animation(getup_name);
 		Vector3 hips, head;
 		if (clip_start(skel, a, skel_in_node, skel->find_bone("Bip01_Pelvis"), skel->find_bone("Bip01_Head"), hips, head)) {
 			has_getup = true; getup_len = a->get_length(); getup_hips = hips; getup_axis = std::atan2(head.x - hips.x, head.z - hips.z);
@@ -240,14 +242,14 @@ void CityPed::drive(const Transform3D &p_at, const StringName &p_req, double p_s
 		cur_clip = p_clip; cur_hold = p_hold; cur_token = p_token;
 		if (p_hold >= 0.0) { anim->play(p_clip, 0.0); anim->seek(p_hold, true); anim->pause(); }
 		else {
-			anim->play(p_clip, p_hold < -1.5 ? 0.18 : 0.3);
+			anim->play(p_clip, next_blend >= 0.0 ? next_blend : (p_hold < -1.5 ? 0.18 : 0.3));
 			// (Yasin, 20 Nov: "i want them pixel perfect"; tests/people/trace_locomotion.gd: stopping from a sprint went
 			// Sprint, Jog, Walk, Idle, each new loop from its own start: the feet jumped 11-18 cm a frame) one walking loop
 			// handing over to another starts at the same point of the stride (each loop's left foot lands at a measured
 			// share of it: tools/people/clip_audit.gd STRIDE)
 			double ph_was = 0.0, ph_new = 0.0; int n_was = 1, n_new = 1;
 			const double len_new = anim->get_animation(p_clip)->get_length();
-			if (!again && was_pos >= 0.0 && stride_any(was, ph_was, n_was) && stride_any(p_clip, ph_new, n_new) && anim->has_animation(was)) {
+			if (false && !again && was_pos >= 0.0 && stride_any(was, ph_was, n_was) && stride_any(p_clip, ph_new, n_new) && anim->has_animation(was)) {   // (no seek of mine: each clip from its own start, Yasin 21 Nov)
 				const double len_was = anim->get_animation(was)->get_length();
 				const double u = len_was > 0.0 ? was_pos / len_was : 0.0;
 				double phase = u * n_was - ph_was * n_was; phase -= std::floor(phase);   // (the share of one stride since the left foot landed)
@@ -268,7 +270,7 @@ void CityPed::drive(const Transform3D &p_at, const StringName &p_req, double p_s
 		} else take_last_pos = pos;
 	}
 	if (p_hold < 0.0) anim->set_speed_scale((float)p_speed);
-	if (fresh) pending_seek = -1.0;
+	if (fresh) { pending_seek = -1.0; next_blend = -1.0; }
 }
 
 // A made step clip's pace at t: the share of the walk's ground pace the body moves at (meta "pace", 30 a second; 1 for

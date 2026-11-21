@@ -11,7 +11,7 @@ var lib := ""
 var from := 0
 var count := 6
 var n := 0
-const COLS := 5
+var COLS := 5
 const DX := 2.4
 const DY := 2.6
 
@@ -23,6 +23,7 @@ func _initialize() -> void:
 		elif a.begins_with("--lib="): lib = a.trim_prefix("--lib=")
 		elif a.begins_with("--from="): from = int(a.trim_prefix("--from="))
 		elif a.begins_with("--count="): count = int(a.trim_prefix("--count="))
+		elif a.begins_with("--cols="): COLS = int(a.trim_prefix("--cols="))
 	var sun := DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-45, 30, 0); root.add_child(sun)
 	var we := WorldEnvironment.new(); var env := Environment.new(); env.background_mode = Environment.BG_COLOR; env.background_color = Color(0.82, 0.85, 0.9)
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR; env.ambient_light_color = Color(0.75, 0.76, 0.8); env.ambient_light_energy = 0.9; we.environment = env; root.add_child(we)
