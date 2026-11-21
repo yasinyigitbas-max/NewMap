@@ -47,6 +47,34 @@ def _solid(s, tier, planes, roles, name='solid', tiers=('near', 'mid', 'far'), m
     return [(so, list(roles), meta or {'type': name})]
 Building._solid = _solid
 
+# ---- u-wrap for the game's clamped sampler (21 Nov, polish 2). The kit maps full-width strips (siding rows, trims,
+# rails, roofs) with u = world metres / u_period from the world origin, "u wraps freely (sampler REPEAT)" - but the game's
+# building shaders (bldg_wear, rt_bldg) sample the atlas with repeat_disable: every u outside 0..1 clamps to the strip's
+# edge column. On this hero that drew the porch balcony's rail half black and the porte-cochere roof in stripes. Each
+# face (all fragments sharing its mapping) is shifted along u so its u starts at 0: a face shorter than its period (rails,
+# trims, posts, the small roofs) then lies wholly inside 0..1; a longer one clamps only past its first period. Same
+# geometry, same triangle count; only the u offset changes (strips repeat along u, so nothing reads differently in Blender).
+import export as _export
+from geom import REG as _REG
+_assemble0 = _export.assemble
+def _assemble_uwrap(tris, *a, **kw):
+    groups = {}
+    for t in tris:
+        f = t.f; r = _REG.get(f.reg)
+        if r is None or r.get('kind') == 'swatch' or 'uv' not in r: continue
+        if abs(r['uv'][0]) > 1e-6 or abs(r['uv'][2] - 1.0) > 1e-6: continue
+        if abs(float(f.A[0][0])) + abs(float(f.A[0][1])) + abs(float(f.A[0][2])) < 1e-9: continue
+        g = groups.setdefault(id(f.b), [f.b, [], []])
+        g[1].append(f)
+        for q in t.p: g[2].append(float(f.A[0] @ q + f.b[0]))
+    for bb, fs, us in groups.values():
+        lo = min(us)
+        if -1e-6 <= lo and max(us) <= 1.0 + 1e-6: continue
+        nb = bb.copy(); nb[0] = bb[0] - lo
+        for f in fs: f.b = nb
+    return _assemble0(tris, *a, **kw)
+_export.assemble = _assemble_uwrap
+
 def win(k, c, lv, w=1.1, h=2.0, sill=1.0, **kw): return dict(k=k, c=round(c, 3), w=w, t0=round(LV[lv] + sill, 3), t1=round(LV[lv] + sill + h, 3), **kw)
 def door(k, c, lv, w=1.6, h=2.0, **kw): return dict(k=k, c=round(c, 3), w=w, t0=round(LV[lv], 3), t1=round(LV[lv] + h, 3), **kw)
 
@@ -271,7 +299,8 @@ def hotel_bel():
                       top=T, side=T, bottom=T, tiers=('near',), meta={'type': 'bracket'}, name='bracket', overlay=True)
     b.add('solid', planes=[((0, -1, 0), -pb), ((0, 0, -1), -(pz0 - 0.35)), ((0, 0, 1), Z0 + 0.05), ((1, 0, 0), PCW + 0.35), ((-1, 0, 0), PCW + 0.35),
                            ((0.55, 1, 0), pb + 0.2 + 0.55 * (PCW + 0.35)), ((-0.55, 1, 0), pb + 0.2 + 0.55 * (PCW + 0.35))],
-          roles=[SOF, GW, None, T, T, RF, RF], name='pcroof', tiers=('near', 'mid'), meta={'type': 'porch_roof'})
+          roles=[SOF, SWH, None, T, T, RF, RF], name='pcroof', tiers=('near', 'mid'), meta={'type': 'porch_roof'})
+    # (polish 2, 21 Nov: the pediment plain white board, not siding - in the game its siding rows drew as black bands)
     b.add('sign', side='back', wall=pz0 - 0.35, c=0.0, y=pb - 0.05, w=2.9, h=0.6, region='SG_hotelbel', depth=0.05, bracket=False)
     # ------------------------------------------------------------ lamps, vents, service fixtures
     b.add('fixtures', side='back', wall=Z0, items=[('lamp', -1.5, FL + 2.4), ('lamp', 1.5, FL + 2.4), ('lamp', -13.6, FL + 2.3), ('vent', -12.6, FL + 3.4),
