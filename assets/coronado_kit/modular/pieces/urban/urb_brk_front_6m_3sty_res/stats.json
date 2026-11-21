@@ -1,0 +1,203 @@
+{
+ "name": "urb_brk_front_6m_3sty_res",
+ "cat": "mod",
+ "style": "modular",
+ "logic_errors": [],
+ "col_boxes": 5,
+ "near": {
+  "tris": 646,
+  "verts": 1152,
+  "regions": [
+   "O_apt_door",
+   "O_number",
+   "O_win_dh_div",
+   "R_flat",
+   "S_black",
+   "S_brick",
+   "S_concrete",
+   "S_soffit",
+   "T_concrete",
+   "T_metal",
+   "T_white",
+   "W_brick"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.02500000037252903
+   ],
+   [
+    3.0,
+    10.369999885559082,
+    1.8250000476837158
+   ]
+  ]
+ },
+ "mid_roof_top": 10.3,
+ "mid": {
+  "tris": 162,
+  "verts": 217,
+  "regions": [
+   "O_apt_door",
+   "O_win_dh_div",
+   "S_concrete",
+   "S_flat",
+   "S_soffit",
+   "S_white",
+   "W_brick"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    0.02500000037252903
+   ],
+   [
+    3.0,
+    10.300000190734863,
+    1.8250000476837158
+   ]
+  ]
+ },
+ "far": {
+  "tris": 34,
+  "verts": 68,
+  "regions": [
+   "F_c_brick_3",
+   "F_concrete",
+   "F_flat"
+  ],
+  "bbox": [
+   [
+    -3.0,
+    0.0,
+    -0.22499999403953552
+   ],
+   [
+    3.0,
+    10.300000190734863,
+    1.8250000476837158
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "apt_door",
+   1.9
+  ]
+ ],
+ "footprint_wd": [
+  6.0,
+  0.45
+ ],
+ "footprint_area": 2.7,
+ "height": 10.37,
+ "storeys": 1,
+ "budget": [
+  900,
+  260,
+  16
+ ],
+ "budget_units": 1,
+ "budget_class": "mod_brk_front",
+ "time_s": 1.1,
+ "open_planes": [
+  [
+   0,
+   -3.0,
+   -1,
+   null
+  ],
+  [
+   0,
+   3.0,
+   1,
+   null
+  ],
+  [
+   2,
+   -0.225,
+   -1,
+   null
+  ],
+  [
+   1,
+   9.3,
+   1,
+   null
+  ]
+ ],
+ "shift": [
+  0.0,
+  0.0,
+  -0.225
+ ],
+ "openings": [
+  {
+   "k": "apt_door",
+   "c": 1.9,
+   "w": 1.0,
+   "t0": 0.3,
+   "t1": 2.5
+  },
+  {
+   "k": "dh_div",
+   "c": -1.4,
+   "w": 1.2,
+   "t0": 1.1,
+   "t1": 2.6
+  },
+  {
+   "k": "dh_div",
+   "c": -1.4,
+   "w": 1.2,
+   "t0": 4.1,
+   "t1": 5.6
+  },
+  {
+   "k": "dh_div",
+   "c": 1.4,
+   "w": 1.2,
+   "t0": 4.1,
+   "t1": 5.6
+  },
+  {
+   "k": "dh_div",
+   "c": -1.4,
+   "w": 1.2,
+   "t0": 7.1,
+   "t1": 8.6
+  },
+  {
+   "k": "dh_div",
+   "c": 1.4,
+   "w": 1.2,
+   "t0": 7.1,
+   "t1": 8.6
+  }
+ ],
+ "snap": {
+  "grid": 0.5,
+  "module": 6.0,
+  "type": "brk_front",
+  "ends": [
+   [
+    -3.0,
+    0,
+    0.225
+   ],
+   [
+    3.0,
+    0,
+    0.225
+   ]
+  ],
+  "face_z": 0.225,
+  "plate_y": 9.3,
+  "parapet_top": 10.3
+ },
+ "no_door": false,
+ "base_y": 0.0,
+ "ground_reach": false
+}
