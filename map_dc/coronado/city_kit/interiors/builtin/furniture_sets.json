@@ -48,6 +48,9 @@
    ],
    "bin": [
     "indoor_bin"
+   ],
+   "desk_users": [
+    "office_chair"
    ]
   },
   "office": {
@@ -96,7 +99,11 @@
    ],
    "bin": [
     "indoor_bin"
+   ],
+   "desk_users": [
+    "office_chair"
    ]
   }
- }
+ },
+ "_facing": "One axis for props and slots: a kit indoor prop's front (screen + keyboard, drawer fronts, seat front, sign / picture face) is its local +Z; a slot marker's +Z (yaw) points that front TOWARD THE PERSON WHO USES OR READS IT. BuiltinLib.facing_problems checks it per kind: a desk's user chair (a slot whose prop is in the set's desk_users, default office_chair) within 1.1 m in front, facing back; a till's staff behind it; staff / seats facing the desk, till or counter they serve; wall things facing into the room. tools/city/rooms/builtin/prop_facing_sheet.gd renders every prop of a set from +Z."
 }

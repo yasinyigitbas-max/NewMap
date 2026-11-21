@@ -119,6 +119,9 @@ static func validate(model: String, kinds: Array, contract: Dictionary = {}) -> 
 				var lst: Array = set_k[st]; var v := int(s.get_meta(&"variant", 0))
 				if v < 0 or v >= lst.size(): P.append("%s: slot %s variant %d out of range for %s/%s" % [model, s.name, v, kind, st]); continue
 				if R.indoor_file("prop_" + String(lst[v])) == "": P.append("%s: prop %s (slot %s) has no kit file" % [model, lst[v], s.name])
+	if slots and not fl.is_empty():
+		for kind: String in kinds:
+			if sets().has(kind): P.append_array(facing_problems(model, slots, fl[0], kind))
 	for kind: String in kinds:
 		var set_k2: Dictionary = sets().get(kind, {})
 		if set_k2.is_empty(): P.append("%s: no furniture set for kind %s (no fallback)" % [model, kind]); continue
@@ -164,6 +167,61 @@ static func validate(model: String, kinds: Array, contract: Dictionary = {}) -> 
 					var lp := (cs2 as CollisionShape3D).transform.affine_inverse() * probe
 					if absf(lp.x) < bx.size.x * 0.5 and absf(lp.y) < bx.size.y * 0.5 and absf(lp.z) < bx.size.z * 0.5: P.append("%s: col box %s blocks the %s door" % [model, cs2.name, e2.facade])
 	it.free()
+	return P
+
+## FACING (Yasin 22 Nov: "the PCs face the wrong way"). The convention is one axis for props and slots alike: a kit
+## indoor prop's FRONT (screen + keyboard, drawer fronts, seat front, sign or picture face) is its local +Z (Blender -Y,
+## assets/coronado_kit/tools/indoor/i_check.py; tools/city/rooms/builtin/prop_facing_sheet.gd shows every prop of a set
+## from +Z), and a slot marker's +Z (its yaw) is where that front goes: TOWARD THE PERSON WHO USES OR READS IT. So:
+##  - desk: its user's chair (a slot whose prop is one of the set's "desk_users", default office_chair) within 1.1 m
+##    in front of it, facing back at it - a visitor chair in front does not count (a desk turned round fails)
+##  - till: its staff slot behind it (customers in front)
+##  - staff and seat: face the desk / till / counter they serve when one is within 1.3 m
+##  - wall things (decor, shelf, safe, bin, and a seat with nothing to serve): face away from the wall they stand at
+## Rules live here, not per model, so every rollout model is checked the same way.
+const WALL_TYPES := ["decor", "shelf", "safe", "bin", "seat"]
+static func _fwd(m: Marker3D) -> Vector3: return Vector3(sin(m.rotation.y), 0.0, cos(m.rotation.y))
+static func facing_problems(model: String, slots: Node, f1: Array, kind: String) -> Array:
+	var P: Array = []
+	var set_k: Dictionary = sets().get(kind, {})
+	var users_p: Array = set_k.get("desk_users", ["office_chair"])
+	var prop_of := func(m: Marker3D) -> String:
+		var lst: Array = set_k.get(String(m.get_meta(&"slot_type", "")), [])
+		var v := int(m.get_meta(&"variant", 0))
+		return String(lst[v]) if v >= 0 and v < lst.size() else ""
+	var ms: Array = slots.get_children().filter(func(n: Node) -> bool: return n is Marker3D)
+	var of_type := func(types: Array) -> Array: return ms.filter(func(m: Marker3D) -> bool: return types.has(String(m.get_meta(&"slot_type", ""))))
+	var nearest := func(m: Marker3D, cands: Array, maxd: float) -> Marker3D:
+		var best: Marker3D = null; var bd := maxd
+		for c: Marker3D in cands:
+			if c == m: continue
+			var d := Vector2(c.position.x - m.position.x, c.position.z - m.position.z).length()
+			if d < bd: bd = d; best = c
+		return best
+	var dir := func(a: Marker3D, b: Marker3D) -> Vector3: var v := b.position - a.position; v.y = 0.0; return v.normalized()
+	var served := {}
+	for d: Marker3D in of_type.call(["desk"]):
+		var users: Array = (of_type.call(["seat", "staff"]) as Array).filter(func(u: Marker3D) -> bool: return users_p.has(prop_of.call(u)) and _fwd(d).dot(dir.call(d, u)) > 0.7)
+		var u: Marker3D = nearest.call(d, users, 1.1)
+		if u == null: P.append("%s (%s): desk %s has no user chair in front of it (its +Z = screen / keyboard side)" % [model, kind, d.name]); continue
+		if _fwd(u).dot(dir.call(u, d)) < 0.7: P.append("%s: seat %s does not face its desk %s" % [model, u.name, d.name])
+		served[u] = true
+	for t: Marker3D in of_type.call(["till"]):
+		var st: Marker3D = nearest.call(t, of_type.call(["staff"]), 1.3)
+		if st and _fwd(t).dot(dir.call(t, st)) > -0.7: P.append("%s: till %s faces its staff %s (its front is the customer side)" % [model, t.name, st.name])
+	for u2: Marker3D in of_type.call(["staff", "seat"]):
+		if served.has(u2): continue
+		var tgt: Marker3D = nearest.call(u2, of_type.call(["desk", "till", "counter"]), 1.3)
+		if tgt:
+			if _fwd(u2).dot(dir.call(u2, tgt)) < 0.7: P.append("%s: %s %s does not face %s" % [model, u2.get_meta(&"slot_type"), u2.name, tgt.name])
+			served[u2] = true
+	for w: Marker3D in of_type.call(WALL_TYPES):
+		if served.has(w): continue
+		var p := w.position
+		var walls := [[p.x - float(f1[0]), Vector3(1, 0, 0)], [float(f1[2]) - p.x, Vector3(-1, 0, 0)], [p.z - float(f1[1]), Vector3(0, 0, 1)], [float(f1[3]) - p.z, Vector3(0, 0, -1)]]
+		walls.sort_custom(func(a: Array, b: Array) -> bool: return float(a[0]) < float(b[0]))
+		if float(walls[0][0]) > 0.8: continue      # (free-standing)
+		if _fwd(w).dot(walls[0][1]) < 0.7: P.append("%s: %s %s at a wall does not face into the room" % [model, w.get_meta(&"slot_type"), w.name])
 	return P
 
 static func _entrance_point(e: Dictionary, contract: Dictionary) -> Vector3:

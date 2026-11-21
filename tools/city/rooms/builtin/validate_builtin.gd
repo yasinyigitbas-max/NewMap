@@ -36,6 +36,12 @@ func _init() -> void:
 		var n2 := BL.validate("commercial/com_cafe_seaside", ["cafe"], contracts.get("commercial/com_cafe_seaside", {}))
 		print("NEGATIVE unknown kind -> %d problems: %s" % [n1.size(), str(n1)])
 		print("NEGATIVE no interior -> %d problems: %s" % [n2.size(), str(n2)])
-		if n1.is_empty() or n2.is_empty(): print("NEGATIVE FAIL: the validator let a bad model through"); bad += 1
+		# a desk turned round (screen and keyboard away from its chair) must fail the facing rules
+		var it: Node3D = (load(BL.interior_path("commercial/com_bank")) as PackedScene).instantiate()
+		(it.get_node(^"Slots/desk_1") as Node3D).rotation.y += PI
+		var n3 := BL.facing_problems("commercial/com_bank", it.get_node(^"Slots"), (it.get_meta(&"floors") as Array)[0], "bank")
+		it.free()
+		print("NEGATIVE desk turned round -> %d problems: %s" % [n3.size(), str(n3)])
+		if n1.is_empty() or n2.is_empty() or n3.is_empty(): print("NEGATIVE FAIL: the validator let a bad model through"); bad += 1
 	print("BUILTIN_RESULT %s (%d models, %d problems)" % ["PASS" if bad == 0 else "FAIL", kinds.size(), bad])
 	quit(1 if bad > 0 else 0)

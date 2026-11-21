@@ -121,6 +121,13 @@ func _run() -> void:
 	await _shot("08_inside_to_street", Vector3(1.5, 1.6, -1.0), Vector3(1.5, 1.5, 8.0), 75.0)
 	await _shot("09_inside_desks", Vector3(2.0, 1.6, 2.0), Vector3(-6.0, 1.0, 2.0), 75.0)
 	await _shot("10_inside_staff_side", Vector3(-4.6, 1.7, -3.4), Vector3(3.0, 1.0, -5.0), 75.0)
+	# facing checks (Yasin 22 Nov 02:44: "PCs face the wrong way"): from above and from each user's seat
+	await _shot("20_desk_from_above", Vector3(-4.6, 3.0, 0.85), Vector3(-5.8, 0.6, 0.85), 60.0)
+	await _shot("21_desk_officer_seat_view", Vector3(-6.25, 1.2, 0.85), Vector3(-4.2, 0.85, 0.85), 70.0)
+	await _shot("22_desk_customer_seat_view", Vector3(-4.4, 1.2, 0.85), Vector3(-6.3, 0.85, 0.85), 70.0)
+	await _shot("23_back_office_desk_seat_view", Vector3(4.6, 1.2, -6.1), Vector3(4.6, 0.85, -4.0), 70.0)
+	await _shot("24_teller_staff_view", Vector3(0.61, 1.3, -3.1), Vector3(0.61, 1.1, 0.5), 70.0)
+	await _shot("25_hall_view_of_tellers", Vector3(0.0, 1.6, 2.5), Vector3(0.0, 1.2, -3.0), 70.0)
 	# --- doors
 	for d in doors: d.call("open", bank.global_transform * Vector3(0, 1.6, 10.0)); d.set("force_open", 1.0)
 	await _shot("11_door_open_street", Vector3(0.0, 1.65, 10.5), Vector3(0.0, 1.3, 0.0))
