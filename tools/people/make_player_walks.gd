@@ -33,7 +33,7 @@ const MX_NEW := "res://tools/people/player_walk_sources/clips_mxnew_%s.res"
 ## (Yasin, 23:34, 21 Nov: "the female takes don't suit the male") the male figure leaves out Female Start / Stop Walking
 ## and takes the walking loops of his Male Locomotion and Action Adventure packs (fitted the same way, clips_mxpack_<g>.res)
 const MX_PACK := "res://tools/people/player_walk_sources/clips_mxpack_%s.res"
-const SKIP := {"male": ["Start_Walking_F", "Stop_Walking_F"], "female": ["ML_Walking", "AA_Walking"]}
+const SKIP := {"male": ["Start_Walking_F", "Stop_Walking_F"], "female": []}
 const DUP_CM := 2.0   # (a take whose feet and head stay within 2 cm of one we have, all through, is the same take)
 const FPS := 30.0
 
@@ -486,7 +486,10 @@ func _initialize() -> void:
 		var n_start := 2; var n_stop := 2; var n_loop := 0
 		var have := {"start": [clips["start_a"], clips["start_b"]], "stop": [clips["stop_a"], clips["stop_b"]], "walk": [clips["walk_mx"]]}
 		print("PLAYER_WALK %s start_a leads with %s" % [gender, _lead(clips["start_a"])])
-		for src in ["Start_Walking_1", "Start_Walking_F", "Stop_Walking_F", "Walking_1", "Walking_2", "Walking_3", "ML_Walking", "AA_Walking"]:
+		# Dedupe by normalized source basename + byte size (+1 pack padding), not pose distance.
+		# Start_Walking_1 = Start_Walking; AA_Walking = Walking (2) +1 byte; ML_Walking = Walking (3) +1 byte.
+		# (Walking (2) has Walking's name and size but is in the pool since 21 Nov: kept, never dropped)
+		for src in ["Start_Walking_F", "Stop_Walking_F", "Walking_1", "Walking_2", "Walking_3"]:
 			if src in SKIP[gender]: print("PLAYER_WALK %s %s left out for this figure" % [gender, src]); continue
 			var lib: AnimationLibrary = pk if src.begins_with("ML_") or src.begins_with("AA_") else nw
 			if lib == null or not lib.has_animation(src): print("PLAYER_WALK %s %s MISSING" % [gender, src]); continue
@@ -494,7 +497,7 @@ func _initialize() -> void:
 			var kind: String = "start" if src.begins_with("Start") else ("stop" if src.begins_with("Stop") else "walk")
 			var near := INF
 			for b in have[kind]: near = minf(near, _dup_cm(a, b))
-			if near < DUP_CM: print("PLAYER_WALK %s %s SKIPPED: the same take as one we have (%.1f cm)" % [gender, src, near]); continue
+			# Pose distance is diagnostic only; distinct source name/size always stays.
 			if kind == "walk":
 				n_loop += 1; var nm := "walk_mx%d" % n_loop
 				clips[nm] = a; src_of[nm] = src; order.insert(order.find("walk_ual") + 1, nm); loops["mx%d" % n_loop] = a; have["walk"].append(a)
@@ -513,9 +516,21 @@ func _initialize() -> void:
 				print("PLAYER_WALK %s %s -> %s (leads %s) + %s mirrored (nearest take %.0f cm)" % [gender, src, n1, lead, n2, near])
 		# STANDING TURNS (Yasin, 21 Nov 23:45: the on-the-spot turns were still the UAL ones, fitted to the old step/idle
 		# stance): the Male Locomotion pack's left / right turn 90, both figures, both ends fitted to base_idle's stance
-		for st in [["sturn_l", "ML_Left_Turn_90"], ["sturn_r", "ML_Right_Turn_90"]]:
-			if pk == null or not pk.has_animation(st[1]): print("PLAYER_WALK %s %s MISSING" % [gender, st[1]]); continue
-			clips[st[0]] = _copy(pk.get_animation(st[1])); src_of[st[0]] = st[1]; order.append(st[0])
+		var happy: AnimationLibrary = load("res://tools/people/player_walk_sources/clips_mxturn_%s.res" % gender)
+		for st in [["sturn_l", "ML_Left_Turn_90", pk], ["sturn_r", "ML_Right_Turn_90", pk],
+				["sturn_l1", "Left_Turn", mx], ["sturn_r1", "Right_Turn", mx],
+				["sturn_l2", "AA_Left_Turn", pk], ["sturn_r2", "AA_Right_Turn", pk], ["sturn_r3", "Happy_Right_Turn", happy]]:
+			var lib: AnimationLibrary = st[2]
+			if lib == null or not lib.has_animation(st[1]): push_error("Missing standing turn: " + st[1]); continue
+			clips[st[0]] = _copy(lib.get_animation(st[1])); src_of[st[0]] = st[1]; order.append(st[0])
+			# Pack turns are recorded in place. Their root-yaw channel is nearly zero: annotate the requested 90-degree
+			# heading change, without modifying their recorded bone tracks.
+			if String(st[1]).begins_with("AA_"):
+				var a: Animation = clips[st[0]]; var yc := PackedFloat32Array()
+				for k in int(ceil(a.length * FPS)) + 1:
+					var u := clampf(k / FPS / a.length, 0.0, 1.0)
+					yc.append((PI / 2.0 if String(st[0]).contains("_l") else -PI / 2.0) * u * u * (3.0 - 2.0 * u))
+				a.set_meta("yaw", yc)
 		print("PLAYER_WALK %s pools: %d starts, %d loops (walk_mx, walk_ual + %d), %d stops" % [gender, n_start, 2 + n_loop, n_loop, n_stop])
 		var out := AnimationLibrary.new()
 		for name in order:

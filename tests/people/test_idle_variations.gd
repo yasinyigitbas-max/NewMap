@@ -13,7 +13,7 @@ var foot0 := []; var foot_most := 0.0; var pos0 := Vector3(); var pos_most := 0.
 var cancel_t := -1.0
 var bases: Array = []; var all_seq: Array = []; var seg_t := 0.0; var seg_c := ""; var spans: Array = []; var ual_seen := 0
 var seg_f0 := []; var hold_most := 0.0
-const TAKES := ["pidle/Looking_Around_idle", "pidle/Looking", "pidle/Arm_Stretching", "pidle/Neck_Stretching", "pidle/Bored"]
+const TAKES := ["pidle/Looking_Around_idle", "pidle/Looking", "pidle/Arm_Stretching", "pidle/Neck_Stretching", "pidle/Bored", "pidle/Idle_Transition"]   # (22 Nov 01:23: + Idle Transition)
 
 func _check(ok: bool, what: String) -> void:
 	if not ok: fails += 1
@@ -92,9 +92,10 @@ func _process(dt: float) -> bool:
 		_check(kinds.size() >= 3, "%d different bases came" % kinds.size())
 		_check(ual_seen == 0, "the UAL / step idle never plays (%d)" % ual_seen)
 		print("IDLEV   feet: most %.3f m from where they stood at the start (crossfades between stances included); most %.3f m within one take after its blend" % [foot_most, hold_most])
-		_check(hold_most < 0.11, "within a take the feet move no more than the mocap does (Bored shifts a foot 9.8 cm by itself): %.3f m" % hold_most)
+		# (Idle Transition steps 18 cm and the Action Adventure idle (3) 20 cm by themselves, 22 Nov; Bored 9.8 cm)
+		_check(hold_most < 0.22, "within a take the feet move no more than the mocap does (Action Adventure idle (3) shifts a foot 20 cm by itself): %.3f m" % hold_most)
 		_check(pos_most < 0.01, "the body never travels: most %.4f m" % pos_most)
 		print("IDLEV RESULT %s" % ("PASS" if fails == 0 else "FAIL (%d)" % fails))
 		quit(0 if fails == 0 else 1); return true
-	if t > 200.0: print("IDLEV RESULT FAIL (timeout, phase %d)" % phase); quit(1); return true
+	if t > 320.0: print("IDLEV RESULT FAIL (timeout, phase %d)" % phase); quit(1); return true
 	return false

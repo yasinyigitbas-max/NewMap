@@ -42,6 +42,24 @@ func _idle(c: String, d: Dictionary) -> bool:
 
 func _go(dir: Vector2, tier: int) -> void: player.call(&"set_move_tier", dir, tier)
 
+var turn_ask := 0
+var fwd0 := Vector3(); var ask_w := Vector3(); var ask_tier := 1
+## a way in the world as the stick's (the camera need not be behind him; held each frame as the camera swings round)
+func _inp(w: Vector3) -> Vector2:
+	var cy := float((player.call(&"get_view") as Array)[1])
+	return Vector2(w.dot(Vector3(cos(cy), 0, -sin(cy))), w.dot(Vector3(-sin(cy), 0, -cos(cy))))
+func _ask(w: Vector3, tier: int, what: String) -> void:
+	ask_w = w; ask_tier = tier; _go(_inp(w), tier); turn_ask += 1; t = 0.0
+	print("PRUN   asked %s" % what)
+
+## the turn asked has played, he faces the way asked and is back in a run loop at a jog's pace, a little while on
+func _turned(turns: Array, c: String, sp: float) -> bool:
+	var seen := false
+	for k in turns: if turns_seen.has(k): seen = true
+	var y := float((player.call(&"get_frame_log") as Dictionary).get("yaw", 0.0))
+	var facing := Vector3(sin(y), 0, cos(y)).dot(ask_w) > 0.97   # (round the way asked: a running turn is 36 degrees, the steering does the rest)
+	return seen and facing and (c.begins_with("prun/jog") or c.begins_with("prun/fast")) and t > 1.0 and sp > 2.0
+
 func _process(dt: float) -> bool:
 	n += 1; t += dt
 	if n < 5: return false
@@ -94,13 +112,20 @@ func _process(dt: float) -> bool:
 		if t >= 15.5: _go(Vector2(0, 0), 0)
 		if t > 15.5 and _idle(c, d) and t > 16.0: phase = 6; t = 0.0; _go(Vector2(0, 1), 1)
 		if t > 24.0: _check(false, "the tier run did not come back to the idle"); phase = 6; t = 0.0; _go(Vector2(0, 1), 1)
-	elif phase == 6:   # jogging on, then asked right, ahead again, back the way he came
-		if t > 3.0 and t < 5.0: _go(Vector2(1, 0), 1)
-		elif t >= 5.0 and t < 7.0: _go(Vector2(0, 1), 1)
-		elif t >= 7.0 and t < 9.5: _go(Vector2(0, -1), 1)
-		elif t >= 9.5 and t < 11.5: _go(Vector2(-1, 0), 2)
-		elif t >= 11.5 and t < 14.0: _go(Vector2(1, 0), 2)
-		elif t >= 14.0: phase = 7; t = 0.0; _go(Vector2(0, 0), 0)
+	elif phase == 6:   # jogging on, then asked right, ahead again, back the way he came; then the fast run round twice
+		# (each asked once the turn before has played and he is back in a run loop at pace: asked on a timer, a turn
+		# still playing, or a stride too slow to reach its cut in, made the left turn come or not by chance)
+		if turn_ask == 0 and t > 3.0:
+			var y0 := float((player.call(&"get_view") as Array)[0]); fwd0 = Vector3(sin(y0), 0, cos(y0))
+			_ask(Vector3(-cos(y0), 0, sin(y0)), 1, "right")
+		elif turn_ask == 1 and _turned(["prun/turn_r"], c, sp): _ask(fwd0, 1, "left")
+		elif turn_ask == 2 and _turned(["prun/turn_l"], c, sp): _ask(-fwd0, 1, "back")
+		elif turn_ask == 3 and _turned(["prun/turn180_l", "prun/turn180_r", "prun/rturn_l", "prun/rturn_r", "prun/rturn_l1", "prun/rturn_r1"], c, sp): _ask(Vector3(fwd0.z, 0, -fwd0.x), 2, "fast, round")
+		elif turn_ask == 4 and t > 2.0: _ask(fwd0, 2, "fast, back")
+		elif turn_ask == 5 and t > 2.5: turn_ask = 6
+		if turn_ask >= 1 and turn_ask <= 3 and t > 8.0: _check(false, "no running turn for the %s request" % ["right", "left", "back"][turn_ask - 1]); turn_ask = 4; t = 0.0
+		if turn_ask >= 1 and turn_ask <= 5: _go(_inp(ask_w), ask_tier)
+		if turn_ask == 6: phase = 7; t = 0.0; _go(Vector2(0, 0), 0)
 	elif phase == 7:
 		if _idle(c, d) and t > 1.0 and tstart == "":
 			# (90 degrees to his right, in the camera's terms: the camera need not be behind him)

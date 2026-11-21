@@ -23,7 +23,7 @@ extends "res://tools/people/make_player_walks.gd"
 ## v_out, slide_cm; the loops' ground_v (scaled by _vel_scaled: the planted foot) and left_down (their stride's phase).
 const RUN_SRC := "res://tools/people/player_run_sources/clips_mxrun_%s.res"
 const LOOPS := [["jog_a", "mx", "Running_4"], ["jog_b", "mx", "Slow_Run"], ["jog_c", "mx", "Running_2"], ["jog_d", "new", "Loco_Standard_Run"],
-		["fast_a", "mx", "Running_3"], ["fast_b", "mx", "Fast_Run"], ["fast_c", "mx", "Running"], ["fast_d", "mx", "Sprint"]]
+		["fast_a", "mx", "Running_3"], ["fast_b", "mx", "Fast_Run"], ["fast_c", "mx", "Running"], ["fast_d", "mx", "Sprint"], ["fast_e", "new", "Running_New4_mixamo_com"]]
 ## [name, lib, source, mirrored]
 const ONES := [["start_a", "new", "Sprint_Start_Idle_mixamo_com", false], ["start_b", "new", "Sprint_Start_Idle_mixamo_com", true],
 		["tstart_r", "mx", "Turn_To_Running", false], ["tstart_l", "mx", "Turn_To_Running", true],
@@ -31,7 +31,9 @@ const ONES := [["start_a", "new", "Sprint_Start_Idle_mixamo_com", false], ["star
 		["turn_l", "mx", "Running_Left_Turn", false], ["turn_r", "mx", "Running_Right_Turn", false],
 		["turn180_r", "mx", "Running_Turn_180", false], ["turn180_l", "mx", "Running_Turn_180", true],
 		["rturn_l", "mx", "Running_To_Turn", false], ["rturn_r", "mx", "Running_To_Turn", true],
-		["stop_climb", "mx", "Run_To_Stop_Without_climb", false]]
+		["stop_climb", "mx", "Run_To_Stop_Without_climb", false],
+		["start_c", "mx", "Rifle_Start_Run", false], ["start_d", "mx", "Rifle_Start_Run", true],
+		["rturn_l1", "mx", "Running_To_Turn_180", false], ["rturn_r1", "mx", "Running_To_Turn_180", true]]
 
 func _setup(gender: String) -> Node:
 	var scene: Node = (load(DIR + "hero_%s.scn" % gender) as PackedScene).instantiate()

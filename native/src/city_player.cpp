@@ -62,18 +62,18 @@ static const PwNames &pwn() { static const PwNames n; return n; }   // (made on 
 static bool pw_loop(const StringName &p_c) { for (int i = 0; i < PW_NM; i++) if (p_c == PW_MAIN[i]) return true; return false; }
 // The player's run (tools/people/make_player_runs.gd, library "prun"; Yasin, 21 Nov 23:29-23:35): the JOG tier's loops
 // (0-3) and the FAST RUN tier's (4-7), every take he named; the starts, stops and running turns.
-static const int PR_NJ = 4, PR_NF = 4, PR_NL = 8;
+static const int PR_NJ = 4, PR_NF = 5, PR_NL = 9;   // (22 Nov 01:23: + Running (4), fast_e)
 struct PrNames {
-	StringName loop[PR_NL] = { "prun/jog_a", "prun/jog_b", "prun/jog_c", "prun/jog_d", "prun/fast_a", "prun/fast_b", "prun/fast_c", "prun/fast_d" };
-	StringName k_in[PR_NL] = { "ph_in_jog_a", "ph_in_jog_b", "ph_in_jog_c", "ph_in_jog_d", "ph_in_fast_a", "ph_in_fast_b", "ph_in_fast_c", "ph_in_fast_d" };
-	StringName k_at[PR_NL] = { "in_at_jog_a", "in_at_jog_b", "in_at_jog_c", "in_at_jog_d", "in_at_fast_a", "in_at_fast_b", "in_at_fast_c", "in_at_fast_d" };
-	StringName k_out[PR_NL] = { "ph_out_jog_a", "ph_out_jog_b", "ph_out_jog_c", "ph_out_jog_d", "ph_out_fast_a", "ph_out_fast_b", "ph_out_fast_c", "ph_out_fast_d" };
-	StringName k_oat[PR_NL] = { "out_at_jog_a", "out_at_jog_b", "out_at_jog_c", "out_at_jog_d", "out_at_fast_a", "out_at_fast_b", "out_at_fast_c", "out_at_fast_d" };
-	StringName start[2] = { "prun/start_a", "prun/start_b" };
+	StringName loop[PR_NL] = { "prun/jog_a", "prun/jog_b", "prun/jog_c", "prun/jog_d", "prun/fast_a", "prun/fast_b", "prun/fast_c", "prun/fast_d", "prun/fast_e" };
+	StringName k_in[PR_NL] = { "ph_in_jog_a", "ph_in_jog_b", "ph_in_jog_c", "ph_in_jog_d", "ph_in_fast_a", "ph_in_fast_b", "ph_in_fast_c", "ph_in_fast_d", "ph_in_fast_e" };
+	StringName k_at[PR_NL] = { "in_at_jog_a", "in_at_jog_b", "in_at_jog_c", "in_at_jog_d", "in_at_fast_a", "in_at_fast_b", "in_at_fast_c", "in_at_fast_d", "in_at_fast_e" };
+	StringName k_out[PR_NL] = { "ph_out_jog_a", "ph_out_jog_b", "ph_out_jog_c", "ph_out_jog_d", "ph_out_fast_a", "ph_out_fast_b", "ph_out_fast_c", "ph_out_fast_d", "ph_out_fast_e" };
+	StringName k_oat[PR_NL] = { "out_at_jog_a", "out_at_jog_b", "out_at_jog_c", "out_at_jog_d", "out_at_fast_a", "out_at_fast_b", "out_at_fast_c", "out_at_fast_d", "out_at_fast_e" };
+	StringName start[4] = { "prun/start_a", "prun/start_b", "prun/start_c", "prun/start_d" };   // (Idle To Sprint, Rifle Start Run; each mirrored)
 	StringName tstart[2] = { "prun/tstart_l", "prun/tstart_r" };   // (by side: 0 to his left, 1 to his right)
 	StringName stop[2] = { "prun/stop_a", "prun/stop_b" };
 	StringName turn[2] = { "prun/turn_l", "prun/turn_r" };
-	StringName t180[2][2] = { { "prun/turn180_l", "prun/rturn_l" }, { "prun/turn180_r", "prun/rturn_r" } };   // (the 180s by side: the running one, and the one that runs, stops and turns)
+	StringName t180[2][3] = { { "prun/turn180_l", "prun/rturn_l", "prun/rturn_l1" }, { "prun/turn180_r", "prun/rturn_r", "prun/rturn_r1" } };   // (the 180s by side: the running one, and the one that runs, stops and turns)
 };
 static const PrNames &prn() { static const PrNames n; return n; }
 static int pr_loop_of(const StringName &p_c) { for (int i = 0; i < PR_NL; i++) if (p_c == prn().loop[i]) return i; return -1; }
@@ -515,12 +515,17 @@ void CityPlayer::_physics_process(double p_delta) {
 				const bool half = std::fabs(d) > 2.36f;
 				// (Yasin, 21 Nov 23:45: the Mixamo turn 90s, fitted to the base idle's stance, pwalk/sturn_l / _r; the old UAL
 				// step turns only for a figure without them. Past 135 degrees: one turn of up to x1.25 now and another after.)
-				static const StringName ST_L("pwalk/sturn_l"), ST_R("pwalk/sturn_r");
-				const StringName mx_c = d > 0.0f ? ST_L : ST_R;
+				// (22 Nov 01:23: every standing turn take, each side its own pool, never the same twice running)
+				static const StringName ST[2][4] = { { "pwalk/sturn_l", "pwalk/sturn_l1", "pwalk/sturn_l2", "pwalk/sturn_l2" }, { "pwalk/sturn_r", "pwalk/sturn_r1", "pwalk/sturn_r2", "pwalk/sturn_r3" } };
+				static const int ST_N[2] = { 3, 4 };
+				const int st_side = d > 0.0f ? 0 : 1;
+				int st_n = 0; while (st_n < ST_N[st_side] && fig->clip_len(ST[st_side][st_n]) > 0.0) st_n++;
+				const int st_k = st_n > 0 ? pw_pick(st_n, st_last[st_side] < st_n ? st_last[st_side] : -1) : 0;
+				const StringName mx_c = ST[st_side][st_k];
 				const bool mx = fig->clip_len(mx_c) > 0.0;
 				const StringName c = mx ? mx_c : StringName(half ? (d > 0.0f ? "step/turn180_l" : "step/turn180_r") : (d > 0.0f ? "step/turn_l" : "step/turn_r"));
 				if (fig->clip_len(c) > 0.0) {
-					step_mode = 3; step_pw = false; step_clip = c; step_t = 0.0f; turn_yaw0 = yaw;
+					step_mode = 3; step_pw = false; step_clip = c; step_t = 0.0f; turn_yaw0 = yaw; if (mx) st_last[st_side] = st_k;
 					if (mx) {
 						const float ye = std::max(std::fabs((float)fig->clip_curve(c, "yaw", fig->clip_len(c), 1.5707963)), 0.5f);
 						turn_k = std::min(std::max(std::fabs(d) / ye, 0.7f), 1.25f);
@@ -585,7 +590,7 @@ void CityPlayer::_physics_process(double p_delta) {
 			pr_jog = pw_pick(PR_NJ, pr_jog_last); pr_jog_last = pr_jog; step_to_loop = pr_jog; gait_i = 1;
 			const float ad = std::fabs(want_d);
 			if (ad > 0.87f) { step_clip = prn().tstart[want_d > 0.0f ? 0 : 1]; step_turn_clip = true; }
-			else { const int k = pw_pick(2, pr_start_last); pr_start_last = k; step_clip = prn().start[k]; step_turn_clip = false; }
+			else { const int k = pw_pick(fig->clip_len(prn().start[2]) > 0.0 ? 4 : 2, pr_start_last); pr_start_last = k; step_clip = prn().start[k]; step_turn_clip = false; }
 			step_mode = 1; step_pw = true; step_t = 0.0f; step_yaw_prev = 0.0; hand_t = 0.0f; step_end_stand = false;
 			step_end = (float)fig->clip_meta_sn(step_clip, prn().k_oat[step_to_loop], fig->clip_meta_sn(step_clip, K_DONE, fig->clip_len(step_clip)));
 			if (step_turn_clip) {
@@ -677,7 +682,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		} else if (pr_mi >= 0 && !auto_on && want_len > 0.05f && move_speed > 1.5f && !airborne && std::fabs(want_d) > 0.7f) {
 			pr_stop_next = -1;
 			const float ad = std::fabs(want_d); const int side = want_d > 0.0f ? 0 : 1;
-			if (ad > 2.36f) { if (pr_turn_next < 2) pr_turn_next = 2 + pw_pick(2, pr_t180_last[side]); }
+			if (ad > 2.36f) { if (pr_turn_next < 2) pr_turn_next = 2 + pw_pick(fig->clip_len(prn().t180[side][2]) > 0.0 ? 3 : 2, pr_t180_last[side]); }
 			else pr_turn_next = 0;
 			const StringName tc = pr_turn_next >= 2 ? prn().t180[side][pr_turn_next - 2] : prn().turn[side];
 			pr_wait_t += dt;
@@ -967,11 +972,23 @@ void CityPlayer::_physics_process(double p_delta) {
 	// LONG MIXAMO IDLES (Yasin, 21 Nov 23:19): 15-30 seconds looping, one fidget, then a different base.
 	// No UAL/step base. Whole-body mocap, no frozen-leg re-stance; both pools exclude their previous pick.
 	{
-		static const StringName BASE[4] = { StringName("pidle/base_standing"), StringName("pidle/base_idle"), StringName("pidle/base_idle1"), StringName("pidle/base_orc") };
-		static const StringName IDV[5] = { StringName("pidle/Looking_Around_idle"), StringName("pidle/Looking"), StringName("pidle/Arm_Stretching"), StringName("pidle/Neck_Stretching"), StringName("pidle/Bored") };
+		static const StringName BASE[9] = { StringName("pidle/base_standing"), StringName("pidle/base_idle"), StringName("pidle/base_idle1"), StringName("pidle/base_orc"), StringName("pidle/base_loco"), StringName("pidle/base_aa"), StringName("pidle/base_aa2"), StringName("pidle/base_aa3"), StringName("pidle/base_aa5") };   // (22 Nov 01:23: + the packs' standing idles)
+		static const StringName IDV[6] = { StringName("pidle/Looking_Around_idle"), StringName("pidle/Looking"), StringName("pidle/Arm_Stretching"), StringName("pidle/Neck_Stretching"), StringName("pidle/Bored"), StringName("pidle/Idle_Transition") };
+		int nb = 4; while (nb < 9 && fig->clip_len(BASE[nb]) > 0.0) nb++;
+		int nf = 5; while (nf < 6 && fig->clip_len(IDV[nf]) > 0.0) nf++;
 		const bool standing = clip == S_IDLE && hold < 0.0 && step_mode == 0 && climb == 0 && !airborne && !swimming && !frozen && mv.length_squared() < 0.0001f && speed < 0.05f;
 		auto rnd = [&]() -> uint32_t { idv_rng ^= idv_rng << 13; idv_rng ^= idv_rng >> 17; idv_rng ^= idv_rng << 5; return idv_rng; };
 		auto pick = [&](int n, int last) -> int { int k = (int)(rnd() % (uint32_t)(last < 0 ? n : n - 1)); return last >= 0 && k >= last ? k + 1 : k; };
+		// (22 Nov 01:23, "alternate maximally": a bag per pool, every take once before any again, never the last twice running)
+		auto pick_bag = [&](int n, int last, uint32_t &bag) -> int {
+			const uint32_t all = (1u << n) - 1u;
+			if ((bag & all) == all || (bag | (last >= 0 ? 1u << last : 0u)) == all) bag = 0u;
+			int free_n = 0; for (int i = 0; i < n; i++) if (!(bag & (1u << i)) && i != last) free_n++;
+			if (free_n == 0) return pick(n, last);
+			int k = (int)(rnd() % (uint32_t)free_n);
+			for (int i = 0; i < n; i++) if (!(bag & (1u << i)) && i != last) { if (k-- == 0) { bag |= 1u << i; return i; } }
+			return pick(n, last);
+		};
 		if (!standing) {
 			if (idv_take >= 0) fig->set_next_blend(0.15);
 			idv_take = -1; idv_t = 0.0; idv_span = 0.0;
@@ -983,9 +1000,9 @@ void CityPlayer::_physics_process(double p_delta) {
 			if (idv_span <= 0.0) { idv_base = 1; idv_span = 15.0 + (rnd() % 15001u) * 0.001; }
 			idv_t += dt;
 			if (idv_take < 0 && idv_t >= idv_span) {
-				idv_take = pick(5, idv_last); idv_last = idv_take; idv_t = 0.0; fig->set_next_blend(0.6);
+				idv_take = pick_bag(nf, idv_last, idv_bag_f); idv_last = idv_take; idv_t = 0.0; fig->set_next_blend(0.6);
 			} else if (idv_take >= 0 && idv_t >= fig->clip_len(IDV[idv_take]) - 0.6) {
-				idv_take = -1; idv_t = 0.0; idv_base = pick(4, idv_base); idv_span = 15.0 + (rnd() % 15001u) * 0.001; fig->set_next_blend(0.6);
+				idv_take = -1; idv_t = 0.0; idv_base = pick_bag(nb, idv_base, idv_bag_b); idv_span = 15.0 + (rnd() % 15001u) * 0.001; fig->set_next_blend(0.6);
 			}
 			clip = idv_take >= 0 ? IDV[idv_take] : BASE[idv_base];
 		}
