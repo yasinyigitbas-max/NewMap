@@ -1,6 +1,6 @@
 {
  "_doc": "High street fill (claude/fill-high-street, 19 Nov): which business is behind which door of the new high street",
- "count": 53,
+ "count": 52,
  "rooms": [
   {
    "id": "hs_b1_amber_brick_row_0",
@@ -1174,48 +1174,6 @@
    ]
   },
   {
-   "id": "hs_b4_amber_bakery_0",
-   "piece": "n_hs_b4_amber",
-   "label": "bakery",
-   "model": "commercial/com_bakery",
-   "pos": [
-    24.77,
-    2.5113000000000003,
-    283.91
-   ],
-   "yaw": -90.0,
-   "door_index": 0,
-   "door_along": 3.26,
-   "door_w": 1.6,
-   "bay": [
-    -4.2,
-    4.2
-   ],
-   "kind": "bakery",
-   "name": "Sunrise Bakery",
-   "style": "cream",
-   "font": "Overpass",
-   "built": "",
-   "why": "block 4: by the bus stop: coffee and pastries for those waiting and for the beach in the morning",
-   "signs": [
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 8.18
-    },
-    {
-     "facade": "right",
-     "along": 7.55,
-     "w": 0.8
-    },
-    {
-     "facade": "left",
-     "along": 7.55,
-     "w": 0.8
-    }
-   ]
-  },
-  {
    "id": "hs_b4_ocean_skate_0",
    "piece": "n_hs_b4_ocean",
    "label": "skate",
@@ -1918,6 +1876,13 @@
      "w": 3.0
     }
    ]
+  }
+ ],
+ "_removed": [
+  {
+   "id": "hs_b4_amber_bakery_0",
+   "when": "21 Nov 2026",
+   "why": "Hotel Bel replaces the bakery on n_hs_b4_amber (Yasin: \"get to work on ... hotel bel\"); its room file is left in rooms/ unused"
   }
  ]
 }
