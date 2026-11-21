@@ -110,6 +110,7 @@ const LAWN_BEDS := [
 	[300.0, -1680.0, 312.0, -1676.0], [264.0, -1692.0, 268.0, -1680.0],
 	[388.0, -1640.0, 396.0, -1636.0], [412.0, -1648.0, 420.0, -1644.0], [436.0, -1696.0, 448.0, -1692.0],
 	[476.0, -1648.0, 484.0, -1640.0], [464.0, -1688.0, 468.0, -1680.0],
+	[372.0, -1644.0, 384.0, -1640.0], [400.0, -1664.0, 408.0, -1660.0], [420.0, -1636.0, 428.0, -1632.0],   # the museum's front lawn
 ]
 
 const LOOP := [324.0, -1714.0, 376.0, -1676.0, 14.0]
@@ -227,6 +228,8 @@ const LAWN := [
 	# the coach stop's path to the museum: its lamps, a bench pair halfway for the teachers counting heads
 	["prop_lamp_victorian", "worn", 370.0, -1653.6, 0.0], ["prop_lamp_victorian", "worn", 381.4, -1664.0, 0.0],
 	["prop_park_bench", "worn", 372.5, -1647.6, 0.0], ["prop_park_bench", "worn", 375.0, -1647.6, 0.0],
+	# a bench pair on the museum's front lawn, looking over its flower bed toward the museum
+	["prop_park_bench", "worn", 390.75, -1633.2, 180.0], ["prop_park_bench", "worn", 393.25, -1633.2, 180.0],
 ]
 
 func _init() -> void: _run.call_deferred()
