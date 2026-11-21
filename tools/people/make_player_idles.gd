@@ -9,7 +9,11 @@ extends SceneTree
 ## (Yasin, 21 Nov: the player's idle on foot plays step/idle 4 loops, then one of these, never twice in a row; no UAL,
 ## no Idle_Transition, no texting.) The pelvis, thighs, calves and feet hold step/idle's first pose (its still-leg fix),
 ## so the feet stay planted through the variation and both crossfades.
-const TAKES := ["Looking_Around_idle", "Looking", "Arm_Stretching", "Neck_Stretching"]
+const TAKES := ["Looking_Around_idle", "Looking", "Arm_Stretching", "Neck_Stretching", "Bored"]
+## A take not yet in clips_player_idle_<g>.res comes from its own Mixamo conversion (the perf-bugs converter,
+## tools/people/make_mixamo.gd / AnimRetarget "mixamo", run on that one FBX: Yasin's Bored.fbx, 21 Nov); once baked it
+## is in the library and the tool re-stances it from there like the others.
+const EXTRA := {"Bored": "/workspace/share/anim/walk/src/bored_%s.res"}
 const DIR := "res://characters/rocketbox/"
 const FPS := 30.0
 ## OPEN HANDS on the base (Yasin, 21 Nov: "can you open the hands of this base idle please?"): step/idle's finger
@@ -17,6 +21,7 @@ const FPS := 30.0
 ## (arms hanging), held: the same fingers the variations start and end with, so the crossfades do not move them.
 const HAND_FROM := "Neck_Stretching"
 const HAND_AT := 0.0
+const HAND_EASE := 0.4
 func _open_hands(base: Animation, from: Animation, at: float) -> void:
 	var n := 0
 	for ti in base.get_track_count():
@@ -54,7 +59,7 @@ func _initialize() -> void:
 		var sk: Skeleton3D = scene.find_children("*", "Skeleton3D", true, false)[0]
 		var out := AnimationLibrary.new()
 		for name in TAKES:
-			var src: Animation = mx.get_animation(name)
+			var src: Animation = mx.get_animation(name) if mx.has_animation(name) else (load(EXTRA[name] % gender) as AnimationLibrary).get_animation(name)
 			var a := Animation.new(); a.length = src.length; a.loop_mode = Animation.LOOP_NONE
 			var frames := int(ceil(src.length * FPS)) + 1
 			var prefix := String(src.track_get_path(0)).get_slice(":", 0)
@@ -95,6 +100,17 @@ func _initialize() -> void:
 					var th := _local(src, sp_path, t, sk.get_bone_rest(spi)).affine_inverse() * want
 					a.position_track_insert_key(pt, t, th.origin)
 					a.rotation_track_insert_key(rt, t, th.basis.get_rotation_quaternion())
+			# the hands at the crossfades: the fingers ease from the base's open hand over the first 0.4 s and back to it over
+			# the last 0.4 s (the 0.4 s blends in and out), so no finger moves while the clips mix
+			for ti in a.get_track_count():
+				if a.track_get_type(ti) != Animation.TYPE_ROTATION_3D or not String(a.track_get_path(ti)).contains("Finger"): continue
+				var hb := base.find_track(a.track_get_path(ti), Animation.TYPE_ROTATION_3D)
+				if hb < 0: continue
+				var hq := base.rotation_track_interpolate(hb, 0.0)
+				for k in a.track_get_key_count(ti):
+					var kt := a.track_get_key_time(ti, k)
+					var w := smoothstep(0.0, 1.0, clampf(minf(kt, a.length - kt) / HAND_EASE, 0.0, 1.0))
+					a.track_set_key_value(ti, k, hq.slerp(a.track_get_key_value(ti, k), w))
 			a.set_meta("source", "mx/" + name); a.set_meta("stance", "step/idle")
 			out.add_animation(name, a)
 			print("PLAYER_IDLE %s %s %.3fs %d tracks" % [gender, name, a.length, a.get_track_count()])

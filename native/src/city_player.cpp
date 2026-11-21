@@ -627,7 +627,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	// still: the feet do not move in them or in the crossfades, and the body never travels. Moving, crouching, a fight,
 	// a phone, a climb, a car (frozen) or the water: the base or whatever is asked plays at once (0.15 s).
 	{
-		static const StringName IDV[4] = { StringName("pidle/Looking_Around_idle"), StringName("pidle/Looking"), StringName("pidle/Arm_Stretching"), StringName("pidle/Neck_Stretching") };
+		static const StringName IDV[5] = { StringName("pidle/Looking_Around_idle"), StringName("pidle/Looking"), StringName("pidle/Arm_Stretching"), StringName("pidle/Neck_Stretching"), StringName("pidle/Bored") };
 		const double IDV_LOOPS = 4.0, IDV_IN = 0.4, IDV_OUT = 0.4;
 		const bool standing = clip == S_IDLE && hold < 0.0 && step_mode == 0 && climb == 0 && !airborne && !swimming && !frozen && mv.length_squared() < 0.0001f && speed < 0.05f;
 		if (!standing) {
@@ -638,8 +638,8 @@ void CityPlayer::_physics_process(double p_delta) {
 			const double bl = fig->clip_len(S_IDLE);
 			if (bl > 0.0 && idv_t >= IDV_LOOPS * bl) {   // (four complete base loops, then crossfade into the take)
 				idv_rng ^= idv_rng << 13; idv_rng ^= idv_rng >> 17; idv_rng ^= idv_rng << 5;   // (xorshift32)
-				int k = (int)(idv_rng % 3u);
-				if (idv_last < 0) k = (int)(idv_rng % 4u); else if (k >= idv_last) k++;   // (any but the last one)
+				int k = (int)(idv_rng % 4u);
+				if (idv_last < 0) k = (int)(idv_rng % 5u); else if (k >= idv_last) k++;   // (any but the last one)
 				if (fig->clip_len(IDV[k]) > 0.0) { idv_take = k; idv_last = k; idv_t = 0.0; fig->set_next_blend(IDV_IN); }
 				else idv_t = 0.0;   // (a figure without the takes: the base goes on)
 			}

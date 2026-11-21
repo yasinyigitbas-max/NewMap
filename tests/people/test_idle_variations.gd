@@ -1,6 +1,6 @@
 extends SceneTree
 ## The player's idle variations (Yasin, 21 Nov): standing on foot, step/idle plays 4 full loops, then ONE pidle/* take
-## (Looking_Around_idle, Looking, Arm_Stretching, Neck_Stretching), then the base again; never two takes back to back, never
+## (Looking_Around_idle, Looking, Arm_Stretching, Neck_Stretching, Bored), then the base again; never two takes back to back, never
 ## the same take twice running; a move or a car cancels it at once; he never travels and his feet stay planted.
 ##   godot --headless --path . --fixed-fps 60 -s res://tests/people/test_idle_variations.gd
 var player: CharacterBody3D
@@ -11,7 +11,7 @@ var seq: Array = []; var base_starts: Array = []
 var last_clip := ""; var t := 0.0; var phase := 0
 var foot0 := []; var foot_most := 0.0; var pos0 := Vector3(); var pos_most := 0.0
 var cancel_t := -1.0
-const TAKES := ["pidle/Looking_Around_idle", "pidle/Looking", "pidle/Arm_Stretching", "pidle/Neck_Stretching"]
+const TAKES := ["pidle/Looking_Around_idle", "pidle/Looking", "pidle/Arm_Stretching", "pidle/Neck_Stretching", "pidle/Bored"]
 
 func _check(ok: bool, what: String) -> void:
 	if not ok: fails += 1
