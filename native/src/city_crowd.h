@@ -11,6 +11,7 @@
 //    falls and gets up by itself (ped_body.h), and its walker goes on from where it stands afterwards.
 // The test app's script only makes the node and sets numbers; nothing here is called from script per frame.
 #pragma once
+#include <unordered_map>
 
 #include "way_floor.h"
 
@@ -96,11 +97,19 @@ private:
 	std::unordered_map<int, double> speak_until;
 public:
 	void speaking_for(int p_id, double p_seconds) { speak_until[p_id] = own_clock + p_seconds; }
+	// the gesture of what he says now (CityTalk::line_gesture), for that long
+	void talk_gesture(int p_id, int p_kind, double p_seconds) { gest_kind[p_id] = p_kind; gest_until[p_id] = own_clock + p_seconds; }
+	std::unordered_map<int, int> gest_kind;
+	std::unordered_map<int, double> gest_until;
+	int gesture_now(int p_id) const { const auto u = gest_until.find(p_id); if (u == gest_until.end() || u->second < own_clock) return -1; const auto k = gest_kind.find(p_id); return k == gest_kind.end() ? -1 : k->second; }
 	bool speaking(int p_id) const { auto it = speak_until.find(p_id); return it != speak_until.end() && it->second > own_clock; }
 private:
 	struct Near { CityPed *ped = nullptr; class FootPlant *plant = nullptr; int plant_walker = -1; Vector3 last_at; bool has_last = false; int walker = -1; int female = 0; bool in_body = false; float push_cd = 0; Ref<ShaderMaterial> look; int act = -1; float act_t = 99.0f, v_s = 0.0f; int why = 0, after_kind = 0; float after_t = 0.0f, after_len = 0.0f; bool after_hit = false; bool stepping = false; float y_s = 0.0f; bool has_y = false;
 		// the walk start / stop (tools/people/make_steps.gd) for the walker it shows: 1 setting off, 2 stopping
 		int st_mode = 0, st_walker = -1; float st_t = 0.0f; bool st_moving = false; StringName st_clip;
+		// CPR (the Animator, 21 Nov): 1 lying as the clip lies while a medic works on him, 2 getting up from his back
+		int cpr = 0; float cpr_t = 0.0f; Transform3D cpr_xf;
+		class MeshInstance3D *phone2 = nullptr;   // the phone of a call or a text (in the hand at his ear, or held in front of him)
 		// a phone in his raised hand while he films (Yasin, 20 Nov: "put a rectangular phone like shape in npcs hands when
 		// they are recording"): made the first time it is needed, shown only then
 		class MeshInstance3D *phone = nullptr; Vector3 phone_base; float phone_k = 0.01f; };   // act, act_t: what it shows and for how long (the way INTO an act is played once)
@@ -163,6 +172,7 @@ private:
 		float face = 0.0f; bool facing = false;   // standing: turned this way
 		StringName clip; double hold = -1.0; int token = 0;   // its own clip while it stands (empty: the crowd's own)
 		int helps = -1;                           // (helpers, medics) the one he kneels by
+		StringName once; float once_left = 0.0f; bool once_gone = false;   // a clip played through where he stands (out of a car, into one), then moved to where it left him; gone: taken away after it
 		float ground_t = 0.0f;
 		// TALKED TO (CityTalk): he stops what he does, turns to the player (not seated), and goes on after; his own clip kept
 		bool talking = false; StringName s_clip; double s_hold = -1.0; int s_token = 0; float s_face = 0.0f; bool s_facing = false;
@@ -182,10 +192,10 @@ private:
 	int drivers_robbed = 0;
 	int uniform_of(int p_walker) const;
 	// the hurt who stay down (a hard knock): the body lies until a medic has been (or two minutes)
-	struct Down { int walker; double t; bool treated = false; int helpers = 0; };
+	struct Down { int walker; double t; bool treated = false; int helpers = 0; bool cpr = false; };
 	std::vector<Down> downs;
 	void helpers_for(int p_victim, const Vector3 &p_at);
-	int helpers_sent = 0, helpers_knelt = 0, steps_in = 0;
+	int helpers_sent = 0, helpers_knelt = 0, steps_in = 0, n_cpr = 0;
 	// counters
 	WayFloor way_floor;      // a collision floor 3 cm under every pavement and crossing (the city's collision has holes)
 	int riders_drawn = 0;   // the traffic's cyclists drawn as riders this frame
@@ -322,6 +332,9 @@ public:
 	bool actor_go(int p_walker, const Vector3 &p_to, double p_speed, double p_near);
 	bool actor_follow(int p_walker, int p_target, double p_speed, double p_near);   // p_target -2: the player
 	bool actor_stand(int p_walker, double p_yaw, const StringName &p_clip, double p_hold, int p_token);
+	// a clip played once where he stands, turned p_yaw (out of a car, into one: Mixamo's, which walk and turn as they go):
+	// after it he stands where the clip left him, turned as it left him; p_gone: then he is taken away (into the car)
+	bool actor_once(int p_walker, double p_yaw, const StringName &p_clip, bool p_gone);
 	bool actor_arrived(int p_walker) const;
 	bool is_actor(int p_walker) const;
 	int actor_role(int p_walker) const;
@@ -338,6 +351,11 @@ public:
 	bool walker_alive(int p_walker) const;
 	// the hurt who lie until a medic comes: is he one; the medic has been (he gets up)
 	bool is_down(int p_walker) const;
+	void set_cpr(int p_walker, bool p_on);
+	// carrying something (Yasin, 21 Nov: "some people carrying boxes or bags or brief cases"): his shopping, and one walker
+	// in eight always; what: 0 a bag, 1 a box, 2 a briefcase (by his look)
+	bool carries(int i) const;
+	int carry_kind(int i) const;   // (the medics: one gives CPR, the one down lies flat and takes it)
 	void treat(int p_walker);
 	Array downs_list() const;   // [{walker, at, t, treated}]
 	// what happened since the last call (CityLaw): [{at, kind, by_player, victim, hurt}]

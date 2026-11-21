@@ -188,6 +188,7 @@ void CityBike::make() {
 	rq.instantiate();
 	rq->set_collision_mask(1);
 	rider = memnew(CityPed);
+	rider->set_alias(false);   // (the rider's clips are fitted to the bicycle by hand)
 	rider->set_body_id(rider_body);
 	rider->set_clip("ual/Driving_Loop");
 	rider->set_as_top_level(true);

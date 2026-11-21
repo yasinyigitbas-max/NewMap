@@ -42,6 +42,7 @@ bool CityCar::enter(CityPlayer *p_pl) {
 	if (!made || !p_pl || dr_state != DR_NONE) return false;
 	if (!driver) {
 		driver = memnew(CityPed);
+		driver->set_alias(false);   // (the seat, the door: fitted to these clips by hand)
 		driver->set_body_id("M1");
 		add_child(driver);
 		driver->set_as_top_level(true);

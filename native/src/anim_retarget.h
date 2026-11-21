@@ -16,6 +16,10 @@ class AnimRetarget : public RefCounted {
 	Array layers;
 
 	int n_clips = 0;
+	// (Yasin, 21 Nov: "okay go for mixamo") the source rig: "ual" (the Quaternius library) or "mixamo" (Mixamo's
+	// mixamorig: Hips, Spine .. LeftUpLeg ..); and the saved library's file name before <male|female>.res
+	bool mixamo = false;
+	String out_prefix = "clips_ual_";
 
 protected:
 	static void _bind_methods();
@@ -33,6 +37,8 @@ public:
 	// (walking while talking, sitting with a phone ...); made after the fitting, saved with the others
 	void set_layers(const Array &p_layers) { layers = p_layers; }
 	int layered() const { return n_layered; }
+	void set_rig(const String &p_rig) { mixamo = p_rig == "mixamo"; }
+	void set_out_prefix(const String &p_prefix) { out_prefix = p_prefix; }
 };
 
 } // namespace godot

@@ -173,7 +173,20 @@ float CityCrowd::ground_y(const Vector3 &p_at, float p_def) const {
 }
 
 // What an actor's figure plays: on the move a walk, a jog or a run as fast as it goes; standing, its own clip
+bool CityCrowd::actor_once(int p_walker, double p_yaw, const StringName &p_clip, bool p_gone) {
+	Actor *a = actor_of(p_walker);
+	if (!a) return false;
+	double len = 0.0;
+	for (const Near &nb : near_pool) if (nb.ped) { len = nb.ped->clip_len(p_clip); break; }
+	if (len <= 0.0) { if (p_gone) { actor_release(p_walker); remove_walker(p_walker); } return false; }
+	a->once = p_clip; a->once_left = (float)len; a->once_gone = p_gone; a->face = (float)p_yaw; a->speed = 0.0f; a->arrived = true;
+	const int i = crowd->find(p_walker);
+	if (i >= 0) crowd->hold(p_walker, true, a->face);
+	return true;
+}
+
 void CityCrowd::actor_clip(const Actor &a, StringName &r_clip, double &r_speed, double &r_hold, int &r_token) const {
+	if (a.once_left > 0.0f) { r_clip = a.once; r_hold = -2.0; r_token = 7700; r_speed = 1.0; return; }
 	static const StringName WALK("ual/Walk_Loop"), JOG("ual/Jog_Fwd_Loop"), RUN("ual/Sprint_Loop"), IDLE("ual/Idle_Loop");
 	if (a.speed > 0.0f && !a.arrived) {
 		r_hold = -1.0; r_token = 0;
@@ -200,8 +213,10 @@ bool CityCrowd::is_down(int p_walker) const {
 	return false;
 }
 
+void CityCrowd::set_cpr(int p_walker, bool p_on) { for (Down &d : downs) if (d.walker == p_walker) d.cpr = p_on; }
+
 void CityCrowd::treat(int p_walker) {
-	for (Down &d : downs) if (d.walker == p_walker) d.treated = true;
+	for (Down &d : downs) if (d.walker == p_walker) { d.treated = true; d.cpr = false; }
 	for (Near &nb : near_pool) if (nb.walker == p_walker && nb.ped) nb.ped->set_stay_down(false);
 }
 
@@ -275,7 +290,7 @@ void CityCrowd::actors_update(double p_delta) {
 		Down &d = downs[k];
 		d.t += p_delta;
 		bool has_body = false;
-		for (Near &nb : near_pool) if (nb.walker == d.walker && nb.ped && nb.ped->get_mode() != CityPed::MODE_ANIM) { has_body = true; nb.ped->set_stay_down(!d.treated); }
+		for (Near &nb : near_pool) if (nb.walker == d.walker && nb.ped && (nb.ped->get_mode() != CityPed::MODE_ANIM || nb.cpr != 0)) { has_body = true; nb.ped->set_stay_down(!d.treated); }   // (lying in the CPR clip is lying too)
 		if (d.t > 120.0 && !d.treated) treat(d.walker);
 		if (!walker_alive(d.walker) || (!has_body && d.t > 3.0)) { downs.erase(downs.begin() + (long)k); continue; }
 		k++;
@@ -289,6 +304,23 @@ void CityCrowd::actors_update(double p_delta) {
 		if (crowd->mode[i] != pc::M_HELD) crowd->hold(a.walker, true, a.face);
 		if (a.seated) { crowd->y[i] = crowd->py[i] = a.floor_y; }
 		if (a.talking) { crowd->hold(a.walker, true, a.face); k++; continue; }   // (talked to: he stands, or sits, and listens)
+		if (a.once_left > 0.0f) {   // a clip played through where he stands; then he is where it left him
+			a.once_left -= dt;
+			if (a.once_left <= 0.0f) {
+				if (a.once_gone) { const int w = a.walker; actors.erase(actors.begin() + (long)k); remove_walker(w); continue; }
+				for (const Near &nb : near_pool) if (nb.ped && nb.walker == a.walker) {
+					const Vector3 tv = nb.ped->clip_len(a.once) > 0.0 ? (Vector3)Vector3() : Vector3();
+					(void)tv;
+					const double yl = nb.ped->clip_curve(a.once, "yaw", 1e6, 0.0);
+					const Vector3 hips = nb.ped->clip_hips_at(a.once, nb.ped->clip_len(a.once)) - nb.ped->clip_hips_at(a.once, 0.0);
+					const Vector3 mv = Basis(Vector3(0, 1, 0), a.face).xform(Vector3(hips.x, 0.0f, hips.z));
+					crowd->x[i] = crowd->px[i] = crowd->x[i] + mv.x; crowd->z[i] = crowd->pz[i] = crowd->z[i] + mv.z;
+					a.face += (float)yl;
+				}
+				a.once = StringName();
+			}
+			crowd->hold(a.walker, true, a.face); k++; continue;
+		}
 		Vector3 at(crowd->x[i], crowd->y[i], crowd->z[i]);
 		Vector3 to = a.to;
 		if (a.to_walker == -2 && pl) to = pl->get_global_position();
@@ -406,9 +438,9 @@ void CityCrowd::gun_aimed(const Vector3 &p_from, const Vector3 &p_dir, double p_
 		a->to = p_from; a->near = (float)p_seconds;   // (cowering: where the gun is, how long)
 		const float yaw = std::atan2(p_from.x - crowd->x[j], p_from.z - crowd->z[j]);
 		// hands up (the start of the Surprise clip held where both hands are high) or down in a crouch: one in two
-		static const StringName HANDS("ual/Surprise"), CROUCH("ual/Crouch_Idle_Loop");
+		static const StringName HANDS("x/cower"), CROUCH("ual/Crouch_Idle_Loop");   // (Mixamo's Terrified, 21 Nov)
 		const bool up = (crowd->look[j] >> 9) & 1u;
-		actor_stand(w, yaw, up ? HANDS : CROUCH, up ? 0.45 : -1.0, 0);
+		actor_stand(w, yaw, up ? HANDS : CROUCH, -1.0, 0);
 		crowd->act[j] = up ? pc::A_STARE : pc::A_DUCK;
 		cowering++;
 	}

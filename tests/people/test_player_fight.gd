@@ -18,6 +18,9 @@ var spot := Vector3.ZERO
 var lowest := 9.0
 var highest := -9.0
 var punch_t := 0.0
+var shots := ""   # (-- --shots=DIR, in a window: every 3rd frame from beside the fight)
+var n_shot := 0
+var fcam: Camera3D
 
 func _check(ok: bool, what: String) -> void:
 	if not ok: fails += 1
@@ -28,6 +31,11 @@ func _initialize() -> void:
 	crowd.set(&"max_people", 30); crowd.set(&"hour", 12.5); crowd.set(&"near_max", 6)
 	root.add_child(crowd)
 	var cam := Camera3D.new(); cam.position = Vector3(0, 30, -600); cam.rotation_degrees = Vector3(-90, 0, 0); root.add_child(cam); cam.current = true
+	for a: String in OS.get_cmdline_user_args():
+		if a.begins_with("--shots="): shots = a.trim_prefix("--shots="); DirAccess.make_dir_recursive_absolute(shots)
+	if shots != "":
+		var sun := DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-45, 30, 0); root.add_child(sun)
+		fcam = Camera3D.new(); root.add_child(fcam)
 
 func _person() -> Dictionary:
 	for p: Dictionary in crowd.call(&"people_near", spot, 60.0):
@@ -37,6 +45,11 @@ func _person() -> Dictionary:
 func _physics_process(delta: float) -> bool:
 	t += delta
 	var fs: Dictionary = crowd.call(&"fight_stats") if crowd else {}
+	if shots != "" and player != null and is_instance_valid(player):
+		fcam.current = true
+		var c: Vector3 = player.global_position
+		fcam.look_at_from_position(c + Vector3(3.2, 1.6, 1.2), c + Vector3(0, 0.9, 0.5), Vector3.UP)
+		if int(t * 60.0) % 3 == 0: root.get_texture().get_image().save_png("%s/f_%04d.png" % [shots, n_shot]); n_shot += 1
 	match step:
 		0:
 			if t < 2.0: return false

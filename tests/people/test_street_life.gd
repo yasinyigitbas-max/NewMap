@@ -119,7 +119,7 @@ func _physics_process(delta: float) -> bool:
 			var w: int = aimed[0]
 			_check(int(st.cowering) >= 1 and int(crowd.call(&"actor_role", w)) == 7, "a gun aimed at him: he cowers (%d in the line cower)" % int(st.cowering))
 			var nb := _body(w)
-			if not nb.is_empty(): _check(String(nb.clip) in ["ual/Surprise", "ual/Crouch_Idle_Loop"], "his figure: hands up or a crouch (%s)" % String(nb.clip))
+			if not nb.is_empty(): _check(String(nb.clip) in ["ual/Surprise", "ual/Crouch_Idle_Loop", "x/cower"], "his figure: hands up or a crouch (%s)" % String(nb.clip))
 			step = 5; t0 = t
 		5:
 			if t - t0 < 4.0: return false

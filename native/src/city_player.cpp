@@ -327,6 +327,10 @@ void CityPlayer::_physics_process(double p_delta) {
 			const Vector3 hang = hang_set ? climb_hang : climb_from;
 			const float h0 = ss(0.0f, 0.22f, u), a = ss(0.22f, 0.58f, u), b = ss(0.58f, 1.0f, u);
 			at = climb_from.lerp(hang, h0).lerp(mid, a).lerp(climb_to, b);
+		} else if (climb == 5 || climb == 6) {   // a double climb, a running climb: up the wall, then in over the top
+			at.y += (climb_to.y - climb_from.y) * ss(0.12f, climb == 5 ? 0.78f : 0.6f, u);
+			const float over = ss(climb == 5 ? 0.55f : 0.35f, 1.0f, u);
+			at.x += (climb_to.x - climb_from.x) * over; at.z += (climb_to.z - climb_from.z) * over;
 		} else {
 			// (Yasin: "they shouldnt jump up the character so much on the approach, characters body should lift after the
 			// first leg is on the collision"): forward first, the first foot up onto the top (planted there by FootPlant),
@@ -351,8 +355,12 @@ void CityPlayer::_physics_process(double p_delta) {
 		speed = 0.0f;
 		// (the high climb: the pull-up, ClimbUp_2m; Yasin tried a leg over the top, ClimbLedge, and chose: "old pull over long
 		// climb was much better, revert to it")
-		static const StringName C_LOW("ual/ClimbUp_1m"), C_HIGH("ual/ClimbUp_2m"), C_STEP("ual/StepUp"), C_VAULT("ual/SafetyVault");
-		const StringName cc = climb_kind == 2 ? C_HIGH : (climb_kind == 3 ? C_STEP : (climb_kind == 4 ? C_VAULT : C_LOW));
+		// (Mixamo, 21 Nov: the high climb is its hang-and-pull-up, Climbing_single; a run at a wall up to 1.4 m is its running
+		// climb; a wall of 2.5-3.6 m is a double climb: Climbing_double walking, Sprint_To_Wall_Climb at a run)
+		static const StringName C_LOW("ual/ClimbUp_1m"), C_HIGH0("ual/ClimbUp_2m"), C_STEP("ual/StepUp"), C_VAULT("ual/SafetyVault");
+		static const StringName C_HIGH_MX("mx/Climbing_single"), C_RUNCLIMB("mx/Running_Jump_Climb"), C_DOUBLE("mx/Climbing_double"), C_WALLRUN("mx/Sprint_To_Wall_Climb");
+		const StringName C_HIGH = fig->clip_len(C_HIGH_MX) > 0.0 ? C_HIGH_MX : C_HIGH0;
+		const StringName cc = climb_kind == 2 ? C_HIGH : (climb_kind == 3 ? C_STEP : (climb_kind == 4 ? C_VAULT : (climb_kind == 5 ? (climb_fast ? C_WALLRUN : C_DOUBLE) : (climb_kind == 6 ? C_RUNCLIMB : C_LOW))));
 		const double len = fig->clip_len(cc);
 		// the figure placed so its hips follow the climb's path: how far the clip itself has carried the hips by now (read
 		// from its tracks at the moment it is playing, not measured: the measured one came a frame late and the figure bobbed
@@ -366,7 +374,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), fig_at), cc, len > 0.0 ? std::min(std::max(len / (double)climb_len, 0.5), 3.0) : 1.0, -2.0);
 		fig_drawn_at = fig_at;
 		if (climb == 0) settle_off = at - fig_at;   // (the move just ended: the ease to Idle starts exactly where the figure stands)
-		if (plant) { const bool on = (climb != 2 && climb != 4) || u > 0.8f; plant->set_active(on); plant->set_influence(on ? 1.0f : 0.0f); plant->fwd = Vector3(std::sin(yaw), 0, std::cos(yaw)); }
+		if (plant) { const bool on = (climb != 2 && climb != 4 && climb != 5 && climb != 6) || u > 0.85f; plant->set_active(on); plant->set_influence(on ? 1.0f : 0.0f); plant->fwd = Vector3(std::sin(yaw), 0, std::cos(yaw)); }
 		return;
 	}
 	if (settle_t < 0.45f) {   // just up from a step or climb: he stands a moment (the clip's end fading into Idle), then walks
@@ -431,18 +439,39 @@ void CityPlayer::_physics_process(double p_delta) {
 				const StringName c(half ? (d > 0.0f ? "step/turn180_l" : "step/turn180_r") : (d > 0.0f ? "step/turn_l" : "step/turn_r"));
 				if (fig->clip_len(c) > 0.0) {
 					step_mode = 3; step_clip = c; step_t = 0.0f; turn_yaw0 = yaw;
-					turn_k = half ? std::fabs(d) / 3.14159265f : std::min(std::max(std::fabs(d) / 1.5707963f, 0.5f), 1.5f);
+					// (scaled by the clip's own turn: the made ones turn 90 or 180 degrees, Mixamo's 90 to 123)
+					const float yend = std::fabs((float)fig->clip_curve(c, "yaw", fig->clip_len(c), half ? 3.14159265 : 1.5707963));
+					turn_k = half ? std::fabs(d) / std::max(yend, 0.5f) : std::min(std::max(std::fabs(d) / std::max(yend, 0.5f), 0.4f), 1.6f);
 					step_cs = 1.2f;
 					turns++;
 				}
 			}
-			if (step_mode != 3) {
+			// TURNING ROUND WHILE MOVING (Mixamo's Walking_Turn_180, Running_To_Turn, Running_Turn_180): asked back the way he
+			// came, he turns round in his stride (the clip's own turn and travel), not on a tight circle
+			if (step_mode == 0 && std::fabs(d) > 2.5f && move_speed > 0.8f && !airborne && !combat && !crouch) {
+				const bool running = move_speed > walk_top * 1.3f;
+				const char *tc = running ? (d > 0.0f ? "mx/Running_To_Turn" : "mx/Running_Turn_180") : (d < 0.0f ? "mx/Walking_Turn_180" : nullptr);
+				if (tc && fig->clip_len(StringName(tc)) > 0.0) {
+					const StringName c(tc);
+					const float yend = (float)fig->clip_curve(c, "yaw", fig->clip_len(c), 0.0);
+					if (yend * d > 0.0f) { step_mode = 4; step_clip = c; step_t = 0.0f; turn_yaw0 = yaw; turn_k = std::fabs(d) / std::max(std::fabs(yend), 1.0f); step_cs = 1.0f; turns++; }
+				}
+			}
+			if (step_mode != 3 && step_mode != 4) {
 				// (walking, asked to go back the way he came: he turns slowly while he brakes, and turns on the spot once
 				// he has stopped: a man plants his feet to turn round, he does not walk a tight circle)
 				const float rate = (move_speed < 0.4f ? 5.0f : (move_speed < 2.0f ? 3.4f : 2.3f)) * (std::fabs(d) > 2.0f && move_speed > 0.3f ? 0.3f : 1.0f);
 				yaw += std::min(std::max(d, -rate * dt), rate * dt);
 				turn_left = std::fabs(d) - std::min(std::fabs(d), rate * dt);
 			}
+		}
+		if (step_mode == 4) {   // the turn in his stride: the clip turns him and carries him (m/s, its own travel)
+			const double len = fig->clip_len(step_clip);
+			const double at = cur_clip_is(step_clip) ? fig->clip_pos() : (double)step_t;
+			step_t += dt * step_cs;
+			yaw = turn_yaw0 + turn_k * (float)fig->clip_curve(step_clip, "yaw", at, 0.0);
+			move_speed = std::max((float)fig->clip_curve(step_clip, "pace", at, 1.0), 0.0f) * step_cs; turn_left = 0.0f;
+			if (airborne || at >= len - 0.02 || step_t > len + 0.3 || want_len < 0.05f) step_mode = 0;
 		}
 		if (step_mode == 3) {
 			const double len = fig->clip_len(step_clip);
@@ -457,24 +486,30 @@ void CityPlayer::_physics_process(double p_delta) {
 		// standing he sets off with the start clip (his weight over the right foot, the left steps off), and letting go
 		// while walking he walks on to the next footfall and stops with that foot's stop clip (the trunk carries on, the
 		// hips sink, the feet come together). His body moves by the clip's own pace curve, so the planted foot stays put.
-		const char *pre = "step/rb_";
-		const float native_walk = 1.00f;   // (the walk the step clips were made from: the Rocketbox walk's own pace)
+		const char *pre = "step/rb_";   // (played as Mixamo's Start_Walking and Stop_Walking: city_ped_takes.cpp)
+		const float native_walk = 1.00f;   // (their meta "pace" is the travel in m/s; the old ones' a share of a 1 m/s walk)
+		const float step_ref = (float)fig->ground_v(StringName("walk"), 1.0);   // (the walk's own pace: the rate a step clip plays at)
 		if (step_mode != 0 && (airborne || settle_t < 1.1f)) step_mode = 0;
-		if (step_mode == 0 && want_len > 0.05f && move_speed < 0.05f && speed < 0.08f && turn_left < 0.6f && !airborne && settle_t >= 1.1f && !auto_on) {   // (walking to a spot by himself: a step or two, no start: it carried him past the spot)
+		if (step_mode == 0 && want_len > 0.05f && !run && move_speed < 0.05f && speed < 0.08f && turn_left < 0.6f && !airborne && settle_t >= 1.1f && !auto_on) {   // (off into a run: straight into the jog)   // (walking to a spot by himself: a step or two, no start: it carried him past the spot)
 			const StringName c(String(pre) + String("start"));
-			if (fig->clip_len(c) > 0.0) { step_mode = 1; step_clip = c; step_t = 0.0f; step_cs = run ? 1.3f : std::max(std::min(want_len, walk_top) / native_walk, 0.8f); starts++; }   // (never slower than x0.8: at half stick a x0.5 first step took 1.8 s; off into a run: a quicker first step, x1.3, then he gathers into the jog)
+			if (fig->clip_len(c) > 0.0) { step_mode = 1; step_clip = c; step_t = 0.0f; step_cs = run ? 1.3f : std::max(std::min(want_len, walk_top) / step_ref, 0.8f) * 1.2f; starts++;
+				// (Mixamo's start stands still for its first moments: it starts 0.12 s before its feet move)
+				double lead = 0.0; const double sl = fig->clip_len(c);
+				for (double tt = 0.0; tt < sl * 0.5; tt += 1.0 / 30.0) if (fig->clip_curve(c, "pace", tt, 1.0) > 0.12) { lead = std::max(tt - 0.12, 0.0); break; }
+				if (lead > 0.0) { fig->start_at(lead); step_t = (float)lead; }
+			}   // (never slower than x0.8: at half stick a x0.5 first step took 1.8 s; off into a run: a quicker first step, x1.3, then he gathers into the jog)
 		}
 		if (step_mode == 0 && !auto_on && want_len < 0.05f && move_speed > 0.3f && move_speed < walk_top * 1.05f && !airborne && fig->clip_len(StringName(String(pre) + String("stop_l"))) > 0.0) {
 			// waiting for the next footfall (at most half a step): he keeps his pace till then
 			double ld = 0.0; int ns = 1;
 			const StringName cur = fig->current_clip();
-			if (CityPed::stride_of(cur, ld, ns) && fig->clip_len(cur) > 0.0) {
+			if (fig->stride_now(ld, ns) && fig->clip_len(cur) > 0.0) {
 				double ph = fig->clip_pos() / fig->clip_len(cur) * ns - ld * ns; ph -= std::floor(ph);
 				const int side = (stop_ph_prev >= 0.0 && stop_ph_prev > 0.75 && ph < 0.25) ? 1 : ((stop_ph_prev >= 0.0 && stop_ph_prev < 0.5 && ph >= 0.5) ? 2 : 0);
 				stop_ph_prev = ph;
 				if (side) {
 					step_mode = 2; step_clip = StringName(String(pre) + String(side == 1 ? "stop_l" : "stop_r")); step_t = 0.0f; step_v0 = move_speed;
-					step_cs = std::min(std::max(move_speed / native_walk, 0.5f), 1.5f); stops++; stop_ph_prev = -1.0;
+					step_cs = std::min(std::max(move_speed / step_ref, 0.5f), 1.5f); stops++; stop_ph_prev = -1.0;
 				} else target = move_speed;
 			}
 		} else if (step_mode == 0) stop_ph_prev = -1.0;
@@ -484,6 +519,9 @@ void CityPlayer::_physics_process(double p_delta) {
 			step_t += dt * step_cs;
 			const float pace = (float)fig->clip_pace(step_clip, at);
 			if (step_mode == 1 && want_len < 0.05f) step_mode = 0;          // (let go while setting off: he just stops)
+			// (Mixamo's start walks on at its end: once it is up to his walking pace the walk takes over; it took 2.9 s and he
+			// crept off: tests/game/test_car_entry.gd, test_touch_controls.gd)
+			else if (step_mode == 1 && at > 0.5 && pace * step_cs >= 0.5f * std::min(std::max(want_len, 0.3f), walk_top)) step_mode = 0;   // (Mixamo's start is slow at its end: 0.76 m/s at most; past its first step the walk takes over)
 			else if (step_mode == 2 && want_len > 0.05f) step_mode = 0;     // (pushed on while stopping: he walks on)
 			else if (at >= len - 0.02 || step_t > len + 0.3) {
 				if (step_mode == 2) move_speed = 0.0f;
@@ -499,7 +537,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	v.x = nh.x + knock_v.x; v.z = nh.z + knock_v.z;
 	knock_v = Vector3();
 	if (swimming) v.y = std::min(std::max(((float)water_y - 0.38f - (float)here.y) * 4.0f, -1.5f), 1.5f);   // he floats: his body lies at the surface
-	else if (is_on_floor() && jump_want && !frozen) { v.y = 4.3f; airborne = true; crouch = false; jump_y = (float)here.y; air_min_vy = 0.0f; vox(V_JUMP, 0.4, 0.8f); }   // a jump: 4.3 m/s up (about 0.95 m)
+	else if (is_on_floor() && jump_want && !frozen) { v.y = 4.3f; airborne = true; jump_run = move_speed > 2.0f; crouch = false; jump_y = (float)here.y; air_min_vy = 0.0f; vox(V_JUMP, 0.4, 0.8f); }   // a jump: 4.3 m/s up (about 0.95 m)
 	else v.y = is_on_floor() ? -0.5f : v.y - 9.81f * dt;
 	jump_want = false;
 	set_velocity(v);
@@ -560,6 +598,8 @@ void CityPlayer::_physics_process(double p_delta) {
 	if (airborne) air_min_vy = std::min(air_min_vy, get_velocity().y);
 	if (airborne && floor_now && get_velocity().y <= 0.0f) {
 		airborne = false; land_t = 0.35f;
+		land_hard = air_min_vy < -5.0f; if (land_hard) land_t = 0.75f;   // (from about 1.3 m up: down on his knees a moment)
+		jump_run = false;
 		if (air_min_vy < -5.5f) vox(V_LAND, 0.3);   // a hard landing (from about 1.5 m up): the breath knocked out of him
 		if (air_min_vy < -2.5f) {   // the feet coming down (a jump, a drop): the landing takes of the ground under him
 			static const char *NAME[FootSteps::N_KINDS] = { "concrete", "grass", "sand", "dirt", "wood" };
@@ -574,7 +614,9 @@ void CityPlayer::_physics_process(double p_delta) {
 	if (!swimming && speed > 2.2f) run_t += dt;
 	else { if (run_t > 8.0f && speed < 1.2f) vox(V_BREATH, 4.0); if (speed < 1.2f) run_t = std::max(0.0f, run_t - dt * 4.0f); }
 	if (swimming) { clip = speed > 0.25f ? SWIM : FLOAT; cs = speed > 0.25f ? speed / 1.0 : 1.0; }
+	else if (airborne && jump_run && fig->clip_len(StringName("mx/Running_Jump")) > 0.0) { clip = StringName("mx/Running_Jump"); hold = -2.0; }   // (off at a run: Mixamo's running jump)
 	else if (airborne) { clip = get_velocity().y > 1.0f ? J_UP : J_AIR; hold = get_velocity().y > 1.0f ? -2.0 : -1.0; }
+	else if (land_t > 0.0f && land_hard && fig->clip_len(StringName("mx/Falling_To_Landing")) > 0.0) { clip = StringName("mx/Falling_To_Landing"); hold = -2.0; }   // (a long drop: a real landing)
 	else if (land_t > 0.0f) { clip = J_LAND; hold = -2.0; }
 	else if (act_left > 0.0 && !combat) {   // an act: the clip once, turned the way it asks
 		clip = act_clip; hold = -2.0;
@@ -585,28 +627,43 @@ void CityPlayer::_physics_process(double p_delta) {
 		static const StringName GUARD("ual/PunchKick_Enter"), JAB("ual/Punch_Jab"), CROSS("ual/Punch_Cross");
 		static const StringName HIT("ual/Hit_Chest");
 		if (hit_t < 0.45) { clip = HIT; hold = -2.0; }
-		else if (punch_t < punch_len) { clip = punch_side == 0 ? JAB : CROSS; hold = -2.0; }
+		else if (punch_t < punch_len) { clip = punch_side == 0 ? JAB : CROSS; hold = -2.0; taunt_t = 0.0f; }
 		else if (combat_t < fig->clip_len(GUARD)) { clip = GUARD; hold = -2.0; }   // (into the guard: played through)
-		else { clip = GUARD; hold = std::max(fig->clip_len(GUARD) - 0.03, 0.0); }
+		else {
+			// (Yasin, 21 Nov: "combat for agressor npcs and ourselves") the stance as a living loop (Mixamo's fight idles in
+			// turn); stepping in it, the fight's own steps; standing a while without a blow, a taunt
+			static const StringName STANCE("x/fight_stance"), TAUNT("x/fight_taunt"), FSTEP("x/fight_step");
+			taunt_t += dt;
+			if (fig->clip_len(STANCE) > 0.0 && fig->take_of(STANCE) != STANCE) {
+				clip = STANCE;
+				if (speed > 0.15f && fig->clip_len(FSTEP) > 0.0) { clip = FSTEP; cs = std::min(std::max((double)speed / 0.6, 0.7), 1.5); }
+				else if (taunt_t > 7.0f && fig->clip_len(TAUNT) > 0.0) { clip = TAUNT; hold = -2.0; if (taunt_t > 7.0f + fig->clip_len(TAUNT)) taunt_t = 0.0f; }
+			} else { clip = GUARD; hold = std::max(fig->clip_len(GUARD) - 0.03, 0.0); }
+		}
 	}
 	else if (uncombat_t < 0.9 && speed < 0.5f) { static const StringName GUARD_OUT("ual/PunchKick_Exit"); clip = GUARD_OUT; hold = -2.0; }   // (out of the guard)
 	else if (crouch && speed < 0.5f && crouch_t < fig->clip_len(CR_IN)) { clip = CR_IN; hold = -2.0; }   // (down into the crouch)
 	else if (crouch) { clip = speed > 0.2f ? CR_FWD : CR_IDLE; cs = speed > 0.2f ? speed / 0.8 : 1.0; }
 	else if (!crouch && speed < 0.5f && crouch_t < fig->clip_len(CR_OUT) && !airborne) { clip = CR_OUT; hold = -2.0; }   // (up out of it)
-	else if (heavy && step_mode != 0) { clip = step_clip; cs = step_cs; hold = -2.0; }   // (a start or a stop: played through)
+	else if (heavy && step_mode != 0) { clip = step_clip; cs = step_cs; hold = -2.0; }   // (a start, a stop, a turn: played through)
 	else if (heavy && gest_t > 0.0f && speed < 0.08f) {   // a talk's gesture: talking, a nod, a no
 		static const StringName G_TALK("ual/Idle_Talking_Loop"), G_YES("ual/Yes"), G_NO("ual/Idle_No_Loop"), G_LIFT("ual/PickUp_Kneeling");
 		clip = gest_kind == 1 ? G_YES : (gest_kind == 2 ? G_NO : (gest_kind == 3 ? G_LIFT : G_TALK)); hold = (gest_kind == 1 || gest_kind == 3) ? -2.0 : -1.0;
+		// the line's own gesture (CityTalk::line_gesture, Yasin 21 Nov: "especially for the player")
+		static const char *const GK[13] = { nullptr, nullptr, nullptr, nullptr, "x/g_wave", "x/g_ask", "x/g_thanks", "x/g_point", "x/g_angry", "x/g_secret", "x/g_unsure", "x/g_sorry", "x/g_cheer" };
+		if (gest_kind >= 4 && gest_kind < 13 && fig->clip_len(StringName(GK[gest_kind])) > 0.0) { clip = StringName(GK[gest_kind]); hold = -2.0; }
 	}
 	else if (speed > 0.08f || (heavy && turn_left > 0.35f && move_speed < 0.4f && Vector3(want.x, 0, want.z).length() > 0.05f)) {
 		// THE GAIT SET (see the header): the clip whose own pace is nearest his (kept until another is clearly nearer), played
 		// at his pace over its own, so the planted foot stays put. (Turning on the spot: the slowest walk, slowly: he steps
 		// round instead of spinning on his heels.)
 		// (Yasin, 21 Nov: "we need to go back to rocketbox walking and running, this walking and running are too cartooney")
-		static const StringName RB_WS("walk_slow"), RB_W("walk"), RB_WF("walk_fast"), RB_RUN("run");
-		static const StringName SET[4] = { RB_WS, RB_W, RB_WF, RB_RUN };
-		static const float SV[4] = { 0.81f, 1.00f, 1.35f, 2.69f };   // (the planted foot's pace: clip_audit.gd --rb)
-		const StringName *set = SET; const float *sv = SV; const int ns = 4;
+		// (Yasin, 21 Nov: "scrap existing ones and replace what we have with these"): the walk, the jog and the run of
+		// Mixamo (the takes of city_ped_takes.cpp), each at its own measured pace (meta ground_v, make_mixamo.gd)
+		static const StringName RB_W("walk"), RB_RUN("run"), RB_FAST("ual/Sprint_Loop");
+		static const StringName SET[3] = { RB_W, RB_RUN, RB_FAST };
+		const float SV[3] = { (float)fig->ground_v(RB_W, 1.00), (float)fig->ground_v(RB_RUN, 2.69), (float)fig->ground_v(RB_FAST, 3.76) };
+		const StringName *set = SET; const float *sv = SV; const int ns = 3;
 		const float sp = std::max(speed, 0.3f);
 		int best = 0;
 		for (int g = 1; g < ns; g++) if (std::fabs(std::log(sp / sv[g])) < std::fabs(std::log(sp / sv[best]))) best = g;
@@ -614,7 +671,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (gi >= 0 && gi < ns && std::fabs(std::log(sp / sv[gi])) < std::fabs(std::log(sp / sv[best])) + 0.12f) best = gi;
 		gait_i = best;
 		clip = set[best]; cs = speed > 0.08f ? speed / sv[best] : 0.45;
-		if (fig->clip_len(clip) <= 0.0) { clip = best == 3 ? JOG : WALK; cs = speed / (best == 3 ? 2.40f : 0.92f); }   // (a figure without the Rocketbox clips)
+		if (fig->clip_len(clip) <= 0.0) { clip = best >= 1 ? JOG : WALK; cs = speed / (best >= 1 ? 2.40f : 0.92f); }   // (a figure without the clips)
 	}
 	if (clip == IDLE || clip == S_IDLE) gait_i = -1;
 	// his hands on what another system gives him (the climb's grip does it: off when nothing holds them, never in a climb)
@@ -691,7 +748,7 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 	Vector3 probe; Dictionary h;
 	for (float ahead : { 0.04f, 0.12f, 0.2f }) {   // (just past the face, nearest first: a fence's rail is a few cm thick)
 		probe = p + p_dir * (to_face + ahead);
-		Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(probe + Vector3(0, (base - p.y) + 2.7f, 0), probe + Vector3(0, (base - p.y) + 0.05f, 0), 1);
+		Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(probe + Vector3(0, (base - p.y) + 3.8f, 0), probe + Vector3(0, (base - p.y) + 0.05f, 0), 1);
 		q->set_exclude(ex);
 		h = ss->intersect_ray(q);
 		if (!h.is_empty()) break;
@@ -734,7 +791,8 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 	const bool step = !airborne && rise > 0.16f && rise <= 0.24f;   // (a kerb, up to 16 cm, is walked onto: no clip; Yasin: "kerbs shouldnt require step up animation")
 	const bool low = !airborne && rise > 0.24f && rise <= 0.5f;
 	const bool high = rise > 0.5f && rise <= 2.5f;   // (no jump needed: walking into it he climbs it)
-	if (!step && !low && !high) return false;
+	const bool dbl = !airborne && rise > 2.5f && rise <= 3.6f;   // (a double climb: Mixamo's, 21 Nov)
+	if (!step && !low && !high && !dbl) return false;
 	// (his place up there: far enough in from the edge that his whole body stands on the top, 45 cm past where its top was found)
 	const Vector3 dest = Vector3(p.x, top.y + 0.002f, p.z) + p_dir * (to_face + 0.45f);   // (on the top itself: no snap down after)
 	Transform3D td = get_global_transform(); td.origin = dest;
@@ -755,9 +813,11 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 	if (pel_rest.y < 0.5f || pel_rest.y > 1.3f) pel_rest = Vector3(0, 0.95f, 0);
 	pel_rest.x = 0.0f; pel_rest.z = 0.0f;
 	pel_rest_set = true;
-	climb = step ? 3 : (low ? 1 : 2); climb_t = 0.0f; hang_set = false;
+	const bool run_climb = high && !airborne && rise <= 1.4f && speed > 2.2f && fig && fig->clip_len(StringName("mx/Running_Jump_Climb")) > 0.0;
+	climb_fast = speed > 2.4f;
+	climb = step ? 3 : (low ? 1 : (dbl ? 5 : (run_climb ? 6 : 2))); climb_t = 0.0f; hang_set = climb >= 5;
 	if (!step) vox(V_CLIMB, 0.6, low ? 0.6f : 1.0f);   // (a step up has no voice; a high wall always)
-	climb_len = step ? 0.5f : (low ? 0.85f : 1.7f);
+	climb_len = step ? 0.5f : (low ? 0.85f : (climb == 5 ? (climb_fast ? 1.8f : 3.4f) : (climb == 6 ? 1.6f : (fig && fig->clip_len(StringName("mx/Climbing_single")) > 0.0 ? 2.6f : 1.7f))));
 	climb_from = p; climb_to = dest;
 	if (step) steps_up++; else if (low) climbs_low++; else climbs_high++;
 	return true;

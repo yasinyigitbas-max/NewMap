@@ -1,0 +1,2172 @@
+[
+ {
+  "name": "Walking_Left_Turn",
+  "mixamo": "Walking Left Turn",
+  "file": "Walking Left Turn.fbx",
+  "size": 395904,
+  "t": 1795252028.165676
+ },
+ {
+  "name": "Walking",
+  "mixamo": "Walking",
+  "file": "Walking.fbx",
+  "size": 366208,
+  "t": 1795252034.591688
+ },
+ {
+  "name": "Walking_Turn_180",
+  "mixamo": "Walking Turn 180",
+  "file": "Walking Turn 180.fbx",
+  "size": 364976,
+  "t": 1795252042.6927714
+ },
+ {
+  "name": "Start_Walking",
+  "mixamo": "Start Walking",
+  "file": "Start Walking.fbx",
+  "size": 563376,
+  "t": 1795252055.9161441
+ },
+ {
+  "name": "Walking_With_Shopping_Bag",
+  "mixamo": "Walking With Shopping Bag",
+  "file": "Walking With Shopping Bag.fbx",
+  "size": 381424,
+  "t": 1795252065.056469
+ },
+ {
+  "name": "Stop_Walking_With_Rifle",
+  "mixamo": "Stop Walking With Rifle",
+  "file": "Stop Walking With Rifle.fbx",
+  "size": 494976,
+  "t": 1795252078.8661747
+ },
+ {
+  "name": "Walking_Backwards",
+  "mixamo": "Walking Backwards",
+  "file": "Walking Backwards.fbx",
+  "size": 398496,
+  "t": 1795252090.786305
+ },
+ {
+  "name": "Stop_Walking",
+  "mixamo": "Stop Walking",
+  "file": "Stop Walking.fbx",
+  "size": 570208,
+  "t": 1795252098.5116677
+ },
+ {
+  "name": "Injured_Walking_arm",
+  "mixamo": "Injured Walking arm",
+  "file": "Injured Walking arm.fbx",
+  "size": 352048,
+  "t": 1795252107.0331874
+ },
+ {
+  "name": "Walking_Drunk",
+  "mixamo": "Walking Drunk",
+  "file": "Walking Drunk.fbx",
+  "size": 545920,
+  "t": 1795252173.0170095
+ },
+ {
+  "name": "Walking_Carry",
+  "mixamo": "Walking Carry",
+  "file": "Walking Carry.fbx",
+  "size": 525568,
+  "t": 1795252197.738755
+ },
+ {
+  "name": "Texting_And_Walking_one_hand",
+  "mixamo": "Texting And Walking one hand",
+  "file": "Texting And Walking one hand.fbx",
+  "size": 583168,
+  "t": 1795252240.6924596
+ },
+ {
+  "name": "Walking_While_Texting",
+  "mixamo": "Walking While Texting",
+  "file": "Walking While Texting.fbx",
+  "size": 612336,
+  "t": 1795252264.4993796
+ },
+ {
+  "name": "Drunk_Walking_Turn",
+  "mixamo": "Drunk Walking Turn",
+  "file": "Drunk Walking Turn.fbx",
+  "size": 553472,
+  "t": 1795252279.8794913
+ },
+ {
+  "name": "Crouched_Walking",
+  "mixamo": "Crouched Walking",
+  "file": "Crouched Walking.fbx",
+  "size": 346112,
+  "t": 1795252298.6453896
+ },
+ {
+  "name": "Fight_sidestep_R",
+  "mixamo": "Fight sidestep (R)",
+  "file": "Fight sidestep (R).fbx",
+  "size": 346112,
+  "t": 1795252311.7930439
+ },
+ {
+  "name": "Injured_walking_leg",
+  "mixamo": "Injured walking leg",
+  "file": "Injured walking leg.fbx",
+  "size": 435280,
+  "t": 1795252345.7297945
+ },
+ {
+  "name": "Fight_backstep",
+  "mixamo": "Fight backstep",
+  "file": "Fight backstep.fbx",
+  "size": 332608,
+  "t": 1795252396.681031
+ },
+ {
+  "name": "Fight_forwardstep",
+  "mixamo": "Fight forwardstep",
+  "file": "Fight forwardstep.fbx",
+  "size": 343408,
+  "t": 1795252449.149824
+ },
+ {
+  "name": "Walking_Up_The_Stairs",
+  "mixamo": "Walking Up The Stairs",
+  "file": "Walking Up The Stairs.fbx",
+  "size": 359616,
+  "t": 1795252484.2007787
+ },
+ {
+  "name": "Fight_sidestep_L",
+  "mixamo": "Fight sidestep (L)",
+  "file": "Fight sidestep (L).fbx",
+  "size": 346112,
+  "t": 1795252503.7170856
+ },
+ {
+  "name": "Shove_Reaction",
+  "mixamo": "Shove Reaction",
+  "file": "Shove Reaction.fbx",
+  "size": 496304,
+  "t": 1795252561.9596097
+ },
+ {
+  "name": "Ascending_Stairs",
+  "mixamo": "Ascending Stairs",
+  "file": "Ascending Stairs.fbx",
+  "size": 417392,
+  "t": 1795252587.951154
+ },
+ {
+  "name": "Swatting_Bugs",
+  "mixamo": "Swatting Bugs",
+  "file": "Swatting Bugs.fbx",
+  "size": 801744,
+  "t": 1795252611.514763
+ },
+ {
+  "name": "Pacing_And_Talking_On_A_Phone",
+  "mixamo": "Pacing And Talking On A Phone",
+  "file": "Pacing And Talking On A Phone.fbx",
+  "size": 2774800,
+  "t": 1795252659.8539093
+ },
+ {
+  "name": "Opening_Door_Inwards",
+  "mixamo": "Opening Door Inwards",
+  "file": "Opening Door Inwards.fbx",
+  "size": 832336,
+  "t": 1795252680.8702693
+ },
+ {
+  "name": "Walk_With_Rifle",
+  "mixamo": "Walk With Rifle",
+  "file": "Walk With Rifle.fbx",
+  "size": 506032,
+  "t": 1795252693.2094786
+ },
+ {
+  "name": "Open_Door_Outwards",
+  "mixamo": "Open Door Outwards",
+  "file": "Open Door Outwards.fbx",
+  "size": 727360,
+  "t": 1795252718.8530858
+ },
+ {
+  "name": "Descending_Stairs",
+  "mixamo": "Descending Stairs",
+  "file": "Descending Stairs.fbx",
+  "size": 366240,
+  "t": 1795252747.4888442
+ },
+ {
+  "name": "Reloading",
+  "mixamo": "Reloading",
+  "file": "Reloading.fbx",
+  "size": 622800,
+  "t": 1795252762.608158
+ },
+ {
+  "name": "Singing",
+  "mixamo": "Singing",
+  "file": "Singing.fbx",
+  "size": 1232368,
+  "t": 1795252772.9527092
+ },
+ {
+  "name": "Moonwalk",
+  "mixamo": "Moonwalk",
+  "file": "Moonwalk.fbx",
+  "size": 377360,
+  "t": 1795252783.9075692
+ },
+ {
+  "name": "Shoved_Reaction_With_Spin",
+  "mixamo": "Shoved Reaction With Spin",
+  "file": "Shoved Reaction With Spin.fbx",
+  "size": 558752,
+  "t": 1795252799.0528061
+ },
+ {
+  "name": "Tripping",
+  "mixamo": "Tripping",
+  "file": "Tripping.fbx",
+  "size": 576160,
+  "t": 1795252820.0648916
+ },
+ {
+  "name": "Right_Cover_Sneak",
+  "mixamo": "Right Cover Sneak",
+  "file": "Right Cover Sneak.fbx",
+  "size": 373792,
+  "t": 1795252850.544277
+ },
+ {
+  "name": "Left_Cover_Sneak",
+  "mixamo": "Left Cover Sneak",
+  "file": "Left Cover Sneak (1).fbx",
+  "size": 373792,
+  "t": 1795252861.1067789
+ },
+ {
+  "name": "Walk_With_Briefcase",
+  "mixamo": "Walk With Briefcase",
+  "file": "Walk With Briefcase.fbx",
+  "size": 362848,
+  "t": 1795252888.650888
+ },
+ {
+  "name": "180_Turn_W_Briefcase",
+  "mixamo": "180 Turn W_ Briefcase",
+  "file": "180 Turn W_ Briefcase.fbx",
+  "size": 446016,
+  "t": 1795252906.9590442
+ },
+ {
+  "name": "Northern_Soul_Dance",
+  "mixamo": "Northern Soul Dance",
+  "file": "Northern Soul Dance.fbx",
+  "size": 1614336,
+  "t": 1795252920.06203
+ },
+ {
+  "name": "Walk_carry_stop",
+  "mixamo": "Walk carry stop",
+  "file": "Walk carry stop.fbx",
+  "size": 663984,
+  "t": 1795252944.5461988
+ },
+ {
+  "name": "Right_Turn_W_Briefcase",
+  "mixamo": "Right Turn W_ Briefcase",
+  "file": "Right Turn W_ Briefcase.fbx",
+  "size": 435216,
+  "t": 1795252981.6273317
+ },
+ {
+  "name": "Left_Turn_W_Briefcase",
+  "mixamo": "Left Turn W_Briefcase",
+  "file": "Left Turn W_Briefcase.fbx",
+  "size": 476256,
+  "t": 1795252988.6575398
+ },
+ {
+  "name": "Tripping_2",
+  "mixamo": "Tripping",
+  "file": "Tripping (1).fbx",
+  "size": 500560,
+  "t": 1795253021.2526822
+ },
+ {
+  "name": "Sneaking_Forward",
+  "mixamo": "Sneaking Forward",
+  "file": "Sneaking Forward.fbx",
+  "size": 433408,
+  "t": 1795253034.1864274
+ },
+ {
+  "name": "Sneak_off_the_cover",
+  "mixamo": "Sneak off the cover",
+  "file": "Sneak off the cover.fbx",
+  "size": 570208,
+  "t": 1795253047.8622532
+ },
+ {
+  "name": "Drinking_Fountain",
+  "mixamo": "Drinking Fountain",
+  "file": "Drinking Fountain.fbx",
+  "size": 1129232,
+  "t": 1795253089.2916138
+ },
+ {
+  "name": "Old_Man_Walk",
+  "mixamo": "Old Man Walk",
+  "file": "Old Man Walk.fbx",
+  "size": 365008,
+  "t": 1795253098.868331
+ },
+ {
+  "name": "Talking",
+  "mixamo": "Talking",
+  "file": "Talking.fbx",
+  "size": 794128,
+  "t": 1795253256.560004
+ },
+ {
+  "name": "Angry_talking_phone",
+  "mixamo": "Angry talking phone",
+  "file": "Angry talking phone.fbx",
+  "size": 635552,
+  "t": 1795253266.1228611
+ },
+ {
+  "name": "Sitting_talking",
+  "mixamo": "Sitting talking",
+  "file": "Sitting talking.fbx",
+  "size": 577120,
+  "t": 1795253301.1479628
+ },
+ {
+  "name": "Start_Talking_On_A_Cell_Phone",
+  "mixamo": "Start Talking On A Cell Phone",
+  "file": "Start Talking On A Cell Phone.fbx",
+  "size": 2941392,
+  "t": 1795253338.0682495
+ },
+ {
+  "name": "Talking_On_Phone",
+  "mixamo": "Talking On Phone",
+  "file": "Talking On Phone.fbx",
+  "size": 3308256,
+  "t": 1795253375.823295
+ },
+ {
+  "name": "Talking_2",
+  "mixamo": "Talking",
+  "file": "Talking (1).fbx",
+  "size": 665152,
+  "t": 1795253387.7679513
+ },
+ {
+  "name": "Talking_3",
+  "mixamo": "Talking",
+  "file": "Talking (2).fbx",
+  "size": 687200,
+  "t": 1795253414.2448466
+ },
+ {
+  "name": "Talking_At_Watercooler",
+  "mixamo": "Talking At Watercooler",
+  "file": "Talking At Watercooler.fbx",
+  "size": 3143184,
+  "t": 1795253436.6683562
+ },
+ {
+  "name": "Rapping",
+  "mixamo": "Rapping",
+  "file": "Rapping.fbx",
+  "size": 954736,
+  "t": 1795253458.044285
+ },
+ {
+  "name": "Talking_4",
+  "mixamo": "Talking",
+  "file": "Talking (3).fbx",
+  "size": 1137456,
+  "t": 1795253488.099821
+ },
+ {
+  "name": "Talking_Phone_Pacing",
+  "mixamo": "Talking Phone Pacing",
+  "file": "Talking Phone Pacing.fbx",
+  "size": 3726944,
+  "t": 1795253503.0020285
+ },
+ {
+  "name": "Talking_5",
+  "mixamo": "Talking",
+  "file": "Talking (4).fbx",
+  "size": 720976,
+  "t": 1795253524.5692184
+ },
+ {
+  "name": "Cheering_While_Sitting",
+  "mixamo": "Cheering While Sitting",
+  "file": "Cheering While Sitting.fbx",
+  "size": 647744,
+  "t": 1795253559.318491
+ },
+ {
+  "name": "Standing_Arguing",
+  "mixamo": "Standing Arguing",
+  "file": "Standing Arguing.fbx",
+  "size": 2016544,
+  "t": 1795253577.0838213
+ },
+ {
+  "name": "Yelling",
+  "mixamo": "Yelling",
+  "file": "Yelling.fbx",
+  "size": 956048,
+  "t": 1795253595.2786453
+ },
+ {
+  "name": "Telling_A_Secret",
+  "mixamo": "Telling A Secret",
+  "file": "Telling A Secret.fbx",
+  "size": 1117632,
+  "t": 1795253609.6784854
+ },
+ {
+  "name": "Having_A_Meeting_Female",
+  "mixamo": "Having A Meeting, Female",
+  "file": "Having A Meeting, Female.fbx",
+  "size": 3709904,
+  "t": 1795253658.0478685
+ },
+ {
+  "name": "Having_A_Meeting_Male",
+  "mixamo": "Having A Meeting, Male",
+  "file": "Having A Meeting, Male.fbx",
+  "size": 3780128,
+  "t": 1795253672.939044
+ },
+ {
+  "name": "Disappointed",
+  "mixamo": "Disappointed",
+  "file": "Disappointed.fbx",
+  "size": 720544,
+  "t": 1795253688.2564788
+ },
+ {
+  "name": "Standing_Arguing_2",
+  "mixamo": "Standing Arguing",
+  "file": "Standing Arguing (1).fbx",
+  "size": 1988032,
+  "t": 1795253700.732573
+ },
+ {
+  "name": "Talking_on_phone_arguing",
+  "mixamo": "Talking on phone arguing",
+  "file": "Talking on phone arguing.fbx",
+  "size": 635552,
+  "t": 1795253744.3611042
+ },
+ {
+  "name": "Talking_On_A_Cell_Phone",
+  "mixamo": "Talking On A Cell Phone",
+  "file": "Talking On A Cell Phone.fbx",
+  "size": 2941392,
+  "t": 1795253825.8974314
+ },
+ {
+  "name": "Walk_In_Circle",
+  "mixamo": "Walk In Circle",
+  "file": "Walk In Circle.fbx",
+  "size": 1206080,
+  "t": 1795253869.051677
+ },
+ {
+  "name": "Right_Turn",
+  "mixamo": "Right Turn",
+  "file": "Right Turn.fbx",
+  "size": 373648,
+  "t": 1795254001.1545584
+ },
+ {
+  "name": "Left_Turn",
+  "mixamo": "Left Turn",
+  "file": "Left Turn.fbx",
+  "size": 366240,
+  "t": 1795254012.2638314
+ },
+ {
+  "name": "Injured_Turn_Left",
+  "mixamo": "Injured Turn Left",
+  "file": "Injured Turn Left.fbx",
+  "size": 362528,
+  "t": 1795254024.0539234
+ },
+ {
+  "name": "Drunk_Turn",
+  "mixamo": "Drunk Turn",
+  "file": "Drunk Turn.fbx",
+  "size": 440080,
+  "t": 1795254040.4429538
+ },
+ {
+  "name": "Injured_Turn_Right",
+  "mixamo": "Injured Turn Right",
+  "file": "Injured Turn Right.fbx",
+  "size": 339088,
+  "t": 1795254078.0589705
+ },
+ {
+  "name": "Jogging_Stumble",
+  "mixamo": "Jogging Stumble",
+  "file": "Jogging Stumble.fbx",
+  "size": 394720,
+  "t": 1795254133.2296941
+ },
+ {
+  "name": "Jogging_With_Box",
+  "mixamo": "Jogging With Box",
+  "file": "Jogging With Box.fbx",
+  "size": 324512,
+  "t": 1795254140.716245
+ },
+ {
+  "name": "Running_Turn_180",
+  "mixamo": "Running Turn 180",
+  "file": "Running Turn 180.fbx",
+  "size": 330816,
+  "t": 1795254227.6943908
+ },
+ {
+  "name": "Running_Right_Turn",
+  "mixamo": "Running Right Turn",
+  "file": "Running Right Turn.fbx",
+  "size": 347696,
+  "t": 1795254236.1164656
+ },
+ {
+  "name": "Running_To_Turn",
+  "mixamo": "Running To Turn",
+  "file": "Running To Turn.fbx",
+  "size": 494976,
+  "t": 1795254259.0078118
+ },
+ {
+  "name": "Left_Turn_90",
+  "mixamo": "Left Turn 90",
+  "file": "Left Turn 90.fbx",
+  "size": 366240,
+  "t": 1795254882.1061711
+ },
+ {
+  "name": "Right_Turn_90",
+  "mixamo": "Right Turn 90",
+  "file": "Right Turn 90.fbx",
+  "size": 366240,
+  "t": 1795254890.0876515
+ },
+ {
+  "name": "Drunk_Walking_Turn_2",
+  "mixamo": "Drunk Walking Turn",
+  "file": "Drunk Walking Turn (1).fbx",
+  "size": 553472,
+  "t": 1795254896.1467743
+ },
+ {
+  "name": "Walking_Turn_180_2",
+  "mixamo": "Walking Turn 180",
+  "file": "Walking Turn 180 (1).fbx",
+  "size": 364976,
+  "t": 1795254917.2244709
+ },
+ {
+  "name": "Box_Turn",
+  "mixamo": "Box Turn",
+  "file": "Box Turn.fbx",
+  "size": 382112,
+  "t": 1795254946.447976
+ },
+ {
+  "name": "Box_Turn_2",
+  "mixamo": "Box Turn",
+  "file": "Box Turn (1).fbx",
+  "size": 427216,
+  "t": 1795254953.225369
+ },
+ {
+  "name": "180_Turn_W_Briefcase_2",
+  "mixamo": "180 Turn W_ Briefcase",
+  "file": "180 Turn W_ Briefcase (1).fbx",
+  "size": 444208,
+  "t": 1795254967.1161604
+ },
+ {
+  "name": "Turn_To_Running",
+  "mixamo": "Turn To Running",
+  "file": "Turn To Running.fbx",
+  "size": 432080,
+  "t": 1795254984.3517437
+ },
+ {
+  "name": "Running_Right_Turn_2",
+  "mixamo": "Running Right Turn",
+  "file": "Running Right Turn (1).fbx",
+  "size": 347696,
+  "t": 1795255002.8766022
+ },
+ {
+  "name": "Running_Left_Turn",
+  "mixamo": "Running Left Turn",
+  "file": "Running Left Turn (2).fbx",
+  "size": 347696,
+  "t": 1795255013.0763674
+ },
+ {
+  "name": "Carrying_Turn",
+  "mixamo": "Carrying Turn",
+  "file": "Carrying Turn.fbx",
+  "size": 659136,
+  "t": 1795255047.55788
+ },
+ {
+  "name": "Running_To_Turn_180",
+  "mixamo": "Running To Turn 180",
+  "file": "Running To Turn 180.fbx",
+  "size": 494976,
+  "t": 1795255075.0029037
+ },
+ {
+  "name": "Cocky_Head_Turn",
+  "mixamo": "Cocky Head Turn",
+  "file": "Cocky Head Turn.fbx",
+  "size": 549696,
+  "t": 1795255105.5436685
+ },
+ {
+  "name": "Crouch_Turn_To_Stand",
+  "mixamo": "Crouch Turn To Stand",
+  "file": "Crouch Turn To Stand.fbx",
+  "size": 347920,
+  "t": 1795255122.9319994
+ },
+ {
+  "name": "Standing_Cover_Turn",
+  "mixamo": "Standing Cover Turn",
+  "file": "Standing Cover Turn.fbx",
+  "size": 365008,
+  "t": 1795255147.8789654
+ },
+ {
+  "name": "Spinning",
+  "mixamo": "Spinning",
+  "file": "Spinning.fbx",
+  "size": 404224,
+  "t": 1795255178.4218037
+ },
+ {
+  "name": "Slow_Run",
+  "mixamo": "Slow Run",
+  "file": "Slow Run.fbx",
+  "size": 345568,
+  "t": 1795255267.4075928
+ },
+ {
+  "name": "Fast_Run",
+  "mixamo": "Fast Run",
+  "file": "Fast Run.fbx",
+  "size": 305616,
+  "t": 1795255278.425776
+ },
+ {
+  "name": "Running",
+  "mixamo": "Running",
+  "file": "Running.fbx",
+  "size": 334240,
+  "t": 1795255292.3931482
+ },
+ {
+  "name": "Run_Look_Back",
+  "mixamo": "Run Look Back",
+  "file": "Run Look Back.fbx",
+  "size": 515680,
+  "t": 1795255304.3925421
+ },
+ {
+  "name": "Running_Up_Stairs",
+  "mixamo": "Running Up Stairs",
+  "file": "Running Up Stairs.fbx",
+  "size": 325920,
+  "t": 1795255319.4181795
+ },
+ {
+  "name": "Running_2",
+  "mixamo": "Running",
+  "file": "Running (1).fbx",
+  "size": 340288,
+  "t": 1795255339.400918
+ },
+ {
+  "name": "Running_3",
+  "mixamo": "Running",
+  "file": "Running (2).fbx",
+  "size": 332720,
+  "t": 1795255363.8678844
+ },
+ {
+  "name": "Running_4",
+  "mixamo": "Running",
+  "file": "Running (3).fbx",
+  "size": 329920,
+  "t": 1795255372.010869
+ },
+ {
+  "name": "Run_To_Dive",
+  "mixamo": "Run To Dive",
+  "file": "Run To Dive.fbx",
+  "size": 398496,
+  "t": 1795255384.95261
+ },
+ {
+  "name": "Rolling",
+  "mixamo": "Rolling",
+  "file": "Rolling.fbx",
+  "size": 525408,
+  "t": 1795255407.8417015
+ },
+ {
+  "name": "Running_Away_Scared",
+  "mixamo": "Running Away Scared",
+  "file": "Running Away Scared.fbx",
+  "size": 430000,
+  "t": 1795255434.9897137
+ },
+ {
+  "name": "Running_Turn_180_2",
+  "mixamo": "Running Turn 180",
+  "file": "Running Turn 180 (1).fbx",
+  "size": 330816,
+  "t": 1795255486.9741516
+ },
+ {
+  "name": "Look_Behind_Run",
+  "mixamo": "Look Behind Run",
+  "file": "Look Behind Run.fbx",
+  "size": 324512,
+  "t": 1795255503.7068183
+ },
+ {
+  "name": "Running_Jump_Climb",
+  "mixamo": "Running Jump Climb",
+  "file": "Running Jump Climb.fbx",
+  "size": 484720,
+  "t": 1795255524.2883213
+ },
+ {
+  "name": "Run_To_Stop_Without_climb",
+  "mixamo": "Run To Stop Without climb",
+  "file": "Run To Stop Without climb.fbx",
+  "size": 447088,
+  "t": 1795255564.060475
+ },
+ {
+  "name": "Rifle_Start_Run",
+  "mixamo": "Rifle Start Run",
+  "file": "Rifle Start Run.fbx",
+  "size": 440256,
+  "t": 1795255607.8723025
+ },
+ {
+  "name": "Run_With_Sword",
+  "mixamo": "Run With Sword",
+  "file": "Run With Sword.fbx",
+  "size": 327216,
+  "t": 1795255619.5996897
+ },
+ {
+  "name": "Run_To_Stop",
+  "mixamo": "Run To Stop",
+  "file": "Run To Stop.fbx",
+  "size": 354752,
+  "t": 1795255635.6865335
+ },
+ {
+  "name": "Fall_Flat",
+  "mixamo": "Fall Flat",
+  "file": "Fall Flat.fbx",
+  "size": 552064,
+  "t": 1795255689.8674226
+ },
+ {
+  "name": "Hit_On_The_Back",
+  "mixamo": "Hit On The Back",
+  "file": "Hit On The Back.fbx",
+  "size": 547536,
+  "t": 1795255710.8572037
+ },
+ {
+  "name": "Jogging_With_Box_2",
+  "mixamo": "Jogging With Box",
+  "file": "Jogging With Box (1).fbx",
+  "size": 324512,
+  "t": 1795255757.7532475
+ },
+ {
+  "name": "Sprint",
+  "mixamo": "Sprint",
+  "file": "Sprint.fbx",
+  "size": 316560,
+  "t": 1795255792.1874928
+ },
+ {
+  "name": "Crouched_To_Sprinting",
+  "mixamo": "Crouched To Sprinting",
+  "file": "Crouched To Sprinting.fbx",
+  "size": 416320,
+  "t": 1795255801.9379468
+ },
+ {
+  "name": "Climbing_double",
+  "mixamo": "Climbing double",
+  "file": "Climbing double.fbx",
+  "size": 655712,
+  "t": 1795255817.6027505
+ },
+ {
+  "name": "Climbing_ladder_slow",
+  "mixamo": "Climbing ladder slow",
+  "file": "Climbing ladder slow.fbx",
+  "size": 500800,
+  "t": 1795255927.2608638
+ },
+ {
+  "name": "Climbing_Ladder_fast",
+  "mixamo": "Climbing Ladder fast",
+  "file": "Climbing Ladder fast.fbx",
+  "size": 341072,
+  "t": 1795255951.4230657
+ },
+ {
+  "name": "Climbing_Down",
+  "mixamo": "Climbing Down",
+  "file": "Climbing Down.fbx",
+  "size": 583888,
+  "t": 1795255989.5666869
+ },
+ {
+  "name": "Climbing_Down_ladder",
+  "mixamo": "Climbing Down ladder",
+  "file": "Climbing Down ladder.fbx",
+  "size": 467616,
+  "t": 1795256007.371934
+ },
+ {
+  "name": "Start_Climbing_Ladder",
+  "mixamo": "Start Climbing Ladder",
+  "file": "Start Climbing Ladder.fbx",
+  "size": 472256,
+  "t": 1795256055.8332186
+ },
+ {
+  "name": "Climbing_To_Top_ladder",
+  "mixamo": "Climbing To Top ladder",
+  "file": "Climbing To Top ladder.fbx",
+  "size": 672816,
+  "t": 1795256067.8718767
+ },
+ {
+  "name": "Sprint_To_Wall_Climb",
+  "mixamo": "Sprint To Wall Climb",
+  "file": "Sprint To Wall Climb.fbx",
+  "size": 447088,
+  "t": 1795256103.8238118
+ },
+ {
+  "name": "Climbing_single",
+  "mixamo": "Climbing single",
+  "file": "Climbing single.fbx",
+  "size": 631472,
+  "t": 1795256127.925846
+ },
+ {
+  "name": "Walking_Up_The_Stairs_2",
+  "mixamo": "Walking Up The Stairs",
+  "file": "Walking Up The Stairs (1).fbx",
+  "size": 359616,
+  "t": 1795256160.275215
+ },
+ {
+  "name": "Falling_Down_on_ass",
+  "mixamo": "Falling Down on ass",
+  "file": "Falling Down on ass.fbx",
+  "size": 496464,
+  "t": 1795256184.5116124
+ },
+ {
+  "name": "Falling_To_Landing",
+  "mixamo": "Falling To Landing",
+  "file": "Falling To Landing.fbx",
+  "size": 368400,
+  "t": 1795256210.8201282
+ },
+ {
+  "name": "Falling_Into_Pool",
+  "mixamo": "Falling Into Pool",
+  "file": "Falling Into Pool.fbx",
+  "size": 537808,
+  "t": 1795256244.5855281
+ },
+ {
+  "name": "Fallen_Idle",
+  "mixamo": "Fallen Idle",
+  "file": "Fallen Idle.fbx",
+  "size": 383920,
+  "t": 1795256279.413055
+ },
+ {
+  "name": "Stumble_Backwards",
+  "mixamo": "Stumble Backwards",
+  "file": "Stumble Backwards.fbx",
+  "size": 604416,
+  "t": 1795256293.0427077
+ },
+ {
+  "name": "Knocked_Out",
+  "mixamo": "Knocked Out",
+  "file": "Knocked Out.fbx",
+  "size": 766096,
+  "t": 1795256309.1258347
+ },
+ {
+  "name": "Knocked_Out_2",
+  "mixamo": "Knocked Out",
+  "file": "Knocked Out (1).fbx",
+  "size": 709712,
+  "t": 1795256328.1178825
+ },
+ {
+  "name": "Tripping_3",
+  "mixamo": "Tripping",
+  "file": "Tripping (2).fbx",
+  "size": 576160,
+  "t": 1795256349.8761995
+ },
+ {
+  "name": "Tripping_4",
+  "mixamo": "Tripping",
+  "file": "Tripping (3).fbx",
+  "size": 500560,
+  "t": 1795256363.5705163
+ },
+ {
+  "name": "Standing_Up",
+  "mixamo": "Standing Up",
+  "file": "Standing Up.fbx",
+  "size": 451408,
+  "t": 1795256412.2269723
+ },
+ {
+  "name": "Hard_Landing",
+  "mixamo": "Hard Landing",
+  "file": "Hard Landing.fbx",
+  "size": 518912,
+  "t": 1795256432.940794
+ },
+ {
+  "name": "Hit_By_Car",
+  "mixamo": "Hit By Car",
+  "file": "Hit By Car.fbx",
+  "size": 660256,
+  "t": 1795256444.643982
+ },
+ {
+  "name": "Praying",
+  "mixamo": "Praying",
+  "file": "Praying.fbx",
+  "size": 834176,
+  "t": 1795256456.0518675
+ },
+ {
+  "name": "Kick_To_The_Groin",
+  "mixamo": "Kick To The Groin",
+  "file": "Kick To The Groin.fbx",
+  "size": 731136,
+  "t": 1795256467.481329
+ },
+ {
+  "name": "Dying",
+  "mixamo": "Dying",
+  "file": "Dying.fbx",
+  "size": 780272,
+  "t": 1795256483.7208114
+ },
+ {
+  "name": "Disappointed_2",
+  "mixamo": "Disappointed",
+  "file": "Disappointed (2).fbx",
+  "size": 910368,
+  "t": 1795256513.242216
+ },
+ {
+  "name": "Jumping_soft_landing",
+  "mixamo": "Jumping soft landing",
+  "file": "Jumping soft landing.fbx",
+  "size": 481408,
+  "t": 1795256564.1529891
+ },
+ {
+  "name": "Jumping_Rope",
+  "mixamo": "Jumping Rope",
+  "file": "Jumping Rope.fbx",
+  "size": 475152,
+  "t": 1795256628.068222
+ },
+ {
+  "name": "Running_Jump",
+  "mixamo": "Running Jump",
+  "file": "Running Jump.fbx",
+  "size": 364480,
+  "t": 1795256637.703095
+ },
+ {
+  "name": "Injured_Standing_Jump",
+  "mixamo": "Injured Standing Jump",
+  "file": "Injured Standing Jump.fbx",
+  "size": 471712,
+  "t": 1795256690.0424855
+ },
+ {
+  "name": "Injured_Run_Jump",
+  "mixamo": "Injured Run Jump",
+  "file": "Injured Run Jump.fbx",
+  "size": 343200,
+  "t": 1795256697.0251017
+ },
+ {
+  "name": "Jump_To_Hang",
+  "mixamo": "Jump To Hang",
+  "file": "Jump To Hang.fbx",
+  "size": 467616,
+  "t": 1795256727.0150278
+ },
+ {
+  "name": "Jumping_Over_Into_Combat",
+  "mixamo": "Jumping Over Into Combat",
+  "file": "Jumping Over Into Combat.fbx",
+  "size": 735456,
+  "t": 1795256741.0490408
+ },
+ {
+  "name": "Stand_To_Freehang",
+  "mixamo": "Stand To Freehang",
+  "file": "Stand To Freehang.fbx",
+  "size": 436832,
+  "t": 1795256777.8396049
+ },
+ {
+  "name": "Vault_Over_Box_to_Cover",
+  "mixamo": "Vault Over Box to Cover",
+  "file": "Vault Over Box to Cover.fbx",
+  "size": 627568,
+  "t": 1795256809.7426617
+ },
+ {
+  "name": "Standing_Cheering",
+  "mixamo": "Standing Cheering",
+  "file": "Standing Cheering.fbx",
+  "size": 648048,
+  "t": 1795256852.6384993
+ },
+ {
+  "name": "Cheering",
+  "mixamo": "Cheering",
+  "file": "Cheering.fbx",
+  "size": 502080,
+  "t": 1795256860.861038
+ },
+ {
+  "name": "Angry_Gesture",
+  "mixamo": "Angry Gesture",
+  "file": "Angry Gesture.fbx",
+  "size": 632848,
+  "t": 1795256869.809195
+ },
+ {
+  "name": "Fist_Pump",
+  "mixamo": "Fist Pump",
+  "file": "Fist Pump.fbx",
+  "size": 693328,
+  "t": 1795256878.6392941
+ },
+ {
+  "name": "Wheelbarrow_Dump",
+  "mixamo": "Wheelbarrow Dump",
+  "file": "Wheelbarrow Dump.fbx",
+  "size": 822544,
+  "t": 1795256891.4036798
+ },
+ {
+  "name": "Wheelbarrow_Walk",
+  "mixamo": "Wheelbarrow Walk",
+  "file": "Wheelbarrow Walk.fbx",
+  "size": 340720,
+  "t": 1795256929.962784
+ },
+ {
+  "name": "Shuffling",
+  "mixamo": "Shuffling",
+  "file": "Shuffling.fbx",
+  "size": 927376,
+  "t": 1795256942.7101264
+ },
+ {
+  "name": "Cards",
+  "mixamo": "Cards",
+  "file": "Cards.fbx",
+  "size": 1046400,
+  "t": 1795256967.8662505
+ },
+ {
+  "name": "Fistfight_Taunt",
+  "mixamo": "Fistfight Taunt",
+  "file": "Fistfight Taunt.fbx",
+  "size": 625584,
+  "t": 1795256988.2920153
+ },
+ {
+  "name": "Fight_walk_backwards",
+  "mixamo": "Fight walk backwards",
+  "file": "Fight walk backwards.fbx",
+  "size": 332608,
+  "t": 1795257020.824777
+ },
+ {
+  "name": "Shooting_Gun",
+  "mixamo": "Shooting Gun",
+  "file": "Shooting Gun.fbx",
+  "size": 726928,
+  "t": 1795257045.8869417
+ },
+ {
+  "name": "Kiss",
+  "mixamo": "Kiss",
+  "file": "Kiss.fbx",
+  "size": 685776,
+  "t": 1795257065.675028
+ },
+ {
+  "name": "Texting_While_Standing",
+  "mixamo": "Texting While Standing",
+  "file": "Texting While Standing.fbx",
+  "size": 2202512,
+  "t": 1795257076.2278495
+ },
+ {
+  "name": "Fight_idle",
+  "mixamo": "Fight idle",
+  "file": "Fight idle.fbx",
+  "size": 552784,
+  "t": 1795257147.4249022
+ },
+ {
+  "name": "Standing_W_Briefcase_Idle",
+  "mixamo": "Standing W_Briefcase Idle",
+  "file": "Standing W_Briefcase Idle.fbx",
+  "size": 1210992,
+  "t": 1795257188.0404084
+ },
+ {
+  "name": "Fighting_Idle",
+  "mixamo": "Fighting Idle",
+  "file": "Fighting Idle.fbx",
+  "size": 529712,
+  "t": 1795257209.0764456
+ },
+ {
+  "name": "Offensive_Idle",
+  "mixamo": "Offensive Idle",
+  "file": "Offensive Idle.fbx",
+  "size": 1135488,
+  "t": 1795257228.0240335
+ },
+ {
+  "name": "Seated_table_Idle",
+  "mixamo": "Seated table Idle",
+  "file": "Seated table Idle.fbx",
+  "size": 667408,
+  "t": 1795257242.5947697
+ },
+ {
+  "name": "Drunk_Idle_Variation",
+  "mixamo": "Drunk Idle Variation",
+  "file": "Drunk Idle Variation.fbx",
+  "size": 749408,
+  "t": 1795257271.057348
+ },
+ {
+  "name": "Fight_Idle_To_Action_Idle",
+  "mixamo": "Fight Idle To Action Idle",
+  "file": "Fight Idle To Action Idle.fbx",
+  "size": 356912,
+  "t": 1795257294.6279893
+ },
+ {
+  "name": "Fight_Idle",
+  "mixamo": "Fight Idle",
+  "file": "Fight Idle (1).fbx",
+  "size": 451552,
+  "t": 1795257310.3138647
+ },
+ {
+  "name": "Crouching_Idle",
+  "mixamo": "Crouching Idle",
+  "file": "Crouching Idle.fbx",
+  "size": 516208,
+  "t": 1795257335.9022796
+ },
+ {
+  "name": "Sitting_Idle",
+  "mixamo": "Sitting Idle",
+  "file": "Sitting Idle.fbx",
+  "size": 533536,
+  "t": 1795257343.8114686
+ },
+ {
+  "name": "Situp_To_Idle",
+  "mixamo": "Situp To Idle",
+  "file": "Situp To Idle.fbx",
+  "size": 660576,
+  "t": 1795257361.039498
+ },
+ {
+  "name": "Push_Up_To_Idle",
+  "mixamo": "Push Up To Idle",
+  "file": "Push Up To Idle.fbx",
+  "size": 613952,
+  "t": 1795257372.821485
+ },
+ {
+  "name": "Idle_To_Push_Up",
+  "mixamo": "Idle To Push Up",
+  "file": "Idle To Push Up.fbx",
+  "size": 557248,
+  "t": 1795257385.6845274
+ },
+ {
+  "name": "Idle_Transition",
+  "mixamo": "Idle Transition",
+  "file": "Idle Transition.fbx",
+  "size": 470064,
+  "t": 1795257406.774584
+ },
+ {
+  "name": "Crouch_cover_idle",
+  "mixamo": "Crouch cover idle",
+  "file": "Crouch cover idle.fbx",
+  "size": 498032,
+  "t": 1795257437.8729656
+ },
+ {
+  "name": "Hanging_Idle",
+  "mixamo": "Hanging Idle",
+  "file": "Hanging Idle.fbx",
+  "size": 496768,
+  "t": 1795257469.3693354
+ },
+ {
+  "name": "Cover_Idle",
+  "mixamo": "Cover Idle",
+  "file": "Cover Idle.fbx",
+  "size": 490080,
+  "t": 1795257476.3727984
+ },
+ {
+  "name": "Sleeping_Idle",
+  "mixamo": "Sleeping Idle",
+  "file": "Sleeping Idle.fbx",
+  "size": 1631376,
+  "t": 1795257493.2141585
+ },
+ {
+  "name": "Laying_Idle",
+  "mixamo": "Laying Idle",
+  "file": "Laying Idle.fbx",
+  "size": 1088624,
+  "t": 1795257501.3875315
+ },
+ {
+  "name": "Pistol_Idle",
+  "mixamo": "Pistol Idle",
+  "file": "Pistol Idle.fbx",
+  "size": 577776,
+  "t": 1795257510.2850893
+ },
+ {
+  "name": "Sitting_Idle_2",
+  "mixamo": "Sitting Idle",
+  "file": "Sitting Idle (1).fbx",
+  "size": 846112,
+  "t": 1795257521.2602766
+ },
+ {
+  "name": "Hostage_Situation_Idle_Hostage",
+  "mixamo": "Hostage Situation Idle - Hostage",
+  "file": "Hostage Situation Idle - Hostage.fbx",
+  "size": 585744,
+  "t": 1795257530.2544913
+ },
+ {
+  "name": "Hostage_Situation_Idle_Villain",
+  "mixamo": "Hostage Situation Idle - Villain",
+  "file": "Hostage Situation Idle - Villain.fbx",
+  "size": 581424,
+  "t": 1795257546.0552115
+ },
+ {
+  "name": "Looking_Around_idle",
+  "mixamo": "Looking Around idle",
+  "file": "Looking Around idle.fbx",
+  "size": 828464,
+  "t": 1795257562.5330172
+ },
+ {
+  "name": "Wiping_Sweat",
+  "mixamo": "Wiping Sweat",
+  "file": "Wiping Sweat.fbx",
+  "size": 521216,
+  "t": 1795257587.5766325
+ },
+ {
+  "name": "Dice_Idle",
+  "mixamo": "Dice Idle",
+  "file": "Dice Idle.fbx",
+  "size": 610672,
+  "t": 1795257616.9898643
+ },
+ {
+  "name": "Kneeling",
+  "mixamo": "Kneeling",
+  "file": "Kneeling.fbx",
+  "size": 631424,
+  "t": 1795257634.312805
+ },
+ {
+  "name": "Asking_Question",
+  "mixamo": "Asking Question",
+  "file": "Asking Question.fbx",
+  "size": 710880,
+  "t": 1795257641.8813207
+ },
+ {
+  "name": "Angry_Gesture_sitting",
+  "mixamo": "Angry Gesture sitting",
+  "file": "Angry Gesture sitting.fbx",
+  "size": 785632,
+  "t": 1795257656.4231668
+ },
+ {
+  "name": "Hands_Forward_Gesture",
+  "mixamo": "Hands Forward Gesture",
+  "file": "Hands Forward Gesture.fbx",
+  "size": 613952,
+  "t": 1795257700.1045253
+ },
+ {
+  "name": "Arm_Gesture",
+  "mixamo": "Arm Gesture",
+  "file": "Arm Gesture.fbx",
+  "size": 647968,
+  "t": 1795257709.543625
+ },
+ {
+  "name": "Acknowledging",
+  "mixamo": "Acknowledging",
+  "file": "Acknowledging.fbx",
+  "size": 481648,
+  "t": 1795257727.7887123
+ },
+ {
+  "name": "sitting_Pointing",
+  "mixamo": "sitting Pointing",
+  "file": "sitting Pointing.fbx",
+  "size": 596128,
+  "t": 1795257746.6936905
+ },
+ {
+  "name": "Threatening",
+  "mixamo": "Threatening",
+  "file": "Threatening.fbx",
+  "size": 660576,
+  "t": 1795257773.5967793
+ },
+ {
+  "name": "Insult",
+  "mixamo": "Insult",
+  "file": "Insult.fbx",
+  "size": 564816,
+  "t": 1795257791.0270915
+ },
+ {
+  "name": "Salute",
+  "mixamo": "Salute",
+  "file": "Salute.fbx",
+  "size": 580656,
+  "t": 1795257804.0446417
+ },
+ {
+  "name": "Thankful",
+  "mixamo": "Thankful",
+  "file": "Thankful.fbx",
+  "size": 602608,
+  "t": 1795257812.3162415
+ },
+ {
+  "name": "Waving",
+  "mixamo": "Waving",
+  "file": "Waving.fbx",
+  "size": 628272,
+  "t": 1795257831.1675653
+ },
+ {
+  "name": "Quick_Formal_Bow",
+  "mixamo": "Quick Formal Bow",
+  "file": "Quick Formal Bow.fbx",
+  "size": 569424,
+  "t": 1795257839.2245076
+ },
+ {
+  "name": "Standing_Using_Touchscreen_Tablet",
+  "mixamo": "Standing Using Touchscreen Tablet",
+  "file": "Standing Using Touchscreen Tablet.fbx",
+  "size": 2348208,
+  "t": 1795257860.5921168
+ },
+ {
+  "name": "Hand_Raising",
+  "mixamo": "Hand Raising",
+  "file": "Hand Raising.fbx",
+  "size": 719184,
+  "t": 1795257877.9189959
+ },
+ {
+  "name": "No",
+  "mixamo": "No",
+  "file": "No.fbx",
+  "size": 715072,
+  "t": 1795257886.3552644
+ },
+ {
+  "name": "Agreeing",
+  "mixamo": "Agreeing",
+  "file": "Agreeing.fbx",
+  "size": 686400,
+  "t": 1795257895.2116103
+ },
+ {
+  "name": "Terrified",
+  "mixamo": "Terrified",
+  "file": "Terrified.fbx",
+  "size": 1791808,
+  "t": 1795257909.8358748
+ },
+ {
+  "name": "Arm_Stretching",
+  "mixamo": "Arm Stretching",
+  "file": "Arm Stretching.fbx",
+  "size": 1025904,
+  "t": 1795257937.177707
+ },
+ {
+  "name": "Neck_Stretching",
+  "mixamo": "Neck Stretching",
+  "file": "Neck Stretching.fbx",
+  "size": 625296,
+  "t": 1795257944.9804542
+ },
+ {
+  "name": "Victory",
+  "mixamo": "Victory",
+  "file": "Victory.fbx",
+  "size": 983600,
+  "t": 1795257957.6889715
+ },
+ {
+  "name": "Praying_2",
+  "mixamo": "Praying",
+  "file": "Praying (1).fbx",
+  "size": 492880,
+  "t": 1795257967.322083
+ },
+ {
+  "name": "Sitting_Disapproval",
+  "mixamo": "Sitting Disapproval",
+  "file": "Sitting Disapproval.fbx",
+  "size": 685296,
+  "t": 1795257974.9359171
+ },
+ {
+  "name": "Patting",
+  "mixamo": "Patting",
+  "file": "Patting.fbx",
+  "size": 600816,
+  "t": 1795257990.0017438
+ },
+ {
+  "name": "Angry",
+  "mixamo": "Angry",
+  "file": "Angry.fbx",
+  "size": 1688752,
+  "t": 1795258010.5474172
+ },
+ {
+  "name": "Sitting_Clap",
+  "mixamo": "Sitting Clap",
+  "file": "Sitting Clap.fbx",
+  "size": 844192,
+  "t": 1795258035.75763
+ },
+ {
+  "name": "Sitting_Yell",
+  "mixamo": "Sitting Yell",
+  "file": "Sitting Yell.fbx",
+  "size": 481184,
+  "t": 1795258042.401774
+ },
+ {
+  "name": "Yelling_Out",
+  "mixamo": "Yelling Out",
+  "file": "Yelling Out.fbx",
+  "size": 652384,
+  "t": 1795258055.508041
+ },
+ {
+  "name": "Looking",
+  "mixamo": "Looking",
+  "file": "Looking.fbx",
+  "size": 704048,
+  "t": 1795258082.703643
+ },
+ {
+  "name": "Sitting_Thumbs_Up",
+  "mixamo": "Sitting Thumbs Up",
+  "file": "Sitting Thumbs Up.fbx",
+  "size": 635008,
+  "t": 1795258105.9064727
+ },
+ {
+  "name": "Excited",
+  "mixamo": "Excited",
+  "file": "Excited.fbx",
+  "size": 826000,
+  "t": 1795258114.0513835
+ },
+ {
+  "name": "Kneeling_Pointing",
+  "mixamo": "Kneeling Pointing",
+  "file": "Kneeling Pointing.fbx",
+  "size": 662560,
+  "t": 1795258147.6191676
+ },
+ {
+  "name": "Standing_Greeting",
+  "mixamo": "Standing Greeting",
+  "file": "Standing Greeting.fbx",
+  "size": 711008,
+  "t": 1795258159.413069
+ },
+ {
+  "name": "Sarcastic_Head_Nod",
+  "mixamo": "Sarcastic Head Nod",
+  "file": "Sarcastic Head Nod.fbx",
+  "size": 527008,
+  "t": 1795258172.1832416
+ },
+ {
+  "name": "Shove_Reaction_2",
+  "mixamo": "Shove Reaction",
+  "file": "Shove Reaction (1).fbx",
+  "size": 602608,
+  "t": 1795258184.4624007
+ },
+ {
+  "name": "Rallying",
+  "mixamo": "Rallying",
+  "file": "Rallying.fbx",
+  "size": 811536,
+  "t": 1795258198.2566595
+ },
+ {
+  "name": "Smoking",
+  "mixamo": "Smoking",
+  "file": "Smoking.fbx",
+  "size": 1695744,
+  "t": 1795258225.0257638
+ },
+ {
+  "name": "Sitting_Disbelief",
+  "mixamo": "Sitting Disbelief",
+  "file": "Sitting Disbelief.fbx",
+  "size": 672464,
+  "t": 1795258234.4572783
+ },
+ {
+  "name": "Finding",
+  "mixamo": "Finding",
+  "file": "Finding.fbx",
+  "size": 1379120,
+  "t": 1795258255.455042
+ },
+ {
+  "name": "Stand_To_Sit",
+  "mixamo": "Stand To Sit",
+  "file": "Stand To Sit.fbx",
+  "size": 513264,
+  "t": 1795258638.3845663
+ },
+ {
+  "name": "Sit_To_Stand",
+  "mixamo": "Sit To Stand",
+  "file": "Sit To Stand.fbx",
+  "size": 519456,
+  "t": 1795258664.311677
+ },
+ {
+  "name": "Getting_Up",
+  "mixamo": "Getting Up",
+  "file": "Getting Up.fbx",
+  "size": 539440,
+  "t": 1795258679.1240523
+ },
+ {
+  "name": "Standing_Up_2",
+  "mixamo": "Standing Up",
+  "file": "Standing Up (1).fbx",
+  "size": 1232512,
+  "t": 1795258703.1032531
+ },
+ {
+  "name": "Standing_Up_3",
+  "mixamo": "Standing Up",
+  "file": "Standing Up (2).fbx",
+  "size": 1232512,
+  "t": 1795258733.197585
+ },
+ {
+  "name": "Being_Strangled",
+  "mixamo": "Being Strangled",
+  "file": "Being Strangled.fbx",
+  "size": 1732768,
+  "t": 1795258750.0646558
+ },
+ {
+  "name": "sit_Stand_Up",
+  "mixamo": "sit Stand Up",
+  "file": "sit Stand Up.fbx",
+  "size": 695472,
+  "t": 1795258776.101423
+ },
+ {
+  "name": "Administering_Cpr",
+  "mixamo": "Administering Cpr",
+  "file": "Administering Cpr.fbx",
+  "size": 991984,
+  "t": 1795260052.9972112
+ },
+ {
+  "name": "Receiving_Cpr",
+  "mixamo": "Receiving Cpr",
+  "file": "Receiving Cpr.fbx",
+  "size": 738592,
+  "t": 1795260062.2827294
+ },
+ {
+  "name": "Shoulder_Hit_And_Fall",
+  "mixamo": "Shoulder Hit And Fall",
+  "file": "Shoulder Hit And Fall.fbx",
+  "size": 580480,
+  "t": 1795260087.6947532
+ },
+ {
+  "name": "Aiming_Gun",
+  "mixamo": "Aiming Gun",
+  "file": "Aiming Gun.fbx",
+  "size": 508656,
+  "t": 1795260099.0516038
+ },
+ {
+  "name": "Stomping",
+  "mixamo": "Stomping",
+  "file": "Stomping.fbx",
+  "size": 466528,
+  "t": 1795260120.8408768
+ },
+ {
+  "name": "Kicking_Out",
+  "mixamo": "Kicking Out",
+  "file": "Kicking Out.fbx",
+  "size": 417936,
+  "t": 1795260136.175149
+ },
+ {
+  "name": "Punching",
+  "mixamo": "Punching",
+  "file": "Punching.fbx",
+  "size": 344992,
+  "t": 1795260326.3272333
+ },
+ {
+  "name": "Punching_2",
+  "mixamo": "Punching",
+  "file": "Punching (1).fbx",
+  "size": 343408,
+  "t": 1795260337.685696
+ },
+ {
+  "name": "Combo_Punch",
+  "mixamo": "Combo Punch",
+  "file": "Combo Punch.fbx",
+  "size": 496304,
+  "t": 1795260350.8682694
+ },
+ {
+  "name": "Elbow_Punching",
+  "mixamo": "Elbow Punching",
+  "file": "Elbow Punching.fbx",
+  "size": 397408,
+  "t": 1795260373.2732644
+ },
+ {
+  "name": "Jab_To_Elbow_Punch",
+  "mixamo": "Jab To Elbow Punch",
+  "file": "Jab To Elbow Punch.fbx",
+  "size": 632848,
+  "t": 1795260400.7238533
+ },
+ {
+  "name": "Hook",
+  "mixamo": "Hook",
+  "file": "Hook.fbx",
+  "size": 367712,
+  "t": 1795260409.5489554
+ },
+ {
+  "name": "Taking_Punch",
+  "mixamo": "Taking Punch",
+  "file": "Taking Punch.fbx",
+  "size": 771776,
+  "t": 1795260431.3094687
+ },
+ {
+  "name": "Receive_Punch_To_The_Face",
+  "mixamo": "Receive Punch To The Face",
+  "file": "Receive Punch To The Face.fbx",
+  "size": 402816,
+  "t": 1795260447.188174
+ },
+ {
+  "name": "Hit_To_Body",
+  "mixamo": "Hit To Body",
+  "file": "Hit To Body.fbx",
+  "size": 370416,
+  "t": 1795260461.7153618
+ },
+ {
+  "name": "Stunned",
+  "mixamo": "Stunned",
+  "file": "Stunned.fbx",
+  "size": 506528,
+  "t": 1795260473.8471618
+ },
+ {
+  "name": "Hit_Reaction",
+  "mixamo": "Hit Reaction",
+  "file": "Hit Reaction.fbx",
+  "size": 443856,
+  "t": 1795260487.4253106
+ },
+ {
+  "name": "Light_Hit_To_Head",
+  "mixamo": "Light Hit To Head",
+  "file": "Light Hit To Head.fbx",
+  "size": 328112,
+  "t": 1795260507.2136748
+ },
+ {
+  "name": "Big_Hit_To_Head",
+  "mixamo": "Big Hit To Head",
+  "file": "Big Hit To Head.fbx",
+  "size": 364912,
+  "t": 1795260517.0668542
+ },
+ {
+  "name": "Head_Hit",
+  "mixamo": "Head Hit",
+  "file": "Head Hit.fbx",
+  "size": 347664,
+  "t": 1795260533.8673272
+ },
+ {
+  "name": "Crouch_To_Stand",
+  "mixamo": "Crouch To Stand",
+  "file": "Crouch To Stand.fbx",
+  "size": 470320,
+  "t": 1795260557.4084735
+ },
+ {
+  "name": "Opening_slide_door",
+  "mixamo": "Opening slide door",
+  "file": "Opening slide door.fbx",
+  "size": 689456,
+  "t": 1795260643.5217092
+ },
+ {
+  "name": "Opening_locked",
+  "mixamo": "Opening locked",
+  "file": "Opening locked.fbx",
+  "size": 685696,
+  "t": 1795260668.5123205
+ },
+ {
+  "name": "Closing_A_Lid",
+  "mixamo": "Closing A Lid",
+  "file": "Closing A Lid.fbx",
+  "size": 1199792,
+  "t": 1795260720.9731662
+ },
+ {
+  "name": "Working_On_Device_crouched",
+  "mixamo": "Working On Device crouched",
+  "file": "Working On Device crouched.fbx",
+  "size": 837600,
+  "t": 1795260731.2286398
+ },
+ {
+  "name": "Exiting_Car",
+  "mixamo": "Exiting Car",
+  "file": "Exiting Car.fbx",
+  "size": 783792,
+  "t": 1795260772.749694
+ },
+ {
+  "name": "Entering_Car",
+  "mixamo": "Entering Car",
+  "file": "Entering Car.fbx",
+  "size": 754752,
+  "t": 1795260781.1686172
+ },
+ {
+  "name": "Being_Carried_pick_up",
+  "mixamo": "Being Carried pick up",
+  "file": "Being Carried pick up.fbx",
+  "size": 690192,
+  "t": 1795260807.3442698
+ },
+ {
+  "name": "Being_Carried_out_down",
+  "mixamo": "Being Carried out down",
+  "file": "Being Carried out down.fbx",
+  "size": 1039408,
+  "t": 1795260826.4137936
+ },
+ {
+  "name": "Being_Carried_walking",
+  "mixamo": "Being Carried walking",
+  "file": "Being Carried walking.fbx",
+  "size": 635664,
+  "t": 1795260856.097938
+ },
+ {
+  "name": "Box_Turn_3",
+  "mixamo": "Box Turn",
+  "file": "Box Turn (2).fbx",
+  "size": 427216,
+  "t": 1795260884.46506
+ },
+ {
+  "name": "Box_Idle",
+  "mixamo": "Box Idle",
+  "file": "Box Idle.fbx",
+  "size": 771712,
+  "t": 1795260902.7861445
+ },
+ {
+  "name": "Box_Walk_Arc",
+  "mixamo": "Box Walk Arc",
+  "file": "Box Walk Arc.fbx",
+  "size": 395616,
+  "t": 1795260914.439472
+ },
+ {
+  "name": "Running_with_a_box",
+  "mixamo": "Running with a box",
+  "file": "Running with a box.fbx",
+  "size": 392848,
+  "t": 1795260930.3516126
+ },
+ {
+  "name": "Jogging_With_Box_3",
+  "mixamo": "Jogging With Box",
+  "file": "Jogging With Box (2).fbx",
+  "size": 324512,
+  "t": 1795260945.9821215
+ },
+ {
+  "name": "Walk_To_Stop_with_a_box",
+  "mixamo": "Walk To Stop with a box",
+  "file": "Walk To Stop with a box.fbx",
+  "size": 663984,
+  "t": 1795260966.8403184
+ },
+ {
+  "name": "Bartending",
+  "mixamo": "Bartending",
+  "file": "Bartending.fbx",
+  "size": 1416752,
+  "t": 1795261005.53728
+ },
+ {
+  "name": "Opening_A_Filing_Cabinet",
+  "mixamo": "Opening A Filing Cabinet",
+  "file": "Opening A Filing Cabinet.fbx",
+  "size": 1371824,
+  "t": 1795261016.613636
+ },
+ {
+  "name": "Using_A_Filing_Cabinet",
+  "mixamo": "Using A Filing Cabinet",
+  "file": "Using A Filing Cabinet.fbx",
+  "size": 1096032,
+  "t": 1795261024.673159
+ },
+ {
+  "name": "Silly_Dancing",
+  "mixamo": "Silly Dancing",
+  "file": "Silly Dancing.fbx",
+  "size": 572912,
+  "t": 1795261041.966007
+ },
+ {
+  "name": "Paddling",
+  "mixamo": "Paddling",
+  "file": "Paddling.fbx",
+  "size": 843808,
+  "t": 1795261056.5425043
+ },
+ {
+  "name": "Waving_2",
+  "mixamo": "Waving",
+  "file": "Waving (1).fbx",
+  "size": 587312,
+  "t": 1795261130.0690084
+ },
+ {
+  "name": "Shaking_Hands_2",
+  "mixamo": "Shaking Hands 2",
+  "file": "Shaking Hands 2.fbx",
+  "size": 653664,
+  "t": 1795261140.816428
+ },
+ {
+  "name": "Shaking_Hands_1",
+  "mixamo": "Shaking Hands 1",
+  "file": "Shaking Hands 1.fbx",
+  "size": 657424,
+  "t": 1795261148.104848
+ },
+ {
+  "name": "Waving_3",
+  "mixamo": "Waving",
+  "file": "Waving (2).fbx",
+  "size": 628272,
+  "t": 1795261170.1889822
+ },
+ {
+  "name": "Waving_4",
+  "mixamo": "Waving",
+  "file": "Waving (3).fbx",
+  "size": 305040,
+  "t": 1795261178.5737088
+ },
+ {
+  "name": "Tender_Placement",
+  "mixamo": "Tender Placement",
+  "file": "Tender Placement.fbx",
+  "size": 989392,
+  "t": 1795261285.11324
+ },
+ {
+  "name": "Pointing_back_thumb",
+  "mixamo": "Pointing back thumb",
+  "file": "Pointing back thumb.fbx",
+  "size": 608448,
+  "t": 1795261323.8460696
+ },
+ {
+  "name": "Pointing",
+  "mixamo": "Pointing",
+  "file": "Pointing.fbx",
+  "size": 519376,
+  "t": 1795261355.659285
+ },
+ {
+  "name": "Pointing_Forward",
+  "mixamo": "Pointing Forward",
+  "file": "Pointing Forward.fbx",
+  "size": 686400,
+  "t": 1795261363.2142403
+ },
+ {
+  "name": "Taunt",
+  "mixamo": "Taunt",
+  "file": "Taunt.fbx",
+  "size": 583712,
+  "t": 1795261376.2647698
+ },
+ {
+  "name": "Push_Stop",
+  "mixamo": "Push Stop",
+  "file": "Push Stop.fbx",
+  "size": 529168,
+  "t": 1795261427.7649212
+ },
+ {
+  "name": "Run_To_Stop_2",
+  "mixamo": "Run To Stop",
+  "file": "Run To Stop (1).fbx",
+  "size": 354752,
+  "t": 1795261435.2657843
+ },
+ {
+  "name": "Walk_To_Stop_carry",
+  "mixamo": "Walk To Stop carry",
+  "file": "Walk To Stop carry.fbx",
+  "size": 663984,
+  "t": 1795261459.871129
+ },
+ {
+  "name": "Stop_Walking_2",
+  "mixamo": "Stop Walking",
+  "file": "Stop Walking (1).fbx",
+  "size": 570208,
+  "t": 1795261492.197018
+ },
+ {
+  "name": "Restrain",
+  "mixamo": "Restrain",
+  "file": "Restrain.fbx",
+  "size": 761600,
+  "t": 1795261513.177068
+ },
+ {
+  "name": "Shopping_Cart_Dance",
+  "mixamo": "Shopping Cart Dance",
+  "file": "Shopping Cart Dance.fbx",
+  "size": 1519648,
+  "t": 1795261554.520313
+ },
+ {
+  "name": "Step_Hip_Hop_Dance",
+  "mixamo": "Step Hip Hop Dance",
+  "file": "Step Hip Hop Dance.fbx",
+  "size": 755616,
+  "t": 1795261574.22151
+ },
+ {
+  "name": "Typing",
+  "mixamo": "Typing",
+  "file": "Typing.fbx",
+  "size": 1607216,
+  "t": 1795261683.9768226
+ },
+ {
+  "name": "Sit_To_Type",
+  "mixamo": "Sit To Type",
+  "file": "Sit To Type.fbx",
+  "size": 398496,
+  "t": 1795261694.3950608
+ },
+ {
+  "name": "Type_To_Sit",
+  "mixamo": "Type To Sit",
+  "file": "Type To Sit.fbx",
+  "size": 366240,
+  "t": 1795261701.9392967
+ },
+ {
+  "name": "Dancing",
+  "mixamo": "Dancing",
+  "file": "Dancing.fbx",
+  "size": 779328,
+  "t": 1795261761.3221514
+ },
+ {
+  "name": "Female_Peek_And_Aim",
+  "mixamo": "Female Peek And Aim",
+  "file": "Female Peek And Aim.fbx",
+  "size": 473728,
+  "t": 1795261781.4863534
+ },
+ {
+  "name": "Aim_Pistol_sitting",
+  "mixamo": "Aim Pistol sitting",
+  "file": "Aim Pistol sitting.fbx",
+  "size": 658944,
+  "t": 1795261789.4010727
+ },
+ {
+  "name": "Jog_In_Circle",
+  "mixamo": "Jog In Circle",
+  "file": "Jog In Circle.fbx",
+  "size": 789072,
+  "t": 1795261830.3729367
+ },
+ {
+  "name": "Thankful_2",
+  "mixamo": "Thankful",
+  "file": "Thankful (1).fbx",
+  "size": 602608,
+  "t": 1795261869.392441
+ },
+ {
+  "name": "Spat_In_Face",
+  "mixamo": "Spat In Face",
+  "file": "Spat In Face.fbx",
+  "size": 522336,
+  "t": 1795261911.4462438
+ },
+ {
+  "name": "Dancing_2",
+  "mixamo": "Dancing",
+  "file": "Dancing (1).fbx",
+  "size": 1623616,
+  "t": 1795261977.054407
+ },
+ {
+  "name": "Counting",
+  "mixamo": "Counting",
+  "file": "Counting.fbx",
+  "size": 769744,
+  "t": 1795262089.4763544
+ },
+ {
+  "name": "L_Start_Walking",
+  "mixamo": "Start Walking",
+  "file": "L_Start_Walking.fbx",
+  "size": 563376,
+  "t": 1795249774.9292295
+ },
+ {
+  "name": "L_Stop_Walking",
+  "mixamo": "Stop Walking",
+  "file": "L_Stop_Walking.fbx",
+  "size": 570208,
+  "t": 1795249901.8135455
+ }
+]

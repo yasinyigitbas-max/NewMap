@@ -51,8 +51,11 @@ void Crowd::life_roll(int i, float h) {
 	const float rem = dir[i] > 0 ? S.len - u[i] : u[i];
 	if (rem < 6.0f || S.len - rem < 6.0f || tier[i] == TIER_FAR) return;
 	const float r = rnd_of(i);
-	if (r < 0.15f) { state[i] = ST_PAUSE; pause_t[i] = 6.0f + 12.0f * rnd_of(i); act[i] = A_PHONE; v[i] = 0.0f; st.pauses++; return; }
-	if (r < 0.30f) { act[i] = A_PHONE; act_t[i] = 12.0f + 24.0f * rnd_of(i); return; }   // ... or as he walks on (act_t ends it)
+	// (Yasin, 21 Nov: "make them talk on the phone or simply walk for the most, make the chances of seeing each people doing an
+	// action should be logical"): most of the time he just walks; a call or a text as he walks is the next most usual
+	// (a quarter of the rolls, 15-40 s), stopping for one less (a tenth)
+	if (r < 0.10f) { state[i] = ST_PAUSE; pause_t[i] = 6.0f + 12.0f * rnd_of(i); act[i] = A_PHONE; v[i] = 0.0f; st.pauses++; return; }
+	if (r < 0.35f) { act[i] = A_PHONE; act_t[i] = 15.0f + 25.0f * rnd_of(i); return; }   // ... or as he walks on (act_t ends it)
 	if (r < 0.55f) {
 		for (int p : seg_places[seg[i]]) {
 			if (places[p].kind != PL_SHOP || std::fabs(places[p].u - u[i]) > 10.0f) continue;
