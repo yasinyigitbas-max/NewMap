@@ -196,7 +196,7 @@ def hotel_bel():
             o_ = {side: [dict(k='victorian', c=round(c, 3), w=0.9, t0=round(y0 + 0.25, 3), t1=round(y0 + 1.35, 3))]}
             b.add('block', x0=xa, x1=xb_, z0=c - w / 2, z1=c + w / 2, W=yw, y0=y0, roof='gable', axis='x', pitch=0.95, o=0.18, rake=0.18, f=0.12,
                   openings=o_, sills=True, sill_tint=TRIM, gutters=False, downspouts=[], roof_vents=[], foundation=False, corner_boards=False, far=False)
-    for c in (-10.6, -7.6): dormer('front', c)
+    for c in (-10.6, -7.6, 7.6): dormer('front', c)
     for c in (-9.9, 9.9): dormer('back', c)
     dormer('right', -3.0)
     # ------------------------------------------------------------ chimneys + ridge cresting
