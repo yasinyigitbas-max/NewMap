@@ -51,6 +51,18 @@ private:
 	int idv_take = -1, idv_last = -1;   // the take playing (-1: the base), the one before
 	double idv_t = 0.0;                 // seconds into the base's loops, or into the take
 	uint32_t idv_rng = 0x9e3779b9u;
+	// THE PLAYER'S WALK (Yasin, 21 Nov: "we should see one of the random starts, random main walks, and random stop walks.
+	// again, never the same one again"; tools/people/make_player_walks.gd, library "pwalk"): each walk picks its start,
+	// its main loop and its stop, never the one the walk before had; a walking turn plays when he is asked round while
+	// walking. The picks (-1: none yet), the stop / turn waited for (the loop's phase it is cut in at), its seed.
+	int pw_start_last = -1, pw_main = -1, pw_main_last = -1, pw_stop_last = -1, pw_stop_next = -1, pw_turn_next = -1, pw_turn_last = -1;
+	double pw_ph_prev = -1.0;
+	float pw_wait_t = 0.0f;
+	uint32_t pw_rng = 0x2545f491u;
+	bool step_pw = false;                // (the step clip playing is a pwalk one: its body moves by its own vz / vx / yaw)
+	float step_lat = 0.0f, step_end = 0.0f;   // (its sideways pace now; where it hands over, s)
+	double step_yaw_prev = 0.0;          // (its turn so far, the last frame)
+	int pw_pick(int p_n, int p_last);
 	bool capture_mouse = false, scripted = false, cmd_run = false, e_was = false, cam_set = false, frozen = false;
 	Vector2 cmd;
 	float cam_yaw = 0.0f, cam_pitch = -0.18f, cam_dist = 3.4f, yaw = 0.0f, speed = 0.0f;
@@ -64,7 +76,7 @@ private:
 	float move_speed = 0.0f;      // the pace he means (his body turns, then goes the way it faces)
 	Vector3 lean_a;               // his acceleration, smoothed: the body leans into a turn and into a start
 	float last_speed = 0.0f;
-	int step_mode = 0;            // a step clip playing: 1 the start, 2 a stop, 3 a turn on the spot (tools/people/make_steps.gd)
+	int step_mode = 0;            // a step clip playing: 1 the start, 2 a stop, 3 a turn on the spot (tools/people/make_steps.gd), 4 a walking turn (pwalk)
 	StringName step_clip;
 	float step_t = 0.0f, step_cs = 1.0f, step_v0 = 0.0f;
 	double stop_ph_prev = -1.0;   // (waiting for the footfall to stop on: the stride's share last frame)

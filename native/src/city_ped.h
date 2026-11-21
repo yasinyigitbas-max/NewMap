@@ -42,6 +42,7 @@ private:
 	MeshInstance3D *mi = nullptr;
 	StringName cur_clip;             // (driven by the crowd) the clip that runs, and the moment it is held at (-1 = it runs)
 	double next_blend = -1.0;
+	double next_seek = -1.0;         // (the next clip change starts the new clip here, s: a walk loop taking over a start or a turn where its pose is)
 	double cur_hold = -1.0;
 	int cur_token = 0;
 	// getting up: the Quaternius clip "LayToIdle" (lying on the back to standing). Where its figure lies at its start, in
@@ -90,6 +91,7 @@ public:
 	// p_hold: >= 0 held at that moment of the clip; -1 it runs (and starts again when it ends); -2 played once and
 	// held on its last frame. A new p_token starts the same clip again (the next blow of a fight).
 	void set_next_blend(double seconds) { next_blend = seconds; }
+	void set_next_seek(double p_t) { next_seek = p_t; }   // (for this frame's drive only)
 	void drive(const Transform3D &p_at, const StringName &p_clip, double p_speed, double p_hold, int p_token = 0);
 	double clip_len(const StringName &p_clip) const;
 	// (a car's wheel over a downed body, the Animator 20 Nov) the highest top of its body's parts within p_r of p
@@ -98,6 +100,9 @@ public:
 	double clip_pace(const StringName &p_clip, double p_t) const;
 	double clip_curve(const StringName &p_clip, const String &p_key, double p_t, double p_def) const;
 	double clip_meta(const StringName &p_clip, const String &p_key, double p_def) const;
+	// the same with the key a StringName made once (no String built a frame: the player's walk reads these every frame)
+	double clip_curve_sn(const StringName &p_clip, const StringName &p_key, double p_t, double p_def) const;
+	double clip_meta_sn(const StringName &p_clip, const StringName &p_key, double p_def) const;
 	// a clip's hips at a moment of it, read from its own tracks (the figure's own frame, metres): how far the clip itself
 	// carries the body (a climb's rise and travel); and the moment the playing clip is at now
 	Vector3 clip_hips_at(const StringName &p_clip, double p_t) const;

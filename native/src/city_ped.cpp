@@ -87,6 +87,10 @@ void CityPed::make() {
 		// Player-only Mixamo upper-body idle takes over the existing step/idle stance. No general Mixamo aliasing.
 		Ref<AnimationLibrary> pidle = rl->load(dir + String("clips_player_idle_") + g + String(".res"));
 		if (pidle.is_valid()) anim->add_animation_library(StringName("pidle"), pidle);
+		// the player's walk on foot (tools/people/make_player_walks.gd): Mixamo starts, stops and walking turns, both feet;
+		// the Mixamo walk and the UAL walk loop, the hands open: "pwalk/start_a" ...
+		Ref<AnimationLibrary> pwalk = rl->load(dir + String("clips_player_walk_") + g + String(".res"));
+		if (pwalk.is_valid()) anim->add_animation_library(StringName("pwalk"), pwalk);
 		if (lib->has_animation("get_up")) { Ref<Animation> a = lib->get_animation("get_up"); getup_len = a->get_length(); }
 		if (anim->has_animation(clip)) { anim->play(clip); if (clip_at >= 0.0) { anim->seek(clip_at, true); anim->pause(); } }
 	}
@@ -211,10 +215,15 @@ bool CityPed::stride_of(const StringName &p_clip, double &r_left_down, int &r_st
 	static const StringName SW("step/walk"), SJ("step/jog");
 	if (p_clip == SW) { r_left_down = 0.0; r_strides = 1; return true; }
 	if (p_clip == SJ) { r_left_down = 0.924; r_strides = 1; return true; }
+	// the player's walk loops (tools/people/make_player_walks.gd; the Mixamo walk's own "left_down" meta)
+	static const StringName PM("pwalk/walk_mx"), PU("pwalk/walk_ual");
+	if (p_clip == PM) { r_left_down = 0.2258; r_strides = 1; return true; }
+	if (p_clip == PU) { r_left_down = 0.0; r_strides = 1; return true; }
 	return false;
 }
 
 void CityPed::drive(const Transform3D &p_at, const StringName &p_clip, double p_speed, double p_hold, int p_token) {
+	const double seek_to = next_seek; next_seek = -1.0;
 	if (!made || mode != MODE_ANIM) return;
 	set_global_transform(p_at);
 	if (!anim || !anim->has_animation(p_clip)) return;
@@ -238,7 +247,8 @@ void CityPed::drive(const Transform3D &p_at, const StringName &p_clip, double p_
 				double phase = u * n_was - ph_was * n_was; phase -= std::floor(phase);   // (the share of one stride since the left foot landed)
 				double u_new = (phase + ph_new * n_new) / n_new; u_new -= std::floor(u_new);
 				anim->seek(u_new * len_new, true);
-			} else if (again) anim->seek(0.0, true);   // (the same clip again: from its start; a new one starts at its start
+			} else if (seek_to >= 0.0 && !again) anim->seek(std::min(seek_to, len_new), true);   // (asked: where its pose is)
+			else if (again) anim->seek(0.0, true);   // (the same clip again: from its start; a new one starts at its start
 			                                           // by itself, without a seek that would cut the blend short)
 		}
 	} else if (p_hold < 0.0 && p_hold > -1.5 && !anim->is_playing()) anim->play(p_clip, 0.1);   // (a clip that ends starts again while the act lasts)
@@ -254,6 +264,23 @@ double CityPed::clip_meta(const StringName &p_clip, const String &p_key, double 
 	if (!anim || !anim->has_animation(p_clip)) return p_def;
 	const Ref<Animation> a = anim->get_animation(p_clip);
 	return (a.is_valid() && a->has_meta(p_key)) ? (double)a->get_meta(p_key) : p_def;
+}
+
+double CityPed::clip_meta_sn(const StringName &p_clip, const StringName &p_key, double p_def) const {
+	if (!anim || !anim->has_animation(p_clip)) return p_def;
+	const Ref<Animation> a = anim->get_animation(p_clip);
+	return (a.is_valid() && a->has_meta(p_key)) ? (double)a->get_meta(p_key) : p_def;
+}
+
+double CityPed::clip_curve_sn(const StringName &p_clip, const StringName &p_key, double p_t, double p_def) const {
+	if (!anim || !anim->has_animation(p_clip)) return p_def;
+	const Ref<Animation> a = anim->get_animation(p_clip);
+	if (a.is_null() || !a->has_meta(p_key)) return p_def;
+	const PackedFloat32Array p = a->get_meta(p_key);
+	if (p.size() == 0) return p_def;
+	const double f = std::min(std::max(p_t * 30.0, 0.0), (double)(p.size() - 1));
+	const int i = (int)f; const int j = std::min(i + 1, (int)p.size() - 1);
+	return p[i] + (p[j] - p[i]) * (f - i);
 }
 
 // A made clip's curve (meta: a value per 1/30 s, e.g. "pace", a turn's "yaw") at t, or p_def without one
