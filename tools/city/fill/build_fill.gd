@@ -77,7 +77,10 @@ func _run() -> void:
 			var st2 := SurfaceTool.new(); st2.begin(Mesh.PRIMITIVE_TRIANGLES)
 			var lvl := float(p.level)
 			for k in range(0, tri.size(), 3):
-				for m: int in [0, 2, 1]:
+				# face up whatever the outline's direction (Godot's front face: (b-a)x(c-a) points down seen from above)
+				var a2 := poly[tri[k]]; var b2 := poly[tri[k + 1]]; var c2 := poly[tri[k + 2]]
+				var cy := (b2.y - a2.y) * (c2.x - a2.x) - (b2.x - a2.x) * (c2.y - a2.y)      # y of (b-a)x(c-a) in x,z
+				for m: int in ([0, 2, 1] if cy > 0.0 else [0, 1, 2]):
 					var q := poly[tri[k + m]]
 					st2.set_color(Color(0.035, 0, 0, 1)); st2.set_normal(Vector3.UP); st2.add_vertex(Vector3(q.x, lvl, q.y))
 			var wm := MeshInstance3D.new(); wm.name = "pond_%d" % int(p.id); wm.mesh = st2.commit()

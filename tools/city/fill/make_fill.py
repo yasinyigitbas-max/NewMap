@@ -170,8 +170,8 @@ def main():
     def relief_amp(p):
         # rock relief: the bluff faces and the cobble / riprap, fading out at their edges (continuous everywhere)
         sl = slope(p)
-        a_rock = 0.35 * smoothstep(0.16, 0.3, sl)
         d0 = d0s(p)
+        a_rock = 0.35 * smoothstep(0.16, 0.3, sl) * smoothstep(80, 60, d0)
         a_cob = 0.07 * smoothstep(0.35, 0.65, f_rz(p)) * smoothstep(-6, -1, d0) * (1 - smoothstep(10, 18, d0))
         return a_rock + a_cob
 
@@ -189,7 +189,7 @@ def main():
             'gap': lambda p: f_gap(p) - 0.5,
             'coast': lambda p: np.minimum(beach_w(p) - d0s(p) + 6 * (n_fine(p) - 0.5), (3.0 - f_h(p)) * 8),
             'cobble': lambda p: np.minimum(f_rz(p) - 0.5 + 0.2 * (n_mid(p) - 0.5), 14 + 4 * n_fine(p) - d0s(p)),
-            'rock': lambda p: slope(p) - 0.25,
+            'rock': lambda p: np.minimum(slope(p) - 0.25, 0.02 * (80 - d0s(p))),      # (rock faces only on the coast's bluffs)
             'trail': lambda p: 1.3 - np.minimum(trail_dist(p), coast_path(p)) + np.where(f_sd(p) < 3, -9, 0),
             'lawn': lambda p: np.maximum(0.62 - n_grove(p) * 0.4 - n_mid(p) * 0.6 + 0.25 * smoothstep(20, 0, f_road(p)), 0.3 - n_low(p)) - 0.12,
             'pond_edge': None,
@@ -257,7 +257,7 @@ def main():
             UV = P / tile
             # the tint: three scales of noise; wet sand darker near the water; meadow greener in the hollows
             nl = n_low(P); nm = n_mid(P); nf = n_fine(P)
-            k = 1.0 + 0.16 * (nl - 0.5) + 0.14 * (nm - 0.5) + 0.08 * (nf - 0.5)
+            k = 1.0 + 0.16 * (nl - 0.5) + 0.20 * (nm - 0.5) + 0.12 * (nf - 0.5)      # (polish 2: more mid / fine variation, flat grass read plain)
             col = np.stack([k, k, k], 1)
             if m in ('meadow', 'lawn'):
                 # dryness: wide soft noise, drier toward the beach and on the bluffs, greener by the streets and in the
@@ -313,6 +313,10 @@ def props_for(name, X0, Z0, height, f_dom, f_sd, f_d0, f_road, f_gap, n_grove, n
     out = []
 
     def put(base, cond, x, z, yaw, collide=True, scale=1.0, r=0.6):
+        # polish 2 render review: the kit's lawn patch has a rectangular perimeter, visible as black frames at grazing
+        # angles; omit that prop rather than cover the island in frames. Iceplant is a small dune mat, not a giant bush.
+        if base == 'plant_lawn_patch': return
+        if base == 'plant_iceplant_patch': scale *= 0.4
         p = np.array([[x, z], [x + r, z], [x - r, z], [x, z + r], [x, z - r]])
         y = float(height(p).min()) - 0.03
         out.append([base, cond, round(float(x), 3), round(y, 3), round(float(z), 3), round(float(yaw), 1), bool(collide), round(float(scale), 3)])

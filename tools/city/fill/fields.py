@@ -126,6 +126,13 @@ def main():
     nmat = mat[nj, ni]
     del nj, ni, eh
     lift = 0.05 * smoothstep(0, 10, d0)
+    # polish 2 (21 Nov): inland the zoning terrain keeps the pads and steps of lots never built (1 m steps with steep
+    # sides drew dark rock outlines on the grass); away from the shore and the neighbours the ground is the terrain
+    # smoothed over ~6 m (sigma), so a step becomes a soft swell; the coast and every neighbour edge keep the exact one
+    wsm = (smoothstep(20, 45, d0) * smoothstep(12, 35, sd)).astype(np.float32)
+    Hs = ndi.gaussian_filter(Hb, 6.0 / res, mode='nearest').astype(np.float32)
+    Hb = (Hb * (1 - wsm) + Hs * wsm).astype(np.float32)
+    del Hs, wsm
     base = (Hb + lift).astype(np.float32)
     # the lagoons (coast.json "ponds", all in the empty west but the east shore's): a bowl 0.9 m deep under a still
     # surface 0.18 m below the lowest point of the rim; the ground eases down to it over the 6 m inside the rim
