@@ -46,6 +46,11 @@ private:
 	float air_min_vy = 0.0f, run_t = 0.0f;
 	void vox_load();
 	bool vox(int p_kind, double p_gap = 0.3, float p_chance = 1.0f);
+	// IDLE VARIATIONS (Yasin, 21 Nov): standing on foot, step/idle plays IDV_LOOPS full loops, then one pidle/* take
+	// (never the same one twice running), then the base again; anything else asked of him resets it
+	int idv_take = -1, idv_last = -1;   // the take playing (-1: the base), the one before
+	double idv_t = 0.0;                 // seconds into the base's loops, or into the take
+	uint32_t idv_rng = 0x9e3779b9u;
 	bool capture_mouse = false, scripted = false, cmd_run = false, e_was = false, cam_set = false, frozen = false;
 	Vector2 cmd;
 	float cam_yaw = 0.0f, cam_pitch = -0.18f, cam_dist = 3.4f, yaw = 0.0f, speed = 0.0f;

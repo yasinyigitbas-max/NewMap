@@ -5,6 +5,7 @@
 #include "foot_steps.h"
 
 #include "city_ped.h"
+#include <godot_cpp/classes/time.hpp>
 #include "hand_grip.h"
 #include <godot_cpp/classes/skeleton3d.hpp>
 
@@ -39,6 +40,7 @@
 namespace godot {
 
 void CityPlayer::_ready() {
+	idv_rng ^= (uint32_t)Time::get_singleton()->get_ticks_usec() ^ (uint32_t)get_instance_id(); if (idv_rng == 0) idv_rng = 0x9e3779b9u;
 	if (Engine::get_singleton()->is_editor_hint()) return;
 	Ref<CapsuleShape3D> sh; sh.instantiate();
 	sh->set_radius(0.3f); sh->set_height(1.75f);
@@ -237,6 +239,7 @@ int CityPlayer::take_punch() {
 void CityPlayer::_physics_process(double p_delta) {
 	pm::Scope _pm(pm::PLAYER_PHYS);   // (the slow-frame marks, perf_marks.h)
 	if (!fig) return;
+	if (frozen || climb != 0) { if (idv_take >= 0) fig->set_next_blend(0.15); idv_take = -1; idv_t = 0.0; }
 	const float dt = (float)p_delta;
 	sense(p_delta);
 	punch_t += p_delta; hit_t += p_delta; combat_t += p_delta; uncombat_t += p_delta; act_left = std::max(act_left - p_delta, 0.0);
@@ -618,6 +621,34 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (clip == IDLE || clip == S_IDLE) clip = phone_kind == 2 ? P_EAR : (phone_kind == 3 ? P_UP : P_HAND);
 		else if ((clip == S_WALK3 || clip == WALK) && fig->clip_len(P_WALK_HAND) > 0.0) clip = phone_kind == 2 ? P_WALK_EAR : P_WALK_HAND;
 	}
+	// IDLE VARIATIONS (Yasin, 21 Nov: "base step/idle plays 4 full loops, then ONE random variation ... back to the base
+	// ... never two variations back to back ... avoid repeating the same variation twice in a row"; no UAL, no
+	// Idle_Transition, no texting). The takes (tools/people/make_player_idles.gd) hold step/idle's planted legs and pelvis
+	// still: the feet do not move in them or in the crossfades, and the body never travels. Moving, crouching, a fight,
+	// a phone, a climb, a car (frozen) or the water: the base or whatever is asked plays at once (0.15 s).
+	{
+		static const StringName IDV[4] = { StringName("pidle/Looking_Around_idle"), StringName("pidle/Looking"), StringName("pidle/Arm_Stretching"), StringName("pidle/Neck_Stretching") };
+		const double IDV_LOOPS = 4.0, IDV_IN = 0.4, IDV_OUT = 0.4;
+		const bool standing = clip == S_IDLE && hold < 0.0 && step_mode == 0 && climb == 0 && !airborne && !swimming && !frozen && mv.length_squared() < 0.0001f && speed < 0.05f;
+		if (!standing) {
+			if (idv_take >= 0) fig->set_next_blend(0.15);   // (cancelled: the next clip comes in fast)
+			idv_take = -1; idv_t = 0.0;
+		} else if (idv_take < 0) {
+			idv_t += dt;
+			const double bl = fig->clip_len(S_IDLE);
+			if (bl > 0.0 && idv_t >= IDV_LOOPS * bl) {   // (four complete base loops, then crossfade into the take)
+				idv_rng ^= idv_rng << 13; idv_rng ^= idv_rng >> 17; idv_rng ^= idv_rng << 5;   // (xorshift32)
+				int k = (int)(idv_rng % 3u);
+				if (idv_last < 0) k = (int)(idv_rng % 4u); else if (k >= idv_last) k++;   // (any but the last one)
+				if (fig->clip_len(IDV[k]) > 0.0) { idv_take = k; idv_last = k; idv_t = 0.0; fig->set_next_blend(IDV_IN); }
+				else idv_t = 0.0;   // (a figure without the takes: the base goes on)
+			}
+		} else {
+			idv_t += dt;
+			if (idv_t >= fig->clip_len(IDV[idv_take]) - IDV_OUT) { idv_take = -1; idv_t = 0.0; fig->set_next_blend(IDV_OUT); }   // (back to the base, its loop from the start)
+		}
+		if (idv_take >= 0) clip = IDV[idv_take];
+	}
 	vis_dy *= std::exp(-dt / 0.09f); if (std::fabs(vis_dy) < 0.001f) vis_dy = 0.0f;   // (lifted onto a kerb: the figure rises after, its foot already on it)
 	// THE LEAN: his body tilts with its acceleration, into a turn and a little forward into a start, back into a stop
 	// (a person's weight going round with him; at most 8 degrees, eased over 0.18 s)
@@ -761,6 +792,7 @@ Dictionary CityPlayer::get_frame_log() const {
 	d["node"] = get_global_position(); d["fig_at"] = fig ? fig->get_global_position() : Vector3(); d["pelvis"] = pelvis_world();
 	if (plant) { d["foot_l"] = plant->foot_w[0]; d["foot_r"] = plant->foot_w[1]; d["pelvis_drawn"] = plant->pelvis_w; d["plant_on"] = plant->is_active(); d["lock"] = Vector2i(plant->locked[0], plant->locked[1]); d["slide_l"] = plant->slide_w[0]; d["slide_r"] = plant->slide_w[1]; }
 	d["speed"] = speed; d["yaw"] = yaw;
+	d["idle_take"] = idv_take; d["idle_time"] = idv_t; d["idle_last"] = idv_last;
 	d["clip"] = get_clip(); d["fig_mode"] = fig ? (int)fig->get_mode() : -1; d["fig_at"] = fig ? fig->body_at() : Vector3(); d["step"] = step_mode; d["starts"] = starts; d["stops"] = stops; d["turns"] = turns; d["climb"] = climb; d["u"] = climb ? climb_t / climb_len : -1.0f; d["settle"] = settle_t; d["clip_off"] = clip_off;
 	return d;
 }

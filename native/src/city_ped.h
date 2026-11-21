@@ -41,6 +41,7 @@ private:
 	AnimationPlayer *anim = nullptr;
 	MeshInstance3D *mi = nullptr;
 	StringName cur_clip;             // (driven by the crowd) the clip that runs, and the moment it is held at (-1 = it runs)
+	double next_blend = -1.0;
 	double cur_hold = -1.0;
 	int cur_token = 0;
 	// getting up: the Quaternius clip "LayToIdle" (lying on the back to standing). Where its figure lies at its start, in
@@ -88,6 +89,7 @@ public:
 	void become(const String &p_body, const Ref<Mesh> &p_mesh, const Ref<ShaderMaterial> &p_look, bool p_can_body);
 	// p_hold: >= 0 held at that moment of the clip; -1 it runs (and starts again when it ends); -2 played once and
 	// held on its last frame. A new p_token starts the same clip again (the next blow of a fight).
+	void set_next_blend(double seconds) { next_blend = seconds; }
 	void drive(const Transform3D &p_at, const StringName &p_clip, double p_speed, double p_hold, int p_token = 0);
 	double clip_len(const StringName &p_clip) const;
 	// (a car's wheel over a downed body, the Animator 20 Nov) the highest top of its body's parts within p_r of p

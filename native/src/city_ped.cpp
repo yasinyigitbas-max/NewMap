@@ -84,6 +84,9 @@ void CityPed::make() {
 		// the walk starts and stops made from them (tools/people/make_steps.gd): "step/rb_start", "step/ual_stop_l" ...
 		Ref<AnimationLibrary> steps = rl->load(dir + String("clips_step_") + g + String(".res"));
 		if (steps.is_valid()) anim->add_animation_library(StringName("step"), steps);
+		// Player-only Mixamo upper-body idle takes over the existing step/idle stance. No general Mixamo aliasing.
+		Ref<AnimationLibrary> pidle = rl->load(dir + String("clips_player_idle_") + g + String(".res"));
+		if (pidle.is_valid()) anim->add_animation_library(StringName("pidle"), pidle);
 		if (lib->has_animation("get_up")) { Ref<Animation> a = lib->get_animation("get_up"); getup_len = a->get_length(); }
 		if (anim->has_animation(clip)) { anim->play(clip); if (clip_at >= 0.0) { anim->seek(clip_at, true); anim->pause(); } }
 	}
@@ -222,7 +225,7 @@ void CityPed::drive(const Transform3D &p_at, const StringName &p_clip, double p_
 		cur_clip = p_clip; cur_hold = p_hold; cur_token = p_token;
 		if (p_hold >= 0.0) { anim->play(p_clip, 0.0); anim->seek(p_hold, true); anim->pause(); }
 		else {
-			anim->play(p_clip, p_hold < -1.5 ? 0.18 : 0.3);
+			anim->play(p_clip, next_blend >= 0.0 ? next_blend : (p_hold < -1.5 ? 0.18 : 0.3)); next_blend = -1.0;
 			// (Yasin, 20 Nov: "i want them pixel perfect"; tests/people/trace_locomotion.gd: stopping from a sprint went
 			// Sprint, Jog, Walk, Idle, each new loop from its own start: the feet jumped 11-18 cm a frame) one walking loop
 			// handing over to another starts at the same point of the stride (each loop's left foot lands at a measured
