@@ -246,7 +246,37 @@ int CityPlayer::take_punch() {
 	return 1 + punch_side;
 }
 
+// The camera's rays (_process reads what they found): a blocked view over each shoulder, and how far it can go out from his
+// head to the shoulder and back to where it wants to be. In the physics step, where the world's collision can be asked.
+void CityPlayer::cam_probe() {
+	if (!pr_set || !is_inside_tree() || !get_world_3d().is_valid()) return;
+	PhysicsDirectSpaceState3D *ss = get_world_3d()->get_direct_space_state();
+	if (!ss) return;
+	TypedArray<RID> ex; ex.push_back(get_rid()); if (pr_skip.is_valid()) ex.push_back(pr_skip);
+	auto ray = [&](const Vector3 &a0, const Vector3 &a1) -> float {   // the clear length from a0 toward a1
+		const float L = a0.distance_to(a1);
+		if (L < 0.01f) return L;
+		Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(a0, a1, 1);
+		q->set_exclude(ex);
+		const Dictionary h = ss->intersect_ray(q);
+		return h.is_empty() ? L : ((Vector3)h["position"]).distance_to(a0);
+	};
+	auto clear = [&](float p_side) -> float {   // 0..1: how much of the view over that shoulder is clear
+		const Vector3 sh = pr_pivot + pr_right * p_side;
+		const float s0 = ray(pr_pivot, sh), sl = pr_pivot.distance_to(sh);
+		if (s0 < sl - 0.02f) return 0.3f * s0 / std::max(sl, 0.01f);
+		return 0.3f + 0.7f * ray(sh, sh + pr_back * pr_d) / std::max(pr_d, 0.01f);
+	};
+	pc_here = clear(pr_here_side); pc_right = clear(pr_want_side); pc_other = clear(-pr_here_side);
+	pc_s0 = ray(pr_pivot, pr_shoulder);
+	const float sl = pr_pivot.distance_to(pr_shoulder);
+	const Vector3 sh = sl > 0.01f ? pr_pivot + (pr_shoulder - pr_pivot) * (std::max(std::min(pc_s0, sl) - 0.2f, 0.0f) / sl) : pr_pivot;
+	pc_c = ray(sh, pr_want);
+	pc_ok = true;
+}
+
 void CityPlayer::_physics_process(double p_delta) {
+	//BISECT cam_probe();
 	pm::Scope _pm(pm::PLAYER_PHYS);   // (the slow-frame marks, perf_marks.h)
 	if (!fig) return;
 	// in a car or on the bicycle (set_riding: no collision): he stays where he is. Gravity went on pulling him while his
@@ -972,40 +1002,28 @@ void CityPlayer::_process(double p_delta) {
 	// shoulder, then back to the camera's place). The shoulder it is on blocked to under 60 % and the other one clearer:
 	// it swings across (and holds there a second, no flicking); back to the right shoulder once that is clear again. Both
 	// blocked: it rises a little over him and comes in, looking down past what is in the way.
-	PhysicsDirectSpaceState3D *ss = (is_inside_tree() && get_world_3d().is_valid()) ? get_world_3d()->get_direct_space_state() : nullptr;
-	TypedArray<RID> ex; ex.push_back(get_rid()); if (skip.is_valid()) ex.push_back(skip);
-	auto ray = [&](const Vector3 &a0, const Vector3 &a1) -> float {   // the clear length from a0 toward a1
-		const float L = a0.distance_to(a1);
-		if (!ss || L < 0.01f) return L;
-		Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(a0, a1, 1);
-		q->set_exclude(ex);
-		const Dictionary h = ss->intersect_ray(q);
-		return h.is_empty() ? L : ((Vector3)h["position"]).distance_to(a0);
-	};
-	auto clear = [&](float p_side, float p_lift) -> float {   // 0..1: how much of the view over that shoulder is clear
-		const Vector3 sh = cam_pivot + right * p_side + Vector3(0, p_lift, 0);
-		const float s0 = ray(cam_pivot, sh), sl = cam_pivot.distance_to(sh);
-		if (s0 < sl - 0.02f) return 0.3f * s0 / std::max(sl, 0.01f);
-		return 0.3f + 0.7f * ray(sh, sh + back * cam_d) / std::max(cam_d, 0.01f);
-	};
+	// (21 Nov: the rays are cast in the physics step, cam_probe(): the phones run physics on its own thread and allow the
+	// world's collision to be asked only then. They are cast from this frame's framing and read here the next frame.)
 	side_cd = std::max(side_cd - dt, 0.0f);
-	if (ss) {
-		const float here = clear(want_side * side_sign, 0.0f);
+	pr_pivot = cam_pivot; pr_right = right; pr_back = back; pr_d = cam_d; pr_here_side = want_side * side_sign; pr_want_side = want_side; pr_skip = skip;
+	if (pc_ok) {
+		const float here = pc_here;
 		if (side_cd <= 0.0f) {
-			if (side_sign < 0.0f && clear(want_side, 0.0f) > 0.95f) { side_sign = 1.0f; side_cd = 1.0f; }   // (back to the right)
-			else if (here < 0.6f && clear(-want_side * side_sign, 0.0f) > here + 0.2f) { side_sign = -side_sign; side_cd = 1.0f; }
+			if (side_sign < 0.0f && pc_right > 0.95f) { side_sign = 1.0f; side_cd = 1.0f; }   // (back to the right)
+			else if (here < 0.6f && pc_other > here + 0.2f) { side_sign = -side_sign; side_cd = 1.0f; }
 		}
-		const float lift_want = (here < 0.5f && clear(-want_side * side_sign, 0.0f) < 0.5f) ? 0.55f : 0.0f;
+		const float lift_want = (here < 0.5f && pc_other < 0.5f) ? 0.55f : 0.0f;
 		cam_lift += (lift_want - cam_lift) * (1.0f - std::exp(-dt * 3.0f));
 	}
 	const Vector3 shoulder = cam_pivot + right * cam_side + Vector3(0, cam_lift, 0);   // (over his shoulder: he stands off the middle)
 	Vector3 want = shoulder + back * (cam_d * (1.0f - 0.3f * cam_lift / 0.55f));
+	pr_shoulder = shoulder; pr_want = want; pr_set = true;
 	// out of walls and the ground: from his head out to the shoulder, then back to where it wants to be
-	if (ss) {
-		const float s0 = ray(cam_pivot, shoulder), sl = cam_pivot.distance_to(shoulder);
-		const Vector3 sh = sl > 0.01f ? cam_pivot + (shoulder - cam_pivot) * (std::max(s0 - 0.2f, 0.0f) / sl) : cam_pivot;
+	if (pc_ok) {
+		const float sl = cam_pivot.distance_to(shoulder);
+		const Vector3 sh = sl > 0.01f ? cam_pivot + (shoulder - cam_pivot) * (std::max(std::min(pc_s0, sl) - 0.2f, 0.0f) / sl) : cam_pivot;
 		const float L = sh.distance_to(want);
-		const float c = ray(sh, want);
+		const float c = std::min(pc_c, L);
 		if (L > 0.01f) want = sh + (want - sh) * (std::max(c - 0.25f, std::min(0.3f, L)) / L);
 	}
 	if (!cam_set) { cam_pos = want; cam_set = true; }
