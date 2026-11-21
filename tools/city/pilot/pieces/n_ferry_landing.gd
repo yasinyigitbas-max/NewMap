@@ -571,13 +571,13 @@ func _dress() -> void:
 	# the palm pits along the plaza's sides of the loop: an agave at each end of each, the palm between
 	for pt: Array in PITS:
 		for dv: float in [-1.9, 1.9]: P("plant_agave_americana", "normal", (pt[0] + pt[2]) * 0.5, (pt[1] + pt[3]) * 0.5 + dv, 0.0)
-	# the lawns' flower beds: along each bed's long axis, bougainvillea and bird of paradise in turn (the kinds the plaza already draws)
+	# the lawns' flower beds, planted as close as the plants' spread allows: bougainvillea and bird of paradise in turn (the kinds the plaza already draws)
 	var kinds := ["plant_bougainvillea_mound", "plant_bird_of_paradise"]
 	for bd: Array in LAWN_BEDS:
 		var u0: float = bd[0]; var v0: float = bd[1]; var u1: float = bd[2]; var v1: float = bd[3]
 		var along_u := (u1 - u0) >= (v1 - v0)
 		var L := (u1 - u0) if along_u else (v1 - v0)
-		var n := maxi(2, int(floor(L / 2.6)))
+		var n := maxi(2, int(floor(L / 2.6)))       # a 3 m bougainvillea and a 1.5 m bird of paradise in turn, 2.6 m apart or more
 		for k in n:
 			var t := (k + 0.5) / n
 			var pu := lerpf(u0, u1, t) if along_u else (u0 + u1) * 0.5
