@@ -162,6 +162,7 @@ public:
 	void _input(const Ref<InputEvent> &p_event) override;
 	void _integrate_forces(PhysicsDirectBodyState3D *p_state) override;
 	void _process(double p_delta) override;
+	void _physics_process(double p_delta) override;
 
 	void set_player(bool p_on) { player = p_on; }
 	bool get_player() const { return player; }

@@ -173,6 +173,7 @@ public:
 	static CityGame *get() { return one; }
 	void _ready() override;
 	void _process(double p_delta) override;
+	void _physics_process(double p_delta) override;
 	void _unhandled_input(const Ref<InputEvent> &p_event) override;
 	void _notification(int p_what);
 

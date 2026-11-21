@@ -119,6 +119,29 @@ void FootPlant::find_bones(Skeleton3D *sk) {
 	}
 }
 
+void FootPlant::_ready() { set_physics_process(true); }
+
+void FootPlant::_physics_process(double p_delta) {
+	(void)p_delta;
+	if (!found || b_ft[0] < 0 || b_ft[1] < 0) return;
+	if (last_us == 0 || Time::get_singleton()->get_ticks_usec() - last_us > 150000) { probe_ok[0] = probe_ok[1] = false; return; }   // (not drawn now: no rays)
+	Skeleton3D *sk = get_skeleton();
+	if (!sk || !sk->is_inside_tree() || !sk->get_world_3d().is_valid()) return;
+	PhysicsDirectSpaceState3D *ss = sk->get_world_3d()->get_direct_space_state();
+	if (!ss) return;
+	const float lead = (float)(Time::get_singleton()->get_ticks_usec() - last_us) * 1e-6f + 1.0f / 60.0f;   // (until the next drawn frame, about)
+	for (int s = 0; s < 2; s++) {
+		const Vector3 at = clip_fw[s] + Vector3(clip_v[s].x, 0.0f, clip_v[s].z) * std::min(lead, 0.05f);
+		// (a little taller than the modifier's own window, 0.45 up and 0.5 down, as the foot rises and falls meanwhile)
+		Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(at + Vector3(0, 0.6f, 0), at - Vector3(0, 0.65f, 0), 1);
+		TypedArray<RID> ex; if (skip.is_valid()) ex.push_back(skip); q->set_exclude(ex);
+		const Dictionary h = ss->intersect_ray(q);
+		probe_at[s] = at; probe_ok[s] = true; probe_hit[s] = !h.is_empty();
+		if (probe_hit[s]) probe_y[s] = ((Vector3)h["position"]).y;
+		probes++;
+	}
+}
+
 void FootPlant::_process_modification_with_delta(double p_delta) {
 	Skeleton3D *sk = get_skeleton();
 	if (!sk || !sk->get_world_3d().is_valid()) return;
@@ -128,8 +151,6 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 		const Transform3D g = sk->get_global_transform();
 		fp->foot_w[0] = g.xform(sk->get_bone_global_pose(fp->b_ft[0]).origin); fp->foot_w[1] = g.xform(sk->get_bone_global_pose(fp->b_ft[1]).origin);
 		fp->pelvis_w = g.xform(sk->get_bone_global_pose(fp->b_pel).origin); } } rec{ this, sk };
-	PhysicsDirectSpaceState3D *ss = sk->get_world_3d()->get_direct_space_state();
-	if (!ss) return;
 	const Transform3D sg = sk->get_global_transform(), to_sk = sg.affine_inverse();
 	float want[2];
 	bool got[2] = { false, false };
@@ -141,11 +162,13 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 	}
 	for (int s = 0; s < 2; s++) {
 		const Vector3 fw = sg.xform(sk->get_bone_global_pose(b_ft[s]).origin);
-		Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(fw + Vector3(0, 0.45f, 0), fw - Vector3(0, 0.5f, 0), 1);
-		TypedArray<RID> ex; if (skip.is_valid()) ex.push_back(skip); q->set_exclude(ex);
-		const Dictionary h = ss->intersect_ray(q);
-		if (h.is_empty()) { want[s] = 0.0f; continue; }
-		const float gy = ((Vector3)h["position"]).y;
+		// (the ground from the physics step's ray: see _physics_process)
+		clip_v[s] = (have_prev && p_delta > 0.0) ? (fw - clip_fw[s]) / (float)p_delta : Vector3();
+		if (clip_v[s].length() > 20.0f) clip_v[s] = Vector3();   // (a teleport)
+		clip_fw[s] = fw;
+		const bool near_probe = probe_ok[s] && Vector2(probe_at[s].x - fw.x, probe_at[s].z - fw.z).length() < 0.3f;
+		const float gy = probe_y[s];
+		if (!near_probe || !probe_hit[s] || gy > fw.y + 0.45f || gy < fw.y - 0.5f) { want[s] = 0.0f; prev_fw[s] = fw; continue; }
 		// the clip's own foot height over its own floor (the figure's root) is kept: on flat ground nothing changes (the
 		// stepping foot lifts as the clip lifts it). A foot the clip has down (its ankle within 6 cm of the clip's own
 		// standing ankle height) is moved by how much the ground under it differs from the floor the figure stands on (a

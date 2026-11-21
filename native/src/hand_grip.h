@@ -60,6 +60,15 @@ public:
 	bool have_prev = false;
 	uint64_t last_us = 0;
 	float gap_sum = 0.0f, gap_most = 0.0f; int gap_n = 0, gap_by_lift = 0;   // (traces) the pins' gaps as they let go   // (the tests) how far the hips went down, how far each sole ended from its ground
+	// THE GROUND UNDER EACH FOOT IS ASKED IN THE PHYSICS STEP (21 Nov): on the phones physics runs on its own thread and the
+	// world's collision can be asked only then ("Space state is inaccessible right now", 35,000 a minute on the S23: no foot
+	// ever planted there). The step casts each foot's ray where the clip will have it by the next drawn frame (its last place
+	// plus its own speed); the modifier takes the answer when it was cast within 30 cm of the foot's place now.
+	Vector3 clip_fw[2], clip_v[2];   // the clip's foot as last drawn, world, and how fast it moves
+	Vector3 probe_at[2]; float probe_y[2] = { 0, 0 }; bool probe_hit[2] = { false, false }, probe_ok[2] = { false, false };
+	int probes = 0;   // (the tests) rays cast in the physics step
+	void _ready() override;
+	void _physics_process(double p_delta) override;
 	void _process_modification_with_delta(double p_delta) override;
 	void reset() { locked[0] = locked[1] = false; rel_off[0] = rel_off[1] = Vector3(); have_prev = false; }   // (another person in the same figure)
 };

@@ -59,6 +59,11 @@ void CityGame::_ready() {
 	callable_mp(this, &CityGame::open_menu).call_deferred();
 }
 
+// The start's hold asks the world's collision (the ground under him): only in the physics step (the phones' physics thread)
+void CityGame::_physics_process(double p_delta) {
+	if (start_hold >= 0.0) hold_start(p_delta);
+}
+
 void CityGame::_process(double p_delta) {
 	pm::Scope _pm(pm::GAME);   // (the slow-frame marks, perf_marks.h)
 	SceneTree *tr = get_tree();
@@ -75,7 +80,6 @@ void CityGame::_process(double p_delta) {
 		if (autosave_t >= autosave_s) save();
 	}
 	if (play_phase) step_play(p_delta);
-	if (start_hold >= 0.0) hold_start(p_delta);
 	if (ld_fade >= 0.0 && ld_root) {   // the loading screen fades off the picture into the live world
 		// B21 (Yasin 20 Nov: "CONTINUE AFTER LOADING SNAPS BACK TO THE GAME HARD, AND JITTER A BIT"): the first frames in the
 		// world are the heaviest and one long frame skipped most of a linear 0.8 s fade. Now at most a 30 fps step a frame,

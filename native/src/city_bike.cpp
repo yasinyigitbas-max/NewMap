@@ -700,6 +700,41 @@ void CityBike::bike_sounds() {
 	braking = c_brake > 0.3f;
 }
 
+// What asks the world's collision: in the physics step (the phones run physics on its own thread and allow it only then)
+void CityBike::_physics_process(double p_delta) {
+	(void)p_delta;
+	if (!made) return;
+	if (hit_now && state == ST_RIDE) { hit_now = false; throw_rider(hit_v); }
+	if (state == ST_THROWN && rider && rider->get_mode() != CityPed::MODE_ANIM) {   // the cars round him are solid to his body (he slams into one and goes over it)
+		Ref<World3D> w = get_world_3d();
+		PhysicsDirectSpaceState3D *ss = w.is_valid() ? w->get_direct_space_state() : nullptr;
+		int nb = 0;
+		if (ss) {
+			if (q_sphere.is_null()) { q_sphere.instantiate(); q_sphere->set_radius(4.0f); q_shape.instantiate(); q_shape->set_shape(q_sphere); q_shape->set_collision_mask(1 | 16); }
+			q_shape->set_transform(Transform3D(Basis(), rider->body_at()));
+			q_shape->set_exclude(TypedArray<RID>::make(get_rid()));
+			const TypedArray<Dictionary> hits = ss->intersect_shape(q_shape, 8);
+			for (int k = 0; k < hits.size() && nb < pb::MAX_BOXES; k++) {
+				RigidBody3D *rb = Object::cast_to<RigidBody3D>(Object::cast_to<Object>(((Dictionary)hits[k]).get("collider", Variant())));
+				if (!rb) continue;
+				const Vector3 rv = rb->get_linear_velocity();
+				for (int c = 0; c < rb->get_child_count() && nb < pb::MAX_BOXES; c++) {
+					CollisionShape3D *cs = Object::cast_to<CollisionShape3D>(rb->get_child(c));
+					if (!cs || cs->is_disabled()) continue;
+					Ref<BoxShape3D> bxs = cs->get_shape();
+					if (bxs.is_null()) continue;
+					const Transform3D gt = cs->get_global_transform();
+					const Vector3 half = bxs->get_size() * 0.5f * gt.basis.get_scale();
+					const Vector3 fz = gt.basis.get_column(2);
+					rider->set_box(nb, gt.origin, half, std::atan2(fz.x, fz.z), rv, nb + 1);
+					nb++;
+				}
+			}
+		}
+		if (nb == 0) rider->set_box(0, Vector3(), Vector3(), 0.0, Vector3(), 0);
+	}
+}
+
 void CityBike::_process(double p_delta) {
 	pm::Scope _pm(pm::BIKE);   // (the slow-frame marks, perf_marks.h)
 	if (!made) return;
@@ -707,7 +742,6 @@ void CityBike::_process(double p_delta) {
 	pose_parts(p_delta);
 	if (player && !scripted) read_player();
 	bike_sounds();
-	if (hit_now && state == ST_RIDE) { hit_now = false; throw_rider(hit_v); }
 	CityPlayer *pl = the_player();
 	if (want_toggle) {
 		want_toggle = false;
@@ -769,34 +803,6 @@ void CityBike::_process(double p_delta) {
 			pl->stand_at(bt.xform(Vector3(0.5f, 0.0f, 0.05f)), std::atan2(f.x, f.z));   // (where the dismount left him: dismount_pose)
 			pl->take_view();
 		}
-	}
-	if (state == ST_THROWN && rider && rider->get_mode() != CityPed::MODE_ANIM) {   // the cars round him are solid to his body (he slams into one and goes over it)
-		Ref<World3D> w = get_world_3d();
-		PhysicsDirectSpaceState3D *ss = w.is_valid() ? w->get_direct_space_state() : nullptr;
-		int nb = 0;
-		if (ss) {
-			if (q_sphere.is_null()) { q_sphere.instantiate(); q_sphere->set_radius(4.0f); q_shape.instantiate(); q_shape->set_shape(q_sphere); q_shape->set_collision_mask(1 | 16); }
-			q_shape->set_transform(Transform3D(Basis(), rider->body_at()));
-			q_shape->set_exclude(TypedArray<RID>::make(get_rid()));
-			const TypedArray<Dictionary> hits = ss->intersect_shape(q_shape, 8);
-			for (int k = 0; k < hits.size() && nb < pb::MAX_BOXES; k++) {
-				RigidBody3D *rb = Object::cast_to<RigidBody3D>(Object::cast_to<Object>(((Dictionary)hits[k]).get("collider", Variant())));
-				if (!rb) continue;
-				const Vector3 rv = rb->get_linear_velocity();
-				for (int c = 0; c < rb->get_child_count() && nb < pb::MAX_BOXES; c++) {
-					CollisionShape3D *cs = Object::cast_to<CollisionShape3D>(rb->get_child(c));
-					if (!cs || cs->is_disabled()) continue;
-					Ref<BoxShape3D> bxs = cs->get_shape();
-					if (bxs.is_null()) continue;
-					const Transform3D gt = cs->get_global_transform();
-					const Vector3 half = bxs->get_size() * 0.5f * gt.basis.get_scale();
-					const Vector3 fz = gt.basis.get_column(2);
-					rider->set_box(nb, gt.origin, half, std::atan2(fz.x, fz.z), rv, nb + 1);
-					nb++;
-				}
-			}
-		}
-		if (nb == 0) rider->set_box(0, Vector3(), Vector3(), 0.0, Vector3(), 0);
 	}
 	if (state == ST_THROWN && rider && st_t > 1.5f && rider->get_mode() == CityPed::MODE_ANIM) {   // he is up: the player walks from there
 		state = ST_PARKED; st_t = 0.0f;

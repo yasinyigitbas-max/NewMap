@@ -307,13 +307,8 @@ void CityCrowd::actors_update(double p_delta) {
 				}
 			} else if (dist > 0.05f) { a.face = std::atan2(d.x, d.z); crowd->hold(a.walker, true, a.face); }
 		} else if (a.facing) crowd->hold(a.walker, true, a.face);
-		// on the road the pavement's height is wrong: the ground under him, now and then
-		a.ground_t -= dt;
-		if (a.ground_t <= 0.0f && !a.seated) {
-			a.ground_t = 0.25f;
-			const float gy = ground_y(Vector3(crowd->x[i], crowd->y[i], crowd->z[i]), crowd->y[i]);
-			if (std::fabs(gy - crowd->y[i]) < 1.0f) { crowd->y[i] = gy; crowd->py[i] = gy; }
-		}
+		// on the road the pavement's height is wrong: the ground under him, now and then (asked in the physics step:
+		// CityCrowd::_physics_process, as the phones' physics thread allows the world's collision to be asked only then)
 		// THE HELPERS: once by the victim the first kneels, the second calls; up again (or treated, or long enough): off
 		if (a.role == R_HELPER) {
 			const bool still_down = is_down(a.helps);

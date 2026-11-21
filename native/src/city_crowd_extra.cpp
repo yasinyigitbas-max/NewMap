@@ -205,7 +205,15 @@ void CityCrowd::extras_update(double p_alpha) {
 // The capsules stand on the people nearest the player (within 8 m): he bumps into them.
 void CityCrowd::_physics_process(double p_delta) {
 	pm::Scope _pm(pm::CROWD_PHYS);   // (the slow-frame marks, perf_marks.h)
-	(void)p_delta;
+	if (crowd) for (Actor &a : actors) {   // the actors' ground (actors_update): here, where the world's collision can be asked
+		a.ground_t -= (float)p_delta;
+		if (a.ground_t > 0.0f || a.seated) continue;
+		a.ground_t = 0.25f;
+		const int i = crowd->find(a.walker);
+		if (i < 0 || crowd->mode[i] == pc::M_BODY) continue;
+		const float gy = ground_y(Vector3(crowd->x[i], crowd->y[i], crowd->z[i]), crowd->y[i]);
+		if (std::fabs(gy - crowd->y[i]) < 1.0f) { crowd->y[i] = gy; crowd->py[i] = gy; }
+	}
 	if (!extras || !ready) return;
 	cap_steps++;
 	PhysicsServer3D *ps = PhysicsServer3D::get_singleton();
