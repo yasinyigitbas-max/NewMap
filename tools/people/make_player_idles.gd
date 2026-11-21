@@ -19,6 +19,7 @@ const NEW_SRC := "res://tools/people/player_idle_sources/clips_mxidle_%s.res"
 ## (Yasin, 22 Nov 01:23: "add all these variety to the ones we covered": every plain standing idle of his downloads; the
 ## Male Locomotion pack's idle and the Action Adventure pack's four standing idles (its "idle (4)" is the crouched cover
 ## idle, Crouch cover idle.fbx to the byte: not a standing idle), and Idle Transition as a fidget)
+const DROP_IDLE := {"male": ["base_aa", "base_aa5", "base_aa3", "base_orc"], "female": ["base_aa", "base_aa5", "base_aa3", "base_orc"]}   # (Yasin, 22 Nov 02:14: they don't fit)
 const RUN_SRC := "res://tools/people/player_run_sources/clips_mxrun_%s.res"
 const BASES := [["base_standing", "Standing_Idle_mixamo_com", "Standing Idle.fbx"], ["base_idle", "Idle_A_mixamo_com", "Idle.fbx"], ["base_idle1", "Idle_B_mixamo_com", "Idle (1).fbx"], ["base_orc", "Orc_Idle_mixamo_com", "Orc Idle.fbx"],
 		["base_loco", "Loco_Idle", "Male Locomotion Pack idle.fbx", "run"], ["base_aa", "AA_Idle_1", "Action Adventure Pack idle.fbx", "run"], ["base_aa2", "AA_Idle_2", "Action Adventure Pack idle (2).fbx", "run"],
@@ -154,6 +155,9 @@ func _initialize() -> void:
 				worst = maxf(worst, maxf(_d(_pts(ba, 0.0), _pts(fa, 0.0), 4), _d(_pts(fa, fa.length), _pts(ba, 0.0), 4)))
 		print("PLAYER_IDLE %s %d long loops, %d fidgets; feet apart at a crossfade, worst %.1f cm" % [gender, nb, FIDGETS.size(), worst])
 		scene.free()
+		# (Yasin, 22 Nov 02:14, after playing the build: "they dont fit": out of this figure's library, so out of its pools)
+		for rm in DROP_IDLE.get(gender, []):
+			if out.has_animation(rm): out.remove_animation(rm); print("PLAYER_IDLE %s %s REMOVED (Yasin, 22 Nov 02:14)" % [gender, rm])
 		var err := ResourceSaver.save(out, DIR + "clips_player_idle_%s.res" % gender)
 		print("PLAYER_IDLE saved %s %s" % [gender, "ok" if err == OK else "ERROR %d" % err])
 	quit(0)

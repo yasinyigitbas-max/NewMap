@@ -21,6 +21,7 @@ extends "res://tools/people/make_player_walks.gd"
 ## "right turn" and the Male Locomotion "left/right turn 90" are standing turns, not run turns (not used here).
 ## Meta as the walk's (make_player_walks.gd): ph_in_<loop> / in_at_<loop>, ph_out_<loop> / out_at_<loop>, still_at,
 ## v_out, slide_cm; the loops' ground_v (scaled by _vel_scaled: the planted foot) and left_down (their stride's phase).
+const DROP_RUN := {"male": ["jog_b", "fast_a"], "female": ["jog_c", "jog_b", "fast_d"]}   # (Yasin, 22 Nov 02:14: they don't fit)
 const RUN_SRC := "res://tools/people/player_run_sources/clips_mxrun_%s.res"
 const LOOPS := [["jog_a", "mx", "Running_4"], ["jog_b", "mx", "Slow_Run"], ["jog_c", "mx", "Running_2"], ["jog_d", "new", "Loco_Standard_Run"],
 		["fast_a", "mx", "Running_3"], ["fast_b", "mx", "Fast_Run"], ["fast_c", "mx", "Running"], ["fast_d", "mx", "Sprint"], ["fast_e", "new", "Running_New4_mixamo_com"]]
@@ -204,6 +205,9 @@ func _initialize() -> void:
 			out.add_animation(name, a)
 			print("PLAYER_RUN %s %s <- %s %.2fs hands %d slide %.1f cm%s" % [gender, name, a.get_meta("source"), a.length, nh, sl, info])
 		scene.free()
+		# (Yasin, 22 Nov 02:14, after playing the build: "they dont fit": out of this figure's library, so out of its pools)
+		for rm in DROP_RUN.get(gender, []):
+			if out.has_animation(rm): out.remove_animation(rm); print("PLAYER_RUN %s %s REMOVED (Yasin, 22 Nov 02:14)" % [gender, rm])
 		var err := ResourceSaver.save(out, DIR + "clips_player_run_%s.res" % gender, ResourceSaver.FLAG_COMPRESS)
 		print("PLAYER_RUN saved %s %s" % [gender, "ok" if err == OK else "ERROR %d" % err])
 	quit(0)

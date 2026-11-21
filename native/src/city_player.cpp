@@ -59,6 +59,8 @@ static const PwNames &pwn() { static const PwNames n; return n; }   // (made on 
 #define K_OUT (pwn().k_out)
 #define K_AT (pwn().k_at)
 #define K_OAT (pwn().k_oat)
+// (the figure has a walk loop: any of the pool's, Yasin, 22 Nov 02:14: walk_mx is out of both figures)
+#define PW_HAS_MAIN(f) ((f)->clip_len(PW_MAIN[0]) > 0.0 || (f)->clip_len(PW_MAIN[1]) > 0.0 || (f)->clip_len(PW_MAIN[2]) > 0.0 || (f)->clip_len(PW_MAIN[3]) > 0.0)
 static bool pw_loop(const StringName &p_c) { for (int i = 0; i < PW_NM; i++) if (p_c == PW_MAIN[i]) return true; return false; }
 // The player's run (tools/people/make_player_runs.gd, library "prun"; Yasin, 21 Nov 23:29-23:35): the JOG tier's loops
 // (0-3) and the FAST RUN tier's (4-7), every take he named; the starts, stops and running turns.
@@ -92,6 +94,18 @@ int CityPlayer::pw_pick(int p_n, int p_last) {
 	if (p_last < 0 || p_last >= p_n) return (int)(pw_rng % (uint32_t)p_n);
 	int k = (int)(pw_rng % (uint32_t)(p_n - 1));
 	return k >= p_last ? k + 1 : k;
+}
+
+// (a pool whose takes may be missing from this figure's library, Yasin, 22 Nov 02:14: the ones it has, never p_last)
+int CityPlayer::pw_pick_in(const StringName *p_names, int p_n, int p_last) {
+	int have = 0, first = 0;
+	for (int i = 0; i < p_n; i++) if (fig && fig->clip_len(p_names[i]) > 0.0) { if (have == 0) first = i; have++; }
+	if (have == 0) return 0;
+	pw_rng ^= pw_rng << 13; pw_rng ^= pw_rng >> 17; pw_rng ^= pw_rng << 5;
+	const bool skip = p_last >= 0 && p_last < p_n && have > 1 && fig->clip_len(p_names[p_last]) > 0.0;
+	int k = (int)(pw_rng % (uint32_t)(skip ? have - 1 : have));
+	for (int i = 0; i < p_n; i++) if (fig->clip_len(p_names[i]) > 0.0 && !(skip && i == p_last)) { if (k-- == 0) return i; }
+	return first;
 }
 
 // (the phase of a loop went over p_at since last frame: forward, less than half a loop)
@@ -519,8 +533,17 @@ void CityPlayer::_physics_process(double p_delta) {
 				static const StringName ST[2][4] = { { "pwalk/sturn_l", "pwalk/sturn_l1", "pwalk/sturn_l2", "pwalk/sturn_l2" }, { "pwalk/sturn_r", "pwalk/sturn_r1", "pwalk/sturn_r2", "pwalk/sturn_r3" } };
 				static const int ST_N[2] = { 3, 4 };
 				const int st_side = d > 0.0f ? 0 : 1;
-				int st_n = 0; while (st_n < ST_N[st_side] && fig->clip_len(ST[st_side][st_n]) > 0.0) st_n++;
-				const int st_k = st_n > 0 ? pw_pick(st_n, st_last[st_side] < st_n ? st_last[st_side] : -1) : 0;
+				// (22 Nov 02:14: of those, the ones whose own turn is near the angle asked, x0.85-1.2; scaled further, the
+				// 122-degree Left Turn played as a 90 slid the planted foot 6 cm. Past 135 degrees: any, two turns chain.)
+				int cand[4]; int st_n = 0, st_lc = -1;
+				for (int pass = 0; pass < 2 && st_n == 0; pass++)
+					for (int i = 0; i < ST_N[st_side]; i++) {
+						if (fig->clip_len(ST[st_side][i]) <= 0.0) continue;
+						const float ye = std::max(std::fabs((float)fig->clip_curve(ST[st_side][i], "yaw", fig->clip_len(ST[st_side][i]), 1.5707963)), 0.5f);
+						const float r = std::fabs(d) / ye;
+						if (pass == 1 || half || (r > 0.85f && r < 1.2f)) { if (i == st_last[st_side]) st_lc = st_n; cand[st_n++] = i; }
+					}
+				const int st_k = st_n > 0 ? cand[pw_pick(st_n, st_lc)] : 0;
 				const StringName mx_c = ST[st_side][st_k];
 				const bool mx = fig->clip_len(mx_c) > 0.0;
 				const StringName c = mx ? mx_c : StringName(half ? (d > 0.0f ? "step/turn180_l" : "step/turn180_r") : (d > 0.0f ? "step/turn_l" : "step/turn_r"));
@@ -579,7 +602,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		// clip's own vz / vx and turns by its yaw, at the rate it plays: the planted foot stays put.
 		static const StringName PW_TURN[4] = { StringName("pwalk/turn_l"), StringName("pwalk/turn_r"), StringName("pwalk/turn180_l"), StringName("pwalk/turn180_r") };
 		static const StringName K_VZ("vz"), K_VX("vx"), K_YAW("yaw"), K_DONE("done_at"), K_VOUT("v_out"), K_GV("ground_v");
-		const bool pw = fig->clip_len(PW_START[0]) > 0.0 && fig->clip_len(PW_MAIN[0]) > 0.0;
+		const bool pw = fig->clip_len(PW_START[0]) > 0.0 && PW_HAS_MAIN(fig);
 		const float pw_speed_before = move_speed, pw_lat_before = step_lat;
 		const int pw_mode_before = step_mode;
 		const double gv_mx = pw ? fig->clip_meta_sn(PW_MAIN[0], K_GV, 1.533) : 1.533;   // (the Mixamo walk's own pace: its stops and turns are cut from it)
@@ -587,7 +610,7 @@ void CityPlayer::_physics_process(double p_delta) {
 			// OFF INTO A RUN (Yasin, 21 Nov: random start, never the same twice running): straight on, Idle To Sprint or it
 			// mirrored; asked 50-150 degrees round, Turn_To_Running that way (his body turns by its yaw, scaled to the angle).
 			// It hands over to this run's jog loop (the fast run comes as his pace passes the jog's).
-			pr_jog = pw_pick(PR_NJ, pr_jog_last); pr_jog_last = pr_jog; step_to_loop = pr_jog; gait_i = 1;
+			pr_jog = pw_pick_in(prn().loop, PR_NJ, pr_jog_last); pr_jog_last = pr_jog; step_to_loop = pr_jog; gait_i = 1;
 			const float ad = std::fabs(want_d);
 			if (ad > 0.87f) { step_clip = prn().tstart[want_d > 0.0f ? 0 : 1]; step_turn_clip = true; }
 			else { const int k = pw_pick(fig->clip_len(prn().start[2]) > 0.0 ? 4 : 2, pr_start_last); pr_start_last = k; step_clip = prn().start[k]; step_turn_clip = false; }
@@ -603,7 +626,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (step_mode == 0 && want_len > 0.05f && move_speed < 0.05f && speed < 0.08f && turn_left < 0.6f && !airborne && settle_t >= 1.1f && !auto_on && pw) {
 			step_to_loop = -1; step_turn_clip = false; step_end_stand = false;
 			const int k = pw_pick(pw_count(PW_START, PW_NS), pw_start_last); pw_start_last = k;
-			pw_main = pw_pick(pw_count(PW_MAIN, PW_NM_PICK), pw_main_last); pw_main_last = pw_main;
+			pw_main = pw_pick_in(PW_MAIN, PW_NM_PICK, pw_main_last); pw_main_last = pw_main;
 			step_mode = 1; step_pw = true; step_clip = PW_START[k]; step_t = 0.0f; step_yaw_prev = 0.0; hand_t = 0.0f;
 			step_end = (float)fig->clip_meta_sn(step_clip, K_OAT[pw_main], fig->clip_meta_sn(step_clip, K_DONE, fig->clip_len(step_clip)));   // (where the walk loop takes over)
 			step_cs = run ? 1.3f : std::min(std::max(std::min(want_len, walk_top) / (float)fig->clip_meta_sn(step_clip, K_VOUT, 0.85), 0.8f), 1.3f);   // (he ends the start at the pace he walks on at)
@@ -920,27 +943,27 @@ void CityPlayer::_physics_process(double p_delta) {
 		float sv[3] = { 0.92f, 2.40f, 2.40f };   // (the planted foot's pace: clip_audit.gd)
 		float tv[3] = { 0.92f, 2.40f, 2.40f };   // (the tier's pace, for choosing)
 		int ns = 2;
-		if (fig->clip_len(PW_MAIN[0]) > 0.0) {
-			if (pw_main < 0) { pw_main = pw_pick(pw_count(PW_MAIN, PW_NM_PICK), pw_main_last); pw_main_last = pw_main; }
+		if (PW_HAS_MAIN(fig)) {
+			if (pw_main < 0) { pw_main = pw_pick_in(PW_MAIN, PW_NM_PICK, pw_main_last); pw_main_last = pw_main; }
 			set[0] = PW_MAIN[pw_main]; sv[0] = (float)fig->clip_meta_sn(PW_MAIN[pw_main], K_GV2, pw_main < PW_NM_PICK ? 1.533 : 0.92); tv[0] = walk_top;
 		}
 		const bool prl = fig->clip_len(prn().loop[0]) > 0.0;
 		if (prl) {
 			ns = 3; tv[1] = run_speed; tv[2] = fast_speed;
-			if (pr_jog < 0) { pr_jog = pw_pick(PR_NJ, pr_jog_last); pr_jog_last = pr_jog; }
-			if (pr_fast < 0) { pr_fast = pw_pick(PR_NF, pr_fast_last); pr_fast_last = pr_fast; }
+			if (pr_jog < 0) { pr_jog = pw_pick_in(prn().loop, PR_NJ, pr_jog_last); pr_jog_last = pr_jog; }
+			if (pr_fast < 0) { pr_fast = pw_pick_in(prn().loop + PR_NJ, PR_NF, pr_fast_last); pr_fast_last = pr_fast; }
 		}
 		const float sp = std::max(speed, 0.3f);
 		int best = 0;
 		for (int g = 1; g < ns; g++) if (std::fabs(std::log(sp / tv[g])) < std::fabs(std::log(sp / tv[best]))) best = g;
 		const int gi = gait_i;
 		if (gi >= 0 && gi < ns && std::fabs(std::log(sp / tv[gi])) < std::fabs(std::log(sp / tv[best])) + 0.12f) best = gi;
-		if (!run && speed <= walk_top * 1.05f && fig->clip_len(PW_MAIN[0]) > 0.0) best = 0;
+		if (!run && speed <= walk_top * 1.05f && PW_HAS_MAIN(fig)) best = 0;
 		if (prl && pr_tier == 1 && best == 2 && speed <= run_speed * 1.1f) best = 1;   // (asked to jog: not the fast loop)
 		if (prl && run && best == 0) best = 1;   // (asked to run: out of a run start straight into the jog loop, never back to the walk; it gathers pace there)
 		if (prl && best != gi && gi >= 0) {   // (into a tier: its next take, never the one before)
-			if (best == 1) { pr_jog = pw_pick(PR_NJ, pr_jog_last); pr_jog_last = pr_jog; }
-			if (best == 2) { pr_fast = pw_pick(PR_NF, pr_fast_last); pr_fast_last = pr_fast; }
+			if (best == 1) { pr_jog = pw_pick_in(prn().loop, PR_NJ, pr_jog_last); pr_jog_last = pr_jog; }
+			if (best == 2) { pr_fast = pw_pick_in(prn().loop + PR_NJ, PR_NF, pr_fast_last); pr_fast_last = pr_fast; }
 		}
 		if (prl) {
 			set[1] = prn().loop[pr_jog]; sv[1] = (float)fig->clip_meta_sn(set[1], K_GV2, 2.8);
@@ -974,20 +997,22 @@ void CityPlayer::_physics_process(double p_delta) {
 	{
 		static const StringName BASE[9] = { StringName("pidle/base_standing"), StringName("pidle/base_idle"), StringName("pidle/base_idle1"), StringName("pidle/base_orc"), StringName("pidle/base_loco"), StringName("pidle/base_aa"), StringName("pidle/base_aa2"), StringName("pidle/base_aa3"), StringName("pidle/base_aa5") };   // (22 Nov 01:23: + the packs' standing idles)
 		static const StringName IDV[6] = { StringName("pidle/Looking_Around_idle"), StringName("pidle/Looking"), StringName("pidle/Arm_Stretching"), StringName("pidle/Neck_Stretching"), StringName("pidle/Bored"), StringName("pidle/Idle_Transition") };
-		int nb = 4; while (nb < 9 && fig->clip_len(BASE[nb]) > 0.0) nb++;
-		int nf = 5; while (nf < 6 && fig->clip_len(IDV[nf]) > 0.0) nf++;
+		const int nb = 9, nf = 6;   // (a take this figure's library lacks counts as played in the bag: never picked)
 		const bool standing = clip == S_IDLE && hold < 0.0 && step_mode == 0 && climb == 0 && !airborne && !swimming && !frozen && mv.length_squared() < 0.0001f && speed < 0.05f;
 		auto rnd = [&]() -> uint32_t { idv_rng ^= idv_rng << 13; idv_rng ^= idv_rng >> 17; idv_rng ^= idv_rng << 5; return idv_rng; };
 		auto pick = [&](int n, int last) -> int { int k = (int)(rnd() % (uint32_t)(last < 0 ? n : n - 1)); return last >= 0 && k >= last ? k + 1 : k; };
 		// (22 Nov 01:23, "alternate maximally": a bag per pool, every take once before any again, never the last twice running)
-		auto pick_bag = [&](int n, int last, uint32_t &bag) -> int {
+		auto pick_bag = [&](int n, int last, uint32_t &bag, const StringName *names) -> int {
+			uint32_t miss = 0u; for (int i = 0; i < n; i++) if (fig->clip_len(names[i]) <= 0.0) miss |= 1u << i;
 			const uint32_t all = (1u << n) - 1u;
-			if ((bag & all) == all || (bag | (last >= 0 ? 1u << last : 0u)) == all) bag = 0u;
+			const uint32_t lastb = last >= 0 ? 1u << last : 0u;
+			bag |= miss;
+			if (((bag | lastb) & all) == all) bag = miss;   // (the round is over: a new one, the missing takes still out)
 			int free_n = 0; for (int i = 0; i < n; i++) if (!(bag & (1u << i)) && i != last) free_n++;
-			if (free_n == 0) return pick(n, last);
+			if (free_n == 0) { for (int i = 0; i < n; i++) if (!(miss & (1u << i))) return i; return 0; }
 			int k = (int)(rnd() % (uint32_t)free_n);
 			for (int i = 0; i < n; i++) if (!(bag & (1u << i)) && i != last) { if (k-- == 0) { bag |= 1u << i; return i; } }
-			return pick(n, last);
+			return 0;
 		};
 		if (!standing) {
 			if (idv_take >= 0) fig->set_next_blend(0.15);
@@ -1000,9 +1025,9 @@ void CityPlayer::_physics_process(double p_delta) {
 			if (idv_span <= 0.0) { idv_base = 1; idv_span = 15.0 + (rnd() % 15001u) * 0.001; }
 			idv_t += dt;
 			if (idv_take < 0 && idv_t >= idv_span) {
-				idv_take = pick_bag(nf, idv_last, idv_bag_f); idv_last = idv_take; idv_t = 0.0; fig->set_next_blend(0.6);
+				idv_take = pick_bag(nf, idv_last, idv_bag_f, IDV); idv_last = idv_take; idv_t = 0.0; fig->set_next_blend(0.6);
 			} else if (idv_take >= 0 && idv_t >= fig->clip_len(IDV[idv_take]) - 0.6) {
-				idv_take = -1; idv_t = 0.0; idv_base = pick_bag(nb, idv_base, idv_bag_b); idv_span = 15.0 + (rnd() % 15001u) * 0.001; fig->set_next_blend(0.6);
+				idv_take = -1; idv_t = 0.0; idv_base = pick_bag(nb, idv_base, idv_bag_b, BASE); idv_span = 15.0 + (rnd() % 15001u) * 0.001; fig->set_next_blend(0.6);
 			}
 			clip = idv_take >= 0 ? IDV[idv_take] : BASE[idv_base];
 		}

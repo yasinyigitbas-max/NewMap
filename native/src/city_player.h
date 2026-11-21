@@ -86,6 +86,7 @@ private:
 	bool shift_was = false, fast_latch = false;
 	float fast_speed = 4.6f;
 	int pw_pick(int p_n, int p_last);
+	int pw_pick_in(const StringName *p_names, int p_n, int p_last);   // (the pool's takes this figure has)
 	int pw_count(const StringName *p_names, int p_max) const;
 	// THE PROCEDURAL LAYERS, switchable (Yasin, 23:35, 21 Nov: compare the raw mocap with the corrected one; the walk test's
 	// F / P / K keys): RAW_PIN the foot pin off; RAW_ALL every layer off (FootPlant: pin, ground fit, the standing-shuffle

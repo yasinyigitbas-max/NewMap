@@ -34,6 +34,7 @@ const MX_NEW := "res://tools/people/player_walk_sources/clips_mxnew_%s.res"
 ## and takes the walking loops of his Male Locomotion and Action Adventure packs (fitted the same way, clips_mxpack_<g>.res)
 const MX_PACK := "res://tools/people/player_walk_sources/clips_mxpack_%s.res"
 const SKIP := {"male": ["Start_Walking_F", "Stop_Walking_F"], "female": []}
+const DROP_WALK := {"male": ["walk_mx", "walk_mx1"], "female": ["walk_mx"]}   # (Yasin, 22 Nov 02:14: they don't fit)
 const DUP_CM := 2.0   # (a take whose feet and head stay within 2 cm of one we have, all through, is the same take)
 const FPS := 30.0
 
@@ -585,6 +586,9 @@ func _initialize() -> void:
 			out.add_animation(name, a)
 			print("PLAYER_WALK %s %s %.2fs loop=%d hands %d slide %.1f cm%s" % [gender, name, a.length, a.loop_mode, nh, sl, info])
 		scene.free()
+		# (Yasin, 22 Nov 02:14, after playing the build: "they dont fit": out of this figure's library, so out of its pools)
+		for rm in DROP_WALK.get(gender, []):
+			if out.has_animation(rm): out.remove_animation(rm); print("PLAYER_WALK %s %s REMOVED (Yasin, 22 Nov 02:14)" % [gender, rm])
 		var err := ResourceSaver.save(out, DIR + "clips_player_walk_%s.res" % gender)
 		print("PLAYER_WALK saved %s %s" % [gender, "ok" if err == OK else "ERROR %d" % err])
 	quit(0)
