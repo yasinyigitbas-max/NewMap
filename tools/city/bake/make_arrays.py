@@ -22,7 +22,9 @@ SETS = {
     'ground': ['assets/roads/asphalt026c_color.jpg', 'assets/roads/concrete034_color.jpg', 'map_dc/coronado/terrain/textures/grass004/grass_albedo.jpg',
                'map_dc/coronado/terrain/textures/ground037/dry_albedo.jpg', 'map_dc/coronado/terrain/textures/travertine009/albedo.jpg',
                'assets/roads/roadlines022a_white_worn.png', 'assets/roads/roadlines022a_yellow_worn.png',
-               'map_dc/coronado/terrain/textures/gravel022/gravel_albedo.jpg', 'map_dc/coronado/terrain/textures/ground054/sand_albedo.jpg'],
+               'map_dc/coronado/terrain/textures/gravel022/gravel_albedo.jpg', 'map_dc/coronado/terrain/textures/ground054/sand_albedo.jpg',
+               # the fill (21 Nov): the cobble beach and the rock of the bluffs; appended, so the nine layers above keep their numbers
+               'map_dc/coronado/terrain/textures/gray_rocks/gray_rocks_diff_1k.jpg', 'map_dc/coronado/terrain/textures/rock030/rock_albedo.jpg'],
 }
 IMPORT = '''[remap]
 
@@ -59,6 +61,10 @@ for name, files in SETS.items():
     imp = p + '.import'
     if not os.path.exists(imp):     # keep Godot's own file (uid, paths) once it exists
         open(imp, 'w').write(IMPORT % (p, 'true' if 'normal' in name else 'false', len(files)))
+    else:                           # ... but with the layer count of now (21 Nov: the ground went from 9 to 11 layers)
+        import re
+        t = open(imp).read(); t2 = re.sub(r'slices/vertical=\d+', 'slices/vertical=%d' % len(files), t)
+        if t2 != t: open(imp, 'w').write(t2)
     info[name] = ['res://' + f for f in files]
     print(name, len(files), 'layers', os.path.getsize(p) // 1024, 'KB')
 json.dump(info, open(OUT + 'arrays.json', 'w'), indent=1)

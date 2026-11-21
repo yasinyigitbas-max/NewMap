@@ -1,11 +1,57 @@
 {
- "area": "hs_b4_amber", "piece": "n_hs_b4_amber", "zone": "high street",
+ "area": "hs_b4_amber",
+ "piece": "n_hs_b4_amber",
+ "zone": "high street",
  "rule": "docs/TREE_PLAN.md: high street (pilot), Amber spine, arterials - trees in wells on the shop side, palms alternating on Amber: the avenue's signature (zone 406 -> about 360)",
- "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's four builder palms on the green at its Amber end all come back on their own spots: the avenue's palms, mixed canary date, fan and queen, 14-24 m apart.",
+ "written": "by hand, 19 Nov 2026 (cloud session, the city-wide superchecker run from the bottom of the list). The block's four builder palms on the green at its Amber end all come back on their own spots: the avenue's palms, mixed canary date, fan and queen, 14-24 m apart. REWRITTEN by hand 21 Nov 2026 for HOTEL BEL (Yasin: \"get to work on ... hotel bel\"): the hotel stands on the green, so its four palms (two would stand inside the hotel, two on its terrace) give way to the hotel's own: a fan palm in the lawn strip on Amber at its north end, two Canary date palms framing the crown tower on the Ocean Blvd promenade, a queen palm on the motor court's island. Four, as before: the plan's in-view limit (12 within 60 m) is reached here with four (seven gave 15).",
  "trees": [
-  {"base": "palm_queen_a", "cond": "normal", "at": [26.0, 2.366, 294.0], "yaw": 0.0, "scale": 1.0, "why": "the green at Amber's end, 5.6 m from the building: a queen palm, the avenue's signature"},
-  {"base": "palm_canary_date_a", "cond": "normal", "at": [21.0, 2.209, 304.0], "yaw": 90.0, "scale": 1.0, "why": "the same green 11 m on: a canary date palm, alternating"},
-  {"base": "palm_mexican_fan_b", "cond": "normal", "at": [21.0, 2.15, 318.0], "yaw": 180.0, "scale": 1.0, "why": "the green 14 m on toward Ocean: a fan palm"},
-  {"base": "palm_canary_date_b", "cond": "normal", "at": [40.0, 2.181, 312.0], "yaw": 270.0, "scale": 1.0, "why": "the green's east side, 25 m from the walls: a second canary date palm"}
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    17.0,
+    2.59,
+    284.2
+   ],
+   "yaw": 20.0,
+   "scale": 1.0,
+   "why": "Amber, the lawn strip in front of the hotel's north end: a fan palm, the avenue's palms go on past the cinema"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    45.2,
+    2.229,
+    307.6
+   ],
+   "yaw": 130.0,
+   "scale": 1.0,
+   "why": "the motor court's island (mulch bed): a queen palm the cars turn round under the porte-cochere"
+  },
+  {
+   "base": "palm_canary_date_a",
+   "cond": "normal",
+   "at": [
+    22.6,
+    2.243,
+    324.2
+   ],
+   "yaw": 20.0,
+   "scale": 1.0,
+   "why": "the Ocean Blvd promenade, in its bed: a big Canary date palm framing the hotel's corner toward the beach"
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "at": [
+    39.6,
+    2.193,
+    323.4
+   ],
+   "yaw": 200.0,
+   "scale": 1.0,
+   "why": "the promenade's other bed: the second Canary date palm, the pair frames the crown tower and the ocean veranda"
+  }
  ]
 }

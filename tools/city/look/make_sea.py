@@ -9,7 +9,10 @@ in the city kit's own frame, which is the grid frame [u, v] of coast.json):
      (x_shore_foam, zoning/shore_foam.py) follows. So water and foam meet without a seam; the foam is not touched.
 The ponds of coast.json are left out: they sit at land height (1.8-4.7 m), not at the sea's 0 m, and lie outside the
 city's cells.
-Run from the repo root:  python3 tools/city/look/make_sea.py      (numpy, Pillow, shapely)
+The west end (21 Nov, the fill, tools/city/fill/fields.py WEST_COAST): the outline ran off the frame at x -1800 and
+the land with it; it is now closed by a beach, and the sea lies west of that line (depth: the beach's own 1 : 8 slope,
+then deeper). CitySea's skirt covers the whole band west of the frame.
+Run from the repo root:  python3 tools/city/look/make_sea.py      (numpy, Pillow, shapely, scipy)
 """
 import json, os
 import numpy as np
@@ -19,7 +22,7 @@ from PIL import Image
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../..")
 KIT = os.path.join(ROOT, "map_dc/coronado/city_kit")
-X0, X1, Z0, Z1 = -1800.0, 1900.0, -1950.0, 900.0
+X0, X1, Z0, Z1 = -2400.0, 1900.0, -1950.0, 900.0    # (21 Nov: x from -2400, the sea west of the closed west end)
 STEP = 8.0
 ONTO_LAND = 25.0
 DEEP = 20.0
@@ -27,7 +30,11 @@ DEEP = 20.0
 
 def main():
     coast = json.load(open(os.path.join(KIT, "zoning/coast.json")))
-    island = Polygon(coast["sea"][0]).buffer(0)
+    import importlib.util
+    sp = importlib.util.spec_from_file_location("fill_fields", os.path.join(ROOT, "tools/city/fill/fields.py"))
+    ff = importlib.util.module_from_spec(sp); sp.loader.exec_module(ff)
+    wsea, _ = ff.west_sea_polygon()
+    island = Polygon(coast["sea"][0]).buffer(0).difference(wsea)
     inner = island.buffer(-ONTO_LAND)
     g = np.load(os.path.join(KIT, "zoning/terrain_grid.npz"))
     H = g["heights"]; u0, v0, st = float(g["u0"]), float(g["v0"]), float(g["step"])
@@ -45,6 +52,12 @@ def main():
     edge = np.minimum.reduce([XX - u0, (u0 + st * (H.shape[1] - 1)) - XX, ZZ - v0, (v0 + st * (H.shape[0] - 1)) - ZZ])
     w = np.clip(edge / 200.0, 0.0, 1.0)
     depth = np.where(ok, np.clip(-h, 0.0, DEEP) * w + DEEP * (1 - w) * (~land), np.where(land, 0.0, DEEP))
+    # the west sea (no terrain data there): depth from the distance to the new west coast
+    from scipy import ndimage as ndi
+    dist = ndi.distance_transform_edt(~land) * STEP          # metres from the island
+    dw_ = np.clip(np.where(dist < 28, dist / 8.0, 3.5 + (dist - 28) * 0.05), 0, DEEP)
+    tw = np.clip((XX - u0) / 200.0, 0, 1); tw = tw * tw * (3 - 2 * tw)           # over 200 m into the terrain's frame
+    depth = np.where(~land, dw_ * (1 - tw) + depth * tw, depth)
     lay = ~under
     # the island runs past the frame in the west: no water strip along a frame edge that cuts through land
     rim = (XX < X0 + ONTO_LAND + STEP) | (XX > X1 - ONTO_LAND - STEP) | (ZZ < Z0 + ONTO_LAND + STEP) | (ZZ > Z1 - ONTO_LAND - STEP)

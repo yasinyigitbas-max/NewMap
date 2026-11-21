@@ -1,16 +1,6 @@
 {
  "rooms": [
   {
-   "d": 16.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_i1__boatworks__0.scn",
-   "id": "g_w_i1__boatworks__0",
-   "kind": "store",
-   "lights": 6,
-   "name": "Coronado Boatworks Chandlery",
-   "props": 94,
-   "w": 35.4
-  },
-  {
    "d": 15.25,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_i1__marine_engines__0.scn",
    "id": "g_w_i1__marine_engines__0",
@@ -19,86 +9,6 @@
    "name": "Bay Marine Engines",
    "props": 33,
    "w": 17.4
-  },
-  {
-   "d": 16.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_i1__marine_supply__0.scn",
-   "id": "g_w_i1__marine_supply__0",
-   "kind": "store",
-   "lights": 6,
-   "name": "Coronado Marine Supply",
-   "props": 64,
-   "w": 23.4
-  },
-  {
-   "d": 16.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_i2__building_supply__0.scn",
-   "id": "g_w_i2__building_supply__0",
-   "kind": "store",
-   "lights": 6,
-   "name": "Pacific Building Supply",
-   "props": 64,
-   "w": 23.4
-  },
-  {
-   "d": 15.25,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_i2__tire_brake__0.scn",
-   "id": "g_w_i2__tire_brake__0",
-   "kind": "workshop",
-   "lights": 6,
-   "name": "Strand Tire & Brake",
-   "props": 33,
-   "w": 17.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_i2__liquor_deli__0.scn",
-   "id": "g_w_i2__liquor_deli__0",
-   "kind": "corner_shop",
-   "lights": 6,
-   "name": "Strand Liquor & Deli",
-   "props": 28,
-   "w": 11.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_g1__anchor_bar__0.scn",
-   "id": "g_w_g1__anchor_bar__0",
-   "kind": "bar",
-   "lights": 6,
-   "name": "The Anchor",
-   "props": 45,
-   "w": 8.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_g1__laundry_pawn__0.scn",
-   "id": "g_w_g1__laundry_pawn__0",
-   "kind": "cleaners",
-   "lights": 5,
-   "name": "Coin Laundry",
-   "props": 34,
-   "w": 17.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_g1__thrift_row__0.scn",
-   "id": "g_w_g1__thrift_row__0",
-   "kind": "clothes",
-   "lights": 6,
-   "name": "Second Chance Thrift",
-   "props": 40,
-   "w": 17.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_g1__corner_market__0.scn",
-   "id": "g_w_g1__corner_market__0",
-   "kind": "corner_shop",
-   "lights": 6,
-   "name": "Strand Corner Market",
-   "props": 28,
-   "w": 11.4
   },
   {
    "d": 14.15,
@@ -132,52 +42,12 @@
   },
   {
    "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c5__boutiques__0.scn",
-   "id": "g_w_c5__boutiques__0",
-   "kind": "jewelry",
-   "lights": 6,
-   "name": "Bay Jewelers",
-   "props": 40,
-   "w": 17.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c5__bakery__0.scn",
-   "id": "g_w_c5__bakery__0",
-   "kind": "ice_cream",
-   "lights": 5,
-   "name": "Scoops",
-   "props": 38,
-   "w": 8.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c5__corner_shop__0.scn",
-   "id": "g_w_c5__corner_shop__0",
-   "kind": "pharmacy",
-   "lights": 6,
-   "name": "Amber Pharmacy",
-   "props": 28,
-   "w": 11.4
-  },
-  {
-   "d": 13.0,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c5__realty__0.scn",
    "id": "g_w_c5__realty__0",
    "kind": "office",
    "lights": 5,
    "name": "Ridge Realty",
    "props": 16,
-   "w": 5.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c5__cafe__0.scn",
-   "id": "g_w_c5__cafe__0",
-   "kind": "cafe",
-   "lights": 5,
-   "name": "Amber Coffee",
-   "props": 18,
    "w": 5.4
   },
   {
@@ -192,136 +62,6 @@
   },
   {
    "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c8__team_store__0.scn",
-   "id": "g_w_c8__team_store__0",
-   "kind": "clothes",
-   "lights": 6,
-   "name": "Stadium Team Store",
-   "props": 40,
-   "w": 17.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c8__bullpen_bar__0.scn",
-   "id": "g_w_c8__bullpen_bar__0",
-   "kind": "bar",
-   "lights": 6,
-   "name": "The Bullpen",
-   "props": 45,
-   "w": 8.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c8__touchdown_diner__0.scn",
-   "id": "g_w_c8__touchdown_diner__0",
-   "kind": "restaurant",
-   "lights": 6,
-   "name": "Touchdown Diner",
-   "props": 55,
-   "w": 11.4
-  },
-  {
-   "d": 15.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c9__arcade__0.scn",
-   "id": "g_w_c9__arcade__0",
-   "kind": "store",
-   "lights": 6,
-   "name": "Amber Arcade Gifts",
-   "props": 65,
-   "w": 23.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c9__bakery__0.scn",
-   "id": "g_w_c9__bakery__0",
-   "kind": "bakery",
-   "lights": 6,
-   "name": "Amber Bakery",
-   "props": 30,
-   "w": 8.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c9__shop_row__0.scn",
-   "id": "g_w_c9__shop_row__0",
-   "kind": "shoes",
-   "lights": 6,
-   "name": "Amber Shoes",
-   "props": 35,
-   "w": 17.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c9__amber_diner__0.scn",
-   "id": "g_w_c9__amber_diner__0",
-   "kind": "restaurant",
-   "lights": 6,
-   "name": "Amber Diner",
-   "props": 55,
-   "w": 11.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c9__boutiques__0.scn",
-   "id": "g_w_c9__boutiques__0",
-   "kind": "clothes",
-   "lights": 6,
-   "name": "Ridge Boutique",
-   "props": 40,
-   "w": 17.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c9__surf_shop__0.scn",
-   "id": "g_w_c9__surf_shop__0",
-   "kind": "sport",
-   "lights": 6,
-   "name": "Strand Surf",
-   "props": 21,
-   "w": 8.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_c9__corner_shop__0.scn",
-   "id": "g_w_c9__corner_shop__0",
-   "kind": "corner_shop",
-   "lights": 6,
-   "name": "Amber Market",
-   "props": 28,
-   "w": 11.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_s1__gate_pizza__0.scn",
-   "id": "g_w_s1__gate_pizza__0",
-   "kind": "restaurant",
-   "lights": 6,
-   "name": "Gate Pizza",
-   "props": 55,
-   "w": 11.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_s1__campus_cycles__0.scn",
-   "id": "g_w_s1__campus_cycles__0",
-   "kind": "bike",
-   "lights": 6,
-   "name": "Campus Cycles",
-   "props": 16,
-   "w": 8.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_s1__gatehouse_pub__0.scn",
-   "id": "g_w_s1__gatehouse_pub__0",
-   "kind": "bar",
-   "lights": 6,
-   "name": "The Gatehouse",
-   "props": 45,
-   "w": 8.4
-  },
-  {
-   "d": 13.0,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_s1__housing_office__0.scn",
    "id": "g_w_s1__housing_office__0",
    "kind": "office",
@@ -329,36 +69,6 @@
    "name": "Student Housing Office",
    "props": 16,
    "w": 5.4
-  },
-  {
-   "d": 16.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_s2a__campus_market__0.scn",
-   "id": "g_w_s2a__campus_market__0",
-   "kind": "grocery",
-   "lights": 6,
-   "name": "Campus Market",
-   "props": 74,
-   "w": 29.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_s2b__print_boba__0.scn",
-   "id": "g_w_s2b__print_boba__0",
-   "kind": "print",
-   "lights": 6,
-   "name": "Print & Copy",
-   "props": 36,
-   "w": 17.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_s2b__burrito_books__0.scn",
-   "id": "g_w_s2b__burrito_books__0",
-   "kind": "fast_food",
-   "lights": 6,
-   "name": "Burrito Bar",
-   "props": 70,
-   "w": 17.4
   },
   {
    "d": 13.0,
@@ -369,16 +79,6 @@
    "name": "The Quad Pub",
    "props": 45,
    "w": 8.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_s2b__corner_deli__0.scn",
-   "id": "g_w_s2b__corner_deli__0",
-   "kind": "corner_shop",
-   "lights": 6,
-   "name": "Corner Deli",
-   "props": 28,
-   "w": 11.4
   },
   {
    "d": 11.15,
@@ -409,26 +109,6 @@
    "name": "Ridge Community Church",
    "props": 56,
    "w": 13.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_e4__surf_shack__0.scn",
-   "id": "g_w_e4__surf_shack__0",
-   "kind": "sport",
-   "lights": 6,
-   "name": "Surf Shack",
-   "props": 21,
-   "w": 8.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_w_e4__beach_bean__0.scn",
-   "id": "g_w_e4__beach_bean__0",
-   "kind": "cafe",
-   "lights": 5,
-   "name": "Beach Bean",
-   "props": 18,
-   "w": 5.4
   }
  ]
 }

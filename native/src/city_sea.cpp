@@ -69,9 +69,11 @@ void CitySea::build() {
 			const int a = vert(gx, gz), b = vert(gx + 1, gz), c = vert(gx, gz + 1), d = vert(gx + 1, gz + 1);
 			I.push_back(a); I.push_back(b); I.push_back(c); I.push_back(b); I.push_back(d); I.push_back(c);
 		}
-	// the skirt: deep water from the frame to the horizon; not west of the frame between the island's two coasts
+	// the skirt: deep water from the frame to the horizon, on all four sides (21 Nov, the fill: the island's west end is
+	// closed by a beach inside the frame, tools/city/fill/fields.py WEST_COAST; before, the land ran on west of the frame
+	// between the two coasts and the skirt left that band dry)
 	const float gx1 = x0 + (float)((nx - 1) * EVERY) * step, gz1 = z0 + (float)((nz - 1) * EVERY) * step;
-	const float rects[5][4] = { { -FAR, -FAR, FAR, z0 }, { -FAR, gz1, FAR, FAR }, { gx1, z0, FAR, gz1 }, { -FAR, z0, x0, -1600.0f }, { -FAR, 780.0f, x0, gz1 } };
+	const float rects[4][4] = { { -FAR, -FAR, FAR, z0 }, { -FAR, gz1, FAR, FAR }, { gx1, z0, FAR, gz1 }, { -FAR, z0, x0, gz1 } };
 	for (const auto &r : rects) {
 		const int b0 = (int)V.size();
 		const Vector2 q[4] = { Vector2(r[0], r[1]), Vector2(r[2], r[1]), Vector2(r[0], r[3]), Vector2(r[2], r[3]) };

@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://map_dc/coronado/terrain/textures/gray_rocks/gray_rocks_diff_1k.jpg" id="1_buo25"]
+
+[resource]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.86, 0.84, 0.8, 1)
+albedo_texture = ExtResource("1_buo25")
+roughness = 0.9
+texture_filter = 5

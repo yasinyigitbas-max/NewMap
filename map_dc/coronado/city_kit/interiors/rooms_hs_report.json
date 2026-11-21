@@ -1,36 +1,6 @@
 {
  "rooms": [
   {
-   "d": 13.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b1_amber_brick_row_0.scn",
-   "id": "g_hs_b1_amber_brick_row_0",
-   "kind": "pharmacy",
-   "lights": 6,
-   "name": "Amber Drug",
-   "props": 24,
-   "w": 6.24
-  },
-  {
-   "d": 13.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b1_amber_brick_row_1.scn",
-   "id": "g_hs_b1_amber_brick_row_1",
-   "kind": "restaurant",
-   "lights": 5,
-   "name": "Amber Deli",
-   "props": 23,
-   "w": 6.0
-  },
-  {
-   "d": 13.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b1_amber_brick_row_2.scn",
-   "id": "g_hs_b1_amber_brick_row_2",
-   "kind": "shoes",
-   "lights": 5,
-   "name": "Sole Coronado",
-   "props": 16,
-   "w": 5.16
-  },
-  {
    "d": 15.15,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b1_amber_library_0.scn",
    "id": "g_hs_b1_amber_library_0",
@@ -42,36 +12,6 @@
   },
   {
    "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b1_amber_orange_row_0.scn",
-   "id": "g_hs_b1_amber_orange_row_0",
-   "kind": "souvenir",
-   "lights": 4,
-   "name": "Ferry Landing Gifts",
-   "props": 23,
-   "w": 5.7
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b1_amber_orange_row_1.scn",
-   "id": "g_hs_b1_amber_orange_row_1",
-   "kind": "clothes",
-   "lights": 5,
-   "name": "Tide Threads",
-   "props": 22,
-   "w": 5.92
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b1_amber_orange_row_2.scn",
-   "id": "g_hs_b1_amber_orange_row_2",
-   "kind": "jewelry",
-   "lights": 5,
-   "name": "Coral & Pearl",
-   "props": 25,
-   "w": 5.78
-  },
-  {
-   "d": 13.0,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b1_amber_cafe_0.scn",
    "id": "g_hs_b1_amber_cafe_0",
    "kind": "cafe",
@@ -79,26 +19,6 @@
    "name": "Library Grounds Coffee",
    "props": 17,
    "w": 5.4
-  },
-  {
-   "d": 15.05,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b1_amber_corner_0.scn",
-   "id": "g_hs_b1_amber_corner_0",
-   "kind": "sport",
-   "lights": 6,
-   "name": "South Beach Surf",
-   "props": 44,
-   "w": 17.4
-  },
-  {
-   "d": 11.25,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b1_tenth_market_0.scn",
-   "id": "g_hs_b1_tenth_market_0",
-   "kind": "corner_shop",
-   "lights": 6,
-   "name": "Tenth Street Market",
-   "props": 41,
-   "w": 18.4
   },
   {
    "d": 11.25,
@@ -121,36 +41,6 @@
    "w": 13.4
   },
   {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b2_amber_shops_0.scn",
-   "id": "g_hs_b2_amber_shops_0",
-   "kind": "ice_cream",
-   "lights": 4,
-   "name": "Hilltop Scoops",
-   "props": 25,
-   "w": 5.7
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b2_amber_shops_1.scn",
-   "id": "g_hs_b2_amber_shops_1",
-   "kind": "gallery",
-   "lights": 4,
-   "name": "Amber Art Co",
-   "props": 16,
-   "w": 5.7
-  },
-  {
-   "d": 13.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b2_amber_hardware_0.scn",
-   "id": "g_hs_b2_amber_hardware_0",
-   "kind": "store",
-   "lights": 6,
-   "name": "Amber Hardware",
-   "props": 33,
-   "w": 11.4
-  },
-  {
    "d": 13.1,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b2_amber_corner_0.scn",
    "id": "g_hs_b2_amber_corner_0",
@@ -171,26 +61,6 @@
    "w": 23.4
   },
   {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b3_amber_corner_0.scn",
-   "id": "g_hs_b3_amber_corner_0",
-   "kind": "corner_shop",
-   "lights": 5,
-   "name": "Beach Market",
-   "props": 18,
-   "w": 5.7
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b3_amber_corner_1.scn",
-   "id": "g_hs_b3_amber_corner_1",
-   "kind": "salon",
-   "lights": 4,
-   "name": "Shore Cuts",
-   "props": 26,
-   "w": 5.7
-  },
-  {
    "d": 10.25,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b3_amber_condo_0.scn",
    "id": "g_hs_b3_amber_condo_0",
@@ -199,26 +69,6 @@
    "name": "Swim & Sun",
    "props": 34,
    "w": 17.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b3_amber_surf_0.scn",
-   "id": "g_hs_b3_amber_surf_0",
-   "kind": "sport",
-   "lights": 6,
-   "name": "Coronado Surf Co.",
-   "props": 18,
-   "w": 8.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b3_amber_cafe_0.scn",
-   "id": "g_hs_b3_amber_cafe_0",
-   "kind": "cafe",
-   "lights": 5,
-   "name": "Beach Break Cafe",
-   "props": 20,
-   "w": 5.4
   },
   {
    "d": 13.0,
@@ -231,16 +81,6 @@
    "w": 5.4
   },
   {
-   "d": 11.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b3_amber_burger_1.scn",
-   "id": "g_hs_b3_amber_burger_1",
-   "kind": "fast_food",
-   "lights": 6,
-   "name": "Ocean Burger",
-   "props": 23,
-   "w": 8.76
-  },
-  {
    "d": 10.25,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b3_motel_condo_0.scn",
    "id": "g_hs_b3_motel_condo_0",
@@ -251,46 +91,6 @@
    "w": 17.4
   },
   {
-   "d": 15.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b4_amber_arcade_0.scn",
-   "id": "g_hs_b4_amber_arcade_0",
-   "kind": "books",
-   "lights": 6,
-   "name": "Arcade Books",
-   "props": 39,
-   "w": 7.7
-  },
-  {
-   "d": 15.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b4_amber_arcade_1.scn",
-   "id": "g_hs_b4_amber_arcade_1",
-   "kind": "cafe",
-   "lights": 6,
-   "name": "Arches Coffee",
-   "props": 40,
-   "w": 7.78
-  },
-  {
-   "d": 15.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b4_amber_arcade_2.scn",
-   "id": "g_hs_b4_amber_arcade_2",
-   "kind": "gallery",
-   "lights": 5,
-   "name": "Shoreline Gallery",
-   "props": 32,
-   "w": 7.92
-  },
-  {
-   "d": 11.25,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b4_amber_stucco_0.scn",
-   "id": "g_hs_b4_amber_stucco_0",
-   "kind": "pharmacy",
-   "lights": 6,
-   "name": "Ocean Pharmacy",
-   "props": 49,
-   "w": 18.4
-  },
-  {
    "d": 13.0,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b4_amber_pub_0.scn",
    "id": "g_hs_b4_amber_pub_0",
@@ -298,36 +98,6 @@
    "lights": 6,
    "name": "The Crown & Anchor",
    "props": 39,
-   "w": 8.4
-  },
-  {
-   "d": 11.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b4_amber_cinema_0.scn",
-   "id": "g_hs_b4_amber_cinema_0",
-   "kind": "venue",
-   "lights": 4,
-   "name": "Beach Cinema",
-   "props": 14,
-   "w": 5.56
-  },
-  {
-   "d": 11.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b4_amber_cinema_1.scn",
-   "id": "g_hs_b4_amber_cinema_1",
-   "kind": "fast_food",
-   "lights": 4,
-   "name": "Cinema Snacks",
-   "props": 14,
-   "w": 5.84
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b4_amber_bakery_0.scn",
-   "id": "g_hs_b4_amber_bakery_0",
-   "kind": "bakery",
-   "lights": 6,
-   "name": "Sunrise Bakery",
-   "props": 31,
    "w": 8.4
   },
   {
@@ -351,86 +121,6 @@
    "w": 21.4
   },
   {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b5_amber_bistro_0.scn",
-   "id": "g_hs_b5_amber_bistro_0",
-   "kind": "restaurant",
-   "lights": 6,
-   "name": "Hillside Bistro",
-   "props": 51,
-   "w": 11.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b5_amber_corner_0.scn",
-   "id": "g_hs_b5_amber_corner_0",
-   "kind": "ice_cream",
-   "lights": 4,
-   "name": "Scoops",
-   "props": 21,
-   "w": 5.7
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b5_amber_corner_1.scn",
-   "id": "g_hs_b5_amber_corner_1",
-   "kind": "cleaners",
-   "lights": 4,
-   "name": "Bay Cleaners",
-   "props": 25,
-   "w": 5.7
-  },
-  {
-   "d": 16.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b5_amber_arcade_0.scn",
-   "id": "g_hs_b5_amber_arcade_0",
-   "kind": "clothes",
-   "lights": 6,
-   "name": "Orange Grove",
-   "props": 26,
-   "w": 6.2
-  },
-  {
-   "d": 16.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b5_amber_arcade_1.scn",
-   "id": "g_hs_b5_amber_arcade_1",
-   "kind": "souvenir",
-   "lights": 5,
-   "name": "Island Gifts",
-   "props": 24,
-   "w": 6.5
-  },
-  {
-   "d": 16.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b5_amber_arcade_2.scn",
-   "id": "g_hs_b5_amber_arcade_2",
-   "kind": "shoes",
-   "lights": 6,
-   "name": "Step Lively",
-   "props": 29,
-   "w": 6.5
-  },
-  {
-   "d": 16.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b5_amber_arcade_3.scn",
-   "id": "g_hs_b5_amber_arcade_3",
-   "kind": "salon",
-   "lights": 5,
-   "name": "Arcade Hair",
-   "props": 32,
-   "w": 6.2
-  },
-  {
-   "d": 13.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b6_amber_brick_0.scn",
-   "id": "g_hs_b6_amber_brick_0",
-   "kind": "books",
-   "lights": 6,
-   "name": "Ninth Street Books",
-   "props": 43,
-   "w": 11.4
-  },
-  {
    "d": 11.1,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b6_amber_bankph_0.scn",
    "id": "g_hs_b6_amber_bankph_0",
@@ -441,36 +131,6 @@
    "w": 11.4
   },
   {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b6_amber_row_0.scn",
-   "id": "g_hs_b6_amber_row_0",
-   "kind": "jewelry",
-   "lights": 5,
-   "name": "Silver Tide",
-   "props": 25,
-   "w": 5.7
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b6_amber_row_1.scn",
-   "id": "g_hs_b6_amber_row_1",
-   "kind": "shoes",
-   "lights": 5,
-   "name": "Hill Shoes",
-   "props": 22,
-   "w": 5.92
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b6_amber_row_2.scn",
-   "id": "g_hs_b6_amber_row_2",
-   "kind": "clothes",
-   "lights": 5,
-   "name": "Hillcrest Threads",
-   "props": 22,
-   "w": 5.78
-  },
-  {
    "d": 13.1,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b6_amber_corner_0.scn",
    "id": "g_hs_b6_amber_corner_0",
@@ -479,36 +139,6 @@
    "name": "Ninth Street Pharmacy",
    "props": 35,
    "w": 11.4
-  },
-  {
-   "d": 11.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b6_amber_trade_0.scn",
-   "id": "g_hs_b6_amber_trade_0",
-   "kind": "store",
-   "lights": 4,
-   "name": "Coronado Hardware",
-   "props": 15,
-   "w": 5.7
-  },
-  {
-   "d": 11.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b6_amber_trade_1.scn",
-   "id": "g_hs_b6_amber_trade_1",
-   "kind": "cleaners",
-   "lights": 4,
-   "name": "Plaza Cleaners",
-   "props": 29,
-   "w": 5.7
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hs_b6_amber_cafe_0.scn",
-   "id": "g_hs_b6_amber_cafe_0",
-   "kind": "cafe",
-   "lights": 5,
-   "name": "Hillclimb Coffee",
-   "props": 20,
-   "w": 5.4
   },
   {
    "d": 11.25,

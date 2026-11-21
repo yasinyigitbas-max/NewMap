@@ -1,6 +1,14 @@
 {
  "_doc": "Hospital zone and university campus (claude/fill-high-street, 19 Nov): which business or service is behind which",
- "count": 22,
+ "_removed": [
+  {
+   "id": "hp_west_bistro_0",
+   "name": "Isla Bistro",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  }
+ ],
+ "count": 21,
  "rooms": [
   {
    "id": "hp_main_hospital_0",
@@ -189,32 +197,6 @@
      "w": 5.2
     }
    ]
-  },
-  {
-   "id": "hp_west_bistro_0",
-   "piece": "n_hp_west",
-   "label": "bistro",
-   "model": "commercial/com_bistro",
-   "pos": [
-    410.0,
-    2.1471,
-    -1427.67
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": 4.76,
-   "door_w": 1.6,
-   "bay": [
-    -5.7,
-    5.7
-   ],
-   "kind": "restaurant",
-   "name": "Isla Bistro",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "lunch for the hospital's staff and visitors (its ISLA BISTRO sign painted on); its tables on the 3rd St forecourt",
-   "signs": []
   },
   {
    "id": "hp_west_wellness_0",

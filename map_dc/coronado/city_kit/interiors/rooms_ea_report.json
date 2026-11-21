@@ -2,26 +2,6 @@
  "rooms": [
   {
    "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ea_cape_rent_0.scn",
-   "id": "g_ea_cape_rent_0",
-   "kind": "sport",
-   "lights": 6,
-   "name": "North Beach Rentals",
-   "props": 22,
-   "w": 8.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ea_cape_cafe_0.scn",
-   "id": "g_ea_cape_cafe_0",
-   "kind": "cafe",
-   "lights": 5,
-   "name": "North Beach Cafe",
-   "props": 21,
-   "w": 5.4
-  },
-  {
-   "d": 13.0,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ea_shore_scoops_0.scn",
    "id": "g_ea_shore_scoops_0",
    "kind": "ice_cream",

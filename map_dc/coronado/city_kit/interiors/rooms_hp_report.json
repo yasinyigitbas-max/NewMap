@@ -61,16 +61,6 @@
    "w": 11.4
   },
   {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hp_west_bistro_0.scn",
-   "id": "g_hp_west_bistro_0",
-   "kind": "restaurant",
-   "lights": 6,
-   "name": "Isla Bistro",
-   "props": 50,
-   "w": 11.4
-  },
-  {
    "d": 13.15,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_hp_west_wellness_0.scn",
    "id": "g_hp_west_wellness_0",

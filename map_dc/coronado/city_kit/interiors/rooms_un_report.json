@@ -41,36 +41,6 @@
    "w": 29.4
   },
   {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_gate_cafe__0.scn",
-   "id": "g_un_ne__uni_gate_cafe__0",
-   "kind": "cafe",
-   "lights": 5,
-   "name": "Gate Coffee",
-   "props": 18,
-   "w": 5.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_gate_books__0.scn",
-   "id": "g_un_ne__uni_gate_books__0",
-   "kind": "books",
-   "lights": 5,
-   "name": "Campus Books",
-   "props": 20,
-   "w": 5.4
-  },
-  {
-   "d": 5.25,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_ne__uni_bus_kiosk__0.scn",
-   "id": "g_un_ne__uni_bus_kiosk__0",
-   "kind": "cafe",
-   "lights": 2,
-   "name": "Crown Cafe",
-   "props": 5,
-   "w": 3.4
-  },
-  {
    "d": 14.15,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_nw__uni_museum__0.scn",
    "id": "g_un_nw__uni_museum__0",
@@ -89,16 +59,6 @@
    "name": "University Chapel",
    "props": 24,
    "w": 9.4
-  },
-  {
-   "d": 13.15,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_nw__uni_union__0.scn",
-   "id": "g_un_nw__uni_union__0",
-   "kind": "venue",
-   "lights": 5,
-   "name": "Student Union",
-   "props": 51,
-   "w": 23.4
   },
   {
    "d": 11.15,
@@ -139,26 +99,6 @@
    "name": "Kinesiology",
    "props": 62,
    "w": 29.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_se__uni_gameday_kiosk__0.scn",
-   "id": "g_un_se__uni_gameday_kiosk__0",
-   "kind": "cafe",
-   "lights": 5,
-   "name": "Crown Cafe",
-   "props": 18,
-   "w": 5.4
-  },
-  {
-   "d": 15.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_un_sw__uni_dining__0.scn",
-   "id": "g_un_sw__uni_dining__0",
-   "kind": "fast_food",
-   "lights": 6,
-   "name": "Dining Commons",
-   "props": 110,
-   "w": 23.4
   },
   {
    "d": 8.25,

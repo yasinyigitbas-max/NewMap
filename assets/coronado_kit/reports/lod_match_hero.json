@@ -1,0 +1,31 @@
+{
+ "density": 4.45684814453125,
+ "page": [
+  512,
+  512
+ ],
+ "page_file": "bld_lod_color_hero.png",
+ "fill": 0.8867835998535156,
+ "buildings": [
+  {
+   "name": "landmarks/lmk_hotel_bel",
+   "tris_before": {
+    "near": 14919,
+    "mid": 3919,
+    "far": 202
+   },
+   "dens": 4.46,
+   "far_budget": 300,
+   "budget": [
+    15000,
+    4000,
+    300
+   ],
+   "budget_class": "hero",
+   "far_rehull": false,
+   "far_boxes": 9,
+   "tris_mid": 3919,
+   "tris_far": 292
+  }
+ ]
+}
