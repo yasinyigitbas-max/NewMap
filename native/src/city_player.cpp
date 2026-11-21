@@ -529,6 +529,17 @@ void CityPlayer::_physics_process(double p_delta) {
 	static const StringName CR_IDLE("ual/Crouch_Idle_Loop"), CR_FWD("ual/Crouch_Fwd_Loop"), J_UP("ual/Jump_Start"), J_AIR("ual/Jump_Loop"), J_LAND("ual/Jump_Land"), CR_IN("ual/Crouch_Enter"), CR_OUT("ual/Crouch_Exit");
 	static const StringName S_IDLE("step/idle");
 	StringName clip = fig->clip_len(S_IDLE) > 0.0 ? S_IDLE : IDLE; double cs = 1.0, hold = -1.0;   // (standing: the hands open)
+	// up again after being knocked down: he is where his body got up, not where he was standing (the figure snapped
+	// back to his standing place, 1.8 m after a car's hit: tests/people/run_over_film.gd)
+	{
+		const bool body_now = fig->get_mode() != CityPed::MODE_ANIM;
+		if (fig_was_body && !body_now) {
+			const Vector3 o = fig->get_global_transform().origin;
+			set_global_position(Vector3(o.x, std::max(o.y, (float)get_global_position().y - 0.5f) + 0.05f, o.z));
+			set_velocity(Vector3()); move_speed = 0.0f;
+		}
+		fig_was_body = body_now;
+	}
 	const bool floor_now = is_on_floor();
 	if (airborne) air_min_vy = std::min(air_min_vy, get_velocity().y);
 	if (airborne && floor_now && get_velocity().y <= 0.0f) {
@@ -750,7 +761,7 @@ Dictionary CityPlayer::get_frame_log() const {
 	d["node"] = get_global_position(); d["fig_at"] = fig ? fig->get_global_position() : Vector3(); d["pelvis"] = pelvis_world();
 	if (plant) { d["foot_l"] = plant->foot_w[0]; d["foot_r"] = plant->foot_w[1]; d["pelvis_drawn"] = plant->pelvis_w; d["plant_on"] = plant->is_active(); d["lock"] = Vector2i(plant->locked[0], plant->locked[1]); d["slide_l"] = plant->slide_w[0]; d["slide_r"] = plant->slide_w[1]; }
 	d["speed"] = speed; d["yaw"] = yaw;
-	d["clip"] = get_clip(); d["step"] = step_mode; d["starts"] = starts; d["stops"] = stops; d["turns"] = turns; d["climb"] = climb; d["u"] = climb ? climb_t / climb_len : -1.0f; d["settle"] = settle_t; d["clip_off"] = clip_off;
+	d["clip"] = get_clip(); d["fig_mode"] = fig ? (int)fig->get_mode() : -1; d["fig_at"] = fig ? fig->body_at() : Vector3(); d["step"] = step_mode; d["starts"] = starts; d["stops"] = stops; d["turns"] = turns; d["climb"] = climb; d["u"] = climb ? climb_t / climb_len : -1.0f; d["settle"] = settle_t; d["clip_off"] = clip_off;
 	return d;
 }
 

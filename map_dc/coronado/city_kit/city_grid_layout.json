@@ -5605,6 +5605,36 @@
    "from": "grow_hospital"
   },
   {
+   "piece": "n_sc_west",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_sc_mid",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
+   "piece": "n_sc_south",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "grow_hospital"
+  },
+  {
    "piece": "n_hp_main",
    "pos": [
     0.0,

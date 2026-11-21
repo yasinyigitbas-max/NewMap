@@ -4,7 +4,8 @@ extends SceneTree
 ##   godot --path . --rendering-method mobile --resolution 960x540 --fixed-fps 60 -s res://tests/people/sweep_shove.gd
 ## One person after another, each shoved in the chest from behind, harder each time (30 to 240 N s). For each: the steps
 ## it took, whether it fell. Checks (a person, not a tumbler): a light shove (30-60) is taken in 0-2 steps and standing;
-## nobody takes more than 4 steps; from 150 N s on everyone goes down.
+## nobody takes more than 4 steps; from 190 N s on everyone goes down (Yasin, 20 Nov: "try to balance for 3 steps as
+## hard as they can then fall if they still cant": a 150 N s shove is now caught in three hard steps).
 const SHOVES := [30.0, 45.0, 60.0, 90.0, 120.0, 150.0, 190.0, 240.0]
 var ped: Node3D
 var cam: Camera3D
@@ -41,10 +42,10 @@ func _physics_process(delta: float) -> bool:
 		for r: Array in rows:
 			most = maxi(most, int(r[1]))
 			if float(r[0]) <= 60.0 and (int(r[1]) > 2 or bool(r[2])): light_ok = false
-			if float(r[0]) >= 150.0 and not bool(r[2]): hard_ok = false
+			if float(r[0]) >= 190.0 and not bool(r[2]): hard_ok = false
 		_check(light_ok, "light shoves (30-60 N s) taken in 0-2 steps, standing")
 		_check(most <= 4, "nobody took more than 4 steps (most %d)" % most)
-		_check(hard_ok, "from 150 N s on, everyone went down")
+		_check(hard_ok, "from 190 N s on, everyone went down")
 		print("RESULT %s" % ("PASS" if fails == 0 else "FAIL (%d)" % fails))
 		quit(1 if fails else 0); return true
 	cam.current = true

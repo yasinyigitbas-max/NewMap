@@ -12,6 +12,10 @@
 #include "ped_inl.h"
 #include "traffic_sim.h"
 
+#include <godot_cpp/classes/bone_attachment3d.hpp>
+#include <godot_cpp/classes/box_mesh.hpp>
+#include <godot_cpp/classes/mesh_instance3d.hpp>
+#include <godot_cpp/classes/standard_material3d.hpp>
 #include <godot_cpp/classes/array_mesh.hpp>
 #include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/file_access.hpp>
@@ -86,7 +90,25 @@ int tag_of(const String &t, bool police) {
 } // namespace
 
 CityCrowd::CityCrowd() { crowd = new pc::Crowd(); }
-CityCrowd::~CityCrowd() { delete crowd; }
+CityCrowd *CityCrowd::the = nullptr;
+
+CityCrowd::~CityCrowd() { if (the == this) the = nullptr; delete crowd; }
+
+float CityCrowd::body_under(const Vector3 &p_at) const {
+	float top = -1.0e9f;
+	for (const Near &nb : near_pool) if (nb.walker >= 0 && nb.ped) top = std::max(top, nb.ped->top_over(p_at, 0.25f));
+	if (player_id) if (CityPlayer *pl = Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id)))) if (pl->figure()) top = std::max(top, pl->figure()->top_over(p_at, 0.25f));
+	return top;
+}
+
+int CityCrowd::car_boxes(CityPed *p_ped, int k, const float *q, float p_ground_y) {
+	const float hl = q[3], hw = q[4], fx = std::sin(q[2]), fz = std::cos(q[2]);
+	const Vector3 v(q[5], 0, q[6]);
+	p_ped->set_box(k, Vector3(q[0], p_ground_y + 0.535f, q[1]), Vector3(hw, 0.315f, hl), q[2], v, k + 2);   // (the body: 0.22-0.85 m)
+	const float off = -0.175f * hl;   // (the cabin: from 55 % of the way back to 20 % forward, 0.85-1.45 m)
+	p_ped->set_box(k + 1, Vector3(q[0] + fx * off, p_ground_y + 1.15f, q[1] + fz * off), Vector3(hw * 0.9f, 0.3f, 0.375f * hl), q[2], v, k + 2);
+	return k + 2;
+}
 
 // The streets, the places, the bodies' table.
 bool CityCrowd::load() {
@@ -223,6 +245,7 @@ void CityCrowd::make_look() {
 }
 
 void CityCrowd::_ready() {
+	the = this;
 	if (!ready) load();
 	if (!ready) { set_process(false); return; }
 	if (cells.empty()) cells.assign((size_t)GRID * GRID, 0);
@@ -276,7 +299,9 @@ void CityCrowd::set_player(Object *p_player) {
 		Ref<ShaderMaterial> m = mat_near->duplicate();
 		m->set_shader_parameter("person", Vector4(7.0f, 0.0f, 3.0f + 8.0f, 0.2f));
 		m->set_shader_parameter("fade_band", Vector2(1.0e5f, 1.0e5f + 1.0f));
-		cp->figure()->become(bodies[body].id, bodies[body].near_mesh, m, false);
+		// (with his physical body: it was false, and nothing could knock him over, a car (Yasin, 20 Nov: "i got run over by
+		// cars several times", "still passing right thru") nor a beating; the fight's "beaten" froze him standing)
+		cp->figure()->become(bodies[body].id, bodies[body].near_mesh, m, true);
 	}
 }
 
@@ -393,7 +418,11 @@ void CityCrowd::step_brain(double p_delta) {
 			dyn.insert(dyn.end(), b, b + tc::DYN_STRIDE);
 		}
 		if (crowd->has_player) {   // the player on foot: the drivers see him wherever he is
-			const float b[tc::DYN_STRIDE] = { crowd->pl_x, last_player.y, crowd->pl_z, 0.0f, 0.3f, 0.3f, crowd->pl_vx, crowd->pl_vz, (float)tc::DYN_PLAYER, -3.0f, (float)tc::DF_ON_ROAD };
+			// (knocked down, where his body lies: it may be metres from where he was standing)
+			float px = crowd->pl_x, pz = crowd->pl_z;
+			if (CityPlayer *dp = player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr)
+				if (dp->figure() && dp->figure()->get_mode() != CityPed::MODE_ANIM) { const Vector3 ba = dp->figure()->body_at(); px = ba.x; pz = ba.z; }
+			const float b[tc::DYN_STRIDE] = { px, last_player.y, pz, 0.0f, 0.3f, 0.3f, crowd->pl_vx, crowd->pl_vz, (float)tc::DYN_PLAYER, -3.0f, (float)tc::DF_ON_ROAD };
 			dyn.insert(dyn.end(), b, b + tc::DYN_STRIDE);
 		}
 		tr->set_walkers(dyn.data(), (int)dyn.size() / tc::DYN_STRIDE);
@@ -841,22 +870,15 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 	// still from the moment of the take-over, and a car at 25 km/h moved a man 0.4 m and left him standing: seen 20 Nov
 	// in tests/people/test_car_hits.gd.)
 	auto feed_boxes = [&](Near &nb, int i) {
-		int nbx = 0;
-		const int nc = (int)cars.size() / 7;
-		for (int c = 0; c < nc && nbx < pb::MAX_BOXES; c++) {
-			const float *q = &cars[(size_t)c * 7];
-			const float dx = q[0] - crowd->x[i], dz = q[1] - crowd->z[i];
-			if (dx * dx + dz * dz > 9.0f * 9.0f) continue;
-			nbx++;
-		}
 		int k = 0;
-		for (int c = 0; c < nc && k < nbx; c++) {
+		const int nc = (int)cars.size() / 7;
+		for (int c = 0; c < nc && k + 2 <= pb::MAX_BOXES; c++) {
 			const float *q = &cars[(size_t)c * 7];
 			const float dx = q[0] - crowd->x[i], dz = q[1] - crowd->z[i];
 			if (dx * dx + dz * dz > 9.0f * 9.0f) continue;
-			nb.ped->set_box(k++, Vector3(q[0], crowd->y[i] + 0.75f, q[1]), Vector3(q[4], 0.75f, q[3]), q[2], Vector3(q[5], 0, q[6]), nbx);
+			k = car_boxes(nb.ped, k, q, crowd->y[i]);
 		}
-		if (nbx == 0) nb.ped->set_box(-1, Vector3(), Vector3(), 0.0, Vector3(), 0);
+		if (k == 0) nb.ped->set_box(-1, Vector3(), Vector3(), 0.0, Vector3(), 0);
 	};
 	// what each one shows; a car near it; the player walking into it; its physical body
 	Node3D *pl = player_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
@@ -1038,6 +1060,41 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 					if (CityPed::stride_of(clip, ld, ns)) speed /= std::max((double)sc, 0.5);
 				}
 				nb.ped->drive(Transform3D(Basis(Vector3(0, 1, 0), lerp_angle(crowd->pyaw[i], crowd->yaw[i], a)).scaled(Vector3(sc, sc, sc)), at), clip, speed, hold, token);
+				{   // the phone he films with: a dark slab, 7 x 14.5 x 0.9 cm, in his raised left hand (the filming clip holds it up)
+					const bool rec = crowd->act[i] == pc::A_FILM;
+					if (rec && !nb.phone) {
+						if (Skeleton3D *sk = nb.ped->skeleton()) {
+							const float k = std::max((float)sk->get_global_transform().basis.get_scale().x / std::max(sc, 0.5f), 1e-4f);   // (the skeleton's units: centimetres)
+							BoneAttachment3D *ba = memnew(BoneAttachment3D); ba->set_bone_name("Bip01_L_Hand"); sk->add_child(ba);
+							MeshInstance3D *m = memnew(MeshInstance3D);
+							Ref<BoxMesh> bm; bm.instantiate(); bm->set_size(Vector3(0.009f, 0.07f, 0.145f) / k);   // (upright, its face toward him: thin along the hand, tall up its side)
+							Ref<StandardMaterial3D> mat; mat.instantiate(); mat->set_albedo(Color(0.05f, 0.05f, 0.06f)); mat->set_roughness(0.35f); mat->set_metallic(0.3f);
+							m->set_mesh(bm); m->set_material_override(mat); m->set_cast_shadows_setting(GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);
+							nb.phone_base = Vector3(0.09f, -0.02f, 0.0f) / k;   // (along the hand, past the palm: held in the fingers)
+							m->set_position(nb.phone_base);
+							ba->add_child(m); nb.phone = m; nb.phone_k = k;
+							m->set_as_top_level(true);   // (placed in the world each frame: upright, not turned with the hand)
+						}
+					}
+					if (nb.phone) nb.phone->set_visible(rec && nb.ped->get_mode() == CityPed::MODE_ANIM);
+					// HOW HE HOLDS IT (Yasin, 20 Nov: "push it 10 cms to left on that photo and 3 cms up", "actually 5cms left",
+					// "not the bone the phone", "pull it 3 cms back into the hand. fingers should cover it and it shouldnt clip and
+					// it should stand straight"): placed in the world each frame, not by the hand's bone: upright whatever way the hand
+					// is turned, its face toward him; its lower part in the fist's grip (where the clip's torch handle was), so the
+					// fingers close round it and not through it; on the front photo (taken from his front-left) 7 cm left and 3 cm
+					// back ("pull 3 more cms back and 5 more cms left"): 7.56 cm toward his right, 0.82 cm forward,
+					// and 3 cm up
+					if (nb.phone && nb.phone->is_visible()) {
+						if (Node3D *ba = Object::cast_to<Node3D>(nb.phone->get_parent())) {
+							const Basis fb = nb.ped->get_global_transform().basis.orthonormalized();
+							Vector3 fwd = fb.get_column(2); fwd.y = 0.0f; fwd = fwd.length() > 0.01f ? fwd.normalized() : Vector3(0, 0, 1);
+							const Vector3 up(0, 1, 0), left = up.cross(fwd);
+							const Vector3 grip = ba->get_global_transform().xform(nb.phone_base);   // (the fist's grip)
+							const Vector3 at = grip + fb.xform(Vector3(-0.0756f, 0.03f, 0.0082f)) + up * (0.145f * 0.5f - 0.045f);   // (4.5 cm of it in the fist)
+							nb.phone->set_global_transform(Transform3D(Basis(fwd, left, up).scaled(Vector3(nb.phone_k, nb.phone_k, nb.phone_k)), at));
+						}
+					}
+				}
 				// the feet on the real ground, planted ones pinned where they land (Yasin, 20 Nov: "i want them pixel perfect":
 				// tests/people/trace_crowd.gd found walkers' planted feet sliding 0.24-0.36 m/s and feet 23 cm over the ground
 				// or 3 cm in it where the crowd's path height and the ground differ); off while seated, on the ground, lying or
@@ -1373,10 +1430,53 @@ void CityCrowd::player_fight(double p_delta) {
 	if (!pl || !pl->is_inside_tree()) { if (pf.walker >= 0) end_fight(true); return; }
 	const float dt = (float)p_delta;
 	CityPed *pfig = pl->figure();
-	if (pf.player_down) {   // beaten: he lies until his body has him up again
-		if (pfig && pfig->get_mode() == CityPed::MODE_ANIM) { pf.player_down = false; pl->set_frozen(false); }
+	car_hit_cd = std::max(car_hit_cd - dt, 0.0f);
+	if (pfig) {   // the cars near him, as the people feel them (his body rolls on a bonnet and slides off it)
+		const Vector3 me = pfig->body_at();
+		int k = 0;
+		const int nc = (int)cars.size() / 7;
+		for (int c = 0; c < nc && k + 2 <= pb::MAX_BOXES; c++) {
+			const float *q = &cars[(size_t)c * 7];
+			const float dx = q[0] - me.x, dz = q[1] - me.z;
+			if (dx * dx + dz * dz > 81.0f) continue;
+			k = car_boxes(pfig, k, q, pl->get_global_position().y);
+		}
+		if (k == 0) pfig->set_box(-1, Vector3(), Vector3(), 0.0, Vector3(), 0);
+	}
+	if (pf.player_down) {   // beaten (or run over): he lies until his body has him up again
+		// (and not before he has been down: his figure goes over to its balancing body a frame after knock_down, and that
+		// frame it was still animated, so a car's hit let him go at once and he stood where he was: car_hit_cd)
+		if (pfig && pfig->get_mode() == CityPed::MODE_ANIM && car_hit_cd <= 0.0f) { pf.player_down = false; pl->set_frozen(false); }
 		pl->take_combat_request();
 		return;
+	}
+	// RUN OVER (Yasin, 20 Nov: "i got run over by cars several times while playing"; nothing showed it): a car that
+	// reaches the player on foot at speed knocks him down (his balancing body, as when he is beaten; he gets up and
+	// has his body back); a slow one bumps him (the hit clip and a push)
+	if (pfig && pl->is_visible_in_tree() && car_hit_cd <= 0.0f && pfig->get_mode() == CityPed::MODE_ANIM) {
+		const Vector3 me = pl->get_global_position();
+		const int nc = (int)cars.size() / 7;
+		for (int c = 0; c < nc; c++) {
+			const float *q = &cars[(size_t)c * 7];
+			const float dx = me.x - q[0], dz = me.z - q[1];
+			if (dx * dx + dz * dz > 36.0f) continue;
+			const float hx = std::sin(q[2]), hz = std::cos(q[2]);
+			const float along = dx * hx + dz * hz, across = dx * hz - dz * hx;
+			if (std::fabs(along) > q[3] + 0.3f || std::fabs(across) > q[4] + 0.3f) continue;
+			const Vector3 cv(q[5], 0.0f, q[6]);
+			const float sp = cv.length();
+			if (sp < 0.8f) continue;
+			const Vector3 dir = cv / sp;
+			if (sp > 2.5f) {   // knocked down and thrown with the car's speed
+				// (his legs swept at the knees, only a little speed of his own: the car's bonnet does the rest, he goes up onto
+				// it and is carried, and slides off; launched at the car's speed he flew on ahead of it)
+				pfig->knock_down(dir * std::min(sp * 0.3f, 4.0f) + Vector3(0, 0.6f, 0), dir * std::min(sp * 9.0f, 90.0f), me + Vector3(0, 0.45f, 0));
+				pf.player_down = true; pl->set_frozen(true);
+				if (pf.walker >= 0) end_fight(true);
+			} else { pl->take_hit(); pl->knock(dir * (sp + 1.0f)); }
+			cars_hit_player++; car_hit_cd = 1.5f; car_hit_v = sp;
+			break;
+		}
 	}
 	const Vector3 pp = pl->get_global_position();
 	if (pl->take_combat_request()) {
@@ -1590,6 +1690,7 @@ Dictionary CityCrowd::stats() const {
 	d["alarms_player_hit"] = alarms[1]; d["alarms_car_hit"] = alarms[2]; d["alarms_bike_down"] = alarms[3]; d["alarms_npc_fight"] = alarms[4]; d["cars_hit_people"] = cars_hit_people;
 	d["helpers_sent"] = helpers_sent; d["helpers_knelt"] = helpers_knelt; d["steps_in"] = steps_in; d["actors"] = (int)actors.size(); d["downs"] = (int)downs.size();
 	d["cowering"] = cowering; d["shots_heard"] = shots_heard; d["drivers_robbed"] = drivers_robbed; d["alarms_shot"] = alarms[5]; d["alarms_mugging"] = alarms[6]; d["alarms_car_taken"] = alarms[7];
+	d["cars_hit_player"] = cars_hit_player; d["car_hit_v"] = car_hit_v; d["player_down_now"] = pf.player_down;
 	d["ducked"] = s.ducks; d["stared"] = s.stared; d["coins"] = s.coins; d["lines_said"] = s.lines_said;
 	{ PackedFloat32Array cl; const double ls[11] = { l_sit_in, l_sit_out, l_gsit_in, l_gsit_out, l_lie_in, l_lie_out, l_duck_in, l_duck_out, l_fight_in, l_fight_out, l_surprise }; for (double l : ls) cl.push_back((float)l); d["clip_seconds"] = cl; }   // into and out of: a seat, the ground, lying, a crouch, a fight; the start
 	d["shoved_by_player"] = n_shoved; d["told_him_off"] = n_told_off; d["hit_back"] = n_hit_back;
