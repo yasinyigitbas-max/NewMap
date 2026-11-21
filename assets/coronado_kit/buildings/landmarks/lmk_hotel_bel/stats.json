@@ -1,0 +1,141 @@
+{
+ "name": "lmk_hotel_bel",
+ "cat": "landmark",
+ "style": "victorian_beach_resort",
+ "logic_errors": [],
+ "col_boxes": 28,
+ "near": {
+  "tris": 14919,
+  "verts": 26030,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_lamp",
+   "O_louver",
+   "O_patio",
+   "O_vent",
+   "O_win_victorian",
+   "R_shingle",
+   "SG_hotelbel",
+   "S_black",
+   "S_brick",
+   "S_concrete",
+   "S_siding",
+   "S_soffit",
+   "S_white",
+   "T_concrete",
+   "T_deck",
+   "T_metal",
+   "T_rail",
+   "T_terracotta",
+   "T_white",
+   "W_brick",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -19.718000411987305,
+    -0.0,
+    -14.402000427246094
+   ],
+   [
+    20.832000732421875,
+    28.277999877929688,
+    11.399999618530273
+   ]
+  ]
+ },
+ "mid_roof_top": 26.528,
+ "mid": {
+  "tris": 3919,
+  "verts": 4694,
+  "regions": [
+   "O_apt_door",
+   "O_civic_door",
+   "O_louver",
+   "O_patio",
+   "O_win_victorian",
+   "SG_hotelbel",
+   "S_concrete",
+   "S_deck",
+   "S_shingle",
+   "S_signbg",
+   "S_soffit",
+   "S_white",
+   "W_brick",
+   "W_siding",
+   "W_stucco"
+  ],
+  "bbox": [
+   [
+    -19.718000411987305,
+    -0.0,
+    -14.402000427246094
+   ],
+   [
+    20.832000732421875,
+    26.527999877929688,
+    11.399999618530273
+   ]
+  ]
+ },
+ "far": {
+  "tris": 202,
+  "verts": 288,
+  "regions": [
+   "F_flat",
+   "F_siding_2",
+   "F_siding_blank",
+   "F_trim_white"
+  ],
+  "bbox": [
+   [
+    -19.368000030517578,
+    0.0,
+    -9.600000381469727
+   ],
+   [
+    19.368999481201172,
+    26.527999877929688,
+    9.600000381469727
+   ]
+  ]
+ },
+ "doors_front": [
+  [
+   "civic_door",
+   -10.97
+  ],
+  [
+   "civic_door",
+   7.03
+  ],
+  [
+   "civic_door",
+   -0.97
+  ],
+  [
+   "patio",
+   -0.97
+  ],
+  [
+   "patio",
+   -0.97
+  ]
+ ],
+ "footprint_wd": [
+  38.74,
+  19.2
+ ],
+ "footprint_area": 743.7,
+ "height": 28.28,
+ "storeys": 4,
+ "budget": [
+  15000,
+  4000,
+  300
+ ],
+ "budget_class": "hero",
+ "time_s": 62.6
+}

@@ -644,7 +644,7 @@ func _mat_bldg(src: Material) -> Material:
 	for u: StringName in [&"albedo_tex", &"normal_tex", &"orm_tex", &"emission_tex", &"grime_tex", &"has_normal", &"has_orm", &"has_emission", &"emission_energy", &"wear", &"foot_m", &"grime_meters", &"streaks"]:
 		if s.get_shader_parameter(u) != null: m.set_shader_parameter(u, s.get_shader_parameter(u))
 	var at: Texture2D = s.get_shader_parameter(&"albedo_tex")
-	if at and at.resource_path in [LOD_PAGE, LOD_PAGE_B]: m.set_shader_parameter(&"lod_glass", true)
+	if at and at.resource_path in [LOD_PAGE, LOD_PAGE_B, LOD_PAGE_H]: m.set_shader_parameter(&"lod_glass", true)
 	return _save_mat(sig, m)
 
 func _mat_far(kind: String) -> String:
@@ -652,10 +652,10 @@ func _mat_far(kind: String) -> String:
 	if not mats.has(sig):
 		var m := ShaderMaterial.new(); m.shader = load(SH + "rt_far_%s.gdshader" % ("cut" if kind == "cut" else "solid"))
 		if kind == "cut": m.set_shader_parameter(&"albedo_arr", load(TEX + "arr_fol_albedo.png"))
-		elif kind == "solid" or kind == "solid_b":      # LOD match (20 Nov): far buildings baked from their near (their page, glass and average
+		elif kind == "solid" or kind == "solid_b" or kind == "solid_h":      # LOD match (20 Nov): far buildings baked from their near (their page, glass and average
 			# grime) and the far props (flat vertex colour; they read no texel), in ONE material, so the old far atlas
 			# (far_color.png) is not loaded at all unless a building far is not baked yet ("legacy")
-			m.set_shader_parameter(&"albedo_tex", load(LOD_PAGE if kind == "solid" else LOD_PAGE_B))
+			m.set_shader_parameter(&"albedo_tex", load(LOD_PAGE if kind == "solid" else (LOD_PAGE_B if kind == "solid_b" else LOD_PAGE_H)))
 			m.set_shader_parameter(&"far_glass", 0.2); m.set_shader_parameter(&"far_wear", 0.92)
 		else: m.set_shader_parameter(&"albedo_tex", load("res://assets/coronado_kit/textures/far_color.png"))
 		m.set_shader_parameter(&"range_begin", MID_END)
@@ -1113,7 +1113,7 @@ func _building(b: Node3D, piece: String, inst_name: String) -> void:
 				if String(mi.name) == "mid": mt = _lod_mid_mat(mt, lt.tex)
 			if String(mi.name) == "far":
 				var ftint: Color = (_tint_for(rec.name, rec.kit)[0] if tint_on else Color.WHITE) if not lt.is_empty() else Color.WHITE
-				_far_add(pivot, _mat_far("legacy" if lt.is_empty() else ("solid" if (lt.tex as Texture2D).resource_path == LOD_PAGE else "solid_b")), mesh, mi.global_transform, pivot, 1.0e9, false, false, null, 0.0, ftint)
+				_far_add(pivot, _mat_far("legacy" if lt.is_empty() else _lod_far_kind((lt.tex as Texture2D).resource_path)), mesh, mi.global_transform, pivot, 1.0e9, false, false, null, 0.0, ftint)
 				continue
 			rec.tiers.append({"name": String(mi.name), "mesh": mesh, "lxf": mi.transform, "mat": mt, "vb": mi.visibility_range_begin, "ve": mi.visibility_range_end, "vbm": mi.visibility_range_begin_margin, "vem": mi.visibility_range_end_margin, "shadow": mi.cast_shadow})
 		elif ch is StaticBody3D:
@@ -1248,6 +1248,8 @@ func _far_add(where: Vector3, matkey: String, mesh: Mesh, xf: Transform3D, pivot
 ## LOD_PAGE, tools/city/lod/lod_bake.py), else {} (the piece's own copy is used, as before)
 const LOD_PAGE := "res://assets/coronado_kit/textures/bld_lod_color.png"
 const LOD_PAGE_B := "res://assets/coronado_kit/textures/bld_lod_color_b.png"      # the types no piece places yet
+const LOD_PAGE_H := "res://assets/coronado_kit/textures/bld_lod_color_hero.png"   # the hero (Hotel Bel): its own 512 page (SPEC 3)
+static func _lod_far_kind(path: String) -> String: return "solid" if path == LOD_PAGE else ("solid_b" if path == LOD_PAGE_B else "solid_h")
 var lod_tiers := {}
 func _lod_tier(kit: String, tier: String) -> Dictionary:
 	var k := kit + "|" + tier
@@ -1259,7 +1261,7 @@ func _lod_tier(kit: String, tier: String) -> Dictionary:
 		var src := KitLib._first_mesh(inst)
 		if src and src.mesh:
 			var m: Material = src.get_surface_override_material(0) if src.get_surface_override_material(0) else src.mesh.surface_get_material(0)
-			if m is BaseMaterial3D and (m as BaseMaterial3D).albedo_texture and (m as BaseMaterial3D).albedo_texture.resource_path in [LOD_PAGE, LOD_PAGE_B]:
+			if m is BaseMaterial3D and (m as BaseMaterial3D).albedo_texture and (m as BaseMaterial3D).albedo_texture.resource_path in [LOD_PAGE, LOD_PAGE_B, LOD_PAGE_H]:
 				r = {"mesh": src.mesh, "tex": (m as BaseMaterial3D).albedo_texture}
 		inst.free()
 	lod_tiers[k] = r

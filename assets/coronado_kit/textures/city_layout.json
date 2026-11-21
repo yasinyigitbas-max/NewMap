@@ -1953,6 +1953,59 @@
     0.4609375,
     0.5234375
    ]
+  },
+  "R_shingle": {
+   "kind": "tile",
+   "px": [
+    0,
+    2016,
+    2048,
+    2048
+   ],
+   "uv": [
+    0.0,
+    0.984375,
+    1.0,
+    1.0
+   ],
+   "tile_m": 1.0,
+   "u_period_m": 16.0,
+   "note": "Hotel Bel: red painted 3-tab shingles (R_comp recoloured)"
+  },
+  "S_shingle": {
+   "kind": "swatch",
+   "of": "R_shingle",
+   "px": [
+    1720,
+    1640,
+    1744,
+    1664
+   ],
+   "uv_center": [
+    0.845703125,
+    0.806640625
+   ]
+  },
+  "SG_hotelbel": {
+   "kind": "sign",
+   "px": [
+    1412,
+    1634,
+    1700,
+    1694
+   ],
+   "uv": [
+    0.689453125,
+    0.7978515625,
+    0.830078125,
+    0.8271484375
+   ],
+   "size_m": [
+    2.88,
+    0.6
+   ],
+   "tile_x": false,
+   "glow": false
   }
  },
  "texel_density": {
@@ -1999,7 +2052,8 @@
   "SG_parking": "PARKING",
   "SG_boathouse": "BOATHOUSE",
   "SG_bridge": "CROWNADO BRIDGE",
-  "SG_emergency": "EMERGENCY"
+  "SG_emergency": "EMERGENCY",
+  "SG_hotelbel": "HOTEL BEL"
  },
  "far_added": [
   "F_c_apt_3",
