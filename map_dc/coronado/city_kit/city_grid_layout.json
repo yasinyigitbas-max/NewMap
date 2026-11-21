@@ -12483,6 +12483,36 @@
    ],
    "yaw": 0.0,
    "from": "fill 21 Nov (tools/city/fill, generated)"
+  },
+  {
+   "piece": "j_rg_nw_e350_n1600",
+   "pos": [
+    350.0,
+    2.0,
+    -1600.0
+   ],
+   "yaw": 0.0,
+   "from": "hero ferry landing 21 Nov (the 1st St gap: a signalised T)"
+  },
+  {
+   "piece": "n_ferry_landing",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "hero ferry landing 21 Nov (terminal, quay and pier, park and ride, maritime museum, green)"
+  },
+  {
+   "piece": "t_ferry_landing",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "hero ferry landing 21 Nov: the landing's hand-placed trees (zoning/trees/ferry_landing.json, sc.py trees)"
   }
  ],
  "coverage": {

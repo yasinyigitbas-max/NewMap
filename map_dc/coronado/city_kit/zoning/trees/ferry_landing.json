@@ -1,0 +1,321 @@
+{
+ "area": "ferry_landing",
+ "piece": "n_ferry_landing",
+ "zone": "hero: the ferry landing",
+ "rule": "docs/TREE_PLAN.md: parks and plazas - palms in rows along the drives and promenades, a few shade trees on the lawns; at most 8 broadleaf and 12 trees of any kind within 60 m of any street point (the plan's in-view limit)",
+ "written": "21 Nov 2026 (hero ferry landing): each tree placed by hand on the built ground, one by one",
+ "trees": [
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    343.55,
+    2.111,
+    -1632
+   ],
+   "yaw": 10,
+   "scale": 1.0,
+   "why": "Ferry Landing Drive, west parkway: the drive's palm row carried on from the T, between the lamps"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    343.55,
+    2.053,
+    -1641
+   ],
+   "yaw": 95,
+   "scale": 1.0,
+   "why": "Ferry Landing Drive, west parkway: the drive's palm row carried on from the T, between the lamps"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    356.45,
+    2.118,
+    -1631
+   ],
+   "yaw": 40,
+   "scale": 0.95,
+   "why": "Ferry Landing Drive, east parkway (the coach bay between): the palm row on the bus side"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    356.45,
+    1.89,
+    -1666
+   ],
+   "yaw": 150,
+   "scale": 0.95,
+   "why": "Ferry Landing Drive, east parkway (the coach bay between): the palm row on the bus side"
+  },
+  {
+   "base": "palm_canary_date_a",
+   "cond": "normal",
+   "at": [
+    339.5,
+    1.744,
+    -1688.5
+   ],
+   "yaw": 0,
+   "scale": 0.9,
+   "why": "the loop's island: four date palms round the monument, the landing's landmark from the drive and the boat"
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "at": [
+    360.5,
+    1.744,
+    -1688.5
+   ],
+   "yaw": 90,
+   "scale": 0.9,
+   "why": "the loop's island: four date palms round the monument, the landing's landmark from the drive and the boat"
+  },
+  {
+   "base": "palm_canary_date_a",
+   "cond": "normal",
+   "at": [
+    339.5,
+    1.659,
+    -1701.5
+   ],
+   "yaw": 180,
+   "scale": 0.9,
+   "why": "the loop's island: four date palms round the monument, the landing's landmark from the drive and the boat"
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "at": [
+    360.5,
+    1.659,
+    -1701.5
+   ],
+   "yaw": 270,
+   "scale": 0.9,
+   "why": "the loop's island: four date palms round the monument, the landing's landmark from the drive and the boat"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    277.5,
+    2.026,
+    -1645.0
+   ],
+   "yaw": 120,
+   "scale": 1.0,
+   "why": "the park and ride's island (mulch) between the lot lights: shade for the cars, the lot's palms"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    232.0,
+    1.591,
+    -1712.0
+   ],
+   "yaw": 40,
+   "scale": 0.95,
+   "why": "the landing green: shade over the playground's benches side"
+  },
+  {
+   "base": "tree_torrey_pine_a",
+   "cond": "normal",
+   "at": [
+    205.0,
+    1.734,
+    -1690.0
+   ],
+   "yaw": 120,
+   "scale": 1.0,
+   "why": "the landing green's west edge: a Torrey pine on the open lawn, the green's tall tree from the bay"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    280.0,
+    1.611,
+    -1709.0
+   ],
+   "yaw": 210,
+   "scale": 0.9,
+   "why": "the landing green: shade by the bandstand for the people listening"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    452.0,
+    1.916,
+    -1662.0
+   ],
+   "yaw": 60,
+   "scale": 0.95,
+   "why": "the museum lawn: shade on the lawn between the museum and 1st St"
+  },
+  {
+   "base": "tree_coral_b",
+   "cond": "normal",
+   "at": [
+    470.0,
+    1.669,
+    -1700.0
+   ],
+   "yaw": 300,
+   "scale": 0.9,
+   "why": "the museum lawn's bay end: a coral tree by the terrace"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    414.0,
+    1.5,
+    -1729.5
+   ],
+   "yaw": 15,
+   "scale": 1.0,
+   "why": "behind the kiosks' terrace: a fan palm over the taco stand's tables"
+  },
+  {
+   "base": "palm_mexican_fan_c",
+   "cond": "normal",
+   "at": [
+    466.0,
+    1.5,
+    -1729.5
+   ],
+   "yaw": 250,
+   "scale": 1.05,
+   "why": "behind the kiosks' terrace, east end: its fan palm"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    324.5,
+    1.519,
+    -1723
+   ],
+   "yaw": 15,
+   "scale": 1.0,
+   "why": "the plaza's west bed by the loop: a pair of queen palms over the drop-off"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    332.5,
+    1.519,
+    -1723
+   ],
+   "yaw": 75,
+   "scale": 1.0,
+   "why": "the plaza's west bed by the loop: a pair of queen palms over the drop-off"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    367.5,
+    1.519,
+    -1723
+   ],
+   "yaw": 140,
+   "scale": 1.0,
+   "why": "the plaza's east bed by the loop: a pair of queen palms over the drop-off"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    375.5,
+    1.519,
+    -1723
+   ],
+   "yaw": 200,
+   "scale": 1.0,
+   "why": "the plaza's east bed by the loop: a pair of queen palms over the drop-off"
+  },
+  {
+   "base": "palm_mexican_fan_a",
+   "cond": "normal",
+   "at": [
+    325.5,
+    1.5,
+    -1735.5
+   ],
+   "yaw": 40,
+   "scale": 1.0,
+   "why": "the plaza's west side bed by the terminal: a tall fan palm, the landing seen from the bay"
+  },
+  {
+   "base": "palm_mexican_fan_b",
+   "cond": "normal",
+   "at": [
+    374.5,
+    1.5,
+    -1735.5
+   ],
+   "yaw": 250,
+   "scale": 1.0,
+   "why": "the plaza's east side bed by the terminal: a tall fan palm, the landing seen from the bay"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    302,
+    1.591,
+    -1712
+   ],
+   "yaw": 20,
+   "scale": 1.0,
+   "why": "the green's corner by the plaza: shade over the path to the market"
+  },
+  {
+   "base": "tree_jacaranda_b",
+   "cond": "normal",
+   "at": [
+    310,
+    1.747,
+    -1688
+   ],
+   "yaw": 100,
+   "scale": 1.0,
+   "why": "the green's east lawn by the loop: shade, the purple bloom by the landing"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    432,
+    1.591,
+    -1712
+   ],
+   "yaw": 300,
+   "scale": 1.0,
+   "why": "the museum garden's lawn: palms in a loose group by the terrace"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    437,
+    1.562,
+    -1716.5
+   ],
+   "yaw": 220,
+   "scale": 1.0,
+   "why": "the museum garden's lawn: palms in a loose group by the terrace"
+  }
+ ]
+}
