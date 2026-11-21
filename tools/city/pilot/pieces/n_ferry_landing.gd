@@ -94,6 +94,24 @@ const BEDS := [
 ## terminal to the pier at u 343): a palm each (the trees list), agave and bougainvillea, low boxwood round them
 const APRON_BEDS := [[305.0, -1761.0, 313.0, -1754.0], [373.0, -1761.0, 381.0, -1754.0]]
 
+## the plaza's compass rose: a paving inlay on the walking line between the loop and the terminal's door, [u, v,
+## half side of its square]; its star in two tones (asphalt / paving), the field inside its ring travertine ("plaza"),
+## the ring itself kerb stone
+const ROSE := [350.0, -1722.0, 6.0]
+## palm pits in a rhythm along the plaza's two sides of the loop (mulch, 2.4 m square; the palms in the trees list),
+## level with the island's four canary palms
+## (long planters between the plaza's stone bands: [u0, v0, u1, v1], the palm at the middle)
+const PITS := [[319.25, -1703.75, 321.75, -1698.25], [319.25, -1691.75, 321.75, -1686.25],
+	[378.75, -1703.75, 381.25, -1698.25], [378.75, -1691.75, 381.25, -1686.25]]
+## flower beds on the lawns (mulch; bougainvillea, bird of paradise and agave along each): the green's along its
+## paths, the museum lawn's and garden's along theirs
+const LAWN_BEDS := [
+	[252.0, -1719.0, 260.0, -1716.0], [280.0, -1719.0, 292.0, -1716.0], [228.0, -1680.0, 240.0, -1676.0],
+	[300.0, -1680.0, 312.0, -1676.0], [264.0, -1692.0, 268.0, -1680.0],
+	[388.0, -1640.0, 396.0, -1636.0], [412.0, -1648.0, 420.0, -1644.0], [436.0, -1696.0, 448.0, -1692.0],
+	[476.0, -1648.0, 484.0, -1640.0], [464.0, -1688.0, 468.0, -1680.0],
+]
+
 const LOOP := [324.0, -1714.0, 376.0, -1676.0, 14.0]
 const ISLE := [333.0, -1705.0, 367.0, -1685.0, 5.0]
 ## buildings: [label, folder, u, v, yaw, why]
@@ -116,6 +134,7 @@ const PAINTS := [
 	[200.0, -1646.0, 207.0, -1644.0, "-"], [311.0, -1646.0, 318.0, -1644.0, "-"],
 	[340.8, VSTEM, 359.2, VS, "-"],                         # the T junction's stem (j_rg_nw_e350_n1600)
 	[324.0, -1714.0, 376.0, -1676.0, "-"],                  # the loop (ring, island, corners drawn below)
+	[ROSE[0] - ROSE[2], ROSE[1] - ROSE[2], ROSE[0] + ROSE[2], ROSE[1] + ROSE[2], "-"],   # the compass rose's square (drawn by _rose)
 	[340.8, -1662.0, 344.3, -1658.5, "concrete"],           # the zebra's landing on the west side (over the parkway)
 	[355.7, -1662.0, 358.7, -1658.0, "concrete"],           # ... and on the east side
 	[340.8, -1676.0, 342.8, VSTEM, "concrete"],             # the drive's west walk
@@ -146,6 +165,10 @@ const PAINTS := [
 	[377.0, -1676.0, 380.0, -1652.0, "concrete"],           # ... down to the museum's forecourt
 	[283.0, -1700.0, 297.0, -1688.0, "concrete"],           # the picnic pad
 	[428.0, -1697.75, 431.0, VS, "concrete"],               # the museum lawn's path from 1st St
+	[260.0, -1698.5, 264.0, -1668.0, "concrete"],           # the green's path from the lot's walk to the bandstand
+	[431.0, -1708.0, 460.0, -1704.0, "concrete"],           # the museum garden's bay walk (the exhibit walk to the garden) ...
+	[460.0, -1733.0, 464.0, -1659.0, "concrete"],           # ... and its walk from the cross path down to the terrace
+	# (the new paths' and beds' edges on lines the ground is already cut on: the 4 m grid, the old edges)
 ]
 
 ## the waterfront: kit quay modules [kind, u, v_face, yaw] (water face on the line; yaw 180 = face to the bay,
@@ -181,36 +204,29 @@ const RAILS := [
 
 ## the lawns' things: [base, cond, u, v, yaw(, collide)] each with its reason
 const LAWN := [
-	# the green's paths lit at night (globe lamps on the grass beside them)
-	["prop_lamp_globe", "worn", 208.0, -1723.0, 0.0], ["prop_lamp_globe", "worn", 230.0, -1723.0, 0.0],
-	["prop_lamp_globe", "worn", 274.0, -1723.0, 0.0], ["prop_lamp_globe", "worn", 296.0, -1723.0, 0.0],
-	["prop_lamp_globe", "worn", 243.6, -1682.0, 0.0], ["prop_lamp_globe", "worn", 243.6, -1704.0, 0.0],
+	# the green's paths lit at night (Victorian lamps on the grass beside them, as round the plaza)
+	["prop_lamp_victorian", "worn", 208.0, -1723.0, 0.0], ["prop_lamp_victorian", "worn", 230.0, -1723.0, 0.0],
+	["prop_lamp_victorian", "worn", 274.0, -1723.0, 0.0], ["prop_lamp_victorian", "worn", 296.0, -1723.0, 0.0],
+	["prop_lamp_victorian", "worn", 243.6, -1682.0, 0.0], ["prop_lamp_victorian", "worn", 243.6, -1704.0, 0.0],
 	# the beach volleyball court (sand) and its spectators' chairs on the lawn beside it
 	["prop_volleyball_net", "clean", 203.0, -1707.0, 0.0],
 	["prop_adirondack_white", "worn", 214.0, -1709.5, -90.0], ["prop_adirondack_white", "worn", 214.0, -1706.5, -90.0],
 	# chairs on the west lawn's bay end, looking at the water over the promenade
-	["prop_adirondack_wood", "worn", 197.0, -1733.0, 180.0], ["prop_adirondack_wood", "worn", 200.0, -1733.6, 180.0], ["prop_adirondack_wood", "worn", 203.0, -1733.0, 180.0],
+	["prop_adirondack_white", "worn", 197.0, -1733.0, 180.0], ["prop_adirondack_white", "worn", 200.0, -1733.6, 180.0], ["prop_adirondack_white", "worn", 203.0, -1733.0, 180.0],
 	# a drinking fountain between the playground and the volleyball court
 	["prop_drinking_fountain", "worn", 213.0, -1700.0, 0.0],
 	# the green's lawn north of the lot: benches in pairs along the lot's walk, looking at the green
 	["prop_park_bench", "worn", 222.0, -1669.4, 180.0], ["prop_park_bench", "worn", 224.5, -1669.4, 180.0],
 	["prop_park_bench", "worn", 280.0, -1669.4, 180.0], ["prop_park_bench", "worn", 282.5, -1669.4, 180.0],
 	# the museum garden's cross path: lamps, a buoy, chairs and a picnic spot on its lawn
-	["prop_lamp_globe", "worn", 445.0, -1655.0, 0.0], ["prop_lamp_globe", "worn", 470.0, -1655.0, 0.0], ["prop_lamp_globe", "worn", 418.0, -1655.0, 0.0],
-	["prop_buoy_nun", "clean", 440.0, -1662.5, 15.0], ["prop_buoy_can", "clean", 462.0, -1662.5, -30.0],
+	["prop_lamp_victorian", "worn", 445.0, -1655.0, 0.0], ["prop_lamp_victorian", "worn", 470.0, -1655.0, 0.0], ["prop_lamp_victorian", "worn", 418.0, -1655.0, 0.0],
+	["prop_buoy_nun", "clean", 440.0, -1662.5, 15.0], ["prop_buoy_nun", "clean", 467.5, -1663.0, -30.0],
 	["prop_picnic_table", "worn", 470.0, -1682.0, 0.0], ["prop_picnic_table", "worn", 474.4, -1682.0, 0.0], ["prop_bbq_kettle", "worn", 472.2, -1678.6, 0.0],
 	["prop_adirondack_white", "worn", 450.0, -1724.0, 180.0], ["prop_adirondack_white", "worn", 453.0, -1724.6, 180.0], ["prop_adirondack_white", "worn", 456.0, -1724.0, 180.0],
 	["prop_park_bench", "worn", 440.0, -1640.0, 90.0], ["prop_park_bench", "worn", 440.0, -1637.5, 90.0],
 	# the coach stop's path to the museum: its lamps, a bench pair halfway for the teachers counting heads
-	["prop_lamp_globe", "worn", 370.0, -1653.6, 0.0], ["prop_lamp_globe", "worn", 381.4, -1664.0, 0.0],
+	["prop_lamp_victorian", "worn", 370.0, -1653.6, 0.0], ["prop_lamp_victorian", "worn", 381.4, -1664.0, 0.0],
 	["prop_park_bench", "worn", 372.5, -1647.6, 0.0], ["prop_park_bench", "worn", 375.0, -1647.6, 0.0],
-	# the lawns' impact sprinkler heads (the green, the museum lawn and garden are watered: each head in the middle of
-	# an open stretch of lawn, read off the empty-lawn report)
-	["prop_sprinkler_impact", "normal", 305.0, -1705.0, 0.0, false], ["prop_sprinkler_impact", "normal", 395.0, -1645.0, 0.0, false], ["prop_sprinkler_impact", "normal", 435.0, -1685.0, 0.0, false], ["prop_sprinkler_impact", "normal", 445.0, -1705.0, 0.0, false],
-	["prop_sprinkler_impact", "normal", 465.0, -1715.0, 0.0, false], ["prop_sprinkler_impact", "normal", 195.0, -1685.0, 0.0, false], ["prop_sprinkler_impact", "normal", 235.0, -1715.0, 0.0, false], ["prop_sprinkler_impact", "normal", 265.0, -1675.0, 0.0, false],
-	["prop_sprinkler_impact", "normal", 275.0, -1715.0, 0.0, false], ["prop_sprinkler_impact", "normal", 405.0, -1665.0, 0.0, false], ["prop_sprinkler_impact", "normal", 455.0, -1675.0, 0.0, false], ["prop_sprinkler_impact", "normal", 455.0, -1645.0, 0.0, false],
-	["prop_sprinkler_impact", "normal", 475.0, -1635.0, 0.0, false], ["prop_sprinkler_impact", "normal", 475.0, -1695.0, 0.0, false], ["prop_sprinkler_impact", "normal", 485.0, -1665.0, 0.0, false], ["prop_sprinkler_impact", "normal", 485.0, -1725.0, 0.0, false],
-	["prop_sprinkler_impact", "normal", 395.0, -1725.0, 0.0, false],
 ]
 
 func _init() -> void: _run.call_deferred()
@@ -324,6 +340,8 @@ func _run() -> void:
 	for bd: Array in B: paints.append(H.pad_rect(_fp(bd)))
 	for pr: Array in PAINTS: if String(pr[4]) == "-": paints.append(pr)
 	for bd: Array in BEDS: paints.append([bd[0], bd[1], bd[2], bd[3], "mulch"])
+	for pt: Array in PITS: paints.append([pt[0], pt[1], pt[2], pt[3], "mulch"])
+	for bd: Array in LAWN_BEDS: paints.append([bd[0], bd[1], bd[2], bd[3], "mulch"])
 	paints.append_array(_bands(318.0, -1750.0, 383.3, -1676.0))
 	for pr: Array in PAINTS: if String(pr[4]) != "-": paints.append(pr)
 	H.paint(g, U0, VF, U1, VS, paints, "grass", fw, 4.0)
@@ -376,7 +394,8 @@ func _run() -> void:
 		var corner: Vector2 = [Vector2(324.0, -1714.0), Vector2(376.0, -1714.0), Vector2(376.0, -1676.0), Vector2(324.0, -1676.0)][ci]
 		var pts := PackedVector2Array([corner])
 		for k in n: pts.append(ro[ci * n + k])
-		g.poly("plaza", pts, fw)
+		g.poly("concrete", pts, fw)
+	_rose(fw)
 	# ---- the quay apron on the bastion and the revetments
 	var apron: Array = []
 	for bd: Array in APRON_BEDS: apron.append([bd[0], bd[1], bd[2], bd[3], "mulch"])
@@ -385,7 +404,7 @@ func _run() -> void:
 	H.paint(g, U0, TOE, 212.0, VF, [], "ferry_riprap", fx)
 	H.paint(g, 384.0, TOE, U1, VF, [], "ferry_riprap", fx)
 	# the west seawall's end (u 212): a face from the promenade's edge down the revetment beside it
-	H.step_face(g, Vector2(212.0, VF), Vector2(212.0, -1752.0), fw, fx, "wall", 0.5)
+	H.step_face(g, Vector2(212.0, VF), Vector2(212.0, -1752.0), fw, fx, "curb", 0.5)
 	# ---- buildings on their pads
 	for b: Array in B:
 		var cu: float = b[2]; var cv: float = b[3]; var yaw: float = b[4]
@@ -403,6 +422,31 @@ func _run() -> void:
 	quit()
 
 ## ---------------------------------------------------------------- the quay, the pier, the berths, the boats
+## the compass rose: 32 sectors; the star's 8 points (N/S/E/W long, the diagonals short) each split in a dark and a
+## light half, the travertine field round the star inside a kerb-stone ring, concrete out to the square's edge
+func _rose(fw: Callable) -> void:
+	var c := Vector2(ROSE[0], ROSE[1]); var h: float = ROSE[2]
+	var R1 := 4.9; var R2 := 5.5; var N := 32
+	var at := func(a: float, r: float) -> Vector2: return c + Vector2(sin(a), -cos(a)) * r
+	var sq := func(a: float) -> Vector2:
+		var d := Vector2(sin(a), -cos(a)); return c + d * (h / maxf(absf(d.x), absf(d.y)))
+	for m in 8:
+		var a0 := TAU * m / 8.0; var tip: Vector2 = at.call(a0, 4.7 if m % 2 == 0 else 3.0)
+		for side: float in [-1.0, 1.0]:
+			var av := a0 + side * TAU / 16.0; var val: Vector2 = at.call(av, 1.0)
+			# the point's half: dark on one side, light on the other
+			g.poly("asphalt" if side < 0.0 else "paving", PackedVector2Array([c, tip, val]), fw)
+			# the field between this half and the ring: the valley, the ring's arc back to the tip's angle, the tip
+			var pts := PackedVector2Array([val])
+			for k in 3: pts.append(at.call(av - side * TAU / 32.0 * k, R1))
+			pts.append(tip)
+			g.poly("plaza", pts, fw)
+	for k in N:
+		var a0 := TAU * k / N; var a1 := TAU * (k + 1) / N
+		var p0: Vector2 = at.call(a0, R1); var p1: Vector2 = at.call(a1, R1); var q0: Vector2 = at.call(a0, R2); var q1: Vector2 = at.call(a1, R2)
+		g.poly("curb", PackedVector2Array([p0, q0, q1, p1]), fw)
+		g.poly("concrete", PackedVector2Array([q0, sq.call(a0), sq.call(a1), q1]), fw)
+
 func _waterfront() -> void:
 	for q: Array in QUAYS:
 		var kind: String = q[0]; var yaw: float = q[3]
@@ -511,14 +555,38 @@ func _dress() -> void:
 		var cu := (u0 + u1) * 0.5; var cv := (v0 + v1) * 0.5
 		P("plant_bougainvillea_mound", "normal", cu, cv, 0.0)
 		P("plant_bird_of_paradise", "normal", u0 + 2.0, cv + 1.2, 0.0); P("plant_bird_of_paradise", "normal", u1 - 2.0, cv - 1.2, 0.0)
-		P("plant_agave_americana", "normal", u0 + 2.2, cv - 1.6, 0.0); P("plant_agave_americana_small", "normal", u1 - 2.2, cv + 1.6, 0.0)
+		P("plant_agave_americana", "normal", u0 + 2.2, cv - 1.6, 0.0); P("plant_agave_americana", "normal", u1 - 2.2, cv + 1.6, 0.0)
 	for c: Array in [[328.5, -1718.2, 0.0], [371.5, -1718.2, 0.0], [328.0, -1741.0, 180.0], [372.0, -1741.0, 180.0]]:
 		for du: float in [-1.25, 1.25]: P("prop_park_bench", "worn", c[0] + du, c[1], c[2])     # in pairs
 	for k in 9: P("prop_bollard_iron", "worn", 338.0 + 3.0 * k, -1714.8, 0.0)
+	# the plaza's two shade sails, each over a table of four on the walking line's sides (the rose and the walk from
+	# the loop to the door between them stay clear), the ferry
+	# timetable case on the terminal's west wall, the porters' baggage cart parked against it, a second bike rack
+	for u: float in [340.0, 360.0]:
+		P("prop_shade_sail", "worn", u, -1719.0, 0.0, false)
+		P("prop_patio_set_4", "worn", u, -1719.0, 0.0)
+	P("prop_poster_case", "worn", 339.88, -1739.0, -90.0)
+	P("prop_golf_cart_white", "worn", 337.2, -1743.0, 0.0)
+	P("prop_bike_rack", "worn", 336.8, -1733.8, 90.0)
+	# the palm pits along the plaza's sides of the loop: an agave at each end of each, the palm between
+	for pt: Array in PITS:
+		for dv: float in [-1.9, 1.9]: P("plant_agave_americana", "normal", (pt[0] + pt[2]) * 0.5, (pt[1] + pt[3]) * 0.5 + dv, 0.0)
+	# the lawns' flower beds: along each bed's long axis, bougainvillea and bird of paradise in turn (the kinds the plaza already draws)
+	var kinds := ["plant_bougainvillea_mound", "plant_bird_of_paradise"]
+	for bd: Array in LAWN_BEDS:
+		var u0: float = bd[0]; var v0: float = bd[1]; var u1: float = bd[2]; var v1: float = bd[3]
+		var along_u := (u1 - u0) >= (v1 - v0)
+		var L := (u1 - u0) if along_u else (v1 - v0)
+		var n := maxi(2, int(floor(L / 2.6)))
+		for k in n:
+			var t := (k + 0.5) / n
+			var pu := lerpf(u0, u1, t) if along_u else (u0 + u1) * 0.5
+			var pv := (v0 + v1) * 0.5 if along_u else lerpf(v0, v1, t)
+			P(kinds[k % kinds.size()], "normal", pu, pv, 37.0 * k)
 	for u: float in [339.8, 342.3, 357.7, 360.2]: P("prop_park_bench", "worn", u, -1727.6, 0.0)      # facing the loop: waiting for a taxi
 	for v: float in [-1679.5, -1686.5]: P("plant_potted_leafy", "normal", 382.4, v, 0.0)            # the museum's door
 	P("prop_trash_receptacle", "worn", 339.4, -1736.0, 0.0)
-	P("prop_recycling_receptacle", "worn", 360.6, -1736.0, 0.0)
+	P("prop_trash_receptacle", "worn", 360.6, -1736.0, 0.0)
 	P("prop_bike_rack", "worn", 363.2, -1740.5, 90.0)
 	P("prop_newspaper_box_blue", "worn", 358.4, -1728.4, 180.0)
 	# ---- the quay apron: Victorian lamps along the bastion, benches in pairs facing the bay, lifering stands at the
@@ -547,7 +615,7 @@ func _dress() -> void:
 	for u: float in [279.2, 289.8, 269.0]: P("plant_potted_leafy", "normal", u, -1741.0, 0.0)
 	P("prop_bike_rack", "worn", 241.5, -1741.2, 0.0)
 	# ---- the green's and the museum garden's lawns: path lamps, the volleyball court, chairs and tables in groups,
-	#      the lawns' sprinkler heads (each spot read against the empty-lawn report)
+	#      the lawns' benches and picnic spots
 	for c: Array in LAWN: P(String(c[0]), String(c[1]), c[2], c[3], c[4], c.size() < 6 or bool(c[5]))
 	# ---- the beach below the seawall (the fill's sand): umbrellas of the day's beach-goers
 	for c: Array in [[276.0, -1756.0], [284.5, -1757.0], [293.0, -1756.5]]: PY("prop_beach_umbrella", "clean", c[0], LAND.at(c[0], c[1]), c[1], 0.0)
@@ -571,7 +639,7 @@ func _dress() -> void:
 	# ---- the museum: its exhibits on the bay lawn (three buoys, a boat trailer), benches looking at them, the service
 	#      yard's dumpster and condensers against its back wall, lamps on its walks
 	P("prop_buoy_nun", "clean", 404.0, -1708.0, 30.0)
-	P("prop_buoy_can", "clean", 410.0, -1708.0, -20.0)
+	P("prop_buoy_nun", "clean", 410.0, -1708.0, -20.0)
 	P("prop_buoy_mooring", "clean", 416.0, -1708.5, 0.0)
 	P("prop_boat_trailer", "clean", 421.5, -1716.0, 90.0)
 	for u: float in [405.5, 408.0]: P("prop_park_bench", "worn", u, -1703.0, 0.0)
@@ -592,4 +660,4 @@ func _dress() -> void:
 			[470.0, -1757.0], [478.0, -1756.3], [195.0, -1756.6], [201.0, -1756.4], [207.0, -1756.0]]:
 		P("prop_riprap_boulder", "worn", c[0], c[1], fmod(c[0] * 37.0, 360.0))
 	for c: Array in [[396.0, -1753.5], [414.0, -1753.0], [437.0, -1753.6], [459.0, -1753.2], [198.0, -1753.4]]:
-		P("prop_riprap_pile", "worn", c[0], c[1], fmod(c[0] * 53.0, 360.0))
+		P("prop_riprap_boulder", "worn", c[0], c[1], fmod(c[0] * 53.0, 360.0))

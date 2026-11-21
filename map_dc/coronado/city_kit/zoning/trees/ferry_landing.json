@@ -340,6 +340,114 @@
    "yaw": 170,
    "scale": 1.0,
    "why": "the quay apron's east bed: a palm over the benches where people wait for the boat"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    320.5,
+    1.662,
+    -1701
+   ],
+   "yaw": 30,
+   "scale": 1.0,
+   "why": "the plaza's west planters by the loop: palms in a rhythm with the island's canary palms"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    320.5,
+    1.74,
+    -1689
+   ],
+   "yaw": 110,
+   "scale": 1.0,
+   "why": "the plaza's west planters by the loop: palms in a rhythm with the island's canary palms"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    380,
+    1.662,
+    -1701
+   ],
+   "yaw": 200,
+   "scale": 1.0,
+   "why": "the plaza's east planters by the loop: palms in a rhythm with the island's canary palms"
+  },
+  {
+   "base": "palm_queen_a",
+   "cond": "normal",
+   "at": [
+    380,
+    1.74,
+    -1689
+   ],
+   "yaw": 280,
+   "scale": 1.0,
+   "why": "the plaza's east planters by the loop: palms in a rhythm with the island's canary palms"
+  },
+  {
+   "base": "palm_canary_date_b",
+   "cond": "normal",
+   "at": [
+    236,
+    1.5,
+    -1731
+   ],
+   "yaw": 45,
+   "scale": 1.0,
+   "why": "the green's bay corner behind the market row: a big palm over the lawn chairs"
+  },
+  {
+   "base": "tree_coral_a",
+   "cond": "normal",
+   "at": [
+    255,
+    1.747,
+    -1688
+   ],
+   "yaw": 130,
+   "scale": 1.0,
+   "why": "the green's middle by the bandstand path: shade for the bandstand's audience"
+  },
+  {
+   "base": "tree_torrey_pine_b",
+   "cond": "normal",
+   "at": [
+    275,
+    1.734,
+    -1690
+   ],
+   "yaw": 70,
+   "scale": 1.0,
+   "why": "the green between the bandstand and the picnic pad: a Torrey pine, a Coronado native"
+  },
+  {
+   "base": "tree_jacaranda_a",
+   "cond": "normal",
+   "at": [
+    420,
+    1.734,
+    -1690
+   ],
+   "yaw": 160,
+   "scale": 1.0,
+   "why": "the museum lawn south of the museum: shade over the garden's flower beds"
+  },
+  {
+   "base": "palm_queen_b",
+   "cond": "normal",
+   "at": [
+    450,
+    1.669,
+    -1700
+   ],
+   "yaw": 250,
+   "scale": 1.0,
+   "why": "the museum garden by its bay walk: a palm by the flower bed"
   }
  ]
 }
