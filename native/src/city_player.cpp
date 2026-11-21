@@ -457,8 +457,8 @@ void CityPlayer::_physics_process(double p_delta) {
 		// standing he sets off with the start clip (his weight over the right foot, the left steps off), and letting go
 		// while walking he walks on to the next footfall and stops with that foot's stop clip (the trunk carries on, the
 		// hips sink, the feet come together). His body moves by the clip's own pace curve, so the planted foot stays put.
-		const char *pre = "step/";
-		const float native_walk = 0.92f;   // (the walk the step clips were made from: Walk_Loop's own pace)
+		const char *pre = "step/rb_";
+		const float native_walk = 1.00f;   // (the walk the step clips were made from: the Rocketbox walk's own pace)
 		if (step_mode != 0 && (airborne || settle_t < 1.1f)) step_mode = 0;
 		if (step_mode == 0 && want_len > 0.05f && move_speed < 0.05f && speed < 0.08f && turn_left < 0.6f && !airborne && settle_t >= 1.1f && !auto_on) {   // (walking to a spot by himself: a step or two, no start: it carried him past the spot)
 			const StringName c(String(pre) + String("start"));
@@ -602,10 +602,11 @@ void CityPlayer::_physics_process(double p_delta) {
 		// THE GAIT SET (see the header): the clip whose own pace is nearest his (kept until another is clearly nearer), played
 		// at his pace over its own, so the planted foot stays put. (Turning on the spot: the slowest walk, slowly: he steps
 		// round instead of spinning on his heels.)
-		static const StringName S_WALK("step/walk"), S_JOG("step/jog");
-		static const StringName SET[2] = { S_WALK, S_JOG };
-		static const float SV[2] = { 0.92f, 2.40f };   // (the planted foot's pace: clip_audit.gd)
-		const StringName *set = SET; const float *sv = SV; const int ns = 2;
+		// (Yasin, 21 Nov: "we need to go back to rocketbox walking and running, this walking and running are too cartooney")
+		static const StringName RB_WS("walk_slow"), RB_W("walk"), RB_WF("walk_fast"), RB_RUN("run");
+		static const StringName SET[4] = { RB_WS, RB_W, RB_WF, RB_RUN };
+		static const float SV[4] = { 0.81f, 1.00f, 1.35f, 2.69f };   // (the planted foot's pace: clip_audit.gd --rb)
+		const StringName *set = SET; const float *sv = SV; const int ns = 4;
 		const float sp = std::max(speed, 0.3f);
 		int best = 0;
 		for (int g = 1; g < ns; g++) if (std::fabs(std::log(sp / sv[g])) < std::fabs(std::log(sp / sv[best]))) best = g;
@@ -613,7 +614,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (gi >= 0 && gi < ns && std::fabs(std::log(sp / sv[gi])) < std::fabs(std::log(sp / sv[best])) + 0.12f) best = gi;
 		gait_i = best;
 		clip = set[best]; cs = speed > 0.08f ? speed / sv[best] : 0.45;
-		if (fig->clip_len(clip) <= 0.0) { clip = best ? JOG : WALK; cs = speed / sv[best]; }   // (a figure without the step library: the fists)
+		if (fig->clip_len(clip) <= 0.0) { clip = best == 3 ? JOG : WALK; cs = speed / (best == 3 ? 2.40f : 0.92f); }   // (a figure without the Rocketbox clips)
 	}
 	if (clip == IDLE || clip == S_IDLE) gait_i = -1;
 	// his hands on what another system gives him (the climb's grip does it: off when nothing holds them, never in a climb)
@@ -630,9 +631,9 @@ void CityPlayer::_physics_process(double p_delta) {
 	// walk with the phone in the hand or at the ear (the same legs: the stride matches)
 	if (phone_kind != 0 && heavy && step_mode == 0 && gest_t <= 0.0f) {
 		static const StringName P_HAND("ual/Idle_Lantern_Loop"), P_EAR("ual/Idle_TalkingPhone_Loop"), P_UP("ual/Idle_Torch_Loop"),
-				P_WALK_HAND("ual/Walk_Text_Loop"), P_WALK_EAR("ual/Walk_Phone_Loop"), S_WALK3("step/walk");
+				P_WALK_HAND("ual/Walk_Text_Loop"), P_WALK_EAR("ual/Walk_Phone_Loop"), S_WALK3("step/walk"), R_W1("walk_slow"), R_W2("walk"), R_W3("walk_fast");
 		if (clip == IDLE || clip == S_IDLE) clip = phone_kind == 2 ? P_EAR : (phone_kind == 3 ? P_UP : P_HAND);
-		else if ((clip == S_WALK3 || clip == WALK) && fig->clip_len(P_WALK_HAND) > 0.0) clip = phone_kind == 2 ? P_WALK_EAR : P_WALK_HAND;
+		else if ((clip == S_WALK3 || clip == WALK || clip == R_W1 || clip == R_W2 || clip == R_W3) && fig->clip_len(P_WALK_HAND) > 0.0) clip = phone_kind == 2 ? P_WALK_EAR : P_WALK_HAND;
 	}
 	vis_dy *= std::exp(-dt / 0.09f); if (std::fabs(vis_dy) < 0.001f) vis_dy = 0.0f;   // (lifted onto a kerb: the figure rises after, its foot already on it)
 	// THE LEAN: his body tilts with its acceleration, into a turn and a little forward into a start, back into a stop
@@ -654,8 +655,8 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (ang > 0.14f) { const Vector3 hz = Vector3(up.x, 0, up.z).normalized(); up = Vector3(0, std::cos(0.14f), 0) + hz * std::sin(0.14f); }
 		if (ang > 0.002f) fb = Basis(Quaternion(Vector3(0, 1, 0), up)) * fb;
 	}
-	static const StringName S_WALK2("step/walk");
-	const bool slowest = clip == WALK || clip == S_WALK2;
+	static const StringName S_WALK2("step/walk"), R_WS2("walk_slow");
+	const bool slowest = clip == WALK || clip == S_WALK2 || clip == R_WS2;
 	fig->drive(Transform3D(fb, get_global_position() + Vector3(0, vis_dy, 0)), clip, std::min(std::max(cs, slowest ? 0.15 : 0.5), 2.0), hold);
 	if (Skeleton3D *sk = fig->skeleton()) {
 		if (!plant) { plant = memnew(FootPlant); sk->add_child(plant); }
