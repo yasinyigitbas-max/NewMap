@@ -1,0 +1,19 @@
+6c6
+< KIT=Path('/workspace/coronado_kit_v2')
+---
+> KIT=Path(os.environ.get('KIT_ROOT',os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+378a379,383
+>     # exact culling (hb_kit speed-up): a ray shorter than maxd can only hit a triangle whose box lies within maxd of the
+>     # chunk's points; the result is identical to testing every triangle
+>     TL=np.minimum(np.minimum(V0,V1),V2); TH=np.maximum(np.maximum(V0,V1),V2)
+>     order=np.lexsort((points[:,2],points[:,0])) if len(points)>64 else np.arange(len(points))
+>     points=points[order]; normals=normals[order]; inv_order=np.argsort(order)
+380a386,387
+>         lo=P.min(0)-maxd-0.01; hi=P.max(0)+maxd+0.01
+>         sel=np.all((TH>=lo)&(TL<=hi),axis=1)
+384c391
+<         h=ray_tri(O,D,V0,V1,V2,maxd)
+---
+>         h=ray_tri(O,D,V0[sel],V1[sel],V2[sel],maxd) if sel.any() else np.zeros(len(O),bool)
+388a396
+>     occ=occ[inv_order]
