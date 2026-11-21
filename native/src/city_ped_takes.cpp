@@ -62,6 +62,40 @@ const Takes TAKES[] = {
 	{ "ual/Sitting_Talking_Loop", { "mx/Sitting_talking" } },
 	// fighting
 	{ "ual/PunchKick_Enter", { "mx/Fight_Idle_To_Action_Idle" } },
+	// the crowd (Yasin, 21 Nov: "some people carrying boxes or bags or brief cases in the crowd, i want a living city"):
+	// carrying, walking and standing; waiting in many ways; cowering; the police; the medics
+	{ "x/carry_bag", { "mx/Walking_With_Shopping_Bag" } }, { "x/carry_box", { "mx/Walking_Carry" } }, { "x/carry_case", { "mx/Walk_With_Briefcase" } },
+	{ "x/carry_box_idle", { "mx/Box_Idle" } }, { "x/carry_case_idle", { "mx/Standing_W_Briefcase_Idle" } },
+	{ "x/wait_bored", { "mx/Idle_Transition", "mx/Neck_Stretching", "mx/Looking_Around_idle", "mx/Arm_Stretching" }, true },
+	{ "x/wait_smoke", { "mx/Smoking" } },
+	{ "x/phone_angry", { "mx/Angry_talking_phone", "mx/Talking_on_phone_arguing", "mx/Talking_Phone_Pacing" }, true },   // (Yasin: "some of thm should speak angry on the phone")
+	{ "x/seller", { "mx/Yelling_Out", "mx/Hands_Forward_Gesture", "mx/Counting", "mx/Talking_3", "mx/Pointing_Forward" }, true },   // (a street seller: calling out, offering, counting his money)
+	{ "x/sit_chat", { "mx/Sitting_talking", "mx/Sitting_Idle", "mx/Sitting_talking", "mx/Sitting_Thumbs_Up" }, true },   // (two on a bench: talking)
+	{ "x/wait_drunk", { "mx/Drunk_Idle_Variation" } },
+	{ "x/cower", { "mx/Terrified" } },
+	{ "x/car_out", { "mx/Exiting_Car" } }, { "x/car_in", { "mx/Entering_Car" } },   // (Yasin, 21 Nov: "make sure every npc use car get in get out too")
+	// gestures that fit the line (Yasin, 21 Nov: "make sure the gesures are context relevant for the lines", "especially for the
+	// player"): city_talk.cpp line_gesture reads the line; standing and seated
+	{ "x/g_wave", { "mx/Waving", "mx/Waving_2", "mx/Standing_Greeting", "mx/Waving_4" } },
+	{ "x/g_ask", { "mx/Asking_Question", "mx/Hands_Forward_Gesture", "mx/Arm_Gesture" } },
+	{ "x/g_thanks", { "mx/Thankful", "mx/Quick_Formal_Bow" } },
+	{ "x/g_point", { "mx/Pointing", "mx/Pointing_Forward", "mx/Pointing_back_thumb" } },
+	{ "x/g_angry", { "mx/Angry_Gesture", "mx/Insult", "mx/Threatening", "mx/Yelling" } },
+	{ "x/g_secret", { "mx/Telling_A_Secret" } },
+	{ "x/g_unsure", { "mx/Disappointed_2", "mx/Sarcastic_Head_Nod" } },
+	{ "x/g_sorry", { "mx/Disappointed" } },
+	{ "x/g_cheer", { "mx/Cheering", "mx/Fist_Pump", "mx/Excited" } },
+	{ "x/gs_talk", { "mx/Sitting_talking" } }, { "x/gs_yes", { "mx/Sitting_Thumbs_Up" } }, { "x/gs_no", { "mx/Sitting_Disapproval" } },
+	{ "x/gs_point", { "mx/sitting_Pointing" } }, { "x/gs_angry", { "mx/Angry_Gesture_sitting", "mx/Sitting_Yell" } }, { "x/gs_ask", { "mx/Sitting_Disbelief" } },
+	{ "x/gs_cheer", { "mx/Cheering_While_Sitting", "mx/Sitting_Clap" } },
+	{ "x/kneel_caught", { "mx/Kneeling" } },
+	{ "x/police_aim", { "mx/Pistol_Idle" } },
+	{ "x/arrest", { "mx/Restrain" } },
+	{ "x/cpr_give", { "mx/Administering_Cpr" } },
+	{ "x/cpr_take", { "mx/Receiving_Cpr" } },
+	{ "x/up_from_back", { "mx/Getting_Up", "mx/Situp_To_Idle" } },
+	{ "x/mug_victim", { "mx/Hostage_Situation_Idle_Hostage" } },
+	{ "ual/Surprise", { "mx/Looking", "mx/Terrified" } },
 	{ "x/fight_stance", { "mx/Fighting_Idle", "mx/Fight_idle" }, true },   // (the stance held, its takes one after another)
 	{ "x/fight_taunt", { "mx/Fistfight_Taunt", "mx/Taunt" } },
 	{ "x/fight_step", { "mx/Fight_forwardstep" } },

@@ -649,6 +649,9 @@ void CityPlayer::_physics_process(double p_delta) {
 	else if (heavy && gest_t > 0.0f && speed < 0.08f) {   // a talk's gesture: talking, a nod, a no
 		static const StringName G_TALK("ual/Idle_Talking_Loop"), G_YES("ual/Yes"), G_NO("ual/Idle_No_Loop"), G_LIFT("ual/PickUp_Kneeling");
 		clip = gest_kind == 1 ? G_YES : (gest_kind == 2 ? G_NO : (gest_kind == 3 ? G_LIFT : G_TALK)); hold = (gest_kind == 1 || gest_kind == 3) ? -2.0 : -1.0;
+		// the line's own gesture (CityTalk::line_gesture, Yasin 21 Nov: "especially for the player")
+		static const char *const GK[13] = { nullptr, nullptr, nullptr, nullptr, "x/g_wave", "x/g_ask", "x/g_thanks", "x/g_point", "x/g_angry", "x/g_secret", "x/g_unsure", "x/g_sorry", "x/g_cheer" };
+		if (gest_kind >= 4 && gest_kind < 13 && fig->clip_len(StringName(GK[gest_kind])) > 0.0) { clip = StringName(GK[gest_kind]); hold = -2.0; }
 	}
 	else if (speed > 0.08f || (heavy && turn_left > 0.35f && move_speed < 0.4f && Vector3(want.x, 0, want.z).length() > 0.05f)) {
 		// THE GAIT SET (see the header): the clip whose own pace is nearest his (kept until another is clearly nearer), played

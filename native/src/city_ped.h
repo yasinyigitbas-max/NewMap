@@ -122,6 +122,10 @@ public:
 	double ground_v(const StringName &p_clip, double p_def) const;
 	void set_variant(int p_seed) { var_seed = (uint32_t)p_seed; }
 	void set_alias(bool p_on) { alias_on = p_on; }
+	// (the Animator, 21 Nov; Yasin: "paramedic should do cpr and rceiving npc shoud lay flat") its body lying on the ground
+	// hands over to a lying clip: the clip's figure laid where the body lies (hips on hips, head toward head), the clip
+	// running; false when it is not lying in its body or has no such clip
+	bool lie_as(const StringName &p_clip);
 	void start_at(double p_t) { pending_seek = p_t; }   // (the next fresh clip starts this far in: a start clip's still lead-in skipped)
 	double pending_seek = -1.0;
 	// what this figure looks like (its body's mesh and its clothes): another figure of the same person takes them on

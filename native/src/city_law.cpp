@@ -180,6 +180,10 @@ void CityLaw::crew_out(Unit &u) {
 		const Vector3 at = u.at + side * (sx * (m.half_w + 0.55f)) + f * (m.half_len * 0.12f);
 		u.crew[k] = cr->actor_place(at, u.kind == U_POLICE ? 2 : 3, std::atan2(side.x * sx, side.z * sx), u.kind == U_POLICE ? CityCrowd::R_COP : CityCrowd::R_MEDIC);
 		if (u.crew[k] >= 0) n_out++;
+		// (Yasin, 21 Nov: "make sure every npc use car get in get out too") out of the car: Mixamo's Exiting_Car, seated
+		// facing the way the car faces, turning out through the door as he stands
+		static const StringName OUT("x/car_out");
+		if (u.crew[k] >= 0) cr->actor_once(u.crew[k], u.yaw, OUT, false);
 	}
 }
 
@@ -256,6 +260,13 @@ void CityLaw::unit_update(Unit &u, double p_delta) {
 				any = true;
 				if (u.target == -2) {
 					if (!on_foot(pl)) continue;
+					// (Yasin, 21 Nov: "once they find us they should keep a gun at us") the second officer covers him from a few
+					// metres, turned to him, his gun on him; the first runs him down
+					{
+						const Vector3 cq = cr->walker_at(c), pq = pl->get_global_position();
+						const float dq = Vector2(cq.x - pq.x, cq.z - pq.z).length();
+						if (k == 1 && dq < 9.0f) { static const StringName AIM("x/police_aim"); cr->actor_stand(c, std::atan2(pq.x - cq.x, pq.z - cq.z), AIM, -1.0, 0); continue; }
+					}
 					cr->actor_follow(c, -2, 5.4, 1.0);
 					const Vector3 cp = cr->walker_at(c), pp = pl->get_global_position();
 					if (Vector2(cp.x - pp.x, cp.z - pp.z).length() < 1.35f && busted_t < 0.0) {   // BUSTED
@@ -270,7 +281,7 @@ void CityLaw::unit_update(Unit &u, double p_delta) {
 					cr->actor_follow(c, u.target, 5.6, 1.0);
 					const Vector3 cp = cr->walker_at(c), mp = cr->walker_at(u.target);
 					if (k == 0 && Vector2(cp.x - mp.x, cp.z - mp.z).length() < 1.3f) {
-						static const StringName CROUCH("ual/Crouch_Idle_Loop"), POINT("ual/Idle_FoldArms_Loop");
+						static const StringName CROUCH("x/kneel_caught"), POINT("x/police_aim");   // (he kneels; they aim at him: Mixamo, 21 Nov)
 						if (!cr->is_actor(u.target)) cr->actor_take(u.target, CityCrowd::R_MUGGER);
 						cr->actor_stand(u.target, std::atan2(cp.x - mp.x, cp.z - mp.z), CROUCH, -1.0, 0);
 						for (int q = 0; q < 2; q++) if (u.crew[q] >= 0) cr->actor_stand(u.crew[q], std::atan2(mp.x - cp.x, mp.z - cp.z), POINT, -1.0, 0);
@@ -292,7 +303,9 @@ void CityLaw::unit_update(Unit &u, double p_delta) {
 			bool all = true;
 			for (int k = 0; k < 2; k++) {
 				if (u.crew[k] < 0) continue;
-				if (!cr->walker_alive(u.crew[k]) || cr->actor_arrived(u.crew[k]) || u.t > 15.0f) { cr->actor_release(u.crew[k]); u.crew[k] = -1; }
+				// at his door: in (Mixamo's Entering_Car), then he is gone
+				if (cr->walker_alive(u.crew[k]) && cr->actor_arrived(u.crew[k]) && u.t <= 15.0f) { static const StringName IN("x/car_in"); cr->actor_once(u.crew[k], u.yaw + 3.14159265, IN, true); u.crew[k] = -1; }
+				else if (!cr->walker_alive(u.crew[k]) || u.t > 15.0f) { cr->actor_release(u.crew[k]); u.crew[k] = -1; }
 				else all = false;
 			}
 			if (all) {
@@ -311,11 +324,12 @@ void CityLaw::unit_update(Unit &u, double p_delta) {
 				if (c < 0) continue;
 				if (cr->actor_arrived(c) && cr->actor_role(c) == CityCrowd::R_MEDIC) {
 					const Vector3 cp = cr->walker_at(c);
-					static const StringName KNEEL("ual/Fixing_Kneeling"), BAND("ual/PickUp_Kneeling");
-					if (u.goal.y > -9000.0f) cr->actor_stand(c, std::atan2(vp.x - cp.x, vp.z - cp.z), k == 0 ? KNEEL : BAND, k == 0 ? -1.0 : 0.6, 0);
+					// (Yasin, 21 Nov: "paramedic should do cpr") the first gives CPR, the second kneels by him
+					static const StringName CPR("x/cpr_give"), KNEEL("ual/Fixing_Kneeling");
+					if (u.goal.y > -9000.0f) cr->actor_stand(c, std::atan2(vp.x - cp.x, vp.z - cp.z), k == 0 ? CPR : KNEEL, -1.0, 0);
 				} else if (!cr->actor_arrived(c)) there = false;
 			}
-			if (there && u.goal.y > -9000.0f) { u.goal.y = -9999.0f; u.t = 0.0f; }   // (all knelt: the clock starts)
+			if (there && u.goal.y > -9000.0f) { u.goal.y = -9999.0f; u.t = 0.0f; cr->set_cpr(u.target, true); }   // (all knelt: the clock starts; he takes the CPR)
 			if (u.goal.y <= -9000.0f && u.t > 8.0f) {
 				cr->treat(u.target); n_treated++;
 				u.st = S_BACK; u.t = 0.0f; crew_back(u);
@@ -445,6 +459,50 @@ void CityLaw::mug_update(Mug &m, double p_delta) {
 
 // ---------------------------------------------------------------- every frame
 
+// POLICE ON FOOT (Yasin, 21 Nov: "make the police patrol the streets too, not very many of them, but once they find us
+// they should keep a gun at us"): at most two officers walk the pavements near him (placed 60-90 m off, walking from one
+// pavement spot to another near him, gone once he is far). Wanted and seen within 9 m: the officer stands and keeps his
+// gun on him (Mixamo's Pistol_Idle; the gun itself comes with the props), turned to him as he moves; wanted and seen
+// further off: he goes after him.
+void CityLaw::patrol_update(double p_delta) {
+	CityCrowd *cr = crowd();
+	CityPlayer *pl = player();
+	if (!cr || !pl || !police_on) return;
+	const Vector3 pp = player_at(pl, this);
+	patrol_next -= p_delta;
+	for (size_t k = 0; k < patrols.size();) {
+		Patrol &pt = patrols[k];
+		pt.t += (float)p_delta;
+		if (!cr->walker_alive(pt.walker)) { patrols.erase(patrols.begin() + (long)k); continue; }
+		const Vector3 cp = cr->walker_at(pt.walker);
+		const float d = Vector2(cp.x - pp.x, cp.z - pp.z).length();
+		if (d > 160.0f) { cr->actor_release(pt.walker); cr->remove_walker(pt.walker); patrols.erase(patrols.begin() + (long)k); continue; }
+		if (wanted > 0 && on_foot(pl) && d < 9.0f) {
+			static const StringName AIM("x/police_aim");
+			cr->actor_stand(pt.walker, std::atan2(pp.x - cp.x, pp.z - cp.z), AIM, -1.0, 0);
+			pt.aiming = true; n_aims++;
+		} else if (wanted > 0 && on_foot(pl) && d < SEE_COP) {
+			cr->actor_follow(pt.walker, -2, 4.2, 6.0); pt.aiming = false;
+		} else if (pt.aiming || cr->actor_arrived(pt.walker) || pt.t > 40.0f) {
+			// his beat: another pavement spot near the player
+			const float a = (float)std::fmod(clock * 1.7 + (double)pt.walker * 0.37, 6.2831853);
+			const Dictionary pv = cr->pavement_near(pp + Vector3(std::cos(a), 0.0f, std::sin(a)) * 35.0f, 40.0);
+			if ((bool)pv.get("ok", false)) cr->actor_go(pt.walker, (Vector3)pv["at"], 1.2, 1.0);
+			pt.aiming = false; pt.t = 0.0f;
+		}
+		k++;
+	}
+	if (patrols.size() < 2 && patrol_next <= 0.0) {
+		patrol_next = 25.0;
+		const float a = (float)std::fmod(clock * 2.3, 6.2831853);
+		const Dictionary pv = cr->pavement_near(pp + Vector3(std::cos(a), 0.0f, std::sin(a)) * 75.0f, 30.0);
+		if ((bool)pv.get("ok", false)) {
+			const int w = cr->actor_place((Vector3)pv["at"], 2, (double)pv.get("yaw", 0.0), CityCrowd::R_COP);
+			if (w >= 0) { Patrol pt; pt.walker = w; patrols.push_back(pt); n_patrols++; cr->actor_go(w, pp, 1.2, 8.0); }
+		}
+	}
+}
+
 void CityLaw::_process(double p_delta) {
 	CityCrowd *cr = crowd();
 	CityTraffic *tr = traffic();
@@ -452,6 +510,7 @@ void CityLaw::_process(double p_delta) {
 	if (!cr || !tr || !pl) return;
 	clock += p_delta;
 	const Vector3 pp = player_at(pl, this);
+	patrol_update(p_delta);
 	// what happened
 	std::vector<CityCrowd::Incident> &inc = cr->incidents_raw();
 	for (const CityCrowd::Incident &e : inc) {
@@ -492,6 +551,7 @@ void CityLaw::_process(double p_delta) {
 			if (u.has_pose && Vector2(u.at.x - pp.x, u.at.z - pp.z).length() < SEE_CAR) seen = true;
 			for (int k = 0; k < 2; k++) if (u.crew[k] >= 0 && Vector2(cr->walker_at(u.crew[k]).x - pp.x, cr->walker_at(u.crew[k]).z - pp.z).length() < SEE_COP) seen = true;
 		}
+		for (const Patrol &pt : patrols) if (cr->walker_alive(pt.walker) && Vector2(cr->walker_at(pt.walker).x - pp.x, cr->walker_at(pt.walker).z - pp.z).length() < SEE_COP) seen = true;
 		if (seen || clock - last_raise < 2.0) { last_seen = pp; unseen_t = 0.0; }
 		else unseen_t += p_delta;
 		if (unseen_t > 12.0 + 6.0 * wanted && Vector2(pp.x - last_seen.x, pp.z - last_seen.z).length() > 60.0f) lose();

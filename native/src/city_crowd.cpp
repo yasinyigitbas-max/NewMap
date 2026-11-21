@@ -594,6 +594,9 @@ void CityCrowd::onlookers(int p_row, int p_most, float p_seconds, bool p_film, b
 	}
 }
 
+bool CityCrowd::carries(int i) const { return crowd->carry[i] || ((crowd->look[i] >> 20) & 7u) == 0u; }
+int CityCrowd::carry_kind(int i) const { return crowd->carry[i] ? 0 : (int)((crowd->look[i] >> 23) % 3u); }
+
 // The clips' lengths, once the first figure is made: how long the way into and out of an act is. The brain is told
 // how long getting up takes (so a walker stands up where he sat, and walks only then), and how long blows last.
 void CityCrowd::clip_lengths() {
@@ -657,10 +660,10 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 		if (v <= 1.9f) {
 			bool talks = a == pc::A_TALK;
 			if (!talks && crowd->party[i] != 0 && crowd->pkind[i] != pc::PK_JOGGER && crowd->psize[i] > 1)
-				talks = ((int)(own_clock * 0.25) + crowd->party[i]) % ((int)crowd->psize[i] + 1) == (int)crowd->slot[i];
+				talks = ((int)(own_clock * 0.3) + crowd->party[i]) % std::max((int)crowd->psize[i], 1) == (int)crowd->slot[i];   // (Yasin, 21 Nov: "make most of them walk and talk if in groups": somebody always talking, in turn)
 			if (a == pc::A_PHONE || a == pc::A_CALL) r_clip = ((lk >> 13) & 1u) ? WALK_TEXT : WALK_PHONE;
 			else if (talks) r_clip = WALK_TALK;
-			if (crowd->carry[i] && a != pc::A_PHONE && a != pc::A_CALL && !talks) { static const StringName CARRY("ual/Walk_Carry_Loop"); r_clip = CARRY; }   // (his shopping in his arms)
+			if (carries(i) && a != pc::A_PHONE && a != pc::A_CALL && !talks) { static const StringName C3[3] = { StringName("x/carry_bag"), StringName("x/carry_box"), StringName("x/carry_case") }; r_clip = C3[carry_kind(i)]; }   // (a bag, a box, a briefcase: Mixamo, 21 Nov)
 			if (crowd->hurt_t[i] > 0.0f) r_clip = WALK_HURT;   // he lost a fight: slowly away, his hands at his face
 		}
 		r_speed = std::min(std::max(r_speed, 0.4), 2.2);
@@ -674,7 +677,17 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 		if (p_t < (float)p_in_len) { r_clip = p_in; r_hold = -2.0; } else r_clip = p_loop;
 	};
 	switch (a) {
-		case pc::A_SIT: seq(SIT_IN, l_sit_in, speaking(crowd->id[i]) ? SIT_TALK : SITS[(lk >> 12) % 6u]); break;   // (talking to the player from his seat: the seated talk)
+		case pc::A_SIT: {
+			// (from his seat: the seated gesture of his line)
+			StringName st = SIT_TALK;
+			static const char *const GS[13] = { nullptr, "x/gs_yes", "x/gs_no", nullptr, "x/gs_talk", "x/gs_ask", "x/gs_talk", "x/gs_point", "x/gs_angry", "x/gs_talk", "x/gs_ask", "x/gs_no", "x/gs_cheer" };
+			const int gk = gesture_now(crowd->id[i]);
+			if (gk > 0 && gk < 13 && GS[gk]) st = StringName(GS[gk]);
+			// (Yasin, 21 Nov: "some of them should speak on benches") sitting with his party: they talk, in turn
+			static const StringName SIT_CHAT("x/sit_chat");
+			const bool party_sit = crowd->party[i] != 0 && crowd->psize[i] > 1;
+			seq(SIT_IN, l_sit_in, speaking(crowd->id[i]) ? st : (party_sit ? SIT_CHAT : SITS[(lk >> 12) % 6u]));
+		} break;   // (talking to the player from his seat: the seated talk)
 		case pc::A_DRINK: seq(SIT_IN, l_sit_in, ((int)(p_t / 5.0f) % 3 == 1) ? SIT_DRINK : SIT_TALK); break;   // a word, a sip, a word
 		case pc::A_GSIT: seq(GSIT_IN, l_gsit_in, GSIT); break;
 		case pc::A_BEG: {   // a beggar: his hand out to whoever comes by, a nod to the one who gives
@@ -691,14 +704,19 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 		case pc::A_LIE_BACK: case pc::A_LIE_FRONT:
 			if (p_t < (float)l_lie_in) { r_clip = LIE_IN; r_hold = -2.0; } else { r_clip = LIE; r_hold = 0.0; }
 			break;
-		case pc::A_PHONE: r_clip = ((lk >> 13) & 1u) ? TEXT : PHONE; break;   // in the hand, or at the ear
-		case pc::A_CALL: r_clip = PHONE; break;
+		case pc::A_PHONE: { static const StringName ANGRY_CALL("x/phone_angry"); r_clip = ((lk >> 13) & 1u) ? TEXT : ((((lk >> 24) % 5u) == 0u) ? ANGRY_CALL : PHONE); } break;   // in the hand, or at the ear (one caller in five arguing)
+		case pc::A_CALL: { static const StringName ANGRY_CALL("x/phone_angry"); r_clip = (((lk >> 24) % 5u) == 0u) ? ANGRY_CALL : PHONE; } break;
 		case pc::A_FILM: r_clip = FILM2; break;
 		case pc::A_WINDOW: r_clip = LOOK; break;
 		case pc::A_SHELTER: r_clip = ARMS; break;
 		case pc::A_STARE: seq(SURPRISE, l_surprise, ((lk >> 9) & 1u) ? ARMS : LOOK); break;
 		case pc::A_DUCK: seq(DUCK_IN, l_duck_in, DUCK); break;
-		case pc::A_CHAT: case pc::A_TALK: r_clip = TALK; break;
+		case pc::A_CHAT: case pc::A_TALK: {   // (talking to the player: the gesture of his line)
+			r_clip = TALK;
+			static const char *const GK[13] = { nullptr, "ual/Yes", "ual/Idle_No_Loop", nullptr, "x/g_wave", "x/g_ask", "x/g_thanks", "x/g_point", "x/g_angry", "x/g_secret", "x/g_unsure", "x/g_sorry", "x/g_cheer" };
+			const int gk = gesture_now(crowd->id[i]);
+			if (gk > 0 && gk < 13 && GK[gk]) { r_clip = StringName(GK[gk]); r_hold = -2.0; r_token = 8900 + gk; }
+		} break;
 		case pc::A_NOD: { static const StringName YES("ual/Yes"); r_clip = YES; r_hold = -2.0; } break;   // (the Animator, 20 Nov: talks had no nod)
 		case pc::A_NO: r_clip = NO; break;   // (and no refusal: he walked on with a caption)
 		case pc::A_ARGUE: r_clip = ((lk >> 5) & 1u) ? NO : ANGRY; break;
@@ -733,14 +751,22 @@ void CityCrowd::clip_of(int i, float p_t, float p_v, StringName &r_clip, double 
 			const uint32_t h = pc::hash32((uint32_t)(std::min(me, other) * 7919 + std::max(me, other)) * 31u + (uint32_t)k);
 			const int blow = (int)(h % 6u);
 			if (mine) { r_clip = BLOWS[blow]; r_hold = -2.0; r_token = k + 1; break; }
-			if (into < 0.22f) { r_clip = FIGHT_IN; r_hold = std::max(l_fight_in - 0.03, 0.0); break; }   // his guard, until the blow lands
+			if (into < 0.22f) { static const StringName STANCE("x/fight_stance"); r_clip = STANCE; r_hold = -1.0; break; }   // his stance (Mixamo's, a loop), until the blow lands
 			if (k > 0 && ((h >> 8) & 3u) == 0u) r_clip = ((h >> 10) & 1u) ? DODGE_L : DODGE_R;
 			else r_clip = (blow == 2 || blow == 5) ? HIT_BELLY : (((h >> 11) & 1u) ? HIT_HEAD : HIT_CHEST);
 			r_hold = -2.0; r_token = k + 1001;
 		} break;
 		default:   // standing: at a kerb for the lights a look round, folded arms; a jogger gets his breath
-			if (crowd->state[i] == pc::ST_WAIT) { const uint32_t w = (lk >> 9) % 3u; r_clip = (crowd->party[i] != 0 && crowd->pkind[i] == pc::PK_JOGGER) ? TIRED : (w == 0u ? IDLE : (w == 1u ? ARMS : LOOK)); }
-			else r_clip = IDLE;
+			// (Yasin, 21 Nov: "i want a living city") waiting, each his own way: a look round, folded arms, the phone at his ear
+			// or in his hand, a cigarette, shifting about and stretching; carrying, he holds it
+			if (crowd->state[i] == pc::ST_WAIT) {
+				static const StringName W_BORED("x/wait_bored"), W_SMOKE("x/wait_smoke");
+				const StringName W8[8] = { IDLE, ARMS, LOOK, PHONE, TEXT, W_SMOKE, W_BORED, LOOK };
+				r_clip = (crowd->party[i] != 0 && crowd->pkind[i] == pc::PK_JOGGER) ? TIRED : W8[(lk >> 9) % 8u];
+				// (Yasin, 21 Nov: "some of them should sell items") one waiter in eight is a street seller: calling out, offering, counting
+				if (crowd->party[i] == 0 && ((lk >> 27) & 7u) == 0u) { static const StringName SELL("x/seller"); r_clip = SELL; }
+			} else r_clip = IDLE;
+			if (carries(i) && carry_kind(i) > 0) { static const StringName CI[3] = { StringName(), StringName("x/carry_box_idle"), StringName("x/carry_case_idle") }; r_clip = CI[carry_kind(i)]; }
 			if (crowd->hurt_t[i] > 0.0f) { static const StringName NURSE("ual/Bandage_Loop"); r_clip = NURSE; }   // (hurt and standing: he sees to it)
 			break;
 	}
@@ -890,6 +916,24 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 		n_near++;
 		float pr[4]; int body; float sc;
 		person_of(i, pr, body, sc);
+		// CPR (Yasin, 21 Nov: "paramedic should do cpr and rceiving npc shoud lay flat and everything"): a medic has knelt by
+		// him: his body hands over to Receiving_Cpr laid where it lies; treated, he gets up from his back (Getting_Up), and
+		// only then is he up again (his walker goes on from there)
+		{
+			bool cpr_on = false, treated = false;
+			for (const Down &d : downs) if (d.walker == nb.walker) { cpr_on = d.cpr; treated = d.treated; }
+			static const StringName CPR("x/cpr_take"), UP("x/up_from_back");
+			if (nb.cpr == 0 && cpr_on && nb.in_body && nb.ped->get_mode() == CityPed::MODE_BODY && nb.ped->lie_as(CPR)) { nb.cpr = 1; nb.cpr_t = 0.0f; nb.cpr_xf = nb.ped->get_global_transform(); n_cpr++; }
+			if (nb.cpr == 1) {
+				if (!cpr_on || treated) { nb.cpr = 2; nb.cpr_t = 0.0f; }
+				else { nb.ped->drive(nb.cpr_xf, CPR, 1.0, -1.0, 0); continue; }
+			}
+			if (nb.cpr == 2) {
+				nb.cpr_t += (float)p_delta;
+				if (nb.cpr_t < (float)nb.ped->clip_len(UP)) { nb.ped->drive(nb.cpr_xf, UP, 1.0, -2.0, 8801); continue; }
+				nb.cpr = 0; nb.ped->set_stay_down(false);
+			}
+		}
 		if (nb.ped->get_mode() == CityPed::MODE_ANIM) {
 			if (nb.in_body) {   // it is up again
 				const Vector3 at = nb.ped->get_global_transform().origin;
@@ -996,7 +1040,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 				// hands open, and the walk stop (make_steps.gd) when he comes to a stand. (A fight keeps its fists: the
 				// clips below override this.)
 				{
-					static const StringName UW("ual/Walk_Loop"), UJ("ual/Jog_Fwd_Loop"), UI("ual/Idle_Loop"), OW("walk"), OJ("run"), OI("step/idle"),
+					static const StringName UW("ual/Walk_Loop"), UJ("ual/Jog_Fwd_Loop"), UI("ual/Idle_Loop"), OW("ual/Walk_Loop"), OJ("ual/Jog_Fwd_Loop"), OI("ual/Idle_Loop"),
 							OSL("step/rb_stop_l"), OSR("step/rb_stop_r");   // (the Rocketbox walk and run again: Yasin, 21 Nov)
 					if (nb.st_walker != nb.walker) { nb.st_walker = nb.walker; nb.st_mode = 0; nb.st_moving = nb.v_s > 0.3f; }
 					const bool plain = hold < 0.0 && token == 0 && (clip == UW || clip == UI);
@@ -1008,7 +1052,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 							// on the foot nearer its landing (the walk's left lands at 0 of its loop, the right at 0.5)
 							const double len = nb.ped->clip_len(nb.ped->current_clip());
 							double ph = len > 0.0 ? nb.ped->clip_pos() / len : 0.0;
-							if (nb.ped->current_clip() == OW) ph -= 0.630;   // (the Rocketbox walk's left foot lands at 0.630 of its loop)
+							{ double ld = 0.0; int ns = 1; if (nb.ped->stride_now(ld, ns)) ph -= ld; }   // (where this take's left foot lands)
 							ph -= std::floor(ph);
 							nb.st_mode = 2; nb.st_t = 0.0f; nb.st_clip = (ph > 0.25 && ph < 0.75) ? OSR : OSL;
 						}
@@ -1020,11 +1064,9 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 						}
 					} else if (!plain) nb.st_mode = 0;
 					nb.st_moving = moving;
-					if (nb.ped->clip_len(OW) > 0.0 && hold < 0.0 && token == 0) {
-						// (played at the same ground pace: the Rocketbox walk's own is 1.00 m/s against Walk_Loop's 0.91, the run's 2.69
-						// against the jog's 2.40)
-						if (clip == UW) { clip = OW; speed *= 0.91; } else if (clip == UJ) { clip = OJ; speed *= 2.40 / 2.69; } else if (clip == UI) clip = OI;
-					}
+					// (since 21 Nov the takes play Mixamo's: city_ped_takes.cpp) a moving loop plays at the walker's pace over its own
+					// measured pace (meta ground_v), so the planted foot stays put whatever take this person has
+					if (hold < 0.0 && token == 0 && nb.v_s > 0.15f) { const double gv = nb.ped->ground_v(clip, -1.0); if (gv > 0.2) speed = std::min(std::max((double)nb.v_s / gv, 0.4), 2.2); }
 				}
 				if (pf.walker == nb.walker && pf.angry) {   // fighting the player: his guard, a blow, a dodge, a step in
 					static const StringName GUARD("ual/PunchKick_Enter"), JAB("ual/Punch_Jab"), CROSS("ual/Punch_Cross"), DL("ual/Dodge_Left"), DR("ual/Dodge_Right"), STEP("ual/Walk_Loop");
@@ -1033,16 +1075,16 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 					if (pf.st == 1) { clip = (pf.attacks & 1) ? CROSS : JAB; hold = -2.0; token = pf.attacks + 1; }
 					else if (pf.st == 4) { clip = (pf.landed & 1) ? HIT_H : HIT_C; hold = -2.0; token = 2000 + pf.landed; }
 					else if (pf.st == 2) { clip = pf.dodge_dir > 0 ? DL : DR; hold = -2.0; token = 1000 + pf.dodges; }
-					else if (pf.st == 3) { clip = STEP; hold = -1.0; }
+					else if (pf.st == 3) { static const StringName FSTEP("x/fight_step"); clip = FSTEP; hold = -1.0; }   // (the fight's own step in)
 					else if (pf.in_t < (float)l_fight_in) { clip = GUARD; hold = -2.0; token = 6000; }   // (into his guard: played through)
-					else { clip = GUARD; hold = std::max(l_fight_in - 0.03, 0.0); }
+					else { static const StringName STANCE("x/fight_stance"), TAUNT("x/fight_taunt"); clip = (((int)(own_clock * 0.2) + nb.walker) % 5 == 0) ? TAUNT : STANCE; hold = -1.0; }   // (his stance, a taunt now and then: Mixamo, 21 Nov)
 				}
 				for (const Rager &r : ragers) {   // out of his car (getting up from the seat), then yelling, arms going
 					if (r.walker != nb.walker) continue;
-					static const StringName EXIT("ual/Sitting_Exit"), ANGRY("ual/Counter_Angry");
+					static const StringName EXIT("x/car_out"), ANGRY("ual/Counter_Angry");   // (out of his car: Mixamo's Exiting_Car, 21 Nov)
 					speed = 1.0;
 					static const StringName RUN("ual/Sprint_Loop"), RUN_IN("ual/Sprint_Enter"), RUN_OUT("ual/Sprint_Exit");
-					if (r.t < 1.2f) { clip = EXIT; hold = -2.0; token = 7001; }
+					if (r.t < 2.4f) { clip = EXIT; hold = -2.0; token = 7001; }
 					else if (r.chase && r.arrive_t >= 0.0f) { clip = RUN_OUT; hold = -2.0; token = 7003; }
 					else if (r.chase && r.chase_t < 0.5f) { clip = RUN_IN; hold = -2.0; token = 7002; }
 					else if (r.chase) { clip = RUN; hold = -1.0; token = 0; }
@@ -1097,6 +1139,39 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 							const Vector3 at = grip + fb.xform(Vector3(-0.0756f, 0.03f, 0.0082f)) + up * (0.145f * 0.5f - 0.045f);   // (4.5 cm of it in the fist)
 							nb.phone->set_global_transform(Transform3D(Basis(fwd, left, up).scaled(Vector3(nb.phone_k, nb.phone_k, nb.phone_k)), at));
 						}
+					}
+				}
+				{   // THE PHONE OF A CALL OR A TEXT (Yasin, 21 Nov: "bring phones to npcs too"): the same dark slab, in the hand nearer his
+					// head for a call, in the hand held in front of his chest for a text, laid along the fingers
+					const int ac = crowd->act[i];
+					const int pm = ac == pc::A_CALL ? 1 : (ac == pc::A_PHONE ? (((crowd->look[i] >> 13) & 1u) ? 2 : 1) : 0);
+					if (pm && !nb.phone2) {
+						MeshInstance3D *m = memnew(MeshInstance3D);
+						Ref<BoxMesh> bm; bm.instantiate(); bm->set_size(Vector3(0.009f, 0.07f, 0.145f));
+						Ref<StandardMaterial3D> mat; mat.instantiate(); mat->set_albedo(Color(0.05f, 0.05f, 0.06f)); mat->set_roughness(0.35f); mat->set_metallic(0.3f);
+						m->set_mesh(bm); m->set_material_override(mat); m->set_cast_shadows_setting(GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);
+						nb.ped->add_child(m); m->set_as_top_level(true); nb.phone2 = m;
+					}
+					if (nb.phone2) {
+						bool show = pm != 0 && nb.ped->get_mode() == CityPed::MODE_ANIM;
+						Skeleton3D *sk = nb.ped->skeleton();
+						if (show && sk) {
+							const int hl = sk->find_bone("Bip01_L_Hand"), hr = sk->find_bone("Bip01_R_Hand"), hd = sk->find_bone("Bip01_Head"), ch = sk->find_bone("Bip01_Spine2");
+							if (hl >= 0 && hr >= 0 && hd >= 0 && ch >= 0) {
+								const Transform3D sg = sk->get_global_transform();
+								const Transform3D L = sg * sk->get_bone_global_pose(hl), R = sg * sk->get_bone_global_pose(hr);
+								const Vector3 head = sg.xform(sk->get_bone_global_pose(hd).origin), chest = sg.xform(sk->get_bone_global_pose(ch).origin);
+								Vector3 fwd = nb.ped->get_global_transform().basis.get_column(2); fwd.y = 0.0f; fwd = fwd.length() > 0.01f ? fwd.normalized() : Vector3(0, 0, 1);
+								const Vector3 front = chest + fwd * 0.3f - Vector3(0, 0.1f, 0);
+								const bool use_l = pm == 1 ? L.origin.distance_to(head) < R.origin.distance_to(head) : L.origin.distance_to(front) < R.origin.distance_to(front);
+								const Transform3D H = use_l ? L : R;
+								const Basis hb = H.basis.orthonormalized();
+								const Vector3 along = hb.get_column(0).normalized(), side = hb.get_column(2).normalized();
+								const Vector3 zc = along, yc = side, xc = yc.cross(zc).normalized();
+								nb.phone2->set_global_transform(Transform3D(Basis(xc, yc, zc), H.origin + along * 0.075f));
+							} else show = false;
+						}
+						nb.phone2->set_visible(show);
 					}
 				}
 				// the feet on the real ground, planted ones pinned where they land (Yasin, 20 Nov: "i want them pixel perfect":
@@ -1729,6 +1804,7 @@ void CityCrowd::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("walker_alive", "walker"), &CityCrowd::walker_alive);
 	ClassDB::bind_method(D_METHOD("is_down", "walker"), &CityCrowd::is_down);
 	ClassDB::bind_method(D_METHOD("treat", "walker"), &CityCrowd::treat);
+	ClassDB::bind_method(D_METHOD("set_cpr", "walker", "on"), &CityCrowd::set_cpr);
 	ClassDB::bind_method(D_METHOD("downs_list"), &CityCrowd::downs_list);
 	ClassDB::bind_method(D_METHOD("take_incidents"), &CityCrowd::take_incidents);
 	ClassDB::bind_method(D_METHOD("gun_aimed", "from", "dir", "seconds"), &CityCrowd::gun_aimed);

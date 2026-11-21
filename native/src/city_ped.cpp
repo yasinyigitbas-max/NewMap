@@ -381,6 +381,27 @@ void CityPed::write_bones() {
 	}
 }
 
+bool CityPed::lie_as(const StringName &p_req) {
+	if (!made || !anim || !skel || mode == MODE_ANIM) return false;
+	const StringName tk = take_of(p_req);
+	if (!anim->has_animation(tk)) return false;
+	Vector3 hips, head;
+	if (!clip_start(skel, anim->get_animation(tk), skel_in_node, skel->find_bone("Bip01_Pelvis"), skel->find_bone("Bip01_Head"), hips, head)) return false;
+	const pb::Body &P = body.b[pb::B_PELVIS];
+	const vd::V3 d = body.b[pb::B_HEAD].x - P.x;
+	const float yaw = std::atan2(d.x, d.z) - std::atan2(head.x - hips.x, head.z - hips.z);
+	const Basis rb(Vector3(0, 1, 0), yaw);
+	Vector3 at = Vector3(P.x.x, 0, P.x.z) - rb.xform(Vector3(hips.x, 0, hips.z));
+	at.y = body.gd;
+	set_global_transform(Transform3D(rb.scaled(get_global_transform().basis.get_scale()), at));
+	write_bones();
+	anim->set_speed_scale(1.0);
+	anim->play_with_capture(tk, 0.8);
+	cur_req = p_req; cur_clip = tk; cur_hold = -1.0; cur_token = 0;
+	mode = MODE_ANIM; t_mode = 0.0;
+	return true;
+}
+
 // Back to animation: the node goes to where the body is, the clip blends in from the pose the body left
 void CityPed::to_animation(const StringName &p_clip, double p_blend, bool p_from_ground) {
 	const pb::Body &P = body.b[pb::B_PELVIS];

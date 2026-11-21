@@ -46,6 +46,9 @@ public:
 	enum { MAX_OPTS = 4, MAX_TRIES = 3 };
 
 private:
+public:
+	static int line_gesture(const String &p_en);
+private:
 	struct Opt { String id, kind, en, tr, place, hint; PackedStringArray accept; Vector2 goal; bool has_goal = false; };
 	struct Conv { int zones = 0, kinds = 0; Array lines; };
 	struct Mem { double busy_until = -1.0, met_until = -1.0; int met = 0; };

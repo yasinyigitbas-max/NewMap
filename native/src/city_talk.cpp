@@ -255,6 +255,26 @@ void CityTalk::caption(const String &p_who, const String &p_en, const String &p_
 	cap_panel->set_visible(true);
 }
 
+// THE GESTURE A LINE CALLS FOR (Yasin, 21 Nov: "make sure the gesures are context relevant for the lines", "especially for
+// the player"): read from the line itself. 0 talking, 1 yes, 2 no, 4 a greeting or goodbye (a wave), 5 a question, 6
+// thanks, 7 directions (pointing), 8 anger, 9 a secret, 10 not sure, 11 sorry, 12 joy. The clips: city_ped_takes.cpp x/g_*.
+int CityTalk::line_gesture(const String &p_en) {
+	const String l = String(" ") + p_en.to_lower().replace(",", " ").replace(".", " ").replace("!", " ! ").replace("?", " ? ") + String(" ");
+	auto has = [&](const char *w) { return l.contains(w); };
+	if (has(" hello ") || has(" hi ") || has(" hey ") || has(" good morning") || has(" good evening") || has(" good afternoon") || has(" bye ") || has(" goodbye") || has(" see you") || has(" take care") || has(" nice to meet")) return 4;
+	if (has(" thank") || has(" thanks") || has(" cheers ") || has(" appreciate")) return 6;
+	if (has(" sorry") || has(" excuse me") || has(" my fault") || has(" apolog")) return 11;
+	if (has(" get out") || has(" leave me") || has(" go away") || has(" shut up") || has(" idiot") || has(" stop it") || has(" what's your problem") || has(" damn") || (has(" ! ") && (has(" no ") || has(" hey ") || has(" stop ")))) return 8;
+	if (has(" left ") || has(" right ") || has(" straight ") || has(" over there") || has(" this way") || has(" that way") || has(" next to") || has(" across ") || has(" behind ") || has(" down the ") || has(" up the ") || has(" around the corner") || has(" there ")) return 7;
+	if (has(" secret") || has(" between us") || has(" don't tell") || has(" listen ")) return 9;
+	if (has(" don't know") || has(" not sure") || has(" maybe ") || has(" no idea") || has(" perhaps")) return 10;
+	if (has(" great ") || has(" wonderful") || has(" amazing") || has(" awesome") || has(" yay") || has(" i'm happy") || has(" fantastic")) return 12;
+	if (has(" ? ")) return 5;
+	if (l.begins_with(" no ") || has(" no thanks") || has(" i can't") || has(" i won't") || has(" not now") || has(" nope")) return 2;
+	if (l.begins_with(" yes ") || l.begins_with(" sure ") || l.begins_with(" ok ") || l.begins_with(" okay ") || has(" of course") || has(" all right") || has(" alright") || has(" yeah ") || has(" sounds good")) return 1;
+	return 0;
+}
+
 void CityTalk::say(int p_row, const Dictionary &p_line, const Dictionary &p_sub) {
 	if (p_line.is_empty()) return;
 	const String en = fill(p_line.get("en", ""), p_sub), tr_s = fill(p_line.get("tr", ""), p_sub);
@@ -262,6 +282,7 @@ void CityTalk::say(int p_row, const Dictionary &p_line, const Dictionary &p_sub)
 	last_result = en;
 	speak(0, p_row, p_line, p_sub);
 	CityCrowd *c = crowd_node();
+	if (c && p_row >= 0) c->talk_gesture(c->brain()->id[p_row], line_gesture(en), LINE_S);   // (his body says it too)
 	if (c && p_row >= 0 && c->brain()->mode[p_row] == pc::M_STAY && (c->brain()->act[p_row] == pc::A_SIT || c->brain()->act[p_row] == pc::A_DRINK))
 		c->speaking_for(c->brain()->id[p_row], 3.0);   // (from his seat: the seated talk, he stays seated)
 	else if (c && p_row >= 0 && c->brain()->mode[p_row] != pc::M_LINE) c->brain()->set_act(c->brain()->id[p_row], pc::A_TALK, 3.0f);   // (one who walks on says it as he goes)
@@ -339,7 +360,7 @@ void CityTalk::start(int p_row) {
 	mem_of(p_row).met++;
 	n_talks++;
 	player_body("talk_face", true, Vector3(b->x[p_row], b->y[p_row], b->z[p_row]));   // (the player turns to him and says hello)
-	player_body("gesture", 0, 1.5);
+	player_body("gesture", 4, 1.5);   // (a hello: a wave)
 	emit_signal("started", active);
 }
 
@@ -360,7 +381,8 @@ void CityTalk::end(const String &p_outcome) {
 	}
 	close_say();
 	player_body("talk_face", false, Vector3());
-	if (p_outcome == "bye" || p_outcome == "cut") player_body("gesture", 1, 1.2);   // (the player nods too)
+	if (p_outcome == "bye") player_body("gesture", 4, 1.6);   // (goodbye: a wave)
+	else if (p_outcome == "cut") player_body("gesture", 1, 1.2);   // (the player nods too)
 	active = -1; held.clear(); options.clear(); selected = -1;
 	show_options();
 	emit_signal("ended", a, p_outcome);
@@ -491,7 +513,7 @@ void CityTalk::said(bool p_ok, const String &p_how) {
 	if (p_ok) {
 		const Opt o = options[selected];
 		close_say();
-		player_body("gesture", 0, 2.5);   // (the player says his line: his body talks)
+		player_body("gesture", line_gesture(o.en), 2.5);   // (the player says his line: his body says what the line says)
 		emit_signal("listen_result", true, MAX_TRIES - tries, p_how);
 		answer(o);
 		return;

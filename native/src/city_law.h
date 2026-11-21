@@ -49,6 +49,12 @@ private:
 
 	// ---- the wanted level
 	int wanted = 0;
+	// police on foot (patrol_update): who, how long on his way, whether he has his gun on the player
+	struct Patrol { int walker = -1; float t = 0.0f; bool aiming = false; };
+	std::vector<Patrol> patrols;
+	double patrol_next = 8.0;
+	int n_patrols = 0, n_aims = 0;
+	void patrol_update(double p_delta);
 	bool seen = false;
 	double unseen_t = 0.0, last_raise = -99.0, clock = 0.0;
 	Vector3 last_seen;
