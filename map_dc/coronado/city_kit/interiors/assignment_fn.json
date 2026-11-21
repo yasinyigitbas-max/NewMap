@@ -1,33 +1,93 @@
 {
  "_doc": "The north end (fill_east, prefix fn; 20 Nov): which business or service is behind which door of the n_fn_* pieces.",
- "count": 19,
- "rooms": [
+ "_removed": [
   {
    "id": "fn_east_fish_house_0",
-   "piece": "n_fn_east",
-   "label": "fish_house",
-   "model": "commercial/com_bistro",
-   "pos": [
-    311.83,
-    2.159054,
-    -1572.0
-   ],
-   "yaw": 90.0,
-   "door_index": 0,
-   "door_along": 4.76,
-   "door_w": 1.6,
-   "bay": [
-    -5.7,
-    5.7
-   ],
-   "kind": "restaurant",
    "name": "Pier Fish House",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "fish and chips on Ferry Plaza for the boat crowd; its tables out on the plaza",
-   "signs": []
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
   },
+  {
+   "id": "fn_east_rental_0",
+   "name": "Bay Kayak & Bike Rental",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fn_east_corner_0",
+   "name": "North End Market",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fn_east_corner_1",
+   "name": "Ferry Cleaners",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fn_east_boutiques_0",
+   "name": "Bayline Outfitters",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fn_east_boutiques_2",
+   "name": "Tides Salon",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fn_east_bakery_0",
+   "name": "Ferry Landing Bakery",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fn_east_shop_row_0",
+   "name": "Harbor Books",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fn_east_shop_row_1",
+   "name": "Sea Glass Jewelry",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fn_east_shop_row_2",
+   "name": "North End Keys",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fn_east_pub_0",
+   "name": "The Ferryman",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fn_east_coffee_0",
+   "name": "Third Street Coffee",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fn_mid_cafe_0",
+   "name": "Amber Corner Cafe",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fn_west_deli_0",
+   "name": "Crown Hill Deli",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  }
+ ],
+ "count": 5,
+ "rooms": [
   {
    "id": "fn_east_ferry_office_0",
    "piece": "n_fn_east",
@@ -61,110 +121,6 @@
    ]
   },
   {
-   "id": "fn_east_rental_0",
-   "piece": "n_fn_east",
-   "label": "rental",
-   "model": "commercial/com_surf_shop",
-   "pos": [
-    389.95,
-    2.1519909999999998,
-    -1574.0
-   ],
-   "yaw": -90.0,
-   "door_index": 0,
-   "door_along": -3.26,
-   "door_w": 1.6,
-   "bay": [
-    -4.2,
-    4.2
-   ],
-   "kind": "sport",
-   "name": "Bay Kayak & Bike Rental",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "kayaks and cruisers for the day-trippers off the ferry; its racks out on the plaza",
-   "signs": []
-  },
-  {
-   "id": "fn_east_corner_0",
-   "piece": "n_fn_east",
-   "label": "corner",
-   "model": "commercial/com_orange_corner",
-   "pos": [
-    268.0,
-    2.156755,
-    -1427.67
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": -1.08,
-   "door_w": 1.6,
-   "bay": [
-    -5.7,
-    0.0
-   ],
-   "kind": "corner_shop",
-   "name": "North End Market",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "the corner market at B Ave x 3rd for the houses on Crown Hill and the park and ride",
-   "signs": []
-  },
-  {
-   "id": "fn_east_corner_1",
-   "piece": "n_fn_east",
-   "label": "corner",
-   "model": "commercial/com_orange_corner",
-   "pos": [
-    268.0,
-    2.156755,
-    -1427.67
-   ],
-   "yaw": 0.0,
-   "door_index": 1,
-   "door_along": 1.08,
-   "door_w": 1.6,
-   "bay": [
-    0.0,
-    5.7
-   ],
-   "kind": "cleaners",
-   "name": "Ferry Cleaners",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "drop the shirts on the way to the boat, pick them up on the way home",
-   "signs": []
-  },
-  {
-   "id": "fn_east_boutiques_0",
-   "piece": "n_fn_east",
-   "label": "boutiques",
-   "model": "commercial/com_boutique_row",
-   "pos": [
-    286.0,
-    2.153382,
-    -1427.67
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": -4.08,
-   "door_w": 1.6,
-   "bay": [
-    -8.7,
-    -3.0
-   ],
-   "kind": "clothes",
-   "name": "Bayline Outfitters",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "clothes on 3rd St, the route to the bridge",
-   "signs": []
-  },
-  {
    "id": "fn_east_boutiques_1",
    "piece": "n_fn_east",
    "label": "boutiques",
@@ -188,162 +144,6 @@
    "font": "Overpass",
    "built": "",
    "why": "gifts for the visitors walking up Ferry Walk from the boats",
-   "signs": []
-  },
-  {
-   "id": "fn_east_boutiques_2",
-   "piece": "n_fn_east",
-   "label": "boutiques",
-   "model": "commercial/com_boutique_row",
-   "pos": [
-    286.0,
-    2.153382,
-    -1427.67
-   ],
-   "yaw": 0.0,
-   "door_index": 2,
-   "door_along": 7.76,
-   "door_w": 1.6,
-   "bay": [
-    2.92,
-    8.7
-   ],
-   "kind": "salon",
-   "name": "Tides Salon",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "a neighbourhood hair salon",
-   "signs": []
-  },
-  {
-   "id": "fn_east_bakery_0",
-   "piece": "n_fn_east",
-   "label": "bakery",
-   "model": "commercial/com_bakery",
-   "pos": [
-    309.0,
-    2.149791,
-    -1427.67
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": 3.26,
-   "door_w": 1.6,
-   "bay": [
-    -4.2,
-    4.2
-   ],
-   "kind": "bakery",
-   "name": "Ferry Landing Bakery",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "morning bread and coffee where Ferry Walk meets 3rd St",
-   "signs": []
-  },
-  {
-   "id": "fn_east_shop_row_0",
-   "piece": "n_fn_east",
-   "label": "shop_row",
-   "model": "commercial/com_orange_row",
-   "pos": [
-    325.5,
-    2.151712,
-    -1427.67
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": -4.08,
-   "door_w": 1.6,
-   "bay": [
-    -8.7,
-    -3.0
-   ],
-   "kind": "books",
-   "name": "Harbor Books",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "a bookshop for the ride across",
-   "signs": []
-  },
-  {
-   "id": "fn_east_shop_row_1",
-   "piece": "n_fn_east",
-   "label": "shop_row",
-   "model": "commercial/com_orange_row",
-   "pos": [
-    325.5,
-    2.151712,
-    -1427.67
-   ],
-   "yaw": 0.0,
-   "door_index": 1,
-   "door_along": -1.92,
-   "door_w": 1.6,
-   "bay": [
-    -3.0,
-    2.92
-   ],
-   "kind": "jewelry",
-   "name": "Sea Glass Jewelry",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "small jewelry shop on the shop row",
-   "signs": []
-  },
-  {
-   "id": "fn_east_shop_row_2",
-   "piece": "n_fn_east",
-   "label": "shop_row",
-   "model": "commercial/com_orange_row",
-   "pos": [
-    325.5,
-    2.151712,
-    -1427.67
-   ],
-   "yaw": 0.0,
-   "door_index": 2,
-   "door_along": 7.76,
-   "door_w": 1.6,
-   "bay": [
-    2.92,
-    8.7
-   ],
-   "kind": "keys",
-   "name": "North End Keys",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "keys cut and shoes mended for the neighbourhood",
-   "signs": []
-  },
-  {
-   "id": "fn_east_pub_0",
-   "piece": "n_fn_east",
-   "label": "pub",
-   "model": "commercial/com_bar_crown",
-   "pos": [
-    342.0,
-    2.148391,
-    -1427.45
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": -3.26,
-   "door_w": 1.6,
-   "bay": [
-    -4.2,
-    4.2
-   ],
-   "kind": "bar",
-   "name": "The Ferryman",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "the pub for the ferry crews and the hospital night shift next door",
    "signs": []
   },
   {
@@ -373,58 +173,6 @@
    "signs": []
   },
   {
-   "id": "fn_east_coffee_0",
-   "piece": "n_fn_east",
-   "label": "coffee",
-   "model": "commercial/com_cafe_seaside",
-   "pos": [
-    360.0,
-    2.151637,
-    -1427.67
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": -1.76,
-   "door_w": 1.6,
-   "bay": [
-    -2.7,
-    2.7
-   ],
-   "kind": "cafe",
-   "name": "Third Street Coffee",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "coffee for the hospital staff and the bus riders on 3rd St",
-   "signs": []
-  },
-  {
-   "id": "fn_mid_cafe_0",
-   "piece": "n_fn_mid",
-   "label": "cafe",
-   "model": "commercial/com_cafe_seaside",
-   "pos": [
-    24.0,
-    2.467078,
-    -1569.83
-   ],
-   "yaw": 180.0,
-   "door_index": 0,
-   "door_along": -1.76,
-   "door_w": 1.6,
-   "bay": [
-    -2.7,
-    2.7
-   ],
-   "kind": "cafe",
-   "name": "Amber Corner Cafe",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "the cafe at the foot of Amber on the bay, its tables on the corner plaza",
-   "signs": []
-  },
-  {
    "id": "fn_mid_icecream_0",
    "piece": "n_fn_mid",
    "label": "icecream",
@@ -448,32 +196,6 @@
    "font": "Overpass",
    "built": "",
    "why": "ice cream for the people who walked down Amber to the water",
-   "signs": []
-  },
-  {
-   "id": "fn_west_deli_0",
-   "piece": "n_fn_west",
-   "label": "deli",
-   "model": "commercial/com_orange_corner",
-   "pos": [
-    -30.0,
-    8.135275,
-    -1427.67
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": -1.08,
-   "door_w": 1.6,
-   "bay": [
-    -5.7,
-    0.0
-   ],
-   "kind": "corner_shop",
-   "name": "Crown Hill Deli",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "the hilltop corner at Amber x 3rd: sandwiches and groceries for the bus riders and the lane",
    "signs": []
   },
   {

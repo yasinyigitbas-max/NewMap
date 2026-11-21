@@ -1,49 +1,27 @@
 {
  "_doc": "Which shop is behind every shop door of the apartment band FILL blocks (claude/fill-apartments, 19 Nov; Yasin, relayed:",
- "count": 15,
- "rooms": [
+ "_removed": [
   {
    "id": "apt_b1_bw__bakery__0",
-   "piece": "n_apt_b1_bw",
-   "label": "bakery",
-   "model": "commercial/com_bakery",
-   "pos": [
-    263.700012207031,
-    6.15000009536743,
-    -781.299987792969
-   ],
-   "yaw": -179.999991348578,
-   "door_index": 0,
-   "door_along": 3.26,
-   "door_w": 1.6,
-   "bay": [
-    -4.2,
-    4.2
-   ],
-   "kind": "bakery",
    "name": "B Avenue Bakery",
-   "style": "sun",
-   "signs": [
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 8.18
-    },
-    {
-     "facade": "right",
-     "along": 7.55,
-     "w": 0.8
-    },
-    {
-     "facade": "left",
-     "along": 7.55,
-     "w": 0.8
-    }
-   ],
-   "why": "8th St is the walk into the centre: bread and coffee on the way to work",
-   "source": "apartment fill (hand-made shop list)",
-   "built": ""
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
   },
+  {
+   "id": "apt_b1_7th__corner_shops_7th__0",
+   "name": "Adela Pharmacy & Post",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "apt_b3_w__hilltop_books__0",
+   "name": "Hilltop Books",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  }
+ ],
+ "count": 12,
+ "rooms": [
   {
    "id": "apt_b1_bw__barber__0",
    "piece": "n_apt_b1_bw",
@@ -179,38 +157,6 @@
     }
    ],
    "why": "7th St is the bus street to the centre: shirts dropped on the way",
-   "source": "apartment fill (hand-made shop list)",
-   "built": ""
-  },
-  {
-   "id": "apt_b1_7th__corner_shops_7th__0",
-   "piece": "n_apt_b1_7th",
-   "label": "corner_shops_7th",
-   "model": "commercial/com_boutique_row",
-   "pos": [
-    481.799987792969,
-    6.15000009536743,
-    -618.700012207031
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": -4.08,
-   "door_w": 1.6,
-   "bay": [
-    -8.7,
-    -3.0
-   ],
-   "kind": "pharmacy",
-   "name": "Adela Pharmacy & Post",
-   "style": "green",
-   "signs": [
-    {
-     "facade": "front",
-     "along": -6.0,
-     "w": 5.18
-    }
-   ],
-   "why": "the band's chemist with the post counter, at the bus stop corner",
    "source": "apartment fill (hand-made shop list)",
    "built": ""
   },
@@ -492,38 +438,6 @@
     }
    ],
    "why": "the apartments' association hall: meetings at night, the preschool in the day, its play yard behind",
-   "source": "apartment fill (hand-made shop list)",
-   "built": ""
-  },
-  {
-   "id": "apt_b3_w__hilltop_books__0",
-   "piece": "n_apt_b3_w",
-   "label": "hilltop_books",
-   "model": "commercial/com_shallow_books",
-   "pos": [
-    262.450012207031,
-    8.15121459960938,
-    -385.299987792969
-   ],
-   "yaw": -179.999991348578,
-   "door_index": 0,
-   "door_along": -2.01,
-   "door_w": 1.0,
-   "bay": [
-    -2.95,
-    2.95
-   ],
-   "kind": "books",
-   "name": "Hilltop Books",
-   "style": "navy",
-   "signs": [
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 5.68
-    }
-   ],
-   "why": "a tiny second-hand bookshop at the top of B Ave, opposite the community room: the preschool parents' stop",
    "source": "apartment fill (hand-made shop list)",
    "built": ""
   }

@@ -1,16 +1,6 @@
 {
  "rooms": [
   {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_east_fish_house_0.scn",
-   "id": "g_fn_east_fish_house_0",
-   "kind": "restaurant",
-   "lights": 6,
-   "name": "Pier Fish House",
-   "props": 44,
-   "w": 11.4
-  },
-  {
    "d": 11.15,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_east_ferry_office_0.scn",
    "id": "g_fn_east_ferry_office_0",
@@ -19,46 +9,6 @@
    "name": "Coronado Ferry Tickets",
    "props": 36,
    "w": 15.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_east_rental_0.scn",
-   "id": "g_fn_east_rental_0",
-   "kind": "sport",
-   "lights": 6,
-   "name": "Bay Kayak & Bike Rental",
-   "props": 22,
-   "w": 8.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_east_corner_0.scn",
-   "id": "g_fn_east_corner_0",
-   "kind": "corner_shop",
-   "lights": 5,
-   "name": "North End Market",
-   "props": 19,
-   "w": 5.7
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_east_corner_1.scn",
-   "id": "g_fn_east_corner_1",
-   "kind": "cleaners",
-   "lights": 4,
-   "name": "Ferry Cleaners",
-   "props": 25,
-   "w": 5.7
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_east_boutiques_0.scn",
-   "id": "g_fn_east_boutiques_0",
-   "kind": "clothes",
-   "lights": 5,
-   "name": "Bayline Outfitters",
-   "props": 19,
-   "w": 5.7
   },
   {
    "d": 13.0,
@@ -72,92 +22,12 @@
   },
   {
    "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_east_boutiques_2.scn",
-   "id": "g_fn_east_boutiques_2",
-   "kind": "salon",
-   "lights": 4,
-   "name": "Tides Salon",
-   "props": 23,
-   "w": 5.78
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_east_bakery_0.scn",
-   "id": "g_fn_east_bakery_0",
-   "kind": "bakery",
-   "lights": 6,
-   "name": "Ferry Landing Bakery",
-   "props": 32,
-   "w": 8.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_east_shop_row_0.scn",
-   "id": "g_fn_east_shop_row_0",
-   "kind": "books",
-   "lights": 5,
-   "name": "Harbor Books",
-   "props": 26,
-   "w": 5.7
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_east_shop_row_1.scn",
-   "id": "g_fn_east_shop_row_1",
-   "kind": "jewelry",
-   "lights": 5,
-   "name": "Sea Glass Jewelry",
-   "props": 24,
-   "w": 5.92
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_east_shop_row_2.scn",
-   "id": "g_fn_east_shop_row_2",
-   "kind": "keys",
-   "lights": 4,
-   "name": "North End Keys",
-   "props": 21,
-   "w": 5.78
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_east_pub_0.scn",
-   "id": "g_fn_east_pub_0",
-   "kind": "bar",
-   "lights": 6,
-   "name": "The Ferryman",
-   "props": 36,
-   "w": 8.4
-  },
-  {
-   "d": 13.0,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_east_realty_0.scn",
    "id": "g_fn_east_realty_0",
    "kind": "realty",
    "lights": 5,
    "name": "North End Realty",
    "props": 18,
-   "w": 5.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_east_coffee_0.scn",
-   "id": "g_fn_east_coffee_0",
-   "kind": "cafe",
-   "lights": 5,
-   "name": "Third Street Coffee",
-   "props": 21,
-   "w": 5.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_mid_cafe_0.scn",
-   "id": "g_fn_mid_cafe_0",
-   "kind": "cafe",
-   "lights": 5,
-   "name": "Amber Corner Cafe",
-   "props": 19,
    "w": 5.4
   },
   {
@@ -169,16 +39,6 @@
    "name": "Bay Scoops",
    "props": 35,
    "w": 8.4
-  },
-  {
-   "d": 13.0,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_fn_west_deli_0.scn",
-   "id": "g_fn_west_deli_0",
-   "kind": "corner_shop",
-   "lights": 5,
-   "name": "Crown Hill Deli",
-   "props": 19,
-   "w": 5.7
   },
   {
    "d": 13.0,

@@ -11,16 +11,6 @@
    "w": 11.4
   },
   {
-   "d": 11.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_va_w800_n1600_sw__bayside_chandlery__0.scn",
-   "id": "g_ind_va_w800_n1600_sw__bayside_chandlery__0",
-   "kind": "trade_counter",
-   "lights": 6,
-   "name": "Bayside Chandlery",
-   "props": 29,
-   "w": 11.4
-  },
-  {
    "d": 15.25,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_va_w800_n1600_sw__reefer_repair__0.scn",
    "id": "g_ind_va_w800_n1600_sw__reefer_repair__0",
@@ -81,26 +71,6 @@
    "w": 15.4
   },
   {
-   "d": 15.25,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_va_w600_n1600_se__marine_engines__0.scn",
-   "id": "g_ind_va_w600_n1600_se__marine_engines__0",
-   "kind": "parts_counter",
-   "lights": 5,
-   "name": "Tidewater Marine Engines",
-   "props": 31,
-   "w": 6.1
-  },
-  {
-   "d": 11.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_vb_w600_n1400_nw__truck_stop_diner__0.scn",
-   "id": "g_ind_vb_w600_n1400_nw__truck_stop_diner__0",
-   "kind": "diner",
-   "lights": 6,
-   "name": "3rd St Truck Stop",
-   "props": 39,
-   "w": 11.4
-  },
-  {
    "d": 11.1,
    "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_vb_w600_n1400_nw__truck_parts__0.scn",
    "id": "g_ind_vb_w600_n1400_nw__truck_parts__0",
@@ -119,16 +89,6 @@
    "name": "Shift Canteen",
    "props": 50,
    "w": 11.4
-  },
-  {
-   "d": 11.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_ind_vc_w600_n1400_ne__island_restaurant_supply__1.scn",
-   "id": "g_ind_vc_w600_n1400_ne__island_restaurant_supply__1",
-   "kind": "trade_counter",
-   "lights": 4,
-   "name": "Island Restaurant Supply",
-   "props": 23,
-   "w": 5.7
   },
   {
    "d": 11.1,

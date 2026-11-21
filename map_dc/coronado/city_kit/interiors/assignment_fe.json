@@ -1,59 +1,63 @@
 {
  "_doc": "fe fill (claude/fill-high-street, 20 Nov): which business or service is behind which shop / civic door of the fe",
- "count": 11,
- "rooms": [
+ "_removed": [
   {
    "id": "fe_b1e_shops_0",
-   "piece": "n_fe_b1e",
-   "label": "shops",
-   "model": "commercial/com_orange_row",
-   "pos": [
-    397.0,
-    5.089,
-    -976.83
-   ],
-   "yaw": 180.0,
-   "door_index": 0,
-   "door_along": -4.08,
-   "door_w": 1.6,
-   "bay": [
-    -8.7,
-    -3.0
-   ],
-   "kind": "cleaners",
    "name": "Crown Hill Laundry",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "the laundromat of the mews and the garden apartments (no washers of their own), on the strip's edge where they walk past",
-   "signs": []
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
   },
   {
    "id": "fe_b1e_shops_1",
-   "piece": "n_fe_b1e",
-   "label": "shops",
-   "model": "commercial/com_orange_row",
-   "pos": [
-    397.0,
-    5.089,
-    -976.83
-   ],
-   "yaw": 180.0,
-   "door_index": 1,
-   "door_along": -1.92,
-   "door_w": 1.6,
-   "bay": [
-    -3.0,
-    2.92
-   ],
-   "kind": "cafe",
    "name": "Hilltop Coffee",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "coffee while the washing turns, and for the drivers off the strip who park in the lot",
-   "signs": []
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
   },
+  {
+   "id": "fe_b1e_corner_0",
+   "name": "Crown Hill Market",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fe_b1e_corner_1",
+   "name": "Hilltop Pharmacy",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fe_b2_trade_0",
+   "name": "Ringside Bikes",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fe_b2_trade_1",
+   "name": "Ringside Dry Cleaners",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fe_r5_rec_0",
+   "name": "Glorietta Rec Center",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fe_r1_bakery_0",
+   "name": "Point Bakery",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "fe_r1_surf_0",
+   "name": "Glorietta Surf Co.",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  }
+ ],
+ "count": 2,
+ "rooms": [
   {
    "id": "fe_b1e_shops_2",
    "piece": "n_fe_b1e",
@@ -81,122 +85,6 @@
    "signs": []
   },
   {
-   "id": "fe_b1e_corner_0",
-   "piece": "n_fe_b1e",
-   "label": "corner",
-   "model": "commercial/com_orange_corner",
-   "pos": [
-    474.0,
-    4.3971,
-    -976.83
-   ],
-   "yaw": 180.0,
-   "door_index": 0,
-   "door_along": -1.08,
-   "door_w": 1.6,
-   "bay": [
-    -5.7,
-    0.0
-   ],
-   "kind": "corner_shop",
-   "name": "Crown Hill Market",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "milk, bread and beer on the corner of the u 500 street, the nearest food shop for the mews and the apartments",
-   "signs": []
-  },
-  {
-   "id": "fe_b1e_corner_1",
-   "piece": "n_fe_b1e",
-   "label": "corner",
-   "model": "commercial/com_orange_corner",
-   "pos": [
-    474.0,
-    4.3971,
-    -976.83
-   ],
-   "yaw": 180.0,
-   "door_index": 1,
-   "door_along": 1.08,
-   "door_w": 1.6,
-   "bay": [
-    0.0,
-    5.7
-   ],
-   "kind": "pharmacy",
-   "name": "Hilltop Pharmacy",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "a pharmacy counter beside the market for the older residents of the band",
-   "signs": []
-  },
-  {
-   "id": "fe_b2_trade_0",
-   "piece": "n_fe_b2",
-   "label": "trade",
-   "model": "ck/ck_svc_trade",
-   "pos": [
-    522.0,
-    4.2388,
-    -975.0
-   ],
-   "yaw": -90.0,
-   "door_index": 0,
-   "door_along": -3.0,
-   "door_w": 1.8,
-   "bay": [
-    -5.7,
-    0.0
-   ],
-   "kind": "sport",
-   "name": "Ringside Bikes",
-   "style": "teal",
-   "font": "Overpass",
-   "built": "",
-   "why": "bikes sold and mended at the start of the ring path, the island's bike loop",
-   "signs": [
-    {
-     "facade": "front",
-     "along": -3.0,
-     "w": 5.2
-    }
-   ]
-  },
-  {
-   "id": "fe_b2_trade_1",
-   "piece": "n_fe_b2",
-   "label": "trade",
-   "model": "ck/ck_svc_trade",
-   "pos": [
-    522.0,
-    4.2388,
-    -975.0
-   ],
-   "yaw": -90.0,
-   "door_index": 1,
-   "door_along": 3.0,
-   "door_w": 1.8,
-   "bay": [
-    0.0,
-    5.7
-   ],
-   "kind": "cleaners",
-   "name": "Ringside Dry Cleaners",
-   "style": "navy",
-   "font": "Overpass",
-   "built": "",
-   "why": "dry cleaning for the strip's motels and the apartment band, beside the bike shop",
-   "signs": [
-    {
-     "facade": "front",
-     "along": 3.0,
-     "w": 5.2
-    }
-   ]
-  },
-  {
    "id": "fe_b2_cafe_0",
    "piece": "n_fe_b2",
    "label": "cafe",
@@ -220,110 +108,6 @@
    "font": "Overpass",
    "built": "",
    "why": "the park's cafe on the overlook (its CROWN CAFE sign painted on): coffee and ice tea with the bay in view",
-   "signs": []
-  },
-  {
-   "id": "fe_r5_rec_0",
-   "piece": "n_fe_r5",
-   "label": "rec",
-   "model": "civic/civ_rec_center",
-   "pos": [
-    527.95,
-    6.1022,
-    -510.0
-   ],
-   "yaw": -90.0,
-   "door_index": 0,
-   "door_along": 0.0,
-   "door_w": 1.8,
-   "bay": [
-    -11.7,
-    11.7
-   ],
-   "kind": "sport",
-   "name": "Glorietta Rec Center",
-   "style": "teal",
-   "font": "Overpass",
-   "built": "",
-   "why": "the rec center's front desk on the u 500 street: court bookings, classes, rackets and balls to borrow",
-   "signs": [
-    {
-     "facade": "right",
-     "along": 7.72,
-     "w": 1.45
-    },
-    {
-     "facade": "left",
-     "along": 7.72,
-     "w": 1.45
-    },
-    {
-     "facade": "right",
-     "along": 7.72,
-     "w": 1.45
-    },
-    {
-     "facade": "left",
-     "along": 7.72,
-     "w": 1.45
-    },
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 3.0
-    }
-   ]
-  },
-  {
-   "id": "fe_r1_bakery_0",
-   "piece": "n_fe_r1",
-   "label": "bakery",
-   "model": "commercial/com_bakery",
-   "pos": [
-    528.0,
-    4.1899,
-    -23.17
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": 3.26,
-   "door_w": 1.6,
-   "bay": [
-    -4.2,
-    4.2
-   ],
-   "kind": "bakery",
-   "name": "Point Bakery",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "bread and pastries on the v 0 street for the people walking down to the waterfront",
-   "signs": []
-  },
-  {
-   "id": "fe_r1_surf_0",
-   "piece": "n_fe_r1",
-   "label": "surf",
-   "model": "commercial/com_surf_shop",
-   "pos": [
-    540.0,
-    4.1851,
-    -22.95
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": -3.26,
-   "door_w": 1.6,
-   "bay": [
-    -4.2,
-    4.2
-   ],
-   "kind": "sport",
-   "name": "Glorietta Surf Co.",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "boards, wetsuits and wax on the way to the bay beach",
    "signs": []
   }
  ]

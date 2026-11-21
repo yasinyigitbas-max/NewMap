@@ -1,6 +1,0 @@
-PROOF compared: 26 nodes (with every mesh of the buildings), 0 ground and ground-collision triangles, 42 prop instances, 0 colliders, 18 wear marks are identical in both files
-PROOF differences found between the files: 2 lines only in the old one, 0 only in the new one
-PROOF change #1 remove prop_wall_shelf at (-2.40, 0.00, -6.51) removed, in 1 tier(s), no collider  [erased: a shelf across the bar's back door [prop_wall_shelf stands in front of a 1.0 m wide door (a back or side door)]]
-PROOF change #2 remove prop_wall_shelf at (-1.30, 0.00, -6.51) removed, in 1 tier(s), no collider  [erased: a shelf across the bar's back door [prop_wall_shelf stands in front of a 1.0 m wide door (a back or side door)]]
-PROOF 2 listed changes, every one found, nothing else differs
-PROOF RESULT PASS

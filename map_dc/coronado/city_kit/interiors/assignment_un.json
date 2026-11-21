@@ -1,6 +1,44 @@
 {
  "_doc": "Which shop is behind every shop door of the CITY-CENTRE FILL (claude/fill-city-centre, 19 Nov; Yasin via the",
- "count": 22,
+ "_removed": [
+  {
+   "id": "un_ne__uni_gate_cafe__0",
+   "name": "Gate Coffee",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "un_ne__uni_gate_books__0",
+   "name": "Campus Books",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "un_ne__uni_bus_kiosk__0",
+   "name": "Crown Cafe",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "un_nw__uni_union__0",
+   "name": "Student Union",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "un_se__uni_gameday_kiosk__0",
+   "name": "Crown Cafe",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "un_sw__uni_dining__0",
+   "name": "Dining Commons",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  }
+ ],
+ "count": 16,
  "rooms": [
   {
    "id": "un_ne__uni_hall__0",
@@ -103,109 +141,6 @@
    "built": ""
   },
   {
-   "id": "un_ne__uni_gate_cafe__0",
-   "piece": "n_un_ne",
-   "label": "uni_gate_cafe",
-   "model": "commercial/com_cafe_seaside",
-   "pos": [
-    -586.0,
-    6.248,
-    -781.327
-   ],
-   "yaw": -180.0,
-   "door_index": 0,
-   "door_along": -1.76,
-   "door_w": 1.6,
-   "bay": [
-    -2.7,
-    2.7
-   ],
-   "kind": "cafe",
-   "name": "Gate Coffee",
-   "style": "teal",
-   "signs": [
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 5.18
-    },
-    {
-     "facade": "left",
-     "along": 3.8,
-     "w": 3.0
-    }
-   ],
-   "source": "university campus (hand-made room list)",
-   "built": ""
-  },
-  {
-   "id": "un_ne__uni_gate_books__0",
-   "piece": "n_un_ne",
-   "label": "uni_gate_books",
-   "model": "commercial/com_realty",
-   "pos": [
-    -577.4,
-    6.256,
-    -781.327
-   ],
-   "yaw": -180.0,
-   "door_index": 0,
-   "door_along": 1.76,
-   "door_w": 1.6,
-   "bay": [
-    -2.7,
-    2.7
-   ],
-   "kind": "books",
-   "name": "Campus Books",
-   "style": "green",
-   "signs": [
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 5.18
-    },
-    {
-     "facade": "left",
-     "along": -3.4,
-     "w": 2.6
-    }
-   ],
-   "source": "university campus (hand-made room list)",
-   "built": ""
-  },
-  {
-   "id": "un_ne__uni_bus_kiosk__0",
-   "piece": "n_un_ne",
-   "label": "uni_bus_kiosk",
-   "model": "commercial/com_kiosk",
-   "pos": [
-    -500.0,
-    6.248,
-    -776.523
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": 1.15,
-   "door_w": 0.9,
-   "bay": [
-    -1.7,
-    1.7
-   ],
-   "kind": "cafe",
-   "name": "Crown Cafe",
-   "style": "sun",
-   "signs": [
-    {
-     "facade": "left",
-     "along": 0.9,
-     "w": 1.2
-    }
-   ],
-   "source": "university campus (hand-made room list)",
-   "built": ""
-  },
-  {
    "id": "un_nw__uni_museum__0",
    "piece": "n_un_nw",
    "label": "uni_museum",
@@ -277,42 +212,6 @@
      "facade": "left",
      "along": 8.67,
      "w": 1.35
-    }
-   ],
-   "source": "university campus (hand-made room list)",
-   "built": ""
-  },
-  {
-   "id": "un_nw__uni_union__0",
-   "piece": "n_un_nw",
-   "label": "uni_union",
-   "model": "civic/civ_community_center",
-   "pos": [
-    -630.0,
-    6.309,
-    -761.05
-   ],
-   "yaw": -180.0,
-   "door_index": 0,
-   "door_along": 0.0,
-   "door_w": 1.8,
-   "bay": [
-    -11.7,
-    11.7
-   ],
-   "kind": "venue",
-   "name": "Student Union",
-   "style": "teal",
-   "signs": [
-    {
-     "facade": "front",
-     "along": 1.81,
-     "w": 0.58
-    },
-    {
-     "facade": "front",
-     "along": -1.81,
-     "w": 0.58
     }
    ],
    "source": "university campus (hand-made room list)",
@@ -441,83 +340,6 @@
    "name": "Kinesiology",
    "style": "navy",
    "signs": [],
-   "source": "university campus (hand-made room list)",
-   "built": ""
-  },
-  {
-   "id": "un_se__uni_gameday_kiosk__0",
-   "piece": "n_un_se",
-   "label": "uni_gameday_kiosk",
-   "model": "commercial/com_cafe_seaside",
-   "pos": [
-    -432.173,
-    6.169,
-    -478.0
-   ],
-   "yaw": 90.0,
-   "door_index": 0,
-   "door_along": -1.76,
-   "door_w": 1.6,
-   "bay": [
-    -2.7,
-    2.7
-   ],
-   "kind": "cafe",
-   "name": "Crown Cafe",
-   "style": "sun",
-   "signs": [
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 5.18
-    },
-    {
-     "facade": "left",
-     "along": 3.8,
-     "w": 3.0
-    }
-   ],
-   "source": "university campus (hand-made room list)",
-   "built": ""
-  },
-  {
-   "id": "un_sw__uni_dining__0",
-   "piece": "n_un_sw",
-   "label": "uni_dining",
-   "model": "commercial/com_spanish_arcade_block",
-   "pos": [
-    -640.0,
-    6.102,
-    -574.95
-   ],
-   "yaw": -180.0,
-   "door_index": 0,
-   "door_along": -5.08,
-   "door_w": 1.6,
-   "bay": [
-    -11.7,
-    11.7
-   ],
-   "kind": "fast_food",
-   "name": "Dining Commons",
-   "style": "green",
-   "signs": [
-    {
-     "facade": "front",
-     "along": -8.0,
-     "w": 7.18
-    },
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 7.18
-    },
-    {
-     "facade": "front",
-     "along": 8.0,
-     "w": 7.18
-    }
-   ],
    "source": "university campus (hand-made room list)",
    "built": ""
   },

@@ -1,5 +1,31 @@
 {
  "_doc": "The walk-in places of the industrial growth blocks (18 Nov, claude/grow-industrial; Yasin: \"do out and indoors -> rooms g_<id> by tools/city/rooms/room_gen_ind.gd",
+ "_removed": [
+  {
+   "id": "ind_va_w800_n1600_sw__bayside_chandlery__0",
+   "name": "Bayside Chandlery",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "ind_va_w600_n1600_se__marine_engines__0",
+   "name": "Tidewater Marine Engines",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "ind_vb_w600_n1400_nw__truck_stop_diner__0",
+   "name": "3rd St Truck Stop",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "ind_vc_w600_n1400_ne__island_restaurant_supply__1",
+   "name": "Island Restaurant Supply",
+   "when": "21 Nov 2026",
+   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  }
+ ],
  "rooms": [
   {
    "id": "ind_va_w800_n1600_sw__hfs_office__0",
@@ -30,38 +56,6 @@
      "facade": "front",
      "along": 2.4,
      "w": 2.2
-    }
-   ]
-  },
-  {
-   "id": "ind_va_w800_n1600_sw__bayside_chandlery__0",
-   "piece": "i_va_w800_n1600_sw",
-   "label": "bayside_chandlery",
-   "model": "ck/ck_svc_trade_1d",
-   "pos": [
-    -845.0,
-    2.15000009536743,
-    -1577.38745117188
-   ],
-   "yaw": -179.999991348578,
-   "door_index": 0,
-   "door_along": -3.0,
-   "door_w": 1.8,
-   "bay": [
-    -5.7,
-    5.7
-   ],
-   "kind": "trade_counter",
-   "name": "Bayside Chandlery",
-   "style": "green",
-   "why": "rope, paint, shackles and engine oil for the boats across 1st St",
-   "source": "industrial growth",
-   "built": "",
-   "signs": [
-    {
-     "facade": "front",
-     "along": -3.0,
-     "w": 5.2
     }
    ]
   },
@@ -293,95 +287,6 @@
    ]
   },
   {
-   "id": "ind_va_w600_n1600_se__marine_engines__0",
-   "piece": "i_va_w600_n1600_se",
-   "label": "marine_engines",
-   "model": "industrial/ind_repair",
-   "pos": [
-    -580.934387207031,
-    2.15000009536743,
-    -1564.0
-   ],
-   "yaw": -90.0000025044782,
-   "door_index": 0,
-   "door_along": -6.5,
-   "door_w": 1.6,
-   "bay": [
-    -8.7,
-    -2.6
-   ],
-   "kind": "parts_counter",
-   "name": "Tidewater Marine Engines",
-   "style": "green",
-   "why": "outboard and diesel parts over the counter; the bays work on the yard's boats",
-   "source": "industrial growth",
-   "built": "",
-   "signs": [
-    {
-     "facade": "left",
-     "along": 8.67,
-     "w": 1.35
-    },
-    {
-     "facade": "front",
-     "along": -5.0,
-     "w": 3.6
-    },
-    {
-     "facade": "left",
-     "along": 8.67,
-     "w": 1.35
-    },
-    {
-     "facade": "left",
-     "along": 8.87,
-     "w": 1.75
-    },
-    {
-     "facade": "left",
-     "along": 8.87,
-     "w": 1.75
-    }
-   ]
-  },
-  {
-   "id": "ind_vb_w600_n1400_nw__truck_stop_diner__0",
-   "piece": "i_vb_w600_n1400_nw",
-   "label": "truck_stop_diner",
-   "model": "ck/mod_fastfood",
-   "pos": [
-    -628.5,
-    2.15000009536743,
-    -1422.51245117188
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": -4.8,
-   "door_w": 1.6,
-   "bay": [
-    -5.7,
-    5.7
-   ],
-   "kind": "diner",
-   "name": "3rd St Truck Stop",
-   "style": "red",
-   "why": "the drivers' diner on the truck route: breakfast at 4 am, coffee all day",
-   "source": "industrial growth",
-   "built": "",
-   "signs": [
-    {
-     "facade": "front",
-     "along": -3.0,
-     "w": 4.0
-    },
-    {
-     "facade": "front",
-     "along": 3.0,
-     "w": 4.0
-    }
-   ]
-  },
-  {
    "id": "ind_vb_w600_n1400_nw__truck_parts__0",
    "piece": "i_vb_w600_n1400_nw",
    "label": "truck_parts",
@@ -462,38 +367,6 @@
      "facade": "right",
      "along": 2.4,
      "w": 3.2
-    }
-   ]
-  },
-  {
-   "id": "ind_vc_w600_n1400_ne__island_restaurant_supply__1",
-   "piece": "i_vc_w600_n1400_ne",
-   "label": "island_restaurant_supply",
-   "model": "ck/ck_svc_trade",
-   "pos": [
-    -557.0,
-    2.15000009536743,
-    -1422.61254882812
-   ],
-   "yaw": 0.0,
-   "door_index": 1,
-   "door_along": 3.0,
-   "door_w": 1.8,
-   "bay": [
-    0.0,
-    5.7
-   ],
-   "kind": "trade_counter",
-   "name": "Island Restaurant Supply",
-   "style": "green",
-   "why": "cash and carry for the island's kitchens: pans, gloves, boxes, dry goods",
-   "source": "industrial growth",
-   "built": "",
-   "signs": [
-    {
-     "facade": "front",
-     "along": 3.0,
-     "w": 5.2
     }
    ]
   },

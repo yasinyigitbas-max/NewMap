@@ -1,14 +1,3 @@
 {
- "rooms": [
-  {
-   "d": 11.1,
-   "file": "res://map_dc/coronado/city_kit/interiors/rooms/g_grt_v3_j5sw_corner_shop_0.scn",
-   "id": "g_grt_v3_j5sw_corner_shop_0",
-   "kind": "takeout",
-   "lights": 4,
-   "name": "Late Night Noodles",
-   "props": 8,
-   "w": 2.64
-  }
- ]
+ "rooms": []
 }
