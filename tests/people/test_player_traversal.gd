@@ -69,6 +69,12 @@ func _trav() -> Dictionary: return player.call(&"get_trav")
 func _clear() -> void:
 	seen = {}; pel_jump = 0.0; slide = 0.0; pel_jump_at = ""; slide_at = ""
 
+var TRAV_RE := RegEx.create_from_string("jump|crouch|climb|vault|fall|land|roll|cover|hang|ledge|sneak|getup|get_up|stand_up|mantle")
+
+## a running loop: the Mixamo runs, or the run's own fallback when a figure lacks the take picked
+func _running(c: String) -> bool:
+	return c.begins_with("prun/") or c in ["ual/Jog_Fwd_Loop", "ual/Sprint_Loop", "step/jog"]
+
 func _frame() -> void:
 	await physics_frame
 	var c := _clip()
@@ -76,7 +82,8 @@ func _frame() -> void:
 		print("PTRAV    %s (y %.2f mode %d)" % [c, player.global_position.y, int(_trav().get("mode", 0))]); last_c = c
 	if not seen.has(c): seen[c] = 0
 	seen[c] += 1
-	if c.begins_with("ual/") or c.begins_with("step/"): ual_seen = c
+	# a UAL / step traversal clip (the locomotion's own fallback loops for a figure missing a take are not ours)
+	if (c.begins_with("ual/") or c.begins_with("step/")) and TRAV_RE.search(c.to_lower()): ual_seen = c
 	if not sk: sk = _find_sk(player)
 	if sk and bl < 0: bl = sk.find_bone("Bip01_L_Foot"); br = sk.find_bone("Bip01_R_Foot"); bp = sk.find_bone("Bip01_Pelvis")
 	if sk and bp >= 0:
@@ -163,7 +170,7 @@ func _run() -> void:
 		takes[_any(["ptrav/Running_Jump_a", "ptrav/Jump_b"])] = true
 		await _until(func(): return int(_trav().get("mode", 0)) == 0, 3.0)
 		await _wait(0.4)
-		_check(ok and _clip().begins_with("prun/"), "running jump %d: %s, on running (%s)" % [i + 1, _any(["ptrav/Running_Jump_a", "ptrav/Jump_b"]), _clip()])
+		_check(ok and _running(_clip()), "running jump %d: %s, on running (%s)" % [i + 1, _any(["ptrav/Running_Jump_a", "ptrav/Jump_b"]), _clip()])
 		_stop()
 	_check(takes.size() == 2, "running jumps alternate: %s" % [takes.keys()])
 	_report("running jump")
@@ -184,7 +191,7 @@ func _run() -> void:
 	_check(_any(["ptrav/Crouch_To_Stand", "ptrav/Crouched_To_Standing"]) != "" and not bool(player.call(&"get_crouch")), "out of the crouch: %s" % _any(["ptrav/Crouch_To_Stand", "ptrav/Crouched_To_Standing"]))
 	player.call(&"set_crouch", true); await _wait(1.5)
 	_clear(); _go(1); await _wait(1.5)
-	_check(seen.has("ptrav/Crouched_To_Sprinting") and _clip().begins_with("prun/"), "off at a run from the crouch: Crouched To Sprinting, then %s" % _clip())
+	_check(seen.has("ptrav/Crouched_To_Sprinting") and _running(_clip()), "off at a run from the crouch: Crouched To Sprinting, then %s" % _clip())
 	_stop(); await _wait(1.5)
 	_report("crouch")
 	# OBSTACLES
@@ -237,7 +244,7 @@ func _run() -> void:
 	await _until(func(): return int(_trav().get("mode", 0)) == 0 and player.global_position.y < 0.3, 12.0)
 	_check(fell and seen.has("ptrav/Falling_From_Losing_Balance") and player.global_position.y < 0.3, "at the edge 15 s: Falling From Losing Balance, down off it (y %.2f, landed %s)" % [player.global_position.y, _trav().get("last_land", "")])
 	_report("losing balance", 0.35)
-	_check(ual_seen == "", "never a UAL / step clip (%s)" % ual_seen)
+	_check(ual_seen == "", "never a UAL / step traversal clip (%s)" % ual_seen)
 	_end()
 
 func _inp(w: Vector3) -> Vector2:
@@ -255,7 +262,7 @@ func _obstacle(what: String, at: Vector3, tier: int, key: String, top: float, ke
 	var cl := _clip()
 	print("PTRAV  %s: %s (%s)" % [what, _trav().get("move", ""), _trav().get("obstacle", "")])
 	var on_ok := absf(y - top) < 0.15 if (top > 0.0) else y < 0.2
-	_check(ok and on_ok and (not keep_running or cl.begins_with("prun/")), "%s: %s, y %.2f (want %.2f), then %s" % [what, key, y, top, cl])
+	_check(ok and on_ok and (not keep_running or _running(cl)), "%s: %s, y %.2f (want %.2f), then %s" % [what, key, y, top, cl])
 	_stop(); await _wait(1.0)
 	_report(what, 0.35)
 
