@@ -406,7 +406,13 @@ Dictionary CityCar::get_damage() const {
 void CityCar::take_wheel(bool p_on) {
 	if (!made) return;
 	player = p_on;
-	if (p_on) {
+	if (p_on && door_player()) {   // the player at the wheel: his own camera frames the car (CityPlayer::view_vehicle)
+		door_player()->view_vehicle(this);
+		c_handbrake = 0.0f; c_brake = 0.0f;
+		set_max_contacts_reported(4);
+		elsfx::play(this, "res://audio/sfx/car/seatbelt_buckle_", -8.0f, 0.03f, Vector3(-0.4f, 0.9f, 0), 10.0f);
+		elsfx::play(this, String("res://audio/sfx/car/engine_start_") + String(sound_class(false)) + String("_"), -2.0f, 0.02f, Vector3(0, 0.6f, 1.4f), 50.0f);
+	} else if (p_on) {
 		chase_camera = true;
 		if (!cam) {
 			cam = memnew(Camera3D);

@@ -191,6 +191,10 @@ public:
 	Dictionary get_state() const;
 	int get_ride_state() const { return state; }   // ST_PARKED .. ST_THROWN
 	float get_speed() const { return speed; }
+	// (the player's camera) where the rider's body is after a throw, else the bike
+	Vector3 view_focus() const;
+	float view_roll() const { return cam_roll; }   // the view's roll with the lean and the pedalling, and its bob
+	float view_bob() const { return cam_bob; }
 };
 
 } // namespace godot
