@@ -153,6 +153,7 @@ public:
 	int get_entry_state() const { return dr_state; }
 	Vector3 get_driver_hips() const;   // (the tests) the driver figure's hips as drawn, world
 	bool is_seated() const { return dr_state == DR_SEATED; }
+	bool view_in_car() const { return dr_state >= DR_OPEN_IN && dr_state <= DR_STAND_OUT; }   // (the player's camera: opening the door .. getting up out)
 	float get_door() const { return door; }
 	Vector3 door_spot() const;     // node frame: where a person stands to get in (beside the door, on the ground)
 	Vector3 seat_hips() const;     // node frame: the driver's hips on his seat

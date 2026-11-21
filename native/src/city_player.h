@@ -93,6 +93,10 @@ public:
 private:
 	float turn_yaw0 = 0.0f, turn_k = 1.0f;   // a turn on the spot (step_mode 3): the way he faced, the clip's turn scaled to the angle
 	Vector3 cam_pos, knock_v;
+	uint64_t view_id = 0;                 // the car or bicycle his camera frames (0: him)
+	Vector3 cam_pivot;                    // what the camera turns round, eased
+	float cam_d = 1.7f, cam_side = 0.72f, cam_fov = 56.0f, look_idle = 9.0f;
+	float side_sign = 1.0f, side_cd = 0.0f, cam_lift = 0.0f;   // the shoulder it is over (+1 right), its hold, its rise over a blocked view
 	// THE OLD GAME'S TOUCH SCHEME (docs/OLD_CONTROLS_SPEC.md; Yasin: "copy it as it was"): the left half of the screen is
 	// an invisible floating stick (full at 80 px), the right half looks (0.25 deg a pixel x 1.2), a double tap (0.32 s,
 	// 110 px) on the left crouches, on the right jumps
@@ -226,7 +230,14 @@ public:
 	float get_yaw() const { return yaw; }
 	Array get_view() const { Array a; a.push_back(yaw); a.push_back(cam_yaw); a.push_back(cam_pitch); return a; }
 	void set_view(double p_yaw, double p_cam_yaw, double p_cam_pitch) { yaw = (float)p_yaw; cam_yaw = (float)p_cam_yaw; cam_pitch = (float)p_cam_pitch; }
-	void take_view() { if (cam) { cam->make_current(); cam_set = false; } }
+	// THE ONE CAMERA (Yasin, 21 Nov: "why do we even have 2 camera set ups anyway? unify the camera, make it a god of war
+	// like shoulder camera that follows us everywhere"): his camera is the only one. On foot it sits over his right
+	// shoulder; getting into a car or onto the bike it follows his body to the seat; driving or riding it frames the
+	// vehicle, a little further back, easing round behind it when nobody turns the view. It never cuts: every change of
+	// framing is eased. A ray keeps it out of walls and the ground.
+	void view_vehicle(Node3D *p_vehicle) { view_id = p_vehicle ? (uint64_t)p_vehicle->get_instance_id() : 0; look_idle = 0.0f; if (cam) cam->make_current(); }
+	void take_view() { view_id = 0; if (cam) cam->make_current(); }
+	Camera3D *get_camera() const { return cam; }
 	void set_body_id(const String &p_id) { body_id = p_id; }
 	bool vocal(const String &p_kind);           // a vocal sound by name ("jump", "throw", ...): other systems' (a shove)
 	int get_vocal_count() const { return vox_count; }

@@ -6,6 +6,9 @@
 
 #include "city_ped.h"
 #include "hand_grip.h"
+#include "city_car.h"
+#include "car_models.h"
+#include "city_bike.h"
 #include <godot_cpp/classes/skeleton3d.hpp>
 
 #include <godot_cpp/classes/audio_effect_capture.hpp>
@@ -84,6 +87,15 @@ void CityPlayer::_exit_tree() {
 }
 
 void CityPlayer::_input(const Ref<InputEvent> &p_event) {
+	if (frozen && view_id) {   // driving or riding: the mouse still turns the view (the screen's touches are the vehicle's)
+		const InputEventMouseMotion *vm = Object::cast_to<InputEventMouseMotion>(p_event.ptr());
+		if (vm && Input::get_singleton()->get_mouse_mode() == Input::MOUSE_MODE_CAPTURED) {
+			cam_yaw -= (float)vm->get_relative().x * 0.0035f;
+			cam_pitch = std::min(std::max(cam_pitch - (float)vm->get_relative().y * 0.003f, -1.1f), 0.5f);
+			look_idle = 0.0f;
+		}
+		return;
+	}
 	if (frozen) return;
 	Viewport *vp = get_viewport();
 	const Vector2 sz = vp ? vp->get_visible_rect().size : Vector2(1152, 648);
@@ -237,6 +249,10 @@ int CityPlayer::take_punch() {
 void CityPlayer::_physics_process(double p_delta) {
 	pm::Scope _pm(pm::PLAYER_PHYS);   // (the slow-frame marks, perf_marks.h)
 	if (!fig) return;
+	// in a car or on the bicycle (set_riding: no collision): he stays where he is. Gravity went on pulling him while his
+	// collision was off: he fell through the floor, and the camera that followed him went with him (Yasin, 21 Nov:
+	// "getting into cars either drops the camera off the floor or us off the floor ... especially during hijacks")
+	if (frozen && get_collision_mask() == 0) { set_velocity(Vector3()); return; }
 	const float dt = (float)p_delta;
 	sense(p_delta);
 	punch_t += p_delta; hit_t += p_delta; combat_t += p_delta; uncombat_t += p_delta; act_left = std::max(act_left - p_delta, 0.0);
@@ -815,7 +831,7 @@ void CityPlayer::set_riding(bool p_on) {
 void CityPlayer::stand_at(const Vector3 &p_at, double p_yaw) {
 	set_global_position(p_at);
 	yaw = (float)p_yaw;
-	cam_yaw = (float)p_yaw + 3.14159265f;   // (his view behind him)
+	// (the view stays where it was: getting out of a car or off the bike it does not cut round behind him)
 	set_velocity(Vector3());
 	if (fig) fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), p_at), StringName("ual/Idle_Loop"), 1.0, -1.0);
 }
@@ -826,12 +842,117 @@ void CityPlayer::_process(double p_delta) {
 	pm::Scope _pm(pm::PLAYER);   // (the slow-frame marks, perf_marks.h)
 	if (!cam) return;
 	const float dt = (float)std::min(p_delta, 0.1);
-	const Vector3 head = get_global_position() + Vector3(0, 1.55f, 0);
+	// what it frames: him (his head), his body on its way into or out of a vehicle, or the vehicle he drives
+	Node3D *veh = view_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(view_id))) : nullptr;
+	if (view_id && !veh) view_id = 0;
+	Vector3 pivot = get_global_position() + Vector3(0, 1.5f, 0);   // (his shoulders: the God of War framing, close over the right shoulder, him in the left third)
+	float want_d = 1.7f, want_side = 0.72f, want_fov = 56.0f, spd = 0.0f, roll = 0.0f, bob = 0.0f;
+	bool driving = false;
+	Vector3 heading;
+	RID skip;
+	if (CityCar *c = Object::cast_to<CityCar>(veh)) {
+		const Transform3D t = c->get_global_transform();
+
+		if (c->get_player() || c->view_in_car()) {   // (sitting in, at the wheel, getting up out of it: the car's framing)
+			const cm::CarModel &m = cm::MODELS[std::min(std::max(c->get_model(), 0), cm::N_MODELS - 1)];
+			spd = std::fabs(c->dyn().speed);
+			pivot = t.origin + Vector3(0, 1.0f + m.height * 0.35f, 0);
+			want_d = 3.8f + m.half_len * 0.7f + spd * 0.035f; want_side = 0.55f; want_fov = 58.0f + std::min(spd, 60.0f) * 0.22f;
+			driving = c->get_player(); heading = t.basis.get_column(2);
+			skip = c->get_rid();   // (at the wheel the rays look past the car; getting in or out it is a wall like any other)
+		} else {
+			const Vector3 h = c->get_driver_hips();
+			if (h != Vector3()) pivot = h + Vector3(0, 0.55f, 0);   // (his body walking to the door, sitting in, getting out)
+			want_d = 2.7f; want_side = 0.7f; want_fov = 58.0f;   // (a little back: the car round him)
+		}
+	} else if (CityBike *b = Object::cast_to<CityBike>(veh)) {
+		const Transform3D t = b->get_global_transform();
+		skip = b->get_rid();
+		const int st = b->get_ride_state();
+		spd = std::fabs(b->get_speed());
+		if (st == CityBike::ST_THROWN) { pivot = b->view_focus() + Vector3(0, 0.6f, 0); want_d = 2.2f; want_side = 0.6f; want_fov = 56.0f; }
+		else {
+			pivot = t.origin + Vector3(0, 1.5f, 0);
+			want_d = 2.6f + spd * 0.05f; want_side = 0.55f; want_fov = 58.0f + std::min(spd, 14.0f) * 0.55f;
+			driving = st == CityBike::ST_RIDE || st == CityBike::ST_MOUNT; heading = t.basis.get_column(2);
+			roll = b->view_roll() * 0.25f; bob = b->view_bob() * 0.25f;   // (it rolls with the lean, bobs with the pedalling: a quarter of it, Yasin 21 Nov: "decrease the wobble of it significantly")
+		}
+	}
+	// driving: nobody turning the view for a moment, it eases round behind the vehicle and down to its usual tilt
+	look_idle += dt;
+	if (driving && look_idle > 1.2f) {
+		Vector3 f(heading.x, 0.0f, heading.z);
+		if (f.length() > 0.1f && spd > 0.8f) {
+			const float want_yaw = std::atan2(-f.x, -f.z);   // (the camera behind: its back vector against the heading)
+			float dy = std::fmod(want_yaw - cam_yaw + 3.14159265f, 6.2831853f); if (dy < 0) dy += 6.2831853f; dy -= 3.14159265f;
+			cam_yaw += dy * (1.0f - std::exp(-dt * (1.4f + spd * 0.1f)));
+			cam_pitch += (-0.2f - cam_pitch) * (1.0f - std::exp(-dt * 1.5f));
+		}
+	}
+	if (driving) {   // the right stick turns the view while he drives
+		Input *in = Input::get_singleton();
+		const float rx = (float)in->get_joy_axis(0, JOY_AXIS_RIGHT_X), ry = (float)in->get_joy_axis(0, JOY_AXIS_RIGHT_Y);
+		if (std::fabs(rx) > 0.2f || std::fabs(ry) > 0.2f) {
+			cam_yaw -= (std::fabs(rx) > 0.2f ? rx : 0.0f) * 2.2f * dt;
+			cam_pitch = std::min(std::max(cam_pitch - (std::fabs(ry) > 0.2f ? ry : 0.0f) * 1.6f * dt, -1.1f), 0.5f);
+			look_idle = 0.0f;
+		}
+	}
+	// eased: a new framing (on foot, at the door, at the wheel) never cuts
+	if (!cam_set) { cam_pivot = pivot; cam_d = want_d; cam_side = want_side; cam_fov = want_fov; }
+	cam_pivot += (pivot - cam_pivot) * (1.0f - std::exp(-dt * (driving ? 16.0f : 12.0f)));
+	cam_d += (want_d - cam_d) * (1.0f - std::exp(-dt * 3.0f));
+	cam_side += (want_side * side_sign - cam_side) * (1.0f - std::exp(-dt * 4.0f));   // (over the shoulder it is on: it swings across)
+	cam_fov += (want_fov - cam_fov) * (1.0f - std::exp(-dt * 3.0f));
 	const Vector3 back(std::sin(cam_yaw) * std::cos(cam_pitch), -std::sin(cam_pitch), std::cos(cam_yaw) * std::cos(cam_pitch));
-	const Vector3 want = head + back * cam_dist;
+	const Vector3 right(std::cos(cam_yaw), 0.0f, -std::sin(cam_yaw));
+	// A BLOCKED VIEW (Yasin, 21 Nov: "make sure that camera switches shoulders and looks for a better view when the screen
+	// is blocked on its own"): how much of the way out to each shoulder's place is clear (a ray from his head to over the
+	// shoulder, then back to the camera's place). The shoulder it is on blocked to under 60 % and the other one clearer:
+	// it swings across (and holds there a second, no flicking); back to the right shoulder once that is clear again. Both
+	// blocked: it rises a little over him and comes in, looking down past what is in the way.
+	PhysicsDirectSpaceState3D *ss = (is_inside_tree() && get_world_3d().is_valid()) ? get_world_3d()->get_direct_space_state() : nullptr;
+	TypedArray<RID> ex; ex.push_back(get_rid()); if (skip.is_valid()) ex.push_back(skip);
+	auto ray = [&](const Vector3 &a0, const Vector3 &a1) -> float {   // the clear length from a0 toward a1
+		const float L = a0.distance_to(a1);
+		if (!ss || L < 0.01f) return L;
+		Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(a0, a1, 1);
+		q->set_exclude(ex);
+		const Dictionary h = ss->intersect_ray(q);
+		return h.is_empty() ? L : ((Vector3)h["position"]).distance_to(a0);
+	};
+	auto clear = [&](float p_side, float p_lift) -> float {   // 0..1: how much of the view over that shoulder is clear
+		const Vector3 sh = cam_pivot + right * p_side + Vector3(0, p_lift, 0);
+		const float s0 = ray(cam_pivot, sh), sl = cam_pivot.distance_to(sh);
+		if (s0 < sl - 0.02f) return 0.3f * s0 / std::max(sl, 0.01f);
+		return 0.3f + 0.7f * ray(sh, sh + back * cam_d) / std::max(cam_d, 0.01f);
+	};
+	side_cd = std::max(side_cd - dt, 0.0f);
+	if (ss) {
+		const float here = clear(want_side * side_sign, 0.0f);
+		if (side_cd <= 0.0f) {
+			if (side_sign < 0.0f && clear(want_side, 0.0f) > 0.95f) { side_sign = 1.0f; side_cd = 1.0f; }   // (back to the right)
+			else if (here < 0.6f && clear(-want_side * side_sign, 0.0f) > here + 0.2f) { side_sign = -side_sign; side_cd = 1.0f; }
+		}
+		const float lift_want = (here < 0.5f && clear(-want_side * side_sign, 0.0f) < 0.5f) ? 0.55f : 0.0f;
+		cam_lift += (lift_want - cam_lift) * (1.0f - std::exp(-dt * 3.0f));
+	}
+	const Vector3 shoulder = cam_pivot + right * cam_side + Vector3(0, cam_lift, 0);   // (over his shoulder: he stands off the middle)
+	Vector3 want = shoulder + back * (cam_d * (1.0f - 0.3f * cam_lift / 0.55f));
+	// out of walls and the ground: from his head out to the shoulder, then back to where it wants to be
+	if (ss) {
+		const float s0 = ray(cam_pivot, shoulder), sl = cam_pivot.distance_to(shoulder);
+		const Vector3 sh = sl > 0.01f ? cam_pivot + (shoulder - cam_pivot) * (std::max(s0 - 0.2f, 0.0f) / sl) : cam_pivot;
+		const float L = sh.distance_to(want);
+		const float c = ray(sh, want);
+		if (L > 0.01f) want = sh + (want - sh) * (std::max(c - 0.25f, std::min(0.3f, L)) / L);
+	}
 	if (!cam_set) { cam_pos = want; cam_set = true; }
-	cam_pos += (want - cam_pos) * (1.0f - std::exp(-dt * 14.0f));
-	cam->set_global_transform(Transform3D(Basis(), cam_pos).looking_at(head, Vector3(0, 1, 0)));
+	cam_pos += (want - cam_pos) * (1.0f - std::exp(-dt * 18.0f));
+	Transform3D ct = Transform3D(Basis(), cam_pos + Vector3(0, bob, 0)).looking_at(cam_pos - back, Vector3(0, 1, 0));
+	if (roll != 0.0f) ct.basis = ct.basis * Basis(Vector3(0, 0, 1), roll);
+	cam->set_global_transform(ct);
+	cam->set_fov(cam_fov);
 }
 
 void CityPlayer::act(const StringName &p_clip, double p_seconds, double p_yaw) {

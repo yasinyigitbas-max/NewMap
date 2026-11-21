@@ -54,6 +54,7 @@ bool CityCar::enter(CityPlayer *p_pl) {
 	dr_at = p_pl->get_global_position(); dr_at.y -= 0.05f;
 	dr_yaw = p_pl->get_yaw();
 	p_pl->set_riding(true);
+	p_pl->view_vehicle(this);   // (his camera follows his body to the seat, then frames the car: the one camera)
 	driver->set_visible(true);
 	// the way to the door: straight, or round the front when he stands on the car's far side
 	dr_path.clear();

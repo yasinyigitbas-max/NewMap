@@ -73,10 +73,14 @@ func _physics_process(_d: float) -> bool:
 			var l: Vector3 = car.global_transform.affine_inverse() * player.global_position
 			_check(player.visible and l.x > 0.8 and l.x < 2.4 and absf(l.z) < 1.5, "out: the player stands by the driver's door (car frame x %.2f z %.2f) after %.1f s" % [l.x, l.z, t - t0])
 			_check(hips_jump < 0.06, "the driver's hips at most %.3f m in a frame (worst in step %d)" % [hips_jump, jump_at])
-			player.call(&"set_move", Vector2(0, 1), false); step = 4; t0 = t
+			var away: Vector3 = car.global_transform.basis.x   # (the view turned away from the car: he walks where it looks)
+			player.call(&"set_view", atan2(away.x, away.z), atan2(-away.x, -away.z), -0.15)
+			player.call(&"set_move", Vector2(0, 1), false); step = 4; t0 = t; set_meta("out_at", player.global_position)
 		4:
 			if t - t0 < 1.5: return false
-			_check(player.global_position.distance_to(car.global_position) > 2.2, "he walks off (%.2f m from the car)" % player.global_position.distance_to(car.global_position))
+			# (he walks the way the camera looks: since the one camera, 21 Nov, it does not cut round behind him as he gets out)
+			var went: float = player.global_position.distance_to(get_meta("out_at"))
+			_check(went > 0.8 and player.global_position.distance_to(car.global_position) > 1.6, "he walks off (%.2f m, %.2f m from the car)" % [went, player.global_position.distance_to(car.global_position)])
 			step = 9
 		9:
 			if not shots.is_empty():

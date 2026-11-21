@@ -208,6 +208,8 @@ void CityBike::_ready() {
 
 void CityBike::set_rider_player(Object *p_player) { player_id = p_player ? (uint64_t)p_player->get_instance_id() : 0; }
 
+Vector3 CityBike::view_focus() const { return (state == ST_THROWN && rider) ? rider->body_at() : get_global_position(); }
+
 CityPlayer *CityBike::the_player() const {
 	return player_id ? Object::cast_to<CityPlayer>(ObjectDB::get_instance(ObjectID(player_id))) : nullptr;
 }
@@ -253,7 +255,7 @@ void CityBike::mount() {
 		set_linear_velocity(Vector3()); set_angular_velocity(Vector3());
 		fallen = false;
 	}
-	if (pl) pl->set_riding(true);
+	if (pl) { pl->set_riding(true); pl->view_vehicle(this); }   // (his own camera frames the bike: the one camera)
 	// the rider is the player as he looks (Yasin, 20 Nov: "when we get on it our character becomes a grey person"): his
 	// body and clothes taken over from his own figure
 	if (pl && rider && pl->figure()) {
@@ -276,7 +278,7 @@ void CityBike::mount() {
 	}
 	lean = lean_v = 0.0f;
 	if (rider) rider->set_visible(true);
-	if (cam && chase_camera) {      // B37: put behind the bike before it is made current (a top-level camera starts at the origin)
+	if (cam && chase_camera && !pl) {      // B37: put behind the bike before it is made current (a top-level camera starts at the origin)
 		if (is_inside_tree()) {
 			const Transform3D t = get_global_transform(); const Vector3 fwd = t.basis.get_column(2); const Vector3 at = t.origin + Vector3(0, 1.0f, 0);
 			cam->set_global_transform(Transform3D(Basis(), at - Vector3(fwd.x, 0, fwd.z).normalized() * 4.5f + Vector3(0, 1.2f, 0)).looking_at(at, Vector3(0, 1, 0)));
@@ -613,7 +615,8 @@ void CityBike::dismount_pose(const Transform3D &bt, float u, bool p_on) {
 // Behind and above, swinging round as it turns; it rolls with the lean, sways and bobs with the pedalling, shakes over
 // bumps. After a throw it follows the rider's body.
 void CityBike::view(double p_delta) {
-	if (!cam || !chase_camera || state == ST_PARKED) return;
+	if (state == ST_PARKED) { cam_roll = cam_bob = 0.0f; return; }
+	const bool own = cam && chase_camera && !the_player();   // (else the player's camera frames it, with this wobble)
 	const float dt = (float)std::min(p_delta, 0.1);
 	const Transform3D bt = get_global_transform();
 	Vector3 target = bt.origin;
@@ -638,6 +641,7 @@ void CityBike::view(double p_delta) {
 	cam_roll += (roll_want - cam_roll) * (1.0f - std::exp(-dt * 10.0f));
 	cam_bob = std::sin(crank * 2.0f) * 0.028f * effort + std::sin(st_t * 31.0f) * std::min(bump, 1.0f) * 0.03f;
 	wobble_most = std::max(wobble_most, std::fabs(cam_roll) + std::fabs(cam_bob));
+	if (!own) return;
 	Transform3D ct = Transform3D(Basis(), cam_pos + Vector3(0, cam_bob, 0)).looking_at(cam_look, Vector3(0, 1, 0));
 	ct.basis = ct.basis * Basis(Vector3(0, 0, 1), cam_roll);
 	cam->set_global_transform(ct);
