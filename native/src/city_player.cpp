@@ -714,6 +714,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		} else if (step_mode == 0) stop_ph_prev = -1.0;
 		if ((step_mode == 1 || step_mode == 2 || step_mode == 4) && step_pw) {
 			const double at = cur_clip_is(step_clip) ? fig->clip_pos() : (double)step_t;
+			const bool walk_stop = step_clip == PW_STOP[0] || step_clip == PW_STOP[1] || step_clip == PW_STOP[2] || step_clip == PW_STOP[3];
 			step_t += dt * step_cs;
 			const double y = fig->clip_curve_sn(step_clip, K_YAW, at, 0.0);
 			if (step_mode == 4 || step_turn_clip) {   // (the walking turn's yaw, followed at a rate that builds up and eases off: cut in from the loop at the
@@ -731,6 +732,9 @@ void CityPlayer::_physics_process(double p_delta) {
 					move_speed = std::max(move_speed, 0.3f);
 				} else {
 					if (pw_main >= 0) fig->set_next_seek(fig->clip_meta_sn(step_clip, K_OUT[pw_main], 0.0) * fig->clip_len(PW_MAIN[pw_main]));   // (the walk takes over where its pose is)
+					// (and his pace is held near the start's own while the two crossfade: the start still plays at its rate under
+					// the loop, and a pick-up to the pace asked inside the blend slid its planted foot on, 5-6 cm; 22 Nov)
+					pw_join = 0.3f;
 					move_speed = std::max(move_speed, 0.3f);   // (on at the clip's own last pace: the walk's pace eases to the one asked from there; a snap to the pace asked jerked him)
 				}
 				step_mode = 0; step_lat = 0.0f;
@@ -739,7 +743,9 @@ void CityPlayer::_physics_process(double p_delta) {
 				// THE HANDOVER (Yasin, 21 Nov: "the jerks are still there"): cut in from the loop, the clip's pace at its cut-in
 				// point is not his (the stop's 0.64 m/s against the loop's 1.4): what it lacks is carried and eased out over the
 				// crossfade, 0.35 s, so his body does not snap to the clip's pace in one frame
-				if (hand_t < 0.0f) { hand_off = hand_v - move_speed; hand_t = 0.35f; }
+				// (not in a stop: carried on into the stop's own braking it ran his body on over the planted foot, 6-9 cm in the
+				// mirrored stops cut in late, at 0.57 s; there the clip's braking is followed at up to 9 m/s2 below. 22 Nov)
+				if (hand_t < 0.0f) { hand_off = (step_mode == 2 && walk_stop) ? 0.0f : hand_v - move_speed; hand_t = 0.35f; }
 				if (hand_t > 0.0f) { const float w = hand_t / 0.35f; move_speed += hand_off * w * w * (3.0f - 2.0f * w); hand_t = std::max(hand_t - dt, 0.0f); }
 				step_lat = step_cs * (float)fig->clip_curve_sn(step_clip, K_VX, at, 0.0);
 			}
@@ -766,22 +772,24 @@ void CityPlayer::_physics_process(double p_delta) {
 			if (!clip_turns && std::fabs(yaw_fr) < 0.05f) yaw_fr = 0.0f;
 		}
 		if (step_mode == 0) {
-			const float acc = target > move_speed ? (move_speed < walk_top ? 2.6f : 3.2f) : (target < 0.05f ? 4.0f : 3.0f);
+			float acc = target > move_speed ? (move_speed < walk_top ? 2.6f : 3.2f) : (target < 0.05f ? 4.0f : 3.0f);
+			if (pw_join > 0.0f && target <= walk_top * 1.05f) acc = std::min(acc, 0.3f);   // (on into a jog: his pace is not held; the run takes over)
 			move_speed = move_speed + std::min(std::max(target - move_speed, -acc * dt), acc * dt);
 		}
 		if (step_mode == 0 || !step_pw) step_lat = 0.0f;
 		if (step_mode == 0) { step_turn_clip = false; step_end_stand = false; }
 		if (pw_mode_before == 2 && step_mode == 0 && want_len < 0.05f) pw_settle = 0.35f;   // (a stop's end: what pace is left eases out under the idle's crossfade)
 		pw_settle = std::max(pw_settle - dt, 0.0f);
+		pw_join = std::max(pw_join - dt, 0.0f);
 		if ((pw || pr) && !airborne) {
 			// (the clip curves give the desired speed, never an impulse: also covers the final sample of a stop and a
 			// cancelled start/stop. The raw hips' pace is followed, up to 3.5 m/s2, sideways as well as forward; in a run
 			// start, stop or turn up to 9 m/s2: a run stops from 4.6 m/s inside a second, its feet would skate behind)
 			const bool pr_step = step_pw && (step_mode != 0 || pw_mode_before != 0) && String(step_clip).begins_with("prun/");
 			const float lim = pr_step ? 9.0f : 3.5f;
-			// (in a walk's stop the clip's own braking is followed up to 7 m/s2: held to 3.5 the body ran on over the planted
+			// (in a walk's stop the clip's own braking is followed up to 9 m/s2: held to 3.5 the body ran on over the planted
 			// foot, 6-14 cm in the mirrored stops; 21 Nov 23:45)
-			const float brake = (!pr_step && step_pw && step_mode == 2) ? 7.0f : lim;
+			const float brake = (!pr_step && step_pw && step_mode == 2) ? 9.0f : lim;
 			move_speed = pw_speed_before + std::min(std::max(move_speed - pw_speed_before, -brake * dt), lim * dt);
 			step_lat = pw_lat_before + std::min(std::max(step_lat - pw_lat_before, -lim * dt), lim * dt);
 		}

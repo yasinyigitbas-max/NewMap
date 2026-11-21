@@ -64,7 +64,8 @@ private:
 	bool step_pw = false;                // (the step clip playing is a pwalk one: its body moves by its own vz / vx / yaw)
 	float step_lat = 0.0f, step_end = 0.0f;   // (its sideways pace now; where it hands over, s)
 	double step_yaw_prev = 0.0;          // (its turn so far, the last frame)
-	float hand_v = 0.0f, hand_off = 0.0f, hand_t = 0.0f;   // (a clip's handover: his pace as it began, what the clip's pace lacked of it, the blend left)
+	float hand_v = 0.0f, hand_off = 0.0f, hand_t = 0.0f;
+	float pw_join = 0.0f;   // (a start handed to the walk loop: the crossfade left, while his pace is held near the start's)   // (a clip's handover: his pace as it began, what the clip's pace lacked of it, the blend left)
 	float yaw_debt = 0.0f, yaw_fr = 0.0f;
 	float pw_settle = 0.0f;   // (the stand after a stop: the idle, while the last of his pace eases out)   // (a walking turn's yaw still to give him, and the rate it is given at)
 	float yaw_r = 0.0f;                  // (his steering's turn rate now, rad/s: it builds up and eases off, no snap)

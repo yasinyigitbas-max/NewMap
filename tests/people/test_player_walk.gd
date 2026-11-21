@@ -59,6 +59,16 @@ func _track_feet(c: String) -> void:
 		if f[s].y < low[s] + 0.01: contact[s].append([f[s], c])
 		elif not contact[s].is_empty(): _end_contact(s)
 
+var turn_ask := 0
+func _ask(m: Vector2, what: String) -> void:
+	player.call(&"set_move", m, false); turn_ask += 1; t = 0.0
+	print("PWALK   asked %s" % what)
+
+## the turn asked has played and he is back in the walk loop at his walking pace (asked slow, out of the turn, a stride
+## took over 2 s and the walking turn gave way to steering round, 1.8 s on)
+func _turned(turn: String, c: String) -> bool:
+	return turns_seen.has(turn) and c.begins_with("pwalk/walk") and t > 1.0 and float(player.call(&"get_frame_log").get("speed", 0)) > 1.25
+
 func _process(dt: float) -> bool:
 	n += 1; t += dt
 	if n == 5:
@@ -87,14 +97,18 @@ func _process(dt: float) -> bool:
 			if walks.size() >= CYCLES: phase = 3; t = 0.0; player.call(&"set_move", Vector2(0, 1), false)
 			else: phase = 1; t = 0.0; player.call(&"set_move", Vector2(0, 1), false)
 		if t > 8.0: _check(false, "walk %d did not come back to the idle" % (walks.size() + 1)); phase = 3; t = 0.0
-	elif phase == 3:   # walking on, then asked right (a right turn), ahead again (a left turn), back the way he came (a 180)
-		if t > 3.0 and t < 5.5: player.call(&"set_move", Vector2(1, 0), false)
-		elif t >= 5.5 and t < 8.0: player.call(&"set_move", Vector2(0, 1), false)
-		elif t >= 8.0 and t < 10.5: player.call(&"set_move", Vector2(0, -1), false)
-		elif t >= 10.5: phase = 4; t = 0.0; player.call(&"set_move", Vector2(0, 0), false)
+	elif phase == 3:   # walking on, then asked right (a right turn), ahead again (a left turn), back the way he came (a 180):
+		# each asked once the turn before has played and he is back in the loop (asked on a timer, a turn still playing
+		# when the next was asked made the left turn come or not by chance)
+		if turn_ask == 0 and t > 3.0: _ask(Vector2(1, 0), "right")
+		elif turn_ask == 1 and _turned("pwalk/turn_r", c): _ask(Vector2(0, 1), "left")
+		elif turn_ask == 2 and _turned("pwalk/turn_l", c): _ask(Vector2(0, -1), "back")
+		elif turn_ask == 3 and (_turned("pwalk/turn180_l", c) or _turned("pwalk/turn180_r", c)): turn_ask = 4
+		if turn_ask >= 1 and turn_ask <= 3 and t > 8.0: _check(false, "no turn for the %s request" % ["right", "left", "back"][turn_ask - 1]); turn_ask = 4
+		if turn_ask == 4: phase = 4; t = 0.0; player.call(&"set_move", Vector2(0, 0), false)
 	elif phase == 4:
 		if c.begins_with("pidle/base_") and t > 1.0 and float(d.get("speed", 1)) < 0.02: phase = 5; t = 0.0; player.call(&"set_move", Vector2(0, 1), false)
-		if t > 8.0: phase = 5; t = 0.0
+		if t > 12.0: _check(false, "did not come back to the idle after the turns"); phase = 5; t = 0.0; player.call(&"set_move", Vector2(0, 1), false)
 	elif phase == 5:   # let go while setting off
 		if c.begins_with("pwalk/start") and t > 0.3 and cancel_start == "":
 			player.call(&"set_move", Vector2(0, 0), false); cancel_start = "wait"; t = 0.0
