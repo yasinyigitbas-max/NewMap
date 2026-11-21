@@ -532,10 +532,14 @@ void CityTraffic::_ready() {
 	seed_stalls();
 	// the models, their one material each way, the batches
 	ResourceLoader *rl = ResourceLoader::get_singleton();
-	mesh_near.resize(cm::N_MODELS); mesh_mid.resize(cm::N_MODELS);
+	mesh_near.resize(cm::N_MODELS); mesh_mid.resize(cm::N_MODELS); mesh_mid_light.assign(cm::N_MODELS, 0);
 	for (int m = 0; m < cm::N_MODELS; m++) {
 		mesh_near[m] = rl->load(String("res://vehicles/models/lod/") + cm::MODELS[m].id + "_q.res");
-		mesh_mid[m] = rl->load(String("res://vehicles/models/lod/") + cm::MODELS[m].id + "_far.res");
+		// the light model is the near mesh with the near material (21 Nov; Yasin: the old lod/<id>_far.res read as "a near drawn
+		// car without its body": open side windows and door panels, no glass. Simplifying the near mesh dropped the wheels and
+		// opened holes again, so the near mesh itself; about twice the old one's triangles, for the cars at 22-85 m).
+		mesh_mid_light[m] = 1;
+		mesh_mid[m] = rl->load(String("res://vehicles/models/lod/") + cm::MODELS[m].id + "_q.res");
 		if (mesh_mid[m].is_null()) mesh_mid[m] = mesh_near[m];
 	}
 	mesh_box = rl->load("res://vehicles/models/lod/stern_g_imp.res");
@@ -559,7 +563,7 @@ void CityTraffic::_ready() {
 			const String base = String("res://vehicles/models/lod/") + id;
 			Ref<Mesh> qb = rl->exists(base + String("_q_body.res")) ? Ref<Mesh>(rl->load(base + String("_q_body.res"))) : Ref<Mesh>();
 			const bool ok = rl->exists(cx + t + String("_car_normal.png")) && rl->exists(cx + t + String("_far_albedo.png")) && qb.is_valid() && qb->has_meta("cartex");
-			if (!ok) { mat_near_m[m] = mat_near; mat_mid_m[m] = mat_mid; continue; }
+			if (!ok) { mat_near_m[m] = mat_near; mat_mid_m[m] = mesh_mid_light[m] ? mat_near : mat_mid; continue; }
 			Ref<ShaderMaterial> n = mat_near->duplicate(), f = mat_mid->duplicate();
 			n->set_shader_parameter("map_mode", 2);
 			n->set_shader_parameter("trim_albedo", rl->load(cx + String("trim_albedo.png")));
@@ -570,7 +574,7 @@ void CityTraffic::_ready() {
 			f->set_shader_parameter("map_mode", 1);
 			f->set_shader_parameter("albedo_map", rl->load(cx + t + String("_far_albedo.png")));
 			f->set_shader_parameter("orm_map", rl->load(cx + t + String("_far_orm.png")));
-			mat_near_m[m] = n; mat_mid_m[m] = f;
+			mat_near_m[m] = n; mat_mid_m[m] = mesh_mid_light[m] ? Ref<ShaderMaterial>(n->duplicate()) : f;
 		}
 		if (rl->exists(cx + String("volt_x_far_albedo.png"))) mat_box->set_shader_parameter("atlas", rl->load(cx + String("volt_x_far_albedo.png")));
 	}

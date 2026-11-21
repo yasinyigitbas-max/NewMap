@@ -194,6 +194,7 @@ private:
 	Ref<ShaderMaterial> mat_lamps;
 	double lamps_r = 140.0;        // m: lamps are drawn this far (at night; by day only the brake lights, to 60 m)
 	std::vector<Ref<Mesh>> mesh_near, mesh_mid;
+	std::vector<char> mesh_mid_light;   // (the light model is the near mesh, drawn with the near material)
 	Ref<Mesh> mesh_box;
 	Ref<ShaderMaterial> mat_near, mat_mid, mat_box, mat_box_parked;
 	std::vector<Ref<ShaderMaterial>> mat_near_m, mat_mid_m;   // per model: the new car textures (car-tex r3) are the model's own
