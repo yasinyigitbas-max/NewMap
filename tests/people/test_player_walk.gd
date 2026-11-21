@@ -1,7 +1,7 @@
 extends SceneTree
 ## The player's walk on foot (Yasin, 21 Nov: "we should see one of the random starts, random main walks, and random stop
 ## walks. again, never the same one again"; tools/people/make_player_walks.gd, library "pwalk"):
-##  - each walk: a start (pwalk/start_a|b), a main loop (pwalk/walk_mx|walk_ual), a stop (pwalk/stop_a|b); in each of
+##  - each walk: a start (pwalk/start_a..d), a main loop (pwalk/walk_mx|mx1|mx2|mx3; walk_ual is out of the pool), a stop (pwalk/stop_a..d); in each of
 ##    the three never the same as the walk before
 ##  - asked round while walking: the walking turns (turn_l / turn_r / turn180_*)
 ##  - letting go while setting off ends the start at once; pushing on while stopping ends the stop at once

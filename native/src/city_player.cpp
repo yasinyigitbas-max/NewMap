@@ -41,14 +41,15 @@ namespace godot {
 
 // Player walk pools: all takes go to both figures (Yasin, 21 Nov 22:24: "ignore gender tags").
 static const int PW_NS = 4, PW_NM = 5, PW_NE = 4;
+static const int PW_NM_PICK = 4;   // (Yasin, 21 Nov 23:06: "the UAL walk doesn't fit": the pool is the four Mixamo loops; walk_ual stays in the library, last, never picked)
 struct PwNames {
 	StringName start[PW_NS] = { "pwalk/start_a", "pwalk/start_b", "pwalk/start_c", "pwalk/start_d" };
-	StringName main[PW_NM] = { "pwalk/walk_mx", "pwalk/walk_ual", "pwalk/walk_mx1", "pwalk/walk_mx2", "pwalk/walk_mx3" };
+	StringName main[PW_NM] = { "pwalk/walk_mx", "pwalk/walk_mx1", "pwalk/walk_mx2", "pwalk/walk_mx3", "pwalk/walk_ual" };
 	StringName stop[PW_NE] = { "pwalk/stop_a", "pwalk/stop_b", "pwalk/stop_c", "pwalk/stop_d" };
-	StringName k_in[PW_NM] = { "ph_in_mx", "ph_in_ual", "ph_in_mx1", "ph_in_mx2", "ph_in_mx3" };
-	StringName k_out[PW_NM] = { "ph_out_mx", "ph_out_ual", "ph_out_mx1", "ph_out_mx2", "ph_out_mx3" };
-	StringName k_at[PW_NM] = { "in_at_mx", "in_at_ual", "in_at_mx1", "in_at_mx2", "in_at_mx3" };
-	StringName k_oat[PW_NM] = { "out_at_mx", "out_at_ual", "out_at_mx1", "out_at_mx2", "out_at_mx3" };
+	StringName k_in[PW_NM] = { "ph_in_mx", "ph_in_mx1", "ph_in_mx2", "ph_in_mx3", "ph_in_ual" };
+	StringName k_out[PW_NM] = { "ph_out_mx", "ph_out_mx1", "ph_out_mx2", "ph_out_mx3", "ph_out_ual" };
+	StringName k_at[PW_NM] = { "in_at_mx", "in_at_mx1", "in_at_mx2", "in_at_mx3", "in_at_ual" };
+	StringName k_oat[PW_NM] = { "out_at_mx", "out_at_mx1", "out_at_mx2", "out_at_mx3", "out_at_ual" };
 };
 static const PwNames &pwn() { static const PwNames n; return n; }   // (made on first use: a StringName cannot be made before the engine is up)
 #define PW_START (pwn().start)
@@ -512,7 +513,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		const double gv_mx = pw ? fig->clip_meta_sn(PW_MAIN[0], K_GV, 1.533) : 1.533;   // (the Mixamo walk's own pace: its stops and turns are cut from it)
 		if (step_mode == 0 && want_len > 0.05f && move_speed < 0.05f && speed < 0.08f && turn_left < 0.6f && !airborne && settle_t >= 1.1f && !auto_on && pw) {
 			const int k = pw_pick(PW_NS, pw_start_last); pw_start_last = k;
-			pw_main = pw_pick(PW_NM, pw_main_last); pw_main_last = pw_main;
+			pw_main = pw_pick(PW_NM_PICK, pw_main_last); pw_main_last = pw_main;
 			step_mode = 1; step_pw = true; step_clip = PW_START[k]; step_t = 0.0f; step_yaw_prev = 0.0; hand_t = 0.0f;
 			step_end = (float)fig->clip_meta_sn(step_clip, K_OAT[pw_main], fig->clip_meta_sn(step_clip, K_DONE, fig->clip_len(step_clip)));   // (where the walk loop takes over)
 			step_cs = run ? 1.3f : std::min(std::max(std::min(want_len, walk_top) / (float)fig->clip_meta_sn(step_clip, K_VOUT, 0.85), 0.8f), 1.3f);   // (he ends the start at the pace he walks on at)
@@ -754,8 +755,8 @@ void CityPlayer::_physics_process(double p_delta) {
 		float sv[2] = { 0.92f, 2.40f };   // (the planted foot's pace: clip_audit.gd)
 		const int ns = 2;
 		if (fig->clip_len(PW_MAIN[0]) > 0.0) {
-			if (pw_main < 0) { pw_main = pw_pick(PW_NM, pw_main_last); pw_main_last = pw_main; }
-			set[0] = PW_MAIN[pw_main]; sv[0] = (float)fig->clip_meta_sn(PW_MAIN[pw_main], K_GV2, pw_main == 0 ? 1.533 : 0.92);
+			if (pw_main < 0) { pw_main = pw_pick(PW_NM_PICK, pw_main_last); pw_main_last = pw_main; }
+			set[0] = PW_MAIN[pw_main]; sv[0] = (float)fig->clip_meta_sn(PW_MAIN[pw_main], K_GV2, pw_main < PW_NM_PICK ? 1.533 : 0.92);
 		}
 		const float sp = std::max(speed, 0.3f);
 		int best = 0;
