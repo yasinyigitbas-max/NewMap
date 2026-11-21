@@ -123,6 +123,8 @@ Every file and its trigger, levels and source take is in el_manifest.json next t
 
 ## Engine layers per price class: start, idle, rev, stall (P1)
 
+Idle, low/high-rpm cruise loops and throttle-blip one-shots added 21 Nov 2026 (two takes each; EV is an electric motor whine). Hooked up in `engine_sound.cpp`: equal-power idle/low/high layers and `engine_rev_up` on a sharp throttle-on; the old generator is the fallback if a class is missing.
+
 | file | status | trigger | dur s | loop |
 |---|---|---|---|---|
 | sfx/car/engine_stall_0.ogg | new | engine stalls / switched off | 1.73 |  |
@@ -149,6 +151,46 @@ Every file and its trigger, levels and source take is in el_manifest.json next t
 | sfx/car/engine_start_v8_1.ogg | new | CityCar enter / ignition (class: v8) | 2.48 |  |
 | sfx/car/engine_start_v8_2.ogg | new | CityCar enter / ignition (class: v8) | 2.48 |  |
 | sfx/car/engine_start_v8_3.ogg | new | CityCar enter / ignition (class: v8) | 2.45 |  |
+| sfx/car/engine_idle_compact_0.ogg | new | engine idle loop (class: compact) | 2.99 | yes |
+| sfx/car/engine_idle_compact_1.ogg | new | engine idle loop (class: compact) | 3.00 | yes |
+| sfx/car/engine_idle_diesel_0.ogg | new | engine idle loop (class: diesel) | 2.81 | yes |
+| sfx/car/engine_idle_diesel_1.ogg | new | engine idle loop (class: diesel) | 2.81 | yes |
+| sfx/car/engine_idle_ev_0.ogg | new | EV ready hum / inverter idle loop (volt_s / volt_x) | 2.79 | yes |
+| sfx/car/engine_idle_ev_1.ogg | new | EV ready hum / inverter idle loop (volt_s / volt_x) | 2.80 | yes |
+| sfx/car/engine_idle_v6_0.ogg | new | engine idle loop (class: v6) | 2.99 | yes |
+| sfx/car/engine_idle_v6_1.ogg | new | engine idle loop (class: v6) | 3.36 | yes |
+| sfx/car/engine_idle_v8_0.ogg | new | engine idle loop (class: v8) | 3.33 | yes |
+| sfx/car/engine_idle_v8_1.ogg | new | engine idle loop (class: v8) | 2.80 | yes |
+| sfx/car/engine_rev_low_compact_0.ogg | new | engine low-rpm cruise loop (class: compact) | 2.80 | yes |
+| sfx/car/engine_rev_low_compact_1.ogg | new | engine low-rpm cruise loop (class: compact) | 2.90 | yes |
+| sfx/car/engine_rev_low_diesel_0.ogg | new | engine low-rpm cruise loop (class: diesel) | 2.80 | yes |
+| sfx/car/engine_rev_low_diesel_1.ogg | new | engine low-rpm cruise loop (class: diesel) | 2.80 | yes |
+| sfx/car/engine_rev_low_ev_0.ogg | new | EV low-speed motor whine loop (volt_s / volt_x) | 2.79 | yes |
+| sfx/car/engine_rev_low_ev_1.ogg | new | EV low-speed motor whine loop (volt_s / volt_x) | 2.81 | yes |
+| sfx/car/engine_rev_low_v6_0.ogg | new | engine low-rpm cruise loop (class: v6) | 2.80 | yes |
+| sfx/car/engine_rev_low_v6_1.ogg | new | engine low-rpm cruise loop (class: v6) | 2.89 | yes |
+| sfx/car/engine_rev_low_v8_0.ogg | new | engine low-rpm cruise loop (class: v8) | 2.84 | yes |
+| sfx/car/engine_rev_low_v8_1.ogg | new | engine low-rpm cruise loop (class: v8) | 2.89 | yes |
+| sfx/car/engine_rev_high_compact_0.ogg | new | engine high-rpm cruise loop (class: compact) | 2.85 | yes |
+| sfx/car/engine_rev_high_compact_1.ogg | new | engine high-rpm cruise loop (class: compact) | 2.80 | yes |
+| sfx/car/engine_rev_high_diesel_0.ogg | new | engine high-rpm cruise loop (class: diesel) | 2.80 | yes |
+| sfx/car/engine_rev_high_diesel_1.ogg | new | engine high-rpm cruise loop (class: diesel) | 2.94 | yes |
+| sfx/car/engine_rev_high_ev_0.ogg | new | EV high-speed motor whine loop (volt_s / volt_x) | 2.80 | yes |
+| sfx/car/engine_rev_high_ev_1.ogg | new | EV high-speed motor whine loop (volt_s / volt_x) | 2.79 | yes |
+| sfx/car/engine_rev_high_v6_0.ogg | new | engine high-rpm cruise loop (class: v6) | 2.89 | yes |
+| sfx/car/engine_rev_high_v6_1.ogg | new | engine high-rpm cruise loop (class: v6) | 2.88 | yes |
+| sfx/car/engine_rev_high_v8_0.ogg | new | engine high-rpm cruise loop (class: v8) | 2.79 | yes |
+| sfx/car/engine_rev_high_v8_1.ogg | new | engine high-rpm cruise loop (class: v8) | 2.80 | yes |
+| sfx/car/engine_rev_up_compact_0.ogg | new | engine throttle blip (class: compact) | 1.60 |  |
+| sfx/car/engine_rev_up_compact_1.ogg | new | engine throttle blip (class: compact) | 1.60 |  |
+| sfx/car/engine_rev_up_diesel_0.ogg | new | engine throttle blip (class: diesel) | 1.57 |  |
+| sfx/car/engine_rev_up_diesel_1.ogg | new | engine throttle blip (class: diesel) | 1.60 |  |
+| sfx/car/engine_rev_up_ev_0.ogg | new | EV motor throttle surge (volt_s / volt_x) | 1.57 |  |
+| sfx/car/engine_rev_up_ev_1.ogg | new | EV motor throttle surge (volt_s / volt_x) | 1.56 |  |
+| sfx/car/engine_rev_up_v6_0.ogg | new | engine throttle blip (class: v6) | 1.60 |  |
+| sfx/car/engine_rev_up_v6_1.ogg | new | engine throttle blip (class: v6) | 1.60 |  |
+| sfx/car/engine_rev_up_v8_0.ogg | new | engine throttle blip (class: v8) | 1.60 |  |
+| sfx/car/engine_rev_up_v8_1.ogg | new | engine throttle blip (class: v8) | 1.60 |  |
 
 ## Glass shatter, scrape, metal creak, hits on poles / fences / bins (P1)
 

@@ -15,6 +15,7 @@
 
 #include "car_models.h"
 #include "city_car.h"
+#include "engine_sound.h"
 #include "traffic_sim.h"
 
 #include <godot_cpp/classes/array_mesh.hpp>
@@ -885,6 +886,22 @@ void CityTraffic::_process(double p_delta) {
 		}
 	}
 	if ((++bus_frame & 3) == 0) bus_stop_sounds(cp);
+	{   // recorded engine loops on the nearest moving cars (player + loose CityCars have their own EngineSound)
+		EngineSound::TrafCar buf[48];
+		int neng = 0;
+		for (int i = 0; i < now.n && neng < 48; i++) {
+			const Row &r = now.rows[i];
+			if (r.kind == tc::K_BIKE) continue;
+			const float *p = pose[i];
+			if (p[5] > 70.0f * 70.0f) continue;   // hidden rows are already at 1e12 here
+			buf[neng].at = Vector3(p[0], p[1], p[2]);
+			buf[neng].speed = r.v;
+			buf[neng].model = (int)r.model;
+			buf[neng].key = r.id;
+			neng++;
+		}
+		EngineSound::update_traffic(this, cp, buf, neng, p_delta);
+	}
 	for (size_t h = 0; h < hidden.size();) {   // the step has dropped it: forget it
 		hidden[h].frames++;
 		if (!hidden[h].seen && hidden[h].frames > 30) { hidden[h] = hidden.back(); hidden.pop_back(); continue; }

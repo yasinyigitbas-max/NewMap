@@ -344,6 +344,15 @@ void CityCar::crash_sound(float p_sev) {
 	snd->play();
 }
 
+String CityCar::engine_class_for(int p_model) {
+	const std::string id = cm::MODELS[std::min(std::max(p_model, 0), cm::N_MODELS - 1)].id;
+	if (id.rfind("bus", 0) == 0 || id == "van" || id == "sakura_t") return "diesel";
+	if (id.rfind("fiamma", 0) == 0) return "v8";
+	if (id.rfind("volt", 0) == 0 || id == "stern_e") return "ev";
+	if (id == "sakura") return "compact";
+	return "v6";   // (stern_g, the taxi)
+}
+
 const char *CityCar::sound_class(bool p_horn) const {
 	const std::string id = cm::MODELS[std::min(std::max(model, 0), cm::N_MODELS - 1)].id;
 	if (id.rfind("bus", 0) == 0) return p_horn ? "bus" : "diesel";
@@ -642,9 +651,9 @@ void CityCar::_process(double p_delta) {
 	door_update(p_delta);
 	drive_sounds(p_delta);
 	if (!hits_due.empty()) { const std::vector<Vector3> hd = hits_due; hits_due.clear(); for (const Vector3 &dv : hd) hit(dv); }
+	if (!has_node("Engine")) { EngineSound *es = memnew(EngineSound); es->set_name("Engine"); add_child(es); es->set_car(this); }   // running engine (recorded loops, or the old synth if they are missing)
 	if (player) {   // the old pedals and the speed plate, while the player drives
 		if (!hud) make_hud();
-		if (!has_node("Engine")) { EngineSound *es = memnew(EngineSound); es->set_name("Engine"); add_child(es); es->set_car(this); }   // B4: his engine, made from the revs and the gears
 		Viewport *vp = get_viewport();
 		if (vp) {
 			const Vector2 sz = vp->get_visible_rect().size;
@@ -700,6 +709,7 @@ Dictionary CityCar::get_state() const {
 void CityCar::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_model", "model"), &CityCar::set_model);
 	ClassDB::bind_method(D_METHOD("get_model"), &CityCar::get_model);
+	ClassDB::bind_static_method("CityCar", D_METHOD("engine_class_for", "model"), &CityCar::engine_class_for);
 	ClassDB::bind_method(D_METHOD("set_feel", "feel"), &CityCar::set_feel);
 	ClassDB::bind_method(D_METHOD("get_feel"), &CityCar::get_feel);
 	ClassDB::bind_method(D_METHOD("set_paint", "colour"), &CityCar::set_paint);
