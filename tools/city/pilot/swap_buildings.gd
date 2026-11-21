@@ -65,7 +65,7 @@ func _run() -> void:
 		done += 1
 	var cells: Array = walks.get("cells", [])
 	if not cells.is_empty():
-		var n := _walks(top, cells)
+		var n := _walks(top, cells, walks.get("skirts", []))
 		if n < 0: print("SWAP %s: REFUSED walks (no ground concrete surface)" % piece); top.free(); quit(1); return
 		print("SWAP %s: walks: %d concrete cells laid" % [piece, n])
 	var ps := PackedScene.new(); ps.pack(top)
@@ -75,8 +75,9 @@ func _run() -> void:
 	quit(0 if err == OK and done == swaps.size() else 1)
 
 ## concrete cells appended to the ground's "concrete" surface; uv and colour continued from the surface (a plane fit of
-## uv over x, z; the surface's mean colour), the normal up, the winding the surface's own
-func _walks(top: Node, cells: Array) -> int:
+## uv over x, z; the surface's mean colour), the normal up, the winding the surface's own. Each outer edge of a walk gets
+## a 12 cm skirt down into the ground (its normal outward), so no edge of it is open to the eye.
+func _walks(top: Node, cells: Array, skirts: Array) -> int:
 	var g := top.get_node_or_null("ground") as MeshInstance3D
 	if g == null or not (g.mesh is ArrayMesh): return -1
 	var m := g.mesh as ArrayMesh
@@ -87,7 +88,7 @@ func _walks(top: Node, cells: Array) -> int:
 	var nm := ArrayMesh.new()
 	for i in m.get_surface_count():
 		var arr := m.surface_get_arrays(i)
-		if i == si: arr = _append(arr, cells)
+		if i == si: arr = _append(arr, cells, skirts)
 		nm.add_surface_from_arrays(m.surface_get_primitive_type(i), arr)
 		nm.surface_set_name(i, m.surface_get_name(i))
 		nm.surface_set_material(i, m.surface_get_material(i))
@@ -106,7 +107,7 @@ func _fit(v: PackedVector3Array, uv: PackedVector2Array) -> Array:      # least 
 	var inv := A.inverse()
 	return [inv * su, inv * sv]
 
-func _append(arr: Array, cells: Array) -> Array:      # (packed arrays are values: taken out, grown, put back)
+func _append(arr: Array, cells: Array, skirts: Array = []) -> Array:      # (packed arrays are values: taken out, grown, put back)
 	var v: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
 	var has_idx: bool = arr[Mesh.ARRAY_INDEX] != null
 	var idx: PackedInt32Array = arr[Mesh.ARRAY_INDEX] if has_idx else PackedInt32Array()
@@ -122,15 +123,19 @@ func _append(arr: Array, cells: Array) -> Array:      # (packed arrays are value
 	var col := Color(0, 0, 0, 0)
 	for c: Color in cols: col += c
 	if cols.size() > 0: col = col / float(cols.size())
-	for q: Array in cells:
+	var quads: Array = []      # [4 corners, normal]
+	for q: Array in cells: quads.append([q, Vector3.UP])
+	for q: Array in skirts: quads.append([q.slice(0, 4), Vector3(float(q[4][0]), float(q[4][1]), float(q[4][2]))])
+	for qq: Array in quads:
 		var p: Array = []
-		for c: Array in q: p.append(Vector3(float(c[0]), float(c[1]), float(c[2])))
+		var nn: Vector3 = qq[1]
+		for c: Array in qq[0]: p.append(Vector3(float(c[0]), float(c[1]), float(c[2])))
 		for t: Array in [[p[0], p[1], p[2]], [p[0], p[2], p[3]]]:
-			if signf((t[1] - t[0]).cross(t[2] - t[0]).y) != up_sign: t = [t[0], t[2], t[1]]
+			if signf((t[1] - t[0]).cross(t[2] - t[0]).dot(nn)) != up_sign: t = [t[0], t[2], t[1]]
 			for w: Vector3 in t:
 				if has_idx: idx.append(v.size())
 				v.append(w)
-				if arr[Mesh.ARRAY_NORMAL] != null: nrm.append(Vector3.UP)
+				if arr[Mesh.ARRAY_NORMAL] != null: nrm.append(nn)
 				if arr[Mesh.ARRAY_TANGENT] != null: tan.append_array(PackedFloat32Array([1, 0, 0, 1]))
 				if arr[Mesh.ARRAY_COLOR] != null: cols.append(col)
 				var k3 := Vector3(w.x, w.z, 1)
