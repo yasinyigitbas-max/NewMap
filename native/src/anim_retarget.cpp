@@ -94,8 +94,100 @@ int find_src(Skeleton3D *sk, const char *p_name) {
 // a clip's loop: a walk, a run or an idle loops; a start, a stop, a turn plays once
 bool mx_loops(const String &n) {
 	const String l = n.to_lower();
-	if (l.contains("start") || l.contains("stop") || l.contains("turn") || l.contains(" to ") || l.contains("_to_")) return false;
-	return l.contains("walk") || l.contains("run") || l.contains("jog") || l.contains("idle") || l.ends_with("_loop");
+	if (l.contains("start") || l.contains("stop") || l.contains("turn") || l.contains(" to ") || l.contains("_to_") || l.contains("jump") || l.contains("climb") || l.contains("stairs")) return l.contains("stairs") && !l.contains("start");
+	return l.contains("walk") || l.contains("run") || l.contains("jog") || l.contains("idle") || l.contains("sprint") || l.contains("sneak") || l.ends_with("_loop");
+}
+
+
+// THE CLIP'S OWN MOTION (Mixamo, the Animator 21 Nov): the game moves and turns the bodies itself, so a clip that walks
+// off or turns round would carry the figure away from its body and snap back. Measured, written down, taken out:
+//  - meta "yaw": the hips' turn about the vertical, per 1/30 s (radians, + to the left), and "done_at" (the turn is 97 %
+//    done): a turning clip (its name says turn, over 20 degrees) has it taken out (the body turns by it instead)
+//  - meta "vz", "vx": the travel per 1/30 s in the body's own frame (m/s, forward and to its left) and "pace" (= vz: the
+//    step code moves the body at native pace x pace)
+//  - a loop: its straight drift taken out (an "in place" one has none) and meta "ground_v" (m/s: the drift, or the
+//    planted foot's own pace) and "left_down" (the share of the loop where the left foot is furthest forward: the
+//    stride's phase, for handing one loop to the next in step); a walking start, stop or turn: its travel taken out
+//    (its sway kept); anything else keeps its travel (a fall, a dive, a stumble shows where it goes)
+//  - meta "tpose": the share of frames the arms are held straight out (a download in its T pose, not a clip)
+static float wrap_pi(float a) { while (a > 3.14159265f) a -= 6.2831853f; while (a < -3.14159265f) a += 6.2831853f; return a; }
+void mx_motion(Ref<Animation> &o, const String &name, const std::vector<Vector3> &hip, const std::vector<Vector3> &lf, const std::vector<Vector3> &rf,
+		const std::vector<Quaternion> &pq, int tr_pos, int tr_pel, int t_pel, Skeleton3D *tsk, const Transform3D &tnode, const Quaternion &tnode_q, float tpose, PackedStringArray &rep) {
+	const int n = (int)hip.size();
+	const float dt = 1.0f / 30.0f;
+	const String l = name.to_lower();
+	const bool loop = o->get_loop_mode() != Animation::LOOP_NONE;
+	// the turn: the hips' forward, turned from the first frame's
+	std::vector<float> yaw(n, 0.0f);
+	for (int f = 1; f < n; f++) {
+		const Vector3 v = (pq[f] * pq[0].inverse()).xform(Vector3(0, 0, 1));
+		yaw[f] = yaw[f - 1] + wrap_pi(std::atan2(v.x, v.z) - yaw[f - 1]);
+	}
+	const bool turn = l.contains("turn") && std::fabs(yaw[n - 1]) > 0.35f;
+	// (a fight's steps and a jump too: the game moves the body through them)
+	const bool locomotion = loop || l.contains("start") || l.contains("stop") || l.contains("turn") || l.contains("to_run") || l.contains("to_stop") || l.contains("step") || l.contains("jump") && !l.contains("climb") && !l.contains("hang");
+	// the path: a loop's straight drift, or (a locomotion move) the hips smoothed over half a second
+	std::vector<Vector3> path(n);
+	if (loop) { const Vector3 d = hip[n - 1] - hip[0]; for (int f = 0; f < n; f++) path[f] = hip[0] + Vector3(d.x, 0, d.z) * ((float)f / (float)(n - 1)); }
+	else {
+		const int w = 7;
+		for (int f = 0; f < n; f++) {
+			Vector3 acc; int c = 0;
+			for (int k = std::max(0, f - w); k <= std::min(n - 1, f + w); k++) { acc += hip[k]; c++; }
+			path[f] = acc / (float)c; path[f].y = hip[0].y;
+		}
+		path[0] = Vector3(hip[0].x, hip[0].y, hip[0].z); path[n - 1] = Vector3(hip[n - 1].x, hip[0].y, hip[n - 1].z);
+		for (int f = 1; f < n - 1; f++) if (f <= 7 || f >= n - 8) { const float u = f <= 7 ? (float)f / 8.0f : (float)(n - 1 - f) / 8.0f; const Vector3 e = f <= 7 ? hip[0] : hip[n - 1]; path[f] = Vector3(e.x, hip[0].y, e.z).lerp(path[f], u); }
+	}
+	PackedFloat32Array vz, vx, yw;
+	vz.resize(n); vx.resize(n); yw.resize(n);
+	for (int f = 0; f < n; f++) {
+		const int a = std::max(0, f - 1), b = std::min(n - 1, f + 1);
+		const Vector3 v = (path[b] - path[a]) / (dt * (float)std::max(b - a, 1));
+		const float c = std::cos(yaw[f]), sn = std::sin(yaw[f]);   // into the body's own frame (it faced +z at the start)
+		vz[f] = v.z * c + v.x * sn; vx[f] = v.x * c - v.z * sn; yw[f] = yaw[f];
+	}
+	o->set_meta("vz", vz); o->set_meta("vx", vx); o->set_meta("pace", vz); o->set_meta("yaw", yw);
+	o->set_meta("travel", Vector3(path[n - 1].x - path[0].x, 0, path[n - 1].z - path[0].z));
+	o->set_meta("tpose", tpose);
+	{ int k = n - 1; const float y_end = yaw[n - 1]; for (int f = 0; f < n; f++) if (std::fabs(yaw[f]) >= 0.97f * std::fabs(y_end)) { k = f; break; } o->set_meta("done_at", (float)k * dt); }
+	// the stride (a loop): the left foot furthest forward, and its own pace
+	if (loop) {
+		int best = 0; float most = -1e9f;
+		for (int f = 0; f < n - 1; f++) { const float z = lf[f].z - hip[f].z; if (z > most) { most = z; best = f; } }
+		o->set_meta("left_down", (float)best / (float)(n - 1));
+		const float drift = Vector2(hip[n - 1].x - hip[0].x, hip[n - 1].z - hip[0].z).length() / ((float)(n - 1) * dt);
+		float gv = drift;
+		if (drift < 0.15f) {   // in place: how fast the lower foot goes back under the body
+			float sum = 0.0f; int c = 0;
+			for (int f = 1; f < n; f++) { const bool left = lf[f].y < rf[f].y; const Vector3 &p1 = left ? lf[f] : rf[f], &p0 = left ? lf[f - 1] : rf[f - 1]; if (((left ? lf : rf)[f].y - std::min(lf[f].y, rf[f].y)) < 0.01f) { sum += -(p1.z - p0.z) / dt; c++; } }
+			gv = c ? std::max(sum / (float)c, 0.0f) : 0.0f;
+		}
+		o->set_meta("ground_v", gv);
+	}
+	// taken out: the travel (a loop's drift, a locomotion move's path), the turn (a turning clip)
+	if (!locomotion && !turn) { if (tpose > 0.5f) rep.push_back(vformat("ANIMS T-POSE %s (%.0f %% of its frames: a download without its motion?)", name, tpose * 100.0f)); return; }
+	const Transform3D inv = tnode.affine_inverse();
+	for (int f = 0; f < n; f++) {
+		const float t = std::min((float)o->get_length(), (float)f * dt);
+		Vector3 h = hip[f];
+		const Vector3 off = Vector3(h.x - path[f].x, 0, h.z - path[f].z);   // (the sway round the path)
+		const Quaternion un = turn ? Quaternion(Vector3(0, 1, 0), -yaw[f]) : Quaternion();
+		const Vector3 o2 = un.xform(off);
+		h = Vector3(hip[0].x + o2.x, h.y, hip[0].z + o2.z);
+		o->track_set_key_value(tr_pos, f, inv.xform(h));
+		if (turn && tr_pel >= 0) {
+			const int par = tsk->get_bone_parent(t_pel);
+			(void)par;
+			const Quaternion lq = o->track_get_key_value(tr_pel, f);
+			// the pelvis's own key is under its parent (not moved by the clip): turning the world turn back turns the key
+			Quaternion pw = tnode_q;   // (the pelvis's parents carry no clip turn: their rest turns, root first)
+			{ std::vector<int> chain; for (int q = par; q >= 0; q = tsk->get_bone_parent(q)) chain.push_back(q); for (int k = (int)chain.size() - 1; k >= 0; k--) pw = pw * tsk->get_bone_rest(chain[k]).basis.get_rotation_quaternion(); }
+			o->track_set_key_value(tr_pel, f, (pw.inverse() * un * pw * lq).normalized());
+		}
+		(void)t;
+	}
+	if (tpose > 0.5f) rep.push_back(vformat("ANIMS T-POSE %s (%.0f %% of its frames)", name, tpose * 100.0f));
 }
 
 // a node's place inside the scene it was made in, from the nodes' own transforms (a tool's nodes have no global one)
@@ -241,6 +333,12 @@ PackedStringArray AnimRetarget::retarget(Node *p_parent, const PackedStringArray
 				o->track_set_path(tr_pos, NodePath(track_base + String("Bip01_Pelvis")));
 				std::vector<Transform3D> sg;
 				std::vector<Quaternion> tw(nt);
+				// (Mixamo) per frame: the hips' place and turn, the feet, the hands against the shoulders (for the motion's
+				// own travel and turn, the stride, and a broken download held in its T)
+				std::vector<Vector3> m_hip, m_lf, m_rf; std::vector<Quaternion> m_pq; int m_t = 0;
+				const int s_lf = mixamo ? find_src(S.skel, "LeftFoot") : -1, s_rf = mixamo ? find_src(S.skel, "RightFoot") : -1;
+				const int s_lh = mixamo ? find_src(S.skel, "LeftHand") : -1, s_rh = mixamo ? find_src(S.skel, "RightHand") : -1;
+				const int s_la = mixamo ? find_src(S.skel, "LeftArm") : -1, s_ra = mixamo ? find_src(S.skel, "RightArm") : -1;
 				for (int f = 0; f <= frames; f++) {
 					const float t = std::min(len, (float)f / 30.0f);
 					pose_of(S.skel, a, t, sg);
@@ -256,7 +354,17 @@ PackedStringArray AnimRetarget::retarget(Node *p_parent, const PackedStringArray
 					const Vector3 sp = (S.node * sg[s_pel]).origin;
 					const Vector3 tp = tp0 + (sp - sp0) * k_h;
 					o->position_track_insert_key(tr_pos, t, tnode.affine_inverse().xform(tp));
+					if (mixamo && s_lf >= 0 && s_rf >= 0) {
+						m_hip.push_back(tp); m_pq.push_back(tw[t_pel]);
+						m_lf.push_back(tp0 + ((S.node * sg[s_lf]).origin - sp0) * k_h); m_rf.push_back(tp0 + ((S.node * sg[s_rf]).origin - sp0) * k_h);
+						if (s_lh >= 0 && s_rh >= 0 && s_la >= 0 && s_ra >= 0) {
+							const Vector3 lh = (S.node * sg[s_lh]).origin, rh = (S.node * sg[s_rh]).origin, la = (S.node * sg[s_la]).origin, ra = (S.node * sg[s_ra]).origin;
+							const float hgt = std::max(sp0.y, 0.1f) * 2.0f;
+							if (std::fabs(lh.y - la.y) < 0.08f * hgt && std::fabs(rh.y - ra.y) < 0.08f * hgt && (lh - rh).length() > 0.75f * hgt) m_t++;
+						}
+					}
 				}
+				if (mixamo && m_hip.size() > 2) mx_motion(o, name, m_hip, m_lf, m_rf, m_pq, tr_pos, tr[t_pel], t_pel, tsk, tnode, tnode_q, (float)m_t / (float)m_hip.size(), rep);
 				lib->add_animation(name, o);
 				names += name + String(" ");
 				made++;

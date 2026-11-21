@@ -84,6 +84,10 @@ void CityPed::make() {
 		// the walk starts and stops made from them (tools/people/make_steps.gd): "step/rb_start", "step/ual_stop_l" ...
 		Ref<AnimationLibrary> steps = rl->load(dir + String("clips_step_") + g + String(".res"));
 		if (steps.is_valid()) anim->add_animation_library(StringName("step"), steps);
+		// the Mixamo clips, fitted to this figure (tools/people/make_mixamo.gd): "mx/Walking", "mx/Fight_Idle" ... (Yasin, 21 Nov:
+		// "i want every action in the game animated. literally every action")
+		Ref<AnimationLibrary> mx = rl->load(dir + String("clips_mx_") + g + String(".res"));
+		if (mx.is_valid()) anim->add_animation_library(StringName("mx"), mx);
 		if (lib->has_animation("get_up")) { Ref<Animation> a = lib->get_animation("get_up"); getup_len = a->get_length(); }
 		if (anim->has_animation(clip)) { anim->play(clip); if (clip_at >= 0.0) { anim->seek(clip_at, true); anim->pause(); } }
 	}
@@ -141,7 +145,8 @@ static bool clip_start(Skeleton3D *skel, const Ref<Animation> &a, const Transfor
 	return clip_pose_at(skel, a, skel_in_node, b_hips, b_head, 0.0, r_hips, r_head);
 }
 
-Vector3 CityPed::clip_hips_at(const StringName &p_clip, double p_t) const {
+Vector3 CityPed::clip_hips_at(const StringName &p_req, double p_t) const {
+	const StringName p_clip = take_of(p_req);
 	if (!anim || !skel || !anim->has_animation(p_clip)) return Vector3();
 	Vector3 hips, head;
 	const int bh = skel->find_bone("Bip01_Pelvis"), bd = skel->find_bone("Bip01_Head");
@@ -219,11 +224,16 @@ bool CityPed::stride_of(const StringName &p_clip, double &r_left_down, int &r_st
 	return false;
 }
 
-void CityPed::drive(const Transform3D &p_at, const StringName &p_clip, double p_speed, double p_hold, int p_token) {
+void CityPed::drive(const Transform3D &p_at, const StringName &p_req, double p_speed, double p_hold, int p_token) {
 	if (!made || mode != MODE_ANIM) return;
 	set_global_transform(p_at);
-	if (!anim || !anim->has_animation(p_clip)) return;
-	if (p_clip != cur_clip || p_hold != cur_hold || p_token != cur_token) {
+	if (!anim) return;
+	const bool fresh = p_req != cur_req || p_hold != cur_hold || p_token != cur_token;
+	// the take: the one that runs while the same thing is asked for; a new ask takes this person's take (a one-off: the next)
+	const StringName p_clip = fresh ? take_next(p_req) : cur_clip;
+	if (!anim->has_animation(p_clip)) return;
+	if (fresh) {
+		cur_req = p_req; take_last_pos = -1.0;
 		const bool again = p_clip == cur_clip;
 		const StringName was = cur_clip;
 		const double was_pos = anim->is_playing() ? anim->get_current_animation_position() : -1.0;
@@ -237,17 +247,28 @@ void CityPed::drive(const Transform3D &p_at, const StringName &p_clip, double p_
 			// share of it: tools/people/clip_audit.gd STRIDE)
 			double ph_was = 0.0, ph_new = 0.0; int n_was = 1, n_new = 1;
 			const double len_new = anim->get_animation(p_clip)->get_length();
-			if (!again && was_pos >= 0.0 && stride_of(was, ph_was, n_was) && stride_of(p_clip, ph_new, n_new) && anim->has_animation(was)) {
+			if (!again && was_pos >= 0.0 && stride_any(was, ph_was, n_was) && stride_any(p_clip, ph_new, n_new) && anim->has_animation(was)) {
 				const double len_was = anim->get_animation(was)->get_length();
 				const double u = len_was > 0.0 ? was_pos / len_was : 0.0;
 				double phase = u * n_was - ph_was * n_was; phase -= std::floor(phase);   // (the share of one stride since the left foot landed)
 				double u_new = (phase + ph_new * n_new) / n_new; u_new -= std::floor(u_new);
 				anim->seek(u_new * len_new, true);
+			} else if (pending_seek > 0.0) { anim->seek(std::min(pending_seek, len_new * 0.5), true);
 			} else if (again) anim->seek(0.0, true);   // (the same clip again: from its start; a new one starts at its start
 			                                           // by itself, without a seek that would cut the blend short)
 		}
 	} else if (p_hold < 0.0 && p_hold > -1.5 && !anim->is_playing()) anim->play(p_clip, 0.1);   // (a clip that ends starts again while the act lasts)
+	else if (p_hold < 0.0 && p_hold > -1.5 && anim->is_playing() && take_cycles(p_req)) {
+		// a cycling loop played through (its position came round): the next take, blended in
+		const double pos = anim->get_current_animation_position();
+		if (take_last_pos >= 0.0 && pos + 0.05 < take_last_pos) {
+			const StringName nx = take_next(p_req);
+			if (nx != cur_clip && anim->has_animation(nx)) { cur_clip = nx; anim->play(nx, 0.45); }
+			take_last_pos = -1.0;
+		} else take_last_pos = pos;
+	}
 	if (p_hold < 0.0) anim->set_speed_scale((float)p_speed);
+	if (fresh) pending_seek = -1.0;
 }
 
 // A made step clip's pace at t: the share of the walk's ground pace the body moves at (meta "pace", 30 a second; 1 for
@@ -255,14 +276,16 @@ void CityPed::drive(const Transform3D &p_at, const StringName &p_clip, double p_
 double CityPed::clip_pace(const StringName &p_clip, double p_t) const { return clip_curve(p_clip, "pace", p_t, 1.0); }
 
 // A made clip's number (meta, e.g. a turn's "done_at"), or p_def
-double CityPed::clip_meta(const StringName &p_clip, const String &p_key, double p_def) const {
+double CityPed::clip_meta(const StringName &p_req, const String &p_key, double p_def) const {
+	const StringName p_clip = take_of(p_req);
 	if (!anim || !anim->has_animation(p_clip)) return p_def;
 	const Ref<Animation> a = anim->get_animation(p_clip);
 	return (a.is_valid() && a->has_meta(p_key)) ? (double)a->get_meta(p_key) : p_def;
 }
 
 // A made clip's curve (meta: a value per 1/30 s, e.g. "pace", a turn's "yaw") at t, or p_def without one
-double CityPed::clip_curve(const StringName &p_clip, const String &p_key, double p_t, double p_def) const {
+double CityPed::clip_curve(const StringName &p_req, const String &p_key, double p_t, double p_def) const {
+	const StringName p_clip = take_of(p_req);
 	if (!anim || !anim->has_animation(p_clip)) return p_def;
 	const Ref<Animation> a = anim->get_animation(p_clip);
 	if (a.is_null() || !a->has_meta(p_key)) return p_def;
@@ -284,7 +307,8 @@ float CityPed::top_over(const Vector3 &p_at, float p_r) const {
 	return top;
 }
 
-double CityPed::clip_len(const StringName &p_clip) const {
+double CityPed::clip_len(const StringName &p_req) const {
+	const StringName p_clip = take_of(p_req);
 	if (!anim || !anim->has_animation(p_clip)) return 0.0;
 	const Ref<Animation> a = anim->get_animation(p_clip);
 	return a.is_valid() ? a->get_length() : 0.0;
@@ -303,14 +327,16 @@ void CityPed::_ready() {
 
 void CityPed::set_clip(const String &p_clip) {
 	clip = p_clip;
-	if (made && anim && mode == MODE_ANIM && anim->has_animation(clip)) anim->play(clip, 0.25);
+	const StringName tk = take_of(clip);
+	if (made && anim && mode == MODE_ANIM && anim->has_animation(tk)) anim->play(tk, 0.25);
 }
 
 // For pictures and checks: the clip held still at a moment of it (seconds); below 0 = it runs
 void CityPed::set_clip_at(double p_t) {
 	clip_at = p_t;
-	if (!made || !anim || mode != MODE_ANIM || !anim->has_animation(clip)) return;
-	if (clip_at >= 0.0) { anim->play(clip, 0.0); anim->seek(clip_at, true); anim->pause(); } else anim->play(clip, 0.25);
+	const StringName tk = take_of(clip);
+	if (!made || !anim || mode != MODE_ANIM || !anim->has_animation(tk)) return;
+	if (clip_at >= 0.0) { anim->play(tk, 0.0); anim->seek(clip_at, true); anim->pause(); } else anim->play(tk, 0.25);
 }
 
 // The body takes over from the animation: every part where its bone is at this moment
@@ -384,7 +410,7 @@ void CityPed::to_animation(const StringName &p_clip, double p_blend, bool p_from
 		anim->set_speed_scale((p_from_ground && !has_getup) ? GETUP_SLOW : (p_from_ground ? GETUP_PACE : 1.0));
 		anim->play_with_capture(play, blend);
 	}
-	cur_clip = StringName(); cur_hold = -1.0; cur_token = 0;
+	cur_clip = StringName(); cur_req = StringName(); cur_hold = -1.0; cur_token = 0;
 	mode = p_from_ground ? MODE_GETUP : MODE_ANIM;
 	t_mode = 0.0;
 }
@@ -435,7 +461,7 @@ void CityPed::_physics_process(double p_delta) {
 	}
 	if (mode == MODE_GETUP) {
 		if (has_getup) {
-			if (t_mode >= getup_len / GETUP_PACE) { mode = MODE_ANIM; t_mode = 0.0; getups++; cur_clip = StringName(); if (anim && anim->has_animation(clip)) anim->play(clip, 0.3); }
+			if (t_mode >= getup_len / GETUP_PACE) { mode = MODE_ANIM; t_mode = 0.0; getups++; cur_clip = StringName(); cur_req = StringName(); if (anim && anim->has_animation(clip)) anim->play(clip, 0.3); }
 			return;
 		}
 		if (t_mode >= GETUP_GATHER && anim) anim->set_speed_scale(1.0);

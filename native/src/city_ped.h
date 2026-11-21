@@ -8,6 +8,7 @@
 // This is the BODY of one person near the player. The walking crowd (who goes where) is another class; it will hand
 // its nearest walkers to this one. Nothing here is called from script per frame.
 #pragma once
+#include <godot_cpp/templates/hash_map.hpp>
 
 #include "ped_body.h"
 
@@ -41,6 +42,10 @@ private:
 	AnimationPlayer *anim = nullptr;
 	MeshInstance3D *mi = nullptr;
 	StringName cur_clip;             // (driven by the crowd) the clip that runs, and the moment it is held at (-1 = it runs)
+	StringName cur_req;              // the clip asked for (an old name the Mixamo table may play another clip for)
+	uint32_t var_seed = 0;           // this person's own pick among the takes of an action (set_variant)
+	HashMap<StringName, int> var_uses;   // how often each action was played (the next take of a one-off, in turn)
+	bool alias_on = true;            // (the car's driver, the bicycle's rider: their clips are fitted by hand, kept)
 	double cur_hold = -1.0;
 	int cur_token = 0;
 	// getting up: the Quaternius clip "LayToIdle" (lying on the back to standing). Where its figure lies at its start, in
@@ -101,7 +106,24 @@ public:
 	Vector3 clip_hips_at(const StringName &p_clip, double p_t) const;
 	double clip_pos() const;
 	static bool stride_of(const StringName &p_clip, double &r_left_down, int &r_strides);
-	StringName current_clip() const { return cur_clip; }
+	StringName current_clip() const { return cur_req; }
+	// THE MIXAMO TAKES (Yasin, 21 Nov: "scrap existing ones and replace what we have with these, if our old pack had the
+	// act but this list doesnt have anything to replace it, keep the old one ... some of them have variety, use the varied
+	// ones in rotation"): an old clip name asked for plays a Mixamo take (city_ped_takes.cpp); a loop keeps this
+	// person's own take, a one-off plays the next take each time. What plays: the take for a name, the stride of the
+	// clip that runs now, a loop's own ground pace (m/s, its meta, or p_def)
+	StringName take_of(const StringName &p_clip) const;
+	StringName take_next(const StringName &p_clip);
+	bool take_cycles(const StringName &p_clip) const;
+	double take_last_pos = -1.0;   // (a cycling loop: where its take was, to see it come round)
+	bool stride_any(const StringName &p_clip, double &r_left_down, int &r_strides) const;
+	StringName playing() const { return cur_clip; }
+	bool stride_now(double &r_left_down, int &r_strides) const;
+	double ground_v(const StringName &p_clip, double p_def) const;
+	void set_variant(int p_seed) { var_seed = (uint32_t)p_seed; }
+	void set_alias(bool p_on) { alias_on = p_on; }
+	void start_at(double p_t) { pending_seek = p_t; }   // (the next fresh clip starts this far in: a start clip's still lead-in skipped)
+	double pending_seek = -1.0;
 	// what this figure looks like (its body's mesh and its clothes): another figure of the same person takes them on
 	String get_body() const { return body_id; }
 	Ref<Mesh> get_body_mesh() const;

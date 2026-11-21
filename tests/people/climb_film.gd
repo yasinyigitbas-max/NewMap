@@ -12,11 +12,14 @@ var shot := 0
 var take := 0
 var t := 0.0
 var look := Vector3(0, 1.0, 0)
-const WALL_H := 1.6
+var WALL_H := 1.6
+var RUN := false   # (-- --h=3.0 a wall of that height; --run: at a run)
 
 func _initialize() -> void:
 	for a: String in OS.get_cmdline_user_args():
 		if a.begins_with("--out="): out = a.trim_prefix("--out=")
+		elif a.begins_with("--h="): WALL_H = float(a.trim_prefix("--h="))
+		elif a == "--run": RUN = true
 	if not ClassDB.class_exists(&"CityPlayer"): print("FILM ERROR no native module"); quit(1); return
 	DirAccess.make_dir_recursive_absolute(out)
 	var sun := DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-45, 60, 0); sun.shadow_enabled = true; root.add_child(sun)
@@ -27,7 +30,7 @@ func _initialize() -> void:
 	img.set_pixel(1, 0, Color(0.40, 0.41, 0.43)); img.set_pixel(0, 1, Color(0.40, 0.41, 0.43))
 	var tex := ImageTexture.create_from_image(img)
 	_box(Vector3(60, 2, 60), Vector3(0, -1, 0), tex, Vector3(30, 30, 1))
-	_box(Vector3(4, WALL_H, 3), Vector3(0, WALL_H / 2.0, 4.5), null, Vector3.ONE)   # (its face at z 3: the stick forward walks him along +z)
+	_box(Vector3(4, WALL_H, 3), Vector3(0, WALL_H / 2.0, 4.5 + (6.0 if RUN else 0.0)), null, Vector3.ONE)   # (its face at z 3: the stick forward walks him along +z)
 	player = ClassDB.instantiate(&"CityPlayer"); player.position = Vector3(0, 0.05, 0); root.add_child(player)
 	cam = Camera3D.new(); cam.fov = 45.0; root.add_child(cam)
 
@@ -43,10 +46,10 @@ func _physics_process(delta: float) -> bool:
 	n += 1; t += delta
 	cam.current = true
 	look = look.lerp(player.global_position + Vector3(0, 1.0, 0), minf(delta * 3.0, 1.0))
-	cam.look_at_from_position(look + Vector3(4.2, 0.7, 0.6), look, Vector3.UP)
+	cam.look_at_from_position(look + Vector3(4.2 + WALL_H * 0.6, 0.7 + WALL_H * 0.3, 0.6), look, Vector3.UP)
 	if n < 30: return false
 	# take 0: stand 0.8 s, walk at the wall (and up it), then stand; take 1: from the start again, a jump on the way
-	if t > 0.8: player.call(&"set_move", Vector2(0, 1) if t < 6.5 else Vector2.ZERO, false)
+	if t > 0.8: player.call(&"set_move", Vector2(0, 1) if t < 6.5 else Vector2.ZERO, RUN)
 	if take == 1 and absf(t - 2.6) < delta * 0.5: player.call(&"jump")
 	if t > 8.0:
 		take += 1; t = 0.0

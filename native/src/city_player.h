@@ -54,7 +54,11 @@ private:
 	// angry entirely"): the Quaternius walk and jog with the hands open (tools/people/make_steps.gd: "step/walk",
 	// "step/jog", "step/idle"), each played near its own speed (before: the walk x1.74, the sprint x1.48,
 	// tests/people/gait_film.gd).
-	float walk_speed = 1.05f, run_speed = 2.8f;          // the walk at x1.14, the jog at x1.17
+	float walk_speed = 1.35f, run_speed = 2.8f;   // (the Mixamo walk's own pace is 1.53 m/s, its jog's 2.69: near their own rate; 21 Nov)
+	float turn_dir = 0.0f;   // (a turn while moving: the clip's own way round)
+	float taunt_t = 0.0f;    // (in his stance without a blow: a taunt now and then)
+	bool jump_run = false, land_hard = false;   // (a jump at a run; a landing from high up)
+	bool climb_fast = false;   // (the double climb taken at a run: up the wall at a sprint)          // the walk at x1.14, the jog at x1.17
 	int gait_i = -1;              // the walking clip of the set playing now (kept a little past the midpoint: no flicker)
 	float move_speed = 0.0f;      // the pace he means (his body turns, then goes the way it faces)
 	Vector3 lean_a;               // his acceleration, smoothed: the body leans into a turn and into a start

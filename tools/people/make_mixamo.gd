@@ -26,4 +26,11 @@ func _initialize() -> void:
 	r.set_out_prefix("clips_mx_")
 	var rep: PackedStringArray = r.retarget(root, files, "res://characters/rocketbox/")
 	for l in rep: print(l)
+	# compressed (Animation.compress: 39 MB a figure -> about 10, no visible change; the meta and every read still work)
+	for g in ["male", "female"]:
+		var path := "res://characters/rocketbox/clips_mx_%s.res" % g
+		var lib: AnimationLibrary = load(path)
+		if lib == null: continue
+		for nm in lib.get_animation_list(): lib.get_animation(nm).compress()
+		print("MIXAMO %s compressed: %s" % [path, "ok" if ResourceSaver.save(lib, path, ResourceSaver.FLAG_COMPRESS) == OK else "NOT SAVED"])
 	quit(0 if int(r.count()) > 0 else 1)
