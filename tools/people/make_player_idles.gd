@@ -12,6 +12,27 @@ extends SceneTree
 const TAKES := ["Looking_Around_idle", "Looking", "Arm_Stretching", "Neck_Stretching"]
 const DIR := "res://characters/rocketbox/"
 const FPS := 30.0
+## OPEN HANDS on the base (Yasin, 21 Nov: "can you open the hands of this base idle please?"): step/idle's finger
+## tracks (Quaternius, tips folded into the palm) take the relaxed, slightly curled hand of a Mixamo take at rest
+## (arms hanging), held: the same fingers the variations start and end with, so the crossfades do not move them.
+const HAND_FROM := "Neck_Stretching"
+const HAND_AT := 0.0
+func _open_hands(base: Animation, from: Animation, at: float) -> void:
+	var n := 0
+	for ti in base.get_track_count():
+		if base.track_get_type(ti) != Animation.TYPE_ROTATION_3D: continue
+		var path := base.track_get_path(ti)
+		var bone := String(path).get_slice(":", 1)
+		if not bone.contains("Finger"): continue
+		var fi := from.find_track(path, Animation.TYPE_ROTATION_3D)
+		if fi < 0: continue
+		var q := from.rotation_track_interpolate(fi, at)
+		while base.track_get_key_count(ti) > 0: base.track_remove_key(ti, 0)
+		base.rotation_track_insert_key(ti, 0.0, q)
+		base.rotation_track_insert_key(ti, base.length, q)
+		n += 1
+	print("PLAYER_IDLE open hands: %d finger tracks of step/idle from %s at %.2f s" % [n, from.resource_name if from.resource_name != "" else HAND_FROM, at])
+
 func _local(a: Animation, path: NodePath, t: float, rest: Transform3D) -> Transform3D:
 	var pi := a.find_track(path, Animation.TYPE_POSITION_3D)
 	var ri := a.find_track(path, Animation.TYPE_ROTATION_3D)
@@ -26,6 +47,9 @@ func _initialize() -> void:
 		var steps: AnimationLibrary = load(DIR + "clips_step_%s.res" % gender)
 		var base: Animation = steps.get_animation(&"idle")
 		var mx: AnimationLibrary = load(DIR + "clips_player_idle_%s.res" % gender)
+		_open_hands(base, mx.get_animation(HAND_FROM), HAND_AT)
+		var serr := ResourceSaver.save(steps, DIR + "clips_step_%s.res" % gender)
+		if serr != OK: print("PLAYER_IDLE ERROR save steps %d" % serr)
 		var scene: Node = (load(DIR + "hero_%s.scn" % gender) as PackedScene).instantiate()
 		var sk: Skeleton3D = scene.find_children("*", "Skeleton3D", true, false)[0]
 		var out := AnimationLibrary.new()
