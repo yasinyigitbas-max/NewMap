@@ -1,0 +1,369 @@
+{
+ "boat_on_stands": {
+  "file_base": "prop_boat_on_stands",
+  "batch": "intrade",
+  "class": "large",
+  "budget": 2000,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1262
+  },
+  "footprint_w": 5.082,
+  "footprint_d": 2.526,
+  "height": 2.663,
+  "regions": [
+   "baked:boat_on_stands"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 28.01,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 6.79,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.55,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.4,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.66,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 3.84,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3302,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 621.4,
+  "col": 1,
+  "secs": 33.5
+ },
+ "engine_hoist": {
+  "file_base": "prop_engine_hoist",
+  "batch": "intrade",
+  "class": "medium",
+  "budget": 1000,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 833
+  },
+  "footprint_w": 1.72,
+  "footprint_d": 0.842,
+  "height": 1.717,
+  "regions": [
+   "baked:engine_hoist"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 3.01,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 1.33,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.06,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 2339,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 621.4,
+  "col": 1,
+  "secs": 19.1
+ },
+ "oil_can_shelf": {
+  "file_base": "prop_oil_can_shelf",
+  "batch": "intrade",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1090
+  },
+  "footprint_w": 1.22,
+  "footprint_d": 0.462,
+  "height": 1.92,
+  "regions": [
+   "baked:oil_can_shelf"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 10.55,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 6.12,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 7.95,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 15524,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 138.9,
+  "col": 1,
+  "secs": 18.1
+ },
+ "pallet_racking": {
+  "file_base": "prop_pallet_racking",
+  "batch": "intrade",
+  "class": "large",
+  "budget": 1500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1360
+  },
+  "footprint_w": 2.78,
+  "footprint_d": 1.06,
+  "height": 2.6,
+  "regions": [
+   "baked:pallet_racking"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 19.85,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 1.55,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 29.59,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 10.74,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 7.68,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 5264,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 621.4,
+  "col": 1,
+  "secs": 23.9
+ },
+ "tire_rack": {
+  "file_base": "prop_tire_rack",
+  "batch": "intrade",
+  "class": "large",
+  "budget": 1500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1316
+  },
+  "footprint_w": 2.0,
+  "footprint_d": 0.7,
+  "height": 1.55,
+  "regions": [
+   "baked:tire_rack"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 2.88,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 10.84,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.06,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 7828,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 621.4,
+  "col": 1,
+  "secs": 22.3
+ },
+ "tool_chest": {
+  "file_base": "prop_tool_chest",
+  "batch": "intrade",
+  "class": "medium",
+  "budget": 800,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 530
+  },
+  "footprint_w": 1.017,
+  "footprint_d": 0.509,
+  "height": 1.475,
+  "regions": [
+   "baked:tool_chest"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 0.54,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 1.13,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 7.14,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1918,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 621.4,
+  "col": 1,
+  "secs": 14.3
+ },
+ "wheel_balancer": {
+  "file_base": "prop_wheel_balancer",
+  "batch": "intrade",
+  "class": "medium",
+  "budget": 1000,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 516
+  },
+  "footprint_w": 1.04,
+  "footprint_d": 0.73,
+  "height": 1.567,
+  "regions": [
+   "baked:wheel_balancer"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 4.71,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.61,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.88,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1946,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 165.6,
+  "col": 1,
+  "secs": 15.2
+ },
+ "lumber_rack": {
+  "file_base": "prop_lumber_rack",
+  "batch": "intrade",
+  "class": "large",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1090
+  },
+  "footprint_w": 2.569,
+  "footprint_d": 0.945,
+  "height": 2.3,
+  "regions": [
+   "baked:lumber_rack"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 5.93,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 22.36,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3900,
+  "bake_slot_px": 32,
+  "bake_px_per_m": 414.3,
+  "col": 1,
+  "secs": 20.9
+ },
+ "table_saw": {
+  "file_base": "prop_table_saw",
+  "batch": "intrade",
+  "class": "medium",
+  "budget": 800,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 444
+  },
+  "footprint_w": 1.25,
+  "footprint_d": 0.76,
+  "height": 1.04,
+  "regions": [
+   "baked:table_saw"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 2.34,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 3.33,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.08,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 826,
+  "bake_slot_px": 32,
+  "bake_px_per_m": 414.3,
+  "col": 1,
+  "secs": 15.7
+ }
+}
