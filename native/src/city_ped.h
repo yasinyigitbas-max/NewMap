@@ -126,7 +126,9 @@ public:
 	// hands over to a lying clip: the clip's figure laid where the body lies (hips on hips, head toward head), the clip
 	// running; false when it is not lying in its body or has no such clip
 	bool lie_as(const StringName &p_clip);
-	void start_at(double p_t) { pending_seek = p_t; }   // (the next fresh clip starts this far in: a start clip's still lead-in skipped)
+	void start_at(double p_t) { pending_seek = p_t; }
+	void set_next_blend(double p_s) { next_blend = p_s; }   // (the next fresh clip blends in over this long: 0 a cut, where two roots far apart would swing the hips through the blend)
+	double next_blend = -1.0;   // (the next fresh clip starts this far in: a start clip's still lead-in skipped)
 	double pending_seek = -1.0;
 	// what this figure looks like (its body's mesh and its clothes): another figure of the same person takes them on
 	String get_body() const { return body_id; }

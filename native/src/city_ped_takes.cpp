@@ -73,6 +73,32 @@ const Takes TAKES[] = {
 	{ "x/sit_chat", { "mx/Sitting_talking", "mx/Sitting_Idle", "mx/Sitting_talking", "mx/Sitting_Thumbs_Up" }, true },   // (two on a bench: talking)
 	{ "x/wait_drunk", { "mx/Drunk_Idle_Variation" } },
 	{ "x/cower", { "mx/Terrified" } },
+	// EVERY OLD CLIP LEFT: its nearest Mixamo stand-in (Yasin, 21 Nov: "old ones look terrible, remove any customizations you
+	// made regarding old ones too and just use mixamos"; "exact heights arent necessary")
+	{ "ual/Jump_Start", { "mx/Jumping_soft_landing" } }, { "ual/Jump_Loop", { "mx/Jumping_soft_landing" } }, { "ual/Jump_Land", { "mx/Falling_To_Landing" } },
+	{ "ual/Crouch_Enter", { "mx/Crouching_Idle" } },
+	{ "ual/Swim_Fwd_Loop", { "mx/Paddling" } }, { "ual/Swim_Idle_Loop", { "mx/Paddling" } }, { "ual/Swim", { "mx/Paddling" } },
+	{ "ual/Driving_Loop", { "mx/Seated_table_Idle" } },
+	{ "ual/Sitting_Phone_Loop", { "mx/Sitting_talking", "mx/Sitting_Idle" }, true }, { "ual/Sitting_Text_Loop", { "mx/Sitting_Idle_2", "mx/Seated_table_Idle" }, true },
+	{ "ual/Sitting_Drink_Loop", { "mx/Seated_table_Idle", "mx/Sitting_talking" }, true }, { "ual/Sitting_Nodding_Loop", { "mx/Sitting_Thumbs_Up", "mx/Sitting_talking" }, true },
+	{ "ual/GroundSit_Enter", { "mx/Kneeling" } }, { "ual/GroundSit_Exit", { "mx/Crouch_To_Stand" } }, { "ual/GroundSit", { "mx/Kneeling" } },
+	{ "ual/GroundSit_Idle_Loop", { "mx/Kneeling" } }, { "ual/GroundSit_Ask_Loop", { "mx/Kneeling_Pointing" } },   // (kneeling: Praying_2 stands up) { "ual/GroundSit_Thanks_Loop", { "mx/Thankful" } },
+	{ "ual/IdleToLay", { "mx/Laying_Idle" } }, { "ual/LayToIdle", { "mx/Getting_Up" } },
+	{ "ual/Idle_FoldArms_Loop", { "mx/Looking_Around_idle", "mx/Idle_Transition" }, true },
+	{ "ual/Idle_Tired_Loop", { "mx/Wiping_Sweat", "mx/Neck_Stretching" }, true },
+	{ "ual/Idle_Torch_Loop", { "mx/Standing_Using_Touchscreen_Tablet" } },
+	{ "ual/Bandage_Loop", { "mx/Kneeling", "mx/Disappointed" }, true },
+	{ "ual/Walk_Talk_Loop", { "mx/Walking" } }, { "ual/Walk_Phone_Loop", { "mx/Texting_And_Walking_one_hand" } },
+	{ "ual/Dodge_Left", { "mx/Fight_sidestep_L" } }, { "ual/Dodge_Right", { "mx/Fight_sidestep_R" } },
+	{ "ual/Melee_Uppercut", { "mx/Jab_To_Elbow_Punch", "mx/Hook" } }, { "ual/Melee_Knee", { "mx/Kick_To_The_Groin" } },
+	{ "ual/PunchKick_Exit", { "mx/Idle_Transition" } },
+	{ "ual/Sprint_Enter", { "mx/Running_2" } }, { "ual/Sprint_Exit", { "mx/Run_To_Stop" } },
+	{ "ual/Counter_Give", { "mx/Hands_Forward_Gesture" } }, { "ual/Counter_Show", { "mx/Pointing_Forward", "mx/Hands_Forward_Gesture" } }, { "ual/Interact", { "mx/Tender_Placement" } },
+	{ "ual/PickUp_Kneeling", { "mx/Kneeling" } },
+	{ "ual/StepUp", { "mx/Ascending_Stairs" } }, { "ual/ClimbUp_1m", { "mx/Ascending_Stairs" } }, { "ual/ClimbUp_2m", { "mx/Climbing_single" } }, { "ual/SafetyVault", { "mx/Vault_Over_Box_to_Cover" } },
+	{ "step/turn180_l", { "mx/Left_Turn" } }, { "step/turn180_r", { "mx/Right_Turn" } },
+	{ "wave", { "mx/Waving", "mx/Waving_2", "mx/Standing_Greeting" } }, { "hug", { "mx/Shaking_Hands_1", "mx/Shaking_Hands_2" } },
+	{ "get_up", { "mx/Getting_Up", "mx/Standing_Up" } },
 	{ "x/car_out", { "mx/Exiting_Car" } }, { "x/car_in", { "mx/Entering_Car" } },   // (Yasin, 21 Nov: "make sure every npc use car get in get out too")
 	// gestures that fit the line (Yasin, 21 Nov: "make sure the gesures are context relevant for the lines", "especially for the
 	// player"): city_talk.cpp line_gesture reads the line; standing and seated

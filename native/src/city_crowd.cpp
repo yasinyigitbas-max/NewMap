@@ -1183,7 +1183,7 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 					if (nb.plant_walker != nb.walker) { nb.plant->reset(); nb.plant_walker = nb.walker; }
 					const String cn = String(clip);
 					const bool on = sc > 0.9f && !cn.begins_with("ual/Sitting") && !cn.begins_with("ual/GroundSit") && !cn.contains("Lay") && !cn.begins_with("ual/Swim");
-					nb.plant->set_active(on); nb.plant->set_influence(on ? 1.0f : 0.0f);
+					nb.plant->set_active(false); nb.plant->set_influence(0.0f); (void)on;   /* (no foot plant: Mixamo's clips as they are, Yasin 21 Nov) */
 					const float fy = lerp_angle(crowd->pyaw[i], crowd->yaw[i], a);
 					nb.plant->fwd = Vector3(std::sin(fy), 0.0f, std::cos(fy));
 				}

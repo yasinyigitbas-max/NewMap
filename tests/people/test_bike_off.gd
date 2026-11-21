@@ -69,17 +69,17 @@ func _physics_process(_delta: float) -> bool:
 				return false
 			if String(s.state) == "parked":
 				var fl: Dictionary = player.call(&"get_frame_log")
-				var ph: Vector3 = fl.get("pelvis_drawn", Vector3.INF)
+				var ph: Vector3 = fl.get("pelvis", Vector3.INF)   # (the figure's pelvis: the foot plant's record is gone with it, 21 Nov)
 				if t - t0 < 0.05 + 1.3 + 2.0 / 60.0: return false   # (the player's own figure posed once)
 				_check(hips_jump < 0.04, "getting off, the rider's hips at most %.3f m in a frame" % hips_jump)
-				_check(last_rider_hips != Vector3.INF and ph != Vector3.INF and (ph - last_rider_hips).length() < 0.05, "the player takes over where the rider stood: hips %.3f m apart" % (ph - last_rider_hips).length())
+				_check(ph != Vector3.INF and Vector2(ph.x - bike.global_position.x, ph.z - bike.global_position.z).length() < 1.2, "off at once beside it (no made-up dismount since 21 Nov: Mixamo has none): %.2f m from it" % Vector2(ph.x - bike.global_position.x, ph.z - bike.global_position.z).length())
 				step = 5; t0 = t
 		5:
 			if t - t0 < 0.4: return false
 			_shot()
 			player.call(&"set_move", Vector2(0.0, 1.0), false); step = 6; t0 = t
 		6:
-			if t - t0 < 1.5: return false
+			if t - t0 < 2.5: return false   # (Mixamo's walk start from its own start)
 			_check(player.global_position.distance_to(bike.global_position) > 1.0, "he walks away from it (%.2f m)" % player.global_position.distance_to(bike.global_position))
 			var w := 384; var h := 324
 			var strip := Image.create(w * shots.size(), h, false, Image.FORMAT_RGBA8)

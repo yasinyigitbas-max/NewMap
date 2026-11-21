@@ -188,7 +188,7 @@ void CityBike::make() {
 	rq.instantiate();
 	rq->set_collision_mask(1);
 	rider = memnew(CityPed);
-	rider->set_alias(false);   // (the rider's clips are fitted to the bicycle by hand)
+	// (Yasin, 21 Nov: "just use mixamos": the rider plays the takes too; his feet and hands are on the pedals and grips by reach)
 	rider->set_body_id(rider_body);
 	rider->set_clip("ual/Driving_Loop");
 	rider->set_as_top_level(true);
@@ -269,7 +269,7 @@ void CityBike::mount() {
 	// at its left side, a step in, the right leg over the low frame onto its pedal, up onto the saddle, the hands to the
 	// bars; the left foot stays down (he is standing still on it) until he rides off
 	state = ST_MOUNT; st_t = 0.0f;
-	clip_in = 1.3f;
+	clip_in = 0.05f;   // (Yasin, 21 Nov: "just use mixamos", "remove all your modifications": Mixamo has no getting on a bicycle; the made-up one is gone: on at once)
 	foot_down = 1.0f; dm_fk = 1.0f; dm_seat_t = 0.0;
 	crank = IDLE_CRANK;
 	{
@@ -290,7 +290,7 @@ void CityBike::mount() {
 
 void CityBike::dismount() {
 	state = ST_DISMOUNT; st_t = 0.0f;
-	clip_out = 1.3f;
+	clip_out = 0.05f;   // (and off at once: no made-up dismount)
 	const Transform3D inv = get_global_transform().affine_inverse();
 	for (int s = 0; s < 2; s++) dm_foot0[s] = reach_mod ? inv.xform(reach_mod->foot[s]) : Vector3();
 	dm_fk = foot_down * foot_down * (3.0f - 2.0f * foot_down);

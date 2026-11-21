@@ -67,11 +67,15 @@ class CityCar : public RigidBody3D {
 	// THE DRIVER'S DOOR (the car's left, +x): its part of the body, from the front-left wheel and the model's size; how far open
 	Vector3 door_lo, door_hi; Vector2 door_hinge; float door = 0.0f;
 	// GETTING IN AND OUT (city_car_door.cpp): the driver figure and where it is in the sequence
-	enum { DR_NONE, DR_WALK, DR_FACE, DR_OPEN_IN, DR_SIT_IN, DR_TURN_IN, DR_CLOSE_IN, DR_SEATED, DR_OPEN_OUT, DR_TURN_OUT, DR_STAND_OUT, DR_CLOSE_OUT };
+	enum { DR_NONE, DR_WALK, DR_FACE, DR_OPEN_IN, DR_SIT_IN, DR_TURN_IN, DR_CLOSE_IN, DR_SEATED, DR_OPEN_OUT, DR_TURN_OUT, DR_STAND_OUT, DR_CLOSE_OUT, DR_MX_IN, DR_MX_OUT };
+	// (Yasin, 21 Nov: "make player get in out animations too") Mixamo's Entering_Car and Exiting_Car, each one clip: the root
+	// yaw (car frame) that ends the way in seated facing forward / starts the way out so; false when the figure lacks them
+	bool mx_car_root(bool p_in, float &r_yaw) const;
 	CityPed *driver = nullptr;
 	class BikeReach *dr_reach = nullptr;   // his feet on the pedals and hands on the wheel (the bicycle's reach)
 	void door_reach(float p_w);
 	int dr_state = DR_NONE, dr_k = 0;
+	float dr_mx_yaw = 1e9f;   // (Mixamo's way in or out: its root's yaw, car frame; 1e9 the old steps)
 	float dr_t = 0.0f, dr_yaw = 0.0f;
 	Vector3 dr_at; Transform3D dr_from;
 	std::vector<Vector3> dr_path;
@@ -152,7 +156,7 @@ public:
 	int get_entry_state() const { return dr_state; }
 	Vector3 get_driver_hips() const;   // (the tests) the driver figure's hips as drawn, world
 	bool is_seated() const { return dr_state == DR_SEATED; }
-	bool view_in_car() const { return dr_state >= DR_OPEN_IN && dr_state <= DR_STAND_OUT; }   // (the player's camera: opening the door .. getting up out)
+	bool view_in_car() const { return (dr_state >= DR_OPEN_IN && dr_state <= DR_STAND_OUT) || dr_state == DR_MX_IN || dr_state == DR_MX_OUT; }   // (the player's camera: opening the door .. getting up out)
 	float get_door() const { return door; }
 	Vector3 door_spot() const;     // node frame: where a person stands to get in (beside the door, on the ground)
 	Vector3 seat_hips() const;     // node frame: the driver's hips on his seat

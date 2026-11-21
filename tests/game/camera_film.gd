@@ -73,7 +73,7 @@ func _physics_process(d: float) -> bool:
 			if player.global_position.z < 22.0 and t - t0 < 25.0: return false
 			player.call(&"set_move", Vector2.ZERO, false)
 			_check(left_seen, "beside the wall on his right the view went over his left shoulder")
-			_check(back_right, "past the wall it went back over his right shoulder")
+			# (it stays over the left shoulder after the wall: it moves only when blocked, Yasin 21 Nov: "not a timed camera")
 			step = 2; t0 = t
 		2:
 			if t - t0 < 0.8: return false

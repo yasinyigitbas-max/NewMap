@@ -30,6 +30,8 @@ const StringName &C_SIT_IN() { static const StringName s("ual/Sitting_Enter"); r
 const StringName &C_SIT() { static const StringName s("ual/Sitting_Idle_Loop"); return s; }
 const StringName &C_SIT_OUT() { static const StringName s("ual/Sitting_Exit"); return s; }
 const StringName &C_DRIVE() { static const StringName s("ual/Driving_Loop"); return s; }
+const StringName &C_MX_IN() { static const StringName s("mx/Entering_Car"); return s; }
+const StringName &C_MX_OUT() { static const StringName s("mx/Exiting_Car"); return s; }
 }
 
 Vector3 CityCar::get_driver_hips() const { return driver && driver->is_visible() ? driver->bone_world("Bip01_Pelvis") : Vector3(); }
@@ -42,7 +44,7 @@ bool CityCar::enter(CityPlayer *p_pl) {
 	if (!made || !p_pl || dr_state != DR_NONE) return false;
 	if (!driver) {
 		driver = memnew(CityPed);
-		driver->set_alias(false);   // (the seat, the door: fitted to these clips by hand)
+		// (Yasin, 21 Nov: "old ones look terrible ... just use mixamos": the driver plays the takes too)
 		driver->set_body_id("M1");
 		add_child(driver);
 		driver->set_as_top_level(true);
@@ -67,7 +69,15 @@ bool CityCar::enter(CityPlayer *p_pl) {
 		dr_path.push_back(Vector3(-(m.half_w + 0.6f), 0.0f, zf));
 		dr_path.push_back(Vector3(m.half_w + 0.6f, 0.0f, zf));
 	}
-	dr_path.push_back(door_spot());
+	{   // Mixamo's way in: the walk ends where its first frame stands (worked back from its seated end)
+		float ry = 0.0f;
+		if (mx_car_root(true, ry)) {
+			const StringName c = C_MX_IN();
+			const Transform3D r = door_root(c, driver->clip_len(c), seat_hips(), ry);
+			Vector3 st = t.affine_inverse().xform(r.origin); st.y = 0.0f;
+			dr_path.push_back(st); dr_mx_yaw = ry;
+		} else { dr_path.push_back(door_spot()); dr_mx_yaw = 1e9f; }
+	}
 	dr_state = DR_WALK; dr_t = 0.0f; dr_k = 0;
 	return true;
 }
@@ -75,7 +85,20 @@ bool CityCar::enter(CityPlayer *p_pl) {
 bool CityCar::leave() {
 	if (dr_state != DR_SEATED || get_linear_velocity().length() > 2.5f) return false;
 	take_wheel(false);
+	float ry = 0.0f;
+	if (mx_car_root(false, ry)) { dr_state = DR_MX_OUT; dr_t = 0.0f; dr_mx_yaw = ry; driver->set_next_blend(0.0); return true; }   // (Mixamo's way out: a cut from the seated pose, his hips on the seat in both)
 	dr_state = DR_OPEN_OUT; dr_t = 0.0f;
+	return true;
+}
+
+bool CityCar::mx_car_root(bool p_in, float &r_yaw) const {
+	if (!driver) return false;
+	const StringName c = p_in ? C_MX_IN() : C_MX_OUT();
+	const double L = driver->clip_len(c);
+	if (L <= 0.0) return false;
+	// the clip's own turn (meta yaw): the way in ends facing forward (0 in the car's frame), the way out starts so
+	const float y = (float)driver->clip_curve(c, "yaw", p_in ? L : 0.0, 0.0);
+	r_yaw = -y;
 	return true;
 }
 
@@ -90,6 +113,7 @@ Transform3D CityCar::door_root(const StringName &p_clip, double p_t, const Vecto
 // seated: his feet on the pedals in the footwell, his hands on the wheel (else the seated clip's legs went down through the
 // floor and his feet showed under the sill: tests/game/test_car_entry.gd); p_w 0..1 as he swings in or out
 void CityCar::door_reach(float p_w) {
+	p_w = 0.0f;   // (no reach to the wheel and pedals (Yasin, 21 Nov: "you still add things to them like jumps, remove all your modifications", "they are breaking every animation": the clips play as Mixamo made them))
 	if (!driver || !driver->skeleton()) return;
 	if (!dr_reach) { dr_reach = memnew(BikeReach); driver->skeleton()->add_child(dr_reach); }
 	dr_reach->set_active(p_w > 0.001f); dr_reach->set_influence(p_w);
@@ -131,11 +155,11 @@ void CityCar::door_update(double p_delta) {
 			dr_yaw += std::min(std::max(wrapa(want - dr_yaw), -8.0f * dt), 8.0f * dt);
 			driver->drive(Transform3D(Basis(Vector3(0, 1, 0), dr_yaw), dr_at), C_WALK(), v / 0.91, -1.0);
 		} break;
-		case DR_FACE: {   // face the door
-			const float want = car_yaw + Y_IN;
+		case DR_FACE: {   // face the door (Mixamo's way in: the way its first frame faces)
+			const float want = dr_mx_yaw < 1e8f ? car_yaw + dr_mx_yaw : car_yaw + Y_IN;
 			dr_yaw += std::min(std::max(wrapa(want - dr_yaw), -6.0f * dt), 6.0f * dt);
 			driver->drive(Transform3D(Basis(Vector3(0, 1, 0), dr_yaw), dr_at), C_IDLE(), 1.0, -1.0);
-			if (std::fabs(wrapa(want - dr_yaw)) < 0.05f || dr_t > 0.6f) { dr_state = DR_OPEN_IN; dr_t = 0.0f; }
+			if (std::fabs(wrapa(want - dr_yaw)) < 0.05f || dr_t > 0.6f) { dr_state = dr_mx_yaw < 1e8f ? DR_MX_IN : DR_OPEN_IN; dr_t = 0.0f; if (dr_mx_yaw < 1e8f) driver->set_next_blend(0.5); }
 		} break;
 		case DR_OPEN_IN: {   // he reaches for the handle and pulls it open (the door swings out round him: he steps back a little)
 			const float T = 0.75f;
@@ -202,6 +226,32 @@ void CityCar::door_update(double p_delta) {
 				driver->set_visible(false);
 				if (pl) { pl->set_riding(false); pl->stand_at(stand + Vector3(0, 0.05f, 0), std::atan2(f.x, f.z)); pl->take_view(); }
 				dr_state = DR_CLOSE_OUT; dr_t = 0.0f;
+			}
+		} break;
+		case DR_MX_IN: {   // Mixamo's Entering_Car: the door as his hand opens it, in and down, the door shut as he settles
+			const StringName c = C_MX_IN();
+			const float L = (float)std::max(driver->clip_len(c), 0.5);
+			const float u = std::min(dr_t / L, 1.0f);
+			Transform3D rin = door_root(c, L, hips, dr_mx_yaw); rin.origin.y = t.origin.y;   // (its root on the ground he stands on: the seat placing it put it 22 cm off)
+			driver->drive(rin, c, 1.0, -2.0);
+			set_door(ssf(0.14f, 0.32f, u) * (1.0f - ssf(0.84f, 0.98f, u)));
+			door_reach(ssf(0.9f, 1.0f, u));
+			if (dr_t >= L) { dr_state = DR_SEATED; dr_t = 0.0f; set_door(0.0f); take_wheel(true); driver->set_next_blend(0.0); }   // (into the driving pose as a cut: both have his hips on the seat; a blend swung them out through the car)
+		} break;
+		case DR_MX_OUT: {   // Mixamo's Exiting_Car: the door as he pushes out, out and up, the door swung shut behind him
+			const StringName c = C_MX_OUT();
+			const float L = (float)std::max(driver->clip_len(c), 0.5);
+			const float u = std::min(dr_t / L, 1.0f);
+			Transform3D r = door_root(c, 0.0, hips, dr_mx_yaw); r.origin.y = t.origin.y;   // (its root on the ground)
+			driver->drive(r, c, 1.0, -2.0);
+			set_door(ssf(0.03f, 0.18f, u) * (1.0f - ssf(0.72f, 0.92f, u)));
+			door_reach(1.0f - ssf(0.0f, 0.12f, u));
+			if (dr_t >= L) {
+				Vector3 end = r.xform(driver->clip_hips_at(c, L)); end.y = t.origin.y;
+				const float yaw_end = std::atan2(r.basis.get_column(2).x, r.basis.get_column(2).z) + (float)driver->clip_curve(c, "yaw", L, 0.0);
+				driver->set_visible(false); door_reach(0.0f); set_door(0.0f);
+				if (pl) { pl->set_riding(false); pl->stand_at(end + Vector3(0, 0.05f, 0), yaw_end); pl->take_view(); }
+				dr_state = DR_NONE; dr_t = 0.0f; dr_player = 0; lock_sound();
 			}
 		} break;
 		case DR_CLOSE_OUT: {
