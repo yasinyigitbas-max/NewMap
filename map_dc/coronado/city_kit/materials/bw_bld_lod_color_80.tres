@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://map_dc/coronado/city_kit/shaders/bldg_wear.gdshader" id="1_v0ux6"]
+[ext_resource type="Texture2D" path="res://assets/coronado_kit/textures/bld_lod_color.png" id="2_0ri45"]
+[ext_resource type="Texture2D" path="res://assets/coronado_kit/atlases/props_grime.png" id="3_v7j2h"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_v0ux6")
+shader_parameter/albedo_tex = ExtResource("2_0ri45")
+shader_parameter/grime_tex = ExtResource("3_v7j2h")
+shader_parameter/has_normal = false
+shader_parameter/has_orm = false
+shader_parameter/has_emission = false
+shader_parameter/emission_energy = 1.0
+shader_parameter/wear = 0.80
+shader_parameter/foot_m = 1.4
+shader_parameter/grime_meters = 2.2
+shader_parameter/streaks = 0.55
+shader_parameter/night_k = 0.0
