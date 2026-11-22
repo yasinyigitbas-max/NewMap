@@ -36,6 +36,7 @@ struct TravState {
 	// COVER: the wall's point and its normal (out toward him), high (standing) or low (crouched) cover
 	Vector3 wall_p, wall_n; bool high = false;
 	int cov_dir = 0; float cov_move_t = 0.0f, cov_edge_t = 0.0f, cov_away_t = 0.0f, cov_peek_cd = 0.0f; StringName cov_clip; bool cov_flip = false;
+	float cov_stop = 0.0f; StringName cov_hand; int cov_hand_dir = 0;   // (cov_hand: the clip handed to as cover began, kept while the hand-over runs)   // (the sneak let go: it slows to a stop with him before the idle takes over, its feet kept on the floor)
 	// THE CROUCH: strafing (he keeps facing the view and sneaks sideways), the loop picked
 	bool crouch_was = false, strafe = false; float strafe_yaw = 0.0f;
 	StringName cw_clip; int cw_side = 99; bool cw_flip = false;
@@ -44,6 +45,10 @@ struct TravState {
 	bool pad_a = false, pad_b = false;
 	// the hand-over between two clips: the figure offset that keeps the hips where they were drawn while the poses cross-fade
 	Vector3 fo; float fo_t = 0.0f, fo_len = 0.2f, blend_req = 0.2f;
+	// the hand-over's turn: the figure's yaw offset so the old pose keeps facing the way it was drawn while it fades (a
+	// take drawn turned round, or the stance's facing, changes the figure's yaw by up to 180 degrees: blended in the
+	// figure's own frame the pose spun through it, the feet swinging round the hips)
+	float yo = 0.0f, yo_t = 0.0f, yo_len = 0.3f, add_prev = 0.0f, cov_yaw_prev = 0.0f;
 	float mess_chance = 0.10f;
 	int last[24];
 	uint32_t rng = 0x7f4a7c15u;

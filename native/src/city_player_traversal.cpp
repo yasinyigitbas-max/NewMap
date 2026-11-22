@@ -82,6 +82,7 @@ float CityPlayer::trav_ground(const Vector3 &p_at, float p_up, float p_down, boo
 
 static float clip_f(const CityPed *f, const StringName &c, const char *k, float def) { return (float)f->clip_meta(c, k, def); }
 static float curve_f(const CityPed *f, const StringName &c, const char *k, double t, float def) { return (float)f->clip_curve(c, k, t, def); }
+static float trav_yo(TravState &s, float p_dt);
 
 // A clip move starts: the figure where he stands, its hips where his capsule is
 void CityPlayer::trav_start(const StringName &p_clip, double p_t0, double p_end, float p_yaw, int p_then) {
@@ -91,6 +92,13 @@ void CityPlayer::trav_start(const StringName &p_clip, double p_t0, double p_end,
 	const double blend = s.blend_req; s.blend_req = 0.2f;
 	s.mode = TravState::CLIP; s.clip = p_clip; s.t0 = std::min(std::max(p_t0, 0.0), len); s.t = s.t0;
 	s.t_end = p_end > 0.0 ? std::min(p_end, len) : len; s.rate = 1.0;
+	if (p_then == TravState::THEN_RUN && p_end <= 0.0) {
+		// (on running: handed over in a stride's flight, both feet up: handed over with a foot down, the foot the take had
+		// planted went on with him at a run as its pose faded: it slid up to 0.6 m)
+		const double land = fig->clip_meta(p_clip, "land_at", -1.0);
+		for (double t = len - 1.0 / 30.0; t > std::max(land + 0.12, s.t0 + 0.3); t -= 1.0 / 60.0)
+			if (curve_f(fig, p_clip, "elev", t, 0.0f) > 0.04f) { s.t_end = t; break; }
+	}
 	s.yaw = p_yaw; s.yaw_to = p_yaw; s.yaw_ease = 0.0f; s.turn_k = 0.0f;
 	s.dy0 = s.dy1 = 0.0f; s.ya = s.yb = 0.0f; s.dxz = Vector3(); s.xa = s.xb = 0.0f; s.d0 = Vector3(); s.d0_t = 0.3f;
 	s.lift = 0.0f; s.la = s.lb = 0.0f; s.hscale = 1.0f; s.then = p_then; s.air_at = -1.0; s.cancel_at = -1.0; s.air_vy = 0.0f;
@@ -143,7 +151,7 @@ void CityPlayer::trav_clip(float p_dt, const Vector3 &p_want) {
 	s.prev_body = body; s.last_fig_y = (float)fa.y;
 	speed = Vector3(vel.x, 0, vel.z).length(); move_speed = 0.0f;
 	yaw = y;
-	fig->drive(Transform3D(Basis(UP, y), fa + trav_fo(p_dt)), s.clip, s.rate, -2.0, 7000 + (s.token & 255));
+	fig->drive(Transform3D(Basis(UP, y + trav_yo(s, p_dt)), fa + trav_fo(p_dt)), s.clip, s.rate, -2.0, 7000 + (s.token & 255));
 	fig_drawn_at = fa;
 	if (plant) { plant->set_active(s.plant_on); plant->set_influence(s.plant_on ? 1.0f : 0.0f); plant->fwd = fwd_of(yaw); }
 	if (s.air_at >= 0.0 && t >= s.air_at) {   // off the ledge / up in the air: gravity has him
@@ -189,19 +197,28 @@ void CityPlayer::trav_done() {
 	else if (s.then == TravState::THEN_WALK || s.then == TravState::THEN_RUN) ny = y + std::min(std::max(wrapf(face_e - face_s), -0.6f), 0.6f);
 	if (s.then != TravState::THEN_COVER) yaw = ny;
 	step_mode = 0; yaw_r = 0.0f; pw_settle = 0.0f; gait_i = -1; pw_main = -1; pw_join = 0.0f; step_lat = 0.0f;
-	fig->set_next_blend(0.3);
-	trav_hand(trav_hips_now(), p, s.then == TravState::THEN_COVER ? y : yaw, 0.3);
+	const double hb = 0.3;
+	fig->set_next_blend(hb);
+	trav_hand(trav_hips_now(), p, s.then == TravState::THEN_COVER ? y : yaw, hb);
+	if (plant && s.then != TravState::THEN_COVER) plant->reset();   // (the walk's pins from before the move are stale)
 	switch (s.then) {
 		case TravState::THEN_RUN: {
 			move_speed = std::max(s.vel_out.length(), run_speed); set_velocity(fwd_of(yaw) * move_speed + Vector3(0, -0.5f, 0)); crouch = false; break;
 		}
 		case TravState::THEN_WALK: move_speed = walk_speed * 0.8f; set_velocity(fwd_of(yaw) * move_speed + Vector3(0, -0.5f, 0)); crouch = false; break;
 		case TravState::THEN_CROUCH: move_speed = 0.0f; set_velocity(Vector3()); crouch = true; break;
-		case TravState::THEN_COVER: s.mode = TravState::COVER; s.cov_move_t = 0.0f; s.cov_edge_t = 0.0f; s.cov_away_t = 0.0f; s.cov_clip = StringName(); set_velocity(Vector3()); break;
+		case TravState::THEN_COVER: s.mode = TravState::COVER; s.cov_yaw_prev = y; s.cov_hand = StringName(); s.cov_stop = 0.0f; s.cov_move_t = 0.0f; s.cov_edge_t = 0.0f; s.cov_away_t = 0.0f; s.cov_clip = StringName(); set_velocity(Vector3()); break;
 		default: move_speed = 0.0f; set_velocity(Vector3()); crouch = false; break;
 	}
 	s.crouch_was = crouch; crouch_prev = crouch; crouch_t = 99.0f;
 	speed = Vector3(get_velocity().x, 0, get_velocity().z).length();
+}
+
+// the air clip's figure: its hips over the capsule (the clips' roots are left where the take began: a metre off, and the
+// landing then slid the whole figure that metre as it took over)
+static Vector3 air_fig(const CityPed *f, const StringName &c, double t, const Vector3 &p, float y) {
+	const Vector3 h = f->clip_hips_at(c, t);
+	return p - Basis(UP, y).xform(Vector3(h.x, 0, h.z));
 }
 
 // IN THE AIR: falling (or flying from a jump) under gravity; the clip by the fall ahead
@@ -216,7 +233,7 @@ void CityPlayer::trav_air(const Vector3 &p_v, float p_from_y) {
 	static const StringName F_AIR(TN("Falling_Air")), F_IDLE(TN("Falling_Idle"));
 	s.air_clip = s.air_long ? F_IDLE : F_AIR;
 	fig->set_next_blend(0.3);
-	trav_hand(trav_hips_now(), get_global_position(), yaw, 0.3);
+	trav_hand(trav_hips_now(), air_fig(fig, s.air_clip, 0.0, get_global_position(), yaw), yaw, 0.3);
 	s.last_move = String(s.air_clip).replace("ptrav/", "");
 }
 
@@ -234,8 +251,9 @@ void CityPlayer::trav_air_step(float p_dt) {
 	s.prev_body = p;
 	if (is_on_floor() && v.y <= 0.0f) { trav_land(s.from_y - (float)p.y); return; }
 	if (p.y < s.from_y - 300.0f) { s.mode = TravState::NONE; return; }   // (nothing under him at all)
-	fig->drive(Transform3D(Basis(UP, yaw), p + trav_fo(p_dt)), s.air_clip, 1.0, -1.0);
-	fig_drawn_at = p;
+	const Vector3 fa = air_fig(fig, s.air_clip, fig->current_clip() == s.air_clip ? fig->clip_pos() : 0.0, p, yaw);
+	fig->drive(Transform3D(Basis(UP, yaw + trav_yo(s, p_dt)), fa + trav_fo(p_dt)), s.air_clip, 1.0, -1.0);
+	fig_drawn_at = fa;
 	if (plant) { plant->set_active(false); plant->set_influence(0.0f); }
 }
 
@@ -261,6 +279,7 @@ void CityPlayer::trav_land(float p_drop) {
 	if (c == MESS[1]) t0 = 0.65; else if (c == MESS[2]) t0 = 0.4; else t0 = imp > 0.0 ? std::max(imp - 0.03, 0.0) : 0.0;
 	s.blend_req = 0.12f;
 	trav_start(c, t0, 0.0, yaw, TravState::THEN_IDLE);
+	if (plant) plant->reset();   // (no pin carried over from before the fall: its own reset is by wall-clock time)
 	s.plant_on = kind != 2;
 	if (kind == 0) { s.cancel_at = t0 + 0.45; s.n_soft++; s.last_land = "soft"; }
 	else if (kind == 1) { s.cancel_at = t0 + 1.1; s.n_hard++; s.last_land = "hard"; }
@@ -539,10 +558,25 @@ bool CityPlayer::trav_cover_enter(const Vector3 &p_want) {
 	static const StringName IN_LOW(TN("Stand_To_Cover_b")), IN_HIGH(TN("Stand_To_Cover_a"));
 	const StringName c = high ? IN_HIGH : IN_LOW;
 	const float yd = yaw_of(-N);
-	s.blend_req = 0.3f;
-	trav_start(c, 0.3, 0.0, yd, TravState::THEN_COVER);
+	// (the clip's own steps carry him to the wall: it starts where the travel left in it is the way to go, so only a
+	// little is left to slide in; a planted foot then stays put: the whole correction slid both feet 0.3 m)
 	const double len = fig->clip_len(c);
 	const Vector3 he = fig->clip_hips_at(c, len);
+	double t0 = 0.3;
+	{
+		const Basis Rd(UP, yd);
+		const Vector3 want_end0 = Vector3(w.p.x, p.y, w.p.z) + N * 0.33f;
+		const float need = (want_end0 - p).dot(-N);
+		float best = 1e9f;
+		for (double t = 0.0; t <= len * 0.6; t += 1.0 / 30.0) {
+			const Vector3 h = fig->clip_hips_at(c, t);
+			const float go = Rd.xform(Vector3(he.x - h.x, 0, he.z - h.z)).dot(-N);
+			const float e = std::fabs(go - need) + 0.05f * std::fabs((float)t - 0.3f);
+			if (e < best) { best = e; t0 = t; }
+		}
+	}
+	s.blend_req = 0.3f;
+	trav_start(c, t0, 0.0, yd, TravState::THEN_COVER);
 	const Vector3 end = s.anchor + Basis(UP, yd).xform(Vector3(he.x, 0, he.z));
 	const Vector3 want_end = Vector3(w.p.x, p.y, w.p.z) + N * 0.33f;
 	s.dxz = Vector3(want_end.x - end.x, 0, want_end.z - end.z); s.xa = (float)s.t0; s.xb = (float)len;
@@ -648,7 +682,7 @@ void CityPlayer::trav_cover(float p_dt, const Vector3 &p_want) {
 				if (nc == 0) cand[nc++] = (dir > 0 ? pools[0][0] : pools[1][0]);
 				s.cov_clip = cand[trav_pick(s.high ? (dir > 0 ? P_HS_L : P_HS_R) : (dir > 0 ? P_CS_L : P_CS_R), nc)];
 			}
-			s.cov_dir = dir; s.cov_move_t += p_dt; s.cov_edge_t = 0.0f;
+			s.cov_dir = dir; s.cov_move_t += p_dt; s.cov_edge_t = 0.0f; s.cov_stop = 0.0f;
 			const Hit back = ray(ss, self, p + Vector3(0, hgt, 0), p + Vector3(0, hgt, 0) - N * 1.0f);
 			const float dist = back.ok ? (float)(p - back.p).dot(N) : 0.33f;
 			v += T * (float)dir * 0.95f + N * ((0.33f - dist) * 5.0f);
@@ -685,13 +719,39 @@ void CityPlayer::trav_cover(float p_dt, const Vector3 &p_want) {
 				}
 			}
 		}
-	} else { s.cov_move_t = 0.0f; s.cov_clip = StringName(); }
+	} else if (s.cov_clip != StringName() && s.cov_dir != 0 && s.cov_stop < 0.3f) {
+		// LET GO mid-sneak: the sneak and he slow down together (its planted foot stays where it is), then the idle
+		s.cov_stop += p_dt;
+		const float k = std::max(0.0f, 1.0f - s.cov_stop / 0.3f);
+		clip = s.cov_clip;
+		const float gv = std::max(clip_f(fig, clip, "ground_v", 0.9f), 0.3f);
+		cs = std::max(0.95 / gv * k, 0.01);
+		v += T * (float)s.cov_dir * 0.95f * k;
+		if (s.cov_stop >= 0.3f) { s.cov_clip = StringName(); s.cov_move_t = 0.0f; clip = s.high ? IDLE_HIGH : IDLE_LOW; cs = 1.0; fig->set_next_blend(0.45); }
+	} else { s.cov_move_t = 0.0f; s.cov_clip = StringName(); s.cov_stop = 0.0f; }
+	// (while the hand-over into cover still runs, the clip it went to stays: a second change mid-way left the hips'
+	// offset fading against the wrong pose, and the feet slid up to 0.6 m)
+	if (s.fo_t > 0.0f) {
+		if (s.cov_hand == StringName()) { s.cov_hand = clip; s.cov_hand_dir = s.cov_clip != StringName() ? s.cov_dir : 0; }
+		else if (clip != s.cov_hand) {
+			clip = s.cov_hand;
+			const float lat = (float)v.dot(T);
+			v -= T * lat;
+			if (s.cov_hand_dir != 0) { v += T * (float)s.cov_hand_dir * 0.95f; cs = 0.95 / std::max(clip_f(fig, clip, "ground_v", 0.9f), 0.3f); } else cs = 1.0;
+		}
+	} else s.cov_hand = StringName();
 	set_velocity(v);
 	move_and_slide();
 	speed = Vector3(get_velocity().x, 0, get_velocity().z).length();
 	const Vector3 at = get_global_position();
 	s.prev_body = at;
-	fig->drive(Transform3D(Basis(UP, draw_yaw(clip)), at + trav_fo(p_dt)), clip, std::min(std::max(cs, 0.3), 2.0), -1.0);
+	const float dyw = draw_yaw(clip);
+	if (std::fabs(wrapf(dyw - s.cov_yaw_prev)) > 0.3f) {   // (a cover take drawn turned round, or back: see TravState::yo)
+		const float cur = s.yo_t > 0.0f ? s.yo * s.yo_t / s.yo_len : 0.0f;
+		s.yo = cur + wrapf(s.cov_yaw_prev - dyw); s.yo_len = s.yo_t = s.cov_stop >= 0.3f ? 0.45f : 0.3f;
+	}
+	s.cov_yaw_prev = dyw;
+	fig->drive(Transform3D(Basis(UP, dyw + trav_yo(s, p_dt)), at + trav_fo(p_dt)), clip, std::min(std::max(cs, s.cov_stop > 0.0f ? 0.01 : 0.3), 2.0), -1.0);
 	fig_drawn_at = at;
 	if (plant) { plant->set_active(true); plant->set_influence(1.0f); plant->skip = get_rid(); plant->fwd = fwd_of(yaw); }
 }
@@ -811,16 +871,26 @@ bool CityPlayer::trav_physics(float p_dt, const Vector2 &p_mv, const Vector3 &p_
 
 // The figure's clip in the crouch (the normal flow moves him; this picks the Mixamo crouch loops)
 void CityPlayer::trav_figure(StringName &r_clip, double &r_cs, double &r_hold, float &r_yaw_add, Vector3 &r_off) {
-	r_yaw_add = 0.0f;
-	r_off = trav_lib() ? trav_fo((float)get_physics_process_delta_time()) : Vector3();
-	if (!trav_lib() || trv.mode != TravState::NONE || !crouch || swimming || combat || airborne) return;
 	TravState &s = trv;
+	const float dt = (float)get_physics_process_delta_time();
+	const float yoe = trav_lib() ? trav_yo(s, dt) : 0.0f;
+	r_yaw_add = yoe;
+	r_off = trav_lib() ? trav_fo(dt) : Vector3();
+	// (a crouch take drawn turned round, or back from one: the turn is the hand-over's, not a spin of the pose)
+	auto add = [&](float a) {
+		if (std::fabs(wrapf(a - s.add_prev)) > 0.3f && s.mode == TravState::NONE) {
+			s.yo = yoe + wrapf(s.add_prev - a); s.yo_len = s.yo_t = 0.3f;
+			r_yaw_add = a + yoe + wrapf(s.add_prev - a);
+		} else r_yaw_add = a + yoe;
+		s.add_prev = a;
+	};
+	if (!trav_lib() || trv.mode != TravState::NONE || !crouch || swimming || combat || airborne) { if (trav_lib() && trv.mode == TravState::NONE) add(0.0f); return; }
 	static const StringName IDLE(TN("Crouching_Idle"));
 	static const StringName FW[2] = { TN("Crouched_Walking"), TN("Sneaking_Forward") };
 	static const StringName SL[1] = { TN("Crouched_Sneaking_Left") };
 	static const StringName SR[2] = { TN("Crouched_Sneaking_Right"), TN("Crouched_Sneaking_Right_aa") };
 	r_hold = -1.0;
-	if (speed < 0.15f) { r_clip = IDLE; r_cs = 1.0; s.cw_side = 99; return; }
+	if (speed < 0.15f) { r_clip = IDLE; r_cs = 1.0; s.cw_side = 99; add(0.0f); return; }
 	int side = 0;
 	if (s.strafe) {
 		const Vector3 v = get_velocity();
@@ -841,7 +911,7 @@ void CityPlayer::trav_figure(StringName &r_clip, double &r_cs, double &r_hold, f
 	r_clip = s.cw_clip;
 	const float gv = std::max(clip_f(fig, r_clip, "ground_v", 1.0f), 0.3f);
 	r_cs = speed / gv;
-	r_yaw_add = s.cw_flip ? PI_F : 0.0f;
+	add(s.cw_flip ? PI_F : 0.0f);
 }
 
 Dictionary CityPlayer::get_trav() const {
@@ -854,7 +924,7 @@ Dictionary CityPlayer::get_trav() const {
 	d["last_land"] = s.last_land; d["last_drop"] = s.last_drop;
 	d["crouches"] = s.n_crouch; d["sprint_out"] = s.n_sprint_out; d["strafe"] = s.strafe;
 	d["cover"] = s.n_cover; d["cover_switch"] = s.n_cover_switch; d["cover_turn"] = s.n_cover_turn; d["peek"] = s.n_peek; d["cover_vault"] = s.n_cover_vault; d["cover_exit"] = s.n_cover_exit;
-	d["in_cover"] = s.mode == TravState::COVER; d["cover_high"] = s.high; d["wall_n"] = s.wall_n; d["edge_t"] = s.edge_t;
+	d["in_cover"] = s.mode == TravState::COVER; d["cover_high"] = s.high; d["wall_n"] = s.wall_n; d["edge_t"] = s.edge_t; d["fo"] = s.fo; d["fo_t"] = s.fo_t;
 	return d;
 }
 
@@ -876,10 +946,22 @@ Vector3 CityPlayer::trav_hips_now() const {
 // A hand-over to a figure placed at p_fig turned p_yaw: while the old pose fades out (p_blend s) the figure is offset so
 // the hips stay where they were drawn (the new clip's hips may start a metre from its origin: root motion)
 void CityPlayer::trav_hand(const Vector3 &p_hl, const Vector3 &p_fig, float p_yaw, double p_blend) {
-	const Vector3 drawn = fig->get_global_transform().xform(p_hl);
-	trv.fo = drawn - (p_fig + Basis(UP, p_yaw).xform(p_hl));
+	const Transform3D G = fig->get_global_transform();
+	const Vector3 drawn = G.xform(p_hl);
+	const Vector3 zc = G.basis.get_column(2);
+	trv.yo = wrapf(std::atan2((float)zc.x, (float)zc.z) - p_yaw);
+	if (std::fabs(trv.yo) < 0.02f) trv.yo = 0.0f;
+	trv.fo = drawn - (p_fig + Basis(UP, p_yaw + trv.yo).xform(p_hl));
 	trv.fo_len = (float)std::max(p_blend, 0.05); trv.fo_t = trv.fo_len;
-	if (trv.fo.length() > 4.0f) { trv.fo = Vector3(); trv.fo_t = 0.0f; }   // (a teleport, not a hand-over)
+	trv.yo_len = trv.fo_len; trv.yo_t = trv.yo != 0.0f ? trv.yo_len : 0.0f; trv.add_prev = 0.0f;
+	if (trv.fo.length() > 4.0f) { trv.fo = Vector3(); trv.fo_t = 0.0f; trv.yo_t = 0.0f; }   // (a teleport, not a hand-over)
+}
+
+// (the yaw offset as it fades: called once a frame, before trav_fo)
+static float trav_yo(TravState &s, float p_dt) {
+	if (s.yo_t <= 0.0f) return 0.0f;
+	s.yo_t = std::max(s.yo_t - p_dt, 0.0f);
+	return s.yo * (s.yo_t / s.yo_len);
 }
 
 Vector3 CityPlayer::trav_fo(float p_dt) {

@@ -75,6 +75,11 @@ var TRAV_RE := RegEx.create_from_string("jump|crouch|climb|vault|fall|land|roll|
 func _running(c: String) -> bool:
 	return c.begins_with("prun/") or c in ["ual/Jog_Fwd_Loop", "ual/Sprint_Loop", "step/jog"]
 
+var plant_body := [Vector3(), Vector3()]; var plant_clips := [[], []]; var plant_n := [0, 0]; var plant_max := [0.0, 0.0]; var plant_fo := [Vector3(), Vector3()]
+var quiet := false
+var plant_raw0 := [Vector3(), Vector3()]; var plant_rawmax := [0.0, 0.0]
+var slides_dbg := "slides" in OS.get_cmdline_user_args()
+
 func _frame() -> void:
 	await physics_frame
 	var c := _clip()
@@ -96,18 +101,39 @@ func _frame() -> void:
 		body_prev = player.global_position
 		pel_prev = pel
 		# a planted foot: low (within 14 cm of the lower foot) and still in height; its slide over the plant
-		var fl := g * sk.get_bone_global_pose(bl).origin; var fr := g * sk.get_bone_global_pose(br).origin
+		# (as DRAWN: after the foot plant's lock, which pins a planted foot; the bone poses read here are the clip's own)
+		var flog: Dictionary = player.call(&"get_frame_log")
+		var fl: Vector3 = flog.get("foot_l", g * sk.get_bone_global_pose(bl).origin); var fr: Vector3 = flog.get("foot_r", g * sk.get_bone_global_pose(br).origin)
+		var raw := [g * sk.get_bone_global_pose(bl).origin, g * sk.get_bone_global_pose(br).origin]
+		if quiet: foot_c = [false, false]; foot_prev = [fl, fr]; return
 		var low := minf(fl.y, fr.y)
 		for k in 2:
 			var f: Vector3 = fl if k == 0 else fr
 			var vy: float = absf(f.y - (foot_prev[k] as Vector3).y) * 60.0
-			var on: bool = f.y - low < 0.04 and vy < 0.15 and foot_prev[k] != Vector3()
+			var on: bool = f.y - low < 0.04 and vy < 0.15 and foot_prev[k] != Vector3() and _on_ground(f)
 			foot_prev[k] = f
-			if on and not foot_c[k]: foot_a[k] = f
+			if on and not foot_c[k]:
+				foot_a[k] = f; plant_body[k] = player.global_position; plant_clips[k] = [c]; plant_n[k] = 0
+				plant_fo[k] = _trav().get("fo", Vector3()); plant_raw0[k] = raw[k]; plant_rawmax[k] = 0.0
 			if on:
 				var s := Vector2(f.x - foot_a[k].x, f.z - foot_a[k].z).length()
 				if s > slide and s < 1.0: slide = s; slide_at = c
+				plant_n[k] += 1; plant_max[k] = maxf(plant_max[k], s)
+				var rv: Vector3 = raw[k] - plant_raw0[k]; plant_rawmax[k] = maxf(plant_rawmax[k], Vector2(rv.x, rv.z).length())
+				if slides_dbg and s > 0.12: print("PTRAV      f%d %s %s t %.2f drawn %.3f raw %.3f lock %s slide %s fig %s" % [Engine.get_physics_frames(), "LR"[k], c, float(_trav().get("t", 0)), s, Vector2(rv.x, rv.z).length(), flog.get("lock", ""), flog.get("slide_l" if k == 0 else "slide_r", ""), flog.get("fig_at", "")])
+				if not (plant_clips[k] as Array).has(c): (plant_clips[k] as Array).append(c)
+			if foot_c[k] and not on and slides_dbg and plant_max[k] > 0.12:
+				var bd: Vector3 = player.global_position - plant_body[k]
+				print("PTRAV    slide %s foot %.2f m (raw clip %.2f) over %d frames, body moved %.2f m, fo %s -> %s, clips %s" % ["LR"[k], plant_max[k], plant_rawmax[k], plant_n[k], Vector2(bd.x, bd.z).length(), plant_fo[k], _trav().get("fo", Vector3()), plant_clips[k]])
+			if not on: plant_max[k] = 0.0
 			foot_c[k] = on
+
+## the ankle within 16 cm of the ground under it (a foot carried level over a bush is not planted)
+func _on_ground(f: Vector3) -> bool:
+	var q := PhysicsRayQueryParameters3D.create(f + Vector3(0, 0.3, 0), f - Vector3(0, 0.6, 0))
+	q.exclude = [player.get_rid()]
+	var h := player.get_world_3d().direct_space_state.intersect_ray(q)
+	return not h.is_empty() and f.y - (h.position as Vector3).y < 0.16
 
 func _wait(sec: float) -> void:
 	var n := int(sec * 60.0)
@@ -124,9 +150,11 @@ func _until(cond: Callable, sec: float) -> bool:
 func _put(at: Vector3, yaw: float) -> void:
 	player.call(&"set_move_tier", Vector2(), 0)
 	player.call(&"set_crouch", false)
+	quiet = true
 	player.global_position = at
 	player.call(&"set_facing", yaw)
 	await _wait(0.5)
+	quiet = false
 	pel_prev = Vector3(); foot_prev = [Vector3(), Vector3()]; foot_c = [false, false]
 	_clear()
 
@@ -141,8 +169,11 @@ func _report(what: String, pop_max := 0.3) -> void:
 	print("PTRAV  %s: the hips' largest step a frame %.3f m (%s), a planted foot's slide %.3f m (%s)" % [what, pel_jump, pel_jump_at, slide, slide_at])
 	slide_all[what] = slide
 	_check(pel_jump < pop_max, "%s: no pop (hips %.2f m in a frame)" % [what, pel_jump])
-	var lying := slide_at.begins_with("ptrav/Fall") or slide_at.begins_with("ptrav/Getting_Up") or slide_at.begins_with("ptrav/Standing_Up")
-	_check(lying or slide < 0.7, "%s: a planted foot slides under 0.7 m (%.2f m, %s)" % [what, slide, slide_at])
+	# (as drawn, the foot plant's pin included; a foot on the ground only. Under 0.2 m in a traversal clip; in the walk /
+	# run loops around it (their own clips) under 0.7 m, reported)
+	var loco := slide_at.begins_with("prun/") or slide_at.begins_with("pwalk/") or slide_at.begins_with("pidle/")
+	var lim := 0.7 if loco else 0.2
+	_check(slide < lim, "%s: a planted foot slides under %.1f m (%.2f m, %s)" % [what, lim, slide, slide_at])
 
 func _run() -> void:
 	await _wait(0.5)
