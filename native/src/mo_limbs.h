@@ -53,6 +53,7 @@ public:
 	bool fit_on = false;
 	float fit_off[2] = { 0.0f, 0.0f };   // m, the clip's foot moved up / down to the ground there (already weighted)
 	float fit_w[2] = { 0.0f, 0.0f };     // how much the clip has that foot on its floor (0 in the swing)
+	Vector3 place_off[2];                // a level move of the foot's landing (off a step's face; the motor's)
 	float fit_y[2] = { 0.0f, 0.0f };     // world: the clip's own foot height on the ground there (no hand-over offset): a pin's height
 	float lock_t[2] = { 9.0f, 9.0f };    // since a foot was pinned (its height eased onto fit_y over 0.1 s)
 	Vector3 ground_n[2] = { Vector3(0, 1, 0), Vector3(0, 1, 0) };

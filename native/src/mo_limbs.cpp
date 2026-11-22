@@ -71,7 +71,7 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 	for (int s = 0; s < 2; s++) {
 		if (b_ft[s] < 0) continue;
 		raw[s] = G.xform(sk->get_bone_global_pose(b_ft[s]).origin);
-		fit[s] = raw[s] + Vector3(0, (lock_on && fit_on) ? fit_off[s] : 0.0f, 0);
+		fit[s] = raw[s] + Vector3(0, (lock_on && fit_on) ? fit_off[s] : 0.0f, 0) + ((lock_on && fit_on) ? place_off[s] : Vector3());
 		if (!lock_on || !fit_on) continue;
 		need = std::max(need, (float)(raw[s].y - fit[s].y));
 		if (locked[s]) need = std::max(need, (float)(raw[s].y - lock_w[s].y));

@@ -12,6 +12,8 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdlib>
+#include <godot_cpp/variant/utility_functions.hpp>
 
 using namespace godot;
 using namespace godot::mo;
@@ -435,6 +437,43 @@ void Motor::replace(Host &p_host) {
 	fig->set_global_transform(Transform3D(Basis(UP, yaw), at));
 }
 
+// THE LANDING ON A STEP: the ground sampled every 2 cm along the foot (30 cm behind the heel to 30 cm past the toe);
+// the level stretch (a tread, a kerb's top, the street) under the middle of the sole is where the foot goes: moved so
+// the whole sole (heel 6 cm behind the ankle to the toe) is on it, or centred on it when it is shorter than the sole.
+// Returns that level move (none: no step under the sole; a slope: the sole tilts onto it instead)
+Vector3 Motor::step_clear(Host &p_host, const Vector3 &p_ankle, const Vector3 &p_toe) {
+	Vector3 dir = p_toe - p_ankle; dir.y = 0.0f;
+	const float flen = (float)dir.length();
+	if (flen < 0.05f) return Vector3();
+	dir /= flen;
+	const float L = flen + 0.06f, pre = 0.30f, step = 0.02f;
+	const Vector3 a0 = p_ankle - dir * 0.06f;
+	const int n = (int)((L + 2.0f * pre) / step) + 1;
+	float h[64]; bool ok[64];
+	const int m = std::min(n, 64);
+	bool any_face = false;
+	for (int i = 0; i < m; i++) {
+		const Vector3 q = a0 + dir * (-pre + step * i);
+		Vector3 g2, n2;
+		ok[i] = p_host.ray(q + Vector3(0, 0.6f, 0), q - Vector3(0, 0.6f, 0), g2, n2) && n2.y >= 0.97f;
+		h[i] = ok[i] ? (float)g2.y : -1e9f;
+	}
+	const int i0 = (int)(pre / step), i1 = std::min((int)((pre + L) / step), m - 1), im = (int)((pre + 0.5f * L) / step);
+	for (int i = i0; i <= i1; i++) { if (!ok[i]) return Vector3(); if (std::fabs(h[i] - h[i0]) > 0.04f) any_face = true; }
+	if (!any_face) return Vector3();
+	// the level stretch under the middle of the sole
+	int s0 = im, s1 = im;
+	while (s0 > 0 && ok[s0 - 1] && std::fabs(h[s0 - 1] - h[im]) < 0.02f) s0--;
+	while (s1 < m - 1 && ok[s1 + 1] && std::fabs(h[s1 + 1] - h[im]) < 0.02f) s1++;
+	const float u0 = -pre + step * s0, u1 = -pre + step * s1;   // (along the sole: 0 the heel, L the toe)
+	float shift = 0.0f;
+	if (u1 - u0 >= L + 0.02f) { if (u0 > 0.0f) shift = u0 + 0.01f; else if (u1 < L) shift = u1 - 0.01f - L; }
+	else shift = 0.5f * (u0 + u1) - 0.5f * L;
+	if (std::fabs(shift) < 0.005f) return Vector3();
+	n_pin_fix++;
+	return dir * shift;
+}
+
 // THE GROUND UNDER EACH FOOT (for MoLimbs): where the clip puts the foot this frame, a ray down there; the foot moved by
 // the ground's height there against the figure's floor - fully while the clip has it on its floor, and, in the swing,
 // only up (over a stair's edge; down, it stays where the clip swings it)
@@ -445,10 +484,27 @@ void Motor::ground_feet(Host &p_host) {
 	if (!limbs->fit_on) return;
 	const Frame fr = cur->d->lerp(t);
 	const Transform3D X = fig->get_global_transform();
+	// (a foot rests on the highest ground under its sole: under the ankle alone, a foot at a stair's edge was pulled
+	// down onto the step below, 17 cm into the one it stood on)
+	// (only at a STEP: level ground at both, 4 cm or more apart - on a ramp the toe's ground is higher by the slope and
+	// the sole is tilted onto it instead)
+	auto sole = [&](const Vector3 &p_ankle, const Vector3 &p_toe, Vector3 &r_g, Vector3 &r_n) {
+		Vector3 g, gn;
+		if (!p_host.ray(p_ankle + Vector3(0, 0.6f, 0), p_ankle - Vector3(0, 0.6f, 0), g, gn) || gn.y < 0.5f) return false;
+		r_g = g; r_n = gn;
+		if (gn.y < 0.97f) return true;
+		// (onto the higher step only when the ball AND the middle of the sole are over it: most of the foot)
+		Vector3 gt, nt, gm, nm;
+		const Vector3 mid = p_ankle.lerp(p_toe, 0.5f);
+		if (p_host.ray(p_toe + Vector3(0, 0.6f, 0), p_toe - Vector3(0, 0.6f, 0), gt, nt) && nt.y >= 0.97f && gt.y > r_g.y + 0.04f &&
+				p_host.ray(mid + Vector3(0, 0.6f, 0), mid - Vector3(0, 0.6f, 0), gm, nm) && nm.y >= 0.97f && gm.y > r_g.y + 0.04f) { r_g = Vector3(p_ankle.x, std::min(gt.y, gm.y), p_ankle.z); r_n = nm; }
+		return true;
+	};
 	for (int s = 0; s < 2; s++) {
 		Vector3 fw = X.xform(Vector3(fr.foot[s].x, 0.0f, fr.foot[s].z)); fw.y = draw_y;
+		Vector3 tw = X.xform(Vector3(fr.toe[s].x, 0.0f, fr.toe[s].z)); tw.y = draw_y;
 		Vector3 g, gn;
-		if (!p_host.ray(fw + Vector3(0, 0.6f, 0), fw - Vector3(0, 0.6f, 0), g, gn) || gn.y < 0.5f) { g = fw; gn = UP; }
+		if (!sole(fw, tw, g, gn)) { g = fw; gn = UP; }
 		const float h = (float)fr.foot[s].y - cur->d->ground_y;
 		const float w = 1.0f - sstep(0.04f, 0.25f, h);
 		const float off = (float)g.y - draw_y;
@@ -456,10 +512,33 @@ void Motor::ground_feet(Host &p_host) {
 		// a pin's height: the ground at the PIN (on stairs the clip's foot and the pin can be on different steps) plus
 		// the clip's foot over its own floor plus the ankle's height standing (a raw Mixamo take's floor is not festive's)
 		Vector3 gp = g;
+		// A FOOT ACROSS A STEP'S FACE: decided in the swing, not after it lands (moved once pinned, it slid 7 cm). The
+		// clip's landing looked up ahead (within 0.2 s), its spot predicted (the clip's foot then, the body's travel till
+		// then), the sole there sampled heel to toe; across a face, the landing moved clear of it - back, or forward onto
+		// the step if most of the sole is over it - eased in over the rest of the swing. Pinned, the pin holds it.
+		if (!limbs->locked[s]) {
+			Vector3 want_off;
+			float k_in = 0.0f;
+			for (float tau = 1.0f / 60.0f; tau <= 0.2f + 1e-4f; tau += 1.0f / 60.0f) {
+				const double tl = t + tau * rate;
+				if (!cur->d->loop && tl > cur->d->len) break;
+				const Frame fl = cur->d->lerp(tl);
+				if (!fl.down[s]) continue;
+				Vector3 P = X.xform(Vector3(fl.foot[s].x, 0.0f, fl.foot[s].z)) + Vector3(last_vel.x, 0.0f, last_vel.z) * tau; P.y = draw_y;
+				Vector3 T = X.xform(Vector3(fl.toe[s].x, 0.0f, fl.toe[s].z)) + Vector3(last_vel.x, 0.0f, last_vel.z) * tau; T.y = draw_y;
+				want_off = step_clear(p_host, P, T);
+				k_in = 1.0f - tau / 0.2f;
+				break;
+			}
+			const Vector3 target = want_off * k_in;
+			place_off[s] += (target - place_off[s]) * 0.35f;
+			if (want_off.length() < 1e-4f && k_in <= 0.0f) place_off[s] *= 0.8f;   // (no landing near: gone)
+			limbs->place_off[s] = place_off[s];
+		}
 		if (limbs->locked[s]) {
 			Vector3 lp = limbs->lock_w[s]; lp.y = draw_y;
 			Vector3 gn2;
-			if (!p_host.ray(lp + Vector3(0, 0.6f, 0), lp - Vector3(0, 0.6f, 0), gp, gn2) || gn2.y < 0.5f) gp = lp;
+			if (!sole(lp, lp + (tw - fw), gp, gn2)) gp = lp;
 		}
 		limbs->fit_y[s] = (float)gp.y + std::max((float)fr.foot[s].y - cur->d->ground_y, 0.0f) + ankle_rest;
 		limbs->fit_w[s] = w; limbs->ground_n[s] = gn;
@@ -635,6 +714,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	// the body: level motion as above, and down onto the ground
 	Vector3 v = vel;
 	v.y = p_host.on_floor() ? -0.5f : -4.0f;
+	last_vel = vel;
 	const Vector3 got = p_host.slide(v, p_dt);
 	const float got_s = (float)Vector3(got.x, 0, got.z).length();
 	if (st == MOVE) speed = std::min(speed, got_s + 0.6f);   // (into a wall he does not keep a pace he cannot walk)

@@ -113,6 +113,8 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 		const Vector3 th = G(b_th[0]) - G(b_th[1]);
 		const Vector3 fw = -Vector3(0, 1, 0).cross(th);
 		F.face = std::atan2((float)fw.x, (float)fw.z);
+		// (the Rocketbox figures have no toe bone: the ball of the foot taken 13 cm ahead of the ankle, the way he faces)
+		for (int s = 0; s < 2; s++) if (b_toe[s] < 0) F.toe[s] = F.foot[s] + Vector3(std::sin(F.face) * 0.13f, -0.07f, std::cos(F.face) * 0.13f);
 	}
 	// IN PLACE only when the hips do not carry the travel themselves: festive's traversal clips (and a raw climb) keep
 	// their vz / vx meta but have the travel back in the hips; taken as in place, their travel was counted twice

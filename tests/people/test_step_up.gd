@@ -112,7 +112,11 @@ func _judge(what: String, jump: bool) -> void:
 	var over := z > 3.0 + deep + 0.3
 	var how := "in a jump" if jump else "walking"
 	match what:
-		"step": _check(on_top and clips.has("mx/Ascending_Stairs") and _settled(), "%s, %s: an obvious step over it (StepUp), feet %.2f m up, then a moment standing (%s)" % [name, how, top_y, str(seq)])
+		"step":
+			# (the new movement system walks kerbs - each foot fitted to its own step, no step clip; Yasin: "kerbs
+			# shouldnt require step up animation"; tests/people/test_motor_slopes.gd measures the feet)
+			var walked := not clips.has("mx/Ascending_Stairs") and clips.keys().any(func(k): return String(k).begins_with("pwalk/") or String(k).begins_with("prun/"))
+			_check(on_top and ((clips.has("mx/Ascending_Stairs") and _settled()) or walked), "%s, %s: an obvious step over it (StepUp), feet %.2f m up, then a moment standing (%s)" % [name, how, top_y, str(seq)])
 		"climb":
 			# (since 21 Nov the high climb is Mixamo's pull-up, a 3 m wall its double climb)
 			var c := "mx/Climbing_double" if h > 2.5 else ("mx/Climbing_single" if h > 0.5 else "mx/Ascending_Stairs")

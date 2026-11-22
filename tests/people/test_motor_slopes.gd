@@ -13,7 +13,7 @@ extends SceneTree
 ## What it cannot see: the knees, the lean, the look on a slope - Yasin plays it.
 var player: CharacterBody3D
 var sk: Skeleton3D
-var b_pel := -1; var b_ft := [-1, -1]
+var b_pel := -1; var b_ft := [-1, -1]; var b_toe := [-1, -1]
 var fails := 0
 var trace := false
 const LEN := 6.0   # a ramp's run
@@ -92,7 +92,7 @@ func _process(delta: float) -> bool:
 	if sk == null:
 		var s := player.find_children("*", "Skeleton3D", true, false)
 		if s.is_empty(): return false
-		sk = s[0]; b_pel = sk.find_bone("Bip01_Pelvis"); b_ft = [sk.find_bone("Bip01_L_Foot"), sk.find_bone("Bip01_R_Foot")]
+		sk = s[0]; b_pel = sk.find_bone("Bip01_Pelvis"); b_ft = [sk.find_bone("Bip01_L_Foot"), sk.find_bone("Bip01_R_Foot")]; b_toe = [sk.find_bone("Bip01_L_Toe0"), sk.find_bone("Bip01_R_Toe0")]
 		sk.skeleton_updated.connect(_on_pose)
 		_next(); return false
 	if lane >= LANES.size(): return true
@@ -107,13 +107,17 @@ func _process(delta: float) -> bool:
 	return false
 
 var pose_frame := -1; var snap_ok := false
-var snap_pel := Vector3(); var snap_ft := [Vector3(), Vector3()]; var snap_ms := {}
+var snap_pel := Vector3(); var snap_ft := [Vector3(), Vector3()]; var snap_toe := [Vector3(), Vector3()]; var snap_ms := {}
 func _on_pose() -> void:
 	var f := Engine.get_process_frames()
 	if f != pose_frame and snap_ok: _sample()
 	pose_frame = f
 	snap_pel = sk.global_transform * sk.get_bone_global_pose(b_pel).origin
-	for s in 2: snap_ft[s] = sk.global_transform * sk.get_bone_global_pose(b_ft[s]).origin
+	for s in 2:
+		snap_ft[s] = sk.global_transform * sk.get_bone_global_pose(b_ft[s]).origin
+		# (no toe bone on these figures: the ball of the foot 13 cm ahead of the ankle, the way he faces)
+		var yw: float = float(player.call(&"get_motor_state").get("yaw", 0.0))
+		snap_toe[s] = snap_ft[s] + Vector3(sin(yw), 0, cos(yw)) * 0.13 if b_toe[s] < 0 else sk.global_transform * sk.get_bone_global_pose(b_toe[s]).origin
 	snap_ms = player.call(&"get_motor_state")
 	snap_ok = true
 
@@ -131,7 +135,11 @@ func _sample() -> void:
 		var down: bool = st != "off" and bool(ms.get(["down_l", "down_r"][s], false)) and not bool(ms.get(["step_l", "step_r"][s], false))
 		var a: Vector3 = snap_ft[s]
 		if not down: plant[s] = null; continue
-		var over := a.y - _ground(a)
+		# (the ground the sole rests on: the highest under the ankle, the toe, between: at a stair's edge the ankle is over
+		# the step below)
+		var tp: Vector3 = snap_toe[s]
+		var ga := _ground(a); var gs := minf(_ground(tp), _ground(a.lerp(tp, 0.5)))   # (on the step above only with the ball and mid-sole over it: the motor's rule)
+		var over := a.y - (gs if (LANES[lane][0] in ["stairs", "kerb"] and gs > ga + 0.04) else ga)   # (a step under the sole, not a ramp's rise)
 		var g: int = 1 if LANES[lane][2] else 0
 		if flat:
 			base[g] += over; base_n[g] += 1
@@ -144,7 +152,7 @@ func _sample() -> void:
 	var pel: Vector3 = snap_pel
 	if have > 1: s_pop = maxf(s_pop, absf((pel.y - pel_prev.y) - dy_prev))
 	if have > 0: dy_prev = pel.y - pel_prev.y
-	if trace: print("TRACE lane %d t %.3f %s %s pel %s drop %.3f draw %.3f body %.3f" % [lane, t, st, ms.get("clip", ""), str(pel), float(ms.get("drop", 0.0)), float(ms.get("draw_y", 0.0)), player.global_position.y])
+	if trace: print("TRACE lane %d t %.3f %s %s pel %s drop %.3f draw %.3f body %.3f pinfix %d" % [lane, t, st, ms.get("clip", ""), str(pel), float(ms.get("drop", 0.0)), float(ms.get("draw_y", 0.0)), player.global_position.y, int(ms.get("pin_fix", 0))])
 	pel_prev = pel; have += 1
 
 func _check(ok: bool, what: String) -> void:

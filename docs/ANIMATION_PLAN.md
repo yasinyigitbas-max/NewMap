@@ -216,3 +216,36 @@ What changed, and why (each measured before / after):
 |---|---|---|---|
 | all 19 | 0.0-2.0 cm | 0.12-1.14 m/s | 3-6 cm in walks, runs, turns; 12-20 cm early in the stops (the swing leg's blend still decaying when it lands; the body follows it out within 0.3 s) |
 OPEN: the stops' landing pull (a better stop entry: match the swing foot's landing spot, not just the pose).
+
+## 9. Step 4, slopes, kerbs and stairs (22 Nov): `tests/people/test_motor_slopes.gd`
+Built (character-generic, in mo_motor / mo_limbs):
+- THE FIGURE'S FLOOR is the ground under the body on a critically damped spring (10 rad/s; snaps over 0.45 m: a drop, a
+  teleport), not the capsule's height. The figure hangs under the body: after the host lifts the body onto a kerb, the
+  figure is put back (Motor::replace) - before, the lift dragged it up 4-8 cm for a frame.
+- EACH FOOT FITTED to the ground under it (rays at the clip's foot each frame): fully while the clip has it on its floor,
+  only upward in the swing (over a step's edge). On a STEP (level ground both, 4 cm apart) the sole stands on the higher
+  one only when the ball and mid-sole are over it.
+- A PIN'S HEIGHT is the clip's own contact height on the ground at the pin (eased 0.1 s), not the blended pose's.
+- THE HIPS DROP for a fitted foot lower than the clip's (downhill, a step down), on a spring (14 down / 9 up rad/s);
+  eased by a rate they popped 4-5 cm a frame at every stair.
+- SOLES TILTED onto the ground's slope while down (at most 30 degrees).
+- THE LANDING ON A STEP decided in the swing: the clip's next contact looked up (within 0.2 s), its spot predicted, the
+  ground sampled along the sole; the foot steered onto the level stretch under its middle (whole sole on it, or
+  centred). Moving the pin after landing showed as a 7 cm slide.
+- Kerbs and stairs are WALKED by the new system: CityPlayer's old step-up clip (try_climb, rise <= 24 cm) is skipped
+  while the motor has him (Yasin: "kerbs shouldnt require step up animation"); the capsule's lift stays.
+- The body keeps the new system over a crest run fast (ground within 0.5 m under him).
+- A LOOP GOES STRAIGHT on average (its cycle's sideways drift removed: the run drifted 2.7 m left in 14 m).
+- Re-plant steps fire at once when a standing foot is 12 cm off; a pin about to break (30 cm) steps instead of snapping.
+- The body-follow reads the DRAWN frame's pull (read mid-step it alternated) and accelerates at most 4 m/s^2.
+- MoLimbs' timers count each frame once (the skeleton can be posed twice a frame).
+| lane | float / sink (cm) | slide | hip pop |
+|---|---|---|---|
+| ramps 8, 15, 22, 30 deg, walked and run | 0.3-3.3 / 0.3-2.0 | 0.1-1.4 | 0.4-1.4 |
+| stairs 12 cm walked | 1.9 / 1.6 | 0.8 | 0.8 |
+| kerb 15 cm walked / run | (flips between 0.6 and 14.7 / 0.4-4.5 with the toe estimate) | 0-2.5 | 0.6-0.9 |
+| stairs 17 cm walked / run | 16-17 / 0.4-0.6 at the first and last steps | 1.6-5.4 | 1.0 |
+OPEN: the 17 cm stairs' first and last steps, and the kerb: the figures have NO TOE BONE, the ball of the foot is taken
+13 cm ahead of the ankle; whether the sole stands on the step's edge or before it decides these numbers, and the test
+and the motor estimate the toe differently. Yasin's eye on stairs decides the next fix (a stair-climb clip set would be
+the studio answer for long flights; ask Yasin for "stairs up / down" takes).

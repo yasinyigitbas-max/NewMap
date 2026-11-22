@@ -114,3 +114,12 @@ TRAPS (each cost a run):
 - The converter's yaw curve and the pose can both carry the same turn: judge at the curve's largest turn, not its end.
 - Clips at 30 Hz played with linear interpolation kink at every key in fast turns: the motor sets cubic.
 - Never trust the capsule's height for drawing: ray the ground (place()).
+- The figure is a CHILD of the body: anything that moves the body after the motor placed the figure (the old kerb lift)
+  drags the drawn figure with it for that frame - put it back (Motor::replace).
+- The Rocketbox figures have NO toe bone (Bip01_*_Toe0 missing): mo_clip estimates the ball 13 cm ahead of the ankle.
+- Values a modifier writes can be read mid-step from a pass made before the figure was placed: read what was DRAWN
+  (snapshot at the start of Motor::step).
+- Easing by a rate (x += (goal - x) * k dt) starts at full speed: a pop when the goal jumps; use a damped spring.
+- Mocap loops drift sideways over a cycle: take the mean out (mo_clip loop_drift).
+- Tests: test_motor_base.gd (19 phases), test_motor_trav.gd (12 lanes), test_motor_slopes.gd (ramps, stairs, kerbs),
+  test_step_up.gd (old + new); run all four after any change to mo_*.
