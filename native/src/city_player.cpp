@@ -10,6 +10,9 @@
 #include "car_models.h"
 #include "city_bike.h"
 #include <godot_cpp/classes/skeleton3d.hpp>
+#include <godot_cpp/classes/mesh_instance3d.hpp>
+#include <godot_cpp/classes/box_mesh.hpp>
+#include <godot_cpp/classes/standard_material3d.hpp>
 
 #include <godot_cpp/classes/audio_effect_capture.hpp>
 #include <godot_cpp/classes/audio_server.hpp>
@@ -309,6 +312,9 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (space && !space_was) jump_want = true;
 		if (ck && !c_was) crouch = !crouch;
 		space_was = space; c_was = ck;
+		const bool gk = in->is_key_pressed(KEY_G);   // (a box in his hands, to try the carry: the pick-up itself comes later)
+		if (gk && !g_was) carry_kind = carry_kind ? 0 : 1;
+		g_was = gk;
 		const bool qk = in->is_key_pressed(KEY_Q);   // (cover: into it at a wall ahead, out again - the new movement system)
 		if (qk && !q_was) cover_req = true;
 		q_was = qk;
@@ -368,8 +374,9 @@ void CityPlayer::_physics_process(double p_delta) {
 		const float ml = std::min(mv.length() / (run ? 1.0f : 0.6f), 1.0f);
 		in.dir = mv.length() > 0.05f ? (fwd * mv.y + right * mv.x).normalized() * ml : Vector3();
 		in.speed = run ? run_speed : walk_speed;
-		in.crouch = crouch; in.cover = cover_req; cover_req = false;
+		in.crouch = crouch; in.cover = cover_req; cover_req = false; in.carry = carry_kind;
 		motor->step(dt, in, host);
+		carry_draw();
 		yaw = motor->yaw; speed = motor->speed; move_speed = speed;
 		// (not in cover: touching the cover's wall read as a kerb's face, and the kerb step moved him 4 cm a frame along it)
 		if (!motor->in_trav() && !motor->in_cover() && in.dir.length() > 0.3f) {
@@ -908,6 +915,29 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 	return true;
 }
 
+// THE CARRIED THING, a placeholder (a cardboard box, a briefcase, a bag) where the motor says it is
+void CityPlayer::carry_draw() {
+	const int k = motor ? motor->carrying() : 0;
+	const float w = motor ? motor->carry_weight() : 0.0f;
+	if (k == 0 && w <= 0.0f) { if (carry_mesh) carry_mesh->set_visible(false); return; }
+	const int kind = k != 0 ? k : carry_mesh_kind;
+	if (!carry_mesh || carry_mesh_kind != kind) {
+		if (!carry_mesh) { carry_mesh = memnew(MeshInstance3D); add_child(carry_mesh); carry_mesh->set_as_top_level(true); }
+		Ref<BoxMesh> m; m.instantiate();
+		Ref<StandardMaterial3D> mat; mat.instantiate();
+		if (kind == 1) { m->set_size(Vector3(0.36f, 0.32f, 0.34f)); mat->set_albedo(Color(0.62f, 0.47f, 0.30f)); }        // (cardboard)
+		else if (kind == 2) { m->set_size(Vector3(0.10f, 0.32f, 0.44f)); mat->set_albedo(Color(0.12f, 0.10f, 0.09f)); }   // (a briefcase)
+		else { m->set_size(Vector3(0.14f, 0.36f, 0.30f)); mat->set_albedo(Color(0.85f, 0.83f, 0.78f)); }                  // (a paper bag)
+		m->set_material(mat);
+		carry_mesh->set_mesh(m); carry_mesh_kind = kind;
+	}
+	carry_mesh->set_visible(true);
+	Transform3D xf = motor->carry_xf;
+	if (kind == 1) { xf.basis.scale(Vector3(motor->box_width() / 0.36f * 0.92f, 1.0f, 1.0f)); }   // (between the palms)
+	else xf.origin += Vector3(0, -0.2f, 0);   // (hanging under the hand)
+	carry_mesh->set_global_transform(xf);
+}
+
 bool CityPlayer::motor_can() const {
 	if (motor && motor->in_trav()) return fig && fig->get_mode() == CityPed::MODE_ANIM;   // (a vault / climb runs to its end)
 	return fig && fig->get_mode() == CityPed::MODE_ANIM && climb == 0 && settle_t >= 0.45f && !swimming && !combat && uncombat_t >= 0.9
@@ -933,7 +963,7 @@ Dictionary CityPlayer::get_motor_state() const {
 	if (!motor) return d;
 	d["state"] = String(motor->state_name()); d["clip"] = motor->clip_name(); d["t"] = motor->clip_time(); d["speed"] = motor->speed; d["yaw"] = motor->yaw;
 	d["starts"] = motor->n_starts; d["stops"] = motor->n_stops; d["turns"] = motor->n_turns; d["pivots"] = motor->n_pivots; d["gaits"] = motor->n_gait;
-	d["fidgets"] = motor->n_fidgets; d["switches"] = motor->n_switch; d["entry_cost"] = motor->last_entry_cost; d["i_switches"] = motor->inert_switches(); d["i_jump"] = motor->inert_jump(); d["i_live"] = motor->inert_live(); d["down_l"] = motor->foot_down(0); d["down_r"] = motor->foot_down(1); d["pull_l"] = motor->foot_pull(0); d["pull_r"] = motor->foot_pull(1); d["locks"] = motor->foot_locks(); d["steps"] = motor->foot_steps(); d["drop"] = motor->hips_drop(); d["draw_y"] = motor->floor_y(); d["follow"] = motor->last_follow; d["pin_fix"] = motor->n_pin_fix; d["covers"] = motor->n_covers; d["sneaks"] = motor->n_sneaks; d["cover_gap"] = motor->cover_gap(); d["crouched"] = motor->crouched(); d["sneak_off"] = motor->sneak_off; d["dbg_v"] = motor->dbg_v; d["dbg_t"] = motor->dbg_t; d["follow_v"] = motor->follow_v; d["step_l"] = motor->foot_stepping(0); d["step_r"] = motor->foot_stepping(1); d["aligned"] = motor->n_aligned; d["align"] = motor->last_align; d["align_yaw"] = motor->last_align_yaw; d["hips_aligned"] = motor->n_hips_aligned; d["vaults"] = motor->n_vaults; d["climbs"] = motor->n_climbs; d["trav"] = motor->last_trav; d["hand_miss"] = motor->trav_hand_miss; d["hand_dy"] = motor->trav_hand_dy; d["hips_over"] = motor->trav_hips_over; d["warp"] = motor->trav_warp; d["top"] = motor->trav_top; d["win"] = motor->trav_win(); d["wmax"] = motor->trav_wmax; d["hands"] = motor->trav_hands();
+	d["fidgets"] = motor->n_fidgets; d["switches"] = motor->n_switch; d["entry_cost"] = motor->last_entry_cost; d["i_switches"] = motor->inert_switches(); d["i_jump"] = motor->inert_jump(); d["i_live"] = motor->inert_live(); d["down_l"] = motor->foot_down(0); d["down_r"] = motor->foot_down(1); d["pull_l"] = motor->foot_pull(0); d["pull_r"] = motor->foot_pull(1); d["locks"] = motor->foot_locks(); d["steps"] = motor->foot_steps(); d["drop"] = motor->hips_drop(); d["draw_y"] = motor->floor_y(); d["follow"] = motor->last_follow; d["pin_fix"] = motor->n_pin_fix; d["covers"] = motor->n_covers; d["sneaks"] = motor->n_sneaks; d["cover_gap"] = motor->cover_gap(); d["crouched"] = motor->crouched(); d["carry"] = motor->carrying(); d["carry_w"] = motor->carry_weight(); d["carry_xf"] = motor->carry_xf; d["hand_t"] = Array::make(motor->carry_hand_target(0), motor->carry_hand_target(1)); d["sneak_off"] = motor->sneak_off; d["dbg_v"] = motor->dbg_v; d["dbg_t"] = motor->dbg_t; d["follow_v"] = motor->follow_v; d["step_l"] = motor->foot_stepping(0); d["step_r"] = motor->foot_stepping(1); d["aligned"] = motor->n_aligned; d["align"] = motor->last_align; d["align_yaw"] = motor->last_align_yaw; d["hips_aligned"] = motor->n_hips_aligned; d["vaults"] = motor->n_vaults; d["climbs"] = motor->n_climbs; d["trav"] = motor->last_trav; d["hand_miss"] = motor->trav_hand_miss; d["hand_dy"] = motor->trav_hand_dy; d["hips_over"] = motor->trav_hips_over; d["warp"] = motor->trav_warp; d["top"] = motor->trav_top; d["win"] = motor->trav_win(); d["wmax"] = motor->trav_wmax; d["hands"] = motor->trav_hands();
 	return d;
 }
 
@@ -1143,6 +1173,7 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_clip"), &CityPlayer::get_clip);
 	ClassDB::bind_method(D_METHOD("set_crouch", "on"), &CityPlayer::set_crouch);
 	ClassDB::bind_method(D_METHOD("request_cover"), &CityPlayer::request_cover);
+	ClassDB::bind_method(D_METHOD("set_carry", "kind"), &CityPlayer::set_carry);
 	ClassDB::bind_method(D_METHOD("get_crouch"), &CityPlayer::get_crouch);
 	ClassDB::bind_method(D_METHOD("jump"), &CityPlayer::jump);
 	ClassDB::bind_method(D_METHOD("get_view"), &CityPlayer::get_view);

@@ -278,3 +278,24 @@ the studio answer for long flights; ask Yasin for "stairs up / down" takes).
 NOT YET: peeking round a corner (Crouch_Look_Around_Corner), turning in cover (Standing/Crouch_Cover_Turn), cover to
 cover (Crouch_Cover_To_Cover), sneaking off the cover (Sneak_Off_The_Cover), a crouched turn on the spot. What the test
 cannot see: his back and hands against the wall, where he looks - Yasin plays it.
+
+## 11. Step 6, carrying (22 Nov): `native/src/mo_motor_carry.cpp`, `tests/people/test_motor_carry.gd` PASS
+- A BOX in both hands (G toggles one, to try it; `set_carry(1)`): Walking_Carry and Jogging_With_Box_a as loops, steered
+  at 2.6 rad/s and slowed into sharp turns; no carried start: the rate eased up from about 0.6 m/s; on letting go, eased
+  down and on to the stride most like the idle. The idle is the held tail of Walk_Carry_Stop (from 3.0 s, looped with a
+  hand-over at its seam; its hips stand 1.4 m from the clip's origin, played in place by the clip's figure offset
+  Clip::off). The box is where the clip's hands hold it (their middle, on a spring), as wide as the carry walk's palms
+  are apart, and BOTH HANDS ARE PINNED TO ITS SIDES (MoLimbs' hand reach): every clip holds the same box.
+- A BRIEFCASE / SHOPPING BAG in the right hand (`set_carry(2 / 3)`): Briefcase_Idle, Walk_With_Briefcase /
+  Walking_With_Shopping_Bag; the bag where the clip's right hand is (on a spring), the hand pinned to its handle.
+- The motor says where the thing is (Motor::carry_xf); CityPlayer draws a placeholder (a cardboard box, a briefcase, a
+  paper bag). Switches inside a carry keep the body where it is (facing alignment only: the idle's stance against a
+  stride, the contact alignment jumped the body 40 cm).
+| lane | hands to the box | prop, most in a frame | slide | pop | hips speed jump |
+|---|---|---|---|---|---|
+| box (walk, stop, jog, stop) | 0.1 cm | 4.4 cm | 0.2 cm | 0.9 cm | 1.16 m/s |
+| briefcase (walk, stop) | - | 3.0 cm | 2.2 cm | 0.5 cm | 0.66 m/s |
+NOT YET: picking up and putting down (no clip in festive's set for a pick-up from the floor; Tender_Placement, 9.3 s, is
+a slow careful put-down: ask Yasin for "pick up a box / put it down" takes), turning on the spot with a box (Box_Turn_a
+/ _b, Carrying_Turn are there), the briefcase's turns, running with a bag. What the test cannot see: the fingers, the
+box's look - Yasin plays it.

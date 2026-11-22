@@ -39,6 +39,7 @@ struct Intent {
 	float speed = 0.0f;   // m/s wanted at full stick
 	bool crouch = false;  // crouched (held as a state by the controller)
 	bool cover = false;   // into cover / out of it (a request, this frame)
+	int carry = 0;        // carrying: 0 nothing, 1 a box (both hands), 2 a briefcase, 3 a shopping bag (right hand)
 };
 
 // What moves the body in the world
@@ -64,6 +65,9 @@ struct Clip {
 	Ref<Animation> a;
 	const ClipData *d = nullptr;
 	float ground_v = 0.0f, yaw_end = 0.0f;
+	Vector3 off;           // the figure drawn this far back of the body (figure frame, level): a clip whose hips stand
+	                       // away from its origin played in place (the box idle: the tail of a walk-stop, 1.4 m on)
+	double lo = 0.0;       // a loop over [lo, its end] only (the box idle's held tail)
 	bool ok() const { return d != nullptr; }
 	float curve(const char *p_key, double p_t, float p_def = 0.0f) const;
 	float meta(const char *p_key, float p_def) const;
@@ -71,7 +75,7 @@ struct Clip {
 
 class Motor {
 public:
-	enum State { OFF = 0, IDLE, START, MOVE, STOP, TURN, PIVOT, TRAV, CROUCH, STANCE, COVER_IN, COVER, COVER_OUT };
+	enum State { OFF = 0, IDLE, START, MOVE, STOP, TURN, PIVOT, TRAV, CROUCH, STANCE, COVER_IN, COVER, COVER_OUT, CARRY };
 
 	bool attach(CityPed *p_fig);   // loads the libraries, puts MoInertial first on the skeleton; false: no clips
 	bool ready() const { return fig != nullptr && n_loops > 0; }
@@ -92,7 +96,7 @@ public:
 	double clip_time() const { return t; }
 	bool foot_down(int p_side) const { return cur && cur->d->lerp(t).down[p_side & 1]; }   // the clip has that foot planted now
 	// tuning (Yasin's notes go here first)
-	float walk_turn_rate = 3.4f, run_turn_rate = 2.3f, idle_turn_rate = 5.0f, crouch_turn_rate = 2.5f;   // rad/s while moving
+	float walk_turn_rate = 3.4f, run_turn_rate = 2.3f, idle_turn_rate = 5.0f, crouch_turn_rate = 2.5f, carry_turn_rate = 2.6f;   // rad/s while moving
 	float accel_up = 2.8f, accel_down = 3.5f;                                  // m/s2 in a loop
 	float blend_loop = 0.25f, blend_step = 0.2f, blend_idle = 0.3f;            // hand-over times, s
 	float gait_hold = 0.4f;                                                    // s in a loop before another gait
@@ -184,6 +188,18 @@ private:
 	void trav_step(float p_dt);
 	Vector3 trav_anchor(double p_t) const;
 
+	// ---- CARRYING (mo_motor_carry.cpp; step 6): a box in both hands (walk, jog, its own held idle), a briefcase or a
+	// shopping bag in the right hand; the box's hands pinned to its sides, the box where the clip's hands hold it
+	Clip ca_walk, ca_jog, ca_idle, bg_idle, bg_walk, sb_walk;
+	int carry = 0;
+	float carry_w = 0.0f;           // the hands on the prop (eased in and out)
+	Vector3 hc_s, hc_v; bool hc_ok = false, carry_was_box = false;   // the box's centre, on a spring
+	float box_w = 0.42f;            // the box's width (between the palms), m: from the carry walk's hands
+	void load_carry();
+	void carry_step(float p_dt, const Intent &p_in, float p_d, bool p_want, Vector3 &r_vel);
+	void carry_hands(float p_dt);
+	void to_carry_idle(float p_blend);
+
 	// ---- CROUCH AND COVER (mo_motor_cover.cpp; step 5): the crouch (its own idle and walk, in and out by their clips) and
 	// cover against a wall (standing behind one from 1.45 m, crouched behind a lower one from 0.6 m): in by a clip warped
 	// onto the wall, along it by the cover sneaks at the wall's distance, out by a clip. Clips that carry the body in their
@@ -215,6 +231,11 @@ private:
 
 public:
 	float cover_d_tall = 0.30f, cover_d_low = 0.38f;   // the body's distance from the wall in cover (m)
+	int carrying() const { return carry; }
+	Transform3D carry_xf;                              // where the carried thing is drawn (world): the box's centre / the bag's handle
+	float carry_weight() const { return carry_w; }
+	float box_width() const { return box_w; }
+	Vector3 carry_hand_target(int s) const;            // (tests) where each hand is pinned (world)
 	int n_covers = 0, n_sneaks = 0;                    // (tests)
 	float cover_gap() const;                           // (tests) the body's distance to the wall now (m)
 	// (tests) traversal: counts, the last move, and how well it fitted

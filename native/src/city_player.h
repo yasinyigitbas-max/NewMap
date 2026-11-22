@@ -24,6 +24,7 @@ namespace godot {
 
 class CityPed;
 class AudioStreamPlayer3D;
+class MeshInstance3D;
 
 class CityPlayer : public CharacterBody3D {
 	GDCLASS(CityPlayer, CharacterBody3D)
@@ -115,7 +116,9 @@ private:
 	bool crouch = false, jump_want = false, space_was = false, c_was = false, airborne = false;
 	float land_t = 0.0f;
 	bool crouch_prev = false; float crouch_t = 9.0f;
-	bool cover_req = false, q_was = false;   // (into and out of the crouch: Crouch_Enter / Crouch_Exit played through)
+	bool cover_req = false, q_was = false, g_was = false;
+	int carry_kind = 0;
+	MeshInstance3D *carry_mesh = nullptr; int carry_mesh_kind = 0;   // a placeholder for the carried thing   // (into and out of the crouch: Crouch_Enter / Crouch_Exit played through)
 	int steps_up = 0;   // (the tests) small heights stepped up
 	// CLIMBING (Yasin: "put climb animation on up to 50 cm, then above that should require a jump, but if our height allows
 	// it we should be able to clinch and pull ourselves up"; "maybe limit it around 2.5 m"): walking into a ledge 24-50 cm
@@ -177,7 +180,8 @@ private:
 	bool motor_on = true, motor_tried = false;
 	bool motor_can() const;
 	bool step_or_climb(const Vector3 &p_want, double p_delta);
-	bool ground_near(float p_below) const;   // kerbs and ledges ahead (both paths)
+	bool ground_near(float p_below) const;
+	void carry_draw();   // kerbs and ledges ahead (both paths)
 	double water_y = -1000.0;   // the water's surface (-1000 = there is none): deeper than his chest he swims
 	bool swimming = false;
 
@@ -205,7 +209,8 @@ public:
 	String get_act() const { return act_left > 0.0 ? String(act_clip) : String(); }
 	int get_acts() const { return acts; }
 	void set_crouch(bool p_on) { crouch = p_on; }
-	void request_cover() { cover_req = true; }   // into cover at a wall ahead / out of it (the new movement system)
+	void request_cover() { cover_req = true; }
+	void set_carry(int p_kind) { carry_kind = p_kind; }   // 0 nothing, 1 a box, 2 a briefcase, 3 a shopping bag (the new movement system)   // into cover at a wall ahead / out of it (the new movement system)
 	// combat: asked for (a swing / F) and punches (a back tap / J / click) are taken by the crowd
 	void request_combat() { combat_req = true; }
 	void punch() { if (combat) punch_req = true; }
