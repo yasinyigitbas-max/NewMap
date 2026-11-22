@@ -1073,7 +1073,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		const bool idle_mocap = String(clip).begins_with("pidle/");
 		const bool on = !airborne && !swimming && !frozen && !idle_mocap && !(raw_layers & RAW_ALL);
 		plant->set_active(on); plant->set_influence(on ? 1.0f : 0.0f);
-		plant->skip = get_rid(); plant->fwd = Vector3(std::sin(yaw), 0, std::cos(yaw));
+		plant->skip = get_rid(); plant->fwd = Vector3(std::sin(yaw), 0, std::cos(yaw)); plant->floor_node = fig;   // (the ground fit on the real floor: slopes)
 		static const StringName PWS2("pwalk/start_a");
 		plant->lock_on = !(raw_layers & RAW_PIN);   // (kept on the pwalk clips too: off, the planted feet drifted up to 6-9 cm; its release is not what jerked him: noplant 240 flagged frames vs 227)
 		(void)PWS2;
@@ -1190,7 +1190,7 @@ Vector3 CityPlayer::pelvis_world() const {
 Dictionary CityPlayer::get_frame_log() const {
 	Dictionary d;
 	d["node"] = get_global_position(); d["fig_at"] = fig ? fig->get_global_position() : Vector3(); d["pelvis"] = pelvis_world();
-	if (plant) { d["foot_l"] = plant->foot_w[0]; d["foot_r"] = plant->foot_w[1]; d["pelvis_drawn"] = plant->pelvis_w; d["plant_on"] = plant->is_active(); d["lock"] = Vector2i(plant->locked[0], plant->locked[1]); d["slide_l"] = plant->slide_w[0]; d["slide_r"] = plant->slide_w[1]; }
+	if (plant) { d["foot_l"] = plant->foot_w[0]; d["foot_r"] = plant->foot_w[1]; d["pelvis_drawn"] = plant->pelvis_w; d["plant_on"] = plant->is_active(); d["lock"] = Vector2i(plant->locked[0], plant->locked[1]); d["slide_l"] = plant->slide_w[0]; d["slide_r"] = plant->slide_w[1]; d["toe_l"] = plant->toe_w[0]; d["toe_r"] = plant->toe_w[1]; d["sole_l"] = PackedVector3Array({ plant->sole_w[0][0], plant->sole_w[0][1] }); d["sole_r"] = PackedVector3Array({ plant->sole_w[1][0], plant->sole_w[1][1] }); d["hips_drop"] = plant->hips_drop; }
 	d["speed"] = speed; d["yaw"] = yaw;
 	d["idle_base"] = idv_base; d["idle_span"] = idv_span; d["idle_take"] = idv_take; d["idle_time"] = idv_t; d["idle_last"] = idv_last;
 	d["tier"] = pr_tier; d["pr_jog"] = pr_jog; d["pr_fast"] = pr_fast; d["pr_start"] = pr_start_last; d["pr_stop"] = pr_stop_last; d["move_speed"] = move_speed; d["yaw"] = yaw;

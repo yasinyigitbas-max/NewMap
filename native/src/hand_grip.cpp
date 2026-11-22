@@ -127,6 +127,15 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 	struct Rec { FootPlant *fp; Skeleton3D *sk; ~Rec() {   // (as drawn, after this modifier: for the traces)
 		const Transform3D g = sk->get_global_transform();
 		fp->foot_w[0] = g.xform(sk->get_bone_global_pose(fp->b_ft[0]).origin); fp->foot_w[1] = g.xform(sk->get_bone_global_pose(fp->b_ft[1]).origin);
+		for (int s = 0; s < 2; s++) {
+			fp->toe_w[s] = fp->b_toe[s] >= 0 ? g.xform(sk->get_bone_global_pose(fp->b_toe[s]).origin) : fp->foot_w[s];
+			// (the sole's heel and ball, modelled: 5 cm behind / 13 cm ahead of the ankle, 10 cm under it, turned as the foot was)
+			Basis T; const Vector3 n = fp->gn[s];
+			if (fp->floor_node && fp->tilt_w[s] > 0.0f && n.y < 0.999f) T = Basis(Vector3(0, 1, 0).cross(n).normalized(), std::min(std::acos(std::min(n.y, 1.0f)), 0.61f) * fp->tilt_w[s]);
+			const Vector3 f = fp->fwd.length_squared() > 1e-6f ? fp->fwd.normalized() : Vector3(0, 0, 1);
+			fp->sole_w[s][0] = fp->foot_w[s] + T.xform(f * -0.05f + Vector3(0, -0.1f, 0));
+			fp->sole_w[s][1] = fp->foot_w[s] + T.xform(f * 0.13f + Vector3(0, -0.1f, 0));
+		}
 		fp->pelvis_w = g.xform(sk->get_bone_global_pose(fp->b_pel).origin); } } rec{ this, sk };
 	PhysicsDirectSpaceState3D *ss = sk->get_world_3d()->get_direct_space_state();
 	if (!ss) return;
@@ -136,7 +145,7 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 	Vector3 slide[2];   // (world, level) how far the lock moves each foot from where the clip has it
 	{   // (a gap: the modifier was off: no stale pins)
 		const uint64_t now = Time::get_singleton()->get_ticks_usec();
-		if (last_us == 0 || now - last_us > 150000) { locked[0] = locked[1] = false; rel_off[0] = rel_off[1] = Vector3(); have_prev = false; }
+		if (last_us == 0 || now - last_us > 150000) { locked[0] = locked[1] = false; rel_off[0] = rel_off[1] = Vector3(); have_prev = false; d_s[0] = d_s[1] = drop_s = 0.0f; tilt_w[0] = tilt_w[1] = 0.0f; }
 		last_us = now;
 	}
 	for (int s = 0; s < 2; s++) {
@@ -152,13 +161,25 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 		// kerb, a step, a slope; Yasin: "They should plant on the real collision surface"); a foot it has up (stepping
 		// over) stays up, only never into the surface. (The first version set every foot to a guessed ankle height: both
 		// feet stayed flat on the floor and the hips went down 20-30 cm: found by tests/people/trace_locomotion.gd)
-		const float d_ground = gy - sg.origin.y;              // the ground under this foot, over the figure's own floor
-		const float h_clip = fw.y - sg.origin.y;              // the ankle over the clip's floor
+		const float floor = floor_node ? (float)floor_node->get_global_position().y : (float)sg.origin.y;
+		const float d_ground = gy - floor;                    // the ground under this foot, over the figure's own floor
+		const float h_clip = fw.y - floor;                    // the ankle over the clip's floor
 		const bool down = h_clip < ankle_h + 0.06f;
 		float d = 0.0f;
 		if (down) d = d_ground;
-		else if (fw.y < gy + ankle_h) d = gy + ankle_h - fw.y;   // (a lifted foot that would go into the surface)
+		else {   // (a lifted foot that would go into the surface; the player's clips stand their ankles 10.5 cm up: kept that high
+			     //  over it, down a slope the foot leaving the higher ground went 3 cm in)
+			const float hs = floor_node ? ankle_h + 0.03f : ankle_h;
+			if (fw.y < gy + hs) d = gy + hs - fw.y;
+		}
 		if (std::fabs(d) > 0.45f) d = 0.0f;
+		const float d_hold = d;   // (the fit's own: eased below, never under it upward: an eased foot went into a rising slope)
+		if (floor_node) {
+			Vector3 n = h["normal"]; if (n.y < 0.6f) n = Vector3(0, 1, 0);
+			gn[s] = n;
+			const float tw = down ? 1.0f : 0.0f;
+			tilt_w[s] += (tw - tilt_w[s]) * (1.0f - (float)std::exp(-p_delta / 0.08));
+		}
 		// the lock: a foot planted (near its floor and the clip holding it nearly still in the world: under 0.6 m/s) is pinned
 		// where it landed; it lets go as it rises 3 cm or the clip moves it over 1 m/s; the pin's last offset then fades
 		slide[s] = Vector3();
@@ -173,7 +194,8 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 		const Vector3 pw = b_toe[s] >= 0 ? sg.xform(sk->get_bone_global_pose(b_toe[s]).origin) : fw;
 		const float h_toe = pw.y - sg.origin.y;
 		const float pin_gap = locked[s] ? Vector2(pw.x - lock_w[s].x, pw.z - lock_w[s].z).length() : 0.0f;
-		const bool plant_now = lock_on && (locked[s] ? (h_toe < toe_y0[s] + 0.025f && clip_v < v_keep + 0.6f && pin_gap < 0.12f) : (h_clip < ankle_h + 0.02f && clip_v < v_take));
+		const float h_lk = fw.y - (float)sg.origin.y;   // (the pin's own test: as it was tuned, against the skeleton's origin)
+		const bool plant_now = lock_on && (locked[s] ? (h_toe < toe_y0[s] + 0.025f && clip_v < v_keep + 0.6f && pin_gap < 0.12f) : (h_lk < ankle_h + 0.02f && clip_v < v_take));
 		if (plant_now) {
 			if (!locked[s]) { locked[s] = true; lock_w[s] = pw + rel_off[s]; toe_y0[s] = std::min(h_toe, 0.06f); }
 			slide[s] = Vector3(lock_w[s].x - pw.x, 0.0f, lock_w[s].z - pw.z);
@@ -181,7 +203,7 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 		} else {
 			// standing, a clip that moves a foot along the floor (the crouch's widening stance) makes it a little step: the foot
 			// lifts up to 4 cm as it goes, not a slide
-			if (body_v < 0.15f && h_clip < ankle_h + 0.03f && clip_v > 0.25f) d += std::min(0.04f, 0.02f * clip_v);
+			if (body_v < 0.15f && h_lk < ankle_h + 0.03f && clip_v > 0.25f) d += std::min(0.04f, 0.02f * clip_v);
 			if (locked[s]) {
 				locked[s] = false; rel_t[s] = 0.0f; rel_off[s] = Vector3(lock_w[s].x - pw.x, 0.0f, lock_w[s].z - pw.z);
 				const float g = rel_off[s].length(); gap_sum += g; gap_n++; gap_most = std::max(gap_most, g); if (h_toe >= toe_y0[s] + 0.025f) gap_by_lift++;
@@ -191,6 +213,8 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 			slide[s] = rel_off[s];
 		}
 		slide_w[s] = slide[s];
+		if (floor_node) { d_s[s] += (d - d_s[s]) * (1.0f - (float)std::exp(-p_delta / 0.06)); d_s[s] = std::max(d_s[s], d_hold - 0.005f); d = d_s[s]; }
+		if (floor_node && tilt_w[s] > 0.02f && gn[s].y < 0.999f) { got[s] = true; want[s] = d; continue; }   // (a foot on a slope: turned onto it even with no height to fit)
 		if (std::fabs(d) < 0.004f && slide[s].length_squared() < 1e-6f) { want[s] = 0.0f; continue; }
 		want[s] = d;
 		got[s] = true;
@@ -199,7 +223,21 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 	// the hips go down with the lower foot (so both legs reach); the higher foot is bent up onto its ground
 	float drop = 0.0f;
 	for (int s = 0; s < 2; s++) if (got[s] && fabsf(want[s]) > 0.0f) drop = std::min(drop, want[s]);
+	if (floor_node) {
+		// (and low enough that each foot down can reach its ground: uphill the trailing leg is near straight in the clip,
+		//  lowered by the slope it could not reach and its foot hung 3-4 cm into the ground)
+		const Vector3 up0 = to_sk.basis.xform(Vector3(0, 1, 0)); const float kk = up0.length(); const Vector3 u = up0 / std::max(kk, 1e-6f);
+		for (int s = 0; s < 2; s++) {
+			if (!got[s] || b_th[s] < 0 || b_ca[s] < 0) continue;
+			const Vector3 pa = sk->get_bone_global_pose(b_th[s]).origin, pb = sk->get_bone_global_pose(b_ca[s]).origin, pc = sk->get_bone_global_pose(b_ft[s]).origin;
+			const float lmax = ((pb - pa).length() + (pc - pb).length()) * 0.985f;
+			const Vector3 tg = pc + u * (want[s] * kk) + to_sk.basis.xform(slide[s]);
+			const Vector3 w = pa - tg; const float v = w.dot(u); const float hz = (w - u * v).length();
+			if (hz < lmax && v > std::sqrt(lmax * lmax - hz * hz)) drop = std::min(drop, (std::sqrt(lmax * lmax - hz * hz) - v) / kk);
+		}
+	}
 	drop = std::max(drop, -0.3f);
+	if (floor_node) { drop_s += (drop - drop_s) * (1.0f - (float)std::exp(-p_delta / 0.08)); drop = drop_s; }
 	hips_drop = drop;
 	const Vector3 up_s = to_sk.basis.xform(Vector3(0, 1, 0));
 	if (drop < 0.0f) {
@@ -208,7 +246,7 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 	}
 	const Vector3 fwd_s = to_sk.basis.xform(fwd.length_squared() > 1e-6f ? fwd : Vector3(0, 0, 1)).normalized();
 	for (int s = 0; s < 2; s++) {
-		if (!got[s] || b_th[s] < 0 || b_ca[s] < 0) continue;
+		if ((!got[s] && drop == 0.0f) || b_th[s] < 0 || b_ca[s] < 0) continue;   // (with the hips down, every foot is reached back to its place)
 		const Vector3 cur = sk->get_bone_global_pose(b_ft[s]).origin;   // (after the hips went down)
 		const Vector3 target = cur + up_s * (want[s] - drop) + to_sk.basis.xform(slide[s]);
 		// a two-bone reach, the knee forward
@@ -225,12 +263,24 @@ void FootPlant::_process_modification_with_delta(double p_delta) {
 		v.normalize();
 		const float ca = std::min(std::max((la * la + d * d - lb * lb) / (2.0f * la * d), -1.0f), 1.0f);
 		const Vector3 knee = pa + (u * ca + v * std::sqrt(std::max(0.0f, 1.0f - ca * ca))) * la;
-		const Basis foot_keep = Gc.basis;
+		Basis foot_keep = Gc.basis;
+		// ON A SLOPE: the sole turned onto the ground under it (the clip's is level: on 22 degrees its heel or ball went
+		// 4-5 cm into the slope), as much as the foot is down (eased), at most 35 degrees
+		Basis tilt_world;
+		if (floor_node && tilt_w[s] > 0.0f && gn[s].y < 0.999f) {
+			const Vector3 n = gn[s];
+			const float ang = std::min(std::acos(std::min(n.y, 1.0f)), 0.61f) * tilt_w[s];
+			const Vector3 ax = Vector3(0, 1, 0).cross(n).normalized();
+			tilt_world = Basis(ax, ang);
+			foot_keep = to_sk.basis * tilt_world * sg.basis * Gc.basis;
+			// (to_sk * R * sg: R in the skeleton's own frame, its scale cancelled)
+			foot_keep = foot_keep.orthonormalized().scaled(Gc.basis.get_scale());
+		}
 		sk->set_bone_global_pose(a, Transform3D(arc(pb - pa, knee - pa) * Ga.basis, pa));
 		const Transform3D Gb2 = sk->get_bone_global_pose(b), Gc2 = sk->get_bone_global_pose(c);
 		sk->set_bone_global_pose(b, Transform3D(arc(Gc2.origin - Gb2.origin, pa + u * d - Gb2.origin) * Gb2.basis, Gb2.origin));
 		const Transform3D Gc3 = sk->get_bone_global_pose(c);
-		sk->set_bone_global_pose(c, Transform3D(foot_keep, Gc3.origin));   // (the sole stays as the clip had it: flat)
+		sk->set_bone_global_pose(c, Transform3D(foot_keep, Gc3.origin));   // (the sole as the clip had it, on a slope turned onto it)
 		const float k = sg.basis.get_column(0).length();
 		foot_off[s] = (sg.xform(Gc3.origin).y - sg.xform(target).y) * (k > 0.0f ? 1.0f : 1.0f);
 	}

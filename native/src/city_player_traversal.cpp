@@ -153,7 +153,7 @@ void CityPlayer::trav_clip(float p_dt, const Vector3 &p_want) {
 	yaw = y;
 	fig->drive(Transform3D(Basis(UP, y + trav_yo(s, p_dt)), fa + trav_fo(p_dt)), s.clip, s.rate, -2.0, 7000 + (s.token & 255));
 	fig_drawn_at = fa;
-	if (plant) { plant->set_active(s.plant_on); plant->set_influence(s.plant_on ? 1.0f : 0.0f); plant->fwd = fwd_of(yaw); }
+	if (plant) { plant->set_active(s.plant_on); plant->set_influence(s.plant_on ? 1.0f : 0.0f); plant->fwd = fwd_of(yaw); plant->floor_node = nullptr; }   // (the moves keep the pin as tuned, no ground fit)
 	if (s.air_at >= 0.0 && t >= s.air_at) {   // off the ledge / up in the air: gravity has him
 		Vector3 v = vel;
 		if (s.air_vy > 0.0f) v = Vector3(s.vel_out.x, s.air_vy, s.vel_out.z);
@@ -755,7 +755,7 @@ void CityPlayer::trav_cover(float p_dt, const Vector3 &p_want) {
 	s.cov_yaw_prev = dyw;
 	fig->drive(Transform3D(Basis(UP, dyw + trav_yo(s, p_dt)), at + trav_fo(p_dt)), clip, std::min(std::max(cs, s.cov_stop > 0.0f ? 0.01 : 0.3), 2.0), -1.0);
 	fig_drawn_at = at;
-	if (plant) { plant->set_active(true); plant->set_influence(1.0f); plant->skip = get_rid(); plant->fwd = fwd_of(yaw); }
+	if (plant) { plant->set_active(true); plant->set_influence(1.0f); plant->skip = get_rid(); plant->fwd = fwd_of(yaw); plant->floor_node = nullptr; }
 }
 
 // AT AN EDGE: standing still with a drop beside him for 15 s, he loses his balance and falls
