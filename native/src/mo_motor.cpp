@@ -266,7 +266,7 @@ void Motor::play(const Clip &p_c, double p_t0, float p_blend) {
 		// another actor's pose: a longer hand-over; at set 1's, the hips' speed jumped 1.4-2.7 m/s there)
 		const String a = String(cur->name), b = String(p_c.name);
 		const bool own_a = a.begins_with("ms/") || a.begins_with("yl/"), own_b = b.begins_with("ms/") || b.begins_with("yl/");
-		if (own_a != own_b) p_blend = std::max(p_blend * 1.6f, 0.35f);
+		if (own_a != own_b) p_blend = std::max(p_blend * 1.8f, 0.4f);
 	}
 	if (inert) inert->inertialize(p_blend);
 	cur = &p_c; n_switch++;
@@ -294,7 +294,12 @@ int Motor::pick_loop(float p_speed, int p_keep, bool p_random) {
 	for (int i = 1; i < n_loops; i++) if (std::fabs(std::log(sp / loops[i].ground_v)) < std::fabs(std::log(sp / loops[best].ground_v))) best = i;
 	const float lb = std::fabs(std::log(sp / loops[best].ground_v));
 	if (p_keep >= 0 && p_keep < n_loops && std::fabs(std::log(sp / loops[p_keep].ground_v)) < lb + 0.15f) return p_keep;   // (on the move: the one he is in)
-	if (!p_random) return best;   // (out of a pivot, a turn, a pace change: the nearest - a random one after a run pivot jumped the hips)
+	if (!p_random) {   // (out of a pivot, a turn, a pace change: the nearest of set 1's - its transitions were made with them;
+		// out of a run pivot into set 3's quick run the hips' speed jumped 1.5 m/s)
+		int b1 = -1;
+		for (int i = 0; i < n_loops; i++) if (!String(loops[i].name).begins_with("ms/") && (b1 < 0 || std::fabs(std::log(sp / loops[i].ground_v)) < std::fabs(std::log(sp / loops[b1].ground_v)))) b1 = i;
+		return (b1 >= 0 && std::fabs(std::log(sp / loops[b1].ground_v)) < lb + 0.15f) ? b1 : best;
+	}
 	// a new one: at random among those as near the pace (within 15 %) - set 1's and set 3's takes rotate
 	int cand[16]; int nc = 0;
 	for (int i = 0; i < n_loops; i++) if (std::fabs(std::log(sp / loops[i].ground_v)) < lb + 0.15f) cand[nc++] = i;
@@ -459,6 +464,9 @@ void Motor::to_pivot(const Clip &c, double best_t, float p_angle, float p_cost) 
 	turn_k = std::fabs(c.yaw_end) > 0.1f ? clampf(p_angle / c.yaw_end, 0.75f, 1.1f) : 1.0f;
 	rate = 1.0f;
 	yaw0 = yaw - turn_k * c.d->yaw(best_t);
+	// (out into set 1's run nearest the pace: the pivot's hand-over was measured for those - from set 3's run, it handed
+	// over at its end and the hips' speed jumped 1.7 m/s)
+	if (loop_i >= 0 && String(loops[loop_i].name).begins_with("ms/")) loop_i = pick_loop(loops[loop_i].ground_v, -1);
 	const String key = String("out_at_") + loop_key(loops[loop_i >= 0 ? loop_i : 0].name);
 	hand_at = c.a->has_meta(key) ? (double)c.a->get_meta(key) : c.meta("done_at", (float)c.d->len);
 	play(c, best_t, blend_step);
@@ -906,7 +914,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 			vel = clip_vel(*cur, t);
 			speed = (float)vel.length();
 			if (t >= hand_at || t >= cur->d->len - 0.02) {
-				if (want) { speed = std::max(speed, 0.8f); to_loop(pick_loop(std::max(speed, want_speed), loop_i), blend_loop); }   // (on at the pace wanted: a run's pivot runs on)
+				if (want) { speed = std::max(speed, 0.8f); to_loop(pick_loop(std::max(speed, want_speed), String(loops[loop_i].name).begins_with("ms/") ? -1 : loop_i), blend_loop); }   // (on at the pace wanted: a run's pivot runs on - into set 1's)
 				else if (speed > 0.6f) to_stop(); else to_idle(blend_idle);
 			}
 			break;

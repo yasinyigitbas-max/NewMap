@@ -166,6 +166,7 @@ func _judge() -> void:
 		_check(x_max < WALL_W * 0.5 + 0.05 and x_min > -WALL_W * 0.5 - 0.05, "%s: never past the wall's ends (%.2f..%.2f, ends at +-%.1f)" % [name, x_min, x_max, WALL_W * 0.5])
 		_check(x_max - x_min > 1.5, "%s: moved along it (%.2f m)" % [name, x_max - x_min])
 		if not tall: _check(pel_min < 0.62, "%s: crouched behind it (hips %.2f m)" % [name, pel_min])
+		if not tall: _check(int(ms.get("peeks", 0)) >= 1 and clips.keys().any(func(c): return String(c).begins_with("ptrav/Crouch_Look_Around_Corner")), "%s: a look round its end, held toward it (%d)" % [name, int(ms.get("peeks", 0))])
 	_check(high_end > 0.78, "%s: standing again at the end (hips %.2f m)" % [name, high_end])
 	_check(knee_back < 0.02, "%s: the knees never bend backwards (%.1f cm behind the line hip-ankle at most)" % [name, knee_back * 100])
 	_check(s_slide < 0.03, "%s: planted feet do not slide (%.1f < 3 cm)" % [name, s_slide * 100])

@@ -233,7 +233,7 @@ private:
 	void load_descent(Descent &r_d, const char *p_name);
 	bool descend_probe(const Vector3 &p_fwd);
 public:
-	int n_descents = 0;
+	int n_descents = 0, n_peeks = 0;
 	int n_jumps = 0, n_falls = 0, n_landings = 0, n_soft = 0, n_hard = 0, n_flat = 0;   // (tests)
 	float land_fallen = 0.0f;                                                          // (tests) the last landing's height fallen
 private:
@@ -262,6 +262,7 @@ private:
 	RootPlay rp;
 	int stance_to = 0;              // STANCE: 0 to standing, 1 to crouched
 	Vector3 cv_w, cv_n; bool cv_tall = true; int cv_dir = 0; float cv_t = 0.0f;
+	Clip cv_peek[2]; int cv_peeking = 0; float cv_end_t = 0.0f;   // (a look round the low cover's end: [his left, his right])
 	bool align_full = false;        // the next hand-over may turn the figure any amount to the drawn hips (cover's own frames)
 	void load_cover();
 	bool cover_probe(const Vector3 &p_dir, float p_reach, bool p_around);

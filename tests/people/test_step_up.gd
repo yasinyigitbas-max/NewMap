@@ -136,7 +136,7 @@ func _judge(what: String, jump: bool) -> void:
 			if newc: c = "the new system's climb"
 			_check(on_top and (clips.has(c) or newc) and (_settled() or h > 2.5), "%s, %s: up on it (%s), feet %.2f m up, then a moment standing (%s)" % [name, how, c, top_y, str(seq)])
 		"vault":
-			if jump and clips.keys().any(func(k): return String(k) in ["ptrav/Jumping_Up", "ptrav/Jumping_c", "ptrav/Jump_a"]):
+			if jump and clips.keys().any(func(k): return String(k) in ["ptrav/Jumping_Up", "ptrav/Jumping_c", "ptrav/Jump_a", "ms/S3_Jump_In_Place"]):
 				_check(true, "%s, %s: the new system's jump (it does not vault in the air)" % [name, how]); return
 			_check(over and (clips.has("ual/SafetyVault") or clips.has("mx/Vault_Over_Box_to_Cover") or clips.has("ptrav/Jumping_Over_Into_Combat")) and _settled(), "%s, %s: over it (Vault) to the far side (at z %.2f), then a moment standing (%s)" % [name, how, z, str(seq)])
 		"walk": _check(on_top and hips_jump < 0.03, "%s, %s: walked onto it, no step clip, the hips never jump (most %.3f m in a frame), feet %.2f m up (%s)" % [name, how, hips_jump, top_y, str(seq)])

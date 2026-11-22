@@ -47,6 +47,7 @@ void Motor::load_cover() {
 	cv_out[0] = load("ptrav/Cover_To_Stand_a"); cv_out[1] = load("ptrav/Cover_To_Stand_b");
 	cv_sneak_l[0] = load("ptrav/Crouched_Sneaking_Left"); cv_sneak_r[0] = load("ptrav/Crouched_Sneaking_Right");
 	cv_sneak_l[1] = load("ptrav/Left_Cover_Sneak_a"); cv_sneak_r[1] = load("ptrav/Right_Cover_Sneak_a");
+	cv_peek[0] = load("ptrav/Crouch_Look_Around_Corner"); cv_peek[1] = load("ptrav/Crouch_Look_Around_Corner_M");
 }
 
 // ---- ROOT CLIPS: the figure at an anchor (eased from where he is to where the clip must end, while it plays), the
@@ -259,7 +260,29 @@ void Motor::cover_step(float p_dt, const Intent &p_in, Vector3 &r_vel) {
 	// along the wall: the stick's share along it; stopped where the wall ends (40 cm ahead of the body, no wall)
 	const float s = (float)dir.dot(left);
 	int want = std::fabs(s) > 0.3f ? (s > 0.0f ? 1 : -1) : 0;
-	if (want != 0 && cover_dist(host->position() + left * (0.85f * want)) < 0.0f) want = 0;
+	// AT THE END: held toward it (0.35 s, standing still behind low cover) he looks round it - festive's crouched look round
+	// the corner, its mirror for the other end (Yasin, 24 Nov: "polish that too")
+	if (cv_peeking != 0) {
+		advance(p_dt); speed = 0.0f;
+		if (t >= std::min(2.0, cur->d->len - 0.02) || (want != cv_peeking && t > 1.0 && t < 1.6)) {
+			cv_peeking = 0; cv_dir = 0; align_full = true; face_only = true;
+			const Clip &ci = cv_idle[cv_tall ? 1 : 0];
+			play(ci, best_entry(*cur->d, t, *ci.d, 0.0, ci.d->len, &last_entry_cost), 0.35f);
+			align_full = false;
+		}
+		return;
+	}
+	const bool at_end = want != 0 && cover_dist(host->position() + left * (0.85f * want)) < 0.0f;
+	cv_end_t = (at_end && cv_dir == 0) ? cv_end_t + p_dt : 0.0f;
+	if (at_end && !cv_tall && cv_dir == 0 && cv_end_t > 0.35f && cv_peek[want > 0 ? 0 : 1].ok()) {
+		const Clip &pc = cv_peek[want > 0 ? 0 : 1];
+		cv_peeking = want; cv_end_t = 0.0f; n_peeks++;
+		align_full = true; face_only = true;
+		play(pc, best_entry(*cur->d, t, *pc.d, 0.0, 0.3, &last_entry_cost), 0.3f);
+		align_full = false;
+		return;
+	}
+	if (at_end) want = 0;
 	if (cv_dir != 0 && want == -cv_dir) want = 0;   // (a reversal through the idle: sneak into sneak turned the figure 20 degrees under a planted foot)   // (the stop's stride and hand-over run on up to half a metre)
 	// (let go: the sneak runs on, at most half a stride, to the moment most like the cover idle's stance - switched
 	// mid-stride, a planted foot slid 30 cm)

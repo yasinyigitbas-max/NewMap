@@ -88,6 +88,8 @@ bool Motor::descend_probe(const Vector3 &p_fwd) {
 		if (g > here - 0.1f && g > -1e8f) continue;
 		if (g < -1e8f) { drop = 9.0f; break; }
 		if (here - g >= 0.5f) { drop = here - g; ground = g; break; }   // (under 0.5 m: stepped down, the feet fitted)
+		return false;   // (the ground going down by less first: stairs, a ramp - walked down, not jumped off; looking 1.25 m on,
+		// the steps of a stair added up to a "ledge")
 	}
 	if (drop < 0.5f || drop > 2.0f) return false;   // (no drop; or higher: the fall and its landing)
 	// (Yasin, 24 Nov: "walk off 1m goes away, we use walk off 1.8m for both") - his Jumping Down for every height
@@ -101,6 +103,11 @@ bool Motor::descend_probe(const Vector3 &p_fwd) {
 		const Vector3 q = p + p_fwd * a;
 		const float g = ground_below(Vector3(q.x, here + 1.2f, q.z), 4.2f);
 		if (g < -1e8f || g < here - 0.3f) { de = a; break; }
+	}
+	{   // (a sheer edge: just short of it the ground is still his level)
+		const Vector3 q = p + p_fwd * std::max(0.0f, de - 0.06f);
+		const float g = ground_below(Vector3(q.x, here + 1.2f, q.z), 4.2f);
+		if (g < here - 0.1f) return false;
 	}
 	const float want_d = d->edge_z - (float)d->c.d->f[0].hips.z;
 	if (de > want_d + 0.04f) return false;   // (not there yet)
