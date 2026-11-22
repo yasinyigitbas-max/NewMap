@@ -3,10 +3,10 @@
  "cat": "house",
  "style": "tudor",
  "logic_errors": [],
- "col_boxes": 67,
+ "col_boxes": 69,
  "near": {
-  "tris": 2470,
-  "verts": 4638,
+  "tris": 2494,
+  "verts": 4686,
   "regions": [
    "O_door_spanish",
    "O_lamp",
