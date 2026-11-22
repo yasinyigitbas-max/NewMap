@@ -76,7 +76,7 @@ Array Motor::dump(const String &p_clip) const {
 float Motor::rnd() { rng ^= rng << 13; rng ^= rng >> 17; rng ^= rng << 5; return (rng & 0xffffff) / 16777216.0f; }
 
 const char *Motor::state_name() const {
-	static const char *N[] = { "off", "idle", "start", "move", "stop", "turn", "pivot", "trav" };
+	static const char *N[] = { "off", "idle", "start", "move", "stop", "turn", "pivot", "trav", "crouch", "stance", "cover_in", "cover", "cover_out" };
 	return N[st];
 }
 
@@ -136,6 +136,7 @@ bool Motor::attach(CityPed *p_fig) {
 	// so a run vaults with the walking take too, entered later in it, until a better take comes)
 	v_walk = load("ptrav/Jumping_Over_Into_Combat"); v_run = v_walk;
 	c_low = load("ptrav/Running_Jump_Climb"); c_mid = load("ptrav/Climbing_Double"); c_mid_run = load("ptrav/Sprint_To_Wall_Climb");
+	load_cover();
 	if (n_loops == 0 || n_idles == 0) { fig = nullptr; return false; }
 	if (!inert) {   // first on the skeleton: it sees the clip's own pose, the IK after it sees the handed-over one
 		inert = memnew(MoInertial);
@@ -185,7 +186,7 @@ void Motor::align_facing(const Clip &p_c, double p_t0) {
 	const float drawn = std::atan2((float)fw.x, (float)fw.z);
 	const float dy = wrapf(drawn - (yaw + (float)p_c.d->lerp(p_t0).face));
 	last_align_yaw = dy;
-	if (std::fabs(dy) < 0.005f || std::fabs(dy) > 0.5f) return;
+	if (std::fabs(dy) < 0.005f || (std::fabs(dy) > 0.5f && !align_full)) return;
 	yaw += dy; yaw0 += dy;
 }
 
@@ -204,9 +205,13 @@ void Motor::align_hips(const Clip &p_c, double p_t0) {
 }
 
 void Motor::play(const Clip &p_c, double p_t0, float p_blend) {
-	if (!into_loop) align_facing(p_c, p_t0);   // (into a loop the facing is the way he travels: turned to the hips mid-turn at a pivot's end, the run's travel swung 1.5 m/s sideways)
-	into_loop = false;
-	if (!align_contacts(p_c, p_t0)) align_hips(p_c, p_t0);
+	if (no_align) { no_align = false; into_loop = false; }   // (a root clip: its anchor places it)
+	else if (face_only) { face_only = false; if (!into_loop) align_facing(p_c, p_t0); into_loop = false; }   // (cover: the wall places the body)
+	else {
+		if (!into_loop) align_facing(p_c, p_t0);   // (into a loop the facing is the way he travels: turned to the hips mid-turn at a pivot's end, the run's travel swung 1.5 m/s sideways)
+		into_loop = false;
+		if (!align_contacts(p_c, p_t0)) align_hips(p_c, p_t0);
+	}
 	anim->play(p_c.name, 0.0);
 	t = std::min(std::max(p_t0, 0.0), p_c.d->len);
 	anim->seek(t, true);
@@ -563,9 +568,44 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		host = nullptr;
 		return;
 	}
+	// ROOT CLIPS (mo_motor_cover.cpp): a stance change, into or out of cover - the clip has the body
+	if (st == STANCE || st == COVER_IN || st == COVER_OUT) {
+		const bool done = root_step(p_dt);
+		if (limbs && cur) {
+			const Frame fr = cur->d->lerp(t);
+			limbs->lock_on = true; limbs->may_step = false;
+			limbs->down[0] = fr.down[0]; limbs->down[1] = fr.down[1];
+		}
+		ground_feet(p_host);
+		if (done) {
+			if (st == STANCE) { if (stance_to == 1) to_crouch(0.3f); else to_idle(0.3f); }
+			else if (st == COVER_IN) {
+				const Clip &ci = cv_idle[cv_tall ? 1 : 0];
+				st = COVER; cv_t = 0.0f; cv_dir = 0;
+				align_full = true; face_only = true;
+				play(ci, best_entry(*cur->d, t, *ci.d, 0.0, ci.d->len, &last_entry_cost), 0.3f);
+				align_full = false;
+			} else to_idle(0.35f);
+			place(p_host);
+		}
+		host = nullptr;
+		return;
+	}
+	// into cover (asked, a wall ahead), into the crouch
+	if (p_in.cover && (st == IDLE || st == START || st == MOVE || st == STOP || st == CROUCH) && cover_probe(want ? dir : fwd_of(yaw))) { host = nullptr; return; }
+	if (p_in.crouch && cr_idle.ok() && cr_walk.ok()) {
+		if (st == IDLE || st == STOP || st == TURN) { to_stance(1); host = nullptr; return; }
+		if (st == START || st == MOVE || st == PIVOT) {   // (on the move: into the crouched walk, in step)
+			into_loop = true;
+			play(cr_walk, best_entry(*cur->d, t, *cr_walk.d, 0.0, cr_walk.d->len, &last_entry_cost), 0.35f);
+			st = CROUCH;
+		}
+	}
 	// a vault or a climb ahead, going the way he faces
 	if (want && std::fabs(d) < 0.5f && (st == IDLE || st == START || st == MOVE) && trav_probe(fwd_of(yaw), std::max(speed, want_speed > 2.0f ? speed : 0.0f))) { host = nullptr; return; }
 	switch (st) {
+		case CROUCH: crouch_step(p_dt, p_in, d, want, vel); break;
+		case COVER: cover_step(p_dt, p_in, vel); break;
 		case IDLE: {
 			advance(p_dt); idle_t += p_dt;
 			if (want) {
@@ -692,7 +732,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	if (limbs && cur) {
 		const Frame fr = cur->d->lerp(t);
 		limbs->lock_on = st != OFF;
-		limbs->may_step = st == IDLE || st == STOP;   // (standing: a foot held off the clip's stance re-plants)
+		limbs->may_step = st == IDLE || st == STOP || (st == CROUCH && cur == &cr_idle) || (st == COVER && cv_dir == 0);   // (standing: a foot held off the clip's stance re-plants)
 		limbs->down[0] = fr.down[0]; limbs->down[1] = fr.down[1];
 	}
 	// THE BODY FOLLOWS ITS PLANTED FEET: a foot pinned where the clip no longer has it (pinned during a hand-over, the

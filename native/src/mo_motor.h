@@ -37,6 +37,8 @@ namespace mo {
 struct Intent {
 	Vector3 dir;          // world, level; length 0..1 (0: stand)
 	float speed = 0.0f;   // m/s wanted at full stick
+	bool crouch = false;  // crouched (held as a state by the controller)
+	bool cover = false;   // into cover / out of it (a request, this frame)
 };
 
 // What moves the body in the world
@@ -69,7 +71,7 @@ struct Clip {
 
 class Motor {
 public:
-	enum State { OFF = 0, IDLE, START, MOVE, STOP, TURN, PIVOT, TRAV };
+	enum State { OFF = 0, IDLE, START, MOVE, STOP, TURN, PIVOT, TRAV, CROUCH, STANCE, COVER_IN, COVER, COVER_OUT };
 
 	bool attach(CityPed *p_fig);   // loads the libraries, puts MoInertial first on the skeleton; false: no clips
 	bool ready() const { return fig != nullptr && n_loops > 0; }
@@ -79,6 +81,8 @@ public:
 	bool active() const { return st != OFF; }
 	void step(float p_dt, const Intent &p_in, Host &p_host);
 	bool in_trav() const { return st == TRAV; }
+	bool in_cover() const { return st == COVER_IN || st == COVER || st == COVER_OUT; }
+	bool crouched() const { return st == CROUCH || (st == STANCE && stance_to == 1) || (in_cover() && !cv_tall); }
 
 	// the state for the rest of the game (the camera, the old code when it takes over again)
 	float yaw = 0.0f, speed = 0.0f;
@@ -88,7 +92,7 @@ public:
 	double clip_time() const { return t; }
 	bool foot_down(int p_side) const { return cur && cur->d->lerp(t).down[p_side & 1]; }   // the clip has that foot planted now
 	// tuning (Yasin's notes go here first)
-	float walk_turn_rate = 3.4f, run_turn_rate = 2.3f, idle_turn_rate = 5.0f;   // rad/s while moving
+	float walk_turn_rate = 3.4f, run_turn_rate = 2.3f, idle_turn_rate = 5.0f, crouch_turn_rate = 2.5f;   // rad/s while moving
 	float accel_up = 2.8f, accel_down = 3.5f;                                  // m/s2 in a loop
 	float blend_loop = 0.25f, blend_step = 0.2f, blend_idle = 0.3f;            // hand-over times, s
 	float gait_hold = 0.4f;                                                    // s in a loop before another gait
@@ -180,7 +184,39 @@ private:
 	void trav_step(float p_dt);
 	Vector3 trav_anchor(double p_t) const;
 
+	// ---- CROUCH AND COVER (mo_motor_cover.cpp; step 5): the crouch (its own idle and walk, in and out by their clips) and
+	// cover against a wall (standing behind one from 1.45 m, crouched behind a lower one from 0.6 m): in by a clip warped
+	// onto the wall, along it by the cover sneaks at the wall's distance, out by a clip. Clips that carry the body in their
+	// hips (in, out, the stance changes) play as ROOT clips: the figure held at an anchor, the body following the hips.
+	Clip cr_idle, cr_walk, cr_in, cr_out;
+	Clip cv_in[2], cv_idle[2], cv_out[2], cv_sneak_l[2], cv_sneak_r[2];   // [0] low (crouched), [1] tall
+	struct RootPlay { const Clip *c = nullptr; Vector3 a_from, a_to; float yaw = 0.0f; double t0 = 0.0, t_warp = 0.0; };
+	RootPlay rp;
+	int stance_to = 0;              // STANCE: 0 to standing, 1 to crouched
+	Vector3 cv_w, cv_n; bool cv_tall = true; int cv_dir = 0; float cv_t = 0.0f;
+	bool align_full = false;        // the next hand-over may turn the figure any amount to the drawn hips (cover's own frames)
+	void load_cover();
+	bool cover_probe(const Vector3 &p_dir);
+	Vector3 fwd_dir() const;
+	void root_start(const Clip &p_c, double p_t0, float p_blend, float p_yaw, const Vector3 *p_end_hips, bool p_face);
+	bool no_align = false, face_only = false;
+	float last_gap = -1.0f;
 public:
+	float sneak_off = 0.0f; Vector3 dbg_v; float dbg_t = 0.0f;
+private:
+	Vector3 root_anchor(double p_t) const;
+	bool root_step(float p_dt);     // true at the clip's end
+	void to_crouch(float p_blend);
+	void to_stance(int p_to);
+	void crouch_step(float p_dt, const Intent &p_in, float p_d, bool p_want, Vector3 &r_vel);
+	void cover_step(float p_dt, const Intent &p_in, Vector3 &r_vel);
+	void cover_sneak(int p_dir);
+	float cover_dist(const Vector3 &p_at) const;   // the body's distance to the cover's wall (-1: no wall there)
+
+public:
+	float cover_d_tall = 0.30f, cover_d_low = 0.38f;   // the body's distance from the wall in cover (m)
+	int n_covers = 0, n_sneaks = 0;                    // (tests)
+	float cover_gap() const;                           // (tests) the body's distance to the wall now (m)
 	// (tests) traversal: counts, the last move, and how well it fitted
 	int n_vaults = 0, n_climbs = 0;
 	String last_trav;

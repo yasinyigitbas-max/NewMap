@@ -165,7 +165,9 @@ func _physics_process(delta: float) -> bool:
 		6:
 			clips[String(player.call(&"get_clip"))] = true
 			if t - t0 < 2.0: return false
-			_check((clips.has("ual/Crouch_Idle_Loop") or clips.has("ual/Crouch_Enter")) and clips.has("ual/Crouch_Exit"), "the crouch: held and up with its clips (Mixamo has no way down: it blends in)")
+			# (the new movement system's crouch, 22 Nov: down and up by festive's clips; test_motor_cover.gd measures it)
+			var new_cr := clips.has("ptrav/Crouching_Idle") and clips.has("ptrav/Crouched_To_Standing")
+			_check(new_cr or ((clips.has("ual/Crouch_Idle_Loop") or clips.has("ual/Crouch_Enter")) and clips.has("ual/Crouch_Exit")), "the crouch: held and up with its clips (%s)" % ("the new system's" if new_cr else "Mixamo has no way down: it blends in"))
 			print("RESULT %s" % ("PASS" if fails == 0 else "FAIL (%d)" % fails))
 			quit(1 if fails else 0)
 			return true
