@@ -93,7 +93,8 @@ void MoInertial::start(Skeleton3D *sk, float dt) {
 			B.qx0 = ang; B.qT = quintic(ang, (float)w.dot(B.qa), pend_T, B.qc);
 		} else { B.qx0 = 0.0f; B.qT = 0.0f; }
 	}
-	t = 0.0f; live = true; switches++;
+	t = 0.0f; live = true;
+	if (frame_id != start_frame) switches++;
 }
 
 void MoInertial::_process_modification_with_delta(double p_delta) {
@@ -123,7 +124,8 @@ void MoInertial::_process_modification_with_delta(double p_delta) {
 		frame_id = f;
 		if (p_delta > 0.0) dt_frame = (float)p_delta;
 	}
-	if (pending) { pending = false; if (frames >= 2) start(sk, dt_frame); }
+	if (pending) { pending = false; if (frames >= 2) { start(sk, dt_frame); start_frame = frame_id; } }
+	else if (live && frame_id == start_frame) start(sk, dt_frame);   // (posed again in the switch's frame: the offsets from this pose and place)
 	for (int b = 0; b < n; b++) {
 		Bone &B = bones[b];
 		Vector3 p = sk->get_bone_pose_position(b);

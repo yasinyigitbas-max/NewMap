@@ -343,6 +343,17 @@ void CityPlayer::_physics_process(double p_delta) {
 			Vector3 position() const override { return p->get_global_position(); }
 			Vector3 slide(const Vector3 &v, float) override { p->set_velocity(v); p->move_and_slide(); return p->get_velocity(); }
 			bool on_floor() const override { return p->is_on_floor(); }
+			bool ray(const Vector3 &a, const Vector3 &b, Vector3 &r_pos, Vector3 &r_n) const override {
+				PhysicsDirectSpaceState3D *ss = p->get_world_3d()->get_direct_space_state();
+				if (!ss) return false;
+				Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(a, b, 1);
+				TypedArray<RID> ex; ex.push_back(p->get_rid()); q->set_exclude(ex);
+				const Dictionary h = ss->intersect_ray(q);
+				if (h.is_empty()) return false;
+				r_pos = h["position"]; r_n = h["normal"]; return true;
+			}
+			void teleport(const Vector3 &at) override { p->set_global_position(at); p->set_velocity(Vector3()); }
+			bool room_at(const Vector3 &at) const override { Transform3D t = p->get_global_transform(); t.origin = at; return !p->test_move(t, Vector3(0, 0.05f, 0)); }
 			bool shift(const Vector3 &by) override {
 				Transform3D t = p->get_global_transform();
 				if (p->test_move(t, by)) return false;
@@ -356,7 +367,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		in.speed = run ? run_speed : walk_speed;
 		motor->step(dt, in, host);
 		yaw = motor->yaw; speed = motor->speed; move_speed = speed;
-		if (in.dir.length() > 0.3f) step_or_climb(in.dir * in.speed, p_delta);
+		if (!motor->in_trav() && in.dir.length() > 0.3f) step_or_climb(in.dir * in.speed, p_delta);
 		return;
 	}
 	if (motor && motor->active()) {   // the old code has him again
@@ -886,6 +897,7 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 }
 
 bool CityPlayer::motor_can() const {
+	if (motor && motor->in_trav()) return fig && fig->get_mode() == CityPed::MODE_ANIM;   // (a vault / climb runs to its end)
 	return fig && fig->get_mode() == CityPed::MODE_ANIM && climb == 0 && settle_t >= 0.45f && !swimming && !combat && uncombat_t >= 0.9
 			&& act_left <= 0.0 && gest_t <= 0.0f && !airborne && land_t <= 0.0f && !crouch && crouch == crouch_prev && crouch_t > 1.2f && !jump_want && phone_kind == 0
 			&& !auto_on && !frozen && !talk_on && hit_t > 0.45 && !hold_on && is_on_floor();
@@ -897,7 +909,7 @@ Dictionary CityPlayer::get_motor_state() const {
 	if (!motor) return d;
 	d["state"] = String(motor->state_name()); d["clip"] = motor->clip_name(); d["t"] = motor->clip_time(); d["speed"] = motor->speed; d["yaw"] = motor->yaw;
 	d["starts"] = motor->n_starts; d["stops"] = motor->n_stops; d["turns"] = motor->n_turns; d["pivots"] = motor->n_pivots; d["gaits"] = motor->n_gait;
-	d["fidgets"] = motor->n_fidgets; d["switches"] = motor->n_switch; d["entry_cost"] = motor->last_entry_cost; d["i_switches"] = motor->inert_switches(); d["i_jump"] = motor->inert_jump(); d["i_live"] = motor->inert_live(); d["down_l"] = motor->foot_down(0); d["down_r"] = motor->foot_down(1); d["pull_l"] = motor->foot_pull(0); d["pull_r"] = motor->foot_pull(1); d["locks"] = motor->foot_locks(); d["aligned"] = motor->n_aligned; d["align"] = motor->last_align;
+	d["fidgets"] = motor->n_fidgets; d["switches"] = motor->n_switch; d["entry_cost"] = motor->last_entry_cost; d["i_switches"] = motor->inert_switches(); d["i_jump"] = motor->inert_jump(); d["i_live"] = motor->inert_live(); d["down_l"] = motor->foot_down(0); d["down_r"] = motor->foot_down(1); d["pull_l"] = motor->foot_pull(0); d["pull_r"] = motor->foot_pull(1); d["locks"] = motor->foot_locks(); d["aligned"] = motor->n_aligned; d["align"] = motor->last_align; d["vaults"] = motor->n_vaults; d["climbs"] = motor->n_climbs; d["trav"] = motor->last_trav; d["hand_miss"] = motor->trav_hand_miss; d["hand_dy"] = motor->trav_hand_dy; d["hips_over"] = motor->trav_hips_over; d["warp"] = motor->trav_warp; d["top"] = motor->trav_top; d["win"] = motor->trav_win(); d["wmax"] = motor->trav_wmax; d["hands"] = motor->trav_hands();
 	return d;
 }
 

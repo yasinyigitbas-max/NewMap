@@ -35,6 +35,8 @@ class MoInertial : public SkeletonModifier3D {
 	Transform3D sk_g, sk_g1;     // the skeleton's world transform last frame and the frame before
 	Transform3D sk_go;           // this frame's
 	uint64_t frame_id = ~0ull;   // the engine frame the outputs po / qo belong to
+	uint64_t start_frame = ~0ull;   // the frame a hand-over began in: every pose of that frame takes it again (the figure is
+	                                // often placed AFTER the new clip was seeked: taken once, the hips were off by that move)
 	float dt_frame = 1.0f / 60.0f;
 	int frames = 0;              // poses recorded (two are needed for the speeds)
 	bool pending = false;

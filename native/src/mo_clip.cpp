@@ -113,6 +113,15 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 		const Vector3 fw = -Vector3(0, 1, 0).cross(th);
 		F.face = std::atan2((float)fw.x, (float)fw.z);
 	}
+	// IN PLACE only when the hips do not carry the travel themselves: festive's traversal clips (and a raw climb) keep
+	// their vz / vx meta but have the travel back in the hips; taken as in place, their travel was counted twice
+	if (d->in_place) {
+		float vz_travel = 0.0f;
+		for (int k = 0; k < n; k++) vz_travel += std::fabs(curve(a, "vz", k / FPS)) / (float)FPS;
+		const Vector3 dh = d->f[n - 1].hips - d->f[0].hips;
+		const float hips_travel = (float)Vector3(dh.x, 0.0f, dh.z).length();
+		if ((a->has_meta("root") && (bool)a->get_meta("root")) || (vz_travel > 0.2f && hips_travel > 0.5f * vz_travel)) d->in_place = false;
+	}
 	// is the turn in the pose or in the yaw curve? (the pose's own facing change against the curve's)
 	{
 		const float yend = d->in_place ? curve(a, "yaw", d->len) : 0.0f;

@@ -61,6 +61,7 @@ Array Motor::dump(const String &p_clip) const {
 		r.push_back(k / FPS); r.push_back(F.foot[0]); r.push_back(F.foot[1]); r.push_back(F.down[0]); r.push_back(F.down[1]);
 		r.push_back(F.hips); r.push_back(d->root_v.empty() ? Vector3() : d->root_v[k]); r.push_back(c.curve("yaw", k / FPS, 0.0f));
 		r.push_back(Vector3(c.curve("vx", k / FPS, 0.0f), 0.0f, c.curve("vz", k / FPS, 0.0f))); r.push_back(F.face);
+		r.push_back(F.hand[0]); r.push_back(F.hand[1]); r.push_back((float)F.hand_v[0].length()); r.push_back((float)F.hand_v[1].length());
 		out.push_back(r);
 	}
 	return out;
@@ -69,7 +70,7 @@ Array Motor::dump(const String &p_clip) const {
 float Motor::rnd() { rng ^= rng << 13; rng ^= rng >> 17; rng ^= rng << 5; return (rng & 0xffffff) / 16777216.0f; }
 
 const char *Motor::state_name() const {
-	static const char *N[] = { "off", "idle", "start", "move", "stop", "turn", "pivot" };
+	static const char *N[] = { "off", "idle", "start", "move", "stop", "turn", "pivot", "trav" };
 	return N[st];
 }
 
@@ -115,6 +116,12 @@ bool Motor::attach(CityPed *p_fig) {
 	w_pivot[0] = load("pwalk/turn180_l"); w_pivot[1] = load("pwalk/turn180_r");
 	r_pivot[0] = load("prun/turn180_l"); r_pivot[1] = load("mx/Running_Turn_180");   // (left: festive's mirror of it; no raw take that way)
 	if (!r_pivot[1].ok()) r_pivot[1] = load("prun/turn180_r");
+	// traversal (festive's ptrav takes: their travel in the hips): vault walking / running, climb low (to 1.15 m),
+	// climb to 2.05 m walking / running
+	// (the running vault: Vault_Over_Box_To_Cover has no clean hand plant - its hands drift 25 cm "planted", 22 Nov -
+	// so a run vaults with the walking take too, entered later in it, until a better take comes)
+	v_walk = load("ptrav/Jumping_Over_Into_Combat"); v_run = v_walk;
+	c_low = load("ptrav/Running_Jump_Climb"); c_mid = load("ptrav/Climbing_Double"); c_mid_run = load("ptrav/Sprint_To_Wall_Climb");
 	if (n_loops == 0 || n_idles == 0) { fig = nullptr; return false; }
 	if (!inert) {   // first on the skeleton: it sees the clip's own pose, the IK after it sees the handed-over one
 		inert = memnew(MoInertial);
@@ -333,6 +340,13 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	const float want_speed = p_in.speed * wl;
 	const float d = want ? wrapf(std::atan2((float)dir.x, (float)dir.z) - yaw) : 0.0f;
 	Vector3 vel;   // level velocity this frame (world)
+	if (st == TRAV) {   // a vault or a climb: the clip has the body (mo_motor_trav.cpp)
+		trav_step(p_dt);
+		host = nullptr;
+		return;
+	}
+	// a vault or a climb ahead, going the way he faces
+	if (want && std::fabs(d) < 0.5f && (st == IDLE || st == START || st == MOVE) && trav_probe(fwd_of(yaw), std::max(speed, want_speed > 2.0f ? speed : 0.0f))) { host = nullptr; return; }
 	switch (st) {
 		case IDLE: {
 			advance(p_dt); idle_t += p_dt;

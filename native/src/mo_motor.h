@@ -49,6 +49,11 @@ struct Host {
 	// moved at once by this (level, a few cm: a hand-over lines up the new clip's planted foot with the one down);
 	// false when something is in the way (it then stays)
 	virtual bool shift(const Vector3 &p_by) = 0;
+	// the world, for traversal: a ray (the body itself left out); the body put somewhere without colliding (a move's own
+	// path: the clip owns it); can a standing body be at a place
+	virtual bool ray(const Vector3 &p_from, const Vector3 &p_to, Vector3 &r_pos, Vector3 &r_normal) const = 0;
+	virtual void teleport(const Vector3 &p_at) = 0;
+	virtual bool room_at(const Vector3 &p_at) const = 0;
 };
 
 // One clip as the motor knows it
@@ -64,7 +69,7 @@ struct Clip {
 
 class Motor {
 public:
-	enum State { OFF = 0, IDLE, START, MOVE, STOP, TURN, PIVOT };
+	enum State { OFF = 0, IDLE, START, MOVE, STOP, TURN, PIVOT, TRAV };
 
 	bool attach(CityPed *p_fig);   // loads the libraries, puts MoInertial first on the skeleton; false: no clips
 	bool ready() const { return fig != nullptr && n_loops > 0; }
@@ -73,6 +78,7 @@ public:
 	void end();
 	bool active() const { return st != OFF; }
 	void step(float p_dt, const Intent &p_in, Host &p_host);
+	bool in_trav() const { return st == TRAV; }
 
 	// the state for the rest of the game (the camera, the old code when it takes over again)
 	float yaw = 0.0f, speed = 0.0f;
@@ -138,6 +144,43 @@ private:
 	// pulled the drawn foot 27 cm toward the new clip's, and it let go.
 	void align_contacts(const Clip &p_c, double p_t0);
 	Host *host = nullptr;       // (the body, while step runs)
+
+	// ---- TRAVERSAL (mo_motor_trav.cpp; step 3 of docs/ANIMATION_PLAN.md): vaults and climbs as root-motion clips,
+	// fitted to the world by MOTION WARPING (the anchor shifted so the clip's hand contact lands on the real edge: level
+	// over the approach, height only while the feet are off the ground) and the HANDS PINNED to the real top during the
+	// clip's own contact windows. The body follows the clip's hips; nothing else moves it.
+	struct Trav {
+		const Clip *c = nullptr;
+		double t0 = 0.0, t_end = 0.0, tc = 0.0, tw = 0.0, ty0 = 0.0, he = 0.0, land_t = 0.0;   // (tw: the warp done by the first hand touch)
+		Vector3 anchor0, delta, edge_p, edge_n;   // the anchor at the start; the warp's full shift; the edge (world), out toward him
+		float yaw = 0.0f, top_y = 0.0f, start_y = 0.0f, land_dy = 0.0f;
+		bool vault = false;
+		double hs[2] = { -1, -1 }, hend[2] = { -1, -1 };   // each hand's contact window (clip time)
+		double hk[2] = { -1, -1 };                          // each hand's stillest moment in it (its spot is where the clip has it then)
+		bool hand_set[2] = { false, false }; Vector3 hand_w[2];
+		Vector3 c_contact;                       // the primary hand at contact (figure frame)
+		float clip_clear = 0.0f;                 // the clip's own hips over its top, at most (m)
+	};
+	Trav tr;
+	Clip v_walk, v_run, c_low, c_mid, c_mid_run;
+	bool trav_probe(const Vector3 &p_dir, float p_speed);
+	bool trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_n, float p_top_y, float p_land_y, bool p_vault);
+	void trav_step(float p_dt);
+	Vector3 trav_anchor(double p_t) const;
+
+public:
+	// (tests) traversal: counts, the last move, and how well it fitted
+	int n_vaults = 0, n_climbs = 0;
+	String last_trav;
+	float trav_hand_miss = 0.0f;    // the worst distance a pinned hand was drawn from its point on the edge (m)
+	float trav_hand_dy = 0.0f;      // the worst a pinned hand's height was off the top + its rest (m)
+	float trav_hips_over = 0.0f;    // the hips' height over the top, at most, minus the clip's own (m): "the sky"
+	float trav_warp = 0.0f;         // the warp's size at the last start (m)
+	float trav_top = 0.0f;          // the top's height over where he stood (m)
+	Vector3 trav_win() const { return Vector3((float)tr.tc, (float)tr.hs[0], (float)tr.hs[1]); }   // (tests) contact, hand windows' starts
+	float trav_wmax = 0.0f;         // (tests) the largest hand weight given
+	Array trav_hands() const;       // (tests) [L target, L weight, R target, R weight] now
+private:
 	void place(Host &p_host);   // the figure on the body
 };
 
