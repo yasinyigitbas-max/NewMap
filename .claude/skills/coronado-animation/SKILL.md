@@ -8,6 +8,9 @@ description: The player's (and later the crowd's) animation system for Coronado 
 The plan and diagnosis with file:line references: `docs/ANIMATION_PLAN.md`. This skill is the short form plus
 the rules. Re-read both after a context compression.
 
+## CHECKPOINT: branch `claude/anim-checkpoint-23nov` (commit 23e2a8da) is the state Yasin approved on 23 Nov. Never push
+## to it; work goes on the session branch. If polish breaks something, compare with or return to it.
+
 ## Yasin's words for this work (newest last)
 - 21 Nov (to the Animator): "I TOLD YOU TO REPLACE ALL YOUR CODE WITH CLIPS", "add them to animations raw", "you still
   add things to them like jumps, remove all your modifications". The point: no invented motion added on top of the clips.
@@ -122,6 +125,8 @@ TRAPS (each cost a run):
   bone read in Motor::step is not what was drawn. Anything that must follow the drawn body (a carried thing, hands on
   it) is placed inside a modifier (MoLimbs) in the same pass.
 - A spring that follows a moving target lags it (speed x 2 / omega): smooth an offset in the body's own frame.
+- 23 Nov: "okay, many things are great now, just a bit more polish and we are there. firstly save this work as it is,
+  i dont want anything to break while some other things improve" -> the checkpoint branch above.
 - 23 Nov (Yasin): no double climbs; knees never backwards; nothing into the body; jumps and landings as festive's.
 - The figure is a CHILD of the body: anything that moves the body after the motor placed the figure (the old kerb lift)
   drags the drawn figure with it for that frame - put it back (Motor::replace).

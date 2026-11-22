@@ -333,3 +333,9 @@ in place jumps are terrible, use other animations, it looks like climbing an imv
   started so the clip's own touch of the feet comes as the body reaches the ground. test_motor_air PASS (touch 0.1-4.9
   cm). Jumps no longer grab a ledge in the air (climbs start on foot).
 - STILL THE OLD CODE: obstacles 0.24-0.55 m (a 45 cm box: mx/Ascending_Stairs; a 40 cm fence: mx/Vault_Over_Box_to_Cover).
+
+## CHECKPOINT 23 Nov (Yasin: "many things are great now ... save this work as it is, i dont want anything to break
+## while some other things improve")
+Branch `claude/anim-checkpoint-23nov` = commit 23e2a8da, the state he approved. NEVER push to it; polish goes on
+`claude/cool-galileo-6y68se`. To go back: `git checkout claude/anim-checkpoint-23nov` (or reset the work branch to it).
+(A tag was refused by the session's proxy: the checkpoint is a branch.)
