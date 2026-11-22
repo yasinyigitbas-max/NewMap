@@ -232,6 +232,15 @@
           "z": 0.3,
           "yaw": 25,
           "note": "a small object on the right of the console, behind the screen plane"
+        },
+        {
+          "id": "prop_frame_print_medium",
+          "cond": "clean",
+          "x": -5.76,
+          "y": 1.35,
+          "z": 2.15,
+          "yaw": 90,
+          "note": "on the west gable wall, which has no window; a print so the plaster is not a blank field"
         }
       ]
     },
@@ -584,16 +593,16 @@
         {
           "id": "prop_filing_cabinet",
           "cond": "clean",
-          "x": -4.8,
+          "x": -3.2,
           "y": 0.0,
           "z": -1.67,
           "yaw": 180,
-          "note": "on the south wall, west of the window so the glass stays clear"
+          "note": "on the south wall, east of the west window so the glass stays clear, and west of the door swing"
         },
         {
           "id": "prop_globe_desktop",
           "cond": "clean",
-          "x": -4.8,
+          "x": -3.2,
           "y": 1.32,
           "z": -1.67,
           "yaw": 30,
@@ -838,9 +847,9 @@
           "cond": "clean",
           "x": -5.4,
           "y": 3.5,
-          "z": -1.6,
+          "z": 2.2,
           "yaw": 0,
-          "note": "by the west window, evening light for the chairless corner"
+          "note": "in the south-west corner, off the west window glass"
         },
         {
           "id": "prop_curtain_panel",
