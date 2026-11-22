@@ -31,9 +31,21 @@ This is a read of the code and the clips. No code changed in this step.
 | stiff after a climb or vault | 0.45 s of forced Idle, then a forced walk. |
 | feet skate in starts and stops | The foot plant is off, and the start, stop and turn clips play at rates other than their own pace. |
 
-Festive (read for its features only, none of its code is used): it fitted clips to the world with offsets ramped over
-windows, and covered over each crossfade with figure offsets (`city_player_traversal.h`). The idea is right, but the
-patches stacked on each other: the result is the "great one by one, terrible in interactions" Yasin saw.
+Festive (`origin/festive-faraday-work`: `native/src/city_player_traversal.cpp`, `city_player_moves.cpp`; read for
+its features and its mistakes, none of its code is used):
+- It fitted a clip to the world by moving the WHOLE figure (height dy, shift dxz, an added sine "lift" arc, a travel
+  scale) over windows that include planted feet (`trav_pose`). Result: planted feet slide and the body floats over
+  the obstacle.
+- No hand grip in any traversal move (`hand_grip.h` included, never used): hands never touched an edge.
+- Clips cut in partway (`t0 = air - 0.3`), with the pop then covered by figure and yaw offsets during a crossfade
+  (`trav_hand`, `trav_fo`, `trav_yo`): patch on patch.
+- Clips used for the wrong job: Running_Jump_Climb when walking up to a box, Vault_Over_Box_To_Cover (ends crouched in
+  cover) for every walking vault, a running jump over bushes. Facings hard-coded ("the standing idles' hips face -39
+  degrees").
+- Its feature list and thresholds are a good spec, and they are kept: falls by height (3 / 5 / 7 m), losing balance
+  at an edge after 15 s, cover from 0.6 m (standing cover from 1.45 m), thin under 0.6 m, short under 1.2 m, climbs
+  to 2.5 m, carry one or two hands, benches from front / side / behind, bumps and trips, the sidestep through a gap,
+  the look-at.
 
 ## 3. The clips we have (festive's libraries, plus what main already plays)
 - **ptrav** (60): standing / running jumps, jump downs, soft and hard landings, falls (flat, on his back, from losing
